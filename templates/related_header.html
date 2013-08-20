@@ -1,0 +1,63 @@
+<span modes='read edit' id='informations'>
+	Item: {id}
+	- Type:  {type}
+	{?patient_id}
+	- Patient: {patient_id}
+	{/patient_id}
+	- Record created: {@read value=created type="timestamp"/}
+	- Record modified: {@read value=modified type="timestamp"/}
+	- Last user: {lastuser}
+</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+<span security='all_edit'>
+	{#locked}
+		<span modes='read edit'>future: locked</span>
+	{:else}
+		<span modes='read edit'>free</span>
+	{/locked}
+</span>
+
+<input modes='edit add' class="button" id="submitbutton" type="submit" value="Save">
+
+{?patient_id}
+	<a modes='edit' class='textbutton' href="#related/{relatedid}/read">
+		<img src="/cryptomedic/img/cancel.gif">
+		Cancel
+	</a>
+	<a modes='add' class='textbutton' href='#read' >
+		<img src="/cryptomedic/img/cancel.gif">
+		Cancel
+	</a>
+	<span security='all_edit'>
+		<a modes='read' class='textbutton' href="#related/{relatedid}/edit">
+			<img src="/cryptomedic/img/edit.gif">
+			Edit
+		</a>
+		<a modes='read' class='textbutton' href="/amd/{controller}/delete/{id}">
+			<img src="/cryptomedic/img/delete.gif">
+			Delete
+		</a>
+	</span>
+{:else}
+	<a modes='edit' class='textbutton' href="#read">
+		<img src="/cryptomedic/img/cancel.gif">
+		Cancel
+	</a>
+	<span security='all_edit'>
+		<a modes='read' class='textbutton' href="#edit">
+			<img src="/cryptomedic/img/edit.gif">
+			Edit patient
+		</a>
+		<span modes='read'>
+			<span id='patient_nodelete' class='textbutton' status='disabled'>
+				<img src="/cryptomedic/img/delete.gif">
+				Could not delete
+			</span>
+			<a id='patient_delete' class='textbutton' href="/amd/{controller}/delete/{id}">
+				<img src="/cryptomedic/img/delete.gif">
+				Delete patient
+			</a>
+		</span>
+	</span>
+{/patient_id}

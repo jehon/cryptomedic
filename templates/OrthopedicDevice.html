@@ -1,0 +1,188 @@
+<form id="generalForm" enctype="multipart/form-data" method="post" action="/amd/{controller}/save" accept-charset="utf-8">
+	<div id='headerContainer' class='headerContainer'></div>
+	<input type="hidden" name="_method" value="PUT" />
+	<input type="hidden" name="data[id]" value="{id}" />
+	<input type="hidden" name="data[patient_id]" value="{patient_id}" />
+	<input type="hidden" name="data[type]" value="OrthopedicDevice" />
+	<Table width='100%'>
+		<tr>
+			<td>
+				<FieldSet>
+					<Legend><label for="OrthopedicDevice-GeneralData" name="OrthopedicDevice-GeneralData">OrthopedicDevice-GeneralData</label></Legend>
+					<table class='colorize'>
+						<col width='30%' /><col width='*' /> 
+						<tr>
+							<td><label for="OrthopedicDeviceOrthoname" name="OrthopedicDevice.Orthoname">Ortho name</label></td>
+							<td>{@input header="OrthopedicDevice.Orthoname"/}</td>
+						</tr><tr>
+							<td><label for="OrthopedicDeviceGoal" name="OrthopedicDevice.Goal">OrthopedicDevice.Goal</label></td>
+							<td>{@input header="OrthopedicDevice.Goal"/}</td>
+						</tr><tr>
+							<td><label for="OrthopedicDeviceUsingProposal" name="OrthopedicDevice.UsingProposal">OrthopedicDevice.UsingProposal</label></td>
+							<td>{@input header="OrthopedicDevice.UsingProposal"/}</td>
+						</tr><tr>
+							<td><label for="OrthopedicDeviceTypeOfMaterial" name="OrthopedicDevice.TypeOfMaterial">OrthopedicDevice.TypeOfMaterial</label></td>
+							<td>{@input header="OrthopedicDevice.TypeOfMaterial"/}</td>
+						</tr>
+					</table>
+				</FieldSet>
+				<FieldSet>
+					<Legend><label for="OrthopedicDevice-Prescription" name="OrthopedicDevice-Prescription">OrthopedicDevice-Prescription</label></Legend>
+					<table class='colorize'>
+						<col width='30%' /><col width='*' /><col width='*' /> 
+	                    <tr>
+	                        <td></td>
+							<td><label for="Left" name="Left">Left</label></td>
+							<td><label for="Right" name="Right">Right</label></td>
+	                    </tr>
+	                    <tr>
+	                        <td><label for="OrthopedicDevice-Hip" name="OrthopedicDevice-Hip">OrthopedicDevice-Hip</label></td>
+	                        <td></td>
+	                        <td></td>
+	                    </tr>
+	                    <tr>
+							<td><label for="OrthopedicDevice-HipJoint" name="OrthopedicDevice-HipJoint">OrthopedicDevice-HipJoint</label></td>
+							<td>{@input header="OrthopedicDevice.LeftHipJoint"/}</td>
+							<td>{@input header="OrthopedicDevice.RightHipJoint"/}</td>
+	                    </tr>
+	                    <tr>
+							<td><label for="OrthopedicDevice-HipType" name="OrthopedicDevice-HipType">OrthopedicDevice-HipType</label></td>
+							<td>{@input header="OrthopedicDevice.LeftHipType"/}</td>
+							<td>{@input header="OrthopedicDevice.RightHipType"/}</td>
+	                    </tr>
+	                    <tr>
+							<td><label for="OrthopedicDevice-HipROM" name="OrthopedicDevice-HipROM">OrthopedicDevice-HipROM</label></td>
+							<td>{@input header="OrthopedicDevice.LeftHipROM"/}</td>
+							<td>{@input header="OrthopedicDevice.RightHipROM"/}</td>
+	                    </tr>
+	                    <tr>
+	                        <td><label for="OrthopedicDevice-Knee" name="OrthopedicDevice-Knee">OrthopedicDevice-Knee</label></td>
+	                        <td></td>
+	                        <td></td>
+	                    </tr>
+	                    <tr>
+							<td><label for="OrthopedicDevice-KneeJoint" name="OrthopedicDevice-KneeJoint">OrthopedicDevice-KneeJoint</label></td>
+							<td>{@input header="OrthopedicDevice.LeftKneeJoint"/}</td>
+							<td>{@input header="OrthopedicDevice.RightKneeJoint"/}</td>
+	                    </tr>
+	                    <tr>
+							<td><label for="OrthopedicDevice-KneeLock" name="OrthopedicDevice-KneeLock">OrthopedicDevice-KneeLock</label></td>
+							<td>{@input header="OrthopedicDevice.LeftKneeLock"/}</td>
+							<td>{@input header="OrthopedicDevice.RightKneeLock"/}</td>
+	                    </tr>
+	                    <tr>
+							<td><label for="OrthopedicDevice-KneeType" name="OrthopedicDevice-KneeType">OrthopedicDevice-KneeType</label></td>
+							<td>{@input header="OrthopedicDevice.LeftKneeType"/}</td>
+							<td>{@input header="OrthopedicDevice.RightKneeType"/}</td>
+	                    </tr>
+	                    <tr>
+							<td><label for="OrthopedicDevice-KneeROM" name="OrthopedicDevice-KneeROM">OrthopedicDevice-KneeROM</label></td>
+							<td>{@input header="OrthopedicDevice.LeftKneeROM"/}</td>
+							<td>{@input header="OrthopedicDevice.RightKneeROM"/}</td>
+	                    </tr>
+	                    <tr>
+	                        <td><label for="OrthopedicDevice-Ankle" name="OrthopedicDevice-Ankle">OrthopedicDevice-Ankle</label></td>
+	                        <td></td>
+	                        <td></td>
+	                    </tr>
+	                    <tr>
+							<td><label for="OrthopedicDevice-AnkleJoint" name="OrthopedicDevice-AnkleJoint">OrthopedicDevice-AnkleJoint</label></td>
+							<td>{@input header="OrthopedicDevice.LeftAnkleJoint"/}</td>
+							<td>{@input header="OrthopedicDevice.RightAnkleJoint"/}</td>
+	                    </tr>
+	                    <tr>
+							<td><label for="OrthopedicDevice-AnkleType" name="OrthopedicDevice-AnkleType">OrthopedicDevice-AnkleType</label></td>
+							<td>{@input header="OrthopedicDevice.LeftAnkleType"/}</td>
+							<td>{@input header="OrthopedicDevice.RightAnkleType"/}</td>
+	                    </tr>
+	                    <tr>
+							<td><label for="OrthopedicDevice-AnkleROM" name="OrthopedicDevice-AnkleROM">OrthopedicDevice-AnkleROM</label></td>
+							<td>{@input header="OrthopedicDevice.LeftAnkleROM"/}</td>
+							<td>{@input header="OrthopedicDevice.RightAnkleROM"/}</td>
+	                    </tr>
+	                    <tr>
+							<td><label for="OrthopedicDevice-AnkleLimited" name="OrthopedicDevice-AnkleLimited">OrthopedicDevice-AnkleLimited</label></td>
+							<td>{@input header="OrthopedicDevice.LeftAnkleLimited"/}</td>
+							<td>{@input header="OrthopedicDevice.RightAnkleLimited"/}</td>
+	                    </tr>
+	                    <tr>
+							<td><label for="OrthopedicDevice-AnkleBelt" name="OrthopedicDevice-AnkleBelt">OrthopedicDevice-AnkleBelt</label></td>
+							<td>{@input header="OrthopedicDevice.LeftAnkleBelt"/}</td>
+							<td>{@input header="OrthopedicDevice.RightAnkleBelt"/}</td>
+	                    </tr>
+	                    <tr>
+	                        <td><label for="OrthopedicDevice-Foot" name="OrthopedicDevice-Foot">OrthopedicDevice-Foot</label></td>
+	                        <td></td>
+	                        <td></td>
+	                    </tr>
+	                    <tr>
+							<td><label for="OrthopedicDevice-FootSupinatorPronator" name="OrthopedicDevice-FootSupinatorPronator">OrthopedicDevice-FootSupinatorPronator</label></td>
+							<td>{@input header="OrthopedicDevice.LeftFootSupinatorPronator"/}</td>
+							<td>{@input header="OrthopedicDevice.RightFootSupinatorPronator"/}</td>
+	                    </tr>
+	                    <tr>
+							<td><label for="OrthopedicDevice-FootArchSupportCompensation" name="OrthopedicDevice-FootArchSupportCompensation">OrthopedicDevice-FootArchSupportCompensation</label></td>
+							<td>{@input header="OrthopedicDevice.LeftFootArchSupportCompensation"/}</td>
+							<td>{@input header="OrthopedicDevice.RightFootArchSupportCompensation"/}</td>
+	                    </tr>
+	   					<tr>
+							<td><label for="OrthopedicDeviceOtherTypeOfDevice" name="OrthopedicDevice.OtherTypeOfDevice">OrthopedicDevice.OtherTypeOfDevice</label></td>
+							<td>{@input header="OrthopedicDevice.OtherTypeOfDevice"/}</td>
+						</tr>
+					</table>
+				</FieldSet>
+				<FieldSet>
+					<Legend><label for="OrthopedicDevice-Measure" name="OrthopedicDevice-Measure">OrthopedicDevice-Measure</label></Legend>
+					<table class='colorize'>
+						<col width='30%' /><col width='*' /> 
+						<tr>
+							<td><label for="OrthopedicDeviceMeasureDate" name="OrthopedicDevice.MeasureDate">OrthopedicDevice.MeasureDate</label></td>
+							<td>{@input header="OrthopedicDevice.MeasureDate"/}</td>
+						</tr><tr>
+							<td><label for="OrthopedicDeviceMeasurePerson" name="OrthopedicDevice.MeasurePerson">OrthopedicDevice.MeasurePerson</label></td>
+							<td>{@input header="OrthopedicDevice.MeasurePerson"/}</td>
+						</tr><tr>
+							<td><label for="OrthopedicDeviceMeasureComments" name="OrthopedicDevice.MeasureComments">OrthopedicDevice.MeasureComments</label></td>
+							<td>{@input header="OrthopedicDevice.MeasureComments"/}</td>
+						</tr>
+					</table>
+				</FieldSet>
+				<FieldSet>
+					<Legend><label for="OrthopedicDevice-Fitting" name="OrthopedicDevice-Fitting">OrthopedicDevice-Fitting</label></Legend>
+					<table class='colorize'>
+						<col width='30%' /><col width='*' /> 
+						<tr>
+							<td><label for="OrthopedicDeviceFittingDate" name="OrthopedicDevice.FittingDate">OrthopedicDevice.FittingDate</label></td>
+							<td>{@input header="OrthopedicDevice.FittingDate"/}</td>
+						</tr><tr>
+							<td><label for="OrthopedicDeviceFittingPerson" name="OrthopedicDevice.FittingPerson">OrthopedicDevice.FittingPerson</label></td>
+							<td>{@input header="OrthopedicDevice.FittingPerson"/}</td>
+						</tr><tr>
+							<td><label for="OrthopedicDeviceFittingComments" name="OrthopedicDevice.FittingComments">OrthopedicDevice.FittingComments</label></td>
+							<td>{@input header="OrthopedicDevice.FittingComments"/}</td>
+						</tr>
+					</table>
+				</FieldSet>
+				<FieldSet>
+					<Legend><label for="OrthopedicDevice-Delivery" name="OrthopedicDevice-Delivery">OrthopedicDevice-Delivery</label></Legend>
+					<table class='colorize'>
+						<col width='30%' /><col width='*' /> 
+						<tr>
+							<td><label for="OrthopedicDeviceDeliveryDate" name="OrthopedicDevice.DeliveryDate">OrthopedicDevice.DeliveryDate</label></td>
+							<td>{@input header="OrthopedicDevice.DeliveryDate"/}</td>
+						</tr><tr>
+							<td><label for="OrthopedicDeviceDeliveryPerson" name="OrthopedicDevice.DeliveryPerson">OrthopedicDevice.DeliveryPerson</label></td>
+							<td>{@input header="OrthopedicDevice.DeliveryPerson"/}</td>
+						</tr><tr>
+							<td><label for="OrthopedicDeviceDeliveryComments" name="OrthopedicDevice.DeliveryComments">OrthopedicDevice.DeliveryComments</label></td>
+							<td>{@input header="OrthopedicDevice.DeliveryComments"/}</td>
+						</tr>
+					</table>
+				</FieldSet>
+			</td>
+			<td>
+				<span id='belongsTo'></span>
+			</td>
+		</tr>
+	</Table>
+</form>

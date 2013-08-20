@@ -1,0 +1,1 @@
+DROP TABLE orthopedic_followups;

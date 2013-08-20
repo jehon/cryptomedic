@@ -1,0 +1,9 @@
+AddType application/javascript .compiled
+AddType application/javascript .cached
+
+<IfModule mod_expires.c>
+	ExpiresActive 	On
+	ExpiresByType	image/*			"access plus 1 year"
+	ExpiresDefault 	"access plus 1 year"
+	Header 	Set Cache-Control 	"public"
+</IfModule>

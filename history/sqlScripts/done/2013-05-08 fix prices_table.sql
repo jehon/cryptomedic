@@ -1,0 +1,66 @@
+ALTER TABLE  `prices` CHANGE consult_CDC_consultation_physio consult_CDC_consultation_physio INT DEFAULT -1; 
+ALTER TABLE  `prices` CHANGE consult_CDC_consultation_Bengali_Doctor consult_CDC_consultation_Bengali_Doctor INT DEFAULT -1; 
+ALTER TABLE  `prices` CHANGE consult_field_visit consult_field_visit INT DEFAULT -1; 
+ALTER TABLE  `prices` CHANGE consult_home_visit consult_home_visit INT DEFAULT -1; 
+ALTER TABLE  `prices` CHANGE consult_medecine consult_medecine INT DEFAULT -1; 
+ALTER TABLE  `prices` CHANGE consult_making_plaster consult_making_plaster INT DEFAULT -1; 
+ALTER TABLE  `prices` CHANGE consult_making_dressing consult_making_dressing INT DEFAULT -1; 
+ALTER TABLE  `prices` CHANGE consult_physiotherapy consult_physiotherapy INT DEFAULT -1; 
+ALTER TABLE  `prices` CHANGE consult_Other_consultation_care consult_Other_consultation_care INT DEFAULT -1; 
+
+ALTER TABLE  `prices` CHANGE workshop_BHKAFO_night workshop_BHKAFO_night INT DEFAULT -1; 
+ALTER TABLE  `prices` CHANGE workshop_BHKAFO_walking workshop_BHKAFO_walking INT DEFAULT -1; 
+ALTER TABLE  `prices` CHANGE workshop_UHKAFO_night workshop_UHKAFO_night INT DEFAULT -1; 
+ALTER TABLE  `prices` CHANGE workshop_UHKAFO_walking workshop_UHKAFO_walking INT DEFAULT -1; 
+ALTER TABLE  `prices` CHANGE workshop_BKAFO_night workshop_BKAFO_night INT DEFAULT -1; 
+ALTER TABLE  `prices` CHANGE workshop_BKAFO_walking workshop_BKAFO_walking INT DEFAULT -1; 
+ALTER TABLE  `prices` CHANGE workshop_UKAFO_night workshop_UKAFO_night INT DEFAULT -1; 
+ALTER TABLE  `prices` CHANGE workshop_UKAFO_walking workshop_UKAFO_walking INT DEFAULT -1; 
+ALTER TABLE  `prices` CHANGE workshop_Knee_brace workshop_Knee_brace INT DEFAULT -1; 
+ALTER TABLE  `prices` CHANGE workshop_BAFO_night workshop_BAFO_night INT DEFAULT -1; 
+ALTER TABLE  `prices` CHANGE workshop_BAFO_walking workshop_BAFO_walking INT DEFAULT -1; 
+ALTER TABLE  `prices` CHANGE workshop_UAFO_night workshop_UAFO_night INT DEFAULT -1; 
+ALTER TABLE  `prices` CHANGE workshop_UAFO_walking workshop_UAFO_walking INT DEFAULT -1; 
+ALTER TABLE  `prices` CHANGE workshop_Orthoshoes_with_bar workshop_Orthoshoes_with_bar INT DEFAULT -1; 
+ALTER TABLE  `prices` CHANGE workshop_Orthoshoes_without_bar workshop_Orthoshoes_without_bar INT DEFAULT -1; 
+ALTER TABLE  `prices` CHANGE workshop_DDB_splint workshop_DDB_splint INT DEFAULT -1; 
+ALTER TABLE  `prices` CHANGE workshop_Compensation_sole workshop_Compensation_sole INT DEFAULT -1; 
+ALTER TABLE  `prices` CHANGE workshop_Arch_support workshop_Arch_support INT DEFAULT -1; 
+ALTER TABLE  `prices` CHANGE workshop_Matetarsal_pade workshop_Matetarsal_pade INT DEFAULT -1; 
+
+ALTER TABLE  `prices` CHANGE workshop_Supinator_corner workshop_Supinator_corner INT DEFAULT -1; 
+ALTER TABLE  `prices` CHANGE workshop_Wirst_splint workshop_Wirst_splint INT DEFAULT -1; 
+ALTER TABLE  `prices` CHANGE workshop_Hand_splint workshop_Hand_splint INT DEFAULT -1; 
+ALTER TABLE  `prices` CHANGE workshop_Finger_splint workshop_Finger_splint INT DEFAULT -1; 
+ALTER TABLE  `prices` CHANGE workshop_Walker_with_wheel workshop_Walker_with_wheel INT DEFAULT -1; 
+ALTER TABLE  `prices` CHANGE workshop_Walker_without_wheel workshop_Walker_without_wheel INT DEFAULT -1; 
+ALTER TABLE  `prices` CHANGE workshop_Crutch_a_pair workshop_Crutch_a_pair INT DEFAULT -1; 
+ALTER TABLE  `prices` CHANGE workshop_Crutch_a_piece workshop_Crutch_a_piece INT DEFAULT -1; 
+ALTER TABLE  `prices` CHANGE workshop_Wheel_chair workshop_Wheel_chair INT DEFAULT -1; 
+ALTER TABLE  `prices` CHANGE workshop_CP_chair workshop_CP_chair INT DEFAULT -1; 
+ALTER TABLE  `prices` CHANGE workshop_CP_standing_table workshop_CP_standing_table INT DEFAULT -1; 
+ALTER TABLE  `prices` CHANGE workshop_Cervical_Collar workshop_Cervical_Collar INT DEFAULT -1; 
+ALTER TABLE  `prices` CHANGE workshop_Abdominal_corset_belt workshop_Abdominal_corset_belt INT DEFAULT -1; 
+ALTER TABLE  `prices` CHANGE workshop_Reparing workshop_Reparing INT DEFAULT -1; 
+ALTER TABLE  `prices` CHANGE workshop_Other_orthodevice workshop_Other_orthodevice INT DEFAULT -1; 
+ALTER TABLE  `prices` CHANGE surgical_osteotomy surgical_osteotomy INT DEFAULT -1; 
+ALTER TABLE  `prices` CHANGE surgical_epiphysiodesis surgical_epiphysiodesis INT DEFAULT -1; 
+ALTER TABLE  `prices` CHANGE surgical_polio_AL surgical_polio_AL INT DEFAULT -1; 
+ALTER TABLE  `prices` CHANGE surgical_percutaneous_AL_club_foot surgical_percutaneous_AL_club_foot INT DEFAULT -1; 
+ALTER TABLE  `prices` CHANGE surgical_PMR_club_foot surgical_PMR_club_foot INT DEFAULT -1; 
+ALTER TABLE  `prices` CHANGE surgical_Burn_release surgical_Burn_release INT DEFAULT -1; 
+ALTER TABLE  `prices` CHANGE surgical_Pin_removal surgical_Pin_removal INT DEFAULT -1; 
+ALTER TABLE  `prices` CHANGE surgical_other_operation surgical_other_operation INT DEFAULT -1; 
+ALTER TABLE  `prices` CHANGE other_microbus other_microbus INT DEFAULT -1;
+ALTER TABLE  `prices` CHANGE other_CMOSH_follow_up other_CMOSH_follow_up INT DEFAULT -1;
+ALTER TABLE  `prices` CHANGE consult_X_Ray consult_X_Ray INT NOT NULL DEFAULT  '-1';
+
+INSERT INTO prices (id, consult_CDC_consultation_physio,consult_CDC_consultation_Bengali_Doctor,consult_field_visit,consult_home_visit,consult_medecine,consult_making_plaster,consult_making_dressing,consult_X_Ray,consult_physiotherapy,workshop_BHKAFO_night,workshop_BHKAFO_walking,workshop_UHKAFO_night,workshop_UHKAFO_walking,workshop_BKAFO_night,workshop_BKAFO_walking,workshop_UKAFO_night,workshop_UKAFO_walking,workshop_Knee_brace,workshop_BAFO_night,workshop_BAFO_walking,workshop_UAFO_night,workshop_UAFO_walking,workshop_Orthoshoes_with_bar,workshop_Orthoshoes_without_bar,workshop_DDB_splint,workshop_Compensation_sole,workshop_Arch_support,workshop_Matetarsal_pade,workshop_Supinator_corner,workshop_Wirst_splint,workshop_Hand_splint,workshop_Finger_splint,workshop_Walker_with_wheel,workshop_Walker_without_wheel,workshop_Crutch_a_pair,workshop_Crutch_a_piece,workshop_Wheel_chair,workshop_CP_chair,workshop_CP_standing_table,workshop_Cervical_Collar,workshop_Abdominal_corset_belt,workshop_Reparing,surgical_osteotomy,surgical_epiphysiodesis,surgical_polio_AL,surgical_percutaneous_AL_club_foot,surgical_PMR_club_foot,surgical_Burn_release,surgical_Pin_removal,other_microbus,other_CMOSH_follow_up,consult_Other_consultation_care,workshop_Other_orthodevice,surgical_other_operation,socialLevelPercentage_1,socialLevelPercentage_2,socialLevelPercentage_3,socialLevelPercentage_4)
+ VALUE (3, 200,200,100,150,100,200,100,120,200,4200,4950,2420,2420,3200,3200,1600,1600,800,2400,2400,1100,1100,1000,1000,820,200,150,150,150,300,800,600,1320,1000,390,195,7500,5000,5000,150,1500,300,18000,8000,14000,5000,18000,14000,8000,200,200,1,1,1,0.1,0.3,0.7,1);
+UPDATE bills SET price_id = 3;
+DELETE FROM prices WHERE id = 1;
+UPDATE prices SET id = 1 WHERE id = 3;
+UPDATE  `amd_chakaria`.`prices` SET  `dateto` =  '2013-01-01 00:00:00' WHERE  `prices`.`id` =1;
+
+ALTER TABLE  `bills` CHANGE  `socialLevel`  `socialLevel` INT( 10 ) UNSIGNED NULL DEFAULT NULL;
+UPDATE bills SET socialLevel = NULL WHERE socialLevel = 0;

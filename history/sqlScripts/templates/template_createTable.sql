@@ -1,0 +1,9 @@
+CREATE TABLE $ (
+			id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, 
+			modified TIMESTAMP NOT NULL ON UPDATE CURRENT_TIMESTAMP default CURRENT_TIMESTAMP,
+			created TIMESTAMP NOT NULL,
+			lastuser VARCHAR(50),
+			patient_id INT UNSIGNED NOT NULL,
+			INDEX (patient_id), 
+			FOREIGN KEY $_patient_id (patient_id) REFERENCES patients(id)
+)  ENGINE=InnoDB
