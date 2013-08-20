@@ -1,0 +1,104 @@
+<?php ?>
+<div style='width: 100%;text-align: center'>
+	<h1 style='text-align: center'><label for="Home-MainTitle" name="Home-MainTitle">Home Page</label></h1>
+</div>
+<table>
+	<tr>
+		<td>
+
+
+            <form id="generalForm" enctype="multipart/form-data" method="post" action="/amd/patients/reference" accept-charset="utf-8">
+                <Div class='searchFields'>
+                    <Fieldset>
+                        <Legend>Check for an existing patient, or create it</Legend>
+                        <Table class='colorize'>
+                            <tr>
+                                <td><label for="PatientEntryyear" name="Patient.entryyear">Patient.entryyear</label></td>
+                                <td>
+                                    <input id='entryyear' name="data[reference-entryyear]" type="number" value="<? echo array_key_exists('reference-entryyear', $this->data) ? $this->data['reference-entryyear'] : ''; ?>" required="required" myrequired="required" id="PatientEntryyear">
+                            </tr>
+                            <tr>
+                                <td><label for="PatientEntryorder" name="Patient.entryorder">Patient.entryorder</label></td>
+                                <td>
+                                    <input id='entryorder' name="data[reference-entryorder]" type="number" value="<? echo array_key_exists('reference-entryorder', $this->data) ? $this->data['reference-entryorder'] : ''; ?>" id="PatientEntryorder">
+                                </td>
+                            </tr>
+                            <input type="hidden" name="data[create]" id="ForceCreate" value=false />
+                        </Table>
+                        <input class="button" id="submitbutton" type="submit" value="Look up">
+                    </Fieldset>
+                </Div>
+            </form>
+            <?php
+            if (array_key_exists('reference', $this->data)) {
+                ?>
+                <Div class='searchFields'>
+                    <Fieldset>
+                        <Legend>Results</Legend>
+                        <?php
+                        if ($this->request->data['reference-entryorder'] > 0) {
+                            ?>
+                            The patient does <b>not</b> exist. Do you want to <b>create</b> it?<br><br>
+                            <a class='textbutton' href="javascript:cryptomedic.reference_submit_for_create();"><img src="/amd/cryptomedic/img/go.gif" alt=""> Create patient</a>
+                        <?
+                        } else {
+                            ?>
+                            You must specify a valid reference !
+                            <a class='textbutton' href="javascript:cryptomedic.reference_submit_for_create();"><img src="/amd/cryptomedic/img/go.gif" alt=""> Create patient with generated reference</a>
+                        <?
+                        }
+                        ?>
+                    </fieldset>
+                </div>
+            <?php
+            }
+            ?>
+		</td>
+<?
+if (!array_key_exists('reference', $this->data)) {
+    ?>
+        <td>
+                <fieldset>
+                    <legend><label for="Home-QuickMenu" name="Home-QuickMenu">Quick menu</label></legend>
+                    <table>
+                        <tr style='text-align: center'>
+                            <td>
+                                    <a class='textbutton' a href="/amd/ricket_consults/day/"><img src="/amd/cryptomedic/img/go.gif" alt="" />Day of consult</a>
+                            </td>
+                        </tr>
+                        <tr style='text-align: center'>
+                            <td>
+                                <a class='textbutton' a href="/amd/patients"><img src="/amd/cryptomedic/img/patientsSearch.gif" alt="" />Search a patient</a>
+                            </td>
+                        </tr>
+                        <tr style='text-align: center'>
+                            <td>
+                                <a class='textbutton' href="/amd/pages/activity"><img src="/amd/cryptomedic/img/activity.gif" alt="" />Activity</a>
+                            </td>
+                        </tr>
+                        <tr style='text-align: center'>
+                            <td>
+                                <a class='textbutton' href="/amd/pages/monthlyreport"><img src="/amd/cryptomedic/img/monthlyreport.gif" alt="" />Monthly report</a>
+                            </td>
+                        </tr>
+                        </table>
+                </fieldset>
+            </td>
+        <?
+    }
+    ?>
+	</tr>
+</table>
+<div style='text-align: center'>
+		<h3 align='center'>Credits</h3>
+		<div  align='center'>Developper : Jean Honlet</div>
+</div>
+<script type="text/javascript">
+//    jQuery('#generalForm').submit(function() {return false});
+</script>
+
+
+<script>
+    jQuery("#entryyear").change(function() { jQuery('#ForceCreate').val(false); });
+    jQuery("#entryorder").change(function() { jQuery('#ForceCreate').val(false); });
+</script>

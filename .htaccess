@@ -1,6 +1,5 @@
-<IfModule mod_expires.c>
-	ExpiresActive 	On
-	ExpiresByType	image/*			"access plus 1 year"
-	ExpiresDefault 	"access plus 1 year"
-	Header 	Set Cache-Control 	"public"
+<IfModule mod_rewrite.c>
+   RewriteEngine on
+   RewriteRule    ^$ app/webroot/    [L]
+   RewriteRule    (.*) app/webroot/$1 [L]
 </IfModule>
