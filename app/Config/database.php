@@ -53,17 +53,22 @@
  * unix_socket =>
  * For MySQL to connect via socket specify the `unix_socket` parameter instead of `host` and `port`
  */
+
+require_once(dirname(__FILE__) . "/../../../secrets.php" );
+
 class DATABASE_CONFIG {
 
 	public $default = array(
 		'datasource' => 'Database/Mysql',
 		'persistent' => false,
 		'host' => 'localhost',
-		'login' => 'amd_chakaria',
-		'password' => 'km9C3Yj6',
+//		'login' => 'amd_chakaria',
+//		'password' => 'km9C3Yj6',
 		'database' => 'amd_chakaria',
 		'encoding' => 'utf8',
 	);
+};
 
-}
+$DATABASE_CONFIG->default['login'] = $cryptomedic['database_login'];
+$DATABASE_CONFIG->default['password'] = $cryptomedic['database_password'];
 

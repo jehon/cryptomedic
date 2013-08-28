@@ -46,7 +46,7 @@ class AppModel extends Model {
 		return $data;
 	}
 	
-	function afterFind($data, $primary) {
+	function afterFind($data, $primary = false) {
 		/**
 		 * Enhance everything...
 		 */
