@@ -5,7 +5,7 @@ define("PICTWEB", "/uploadedPictures/");
 define("PICTROOT", $_SERVER['DOCUMENT_ROOT'] . "/uploadedPictures/" );
 
 class Picture extends AppModel {
-	function beforeDelete() {
+	function beforeDelete($cascade = true) {
 		/**
 		 * Remove the actual physical picture before removing the database record
 		 */
@@ -15,7 +15,7 @@ class Picture extends AppModel {
 				if (!unlink(constant("PICTROOT") . $data['Picture']['file'])) {
 					echo "Can not delete file for some unknown reason";
 				}
-		return parent::beforeDelete();
+		return parent::beforeDelete($cascade);
 	}
 
 	function beforeSave($options = array())  {
