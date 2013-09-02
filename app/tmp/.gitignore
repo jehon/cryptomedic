@@ -1,0 +1,7 @@
+!empty
+cache/models/*
+cache/persistent/*
+cache/views/*
+logs/*
+sessions/*
+!empty
