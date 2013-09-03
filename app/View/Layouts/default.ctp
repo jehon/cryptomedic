@@ -182,9 +182,10 @@
 				<div class="menubar" id='application_header'>
 					<?php if (isset($login)) { ?>
 						<span id='identification'><? echo $login; ?></span>
-						<a class='textbutton' href="/amd/"><img src="<? echo $this->webroot ?>/cryptomedic/img/home.gif" alt="Home" />Home</a>
-						<a class='textbutton' href="/amd/users/logout"><img src="<? echo $this->webroot ?>/cryptomedic/img/exit.gif" alt="logout" /><label for="Logout">Logout</label></a>
+						<a class='textbutton' href="/amd/"><img src="<? echo $this->webroot ?>/cryptomedic/img/home.gif" alt="" />Home</a>
+						<a class='textbutton' href="/amd/users/logout"><img src="<? echo $this->webroot ?>/cryptomedic/img/exit.gif" alt="" /><label for="Logout">Logout</label></a>
 						<a class='textbutton' href="/amd/patients"><img src="<? echo $this->webroot ?>/cryptomedic/img/patientsSearch.gif" alt="" /> Search a patient</a>
+                        <a class='textbutton' href="/amd/?patientForm=1"><img src="<? echo $this->webroot ?>/cryptomedic/img/add.gif" alt="" /> Add a patient</a>
                         <a class='textbutton' href="/amd/ricket_consults/day/"><img src="<? echo $this->webroot ?>/cryptomedic/img/go.gif" alt="" />Day of consult</a>
 					<?php } ?>
 				</div>

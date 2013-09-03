@@ -61,7 +61,7 @@ class KdmHelper extends AppHelper {
 			$id = preg_replace("/\.[^.]+\./", ".", $id);
 		}
 
-		$labels =& ClassRegistry::init('Label', true);
+		$labels = ClassRegistry::init('Label', true);
 		if (is_numeric($id)) {
 			$label = $labels->find('first', array('conditions' => array('Label.id' => $id)));
 		} else {
