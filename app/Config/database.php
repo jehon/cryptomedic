@@ -54,7 +54,6 @@
  * For MySQL to connect via socket specify the `unix_socket` parameter instead of `host` and `port`
  */
 
-require_once(dirname(__FILE__) . "/../../../secrets.php" );
 
 class DATABASE_CONFIG {
 	public $default = array(
@@ -63,9 +62,15 @@ class DATABASE_CONFIG {
 		'host' => 'localhost',
 		'database' => 'amd_chakaria',
 		'encoding' => 'utf8',
+        'login' => 'amd_chakaria' // Keep this one so if nothing configured in secrets, in also fail in dev (where root always have access)
+//        'password' => 'km9C3Yj6'
 	);
-};
 
-$DATABASE_CONFIG->default['login'] = $cryptomedic['database_login'];
-$DATABASE_CONFIG->default['password'] = $cryptomedic['database_password'];
+    function __construct() {
+        require(__DIR__ . "/../../../secrets.php" );
+
+        $this->default['password'] = $secrets['cryptomedic']['database_password'];
+        $this->default['login'] = $secrets['cryptomedic']['database_login'];
+    }
+};
 
