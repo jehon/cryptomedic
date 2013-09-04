@@ -49,7 +49,8 @@
 	}
 
 	
-	$version = trim(file_get_contents(__DIR__ . "/../../webroot/version.txt"));
+	$version = trim(file_get_contents(__DIR__ . "/../../../../amd.version"));
+//    $version = trim(file_get_contents(__DIR__ . "/../../webroot/version.txt"));
 	$dev = false;
 	if ($_SERVER['HTTP_HOST'] == 'localhost') {
 		// Dev version: disable the whole caching system
