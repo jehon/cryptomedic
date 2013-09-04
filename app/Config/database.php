@@ -57,13 +57,10 @@
 require_once(dirname(__FILE__) . "/../../../secrets.php" );
 
 class DATABASE_CONFIG {
-
 	public $default = array(
 		'datasource' => 'Database/Mysql',
 		'persistent' => false,
 		'host' => 'localhost',
-//		'login' => 'amd_chakaria',
-//		'password' => 'km9C3Yj6',
 		'database' => 'amd_chakaria',
 		'encoding' => 'utf8',
 	);
