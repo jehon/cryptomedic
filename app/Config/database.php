@@ -63,7 +63,6 @@ class DATABASE_CONFIG {
 		'database' => 'amd_chakaria',
 		'encoding' => 'utf8',
         'login' => 'amd_chakaria' // Keep this one so if nothing configured in secrets, in also fail in dev (where root always have access)
-//        'password' => 'km9C3Yj6'
 	);
 
     function __construct() {

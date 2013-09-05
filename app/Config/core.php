@@ -34,7 +34,6 @@
  * In development mode, you need to click the flash message to continue.
  */
     require(__DIR__ . "/../../../secrets.php");
-
 	Configure::write('debug', $secrets['cryptomedic']['debug_level']);
 
 /**
