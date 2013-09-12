@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 // Modes are: read, edit, add, display
 
@@ -39,12 +39,57 @@ cryptomedic.bmi = function(height, weight) {
 };
 
 cryptomedic.pn = function(n, dec) {
-    if (n == NaN) return "Not a number";
-    if (isNaN(parseInt(n))) return n;
-    if (dec == "%")
+    if (isNaN(n)) {
+        return "Not a number";
+    }
+    if (isNaN(parseInt(n))) {
+        return n;
+    }
+    if (dec === "%") {
         return Math.round(n * 100) + "%";
+    }
     return Math.round(n * Math.pow(10, dec)) / Math.pow(10, dec);
 };
+
+cryptomedic.math = (function() {
+    function evaluatePoly(line, x) {
+        var i = -1;
+        if ((x < line[0][0]) || (x > line[line.length - 1][0])) {
+            return NaN;
+        }
+        for(i = 0; i< line.length; i++) {
+            if (x <= line[i][0])
+                break;
+        }
+
+        // i = the next indice (line[i-1] < x <= line[i])
+        if (x == line[i][0]) return line[i][1];
+
+        var xup = line[i][0];
+        var yup = line[i][1];
+        var xdw = line[i-1][0];
+        var ydw = line[i-1][1];
+        return ydw + (yup - ydw) * ((x - xdw) / (xup - xdw));
+    };
+
+    function stdDeviation(line, x, y) {
+        var avg = evaluatePoly(line.medium, x);
+        if (isNaN(avg)) return "#Out of bound#";
+        if (y == avg) return 0;
+
+        var ref;
+        if (y < avg) ref = evaluatePoly(line.min, x);
+        else ref = evaluatePoly(line.max, x);
+        if (isNaN(ref)) return "#Out of bound#";
+
+        // 1.64485 = sigma at 90 for normal distribution
+        var sigma = Math.abs((avg - ref) / 1.64485);
+        var stdDev = (y - avg) / sigma;
+        return stdDev;
+    };
+
+    return { 'stdDeviation': stdDeviation };
+}());
 
 cryptomedic.reference_submit_for_create = function() {
     jQuery("#ForceCreate").val(true);
@@ -508,11 +553,11 @@ cryptomedic.enhance = function(ajax) {
 	        }
 	
 	        if (!isNaN(parseInt(el.Heightcm)) && (el.Heightcm > 0) && (age > 0)) {
-	            ajax.related[i].stats_ds_height = cryptomedic.pn(jehon.math.stdDeviation(amd_stats[sex]['height'], age, el.Heightcm), 1) + ' sd';
+	            ajax.related[i].stats_ds_height = cryptomedic.pn(cryptomedic.math.stdDeviation(amd_stats[sex]['height'], age, el.Heightcm), 1) + ' sd';
 	        }
 	    
 	        if (!isNaN(parseInt(el.Weightkg)) && (el.Weightkg > 0) && (age > 0)) {
-	            ajax.related[i].stats_ds_weight = cryptomedic.pn(jehon.math.stdDeviation(amd_stats[sex]['weight'], age, el.Weightkg), 1) + ' sd';
+	            ajax.related[i].stats_ds_weight = cryptomedic.pn(cryptomedic.math.stdDeviation(amd_stats[sex]['weight'], age, el.Weightkg), 1) + ' sd';
 	        }
 	    
 	        if (!isNaN(parseInt(el.Heightcm)) && (el.Heightcm > 0) && !isNaN(parseInt(el.Weightkg)) && (el.Weightkg > 0)) {
@@ -520,9 +565,9 @@ cryptomedic.enhance = function(ajax) {
 	            ajax.related[i].stats_base_bmi = cryptomedic.pn(bmi, 2);
 	            console.log(el.Weightkg/el.Heightcm);
 	            ajax.related[i].stats_base_wh = Math.floor(el.Weightkg/el.Heightcm * 100) / 100;
-	            ajax.related[i].stats_ds_wh = cryptomedic.pn(jehon.math.stdDeviation(amd_stats[sex]['wh'], el.Heightcm, el.Weightkg), 1) + ' sd';
+	            ajax.related[i].stats_ds_wh = cryptomedic.pn(cryptomedic.math.stdDeviation(amd_stats[sex]['wh'], el.Heightcm, el.Weightkg), 1) + ' sd';
 	            if (age > 0) {
-	                ajax.related[i].stats_ds_bmi = cryptomedic.pn(jehon.math.stdDeviation(amd_stats[sex]['BMI'], age, bmi), 1) + ' sd';
+	                ajax.related[i].stats_ds_bmi = cryptomedic.pn(cryptomedic.math.stdDeviation(amd_stats[sex]['BMI'], age, bmi), 1) + ' sd';
 	            }
 	        }
 		}

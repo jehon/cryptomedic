@@ -91,8 +91,8 @@
 	<script type="text/javascript" src="/jehon<? echo $version; ?>/js/base64.js"></script>
 	
 	<script type="text/javascript" src="/jehon<? echo $version; ?>/jehon.js"></script>
-	<script type="text/javascript" src="/jehon<? echo $version; ?>/jehon.math.js"></script>
-	<script type="text/javascript" src="/jehon<? echo $version; ?>/jehon.csv.js"></script>
+<!--	<script type="text/javascript" src="/jehon--><?// echo $version; ?><!--/jehon.math.js"></script>-->
+<!--	<script type="text/javascript" src="/jehon--><?// echo $version; ?><!--/jehon.csv.js"></script>-->
 	
 	<script type="text/javascript" src="<? echo $this->webroot ?>/cryptomedic<? echo $version; ?>/application.js"></script>
 	<script type="text/javascript" src="<? echo $this->webroot ?>/cryptomedic<? echo $version; ?>/js/amd_stats_datas.js"></script>
