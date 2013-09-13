@@ -33,8 +33,8 @@
  * In production mode, flash messages redirect after a time interval.
  * In development mode, you need to click the flash message to continue.
  */
-    require(__DIR__ . "/../../../secrets.php");
-	Configure::write('debug', $secrets['cryptomedic']['debug_level']);
+    require(__DIR__ . "/../../../maintenance.php");
+	Configure::write('debug', $config['cryptomedic']['debug_level']);
 
 /**
  * Configure the Error handler used to handle errors for your application. By default
