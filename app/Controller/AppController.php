@@ -322,10 +322,10 @@ class AppController extends Controller {
 	function structure() {
 		$model = $this->modelClass;
 	    if (!ClassRegistry::isKeySet($model)) {
-			$omodel =& ClassRegistry::init($model);
+			$omodel = ClassRegistry::init($model);
 		}
 			
-		$omodel =& ClassRegistry::getObject($model);
+		$omodel = ClassRegistry::getObject($model);
 		$data = array();
 		$data = $omodel->schema();
 		if (isset($omodel::$part)) {
