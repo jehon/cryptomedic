@@ -3,13 +3,16 @@
 // file:///home/jehon/websites/cake1.3/api13.cakephp.org/class/dbo-mysql.html
 
 $now = new DateTime();
-$lastmonth = new DateTime($now->format("Y-M-1"));
-$lastmonth->modify('+1 month');
-global $dates;
-$dates = array($lastmonth);
-for($i=0; $i<12;$i++) {
-    $lastmonth->modify("-1 month");
-    $dates[] = new DateTime($lastmonth->format('Y-m-d'));
+{
+    $m = new DateTime($now->format("Y-M-1"));
+    $m->modify('+1 month');
+    global $dates;
+    $dates = array();
+    $dates[] = new DateTime($m->format('Y-m-d'));
+    for($i=0; $i<12;$i++) {
+        $m->modify("-1 month");
+        $dates[] = new DateTime($m->format('Y-m-d'));
+    }
 }
 
 $where = "";
@@ -36,7 +39,8 @@ function get($sql, $field = null, $where = null) {
 			$where = $_REQUEST['where'];
 	}
 	$conn = ConnectionManager::getDataSource("default");
-	$row = array_pop($conn->fetchRow($sql));
+    $arr = $conn->fetchRow($sql);
+    $row = array_pop($arr);
 	$res = $row;
 	if ($field != null) {
 		$res = $row[$field];
@@ -53,20 +57,19 @@ function between($i) {
 	$de = $dates[$i]->format('Y-m-d');
 	return "BETWEEN '$db' AND '$de'";
 }
-
 ?>
 <table>
-    <thead>
+    <thead class='colorize'>
         <tr>
             <th>Number of files</th>
-            <th>this month</th>
-            <?php for($i = 2; $i<count($dates);$i++) echo "<th>" . $dates[$i]->format('M-Y') ."</th>\n"; ?>
+            <th>This month</th>
+            <?php for($i = 1; $i<count($dates) - 1;$i++) echo "<th>" . $dates[$i+1]->format('M-Y') ."</th>\n"; ?>
         </tr>
     </thead>
     <tbody>
         <?php foreach($tables as $label => $t) { ?>
-            <tr class="contrast">
-                <td><?php echo $label; ?></td>
+            <tr class="subheader">
+                <td colspan="13"><?php echo $label; ?></td>
             </tr>
             <tr class="dark"><td>created</td>
                 <?php 
@@ -77,14 +80,14 @@ function between($i) {
             <tr style="background-color: white"><td>modified</td>
                 <?php 
                 	for ($i = 0; $i<count($dates) - 1; $i++) 
-                		echo "<td>" . get("SELECT COUNT($t.created) as c FROM $t WHERE (created NOT " . between($i) . ")"
+                		echo "<td>" . get("SELECT COUNT($t.modified) as c FROM $t WHERE (created NOT " . between($i) . ")"
                 				. " AND (modified " . between($i) . ")"
                 				, "c") . "</td>\n"; 
                 ?>
             </tr>
         <?php } ?>
         
-        <tr class="contrast"><td>Amount in bills</td></tr>
+        <tr class="subheader"><td colspan="13">Amount in bills</td></tr>
         <tr class="dark"><td>theorical</td>
 	        <?php
 	        	for ($i = 0; $i<count($dates) - 1; $i++) {
@@ -100,7 +103,7 @@ function between($i) {
 				}
 	        ?>
         </tr>
-        <tr class="contrast"><td>Number of Bills per Patient Social levels</td></tr>
+        <tr class="subheader"><td colspan="13">Number of Bills per Patient Social levels</td></tr>
         <?php
         for ($sl = 1; $sl <= 5; $sl++) {
         	?>
@@ -123,7 +126,7 @@ function between($i) {
 				}
         	?>
        	</tr>
-        <tr class="contrast"><td>Number of Bills per Type of Care</td></tr>
+        <tr class="subheader"><td colspan="13">Number of Bills per Type of Care</td></tr>
 	        <?php 
 		        function bills4type($field) {
 		        	global $dates;
@@ -141,7 +144,7 @@ function between($i) {
 		        bills4type("consult_medecine");
 		        bills4type("consult_making_plaster");
 			?>
-        <tr class="contrast"><td>Number of items in bills</td></tr>
+        <tr class="subheader"><td colspan="13">Number of items in bills</td></tr>
 			<?php
 				function bills4item($field) {
 					global $dates;

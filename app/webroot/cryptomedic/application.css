@@ -11,6 +11,10 @@ input[type=submit]  {
 	margin-right: 10px;
 }
 
+tr.subheader {
+    background-color: lightgray;
+}
+
 tr.highlighted  > td {
     background-color: darkgray;
 }
