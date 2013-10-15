@@ -82,13 +82,6 @@ class AppController extends Controller {
         return true;
     }
 
-	// USED ???
-//    function notAuthorized() {
-//        $this->Session->setFlash("You are not authorized to call " . $this->modelClass . "/" . $this->action  . " directly.");
-//        $this->redirect(array('controller' => 'page', 'action' => 'home'));
-//        return ;
-//    }
-
 	function beforeFilter() {
     	// ----------------------------- current browser capacities logs ------------------------
 	    if (array_key_exists('data', $this->request)) {
