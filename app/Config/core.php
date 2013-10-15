@@ -34,7 +34,7 @@
  * In development mode, you need to click the flash message to continue.
  */
     require(__DIR__ . "/../../../maintenance.php");
-	Configure::write('debug', $config['settings']['debug_level']);
+	Configure::write('debug', $config['cryptomedic']['debug_level']);
 
 /**
  * Configure the Error handler used to handle errors for your application. By default

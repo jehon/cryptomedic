@@ -2,12 +2,6 @@
 App::uses('AppController', 'Controller');
 
 class PatientsController extends AppController {
-	
-	function save($id = null) {
-		// TODO: prevent parent::save if no id is specified -> it should be done in reference
-		return parent::save($id);
-	}
-	
 	function index() {
 		$sqlfilter = "(1=1)";
 		if (array_key_exists('data', $this->request) && array_key_exists('Patient', $this->request->data)) {

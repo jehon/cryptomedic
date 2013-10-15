@@ -242,7 +242,7 @@ Path.map("#related/:id/:mode").to(function() {
     cryptomedic.status.related = this.params['id'];
     cryptomedic.status.route= "related";
     var tstart = new Date().getTime();
-    if ((typeof(ajax.related) == 'undefined') || (typeof(ajax.related[cryptomedic.status.related]) == 'undefined')) {
+    if ((typeof(ajax.related) === 'undefined') || (typeof(ajax.related[cryptomedic.status.related]) === 'undefined')) {
         // TODO: manage this
         console.error("Related id is not correct");
         jQuery("#content").html("invalid informations");

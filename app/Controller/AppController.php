@@ -33,27 +33,25 @@ class AppController extends Controller {
 	);
 
 	var $mytransactions = array(
-			"all_edit",
-			"all_delete"
-		);
+        "all_edit",
+        "all_delete",
+        "all_unlock"
+    );
 
-    function isAuthorized($transaction = "") {
-    	// USED ???
+    function isAuthorized($user) {
+        $resource = $this->name;
+        $action = $this->action;
+        $args = $this->passedArgs;
+
+        pr(array('resource' => $resource, 'action' => $action, 'args' => $args));
+        return $this->testAuthorized($resource, $action, $args);
+    }
+
+    function testAuthorized($resource, $action, $args = array()) {
     	$group = $this->Auth->user('group');
-    	$page = $this->name;
-		$action = $this->action;
-		// if (count($this->request->params['pass']) > 0)
-			// $param = $this->request->params['pass'][0];
-		if (is_array($transaction)) return true;
-		if (($transaction != "") && ($transaction != null)) {
-	    	$p = explode("_", $transaction);
-			$page = $p[0];
-			$action = $p[1];
-			if (count($p) > 2)
-				$param = $p[2];
-		}
+
         if ('admin' == $group) return true;
-		switch($page) {
+		switch($resource) {
 			case "Users":
 			    return true;
 				break;
@@ -63,6 +61,7 @@ class AppController extends Controller {
 		};
 		
         switch($action) {
+            case "unlock":
             case "delete":
                 if ("manager" == $group) return true;
                 return false;
@@ -84,11 +83,11 @@ class AppController extends Controller {
     }
 
 	// USED ???
-    function notAuthorized() {
-        $this->Session->setFlash("You are not authorized to call " . $this->modelClass . "/" . $this->action  . " directly.");
-        $this->redirect(array('controller' => 'page', 'action' => 'home'));
-        return ;
-    }
+//    function notAuthorized() {
+//        $this->Session->setFlash("You are not authorized to call " . $this->modelClass . "/" . $this->action  . " directly.");
+//        $this->redirect(array('controller' => 'page', 'action' => 'home'));
+//        return ;
+//    }
 
 	function beforeFilter() {
     	// ----------------------------- current browser capacities logs ------------------------
@@ -121,7 +120,10 @@ class AppController extends Controller {
 		// ----------------------------------- Rights --------------------------------
 		$denied = array();
 		foreach($this->mytransactions as $t) {
-			if (!$this->isAuthorized($t)) {
+            $p = explode("_", $t);
+            $resource = $p[0];
+            $action = $p[1];
+			if (!$this->testAuthorized($resource, $action)) {
 				array_push($denied, $t);
 			}
 		}
@@ -165,7 +167,7 @@ class AppController extends Controller {
 			} else if (array_key_exists('Patient', $this->request->data)){
 				// Dependent
 				$pid = $this->request->data['Patient']['id'];
-				$a2 = $this->loadModel('Patient', $pid);
+				$this->loadModel('Patient', $pid);
 				$ajax = $this->Patient->read(null, $pid);
 			} else {
 				$ajax = array();
@@ -198,7 +200,39 @@ class AppController extends Controller {
 		$this->set("ajax", $ajax);
 	}
 
-	function save($id = null) {
+    function unlock($id) {
+        if ($id == null || $id <= 0) {
+            $this->Session->setflash('Invalid request.');
+            return $this->render("../results");
+        }
+
+        $data = $this->{$this->modelClass}->read(null, $id);
+        if ($data == null) {
+            $this->Session->setFlash('Invalid ' . $this->modelKey . ": $id");
+            return $this->render('../Patients/notfound');
+        }
+        $data = $data[$this->modelClass];
+
+        $login = $this->Auth->user();
+        $data['lastuser'] = $login['username'];
+
+        $date = new DateTime();
+        $data['modified'] = $date->format('Y-m-d 00:00:00');
+
+        $this->set('mode', "#related");
+        $this->set('type', $this->modelClass);
+        $this->set('related', $id);
+        $this->set('patient', $data['patient_id']);
+
+        if ($this->{$this->modelClass}->save($data)) {
+            $this->Session->setflash('Great! The ' . $this->modelClass . ' has been unlocked !', 'default', array('class' => 'flashok'));
+        } else {
+            $this->Session->setflash('Bad luck! The ' . $this->modelClass . ' has not been unlocked.');
+        }
+        return $this->render("../results");
+    }
+
+	function save() {
 		$this->set('patient', -1);
 		$this->set('mode', "#read");
 		$this->set('type', "");
@@ -245,7 +279,7 @@ class AppController extends Controller {
 		return $this->render('../results');
 	}
 	
-	function view($id = null) {
+	function view($id) {
         if ($id == null) {
 			return $this->render('notfound');
 		}
@@ -258,7 +292,7 @@ class AppController extends Controller {
 		$this->render('details');
 	}
 
-	function delete($id = null) {
+	function delete($id) {
 		$this->set('patient', -1);
 		$this->set('mode', '#history');
 		$this->set('type', "");
@@ -302,19 +336,19 @@ class AppController extends Controller {
 		}
 		
 		$this->request->data['list'] = array();
-		$cond = $this->request->data['filter'];
+		$filter = $this->request->data['filter'];
 		
-		if ($cond['Center'] == "") unset($cond['Center']);
-		$cond = array('recursive' => 0, 'conditions' => $cond);
+		if ($filter['Center'] == "") unset($filter['Center']);
+		$filter = array('recursive' => 0, 'conditions' => $filter);
 		
 		$this->loadModel("RicketConsult");
-	    $this->request->data['list'] = array_merge($this->request->data['list'], $this->RicketConsult->find('all', $cond));
+	    $this->request->data['list'] = array_merge($this->request->data['list'], $this->RicketConsult->find('all', $filter));
 
 		$this->loadModel("NonricketConsult");
-	    $this->request->data['list'] = array_merge($this->request->data['list'], $this->NonricketConsult->find('all', $cond));
+	    $this->request->data['list'] = array_merge($this->request->data['list'], $this->NonricketConsult->find('all', $filter));
 
 		$this->loadModel("ClubFoot");
-	    $this->request->data['list'] = array_merge($this->request->data['list'], $this->ClubFoot->find('all', $cond));
+	    $this->request->data['list'] = array_merge($this->request->data['list'], $this->ClubFoot->find('all', $filter));
 
 	    $this->render("../day");
 	}
@@ -322,14 +356,13 @@ class AppController extends Controller {
 	function structure() {
 		$model = $this->modelClass;
 	    if (!ClassRegistry::isKeySet($model)) {
-			$omodel = ClassRegistry::init($model);
+			ClassRegistry::init($model);
 		}
 			
-		$omodel = ClassRegistry::getObject($model);
-		$data = array();
-		$data = $omodel->schema();
-		if (isset($omodel::$part)) {
-			foreach($omodel::$part as $f => $l) {
+		$oModel = ClassRegistry::getObject($model);
+		$data = $oModel->schema();
+		if (isset($oModel::$part)) {
+			foreach($oModel::$part as $f => $l) {
 				$data[$f]['list'] = $l;
 			}
 		}

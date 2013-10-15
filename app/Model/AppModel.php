@@ -15,16 +15,14 @@ App::uses('Model', 'Model');
 require_once(__DIR__ . "/amd_listings.php");
 
 class AppModel extends Model {
-	public static $part = array();
-	
 	/**
 	 * In all classes, I added a ::part field, having the definitions of the various listings.
 	 * This is used in AppController to enrich the *structure* of the object with actual listings.
 	 * 
 	 * I am pretty sure this could be done by a more normal way, but I don't know how.
 	 */
-	// public static $part = array();
-	
+    public static $part = array();
+
 	function enhance($data, $model) {
 		/**
 		 * Add structural informations, to keep trakc of who is what when managing that in ajax
@@ -35,13 +33,20 @@ class AppModel extends Model {
     		$data['relatedid'] = $model . "-" . $data['id'];
 		}
     	// Protect the sheets if too old, but not the patients one (skip above)
-		if (array_key_exists('modified', $data)) {
-    		$data['locked'] = ($data['modified'] < '2012-01-01');
+		if (array_key_exists('modified', $data)
+            & ($data['modified'] != null)
+            & ($data['modified'] > "")) {
+            $date = new DateTime();
+            $date->sub(new DateInterval('P30D'));
+            $date = $date->format('Y-m-d');
+            $data['locked'] = ($data['modified'] < $date);
+            $data['dlocked'] = $date;
 		}
 		// Special case for patients:
 		if ("Patient" == $this->name) {
-			$data['locked'] = 0;
+			$data['locked'] = false;
 			$data['relatedid'] = -1;
+            $data['dlocked'] = "patient";
 		}
 		return $data;
 	}
