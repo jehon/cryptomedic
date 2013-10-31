@@ -168,16 +168,31 @@ class KdmHelper extends AppHelper {
 		switch($this->format) {
 			case 'csvfr':
 			case 'csv':
-				echo $title . "\n";
+				echo "* " . $title . "\n";
 				break;
 			case 'xls':
-				$this->objPHPSheet->setCellValue($this->intToXLSCoordonates(0), $title);
+				$this->objPHPSheet->setCellValue($this->intToXLSCoordonates(0), "* " . $title);
 				break;
 			default:
 				echo "<tr><td colspan=2 style='text-align: center'><h3>$title</h3></td></tr>\n";
 		}
 		$this->reportCurrentRow++;
 	}
+
+    function reportSubHeader($title) {
+        switch($this->format) {
+            case 'csvfr':
+            case 'csv':
+                echo "- " . $title . "\n";
+                break;
+            case 'xls':
+                $this->objPHPSheet->setCellValue($this->intToXLSCoordonates(0), "- " . $title);
+                break;
+            default:
+                echo "<tr><td colspan=2 style='text-align: center'><h5>$title</h5></td></tr>\n";
+        }
+        $this->reportCurrentRow++;
+    }
 
 	function reportLine($args) {
 		$this->reportCurrentColumn = 0;

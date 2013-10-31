@@ -43,7 +43,7 @@ class AppController extends Controller {
         $action = $this->action;
         $args = $this->passedArgs;
 
-        pr(array('resource' => $resource, 'action' => $action, 'args' => $args));
+//        pr(array('resource' => $resource, 'action' => $action, 'args' => $args));
         return $this->testAuthorized($resource, $action, $args);
     }
 

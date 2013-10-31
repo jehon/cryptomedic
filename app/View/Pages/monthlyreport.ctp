@@ -110,18 +110,24 @@ foreach($centers as $c) {
 }
 
 $this->kdm->reportHeader("Consult Activity");
+$anyConsult = array("OR" => array());
 foreach($mbill->billFields("consult") as $f) {
 	getBillCountBy($f, array("$f >" => 0));
+    $anyConsult["OR"][$f] = ">0";
 }
 
 $this->kdm->reportHeader("Workshop Activity");
+$anyWorkshop = array("OR" => array());
 foreach($mbill->billFields("workshop") as $f) {
 	getBillCountBy($f, array("$f >" => 0));
+    $anyWorkshop["OR"][$f] = ">0";
 }
 
 $this->kdm->reportHeader("Surgical activity");
+$anySurgery = array("OR" => array());
 foreach($mbill->billFields("surgical") as $f) {
 	getBillCountBy($f, array("$f >" => 0));
+    $anySurgery["OR"][$f] = ">0";
 }
 
 $this->kdm->reportHeader("Other activity");
@@ -130,6 +136,23 @@ foreach($mbill->billFields("other") as $f) {
 }
 
 $this->kdm->reportHeader("Financials");
+$this->kdm->reportSubHeader("Consultation");
+$treal = getBillExpressionBy("total asked", "SUM(total_asked)", $anyConsult);
+$tpaid = getBillExpressionBy("total paid", "SUM(total_paid)", $anyConsult);
+$kdm->reportLine("total paid / total real", $tpaid / $treal);
+
+$this->kdm->reportSubHeader("Workshop");
+$treal = getBillExpressionBy("total asked", "SUM(total_asked)", $anyWorkshop);
+$tpaid = getBillExpressionBy("total paid", "SUM(total_paid)", $anyWorkshop);
+$kdm->reportLine("total paid / total real", $tpaid / $treal);
+
+$this->kdm->reportSubHeader("Surgery");
+$treal = getBillExpressionBy("total asked", "SUM(total_asked)", $anySurgery);
+$tpaid = getBillExpressionBy("total paid", "SUM(total_paid)", $anySurgery);
+$kdm->reportLine("total paid / total real", $tpaid / $treal);
+
+
+$this->kdm->reportSubHeader("Grand Total");
 $treal = getBillExpressionBy("total real", "SUM(total_real)");
 getBillExpressionBy("total asked", "SUM(total_asked)");
 $tpaid = getBillExpressionBy("total paid", "SUM(total_paid)");

@@ -34,8 +34,9 @@ class AppModel extends Model {
 		}
     	// Protect the sheets if too old, but not the patients one (skip above)
 		if (array_key_exists('modified', $data)
-            & ($data['modified'] != null)
-            & ($data['modified'] > "")) {
+            && array_key_exists('modified', $data)
+            && ($data['modified'] != null)
+            && ($data['modified'] > "")) {
             $date = new DateTime();
             $date->sub(new DateInterval('P30D'));
             $date = $date->format('Y-m-d');
