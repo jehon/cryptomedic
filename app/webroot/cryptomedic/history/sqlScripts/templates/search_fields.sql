@@ -7,3 +7,21 @@ WHERE TABLE_SCHEMA = 'amd_chakaria' AND `CHARACTER_SET_NAME` NOT LIKE 'utf8';
 SELECT concat("ALTER TABLE ", table_name, " DROP ", column_name, ";")
 FROM information_schema.COLUMNS 
 WHERE TABLE_SCHEMA = 'amd_chakaria' AND `COLUMN_NAME` LIKE 'old_%'
+
+-- change default
+-- about utf8
+SELECT CONCAT("ALTER TABLE ", table_name, " CHANGE `", column_name, "` `", column_name, "` ",
+              "INT( 11 ) ",
+              " NOT NULL DEFAULT 0", ";")
+FROM information_schema.COLUMNS
+WHERE TABLE_SCHEMA = 'amd_chakaria'
+      AND `TABLE_NAME` = 'bills'
+      AND (`DATA_TYPE` = 'int' OR `DATA_TYPE` = 'tinyint')
+      AND  ((`COLUMN_NAME` LIKE 'work%')
+            OR (`COLUMN_NAME` LIKE 'consult%')
+            OR (`COLUMN_NAME` LIKE 'surgical%')
+            OR (`COLUMN_NAME` LIKE 'other%')
+      )
+
+      -- AND `IS_NULLABLE`
+      -- AND `CHARACTER_SET_NAME` NOT LIKE 'utf8';

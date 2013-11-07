@@ -21,6 +21,9 @@ $this->kdm->reportFileName("monthly-report-$year-$month");
  */
 global $timecondition, $mbill, $mpatient, $kdm;
 $timecondition = array("Date BETWEEN ? AND ?" => array($year . "-" . $month . "-01", date("Y-m-d", mktime(0, 0, 0, $month + 1, 0, $year))));
+pr("debug");
+$timecondition = array("Date BETWEEN ? AND ?" => array($year . "-" . $month . "-01", date("Y-m-d", mktime(0, 0, 0, $month, 1, $year))));
+pr($timecondition);
 $mbill = ClassRegistry::init("Bill");
 $mpatient = ClassRegistry::init("Patient");
 $kdm = $this->kdm;
@@ -56,14 +59,44 @@ function getBillExpressionBy($header, $expression, $conditions = array()) {
 	}
 	global $timecondition;
 	global $mbill;
-	$res = $mbill->find('all', array('conditions' => array_merge($conditions, $timecondition),
+    $cond = array_merge($conditions, $timecondition);
+    if ($header == "stats") {
+        $res = $mbill->find('all', array('conditions' => $cond));
+        ksort($res);
+        pr($cond);
+        foreach($res as $i => $v) {
+            ksort($res[$i]['Bill']);
+            pr($res[$i]['Bill']['id']);
+
+        }
+    }
+
+	$res = $mbill->find('all', array('conditions' => $cond,
 			'fields' => $expression 
 		));
 	
-// 	var_dump($res);
-	$res = (float) array_pop($res[0][0]);
-	if (floor($res) == $res) $res = (int) $res;
-	return resultat($header, $res);
+    if (!is_array($expression)) {
+        $res = (float) array_pop($res[0][0]);
+        if (floor($res) == $res) $res = (int) $res;
+        return resultat($header, $res);
+    }
+    foreach($res[0][0] as $k => $v) {
+        if (floor($v) == $v) $res[0][0][$k] = (int) $v;
+    }
+    return $res[0][0];
+}
+
+function billStats($header, $condition = array()) {
+    global $kdm;
+    $kdm->reportSubHeader($header);
+    $stats = getBillExpressionBy("stats",
+        array("SUM(total_real) as total_real", "SUM(total_asked) as total_asked", "SUM(total_paid) as total_paid"),
+        $condition);
+    resultat("total_real", $stats['total_real']);
+    resultat("total_asked", $stats['total_asked']);
+    resultat("total_paid", $stats['total_paid']);
+    $kdm->reportLine("total paid / total real", $stats['total_paid'] / $stats['total_real']);
+    $kdm->reportLine("");
 }
 
 /**
@@ -113,21 +146,21 @@ $this->kdm->reportHeader("Consult Activity");
 $anyConsult = array("OR" => array());
 foreach($mbill->billFields("consult") as $f) {
 	getBillCountBy($f, array("$f >" => 0));
-    $anyConsult["OR"][$f] = ">0";
+    $anyConsult["OR"][$f . " >"] = "0";
 }
 
 $this->kdm->reportHeader("Workshop Activity");
 $anyWorkshop = array("OR" => array());
 foreach($mbill->billFields("workshop") as $f) {
 	getBillCountBy($f, array("$f >" => 0));
-    $anyWorkshop["OR"][$f] = ">0";
+    $anyWorkshop["OR"][$f . " >"] = "0";
 }
 
 $this->kdm->reportHeader("Surgical activity");
 $anySurgery = array("OR" => array());
 foreach($mbill->billFields("surgical") as $f) {
 	getBillCountBy($f, array("$f >" => 0));
-    $anySurgery["OR"][$f] = ">0";
+    $anySurgery["OR"][$f . " >"] = "0";
 }
 
 $this->kdm->reportHeader("Other activity");
@@ -136,26 +169,20 @@ foreach($mbill->billFields("other") as $f) {
 }
 
 $this->kdm->reportHeader("Financials");
-$this->kdm->reportSubHeader("Consultation");
-$treal = getBillExpressionBy("total asked", "SUM(total_asked)", $anyConsult);
-$tpaid = getBillExpressionBy("total paid", "SUM(total_paid)", $anyConsult);
-$kdm->reportLine("total paid / total real", $tpaid / $treal);
+billStats("Surgery", $anySurgery);
 
-$this->kdm->reportSubHeader("Workshop");
-$treal = getBillExpressionBy("total asked", "SUM(total_asked)", $anyWorkshop);
-$tpaid = getBillExpressionBy("total paid", "SUM(total_paid)", $anyWorkshop);
-$kdm->reportLine("total paid / total real", $tpaid / $treal);
+pr("workshop");
+$onlyWorkshop = array("AND" => array_merge($anyWorkshop, array("NOT" => array_merge_recursive($anySurgery))));
+billStats("Workshop", $onlyWorkshop);
 
-$this->kdm->reportSubHeader("Surgery");
-$treal = getBillExpressionBy("total asked", "SUM(total_asked)", $anySurgery);
-$tpaid = getBillExpressionBy("total paid", "SUM(total_paid)", $anySurgery);
-$kdm->reportLine("total paid / total real", $tpaid / $treal);
+pr("consults");
+$onlyConsults = array("AND" => array_merge($anyConsult, array("NOT" => array_merge_recursive($anySurgery, $anyWorkshop))));
+billStats("Consults", $onlyConsults);
 
+pr("others");
+$onlyOther = array("NOT" => array_merge_recursive($anySurgery, $anyWorkshop, $anyConsult));
+billStats("Others", $onlyOther);
 
-$this->kdm->reportSubHeader("Grand Total");
-$treal = getBillExpressionBy("total real", "SUM(total_real)");
-getBillExpressionBy("total asked", "SUM(total_asked)");
-$tpaid = getBillExpressionBy("total paid", "SUM(total_paid)");
-$kdm->reportLine("total paid / total real", $tpaid / $treal);
+billStats("Grand Total");
 
 $this->kdm->reportEnd();
