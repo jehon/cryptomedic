@@ -4,7 +4,7 @@ if (!array_key_exists("month", $this->Html->request->query)) {
 	?>
 	Please select a month (yyyy-mm, ex: 2013-03):
 	<form>
-		<input name='month' value='2013-03'>
+		<input name='month' value='<? echo date('Y-m', time() - 29*25*60*60); ?>'>
 		<input type='submit' value='submit'>
 	</form>
 	<?
@@ -21,9 +21,8 @@ $this->kdm->reportFileName("monthly-report-$year-$month");
  */
 global $timecondition, $mbill, $mpatient, $kdm;
 $timecondition = array("Date BETWEEN ? AND ?" => array($year . "-" . $month . "-01", date("Y-m-d", mktime(0, 0, 0, $month + 1, 0, $year))));
-pr("debug");
-$timecondition = array("Date BETWEEN ? AND ?" => array($year . "-" . $month . "-01", date("Y-m-d", mktime(0, 0, 0, $month, 1, $year))));
-pr($timecondition);
+//pr("debug");
+//$timecondition = array("Date BETWEEN ? AND ?" => array($year . "-" . $month . "-01", date("Y-m-d", mktime(0, 0, 0, $month, 1, $year))));
 $mbill = ClassRegistry::init("Bill");
 $mpatient = ClassRegistry::init("Patient");
 $kdm = $this->kdm;
@@ -60,16 +59,16 @@ function getBillExpressionBy($header, $expression, $conditions = array()) {
 	global $timecondition;
 	global $mbill;
     $cond = array_merge($conditions, $timecondition);
-    if ($header == "stats") {
-        $res = $mbill->find('all', array('conditions' => $cond));
-        ksort($res);
-        pr($cond);
-        foreach($res as $i => $v) {
-            ksort($res[$i]['Bill']);
-            pr($res[$i]['Bill']['id']);
-
-        }
-    }
+//    if ($header == "stats") {
+//        $res = $mbill->find('all', array('conditions' => $cond));
+//        ksort($res);
+//        pr($cond);
+//        foreach($res as $i => $v) {
+//            ksort($res[$i]['Bill']);
+//            pr($res[$i]['Bill']['id']);
+//
+//        }
+//    }
 
 	$res = $mbill->find('all', array('conditions' => $cond,
 			'fields' => $expression 
@@ -95,7 +94,10 @@ function billStats($header, $condition = array()) {
     resultat("total_real", $stats['total_real']);
     resultat("total_asked", $stats['total_asked']);
     resultat("total_paid", $stats['total_paid']);
-    $kdm->reportLine("total paid / total real", $stats['total_paid'] / $stats['total_real']);
+    if ($stats['total_real'] > 0)
+        $kdm->reportLine("total paid / total real", $stats['total_paid'] / $stats['total_real']);
+    else
+        $kdm->reportLine("total paid / total real", "-");
     $kdm->reportLine("");
 }
 
@@ -126,7 +128,10 @@ getBillCountBy("Other", array("Patient.pathology_other" => "1"));
 $this->kdm->reportHeader("Social Level");
 $inco = getBillExpressionBy("Family income (mean)", "CAST(SUM(Patient.Familysalaryinamonth) / COUNT(*) AS DECIMAL)");
 $nbhous = getBillExpressionBy("Nb household mb (mean)", "SUM(Patient.Numberofhouseholdmembers) / COUNT(*)");
-$kdm->reportLine("ratio (mean)", $inco / $nbhous);
+if ($nbhous > 0)
+    $kdm->reportLine("ratio (mean)", $inco / $nbhous);
+else
+    $kdm->reportLine("ratio (mean)", "-");
 
 $i = 0;
 getBillCountBy("Social Level $i", array("Bill.SocialLevel" => "$i")); $i++;
@@ -171,15 +176,12 @@ foreach($mbill->billFields("other") as $f) {
 $this->kdm->reportHeader("Financials");
 billStats("Surgery", $anySurgery);
 
-pr("Workshop (exl. surgeries)");
 $onlyWorkshop = array("AND" => array_merge($anyWorkshop, array("NOT" => array_merge_recursive($anySurgery))));
-billStats("Workshop", $onlyWorkshop);
+billStats("Workshop (exl. surgeries)", $onlyWorkshop);
 
-pr("Consults (ex. surgeries and workshops");
 $onlyConsults = array("AND" => array_merge($anyConsult, array("NOT" => array_merge_recursive($anySurgery, $anyWorkshop))));
-billStats("Consults", $onlyConsults);
+billStats("Consults (ex. surgeries and workshops", $onlyConsults);
 
-pr("others");
 $onlyOther = array("NOT" => array_merge_recursive($anySurgery, $anyWorkshop, $anyConsult));
 billStats("Others", $onlyOther);
 
