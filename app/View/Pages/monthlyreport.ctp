@@ -171,11 +171,11 @@ foreach($mbill->billFields("other") as $f) {
 $this->kdm->reportHeader("Financials");
 billStats("Surgery", $anySurgery);
 
-pr("workshop");
+pr("Workshop (exl. surgeries)");
 $onlyWorkshop = array("AND" => array_merge($anyWorkshop, array("NOT" => array_merge_recursive($anySurgery))));
 billStats("Workshop", $onlyWorkshop);
 
-pr("consults");
+pr("Consults (ex. surgeries and workshops");
 $onlyConsults = array("AND" => array_merge($anyConsult, array("NOT" => array_merge_recursive($anySurgery, $anyWorkshop))));
 billStats("Consults", $onlyConsults);
 
