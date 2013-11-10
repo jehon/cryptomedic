@@ -598,6 +598,7 @@ dust.helpers.input = function(chunk, context, bodies, params) {
     var id = jehon.utils.uuid();
     var field = "";
     var extra = "";
+    var defval = null;
     
     if ((typeof(params.header) != "undefined") && (params.header > "")) {
         var p = params.header.split('.');
@@ -633,6 +634,9 @@ dust.helpers.input = function(chunk, context, bodies, params) {
             if (typeof(cryptomedic.structure[obj][field]['null']) != 'undefined') {
                 required = ((cryptomedic.structure[obj][field]['null']) ? "" : required="required myrequired='required'");
             }
+            if (typeof(cryptomedic.structure[obj][field]['default']) != 'undefined') {
+                defval = cryptomedic.structure[obj][field]['default'];
+            }
         }
         value = context.get(field);
         extra = "id=\"" + params.header.split(".").join("_") + "\" ";
@@ -642,13 +646,22 @@ dust.helpers.input = function(chunk, context, bodies, params) {
     if (typeof(params.mode) != "undefined") mode = params.mode;
     if (typeof(params.value) != "undefined") value = params.value;
     if (typeof(params.type) != 'undefined') type = params.type;
+//    if (typeof(params.default) != "undefined") defval = params.default;
     if ((typeof(params.required) != "undefined") && params.required) required = " required='required' myrequired='required'";
     if (typeof(params.list) != "undefined") list = jehon.utils.stringToObject(params.list);
     if (typeof(params.extra) != "undefined") {
         extra = extra + decodeURIComponent(params.extra);
     }
 
-    console.log("calculated: %O", { mode: mode, type: type, value: value, required: required, list: list, extra: extra });
+    console.log("calculated: %O", {
+        mode: mode,
+        type: type,
+        value: value,
+        required: required,
+        list: list,
+        extra: extra,
+        defval: defval
+    });
     // End of initialization
 
     if (debugTemplate) {
@@ -738,12 +751,12 @@ dust.helpers.input = function(chunk, context, bodies, params) {
         }
                 
         // Let's build it up:
-        if (typeof(value) == "undefined") value = "";
+        if (typeof(value) == "undefined") value = defval;
         if (value == null) value = "";
         
         switch(type) {
             case 'integer':
-                if (value == "") value = "";
+                if (value == "") value = parseInt(defval);
                 return chunk.write("<input name='" + params.name + "' type='number'" + required + " value='" + value + "' " + extra  + " />");
             case 'string':
                 return chunk.write("<input name='" + params.name + "' type='text'" + required + " maxlength='255' value='" + value + "' " + extra  + " />");
