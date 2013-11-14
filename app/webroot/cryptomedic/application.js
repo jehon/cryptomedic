@@ -766,7 +766,7 @@ dust.helpers.input = function(chunk, context, bodies, params) {
                 //if (params.value == "") params.value = 0;
                 // TODO: treat list (labels)
                 params.list = list;
-                if (_(list).keys().length <= 6) {
+                if ((list).keys().length <= 6) {
                     chunk.write("<table width='100%'><colgroup span='2' width='50%' /><tr><td>");
                     params.type = "radios";
                     params.separator = function(i, n) {

@@ -68,8 +68,10 @@ class DATABASE_CONFIG {
     function __construct() {
         require(__DIR__ . "/../../../maintenance.php" );
 
-        $this->default['password'] = $config['cryptomedic']['database_password'];
-        $this->default['login'] = $config['cryptomedic']['database_login'];
+        $this->default['host'] = $config['database']['host'];
+        $this->default['login'] = $config['database']['login'];
+        $this->default['password'] = $config['database']['password'];
+        $this->default['schema'] = $config['database']['schema'];
     }
 };
 
