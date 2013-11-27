@@ -70,33 +70,29 @@
 	<link href="<? echo $this->webroot ?>/cryptomedic/favicon.ico" type="image/x-icon" rel="icon" />
 	<link href="<? echo $this->webroot ?>/cryptomedic/favicon.ico" type="image/x-icon" rel="shortcut icon" />
 	
-	<link rel="stylesheet" type="text/css" href="/jehon<? echo $version; ?>/css/jehon.css" />
-	<link rel="stylesheet" type="text/css" href="/jehon<? echo $version; ?>/css/jquery-ui.css" />
+	<link rel="stylesheet" type="text/css" href="<? echo $this->webroot ?>/jehon<? echo $version; ?>/css/jehon.css" />
+	<link rel="stylesheet" type="text/css" href="<? echo $this->webroot ?>/jehon<? echo $version; ?>/css/jquery-ui.css" />
 	<link rel="stylesheet" type="text/css" href="<? echo $this->webroot ?>/cryptomedic<? echo $version; ?>/application.css" />
-	<link id='cssdebug' rel="stylesheet" type="text/css" href="/jehon<? echo $version; ?>/css/debug.css" />
-	
-	<script type="text/javascript" src="/jehon<? echo $version; ?>/js/modernizr.js"></script>
-	<script type="text/javascript" src="/jehon<? echo $version; ?>/js/underscore.js"></script>
-	<script type="text/javascript" src="/jehon<? echo $version; ?>/js/jquery.js"></script>
-	<script type="text/javascript" src="/jehon<? echo $version; ?>/js/jquery-migrate.js"></script>
-	<script type="text/javascript" src="/jehon<? echo $version; ?>/js/jquery.metadata.js"></script>
-	<script type="text/javascript" src="/jehon<? echo $version; ?>/js/jquery.ui.js"></script>
-	<script type="text/javascript" src="/jehon<? echo $version; ?>/js/jquery.tablesorter.js"></script>
-	<script type="text/javascript" src="/jehon<? echo $version; ?>/js/jquery.tablesorter.pager.js"></script>
-	<script type="text/javascript" src="/jehon<? echo $version; ?>/js/jquery.tinysort.js"></script>
-	<script type="text/javascript" src="/jehon<? echo $version; ?>/js/jquery.notify.js"></script>
-	<script type="text/javascript" src="/jehon<? echo $version; ?>/js/dust.js"></script>
-	<script type="text/javascript" src="/jehon<? echo $version; ?>/js/dust.helpers.js"></script>
-	<script type="text/javascript" src="/jehon<? echo $version; ?>/js/path.js"></script>
-	<script type="text/javascript" src="/jehon<? echo $version; ?>/js/base64.js"></script>
-	
-	<script type="text/javascript" src="/jehon<? echo $version; ?>/jehon.js"></script>
-<!--	<script type="text/javascript" src="/jehon--><?// echo $version; ?><!--/jehon.math.js"></script>-->
-<!--	<script type="text/javascript" src="/jehon--><?// echo $version; ?><!--/jehon.csv.js"></script>-->
-	
+
+	<script type="text/javascript" src="<? echo $this->webroot ?>/jehon<? echo $version; ?>/js/modernizr.js"></script>
+	<script type="text/javascript" src="<? echo $this->webroot ?>/jehon<? echo $version; ?>/js/underscore.js"></script>
+	<script type="text/javascript" src="<? echo $this->webroot ?>/jehon<? echo $version; ?>/js/jquery.js"></script>
+	<script type="text/javascript" src="<? echo $this->webroot ?>/jehon<? echo $version; ?>/js/jquery-migrate.js"></script>
+	<script type="text/javascript" src="<? echo $this->webroot ?>/jehon<? echo $version; ?>/js/jquery.metadata.js"></script>
+	<script type="text/javascript" src="<? echo $this->webroot ?>/jehon<? echo $version; ?>/js/jquery.ui.js"></script>
+	<script type="text/javascript" src="<? echo $this->webroot ?>/jehon<? echo $version; ?>/js/jquery.tablesorter.js"></script>
+	<script type="text/javascript" src="<? echo $this->webroot ?>/jehon<? echo $version; ?>/js/jquery.tablesorter.pager.js"></script>
+	<script type="text/javascript" src="<? echo $this->webroot ?>/jehon<? echo $version; ?>/js/jquery.tinysort.js"></script>
+	<script type="text/javascript" src="<? echo $this->webroot ?>/jehon<? echo $version; ?>/js/jquery.notify.js"></script>
+	<script type="text/javascript" src="<? echo $this->webroot ?>/jehon<? echo $version; ?>/js/dust.js"></script>
+	<script type="text/javascript" src="<? echo $this->webroot ?>/jehon<? echo $version; ?>/js/dust.helpers.js"></script>
+	<script type="text/javascript" src="<? echo $this->webroot ?>/jehon<? echo $version; ?>/js/path.js"></script>
+<!--	<script type="text/javascript" src="--><?// echo $this->webroot ?><!--/jehon--><?// echo $version; ?><!--/js/base64.js"></script>-->
+	<script type="text/javascript" src="<? echo $this->webroot ?>/jehon<? echo $version; ?>/jehon.js"></script>
+
 	<script type="text/javascript" src="<? echo $this->webroot ?>/cryptomedic<? echo $version; ?>/application.js"></script>
 	<script type="text/javascript" src="<? echo $this->webroot ?>/cryptomedic<? echo $version; ?>/js/amd_stats_datas.js"></script>
-	
+
 	<script type="text/javascript" src="<? echo $this->webroot ?>/cryptomedic<? echo $version ?>/dynamic/Bill.compiled"></script>
 	<script type="text/javascript" src="<? echo $this->webroot ?>/cryptomedic<? echo $version ?>/dynamic/ClubFoot.compiled"></script>
 	<script type="text/javascript" src="<? echo $this->webroot ?>/cryptomedic<? echo $version ?>/dynamic/NonricketConsult.compiled"></script>

@@ -654,6 +654,7 @@ dust.helpers.input = function(chunk, context, bodies, params) {
     }
 
     console.log("calculated: %O", {
+        header: params.header,
         mode: mode,
         type: type,
         value: value,
@@ -699,7 +700,7 @@ dust.helpers.input = function(chunk, context, bodies, params) {
             case 'text':
                 return chunk.write(value.replace("\n", "<br>"));
             case 'list':
-                // TODO: all list are not translated !!! 
+                // TODO: all list are not translated !!!
                 if (list.labels) {
                     if (typeof(cryptomedic.labels[value]) == 'undefined') {
                         return chunk.write("?" + value + "?");
@@ -766,7 +767,7 @@ dust.helpers.input = function(chunk, context, bodies, params) {
                 //if (params.value == "") params.value = 0;
                 // TODO: treat list (labels)
                 params.list = list;
-                if ((list).keys().length <= 6) {
+                if (_(list).keys().length <= 6) {
                     chunk.write("<table width='100%'><colgroup span='2' width='50%' /><tr><td>");
                     params.type = "radios";
                     params.separator = function(i, n) {
