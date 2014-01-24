@@ -39,6 +39,27 @@
 	CakePlugin::routes();
 
 /**
+ * JEHON:
+ * --> saved from url=(0052)http://book.cakephp.org/2.0/en/development/rest.html
+ *
+ * Add REST services to every controller
+ *
+ *** Mapping of routes:
+ * GET	/recipes.format	RecipesController::index()
+ * GET	/recipes/123.format	RecipesController::view(123)
+ * POST	/recipes.format	RecipesController::add()
+ * PUT	/recipes/123.format	RecipesController::edit(123)
+ * DELETE	/recipes/123.format	RecipesController::delete(123)
+ * POST	/recipes/123.format	RecipesController::edit(123)
+ *
+ *** How to set the method?
+ * The _method POST variable
+ * The X_HTTP_METHOD_OVERRIDE
+ * The REQUEST_METHOD header
+ */
+    Router::mapResources('recipes');
+
+/**
  * Load the CakePHP default routes. Only remove this if you do not want to use
  * the built-in default routes.
  */

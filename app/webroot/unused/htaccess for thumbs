@@ -1,0 +1,8 @@
+# Rewrite rule
+<IfModule mod_rewrite.c>
+    RewriteEngine on
+    RewriteRule  ^(.*)~(.*)x(.*)$  ./thumbs.php?uri=$1&w=$2&h=$3&method=fit
+    RewriteRule  ^(.*)~(.*)$  ./thumbs.php?uri=$1&w=$2&h=$2&method=fit
+    RewriteRule  ^(.*)=(.*)x(.*)$  ./thumbs.php?uri=$1&w=$2&h=$3&method=stretch
+</IfModule>
+

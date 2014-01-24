@@ -106,10 +106,6 @@ class AppController extends Controller {
 		// Used ???
     	$this->Session->write("group", $mylogin['group']);
 	    	
-		// ----------------------------------- Other --------------------------------
-		// if (isset($this->{$this->modelClass}))
-			// $this->set("mymodel", $this->{$this->modelClass});
-		
 		// ----------------------------------- Rights --------------------------------
 		$denied = array();
 		foreach($this->mytransactions as $t) {

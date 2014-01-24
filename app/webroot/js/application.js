@@ -13,7 +13,7 @@ app.modes = {
 	'display': 'display'
 };
 
-jehon.ready(function() {
+jQuery(function() {
     Path.listen();
     cryptomedic.display.finish();
 });
@@ -404,25 +404,19 @@ Level 4 is when the familial ration is 3000< FR
 		 */
 		
 		if (ratio < 300) {
-//			jQuery("[name='data[Sociallevel]'][value=0]").attr("checked", true);
 			jQuery("#calculatedSL").html("0");
 		} else if (ratio < 500) {
-//			jQuery("[name='data[Sociallevel]'][value=1]").attr("checked", true);		
 			jQuery("#calculatedSL").html("1");
 		} else if (ratio < 1500) {
-//			jQuery("[name='data[Sociallevel]'][value=2]").attr("checked", true);
 			jQuery("#calculatedSL").html("2");
 		} else if (ratio < 3000) {
-//			jQuery("[name='data[Sociallevel]'][value=3]").attr("checked", true);
 			jQuery("#calculatedSL").html("4");
 		} else {
-//			jQuery("[name='data[Sociallevel]'][value=4]").attr("checked", true);
 			jQuery("#calculatedSL").html("4");
 		}
 		
 	} else {
 		jQuery("#ratio_salary").html("Not enough datas");
-//		jQuery("[name='data[Sociallevel]'][value=4]").attr("checked", true);
 		jQuery("#calculatedSL").html("no data");
 	}
 };
@@ -449,11 +443,9 @@ cryptomedic.businessrules.billPrice = function(price_id) {
 	var d = jQuery("input#Bill_Date").val();
 	var pi = -1;
 	if ((typeof(price_id) == 'number') || (typeof(price_id) == 'string')) {
-//		console.log("price_id given: " + price_id);
 		pi = price_id;
 	}
 	if ((pi < 0) && (d != "")) {
-//		console.log("searching");
 		_(cryptomedic.prices).each(function(p, i) {
 			if (((p['datefrom'] == null) || (p['datefrom'] <= d))
 					&& ((p['dateto'] == null) || (p['dateto'] > d))) {
@@ -587,6 +579,7 @@ dust.helpers.edit = function(chunk, context, bodies, params) {
     return dust.helpers.input(chunk, context, bodies, params);
 };
 
+var uuid = 1;
 dust.helpers.input = function(chunk, context, bodies, params) {
     console.log("input for header [" + params.header + "]");
     console.log("parameters: %O", params);
@@ -595,7 +588,7 @@ dust.helpers.input = function(chunk, context, bodies, params) {
     var type = "string";
     var list = [];
     var required = "";
-    var id = jehon.utils.uuid();
+    var id = "dust-helper-input-" + (uuid++);
     var field = "";
     var extra = "";
     var defval = null;
@@ -646,7 +639,6 @@ dust.helpers.input = function(chunk, context, bodies, params) {
     if (typeof(params.mode) != "undefined") mode = params.mode;
     if (typeof(params.value) != "undefined") value = params.value;
     if (typeof(params.type) != 'undefined') type = params.type;
-//    if (typeof(params.default) != "undefined") defval = params.default;
     if ((typeof(params.required) != "undefined") && params.required) required = " required='required' myrequired='required'";
     if (typeof(params.list) != "undefined") list = jehon.utils.stringToObject(params.list);
     if (typeof(params.extra) != "undefined") {

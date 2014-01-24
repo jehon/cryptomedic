@@ -6,14 +6,11 @@ if (window.location.search) {
 	}
 }
 
-// TODO: application mode is not perfect -> not in the correct event??? (we need the complete dom instead of script environnements)
-// TODO: selector [name=value] is for static attributes, :test is for dynamic properties
-
 /**
  *  TODO: trigger? 
- *  	triggerHandler will not work if event attached to document level
- *  	but trigger will bubble up
- *  	==> how to prevent the bubble up?
+ *      triggerHandler will not work if event attached to document level
+ *      but trigger will bubble up
+ *      ==> how to prevent the bubble up?
  */
 
 jQuery.noConflict();
@@ -36,17 +33,16 @@ jehon.events = {
 		'pagechange': "pagechange_html.jehon", // on target
 		'displayErrors': "displayerrors_forms.jehon", // on target: display the errors messages
 		'customvalidate': "customvalidate_forms.jehon", // on target: custom validations
-		//		'validateForm': "validateForm_forms.jehon",
 		'z': "z"
 };
 
 jehon.settings = {};
 // Insert here the functions to be called when "jehon" is ready 
-jehon.startup = {};
+//jehon.startup = {};
 // Private domain
 jehon.private = {};
 // is this the correct name? used internally only
-jehon.private.ready = {};
+//jehon.private.ready = {};
 
 jehon.settings.collapsable = { timing: 500 };
 jehon.settings.mode = 'read';
@@ -63,119 +59,48 @@ if (typeof(console.group) !== 'function') { console.group = function(group) { co
 if (typeof(console.groupCollapsed) !== 'function') { console.groupCollapsed = console.group; }
 if (typeof(console.groupEnd) !== 'function') { console.groupEnd = function() { console.log("GROUP END"); } ; }
 
-jehon.ctag = function(text) {
-    return "[" + text + "]";
-}
-
+//jehon.ctag = function(text) {
+//    return "[" + text + "]";
+//};
+//
 // -------------------------- Debug functions -----------------------
-var debug = function() { jehon.notify('debug', 'debug not implemented'); };
-jehon.noop = function() {};
-
-/**
- * Change the current hash function to reflect the new route
- * @uri (string): new hash of the url
- */
-jehon.route = function(uri) {
-    window.location.hash = uri;
-};
-
-/**
- * Delay the execution of a whole queue, by running each one every [delay_] ms
- *
-jehon.throttle = function(qname_, options) {
-	var qname = qname_;
-	var queue = [];
-	var stopped = false;
-	
-	options = jQuery.extend({ 'delay': 100, 'threads': 1, 'completed': jehon.noop }, options);
-	
-	if ((typeof(options.delay) !== 'number') || (options.delay < 0)) {
-		options.delay = 100;
-		console.warn("[Queue:" + qname + "] Overwriting delay: " + delay);
-	}
-	
-	if ((typeof(options.threads) !== 'number') || (options.threads < 1)) {
-		options.treads = 1;
-		console.warn("[Queue:" + qname + "] Overwriting threads: " + options.threads);
-	}
-
-	function enqueue(func) {
-		queue.unshift(func);
-		daemon();
-	}
-	
-	var running = 0;
-	function daemon() {
-		showProgress();
-		if (queue.length === 0) {
-			if (running === 0) {
-				if (typeof(options.completed) === 'function')
-					options.completed();
-			}
-			return;
-		}
-		if (stopped) { return; }
-		if (running >= options.threads) { return; }
-		running++;
-		showProgress();
-		var v = queue.pop();
-		showProgress();
-		jQuery.when(v()).then(function() {
-			setTimeout(function() {
-				running--;
-				daemon();
-			}, options.delay);
-		});
-	}
-	
-	function showProgress() {
-		jQuery("[queue=" + qname + "]").html("Pending: " + queue.length +
-				" Treads: " + running +
-				" " +
-				(stopped ? "stopped" : ""));
-	}
-
-	function stop() {
-		stopped = true;
-		showProgress();
-	}
-	
-	function resume() {
-		stopped = false;
-		showProgress();
-		daemon();
-	}
-	
-	return { 'enqueue': enqueue, 'stop': stop, 'resume': resume };
-};
-*/
-
-/*********************************** Cookies ********************************/
-/*********************************** Cookies ********************************/
-/*********************************** Cookies ********************************/
-jehon.cookies = {
-	'get': function(c_name) {
-            var i,x,ARRcookies;
-            ARRcookies = document.cookie.split(";");
-            for (i=0;i<ARRcookies.length;i++) {
-                x = ARRcookies[i].substr(0,ARRcookies[i].indexOf("="));
-                x = x.replace(/^\s+|\s+$/g,"");
-                if (x == c_name) {
-                    return unescape(ARRcookies[i].substr(ARRcookies[i].indexOf("=")+1));
-                }
-            }
-        },
-	'set': function(c_name, value, exdays) {
-            var exdate = new Date();
-            exdate.setDate(exdate.getDate() + exdays);
-            var c_value = escape(value) + ((exdays === null) ? "" : "; expires=" + exdate.toUTCString());
-            document.cookie = c_name + "=" + c_value;
-		}
-};
-
-/*********************************** Debug ********************************/
-/*********************************** Debug ********************************/
-/*********************************** Debug ********************************/
+//var debug = function() { jehon.notify('debug', 'debug not implemented'); };
+//jehon.noop = function() {};
+//
+///**
+// * Change the current hash function to reflect the new route
+// * @uri (string): new hash of the url
+// */
+//jehon.route = function(uri) {
+//    window.location.hash = uri;
+//};
+//
+///*********************************** Cookies ********************************/
+///*********************************** Cookies ********************************/
+///*********************************** Cookies ********************************/
+//jehon.cookies = {
+//	'get': function(c_name) {
+//            var i,x,ARRcookies;
+//            ARRcookies = document.cookie.split(";");
+//            for (i=0;i<ARRcookies.length;i++) {
+//                x = ARRcookies[i].substr(0,ARRcookies[i].indexOf("="));
+//                x = x.replace(/^\s+|\s+$/g,"");
+//                if (x == c_name) {
+//                    return unescape(ARRcookies[i].substr(ARRcookies[i].indexOf("=")+1));
+//                }
+//            }
+//        },
+//	'set': function(c_name, value, exdays) {
+//            var exdate = new Date();
+//            exdate.setDate(exdate.getDate() + exdays);
+//            var c_value = escape(value) + ((exdays === null) ? "" : "; expires=" + exdate.toUTCString());
+//            document.cookie = c_name + "=" + c_value;
+//		}
+//};
+//
+///*********************************** Debug ********************************/
+///*********************************** Debug ********************************/
+///*********************************** Debug ********************************/
 //jehon.debug = {
 //		inputs: function() {
 //			jQuery("input:visible").each(function(i,e) {
@@ -197,87 +122,6 @@ jehon.cookies = {
 //			});
 //		}
 //};
-
-///*********************************** Dialogs ********************************/
-///*********************************** Dialogs ********************************/
-///*********************************** Dialogs ********************************/
-//if (typeof(jQuery("").dialog) === 'function') {
-//	jehon.dialogs = (function() {
-//		var list = {};
-//
-//        function build(name, content, options) {
-//            if ((typeof(list[name]) !== 'undefined') && list[name])
-//                return;
-//            console.log('building dialog: ' + name);
-//            options.autoOpen = false;
-//            options.closeOnEscape = true;
-//            content = jQuery(content).attr('hidefn', "jehon.dialogs.hide('" + name + "');");
-//            list[name] = {
-//                name: name,
-//                options: _.clone(options),
-//                dialog: jQuery(content).dialog(options),
-//                show: function(msg) {
-//                    msg = (typeof(msg) === "undefined") ? "" : msg;
-//                    jQuery(this.dialog).dialog('open');
-//                    jQuery(this.dialog).children('#message').html(msg);
-//                },
-//                hide: function() {
-//                    jQuery(this.dialog).dialog('close');
-//                    jQuery(this.dialog).children('#message').html('');
-//                }
-//            };
-//            return list[name];
-//        }
-//
-//        function show(name, msg) {
-//            if (typeof(list[name]) === 'undefined') {
-//            	console.error("dialog " + name + " does not exists");
-//            	return;
-//            }
-//            list[name].show(msg);
-//        }
-//
-//        function hide(name) {
-//            if (typeof(name) === 'undefined') {
-//                _(list).each(function(d) { d.hide(); });
-//            } else {
-//                if (typeof(list[name]) === 'undefined') {
-//                    console.error("dialog " + name + " does not exists");
-//                    return;
-//                }
-//                list[name].hide();
-//            }
-//        }
-//
-//        jehon.private.ready.dialogs = function() {
-//            jehon.dialogs.build('waiting',
-//                "<div><span class='waiting' id='message'></span></div>",
-//                { "modal": true }
-//            );
-//
-//            jehon.dialogs.build('error',
-//                "<div><span class='error'>Error received<pre id='message'></pre></span></div>",
-//                {
-//                    "modal": true,
-//                    "buttons": {
-//                        "Ok": function() { eval(jQuery(this).attr('hidefn'));  }
-//                    }
-//                }
-//            );
-//
-//            jehon.dialogs.build('ok',
-//                "<div><span class='ok' id='message'></span></div>",
-//                {
-//                    "modal": true,
-//                    "buttons": {
-//                        "Ok": function() { eval(jQuery(this).attr('hidefn'));  }
-//                    }
-//                }
-//            );
-//       	};
-//        return { 'build': build, 'show': show, 'hide': hide };
-//    }());
-//}
 
 /*********************************** Forms ********************************/
 /*********************************** Forms ********************************/
@@ -404,15 +248,6 @@ jehon.forms = (function() {
                     }
                 }
             }
-            // if (!Modernizr.input.max && ('' == this.validationMessage)) {
-            //
-            // }
-            // if (!Modernizr.input.min && ('' == this.validationMessage)) {
-            //
-            // }
-            // if (!Modernizr.input.step && ('' == this.validationMessage)) {
-            //
-            // }
         }
 
         /*
@@ -446,7 +281,7 @@ jehon.forms = (function() {
                     jQuery(this).on(jehon.events.customvalidate, listener);
                 };
 
-                if (typeof(this.id) == "undefined" || (this.id == "")) {
+                if (typeof(this.id) === "undefined" || (this.id == "")) {
                     jQuery(this).attr("id", "html5-" + jehon.utils.uuid(32));
                 }
 
@@ -493,12 +328,10 @@ jehon.graphics = {
 };
 
 jQuery(document).on(jehon.events.pagechange, "body, div", function(event, data) {
-	console.log("img page change");
-
 	jQuery("[mymargins]").each(function() {
 		// In abstract function, we can declare local variable to store informations
 		var a = function(graph) {
-			if (typeof(graph.margins) != 'undefined') {
+			if (typeof(graph.margins) !== 'undefined') {
 				return;
 			}
 			var margins = {};
@@ -548,7 +381,7 @@ jQuery(document).on(jehon.events.pagechange, "body, div", function(event, data) 
 
             graph.highlight = function(event) {
                 var uuid = event;
-                if (typeof(event) != "string") uuid = jQuery(event.currentTarget).attr('labelid');
+                if (typeof(event) !== "string") uuid = jQuery(event.currentTarget).attr('labelid');
                 jQuery("tr.highlighted").removeClass("highlighted");
                 jQuery("tr[labelid=" + uuid + "]").addClass("highlighted");
 
@@ -653,14 +486,6 @@ jehon.html = (function() {
 
 		data = jQuery().extend({ 'mode': jehon.settings.mode }, data);
 		
-//        // -------------------------- Exec -----------------------
-//        jQuery('[type=exec][eval]', scope).each(function(e) {
-//            if (jQuery(this).is('[executed]')) return;
-//            jQuery(this)
-//                .html(eval(jQuery(this).attr('eval')))
-//                .attr("executed", 1);
-//        });
-
         // -------------------------- Modes -----------------------
         if (typeof(data.mode) != 'undefined') {
             jehon.html.showMode(data.mode, {'scope': scope });
@@ -801,52 +626,19 @@ jehon.html = (function() {
 			_(mode.split(",")).each(function(m) {
 				jQuery('[' + options.tag + '~=' + m + ']', options.scope).show();
 			});
-		},
-		
-		/**
-		 * Mark a div as "waiting"
-		 * Optionnaly show a message in it
-		 * @param {cssSelector} cssSelector
-		 */
-		waiting: function(cssSelector, message) {
-		    if (typeof(message) == "undefined") message = "";
-		    jQuery(cssSelector).html("<span class='waiting' id='message'>" + message + "</span>").css('text-align: center');
 		}
+		
+//		/**
+//		 * Mark a div as "waiting"
+//		 * Optionnaly show a message in it
+//		 * @param {cssSelector} cssSelector
+//		 */
+//		waiting: function(cssSelector, message) {
+//		    if (typeof(message) == "undefined") message = "";
+//		    jQuery(cssSelector).html("<span class='waiting' id='message'>" + message + "</span>").css('text-align: center');
+//		}
 	};
 }());
-
-/*********************************** Notify *********************************/
-/*********************************** Notify *********************************/
-/*********************************** Notify *********************************/
-//jehon.notify = (function() {
-//	if (typeof(jQuery("#notify").notify) == "undefined") {
-//		return { 'notify': function(title, msg) {
-//			console.error("Notify required but not installed: [%s] %s", title, message);
-//		}};
-//	}
-//
-//	jehon.private.ready.notify = function()	{
-//		jQuery("body").prepend(" <div id='notify' style='display:none'> \
-//	            <div id='basic-template'>  \
-//	                <a class='ui-notify-cross ui-notify-close' href='#'>x</a> \
-//	                <h1>#{title}</h1> \
-//	                <p>#{text}</p> \
-//	            </div> \
-//	        </div>");
-//
-//	    jQuery("#notify").notify({
-//	        speed: 500,
-//	        expires: 1500
-//	    });
-//	};
-//
-//	return function(title, message) {
-//		jQuery("#notify").notify("create", {
-//			title: title,
-//			text: message
-//		});
-//	};
-//})();
 
 /*********************************** Templates ******************************/
 /*********************************** Templates ******************************/
@@ -1086,7 +878,7 @@ jehon.utils.uuid = (function() {
 /**************************** STARTUP FUNCTIONS ******************************/
 /**************************** STARTUP FUNCTIONS ******************************/
 /**************************** STARTUP FUNCTIONS ******************************/
-jehon.private.ready.application = function() {
+jQuery(function() {
 	/**
 	 * Resize the application, with:
 	 *     - application_header and application_footer as fixed
@@ -1110,21 +902,7 @@ jehon.private.ready.application = function() {
     jQuery(window).on('resize', function() {
     	myresize();
     });
-};
-
-//jehon.private.ready.debugs = function() {
-//    /**
-//     * Add some debug menu
-//     */
-//    jQuery('.menubar').append("<a id=menudebug href='javascript: debug();' class='textbutton debug'>Debug</a> ");
-//
-//    /**
-//     * Enable the debug mode
-//     */
-//    if (jehon.cookies.get('debug') && eval(jehon.cookies.get('debug'))) {
-//        console.log('enabling debug according to cookie');
-//    }
-//};
+});
 
 /*********************************** EXECUTE ********************************/
 /*********************************** EXECUTE ********************************/
@@ -1141,26 +919,21 @@ jQuery(document).on(jehon.events.pagechange, "body, div, span", function(event) 
 
 jQuery(function() {
 	// Jehon internals function jehon.private.ready
-	var deferreds = [];
-	console.groupCollapsed("Internal ready");
-	_(jehon.private.ready).each(function(v, k) {
-		console.log("Starting " + k);
-		if (typeof(v) == 'function') {
-			var res = v();
-			if (typeof(res) == 'object') {
-				console.log("result of return: %O", res);
-				deferreds.push(res);
-			}
-		}
-	});
+//	var deferreds = [];
+//	_(jehon.private.ready).each(function(v, k) {
+//		console.log("Starting " + k);
+//		if (typeof(v) == 'function') {
+//			var res = v();
+//			if (typeof(res) == 'object') {
+//				console.log("result of return: %O", res);
+//				deferreds.push(res);
+//			}
+//		}
+//	});
 
-	jQuery.when.apply({}, deferreds).done(function() {
-		console.log("Trigger " + jehon.events.pagechange);
+//	jQuery.when.apply({}, deferreds).done(function() {
+    jQuery(function() {
 		jQuery("body").trigger(jehon.events.pagechange, { 'mode': jehon.settings.mode } );
-		console.log("Triggered " + jehon.events.pagechange);
-		console.groupEnd();
-		console.log("Trigger " + jehon.events.ready);
 		jQuery(document).triggerHandler(jehon.events.ready);
-		console.log("Triggered " + jehon.events.ready);
 	});
 });

@@ -31,7 +31,7 @@
 </div>
 </form>
 <script>
-    jehon.ready(function() {
+    jQuery(function() {
     	jQuery("#login").show();
     	jQuery("#nojavascript").hide();
     	jQuery('#browser').val("jquery ready work");
