@@ -6,8 +6,9 @@ class PatientsController extends AppController {
 		$sqlfilter = "(1=1)";
 		if (array_key_exists('data', $this->request) && array_key_exists('Patient', $this->request->data)) {
 			foreach($this->request->data['Patient'] as $k => $v) {
-				if (($this->Patient->getColumnTypes($k) == 'text')
-						or ($this->Patient->getColumnTypes($k) == 'string')) {
+				if (($this->Patient->getColumnTypes()[$k] == 'text')
+						or ($this->Patient->getColumnTypes()[$k] == 'string')) {
+						pr($k . " = " . $v);
 					if ($v != '') {
 						if (($k == "Lastname") or ($k == "Firstname")) {
 							$v = str_replace('j', 'z', $v);
@@ -16,7 +17,7 @@ class PatientsController extends AppController {
 						} else
 							$sqlfilter .= " AND (replace($this->modelClass.$k, 'j', 'z')  LIKE replace('%$v%', 'j', 'z'))";
 					}
-				} else if ($this->Patient->getColumnTypes($k) == 'boolean') {
+				} else if ($this->Patient->getColumnTypes()[$k] == 'boolean') {
 					if ($v > 0)
 						$sqlfilter .= " AND (Patient.$k = true)";
 				} else {
