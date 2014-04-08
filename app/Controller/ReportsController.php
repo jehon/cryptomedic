@@ -12,7 +12,7 @@ class ReportsController extends PagesController {
 	var $result = array();
 
 	function beforeRender() {
-		$this->set("data", $this->result);
+		$this->request->data = $this->result;
 	}
 	
 	function _conditionMontly($year, $month) {
@@ -80,11 +80,12 @@ class ReportsController extends PagesController {
 	/* REPORTS */
 	
 	public function monthlyReport() {
-		if (!array_key_exists('month', $this->request->query) || !$this->request->query['month']) {
+		if (!$this->request->query('month')) {
 			pr("No data: please fill in the form");
 			return;
 		}
-		$input = $this->request->query['month'];
+
+		$input = $this->request->query('month');
 		$year = substr($input, 0, 4);
 		$month = substr($input, 5, 2);
 
@@ -172,34 +173,20 @@ class ReportsController extends PagesController {
 		$this->_billStats("Grand Total", array($this->_conditionMontly($year, $month)));
 	}
 	
-	function day($day = null) {
-		// fix day="today" if day is null
-		if ($day == null) {
-			$day = date('Y-m-d');
-		}
-	
-		if (!array_key_exists('filter', $this->request->data)) {
-			$this->request->data['filter'] = array();
-		}
-	
-		if (!array_key_exists('Nextappointment', $this->request->data['filter'])) {
-			$this->request->data['filter']['Nextappointment'] = $day;
-		}
-		if (!array_key_exists('Center', $this->request->data['filter'])) {
-			$this->request->data['filter']['Center'] = "";
-		}
-	
-		$this->request->data['list'] = array();
+	function day() {
+		// TODO: in the view, use the request->data("filter.blabla") which is null-resistant
+		$this->request->data['filter'] = array();
+		$this->request->data['filter']['Nextappointment'] = $this->request->query('Nextappointment', date('Y-m-d'));
+		$this->request->data['filter']['Center'] = $this->request->query('Center', "");
+		
 		$filter = $this->request->data['filter'];
-	
 		if ($filter['Center'] == "") unset($filter['Center']);
 		$filter = array('recursive' => 0, 'conditions' => $filter);
 	
+		$this->request->data['list'] = array();
 		$this->request->data['list'] = array_merge($this->request->data['list'], $this->RicketConsult->find('all', $filter));
 		$this->request->data['list'] = array_merge($this->request->data['list'], $this->NonricketConsult->find('all', $filter));
 		$this->request->data['list'] = array_merge($this->request->data['list'], $this->ClubFoot->find('all', $filter));
-	
-		//$this->render("day");
 	}
 	
 	function activity() {

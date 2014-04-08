@@ -2,8 +2,6 @@
 
 App::uses('JsonView', 'View');
 
-// TODO: change the links!
-
 class MyCsvView extends JsonView {
 	var $separator = ",";
 	var $contentType = "application/csv";
@@ -12,36 +10,31 @@ class MyCsvView extends JsonView {
 	
 	public function __construct(Controller $controller = null) {
 		parent::__construct($controller);
-		$this->filename = $this->name . "-" . $this->passedArgs[0];
+		$this->filename = $this->name;
+		if (count($this->passedArgs) > 0)
+			$this->filename .= "-" . $this->passedArgs[0];
+		
 		if (isset($_REQUEST['fr'])) 
 			$this->separator = ";";
 	}
 	
-	/**
-	 * Render a JSON view.
-	 *
-	 * Uses the special '_serialize' parameter to convert a set of
-	 * view variables into a JSON response. Makes generating simple
-	 * JSON responses very easy. You can omit the '_serialize' parameter,
-	 * and use a normal view + layout as well.
-	 *
-	 * @param string $view The view being rendered.
-	 * @param string $layout The layout being rendered.
-	 * @return string The rendered view.
-	 */
 	public function render($view = null, $layout = null) {
-		//$this->autoRender = false; // no view to render
-		header("Pragma: no-cache");
-		header("Cache-Control: no-store, no-cache, max-age=0, must-revalidate");
+		$this->response->disableCache();
 		if (!isset($_REQUEST['inline'])) {
 			header('Content-Type: ' . $this->contentType);
 			header('Content-Description: File Transfer');
-
-			// TODO: define and fix filename
 			header('Content-Disposition: attachment; filename=' . $this->filename . '.' . $this->extension);
-		} 		
+
+	// 		$this->response->body($string);
+	// 		$this->response->type('ics');
+	// 		$this->response->download('filename_for_download.ics');
+			
+	// 		// Return response object to prevent controller from trying to render a view
+	// 		return $this->response;
+	
+		}		
 		return $this->header() 
-			. $this->renderArray($this->data)
+			. $this->renderArray($this->request->data)
 			. $this->footer();
 	}
 	

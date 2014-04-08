@@ -1,4 +1,4 @@
-<form id="generalForm" enctype="multipart/form-data" method="post" action="<? echo $this->request->here ?>" accept-charset="utf-8">
+<form id="generalForm" enctype="multipart/form-data" method="get" action="<? echo $this->request->here ?>" accept-charset="utf-8">
 	<div style='margin-left: 25%; margin-right: 25%; text-align: center'>
 		<fieldset>
 			<legend>Consultation informations</legend>
@@ -8,7 +8,7 @@
 					<col width='50%'>
 					<tr>
 						<td>Date</td>
-						<td><input name='data[filter][Nextappointment]' type='date' value='<? echo $this->data['filter']['Nextappointment']; ?>'><br></td>
+						<td><input name='Nextappointment' type='date' value='<? echo $this->data['filter']['Nextappointment']; ?>'><br></td>
 					</tr>
 					<tr>
 						<td>Center</td>
@@ -16,6 +16,7 @@
 							<? 
 								echo $this->Form->input('filter.Center', 
 									array('options' => cryptomedicGetList('RicketConsult', 'Center', 'any'),
+										'name' => "Center",
 										'label' => false
 									));
 							?>

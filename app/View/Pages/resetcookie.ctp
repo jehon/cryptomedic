@@ -3,4 +3,4 @@
 ?>
 
 Your cookie should have been resetted<br>
-Go back to <a href="<?php echo $this->webroot; ?>/users/login">login page</a>.
+Go back to <a href="<?php echo $this->request->webroot; ?>/users/login">login page</a>.

@@ -22,7 +22,9 @@ class Picture extends AppModel {
 		/**
 		 * Manage the newly uploaded picture if any
 		 */
-		if (array_key_exists('size', $this->data['Picture']['filecontent']) && ($this->data['Picture']['filecontent']['size'] > 0)) {
+		if (array_key_exists('filecontent', $this->data['Picture'])
+				&& array_key_exists('size', $this->data['Picture']['filecontent'])
+				&& ($this->data['Picture']['filecontent']['size'] > 0)) {
 			$this->data['Picture']['OriginalName'] = $this->data['Picture']['filecontent']['name'];
 			$ext = substr($this->data['Picture']['filecontent']['name'], strrpos($this->data['Picture']['filecontent']['name'], '.'));			
 			

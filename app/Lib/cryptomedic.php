@@ -1,9 +1,25 @@
 <?php 
+	global $model2controller;
+	$model2controller = array(
+			"Bill" => "bills",
+			"ClubFoot" => "club_foots",
+			"NonricketConsult" => "nonricket_consults",
+			"OrthopedicDevice" => "orthopedic_devices",
+			"Patient" => "patients",
+			"Picture" => "pictures",
+			"RicketConsult" => "ricket_consults",
+			"Surgery" => "surgeries",
+			"SurgeryFollowup" => "surgery_followups",
+	);
 
 	// TODO: dereference getLabel ?
 	function cryptomedicValue2Label($model, $key, $value) {
+		global $model2controller;
+		if (! array_key_exists($model, $model2controller)) {
+			return $value;
+		}
+		
 		if (!ClassRegistry::isKeySet($model)) {
-			//$omodel =& 
 			ClassRegistry::init($model);
 		}
 		

@@ -25,18 +25,22 @@ class MyJsonView extends JsonView {
 		
 		if ((array_key_exists("cached", $this->viewVars) && $this->viewVars["cached"]) 
 			|| ($this->request->query('version'))) {
-			header("Expires: " . gmdate("D, d M Y H:i:s", time() + $mycache_seconds) . " GMT");
-			header("Pragma: cache");
-			header("Cache-Control: max-age=$mycache_seconds");
+			
+			$this->response->cache(0, '+365days');
+			$this->response->sharable(true, $mycache_seconds);
+			//header("Expires: " . gmdate("D, d M Y H:i:s", time() + $mycache_seconds) . " GMT");
+			//header("Pragma: cache");
+			//header("Cache-Control: max-age=$mycache_seconds");
 		} else {
-			header("Pragma: no-cache");
-			header("Cache-Control: no-store, no-cache, max-age=0, must-revalidate");
+			$this->response->disableCache();
+			//header("Pragma: no-cache");
+			//header("Cache-Control: no-store, no-cache, max-age=0, must-revalidate");
 		}
 		
 		$res = "";
-		if ($_REQUEST['var']) {
+		if ($this->request->query('var')) {
 			$this->response->type('javascript');
-			$res .= $_REQUEST['var'] . "=";
+			$res .= $this->request->query('var') . "=";
 		} else {
 			$this->response->type('json');
 		}

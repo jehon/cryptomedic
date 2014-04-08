@@ -27,52 +27,53 @@
 <head>
 	<title>AMD Medical Database</title>
 	<?php echo $this->Html->charset() . "\n"; ?>
-	<link href="<? echo $this->webroot ?>/favicon.ico" type="image/x-icon" rel="icon" />
-	<link href="<? echo $this->webroot ?>/favicon.ico" type="image/x-icon" rel="shortcut icon" />
+	<link href="<? echo $this->request->webroot; ?>/favicon.ico" type="image/x-icon" rel="icon" />
+	<link href="<? echo $this->request->webroot; ?>/favicon.ico" type="image/x-icon" rel="shortcut icon" />
 	
-	<link rel="stylesheet" type="text/css" href="<? echo $this->webroot ?>/libs<? echo $version; ?>/jquery/jquery-ui.css" />
-    <link rel="stylesheet" type="text/css" href="<? echo $this->webroot ?>/css<? echo $version; ?>/jehon.css" />
-	<link rel="stylesheet" type="text/css" href="<? echo $this->webroot ?>/css<? echo $version; ?>/application.css" />
+	<link rel="stylesheet" type="text/css" href="<? echo $this->request->webroot; ?>/libs<? echo $version; ?>/jquery/jquery-ui.css" />
+    <link rel="stylesheet" type="text/css" href="<? echo $this->request->webroot; ?>/css<? echo $version; ?>/jehon.css" />
+	<link rel="stylesheet" type="text/css" href="<? echo $this->request->webroot; ?>/css<? echo $version; ?>/application.css" />
 
-	<script type="text/javascript" src="<? echo $this->webroot ?>/libs<? echo $version; ?>/modernizr.js"></script>
-	<script type="text/javascript" src="<? echo $this->webroot ?>/libs<? echo $version; ?>/underscore.js"></script>
-	<script type="text/javascript" src="<? echo $this->webroot ?>/libs<? echo $version; ?>/jquery/jquery.js"></script>
-	<script type="text/javascript" src="<? echo $this->webroot ?>/libs<? echo $version; ?>/jquery/jquery-migrate.js"></script>
-	<script type="text/javascript" src="<? echo $this->webroot ?>/libs<? echo $version; ?>/jquery/jquery.metadata.js"></script>
-	<script type="text/javascript" src="<? echo $this->webroot ?>/libs<? echo $version; ?>/jquery/jquery.ui.js"></script>
-	<script type="text/javascript" src="<? echo $this->webroot ?>/libs<? echo $version; ?>/jquery/jquery.tablesorter.js"></script>
-	<script type="text/javascript" src="<? echo $this->webroot ?>/libs<? echo $version; ?>/jquery/jquery.tablesorter.pager.js"></script>
-	<script type="text/javascript" src="<? echo $this->webroot ?>/libs<? echo $version; ?>/jquery/jquery.tinysort.js"></script>
-	<script type="text/javascript" src="<? echo $this->webroot ?>/libs<? echo $version; ?>/dust/dust.js"></script>
-	<script type="text/javascript" src="<? echo $this->webroot ?>/libs<? echo $version; ?>/dust/dust.helpers.js"></script>
-	<script type="text/javascript" src="<? echo $this->webroot ?>/libs<? echo $version; ?>/path.js"></script>
+	<script type="text/javascript" src="<? echo $this->request->webroot; ?>/libs<? echo $version; ?>/modernizr.js"></script>
+	<script type="text/javascript" src="<? echo $this->request->webroot; ?>/libs<? echo $version; ?>/underscore.js"></script>
+	<script type="text/javascript" src="<? echo $this->request->webroot; ?>/libs<? echo $version; ?>/jquery/jquery.js"></script>
+	<script type="text/javascript" src="<? echo $this->request->webroot; ?>/libs<? echo $version; ?>/jquery/jquery-migrate.js"></script>
+	<script type="text/javascript" src="<? echo $this->request->webroot; ?>/libs<? echo $version; ?>/jquery/jquery.metadata.js"></script>
+	<script type="text/javascript" src="<? echo $this->request->webroot; ?>/libs<? echo $version; ?>/jquery/jquery.ui.js"></script>
+	<script type="text/javascript" src="<? echo $this->request->webroot; ?>/libs<? echo $version; ?>/jquery/jquery.tablesorter.js"></script>
+	<script type="text/javascript" src="<? echo $this->request->webroot; ?>/libs<? echo $version; ?>/jquery/jquery.tablesorter.pager.js"></script>
+	<script type="text/javascript" src="<? echo $this->request->webroot; ?>/libs<? echo $version; ?>/jquery/jquery.tinysort.js"></script>
+	<script type="text/javascript" src="<? echo $this->request->webroot; ?>/libs<? echo $version; ?>/dust/dust.js"></script>
+	<script type="text/javascript" src="<? echo $this->request->webroot; ?>/libs<? echo $version; ?>/dust/dust.helpers.js"></script>
+	<script type="text/javascript" src="<? echo $this->request->webroot; ?>/libs<? echo $version; ?>/path.js"></script>
 
-    <script type="text/javascript" src="<? echo $this->webroot ?>/js<? echo $version; ?>/jehon.js"></script>
-    <script type="text/javascript" src="<? echo $this->webroot ?>/js<? echo $version; ?>/application.js"></script>
-	<script type="text/javascript" src="<? echo $this->webroot ?>/js<? echo $version; ?>/amd_stats_datas.js"></script>
+    <script type="text/javascript" src="<? echo $this->request->webroot; ?>/js<? echo $version; ?>/jehon.js"></script>
+    <script type="text/javascript" src="<? echo $this->request->webroot; ?>/js<? echo $version; ?>/application.js"></script>
+	<script type="text/javascript" src="<? echo $this->request->webroot; ?>/js<? echo $version; ?>/amd_stats_datas.js"></script>
 
 	<?php if (isset($login)) {
-		foreach($controller as $m => $c) {
+		global $model2controller;
+		foreach($model2controller as $m => $c) {
 				echo "<script type='text/javascript' "
-					. "src='" . $this->webroot . "/$c/structure.json?var=cryptomedic.structure.$m&version=$version_db'"
+					. "src='" . $this->request->webroot . "/$c/structure.json?var=cryptomedic.structure.$m&version=$version_db'"
 					. "></script>";
 				echo "<script type='text/javascript' "
-					. "src='" . $this->webroot . "/cryptomedic$version/dynamic/$m.compiled'"
+					. "src='" . $this->request->webroot . "/cryptomedic$version/dynamic/$m.compiled'"
 					. "></script>";
 				if ($m != "Patient") {
 					echo "<script type='text/javascript' "
-						. "src='" . $this->webroot . "/cryptomedic$version/dynamic/$m.history.compiled'"
+						. "src='" . $this->request->webroot . "/cryptomedic$version/dynamic/$m.history.compiled'"
 						. "></script>";
 				}
 			}
 		?>
-		<script type="text/javascript" src="<? echo $this->webroot ?>/cryptomedic<? echo $version ?>/dynamic/history.compiled"></script>
-		<script type="text/javascript" src="<? echo $this->webroot ?>/cryptomedic<? echo $version ?>/dynamic/patient_summary.compiled"></script>
-		<script type="text/javascript" src="<? echo $this->webroot ?>/cryptomedic<? echo $version ?>/dynamic/graphics.compiled"></script>
-		<script type="text/javascript" src="<? echo $this->webroot ?>/cryptomedic<? echo $version ?>/dynamic/related_header.compiled"></script>
+		<script type="text/javascript" src="<? echo $this->request->webroot; ?>/cryptomedic<? echo $version; ?>/dynamic/history.compiled"></script>
+		<script type="text/javascript" src="<? echo $this->request->webroot; ?>/cryptomedic<? echo $version; ?>/dynamic/patient_summary.compiled"></script>
+		<script type="text/javascript" src="<? echo $this->request->webroot; ?>/cryptomedic<? echo $version; ?>/dynamic/graphics.compiled"></script>
+		<script type="text/javascript" src="<? echo $this->request->webroot; ?>/cryptomedic<? echo $version; ?>/dynamic/related_header.compiled"></script>
 		
-		<script type="text/javascript" src="<? echo $this->webroot ?>/labels/index.json?var=cryptomedic.labels&version=<? echo $version_db; ?>"></script>
-		<script type="text/javascript" src="<? echo $this->webroot ?>/prices/index.json?var=cryptomedic.prices&version=<? echo $version_db; ?>"></script>
+		<script type="text/javascript" src="<? echo $this->request->webroot; ?>/labels/index.json?var=cryptomedic.labels&version=<? echo $version_db; ?>"></script>
+		<script type="text/javascript" src="<? echo $this->request->webroot; ?>/prices/index.json?var=cryptomedic.prices&version=<? echo $version_db; ?>"></script>
 	<?php } ?>
 	<script>
 		/* 
@@ -120,17 +121,17 @@
     <table style='margin-top: 0px; padding-top: 0px; border-spacing: 0px'>
     	<tr>
     		<td width='50px'>
-				<img class="imgbutton" src="<? echo $this->webroot ?>/cryptomedic/img/amd.jpg" height='50px' alt="amd">
+				<img class="imgbutton" src="<? echo $this->request->webroot; ?>/cryptomedic/img/amd.jpg" height='50px' alt="amd">
     		</td>
     		<td>
 				<div class="menubar" id='application_header'>
 					<?php if (isset($login)) { ?>
 						<span id='identification'><? echo $login; ?></span>
-						<a class='textbutton' href="/amd/"><img src="<? echo $this->webroot ?>/cryptomedic/img/home.gif" alt="" />Home</a>
-						<a class='textbutton' href="/amd/users/logout"><img src="<? echo $this->webroot ?>/cryptomedic/img/exit.gif" alt="" /><label for="Logout">Logout</label></a>
-						<a class='textbutton' href="/amd/patients"><img src="<? echo $this->webroot ?>/cryptomedic/img/patientsSearch.gif" alt="" /> Search a patient</a>
-                        <a class='textbutton' href="/amd/?patientForm=1"><img src="<? echo $this->webroot ?>/cryptomedic/img/add.gif" alt="" /> Add a patient</a>
-                        <a class='textbutton' href="/amd/ricket_consults/day/"><img src="<? echo $this->webroot ?>/cryptomedic/img/go.gif" alt="" />Day of consult</a>
+						<a class='textbutton' href="/amd/"><img src="<? echo $this->request->webroot; ?>/cryptomedic/img/home.gif" alt="" />Home</a>
+						<a class='textbutton' href="/amd/users/logout"><img src="<? echo $this->request->webroot; ?>/cryptomedic/img/exit.gif" alt="" /><label for="Logout">Logout</label></a>
+						<a class='textbutton' href="/amd/patients"><img src="<? echo $this->request->webroot; ?>/cryptomedic/img/patientsSearch.gif" alt="" /> Search a patient</a>
+                        <a class='textbutton' href="/amd/?patientForm=1"><img src="<? echo $this->request->webroot; ?>/cryptomedic/img/add.gif" alt="" /> Add a patient</a>
+                        <a class='textbutton' href="/amd/reports/day/"><img src="<? echo $this->request->webroot; ?>/cryptomedic/img/go.gif" alt="" />Day of consult</a>
 					<?php } ?>
 				</div>
     		</td>
@@ -139,15 +140,15 @@
     <? if (isset($ajax) && array_key_exists('id', $ajax)) { ?>
 	    <div id='patient_menu' class='headerContainer'>
 			<a class='textbutton' href='#read'>
-				<img src="<? echo $this->webroot ?>/cryptomedic/img/Patient.gif"/>
+				<img src="<? echo $this->request->webroot; ?>/cryptomedic/img/Patient.gif"/>
 				Patient
 			</a>
 			<a class='textbutton' href='#history'>
-				<img src="<? echo $this->webroot ?>/cryptomedic/img/history.gif"/>
+				<img src="<? echo $this->request->webroot; ?>/cryptomedic/img/history.gif"/>
 				History
 			</a>
 			<a class='textbutton' href='#graphics'>
-				<img src="<? echo $this->webroot ?>/cryptomedic/img/graphics.gif"/>
+				<img src="<? echo $this->request->webroot; ?>/cryptomedic/img/graphics.gif"/>
 				Graphics
 			</a>
 		</div>

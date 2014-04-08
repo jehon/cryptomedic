@@ -3,12 +3,10 @@
 require_once("MyCsvView.php");
 require_once dirname(__FILE__) . '/../Lib/PHPExcel/PHPExcel.php';
 
-
 class MyExcelView extends MyCsvView {
 	var $contentType = "application/xls";
 	var $filename = "export";
 	var $extension = "xls";
-	
 	
 	var $row = 0;
 	var $col = 0;
@@ -20,7 +18,7 @@ class MyExcelView extends MyCsvView {
 		// Set document properties
 		$this->objPHPExcel->getProperties()->setCreator("Cryptomedic online")
 			->setTitle("Cryptomedic report")
-			->setSubject("Test");
+			->setSubject("Reporting");
 		$this->objPHPSheet = $this->objPHPExcel->setActiveSheetIndex(0);
 		return "";
 	}

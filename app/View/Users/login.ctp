@@ -27,7 +27,7 @@
 	<br>
 		<div class="submit"><input type="submit" value="login" /></div><br>
 		<br>
-		You have problems to log in? Please try this link: <a href='<?php echo $this->webroot; ?>/pages/resetcookie'>reset</a><br>
+		You have problems to log in? Please try this link: <a href='<?php echo $this->request->webroot; ?>/pages/resetcookie'>reset</a><br>
 </div>
 </form>
 <script>
