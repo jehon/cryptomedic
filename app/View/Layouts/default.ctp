@@ -1,66 +1,26 @@
 <?php
-	if (array_key_exists('_resetcookie', $_REQUEST) 
-		|| (array_key_exists('query', $this->request->params)
-			&& array_key_exists('_resetcookie', $this->request->params['query']) 
-			&& ($this->request->params['query']['_resetcookie'] > 0)) 
-		|| (array_key_exists('query', $this->request) && is_array($this->request['query']) 
-			&& array_key_exists('_resetcookie', $this->request['query'])
-			&& $this->request['query']['_resetcookie'] > 0)
-		){
-		setcookie ("CAKEPHP", "", time() - 3600, "/");
-		?>
-			Your cookie should have been resetted<br>
-			Go back to <a href='/amd/'>login page</a>.
-		<?
-		die("Cookie reset");
-	}
-
-	/**
-	 * Various exports formats 
-	 * 
-	 * 
-	 * 
-	 */
-
-	if (array_key_exists('_format', $_REQUEST) && ($_REQUEST['_format'] > "")) {
-		$CT = array(
-				"xls" => "application/csv",
-				"csv" => "application/csv",
-				"csvfr" => "application/csv"
-		);
-		$EXT = array(
-				"xls" => "xls",
-				"csv" => "csv",
-				"csvfr" => "csv"
-		);
-		
-		$f = $_REQUEST['_format'];
-		
-		header('Content-Type: ' . $CT[$f]);
-		header('Content-Description: File Transfer');
-		header('Content-Disposition: attachment; filename=' . $this->request->data['filename'] . '.' . $EXT[$f]);
-		
-		echo $content_for_layout;
-		// TODO: this is not the correct way of terminating the page???
-		return ;
-		/** 
-		 *	Exports done
-		 */
-	}
+	$controller = array(
+			"Bill" => "bills",
+			"ClubFoot" => "club_foots",
+			"NonricketConsult" => "nonricket_consults",
+			"OrthopedicDevice" => "orthopedic_devices",
+			"Patient" => "patients",
+			"Picture" => "pictures",
+			"RicketConsult" => "ricket_consults",
+			"Surgery" => "surgeries",
+			"SurgeryFollowup" => "surgery_followups",
+	);
 
     if (($_SERVER['HTTP_HOST'] == 'localhost') || !file_exists(__DIR__ . "/../../../../amd.version")) {
         // Dev version: disable the whole caching system
         $dev = true;
-        $version = time();
+        $version_db = $version = time();
     } else {
-	    $version = trim(file_get_contents(__DIR__ . "/../../../../amd.version"));
-    //    $version = trim(file_get_contents(__DIR__ . "/../../webroot/version.txt"));
 	    $dev = false;
+    	$version = trim(file_get_contents(__DIR__ . "/../../../../amd.version"));
+    	// TODO: calculate db version !
+        $version_db = $version;
     }
-
-	if (array_key_exists("_noversion", $_REQUEST)) {
-		$version = 1;
-	}
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -83,7 +43,6 @@
 	<script type="text/javascript" src="<? echo $this->webroot ?>/libs<? echo $version; ?>/jquery/jquery.tablesorter.js"></script>
 	<script type="text/javascript" src="<? echo $this->webroot ?>/libs<? echo $version; ?>/jquery/jquery.tablesorter.pager.js"></script>
 	<script type="text/javascript" src="<? echo $this->webroot ?>/libs<? echo $version; ?>/jquery/jquery.tinysort.js"></script>
-<!--	<script type="text/javascript" src="--><?// echo $this->webroot ?><!--/libs--><?// echo $version; ?><!--/jquery/jquery.notify.js"></script>-->
 	<script type="text/javascript" src="<? echo $this->webroot ?>/libs<? echo $version; ?>/dust/dust.js"></script>
 	<script type="text/javascript" src="<? echo $this->webroot ?>/libs<? echo $version; ?>/dust/dust.helpers.js"></script>
 	<script type="text/javascript" src="<? echo $this->webroot ?>/libs<? echo $version; ?>/path.js"></script>
@@ -92,43 +51,29 @@
     <script type="text/javascript" src="<? echo $this->webroot ?>/js<? echo $version; ?>/application.js"></script>
 	<script type="text/javascript" src="<? echo $this->webroot ?>/js<? echo $version; ?>/amd_stats_datas.js"></script>
 
-	<script type="text/javascript" src="<? echo $this->webroot ?>/cryptomedic<? echo $version ?>/dynamic/Bill.compiled"></script>
-	<script type="text/javascript" src="<? echo $this->webroot ?>/cryptomedic<? echo $version ?>/dynamic/ClubFoot.compiled"></script>
-	<script type="text/javascript" src="<? echo $this->webroot ?>/cryptomedic<? echo $version ?>/dynamic/NonricketConsult.compiled"></script>
-	<script type="text/javascript" src="<? echo $this->webroot ?>/cryptomedic<? echo $version ?>/dynamic/OrthopedicDevice.compiled"></script>
-	<script type="text/javascript" src="<? echo $this->webroot ?>/cryptomedic<? echo $version ?>/dynamic/Patient.compiled"></script>
-	<script type="text/javascript" src="<? echo $this->webroot ?>/cryptomedic<? echo $version ?>/dynamic/Picture.compiled"></script>
-	<script type="text/javascript" src="<? echo $this->webroot ?>/cryptomedic<? echo $version ?>/dynamic/RicketConsult.compiled"></script>
-	<script type="text/javascript" src="<? echo $this->webroot ?>/cryptomedic<? echo $version ?>/dynamic/Surgery.compiled"></script>
-	<script type="text/javascript" src="<? echo $this->webroot ?>/cryptomedic<? echo $version ?>/dynamic/SurgeryFollowup.compiled"></script>
-
-	<script type="text/javascript" src="<? echo $this->webroot ?>/cryptomedic<? echo $version ?>/dynamic/history.compiled"></script>
-	<script type="text/javascript" src="<? echo $this->webroot ?>/cryptomedic<? echo $version ?>/dynamic/Bill.history.compiled"></script>
-	<script type="text/javascript" src="<? echo $this->webroot ?>/cryptomedic<? echo $version ?>/dynamic/ClubFoot.history.compiled"></script>
-	<script type="text/javascript" src="<? echo $this->webroot ?>/cryptomedic<? echo $version ?>/dynamic/NonricketConsult.history.compiled"></script>
-	<script type="text/javascript" src="<? echo $this->webroot ?>/cryptomedic<? echo $version ?>/dynamic/OrthopedicDevice.history.compiled"></script>
-	<script type="text/javascript" src="<? echo $this->webroot ?>/cryptomedic<? echo $version ?>/dynamic/Picture.history.compiled"></script>
-	<script type="text/javascript" src="<? echo $this->webroot ?>/cryptomedic<? echo $version ?>/dynamic/RicketConsult.history.compiled"></script>
-	<script type="text/javascript" src="<? echo $this->webroot ?>/cryptomedic<? echo $version ?>/dynamic/Surgery.history.compiled"></script>
-	<script type="text/javascript" src="<? echo $this->webroot ?>/cryptomedic<? echo $version ?>/dynamic/SurgeryFollowup.history.compiled"></script>
-
-	<script type="text/javascript" src="<? echo $this->webroot ?>/cryptomedic<? echo $version ?>/dynamic/patient_summary.compiled"></script>
-	<script type="text/javascript" src="<? echo $this->webroot ?>/cryptomedic<? echo $version ?>/dynamic/graphics.compiled"></script>
-	<script type="text/javascript" src="<? echo $this->webroot ?>/cryptomedic<? echo $version ?>/dynamic/related_header.compiled"></script>
-	
-	<script type="text/javascript" src="<? echo $this->webroot ?>/cryptomedic<? echo $version ?>/dynamic/cryptomedic.structure.Bill.cached"></script>
-	<script type="text/javascript" src="<? echo $this->webroot ?>/cryptomedic<? echo $version ?>/dynamic/cryptomedic.structure.ClubFoot.cached"></script>
-	<script type="text/javascript" src="<? echo $this->webroot ?>/cryptomedic<? echo $version ?>/dynamic/cryptomedic.structure.NonricketConsult.cached"></script>
-	<script type="text/javascript" src="<? echo $this->webroot ?>/cryptomedic<? echo $version ?>/dynamic/cryptomedic.structure.OrthopedicDevice.cached"></script>
-	<script type="text/javascript" src="<? echo $this->webroot ?>/cryptomedic<? echo $version ?>/dynamic/cryptomedic.structure.Patient.cached"></script>
-	<script type="text/javascript" src="<? echo $this->webroot ?>/cryptomedic<? echo $version ?>/dynamic/cryptomedic.structure.Picture.cached"></script>
-	<script type="text/javascript" src="<? echo $this->webroot ?>/cryptomedic<? echo $version ?>/dynamic/cryptomedic.structure.RicketConsult.cached"></script>
-	<script type="text/javascript" src="<? echo $this->webroot ?>/cryptomedic<? echo $version ?>/dynamic/cryptomedic.structure.Surgery.cached"></script>
-	<script type="text/javascript" src="<? echo $this->webroot ?>/cryptomedic<? echo $version ?>/dynamic/cryptomedic.structure.SurgeryFollowup.cached"></script>
-
-	<script type="text/javascript" src="<? echo $this->webroot ?>/cryptomedic<? echo $version ?>/dynamic/cryptomedic.labels.cached"></script>
-	<script type="text/javascript" src="<? echo $this->webroot ?>/cryptomedic<? echo $version ?>/dynamic/cryptomedic.prices.cached"></script>
-	
+	<?php if (isset($login)) {
+		foreach($controller as $m => $c) {
+				echo "<script type='text/javascript' "
+					. "src='" . $this->webroot . "/$c/structure.json?var=cryptomedic.structure.$m&version=$version_db'"
+					. "></script>";
+				echo "<script type='text/javascript' "
+					. "src='" . $this->webroot . "/cryptomedic$version/dynamic/$m.compiled'"
+					. "></script>";
+				if ($m != "Patient") {
+					echo "<script type='text/javascript' "
+						. "src='" . $this->webroot . "/cryptomedic$version/dynamic/$m.history.compiled'"
+						. "></script>";
+				}
+			}
+		?>
+		<script type="text/javascript" src="<? echo $this->webroot ?>/cryptomedic<? echo $version ?>/dynamic/history.compiled"></script>
+		<script type="text/javascript" src="<? echo $this->webroot ?>/cryptomedic<? echo $version ?>/dynamic/patient_summary.compiled"></script>
+		<script type="text/javascript" src="<? echo $this->webroot ?>/cryptomedic<? echo $version ?>/dynamic/graphics.compiled"></script>
+		<script type="text/javascript" src="<? echo $this->webroot ?>/cryptomedic<? echo $version ?>/dynamic/related_header.compiled"></script>
+		
+		<script type="text/javascript" src="<? echo $this->webroot ?>/labels/index.json?var=cryptomedic.labels&version=<? echo $version_db; ?>"></script>
+		<script type="text/javascript" src="<? echo $this->webroot ?>/prices/index.json?var=cryptomedic.prices&version=<? echo $version_db; ?>"></script>
+	<?php } ?>
 	<script>
 		/* 
 		 * Initialisation scripts (all style of initialisation, before apearing of elements on the page
@@ -138,8 +83,10 @@
 		 	
 		version='<? echo $version; ?>';
 		jehon.settings.denied=<? echo json_encode($denied); ?>;
-		
-		ajax =<? echo json_encode($ajax); ?>;
+		ajax=<?php 
+			if (isset($ajax)) echo json_encode($ajax);
+			else echo "[]";
+		?>;
 		cryptomedic.enhance(ajax);
 		cryptomedic.settings.maxUploadSizeMb = <? echo min((int) ini_get('upload_max_filesize'), 
 				(int)(ini_get('post_max_size') * 0.90), 
@@ -189,7 +136,7 @@
     		</td>
     	</tr>
     </table>
-    <? if (array_key_exists('id', $ajax)) { ?>
+    <? if (isset($ajax) && array_key_exists('id', $ajax)) { ?>
 	    <div id='patient_menu' class='headerContainer'>
 			<a class='textbutton' href='#read'>
 				<img src="<? echo $this->webroot ?>/cryptomedic/img/Patient.gif"/>

@@ -90,7 +90,7 @@ if (!array_key_exists('patientForm', $this->request->query) && !array_key_exists
                     <table>
                         <tr style='text-align: center'>
                             <td>
-                                    <a class='textbutton' a href="/amd/ricket_consults/day/"><img src="/amd/cryptomedic/img/go.gif" alt="" />Day of consult</a>
+                                    <a class='textbutton' a href="/amd/reports/day/"><img src="/amd/cryptomedic/img/go.gif" alt="" />Day of consult</a>
                             </td>
                         </tr>
                         <tr style='text-align: center'>
@@ -105,7 +105,7 @@ if (!array_key_exists('patientForm', $this->request->query) && !array_key_exists
                         </tr>
                         <tr style='text-align: center'>
                             <td>
-                                <a class='textbutton' href="/amd/pages/monthlyreport"><img src="/amd/cryptomedic/img/monthlyreport.gif" alt="" />Monthly report</a>
+                                <a class='textbutton' href="/amd/reports/monthlyreport"><img src="/amd/cryptomedic/img/monthlyreport.gif" alt="" />Monthly report</a>
                             </td>
                         </tr>
                         </table>

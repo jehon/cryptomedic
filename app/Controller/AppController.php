@@ -21,14 +21,26 @@
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 App::uses('Controller', 'Controller');
+require_once(__DIR__ . "/../Lib/cryptomedic.php");
+
+// TODO: check rights
 
 class AppController extends Controller {
-	var $helpers = array('Html', 'Form', 'Kdm'); 
+	public $helpers = array('Html', 'Form');
+		 
 	public $components = array(
 		'Session',
 		'Auth' => array(
 			'loginRedirect' => array('controller' => 'pages', 'action' => 'display', 'home'),
 			'logoutRedirect' => "/"
+		),
+		'RequestHandler' => array(
+        	'viewClassMap' => array(
+            	'json' => 'MyJson',
+        		'csv' => 'MyCsv',
+        		'csvfr' => 'MyCsv',
+        		'xls' => 'MyExcel'
+        	)
 		)
 	);
 
@@ -72,6 +84,7 @@ class AppController extends Controller {
                 if ("readonly" == $group) return false;
                 return true;
                 break;
+            case "structure":
             case "calculate":
             case "view":
             case "index":
@@ -95,10 +108,7 @@ class AppController extends Controller {
     	$this->Auth->loginAction = array('controller' => 'users', 'action' => 'login');
     	$this->Auth->logoutRedirect = array('controller' => 'users', 'action' => 'login');
     	$this->Auth->loginRedirect = "/";
-		if ($_SERVER['HTTP_HOST'] == 'localhost') {
-			$this->Auth->allow('structure');
-		}
-		
+    	
 		// ----------------------------------- Prefs --------------------------------
         $mylogin = $this->Auth->user();
 		$this->set("login", $mylogin['username']);
@@ -131,6 +141,7 @@ class AppController extends Controller {
 			return ;
 		}
 		
+		// Used in case of patient, to transfer to the page the patient content
 		if ($this->action == 'index' 
 				|| $this->action == 'day' 
 				|| $this->modelClass == 'User'
@@ -278,10 +289,12 @@ class AppController extends Controller {
 			return $this->render('notfound');
 		}
 		$this->request->data = $data;
+		$this->set("data", $data);
 		$this->render('details');
 	}
 
 	function delete($id) {
+		// TODO: Add to "deleted" table -> sync with indexedDB 
 		$this->set('patient', -1);
 		$this->set('mode', '#history');
 		$this->set('type', "");
@@ -307,47 +320,12 @@ class AppController extends Controller {
 		return $this->render("../results");
 	}
 
-	function day($day = null) {
-		// fix day="today" if day is null
-		if ($day == null) {
-			$day = date('Y-m-d');
-		}
-		
-		if (!array_key_exists('filter', $this->request->data)) {
-			$this->request->data['filter'] = array();
-		}
-		
-		if (!array_key_exists('Nextappointment', $this->request->data['filter'])) {
-			$this->request->data['filter']['Nextappointment'] = $day;
-		}
-		if (!array_key_exists('Center', $this->request->data['filter'])) {
-			$this->request->data['filter']['Center'] = "";
-		}
-		
-		$this->request->data['list'] = array();
-		$filter = $this->request->data['filter'];
-		
-		if ($filter['Center'] == "") unset($filter['Center']);
-		$filter = array('recursive' => 0, 'conditions' => $filter);
-		
-		$this->loadModel("RicketConsult");
-	    $this->request->data['list'] = array_merge($this->request->data['list'], $this->RicketConsult->find('all', $filter));
-
-		$this->loadModel("NonricketConsult");
-	    $this->request->data['list'] = array_merge($this->request->data['list'], $this->NonricketConsult->find('all', $filter));
-
-		$this->loadModel("ClubFoot");
-	    $this->request->data['list'] = array_merge($this->request->data['list'], $this->ClubFoot->find('all', $filter));
-
-	    $this->render("../day");
-	}
-    
 	function structure() {
 		$model = $this->modelClass;
 	    if (!ClassRegistry::isKeySet($model)) {
 			ClassRegistry::init($model);
 		}
-			
+		
 		$oModel = ClassRegistry::getObject($model);
 		$data = $oModel->schema();
 		if (isset($oModel::$part)) {
@@ -359,8 +337,7 @@ class AppController extends Controller {
 		$data['type'] = array("type" => 'string');
 		$data['controller'] = array("type" => 'string');
 		$this->request->data = $data;
-		$this->set("data", $data);
-		$this->set("ajax", $data);
-		$this->render("../noview", "ajax");
+		$this->set("cached", true);			
+		$this->set("data", $data);			
 	}
 }

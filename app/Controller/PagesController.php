@@ -32,18 +32,16 @@ App::uses('AppController', 'Controller');
 class PagesController extends AppController {
 
 /**
- * Controller name
- *
- * @var string
- */
-	public $name = 'Pages';
-
-/**
  * This controller does not use a model
  *
  * @var array
  */
 	public $uses = array();
+
+	function beforeFilter() {
+		$this->Auth->allow('display');
+		parent::beforeFilter();
+	}
 
 /**
  * Displays a view
@@ -58,7 +56,7 @@ class PagesController extends AppController {
 		if (!$count) {
 			$this->redirect('/');
 		}
-		$page = $subpage = $title_for_layout = null;
+		$page = $subpage = null;
 
 		if (!empty($path[0])) {
 			$page = $path[0];
@@ -67,9 +65,14 @@ class PagesController extends AppController {
 			$subpage = $path[1];
 		}
 		if (!empty($path[$count - 1])) {
-			$title_for_layout = Inflector::humanize($path[$count - 1]);
+			$this->set("title", Inflector::humanize($path[$count - 1]));
 		}
-		$this->set(compact('page', 'subpage', 'title_for_layout'));
+		$this->set(compact('page', 'subpage', 'title'));
+
+		if (!in_array($page, array("resetcookie")) && !$this->Auth->user()) {
+			$this->redirect("/users/login");
+		}
+		
 		$this->render(implode('/', $path));
 	}
 }

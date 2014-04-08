@@ -57,8 +57,11 @@
  * The X_HTTP_METHOD_OVERRIDE
  * The REQUEST_METHOD header
  */
-    Router::mapResources('recipes');
-
+    Router::mapResources('patients');
+    
+    // Jehon: http://book.cakephp.org/2.0/en/development/routing.html#Router::parseExtensions
+    Router::parseExtensions('json', 'xls', 'csv');
+    
 /**
  * Load the CakePHP default routes. Only remove this if you do not want to use
  * the built-in default routes.

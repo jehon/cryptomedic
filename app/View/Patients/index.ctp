@@ -101,7 +101,7 @@
 										<td><?php echo $item['entryorder']; ?></td>
 										<td><?php echo $item['Firstname']; ?></td>
 										<td><?php echo $item['Lastname']; ?></td>
-										<td><?php echo $this->kdm->getLabel($item['Sex']); ?>
+										<td><?php echo cryptomedicValue2Label('Patient', 'Sex', $item['Sex']); ?>
 										<td><?php echo $item['Yearofbirth']; ?></td>
 										<td><?php echo $item['Fathersname']; ?></td>
 									</tr>

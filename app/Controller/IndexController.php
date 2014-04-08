@@ -13,7 +13,8 @@ class IndexController extends AppController {
 		$res = $this->{$this->modelClass}->find('all', array('recursive' => 0));
 		
 		$this->request->data = $res;
-		$this->render("../noview", 'ajax');
+		$this->set("flattern", true);
+		$this->set("data", $res);
 	}
 
 	function beforeFilter() {

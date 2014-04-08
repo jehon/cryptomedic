@@ -1,11 +1,11 @@
-<form id="generalForm" enctype="multipart/form-data" method="post" action="<? echo $this->request->here ?>" accept-charset="utf-8">
+<form id="generalForm" enctype="multipart/form-data" method="post" action="<?php echo $this->request->here; ?>" accept-charset="utf-8">
 <div align=center id='nojavascript' class='error-message'>
-	<br>
-	You browser does not support javascript, or an error happend during page load.<br>
-	This will cause problems in the rest of the application.<br>
-	Please contact jeanhonlet@gmail.com to solve this problem<br><br>
-	Access to the application is forbidden upto resolution of this problem<br>
-	<br> 
+	<br/>
+	You browser does not support javascript, or an error happend during page load.<br/>
+	This will cause problems in the rest of the application.<br/>
+	Please contact jeanhonlet@gmail.com to solve this problem<br/><br/>
+	Access to the application is forbidden upto resolution of this problem<br/>
+	<br/> 
 </div>
 <div align=center id='login' style='display: none'>
 	<h1 style='width: 25%; color: #94004A; padding: 10px'>Restricted access</h1>
@@ -27,7 +27,7 @@
 	<br>
 		<div class="submit"><input type="submit" value="login" /></div><br>
 		<br>
-		You have problems to log in? Please try this link: <a href='?_resetcookie=1'>reset</a><br>
+		You have problems to log in? Please try this link: <a href='<?php echo $this->webroot; ?>/pages/resetcookie'>reset</a><br>
 </div>
 </form>
 <script>
