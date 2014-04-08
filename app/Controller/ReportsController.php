@@ -201,4 +201,8 @@ class ReportsController extends PagesController {
 	
 		//$this->render("day");
 	}
+	
+	function activity() {
+		// TODO
+	}
 }

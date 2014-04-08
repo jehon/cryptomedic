@@ -100,7 +100,7 @@ if (!array_key_exists('patientForm', $this->request->query) && !array_key_exists
                         </tr>
                         <tr style='text-align: center'>
                             <td>
-                                <a class='textbutton' href="/amd/pages/activity"><img src="/amd/cryptomedic/img/activity.gif" alt="" />Activity</a>
+                                <a class='textbutton' href="/amd/reports/activity"><img src="/amd/cryptomedic/img/activity.gif" alt="" />Activity</a>
                             </td>
                         </tr>
                         <tr style='text-align: center'>
