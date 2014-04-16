@@ -12,73 +12,83 @@ input[type=submit]  {
 }
 
 tr.subheader {
-    background-color: lightgray;
+	background-color: lightgray;
 }
 
 tr.highlighted  > td {
-    background-color: darkgray;
+	background-color: darkgray;
 }
 
 /*******************************************/
 /* Notices and Errors From Cake himself    */
 /*******************************************/
 .jserror {
-        color: red;
-        padding: 2px;
-        border: solid red;
+	color: red;
+	padding: 2px;
+	border: solid red;
 }
 
 div.message {
-        font-size: 120%;
-        color: white;
-        background-color: #900;
-        text-align: center;
-        padding: 10px;
+	font-size: 120%;
+	color: white;
+	background-color: #900;
+	text-align: center;
+	padding: 10px;
 }
 
 .flashok {
-        font-size: 120%;
-        color: white;
-        background-color: green;
-        text-align: center;
-        padding: 10px;
+	font-size: 120%;
+	color: white;
+	background-color: green;
+	text-align: center;
+	padding: 10px;
+}
+
+.flashko {
+	font-size: 120%;
+	color: white;
+	background-color: red;
+	text-align: center;
+	padding: 10px;
 }
 
 .error-message {
-        color: white;
-        background-color: #900;
-        padding: 2px;
+	color: white;
+	background-color: #900;
+	padding: 2px;
 }
 
 p.error {
-        background-color: #e32;
-        color: #fff;
-        font-family: Courier, monospace;
-        font-size: 120%;
-        line-height: 140%;
-        padding: 0.8em;
-        margin: 1em 0;
-}
-p.error em {
-        color: #000;
-        font-weight: normal;
-        line-height: 140%;
-}
-.notice {
-        background: #ffcc00;
-        color: #000;
-        display: block;
-        font-family: Courier, monospace;
-        font-size: 120%;
-        line-height: 140%;
-        padding: 0.8em;
-        margin: 1em 0;
-}
-.success {
-        background: green;
-        color: #fff;
+	background-color: #e32;
+	color: #fff;
+	font-family: Courier, monospace;
+	font-size: 120%;
+	line-height: 140%;
+	padding: 0.8em;
+	margin: 1em 0;
 }
 
+p.error em {
+	color: #000;
+	font-weight: normal;
+	line-height: 140%;
+}
+
+.notice {
+	background: #ffcc00;
+	color: #000;
+	display: block;
+	font-family: Courier, monospace;
+	font-size: 120%;
+	line-height: 140%;
+	padding: 0.8em;
+	margin: 1em 0;
+}
+
+.success {
+	background: green;
+	color: #fff;
+}
 
 /***********************************************************************
  *  OLD ELEMENTS IMPORTED
@@ -107,18 +117,18 @@ hr {
 	clear: both;
 }
 
-body,p,ul,li { 
-	font-size : 9pt ; 
-	font-family : Arial ; 
+body,p,ul,li {
+	font-size : 9pt;
+	font-family : Arial;
 }
 
-input, select {
-  border-Width: thin;
-  font-Family: Arial, Helvetica, sans-serif;
+input,select {
+	border-Width: thin;
+	font-Family: Arial, Helvetica, sans-serif;
 }
 
 textarea {
-    border-width : thin;
+	border-width: thin;
 }
 
 /***********************************/
@@ -155,12 +165,12 @@ textarea {
 
 .tdleft {
 	text-align: left;
-	padding-left: 20px;	
+	padding-left: 20px;
 }
 
 .mygraphic {
 	margin: 0 auto;
-/*	
+	/*	
 	width: 360px;
 	height: 240px;
 */
@@ -185,7 +195,7 @@ textarea {
  */
 .searchFields, #searchFields {
 	text-align: center;
-	width: 50%; 
-	margin-left: auto; 
+	width: 50%;
+	margin-left: auto;
 	margin-right: auto;
 }

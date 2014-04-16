@@ -92,7 +92,7 @@ cryptomedic.math = (function() {
 }());
 
 cryptomedic.reference_submit_for_create = function() {
-    jQuery("#ForceCreate").val(true);
+    jQuery("#ForceCreate").val("true");
     jQuery(document.forms[0]).submit();
 };
 
@@ -292,6 +292,7 @@ Path.map("#addrelated/:model").to(function() {
 // ************************************* TEMPLATES DRAWING ***********************************************
 cryptomedic.display = {};
 cryptomedic.display.finish = function(tstart, cb) {
+	//cryptomedic.display.messages(mymessages);
     if (typeof(ajax) != 'undefined') {
         cryptomedic.display.patient_summary();
     }
@@ -318,6 +319,17 @@ cryptomedic.display.finish = function(tstart, cb) {
     if (typeof(cb) == 'function')
         cb();
 };
+
+//cryptomedic.display.messages = function (mymessages) {
+//	for(var a in mymessages) {
+//		var txt = mymessages[a];
+//		var sub = mymessages[a].split("|"); 
+//		console.log(sub);
+//		jQuery("#flashMessages").append("<div "
+//				+ "class='flash" + ((sub.length > 1) ? sub[1] : '') + "'"
+//				+ ">" + sub[0] + "</div>");
+//	}
+//}
 
 // ************************************* TEMPLATES SPECIFICS ***********************************************
 cryptomedic.display.specifics = {};

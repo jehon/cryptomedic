@@ -1,13 +1,7 @@
 <IfModule mod_rewrite.c>
     RewriteEngine On
-    RewriteRule cryptomedic([^/]+)/(.*)$	cryptomedic/$2 [L]
-    RewriteRule jehon([^/]+)/(.*)$	        jehon/$2 [L]
-    RewriteRule js([^/]+)/(.*)$	            js/$2 [L]
-    RewriteRule libs([^/]+)/(.*)$	        libs/$2 [L]
-    RewriteRule css([^/]+)/(.*)$			css/$2 [L]
-    RewriteRule img([^/]+)/(.*)$	        img/$2 [L]
 
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteRule ^(.*)$ index.php [QSA,L]
+    RewriteRule ^ index.php [L]
 </IfModule>

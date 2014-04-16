@@ -1,79 +1,90 @@
 <?php
-	$controller = array(
-			"Bill" => "bills",
-			"ClubFoot" => "club_foots",
-			"NonricketConsult" => "nonricket_consults",
-			"OrthopedicDevice" => "orthopedic_devices",
-			"Patient" => "patients",
-			"Picture" => "pictures",
-			"RicketConsult" => "ricket_consults",
-			"Surgery" => "surgeries",
-			"SurgeryFollowup" => "surgery_followups",
-	);
+$controller = array (
+		"Bill" => "bills",
+		"ClubFoot" => "club_foots",
+		"NonricketConsult" => "nonricket_consults",
+		"OrthopedicDevice" => "orthopedic_devices",
+		"Patient" => "patients",
+		"Picture" => "pictures",
+		"RicketConsult" => "ricket_consults",
+		"Surgery" => "surgeries",
+		"SurgeryFollowup" => "surgery_followups" 
+);
 
-    if (($_SERVER['HTTP_HOST'] == 'localhost') || !file_exists(__DIR__ . "/../../../../amd.version")) {
-        // Dev version: disable the whole caching system
-        $dev = true;
-        $version_db = $version = time();
-    } else {
-	    $dev = false;
-    	$version = trim(file_get_contents(__DIR__ . "/../../../../amd.version"));
-    	// TODO: calculate db version !
-        $version_db = $version;
-    }
+$dev = false;
+$version_app = trim ( file_get_contents ( __DIR__ . "/../../../../amd.version" ) );
+
+ClassRegistry::init ( "Setting" );
+$Setting = ClassRegistry::getObject ( "Setting" );
+$version_db = $Setting->find ( 'first', array (
+		'conditions' => array (
+				'Setting.id' => "version" 
+		) 
+) );
+$version_db = $version_db ['Setting'] ['value'];
+$version_db = str_replace ( array (
+		":",
+		" ",
+		"-" 
+), "", $version_db );
+if (($_SERVER ['HTTP_HOST'] == 'localhost') || ! file_exists ( __DIR__ . "/../../../../amd.version" )) {
+	// Dev version: disable the whole caching system
+	$dev = true;
+	$version_db = $version_app = time ();
+}
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<title>AMD Medical Database</title>
+<title>AMD Medical Database</title>
 	<?php echo $this->Html->charset() . "\n"; ?>
 	<link href="<? echo $this->request->webroot; ?>/favicon.ico" type="image/x-icon" rel="icon" />
 	<link href="<? echo $this->request->webroot; ?>/favicon.ico" type="image/x-icon" rel="shortcut icon" />
-	
-	<link rel="stylesheet" type="text/css" href="<? echo $this->request->webroot; ?>/libs<? echo $version; ?>/jquery/jquery-ui.css" />
-    <link rel="stylesheet" type="text/css" href="<? echo $this->request->webroot; ?>/css<? echo $version; ?>/jehon.css" />
-	<link rel="stylesheet" type="text/css" href="<? echo $this->request->webroot; ?>/css<? echo $version; ?>/application.css" />
 
-	<script type="text/javascript" src="<? echo $this->request->webroot; ?>/libs<? echo $version; ?>/modernizr.js"></script>
-	<script type="text/javascript" src="<? echo $this->request->webroot; ?>/libs<? echo $version; ?>/underscore.js"></script>
-	<script type="text/javascript" src="<? echo $this->request->webroot; ?>/libs<? echo $version; ?>/jquery/jquery.js"></script>
-	<script type="text/javascript" src="<? echo $this->request->webroot; ?>/libs<? echo $version; ?>/jquery/jquery-migrate.js"></script>
-	<script type="text/javascript" src="<? echo $this->request->webroot; ?>/libs<? echo $version; ?>/jquery/jquery.metadata.js"></script>
-	<script type="text/javascript" src="<? echo $this->request->webroot; ?>/libs<? echo $version; ?>/jquery/jquery.ui.js"></script>
-	<script type="text/javascript" src="<? echo $this->request->webroot; ?>/libs<? echo $version; ?>/jquery/jquery.tablesorter.js"></script>
-	<script type="text/javascript" src="<? echo $this->request->webroot; ?>/libs<? echo $version; ?>/jquery/jquery.tablesorter.pager.js"></script>
-	<script type="text/javascript" src="<? echo $this->request->webroot; ?>/libs<? echo $version; ?>/jquery/jquery.tinysort.js"></script>
-	<script type="text/javascript" src="<? echo $this->request->webroot; ?>/libs<? echo $version; ?>/dust/dust.js"></script>
-	<script type="text/javascript" src="<? echo $this->request->webroot; ?>/libs<? echo $version; ?>/dust/dust.helpers.js"></script>
-	<script type="text/javascript" src="<? echo $this->request->webroot; ?>/libs<? echo $version; ?>/path.js"></script>
+	<link rel="stylesheet" type="text/css" href="<? echo $this->request->webroot; ?>/libs<? echo $version_app; ?>/jquery/jquery-ui.css" />
+    <link rel="stylesheet" type="text/css" href="<? echo $this->request->webroot; ?>/css<? echo $version_app; ?>/jehon.css" />
+    <link rel="stylesheet" type="text/css" href="<? echo $this->request->webroot; ?>/css/application.css?<? echo $version_app; ?>" />
 
-    <script type="text/javascript" src="<? echo $this->request->webroot; ?>/js<? echo $version; ?>/jehon.js"></script>
-    <script type="text/javascript" src="<? echo $this->request->webroot; ?>/js<? echo $version; ?>/application.js"></script>
-	<script type="text/javascript" src="<? echo $this->request->webroot; ?>/js<? echo $version; ?>/amd_stats_datas.js"></script>
+    <script type="text/javascript" src="<? echo $this->request->webroot; ?>/libs/modernizr.js?<? echo $version_app; ?>"></script>
+    <script type="text/javascript" src="<? echo $this->request->webroot; ?>/libs/underscore.js?<? echo $version_app; ?>"></script>
+    <script type="text/javascript" src="<? echo $this->request->webroot; ?>/libs/jquery/jquery.js?<? echo $version_app; ?>"></script>
+    <script type="text/javascript" src="<? echo $this->request->webroot; ?>/libs/jquery/jquery-migrate.js?<? echo $version_app; ?>"></script>
+    <script type="text/javascript" src="<? echo $this->request->webroot; ?>/libs/jquery/jquery.metadata.js?<? echo $version_app; ?>"></script>
+    <script type="text/javascript" src="<? echo $this->request->webroot; ?>/libs/jquery/jquery.ui.js?<? echo $version_app; ?>"></script>
+    <script type="text/javascript" src="<? echo $this->request->webroot; ?>/libs/jquery/jquery.tablesorter.js?<? echo $version_app; ?>"></script>
+    <script type="text/javascript" src="<? echo $this->request->webroot; ?>/libs/jquery/jquery.tablesorter.pager.js?<? echo $version_app; ?>"></script>
+    <script type="text/javascript" src="<? echo $this->request->webroot; ?>/libs/jquery/jquery.tinysort.js?<? echo $version_app; ?>"></script>
+    <script type="text/javascript" src="<? echo $this->request->webroot; ?>/libs/dust/dust.js?<? echo $version_app; ?>"></script>
+    <script type="text/javascript" src="<? echo $this->request->webroot; ?>/libs/dust/dust.helpers.js?<? echo $version_app; ?>"></script>
+    <script type="text/javascript" src="<? echo $this->request->webroot; ?>/libs/path.js?<? echo $version_app; ?>"></script>
 
-	<?php if (isset($login)) {
+    <script type="text/javascript" src="<? echo $this->request->webroot; ?>/js/jehon.js?<? echo $version_app; ?>"></script>
+    <script type="text/javascript" src="<? echo $this->request->webroot; ?>/js/application.js?<? echo $version_app; ?>"></script>
+    <script type="text/javascript" src="<? echo $this->request->webroot; ?>/js/amd_stats_datas.js?<? echo $version_app; ?>"></script>
+
+	<?php if (isset ( $login )) {
 		global $model2controller;
-		foreach($model2controller as $m => $c) {
+		foreach ( $model2controller as $m => $c ) {
+			echo "<script type='text/javascript' "
+			    . "src='" . $this->request->webroot . "/$c/structure.json?var=cryptomedic.structure.$m&version=$version_db'"
+			    . "></script>";
+			echo "<script type='text/javascript' "
+			    . "src='" . $this->request->webroot . "/cryptomedic/dynamic/$m.compiled?$version_app'"
+			    . "></script>";
+			if ($m != "Patient") {
 				echo "<script type='text/javascript' "
-					. "src='" . $this->request->webroot . "/$c/structure.json?var=cryptomedic.structure.$m&version=$version_db'"
-					. "></script>";
-				echo "<script type='text/javascript' "
-					. "src='" . $this->request->webroot . "/cryptomedic$version/dynamic/$m.compiled'"
-					. "></script>";
-				if ($m != "Patient") {
-					echo "<script type='text/javascript' "
-						. "src='" . $this->request->webroot . "/cryptomedic$version/dynamic/$m.history.compiled'"
-						. "></script>";
-				}
+				    . "src='" . $this->request->webroot . "/cryptomedic/dynamic/$m.history.compiled?$version_app'"
+				    . "></script>";
 			}
+		}
 		?>
-		<script type="text/javascript" src="<? echo $this->request->webroot; ?>/cryptomedic<? echo $version; ?>/dynamic/history.compiled"></script>
-		<script type="text/javascript" src="<? echo $this->request->webroot; ?>/cryptomedic<? echo $version; ?>/dynamic/patient_summary.compiled"></script>
-		<script type="text/javascript" src="<? echo $this->request->webroot; ?>/cryptomedic<? echo $version; ?>/dynamic/graphics.compiled"></script>
-		<script type="text/javascript" src="<? echo $this->request->webroot; ?>/cryptomedic<? echo $version; ?>/dynamic/related_header.compiled"></script>
-		
-		<script type="text/javascript" src="<? echo $this->request->webroot; ?>/labels/index.json?var=cryptomedic.labels&version=<? echo $version_db; ?>"></script>
-		<script type="text/javascript" src="<? echo $this->request->webroot; ?>/prices/index.json?var=cryptomedic.prices&version=<? echo $version_db; ?>"></script>
+		<script type="text/javascript" src="<? echo $this->request->webroot; ?>/cryptomedic/dynamic/history.compiled?<? echo $version_app; ?>"></script>
+        <script type="text/javascript" src="<? echo $this->request->webroot; ?>/cryptomedic/dynamic/patient_summary.compiled?<? echo $version_app; ?>"></script>
+        <script type="text/javascript" src="<? echo $this->request->webroot; ?>/cryptomedic/dynamic/graphics.compiled?<? echo $version_app; ?>"></script>
+        <script type="text/javascript" src="<? echo $this->request->webroot; ?>/cryptomedic/dynamic/related_header.compiled?<? echo $version_app; ?>"></script>
+
+        <script type="text/javascript" src="<? echo $this->request->webroot; ?>/labels/index.json?var=cryptomedic.labels&version=<? echo $version_db; ?>"></script>
+        <script type="text/javascript" src="<? echo $this->request->webroot; ?>/prices/index.json?var=cryptomedic.prices&version=<? echo $version_db; ?>"></script>
 	<?php } ?>
 	<script>
 		/* 
@@ -82,17 +93,20 @@
 		 * This initialisation pass informations from server to script
 		 */
 		 	
-		version='<? echo $version; ?>';
+		version_app='<? echo $version_app; ?>';
+		version_db='<? echo $version_db; ?>';
 		jehon.settings.denied=<? echo json_encode($denied); ?>;
-		ajax=<?php 
-			if (isset($ajax)) echo json_encode($ajax);
-			else echo "[]";
+		ajax=<?php
+		if (isset($ajax))
+			echo json_encode ( $ajax );
+		else
+			echo "[]";
 		?>;
 		cryptomedic.enhance(ajax);
-		cryptomedic.settings.maxUploadSizeMb = <? echo min((int) ini_get('upload_max_filesize'), 
-				(int)(ini_get('post_max_size') * 0.90), 
+		cryptomedic.settings.maxUploadSizeMb = <? echo min((int) ini_get('upload_max_filesize'),
+				(int)(ini_get('post_max_size') * 0.90),
 				(int)(ini_get('memory_limit') * 0.5)
-			); 
+			);
 		?>;
 
 		jehon.ready(function() {
@@ -100,79 +114,76 @@
 				cryptomedic.status.mode = '<?
 					switch($this->action) {
 						case 'day':
-						case 'display':						
-							echo "display";
-							break;
+						case 'display':
+						    echo "display";
+						    break;
 						case 'view':
-							echo "read";
-							break;
-						default:
-							echo $this->action;
-							break;
-					}
+						    echo "read";
+						    break;
+					    default:
+						    echo $this->action;
+						    break;
+				}
 				?>';
 			}
 		});
 	</script>
 </head>
 <body>
-    <!-- ---------------------------------------------- main scripts end --------------------------------- -->
-    <!-- ---------------------------------------------- top menu begin --------------------------------- -->
-    <table style='margin-top: 0px; padding-top: 0px; border-spacing: 0px'>
-    	<tr>
+	<!-- ---------------------------------------------- main scripts end --------------------------------- -->
+	<!-- ---------------------------------------------- top menu begin --------------------------------- -->
+	<table style='margin-top: 0px; padding-top: 0px; border-spacing: 0px'>
+		<tr>
     		<td width='50px'>
 				<img class="imgbutton" src="<? echo $this->request->webroot; ?>/cryptomedic/img/amd.jpg" height='50px' alt="amd">
     		</td>
-    		<td>
+			<td>
 				<div class="menubar" id='application_header'>
 					<?php if (isset($login)) { ?>
 						<span id='identification'><? echo $login; ?></span>
 						<a class='textbutton' href="/amd/"><img src="<? echo $this->request->webroot; ?>/cryptomedic/img/home.gif" alt="" />Home</a>
 						<a class='textbutton' href="/amd/users/logout"><img src="<? echo $this->request->webroot; ?>/cryptomedic/img/exit.gif" alt="" /><label for="Logout">Logout</label></a>
 						<a class='textbutton' href="/amd/patients"><img src="<? echo $this->request->webroot; ?>/cryptomedic/img/patientsSearch.gif" alt="" /> Search a patient</a>
-                        <a class='textbutton' href="/amd/?patientForm=1"><img src="<? echo $this->request->webroot; ?>/cryptomedic/img/add.gif" alt="" /> Add a patient</a>
+                        <a class='textbutton' href="/amd/patients/reference"><img src="<? echo $this->request->webroot; ?>/cryptomedic/img/add.gif" alt="" /> Add a patient</a>
                         <a class='textbutton' href="/amd/reports/day/"><img src="<? echo $this->request->webroot; ?>/cryptomedic/img/go.gif" alt="" />Day of consult</a>
 					<?php } ?>
 				</div>
-    		</td>
-    	</tr>
-    </table>
+			</td>
+		</tr>
+	</table>
     <? if (isset($ajax) && array_key_exists('id', $ajax)) { ?>
 	    <div id='patient_menu' class='headerContainer'>
 			<a class='textbutton' href='#read'>
 				<img src="<? echo $this->request->webroot; ?>/cryptomedic/img/Patient.gif"/>
-				Patient
+			    Patient
 			</a>
 			<a class='textbutton' href='#history'>
 				<img src="<? echo $this->request->webroot; ?>/cryptomedic/img/history.gif"/>
-				History
+			    History
 			</a>
 			<a class='textbutton' href='#graphics'>
 				<img src="<? echo $this->request->webroot; ?>/cryptomedic/img/graphics.gif"/>
-				Graphics
-			</a>
-		</div>
+			    Graphics
+		    </a>
+	</div>
 	<? } ?>
     <!-- ---------------------------------------------- top menu end --------------------------------- -->
 	<div id='application_content_TODO'>
-        <!-- ---------------------------------------------- Content begin --------------------------------- -->
-	    <div id="content">
-	        <!-- ---------------------------------------------- errors begin --------------------------------- -->
-		    <div id="generalForm_errors"></div>
-	        <div id='flashMessages'>
-			    <?php echo $this->Session->flash('auth'); ?>
-			    <?php echo $this->Session->flash(); ?>
-		    </div>
-	        <!-- ---------------------------------------------- errors end --------------------------------- -->
+		<!-- ---------------------------------------------- Content begin --------------------------------- -->
+		<div id='flashMessages'><?php echo $this->Session->flash(); ?></div>
+		<div id="content">
+			<!-- ---------------------------------------------- errors begin --------------------------------- -->
+			<div id="generalForm_errors"></div>
+			<!-- ---------------------------------------------- errors end --------------------------------- -->
 	    	<?php echo $content_for_layout; ?>
 			<div class='headerContainer' style='text-align: center'>
 				<input modes='edit add' class="button" id="submitbutton" type="submit" value="Save">
 			</div>
-	    </div>
-        <!-- ---------------------------------------------- Main Content end --------------------------------- -->
+		</div>
+		<!-- ---------------------------------------------- Main Content end --------------------------------- -->
 	</div>
-	<div id='application_footer'>version <? echo $version; ?> <? if ($dev) echo "DEVELOPPEMENT VERSION"; ?></div>
-	</body>
+	<div id='application_footer'>application: <? echo $version_app; ?> database: <?php echo $version_db; ?> <?php if ($dev) echo "DEVELOPPEMENT VERSION"; ?></div>
+</body>
 </html>
 <script>
 	if (typeof(cryptomedic.display.specifics.patient) == 'function')

@@ -59,19 +59,6 @@ class Patient extends AppModel {
 			'finderQuery' => '',
 			'counterQuery' => ''
 		),
-		'BioCheckup' => array(
-			'className' => 'BioCheckup',
-			'foreignKey' => 'patient_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
-		),
 		'ClubFoot' => array(
 			'className' => 'ClubFoot',
 			'foreignKey' => 'patient_id',

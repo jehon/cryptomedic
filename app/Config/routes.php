@@ -4,9 +4,7 @@
  *
  * In this file, you set up routes to your controllers and their actions.
  * Routes are very important mechanism that allows you to freely connect
- * different urls to chosen controllers and their actions (functions).
- *
- * PHP 5
+ * different URLs to chosen controllers and their actions (functions).
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -19,7 +17,7 @@
  * @link          http://cakephp.org CakePHP(tm) Project
  * @package       app.Config
  * @since         CakePHP(tm) v 0.2.9
- * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
+ * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 /**
  * Here, we are connecting '/' (base path) to controller called 'Pages',
@@ -28,7 +26,7 @@
  */
 	Router::connect('/', array('controller' => 'pages', 'action' => 'display', 'home'));
 /**
- * ...and connect the rest of 'Pages' controller's urls.
+ * ...and connect the rest of 'Pages' controller's URLs.
  */
 	Router::connect('/pages/*', array('controller' => 'pages', 'action' => 'display'));
 
@@ -44,7 +42,7 @@
  *
  * Add REST services to every controller
  *
- *** Mapping of routes:
+ * ** Mapping of routes:
  * GET	/recipes.format	RecipesController::index()
  * GET	/recipes/123.format	RecipesController::view(123)
  * POST	/recipes.format	RecipesController::add()
@@ -52,16 +50,17 @@
  * DELETE	/recipes/123.format	RecipesController::delete(123)
  * POST	/recipes/123.format	RecipesController::edit(123)
  *
- *** How to set the method?
+ * ** How to set the method?
  * The _method POST variable
  * The X_HTTP_METHOD_OVERRIDE
  * The REQUEST_METHOD header
  */
-    Router::mapResources('patients');
-    
-    // Jehon: http://book.cakephp.org/2.0/en/development/routing.html#Router::parseExtensions
-    Router::parseExtensions('json', 'xls', 'csv');
-    
+// !! when enabled, a post on /patients/ will be interpreted as a "add"
+// Router::mapResources('patients');
+
+// Jehon: http://book.cakephp.org/2.0/en/development/routing.html#Router::parseExtensions
+Router::parseExtensions ( 'json', 'xls', 'csv' );
+
 /**
  * Load the CakePHP default routes. Only remove this if you do not want to use
  * the built-in default routes.

@@ -4,8 +4,6 @@
  *
  * Use it to configure core behavior of Cake.
  *
- * PHP 5
- *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
@@ -17,7 +15,7 @@
  * @link          http://cakephp.org CakePHP(tm) Project
  * @package       app.Config
  * @since         CakePHP(tm) v 0.2.9
- * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
+ * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
 /**
@@ -33,8 +31,12 @@
  * In production mode, flash messages redirect after a time interval.
  * In development mode, you need to click the flash message to continue.
  */
-    require(__DIR__ . "/../../../maintenance.php");
-	Configure::write('debug', $config['cryptomedic']['debug_level']);
+require (__DIR__ . "/../../../maintenance.php");
+if ($_SERVER ['HTTP_HOST'] == 'localhost') {
+	Configure::write ( 'debug', 1 );
+} else {
+	Configure::write ( 'debug', $config ['cryptomedic'] ['debug_level']);
+}
 
 /**
  * Configure the Error handler used to handle errors for your application. By default
@@ -46,7 +48,7 @@
  * - `handler` - callback - The callback to handle errors. You can set this to any callable type,
  *   including anonymous functions.
  *   Make sure you add App::uses('MyHandler', 'Error'); when using a custom handler class
- * - `level` - int - The level of errors you are interested in capturing.
+ * - `level` - integer - The level of errors you are interested in capturing.
  * - `trace` - boolean - Include stack traces for errors in log files.
  *
  * @see ErrorHandler for more information on error handling and configuration.
@@ -71,6 +73,9 @@
  * - `renderer` - string - The class responsible for rendering uncaught exceptions. If you choose a custom class you
  *   should place the file for that class in app/Lib/Error. This class needs to implement a render method.
  * - `log` - boolean - Should Exceptions be logged?
+ * - `skipLog` - array - list of exceptions to skip for logging. Exceptions that
+ *   extend one of the listed exceptions will also be skipped for logging.
+ *   Example: `'skipLog' => array('NotFoundException', 'UnauthorizedException')`
  *
  * @see ErrorHandler for more information on exception handling and configuration.
  */
@@ -95,8 +100,8 @@
  * /app/webroot/.htaccess
  *
  * And uncomment the App.baseUrl below. But keep in mind
- * that plugin assets such as images, CSS and Javascript files
- * will not work without url rewriting!
+ * that plugin assets such as images, CSS and JavaScript files
+ * will not work without URL rewriting!
  * To work around this issue you should either symlink or copy
  * the plugin assets into you app's webroot directory. This is
  * recommended even when you are using mod_rewrite. Handling static
@@ -105,6 +110,32 @@
  * thus not recommended for production applications.
  */
 	//Configure::write('App.baseUrl', env('SCRIPT_NAME'));
+/**
+ * To configure CakePHP to use a particular domain URL
+ * for any URL generation inside the application, set the following
+ * configuration variable to the http(s) address to your domain. This
+ * will override the automatic detection of full base URL and can be
+ * useful when generating links from the CLI (e.g. sending emails)
+ */
+	//Configure::write('App.fullBaseUrl', 'http://example.com');
+
+/**
+ * Web path to the public images directory under webroot.
+ * If not set defaults to 'img/'
+ */
+	//Configure::write('App.imageBaseUrl', 'img/');
+
+/**
+ * Web path to the CSS files directory under webroot.
+ * If not set defaults to 'css/'
+ */
+	//Configure::write('App.cssBaseUrl', 'css/');
+
+/**
+ * Web path to the js files directory under webroot.
+ * If not set defaults to 'js/'
+ */
+	//Configure::write('App.jsBaseUrl', 'js/');
 
 /**
  * Uncomment the define below to use CakePHP prefix routes.
@@ -152,12 +183,6 @@
 	//Configure::write('Cache.viewPrefix', 'prefix');
 
 /**
- * Defines the default error type when using the log() function. Used for
- * differentiating error logging and debugging. Currently PHP supports LOG_DEBUG.
- */
-	define('LOG_ERROR', LOG_ERR);
-
-/**
  * Session configuration.
  *
  * Contains an array of settings to use for session configuration. The defaults key is
@@ -173,7 +198,7 @@
  *    value to false, when dealing with older versions of IE, Chrome Frame or certain web-browsing devices and AJAX
  * - `Session.defaults` - The default configuration set to use as a basis for your session.
  *    There are four builtins: php, cake, cache, database.
- * - `Session.handler` - Can be used to enable a custom session handler. Expects an array of of callables,
+ * - `Session.handler` - Can be used to enable a custom session handler. Expects an array of callables,
  *    that can be used with `session_save_handler`. Using this option will automatically add `session.save_handler`
  *    to the ini array.
  * - `Session.autoRegenerate` - Enabling this setting, turns on automatic renewal of sessions, and
@@ -201,16 +226,16 @@
 /**
  * A random string used in security hashing methods.
  */
-	Configure::write('Security.salt', 'e1b8c2f8d60f476c86dbc55fdcef5a28');
+Configure::write ( 'Security.salt', $config ['cryptomedic'] ['salt'] );
 
 /**
  * A random numeric string (digits only) used to encrypt/decrypt strings.
  */
-	Configure::write('Security.cipherSeed', '76859309657555542496749683645');
+Configure::write ( 'Security.cipherSeed', $config ['cryptomedic'] ['cipher'] );
 
 /**
  * Apply timestamps with the last modified time to static assets (js, css, images).
- * Will append a querystring parameter containing the time the file was modified. This is
+ * Will append a query string parameter containing the time the file was modified. This is
  * useful for invalidating browser caches.
  *
  * Set to `true` to apply timestamps when debug > 0. Set to 'force' to always enable
@@ -231,12 +256,12 @@
  * Plug in your own custom JavaScript compressor by dropping a script in your webroot to handle the
  * output, and setting the config below to the name of the script.
  *
- * To use, prefix your JavaScript link URLs with '/cjs/' instead of '/js/' or use JavaScriptHelper::link().
+ * To use, prefix your JavaScript link URLs with '/cjs/' instead of '/js/' or use JsHelper::link().
  */
 	//Configure::write('Asset.filter.js', 'custom_javascript_output_filter.php');
 
 /**
- * The classname and database used in CakePHP's
+ * The class name and database used in CakePHP's
  * access control lists.
  */
 	Configure::write('Acl.classname', 'DbAcl');
@@ -247,6 +272,13 @@
  * any date & time related errors.
  */
 	//date_default_timezone_set('UTC');
+/**
+ * `Config.timezone` is available in which you can set users' timezone string.
+ * If a method of CakeTime class is called with $timezone parameter as null and `Config.timezone` is set,
+ * then the value of `Config.timezone` will be used. This feature allows you to set users' timezone just
+ * once instead of passing it each time in function calls.
+ */
+	//Configure::write('Config.timezone', 'Europe/Paris')
 
 /**
  *
@@ -262,7 +294,8 @@
  * 		'path' => CACHE, //[optional] use system tmp directory - remember to use absolute path
  * 		'prefix' => 'cake_', //[optional]  prefix every cache file with this string
  * 		'lock' => false, //[optional]  use file locking
- * 		'serialize' => true, [optional]
+ * 		'serialize' => true, //[optional]
+ * 		'mask' => 0664, //[optional]
  *	));
  *
  * APC (http://pecl.php.net/package/APC)
@@ -316,7 +349,7 @@
  * By default File is used, but for improved performance you should use APC.
  *
  * Note: 'default' and other application caches should be configured in app/Config/bootstrap.php.
- *       Please check the comments in boostrap.php for more info on the cache engines available
+ *       Please check the comments in bootstrap.php for more info on the cache engines available
  *       and their settings.
  */
 $engine = 'File';

@@ -1,45 +1,42 @@
 <?php
-
 App::uses('JsonView', 'View');
-
 class MyCsvView extends JsonView {
 	var $separator = ",";
 	var $contentType = "application/csv";
 	var $filename = "export";
 	var $extension = "csv";
-	
+
 	public function __construct(Controller $controller = null) {
 		parent::__construct($controller);
 		$this->filename = $this->name;
 		if (count($this->passedArgs) > 0)
 			$this->filename .= "-" . $this->passedArgs[0];
 		
-		if (isset($_REQUEST['fr'])) 
+		if (isset($_REQUEST['fr']))
 			$this->separator = ";";
 	}
-	
+
 	public function render($view = null, $layout = null) {
 		$this->response->disableCache();
-		if (!isset($_REQUEST['inline'])) {
+		if (!$this->request->query('inline')) {
 			header('Content-Type: ' . $this->contentType);
 			header('Content-Description: File Transfer');
 			header('Content-Disposition: attachment; filename=' . $this->filename . '.' . $this->extension);
-
-	// 		$this->response->body($string);
-	// 		$this->response->type('ics');
-	// 		$this->response->download('filename_for_download.ics');
 			
-	// 		// Return response object to prevent controller from trying to render a view
-	// 		return $this->response;
-	
-		}		
-		return $this->header() 
+			// $this->response->body($string);
+			// $this->response->type('ics');
+			// $this->response->download('filename_for_download.ics');
+			
+			// // Return response object to prevent controller from trying to render a view
+			// return $this->response;
+		}
+		return $this->header()
 			. $this->renderArray($this->request->data)
 			. $this->footer();
 	}
-	
-	
-	var	$previousKeys = array();		
+
+
+	var	$previousKeys = array();
 	private function renderArray($data, $model = "") {
 		if (!is_array($data)) {
 			pr("Data is not an array");
@@ -47,7 +44,7 @@ class MyCsvView extends JsonView {
 			return "";
 		}
 		$res = "";
-
+		
 		$allArrays = true;
 		foreach($data as $k => $v) {
 			$allArrays = $allArrays && is_array($v);
@@ -68,8 +65,8 @@ class MyCsvView extends JsonView {
 				}
 			}
 			$res .= $this->endOfLine();
-		}	
-			
+		}
+		
 		foreach($data as $k => $v) {
 			if (is_array($v)) {
 				if (!is_numeric($k))
@@ -87,7 +84,7 @@ class MyCsvView extends JsonView {
 	protected function header() {
 		return "\xEF\xBB\xBF";
 	}
-	
+
 	protected function addCell($data) {
 		return str_replace(array("\\", "\n", ","), "#", $data) . $this->separator;
 	}
@@ -95,9 +92,9 @@ class MyCsvView extends JsonView {
 	protected function endOfLine() {
 		return "\n";
 	}
-	
+
 	protected function footer() {
 		return "** END **";
 	}
-	
+
 }

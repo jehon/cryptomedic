@@ -8,17 +8,17 @@ require_once("PagesController.php");
 
 class ReportsController extends PagesController {
 	public $uses = array('Patient', 'Bill', 'ClubFoot', 'NonricketConsult', 'OrthopedicDevice', 'RicketConsult', 'Surgery', 'SurgeryFollowup');
-	
+
 	var $result = array();
 
 	function beforeRender() {
-		$this->request->data = $this->result;
+		$this->set('data', $this->result);
 	}
-	
+
 	function _conditionMontly($year, $month) {
 		return array("Date BETWEEN ? AND ?" => array($year . "-" . $month . "-01", date("Y-m-d", mktime(0, 0, 0, $month + 1, 0, $year))));
 	}
-	
+
 	function _addLine($data) {
 		if (!is_array($data))
 			$data = func_get_args();
@@ -26,7 +26,7 @@ class ReportsController extends PagesController {
 		if (count($data) > 1)
 			return $data[1];
 	}
-	
+
 	function _getCountBy($header, $model, $conditions) {
 		$cmodel = ClassRegistry::init($model);
 		$res = $this->$model->find('count', array('conditions' => $conditions));
@@ -40,7 +40,7 @@ class ReportsController extends PagesController {
 		}
 		return $this->_getCountBy($header, "Bill", array_merge($timeCondition, $conditions));
 	}
-	
+
 	function _getBillExpressionBy($header, $expression, $conditions = array()) {
 		if (!is_array($conditions)) {
 			$this->_addLine($header, "Not implemented");
@@ -48,9 +48,9 @@ class ReportsController extends PagesController {
 		}
 		
 		$res = $this->Bill->find('all', array('conditions' => $conditions,
-				'fields' => $expression
+				'fields' => $expression 
 		));
-	
+		
 		if (!is_array($expression)) {
 			$res = (float) array_pop($res[0][0]);
 			if (floor($res) == $res) $res = (int) $res;
@@ -61,7 +61,7 @@ class ReportsController extends PagesController {
 		}
 		return $res[0][0];
 	}
-	
+
 	function _billStats($header, $condition = array()) {
 		$this->_addLine("", $header);
 		$stats = $this->_getBillExpressionBy("stats",
@@ -78,23 +78,23 @@ class ReportsController extends PagesController {
 	}
 	
 	/* REPORTS */
-	
+
 	public function monthlyReport() {
 		if (!$this->request->query('month')) {
 			pr("No data: please fill in the form");
 			return;
 		}
-
+		
 		$input = $this->request->query('month');
 		$year = substr($input, 0, 4);
 		$month = substr($input, 5, 2);
-
+		
 		$this->_addLine("Requested");
 		$this->_addLine("year", $year);
 		$this->_addLine("month", $month);
 		
 		$this->_addLine("Diagnostic");
-
+		
 		$new = array("AND" => array("Patient.entryyear >= YEAR(Bill.Date)", "ADDDATE(Patient.created, INTERVAL 1 MONTH) >= Bill.Date"));
 		
 		$this->_getBillCountBy("Ricket consults", array("Patient.pathology_Ricket" => "1", $this->_conditionMontly($year, $month)));
@@ -172,7 +172,7 @@ class ReportsController extends PagesController {
 		
 		$this->_billStats("Grand Total", array($this->_conditionMontly($year, $month)));
 	}
-	
+
 	function day() {
 		// TODO: in the view, use the request->data("filter.blabla") which is null-resistant
 		$this->request->data['filter'] = array();
@@ -182,14 +182,15 @@ class ReportsController extends PagesController {
 		$filter = $this->request->data['filter'];
 		if ($filter['Center'] == "") unset($filter['Center']);
 		$filter = array('recursive' => 0, 'conditions' => $filter);
-	
-		$this->request->data['list'] = array();
-		$this->request->data['list'] = array_merge($this->request->data['list'], $this->RicketConsult->find('all', $filter));
-		$this->request->data['list'] = array_merge($this->request->data['list'], $this->NonricketConsult->find('all', $filter));
-		$this->request->data['list'] = array_merge($this->request->data['list'], $this->ClubFoot->find('all', $filter));
+		
+		$data = array ();
+		$data = array_merge ( $data, $this->RicketConsult->find ( 'all', $filter ) );
+		$data = array_merge ( $data, $this->NonricketConsult->find ( 'all', $filter ) );
+		$data = array_merge ( $data, $this->ClubFoot->find ( 'all', $filter ) );
+		$this->set ( "data", $data );
 	}
-	
+
 	function activity() {
-		// TODO
+		// TODO: activity in controller
 	}
 }

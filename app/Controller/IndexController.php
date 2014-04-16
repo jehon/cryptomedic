@@ -5,7 +5,7 @@ App::uses('AppController', 'Controller');
  * Index controller is an intermediary controller, defined myself, to factorize all classes
  * that need to be "indexed", ie. where you should be able to retrieve all records in one
  * run (unsecurized if from localhost).
- * 
+ *
  * This is necessary for the caching system.
  */
 class IndexController extends AppController {
@@ -15,12 +15,5 @@ class IndexController extends AppController {
 		$this->request->data = $res;
 		$this->set("flattern", true);
 		$this->set("data", $res);
-	}
-
-	function beforeFilter() {
-		parent::beforeFilter();
-		if ($_SERVER['HTTP_HOST'] == 'localhost') {
-			$this->Auth->allow('index');
-		}
 	}
 }

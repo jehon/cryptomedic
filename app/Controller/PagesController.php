@@ -30,34 +30,33 @@ App::uses('AppController', 'Controller');
  * @link http://book.cakephp.org/2.0/en/controllers/pages-controller.html
  */
 class PagesController extends AppController {
-
-/**
- * This controller does not use a model
- *
- * @var array
- */
+	
+	/**
+	 * This controller does not use a model
+	 *
+	 * @var array
+	 */
 	public $uses = array();
 
 	function beforeFilter() {
-		$this->Auth->allow('display');
 		parent::beforeFilter();
 	}
-
-/**
- * Displays a view
- *
+	
+	/**
+	 * Displays a view
+	 *
  * @param mixed What page to display
- * @return void
- */
+	 * @return void
+	 */
 	public function display() {
 		$path = func_get_args();
-
+		
 		$count = count($path);
 		if (!$count) {
 			$this->redirect('/');
 		}
 		$page = $subpage = null;
-
+		
 		if (!empty($path[0])) {
 			$page = $path[0];
 		}
@@ -68,11 +67,14 @@ class PagesController extends AppController {
 			$this->set("title", Inflector::humanize($path[$count - 1]));
 		}
 		$this->set(compact('page', 'subpage', 'title'));
-
-		if (!in_array($page, array("resetcookie")) && !$this->Auth->user()) {
-			$this->redirect("/users/login");
-		}
 		
-		$this->render(implode('/', $path));
+		try {
+			$this->render(implode('/', $path));
+		} catch (MissingViewException $e) {
+			if (Configure::read('debug')) {
+				throw $e;
+			}
+			throw new NotFoundException ();
+		}
 	}
 }
