@@ -326,7 +326,6 @@ cryptomedic.display.messages = function (mymessages) {
 		console.info("hide messages");
 		jQuery("#flashMessages").hide("blind");
 	})
-
 //	for(var a in mymessages) {
 //		var txt = mymessages[a];
 //		var sub = mymessages[a].split("|"); 
