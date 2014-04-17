@@ -183,11 +183,10 @@ class ReportsController extends PagesController {
 		if ($filter['Center'] == "") unset($filter['Center']);
 		$filter = array('recursive' => 0, 'conditions' => $filter);
 		
-		$data = array ();
-		$data = array_merge ( $data, $this->RicketConsult->find ( 'all', $filter ) );
-		$data = array_merge ( $data, $this->NonricketConsult->find ( 'all', $filter ) );
-		$data = array_merge ( $data, $this->ClubFoot->find ( 'all', $filter ) );
-		$this->set ( "data", $data );
+		$this->result = array ();
+		$this->result = array_merge($this->result, $this->RicketConsult->find ( 'all', $filter ) );
+		$this->result = array_merge($this->result, $this->NonricketConsult->find ( 'all', $filter ) );
+		$this->result = array_merge($this->result, $this->ClubFoot->find ( 'all', $filter ) );
 	}
 
 	function activity() {

@@ -44,7 +44,7 @@
 			<th>Appointment from Date</th>
 		</tr>
 	<?
-	foreach ( $data as $d ) {
+	foreach ($data as $d) {
 		$pat = $d['Patient'];
 		unset($d['Patient']);
 		$type = array_keys($d);

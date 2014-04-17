@@ -292,7 +292,7 @@ Path.map("#addrelated/:model").to(function() {
 // ************************************* TEMPLATES DRAWING ***********************************************
 cryptomedic.display = {};
 cryptomedic.display.finish = function(tstart, cb) {
-	//cryptomedic.display.messages(mymessages);
+	cryptomedic.display.messages();
     if (typeof(ajax) != 'undefined') {
         cryptomedic.display.patient_summary();
     }
@@ -320,7 +320,13 @@ cryptomedic.display.finish = function(tstart, cb) {
         cb();
 };
 
-//cryptomedic.display.messages = function (mymessages) {
+cryptomedic.display.messages = function (mymessages) {
+	// Hide messages after some times
+	jQuery("body").one("click", function() { 
+		console.info("hide messages");
+		jQuery("#flashMessages").hide("blind");
+	})
+
 //	for(var a in mymessages) {
 //		var txt = mymessages[a];
 //		var sub = mymessages[a].split("|"); 
@@ -329,7 +335,7 @@ cryptomedic.display.finish = function(tstart, cb) {
 //				+ "class='flash" + ((sub.length > 1) ? sub[1] : '') + "'"
 //				+ ">" + sub[0] + "</div>");
 //	}
-//}
+}
 
 // ************************************* TEMPLATES SPECIFICS ***********************************************
 cryptomedic.display.specifics = {};

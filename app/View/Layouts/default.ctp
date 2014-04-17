@@ -41,8 +41,8 @@ if (($_SERVER ['HTTP_HOST'] == 'localhost') || ! file_exists ( __DIR__ . "/../..
 	<link href="<? echo $this->request->webroot; ?>/favicon.ico" type="image/x-icon" rel="icon" />
 	<link href="<? echo $this->request->webroot; ?>/favicon.ico" type="image/x-icon" rel="shortcut icon" />
 
-	<link rel="stylesheet" type="text/css" href="<? echo $this->request->webroot; ?>/libs<? echo $version_app; ?>/jquery/jquery-ui.css" />
-    <link rel="stylesheet" type="text/css" href="<? echo $this->request->webroot; ?>/css<? echo $version_app; ?>/jehon.css" />
+	<link rel="stylesheet" type="text/css" href="<? echo $this->request->webroot; ?>/libs/jquery/jquery-ui.css?<? echo $version_app; ?>" />
+    <link rel="stylesheet" type="text/css" href="<? echo $this->request->webroot; ?>/css/jehon.css?<? echo $version_app; ?>" />
     <link rel="stylesheet" type="text/css" href="<? echo $this->request->webroot; ?>/css/application.css?<? echo $version_app; ?>" />
 
     <script type="text/javascript" src="<? echo $this->request->webroot; ?>/libs/modernizr.js?<? echo $version_app; ?>"></script>
