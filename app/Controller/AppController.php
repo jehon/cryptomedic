@@ -139,6 +139,12 @@ class AppController extends Controller {
 	}
 
 	function beforeRender() {
+		if ($this->request->query("_testing") == "0") {
+			$this->Session->delete("testing");
+		} elseif ($this->request->query("_testing")) {
+			$this->Session->write("testing", 1);
+		}
+		
 		if (! array_key_exists('data', $this->viewVars))
 			return;
 		
@@ -212,16 +218,13 @@ class AppController extends Controller {
 
 	function myRedirectToPatientPage($data, $flash = "", $flash_class = "flashko") {
 		if ($flash > "") {
-			$this->Session->setFlash($flash, "default", array (
-					"class" => $flash_class 
-			));
+			$this->Session->setFlash($flash, "default", array ("class" => $flash_class));
 		}
 		if (is_array($data) && array_key_exists($this->modelClass, $data))
 			$mdata = $data [$this->modelClass];
 		else
 			$mdata = $data;
 		if (is_array($mdata) && array_key_exists("patient_id", $mdata)) {
-			$this->Session->setFlash("delete in here");
 			return $this->redirect("/patients/view/" . $mdata ['patient_id'] . "#related/$this->modelClass-" . $mdata ['id'] . "/read");
 		}
 		return $this->redirect("/" . $this->request->params ['controller'] . "/view/" 
@@ -288,17 +291,17 @@ class AppController extends Controller {
 		// }
 		
 		$login = $this->Auth->user();
-		$this->request->data ['lastuser'] = $login ['username'];
+		$data = $this->request->data;
+		$data['lastuser'] = $login['username'];
 		
-		if ($this->{$this->request->data ['type']}->save($this->request->data)) {
-			if (! ($this->request->data ['id'] > 0)) {
-				// $id = $this->{$this->request->data['type']}->getLastInsertID();
-				$this->request->data ['id'] = $id;
-				// $this->set('related', $id);
+		if ($this->{$data['type']}->save($data)) {
+			if (!($data['id'] > 0)) {
+				$id = $this->{$data['type']}->getLastInsertID();
+				$data['id'] = $id;
 			}
-			return $this->myRedirectToPatientPage($this->request->data, 'Great! The ' . $this->request->data ['type'] . ' has been saved !', 'flashok');
+			return $this->myRedirectToPatientPage($data, 'Great! The ' . $this->request->data ['type'] . ' has been saved !', 'flashok');
 		}
-		return $this->myRedirectToPatientPage($this->request->data, 'Bad luck! The ' . $this->request->data ['type'] . ' has not been saved.');
+		return $this->myRedirectToPatientPage($data, 'Bad luck! The ' . $this->request->data ['type'] . ' has not been saved.');
 	}
 
 	function view($id = null) {
