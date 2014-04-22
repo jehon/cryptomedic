@@ -68,18 +68,17 @@ class AppController extends Controller {
 		switch ($resource) {
 			case "Users" :
 				switch ($action) {
-					case "login" :
-						return true;
-					case "logout" :
-						return true;
+					case "login": 	return true;
+					case "logout":	return true;
 				}
 				return false;
 				break;
 			case "Pages" :
 				if (count($args) > 0) {
 					switch ($args [0]) {
-						case "resetcookie" :
-						case "home" :
+						case "resetcookie":
+						case "home":
+						case "upgrade":
 							return true;
 					}
 				}
