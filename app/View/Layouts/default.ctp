@@ -86,6 +86,10 @@ if (($_SERVER ['HTTP_HOST'] == 'localhost') || ! file_exists ( __DIR__ . "/../..
         <script type="text/javascript" src="<? echo $this->request->webroot; ?>/labels/index.json?var=cryptomedic.labels&version=<? echo $version_db; ?>"></script>
         <script type="text/javascript" src="<? echo $this->request->webroot; ?>/prices/index.json?var=cryptomedic.prices&version=<? echo $version_db; ?>"></script>
 	<?php } ?>
+	<?php if ($this->Session->check("testing")) { ?>
+        <script type="text/javascript" src="<? echo $this->request->webroot; ?>/testing/qbehavior.js?<? echo $version_app; ?>"></script>
+    <?php } ?>
+	
 	<script>
 		/* 
 		 * Initialisation scripts (all style of initialisation, before apearing of elements on the page
@@ -142,11 +146,11 @@ if (($_SERVER ['HTTP_HOST'] == 'localhost') || ! file_exists ( __DIR__ . "/../..
 					<?php if (isset($login)) { ?>
 						<span id='identification'><? echo $login; ?></span>
 						<a class='textbutton' href="/amd/"><img src="<? echo $this->request->webroot; ?>/cryptomedic/img/home.gif" alt="" />Home</a>
-						<a class='textbutton' href="/amd/users/logout"><img src="<? echo $this->request->webroot; ?>/cryptomedic/img/exit.gif" alt="" /><label for="Logout">Logout</label></a>
 						<a class='textbutton' href="/amd/patients"><img src="<? echo $this->request->webroot; ?>/cryptomedic/img/patientsSearch.gif" alt="" /> Search a patient</a>
                         <a class='textbutton' href="/amd/patients/reference"><img src="<? echo $this->request->webroot; ?>/cryptomedic/img/add.gif" alt="" /> Add a patient</a>
                         <a class='textbutton' href="/amd/reports/day/"><img src="<? echo $this->request->webroot; ?>/cryptomedic/img/go.gif" alt="" />Day of consult</a>
-					<?php } ?>
+						<a class='textbutton' href="/amd/users/logout"><img src="<? echo $this->request->webroot; ?>/cryptomedic/img/exit.gif" alt="" /><label for="Logout">Logout</label></a>
+                    <?php } ?>
 				</div>
 			</td>
 		</tr>

@@ -59,69 +59,9 @@ if (typeof(console.group) !== 'function') { console.group = function(group) { co
 if (typeof(console.groupCollapsed) !== 'function') { console.groupCollapsed = console.group; }
 if (typeof(console.groupEnd) !== 'function') { console.groupEnd = function() { console.log("GROUP END"); } ; }
 
-//jehon.ctag = function(text) {
-//    return "[" + text + "]";
-//};
-//
 // -------------------------- Debug functions -----------------------
 //var debug = function() { jehon.notify('debug', 'debug not implemented'); };
 //jehon.noop = function() {};
-//
-///**
-// * Change the current hash function to reflect the new route
-// * @uri (string): new hash of the url
-// */
-//jehon.route = function(uri) {
-//    window.location.hash = uri;
-//};
-//
-///*********************************** Cookies ********************************/
-///*********************************** Cookies ********************************/
-///*********************************** Cookies ********************************/
-//jehon.cookies = {
-//	'get': function(c_name) {
-//            var i,x,ARRcookies;
-//            ARRcookies = document.cookie.split(";");
-//            for (i=0;i<ARRcookies.length;i++) {
-//                x = ARRcookies[i].substr(0,ARRcookies[i].indexOf("="));
-//                x = x.replace(/^\s+|\s+$/g,"");
-//                if (x == c_name) {
-//                    return unescape(ARRcookies[i].substr(ARRcookies[i].indexOf("=")+1));
-//                }
-//            }
-//        },
-//	'set': function(c_name, value, exdays) {
-//            var exdate = new Date();
-//            exdate.setDate(exdate.getDate() + exdays);
-//            var c_value = escape(value) + ((exdays === null) ? "" : "; expires=" + exdate.toUTCString());
-//            document.cookie = c_name + "=" + c_value;
-//		}
-//};
-//
-///*********************************** Debug ********************************/
-///*********************************** Debug ********************************/
-///*********************************** Debug ********************************/
-//jehon.debug = {
-//		inputs: function() {
-//			jQuery("input:visible").each(function(i,e) {
-//				console.log(i);
-//				jQuery(e).val(i);
-//			});
-//		},
-//		fn: function() {
-//			console.log("In jehon.cbdbg: %O", arguments);
-//		},
-//		debugtime: function() {
-//			console.log("In debugtime: %O", arguments); setTimeout(jQuery.proxy(debugfn, {}, arguments), 1000);
-//		},
-//		showLabels: function() {
-//			jQuery("label[for]").each(function(i,e) {
-//				jQuery(this)
-//					.html(jQuery(this).attr('for'))
-//					.addClass('debugLabel');
-//			});
-//		}
-//};
 
 /*********************************** Forms ********************************/
 /*********************************** Forms ********************************/
@@ -918,20 +858,6 @@ jQuery(document).on(jehon.events.pagechange, "body, div, span", function(event) 
 });
 
 jQuery(function() {
-	// Jehon internals function jehon.private.ready
-//	var deferreds = [];
-//	_(jehon.private.ready).each(function(v, k) {
-//		console.log("Starting " + k);
-//		if (typeof(v) == 'function') {
-//			var res = v();
-//			if (typeof(res) == 'object') {
-//				console.log("result of return: %O", res);
-//				deferreds.push(res);
-//			}
-//		}
-//	});
-
-//	jQuery.when.apply({}, deferreds).done(function() {
     jQuery(function() {
 		jQuery("body").trigger(jehon.events.pagechange, { 'mode': jehon.settings.mode } );
 		jQuery(document).triggerHandler(jehon.events.ready);
