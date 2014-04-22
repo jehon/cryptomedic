@@ -21,8 +21,6 @@
             Unlock this file
         </a>
     {:else}
-        <!-- TODO: the rest should be here -->
-	{/locked}
         {?patient_id}
             <a modes='edit' class='textbutton' href="#related/{relatedid}/read">
                 <img src="/amd/cryptomedic/img/cancel.gif">
@@ -63,4 +61,5 @@
                 </a>
             </span>
         {/patient_id}
+	{/locked}
 </span>
