@@ -273,22 +273,6 @@ class AppController extends Controller {
 			return $this->redirect('/');
 		}
 		
-		// Ok we have data's
-		// if ($this->request->data['type'] == 'Patient') {
-		// $this->set('patient', $this->request->data['id']);
-		// $this->set('type', "");
-		// $this->set('related', -1);
-		// } else {
-		// if (!array_key_exists('patient_id', $this->request->data)) {
-		// $this->Session->setflash('Incompleted related data');
-		// return $this->redirect('/');
-		// }
-		// $this->set('patient', $this->request->data['patient_id']);
-		// $this->set('mode', "#related");
-		// $this->set('type', $this->request->data['type']);
-		// $this->set('related', $this->request->data['id']);
-		// }
-		
 		$login = $this->Auth->user();
 		$data = $this->request->data;
 		$data['lastuser'] = $login['username'];
