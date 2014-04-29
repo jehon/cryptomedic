@@ -52,6 +52,8 @@ class AppController extends Controller {
 			) 
 	);
 
+	public $uses = array("Label", "Deleted");
+	
 	function isAuthorized($user, $resource = null, $action = null, $args = null) {
 		if ($resource == null)
 			$resource = $this->name;
@@ -87,7 +89,6 @@ class AppController extends Controller {
 			case "Reports" :
 				return true;
 		}
-		;
 		
 		switch ($action) {
 			case "unlock" :
@@ -316,6 +317,9 @@ class AppController extends Controller {
 		}
 		
 		if ($this->{$this->modelClass}->delete($id)) {
+			// Add a trace
+			$this->Deleted->save(array("entity_type" => $this->{$this->modelClass}->useTable, "entity_id" => $id));
+			
 			$this->Session->setFlash($this->modelKey . ' deleted', 'default', array (
 					'class' => 'flashok' 
 			));
