@@ -87,6 +87,7 @@ if (($_SERVER ['HTTP_HOST'] == 'localhost') || ! file_exists ( __DIR__ . "/../..
         <script type="text/javascript" src="<? echo $this->request->webroot; ?>/labels/index.json?var=cryptomedic.labels&version=<? echo $version_db; ?>"></script>
         <script type="text/javascript" src="<? echo $this->request->webroot; ?>/prices/index.json?var=cryptomedic.prices&version=<? echo $version_db; ?>"></script>
 	<?php } ?>
+
 	<?php if ($this->Session->check("testing")) { ?>
         <script type="text/javascript" src="<? echo $this->request->webroot; ?>/testing/qbehavior.js?<? echo $version_app; ?>"></script>
     <?php } ?>
@@ -132,6 +133,8 @@ if (($_SERVER ['HTTP_HOST'] == 'localhost') || ! file_exists ( __DIR__ . "/../..
 				?>';
 			}
 		});
+
+		var tests = [ "tests_jehon.js" ];
 	</script>
 </head>
 <body>
