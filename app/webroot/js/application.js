@@ -555,7 +555,8 @@ cryptomedic.enhance = function(ajax) {
 
 	        var el = ajax.related[i];
 	        var sex = (ajax.Sex == 207 ? 'm' : 'f');
-	        var age = el.Date.substr(0, 4) - ajax.Yearofbirth;
+	        var age = 0;
+	        if (el.Date != null) age = el.Date.substr(0, 4) - ajax.Yearofbirth;
 	
 	        if (age > 0) {
 	            ajax.related[i].stats_base_age = age + " years old at that time of consultation";
