@@ -34,8 +34,7 @@ $url = $config['mirror']['master'] . "/mirror/master_data.php?ts=" . urlencode($
 	. "&id=" . $ref['id']
 	. "&n=5";
 
-var_dump($url);
-$data = file_get_contents($url);
+// TODO: Quid time-out and errors?
+$data = unserialize(file_get_contents($url));
 
 var_dump($data);
-var_dump(unserialize($data));
