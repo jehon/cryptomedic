@@ -12,7 +12,19 @@
 		}
 		die("** ERROR **\n");
 	}
-
+	
+	function versionAfter($before, $after) {
+		$beforea = explode(".", $before);
+		$aftera = explode(".", $after);
+		foreach($beforea as $i => $v) {
+			if (!array_key_exists($i, $aftera)) return false;
+			if ($beforea[$i] < $aftera[$i]) return true;
+			if ($beforea[$i] > $aftera[$i]) return false;
+		}
+		if (count($beforea) == count($aftera)) return false;
+		return true;
+	}
+	
 	require(__DIR__ . "/../../../../maintenance.php");
 	
 	$mysqli = new mysqli($config['database']['host'], 
@@ -42,7 +54,7 @@
 		
 		foreach(glob(__DIR__ . "/upgrade.sql/*") as $f) {
 			$target_v = basename($f, ".sql");
-			if ($target_v <= $version) {
+			if (!versionAfter($version, $target_v)) {
 				echo "Skipping $f [$target_v]\n";
 				continue;
 			}
