@@ -18,4 +18,4 @@ ALTER TABLE  `surgery_followups` ADD INDEX (  `modified` ) ;
 
 -- Create the structure_version field for structure synchronization
 ALTER TABLE  `settings` CHANGE  `id`  `id` VARCHAR( 50 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ;
-INSERT INTO `settings` VALUE('structure_version', '')
+INSERT INTO `settings`(id, value) VALUE('structure_version', '')
