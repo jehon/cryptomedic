@@ -27,11 +27,12 @@ if ($res === false) myerror("error in union", $mysqli);
 $ref = $res->fetch_assoc();
 $res->close();
 
+// FIXME: fix this
 #$url = $config['mirror']['master'] . "/mirror/master/data.php?ts=" . urlencode($ref['modified']) 
 $url = $config['mirror']['master'] . "/mirror/master_data.php?ts=" . urlencode($ref['modified']) 
 	. "&tprio=" . $ref['priority']
 	. "&id=" . $ref['id']
-	. "&n=5";
+	. "&n=1";
 
 // TODO: Quid time-out and errors?
 $data = unserialize(file_get_contents($url));
