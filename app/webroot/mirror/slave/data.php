@@ -7,7 +7,7 @@
  *  
  */
 
-require_once("utilities.php");
+require_once("../utilities.php");
 
 //var_export(modificationList('2014-01-01 00:00:00', 5));
 
@@ -27,8 +27,7 @@ if ($res === false) myerror("error in union", $mysqli);
 $ref = $res->fetch_assoc();
 $res->close();
 
-var_dump($ref);
-
+#$url = $config['mirror']['master'] . "/mirror/master/data.php?ts=" . urlencode($ref['modified']) 
 $url = $config['mirror']['master'] . "/mirror/master_data.php?ts=" . urlencode($ref['modified']) 
 	. "&tprio=" . $ref['priority']
 	. "&id=" . $ref['id']

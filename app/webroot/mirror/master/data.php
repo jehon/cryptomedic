@@ -7,7 +7,7 @@
  * --> where ts> or (ts= and tablePriority>=) or (ts= and tablePriority= and id>=)
  *
  */
-require_once("utilities.php");
+require_once("../utilities.php");
 
 $ts = getParameter('ts', '');
 $tprio = getParameter('tprio', 0);
