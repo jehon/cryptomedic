@@ -38,7 +38,7 @@
         jQuery('#browser').val(jehon.utils.browserDescription());
     });
 </script>
-<!--[if lt IE 6]>
+<!--[if lt IE 7]>
 	<script type="text/javascript">
   		window.location.href = "/amd/cryptomedic/upgrade.html";
 	</script>
