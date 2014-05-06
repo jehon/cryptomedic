@@ -16,12 +16,6 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8 */;
 
---
--- Database: `amd_chakaria`
---
-CREATE DATABASE IF NOT EXISTS `amd_chakaria` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE `amd_chakaria`;
-
 -- --------------------------------------------------------
 
 --

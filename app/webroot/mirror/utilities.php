@@ -2,7 +2,7 @@
 require(__DIR__ . "/../../../../maintenance.php");
 
 function getParameter($key, $default = null) {
-	if (array_key_exists($key, $_REQUEST))
+	if (array_key_exists($key, $_REQUEST) && ($_REQUEST[$key] > ""))
 		return $_REQUEST[$key];
 	if ($default === null)
 		die("Parameter not found: $key");
@@ -34,10 +34,6 @@ function myerror($msg, $mysqli = null) {
 	die("** ERROR **\n");
 }
 
-function mylog($arg) {
-	//echo $arg;
-}
-
 function orderedTableList() {
 	global $mysqli;
 	$tables = array();
@@ -51,6 +47,21 @@ function orderedTableList() {
 	return $list;
 }
 
+function insertObject($table, $obj) {
+	global $mysqli;
+	$keys = "";
+	$vals = "";
+	foreach($obj as $k => $v) {
+		if ($keys != "") $keys .= ",";
+		$keys .= "`" . $mysqli->real_escape_string($k) . "`";
+		if ($vals != "") $vals .= ",";
+		$vals .= "'" . $mysqli->real_escape_string($v) . "'";
+	}
+	$sql = "INSERT INTO $table($keys) VALUE ($vals)";
+	$res = $mysqli->query($sql);
+// 	print_r($sql);
+}
+
 $mysqli = new mysqli($config['database']['host'],
 		$config['database']['login'],
 		$config['database']['password'],
@@ -60,4 +71,3 @@ $mysqli = new mysqli($config['database']['host'],
 if ($mysqli->connect_errno) {
 	echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
 }
-mylog("Host infos: " . $mysqli->host_info . "\n");
