@@ -71,7 +71,7 @@ class DATABASE_CONFIG {
         $this->default['host'] = $config['database']['host'];
         $this->default['login'] = $config['database']['login'];
         $this->default['password'] = $config['database']['password'];
-        $this->default['schema'] = $config['database']['schema'];
+        $this->default['database'] = $config['database']['schema'];
     }
 };
 
