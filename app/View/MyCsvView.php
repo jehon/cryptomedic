@@ -22,13 +22,6 @@ class MyCsvView extends JsonView {
 			header('Content-Type: ' . $this->contentType);
 			header('Content-Description: File Transfer');
 			header('Content-Disposition: attachment; filename=' . $this->filename . '.' . $this->extension);
-			
-			// $this->response->body($string);
-			// $this->response->type('ics');
-			// $this->response->download('filename_for_download.ics');
-			
-			// // Return response object to prevent controller from trying to render a view
-			// return $this->response;
 		}
 		return $this->header()
 			. $this->renderArray($this->viewVars['data'])
