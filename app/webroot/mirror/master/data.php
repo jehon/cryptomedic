@@ -9,7 +9,7 @@
  */
 require_once("../utilities.php");
 
-$ts = getParameter('ts', '');
+$ts = getParameter('ts', '0');
 $tprio = getParameter('tprio', 0);
 $id = getParameter('id', 0);
 $n = getParameter('n', 5);
@@ -42,5 +42,4 @@ $res_row = $mysqli->query("SELECT * FROM {$row['table']} WHERE id = '{$row['id']
 }
 $res->close();
 
-// var_dump($datas);
 echo serialize($datas);
