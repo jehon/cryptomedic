@@ -31,7 +31,7 @@ class MyCsvView extends JsonView {
 			// return $this->response;
 		}
 		return $this->header()
-			. $this->renderArray($this->request->data)
+			. $this->renderArray($this->viewVars['data'])
 			. $this->footer();
 	}
 
