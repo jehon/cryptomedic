@@ -67,7 +67,6 @@ if (($_SERVER ['HTTP_HOST'] == 'localhost') || ! file_exists ( __DIR__ . "/../..
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
     
-    
     <script type="text/javascript" src="<? echo $this->request->webroot; ?>/js/jehon.js?<? echo $version_app; ?>"></script>
     <script type="text/javascript" src="<? echo $this->request->webroot; ?>/js/application.js?<? echo $version_app; ?>"></script>
     <script type="text/javascript" src="<? echo $this->request->webroot; ?>/js/amd_stats_datas.js?<? echo $version_app; ?>"></script>
