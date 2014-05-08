@@ -7,7 +7,52 @@
  * --> where ts> or (ts= and tablePriority>=) or (ts= and tablePriority= and id>=)
  *
  */
-require_once("../utilities.php");
+require(__DIR__ . "/../../../../maintenance.php");
+
+function getParameter($key, $default = null) {
+	if (array_key_exists($key, $_REQUEST) && ($_REQUEST[$key] > ""))
+		return $_REQUEST[$key];
+	if ($default === null)
+		die("Parameter not found: $key");
+	return $default;
+}
+
+function myerror($msg, $mysqli = null) {
+	echo "\n";
+	if ($msg != null) {
+		if (strlen($msg) > 0) {
+			echo "$msg: ";
+		}
+	}
+	if ($mysqli != null) {
+		echo "FAILED #" . $mysqli->errno . ":\n" . $mysqli->error . "\n";
+	}
+	die("** ERROR **\n");
+}
+
+function orderedTableList() {
+	global $mysqli;
+	$tables = array();
+	$res = $mysqli->query("show tables");
+	while($row = $res->fetch_array()) {
+		$tables[] = array_pop($row);
+	}
+	$res->close();
+	$list = array_unique(array_merge(array("settings", "labels", "deleted", "prices", "patients"), $tables));
+	array_shift($list);
+	return $list;
+}
+
+global $mysqli;
+$mysqli = new mysqli($config['database']['host'],
+		$config['database']['login'],
+		$config['database']['password'],
+		$config['database']['schema']
+);
+
+if ($mysqli->connect_errno) {
+	echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
+}
 
 $ts = getParameter('ts', '0');
 $tprio = getParameter('tprio', 0);

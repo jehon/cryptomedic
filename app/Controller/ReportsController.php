@@ -192,4 +192,8 @@ class ReportsController extends PagesController {
 	function activity() {
 		// TODO: activity in controller
 	}
+	
+	function modifications() {
+		// TODO: put it here?
+	}
 }
