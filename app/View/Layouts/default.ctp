@@ -36,8 +36,15 @@ if (($_SERVER ['HTTP_HOST'] == 'localhost') || ! file_exists ( __DIR__ . "/../..
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>AMD Medical Database</title>
+	<title>AMD Medical Database</title>
 	<?php echo $this->Html->charset() . "\n"; ?>
+	<!-- Adapt upgrade.html also -->
+	<!--[if lt IE 7]>
+		<script type="text/javascript">
+  			window.location.href = "/amd/cryptomedic/upgrade.html";
+		</script>
+	<![endif]-->
+	
 	<link href="<? echo $this->request->webroot; ?>/favicon.ico" type="image/x-icon" rel="icon" />
 	<link href="<? echo $this->request->webroot; ?>/favicon.ico" type="image/x-icon" rel="shortcut icon" />
 
@@ -58,15 +65,15 @@ if (($_SERVER ['HTTP_HOST'] == 'localhost') || ! file_exists ( __DIR__ . "/../..
     <script type="text/javascript" src="<? echo $this->request->webroot; ?>/libs/dust/dust.js?<? echo $version_app; ?>"></script>
     <script type="text/javascript" src="<? echo $this->request->webroot; ?>/libs/dust/dust.helpers.js?<? echo $version_app; ?>"></script>
     <script type="text/javascript" src="<? echo $this->request->webroot; ?>/libs/path.js?<? echo $version_app; ?>"></script>
-
+<!-- 
     <script type="text/javascript" src="<? echo $this->request->webroot; ?>/libs/bootstrap/bootstrap.js?<? echo $version_app; ?>"></script>
 	<link rel="stylesheet" type="text/css" href="<? echo $this->request->webroot; ?>/libs/bootstrap/css/bootstrap.min.css?<? echo $version_app; ?>" />
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -- >
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-    
+    <![endif]-- >
+-->    
     <script type="text/javascript" src="<? echo $this->request->webroot; ?>/js/jehon.js?<? echo $version_app; ?>"></script>
     <script type="text/javascript" src="<? echo $this->request->webroot; ?>/js/application.js?<? echo $version_app; ?>"></script>
     <script type="text/javascript" src="<? echo $this->request->webroot; ?>/js/amd_stats_datas.js?<? echo $version_app; ?>"></script>
@@ -94,6 +101,9 @@ if (($_SERVER ['HTTP_HOST'] == 'localhost') || ! file_exists ( __DIR__ . "/../..
 
         <script type="text/javascript" src="<? echo $this->request->webroot; ?>/labels/index.json?var=cryptomedic.labels&version=<? echo $version_db; ?>"></script>
         <script type="text/javascript" src="<? echo $this->request->webroot; ?>/prices/index.json?var=cryptomedic.prices&version=<? echo $version_db; ?>"></script>
+
+        <script type="text/javascript" src="<? echo $this->request->webroot; ?>/users/permissions.json?var=jehon.settings.denied"></script>
+        <script type="text/javascript" src="<? echo $this->request->webroot; ?>/users/settings.json?var=cryptomedic.settings"></script>
 	<?php } ?>
 
 	<?php if ($this->Session->check("testing")) { ?>
@@ -109,7 +119,6 @@ if (($_SERVER ['HTTP_HOST'] == 'localhost') || ! file_exists ( __DIR__ . "/../..
 		 	
 		version_app='<? echo $version_app; ?>';
 		version_db='<? echo $version_db; ?>';
-		jehon.settings.denied=<? echo json_encode($denied); ?>;
 		ajax=<?php
 		if (isset($ajax))
 			echo json_encode ( $ajax );
@@ -117,11 +126,6 @@ if (($_SERVER ['HTTP_HOST'] == 'localhost') || ! file_exists ( __DIR__ . "/../..
 			echo "[]";
 		?>;
 		cryptomedic.enhance(ajax);
-		cryptomedic.settings.maxUploadSizeMb = <? echo min((int) ini_get('upload_max_filesize'),
-				(int)(ini_get('post_max_size') * 0.90),
-				(int)(ini_get('memory_limit') * 0.5)
-			);
-		?>;
 
 		jehon.ready(function() {
 			if (window.location.hash.length == 0) {
