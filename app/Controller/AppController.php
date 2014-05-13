@@ -54,12 +54,9 @@ class AppController extends Controller {
 	public $uses = array("Label", "Deleted");
 	
 	function isAuthorized($user, $resource = null, $action = null, $args = null) {
-		if ($resource == null)
-			$resource = $this->name;
-		if ($action == null)
-			$action = $this->action;
-		if ($args == null)
-			$args = $this->passedArgs;
+		if ($resource == null) 	$resource = $this->name;
+		if ($action == null)	$action = $this->action;
+		if ($args == null)		$args = $this->passedArgs;
 		
 		$group = $this->Auth->user('group');
 		// pr(array('group' => $group, 'resource' => $resource, 'action' => $action, 'args' => $args));
