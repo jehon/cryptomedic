@@ -5,6 +5,7 @@
 		"jquery-ui": "latest",
 		"bootstrap": "latest",
 		"angular": "latest",
+		"angular-route": "latest",
 		"underscore": "latest",
 		"qunit": "latest"
 	}
