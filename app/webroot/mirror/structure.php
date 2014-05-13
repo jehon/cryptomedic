@@ -77,14 +77,13 @@ foreach(glob(__DIR__ . "/upgrade.sql/*") as $f) {
 	} 
 	if ($mysqli->errno) {
 		myerror("Executing the batch failed @$i?", $mysqli);
-	} else {
-		$mysqli->commit();
 	}
 	
 	echo "ok";
-	$ures = $mysqli->query("UPDATE `settings` SET `value`= '$target_v' WHERE `id` = 'structure_version' ORDER BY `id` ASC");
-	if (!$ures) {
+	$ures = $mysqli->query("UPDATE `settings` SET `value`= '$target_v' WHERE `id` = 'structure_version'");
+	if ($ures === false) {
 		echo " !! version not updated: " . $mysqli->errno . ":\n" . $mysqli->error;
 	}
+	$mysqli->commit();
 	echo "\n";
 }
