@@ -1,17 +1,15 @@
 <div class="login">
-  <div class="site-wrapper">
-    <div class="site-wrapper-inner">
-      <div class="cover-container">
-        <div class="inner cover">
-          <h1 class="cover-heading">Cover your page.</h1>
-          <p class="lead">Cover is a one-page template for building simple and beautiful home pages. Download, edit the text, and add your own fullscreen background photo to make it your own.</p>
-          <p class="lead">
-            <a href="#" class="btn btn-lg btn-default">Learn more</a>
-          </p>
-        </div>
-        <div class="mastfoot">
-          <div class="inner">Footer</div>
-        </div>
+	<div class="site-wrapper">
+		<div class="site-wrapper-inner col-sm-offset-4 col-sm-4">
+		<form class="form-signin" role="form">
+    		<h2 class="form-signin-heading">Please sign in</h2>
+    		<label for="username">Username</label>
+        	<input id="username" class="form-control" placeholder="Username" required autofocus>
+    		<label for="password">Password</label>
+        	<input id="password" class="form-control" placeholder="Password" required type="password">
+			<br>
+        	<button id="login" ng-click="login()" class="btn btn-lg btn-primary btn-block" type="submit">Log in</button>
+      	</form>
       </div>
     </div>
   </div>

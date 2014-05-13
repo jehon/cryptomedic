@@ -32,7 +32,8 @@
 	<link   type="text/css"       href="bower_components/bootstrap/dist/css/bootstrap.min.css?<? echo $version_app; ?>" rel="stylesheet" />
 
 	<script type="text/javascript" src="bower_components/angular/angular.js"></script>
-
+	<script type="text/javascript" src="bower_components/angular-route/angular-route.min.js"></script>
+	
 <!--    <script type="text/javascript" src="src/js/jehon.js?<? echo $version_app; ?>"></script>-->
 <!--    <link   type="text/css"       href="src/css/jehon.css?<? echo $version_app; ?>" rel="stylesheet" />-->
     <script type="text/javascript" src="src/js/application.js?<? echo $version_app; ?>"></script>
@@ -51,11 +52,11 @@
     <script type="text/javascript" src="/amd/prices/index.json?var=cryptomedic.prices&version=<? echo $version_db; ?>"></script>
 </head>
 <body ng-app="Cryptomedic_app" ng-controller="Cryptomedic_ctrl">
-<span ng-if="!loggedIn" ng-include="'src/html/login.html'"></span>
-<span ng-if="loggedIn">
-	<div class="container">
-		here we are
-	</div>
-</span>
+	<span ng-if="!loggedIn" ng-include="'src/html/login.html'"></span>
+	<span ng-if="loggedIn">
+		<div class="container" ng-view>
+			here we are
+		</div>
+	</span>
 </body>
 </html>
