@@ -23,7 +23,6 @@
 App::uses('Controller', 'Controller');
 require_once (__DIR__ . "/../Lib/cryptomedic.php");
 
-// TODO: simplify rights
 // TODO: simplify what ajax is doing
 
 class AppController extends Controller {

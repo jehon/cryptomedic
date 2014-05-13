@@ -16,17 +16,9 @@ $version_app = trim ( file_get_contents ( __DIR__ . "/../../../../amd.version" )
 
 ClassRegistry::init ( "Setting" );
 $Setting = ClassRegistry::getObject ( "Setting" );
-$version_db = $Setting->find ( 'first', array (
-		'conditions' => array (
-				'Setting.id' => "version" 
-		) 
-) );
+$version_db = $Setting->find ( 'first', array ('conditions' => array ('Setting.id' => "version")));
 $version_db = $version_db ['Setting'] ['value'];
-$version_db = str_replace ( array (
-		":",
-		" ",
-		"-" 
-), "", $version_db );
+$version_db = str_replace ( array(":", " ",	"-"), "", $version_db );
 if (($_SERVER ['HTTP_HOST'] == 'localhost') || ! file_exists ( __DIR__ . "/../../../../amd.version" )) {
 	// Dev version: disable the whole caching system
 	$dev = true;
@@ -51,7 +43,6 @@ if (($_SERVER ['HTTP_HOST'] == 'localhost') || ! file_exists ( __DIR__ . "/../..
 	<link rel="stylesheet" type="text/css" href="<? echo $this->request->webroot; ?>/libs/jquery/jquery-ui.css?<? echo $version_app; ?>" />
     <link rel="stylesheet" type="text/css" href="<? echo $this->request->webroot; ?>/css/jehon.css?<? echo $version_app; ?>" />
     <link rel="stylesheet" type="text/css" href="<? echo $this->request->webroot; ?>/css/application.css?<? echo $version_app; ?>" />
-
     
     <script type="text/javascript" src="<? echo $this->request->webroot; ?>/libs/modernizr.js?<? echo $version_app; ?>"></script>
     <script type="text/javascript" src="<? echo $this->request->webroot; ?>/libs/underscore.js?<? echo $version_app; ?>"></script>
@@ -102,7 +93,6 @@ if (($_SERVER ['HTTP_HOST'] == 'localhost') || ! file_exists ( __DIR__ . "/../..
         <script type="text/javascript" src="<? echo $this->request->webroot; ?>/labels/index.json?var=cryptomedic.labels&version=<? echo $version_db; ?>"></script>
         <script type="text/javascript" src="<? echo $this->request->webroot; ?>/prices/index.json?var=cryptomedic.prices&version=<? echo $version_db; ?>"></script>
 
-        <script type="text/javascript" src="<? echo $this->request->webroot; ?>/users/permissions.json?var=jehon.settings.denied"></script>
         <script type="text/javascript" src="<? echo $this->request->webroot; ?>/users/settings.json?var=cryptomedic.settings"></script>
 	<?php } ?>
 
@@ -116,7 +106,8 @@ if (($_SERVER ['HTTP_HOST'] == 'localhost') || ! file_exists ( __DIR__ . "/../..
 		 * 	
 		 * This initialisation pass informations from server to script
 		 */
-		 	
+		jehon.settings.denied = cryptomedic.settings.denied;
+			 		 	
 		version_app='<? echo $version_app; ?>';
 		version_db='<? echo $version_db; ?>';
 		ajax=<?php
@@ -145,8 +136,6 @@ if (($_SERVER ['HTTP_HOST'] == 'localhost') || ! file_exists ( __DIR__ . "/../..
 				?>';
 			}
 		});
-
-		var tests = [ "tests_jehon.js" ];
 	</script>
 </head>
 <body>

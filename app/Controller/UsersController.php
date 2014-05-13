@@ -36,32 +36,22 @@ class UsersController extends AppController {
 	
 	function settings() {
 		// Should be "settings" and also pass max_upload_size, loginname, group, ...
-		$this->permissions();
 		$mylogin = $this->Auth->user();
 		$data = array(
 			"login" => $mylogin['username'],
 			"group" => $mylogin['group'], 
-			"denied" => $this->viewVars['data'],
 			"maxUploadSizeMb" => min((int) ini_get('upload_max_filesize'),
 				(int)(ini_get('post_max_size') * 0.90),
 				(int)(ini_get('memory_limit') * 0.5)
-			)
+			),
+			"denied" => array()
 		);
+		if (! $this->isAuthorized($mylogin, "all", "edit"))		$data['denied'][] = "all_edit";
+		if (! $this->isAuthorized($mylogin, "all", "delete"))	$data['denied'][] = "all_delete";
+		if (! $this->isAuthorized($mylogin, "all", "unlock"))	$data['denied'][] = "all_unlock";
 		$this->set("data", $data);
 	}
 	
-	function permissions() {
-		$mylogin = $this->Auth->user();
-		$data = array ();
-		if (! $this->isAuthorized($mylogin, "all", "edit"))
-			$data[] = "all_edit";
-		if (! $this->isAuthorized($mylogin, "all", "delete"))
-			$data[] = "all_delete";
-		if (! $this->isAuthorized($mylogin, "all", "unlock"))
-			$data[] = "all_unlock";
-		$this->set("data", $data);
-	}
-
 	function beforeFilter() {
 		parent::beforeFilter();
 		$this->Auth->allow('login', 'logout');
