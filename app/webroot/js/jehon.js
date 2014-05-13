@@ -1,4 +1,17 @@
 "use strict";
+/**
+ * For this f*** old IE6-8
+ */
+if (typeof(console) === 'undefined') { console = {}; }
+if (typeof(console.log) !== 'function') { console.log = function() {}; }
+if (typeof(console.info) !== 'function') { console.info = console.log; }
+if (typeof(console.error) !== 'function') { console.error = console.log; }
+if (typeof(console.trace) !== 'function') { console.trace = console.log; }
+if (typeof(console.warn) !== 'function') { console.warn = console.log; }
+if (typeof(console.group) !== 'function') { console.group = function(group) { console.log("GROUP: " + group); }; }
+if (typeof(console.groupCollapsed) !== 'function') { console.groupCollapsed = console.group; }
+if (typeof(console.groupEnd) !== 'function') { console.groupEnd = function() { console.log("GROUP END"); } ; }
+
 if (window.location.search) {
 	if (window.location.search.search("_nocollapse") > 0) {
 		console.log("mode no-collapse");
@@ -46,18 +59,6 @@ jehon.private = {};
 
 jehon.settings.collapsable = { timing: 500 };
 jehon.settings.mode = 'read';
-
-/**
- * For this f*** old IE6-8
- */
-if (typeof(console) === 'undefined') { console = {}; }
-if (typeof(console.log) !== 'function') { console.log = function() {}; }
-if (typeof(console.error) !== 'function') { console.error = console.log; }
-if (typeof(console.trace) !== 'function') { console.trace = console.log; }
-if (typeof(console.warn) !== 'function') { console.warn = console.log; }
-if (typeof(console.group) !== 'function') { console.group = function(group) { console.log("GROUP: " + group); }; }
-if (typeof(console.groupCollapsed) !== 'function') { console.groupCollapsed = console.group; }
-if (typeof(console.groupEnd) !== 'function') { console.groupEnd = function() { console.log("GROUP END"); } ; }
 
 // -------------------------- Debug functions -----------------------
 //var debug = function() { jehon.notify('debug', 'debug not implemented'); };
