@@ -1,0 +1,11 @@
+{
+	"name": "cryptomedic",
+	"dependencies": {
+		"jquery": "latest",
+		"jquery-ui": "latest",
+		"bootstrap": "latest",
+		"angular": "latest",
+		"underscore": "latest",
+		"qunit": "latest"
+	}
+}
