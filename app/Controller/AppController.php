@@ -36,11 +36,11 @@ class AppController extends Controller {
 			'Session',
 			'Auth' => array (
 					'loginRedirect' => array (
-							'controller' => 'pages',
-							'action' => 'display',
-							'home' 
+						'controller' => 'pages',
+						'action' => 'display',
+						'home' 
 					),
-					'logoutRedirect' => "/" 
+					'logoutRedirect' => "/"
 			),
 			'RequestHandler' => array (
 					'viewClassMap' => array (
@@ -68,10 +68,14 @@ class AppController extends Controller {
 		if ('admin' == $group)
 			return true;
 		switch ($resource) {
+
 			case "Users" :
 				switch ($action) {
-					case "login": 	return true;
-					case "logout":	return true;
+					case "login": 	
+					case "logout":	
+					case "permissions": 
+					case "settings": 
+						return true;
 				}
 				return false;
 				break;
@@ -116,39 +120,17 @@ class AppController extends Controller {
 	}
 
 	function beforeFilter() {
-		// ----------------------------- current browser capacities logs ------------------------
-		if (array_key_exists('data', $this->request)) {
-			if (array_key_exists('browser', $this->request->data)) {
-				CakeLog::write(LOG_ERROR, 'browsers capacities,' . $this->request->data ['User'] ['username'] . "," . $this->request->data ['browser']);
-			}
-		}
-		
 		// ----------------------------------- Prefs --------------------------------
+// Pushed back in users.settings - but still necessary for default layout...
 		$mylogin = $this->Auth->user();
 		$this->set("login", $mylogin ['username']);
-		
-		// ----------------------------------- Rights --------------------------------
-		$denied = array ();
-		if (! $this->isAuthorized($mylogin, "all", "edit"))
-			$denied [] = "all_edit";
-		if (! $this->isAuthorized($mylogin, "all", "delete"))
-			$denied [] = "all_delete";
-		if (! $this->isAuthorized($mylogin, "all", "unlock"))
-			$denied [] = "all_unlock";
-		$this->set("denied", $denied);
 	}
 
 	function beforeRender() {
-		if ($this->request->query("_testing") == "0") {
-			$this->Session->delete("testing");
-		} elseif ($this->request->query("_testing")) {
-			$this->Session->write("testing", 1);
-		}
-		
 		if (! array_key_exists('data', $this->viewVars))
 			return;
 		
-		$data = $this->viewVars ['data'];
+		$data = $this->viewVars['data'];
 		if (array_key_exists('ajax', $this->viewVars)) {
 			// Already set, nothing to do
 			return;
