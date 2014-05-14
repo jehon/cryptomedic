@@ -8,8 +8,11 @@
     		<label for="password">Password</label>
         	<input id="password" ng-model="password" class="form-control" placeholder="Password" required type="password">
 			<br>
-			<div ng-if="loginError" class="text-danger">
-				Invalid username/password. Please try again
+			<div ng-if="loginError">
+			    <div class="alert alert-danger">
+        			<a href="#" class="close" data-dismiss="alert">&times;</a>
+        			Invalid username/password. Please try again
+				</div>
 			</div>
 			<br>
         	<button ng-disabled="{{pending}}" id="login" ng-click="login()" class="btn btn-lg btn-primary btn-block" type="submit">Log in</button>
