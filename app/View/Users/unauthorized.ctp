@@ -1,1 +1,0 @@
-{ error: 'Not logged in' }
