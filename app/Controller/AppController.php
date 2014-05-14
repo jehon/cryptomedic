@@ -116,10 +116,13 @@ class AppController extends Controller {
 	}
 
 	function beforeFilter() {
-		// ----------------------------------- Prefs --------------------------------
-// Pushed back in users.settings - but still necessary for default layout...
+		// From http://api.cakephp.org/2.4/source-class-CakeRequest.html#545-598
+		// 586:  * `addDetector('extension', array('param' => 'ext', 'options' => array('pdf', 'csv'))`
+		$this->request->addDetector('ajax', array('param' => 'ext', 'value' => 'json'));
+		
+		// Pushed back in users.settings - but still necessary for default layout...
 		$mylogin = $this->Auth->user();
-		$this->set("login", $mylogin ['username']);
+		$this->set("login", $mylogin['username']);
 	}
 
 	function beforeRender() {

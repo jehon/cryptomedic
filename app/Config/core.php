@@ -38,6 +38,14 @@ if ($_SERVER ['HTTP_HOST'] == 'localhost') {
 	Configure::write ( 'debug', $config ['cryptomedic'] ['debug_level']);
 }
 
+function mpr($var, $title = "") {
+	if (Configure::read('debug') > 0) {
+		$template = php_sapi_name() !== 'cli' ? '<pre>%s %s</pre>' : "\n%s\n";
+		if ($var === false) $var = "!false!";
+		printf($template, $title, print_r($var, true));
+	}
+}
+
 /**
  * Configure the Error handler used to handle errors for your application. By default
  * ErrorHandler::handleError() is used. It will display errors using Debugger, when debug > 0

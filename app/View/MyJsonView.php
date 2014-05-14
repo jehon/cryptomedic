@@ -45,6 +45,9 @@ class MyJsonView extends JsonView {
 			$this->response->type('json');
 		}
 		
+		if (!array_key_exists("data", $this->viewVars))
+			$this->viewVars['data'] = "<No \$data>";
+		
 		if (is_array($this->viewVars['data']) && array_key_exists("flattern", $this->viewVars) && $this->viewVars['flattern']) {
 			$ajax = array();
 			foreach($this->viewVars['data'] as $i => $m) {
