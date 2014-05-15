@@ -68,7 +68,7 @@ class UsersController extends AppController {
 		// Should be "settings" and also pass max_upload_size, loginname, group, ...
 		$mylogin = $this->Auth->user();
 		$data = array (
-				"login" => $mylogin ['username'],
+				"username" => $mylogin ['username'],
 				"group" => $mylogin ['group'],
 				"maxUploadSizeMb" => min(( int ) ini_get('upload_max_filesize'), ( int ) (ini_get('post_max_size') * 0.90), ( int ) (ini_get('memory_limit') * 0.5)),
 				"denied" => array () 
