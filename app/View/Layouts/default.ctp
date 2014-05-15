@@ -22,7 +22,7 @@ $version_db = str_replace ( array(":", " ",	"-"), "", $version_db );
 if (($_SERVER ['HTTP_HOST'] == 'localhost') || ! file_exists ( __DIR__ . "/../../../../amd.version" )) {
 	// Dev version: disable the whole caching system
 	$dev = true;
-	$version_db = $version_app = time ();
+	$version_db = $version_app = time();
 }
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
