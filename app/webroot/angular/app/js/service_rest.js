@@ -29,9 +29,13 @@ cryptoApp.factory('service_rest', [ '$http', '$log' , '$rootScope', function($ht
 			return def;
 		},
 		'doLogout': function() {
-			// TODO
 			var def = jQuery.Deferred();
-			def.resolve();
+			$http.post(root + "/users/logout")
+			.success(function(data, status, headers, config) {
+				def.resolve();
+			}).error(function(data, status, headers, config) {
+				def.reject(data);
+			});
 			return def;
 		},
 	};

@@ -50,17 +50,20 @@ cryptoApp.controller('ctrl_cryptomedic', [ '$scope', 'service_rest' , function($
 		return function() { 
 			console.log("doBusy is done");
 			$scope.busyMessages[c].status = true;
-			// TODO trigger busyMessageDone:
+			$scope.safeApply();
+			// If all messages are ok, then hide it
 			var allOk = true;
 			for(var m in $scope.busyMessages) {
 				allOk = allOk && $scope.busyMessages[m].status;
 			}
-			$scope.busyMessagesDone = true;
-			$scope.safeApply();
-			setTimeout(function() {
-				jQuery("#busy").modal('hide'); 
-				$scope.safeApply();
-			}, 2000);
+			if (allOk) {
+				$scope.busyMessagesDone = true;
+				setTimeout(function() {
+					jQuery("#busy").modal('hide'); 
+					$scope.busyMessages = [];
+					$scope.safeApply();
+				}, 2000);
+			}
 		};
 	};
 
@@ -68,6 +71,7 @@ cryptoApp.controller('ctrl_cryptomedic', [ '$scope', 'service_rest' , function($
 	$scope.password = "";
 	if (typeof(cryptomedic) != "undefined" && cryptomedic.settings && cryptomedic.settings.username) {
 		$scope.logged = true;
+		$scope.username = cryptomedic.settings.username;
 		console.log("conntected");
 	}
 	$scope.doLogin = function() {
@@ -78,20 +82,33 @@ cryptoApp.controller('ctrl_cryptomedic', [ '$scope', 'service_rest' , function($
 				console.log("login ok");
 				$scope.loginError = false;
 				$scope.logged = true;
-				busyEnd();
+				
+				if (typeof(cryptomedic) == "undefined" || !cryptomedic.settings || !cryptomedic.settings.username) {
+					window.reload();
+				}
 			})
 			.fail(function(data) {
 				console.log("login ko");
 				$scope.loginError = true;
 				$scope.logged = false;
+			}).always(function() {
 				busyEnd();
 			});
 	};
 
 	$scope.doLogout = function() {
+		console.log("logout");
 		var busyEnd = $scope.doBusy("Disconnecting from the server");
-		
-	}
+		service_rest.doLogout()
+			.done(function() {
+			})
+			.fail(function(data) {
+			})
+			.always(function(data) {
+				$scope.logged = false;
+				busyEnd();
+			});
+	};
 	
 	// Events from the service_*
 	$scope.$on("pending", $scope.pending);
