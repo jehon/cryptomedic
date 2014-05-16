@@ -84,7 +84,7 @@ cryptoApp.controller('ctrl_cryptomedic', [ '$scope', 'service_rest' , function($
 				$scope.logged = true;
 				
 				if (typeof(cryptomedic) == "undefined" || !cryptomedic.settings || !cryptomedic.settings.username) {
-					window.reload();
+					window.location.reload();
 				}
 			})
 			.fail(function(data) {
