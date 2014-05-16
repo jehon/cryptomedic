@@ -136,8 +136,12 @@
 	    <div class="collapse navbar-collapse" id="menuMain">
 	      <ul class="nav navbar-nav navbar-right">
         	<li><p class="navbar-text">{{username}}</p></li>
-	      	<li><button ng-click="doLogout()" type="button" class="btn btn-default navbar-btn">Logout</button></li>
-	      	<li><button ng-click="window.location='#/home'" type="button" class="btn btn-default navbar-btn">Home</button></li>
+	      	<li><button type="button" class="btn btn-default navbar-btn" ng-click="doLogout()" >
+	      		Logout
+	      		</button></li>
+	      	<li><button type="button" class="btn btn-default navbar-btn"><a href="#/home">
+	      		Home
+	      		</a></button></li>
 	      </ul>
 	    </div>
 	  </div>
