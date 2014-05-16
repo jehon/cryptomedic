@@ -11,15 +11,16 @@ html,body {
   height: 100%;
 }
 
-/*
- * Login
+/********************************************
+ * Menu / buttons
  */
-.login {
- 	background-color: #333;
-	color: #fff;
+button img {
+	height: 17px;
 }
 
-/* Extra markup and styles for table-esque vertical and horizontal centering */
+/********************************************
+ *  Overlays 
+ */
 .site-wrapper {
 	display: table;
 	width: 100%;
@@ -27,12 +28,15 @@ html,body {
 	min-height: 100%;
 	position: absolute;
 	text-align: center;
-	opacity: 0.8;
+	/* opacity: 0.8; */
+ 	background: rgba(3, 3, 3, 0.6);
+	color: #fff;
 }
 
 .site-wrapper-inner {
-  display: table-cell;
-  vertical-align: top;
+	display: table-cell;
+	vertical-align: top;
+	background-color: #333;  
 }
 
 .cover-container {
@@ -44,6 +48,30 @@ html,body {
 .inner {
   padding: 30px;
 }
+
+/**********************************************
+ * Fieldsets
+ */
+fieldset {
+	border-radius: 10px;
+	padding: 10px;
+	border-style:solid; 
+	border-width:2px; 
+	border-color:#002060;	
+}
+
+fieldset > legend {
+	font-size: 120%;
+	color: #004A94;
+	padding-left: 10px;
+	padding-right: 10px;
+	width: auto;
+}
+
+/********************************************
+/******************************************** OLD
+/********************************************
+
 
 /*
  * Affix and center
