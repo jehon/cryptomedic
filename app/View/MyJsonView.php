@@ -49,12 +49,13 @@ class MyJsonView extends JsonView {
 			$this->viewVars['data'] = "<No \$data>";
 		
 		if (is_array($this->viewVars['data']) && array_key_exists("flattern", $this->viewVars) && $this->viewVars['flattern']) {
+			$field = $this->viewVars['flattern'];
 			$ajax = array();
 			foreach($this->viewVars['data'] as $i => $m) {
 				if (is_array($m)) {
 					foreach($m as $j => $d) {
-						if (is_array($d) && array_key_exists('id', $d)) {
-							$ajax[$d['id']] = $d;
+						if (is_array($d) && array_key_exists($field, $d)) {
+							$ajax[$d[$field]] = $d;
 						} else {
 							$ajax[$j] = $d;
 						}

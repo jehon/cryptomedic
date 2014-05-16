@@ -13,7 +13,7 @@ class IndexController extends AppController {
 		$res = $this->{$this->modelClass}->find('all', array('recursive' => 0));
 		
 		$this->request->data = $res;
-		$this->set("flattern", true);
+		$this->set("flattern", "id");
 		$this->set("data", $res);
 	}
 }
