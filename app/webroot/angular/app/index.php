@@ -55,6 +55,7 @@
     <script src="js/cryptomedic.js?<? echo $version_app; ?>"></script>
     <script src="js/application.js?<? echo $version_app; ?>"></script>
     <script src="js/service_rest.js?<? echo $version_app; ?>"></script>
+    <script src="js/ctrl_home.js?<? echo $version_app; ?>"></script>
 <!--     <script src="js/old_application.js?<? echo $version_app; ?>"></script> -->
 <!--     <script src="js/amd_stats_datas.js?<? echo $version_app; ?>"></script> -->
 
@@ -146,7 +147,6 @@
 	    </div>
 	  </div>
 	</nav>
-	
 	<div class="container" ng-view>View content</div>
 </body>
 </html>

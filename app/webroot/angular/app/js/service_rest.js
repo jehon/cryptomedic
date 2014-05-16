@@ -2,8 +2,6 @@
 
 cryptoApp.factory('service_rest', [ '$http', '$log' , '$rootScope', function($http, $log, $rootScope) {
 	var root = "/amd";
-//	checkLogin();
-	
 	return {
 		'checkLogin': function() {
 			var def = jQuery.Deferred();
