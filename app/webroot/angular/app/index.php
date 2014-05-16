@@ -25,21 +25,14 @@
 	<title>Cryptomedic</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link href="favicon.ico" type="image/x-icon" rel="icon" />
-	<link href="favicon.ico" type="image/x-icon" rel="shortcut icon" />
+	<link href="img/favicon.ico" type="image/x-icon" rel="icon" />
+	<link href="img/favicon.ico" type="image/x-icon" rel="shortcut icon" />
 	
 	<!-- jquery -->
 	<script src="bower_components/jquery/dist/jquery.min.js?<? echo $version_app; ?>"></script>
     <script src="bower_components/jquery-ui/ui/minified/jquery-ui.min.js?<? echo $version_app; ?>"></script>
 	<link  href="bower_components/jquery-ui/themes/base/minified/jquery-ui.min.css?<? echo $version_app; ?>" rel="stylesheet" />
 	
-	<!-- angular -->
-	<link  href="bower_components/html5-boilerplate/css/normalize.css" rel="stylesheet" >
-	<link  href="bower_components/html5-boilerplate/css/main.css" rel="stylesheet" >
-	<script src="bower_components/html5-boilerplate/js/vendor/modernizr-2.6.2.min.js"></script>
-	<script src="bower_components/angular/angular.js"></script>
-	<script src="bower_components/angular-route/angular-route.min.js"></script>
-
 	<!-- bootstrap -->
     <script src="bower_components/bootstrap/dist/js/bootstrap.min.js?<? echo $version_app; ?>"></script>
 	<link  href="bower_components/bootstrap/dist/css/bootstrap.min.css?<? echo $version_app; ?>" rel="stylesheet" />
@@ -51,10 +44,18 @@
 		</script>
 	<![endif]-->
 
+	<!-- angular -->
+	<link  href="bower_components/html5-boilerplate/css/normalize.css?<? echo $version_app; ?>" rel="stylesheet" >
+	<link  href="bower_components/html5-boilerplate/css/main.css?<? echo $version_app; ?>" rel="stylesheet" >
+	<script src="bower_components/html5-boilerplate/js/vendor/modernizr-2.6.2.min.js?<? echo $version_app; ?>"></script>
+	<script src="bower_components/angular/angular.js"></script>
+	<script src="bower_components/angular-route/angular-route.min.js"></script>
+
 	<!-- personnal -->
     <script src="js/cryptomedic.js?<? echo $version_app; ?>"></script>
     <script src="js/application.js?<? echo $version_app; ?>"></script>
     <script src="js/service_rest.js?<? echo $version_app; ?>"></script>
+    <script src="js/directive_crlabel.js?<? echo $version_app; ?>"></script>
     <script src="js/ctrl_home.js?<? echo $version_app; ?>"></script>
 <!--     <script src="js/old_application.js?<? echo $version_app; ?>"></script> -->
 <!--     <script src="js/amd_stats_datas.js?<? echo $version_app; ?>"></script> -->
@@ -73,9 +74,9 @@
     <script type="text/javascript" src="/amd/prices/index.json?var=cryptomedic.prices&version=<? echo $version_db; ?>"></script>
 	
 </head>
-<body ng-app="app_cryptomedic" ng-controller="ctrl_cryptomedic">
+<body ng-app="app_cryptomedic" ng-controller="ctrl_cryptomedic" id="ng-app">
 	<!--  Login screen -->
-	<div ng-if="!logged && !pending" class="login site-wrapper">
+	<div ng-if="!logged && !pending" class="site-wrapper">
 		<div class="site-wrapper-inner col-sm-offset-4 col-sm-4">
 			<form class="form-signin" role="form">
 	    		<h2 class="form-signin-heading">Please sign in</h2>
@@ -91,8 +92,9 @@
 					</div>
 				</div>
 				<br>
-	        	<button ng-disabled="{{pending}}" id="login" ng-click="doLogin()" class="btn btn-lg btn-primary btn-block" type="submit">Log in</button>
+	        	<button ng-disabled="{{pending}}" id="login" ng-click="doLogin()" class="btn btn-lg btn-primary btn-block">Log in</button>
 	      	</form>
+	      	<br>
 	      </div>
 	    </div>
 	  </div>
@@ -137,16 +139,21 @@
 	    <div class="collapse navbar-collapse" id="menuMain">
 	      <ul class="nav navbar-nav navbar-right">
         	<li><p class="navbar-text">{{username}}</p></li>
-	      	<li><button type="button" class="btn btn-default navbar-btn" ng-click="doLogout()" >
-	      		Logout
-	      		</button></li>
-	      	<li><button type="button" class="btn btn-default navbar-btn"><a href="#/home">
+	      	<li><button type="button" class="btn btn-default navbar-btn"><a href="#/">
+	      		<img src="img/home.gif"/>
 	      		Home
 	      		</a></button></li>
+	      	<li><button type="button" class="btn btn-default navbar-btn" ng-click="doLogout()" >
+	      		<img src="img/logout.gif"/>
+	      		Logout
+	      		</button></li>
 	      </ul>
 	    </div>
 	  </div>
 	</nav>
-	<div class="container" ng-view>View content</div>
+	<div class="view-animate-container">
+		<div>&nbsp;</div>
+		<div ng-view></div>
+	</div>
 </body>
 </html>

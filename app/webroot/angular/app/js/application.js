@@ -2,16 +2,19 @@
 
 var cryptoApp = angular.module('app_cryptomedic', [ 'ngRoute' ])
 .config([ '$routeProvider', function($routeProvider) {
-    $routeProvider.when('/home', {
-    	templateurl: 'partials/home.html',
+    $routeProvider.when('/', {
+    	templateUrl: 'partials/home.html',
         controller: 'ctrl_home'
-    }).otherwise({ 'redirectTo': '/home'});
+    })
+    .when('/blank', {
+    	templateUrl: 'partials/blank.html',
+    }).otherwise({ 'redirectTo': '/blank'});
 }])
 .config([ '$compileProvider', function( $compileProvider ) {
 	$compileProvider.aHrefSanitizationWhitelist(/^\s*((https?|ftp|mailto|chrome-extension):|data:text,)/);
 }]);
 
-cryptoApp.controller('ctrl_cryptomedic', [ '$scope', 'service_rest' , function($scope, service_rest) { 
+cryptoApp.controller('ctrl_cryptomedic', [ '$scope', 'service_rest', function($scope, service_rest) { 
 	$scope.safeApply = function (fn) {
 		  var phase = this.$root.$$phase;
 		  if(phase == '$apply' || phase == '$digest') {
@@ -27,13 +30,6 @@ cryptoApp.controller('ctrl_cryptomedic', [ '$scope', 'service_rest' , function($
 	$scope.pending = false;
 	$scope.busyMessages = [ ];
 	$scope.busyMessagesDone = false;
-	
-	$scope.$on("loggedOut", function(msg) {
-		console.log("event notlogged");
-		$scope.logged = false;
-//		if (typeof(msg) == 'undefined') msg = false;
-//		$scope.errorLogin = msg;
-	});
 	
 	$scope.doBusy = function(msg) {
 		jQuery("#busy").modal('show');
@@ -53,7 +49,6 @@ cryptoApp.controller('ctrl_cryptomedic', [ '$scope', 'service_rest' , function($
 				setTimeout(function() {
 					jQuery("#busy").modal('hide'); 
 					$scope.busyMessages = [];
-					$scope.safeApply();
 				}, 2000);
 			}
 		};
@@ -101,8 +96,11 @@ cryptoApp.controller('ctrl_cryptomedic', [ '$scope', 'service_rest' , function($
 				busyEnd();
 			});
 	};
-	
+
 	// Events from the service_*
+	$scope.$on("loggedOut", function(msg) { $scope.logged = false; });
 	$scope.$on("pending", $scope.pending);
 	$scope.$on("clear", $scope.clear);
+
+	$scope.$on("$routeChangeError", function() { console.log("error in routes"); console.log(arguments); });
 }]);
