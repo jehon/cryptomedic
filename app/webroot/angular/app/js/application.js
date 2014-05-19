@@ -3,7 +3,7 @@
 var cryptoApp = angular.module('app_cryptomedic', [ 'ngRoute' ])
 .config([ '$routeProvider', function($routeProvider) {
     $routeProvider.when('/', {
-    	templateUrl: 'partials/home.html',
+    	templateUrl: 'partials/home.php',
         controller: 'ctrl_home'
     })
     .when('/blank', {
@@ -35,6 +35,7 @@ cryptoApp.controller('ctrl_cryptomedic', [ '$scope', 'service_rest', function($s
 		jQuery("#busy").modal('show');
 		var c = this.busyMessages.push({ 'message': msg, 'done': false }) - 1;
 		this.busyMessageDone = false;
+		$scope.safeApply();
 		return function() { 
 			console.log("doBusy is done");
 			$scope.busyMessages[c].status = true;
