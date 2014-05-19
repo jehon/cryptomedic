@@ -1,19 +1,9 @@
 <?php
-global $model2controller;
-$model2controller = array(
-		"Bill" => "bills",
-		"ClubFoot" => "club_foots",
-		"NonricketConsult" => "nonricket_consults",
-		"OrthopedicDevice" => "orthopedic_devices",
-		"Patient" => "patients",
-		"Picture" => "pictures",
-		"RicketConsult" => "ricket_consults",
-		"Surgery" => "surgeries",
-		"SurgeryFollowup" => "surgery_followups"
-);
+require_once(__DIR__ . "/../Model/amd_listings.php");
 
 // TODO: dereference getLabel ?
 function cryptomedicValue2Label($model, $key, $value) {
+	// Used in patients search and in reports
 	global $model2controller;
 		if (! array_key_exists($model, $model2controller)) {
 		return $value;
@@ -27,20 +17,23 @@ function cryptomedicValue2Label($model, $key, $value) {
     if (get_class($omodel) != $model) {
         die("Class not found: $model - received " . get_class($omodel));
 	}
-    if (!isset($omodel::$part)) {
-        die("No part associated with model $model");
-	}
-	
-    if (!array_key_exists($key, $omodel::$part))
+//     if (!isset($omodel::$part)) {
+//         die("No part associated with model $model");
+// 	}
+
+	global $model_listing;
+	if (!array_key_exists($model . "." . $key, $model_listing))
+//     if (!array_key_exists($key, $omodel::$part))
 		return $value;
-    $infos = $omodel::$part[$key];
+	
+	$infos = $model_listing[$model . "." . $key];
+//     $infos = $omodel::$part[$key];
     if (!array_key_exists('labels', $infos)) return $value;
     if (!$infos['labels']) return $valule;
     return cryptomedicGetLabel($value);
 }
 
 // Seems to be a private function...
-// TODO: specialize this on into "translations"
 function cryptomedicGetLabel($id) {
 		if ($id == "") return "?";
 		if (count(explode('.', $id)) > 2) {
@@ -63,23 +56,27 @@ function cryptomedicGetLabel($id) {
 }
 
 function cryptomedicGetList($model, $field, $allowNull = false) {
-		if (!ClassRegistry::isKeySet($model)) {
-			ClassRegistry::init($model);
+	// Used in "day.ctp"
+	
+// 	if (!ClassRegistry::isKeySet($model)) {
+// 		ClassRegistry::init($model);
+// 	}
+// 	$omodel = ClassRegistry::getObject($model);
+// 	if (get_class($omodel) != $model) {
+// 		die("Class not found: $model - received " . get_class($omodel));
+// 	}
+// 		if (!isset($omodel::$part)) {
+// 			die("No part associated with model $model");
+// 	}
+	
+	global $model_listing;
+	if (!array_key_exists($model . "." . $field, $model_listing)) {
+// 	if (!array_key_exists($field, $omodel::$part)) {
+		die("No list associated with field $field on model $model");
 	}
 	
-		$omodel = ClassRegistry::getObject($model);
-		if (get_class($omodel) != $model) {
-			die("Class not found: $model - received " . get_class($omodel));
-	}
-		if (!isset($omodel::$part)) {
-			die("No part associated with model $model");
-	}
-	
-		if (!array_key_exists($field, $omodel::$part)) {
-			die("No list associated with field $field on model $model");
-	}
-	
-    $choix = $omodel::$part[$field];
+	$choix= $model_listing[$model . "." . $field];
+//     $choix = $omodel::$part[$field];
 
     if (array_key_exists("labels", $choix) && $choix["labels"]) {
         unset($choix["labels"]);

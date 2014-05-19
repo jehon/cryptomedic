@@ -10,10 +10,8 @@ $mysqli = new mysqli($config['database']['host'],
 );
 
 if ($mysqli->connect_errno) {
-	echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
+	die("Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error);
 }
-
-
 
 function _label($key) {
 	global $mysqli;
@@ -39,6 +37,16 @@ function _label($key) {
 	return $version["english"];
 }
 
+function _parseKey($key) {
+	$data = explode(".", $key);
+	if (count($data) != 2) {
+		throw new Exception("Read: key is not a two parts: '$key'");
+	}
+	$model = $data[0];
+	$field = $data[1];
+	require(__DIR__ . "/../../../../Lib/cryptomedic.php");
+}
+
 function label($key) {
 	echo "<label for='$key'>" . _label($key) . "</label>\n";
 }
@@ -52,9 +60,9 @@ function value($key) {
 }
 
 function read($key) {
-	
+	$struct = _parseKey($key);
 }
 
 function write($key, $allownull) {
-	
+	$struct = _parseKey($key);
 }

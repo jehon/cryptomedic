@@ -316,6 +316,8 @@ class AppController extends Controller {
 	}
 
 	function structure() {
+		global $model_listing;
+		
 		$model = $this->modelClass;
 		if (! ClassRegistry::isKeySet($model)) {
 			ClassRegistry::init($model);
@@ -323,11 +325,17 @@ class AppController extends Controller {
 		
 		$oModel = ClassRegistry::getObject($model);
 		$data = $oModel->schema();
-		if (isset($oModel::$part)) {
-			foreach ( $oModel::$part as $f => $l ) {
-				$data [$f] ['list'] = $l;
+		foreach($model_listing as $key => $l) {
+			if (substr($key, 0, strlen($model) + 1) == $model . ".") {
+				$f = substr($key, strlen($model) + 1);
+				$data[$f]['list'] = $l;
 			}
 		}
+// 		if (isset($oModel::$part)) {
+// 			foreach ( $oModel::$part as $f => $l ) {
+// 				$data [$f] ['list'] = $l;
+// 			}
+// 		}
 		$data ['timestamp'] = array (
 				"type" => 'timestamp' 
 		);

@@ -21,7 +21,7 @@ class AppModel extends Model {
 	 * 
 	 * I am pretty sure this could be done by a more normal way, but I don't know how.
 	 */
-    public static $part = array();
+//     public static $part = array();
 
 	function enhance($data, $model) {
 		/**

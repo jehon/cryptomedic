@@ -2,26 +2,26 @@
 App::uses('AppModel', 'Model');
 
 class Patient extends AppModel {
-    public static $part = array();
+//     public static $part = array();
 
-	function __construct() {
-		global $amd_listing;
-		Patient::$part['District'] = $amd_listing['Districts'];
-		Patient::$part['Doesthechildrengotoschool'] = $amd_listing['SchoolAttendee'];
-		Patient::$part['Family'] = $amd_listing['ParentalStatus'];
-		Patient::$part['Fatherseducation'] = $amd_listing['Schools'];
-		Patient::$part['Home'] = $amd_listing['Owning'];
-		Patient::$part['Motherseducation'] = $amd_listing['Schools'];
-		Patient::$part['Religion'] = $amd_listing['Religions'];
-		Patient::$part['Roof'] = $amd_listing['CHO/4'];
-		Patient::$part['Sex'] = $amd_listing['Gender'];
-		Patient::$part['Sociallevel'] = $amd_listing['SocialLevel'];
-		Patient::$part['Union_'] = $amd_listing['Unions'];
-		Patient::$part['Upazilla'] = $amd_listing['Upazilla'];
-		Patient::$part['Wall'] = $amd_listing['CHO/4'];
+// 	function __construct() {
+// 		global $amd_listing;
+// 		Patient::$part['District'] = $amd_listing['Districts'];
+// 		Patient::$part['Doesthechildrengotoschool'] = $amd_listing['SchoolAttendee'];
+// 		Patient::$part['Family'] = $amd_listing['ParentalStatus'];
+// 		Patient::$part['Fatherseducation'] = $amd_listing['Schools'];
+// 		Patient::$part['Home'] = $amd_listing['Owning'];
+// 		Patient::$part['Motherseducation'] = $amd_listing['Schools'];
+// 		Patient::$part['Religion'] = $amd_listing['Religions'];
+// 		Patient::$part['Roof'] = $amd_listing['CHO/4'];
+// 		Patient::$part['Sex'] = $amd_listing['Gender'];
+// 		Patient::$part['Sociallevel'] = $amd_listing['SocialLevel'];
+// 		Patient::$part['Union_'] = $amd_listing['Unions'];
+// 		Patient::$part['Upazilla'] = $amd_listing['Upazilla'];
+// 		Patient::$part['Wall'] = $amd_listing['CHO/4'];
 		
-		parent::__construct();
-	}
+// 		parent::__construct();
+// 	}
 
 	function beforeSave($options = array()) {
         if (!isset($this->data)) {

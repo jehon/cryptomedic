@@ -2,15 +2,15 @@
 App::uses('AppModel', 'Model');
 
 class Bill extends AppModel {
-   	public static $part = array();
+//    	public static $part = array();
    	var $uses = array('Price');
    			
-	function __construct() {
-		global $amd_listing;
-		Bill::$part['Center'] = $amd_listing['Centers'];
-		Bill::$part['Sociallevel'] = $amd_listing['SocialLevel'];
-		parent::__construct();
-	}
+// 	function __construct() {
+// 		global $amd_listing;
+// 		Bill::$part['Center'] = $amd_listing['Centers'];
+// 		Bill::$part['Sociallevel'] = $amd_listing['SocialLevel'];
+// 		parent::__construct();
+// 	}
 
 	public $belongsTo = array(
 		'Patient' => array(

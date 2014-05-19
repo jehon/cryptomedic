@@ -1,4 +1,17 @@
 <?php
+global $model2controller;
+$model2controller = array(
+		"Bill" => "bills",
+		"ClubFoot" => "club_foots",
+		"NonricketConsult" => "nonricket_consults",
+		"OrthopedicDevice" => "orthopedic_devices",
+		"Patient" => "patients",
+		"Picture" => "pictures",
+		"RicketConsult" => "ricket_consults",
+		"Surgery" => "surgeries",
+		"SurgeryFollowup" => "surgery_followups"
+);
+
 global $amd_listing;
 $amd_listing = array();
 
@@ -138,3 +151,95 @@ $amd_listing["Material"] = array( 272, 273, 274 );
 $amd_listing["Material"]["labels"] = true;
 
 $amd_listing["SocialLevel"] = array( 0, 1, 2, 3, 4 );
+
+global $model_listing;
+$model_listing = array();
+$model_listing['Bill.Center'] = $amd_listing['Centers'];
+$model_listing['Bill.Sociallevel'] = $amd_listing['SocialLevel'];
+$model_listing['ClubFoot.CavusFoot'] = $amd_listing['Pain'];
+$model_listing['ClubFoot.Side'] = $amd_listing['Side'];
+$model_listing['ClubFoot.Run'] = array(0, 1, 2);
+$model_listing['ClubFoot.Pain'] = array(0, 1, 2);
+$model_listing['ClubFoot.Sport'] = array(1, 2, 3);
+$model_listing['ClubFoot.WalkingFloorContact'] = array(1, 2, 3);
+$model_listing['ClubFoot.WalkingFirstContact'] = array(1, 2, 3);
+$model_listing['ClubFoot.EquinusReduc'] = array(1, 2, 3, 4);
+$model_listing['ClubFoot.VarusReduc'] = array(1, 2, 3, 4);
+$model_listing['ClubFoot.CPBRotation'] = array(1, 2, 3, 4);
+$model_listing['ClubFoot.AdductionReduc'] = array(1, 2, 3, 4);
+$model_listing['ClubFoot.DIMEGLIO'] = array(1, 2, 3, 4);
+$model_listing['ClubFoot.Center'] = $amd_listing['Centers'];
+$model_listing['ClubFoot.EquinusReduc'] = array(1, 2, 3, 4);
+$model_listing['ClubFoot.VarusReduc'] = array(1, 2, 3, 4);
+$model_listing['ClubFoot.CPBRotation'] = array(1, 2, 3, 4);
+$model_listing['ClubFoot.AdductionReduc'] = array(1, 2, 3, 4);
+
+// $model_listing['ClubFoot.MedialCrease'] = $amd_listing['Pain'];
+// $model_listing['ClubFoot.PosteriorCrease'] = $amd_listing['Pain'];
+
+$model_listing['NonricketConsult.Orthopedicdevice65'] = $amd_listing['Device'];
+$model_listing['NonricketConsult.Pain'] = $amd_listing['Pain'];
+$model_listing['NonricketConsult.Pathology'] = $amd_listing['Pathology'];
+$model_listing['NonricketConsult.Plaster62'] = $amd_listing['Plaster'];
+$model_listing['NonricketConsult.Side'] = $amd_listing['Side'];
+$model_listing['NonricketConsult.Surgery66'] = $amd_listing['Surgery'];
+$model_listing['NonricketConsult.Walk'] = $amd_listing['WalkingCapacities'];
+$model_listing['NonricketConsult.Center'] = $amd_listing['Centers'];
+
+$model_listing['OrthopedicDevice.Device'] = $amd_listing['Device'];
+$model_listing['OrthopedicDevice.Goal'] = $amd_listing['OrthopedicGoal'];
+$model_listing['OrthopedicDevice.Orthopedicdevice'] = $amd_listing['CHO/29'];
+$model_listing['OrthopedicDevice.Result'] = $amd_listing['CHO/26'];
+$model_listing['OrthopedicDevice.TypeOfMaterial'] = $amd_listing['Material'];
+$model_listing['OrthopedicDevice.UsingProposal'] = $amd_listing['OrthopedicUsage'];
+
+$model_listing['Patient.District'] = $amd_listing['Districts'];
+$model_listing['Patient.Doesthechildrengotoschool'] = $amd_listing['SchoolAttendee'];
+$model_listing['Patient.Family'] = $amd_listing['ParentalStatus'];
+$model_listing['Patient.Fatherseducation'] = $amd_listing['Schools'];
+$model_listing['Patient.Home'] = $amd_listing['Owning'];
+$model_listing['Patient.Motherseducation'] = $amd_listing['Schools'];
+$model_listing['Patient.Religion'] = $amd_listing['Religions'];
+$model_listing['Patient.Roof'] = $amd_listing['CHO/4'];
+$model_listing['Patient.Sex'] = $amd_listing['Gender'];
+$model_listing['Patient.Sociallevel'] = $amd_listing['SocialLevel'];
+$model_listing['Patient.Union_'] = $amd_listing['Unions'];
+$model_listing['Patient.Upazilla'] = $amd_listing['Upazilla'];
+$model_listing['Patient.Wall'] = $amd_listing['CHO/4'];
+
+$model_listing['RicketConsult.Bossingforehead'] = $amd_listing['Eval03'];
+$model_listing['RicketConsult.Brace'] = $amd_listing['Device'];
+$model_listing['RicketConsult.LaxityLeft'] = $amd_listing['Eval03'];
+$model_listing['RicketConsult.LaxityRight'] = $amd_listing['Eval03'];
+$model_listing['RicketConsult.Leftleg'] = $amd_listing['LegAnalysis'];
+$model_listing['RicketConsult.Littlefishbowl'] = $amd_listing['Frequency'];
+$model_listing['RicketConsult.Milkglass'] = $amd_listing['Frequency'];
+$model_listing['RicketConsult.Nutritionaladvice'] = $amd_listing['NutritionalAdvice'];
+$model_listing['RicketConsult.Onebowlvegetables'] = $amd_listing['Frequency'];
+$model_listing['RicketConsult.Pain'] = $amd_listing['Pain'];
+$model_listing['RicketConsult.Ribbeading'] = $amd_listing['Eval03'];
+$model_listing['RicketConsult.Ricewithchun'] = $amd_listing['Frequency'];
+$model_listing['RicketConsult.Rightleg'] = $amd_listing['LegAnalysis'];
+$model_listing['RicketConsult.SocialLevel'] = $amd_listing['SocialLevel'];
+$model_listing['RicketConsult.Surgery'] = $amd_listing['Surgery'];
+$model_listing['RicketConsult.Twospoonsesamseedgrounded'] = $amd_listing['Frequency'];
+$model_listing['RicketConsult.WalkingDifficulties'] = $amd_listing['WalkingCapacities'];
+$model_listing['RicketConsult.Wristenlargement'] = $amd_listing['Eval03'];
+$model_listing['RicketConsult.Center'] = $amd_listing['Centers'];
+// 		$model_listing['RicketConsult.Advice'] = $amd_listing['CHO/22'];
+// 		$model_listing['RicketConsult.Biologicaltest'] = $amd_listing['XRay'];
+// 		$model_listing['RicketConsult.Nutritionallevel'] = $amd_listing['CHO/8'];
+// 		$model_listing['RicketConsult.Plaster62'] = $amd_listing['Plaster'];
+// 		$model_listing['RicketConsult.Results'] = $amd_listing['CHO/31'];
+//		$model_listing['RicketConsult.XRay46'] = $amd_listing['XRay'];
+
+$model_listing['Surgery.ChestAuscultation'] = $amd_listing['ChestAuscultation'];
+$model_listing['Surgery.GeneralCondition'] = $amd_listing['GoodBad'];
+$model_listing['Surgery.HeartAuscultation'] = $amd_listing['HeartBeat'];
+$model_listing['Surgery.Location'] = $amd_listing['CHO/11'];
+$model_listing['Surgery.MedicalProblem'] = $amd_listing['MedicalProblem'];
+$model_listing['Surgery.MouthAndTeeth'] = $amd_listing['Teeth'];
+$model_listing['Surgery.Operation'] = $amd_listing['Operation'];
+$model_listing['Surgery.Side'] = $amd_listing['Side'];
+$model_listing['Surgery.Skin'] = $amd_listing['Skin'];
+
