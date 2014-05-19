@@ -148,6 +148,10 @@
 	      		<img src="img/reports.gif"/>
 	      		Reports
 	      		</a></button></li>
+	      	<li><button type="button" class="btn btn-default navbar-btn"><a href="/amd/pages/reports">
+	      		<img src="img/reports.gif"/>
+	      		Reports
+	      		</a></button></li>
 	      	<li><button type="button" class="btn btn-default navbar-btn" ng-click="doLogout()" >
 	      		<img src="img/logout.gif"/>
 	      		Logout
