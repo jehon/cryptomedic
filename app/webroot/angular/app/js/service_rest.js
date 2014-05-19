@@ -36,5 +36,21 @@ cryptoApp.factory('service_rest', [ '$http', '$log' , '$rootScope', function($ht
 			});
 			return def;
 		},
+		'checkReference': function(year, order) {
+			var def = jQuery.Deferred();
+			$http.post(root + "/patients/index.json", { 'Patient': {'entryyear': year, 'entryorder': order}})
+			.success(function(data, status, headers, config) {
+				console.log(data);
+				console.log(data.length);
+				if (data.length == 1) {
+					def.resolve(data[0]['Patient']['id']);
+				} else {
+					def.resolve(false);
+				}
+			}).error(function(data, status, headers, config) {
+				def.reject(data);
+			});
+			return def;
+		}
 	};
 }]);
