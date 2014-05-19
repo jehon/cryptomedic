@@ -28,15 +28,17 @@ button img {
 	min-height: 100%;
 	position: absolute;
 	text-align: center;
-	/* opacity: 0.8; */
- 	background: rgba(3, 3, 3, 0.6);
+  	background: rgba(3, 3, 3, 0.6);
+/* 	background-color: #333; */
 	color: #fff;
+	z-index: 500;
 }
 
 .site-wrapper-inner {
 	display: table-cell;
 	vertical-align: top;
 	background-color: #333;  
+/*  	background: rgba(3, 3, 3, 1); */
 }
 
 .cover-container {
