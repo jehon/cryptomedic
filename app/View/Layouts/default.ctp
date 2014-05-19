@@ -155,7 +155,8 @@ if (($_SERVER ['HTTP_HOST'] == 'localhost') || ! file_exists ( __DIR__ . "/../..
 							<a class='textbutton' href="/amd/patients"><img src="<? echo $this->request->webroot; ?>/cryptomedic/img/patientsSearch.gif" alt="" /> Search a patient</a>
 	                        <a class='textbutton' href="/amd/patients/reference"><img src="<? echo $this->request->webroot; ?>/cryptomedic/img/add.gif" alt="" /> Add a patient</a>
 	                        <a class='textbutton' href="/amd/reports/day/"><img src="<? echo $this->request->webroot; ?>/cryptomedic/img/go.gif" alt="" />Day of consult</a>
-							<a class='textbutton' href="/amd/users/logout"><img src="<? echo $this->request->webroot; ?>/cryptomedic/img/exit.gif" alt="" /><label for="Logout">Logout</label></a>
+	                        <a class='textbutton' href="/amd/home/reports"><img src="<? echo $this->request->webroot; ?>/cryptomedic/img/go.gif" alt="" />All reports</a>
+	                        <a class='textbutton' href="/amd/users/logout"><img src="<? echo $this->request->webroot; ?>/cryptomedic/img/exit.gif" alt="" /><label for="Logout">Logout</label></a>
 	                    <?php } ?>
 					</div>
 				</td>
