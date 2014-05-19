@@ -5,8 +5,11 @@ var cryptoApp = angular.module('app_cryptomedic', [ 'ngRoute' ])
     $routeProvider.when('/', {
     	templateUrl: 'partials/home.php',
         controller: 'ctrl_home'
-    })
-    .when('/blank', {
+    }).when('/search', {
+    	templateUrl: 'partials/search.php',
+    }).when('/patient/:id', {
+    	templateUrl: 'partials/patient.php',
+    }).when('/blank', {
     	templateUrl: 'partials/blank.html',
     }).otherwise({ 'redirectTo': '/blank'});
 }])
@@ -31,13 +34,13 @@ cryptoApp.controller('ctrl_cryptomedic', [ '$scope', 'service_rest', function($s
 	$scope.busyMessages = [ ];
 	$scope.busyMessagesDone = false;
 	
-	$scope.doBusy = function(msg) {
+	$scope.doBusy = function(msg, wait) {
+		if (typeof(wait) == 'undefined') wait = false;
 		jQuery("#busy").modal('show');
 		var c = this.busyMessages.push({ 'message': msg, 'done': false }) - 1;
 		this.busyMessageDone = false;
 		$scope.safeApply();
 		return function() { 
-			console.log("doBusy is done");
 			$scope.busyMessages[c].status = true;
 			$scope.safeApply();
 			// If all messages are ok, then hide it
@@ -47,10 +50,15 @@ cryptoApp.controller('ctrl_cryptomedic', [ '$scope', 'service_rest', function($s
 			}
 			if (allOk) {
 				$scope.busyMessagesDone = true;
-				setTimeout(function() {
+				var done = function() {
 					jQuery("#busy").modal('hide'); 
 					$scope.busyMessages = [];
-				}, 2000);
+				};
+				if (wait) {
+					setTimeout(done, 2000);
+				} else {
+					done();
+				}
 			}
 		};
 	};
@@ -64,7 +72,7 @@ cryptoApp.controller('ctrl_cryptomedic', [ '$scope', 'service_rest', function($s
 	}
 	$scope.doLogin = function() {
 		$scope.loginError = false;
-		var busyEnd = $scope.doBusy("Checking your login/password with the online server");
+		var busyEnd = $scope.doBusy("Checking your login/password with the online server", true);
 		service_rest.doLogin(this.username, this.password)
 			.done(function() {
 				console.log("login ok");
@@ -86,12 +94,10 @@ cryptoApp.controller('ctrl_cryptomedic', [ '$scope', 'service_rest', function($s
 
 	$scope.doLogout = function() {
 		console.log("logout");
-		var busyEnd = $scope.doBusy("Disconnecting from the server");
+		var busyEnd = $scope.doBusy("Disconnecting from the server", true);
 		service_rest.doLogout()
-			.done(function() {
-			})
-			.fail(function(data) {
-			})
+			.done(function() {})
+			.fail(function(data) {})
 			.always(function(data) {
 				$scope.logged = false;
 				busyEnd();
