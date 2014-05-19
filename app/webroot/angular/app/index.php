@@ -144,9 +144,9 @@
 	      		<img src="img/home.gif"/>
 	      		Home
 	      		</a></button></li>
-	      	<li><button type="button" class="btn btn-default navbar-btn"><a href="/amd/pages/reports">
-	      		<img src="img/reports.gif"/>
-	      		Reports
+	      	<li><button type="button" class="btn btn-default navbar-btn"><a href="#/search">
+	      		<img src="img/patientsSearch.gif"/>
+	      		Search a patient
 	      		</a></button></li>
 	      	<li><button type="button" class="btn btn-default navbar-btn"><a href="/amd/pages/reports">
 	      		<img src="img/reports.gif"/>
