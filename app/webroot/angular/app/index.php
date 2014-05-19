@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <?php 
+	require "php/script.php";
+
 	$dev = false;
 	$version_db = $version_app = time();
 	$version_app = trim ( file_get_contents ( __DIR__ . "/../../../../../amd.version" ) );
@@ -29,9 +31,9 @@
 	<link href="img/favicon.ico" type="image/x-icon" rel="shortcut icon" />
 	
 	<!-- jquery -->
-	<script src="bower_components/jquery/dist/jquery.min.js?<? echo $version_app; ?>"></script>
-    <script src="bower_components/jquery-ui/ui/minified/jquery-ui.min.js?<? echo $version_app; ?>"></script>
-	<link  href="bower_components/jquery-ui/themes/base/minified/jquery-ui.min.css?<? echo $version_app; ?>" rel="stylesheet" />
+	<?php (new Script())->url("bower_components/jquery/dist/jquery.min.js")->js()->dependFile()->toPrint(); ?>
+	<?php (new Script())->url("bower_components/jquery-ui/ui/minified/jquery-ui.min.js")->js()->dependFile()->toPrint(); ?>
+	<?php (new Script())->url("bower_components/jquery-ui/themes/base/minified/jquery-ui.min.css")->css()->dependFile()->toPrint(); ?>
 	
 	<!-- bootstrap -->
     <script src="bower_components/bootstrap/dist/js/bootstrap.min.js?<? echo $version_app; ?>"></script>
@@ -55,7 +57,6 @@
     <script src="js/cryptomedic.js?<? echo $version_app; ?>"></script>
     <script src="js/application.js?<? echo $version_app; ?>"></script>
     <script src="js/service_rest.js?<? echo $version_app; ?>"></script>
-    <script src="js/directive_crlabel.js?<? echo $version_app; ?>"></script>
     <script src="js/ctrl_home.js?<? echo $version_app; ?>"></script>
 <!--     <script src="js/old_application.js?<? echo $version_app; ?>"></script> -->
 <!--     <script src="js/amd_stats_datas.js?<? echo $version_app; ?>"></script> -->
@@ -70,9 +71,9 @@
 	?>
 	<script src="/amd/users/settings.json?var=cryptomedic.settings"></script>
 	
-	<script type="text/javascript" src="/amd/labels/index.json?var=cryptomedic.labels&version=<? echo $version_db; ?>"></script>
     <script type="text/javascript" src="/amd/prices/index.json?var=cryptomedic.prices&version=<? echo $version_db; ?>"></script>
-	
+	<script type="text/javascript" src="/amd/labels/index.json?var=cryptomedic.labels&version=<? echo $version_db; ?>"></script>
+	<script type="text/javascript" src="/amd/labels/references.json?var=cryptomedic.reflabels&version=<? echo $version_db; ?>"></script>
 </head>
 <body ng-app="app_cryptomedic" ng-controller="ctrl_cryptomedic" id="ng-app">
 	<!--  Login screen -->
