@@ -10,12 +10,22 @@ class Script {
 	public function css() { 		$this->type = "css"; return $this; }
 	public function js() { 			$this->type = "js"; return $this; }
 	
+	function cached() {
+		$this->opt["cached"] = 1;
+		return $this;
+	}
+	
 	function dependFile($file = null) {
 		if ($file == null) $file = $this->_url;
 		if (!file_exists($file)) {
 			throw new Exception("Script: $file does not exists");
 		}
 		$this->opt[] = date("YmdHis", filemtime($file));
+		return $this;
+	}
+	
+	function dependDb() {
+		$opt[] = 1;
 		return $this;
 	}
 	

@@ -1,20 +1,6 @@
 <!DOCTYPE html>
 <?php 
 	require "php/script.php";
-
-	$dev = false;
-	$version_db = $version_app = time();
-	$version_app = trim ( file_get_contents ( __DIR__ . "/../../../../../amd.version" ) );
-	
-	//$version_db = $Setting->find ( 'first', array ('conditions' => array ('Setting.id' => "version")));
-	//$version_db = $version_db ['Setting'] ['value'];
-	//$version_db = str_replace ( array(":", " ",	"-"), "", $version_db );
-	if (($_SERVER ['HTTP_HOST'] == 'localhost') || ! file_exists ( __DIR__ . "/../../../../amd.version" )) {
-		// Dev version: disable the whole caching system
-		$dev = true;
-		$version_db = $version_app = time();
-	}
-
 	require("../../../Lib/cryptomedic.php");
 ?>
 <!--[if lt IE 7]>      <html lang="en" ng-app="app_cryptomedic" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
@@ -30,50 +16,49 @@
 	<link href="img/favicon.ico" type="image/x-icon" rel="icon" />
 	<link href="img/favicon.ico" type="image/x-icon" rel="shortcut icon" />
 	
-	<!-- jquery -->
-	<?php (new Script())->url("bower_components/jquery/dist/jquery.min.js")->js()->dependFile()->toPrint(); ?>
-	<?php (new Script())->url("bower_components/jquery-ui/ui/minified/jquery-ui.min.js")->js()->dependFile()->toPrint(); ?>
-	<?php (new Script())->url("bower_components/jquery-ui/themes/base/minified/jquery-ui.min.css")->css()->dependFile()->toPrint(); ?>
-	
-	<!-- bootstrap -->
-	<?php (new Script())->url("bower_components/bootstrap/dist/js/bootstrap.min.js")->js()->dependFile()->toPrint(); ?>
-	<?php (new Script())->url("bower_components/bootstrap/dist/css/bootstrap.min.css")->css()->dependFile()->toPrint(); ?>
-
 	<!-- Adapt upgrade.html also -->
 	<!--[if lt IE 7]>
 		<script type="text/javascript">
 			window.location.href = "/amd/cryptomedic/upgrade.html";
 		</script>
 	<![endif]-->
-
-	<!-- angular -->
-	<?php (new Script())->url("bower_components/html5-boilerplate/css/normalize.css")->css()->dependFile()->toPrint(); ?>
-	<?php (new Script())->url("bower_components/html5-boilerplate/css/main.css")->css()->dependFile()->toPrint(); ?>
-	<?php (new Script())->url("bower_components/html5-boilerplate/js/vendor/modernizr-2.6.2.min.js")->js()->dependFile()->toPrint(); ?>
-	<?php (new Script())->url("bower_components/angular/angular.min.js")->js()->dependFile()->toPrint(); ?>
-	<?php (new Script())->url("bower_components/angular-route/angular-route.min.js")->js()->dependFile()->toPrint(); ?>
 	
-	<!-- personnal -->
-	<?php (new Script())->url("js/cryptomedic.js")->js()->dependFile()->toPrint(); ?>
-	<?php (new Script())->url("js/application.js")->js()->dependFile()->toPrint(); ?>
-	<?php (new Script())->url("js/service_rest.js")->js()->dependFile()->toPrint(); ?>
-	<?php (new Script())->url("js/ctrl_home.js")->js()->dependFile()->toPrint(); ?>
-	<?php (new Script())->url("js/ctrl_file.js")->js()->dependFile()->toPrint(); ?>
-<!--     <script src="js/old_application.js?<? echo $version_app; ?>"></script> -->
-<!--     <script src="js/amd_stats_datas.js?<? echo $version_app; ?>"></script> -->
-
-    <link  href="css/application.css?<? echo $version_app; ?>" rel="stylesheet" />
-	<?php
-		foreach ( $model2controller as $m => $c ) {
-			echo "<script type='text/javascript' "
-			    . "src='/amd/$c/structure.json?var=cryptomedic.structure.$m&version=$version_db'"
-			    . "></script>";
-		}
-	?>
+<?php 
+	// jquery
+	(new Script())->url("bower_components/jquery/dist/jquery.min.js")->cached()->js()->dependFile()->toPrint();
+	(new Script())->url("bower_components/jquery-ui/ui/minified/jquery-ui.min.js")->cached()->js()->dependFile()->toPrint();
+	(new Script())->url("bower_components/jquery-ui/themes/base/minified/jquery-ui.min.css")->cached()->css()->dependFile()->toPrint();
 	
-	<?php (new Script())->url("/amd/users/settings.json?var=cryptomedic.settings")->js()->dependDBTable("settings")->toPrint(); ?>
-	<?php (new Script())->url("/amd/prices/index.json?var=cryptomedic.prices")->js()->dependDBTable("prices")->toPrint(); ?>
-	<?php (new Script())->url("/amd/labels/index.json?var=cryptomedic.labels")->js()->dependDBTable("labels")->toPrint(); ?>
+	// <!-- bootstrap -->
+	(new Script())->url("bower_components/bootstrap/dist/js/bootstrap.min.js")->cached()->js()->dependFile()->toPrint();
+	(new Script())->url("bower_components/bootstrap/dist/css/bootstrap.min.css")->cached()->css()->dependFile()->toPrint();
+
+
+	// <!-- angular -->
+	(new Script())->url("bower_components/html5-boilerplate/css/normalize.css")->cached()->css()->dependFile()->toPrint();
+	(new Script())->url("bower_components/html5-boilerplate/css/main.css")->cached()->css()->dependFile()->toPrint();
+	(new Script())->url("bower_components/html5-boilerplate/js/vendor/modernizr-2.6.2.min.js")->cached()->js()->dependFile()->toPrint();
+	(new Script())->url("bower_components/angular/angular.min.js")->cached()->js()->dependFile()->toPrint();
+	(new Script())->url("bower_components/angular-route/angular-route.min.js")->cached()->js()->dependFile()->toPrint();
+	
+	// <!-- personnal -->
+	(new Script())->url("js/cryptomedic.js")->cached()->js()->dependFile()->toPrint();
+	(new Script())->url("js/application.js")->cached()->js()->dependFile()->toPrint();
+	(new Script())->url("js/service_rest.js")->cached()->js()->dependFile()->toPrint();
+	(new Script())->url("js/ctrl_home.js")->cached()->js()->dependFile()->toPrint();
+	(new Script())->url("js/ctrl_file.js")->cached()->js()->dependFile()->toPrint();
+	// (new Script())->url("js/old_application.js")->cached()->css()->dependFile()->toPrint();
+	// (new Script())->url("js/amd_stats_datas.js")->cached()->css()->dependFile()->toPrint();
+
+	(new Script())->url("css/application.css")->cached()->css()->dependFile()->toPrint();
+	foreach ( $model2controller as $m => $c ) {
+		(new Script())->url("/amd/$c/structure.json?var=cryptomedic.structure.$m")->cached()->js()->dependDB()->toPrint();
+	}
+	
+	(new Script())->url("/amd/users/settings.json?var=cryptomedic.settings")->cached()->js()->dependDBTable("settings")->toPrint();
+	(new Script())->url("/amd/prices/index.json?var=cryptomedic.prices")->cached()->js()->dependDBTable("prices")->toPrint();
+	(new Script())->url("/amd/labels/index.json?var=cryptomedic.labels")->cached()->js()->dependDBTable("labels")->toPrint(); 
+?>
 </head>
 <body ng-app="app_cryptomedic" ng-controller="ctrl_cryptomedic" id="ng-app">
 	<!--  Login screen -->

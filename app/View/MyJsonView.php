@@ -24,8 +24,9 @@ class MyJsonView extends JsonView {
 		$mycache_seconds = 3600 * 24 * 365;
 		
 		if ((array_key_exists("cached", $this->viewVars) && $this->viewVars["cached"]) 
+			|| array_key_exists("cached", $_REQUEST)
 			|| ($this->request->query('version'))) {
-			
+
 			$this->response->cache(0, '+365days');
 			$this->response->sharable(true, $mycache_seconds);
 			//header("Expires: " . gmdate("D, d M Y H:i:s", time() + $mycache_seconds) . " GMT");
