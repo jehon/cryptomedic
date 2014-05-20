@@ -95,8 +95,8 @@
 				</div>
 				<div class="modal-body">
 					<div ng-repeat="m in busyMessages">
-						<span ng-if="!m.status" class="glyphicon glyphicon-asterisk"></span>
-						<span ng-if="m.status" class="glyphicon glyphicon-ok"></span>
+						<img ng-hide="m.status" src="img/waiting.gif" />
+						<span ng-show="m.status" class="glyphicon glyphicon-ok"></span>
 						{{m.message}}
 					</div>
 				</div>
