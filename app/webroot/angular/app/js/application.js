@@ -1,4 +1,17 @@
 "use strict";
+/*
+** Add on top 
+<?php require_once(__DIR__ . "/../php/templates.php"); ?>
+
+** Replace:
+\{@input header="([^"]+)"\/\}
+<?php write("$1"); ?>
+
+** Replace:
+\{@input header="([^"]+)"[ ]*extra="([^"]*)"\/\}
+<?php write("$1", "$2"); ?>
+
+*/
 
 var cryptoApp = angular.module('app_cryptomedic', [ 'ngRoute' ])
 .config([ '$routeProvider', function($routeProvider) {
@@ -8,6 +21,7 @@ var cryptoApp = angular.module('app_cryptomedic', [ 'ngRoute' ])
     }).when('/search', {
     	templateUrl: 'partials/search.php',
     }).when('/patient/:id', {
+    	controller: 'ctrl_file',
     	templateUrl: 'partials/patient.php',
     }).when('/blank', {
     	templateUrl: 'partials/blank.html',
@@ -33,6 +47,13 @@ cryptoApp.controller('ctrl_cryptomedic', [ '$scope', 'service_rest', function($s
 	$scope.pending = false;
 	$scope.busyMessages = [ ];
 	$scope.busyMessagesDone = false;
+
+	$scope.link = function(key) {
+		if (key == null) key = 0;
+		if (typeof(cryptomedic.labels[key]) == "undefined")
+			return "UNKNOWN LABEL " + key;
+		return cryptomedic.labels[key].text;
+	}
 	
 	$scope.doBusy = function(msg, wait) {
 		if (typeof(wait) == 'undefined') wait = false;

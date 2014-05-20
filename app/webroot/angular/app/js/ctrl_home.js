@@ -17,7 +17,9 @@ cryptoApp.controller('ctrl_home', [ '$scope', '$location', 'service_rest' , func
 				if (data === false) {
 					$scope.searched = true;
 				} else {
-					console.log(data);
+					busyEnd();
+					// end the busy mode
+					jQuery("#busy").modal('hide');
 					window.location.hash = "/patient/" + data;
 				}
 			})

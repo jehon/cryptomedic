@@ -38,6 +38,93 @@ function _label($key) {
 	return $version["english"];
 }
 
+function _parseKey($key) {
+	$data = explode(".", $key);
+	if (count($data) != 2) {
+		throw new Exception("Read: key is not a two parts: '$key'");
+	}
+	$model = $data[0];
+	$field = $data[1];
+
+	global $mysqli;
+	$res = $mysqli->query("SELECT $field FROM patients LIMIT 1");
+	$structures = $res->fetch_fields();
+	$structure = $structures[0];
+
+	$structure->myFlags = array();
+	$constants = get_defined_constants(true);
+	foreach ($constants['mysqli'] as $c => $n) {
+		if (preg_match('/MYSQLI_(.*)_FLAG$/', $c) && (($structure->flags & $n) > 0)) {
+			$structure->myFlags[$c] = 1;
+		}
+	}
+
+	switch ($structure->type) {
+		case MYSQLI_TYPE_TINY:
+		case MYSQLI_TYPE_BIT:
+			$structure->myType = "boolean";
+			break;
+		case MYSQLI_TYPE_DECIMAL:
+		case MYSQLI_TYPE_NEWDECIMAL:
+		case MYSQLI_TYPE_SHORT:
+		case MYSQLI_TYPE_LONG:
+		case MYSQLI_TYPE_LONGLONG:
+		case MYSQLI_TYPE_INT24:
+			$structure->myType = "numeric";
+			break;
+		case MYSQLI_TYPE_FLOAT:
+		case MYSQLI_TYPE_DOUBLE:
+			$structure->myType = "float";
+			break;
+		case MYSQLI_TYPE_TIMESTAMP:
+		case MYSQLI_TYPE_DATETIME:
+			$structure->myType = "datetime";
+			break;
+		case MYSQLI_TYPE_VAR_STRING:
+		case MYSQLI_TYPE_STRING:
+		case MYSQLI_TYPE_CHAR:
+		case MYSQLI_TYPE_TINY_BLOB:
+		case MYSQLI_TYPE_MEDIUM_BLOB:
+		case MYSQLI_TYPE_LONG_BLOB:
+		case MYSQLI_TYPE_BLOB:
+			$structure->myType = "text";
+			break;
+		case MYSQLI_TYPE_TIME:
+		case MYSQLI_TYPE_DATE:
+		case MYSQLI_TYPE_YEAR:
+		case MYSQLI_TYPE_NEWDATE:
+		case MYSQLI_TYPE_INTERVAL:
+		case MYSQLI_TYPE_ENUM:
+		case MYSQLI_TYPE_SET:
+		case MYSQLI_TYPE_GEOMETRY:
+		default:
+			// http://www.php.net/manual/en/mysqli.constants.php
+			var_dump($structure);
+			$constants = get_defined_constants(true);
+			foreach ($constants['mysqli'] as $c => $n)
+			if (preg_match('/^MYSQLI_TYPE_(.*)/', $c, $m) && ($n == $structure->type))
+				var_dump($c);
+			//$types[$n] = $m[1];
+
+			throw new Exception("Unhandled type for field $field");
+	}
+	global $model_listing;
+	if (array_key_exists($key, $model_listing)) {
+		$structure->myType = "list";
+		$structure->listing = $model_listing[$key];
+		if (array_key_exists('labels', $structure->listing) && ($structure->listing['labels'])) {
+			$list = $structure->listing;
+			$structure->myType = "linkedList";
+			unset($list['labels']);
+			$structure->listing = [];
+			foreach($list as $k => $v){
+				$structure->listing[$v] = _label($v);
+			}
+		}
+	}
+	return $structure;
+}
+
 function label($key) {
 	echo "<label for='$key'>" . _label($key) . "</label>\n";
 }
@@ -58,13 +145,16 @@ function read($key, $type = null) {
 		case 'numeric':
 		case 'float':
 		case 'datetime':
-			echo "<span id='$key'>{{" . $struct->name . "}}</span>";
+		case 'list':
+			echo "<span id='$key'>{{" . $key . "}}</span>";
 			break;
 		case 'boolean':
-			echo "<span id='$key-true' ng-show='" . $struct->name . "'><img src='img/boolean-true.gif'></span>"
-					. "<span id='$key-true' ng-hide='" . $struct->name . "'><img src='img/boolean-false.gif'></span>";
-		case 'link':
-			//TODO
+			echo "<span id='$key-true' ng-show='" . $key. "'><img src='img/boolean-true.gif'></span>"
+					. "<span id='$key-true' ng-hide='" . $key . "'><img src='img/boolean-false.gif'></span>";
+			break;
+		case 'linkedList':
+			echo "<span id='$key'>{{link($key)}}</span>";
+			break;
 		default:
 			echo "$key input";
 	}
@@ -73,90 +163,4 @@ function read($key, $type = null) {
 function write($key, $allownull) {
 	$struct = _parseKey($key);
 	read($key);
-}
-
-function _parseKey($key) {
-	$data = explode(".", $key);
-	if (count($data) != 2) {
-		throw new Exception("Read: key is not a two parts: '$key'");
-	}
-	$model = $data[0];
-	$field = $data[1];
-
-	global $mysqli;
-	$res = $mysqli->query("SELECT $field FROM patients LIMIT 1");
-	$structures = $res->fetch_fields();
-	$structure = $structures[0];
-	
-	$structure->myFlags = array();
-	$constants = get_defined_constants(true);
-	foreach ($constants['mysqli'] as $c => $n) {
-		if (preg_match('/MYSQLI_(.*)_FLAG$/', $c) && (($structure->flags & $n) > 0)) {
-			$structure->myFlags[$c] = 1; 
-		}
-	}
-	
-	switch ($structure->type) {
-		case MYSQLI_TYPE_TINY:
-		case MYSQLI_TYPE_BIT:
-				$structure->myType = "boolean";
-				break;
-		case MYSQLI_TYPE_DECIMAL:
-		case MYSQLI_TYPE_NEWDECIMAL:
-		case MYSQLI_TYPE_SHORT:
-		case MYSQLI_TYPE_LONG:
-		case MYSQLI_TYPE_LONGLONG:
-		case MYSQLI_TYPE_INT24:
-				$structure->myType = "numeric";
-				break;
-		case MYSQLI_TYPE_FLOAT:
-		case MYSQLI_TYPE_DOUBLE:
-				$structure->myType = "float";
-				break;
-		case MYSQLI_TYPE_TIMESTAMP:
-		case MYSQLI_TYPE_DATETIME:
-				$structure->myType = "datetime";
-				break;
-		case MYSQLI_TYPE_VAR_STRING:
-		case MYSQLI_TYPE_STRING:
-		case MYSQLI_TYPE_CHAR:
-		case MYSQLI_TYPE_TINY_BLOB:
-		case MYSQLI_TYPE_MEDIUM_BLOB:
-		case MYSQLI_TYPE_LONG_BLOB:
-		case MYSQLI_TYPE_BLOB:
-			$structure->myType = "text";
-				break;
-		case MYSQLI_TYPE_TIME:
-		case MYSQLI_TYPE_DATE: 
-		case MYSQLI_TYPE_YEAR:
-		case MYSQLI_TYPE_NEWDATE:
-		case MYSQLI_TYPE_INTERVAL:
-		case MYSQLI_TYPE_ENUM:
-		case MYSQLI_TYPE_SET:
-		case MYSQLI_TYPE_GEOMETRY:
-		default:
-				// http://www.php.net/manual/en/mysqli.constants.php
-				var_dump($structure);
-				$constants = get_defined_constants(true);
-				foreach ($constants['mysqli'] as $c => $n) 
-					if (preg_match('/^MYSQLI_TYPE_(.*)/', $c, $m) && ($n == $structure->type))
-						var_dump($c); 
-						//$types[$n] = $m[1];
-						
-				throw new Exception("Unhandled type for field $field");
-	}
-	global $model_listing;
-	if (array_key_exists($key, $model_listing)) {
-		$structure->listing = $model_listing[$key];
-		if (array_key_exists('labels', $structure->listing) && ($structure->listing['labels'])) {
-			$list = $structure->listing;
-			unset($list['labels']);
-			$structure->listing = [];
-			foreach($list as $k => $v){
-				$structure->listing[$v] = _label($v);
-			}
-		}
-		$structure->myType = "link";
-	}
-	return $structure;
 }
