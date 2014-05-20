@@ -54,11 +54,7 @@ cryptoApp.factory('service_rest', [ '$http', '$log' , '$rootScope', function($ht
 			var def = jQuery.Deferred();
 			$http.post(root + "/patients/view/" + id + ".json")
 			.success(function(data, status, headers, config) {
-				if (data.length == 1) {
-					def.resolve(data);
-				} else {
-					def.resolve(false);
-				}
+				def.resolve(data);
 			}).error(function(data, status, headers, config) {
 				def.reject(data);
 			});
