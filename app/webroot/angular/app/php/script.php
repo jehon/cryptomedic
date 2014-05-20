@@ -13,7 +13,7 @@ class Script {
 	function dependFile($file = null) {
 		if ($file == null) $file = $this->_url;
 		if (!file_exists($file)) {
-			throw Exception("Script: $file does not exists");
+			throw new Exception("Script: $file does not exists");
 		}
 		$this->opt[] = date("YmdHis", filemtime($file));
 		return $this;
@@ -31,10 +31,12 @@ class Script {
 	function toPrint() {
 		switch($this->type) {
 			case "js":
-				echo "<script type='text/javascript' src='" . $this->_url . "?" . $this->_params() . "'></script>\n";
+				echo "<script type='text/javascript' src='" . $this->_url 
+					. (strpos($this->_url, "?") > 0 ? "&" :  "?") . $this->_params() . "'></script>\n";
 				break;
 			case "css":
-				echo "<link rel='stylesheet' href='" . $this->_url . "?" . $this->_params() . "'/>\n";
+				echo "<link rel='stylesheet' href='" . $this->_url 
+					. (strpos($this->_url, "?") > 0 ? "&" :  "?") . $this->_params() . "'/>\n";
 				break;
 			default:
 				throw Exception("Invalid type: $type");				

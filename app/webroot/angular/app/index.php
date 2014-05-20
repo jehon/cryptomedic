@@ -36,8 +36,8 @@
 	<?php (new Script())->url("bower_components/jquery-ui/themes/base/minified/jquery-ui.min.css")->css()->dependFile()->toPrint(); ?>
 	
 	<!-- bootstrap -->
-    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js?<? echo $version_app; ?>"></script>
-	<link  href="bower_components/bootstrap/dist/css/bootstrap.min.css?<? echo $version_app; ?>" rel="stylesheet" />
+	<?php (new Script())->url("bower_components/bootstrap/dist/js/bootstrap.min.js")->js()->dependFile()->toPrint(); ?>
+	<?php (new Script())->url("bower_components/bootstrap/dist/css/bootstrap.min.css")->css()->dependFile()->toPrint(); ?>
 
 	<!-- Adapt upgrade.html also -->
 	<!--[if lt IE 7]>
@@ -47,17 +47,18 @@
 	<![endif]-->
 
 	<!-- angular -->
-	<link  href="bower_components/html5-boilerplate/css/normalize.css?<? echo $version_app; ?>" rel="stylesheet" >
-	<link  href="bower_components/html5-boilerplate/css/main.css?<? echo $version_app; ?>" rel="stylesheet" >
-	<script src="bower_components/html5-boilerplate/js/vendor/modernizr-2.6.2.min.js?<? echo $version_app; ?>"></script>
-	<script src="bower_components/angular/angular.js"></script>
-	<script src="bower_components/angular-route/angular-route.min.js"></script>
-
+	<?php (new Script())->url("bower_components/html5-boilerplate/css/normalize.css")->css()->dependFile()->toPrint(); ?>
+	<?php (new Script())->url("bower_components/html5-boilerplate/css/main.css")->css()->dependFile()->toPrint(); ?>
+	<?php (new Script())->url("bower_components/html5-boilerplate/js/vendor/modernizr-2.6.2.min.js")->js()->dependFile()->toPrint(); ?>
+	<?php (new Script())->url("bower_components/angular/angular.min.js")->js()->dependFile()->toPrint(); ?>
+	<?php (new Script())->url("bower_components/angular-route/angular-route.min.js")->js()->dependFile()->toPrint(); ?>
+	
 	<!-- personnal -->
-    <script src="js/cryptomedic.js?<? echo $version_app; ?>"></script>
-    <script src="js/application.js?<? echo $version_app; ?>"></script>
-    <script src="js/service_rest.js?<? echo $version_app; ?>"></script>
-    <script src="js/ctrl_home.js?<? echo $version_app; ?>"></script>
+	<?php (new Script())->url("js/cryptomedic.js")->js()->dependFile()->toPrint(); ?>
+	<?php (new Script())->url("js/application.js")->js()->dependFile()->toPrint(); ?>
+	<?php (new Script())->url("js/service_rest.js")->js()->dependFile()->toPrint(); ?>
+	<?php (new Script())->url("js/ctrl_home.js")->js()->dependFile()->toPrint(); ?>
+	<?php (new Script())->url("js/ctrl_file.js")->js()->dependFile()->toPrint(); ?>
 <!--     <script src="js/old_application.js?<? echo $version_app; ?>"></script> -->
 <!--     <script src="js/amd_stats_datas.js?<? echo $version_app; ?>"></script> -->
 
@@ -69,11 +70,10 @@
 			    . "></script>";
 		}
 	?>
-	<script src="/amd/users/settings.json?var=cryptomedic.settings"></script>
 	
-    <script type="text/javascript" src="/amd/prices/index.json?var=cryptomedic.prices&version=<? echo $version_db; ?>"></script>
-	<script type="text/javascript" src="/amd/labels/index.json?var=cryptomedic.labels&version=<? echo $version_db; ?>"></script>
-	<script type="text/javascript" src="/amd/labels/references.json?var=cryptomedic.reflabels&version=<? echo $version_db; ?>"></script>
+	<?php (new Script())->url("/amd/users/settings.json?var=cryptomedic.settings")->js()->dependDBTable("settings")->toPrint(); ?>
+	<?php (new Script())->url("/amd/prices/index.json?var=cryptomedic.prices")->js()->dependDBTable("prices")->toPrint(); ?>
+	<?php (new Script())->url("/amd/labels/index.json?var=cryptomedic.labels")->js()->dependDBTable("labels")->toPrint(); ?>
 </head>
 <body ng-app="app_cryptomedic" ng-controller="ctrl_cryptomedic" id="ng-app">
 	<!--  Login screen -->
