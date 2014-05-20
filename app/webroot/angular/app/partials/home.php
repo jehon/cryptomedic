@@ -15,17 +15,17 @@
 				</li>
 			</ul>
 		</div>
-		<input ng-model="generate" type='checkbox' value='1'> Generate a reference for me<br>
+		<input ng-model="generate" ng-change="resetSearched()" type='checkbox' value='1'> Generate a reference for me<br>
 		<br>
 		<? label('Patient.entryyear'); ?>
-       	<input ng-model="year" type="number" class="form-control" placeholder="Entry year" required autofocus>
+       	<input ng-model="entryyear" ng-change="resetSearched()" type="number" class="form-control" placeholder="Entry year" required autofocus>
 
        	<span ng-show="generate != true">
 			<? label('Patient.entryorder'); ?>
-	       	<input ng-model="order" type="number" class="form-control" placeholder="Entry order">
+	       	<input ng-model="entryorder" ng-change="resetSearched()" type="number" class="form-control" placeholder="Entry order">
        	</span>
 		<br>
-		<div ng-if="(year > 0) && ((order > 0) || (generate == true))" class="text-center">
+		<div ng-if="(entryyear > 0) && ((entryorder > 0) || (generate == true))" class="text-center">
 			<button ng-click="checkReference()" class="btn btn-primary" >Check it</button>
 		</div>
 	</fieldset>
@@ -39,4 +39,3 @@
 		
 	</fieldset>
 </div>
-	
