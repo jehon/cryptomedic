@@ -2,8 +2,8 @@
 
 cryptoApp.controller('ctrl_home', [ '$scope', '$location', 'service_rest' , function($scope, $location, service_rest) { 
 	$scope.searched = false;
-	$scope.year = 2001;
-	$scope.order = 1;
+	$scope.entryyear = 2001;
+	$scope.entryorder = 1;
 	$scope.generate = false;
 
 	$scope.resetSearched = function() {
@@ -11,8 +11,8 @@ cryptoApp.controller('ctrl_home', [ '$scope', '$location', 'service_rest' , func
 	};
 	
 	$scope.checkReference = function() {
-	var busyEnd = $scope.doBusy("Checking the reference on the server");
-		service_rest.checkReference($scope.year, $scope.order)
+		var busyEnd = $scope.doBusy("Checking the reference on the server");
+		service_rest.checkReference($scope.entryyear, $scope.entryorder)
 			.done(function(data) {
 				if (data === false) {
 					$scope.searched = true;
