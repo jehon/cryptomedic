@@ -23,7 +23,7 @@ var cryptoApp = angular.module('app_cryptomedic', [ 'ngRoute' ])
     	templateUrl: 'partials/search.php',
     }).when('/patient/:id', {
     	controller: 'ctrl_file',
-    	templateUrl: 'partials/patient.php',
+    	templateUrl: 'partials/file.html',
     }).when('/blank', {
     	templateUrl: 'partials/blank.html',
     }).otherwise({ 'redirectTo': '/blank'});
@@ -73,7 +73,6 @@ cryptoApp.controller('ctrl_cryptomedic', [ '$scope', 'service_rest', function($s
 			for(var m in $scope.busy.messages) {
 				ok = ok && $scope.busy.messages[m].status;
 			}
-			console.log(ok);
 			return ok;
 		}
 		return function() { 
