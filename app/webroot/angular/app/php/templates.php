@@ -162,6 +162,7 @@ function read($key, $type = null) {
 }
 
 function write($key, $allownull) {
+	// TODO: write
 	$struct = _parseKey($key);
 	read($key);
 }

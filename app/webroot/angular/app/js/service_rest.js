@@ -1,5 +1,20 @@
 "use strict";
 
+// TODO: manage errors codes (interceptors ?)
+
+//	$httpProvider.interceptors.push(function($q) {
+//		// https://docs.angularjs.org/api/ng/service/$http
+//		return {
+//			'request': function(config) {
+//				return config || $q.when(config);
+//			},
+//		
+//			'response': function(response) {
+//				return response || $q.when(response);
+//			}
+//		};
+//	});
+
 cryptoApp.factory('service_rest', [ '$http', '$log' , '$rootScope', function($http, $log, $rootScope) {
 	var root = "/amd";
 	return {

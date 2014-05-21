@@ -22,7 +22,7 @@ cryptoApp.controller('ctrl_home', [ '$scope', '$location', 'service_rest' , func
 					jQuery("#busy").modal('hide');
 					setTimeout(function() {
 						window.location.hash = "/patient/" + data;
-					}, 10);
+					}, 1);
 				}
 			})
 			.fail(function(data) {
