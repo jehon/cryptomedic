@@ -29,13 +29,8 @@ class MyJsonView extends JsonView {
 
 			$this->response->cache(0, '+365days');
 			$this->response->sharable(true, $mycache_seconds);
-			//header("Expires: " . gmdate("D, d M Y H:i:s", time() + $mycache_seconds) . " GMT");
-			//header("Pragma: cache");
-			//header("Cache-Control: max-age=$mycache_seconds");
 		} else {
 			$this->response->disableCache();
-			//header("Pragma: no-cache");
-			//header("Cache-Control: no-store, no-cache, max-age=0, must-revalidate");
 		}
 		
 		$res = "";
