@@ -13,6 +13,7 @@
 
 */
 
+// TODO: dependants partials
 var cryptoApp = angular.module('app_cryptomedic', [ 'ngRoute' ])
 .config([ '$routeProvider', function($routeProvider) {
     $routeProvider.when('/', {
@@ -45,42 +46,52 @@ cryptoApp.controller('ctrl_cryptomedic', [ '$scope', 'service_rest', function($s
 	
 	$scope.logged = false;
 	$scope.pending = false;
-	$scope.busyMessages = [ ];
-	$scope.busyMessagesDone = false;
 
 	$scope.link = function(key) {
 		if (key == null) key = 0;
 		if (typeof(cryptomedic.labels[key]) == "undefined")
 			return "UNKNOWN LABEL " + key;
 		return cryptomedic.labels[key].text;
-	}
+	};
 	
+	$scope.busy = [];
+	$scope.busy.messages = [ ];
+	$scope.busy.done = false;
+	$scope.busy.shown = false;
 	$scope.doBusy = function(msg, wait) {
+		// TODO: wait 500ms before hide, anyway, but also check in hide if anything is pending...
 		if (typeof(wait) == 'undefined') wait = false;
-		jQuery("#busy").modal('show');
-		var c = this.busyMessages.push({ 'message': msg, 'done': false }) - 1;
-		this.busyMessageDone = false;
+		var c = $scope.busy.messages.push({ 'message': msg, 'done': false }) - 1;
+		$scope.busy.done = false;
+		if (!$scope.busy.shown) {
+			jQuery("#busy").modal('show');
+			$scope.busy.shown = true;
+		}
 		$scope.safeApply();
+		function allOk() {
+			var ok = true;
+			for(var m in $scope.busy.messages) {
+				ok = ok && $scope.busy.messages[m].status;
+			}
+			console.log(ok);
+			return ok;
+		}
 		return function() { 
-			$scope.busyMessages[c].status = true;
+			$scope.busy.messages[c].status = true;
 			$scope.safeApply();
 			// If all messages are ok, then hide it
-			var allOk = true;
-			for(var m in $scope.busyMessages) {
-				allOk = allOk && $scope.busyMessages[m].status;
+			if (allOk()) {
+				$scope.busy.done = true;
 			}
-			if (allOk) {
-				$scope.busyMessagesDone = true;
-				var done = function() {
-					jQuery("#busy").modal('hide'); 
+			setTimeout(function() {
+				if (allOk()) {
+					jQuery("#busy").modal('hide');
+					// See http://stackoverflow.com/a/11544860
+					jQuery('body').removeClass('modal-open');
+					jQuery(".modal-backdrop").remove();
 					$scope.busyMessages = [];
-				};
-				if (wait) {
-					setTimeout(done, 2000);
-				} else {
-					done();
 				}
-			}
+			}, (wait ? 2000 : 1));
 		};
 	};
 

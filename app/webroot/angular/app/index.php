@@ -94,13 +94,13 @@
 					<h4 class="modal-title">Waiting for:</h4>
 				</div>
 				<div class="modal-body">
-					<div ng-repeat="m in busyMessages">
+					<div ng-repeat="m in busy.messages">
 						<img ng-hide="m.status" src="img/waiting.gif" />
 						<span ng-show="m.status" class="glyphicon glyphicon-ok"></span>
 						{{m.message}}
 					</div>
 				</div>
-				<div class="modal-footer" ng-if="busyMessagesDone">
+				<div class="modal-footer" ng-if="busy.done">
 					<button type="button" class="btn btn-default btn-success" data-dismiss="modal">
 						<span class="glyphicon glyphicon-time"></span>
 						Dismiss
