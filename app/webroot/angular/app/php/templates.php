@@ -141,10 +141,11 @@ function read($key, $type = null) {
 	$struct = _parseKey($key);
 	if ($type == null) $type = $struct->myType; 
 	switch($type) {
+		case 'datetime':
+			// TODO: clean presentation
 		case 'text':
 		case 'numeric':
 		case 'float':
-		case 'datetime':
 		case 'list':
 			echo "<span id='$key'>{{" . $key . "}}</span>";
 			break;
