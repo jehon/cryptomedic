@@ -69,7 +69,38 @@ cryptoApp.factory('service_rest', [ '$http', '$log' , '$rootScope', function($ht
 			var def = jQuery.Deferred();
 			$http.post(root + "/patients/view/" + id + ".json")
 			.success(function(data, status, headers, config) {
-				def.resolve(data);
+				console.log(data);
+				var dataCanonized = {
+						"Patient": data['Patient']
+				};
+				dataCanonized['files'] = [];
+				for(var i in data) {
+					if (i == "Patient") continue;
+					for(var j in data[i]) {
+						dataCanonized['files'].push(data[i][j]);
+					}
+					// TODO: sort !
+					dataCanonized['files'] = dataCanonized['files'].sort(function(big, small) {
+						if (typeof(big.Date) == "undefined") {
+							if (typeof(small.Date) == "undefined") {
+								// refine
+								return 0;
+							} else {
+								return 1;
+							}
+						}
+						if (typeof(small.Date) == "undefined") {
+							return -1;
+						}
+						if (big.Date == small.Date) {
+							// refine
+							return 0;
+						}
+						return (big.Date > small.Date ? 1 : -1);
+					});
+				}
+				console.log(dataCanonized);
+				def.resolve(dataCanonized);
 			}).error(function(data, status, headers, config) {
 				def.reject(data);
 			});
