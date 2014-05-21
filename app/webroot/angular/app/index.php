@@ -55,7 +55,7 @@
 		(new Script())->url("/amd/$c/structure.json?var=cryptomedic.structure.$m")->cached()->js()->dependDB()->toPrint();
 	}
 	
-	(new Script())->url("/amd/users/settings.json?var=cryptomedic.settings")->cached()->js()->dependDBTable("settings")->toPrint();
+	(new Script())->url("/amd/users/settings.json?var=cryptomedic.settings")->live()->js()->dependDBTable("settings")->toPrint();
 	(new Script())->url("/amd/prices/index.json?var=cryptomedic.prices")->cached()->js()->dependDBTable("prices")->toPrint();
 	(new Script())->url("/amd/labels/index.json?var=cryptomedic.labels")->cached()->js()->dependDBTable("labels")->toPrint(); 
 ?>

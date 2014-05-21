@@ -14,6 +14,11 @@ class Script {
 		$this->opt["cached"] = 1;
 		return $this;
 	}
+
+	function live() {
+		unset($this->opt["cached"]);
+		return $this;
+	}
 	
 	function dependFile($file = null) {
 		if ($file == null) $file = $this->_url;
