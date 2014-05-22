@@ -1,1 +1,1 @@
-template page graphic
+graphic.php
