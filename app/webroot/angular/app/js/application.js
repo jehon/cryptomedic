@@ -5,11 +5,16 @@
 
 ** Replace:
 \{@input header="([^"]+)"\/\}
-<?php write("$1"); ?>
+<?php value("$1"); ?>
 
 ** Replace:
 \{@input header="([^"]+)"[ ]*extra="([^"]*)"\/\}
-<?php write("$1", "$2"); ?>
+<?php value("$1", "$2"); ?>
+
+** Replace:
+<label for="[a-zA-Z]+" name="([a-zA-Z.]+)">[^<]+</label>
+<?php label("$1");?>
+
 
 */
 
