@@ -44,9 +44,11 @@
 	// <!-- personnal -->
 	(new Script())->url("js/cryptomedic.js")->cached()->js()->dependFile()->toPrint();
 	(new Script())->url("js/application.js")->cached()->js()->dependFile()->toPrint();
-	(new Script())->url("js/service_rest.js")->cached()->js()->dependFile()->toPrint();
-	(new Script())->url("js/ctrl_home.js")->cached()->js()->dependFile()->toPrint();
-	(new Script())->url("js/ctrl_file.js")->cached()->js()->dependFile()->toPrint();
+	(new Script())->all("js/service_*.js")->cached()->js()->dependFile()->toPrint();
+	(new Script())->all("js/ctrl_*.js")->cached()->js()->dependFile()->toPrint();
+// 	(new Script())->url("js/service_rest.js")->cached()->js()->dependFile()->toPrint();
+// 	(new Script())->url("js/ctrl_home.js")->cached()->js()->dependFile()->toPrint();
+// 	(new Script())->url("js/ctrl_file.js")->cached()->js()->dependFile()->toPrint();
 	// (new Script())->url("js/old_application.js")->cached()->css()->dependFile()->toPrint();
 	// (new Script())->url("js/amd_stats_datas.js")->cached()->css()->dependFile()->toPrint();
 
