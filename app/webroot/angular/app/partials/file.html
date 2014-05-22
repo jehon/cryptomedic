@@ -1,13 +1,14 @@
 <div class="col-md-2">
-	<button class="btn" style="width: 100%" ng-href="#/patient/{{Patient.id}}">Patient</button>
-	<button class="btn" style="width: 100%">Graphics</button>
-	<button class="btn" style="width: 100%">History</button>
+	<button ng-click="select('summary');" class="btn" style="width: 100%">Summary</button>
+	<button ng-click="select('graphic');" class="btn" style="width: 100%">Graphics</button>
 	<span ng-repeat="f in files">
-		<button class="btn" style="width: 100%" ng-class="{{selected($index)}}">
+		<button ng-click="select($index);" class="btn" style="width: 100%" ng-class="{{selected($index)}}">
 			{{f.type}} [{{f.Date}}]
 		</button>
 	</span>
 </div>
 <div class="col-md-10">
-	Content
+	<span ng-include="'partials/' + name() + '.php'" ng-controller="ctrl_{{name()}}">
+	</span>
+	Content {{page}}
 </div>

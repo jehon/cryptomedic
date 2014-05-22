@@ -2,9 +2,30 @@
 
 cryptoApp.controller('ctrl_file', [ '$scope', '$location', 'service_rest', '$routeParams' , function($scope, $location, service_rest, $routeParams) { 
 	$scope.file = [];
+	$scope.page = 0;
+	$scope.patientId = $routeParams['id'];
+	if (typeof($routeParams['page']) != 'undefined') {
+		$scope.page = $routeParams['page'];
+	}
+	
+	$scope.select = function(page) {
+		console.log(page);
+		$scope.page = page;
+	};
+	
+	$scope.selected = function(i) {
+		if (i == $scope.page) {
+			return "btn-error";
+		}
+		return "";
+	};
 
+	$scope.name = function() {
+		return "patient";
+	};
+	
 	var busyEnd = $scope.doBusy("Getting the file from the server");
-	service_rest.getFile($routeParams['id'])
+	service_rest.getFile($scope.patientId)
 		.done(function(data) {
 			$scope.files = data['files'];
 			$scope.Patient = data['Patient'];

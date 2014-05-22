@@ -21,12 +21,12 @@ var cryptoApp = angular.module('app_cryptomedic', [ 'ngRoute' ])
         controller: 'ctrl_home'
     }).when('/search', {
     	templateUrl: 'partials/search.php',
-    }).when('/patient/:id', {
+    }).when('/patient/:id/:page?', {
     	controller: 'ctrl_file',
     	templateUrl: 'partials/file.html',
     }).when('/blank', {
     	templateUrl: 'partials/blank.html',
-    }).otherwise({ 'redirectTo': '/blank'});
+    }).otherwise({ 'redirectTo': '/home'});
 }])
 .config([ '$compileProvider', function( $compileProvider ) {
 	$compileProvider.aHrefSanitizationWhitelist(/^\s*((https?|ftp|mailto|chrome-extension):|data:text,)/);
