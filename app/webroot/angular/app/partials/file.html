@@ -8,7 +8,7 @@
 	</span>
 </div>
 <div class="col-md-10">
-	<div>
+	<div ng-if="isNumber(page)">
 		Id: {{files[page].id}} #
 		Type: {{files[page].type}} #
 		Modified on: {{files[page].modified}} #

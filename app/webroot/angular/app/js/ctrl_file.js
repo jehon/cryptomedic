@@ -6,6 +6,8 @@ cryptoApp.controller('ctrl_file', [ '$scope', '$location', 'service_rest', '$rou
 	$scope.patientId = $routeParams['id'];
 	if (typeof($routeParams['page']) != 'undefined') {
 		$scope.page = $routeParams['page'];
+		if (parseInt($routeParams['page']) == $routeParams['page'])
+			$scope.page = parseInt($routeParams['page']); 
 	}
 	
 	$scope.select = function(page) {
