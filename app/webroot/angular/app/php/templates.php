@@ -47,7 +47,8 @@ function _parseKey($key) {
 	$field = $data[1];
 
 	global $mysqli;
-	$res = $mysqli->query("SELECT $field FROM patients LIMIT 1");
+	global $model2controller;
+	$res = $mysqli->query("SELECT $field FROM " . $model2controller[$model] . " LIMIT 1");
 	$structures = $res->fetch_fields();
 	$structure = $structures[0];
 
@@ -78,6 +79,7 @@ function _parseKey($key) {
 			break;
 		case MYSQLI_TYPE_TIMESTAMP:
 		case MYSQLI_TYPE_DATETIME:
+		case MYSQLI_TYPE_DATE:
 			$structure->myType = "datetime";
 			break;
 		case MYSQLI_TYPE_VAR_STRING:
@@ -90,7 +92,6 @@ function _parseKey($key) {
 			$structure->myType = "text";
 			break;
 		case MYSQLI_TYPE_TIME:
-		case MYSQLI_TYPE_DATE:
 		case MYSQLI_TYPE_YEAR:
 		case MYSQLI_TYPE_NEWDATE:
 		case MYSQLI_TYPE_INTERVAL:
