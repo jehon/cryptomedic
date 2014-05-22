@@ -16,6 +16,7 @@
 //	});
 
 cryptoApp.factory('service_rest', [ '$http', '$log' , '$rootScope', function($http, $log, $rootScope) {
+	var cache = perishableCache(10);
 	var root = "/amd";
 	var ordering = function(big, small) {
 		if (typeof(big.Date) == "undefined") {
@@ -23,7 +24,7 @@ cryptoApp.factory('service_rest', [ '$http', '$log' , '$rootScope', function($ht
 				// refine
 				return 0;
 			} else {
-				return 1;
+				return -1;
 			}
 		}
 		if (typeof(small.Date) == "undefined") {
@@ -36,8 +37,26 @@ cryptoApp.factory('service_rest', [ '$http', '$log' , '$rootScope', function($ht
 		return (big.Date > small.Date ? 1 : -1);
 	};
 	
+	var canonize = function(data) {
+		var dataCanonized = {
+				"Patient": data['Patient']
+		};
+		dataCanonized['files'] = [];
+		for(var i in data) {
+			if (i == "Patient") {
+				dataCanonized['files'].push(data[i]);
+			} else {
+				for(var j in data[i]) {
+					dataCanonized['files'].push(data[i][j]);
+				}
+			}
+		}
+		dataCanonized['files'] = dataCanonized['files'].sort(ordering);
+		return dataCanonized;
+	};
+	
 	return {
-		'ordering': ordering,
+//		'ordering': ordering,
 		'checkLogin': function() {
 			var def = jQuery.Deferred();
 			$http.post(root + "/users/settings.json")
@@ -76,6 +95,7 @@ cryptoApp.factory('service_rest', [ '$http', '$log' , '$rootScope', function($ht
 			$http.post(root + "/patients/index.json", { 'Patient': {'entryyear': year, 'entryorder': order}})
 			.success(function(data, status, headers, config) {
 				if (data.length == 1) {
+					cache.set(data[0]['Patient']['id'], canonize(data));
 					def.resolve(data[0]['Patient']['id']);
 				} else {
 					def.resolve(false);
@@ -87,25 +107,16 @@ cryptoApp.factory('service_rest', [ '$http', '$log' , '$rootScope', function($ht
 		},
 		'getFile': function(id) {
 			var def = jQuery.Deferred();
+			if (cache.isCached(id)) {
+				console.log("having some cache data");
+				return def.resolve(cache.get(id));
+			}
 			$http.post(root + "/patients/view/" + id + ".json")
 			.success(function(data, status, headers, config) {
+				var canonized = canonize(data);
 				console.log(data);
-				var dataCanonized = {
-						"Patient": data['Patient']
-				};
-				dataCanonized['files'] = [];
-				for(var i in data) {
-					if (i == "Patient") {
-						dataCanonized['files'].push(data[i]);
-					} else {
-						for(var j in data[i]) {
-							dataCanonized['files'].push(data[i][j]);
-						}
-					}
-				}
-				dataCanonized['files'] = dataCanonized['files'].sort(ordering);
-				console.log(dataCanonized);
-				def.resolve(dataCanonized);
+				cache.set(data['Patient']['id'], canonized);
+				def.resolve(canonized);
 			}).error(function(data, status, headers, config) {
 				def.reject(data);
 			});
