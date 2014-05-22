@@ -7,6 +7,14 @@
 		</a>
 	</span>
 </div>
-<div class="col-md-10" ng-include="'partials/' + name() + '.php'">
-	debug: Content {{page}}
+<div class="col-md-10">
+	<div>
+		Id: {{files[page].id}} #
+		Type: {{files[page].type}} #
+		Modified on: {{files[page].modified}} #
+		By: {{files[page].lastuser}}
+	</div>
+	<span ng-include="'partials/' + name() + '.php'">
+		debug: Content {{page}}
+	</span>
 </div>
