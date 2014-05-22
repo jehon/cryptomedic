@@ -17,7 +17,27 @@
 
 cryptoApp.factory('service_rest', [ '$http', '$log' , '$rootScope', function($http, $log, $rootScope) {
 	var root = "/amd";
+	var ordering = function(big, small) {
+		if (typeof(big.Date) == "undefined") {
+			if (typeof(small.Date) == "undefined") {
+				// refine
+				return 0;
+			} else {
+				return 1;
+			}
+		}
+		if (typeof(small.Date) == "undefined") {
+			return -1;
+		}
+		if (big.Date == small.Date) {
+			// refine
+			return 0;
+		}
+		return (big.Date > small.Date ? 1 : -1);
+	};
+	
 	return {
+		'ordering': ordering,
 		'checkLogin': function() {
 			var def = jQuery.Deferred();
 			$http.post(root + "/users/settings.json")
@@ -75,30 +95,15 @@ cryptoApp.factory('service_rest', [ '$http', '$log' , '$rootScope', function($ht
 				};
 				dataCanonized['files'] = [];
 				for(var i in data) {
-					if (i == "Patient") continue;
-					for(var j in data[i]) {
-						dataCanonized['files'].push(data[i][j]);
+					if (i == "Patient") {
+						dataCanonized['files'].push(data[i]);
+					} else {
+						for(var j in data[i]) {
+							dataCanonized['files'].push(data[i][j]);
+						}
 					}
-					// TODO: sort !
-					dataCanonized['files'] = dataCanonized['files'].sort(function(big, small) {
-						if (typeof(big.Date) == "undefined") {
-							if (typeof(small.Date) == "undefined") {
-								// refine
-								return 0;
-							} else {
-								return 1;
-							}
-						}
-						if (typeof(small.Date) == "undefined") {
-							return -1;
-						}
-						if (big.Date == small.Date) {
-							// refine
-							return 0;
-						}
-						return (big.Date > small.Date ? 1 : -1);
-					});
 				}
+				dataCanonized['files'] = dataCanonized['files'].sort(ordering);
 				console.log(dataCanonized);
 				def.resolve(dataCanonized);
 			}).error(function(data, status, headers, config) {
