@@ -1,14 +1,12 @@
-<div class="col-md-2">
-	<button ng-click="select('summary');" class="btn" style="width: 100%">Summary</button>
-	<button ng-click="select('graphic');" class="btn" style="width: 100%">Graphics</button>
+<div class="col-md-2" class="btn-group btn-group-justified btn-group-vertical">
+	<a ng-class="selected('summary')" href="#/patient/{{patientId}}/summary" class="btn btn-default" style="width: 100%">Summary</a>
+	<a ng-class="selected('graphics')" href="#/patient/{{patientId}}/graphics" class="btn btn-default" style="width: 100%">Graphics</a>
 	<span ng-repeat="f in files">
-		<button ng-click="select($index);" class="btn" style="width: 100%" ng-class="{{selected($index)}}">
+		<a href="#/patient/{{patientId}}/{{$index}}" class="btn btn-default" style="width: 100%" ng-class="selected($index)">
 			{{f.type}} [{{f.Date}}]
-		</button>
+		</a>
 	</span>
 </div>
-<div class="col-md-10">
-	<span ng-include="'partials/' + name() + '.php'" ng-controller="ctrl_{{name()}}">
-	</span>
-	Content {{page}}
+<div class="col-md-10" ng-include="'partials/' + name() + '.php'">
+	debug: Content {{page}}
 </div>
