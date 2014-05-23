@@ -79,8 +79,10 @@ function _parseKey($key) {
 			break;
 		case MYSQLI_TYPE_TIMESTAMP:
 		case MYSQLI_TYPE_DATETIME:
-		case MYSQLI_TYPE_DATE:
 			$structure->myType = "datetime";
+			break;
+		case MYSQLI_TYPE_DATE:
+			$structure->myType = "date";
 			break;
 		case MYSQLI_TYPE_VAR_STRING:
 		case MYSQLI_TYPE_STRING:
@@ -142,7 +144,14 @@ function read($key, $type = null) {
 	$struct = _parseKey($key);
 	if ($type == null) $type = $struct->myType; 
 	switch($type) {
+		case 'date':
+			// See https://docs.angularjs.org/api/ng/filter/date
+			echo "<span id='$key>{{" . $key . " | format: 'shortDate' }}</span>";
+			break;
 		case 'datetime':
+			// See https://docs.angularjs.org/api/ng/filter/date
+			echo "<span id='$key>{{" . $key . " | format: 'short' }}</span>";
+			break;
 			// TODO: clean presentation
 		case 'text':
 		case 'numeric':
