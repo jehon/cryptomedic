@@ -56,7 +56,6 @@ cryptoApp.factory('service_rest', [ '$http', '$log' , '$rootScope', function($ht
 	};
 	
 	return {
-//		'ordering': ordering,
 		'checkLogin': function() {
 			var def = jQuery.Deferred();
 			$http.post(root + "/users/settings.json")
@@ -114,7 +113,8 @@ cryptoApp.factory('service_rest', [ '$http', '$log' , '$rootScope', function($ht
 			$http.post(root + "/patients/view/" + id + ".json")
 			.success(function(data, status, headers, config) {
 				var canonized = canonize(data);
-				console.log(data);
+				canonized = angular.extend(new cryptomedic.prototypes.file(), canonized); 
+				console.log(canonized.test());
 				cache.set(data['Patient']['id'], canonized);
 				def.resolve(canonized);
 			}).error(function(data, status, headers, config) {
