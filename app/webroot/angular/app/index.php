@@ -44,6 +44,7 @@
 	// <!-- personnal -->
 	(new Script())->url("js/cryptomedic.js")->cached()->js()->dependFile()->toPrint();
 	(new Script())->url("js/application.js")->cached()->js()->dependFile()->toPrint();
+	(new Script())->all("js/model_*.js")->cached()->js()->dependFile()->toPrint();
 	(new Script())->all("js/service_*.js")->cached()->js()->dependFile()->toPrint();
 	(new Script())->all("js/ctrl_*.js")->cached()->js()->dependFile()->toPrint();
 // 	(new Script())->url("js/service_rest.js")->cached()->js()->dependFile()->toPrint();
