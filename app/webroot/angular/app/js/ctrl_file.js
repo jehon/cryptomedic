@@ -24,7 +24,6 @@ cryptoApp.controller('ctrl_file', [ '$scope', '$location', 'service_rest', '$rou
 	$scope.name = function() {
 		if (parseInt($scope.page) == $scope.page) {
 			if ($scope.page < $scope.files.length) {
-				console.log($scope.files[$scope.page]);
 				return $scope.files[$scope.page]['type'].toLowerCase();
 			} else {
 				return "blank";
