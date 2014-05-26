@@ -12,8 +12,24 @@ describe("Data", function() {
 		});
 	});
 		
-	describe("with data loading", function() {
+	describe("with data loading at construction time", function() {
 		var folder = new cryptomedic.models.Folder({
+			data1: "data1",
+			dataArray: [ 1, 2, 3]
+		});
+		it("should contain all datas", function() {
+			expect(folder.data1).toBe("data1");
+			expect(folder.dataArray).toContain(1);
+			expect(folder.dataArray).toContain(2);
+			expect(folder.dataArray).toContain(3);
+			expect(folder.dataArray).not.toContain(4);
+			expect(folder.anything).toBe(undefined);
+		});
+	});
+
+	describe("with data loading by function", function() {
+		var folder = new cryptomedic.models.Folder()
+		folder.load({
 			data1: "data1",
 			dataArray: [ 1, 2, 3]
 		});
