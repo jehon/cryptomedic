@@ -27,8 +27,8 @@ var cryptoApp = angular.module('app_cryptomedic', [ 'ngRoute' ])
     }).when('/search', {
     	templateUrl: 'partials/search.php',
     }).when('/patient/:id/:page?', {
-    	controller: 'ctrl_file',
-    	templateUrl: 'partials/file.html',
+    	controller: 'ctrl_folder',
+    	templateUrl: 'partials/folder.html',
     }).when('/blank', {
     	templateUrl: 'partials/blank.html',
     }).otherwise({ 'redirectTo': '/home'});
