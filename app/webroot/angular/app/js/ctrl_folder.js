@@ -1,6 +1,6 @@
 "use strict";
 
-cryptoApp.controller('ctrl_file', [ '$scope', '$location', 'service_rest', '$routeParams' , function($scope, $location, service_rest, $routeParams) { 
+cryptoApp.controller('ctrl_folder', [ '$scope', '$location', 'service_rest', '$routeParams' , function($scope, $location, service_rest, $routeParams) { 
 	$scope.files = [];
 	$scope.page = 0;
 	$scope.patientId = $routeParams['id'];
@@ -35,8 +35,7 @@ cryptoApp.controller('ctrl_file', [ '$scope', '$location', 'service_rest', '$rou
 	var busyEnd = $scope.doBusy("Getting the file from the server");
 	service_rest.getFile($scope.patientId)
 		.done(function(data) {
-			$scope.files = data['files'];
-			$scope.Patient = data['Patient'];
+			$scope.files = data;
 			$scope.safeApply();
 		})
 		.fail(function(data) {
