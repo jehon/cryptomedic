@@ -4,7 +4,7 @@ cryptomedic.models = {};
 
 cryptomedic.models.Data = Class.extend({
 	init: function(data){
-//		this._super.init();
+		console.log(data);
 		this.load(data);
 	},
 	load: function(data) {
@@ -14,5 +14,10 @@ cryptomedic.models.Data = Class.extend({
 			}
 		}
 	},
-	getName: function () { return 'Data'; }
+	loadFrom: function(url, cb) {
+		var t = this;
+		return jQuery.getJSON(url).done(function(data) {
+			t.load(data);
+		});
+	}
 });

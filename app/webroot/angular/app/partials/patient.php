@@ -30,7 +30,7 @@
 						</td>
 					</tr><tr mode='read'>
 						<td><label for="Patient-Age" name="Patient-Age">Age</label></td>
-						<td>{{stats_base_actualage}}</td>
+						<td>{{files.getPatient().actualAge()}}</td>
 					</tr><tr>
 						<td><?php label("Patient.Fathersname");?></td>
 						<td><?php value("Patient.Fathersname", ""); ?></td>

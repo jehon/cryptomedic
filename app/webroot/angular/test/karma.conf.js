@@ -5,9 +5,9 @@ module.exports = function(config) {
 		            'karma-firefox-launcher',
 		            'karma-jasmine', 
 		            'karma-junit-reporter',
-		            //'karma-htmlfile-reporter' // html report
+//		            'karma-jasmine-html-reporter' // https://www.npmjs.org/package/karma-htmlfile-reporter
 		],
-		// https://www.npmjs.org/package/karma-htmlfile-reporter
+		// https://www.npmjs.org/package/karma-jasmine-htmlfile-reporter
 		reporters : [ 
 		              'progress', 
 //		              'html' 
@@ -16,6 +16,7 @@ module.exports = function(config) {
 		basePath : '../',
 
 		files : [ 
+		          'app/bower_components/jQuery/dist/jquery.min.js',
 		          'app/bower_components/angular/angular.js',
 		          'app/bower_components/angular-route/angular-route.js',
 		          'app/bower_components/angular-mocks/angular-mocks.js',

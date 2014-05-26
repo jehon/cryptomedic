@@ -18,40 +18,18 @@
 cryptoApp.factory('service_rest', [ '$http', '$log' , '$rootScope', function($http, $log, $rootScope) {
 	var cache = perishableCache(10);
 	var root = "/amd";
-	var ordering = function(big, small) {
-		if (typeof(big.Date) == "undefined") {
-			if (typeof(small.Date) == "undefined") {
-				// refine
-				return 0;
-			} else {
-				return -1;
-			}
-		}
-		if (typeof(small.Date) == "undefined") {
-			return -1;
-		}
-		if (big.Date == small.Date) {
-			// refine
-			return 0;
-		}
-		return (big.Date > small.Date ? 1 : -1);
-	};
 	
 	var canonize = function(data) {
-		var dataCanonized = {
-				"Patient": data['Patient']
-		};
-		dataCanonized['files'] = [];
+		var dataCanonized = [];
 		for(var i in data) {
 			if (i == "Patient") {
-				dataCanonized['files'].push(data[i]);
+				dataCanonized.push(data[i]);
 			} else {
 				for(var j in data[i]) {
-					dataCanonized['files'].push(data[i][j]);
+					dataCanonized.push(data[i][j]);
 				}
 			}
 		}
-		dataCanonized['files'] = dataCanonized['files'].sort(ordering);
 		return dataCanonized;
 	};
 	
@@ -82,11 +60,11 @@ cryptoApp.factory('service_rest', [ '$http', '$log' , '$rootScope', function($ht
 		'doLogout': function() {
 			var def = jQuery.Deferred();
 			$http.post(root + "/users/logout")
-			.success(function(data, status, headers, config) {
-				def.resolve();
-			}).error(function(data, status, headers, config) {
-				def.reject(data);
-			});
+				.success(function(data, status, headers, config) {
+					def.resolve();
+				}).error(function(data, status, headers, config) {
+					def.reject(data);
+				});
 			return def;
 		},
 		'checkReference': function(year, order) {
@@ -94,7 +72,6 @@ cryptoApp.factory('service_rest', [ '$http', '$log' , '$rootScope', function($ht
 			$http.post(root + "/patients/index.json", { 'Patient': {'entryyear': year, 'entryorder': order}})
 			.success(function(data, status, headers, config) {
 				if (data.length == 1) {
-					cache.set(data[0]['Patient']['id'], canonize(data));
 					def.resolve(data[0]['Patient']['id']);
 				} else {
 					def.resolve(false);
@@ -112,9 +89,8 @@ cryptoApp.factory('service_rest', [ '$http', '$log' , '$rootScope', function($ht
 			}
 			$http.post(root + "/patients/view/" + id + ".json")
 			.success(function(data, status, headers, config) {
-				var canonized = canonize(data);
-				canonized = angular.extend(new cryptomedic.prototypes.file(), canonized); 
-				console.log(canonized.test());
+				var canonized = new (cryptomedic.models.Folder)({ "files": canonize(data) });
+				canonized.objectizeList();
 				cache.set(data['Patient']['id'], canonized);
 				def.resolve(canonized);
 			}).error(function(data, status, headers, config) {
