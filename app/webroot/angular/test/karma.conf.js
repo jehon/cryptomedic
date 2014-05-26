@@ -20,7 +20,7 @@ module.exports = function(config) {
 		          'app/bower_components/angular-route/angular-route.js',
 		          'app/bower_components/angular-mocks/angular-mocks.js',
 		          'app/js/**/*.js', 'test/unit/**/*.js', 
-		          { pattern : 'test/mock/*.json', watched : true, served : true, included : false }
+		          { pattern : 'test/mocks/*.json', watched : true, served : true, included : false }
 		        ],
 
 		autoWatch : true,
