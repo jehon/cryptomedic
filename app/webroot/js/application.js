@@ -532,7 +532,6 @@ cryptomedic.display.specifics.Picture = function() {
  * Enhance data
  */
 cryptomedic.enhance = function(ajax) {
-	console.log("starting enhancement of ajax data");
 	ajax.stats_base_actualage = "#Year of birth unknown#";
 	if (ajax.Yearofbirth >= 1900) {
         ajax.stats_base_actualage = (new Date().getFullYear() - ajax.Yearofbirth) + " years old today";

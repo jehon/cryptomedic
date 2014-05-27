@@ -21,9 +21,23 @@ class AppModel extends Model {
 	 * 
 	 * I am pretty sure this could be done by a more normal way, but I don't know how.
 	 */
-//     public static $part = array();
-
 	function enhance($data, $model) {
+		/* 
+		 * Parse int into integers - this should be removed in cake 3.x
+		 * 
+		 * From: https://gist.github.com/geon/1189139
+		 */
+		$columnTypes = $this->getColumnTypes();
+		foreach($data as $columnName => $value) {
+			if (($columnTypes[$columnName] === 'integer')
+					&& ($value !== null) 
+					&& (!in_array($columnName, [ 'patient_id' ]))) {
+				if (intval($value) == $value) {
+					$data[$columnName] = intval($value);
+				}
+			}
+		}
+		
 		/**
 		 * Add structural informations, to keep trakc of who is what when managing that in ajax
 		 */

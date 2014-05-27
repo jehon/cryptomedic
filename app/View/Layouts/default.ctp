@@ -111,10 +111,10 @@ if (($_SERVER ['HTTP_HOST'] == 'localhost') || ! file_exists ( __DIR__ . "/../..
 		version_app='<? echo $version_app; ?>';
 		version_db='<? echo $version_db; ?>';
 		ajax=<?php
-		if (isset($ajax))
-			echo json_encode ( $ajax );
-		else
-			echo "[]";
+			if (isset($ajax))
+				echo json_encode($ajax);
+			else
+				echo "[]";
 		?>;
 		cryptomedic.enhance(ajax);
 
