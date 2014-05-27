@@ -10,7 +10,7 @@ describe("Folder", function() {
 		});
 	});
 
-	describe("with patient_10.json", function() {
+	describe("with mock_patient_10.json", function() {
 		var folder = new cryptomedic.models.Folder();
 		it("should load correctly and store it", myDeferredTest(function () {
 			return folder.loadFrom("/base/test/mocks/mock_patient_10.json");
@@ -20,9 +20,9 @@ describe("Folder", function() {
 			folder.objectizeList();
 			expect(folder instanceof cryptomedic.models.Folder).toBeTruthy();
 			expect(folder.getPatient() instanceof cryptomedic.models.Patient).toBeTruthy();
-			expect(folder.getPatient().id).toBe(10001);
+			expect(folder.getPatient().id).toBe(10);
 
-			console.log(folder.files);
+			// console.log(folder.files);
 		}));
 	});
 });
