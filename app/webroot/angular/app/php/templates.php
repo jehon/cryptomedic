@@ -128,10 +128,10 @@ function _parseKey($key) {
 	return $structure;
 }
 
-// function rawValue($key, $type = null) {
-// 	$angularKey = "folder.files[page]." . $key;
-// 	echo "{{" . $angularKey. "}}";
-// }
+function rawValue($key, $type = null) {
+	$struct = _parseKey($key);
+	echo "{{folder.files[page]." . $struct->name . "}}";
+}
 
 function label($key) {
 	echo "<label for='$key'>" . _label($key) . "</label>\n";
