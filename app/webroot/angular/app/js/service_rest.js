@@ -92,7 +92,7 @@ cryptoApp.factory('service_rest', [ '$http', '$log' , '$rootScope', function($ht
 				var canonized = new (cryptomedic.models.Folder)({ "files": canonize(data) });
 				console.log(canonized);
 //				// To generate test data (! strip the trailing and ending ") 
-//				console.log(JSON.stringify(canonized.files);
+//				console.log(JSON.stringify(canonized));
 				canonized.objectizeList();
 				cache.set(data['Patient']['id'], canonized);
 				def.resolve(canonized);
