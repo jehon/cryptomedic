@@ -1,11 +1,5 @@
 <?php require_once(__DIR__ . "/../php/templates.php"); ?>
 <span id='patient_content' ng-controller="ctrl_patient">
-	<div modes='read'>
-        Get a complete report:
-        	<a target="_new" href="/amd/patients/view/<?php rawValue("Patient.id"); ?>.csv" >csv</a>&nbsp
-        	<a target="_new" href="/amd/patients/view/<?php rawValue("Patient.id"); ?>.csv?fr=1" >french-csv</a>&nbsp
-    		<a target="_new" href="/amd/patients/view/<?php rawValue("Patient.id"); ?>.xls" >xls</a>&nbsp
-	</div>
 	<div class="col-sm-6">
         <fieldset>
 				<legend><label for="Patient-GeneralData" name="Patient-GeneralData">General Data</label></legend>
