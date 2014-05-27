@@ -62,7 +62,7 @@ describe("Data", function() {
 			var folder = new cryptomedic.models.Folder();
 			var done = false;
 			runs(function() {
-				folder.loadFrom("/base/test/mocks/load_test.json").done(function(data) {
+				folder.loadFrom("/base/test/mocks/mock_load_test.json").done(function(data) {
 					done = true;
 				});
 			});
@@ -85,7 +85,7 @@ describe("Data", function() {
 	describe("with data loaded remotely tested through myAsyncTest", function() {
 		var folder = new cryptomedic.models.Folder();
 		it("should load correctly load_test.json and store it", myDeferredTest(function () {
-			return folder.loadFrom("/base/test/mocks/load_test.json");
+			return folder.loadFrom("/base/test/mocks/mock_load_test.json");
 		}, function() {
 			expect(folder.data1).toBe("data1");
 			expect(folder.dataArray).toContain(1);

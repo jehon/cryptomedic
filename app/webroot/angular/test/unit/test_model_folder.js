@@ -13,7 +13,7 @@ describe("Folder", function() {
 	describe("with patient_10.json", function() {
 		var folder = new cryptomedic.models.Folder();
 		it("should load correctly and store it", myDeferredTest(function () {
-			return folder.loadFrom("/base/test/mocks/patient_10.json");
+			return folder.loadFrom("/base/test/mocks/mock_patient_10.json");
 		}, function() {
 			expect(folder instanceof cryptomedic.models.Folder).toBeTruthy();
 			expect(typeof(folder.objectizeList)).toBe("function");
@@ -21,6 +21,7 @@ describe("Folder", function() {
 			expect(folder instanceof cryptomedic.models.Folder).toBeTruthy();
 			expect(folder.getPatient() instanceof cryptomedic.models.Patient).toBeTruthy();
 			expect(folder.getPatient().id).toBe(10001);
+
 			console.log(folder.files);
 		}));
 	});
