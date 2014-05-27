@@ -33,7 +33,6 @@ cryptoApp.controller('ctrl_folder', [ '$scope', '$location', 'service_rest', '$r
 	};
 	
 	$scope.getCached = function(id) {
-		console.log("here " + id);
 		return service_rest.getCached(id);
 	};
 	
