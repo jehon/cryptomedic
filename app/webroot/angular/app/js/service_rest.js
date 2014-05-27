@@ -34,6 +34,9 @@ cryptoApp.factory('service_rest', [ '$http', '$log' , '$rootScope', function($ht
 	};
 	
 	return {
+		'getCached': function(id) {
+			return cache.get(id);
+		},
 		'checkLogin': function() {
 			var def = jQuery.Deferred();
 			$http.post(root + "/users/settings.json")

@@ -24,13 +24,17 @@ cryptoApp.controller('ctrl_folder', [ '$scope', '$location', 'service_rest', '$r
 	$scope.name = function() {
 		if (parseInt($scope.page) == $scope.page) {
 			if ($scope.page < $scope.folder.files.length) {
-				console.log($scope.folder.files[$scope.page]);
 				return $scope.folder.files[$scope.page]['type'].toLowerCase();
 			} else {
 				return "blank";
 			}
 		}
 		return $scope.page;
+	};
+	
+	$scope.getCached = function(id) {
+		console.log("here " + id);
+		return service_rest.getCached(id);
 	};
 	
 	var busyEnd = $scope.doBusy("Getting the file from the server");
