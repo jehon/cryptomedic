@@ -7,6 +7,7 @@
 			{{f.type}} [{{f.Date}}]
 		</a>
 	</span>
+	<a ng-if="hasPermission('all.debug')" ng-class="selected('export')" href="#/patient/{{patientId}}/export" class="btn btn-default debug" style="width: 100%">Export</a>
 </div>
 <div class="col-md-10">
 	<div >

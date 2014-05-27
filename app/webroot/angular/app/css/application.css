@@ -2,6 +2,13 @@
  * Globals
  */
 
+.debug {
+	/* color: white; */
+	/* background-color: yellow; */
+	border-left: solid 15px yellow;
+	border-right: solid 15px yellow;
+ 	border-color: yellow;
+}
 
 /*
  * Base structure

@@ -52,6 +52,10 @@ cryptoApp.controller('ctrl_cryptomedic', [ '$scope', 'service_rest', function($s
 	$scope.logged = false;
 	$scope.pending = false;
 
+	$scope.hasPermission = function(transaction) {
+		return (typeof(cryptomedic.settings.denied[transaction]) == "undefined");
+	};
+	
 	$scope.link = function(key) {
 		if (key == null) key = 0;
 		if (typeof(cryptomedic.labels[key]) == "undefined")
