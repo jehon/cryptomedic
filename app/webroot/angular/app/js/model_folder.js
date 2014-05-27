@@ -2,7 +2,7 @@
 
 cryptomedic.models.Folder = cryptomedic.models.Data.extend({
 	init: function(data) {
-		this.files = [ new cryptomedic.models.Patient() ];
+		this.files = [];
  		this._super(data);
 	},
 	objectizeList: function() {
@@ -11,8 +11,8 @@ cryptomedic.models.Folder = cryptomedic.models.Data.extend({
 				if (!(this.files[i] instanceof Class)) {
 					var type = this.files[i]['type'] ;//.toLowerCase();
 					if (typeof(cryptomedic.models[type]) == "undefined") {
-						console.error("No type found for: " + type + " - Fallback to Class");
-						this.files[i] = new (cryptomedic.models.data)(this.files[i]);
+						console.error("No type found for: " + type + " - Fallback to Data");
+						this.files[i] = new (cryptomedic.models.Data)(this.files[i]);
 					} else {
 						this.files[i] = new (cryptomedic.models[type])(this.files[i]);
 					}
@@ -22,22 +22,19 @@ cryptomedic.models.Folder = cryptomedic.models.Data.extend({
 		}
 	},
 	ordering: function(big, small) {
-		if (typeof(big.Date) == "undefined") {
-			if (typeof(small.Date) == "undefined") {
-				// refine
-				return 0;
-			} else {
-				return -1;
-			}
+		// Sort by: [undefined/date]-type-id
+		function st(what) {
+			return (typeof(what['Date']) == 'undefined' ? "0" : what['Date']) +
+				"-" +
+				(typeof(what['type']) == 'undefined' ? "z" : what['type']) +
+				"-" +
+				(typeof(what['id']) == 'undefined' ? 0 : what['id']);
 		}
-		if (typeof(small.Date) == "undefined") {
-			return -1;
-		}
-		if (big.Date == small.Date) {
-			// refine
-			return 0;
-		}
-		return (big.Date > small.Date ? 1 : -1);
+		var bigs = st(big);
+		var smls = st(small);
+		if (bigs == smls) return 0;
+		if (bigs > smls) return 1;
+		return -1;
 	},
 	file: function(i) {
 		if (i >= this.files.length) return null;

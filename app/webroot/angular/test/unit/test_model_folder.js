@@ -20,7 +20,7 @@ describe("Folder", function() {
 			folder.objectizeList();
 			expect(folder instanceof cryptomedic.models.Folder).toBeTruthy();
 			expect(folder.getPatient() instanceof cryptomedic.models.Patient).toBeTruthy();
-			expect(folder.getPatient().id).toBe("10001");
+			expect(folder.getPatient().id).toBe(10001);
 			console.log(folder.files);
 		}));
 	});
