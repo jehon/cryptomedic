@@ -51,7 +51,7 @@ function _parseKey($key) {
 	$res = $mysqli->query("SELECT $field FROM " . $model2controller[$model] . " LIMIT 1");
 	$structures = $res->fetch_fields();
 	$structure = $structures[0];
-
+	
 	$structure->myFlags = array();
 	$constants = get_defined_constants(true);
 	foreach ($constants['mysqli'] as $c => $n) {
@@ -128,6 +128,11 @@ function _parseKey($key) {
 	return $structure;
 }
 
+// function rawValue($key, $type = null) {
+// 	$angularKey = "folder.files[page]." . $key;
+// 	echo "{{" . $angularKey. "}}";
+// }
+
 function label($key) {
 	echo "<label for='$key'>" . _label($key) . "</label>\n";
 }
@@ -142,29 +147,30 @@ function value($key) {
 
 function read($key, $type = null) {
 	$struct = _parseKey($key);
+	$angularKey = "folder.files[page]." . $struct->name;
 	if ($type == null) $type = $struct->myType; 
 	switch($type) {
 		case 'date':
 			// See https://docs.angularjs.org/api/ng/filter/date
-			echo "<span id='$key>{{" . $key . " | format: 'shortDate' }}</span>";
+			echo "<span id='$key>{{" . $angularKey . " | format: 'shortDate' }}</span>";
 			break;
 		case 'datetime':
 			// See https://docs.angularjs.org/api/ng/filter/date
-			echo "<span id='$key>{{" . $key . " | format: 'short' }}</span>";
+			echo "<span id='$key>{{" . $angularKey . " | format: 'short' }}</span>";
 			break;
 			// TODO: clean presentation
 		case 'text':
 		case 'numeric':
 		case 'float':
 		case 'list':
-			echo "<span id='$key'>{{" . $key . "}}</span>";
+			echo "<span id='$key'>{{" . $angularKey . "}}</span>";
 			break;
 		case 'boolean':
-			echo "<span id='$key-true' ng-show='" . $key. "'><img src='img/boolean-true.gif'></span>"
-					. "<span id='$key-true' ng-hide='" . $key . "'><img src='img/boolean-false.gif'></span>";
+			echo "<span id='$key-true' ng-show='" . $angularKey. "'><img src='img/boolean-true.gif'></span>"
+					. "<span id='$key-true' ng-hide='" . $angularKey . "'><img src='img/boolean-false.gif'></span>";
 			break;
 		case 'linkedList':
-			echo "<span id='$key'>{{link($key)}}</span>";
+			echo "<span id='$key'>{{link($angularKey)}}</span>";
 			break;
 		default:
 			echo "$key input";

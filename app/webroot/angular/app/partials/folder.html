@@ -1,7 +1,7 @@
 <div class="col-md-2" class="btn-group btn-group-justified btn-group-vertical">
 	<a ng-class="selected('summary')" href="#/patient/{{patientId}}/summary" class="btn btn-default" style="width: 100%">Summary</a>
 	<a ng-class="selected('graphics')" href="#/patient/{{patientId}}/graphics" class="btn btn-default" style="width: 100%">Graphics</a>
-	<span ng-repeat="f in files">
+	<span ng-repeat="f in folder.files">
 		<a href="#/patient/{{patientId}}/{{$index}}" class="btn btn-default" style="width: 100%" ng-class="selected($index)">
 			{{f.type}} [{{f.Date}}]
 		</a>
@@ -9,10 +9,10 @@
 </div>
 <div class="col-md-10">
 	<div xng-if="isNumber(page)">
-		Id: {{files[page].id}} #
-		Type: {{files[page].type}} #
-		Modified on: {{files[page].modified}} #
-		By: {{files[page].lastuser}}
+		Id: {{folder.files[page].id}} #
+		Type: {{folder.files[page].type}} #
+		Modified on: {{folder.files[page].modified}} #
+		By: {{folder.files[page].lastuser}}
 	</div>
 	<span ng-include="'partials/' + name() + '.php'">
 		debug: Content {{page}}

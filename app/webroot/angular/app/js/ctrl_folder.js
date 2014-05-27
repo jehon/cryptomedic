@@ -1,7 +1,7 @@
 "use strict";
 
 cryptoApp.controller('ctrl_folder', [ '$scope', '$location', 'service_rest', '$routeParams' , function($scope, $location, service_rest, $routeParams) { 
-	$scope.files = [];
+	$scope.folder = new cryptomedic.models.Folder();
 	$scope.page = 0;
 	$scope.patientId = $routeParams['id'];
 	if (typeof($routeParams['page']) != 'undefined') {
@@ -23,8 +23,9 @@ cryptoApp.controller('ctrl_folder', [ '$scope', '$location', 'service_rest', '$r
 
 	$scope.name = function() {
 		if (parseInt($scope.page) == $scope.page) {
-			if ($scope.page < $scope.files.length) {
-				return $scope.files[$scope.page]['type'].toLowerCase();
+			if ($scope.page < $scope.folder.files.length) {
+				console.log($scope.folder.files[$scope.page]);
+				return $scope.folder.files[$scope.page]['type'].toLowerCase();
 			} else {
 				return "blank";
 			}
@@ -35,7 +36,7 @@ cryptoApp.controller('ctrl_folder', [ '$scope', '$location', 'service_rest', '$r
 	var busyEnd = $scope.doBusy("Getting the file from the server");
 	service_rest.getFile($scope.patientId)
 		.done(function(data) {
-			$scope.files = data;
+			$scope.folder = data;
 			$scope.safeApply();
 		})
 		.fail(function(data) {
