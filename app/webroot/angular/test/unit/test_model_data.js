@@ -3,21 +3,15 @@
 function myDeferredTest(setUp, results) {
 	var done = false;
 	runs(function() {
-		setUp().done(function() { done = true; });
+		setUp().done(function() { done = true; })
+		.fail(function(data, msg) {
+			console.error("Failed to load data in myDeferredTest");
+			console.error(msg);
+		});
 	});
 	waitsFor(function() { return done; }, "Waited too long inside myDeferredTest");
 	runs(results);
 }
-
-//function myDeferredTest2(theTest) {
-//	var done = false;
-//	runs(theTest(function() { console.log("in itIsDone()"); done = true; }));
-//	waitsFor(function() { console.log("waitsFor"); return done; }, "Waited too long inside myDeferredTest");
-//	runs(function() { 
-//		console.log("last run");
-//		expect(true).toBe(true);
-//	});
-//}
 
 describe("Data", function() {
 	describe("with empty loader", function() {

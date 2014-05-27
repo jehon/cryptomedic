@@ -4,7 +4,6 @@ cryptomedic.models = {};
 
 cryptomedic.models.Data = Class.extend({
 	init: function(data){
-		console.log(data);
 		this.load(data);
 	},
 	load: function(data) {
