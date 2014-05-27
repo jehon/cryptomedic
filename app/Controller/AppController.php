@@ -61,8 +61,8 @@ class AppController extends Controller {
 		$group = $this->Auth->user('group');
 		// pr(array('group' => $group, 'resource' => $resource, 'action' => $action, 'args' => $args));
 		
-		if ('admin' == $group)
-			return true;
+		if ('admin' == $group) 	return true;
+		if ('debug' == $action)	return false;
 		switch ($resource) {
 
 			case "Users" :

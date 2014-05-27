@@ -79,6 +79,8 @@ class UsersController extends AppController {
 			$data ['denied'] [] = "all_delete";
 		if (! $this->isAuthorized($mylogin, "all", "unlock"))
 			$data ['denied'] [] = "all_unlock";
+		if (! $this->isAuthorized($mylogin, "all", "debug"))
+			$data ['denied'] [] = "all_debug";
 		$this->set("data", $data);
 	}
 
