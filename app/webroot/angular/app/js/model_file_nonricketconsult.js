@@ -1,4 +1,4 @@
 "use strict";
 
-cryptomedic.models.ClubFoot = cryptomedic.models.Consult.extend({
+cryptomedic.models.NonricketConsult = cryptomedic.models.Consult.extend({
 });
