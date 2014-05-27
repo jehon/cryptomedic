@@ -7,14 +7,23 @@ cryptomedic.models.Folder = cryptomedic.models.Data.extend({
 	},
 	objectizeList: function() {
 		if (this.files && (this.files.length > 0)) {
+			var p = -1;
+			for(var i in this.files) {
+				if (this.files[i]['type'] == "Patient") {
+					this.files[i] = new cryptomedic.models.Patient(this.files[i]);
+					p = i;
+				}
+			}
+			
+			if (p < 0) console.error("No patient found");
 			for(var i in this.files) {
 				if (!(this.files[i] instanceof Class)) {
 					var type = this.files[i]['type'] ;//.toLowerCase();
 					if (typeof(cryptomedic.models[type]) == "undefined") {
 						console.error("No type found for: " + type + " - Fallback to Data");
-						this.files[i] = new (cryptomedic.models.Data)(this.files[i]);
+						this.files[i] = new (cryptomedic.models.Data)(this.files[i], this.files[p]);
 					} else {
-						this.files[i] = new (cryptomedic.models[type])(this.files[i]);
+						this.files[i] = new (cryptomedic.models[type])(this.files[i], this.files[p]);
 					}
 				}
 			}

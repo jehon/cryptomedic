@@ -87,15 +87,11 @@ cryptoApp.factory('service_rest', [ '$http', '$log' , '$rootScope', function($ht
 		'getFile': function(id) {
 			var def = jQuery.Deferred();
 			if (cache.isCached(id)) {
-				console.log("having some cache data");
 				return def.resolve(cache.get(id));
 			}
 			$http.post(root + "/patients/view/" + id + ".json")
 			.success(function(data, status, headers, config) {
 				var canonized = new (cryptomedic.models.Folder)({ "files": canonize(data) });
-				console.log(canonized);
-//				// To generate test data (! strip the trailing and ending ") 
-//				console.log(JSON.stringify(canonized));
 				canonized.objectizeList();
 				cache.set(data['Patient']['id'], canonized);
 				def.resolve(canonized);
