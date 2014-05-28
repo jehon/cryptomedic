@@ -1,25 +1,25 @@
 'use strict';
 
 // Modes are: read, edit, add, display
-
-var app = {};
-app.lists = {};
-app.templates = {};
-app.modes = {
-	'read': 'read',
-	'edit': 'edit',
-	'add': 'add',
-	'display': 'display'
-};
-
+//
+//var app = {};
+//app.lists = {};
+//app.templates = {};
+//app.modes = {
+//	'read': 'read',
+//	'edit': 'edit',
+//	'add': 'add',
+//	'display': 'display'
+//};
+//
 //jQuery(function() {
 //    cryptomedic.display.finish();
 //});
-
-cryptomedic.reference_submit_for_create = function() {
-    jQuery("#ForceCreate").val("true");
-    jQuery(document.forms[0]).submit();
-};
+//
+//cryptomedic.reference_submit_for_create = function() {
+//    jQuery("#ForceCreate").val("true");
+//    jQuery(document.forms[0]).submit();
+//};
 
 // ************************************* STATISTICS AND GRAPHICS DRAWING ***********************************************
 // ************************************* STATISTICS AND GRAPHICS DRAWING ***********************************************
@@ -109,34 +109,34 @@ cryptomedic.graphic = function(what, ajax, xlabel, ylabel, width) {
 //    });
 //});
 //
-//Path.map("#graphics").to(function() {
-//    jehon.settings.mode = 'read';
-//    cryptomedic.status.related = -1;
-//    cryptomedic.status.route= "graphics";
-//    console.log(cryptomedic.status);
-//    
-//    if (typeof(ajax) == 'undefined') return
-//    if ((typeof(ajax.related) == 'undefined') || (ajax.related.length == 0)) {
-//        jQuery("#content > div").html("No data available to draw some graphics");
-//    }
-//
-//    var tstart = new Date().getTime();
-//    jehon.templates.render('graphics', ajax, '#content', {
-//        callback: function() {
-//            // Fill in all graphics
-//            cryptomedic.graphic('weight', ajax, 'age',      'Weightkg');
-//            cryptomedic.graphic('height', ajax, 'age',      'Heightcm');
-//            cryptomedic.graphic('wh',     ajax, 'Heightcm', 'Weightkg');
-//            cryptomedic.graphic('BMI',    ajax, 'age',      'bmi'); 
-//            jehon.templates.render("related_header", ajax, '#headerContainer', {
-//                callback: function() {
-//                    cryptomedic.display.finish(tstart);
-//                }
-//            });
-//        }
-//    });
-//});
-//
+Path.map("#graphics").to(function() {
+    jehon.settings.mode = 'read';
+    cryptomedic.status.related = -1;
+    cryptomedic.status.route= "graphics";
+    console.log(cryptomedic.status);
+    
+    if (typeof(ajax) == 'undefined') return
+    if ((typeof(ajax.related) == 'undefined') || (ajax.related.length == 0)) {
+        jQuery("#content > div").html("No data available to draw some graphics");
+    }
+
+    var tstart = new Date().getTime();
+    jehon.templates.render('graphics', ajax, '#content', {
+        callback: function() {
+            // Fill in all graphics
+            cryptomedic.graphic('weight', ajax, 'age',      'Weightkg');
+            cryptomedic.graphic('height', ajax, 'age',      'Heightcm');
+            cryptomedic.graphic('wh',     ajax, 'Heightcm', 'Weightkg');
+            cryptomedic.graphic('BMI',    ajax, 'age',      'bmi'); 
+            jehon.templates.render("related_header", ajax, '#headerContainer', {
+                callback: function() {
+                    cryptomedic.display.finish(tstart);
+                }
+            });
+        }
+    });
+});
+
 //Path.map("#history").to(function() {
 //    console.log("history");
 //    jehon.settings.mode = 'read';
@@ -210,11 +210,11 @@ cryptomedic.graphic = function(what, ajax, xlabel, ylabel, width) {
 //    });
 //
 //});
-
+//
 // ************************************* TEMPLATES DRAWING ***********************************************
 // ************************************* TEMPLATES DRAWING ***********************************************
 // ************************************* TEMPLATES DRAWING ***********************************************
-cryptomedic.display = {};
+//cryptomedic.display = {};
 //cryptomedic.display.finish = function(tstart, cb) {
 //	cryptomedic.display.messages();
 //    if (typeof(ajax) != 'undefined') {
@@ -243,7 +243,7 @@ cryptomedic.display = {};
 //    if (typeof(cb) == 'function')
 //        cb();
 //};
-
+//
 //cryptomedic.display.messages = function (mymessages) {
 //	// Hide messages after some times
 //	jQuery("body").one("click", function() { 
@@ -251,18 +251,18 @@ cryptomedic.display = {};
 //		jQuery("#flashMessages").hide("blind");
 //	})
 //}
-
+//
 // ************************************* TEMPLATES SPECIFICS ***********************************************
-cryptomedic.display.specifics = {};
-cryptomedic.businessrules = {};
-
-cryptomedic.display.patient_summary = function(cb) {
-    if (typeof(cb) != "function") cb = function() {};
-    if (jQuery('#belongsTo').length > 0) {
-        jehon.templates.render('patient_summary', ajax, '#belongsTo', function() {
-        });
-    }
-};
+//cryptomedic.display.specifics = {};
+//cryptomedic.businessrules = {};
+//
+//cryptomedic.display.patient_summary = function(cb) {
+//    if (typeof(cb) != "function") cb = function() {};
+//    if (jQuery('#belongsTo').length > 0) {
+//        jehon.templates.render('patient_summary', ajax, '#belongsTo', function() {
+//        });
+//    }
+//};
 
 /*****
  * Patient
@@ -499,7 +499,7 @@ cryptomedic.enhance = function(ajax) {
 		}
 	}
 };
-
+	
 // ************************************* TEMPLATES HELPERS ***********************************************
 // ************************************* TEMPLATES HELPERS ***********************************************
 // ************************************* TEMPLATES HELPERS ***********************************************
