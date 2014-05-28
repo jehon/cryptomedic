@@ -1,7 +1,5 @@
 "use strict";
 
-cryptomedic.models = {};
-
 cryptomedic.models.Data = Class.extend({
 	init: function(data){
 		this.load(data);
