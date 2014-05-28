@@ -50,8 +50,8 @@ cryptomedic.numberToString = function(n, dec) {
     return Math.round(n * Math.pow(10, dec)) / Math.pow(10, dec);
 };
 
-cryptomedic.math = (function() {
-    function evaluatePoly(line, x) {
+cryptomedic.math = {
+	evaluatePoly: function (line, x) {
         var i = -1;
         if ((x < line[0][0]) || (x > line[line.length - 1][0])) {
             return NaN;
@@ -69,23 +69,20 @@ cryptomedic.math = (function() {
         var xdw = line[i-1][0];
         var ydw = line[i-1][1];
         return ydw + (yup - ydw) * ((x - xdw) / (xup - xdw));
-    };
-
-    function stdDeviation(line, x, y) {
-        var avg = evaluatePoly(line.medium, x);
+    },
+    stdDeviation: function(line, x, y) {
+        var avg = this.evaluatePoly(line.medium, x);
         if (isNaN(avg)) return "#Out of bound#";
         if (y == avg) return 0;
 
         var ref;
-        if (y < avg) ref = evaluatePoly(line.min, x);
-        else ref = evaluatePoly(line.max, x);
+        if (y < avg) ref = this.evaluatePoly(line.min, x);
+        else ref = this.evaluatePoly(line.max, x);
         if (isNaN(ref)) return "#Out of bound#";
 
-        // 1.64485 = sigma at 90 for normal distribution
-        var sigma = Math.abs((avg - ref) / 1.64485);
-        var stdDev = (y - avg) / sigma;
-        return stdDev;
-    };
-
-    return { 'stdDeviation': stdDeviation };
-}());
+        var dev = Math.abs((avg - ref) / this.sigma);
+        return (y - avg) / dev;
+    },
+    // 1.64485 = sigma at 90 for normal distribution
+    sigma: 1.64485
+};
