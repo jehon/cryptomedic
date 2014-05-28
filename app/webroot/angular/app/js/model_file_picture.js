@@ -1,4 +1,4 @@
 "use strict";
 
-cryptomedic.models.Picture = cryptomedic.models.Consult.extend({
+cryptomedic.models.Picture = cryptomedic.models.File.extend({
 });

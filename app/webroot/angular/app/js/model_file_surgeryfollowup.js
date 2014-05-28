@@ -1,4 +1,4 @@
 "use strict";
 
-cryptomedic.models.SurgeryFollowup = cryptomedic.models.Consult.extend({
+cryptomedic.models.SurgeryFollowup = cryptomedic.models.File.extend({
 });

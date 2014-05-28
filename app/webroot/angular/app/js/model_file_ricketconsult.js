@@ -1,4 +1,4 @@
 "use strict";
 
-cryptomedic.models.RicketConsult = cryptomedic.models.Consult.extend({
+cryptomedic.models.RicketConsult = cryptomedic.models.File.extend({
 });

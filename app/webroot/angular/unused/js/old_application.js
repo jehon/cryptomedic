@@ -444,62 +444,62 @@ cryptomedic.display.specifics.Picture = function() {
     jQuery("#maxUploadSizeMb").html(cryptomedic.settings.maxUploadSizeMb);
 };
 
-/***
- * Enhance data
- */
-cryptomedic.enhance = function(ajax) {
-	console.log("starting enhancement of ajax data");
-	ajax.stats_base_actualage = "#Year of birth unknown#";
-	if (ajax.Yearofbirth >= 1900) {
-        ajax.stats_base_actualage = (new Date().getFullYear() - ajax.Yearofbirth) + " years old today";
-    }
-	
-	for(var i in ajax.related) {
-		ajax.related[i].stats_ds_height = "#sex unknown#";
-		ajax.related[i].stats_ds_weight = "#sex unknown#";
-		ajax.related[i].stats_base_bmi = "#sex unknown#";
-		ajax.related[i].stats_ds_wh = "#sex unknown#";
-		ajax.related[i].stats_ds_bmi = "#sex unknown#";
-		if (ajax.Sex > 0) {
-	        ajax.related[i].stats_base_age = "#age, year of birth, date of consultation unknown#";
-	        ajax.related[i].stats_base_bmi = "#height or weigth unknown#";
-	        ajax.related[i].stats_base_wh = "#height or weigth unknown#";
-	        ajax.related[i].stats_ds_height = "#height or age unknown#";
-	        ajax.related[i].stats_ds_weight = "#weigth or age unknown#";
-	        ajax.related[i].stats_ds_wh = "#height or weigth unknown#";
-	        ajax.related[i].stats_ds_bmi = "#height, weigth or age unknown#";
-
-	        var el = ajax.related[i];
-	        var sex = (ajax.Sex == 207 ? 'm' : 'f');
-	        var age = 0;
-	        if (el.Date != null) age = el.Date.substr(0, 4) - ajax.Yearofbirth;
-	
-	        if (age > 0) {
-	            ajax.related[i].stats_base_age = age + " years old at that time of consultation";
-	        }
-	
-	        if (!isNaN(parseInt(el.Heightcm)) && (el.Heightcm > 0) && (age > 0)) {
-	            ajax.related[i].stats_ds_height = cryptomedic.pn(cryptomedic.math.stdDeviation(amd_stats[sex]['height'], age, el.Heightcm), 1) + ' sd';
-	        }
-	    
-	        if (!isNaN(parseInt(el.Weightkg)) && (el.Weightkg > 0) && (age > 0)) {
-	            ajax.related[i].stats_ds_weight = cryptomedic.pn(cryptomedic.math.stdDeviation(amd_stats[sex]['weight'], age, el.Weightkg), 1) + ' sd';
-	        }
-	    
-	        if (!isNaN(parseInt(el.Heightcm)) && (el.Heightcm > 0) && !isNaN(parseInt(el.Weightkg)) && (el.Weightkg > 0)) {
-	            var bmi = cryptomedic.bmi(el.Heightcm, el.Weightkg);
-	            ajax.related[i].stats_base_bmi = cryptomedic.pn(bmi, 2);
-	            console.log(el.Weightkg/el.Heightcm);
-	            ajax.related[i].stats_base_wh = Math.floor(el.Weightkg/el.Heightcm * 100) / 100;
-	            ajax.related[i].stats_ds_wh = cryptomedic.pn(cryptomedic.math.stdDeviation(amd_stats[sex]['wh'], el.Heightcm, el.Weightkg), 1) + ' sd';
-	            if (age > 0) {
-	                ajax.related[i].stats_ds_bmi = cryptomedic.pn(cryptomedic.math.stdDeviation(amd_stats[sex]['BMI'], age, bmi), 1) + ' sd';
-	            }
-	        }
-		}
-	}
-};
-	
+///***
+// * Enhance data
+// */
+//cryptomedic.enhance = function(ajax) {
+//	console.log("starting enhancement of ajax data");
+//	ajax.stats_base_actualage = "#Year of birth unknown#";
+//	if (ajax.Yearofbirth >= 1900) {
+//        ajax.stats_base_actualage = (new Date().getFullYear() - ajax.Yearofbirth) + " years old today";
+//    }
+//	
+//	for(var i in ajax.related) {
+//		ajax.related[i].stats_ds_height = "#sex unknown#";
+//		ajax.related[i].stats_ds_weight = "#sex unknown#";
+//		ajax.related[i].stats_base_bmi = "#sex unknown#";
+//		ajax.related[i].stats_ds_wh = "#sex unknown#";
+//		ajax.related[i].stats_ds_bmi = "#sex unknown#";
+//		if (ajax.Sex > 0) {
+//	        ajax.related[i].stats_base_age = "#age, year of birth, date of consultation unknown#";
+//	        ajax.related[i].stats_base_bmi = "#height or weigth unknown#";
+//	        ajax.related[i].stats_base_wh = "#height or weigth unknown#";
+//	        ajax.related[i].stats_ds_height = "#height or age unknown#";
+//	        ajax.related[i].stats_ds_weight = "#weigth or age unknown#";
+//	        ajax.related[i].stats_ds_wh = "#height or weigth unknown#";
+//	        ajax.related[i].stats_ds_bmi = "#height, weigth or age unknown#";
+//
+//	        var el = ajax.related[i];
+//	        var sex = (ajax.Sex == 207 ? 'm' : 'f');
+//	        var age = 0;
+//	        if (el.Date != null) age = el.Date.substr(0, 4) - ajax.Yearofbirth;
+//	
+//	        if (age > 0) {
+//	            ajax.related[i].stats_base_age = age + " years old at that time of consultation";
+//	        }
+//	
+//	        if (!isNaN(parseInt(el.Heightcm)) && (el.Heightcm > 0) && (age > 0)) {
+//	            ajax.related[i].stats_ds_height = cryptomedic.pn(cryptomedic.math.stdDeviation(amd_stats[sex]['height'], age, el.Heightcm), 1) + ' sd';
+//	        }
+//	    
+//	        if (!isNaN(parseInt(el.Weightkg)) && (el.Weightkg > 0) && (age > 0)) {
+//	            ajax.related[i].stats_ds_weight = cryptomedic.pn(cryptomedic.math.stdDeviation(amd_stats[sex]['weight'], age, el.Weightkg), 1) + ' sd';
+//	        }
+//	    
+//	        if (!isNaN(parseInt(el.Heightcm)) && (el.Heightcm > 0) && !isNaN(parseInt(el.Weightkg)) && (el.Weightkg > 0)) {
+//	            var bmi = cryptomedic.bmi(el.Heightcm, el.Weightkg);
+//	            ajax.related[i].stats_base_bmi = cryptomedic.pn(bmi, 2);
+//	            console.log(el.Weightkg/el.Heightcm);
+//	            ajax.related[i].stats_base_wh = Math.floor(el.Weightkg/el.Heightcm * 100) / 100;
+//	            ajax.related[i].stats_ds_wh = cryptomedic.pn(cryptomedic.math.stdDeviation(amd_stats[sex]['wh'], el.Heightcm, el.Weightkg), 1) + ' sd';
+//	            if (age > 0) {
+//	                ajax.related[i].stats_ds_bmi = cryptomedic.pn(cryptomedic.math.stdDeviation(amd_stats[sex]['BMI'], age, bmi), 1) + ' sd';
+//	            }
+//	        }
+//		}
+//	}
+//};
+//	
 // ************************************* TEMPLATES HELPERS ***********************************************
 // ************************************* TEMPLATES HELPERS ***********************************************
 // ************************************* TEMPLATES HELPERS ***********************************************

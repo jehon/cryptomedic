@@ -1,4 +1,4 @@
 "use strict";
 
-cryptomedic.models.OrthopedicDevice = cryptomedic.models.Consult.extend({
+cryptomedic.models.OrthopedicDevice = cryptomedic.models.File.extend({
 });

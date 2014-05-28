@@ -1,4 +1,4 @@
 "use strict";
 
-cryptomedic.models.ClubFoot = cryptomedic.models.Consult.extend({
+cryptomedic.models.ClubFoot = cryptomedic.models.File.extend({
 });
