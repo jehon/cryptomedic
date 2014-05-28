@@ -12,6 +12,8 @@ describe("Patient", function() {
 			expect(folder.getPatient().id).toBe(10);
 			expect(folder.getPatient().Yearofbirth).toBe(1998);
 			expect(folder.getPatient().actualAge(new Date("2014-01-01"))).toBe("16 years old today");
+			expect(folder.getPatient().Sex).toBe(207);
+			expect(folder.getPatient().sexStr()).toBe("m");
 		}));
 	});
 });

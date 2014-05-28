@@ -8,5 +8,9 @@ cryptomedic.models.Patient = cryptomedic.models.Data.extend({
 		} else {
 			return "#Year of birth unknown#";
 		} 
+	},
+	'sexStr': function() {
+		if (!this.isNotZero('Sex')) return null;
+		return this.Sex == 207 ? "m" : "f"; 
 	}
 });
