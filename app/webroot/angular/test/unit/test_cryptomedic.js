@@ -28,7 +28,7 @@ describe("Cryptomedic.js", function() {
 	
 	it("calculate standard deviations", function() {
 		expect(cryptomedic.math.stdDeviation(poly, 0, 1)).toBe(0);
-		expect(cryptomedic.math.stdDeviation(poly, 0, 0)).toBe(-1.64485);
-		expect(cryptomedic.math.stdDeviation(poly, 0, 2)).toBe(1.64485);
+		expect(cryptomedic.math.stdDeviation(poly, 0, 0)).toBe(-cryptomedic.math.sigma);
+		expect(cryptomedic.math.stdDeviation(poly, 0, 2)).toBe(cryptomedic.math.sigma);
 	});
 });

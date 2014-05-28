@@ -37,6 +37,7 @@ cryptomedic.model2controller = {
     "SurgeryFollowup": "surgery_followups"
 };
 
+// Should be removed?
 cryptomedic.numberToString = function(n, dec) {
     if (isNaN(n)) {
         return "Not a number";
