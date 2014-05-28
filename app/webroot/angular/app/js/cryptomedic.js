@@ -22,8 +22,8 @@ if (window.location.search) {
 
 var cryptomedic = {};
 cryptomedic.settings = {};
-cryptomedic.structure = {};
-cryptomedic.prototypes = {};
+cryptomedic.structure = {};  // Could be removed? Structure is used inside the php only
+cryptomedic.models = {};
 
 cryptomedic.model2controller = {
     "Bill": "bills", 
@@ -37,11 +37,7 @@ cryptomedic.model2controller = {
     "SurgeryFollowup": "surgery_followups"
 };
 
-cryptomedic.bmi = function(height, weight) {
-    return 10000 * weight / (height * height);
-};
-
-cryptomedic.pn = function(n, dec) {
+cryptomedic.numberToString = function(n, dec) {
     if (isNaN(n)) {
         return "Not a number";
     }
