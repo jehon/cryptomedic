@@ -51,7 +51,7 @@
 // 	(new Script())->url("js/ctrl_home.js")->cached()->js()->dependFile()->toPrint();
 // 	(new Script())->url("js/ctrl_file.js")->cached()->js()->dependFile()->toPrint();
 	// (new Script())->url("js/old_application.js")->cached()->css()->dependFile()->toPrint();
-	// (new Script())->url("js/amd_stats_datas.js")->cached()->css()->dependFile()->toPrint();
+	(new Script())->url("js/amd_stats_datas.js")->cached()->css()->dependFile()->toPrint();
 
 	(new Script())->url("css/application.css")->cached()->css()->dependFile()->toPrint();
 	foreach ( $model2controller as $m => $c ) {
