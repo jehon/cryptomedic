@@ -197,6 +197,10 @@ class AppController extends Controller {
 		$this->set("ajax", $ajax);
 	}
 
+// 	function redirect($url, $status = NULL, $exit = true) {
+		
+// 	}
+	
 	function myRedirectToPatientPage($data, $flash = "", $flash_class = "flashko") {
 		if ($flash > "") {
 			$this->Session->setFlash($flash, "default", array ("class" => $flash_class));
@@ -216,7 +220,7 @@ class AppController extends Controller {
 	function unlock($id = null) {
 		if ($id == null || $id <= 0) {
 			$this->Session->setflash('Invalid request.');
-			return $this->redirect("/");
+			return $this->redirect("/", 406);
 		}
 		
 		if ($this->modelClass == "Patient") {
@@ -226,7 +230,7 @@ class AppController extends Controller {
 		$data = $this->{$this->modelClass}->read(null, $id);
 		if ($data == null) {
 			$this->Session->setFlash('Invalid ' . $this->modelKey . ": #$id");
-			return $this->redirect("/");
+			return $this->redirect("/", 400);
 		}
 		
 		// Change the data
@@ -247,12 +251,12 @@ class AppController extends Controller {
 	function save() {
 		if (empty($this->request->data) > 0) {
 			$this->Session->setflash('Not enough data');
-			return $this->redirect("/");
+			return $this->redirect("/", 406);
 		}
 		
 		if (! array_key_exists('type', $this->request->data)) {
 			$this->Session->setflash('Incomplete data');
-			return $this->redirect('/');
+			return $this->redirect('/', 406);
 		}
 		
 		$login = $this->Auth->user();
@@ -272,13 +276,14 @@ class AppController extends Controller {
 	function view($id = null) {
 		if ($id == null || $id <= 0) {
 			$this->Session->setflash('Invalid request.');
-			return $this->redirect("/");
+			return $this->redirect("/", 406);
 		}
 		
 		$data = $this->{$this->modelClass}->read(null, $id);
 		if ($data == null) {
+			// TODO: this is an error !!! how to manage that in MyJsonView ?
 			$this->Session->setFlash('Invalid ' . $this->modelKey . ": $id");
-			return $this->redirect('/');
+			return $this->redirect('/', 400);
 		}
 		$this->set("data", $data);
 		$this->render('details');
@@ -287,14 +292,14 @@ class AppController extends Controller {
 	function delete($id) {
 		if (! $id) {
 			$this->Session->setFlash('Not enough data.');
-			return $this->render("/");
+			return $this->render("/", 406);
 		}
 		
 		$data = $this->{$this->modelClass}->read(null, $id);
 		
 		if (($data == null) || ($data === false)) {
 			$this->Session->setFlash('Invalid data');
-			return $this->redirect("/");
+			return $this->redirect("/", 406);
 		}
 		
 		if ($this->{$this->modelClass}->delete($id)) {
