@@ -1,5 +1,4 @@
 <?php require_once(__DIR__ . "/../php/templates.php"); ?>
-<span ng-controller="ctrl_consultation">
 <span ng-controller="ctrl_clubfoot"> 
 	<div class="col-sm-6">
 		<FieldSet>
@@ -17,7 +16,7 @@
 					<td><?php value("ClubFoot.Center"); ?></td>
 				</tr><tr modes='read'>
 					<td><label for="Patient-Age" name="Patient-Age">Age</label></td>
-					<td>{{stats_base_age}}</td>
+					<td>{{currentFile().ageAtConsultTimeStr()}}</td>
 				</tr><tr>
 					<td><?php label("ClubFoot.SchoolClass");?></td>
 					<td><?php value("ClubFoot.SchoolClass"); ?></td>
@@ -128,7 +127,7 @@
 		</FieldSet>
 	</div>
 	<div class="col-sm-6">
-		<div ng-include="'partials/patient_summary.php'"></div>
+		<div xng-include="'partials/patient_summary.php'"></div>
 		<FieldSet>
 			<legend><label for="ClubFoot-Conclusion" name="ClubFoot-Conclusion">ClubFoot-Conclusion</label></legend>
 			<table  class='colorize'>
