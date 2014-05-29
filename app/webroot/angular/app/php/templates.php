@@ -130,7 +130,8 @@ function _parseKey($key) {
 
 function rawValue($key, $type = null) {
 	$struct = _parseKey($key);
-	echo "{{folder.files[page]." . $struct->name . "}}";
+	echo "{{currentFile()." . $struct->name . "}}";
+// 	echo "{{folder.files[page]." . $struct->name . "}}";
 }
 
 function label($key) {
@@ -147,16 +148,17 @@ function value($key) {
 
 function read($key, $type = null) {
 	$struct = _parseKey($key);
-	$angularKey = "folder.files[page]." . $struct->name;
+	$angularKey = "currentFile()." . $struct->name;
+// 	$angularKey = "folder.files[page]." . $struct->name;
 	if ($type == null) $type = $struct->myType; 
 	switch($type) {
 		case 'date':
 			// See https://docs.angularjs.org/api/ng/filter/date
-			echo "<span id='$key>{{" . $angularKey . " | format: 'shortDate' }}</span>";
+			echo "<span id='$key'>{{" . $angularKey . " | date:'shortDate' }}</span>";
 			break;
 		case 'datetime':
 			// See https://docs.angularjs.org/api/ng/filter/date
-			echo "<span id='$key>{{" . $angularKey . " | format: 'short' }}</span>";
+			echo "<span id='$key'>{{" . $angularKey . " | date:'short' }}</span>";
 			break;
 			// TODO: clean presentation
 		case 'text':
@@ -174,6 +176,7 @@ function read($key, $type = null) {
 			break;
 		default:
 			echo "$key input";
+			break;
 	}
 }
 
