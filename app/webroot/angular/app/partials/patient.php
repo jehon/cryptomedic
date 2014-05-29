@@ -1,61 +1,61 @@
 <?php require_once(__DIR__ . "/../php/templates.php"); ?>
-<span id='patient_content' ng-controller="ctrl_patient">
+<span ng-controller="ctrl_patient">
 	<div class="col-sm-6">
         <fieldset>
-				<legend><label for="Patient-GeneralData" name="Patient-GeneralData">General Data</label></legend>
-				<table class='colorize'>
-					<col width='30%' /><col width='*' />
-					<tr>
-						<td><?php label("Patient.entrynumber");?>
-						<td><?php read("Patient.entryyear"); ?>-<?php read("Patient.entryorder"); ?></td>
-					</tr><tr>
-						<td><?php label("Patient.Firstname");?></td>
-						<td><?php value("Patient.Firstname"); ?></td>
-					</tr><tr>
-						<td><?php label("Patient.Lastname");?></td>
-						<td><?php value("Patient.Lastname"); ?></td>
-					</tr><tr>
-						<td><?php label("Patient.Sex");?></td>
-						<td><?php value("Patient.Sex"); ?></td>
-					</tr><tr>
-						<td><?php label("Patient.Yearofbirth");?></td>
-						<td>
-							<?php value("Patient.Yearofbirth", [ "min" => 900, "max" => 2100]); ?>
-						</td>
-					</tr><tr mode='read'>
-						<td><label for="Patient-Age" name="Patient-Age">Age</label></td>
-						<td>{{folder.getPatient().actualAge()}}</td>
-					</tr><tr>
-						<td><?php label("Patient.Fathersname");?></td>
-						<td><?php value("Patient.Fathersname", ""); ?></td>
-					</tr><tr>
-						<td><?php label("Patient.District");?></td>
-						<td><?php value("Patient.District"); ?></td>
-					</tr><tr>
-						<td><?php label("Patient.Upazilla");?></td>
-						<td><?php value("Patient.Upazilla"); ?></td>
-					</tr><tr>
-						<td><label for="PatientUnion" name="Patient.Union_">Union</label></td>
-						<td><?php value("Patient.Union_"); ?></td>
-					</tr><tr>
-						<td><?php label("Patient.Telephone");?></td>
-						<td><?php value("Patient.Telephone"); ?></td>
-					</tr><tr>
-						<td><?php label("Patient.AddressNotes");?></td>
-						<td><?php value("Patient.AddressNotes"); ?></td>
-						</tr>
-					</table>
-				</fieldset>
-				<br/>
-				<fieldset id='PatientPathology'>
-					<legend><label for="Patient-Pathology" name="Patient-Pathology">Pathology</label></legend>
-					<table class='colorize'>
-						<col width='30%' /><col width='*' />
-						<tr>
-							<td></td>
-							<td id='PatientPathologyError' style='display: none' class='jserror'>
-							<label for="Patient-Nopathology" name="Patient-Nopathology">Please select at least one pathology</label>
-						</td>
+			<legend><label for="Patient-GeneralData" name="Patient-GeneralData">General Data</label></legend>
+			<table class='colorize'>
+				<col width='30%' /><col width='*' />
+				<tr>
+					<td><?php label("Patient.entrynumber");?>
+					<td><?php read("Patient.entryyear"); ?>-<?php read("Patient.entryorder"); ?></td>
+				</tr><tr>
+					<td><?php label("Patient.Firstname");?></td>
+					<td><?php value("Patient.Firstname"); ?></td>
+				</tr><tr>
+					<td><?php label("Patient.Lastname");?></td>
+					<td><?php value("Patient.Lastname"); ?></td>
+				</tr><tr>
+					<td><?php label("Patient.Sex");?></td>
+					<td><?php value("Patient.Sex"); ?></td>
+				</tr><tr>
+					<td><?php label("Patient.Yearofbirth");?></td>
+					<td>
+						<?php value("Patient.Yearofbirth", [ "min" => 900, "max" => 2100]); ?>
+					</td>
+				</tr><tr mode='read'>
+					<td><label for="Patient-Age" name="Patient-Age">Age</label></td>
+					<td>{{currentFile().actualAge()}}</td>
+				</tr><tr>
+					<td><?php label("Patient.Fathersname");?></td>
+					<td><?php value("Patient.Fathersname", ""); ?></td>
+				</tr><tr>
+					<td><?php label("Patient.District");?></td>
+					<td><?php value("Patient.District"); ?></td>
+				</tr><tr>
+					<td><?php label("Patient.Upazilla");?></td>
+					<td><?php value("Patient.Upazilla"); ?></td>
+				</tr><tr>
+					<td><label for="PatientUnion" name="Patient.Union_">Union</label></td>
+					<td><?php value("Patient.Union_"); ?></td>
+				</tr><tr>
+					<td><?php label("Patient.Telephone");?></td>
+					<td><?php value("Patient.Telephone"); ?></td>
+				</tr><tr>
+					<td><?php label("Patient.AddressNotes");?></td>
+					<td><?php value("Patient.AddressNotes"); ?></td>
+				</tr>
+			</table>
+		</fieldset>
+		<br/>
+		<fieldset id='PatientPathology'>
+			<legend><label for="Patient-Pathology" name="Patient-Pathology">Pathology</label></legend>
+			<table class='colorize'>
+				<col width='30%' /><col width='*' />
+				<tr>
+					<td></td>
+					<td id='PatientPathologyError' style='display: none' class='jserror'>
+					<label for="Patient-Nopathology" name="Patient-Nopathology">Please select at least one pathology</label>
+				</td>
 				</tr><tr>
 					<td><label for="PatientPathologyRicket" name="Patient.pathology_Ricket">Ricket</label></td>
 					<td><?php value("Patient.pathology_Ricket"); ?></td>
