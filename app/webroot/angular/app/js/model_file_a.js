@@ -1,67 +1,66 @@
 "use strict";
 
+var DataMissingException = function(data) {
+	this.data = data;
+};
+
 cryptomedic.models.File = cryptomedic.models.Data.extend({
 	'init': function(data, patient) {
 		this._super(data);
 		this.patient = patient;
 	},
 	'ageAtConsultTime': function() {
-		if (!this.isNotZero('Date')) return "#Date unknown#";
-		if (!this.isNotZero('patient')) return "#Patient not found#";
-		if (!this.patient.isNotZero('Yearofbirth')) return "#Year of Birth unknown#";
+		if (!this.isNotZero('Date')) throw new DataMissingException("Date");
+		if (!this.isNotZero('patient')) throw new DataMissingException("Patient");
+		if (!this.patient.isNotZero('Yearofbirth')) throw new DataMissingException("Year of Birth");
 	    
 		return parseInt(this.Date.substr(0, 4)) - this.patient.Yearofbirth;
 	},
-	'ageAtConsultTimeStr': function() {
-		var age = this.ageAtConsultTime();
-		if (typeof(age) == "number") return age + " years old at that time of consultation";
-		return age;
-	},
 	'ds_height': function() {
-		if (!this.isNotZero("Heightcm")) return "#Height unknown#";
+		if (!this.isNotZero("Heightcm")) throw new DataMissingException("Height");
 		var sex = !this.patient.sexStr;
-		if (!sex) return "#sex unknown#";
+		if (!sex) throw new DataMissingException("sex");
 		var age = this.ageAtConsultTime();
-		if (typeof(age) != "number") return "#Age unknowns#";
+		if (typeof(age) != "number") throw new DataMissingException("Age");
 	
 		return cryptomedic.math.stdDeviation(amd_stats[sex]['height'], age, this.Heightcm);
 	},
 	'ds_weight': function() {
-		if (!this.isNotZero("Weightkg")) return "#Weight unknown#";
+		if (!this.isNotZero("Weightkg")) throw new DataMissingException("Weight");
 		var sex = !this.patient.sexStr;
-		if (!sex) return "#sex unknown#";
+		if (!sex) throw new DataMissingException("sex");
 		var age = this.ageAtConsultTime();
-		if (typeof(age) != "number") return "#Age unknowns#";
+		if (typeof(age) != "number") throw new DataMissingException("Age");
 
 		return cryptomedic.math.stdDeviation(amd_stats[sex]['weight'], age, this.Weightkg);
 	},
 	'wh': function() {
-		if (!this.isNotZero("Heightcm")) return "#Height unknown#";
-		if (!this.isNotZero("Weightkg")) return "#Weight unknown#";
+		if (!this.isNotZero("Heightcm")) throw new DataMissingException("Height");
+		if (!this.isNotZero("Weightkg")) throw new DataMissingException("Weight");
 
 		return this.Weightkg/this.Heightcm;
 	},
 	'ds_weight_height': function() {
-		if (!this.isNotZero("Heightcm")) return "#Height unknown#";
-		if (!this.isNotZero("Weightkg")) return "#Weight unknown#";
+		if (!this.isNotZero("Heightcm")) throw new DataMissingException("Height");
+		if (!this.isNotZero("Weightkg")) throw new DataMissingException("Weight");
 		var sex = !this.patient.sexStr;
-		if (!sex) return "#sex unknown#";
+		if (!sex) throw new DataMissingException("sex");
 
 		return cryptomedic.math.stdDeviation(amd_stats[sex]['wh'], el.Heightcm, el.Weightkg);
 	},
 	'bmi': function(height, weight) {
-		if (!this.isNotZero("Heightcm")) return null;
-		if (!this.isNotZero("Weightkg")) return null;
+		if (!this.isNotZero("Heightcm")) throw new DataMissingException("Height");
+		if (!this.isNotZero("Weightkg")) throw new DataMissingException("Weight");
 
 		return 10000 * this.Weightkg / (this.Heightcm * this.Heightcm);
 	},
 	'ds_bmi': function() {
-		if (!this.isNotZero("Heightcm")) return "#Height unknown#";
-		if (!this.isNotZero("Weightkg")) return "#Weight unknown#";
+//		if (!this.isNotZero("Heightcm")) throw new DataMissingException("Height");
+//		if (!this.isNotZero("Weightkg")) throw new DataMissingException("Weight");
 		var sex = !this.patient.sexStr;
-		if (!sex) return "#sex unknown#";
+		if (!sex) throw new DataMissingException("sex");
 		var age = this.ageAtConsultTime();
-		if (typeof(age) != "number") return "#Age unknowns#";
+		if (typeof(age) != "number") throw new DataMissingException("Age");
 
 		return cryptomedic.math.stdDeviation(amd_stats[sex]['BMI'], age, this.bmi());
 	}

@@ -22,7 +22,9 @@
 		Modified on: {{currentFile().modified}} #
 		By: {{currentFile().lastuser}}
 	</div>
-	<span ng-include="'partials/' + name() + '.php'">
-		debug: Content {{page}}
+	<span ng-controller="ctrl_file">
+		<span ng-include="'partials/' + name() + '.php'">
+			debug: Content {{page}}
+		</span>
 	</span>
 </div>
