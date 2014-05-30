@@ -4,6 +4,10 @@
 <?php require_once(__DIR__ . "/../php/templates.php"); ?>
 
 ** Replace:
+<label for="[a-zA-Z]+" name="([a-zA-Z.]+)">[^<]+</label>
+<?php label("$1");?>
+
+** Replace:
 \{@input header="([^"]+)"\/\}
 <?php value("$1"); ?>
 
@@ -11,9 +15,6 @@
 \{@input header="([^"]+)"[ ]*extra="([^"]*)"\/\}
 <?php value("$1", "$2"); ?>
 
-** Replace:
-<label for="[a-zA-Z]+" name="([a-zA-Z.]+)">[^<]+</label>
-<?php label("$1");?>
 
 
 */
