@@ -127,7 +127,7 @@
 		</FieldSet>
 	</div>
 	<div class="col-sm-6">
-		<div xng-include="'partials/patient_summary.php'"></div>
+		<div ng-include="'partials/patient_summary.php'"></div>
 		<FieldSet>
 			<legend><label for="ClubFoot-Conclusion" name="ClubFoot-Conclusion">ClubFoot-Conclusion</label></legend>
 			<table  class='colorize'>
