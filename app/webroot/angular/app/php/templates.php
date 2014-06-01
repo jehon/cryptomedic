@@ -30,12 +30,17 @@ function _label($key) {
 		echo $sql;
 		throw new Exception("Too much labels for '$key'");
 	}
-	if ($res->num_rows == 0) {
+	if ($res->num_rows > 1) {
+		$version = $res->fetch_array();
+		if ($version["english"] != $key && $version["english"] != "")
+			return $version["english"];
+	}
+	try {
+		$struct = _parseKey($key);
+		return $struct->name;
+	} catch (Exception $e) {
 		return $key;
 	}
-	$version = $res->fetch_array();
-	if ($version["english"] == "") return $key;
-	return $version["english"];
 }
 
 function _parseKey($key) {
