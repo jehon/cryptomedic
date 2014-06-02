@@ -8,7 +8,15 @@ describe('Jasmine', function() {
 	});
 	
 	it('prints jasmine version', function() {
-//        console.log('jasmine-version:' + jasmine.getEnv().versionString());
         expect(jasmine.getEnv().versionString()).toMatch("1.3");
+	});
+	
+	it('manage exceptions', function() {
+		expect(function() { throw "test"; }).toThrow();
+		expect(function() { throw "test"; }).toThrow("test");
+		expect(function() { throw new Error("test"); }).toThrow();
+		expect(function() { throw new Error("test"); }).toThrow(new Error("test"));
+		expect(function() { throw new DataMissingException("test"); }).toThrow();
+//		expect(function() { throw new DataMissingException("test"); }).toThrow(new DataMissingException("test"));
 	});
 });

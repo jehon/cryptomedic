@@ -19,7 +19,6 @@ describe("File", function() {
 			expect(folder.file(i).patient instanceof cryptomedic.models.Patient).toBeTruthy();
 			expect(folder.file(i).Date).toBe("2014-04-17");
 			expect(folder.file(i).ageAtConsultTime()).toBe(16);
-			expect(folder.file(i).ageAtConsultTimeStr()).toBe("16 years old at that time of consultation");
 			
 			i = 3;
 			expect(folder.file(i) instanceof cryptomedic.models.File).toBeTruthy();
@@ -27,9 +26,8 @@ describe("File", function() {
 			expect(folder.file(i).id).toBe(17);
 			expect(folder.file(i).patient instanceof cryptomedic.models.Patient).toBeTruthy();
 			expect(folder.file(i).Date).toBe(null);
-			expect(folder.file(i).ageAtConsultTime()).toBe("#Date unknown#");
-			expect(folder.file(i).ageAtConsultTimeStr()).toBe("#Date unknown#");
-			
+			expect(folder.file(i).ageAtConsultTime).toThrow();
+			//expect(folder.file(i).ageAtConsultTime).toThrow(new DataMissingException("Date"));
 		}));
 	});
 });
