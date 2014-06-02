@@ -5,12 +5,11 @@ module.exports = function(config) {
 		            'karma-firefox-launcher',
 		            'karma-jasmine', 
 		            'karma-junit-reporter',
-		            'karma-phantomjs-launcher'
-//		            'karma-jasmine-html-reporter' // https://www.npmjs.org/package/karma-htmlfile-reporter
+		            'karma-phantomjs-launcher',
+//		            'karma-html-reporter' //  add to package.json: "karma-html-reporter": "latest" - https://www.npmjs.org/package/karma-html-reporter
 		],
-		// https://www.npmjs.org/package/karma-jasmine-htmlfile-reporter
 		reporters : [ 
-		              'progress', 
+		              'progress' 
 //		              'html' 
 		             ],
 
@@ -35,9 +34,9 @@ module.exports = function(config) {
 			outputFile : 'test_out/unit.xml',
 			suite : 'unit'
 		},
-		
-//		htmlReporter : {
-//			outputFile : 'test_out/html_unit.html'
-//		}
+//	    htmlReporter: {
+//	        outputDir: 'output',
+//	        templatePath: 'output/jasmine_template.html'
+//	    }
 	});
 };
