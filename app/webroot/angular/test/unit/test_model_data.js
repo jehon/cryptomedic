@@ -1,18 +1,5 @@
 "use strict";
 
-function myDeferredTest(setUp, results) {
-	var done = false;
-	runs(function() {
-		setUp().done(function() { done = true; })
-		.fail(function(data, msg) {
-			console.error("Failed to load data in myDeferredTest");
-			console.error(msg);
-		});
-	});
-	waitsFor(function() { return done; }, "Waited too long inside myDeferredTest");
-	runs(results);
-}
-
 describe("Data", function() {
 	describe("with empty loader", function() {
 		var data = new cryptomedic.models.Data();
@@ -58,45 +45,36 @@ describe("Data", function() {
 	});
 	
 	describe("with data loaded remotely", function() {
-		it("should load correctly load_test.json and store it", function() {
+		it("should load correctly load_test.json and store it", function(done) {
 			var data = new cryptomedic.models.Data();
-			var done = false;
-			runs(function() {
-				data.loadFrom("/base/test/mocks/mock_load_test.json").done(function(data) {
-					done = true;
-				});
-			});
-			
-			waitsFor(function() {
-				return done; 
-			}, "load_test.json should be loaded");
-			
-			runs(function() {
+			data.loadFrom("/base/test/mocks/mock_load_test.json").done(function(data) {
 				expect(data.data1).toBe("data1");
 				expect(data.dataArray).toContain(1);
 				expect(data.dataArray).toContain(2);
 				expect(data.dataArray).toContain(3);
 				expect(data.dataArray).not.toContain(4);
 				expect(data.anything).toBeUndefined();
+				done();
 			});
 		});
 	});
 	
 	describe("with data loaded remotely tested through myAsyncTest", function() {
 		var data = new cryptomedic.models.Data();
-		it("should load correctly load_test.json and store it", myDeferredTest(function () {
-			return data.loadFrom("/base/test/mocks/mock_load_test.json");
-		}, function() {
-			expect(data.data1).toBe("data1");
-			expect(data.dataArray).toContain(1);
-			expect(data.dataArray).toContain(2);
-			expect(data.dataArray).toContain(3);
-			expect(data.dataArray).not.toContain(4);
-			expect(data.anything).toBeUndefined();
-		}));
+		it("should load correctly load_test.json and store it", function(done) {
+			data.loadFrom("/base/test/mocks/mock_load_test.json").done(function() {
+				expect(data.data1).toBe("data1");
+				expect(data.dataArray).toContain(1);
+				expect(data.dataArray).toContain(2);
+				expect(data.dataArray).toContain(3);
+				expect(data.dataArray).not.toContain(4);
+				expect(data.anything).toBeUndefined();
+				done();
+			});
+		});
 	});
 
-	describe("would interpret notSet correctly", function() {
+	it("would interpret notSet correctly", function() {
 		var data = new cryptomedic.models.Data();
 		expect(data.data1).toBeUndefined();
 		expect(data.isSet("data1")).toBeFalsy();

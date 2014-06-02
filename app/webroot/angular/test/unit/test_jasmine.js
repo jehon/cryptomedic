@@ -8,7 +8,7 @@ describe('Jasmine', function() {
 	});
 	
 	it('prints jasmine version', function() {
-        expect(jasmine.getEnv().versionString()).toMatch("1.3");
+		expect(jasmine.version).toMatch("2.0");
 	});
 	
 	it('manage exceptions', function() {
