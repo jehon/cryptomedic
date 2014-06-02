@@ -68,7 +68,7 @@ cryptomedic.graphic = function(what, ajax, xlabel, ylabel, width) {
         fieldset.children().each(function() {
             if (jQuery(this).is("legend")) return;
             this.remove();
-        })
+        });
         jQuery(fieldset).append("<div>Sorry, not enough vaid data available</div>");
     }
 };
@@ -357,22 +357,22 @@ Level 4 is when the familial ration is 3000< FR
 /*******
  * Bills
  */
-cryptomedic.display.specifics.Bill = function() {
-    console.log("Bill specific");
-	if (jehon.settings.mode == 'edit' || jehon.settings.mode == 'add') {
-	    jQuery('[name="data[Date]"]').each(function(i, e) {
-	    	e.addCustomValidation(cryptomedic.businessrules.billPrice);
-	    });
-	}
-	if (jehon.settings.mode != 'add') {
-		cryptomedic.businessrules.billPrice(ajax.related[cryptomedic.status.related].price_id);
-	} else {
-		cryptomedic.businessrules.billPrice();
-	}
-};
+//cryptomedic.display.specifics.Bill = function() {
+//    console.log("Bill specific");
+//	if (jehon.settings.mode == 'edit' || jehon.settings.mode == 'add') {
+//	    jQuery('[name="data[Date]"]').each(function(i, e) {
+//	    	e.addCustomValidation(cryptomedic.businessrules.billPrice);
+//	    });
+//	}
+//	if (jehon.settings.mode != 'add') {
+//		cryptomedic.businessrules.billPrice(ajax.related[cryptomedic.status.related].price_id);
+//	} else {
+//		cryptomedic.businessrules.billPrice();
+//	}
+//};
 
 cryptomedic.businessrules.billPrice = function(price_id) {
-	console.log("business rule billPrice");
+//	console.log("business rule billPrice");
 	var d = jQuery("input#Bill_Date").val();
 	var pi = -1;
 	if ((typeof(price_id) == 'number') || (typeof(price_id) == 'string')) {
