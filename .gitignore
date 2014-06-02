@@ -1,3 +1,5 @@
 /.project
 /.settings
 /.buildpath
+
+app/webroot/angular/npm-debug.log
