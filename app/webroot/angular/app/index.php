@@ -44,12 +44,12 @@
 	// <!-- personnal -->
 	(new Script())->url("js/cryptomedic.js")->cached()->js()->dependFile()->toPrint();
 	(new Script())->url("js/application.js")->cached()->js()->dependFile()->toPrint();
+	(new Script())->url("js/amd_stats_datas.js")->cached()->js()->dependFile()->toPrint();
 	(new Script())->url("js/exceptions.js")->cached()->js()->dependFile()->toPrint();
 	(new Script())->all("js/model*.js")->cached()->js()->dependFile()->toPrint();
 	(new Script())->all("js/service*.js")->cached()->js()->dependFile()->toPrint();
 	(new Script())->all("js/ctrl*.js")->cached()->js()->dependFile()->toPrint();
 	// (new Script())->url("js/old_application.js")->cached()->css()->dependFile()->toPrint();
-	(new Script())->url("js/amd_stats_datas.js")->cached()->css()->dependFile()->toPrint();
 
 	(new Script())->url("css/application.css")->cached()->css()->dependFile()->toPrint();
 	foreach ( $model2controller as $m => $c ) {
