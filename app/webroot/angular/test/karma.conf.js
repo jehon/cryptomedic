@@ -5,6 +5,7 @@ module.exports = function(config) {
 		            'karma-firefox-launcher',
 		            'karma-jasmine', 
 		            'karma-junit-reporter',
+		            'karma-phantomjs-launcher'
 //		            'karma-jasmine-html-reporter' // https://www.npmjs.org/package/karma-htmlfile-reporter
 		],
 		// https://www.npmjs.org/package/karma-jasmine-htmlfile-reporter
@@ -28,7 +29,7 @@ module.exports = function(config) {
 
 		frameworks : [ 'jasmine' ],
 
-		browsers : [ 'Chrome' ],
+		browsers : [ 'Chrome', 'PhantomJS' ],
 
 		junitReporter : {
 			outputFile : 'test_out/unit.xml',
