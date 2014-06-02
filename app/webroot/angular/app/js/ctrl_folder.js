@@ -13,7 +13,6 @@ cryptoApp.controller('ctrl_folder', [ '$scope', '$location', 'service_rest', '$r
 			$scope.page = parseInt($scope.page);
 			if ($scope.page < $scope.folder.files.length)
 				$scope.pageIsFile = true;
-			console.log($scope.currentFile());
 		}
 	};
 	
