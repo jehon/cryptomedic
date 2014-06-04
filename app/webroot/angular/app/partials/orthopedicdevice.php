@@ -26,7 +26,7 @@
                     <tr>
                         <td></td>
 						<td><?php label("Left");?></td>
-				<td><?php label("Right");?></td>
+						<td><?php label("Right");?></td>
                     </tr>
                     <tr>
                         <td><label for="OrthopedicDevice-Hip" name="OrthopedicDevice-Hip">OrthopedicDevice-Hip</label></td>
@@ -36,17 +36,17 @@
                     <tr>
 						<td><label for="OrthopedicDevice-HipJoint" name="OrthopedicDevice-HipJoint">OrthopedicDevice-HipJoint</label></td>
 						<td><?php value("OrthopedicDevice.LeftHipJoint"); ?></td>
-				<td><?php value("OrthopedicDevice.RightHipJoint"); ?></td>
+						<td><?php value("OrthopedicDevice.RightHipJoint"); ?></td>
                     </tr>
                     <tr>
 						<td><label for="OrthopedicDevice-HipType" name="OrthopedicDevice-HipType">OrthopedicDevice-HipType</label></td>
 						<td><?php value("OrthopedicDevice.LeftHipType"); ?></td>
-				<td><?php value("OrthopedicDevice.RightHipType"); ?></td>
+						<td><?php value("OrthopedicDevice.RightHipType"); ?></td>
                     </tr>
                     <tr>
 						<td><label for="OrthopedicDevice-HipROM" name="OrthopedicDevice-HipROM">OrthopedicDevice-HipROM</label></td>
 						<td><?php value("OrthopedicDevice.LeftHipROM"); ?></td>
-				<td><?php value("OrthopedicDevice.RightHipROM"); ?></td>
+						<td><?php value("OrthopedicDevice.RightHipROM"); ?></td>
                     </tr>
                     <tr>
                         <td><label for="OrthopedicDevice-Knee" name="OrthopedicDevice-Knee">OrthopedicDevice-Knee</label></td>
@@ -56,22 +56,22 @@
                     <tr>
 						<td><label for="OrthopedicDevice-KneeJoint" name="OrthopedicDevice-KneeJoint">OrthopedicDevice-KneeJoint</label></td>
 						<td><?php value("OrthopedicDevice.LeftKneeJoint"); ?></td>
-				<td><?php value("OrthopedicDevice.RightKneeJoint"); ?></td>
+						<td><?php value("OrthopedicDevice.RightKneeJoint"); ?></td>
                     </tr>
                     <tr>
 						<td><label for="OrthopedicDevice-KneeLock" name="OrthopedicDevice-KneeLock">OrthopedicDevice-KneeLock</label></td>
 						<td><?php value("OrthopedicDevice.LeftKneeLock"); ?></td>
-				<td><?php value("OrthopedicDevice.RightKneeLock"); ?></td>
+						<td><?php value("OrthopedicDevice.RightKneeLock"); ?></td>
                     </tr>
                     <tr>
 						<td><label for="OrthopedicDevice-KneeType" name="OrthopedicDevice-KneeType">OrthopedicDevice-KneeType</label></td>
 						<td><?php value("OrthopedicDevice.LeftKneeType"); ?></td>
-				<td><?php value("OrthopedicDevice.RightKneeType"); ?></td>
+						<td><?php value("OrthopedicDevice.RightKneeType"); ?></td>
                     </tr>
                     <tr>
 						<td><label for="OrthopedicDevice-KneeROM" name="OrthopedicDevice-KneeROM">OrthopedicDevice-KneeROM</label></td>
 						<td><?php value("OrthopedicDevice.LeftKneeROM"); ?></td>
-				<td><?php value("OrthopedicDevice.RightKneeROM"); ?></td>
+						<td><?php value("OrthopedicDevice.RightKneeROM"); ?></td>
                     </tr>
                     <tr>
                         <td><label for="OrthopedicDevice-Ankle" name="OrthopedicDevice-Ankle">OrthopedicDevice-Ankle</label></td>
@@ -81,27 +81,27 @@
                     <tr>
 						<td><label for="OrthopedicDevice-AnkleJoint" name="OrthopedicDevice-AnkleJoint">OrthopedicDevice-AnkleJoint</label></td>
 						<td><?php value("OrthopedicDevice.LeftAnkleJoint"); ?></td>
-				<td><?php value("OrthopedicDevice.RightAnkleJoint"); ?></td>
+						<td><?php value("OrthopedicDevice.RightAnkleJoint"); ?></td>
                     </tr>
                     <tr>
 						<td><label for="OrthopedicDevice-AnkleType" name="OrthopedicDevice-AnkleType">OrthopedicDevice-AnkleType</label></td>
 						<td><?php value("OrthopedicDevice.LeftAnkleType"); ?></td>
-				<td><?php value("OrthopedicDevice.RightAnkleType"); ?></td>
+						<td><?php value("OrthopedicDevice.RightAnkleType"); ?></td>
                     </tr>
                     <tr>
 						<td><label for="OrthopedicDevice-AnkleROM" name="OrthopedicDevice-AnkleROM">OrthopedicDevice-AnkleROM</label></td>
 						<td><?php value("OrthopedicDevice.LeftAnkleROM"); ?></td>
-				<td><?php value("OrthopedicDevice.RightAnkleROM"); ?></td>
+						<td><?php value("OrthopedicDevice.RightAnkleROM"); ?></td>
                     </tr>
                     <tr>
 						<td><label for="OrthopedicDevice-AnkleLimited" name="OrthopedicDevice-AnkleLimited">OrthopedicDevice-AnkleLimited</label></td>
 						<td><?php value("OrthopedicDevice.LeftAnkleLimited"); ?></td>
-				<td><?php value("OrthopedicDevice.RightAnkleLimited"); ?></td>
+						<td><?php value("OrthopedicDevice.RightAnkleLimited"); ?></td>
                     </tr>
                     <tr>
 						<td><label for="OrthopedicDevice-AnkleBelt" name="OrthopedicDevice-AnkleBelt">OrthopedicDevice-AnkleBelt</label></td>
 						<td><?php value("OrthopedicDevice.LeftAnkleBelt"); ?></td>
-				<td><?php value("OrthopedicDevice.RightAnkleBelt"); ?></td>
+						<td><?php value("OrthopedicDevice.RightAnkleBelt"); ?></td>
                     </tr>
                     <tr>
                         <td><label for="OrthopedicDevice-Foot" name="OrthopedicDevice-Foot">OrthopedicDevice-Foot</label></td>
@@ -111,16 +111,16 @@
                     <tr>
 						<td><label for="OrthopedicDevice-FootSupinatorPronator" name="OrthopedicDevice-FootSupinatorPronator">OrthopedicDevice-FootSupinatorPronator</label></td>
 						<td><?php value("OrthopedicDevice.LeftFootSupinatorPronator"); ?></td>
-				<td><?php value("OrthopedicDevice.RightFootSupinatorPronator"); ?></td>
+						<td><?php value("OrthopedicDevice.RightFootSupinatorPronator"); ?></td>
                     </tr>
                     <tr>
 						<td><label for="OrthopedicDevice-FootArchSupportCompensation" name="OrthopedicDevice-FootArchSupportCompensation">OrthopedicDevice-FootArchSupportCompensation</label></td>
 						<td><?php value("OrthopedicDevice.LeftFootArchSupportCompensation"); ?></td>
-				<td><?php value("OrthopedicDevice.RightFootArchSupportCompensation"); ?></td>
+						<td><?php value("OrthopedicDevice.RightFootArchSupportCompensation"); ?></td>
                     </tr>
    					<tr>
 						<td><?php label("OrthopedicDevice.OtherTypeOfDevice");?></td>
-				<td><?php value("OrthopedicDevice.OtherTypeOfDevice"); ?></td>
+						<td><?php value("OrthopedicDevice.OtherTypeOfDevice"); ?></td>
 			</tr>
 		</table>
 	</FieldSet>
