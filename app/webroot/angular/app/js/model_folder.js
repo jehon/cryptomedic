@@ -37,58 +37,54 @@ cryptomedic.models.Folder = cryptomedic.models.Data.extend({
 		// Return -1 if o1 < o2 (o1 - o2) (o1 est avant o2)
 		
 		// Patient are first, whatever happen!
-		if (typeof(o1['type']) != "undefined") {
-			if (typeof(o2['type'] != "undefined")) {
-				if (o1['type'] != o2['type']) {
-					if (o1['type'] == "Patient") return o1First;
-					if (o2['type'] == "Patient") return o2First;
-//					return o1.localeCompare(o2);
-				}
-			}
+		if ((typeof(o1['type']) != "undefined") && typeof(o2['type'] != "undefined") && (o1['type'] != o2['type'])) {
+			if (o1['type'] == "Patient") return o1First;
+			if (o2['type'] == "Patient") return o2First;
 		} 
 
 		// What to do if one 'id' is missing
 		if (typeof(o1['id']) == "undefined") {
-			if (typeof(o2['id'] != "undefined")) return o1First;
+			if (typeof(o2['id']) != "undefined") {
+				return o1First;
+			}
 		} else {
-			if (typeof(o2['id'] == "undefined")) return o2First;
+			if (typeof(o2['id']) == "undefined") {
+				return o2First;
+			}
 		}
 		
 		// What to do if one 'type' is missing
 		if (typeof(o1['type']) == "undefined") { 
-			if (typeof(o2['type'] != "undefined")) return o1First;
+			if (typeof(o2['type']) != "undefined") return o1First;
 		} else {
-			if (typeof(o2['type'] == "undefined")) return o2First;
+			if (typeof(o2['type']) == "undefined") return o2First;
 		} 
 
 		// What to do if one 'Date' is missing
 		if (typeof(o1['Date']) == "undefined") { 
-			if (typeof(o2['Date'] != "undefined")) return o1First;
+			if (typeof(o2['Date']) != "undefined") return o1First;
 		} else {
-			if (typeof(o2['Date'] == "undefined")) return o2First;
+			if (typeof(o2['Date']) == "undefined") return o2First;
 		} 
 
-		// What to do if info is missing at both sides ???
-		
-		// str1.localeCompare(str2);
-		
-		var big = o1;
-		var small = o2;
-		// Sort by: 
-		//  - patients first
-		//  - [undefined/date]-type-id
-		function st(what) {
-			return (typeof(what['Date']) == 'undefined' ? "9999-99-99" : what['Date']) +
-				"-" +
-				(typeof(what['type']) == 'undefined' ? "z" : what['type']) +
-				"-" +
-				(typeof(what['id']) == 'undefined' ? 0 : what['id']);
+		// Both 'date' are present
+		if (typeof(o1['Date']) != "undefined" && typeof(o2['Date']) != 'undefined') {
+			if (o1['Date'] < o2['Date']) return o2First;
+			if (o1['Date'] > o2['Date']) return o1First;
 		}
-		var bigs = st(big);
-		var smls = st(small);
-		if (bigs == smls) return 0;
-		if (bigs > smls) return -1;
-		return 1;
+		
+		// Both 'type' are present
+		if (typeof(o1['type']) != "undefined" && typeof(o2['type']) != 'undefined') {
+			if (o1['type'] < o2['type']) return o1First;
+			if (o1['type'] > o2['type']) return o2First;
+		}
+		
+		// Both 'id' are present
+		if (typeof(o1['id']) != "undefined" && typeof(o2['id']) != 'undefined') {
+			if (o1['id'] < o2['id']) return o1First;
+			if (o1['id'] > o2['id']) return o2First;
+		}
+		return 0;
 	},
 	file: function(i) {
 		if (i >= this.files.length) return null;

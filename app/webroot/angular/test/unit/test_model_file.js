@@ -14,7 +14,7 @@ describe("File", function() {
 				expect(folder.getPatient().Yearofbirth).toBe(1998);
 				expect(folder.getPatient().actualAge(new Date("2014-01-01"))).toBe("16 years old today");
 	
-				var i = 9;
+				var i = 7;
 				expect(folder.file(i) instanceof cryptomedic.models.File).toBeTruthy();
 				expect(folder.file(i) instanceof cryptomedic.models.ClubFoot).toBeTruthy();
 				expect(folder.file(i).id).toBe(695);
@@ -22,8 +22,7 @@ describe("File", function() {
 				expect(folder.file(i).Date).toBe("2014-04-17");
 				expect(folder.file(i).ageAtConsultTime()).toBe(16);
 				
-				i = 1;
-				console.log(folder.files);
+				i = 9;
 				expect(folder.file(i) instanceof cryptomedic.models.File).toBeTruthy();
 				expect(folder.file(i) instanceof cryptomedic.models.OrthopedicDevice).toBeTruthy();
 				expect(folder.file(i).id).toBe(17);
