@@ -36,7 +36,19 @@ var cryptoApp = angular.module('app_cryptomedic', [ 'ngRoute' ])
 }])
 .config([ '$compileProvider', function( $compileProvider ) {
 	$compileProvider.aHrefSanitizationWhitelist(/^\s*((https?|ftp|mailto|chrome-extension):|data:text,)/);
-}]);
+}])
+.filter('mynumber', function() {
+	return function(text, rnd, ext) {
+		text = text || '';
+		rnd = rnd || 2;
+		ext = ext || '';
+		if (typeof(text) != 'number') {
+			if (parseInt(text) != text) return text;
+			text = parseInt(text);
+		}
+		return "" + (Math.round(text * 10) / 10) + ext;
+	};
+});
 
 cryptoApp.controller('ctrl_cryptomedic', [ '$scope', 'service_rest', function($scope, service_rest) { 
 	$scope.safeApply = function (fn) {
