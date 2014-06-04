@@ -33,7 +33,7 @@ cryptomedic.models.Folder = cryptomedic.models.Data.extend({
 	ordering: function(big, small) {
 		// Sort by: [undefined/date]-type-id
 		function st(what) {
-			return (typeof(what['Date']) == 'undefined' ? "0" : what['Date']) +
+			return (typeof(what['Date']) == 'undefined' ? "9999-99-99" : what['Date']) +
 				"-" +
 				(typeof(what['type']) == 'undefined' ? "z" : what['type']) +
 				"-" +
@@ -42,8 +42,8 @@ cryptomedic.models.Folder = cryptomedic.models.Data.extend({
 		var bigs = st(big);
 		var smls = st(small);
 		if (bigs == smls) return 0;
-		if (bigs > smls) return 1;
-		return -1;
+		if (bigs > smls) return -1;
+		return 1;
 	},
 	file: function(i) {
 		if (i >= this.files.length) return null;
