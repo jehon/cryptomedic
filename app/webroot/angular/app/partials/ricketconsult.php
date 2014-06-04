@@ -15,7 +15,7 @@
 				<td><?php value("RicketConsult.Center"); ?></td>
 			</tr><tr modes='read'>
 					<td><label for="Patient-Age" name="Patient-Age">Age</label></td>
-					<td>{stats_base_age}</td>
+				<td>{{ageAtConsultTimeStr()}}</td>
 			</tr>
 			<tr>
 				<td><?php label("RicketConsult.SchoolClass");?></td>
@@ -31,12 +31,12 @@
 			<tr>
 				<td><?php label("RicketConsult.Weightkg");?></td>
 				<td><?php value("RicketConsult.Weightkg"); ?></td>
-				<td>{stats_ds_weight}</td>
+				<td>{{stats_ds_weight() | mynumber:2:'ds' }}</td>
 			</tr>
 			<tr>
 				<td><?php label("RicketConsult.Heightcm");?></td>
 				<td><?php value("RicketConsult.Heightcm"); ?></td>
-				<td>{stats_ds_height}</td>
+				<td>{{stats_ds_height() | mynumber:2:'ds' }}</div></td>
 			</tr>
 			<tr>
 				<td><?php label("RicketConsult.HeightcmLying");?></td>
@@ -49,12 +49,12 @@
 				<td><?php value("RicketConsult.Brachialcircumferencecm"); ?></td>
 			</tr><tr>
 				<td><label for="RicketConsultWeightHeightRatio" name="RicketConsult.Weight_Height_Ratio">Weight/Height Ratio</label></td>
-				<td class='tdright'>{stats_base_wh}</td>
-				<td>{stats_ds_wh}</td>
+				<td class='tdright'>{{stats_wh() | mynumber:2 }}</td>
+				<td>{{stats_ds_weight_height() | mynumber:2:'ds' }}</td>
 			</tr><tr>
 				<td><?php label("RicketConsult.bmi");?></td>
-				<td>{stats_base_bmi}</td>
-				<td>{stats_ds_bmi}</td>
+				<td>{{stats_bmi() | mynumber:2 }}</td>
+				<td>{{stats_ds_bmi() | mynumber:2:'ds' }}</td>
 			</tr><tr>
 				<td><?php label("RicketConsult.Undernutrited");?></td>
 				<td><?php value("RicketConsult.Undernutrited"); ?></td>

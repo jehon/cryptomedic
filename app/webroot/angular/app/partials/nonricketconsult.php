@@ -33,19 +33,19 @@
 			<tr><td/><td/><td>Deviation :</td></tr>					<tr>
 				<td><?php label("NonricketConsult.Weightkg");?></td>
 				<td class='tdright'><?php value("NonricketConsult.Weightkg"); ?></td>
-				<td>{{stats_ds_weight()}}</td>
+				<td>{{stats_ds_weight() | mynumber:2:'ds' }}</td>
 			</tr><tr>
 				<td><?php label("NonricketConsult.Heightcm");?></td>
 				<td class='tdright'><?php value("NonricketConsult.Heightcm"); ?></td>
-				<td>{{stats_ds_height()}}</div></td>
+				<td>{{stats_ds_height() | mynumber:2:'ds' }}</div></td>
 			</tr><tr>
 				<td><label for="NonricketConsultWeightHeightRatio" name="NonricketConsult.Weight_Height_Ratio">Weight/Height Ratio</label></td>
-				<td class='tdright'>{{stats_base_wh()}}</td>
-				<td>{{stats_ds_wh()}}</td>
+				<td class='tdright'>{{stats_wh() | mynumber:2 }}</td>
+				<td>{{stats_ds_weight_height() | mynumber:2:'ds' }}</td>
 			</tr><tr>
 				<td><?php label("NonricketConsult.bmi");?></td>
-				<td>{{stats_base_bmi()}}</td>
-				<td>{{stats_ds_bmi()}}</td>
+				<td>{{stats_bmi() | mynumber:2 }}</td>
+				<td>{{stats_ds_bmi() | mynumber:2:'ds' }}</td>
 			</tr><tr>
 				<td><?php label("NonricketConsult.Brachialcircumferencecm");?></td>
 				<td><?php value("NonricketConsult.Brachialcircumferencecm"); ?></td>
