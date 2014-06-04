@@ -7,11 +7,14 @@ describe("File", function() {
 			folder.loadFrom("/base/test/mocks/mock_patient_10.json").done(function() {
 				expect(folder instanceof cryptomedic.models.Folder).toBeTruthy();
 				folder.objectizeList();
+//				angular.forEach(folder.files, function(f, i) { console.info(i + ": " + f.type + "/" + f.id); });
+				
+				expect(folder.getPatient() instanceof cryptomedic.models.Patient).toBeTruthy();
 				expect(folder.getPatient().Sex).toBe(207);
 				expect(folder.getPatient().Yearofbirth).toBe(1998);
 				expect(folder.getPatient().actualAge(new Date("2014-01-01"))).toBe("16 years old today");
 	
-				var i = 1;
+				var i = 9;
 				expect(folder.file(i) instanceof cryptomedic.models.File).toBeTruthy();
 				expect(folder.file(i) instanceof cryptomedic.models.ClubFoot).toBeTruthy();
 				expect(folder.file(i).id).toBe(695);
@@ -19,7 +22,8 @@ describe("File", function() {
 				expect(folder.file(i).Date).toBe("2014-04-17");
 				expect(folder.file(i).ageAtConsultTime()).toBe(16);
 				
-				i = 3;
+				i = 1;
+				console.log(folder.files);
 				expect(folder.file(i) instanceof cryptomedic.models.File).toBeTruthy();
 				expect(folder.file(i) instanceof cryptomedic.models.OrthopedicDevice).toBeTruthy();
 				expect(folder.file(i).id).toBe(17);

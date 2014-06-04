@@ -1,7 +1,7 @@
 "use strict";
 
 cryptomedic.models.Patient = cryptomedic.models.Data.extend({
-	actualAge: function(date) {
+	'actualAge': function(date) {
 		if (typeof(date) == "undefined") date = new Date();
 		if (this.Yearofbirth >= 1900) {
 			return (date.getFullYear() - this.Yearofbirth) + " years old today";
