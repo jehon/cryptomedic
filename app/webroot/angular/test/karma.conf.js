@@ -2,14 +2,16 @@ module.exports = function(config) {
 	config.set({
 		plugins : [ 
 		            'karma-chrome-launcher', 
-		            'karma-firefox-launcher',
+//		            'karma-firefox-launcher',
 		            'karma-jasmine', 
 		            'karma-junit-reporter',
 		            'karma-phantomjs-launcher',
+		            'karma-coverage',
 //		            'karma-html-reporter' //  add to package.json: "karma-html-reporter": "latest" - https://www.npmjs.org/package/karma-html-reporter
 		],
 		reporters : [ 
-		              'progress' 
+		              'progress',
+		              'coverage'
 //		              'html' 
 		             ],
 
@@ -28,12 +30,21 @@ module.exports = function(config) {
 
 		frameworks : [ 'jasmine' ],
 
-		browsers : [ 'Chrome', 'PhantomJS' ],
+		browsers : [ 'PhantomJS' ], // 'Chrome'
 
 		junitReporter : {
 			outputFile : 'test_out/unit.xml',
 			suite : 'unit'
 		},
+
+		
+		preprocessors: {
+			'**/app/js/*.js': [ 'coverage' ]
+		},
+		coverageReporter: {
+			type : 'html',
+			dir : 'output/coverage/'
+		}
 //	    htmlReporter: {
 //	        outputDir: 'output',
 //	        templatePath: 'output/jasmine_template.html'
