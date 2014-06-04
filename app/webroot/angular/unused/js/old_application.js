@@ -370,80 +370,80 @@ Level 4 is when the familial ration is 3000< FR
 //		cryptomedic.businessrules.billPrice();
 //	}
 //};
-
-cryptomedic.businessrules.billPrice = function(price_id) {
-//	console.log("business rule billPrice");
-	var d = jQuery("input#Bill_Date").val();
-	var pi = -1;
-	if ((typeof(price_id) == 'number') || (typeof(price_id) == 'string')) {
-		pi = price_id;
-	}
-	if ((pi < 0) && (d != "")) {
-		_(cryptomedic.prices).each(function(p, i) {
-			if (((p['datefrom'] == null) || (p['datefrom'] <= d))
-					&& ((p['dateto'] == null) || (p['dateto'] > d))) {
-				pi = i;
-			}
-		});
-		console.log("we have a price: " + pi);
-	}
-	if (pi < 0) {
-		jQuery("[pricefor]").html("?no date?");
-	} else {
-		jQuery('[name="data[price_id]"]').val(pi);
-		_(cryptomedic.prices[pi]).each(function(v, i) {
-			var tag = "[pricefor=" + i + "]";
-			if (v > 0) {
-				jQuery(tag).html(v);
-				jQuery(tag).parentsUntil('tbody').find("input").attr('disabled', false);
-			} else {
-				jQuery(tag).html('not available');
-				jQuery(tag).parentsUntil('tbody').find("input").attr('disabled', true).val(0);
-			}
-		});
-	}
-};
-
-cryptomedic.businessrules.billcalculate = function() {
-	console.log("calculating");
-	var pi = jQuery('[name="data[price_id]"]').val();
-	var total = 0;
-	_(jQuery('input:enabled[type=number]')).each(function(v, i) {
-		var n = jQuery(v).attr('name').replace("data[", "").replace("]", "");
-		var p = cryptomedic.prices[pi][n]; 
-		if ((typeof(p) != 'undefined') && (p > 0)) {
-			total += p * jQuery(v).val();
-		}
-	});
-	jQuery('#total_real').html(total);
-	var total_social = total;
-	var sl = jQuery('[name="data[Sociallevel]"]:checked').val();
-	if ((typeof(sl) != undefined) && (sl >= "")) {
-		var psl = cryptomedic.prices[pi]['socialLevelPercentage_' + sl];
-		if ((typeof(psl) != 'undefined') && (psl >= 0)) {
-			total_social = total * psl;
-		}
-	}
-	jQuery('#total_asked').html(total_social);
-};
-
-/****
- * Pictures
- */
-cryptomedic.display.specifics.Picture = function() {
-    console.log("picture specific");
-    jQuery('#PictureFilecontent')[0].addCustomValidation(function() {
-        var s = jQuery(':input[type=file]').get(0).files[0].size;
-        if (s >  (cryptomedic.settings.maxUploadSizeMb * 1024 * 1024)- 1) {
-            console.log("too big: " + s + " vs " + cryptomedic.maxUploadSizeMb);
-            jQuery('#PictureFilecontent')[0].setCustomValidity("file is too big. Maximum allowed size is " + cryptomedic.settings.maxUploadSizeMb + "Mb");
-        } else {
-            jQuery('#PictureFilecontent')[0].setCustomValidity("");
-        }
-    });
-    jQuery("#maxUploadSizeMb").html(cryptomedic.settings.maxUploadSizeMb);
-};
-
+//
+//cryptomedic.businessrules.billPrice = function(price_id) {
+////	console.log("business rule billPrice");
+//	var d = jQuery("input#Bill_Date").val();
+//	var pi = -1;
+//	if ((typeof(price_id) == 'number') || (typeof(price_id) == 'string')) {
+//		pi = price_id;
+//	}
+//	if ((pi < 0) && (d != "")) {
+//		_(cryptomedic.prices).each(function(p, i) {
+//			if (((p['datefrom'] == null) || (p['datefrom'] <= d))
+//					&& ((p['dateto'] == null) || (p['dateto'] > d))) {
+//				pi = i;
+//			}
+//		});
+//		console.log("we have a price: " + pi);
+//	}
+//	if (pi < 0) {
+//		jQuery("[pricefor]").html("?no date?");
+//	} else {
+//		jQuery('[name="data[price_id]"]').val(pi);
+//		_(cryptomedic.prices[pi]).each(function(v, i) {
+//			var tag = "[pricefor=" + i + "]";
+//			if (v > 0) {
+//				jQuery(tag).html(v);
+//				jQuery(tag).parentsUntil('tbody').find("input").attr('disabled', false);
+//			} else {
+//				jQuery(tag).html('not available');
+//				jQuery(tag).parentsUntil('tbody').find("input").attr('disabled', true).val(0);
+//			}
+//		});
+//	}
+//};
+//
+//cryptomedic.businessrules.billcalculate = function() {
+//	console.log("calculating");
+//	var pi = jQuery('[name="data[price_id]"]').val();
+//	var total = 0;
+//	_(jQuery('input:enabled[type=number]')).each(function(v, i) {
+//		var n = jQuery(v).attr('name').replace("data[", "").replace("]", "");
+//		var p = cryptomedic.prices[pi][n]; 
+//		if ((typeof(p) != 'undefined') && (p > 0)) {
+//			total += p * jQuery(v).val();
+//		}
+//	});
+//	jQuery('#total_real').html(total);
+//	var total_social = total;
+//	var sl = jQuery('[name="data[Sociallevel]"]:checked').val();
+//	if ((typeof(sl) != undefined) && (sl >= "")) {
+//		var psl = cryptomedic.prices[pi]['socialLevelPercentage_' + sl];
+//		if ((typeof(psl) != 'undefined') && (psl >= 0)) {
+//			total_social = total * psl;
+//		}
+//	}
+//	jQuery('#total_asked').html(total_social);
+//};
+//
+///****
+// * Pictures
+// */
+//cryptomedic.display.specifics.Picture = function() {
+//    console.log("picture specific");
+//    jQuery('#PictureFilecontent')[0].addCustomValidation(function() {
+//        var s = jQuery(':input[type=file]').get(0).files[0].size;
+//        if (s >  (cryptomedic.settings.maxUploadSizeMb * 1024 * 1024)- 1) {
+//            console.log("too big: " + s + " vs " + cryptomedic.maxUploadSizeMb);
+//            jQuery('#PictureFilecontent')[0].setCustomValidity("file is too big. Maximum allowed size is " + cryptomedic.settings.maxUploadSizeMb + "Mb");
+//        } else {
+//            jQuery('#PictureFilecontent')[0].setCustomValidity("");
+//        }
+//    });
+//    jQuery("#maxUploadSizeMb").html(cryptomedic.settings.maxUploadSizeMb);
+//};
+//
 ///***
 // * Enhance data
 // */
