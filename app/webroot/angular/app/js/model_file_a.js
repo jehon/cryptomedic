@@ -42,7 +42,7 @@ cryptomedic.models.File = cryptomedic.models.Data.extend({
 		var sex = this.patient.sexStr();
 		if (!sex) throw new DataMissingException("sex");
 
-		return cryptomedic.math.stdDeviation(amd_stats[sex]['wh'], el.Heightcm, el.Weightkg);
+		return cryptomedic.math.stdDeviation(amd_stats[sex]['wh'], this.Heightcm, this.Weightkg);
 	},
 	'bmi': function(height, weight) {
 		if (!this.isNotZero("Heightcm")) throw new DataMissingException("Height");
@@ -51,8 +51,6 @@ cryptomedic.models.File = cryptomedic.models.Data.extend({
 		return 10000 * this.Weightkg / (this.Heightcm * this.Heightcm);
 	},
 	'ds_bmi': function() {
-//		if (!this.isNotZero("Heightcm")) throw new DataMissingException("Height");
-//		if (!this.isNotZero("Weightkg")) throw new DataMissingException("Weight");
 		var sex = this.patient.sexStr();
 		if (!sex) throw new DataMissingException("sex");
 		var age = this.ageAtConsultTime();

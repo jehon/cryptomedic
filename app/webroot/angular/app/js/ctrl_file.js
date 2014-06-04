@@ -20,6 +20,7 @@ cryptoApp.controller('ctrl_file', [ '$scope', 'service_rest', function($scope, s
 		}
 	};
 
+	$scope.stats_wh = function() { return myTryCatch("wh"); };
 	$scope.stats_ds_weight = function() { return myTryCatch("ds_weight"); };
 	$scope.stats_ds_height = function() { return myTryCatch("ds_height"); };
 	$scope.stats_ds_weight_height = function() { return myTryCatch("ds_weight_height"); };
