@@ -54,6 +54,9 @@ function _parseKey($key) {
 	global $mysqli;
 	global $model2controller;
 	$res = $mysqli->query("SELECT $field FROM " . $model2controller[$model] . " LIMIT 1");
+	if ($res === false) {
+		throw new Exception("ParseKey: $key is not in the database");
+	}
 	$structures = $res->fetch_fields();
 	$structure = $structures[0];
 	
