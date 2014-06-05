@@ -9,8 +9,8 @@ cryptomedic.models.File = cryptomedic.models.Data.extend({
 		if (!this.isNotZero('Date')) throw new DataMissingException("Date");
 		if (!this.isNotZero('patient')) throw new DataMissingException("Patient");
 		if (!this.patient.isNotZero('Yearofbirth')) throw new DataMissingException("Year of Birth");
-	    
-		return parseInt(this.Date.substr(0, 4)) - this.patient.Yearofbirth;
+
+		return (this.Date.getUTCFullYear() - this.patient.Yearofbirth);
 	},
 	'ds_height': function() {
 		if (!this.isNotZero("Heightcm")) throw new DataMissingException("Height");

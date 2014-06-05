@@ -21,6 +21,7 @@ cryptoApp.factory('service_rest', [ '$http', '$log' , '$rootScope', function($ht
 	
 	var canonize = function(data) {
 		var dataCanonized = [];
+		// Detect dates and parse them
 		data = jsonString2Date(data);
 		for(var i in data) {
 			if (i == "Patient") {
@@ -31,8 +32,6 @@ cryptoApp.factory('service_rest', [ '$http', '$log' , '$rootScope', function($ht
 				}
 			}
 		}
-		jsonString2date(dataCanonized);
-		// TODO: detect dates and parse them !
 		return dataCanonized;
 	};
 	
