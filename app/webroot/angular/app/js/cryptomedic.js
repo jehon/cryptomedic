@@ -3,22 +3,32 @@
 /**
  * For this f*** old IE6-8
  */
+/* istanbul ignore next */
 if (typeof(console) === 'undefined') { console = {}; }
+/* istanbul ignore next */
 if (typeof(console.log) !== 'function') { console.log = function() {}; }
+/* istanbul ignore next */
 if (typeof(console.info) !== 'function') { console.info = console.log; }
+/* istanbul ignore next */
 if (typeof(console.error) !== 'function') { console.error = console.log; }
+/* istanbul ignore next */
 if (typeof(console.trace) !== 'function') { console.trace = console.log; }
+/* istanbul ignore next */
 if (typeof(console.warn) !== 'function') { console.warn = console.log; }
-//if (typeof(console.group) !== 'function') { console.group = function(group) { console.log("GROUP: " + group); }; }
-//if (typeof(console.groupCollapsed) !== 'function') { console.groupCollapsed = console.group; }
-//if (typeof(console.groupEnd) !== 'function') { console.groupEnd = function() { console.log("GROUP END"); } ; }
-//
-//if (window.location.search) {
-//	if (window.location.search.search("_nocollapse") > 0) {
-//		console.log("mode no-collapse");
-//		console.groupCollapsed = console.group;
-//	}
-//}
+/* istanbul ignore next */
+if (typeof(console.group) !== 'function') { console.group = function(group) { console.log("GROUP: " + group); }; }
+/* istanbul ignore next */
+if (typeof(console.groupCollapsed) !== 'function') { console.groupCollapsed = console.group; }
+/* istanbul ignore next */
+if (typeof(console.groupEnd) !== 'function') { console.groupEnd = function() { console.log("GROUP END"); } ; }
+
+/* istanbul ignore next */
+if (window.location.search) {
+	if (window.location.search.search("_nocollapse") > 0) {
+		console.log("mode no-collapse");
+		console.groupCollapsed = console.group;
+	}
+}
 
 function jsonString2Date(what) {
 	switch(typeof(what)) {
@@ -58,20 +68,6 @@ cryptomedic.model2controller = {
     "RicketConsult": "ricket_consults",
     "Surgery": "surgeries",
     "SurgeryFollowup": "surgery_followups"
-};
-
-// Should be removed?
-cryptomedic.numberToString = function(n, dec) {
-    if (isNaN(n)) {
-        return "Not a number";
-    }
-    if (isNaN(parseInt(n))) {
-        return n;
-    }
-    if (dec === "%") {
-        return Math.round(n * 100) + "%";
-    }
-    return Math.round(n * Math.pow(10, dec)) / Math.pow(10, dec);
 };
 
 cryptomedic.math = {
