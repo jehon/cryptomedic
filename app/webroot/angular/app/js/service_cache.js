@@ -15,9 +15,11 @@ function perishableCache(n, perish) {
 		'perish': function(id) {
 			if (this.isCached(id))
 				delete(cache[id]);
+			return true;
 		},
 		'set': function(id, data) {
 			cache[id] = data;
+			return data;
 		}
-	}
+	};
 };
