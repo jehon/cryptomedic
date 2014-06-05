@@ -3,8 +3,8 @@
 describe("The browser", function() {
 	it("should parse date correctly", function() {
 		var d = new Date("2001-02-03");
-		expect(d.getDate()).toBe(3);
-		expect(d.getMonth() + 1).toBe(2);
-		expect(d.getFullYear()).toBe(2001);
+		expect(d.getUTCDate()).toBe(3);
+		expect(d.getUTCMonth() + 1).toBe(2);
+		expect(d.getUTCFullYear()).toBe(2001);
 	});
 });
