@@ -36,6 +36,7 @@ var cryptoApp = angular.module('app_cryptomedic', [ 'ngRoute' ])
 }])
 .config([ '$compileProvider', function( $compileProvider ) {
 	$compileProvider.aHrefSanitizationWhitelist(/^\s*((https?|ftp|mailto|chrome-extension):|data:text,)/);
+	$compileProvider.imgSrcSanitizationWhitelist($compileProvider.aHrefSanitizationWhitelist());
 }])
 .filter('mynumber', function() {
 	return function(text, rnd, ext) {
