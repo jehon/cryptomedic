@@ -1,15 +1,15 @@
 {
-  "name": "angular-seed",
+  "name": "CryptomedicApp",
   "private": true,
   "version": "0.0.0",
-  "description": "A starter project for AngularJS",
-  "repository": "https://github.com/angular/angular-seed",
+  "description": "Cryptomedic application for all plateforms",
+  "repository": "https://github.com/jehon/CryptomedicApp",
   "license": "MIT",
   "devDependencies": {
     "bower": "^1.3",
     "grunt": "^0.4.5",
     "grunt-releaser": "latest",
-    "http-server": "^0.6.1",
+    "http-server": "latest",
     "karma": "latest",
     "karma-chrome-launcher": "latest",
     "karma-cli": "latest",
@@ -20,7 +20,7 @@
     "karma-phantomjs-launcher": "latest",
     "phantomjs": "latest",
     "protractor": "~0.20.1",
-    "shelljs": "^0.2.6"
+    "shelljs": "latest"
   },
   "scripts": {
     "postinstall": "bower install",
