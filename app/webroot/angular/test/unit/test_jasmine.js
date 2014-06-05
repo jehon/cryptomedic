@@ -17,5 +17,6 @@ describe('Jasmine', function() {
 		expect(function() { throw new Error("test"); }).toThrow();
 		expect(function() { throw new Error("test"); }).toThrow(new Error("test"));
 		expect(function() { throw new DataMissingException("test"); }).toThrow();
+		expect(function() { throw new DataMissingException("test"); }).toThrow(new DataMissingException("test"));
 	});
 });

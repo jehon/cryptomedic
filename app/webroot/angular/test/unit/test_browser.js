@@ -7,4 +7,9 @@ describe("The browser", function() {
 		expect(d.getUTCMonth() + 1).toBe(2);
 		expect(d.getUTCFullYear()).toBe(2001);
 	});
+
+	it('have a correct DataMissingException', function() {
+		expect((new DataMissingException())instanceof Error).toBeTruthy();
+		expect((new DataMissingException())instanceof DataMissingException).toBeTruthy();
+	});
 });

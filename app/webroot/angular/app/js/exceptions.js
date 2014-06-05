@@ -1,5 +1,7 @@
 "use strict";
 
-var DataMissingException = function(data) {
-	this.data = data;
-};
+function DataMissingException(data) {
+    this.message = "Missing "  + (data || "some data");
+    this.data = data;
+}
+DataMissingException.prototype = new Error();
