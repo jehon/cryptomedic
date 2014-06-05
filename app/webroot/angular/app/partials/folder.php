@@ -4,7 +4,7 @@
 	<a ng-class="selected('graphics')" href="#/patient/{{patientId}}/graphics" class="btn btn-default" style="width: 100%">Graphics</a>
 	<span ng-repeat="f in folder.files">
 		<a href="#/patient/{{patientId}}/{{$index}}" class="btn btn-default" style="width: 100%" ng-class="selected($index)">
-			{{f.type}}<span ng-if="f.Date">[{{f.Date}}]</span>
+			{{f.type}}<span ng-if="f.Date">[{{f.Date | date:'yyyy-MM-dd' }}]</span>
 		</a>
 	</span>
 	<a ng-if="hasPermission('all.debug')" ng-class="selected('export')" href="#/patient/{{patientId}}/export" class="btn btn-default debug" style="width: 100%">Export</a>
