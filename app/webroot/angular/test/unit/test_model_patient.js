@@ -20,12 +20,14 @@ describe("Patient", function() {
 	});
 	it("should handle empty patient correctly", function() {
 		expect((new cryptomedic.models.Patient()).actualAge).toThrow();
+		expect(function() { (new cryptomedic.models.Patient()).actualAge(); }).toThrow(new DataMissingException("Yearofbirth"));
 		expect((new cryptomedic.models.Patient()).sexStr()).toBe(null);
 	});
 	it("should handle very old patients", function() {
 		var p = new cryptomedic.models.Patient();
 		p.Yearofbirth = 1800;
-		expect(p.actualAge).toThrow();
+		expect(function() { p.actualAge(); }).toThrow();
+//		expect(function() { p.actualAge(); }).toThrow(new DataMissingException("Yearofbirth"));
 	});
 	it("should handle girls patients", function() {
 		var p = new cryptomedic.models.Patient();
