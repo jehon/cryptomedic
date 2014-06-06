@@ -37,9 +37,10 @@ function jsonString2Date(what) {
 			if (what === "0000-00-00") {
 				return null;
 			}
-			if (what.match("[0-9]{4}-[0-9]{2}-[0-9]{2}") == what) {
-				var s = what.split("-");
-				return new Date(s[0], s[1] - 1, s[2]);
+			if (what.match("[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2} GMT[+][0-9]{4}") == what) {
+//				var s = what.split("-");
+//				return new Date(s[0], s[1] - 1, s[2]);
+				return new Date(what);
 			};
 			return what;
 		case "object":

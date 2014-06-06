@@ -75,7 +75,7 @@ class MyJsonView extends JsonView {
 					$data[$key] = $this->changeDates($val);
 			}
 			foreach([ "modified", "created" ] as $key) {
-				if (array_key_exists($key, $data))
+				if (array_key_exists($key, $data) && !is_array($data[$key]))
 					$data[$key] = $data[$key] . " GMT" . date("O");
 			}
 		}

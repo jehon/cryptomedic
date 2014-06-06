@@ -4,7 +4,8 @@
 	<a ng-class="selected('graphics')" href="#/patient/{{patientId}}/graphics" class="btn btn-default" style="width: 100%">Graphics</a>
 	<span ng-repeat="f in folder.files">
 		<a href="#/patient/{{patientId}}/{{$index}}" class="btn btn-default" style="width: 100%" ng-class="selected($index)">
-			{{f.type}}<span ng-if="f.Date">[{{f.Date | date:'yyyy-MM-dd' }}]</span>
+			{{f.type}}<span ng-if="f.Date">[{{f.Date}}]</span> 
+<!-- 			| date:'yyyy-MM-dd' -->
 		</a>
 	</span>
 	<a ng-if="hasPermission('all.debug')" ng-class="selected('export')" href="#/patient/{{patientId}}/export" class="btn btn-default debug" style="width: 100%">Export</a>
@@ -19,7 +20,7 @@
 	<div ng-if="pageIsFile">
 		Id: {{currentFile().id}} #
 		Type: {{currentFile().type}} #
-		Modified on: {{currentFile().modified}} #
+		Modified on: {{currentFile().modified | date:'yyyy-MM-dd HH:mm:ss' }} #
 		By: {{currentFile().lastuser}}
 	</div>
 	<span ng-controller="ctrl_file">
