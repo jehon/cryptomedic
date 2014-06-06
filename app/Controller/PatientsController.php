@@ -2,6 +2,28 @@
 App::uses('AppController', 'Controller');
 
 class PatientsController extends AppController {
+	function completeFile($id) {
+		// TODO: present the data correctly from here !
+		// Order the result correctly here
+		$this->view($id);
+		$data = $this->viewVars["data"];
+
+		// Structure of the file:
+		//   data = patient
+		//     patient.related = [ file1, file2, file3 ]
+
+		$ndata = $data['Patient'];
+		$ndata['related'] = [];
+		foreach($data as $model => $list) {
+			if ($model == "Patient") continue;
+			foreach($list as $i => $val) {
+				array_push($ndata['related'], $val);
+			}
+		}
+
+		$this->set("data", $ndata);
+	}
+	
 	function index() {
 		$sqlfilter = "(1=1)";
 		$filter = array (
