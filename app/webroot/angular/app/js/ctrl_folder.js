@@ -44,8 +44,8 @@ cryptoApp.controller('ctrl_folder', [ '$scope', '$location', 'service_rest', '$r
 		return $scope.page;
 	};
 	
-	$scope.getCached = function(id) {
-		return service_rest.getCached(id);
+	$scope.getCachedForExport = function(id) {
+		return stringify(service_rest.getCached(id));
 	};
 
 	if (typeof($routeParams['page']) != 'undefined') {
