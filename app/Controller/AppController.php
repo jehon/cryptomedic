@@ -286,7 +286,6 @@ class AppController extends Controller {
 			return $this->redirect('/', 400);
 		}
 		$this->set("data", $data);
-		$this->render('details');
 	}
 
 	function delete($id) {
