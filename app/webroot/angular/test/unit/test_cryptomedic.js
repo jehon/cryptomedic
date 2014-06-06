@@ -36,7 +36,21 @@ describe("Cryptomedic.js", function() {
 	});
 	
 	describe("jsonString2Date", function() {
-		var d = new Date(2010, 10, 12);
+		var d = new Date();
+		d.setMilliseconds(0);
+		var sd = d.getFullYear() + 
+			"-" + 
+			("00" + (d.getMonth() + 1)).substr(-2) + 
+			"-" +
+			("00" + (d.getDate())).substr(-2) +
+			" " +
+			("00" + d.getHours()).substr(-2) +
+ 			":" +
+			("00" + d.getMinutes()).substr(-2) +
+ 			":" +
+			("00" + d.getSeconds()).substr(-2) +
+			" GMT+" + 
+			("0000" + (-(new Date()).getTimezoneOffset()/60 * 100)).substr(-4);
 		it("should do nothing with simple types", function() {
 			expect(jsonString2Date()).toBe(null);
 			expect(jsonString2Date(null)).toBe(null);
@@ -44,16 +58,16 @@ describe("Cryptomedic.js", function() {
 			expect(jsonString2Date("azer")).toBe("azer");
 			expect(jsonString2Date(d)).toBe(d);
 		});
-		it("should parse ????-??-?? correctly", function() {
-			expect(jsonString2Date("2010-11-12")).toEqual(d);
+		it("should parse " + sd + " correctly", function() {
+			expect(jsonString2Date(sd)).toEqual(d);
 		});
 		it("should parse 0000-00-00 correctly", function() {
 			expect(jsonString2Date("0000-00-00")).toEqual(null);
 		});
 		it("should parse recursively arrays and objects", function() {
-			expect(jsonString2Date({ a: "2010-11-12" })).toEqual({ a: d });
-			expect(jsonString2Date([ "2010-11-12" ])).toEqual([ d ]);
-			expect(jsonString2Date({ a: [ "2010-11-12" ]})).toEqual({ a: [ d ]});
+			expect(jsonString2Date({ a: sd })).toEqual({ a: d });
+			expect(jsonString2Date([ sd ])).toEqual([ d ]);
+			expect(jsonString2Date({ a: [ sd ]})).toEqual({ a: [ d ]});
 		});
 	});
 });
