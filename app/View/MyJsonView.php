@@ -62,9 +62,23 @@ class MyJsonView extends JsonView {
 			}
 			$this->viewVars['data'] = $ajax;		
 		}
-		
+		$this->viewVars['data'] = $this->changeDates($this->viewVars['data']);
 		$res .= parent::render($view, $layout);
 		
 		return $res;
+	}
+	
+	private function changeDates($data) {
+		if (is_array($data)) {
+			foreach($data as $key => $val) {
+				if (is_array($val))
+					$data[$key] = $this->changeDates($val);
+			}
+			foreach([ "modified", "created" ] as $key) {
+				if (array_key_exists($key, $data))
+					$data[$key] = $data[$key] . " GMT" . date("O");
+			}
+		}
+		return $data;		
 	}
 }
