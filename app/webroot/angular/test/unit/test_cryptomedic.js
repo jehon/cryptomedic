@@ -34,40 +34,59 @@ describe("Cryptomedic.js", function() {
 			expect(cryptomedic.math.stdDeviation(poly, -1, 2)).toBe("#Out of bound#");
 		});
 	});
+
+	describe("date2CanonicString", function() {
+		it("should return 0000-00-00 00:00:00 GMT+0000 for null", function() {
+			expect(date2CanonicString(null)).toEqual("0000-00-00 00:00:00 GMT+0000");
+		});
+		it("should return information that could be understood through objectify", function() {
+			var d = new Date();
+			d.setMilliseconds(0);
+			expect(objectify(date2CanonicString(d))).toEqual(d);
+		});
+	});
 	
-	describe("jsonString2Date", function() {
+	describe("objectify", function() {
 		var d = new Date();
 		d.setMilliseconds(0);
-		var sd = d.getFullYear() + 
-			"-" + 
-			("00" + (d.getMonth() + 1)).substr(-2) + 
-			"-" +
-			("00" + (d.getDate())).substr(-2) +
-			" " +
-			("00" + d.getHours()).substr(-2) +
- 			":" +
-			("00" + d.getMinutes()).substr(-2) +
- 			":" +
-			("00" + d.getSeconds()).substr(-2) +
-			" GMT+" + 
-			("0000" + (-(new Date()).getTimezoneOffset()/60 * 100)).substr(-4);
+		var sd = date2CanonicString(d);
 		it("should do nothing with simple types", function() {
-			expect(jsonString2Date()).toBe(null);
-			expect(jsonString2Date(null)).toBe(null);
-			expect(jsonString2Date(123)).toBe(123);
-			expect(jsonString2Date("azer")).toBe("azer");
-			expect(jsonString2Date(d)).toBe(d);
+			expect(objectify()).toBe(null);
+			expect(objectify(null)).toBe(null);
+			expect(objectify(123)).toBe(123);
+			expect(objectify("azer")).toBe("azer");
+			expect(objectify(d)).toBe(d);
 		});
 		it("should parse " + sd + " correctly", function() {
-			expect(jsonString2Date(sd)).toEqual(d);
+			expect(objectify(sd)).toEqual(d);
 		});
-		it("should parse 0000-00-00 correctly", function() {
-			expect(jsonString2Date("0000-00-00")).toEqual(null);
+		it("should parse " + date2CanonicString(null) + " correctly", function() {
+			expect(objectify("0000-00-00 00:00:00 GMT+0000")).toEqual(null);
 		});
 		it("should parse recursively arrays and objects", function() {
-			expect(jsonString2Date({ a: sd })).toEqual({ a: d });
-			expect(jsonString2Date([ sd ])).toEqual([ d ]);
-			expect(jsonString2Date({ a: [ sd ]})).toEqual({ a: [ d ]});
+			expect(objectify({ a: sd })).toEqual({ a: d });
+			expect(objectify([ sd ])).toEqual([ d ]);
+			expect(objectify({ a: [ sd ]})).toEqual({ a: [ d ]});
+		});
+	});
+
+	describe("stringify", function() {
+		var d = new Date();
+		d.setMilliseconds(0);
+		var sd = date2CanonicString(d);
+		it("should do nothing with simple types", function() {
+			expect(stringify(null)).toBe(null);
+			expect(stringify(null)).toBe(null);
+			expect(stringify(123)).toBe(123);
+			expect(stringify("azer")).toBe("azer");
+		});
+		it("should encode " + sd + " correctly", function() {
+			expect(stringify(d)).toEqual(sd);
+		});
+		it("should parse recursively arrays and objects", function() {
+			expect(stringify({ a: d })).toEqual({ a: sd });
+			expect(stringify([ d ])).toEqual([ sd ]);
+			expect(stringify({ a: [ d ]})).toEqual({ a: [ sd ]});
 		});
 	});
 });

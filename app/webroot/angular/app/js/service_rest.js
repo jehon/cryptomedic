@@ -2,31 +2,17 @@
 
 // TODO: manage errors codes (interceptors ?)
 
-//	$httpProvider.interceptors.push(function($q) {
-//		// https://docs.angularjs.org/api/ng/service/$http
-//		return {
-//			'request': function(config) {
-//				return config || $q.when(config);
-//			},
-//		
-//			'response': function(response) {
-//				return response || $q.when(response);
-//			}
-//		};
-//	});
-
 cryptoApp.factory('service_rest', [ '$http', '$log' , '$rootScope', function($http, $log, $rootScope) {
 	var cache = perishableCache(10);
 	var root = "/amd";
 	
-	var canonize = function(data) {
+	var patientFirst = function(data) {
 		var dataCanonized = [];
 		// Detect dates and parse them
-		data = jsonString2Date(data);
+		//data = jsonString2Date(data);
+		dataCanonized.push(data['Patient']);
 		for(var i in data) {
-			if (i == "Patient") {
-				dataCanonized.push(data[i]);
-			} else {
+			if (i != "Patient") {
 				for(var j in data[i]) {
 					dataCanonized.push(data[i][j]);
 				}
@@ -86,17 +72,17 @@ cryptoApp.factory('service_rest', [ '$http', '$log' , '$rootScope', function($ht
 			});
 			return def;
 		},
-		'getFile': function(id) {
+		'getFile': function(id, url) {
 			var def = jQuery.Deferred();
 			if (cache.isCached(id)) {
 				return def.resolve(cache.get(id));
 			}
-			$http.post(root + "/patients/view/" + id + ".json")
+			url = url || root + "/patients/view/" + id + ".json"; 
+			$http.post(url)
 			.success(function(data, status, headers, config) {
-				var canonized = new (cryptomedic.models.Folder)({ "files": canonize(data) });
-				canonized.objectizeList();
-				cache.set(data['Patient']['id'], canonized);
-				def.resolve(canonized);
+				var folder = new (cryptomedic.models.Folder)({ "files": patientFirst(data) });
+				cache.set(folder.getPatient().id, folder);
+				def.resolve(folder);
 			}).error(function(data, status, headers, config) {
 				def.reject(data);
 			});

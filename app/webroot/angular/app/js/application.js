@@ -1,25 +1,7 @@
 "use strict";
-/*
-** Add on top 
-<?php require_once(__DIR__ . "/../php/templates.php"); ?>
 
-** Replace:
-<label for="[a-zA-Z]+" name="([a-zA-Z.]+)">[^<]+</label>
-<?php label("$1");?>
+// TODO: partials depend on version (like script) -> caching opportunities
 
-** Replace:
-\{@input header="([^"]+)"\/\}
-<?php value("$1"); ?>
-
-** Replace:
-\{@input header="([^"]+)"[ ]*extra="([^"]*)"\/\}
-<?php value("$1", "$2"); ?>
-
-
-
-*/
-
-// TODO: dependants partials
 var cryptoApp = angular.module('app_cryptomedic', [ 'ngRoute' ])
 .config([ '$routeProvider', function($routeProvider) {
     $routeProvider.when('/', {
@@ -37,6 +19,13 @@ var cryptoApp = angular.module('app_cryptomedic', [ 'ngRoute' ])
 .config([ '$compileProvider', function( $compileProvider ) {
 	$compileProvider.aHrefSanitizationWhitelist(/^\s*((https?|ftp|mailto|chrome-extension):|data:text,)/);
 	$compileProvider.imgSrcSanitizationWhitelist($compileProvider.aHrefSanitizationWhitelist());
+}])
+.config(["$httpProvider", function ($httpProvider) {
+	$httpProvider.defaults.transformResponse.push(function(responseData){
+			if (typeof responseData !== "object") return responseData;
+			responseData = objectify(responseData);
+			return responseData;
+		});
 }])
 .filter('mynumber', function() {
 	return function(text, rnd, ext) {
