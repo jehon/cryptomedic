@@ -13,11 +13,11 @@ class PatientsController extends AppController {
 		//     patient.related = [ file1, file2, file3 ]
 
 		$ndata = $data['Patient'];
-		$ndata['related'] = [];
+		$ndata['subFiles'] = [];
 		foreach($data as $model => $list) {
 			if ($model == "Patient") continue;
 			foreach($list as $i => $val) {
-				array_push($ndata['related'], $val);
+				array_push($ndata['subFiles'], $val);
 			}
 		}
 
