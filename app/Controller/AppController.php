@@ -107,6 +107,7 @@ class AppController extends Controller {
 			case "structure" :
 			case "calculate" :
 			case "view" :
+			case "folder":
 			case "index" :
 				return true;
 				break;

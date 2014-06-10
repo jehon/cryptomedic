@@ -2,22 +2,26 @@
 
 cryptoApp.controller('ctrl_folder', [ '$scope', '$location', 'service_rest', '$routeParams' , function($scope, $location, service_rest, $routeParams) {
 	$scope.folder = new cryptomedic.models.Folder();
-	$scope.page = "summary";
+	$scope.page = "";
 	$scope.pageIsFile = false;
-	$scope.patientId = parseInt($routeParams['id']);
-	
+	var id = parseInt($routeParams['id']);
+
+	$scope.id = function() { 
+		return id;
+	};
+
 	$scope.select = function(page) {
 		$scope.page = page;
 		$scope.pageIsFile = false;
 		if (parseInt($scope.page) == $scope.page) {
 			$scope.page = parseInt($scope.page);
-			if ($scope.page < $scope.folder.files.length)
+			if (($scope.folder.getSubFiles() != null) && ($scope.page < $scope.folder.getSubFiles().length))
 				$scope.pageIsFile = true;
 		}
 	};
 	
 	$scope.selected = function(i) {
-		if (i == $scope.page) {
+		if (i === $scope.page) {
 			return "btn-warning";
 		}
 		return "";
@@ -25,21 +29,20 @@ cryptoApp.controller('ctrl_folder', [ '$scope', '$location', 'service_rest', '$r
 
 	$scope.currentFile = function() {
 		if ($scope.pageIsFile) {
-			return $scope.folder.files[$scope.page];
+			return $scope.folder.getSubFile($scope.page);
 		}
-		console.log("default to patient");
-		return $scope.patient();
+		return $scope.folder.getMainFile();
 	};
 	
 	$scope.patient = function() {
-		if ($scope.folder.files.count == 0) return null;
-		return $scope.folder.getPatient();
+		return $scope.folder.getMainFile();
 	};
 	
 	$scope.name = function() {
 		if ($scope.pageIsFile) {
-			return $scope.folder.files[$scope.page]['type'].toLowerCase();
+			return $scope.folder.getSubFile($scope.page)['type'].toLowerCase();
 		}
+		if ($scope.page == "") return "Patient";
 		if (typeof($scope.page) == "number") return "blank";
 		return $scope.page;
 	};
@@ -53,7 +56,7 @@ cryptoApp.controller('ctrl_folder', [ '$scope', '$location', 'service_rest', '$r
 	}
 	
 	var busyEnd = $scope.doBusy("Getting the file from the server");
-	service_rest.getFile($scope.patientId)
+	service_rest.getFile(id)
 		.done(function(data) {
 			$scope.folder = data;
 			$scope.select($scope.page);

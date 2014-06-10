@@ -2,7 +2,7 @@
 App::uses('AppController', 'Controller');
 
 class PatientsController extends AppController {
-	function completeFile($id) {
+	function folder($id) {
 		// TODO: present the data correctly from here !
 		// Order the result correctly here
 		$this->view($id);
@@ -12,8 +12,11 @@ class PatientsController extends AppController {
 		//   data = patient
 		//     patient.related = [ file1, file2, file3 ]
 
-		$ndata = $data['Patient'];
-		$ndata['subFiles'] = [];
+		$ndata = array(
+			'type' => 'Folder', 
+			'id' => $data['Patient']['id'],
+			'mainFile' => $data['Patient'], 
+			'subFiles' => array());
 		foreach($data as $model => $list) {
 			if ($model == "Patient") continue;
 			foreach($list as $i => $val) {

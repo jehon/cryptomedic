@@ -1,14 +1,13 @@
 "use strict";
 
 cryptomedic.models.Folder = cryptomedic.models.Data.extend({
-	init: function(data) {
-		this.files = [];
- 		this._super(data);
- 		for(var i = 0; i < this.files.length; i++) {
- 			if (typeof(this.files[i]['patient_id']) != "undefined")  {
- 				this.files[i].patient = function() { return this.files[0]; }; 
- 			}
- 		}
+	load: function(data) {
+		this._super(data);
+		this.mainFile = this.mainFile || {};
+		this.subFiles = this.subFiles || [];
+		for(var i = 0; i < this.subFiles.length; i++) {
+			this.subFiles[i].patient = this.mainFile;
+		}
 	},
 	ordering: function(o1, o2) {
 		var o1First = -1;
@@ -66,11 +65,15 @@ cryptomedic.models.Folder = cryptomedic.models.Data.extend({
 		}
 		return 0;
 	},
-	file: function(i) {
-		if (i >= this.files.length) return null;
-		return this.files[i];
+	getId: function() { return this.id; },
+	getSubFiles: function() {
+		return this.subFiles;
 	},
-	getPatient: function() {
-		return this.file(0);
+	getSubFile: function(i) {
+		if (i >= this.subFiles.length) return null;
+		return this.subFiles[i];
+	},
+	getMainFile: function() {
+		return this.mainFile;
 	}
 });

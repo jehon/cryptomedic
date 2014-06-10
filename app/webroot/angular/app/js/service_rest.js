@@ -6,21 +6,6 @@ cryptoApp.factory('service_rest', [ '$http', '$log' , '$rootScope', function($ht
 	var cache = perishableCache(10);
 	var root = "/amd";
 	
-	var patientFirst = function(data) {
-		var dataCanonized = [];
-		// Detect dates and parse them
-		//data = jsonString2Date(data);
-		dataCanonized.push(data['Patient']);
-		for(var i in data) {
-			if (i != "Patient") {
-				for(var j in data[i]) {
-					dataCanonized.push(data[i][j]);
-				}
-			}
-		}
-		return dataCanonized;
-	};
-	
 	return {
 		'getCached': function(id) {
 			return cache.get(id);
@@ -72,16 +57,15 @@ cryptoApp.factory('service_rest', [ '$http', '$log' , '$rootScope', function($ht
 			});
 			return def;
 		},
-		'getFile': function(id, url) {
+		'getFile': function(id) {
 			var def = jQuery.Deferred();
 			if (cache.isCached(id)) {
 				return def.resolve(cache.get(id));
 			}
-			url = url || root + "/patients/view/" + id + ".json"; 
-			$http.post(url)
+			$http.post(root + "/patients/folder/" + id + ".json")
 			.success(function(data, status, headers, config) {
-				var folder = new (cryptomedic.models.Folder)({ "files": patientFirst(data) });
-				cache.set(folder.getPatient().id, folder);
+				var folder = new (cryptomedic.models.Folder)(data);
+				cache.set(folder.getMainFile().id, folder);
 				def.resolve(folder);
 			}).error(function(data, status, headers, config) {
 				def.reject(data);
