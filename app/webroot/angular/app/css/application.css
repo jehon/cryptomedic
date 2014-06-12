@@ -77,6 +77,20 @@ fieldset > legend {
 	width: auto;
 }
 
+/*******************************************
+/* Data Legend
+ */
+table.datalegend {
+    font-size: 9px;
+    padding: 0px;
+    width: 100%;
+}
+
+table.datalegend > thead > tr> th {
+    font-size: 9px;
+    padding: 2px;
+}
+
 /********************************************
 /******************************************** OLD
 /********************************************
