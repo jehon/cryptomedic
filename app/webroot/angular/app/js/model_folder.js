@@ -8,7 +8,20 @@ cryptomedic.models.Folder = cryptomedic.models.Data.extend({
 		for(var i = 0; i < this.subFiles.length; i++) {
 			this.subFiles[i].patient = this.mainFile;
 		}
+		this.subFiles.sort(this.ordering);
 	},
+	getId: function() { return this.id; },
+	getSubFiles: function() {
+		return this.subFiles;
+	},
+	getSubFile: function(i) {
+		if (i >= this.subFiles.length) return null;
+		return this.subFiles[i];
+	},
+	getMainFile: function() {
+		return this.mainFile;
+	},
+
 	ordering: function(o1, o2) {
 		var o1First = -1;
 		var o2First = 1;
@@ -64,16 +77,5 @@ cryptomedic.models.Folder = cryptomedic.models.Data.extend({
 			if (o1['id'] > o2['id']) return o2First;
 		}
 		return 0;
-	},
-	getId: function() { return this.id; },
-	getSubFiles: function() {
-		return this.subFiles;
-	},
-	getSubFile: function(i) {
-		if (i >= this.subFiles.length) return null;
-		return this.subFiles[i];
-	},
-	getMainFile: function() {
-		return this.mainFile;
 	}
 });

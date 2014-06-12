@@ -15,11 +15,9 @@ describe("Folder", function() {
 		it("should load correctly and store it", function (done) {
 			folder.loadFrom("/base/test/mocks/mock_patient_10.json").done(function() {
 				expect(folder instanceof cryptomedic.models.Folder).toBeTruthy();
-				expect(typeof(folder.objectizeList)).toBe("function");
-				folder.objectizeList();
 				expect(folder instanceof cryptomedic.models.Folder).toBeTruthy();
-				expect(folder.getPatient() instanceof cryptomedic.models.Patient).toBeTruthy();
-				expect(folder.getPatient().id).toBe(10);
+				expect(folder.getMainFile() instanceof cryptomedic.models.Patient).toBeTruthy();
+				expect(folder.getMainFile().id).toBe(10);
 				done();
 				// console.log(folder.files);
 			});

@@ -14,8 +14,11 @@ cryptomedic.models.Data = Class.extend({
 	loadFrom: function(url, cb) {
 		var t = this;
 		return jQuery.getJSON(url).done(function(data) {
-			t.load(data);
+			t.load(objectify(data));
 		});
+	},
+	setPatient: function(_patient) {
+		patient = _patient;
 	},
 	isSet: function(field) {
 		if (typeof(this[field]) == "undefined") return false;
