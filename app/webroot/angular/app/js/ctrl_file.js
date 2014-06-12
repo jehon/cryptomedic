@@ -1,11 +1,12 @@
 "use strict";
 
 cryptoApp.controller('ctrl_file', [ '$scope', 'service_rest', function($scope, service_rest) {
-	var current = $scope.currentFile();
-	if ($scope.$index) current = $scope.folder.getSubFile($scope.$index);
 
 	$scope.currentFile = function() {
-		return current;
+		// The link need to be kept with parent, so that when the data is loaded, 
+		// we inherit from it "live".
+		if ($scope.$index) return $scope.folder.getSubFile($scope.$index);
+		return $scope.$parent.currentFile();
 	}
 
 	function myTryCatch(fn) {
