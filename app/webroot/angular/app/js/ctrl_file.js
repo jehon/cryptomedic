@@ -1,6 +1,13 @@
 "use strict";
 
 cryptoApp.controller('ctrl_file', [ '$scope', 'service_rest', function($scope, service_rest) {
+	var current = $scope.currentFile();
+	if ($scope.$index) current = $scope.folder.getSubFile($scope.$index);
+
+	$scope.currentFile = function() {
+		return current;
+	}
+
 	function myTryCatch(fn) {
 		try {
 			return $scope.currentFile()[fn]();
@@ -26,5 +33,4 @@ cryptoApp.controller('ctrl_file', [ '$scope', 'service_rest', function($scope, s
 	$scope.stats_ds_weight_height = function() { return myTryCatch("ds_weight_height"); };
 	$scope.stats_ds_bmi = function() { return myTryCatch("ds_bmi"); };
 	$scope.stats_bmi = function() { return myTryCatch("bmi"); };
-
 }]);
