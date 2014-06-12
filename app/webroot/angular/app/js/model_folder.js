@@ -28,11 +28,11 @@ cryptomedic.models.Folder = cryptomedic.models.Data.extend({
 		// Return 1 if o1 > o2 (o1 - o2) (o1 est après o2)
 		// Return -1 if o1 < o2 (o1 - o2) (o1 est avant o2)
 		
-		// Patient are first, whatever happen!
-		if ((typeof(o1['type']) != "undefined") && typeof(o2['type'] != "undefined") && (o1['type'] != o2['type'])) {
-			if (o1['type'] == "Patient") return o1First;
-			if (o2['type'] == "Patient") return o2First;
-		} 
+		// // Patient are first, whatever happen!
+		// if ((typeof(o1['type']) != "undefined") && typeof(o2['type'] != "undefined") && (o1['type'] != o2['type'])) {
+		// 	if (o1['type'] == "Patient") return o1First;
+		// 	if (o2['type'] == "Patient") return o2First;
+		// } 
 
 		// What to do if one 'id' is missing
 		if (typeof(o1['id']) == "undefined") {
