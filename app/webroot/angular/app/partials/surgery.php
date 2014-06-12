@@ -146,5 +146,5 @@
 	</fieldSet>
 </div>
 <div class="col-sm-6">
-		<div ng-include="'partials/patient_summary.php'"></div>
+		<div ng-include="'partials/patient-related.php'"></div>
 </div>	

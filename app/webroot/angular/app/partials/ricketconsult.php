@@ -170,7 +170,7 @@
 	</fieldset>
 </div>
 <div class="col-sm-6">
-	<div ng-include="'partials/patient_summary.php'"></div>
+	<div ng-include="'partials/patient-related.php'"></div>
 	<fieldset>
 		<legend><label for="RicketConsult-Conclusion" name="RicketConsult-Conclusion">Conclusion</label></legend>
 		<table class='colorize'>

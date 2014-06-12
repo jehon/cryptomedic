@@ -140,7 +140,7 @@
 	</FieldSet>
 </div>
 <div class="col-sm-6">
-	<div ng-include="'partials/patient_summary.php'"></div>
+	<div ng-include="'partials/patient-related.php'"></div>
 	<FieldSet>
 		<legend><label for="Bill-Total" name="Bill-Total">Total</label></legend>
 		<table  class='colorize'>
