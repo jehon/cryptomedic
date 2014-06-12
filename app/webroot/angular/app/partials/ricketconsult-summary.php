@@ -3,28 +3,28 @@
 	<tbody>
 		<tr>
 			<td><label for="RicketConsultDate" name="RicketConsult.Date">Date</label></td>
-			<td>{@read header="RicketConsult.Date"/}</td>
+			<td>{{f.Date}}</td>
 		</tr><tr>
 			<td><label for="RicketConsultRightleg" name="RicketConsult.Rightleg">Right leg</label></td>
-			<td>{@read header="RicketConsult.Rightleg"/}</td>
+			<td>{{f.Rightleg}}</td>
 		</tr><tr>
 			<td><label for="RicketConsultRightlegAngle" name="RicketConsult.RightlegAngle">Var/valg Right leg</label></td>
-			<td>{@read header="RicketConsult.RightlegAngle"/}</td>
+			<td>{{f.RightlegAngle}}</td>
 		</tr><tr>
 			<td><label for="RicketConsultLeftleg" name="RicketConsult.Leftleg">Left leg</label></td>
-			<td>{@read header="RicketConsult.Leftleg"/}</td>
+			<td>{{f.Leftleg}}</td>
 		</tr><tr>
 			<td><label for="RicketConsultLeftlegAngle" name="RicketConsult.LeftlegAngle">Var/valg Left leg</label></td>
-			<td>{@read header="RicketConsult.LeftlegAngle"/}</td>
+			<td>{{f.LeftlegAngle}}</td>
 		</tr><tr>
 			<td><label for="RicketConsultCommentary" name="RicketConsult.Commentary">Commentary</label></td>
-			<td>{@read header="RicketConsult.Commentary"/}</td>
+			<td>{{f.Commentary}}</td>
 		</tr><tr>
 			<td><label for="RicketConsultHeightcm" name="RicketConsult.Heightcm">Heightcm (standing/lying) (cm)</label></td>
-			<td>{@read header="RicketConsult.Heightcm"/}</td>
+			<td>{{f.Heightcm}}</td>
 		</tr><tr>
 			<td><label for="RicketConsultWeightkg" name="RicketConsult.Weightkg">Weight (kg)</label></td>
-			<td>{@read header="RicketConsult.Weightkg"/}</td>
+			<td>{{f.Weightkg}}</td>
 		</tr>
 	</tbody>
 </table>
