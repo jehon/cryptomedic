@@ -2,9 +2,6 @@
 <table width="100%">
 	<colgroup span="2" width="50%"></colgroup>
 	<tbody>
-		<tr>
-			<td><?php label("Bill.Date");?></td>
-			<td><?php read("Bill.Date"); ?></td>
-		</tr>
+		<?php tr("Bill.Date"); ?>
 	</tbody>
 </table>

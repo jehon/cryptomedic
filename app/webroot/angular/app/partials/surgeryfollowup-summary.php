@@ -2,9 +2,6 @@
 <table width="100%">
 	<colgroup span="2" width="50%"></colgroup>
 	<tbody>
-		</tr><tr>
-			<td><?php label("SurgeryFollowup.ResultImprovement"); ?></td>
-			<td><?php read("SurgeryFollowup.ResultImprovement"); ?></td>
-		</tr>
+		<?php tr("SurgeryFollowup.ResultImprovement"); ?>
 	</tbody>
 </table>

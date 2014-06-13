@@ -193,3 +193,10 @@ function write($key, $allownull) {
 	$struct = _parseKey($key);
 	read($key);
 }
+
+function tr($key) {
+	echo "<tr ng-if='" . rawValue($key) . "'>\n";
+	echo "	<td>"; label($key); echo "</td>\n";
+	echo "	<td>"; value($key); echo "</td>\n";
+	echo "</tr>\n";
+}
