@@ -26,6 +26,37 @@ button img {
 }
 
 /********************************************
+ *  Marks and graphics
+ */
+.markContainer {
+  /* position: absolute -> relative to the first non-static element -> relative to 0,0 = pseudo-static */
+  position: relative;
+}
+
+.mark {
+  color: red;
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  border: 0;  
+  margin-top: -10px;
+}
+
+.mark span {
+  margin-left: -50%;       
+}
+
+.mark.hovered {
+  background-color: red;
+  color: white;
+  z-index: 100;
+}
+
+tr.hovered {
+  background-color: gray;
+}
+
+/********************************************
  *  Overlays 
  */
 .site-wrapper {
