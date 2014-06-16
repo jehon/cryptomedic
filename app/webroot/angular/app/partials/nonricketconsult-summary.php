@@ -2,14 +2,14 @@
 <table width="100%">
 	<colgroup span="2" width="50%"></colgroup>
 	<tbody>
-		<?php echo tr("NonricketConsult.Date"); ?>
-		<?php echo tr("NonricketConsult.Physiotherapy61"); ?>
-		<?php echo tr("NonricketConsult.Plaster62"); ?>
-		<?php echo tr("NonricketConsult.Orthopedicdevice65"); ?>
-		<?php echo tr("NonricketConsult.Surgery66"); ?>
-		<?php echo tr("NonricketConsult.Othertreatment68"); ?>
-		<?php echo tr("NonricketConsult.Heightcm"); ?>
-		<?php echo tr("NonricketConsult.Weightkg"); ?>
-		<?php echo tr("NonricketConsult.Comment"); ?>
+		<? (new t("NonricketConsult.Date"))->readOnly()->tr()->p(); ?>
+		<? (new t("NonricketConsult.Physiotherapy61"))->readOnly()->tr()->p(); ?>
+		<? (new t("NonricketConsult.Plaster62"))->readOnly()->tr()->p(); ?>
+		<? (new t("NonricketConsult.Orthopedicdevice65"))->readOnly()->tr()->p(); ?>
+		<? (new t("NonricketConsult.Surgery66"))->readOnly()->tr()->p(); ?>
+		<? (new t("NonricketConsult.Othertreatment68"))->readOnly()->tr()->p(); ?>
+		<? (new t("NonricketConsult.Heightcm"))->readOnly()->tr()->p(); ?>
+		<? (new t("NonricketConsult.Weightkg"))->readOnly()->tr()->p(); ?>
+		<? (new t("NonricketConsult.Comment"))->readOnly()->tr()->p(); ?>
 	</tbody>
 </table>

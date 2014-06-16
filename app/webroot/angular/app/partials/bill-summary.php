@@ -2,6 +2,6 @@
 <table width="100%">
 	<colgroup span="2" width="50%"></colgroup>
 	<tbody>
-		<?php tr("Bill.Date"); ?>
+		<? (new t("Bill.Date"))->readOnly()->tr()->p(); ?>
 	</tbody>
 </table>

@@ -1,10 +1,10 @@
 <?php require_once(__DIR__ . "/../php/templates.php"); ?>
 <table>
-	<?php tr("Patient.entryyear"); ?>
-	<?php tr("Patient.entryorder"); ?>
-	<?php tr("Patient.Firstname"); ?>
-	<?php tr("Patient.Lastname"); ?>
-	<?php tr("Patient.Fathersname"); ?>
-	<?php tr("Patient.Yearofbirth"); ?>
-	<?php tr("Patient.Sex"); ?>
+	<? (new t("Patient.entryyear"))->readOnly()->tr()->p(); ?>
+	<? (new t("Patient.entryorder"))->readOnly()->tr()->p(); ?>
+	<? (new t("Patient.Firstname"))->readOnly()->tr()->p(); ?>
+	<? (new t("Patient.Lastname"))->readOnly()->tr()->p(); ?>
+	<? (new t("Patient.Fathersname"))->readOnly()->tr()->p(); ?>
+	<? (new t("Patient.Yearofbirth"))->readOnly()->tr()->p(); ?>
+	<? (new t("Patient.Sex"))->readOnly()->tr()->p(); ?>
 </table>

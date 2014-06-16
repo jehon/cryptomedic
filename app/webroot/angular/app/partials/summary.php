@@ -1,3 +1,4 @@
+<?php require_once(__DIR__ . "/../php/templates.php"); ?>
 <table class='table table-striped'>
 	<thead>
 		<th></th>

@@ -11,29 +11,14 @@
 						view
 					</a>
 				</td>
-				<td><?php label("Patient.entryyear");?></td>
-				<td>
-					<?php read("Patient.entryyear"); ?>
-				</td>
-			</tr><tr>
-				<td><?php label("Patient.entryorder");?></td>
-				<td><?php read("Patient.entryorder"); ?></td>
-			</tr><tr>
-				<td><?php label("Patient.Firstname");?></td>
-				<td><?php read("Patient.Firstname"); ?></td>
-			</tr><tr>
-				<td><?php label("Patient.Lastname");?></td>
-				<td><?php read("Patient.Lastname"); ?></td>
-			</tr><tr>
-				<td><?php label("Patient.Fathersname");?></td>
-				<td><?php read("Patient.Fathersname"); ?></td>
-			</tr><tr>
-				<td><?php label("Patient.Yearofbirth");?></td>
-				<td><?php read("Patient.Yearofbirth"); ?></td>
-			</tr><tr>
-				<td><?php label("Patient.Sex");?></td>
-				<td><?php read("Patient.Sex"); ?></td>
 			</tr>
+			<? (new t("Patient.entryyear"))->readOnly()->tr()->p(); ?>
+			<? (new t("Patient.entryorder"))->readOnly()->tr()->p(); ?>
+			<? (new t("Patient.Firstname"))->readOnly()->tr()->p(); ?>
+			<? (new t("Patient.Lastname"))->readOnly()->tr()->p(); ?>
+			<? (new t("Patient.Fathersname"))->readOnly()->tr()->p(); ?>
+			<? (new t("Patient.Yearofbirth"))->readOnly()->tr()->p(); ?>
+			<? (new t("Patient.Sex"))->readOnly()->tr()->p(); ?>
 		</tbody>						
 	</table>						
 </fieldset>
