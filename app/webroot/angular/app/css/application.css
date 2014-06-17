@@ -46,7 +46,7 @@ button img {
   margin-left: -50%;       
 }
 
-.mark.hovered {
+.mark.hovered > span {
   background-color: red;
   color: white;
   z-index: 100;
