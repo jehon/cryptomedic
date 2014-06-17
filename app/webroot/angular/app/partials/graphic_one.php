@@ -1,19 +1,20 @@
 <fieldset>
 	<legend>{{getVariableY()}} / {{getVariableX()}}</legend>
 	<div class='markContainer'>
-		<img ng-src="img/stats_{{getImageName()}}.jpg" width='600px' height='360px' />
+		<img ng-src="img/stats_{{getImageName()}}.jpg" width='600px' height='360px'>
 <!-- 		<img ng-if="currentFile().Sex == 207" src='/amd/cryptomedic/img/graphics/weight-m.jpg' width='600px' height='360px'/>
 		<img ng-if="currentFile().Sex == 208" src='/amd/cryptomedic/img/graphics/weight-f.jpg' width='600px' height='360px'/>
 		<img ng-if="currentFile().Sex == 0"   src='/amd/cryptomedic/img/graphics/weight-u.jpg' width='600px' height='360px'/>
- -->	    <span ng-repeat="f in folder.getSubFiles()" id="stat_{{$index}}"
+ -->	    <span ng-repeat="f in folder.getSubFiles()"
 	        ng-if="getValidity($index) == 'v'"
 	        ng-mouseover="hover($index)"
 	    	ng-class="ifHovered($index)"
 	        class="mark"
 	        style="left: {{getAbscisse($index)}}%; top: {{getOrdonnee($index)}}%"
 	        >
-	        <span>+</span>
-	    </span>
+		        <span id="stat_{{$index}}">+</span>
+		    </span>
+		</img>
 	</div>
 	<table class='colorize datalegend'>
 	    <thead>
