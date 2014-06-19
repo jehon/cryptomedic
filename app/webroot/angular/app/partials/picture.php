@@ -3,21 +3,15 @@
 	<FieldSet>
 		<Legend><label for="Picture-header" name="Picture-header">Picture</label></Legend>
 		<table class='colorize'>
-			<tr>
-				<td><?php label("Picture.OriginalName");?></td>
-				<td><?php read("Picture.OriginalName"); ?></td>
-			<tr>
-				<td><label name="Picture.File">File</label></td>
-				<td><?php read("Picture.file"); ?></td>
-			<tr>
-				<td><?php label("Picture.Date");?></td>
-				<td><?php value("Picture.Date"); ?></td>
-			</tr><tr>
-				<td><?php label("Picture.comment");?></td>
-				<td><?php value("Picture.comment"); ?></td>
-			</tr>
-			<tr mode='edit' ng-hide="currentFile().file">
-				<td><?php label("Picture.file");?><br>(max size: <span id='maxUploadSizeMb'></span>Mb)</td>
+			<?php (new t("Picture.OriginalName"))->readOnly()->tr()->p(); ?>
+			<?php (new t("Picture.file"))->readOnly()->tr()->p(); ?>
+			<?php (new t("Picture.Date"))->tr()->p(); ?>
+			<?php (new t("Picture.comment"))->tr()->p(); ?>
+			<tr mode='notModeWrite' ng-hide="currentFile().file">
+				<td><?php (new t("Picture.file"))->label()->p(); ?>
+					<br>
+					(max size: <span>{{cryptomedic.settings.maxUploadSizeMb}}</span>Mb)
+				</td>
             	<td><input type="file" name="data[filecontent]" id="PictureFilecontent" /></td>
 			</tr>
 		</table>
