@@ -61,7 +61,7 @@
 	(new Script())->url("/amd/labels/index.json?var=cryptomedic.labels")->cached()->js()->dependDBTable("labels")->toPrint(); 
 ?>
 </head>
-<body ng-app="app_cryptomedic" ng-controller="ctrl_cryptomedic" id="ng-app">
+<body ng-app="app_cryptomedic" ng-controller="ctrl" id="ng-app">
 	<!--  Login screen -->
 	<div ng-if="!logged && !pending" class="site-wrapper">
 		<div class="site-wrapper-inner col-sm-offset-4 col-sm-4">

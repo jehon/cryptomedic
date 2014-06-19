@@ -40,7 +40,8 @@ var cryptoApp = angular.module('app_cryptomedic', [ 'ngRoute' ])
 	};
 });
 
-cryptoApp.controller('ctrl_cryptomedic', [ '$scope', 'service_rest', function($scope, service_rest) { 
+cryptoApp.controller('ctrl', [ '$scope', 'service_rest', function($scope, service_rest) { 
+	$scope.cryptomedic = cryptomedic;
 	$scope.safeApply = function (fn) {
 		  var phase = this.$root.$$phase;
 		  if(phase == '$apply' || phase == '$digest') {
