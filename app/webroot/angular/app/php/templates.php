@@ -50,12 +50,6 @@ function label($key) {
 
 
 
-
-
-
-
-
-
 class t {
 	var $key;
 	var $extra;
