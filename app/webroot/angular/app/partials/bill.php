@@ -1,16 +1,18 @@
 <?php require_once(__DIR__ . "/../php/templates.php"); ?>
 <?php 
 	function price($item, $extra = "size=2") {
-		$struct = _parseKey($item);
-		echo "<tr ng-if='currentFile()." . $struct->name . " > 0'>";
+		// $struct = _parseKey($item);
+		$name = explode(".", $item);
+		$name = $name[1];
+		echo "<tr ng-if='currentFile().$name > 0'>";
 		echo "<td>";
-		label($item);
+		(new t($item))->label()->p();
 		echo "</td>";
 		echo "<td>";
-		value($item, $extra);
+		(new t($item, $extra))->value()->p();
 		echo "</td>";
-		echo "<td><div pricefor='$item'>{{currentFile().getPriceFor('" . $struct->name . "')}}</div></td>";
-		echo "<td>{{currentFile().getTotalFor('" . $struct->name . "')}}</td>";
+		echo "<td><div pricefor='$item'>{{currentFile().getPriceFor('$name')}}</div></td>";
+		echo "<td>{{currentFile().getTotalFor('$name')}}</td>";
 		echo "</tr>";
 	}
 ?>
@@ -18,16 +20,9 @@
 	<FieldSet>
 		<legend><label for="Bill-GeneralData" name="Bill-GeneralData">General Data</label></legend>
 		<table  class='colorize'>
-			<tr>
-				<td><?php label("Bill.Date");?></td>
-				<td><?php value("Bill.Date"); ?></td>
-			</tr><tr>
-				<td><?php label("Bill.ExaminerName");?></td>
-				<td><?php value("Bill.ExaminerName"); ?></td>
-			</tr><tr>
-				<td><?php label("Bill.Center");?></td>
-				<td><?php value("Bill.Center"); ?></td>
-			</tr>
+			<?php price("Bill.Date"); ?>
+			<?php price("Bill.ExaminerName"); ?>
+			<?php price("Bill.Center"); ?>
 		</table>
 	</FieldSet>
 	<FieldSet>
@@ -36,9 +31,9 @@
 			<col width='60%' /><col width='15%' /><col width='15%' /><col width='10%' /> 
 			<tr>
 				<td></td>
-				<td><?php label("Quantity");?></td>
-				<td><?php label("Price");?></td>
-				<td><?php label("Total");?></td>
+				<td><?php (new t("Quantity"))->label()->p() ;?></td>
+				<td><?php (new t("Price"))->label()->p() ;?></td>
+				<td><?php (new t("Total"))->label()->p() ;?></td>
 			</tr>
 			<?php price("Bill.consult_CDC_consultation_physio"); ?>
 			<?php price("Bill.consult_CDC_consultation_Bengali_Doctor", "size=2"); ?>
@@ -63,8 +58,9 @@
 			<col width='60%' /><col width='15%' /><col width='15%' /><col width='10%' /> 
 			<tr>
 				<td></td>
-				<td><?php label("Quantity");?></td>
-				<td><?php label("Price");?></td>
+				<td><?php (new t("Quantity"))->label()->p() ;?></td>
+				<td><?php (new t("Price"))->label()->p() ;?></td>
+				<td><?php (new t("Total"))->label()->p() ;?></td>
 			</tr>
 			<?php price("Bill.workshop_BHKAFO_night", "size=2"); ?>
 			<?php price("Bill.workshop_BHKAFO_walking", "size=2"); ?>
@@ -117,8 +113,9 @@
 			<col width='60%' /><col width='15%' /><col width='15%' /><col width='10%' /> 
 			<tr>
 				<td></td>
-				<td><?php label("Quantity");?></td>
-				<td><?php label("Price");?></td>
+				<td><?php (new t("Quantity"))->label()->p() ;?></td>
+				<td><?php (new t("Price"))->label()->p() ;?></td>
+				<td><?php (new t("Total"))->label()->p() ;?></td>
 			</tr>
 			<?php price("Bill.surgical_osteotomy", "size=2"); ?>
 			<?php price("Bill.surgical_osteotomy_bi", "size=2"); ?>
@@ -147,26 +144,17 @@
 			<col width='70%' /><col width='*' /> 
 			<tr>
 				<td></td>
-				<td modes='add edit'><a class='textbutton' href="javascript:cryptomedic.businessrules.billcalculate();">
-						<img src='/amd/cryptomedic/img/calculate.gif' alt='[calculate]'>
+				<td modes='add edit'><a class='textbutton' ng-clic="calculate()">
+						<img src='img/calculate.gif' alt='[calculate]'>
 						Calculate
 					</a></td>
 			</tr><tr>
-				<td><label for="BillTotalReal" name="Bill.total_real">Total real</label></td>
-				<td id='total_real'>{@read header="Bill.total_real"/}</td>
-					<input type="hidden" name="data[total_real]" value="{total_real}" id="BillTotalReal" />
-			</tr><tr>
-				<td><?php label("Bill.SocialLevel");?></td>
-				<td><?php value("Bill.Sociallevel"); ?></td>
+				<td><?php (new t("Bill.total_real"))->label()->p(); ?></td>
+				<td id='total_real'>{{total_real()}}</td>
 			</tr>
-            <tr>
-				<td><label for="BillTotalAsked" name="Bill.total_asked">Total asked</label></td>
-				<td id='total_asked'>{@read header="Bill.total_asked"/}</td>
-				<input type="hidden" name="data[total_asked]" value="{total_asked}" id="BillTotalAsked" />
-			</tr><tr>
-				<td><label for="BillTotalPaid" name="Bill.total_paid">Bill.total_paid</label></td>
-				<td><?php value("Bill.total_paid"); ?></td>
-			</tr>
+			<?php (new t("Bill.Sociallevel", "size=2"))->tr()->p(); ?>
+			<?php (new t("Bill.total_asked", "size=2"))->tr()->p(); ?>
+			<?php (new t("Bill.total_paid", "size=2"))->tr()->p(); ?>
 		</table>
 	</FieldSet>
 </div>
