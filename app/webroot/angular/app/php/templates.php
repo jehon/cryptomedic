@@ -2,8 +2,10 @@
 
 /*
 
-<tr>\n.*<td><\?php label\("(.*)"\);\?></td>\n.*<td><\?php value\(".*"\); \?></td>\n.*</tr>
-				<?php (new t("$1"))->tr()->p(); ?>\n
+C:\wamp\www\amd\app\webroot\angular\app\partials
+
+<tr>\n.*<td><\?php label\("(.*)"\);\?></td>\n.*<td><\?php value\("(.*)"\);.*\?></td>\n.*</tr>
+<?php (new t("$1"))->tr()->p(); ?>\n
 
 */
 
@@ -21,184 +23,30 @@ if ($mysqli->connect_errno) {
 	die("Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error);
 }
 
-// function _label($key) {
-// 	global $mysqli;
-// 	if (is_numeric($key)) {
-// 		$sql = "SELECT * FROM `labels` WHERE `id` = '$key' or `reference` = '$key'";
-// 	} else {
-// 		$sql = "SELECT * FROM `labels` WHERE `reference` = '$key'";
-// 	}
-// 	$res = $mysqli->query($sql);
-// 	if ($res === false) {
-// 		echo $mysqli->errno . ":\n" . $mysqli->error . "\n";
-// 		throw new Exception("Syntax error in labels");
-// 	}
-// 	if ($res->num_rows > 1) {
-// 		echo $sql;
-// 		throw new Exception("Too much labels for '$key'");
-// 	}
-// 	if ($res->num_rows > 1) {
-// 		$version = $res->fetch_array();
-// 		if ($version["english"] != $key && $version["english"] != "")
-// 			return $version["english"];
-// 	}
-// 	try {
-// 		$struct = _parseKey($key);
-// 		return $struct->name;
-// 	} catch (Exception $e) {
-// 		return $key;
-// 	}
-// }
+function rawExpression($key) { 
+	debug_print_backtrace();
+	(new t($key))->rawExpression()->p(); 
+}
 
-// function _parseKey($key) {
-// 	$data = explode(".", $key);
-// 	if (count($data) != 2) {
-// 		throw new Exception("Read: key is not a two parts: '$key'");
-// 	}
-// 	$model = $data[0];
-// 	$field = $data[1];
+function rawValue($key) { 
+	debug_print_backtrace();
+	(new t($key))->rawValue()->p(); 
+}
 
-// 	global $mysqli;
-// 	global $model2controller;
-// 	$res = $mysqli->query("SELECT $field FROM " . $model2controller[$model] . " LIMIT 1");
-// 	if ($res === false) {
-// 		throw new Exception("ParseKey: $key is not in the database");
-// 	}
-// 	$structures = $res->fetch_fields();
-// 	$structure = $structures[0];
-	
-// 	$structure->myFlags = array();
-// 	$constants = get_defined_constants(true);
-// 	foreach ($constants['mysqli'] as $c => $n) {
-// 		if (preg_match('/MYSQLI_(.*)_FLAG$/', $c) && (($structure->flags & $n) > 0)) {
-// 			$structure->myFlags[$c] = 1;
-// 		}
-// 	}
+function value($key) { 
+	debug_print_backtrace();
+	(new t($key))->value()->p(); 
+}
 
-// 	switch ($structure->type) {
-// 		case MYSQLI_TYPE_TINY:
-// 		case MYSQLI_TYPE_BIT:
-// 			$structure->myType = "boolean";
-// 			break;
-// 		case MYSQLI_TYPE_DECIMAL:
-// 		case MYSQLI_TYPE_NEWDECIMAL:
-// 		case MYSQLI_TYPE_SHORT:
-// 		case MYSQLI_TYPE_LONG:
-// 		case MYSQLI_TYPE_LONGLONG:
-// 		case MYSQLI_TYPE_INT24:
-// 			$structure->myType = "numeric";
-// 			break;
-// 		case MYSQLI_TYPE_FLOAT:
-// 		case MYSQLI_TYPE_DOUBLE:
-// 			$structure->myType = "float";
-// 			break;
-// 		case MYSQLI_TYPE_TIMESTAMP:
-// 		case MYSQLI_TYPE_DATETIME:
-// 			$structure->myType = "datetime";
-// 			break;
-// 		case MYSQLI_TYPE_DATE:
-// 			$structure->myType = "date";
-// 			break;
-// 		case MYSQLI_TYPE_VAR_STRING:
-// 		case MYSQLI_TYPE_STRING:
-// 		case MYSQLI_TYPE_CHAR:
-// 		case MYSQLI_TYPE_TINY_BLOB:
-// 		case MYSQLI_TYPE_MEDIUM_BLOB:
-// 		case MYSQLI_TYPE_LONG_BLOB:
-// 		case MYSQLI_TYPE_BLOB:
-// 			$structure->myType = "text";
-// 			break;
-// 		case MYSQLI_TYPE_TIME:
-// 		case MYSQLI_TYPE_YEAR:
-// 		case MYSQLI_TYPE_NEWDATE:
-// 		case MYSQLI_TYPE_INTERVAL:
-// 		case MYSQLI_TYPE_ENUM:
-// 		case MYSQLI_TYPE_SET:
-// 		case MYSQLI_TYPE_GEOMETRY:
-// 		default:
-// 			// http://www.php.net/manual/en/mysqli.constants.php
-// 			var_dump($structure);
-// 			$constants = get_defined_constants(true);
-// 			foreach ($constants['mysqli'] as $c => $n)
-// 			if (preg_match('/^MYSQLI_TYPE_(.*)/', $c, $m) && ($n == $structure->type))
-// 				var_dump($c);
-// 			//$types[$n] = $m[1];
-// 
-// 			throw new Exception("Unhandled type for field $field");
-// 	}
-// 	global $model_listing;
-// 	if (array_key_exists($key, $model_listing)) {
-// 		$structure->myType = "list";
-// 		$structure->listing = $model_listing[$key];
-// 		if (array_key_exists('labels', $structure->listing) && ($structure->listing['labels'])) {
-// 			$list = $structure->listing;
-// 			$structure->myType = "linkedList";
-// 			unset($list['labels']);
-// 			$structure->listing = [];
-// 			foreach($list as $k => $v){
-// 				$structure->listing[$v] = _label($v);
-// 			}
-// 		}
-// 	}
-// 	return $structure;
-// }
-// 
-// function rawExpression($key, $type = null) {
-// 	$struct = _parseKey($key);
-// 	echo "currentFile()." . $struct->name;
-// }
-// 
-// function rawValue($key, $type = null) {
-// 	$struct = _parseKey($key);
-// 	echo "{{"; echo rawExpression($key, $type); echo "}}";
-// // 	echo "{{folder.files[page]." . $struct->name . "}}";
-// }
-// 
-// function label($key) {
-// 	echo "<label for='$key'>" . _label($key) . "</label>\n";
-// }
-// 
-// function value($key) {
-// 	return read($key);
-// }
-// 
-// function read($key, $type = null) {
-// 	$struct = _parseKey($key);
-// 	if ($type == null) $type = $struct->myType; 
-// 	switch($type) {
-// 		case 'date':
-// 			// See https://docs.angularjs.org/api/ng/filter/date
-// 			echo "<span id='$key'>{{"; rawExpression($key, $type); echo " | date:'longDate' }}</span>";
-// 			break;
-// 		case 'datetime':
-// 			// See https://docs.angularjs.org/api/ng/filter/date
-// 			echo "<span id='$key'>{{"; rawExpression($key, $type); echo " | date:'short' }}</span>";
-// 			break;
-// 			// TODO: clean presentation
-// 		case 'text':
-// 		case 'numeric':
-// 		case 'float':
-// 		case 'list':
-// 			echo "<span id='$key'>"; echo rawValue($key, $type) ; echo "</span>";
-// 			break;
-// 		case 'boolean':
-// 			echo "<span id='$key-true' ng-show='"; rawExpression($key, $type); echo "'><img src='img/boolean-true.gif'></span>"
-// 					. "<span id='$key-true' ng-hide='"; rawExpression($key, $type); echo "'><img src='img/boolean-false.gif'></span>";
-// 			break;
-// 		case 'linkedList':
-// 			echo "<span id='$key'>{{link("; rawExpression($key, $type); echo ")}}</span>";
-// 			break;
-// 		default:
-// 			echo "$key input";
-// 			break;
-// 	}
-// }
+function read($key) { 
+	debug_print_backtrace();
+	(new t($key))->read()->p(); 
+}
 
-function rawExpression($key) { (new t($key))->rawExpression()->p(); }
-function rawValue($key) { (new t($key))->rawValue()->p(); }
-function read($key) { (new t($key))->read()->p(); }
-function value($key) { (new t($key))->value()->p(); }
-function label($key) { (new t($key))->label()->p(); }
+function label($key) { 
+	debug_print_backtrace();
+	(new t($key))->label()->p(); 
+}
 
 
 class t {
@@ -290,7 +138,7 @@ class t {
 					var_dump($c);
 				//$types[$n] = $m[1];
 
-				throw new Exception("Unhandled type for field $field");
+				throw new Exception("Unhandled type for field {$this->field}");
 		}
 		global $model_listing;
 		if (array_key_exists($this->key, $model_listing)) {
@@ -307,7 +155,8 @@ class t {
 			}
 		}
 
-		$this->rawExpression = "currentFile()." . $this->structure->name;
+		$this->linked2DB = true;
+		$this->rawExpression = "currentFile()." . $this->field;
 		return $this;
 	}
 
@@ -331,11 +180,20 @@ class t {
 			if ($version["english"] != $key && $version["english"] != "")
 				return $version["english"];
 		}
-		return $this->field;
+		if ($this->linked2DB) {
+			return $this->field;
+		}
+		if (count(explode(".", $this->key)) > 1) {
+			return explode(".", $this->key)[1];
+		}
+		if (count(explode("-", $this->key)) > 1) {
+			return explode("-", $this->key)[1];
+		}
+		return $this->key;
 	}
 
 	function label() {
-		$this->res .= "<label for='" . $this->key . "'>" . $this->_label() . "</label>\n";
+		$this->res .= "<label for='{$this->key}'>" . $this->_label() . "</label>\n";
 		return $this;
 	}
 
@@ -380,7 +238,7 @@ class t {
 
 	function write($forceAllowNull = false) {
 		if (!$this->linked2DB) {
-			throw new Exception("Read: key is not a two parts: '{$this->key}'");
+			throw new Exception("Read: key is not in the database: '{$this->key}'");
 		}
 		// TODO: write
 		$this->read($key);
@@ -403,7 +261,7 @@ class t {
 
 	function tr() {
 		if (!$this->linked2DB) {
-			throw new Exception("Read: key is not a two parts: '{$this->key}'");
+			throw new Exception("Read: key is not in the database: '{$this->key}'");
 		}
 		$this->res .= "<tr ng-class='{ emptyValue: !$this->rawExpression}'>\n";
 		$this->res .= "	<td>"; 
@@ -414,6 +272,25 @@ class t {
 			$this->res .="</td>\n";
 		$this->res .= "</tr>\n";
 		return $this;
+	}
+
+	function trLeftRight() {
+		$this->res .= "<tr>\n";
+			$this->res .= "	<td>"; 
+				$this->res .= (new t(str_replace("?", "", $this->key)))->label()->getText();
+			$this->res .= "</td>\n";
+			$this->res .= "	<td>";
+				$this->res .= (new t(str_replace("?", "Left", $this->key)))->value()->getText();
+			$this->res .= "</td>\n";
+			$this->res .= "	<td>";
+				$this->res .= (new t(str_replace("?", "Right", $this->key)))->value()->getText();
+			$this->res .= "</td>\n";
+		$this->res .= "</tr>\n";
+		return $this;
+	}
+
+	function getText() {
+		return $this->res;
 	}
 
 	function p() {

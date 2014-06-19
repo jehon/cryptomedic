@@ -2,24 +2,23 @@
 <span ng-controller="ctrl_patient">
 	<div class="col-sm-6">
         <fieldset>
-			<legend><label for="Patient-GeneralData" name="Patient-GeneralData">General Data</label></legend>
+			<legend><?php (new t("Patient-GeneralData"))->label()->p(); ?></legend>
 			<table class='colorize'>
 				<col width='30%' /><col width='*' />
 				<tr>
 					<td><?php (new t("Patient.entrynumber"))->label()->p(); ?></td>
 					<td><?php (new t("Patient.entryyear"))->read()->p(); ?>-<?php (new t("Patient.entryorder"))->read()->p(); ?></td>
-				</tr>				
+				</tr>
 				<?php (new t("Patient.Firstname"))->tr()->p(); ?>
 				<?php (new t("Patient.Lastname"))->tr()->p(); ?>
 				<?php (new t("Patient.Sex"))->tr()->p(); ?>
 				<tr>
-					<td><?php label("Patient.Yearofbirth");?></td>
+					<td><?php (new t("Patient.Yearofbirth"))->label()->p(); ?></td>
 					<td>
 						<?php value("Patient.Yearofbirth", [ "min" => 900, "max" => 2100]); ?>
 					</td>
-				</tr>
-				<tr mode='read'>
-					<td><label for="Patient-Age" name="Patient-Age">Age</label></td>
+				</tr><tr mode='read'>
+					<td><?php (new t("Patient-Age"))->label()->p(); ?></td>
 					<td>{{currentFile().actualAge()}}</td>
 				</tr>
 				<?php (new t("Patient.Fathersname"))->tr()->p(); ?>
@@ -32,37 +31,37 @@
 		</fieldset>
 		<br/>
 		<fieldset id='PatientPathology'>
-			<legend><label for="Patient-Pathology" name="Patient-Pathology">Pathology</label></legend>
+			<legend><?php (new t("Patient-Pathology"))->label()->p(); ?></legend>
 			<table class='colorize'>
 				<col width='30%' /><col width='*' />
 				<tr>
 					<td></td>
 					<td id='PatientPathologyError' style='display: none' class='jserror'>
-					<label for="Patient-Nopathology" name="Patient-Nopathology">Please select at least one pathology</label>
+					<?php (new t("Patient-Nopathology"))->label()->p(); ?>
 				</td>
 				</tr><tr>
-					<td><label for="PatientPathologyRicket" name="Patient.pathology_Ricket">Ricket</label></td>
+					<td><?php (new t("PatientPathologyRicket"))->label()->p(); ?></td>
 					<td><?php value("Patient.pathology_Ricket"); ?></td>
 				</tr><tr>
-					<td><label for="PatientPathologyClubfoot" name="Patient.pathology_Clubfoot">Clubfoot</label></td>
+					<td><?php (new t("PatientPathologyClubfoot"))->label()->p(); ?></td>
 					<td><?php value("Patient.pathology_Clubfoot"); ?></td>
 				</tr><tr>
-					<td><label for="PatientPathologyPolio" name="Patient.pathology_Polio">Polio</label></td>
+					<td><?php (new t("PatientPathologyPolio"))->label()->p(); ?></td>
 					<td><?php value("Patient.pathology_Polio"); ?></td>
 				</tr><tr>
-					<td><label for="PatientPathologyBurn" name="Patient.pathology_Burn">Burn</label></td>
+					<td><?php (new t("PatientPathologyBurn"))->label()->p(); ?></td>
 					<td><?php value("Patient.pathology_Burn"); ?></td>
 				</tr><tr>
-					<td><label for="PatientPathologyCP" name="Patient.pathology_CP">CP</label></td>
+					<td><?php (new t("PatientPathologyCP"))->label()->p(); ?></td>
 					<td><?php value("Patient.pathology_CP"); ?></td>
 				</tr><tr>
-					<td><label for="PatientPathologyCongenital" name="Patient.pathology_Congenital">Congenital</label></td>
+					<td><?php (new t("PatientPathologyCongenital"))->label()->p(); ?></td>
 					<td><?php value("Patient.pathology_Congenital"); ?></td>
 				</tr><tr>
-					<td><label for="PatientPathologyAdult" name="Patient.pathology_Adult">Adult</label></td>
+					<td><?php (new t("PatientPathologyAdult"))->label()->p(); ?></td>
 					<td><?php value("Patient.pathology_Adult"); ?></td>
 				</tr><tr>
-					<td><label for="PatientPathologyOther" name="Patient.pathology_other">Other pathology</label></td>
+					<td><?php (new t("PatientPathologyOther"))->label()->p(); ?></td>
 					<td><?php value("Patient.pathology_other"); ?></td>
 				</tr>
 				<?php (new t("Patient.historyofcomplaint"))->tr()->p(); ?>

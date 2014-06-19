@@ -1,7 +1,7 @@
 <? require_once("../php/templates.php"); ?>
 <div class='col-sm-offset-3 col-sm-6'>
 	<h1 class='text-center'>
-		<label for="Home-MainTitle" name="Home-MainTitle">Home Page</label>
+		<?php (new t("Home-MainTitle"))->label()->p(); ?>
 	</h1>
 	<fieldset id='add'>
 		<legend>Check if a patient exists, and if not, create it</legend>
@@ -17,11 +17,11 @@
 		</div>
 		<input ng-model="generate" ng-change="resetSearched()" type='checkbox' value='1'> Generate a reference for me<br>
 		<br>
-		<? label('Patient.entryyear'); ?>
+		<?php (new t("Patient.entryyear"))->label()->p(); ?>
        	<input ng-model="entryyear" ng-change="resetSearched()" type="number" class="form-control" placeholder="Entry year" required autofocus>
 
        	<span ng-show="generate != true">
-			<? label('Patient.entryorder'); ?>
+			<?php (new t("Patient.entryorder"))->label()->p(); ?>
 	       	<input ng-model="entryorder" ng-change="resetSearched()" type="number" class="form-control" placeholder="Entry order">
        	</span>
 		<br>

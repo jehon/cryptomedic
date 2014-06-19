@@ -7,6 +7,12 @@ cryptomedic.models.Bill = cryptomedic.models.File.extend({
 	'getTotalFor': function(key) {
 		return cryptomedic.prices[this.price_id][key] * this[key];
 	},
+	'calculate_total_real': function() {
+		return "TODO";
+	},
+	'calculate_total_asked': function() {
+		return "TODO";
+	},
 	'calculatePriceId': function() {
 		this.price_id = -1;
 		angular.forEach(cryptomedic.prices, function(p, i) {

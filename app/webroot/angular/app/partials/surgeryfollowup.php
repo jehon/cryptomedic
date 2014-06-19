@@ -1,7 +1,7 @@
 <?php require_once(__DIR__ . "/../php/templates.php"); ?>
 <div class="col-sm-6">
 	<FieldSet>
-		<Legend><label for="SurgeryFollowup-Discharge" name="SurgeryFollowup-Discharge">SurgeryFollowup-Discharge</label></Legend>
+		<Legend><?php (new t("SurgeryFollowup-Discharge"))->label()->p(); ?></Legend>
 		<table class='colorize'>
 			<col width='30%' /><col width='*' /> 
 			<?php (new t("SurgeryFollowup.Date"))->tr()->p(); ?>
@@ -22,7 +22,7 @@
 		</table>
 	</FieldSet>
 	<FieldSet>
-		<Legend><label for="SurgeryFollowup-Visit" name="SurgeryFollowup-Visit">SurgeryFollowup-Visit</label></Legend>
+		<Legend><?php (new t("SurgeryFollowup-Visit"))->label()->p(); ?></Legend>
 		<table class='colorize'>
 			<col width='30%' /><col width='*' /> 
 			<?php (new t("SurgeryFollowup.SkinCicatrisation"))->tr()->p(); ?>
@@ -33,7 +33,7 @@
 		</table>
 	</FieldSet>
 	<FieldSet>
-		<Legend><label for="SurgeryFollowup-Treatment" name="SurgeryFollowup-Treatment">SurgeryFollowup-Treatment</label></Legend>
+		<Legend><?php (new t("SurgeryFollowup-Treatment"))->label()->p(); ?></Legend>
 		<table class='colorize'>
 			<col width='30%' /><col width='*' /> 
 			<?php (new t("SurgeryFollowup.TreatmentPhysiotherapy"))->tr()->p(); ?>
@@ -43,7 +43,7 @@
 		</table>
 	</FieldSet>
 	<FieldSet>
-		<Legend><label for="SurgeryFollowup-Conclusion" name="SurgeryFollowup-Conclusion">SurgeryFollowup-Conclusion</label></Legend>
+		<Legend><?php (new t("SurgeryFollowup-Conclusion"))->label()->p(); ?></Legend>
 		<table class='colorize'>
 			<col width='30%' /><col width='*' /> 
 			<?php (new t("SurgeryFollowup.ResultImprovement"))->tr()->p(); ?>

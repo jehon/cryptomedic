@@ -1,7 +1,7 @@
 <?php require_once(__DIR__ . "/../php/templates.php"); ?>
 <div class="col-sm-6">
 	<fieldset>
-		<legend><label for="Surgery-Order" name="Surgery-Order">Surgery-Order</label></legend>
+		<legend><?php (new t("Surgery-Order"))->label()->p(); ?></legend>
 		<table class='colorize'>
 			<col width='30%' /><col width='*' /> 
 			<?php (new t("Surgery.Operation"))->tr()->p(); ?>
@@ -10,7 +10,7 @@
 		</table>
 	</fieldSet>
 	<fieldSet>
-		<legend><label for="Surgery-GeneralExamination" name="Surgery-GeneralExamination">Surgery-GeneralExamination</label></legend>
+		<legend><?php (new t("Surgery-GeneralExamination"))->label()->p(); ?></legend>
 		<table class='colorize'>
 			<col width='30%' /><col width='*' /> 
 			<?php (new t("Surgery.MedicalProblem"))->tr()->p(); ?>
@@ -31,7 +31,7 @@
 		</table>
 	</fieldSet>
 	<fieldSet>
-		<legend><label for="Surgery-PreSurgicalExams" name="Surgery-PreSurgicalExams">Surgery-PreSurgicalExams</label></legend>
+		<legend><?php (new t("Surgery-PreSurgicalExams"))->label()->p(); ?></legend>
 		<table>
 			<col width='30%' /><col width='*' /> 
 			<?php (new t("Surgery.RadiologicalExam"))->tr()->p(); ?>
@@ -43,7 +43,7 @@
 		</table>
 	</fieldSet>
 	<fieldSet>
-		<legend><label for="Surgery-ParentAutorisation" name="Surgery-ParentAutorisation">Surgery-ParentAutorisation</label></legend>
+		<legend><?php (new t("Surgery-ParentAutorisation"))->label()->p(); ?></legend>
 		<table class='colorize'>
 			<col width='30%' /><col width='*' /> 
 			<?php (new t("Surgery.PAOk"))->tr()->p(); ?>
@@ -51,7 +51,7 @@
 		</table>
 	</fieldSet>
 	<fieldSet>
-		<legend><label for="Surgery-SurgicalReport" name="Surgery-SurgicalReport">Surgery-SurgicalReport</label></legend>
+		<legend><?php (new t("Surgery-SurgicalReport"))->label()->p(); ?></legend>
 		<table class='colorize'>
 			<col width='30%' /><col width='*' /> 
 			<?php (new t("Surgery.ReportDate"))->tr()->p(); ?>
@@ -64,7 +64,7 @@
 		</table>
 	</fieldSet>
 	<fieldSet>
-		<legend><label for="Surgery-HospitalisationFollowUp" name="Surgery-HospitalisationFollowUp">Surgery-HospitalisationFollowUp</label></legend>
+		<legend><?php (new t("Surgery-HospitalisationFollowUp"))->label()->p(); ?></legend>
 		<table class='colorize'>
 			<col width='30%' /><col width='*' /> 
 			<?php (new t("Surgery.FollowUpComplication"))->tr()->p(); ?>

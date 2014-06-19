@@ -11,5 +11,8 @@ cryptomedic.models.Patient = cryptomedic.models.Data.extend({
 	'sexStr': function() {
 		if (!this.isNotZero('Sex')) return null;
 		return this.Sex == 207 ? "m" : "f"; 
+	},
+	'calculateSocialLevel': function() {
+		return "TODO";
 	}
 });

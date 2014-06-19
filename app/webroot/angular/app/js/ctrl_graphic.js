@@ -78,9 +78,7 @@ cryptoApp.controller('ctrl_graphic', [ '$scope', '$element', 'service_rest', fun
 		return (p* (imgDimension("top") - imgDimension("bottom")) + imgDimension("bottom")) * 100;
 	}
 
-//	$scope.hovered = -1;
 	$scope.hover = function($index) {
-		// $scope.hovered = $index;
 		$scope.$emit("hovered", $index);
 	}
 }]);
