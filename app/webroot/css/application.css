@@ -1,0 +1,201 @@
+#application_content_TODO {
+	padding: 10px;
+}
+
+input[type=submit]  {
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+tr.subheader {
+	background-color: lightgray;
+}
+
+tr.highlighted  > td {
+	background-color: darkgray;
+}
+
+/*******************************************/
+/* Notices and Errors From Cake himself    */
+/*******************************************/
+.jserror {
+	color: red;
+	padding: 2px;
+	border: solid red;
+}
+
+div.message {
+	font-size: 120%;
+	color: white;
+	background-color: #900;
+	text-align: center;
+	padding: 10px;
+}
+
+.flashok {
+	font-size: 120%;
+	color: white;
+	background-color: green;
+	text-align: center;
+	padding: 10px;
+}
+
+.flashko {
+	font-size: 120%;
+	color: white;
+	background-color: red;
+	text-align: center;
+	padding: 10px;
+}
+
+.error-message {
+	color: white;
+	background-color: #900;
+	padding: 2px;
+}
+
+p.error {
+	background-color: #e32;
+	color: #fff;
+	font-family: Courier, monospace;
+	font-size: 120%;
+	line-height: 140%;
+	padding: 0.8em;
+	margin: 1em 0;
+}
+
+p.error em {
+	color: #000;
+	font-weight: normal;
+	line-height: 140%;
+}
+
+.notice {
+	background: #ffcc00;
+	color: #000;
+	display: block;
+	font-family: Courier, monospace;
+	font-size: 120%;
+	line-height: 140%;
+	padding: 0.8em;
+	margin: 1em 0;
+}
+
+.success {
+	background: green;
+	color: #fff;
+}
+
+/***********************************************************************
+ *  OLD ELEMENTS IMPORTED
+ */
+
+/*******************************************/
+/* Standard elements */
+/*******************************************/
+table {
+	width: 100%;
+}
+
+tr {
+	vertical-align: top;
+	text-align: left;
+	padding: 0px;
+	margin: 0px;
+}
+
+td {
+	padding: 0px;
+	margin: 0px;
+}
+
+hr {
+	clear: both;
+}
+
+body,p,ul,li {
+	font-size : 9pt;
+	font-family : Arial;
+}
+
+input,select {
+	border-Width: thin;
+	font-Family: Arial, Helvetica, sans-serif;
+}
+
+textarea {
+	border-width: thin;
+}
+
+/***********************************/
+/*  General sections  */
+/***********************************/
+#related, .search {
+	border-width: 2px;
+	text-align: center;
+	padding: 10px;
+
+	width: 90%;
+	margin-left: 5%;
+	margin-right: 5%;
+}
+
+.footer {
+	text-align: center;
+	font-size: 120%;
+	padding: 20px;
+}
+
+.conclusion {
+	border-top: 1px solid;
+	text-align: center;
+	font-size: 120%;
+	color: #004A94;
+	padding-top: 15px;
+}
+
+.tdright {
+	text-align: right;
+	padding-right: 20px;
+}
+
+.tdleft {
+	text-align: left;
+	padding-left: 20px;
+}
+
+.mygraphic {
+	margin: 0 auto;
+	/*	
+	width: 360px;
+	height: 240px;
+*/
+	text-align: center;
+}
+
+/*-----------------------------------------
+ * Default layout:                          
+ *    Header
+ *-----------------------------------------
+ */
+.headerContainer {
+	font-style: italic;
+	background-color: #bfbfbf;
+	color: white;
+}
+
+/*-----------------------------------------
+ * Default layout:                          
+ *     Search related elements                 
+ *-----------------------------------------
+ */
+.searchFields, #searchFields {
+	text-align: center;
+	width: 50%;
+	margin-left: auto;
+	margin-right: auto;
+}

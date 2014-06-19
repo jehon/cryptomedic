@@ -1,0 +1,509 @@
+.mark {
+        color: red;
+        position: absolute;
+        <!-- background-color: white; -->
+}
+
+.mark.highlighted {
+    background-color: red;
+    color: white;
+    z-index: 100;
+}
+
+.ui-menu { 
+	width: 150px; 
+}
+
+html, body {
+	margin: 0px;
+	padding: 0px;
+ 	height: 100%;
+}
+
+.invalid {
+	color: red;
+    border: solid 3 red;
+    background-color: red;
+}
+
+.validationErrors {
+	color: black;
+	background-color: white;
+}
+
+.error {
+	height: 20px;
+	padding-left: 22px;
+}
+
+.error-message {
+	background-repeat: no-repeat;
+	min-height: 103px;
+	padding-left: 22px;
+	background-image: url("img/error.png");
+}
+
+.ok {
+	background-repeat: no-repeat;
+	height: 20px;
+	padding-left: 22px;
+	background-image: url("img/ok.png");
+}
+
+.waiting {
+	height: 20px;
+	padding-left: 22px;
+	background-image: url("img/waiting.gif");
+	background-repeat: no-repeat;
+}
+
+.disabled {
+	background-image: url("img/waiting.gif");
+	background-position: 100px 100px;
+	background-repeat: no-repeat;
+	color: gray;
+}
+
+.disabled a {
+	color: lightgray;
+}
+/*
+#header {
+	width: auto;
+	background-color: gray;
+	color: white;
+	white-space: nowrap;
+	margin: auto;
+}
+
+*/
+/*#application_leftbar {*/
+	/*float: left;*/
+	/*width: 20%;*/
+	/*height: auto;*/
+	/*padding: 10px;*/
+	/*overflow-y: scroll;*/
+/*}*/
+
+#application_content {
+	heigh: 100%;
+	padding: 10px;
+	overflow-y: scroll;
+}
+
+#application_content h3 {
+	padding: 7px;
+	padding-left: 20px;
+	background-color: lightgray;
+}
+
+#application_footer {
+	clear: both;
+	text-align: center;
+	font-size: 75%;
+	color: gray;
+}
+
+.scrollable {
+	height: 100%;
+	overflow-y: scroll;
+}
+
+.tag {
+	background-color: #E7E7E7;
+	border-radius: 3px;
+	/*border: black 1px solid;*/
+	padding: 2px;
+	text-size: smaller;
+	color: gray;
+}
+
+.tag > a {
+	text-decoration: none;
+	color: gray;
+}
+
+/*******************************************/
+/*      Menu */
+/*******************************************/
+.menubar {
+	padding: 5px;
+	background-color: lightgray;
+	color: white;
+	white-space: nowrap;
+	text-align: right;
+}
+
+/*******************************************/
+/*      Textbuttons */
+/*******************************************/
+.textbutton {
+	display: inline-block;
+	padding: 2px;
+	background-color: gray;
+	color: white;
+	white-space: nowrap;
+	vertical-align: middle;
+	text-decoration: none;
+	font-size: small;
+	border-radius: 3px;
+	margin-right: 1px;
+	margin-left: 1px;
+}
+
+/* todo: display: table-row table-cell */
+h3 .textbutton, .menubar .textbutton {
+	display: inline;
+	padding: 10px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	border: 1px solid gray;
+	background-color: gray;
+	color: white;
+	white-space: nowrap;
+	vertical-align: middle;
+	text-decoration: none;
+	font-size: small;
+}
+
+.textbutton[status=selected] {
+	background-color: silver;
+}
+
+.textbutton[status=disabled] {
+	color: black;	
+}
+
+.textbutton img {
+	vertical-align: middle;
+	height: 20px;
+	padding-right: 10px;
+}
+
+.textbutton a {
+	text-decoration: none;
+	color: white; 
+}
+
+.textbutton#couchdbcleanup {
+	background-image: url("img/cleanup.gif");
+	background-position: 10px 10px;
+	background-size: 20px 20px;
+	background-repeat: no-repeat;
+	padding-left: 40px;
+}
+
+.textbutton#menudebug {
+	background-image: url("img/debug.gif");
+	background-position: 10px 10px;
+	background-size: 20px 20px;
+	background-repeat: no-repeat;
+	padding-left: 40px;
+}
+
+.textbutton#trace {
+	background-image: url("img/trace.gif");
+	background-position: 10px 10px;
+	background-size: 20px 20px;
+	background-repeat: no-repeat;
+	padding-left: 40px;
+}
+
+/*******************************************/
+/*   Modal screen   */
+/*******************************************/
+/*#screener {*/
+	/*display: none;*/
+	/*position: fixed;*/
+	/*top: 0px;*/
+	/*left: 0px;*/
+	/*z-index: 900;*/
+	/*opacity: 0.5;*/
+	/*width: 100%;*/
+	/*height: 100%;*/
+	/**/
+	/*text-align: center;*/
+	/*vertical-align: middle;	*/
+	/*margin: auto;*/
+	/**/
+	/*background-color: lightgray;*/
+/*}*/
+
+/*.modal {*/
+	/*display: none;*/
+	/*position: fixed;*/
+	/*top: 0px;*/
+	/*left: 0px;*/
+	/*z-index: 901;*/
+	/*width: 50%;*/
+	/*margin-left: 25%;*/
+	/*margin-right: 25%;*/
+	/*margin-top: 25%;*/
+	/**/
+	/*text-align: center;*/
+	/*vertical-align: middle;	*/
+	/*padding: 20px;*/
+
+	/*background-color: white;*/
+	/*color: black;*/
+	/*border: solid 3 gray;*/
+	/*border-radius: 15px;*/
+/*}*/
+
+/*.modal img {*/
+	/*vertical-align: middle;*/
+	/*max-height: 40px;*/
+/*}*/
+
+/*-----------------------------------------
+ * Default layout:                          
+ *    Fieldsets
+ *-----------------------------------------*/
+fieldset {
+	border-radius: 10px;
+	padding: 10px;
+	border-style:solid; 
+	border-width:2px; 
+	border-color:#002060;	
+}
+
+legend {
+	font-size: 120%;
+	color: #004A94;
+	padding-left: 10px;
+	padding-right: 10px;
+	
+}
+
+/*******************************************/
+/*      Fieldsets collapsable */
+/*******************************************/
+/* Expanded section */
+fieldset.collapsable > legend {
+	background-repeat: no-repeat;
+	background-image: url("img/section_expanded.gif");
+	height: 20px;
+	padding-left: 22px;
+}
+
+/* Collapsed section */
+fieldset.collapsable.collapsed  {
+	border-top-width: 2px;
+	border-left-width: 0;
+	border-right-width: 0;
+	border-bottom-width: 0;
+	border-radius: 0px;
+}
+
+
+fieldset.collapsable.collapsed > legend {
+	background-image: url("img/section_collapsed.gif");
+}
+
+fieldset.collapsable.collapsed > div {
+	display: none;
+}
+
+/*******************************************/
+/*      Tables  */
+/*******************************************/
+table.colorize {
+	width: 100%;
+	margin:10px 0pt 15px;
+	padding: 2px;
+	vertical-align: top;
+}
+
+table.colorize > thead, table.colorize > tfoot, thead.colorize {
+	background-color: #e6EEEE;
+	border: 1px solid #FFF;
+	font-size: 8pt;
+	padding: 4px;
+}
+
+table.colorize > thead > tr > th, table.colorize > tfoot > tr > th, thead.colorize > tr > th {
+	padding: 10px;
+	text-align: center;
+	background-color: gray;
+}
+
+table.colorize > tbody > tr {
+	background-color: white;
+	padding: 4px;
+	vertical-align: top;
+}
+
+table.colorize > tbody > tr:nth-child(odd) {
+	background-color: #E6E6FA;
+}
+
+table.tablesorter {
+	background-color: #CDCDCD;
+} 
+
+table.tablesorter > thead > tr .header {
+	background-image: url(img-sorter/bg.gif);
+	background-repeat: no-repeat;
+	background-position: center right;
+	cursor: pointer;
+}
+
+table.tablesorter > thead > tr .headerSortUp {
+	background-image: url(img-sorter/asc.gif);
+}
+table.tablesorter > thead > tr .headerSortDown {
+	background-image: url(img-sorter/desc.gif);
+}
+
+.pager {
+	position: relative !important;
+}
+
+.pager .first {
+	background-repeat: no-repeat;
+	height: 20px;
+	padding-left: 22px;
+	background-image: url("img-sorter/first.png");
+}
+
+.pager .prev {
+	background-repeat: no-repeat;
+	height: 20px;
+	padding-left: 22px;
+	background-image: url("img-sorter/prev.png");
+}
+
+.pager .next {
+	background-repeat: no-repeat;
+	height: 20px;
+	padding-left: 22px;
+	background-image: url("img-sorter/next.png");
+}
+
+.pager .last {
+	background-repeat: no-repeat;
+	height: 20px;
+	padding-left: 22px;
+	background-image: url("img-sorter/last.png");
+}
+
+/*******************************************
+/* Data Legend
+ */
+table.datalegend {
+    font-size: 9px;
+    padding: 0px;
+}
+
+table.datalegend > thead > tr> th {
+    font-size: 9px;
+    padding: 2px;
+}
+
+/*******************************************/
+/*      Notifications  */
+/*******************************************/
+/*.ui-notify {*/
+	/*width: 250px;*/
+	/*position: fixed;*/
+	/*top: 10px;*/
+	/*right: 10px;*/
+/*}*/
+/*.ui-notify-message {*/
+	/*padding: 10px;*/
+	/*margin-bottom: 15px;*/
+	/*border-radius: 8px*/
+/*}*/
+/*.ui-notify-message h1 {*/
+	/*font-size: 14px;*/
+	/*margin: 0;*/
+	/*padding: 0*/
+/*}*/
+/*.ui-notify-message p {*/
+	/*margin: 3px 0;*/
+	/*padding: 0;*/
+	/*line-height: 18px*/
+/*}*/
+/*.ui-notify-message:last-child {*/
+	/*margin-bottom: 0*/
+/*}*/
+/*.ui-notify-message-style {*/
+	/*background: #000;*/
+	/*background: rgba(0,0,0,0.8);*/
+	/*box-shadow: 0 0 6px #000;*/
+/*}*/
+/*.ui-notify-message-style h1 {*/
+	/*color: #fff;*/
+	/*font-weight: bold*/
+/*}*/
+/*.ui-notify-message-style p {*/
+	/*color: #fff*/
+/*}*/
+/*.ui-notify-close {*/
+	/*color: #fff;*/
+	/*text-decoration: underline*/
+/*}*/
+/*.ui-notify-click {*/
+	/*cursor: pointer*/
+/*}*/
+/*.ui-notify-cross {*/
+	/*margin-top: -4px;*/
+	/*float: right;*/
+	/*cursor: pointer;*/
+	/*text-decoration: none;*/
+	/*font-size: 12px;*/
+	/*font-weight: bold;*/
+	/*text-shadow: 0 1px 1px #fff;*/
+	/*padding: 2px*/
+/*}*/
+/*.ui-notify-cross:hover {*/
+	/*color: #ffffab*/
+/*}*/
+/*.ui-notify-cross:active {*/
+	/*position: relative;*/
+	/*top: 1px*/
+/*}*/
+
+/**
+ * 	Autocomplete
+ */
+.ui-autocomplete {
+    max-height: 100px;
+    overflow-y: auto;
+    /* prevent horizontal scrollbar */
+    overflow-x: hidden;
+}
+
+/***/
+  /** Task List*/
+  /**/
+/*.TaskListToDo {*/
+    /*padding-left: 22px;*/
+    /*background-repeat: no-repeat;*/
+    /*background-image: url("../img/arrow-gray.gif");*/
+    /*background-size: auto 20px;*/
+/*}*/
+
+/*.TaskListRunning {*/
+    /*padding-left: 22px;*/
+    /*background-repeat: no-repeat;*/
+    /*background-image: url("img/waiting.gif");*/
+    /*background-size: auto 20px;*/
+/*}*/
+
+/*.TaskListOk {*/
+    /*padding-left: 22px;*/
+    /*background-repeat: no-repeat;*/
+    /*background-image: url("img/ok.png");*/
+    /*background-size: auto 20px;*/
+/*}*/
+/**
+  * DEBUG
+  */    
+.debugLabel {
+	background-color: yellow;
+}
+
+.debugList {
+	background-color: orange;
+}

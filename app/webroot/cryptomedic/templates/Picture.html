@@ -1,0 +1,46 @@
+<form id="generalForm" enctype="multipart/form-data" method="post" action="/amd/{controller}/save" accept-charset="utf-8">
+	<div id='headerContainer' class='headerContainer'></div>
+	<input type="hidden" name="_method" value="PUT" />
+	<input type="hidden" name="data[id]" value="{id}" />
+	<input type="hidden" name="data[patient_id]" value="{patient_id}" />
+	<input type="hidden" name="data[type]" value="Picture" />
+	<Table width='100%'>
+		<tr>
+			<td>
+				<FieldSet>
+					<Legend><label for="Picture-header" name="Picture-header">Picture</label></Legend>
+					<table class='colorize'>
+						<tr>
+							<td><label for="PictureOriginalName" name="Picture.OriginalName">Original Name</label></td>
+							<td>{@read header="Picture.OriginalName"/}</td>
+						<tr>
+							<td><label name="Picture.File">File</label></td>
+							<td>{@read header="Picture.file"/}</td>
+						<tr>
+							<td><label for="PictureDate" name="Picture.Date">Taken on (date)</label></td>
+							<td>{@input header="Picture.Date"/}</td>
+						</tr><tr>
+							<td><label for="PictureComment" name="Picture.comment">Comment</label></td>
+							<td>{@input header="Picture.comment"/}</td>
+						</tr>
+						{?file}
+						{:else}
+	                        <tr mode='edit'>
+								<td><label for="PictureFile" name="Picture.file">File</label><br>(max size: <span id='maxUploadSizeMb'></span>Mb)</td>
+	                            <td><input type="file" name="data[filecontent]" id="PictureFilecontent" /></td>
+	                        </tr>
+						{/file}
+					</table>
+				</FieldSet>
+			</td>
+			<td>
+				<span id='belongsTo'></span>
+			</td>
+		</tr>
+	</Table>
+	{?file}
+		<div style='text-align: center'>
+			<img width='80%' src='/uploadedPictures/{file}'>
+		</div>
+	{/file}
+</form>
