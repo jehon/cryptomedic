@@ -194,19 +194,31 @@ function read($key, $type = null) {
 	}
 }
 
+
+
+
+
+
+
+
 class t {
 	var $key;
 	var $extra;
 	var $readonly = false;
 	var $res = "";
+	var $linked2DB = false;
 
 	function __construct($key, $extra = array()) {
 		$this->key = $key;
 		$this->extra = $extra;
+		$this->field = $key;
 		$data = explode(".", $this->key);
 		if (count($data) != 2) {
-			throw new Exception("Read: key is not a two parts: '$key'");
+			$this->linked2DB = false;
+			return ;
 		}
+
+		$this->linked2DB = true;
 		$this->model = $data[0];
 		$this->field = $data[1];
 
@@ -214,7 +226,7 @@ class t {
 		global $model2controller;
 		$res = $mysqli->query("SELECT " . $this->field . " FROM " . $model2controller[$this->model] . " LIMIT 1");
 		if ($res === false) {
-			throw new Exception("ParseKey: $key is not in the database");
+			throw new Exception("ParseKey: {$this->key} is not in the database");
 		}
 		$this->structures = $res->fetch_fields();
 		$this->structure = $this->structures[0];
@@ -299,24 +311,25 @@ class t {
 
 	private function _label() {
 		global $mysqli;
-		if (is_numeric($this->key)) {
-			$sql = "SELECT * FROM `labels` WHERE `id` = '$key' or `reference` = '". $this->key . "'";
-		} else {
-			$sql = "SELECT * FROM `labels` WHERE `reference` = '" . $this->key . "'";
-		}
+		// if (is_numeric($this->key)) {
+		//	$sql = "SELECT * FROM `labels` WHERE `id` = '{$this->key}' or `reference` = '". $this->key . "'";
+		// } else {
+		$sql = "SELECT * FROM `labels` WHERE `reference` = '{$this->key}'";
+		// }
+		
 		$res = $mysqli->query($sql);
 		if ($res === false) {
 			throw new Exception("Syntax error in labels: " . $mysqli->errno . ":\n" . $mysqli->error . "\n");
 		}
 		if ($res->num_rows > 1) {
-			throw new Exception("Too much labels for '$key': " . $sql);
+			throw new Exception("Too much labels for '{$this->key}': " . $sql);
 		}
 		if ($res->num_rows > 1) {
 			$version = $res->fetch_array();
 			if ($version["english"] != $key && $version["english"] != "")
 				return $version["english"];
 		}
-		return $this->structure->name;
+		return $this->field;
 	}
 
 	function label() {
@@ -330,6 +343,9 @@ class t {
 	}
 	
 	function read() {
+		if (!$this->linked2DB) {
+			throw new Exception("Read: key is not a two parts: '{$this->key}'");
+		}
 		switch($this->myType) {
 			case 'date':
 				// See https://docs.angularjs.org/api/ng/filter/date
@@ -361,6 +377,9 @@ class t {
 	}
 
 	function write($forceAllowNull = false) {
+		if (!$this->linked2DB) {
+			throw new Exception("Read: key is not a two parts: '{$this->key}'");
+		}
 		// TODO: write
 		$this->read($key);
 		return $this;
