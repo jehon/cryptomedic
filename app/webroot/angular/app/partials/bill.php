@@ -1,17 +1,17 @@
 <?php require_once(__DIR__ . "/../php/templates.php"); ?>
 <?php 
 	function price($item, $extra = "size=2") {
-		$name = explode(".", $item)[1];
-		$t = new t($item, $extra);
-		echo "<tr ng-if='currentFile()." . $name . " > 0'>";
+		$name = explode(".", $item);
+		$name = $name[1];
+		echo "<tr ng-if='currentFile().$name > 0'>";
 		echo "<td>";
-		$t->label()->p();
+		(new t($item))->label()->p();
 		echo "</td>";
 		echo "<td>";
-		$t->value()->p();
+		(new t($item, $extra))->value()->p();
 		echo "</td>";
-		echo "<td><div pricefor='$item'>{{currentFile().getPriceFor('" . $name . "')}}</div></td>";
-		echo "<td>{{currentFile().getTotalFor('" . $name . "')}}</td>";
+		echo "<td><div pricefor='$item'>{{currentFile().getPriceFor('$name')}}</div></td>";
+		echo "<td>{{currentFile().getTotalFor('$name')}}</td>";
 		echo "</tr>";
 	}
 ?>
@@ -30,9 +30,9 @@
 			<col width='60%' /><col width='15%' /><col width='15%' /><col width='10%' /> 
 			<tr>
 				<td></td>
-				<td><?php (new t("Quantity"))->label()->p(); ?></td>
-				<td><?php (new t("Price"))->label()->p(); ?></td>
-				<td><?php (new t("Total"))->label()->p(); ?></td>
+				<td><?php (new t("Quantity"))->label()->p() ;?></td>
+				<td><?php (new t("Price"))->label()->p() ;?></td>
+				<td><?php (new t("Total"))->label()->p() ;?></td>
 			</tr>
 			<?php price("Bill.consult_CDC_consultation_physio"); ?>
 			<?php price("Bill.consult_CDC_consultation_Bengali_Doctor", "size=2"); ?>
@@ -57,8 +57,9 @@
 			<col width='60%' /><col width='15%' /><col width='15%' /><col width='10%' /> 
 			<tr>
 				<td></td>
-				<td><?php (new t("Quantity"))->label()->p(); ?></td>
-				<td><?php (new t("Price"))->label()->p(); ?></td>
+				<td><?php (new t("Quantity"))->label()->p() ;?></td>
+				<td><?php (new t("Price"))->label()->p() ;?></td>
+				<td><?php (new t("Total"))->label()->p() ;?></td>
 			</tr>
 			<?php price("Bill.workshop_BHKAFO_night", "size=2"); ?>
 			<?php price("Bill.workshop_BHKAFO_walking", "size=2"); ?>
@@ -111,9 +112,9 @@
 			<col width='60%' /><col width='15%' /><col width='15%' /><col width='10%' /> 
 			<tr>
 				<td></td>
-				<td><?php (new t("Quantity"))->label()->p(); ?></td>
-				<td><?php (new t("Price"))->label()->p(); ?></td>
-				<td><?php (new t("Total"))->label()->p(); ?></td>
+				<td><?php (new t("Quantity"))->label()->p() ;?></td>
+				<td><?php (new t("Price"))->label()->p() ;?></td>
+				<td><?php (new t("Total"))->label()->p() ;?></td>
 			</tr>
 			<?php price("Bill.surgical_osteotomy", "size=2"); ?>
 			<?php price("Bill.surgical_osteotomy_bi", "size=2"); ?>
@@ -149,7 +150,6 @@
 				<td><?php (new t("Bill.total_asked"))->label()->p(); ?></td>
 				<td>{{currentFile().calculate_total_asked()}}</td>
 			</tr>
-			<?php (new t("Bill.total_paid"))->tr()->p(); ?>
 		</table>
 	</FieldSet>
 </div>
