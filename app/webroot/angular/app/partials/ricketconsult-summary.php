@@ -2,7 +2,6 @@
 <table width="100%">
 	<colgroup span="2" width="50%"></colgroup>
 	<tbody>
-		<? (new t("RicketConsult.Date"))->readOnly()->tr()->p(); ?>
 		<? (new t("RicketConsult.Rightleg"))->readOnly()->tr()->p(); ?>
 		<? (new t("RicketConsult.RightlegAngle"))->readOnly()->tr()->p(); ?>
 		<? (new t("RicketConsult.Leftleg"))->readOnly()->tr()->p(); ?>
