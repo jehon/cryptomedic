@@ -6,44 +6,28 @@
 			<table class='colorize'>
 				<col width='30%' /><col width='*' />
 				<tr>
-					<td><?php label("Patient.entrynumber");?>
-					<td><?php read("Patient.entryyear"); ?>-<?php read("Patient.entryorder"); ?></td>
-				</tr><tr>
-					<td><?php label("Patient.Firstname");?></td>
-					<td><?php value("Patient.Firstname"); ?></td>
-				</tr><tr>
-					<td><?php label("Patient.Lastname");?></td>
-					<td><?php value("Patient.Lastname"); ?></td>
-				</tr><tr>
-					<td><?php label("Patient.Sex");?></td>
-					<td><?php value("Patient.Sex"); ?></td>
-				</tr><tr>
+					<td><?php (new t("Patient.entrynumber"))->label()->p(); ?></td>
+					<td><?php (new t("Patient.entryyear"))->read()->p(); ?>-<?php (new t("Patient.entryorder"))->read()->p(); ?></td>
+				</tr>				
+				<?php (new t("Patient.Firstname"))->tr()->p(); ?>
+				<?php (new t("Patient.Lastname"))->tr()->p(); ?>
+				<?php (new t("Patient.Sex"))->tr()->p(); ?>
+				<tr>
 					<td><?php label("Patient.Yearofbirth");?></td>
 					<td>
 						<?php value("Patient.Yearofbirth", [ "min" => 900, "max" => 2100]); ?>
 					</td>
-				</tr><tr mode='read'>
+				</tr>
+				<tr mode='read'>
 					<td><label for="Patient-Age" name="Patient-Age">Age</label></td>
 					<td>{{currentFile().actualAge()}}</td>
-				</tr><tr>
-					<td><?php label("Patient.Fathersname");?></td>
-					<td><?php value("Patient.Fathersname", ""); ?></td>
-				</tr><tr>
-					<td><?php label("Patient.District");?></td>
-					<td><?php value("Patient.District"); ?></td>
-				</tr><tr>
-					<td><?php label("Patient.Upazilla");?></td>
-					<td><?php value("Patient.Upazilla"); ?></td>
-				</tr><tr>
-					<td><label for="PatientUnion" name="Patient.Union_">Union</label></td>
-					<td><?php value("Patient.Union_"); ?></td>
-				</tr><tr>
-					<td><?php label("Patient.Telephone");?></td>
-					<td><?php value("Patient.Telephone"); ?></td>
-				</tr><tr>
-					<td><?php label("Patient.AddressNotes");?></td>
-					<td><?php value("Patient.AddressNotes"); ?></td>
 				</tr>
+				<?php (new t("Patient.Fathersname"))->tr()->p(); ?>
+				<?php (new t("Patient.District"))->tr()->p(); ?>
+				<?php (new t("Patient.Upazilla"))->tr()->p(); ?>
+				<?php (new t("Patient.Union_"))->tr()->p(); ?>
+				<?php (new t("Patient.Telephone"))->tr()->p(); ?>
+				<?php (new t("Patient.AddressNotes"))->tr()->p(); ?>
 			</table>
 		</fieldset>
 		<br/>
@@ -80,10 +64,8 @@
 				</tr><tr>
 					<td><label for="PatientPathologyOther" name="Patient.pathology_other">Other pathology</label></td>
 					<td><?php value("Patient.pathology_other"); ?></td>
-				</tr><tr>
-					<td><?php label("Patient.historyofcomplaint");?></td>
-					<td><?php value("Patient.historyofcomplaint"); ?></td>
 				</tr>
+				<?php (new t("Patient.historyofcomplaint"))->tr()->p(); ?>
 			</table>
 		</fieldset>
 		<fieldset>
@@ -96,28 +78,13 @@
 			<legend><label for="Patient-ChildrenData" name="Patient-ChildrenData">Children Data</label></legend>
 			<table class='colorize'>
 				<col width='30%' /><col width='*' /> 
-				<tr>
-					<td><?php label("Patient.Rowofthechildreninthefamily");?></td>
-					<td><?php value("Patient.Rowofthechildreninthefamily"); ?></td>
-				</tr><tr>
-					<td><?php label("Patient.Ageofweaningmonth");?></td>
-					<td><?php value("Patient.Ageofweaningmonth"); ?></td>
-				</tr><tr>
-					<td><?php label("Patient.Ageofdiversificationofthefoodmonth");?></td>
-					<td><?php value("Patient.Ageofdiversificationofthefoodmonth"); ?></td>
-				</tr><tr>
-					<td><label for="PatientDiseaseDiarrhoea" name="Patient.disease_diarrhoea">Diarrhoea</label></td>
-					<td><?php value("Patient.disease_diarrhoea"); ?></td>
-				</tr><tr>
-					<td><label for="PatientDiseaseRespiratoryInfection" name="Patient.disease_respiratory_infection">Respiratory infection</label></td>
-					<td><?php value("Patient.disease_respiratory_infection"); ?></td>
-				</tr><tr>
-					<td><label for="PatientDiseaseMalaria" name="Patient.disease_malaria">Malaria</label></td>
-					<td><?php value("Patient.disease_malaria"); ?></td>
-				</tr><tr>
-					<td><label for="PatientDiseaseTyphoid" name="Patient.disease_typhoid">Typhoid</label></td>
-					<td><?php value("Patient.disease_typhoid"); ?></td>
-				</tr>
+				<?php (new t("Patient.Rowofthechildreninthefamily"))->tr()->p(); ?>
+				<?php (new t("Patient.Ageofweaningmonth"))->tr()->p(); ?>
+				<?php (new t("Patient.Ageofdiversificationofthefoodmonth"))->tr()->p(); ?>
+				<?php (new t("Patient.disease_diarrhoea"))->tr()->p(); ?>
+				<?php (new t("Patient.disease_respiratory_infection"))->tr()->p(); ?>
+				<?php (new t("Patient.disease_malaria"))->tr()->p(); ?>
+				<?php (new t("Patient.disease_typhoid"))->tr()->p(); ?>
 			</table>
 		</fieldset>
 		<br/>
@@ -125,22 +92,11 @@
 			<legend><label for="Patient-FamilyData" name="Patient-FamilyData">Family Data</label></legend>
 			<table class='colorize'>
 				<col width='30%' /><col width='*' /> 
-				<tr>
-					<td><?php label("Patient.Religion");?></td>
-					<td><?php value("Patient.Religion"); ?></td>
-				</tr><tr>
-					<td><?php label("Patient.Consanguineousfamily");?></td>
-					<td><?php value("Patient.Consanguineousfamily"); ?></td>
-				</tr><tr>
-					<td><?php label("Patient.Numberofpregnacy");?></td>
-					<td><?php value("Patient.Numberofpregnacy"); ?></td>
-				</tr><tr>
-					<td><?php label("Patient.Numberofbrothersandsisters");?></td>
-					<td><?php value("Patient.Numberofbrothersandsisters"); ?></td>
-				</tr><tr>
-					<td><?php label("Patient.Numberofbrothersandsistersaffectedbyrickets");?></td>
-					<td><?php value("Patient.Numberofbrothersandsistersaffectedbyrickets"); ?></td>
-				</tr>
+				<?php (new t("Patient.Religion"))->tr()->p(); ?>
+				<?php (new t("Patient.Consanguineousfamily"))->tr()->p(); ?>
+				<?php (new t("Patient.Numberofpregnacy"))->tr()->p(); ?>
+				<?php (new t("Patient.Numberofbrothersandsisters"))->tr()->p(); ?>
+				<?php (new t("Patient.Numberofbrothersandsistersaffectedbyrickets"))->tr()->p(); ?>
 			</table>
 		</fieldset>
 		<br/>
@@ -148,62 +104,31 @@
 			<legend><label for="Patient-SocialData" name="Patient-SocialData">Social Data</label></legend>
 			<table class='colorize'>
 				<col width='30%' /><col width='*' /> 
+				<?php (new t("Patient.Familysalaryinamonth"))->tr()->p(); ?>
+				<?php (new t("Patient.Numberofhouseholdmembers"))->tr()->p(); ?>
 				<tr>
-					<td><?php label("Patient.Familysalaryinamonth");?></td>
-					<td><?php value("Patient.Familysalaryinamonth"); ?></td>
-				</tr><tr>
-					<td><?php label("Patient.Numberofhouseholdmembers");?></td>
-					<td><?php value("Patient.Numberofhouseholdmembers"); ?></td>
-				</tr><tr>
 					<td>Ratio</td>
-					<td><div id='ratio_salary'></div></td>
-				</tr><tr>
-					<td><?php label("Patient.Doesthechildrengotoschool");?></td>
-					<td><?php value("Patient.Doesthechildrengotoschool"); ?></td>
-				</tr><tr>
-					<td><?php label("Patient.Family");?></td>
-					<td><?php value("Patient.Family"); ?></td>
-				</tr><tr>
-					<td><?php label("Patient.Motherseducation");?></td>
-					<td><?php value("Patient.Motherseducation"); ?></td>
-				</tr><tr>
-					<td><?php label("Patient.Fatherseducation");?></td>
-					<td><?php value("Patient.Fatherseducation"); ?></td>
-				</tr><tr>
-					<td><?php label("Patient.Fatherswork");?></td>
-					<td><?php value("Patient.Fatherswork"); ?></td>
-				</tr><tr>
-					<td><?php label("Patient.Motherswork");?></td>
-					<td><?php value("Patient.Motherswork"); ?></td>
-				</tr><tr>
-					<td><?php label("Patient.Howmanymealperday");?></td>
-					<td><?php value("Patient.Howmanymealperday"); ?></td>
-				</tr><tr>
-					<td><?php label("Patient.Anyloanforfoodthisyear");?></td>
-					<td><?php value("Patient.Anyloanforfoodthisyear"); ?></td>
-				</tr><tr>
-					<td><?php label("Patient.Home");?></td>
-					<td><?php value("Patient.Home"); ?></td>
-				</tr><tr>
-					<td><?php label("Patient.Roof");?></td>
-					<td><?php value("Patient.Roof"); ?></td>
-				</tr><tr>
-					<td><?php label("Patient.Wall");?></td>
-					<td><?php value("Patient.Wall"); ?></td>
-				</tr><tr>
-					<td><?php label("Patient.Drinkingwaterfromtubewell");?></td>
-					<td><?php value("Patient.Drinkingwaterfromtubewell"); ?></td>
-				</tr><tr>
-					<td><?php label("Patient.Homesteadgarden");?></td>
-					<td><?php value("Patient.Homesteadgarden"); ?></td>
-				</tr><tr>
+					<td><div id='ratio_salary'>TODO: ratio_salary</div></td>
+				</tr>
+				<?php (new t("Patient.Doesthechildrengotoschool"))->tr()->p(); ?>
+				<?php (new t("Patient.Family"))->tr()->p(); ?>
+				<?php (new t("Patient.Motherseducation"))->tr()->p(); ?>
+				<?php (new t("Patient.Fatherseducation"))->tr()->p(); ?>
+				<?php (new t("Patient.Fatherswork"))->tr()->p(); ?>
+				<?php (new t("Patient.Motherswork"))->tr()->p(); ?>
+				<?php (new t("Patient.Howmanymealperday"))->tr()->p(); ?>
+				<?php (new t("Patient.Anyloanforfoodthisyear"))->tr()->p(); ?>
+				<?php (new t("Patient.Home"))->tr()->p(); ?>
+				<?php (new t("Patient.Roof"))->tr()->p(); ?>
+				<?php (new t("Patient.Wall"))->tr()->p(); ?>
+				<?php (new t("Patient.Drinkingwaterfromtubewell"))->tr()->p(); ?>
+				<?php (new t("Patient.Homesteadgarden"))->tr()->p(); ?>
+				<tr>
 					<td><hr/></td><td><hr/></td>
 				</tr><tr>
 					<td>Calculated social level</td><td><span id='calculatedSL'></span></td>
-				</tr><tr>
-					<td><?php label("Patient.Sociallevel");?></td>
-					<td><?php value("Patient.Sociallevel"); ?></td>
-					</tr>
+				</tr>
+				<?php (new t("Patient.Sociallevel"))->tr()->p(); ?>
 			</table>
 		</fieldset>
 	</div>

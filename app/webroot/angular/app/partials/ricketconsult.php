@@ -4,23 +4,14 @@
 		<legend><label for="RicketConsult-GeneralData" name="RicketConsult-GeneralData">General Data</label></legend>
 		<table class='colorize'>
 			<col width='30%' /><col width='*' /> 
-			<tr>
-				<td><?php label("RicketConsult.Date");?></td>
-				<td><?php value("RicketConsult.Date"); ?></td>
-			</tr><tr>
-				<td><?php label("RicketConsult.ExaminerName");?></td>
-				<td><?php value("RicketConsult.ExaminerName"); ?></td>
-			</tr><tr>
-				<td><?php label("RicketConsult.Center");?></td>
-				<td><?php value("RicketConsult.Center"); ?></td>
-			</tr><tr modes='read'>
-					<td><label for="Patient-Age" name="Patient-Age">Age</label></td>
+			<?php (new t("RicketConsult.Date"))->tr()->p(); ?>
+			<?php (new t("RicketConsult.ExaminerName"))->tr()->p(); ?>
+			<?php (new t("RicketConsult.Center"))->tr()->p(); ?>
+			<tr modes='read'>
+				<td><label for="Patient-Age" name="Patient-Age">Age</label></td>
 				<td>{{ageAtConsultTimeStr()}}</td>
 			</tr>
-			<tr>
-				<td><?php label("RicketConsult.SchoolClass");?></td>
-				<td><?php value("RicketConsult.SchoolClass"); ?></td>
-			</tr>
+			<?php (new t("RicketConsult.SchoolClass"))->tr()->p(); ?>
 		</table>
 	</fieldset>
 	<br>
@@ -38,16 +29,10 @@
 				<td><?php value("RicketConsult.Heightcm"); ?></td>
 				<td>{{stats_ds_height() | mynumber:2:'ds' }}</div></td>
 			</tr>
+			<?php (new t("RicketConsult.HeightcmLying"))->tr()->p(); ?>
+			<?php (new t("RicketConsult.Sittingheightcm"))->tr()->p(); ?>
+			<?php (new t("RicketConsult.Brachialcircumferencecm"))->tr()->p(); ?>
 			<tr>
-				<td><?php label("RicketConsult.HeightcmLying");?></td>
-				<td><?php value("RicketConsult.HeightcmLying"); ?></td>
-			</tr><tr>
-				<td><?php label("RicketConsult.Sittingheightcm");?></td>
-				<td><?php value("RicketConsult.Sittingheightcm"); ?></td>
-			</tr><tr>
-				<td><?php label("RicketConsult.Brachialcircumferencecm");?></td>
-				<td><?php value("RicketConsult.Brachialcircumferencecm"); ?></td>
-			</tr><tr>
 				<td><label for="RicketConsultWeightHeightRatio" name="RicketConsult.Weight_Height_Ratio">Weight/Height Ratio</label></td>
 				<td class='tdright'>{{stats_wh() | mynumber:2 }}</td>
 				<td>{{stats_ds_weight_height() | mynumber:2:'ds' }}</td>
@@ -55,13 +40,8 @@
 				<td><?php label("RicketConsult.bmi");?></td>
 				<td>{{stats_bmi() | mynumber:2 }}</td>
 				<td>{{stats_ds_bmi() | mynumber:2:'ds' }}</td>
-			</tr><tr>
-				<td><?php label("RicketConsult.Undernutrited");?></td>
-				<td><?php value("RicketConsult.Undernutrited"); ?></td>
-			</tr><tr>
-				<td><?php label("RicketConsult.Worms");?></td>
-				<td><?php value("RicketConsult.Worms"); ?></td>
-			</tr>				
+			</tr>				<?php (new t("RicketConsult.Undernutrited"))->tr()->p(); ?>
+			<?php (new t("RicketConsult.Worms"))->tr()->p(); ?>
 		</table>
 	</fieldset>
 	<br>
@@ -69,25 +49,12 @@
 		<legend><label for="RicketConsult-FoodData" name="RicketConsult-FoodData">Food Data</label></legend>
 		<table class='colorize'>
 			<col width='30%' /><col width='*' /> 
-			<tr>
-				<td><?php label("RicketConsult.Ricewithchun");?></td>
-				<td><?php value("RicketConsult.Ricewithchun"); ?></td>
-			</tr><tr>
-				<td><?php label("RicketConsult.Onebowlvegetables");?></td>
-				<td><?php value("RicketConsult.Onebowlvegetables"); ?></td>
-			</tr><tr>
-				<td><?php label("RicketConsult.Twospoonsesamseedgrounded");?></td>
-				<td><?php value("RicketConsult.Twospoonsesamseedgrounded"); ?></td>
-			</tr><tr>
-				<td><?php label("RicketConsult.Littlefishbowl");?></td>
-				<td><?php value("RicketConsult.Littlefishbowl"); ?></td>
-			</tr><tr>
-				<td><?php label("RicketConsult.Milkglass");?></td>
-				<td><?php value("RicketConsult.Milkglass"); ?></td>
-			</tr><tr>
-				<td><?php label("RicketConsult.Iodisedsalt");?></td>
-				<td><?php value("RicketConsult.Iodisedsalt"); ?></td>
-			</tr>
+			<?php (new t("RicketConsult.Ricewithchun"))->tr()->p(); ?>
+			<?php (new t("RicketConsult.Onebowlvegetables"))->tr()->p(); ?>
+			<?php (new t("RicketConsult.Twospoonsesamseedgrounded"))->tr()->p(); ?>
+			<?php (new t("RicketConsult.Littlefishbowl"))->tr()->p(); ?>
+			<?php (new t("RicketConsult.Milkglass"))->tr()->p(); ?>
+			<?php (new t("RicketConsult.Iodisedsalt"))->tr()->p(); ?>
 		</table>
 	</fieldset>
 	<br>
@@ -95,31 +62,15 @@
 		<legend><label for="RicketConsult-RicketsData" name="RicketConsult-RicketsData">Rickets Data</label></legend>
 		<table class='colorize'>
 			<col width='30%' /><col width='*' /> 
+			<?php (new t("RicketConsult.Ageofbeginningofthedeformitiesyear"))->tr()->p(); ?>
+			<?php (new t("RicketConsult.Treatmenttaken"))->tr()->p(); ?>
+			<?php (new t("RicketConsult.WalkingDifficulties"))->tr()->p(); ?>
+			<?php (new t("RicketConsult.Pain"))->tr()->p(); ?>
+			<?php (new t("RicketConsult.Wristenlargement"))->tr()->p(); ?>
+			<?php (new t("RicketConsult.Ribbeading"))->tr()->p(); ?>
+			<?php (new t("RicketConsult.Bossingforehead"))->tr()->p(); ?>
+			<?php (new t("RicketConsult.Cubitusvarus"))->tr()->p(); ?>
 			<tr>
-				<td><?php label("RicketConsult.Ageofbeginningofthedeformitiesyear");?></td>
-				<td><?php value("RicketConsult.Ageofbeginningofthedeformitiesyear"); ?></td>
-			</tr><tr>
-				<td><?php label("RicketConsult.Treatmenttaken");?></td>
-				<td><?php value("RicketConsult.Treatmenttaken"); ?></td>
-			</tr><tr>
-				<td><?php label("RicketConsult.WalkingDifficulties");?></td>
-				<td><?php value("RicketConsult.WalkingDifficulties"); ?></td>
-			</tr><tr>
-				<td><?php label("RicketConsult.Pain");?></td>
-				<td><?php value("RicketConsult.Pain"); ?></td>
-			</tr><tr>
-				<td><?php label("RicketConsult.Wristenlargement");?></td>
-				<td><?php value("RicketConsult.Wristenlargement"); ?></td>
-			</tr><tr>
-				<td><?php label("RicketConsult.Ribbeading");?></td>
-				<td><?php value("RicketConsult.Ribbeading"); ?></td>
-			</tr><tr>
-				<td><?php label("RicketConsult.Bossingforehead");?></td>
-				<td><?php value("RicketConsult.Bossingforehead"); ?></td>
-			</tr><tr>
-				<td><?php label("RicketConsult.Cubitusvarus");?></td>
-				<td><?php value("RicketConsult.Cubitusvarus"); ?></td>
-			</tr><tr>
 				<td><?php label("RicketConsult.Legs");?></td>
 				<td><?php label("RicketConsult.Left");?></td>
 				<td><?php label("RicketConsult.Right");?></td>
@@ -147,10 +98,9 @@
 				<td><label for="RicketConsult-Laxity" name="RicketConsult-Laxity">Laxity</label></td>
 				<td><?php value("RicketConsult.LaxityLeft"); ?></td>
 				<td><?php value("RicketConsult.LaxityRight"); ?></td>
-			</tr><tr>
-				<td><?php label("RicketConsult.IMICDistance");?></td>
-				<td><?php value("RicketConsult.IMICDistance"); ?></td>
-			</tr><tr>
+			</tr>
+			<?php (new t("RicketConsult.IMICDistance"))->tr()->p(); ?>
+			<tr>
 				<td><label for="RicketConsult-Patelladislocation" name="RicketConsult-Patelladislocation">RicketConsult-Patelladislocation</label></td>
 				<td><?php value("RicketConsult.PatelladislocationLeft"); ?></td>
 				<td><?php value("RicketConsult.PatelladislocationRight"); ?></td>
@@ -162,10 +112,8 @@
 				<td></td>
 				<td>F</td>
 				<td><?php value("RicketConsult.KneeMobilityF"); ?></td>
-			</tr><tr>
-				<td><?php label("RicketConsult.XRay");?></td>
-				<td><?php value("RicketConsult.XRay"); ?></td>
 			</tr>
+			<?php (new t("RicketConsult.XRay"))->tr()->p(); ?>
 		</table>
 	</fieldset>
 </div>
@@ -175,43 +123,18 @@
 		<legend><label for="RicketConsult-Conclusion" name="RicketConsult-Conclusion">Conclusion</label></legend>
 		<table class='colorize'>
 			<col width='30%' /><col width='*' /> 
-			<tr>
-				<td><?php label("RicketConsult.Nutritionaladvice");?></td>
-				<td><?php value("RicketConsult.Nutritionaladvice"); ?></td>
-			</tr><tr>
-				<td><?php label("RicketConsult.Nutrisupport");?></td>
-				<td><?php value("RicketConsult.Nutrisupport"); ?></td>
-			</tr><tr>
-				<td><?php label("RicketConsult.Medical");?></td>
-				<td><?php value("RicketConsult.Medical"); ?></td>
-			</tr><tr>
-				<td><label for="RicketConsultConclusionMedicalCalcium500" name="RicketConsult.conclusion_medical_calcium500">Calcium 500</label></td>
-				<td><?php value("RicketConsult.conclusion_medical_calcium500"); ?></td>
-			</tr><tr>
-				<td><label for="RicketConsultConclusionMedicalCalcium1000" name="RicketConsult.conclusion_medical_calcium1000">Calcium 1000</label></td>
-				<td><?php value("RicketConsult.conclusion_medical_calcium1000"); ?></td>
-			</tr><tr>
-				<td><label for="RicketConsultConclusionMedicalCodLiverOil" name="RicketConsult.conclusion_medical_codLiverOil">Cod Liver Oil</label></td>
-				<td><?php value("RicketConsult.conclusion_medical_codLiverOil"); ?></td>
-			</tr><tr>
-				<td><label for="RicketConsultConclusionMedicalVitaminD" name="RicketConsult.conclusion_medical_vitaminD">Vitamin D</label></td>
-				<td><?php value("RicketConsult.conclusion_medical_vitaminD"); ?></td>
-			</tr><tr>
-				<td><label for="RicketConsultConclusionMedicalOther" name="RicketConsult.conclusion_medical_other">Other</label></td>
-				<td><?php value("RicketConsult.conclusion_medical_other"); ?></td>
-			</tr><tr>
-				<td><?php label("RicketConsult.Surgery");?></td>
-				<td><?php value("RicketConsult.Surgery"); ?></td>
-			</tr><tr>
-				<td><?php label("RicketConsult.Brace");?></td>
-				<td><?php value("RicketConsult.Brace"); ?></td>
-			</tr><tr>
-				<td><?php label("RicketConsult.Commentary");?></td>
-				<td><?php value("RicketConsult.Commentary"); ?></td>
-			</tr><tr>
-				<td><?php label("RicketConsult.Nextappointment");?></td>
-				<td><?php value("RicketConsult.Nextappointment"); ?></td>
-			</tr>
+			<?php (new t("RicketConsult.Nutritionaladvice"))->tr()->p(); ?>
+			<?php (new t("RicketConsult.Nutrisupport"))->tr()->p(); ?>
+			<?php (new t("RicketConsult.Medical"))->tr()->p(); ?>
+			<?php (new t("RicketConsult.conclusion_medical_calcium500"))->tr()->p(); ?>
+			<?php (new t("RicketConsult.conclusion_medical_calcium1000"))->tr()->p(); ?>
+			<?php (new t("RicketConsult.conclusion_medical_codLiverOil"))->tr()->p(); ?>
+			<?php (new t("RicketConsult.conclusion_medical_vitaminD"))->tr()->p(); ?>
+			<?php (new t("RicketConsult.conclusion_medical_other"))->tr()->p(); ?>
+			<?php (new t("RicketConsult.Surgery"))->tr()->p(); ?>
+			<?php (new t("RicketConsult.Brace"))->tr()->p(); ?>
+			<?php (new t("RicketConsult.Commentary"))->tr()->p(); ?>
+			<?php (new t("RicketConsult.Nextappointment"))->tr()->p(); ?>
 		</table>
 	</fieldset>
 </div>
