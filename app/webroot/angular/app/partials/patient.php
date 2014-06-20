@@ -2,11 +2,11 @@
 <span ng-controller="ctrl_patient">
 	<div class="col-sm-6">
         <fieldset>
-			<legend><?php (new t("Patient-GeneralData"))->label()->p(); ?></legend>
+			<legend><?php label("Patient-GeneralData"); ?></legend>
 			<table class='colorize'>
 				<col width='30%' /><col width='*' />
 				<tr>
-					<td><?php (new t("Patient.entrynumber"))->label()->p(); ?></td>
+					<td><?php label("Patient.entrynumber"); ?></td>
 					<td><?php (new t("Patient.entryyear"))->read()->p(); ?>-<?php (new t("Patient.entryorder"))->read()->p(); ?></td>
 				</tr>
 				<?php (new t("Patient.Firstname"))->tr()->p(); ?>
@@ -14,7 +14,7 @@
 				<?php (new t("Patient.Sex"))->tr()->p(); ?>
 				<?php (new t("Patient.Yearofbirth",  [ "min" => 900, "max" => 2100]))->tr()->p(); ?></td>
 				<tr class='notModeWrite'>
-					<td><?php (new t("Patient-Age"))->label()->p(); ?></td>
+					<td><?php label("Patient-Age"); ?></td>
 					<td>{{currentFile().actualAge()}}</td>
 				</tr>
 				<?php (new t("Patient.Fathersname"))->tr()->p(); ?>
@@ -27,13 +27,13 @@
 		</fieldset>
 		<br/>
 		<fieldset id='PatientPathology'>
-			<legend><?php (new t("Patient-Pathology"))->label()->p(); ?></legend>
+			<legend><?php label("Patient-Pathology"); ?></legend>
 			<table class='colorize'>
 				<col width='30%' /><col width='*' />
 				<tr>
 					<td></td>
 					<td id='PatientPathologyError' style='display: none' class='jserror'>
-					<?php (new t("Patient-Nopathology"))->label()->p(); ?>
+					<?php label("Patient-Nopathology"); ?>
 				</td>
 				</tr>
 				<?php (new t("Patient.pathology_Ricket"))->tr()->p(); ?>
@@ -48,13 +48,13 @@
 			</table>
 		</fieldset>
 		<fieldset>
-			<legend><?php (new t("Patient.Notesforthepatient"))->label()->p(); ?></legend>
+			<legend><?php label("Patient.Notesforthepatient"); ?></legend>
 			<?php (new t("Patient.Notesforthepatient"))->value()->p(); ?>					
 		</fieldset>
 	</div>
 	<div class="col-sm-6">
 		<fieldset>
-			<legend><?php (new t("Patient-ChildrenData"))->label()->p(); ?></legend>
+			<legend><?php label("Patient-ChildrenData"); ?></legend>
 			<table class='colorize'>
 				<col width='30%' /><col width='*' /> 
 				<?php (new t("Patient.Rowofthechildreninthefamily"))->tr()->p(); ?>
@@ -68,7 +68,7 @@
 		</fieldset>
 		<br/>
 		<fieldset>
-			<legend><?php (new t("Patient-FamilyData"))->label()->p(); ?></legend>
+			<legend><?php label("Patient-FamilyData"); ?></legend>
 			<table class='colorize'>
 				<col width='30%' /><col width='*' /> 
 				<?php (new t("Patient.Religion"))->tr()->p(); ?>
@@ -80,13 +80,13 @@
 		</fieldset>
 		<br/>
 		<fieldset>
-			<legend><?php (new t("Patient-SocialData"))->label()->p(); ?></legend>
+			<legend><?php label("Patient-SocialData"); ?></legend>
 			<table class='colorize'>
 				<col width='30%' /><col width='*' /> 
 				<?php (new t("Patient.Familysalaryinamonth"))->tr()->p(); ?>
 				<?php (new t("Patient.Numberofhouseholdmembers"))->tr()->p(); ?>
 				<tr>
-					<td>Ratio</td>
+					<td><?php label("Patient-Ratio"); ?></td>
 					<td><div id='ratio_salary'>{{currentFile().ratioSalary()}}</div></td>
 				</tr>
 				<?php (new t("Patient.Doesthechildrengotoschool"))->tr()->p(); ?>
@@ -105,7 +105,7 @@
 				<tr>
 					<td><hr/></td><td><hr/></td>
 				</tr><tr>
-					<td>Calculated social level</td><td>{{currentFile().calculateSocialLevel()}}</td>
+					<td><?php label("Patient-CalculatedSocialLevel"); ?></td><td>{{currentFile().calculateSocialLevel()}}</td>
 				</tr>
 				<?php (new t("Patient.Sociallevel"))->tr()->p(); ?>
 			</table>

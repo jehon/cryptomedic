@@ -3,7 +3,7 @@
 	<div ng-include="'partials/consult-introduction.php'"></div>
 	<br/>
 	<fieldset>
-		<legend><?php (new t("NonricketConsult-OrthopedicData"))->label()->p(); ?></legend>
+		<legend><?php label("NonricketConsult-OrthopedicData"); ?></legend>
 		<table class='colorize'>
 			<col width='30%' /><col width='*' /> 
 			<?php (new t("NonricketConsult.Side"))->tr()->p(); ?>
@@ -20,7 +20,7 @@
 <div class="col-sm-6">
 	<div ng-include="'partials/patient-related.php'"></div>
 	<fieldset>
-		<legend><?php (new t("NonricketConsult-Conclusion"))->label()->p(); ?></legend>
+		<legend><?php label("NonricketConsult-Conclusion"); ?></legend>
 		<table class='colorize'>
 			<col width='30%' /><col width='*' /> 
 			<?php (new t("NonricketConsult.Physiotherapy61"))->tr()->p(); ?>

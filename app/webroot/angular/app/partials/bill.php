@@ -4,9 +4,7 @@
 		$name = explode(".", $item);
 		$name = $name[1];
 		echo "<tr ng-if='currentFile().$name > 0'>";
-		echo "<td>";
-		(new t($item))->label()->p();
-		echo "</td>";
+		echo "<td>" . label($item, false) . "</td>";
 		echo "<td>";
 		(new t($item, $extra))->value()->p();
 		echo "</td>";
@@ -17,7 +15,7 @@
 ?>
 <div class="col-sm-6" ng-controller="ctrl_bill">
 	<FieldSet>
-		<legend><?php (new t("Bill-GeneralData"))->label()->p(); ?></legend>
+		<legend><?php label("Bill-GeneralData"); ?></legend>
 		<table  class='colorize'>
 			<?php (new t("Bill.Date"))->tr()->p(); ?>
 			<?php (new t("Bill.ExaminerName"))->tr()->p(); ?>
@@ -25,14 +23,14 @@
 		</table>
 	</FieldSet>
 	<FieldSet>
-		<legend><?php (new t("Bill-Consults"))->label()->p(); ?></legend>
+		<legend><?php label("Bill-Consults"); ?></legend>
 		<table  class='colorize'>
 			<col width='60%' /><col width='15%' /><col width='15%' /><col width='10%' /> 
 			<tr>
 				<td></td>
-				<td><?php (new t("Quantity"))->label()->p() ;?></td>
-				<td><?php (new t("Price"))->label()->p() ;?></td>
-				<td><?php (new t("Total"))->label()->p() ;?></td>
+				<td><?php label("Quantity"); ?></td>
+				<td><?php label("Price"); ?></td>
+				<td><?php label("Total"); ?></td>
 			</tr>
 			<?php price("Bill.consult_CDC_consultation_physio"); ?>
 			<?php price("Bill.consult_CDC_consultation_Bengali_Doctor", "size=2"); ?>
@@ -52,14 +50,14 @@
 		</table>
 	</FieldSet>
 	<FieldSet>
-		<legend><?php (new t("Bill-Workshop"))->label()->p(); ?></legend>
+		<legend><?php label("Bill-Workshop"); ?></legend>
 		<table  class='colorize'>
 			<col width='60%' /><col width='15%' /><col width='15%' /><col width='10%' /> 
 			<tr>
 				<td></td>
-				<td><?php (new t("Quantity"))->label()->p() ;?></td>
-				<td><?php (new t("Price"))->label()->p() ;?></td>
-				<td><?php (new t("Total"))->label()->p() ;?></td>
+				<td><?php label("Quantity"); ?></td>
+				<td><?php label("Price"); ?></td>
+				<td><?php label("Total"); ?></td>
 			</tr>
 			<?php price("Bill.workshop_BHKAFO_night", "size=2"); ?>
 			<?php price("Bill.workshop_BHKAFO_walking", "size=2"); ?>
@@ -107,14 +105,14 @@
 		</table>
 	</FieldSet>
 	<FieldSet>
-		<legend><?php (new t("Bill-Surgery"))->label()->p(); ?></legend>
+		<legend><?php label("Bill-Surgery"); ?></legend>
 		<table  class='colorize'>
 			<col width='60%' /><col width='15%' /><col width='15%' /><col width='10%' /> 
 			<tr>
 				<td></td>
-				<td><?php (new t("Quantity"))->label()->p() ;?></td>
-				<td><?php (new t("Price"))->label()->p() ;?></td>
-				<td><?php (new t("Total"))->label()->p() ;?></td>
+				<td><?php label("Quantity"); ?></td>
+				<td><?php label("Price"); ?></td>
+				<td><?php label("Total"); ?></td>
 			</tr>
 			<?php price("Bill.surgical_osteotomy", "size=2"); ?>
 			<?php price("Bill.surgical_osteotomy_bi", "size=2"); ?>
@@ -138,16 +136,16 @@
 <div class="col-sm-6">
 	<div ng-include="'partials/patient-related.php'"></div>
 	<FieldSet>
-		<legend><?php (new t("Bill-Total"))->label()->p(); ?></legend>
+		<legend><?php label("Bill-Total"); ?></legend>
 		<table  class='colorize'>
 			<col width='70%' /><col width='*' /> 
 			<tr>
-				<td><?php (new t("Bill.total_real"))->label()->p(); ?></td>
+				<td><?php label("Bill.total_real"); ?></td>
 				<td>{{currentFile().calculate_total_real()}}</td>
 			</tr>
 			<?php (new t("Bill.SocialLevel"))->tr()->p(); ?>
             <tr>
-				<td><?php (new t("Bill.total_asked"))->label()->p(); ?></td>
+				<td><?php label("Bill.total_asked"); ?></td>
 				<td>{{currentFile().calculate_total_asked()}}</td>
 			</tr>
 		</table>

@@ -1,7 +1,7 @@
 <?php require_once(__DIR__ . "/../php/templates.php"); ?>
 <div class="col-sm-6">
 	<fieldset>
-		<legend><?php (new t("Surgery-Order"))->label()->p(); ?></legend>
+		<legend><?php label("Surgery-Order"); ?></legend>
 		<table class='colorize'>
 			<col width='30%' /><col width='*' /> 
 			<?php (new t("Surgery.Operation"))->tr()->p(); ?>
@@ -10,7 +10,7 @@
 		</table>
 	</fieldSet>
 	<fieldSet>
-		<legend><?php (new t("Surgery-GeneralExamination"))->label()->p(); ?></legend>
+		<legend><?php label("Surgery-GeneralExamination"); ?></legend>
 		<table class='colorize'>
 			<col width='30%' /><col width='*' /> 
 			<?php (new t("Surgery.MedicalProblem"))->tr()->p(); ?>
@@ -31,7 +31,7 @@
 		</table>
 	</fieldSet>
 	<fieldSet>
-		<legend><?php (new t("Surgery-PreSurgicalExams"))->label()->p(); ?></legend>
+		<legend><?php label("Surgery-PreSurgicalExams"); ?></legend>
 		<table>
 			<col width='30%' /><col width='*' /> 
 			<?php (new t("Surgery.RadiologicalExam"))->tr()->p(); ?>
@@ -43,7 +43,7 @@
 		</table>
 	</fieldSet>
 	<fieldSet>
-		<legend><?php (new t("Surgery-ParentAutorisation"))->label()->p(); ?></legend>
+		<legend><?php label("Surgery-ParentAutorisation"); ?></legend>
 		<table class='colorize'>
 			<col width='30%' /><col width='*' /> 
 			<?php (new t("Surgery.PAOk"))->tr()->p(); ?>
@@ -51,7 +51,7 @@
 		</table>
 	</fieldSet>
 	<fieldSet>
-		<legend><?php (new t("Surgery-SurgicalReport"))->label()->p(); ?></legend>
+		<legend><?php label("Surgery-SurgicalReport"); ?></legend>
 		<table class='colorize'>
 			<col width='30%' /><col width='*' /> 
 			<?php (new t("Surgery.ReportDate"))->tr()->p(); ?>
@@ -64,7 +64,7 @@
 		</table>
 	</fieldSet>
 	<fieldSet>
-		<legend><?php (new t("Surgery-HospitalisationFollowUp"))->label()->p(); ?></legend>
+		<legend><?php label("Surgery-HospitalisationFollowUp"); ?></legend>
 		<table class='colorize'>
 			<col width='30%' /><col width='*' /> 
 			<?php (new t("Surgery.FollowUpComplication"))->tr()->p(); ?>

@@ -1,7 +1,7 @@
 <?php require_once(__DIR__ . "/../php/templates.php"); ?>
 <div class="col-sm-6">
 	<FieldSet>
-		<Legend><label for="OrthopedicDevice-GeneralData" name="OrthopedicDevice-GeneralData">OrthopedicDevice-GeneralData</label></Legend>
+		<Legend><?php label("OrthopedicDevice-GeneralData"); ?></Legend>
 		<table class='colorize'>
 			<col width='30%' /><col width='*' /> 
 			<?php (new t("OrthopedicDevice.Orthoname"))->tr()->p(); ?>
@@ -11,16 +11,16 @@
 		</table>
 	</FieldSet>
 	<FieldSet>
-		<Legend><label for="OrthopedicDevice-Prescription" name="OrthopedicDevice-Prescription">OrthopedicDevice-Prescription</label></Legend>
+		<Legend><?php label("OrthopedicDevice-Prescription"); ?></Legend>
 		<table class='colorize'>
 			<col width='30%' /><col width='*' /><col width='*' /> 
             <tr>
                 <td></td>
-				<td><?php (new t("Left"))->label()->p(); ?></td>
-				<td><?php (new t("Right"))->label()->p(); ?></td>
+				<td><?php label("Left"); ?></td>
+				<td><?php label("Right"); ?></td>
             </tr>
             <tr>
-                <td><label for="OrthopedicDevice-Hip" name="OrthopedicDevice-Hip">OrthopedicDevice-Hip</label></td>
+                <td><?php label("OrthopedicDevice-Hip"); ?></td>
                 <td></td>
                 <td></td>
             </tr>
@@ -28,7 +28,7 @@
 			<?php (new t("OrthopedicDevice.?HipType"))->trLeftRight()->p(); ?>
 			<?php (new t("OrthopedicDevice.?HipROM"))->trLeftRight()->p(); ?>
             <tr>
-                <td><label for="OrthopedicDevice-Knee" name="OrthopedicDevice-Knee">OrthopedicDevice-Knee</label></td>
+                <td><?php label("OrthopedicDevice-Knee"); ?></td>
                 <td></td>
                 <td></td>
             </tr>
@@ -37,7 +37,7 @@
 			<?php (new t("OrthopedicDevice.?KneeType"))->trLeftRight()->p(); ?>
 			<?php (new t("OrthopedicDevice.?KneeROM"))->trLeftRight()->p(); ?>
             <tr>
-                <td><label for="OrthopedicDevice-Ankle" name="OrthopedicDevice-Ankle">OrthopedicDevice-Ankle</label></td>
+                <td><?php label("OrthopedicDevice-Ankle"); ?></td>
                 <td></td>
                 <td></td>
             </tr>
@@ -47,7 +47,7 @@
 			<?php (new t("OrthopedicDevice.?AnkleLimited"))->trLeftRight()->p(); ?>
 			<?php (new t("OrthopedicDevice.?AnkleBelt"))->trLeftRight()->p(); ?>
             <tr>
-                <td><label for="OrthopedicDevice-Foot" name="OrthopedicDevice-Foot">OrthopedicDevice-Foot</label></td>
+                <td><?php label("OrthopedicDevice-Foot"); ?></td>
                 <td></td>
                 <td></td>
             </tr>
@@ -57,7 +57,7 @@
 		</table>
 	</FieldSet>
 	<FieldSet>
-		<Legend><label for="OrthopedicDevice-Measure" name="OrthopedicDevice-Measure">OrthopedicDevice-Measure</label></Legend>
+		<Legend><?php label("OrthopedicDevice-Measure"); ?></Legend>
 		<table class='colorize'>
 			<col width='30%' /><col width='*' /> 
 			<?php (new t("OrthopedicDevice.MeasureDate"))->tr()->p(); ?>
@@ -66,7 +66,7 @@
 		</table>
 	</FieldSet>
 	<FieldSet>
-		<Legend><label for="OrthopedicDevice-Fitting" name="OrthopedicDevice-Fitting">OrthopedicDevice-Fitting</label></Legend>
+		<Legend><?php label("OrthopedicDevice-Fitting"); ?></Legend>
 		<table class='colorize'>
 			<col width='30%' /><col width='*' /> 
 			<?php (new t("OrthopedicDevice.FittingDate"))->tr()->p(); ?>
@@ -75,7 +75,7 @@
 		</table>
 	</FieldSet>
 	<FieldSet>
-		<Legend><label for="OrthopedicDevice-Delivery" name="OrthopedicDevice-Delivery">OrthopedicDevice-Delivery</label></Legend>
+		<Legend><?php label("OrthopedicDevice-Delivery"); ?></Legend>
 		<table class='colorize'>
 			<col width='30%' /><col width='*' /> 
 			<?php (new t("OrthopedicDevice.DeliveryDate"))->tr()->p(); ?>

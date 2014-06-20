@@ -3,7 +3,7 @@
 	<div ng-include="'partials/consult-introduction.php'"></div>
 	<br>
 	<fieldset>
-		<legend><?php (new t("RicketConsult-FoodData"))->label()->p(); ?></legend>
+		<legend><?php label("RicketConsult-FoodData"); ?></legend>
 		<table class='colorize'>
 			<col width='30%' /><col width='*' /> 
 			<?php (new t("RicketConsult.Ricewithchun"))->tr()->p(); ?>
@@ -16,7 +16,7 @@
 	</fieldset>
 	<br>
 	<fieldset>
-		<legend><?php (new t("RicketConsult-RicketsData"))->label()->p(); ?></legend>
+		<legend><?php label("RicketConsult-RicketsData"); ?></legend>
 		<table class='colorize'>
 			<col width='30%' /><col width='*' /> 
 			<?php (new t("RicketConsult.Ageofbeginningofthedeformitiesyear"))->tr()->p(); ?>
@@ -28,14 +28,14 @@
 			<?php (new t("RicketConsult.Bossingforehead"))->tr()->p(); ?>
 			<?php (new t("RicketConsult.Cubitusvarus"))->tr()->p(); ?>
 			<tr>
-				<td><?php (new t("RicketConsult.Legs"))->label()->p(); ?></td>
-				<td><?php (new t("RicketConsult.Left"))->label()->p(); ?></td>
-				<td><?php (new t("RicketConsult.Right"))->label()->p(); ?></td>
+				<td><?php label("RicketConsult.Legs"); ?></td>
+				<td><?php label("RicketConsult.Left"); ?></td>
+				<td><?php label("RicketConsult.Right"); ?></td>
 			</tr>
 			<?php (new t("RicketConsult.?Leg"))->trLeftRight()->p(); ?>
 			<?php (new t("RicketConsult.?legAngle"))->trLeftRight()->p(); ?>
 			<tr>
-				<td><?php (new t("RicketConsult-Cross"))->label()->p(); ?></td>
+				<td><?php label("RicketConsult-Cross"); ?></td>
 				<td></td>
 				<td></td>
 			</tr>
@@ -45,7 +45,7 @@
 			<?php (new t("RicketConsult.IMICDistance"))->tr()->p(); ?>
 			<?php (new t("RicketConsult.Patelladislocation?"))->trLeftRight()->p(); ?>
 			<tr>
-				<td><?php (new t("RicketConsult-KneeMobility"))->label()->p(); ?></td>
+				<td><?php label("RicketConsult-KneeMobility"); ?></td>
 				<td>E</td>
 				<td><?php (new t("RicketConsult.KneeMobilityE"))->value()->p(); ?></td>
 			</tr><tr>
@@ -60,7 +60,7 @@
 <div class="col-sm-6">
 	<div ng-include="'partials/patient-related.php'"></div>
 	<fieldset>
-		<legend><?php (new t("RicketConsult-Conclusion"))->label()->p(); ?></legend>
+		<legend><?php label("RicketConsult-Conclusion"); ?></legend>
 		<table class='colorize'>
 			<col width='30%' /><col width='*' /> 
 			<?php (new t("RicketConsult.Nutritionaladvice"))->tr()->p(); ?>

@@ -7,6 +7,9 @@ C:\wamp\www\amd\app\webroot\angular\app\partials
 <tr>\n.*<td><\?php label\("(.*)"\);\?></td>\n.*<td><\?php value\("(.*)"\);.*\?></td>\n.*</tr>
 <?php (new t("$1"))->tr()->p(); ?>\n
 
+<\?php \(new t\("(.*)"\)\)->label\(\)->p\(\); \?>
+<?php label("$1"); ?>
+
 */
 
 require_once "../../../../../../maintenance.php";
@@ -23,32 +26,70 @@ if ($mysqli->connect_errno) {
 	die("Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error);
 }
 
-// function rawExpression($key) { 
-// 	debug_print_backtrace();
-// 	(new t($key))->rawExpression()->p(); 
-// }
+function trace() {
+	$trace = debug_backtrace();
+	array_shift($trace);
+	$list = array();
+	if (count(func_get_args()) > 0) {
+		$str = "";
+		$str .= "Trace with ";
+		$str .= implode(func_get_args(), ",");
+		$list[] = $str;
+	}
+	foreach($trace as $i => $t) {
+		$str = "";
+		$str .= basename($t['file']) . ":" . $t['line'] 
+			. (array_key_exists('function', $t) ? 
+				"@" . (array_key_exists('class', $t) ? $t['class'] . "->" : "")
+				. $t['function'] : "");
+		if (array_key_exists('args', $t) && !in_array($t['function'], [ "require_once", "require", "include_once", "inluce" ])) {
+			$str .= "[";
+			foreach($t['args'] as $i => $v)  {
+				if ($i != 0) $str .= ",";
+				$str .= is_array($v) ? "Array" : $v;
+			}
+			$str .= "]";
+		}
+		$str = str_replace([ "\"", "'", "\\"], "_", $str);
+		$list[] = $str;
+	}
+	echo "<script>console.log(JSON.parse('" . json_encode($list) . "')); </script>";
+}
 
-// function rawValue($key) { 
-// 	debug_print_backtrace();
-// 	(new t($key))->rawValue()->p(); 
-// }
+function label($key, $echo = true, $wrap = true) {
+	if ($wrap) {
+		$str = label($key, false, false);
+		$str = "<label for='{$key}'>$str</label>\n";
 
-// function value($key) { 
-// 	debug_print_backtrace();
-// 	(new t($key))->value()->p(); 
-// }
+		if ($echo === true) {
+			echo $str;
+		} 
+		return $str;
+	}
+	global $mysqli;
+	$sql = "SELECT * FROM `labels` WHERE `reference` = '{$key}'";
 
-// function read($key) { 
-// 	debug_print_backtrace();
-// 	(new t($key))->read()->p(); 
-// }
-
-// function label($key) { 
-// 	debug_print_backtrace();
-// 	(new t($key))->label()->p(); 
-// }
-
-
+	$res = $mysqli->query($sql);
+	if ($res === false) {
+		throw new Exception("Syntax error in labels: " . $mysqli->errno . ":\n" . $mysqli->error . "\n");
+	}
+	if ($res->num_rows > 1) {
+		throw new Exception("Too much labels for '{$key}': " . $sql);
+	}
+	$str = "";
+	if ($res->num_rows > 1) {
+		$version = $res->fetch_array();
+		if ($version["english"] != $key && $version["english"] != "")
+			return $version["english"];
+	}
+	if (count(explode("-", $key)) > 1){
+		return explode("-", $key)[1];
+	}
+	if (count(explode(".", $key)) > 1) {
+		return explode(".", $key)[1];
+	}
+	return $key;
+}
 
 class t {
 	var $key;
@@ -151,7 +192,7 @@ class t {
 				unset($list['labels']);
 				$this->listing = [];
 				foreach($list as $k => $v){
-					$this->listing[$v] = $this->_label($v);
+					$this->listing[$v] = $this->_reference($v);
 				}
 			}
 		}
@@ -161,13 +202,13 @@ class t {
 		return $this;
 	}
 
-	private function _label() {
+	private function _reference() {
 		global $mysqli;
-		// if (is_numeric($this->key)) {
-		//	$sql = "SELECT * FROM `labels` WHERE `id` = '{$this->key}' or `reference` = '". $this->key . "'";
-		// } else {
-		$sql = "SELECT * FROM `labels` WHERE `reference` = '{$this->key}'";
-		// }
+		if (is_numeric($this->key)) {
+			$sql = "SELECT * FROM `labels` WHERE `id` = '{$this->key}' or `reference` = '". $this->key . "'";
+		} else {
+			$sql = "SELECT * FROM `labels` WHERE `reference` = '{$this->key}'";
+		}
 		
 		$res = $mysqli->query($sql);
 		if ($res === false) {
@@ -184,17 +225,18 @@ class t {
 		if ($this->linked2DB) {
 			return $this->field;
 		}
-		if (count(explode(".", $this->key)) > 1) {
-			return explode(".", $this->key)[1];
-		}
 		if (count(explode("-", $this->key)) > 1) {
 			return explode("-", $this->key)[1];
+		}
+		if (count(explode(".", $this->key)) > 1) {
+			return explode(".", $this->key)[1];
 		}
 		return $this->key;
 	}
 
 	function label() {
-		$this->res .= "<label for='{$this->key}'>" . $this->_label() . "</label>\n";
+		trace();
+		$this->res .= label($this->key, false);
 		return $this;
 	}
 
@@ -247,7 +289,7 @@ class t {
 	}
 
 	function value() {
-		// TODO: show both sides
+		// TODO: show both sides, and hide with css
 		if (!$this->readOnly && array_key_exists('mode', $_REQUEST) && ($_REQUEST['mode'] == "write")) {
 			return $this->write();
 		} else {
@@ -265,27 +307,21 @@ class t {
 			throw new Exception("Read: key is not in the database: '{$this->key}'");
 		}
 		$this->res .= "<tr ng-class='{ emptyValue: !$this->rawExpression}'>\n";
-		$this->res .= "	<td>"; 
-			$this->label(); 
-			$this->res .= "</td>\n";
+		$this->res .= "	<td>" . label($this->key, false) . "</td>\n";
 		$this->res .= "	<td>";
 			$this->value();
-			$this->res .="</td>\n";
+		$this->res .="</td>\n";
 		$this->res .= "</tr>\n";
 		return $this;
 	}
 
 	function trLeftRight() {
-		$this->res .= "<tr>\n";
-			$this->res .= "	<td>"; 
-				$this->res .= (new t(str_replace("?", "", $this->key)))->label()->getText();
-			$this->res .= "</td>\n";
-			$this->res .= "	<td>";
-				$this->res .= (new t(str_replace("?", "Left", $this->key)))->value()->getText();
-			$this->res .= "</td>\n";
-			$this->res .= "	<td>";
-				$this->res .= (new t(str_replace("?", "Right", $this->key)))->value()->getText();
-			$this->res .= "</td>\n";
+		$left = new t(str_replace("?", "Left", $this->key));
+		$right = new t(str_replace("?", "Right", $this->key));
+		$this->res .= "<tr ng-class='{ emptyValue: !{$left->rawExpression} && !{$right->rawExpression} }'>\n";
+			$this->res .= "	<td>" . label(str_replace("?", "", $this->key), false) . "</td>\n";
+			$this->res .= "	<td>" . $left->value()->getText() . "</td>\n";
+			$this->res .= "	<td>" . $right->value()->getText() . "</td>\n";
 		$this->res .= "</tr>\n";
 		return $this;
 	}
