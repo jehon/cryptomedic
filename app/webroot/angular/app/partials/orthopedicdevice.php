@@ -16,99 +16,43 @@
 			<col width='30%' /><col width='*' /><col width='*' /> 
             <tr>
                 <td></td>
-				<td><?php label("Left");?></td>
-				<td><?php label("Right");?></td>
+				<td><?php (new t("Left"))->label()->p(); ?></td>
+				<td><?php (new t("Right"))->label()->p(); ?></td>
             </tr>
             <tr>
                 <td><label for="OrthopedicDevice-Hip" name="OrthopedicDevice-Hip">OrthopedicDevice-Hip</label></td>
                 <td></td>
                 <td></td>
             </tr>
-            <tr>
-				<td><label for="OrthopedicDevice-HipJoint" name="OrthopedicDevice-HipJoint">OrthopedicDevice-HipJoint</label></td>
-				<td><?php value("OrthopedicDevice.LeftHipJoint"); ?></td>
-				<td><?php value("OrthopedicDevice.RightHipJoint"); ?></td>
-            </tr>
-            <tr>
-				<td><label for="OrthopedicDevice-HipType" name="OrthopedicDevice-HipType">OrthopedicDevice-HipType</label></td>
-				<td><?php value("OrthopedicDevice.LeftHipType"); ?></td>
-				<td><?php value("OrthopedicDevice.RightHipType"); ?></td>
-            </tr>
-            <tr>
-				<td><label for="OrthopedicDevice-HipROM" name="OrthopedicDevice-HipROM">OrthopedicDevice-HipROM</label></td>
-				<td><?php value("OrthopedicDevice.LeftHipROM"); ?></td>
-				<td><?php value("OrthopedicDevice.RightHipROM"); ?></td>
-            </tr>
+			<?php (new t("OrthopedicDevice.?HipJoint"))->trLeftRight()->p(); ?>
+			<?php (new t("OrthopedicDevice.?HipType"))->trLeftRight()->p(); ?>
+			<?php (new t("OrthopedicDevice.?HipROM"))->trLeftRight()->p(); ?>
             <tr>
                 <td><label for="OrthopedicDevice-Knee" name="OrthopedicDevice-Knee">OrthopedicDevice-Knee</label></td>
                 <td></td>
                 <td></td>
             </tr>
-            <tr>
-				<td><label for="OrthopedicDevice-KneeJoint" name="OrthopedicDevice-KneeJoint">OrthopedicDevice-KneeJoint</label></td>
-				<td><?php value("OrthopedicDevice.LeftKneeJoint"); ?></td>
-				<td><?php value("OrthopedicDevice.RightKneeJoint"); ?></td>
-            </tr>
-            <tr>
-				<td><label for="OrthopedicDevice-KneeLock" name="OrthopedicDevice-KneeLock">OrthopedicDevice-KneeLock</label></td>
-				<td><?php value("OrthopedicDevice.LeftKneeLock"); ?></td>
-				<td><?php value("OrthopedicDevice.RightKneeLock"); ?></td>
-            </tr>
-            <tr>
-				<td><label for="OrthopedicDevice-KneeType" name="OrthopedicDevice-KneeType">OrthopedicDevice-KneeType</label></td>
-				<td><?php value("OrthopedicDevice.LeftKneeType"); ?></td>
-				<td><?php value("OrthopedicDevice.RightKneeType"); ?></td>
-            </tr>
-            <tr>
-				<td><label for="OrthopedicDevice-KneeROM" name="OrthopedicDevice-KneeROM">OrthopedicDevice-KneeROM</label></td>
-				<td><?php value("OrthopedicDevice.LeftKneeROM"); ?></td>
-				<td><?php value("OrthopedicDevice.RightKneeROM"); ?></td>
-            </tr>
+			<?php (new t("OrthopedicDevice.?KneeJoint"))->trLeftRight()->p(); ?>
+			<?php (new t("OrthopedicDevice.?KneeLock"))->trLeftRight()->p(); ?>
+			<?php (new t("OrthopedicDevice.?KneeType"))->trLeftRight()->p(); ?>
+			<?php (new t("OrthopedicDevice.?KneeROM"))->trLeftRight()->p(); ?>
             <tr>
                 <td><label for="OrthopedicDevice-Ankle" name="OrthopedicDevice-Ankle">OrthopedicDevice-Ankle</label></td>
                 <td></td>
                 <td></td>
             </tr>
-            <tr>
-				<td><label for="OrthopedicDevice-AnkleJoint" name="OrthopedicDevice-AnkleJoint">OrthopedicDevice-AnkleJoint</label></td>
-				<td><?php value("OrthopedicDevice.LeftAnkleJoint"); ?></td>
-				<td><?php value("OrthopedicDevice.RightAnkleJoint"); ?></td>
-            </tr>
-            <tr>
-				<td><label for="OrthopedicDevice-AnkleType" name="OrthopedicDevice-AnkleType">OrthopedicDevice-AnkleType</label></td>
-				<td><?php value("OrthopedicDevice.LeftAnkleType"); ?></td>
-				<td><?php value("OrthopedicDevice.RightAnkleType"); ?></td>
-            </tr>
-            <tr>
-				<td><label for="OrthopedicDevice-AnkleROM" name="OrthopedicDevice-AnkleROM">OrthopedicDevice-AnkleROM</label></td>
-				<td><?php value("OrthopedicDevice.LeftAnkleROM"); ?></td>
-				<td><?php value("OrthopedicDevice.RightAnkleROM"); ?></td>
-            </tr>
-            <tr>
-				<td><label for="OrthopedicDevice-AnkleLimited" name="OrthopedicDevice-AnkleLimited">OrthopedicDevice-AnkleLimited</label></td>
-				<td><?php value("OrthopedicDevice.LeftAnkleLimited"); ?></td>
-				<td><?php value("OrthopedicDevice.RightAnkleLimited"); ?></td>
-            </tr>
-            <tr>
-				<td><label for="OrthopedicDevice-AnkleBelt" name="OrthopedicDevice-AnkleBelt">OrthopedicDevice-AnkleBelt</label></td>
-				<td><?php value("OrthopedicDevice.LeftAnkleBelt"); ?></td>
-				<td><?php value("OrthopedicDevice.RightAnkleBelt"); ?></td>
-            </tr>
+			<?php (new t("OrthopedicDevice.?AnkleJoint"))->trLeftRight()->p(); ?>
+			<?php (new t("OrthopedicDevice.?AnkleType"))->trLeftRight()->p(); ?>
+			<?php (new t("OrthopedicDevice.?AnkleROM"))->trLeftRight()->p(); ?>
+			<?php (new t("OrthopedicDevice.?AnkleLimited"))->trLeftRight()->p(); ?>
+			<?php (new t("OrthopedicDevice.?AnkleBelt"))->trLeftRight()->p(); ?>
             <tr>
                 <td><label for="OrthopedicDevice-Foot" name="OrthopedicDevice-Foot">OrthopedicDevice-Foot</label></td>
                 <td></td>
                 <td></td>
             </tr>
-            <tr>
-				<td><label for="OrthopedicDevice-FootSupinatorPronator" name="OrthopedicDevice-FootSupinatorPronator">OrthopedicDevice-FootSupinatorPronator</label></td>
-				<td><?php value("OrthopedicDevice.LeftFootSupinatorPronator"); ?></td>
-				<td><?php value("OrthopedicDevice.RightFootSupinatorPronator"); ?></td>
-            </tr>
-            <tr>
-				<td><label for="OrthopedicDevice-FootArchSupportCompensation" name="OrthopedicDevice-FootArchSupportCompensation">OrthopedicDevice-FootArchSupportCompensation</label></td>
-				<td><?php value("OrthopedicDevice.LeftFootArchSupportCompensation"); ?></td>
-				<td><?php value("OrthopedicDevice.RightFootArchSupportCompensation"); ?></td>
-            </tr>
+			<?php (new t("OrthopedicDevice.?FootSupinatorPronator"))->trLeftRight()->p(); ?>
+			<?php (new t("OrthopedicDevice.?FootArchSupportCompensation"))->trLeftRight()->p(); ?>
 			<?php (new t("OrthopedicDevice.OtherTypeOfDevice"))->tr()->p(); ?>
 		</table>
 	</FieldSet>

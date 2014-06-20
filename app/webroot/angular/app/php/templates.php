@@ -23,30 +23,30 @@ if ($mysqli->connect_errno) {
 	die("Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error);
 }
 
-function rawExpression($key) { 
-	debug_print_backtrace();
-	(new t($key))->rawExpression()->p(); 
-}
+// function rawExpression($key) { 
+// 	debug_print_backtrace();
+// 	(new t($key))->rawExpression()->p(); 
+// }
 
-function rawValue($key) { 
-	debug_print_backtrace();
-	(new t($key))->rawValue()->p(); 
-}
+// function rawValue($key) { 
+// 	debug_print_backtrace();
+// 	(new t($key))->rawValue()->p(); 
+// }
 
-function value($key) { 
-	debug_print_backtrace();
-	(new t($key))->value()->p(); 
-}
+// function value($key) { 
+// 	debug_print_backtrace();
+// 	(new t($key))->value()->p(); 
+// }
 
-function read($key) { 
-	debug_print_backtrace();
-	(new t($key))->read()->p(); 
-}
+// function read($key) { 
+// 	debug_print_backtrace();
+// 	(new t($key))->read()->p(); 
+// }
 
-function label($key) { 
-	debug_print_backtrace();
-	(new t($key))->label()->p(); 
-}
+// function label($key) { 
+// 	debug_print_backtrace();
+// 	(new t($key))->label()->p(); 
+// }
 
 
 

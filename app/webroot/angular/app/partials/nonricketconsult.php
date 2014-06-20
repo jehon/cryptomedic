@@ -25,7 +25,7 @@
 			<col width='30%' /><col width='*' /> 
 			<?php (new t("NonricketConsult.Physiotherapy61"))->tr()->p(); ?>
 			<?php (new t("NonricketConsult.Plaster62"))->tr()->p(); ?>
-			<?php (new t("NonricketConsult.Orthopedicdevice65"))->tr(->p(); ?>
+			<?php (new t("NonricketConsult.Orthopedicdevice65"))->tr()->p(); ?>
 			<?php (new t("NonricketConsult.Surgery66"))->tr()->p(); ?>
 			<?php (new t("NonricketConsult.Othertreatment68"))->tr()->p(); ?>
 			<?php (new t("NonricketConsult.Comment"))->tr()->p(); ?>
