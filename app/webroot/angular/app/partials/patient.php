@@ -12,12 +12,8 @@
 				<?php (new t("Patient.Firstname"))->tr()->p(); ?>
 				<?php (new t("Patient.Lastname"))->tr()->p(); ?>
 				<?php (new t("Patient.Sex"))->tr()->p(); ?>
-				<tr>
-					<td><?php (new t("Patient.Yearofbirth"))->label()->p(); ?></td>
-					<td>
-						<?php value("Patient.Yearofbirth", [ "min" => 900, "max" => 2100]); ?>
-					</td>
-				</tr><tr mode='read'>
+				<?php (new t("Patient.Yearofbirth",  [ "min" => 900, "max" => 2100]))->tr()->p(); ?></td>
+				<tr class='notModeWrite'>
 					<td><?php (new t("Patient-Age"))->label()->p(); ?></td>
 					<td>{{currentFile().actualAge()}}</td>
 				</tr>
@@ -39,42 +35,26 @@
 					<td id='PatientPathologyError' style='display: none' class='jserror'>
 					<?php (new t("Patient-Nopathology"))->label()->p(); ?>
 				</td>
-				</tr><tr>
-					<td><?php (new t("PatientPathologyRicket"))->label()->p(); ?></td>
-					<td><?php value("Patient.pathology_Ricket"); ?></td>
-				</tr><tr>
-					<td><?php (new t("PatientPathologyClubfoot"))->label()->p(); ?></td>
-					<td><?php value("Patient.pathology_Clubfoot"); ?></td>
-				</tr><tr>
-					<td><?php (new t("PatientPathologyPolio"))->label()->p(); ?></td>
-					<td><?php value("Patient.pathology_Polio"); ?></td>
-				</tr><tr>
-					<td><?php (new t("PatientPathologyBurn"))->label()->p(); ?></td>
-					<td><?php value("Patient.pathology_Burn"); ?></td>
-				</tr><tr>
-					<td><?php (new t("PatientPathologyCP"))->label()->p(); ?></td>
-					<td><?php value("Patient.pathology_CP"); ?></td>
-				</tr><tr>
-					<td><?php (new t("PatientPathologyCongenital"))->label()->p(); ?></td>
-					<td><?php value("Patient.pathology_Congenital"); ?></td>
-				</tr><tr>
-					<td><?php (new t("PatientPathologyAdult"))->label()->p(); ?></td>
-					<td><?php value("Patient.pathology_Adult"); ?></td>
-				</tr><tr>
-					<td><?php (new t("PatientPathologyOther"))->label()->p(); ?></td>
-					<td><?php value("Patient.pathology_other"); ?></td>
 				</tr>
+				<?php (new t("Patient.pathology_Ricket"))->tr()->p(); ?>
+				<?php (new t("Patient.pathology_Clubfoot"))->tr()->p(); ?>
+				<?php (new t("Patient.pathology_Polio"))->tr()->p(); ?>
+				<?php (new t("Patient.pathology_Burn"))->tr()->p(); ?>
+				<?php (new t("Patient.pathology_CP"))->tr()->p(); ?>
+				<?php (new t("Patient.pathology_Congenital"))->tr()->p(); ?>
+				<?php (new t("Patient.pathology_Adult"))->tr()->p(); ?>
+				<?php (new t("Patient.pathology_other"))->tr()->p(); ?>
 				<?php (new t("Patient.historyofcomplaint"))->tr()->p(); ?>
 			</table>
 		</fieldset>
 		<fieldset>
-			<legend><?php label("Patient.Notesforthepatient");?></legend>
-			<?php value("Patient.Notesforthepatient"); ?>					
+			<legend><?php (new t("Patient.Notesforthepatient"))->label()->p(); ?></legend>
+			<?php (new t("Patient.Notesforthepatient"))->value()->p(); ?>					
 		</fieldset>
 	</div>
 	<div class="col-sm-6">
 		<fieldset>
-			<legend><label for="Patient-ChildrenData" name="Patient-ChildrenData">Children Data</label></legend>
+			<legend><?php (new t("Patient-ChildrenData"))->label()->p(); ?></legend>
 			<table class='colorize'>
 				<col width='30%' /><col width='*' /> 
 				<?php (new t("Patient.Rowofthechildreninthefamily"))->tr()->p(); ?>
@@ -88,7 +68,7 @@
 		</fieldset>
 		<br/>
 		<fieldset>
-			<legend><label for="Patient-FamilyData" name="Patient-FamilyData">Family Data</label></legend>
+			<legend><?php (new t("Patient-FamilyData"))->label()->p(); ?></legend>
 			<table class='colorize'>
 				<col width='30%' /><col width='*' /> 
 				<?php (new t("Patient.Religion"))->tr()->p(); ?>
@@ -100,14 +80,14 @@
 		</fieldset>
 		<br/>
 		<fieldset>
-			<legend><label for="Patient-SocialData" name="Patient-SocialData">Social Data</label></legend>
+			<legend><?php (new t("Patient-SocialData"))->label()->p(); ?></legend>
 			<table class='colorize'>
 				<col width='30%' /><col width='*' /> 
 				<?php (new t("Patient.Familysalaryinamonth"))->tr()->p(); ?>
 				<?php (new t("Patient.Numberofhouseholdmembers"))->tr()->p(); ?>
 				<tr>
 					<td>Ratio</td>
-					<td><div id='ratio_salary'>TODO: ratio_salary</div></td>
+					<td><div id='ratio_salary'>{{currentFile().ratioSalary()}}</div></td>
 				</tr>
 				<?php (new t("Patient.Doesthechildrengotoschool"))->tr()->p(); ?>
 				<?php (new t("Patient.Family"))->tr()->p(); ?>
@@ -125,7 +105,7 @@
 				<tr>
 					<td><hr/></td><td><hr/></td>
 				</tr><tr>
-					<td>Calculated social level</td><td><span id='calculatedSL'></span></td>
+					<td>Calculated social level</td><td>{{currentFile().calculateSocialLevel()}}</td>
 				</tr>
 				<?php (new t("Patient.Sociallevel"))->tr()->p(); ?>
 			</table>

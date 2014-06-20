@@ -6,7 +6,7 @@
 		<?php (new t("NonricketConsult.Date"))->tr()->p(); ?>
 		<?php (new t("NonricketConsult.ExaminerName"))->tr()->p(); ?>
 		<?php (new t("NonricketConsult.Center"))->tr()->p(); ?>
-		<tr modes='read'>
+		<tr class='notModeWrite'>
 			<td><?php (new t("Patient-Age"))->label()->p(); ?></td>
 			<td>{{ageAtConsultTimeStr()}}</td>
 		</tr>

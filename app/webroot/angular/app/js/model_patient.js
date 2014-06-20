@@ -14,5 +14,8 @@ cryptomedic.models.Patient = cryptomedic.models.Data.extend({
 	},
 	'calculateSocialLevel': function() {
 		return "TODO";
+	},
+	'ratioSalary': function() {
+		return "TODO";
 	}
 });
