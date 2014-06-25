@@ -4,4 +4,4 @@ function DataMissingException(data) {
     this.message = "Missing "  + (data || "some data");
     this.data = data;
 }
-DataMissingException.prototype = new Error();
+DataMissingException.prototype = new ApplicationException();

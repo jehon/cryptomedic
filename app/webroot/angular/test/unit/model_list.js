@@ -1,7 +1,7 @@
 'use strict';
 
 describe('model_list', function() {
-	  beforeEach(module('app_cryptomedic'));
+	  beforeEach(module('app_main'));
 
 //	describe('interpolate', function() {
 //	    beforeEach(module(function($provide) {

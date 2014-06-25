@@ -3,10 +3,10 @@
 	require "php/script.php";
 	require("../../../Lib/cryptomedic.php");
 ?>
-<!--[if lt IE 7]>      <html lang="en" ng-app="app_cryptomedic" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html lang="en" ng-app="app_cryptomedic" class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html lang="en" ng-app="app_cryptomedic" class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html lang="en" ng-app="app_cryptomedic" class="no-js"> <!--<![endif]-->
+<!--[if lt IE 7]>      <html lang="en" ng-app="app_main" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="en" ng-app="app_main" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="en" ng-app="app_main" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en" ng-app="app_main" class="no-js"> <!--<![endif]-->
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -61,7 +61,7 @@
 	(new Script())->url("/amd/labels/index.json?var=cryptomedic.labels")->cached()->js()->dependDBTable("labels")->toPrint(); 
 ?>
 </head>
-<body ng-app="app_cryptomedic" ng-controller="ctrl" id="ng-app">
+<body ng-app="app_main" ng-controller="ctrl" id="ng-app">
 	<!--  Login screen -->
 	<div ng-if="!logged && !pending" class="site-wrapper">
 		<div class="site-wrapper-inner col-sm-offset-4 col-sm-4">

@@ -3,7 +3,7 @@
 /* jasmine specs for services go here */
 
 describe('service', function() {
-  beforeEach(module('app_cryptomedic'));
+  beforeEach(module('app_main'));
 
 
 //  describe('version', function() {

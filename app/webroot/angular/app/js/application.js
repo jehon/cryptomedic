@@ -1,8 +1,13 @@
 "use strict";
 
 // TODO: partials depend on version (like script) -> caching opportunities
+function ApplicationException(msg) {
+    this.message = msg;
+}
+ApplicationException.prototype = new Error();
+ApplicationException.prototype.getMessage = function() { return this.message; };
 
-var cryptoApp = angular.module('app_cryptomedic', [ 'ngRoute' ])
+var cryptoApp = angular.module('app_main', [ 'ngRoute' ])
 .config([ '$routeProvider', function($routeProvider) {
     $routeProvider.when('/', {
     	templateUrl: 'partials/home.php',
@@ -38,7 +43,42 @@ var cryptoApp = angular.module('app_cryptomedic', [ 'ngRoute' ])
 		}
 		return "" + (Math.round(text * 10) / 10) + ext;
 	};
-});
+})
+.directive('catchIt', [ "$compile", function($compile) {
+	return {
+		restrict: 'A',
+		require: '^ngModel',
+		// transclude: true,
+		scope: {
+			'tryit': '&', // executed in parent scope
+			'ngModel': '=',
+		},
+		// Problem: transclude make template ng-transclude element evaluated in parent scope
+		template: '<span ng-if="iserror">{{msg}}</span><span ng-if="!iserror" y-ng-transclude>{{result}}</span>',
+		link: function($scope, iElement, iAttrs) {
+            // var html ='<div ng-repeat="item in items">I should not be red</div>';
+            // var e =$compile(html)(scope);
+            // element.replaceWith(e);
+			function testIt() {
+				$scope.iserror = false;
+				try {
+					$scope.result = $scope.tryit();
+				} catch (e) {
+					if (e instanceof ApplicationException) {
+						console.warn(e);
+						$scope.iserror = true;
+						$scope.msg = "[" + e.getMessage() + "]";
+					} else {
+						console.info("not a correct error");
+						throw e;
+					}
+				}
+			}
+			$scope.$watch("ngModel", testIt);
+		}
+	};
+}])
+;
 
 cryptoApp.controller('ctrl', [ '$scope', 'service_rest', function($scope, service_rest) { 
 	$scope.cryptomedic = cryptomedic;

@@ -3,7 +3,7 @@
 /* jasmine specs for filters go here */
 
 describe('filter', function() {
-  beforeEach(module('app_cryptomedic.filters'));
+  beforeEach(module('app_main.filters'));
 
 
 //  describe('interpolate', function() {

@@ -56,16 +56,24 @@ function trace() {
 	echo "<script>console.log(JSON.parse('" . json_encode($list) . "')); </script>";
 }
 
-function label($key, $echo = true, $wrap = true) {
-	if ($wrap) {
-		$str = label($key, false, false);
-		$str = "<label for='{$key}'>$str</label>\n";
+function label($key, $options = array()) {
+	$options = array_merge([
+		'echo' => true,
+		'wrap' => true
+	], $options);
 
-		if ($echo === true) {
-			echo $str;
-		} 
+	if ($options['echo']) {
+		$str = label($key, array_merge($options, [ "echo" => false ]));
+		echo $str;
 		return $str;
 	}
+
+	if ($options['wrap']) {
+		$str = label($key, array_merge($options, [ "wrap" => false]));
+		$str = "<label for='{$key}'>$str</label>\n";
+		return $str;
+	}
+
 	global $mysqli;
 	$sql = "SELECT * FROM `labels` WHERE `reference` = '{$key}'";
 
@@ -89,6 +97,22 @@ function label($key, $echo = true, $wrap = true) {
 		return explode(".", $key)[1];
 	}
 	return $key;
+}
+
+function catchFunction($name, $watch, $options = array()) {
+	$options = array_merge([
+		'echo' => true,
+		'format' => false
+	], $options);
+	
+	if ($options['echo']) {
+		echo catchFunction($name, $watch, array_merge($options, [ 'echo' => false ]));
+	}
+
+	return "<span catch-it ng-model='folder' tryit='$name'>"
+		. "{{ $name" 
+		. ($options['format'] ? "| "  . $options['format'] : "")
+		. "}}</span>\n";
 }
 
 class t {
@@ -279,7 +303,11 @@ class t {
 		return $this;
 	}
 
-	function write($forceAllowNull = false) {
+	function write($options = array()) {
+		$options = array_merge([
+			'forceAllowNull' => false
+		], $options);
+
 		if (!$this->linked2DB) {
 			throw new Exception("Read: key is not in the database: '{$this->key}'");
 		}
@@ -307,7 +335,7 @@ class t {
 			throw new Exception("Read: key is not in the database: '{$this->key}'");
 		}
 		$this->res .= "<tr ng-class='{ emptyValue: !$this->rawExpression}'>\n";
-		$this->res .= "	<td>" . label($this->key, false) . "</td>\n";
+		$this->res .= "	<td>" . label($this->key, [ 'echo' => false ]) . "</td>\n";
 		$this->res .= "	<td>";
 			$this->value();
 		$this->res .="</td>\n";

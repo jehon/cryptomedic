@@ -3,7 +3,7 @@
 /* jasmine specs for controllers go here */
 
 describe('controllers', function() {
-	beforeEach(module('app_cryptomedic'));
+	beforeEach(module('app_main'));
 
 	it('should load ctrl_home', inject(function($controller) {
 		// spec body

@@ -3,7 +3,7 @@
 /* jasmine specs for directives go here */
 
 describe('directives', function() {
-  beforeEach(module('app_cryptomedic.directives'));
+  beforeEach(module('app_main.directives'));
 //  describe('app-version', function() {
 //    it('should print current version', function() {
 //      module(function($provide) {
