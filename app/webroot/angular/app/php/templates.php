@@ -99,7 +99,8 @@ function label($key, $options = array()) {
 	return $key;
 }
 
-// function catchFunction($name, $watch, $options = array()) {
+function catchFunction($name, $watch, $options = array()) {
+	trace();
 // 	$options = array_merge([
 // 		'echo' => true,
 // 		'format' => false
@@ -113,7 +114,7 @@ function label($key, $options = array()) {
 // 		. "{{ result " 
 // 		. ($options['format'] ? "| "  . $options['format'] : "")
 // 		. "}}</span>\n";
-// }
+}
 
 class t {
 	var $key;
