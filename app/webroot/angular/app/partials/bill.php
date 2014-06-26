@@ -4,7 +4,7 @@
 		$name = explode(".", $item);
 		$name = $name[1];
 		echo "<tr ng-if='currentFile().$name > 0'>";
-		echo "<td>" . label($item, false) . "</td>";
+		echo "<td>" . label($item, [ 'echo' => false ]) . "</td>";
 		echo "<td>";
 		(new t($item, $extra))->value()->p();
 		echo "</td>";

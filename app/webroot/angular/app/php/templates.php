@@ -348,7 +348,7 @@ class t {
 		$left = new t(str_replace("?", "Left", $this->key));
 		$right = new t(str_replace("?", "Right", $this->key));
 		$this->res .= "<tr ng-class='{ emptyValue: !{$left->rawExpression} && !{$right->rawExpression} }'>\n";
-			$this->res .= "	<td>" . label(str_replace("?", "", $this->key), false) . "</td>\n";
+			$this->res .= "	<td>" . label(str_replace("?", "", $this->key), [ 'echo' => false ]) . "</td>\n";
 			$this->res .= "	<td>" . $left->value()->getText() . "</td>\n";
 			$this->res .= "	<td>" . $right->value()->getText() . "</td>\n";
 		$this->res .= "</tr>\n";
