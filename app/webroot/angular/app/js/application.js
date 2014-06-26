@@ -48,34 +48,63 @@ var cryptoApp = angular.module('app_main', [ 'ngRoute' ])
 	return {
 		restrict: 'A',
 		require: '^ngModel',
-		// transclude: true,
+		transclude: true,
 		scope: {
 			'tryit': '&', // executed in parent scope
 			'ngModel': '=',
 		},
 		// Problem: transclude make template ng-transclude element evaluated in parent scope
-		template: '<span ng-if="iserror">{{msg}}</span><span ng-if="!iserror" y-ng-transclude>{{result}}</span>',
-		link: function($scope, iElement, iAttrs) {
-            // var html ='<div ng-repeat="item in items">I should not be red</div>';
-            // var e =$compile(html)(scope);
-            // element.replaceWith(e);
-			function testIt() {
-				$scope.iserror = false;
-				try {
-					$scope.result = $scope.tryit();
-				} catch (e) {
-					if (e instanceof ApplicationException) {
-						console.warn(e);
-						$scope.iserror = true;
-						$scope.msg = "[" + e.getMessage() + "]";
-					} else {
-						console.info("not a correct error");
-						throw e;
+
+		// http://tutorials.jenkov.com/angularjs/custom-directives.html#compile-and-link
+		compile: function(tElem, cAttrs, $transclude) {
+      		//do optional DOM transformation here
+			return function($scope, elem, attrs) {
+
+				function testIt() {
+	        		//linking function here (not in the main attribute, thus)
+					try {
+						$scope.result = $scope.tryit();
+						var tr = $transclude($scope);
+						elem.html(tr);
+					} catch (e) {
+						if (e instanceof ApplicationException) {
+							console.warn(e);
+							// $scope.iserror = true;
+							// $scope.msg = "[" + e.getMessage() + "]";
+							elem.html("<span>[" + e.getMessage() + "]</span>");
+						} else {
+							console.warn("not a correct error");
+							throw e;
+						}
 					}
 				}
-			}
-			$scope.$watch("ngModel", testIt);
-		}
+				$scope.$watch("ngModel", testIt);
+      		};
+      	},
+  		// http://blog.omkarpatil.com/2012/11/transclude-in-angularjs.html
+
+		// template: '<span ng-if="iserror">{{msg}}</span><span ng-if="!iserror" y-ng-transclude>{{result}}</span>',
+		// link: function($scope, iElement, iAttrs) {
+  //           // var html ='<div ng-repeat="item in items">I should not be red</div>';
+  //           // var e =$compile(html)(scope);
+  //           // element.replaceWith(e);
+		// 	function testIt() {
+		// 		$scope.iserror = false;
+		// 		try {
+		// 			$scope.result = $scope.tryit();
+		// 		} catch (e) {
+		// 			if (e instanceof ApplicationException) {
+		// 				console.warn(e);
+		// 				$scope.iserror = true;
+		// 				$scope.msg = "[" + e.getMessage() + "]";
+		// 			} else {
+		// 				console.info("not a correct error");
+		// 				throw e;
+		// 			}
+		// 		}
+		// 	}
+		// 	$scope.$watch("ngModel", testIt);
+		// }
 	};
 }])
 ;

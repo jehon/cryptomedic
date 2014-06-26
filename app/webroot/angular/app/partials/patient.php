@@ -15,7 +15,7 @@
 				<?php (new t("Patient.Yearofbirth",  [ "min" => 900, "max" => 2100]))->tr()->p(); ?></td>
 				<tr class='notModeWrite'>
 					<td><?php label("Patient-Age"); ?></td>
-					<td>{{currentFile().actualAge()}}</td>
+					<td><span catch-it ng-model="folder" tryit="currentFile().actualAge()">{{result}} years old</span></td>
 				</tr>
 				<?php (new t("Patient.Fathersname"))->tr()->p(); ?>
 				<?php (new t("Patient.District"))->tr()->p(); ?>
@@ -87,7 +87,7 @@
 				<?php (new t("Patient.Numberofhouseholdmembers"))->tr()->p(); ?>
 				<tr>
 					<td><?php label("Patient-Ratio"); ?></td>
-					<td><div id='ratio_salary'>{{currentFile().ratioSalary()}}</div></td>
+					<td><?php catchFunction("currentFile().ratioSalary()", "folder"); ?></td>
 				</tr>
 				<?php (new t("Patient.Doesthechildrengotoschool"))->tr()->p(); ?>
 				<?php (new t("Patient.Family"))->tr()->p(); ?>
@@ -105,7 +105,8 @@
 				<tr>
 					<td><hr/></td><td><hr/></td>
 				</tr><tr>
-					<td><?php label("Patient-CalculatedSocialLevel"); ?></td><td>{{currentFile().calculateSocialLevel()}}</td>
+					<td><?php label("Patient-CalculatedSocialLevel"); ?></td>
+					<td><span catch-it ng-model="folder" tryit="currentFile().calculateSocialLevel()">level {{result | number:0 }}</span><br></td>
 				</tr>
 				<?php (new t("Patient.Sociallevel"))->tr()->p(); ?>
 			</table>

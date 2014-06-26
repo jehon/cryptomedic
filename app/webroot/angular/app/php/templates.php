@@ -99,21 +99,21 @@ function label($key, $options = array()) {
 	return $key;
 }
 
-function catchFunction($name, $watch, $options = array()) {
-	$options = array_merge([
-		'echo' => true,
-		'format' => false
-	], $options);
+// function catchFunction($name, $watch, $options = array()) {
+// 	$options = array_merge([
+// 		'echo' => true,
+// 		'format' => false
+// 	], $options);
 	
-	if ($options['echo']) {
-		echo catchFunction($name, $watch, array_merge($options, [ 'echo' => false ]));
-	}
+// 	if ($options['echo']) {
+// 		echo catchFunction($name, $watch, array_merge($options, [ 'echo' => false ]));
+// 	}
 
-	return "<span catch-it ng-model='folder' tryit='$name'>"
-		. "{{ $name" 
-		. ($options['format'] ? "| "  . $options['format'] : "")
-		. "}}</span>\n";
-}
+// 	return "<span catch-it ng-model='folder' tryit='$name'>"
+// 		. "{{ result " 
+// 		. ($options['format'] ? "| "  . $options['format'] : "")
+// 		. "}}</span>\n";
+// }
 
 class t {
 	var $key;
