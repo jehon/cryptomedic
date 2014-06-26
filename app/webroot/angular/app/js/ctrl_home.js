@@ -21,7 +21,7 @@ cryptoApp.controller('ctrl_home', [ '$scope', '$location', 'service_rest' , func
 					// end the busy mode
 					jQuery("#busy").modal('hide');
 					setTimeout(function() {
-						window.location.hash = "/patient/" + data;
+						window.location.hash = "/folder/" + data;
 					}, 1);
 				}
 			})

@@ -6,7 +6,7 @@
 				<td rowspan='100' align='left' width='100px'>
 					<img src="img/Patient.gif">
 					<br/>
-					<a class='textbutton' href="#/patient/{{folder.getId()}}">
+					<a class='textbutton' href="#/folder/{{folder.getId()}}">
 						<img src="img/go.gif">
 						view
 					</a>

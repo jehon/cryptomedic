@@ -118,15 +118,26 @@ function catchFunction($name, $watch, $options = array()) {
 
 class t {
 	var $key;
-	var $extra;
+	var $options;
 	var $readOnly = false;
+	var $writeOnly = false;
 	var $res = "";
 	var $linked2DB = false;
 
-	function __construct($key, $extra = array()) {
+	function __construct($key, $options = array()) {
 		$this->key = $key;
-		$this->extra = $extra;
+		$this->options = $options;
 		$this->field = $key;
+
+		if (!is_array($options)) {
+			trace("options are not an array");
+			$this->options = array();
+		}
+
+		$this->options = array_merge([
+			'forceAllowNull' => false
+		], $this->options);
+
 		$data = explode(".", $this->key);
 		if (count($data) != 2) {
 			$this->linked2DB = false;
@@ -304,22 +315,21 @@ class t {
 		return $this;
 	}
 
-	function write($options = array()) {
-		$options = array_merge([
-			'forceAllowNull' => false
-		], $options);
-
+	function write() {
 		if (!$this->linked2DB) {
 			throw new Exception("Read: key is not in the database: '{$this->key}'");
 		}
 		// TODO: write
-		$this->read($key);
+		$this->res .= "#write#";
+		$this->read($this->key);
 		return $this;
 	}
 
 	function value() {
 		// TODO: show both sides, and hide with css
-		if (!$this->readOnly && array_key_exists('mode', $_REQUEST) && ($_REQUEST['mode'] == "write")) {
+		if (!$this->readOnly 
+			&& ((array_key_exists('mode', $_REQUEST) && ($_REQUEST['mode'] == "write")) || $this->writeOnly)
+			) {
 			return $this->write();
 		} else {
 			return $this->read();
@@ -328,6 +338,11 @@ class t {
 
 	function readOnly() {
 		$this->readOnly = true;
+		return $this;
+	}
+
+	function writeOnly() {
+		$this->writeOnly = true;
 		return $this;
 	}
 

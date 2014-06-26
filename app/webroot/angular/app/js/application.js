@@ -14,11 +14,10 @@ var cryptoApp = angular.module('app_main', [ 'ngRoute' ])
         controller: 'ctrl_home'
     }).when('/search', {
     	templateUrl: 'partials/search.php',
-    }).when('/patient/:id/:page?', {
+    	controller: 'ctrl_search',
+    }).when('/folder/:id/:page?', {
     	controller: 'ctrl_folder',
     	templateUrl: 'partials/folder.php',
-    }).when('/blank', {
-    	templateUrl: 'partials/blank.html',
     }).otherwise({ 'redirectTo': '/home'});
 }])
 .config([ '$compileProvider', function( $compileProvider ) {
