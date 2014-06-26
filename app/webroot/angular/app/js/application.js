@@ -32,18 +32,19 @@ var cryptoApp = angular.module('app_main', [ 'ngRoute' ])
 			return responseData;
 		});
 }])
-.filter('mynumber', function() {
-	return function(text, rnd, ext) {
-		text = text || '';
-		rnd = rnd || 2;
-		ext = ext || '';
-		if (typeof(text) != 'number') {
-			if (parseInt(text) != text) return text;
-			text = parseInt(text);
-		}
-		return "" + (Math.round(text * 10) / 10) + ext;
-	};
-})
+// .filter('mynumber', function() {
+// 	// TODO: remove
+// 	return function(text, rnd, ext) {
+// 		text = text || '';
+// 		rnd = rnd || 2;
+// 		ext = ext || '';
+// 		if (typeof(text) != 'number') {
+// 			if (parseInt(text) != text) return text;
+// 			text = parseInt(text);
+// 		}
+// 		return "" + (Math.round(text * 10) / 10) + ext;
+// 	};
+// })
 .directive('catchIt', [ "$compile", function($compile) {
 	return {
 		restrict: 'A',
@@ -53,25 +54,29 @@ var cryptoApp = angular.module('app_main', [ 'ngRoute' ])
 			'tryit': '&', // executed in parent scope
 			'ngModel': '=',
 		},
-		// Problem: transclude make template ng-transclude element evaluated in parent scope
-
 		// http://tutorials.jenkov.com/angularjs/custom-directives.html#compile-and-link
-		compile: function(tElem, cAttrs, $transclude) {
-      		//do optional DOM transformation here
-			return function($scope, elem, attrs) {
+		compile: function(cElement, cAttrs, cTransclude) {
+      		// TODO: what hapen if data is updated ? -> see the write mode
+			return function($scope, $element, $attrs, ctrl, $transclude) {
+				var transcludeScope = $scope.$parent.$new();
 
 				function testIt() {
 	        		//linking function here (not in the main attribute, thus)
 					try {
-						$scope.result = $scope.tryit();
-						var tr = $transclude($scope);
-						elem.html(tr);
+						transcludeScope.result = $scope.tryit();
+						// Angular.js#5350
+						// TODO: clone scope and add result
+						// parent.$new()
+						// $destroy() when???
+					    $transclude(transcludeScope, function(clone) {
+							$element.empty();
+					    	$element.append(clone);
+					    });
+						// var tr = cTransclude($scope);
+						// $element.html(tr);
 					} catch (e) {
 						if (e instanceof ApplicationException) {
-							console.warn(e);
-							// $scope.iserror = true;
-							// $scope.msg = "[" + e.getMessage() + "]";
-							elem.html("<span>[" + e.getMessage() + "]</span>");
+							$element.html("<span>[" + e.getMessage() + "]</span>");
 						} else {
 							console.warn("not a correct error");
 							throw e;
@@ -79,10 +84,13 @@ var cryptoApp = angular.module('app_main', [ 'ngRoute' ])
 					}
 				}
 				$scope.$watch("ngModel", testIt);
+
+				// Destroy of the element
+				$element.on('$destroy', function() {
+					transcludeScope.$destroy();
+      			});
       		};
       	},
-  		// http://blog.omkarpatil.com/2012/11/transclude-in-angularjs.html
-
 		// template: '<span ng-if="iserror">{{msg}}</span><span ng-if="!iserror" y-ng-transclude>{{result}}</span>',
 		// link: function($scope, iElement, iAttrs) {
   //           // var html ='<div ng-repeat="item in items">I should not be red</div>';

@@ -87,7 +87,7 @@
 				<?php (new t("Patient.Numberofhouseholdmembers"))->tr()->p(); ?>
 				<tr>
 					<td><?php label("Patient-Ratio"); ?></td>
-					<td><?php catchFunction("currentFile().ratioSalary()", "folder"); ?></td>
+					<td><span catch-it ng-model="folder" tryit="currentFile().ratioSalary()">{{ result | number:0 }}</span></td>
 				</tr>
 				<?php (new t("Patient.Doesthechildrengotoschool"))->tr()->p(); ?>
 				<?php (new t("Patient.Family"))->tr()->p(); ?>
@@ -106,7 +106,9 @@
 					<td><hr/></td><td><hr/></td>
 				</tr><tr>
 					<td><?php label("Patient-CalculatedSocialLevel"); ?></td>
-					<td><span catch-it ng-model="folder" tryit="currentFile().calculateSocialLevel()">level {{result | number:0 }}</span><br></td>
+					<td><span catch-it ng-model="folder" tryit="currentFile().calculateSocialLevel()">
+						level {{ result | number:0 }}
+						</span></td>
 				</tr>
 				<?php (new t("Patient.Sociallevel"))->tr()->p(); ?>
 			</table>
