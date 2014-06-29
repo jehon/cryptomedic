@@ -1,76 +1,70 @@
-<?php require_once(__DIR__ . "/../php/templates.php"); ?>
+<?php 
+	require_once(__DIR__ . "/../php/templates.php"); 
+	t::setDefaultOption("baseExpression", "params.");
+	t::setDefaultOption("forceAllowNull");
+	t::setDefaultOption("writeOnly");
+?>
 <div class='searchFields'>
 	<Fieldset>
 		<Legend><?php label("Search for"); ?>...</Legend>
 		<table class='colorize'>
-			<?php (new t("Patient.entryyear"))->writeOnly()->tr([ "forceAllowNull" => true ])->p(); ?>
-			<?php (new t("Patient.entryorder"))->writeOnly()->tr([ "forceAllowNull" => true ])->p(); ?>
-			<?php (new t("Patient.Firstname"))->writeOnly()->tr([ "forceAllowNull" => true ])->p(); ?>
-			<?php (new t("Patient.Lastname"))->writeOnly()->tr([ "forceAllowNull" => true ])->p(); ?>
-			<?php (new t("Patient.Yearofbirth"))->writeOnly()->tr([ "forceAllowNull" => true ])->p(); ?>
-			<?php (new t("Patient.Fathersname"))->writeOnly()->tr([ "forceAllowNull" => true ])->p(); ?>
-			<?php (new t("Patient.Telephone"))->writeOnly()->tr([ "forceAllowNull" => true ])->p(); ?>
-			<?php (new t("Patient.pathology_Ricket"))->writeOnly()->tr()->p(); ?>
-			<?php (new t("Patient.pathology_Clubfoot"))->writeOnly()->tr()->p(); ?>
-			<?php (new t("Patient.pathology_Burn"))->writeOnly()->tr()->p(); ?>
-			<?php (new t("Patient.pathology_Polio"))->writeOnly()->tr()->p(); ?>
-			<?php (new t("Patient.pathology_CP"))->writeOnly()->tr()->p(); ?>
-			<?php (new t("Patient.pathology_Congenital"))->writeOnly()->tr()->p(); ?>
-			<?php (new t("Patient.pathology_Adult"))->writeOnly()->tr()->p(); ?>
-			<?php (new t("Patient.pathology_other"))->writeOnly()->tr()->p(); ?>
+			<?php (new t("Patient.entryyear"))->tr()->p(); ?>
+			<?php (new t("Patient.entryorder"))->tr()->p(); ?>
+			<?php (new t("Patient.Firstname"))->tr()->p(); ?>
+			<?php (new t("Patient.Lastname"))->tr()->p(); ?>
+			<?php (new t("Patient.Yearofbirth"))->tr()->p(); ?>
+			<?php (new t("Patient.Fathersname"))->tr()->p(); ?>
+			<?php (new t("Patient.Telephone"))->tr()->p(); ?>
+			<?php (new t("Patient.pathology_Ricket"))->tr()->p(); ?>
+			<?php (new t("Patient.pathology_Clubfoot"))->tr()->p(); ?>
+			<?php (new t("Patient.pathology_Burn"))->tr()->p(); ?>
+			<?php (new t("Patient.pathology_Polio"))->tr()->p(); ?>
+			<?php (new t("Patient.pathology_CP"))->tr()->p(); ?>
+			<?php (new t("Patient.pathology_Congenital"))->tr()->p(); ?>
+			<?php (new t("Patient.pathology_Adult"))->tr()->p(); ?>
+			<?php (new t("Patient.pathology_other"))->tr()->p(); ?>
 		</Table>
 	</Fieldset>
+	<span ng-click="submit()">Submit</span>
 </div>
-
-
-	<!-- ---------------------------------------------- Search results --------------------------------- -->
-	<div id='searchResults'>
-	<?php 
-	    if (isset($data) && is_array($data) && (count($data) > 0)) {
-	            ?>
-	            <div style='text-align: center; color: red'>Only the first 100 results are shown</div>
-	            <table class='colorize tablesorter' pagesize="10">
-	            	<thead>
-	            		<tr>
-	            			<th></th>
-							<th>Entry Year</th>
-							<th>Entry Order</th>
-							<th>Firstname</th>
-							<th>Lastname</th>
-							<th>Sex</th>
-							<th>Yearofbirth</th>
-							<th>Fathersname</th>
-						</tr>
-	            	</thead>
-		            <?
-		                foreach($data as $zeroitem) {
-		                    foreach($zeroitem as $mmodel => $item) {
-		                        if ('Patient' != $mmodel)
-		                            continue;
-		                       	?>
-									<tr>
-										<td><a href="/amd/patients/view/<? echo $item['id']; ?>#read" class="textbutton">
-											<img src="/amd/cryptomedic/img/go.gif" />
-											View
-										</a></td>
-										<td><?php echo $item['entryyear']; ?></td>
-										<td><?php echo $item['entryorder']; ?></td>
-										<td><?php echo $item['Firstname']; ?></td>
-										<td><?php echo $item['Lastname']; ?></td>
-										<td><?php echo cryptomedicValue2Label('Patient', 'Sex', $item['Sex']); ?>
-										<td><?php echo $item['Yearofbirth']; ?></td>
-										<td><?php echo $item['Fathersname']; ?></td>
-									</tr>
-								<?
-		                    }
-						}
-					?>
-					</tbody>
-				</table>
-				<?
-	    } else {
-	        echo "No Result Found";
-	    }
-	?> 
-	</div>
-</form>
+<? 
+	t::setDefaultOption("baseExpression", "patient.");
+	t::setDefaultOption("writeOnly", false);
+	t::setDefaultOption("readOnly");
+?>
+<div>
+	<div ng-if="listing.length == 0">No results</div>
+	<div ng-if="listing.length > 0">
+        <div style='text-align: center; color: red'>Only the first 100 results are shown</div>
+	    <table class='colorize tablesorter' pagesize="10">
+	    	<thead>
+	    		<tr>
+	    			<th></th>
+					<th>Entry Year - Entry order</th>
+					<th>Firstname</th>
+					<th>Lastname</th>
+					<th>Sex</th>
+					<th>Yearofbirth</th>
+					<th>Fathersname</th>
+				</tr>
+	    	</thead>
+	    	<tr ng-repeat="patient in listing">
+	    		<td>
+	    			<a ng-href='#/folder/{{patient.id}}/'>
+	    				<img src='img/go.gif'>
+	    			</a>
+	    		</td>
+	    		<td>
+	    			<?php (new t("Patient.entryyear"))->read()->p(); ?>
+	    			-
+	    			<?php (new t("Patient.entryorder"))->read()->p(); ?>
+	    		</td>
+	    		<td><?php (new t("Patient.Firstname"))->read()->p(); ?></td>
+	    		<td><?php (new t("Patient.Lastname"))->read()->p(); ?></td>
+	    		<td><?php (new t("Patient.Sex"))->read()->p(); ?></td>
+	    		<td><?php (new t("Patient.Yearofbirth"))->read()->p(); ?></td>
+	    		<td><?php (new t("Patient.Fathersname"))->read()->p(); ?></td>
+	    	</tr>
+		</table>
+    </div>
+</div>

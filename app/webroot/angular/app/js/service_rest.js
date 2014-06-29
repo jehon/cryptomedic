@@ -59,14 +59,30 @@ cryptoApp.factory('service_rest', [ '$http', '$log' , '$rootScope', function($ht
 		},
 		'getFile': function(id) {
 			var def = jQuery.Deferred();
-			if (cache.isCached(id)) {
-				return def.resolve(cache.get(id));
-			}
+			// if (cache.isCached(id)) {
+			// 	console.log("using cached informations");
+			// 	return def.resolve(cache.get(id));
+			// }
 			$http.post(root + "/patients/folder/" + id + ".json")
-			.success(function(data, status, headers, config) {
-				var folder = new (cryptomedic.models.Folder)(data);
-				cache.set(folder.getMainFile().id, folder);
+			.success(function(folder, status, headers, config) {
+				// cache.set(folder.getMainFile().id, folder);
+				console.log(folder);
 				def.resolve(folder);
+			}).error(function(data, status, headers, config) {
+				def.reject(data);
+			});
+			return def;
+		},
+		'searchForPatients': function(params) {
+			console.log(params);
+			var def = jQuery.Deferred();
+			$http.post(root + "/patients/index.json", { 'Patient': params })
+			.success(function(data, status, headers, config) {
+				var list = [];
+				for(var i in data) {
+					list.push(new cryptomedic.models.Patient(data[i]['Patient']));
+				}
+				def.resolve(list);
 			}).error(function(data, status, headers, config) {
 				def.reject(data);
 			});
