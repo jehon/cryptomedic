@@ -1,4 +1,7 @@
-<?php require_once(__DIR__ . "/../php/templates.php"); ?>
+<?php 
+	require_once(__DIR__ . "/../php/templates.php"); 
+	t::setDefaultOption("baseExpression", "currentFile().");
+?>
 <?php 
 	function price($item, $extra = "size=2") {
 		$name = explode(".", $item);

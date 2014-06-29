@@ -1,3 +1,8 @@
+<?php 
+	require_once(__DIR__ . "/../php/templates.php"); 
+	t::setDefaultOption("baseExpression", "getcurrentFile().");
+	t::setDefaultOption("readOnly");
+?>
 <fieldset>
 	<legend>{{getVariableY()}} / {{getVariableX()}}</legend>
 	<div class='markContainer'>

@@ -1,4 +1,7 @@
-<?php require_once(__DIR__ . "/../php/templates.php"); ?>
+<?php 
+	require_once(__DIR__ . "/../php/templates.php"); 
+	t::setDefaultOption("baseExpression", "getCurrentFile().");
+?>
 <div class="col-md-2" class="btn-group btn-group-justified btn-group-vertical">
 	<a ng-class="{ 'btn-warning': page === 'summary'}" ng-href="#/folder/{{id()}}/summary" class="btn btn-default" style="width: 100%">Summary</a>
 	<a ng-class="{ 'btn-warning': page === 'graphics'}" href="#/folder/{{id()}}/graphics" class="btn btn-default" style="width: 100%">Graphics</a>

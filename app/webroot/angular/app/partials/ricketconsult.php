@@ -1,4 +1,7 @@
-<?php require_once(__DIR__ . "/../php/templates.php"); ?>
+<?php 
+	require_once(__DIR__ . "/../php/templates.php"); 
+	t::setDefaultOption("baseExpression", "currentFile().");
+?>
 <div class="col-sm-6">
 	<div ng-include="'partials/consult-introduction.php'"></div>
 	<br>

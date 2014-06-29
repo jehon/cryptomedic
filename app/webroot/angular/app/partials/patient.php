@@ -1,4 +1,7 @@
-<?php require_once(__DIR__ . "/../php/templates.php"); ?>
+<?php 
+	require_once(__DIR__ . "/../php/templates.php"); 
+	t::setDefaultOption("baseExpression", "folder.getMainFile().");
+?>
 <span ng-controller="ctrl_patient">
 	<div class="col-sm-6">
         <fieldset>

@@ -1,15 +1,19 @@
-<?php require_once(__DIR__ . "/../php/templates.php"); ?>
+<?php 
+	require_once(__DIR__ . "/../php/templates.php"); 
+	t::setDefaultOption("baseExpression", "currentFile().");
+	t::setDefaultOption("readOnly");
+?>
 <table width="100%">
 	<colgroup span="2" width="50%"></colgroup>
 	<tbody>
-		<? (new t("NonricketConsult.Date"))->readOnly()->tr()->p(); ?>
-		<? (new t("NonricketConsult.Physiotherapy61"))->readOnly()->tr()->p(); ?>
-		<? (new t("NonricketConsult.Plaster62"))->readOnly()->tr()->p(); ?>
-		<? (new t("NonricketConsult.Orthopedicdevice65"))->readOnly()->tr()->p(); ?>
-		<? (new t("NonricketConsult.Surgery66"))->readOnly()->tr()->p(); ?>
-		<? (new t("NonricketConsult.Othertreatment68"))->readOnly()->tr()->p(); ?>
-		<? (new t("NonricketConsult.Heightcm"))->readOnly()->tr()->p(); ?>
-		<? (new t("NonricketConsult.Weightkg"))->readOnly()->tr()->p(); ?>
-		<? (new t("NonricketConsult.Comment"))->readOnly()->tr()->p(); ?>
+		<? (new t("NonricketConsult.Date"))->tr()->p(); ?>
+		<? (new t("NonricketConsult.Physiotherapy61"))->tr()->p(); ?>
+		<? (new t("NonricketConsult.Plaster62"))->tr()->p(); ?>
+		<? (new t("NonricketConsult.Orthopedicdevice65"))->tr()->p(); ?>
+		<? (new t("NonricketConsult.Surgery66"))->tr()->p(); ?>
+		<? (new t("NonricketConsult.Othertreatment68"))->tr()->p(); ?>
+		<? (new t("NonricketConsult.Heightcm"))->tr()->p(); ?>
+		<? (new t("NonricketConsult.Weightkg"))->tr()->p(); ?>
+		<? (new t("NonricketConsult.Comment"))->tr()->p(); ?>
 	</tbody>
 </table>

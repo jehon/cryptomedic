@@ -1,4 +1,7 @@
-<?php require_once(__DIR__ . "/../php/templates.php"); ?>
+<?php 
+	require_once(__DIR__ . "/../php/templates.php"); 
+	t::setDefaultOption("baseExpression", "currentFile().");
+?>
 <div class="col-sm-6">
 	<FieldSet>
 		<Legend><?php label("SurgeryFollowup-Discharge"); ?></Legend>

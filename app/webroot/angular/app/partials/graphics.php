@@ -1,4 +1,8 @@
-<?php require_once(__DIR__ . "/../php/templates.php"); ?>
+<?php 
+    require_once(__DIR__ . "/../php/templates.php"); 
+    t::setDefaultOption("baseExpression", "currentFile().");
+    t::setDefaultOption("readOnly");
+?>
 <div id='headerContainer' class='headerContainer'></div>
 <div align='center' ng-controller="ctrl_allGraphics">
     <table style='width: auto'>

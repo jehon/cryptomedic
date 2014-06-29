@@ -1,7 +1,11 @@
-<?php require_once(__DIR__ . "/../php/templates.php"); ?>
+<?php 
+	require_once(__DIR__ . "/../php/templates.php"); 
+	t::setDefaultOption("baseExpression", "currentFile().");
+	t::setDefaultOption("readOnly");
+?>
 <table width="100%">
 	<colgroup span="2" width="50%"></colgroup>
 	<tbody>
-		<? (new t("SurgeryFollowup.ResultImprovement"))->readOnly()->tr()->p(); ?>
+		<? (new t("SurgeryFollowup.ResultImprovement"))->tr()->p(); ?>
 	</tbody>
 </table>

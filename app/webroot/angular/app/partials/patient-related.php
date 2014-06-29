@@ -1,4 +1,7 @@
-<?php require_once(__DIR__ . "/../php/templates.php"); ?>
+<?php 
+	require_once(__DIR__ . "/../php/templates.php"); 
+	t::setDefaultOption("baseExpression", "folder.getMainFile().");
+?>
 <fieldset ng-controller='ctrl_patient'>
 	<legend><?php label("Related"); ?></legend>
 		<table class='colorize'>
