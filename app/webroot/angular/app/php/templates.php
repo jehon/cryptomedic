@@ -119,10 +119,27 @@ function catchFunction($name, $watch, $options = array()) {
 class t {
 	var $key;
 	var $options;
-	var $readOnly = false;
-	var $writeOnly = false;
 	var $res = "";
 	var $linked2DB = false;
+
+	private static $defaultOptions = [
+		"baseExpression" => "",
+		"writeOnly" => false,
+		"readOnly" => false,
+		"forceAllowNull" => false
+	];
+
+	static function setDefaultOption($key, $val = true) {
+		if (!array_key_exists($key, self::$defaultOptions)) {
+			return trace("Setting unsupported option: $key");
+		}
+		self::$defaultOptions[$key] = $val;
+	}
+
+	static function setDefaultOptions($defaultOptions) {
+		foreach($defaultOptions as $key => $val)
+			self::setDefaultOption($key, $val);
+	}
 
 	function __construct($key, $options = array()) {
 		$this->key = $key;
@@ -134,9 +151,7 @@ class t {
 			$this->options = array();
 		}
 
-		$this->options = array_merge([
-			'forceAllowNull' => false
-		], $this->options);
+		$this->options = array_merge(self::$defaultOptions, $this->options);
 
 		$data = explode(".", $this->key);
 		if (count($data) != 2) {
@@ -234,7 +249,7 @@ class t {
 		}
 
 		$this->linked2DB = true;
-		$this->rawExpression = "currentFile()." . $this->field;
+		$this->rawExpression = $this->options['baseExpression'] . $this->field;
 		return $this;
 	}
 
@@ -319,31 +334,48 @@ class t {
 		if (!$this->linked2DB) {
 			throw new Exception("Read: key is not in the database: '{$this->key}'");
 		}
-		// TODO: write
-		$this->res .= "#write#";
-		$this->read($this->key);
+
+		switch($this->myType) {
+			case 'datetime':
+				// always read-only
+				$this->read();
+				break;
+			case 'date':
+				$this->res .= "<input type='date' ng-model='{$this->rawExpression}' />";
+				break;
+			case 'text':
+				$this->res .= "<input ng-model='{$this->rawExpression}' />";
+				break;
+			case 'numeric':
+			case 'float':
+				$this->res .= "<input type='number' ng-model='{$this->rawExpression}' />";
+				break;
+			case 'list':
+				$this->res .= "<span id='{$this->key}'>{{ {$this->rawExpression} }}</span>";
+				break;
+			case 'boolean':
+				$this->res .= "<input type='checkbox' ng-model='{$this->rawExpression}' />";
+				break;
+			case 'linkedList':
+				// TODO
+				$this->res .= "<span id='{$this->key}'>{{link( {$this->rawExpression} )}}</span>";
+				break;
+			default:
+				$this->res .= "{$this->key} input";
+				break;
+		}
 		return $this;
 	}
 
 	function value() {
 		// TODO: show both sides, and hide with css
-		if (!$this->readOnly 
-			&& ((array_key_exists('mode', $_REQUEST) && ($_REQUEST['mode'] == "write")) || $this->writeOnly)
+		if (!$this->options['readOnly']
+			&& ((array_key_exists('mode', $_REQUEST) && ($_REQUEST['mode'] == "write")) || $this->options['writeOnly'])
 			) {
 			return $this->write();
 		} else {
 			return $this->read();
 		}
-	}
-
-	function readOnly() {
-		$this->readOnly = true;
-		return $this;
-	}
-
-	function writeOnly() {
-		$this->writeOnly = true;
-		return $this;
 	}
 
 	function tr() {
@@ -376,5 +408,15 @@ class t {
 
 	function p() {
 		echo $this->res;
+	}
+
+	function readOnly() {
+		$this->options['readOnly'] = true;
+		return $this;
+	}
+
+	function writeOnly() {
+		$this->options['writeOnly'] = true;
+		return $this;
 	}
 }
