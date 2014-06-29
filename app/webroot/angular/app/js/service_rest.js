@@ -59,14 +59,13 @@ cryptoApp.factory('service_rest', [ '$http', '$log' , '$rootScope', function($ht
 		},
 		'getFile': function(id) {
 			var def = jQuery.Deferred();
-			// if (cache.isCached(id)) {
-			// 	console.log("using cached informations");
-			// 	return def.resolve(cache.get(id));
-			// }
+			if (cache.isCached(id)) {
+				console.log("using cached informations");
+				return def.resolve(cache.get(id));
+			}
 			$http.post(root + "/patients/folder/" + id + ".json")
 			.success(function(folder, status, headers, config) {
-				// cache.set(folder.getMainFile().id, folder);
-				console.log(folder);
+				 cache.set(folder.getMainFile().id, folder);
 				def.resolve(folder);
 			}).error(function(data, status, headers, config) {
 				def.reject(data);
