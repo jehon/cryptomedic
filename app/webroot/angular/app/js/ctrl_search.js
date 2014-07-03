@@ -1,8 +1,11 @@
 "use strict";
 
 cryptoApp.controller('ctrl_search', [ "$scope", "service_rest", function($scope, service_rest) {
-	$scope.params = {};
-	$scope.listing = [];
+	if (typeof($scope.params) == 'undefined')
+		$scope.params = {};
+	
+	if (typeof($scope.listing) == 'undefined')
+		$scope.listing = [];
 
 	$scope.page = function() {
 		// TODO: paginate this
