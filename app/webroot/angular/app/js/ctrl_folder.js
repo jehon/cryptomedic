@@ -54,9 +54,6 @@ cryptoApp.controller('ctrl_folder', [ '$scope', '$location', 'service_rest', '$r
 			$scope.folder = data;
 			$scope.select($scope.page);
 			$scope.safeApply();
-		})
-		.fail(function(data) {
-			console.error(data);
 		}).always(function() {
 			$scope.$broadcast("refresh");
 			busyEnd();

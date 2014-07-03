@@ -16,7 +16,7 @@ cryptoApp.factory('service_rest', [ '$http', '$log' , '$rootScope', function($ht
 			}
 			def.resolve(data);
 		}).error(function(data, status, headers, config) {
-			if (status == 403 || status == 401) {
+			if (status == 403) {
 				// 401: Unauthorized
 				// 403: Forbidden
 				$rootScope.$broadcast("rest_logged_out");

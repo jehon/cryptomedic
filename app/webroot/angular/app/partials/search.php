@@ -25,7 +25,7 @@
 			<?php (new t("Patient.pathology_other"))->tr()->p(); ?>
 		</Table>
 	</Fieldset>
-	<span ng-click="submit()">Submit</span>
+	<span class="btn btn-primary" ng-click="submit()">Submit</span>
 </div>
 <? 
 	t::setDefaultOption("baseExpression", "patient.");
@@ -36,7 +36,7 @@
 	<div ng-if="listing.length == 0">No results</div>
 	<div ng-if="listing.length > 0">
         <div style='text-align: center; color: red'>Only the first 100 results are shown</div>
-	    <table class='colorize tablesorter' pagesize="10">
+	    <table class='table table-hover table-bordered tablesorter' pagesize="10">
 	    	<thead>
 	    		<tr>
 	    			<th></th>
@@ -48,7 +48,7 @@
 					<th>Fathersname</th>
 				</tr>
 	    	</thead>
-	    	<tr ng-repeat="patient in listing">
+	    	<tr ng-repeat="patient in listing" ng-click="go('#/folder/' + patient.id + '/')">
 	    		<td>
 	    			<a ng-href='#/folder/{{patient.id}}/'>
 	    				<img src='img/go.gif'>
