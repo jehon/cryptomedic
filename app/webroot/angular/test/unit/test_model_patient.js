@@ -9,8 +9,8 @@ describe("Patient", function() {
 				expect(folder.getMainFile() instanceof cryptomedic.models.Patient).toBeTruthy();
 				expect(folder.getMainFile().id).toBe(10);
 				expect(folder.getMainFile().Yearofbirth).toBe(1998);
-				expect(folder.getMainFile().actualAge(new Date("2014-01-01"))).toBe("16 years old today");
-				expect(folder.getMainFile().actualAge()).toMatch("years old today");
+				expect(folder.getMainFile().actualAge(new Date("2014-01-01"))).toBe(16);
+				// expect(folder.getMainFile().actualAge()).toMatch("years old today");
 				expect(folder.getMainFile().Sex).toBe(207);
 				expect(folder.getMainFile().sexStr()).toBe("m");
 				done();

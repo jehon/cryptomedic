@@ -15,7 +15,7 @@ describe("File", function() {
 				expect(folder.getMainFile() instanceof cryptomedic.models.Patient).toBeTruthy();
 				expect(folder.getMainFile().Sex).toBe(207);
 				expect(folder.getMainFile().Yearofbirth).toBe(1998);
-				expect(folder.getMainFile().actualAge(new Date("2014-01-01"))).toBe("16 years old today");
+				expect(folder.getMainFile().actualAge(new Date("2014-01-01"))).toBe(16);
 
 angular.forEach(folder.getSubFiles(), function(val, i) { console.log(i + ": " + val.type + "#" + val.id) });
 
