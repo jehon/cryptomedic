@@ -6,86 +6,75 @@ cryptoApp.factory('service_rest', [ '$http', '$log' , '$rootScope', function($ht
 	var cache = perishableCache(10);
 	var root = "/amd";
 	
+	function treatHttp(request, treatResponse) {
+		var def = jQuery.Deferred();
+
+		request.success(function(data, status, headers, config) {
+			$rootScope.$broadcast("rest_logged_in");
+			if (typeof(treatResponse) == 'function') {
+				data = treatResponse(data);
+			}
+			def.resolve(data);
+		}).error(function(data, status, headers, config) {
+			if (status == 403 || status == 401) {
+				// 401: Unauthorized
+				// 403: Forbidden
+				$rootScope.$broadcast("rest_logged_out");
+			} else {
+				$rootScope.$broadcast("rest_error");
+			}
+			def.reject(data);
+		});
+		return def;
+	}
+
 	return {
-		'getCached': function(id) {
-			return cache.get(id);
-		},
+		// 'getCached': function(id) {
+		// 	return cache.get(id);
+		// },
 		'checkLogin': function() {
-			var def = jQuery.Deferred();
-			$http.post(root + "/users/settings.json")
-			.success(function(data, status, headers, config) {
-				def.resolve();
-			}).error(function(data, status, headers, config) {
-				def.reject(data);
-			});
-			return def;
+			return treatHttp($http.post(root + "/users/settings.json"));
 		},
 		'doLogin': function(username, password) {
 			// Hack: if no username is given, then checkLogin instead
 			if (username == "") return this.checkLogin();
 			
-			var def = jQuery.Deferred();
-			$http.post(root + "/users/login.json", { 'username': username, 'password': password })
-				.success(function(data, status, headers, config) {
-					def.resolve();
-				}).error(function(data, status, headers, config) {
-					def.reject(data);
-				});
-			return def;
+			return treatHttp($http.post(root + "/users/login.json", { 'username': username, 'password': password }));
 		},
 		'doLogout': function() {
-			var def = jQuery.Deferred();
-			$http.post(root + "/users/logout")
-				.success(function(data, status, headers, config) {
-					def.resolve();
-				}).error(function(data, status, headers, config) {
-					def.reject(data);
-				});
-			return def;
+			return treatHttp($http.post(root + "/users/logout"), function(data) {
+				$rootScope.$broadcast("rest_logged_out");
+			});
 		},
 		'checkReference': function(year, order) {
-			var def = jQuery.Deferred();
-			$http.post(root + "/patients/index.json", { 'Patient': {'entryyear': year, 'entryorder': order}})
-			.success(function(data, status, headers, config) {
-				if (data.length == 1) {
-					def.resolve(data[0]['Patient']['id']);
-				} else {
-					def.resolve(false);
-				}
-			}).error(function(data, status, headers, config) {
-				def.reject(data);
-			});
-			return def;
+			return treatHttp($http.post(root + "/patients/index.json", { 'Patient': {'entryyear': year, 'entryorder': order}}), 
+				function(data) {
+					if (data.length == 1) {
+						return data[0]['Patient']['id'];
+					} else {
+						return false;
+					}
+				});
 		},
 		'getFile': function(id) {
-			var def = jQuery.Deferred();
 			if (cache.isCached(id)) {
 				console.log("using cached informations");
+				var def = jQuery.Deferred();
 				return def.resolve(cache.get(id));
 			}
-			$http.post(root + "/patients/folder/" + id + ".json")
-			.success(function(folder, status, headers, config) {
-				 cache.set(folder.getMainFile().id, folder);
-				def.resolve(folder);
-			}).error(function(data, status, headers, config) {
-				def.reject(data);
+			return treatHttp($http.post(root + "/patients/folder/" + id + ".json"), function(data) {
+				cache.set(data.getMainFile().id, data);
+				return data;				
 			});
-			return def;
 		},
 		'searchForPatients': function(params) {
-			console.log(params);
-			var def = jQuery.Deferred();
-			$http.post(root + "/patients/index.json", { 'Patient': params })
-			.success(function(data, status, headers, config) {
+			return treatHttp($http.post(root + "/patients/index.json", { 'Patient': params }), function(data) {
 				var list = [];
 				for(var i in data) {
 					list.push(new cryptomedic.models.Patient(data[i]['Patient']));
 				}
-				def.resolve(list);
-			}).error(function(data, status, headers, config) {
-				def.reject(data);
+				return list;
 			});
-			return def;
 		}
 	};
 }]);

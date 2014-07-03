@@ -63,7 +63,7 @@
 </head>
 <body ng-app="app_main" ng-controller="ctrl" id="ng-app">
 	<!--  Login screen -->
-	<div ng-if="!logged && !pending" class="site-wrapper">
+	<div ng-if="!logged && !busy.shown" class="site-wrapper">
 		<div class="site-wrapper-inner col-sm-offset-4 col-sm-4">
 			<form class="form-signin" role="form">
 	    		<h2 class="form-signin-heading">Please sign in</h2>
@@ -102,7 +102,7 @@
 					</div>
 				</div>
 				<div class="modal-footer" ng-if="busy.done">
-					<button type="button" class="btn btn-default btn-success" data-dismiss="modal">
+					<button type="button" class="btn btn-default btn-success" data-dismiss="modal" ng-click="endbusy()">
 						<span class="glyphicon glyphicon-time"></span>
 						Dismiss
 					</button>
