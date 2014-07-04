@@ -34,6 +34,7 @@ class AppController extends Controller {
 	public $components = array (
 			'Session',
 			'Auth' => array (
+			        'authorize' => array('Controller'),
 					'loginRedirect' => array (
 						'controller' => 'pages',
 						'action' => 'display',
@@ -53,7 +54,7 @@ class AppController extends Controller {
 
 	public $uses = array("Label", "Deleted");
 	
-	function isAuthorized($user, $resource = null, $action = null, $args = null) {
+	function isAuthorized($user = null, $resource = null, $action = null, $args = null) {
 		if ($resource == null) 	$resource = $this->name;
 		if ($action == null)	$action = $this->action;
 		if ($args == null)		$args = $this->passedArgs;
