@@ -14,6 +14,8 @@
     "jquery": "~1.11",
     "jquery-ui": "latest",
     "bootstrap": "latest",
-    "qunit": "latest"
+    "qunit": "latest",
+    "respond": "latest",
+    "html5shiv": "latest"
   }
 }
