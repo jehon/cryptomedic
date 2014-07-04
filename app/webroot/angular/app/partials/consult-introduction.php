@@ -1,4 +1,8 @@
-<?php require_once(__DIR__ . "/../php/templates.php"); ?>
+<?php 
+	require_once(__DIR__ . "/../php/templates.php"); 
+	t::setDefaultOption("baseExpression", "currentFile().");
+	t::setDefaultOption("readOnly");
+?>
 <fieldset>
 	<legend><?php label("NonricketConsult-GeneralData"); ?></legend>
 	<table  class='colorize'>

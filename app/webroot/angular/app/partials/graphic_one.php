@@ -1,6 +1,6 @@
 <?php 
 	require_once(__DIR__ . "/../php/templates.php"); 
-	t::setDefaultOption("baseExpression", "getcurrentFile().");
+	t::setDefaultOption("baseExpression", "currentFile().");
 	t::setDefaultOption("readOnly");
 ?>
 <fieldset>
@@ -31,6 +31,7 @@
 	    <tr ng-repeat="f in folder.getSubFiles()" tag="stat_{{$index}}"
 	    	ng-mouseover="hover($index)"
 	    	ng-class="{ hovered: hovered == $index }"
+	    	ng-click="go('/folder/' + folder.id + '/' + $index)"
 			>
 	        <td>{{getValue($index, "Date")}}</td>
 	        <td>{{getValue($index, getVariableX())}}</td>
