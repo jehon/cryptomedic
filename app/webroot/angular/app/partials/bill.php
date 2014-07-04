@@ -16,7 +16,7 @@
 		echo "</tr>";
 	}
 ?>
-<div class="col-sm-6" ng-controller="ctrl_bill">
+<div class="col-sm-6">
 	<FieldSet>
 		<legend><?php label("Bill-GeneralData"); ?></legend>
 		<table  class='colorize'>
@@ -146,7 +146,11 @@
 				<td><?php label("Bill.total_real"); ?></td>
 				<td>{{currentFile().calculate_total_real()}}</td>
 			</tr>
-			<?php (new t("Bill.SocialLevel"))->tr()->p(); ?>
+			<?php (new t("Bill.Sociallevel"))->tr()->p(); ?>
+            <tr>
+				<td><?php label("Bill.percentage_asked"); ?></td>
+				<td>{{currentFile().calculate_percentage_asked() | mypercentage:1 }}</td>
+			</tr>
             <tr>
 				<td><?php label("Bill.total_asked"); ?></td>
 				<td>{{currentFile().calculate_total_asked()}}</td>
