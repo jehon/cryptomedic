@@ -9,7 +9,8 @@ function perishableCache(n, perish) {
 			return (typeof(cache[id]) != "undefined");
 		},
 		'get': function(id) {
-			if (this.isCached(id)) return cache[id];
+			if (this.isCached(id)) 
+				return angular.copy(cache[id]);
 			return null;
 		},
 		'perish': function(id) {
@@ -18,7 +19,7 @@ function perishableCache(n, perish) {
 			return true;
 		},
 		'set': function(id, data) {
-			cache[id] = data;
+			cache[id] = angular.copy(data);
 			return data;
 		}
 	};
