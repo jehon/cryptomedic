@@ -31,19 +31,17 @@ var cryptoApp = angular.module('app_main', [ 'ngRoute' ])
 			return responseData;
 		});
 }])
-// .filter('mynumber', function() {
-// 	// TODO: remove
-// 	return function(text, rnd, ext) {
-// 		text = text || '';
-// 		rnd = rnd || 2;
-// 		ext = ext || '';
-// 		if (typeof(text) != 'number') {
-// 			if (parseInt(text) != text) return text;
-// 			text = parseInt(text);
-// 		}
-// 		return "" + (Math.round(text * 10) / 10) + ext;
-// 	};
-// })
+.filter('mypercentage', function() {
+	return function(text, rnd) {
+		text = text || '';
+		rnd = rnd || 2;
+		if (typeof(text) != 'number') {
+			if (parseFloat(text) != text) return text;
+			text = parseFloat(text);
+		}
+		return "" + (Math.round(text * 100 * Math.pow(10, rnd)) / Math.pow(10, rnd)) + "%";
+	};
+})
 .directive('catchIt', [ "$compile", function($compile) {
 	return {
 		restrict: 'A',
