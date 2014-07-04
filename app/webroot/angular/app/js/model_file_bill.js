@@ -1,17 +1,51 @@
 "use strict";
 
 cryptomedic.models.Bill = cryptomedic.models.File.extend({
+	'calculate': function() {
+		var price = cryptomedic.prices[this.price_id];
+		var total = 0;
+		angular.forEach(price, function(p, i) {
+			if (i == "id") return;
+			if (i == "modified") return;
+			if (i == "created") return;
+			if (i == "lastuser") return;
+			if (i == "datefrom") return;
+			if (i == "dateto") return;
+			if (i == "type") return;
+			if (i == "controller") return;
+			if (i == "locked") return;
+			if (i == "dlocked") return;
+			if (i == "socialLevelPercentage_0") return;
+			if (i == "socialLevelPercentage_1") return;
+			if (i == "socialLevelPercentage_2") return;
+			if (i == "socialLevelPercentage_3") return;
+			if (i == "socialLevelPercentage_4") return;
+			if (p < 0) return;
+			if (typeof(this[i]) == 'undefined') return;
+			if (this[i] <= 0) return;
+			total += price[i] * this[i];
+			// 	$total += $price[$i] * $data[$i];
+		}, this);
+		return total;
+	},
+	'calculate_total_real': function() {
+		return this.calculate();
+	},
+	'calculate_percentage_asked': function() {
+		var sl = this['Sociallevel'];
+		if (sl == null || sl == 0) return total;
+		var price = cryptomedic.prices[this.price_id];
+		if (typeof(price["socialLevelPercentage_" + this.price_id]) == "undefined") return 1;
+		return price["socialLevelPercentage_" + this.price_id];
+	},
+	'calculate_total_asked': function() {
+		return this.calculate_total_real() * this.calculate_percentage_asked();
+	},
 	'getPriceFor': function(key) {
 		return cryptomedic.prices[this.price_id][key];
 	},
 	'getTotalFor': function(key) {
 		return cryptomedic.prices[this.price_id][key] * this[key];
-	},
-	'calculate_total_real': function() {
-		return "TODO";
-	},
-	'calculate_total_asked': function() {
-		return "TODO";
 	},
 	'calculatePriceId': function() {
 		this.price_id = -1;
