@@ -1,0 +1,27 @@
+TODO Migration 3.0.0
+
+flash:
+- AppController.php
+- PatientsController.php
+- UsersController.php
+
+If you want to continue using SHA1 hashing used in 2.x use ’passwordHasher’ => ’Weak’ in your authenticator configuration
+
+The method login() has been removed and replaced by setUser() instead. To login a user you now have to call identify() which returns user info upon successful identification and then use setUser() to save the info to session for persistence across requests.
+
+
+Folders:
+- Layouts is now Layout
+- Elements is now Element
+- Scaffolds is now Scaffold
+- Errors is now Error
+- Emails is now Email (same for Email inside Layout)
+
+View Class:
+• View::getVar() has been removed, use Cake\View\View::get() instead.
+• View::$ext has been removed and instead a protected property View::$_ext has been added.
+• The base, webroot, here, data, action, and params magic properties have been removed. You should access all of these properties on $this->request instead.
+
+
+New ORM Upgrade Guide:
+- lots to be done here !!!
