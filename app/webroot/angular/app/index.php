@@ -17,12 +17,11 @@
 	<link href="img/favicon.ico" type="image/x-icon" rel="shortcut icon" />
 	
 	<!-- Adapt upgrade.html also -->
-	<!--[if lt IE 7]>
+	<!--[if lt IE 8]>
 		<script type="text/javascript">
 			window.location.href = "/amd/cryptomedic/upgrade.html";
 		</script>
 	<![endif]-->
-	
 <?php 
 	// jquery
 	(new Script())->url("bower_components/jquery/dist/jquery.min.js")->cached()->js()->dependFile()->toPrint();
@@ -60,6 +59,11 @@
 	(new Script())->url("/amd/prices/index.json?var=cryptomedic.prices")->cached()->js()->dependDBTable("prices")->toPrint();
 	(new Script())->url("/amd/labels/index.json?var=cryptomedic.labels")->cached()->js()->dependDBTable("labels")->toPrint(); 
 ?>
+   	<!-- Responsive for bootstrap -->
+    <!--[if lt IE 9]>
+	    <?php (new Script())->url("bower_components/html5shiv/dist/html5shiv.min.js")->cached()->js()->dependFile()->toPrint(); ?>
+	    <?php (new Script())->url("bower_components/respond/dest/respond.min.js")->cached()->js()->dependFile()->toPrint(); ?>
+	<![endif]-->
 </head>
 <body ng-app="app_main" ng-controller="ctrl" id="ng-app">
 	<!--  Login screen -->
