@@ -5,6 +5,12 @@ cryptoApp.controller('ctrl_folder', [ '$scope', '$location', 'service_rest', '$r
 	$scope.page = "";
 	$scope.pageIsFile = false;
 	var id = parseInt($routeParams['id']);
+	var mode = $routeParams['mode'];
+	if (typeof(mode) == "undefined") mode = "read";
+
+	if (mode == "edit") {
+		jQuery(".modeRead").removeClass('modeRead').addClass('modeWrite');
+	}
 
 	$scope.id = function() { 
 		return id;
@@ -40,6 +46,11 @@ cryptoApp.controller('ctrl_folder', [ '$scope', '$location', 'service_rest', '$r
 		return $scope.page;
 	};
 	
+	$scope.actionCancel =function() {
+		refreshFolder();
+		$scope.go("/folder/" + $scope.folder.getId() + "/" + $scope.page);
+	}
+
 	$scope.getCachedForExport = function(id) {
 		return stringify(service_rest.getCached(id));
 	};
@@ -48,14 +59,17 @@ cryptoApp.controller('ctrl_folder', [ '$scope', '$location', 'service_rest', '$r
 		$scope.select($routeParams['page']);
 	}
 	
-	var busyEnd = $scope.doBusy("Getting the file from the server");
-	service_rest.getFile(id)
-		.done(function(data) {
-			$scope.folder = data;
-			$scope.select($scope.page);
-			$scope.safeApply();
-		}).always(function() {
-			$scope.$broadcast("refresh");
-			busyEnd();
-		});
+	function refreshFolder() {
+		var busyEnd = $scope.doBusy("Getting the file from the server");
+		service_rest.getFile(id)
+			.done(function(data) {
+				$scope.folder = data;
+				$scope.select($scope.page);
+				$scope.safeApply();
+			}).always(function() {
+				$scope.$broadcast("refresh");
+				busyEnd();
+			});
+	}
+	refreshFolder();
 }]);

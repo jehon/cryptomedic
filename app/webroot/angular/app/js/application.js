@@ -15,7 +15,7 @@ var cryptoApp = angular.module('app_main', [ 'ngRoute' ])
     }).when('/search', {
     	templateUrl: 'partials/search.php',
     	controller: 'ctrl_search',
-    }).when('/folder/:id/:page?', {
+    }).when('/folder/:id/:page?/:mode?', {
     	controller: 'ctrl_folder',
     	templateUrl: 'partials/folder.php',
     }).otherwise({ 'redirectTo': '/home'});
@@ -248,3 +248,4 @@ cryptoApp.controller('ctrl', [ '$scope', '$location', 'service_rest', function($
 
 	$scope.$on("$routeChangeError", function() { console.log("error in routes"); console.log(arguments); });
 }]);
+

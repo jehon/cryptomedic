@@ -351,17 +351,17 @@ class t {
 				$this->res .= "<input type='number' ng-model='{$this->rawExpression}' />";
 				break;
 			case 'list':
-				$this->res .= "<span id='{$this->key}'>{{ {$this->rawExpression} }}</span>";
+				$this->res .= "<span id='{$this->key}'>WW {{ {$this->rawExpression} }}</span>";
 				break;
 			case 'boolean':
 				$this->res .= "<input type='checkbox' ng-model='{$this->rawExpression}' />";
 				break;
 			case 'linkedList':
 				// TODO
-				$this->res .= "<span id='{$this->key}'>{{link( {$this->rawExpression} )}}</span>";
+				$this->res .= "<span id='{$this->key}'>WW {{link( {$this->rawExpression} )}}</span>";
 				break;
 			default:
-				$this->res .= "{$this->key} input";
+				$this->res .= "WW {$this->key} input";
 				break;
 		}
 		return $this;
@@ -369,13 +369,17 @@ class t {
 
 	function value() {
 		// TODO: show both sides, and hide with css
-		if (!$this->options['readOnly']
-			&& ((array_key_exists('mode', $_REQUEST) && ($_REQUEST['mode'] == "write")) || $this->options['writeOnly'])
-			) {
-			return $this->write();
-		} else {
-			return $this->read();
-		}
+		if ($this->options['readOnly']) return $this->read();
+		if ($this->options['writeOnly']) return $this->write();
+
+		$this->res .= "<span class='notModeWrite'>";
+		$this->read();
+		$this->res .= "</span>";
+
+		$this->res .= "<span class='notModeRead'>";
+		$this->write();
+		$this->res .= "</span>";
+		return $this;
 	}
 
 	function tr() {

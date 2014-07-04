@@ -21,20 +21,20 @@ html,body {
 /********************************************
  * Data display (modes, emtpyValues)
  */
-.modeRead .emptyValue {
-  color: lightgray;
-}
-
 .summary .emptyValue {
   display: none;
 }
 
-.modeWrite .notModeWrite {
-  background-color: red;
+.modeRead .emptyValue {
+  color: lightgray;
 }
 
 .modeRead .notModeRead {
-  background-color: green;
+  display: none;
+}
+
+.modeWrite .notModeWrite {
+  display: none;
 }
 
 /********************************************

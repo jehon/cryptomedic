@@ -1,6 +1,7 @@
 <?php 
 	require_once(__DIR__ . "/../php/templates.php"); 
 	t::setDefaultOption("baseExpression", "folder.getMainFile().");
+	t::setDefaultOption("readOnly");
 ?>
 <fieldset ng-controller='ctrl_patient'>
 	<legend><?php label("Related"); ?></legend>
@@ -19,16 +20,16 @@
 				<td><?php label("Patient.Reference") ?>
 				</td>
 				<td>
-				<? (new t("Patient.entryyear"))->readOnly()->value()->p(); ?>
+				<? (new t("Patient.entryyear"))->value()->p(); ?>
 				-
-				<? (new t("Patient.entryorder"))->readOnly()->value()->p(); ?>
+				<? (new t("Patient.entryorder"))->value()->p(); ?>
 				</td>
 			</tr>
-			<? (new t("Patient.Firstname"))->readOnly()->tr()->p(); ?>
-			<? (new t("Patient.Lastname"))->readOnly()->tr()->p(); ?>
-			<? (new t("Patient.Fathersname"))->readOnly()->tr()->p(); ?>
-			<? (new t("Patient.Yearofbirth"))->readOnly()->tr()->p(); ?>
-			<? (new t("Patient.Sex"))->readOnly()->tr()->p(); ?>
+			<? (new t("Patient.Firstname"))->tr()->p(); ?>
+			<? (new t("Patient.Lastname"))->tr()->p(); ?>
+			<? (new t("Patient.Fathersname"))->tr()->p(); ?>
+			<? (new t("Patient.Yearofbirth"))->tr()->p(); ?>
+			<? (new t("Patient.Sex"))->tr()->p(); ?>
 		</tbody>						
 	</table>						
 </fieldset>
