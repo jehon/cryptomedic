@@ -8,12 +8,12 @@ cryptomedic.models.File = cryptomedic.models.Data.extend({
 	},
 	'ageAtConsultTime': function() {
 		if (!this.isNotZero('Date')) throw new DataMissingException("Date");
-		if (this.Date.substr(0, 10) == "0000-00-00") throw new DataMissingException("Date");
+		// if (this.Date.substr(0, 10) == "0000-00-00") throw new DataMissingException("Date");
 		if (!this.isNotZero('patient')) throw new DataMissingException("Patient");
 		if (!this.patient.isNotZero('Yearofbirth')) throw new DataMissingException("Year of Birth");
 
-		// TODO: parse the Date?
-		return (this.Date.substr(0, 4) - this.patient.Yearofbirth);
+		return (this.Date.getFullYear() - this.patient.Yearofbirth);
+		//return (this.Date.substr(0, 4) - this.patient.Yearofbirth);
 	},
 	'ds_height': function() {
 		var sex = this.patient.sexStr();
