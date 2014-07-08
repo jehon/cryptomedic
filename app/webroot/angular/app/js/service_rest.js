@@ -4,7 +4,7 @@
 
 cryptoApp.factory('service_rest', [ '$http', '$log' , '$rootScope', function($http, $log, $rootScope) {
 	var cache = perishableCache(10);
-	var root = "/amd";
+	var root = "/amd/";
 	
 	function treatHttp(request, treatResponse) {
 		var def = jQuery.Deferred();
@@ -46,6 +46,15 @@ cryptoApp.factory('service_rest', [ '$http', '$log' , '$rootScope', function($ht
 				$rootScope.$broadcast("rest_logged_out");
 			});
 		},
+		'searchForPatients': function(params) {
+			return treatHttp($http.post(root + "/patients/index.json", { 'Patient': params }), function(data) {
+				var list = [];
+				for(var i in data) {
+					list.push(new cryptomedic.models.Patient(data[i]['Patient']));
+				}
+				return list;
+			});
+		},
 		'checkReference': function(year, order) {
 			return treatHttp($http.post(root + "/patients/index.json", { 'Patient': {'entryyear': year, 'entryorder': order}}), 
 				function(data) {
@@ -56,7 +65,7 @@ cryptoApp.factory('service_rest', [ '$http', '$log' , '$rootScope', function($ht
 					}
 				});
 		},
-		'getFile': function(id) {
+		'getFolder': function(id) {
 			if (cache.isCached(id)) {
 				console.log("using cached informations");
 				var def = jQuery.Deferred();
@@ -67,13 +76,14 @@ cryptoApp.factory('service_rest', [ '$http', '$log' , '$rootScope', function($ht
 				return data;				
 			});
 		},
-		'searchForPatients': function(params) {
-			return treatHttp($http.post(root + "/patients/index.json", { 'Patient': params }), function(data) {
-				var list = [];
-				for(var i in data) {
-					list.push(new cryptomedic.models.Patient(data[i]['Patient']));
-				}
-				return list;
+		'saveFile': function(data) {
+			if (data['type'] == "Patient") {
+				cache.perish(data['id']);
+			} else {
+				cache.perish(data['patient_id']);
+			}
+			return treatHttp($http.post(root + "/" + data['controller'] + "/save/" + data['id'] + ".json", data), function(data) {
+
 			});
 		}
 	};

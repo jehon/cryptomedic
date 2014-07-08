@@ -12,25 +12,26 @@
 					class="btn btn-default"
 					ng-class="{ 'btn-warning': page === $index }"
 					>
-				{{f.type}}<span ng-if="f.Date">[{{f.Date}}]</span> 
+				{{f.type}}<span ng-if="f.Date">[{{f.Date | date:'<?php echo $dateFormat; ?>'}}]</span> 
 	<!-- 			| date:'yyyy-MM-dd' -->
 			</a>
 		</span>
 		<a ng-if="hasPermission('all.debug')" ng-class="selected('export')" href="#/folder/{{id()}}/export" class="btn btn-default debug" style="width: 100%">Export</a>
 	</div>
 	<div class="col-md-10">
-		<div ng-if="patient()" ng-controller="ctrl_patient">
-	        Get a complete report:
-	        	<a target="_new" href="/amd/patients/view/{{id()}}.csv" >csv</a>&nbsp
-	        	<a target="_new" href="/amd/patients/view/{{id()}}.csv?fr=1" >french-csv</a>&nbsp
-	    		<a target="_new" href="/amd/patients/view/{{id()}}.xls" >xls</a>&nbsp
-		</div>
-		<div ng-if="pageIsFile">
-			<span class="notModeWrite btn btn-default" ng-click="go('/folder/' + folder.id + '/' + page + '/edit')">Edit</span>
-			<span class="notModeWrite btn btn-default">Delete</span>
-			<span class="notModeRead btn btn-default">Save</span>
-			<span class="notModeRead btn btn-default" ng-click="actionCancel()">Cancel</span>
-
+		<div>
+			<span ng-if="pageIsFile || (page == '')">
+				<span class="notModeWrite btn btn-default" ng-click="go('/folder/' + folder.id + '/' + page + '/edit')">Edit</span>
+				<span class="notModeWrite btn btn-default">Delete</span>
+				<span class="notModeRead btn btn-default" ng-click="actionSave()">Save</span>
+				<span class="notModeRead btn btn-default" ng-click="actionCancel()">Cancel</span>
+			</span>
+			<span ng-if="patient()" ng-controller="ctrl_patient">
+		        Get a complete report:
+		        	<a target="_new" href="/amd/patients/view/{{id()}}.csv" >csv</a>&nbsp
+		        	<a target="_new" href="/amd/patients/view/{{id()}}.csv?fr=1" >french-csv</a>&nbsp
+		    		<a target="_new" href="/amd/patients/view/{{id()}}.xls" >xls</a>&nbsp
+			</span>
 			Id: {{currentFile().id}} #
 			Type: {{currentFile().type}} #
 			Modified on: {{currentFile().modified | date:'yyyy-MM-dd HH:mm:ss' }} #
