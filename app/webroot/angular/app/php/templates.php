@@ -15,6 +15,9 @@ C:\wamp\www\amd\app\webroot\angular\app\partials
 require_once "../../../../../../maintenance.php";
 require_once(__DIR__ . "/../../../../Lib/cryptomedic.php");
 
+$dateFormat = "shortDate";
+$dateTimeFormat = "short";
+
 global $mysqli;
 $mysqli = new mysqli($config['database']['host'],
 		$config['database']['login'],
@@ -101,19 +104,6 @@ function label($key, $options = array()) {
 
 function catchFunction($name, $watch, $options = array()) {
 	trace();
-// 	$options = array_merge([
-// 		'echo' => true,
-// 		'format' => false
-// 	], $options);
-	
-// 	if ($options['echo']) {
-// 		echo catchFunction($name, $watch, array_merge($options, [ 'echo' => false ]));
-// 	}
-
-// 	return "<span catch-it ng-model='folder' tryit='$name'>"
-// 		. "{{ result " 
-// 		. ($options['format'] ? "| "  . $options['format'] : "")
-// 		. "}}</span>\n";
 }
 
 class t {
@@ -171,9 +161,11 @@ class t {
 			return ;
 			//throw new Exception("ParseKey: {$this->key} is not in the database");
 		}
-		$this->structures = $res->fetch_fields();
-		$this->structure = $this->structures[0];
-		
+
+		$structures = $res->fetch_fields();
+		$this->structure = $structures[0];
+
+
 		$this->myFlags = array();
 		$constants = get_defined_constants(true);
 		foreach ($constants['mysqli'] as $c => $n) {
@@ -245,6 +237,9 @@ class t {
 				foreach($list as $k => $v){
 					$this->listing[$v] = $this->_reference($v);
 				}
+			} else {
+				// Labels = the value itself
+				$this->listing = array_combine($this->listing, $this->listing);
 			}
 		}
 
@@ -253,36 +248,23 @@ class t {
 		return $this;
 	}
 
-	private function _reference() {
+	private function _reference($v) {
 		global $mysqli;
-		if (is_numeric($this->key)) {
-			$sql = "SELECT * FROM `labels` WHERE `id` = '{$this->key}' or `reference` = '". $this->key . "'";
-		} else {
-			$sql = "SELECT * FROM `labels` WHERE `reference` = '{$this->key}'";
-		}
+		$sql = "SELECT * FROM `labels` WHERE `id` = $v" ;
 		
 		$res = $mysqli->query($sql);
 		if ($res === false) {
 			throw new Exception("Syntax error in labels: " . $mysqli->errno . ":\n" . $mysqli->error . "\n");
 		}
 		if ($res->num_rows > 1) {
-			throw new Exception("Too much labels for '{$this->key}': " . $sql);
+			throw new Exception("Too much labels for '$v': " . $sql);
 		}
-		if ($res->num_rows > 1) {
+		if ($res->num_rows == 1) {
 			$version = $res->fetch_array();
-			if ($version["english"] != $key && $version["english"] != "")
+			if ($version["english"] != $v && $version["english"] != "")
 				return $version["english"];
 		}
-		if ($this->linked2DB) {
-			return $this->field;
-		}
-		if (count(explode("-", $this->key)) > 1) {
-			return explode("-", $this->key)[1];
-		}
-		if (count(explode(".", $this->key)) > 1) {
-			return explode(".", $this->key)[1];
-		}
-		return $this->key;
+		return $v;
 	}
 
 	function label() {
@@ -297,17 +279,19 @@ class t {
 	}
 	
 	function read() {
+		global $dateFormat;
+		global $dateTimeFormat;
 		if (!$this->linked2DB) {
 			throw new Exception("Read: key is not a two parts: '{$this->key}'");
 		}
 		switch($this->myType) {
 			case 'date':
 				// See https://docs.angularjs.org/api/ng/filter/date
-				$this->res .= "<span id='{$this->key}'>{{ {$this->rawExpression} | date:'shortDate' }}</span>";
+				$this->res .= "<span id='{$this->key}'>{{ {$this->rawExpression} | date:'$dateFormat' }}</span>";
 				break;
 			case 'datetime':
 				// See https://docs.angularjs.org/api/ng/filter/date
-				$this->res .= "<span id='{$this->key}'>{{ {$this->rawExpression} | date:'short' }}</span>";
+				$this->res .= "<span id='{$this->key}'>{{ {$this->rawExpression} | date:'$dateTimeFormat' }}</span>";
 				break;
 				// TODO: clean presentation
 			case 'text':
@@ -334,6 +318,9 @@ class t {
 		if (!$this->linked2DB) {
 			throw new Exception("Read: key is not in the database: '{$this->key}'");
 		}
+		$required = array_key_exists('MYSQLI_NOT_NULL_FLAG', $this->myFlags);
+
+		// TODO: all the "required" fields
 
 		switch($this->myType) {
 			case 'datetime':
@@ -341,24 +328,51 @@ class t {
 				$this->read();
 				break;
 			case 'date':
-				$this->res .= "<input type='date' ng-model='{$this->rawExpression}' />";
+				$this->res .= "<input type='date' ng-model='{$this->rawExpression}' " 
+					. ($required ? "required ng-required " : "" )
+					. "/>";
 				break;
 			case 'text':
-				$this->res .= "<input ng-model='{$this->rawExpression}' />";
+				if ($this->structure->length > 256) {
+					$this->res .= "<textarea ng-model='{$this->rawExpression}' cols=40 rows=4/>";
+				} else {
+					$this->res .= "<input ng-model='{$this->rawExpression}' "
+					. ($required ? "required ng-required " : "" )
+					. "/>";
+				}
 				break;
 			case 'numeric':
 			case 'float':
-				$this->res .= "<input type='number' ng-model='{$this->rawExpression}' />";
-				break;
-			case 'list':
-				$this->res .= "<span id='{$this->key}'>WW {{ {$this->rawExpression} }}</span>";
+				$this->res .= "<input type='number' ng-model='{$this->rawExpression}' "
+				. ($required ? "required ng-required " : "" )
+				. "/>";
 				break;
 			case 'boolean':
 				$this->res .= "<input type='checkbox' ng-model='{$this->rawExpression}' />";
 				break;
 			case 'linkedList':
-				// TODO
-				$this->res .= "<span id='{$this->key}'>WW {{link( {$this->rawExpression} )}}</span>";
+			case 'list':
+/*
+<span  class="nullable">
+    <select ng-model="myColor" ng-options="color.name for color in colors">
+      <option value="">-- choose color --</option>
+    </select>
+  </span>
+  */
+  				// TODO: back to radio buttons
+  				// if (count($this->listing) < 6) {
+  				// } else {
+  					$this->res .= "<select ng-model='{$this->rawExpression}' "
+						. ($required ? "required ng-required " : "" )
+  						. ">";
+  					if (!array_key_exists('MYSQLI_NOT_NULL_FLAG', $this->myFlags)) {
+  						$this->res .= "<option value=''>?</option>";
+  					}
+  					foreach($this->listing as $k => $v) {
+  						$this->res .= "<option value='$k'>$v</option>";
+  					}
+  					$this->res .= "</select>";
+  				// }
 				break;
 			default:
 				$this->res .= "WW {$this->key} input";
