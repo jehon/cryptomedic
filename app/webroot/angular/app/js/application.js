@@ -7,6 +7,53 @@ function ApplicationException(msg) {
 ApplicationException.prototype = new Error();
 ApplicationException.prototype.getMessage = function() { return this.message; };
 
+function objectify(what) {
+	if (what === null) return what;
+    switch(typeof(what)) {
+		case "undefined": return null;
+		case "string": 
+			if (what === date2CanonicString(null)) {
+				return null;
+			}
+            if (what.match("[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2} GMT[+-][0-9]{4}") == what) {
+            	if (what == "0000-00-00 00:00:00 GMT+0000") return null;
+                return new Date(what.substr(0, 4), what.substr(5, 2) - 1, what.substr(8, 2),
+                    what.substr(11, 2), what.substr(14, 2), what.substr(17, 2));
+			};
+			// TODO: problem with year parsing !!!
+            if (what.match("[0-9]{4}-[0-9]{2}-[0-9]{2}") == what) {
+            	if (what == "0000-00-00") return null;
+                var d = new Date(what.substr(0, 4), what.substr(5, 2) - 1, what.substr(8, 2));
+                return d;
+			};
+			return what;
+		case "object":
+			angular.forEach(what, function(val, i) {
+				what[i] = objectify(what[i]);
+			});
+            if (typeof(what['type']) != "undefined") {
+                what = new cryptomedic.models[what['type']](what);
+            }
+			return what;
+		default:
+			return what;
+				
+	}
+}
+
+function stringify(what) {
+    if (what == null) return what;
+    if (typeof(what) == "object") {
+        if (what instanceof Date) {
+            return date2CanonicString(what);
+        }
+        angular.forEach(what, function (v, k) {
+            what[k] = stringify(what[k]);
+        });
+    }
+    return what;
+}
+
 var cryptoApp = angular.module('app_main', [ 'ngRoute' ])
 .config([ '$routeProvider', function($routeProvider) {
     $routeProvider.when('/', {
