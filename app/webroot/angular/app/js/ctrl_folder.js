@@ -46,11 +46,6 @@ cryptoApp.controller('ctrl_folder', [ '$scope', '$location', 'service_rest', '$r
 		return $scope.page;
 	};
 	
-	$scope.actionCancel =function() {
-		refreshFolder();
-		$scope.go("/folder/" + $scope.folder.getId() + "/" + $scope.page);
-	}
-
 	$scope.getCachedForExport = function(id) {
 		return stringify(service_rest.getCached(id));
 	};
@@ -59,9 +54,28 @@ cryptoApp.controller('ctrl_folder', [ '$scope', '$location', 'service_rest', '$r
 		$scope.select($routeParams['page']);
 	}
 	
+	$scope.actionCancel =function() {
+		refreshFolder();
+		$scope.go("/folder/" + $scope.folder.getId() + "/" + $scope.page);
+	}
+
+	$scope.actionSave = function() {
+		console.log($scope.currentFile());
+		var busyEnd = $scope.doBusy("Saving the file to the server");
+		service_rest.saveFile($scope.currentFile())
+			.done(function(data) {
+//				$scope.folder = data;
+//				$scope.select($scope.page);
+				$scope.safeApply();
+			}).always(function() {
+				$scope.$broadcast("refresh");
+				busyEnd();
+			});
+	}
+
 	function refreshFolder() {
 		var busyEnd = $scope.doBusy("Getting the file from the server");
-		service_rest.getFile(id)
+		service_rest.getFolder(id)
 			.done(function(data) {
 				$scope.folder = data;
 				$scope.select($scope.page);

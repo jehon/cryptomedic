@@ -199,20 +199,21 @@ class AppController extends Controller {
 		$this->set("ajax", $ajax);
 	}
 
-// 	function redirect($url, $status = NULL, $exit = true) {
-		
-// 	}
-	
 	function myRedirectToPatientPage($data, $flash = "", $flash_class = "flashko") {
+		if ($this->request->is("ajax")) {
+			$this->set("data", $flash);
+			return ;
+		}
 		if ($flash > "") {
 			$this->Session->setFlash($flash, "default", array ("class" => $flash_class));
 		}
 		if (is_array($data) && array_key_exists($this->modelClass, $data))
-			$mdata = $data [$this->modelClass];
+			$mdata = $data[$this->modelClass];
 		else
 			$mdata = $data;
 		if (is_array($mdata) && array_key_exists("patient_id", $mdata)) {
-			return $this->redirect("/patients/view/" . $mdata ['patient_id'] . "#related/$this->modelClass-" . $mdata ['id'] . "/read");
+			return $this->redirect("/patients/view/" . $mdata ['patient_id'] 
+				. "#related/$this->modelClass-" . $mdata ['id'] . "/read");
 		}
 		return $this->redirect("/" . $this->request->params ['controller'] . "/view/" 
 				. (is_array($mdata) ? $mdata ['id'] : $mdata)

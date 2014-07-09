@@ -25,7 +25,7 @@ angular.forEach(folder.getSubFiles(), function(val, i) { console.log(i + ": " + 
 				expect(folder.getSubFile(i) instanceof cryptomedic.models.RicketConsult).toBeTruthy();
 				expect(folder.getSubFile(i).id).toBe(8819);
 				expect(folder.getSubFile(i).patient instanceof cryptomedic.models.Patient).toBeTruthy();
-				expect(folder.getSubFile(i).Date).toBe("2014-06-04");
+				expect(folder.getSubFile(i).Date).toEqual(new Date(2014, 5, 4));
 				expect(folder.getSubFile(i).ageAtConsultTime()).toBe(16);
 
 				i = clubFoot_695;
@@ -33,7 +33,7 @@ angular.forEach(folder.getSubFiles(), function(val, i) { console.log(i + ": " + 
 				expect(folder.getSubFile(i) instanceof cryptomedic.models.ClubFoot).toBeTruthy();
 				expect(folder.getSubFile(i).id).toBe(695);
 				expect(folder.getSubFile(i).patient instanceof cryptomedic.models.Patient).toBeTruthy();
-				expect(folder.getSubFile(i).Date).toBe("2014-04-17");
+				expect(folder.getSubFile(i).Date).toEqual(new Date(2014, 3, 17));
 				expect(folder.getSubFile(i).ageAtConsultTime()).toBe(16);
 				
 				i = orthopedicDevice_17;
@@ -41,7 +41,7 @@ angular.forEach(folder.getSubFiles(), function(val, i) { console.log(i + ": " + 
 				expect(folder.getSubFile(i) instanceof cryptomedic.models.OrthopedicDevice).toBeTruthy();
 				expect(folder.getSubFile(i).id).toBe(17);
 				expect(folder.getSubFile(i).patient instanceof cryptomedic.models.Patient).toBeTruthy();
-				expect(folder.getSubFile(i).Date).toBe("0000-00-00");
+				expect(folder.getSubFile(i).Date).toBe(null);
 				expect(folder.getSubFile(i).ageAtConsultTime).toThrow();
 				expect(function() { folder.getSubFile(i).ageAtConsultTime() }).toThrow(new DataMissingException("Date"));
 				done();
