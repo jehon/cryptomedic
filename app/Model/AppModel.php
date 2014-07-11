@@ -31,7 +31,7 @@ class AppModel extends Model {
 		foreach($data as $columnName => $value) {
 			if (($columnTypes[$columnName] === 'integer')
 					&& ($value !== null) 
-					&& (!in_array($columnName, [ 'patient_id' ]))) {
+					&& (!in_array($columnName, array('patient_id')))) {
 				if (intval($value) == $value) {
 					$data[$columnName] = intval($value);
 				}
