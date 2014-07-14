@@ -4,29 +4,25 @@ if(!isset($_SESSION)) session_start();
 
 // Debug helper functios
 require_once("helpers/debug.php");
+foreach(glob(__DIR__ . DIRECTORY_SEPARATOR . "helpers" . DIRECTORY_SEPARATOR . "*.php") as $f) {
+	require_once($f);
+}
 
 // Configure the application
 require_once("config.php");
-require_once("helpers/server.php");
 $server = new Server($config);
-
-require_once("helpers/response.php");
 $response = new Response($server);
-
-require_once("helpers/database.php");
-$database = new Database($server->getConfig("database"), $server, $response);
-
-require_once("helpers/request.php");
-$request = new Request($server, $response, $database);
+$request = new Request($server, $response);
 
 // define security: authentification + authorization
 require_once("behaviors/authentification.php");
 
-// redirect to the correct route accordingly
-
+$route = __DIR__ . DIRECTORY_SEPARATOR . "routes" .  DIRECTORY_SEPARATOR . $request->getRoute()[0] . ".php";
+if (file_exists($route)) {
+	require_once($route);
+}
 
 ?>
 <hr>
 <?php
 	var_dump($_SESSION);
-?>

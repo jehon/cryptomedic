@@ -1,8 +1,9 @@
 <?php
 
-
 class Server {
 	var $config = array();
+	const LOGIN_USERNAME = "login.username";	
+
 
 	public function __construct($config) {
 		// read the configuration
@@ -49,7 +50,6 @@ class Server {
 	*
 	* @param string $key
 	* @param any $defvalue the default value
-	*    if $defvalue is null, the function raise a criticalError in case the key is not present 
 	* @see setConfig
 	* @see addConfig
 	*/
@@ -92,5 +92,3 @@ class Server {
 		$this->config[$key][] = $value;
 	}
 }
-
-

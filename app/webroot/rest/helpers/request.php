@@ -3,16 +3,14 @@
 Class request {
 	protected $server;
 	protected $response;
-	protected $database;
 	protected $method;
 	protected $parameters;
 	protected $post;
 	protected $subquery;
 
-	public function __construct($server, $response, $database) {
+	public function __construct($server, $response) {
 		$this->server = $server;
 		$this->response = $response;
-		$this->database = $database;
 
 		/**
 		* Defining the query parameter
@@ -27,7 +25,7 @@ Class request {
 			$this->response->debugHeader($l, 'SUBQUERY-' . $k);
 		
 		if (count($this->subquery) < 1)
-			$this->response->criticalError("Invalid route", Response::INVALID_ROUTE);
+			$this->response->invalidData("Invalid route");
 		
 		/**
 		* Parameters
@@ -35,8 +33,14 @@ Class request {
 		// parse_str($_SERVER['QUERY_STRING'], $this->parameters);
 		// var_dump($_GET);
 		$this->parameters = $_GET;
+		foreach($this->parameters as $k => $v) {
+			$this->response->debugHeader($v, 'SUBQUERY-PARAM-' . $k);
+		}
 
 		$this->post = $_POST;
+		foreach($this->post as $k => $v) {
+			$this->response->debugHeader($v, 'SUBQUERY-POST-' . $k);
+		}
 
 		/**
 		* Defining the method parameter
@@ -52,6 +56,14 @@ Class request {
 		$this->response->debugHeader($this->method, 'SUBQUERY-METHOD');
 	}
 
+	public function getRoute($i = null) {
+		if ($i == null)
+			return $this->subquery;
+		if ($i > count($this->subquery))
+			return null;
+		return $this->subquery[$i-1];;
+	}
+
 	public function getMethod() {
 		return $this->method;
 	}
@@ -60,6 +72,10 @@ Class request {
 		if (array_key_exists($key, $this->parameters))
 			return $this->parameters[$key];
 		return $default;
+	}
+
+	public function getParameters() {
+		return $this->parameters;
 	}
 
 	public function getPost($key = null, $default = null) {
@@ -71,6 +87,8 @@ Class request {
 
 	public function matchRoute($elements) {
 		foreach($elements as $i => $e) {
+			if (!array_key_exists($i, $this->subquery))
+				return false;
 			if ($this->subquery[$i] != $e)
 				return false;
 		}

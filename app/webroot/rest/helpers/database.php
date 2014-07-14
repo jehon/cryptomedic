@@ -2,101 +2,105 @@
 
 require_once(__DIR__ . "/../adodb/adodb.inc.php");
 
-class database {
+class DBTable {
 	protected $response = array();
 	protected $db = null;
-	protected $tables = null;
+	protected $table;
 	protected $lastStatement = "";
+	protected $columns;
 
-	public function __construct($config, $server, $response) {
+	public function __construct($config, $table, $server, $response) {
 		$this->response = $response;
 		$this->server = $server;
+		$this->table = $table;
 
 		$this->db = ADONewConnection($config['uri']);
 		$this->db->SetFetchMode(ADODB_FETCH_ASSOC);
 		if (array_key_exists("init", $config)) {
 			//$this->db->Execute("SET CHARACTER SET 'utf8'");
 			$this->lastStatement = $config['init'];
-			$res = $this->db->Execute($config['init']);
-			if ($res === false) {
-				$this->response->dieOnSqlError($this, "Database init script error");
-			}
+			$this->dieIfNecessary($this->db->Execute($config['init']), "Database init script error");
 		}
 
-		$this->tables = $this->server->getCache("tables", null);
-		if (is_null($this->tables)) {
-			$this->tables = $this->db->MetaTables();
-			if ($this->tables === false)
-				$this->response->criticalError("Table list error", 500, $this->db->ErrorMsg());
-			$this->server->setCache('tables', $this->tables);
+		$tablesList = $this->server->getCache("tables", null);
+		if (is_null($tablesList)) {
+			$tablesList = $this->db->MetaTables();
+			if ($tablesList === false)
+				$this->response->internalError("Table list error", 500, $this->db->ErrorMsg());
+			$this->server->setCache('tables', $tablesList);
+		}
+		if (($this->table != null) && (array_search($this->table, $tablesList) === false)) {
+			$this->response->invalidData("Incorrect table: " . $this->table);
 		}
 	}
 
-	// ---------------------------------- _SQL FUNCTIONS ------------------------------
-	public function checkTableName($table) {
-		if (in_array($table, $this->tables))
-			return true;
-		$this->response->criticalError("Table not available: $table");
-		return false;
+	public function escape($what) {
+		return $this->db->qstr($what, get_magic_quotes_gpc());
 	}
 
-	public function checkTableField($table, $field) {
-		// TODO: clean up parameters: check existing ` = sql escape
-		// error ? throw exception
-		return true;
+	public function getColumns() {
+		if (!$this->table) $this->response->internalError("No table in " . __METHOD__);
+		if (!$this->columns) 
+			$this->columns = $this->dieIfNecessary($this->db->MetaColumnNames($this->table), "Getting columns names");
+		return $this->columns;
 	}
 
-	public function _checkValue($value) {
-		// TODO: clean up parameters: check existing ` = sql escape
-		// error ? throw exception
-		return true;
+	public function isColumn($col) {
+		if (!$this->table) $this->response->internalError("No table in " . __METHOD__);
+		$i = array_search($col, $this->getColumns());
+		if ($i === false)
+			return false;
+		return $this->columns[$i];
 	}
 
-	public function rowAll($table, $parameters) {
-		$where = $this->getParameter('where', $parameters, "(1=1)");
-		$column = $this->getParameter('columns', $parameters, '*');
+	public function rowAll($where = array(), $excludeColumns = array(), $limit = null) {
+		if (!$this->table) $this->response->internalError("No table in " . __METHOD__);
+		$sql = "SELECT ";
+
+		if ($excludeColumns == null) {
+			$sql .= "*";
+		} else {
+			$cols = array_diff($this->getColumns(), $excludeColumns);
+			$sql .= "`" . implode($cols, "`, `") . "`";
+		}
+		$sql .= "FROM `{$this->table}` ";
+
+		// We send back only what we can handle:
+		$whereClause = "(id > '') AND (modified is not null)";
+		// $whereClause = "(1 = 1)";
 		
-		$cols = split(',', $column);
-		
-		if ((count($cols) == 1)  && ($cols[0] != '*')) {
-			$data = $this->db->GetCol("SELECT DISTINCT `" . $cols[0] . "` FROM `$table` WHERE (id > '') && (modified is not null) && $where ");
-			$split = $this->getParameter('split', $parameters, '');
-			if ($split != "") {
-				$s = array();
-				foreach($data as $key => $val) {
-					$s = array_merge($s, split($split, $val));
-				}
-				$data = array_unique($s);
-				sort($data);
-				if ($data[0] == "") {
-					array_shift($data);
-				}
+		foreach($where as $p => $v) {
+			$np = $this->isColumn($p);
+			if (!$np) {
+				$this->response->invalidData("rowAll: " . $p);
 			}
-		} else {		
-			$data = $this->db->GetAll("SELECT * FROM `$table` WHERE (id > '') && (modified is not null) && $where ");
+			$whereClause .= " AND (`$np` LIKE " . $this->escape($v) . ")";
 		}
+		$sql .= "WHERE " . $whereClause;
+
+		if (is_numeric($limit))
+			$sql .= "LIMIT " . $limit;
+
+		$data = $this->dieIfNecessary($this->db->GetAll($sql), "rowAll");
 		return $data;
 	}
 
-	public function rowGet($table, $id) {
-		return $this->db->GetRow("SELECT * FROM `$table` WHERE id='$id' ");
-	}
-
-	public function tableList() {
-		return $this->tables;
+	public function rowGet($id) {
+		if (!$this->table) $this->response->internalError("No table in " . __METHOD__);
+		return $this->preparedStatement("SELECT * FROM `{$this->table}` WHERE id= ?", array($id));
 	}
 
 	public function preparedStatement($statement, $data) {
 		$this->lastStatement = $statement;
-		$stmt = $this->db->Prepare($statement);
-		$res = $this->db->Execute($stmt, $data);
-		if ($res === false) {
-			$this->response->dieOnSqlError($this->db);
-		}
+		$stmt = $this->dieIfNecessary($this->db->Prepare($statement), "preparing statement");
+		$res = $this->dieIfNecessary($this->db->Execute($stmt, $data), "executing statement");
 		return $res->getArray();
 	}
 
-	public function errorMsg() {
-		return $this->db->ErrorMsg() . "<br>\n" . $this->lastStatement;
+	public function dieIfNecessary($result, $dbgMsg) {
+		if (($result === false) && ($this->db->ErrorMsg())) {
+			$this->response->dieWith(500, "Invalid SQL", "Invalid sql " . ($dbgMsg ? "[" . $dbgMsg . "]" : "") . ":" . $this->db->ErrorMsg());
+		}
+		return $result;
 	}
 }

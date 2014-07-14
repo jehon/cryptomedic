@@ -4,29 +4,40 @@
 
 Class Response {
 	protected $server = array();
-	const INVALID_ROUTE = 404;
 
 	public function __construct($server) {
 		$this->server = $server;
 	}
 
-	public function ok($data = null) {
-		if ($data) json_encode($data, $this->server->getConfig('debug', false) ? JSON_PRETTY_PRINT : 0);
-		die("");
-	}
-
-	public function dieOnSqlError($database, $dbgMsg = false) {
-		if ($dbgMsg) $this->debugHeader($dbgMsg);
-		if ($this->server->getConfig('debug', false)) {
-			die("Invalid sql " . ($dbgMsg ? "[" . $dbgMsg . "]" : "") . ":" . $database->errorMsg());
+	protected function dieWith($errCode, $errData = null, $dbgData = null) {
+		if (is_array($dbgData)) $dbgData = implode($dbgData, "/");
+		if ($dbgData) $this->debugHeader($dbgData);
+		if ($errData) {
+			echo json_encode($errData, $this->server->getConfig('debug', false) ? JSON_PRETTY_PRINT : 0);
 		}
-		die("Invalid sql: " . $db->ErrorMsg());
+		http_response_code($errCode);
+		die();
 	}
 
-	public function invalidData($dbgMsg = false) {
-		if ($dbgMsg) $this->debugHeader($dbgMsg);
-		header("Invalid data", true, 406);
-		die("Invalid data");
+	public function ok($data = null) {
+		if ($data) echo json_encode($data, $this->server->getConfig('debug', false) ? JSON_PRETTY_PRINT : 0);
+		die();
+	}
+
+	public function unauthorized($errData = null) {
+		$this->dieWith(401, $errData);
+	}
+
+	public function forbidden($errData = null) {
+		$this->dieWith(403, $errData);
+	}
+
+	public function invalidData($invalidData = null) {
+		$this->dieWith(406, "Invalid data", $invalidData);
+	}
+
+	public function internalError($dbgMsg = false) {
+		$this->dieWith(500, "An internal error", $dbgMsg);
 	}
 
 	/**
