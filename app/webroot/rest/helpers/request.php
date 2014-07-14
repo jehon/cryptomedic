@@ -64,6 +64,16 @@ Class request {
 		return $this->subquery[$i-1];;
 	}
 
+	public function matchRoute($elements) {
+		foreach($elements as $i => $e) {
+			if (!array_key_exists($i, $this->subquery))
+				return false;
+			if ($this->subquery[$i] != $e)
+				return false;
+		}
+		return true;
+	}
+
 	public function getMethod() {
 		return $this->method;
 	}
@@ -85,13 +95,4 @@ Class request {
 		return $default;
 	}
 
-	public function matchRoute($elements) {
-		foreach($elements as $i => $e) {
-			if (!array_key_exists($i, $this->subquery))
-				return false;
-			if ($this->subquery[$i] != $e)
-				return false;
-		}
-		return true;
-	}
 }
