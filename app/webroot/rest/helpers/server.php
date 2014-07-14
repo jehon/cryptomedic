@@ -2,6 +2,7 @@
 
 class Server {
 	var $config = array();
+	const DEBUG = "debug";	
 	const LOGIN_USERNAME = "login.username";	
 
 
