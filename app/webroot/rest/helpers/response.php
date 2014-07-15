@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * We set the content-type to json only in case we have an "ok" message
+ *
+ */
+
 Class Response {
 	protected $server = array();
 
@@ -31,6 +36,7 @@ Class Response {
 	  * The function die() after this call.
 	  */
 	public function ok($data = null) {
+		header("Content-type: application/json");
 		if ($data) echo json_encode($data);// , $this->server->getConfig('debug', false) ? JSON_PRETTY_PRINT : 0);
 		die();
 	}
