@@ -1,14 +1,18 @@
 <?php
 
 class Server {
-	var $config = array();
 	const DEBUG = "debug";	
 	const LOGIN_USERNAME = "login.username";	
 	const LOGIN_GROUP = "login.group";	
+	const ROUTE_AUTHENTICATE = "authenticate";	
+	
+	var $config = array(
+		Server::ROUTE_AUTHENTICATE => "authenticate"
+	);
 
 	public function __construct($config) {
 		// read the configuration
-		$this->config = $config;
+		$this->config = array_merge($this->config, $config);
 		if (!array_key_exists($this->getConfig("domain"), $_SESSION))
 			$_SESSION[$this->getConfig("domain")] = array();
 	}
@@ -55,15 +59,13 @@ class Server {
 	* @see setConfig
 	* @see addConfig
 	*/
-	public function getConfig($key, $defvalue = null) {
+	public function getConfig($key) {
 		if (array_key_exists($key, $this->config))
 			return $this->config[$key];
-		if ($defvalue != null)
-			return $defvalue;
-		error_log("Key not configured: '$key'");
-		trace("Key not configured: '$key'");
-		die("Dying");
-		return null;
+		// if ($defvalue != null)
+		// 	return $defvalue;
+		global $response;
+		$response->internalError("Key not configured: '$key'");
 	}
 
 	/**
