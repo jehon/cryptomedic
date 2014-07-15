@@ -10,6 +10,8 @@ Class Response {
 
 	public function __construct($server) {
 		$this->server = $server;
+
+		header("Content-type: application/json");
 	}
 
 	/**
@@ -31,12 +33,21 @@ Class Response {
 		die();
 	}
 
+	public function defaultResponse($code = 200) {
+		$this->defaultResponseCode = $code;
+	}
+
+	public function launchDefaultResponse() {
+		debugHeader("default reponse launched");
+		http_response_code($this->defaultResponseCode);
+		die();
+	}
+
 	/**
 	  * Good, the request is ok, let's send some data to the browser
 	  * The function die() after this call.
 	  */
 	public function ok($data = null) {
-		header("Content-type: application/json");
 		if ($data) echo json_encode($data);// , $this->server->getConfig('debug', false) ? JSON_PRETTY_PRINT : 0);
 		die();
 	}
