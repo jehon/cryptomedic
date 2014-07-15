@@ -36,6 +36,24 @@ Class request {
 		}
 
 		$this->post = $_POST;
+		if (!$this->post) {
+			// Read data from php://input
+			// @Author cakephp (CakeRequest.php#934)
+			$fh = fopen('php://input', 'r');
+			$content = stream_get_contents($fh);
+			if ($content) {
+				$content = json_decode($content);
+				if (is_array($content)) {
+					$this->post = $content;
+				} else if (is_object($content)) {
+					foreach($content as $k => $v)
+						$this->post[$k] = $v;
+				} else {
+					$this->response->invalidData("input content");
+				}
+			}
+		}
+
 		foreach($this->post as $k => $v) {
 			debugHeader($v, 'SUBQUERY-POST-' . $k);
 		}
@@ -93,4 +111,20 @@ Class request {
 		return $default;
 	}
 
+
+/**
+ * Read data from php://input, mocked in tests.
+ *
+ * @return string contents of php://input
+ * @Author cakephp (CakeRequest.php#934)
+ */
+	// protected function _readInput() {
+	// 	if (empty($this->_input)) {
+	// 		$fh = fopen('php://input', 'r');
+	// 		$content = stream_get_contents($fh);
+	// 		fclose($fh);
+	// 		$this->_input = $content;
+	// 	}
+	// 	return $this->_input;
+	// }
 }
