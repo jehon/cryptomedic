@@ -10,17 +10,17 @@ class TableRoute {
 	protected $table;
 	protected $route;
 
-	public function __construct($response, $server, $table) {
-		$this->dbTable = new DBTable($server->getConfig("database"), $table, $server, $response);
+	public function __construct($request, $response, $server, $table, $options) {
+		$this->dbTable = new DBTable($server->getConfig("database"), $table, $server, $response, $options);
+		$this->request = $request;
 		$this->response = $response;
 		$this->server = $server;
 		$this->table = $table;
 
-		$this->response->debugHeader($table, "TABLE");
+		debugHeader($table, "TABLE");
 	}
 
-	public function route($request) {
-		$this->request = $request;
+	public function route() {
 		if (count($this->request->getRoute()) == 1) {
 			switch($this->request->getMethod()) {
 				case "GET":
@@ -59,12 +59,11 @@ class TableRoute {
 	}
 
 	public function collectionIndex() {
-		// TODO: implement search parameters
 		$where = array();
 		foreach($this->request->getParameters() as $p => $v) {
 			$where[$p] = $v;
 		}
-		$this->response->ok($this->dbTable->rowAll($where, array("password")));
+		$this->response->ok($this->dbTable->rowAll($where));
 	}
 
 	public function collectionDelete() {

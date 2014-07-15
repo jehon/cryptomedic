@@ -16,7 +16,7 @@ Class Response {
 	protected function dieWith($errCode, $errData = null, $dbgData = null) {
 		if (is_array($dbgData)) $dbgData = implode($dbgData, "/");
 		if ($this->server->getConfig(Server::DEBUG)) {
-		if ($dbgData) $this->debugHeader($dbgData);
+		if ($dbgData) debugHeader($dbgData);
 			trace();
 		}
 		http_response_code($errCode);
@@ -63,19 +63,5 @@ Class Response {
 	  */
 	public function internalError($dbgMsg = false) {
 		$this->dieWith(500, "An internal error", $dbgMsg);
-	}
-
-	/**
-	 * Add a debug header to the request (only if in debug mode)
-	 * 
-	 * The header is in the form "$topic: $content"
-	 * 
-	 * @param $topic: the title of the debug header
-	 * @param $content: value sent to the browser
-	 */
-	public function debugHeader($content, $topic = "ERROR") {
-		if ($this->server->getConfig('debug', false)) {
-			header("X-DEBUG-" . $topic . ': ' . $content, false);
-		}
 	}
 }

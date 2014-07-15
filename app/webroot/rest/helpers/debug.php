@@ -1,6 +1,6 @@
 <?php
 
-function trace() {
+function trace($comments = "") {
 	$trace = debug_backtrace();
 	array_shift($trace);
 	$list = array();
@@ -26,6 +26,22 @@ function trace() {
 		}
 		$list[] = str_replace([ "\"", "'", "\\" ], "_", $str);
 	}
-	var_dump($list);
-	echo "<script>console.log(JSON.parse('" . json_encode($list) . "')); </script>";
+	foreach($list as $i => $l) {
+		debugHeader($l, "TRACE-$i");
+		echo "$i: $l <br>\n";
+	}
+}
+
+/**
+ * Add a debug header to the request (only if in debug mode)
+ * 
+ * The header is in the form "$topic: $content"
+ * 
+ * @param $topic: the title of the debug header
+ * @param $content: value sent to the browser
+ */
+function debugHeader($content, $topic = "ERROR") {
+	if (!isset($server) || $server->getConfig('debug', false)) {
+		header("X-SERVER-" . $topic . ': ' . $content, false);
+	}
 }

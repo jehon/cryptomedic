@@ -3,16 +3,21 @@
 require_once(__DIR__ . "/../adodb/adodb.inc.php");
 
 class DBTable {
+	const PRIVATE_COLUMNS = "privateColumns";
+
 	protected $response = array();
 	protected $db = null;
 	protected $table;
 	protected $lastStatement = "";
 	protected $columns;
 
-	public function __construct($config, $table, $server, $response) {
+	public function __construct($config, $table, $server, $response, $options = array()) {
 		$this->response = $response;
 		$this->server = $server;
 		$this->table = $table;
+		$this->options = array_merge(array(
+				self::PRIVATE_COLUMNS => array()
+			), $options);
 
 		$this->db = ADONewConnection($config['uri']);
 		$this->db->SetFetchMode(ADODB_FETCH_ASSOC);
@@ -53,16 +58,12 @@ class DBTable {
 		return $this->columns[$i];
 	}
 
-	public function rowAll($where = array(), $excludeColumns = array(), $limit = null) {
+	public function rowAll($where = array(), $limit = null) {
 		if (!$this->table) $this->response->internalError("No table in " . __METHOD__);
 		$sql = "SELECT ";
 
-		if ($excludeColumns == null) {
-			$sql .= "*";
-		} else {
-			$cols = array_diff($this->getColumns(), $excludeColumns);
-			$sql .= "`" . implode($cols, "`, `") . "`";
-		}
+		$cols = array_diff($this->getColumns(), $this->options[self::PRIVATE_COLUMNS]);
+		$sql .= "`" . implode($cols, "`, `") . "`";
 		$sql .= "FROM `{$this->table}` ";
 
 		// We send back only what we can handle:
@@ -87,7 +88,11 @@ class DBTable {
 
 	public function rowGet($id) {
 		if (!$this->table) $this->response->internalError("No table in " . __METHOD__);
-		return $this->preparedStatement("SELECT * FROM `{$this->table}` WHERE id= ?", array($id));
+		$res = $this->preparedStatement("SELECT * FROM `{$this->table}` WHERE id= ?", array($id));
+		foreach($this->options[self::PRIVATE_COLUMNS] as $c) {
+			unset($res[$c]);
+		}
+		return $res;
 	}
 
 	public function preparedStatement($statement, $data) {

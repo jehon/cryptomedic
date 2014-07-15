@@ -1,10 +1,13 @@
 <?php
+if (!defined("REST_LOADED")) die("Ca va pas la tête?");
+
 {
 	$database = new DBTable($server->getConfig("database"), null, $server, $response);
 
 	if ($request->matchRoute(array("users", "logout"))) {
-		$response->debugHeader($server->getSession(Server::LOGIN_USERNAME), "AUTH-OLDUSER");
+		debugHeader($server->getSession(Server::LOGIN_USERNAME), "AUTH-OLDUSER");
 		$server->setSession(Server::LOGIN_USERNAME, null);
+		$server->setSession(Server::LOGIN_GROUP, null);
 		$response->ok("Logged out");
 	}
 
@@ -25,9 +28,7 @@
 		$user = $res[0];
 
 		$server->setSession(Server::LOGIN_USERNAME, $user['login']);
-		$server->setSession("login.group", $user['group']);
-		$response->debugHeader($user['login'], "AUTH-USERNAME");
-		$response->debugHeader($user['group'], "AUTH-GROUP");
+		$server->setSession(Server::LOGIN_GROUP, $user['group']);
 
 		// TODO: insert some informations here
 		$response->ok();

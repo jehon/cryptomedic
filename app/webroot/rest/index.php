@@ -1,5 +1,7 @@
 <?php
 
+define("REST_LOADED", 1);
+
 if(!isset($_SESSION)) session_start();
 
 // Debug helper functios
@@ -16,6 +18,7 @@ $request = new Request($server, $response);
 
 // define security: authentification + authorization
 require_once("behaviors/authentification.php");
+require_once("behaviors/authorizations.php");
 
 $route = __DIR__ . DIRECTORY_SEPARATOR . "routes" .  DIRECTORY_SEPARATOR . $request->getRoute()[0] . ".php";
 if (file_exists($route)) {

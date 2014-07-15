@@ -22,7 +22,7 @@ Class request {
 		}
 
 		foreach($this->subquery as $k => $l)
-			$this->response->debugHeader($l, 'SUBQUERY-' . $k);
+			debugHeader($l, 'SUBQUERY-' . $k);
 		
 		if (count($this->subquery) < 1)
 			$this->response->invalidData("Invalid route");
@@ -30,16 +30,14 @@ Class request {
 		/**
 		* Parameters
 		*/
-		// parse_str($_SERVER['QUERY_STRING'], $this->parameters);
-		// var_dump($_GET);
 		$this->parameters = $_GET;
 		foreach($this->parameters as $k => $v) {
-			$this->response->debugHeader($v, 'SUBQUERY-PARAM-' . $k);
+			debugHeader($v, 'SUBQUERY-PARAM-' . $k);
 		}
 
 		$this->post = $_POST;
 		foreach($this->post as $k => $v) {
-			$this->response->debugHeader($v, 'SUBQUERY-POST-' . $k);
+			debugHeader($v, 'SUBQUERY-POST-' . $k);
 		}
 
 		/**
@@ -53,7 +51,7 @@ Class request {
 			unset($this->parameters['_method']);
 			$this->method = $_REQUEST['_method'];
 		}
-		$this->response->debugHeader($this->method, 'SUBQUERY-METHOD');
+		debugHeader($this->method, 'SUBQUERY-METHOD');
 	}
 
 	public function getRoute($i = null) {

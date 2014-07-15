@@ -4,7 +4,7 @@ class Server {
 	var $config = array();
 	const DEBUG = "debug";	
 	const LOGIN_USERNAME = "login.username";	
-
+	const LOGIN_GROUP = "login.group";	
 
 	public function __construct($config) {
 		// read the configuration
@@ -18,6 +18,7 @@ class Server {
 	}
 
 	public function setSession($key, $value) {
+		debugHeader($value, "SESSION-$key");
 		return $this->setCache($key, $value);
 	}
 
