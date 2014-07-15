@@ -104,7 +104,8 @@ class DBTable {
 
 	public function dieIfNecessary($result, $dbgMsg) {
 		if (($result === false) && ($this->db->ErrorMsg())) {
-			$this->response->dieWith(500, "Invalid SQL", "Invalid sql " . ($dbgMsg ? "[" . $dbgMsg . "]" : "") . ":" . $this->db->ErrorMsg());
+			$this->response->internalError("Invalid SQL", 
+				"Invalid sql " . ($dbgMsg ? "[" . $dbgMsg . "]" : "") . ":" . $this->db->ErrorMsg());
 		}
 		return $result;
 	}

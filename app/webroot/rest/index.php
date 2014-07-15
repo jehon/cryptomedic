@@ -25,7 +25,4 @@ if (file_exists($route)) {
 	require_once($route);
 }
 
-?>
-<hr>
-<?php
-	var_dump($_SESSION);
+// var_dump($_SESSION);

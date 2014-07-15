@@ -31,7 +31,7 @@ Class Response {
 	  * The function die() after this call.
 	  */
 	public function ok($data = null) {
-		if ($data) echo json_encode($data, $this->server->getConfig('debug', false) ? JSON_PRETTY_PRINT : 0);
+		if ($data) echo json_encode($data);// , $this->server->getConfig('debug', false) ? JSON_PRETTY_PRINT : 0);
 		die();
 	}
 
@@ -47,6 +47,13 @@ Class Response {
 	  */
 	public function forbidden($errData = null) {
 		$this->dieWith(403, $errData);
+	}
+
+	/** 
+	  * The record does not exists in database
+	  */
+	public function notFound($errData = null) {
+		$this->dieWith(404, $errData);
 	}
 
 	/**

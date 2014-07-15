@@ -10,7 +10,7 @@ class TableRoute {
 	protected $table;
 	protected $route;
 
-	public function __construct($request, $response, $server, $table, $options) {
+	public function __construct($request, $response, $server, $table, $options = array()) {
 		$this->dbTable = new DBTable($server->getConfig("database"), $table, $server, $response, $options);
 		$this->request = $request;
 		$this->response = $response;
