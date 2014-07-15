@@ -11,7 +11,9 @@ if (count($request->getRoute()) == 2) {
 	$res = array();
 	$p = $patients->rowGet($id);
 	if (count($p) < 1) $response->notFound("id = " . $id);
-	$res['mainFile'] = $p[0];
+	$p = $p[0];
+	$p['_type'] = 'patients';
+	$res['mainFile'] = $p;
 	$res['subFiles'] = array();
 
 	$rawTable = new DBTable($server->getConfig("database"), null, $server, $response);
@@ -20,11 +22,11 @@ if (count($request->getRoute()) == 2) {
 		if ($c == "patients") continue;
 		$r = $rawTable->preparedStatement("SELECT * FROM $c WHERE patient_id = ?", $id);
 		foreach($r as $ri => $rv) {
-			$res['subFiles'][] = $r[$ri];
+			$rv['_type'] = $c;
+			$res['subFiles'][] = $rv;
 		}
 	}
 	$response->ok($res);
 } else {
 	$patients->collectionIndex();
 }
-
