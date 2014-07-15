@@ -7,17 +7,25 @@ function isAuthorized($server, $request) {
 	
 	$group = $server->getSession(Server::LOGIN_GROUP);
 	// pr(array('group' => $group, 'resource' => $resource, 'action' => $action, 'args' => $args));
+
+	// Authentification is available for everybody
+	if (Server::ROUTE_AUTHENTICATE == $resource) return true;	
 	
 	// Admin can do everything
 	if ('admin' == $group) 	return true;
 
 	// users pages can be accessed by admin only (see above)
 	// PS: login and logout are public
-	if ('users' == $resource) return false;
+	if ('users' == $resource) return false;	
 	
 	// All can read everything
 	if ('GET' == $action) return true;
 
+	// Readonly can not do anything else
+	if ('readonly' == $group) return false;
+
+
+	// old
 	switch ($action) {
 		case "unlock" :
 		case "delete" :

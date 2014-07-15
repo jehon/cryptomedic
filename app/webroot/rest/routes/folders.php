@@ -28,5 +28,6 @@ if (count($request->getRoute()) == 2) {
 	}
 	$response->ok($res);
 } else {
+	// TODO
 	$patients->collectionIndex();
 }
