@@ -4,15 +4,14 @@ require_once(__DIR__ . "/../../adodb/adodb.inc.php");
 
 class DBTable {
 	const PRIVATE_COLUMNS = "privateColumns";
+	const BY_ID = "id";
 
-	protected $response = array();
 	protected $db = null;
 	protected $table;
 	protected $lastStatement = "";
 	protected $columns;
 
-	public function __construct($config, $table, $server, $response, $options = array()) {
-		$this->response = $response;
+	public function __construct($config, $table, $server, $options = array()) {
 		$this->server = $server;
 		$this->table = $table;
 		$this->options = array_merge(array(
@@ -31,11 +30,11 @@ class DBTable {
 		if (is_null($tablesList)) {
 			$tablesList = $this->db->MetaTables();
 			if ($tablesList === false)
-				$this->response->internalError("Table list error", 500, $this->db->ErrorMsg());
+				throw new DBSystemError("Table list error: " . $this->db->ErrorMsg());
 			$this->server->setCache('tables', $tablesList);
 		}
 		if (($this->table != null) && (array_search($this->table, $tablesList) === false)) {
-			$this->response->invalidData("Incorrect table: " . $this->table);
+			throw new DBInvalidData("Incorrect table: " . $this->table);
 		}
 	}
 
@@ -44,14 +43,14 @@ class DBTable {
 	}
 
 	public function getColumns() {
-		if (!$this->table) $this->response->internalError("No table in " . __METHOD__);
+		if (!$this->table) throw new DBSystemError("No table in ". __METHOD__);
 		if (!$this->columns) 
 			$this->columns = $this->dieIfNecessary($this->db->MetaColumnNames($this->table), "Getting columns names");
 		return $this->columns;
 	}
 
 	public function isColumn($col) {
-		if (!$this->table) $this->response->internalError("No table in " . __METHOD__);
+		if (!$this->table) throw new DBSystemError("No table in ". __METHOD__);
 		$i = array_search($col, $this->getColumns());
 		if ($i === false)
 			return false;
@@ -59,7 +58,7 @@ class DBTable {
 	}
 
 	public function rowAll($where = array(), $limit = null) {
-		if (!$this->table) $this->response->internalError("No table in " . __METHOD__);
+		if (!$this->table) throw new DBSystemError("No table in ". __METHOD__);
 		$sql = "SELECT ";
 
 		$cols = array_diff($this->getColumns(), $this->options[self::PRIVATE_COLUMNS]);
@@ -72,9 +71,8 @@ class DBTable {
 		
 		foreach($where as $p => $v) {
 			$np = $this->isColumn($p);
-			if (!$np) {
-				$this->response->invalidData("rowAll: " . $p);
-			}
+			if (!$np)
+				throw new DBInvalidData("rowAll: " . $p);
 			$whereClause .= " AND (`$np` LIKE " . $this->escape($v) . ")";
 		}
 		$sql .= "WHERE " . $whereClause;
@@ -87,7 +85,7 @@ class DBTable {
 	}
 
 	public function rowGet($id) {
-		if (!$this->table) $this->response->internalError("No table in " . __METHOD__);
+		if (!$this->table) throw new DBSystemError("No table in ". __METHOD__);
 		$res = $this->preparedStatement("SELECT * FROM `{$this->table}` WHERE id= ?", array($id));
 		foreach($this->options[self::PRIVATE_COLUMNS] as $c) {
 			unset($res[$c]);
@@ -103,10 +101,8 @@ class DBTable {
 	}
 
 	public function dieIfNecessary($result, $dbgMsg) {
-		if (($result === false) && ($this->db->ErrorMsg())) {
-			$this->response->internalError("Invalid SQL", 
-				"Invalid sql " . ($dbgMsg ? "[" . $dbgMsg . "]" : "") . ":" . $this->db->ErrorMsg());
-		}
+		if (($result === false) && ($this->db->ErrorMsg()))
+			throw new DBSystemError("Invalid SQL: " . ($dbgMsg ? "[" . $dbgMsg . "]" : "") . ":" . $this->db->ErrorMsg());
 		return $result;
 	}
 }

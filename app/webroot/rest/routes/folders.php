@@ -4,7 +4,7 @@ if (!defined("REST_LOADED")) die("Ca va pas la tête?");
 
 require(__DIR__ . "/../../../Model/amd_listings.php");
 
-$patients = new DBTable($server->getConfig("database"), "patients", $server, $response);
+$patients = new DBTable($server->getConfig("database"), "patients", $server);
 
 if (count($request->getRoute()) == 2) {
 	$id = $request->getRoute(2);
@@ -16,7 +16,7 @@ if (count($request->getRoute()) == 2) {
 	$res['mainFile'] = $p;
 	$res['subFiles'] = array();
 
-	$rawTable = new DBTable($server->getConfig("database"), null, $server, $response);
+	$rawTable = new DBTable($server->getConfig("database"), null, $server);
 	foreach($model2controller as $m => $c) {
 		// we work by controller = the same as in database?
 		if ($c == "patients") continue;

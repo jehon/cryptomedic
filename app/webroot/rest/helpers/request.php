@@ -2,15 +2,13 @@
 
 Class request {
 	protected $server;
-	protected $response;
 	protected $method;
 	protected $parameters;
 	protected $post;
 	protected $subquery;
 
-	public function __construct($server, $response) {
+	public function __construct($server) {
 		$this->server = $server;
-		$this->response = $response;
 
 		/**
 		* Defining the query parameter
@@ -25,14 +23,22 @@ Class request {
 			debugHeader($l, 'SUBQUERY-' . $k);
 		
 		if (count($this->subquery) < 1)
-			$this->response->invalidData("Invalid route");
+			throw new HttpInvalidData("Invalid route");
 		
 		/**
 		* Parameters
 		*/
-		$this->parameters = $_GET;
-		foreach($this->parameters as $k => $v) {
-			debugHeader($v, 'SUBQUERY-PARAM-' . $k);
+		$this->parameters = array();
+		$this->systemParameters = array();
+		foreach($_GET as $k => $v) {
+			if (substr($k, 0, 1) == "_") {
+				$ks = substr($k, 1);
+				$this->systemParameters[$ks] = $v;
+				debugHeader($v, 'SUBQUERY-SYSPARAM-' . $ks);
+			} else {
+				$this->parameters[$k] = $v;
+				debugHeader($v, 'SUBQUERY-PARAM-' . $k);
+			}
 		}
 
 		$this->post = $_POST;
@@ -49,7 +55,7 @@ Class request {
 					foreach($content as $k => $v)
 						$this->post[$k] = $v;
 				} else {
-					$this->response->invalidData("input content");
+					throw new HttpInvalidData("Input content");
 				}
 			}
 		}
@@ -97,6 +103,12 @@ Class request {
 	public function getParameter($key, $default = null) {
 		if (array_key_exists($key, $this->parameters))
 			return $this->parameters[$key];
+		return $default;
+	}
+
+	public function getSystemParameter($key, $default = null) {
+		if (array_key_exists($key, $this->systemParameters))
+			return $this->systemParameters[$key];
 		return $default;
 	}
 

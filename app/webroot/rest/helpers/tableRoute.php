@@ -36,7 +36,7 @@ class TableRoute {
 					$this->collectionDelete();
 					break;
 				default:
-					$this->response->unauthorized("Method not allowed: " . $this->request->getMethod());
+					throw new HttpUnauthorized("Method not allowed: " . $this->request->getMethod());
 					break;
 			}
 		} else {
@@ -51,7 +51,7 @@ class TableRoute {
 					$this->elementDelete();
 					break;
 				default:
-					$this->response->unauthorized("Method not allowed: " . $this->request->getMethod());
+					throw new HttpUnauthorized("Method not allowed: " . $this->request->getMethod());
 					break;
 			}
 		}
@@ -67,27 +67,26 @@ class TableRoute {
 	}
 
 	public function collectionDelete() {
-		$this->response->unauthorized("Method not allowed: " . __METHOD__);
+		throw new HttpUnauthorized("Method not allowed: " . $this->request->getMethod());
 	}
 
 	public function collectionAdd() {
-		$this->response->unauthorized("Method not allowed: " . __METHOD__);
+		throw new HttpUnauthorized("Method not allowed: " . $this->request->getMethod());
 	}
 	
 	public function collectionModify() {
-		$this->response->unauthorized("Method not allowed: " . __METHOD__);
+		throw new HttpUnauthorized("Method not allowed: " . $this->request->getMethod());
 	}
 
 	public function elementGet() {
-		$this->response->ok($this->dbTable->rowGet($this->request->getRoute(2)));
+		throw new HttpUnauthorized("Method not allowed: " . $this->request->getMethod());
 	}
 
 	public function elementDelete() {
-		$this->response->unauthorized("Method not allowed: " . __METHOD__);
+		throw new HttpUnauthorized("Method not allowed: " . $this->request->getMethod());
 	}
 
 	public function elementModify() {
-		$this->response->unauthorized("Method not allowed: " . __METHOD__);
+		throw new HttpUnauthorized("Method not allowed: " . $this->request->getMethod());
 	}
-
 }

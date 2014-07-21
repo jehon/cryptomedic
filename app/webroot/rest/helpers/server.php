@@ -64,8 +64,7 @@ class Server {
 			return $this->config[$key];
 		// if ($defvalue != null)
 		// 	return $defvalue;
-		global $response;
-		$response->internalError("Key not configured: '$key'");
+		throw new HttpInternalError("Key not configured: '$key'");
 	}
 
 	/**

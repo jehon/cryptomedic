@@ -21,23 +21,32 @@ foreach(glob(__DIR__ . DIRECTORY_SEPARATOR . "helpers" . DIRECTORY_SEPARATOR . "
 	require_once($f);
 }
 
-// Configure the application
-require_once("config.php");
-$server = new Server($config);
-$response = new Response($server);
-$request = new Request($server, $response);
+try {
 
-// define security: authentification + authorization
-require_once("behaviors/authentication.php");
-require_once("behaviors/authorizations.php");
 
-$route = __DIR__ . DIRECTORY_SEPARATOR . "routes" .  DIRECTORY_SEPARATOR . $request->getRoute()[0] . ".php";
-if (file_exists($route)) {
-	require_once($route);
+	// Configure the application
+	require_once("config.php");
+	$server = new Server($config);
+	$request = new Request($server);
+	$response = new Response($server, $request);
+
+	// define security: authentification + authorization
+	require_once("behaviors/authentication.php");
+	require_once("behaviors/authorizations.php");
+
+	$route = __DIR__ . DIRECTORY_SEPARATOR . "routes" .  DIRECTORY_SEPARATOR . $request->getRoute()[0] . ".php";
+	if (file_exists($route)) {
+		require_once($route);
+	}
+
+	$response->launchDefaultResponse();
+
+	define("TERMINATED_SUCCESSFULL", 1);
+} catch (Exception $error) {
+    if ($error instanceof HttpException) {
+    	debugHeader(get_class($error), "TERMINATED_CLASS");
+	    debugHeader($error->getMessage(), "TERMINATED_HTTPERROR");
+    	http_response_code($error->getHttpCode());
+		define("TERMINATED_SUCCESSFULL", 1);
+    }
 }
-
-$response->launchDefaultResponse();
-
-// var_dump($_SESSION);
-
-define("TERMINATED_SUCCESSFULL", 1);

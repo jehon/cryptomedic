@@ -1,12 +1,16 @@
 <?php
 if (!defined("REST_LOADED")) die("Ca va pas la tête?");
 
+// Could throw new HttpForbidden();
+
 function isAuthorized($server, $request) {
 	$resource = $request->getRoute(1);
 	$action = $request->getMethod();
 	
 	$group = $server->getSession(Server::LOGIN_GROUP);
 	// pr(array('group' => $group, 'resource' => $resource, 'action' => $action, 'args' => $args));
+
+// var_dump($resource . "." . $action);
 
 	// Authentification is available for everybody
 	if (Server::ROUTE_AUTHENTICATE == $resource) return true;	
@@ -23,7 +27,6 @@ function isAuthorized($server, $request) {
 
 	// Readonly can not do anything else
 	if ('readonly' == $group) return false;
-
 
 	// old
 	switch ($action) {
@@ -53,5 +56,5 @@ function isAuthorized($server, $request) {
 }
 
 if (!isAuthorized($server, $request)) {
-	$response->forbidden();
+	throw new HttpForbidden("Not allowed");
 }
