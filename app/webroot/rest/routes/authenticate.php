@@ -1,6 +1,8 @@
 <?php
 
-if ($request->matchRoute(array($server->getConfig(Server::ROUTE_AUTHENTICATE), "login"))) {
+if ($request->matchRoute(array($server->getConfig(Server::ROUTE_AUTHENTICATE), "login"))
+	|| $request->matchRoute(array($server->getConfig(Server::ROUTE_AUTHENTICATE), "settings"))
+	) {
 	$data = array();
 	$data['username'] = $server->getSession(Server::LOGIN_USERNAME);
 	$data['group'] = $server->getSession(Server::LOGIN_GROUP);
