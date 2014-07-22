@@ -13,7 +13,7 @@ Class Response {
 	public function __construct($request) {
 		$this->request = $request;
 		if ($this->request->getSystemParameter("cache", false) || $this->request->getSystemParameter("version", false)) {
-			$this->response->cache();
+			$this->cache();
 		}
 	}
 
@@ -23,7 +23,6 @@ Class Response {
 	}
 
 	public function cache($time = "+ 1 year", $public = false) {
-		// TODO: manage cache - fire them directly?
 		if (!is_int($time)) {
 			$time = strtotime($time);
 		}
@@ -47,15 +46,15 @@ Class Response {
 
 	public function fire() {
 		// Cache
-		header("Date: " . gmdate("D, j M Y G:i:s ", time()) . 'GMT');
-		header("Last-Modified: ".  gmdate("D, d M Y H:i:s") . " GMT");
+		//header("Date: " . gmdate("D, j M Y G:i:s ", time()) . 'GMT');
+		//header("Last-Modified: ".  gmdate("D, d M Y H:i:s") . " GMT");
 		if ($this->cachingTime == 0) {
 			header("Pragma: no-cache");
 			header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
 			// header("Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0");
 			header("Cache-Control: no-cache");
 		} else {
-			header("Pragma: cache");
+			//header("Pragma: cache");
 			header("Expires: " . $this->cachingTime);
 			header("Cache-Control: " . ($this->cachingPublic ? "public" : "private") . " max-age=" . ($this->cachingTime - time()) );
 		}
