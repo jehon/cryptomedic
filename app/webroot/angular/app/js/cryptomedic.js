@@ -52,7 +52,7 @@ function date2CanonicString(d) {
 
 var cryptomedic = {};
 cryptomedic.settings = {};
-cryptomedic.structure = {};  // Could be removed? Structure is used inside the php only
+//cryptomedic.structure = {};  // Could be removed? Structure is used inside the php only
 cryptomedic.models = {};
 
 cryptomedic.model2controller = {

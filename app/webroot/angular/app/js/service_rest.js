@@ -4,7 +4,7 @@
 
 cryptoApp.factory('service_rest', [ '$http', '$log' , '$rootScope', function($http, $log, $rootScope) {
 	var cache = perishableCache(10);
-	var root = "/amd/";
+	var root = "/amd/rest/";
 	
 	function treatHttp(request, treatResponse) {
 		var def = jQuery.Deferred();
@@ -33,21 +33,21 @@ cryptoApp.factory('service_rest', [ '$http', '$log' , '$rootScope', function($ht
 		// 	return cache.get(id);
 		// },
 		'checkLogin': function() {
-			return treatHttp($http.post(root + "/users/settings.json"));
+			return treatHttp($http.post(root + "/authenticate/settings"));
 		},
 		'doLogin': function(username, password) {
 			// Hack: if no username is given, then checkLogin instead
 			if (username == "") return this.checkLogin();
-			
-			return treatHttp($http.post(root + "/users/login.json", { 'username': username, 'password': password }));
+			return treatHttp($http.post(root + "/authenticate/login", { 'username': username, 'password': password }));
 		},
 		'doLogout': function() {
-			return treatHttp($http.post(root + "/users/logout"), function(data) {
+			return treatHttp($http.post(root + "/authenticate/logout"), function(data) {
 				$rootScope.$broadcast("rest_logged_out");
 			});
 		},
 		'searchForPatients': function(params) {
-			return treatHttp($http.post(root + "/patients/index.json", { 'Patient': params }), function(data) {
+			// TODO
+			return treatHttp($http.post(root + "/patients/", { 'Patient': params }), function(data) {
 				var list = [];
 				for(var i in data) {
 					list.push(new cryptomedic.models.Patient(data[i]['Patient']));
@@ -56,7 +56,8 @@ cryptoApp.factory('service_rest', [ '$http', '$log' , '$rootScope', function($ht
 			});
 		},
 		'checkReference': function(year, order) {
-			return treatHttp($http.post(root + "/patients/index.json", { 'Patient': {'entryyear': year, 'entryorder': order}}), 
+			// TODO
+			return treatHttp($http.post(root + "/patients/", { 'Patient': {'entryyear': year, 'entryorder': order}}), 
 				function(data) {
 					if (data.length == 1) {
 						return data[0]['Patient']['id'];
@@ -71,12 +72,13 @@ cryptoApp.factory('service_rest', [ '$http', '$log' , '$rootScope', function($ht
 				var def = jQuery.Deferred();
 				return def.resolve(cache.get(id));
 			}
-			return treatHttp($http.post(root + "/patients/folder/" + id + ".json"), function(data) {
+			return treatHttp($http.get(root + "/folders/" + id), function(data) {
 				cache.set(data.getMainFile().id, data);
 				return data;				
 			});
 		},
 		'saveFile': function(data) {
+			// TODO
 			if (data['type'] == "Patient") {
 				cache.perish(data['id']);
 			} else {

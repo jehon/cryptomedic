@@ -24,45 +24,45 @@
 	<![endif]-->
 <?php 
 	// jquery
-	(new Script())->url("bower_components/jquery/dist/jquery.min.js")->cached()->js()->dependFile()->toPrint();
-	(new Script())->url("bower_components/jquery-ui/ui/minified/jquery-ui.min.js")->cached()->js()->dependFile()->toPrint();
-	(new Script())->url("bower_components/jquery-ui/themes/base/minified/jquery-ui.min.css")->cached()->css()->dependFile()->toPrint();
+	(new Script())->url("bower_components/jquery/dist/jquery.min.js")->js()->dependFile()->toPrint();
+	(new Script())->url("bower_components/jquery-ui/ui/minified/jquery-ui.min.js")->js()->dependFile()->toPrint();
+	(new Script())->url("bower_components/jquery-ui/themes/base/minified/jquery-ui.min.css")->css()->dependFile()->toPrint();
 	
 	// <!-- bootstrap -->
-	(new Script())->url("bower_components/bootstrap/dist/js/bootstrap.min.js")->cached()->js()->dependFile()->toPrint();
-	(new Script())->url("bower_components/bootstrap/dist/css/bootstrap.min.css")->cached()->css()->dependFile()->toPrint();
+	(new Script())->url("bower_components/bootstrap/dist/js/bootstrap.min.js")->js()->dependFile()->toPrint();
+	(new Script())->url("bower_components/bootstrap/dist/css/bootstrap.min.css")->css()->dependFile()->toPrint();
 
 
 	// <!-- angular -->
-	(new Script())->url("bower_components/html5-boilerplate/css/normalize.css")->cached()->css()->dependFile()->toPrint();
-	(new Script())->url("bower_components/html5-boilerplate/css/main.css")->cached()->css()->dependFile()->toPrint();
-	(new Script())->url("bower_components/html5-boilerplate/js/vendor/modernizr-2.6.2.min.js")->cached()->js()->dependFile()->toPrint();
-	(new Script())->url("bower_components/angular/angular.min.js")->cached()->js()->dependFile()->toPrint();
-	(new Script())->url("bower_components/angular-route/angular-route.min.js")->cached()->js()->dependFile()->toPrint();
+	(new Script())->url("bower_components/html5-boilerplate/css/normalize.css")->css()->dependFile()->toPrint();
+	(new Script())->url("bower_components/html5-boilerplate/css/main.css")->css()->dependFile()->toPrint();
+	(new Script())->url("bower_components/html5-boilerplate/js/vendor/modernizr-2.6.2.min.js")->js()->dependFile()->toPrint();
+	(new Script())->url("bower_components/angular/angular.min.js")->js()->dependFile()->toPrint();
+	(new Script())->url("bower_components/angular-route/angular-route.min.js")->js()->dependFile()->toPrint();
 	
 	// <!-- personnal -->
-	(new Script())->url("js/cryptomedic.js")->cached()->js()->dependFile()->toPrint();
-	(new Script())->url("js/application.js")->cached()->js()->dependFile()->toPrint();
-	(new Script())->url("js/amd_stats_datas.js")->cached()->js()->dependFile()->toPrint();
-	(new Script())->url("js/exceptions.js")->cached()->js()->dependFile()->toPrint();
-	(new Script())->all("js/model*.js")->cached()->js()->dependFile()->toPrint();
-	(new Script())->all("js/service*.js")->cached()->js()->dependFile()->toPrint();
-	(new Script())->all("js/ctrl*.js")->cached()->js()->dependFile()->toPrint();
-	// (new Script())->url("js/old_application.js")->cached()->css()->dependFile()->toPrint();
+	(new Script())->url("js/cryptomedic.js")->js()->dependFile()->toPrint();
+	(new Script())->url("js/application.js")->js()->dependFile()->toPrint();
+	(new Script())->url("js/amd_stats_datas.js")->js()->dependFile()->toPrint();
+	(new Script())->url("js/exceptions.js")->js()->dependFile()->toPrint();
+	(new AllScripts("js/model*.js"))->js()->dependFile()->toPrint();
+	(new AllScripts("js/service*.js"))->js()->dependFile()->toPrint();
+	(new AllScripts("js/ctrl*.js"))->js()->dependFile()->toPrint();
 
-	(new Script())->url("css/application.css")->cached()->css()->dependFile()->toPrint();
-	foreach ( $model2controller as $m => $c ) {
-		(new Script())->url("/amd/$c/structure.json?var=cryptomedic.structure.$m")->cached()->js()->dependDB()->toPrint();
-	}
+	(new Script())->url("css/application.css")->css()->dependFile()->toPrint();
+	// foreach ( $model2controller as $m => $c ) {
+	// 	(new Script())->url("/amd/$c/structure.json?var=cryptomedic.structure.$m")->js()->dependDB()->toPrint();
+	// }
 	
-	(new Script())->url("/amd/users/settings.json?var=cryptomedic.settings")->live()->js()->dependDBTable("settings")->toPrint();
-	(new Script())->url("/amd/prices/index.json?var=cryptomedic.prices")->cached()->js()->dependDBTable("prices")->toPrint();
-	(new Script())->url("/amd/labels/index.json?var=cryptomedic.labels")->cached()->js()->dependDBTable("labels")->toPrint(); 
+	(new Script())->url("/amd/rest/authenticate/settings?_variable=cryptomedic.settings")->js()->dependDBTable("settings")->live()->toPrint();
+	(new Script())->url("/amd/rest/labels?_variable=cryptomedic.labels")->js()->dependDBTable("labels")->toPrint();
+	(new Script())->url("/amd/rest/prices?_variable=cryptomedic.prices")->js()->dependDBTable("prices")->toPrint(); 
+
 ?>
    	<!-- Responsive for bootstrap -->
     <!--[if lt IE 9]>
-	    <?php (new Script())->url("bower_components/html5shiv/dist/html5shiv.min.js")->cached()->js()->dependFile()->toPrint(); ?>
-	    <?php (new Script())->url("bower_components/respond/dest/respond.min.js")->cached()->js()->dependFile()->toPrint(); ?>
+	    <?php (new Script())->url("bower_components/html5shiv/dist/html5shiv.min.js")->js()->dependFile()->toPrint(); ?>
+	    <?php (new Script())->url("bower_components/respond/dest/respond.min.js")->js()->dependFile()->toPrint(); ?>
 	<![endif]-->
 </head>
 <body ng-app="app_main" ng-controller="ctrl" id="ng-app">
