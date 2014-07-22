@@ -13,22 +13,21 @@ function shutdown() {
 
 register_shutdown_function('shutdown');
 
-if(!isset($_SESSION)) session_start();
-
-// Debug helper functios
-require_once("helpers/debug.php");
-foreach(glob(__DIR__ . DIRECTORY_SEPARATOR . "helpers" . DIRECTORY_SEPARATOR . "*.php") as $f) {
-	require_once($f);
-}
 
 try {
-
+	if(!isset($_SESSION)) session_start();
+	
+	// Debug helper functios
+	require_once("helpers/debug.php");
+	foreach(glob(__DIR__ . DIRECTORY_SEPARATOR . "helpers" . DIRECTORY_SEPARATOR . "*.php") as $f) {
+		require_once($f);
+	}
 
 	// Configure the application
 	require_once("config.php");
 	$server = new Server($config);
 	$request = new Request($server);
-	$response = new Response($server, $request);
+	$response = new Response($request);
 
 	// define security: authentification + authorization
 	require_once("behaviors/authentication.php");
@@ -39,8 +38,6 @@ try {
 		require_once($route);
 	}
 
-	$response->launchDefaultResponse();
-
 	define("TERMINATED_SUCCESSFULL", 1);
 } catch (Exception $error) {
     if ($error instanceof HttpException) {
@@ -48,5 +45,7 @@ try {
 	    debugHeader($error->getMessage(), "TERMINATED_HTTPERROR");
     	http_response_code($error->getHttpCode());
 		define("TERMINATED_SUCCESSFULL", 1);
+    } else {
+    	throw $error;
     }
 }

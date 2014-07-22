@@ -33,7 +33,7 @@ if (!defined("REST_LOADED")) die("Ca va pas la tête?");
 		$server->setSession(Server::LOGIN_GROUP, $user['group']);
 
 		// TODO: insert some informations here -> continue?
-		$response->defaultResponse();
+		$response->setResponse();
 	}
 
 	if (!$server->getSession(Server::LOGIN_USERNAME, false)) {

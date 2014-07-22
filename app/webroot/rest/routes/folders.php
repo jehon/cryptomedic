@@ -7,6 +7,7 @@ require(__DIR__ . "/../../../Model/amd_listings.php");
 $patients = new DBTable($server->getConfig("database"), "patients", $server);
 
 if (count($request->getRoute()) == 2) {
+	// Get only one
 	$id = $request->getRoute(2);
 	$res = array();
 	$p = $patients->rowGet($id);
@@ -28,6 +29,8 @@ if (count($request->getRoute()) == 2) {
 	}
 	$response->ok($res);
 } else {
-	// TODO
+	// Search through them
+	var_dump($_REQUEST);
+
 	$patients->collectionIndex();
 }
