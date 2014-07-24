@@ -46,6 +46,10 @@ html,body {
   color: rgb(180,0,0);
 }
 
+.emptyValue .catchedError {
+  color: lightgray;
+}
+
 /********************************************
  * Menu / buttons
  */

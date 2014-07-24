@@ -16,7 +16,7 @@
 		echo "</tr>";
 	}
 ?>
-<div class="col-sm-6">
+<div class="col-lg-6">
 	<FieldSet>
 		<legend><?php label("Bill-GeneralData"); ?></legend>
 		<table  class='colorize'>
@@ -136,7 +136,7 @@
 		</table>
 	</FieldSet>
 </div>
-<div class="col-sm-6">
+<div class="col-lg-6">
 	<div ng-include="'partials/patient-related.php'"></div>
 	<FieldSet>
 		<legend><?php label("Bill-Total"); ?></legend>

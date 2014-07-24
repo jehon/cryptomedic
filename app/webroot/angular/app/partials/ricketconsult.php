@@ -2,7 +2,7 @@
 	require_once(__DIR__ . "/../php/templates.php"); 
 	t::setDefaultOption("baseExpression", "currentFile().");
 ?>
-<div class="col-sm-6">
+<div class="col-lg-6">
 	<div ng-include="'partials/consult-introduction.php'"></div>
 	<br>
 	<fieldset>
@@ -60,7 +60,7 @@
 		</table>
 	</fieldset>
 </div>
-<div class="col-sm-6">
+<div class="col-lg-6">
 	<div ng-include="'partials/patient-related.php'"></div>
 	<fieldset>
 		<legend><?php label("RicketConsult-Conclusion"); ?></legend>

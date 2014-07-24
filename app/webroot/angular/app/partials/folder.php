@@ -3,7 +3,7 @@
 	t::setDefaultOption("baseExpression", "getCurrentFile().");
 ?>
 <span class="modeRead">
-	<div class="col-md-2" class="btn-group btn-group-justified btn-group-vertical">
+	<div class="col-sm-2" class="btn-group btn-group-justified btn-group-vertical">
 		<a ng-class="{ 'btn-warning': page === 'summary'}" ng-href="#/folder/{{id()}}/summary" class="btn btn-default" style="width: 100%">Summary</a>
 		<a ng-class="{ 'btn-warning': page === 'graphics'}" href="#/folder/{{id()}}/graphics" class="btn btn-default" style="width: 100%">Graphics</a>
 		<a ng-class="{ 'btn-warning': page === ''}" href="#/folder/{{id()}}/" class="btn btn-default" style="width: 100%">Patient</a>
@@ -17,7 +17,7 @@
 			</a>
 		</span>
 	</div>
-	<div class="col-md-10">
+	<div class="col-sm-10">
 		<div>
 			<span ng-if="pageIsFile || (page == '')">
 <!-- 				<span class="notModeWrite btn btn-default" ng-click="go('/folder/' + folder.id + '/' + page + '/edit')">Edit</span>

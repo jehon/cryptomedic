@@ -2,7 +2,7 @@
 	require_once(__DIR__ . "/../php/templates.php"); 
 	t::setDefaultOption("baseExpression", "currentFile().");
 ?>
-<div class="col-sm-6">
+<div class="col-lg-6">
 	<fieldset>
 		<legend><?php label("Surgery-Order"); ?></legend>
 		<table class='colorize'>
@@ -74,6 +74,6 @@
 		</table>
 	</fieldSet>
 </div>
-<div class="col-sm-6">
+<div class="col-lg-6">
 	<div ng-include="'partials/patient-related.php'"></div>
 </div>	

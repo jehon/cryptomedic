@@ -3,7 +3,7 @@
 	t::setDefaultOption("baseExpression", "folder.getMainFile().");
 ?>
 <span ng-controller="ctrl_patient">
-	<div class="col-sm-6">
+	<div class="col-lg-6">
         <fieldset>
 			<legend><?php label("Patient-GeneralData"); ?></legend>
 			<table class='colorize'>
@@ -29,7 +29,7 @@
 			</table>
 		</fieldset>
  	</div>
-	<div class="col-sm-6">
+	<div class="col-lg-6">
 		<fieldset id='PatientPathology'>
 			<legend><?php label("Patient-Pathology"); ?></legend>
 			<table class='colorize'>
@@ -57,9 +57,9 @@
 			<?php //(new t("Patient.Notesforthepatient"))->value()->p(); ?>					
 		</fieldset>
  -->	
- 	</div>
+<!--  	</div>
 	<div class="col-sm-6">
-<!-- 		<fieldset>
+ --><!-- 		<fieldset>
 			<legend><?php label("Patient-ChildrenData"); ?></legend>
 			<table class='colorize'>
 				<col width='30%' /><col width='*' /> 
