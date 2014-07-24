@@ -17,6 +17,10 @@ Class Response {
 		}
 	}
 
+	public function terminate() {
+		die();
+	}
+
 	public function noCache() {
 		$this->cachingTime = false;
 		$this->cachingPublic = false;
