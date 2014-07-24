@@ -31,11 +31,13 @@
 	</fieldset>
 	<fieldset ng-if="searched">
 		<legend><?php label("Home-Results"); ?></legend>
-		The patient does <b>not</b> exist. Do you want to <b>create</b> it?<br>
+		The patient does <b>not</b> exist. 
+<!--
+ 		Do you want to <b>create</b> it?<br>
 		<br>
 		<button ng-click="createReference()" class="btn btn-primary" >
 			<img src="img/go.gif" alt="[go]"> Create the patient
 		</button>
-		
+ -->		
 	</fieldset>
 </div>
