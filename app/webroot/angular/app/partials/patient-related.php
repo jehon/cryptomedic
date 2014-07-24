@@ -3,7 +3,7 @@
 	t::setDefaultOption("baseExpression", "folder.getMainFile().");
 	t::setDefaultOption("readOnly");
 ?>
-<fieldset ng-controller='ctrl_patient'>
+<fieldset ng-controller='ctrl_patient' class='related'>
 	<legend><?php label("Related"); ?></legend>
 		<table class='colorize'>
 			<tr>
@@ -27,7 +27,6 @@
 			</tr>
 			<? (new t("Patient.Firstname"))->tr()->p(); ?>
 			<? (new t("Patient.Lastname"))->tr()->p(); ?>
-			<? (new t("Patient.Fathersname"))->tr()->p(); ?>
 			<? (new t("Patient.Yearofbirth"))->tr()->p(); ?>
 			<? (new t("Patient.Sex"))->tr()->p(); ?>
 		</tbody>						

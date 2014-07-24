@@ -28,7 +28,8 @@
 				<?php (new t("Patient.AddressNotes"))->tr()->p(); ?>
 			</table>
 		</fieldset>
-		<br/>
+ 	</div>
+	<div class="col-sm-6">
 		<fieldset id='PatientPathology'>
 			<legend><?php label("Patient-Pathology"); ?></legend>
 			<table class='colorize'>

@@ -25,8 +25,13 @@ html,body {
   display: none;
 }
 
+.related .emptyValue {
+  display: none;
+}
+
 .modeRead .emptyValue {
   color: lightgray;
+  font-size: smaller;
 }
 
 .modeRead .notModeRead {
@@ -35,6 +40,10 @@ html,body {
 
 .modeWrite .notModeWrite {
   display: none;
+}
+
+.catchedError {
+  color: rgb(180,0,0);
 }
 
 /********************************************
@@ -125,6 +134,11 @@ fieldset > legend {
 	padding-left: 10px;
 	padding-right: 10px;
 	width: auto;
+  margin-bottom: 0px;
+}
+
+fieldset > legend > label {
+  padding: 0px;
 }
 
 /*******************************************
