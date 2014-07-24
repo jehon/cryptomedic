@@ -1,11 +1,132 @@
 "use strict";
 
 // TODO: partials depend on version (like script) -> caching opportunities
+
+/**
+ * For this f*** old IE6-8
+ */
+/* istanbul ignore next */
+if (typeof(console) === 'undefined') { console = {}; }
+/* istanbul ignore next */
+if (typeof(console.log) !== 'function') { console.log = function() {}; }
+/* istanbul ignore next */
+if (typeof(console.info) !== 'function') { console.info = console.log; }
+/* istanbul ignore next */
+if (typeof(console.error) !== 'function') { console.error = console.log; }
+/* istanbul ignore next */
+if (typeof(console.trace) !== 'function') { console.trace = console.log; }
+/* istanbul ignore next */
+if (typeof(console.warn) !== 'function') { console.warn = console.log; }
+/* istanbul ignore next */
+if (typeof(console.group) !== 'function') { console.group = function(group) { console.log("GROUP: " + group); }; }
+/* istanbul ignore next */
+if (typeof(console.groupCollapsed) !== 'function') { console.groupCollapsed = console.group; }
+/* istanbul ignore next */
+if (typeof(console.groupEnd) !== 'function') { console.groupEnd = function() { console.log("GROUP END"); } ; }
+
+/* istanbul ignore next */
+if (window.location.search) {
+	if (window.location.search.search("_nocollapse") > 0) {
+		console.log("mode no-collapse");
+		console.groupCollapsed = console.group;
+	}
+}
+
+function inherit(parent, constructor) {
+	// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/create
+
+	if (typeof(constructor) == "undefined")
+		constructor = function() {};
+
+	// shim for older browsers: 
+	var ObjectCreateShim;
+	if (typeof Object.create == 'function') {
+		ObjectCreateShim = Object.create;
+	} else {
+		ObjectCreateShim = function(proto) {
+			    function ctor() { }
+			    ctor.prototype = proto;
+			    return new ctor();
+		};
+	}
+
+	// Create a Student.prototype object that inherits from Person.prototype.
+	// Note: A common error here is to use "new Person()" to create the Student.prototype.
+	// That's incorrect for several reasons, not least that we don't have anything to
+	// give Person for the "firstName" argument. The correct place to call Person is
+	// above, where we call it from Student.
+	constructor.prototype = ObjectCreateShim(parent.prototype);
+
+	// Set the "constructor" property to refer to Student
+	constructor.prototype.constructor = constructor;
+
+	// Add a custom parent field to refer to the inherited parent
+	constructor.prototype._parent = parent.prototype;
+}
+
 function ApplicationException(msg) {
     this.message = msg;
 }
-ApplicationException.prototype = new Error();
+// ApplicationException.prototype = new Error();
+
+inherit(Error, ApplicationException);
 ApplicationException.prototype.getMessage = function() { return this.message; };
+
+function date2CanonicString(d) {
+    // d.setMilliseconds(0);
+    if (d == null) return "0000-00-00 00:00:00 GMT+0000";
+
+    var ts = - (new Date()).getTimezoneOffset()/60 * 100;
+    return d.getFullYear() + 
+        "-" + 
+        ("00" + (d.getMonth() + 1)).substr(-2) + 
+        "-" +
+        ("00" + (d.getDate())).substr(-2) +
+        " " +
+        ("00" + d.getHours()).substr(-2) +
+        ":" +
+        ("00" + d.getMinutes()).substr(-2) +
+        ":" +
+        ("00" + d.getSeconds()).substr(-2) +
+        " GMT" + (ts < 0 ? "-" : "+") + 
+        ("0000" + Math.abs(ts)).substr(-4)
+}
+
+
+// var classA = function(test) { console.log("A: " + test); };
+// classA.prototype.mA = function(test) { console.log("A mA: " + test); };
+
+// var classB = function(test, brol) { 
+// 	console.log("B: " + test + " - " + brol); 
+// 	this._parent.constructor(test); 
+// };
+
+// inherit(classA, classB);
+// classB.prototype.mA = function(test) { 
+// 	console.log("B mA: " + test); 
+// 	this._parent.mA(test); 
+// };
+
+// classB.prototype.mB = function(test) { 
+// 	console.log("B mB: " + test); 
+// };
+
+// console.info("initialized");
+
+// console.info("variable a");
+// var a = new classA(12);
+// console.log(a);
+// console.log(a instanceof classA);
+// console.log(!(a instanceof classB));
+// a.mA("bbb");
+
+// console.info("variable b");
+// var b = new classB(12, 34);
+// console.log(b);
+// console.log(b instanceof classA);
+// console.log(b instanceof classB);
+// b.mA("aaabbb");
+// b.mB("bbb");
 
 function objectify(what) {
 	if (what === null) return what;
@@ -54,19 +175,7 @@ function stringify(what) {
     return what;
 }
 
-var cryptoApp = angular.module('app_main', [ 'ngRoute' ])
-.config([ '$routeProvider', function($routeProvider) {
-    $routeProvider.when('/', {
-    	templateUrl: 'partials/home.php',
-        controller: 'ctrl_home'
-    }).when('/search', {
-    	templateUrl: 'partials/search.php',
-    	controller: 'ctrl_search',
-    }).when('/folder/:id/:page?/:mode?', {
-    	controller: 'ctrl_folder',
-    	templateUrl: 'partials/folder.php',
-    }).otherwise({ 'redirectTo': '/home'});
-}])
+var mainApp = angular.module('app_main', [ 'ngRoute' ])
 .config([ '$compileProvider', function( $compileProvider ) {
 	$compileProvider.aHrefSanitizationWhitelist(/^\s*((https?|ftp|mailto|chrome-extension):|data:text,)/);
 	$compileProvider.imgSrcSanitizationWhitelist($compileProvider.aHrefSanitizationWhitelist());
@@ -120,9 +229,10 @@ var cryptoApp = angular.module('app_main', [ 'ngRoute' ])
 						// $element.html(tr);
 					} catch (e) {
 						if (e instanceof ApplicationException) {
-							$element.html("<span>[" + e.getMessage() + "]</span>");
+							$element.html("<span class='catchedError'>[" + e.getMessage() + "]</span>");
 						} else {
 							console.warn("not a correct error");
+							console.warn(e);
 							throw e;
 						}
 					}
@@ -161,7 +271,7 @@ var cryptoApp = angular.module('app_main', [ 'ngRoute' ])
 }])
 ;
 
-cryptoApp.controller('ctrl', [ '$scope', '$location', 'service_rest', function($scope, $location, service_rest) { 
+mainApp.controller('ctrl', [ '$scope', '$location', 'service_rest', function($scope, $location, service_rest) { 
 	$scope.cryptomedic = cryptomedic;
 	$scope.safeApply = function (fn) {
 		  var phase = this.$root.$$phase;
