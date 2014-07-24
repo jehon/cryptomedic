@@ -102,10 +102,6 @@ function label($key, $options = array()) {
 	return $key;
 }
 
-function catchFunction($name, $watch, $options = array()) {
-	trace();
-}
-
 class t {
 	var $key;
 	var $options;

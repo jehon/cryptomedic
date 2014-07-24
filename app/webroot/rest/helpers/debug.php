@@ -41,7 +41,7 @@ function trace($comments = "") {
  * @param $content: value sent to the browser
  */
 function debugHeader($content, $topic = "ERROR") {
-	if (!isset($server) || $server->getConfig('debug', false)) {
+	if (!headers_sent() && (!isset($server) || $server->getConfig('debug', false))) {
 		header("X-SERVER-" . $topic . ': ' . $content, false);
 	}
 }

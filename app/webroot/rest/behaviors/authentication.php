@@ -10,7 +10,10 @@ if (!defined("REST_LOADED")) die("Ca va pas la tête?");
 		debugHeader($server->getSession(Server::LOGIN_USERNAME), "AUTH-OLDUSER");
 		$server->setSession(Server::LOGIN_USERNAME, null);
 		$server->setSession(Server::LOGIN_GROUP, null);
+		session_unset();
 		$response->ok("Logged out");
+		$response->fire();
+		die();
 	}
 
 	// Login route: log in the user if possible
@@ -32,8 +35,8 @@ if (!defined("REST_LOADED")) die("Ca va pas la tête?");
 		$server->setSession(Server::LOGIN_USERNAME, $user['login']);
 		$server->setSession(Server::LOGIN_GROUP, $user['group']);
 
-		// TODO: insert some informations here -> continue?
-		$response->setResponse();
+		// data is not null, thus this route is marked as "handled" and will not throw an "404"
+		$response->data = array();
 	}
 
 	if (!$server->getSession(Server::LOGIN_USERNAME, false)) {

@@ -53,3 +53,4 @@ class HttpInternalError extends HttpException {
 }
 
 class DBSystemError extends HttpInternalError {}
+class DBInvalidData extends HttpInvalidData {}

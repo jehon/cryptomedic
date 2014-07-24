@@ -8,7 +8,7 @@ Class Response {
 	protected $response = 404;
 	protected $cachingTime = 0;
 	protected $cachingPublic = false;
-	public $data = array();
+	public $data = null;
 
 	public function __construct($request) {
 		$this->request = $request;
@@ -41,10 +41,15 @@ Class Response {
 	public function ok($data = array()) {
 		$this->setResponse();
 		$this->data = $data;
-		$this->fire();
+// TODO: remove this fire()?
+// $this->fire();
 	}
 
 	public function fire() {
+		if ($this->data === null) {
+			throw new HttpNotFound("No data in fire");
+		}
+
 		// Cache
 		//header("Date: " . gmdate("D, j M Y G:i:s ", time()) . 'GMT');
 		//header("Last-Modified: ".  gmdate("D, d M Y H:i:s") . " GMT");
@@ -64,11 +69,11 @@ Class Response {
 		if ($variable) {
 			header("Content-type: application/javascript");
 			echo $variable . "=";
-			if ($this->data) echo json_encode($this->data);
+			if ($this->data) echo json_encode($this->data, JSON_NUMERIC_CHECK);
 			echo ";";
 		} else {
 			header("Content-type: application/json");
-			if ($this->data) echo json_encode($this->data);
+			if ($this->data) echo json_encode($this->data, JSON_NUMERIC_CHECK);
 		}
 		die();
 	}

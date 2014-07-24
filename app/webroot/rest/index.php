@@ -38,6 +38,8 @@ try {
 		require_once($route);
 	}
 
+	$response->fire();
+
 	define("TERMINATED_SUCCESSFULL", 1);
 } catch (Exception $error) {
     if ($error instanceof HttpException) {
