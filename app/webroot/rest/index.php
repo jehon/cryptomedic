@@ -33,9 +33,16 @@ try {
 	require_once("behaviors/authentication.php");
 	require_once("behaviors/authorizations.php");
 
-	$route = __DIR__ . DIRECTORY_SEPARATOR . "routes" .  DIRECTORY_SEPARATOR . $request->getRoute()[0] . ".php";
-	if (file_exists($route)) {
-		require_once($route);
+	if (($request->getRoute(1) == "system") && count($request->getRoute()) > 1) {
+		$route = __DIR__ . DIRECTORY_SEPARATOR . "systemroutes" .  DIRECTORY_SEPARATOR . $request->getRoute(2) . ".php";
+		if (file_exists($route)) {
+			require_once($route);
+		}
+	} else {
+		$route = __DIR__ . DIRECTORY_SEPARATOR . "routes" .  DIRECTORY_SEPARATOR . $request->getRoute(1) . ".php";
+		if (file_exists($route)) {
+			require_once($route);
+		}
 	}
 
 	$response->fire();
