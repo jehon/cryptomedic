@@ -20,7 +20,7 @@
 					<td><?php label("Patient-Age"); ?></td>
 					<td><span catch-it ng-model="folder" tryit="currentFile().actualAge()">{{result}} years old</span></td>
 				</tr>
-				<?php (new t("Patient.Fathersname"))->tr()->p(); ?>
+				<?php //(new t("Patient.Fathersname"))->tr()->p(); ?>
 				<?php (new t("Patient.District"))->tr()->p(); ?>
 				<?php (new t("Patient.Upazilla"))->tr()->p(); ?>
 				<?php (new t("Patient.Union_"))->tr()->p(); ?>
@@ -50,38 +50,41 @@
 				<?php (new t("Patient.historyofcomplaint"))->tr()->p(); ?>
 			</table>
 		</fieldset>
+<!--
 		<fieldset>
 			<legend><?php label("Patient.Notesforthepatient"); ?></legend>
-			<?php (new t("Patient.Notesforthepatient"))->value()->p(); ?>					
+			<?php //(new t("Patient.Notesforthepatient"))->value()->p(); ?>					
 		</fieldset>
-	</div>
+ -->	
+ 	</div>
 	<div class="col-sm-6">
-		<fieldset>
+<!-- 		<fieldset>
 			<legend><?php label("Patient-ChildrenData"); ?></legend>
 			<table class='colorize'>
 				<col width='30%' /><col width='*' /> 
-				<?php (new t("Patient.Rowofthechildreninthefamily"))->tr()->p(); ?>
-				<?php (new t("Patient.Ageofweaningmonth"))->tr()->p(); ?>
-				<?php (new t("Patient.Ageofdiversificationofthefoodmonth"))->tr()->p(); ?>
-				<?php (new t("Patient.disease_diarrhoea"))->tr()->p(); ?>
-				<?php (new t("Patient.disease_respiratory_infection"))->tr()->p(); ?>
-				<?php (new t("Patient.disease_malaria"))->tr()->p(); ?>
-				<?php (new t("Patient.disease_typhoid"))->tr()->p(); ?>
+				<?php // (new t("Patient.Rowofthechildreninthefamily"))->tr()->p(); ?>
+				<?php // (new t("Patient.Ageofweaningmonth"))->tr()->p(); ?>
+				<?php // (new t("Patient.Ageofdiversificationofthefoodmonth"))->tr()->p(); ?>
+				<?php // (new t("Patient.disease_diarrhoea"))->tr()->p(); ?>
+				<?php // (new t("Patient.disease_respiratory_infection"))->tr()->p(); ?>
+				<?php // (new t("Patient.disease_malaria"))->tr()->p(); ?>
+				<?php // (new t("Patient.disease_typhoid"))->tr()->p(); ?>
 			</table>
 		</fieldset>
-		<br/>
-		<fieldset>
+ 		<br/>
+ 		<fieldset>
 			<legend><?php label("Patient-FamilyData"); ?></legend>
 			<table class='colorize'>
 				<col width='30%' /><col width='*' /> 
-				<?php (new t("Patient.Religion"))->tr()->p(); ?>
-				<?php (new t("Patient.Consanguineousfamily"))->tr()->p(); ?>
-				<?php (new t("Patient.Numberofpregnacy"))->tr()->p(); ?>
-				<?php (new t("Patient.Numberofbrothersandsisters"))->tr()->p(); ?>
-				<?php (new t("Patient.Numberofbrothersandsistersaffectedbyrickets"))->tr()->p(); ?>
+				<?php //(new t("Patient.Religion"))->tr()->p(); ?>
+				<?php //(new t("Patient.Consanguineousfamily"))->tr()->p(); ?>
+				<?php //(new t("Patient.Numberofpregnacy"))->tr()->p(); ?>
+				<?php //(new t("Patient.Numberofbrothersandsisters"))->tr()->p(); ?>
+				<?php //(new t("Patient.Numberofbrothersandsistersaffectedbyrickets"))->tr()->p(); ?>
 			</table>
 		</fieldset>
-		<br/>
+ -->
+ 		<br/>
 		<fieldset>
 			<legend><?php label("Patient-SocialData"); ?></legend>
 			<table class='colorize'>
@@ -92,19 +95,19 @@
 					<td><?php label("Patient-Ratio"); ?></td>
 					<td><span catch-it ng-model="folder" tryit="currentFile().ratioSalary()">{{ result | number:0 }}</span></td>
 				</tr>
-				<?php (new t("Patient.Doesthechildrengotoschool"))->tr()->p(); ?>
-				<?php (new t("Patient.Family"))->tr()->p(); ?>
-				<?php (new t("Patient.Motherseducation"))->tr()->p(); ?>
-				<?php (new t("Patient.Fatherseducation"))->tr()->p(); ?>
-				<?php (new t("Patient.Fatherswork"))->tr()->p(); ?>
-				<?php (new t("Patient.Motherswork"))->tr()->p(); ?>
-				<?php (new t("Patient.Howmanymealperday"))->tr()->p(); ?>
-				<?php (new t("Patient.Anyloanforfoodthisyear"))->tr()->p(); ?>
-				<?php (new t("Patient.Home"))->tr()->p(); ?>
-				<?php (new t("Patient.Roof"))->tr()->p(); ?>
-				<?php (new t("Patient.Wall"))->tr()->p(); ?>
-				<?php (new t("Patient.Drinkingwaterfromtubewell"))->tr()->p(); ?>
-				<?php (new t("Patient.Homesteadgarden"))->tr()->p(); ?>
+				<?php //(new t("Patient.Doesthechildrengotoschool"))->tr()->p(); ?>
+				<?php //(new t("Patient.Family"))->tr()->p(); ?>
+				<?php //(new t("Patient.Motherseducation"))->tr()->p(); ?>
+				<?php //(new t("Patient.Fatherseducation"))->tr()->p(); ?>
+				<?php //(new t("Patient.Fatherswork"))->tr()->p(); ?>
+				<?php //(new t("Patient.Motherswork"))->tr()->p(); ?>
+				<?php //(new t("Patient.Howmanymealperday"))->tr()->p(); ?>
+				<?php //(new t("Patient.Anyloanforfoodthisyear"))->tr()->p(); ?>
+				<?php //(new t("Patient.Home"))->tr()->p(); ?>
+				<?php //(new t("Patient.Roof"))->tr()->p(); ?>
+				<?php //(new t("Patient.Wall"))->tr()->p(); ?>
+				<?php //(new t("Patient.Drinkingwaterfromtubewell"))->tr()->p(); ?>
+				<?php //(new t("Patient.Homesteadgarden"))->tr()->p(); ?>
 				<tr>
 					<td><hr/></td><td><hr/></td>
 				</tr><tr>
