@@ -39,17 +39,13 @@ cryptoApp.controller('ctrl_folder', [ '$scope', '$location', 'service_rest', '$r
 	
 	$scope.name = function() {
 		if ($scope.pageIsFile) {
-			return $scope.folder.getSubFile($scope.page)['type'].toLowerCase();
+			return $scope.folder.getSubFile($scope.page)['_type'].toLowerCase();
 		}
 		if ($scope.page == "") return "Patient";
 		if (typeof($scope.page) == "number") return "blank";
 		return $scope.page;
 	};
 	
-	$scope.getCachedForExport = function(id) {
-		return stringify(service_rest.getCached(id));
-	};
-
 	if (typeof($routeParams['page']) != 'undefined') {
 		$scope.select($routeParams['page']);
 	}

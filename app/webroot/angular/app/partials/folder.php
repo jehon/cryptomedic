@@ -12,20 +12,19 @@
 					class="btn btn-default"
 					ng-class="{ 'btn-warning': page === $index }"
 					>
-				{{f.type}}<span ng-if="f.Date">[{{f.Date | date:'<?php echo $dateFormat; ?>'}}]</span> 
+				{{f._type}}<span ng-if="f.Date">[{{f.Date | date:'<?php echo $dateFormat; ?>'}}]</span> 
 	<!-- 			| date:'yyyy-MM-dd' -->
 			</a>
 		</span>
-		<a ng-if="hasPermission('all.debug')" ng-class="selected('export')" href="#/folder/{{id()}}/export" class="btn btn-default debug" style="width: 100%">Export</a>
 	</div>
 	<div class="col-md-10">
 		<div>
 			<span ng-if="pageIsFile || (page == '')">
-				<span class="notModeWrite btn btn-default" ng-click="go('/folder/' + folder.id + '/' + page + '/edit')">Edit</span>
+<!-- 				<span class="notModeWrite btn btn-default" ng-click="go('/folder/' + folder.id + '/' + page + '/edit')">Edit</span>
 				<span class="notModeWrite btn btn-default">Delete</span>
 				<span class="notModeRead btn btn-default" ng-click="actionSave()">Save</span>
 				<span class="notModeRead btn btn-default" ng-click="actionCancel()">Cancel</span>
-			</span>
+ -->			</span>
 			<span ng-if="patient()" ng-controller="ctrl_patient">
 		        Get a complete report:
 		        	<a target="_new" href="/amd/patients/view/{{id()}}.csv" >csv</a>&nbsp

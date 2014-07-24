@@ -31,8 +31,8 @@ function objectify(what) {
 			angular.forEach(what, function(val, i) {
 				what[i] = objectify(what[i]);
 			});
-            if (typeof(what['type']) != "undefined") {
-                what = new cryptomedic.models[what['type']](what);
+            if (typeof(what['_type']) != "undefined") {
+                what = new cryptomedic.models[what['_type']](what);
             }
 			return what;
 		default:
@@ -189,7 +189,7 @@ cryptoApp.controller('ctrl', [ '$scope', '$location', 'service_rest', function($
 		if (key == null) key = 0;
 		if (typeof(cryptomedic.labels[key]) == "undefined")
 			return "UNKNOWN LABEL " + key;
-		return cryptomedic.labels[key].text;
+		return cryptomedic.labels[key];
 	};
 	
 	$scope.busy = [];
@@ -296,3 +296,9 @@ cryptoApp.controller('ctrl', [ '$scope', '$location', 'service_rest', function($
 	$scope.$on("$routeChangeError", function() { console.log("error in routes"); console.log(arguments); });
 }]);
 
+function debug_showLabels() {
+	jQuery("label[for]").each(function(el) {
+		jQuery(this).text(jQuery(this).attr("for"));
+		jQuery(this).addClass("debug");
+	})
+}

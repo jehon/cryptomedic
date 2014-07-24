@@ -1,10 +1,12 @@
 "use strict";
 
 cryptoApp.controller('ctrl_home', [ '$scope', '$location', 'service_rest' , function($scope, $location, service_rest) { 
-	$scope.searched = false;
-	$scope.entryyear = 2001;
-	$scope.entryorder = 1;
-	$scope.generate = false;
+	if (typeof($scope.entryyear) == "undefined") {
+		$scope.searched = false;
+		$scope.entryyear = 2001;
+		$scope.entryorder = 1;
+		$scope.generate = false;
+	}
 
 	$scope.resetSearched = function() {
 		$scope.searched = false;

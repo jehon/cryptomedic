@@ -5,13 +5,13 @@ cryptomedic.models.Bill = cryptomedic.models.File.extend({
 		var price = cryptomedic.prices[this.price_id];
 		var total = 0;
 		angular.forEach(price, function(p, i) {
+			if (i[0] == "_") return;
 			if (i == "id") return;
 			if (i == "modified") return;
 			if (i == "created") return;
 			if (i == "lastuser") return;
 			if (i == "datefrom") return;
 			if (i == "dateto") return;
-			if (i == "type") return;
 			if (i == "controller") return;
 			if (i == "locked") return;
 			if (i == "dlocked") return;

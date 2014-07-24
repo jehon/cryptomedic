@@ -15,11 +15,8 @@ cryptoApp.controller('ctrl_search', [ "$scope", "service_rest", function($scope,
 	$scope.submit = function() {
 		var busyEnd = $scope.doBusy("Searching for matching patients");
 
-		console.log($scope.params);
-
 		service_rest.searchForPatients($scope.params)
 			.done(function(data) {
-				console.log(data);
 				$scope.listing = data;
 				$scope.page();
 				$scope.safeApply();

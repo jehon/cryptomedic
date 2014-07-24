@@ -23,10 +23,10 @@
 		<td>#{{$index + 1}}</td>
 		<td>
 			<a href="#/folder/{{id()}}/{{$index}}" class="btn btn-default" style="width: 100%">
-				{{f.type}}<span ng-if="f.Date">[{{f.Date}}]</span>
+				{{f._type}}<span ng-if="f.Date">[{{f.Date | date:'<?php echo $dateFormat; ?>'}}]</span>
 			</a>
 		</td>
 		<td>{{f.Date | date:'longDate' }}</td>
-		<td><span ng-include="'partials/'+f.type+'-summary.php'"></span></td>
+		<td><span ng-include="'partials/'+f._type+'-summary.php'"></span></td>
 	</tr>
 </span>
