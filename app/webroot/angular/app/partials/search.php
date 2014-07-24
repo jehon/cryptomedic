@@ -12,10 +12,11 @@
 			<?php (new t("Patient.entryorder"))->tr()->p(); ?>
 			<?php (new t("Patient.Firstname"))->tr()->p(); ?>
 			<?php (new t("Patient.Lastname"))->tr()->p(); ?>
+			<?php (new t("Patient.Sex"))->tr()->p(); ?>
 			<?php (new t("Patient.Yearofbirth"))->tr()->p(); ?>
-			<?php (new t("Patient.Fathersname"))->tr()->p(); ?>
 			<?php (new t("Patient.Telephone"))->tr()->p(); ?>
-			<?php (new t("Patient.pathology_Ricket"))->tr()->p(); ?>
+<!-- TODO:
+ 			<?php (new t("Patient.pathology_Ricket"))->tr()->p(); ?>
 			<?php (new t("Patient.pathology_Clubfoot"))->tr()->p(); ?>
 			<?php (new t("Patient.pathology_Burn"))->tr()->p(); ?>
 			<?php (new t("Patient.pathology_Polio"))->tr()->p(); ?>
@@ -23,7 +24,8 @@
 			<?php (new t("Patient.pathology_Congenital"))->tr()->p(); ?>
 			<?php (new t("Patient.pathology_Adult"))->tr()->p(); ?>
 			<?php (new t("Patient.pathology_other"))->tr()->p(); ?>
-		</Table>
+-->
+ 		</Table>
 	</Fieldset>
 	<span class="btn btn-primary" ng-click="submit()">Submit</span>
 </div>
@@ -45,11 +47,12 @@
 					<th>Lastname</th>
 					<th>Sex</th>
 					<th>Yearofbirth</th>
-					<th>Fathersname</th>
+					<th>Telephone</th>
 				</tr>
 	    	</thead>
 	    	<tr ng-repeat="patient in listing" ng-click="go('#/folder/' + patient.id + '/')">
 	    		<td>
+	    		{{id}}
 	    			<a ng-href='#/folder/{{patient.id}}/'>
 	    				<img src='img/go.gif'>
 	    			</a>
@@ -63,7 +66,7 @@
 	    		<td><?php (new t("Patient.Lastname"))->read()->p(); ?></td>
 	    		<td><?php (new t("Patient.Sex"))->read()->p(); ?></td>
 	    		<td><?php (new t("Patient.Yearofbirth"))->read()->p(); ?></td>
-	    		<td><?php (new t("Patient.Fathersname"))->read()->p(); ?></td>
+	    		<td><?php (new t("Patient.Telephone"))->read()->p(); ?></td>
 	    	</tr>
 		</table>
     </div>
