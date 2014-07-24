@@ -1,6 +1,6 @@
 "use strict";
 
-cryptoApp.controller('ctrl_search', [ "$scope", "service_rest", function($scope, service_rest) {
+mainApp.controller('ctrl_search', [ "$scope", "service_rest", function($scope, service_rest) {
 	if (typeof($scope.params) == 'undefined')
 		$scope.params = {};
 	

@@ -1,6 +1,6 @@
 "use strict";
 
-cryptoApp.controller('ctrl_graphic', [ '$scope', '$element', 'service_rest', function($scope, $element, service_rest) {
+mainApp.controller('ctrl_graphic', [ '$scope', '$element', 'service_rest', function($scope, $element, service_rest) {
 	// This controller is intended for ONE graphic only
 	var x, y;
 	var stats;

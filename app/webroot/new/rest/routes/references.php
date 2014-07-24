@@ -2,7 +2,7 @@
 
 if (!defined("REST_LOADED")) die("Ca va pas la tête?");
 
-require(__DIR__ . "/../../../Model/amd_listings.php");
+// require(__DIR__ . "/../../../../Model/amd_listings.php");
 
 $patients = new DBTable($server->getConfig("database"), "patients", $server);
 

@@ -1,6 +1,6 @@
 "use strict";
 
-cryptoApp.controller('ctrl_folder', [ '$scope', '$location', 'service_rest', '$routeParams' , function($scope, $location, service_rest, $routeParams) {
+mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_rest', '$routeParams' , function($scope, $location, service_rest, $routeParams) {
 	$scope.folder = new cryptomedic.models.Folder();
 	$scope.page = "";
 	$scope.pageIsFile = false;

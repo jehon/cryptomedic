@@ -2,9 +2,9 @@
 
 // TODO: manage errors codes (interceptors ?)
 
-cryptoApp.factory('service_rest', [ '$http', '$log' , '$rootScope', function($http, $log, $rootScope) {
+mainApp.factory('service_rest', [ '$http', '$log' , '$rootScope', function($http, $log, $rootScope) {
 	var cache = perishableCache(10);
-	var root = "/amd/rest/";
+	var root = "/amd/new/rest/";
 	
 	function treatHttp(request, treatResponse) {
 		var def = jQuery.Deferred();

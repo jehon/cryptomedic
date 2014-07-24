@@ -1,6 +1,6 @@
 "use strict";
 
-cryptoApp.controller('ctrl_home', [ '$scope', '$location', 'service_rest' , function($scope, $location, service_rest) { 
+mainApp.controller('ctrl_home', [ '$scope', '$location', 'service_rest' , function($scope, $location, service_rest) { 
 	if (typeof($scope.entryyear) == "undefined") {
 		$scope.searched = false;
 		$scope.entryyear = 2001;

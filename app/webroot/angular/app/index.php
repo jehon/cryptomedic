@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <?php 
-	require "php/script.php";
-	require("../../../Lib/cryptomedic.php");
+	require "../../new/libs/php/script.php";
+	// require("../../../Lib/cryptomedic.php");
 ?>
 <!--[if lt IE 7]>      <html lang="en" ng-app="app_main" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html lang="en" ng-app="app_main" class="no-js lt-ie9 lt-ie8"> <![endif]-->
@@ -41,8 +41,8 @@
 	(new Script())->url("bower_components/angular-route/angular-route.min.js")->js()->dependFile()->toPrint();
 	
 	// <!-- personnal -->
-	(new Script())->url("js/cryptomedic.js")->js()->dependFile()->toPrint();
 	(new Script())->url("js/application.js")->js()->dependFile()->toPrint();
+	(new Script())->url("js/cryptomedic.js")->js()->dependFile()->toPrint();
 	(new Script())->url("js/amd_stats_datas.js")->js()->dependFile()->toPrint();
 	(new Script())->url("js/exceptions.js")->js()->dependFile()->toPrint();
 	(new AllScripts("js/model*.js"))->js()->dependFile()->toPrint();
@@ -54,9 +54,9 @@
 	// 	(new Script())->url("/amd/$c/structure.json?var=cryptomedic.structure.$m")->js()->dependDB()->toPrint();
 	// }
 	
-	(new Script())->url("/amd/rest/authenticate/settings?_variable=cryptomedic.settings")->js()->dependDBTable("settings")->live()->toPrint();
-	(new Script())->url("/amd/rest/labels?_variable=cryptomedic.labels")->js()->dependDBTable("labels")->toPrint();
-	(new Script())->url("/amd/rest/prices?_variable=cryptomedic.prices")->js()->dependDBTable("prices")->toPrint(); 
+	(new Script())->url("/amd/new/rest/authenticate/settings?_variable=cryptomedic.settings")->js()->dependDBTable("settings")->live()->toPrint();
+	(new Script())->url("/amd/new/rest/labels?_variable=cryptomedic.labels")->js()->dependDBTable("labels")->toPrint();
+	(new Script())->url("/amd/new/rest/prices?_variable=cryptomedic.prices")->js()->dependDBTable("prices")->toPrint(); 
 
 ?>
    	<!-- Responsive for bootstrap -->

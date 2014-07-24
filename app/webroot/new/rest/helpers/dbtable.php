@@ -1,6 +1,6 @@
 <?php
 
-require_once(__DIR__ . "/../../new/libs/adodb/adodb.inc.php");
+require_once(__DIR__ . "/../../libs/adodb/adodb.inc.php");
 
 class DBTable {
 	const PRIVATE_COLUMNS = "privateColumns";
