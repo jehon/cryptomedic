@@ -9,7 +9,7 @@ cryptomedic.models.Patient = cryptomedic.models.Data.extend({
 		return (date.getUTCFullYear() - this.Yearofbirth);
 	},
 	'sexStr': function() {
-		if (!this.isNotZero('Sex')) return "u";
+		if (!this.isNotZero('Sex')) return null;
 		return this.Sex == 207 ? "m" : "f"; 
 	},
 	'ratioSalary': function() {

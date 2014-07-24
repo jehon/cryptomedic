@@ -17,7 +17,7 @@ cryptomedic.models.File = cryptomedic.models.Data.extend({
 	},
 	'ds_height': function() {
 		var sex = this.patient.sexStr();
-		if (!sex || sex == "u") throw new DataMissingException("sex");
+		if (!sex) throw new DataMissingException("sex");
 		var age = this.ageAtConsultTime();
 		if (typeof(age) != "number") throw new DataMissingException("Age");
 		if (!this.isNotZero("Heightcm")) throw new DataMissingException("Height");
@@ -26,7 +26,7 @@ cryptomedic.models.File = cryptomedic.models.Data.extend({
 	},
 	'ds_weight': function() {
 		var sex = this.patient.sexStr();
-		if (!sex || sex == "u") throw new DataMissingException("sex");
+		if (!sex) throw new DataMissingException("sex");
 		var age = this.ageAtConsultTime();
 		if (typeof(age) != "number") throw new DataMissingException("Age");
 		if (!this.isNotZero("Weightkg")) throw new DataMissingException("Weight");
@@ -41,7 +41,7 @@ cryptomedic.models.File = cryptomedic.models.Data.extend({
 	},
 	'ds_weight_height': function() {
 		var sex = this.patient.sexStr();
-		if (!sex || sex == "u") throw new DataMissingException("sex");
+		if (!sex) throw new DataMissingException("sex");
 		if (!this.isNotZero("Heightcm")) throw new DataMissingException("Height");
 		if (!this.isNotZero("Weightkg")) throw new DataMissingException("Weight");
 
@@ -55,7 +55,7 @@ cryptomedic.models.File = cryptomedic.models.Data.extend({
 	},
 	'ds_bmi': function() {
 		var sex = this.patient.sexStr();
-		if (!sex || sex == "u") throw new DataMissingException("sex");
+		if (!sex) throw new DataMissingException("sex");
 		var age = this.ageAtConsultTime();
 		if (typeof(age) != "number") throw new DataMissingException("Age");
 
