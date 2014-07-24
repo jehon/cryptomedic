@@ -34,8 +34,8 @@
 	    	ng-click="go('/folder/' + folder.id + '/' + $index)"
 			>
 	        <td>{{getValue($index, "Date")}}</td>
-	        <td>{{getValue($index, getVariableX())}}</td>
-	        <td>{{getValue($index, getVariableY())}}</td>
+	        <td>{{getValue($index, getVariableX()) | number:0}}</td>
+	        <td>{{getValue($index, getVariableY()) | number:0}}</td>
 	        <td>{{getValidity($index)}}</td>
 	    </tr>
 	</table>

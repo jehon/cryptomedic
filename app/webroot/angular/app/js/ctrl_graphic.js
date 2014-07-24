@@ -36,8 +36,8 @@ cryptoApp.controller('ctrl_graphic', [ '$scope', '$element', 'service_rest', fun
 		if (x == null) return "?";
 		var vx = $scope.getValue($index, x);
 		var vy = $scope.getValue($index, y);
-		if (typeof(vx) != "number") return "#invalid(x)#";
-		if (typeof(vy) != "number") return "#invalid(y)";
+		if (typeof(vx) != "number") return "Invalid " + x;
+		if (typeof(vy) != "number") return "Invalid " + y;
 		if (vx < imgDimension("vleft")) return x + " to low";
 		if (vx > imgDimension("vright")) return x + " to high";
 		if (vy < imgDimension("vbottom")) return y + " to low";
