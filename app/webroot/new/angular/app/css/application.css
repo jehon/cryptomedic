@@ -1,0 +1,212 @@
+/*
+ * Globals
+ */
+
+.debug {
+	/* color: white; */
+	/* background-color: yellow; */
+	border-left: solid 15px yellow;
+	border-right: solid 15px yellow;
+ 	border-color: yellow;
+}
+
+/*
+ * Base structure
+ */
+
+html,body {
+  height: 100%;
+}
+
+.submenu {
+  background-color: lightgray;
+}
+/********************************************
+ * Data display (modes, emtpyValues)
+ */
+.summary .emptyValue {
+  display: none;
+}
+
+.related .emptyValue {
+  display: none;
+}
+
+.modeRead .emptyValue {
+  color: lightgray;
+  font-size: smaller;
+}
+
+.modeRead .notModeRead {
+  display: none;
+}
+
+.modeWrite .notModeWrite {
+  display: none;
+}
+
+.catchedError {
+  color: rgb(180,0,0);
+}
+
+.emptyValue .catchedError {
+  color: lightgray;
+}
+
+/********************************************
+ * Menu / buttons
+ */
+button img {
+	height: 17px;
+}
+
+.left-menu-button {
+  width: 100%; 
+  white-space: normal;
+  line-height: 1;
+}
+/********************************************
+ *  Marks and graphics
+ */
+.markContainer {
+  /* position: absolute -> relative to the first non-static element -> relative to 0,0 = pseudo-static */
+  position: relative;
+}
+
+.mark {
+  color: red;
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  border: 0;  
+  margin-top: -10px;
+}
+
+.mark span {
+  margin-left: -50%;       
+}
+
+.mark.hovered > span {
+  background-color: red;
+  color: white;
+  z-index: 100;
+}
+
+tr.hovered {
+  background-color: gray;
+}
+
+/********************************************
+ *  Overlays 
+ */
+.site-wrapper {
+	display: table;
+	width: 100%;
+	height: 100%; /* For at least Firefox */
+	min-height: 100%;
+	position: absolute;
+	text-align: center;
+  	background: rgba(3, 3, 3, 0.6);
+/* 	background-color: #333; */
+	color: #fff;
+	z-index: 500;
+}
+
+.site-wrapper-inner {
+	display: table-cell;
+	vertical-align: top;
+	background-color: #333;  
+/*  	background: rgba(3, 3, 3, 1); */
+}
+
+.cover-container {
+  margin-right: auto;
+  margin-left: auto;
+}
+
+/* Padding for spacing */
+.inner {
+  padding: 30px;
+}
+
+/**********************************************
+ * Fieldsets (databoxes)
+ */
+fieldset {
+	border-radius: 10px;
+	padding: 10px;
+	border-style:solid; 
+	border-width:2px; 
+	border-color:#002060;	
+}
+
+fieldset > legend {
+	font-size: 120%;
+	color: #004A94;
+	padding-left: 10px;
+	padding-right: 10px;
+	width: auto;
+  margin-bottom: 0px;
+}
+
+fieldset > legend > label {
+  padding: 0px;
+}
+
+fieldset > table > tbody > tr > td:nth-of-type(1) { /*Setting the width of column 1.*/
+  width: 120px;
+  /*word-break:break-all;*/
+}
+
+/*******************************************
+/* Data Legend
+ */
+table.datalegend {
+    font-size: 9px;
+    padding: 0px;
+    width: 100%;
+}
+
+table.datalegend > thead > tr> th {
+    font-size: 9px;
+    padding: 2px;
+}
+
+/********************************************
+/******************************************** OLD
+/********************************************
+
+
+/*
+ * Affix and center
+ */
+
+@media (min-width: 768px) {
+  /* Pull out the header and footer */
+  .masthead {
+    position: fixed;
+    top: 0;
+  }
+  .mastfoot {
+    position: fixed;
+    bottom: 0;
+  }
+  /* Start the vertical centering */
+  .site-wrapper-inner {
+    vertical-align: middle;
+  }
+  /* Handle the widths */
+  .masthead,
+  .mastfoot,
+  .cover-container {
+    width: 100%; /* Must be percentage or pixels for horizontal alignment */
+  }
+}
+
+@media (min-width: 992px) {
+  .masthead,
+  .mastfoot,
+  .cover-container {
+    width: 700px;
+  }
+}
