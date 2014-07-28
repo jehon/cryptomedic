@@ -6,7 +6,10 @@
 	function price($item, $size = 2) {
 		$name = explode(".", $item);
 		$name = $name[1];
-		echo "<tr ng-if='currentFile().$name > 0'>";
+		echo "<tr "
+			. "ng-if=\"currentFile().getPriceFor('$name')\" "
+			. "ng-class='{ notModeRead: !currentFile().$name }'"
+			. ">";
 		echo "<td>" . label($item, [ 'echo' => false ]) . "</td>";
 		echo "<td>";
 		(new t($item, [ "size" => $size]))->value()->p();
@@ -153,7 +156,7 @@
 			</tr>
             <tr>
 				<td><?php label("Bill.total_asked"); ?></td>
-				<td>{{currentFile().calculate_total_asked()}}</td>
+				<td>{{currentFile().calculate_total_asked() | number:0}}</td>
 			</tr>
 		</table>
 	</FieldSet>
