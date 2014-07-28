@@ -33,10 +33,10 @@ cryptomedic.models.Bill = cryptomedic.models.File.extend({
 	},
 	'calculate_percentage_asked': function() {
 		var sl = this['Sociallevel'];
-		if (sl == null || sl == 0) return total;
+		if (sl == null || sl == 0) return 1;
 		var price = cryptomedic.prices[this.price_id];
 		if (typeof(price["socialLevelPercentage_" + this.price_id]) == "undefined") return 1;
-		return price["socialLevelPercentage_" + this.price_id];
+		return price["socialLevelPercentage_" + sl];
 	},
 	'calculate_total_asked': function() {
 		return this.calculate_total_real() * this.calculate_percentage_asked();
