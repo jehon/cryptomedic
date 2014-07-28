@@ -14,12 +14,17 @@ C:\wamp\www\amd\app\webroot\angular\app\partials
 
 require_once("debug.php");
 
-require_once "../../../../../../maintenance.php";
+// Should not be used -> use config instead
+require_once(dirname(dirname(__DIR__)) . "/config.php");
+
+// Used for listings?
 require_once(__DIR__ . "/../../../../Lib/cryptomedic.php");
 
 $dateFormat = "shortDate";
 $dateTimeFormat = "short";
 
+// TODO: Use config.php correctly
+// TODO: Use dbtable ???
 global $mysqli;
 $mysqli = new mysqli($config['database']['host'],
 		$config['database']['login'],
@@ -31,6 +36,7 @@ if ($mysqli->connect_errno) {
 	die("Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error);
 }
 
+// TODO: used in ->tr() below -> how to manage that???
 function label($key, $options = array()) {
 	$options = array_merge([
 		'echo' => true,

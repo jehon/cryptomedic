@@ -45,3 +45,16 @@ function debugHeader($content, $topic = "ERROR") {
 		header("X-SERVER-" . $topic . ': ' . $content, false);
 	}
 }
+
+
+// class OutputSelf {
+//     public function __call($name, $arguments) {
+//         // Note: value of $name is case sensitive.
+//         echo "Calling object method '$name' " . implode(', ', $arguments). "\n";
+//     }
+
+//     public static function __callStatic($name, $arguments) {
+//         // Note: value of $name is case sensitive.
+//         echo "Calling static method '$name' " . implode(', ', $arguments). "\n";
+//     }
+// }

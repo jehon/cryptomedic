@@ -13,18 +13,21 @@ function shutdown() {
 
 register_shutdown_function('shutdown');
 
-
 try {
 	if(!isset($_SESSION)) session_start();
 	
 	// Debug helper functios
 	require_once("../libs/php/debug.php");
+	foreach(glob(dirname(__DIR__) . DIRECTORY_SEPARATOR . "libs" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "*.php") as $f) {
+		require_once($f);
+	}
+
 	foreach(glob(__DIR__ . DIRECTORY_SEPARATOR . "helpers" . DIRECTORY_SEPARATOR . "*.php") as $f) {
 		require_once($f);
 	}
 
 	// Configure the application
-	require_once("config.php");
+	require_once(dirname(__DIR__) . DIRECTORY_SEPARATOR . "config.php");
 	$server = new Server($config);
 	$request = new Request($server);
 	$response = new Response($request);
@@ -39,8 +42,8 @@ try {
 			require_once($route);
 		}
 	} else {
-		$route = $server->getConfig("appRoot")
 		// $route = dirname(__DIR__) . DIRECTORY_SEPARATOR . "app" . DIRECTORY_SEPARATOR 
+		$route = $server->getConfig("appRoot")
 			. "routes" .  DIRECTORY_SEPARATOR . $request->getRoute(1) . ".php";
 		debugHeader($route, "route");
 		if (file_exists($route)) {
