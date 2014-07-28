@@ -1,6 +1,9 @@
 -- Labels
 UPDATE labels SET english="Home" WHERE reference = "Home-MainTitle";
 
+-- Fix errors in design
+ALTER TABLE `surgeries` CHANGE `Date` `Date` DATE NULL DEFAULT NULL;
+
 -- Put some default to potentially unused fields
 ALTER TABLE `patients` 
 	CHANGE `Drinkingwaterfromtubewell` `Drinkingwaterfromtubewell` TINYINT(1) NOT NULL DEFAULT '0', 
