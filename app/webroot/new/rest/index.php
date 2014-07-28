@@ -39,7 +39,10 @@ try {
 			require_once($route);
 		}
 	} else {
-		$route = __DIR__ . DIRECTORY_SEPARATOR . "routes" .  DIRECTORY_SEPARATOR . $request->getRoute(1) . ".php";
+		$route = $server->getConfig("appRoot")
+		// $route = dirname(__DIR__) . DIRECTORY_SEPARATOR . "app" . DIRECTORY_SEPARATOR 
+			. "routes" .  DIRECTORY_SEPARATOR . $request->getRoute(1) . ".php";
+		debugHeader($route, "route");
 		if (file_exists($route)) {
 			require_once($route);
 		}

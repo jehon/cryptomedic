@@ -10,7 +10,8 @@ $config = array(
 				"uri" => "mysqli://user:pwd@server/db?persist",
 				"init" => "SET CHARACTER SET 'utf8'"
 			),
-		"publicURL" => array()
+		"publicURL" => array(),
+		"appRoot" => dirname(__DIR__) . DIRECTORY_SEPARATOR . "app" . DIRECTORY_SEPARATOR
 	);
 
 if (file_exists(__DIR__ . DIRECTORY_SEPARATOR . "../../../../../maintenance.php"))
