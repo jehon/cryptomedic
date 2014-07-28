@@ -155,7 +155,16 @@ fieldset > legend > label {
 
 fieldset > table > tbody > tr > td:nth-of-type(1) { /*Setting the width of column 1.*/
   width: 120px;
-  /*word-break:break-all;*/
+  font-weight: 700;
+}
+
+/**********************************************
+ * Summary
+ */
+table.summary table > tbody > tr > td:nth-of-type(1) { /*Setting the width of column 1.*/
+  width: 120px;
+  font-weight: 700;
+  padding-right: 10px;
 }
 
 /*******************************************

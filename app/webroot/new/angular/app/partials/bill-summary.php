@@ -6,8 +6,8 @@
 <table width="100%">
 	<colgroup span="2" width="50%"></colgroup>
 	<tbody>
-		<? (new t("Bill.socialLevel", "Social Level"))->tr()->p(); ?>
-		<? (new t("Bill.total_asked", "Total asked"))->tr()->p(); ?>
-		<? (new t("Bill.total_paid", "Total paid"))->tr()->p(); ?>
+		<? (new t("Bill.socialLevel"))->tr("Social Level")->p(); ?>
+		<? (new t("Bill.total_asked"))->tr("Total asked")->p(); ?>
+		<? (new t("Bill.total_paid"))->tr("Total paid")->p(); ?>
 	</tbody>
 </table>

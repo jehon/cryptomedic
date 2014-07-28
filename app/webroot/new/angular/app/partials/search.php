@@ -6,14 +6,14 @@
 ?>
 <div class='searchFields'>
 	<Fieldset>
-		<Legend><?php label("Search for"); ?>...</Legend>
+		<Legend>Search for...</Legend>
 		<table class='colorize'>
-			<?php (new t("Patient.entryyear"))->tr()->p(); ?>
-			<?php (new t("Patient.entryorder"))->tr()->p(); ?>
+			<?php (new t("Patient.entryyear"))->tr("Entry Year")->p(); ?>
+			<?php (new t("Patient.entryorder"))->tr("Entry Order")->p(); ?>
 			<?php (new t("Patient.Firstname"))->tr()->p(); ?>
 			<?php (new t("Patient.Lastname"))->tr()->p(); ?>
 			<?php (new t("Patient.Sex"))->tr()->p(); ?>
-			<?php (new t("Patient.Yearofbirth"))->tr()->p(); ?>
+			<?php (new t("Patient.Yearofbirth"))->tr("Year of birth")->p(); ?>
 			<?php (new t("Patient.Telephone"))->tr()->p(); ?>
 <!-- TODO:
  			<?php (new t("Patient.pathology_Ricket"))->tr()->p(); ?>
@@ -46,7 +46,7 @@
 					<th>Firstname</th>
 					<th>Lastname</th>
 					<th>Sex</th>
-					<th>Yearofbirth</th>
+					<th>Year of Birth</th>
 					<th>Telephone</th>
 				</tr>
 	    	</thead>

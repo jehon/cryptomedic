@@ -5,60 +5,59 @@
 <span ng-controller="ctrl_patient">
 	<div class="col-lg-6">
         <fieldset>
-			<legend><?php label("Patient-GeneralData"); ?></legend>
+			<legend>General data</legend>
 			<table>
 				<tr>
-					<td><?php label("Patient.entrynumber"); ?></td>
+					<td>Entry Number</td>
 					<td><?php (new t("Patient.entryyear"))->read()->p(); ?>-<?php (new t("Patient.entryorder"))->read()->p(); ?></td>
 				</tr>
-				<?php (new t("Patient.Firstname"))->tr()->p(); ?>
-				<?php (new t("Patient.Lastname"))->tr()->p(); ?>
+				<?php (new t("Patient.Firstname"))->tr("First Name")->p(); ?>
+				<?php (new t("Patient.Lastname"))->tr("Last Name")->p(); ?>
 				<?php (new t("Patient.Sex"))->tr()->p(); ?>
-				<?php (new t("Patient.Yearofbirth",  [ "min" => 900, "max" => 2100]))->tr()->p(); ?></td>
+				<?php (new t("Patient.Yearofbirth",  [ "min" => 900, "max" => 2100]))->tr("Year of birth")->p(); ?></td>
 				<tr class='notModeWrite'>
-					<td><?php label("Patient-Age"); ?></td>
+					<td>Age (today)</td>
 					<td><span catch-it ng-model="folder" tryit="currentFile().actualAge()">{{result}} years old</span></td>
 				</tr>
-				<?php //(new t("Patient.Fathersname"))->tr()->p(); ?>
+<!-- 				<?php //(new t("Patient.Fathersname"))->tr()->p(); ?> -->
 				<?php (new t("Patient.District"))->tr()->p(); ?>
 				<?php (new t("Patient.Upazilla"))->tr()->p(); ?>
-				<?php (new t("Patient.Union_"))->tr()->p(); ?>
+				<?php (new t("Patient.Union_"))->tr("Union")->p(); ?>
 				<?php (new t("Patient.Telephone"))->tr()->p(); ?>
-				<?php (new t("Patient.AddressNotes"))->tr()->p(); ?>
+				<?php (new t("Patient.AddressNotes"))->tr("Adress Notes")->p(); ?>
 			</table>
 		</fieldset>
  	</div>
 	<div class="col-lg-6">
 		<fieldset id='PatientPathology'>
-			<legend><?php label("Patient-Pathology"); ?></legend>
+			<legend>Pathology</legend>
 			<table>
 				<tr>
 					<td></td>
 					<td id='PatientPathologyError' style='display: none' class='jserror'>
-					<?php label("Patient-Nopathology"); ?>
+					Please select at least one pathology
 				</td>
 				</tr>
-				<?php (new t("Patient.pathology_Ricket"))->tr()->p(); ?>
-				<?php (new t("Patient.pathology_Clubfoot"))->tr()->p(); ?>
-				<?php (new t("Patient.pathology_Polio"))->tr()->p(); ?>
-				<?php (new t("Patient.pathology_Burn"))->tr()->p(); ?>
-				<?php (new t("Patient.pathology_CP"))->tr()->p(); ?>
-				<?php (new t("Patient.pathology_Congenital"))->tr()->p(); ?>
-				<?php (new t("Patient.pathology_Adult"))->tr()->p(); ?>
-				<?php (new t("Patient.pathology_other"))->tr()->p(); ?>
-				<?php (new t("Patient.historyofcomplaint"))->tr()->p(); ?>
+				<?php (new t("Patient.pathology_Ricket"))->tr("Ricket")->p(); ?>
+				<?php (new t("Patient.pathology_Clubfoot"))->tr("Club foot")->p(); ?>
+				<?php (new t("Patient.pathology_Polio"))->tr("Polio")->p(); ?>
+				<?php (new t("Patient.pathology_Burn"))->tr("Burn")->p(); ?>
+				<?php (new t("Patient.pathology_CP"))->tr("CP")->p(); ?>
+				<?php (new t("Patient.pathology_Congenital"))->tr("Congenital")->p(); ?>
+				<?php (new t("Patient.pathology_Adult"))->tr("Patient is adult")->p(); ?>
+				<?php (new t("Patient.pathology_other"))->tr("Other (please specify)")->p(); ?>
+				<?php (new t("Patient.historyofcomplaint"))->tr("History of the complaint")->p(); ?>
 			</table>
 		</fieldset>
 <!--
 		<fieldset>
-			<legend><?php label("Patient.Notesforthepatient"); ?></legend>
+			<legend><?php //label("Patient.Notesforthepatient"); ?></legend>
 			<?php //(new t("Patient.Notesforthepatient"))->value()->p(); ?>					
 		</fieldset>
- -->	
-<!--  	</div>
+ 	</div>
 	<div class="col-sm-6">
- --><!-- 		<fieldset>
-			<legend><?php label("Patient-ChildrenData"); ?></legend>
+		<fieldset>
+			<legend><?php //label("Patient-ChildrenData"); ?></legend>
 			<table class='colorize'>
 				<col width='30%' /><col width='*' /> 
 				<?php // (new t("Patient.Rowofthechildreninthefamily"))->tr()->p(); ?>
@@ -72,7 +71,7 @@
 		</fieldset>
  		<br/>
  		<fieldset>
-			<legend><?php label("Patient-FamilyData"); ?></legend>
+			<legend><?php //label("Patient-FamilyData"); ?></legend>
 			<table class='colorize'>
 				<col width='30%' /><col width='*' /> 
 				<?php //(new t("Patient.Religion"))->tr()->p(); ?>
@@ -85,15 +84,16 @@
  -->
  		<br/>
 		<fieldset>
-			<legend><?php label("Patient-SocialData"); ?></legend>
+			<legend>Social Data</legend>
 			<table>
-				<?php (new t("Patient.Familysalaryinamonth"))->tr()->p(); ?>
-				<?php (new t("Patient.Numberofhouseholdmembers"))->tr()->p(); ?>
+				<?php (new t("Patient.Familysalaryinamonth"))->tr("Family Salary in a Month")->p(); ?>
+				<?php (new t("Patient.Numberofhouseholdmembers"))->tr("Number of Houslehold Members")->p(); ?>
 				<tr>
-					<td><?php label("Patient-Ratio"); ?></td>
+					<td>Salary ratio</td>
 					<td><span catch-it ng-model="folder" tryit="currentFile().ratioSalary()">{{ result | number:0 }}</span></td>
 				</tr>
-				<?php //(new t("Patient.Doesthechildrengotoschool"))->tr()->p(); ?>
+<!--
+ 				<?php //(new t("Patient.Doesthechildrengotoschool"))->tr()->p(); ?>
 				<?php //(new t("Patient.Family"))->tr()->p(); ?>
 				<?php //(new t("Patient.Motherseducation"))->tr()->p(); ?>
 				<?php //(new t("Patient.Fatherseducation"))->tr()->p(); ?>
@@ -106,15 +106,16 @@
 				<?php //(new t("Patient.Wall"))->tr()->p(); ?>
 				<?php //(new t("Patient.Drinkingwaterfromtubewell"))->tr()->p(); ?>
 				<?php //(new t("Patient.Homesteadgarden"))->tr()->p(); ?>
-				<tr>
+ -->
+ 				<tr>
 					<td><hr/></td><td><hr/></td>
 				</tr><tr>
-					<td><?php label("Patient-CalculatedSocialLevel"); ?></td>
+					<td>Calculated Social Level</td>
 					<td><span catch-it ng-model="folder" tryit="currentFile().calculateSocialLevel()">
 						level {{ result | number:0 }}
 						</span></td>
 				</tr>
-				<?php (new t("Patient.Sociallevel"))->tr()->p(); ?>
+				<?php (new t("Patient.Sociallevel"))->tr("Entered Social Level")->p(); ?>
 			</table>
 		</fieldset>
 	</div>

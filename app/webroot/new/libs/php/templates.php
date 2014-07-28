@@ -370,12 +370,14 @@ class t {
 		return $this;
 	}
 
-	function tr() {
+	function tr($label = null) {
 		if (!$this->linked2DB) {
 			throw new Exception("Read: key is not in the database: '{$this->key}'");
 		}
+		if ($label == null) $label = $this->field;
+
 		$this->res .= "<tr ng-class='{ emptyValue: !$this->rawExpression}'>\n";
-		$this->res .= "	<td>" . label($this->key, [ 'echo' => false ]) . "</td>\n";
+		$this->res .= "	<td>$label</td>\n";
 		$this->res .= "	<td>";
 			$this->value();
 		$this->res .="</td>\n";
@@ -383,7 +385,8 @@ class t {
 		return $this;
 	}
 
-	function trLeftRight() {
+	function trLeftRight($label = null) {
+		if ($label == null) $label = $this->field;
 		$left = new t(str_replace("?", "Left", $this->key));
 		$right = new t(str_replace("?", "Right", $this->key));
 		$this->res .= "<tr ng-class='{ emptyValue: !{$left->rawExpression} && !{$right->rawExpression} }'>\n";

@@ -6,6 +6,6 @@
 <table width="100%">
 	<colgroup span="2" width="50%"></colgroup>
 	<tbody>
-		<? (new t("SurgeryFollowup.ResultImprovement"))->tr()->p(); ?>
+		<? (new t("SurgeryFollowup.ResultImprovement"))->tr("Result Improvement")->p(); ?>
 	</tbody>
 </table>

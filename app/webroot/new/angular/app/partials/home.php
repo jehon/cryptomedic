@@ -2,9 +2,7 @@
 	require_once(dirname(dirname(dirname(__DIR__))) . "/libs/php/templates.php");
 ?>
 <div class='col-sm-offset-3 col-sm-6'>
-	<h1 class='text-center'>
-		<?php label("Home-MainTitle"); ?>
-	</h1>
+	<h1 class='text-center'>Home</h1>
 	<fieldset id='add'>
 		<legend>Check if a patient exists, and if not, create it</legend>
 		<div ng-if="!searched" style="text-align: left">
@@ -19,11 +17,11 @@
 		</div>
 		<input ng-model="generate" ng-change="resetSearched()" type='checkbox' value='1'> Generate a reference for me<br>
 		<br>
-		<?php label("Patient.entryyear"); ?>
+		<label>Entry Year</label>
        	<input ng-model="entryyear" ng-change="resetSearched()" type="number" class="form-control" placeholder="Entry year" required autofocus>
 
        	<span ng-show="generate != true">
-			<?php label("Patient.entryorder"); ?>
+			<label>Entry Order</label>
 	       	<input ng-model="entryorder" ng-change="resetSearched()" type="number" class="form-control" placeholder="Entry order">
        	</span>
 		<br>
@@ -32,7 +30,7 @@
 		</div>
 	</fieldset>
 	<fieldset ng-if="searched">
-		<legend><?php label("Home-Results"); ?></legend>
+		<legend>Results</legend>
 		The patient does <b>not</b> exist. 
 <!--
  		Do you want to <b>create</b> it?<br>
