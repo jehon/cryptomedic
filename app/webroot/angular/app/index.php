@@ -3,10 +3,6 @@
 	require "../../new/libs/php/script.php";
 	// require("../../../Lib/cryptomedic.php");
 ?>
-<!--[if lt IE 7]>      <html lang="en" ng-app="app_main" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html lang="en" ng-app="app_main" class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html lang="en" ng-app="app_main" class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html lang="en" ng-app="app_main" class="no-js"> <!--<![endif]-->
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -17,9 +13,9 @@
 	<link href="img/favicon.ico" type="image/x-icon" rel="shortcut icon" />
 	
 	<!-- Adapt upgrade.html also -->
-	<!--[if lt IE 8]>
+	<!--[if lt IE 9]>
 		<script type="text/javascript">
-			window.location.href = "/amd/cryptomedic/upgrade.html";
+			window.location.href = "static/upgrade.html";
 		</script>
 	<![endif]-->
 <?php 
@@ -59,11 +55,6 @@
 	(new Script())->url("/amd/new/rest/prices?_variable=cryptomedic.prices")->js()->dependDBTable("prices")->toPrint(); 
 
 ?>
-   	<!-- Responsive for bootstrap -->
-    <!--[if lt IE 9]>
-	    <?php (new Script())->url("bower_components/html5shiv/dist/html5shiv.min.js")->js()->dependFile()->toPrint(); ?>
-	    <?php (new Script())->url("bower_components/respond/dest/respond.min.js")->js()->dependFile()->toPrint(); ?>
-	<![endif]-->
 </head>
 <body ng-app="app_main" ng-controller="ctrl" id="ng-app">
 	<!--  Login screen -->
@@ -151,7 +142,6 @@
 	  </div>
 	</nav>
 	<div class="view-animate-container">
-		<div>&nbsp;</div>
 		<div ng-view></div>
 	</div>
 </body>
