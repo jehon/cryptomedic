@@ -1,5 +1,5 @@
 <?php 
-	require_once(__DIR__ . "/../php/templates.php"); 
+	require_once(dirname(dirname(dirname(__DIR__))) . "/new/libs/php/templates.php");
 	t::setDefaultOption("baseExpression", "currentFile().");
 ?>
 <table class='summary table table-striped'>
