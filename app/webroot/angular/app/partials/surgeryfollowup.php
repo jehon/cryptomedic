@@ -5,7 +5,7 @@
 <div class="col-lg-6">
 	<FieldSet>
 		<Legend><?php label("SurgeryFollowup-Discharge"); ?></Legend>
-		<table class='colorize'>
+		<table>
 			<col width='30%' /><col width='*' /> 
 			<?php (new t("SurgeryFollowup.Date"))->tr()->p(); ?>
 			<?php (new t("SurgeryFollowup.Examiner"))->tr()->p(); ?>
@@ -26,7 +26,7 @@
 	</FieldSet>
 	<FieldSet>
 		<Legend><?php label("SurgeryFollowup-Visit"); ?></Legend>
-		<table class='colorize'>
+		<table>
 			<col width='30%' /><col width='*' /> 
 			<?php (new t("SurgeryFollowup.SkinCicatrisation"))->tr()->p(); ?>
 			<?php (new t("SurgeryFollowup.BoneConsolidation"))->tr()->p(); ?>
@@ -37,7 +37,7 @@
 	</FieldSet>
 	<FieldSet>
 		<Legend><?php label("SurgeryFollowup-Treatment"); ?></Legend>
-		<table class='colorize'>
+		<table>
 			<col width='30%' /><col width='*' /> 
 			<?php (new t("SurgeryFollowup.TreatmentPhysiotherapy"))->tr()->p(); ?>
 			<?php (new t("SurgeryFollowup.TreatmentOrthopedicDevice"))->tr()->p(); ?>
@@ -47,7 +47,7 @@
 	</FieldSet>
 	<FieldSet>
 		<Legend><?php label("SurgeryFollowup-Conclusion"); ?></Legend>
-		<table class='colorize'>
+		<table>
 			<col width='30%' /><col width='*' /> 
 			<?php (new t("SurgeryFollowup.ResultImprovement"))->tr()->p(); ?>
 			<?php (new t("SurgeryFollowup.ResultFamilyHappy"))->tr()->p(); ?>

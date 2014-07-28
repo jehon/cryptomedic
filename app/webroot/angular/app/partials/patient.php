@@ -6,8 +6,7 @@
 	<div class="col-lg-6">
         <fieldset>
 			<legend><?php label("Patient-GeneralData"); ?></legend>
-			<table class='colorize'>
-				<col width='30%' /><col width='*' />
+			<table>
 				<tr>
 					<td><?php label("Patient.entrynumber"); ?></td>
 					<td><?php (new t("Patient.entryyear"))->read()->p(); ?>-<?php (new t("Patient.entryorder"))->read()->p(); ?></td>
@@ -32,8 +31,7 @@
 	<div class="col-lg-6">
 		<fieldset id='PatientPathology'>
 			<legend><?php label("Patient-Pathology"); ?></legend>
-			<table class='colorize'>
-				<col width='30%' /><col width='*' />
+			<table>
 				<tr>
 					<td></td>
 					<td id='PatientPathologyError' style='display: none' class='jserror'>
@@ -88,8 +86,7 @@
  		<br/>
 		<fieldset>
 			<legend><?php label("Patient-SocialData"); ?></legend>
-			<table class='colorize'>
-				<col width='30%' /><col width='*' /> 
+			<table>
 				<?php (new t("Patient.Familysalaryinamonth"))->tr()->p(); ?>
 				<?php (new t("Patient.Numberofhouseholdmembers"))->tr()->p(); ?>
 				<tr>

@@ -5,7 +5,7 @@
 <div class="col-lg-6">
 	<fieldset>
 		<legend><?php label("Surgery-Order"); ?></legend>
-		<table class='colorize'>
+		<table>
 			<col width='30%' /><col width='*' /> 
 			<?php (new t("Surgery.Operation"))->tr()->p(); ?>
 			<?php (new t("Surgery.TransferChittagong"))->tr()->p(); ?>
@@ -14,7 +14,7 @@
 	</fieldSet>
 	<fieldSet>
 		<legend><?php label("Surgery-GeneralExamination"); ?></legend>
-		<table class='colorize'>
+		<table>
 			<col width='30%' /><col width='*' /> 
 			<?php (new t("Surgery.MedicalProblem"))->tr()->p(); ?>
 			<?php (new t("Surgery.BleedingExecive"))->tr()->p(); ?>
@@ -47,7 +47,7 @@
 	</fieldSet>
 	<fieldSet>
 		<legend><?php label("Surgery-ParentAutorisation"); ?></legend>
-		<table class='colorize'>
+		<table>
 			<col width='30%' /><col width='*' /> 
 			<?php (new t("Surgery.PAOk"))->tr()->p(); ?>
 			<?php (new t("Surgery.PASurgeon"))->tr()->p(); ?>
@@ -55,7 +55,7 @@
 	</fieldSet>
 	<fieldSet>
 		<legend><?php label("Surgery-SurgicalReport"); ?></legend>
-		<table class='colorize'>
+		<table>
 			<col width='30%' /><col width='*' /> 
 			<?php (new t("Surgery.ReportDate"))->tr()->p(); ?>
 			<?php (new t("Surgery.ReportDiagnostic"))->tr()->p(); ?>
@@ -68,7 +68,7 @@
 	</fieldSet>
 	<fieldSet>
 		<legend><?php label("Surgery-HospitalisationFollowUp"); ?></legend>
-		<table class='colorize'>
+		<table>
 			<col width='30%' /><col width='*' /> 
 			<?php (new t("Surgery.FollowUpComplication"))->tr()->p(); ?>
 		</table>

@@ -5,7 +5,7 @@
 <div class="col-lg-6">
 	<FieldSet>
 		<Legend><?php label("OrthopedicDevice-GeneralData"); ?></Legend>
-		<table class='colorize'>
+		<table>
 			<col width='30%' /><col width='*' /> 
 			<?php (new t("OrthopedicDevice.Orthoname"))->tr()->p(); ?>
 			<?php (new t("OrthopedicDevice.Goal"))->tr()->p(); ?>
@@ -15,7 +15,7 @@
 	</FieldSet>
 	<FieldSet>
 		<Legend><?php label("OrthopedicDevice-Prescription"); ?></Legend>
-		<table class='colorize'>
+		<table>
 			<col width='30%' /><col width='*' /><col width='*' /> 
             <tr>
                 <td></td>
@@ -61,7 +61,7 @@
 	</FieldSet>
 	<FieldSet>
 		<Legend><?php label("OrthopedicDevice-Measure"); ?></Legend>
-		<table class='colorize'>
+		<table>
 			<col width='30%' /><col width='*' /> 
 			<?php (new t("OrthopedicDevice.MeasureDate"))->tr()->p(); ?>
 			<?php (new t("OrthopedicDevice.MeasurePerson"))->tr()->p(); ?>
@@ -70,7 +70,7 @@
 	</FieldSet>
 	<FieldSet>
 		<Legend><?php label("OrthopedicDevice-Fitting"); ?></Legend>
-		<table class='colorize'>
+		<table>
 			<col width='30%' /><col width='*' /> 
 			<?php (new t("OrthopedicDevice.FittingDate"))->tr()->p(); ?>
 			<?php (new t("OrthopedicDevice.FittingPerson"))->tr()->p(); ?>
@@ -79,7 +79,7 @@
 	</FieldSet>
 	<FieldSet>
 		<Legend><?php label("OrthopedicDevice-Delivery"); ?></Legend>
-		<table class='colorize'>
+		<table>
 			<col width='30%' /><col width='*' /> 
 			<?php (new t("OrthopedicDevice.DeliveryDate"))->tr()->p(); ?>
 			<?php (new t("OrthopedicDevice.DeliveryPerson"))->tr()->p(); ?>

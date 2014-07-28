@@ -41,7 +41,6 @@ if (!defined("REST_LOADED")) die("Ca va pas la tête?");
 
 	if (!$server->getSession(Server::LOGIN_USERNAME, false)) {
 		// Test for public pages: none actually
-		trace("public");
 		if (!$request->matchRoute(array("labels"))) {
 			throw New HttpUnauthorized("Not a public page");
 		}

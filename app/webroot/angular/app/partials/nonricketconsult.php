@@ -7,7 +7,7 @@
 	<br/>
 	<fieldset>
 		<legend><?php label("NonricketConsult-OrthopedicData"); ?></legend>
-		<table class='colorize'>
+		<table>
 			<col width='30%' /><col width='*' /> 
 			<?php (new t("NonricketConsult.Side"))->tr()->p(); ?>
 			<?php (new t("NonricketConsult.Jointsorbonesaffected"))->tr()->p(); ?>
@@ -24,7 +24,7 @@
 	<div ng-include="'partials/patient-related.php'"></div>
 	<fieldset>
 		<legend><?php label("NonricketConsult-Conclusion"); ?></legend>
-		<table class='colorize'>
+		<table>
 			<col width='30%' /><col width='*' /> 
 			<?php (new t("NonricketConsult.Physiotherapy61"))->tr()->p(); ?>
 			<?php (new t("NonricketConsult.Plaster62"))->tr()->p(); ?>

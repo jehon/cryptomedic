@@ -5,19 +5,20 @@
 <div class="col-lg-6">
 	<FieldSet>
 		<Legend><? label("Picture-header"); ?></label></Legend>
-		<table class='colorize'>
+		<table>
 			<?php (new t("Picture.OriginalName"))->readOnly()->tr()->p(); ?>
 			<?php (new t("Picture.file"))->readOnly()->tr()->p(); ?>
 			<?php (new t("Picture.Date"))->tr()->p(); ?>
 			<?php (new t("Picture.comment"))->tr()->p(); ?>
-			<tr mode='notModeWrite' ng-hide="currentFile().file">
+<!-- 			<tr mode='notModeWrite' ng-hide="currentFile().file">
 				<td><?php label("Picture.file"); ?>
 					<br>
 					(max size: <span>{{cryptomedic.settings.maxUploadSizeMb}}</span>Mb)
 				</td>
             	<td><input type="file" name="data[filecontent]" id="PictureFilecontent" /></td>
 			</tr>
-		</table>
+ -->
+ 		</table>
 	</FieldSet>
 </div>
 <div class="col-lg-6">
