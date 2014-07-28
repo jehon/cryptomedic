@@ -121,18 +121,18 @@
 	    <div class="collapse navbar-collapse" id="menuMain">
 	      <ul class="nav navbar-nav navbar-right">
         	<li><p class="navbar-text">{{username}}</p></li>
-	      	<li><button type="button" class="btn btn-default navbar-btn"><a href="#/">
-	      		<img src="img/home.gif"/>
-	      		Home
-	      		</a></button></li>
-	      	<li><button type="button" class="btn btn-default navbar-btn"><a href="#/search">
-	      		<img src="img/patientsSearch.gif"/>
+	      	<li><a href="#/home" class="navbar-link">
+		    	<img src="img/home.gif" height="20px"/>
+				Home
+		    </a></li>
+	      	<li><a href="#/search" class="navbar-link">
+	      		<img src="img/patientsSearch.gif" height="20px"/>
 	      		Search a patient
-	      		</a></button></li>
-	      	<li><button type="button" class="btn btn-default navbar-btn"><a href="/amd/pages/reports">
-	      		<img src="img/reports.gif"/>
+	      	</a></li>
+	      	<li><a href="/amd/pages/reports" class="navbar-link">
+	      		<img src="img/reports.gif" height="20px"/>
 	      		Reports
-	      		</a></button></li>
+	      	</a></li>
 	      	<li><button type="button" class="btn btn-default navbar-btn" ng-click="doLogout()" >
 	      		<img src="img/logout.gif"/>
 	      		Logout

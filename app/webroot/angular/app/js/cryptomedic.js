@@ -1,7 +1,7 @@
 "use strict";
 
 mainApp.config([ '$routeProvider', function($routeProvider) {
-    $routeProvider.when('/', {
+    $routeProvider.when('/home', {
         templateUrl: 'partials/home.php',
         controller: 'ctrl_home'
     }).when('/search', {
@@ -10,7 +10,7 @@ mainApp.config([ '$routeProvider', function($routeProvider) {
     }).when('/folder/:id/:page?/:mode?', {
         controller: 'ctrl_folder',
         templateUrl: 'partials/folder.php',
-    }).otherwise({ 'redirectTo': '/'});
+    }).otherwise({ 'redirectTo': '/home'});
 }]);
 
 var cryptomedic = {};
