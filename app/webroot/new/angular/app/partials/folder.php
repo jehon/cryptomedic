@@ -9,15 +9,9 @@
 				Modified on {{currentFile().modified | date:'yyyy-MM-dd HH:mm:ss' }}
 				by {{currentFile().lastuser}}
 				<br>
-				{{currentFile()._type}} / {{currentFile().id}} / {{page}}
+				{{folder.getMainFile()._type}} #{{folder.getMainFile().id}} @{{page}} -> {{currentFile()._type}} #{{currentFile().id}}
 			</div>
-			<div class="col-sm-4" ng-if="patient()" ng-controller="ctrl_patient">
-		        Get a complete report: TODO
-	<!-- 	        	<a target="_new" href="/amd/patients/view/{{id()}}.csv" >csv</a>&nbsp
-		        	<a target="_new" href="/amd/patients/view/{{id()}}.csv?fr=1" >french-csv</a>&nbsp
-		    		<a target="_new" href="/amd/patients/view/{{id()}}.xls" >xls</a>&nbsp
-	 -->		</div>
-				<div class="col-sm-4 text-right" ng-if="pageIsFile || (page == '')" >
+			<div class="col-sm-4 text-center" ng-if="pageIsFile || (page == '')" >
 	 			<span class="notModeWrite btn btn-default" ng-click="go('/folder/' + folder.id + '/' + page + '/edit')">Edit</span>
 	<!--
 				<span class="notModeWrite btn btn-default">Delete</span>
@@ -41,6 +35,7 @@
 	<!-- 			| date:'yyyy-MM-dd' -->
 			</a>
 		</span>
+		<a ng-class="{ 'btn-warning': page === 'reporting'}" ng-href="#/folder/{{id()}}/reporting" class="btn btn-default" style="width: 100%">Reporting</a>
 	</div>
 	<div class="col-sm-10">
 		<span ng-controller="ctrl_file">

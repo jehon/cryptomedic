@@ -36,7 +36,7 @@ if ($mysqli->connect_errno) {
 	die("Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error);
 }
 
-// TODO: used in ->tr() below -> how to manage that???
+// TODO: to be removed progressively + clean up table labels
 function label($key, $options = array()) {
 	$options = array_merge([
 		'echo' => true,
@@ -241,11 +241,11 @@ class t {
 		return $v;
 	}
 
-	function label() {
-		trace();
-		$this->res .= label($this->key, false);
-		return $this;
-	}
+	// function label() {
+	// 	trace();
+	// 	$this->res .= label($this->key, false);
+	// 	return $this;
+	// }
 
 	function rawValue() {
 		$this->res .= "{{" . $this->rawExpression . "}}";
@@ -386,11 +386,12 @@ class t {
 	}
 
 	function trLeftRight($label = null) {
-		if ($label == null) $label = $this->field;
+		if ($label == null) $label = str_replace("?", "", $this->key);
+
 		$left = new t(str_replace("?", "Left", $this->key));
 		$right = new t(str_replace("?", "Right", $this->key));
 		$this->res .= "<tr ng-class='{ emptyValue: !{$left->rawExpression} && !{$right->rawExpression} }'>\n";
-			$this->res .= "	<td>" . label(str_replace("?", "", $this->key), [ 'echo' => false ]) . "</td>\n";
+			$this->res .= "	<td>$label</td>\n";
 			$this->res .= "	<td>" . $left->value()->getText() . "</td>\n";
 			$this->res .= "	<td>" . $right->value()->getText() . "</td>\n";
 		$this->res .= "</tr>\n";
