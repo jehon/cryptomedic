@@ -1,5 +1,9 @@
 <?php
 
+require_once("debug.php");
+require_once("exceptions.php");
+require_once("server.php");
+
 Class request {
 	protected $server;
 	protected $method;

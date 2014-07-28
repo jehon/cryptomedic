@@ -1,4 +1,6 @@
 <?php
+require_once("debug.php");
+require_once("exceptions.php");
 
 class Server {
 	const DEBUG = "debug";	

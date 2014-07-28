@@ -1,5 +1,9 @@
 <?php
 
+require_once("debug.php");
+require_once("exceptions.php");
+require_once("request.php");
+
 /**
  * We set the content-type to json only in case we have an "ok" message
  *
