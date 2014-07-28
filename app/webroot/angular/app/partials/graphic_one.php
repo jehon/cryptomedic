@@ -6,7 +6,7 @@
 <fieldset>
 	<legend>{{getVariableY()}} / {{getVariableX()}}</legend>
 	<div class='markContainer'>
-		<img ng-src="img/stats_{{getImageName()}}.jpg" width='600px' height='360px'>
+		<img ng-src="img/stats_{{getImageName()}}.jpg" width='100%'>
 <!-- 		<img ng-if="currentFile().Sex == 207" src='/amd/cryptomedic/img/graphics/weight-m.jpg' width='600px' height='360px'/>
 		<img ng-if="currentFile().Sex == 208" src='/amd/cryptomedic/img/graphics/weight-f.jpg' width='600px' height='360px'/>
 		<img ng-if="currentFile().Sex == 0"   src='/amd/cryptomedic/img/graphics/weight-u.jpg' width='600px' height='360px'/>
@@ -33,7 +33,7 @@
 	    	ng-class="{ hovered: hovered == $index }"
 	    	ng-click="go('/folder/' + folder.id + '/' + $index)"
 			>
-	        <td>{{getValue($index, "Date")}}</td>
+	        <td>{{getValue($index, "Date") | date:"<? echo $dateFormat; ?>"}}</td>
 	        <td>{{getValue($index, getVariableX()) | number:0}}</td>
 	        <td>{{getValue($index, getVariableY()) | number:0}}</td>
 	        <td>{{getValidity($index)}}</td>
