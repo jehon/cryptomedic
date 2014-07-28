@@ -1,6 +1,6 @@
 <?php
 
-require_once("debug.php");
+require_once(dirname(dirname(__DIR__)) . "/libs/php/debug.php");
 require_once("exceptions.php");
 require_once("request.php");
 

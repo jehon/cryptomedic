@@ -18,7 +18,7 @@ try {
 	if(!isset($_SESSION)) session_start();
 	
 	// Debug helper functios
-	require_once("helpers/debug.php");
+	require_once("../libs/php/debug.php");
 	foreach(glob(__DIR__ . DIRECTORY_SEPARATOR . "helpers" . DIRECTORY_SEPARATOR . "*.php") as $f) {
 		require_once($f);
 	}
