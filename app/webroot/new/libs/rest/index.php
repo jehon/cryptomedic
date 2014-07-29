@@ -17,17 +17,15 @@ try {
 	if(!isset($_SESSION)) session_start();
 	
 	// Debug helper functios
-	require_once("../libs/php/debug.php");
-	foreach(glob(dirname(__DIR__) . DIRECTORY_SEPARATOR . "libs" . DIRECTORY_SEPARATOR . "php" . DIRECTORY_SEPARATOR . "*.php") as $f) {
-		require_once($f);
-	}
+	require_once("../php/debug.php");
+	require_once("../php/exceptions.php");
+	require_once("../php/dbtable.php");
+	require_once("../php/server.php");
 
-	foreach(glob(__DIR__ . DIRECTORY_SEPARATOR . "helpers" . DIRECTORY_SEPARATOR . "*.php") as $f) {
-		require_once($f);
-	}
+	require_once("helpers/request.php");
+	require_once("helpers/response.php");
+	require_once("helpers/tableRoute.php");
 
-	// Configure the application
-	require_once(dirname(__DIR__) . DIRECTORY_SEPARATOR . "config.php");
 	$server = new Server($config);
 	$request = new Request($server);
 	$response = new Response($request);
@@ -37,14 +35,12 @@ try {
 	require_once("behaviors/authorizations.php");
 
 	if (($request->getRoute(1) == "system") && count($request->getRoute()) > 1) {
-		$route = __DIR__ . DIRECTORY_SEPARATOR . "systemroutes" .  DIRECTORY_SEPARATOR . $request->getRoute(2) . ".php";
+		$route = "systemroutes" .  DIRECTORY_SEPARATOR . $request->getRoute(2) . ".php";
 		if (file_exists($route)) {
 			require_once($route);
 		}
 	} else {
-		// $route = dirname(__DIR__) . DIRECTORY_SEPARATOR . "app" . DIRECTORY_SEPARATOR 
-		$route = $server->getConfig("appRoot")
-			. "routes" .  DIRECTORY_SEPARATOR . $request->getRoute(1) . ".php";
+		$route = $server->getConfig("appRoot") . "routes" .  DIRECTORY_SEPARATOR . $request->getRoute(1) . ".php";
 		debugHeader($route, "route");
 		if (file_exists($route)) {
 			require_once($route);
