@@ -4,12 +4,21 @@ class Script {
 	private $type = "js";
 	private $opt = array();
 	
-	function __construct($url = "") { $this->_url = $url; }
+	function __construct($url = "") { 
+		//$this->_url = $url; 
+		$this->url($url);
+	}
 	
-	function url($url) { 	$this->_url = $url; return $this; }
+	function url($url) { 	
+		$this->_url = $url;
+		if (strpos($this->_url, ".css") > 0) $this->css();
+		if (strpos($this->_url, ".js") > 0) $this->js();
+		 return $this; 
+	}
+	
 	function css() { 		$this->type = "css"; return $this; }
 	function js() { 		$this->type = "js"; return $this; }
-	
+
 	// protected function cached() {
 	// 	$this->opt["_cache"] = 1;
 	// 	return $this;
@@ -62,23 +71,26 @@ class Script {
 	}
 };
 
-class AllScripts {
-	private $list = array();
 
-	function __construct($pattern) { 
-		foreach(glob($pattern) as $f) {
-			if (is_file($f)) {
-				$this->list[] = new Script($f);
-			}
-		}
-		return $this;
-	}
-
-	public function __call($fn, $arguments) {
-		// Call the same function on all Script's in the list
-		foreach($this->list as $s) {
-			call_user_func_array(array($s, $fn), $arguments);
-		}
-		return $this;
-	}
-}
+// Note: glob is disabled as hosting
+//
+// class AllScripts {
+// 	private $list = array();
+//
+// 	function __construct($pattern) { 
+// 		foreach(glob($pattern) as $f) {
+// 			if (is_file($f)) {
+// 				$this->list[] = new Script($f);
+// 			}
+// 		}
+// 		return $this;
+// 	}
+//
+// 	public function __call($fn, $arguments) {
+// 		// Call the same function on all Script's in the list
+// 		foreach($this->list as $s) {
+// 			call_user_func_array(array($s, $fn), $arguments);
+// 		}
+// 		return $this;
+// 	}
+// }

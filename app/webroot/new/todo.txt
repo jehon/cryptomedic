@@ -1,0 +1,27 @@
+bower.json
+    "jquery-ui": "latest",
+
+
+
+
+TODO:
+
+transform "php" into "classes"
+extract what are not classes into libs root dir
+deserialize "labels": first ->tr(["label" => "??."]) then save it like that
+(what to do with the rest???)
+
+config (default) cleanup! -> out of rest + include "app/config.php" -> include maintenance (passwords, etc...)
+
+Read mode:
+- bills - pas très beau
+
+Write mode:
+- date très hautes
+- bills - pas très beau
+- orthopedic device (write) http://localhost/amd/angular/app/#/folder/71154/3/edit
+
++ loin:
+- save modified file
+- add file
+- add patient

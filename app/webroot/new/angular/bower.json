@@ -12,7 +12,6 @@
     "angular-mocks": "1.3.x",
     "html5-boilerplate": "~4.3.0",
     "jquery": "~1.11",
-    "jquery-ui": "latest",
     "bootstrap": "latest",
     "qunit": "latest",
     "respond": "latest",

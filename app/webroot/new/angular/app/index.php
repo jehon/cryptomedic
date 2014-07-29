@@ -20,40 +20,58 @@
 	<![endif]-->
 <?php 
 	// jquery
-	(new Script())->url("bower_components/jquery/dist/jquery.min.js")->js()->dependFile()->toPrint();
-	(new Script())->url("bower_components/jquery-ui/ui/minified/jquery-ui.min.js")->js()->dependFile()->toPrint();
-	(new Script())->url("bower_components/jquery-ui/themes/base/minified/jquery-ui.min.css")->css()->dependFile()->toPrint();
+	(new Script("bower_components/jquery/dist/jquery.min.js"))->dependFile()->toPrint();
+	// (new Script())->url("bower_components/jquery-ui/ui/minified/jquery-ui.min.js")->dependFile()->toPrint();
+	// (new Script())->url("bower_components/jquery-ui/themes/base/minified/jquery-ui.min.css")->dependFile()->toPrint();
 	
-	// <!-- bootstrap -->
-	(new Script())->url("bower_components/bootstrap/dist/js/bootstrap.min.js")->js()->dependFile()->toPrint();
-	(new Script())->url("bower_components/bootstrap/dist/css/bootstrap.min.css")->css()->dependFile()->toPrint();
+	// bootstrap
+	(new Script("bower_components/bootstrap/dist/js/bootstrap.min.js"))->dependFile()->toPrint();
+	(new Script("bower_components/bootstrap/dist/css/bootstrap.min.css"))->dependFile()->toPrint();
 
-
-	// <!-- angular -->
-	(new Script())->url("bower_components/html5-boilerplate/css/normalize.css")->css()->dependFile()->toPrint();
-	(new Script())->url("bower_components/html5-boilerplate/css/main.css")->css()->dependFile()->toPrint();
-	(new Script())->url("bower_components/html5-boilerplate/js/vendor/modernizr-2.6.2.min.js")->js()->dependFile()->toPrint();
-	(new Script())->url("bower_components/angular/angular.min.js")->js()->dependFile()->toPrint();
-	(new Script())->url("bower_components/angular-route/angular-route.min.js")->js()->dependFile()->toPrint();
+	// angular
+	(new Script("bower_components/html5-boilerplate/css/normalize.css"))->dependFile()->toPrint();
+	(new Script("bower_components/html5-boilerplate/css/main.css"))->dependFile()->toPrint();
+	(new Script("bower_components/html5-boilerplate/js/vendor/modernizr-2.6.2.min.js"))->dependFile()->toPrint();
+	(new Script("bower_components/angular/angular.min.js"))->dependFile()->toPrint();
+	(new Script("bower_components/angular-route/angular-route.min.js"))->dependFile()->toPrint();
 	
-	// <!-- personnal -->
-	(new Script())->url("js/application.js")->js()->dependFile()->toPrint();
-	(new Script())->url("js/cryptomedic.js")->js()->dependFile()->toPrint();
-	(new Script())->url("js/amd_stats_datas.js")->js()->dependFile()->toPrint();
-	(new Script())->url("js/exceptions.js")->js()->dependFile()->toPrint();
-	(new AllScripts("js/model*.js"))->js()->dependFile()->toPrint();
-	(new AllScripts("js/service*.js"))->js()->dependFile()->toPrint();
-	(new AllScripts("js/ctrl*.js"))->js()->dependFile()->toPrint();
+	// personnal
+	(new Script("js/application.js"))->dependFile()->toPrint();
+	(new Script("js/cryptomedic.js"))->dependFile()->toPrint();
+	(new Script("js/amd_stats_datas.js"))->dependFile()->toPrint();
+	(new Script("js/exceptions.js"))->dependFile()->toPrint();
 
-	(new Script())->url("css/application.css")->css()->dependFile()->toPrint();
-	// foreach ( $model2controller as $m => $c ) {
-	// 	(new Script())->url("/amd/$c/structure.json?var=cryptomedic.structure.$m")->js()->dependDB()->toPrint();
-	// }
+	(new Script("js/model_abstract.js"))->dependFile()->toPrint();
+	(new Script("js/model_data.js"))->dependFile()->toPrint();
+	(new Script("js/model_folder.js"))->dependFile()->toPrint();
+	(new Script("js/model_patient.js"))->dependFile()->toPrint();
+	(new Script("js/model_file.js"))->dependFile()->toPrint();
+	(new Script("js/model_file_bill.js"))->dependFile()->toPrint();
+	(new Script("js/model_file_clubfoot.js"))->dependFile()->toPrint();
+	(new Script("js/model_file_nonricketconsult.js"))->dependFile()->toPrint();
+	(new Script("js/model_file_orthopedicdevice.js"))->dependFile()->toPrint();
+	(new Script("js/model_file_picture.js"))->dependFile()->toPrint();
+	(new Script("js/model_file_ricketconsult.js"))->dependFile()->toPrint();
+	(new Script("js/model_file_surgery.js"))->dependFile()->toPrint();
+	(new Script("js/model_file_surgeryfollowup.js"))->dependFile()->toPrint();
+
+	(new Script("js/service_rest.js"))->dependFile()->toPrint();
+	(new Script("js/service_cache.js"))->dependFile()->toPrint();
+
+	(new Script("js/ctrl_allgraphics.js"))->dependFile()->toPrint();
+	(new Script("js/ctrl_file.js"))->dependFile()->toPrint();
+	(new Script("js/ctrl_folder.js"))->dependFile()->toPrint();
+	(new Script("js/ctrl_graphic.js"))->dependFile()->toPrint();
+	(new Script("js/ctrl_home.js"))->dependFile()->toPrint();
+	(new Script("js/ctrl_patient.js"))->dependFile()->toPrint();
+	(new Script("js/ctrl_picture.js"))->dependFile()->toPrint();
+	(new Script("js/ctrl_search.js"))->dependFile()->toPrint();
+
+	(new Script("css/application.css"))->dependFile()->toPrint();
 	
-	(new Script())->url("/amd/new/rest/authenticate/settings?_variable=cryptomedic.settings")->js()->dependDBTable("settings")->live()->toPrint();
-	(new Script())->url("/amd/new/rest/labels?_variable=cryptomedic.labels")->js()->dependDBTable("labels")->toPrint();
-	(new Script())->url("/amd/new/rest/prices?_variable=cryptomedic.prices")->js()->dependDBTable("prices")->toPrint(); 
-
+	(new Script("/amd/new/rest/authenticate/settings?_variable=cryptomedic.settings"))->js()->dependDBTable("settings")->live()->toPrint();
+	(new Script("/amd/new/rest/labels?_variable=cryptomedic.labels"))->js()->dependDBTable("labels")->toPrint();
+	(new Script("/amd/new/rest/prices?_variable=cryptomedic.prices"))->js()->dependDBTable("prices")->toPrint(); 
 ?>
 </head>
 <body ng-app="app_main" ng-controller="ctrl" id="ng-app">
