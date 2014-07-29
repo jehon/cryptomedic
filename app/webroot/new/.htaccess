@@ -1,4 +1,4 @@
-<IfModule mod_expires.c>
+ <IfModule mod_expires.c>
 	ExpiresActive 	On
 	ExpiresByType	img/*			"access plus 1 week"
 	ExpiresByType	css/*			"access plus 1 week"
@@ -8,7 +8,5 @@
 
 RewriteEngine On
 
-RewriteRule ^$ $1 [L]
-
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule (.*) index.php [QSA,L,E=subquery:$1]
+RewriteRule ^rest/(.*) libs/rest/index.php [QSA,L,E=subquery:$1]
+# RewriteRule ^static/(.*) app/static/$1 [QSA,L]
