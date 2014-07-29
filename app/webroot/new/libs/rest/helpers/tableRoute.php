@@ -2,10 +2,11 @@
 
 // http://en.wikipedia.org/wiki/Representational_state_transfer
 
-require_once(dirname(dirname(__DIR__)) . "/libs/php/debug.php");
-require_once(dirname(dirname(__DIR__)) . "/libs/php/exceptions.php");
-require_once(dirname(dirname(__DIR__)) . "/libs/php/server.php");
-require_once(dirname(dirname(__DIR__)) . "/libs/php/dbtable.php");
+require_once("../php/debug.php");
+require_once("../php/exceptions.php");
+require_once("../php/server.php");
+require_once("../php/dbtable.php");
+
 require_once("request.php");
 require_once("response.php");
 

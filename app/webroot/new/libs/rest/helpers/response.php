@@ -1,7 +1,7 @@
 <?php
 
-require_once(dirname(dirname(__DIR__)) . "/libs/php/debug.php");
-require_once(dirname(dirname(__DIR__)) . "/libs/php/exceptions.php");
+require_once("../php/debug.php");
+require_once("../php/exceptions.php");
 require_once("request.php");
 
 /**

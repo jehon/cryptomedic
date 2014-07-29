@@ -1,8 +1,8 @@
 <?php
 
-require_once(dirname(dirname(__DIR__)) . "/libs/php/debug.php");
-require_once(dirname(dirname(__DIR__)) . "/libs/php/exceptions.php");
-require_once(dirname(dirname(__DIR__)) . "/libs/php/server.php");
+require_once("../php/debug.php");
+require_once("../php/exceptions.php");
+require_once("../php/server.php");
 
 Class request {
 	protected $server;
@@ -17,17 +17,20 @@ Class request {
 		/**
 		* Defining the query parameter
 		*/
+
 		$this->subquery = array();
 		if (array_key_exists('REDIRECT_subquery', $_SERVER)) {
 			$this->subquery = $_SERVER['REDIRECT_subquery'];
 			$this->subquery = array_filter(explode('/', $this->subquery), "strlen");
 		}
 
+		if (count($this->subquery) < 1) {
+			debugHeader("Is configuration ok? No subquery found");
+			throw new HttpInvalidData("Invalid route");
+		}
+		
 		foreach($this->subquery as $k => $l)
 			debugHeader($l, 'SUBQUERY-' . $k);
-		
-		if (count($this->subquery) < 1)
-			throw new HttpInvalidData("Invalid route");
 		
 		/**
 		* Parameters
