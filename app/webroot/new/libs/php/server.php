@@ -2,6 +2,9 @@
 require_once("debug.php");
 require_once("exceptions.php");
 
+// Configure the application
+require_once("../../config.php");
+
 class Server {
 	const DEBUG = "debug";	
 	const LOGIN_USERNAME = "login.username";	
