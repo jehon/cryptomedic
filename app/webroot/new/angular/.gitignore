@@ -2,6 +2,9 @@ logs/*
 !.gitkeep
 node_modules/
 tmp
+#bower_components/
 .DS_Store
 .idea
 output/
+
+**/.htaccess
