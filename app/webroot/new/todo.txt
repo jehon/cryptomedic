@@ -6,7 +6,6 @@ bower.json
 
 TODO:
 
-users (manage users)
 check config (+ upload maintenance.php when deploying next version of cryptomedic and maintenance)
 
 deserialize "labels": first ->tr(["label" => "??."]) then save it like that
