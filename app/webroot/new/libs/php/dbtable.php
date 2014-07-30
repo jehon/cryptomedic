@@ -96,10 +96,21 @@ class DBTable {
 		return $res[0];
 	}
 
+	public function rowCreate() {
+
+	}
+
+	public function rowUpdate() {
+
+	}
+
 	public function preparedStatement($statement, $data) {
 		$this->lastStatement = $statement;
 		$stmt = $this->db->Prepare($statement); // This could not fail!
 		$res = $this->myPostTreatment($this->db->Execute($stmt, $data), "executing statement");
+		if ($res instanceof ADORecordSet_empty) {
+			return array();
+		}
 		return $res->getArray();
 	}
 
@@ -115,6 +126,7 @@ class DBTable {
  
 	protected function myPostTreatment($result, $dbgMsg) {
 		if (($result === false) && ($this->db->ErrorMsg())) {
+			var_dump($this->db->ErrorMsg());
 			trace();
 			throw new DBSystemError("Invalid SQL: " . ($dbgMsg ? "[" . $dbgMsg . "]" : "") . ":" . $this->db->ErrorMsg());
 		}
