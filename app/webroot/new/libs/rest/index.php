@@ -54,9 +54,11 @@ try {
     if ($error instanceof HttpException) {
     	debugHeader(get_class($error), "TERMINATED_CLASS");
 	    debugHeader($error->getMessage(), "TERMINATED_HTTPERROR");
-    	http_response_code($error->getHttpCode());
+	   	http_response_code($error->getHttpCode());
 		define("TERMINATED_SUCCESSFULL", 1);
     } else {
+	    debugHeader($error->getMessage(), "TERMINATED_NOT_HTTPERROR");
+	   	http_response_code(500);
     	throw $error;
     }
 }
