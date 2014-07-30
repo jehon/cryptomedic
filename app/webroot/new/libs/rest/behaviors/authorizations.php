@@ -11,17 +11,24 @@ function isAuthorized($resource, $action, $parameters = array()) {
 	// Authentification is available for everybody
 	if (Server::ROUTE_AUTHENTICATE == $resource) return true;	
 	
+	/*** Admin rights ***/
+
 	// Admin can do everything
 	if ('admin' == $group) 	return true;
+
+	// System resources are available to admin only
+	if ("system" == $resource) return false;
 
 	// users pages can be accessed by admin only (see above)
 	// PS: login and logout are public
 	if ('users' == $resource) return false;	
 	
-	// All can read everything
+	/**** Readonly rights ****/
+
+	// everybody can read everything
 	if ('GET' == $action) return true;
 
-	// Readonly can not do anything else
+	// readonly can not do anything else
 	if ('readonly' == $group) return false;
 
 	// TODO: manage other authorizations:
@@ -47,7 +54,7 @@ function isAuthorized($resource, $action, $parameters = array()) {
 			return true;
 			break;
 	}
-	var_dump("AUTH: uncatched " . $resource . "." . $action);
+	headerDebug($resource . "." . $action, "AUTH-uncatched")
 	return true;
 }
 
