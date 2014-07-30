@@ -8,6 +8,16 @@ class HttpException extends Exception {
 }
 
 /**
+  * Everything is already managed, please don't add anything
+  */ 
+class HttpAlreadyDone extends HttpException {
+  public function __construct($message = "", $code = 0, Exception $previous = null) {
+      $this->httpCode = 200;
+      parent::__construct($message, 0, $previous);
+    }
+}
+
+/**
   * Une authentification est nécessaire pour accéder à la ressource
   */
 class HttpUnauthorized extends HttpException {
@@ -54,3 +64,4 @@ class HttpInternalError extends HttpException {
 
 class DBSystemError extends HttpInternalError {}
 class DBInvalidData extends HttpInvalidData {}
+class DBNotFound extends HttpNotFound {}
