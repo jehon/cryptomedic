@@ -11,6 +11,7 @@ if (array_key_exists("id", $_POST)) {
 	var_dump($_POST);
 	if (array_key_exists("setPassword", $_POST) && $_POST["setPassword"] == "yes") {
 		echo "Setting password";
+		$users->preparedStatement($config['authenticate.updatePasswordRequest'], array($_REQUEST['password'], $_REQUEST['id']));
 	} else {
 		echo "Saving user";
 	}
