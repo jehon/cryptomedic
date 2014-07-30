@@ -32,19 +32,7 @@
  * In development mode, you need to click the flash message to continue.
  */
 require (__DIR__ . "/../../../maintenance.php");
-if ($_SERVER ['HTTP_HOST'] == 'localhost') {
-	Configure::write ( 'debug', 1 );
-} else {
-	Configure::write ( 'debug', $config ['cryptomedic'] ['debug_level']);
-}
-
-function mpr($var, $title = "") {
-	if (Configure::read('debug') > 0) {
-		$template = php_sapi_name() !== 'cli' ? '<pre>%s %s</pre>' : "\n%s\n";
-		if ($var === false) $var = "!false!";
-		printf($template, $title, print_r($var, true));
-	}
-}
+Configure::write ('debug', $config['debug']);
 
 /**
  * Configure the Error handler used to handle errors for your application. By default
@@ -234,12 +222,12 @@ function mpr($var, $title = "") {
 /**
  * A random string used in security hashing methods.
  */
-Configure::write ( 'Security.salt', $config ['cryptomedic'] ['salt'] );
+Configure::write ('Security.salt', $config['authenticate.salt'] );
 
 /**
  * A random numeric string (digits only) used to encrypt/decrypt strings.
  */
-Configure::write ( 'Security.cipherSeed', $config ['cryptomedic'] ['cipher'] );
+Configure::write ('Security.cipherSeed', $config['authenticate.cipher'] );
 
 /**
  * Apply timestamps with the last modified time to static assets (js, css, images).
