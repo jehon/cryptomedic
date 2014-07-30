@@ -4,6 +4,7 @@ define("REST_LOADED", 1);
 
 function shutdown() {
 	if (defined("TERMINATED_SUCCESSFULL")) return;
+
     $error = error_get_last();
     if ($error === null) return;
 

@@ -6,16 +6,27 @@ require_once(__DIR__ . "/../../php/exceptions.php");
 
 $users = new DBTable($config["database"], "users", $server, [DBTable::PRIVATE_COLUMNS => array("password")]);
 
-// TODO: handle results
 if (array_key_exists("id", $_POST)) {
-	var_dump($_POST);
-	if (array_key_exists("setPassword", $_POST) && $_POST["setPassword"] == "yes") {
-		echo "Setting password";
-		$users->preparedStatement($config['authenticate.updatePasswordRequest'], array($_REQUEST['password'], $_REQUEST['id']));
+	if ($_POST['id'] > 0) {
+		if (array_key_exists("_setPassword", $_POST) && $_POST["_setPassword"] == "yes") {
+			echo "Setting password";
+			$users->preparedStatement($config['authenticate.updatePasswordRequest'], array($_REQUEST['password'], $_REQUEST['id']));
+		} else {
+			$users->rowUpdate($_REQUEST);
+		}
 	} else {
-		echo "Saving user";
+		$data = $_REQUEST;
+		unset($data['id']);
+		$users->rowCreate($data);
 	}
 	echo "<hr>";
+} else if (array_key_exists("_delete", $_REQUEST) && $_REQUEST['_delete'] == "yes") {
+	if (array_key_exists("id", $_REQUEST) && $_REQUEST['id'] > 0) {
+		$res = $users->rowDelete($_REQUEST['id']);
+		echo ($res !== false ? "ok" : "failed") . "<br>";
+		echo "<a href='?'>Continue</a>";
+		die("");
+	}
 }
 
 if ($request->getParameter('id', false)) {
@@ -34,7 +45,7 @@ if ($request->getParameter('id', false)) {
 				<?php
 					if ($request->getParameter('password', false)) {
 						?>
-							<input type='hidden' name='setPassword' value="yes">
+							<input type='hidden' name='_setPassword' value="yes">
 							<tr><td>Username</td><td><?php echo $u['username']?></td></tr>
 							<tr><td>Password</td><td><input name='password'></td></tr>
 						<?php
@@ -51,6 +62,7 @@ if ($request->getParameter('id', false)) {
 								</select>
 							</td></tr>
 							<tr><td><a href="?id=<?php echo $u['id']; ?>&password=1">Change password</a></td></tr>
+							<tr><td><a href="?id=<?php echo $u['id']; ?>&_delete=yes">Delete</a></td></tr>
 						<?php
 					}
 				?>
