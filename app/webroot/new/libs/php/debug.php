@@ -42,7 +42,10 @@ function trace($comments = "") {
  */
 function debugHeader($content, $topic = "ERROR") {
 	if (!headers_sent() && (!isset($server) || $server->getConfig('debug', false))) {
-		header("X-SERVER-" . $topic . ': ' . $content, false);
+		if (is_string($content))
+			header("X-SERVER-" . $topic . ': ' . $content, false);
+		else
+			header("X-SERVER-" . $topic . ': ' . "<object>", false);
 	}
 }
 
