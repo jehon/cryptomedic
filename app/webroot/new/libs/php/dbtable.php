@@ -20,7 +20,7 @@ class DBTable {
 		$this->table = $table;
 		$this->options = array_merge(array(
 				self::PRIVATE_COLUMNS => array()
-			), $options);
+				), $options);
 
 		$this->db = ADONewConnection($config['uri']);
 		$this->db->SetFetchMode(ADODB_FETCH_ASSOC);
@@ -89,10 +89,11 @@ class DBTable {
 	public function rowGet($id) {
 		if (!$this->table) throw new DBSystemError("No table in ". __METHOD__);
 		$res = $this->preparedStatement("SELECT * FROM `{$this->table}` WHERE `id` = ?", array($id));
+		if ($res === false) return false;
 		foreach($this->options[self::PRIVATE_COLUMNS] as $c) {
 			unset($res[$c]);
 		}
-		return $res;
+		return $res[0];
 	}
 
 	public function preparedStatement($statement, $data) {

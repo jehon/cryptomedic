@@ -20,8 +20,11 @@ if (count($request->getRoute()) == 2) {
 	$id = $request->getRoute(2);
 	$res = array();
 	$p = $patients->rowGet($id);
-	if (count($p) < 1) $response->notFound("id = " . $id);
-	$p = $p[0];
+	if ($p === false) {
+		throw New DBNotFound("No data matching $id");
+	}
+	// if (count($p) < 1) $response->notFound("id = " . $id);
+	// $p = $p[0];
 	$p['_type'] = 'Patient';
 
 	$res['_type'] = 'Folder';
