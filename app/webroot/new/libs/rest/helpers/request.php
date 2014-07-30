@@ -79,8 +79,8 @@ Class request {
 		if (array_key_exists('X-REQUEST-METHOD', $req_headers)) $this->method = $req_headers['X-REQUEST-METHOD'];
 		if (array_key_exists('X-HTTP-Method-Override', $req_headers)) $this->method = $req_headers['X-HTTP-Method-Override'];
 		if (array_key_exists('_method', $_REQUEST)) {
-			unset($this->parameters['_method']);
 			$this->method = $_REQUEST['_method'];
+			unset($this->systemParameters['_method']);
 		}
 		debugHeader($this->method, 'SUBQUERY-METHOD');
 	}
