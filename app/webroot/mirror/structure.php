@@ -56,12 +56,22 @@ if ($res === false) {
 }
 echo "Current version: $version\n";
 
-foreach(glob(__DIR__ . "/upgrade.sql/*") as $f) {
-	$target_v = basename($f, ".sql");
-	if (!versionAfter($version, $target_v)) {
+if (!array_key_exists("nextVersion", $_REQUEST))
+	die("Please specify version");
+
+$nextVersion = $_REQUEST['nextVersion'];
+echo "Requesting version: $nextVersion\n";
+$f = __DIR__ . "/upgrade.sql/" . $nextVersion . ".sql";
+if (!file_exists($f))
+	die("Version does not exists");
+
+// foreach(glob(__DIR__ . "/upgrade.sql/*") as $f) {
+	// $nextVersion = basename($f, ".sql");
+	$nextVersion = $nextVersion;
+	if (!versionAfter($version, $nextVersion)) {
 		continue;
 	}
-	echo "Treating $f [$target_v]: ";
+	echo "Treating $f [$nextVersion]: ";
 	$content = file_get_contents($f);
 	if (preg_match("/USE `amd_chakaria`/i", $content)) {
 		die("Use close detected");
@@ -80,10 +90,10 @@ foreach(glob(__DIR__ . "/upgrade.sql/*") as $f) {
 	}
 	
 	echo "ok";
-	$ures = $mysqli->query("UPDATE `settings` SET `value`= '$target_v' WHERE `id` = 'structure_version'");
+	$ures = $mysqli->query("UPDATE `settings` SET `value`= '$nextVersion' WHERE `id` = 'structure_version'");
 	if ($ures === false) {
 		echo " !! version not updated: " . $mysqli->errno . ":\n" . $mysqli->error;
 	}
 	$mysqli->commit();
 	echo "\n";
-}
+// }
