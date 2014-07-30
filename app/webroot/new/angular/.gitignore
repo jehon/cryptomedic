@@ -2,7 +2,7 @@ logs/*
 !.gitkeep
 node_modules/
 tmp
-#bower_components/
+# bower_components/
 .DS_Store
 .idea
 output/
