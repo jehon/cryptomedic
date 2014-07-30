@@ -1,5 +1,7 @@
 <?php
 
+require_once("myglob.php");
+
 class Script {
 	private $type = "js";
 	private $opt = array();
@@ -72,25 +74,23 @@ class Script {
 };
 
 
-// Note: glob is disabled as hosting
-//
-// class AllScripts {
-// 	private $list = array();
-//
-// 	function __construct($pattern) { 
-// 		foreach(glob($pattern) as $f) {
-// 			if (is_file($f)) {
-// 				$this->list[] = new Script($f);
-// 			}
-// 		}
-// 		return $this;
-// 	}
-//
-// 	public function __call($fn, $arguments) {
-// 		// Call the same function on all Script's in the list
-// 		foreach($this->list as $s) {
-// 			call_user_func_array(array($s, $fn), $arguments);
-// 		}
-// 		return $this;
-// 	}
-// }
+class AllScripts {
+	private $list = array();
+
+	function __construct($glob) { 
+		foreach(myglob($glob) as $f) {
+			if (is_file($f)) {
+				$this->list[] = new Script($f);
+			}
+		}
+		return $this;
+	}
+
+	public function __call($fn, $arguments) {
+		// Call the same function on all Script's in the list
+		foreach($this->list as $s) {
+			call_user_func_array(array($s, $fn), $arguments);
+		}
+		return $this;
+	}
+}

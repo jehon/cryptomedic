@@ -21,8 +21,6 @@
 <?php 
 	// jquery
 	(new Script("bower_components/jquery/dist/jquery.min.js"))->dependFile()->toPrint();
-	// (new Script())->url("bower_components/jquery-ui/ui/minified/jquery-ui.min.js")->dependFile()->toPrint();
-	// (new Script())->url("bower_components/jquery-ui/themes/base/minified/jquery-ui.min.css")->dependFile()->toPrint();
 	
 	// bootstrap
 	(new Script("bower_components/bootstrap/dist/js/bootstrap.min.js"))->dependFile()->toPrint();
@@ -41,31 +39,35 @@
 	(new Script("js/amd_stats_datas.js"))->dependFile()->toPrint();
 	(new Script("js/exceptions.js"))->dependFile()->toPrint();
 
-	(new Script("js/model_abstract.js"))->dependFile()->toPrint();
-	(new Script("js/model_data.js"))->dependFile()->toPrint();
-	(new Script("js/model_folder.js"))->dependFile()->toPrint();
-	(new Script("js/model_patient.js"))->dependFile()->toPrint();
-	(new Script("js/model_file.js"))->dependFile()->toPrint();
-	(new Script("js/model_file_bill.js"))->dependFile()->toPrint();
-	(new Script("js/model_file_clubfoot.js"))->dependFile()->toPrint();
-	(new Script("js/model_file_nonricketconsult.js"))->dependFile()->toPrint();
-	(new Script("js/model_file_orthopedicdevice.js"))->dependFile()->toPrint();
-	(new Script("js/model_file_picture.js"))->dependFile()->toPrint();
-	(new Script("js/model_file_ricketconsult.js"))->dependFile()->toPrint();
-	(new Script("js/model_file_surgery.js"))->dependFile()->toPrint();
-	(new Script("js/model_file_surgeryfollowup.js"))->dependFile()->toPrint();
+	
+	(new AllScripts("js/model_*.js"))->dependFile()->toPrint();
+	// (new Script("js/model_abstract.js"))->dependFile()->toPrint();
+	// (new Script("js/model_data.js"))->dependFile()->toPrint();
+	// (new Script("js/model_folder.js"))->dependFile()->toPrint();
+	// (new Script("js/model_patient.js"))->dependFile()->toPrint();
+	// (new Script("js/model_file.js"))->dependFile()->toPrint();
+	// (new Script("js/model_file_bill.js"))->dependFile()->toPrint();
+	// (new Script("js/model_file_clubfoot.js"))->dependFile()->toPrint();
+	// (new Script("js/model_file_nonricketconsult.js"))->dependFile()->toPrint();
+	// (new Script("js/model_file_orthopedicdevice.js"))->dependFile()->toPrint();
+	// (new Script("js/model_file_picture.js"))->dependFile()->toPrint();
+	// (new Script("js/model_file_ricketconsult.js"))->dependFile()->toPrint();
+	// (new Script("js/model_file_surgery.js"))->dependFile()->toPrint();
+	// (new Script("js/model_file_surgeryfollowup.js"))->dependFile()->toPrint();
 
-	(new Script("js/service_rest.js"))->dependFile()->toPrint();
-	(new Script("js/service_cache.js"))->dependFile()->toPrint();
+	(new AllScripts("js/service_*.js"))->dependFile()->toPrint();
+	// (new Script("js/service_rest.js"))->dependFile()->toPrint();
+	// (new Script("js/service_cache.js"))->dependFile()->toPrint();
 
-	(new Script("js/ctrl_allgraphics.js"))->dependFile()->toPrint();
-	(new Script("js/ctrl_file.js"))->dependFile()->toPrint();
-	(new Script("js/ctrl_folder.js"))->dependFile()->toPrint();
-	(new Script("js/ctrl_graphic.js"))->dependFile()->toPrint();
-	(new Script("js/ctrl_home.js"))->dependFile()->toPrint();
-	(new Script("js/ctrl_patient.js"))->dependFile()->toPrint();
-	(new Script("js/ctrl_picture.js"))->dependFile()->toPrint();
-	(new Script("js/ctrl_search.js"))->dependFile()->toPrint();
+	(new AllScripts("js/ctrl_*.js"))->dependFile()->toPrint();
+	// (new Script("js/ctrl_allgraphics.js"))->dependFile()->toPrint();
+	// (new Script("js/ctrl_file.js"))->dependFile()->toPrint();
+	// (new Script("js/ctrl_folder.js"))->dependFile()->toPrint();
+	// (new Script("js/ctrl_graphic.js"))->dependFile()->toPrint();
+	// (new Script("js/ctrl_home.js"))->dependFile()->toPrint();
+	// (new Script("js/ctrl_patient.js"))->dependFile()->toPrint();
+	// (new Script("js/ctrl_picture.js"))->dependFile()->toPrint();
+	// (new Script("js/ctrl_search.js"))->dependFile()->toPrint();
 
 	(new Script("css/application.css"))->dependFile()->toPrint();
 	
