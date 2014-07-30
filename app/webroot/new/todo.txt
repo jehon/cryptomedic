@@ -6,12 +6,11 @@ bower.json
 
 TODO:
 
-transform "php" into "classes"
-extract what are not classes into libs root dir
+users (manage users)
+check config (+ upload maintenance.php when deploying next version of cryptomedic and maintenance)
+
 deserialize "labels": first ->tr(["label" => "??."]) then save it like that
 (what to do with the rest???)
-
-config (default) cleanup! -> out of rest + include "app/config.php" -> include maintenance (passwords, etc...)
 
 Read mode:
 - bills - pas très beau
