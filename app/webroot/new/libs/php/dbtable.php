@@ -16,6 +16,8 @@ class DBTable {
 	protected $columns;
 
 	public function __construct($config, $table, $server, $options = array()) {
+		$GLOBALS['ADODB_QUOTE_FIELDNAMES'] = true;
+
 		$this->server = $server;
 		$this->table = $table;
 		$this->options = array_merge(array(
@@ -90,18 +92,34 @@ class DBTable {
 		if (!$this->table) throw new DBSystemError("No table in ". __METHOD__);
 		$res = $this->preparedStatement("SELECT * FROM `{$this->table}` WHERE `id` = ?", array($id));
 		if ($res === false) return false;
+		if (count($res) == 0) return array();
 		foreach($this->options[self::PRIVATE_COLUMNS] as $c) {
 			unset($res[$c]);
 		}
 		return $res[0];
 	}
 
-	public function rowCreate() {
-
+	public function rowCreate($data) {
+		return $this->myPostTreatment(
+			$this->db->AutoExecute($this->table, $data, 'INSERT', false, true, get_magic_quotes_gpc()),
+			"row Update"
+			);
 	}
 
-	public function rowUpdate() {
+	public function rowUpdate($data) {
+		// return $this->myPostTreatment(
+		// 	$this->db->Replace($this->table, $data, $id, get_magic_quotes_gpc()),
+		// 	"row update"
+		// 	);
 
+		return $this->myPostTreatment(
+			$this->db->AutoExecute($this->table, $data, 'UPDATE', "id = '" . $data['id'] . "'", true, get_magic_quotes_gpc()),
+			"row Update"
+			);
+	}
+
+	public function rowDelete($id) {
+		return $this->preparedStatement("DELETE FROM " . $this->table . " WHERE id = ?", $id);
 	}
 
 	public function preparedStatement($statement, $data) {
