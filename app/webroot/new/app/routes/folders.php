@@ -45,6 +45,10 @@ if (count($request->getRoute()) == 2) {
 	foreach($model2controller as $m => $c) {
 		// we work by controller = the same as in database?
 		if ($c == "patients") continue;
+		// TODO: remove references to this:
+		if ($c == "orthopedic_devices") continue;
+		if ($c == "surgery_followups") continue;
+
 		$r = $rawTable->preparedStatement("SELECT * FROM $c WHERE patient_id = ?", $id);
 		foreach($r as $ri => $rv) {
 			$rv['_type'] = db2model($c);
