@@ -37,48 +37,49 @@ if ($mysqli->connect_errno) {
 }
 
 // TODO: to be removed progressively + clean up table labels
-function label($key, $options = array()) {
-	$options = array_merge([
-		'echo' => true,
-		'wrap' => true
-	], $options);
+// function label($key, $options = array()) {
+// 	trace();
+// 	$options = array_merge([
+// 		'echo' => true,
+// 		'wrap' => true
+// 	], $options);
 
-	if ($options['echo']) {
-		$str = label($key, array_merge($options, [ "echo" => false ]));
-		echo $str;
-		return $str;
-	}
+// 	if ($options['echo']) {
+// 		$str = label($key, array_merge($options, [ "echo" => false ]));
+// 		echo $str;
+// 		return $str;
+// 	}
 
-	if ($options['wrap']) {
-		$str = label($key, array_merge($options, [ "wrap" => false]));
-		$str = "<label for='{$key}'>$str</label>\n";
-		return $str;
-	}
+// 	if ($options['wrap']) {
+// 		$str = label($key, array_merge($options, [ "wrap" => false]));
+// 		$str = "<label for='{$key}' class='toberemoved'>$str</label>\n";
+// 		return $str;
+// 	}
 
-	global $mysqli;
-	$sql = "SELECT * FROM `labels` WHERE `reference` = '{$key}'";
+// 	global $mysqli;
+// 	$sql = "SELECT * FROM `labels` WHERE `reference` = '{$key}'";
 
-	$res = $mysqli->query($sql);
-	if ($res === false) {
-		throw new Exception("Syntax error in labels: " . $mysqli->errno . ":\n" . $mysqli->error . "\n");
-	}
-	if ($res->num_rows > 1) {
-		throw new Exception("Too much labels for '{$key}': " . $sql);
-	}
-	$str = "";
-	if ($res->num_rows > 1) {
-		$version = $res->fetch_array();
-		if ($version["english"] != $key && $version["english"] != "")
-			return $version["english"];
-	}
-	if (count(explode("-", $key)) > 1){
-		return explode("-", $key)[1];
-	}
-	if (count(explode(".", $key)) > 1) {
-		return explode(".", $key)[1];
-	}
-	return $key;
-}
+// 	$res = $mysqli->query($sql);
+// 	if ($res === false) {
+// 		throw new Exception("Syntax error in labels: " . $mysqli->errno . ":\n" . $mysqli->error . "\n");
+// 	}
+// 	if ($res->num_rows > 1) {
+// 		throw new Exception("Too much labels for '{$key}': " . $sql);
+// 	}
+// 	$str = "";
+// 	if ($res->num_rows > 1) {
+// 		$version = $res->fetch_array();
+// 		if ($version["english"] != $key && $version["english"] != "")
+// 			return $version["english"];
+// 	}
+// 	if (count(explode("-", $key)) > 1){
+// 		return explode("-", $key)[1];
+// 	}
+// 	if (count(explode(".", $key)) > 1) {
+// 		return explode(".", $key)[1];
+// 	}
+// 	return $key;
+// }
 
 class t {
 	var $key;
@@ -90,7 +91,8 @@ class t {
 		"baseExpression" => "",
 		"writeOnly" => false,
 		"readOnly" => false,
-		"forceAllowNull" => false
+		"forceAllowNull" => false,
+		"inline" => ""
 	];
 
 	static function setDefaultOption($key, $val = true) {
@@ -294,7 +296,9 @@ class t {
 		}
 		$required = array_key_exists('MYSQLI_NOT_NULL_FLAG', $this->myFlags);
 
-		// TODO: all the "required" fields
+		$inline = "class='form-control' ng-model='{$this->rawExpression}' "
+			. ($required ? "required ng-required " : "" )
+			. "{$this->options['inline']}";
 
 		switch($this->myType) {
 			case 'datetime':
@@ -302,49 +306,37 @@ class t {
 				$this->read();
 				break;
 			case 'date':
-				$this->res .= "<input type='date' ng-model='{$this->rawExpression}' " 
-					. ($required ? "required ng-required " : "" )
-					. "/>";
+				$this->res .= "<input type='date' $inline />";
 				break;
 			case 'text':
 				if ($this->structure->length > 256) {
-					$this->res .= "<textarea ng-model='{$this->rawExpression}' cols=40 rows=4/>";
+					$this->res .= "<textarea  cols=40 rows=4 $inline/>";
 				} else {
-					$this->res .= "<input ng-model='{$this->rawExpression}' "
-					. ($required ? "required ng-required " : "" )
-					. "/>";
+					$this->res .= "<input $inline />";
 				}
 				break;
 			case 'numeric':
 			case 'float':
-				$this->res .= "<input type='number' ng-model='{$this->rawExpression}' "
-				. ($required ? "required ng-required " : "" )
-				. "/>";
+				$this->res .= "<input type='number'  $inline />";
 				break;
 			case 'boolean':
 				$this->res .= "<input type='checkbox' ng-model='{$this->rawExpression}' />";
+				// $this->res .= "<input type='checkbox' $inline />";
 				break;
 			case 'linkedList':
 			case 'list':
-/*
-<span  class="nullable">
-    <select ng-model="myColor" ng-options="color.name for color in colors">
-      <option value="">-- choose color --</option>
-    </select>
-  </span>
-  */
+//  <input type="radio" ng-model="color" value="red">  Red <br/>
+
   				// TODO: back to radio buttons
   				// if (count($this->listing) < 6) {
   				// } else {
-  					$this->res .= "<select ng-model='{$this->rawExpression}' "
-						. ($required ? "required ng-required " : "" )
-  						. ">";
-  					if (!array_key_exists('MYSQLI_NOT_NULL_FLAG', $this->myFlags)) {
-  						$this->res .= "<option value=''>?</option>";
-  					}
-  					foreach($this->listing as $k => $v) {
-  						$this->res .= "<option value='$k'>$v</option>";
-  					}
+  					$this->res .= "<select $inline >";
+	  					if (!array_key_exists('MYSQLI_NOT_NULL_FLAG', $this->myFlags)) {
+	  						$this->res .= "<option value=''>?</option>";
+	  					}
+	  					foreach($this->listing as $k => $v) {
+	  						$this->res .= "<option value='$k'>$v</option>";
+	  					}
   					$this->res .= "</select>";
   				// }
 				break;
