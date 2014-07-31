@@ -4,7 +4,7 @@
 ?>
 <div class="col-lg-6">
 	<fieldset>
-		<legend><?php label("Surgery-Order"); ?></legend>
+		<legend>Order</legend>
 		<table>
 			<col width='30%' /><col width='*' /> 
 			<?php (new t("Surgery.Operation"))->tr()->p(); ?>
@@ -13,7 +13,7 @@
 		</table>
 	</fieldSet>
 	<fieldSet>
-		<legend><?php label("Surgery-GeneralExamination"); ?></legend>
+		<legend>General Examination</legend>
 		<table>
 			<col width='30%' /><col width='*' /> 
 			<?php (new t("Surgery.MedicalProblem"))->tr()->p(); ?>
@@ -34,7 +34,7 @@
 		</table>
 	</fieldSet>
 	<fieldSet>
-		<legend><?php label("Surgery-PreSurgicalExams"); ?></legend>
+		<legend>Pre-Surgical Exams</legend>
 		<table>
 			<col width='30%' /><col width='*' /> 
 			<?php (new t("Surgery.RadiologicalExam"))->tr()->p(); ?>
@@ -46,7 +46,7 @@
 		</table>
 	</fieldSet>
 	<fieldSet>
-		<legend><?php label("Surgery-ParentAutorisation"); ?></legend>
+		<legend>Parent Autorisation</legend>
 		<table>
 			<col width='30%' /><col width='*' /> 
 			<?php (new t("Surgery.PAOk"))->tr()->p(); ?>
@@ -54,7 +54,7 @@
 		</table>
 	</fieldSet>
 	<fieldSet>
-		<legend><?php label("Surgery-SurgicalReport"); ?></legend>
+		<legend>Surgical Report</legend>
 		<table>
 			<col width='30%' /><col width='*' /> 
 			<?php (new t("Surgery.ReportDate"))->tr()->p(); ?>
@@ -67,7 +67,7 @@
 		</table>
 	</fieldSet>
 	<fieldSet>
-		<legend><?php label("Surgery-HospitalisationFollowUp"); ?></legend>
+		<legend>Hospitalisation Follow-Up</legend>
 		<table>
 			<col width='30%' /><col width='*' /> 
 			<?php (new t("Surgery.FollowUpComplication"))->tr()->p(); ?>

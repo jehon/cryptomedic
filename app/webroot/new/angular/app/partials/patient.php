@@ -51,13 +51,13 @@
 		</fieldset>
 <!--
 		<fieldset>
-			<legend><?php //label("Patient.Notesforthepatient"); ?></legend>
+			<legend>Notesforthepatient</legend>
 			<?php //(new t("Patient.Notesforthepatient"))->value()->p(); ?>					
 		</fieldset>
  	</div>
 	<div class="col-sm-6">
 		<fieldset>
-			<legend><?php //label("Patient-ChildrenData"); ?></legend>
+			<legend>ChildrenData</legend>
 			<table class='colorize'>
 				<col width='30%' /><col width='*' /> 
 				<?php // (new t("Patient.Rowofthechildreninthefamily"))->tr()->p(); ?>
@@ -71,7 +71,7 @@
 		</fieldset>
  		<br/>
  		<fieldset>
-			<legend><?php //label("Patient-FamilyData"); ?></legend>
+			<legend>FamilyData</legend>
 			<table class='colorize'>
 				<col width='30%' /><col width='*' /> 
 				<?php //(new t("Patient.Religion"))->tr()->p(); ?>

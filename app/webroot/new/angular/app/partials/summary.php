@@ -27,6 +27,6 @@
 			</a>
 		</td>
 		<td>{{f.Date | date:'longDate' }}</td>
-		<td><span ng-include="'partials/'+f._type+'-summary.php'"></span></td>
+		<td><span ng-include="'partials/'+f._type.toLowerCase()+'-summary.php'"></span></td>
 	</tr>
 </span>

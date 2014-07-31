@@ -5,7 +5,7 @@
 	<div class="col-lg-6">
 		<div ng-include="'partials/consult-introduction.php'"></div>
 		<FieldSet>
-			<legend><?php label("ClubFoot-Data"); ?></legend>
+			<legend>Data</legend>
 			<table>
 				<?php (new t("ClubFoot.Side"))->tr()->p(); ?>
 				<?php (new t("ClubFoot.Walking"))->tr()->p(); ?>
@@ -40,7 +40,7 @@
 	<div class="col-lg-6">
 		<div ng-include="'partials/patient-related.php'"></div>
 		<FieldSet>
-			<legend><?php label("ClubFoot-Conclusion"); ?></legend>
+			<legend>Conclusion</legend>
 			<table>
 				<?php (new t("ClubFoot.Treatment"))->tr()->p(); ?>
 				<?php (new t("ClubFoot.Comment"))->tr()->p(); ?>

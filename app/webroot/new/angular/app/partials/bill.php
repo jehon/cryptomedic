@@ -7,12 +7,14 @@
 		$name = explode(".", $item);
 		$name = $name[1];
 		echo "<tr "
-			. "ng-if=\"currentFile().getPriceFor('$name')\" "
+			. "ng-if=\"currentFile().getPriceFor('$name') > 0\" "
 			. "ng-class='{ notModeRead: !currentFile().$name }'"
 			. ">";
-		echo "<td>" . label($item, [ 'echo' => false ]) . "</td>";
+		echo "<td>" 
+			. str_replace("_", " ", substr($item, strpos($item, '_') + 1)) 
+			. "</td>";
 		echo "<td>";
-		(new t($item, [ "size" => $size]))->value()->p();
+		(new t($item, [ "inline" => "style='width: 4em' step=1 min=0" ]))->value()->p();
 		echo "</td>";
 		echo "<td><div pricefor='$item'>{{currentFile().getPriceFor('$name')}}</div></td>";
 		echo "<td>{{currentFile().getTotalFor('$name')}}</td>";
@@ -21,23 +23,23 @@
 ?>
 <div class="col-lg-6">
 	<FieldSet>
-		<legend><?php label("Bill-GeneralData"); ?></legend>
-		<table  class='colorize'>
+		<legend>General data</legend>
+		<table>
 			<?php (new t("Bill.Date"))->tr()->p(); ?>
-			<?php (new t("Bill.ExaminerName"))->tr()->p(); ?>
-			<?php (new t("Bill.Center"))->tr()->p(); ?>
+			<?php (new t("Bill.ExaminerName"))->tr("Examiner")->p(); ?>
+			<?php (new t("Bill.Center"))->tr("Center where consultation took place")->p(); ?>
 		</table>
 	</FieldSet>
 	<FieldSet>
-		<legend><?php label("Bill-Consults"); ?></legend>
-		<table  class='colorize'>
+		<legend>Consultation items</legend>
+		<table  class='prices'>
 			<col width='60%' /><col width='15%' /><col width='15%' /><col width='10%' /> 
-			<tr>
+			<thead>
 				<td></td>
-				<td><?php label("Quantity"); ?></td>
-				<td><?php label("Price"); ?></td>
-				<td><?php label("Total"); ?></td>
-			</tr>
+				<td>Quantity</td>
+				<td>Price</td>
+				<td>Total</td>
+			</thead>
 			<?php price("Bill.consult_CDC_consultation_physio"); ?>
 			<?php price("Bill.consult_CDC_consultation_Bengali_Doctor"); ?>
 			<?php price("Bill.consult_field_visit"); ?>
@@ -56,15 +58,15 @@
 		</table>
 	</FieldSet>
 	<FieldSet>
-		<legend><?php label("Bill-Workshop"); ?></legend>
-		<table  class='colorize'>
+		<legend>Workshop items</legend>
+		<table  class='prices'>
 			<col width='60%' /><col width='15%' /><col width='15%' /><col width='10%' /> 
-			<tr>
+			<thead>
 				<td></td>
-				<td><?php label("Quantity"); ?></td>
-				<td><?php label("Price"); ?></td>
-				<td><?php label("Total"); ?></td>
-			</tr>
+				<td>Quantity</td>
+				<td>Price</td>
+				<td>Total</td>
+			</thead>
 			<?php price("Bill.workshop_BHKAFO_night"); ?>
 			<?php price("Bill.workshop_BHKAFO_walking"); ?>
 			<?php price("Bill.workshop_UHKAFO_night"); ?>
@@ -111,15 +113,15 @@
 		</table>
 	</FieldSet>
 	<FieldSet>
-		<legend><?php label("Bill-Surgery"); ?></legend>
-		<table  class='colorize'>
+		<legend>Surgery items</legend>
+		<table  class='prices'>
 			<col width='60%' /><col width='15%' /><col width='15%' /><col width='10%' /> 
-			<tr>
+			<thead>
 				<td></td>
-				<td><?php label("Quantity"); ?></td>
-				<td><?php label("Price"); ?></td>
-				<td><?php label("Total"); ?></td>
-			</tr>
+				<td>Quantity</td>
+				<td>Price</td>
+				<td>Total</td>
+			</thead>
 			<?php price("Bill.surgical_osteotomy"); ?>
 			<?php price("Bill.surgical_osteotomy_bi"); ?>
 			<?php price("Bill.surgical_epiphysiodesis"); ?>
@@ -142,20 +144,20 @@
 <div class="col-lg-6">
 	<div ng-include="'partials/patient-related.php'"></div>
 	<FieldSet>
-		<legend><?php label("Bill-Total"); ?></legend>
-		<table  class='colorize'>
+		<legend>Summary</legend>
+		<table>
 			<col width='70%' /><col width='*' /> 
 			<tr>
-				<td><?php label("Bill.total_real"); ?></td>
+				<td>Raw Calculated total</td>
 				<td>{{currentFile().calculate_total_real()}}</td>
 			</tr>
-			<?php (new t("Bill.Sociallevel"))->tr()->p(); ?>
+			<?php (new t("Bill.Sociallevel"))->tr("Social Level")->p(); ?>
             <tr>
-				<td><?php label("Bill.percentage_asked"); ?></td>
+				<td>Percentage of price to be asked</td>
 				<td>{{currentFile().calculate_percentage_asked() | mypercentage:1 }}</td>
 			</tr>
             <tr>
-				<td><?php label("Bill.total_asked"); ?></td>
+				<td>Price to be asked to the patient</td>
 				<td>{{currentFile().calculate_total_asked() | number:0}}</td>
 			</tr>
 		</table>

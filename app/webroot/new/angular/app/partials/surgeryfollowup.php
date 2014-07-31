@@ -4,7 +4,7 @@
 ?>
 <div class="col-lg-6">
 	<FieldSet>
-		<Legend><?php label("SurgeryFollowup-Discharge"); ?></Legend>
+		<Legend>Discharge</Legend>
 		<table>
 			<col width='30%' /><col width='*' /> 
 			<?php (new t("SurgeryFollowup.Date"))->tr()->p(); ?>
@@ -25,7 +25,7 @@
 		</table>
 	</FieldSet>
 	<FieldSet>
-		<Legend><?php label("SurgeryFollowup-Visit"); ?></Legend>
+		<Legend>Visit</Legend>
 		<table>
 			<col width='30%' /><col width='*' /> 
 			<?php (new t("SurgeryFollowup.SkinCicatrisation"))->tr()->p(); ?>
@@ -36,7 +36,7 @@
 		</table>
 	</FieldSet>
 	<FieldSet>
-		<Legend><?php label("SurgeryFollowup-Treatment"); ?></Legend>
+		<Legend>Treatment</Legend>
 		<table>
 			<col width='30%' /><col width='*' /> 
 			<?php (new t("SurgeryFollowup.TreatmentPhysiotherapy"))->tr()->p(); ?>
@@ -46,7 +46,7 @@
 		</table>
 	</FieldSet>
 	<FieldSet>
-		<Legend><?php label("SurgeryFollowup-Conclusion"); ?></Legend>
+		<Legend>Conclusion</Legend>
 		<table>
 			<col width='30%' /><col width='*' /> 
 			<?php (new t("SurgeryFollowup.ResultImprovement"))->tr()->p(); ?>
