@@ -40,10 +40,10 @@ Class request {
 		foreach($_GET as $k => $v) {
 			if (substr($k, 0, 1) == "_") {
 				$ks = substr($k, 1);
-				$this->systemParameters[$ks] = $v;
+				$this->systemParameters[$ks] = $this->objectify($v);
 				debugHeader($v, 'SUBQUERY-SYSPARAM-' . $ks);
 			} else {
-				$this->parameters[$k] = $v;
+				$this->parameters[$k] = $this->objectify($v);
 				debugHeader($v, 'SUBQUERY-PARAM-' . $k);
 			}
 		}
@@ -60,7 +60,7 @@ Class request {
 					$this->post = $content;
 				} else if (is_object($content)) {
 					foreach($content as $k => $v)
-						$this->post[$k] = $v;
+						$this->post[$k] = $this->objectify($v);
 				} else {
 					throw new HttpInvalidData("Input content");
 				}
@@ -83,6 +83,14 @@ Class request {
 			unset($this->systemParameters['_method']);
 		}
 		debugHeader($this->method, 'SUBQUERY-METHOD');
+	}
+
+	protected function objectify($what) {
+		if ($what === 'null') return null;
+		if ($what === 'false') return false;
+		if ($what === 'true') return true;
+		if (is_numeric($what)) return $what + 0;
+		return $what;
 	}
 
 	public function getRoute($i = null) {
@@ -108,8 +116,9 @@ Class request {
 	}
 
 	public function getParameter($key, $default = null) {
-		if (array_key_exists($key, $this->parameters))
+		if (array_key_exists($key, $this->parameters)) {
 			return $this->parameters[$key];
+		}
 		return $default;
 	}
 
