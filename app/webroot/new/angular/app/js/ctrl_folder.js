@@ -41,7 +41,7 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_rest', '$rou
 		if ($scope.pageIsFile) {
 			return $scope.folder.getSubFile($scope.page)['_type'].toLowerCase();
 		}
-		if ($scope.page == "") return "Patient";
+		if ($scope.page == "") return "patient";
 		if (typeof($scope.page) == "number") return "blank";
 		return $scope.page;
 	};
