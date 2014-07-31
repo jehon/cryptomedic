@@ -130,7 +130,6 @@ Class request {
 		return $default;
 	}
 
-
 /**
  * Read data from php://input, mocked in tests.
  *

@@ -22,6 +22,13 @@ class Server {
 			$_SESSION[$this->getConfig("domain")] = array();
 	}
 
+	/**
+	 * Return the root of the rest server, ie. where all the route start
+	 */
+	public function getRestServerRoot() {
+		return substr($_SERVER['REQUEST_URI'], 0, -strlen($_SERVER['REDIRECT_subquery']));
+	}
+
 	public function getSession($key, $default = null) {
 		if (array_key_exists($key, $_SESSION[$this->getConfig("domain")]))
 			return $_SESSION[$this->getConfig("domain")][$key];

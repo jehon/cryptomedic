@@ -10,7 +10,10 @@ if (array_key_exists("id", $_POST)) {
 	if ($_POST['id'] > 0) {
 		if (array_key_exists("_setPassword", $_POST) && $_POST["_setPassword"] == "yes") {
 			echo "Setting password";
-			$users->preparedStatement($config['authenticate.updatePasswordRequest'], array($_REQUEST['password'], $_REQUEST['id']));
+			if ($_REQUEST['password'] > '')
+				$users->preparedStatement($config['authenticate.updatePasswordRequest'], array($_REQUEST['password'], $_REQUEST['id']));
+			else
+				$users->preparedStatement($config['authenticate.disablePasswordRequest'], array($_REQUEST['id']));
 		} else {
 			$users->rowUpdate($_REQUEST);
 		}
@@ -102,6 +105,8 @@ foreach($list as $u) {
 
 ?>
 	</table>
+
+<a href='<? echo $server->getRestServerRoot() . "/" . $server->getConfig(Server::ROUTE_AUTHENTICATE); ?>/logout'>Logout</a>
 <?php
 
 throw new HttpAlreadyDone("Users route");

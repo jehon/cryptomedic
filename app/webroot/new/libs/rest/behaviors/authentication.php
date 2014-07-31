@@ -37,11 +37,25 @@ if (!defined("REST_LOADED")) die("Ca va pas la tête?");
 
 		// data is not null, thus this route is marked as "handled" and will not throw an "404"
 		$response->data = array();
+		if ($request->getPost("redirect", false)) {
+			echo "<html>";
+			echo "<a href='{$request->getPost('redirect', false)}'>continue</a>";
+			die();
+		}
 	}
 
 	if (!$server->getSession(Server::LOGIN_USERNAME, false)) {
 		// Test for public pages: none actually
 		if (!$request->matchRoute(array("labels"))) {
+			?>
+				You are not authorized to view this page.<br>
+				<form method="POST" action="<? echo $server->getRestServerRoot() . "/" . $server->getConfig(Server::ROUTE_AUTHENTICATE); ?>/login">
+					username: <input name='username'><br>
+					password: <input type='password' name='password'><br>
+					<input type='hidden' name='redirect' value="<?php echo $_SERVER['REQUEST_URI']; ?>">
+					<button type="submit">Login</button>
+				</form>
+			<?php
 			throw New HttpUnauthorized("Not a public page");
 		}
 	}
