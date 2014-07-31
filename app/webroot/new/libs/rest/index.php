@@ -9,6 +9,7 @@ function shutdown() {
     if ($error === null) return;
 
     debugHeader($error['message'], "TERMINATED_PROBLEM");
+    echo $error['message'];
     http_response_code(500);
 }
 
@@ -56,6 +57,7 @@ try {
     	debugHeader(get_class($error), "TERMINATED_CLASS");
 	    debugHeader($error->getMessage(), "TERMINATED_HTTPERROR");
 	   	http_response_code($error->getHttpCode());
+   	    echo $error->getHttpCode();
 		define("TERMINATED_SUCCESSFULL", 1);
     } else {
 	    debugHeader($error->getMessage(), "TERMINATED_NOT_HTTPERROR");
