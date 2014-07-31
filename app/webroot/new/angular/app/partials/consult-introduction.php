@@ -7,9 +7,10 @@
 	<legend>General data</legend>
 	<table>
 		<col width='30%' /><col width='*' /> 
-		<?php (new t("NonricketConsult.Date"))->tr()->p(); ?>
-		<?php (new t("NonricketConsult.ExaminerName"))->tr()->p(); ?>
-		<?php (new t("NonricketConsult.Center"))->tr()->p(); ?>
+		<?php (new t("NonricketConsult.Date"))->tr("Date")->p(); ?>
+		<?php (new t("NonricketConsult.ExaminerName"))->tr("Examiner Name")->p(); ?>
+		<?php (new t("NonricketConsult.Center"))->tr("Center")->p(); ?>
+		<?php (new t("NonricketConsult.SchoolClass"))->tr("Center")->p(); ?>
 		<tr class='notModeWrite'>
 			<td>Age during consultation</td>
 			<td><span catch-it ng-model="folder" tryit="currentFile().ageAtConsultTime()">{{result | number:0 }} years old at consultation time</span></td>
@@ -22,10 +23,10 @@
 	<table>
 		<col width='30%' /><col width='*' style='text-align: right' /><col width='20%' /> 
 		<thead>
-			<th>
-				<td/><td/>
-				<td class='notModeWrite'>Standard deviation (statistic)</td>
-			</th>
+			<tr>
+				<th/><th/>
+				<th class='notModeWrite'>Standard deviation (statistic)</th>
+			</tr>
 		</thead>
 		<tr ng-class='{ emptyValue: !currentFile().Weightkg}'>
 			<td>Weight (kg)</td>
@@ -35,7 +36,9 @@
 			<td>Height (cm)</td>
 			<td class='tdright'><?php (new t("NonricketConsult.Heightcm"))->value()->p(); ?></td>
 			<td class='notModeWrite'><span catch-it ng-model="folder" tryit="currentFile().ds_height()">{{result | number:2 }} ds</span></td>
-		</tr><tr ng-class='{ emptyValue: !currentFile().Heightcm || !currentFile().Weightkg}'
+		</tr>
+		<?php (new t("NonricketConsult.Brachialcircumferencecm"))->tr()->p(); ?>
+		<tr ng-class='{ emptyValue: !currentFile().Heightcm || !currentFile().Weightkg}'
 				class='notModeWrite'
 				>
 			<td>Weight/Height Ratio</td>
@@ -48,6 +51,5 @@
 			<td class='tdright'><span catch-it ng-model="folder" tryit="currentFile().bmi()">{{result | number:2 }}</span></td>
 			<td class='notModeWrite'><span catch-it ng-model="folder" tryit="currentFile().ds_bmi()">{{result | number:2 }} ds</span></td>
 		</tr>
-		<?php (new t("NonricketConsult.Brachialcircumferencecm"))->tr()->p(); ?>
 	</table>
 </fieldset>

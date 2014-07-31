@@ -6,9 +6,8 @@
 	<div ng-include="'partials/consult-introduction.php'"></div>
 	<br/>
 	<fieldset>
-		<legend>OrthopedicData</legend>
+		<legend>Orthopedic Data</legend>
 		<table>
-			<col width='30%' /><col width='*' /> 
 			<?php (new t("NonricketConsult.Side"))->tr()->p(); ?>
 			<?php (new t("NonricketConsult.Jointsorbonesaffected"))->tr()->p(); ?>
 			<?php (new t("NonricketConsult.Deformity"))->tr()->p(); ?>
@@ -25,13 +24,12 @@
 	<fieldset>
 		<legend>Conclusion</legend>
 		<table>
-			<col width='30%' /><col width='*' /> 
-			<?php (new t("NonricketConsult.Physiotherapy61"))->tr()->p(); ?>
-			<?php (new t("NonricketConsult.Plaster62"))->tr()->p(); ?>
-			<?php (new t("NonricketConsult.Orthopedicdevice65"))->tr()->p(); ?>
+			<?php //(new t("NonricketConsult.Physiotherapy61"))->tr()->p(); ?>
+			<?php //(new t("NonricketConsult.Plaster62"))->tr()->p(); ?>
+			<?php //(new t("NonricketConsult.Orthopedicdevice65"))->tr()->p(); ?>
 			<?php (new t("NonricketConsult.Surgery66"))->tr()->p(); ?>
 			<?php (new t("NonricketConsult.Othertreatment68"))->tr()->p(); ?>
-			<?php (new t("NonricketConsult.Comment"))->tr()->p(); ?>
+			<?php //(new t("NonricketConsult.Comment"))->tr()->p(); ?>
 			<?php (new t("NonricketConsult.Nextappointment"))->tr()->p(); ?>
 		</table>
 	</fieldset>		
