@@ -1,25 +1,32 @@
-bower.json
-    "jquery-ui": "latest",
+Files:
+- examiner name = a list
+- center = add CMxxx (voir Bill)
+- SchoolClass ou pas? (consult-introduction)
 
-
-
+- Drop orthopedic_devices
+- Drop surgeries_followups
 
 TODO:
-
-check config (+ upload maintenance.php when deploying next version of cryptomedic and maintenance)
-
-deserialize "labels": first ->tr(["label" => "??."]) then save it like that
-(what to do with the rest???)
-
-Read mode:
-- bills - pas très beau
+- recherche par pathologie (page patient_search ? + backend)
+- input radio button if <= 6 choices ??? (template.php)
+- link from files to usernames if admin (page index.php?)
+- put files list on menu bar collapsed ? check in "gsm" mode (page index.php?)
+- change password
 
 Write mode:
-- date très hautes
-- bills - pas très beau
+- validate the forms -> howto ? see below an idea
+- all files: business rules to be migrated
 - orthopedic device (write) http://localhost/amd/angular/app/#/folder/71154/3/edit
-
-+ loin:
 - save modified file
 - add file
 - add patient
+- unlock
+- delete file
+
+var $myForm = $('#myForm')
+if (!$myForm[0].checkValidity()) {
+  // If the form is invalid, submit it. The form won't actually submit;
+  // this will just cause the browser to display the native HTML5 error messages.
+  $myForm.submit()
+}
+$myForm.find(':submit').click()
