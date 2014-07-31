@@ -10,6 +10,10 @@
  	border-color: yellow;
 }
 
+.toberemoved {
+  background-color: red;
+}
+
 /*
  * Base structure
  */
@@ -35,6 +39,7 @@ html,body {
 .modeRead .emptyValue {
   color: lightgray;
   font-size: smaller;
+  background-color: white;
 }
 
 .modeRead .notModeRead {
@@ -52,7 +57,58 @@ html,body {
 .emptyValue .catchedError {
   color: lightgray;
 }
+/**********************************************
+ * Fieldsets (databoxes)
+ */
+fieldset {
+  border-radius: 10px;
+  padding: 10px;
+  border-style:solid; 
+  border-width:2px; 
+  border-color:#002060; 
+}
 
+fieldset > legend {
+  font-size: 120%;
+  color: #004A94;
+  padding-left: 10px;
+  padding-right: 10px;
+  width: auto;
+  margin-bottom: 0px;
+}
+
+fieldset > legend > label {
+  padding: 0px;
+}
+
+fieldset > table {
+  width: 100%;
+}
+
+fieldset > table > thead {
+  font-style: italic;
+}
+
+fieldset > table > tbody > tr:nth-child(odd) {
+  background-color: rgb(230, 230, 230);
+}
+
+fieldset > table > tbody > tr > td:nth-of-type(1) { /*Setting the width of column 1.*/
+  width: 120px;
+  font-weight: 700;
+}
+
+/********************************************
+ * Input
+ */
+input[type=date] {
+  /*line-height: inherit !important; */
+  line-height: normal !important;  /* Workaround bootstrap */
+}
+
+input[type=checkbox].form-control {
+  width: auto;
+}
 /********************************************
  * Menu / buttons
  */
@@ -130,35 +186,6 @@ tr.hovered {
 }
 
 /**********************************************
- * Fieldsets (databoxes)
- */
-fieldset {
-	border-radius: 10px;
-	padding: 10px;
-	border-style:solid; 
-	border-width:2px; 
-	border-color:#002060;	
-}
-
-fieldset > legend {
-	font-size: 120%;
-	color: #004A94;
-	padding-left: 10px;
-	padding-right: 10px;
-	width: auto;
-  margin-bottom: 0px;
-}
-
-fieldset > legend > label {
-  padding: 0px;
-}
-
-fieldset > table > tbody > tr > td:nth-of-type(1) { /*Setting the width of column 1.*/
-  width: 120px;
-  font-weight: 700;
-}
-
-/**********************************************
  * Summary
  */
 table.summary table > tbody > tr > td:nth-of-type(1) { /*Setting the width of column 1.*/
@@ -179,6 +206,13 @@ table.datalegend {
 table.datalegend > thead > tr> th {
     font-size: 9px;
     padding: 2px;
+}
+
+/*******************************************
+/* Data management
+ */
+input.ng-invalid {
+  border: 1px solid red;
 }
 
 /********************************************
