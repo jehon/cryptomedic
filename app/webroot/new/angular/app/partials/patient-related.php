@@ -5,7 +5,7 @@
 ?>
 <fieldset ng-controller='ctrl_patient' class='related'>
 	<legend>Related Patient</legend>
-		<table class='colorize'>
+		<table>
 			<tr>
 				<td rowspan='100' align='left' width='100px'>
 					<img src="img/patient.gif">

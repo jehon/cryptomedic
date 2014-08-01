@@ -4,7 +4,6 @@
 	t::setDefaultOption("readOnly");
 ?>
 <table width="100%">
-	<colgroup span="2" width="50%"></colgroup>
 	<tbody>
 		<? (new t("NonricketConsult.Date"))->tr()->p(); ?>
 		<? (new t("NonricketConsult.Physiotherapy61"))->tr("Physiotherapy")->p(); ?>

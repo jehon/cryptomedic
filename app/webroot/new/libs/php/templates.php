@@ -131,7 +131,7 @@ class t {
 
 		global $mysqli;
 		global $model2controller;
-		$res = $mysqli->query("SELECT " . $this->field . " FROM " . $model2controller[$this->model] . " LIMIT 1");
+		$res = $mysqli->query("SELECT `" . $this->field . "` FROM " . $model2controller[$this->model] . " LIMIT 1");
 		if ($res === false) {
 			$this->linked2DB = false;
 			return ;
@@ -258,7 +258,7 @@ class t {
 		global $dateFormat;
 		global $dateTimeFormat;
 		if (!$this->linked2DB) {
-			throw new Exception("Read: key is not a two parts: '{$this->key}'");
+			throw new Exception("Read: key is not linked to DB: '{$this->key}'");
 		}
 		switch($this->myType) {
 			case 'date':

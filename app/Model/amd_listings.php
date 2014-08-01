@@ -15,7 +15,7 @@ $model2controller = array(
 global $amd_listing;
 $amd_listing = array();
 
-$amd_listing["Centers"] = array( 992, 993, 993, 994, 995, 996, 997 );
+$amd_listing["Centers"] = array( 992, 993, 993, 994, 995, 996, 997, 1002 );
 $amd_listing["Centers"]["labels"] = true;
 
 $amd_listing["NullValue"] = array( 0, 302 );

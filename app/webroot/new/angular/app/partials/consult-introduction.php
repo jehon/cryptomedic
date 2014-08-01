@@ -6,9 +6,9 @@
 <fieldset>
 	<legend>General data</legend>
 	<table>
-		<col width='30%' /><col width='*' /> 
 		<?php (new t("NonricketConsult.Date"))->tr("Date")->p(); ?>
 		<?php (new t("NonricketConsult.ExaminerName"))->tr("Examiner Name")->p(); ?>
+		<tr><td>TODO: ExaminerName = list </td></tr>
 		<?php (new t("NonricketConsult.Center"))->tr("Center")->p(); ?>
 		<?php (new t("NonricketConsult.SchoolClass"))->tr("Center")->p(); ?>
 		<tr class='notModeWrite'>
@@ -21,7 +21,6 @@
 <fieldset>
 	<legend>Nutritional Data</legend>
 	<table>
-		<col width='30%' /><col width='*' style='text-align: right' /><col width='20%' /> 
 		<thead>
 			<tr>
 				<th/><th/>

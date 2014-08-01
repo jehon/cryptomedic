@@ -57,7 +57,6 @@
 	<fieldSet>
 		<legend>Surgical Report</legend>
 		<table>
-			<col width='30%' /><col width='*' /> 
 			<?php (new t("Surgery.ReportDate"))->tr()->p(); ?>
 			<?php (new t("Surgery.ReportDiagnostic"))->tr()->p(); ?>
 			<?php (new t("Surgery.ReportSurgeon"))->tr()->p(); ?>
@@ -70,7 +69,6 @@
 	<fieldSet>
 		<legend>Hospitalisation Follow-Up</legend>
 		<table>
-			<col width='30%' /><col width='*' /> 
 			<?php (new t("Surgery.FollowUpComplication"))->tr()->p(); ?>
 		</table>
 	</fieldSet>

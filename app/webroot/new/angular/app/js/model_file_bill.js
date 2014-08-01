@@ -96,3 +96,8 @@ cryptomedic.models.Bill = cryptomedic.models.File.extend({
 		jQuery('#total_asked').html(total_social);
 	}
 });
+
+/* Business rules:
+- il faut pourvoir coder home visit ou give appointment mais pas les 2
+- il faut pourvoir coder consultation physio ou doctor mais pas les 2
+*/

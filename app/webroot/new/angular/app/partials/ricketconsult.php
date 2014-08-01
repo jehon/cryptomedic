@@ -23,7 +23,6 @@
 	<fieldset>
 		<legend>RicketsData</legend>
 		<table>
-			<col width='30%' /><col width='*' /> 
 			<?php //(new t("RicketConsult.Ageofbeginningofthedeformitiesyear"))->tr()->p(); ?>
 			<?php //(new t("RicketConsult.Treatmenttaken"))->tr()->p(); ?>
 			<?php (new t("RicketConsult.WalkingDifficulties"))->tr()->p(); ?>
@@ -69,7 +68,6 @@
 	<fieldset>
 		<legend>Conclusion</legend>
 		<table>
-			<col width='30%' /><col width='*' /> 
 			<?php //(new t("RicketConsult.Nutritionaladvice"))->tr()->p(); ?>
 			<?php (new t("RicketConsult.Nutrisupport"))->tr()->p(); ?>
 			<?php //(new t("RicketConsult.Medical"))->tr()->p(); ?>

@@ -4,7 +4,6 @@
 	t::setDefaultOption("readOnly");
 ?>
 <table width="100%">
-	<colgroup span="2" width="50%"></colgroup>
 	<tbody>
 		<? (new t("RicketConsult.Rightleg"))->tr("Right Leg")->p(); ?>
 		<? (new t("RicketConsult.RightlegAngle"))->tr("Right Leg Angle")->p(); ?>

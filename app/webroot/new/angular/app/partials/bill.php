@@ -1,11 +1,17 @@
 <?php 
+	// Example: 90420 (2010)
+	// Example: 10018 (2011)
+	// Example: 91513 (2012)
+	// Example: 97573 (2014 = price 2)
+	// Hack: 10010
 	require_once(dirname(dirname(dirname(__DIR__))) . "/libs/php/templates.php");
 	t::setDefaultOption("baseExpression", "currentFile().");
 ?>
 <?php 
-	function price($item, $size = 2) {
+	function price($item, $label = null) {
 		$name = explode(".", $item);
 		$name = $name[1];
+		if ($label != null) $name = $label;
 		echo "<tr "
 			. "ng-if=\"currentFile().getPriceFor('$name') > 0\" "
 			. "ng-class='{ notModeRead: !currentFile().$name }'"
@@ -33,19 +39,21 @@
 	<FieldSet>
 		<legend>Consultation items</legend>
 		<table  class='prices'>
-			<col width='60%' /><col width='15%' /><col width='15%' /><col width='10%' /> 
 			<thead>
-				<td></td>
-				<td>Quantity</td>
-				<td>Price</td>
-				<td>Total</td>
+				<tr>
+					<th></th>
+					<th>Quantity</th>
+					<th>Price</th>
+					<th>Total</th>
+				</tr>
 			</thead>
 			<?php price("Bill.consult_CDC_consultation_physio"); ?>
 			<?php price("Bill.consult_CDC_consultation_Bengali_Doctor"); ?>
+			<?php price("Bill.consult_CDC_consultation_Doctor"); ?>
 			<?php price("Bill.consult_field_visit"); ?>
 			<?php price("Bill.consult_home_visit"); ?>
 			<?php price("Bill.consult_give_appointment"); ?>
-			<?php price("Bill.consult_medecine"); ?>
+			<?php price("Bill.consult_medecine", "Medecile (Calcium)"); ?>
 			<?php price("Bill.consult_vitamineD"); ?>
 			<?php price("Bill.consult_nutritionalAdvice"); ?>
 			<?php price("Bill.consult_nutritionalSupport"); ?>
@@ -54,18 +62,19 @@
 			<?php price("Bill.consult_group_physiotherapy"); ?>
 			<?php price("Bill.consult_X_Ray"); ?>
 			<?php price("Bill.consult_physiotherapy"); ?>
-			<?php price("Bill.consult_Other_consultation_care", 6); ?></td>
+			<?php price("Bill.consult_Other_consultation_care"); ?></td>
 		</table>
 	</FieldSet>
 	<FieldSet>
 		<legend>Workshop items</legend>
 		<table  class='prices'>
-			<col width='60%' /><col width='15%' /><col width='15%' /><col width='10%' /> 
 			<thead>
-				<td></td>
-				<td>Quantity</td>
-				<td>Price</td>
-				<td>Total</td>
+				<tr>
+					<th></th>
+					<th>Quantity</th>
+					<th>Price</th>
+					<th>Total</th>
+				</tr>
 			</thead>
 			<?php price("Bill.workshop_BHKAFO_night"); ?>
 			<?php price("Bill.workshop_BHKAFO_walking"); ?>
@@ -109,18 +118,19 @@
 			<?php price("Bill.workshop_fracture_brace"); ?>
 			<?php price("Bill.workshop_smo"); ?>
 			<?php price("Bill.workshop_lifspring_afo"); ?>
-			<?php price("Bill.workshop_Other_orthodevice", 6); ?>
+			<?php price("Bill.workshop_Other_orthodevice"); ?>
 		</table>
 	</FieldSet>
 	<FieldSet>
 		<legend>Surgery items</legend>
 		<table  class='prices'>
-			<col width='60%' /><col width='15%' /><col width='15%' /><col width='10%' /> 
 			<thead>
-				<td></td>
-				<td>Quantity</td>
-				<td>Price</td>
-				<td>Total</td>
+				<tr>
+					<th></th>
+					<th>Quantity</th>
+					<th>Price</th>
+					<th>Total</th>
+				</tr>
 			</thead>
 			<?php price("Bill.surgical_osteotomy"); ?>
 			<?php price("Bill.surgical_osteotomy_bi"); ?>
@@ -137,7 +147,7 @@
 			<?php price("Bill.surgical_Burn_release"); ?>
 			<?php price("Bill.surgical_burn_little_release"); ?>
 			<?php price("Bill.surgical_Pin_removal"); ?>
-			<?php price("Bill.surgical_other_operation", 6); ?>
+			<?php price("Bill.surgical_other_operation"); ?>
 		</table>
 	</FieldSet>
 </div>
@@ -146,7 +156,6 @@
 	<FieldSet>
 		<legend>Summary</legend>
 		<table>
-			<col width='70%' /><col width='*' /> 
 			<tr>
 				<td>Raw Calculated total</td>
 				<td>{{currentFile().calculate_total_real()}}</td>
