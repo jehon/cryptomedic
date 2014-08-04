@@ -243,12 +243,6 @@ class t {
 		return $v;
 	}
 
-	// function label() {
-	// 	trace();
-	// 	$this->res .= label($this->key, false);
-	// 	return $this;
-	// }
-
 	function rawValue() {
 		$this->res .= "{{" . $this->rawExpression . "}}";
 		return $this;
@@ -258,7 +252,8 @@ class t {
 		global $dateFormat;
 		global $dateTimeFormat;
 		if (!$this->linked2DB) {
-			throw new Exception("Read: key is not linked to DB: '{$this->key}'");
+			return "<span class='error'>Read: key is not in the database: '{$this->key}'</span>";
+			// throw new Exception("Read: key is not linked to DB: '{$this->key}'");
 		}
 		switch($this->myType) {
 			case 'date':
@@ -292,7 +287,8 @@ class t {
 
 	function write() {
 		if (!$this->linked2DB) {
-			throw new Exception("Read: key is not in the database: '{$this->key}'");
+			return "<span class='error'>Write: key is not in the database: '{$this->key}'</span>";
+			//throw new Exception("Write: key is not in the database: '{$this->key}'");
 		}
 		$required = array_key_exists('MYSQLI_NOT_NULL_FLAG', $this->myFlags);
 
@@ -321,24 +317,45 @@ class t {
 				break;
 			case 'boolean':
 				$this->res .= "<input type='checkbox' ng-model='{$this->rawExpression}' />";
-				// $this->res .= "<input type='checkbox' $inline />";
 				break;
 			case 'linkedList':
 			case 'list':
-//  <input type="radio" ng-model="color" value="red">  Red <br/>
-
-  				// TODO: back to radio buttons
-  				// if (count($this->listing) < 6) {
-  				// } else {
-  					$this->res .= "<select $inline >";
-	  					if (!array_key_exists('MYSQLI_NOT_NULL_FLAG', $this->myFlags)) {
-	  						$this->res .= "<option value=''>?</option>";
-	  					}
-	  					foreach($this->listing as $k => $v) {
-	  						$this->res .= "<option value='$k'>$v</option>";
-	  					}
+				$this->res .= "VALUE:{{ $this->rawExpression == null ? 'null' : $this->rawExpression}}-<br>";
+				$count = count($this->listing);
+				if (array_key_exists('MYSQLI_NOT_NULL_FLAG', $this->myFlags)) $count++;
+  				if ($count < 6) {
+  					$i = 0;
+  					$this->res .= "<table style='width: 100%'><td>";
+  					foreach($this->listing as $k => $v) {
+  						$this->res.= ""
+  							. "<input type='radio' value='$k' ng-model='{$this->rawExpression}' {$this->options['inline']}>"
+  							. "$v"
+  							. "<br>"
+  							;
+  						if ($i == floor($count / 2)) {
+  							$this->res .= "</td><td>";
+  						}
+  						$i++;
+  					}
+  					if (!array_key_exists('MYSQLI_NOT_NULL_FLAG', $this->myFlags)) {
+  						$this->res.= ""
+							. "<input type='radio' ng-value='{null}' ng-model='{$this->rawExpression}' {$this->options['inline']}>"
+	  						. "?"
+	  						. "<br>"
+	  						;
+	  					$i++;
+  					}
+  					$this->res .= "</table></tr>";
+  				} else {
+  					$this->res .= "<select $inline>";
+  					foreach($this->listing as $k => $v) {
+  						$this->res .= "<option value='$k'>$v</option>";
+  					}
+  					if (!array_key_exists('MYSQLI_NOT_NULL_FLAG', $this->myFlags)) {
+  						$this->res .= "<option value=''>?</option>";
+  					}
   					$this->res .= "</select>";
-  				// }
+  				}
 				break;
 			default:
 				$this->res .= "WW {$this->key} input";
@@ -348,7 +365,6 @@ class t {
 	}
 
 	function value() {
-		// TODO: show both sides, and hide with css
 		if ($this->options['readOnly']) return $this->read();
 		if ($this->options['writeOnly']) return $this->write();
 
@@ -363,15 +379,12 @@ class t {
 	}
 
 	function tr($label = null) {
-		if (!$this->linked2DB) {
-			throw new Exception("Read: key is not in the database: '{$this->key}'");
-		}
 		if ($label == null) $label = $this->field;
 
 		$this->res .= "<tr ng-class='{ emptyValue: !$this->rawExpression}'>\n";
 		$this->res .= "	<td>$label</td>\n";
 		$this->res .= "	<td>";
-			$this->value();
+		$this->value();
 		$this->res .="</td>\n";
 		$this->res .= "</tr>\n";
 		return $this;
