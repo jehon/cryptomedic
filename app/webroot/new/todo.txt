@@ -1,20 +1,16 @@
 Files:
 - examiner name = a list:  Rezaul, Ershad, Murshed, Ricta, Shetou, Dr Taslim, Dr Monir, Dr AMD-KDM
-- center = add CMOSH (check label number)
 - SchoolClass ou pas? (consult-introduction)
-- Club Foot file
-- Bill file
+- Club Foot file (migrate from 1 side to L/R)
 
 - Drop orthopedic_devices
 - Drop surgeries_followups
 
 TODO:
 - put files list on menu bar collapsed ? check in "gsm" mode (page index.php?)
-- link from files to usernames if admin (page index.php?)
 - change password
 
 Write mode:
-- input radio button if <= 6 choices ??? (template.php)
 - validate the forms -> howto ? see below an idea
 - all files: business rules to be migrated
 - save modified file
@@ -22,6 +18,7 @@ Write mode:
 - add patient
 - unlock
 - delete file
+- business rules
 
 var $myForm = $('#myForm')
 if (!$myForm[0].checkValidity()) {
@@ -30,8 +27,3 @@ if (!$myForm[0].checkValidity()) {
   $myForm.submit()
 }
 $myForm.find(':submit').click()
-
-
-Fiche bill:
-Bill.consult_CDC_consultation_Bengali_Doctor (il faut pourvoir coder consultation physio ou doctor mais pas les 2)
-

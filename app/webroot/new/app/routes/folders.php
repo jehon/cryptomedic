@@ -15,15 +15,6 @@ function db2model($dbName) {
 
 }
 
-function addWhereParam($what, $default = "(1=1)") {
-	global $request;
-	global $patients;
-	if ($request->getParameter($what, false)) {
-		return " (patients.$what = " . $patients->escape($request->getParameter($what, false)) . ") ";
-	}
-	return $default;
-}
-
 if (count($request->getRoute()) == 2) {
 	// Get only one
 	$id = $request->getRoute(2);
@@ -59,21 +50,6 @@ if (count($request->getRoute()) == 2) {
 } else {
 	// Search through them
 	$sql = "SELECT patients.* FROM patients WHERE (1=1) ";
-	 	// . "AND " . addWhereParam("entryyear")
-	 	// . "AND " . addWhereParam("entryorder")
-	 	// . "AND " . addWhereParam("Firstname")
-	 	// . "AND " . addWhereParam("Lastname")
-	 	// . "AND " . addWhereParam("Sex")
-	 	// . "AND " . addWhereParam("Yearofbirth")
-	 	// . "AND " . addWhereParam("Telephone")
-	 	// . "AND " . addWhereParam("pathology_Ricket")
-	 	// . "AND " . addWhereParam("pathology_Clubfoot")
-	 	// . "AND " . addWhereParam("pathology_Burn")
-	 	// . "AND " . addWhereParam("pathology_Polio")
-	 	// . "AND " . addWhereParam("pathology_CP")
-	 	// . "AND " . addWhereParam("pathology_Congenital")
-	 	// . "AND " . addWhereParam("pathology_Adult")
-	 	// ;
 
 	if ($request->getParameter("entryyear", false)) 
 		$sql .= " AND (patients.entryyear = " . $patients->escape($request->getParameter("entryyear", false)) . ") ";
