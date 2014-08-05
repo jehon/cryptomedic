@@ -320,7 +320,6 @@ class t {
 				break;
 			case 'linkedList':
 			case 'list':
-				$this->res .= "VALUE:{{ $this->rawExpression == null ? 'null' : $this->rawExpression}}-<br>";
 				$count = count($this->listing);
 				if (array_key_exists('MYSQLI_NOT_NULL_FLAG', $this->myFlags)) $count++;
   				if ($count < 6) {
@@ -339,7 +338,7 @@ class t {
   					}
   					if (!array_key_exists('MYSQLI_NOT_NULL_FLAG', $this->myFlags)) {
   						$this->res.= ""
-							. "<input type='radio' ng-value='{null}' ng-model='{$this->rawExpression}' {$this->options['inline']}>"
+							. "<input type='radio' ng-value='null' ng-model='{$this->rawExpression}' {$this->options['inline']}>"
 	  						. "?"
 	  						. "<br>"
 	  						;
