@@ -11,8 +11,7 @@ function isAuthorized($resource, $action, $parameters = array()) {
 	// Authentification is available for everybody
 	if (Server::ROUTE_AUTHENTICATE == $resource) return true;	
 	
-	/*** Admin rights ***/
-
+/*** Admin rights ***/
 	// Admin can do everything
 	if ('admin' == $group) 	return true;
 
@@ -23,22 +22,20 @@ function isAuthorized($resource, $action, $parameters = array()) {
 	// PS: login and logout are public
 	if ('users' == $resource) return false;	
 	
-	/**** Readonly rights ****/
-
+/**** Readonly rights ****/
 	// everybody can read everything
 	if ('GET' == $action) return true;
 
 	// readonly can not do anything else
 	if ('readonly' == $group) return false;
 
-	// TODO: manage other authorizations:
+/**** Manager rights ****/
+	// UNLOCK and DELETE can only be done by manager (admin above)
+	if ('UNLOCK' == $action) return ($group == 'manager');
+	if ('DELETE' == $action) return ($group == 'manager');
+
+/**** TODO: manage other authorizations ****/
 	switch ($action) {
-		case "unlock" :
-		case "delete" :
-			if ("manager" == $group)
-				return true;
-			return false;
-			break;
 		case "reference" :
 		case "add" :
 		case "edit" :

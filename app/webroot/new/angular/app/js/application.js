@@ -141,6 +141,11 @@ function objectify(what) {
                 return new Date(what.substr(0, 4), what.substr(5, 2) - 1, what.substr(8, 2),
                     what.substr(11, 2), what.substr(14, 2), what.substr(17, 2));
 			};
+            if (what.match("[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}") == what) {
+            	if (what == "0000-00-00 00:00:00") return null;
+                return new Date(what.substr(0, 4), what.substr(5, 2) - 1, what.substr(8, 2),
+                    what.substr(11, 2), what.substr(14, 2), what.substr(17, 2));
+			};
 			// TODO: problem with year parsing !!!
             if (what.match("[0-9]{4}-[0-9]{2}-[0-9]{2}") == what) {
             	if (what == "0000-00-00") return null;
@@ -292,7 +297,10 @@ mainApp.controller('ctrl', [ '$scope', '$location', 'service_rest', function($sc
 	// $scope.pending = false;
 
 	$scope.hasPermission = function(transaction) {
-		return (typeof(cryptomedic.settings.denied[transaction]) == "undefined");
+		if (typeof(cryptomedic) == "undefined") return false;
+		if (typeof(cryptomedic.settings) == "undefined") return false;
+		if (typeof(cryptomedic.settings.denied) == "undefined") return false;
+		return (cryptomedic.settings.denied.indexOf(transaction) < 0);
 	};
 	
 	$scope.link = function(key) {

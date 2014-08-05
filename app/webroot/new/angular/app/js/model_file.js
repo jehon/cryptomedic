@@ -60,5 +60,11 @@ cryptomedic.models.File = cryptomedic.models.Data.extend({
 		if (typeof(age) != "number") throw new DataMissingException("Age");
 
 		return cryptomedic.math.stdDeviation(amd_stats[sex]['bmi'], age, this.bmi());
+	},
+	'isLocked': function () {
+		if (!this.modified) return false;
+		var dlock = new Date(this.modified);
+		dlock.setDate(dlock.getDate() + 5);
+		return (dlock < new Date());
 	}
 });

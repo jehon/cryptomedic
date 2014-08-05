@@ -69,6 +69,10 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_rest', '$rou
 			});
 	}
 
+	$scope.actionUnlock = function() {
+		console.log("unlocking file - todo");
+	}
+
 	function refreshFolder() {
 		var busyEnd = $scope.doBusy("Getting the file from the server");
 		service_rest.getFolder(id)

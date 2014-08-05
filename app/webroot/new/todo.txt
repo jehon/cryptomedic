@@ -1,22 +1,18 @@
 Files:
-- examiner name = a list:  Rezaul, Ershad, Murshed, Ricta, Shetou, Dr Taslim, Dr Monir, Dr AMD-KDM
 - SchoolClass ou pas? (consult-introduction)
+- examiner name = a list:  Rezaul, Ershad, Murshed, Ricta, Shetou, Dr Taslim, Dr Monir, Dr AMD-KDM
 - Club Foot file (migrate from 1 side to L/R)
 
-- Drop orthopedic_devices
-- Drop surgeries_followups
-
-TODO:
-- put files list on menu bar collapsed ? check in "gsm" mode (page index.php?)
-- change password
+- Drop orthopedic_devices (live: suppress the 'add' button + delete from model)
+- Drop surgeries_followups (live: suppress the 'add' button + delete from model)
 
 Write mode:
+- locked/unlock
 - validate the forms -> howto ? see below an idea
 - all files: business rules to be migrated
 - save modified file
 - add file
 - add patient
-- unlock
 - delete file
 - business rules
 
@@ -27,3 +23,7 @@ if (!$myForm[0].checkValidity()) {
   $myForm.submit()
 }
 $myForm.find(':submit').click()
+
+Later:
+- put files list on menu bar collapsed ? check in "gsm" mode (page index.php?)
+- change password

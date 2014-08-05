@@ -16,9 +16,9 @@ if ($request->matchRoute(array($server->getConfig(Server::ROUTE_AUTHENTICATE), "
 	// TODO: refine denied list -> better an authorize list?
 	if (!isAuthorized("folder", "edit"))
 		$data ['denied'] [] = "folder.edit";
-	// if (!isAuthorized("folder", "DELETE"))
+	if (!isAuthorized("folder", "DELETE"))
 		$data ['denied'] [] = "folder.delete";
-	// if (!isAuthorized("folder", "unlock"))
+	if (!isAuthorized("folder", "unlock"))
 		$data ['denied'] [] = "folder.unlock";
 
 	$response->ok($data);

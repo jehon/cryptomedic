@@ -8,7 +8,6 @@
 	<table>
 		<?php (new t("NonricketConsult.Date"))->tr("Date")->p(); ?>
 		<?php (new t("NonricketConsult.ExaminerName"))->tr("Examiner Name")->p(); ?>
-		<tr><td>TODO: ExaminerName = list </td></tr>
 		<?php (new t("NonricketConsult.Center"))->tr("Center")->p(); ?>
 		<?php (new t("NonricketConsult.SchoolClass"))->tr("Center")->p(); ?>
 		<tr class='notModeWrite'>
@@ -52,3 +51,5 @@
 		</tr>
 	</table>
 </fieldset>
+
+<!-- TODO: examiner name = list -->
