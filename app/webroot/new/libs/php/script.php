@@ -80,6 +80,8 @@ class AllScripts {
 	function __construct($glob) { 
 		foreach(myglob($glob) as $f) {
 			if (is_file($f)) {
+				// Replace "\" by "/"
+				$f = str_replace("\\", "/", $f);
 				$this->list[] = new Script($f);
 			}
 		}
