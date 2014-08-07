@@ -15,6 +15,7 @@
     "bootstrap": "latest",
     "qunit": "latest",
     "respond": "latest",
-    "html5shiv": "latest"
+    "html5shiv": "latest",
+    "datejs": "latest"
   }
 }
