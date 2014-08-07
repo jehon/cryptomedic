@@ -1,9 +1,8 @@
 "use strict";
 
 describe("File", function() {
-	var ricketConsult_8819 = 3;
-	var clubFoot_695 = 6;
-	var orthopedicDevice_17 = 8;
+	var ricketConsult_8819 = 2;
+	var clubFoot_695 = 5;
 
 	describe("with mock_patient_10.json", function() {
 		var folder = new cryptomedic.models.Folder();
@@ -17,7 +16,7 @@ describe("File", function() {
 				expect(folder.getMainFile().Yearofbirth).toBe(1998);
 				expect(folder.getMainFile().actualAge(new Date("2014-01-01"))).toBe(16);
 
-angular.forEach(folder.getSubFiles(), function(val, i) { console.log(i + ": " + val.type + "#" + val.id) });
+angular.forEach(folder.getSubFiles(), function(val, i) { console.log(i + ": " + val._type + "#" + val.id) });
 
 				var i;
 				i = ricketConsult_8819;
@@ -36,14 +35,6 @@ angular.forEach(folder.getSubFiles(), function(val, i) { console.log(i + ": " + 
 				expect(folder.getSubFile(i).Date).toEqual(new Date(2014, 3, 17));
 				expect(folder.getSubFile(i).ageAtConsultTime()).toBe(16);
 				
-				i = orthopedicDevice_17;
-				expect(folder.getSubFile(i) instanceof cryptomedic.models.File).toBeTruthy();
-				expect(folder.getSubFile(i) instanceof cryptomedic.models.OrthopedicDevice).toBeTruthy();
-				expect(folder.getSubFile(i).id).toBe(17);
-				expect(folder.getSubFile(i).patient instanceof cryptomedic.models.Patient).toBeTruthy();
-				expect(folder.getSubFile(i).Date).toBe(null);
-				expect(folder.getSubFile(i).ageAtConsultTime).toThrow();
-				expect(function() { folder.getSubFile(i).ageAtConsultTime() }).toThrow(new DataMissingException("Date"));
 				done();
 			});
 		});

@@ -18,7 +18,7 @@ describe("Folder", function() {
 				expect(folder instanceof cryptomedic.models.Folder).toBeTruthy();
 				expect(folder.id).toBe(10);
 				expect(folder.getId()).toBe(10);
-				expect(folder.getSubFiles().length).toBe(9);
+				expect(folder.getSubFiles().length).toBe(7);
 				expect(folder.getSubFile(9)).toBe(null);
 				expect(folder.getMainFile() instanceof cryptomedic.models.Patient).toBeTruthy();
 				expect(folder.getMainFile().id).toBe(10);
