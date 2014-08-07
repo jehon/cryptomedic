@@ -7,7 +7,7 @@ Files:
 - Drop surgeries_followups (live: suppress the 'add' button + delete from model)
 
 Write mode:
-- locked/unlock
+v- locked/unlock
 - validate the forms -> howto ? see below an idea
 - all files: business rules to be migrated
 - save modified file
@@ -27,3 +27,7 @@ $myForm.find(':submit').click()
 Later:
 - put files list on menu bar collapsed ? check in "gsm" mode (page index.php?)
 - change password
+- put models into application.models
+- use new "inherit" for models
+- move application images, css, partials... out of angular into app\
+- take out specific menu out of angular -> app\

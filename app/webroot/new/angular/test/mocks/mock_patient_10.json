@@ -1,5 +1,5 @@
 {
-    "type": "Folder",
+    "_type": "Folder",
     "id": 10,
     "mainFile": {
         "id": 10,
@@ -56,11 +56,7 @@
         "disease_respiratory_infection": false,
         "disease_malaria": false,
         "disease_typhoid": false,
-        "type": "Patient",
-        "controller": "patients",
-        "locked": false,
-        "dlocked": "patient",
-        "relatedid": -1
+        "_type": "Patient"
     },
     "subFiles": [
         {
@@ -154,11 +150,7 @@
             "surgical_percutaneous_achil_tenotomy_bi_cdc": 0,
             "surgical_PMR_club_club_foot_bi": 0,
             "surgical_burn_little_release": 0,
-            "type": "Bill",
-            "controller": "bills",
-            "relatedid": "Bill-12623",
-            "locked": false,
-            "dlocked": "2014-05-12"
+            "_type": "Bill"
         },
         {
             "id": 12624,
@@ -251,11 +243,7 @@
             "surgical_percutaneous_achil_tenotomy_bi_cdc": 0,
             "surgical_PMR_club_club_foot_bi": 0,
             "surgical_burn_little_release": 0,
-            "type": "Bill",
-            "controller": "bills",
-            "relatedid": "Bill-12624",
-            "locked": false,
-            "dlocked": "2014-05-12"
+            "_type": "Bill"
         },
         {
             "id": 695,
@@ -301,11 +289,7 @@
             "Treatment": "",
             "Comment": "",
             "Nextappointment": null,
-            "type": "ClubFoot",
-            "controller": "club_foots",
-            "relatedid": "ClubFoot-695",
-            "locked": true,
-            "dlocked": "2014-05-12"
+            "_type": "ClubFoot"
         },
         {
             "id": 1986,
@@ -338,70 +322,7 @@
             "Walk": null,
             "Worms": false,
             "Nextappointment": null,
-            "type": "NonricketConsult",
-            "controller": "nonricket_consults",
-            "relatedid": "NonricketConsult-1986",
-            "locked": true,
-            "dlocked": "2014-05-12"
-        },
-        {
-            "id": 17,
-            "modified": "2014-04-17 20:25:32 GMT+0200",
-            "created": "2014-04-17 20:25:32 GMT+0200",
-            "lastuser": "jehon",
-            "patient_id": "10",
-            "Device": null,
-            "Orthoname": "",
-            "Date": "0000-00-00",
-            "Result": null,
-            "Commentary": null,
-            "Orthopedicdevice": null,
-            "Goal": null,
-            "UsingProposal": null,
-            "TypeOfMaterial": null,
-            "LeftHipJoint": "",
-            "LeftHipType": "",
-            "LeftHipROM": "",
-            "LeftKneeJoint": "",
-            "LeftKneeLock": false,
-            "LeftKneeType": "",
-            "LeftKneeROM": "",
-            "LeftAnkleJoint": "",
-            "LeftAnkleType": "",
-            "LeftAnkleLimited": "",
-            "LeftAnkleBelt": "",
-            "LeftAnkleROM": "",
-            "LeftFootSupinatorPronator": "",
-            "LeftFootArchSupportCompensation": "",
-            "RightHipJoint": "",
-            "RightHipType": "",
-            "RightHipROM": "",
-            "RightKneeJoint": "",
-            "RightKneeLock": false,
-            "RightKneeType": "",
-            "RightKneeROM": "",
-            "RightAnkleJoint": "",
-            "RightAnkleType": "",
-            "RightAnkleLimited": "",
-            "RightAnkleBelt": "",
-            "RightAnkleROM": "",
-            "RightFootSupinatorPronator": "",
-            "RightFootArchSupportCompensation": "",
-            "OtherTypeOfDevice": "",
-            "MeasureDate": null,
-            "MeasurePerson": "",
-            "MeasureComments": "",
-            "FittingDate": null,
-            "FittingPerson": "",
-            "FittingComments": "",
-            "DeliveryDate": null,
-            "DeliveryPerson": "",
-            "DeliveryComments": "",
-            "type": "OrthopedicDevice",
-            "controller": "orthopedic_devices",
-            "relatedid": "OrthopedicDevice-17",
-            "locked": true,
-            "dlocked": "2014-05-12"
+            "_type": "NonricketConsult"
         },
         {
             "id": 3088,
@@ -413,11 +334,7 @@
             "file": "10_2014-06-04_04-39-19.JPG",
             "Date": "2014-06-04",
             "comment": "Test picture",
-            "type": "Picture",
-            "controller": "pictures",
-            "relatedid": "Picture-3088",
-            "locked": false,
-            "dlocked": "2014-05-12"
+            "_type": "Picture"
         },
         {
             "id": 8819,
@@ -479,11 +396,7 @@
             "conclusion_medical_codLiverOil": false,
             "conclusion_medical_vitaminD": false,
             "conclusion_medical_other": "",
-            "type": "RicketConsult",
-            "controller": "ricket_consults",
-            "relatedid": "RicketConsult-8819",
-            "locked": false,
-            "dlocked": "2014-05-12"
+            "_type": "RicketConsult"
         },
         {
             "id": 491,
@@ -531,51 +444,7 @@
             "ReportSideL": false,
             "report_procedure": "",
             "FollowUpComplication": "",
-            "type": "Surgery",
-            "controller": "surgeries",
-            "relatedid": "Surgery-491",
-            "locked": false,
-            "dlocked": "2014-05-12"
-        },
-        {
-            "id": 54,
-            "modified": "2014-06-04 04:37:00 GMT+0200",
-            "created": "2014-06-04 04:37:00 GMT+0200",
-            "lastuser": "jehon",
-            "patient_id": "10",
-            "Date": "2014-06-10",
-            "Paracetamol": 0,
-            "ParacetamolDays": null,
-            "cloxacilline": null,
-            "CloxacillineDays": null,
-            "Calcium": null,
-            "CalciumDays": null,
-            "CodLiverOil": null,
-            "NextAppointment": null,
-            "StitchOffDate": "2014-06-10",
-            "PlasterDays": null,
-            "TreatmentAfterPlasterWalkingBrace": false,
-            "TreatmentAfterPlasterOrthopedicShoes": false,
-            "TreatmentAfterPlasterNightSplint": false,
-            "TreatmentAfterPlasterPhysioTherapy": false,
-            "Examiner": "",
-            "SkinCicatrisation": false,
-            "BoneConsolidation": null,
-            "DeformityAxis": null,
-            "ArticulationMobility": "",
-            "WalkingDifficulties": "",
-            "TreatmentPhysiotherapy": false,
-            "TreatmentOrthopedicDevice": false,
-            "TreatmentPlaster": false,
-            "TreatmentOther": "Treatment ok",
-            "ResultImprovement": null,
-            "ResultFamilyHappy": false,
-            "ResultChildrenHappy": false,
-            "type": "SurgeryFollowup",
-            "controller": "surgery_followups",
-            "relatedid": "SurgeryFollowup-54",
-            "locked": false,
-            "dlocked": "2014-05-12"
+            "_type": "Surgery"
         }
     ]
 }

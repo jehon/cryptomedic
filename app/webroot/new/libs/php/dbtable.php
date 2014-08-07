@@ -107,11 +107,6 @@ class DBTable {
 	}
 
 	public function rowUpdate($data) {
-		// return $this->myPostTreatment(
-		// 	$this->db->Replace($this->table, $data, $id, get_magic_quotes_gpc()),
-		// 	"row update"
-		// 	);
-
 		return $this->myPostTreatment(
 			$this->db->AutoExecute($this->table, $data, 'UPDATE', "id = '" . $data['id'] . "'", true, get_magic_quotes_gpc()),
 			"row Update"

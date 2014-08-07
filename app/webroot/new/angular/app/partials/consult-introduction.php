@@ -9,7 +9,7 @@
 		<?php (new t("NonricketConsult.Date"))->tr("Date")->p(); ?>
 		<?php (new t("NonricketConsult.ExaminerName"))->tr("Examiner Name")->p(); ?>
 		<?php (new t("NonricketConsult.Center"))->tr("Center")->p(); ?>
-		<?php (new t("NonricketConsult.SchoolClass"))->tr("Center")->p(); ?>
+		<?php (new t("NonricketConsult.SchoolClass"))->tr("School Class")->p(); ?>
 		<tr class='notModeWrite'>
 			<td>Age during consultation</td>
 			<td><span catch-it ng-model="folder" tryit="currentFile().ageAtConsultTime()">{{result | number:0 }} years old at consultation time</span></td>

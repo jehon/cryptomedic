@@ -2,52 +2,14 @@
 
 if (!defined("REST_LOADED")) die("Ca va pas la tête?");
 
-require(__DIR__ . "/../../../../Model/amd_listings.php");
-
-$patients = new DBTable($server->getConfig("database"), "patients", $server);
-
-function db2model($dbName) {
-	global $model2controller;
-	if (array_search($dbName, $model2controller) === false)
-		return $dbName;
-	else
-		return array_search($dbName, $model2controller);
-
-}
+require(__DIR__ . "/helpers/getFolder.php");
 
 if (count($request->getRoute()) == 2) {
 	// Get only one
-	$id = $request->getRoute(2);
-	$res = array();
-	$p = $patients->rowGet($id);
-	if ($p === false) {
-		throw New DBNotFound("No data matching $id");
-	}
-	// if (count($p) < 1) $response->notFound("id = " . $id);
-	// $p = $p[0];
-	$p['_type'] = 'Patient';
-
-	$res['_type'] = 'Folder';
-	$res['id'] = $p['id'];
-	$res['mainFile'] = $p;
-	$res['subFiles'] = array();
-
-	$rawTable = new DBTable($server->getConfig("database"), null, $server);
-	foreach($model2controller as $m => $c) {
-		// we work by controller = the same as in database?
-		if ($c == "patients") continue;
-		// TODO: remove references to this:
-		if ($c == "orthopedic_devices") continue;
-		if ($c == "surgery_followups") continue;
-
-		$r = $rawTable->preparedStatement("SELECT * FROM $c WHERE patient_id = ?", $id);
-		foreach($r as $ri => $rv) {
-			$rv['_type'] = db2model($c);
-			$res['subFiles'][] = $rv;
-		}
-	}
-	$response->ok($res);
+	$response->ok(getFolder($request->getRoute(2)));
 } else {
+	$patients = new DBTable($server->getConfig("database"), "patients", $server);
+
 	// Search through them
 	$sql = "SELECT patients.* FROM patients WHERE (1=1) ";
 

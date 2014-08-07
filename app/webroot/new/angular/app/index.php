@@ -46,7 +46,7 @@
 
 	(new Script("css/application.css"))->dependFile()->toPrint();
 	
-	(new Script("/amd/new/rest/authenticate/settings?_variable=cryptomedic.settings"))->js()->dependDBTable("settings")->live()->toPrint();
+	(new Script("/amd/new/rest/authenticate/settings?_variable=server"))->js()->dependDBTable("settings")->live()->toPrint();
 	(new Script("/amd/new/rest/labels?_variable=cryptomedic.labels"))->js()->dependDBTable("labels")->toPrint();
 	(new Script("/amd/new/rest/prices?_variable=cryptomedic.prices"))->js()->dependDBTable("prices")->toPrint(); 
 ?>
@@ -115,7 +115,7 @@
 	    <!-- Collect the nav links, forms, and other content for toggling -->
 	    <div class="collapse navbar-collapse" id="menuMain">
 	      <ul class="nav navbar-nav navbar-right">
-        	<li><p class="navbar-text">{{username}}</p></li>
+        	<li><p class="navbar-text">{{server.username}}</p></li>
 	      	<li><a href="#/home" class="navbar-link">
 		    	<img src="img/home.gif" height="20px"/>
 				Home

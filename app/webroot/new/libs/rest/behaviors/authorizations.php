@@ -51,7 +51,7 @@ function isAuthorized($resource, $action, $parameters = array()) {
 			return true;
 			break;
 	}
-	headerDebug($resource . "." . $action, "AUTH-uncatched");
+	debugHeader($resource . "." . $action, "AUTH-uncatched");
 	return true;
 }
 

@@ -67,10 +67,6 @@ Class request {
 			}
 		}
 
-		foreach($this->post as $k => $v) {
-			debugHeader($v, 'SUBQUERY-POST-' . $k);
-		}
-
 		/**
 		* Defining the method parameter
 		*/
@@ -111,6 +107,9 @@ Class request {
 		return true;
 	}
 
+	/**
+	  * PUT = update, POST = create
+	  */
 	public function getMethod() {
 		return $this->method;
 	}

@@ -13,7 +13,6 @@
 					ng-class="{ 'btn-warning': page === $index }"
 					>
 				{{f._type}} <span ng-if="f.Date">[{{f.Date | date:'<?php echo $dateFormat; ?>'}}]</span> 
-	<!-- 			| date:'yyyy-MM-dd' -->
 			</a>
 		</span>
 		<a ng-class="{ 'btn-warning': page === 'reporting'}" ng-href="#/folder/{{id()}}/reporting" class="btn btn-default" style="width: 100%">Reporting</a>
@@ -32,7 +31,7 @@
 						<img src='img/locked.gif' />
 						File is locked.
 						<span ng-if='!hasPermission("folder.unlock")'>You can not edit it anymore.</span>
-						<span ng-if='hasPermission("folder.unlock")' class="notModeWrite btn btn-default" ng-if='actionUnlock()'>
+						<span ng-if='hasPermission("folder.unlock")' class="notModeWrite btn btn-default" ng-click='actionUnlock()'>
 							<img src='img/unlock.gif'>
 							Unlock the file
 						</span>

@@ -16,11 +16,12 @@ mainApp.factory('service_rest', [ '$http', '$log' , '$rootScope', function($http
 			}
 			def.resolve(data);
 		}).error(function(data, status, headers, config) {
-			if (status == 403 || status == 404) {
+			if (status == 401) {
 				// 401: Unauthorized
-				// 403: Forbidden
 				$rootScope.$broadcast("rest_logged_out");
 			} else {
+				// 403: Forbidden
+				alert("rest error: " + status + "\n" + data.replace(/<(?:.|\n)*?>/gm, ''));
 				$rootScope.$broadcast("rest_error");
 			}
 			def.reject(data);
@@ -74,15 +75,18 @@ mainApp.factory('service_rest', [ '$http', '$log' , '$rootScope', function($http
 				return data;				
 			});
 		},
-		'saveFile': function(data) {
-			// TODO
-			if (data['_type'] == "Patient") {
-				cache.perish(data['id']);
-			} else {
-				cache.perish(data['patient_id']);
-			}
-			return treatHttp($http.post(root + "/" + data['_type'] + "/save/" + data['id'], data), function(data) {
-				// TODO here
+		'unlockFile': function(data, folderId) {
+			cache.perish(folderId);
+		    return treatHttp($http({ method: "UNLINK", url: root + "/file/" + data['_type'] + "/" + data['id'] }), function(data) {
+				cache.set(data.getMainFile().id, data);
+				return data;				
+			});
+		},
+		'saveFile': function(data, folderId) {
+			cache.perish(folderId);
+			return treatHttp($http.put(root + "/file/" + data['_type'] + "/" + data['id'], data), function(data) {
+				cache.set(data.getMainFile().id, data);
+				return data;				
 			});
 		}
 	};

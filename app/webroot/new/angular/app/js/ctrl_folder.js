@@ -60,17 +60,24 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_rest', '$rou
 		var busyEnd = $scope.doBusy("Saving the file to the server");
 		service_rest.saveFile($scope.currentFile())
 			.done(function(data) {
-//				$scope.folder = data;
-//				$scope.select($scope.page);
+				$scope.folder = data;
 				$scope.safeApply();
 			}).always(function() {
-				$scope.$broadcast("refresh");
+				// $scope.$broadcast("refresh");
 				busyEnd();
 			});
 	}
 
 	$scope.actionUnlock = function() {
-		console.log("unlocking file - todo");
+		var busyEnd = $scope.doBusy("Unlocking the file on the server");
+		service_rest.unlockFile($scope.currentFile())
+			.done(function(data) {
+				$scope.folder = data;
+				$scope.safeApply();
+			}).always(function() {
+				// $scope.$broadcast("refresh");
+				busyEnd();
+			});
 	}
 
 	function refreshFolder() {
@@ -81,7 +88,7 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_rest', '$rou
 				$scope.select($scope.page);
 				$scope.safeApply();
 			}).always(function() {
-				$scope.$broadcast("refresh");
+				// $scope.$broadcast("refresh");
 				busyEnd();
 			});
 	}
