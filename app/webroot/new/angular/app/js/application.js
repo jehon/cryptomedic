@@ -2,6 +2,9 @@
 
 // TODO: partials depend on version (like script) -> caching opportunities
 
+var application = {};
+var server = {};
+
 /**
  * For this f*** old IE6-8
  */
@@ -278,6 +281,8 @@ var mainApp = angular.module('app_main', [ 'ngRoute' ])
 
 mainApp.controller('ctrl', [ '$scope', '$location', 'service_rest', function($scope, $location, service_rest) { 
 	$scope.cryptomedic = cryptomedic;
+	$scope.application = application;
+	$scope.server = server;
 	$scope.safeApply = function (fn) {
 		  var phase = this.$root.$$phase;
 		  if(phase == '$apply' || phase == '$digest') {
@@ -297,10 +302,9 @@ mainApp.controller('ctrl', [ '$scope', '$location', 'service_rest', function($sc
 	// $scope.pending = false;
 
 	$scope.hasPermission = function(transaction) {
-		if (typeof(cryptomedic) == "undefined") return false;
-		if (typeof(cryptomedic.settings) == "undefined") return false;
-		if (typeof(cryptomedic.settings.denied) == "undefined") return false;
-		return (cryptomedic.settings.denied.indexOf(transaction) < 0);
+		if (typeof(server) == "undefined") return false;
+		if (typeof(server.authorized) == "undefined") return false;
+		return (server.authorized.indexOf(transaction) >= 0);
 	};
 	
 	$scope.link = function(key) {
@@ -363,7 +367,7 @@ mainApp.controller('ctrl', [ '$scope', '$location', 'service_rest', function($sc
 	// On load, if cryptomedic.settings is set, we are logged in!
 	$scope.username = "";
 	$scope.password = "";
-	if (typeof(cryptomedic) != "undefined" && cryptomedic.settings && cryptomedic.settings.username) {
+	if (typeof(server) != "undefined" && server.username) {
 		$scope.logged = true;
 		$scope.username = cryptomedic.settings.username;
 	}
