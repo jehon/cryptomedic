@@ -10,11 +10,10 @@ Write mode:
 v- locked/unlock
 - validate the forms -> howto ? see below an idea
 - all files: business rules to be migrated
-- save modified file
+v- save modified file
 - add file
 - add patient
 - delete file
-- business rules
 
 var $myForm = $('#myForm')
 if (!$myForm[0].checkValidity()) {

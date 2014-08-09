@@ -86,6 +86,7 @@ class t {
 	var $options;
 	var $res = "";
 	var $linked2DB = false;
+	var $rawExpression = true;
 
 	private static $defaultOptions = [
 		"baseExpression" => "",
@@ -252,8 +253,9 @@ class t {
 		global $dateFormat;
 		global $dateTimeFormat;
 		if (!$this->linked2DB) {
-			return "<span class='error'>Read: key is not in the database: '{$this->key}'</span>";
+			$this->res .= "<span class='error'>Read: key is not in the database: '{$this->key}'</span>";
 			// throw new Exception("Read: key is not linked to DB: '{$this->key}'");
+			return;
 		}
 		switch($this->myType) {
 			case 'date':
@@ -287,8 +289,9 @@ class t {
 
 	function write() {
 		if (!$this->linked2DB) {
-			return "<span class='error'>Write: key is not in the database: '{$this->key}'</span>";
+			$this->res .= "<span class='error'>Write: key is not in the database: '{$this->key}'</span>";
 			//throw new Exception("Write: key is not in the database: '{$this->key}'");
+			return;
 		}
 		$required = array_key_exists('MYSQLI_NOT_NULL_FLAG', $this->myFlags);
 
@@ -324,7 +327,7 @@ class t {
 				if (array_key_exists('MYSQLI_NOT_NULL_FLAG', $this->myFlags)) $count++;
   				if ($count < 6) {
   					$i = 0;
-  					$this->res .= "<table style='width: 100%'><td>";
+  					$this->res .= "<table style='width: 100%'><tr><td>";
   					foreach($this->listing as $k => $v) {
   						$this->res.= ""
   							. "<input type='radio' value='$k' ng-model='{$this->rawExpression}' {$this->options['inline']}>"
@@ -344,7 +347,7 @@ class t {
 	  						;
 	  					$i++;
   					}
-  					$this->res .= "</table></tr>";
+  					$this->res .= "</td></tr></table>";
   				} else {
   					$this->res .= "<select $inline>";
   					foreach($this->listing as $k => $v) {
@@ -391,9 +394,11 @@ class t {
 
 	function trLeftRight($label = null) {
 		if ($label == null) $label = str_replace("?", "", $this->key);
+		if (strpos($this->key, "?") === false) $this->key = $this->key . "?";
 
 		$left = new t(str_replace("?", "Left", $this->key));
 		$right = new t(str_replace("?", "Right", $this->key));
+
 		$this->res .= "<tr ng-class='{ emptyValue: !{$left->rawExpression} && !{$right->rawExpression} }'>\n";
 			$this->res .= "	<td>$label</td>\n";
 			$this->res .= "	<td>" . $left->value()->getText() . "</td>\n";
