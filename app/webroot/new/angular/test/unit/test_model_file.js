@@ -23,7 +23,7 @@ angular.forEach(folder.getSubFiles(), function(val, i) { console.log(i + ": " + 
 				expect(folder.getSubFile(i) instanceof cryptomedic.models.File).toBeTruthy();
 				expect(folder.getSubFile(i) instanceof cryptomedic.models.RicketConsult).toBeTruthy();
 				expect(folder.getSubFile(i).id).toBe(8819);
-				expect(folder.getSubFile(i).patient instanceof cryptomedic.models.Patient).toBeTruthy();
+				expect(folder.getSubFile(i).getPatient() instanceof cryptomedic.models.Patient).toBeTruthy();
 				expect(folder.getSubFile(i).Date).toEqual(new Date(2014, 5, 4));
 				expect(folder.getSubFile(i).ageAtConsultTime()).toBe(16);
 
@@ -31,7 +31,7 @@ angular.forEach(folder.getSubFiles(), function(val, i) { console.log(i + ": " + 
 				expect(folder.getSubFile(i) instanceof cryptomedic.models.File).toBeTruthy();
 				expect(folder.getSubFile(i) instanceof cryptomedic.models.ClubFoot).toBeTruthy();
 				expect(folder.getSubFile(i).id).toBe(695);
-				expect(folder.getSubFile(i).patient instanceof cryptomedic.models.Patient).toBeTruthy();
+				expect(folder.getSubFile(i).getPatient() instanceof cryptomedic.models.Patient).toBeTruthy();
 				expect(folder.getSubFile(i).Date).toEqual(new Date(2014, 3, 17));
 				expect(folder.getSubFile(i).ageAtConsultTime()).toBe(16);
 				
@@ -41,11 +41,8 @@ angular.forEach(folder.getSubFiles(), function(val, i) { console.log(i + ": " + 
 		describe("with empty object", function() {
 			it("should throw error everytime", function(done) {
 				var i = ricketConsult_8819;
-				var o = new cryptomedic.models.File({ 
-					patient: new cryptomedic.models.Patient()
-				});
+				var o = new cryptomedic.models.File({}, new cryptomedic.models.Patient());
 
-				console.log(o.patient);
 				expect(function() { o.ageAtConsultTime(); }).toThrow(new DataMissingException("Date"));
 				expect(function() { o.bmi(); }).toThrow(new DataMissingException("Height"));
 				expect(function() { o.wh(); }).toThrow(new DataMissingException("Height"));
@@ -61,11 +58,8 @@ angular.forEach(folder.getSubFiles(), function(val, i) { console.log(i + ": " + 
 		describe("with patient with sex", function() {
 			it("should throw error everytime", function(done) {
 				var i = ricketConsult_8819;
-				var o = new cryptomedic.models.File({ 
-					patient: new cryptomedic.models.Patient({ 'Sex': 207 })
-				});
+				var o = new cryptomedic.models.File({}, new cryptomedic.models.Patient({ 'Sex': 207 }));
 
-				console.log(o.patient);
 				expect(function() { o.ageAtConsultTime(); }).toThrow(new DataMissingException("Date"));
 				expect(function() { o.bmi(); }).toThrow(new DataMissingException("Height"));
 				expect(function() { o.wh(); }).toThrow(new DataMissingException("Height"));
@@ -81,6 +75,7 @@ angular.forEach(folder.getSubFiles(), function(val, i) { console.log(i + ": " + 
 		describe("with ricketConsult_8819", function() {
 			it("should have correct statistics", function(done) {
 				var i = ricketConsult_8819;
+
 				expect(folder.getSubFile(i).ageAtConsultTime()).toBe(16);
 				expect(folder.getSubFile(i).bmi()).toBeCloseTo(30.57, 1);
 				expect(folder.getSubFile(i).wh()).toBeCloseTo(0.3363, 3);

@@ -23,7 +23,6 @@ describe("Folder", function() {
 				expect(folder.getMainFile() instanceof cryptomedic.models.Patient).toBeTruthy();
 				expect(folder.getMainFile().id).toBe(10);
 				done();
-				// console.log(folder.files);
 			});
 		});
 	});

@@ -3,10 +3,22 @@
 cryptomedic.models.Folder = cryptomedic.models.Data.extend({
 	load: function(data) {
 		this._super(data);
-		this.mainFile = this.mainFile || {};
+		this.setPatients();
+	},
+	loadFrom: function(url) {
+		var def = jQuery.Deferred();
+		var t = this;
+		this._super(url).done(function() {
+			t.setPatients();
+			def.resolve();
+		});
+		return def;
+	},
+	setPatients: function() {
+		this.mainFile = this.mainFile || new cryptomedic.models.Patient();
 		this.subFiles = this.subFiles || [];
 		for(var i = 0; i < this.subFiles.length; i++) {
-			this.subFiles[i].patient = this.mainFile;
+			this.subFiles[i].setPatient(this.getMainFile());
 		}
 		this.subFiles.sort(this.ordering);
 	},
