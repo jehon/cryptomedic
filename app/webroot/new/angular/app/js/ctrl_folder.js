@@ -8,7 +8,7 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_rest', '$rou
 	var mode = $routeParams['mode'];
 	if (typeof(mode) == "undefined") mode = "read";
 
-	if (mode == "edit") {
+	if (mode == "edit" || mode == "add") {
 		jQuery(".modeRead").removeClass('modeRead').addClass('modeWrite');
 	}
 
@@ -33,7 +33,7 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_rest', '$rou
 		return $scope.folder.getMainFile();
 	};
 	
-	$scope.patient = function() {
+	$scope.getPatient = function() {
 		return $scope.folder.getMainFile();
 	};
 	
