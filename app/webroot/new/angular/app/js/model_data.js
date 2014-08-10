@@ -2,6 +2,12 @@
 
 cryptomedic.models.Data = Class.extend({
 	init: function(data){
+		if (typeof(data) == "undefined") {
+			console.warn("We have undefined data");
+		}
+		if (data == null) {
+			console.warn("We have null data");
+		}
 		this.load(data);
 	},
 	load: function(data) {

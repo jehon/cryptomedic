@@ -13,7 +13,7 @@ if (count($request->getRoute() == 3)) {
 	// UNLOCK
 	if ($request->getMethod() == "UNLINK") {
 		// Unlock the file
-		$typeDB->preparedStatement("UPDATE $type SET modified = NOW(), last_user = ? WHERE id = ?", array($server->getSession(Server::LOGIN_USERNAME), $id));
+		$typeDB->preparedStatement("UPDATE $type SET modified = NOW(), lastuser = ? WHERE id = ?", array($server->getSession(Server::LOGIN_USERNAME), $id));
 
 		// Get the folder id:
 		$nrec = $typeDB->rowGet($id);

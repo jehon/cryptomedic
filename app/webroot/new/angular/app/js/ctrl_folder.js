@@ -10,14 +10,6 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_rest', '$rou
 	var fileCreating = null;
 	if (typeof($scope.mode) == "undefined") $scope.mode = "read";
 
-	if ($scope.mode == "edit" || $scope.mode == "add") {
-		jQuery(".modeRead").removeClass('modeRead').addClass('modeWrite');
-	}
-
-	if ($scope.mode == "add") {
-		// TODO: Create the file
-	}
-
 	$scope.id = function() { 
 		return id;
 	};
@@ -55,10 +47,6 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_rest', '$rou
 		return $scope.page;
 	};
 	
-	if (typeof($routeParams['page']) != 'undefined') {
-		$scope.select($routeParams['page']);
-	}
-	
 	$scope.actionCancel =function() {
 		refreshFolder();
 		$scope.go("/folder/" + $scope.folder.getId() + "/" + $scope.page);
@@ -90,8 +78,16 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_rest', '$rou
 	}
 
 	$scope.actionCreate = function() {
-		// TODO
-		fileCreating = {};
+		var busyEnd = $scope.doBusy("Creating the file on the server");
+		service_rest.unlockFile($scope.currentFile())
+			.done(function(data) {
+				$scope.folder = data;
+				$scope.safeApply();
+				fileCreating = null;
+			}).always(function() {
+				// $scope.$broadcast("refresh");
+				busyEnd();
+			});
 	}
 
 	$scope.actionCancelCreate = function() {
@@ -111,5 +107,21 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_rest', '$rou
 				busyEnd();
 			});
 	}
+
+	if (typeof($routeParams['page']) != 'undefined') {
+		$scope.select($routeParams['page']);
+	}
+	
 	refreshFolder();
+
+	if ($scope.mode == "edit" || $scope.mode == "add") {
+		jQuery(".modeRead").removeClass('modeRead').addClass('modeWrite');
+	}
+
+	if ($scope.mode == "add") {
+		console.log("entering creation mode for " + $scope.page);
+		// TODO: set defaults values
+		$scope.fileCreating = new cryptomedic.models[$scope.page];
+		console.log($scope.fileCreating);
+	}
 }]);
