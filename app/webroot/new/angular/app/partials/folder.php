@@ -4,7 +4,7 @@
 ?>
 <span class="modeRead">
 	<div class="col-sm-2" class="btn-group btn-group-justified btn-group-vertical">
-		<a ng-class="{ 'btn-warning': page === 'add'}" ng-href="#/folder/{{id()}}/add" class="btn btn-default" style="width: 100%">Add</a>
+		<a ng-if='hasPermission("folder.edit")' ng-class="{ 'btn-warning': page === 'add'}" ng-href="#/folder/{{id()}}/add" class="btn btn-default" style="width: 100%">Add</a>
 		<a ng-class="{ 'btn-warning': page === 'summary'}" ng-href="#/folder/{{id()}}/summary" class="btn btn-default" style="width: 100%">Summary</a>
 		<a ng-class="{ 'btn-warning': page === 'graphics'}" href="#/folder/{{id()}}/graphics" class="btn btn-default" style="width: 100%">Graphics</a>
 		<a ng-class="{ 'btn-warning': page === ''}" href="#/folder/{{id()}}/" class="btn btn-default" style="width: 100%">Patient</a>
@@ -26,6 +26,10 @@
 					by {{currentFile().lastuser}}
 					<br>
 					{{folder.getMainFile()._type}} #{{folder.getMainFile().id}} @{{page}} -> {{currentFile()._type}} #{{currentFile().id}}
+				</div>
+				<div class="col-sm-4 text-center" ng-if="(mode == 'add')" >
+					<span ng-if='hasPermission("folder.edit")' class="notModeRead btn btn-default" ng-click="actionCreate()">Create</span>
+		 			<span class="notModeRead btn btn-default" ng-click="actionCancelCreate()">Cancel</span>
 				</div>
 				<div class="col-sm-4 text-center" ng-if="pageIsFile || (page == '')" >
 					<span ng-if="currentFile().isLocked()">

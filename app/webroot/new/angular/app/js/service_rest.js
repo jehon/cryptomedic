@@ -88,6 +88,13 @@ mainApp.factory('service_rest', [ '$http', '$log' , '$rootScope', function($http
 				cache.set(data.getMainFile().id, data);
 				return data;				
 			});
+		},
+		'createFile': function(data, folderId) {
+			cache.perish(folderId);
+			return treatHttp($http.put(root + "/file/" + data['_type'], data), function(data) {
+				cache.set(data.getMainFile().id, data);
+				return data;				
+			});
 		}
 	};
 }]);

@@ -10,9 +10,10 @@ if (count($request->getRoute() == 3)) {
 	$type = type2db($type);
 
 	$typeDB = new DBTable($server->getConfig("database"), $type, $server);
+	// UNLOCK
 	if ($request->getMethod() == "UNLINK") {
 		// Unlock the file
-		$typeDB->preparedStatement("UPDATE $type SET modified = NOW() WHERE id = ?", $id);
+		$typeDB->preparedStatement("UPDATE $type SET modified = NOW(), last_user = ? WHERE id = ?", array($server->getSession(Server::LOGIN_USERNAME), $id));
 
 		// Get the folder id:
 		$nrec = $typeDB->rowGet($id);
@@ -21,6 +22,7 @@ if (count($request->getRoute() == 3)) {
 		$response->ok(getFolder($nrec["patient_id"]));
 	}
 
+	// UPDATE
 	if ($request->getMethod() == "PUT") {
 		var_dump($request->getPost());
 		// Modify the file
