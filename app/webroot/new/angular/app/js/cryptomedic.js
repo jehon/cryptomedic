@@ -17,17 +17,18 @@ var cryptomedic = {};
 cryptomedic.settings = {};
 cryptomedic.models = {};
 
-cryptomedic.model2controller = {
-    "Bill": "bills", 
-    "ClubFoot": "club_foots", 
-    "NonricketConsult": "nonricket_consults",
-    "OrthopedicDevice": "orthopedic_devices",
-    "Patient": "patients",
-    "Picture": "pictures",
-    "RicketConsult": "ricket_consults",
-    "Surgery": "surgeries",
-    "SurgeryFollowup": "surgery_followups"
-};
+// TODO: just done: removing model2controller
+// cryptomedic.model2controller = {
+//     "Bill": "bills", 
+//     "ClubFoot": "club_foots", 
+//     "NonricketConsult": "nonricket_consults",
+//     "OrthopedicDevice": "orthopedic_devices",
+//     "Patient": "patients",
+//     "Picture": "pictures",
+//     "RicketConsult": "ricket_consults",
+//     "Surgery": "surgeries",
+//     "SurgeryFollowup": "surgery_followups"
+// };
 
 cryptomedic.math = {
 	evaluatePoly: function (line, x) {
