@@ -1,19 +1,18 @@
-Files:
+After migration:
 - SchoolClass ou pas? (consult-introduction)
 - examiner name = a list:  Rezaul, Ershad, Murshed, Ricta, Shetou, Dr Taslim, Dr Monir, Dr AMD-KDM
-- Club Foot file (migrate from 1 side to L/R)
-
-- Drop orthopedic_devices (live: suppress the 'add' button + delete from model)
-- Drop surgeries_followups (live: suppress the 'add' button + delete from model)
+- migrate L/R to L+R in Club Foot file
+- Drop table orthopedic_devices
+- Drop table surgeries_followups
 
 Write mode:
 v- locked/unlock
-- validate the forms -> howto ? see below an idea
-- all files: business rules to be migrated
 v- save modified file
-- add file
-- add patient
+.- add file
+- change price according to date in bills (model) + watch in controller
 - delete file
+- add patient
+- validate the forms -> howto ? see below an idea + business rules to be migrated
 
 var $myForm = $('#myForm')
 if (!$myForm[0].checkValidity()) {
@@ -27,6 +26,6 @@ Later:
 - put files list on menu bar collapsed ? check in "gsm" mode (page index.php?)
 - change password
 - put models into application.models
-- use new "inherit" for models
 - move application images, css, partials... out of angular into app\
 - take out specific menu out of angular -> app\
+- enforce rules server-side: patient_id not modified (created ok), lastuser, modified, created, id = non modifiable (black list?), ...
