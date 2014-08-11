@@ -79,7 +79,8 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_rest', '$rou
 
 	$scope.actionCreate = function() {
 		var busyEnd = $scope.doBusy("Creating the file on the server");
-		service_rest.unlockFile($scope.currentFile())
+		console.log($scope.currentFile());
+		service_rest.createFile($scope.currentFile())
 			.done(function(data) {
 				$scope.folder = data;
 				$scope.safeApply();
@@ -102,8 +103,10 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_rest', '$rou
 				$scope.folder = data;
 				$scope.select($scope.page);
 				$scope.safeApply();
+				if (($scope.mode == "add") && (!$scope.fileCreating)) {
+					fileCreating = new cryptomedic.models[$scope.page](null, $scope.folder.getMainFile());
+				}
 			}).always(function() {
-				// $scope.$broadcast("refresh");
 				busyEnd();
 			});
 	}
@@ -118,10 +121,4 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_rest', '$rou
 		jQuery(".modeRead").removeClass('modeRead').addClass('modeWrite');
 	}
 
-	if ($scope.mode == "add") {
-		console.log("entering creation mode for " + $scope.page);
-		// TODO: set defaults values
-		$scope.fileCreating = new cryptomedic.models[$scope.page];
-		console.log($scope.fileCreating);
-	}
 }]);
