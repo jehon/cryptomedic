@@ -1,6 +1,12 @@
 "use strict";
 
 cryptomedic.models.Bill = cryptomedic.models.File.extend({
+	'init': function(data, patient) {
+		this._super(data, patient);
+		if (!data) {
+			this._type = "Bill";
+		}
+	},
 	'calculate': function() {
 		var price = cryptomedic.prices[this.price_id];
 		var total = 0;

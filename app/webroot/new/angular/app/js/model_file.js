@@ -1,14 +1,27 @@
 "use strict";
 
+// function test(a) { 
+// 	(a !== undefined) || (a = 123);
+// 	console.log(a); 
+// }; 
+// test();
+// test(null);
+// test(false);
+// test({});
+
 cryptomedic.models.File = cryptomedic.models.Data.extend({
-	'setPatient': function(patient) {
-		this.getPatient = function() { return patient; }; 
-	},
 	'init': function(data, patient) {
 		this._super(data);
-		if (typeof(patient) == "undefined") patient = null;
+		if (data == null) {
+			this.patient_id = patient.id;
+		} else {
+			if (typeof(patient) == "undefined") patient = null;
+			// this.patient = patient;
+		}
 		this.setPatient(patient);
-		// this.patient = patient;
+	},
+	'setPatient': function(patient) {
+		this.getPatient = function() { return patient; }; 
 	},
 	'ageAtConsultTime': function() {
 		if (!this.isNotZero('Date')) throw new DataMissingException("Date");
