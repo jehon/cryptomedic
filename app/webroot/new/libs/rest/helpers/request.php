@@ -5,6 +5,11 @@ require_once("../php/exceptions.php");
 require_once("../php/server.php");
 
 Class request {
+	const READ = "GET";
+	const UPDATE = "PUT";
+	const CREATE = "POST";
+	const DELETE = "DELETE";
+
 	protected $server;
 	protected $method;
 	protected $parameters;
