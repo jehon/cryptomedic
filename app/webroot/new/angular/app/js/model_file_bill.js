@@ -8,6 +8,7 @@ cryptomedic.models.Bill = cryptomedic.models.File.extend({
 		}
 	},
 	'calculate': function() {
+		if (!this.price_id) return 0;
 		var price = cryptomedic.prices[this.price_id];
 		var total = 0;
 		angular.forEach(price, function(p, i) {
@@ -38,6 +39,7 @@ cryptomedic.models.Bill = cryptomedic.models.File.extend({
 		return this.calculate();
 	},
 	'calculate_percentage_asked': function() {
+		if (!this.price_id) return 0;
 		var sl = this['Sociallevel'];
 		if (sl == null || sl == 0) return 1;
 		var price = cryptomedic.prices[this.price_id];
@@ -48,9 +50,11 @@ cryptomedic.models.Bill = cryptomedic.models.File.extend({
 		return this.calculate_total_real() * this.calculate_percentage_asked();
 	},
 	'getPriceFor': function(key) {
+		if (!this.price_id) return 0;
 		return cryptomedic.prices[this.price_id][key];
 	},
 	'getTotalFor': function(key) {
+		if (!this.price_id) return 0;
 		return cryptomedic.prices[this.price_id][key] * this[key];
 	},
 	'calculatePriceId': function() {
