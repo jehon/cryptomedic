@@ -79,8 +79,8 @@ cryptomedic.models.Folder = cryptomedic.models.Data.extend({
 		
 		// Both 'id' are present
 		if (typeof(o1['id']) != "undefined" && typeof(o2['id']) != 'undefined') {
-			if (o1['id'] < o2['id']) return o1First;
-			if (o1['id'] > o2['id']) return o2First;
+			if (o1['id'] > o2['id']) return o1First;
+			if (o1['id'] < o2['id']) return o2First;
 		}
 		return 0;
 	}
