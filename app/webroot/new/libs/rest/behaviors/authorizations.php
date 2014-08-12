@@ -24,7 +24,7 @@ function isAuthorized($resource, $action, $parameters = array()) {
 	
 /**** Readonly rights ****/
 	// everybody can read everything
-	if ('GET' == $action) return true;
+	if (Request::READ == $action) return true;
 
 	// readonly can not do anything else
 	if ('readonly' == $group) return false;
@@ -32,7 +32,7 @@ function isAuthorized($resource, $action, $parameters = array()) {
 /**** Manager rights ****/
 	// UNLOCK and DELETE can only be done by manager (admin above)
 	if ('UNLOCK' == $action) return ($group == 'manager');
-	if ('DELETE' == $action) return ($group == 'manager');
+	if (Request::DELETE == $action) return ($group == 'manager');
 
 /**** TODO: manage other authorizations ****/
 	switch ($action) {
@@ -56,6 +56,5 @@ function isAuthorized($resource, $action, $parameters = array()) {
 }
 
 if (!isAuthorized($request->getRoute(1), $request->getMethod())) {
-// if (!isAuthorized($server, $request)) {
 	throw new HttpForbidden("Not allowed");
 }
