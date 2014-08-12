@@ -12,7 +12,7 @@ mainApp.factory('service_rest', [ '$http', '$log' , '$rootScope', function($http
 		request.success(function(data, status, headers, config) {
 			$rootScope.$broadcast("rest_logged_in");
 			if (typeof(treatResponse) == 'function') {
-				data = treatResponse(data);
+				data = treatResponse(data, status, headers, config);
 			}
 			def.resolve(data);
 		}).error(function(data, status, headers, config) {
@@ -91,10 +91,20 @@ mainApp.factory('service_rest', [ '$http', '$log' , '$rootScope', function($http
 		},
 		'createFile': function(data, folderId) {
 			cache.perish(folderId);
-			return treatHttp($http.put(root + "/file/" + data['_type'], data), function(data) {
+			return treatHttp($http.post(root + "/file/" + data['_type'], data), function(data, status, headers, config) {
+				// Access to headers???
+				// headers("NEWKEY");
 				cache.set(data.getMainFile().id, data);
 				return data;				
 			});
-		}
+		},
+		'deleteFile': function(data, folderId) {
+			cache.perish(folderId);
+		    return treatHttp($http.delete(root + "/file/" + data['_type'] + "/" + data['id']), function(data) {
+				cache.set(data.getMainFile().id, data);
+				return data;				
+			});
+		},
+
 	};
 }]);
