@@ -7,7 +7,7 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_rest', '$rou
 	$scope.mode = $routeParams['mode'];
 
 	var id = parseInt($routeParams['id']);
-	var fileCreating = null;
+	var fileCreating = {};
 	if (typeof($scope.mode) == "undefined") $scope.mode = "read";
 
 	$scope.id = function() { 
@@ -46,6 +46,16 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_rest', '$rou
 		if (typeof($scope.page) == "number") return "blank";
 		return $scope.page;
 	};
+
+	function showMe(type, id) {
+		for(var i = 0; i < $scope.folder.getSubFiles().length; i++) {
+			if (($scope.folder.getSubFile(i)._type == type)
+				&& ($scope.folder.getSubFile(i).id == id)) {
+				$scope.go("/folder/" + $scope.id() + "/" + i);
+				return;
+			}
+		}
+	}
 	
 	$scope.actionCancel =function() {
 		refreshFolder();
@@ -53,47 +63,64 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_rest', '$rou
 	}
 
 	$scope.actionSave = function() {
-		console.log($scope.currentFile());
 		var busyEnd = $scope.doBusy("Saving the file to the server");
-		service_rest.saveFile($scope.currentFile())
+		var prevId = $scope.currentFile().id;
+		var prevType = $scope.currentFile()._type;
+		service_rest.saveFile($scope.currentFile(), $scope.id())
 			.done(function(data) {
 				$scope.folder = data;
+				// Find back the original file, if a change in date reorder it somewhere else
+				showMe(prevType, prevId);
+
+				$scope.go("/folder/" + $scope.id() + "/" + $scope.page);
 				$scope.safeApply();
 			}).always(function() {
-				// $scope.$broadcast("refresh");
 				busyEnd();
 			});
 	}
 
 	$scope.actionUnlock = function() {
 		var busyEnd = $scope.doBusy("Unlocking the file on the server");
-		service_rest.unlockFile($scope.currentFile())
+		service_rest.unlockFile($scope.currentFile(), $scope.id())
 			.done(function(data) {
 				$scope.folder = data;
 				$scope.safeApply();
 			}).always(function() {
-				// $scope.$broadcast("refresh");
 				busyEnd();
 			});
 	}
 
 	$scope.actionCreate = function() {
 		var busyEnd = $scope.doBusy("Creating the file on the server");
-		console.log($scope.currentFile());
-		service_rest.createFile($scope.currentFile())
+		var creatingType = fileCreating._type;
+		service_rest.createFile($scope.currentFile(), $scope.id())
 			.done(function(data) {
 				$scope.folder = data;
-				$scope.safeApply();
 				fileCreating = null;
+
+				showMe(creatingType, data.newKey);
+
+				$scope.safeApply();
 			}).always(function() {
-				// $scope.$broadcast("refresh");
 				busyEnd();
 			});
 	}
 
 	$scope.actionCancelCreate = function() {
-		fileCreating = null;
+		fileCreating = {};
 		$scope.go("/folder/" + $scope.id() + "/");
+	}
+
+	$scope.actionDelete = function() {
+		var busyEnd = $scope.doBusy("Deleting the file on the server");
+		service_rest.deleteFile($scope.currentFile(), $scope.id())
+			.done(function(data) {
+				$scope.folder = data;
+				$scope.go("/folder/" + $scope.id());
+				$scope.safeApply();
+			}).always(function() {
+				busyEnd();
+			});
 	}
 
 	function refreshFolder() {
