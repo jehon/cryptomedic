@@ -80,12 +80,19 @@ function date2CanonicString(d) {
     if (d == null) return "0000-00-00 00:00:00 GMT+0000";
 
     var ts = - (new Date()).getTimezoneOffset()/60 * 100;
-    return d.getFullYear() + 
+
+    var dateStr = d.getFullYear() + 
         "-" + 
         ("00" + (d.getMonth() + 1)).substr(-2) + 
         "-" +
-        ("00" + (d.getDate())).substr(-2) +
-        " " +
+        ("00" + (d.getDate())).substr(-2);
+
+    if (((((d.getHours() + (ts / 100)) % 24) == 0) || (d.getHours() == 0)) 
+    		&& (d.getMinutes() == 0) && (d.getSeconds() == 0)) {
+    	return dateStr;
+    }
+
+    return dateStr + " " +
         ("00" + d.getHours()).substr(-2) +
         ":" +
         ("00" + d.getMinutes()).substr(-2) +
@@ -94,42 +101,6 @@ function date2CanonicString(d) {
         " GMT" + (ts < 0 ? "-" : "+") + 
         ("0000" + Math.abs(ts)).substr(-4)
 }
-
-
-// var classA = function(test) { console.log("A: " + test); };
-// classA.prototype.mA = function(test) { console.log("A mA: " + test); };
-
-// var classB = function(test, brol) { 
-// 	console.log("B: " + test + " - " + brol); 
-// 	this._parent.constructor(test); 
-// };
-
-// inherit(classA, classB);
-// classB.prototype.mA = function(test) { 
-// 	console.log("B mA: " + test); 
-// 	this._parent.mA(test); 
-// };
-
-// classB.prototype.mB = function(test) { 
-// 	console.log("B mB: " + test); 
-// };
-
-// console.info("initialized");
-
-// console.info("variable a");
-// var a = new classA(12);
-// console.log(a);
-// console.log(a instanceof classA);
-// console.log(!(a instanceof classB));
-// a.mA("bbb");
-
-// console.info("variable b");
-// var b = new classB(12, 34);
-// console.log(b);
-// console.log(b instanceof classA);
-// console.log(b instanceof classB);
-// b.mA("aaabbb");
-// b.mB("bbb");
 
 function objectify(what) {
 	if (what === null) return what;
@@ -190,10 +161,13 @@ var mainApp = angular.module('app_main', [ 'ngRoute' ])
 }])
 .config(["$httpProvider", function ($httpProvider) {
 	$httpProvider.defaults.transformResponse.push(function(responseData){
-			if (typeof responseData !== "object") return responseData;
-			responseData = objectify(responseData);
-			return responseData;
-		});
+		if (typeof responseData !== "object") return responseData;
+		return objectify(responseData);
+	});
+	$httpProvider.defaults.transformRequest.unshift(function(requestData){
+		if (typeof requestData !== "object") return requestData;
+		return stringify(requestData);
+	});
 }])
 .filter('mypercentage', function() {
 	return function(text, rnd) {
