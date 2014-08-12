@@ -8,9 +8,10 @@ After migration:
 Write mode:
 v- locked/unlock
 v- save modified file
-.- add file
+v- add file
+v- delete file
+v- perish the cache after some times
 - change price according to date in bills (model) + watch in controller
-- delete file
 - add patient
 - validate the forms -> howto ? see below an idea + business rules to be migrated
 
@@ -29,3 +30,4 @@ Later:
 - move application images, css, partials... out of angular into app\
 - take out specific menu out of angular -> app\
 - enforce rules server-side: patient_id not modified (created ok), lastuser, modified, created, id = non modifiable (black list?), ...
+- on delete: message box to confirm action
