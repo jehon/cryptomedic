@@ -100,9 +100,12 @@ class DBTable {
 	}
 
 	public function rowCreate($data) {
-		return $this->myPostTreatment(
+		$this->myPostTreatment(
 			$this->db->AutoExecute($this->table, $data, 'INSERT', false, true, get_magic_quotes_gpc()),
-			"row Update"
+			"row Create");
+
+		return $this->myPostTreatment($this->db->Insert_ID(),
+			"Getting last insert id"
 			);
 	}
 
