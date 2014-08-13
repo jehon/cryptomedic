@@ -4,7 +4,7 @@
 
 mainApp.factory('service_rest', [ '$http', '$log' , '$rootScope', function($http, $log, $rootScope) {
 	var cache = perishableCache(10);
-	var root = "/amd/new/rest/";
+	var root = "/rest/";
 	
 	function treatHttp(request, treatResponse) {
 		var def = jQuery.Deferred();

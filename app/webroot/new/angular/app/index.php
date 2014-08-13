@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <?php 
-	require "../../libs/php/script.php";
+	require "../../../../../../rest/php/script.php";
 	// require("../../../Lib/cryptomedic.php");
 ?>
 <head>
@@ -46,9 +46,9 @@
 
 	(new Script("css/application.css"))->dependFile()->toPrint();
 	
-	(new Script("/amd/new/rest/authenticate/settings?JSONP=server.setSettings"))->js()->dependDBTable("settings")->live()->toPrint();
-	(new Script("/amd/new/rest/labels?JSONP=cryptomedic.setLabels"))->js()->dependDBTable("labels")->toPrint();
-	(new Script("/amd/new/rest/prices?JSONP=cryptomedic.setPrices"))->js()->dependDBTable("prices")->toPrint(); 
+	(new Script("/rest/authenticate/settings?JSONP=server.setSettings"))->js()->dependDBTable("settings")->live()->toPrint();
+	(new Script("/rest/labels?JSONP=cryptomedic.setLabels"))->js()->dependDBTable("labels")->toPrint();
+	(new Script("/rest/prices?JSONP=cryptomedic.setPrices"))->js()->dependDBTable("prices")->toPrint(); 
 ?>
 </head>
 <body ng-app="app_main" ng-controller="ctrl" id="ng-app">

@@ -1,5 +1,5 @@
 <?php 
-	require_once(dirname(dirname(dirname(__DIR__))) . "/libs/php/templates.php");
+	require_once(__DIR__ . "/../../../../../../../rest/php/templates.php");
 	t::setDefaultOption("baseExpression", "currentFile().");
 ?>
 <h1>Add a file</h1>

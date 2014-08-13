@@ -6,7 +6,4 @@
 	ExpiresDefault 	A0
 </IfModule>
 
-RewriteEngine On
-
-RewriteRule ^rest/(.*) libs/rest/index.php [QSA,L,E=subquery:$1]
 # RewriteRule ^static/(.*) app/static/$1 [QSA,L]

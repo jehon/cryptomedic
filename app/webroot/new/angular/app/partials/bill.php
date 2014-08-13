@@ -4,7 +4,7 @@
 	// Example: 91513 (2012)
 	// Example: 97573 (2014 = price 2)
 	// Hack: 10010
-	require_once(dirname(dirname(dirname(__DIR__))) . "/libs/php/templates.php");
+	require_once(__DIR__ . "/../../../../../../../rest/php/templates.php");
 	t::setDefaultOption("baseExpression", "currentFile().");
 ?>
 <?php 

@@ -12,6 +12,7 @@ v- add file
 v- delete file
 v- perish the cache after some times
 v- change price according to date in bills (model) + watch in controller
+v- use the new Rest directory into index.php etc...
 - add patient
 - validate the forms -> howto ? see below an idea + business rules to be migrated
 
@@ -31,3 +32,4 @@ Later:
 - take out specific menu out of angular -> app\
 - enforce rules server-side: patient_id not modified (created ok), lastuser, modified, created, id = non modifiable (black list?), ...
 - on delete: message box to confirm action
+- create domains + filter by referer path (see headers sent by server) 
