@@ -277,8 +277,9 @@ mainApp.controller('ctrl', [ '$scope', '$location', 'service_rest', function($sc
 
 	$scope.hasPermission = function(transaction) {
 		if (typeof(server) == "undefined") return false;
-		if (typeof(server.authorized) == "undefined") return false;
-		return (server.authorized.indexOf(transaction) >= 0);
+		if (typeof(server.settings) == "undefined") return false;
+		if (typeof(server.settings.authorized) == "undefined") return false;
+		return (server.settings.authorized.indexOf(transaction) >= 0);
 	};
 	
 	$scope.link = function(key) {
@@ -343,7 +344,7 @@ mainApp.controller('ctrl', [ '$scope', '$location', 'service_rest', function($sc
 	$scope.password = "";
 	if (typeof(server) != "undefined" && server.username) {
 		$scope.logged = true;
-		$scope.username = cryptomedic.settings.username;
+		$scope.username = server.settings.username;
 	}
 
 	$scope.doLogin = function() {
@@ -355,7 +356,7 @@ mainApp.controller('ctrl', [ '$scope', '$location', 'service_rest', function($sc
 				$scope.loginError = false;
 				$scope.logged = true;
 				
-				if (typeof(cryptomedic) == "undefined" || !cryptomedic.settings || !cryptomedic.settings.username) {
+				if (typeof(server) == "undefined" || !server.settings || !server.settings.username) {
 					window.location.reload();
 				}
 			})
@@ -397,4 +398,8 @@ function debug_showLabels() {
 		jQuery(this).text(jQuery(this).attr("for"));
 		jQuery(this).addClass("debug");
 	})
+}
+
+server.setSettings = function(data) {
+	server.settings = objectify(data);
 }

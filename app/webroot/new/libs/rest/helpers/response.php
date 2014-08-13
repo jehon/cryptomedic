@@ -73,12 +73,18 @@ Class Response {
 		}
 
 		// Content
-		$variable = $this->request->getSystemParameter("variable", null);
-		if ($variable) {
+		// $variable = $this->request->getSystemParameter("variable", null);
+		// if ($variable) {
+		// 	header("Content-type: application/javascript");
+		// 	echo $variable . "=";
+		// 	if ($this->data) echo json_encode($this->data, JSON_NUMERIC_CHECK);
+		// 	echo ";";
+		// } else 
+		if ($this->request->getSystemParameter("JSONP", null))  {
 			header("Content-type: application/javascript");
-			echo $variable . "=";
+			echo $this->request->getSystemParameter("JSONP", null) . "(";
 			if ($this->data) echo json_encode($this->data, JSON_NUMERIC_CHECK);
-			echo ";";
+			echo ");";
 		} else {
 			header("Content-type: application/json");
 			if ($this->data) echo json_encode($this->data, JSON_NUMERIC_CHECK);

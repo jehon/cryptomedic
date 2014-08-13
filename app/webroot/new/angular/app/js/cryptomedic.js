@@ -67,3 +67,11 @@ cryptomedic.math = {
     // 1.64485 = sigma at 90 for normal distribution
     sigma: 1.64485
 };
+
+cryptomedic.setPrices = function(data) {
+    cryptomedic.prices = objectify(data);
+};
+
+cryptomedic.setLabels = function(data) {
+    cryptomedic.labels = objectify(data);
+};

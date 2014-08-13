@@ -46,9 +46,9 @@
 
 	(new Script("css/application.css"))->dependFile()->toPrint();
 	
-	(new Script("/amd/new/rest/authenticate/settings?_variable=server"))->js()->dependDBTable("settings")->live()->toPrint();
-	(new Script("/amd/new/rest/labels?_variable=cryptomedic.labels"))->js()->dependDBTable("labels")->toPrint();
-	(new Script("/amd/new/rest/prices?_variable=cryptomedic.prices"))->js()->dependDBTable("prices")->toPrint(); 
+	(new Script("/amd/new/rest/authenticate/settings?JSONP=server.setSettings"))->js()->dependDBTable("settings")->live()->toPrint();
+	(new Script("/amd/new/rest/labels?JSONP=cryptomedic.setLabels"))->js()->dependDBTable("labels")->toPrint();
+	(new Script("/amd/new/rest/prices?JSONP=cryptomedic.setPrices"))->js()->dependDBTable("prices")->toPrint(); 
 ?>
 </head>
 <body ng-app="app_main" ng-controller="ctrl" id="ng-app">

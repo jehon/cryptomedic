@@ -47,6 +47,9 @@ Class request {
 				$ks = substr($k, 1);
 				$this->systemParameters[$ks] = $this->objectify($v);
 				debugHeader($v, 'SUBQUERY-SYSPARAM-' . $ks);
+			} elseif (in_array($k, array("JSONP"))) {
+				$this->systemParameters[$k] = $this->objectify($v);
+				debugHeader($v, 'SUBQUERY-SYSPARAM-' . $k);
 			} else {
 				$this->parameters[$k] = $this->objectify($v);
 				debugHeader($v, 'SUBQUERY-PARAM-' . $k);
