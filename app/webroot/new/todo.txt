@@ -11,7 +11,7 @@ v- save modified file
 v- add file
 v- delete file
 v- perish the cache after some times
-- change price according to date in bills (model) + watch in controller
+v- change price according to date in bills (model) + watch in controller
 - add patient
 - validate the forms -> howto ? see below an idea + business rules to be migrated
 

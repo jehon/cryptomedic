@@ -27,7 +27,7 @@
 		echo "</tr>";
 	}
 ?>
-<div class="col-lg-6">
+<div class="col-lg-6" ng-controller="ctrl_file_bill">
 	<FieldSet>
 		<legend>General data</legend>
 		<table>

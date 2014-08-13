@@ -55,18 +55,24 @@ cryptomedic.models.Bill = cryptomedic.models.File.extend({
 	},
 	'getTotalFor': function(key) {
 		if (!this.price_id) return 0;
+		if (!this[key]) return 0;
 		return cryptomedic.prices[this.price_id][key] * this[key];
 	},
 	'calculatePriceId': function() {
+		if (typeof(this.Date) == "undefined") {
+			this.price_id = 1;
+			return 0;
+		}
 		this.price_id = -1;
+		var t = this;
 		angular.forEach(cryptomedic.prices, function(p, i) {
-			if (((p['datefrom'] == null) || (p['datefrom'] <= this.Date))
-					&& ((p['dateto'] == null) || (p['dateto'] > this.Date))) {
-				this.price_id = i;
+			if (((p['datefrom'] == null) || (p['datefrom'] <= t.Date))
+					&& ((p['dateto'] == null) || (p['dateto'] > t.Date))) {
+				t.price_id = i;
 			}
 		});
 		if (this.price_id < 0) {
-			throw new Exception("Price Id not set");
+			throw new ApplicationException("Price Id not set");
 		}
 	},
 	'tagIt': function() {
