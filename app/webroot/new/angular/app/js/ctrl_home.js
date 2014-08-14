@@ -23,7 +23,7 @@ mainApp.controller('ctrl_home', [ '$scope', '$location', 'service_rest' , functi
 					// end the busy mode
 					jQuery("#busy").modal('hide');
 					setTimeout(function() {
-						window.location.hash = "/folder/" + data;
+						window.location.hash = "/folder/" + data + "/patient";
 					}, 1);
 				}
 			})

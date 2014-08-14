@@ -7,8 +7,8 @@ After migration:
 
 Write mode:
 v- add patient
+v- ctrl_file: if it is a patient, no page is set, but in edit, that leads us to /1234//edit (strange notation). Impact in ctrl_home:createReference
 - validate the forms -> howto ? see below an idea + business rules to be migrated
-- ctrl_file: if it is a patient, no page is set, but in edit, that leads us to /1234//edit (strange notation). Impact in ctrl_home:createReference
 
 var $myForm = $('#myForm')
 if (!$myForm[0].checkValidity()) {

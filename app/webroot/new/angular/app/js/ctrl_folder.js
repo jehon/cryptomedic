@@ -16,6 +16,11 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_rest', '$rou
 
 	$scope.select = function(page) {
 		$scope.page = page;
+
+		if (($scope.page === "") || ($scope.page === undefined) || ($scope.page === null)) {
+			console.log("redirect");
+			$scope.page = "patient";
+		}
 		$scope.pageIsFile = false;
 		if (parseInt($scope.page) == $scope.page) {
 			$scope.page = parseInt($scope.page);
@@ -138,9 +143,7 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_rest', '$rou
 			});
 	}
 
-	if (typeof($routeParams['page']) != 'undefined') {
-		$scope.select($routeParams['page']);
-	}
+	$scope.select($routeParams['page']);
 	
 	refreshFolder();
 

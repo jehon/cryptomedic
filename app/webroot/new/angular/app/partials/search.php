@@ -64,7 +64,7 @@
 	    	<tr ng-repeat="patient in listing" ng-click="go('#/folder/' + patient.id + '/')">
 	    		<td>
 	    		{{id}}
-	    			<a ng-href='#/folder/{{patient.id}}/'>
+	    			<a ng-href='#/folder/{{patient.id}}/patient'>
 	    				<img src='img/go.gif'>
 	    			</a>
 	    		</td>
