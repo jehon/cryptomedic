@@ -3,8 +3,8 @@
 mainApp.controller('ctrl_home', [ '$scope', '$location', 'service_rest' , function($scope, $location, service_rest) { 
 	if (typeof($scope.entryyear) == "undefined") {
 		$scope.searched = false;
-		$scope.entryyear = 1999;
-		$scope.entryorder = 1;
+		$scope.entryyear = (new Date()).getFullYear();
+		$scope.entryorder = "";
 		$scope.generate = false;
 	}
 

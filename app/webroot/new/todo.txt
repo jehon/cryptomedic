@@ -21,6 +21,7 @@ $myForm.find(':submit').click()
 Later:
 - factorize the management of lastuser into dbtable
 - put files list on menu bar collapsed ? check in "gsm" mode (page index.php?)
+- create an holder for static ressources?
 - change password
 - put models into application.models
 - move application images, css, partials... out of angular into app\
