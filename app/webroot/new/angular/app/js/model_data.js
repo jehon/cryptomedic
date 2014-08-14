@@ -29,5 +29,9 @@ cryptomedic.models.Data = Class.extend({
 		if (!this.isSet(field)) return false;
 		if (this[field] === 0) return false;
 		return true;
+	},
+	'validate': function(res) {
+		if (!res) res = {};
+		return res;
 	}
 });

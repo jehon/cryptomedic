@@ -114,6 +114,11 @@ input[type=date] {
 input[type=checkbox].form-control {
   width: auto;
 }
+
+.jserror {
+  color: red;
+}
+
 /********************************************
  * Menu / buttons
  */

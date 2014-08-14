@@ -8,15 +8,9 @@ After migration:
 Write mode:
 v- add patient
 v- ctrl_file: if it is a patient, no page is set, but in edit, that leads us to /1234//edit (strange notation). Impact in ctrl_home:createReference
-- validate the forms -> howto ? see below an idea + business rules to be migrated
-
-var $myForm = $('#myForm')
-if (!$myForm[0].checkValidity()) {
-  // If the form is invalid, submit it. The form won't actually submit;
-  // this will just cause the browser to display the native HTML5 error messages.
-  $myForm.submit()
-}
-$myForm.find(':submit').click()
+v- validate the forms -> howto ? see below an idea
+- display validations errors on pages
+- business rules to be migrated
 
 Later:
 - factorize the management of lastuser into dbtable
@@ -29,3 +23,6 @@ Later:
 - enforce rules server-side: patient_id not modified (created ok), lastuser, modified, created, id = non modifiable (black list?), ...
 - on delete: message box to confirm action
 - create domains + filter by referer path (see headers sent by server) 
+- day of consult
+- all reportings
+- export in xls

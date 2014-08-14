@@ -82,5 +82,5 @@ cryptomedic.models.File = cryptomedic.models.Data.extend({
 		var dlock = new Date(this.modified);
 		dlock.setDate(dlock.getDate() + 5);
 		return (dlock < new Date());
-	}
+	},
 });

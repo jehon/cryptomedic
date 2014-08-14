@@ -34,7 +34,7 @@
 			<table>
 				<tr>
 					<td></td>
-					<td id='PatientPathologyError' style='display: none' class='jserror'>
+					<td ng-if="errors.noPathology" class='jserror'>
 					Please select at least one pathology
 				</td>
 				</tr>
@@ -119,4 +119,4 @@
 			</table>
 		</fieldset>
 	</div>
-</div> 
+</span> 

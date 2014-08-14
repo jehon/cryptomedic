@@ -43,6 +43,7 @@
 					</span>
 					<span ng-if="!currentFile().isLocked()">
 			 			<span ng-if='hasPermission("folder.edit")' class="notModeWrite btn btn-default" ng-click="go('/folder/' + folder.id + '/' + page + '/edit')">Edit</span>
+			 			<span class="notModeRead btn btn-default" ng-click="actionValidate()">Validate</span>
 						<span ng-if='hasPermission("folder.edit")' class="notModeRead btn btn-default" ng-click="actionSave()">Save</span>
 						<span ng-if='hasPermission("folder.delete")' class="notModeRead btn btn-default" ng-click="actionDelete()">Delete</span>
 			 			<span class="notModeRead btn btn-default" ng-click="actionCancel()">Cancel</span>
@@ -51,10 +52,13 @@
 				</div>
 			</div>
 		</div>
-		<span ng-controller="ctrl_file">
-			<span ng-include="'partials/' + name() + '.php'">
-				debug: Content {{page}}
+		<form id="fileForm">
+			<button id="fileFormSubmit" type='submit'>Submit</button>
+			<span ng-controller="ctrl_file">
+				<span ng-include="'partials/' + name() + '.php'">
+					debug: Content {{page}}
+				</span>
 			</span>
-		</span>
+		</form>
 	</div>
 </span>

@@ -33,5 +33,23 @@ cryptomedic.models.Patient = cryptomedic.models.Data.extend({
 		if (this.ratioSalary() < 1500)	return 2;
 		if (this.ratioSalary() < 3000)	return 3;
 		return 4;
+	},
+	'validate': function(res) {
+		console.log("validate patient");
+		res = this._super(res);
+
+		if (!this.pathology_Clubfoot
+			&& !this.pathology_Ricket
+			&& !this.pathology_Adult
+			&& !this.pathology_CP
+			&& !this.pathology_Polio
+			&& !this.pathology_Burn
+			&& !this.pathology_Congenital
+			&& !this.pathology_other) {
+
+			res.noPathology = true;
+		}
+
+		return res;
 	}
 });

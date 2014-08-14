@@ -62,10 +62,35 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_rest', '$rou
 		}
 	}
 	
-	$scope.actionCancel =function() {
+	$scope.actionValidate = function() {
+		// TODO: use this in all modification actions
+		// TODO: jserror should have an icon before (danger)
+		// TODO: hide action button if form is not ok
+		$scope.valide = true;
+
+		if (!jQuery("#fileForm")[0].checkValidity()) {
+			console.log("Form invalid");
+			jQuery("#fileFormSubmit").click();
+			$scope.valide = false;
+		}
+
+		$scope.errors = $scope.currentFile().validate();
+		// TODO: count properties???
+		if (!jQuery.isEmptyObject($scope.errors)) {
+			console.log("Model invalid");
+			console.log($scope.errors);
+			$scope.valide = false;
+			return false;
+		} 
+
+		console.log("Conclusion: " + ($scope.valide ? "ok" : "ko"));
+		return $scope.valide;
+	};
+
+	$scope.actionCancel = function() {
 		refreshFolder();
 		$scope.go("/folder/" + $scope.folder.getId() + "/" + $scope.page);
-	}
+	};
 
 	$scope.actionSave = function() {
 		var busyEnd = $scope.doBusy("Saving the file to the server");
@@ -150,5 +175,4 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_rest', '$rou
 	if ($scope.mode == "edit" || $scope.mode == "add") {
 		jQuery(".modeRead").removeClass('modeRead').addClass('modeWrite');
 	}
-
 }]);
