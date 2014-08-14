@@ -2,7 +2,7 @@
 
 mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_rest', '$routeParams' , function($scope, $location, service_rest, $routeParams) {
 	$scope.folder = new cryptomedic.models.Folder();
-	$scope.page = "";
+	$scope.page = "patient";
 	$scope.pageIsFile = false;
 	$scope.mode = $routeParams['mode'];
 
@@ -116,7 +116,7 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_rest', '$rou
 		service_rest.deleteFile($scope.currentFile(), $scope.id())
 			.done(function(data) {
 				$scope.folder = data;
-				$scope.go("/folder/" + $scope.id());
+				$scope.go("/folder/" + $scope.id() + "/patient");
 				$scope.safeApply();
 			}).always(function() {
 				busyEnd();

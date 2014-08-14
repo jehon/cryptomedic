@@ -7,7 +7,7 @@
 		<a ng-if='hasPermission("folder.edit")' ng-class="{ 'btn-warning': page === 'add'}" ng-href="#/folder/{{id()}}/add" class="btn btn-default" style="width: 100%">Add</a>
 		<a ng-class="{ 'btn-warning': page === 'summary'}" ng-href="#/folder/{{id()}}/summary" class="btn btn-default" style="width: 100%">Summary</a>
 		<a ng-class="{ 'btn-warning': page === 'graphics'}" href="#/folder/{{id()}}/graphics" class="btn btn-default" style="width: 100%">Graphics</a>
-		<a ng-class="{ 'btn-warning': page === ''}" href="#/folder/{{id()}}/" class="btn btn-default" style="width: 100%">Patient</a>
+		<a ng-class="{ 'btn-warning': page === 'patient'}" href="#/folder/{{id()}}/patient" class="btn btn-default" style="width: 100%">Patient</a>
 		<span ng-repeat="f in folder.getSubFiles()">
 			<a href="#/folder/{{id()}}/{{$index}}" 
 					class="btn btn-default left-menu-button"
@@ -31,7 +31,7 @@
 					<span ng-if='hasPermission("folder.edit")' class="notModeRead btn btn-default" ng-click="actionCreate()">Create</span>
 		 			<span class="notModeRead btn btn-default" ng-click="actionCancelCreate()">Cancel</span>
 				</div>
-				<div class="col-sm-4 text-center" ng-if="pageIsFile || (page == '')" >
+				<div class="col-sm-4 text-center" ng-if="pageIsFile || (page == 'patient')" >
 					<span ng-if="currentFile().isLocked()">
 						<img src='img/locked.gif' />
 						File is locked.
