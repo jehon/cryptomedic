@@ -8,6 +8,9 @@
 	<br/>
 </div>
 <div align=center id='login' style='display: none'>
+	<h1>New version available</h1>
+	Do you know? A new version is available. Do you want to test it? Please follow this link:<br>
+		<a href="/amd/new/angular/app/" class="textbutton">New version</a>
 	<h1 style='width: 25%; color: #94004A; padding: 10px'>Restricted access</h1>
 	<table style='width: 30% !important; border: solid 1px; padding: 10px' >
 		<col width='100px'>
