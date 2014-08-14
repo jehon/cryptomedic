@@ -342,23 +342,25 @@ mainApp.controller('ctrl', [ '$scope', '$location', 'service_rest', function($sc
 	// On load, if cryptomedic.settings is set, we are logged in!
 	$scope.username = "";
 	$scope.password = "";
-	if (typeof(server) != "undefined" && server.username) {
+	if (typeof(server) != "undefined" && server.settings && server.settings.username) {
 		$scope.logged = true;
-		$scope.username = server.settings.username;
 	}
 
 	$scope.doLogin = function() {
 		$scope.loginError = false;
 		var busyEnd = $scope.doBusy("Checking your login/password with the online server", true);
 		service_rest.doLogin(this.username, this.password)
-			.done(function() {
+			.done(function(data) {
 				console.log("login ok");
+				console.log(data);
+				server.settings = data;
 				$scope.loginError = false;
 				$scope.logged = true;
-				
+
 				if (typeof(server) == "undefined" || !server.settings || !server.settings.username) {
 					window.location.reload();
 				}
+				$scope.safeApply();
 			})
 			.fail(function(data) {
 				console.log("login ko");
