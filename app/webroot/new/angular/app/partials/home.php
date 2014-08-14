@@ -15,7 +15,9 @@
 				</li>
 			</ul>
 		</div>
+<!-- 
 		<input ng-model="generate" ng-change="resetSearched()" type='checkbox' value='1'> Generate a reference for me<br>
+ -->
 		<br>
 		<label>Entry Year</label>
        	<input ng-model="entryyear" ng-change="resetSearched()" type="number" class="form-control" placeholder="Entry year" required autofocus>
@@ -32,12 +34,10 @@
 	<fieldset ng-if="searched">
 		<legend>Results</legend>
 		The patient does <b>not</b> exist. 
-<!--
  		Do you want to <b>create</b> it?<br>
 		<br>
 		<button ng-click="createReference()" class="btn btn-primary" >
 			<img src="img/go.gif" alt="[go]"> Create the patient
 		</button>
- -->		
 	</fieldset>
 </div>

@@ -2,23 +2,48 @@
 
 if (!defined("REST_LOADED")) die("Ca va pas la tête?");
 
+require(__DIR__ . "/helpers/getFolder.php");
+
 // require(__DIR__ . "/../../../../Model/amd_listings.php");
 
 $patients = new DBTable($server->getConfig("database"), "patients", $server);
 
+function checkReference($entryyear, $entryorder) {
+	global $patients;
+	return $patients->preparedStatement("SELECT patients.id FROM patients WHERE patients.entryyear = ? and patients.entryorder = ? ORDER BY entryyear DESC LIMIT 100", 
+		array($entryyear, $entryorder));
+
+}
+
 if (count($request->getRoute()) == 1) {
-	// Check if a reference exists or not
-	$sql = "SELECT patients.id FROM patients WHERE (1=1) ";
-	if ($request->getParameter("entryyear", false)) 
-		$sql .= " AND (patients.entryyear = " . $patients->escape($request->getParameter("entryyear", false)) . ") ";
+	if (!($entryyear = $request->getData("entryyear", false)))
+		throw new HttpInvalidData("entryyear");
 
-	if ($request->getParameter("entryorder", false)) 
-		$sql .= " AND (patients.entryorder = " . $patients->escape($request->getParameter("entryorder", false)) . ") ";
+	if (!($entryorder = $request->getData("entryorder", false)))
+		throw new HttpInvalidData("entryorder");
 
-	$sql .= " ORDER BY entryyear DESC LIMIT 100";
-	$response->ok($patients->execute($sql));
+	if ($request->getMethod() == Request::READ) {
+		// Check if a reference exists or not
+		$response->ok(checkReference($entryyear, $entryorder));
+	}
 
-} elseif (count($request->getRoute()) == 1) {
-	// TODO: create a reference, reserve one, ...
+	if ($request->getMethod() == Request::CREATE) {
+		// Create a reference
+		$patients->db->BeginTrans();
 
+		// Check the patient
+		$res = checkReference($entryyear, $entryorder);
+		if (count($res) != 0) {
+			$patients->db->RollbackTrans();
+			throw new HttpAlreadyDone("Reference exists");
+		}
+
+		$id = $patients->rowCreate(array(
+			'entryyear' => $entryyear, 
+			'entryorder' => $entryorder,
+			'lastuser' => $server->getSession(Server::LOGIN_USERNAME)));
+		$patients->db->CommitTrans();
+
+		$response->ok(getFolder($id));
+	}
 }

@@ -3,7 +3,7 @@
 mainApp.controller('ctrl_home', [ '$scope', '$location', 'service_rest' , function($scope, $location, service_rest) { 
 	if (typeof($scope.entryyear) == "undefined") {
 		$scope.searched = false;
-		$scope.entryyear = 2001;
+		$scope.entryyear = 1999;
 		$scope.entryorder = 1;
 		$scope.generate = false;
 	}
@@ -36,7 +36,23 @@ mainApp.controller('ctrl_home', [ '$scope', '$location', 'service_rest' , functi
 	};
 	
 	$scope.createReference = function() {
-		console.log($scope.year + "-" +  $scope.order);
+		var busyEnd = $scope.doBusy("Creating the reference on the server");
+		service_rest.createReference($scope.entryyear, $scope.entryorder)
+			.done(function(data) {
+				console.log(data);
+				busyEnd();
+				// end the busy mode
+				jQuery("#busy").modal('hide');
+				setTimeout(function() {
+					window.location.hash = "/folder/" + data.id + "//edit";
+				}, 1);
+			})
+			.fail(function(data) {
+				console.error(data);
+			}).always(function() {
+				busyEnd();
+			});
+		$scope.searched = true;
 	};
 	
 }]);

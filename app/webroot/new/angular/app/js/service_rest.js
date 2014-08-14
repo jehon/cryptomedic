@@ -66,6 +66,16 @@ mainApp.factory('service_rest', [ '$http', '$log' , '$rootScope', function($http
 					}
 				});
 		},
+		'createReference': function(year, order) {
+			return treatHttp($http.post(root + "/references/", 
+					{ 
+						'entryyear': year, 
+						'entryorder': order
+					}), function(data) {
+				cache.set(data.getMainFile().id, data);
+				return data;
+			}); 
+		},
 		'getFolder': function(id) {
 			if (cache.isCached(id)) {
 				return jQuery.Deferred().resolve(cache.get(id));

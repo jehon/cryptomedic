@@ -6,15 +6,9 @@ After migration:
 - Drop table surgeries_followups
 
 Write mode:
-v- locked/unlock
-v- save modified file
-v- add file
-v- delete file
-v- perish the cache after some times
-v- change price according to date in bills (model) + watch in controller
-v- use the new Rest directory into index.php etc...
-- add patient
+v- add patient
 - validate the forms -> howto ? see below an idea + business rules to be migrated
+- ctrl_file: if it is a patient, no page is set, but in edit, that leads us to /1234//edit (strange notation). Impact in ctrl_home:createReference
 
 var $myForm = $('#myForm')
 if (!$myForm[0].checkValidity()) {
@@ -25,6 +19,7 @@ if (!$myForm[0].checkValidity()) {
 $myForm.find(':submit').click()
 
 Later:
+- factorize the management of lastuser into dbtable
 - put files list on menu bar collapsed ? check in "gsm" mode (page index.php?)
 - change password
 - put models into application.models
