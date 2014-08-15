@@ -222,7 +222,7 @@ table.datalegend > thead > tr> th {
 /* Data management
  */
 input.ng-invalid {
-  border: 1px solid red;
+  border: 3px solid red;
 }
 
 /********************************************
