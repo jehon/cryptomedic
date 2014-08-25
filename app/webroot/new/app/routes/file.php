@@ -29,7 +29,16 @@ if (count($request->getRoute()) > 1) {
 			// Get the folder id:
 			$nrec = $typeDB->rowGet($id);
 
-			// Unlock the file
+			if (array_key_exists("file", $nrec) && $nrec["file"]) {
+				$tfile = $config['cryptomedic']['upload'] . DIRECTORY_SEPARATOR . $nrec["file"];
+				if (file_exists($tfile)) {
+					if (!unlink($tfile)) {
+						throw new StorageDeleteError("Could not delete the file");
+					}
+				}
+			}
+
+			// Delete the file
 			$typeDB->preparedStatement("DELETE FROM $type WHERE id = ?", array($id));
 
 			// Send back the folder
