@@ -39,7 +39,7 @@ if (count($request->getRoute()) > 1) {
 		// UPDATE
 		if ($request->getMethod() == Request::UPDATE) {
 			$data = $request->getPost();
-			$data['lastuser'] = $server->getSession(Server::LOGIN_USERNAME);
+			// $data['lastuser'] = $server->getSession(Server::LOGIN_USERNAME);
 
 			// Modify the file
 			$typeDB->rowUpdate($data);
@@ -56,7 +56,7 @@ if (count($request->getRoute()) > 1) {
 	} else if (count($request->getRoute()) == 2) {
 		if ($request->getMethod() == Request::CREATE) {
 			$data = $request->getPost();
-			$data['lastuser'] = $server->getSession(Server::LOGIN_USERNAME);
+			// $data['lastuser'] = $server->getSession(Server::LOGIN_USERNAME);
 
 			$idfolder = $request->getPost("patient_id");
 			$fid = $typeDB->rowCreate($data);

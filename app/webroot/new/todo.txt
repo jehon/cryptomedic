@@ -5,24 +5,27 @@ After migration:
 - Drop table orthopedic_devices
 - Drop table surgeries_followups
 
-Write mode:
+Done:
 v- add patient
 v- ctrl_file: if it is a patient, no page is set, but in edit, that leads us to /1234//edit (strange notation). Impact in ctrl_home:createReference
 v- validate the forms -> howto ? see below an idea
+v- factorize the management of lastuser into dbtable
+v- business rules to be migrated
+- day of consult
+
+Pending:
 - display validations errors on pages
-- business rules to be migrated
+- manage pictures
 
 Later:
-- factorize the management of lastuser into dbtable
 - put files list on menu bar collapsed ? check in "gsm" mode (page index.php?)
 - create an holder for static ressources?
-- change password
 - put models into application.models
 - move application images, css, partials... out of angular into app\
-- take out specific menu out of angular -> app\
-- enforce rules server-side: patient_id not modified (created ok), lastuser, modified, created, id = non modifiable (black list?), ...
 - on delete: message box to confirm action
-- create domains + filter by referer path (see headers sent by server) 
-- day of consult
 - all reportings
 - export in xls
+- change password
+- enforce rules server-side: patient_id not modified (created ok), lastuser, modified, created, id = non modifiable (black list?), ...
+- take out specific menu out of angular -> app\
+- create domains + filter by referer path (see headers sent by server) 

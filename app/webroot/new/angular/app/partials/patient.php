@@ -29,7 +29,7 @@
 		</fieldset>
  	</div>
 	<div class="col-lg-6">
-		<fieldset id='PatientPathology'>
+		<fieldset id='PatientPathology' ng-class='{ errors.noPathology: jserror }'>
 			<legend>Pathology</legend>
 			<table>
 				<tr>
