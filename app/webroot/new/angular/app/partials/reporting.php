@@ -4,7 +4,7 @@
     t::setDefaultOption("readOnly");
 ?>
 <h1>Reporting for the patient</h1>
-<div ng-if="patient()" ng-controller="ctrl_patient">
+<div ng-controller="ctrl_patient">
     Get a complete report: TODO
 <!--
         <a target="_new" href="/amd/patients/view/{{id()}}.csv" >csv</a>&nbsp
