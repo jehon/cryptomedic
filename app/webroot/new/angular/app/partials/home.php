@@ -2,7 +2,7 @@
 	require_once(__DIR__ . "/../../../../../../../rest/php/templates.php");
 ?>
 <div class='col-sm-offset-3 col-sm-6'>
-	<h1 class='text-center'>Home</h1>
+	<h1 class='text-center'><img src='img/home.gif'>Home</h1>
 	<fieldset id='add'>
 		<legend>Check if a patient exists, and if not, create it</legend>
 		<div ng-if="!searched" style="text-align: left">

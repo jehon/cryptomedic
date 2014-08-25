@@ -25,6 +25,11 @@ html,body {
 .submenu {
   background-color: lightgray;
 }
+
+h1 > img {
+  height: 35px;
+  margin-right: 20px;
+}
 /********************************************
  * Data display (modes, emtpyValues)
  */
@@ -106,6 +111,10 @@ fieldset > table > tbody > tr > td:nth-of-type(3), fieldset > table > thead > tr
 /********************************************
  * Input
  */
+input.ng-invalid {
+  border: 3px solid red;
+}
+
 input[type=date] {
   /*line-height: inherit !important; */
   line-height: normal !important;  /* Workaround bootstrap */
@@ -216,13 +225,6 @@ table.datalegend {
 table.datalegend > thead > tr> th {
     font-size: 9px;
     padding: 2px;
-}
-
-/*******************************************
-/* Data management
- */
-input.ng-invalid {
-  border: 3px solid red;
 }
 
 /********************************************

@@ -75,12 +75,10 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_rest', '$rou
 		}
 
 		$scope.errors = $scope.currentFile().validate();
-		// TODO: count properties???
 		if (!jQuery.isEmptyObject($scope.errors)) {
 			console.log("Model invalid");
 			console.log($scope.errors);
 			$scope.valide = false;
-			return false;
 		} 
 
 		console.log("Conclusion: " + ($scope.valide ? "ok" : "ko"));

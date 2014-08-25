@@ -4,8 +4,8 @@
 	t::setDefaultOption("forceAllowNull");
 	t::setDefaultOption("writeOnly");
 ?>
+<h1><img src='img/patientsSearch.gif'>Search for a patient</h1>
 <div class='searchFields'>
-	<h1>Search fields</h1>
 	<div class="row">
 		<div class="col-lg-6">
 			<fieldset>
@@ -36,7 +36,9 @@
 			</fieldset>
 		</div>
 	</div>
-	<span class="btn btn-primary" ng-click="submit()">Submit</span>
+   	<p class="text-center">
+		<span class="btn btn-primary" ng-click="submit()">Submit</span>
+	</p>
 </div>
 <h1>Results</h1>
 <? 
