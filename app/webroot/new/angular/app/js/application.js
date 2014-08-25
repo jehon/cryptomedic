@@ -75,7 +75,7 @@ function ApplicationException(msg) {
 inherit(Error, ApplicationException);
 ApplicationException.prototype.getMessage = function() { return this.message; };
 
-function date2CanonicString(d) {
+function date2CanonicString(d, dateOnly) {
     // d.setMilliseconds(0);
     if (d == null) return "0000-00-00 00:00:00 GMT+0000";
 
@@ -87,6 +87,8 @@ function date2CanonicString(d) {
         "-" +
         ("00" + (d.getDate())).substr(-2);
 
+    if (dateOnly) return dateStr;
+    
     if (((((d.getHours() + (ts / 100)) % 24) == 0) || (d.getHours() == 0)) 
     		&& (d.getMinutes() == 0) && (d.getSeconds() == 0)) {
     	return dateStr;

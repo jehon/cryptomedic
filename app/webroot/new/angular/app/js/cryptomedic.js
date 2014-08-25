@@ -10,25 +10,15 @@ mainApp.config([ '$routeProvider', function($routeProvider) {
     }).when('/folder/:id/:page?/:mode?', {
         controller: 'ctrl_folder',
         templateUrl: 'partials/folder.php',
+    }).when('/day', {
+        controller: 'ctrl_day',
+        templateUrl: 'partials/day.php',
     }).otherwise({ 'redirectTo': '/home'});
 }]);
 
 var cryptomedic = {};
 cryptomedic.settings = {};
 cryptomedic.models = {};
-
-// TODO: just done: removing model2controller
-// cryptomedic.model2controller = {
-//     "Bill": "bills", 
-//     "ClubFoot": "club_foots", 
-//     "NonricketConsult": "nonricket_consults",
-//     "OrthopedicDevice": "orthopedic_devices",
-//     "Patient": "patients",
-//     "Picture": "pictures",
-//     "RicketConsult": "ricket_consults",
-//     "Surgery": "surgeries",
-//     "SurgeryFollowup": "surgery_followups"
-// };
 
 cryptomedic.math = {
 	evaluatePoly: function (line, x) {
