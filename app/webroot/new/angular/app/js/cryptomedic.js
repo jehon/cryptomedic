@@ -18,7 +18,6 @@ mainApp.config([ '$routeProvider', function($routeProvider) {
 
 var cryptomedic = {};
 cryptomedic.settings = {};
-cryptomedic.models = {};
 
 cryptomedic.math = {
 	evaluatePoly: function (line, x) {

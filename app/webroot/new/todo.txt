@@ -11,16 +11,17 @@ v- ctrl_file: if it is a patient, no page is set, but in edit, that leads us to 
 v- validate the forms -> howto ? see below an idea
 v- factorize the management of lastuser into dbtable
 v- business rules to be migrated
-- day of consult
+v- day of consult
+v- put models into application.models
 
 Pending:
 - display validations errors on pages
 - manage pictures
+- test validation on IE
 
 Later:
 - put files list on menu bar collapsed ? check in "gsm" mode (page index.php?)
-- create an holder for static ressources?
-- put models into application.models
+- manage timestamps on partials
 - move application images, css, partials... out of angular into app\
 - on delete: message box to confirm action
 - all reportings
@@ -28,4 +29,4 @@ Later:
 - change password
 - enforce rules server-side: patient_id not modified (created ok), lastuser, modified, created, id = non modifiable (black list?), ...
 - take out specific menu out of angular -> app\
-- create domains + filter by referer path (see headers sent by server) 
+- create domains + filter by referer path? (see headers sent by server) 

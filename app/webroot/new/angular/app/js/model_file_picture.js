@@ -1,6 +1,6 @@
 "use strict";
 
-cryptomedic.models.Picture = cryptomedic.models.File.extend({
+application.models.Picture = application.models.File.extend({
 	'init': function(data, patient) {
 		this._super(data, patient);
 		if (!data) {

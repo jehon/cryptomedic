@@ -9,7 +9,7 @@
 // test(false);
 // test({});
 
-cryptomedic.models.File = cryptomedic.models.Data.extend({
+application.models.File = application.models.Data.extend({
 	'init': function(data, patient) {
 		this._super(data);
 		if (data == null) {

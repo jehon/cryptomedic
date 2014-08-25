@@ -1,6 +1,6 @@
 "use strict";
 
-cryptomedic.models.ClubFoot = cryptomedic.models.File.extend({
+application.models.ClubFoot = application.models.File.extend({
 	'init': function(data, patient) {
 		this._super(data, patient);
 		if (!data) {

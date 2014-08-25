@@ -1,6 +1,6 @@
 "use strict";
 
-cryptomedic.models.Patient = cryptomedic.models.Data.extend({
+application.models.Patient = application.models.Data.extend({
 	'actualAge': function(date) {
 		date = date || new Date();
 		if ((typeof(this.Yearofbirth) != "number") 

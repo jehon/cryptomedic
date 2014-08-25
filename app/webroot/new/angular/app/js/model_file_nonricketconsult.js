@@ -1,6 +1,6 @@
 "use strict";
 
-cryptomedic.models.NonricketConsult = cryptomedic.models.File.extend({
+application.models.NonricketConsult = application.models.File.extend({
 	'init': function(data, patient) {
 		this._super(data, patient);
 		if (!data) {

@@ -1,7 +1,7 @@
 "use strict";
 
 mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_rest', '$routeParams' , function($scope, $location, service_rest, $routeParams) {
-	$scope.folder = new cryptomedic.models.Folder();
+	$scope.folder = new application.models.Folder();
 	$scope.page = "patient";
 	$scope.pageIsFile = false;
 	$scope.mode = $routeParams['mode'];
@@ -159,7 +159,7 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_rest', '$rou
 				$scope.select($scope.page);
 				$scope.safeApply();
 				if (($scope.mode == "add") && (!$scope.fileCreating)) {
-					fileCreating = new cryptomedic.models[$scope.page](null, $scope.folder.getMainFile());
+					fileCreating = new application.models[$scope.page](null, $scope.folder.getMainFile());
 				}
 			}).always(function() {
 				busyEnd();

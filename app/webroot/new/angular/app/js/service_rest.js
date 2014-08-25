@@ -47,7 +47,7 @@ mainApp.factory('service_rest', [ '$http', '$log' , '$rootScope', function($http
 			return treatHttp($http.get(root + "/folders/", { 'params': params }), function(data) {
 				var list = [];
 				for(var i in data) {
-					list.push(new cryptomedic.models.Patient(data[i]));
+					list.push(new application.models.Patient(data[i]));
 				}
 				return list;
 			});
@@ -57,7 +57,7 @@ mainApp.factory('service_rest', [ '$http', '$log' , '$rootScope', function($http
 			return treatHttp($http.get(root + "/consultations/", { 'params': { 'day': day, 'center': center} }), function(data) {
 				var list = [];
 				for(var i in data) {
-					list.push(new cryptomedic.models.Patient(data[i]));
+					list.push(new application.models.Patient(data[i]));
 				}
 				return list;
 			});

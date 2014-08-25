@@ -3,6 +3,7 @@
 // TODO: partials depend on version (like script) -> caching opportunities
 
 var application = {};
+application.models = {};
 var server = {};
 
 /**
@@ -134,7 +135,7 @@ function objectify(what) {
 				what[i] = objectify(what[i]);
 			});
             if (typeof(what['_type']) != "undefined") {
-                what = new cryptomedic.models[what['_type']](what);
+                what = new application.models[what['_type']](what);
             }
 			return what;
 		default:

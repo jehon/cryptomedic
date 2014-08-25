@@ -53,7 +53,7 @@
 			</div>
 		</div>
 		<form id="fileForm">
-			<button id="fileFormSubmit" type='submit'>Submit</button>
+			<button id="fileFormSubmit" type='submit' style="display: none">For html5 validation through javascript</button>
 			<span ng-controller="ctrl_file">
 				<span ng-include="'partials/' + name() + '.php'">
 					debug: Content {{page}}

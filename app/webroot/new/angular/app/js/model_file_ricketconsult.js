@@ -1,6 +1,6 @@
 "use strict";
 
-cryptomedic.models.RicketConsult = cryptomedic.models.File.extend({
+application.models.RicketConsult = application.models.File.extend({
 	'init': function(data, patient) {
 		this._super(data, patient);
 		if (!data) {
