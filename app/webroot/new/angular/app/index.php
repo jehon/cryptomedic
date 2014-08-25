@@ -124,6 +124,10 @@
 	      		<img src="img/patientsSearch.gif" height="20px"/>
 	      		Search a patient
 	      	</a></li>
+	      	<li><a href="#/day" class="navbar-link">
+	      		<img src="img/consultOfDay.gif" height="20px"/>
+	      		Consults of the day
+	      	</a></li>
 	      	<li><a href="/amd/pages/reports" class="navbar-link">
 	      		<img src="img/reports.gif" height="20px"/>
 	      		Reports

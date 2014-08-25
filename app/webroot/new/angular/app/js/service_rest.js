@@ -52,6 +52,16 @@ mainApp.factory('service_rest', [ '$http', '$log' , '$rootScope', function($http
 				return list;
 			});
 		},
+		'searchForConsultations': function(day, center) {
+			day = date2CanonicString(day, true);
+			return treatHttp($http.get(root + "/consultations/", { 'params': { 'day': day, 'center': center} }), function(data) {
+				var list = [];
+				for(var i in data) {
+					list.push(new cryptomedic.models.Patient(data[i]));
+				}
+				return list;
+			});
+		},
 		'checkReference': function(year, order) {
 			return treatHttp($http.get(root + "/references/", 
 					{ 'params': { 
