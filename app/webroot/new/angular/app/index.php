@@ -53,9 +53,9 @@
 </head>
 <body ng-app="app_main" ng-controller="ctrl" id="ng-app">
 	<!--  Login screen -->
-	<div ng-if="!logged && !busy.shown" class="site-wrapper">
+	<div ng-if="!logged && !busy.shown" class="site-wrapper" id='loginForm'>
 		<div class="site-wrapper-inner col-sm-offset-4 col-sm-4">
-			<form class="form-signin" role="form">
+			<form class="form-signing" role="form">
 	    		<h2 class="form-signin-heading">Please sign in</h2>
 	    		<label for="username">Username</label>
 	        	<input id="username" ng-model="username" class="form-control" placeholder="Username" required autofocus>

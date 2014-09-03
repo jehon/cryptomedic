@@ -6,13 +6,6 @@
     "karma": "~0.12.0",
     "karma-jasmine": "~0.2.0"
 
-{
-	"scripts": {
-	    "pretest": "npm install",
-	}
-}
-
-
 
     "grunt": "^0.4.5",
     "grunt-contrib-jasmine": "^0.6.5",
