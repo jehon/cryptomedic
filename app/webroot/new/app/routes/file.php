@@ -30,7 +30,10 @@ if (count($request->getRoute()) > 1) {
 			$nrec = $typeDB->rowGet($id);
 
 			if (array_key_exists("file", $nrec) && $nrec["file"]) {
-				$tfile = $config['cryptomedic']['upload'] . DIRECTORY_SEPARATOR . $nrec["file"];
+				if (!array_key_exists($type, $config) || !array_key_exists('upload', $config[$type]) || !$config[$type]['upload']) {
+					throw new StorageDeleteError("File storage not defined");
+				}
+				$tfile = $config[$type]['upload'] . DIRECTORY_SEPARATOR . $nrec["file"];
 				if (file_exists($tfile)) {
 					if (!unlink($tfile)) {
 						throw new StorageDeleteError("Could not delete the file");
@@ -38,7 +41,7 @@ if (count($request->getRoute()) > 1) {
 				}
 			}
 
-			// Delete the file
+			// Delete the record
 			$typeDB->preparedStatement("DELETE FROM $type WHERE id = ?", array($id));
 
 			// Send back the folder
@@ -63,6 +66,8 @@ if (count($request->getRoute()) > 1) {
 				$response->ok(getFolder($nrec["id"]));
 		}
 	} else if (count($request->getRoute()) == 2) {
+
+		// Create
 		if ($request->getMethod() == Request::CREATE) {
 			$data = $request->getPost();
 			// $data['lastuser'] = $server->getSession(Server::LOGIN_USERNAME);
