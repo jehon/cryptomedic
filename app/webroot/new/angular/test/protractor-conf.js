@@ -5,11 +5,17 @@ exports.config = {
     'e2e/*.js'
   ],
 
-  capabilities: {
-    'browserName': 'chrome'
-  },
+  multiCapabilities: [
+    {
+      'browserName': 'chrome'
+    },
+    // {
+    //   'browserName': 'firefox'
+    // }
+  ],
 
-  baseUrl: 'http://localhost:8000/app/',
+  //baseUrl: 'http://localhost:8000/app/',
+  baseUrl: 'http://localhost/amd/new/angular/app/index.php',
 
   framework: 'jasmine',
 
