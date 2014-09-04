@@ -20,6 +20,7 @@ Pending:
 - test validation on IE
 - export in xls
 - patient reporting (complete xls file for a patient)
+- limit patient delete if there are subfiles
 
 Later:
 - put files list on menu bar collapsed ? check in "gsm" mode (page index.php?)

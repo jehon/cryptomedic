@@ -13,4 +13,8 @@ mainApp.controller('ctrl_picture', [ '$scope', 'service_rest', function($scope, 
 	    });
 	    jQuery("#maxUploadSizeMb").html(cryptomedic.settings.maxUploadSizeMb);
 	}
+
+	$scope.getURLUploadIFrame = function() {
+		return "/rest/upload/pictures/" + $scope.currentFile().id + ".html";
+	}
 }]);
