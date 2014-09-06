@@ -16,6 +16,7 @@
     "qunit": "latest",
     "respond": "latest",
     "html5shiv": "latest",
-    "datejs": "latest"
+    "datejs": "latest",
+    "modernizr": "latest"
   }
 }
