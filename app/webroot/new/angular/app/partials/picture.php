@@ -19,13 +19,15 @@
 			<div ng-include="'partials/patient-related.php'"></div>
 		</div>
 	</div>
-	<div style='text-align: center' >
-		<div ng-if="currentFile().file">
-			<img width='80%' ng-src="/uploadedPictures/{{currentFile().file}}">
-		</div>
-		<div class='notModeWrite text-center' ng-if="!currentFile().file && hasPermission('folder.edit')">
-			You didn't upload a file yet. Please do so!<br>
-			<iframe ng-src="{{getURLUploadIFrame()}}" width='100%' height='300px'></iframe>
+	<div style='text-align: center' class="row">
+		<div class="col-lg-offset-1 col-lg-10">
+			<div ng-if="currentFile().file">
+				<img width='100%' ng-src="/uploadedPictures/{{currentFile().file}}">
+			</div>
+			<div class='notModeWrite text-center' ng-if="!currentFile().file && hasPermission('folder.edit')">
+				You didn't upload a file yet. Please do so!<br>
+				<iframe ng-src="{{getURLUploadIFrame()}}" width='100%' height='300px'></iframe>
+			</div>
 		</div>
 	</div>
 </span>

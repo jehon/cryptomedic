@@ -21,7 +21,12 @@
 <?php 
 	// jquery
 	(new Script("bower_components/jquery/dist/jquery.min.js"))->dependFile()->toPrint();
-	
+	(new Script("bower_components/jquery-ui/jquery-ui.min.js"))->dependFile()->toPrint();
+	(new Script("bower_components/jquery-ui/themes/ui-lightness/jquery-ui.min.css"))->dependFile()->toPrint();
+
+	// Modernizr	
+	(new Script("bower_components/modernizr/modernizr.js"))->dependFile()->toPrint();
+
 	// bootstrap
 	(new Script("bower_components/bootstrap/dist/js/bootstrap.min.js"))->dependFile()->toPrint();
 	(new Script("bower_components/bootstrap/dist/css/bootstrap.min.css"))->dependFile()->toPrint();

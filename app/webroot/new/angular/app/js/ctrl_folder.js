@@ -75,6 +75,7 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_rest', '$rou
 		}
 
 		$scope.errors = $scope.currentFile().validate();
+		console.log($scope.errors);
 		if (!jQuery.isEmptyObject($scope.errors)) {
 			console.log("Model invalid");
 			console.log($scope.errors);
@@ -91,6 +92,10 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_rest', '$rou
 	};
 
 	$scope.actionSave = function() {
+		if (!$scope.actionValidate()) {
+			alert("You have errors in your data. Please correct them and try again");
+			return ;
+		}
 		var busyEnd = $scope.doBusy("Saving the file to the server");
 		var prevId = $scope.currentFile().id;
 		var prevType = $scope.currentFile()._type;

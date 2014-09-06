@@ -14,15 +14,19 @@ v- business rules to be migrated
 v- day of consult
 v- put models into application.models
 v- display validations errors on pages
+v- manage pictures
+v- Dates in firefox (ngBlur, ngFocus, ng-click="count = count + 1")
 
 Pending:
-- manage pictures
+- validation automatique (sur clic save)
 - test validation on IE
 - export in xls
 - patient reporting (complete xls file for a patient)
 - limit patient delete if there are subfiles
+- e2e testing
 
 Later:
+- validation automatique (cron)
 - put files list on menu bar collapsed ? check in "gsm" mode (page index.php?)
 - manage timestamps on partials
 - move application images, css, partials... out of angular into app\
@@ -32,3 +36,7 @@ Later:
 - enforce rules server-side: patient_id not modified (created ok), lastuser, modified, created, id = non modifiable (black list?), ...
 - take out specific menu out of angular -> app\
 - create domains + filter by referer path? (see headers sent by server) 
+
+
+
+

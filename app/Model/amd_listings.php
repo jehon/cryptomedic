@@ -150,6 +150,7 @@ global $model_listing;
 $model_listing = array();
 $model_listing['Bill.Center'] = $amd_listing['Centers'];
 $model_listing['Bill.Sociallevel'] = $amd_listing['SocialLevel'];
+
 $model_listing['ClubFoot.CavusFoot'] = $amd_listing['Pain'];
 $model_listing['ClubFoot.Side'] = $amd_listing['Side'];
 $model_listing['ClubFoot.Run'] = array(0, 1, 2);
@@ -182,24 +183,27 @@ $model_listing['ClubFoot.RigidEquinusRight'] = $amd_listing['Pirani'];
 $model_listing['ClubFoot.EmptyHeelLeft'] = $amd_listing['Pirani'];
 $model_listing['ClubFoot.EmptyHeelRight'] = $amd_listing['Pirani'];
 
-$model_listing['ClubFoot.PainLeft'] = $amd_listing["0-10"];
-$model_listing['ClubFoot.PainRight'] = $amd_listing["0-10"];
-$model_listing['ClubFoot.WalkingFloorContactLeft'] = $amd_listing["0-10"];
-$model_listing['ClubFoot.WalkingFloorContactRight'] = $amd_listing["0-10"];
-$model_listing['ClubFoot.JumpingOneLegLeft'] = $amd_listing["0-10"];
-$model_listing['ClubFoot.JumpingOneLegRight'] = $amd_listing["0-10"];
-$model_listing['ClubFoot.RunLeft'] = $amd_listing["0-10"];
-$model_listing['ClubFoot.RunRight'] = $amd_listing["0-10"];
-$model_listing['ClubFoot.AdductionAngleLeft'] = $amd_listing["0-10"];
-$model_listing['ClubFoot.AdductionAngleRight'] = $amd_listing["0-10"];
-$model_listing['ClubFoot.HindFootAngleWLeft'] = $amd_listing["0-10"];
-$model_listing['ClubFoot.HindFootAngleWRight'] = $amd_listing["0-10"];
-$model_listing['ClubFoot.DorsalFlexionMaxLeft'] = $amd_listing["0-10"];
-$model_listing['ClubFoot.DorsalFlexionMaxRight'] = $amd_listing["0-10"];
-$model_listing['ClubFoot.PlantarFlexionMaxLeft'] = $amd_listing["0-10"];
-$model_listing['ClubFoot.PlantarFlexionMaxRight'] = $amd_listing["0-10"];
+$model_listing['ClubFoot.PainLeft'] = [ 0, 1, 2 ];
+$model_listing['ClubFoot.PainRight'] = [ 0, 1, 2 ];
+$model_listing['ClubFoot.WalkingFloorContactLeft'] = [ 0, 1, 2 ];
+$model_listing['ClubFoot.WalkingFloorContactRight'] = [ 0, 1, 2 ];
+$model_listing['ClubFoot.WalkingFirstContactLeft'] = [ 0, 1, 2 ];
+$model_listing['ClubFoot.WalkingFirstContactRight'] = [ 0, 1, 2 ];
+$model_listing['ClubFoot.JumpingOneLegLeft'] = [ 0, 1 ];
+$model_listing['ClubFoot.JumpingOneLegRight'] = [ 0, 1 ];
+$model_listing['ClubFoot.RunLeft'] = [ 0, 1, 2 ];
+$model_listing['ClubFoot.RunRight'] = [ 0, 1, 2 ];
+// $model_listing['ClubFoot.AdductionAngleLeft'] = $amd_listing["0-10"];
+// $model_listing['ClubFoot.AdductionAngleRight'] = $amd_listing["0-10"];
+// $model_listing['ClubFoot.HindFootAngleWLeft'] = $amd_listing["0-10"];
+// $model_listing['ClubFoot.HindFootAngleWRight'] = $amd_listing["0-10"];
+// $model_listing['ClubFoot.DorsalFlexionMaxLeft'] = $amd_listing["0-10"];
+// $model_listing['ClubFoot.DorsalFlexionMaxRight'] = $amd_listing["0-10"];
+// $model_listing['ClubFoot.PlantarFlexionMaxLeft'] = $amd_listing["0-10"];
+// $model_listing['ClubFoot.PlantarFlexionMaxRight'] = $amd_listing["0-10"];
 $model_listing['ClubFoot.MuscularInbalanceLeft'] = $amd_listing["0-10"];
 $model_listing['ClubFoot.MuscularInbalanceRight'] = $amd_listing["0-10"];
+$model_listing['ClubFoot.NextCenter'] = $amd_listing["Centers"];
 
 
 $model_listing['NonricketConsult.Orthopedicdevice65'] = $amd_listing['Device'];
@@ -210,6 +214,7 @@ $model_listing['NonricketConsult.Side'] = $amd_listing['Side'];
 $model_listing['NonricketConsult.Surgery66'] = $amd_listing['Surgery'];
 $model_listing['NonricketConsult.Walk'] = $amd_listing['WalkingCapacities'];
 $model_listing['NonricketConsult.Center'] = $amd_listing['Centers'];
+$model_listing['NonricketConsult.NextCenter'] = $amd_listing["Centers"];
 
 $model_listing['OrthopedicDevice.Device'] = $amd_listing['Device'];
 $model_listing['OrthopedicDevice.Goal'] = $amd_listing['OrthopedicGoal'];
@@ -251,6 +256,7 @@ $model_listing['RicketConsult.Twospoonsesamseedgrounded'] = $amd_listing['Freque
 $model_listing['RicketConsult.WalkingDifficulties'] = $amd_listing['WalkingCapacities'];
 $model_listing['RicketConsult.Wristenlargement'] = $amd_listing['Eval03'];
 $model_listing['RicketConsult.Center'] = $amd_listing['Centers'];
+$model_listing['RicketConsult.NextCenter'] = $amd_listing["Centers"];
 
 $model_listing['Surgery.ChestAuscultation'] = $amd_listing['ChestAuscultation'];
 $model_listing['Surgery.GeneralCondition'] = $amd_listing['GoodBad'];

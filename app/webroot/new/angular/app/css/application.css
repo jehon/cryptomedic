@@ -2,6 +2,11 @@
  * Globals
  */
 
+::-webkit-calendar-picker-indicator {
+  color: red;
+  background-image: url('img/cal.gif');
+}
+
 .debug {
 	/* color: white; */
 	/* background-color: yellow; */

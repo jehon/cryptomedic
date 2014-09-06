@@ -47,9 +47,15 @@
 					<th>Total</th>
 				</tr>
 			</thead>
+			<tr>
+				<td colspan=3 ng-if='errors.consultPhisioAndDoctor' class='jserror'>Error: you could not bill "physio" and "doctor" together!</td>
+			</tr>
 			<?php price("Bill.consult_CDC_consultation_physio"); ?>
 			<?php price("Bill.consult_CDC_consultation_Bengali_Doctor"); ?>
 			<?php price("Bill.consult_CDC_consultation_Doctor"); ?>
+			<tr>
+				<td colspan=3 ng-if='errors.homeVisitAndGiveAppointment' class='jserror'>Error: you could not bill a "home visit" with "give appointment" together!</td>
+			</tr>
 			<?php price("Bill.consult_field_visit"); ?>
 			<?php price("Bill.consult_home_visit"); ?>
 			<?php price("Bill.consult_give_appointment"); ?>

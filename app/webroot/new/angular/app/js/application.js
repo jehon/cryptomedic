@@ -254,6 +254,32 @@ var mainApp = angular.module('app_main', [ 'ngRoute' ])
 		// }
 	};
 }])
+.directive('mycalendar', function() {
+	return function (scope, elem, attrs) {
+		if (!Modernizr.inputtypes.date) {
+			jQuery(elem).datepicker({ dateFormat: 'yy-mm-dd' });
+			elem.bind('blur', function() {
+				console.info("my blur event");
+				//scope.$apply(attrs.ngBlur);
+			});
+			elem.bind('focus', function() {
+				console.info("my focus event");
+				//scope.$apply(attrs.ngBlur);
+			});
+		}
+	}
+})
+// .directive('myFocus', function() {
+// 	return function (scope, elem, attrs) {
+// 		scope.$watch(attrs.ngFocus, function(newval) {
+// 			if (newval) {
+// 				$timeout(function() {
+// 					elem[0].focus();
+// 				}, 0, false);
+// 			}
+// 		});
+// 	}
+// })
 ;
 
 mainApp.controller('ctrl', [ '$scope', '$location', 'service_rest', function($scope, $location, service_rest) { 

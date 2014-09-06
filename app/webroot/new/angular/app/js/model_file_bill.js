@@ -65,6 +65,9 @@ application.models.Bill = application.models.File.extend({
 		}
 		this.price_id = -1;
 		var t = this;
+		if (typeof(this.Date) == "string") {
+			this.Date = new Date(this.Date);
+		}
 		angular.forEach(cryptomedic.prices, function(p, i) {
 			if (((p['datefrom'] == null) || (p['datefrom'] <= t.Date))
 					&& ((p['dateto'] == null) || (p['dateto'] > t.Date))) {
@@ -116,15 +119,15 @@ application.models.Bill = application.models.File.extend({
 		- il faut pourvoir coder home visit ou give appointment mais pas les 2
 		- il faut pourvoir coder consultation physio ou doctor mais pas les 2
 		*/
-		console.log("validate bill");
 		res = this._super(res);
 
-		if ((this.consult_home_visit > 0) && (this.consult_give_appointment & 0)) {
+		if ((this.consult_home_visit > 0) && (this.consult_give_appointment > 0)) {
 			res.homeVisitAndGiveAppointment = true;
 		}
 
 		if ((this.consult_CDC_consultation_physio > 0) && (this.consult_CDC_consultation_Doctor > 0)) {
 			res.consultPhisioAndDoctor = true;
 		}
+		return res;
 	}
 });
