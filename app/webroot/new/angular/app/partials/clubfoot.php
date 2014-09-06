@@ -4,6 +4,7 @@
 	require_once(__DIR__ . "/../../../../../../../rest/php/templates.php");
 	t::setDefaultOption("baseExpression", "currentFile().");
 ?>
+<span ng-controller='ctrl_file_clubfoots'>
 	<div class="col-lg-6">
 		<div ng-include="'partials/consult-introduction.php'"></div>
 		<FieldSet>
@@ -16,7 +17,7 @@
 						<th>Right</th>
 					</tr>
 				</thead>
-				<tr><td>Mid foot<</td><td></td><td></td></tr>
+				<tr><td>Mid foot</td><td></td><td></td></tr>
 				<?php (new t("ClubFoot.CurvedLateralBorder"))->trLeftRight()->p(); ?>
 				<?php (new t("ClubFoot.MedialCrease"))->trLeftRight()->p(); ?>
 				<?php (new t("ClubFoot.TalarHeadCoverage"))->trLeftRight()->p(); ?>
@@ -24,6 +25,11 @@
 				<?php (new t("ClubFoot.PosteriorCrease"))->trLeftRight()->p(); ?>
 				<?php (new t("ClubFoot.RigidEquinus"))->trLeftRight()->p(); ?>
 				<?php (new t("ClubFoot.EmptyHeel"))->trLeftRight()->p(); ?>
+				<tr>
+					<td>Total</td>
+					<td>{{getPiraniLeft()}}</td>
+					<td>{{getPiraniRight()}}</td>
+				</tr>				
 			</table>
 		</FieldSet>
 		<FieldSet>
@@ -43,15 +49,16 @@
 				<?php (new t("ClubFoot.WalkingFloorContact"))->trLeftRight()->p(); ?>
 				<?php (new t("ClubFoot.WalkingFirstContact"))->trLeftRight()->p(); ?>
 				<?php (new t("ClubFoot.JumpingOneLeg"))->trLeftRight()->p(); ?>
+				<?php (new t("ClubFoot.Run"))->trLeftRight()->p(); ?>
 				<?php //(new t("ClubFoot.JumpingReception"))->tr()->p(); ?>
 				<?php //(new t("ClubFoot.Adduction"))->tr()->p(); ?>
 				<?php //(new t("ClubFoot.HindFootAngleD"))->tr()->p(); ?>
 				<?php //(new t("ClubFoot.ThighFoot"))->tr()->p(); ?>
-				<?php (new t("ClubFoot.AdductionAngle"))->trLeftRight()->p(); ?>
-				<?php (new t("ClubFoot.HindFootAngleW"))->trLeftRight()->p(); ?>
+				<?php (new t("ClubFoot.AdductionAngle", array("inline" => "min=0 max=90")))->trLeftRight()->p(); ?>
+				<?php (new t("ClubFoot.HindFootAngleW", array("inline" => "min=0 max=90")))->trLeftRight()->p(); ?>
 				<?php //(new t("ClubFoot.ThighFootAngle"))->tr()->p(); ?>
-				<?php (new t("ClubFoot.DorsalFlexionMax"))->trLeftRight()->p(); ?>
-				<?php (new t("ClubFoot.PlantarFlexionMax"))->trLeftRight()->p(); ?>
+				<?php (new t("ClubFoot.DorsalFlexionMax", array("inline" => "min=0 max=90")))->trLeftRight()->p(); ?>
+				<?php (new t("ClubFoot.PlantarFlexionMax", array("inline" => "min=0 max=90")))->trLeftRight()->p(); ?>
 				<?php //(new t("ClubFoot.PronationMax"))->tr()->p(); ?>
 				<?php //(new t("ClubFoot.SupinationMax"))->tr()->p(); ?>
 				<?php //(new t("ClubFoot.EquinusReduc"))->tr()->p(); ?>
@@ -75,6 +82,8 @@
 				<?php (new t("ClubFoot.Treatment"))->tr()->p(); ?>
 				<?php (new t("ClubFoot.Comment"))->tr()->p(); ?>
 				<?php (new t("ClubFoot.Nextappointment"))->tr()->p(); ?>
+				<?php (new t("ClubFoot.NextCenter"))->tr()->p(); ?>
 			</table>
 		</FieldSet>
 	</div>
+</span>

@@ -80,6 +80,7 @@
 			<?php (new t("RicketConsult.Brace"))->tr()->p(); ?>
 			<?php (new t("RicketConsult.Commentary"))->tr()->p(); ?>
 			<?php (new t("RicketConsult.Nextappointment"))->tr()->p(); ?>
+			<?php (new t("RicketConsult.NextCenter"))->tr()->p(); ?>
 		</table>
 	</fieldset>
 </div>

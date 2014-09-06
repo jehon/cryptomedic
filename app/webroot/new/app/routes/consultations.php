@@ -5,7 +5,7 @@ function getSqlConsult($label, $table) {
 	global $request;
 	global $patients;
 
-	return "SELECT \"$label\" as c_type, c.id as c_id, c.Date as c_Date, c.Center as c_Center, c.patient_id as patient_id FROM $table as c "
+	return "SELECT \"$label\" as c_type, c.id as c_id, c.Date as c_Date, c.NextCenter as c_Center, c.patient_id as patient_id FROM $table as c "
 			. "WHERE (c.NextAppointment = " . $patients->escape($request->getParameter("day", false)) . ") ";
 
 }

@@ -31,6 +31,7 @@
 			<?php (new t("NonricketConsult.Othertreatment68"))->tr()->p(); ?>
 			<?php //(new t("NonricketConsult.Comment"))->tr()->p(); ?>
 			<?php (new t("NonricketConsult.Nextappointment"))->tr()->p(); ?>
+			<?php (new t("NonricketConsult.NextCenter"))->tr()->p(); ?>
 		</table>
 	</fieldset>		
 </div>
