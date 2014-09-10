@@ -66,7 +66,7 @@ class DATABASE_CONFIG {
 	);
 
     function __construct() {
-        require(__DIR__ . "/../../../maintenance.php" );
+        require(__DIR__ . "/../../appConfiguration.php" );
 
         $this->default['host'] = $config['database']['host'];
         $this->default['login'] = $config['database']['login'];
@@ -74,4 +74,3 @@ class DATABASE_CONFIG {
         $this->default['database'] = $config['database']['schema'];
     }
 };
-

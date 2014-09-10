@@ -31,7 +31,7 @@
  * In production mode, flash messages redirect after a time interval.
  * In development mode, you need to click the flash message to continue.
  */
-require (__DIR__ . "/../../../maintenance.php");
+require(__DIR__ . "/../../appConfiguration.php" );
 Configure::write ('debug', $config['debug']);
 
 /**
