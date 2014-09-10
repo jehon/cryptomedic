@@ -4,21 +4,26 @@ After migration:
 - Drop table orthopedic_devices
 - Drop table surgeries_followups
 
+Done:
+- on delete: message box to confirm action
+
+Bug:
+- les checkbox ne sont pas cochées
+
 Pending:
-- e2e testing
-- test validation on IE
-- test validation on Firefox
-- patient reporting (complete xls file for a patient)
-- export in xls
-- validation automatique (sur clic save)
 - limit patient delete if there are subfiles
+- e2e testing
+- test validation on IE (cfr e2e)
+- test validation on Firefox (cfr e2e)
+- export in xls
+- patient reporting (complete xls file for a patient)
 
 Later:
 - validation automatique (cron)
 - put files list on menu bar collapsed ? check in "gsm" mode (page index.php?)
 - manage timestamps on partials
+- when connecting to a page unauthenticated, should reload everything after login (hint: on fail, relaunch instead of throw error???)
 - move application images, css, partials... out of angular into app\
-- on delete: message box to confirm action
 - global reportings
 - change password
 - enforce rules server-side: patient_id not modified (created ok), lastuser, modified, created, id = non modifiable (black list?), ...
