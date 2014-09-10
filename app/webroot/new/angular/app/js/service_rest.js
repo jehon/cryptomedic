@@ -21,7 +21,7 @@ mainApp.factory('service_rest', [ '$http', '$log' , '$rootScope', function($http
 				$rootScope.$broadcast("rest_logged_out");
 			} else {
 				// 403: Forbidden
-				alert("rest error: " + status + "\n" + data.replace(/<(?:.|\n)*?>/gm, ''));
+				//alert("rest error: " + status + "\n" + data.replace(/<(?:.|\n)*?>/gm, ''));
 				$rootScope.$broadcast("rest_error");
 			}
 			def.reject(data);
@@ -121,7 +121,8 @@ mainApp.factory('service_rest', [ '$http', '$log' , '$rootScope', function($http
 		'deleteFile': function(data, folderId) {
 			cache.perish(folderId);
 			return treatHttp($http.delete(root + "/file/" + data['_type'] + "/" + data['id']), function(data) {
-				cache.set(data.getMainFile().id, data);
+				if (data instanceof application.models.Folder)
+					cache.set(data.getMainFile().id, data);
 				return data;				
 			});
 		},
