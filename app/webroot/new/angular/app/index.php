@@ -63,9 +63,9 @@
 			<form class="form-signing" role="form">
 	    		<h2 class="form-signin-heading">Please sign in</h2>
 	    		<label for="username">Username</label>
-	        	<input id="username" ng-model="username" class="form-control" placeholder="Username" required autofocus>
+	        	<input id="login.username" ng-model="username" class="form-control" placeholder="Username" required autofocus>
 	    		<label for="password">Password</label>
-	        	<input id="password" ng-model="password" class="form-control" placeholder="Password" required type="password">
+	        	<input id="login.password" ng-model="password" class="form-control" placeholder="Password" required type="password">
 				<br>
 				<div ng-if="loginError">
 				    <div class="alert alert-danger">
@@ -74,7 +74,7 @@
 					</div>
 				</div>
 				<br>
-	        	<button ng-disabled="{{pending}}" id="login" ng-click="doLogin()" class="btn btn-lg btn-primary btn-block">Log in</button>
+	        	<button ng-disabled="{{pending}}" id="login.go" ng-click="doLogin()" class="btn btn-lg btn-primary btn-block">Log in</button>
 	      	</form>
 	      	<br>
 	      </div>
@@ -120,7 +120,7 @@
 	    <!-- Collect the nav links, forms, and other content for toggling -->
 	    <div class="collapse navbar-collapse" id="menuMain">
 	      <ul class="nav navbar-nav navbar-right">
-        	<li><p class="navbar-text">{{server.settings.username}}</p></li>
+        	<li><p class="navbar-text" id='login.logged.username'>{{server.settings.username}}</p></li>
 	      	<li><a href="#/home" class="navbar-link">
 		    	<img src="img/home.gif" height="20px"/>
 				Home
