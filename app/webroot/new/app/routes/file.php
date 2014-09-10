@@ -44,8 +44,12 @@ if (count($request->getRoute()) > 1) {
 			// Delete the record
 			$typeDB->preparedStatement("DELETE FROM $type WHERE id = ?", array($id));
 
-			// Send back the folder
-			$response->ok(getFolder($nrec["patient_id"]));
+			if ($type == "patients") {
+				$response->ok();
+			} else {			
+				// Send back the folder
+				$response->ok(getFolder($nrec["patient_id"]));
+			}
 		}
 
 		// UPDATE
