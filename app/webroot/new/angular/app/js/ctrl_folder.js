@@ -145,11 +145,20 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_rest', '$rou
 	}
 
 	$scope.actionDelete = function() {
+		if (!confirm("Are you sure you want to delete this file?")) {
+			return;
+		}
+
 		var busyEnd = $scope.doBusy("Deleting the file on the server");
 		service_rest.deleteFile($scope.currentFile(), $scope.id())
 			.done(function(data) {
-				$scope.folder = data;
-				$scope.go("/folder/" + $scope.id() + "/patient");
+				if ($scope.page == 'Patient') {
+					console.log("going home");
+					$scope.go("/home");
+				} else {
+					$scope.folder = data;
+					$scope.go("/folder/" + $scope.id() + "/patient");					
+				}
 				$scope.safeApply();
 			}).always(function() {
 				busyEnd();
