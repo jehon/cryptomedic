@@ -222,12 +222,12 @@ Configure::write ('debug', $config['debug']);
 /**
  * A random string used in security hashing methods.
  */
-Configure::write ('Security.salt', $config['authenticate.salt'] );
+Configure::write ('Security.salt', getSecret('authenticateSalt'));
 
 /**
  * A random numeric string (digits only) used to encrypt/decrypt strings.
  */
-Configure::write ('Security.cipherSeed', $config['authenticate.cipher'] );
+Configure::write ('Security.cipherSeed', getSecret('authenticateCipher'));
 
 /**
  * Apply timestamps with the last modified time to static assets (js, css, images).
