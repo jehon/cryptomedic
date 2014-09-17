@@ -6,5 +6,6 @@ tmp
 .DS_Store
 .idea
 output/
+tmp/
 
 **/.htaccess

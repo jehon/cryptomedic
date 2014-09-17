@@ -44,11 +44,11 @@ module.exports = function(config) {
 		},
 		coverageReporter: {
 			type : 'html',
-			dir : 'output/coverage/'
+			dir : 'tmp/coverage/'
 		}
 //	    htmlReporter: {
-//	        outputDir: 'output',
-//	        templatePath: 'output/jasmine_template.html'
+//	        outputDir: 'tmp',
+//	        templatePath: 'tmp/jasmine_template.html'
 //	    }
 	});
 };
