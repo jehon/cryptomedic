@@ -6,10 +6,6 @@ mainApp.controller('ctrl_day', [ "$scope", "$routeParams", "service_rest", funct
 	else 
 		$scope.searched = false;
 
-	if (!$scope.day) {
-		$scope.day = new Date();
-	}
-
 	$scope.page = function() {
 		// TODO: paginate this
 		$scope.currentPage = $scope.listing;
@@ -32,4 +28,14 @@ mainApp.controller('ctrl_day', [ "$scope", "$routeParams", "service_rest", funct
 				busyEnd();
 			});
 	}
+
+	if ($routeParams.day) {
+		$scope.day = new Date($routeParams.day);
+		$scope.submit();
+	}
+
+	if (!$scope.day) {
+		$scope.day = new Date();
+	}
+
 }]);

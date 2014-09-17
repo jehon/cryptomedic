@@ -41,10 +41,10 @@
 			<tbody>
 				<tr ng-repeat="c in listing">
 					<td>{{c.c_type}}</td>
-					<td>{{c.c_Center}}</td>
-					<td>{{c.p_entryyear}}-{{c.p_entryorder}}</td>
-					<td>{{c.p_firstname}} {{c.p_lastname}}</td>
-					<td>{{c.p_phone}}</td>
+					<td>{{link(c.c_Center)}}</td>
+					<td>{{c.entryyear}}-{{c.entryorder}}</td>
+					<td>{{c.Firstname}} {{c.Lastname}}</td>
+					<td>{{c.Telephone}}</td>
 					<td>{{c.c_Date | date }}</td>
 				</tr>
 			</tbody>

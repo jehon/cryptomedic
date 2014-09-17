@@ -3,10 +3,11 @@ if (!defined("REST_LOADED")) die("Ca va pas la tête?");
 
 function getSqlConsult($label, $table) {
 	global $request;
+	global $server;
 	// global $patients;
 
 	return "SELECT \"$label\" as c_type, c.id as c_id, c.Date as c_Date, c.NextCenter as c_Center, c.patient_id as patient_id FROM $table as c "
-			. "WHERE (c.NextAppointment = " . $server->database->escape($request->getParameter("day", false)) . ") ";
+			. "WHERE (c.NextAppointment = " . $server->getDatabase()->escape($request->getParameter("day", false)) . ") ";
 
 }
 
