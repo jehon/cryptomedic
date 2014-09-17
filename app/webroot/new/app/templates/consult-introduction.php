@@ -1,5 +1,4 @@
 <?php 
-	require_once(__DIR__ . "/../../../../../../../rest/php/templates.php");
 	t::setDefaultOption("baseExpression", "currentFile().");
 	//t::setDefaultOption("readOnly");
 ?>
@@ -52,4 +51,4 @@
 	</table>
 </fieldset>
 
-<!-- TODO: examiner name = list -->
+<!-- TODOJH: examiner name = list -->

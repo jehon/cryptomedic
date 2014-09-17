@@ -1,9 +1,9 @@
 <?php 
-	require_once(__DIR__ . "/../../../../../../../rest/php/templates.php");
 	t::setDefaultOption("baseExpression", "currentFile().");
+	// Example: 10001
 ?>
 <div class="col-lg-6">
-	<div ng-include="'partials/consult-introduction.php'"></div>
+	<div ng-include="'/rest/templates/consult-introduction.php'"></div>
 	<br>
 <!--
  	<fieldset>
@@ -64,7 +64,7 @@
 	</fieldset>
 </div>
 <div class="col-lg-6">
-	<div ng-include="'partials/patient-related.php'"></div>
+	<div ng-include="'/rest/templates/patient-related.html'"></div>
 	<fieldset>
 		<legend>Conclusion</legend>
 		<table>

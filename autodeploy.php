@@ -5,6 +5,6 @@ $deploy = array(
     'owner' => 'jehon',
     'repository' => 'cryptomedic',
     'DatabaseHistoryPath' => __DIR__ . "/database_scripts",
-    'DatabaseDevPath' => __DIR__ . "/dev.sql",
+    'DatabaseDevSQL' => __DIR__ . "/dev.sql",
     'restoreDB' =>  "C:\Users\jehon\Downloads\amd_chakaria.sql"
 );

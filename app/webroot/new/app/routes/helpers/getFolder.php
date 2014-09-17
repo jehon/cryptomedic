@@ -19,7 +19,8 @@ function type2db($type) {
 
 function getFolder($id) {
 	global $server;
-	$patients = new DBTable($server->getConfig("database"), "patients", $server);
+	$patients = $server->getDatabase()->getTable("patients");
+	//new DBTable($server->getConfig("database"), "patients", $server);
 
 	$res = array();
 	$p = $patients->rowGet($id);
@@ -35,7 +36,7 @@ function getFolder($id) {
 	$res['mainFile'] = $p;
 	$res['subFiles'] = array();
 
-	$rawTable = new DBTable($server->getConfig("database"), null, $server);
+	//$rawTable = new DBTable($server->getConfig("database"), null, $server);
 	global $model2controller;
 	foreach($model2controller as $m => $c) {
 		// we work by controller = the same as in database?
@@ -44,7 +45,7 @@ function getFolder($id) {
 		if ($c == "orthopedic_devices") continue;
 		if ($c == "surgery_followups") continue;
 
-		$r = $rawTable->preparedStatement("SELECT * FROM $c WHERE patient_id = ?", $id);
+		$r = $server->getDatabase()->preparedStatement("SELECT * FROM $c WHERE patient_id = ?", $id);
 		foreach($r as $ri => $rv) {
 			$rv['_type'] = db2model($c);
 			$res['subFiles'][] = $rv;

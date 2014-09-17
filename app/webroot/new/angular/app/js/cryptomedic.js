@@ -2,17 +2,17 @@
 
 mainApp.config([ '$routeProvider', function($routeProvider) {
     $routeProvider.when('/home', {
-        templateUrl: 'partials/home.php',
+        templateUrl: '/rest/templates/home.php',
         controller: 'ctrl_home'
     }).when('/search', {
-        templateUrl: 'partials/search.php',
+        templateUrl: '/rest/templates/search.php',
         controller: 'ctrl_search',
     }).when('/folder/:id/:page?/:mode?', {
+        templateUrl: '/rest/templates/folder.php',
         controller: 'ctrl_folder',
-        templateUrl: 'partials/folder.php',
     }).when('/day', {
+        templateUrl: '/rest/templates/day.php',
         controller: 'ctrl_day',
-        templateUrl: 'partials/day.php',
     }).otherwise({ 'redirectTo': '/home'});
 }]);
 

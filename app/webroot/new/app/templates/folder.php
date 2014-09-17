@@ -1,5 +1,4 @@
 <?php 
-	require_once(__DIR__ . "/../../../../../../../rest/php/templates.php");
 	t::setDefaultOption("baseExpression", "getCurrentFile().");
 ?>
 <span class="modeRead">
@@ -55,7 +54,7 @@
 		<form id="fileForm">
 			<button id="fileFormSubmit" type='submit' style="display: none">For html5 validation through javascript</button>
 			<span ng-controller="ctrl_file">
-				<span ng-include="'partials/' + name() + '.php'">
+				<span ng-include="'/rest/templates/' + name() + '.html'">
 					debug: Content {{page}}
 				</span>
 			</span>

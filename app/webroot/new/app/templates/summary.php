@@ -1,5 +1,4 @@
 <?php 
-	require_once(__DIR__ . "/../../../../../../../rest/php/templates.php");
 	t::setDefaultOption("baseExpression", "currentFile().");
 ?>
 <table class='summary table table-striped'>
@@ -17,7 +16,7 @@
 			</a>
 		</td>
 		<td></td>
-		<td ng-include="'partials/patient-summary.php'"></td>
+		<td ng-include="'/rest/templates/patient-summary.html'"></td>
 	</tr>
 	<tr ng-repeat="f in folder.getSubFiles()" ng-controller="ctrl_file">
 		<td>#{{$index + 1}}</td>
@@ -27,6 +26,6 @@
 			</a>
 		</td>
 		<td>{{f.Date | date:'longDate' }}</td>
-		<td><span ng-include="'partials/'+f._type.toLowerCase()+'-summary.php'"></span></td>
+		<td><span ng-include="'/rest/templates/'+f._type.toLowerCase()+'-summary.html'"></span></td>
 	</tr>
 </span>

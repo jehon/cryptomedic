@@ -1,5 +1,4 @@
 <? 
-	require_once(__DIR__ . "/../../../../../../../rest/php/templates.php");
 ?>
 <div class='col-sm-offset-3 col-sm-6'>
 	<h1 class='text-center'><img src='img/home.gif'>Home</h1>

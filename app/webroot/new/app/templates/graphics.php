@@ -1,5 +1,4 @@
 <?php 
-    require_once(__DIR__ . "/../../../../../../../rest/php/templates.php");
     t::setDefaultOption("baseExpression", "currentFile().");
     t::setDefaultOption("readOnly");
 ?>
@@ -7,18 +6,18 @@
 <div align='center' ng-controller="ctrl_allGraphics">
     <div class="col-lg-6">
         <span ng-controller="ctrl_graphic" ng-init="axis('ageAtConsultTime', 'Weightkg')">
-            <span ng-include="'partials/graphic_one.php'"></span>
+            <span ng-include="'/rest/templates/graphic_one.html'"></span>
         </span>
         <span ng-controller="ctrl_graphic" ng-init="axis('ageAtConsultTime', 'Heightcm')">
-            <span ng-include="'partials/graphic_one.php'"></span>
+            <span ng-include="'/rest/templates/graphic_one.html'"></span>
         </span>
     </div>
     <div class="col-lg-6">
         <span ng-controller="ctrl_graphic" ng-init="axis('Heightcm', 'Weightkg')">
-            <span ng-include="'partials/graphic_one.php'"></span>
+            <span ng-include="'/rest/templates/graphic_one.html'"></span>
         </span>
         <span ng-controller="ctrl_graphic" ng-init="axis('ageAtConsultTime', 'bmi')">
-            <span ng-include="'partials/graphic_one.php'"></span>
+            <span ng-include="'/rest/templates/graphic_one.html'"></span>
         </span>
     </div>
 </div>

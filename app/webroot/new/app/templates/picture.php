@@ -1,5 +1,4 @@
 <?php 
-	require_once(__DIR__ . "/../../../../../../../rest/php/templates.php");
 	t::setDefaultOption("baseExpression", "currentFile().");
 ?>
 <span ng-controller="ctrl_picture">
@@ -16,7 +15,7 @@
 			</FieldSet>
 		</div>
 		<div class="col-lg-6">
-			<div ng-include="'partials/patient-related.php'"></div>
+			<div ng-include="'/rest/templates/patient-related.html'"></div>
 		</div>
 	</div>
 	<div style='text-align: center' class="row">

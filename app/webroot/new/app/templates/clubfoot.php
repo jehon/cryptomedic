@@ -1,12 +1,11 @@
 <?php 
 	// Example: 90658
 
-	require_once(__DIR__ . "/../../../../../../../rest/php/templates.php");
 	t::setDefaultOption("baseExpression", "currentFile().");
 ?>
 <span ng-controller='ctrl_file_clubfoots'>
 	<div class="col-lg-6">
-		<div ng-include="'partials/consult-introduction.php'"></div>
+		<div ng-include="'/rest/templates/consult-introduction.php'"></div>
 		<FieldSet>
 			<legend>Club Foot Pirani Score</legend>
 			<table>
@@ -75,7 +74,7 @@
 		</FieldSet>
 	</div>
 	<div class="col-lg-6">
-		<div ng-include="'partials/patient-related.php'"></div>
+		<div ng-include="'/rest/templates/patient-related.html'"></div>
 		<FieldSet>
 			<legend>Conclusion</legend>
 			<table>

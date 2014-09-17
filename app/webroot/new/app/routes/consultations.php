@@ -3,15 +3,15 @@ if (!defined("REST_LOADED")) die("Ca va pas la tête?");
 
 function getSqlConsult($label, $table) {
 	global $request;
-	global $patients;
+	// global $patients;
 
 	return "SELECT \"$label\" as c_type, c.id as c_id, c.Date as c_Date, c.NextCenter as c_Center, c.patient_id as patient_id FROM $table as c "
-			. "WHERE (c.NextAppointment = " . $patients->escape($request->getParameter("day", false)) . ") ";
+			. "WHERE (c.NextAppointment = " . $server->database->escape($request->getParameter("day", false)) . ") ";
 
 }
 
 if ((count($request->getRoute()) == 1) && ($request->getMethod() == Request::READ)) {
-	$patients = new DBTable($server->getConfig("database"), "patients", $server);
+	// $patients = new DBTable($server->getConfig("database"), "patients", $server);
 
 	// Search through them
 	$sql = "SELECT cc.*, patients.*
@@ -26,12 +26,12 @@ if ((count($request->getRoute()) == 1) && ($request->getMethod() == Request::REA
 		. " JOIN patients ON (cc.patient_id = patients.id) ";
 
 	if ($request->getParameter("center", false)) 
-		$sql .= " AND (c_center = " . $patients->escape($request->getParameter("center", false)) . ") ";
+		$sql .= " AND (c_center = " . $server->database->escape($request->getParameter("center", false)) . ") ";
 
 	$sql .= " LIMIT 100";
 
 	debugHeader($sql, "SQL-SEARCH");
 
-	$listing = $patients->execute($sql);
+	$listing = $server->database->execute($sql);
 	$response->ok($listing);
 }

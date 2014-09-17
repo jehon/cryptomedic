@@ -1,5 +1,5 @@
 <? 
-	require_once(__DIR__ . "/../../../../../../../rest/php/templates.php");
+	
 ?>
 <div class="row">
 	<div class='col-sm-offset-3 col-sm-6'>

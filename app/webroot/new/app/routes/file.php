@@ -7,7 +7,9 @@ require(__DIR__ . "/helpers/getFolder.php");
 if (count($request->getRoute()) > 1) {
 	$type = $request->getRoute(2);
 	$type = type2db($type);
-	$typeDB = new DBTable($server->getConfig("database"), $type, $server);
+	// $typeDB = new DBTable($server->getConfig("database"), $type, $server);
+	$typeDB = $server->getDatabase()->getTable($type);
+
 
 	if (count($request->getRoute()) == 3) {
 		$id = $request->getRoute(3);
@@ -15,7 +17,7 @@ if (count($request->getRoute()) > 1) {
 		// UNLOCK
 		if ($request->getMethod() == "UNLINK") {
 			// Unlock the file
-			$typeDB->preparedStatement("UPDATE $type SET modified = NOW(), lastuser = ? WHERE id = ?", array($server->getSession(Server::LOGIN_USERNAME), $id));
+			$server->getDatabase()->preparedStatement("UPDATE $type SET modified = NOW(), lastuser = ? WHERE id = ?", array($server->getSession(Server::LOGIN_USERNAME), $id));
 
 			// Get the folder id:
 			$nrec = $typeDB->rowGet($id);
@@ -42,7 +44,7 @@ if (count($request->getRoute()) > 1) {
 			}
 
 			// Delete the record
-			$typeDB->preparedStatement("DELETE FROM $type WHERE id = ?", array($id));
+			$server->getDatabase()->preparedStatement("DELETE FROM $type WHERE id = ?", array($id));
 
 			if ($type == "patients") {
 				$response->ok();

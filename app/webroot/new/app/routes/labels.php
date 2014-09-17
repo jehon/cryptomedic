@@ -1,8 +1,9 @@
 <?php
 
-$labels = new DBTable($server->getConfig("database"), "labels", $server, 
-	array("BYKEY" => "reference")
-);
+$labels = $server->getDatabase()->getTable("labels", array("BYKEY" => "reference"));
+// new DBTable($server->getConfig("database"), "labels", $server, 
+// 	array("BYKEY" => "reference")
+// );
 
 $list = $labels->rowAll();
 $nlist = array();

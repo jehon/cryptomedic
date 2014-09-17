@@ -1,5 +1,4 @@
 <?php 
-	require_once(__DIR__ . "/../../../../../../../rest/php/templates.php");
 	t::setDefaultOption("baseExpression", "folder.getMainFile().");
 ?>
 <span ng-controller="ctrl_patient">

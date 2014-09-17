@@ -6,11 +6,12 @@ require(__DIR__ . "/helpers/getFolder.php");
 
 // require(__DIR__ . "/../../../../Model/amd_listings.php");
 
-$patients = new DBTable($server->getConfig("database"), "patients", $server);
+//$patients = new DBTable($server->getConfig("database"), "patients", $server);
+
 
 function checkReference($entryyear, $entryorder) {
-	global $patients;
-	return $patients->preparedStatement("SELECT patients.id FROM patients WHERE patients.entryyear = ? and patients.entryorder = ? ORDER BY entryyear DESC LIMIT 100", 
+	global $server;
+	return $server->getDatabase()->preparedStatement("SELECT patients.id FROM patients WHERE patients.entryyear = ? and patients.entryorder = ? ORDER BY entryyear DESC LIMIT 100", 
 		array($entryyear, $entryorder));
 
 }
@@ -29,20 +30,20 @@ if (count($request->getRoute()) == 1) {
 
 	if ($request->getMethod() == Request::CREATE) {
 		// Create a reference
-		$patients->db->BeginTrans();
+		$server->getDatabase()->db->BeginTrans();
 
 		// Check the patient
 		$res = checkReference($entryyear, $entryorder);
 		if (count($res) != 0) {
-			$patients->db->RollbackTrans();
+			$server->getDatabase()->db->RollbackTrans();
 			throw new HttpAlreadyDone("Reference exists");
 		}
 
-		$id = $patients->rowCreate(array(
+		$id = $server->getDatabase()->getTable("patients")->rowCreate(array(
 			'entryyear' => $entryyear, 
 			'entryorder' => $entryorder,
 			'lastuser' => $server->getSession(Server::LOGIN_USERNAME)));
-		$patients->db->CommitTrans();
+		$server->getDatabase()->db->CommitTrans();
 
 		$response->ok(getFolder($id));
 	}

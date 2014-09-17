@@ -8,30 +8,30 @@ if (count($request->getRoute()) == 2) {
 	// Get only one
 	$response->ok(getFolder($request->getRoute(2)));
 } else {
-	$patients = new DBTable($server->getConfig("database"), "patients", $server);
+	// $patients = new DBTable($server->getConfig("database"), "patients", $server);
 
 	// Search through them
 	$sql = "SELECT patients.* FROM patients WHERE (1=1) ";
 
 	if ($request->getParameter("entryyear", false)) 
-		$sql .= " AND (patients.entryyear = " . $patients->escape($request->getParameter("entryyear", false)) . ") ";
+		$sql .= " AND (patients.entryyear = " . $server->getDatabase()->escape($request->getParameter("entryyear", false)) . ") ";
 
 	if ($request->getParameter("entryorder", false)) 
-		$sql .= " AND (patients.entryorder = " . $patients->escape($request->getParameter("entryorder", false)) . ") ";
+		$sql .= " AND (patients.entryorder = " . $server->getDatabase()->escape($request->getParameter("entryorder", false)) . ") ";
 
 	if ($request->getParameter("Lastname", false))  {
-		$sql .= " AND ((patients.Firstname LIKE " . $patients->escape('%' . str_replace("j", "z", $request->getParameter("Lastname", false)) . '%') . ") ";
-		$sql .= " OR (patients.Lastname LIKE " . $patients->escape('%' . str_replace("j", "z", $request->getParameter("Lastname", false)) . '%') . ")) ";
+		$sql .= " AND ((patients.Firstname LIKE " . $server->getDatabase()->escape('%' . str_replace("j", "z", $request->getParameter("Lastname", false)) . '%') . ") ";
+		$sql .= " OR (patients.Lastname LIKE " . $server->getDatabase()->escape('%' . str_replace("j", "z", $request->getParameter("Lastname", false)) . '%') . ")) ";
 	}
 
 	if ($request->getParameter("Sex", false)) 
-		$sql .= " AND (patients.Sex = " . $patients->escape($request->getParameter("Sex", false)) . ") ";
+		$sql .= " AND (patients.Sex = " . $server->getDatabase()->escape($request->getParameter("Sex", false)) . ") ";
 
 	if ($request->getParameter("Yearofbirth", false)) 
-		$sql .= " AND (patients.Yearofbirth = " . $patients->escape($request->getParameter("Yearofbirth", false)) . ") ";
+		$sql .= " AND (patients.Yearofbirth = " . $server->getDatabase()->escape($request->getParameter("Yearofbirth", false)) . ") ";
 
 	if ($request->getParameter("Telephone", false)) 
-		$sql .= " AND (patients.Telephone LIKE " . $patients->escape('%' . $request->getParameter("Telephone", false) . '%') . ") ";
+		$sql .= " AND (patients.Telephone LIKE " . $server->getDatabase()->escape('%' . $request->getParameter("Telephone", false) . '%') . ") ";
 
 	if ($request->getParameter("pathology_Ricket", false)) 
 		$sql .= " AND (patients.pathology_Ricket = 1) ";
@@ -58,7 +58,7 @@ if (count($request->getRoute()) == 2) {
 	
 	debugHeader($sql, "SQL-SEARCH");
 
-	$listing = $patients->execute($sql);
+	$listing = $server->getDatabase()->execute($sql);
 	foreach($listing as $k => $v) {
 		$listing[$k]['_type'] = 'Patient';
 	}
