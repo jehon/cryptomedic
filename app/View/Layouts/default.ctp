@@ -40,29 +40,29 @@ if (($_SERVER ['HTTP_HOST'] == 'localhost') || ! file_exists ( __DIR__ . "/../..
 	<link href="<? echo $this->request->webroot; ?>/favicon.ico" type="image/x-icon" rel="icon" />
 	<link href="<? echo $this->request->webroot; ?>/favicon.ico" type="image/x-icon" rel="shortcut icon" />
 
-	<link rel="stylesheet" type="text/css" href="<? echo $this->request->webroot; ?>/libs/jquery/jquery-ui.css?<? echo $version_app; ?>" />
+	<link rel="stylesheet" type="text/css" href="<? echo $this->request->webroot; ?>/lib/jquery/jquery-ui.css?<? echo $version_app; ?>" />
     <link rel="stylesheet" type="text/css" href="<? echo $this->request->webroot; ?>/css/jehon.css?<? echo $version_app; ?>" />
     <link rel="stylesheet" type="text/css" href="<? echo $this->request->webroot; ?>/css/application.css?<? echo $version_app; ?>" />
     
-    <script type="text/javascript" src="<? echo $this->request->webroot; ?>/libs/modernizr.js?<? echo $version_app; ?>"></script>
-    <script type="text/javascript" src="<? echo $this->request->webroot; ?>/libs/underscore.js?<? echo $version_app; ?>"></script>
-    <script type="text/javascript" src="<? echo $this->request->webroot; ?>/libs/jquery/jquery.js?<? echo $version_app; ?>"></script>
-    <script type="text/javascript" src="<? echo $this->request->webroot; ?>/libs/jquery/jquery-migrate.js?<? echo $version_app; ?>"></script>
-    <script type="text/javascript" src="<? echo $this->request->webroot; ?>/libs/jquery/jquery.metadata.js?<? echo $version_app; ?>"></script>
-    <script type="text/javascript" src="<? echo $this->request->webroot; ?>/libs/jquery/jquery.ui.js?<? echo $version_app; ?>"></script>
-    <script type="text/javascript" src="<? echo $this->request->webroot; ?>/libs/jquery/jquery.tablesorter.js?<? echo $version_app; ?>"></script>
-    <script type="text/javascript" src="<? echo $this->request->webroot; ?>/libs/jquery/jquery.tablesorter.pager.js?<? echo $version_app; ?>"></script>
-    <script type="text/javascript" src="<? echo $this->request->webroot; ?>/libs/jquery/jquery.tinysort.js?<? echo $version_app; ?>"></script>
-    <script type="text/javascript" src="<? echo $this->request->webroot; ?>/libs/dust/dust.js?<? echo $version_app; ?>"></script>
-    <script type="text/javascript" src="<? echo $this->request->webroot; ?>/libs/dust/dust.helpers.js?<? echo $version_app; ?>"></script>
-    <script type="text/javascript" src="<? echo $this->request->webroot; ?>/libs/path.js?<? echo $version_app; ?>"></script>
+    <script type="text/javascript" src="<? echo $this->request->webroot; ?>/lib/modernizr.js?<? echo $version_app; ?>"></script>
+    <script type="text/javascript" src="<? echo $this->request->webroot; ?>/lib/underscore.js?<? echo $version_app; ?>"></script>
+    <script type="text/javascript" src="<? echo $this->request->webroot; ?>/lib/jquery/jquery.js?<? echo $version_app; ?>"></script>
+    <script type="text/javascript" src="<? echo $this->request->webroot; ?>/lib/jquery/jquery-migrate.js?<? echo $version_app; ?>"></script>
+    <script type="text/javascript" src="<? echo $this->request->webroot; ?>/lib/jquery/jquery.metadata.js?<? echo $version_app; ?>"></script>
+    <script type="text/javascript" src="<? echo $this->request->webroot; ?>/lib/jquery/jquery.ui.js?<? echo $version_app; ?>"></script>
+    <script type="text/javascript" src="<? echo $this->request->webroot; ?>/lib/jquery/jquery.tablesorter.js?<? echo $version_app; ?>"></script>
+    <script type="text/javascript" src="<? echo $this->request->webroot; ?>/lib/jquery/jquery.tablesorter.pager.js?<? echo $version_app; ?>"></script>
+    <script type="text/javascript" src="<? echo $this->request->webroot; ?>/lib/jquery/jquery.tinysort.js?<? echo $version_app; ?>"></script>
+    <script type="text/javascript" src="<? echo $this->request->webroot; ?>/lib/dust/dust.js?<? echo $version_app; ?>"></script>
+    <script type="text/javascript" src="<? echo $this->request->webroot; ?>/lib/dust/dust.helpers.js?<? echo $version_app; ?>"></script>
+    <script type="text/javascript" src="<? echo $this->request->webroot; ?>/lib/path.js?<? echo $version_app; ?>"></script>
 <!-- 
-    <script type="text/javascript" src="<? echo $this->request->webroot; ?>/libs/bootstrap/bootstrap.js?<? echo $version_app; ?>"></script>
-	<link rel="stylesheet" type="text/css" href="<? echo $this->request->webroot; ?>/libs/bootstrap/css/bootstrap.min.css?<? echo $version_app; ?>" />
+    <script type="text/javascript" src="<? echo $this->request->webroot; ?>/lib/bootstrap/bootstrap.js?<? echo $version_app; ?>"></script>
+	<link rel="stylesheet" type="text/css" href="<? echo $this->request->webroot; ?>/lib/bootstrap/css/bootstrap.min.css?<? echo $version_app; ?>" />
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -- >
     <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+      <script src="https://oss.maxcdn.com/lib/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/lib/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-- >
 -->    
     <script type="text/javascript" src="<? echo $this->request->webroot; ?>/js/jehon.js?<? echo $version_app; ?>"></script>
