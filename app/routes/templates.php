@@ -1,7 +1,7 @@
 <?php
 
 // Used for listings?
-require_once(DIRECTORY_SEPARATOR . "../../../../Lib/cryptomedic.php");
+require_once(DIRECTORY_SEPARATOR . "../Lib/cryptomedic.php");
 
 $dateFormat = "shortDate";
 $dateTimeFormat = "short";

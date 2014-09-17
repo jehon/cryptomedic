@@ -1,5 +1,5 @@
 <?php
-require(__DIR__ . "/../../../../../Model/amd_listings.php");
+require(__DIR__ . "/../../Lib/amd_listings.php");
 
 function db2model($dbName) {
 	global $model2controller;
