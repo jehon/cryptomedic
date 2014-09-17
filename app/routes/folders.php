@@ -58,7 +58,7 @@ if (count($request->getRoute()) == 2) {
 	
 	debugHeader($sql, "SQL-SEARCH");
 
-	$listing = $server->getDatabase()->execute($sql);
+	$listing = $server->getDatabase()->query($sql);
 	foreach($listing as $k => $v) {
 		$listing[$k]['_type'] = 'Patient';
 	}
