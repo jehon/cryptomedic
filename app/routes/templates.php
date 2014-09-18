@@ -236,7 +236,7 @@ class t {
 				$count = count($this->listing);
 				// if (array_key_exists('MYSQLI_NOT_NULL_FLAG', $this->myFlags)) $count++;
 				if (!$required) $count++;
-  				if ($count < 6) {
+  				if ($count <= 6) {
   					$i = 0;
   					$this->res .= "<table style='width: 100%'><tr><td>";
   					foreach($this->listing as $k => $v) {
@@ -245,7 +245,7 @@ class t {
   							. "$v"
   							. "<br>"
   							;
-  						if ($i == floor($count / 2)) {
+  						if ($i == floor($count / 2) - 1) {
   							$this->res .= "</td><td>";
   						}
   						$i++;

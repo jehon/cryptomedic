@@ -386,9 +386,10 @@ mainApp.controller('ctrl', [ '$scope', '$location', 'service_rest', function($sc
 				$scope.loginError = false;
 				$scope.logged = true;
 
-				if (typeof(server) == "undefined" || !server.settings || !server.settings.username) {
+				console.log("Reloading the page");
+				// if (typeof(server) == "undefined" || !server.settings || !server.settings.username) {
 					window.location.reload();
-				}
+				// }
 				$scope.safeApply();
 			})
 			.fail(function(data) {
