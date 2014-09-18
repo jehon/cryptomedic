@@ -43,4 +43,5 @@ $config['authenticate.updatePasswordRequest'] = 'UPDATE users SET password = SHA
 $config['authenticate.disablePasswordRequest'] = 'UPDATE users SET password = "[disabled password]" WHERE id = ?';
 
 /* Include dev specific items */
-include(dirname(__DIR__) . DIRECTORY_SEPARATOR . "dev.php");
+if (file_exists(dirname(__DIR__) . DIRECTORY_SEPARATOR . "dev.php"))
+	include(dirname(__DIR__) . DIRECTORY_SEPARATOR . "dev.php");
