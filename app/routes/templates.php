@@ -245,7 +245,8 @@ class t {
   							. "$v"
   							. "<br>"
   							;
-  						if ($i == floor($count / 2) - 1) {
+  						// ((i+1)/n) >= 0.5) && ( (i/n) < 0.5)) 
+  						if ($i == ceil($count/ 2) - 1) {
   							$this->res .= "</td><td>";
   						}
   						$i++;
