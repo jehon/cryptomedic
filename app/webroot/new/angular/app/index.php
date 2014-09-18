@@ -133,7 +133,7 @@
 	      		<img src="img/consultOfDay.gif" height="20px"/>
 	      		Consults of the day
 	      	</a></li>
-	      	<li><a href="/amd/pages/reports" class="navbar-link">
+	      	<li><a href="#/reports" class="navbar-link">
 	      		<img src="img/reports.gif" height="20px"/>
 	      		Reports
 	      	</a></li>
