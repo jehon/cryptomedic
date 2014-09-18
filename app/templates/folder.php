@@ -15,7 +15,7 @@
 				{{f._type}} <span ng-if="f.Date">[{{f.Date | date:'<?php echo $dateFormat; ?>'}}]</span> 
 			</a>
 		</span>
-		<a ng-class="{ 'btn-warning': page === 'reporting'}" ng-href="#/folder/{{id()}}/reporting" class="btn btn-default" style="width: 100%">Reporting</a>
+		<a ng-class="{ 'btn-warning': page === 'patient-reporting'}" ng-href="#/folder/{{id()}}/patient-reporting" class="btn btn-default" style="width: 100%">Reporting</a>
 	</div>
 	<div class="col-sm-10">
 		<div class="submenu .container-fluid">
