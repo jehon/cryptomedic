@@ -38,7 +38,7 @@ $config['pictures']['web'] = '/uploadedPictures';
 //@include(dirname(__DIR__) . DIRECTORY_SEPARATOR . "maintenance" . DIRECTORY_SEPARATOR . "autodeploy.php");
 
 $config['authenticate.loginRequest'] = 'SELECT users.username as login, users.group as `group` FROM users '
-    . ' WHERE LOWER(username) = LOWER(?) and password = SHA1(concat("' .  getSecret('authenticateSalt') . '", ?))';
+    . ' WHERE username = ? and password = SHA1(concat("' .  getSecret('authenticateSalt') . '", ?))';
 $config['authenticate.updatePasswordRequest'] = 'UPDATE users SET password = SHA1(concat("'.getSecret('authenticateSalt') .'", ?)) WHERE id = ?';
 $config['authenticate.disablePasswordRequest'] = 'UPDATE users SET password = "[disabled password]" WHERE id = ?';
 

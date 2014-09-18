@@ -376,6 +376,12 @@ mainApp.controller('ctrl', [ '$scope', '$location', 'service_rest', function($sc
 	}
 
 	$scope.doLogin = function() {
+		// console.log(jQuery("#login_username").val() + " vs " + $scope.username);
+		// console.log(jQuery("#login_password").val() + " vs " + $scope.password);
+		// console.log($scope.username + "/" + $scope.password);
+		$scope.username = jQuery("#login_username").val();
+		$scope.password = jQuery("#login_password").val();
+		// console.log($scope.username + "/" + $scope.password);
 		$scope.loginError = false;
 		var busyEnd = $scope.doBusy("Checking your login/password with the online server", true);
 		service_rest.doLogin(this.username, this.password)
@@ -386,8 +392,8 @@ mainApp.controller('ctrl', [ '$scope', '$location', 'service_rest', function($sc
 				$scope.loginError = false;
 				$scope.logged = true;
 
-				console.log("Reloading the page");
 				// if (typeof(server) == "undefined" || !server.settings || !server.settings.username) {
+					console.log("Reloading the page");
 					window.location.reload();
 				// }
 				$scope.safeApply();
