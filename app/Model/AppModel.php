@@ -12,7 +12,7 @@
 
 App::uses('Model', 'Model');
 
-require_once(__DIR__ . "/../Lib/amd_listings.php");
+require_once(__DIR__ . "/../../configs/amd_listings.php");
 
 class AppModel extends Model {
 	/**

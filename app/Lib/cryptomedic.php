@@ -1,5 +1,5 @@
 <?php
-require_once("amd_listings.php");
+require_once(__DIR__ . "/../../configs/amd_listings.php");
 
 // TODO: dereference getLabel ?
 function cryptomedicValue2Label($model, $key, $value) {

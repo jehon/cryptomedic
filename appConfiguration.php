@@ -10,7 +10,7 @@ if (!array_key_exists('settings', $config)) $config['settings'] = array();
 if (!array_key_exists('disabled', $config)) $config['disabled'] = array();
 
 //$config['appRoot'] = __DIR__ . '/app/webroot/new/app/';
-$config['appRoot'] = __DIR__ . '/app/';
+$config['appRoot'] = __DIR__ . '/configs/';
 $config['debug'] = false;
 $config['domain'] = 'cryptomedic';
 

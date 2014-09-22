@@ -1,6 +1,6 @@
 <?php
 
-require_once(DIRECTORY_SEPARATOR . "../Lib/amd_listings.php");
+require_once(__DIR__ . "/../amd_listings.php");
 
 $dateFormat = "shortDate";
 $dateTimeFormat = "short";
