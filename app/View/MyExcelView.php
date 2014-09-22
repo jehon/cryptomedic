@@ -1,7 +1,7 @@
 <?php
 
 require_once("MyCsvView.php");
-require_once dirname(__FILE__) . '/../Lib/PHPExcel/PHPExcel.php';
+require_once dirname(__FILE__) . '/../../Lib/PHPExcel/PHPExcel.php';
 
 class MyExcelView extends MyCsvView {
 	var $contentType = "application/xls";
