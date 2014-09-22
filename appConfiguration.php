@@ -45,3 +45,6 @@ $config['authenticate.disablePasswordRequest'] = 'UPDATE users SET password = "[
 /* Include dev specific items */
 if (file_exists(dirname(__DIR__) . DIRECTORY_SEPARATOR . "dev.php"))
 	include(dirname(__DIR__) . DIRECTORY_SEPARATOR . "dev.php");
+
+// TODOJH: undebug the production
+$config['debug'] = 1;

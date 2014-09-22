@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <?php 
 	require "../../../../../../rest/php/script.php";
-	// require("../../../Lib/cryptomedic.php");
 ?>
 <head>
 	<meta charset="utf-8">

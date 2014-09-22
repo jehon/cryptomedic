@@ -1,7 +1,6 @@
 <?php
 
-// Used for listings?
-require_once(DIRECTORY_SEPARATOR . "../Lib/cryptomedic.php");
+require_once(DIRECTORY_SEPARATOR . "../Lib/amd_listings.php");
 
 $dateFormat = "shortDate";
 $dateTimeFormat = "short";
@@ -245,7 +244,6 @@ class t {
   							. "$v"
   							. "<br>"
   							;
-  						// ((i+1)/n) >= 0.5) && ( (i/n) < 0.5)) 
   						if ($i == ceil($count/ 2) - 1) {
   							$this->res .= "</td><td>";
   						}
