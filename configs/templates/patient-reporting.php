@@ -4,16 +4,13 @@
 ?>
 <h1>Reporting for the patient</h1>
 <div ng-controller="ctrl_patient">
-    Get a complete report: TODO
-
-
-Reporting is not yet implemented. Please go back to the old application and generate your reporting there:<br>
 <br>
 <a href='/amd/patients/view/{{id()}}' target='_new'>Go to the old application</a>
 
-<!--
-        <a target="_new" href="/amd/patients/view/{{id()}}.csv" >csv</a>&nbsp
-        <a target="_new" href="/amd/patients/view/{{id()}}.csv?fr=1" >french-csv</a>&nbsp
-        <a target="_new" href="/amd/patients/view/{{id()}}.xls" >xls</a>&nbsp
--->
+	Get the whole patient file as a<br>
+    <ul>
+    	<li><a target="_new" href="/rest/reports/patients/{{id()}}.csv" >csv</a></li>
+        <li><a target="_new" href="/rest/reports/patients/{{id()}}.csvfr" >french-csv</a></li>
+        <li><a target="_new" href="/rest/reports/patients/{{id()}}.xls" >excel file</a></li>
+    </ul>
 </div>

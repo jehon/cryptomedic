@@ -6,18 +6,18 @@ After migration:
 
 Done:
 - on delete: message box to confirm action
-
-Bug:
 - les checkbox ne sont pas cochées
+- export in xls
+- links -> patient reporting (complete xls file for a patient)
 
 Pending:
+- activity report (construct object)
+- monthly report (construct object)
 - Bill: Il faudrait pouvoir rajouter l’item « Making Long plaster »  (600 tk)  et à la place de « making plaster » mettre « making short plaster » (400). Et à la place de « bill consult medecine » mettre « bill consult calcium 30*500mg »
 - limit patient delete if there are subfiles
 - e2e testing
 - test validation on IE (cfr e2e)
 - test validation on Firefox (cfr e2e)
-- export in xls
-- patient reporting (complete xls file for a patient)
 
 Later:
 - validation automatique (cron)
