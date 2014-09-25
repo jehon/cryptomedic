@@ -9,10 +9,11 @@ Done:
 - les checkbox ne sont pas cochées
 - export in xls
 - links -> patient reporting (complete xls file for a patient)
+- activity report (construct object)
 
 Pending:
-- activity report (construct object)
 - monthly report (construct object)
+- display html report more cleanly
 - Bill: Il faudrait pouvoir rajouter l’item « Making Long plaster »  (600 tk)  et à la place de « making plaster » mettre « making short plaster » (400). Et à la place de « bill consult medecine » mettre « bill consult calcium 30*500mg »
 - limit patient delete if there are subfiles
 - e2e testing
@@ -31,3 +32,4 @@ Later:
 - take out specific menu out of angular -> app\
 - create domains + filter by referer path? (see headers sent by server) 
 - change salt, cipher and db password
+- clean up activity report -> construct object instead of displaying table directly
