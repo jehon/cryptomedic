@@ -1,13 +1,6 @@
-<style>
-	tr.dark {
-	  background-color: lightgray;
-	}
-
-	tr.subheader {
-	  background-color: gray;
-	}
-</style>
 <?php
+
+require_once(__DIR__ . "/../../amd_listings.php");
 
 $now = new DateTime();
 {
@@ -26,18 +19,6 @@ $where = "";
 if (array_key_exists('where', $_REQUEST)) {
     $where = $_REQUEST['where'];
 }   
-
-$tables = array("Patients" => "patients", 
-    "Ricket Consults" => "ricket_consults", 
-    "Non ricket consults" => "nonricket_consults", 
-    "Club foots consults" => "club_foots", 
-    "Orthopedic devices" => "orthopedic_devices", 
-    "Surgeries" => "surgeries", 
-    "Surgery Follow-up" => "surgery_followups",
-    "Pictures" => "pictures", 
-    "Bill" => "bills", 
-//    "Bio Checkups" => "bio_checkups", 
-    );
 
 function get($sql, $field = null, $where = null) {
 	if (is_null($where)) {
@@ -74,7 +55,7 @@ function between($i) {
         </tr>
     </thead>
     <tbody>
-        <?php foreach($tables as $label => $t) { ?>
+        <?php foreach($model2controller as $label => $t) { ?>
             <tr class="subheader">
                 <td colspan="13"><?php echo $label; ?></td>
             </tr>

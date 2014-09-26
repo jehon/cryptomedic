@@ -10,7 +10,7 @@ if (count($request->getRoute()) == 3) {
 	$heads = array();
 	$data = array();
 
-	$heads[] = "Patient";
+	$heads[] = "subheader";
 	$data[] = array_keys($folder['mainFile']);
 
 	$heads[] = false;
@@ -20,25 +20,25 @@ if (count($request->getRoute()) == 3) {
 	$data[] = "";
 	
 	foreach($model2controller as $m => $t) {
-		$heads[] = null;
-		$data[] = "*** $m ***";
 		$present = false;
+		$heads[] = "subheader";
+		$data[] = "*** $m ***";
 
 		foreach($folder['subFiles'] as $f) {
 			if ($f['_type'] == $m) {
 				if (!$present) {
-					$heads[] = $m;
+
+					$heads[] = "subheader";
 					$data[] = array_keys($f);
+
 					$present = true;
 				}
-				$heads[] = false; //(array_key_exists('Date', $f) ? $f['Date'] : "NA");
+				$heads[] = false;
 				$data[] = unreferenceArray($m, $f);
 			}
 		}
-		if ($present) {
-			$heads[] = false;
-			$data[] = "";
-		}
+		$heads[] = false;
+		$data[] = "";
 	}
 	$response->ok($data, $heads);
 }
