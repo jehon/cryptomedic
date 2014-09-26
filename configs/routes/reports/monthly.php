@@ -3,7 +3,7 @@
 require_once(__DIR__ . "/../helpers/references.php");
 
 $response->data = array();
-$response->parameters = array("month" => array("text" => "Enter the month for the report (yyyy-mm - 2014-01)",
+$response->formParameters = array("month" => array("text" => "Enter the month for the report (yyyy-mm - 2014-01)",
 			"default" => date("Y-m")
 		)
 	);
@@ -22,7 +22,7 @@ function _addLine($data) {
 		return $data[1];
 }
 
-$input = $request->getParameter('month', '2012-01'); // TODOJH: default to : date("Y-m") or month - 1?
+$input = $request->getParameter('month', $response->formParameters['month']['default']);
 $year = substr($input, 0, 4);
 $month = substr($input, 5, 2);
 
