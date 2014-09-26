@@ -4,12 +4,14 @@ $model2controller = array(
 		"Bill" => "bills",
 		"ClubFoot" => "club_foots",
 		"NonricketConsult" => "nonricket_consults",
-		// "OrthopedicDevice" => "orthopedic_devices",
 		"Patient" => "patients",
 		"Picture" => "pictures",
 		"RicketConsult" => "ricket_consults",
 		"Surgery" => "surgeries",
-		// "SurgeryFollowup" => "surgery_followups"
+
+// TODOJH: remove this
+		"OrthopedicDevice" => "orthopedic_devices",
+		"SurgeryFollowup" => "surgery_followups"
 );
 
 global $amd_listing;

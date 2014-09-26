@@ -1,8 +1,8 @@
 After migration:
 - examiner name = a list:  Rezaul, Ershad, Murshed, Ricta, Shetou, Dr Taslim, Dr Monir, Dr AMD-KDM
 - migrate L/R to L+R in Club Foot file
-- Drop table orthopedic_devices
-- Drop table surgeries_followups
+- Drop table orthopedic_devices (and adapt amd_listings)
+- Drop table surgeries_followups (and adapt amd_listings)
 
 Done:
 - on delete: message box to confirm action
@@ -10,10 +10,10 @@ Done:
 - export in xls
 - links -> patient reporting (complete xls file for a patient)
 - activity report (construct object)
+- display html report more cleanly
 
 Pending:
 - monthly report (construct object)
-- display html report more cleanly
 - fix name for download
 - Bill: Il faudrait pouvoir rajouter l’item « Making Long plaster »  (600 tk)  et à la place de « making plaster » mettre « making short plaster » (400). Et à la place de « bill consult medecine » mettre « bill consult calcium 30*500mg »
 - limit patient delete if there are subfiles
@@ -34,3 +34,4 @@ Later:
 - create domains + filter by referer path? (see headers sent by server) 
 - change salt, cipher and db password
 - clean up activity report -> construct object instead of displaying table directly
+- reports: include them as partials -> get it from layout
