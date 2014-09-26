@@ -3,6 +3,10 @@
 require_once(__DIR__ . "/../helpers/references.php");
 
 $response->data = array();
+$response->parameters = array("month" => array("text" => "Enter the month for the report (yyyy-mm - 2014-01)",
+			"default" => date("Y-m")
+		)
+	);
 
 function _addLine($data) {
 	if (!is_array($data))
