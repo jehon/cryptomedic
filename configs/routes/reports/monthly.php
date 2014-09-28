@@ -116,7 +116,7 @@ function billCountByType($filter, &$list) {
 	foreach($bills->getColumns() as $f => $k) {
 		if ($list == "") $list = "(1=0)";
 		if (strtoupper(substr($f, 0, strlen($filter))) == strtoupper($filter)) {
-			$sql = "SELECT count(*) From Bills WHERE $thismonth AND ($f > 0)";
+			$sql = "SELECT count(*) From bills WHERE $thismonth AND ($f > 0)";
 			_addLine(strtolower($f), $server->getDatabase()->queryOneCell($sql));
 			$list .= "OR($f>0)";	
 		}

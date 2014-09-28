@@ -11,9 +11,10 @@ Done:
 - links -> patient reporting (complete xls file for a patient)
 - activity report (construct object)
 - display html report more cleanly
+- monthly report (construct object)
 
 Pending:
-- monthly report (construct object)
+- message pour upload picture
 - fix name for download
 - Bill: Il faudrait pouvoir rajouter l’item « Making Long plaster »  (600 tk)  et à la place de « making plaster » mettre « making short plaster » (400). Et à la place de « bill consult medecine » mettre « bill consult calcium 30*500mg »
 - limit patient delete if there are subfiles
@@ -22,6 +23,7 @@ Pending:
 - test validation on Firefox (cfr e2e)
 
 Later:
+- change DB version to integer (decimal dotation add no special meaning)
 - validation automatique (cron)
 - put files list on menu bar collapsed ? check in "gsm" mode (page index.php?)
 - manage timestamps on partials
