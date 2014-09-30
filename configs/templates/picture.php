@@ -2,6 +2,10 @@
 	t::setDefaultOption("baseExpression", "currentFile().");
 ?>
 <span ng-controller="ctrl_picture">
+	<div ng-if="!currentFile().file" class="notModeRead alert alert-info" role="alert">
+		To upload your picture, please first save all the informations. 
+		Then you will be proposed to upload your picture.<br>
+	</div>
 	<div class="row">
 		<div class="col-lg-6">
 			<FieldSet>

@@ -27,9 +27,9 @@ $config['database'] = array(
 
 $config['proxy'] = false;
 
-$config['pictures'] = array();
-$config['pictures']['upload'] = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'uploadedPictures';
-$config['pictures']['web'] = '/uploadedPictures';
+$config['upload_pictures'] = array();
+$config['upload_pictures']['path'] = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'uploadedPictures';
+$config['upload_pictures']['web'] = '/uploadedPictures';
 
 
 /* Include the various modules */

@@ -12,11 +12,11 @@ Done:
 - activity report (construct object)
 - display html report more cleanly
 - monthly report (construct object)
+- message pour upload picture
 
 Pending:
-- message pour upload picture
-- fix name for download
 - Bill: Il faudrait pouvoir rajouter l’item « Making Long plaster »  (600 tk)  et à la place de « making plaster » mettre « making short plaster » (400). Et à la place de « bill consult medecine » mettre « bill consult calcium 30*500mg »
+- fix name for download
 - limit patient delete if there are subfiles
 - e2e testing
 - test validation on IE (cfr e2e)
