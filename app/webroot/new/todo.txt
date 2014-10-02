@@ -1,9 +1,3 @@
-After migration:
-- examiner name = a list:  Rezaul, Ershad, Murshed, Ricta, Shetou, Dr Taslim, Dr Monir, Dr AMD-KDM
-- migrate L/R to L+R in Club Foot file
-- Drop table orthopedic_devices (and adapt amd_listings)
-- Drop table surgeries_followups (and adapt amd_listings)
-
 Done:
 - on delete: message box to confirm action
 - les checkbox ne sont pas cochées
@@ -13,23 +7,24 @@ Done:
 - display html report more cleanly
 - monthly report (construct object)
 - message pour upload picture
+- Bill: Il faudrait pouvoir rajouter l’item « Making Long plaster »  (600 tk)  et à la place de « making plaster » mettre « making short plaster » (400).
+- Bill: et à la place de « bill consult medecine » mettre « bill consult calcium 30*500mg »
+- change DB version to integer (decimal dotation add no special meaning)
 
 Pending:
-- Bill: Il faudrait pouvoir rajouter l’item « Making Long plaster »  (600 tk)  et à la place de « making plaster » mettre « making short plaster » (400). Et à la place de « bill consult medecine » mettre « bill consult calcium 30*500mg »
 - fix name for download
 - limit patient delete if there are subfiles
+- php unit testing
 - e2e testing
 - test validation on IE (cfr e2e)
 - test validation on Firefox (cfr e2e)
 
 Later:
-- change DB version to integer (decimal dotation add no special meaning)
 - validation automatique (cron)
 - put files list on menu bar collapsed ? check in "gsm" mode (page index.php?)
 - manage timestamps on partials
 - when connecting to a page unauthenticated, should reload everything after login (hint: on fail, relaunch instead of throw error???)
 - move application images, css, partials... out of angular into app\
-- global reportings
 - change password
 - enforce rules server-side: patient_id not modified (created ok), lastuser, modified, created, id = non modifiable (black list?), ...
 - take out specific menu out of angular -> app\

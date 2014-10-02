@@ -33,6 +33,7 @@
 			<?php (new t("Bill.Date"))->tr()->p(); ?>
 			<?php (new t("Bill.ExaminerName"))->tr("Examiner")->p(); ?>
 			<?php (new t("Bill.Center"))->tr("Center where consultation took place")->p(); ?>
+			<?php (new t("Bill.price_id"))->readonly()->tr("")->p(); ?>
 		</table>
 	</FieldSet>
 	<FieldSet>
@@ -58,11 +59,14 @@
 			<?php price("Bill.consult_field_visit"); ?>
 			<?php price("Bill.consult_home_visit"); ?>
 			<?php price("Bill.consult_give_appointment"); ?>
-			<?php price("Bill.consult_medecine", "Medecile (Calcium)"); ?>
+			<?php price("Bill.consult_medecine", "Medecine (Calcium)"); ?>
+			<?php price("Bill.consult_calcium_30x500mg"); ?>
 			<?php price("Bill.consult_vitamineD"); ?>
 			<?php price("Bill.consult_nutritionalAdvice"); ?>
 			<?php price("Bill.consult_nutritionalSupport"); ?>
 			<?php price("Bill.consult_making_plaster"); ?>
+			<?php price("Bill.consult_make_long_plaster"); ?>
+			<?php price("Bill.consult_make_short_plaster"); ?>
 			<?php price("Bill.consult_making_dressing"); ?>
 			<?php price("Bill.consult_group_physiotherapy"); ?>
 			<?php price("Bill.consult_X_Ray"); ?>
