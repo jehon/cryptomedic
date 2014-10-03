@@ -15,24 +15,38 @@ describe('angularjs homepage', function() {
     it('should show the login element', function() {
         expect(element.all(by.id('loginForm')).count()).toEqual(1);
         expect(element(by.id('loginForm')).isDisplayed()).toEqual(true);
-        expect(element(by.model('username')).isDisplayed()).toEqual(true);
-        expect(element(by.model('password')).isDisplayed()).toEqual(true);
+        expect(element(by.id('login_username')).isDisplayed()).toEqual(true);
+        expect(element(by.id('login_password')).isDisplayed()).toEqual(true);
     });
-});
 
-
-describe('readonly mode', function() {  
-    beforeEach(function() {
-        browser.get('index.php');
-        element(by.id('login.username')).sendKeys("readonly");
-        element(by.id('login.password')).sendKeys("readonly");
+    describe('Try to login', function() {
+        element(by.id('login_username')).sendKeys("test");
+        element(by.id('login_password')).sendKeys("test");
         element(by.id('login.go')).click();
-    });
-
-    it('allow readonly to log in', function() {
-        expect(element(by.id('login.logged.username')).getText()).toEqual("readonly");
+        expect(element(by.id('login_error')).isDisplayed()).toEqual(true);
     });
 });
+
+describe('restore database', function() {
+    browser.get("/rest/system/index.html");
+    // element(by.id('login_username')).sendKeys('testadmin');
+    // element(by.id('login_password')).sendKeys('testadmin');
+    // element(by.id('login_submit')).click();
+    
+});
+
+// describe('readonly mode', function() {  
+//     beforeEach(function() {
+//         browser.get('index.php');
+//         element(by.id('login.username')).sendKeys("readonly");
+//         element(by.id('login.password')).sendKeys("readonly");
+//         element(by.id('login.go')).click();
+//     });
+
+//     it('allow readonly to log in', function() {
+//         expect(element(by.id('login.logged.username')).getText()).toEqual("readonly");
+//     });
+// });
 
 /*
 beforeEach(fn)

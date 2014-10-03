@@ -67,7 +67,7 @@
 	        	<input id="login_password" ng-model="password" class="form-control" placeholder="Password" required type="password">
 				<br>
 				<div ng-if="loginError">
-				    <div class="alert alert-danger">
+				    <div id='login_error' class="alert alert-danger">
 	        			<a href="#" class="close" data-dismiss="alert">&times;</a>
 	        			Invalid username/password. Please try again
 					</div>
