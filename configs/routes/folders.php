@@ -4,9 +4,9 @@ if (!defined("REST_LOADED")) die("Ca va pas la tête?");
 
 require(__DIR__ . "/helpers/getFolder.php");
 
-if (count($request->getRoute()) == 2) {
+if (!$request->routeIsEnded()) {
 	// Get only one
-	$response->ok(getFolder($request->getRoute(2)));
+	$response->ok(getFolder($request->routeConsumeNext()));
 } else {
 	// $patients = new DBTable($server->getConfig("database"), "patients", $server);
 

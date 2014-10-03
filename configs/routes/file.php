@@ -4,15 +4,15 @@ if (!defined("REST_LOADED")) die("Ca va pas la tête?");
 
 require(__DIR__ . "/helpers/getFolder.php");
 
-if (count($request->getRoute()) > 1) {
-	$type = $request->getRoute(2);
+if (!$request->routeIsEnded()) {
+	$type = $request->routeConsumeNext();
 	$type = type2db($type);
 	// $typeDB = new DBTable($server->getConfig("database"), $type, $server);
 	$typeDB = $server->getDatabase()->getTable($type);
 
 
-	if (count($request->getRoute()) == 3) {
-		$id = $request->getRoute(3);
+	if (!$request->routeIsEnded()) {
+		$id = $request->routeConsumeNext();
 
 		// UNLOCK
 		if ($request->getMethod() == "UNLINK") {
@@ -71,7 +71,7 @@ if (count($request->getRoute()) > 1) {
 			else
 				$response->ok(getFolder($nrec["id"]));
 		}
-	} else if (count($request->getRoute()) == 2) {
+	} else {
 
 		// Create
 		if ($request->getMethod() == Request::CREATE) {

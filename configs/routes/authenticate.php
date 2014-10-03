@@ -1,7 +1,7 @@
 <?php
 
-if ($request->matchRoute(array($server->getConfig(Server::ROUTE_AUTHENTICATE), "login"))
-	|| $request->matchRoute(array($server->getConfig(Server::ROUTE_AUTHENTICATE), "settings"))
+if ($request->routeConsumeIfNext("login")
+	|| $request->routeConsumeIfNext("settings")
 	) {
 	$data = array();
 	$data['username'] = $server->getSession(Server::LOGIN_USERNAME);

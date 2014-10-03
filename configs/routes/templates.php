@@ -338,8 +338,8 @@ class t {
 	}
 }
 
-if (($request->getMethod() == Request::READ) && (count($request->getRoute() == 2))) {
-	$basename = basename($request->getRoute(2));
+if (($request->getMethod() == Request::READ) && !$request->routeIsEnded()) {
+	$basename = basename($request->routeConsumeNext());
 	$file = __DIR__ . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . "templates" . DIRECTORY_SEPARATOR . $basename .".php";
 	debugHeader($file, "X-TEMPLATE-ASKED");
 	if (file_exists($file)) {
