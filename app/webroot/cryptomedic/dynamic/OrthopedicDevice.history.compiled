@@ -1,1 +1,0 @@
-(function(){dust.register("OrthopedicDevice.history",body_0);function body_0(chk,ctx){return chk.write("<table width=\"100%\"><colgroup span=\"2\" width=\"50%\"></colgroup><tbody><tr><td><label for=\"OrthopedicDeviceId\" name=\"OrthopedicDevice.id\">id</label></td><td>").helper("read",ctx,{},{"header":"id"}).write("</td></tr></tbody></table>");}return body_0;})();
