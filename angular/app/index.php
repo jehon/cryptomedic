@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <?php 
-	require "../../../../../../rest/php/script.php";
+	require "../../../rest/php/script.php";
 ?>
 <head>
 	<meta charset="utf-8">

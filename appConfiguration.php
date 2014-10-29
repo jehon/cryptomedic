@@ -19,8 +19,12 @@ $config['database'] = array(
     'host' => 'localhost', // for cakephp
     'login' => 'amd_chakaria', // for cakephp
     'password' => getSecret('databasePassword'), // for cakephp
-    
-    'schema' => 'amd_chakaria',	'uri' => "mysqli://amd_chakaria:" . getSecret('databasePassword') . "@localhost/amd_chakaria",
+
+    'pdo_host' => 'mysql:host=localhost;dbname=amd_chakaria',
+    'pdo_username' => 'amd_chakaria',
+    'pdo_password' => getSecret("databasePassword"),
+
+    // 'schema' => 'amd_chakaria',	'uri' => "mysqli://amd_chakaria:" . getSecret('databasePassword') . "@localhost/amd_chakaria",
     'init' => "SET CHARACTER SET 'utf8'",
     'backup_tables' => array( "users", "labels", "patients", "prices" )
 );
@@ -38,9 +42,9 @@ $config['upload_pictures']['web'] = '/uploadedPictures';
 //@include(dirname(__DIR__) . DIRECTORY_SEPARATOR . "maintenance" . DIRECTORY_SEPARATOR . "autodeploy.php");
 
 $config['authenticate.loginRequest'] = 'SELECT users.username as login, users.group as `group` FROM users '
-    . ' WHERE username = ? and password = SHA1(concat("' .  getSecret('authenticateSalt') . '", ?))';
-$config['authenticate.updatePasswordRequest'] = 'UPDATE users SET password = SHA1(concat("'.getSecret('authenticateSalt') .'", ?)) WHERE id = ?';
-$config['authenticate.disablePasswordRequest'] = 'UPDATE users SET password = "[disabled password]" WHERE id = ?';
+    . ' WHERE username = :username and password = SHA1(concat("' .  getSecret('authenticateSalt') . '", :password))';
+$config['authenticate.updatePasswordRequest'] = 'UPDATE users SET password = SHA1(concat("'.getSecret('authenticateSalt') .'", :password)) WHERE id = :id';
+$config['authenticate.disablePasswordRequest'] = 'UPDATE users SET password = "[disabled password]" WHERE id = :id';
 
 /* Include dev specific items */
 if (file_exists(dirname(__DIR__) . DIRECTORY_SEPARATOR . "dev.php"))

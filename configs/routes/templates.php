@@ -65,67 +65,71 @@ class t {
 
 		$this->structure = $dbtable->getColumnInfos($this->field);
 
-		switch ($this->structure->type) {
-			case "tinyint":
-			// case MYSQLI_TYPE_TINY:
-			// case MYSQLI_TYPE_BIT:
-				$this->myType = "boolean";
-				break;
-			// case MYSQLI_TYPE_DECIMAL:
-			// case MYSQLI_TYPE_NEWDECIMAL:
-			// case MYSQLI_TYPE_SHORT:
-			// case MYSQLI_TYPE_LONG:
-			// case MYSQLI_TYPE_LONGLONG:
-			// case MYSQLI_TYPE_INT24:
-			case "int":
-			case "decimal":
-				$this->myType = "numeric";
-				break;
-			// case MYSQLI_TYPE_FLOAT:
-			// case MYSQLI_TYPE_DOUBLE:
-			case "float":
-				$this->myType = "float";
-				break;
-			case "datetime":
-			// case MYSQLI_TYPE_TIMESTAMP:
-			// case MYSQLI_TYPE_DATETIME:
-				$this->myType = "datetime";
-				break;
-			case "date":
-			// case MYSQLI_TYPE_DATE:
-				$this->myType = "date";
-				break;
-			// case MYSQLI_TYPE_VAR_STRING:
-			// case MYSQLI_TYPE_STRING:
-			// case MYSQLI_TYPE_CHAR:
-			// case MYSQLI_TYPE_TINY_BLOB:
-			// case MYSQLI_TYPE_MEDIUM_BLOB:
-			// case MYSQLI_TYPE_LONG_BLOB:
-			// case MYSQLI_TYPE_BLOB:
-			case "varchar":
-			case "mediumtext":
-				$this->myType = "text";
-				break;
-			// case MYSQLI_TYPE_TIME:
-			// case MYSQLI_TYPE_YEAR:
-			// case MYSQLI_TYPE_NEWDATE:
-			// case MYSQLI_TYPE_INTERVAL:
-			// case MYSQLI_TYPE_ENUM:
-			// case MYSQLI_TYPE_SET:
-			// case MYSQLI_TYPE_GEOMETRY:
-			default:
-				$this->res .= "<div class='jserror'>Unhandled type " . $this->structure->type . " for field {$this->field}</div>";
-				$this->myType = "text";
-				// throw new Exception("Unhandled type " . $this->structure->type . " for field {$this->field}");
-				return;
-		}
+		// switch ($this->structure->type) {
+		// 	case "tinyint":
+		// 	// case MYSQLI_TYPE_TINY:
+		// 	// case MYSQLI_TYPE_BIT:
+		// 		$this->myType = "boolean";
+		// 		break;
+		// 	// case MYSQLI_TYPE_DECIMAL:
+		// 	// case MYSQLI_TYPE_NEWDECIMAL:
+		// 	// case MYSQLI_TYPE_SHORT:
+		// 	// case MYSQLI_TYPE_LONG:
+		// 	// case MYSQLI_TYPE_LONGLONG:
+		// 	// case MYSQLI_TYPE_INT24:
+		// 	case "int":
+		// 	case "decimal":
+		// 		$this->myType = "numeric";
+		// 		break;
+		// 	// case MYSQLI_TYPE_FLOAT:
+		// 	// case MYSQLI_TYPE_DOUBLE:
+		// 	case "float":
+		// 		$this->myType = "float";
+		// 		break;
+		// 	case "datetime":
+		// 	// case MYSQLI_TYPE_TIMESTAMP:
+		// 	// case MYSQLI_TYPE_DATETIME:
+		// 		$this->myType = "datetime";
+		// 		break;
+		// 	case "date":
+		// 	// case MYSQLI_TYPE_DATE:
+		// 		$this->myType = "date";
+		// 		break;
+		// 	// case MYSQLI_TYPE_VAR_STRING:
+		// 	// case MYSQLI_TYPE_STRING:
+		// 	// case MYSQLI_TYPE_CHAR:
+		// 	// case MYSQLI_TYPE_TINY_BLOB:
+		// 	// case MYSQLI_TYPE_MEDIUM_BLOB:
+		// 	// case MYSQLI_TYPE_LONG_BLOB:
+		// 	// case MYSQLI_TYPE_BLOB:
+		// 	case "varchar":
+		// 	case "mediumtext":
+		// 		$this->myType = "text";
+		// 		break;
+		// 	// case MYSQLI_TYPE_TIME:
+		// 	// case MYSQLI_TYPE_YEAR:
+		// 	// case MYSQLI_TYPE_NEWDATE:
+		// 	// case MYSQLI_TYPE_INTERVAL:
+		// 	// case MYSQLI_TYPE_ENUM:
+		// 	// case MYSQLI_TYPE_SET:
+		// 	// case MYSQLI_TYPE_GEOMETRY:
+		// 	default:
+		// 		$this->res .= "<div class='jserror'>Unhandled type " . $this->structure->type . " for field {$this->field}</div>";
+		// 		$this->myType = "text";
+		// 		// throw new Exception("Unhandled type " . $this->structure->type . " for field {$this->field}");
+		// 		return;
+		// }
 		global $model_listing;
+		$this->isList = false;
+		$this->isListLinked = false;
 		if (array_key_exists($this->key, $model_listing)) {
-			$this->myType = "list";
+			// $this->myType = "list";
+			$this->isList = true;
 			$this->listing = $model_listing[$key];
 			if (array_key_exists('labels', $this->listing) && ($this->listing['labels'])) {
 				$list = $this->listing;
-				$this->myType = "linkedList";
+				// $this->myType = "linkedList";
+				$this->isListLinked = true;
 				unset($list['labels']);
 				$this->listing = [];
 				foreach($list as $k => $v){
@@ -146,7 +150,7 @@ class t {
 		$sql = "SELECT * FROM `labels` WHERE `id` = $v" ;
 		
 		global $server;
-		$res = $server->getDatabase()->myPostTreatment($server->getDatabase()->getTable("labels")->rowGet($v), "_reference");
+		$res = $server->getDatabase()->getTable("labels")->rowGet($v);
 		if ($res["english"] != $v && $res["english"] != "")
 			return $res["english"];
 		return $v;
@@ -164,28 +168,33 @@ class t {
 			$this->res .= "<span class='error'>Read: key is not in the database: '{$this->key}'</span>";
 			return;
 		}
-		switch($this->myType) {
-			case 'date':
-				// See https://docs.angularjs.org/api/ng/filter/date
-				$this->res .= "<span id='{$this->key}'>{{ {$this->rawExpression} | date:'$dateFormat' }}</span>";
-				break;
-			case 'datetime':
-				// See https://docs.angularjs.org/api/ng/filter/date
-				$this->res .= "<span id='{$this->key}'>{{ {$this->rawExpression} | date:'$dateTimeFormat' }}</span>";
-				break;
-				// TODO: clean presentation
-			case 'text':
-			case 'numeric':
-			case 'float':
-			case 'list':
-				$this->res .= "<span id='{$this->key}'>{{ {$this->rawExpression} }}</span>";
-				break;
-			case 'boolean':
+		// switch($this->myType) {
+		switch($this->structure['pdo_type']) {
+			case PDO::PARAM_BOOL:
+			// case 'boolean':
 				$this->res .= "<span id='{$this->key}' ng-show='{$this->rawExpression}'><img src='img/boolean-true.gif'></span>"
 						. "<span id='{$this->key}' ng-hide='{$this->rawExpression}'><img src='img/boolean-false.gif'></span>";
 				break;
-			case 'linkedList':
-				$this->res .= "<span id='{$this->key}'>{{link( {$this->rawExpression} )}}</span>";
+			case PDO::PARAM_INT:
+			case PDO::PARAM_STR: 
+				if ($this->structure['native_type'] == "TIMESTAMP") {
+					// case 'datetime':
+					// See https://docs.angularjs.org/api/ng/filter/date
+					$this->res .= "<span id='{$this->key}'>{{ {$this->rawExpression} | date:'$dateTimeFormat' }}</span>";
+				} elseif ($this->structure['native_type'] == "DATE") {
+					// case 'date':
+					// See https://docs.angularjs.org/api/ng/filter/date
+					$this->res .= "<span id='{$this->key}'>{{ {$this->rawExpression} | date:'$dateFormat' }}</span>";
+				} elseif ($this->isListLinked) {
+					// case 'linkedList':
+					$this->res .= "<span id='{$this->key}'>{{link( {$this->rawExpression} )}}</span>";
+				} else {
+					// case 'text':
+					// case 'numeric':
+					// case 'float':
+					// case 'list':
+					$this->res .= "<span id='{$this->key}'>{{ {$this->rawExpression} }}</span>";
+				}
 				break;
 			default:
 				$this->res .= "{$this->key} input";
@@ -200,7 +209,9 @@ class t {
 			return;
 		}
 
-		$required = $this->structure->not_null;
+		//var_dump($this->structure);
+
+		$required = in_array('not_null', $this->structure['flags']);
 
 		// $this->res .= "(" . $this->structure->type . "=" . $this->myType . ($required ? "!" : "?"). ")";
 
@@ -208,71 +219,86 @@ class t {
 			. ($required ? "required ng-required " : "")
 			. $this->options['inline'];
 
-		switch($this->myType) {
-			case 'datetime':
-				// always read-only
-				$this->read();
-				break;
-			case 'date':
-				$this->res .= "<input type='date' $inline placeholder='yyyy-MM-dd' mycalendar/>";
-				break;
-			case 'text':
-				if ($this->structure->max_length >= 256) {
-					$this->res .= "<textarea  cols=40 rows=4 $inline/>";
+		switch($this->structure['pdo_type']) {
+			// TODO: cases in pdo style
+			case PDO::PARAM_BOOL:
+			case PDO::PARAM_STR: 
+			case PDO::PARAM_INT:
+				if ($this->isList) {
+					// case 'linkedList':
+					// case 'list':
+					$count = count($this->listing);
+					if (!$required) $count++;
+	  				if ($count <= 6) {
+	  					$i = 0;
+	  					$this->res .= "<table style='width: 100%'><tr><td>";
+	  					foreach($this->listing as $k => $v) {
+	  						$this->res.= ""
+	  							. "<input type='radio' value='$k' ng-model='{$this->rawExpression}' {$this->options['inline']}>"
+	  							. "$v"
+	  							. "<br>"
+	  							;
+	  						if ($i == ceil($count/ 2) - 1) {
+	  							$this->res .= "</td><td>";
+	  						}
+	  						$i++;
+	  					}
+	  					// if (!array_key_exists('MYSQLI_NOT_NULL_FLAG', $this->myFlags)) {
+						if (!$required) {
+	  						$this->res.= ""
+								. "<input type='radio' ng-value='null' ng-model='{$this->rawExpression}' {$this->options['inline']}>"
+		  						. "?"
+		  						. "<br>"
+		  						;
+		  					$i++;
+	  					}
+	  					$this->res .= "</td></tr></table>";
+	  				} else {
+	  					$this->res .= "<select $inline>";
+	  					foreach($this->listing as $k => $v) {
+	  						$this->res .= "<option value='$k'>$v</option>";
+	  					}
+	  					// if (!array_key_exists('MYSQLI_NOT_NULL_FLAG', $this->myFlags)) {
+	  					if (!$required) {
+	  						$this->res .= "<option value=''>?</option>";
+	  					}
+	  					$this->res .= "</select>";
+	  				}
+					// break;
 				} else {
-					$this->res .= "<input $inline />";
+					switch($this->structure['native_type']) {
+						// case 'datetime':
+						case "TIMESTAMP":
+							// always read-only
+							$this->read();
+							break;
+						case "DATE":
+							// case 'date':
+							$this->res .= "<input type='date' $inline placeholder='yyyy-MM-dd' mycalendar/>";
+							break;
+						case "TINY":
+							// case 'boolean':
+							$this->res .= "<input type='checkbox' ng-model='{$this->rawExpression}' ng-true-value='1' ng-false-value='0' />";
+							break;
+						case "LONG":
+							// case 'numeric':
+							// case 'float':
+							$this->res .= "<input type='number'  $inline />";	
+							break;	
+						case "VAR_STRING":
+							// case 'text':
+							if ($this->structure['len'] >= 256) {
+								$this->res .= "<textarea  cols=40 rows=4 $inline/>";
+							} else {
+								$this->res .= "<input $inline />";
+							}
+							break;
+					}
 				}
 				break;
-			case 'numeric':
-			case 'float':
-				$this->res .= "<input type='number'  $inline />";
-				break;
-			case 'boolean':
-				$this->res .= "<input type='checkbox' ng-model='{$this->rawExpression}' ng-true-value='1' ng-false-value='0' />";
-				break;
-			case 'linkedList':
-			case 'list':
-				$count = count($this->listing);
-				// if (array_key_exists('MYSQLI_NOT_NULL_FLAG', $this->myFlags)) $count++;
-				if (!$required) $count++;
-  				if ($count <= 6) {
-  					$i = 0;
-  					$this->res .= "<table style='width: 100%'><tr><td>";
-  					foreach($this->listing as $k => $v) {
-  						$this->res.= ""
-  							. "<input type='radio' value='$k' ng-model='{$this->rawExpression}' {$this->options['inline']}>"
-  							. "$v"
-  							. "<br>"
-  							;
-  						if ($i == ceil($count/ 2) - 1) {
-  							$this->res .= "</td><td>";
-  						}
-  						$i++;
-  					}
-  					// if (!array_key_exists('MYSQLI_NOT_NULL_FLAG', $this->myFlags)) {
-					if (!$required) {
-  						$this->res.= ""
-							. "<input type='radio' ng-value='null' ng-model='{$this->rawExpression}' {$this->options['inline']}>"
-	  						. "?"
-	  						. "<br>"
-	  						;
-	  					$i++;
-  					}
-  					$this->res .= "</td></tr></table>";
-  				} else {
-  					$this->res .= "<select $inline>";
-  					foreach($this->listing as $k => $v) {
-  						$this->res .= "<option value='$k'>$v</option>";
-  					}
-  					// if (!array_key_exists('MYSQLI_NOT_NULL_FLAG', $this->myFlags)) {
-  					if (!$required) {
-  						$this->res .= "<option value=''>?</option>";
-  					}
-  					$this->res .= "</select>";
-  				}
-				break;
 			default:
-				$this->res .= "WW {$this->key} input";
+				var_dump($this->structure);
+				$this->res .= "WW {$this->key} input ";
 				break;
 		}
 		return $this;

@@ -8,8 +8,8 @@ require(__DIR__ . "/helpers/getFolder.php");
 
 function checkReference($entryyear, $entryorder) {
 	global $server;
-	return $server->getDatabase()->preparedStatement("SELECT patients.id FROM patients WHERE patients.entryyear = ? and patients.entryorder = ? ORDER BY entryyear DESC LIMIT 100", 
-		array($entryyear, $entryorder));
+	return $server->getDatabase()->query("SELECT patients.id FROM patients WHERE patients.entryyear = :entryyear and patients.entryorder = :entryorder ORDER BY entryyear DESC LIMIT 100", 
+		array("entryyear" => $entryyear, "entryorder" => $entryorder));
 
 }
 
@@ -26,12 +26,12 @@ if ($request->getMethod() == Request::READ) {
 
 if ($request->getMethod() == Request::CREATE) {
 	// Create a reference
-	$server->getDatabase()->db->BeginTrans();
+	$server->getDatabase()->pdo->beginTrans();
 
 	// Check the patient
 	$res = checkReference($entryyear, $entryorder);
 	if (count($res) != 0) {
-		$server->getDatabase()->db->RollbackTrans();
+		$server->getDatabase()->pdo->rollback();
 		throw new HttpAlreadyDone("Reference exists");
 	}
 
@@ -39,7 +39,7 @@ if ($request->getMethod() == Request::CREATE) {
 		'entryyear' => $entryyear, 
 		'entryorder' => $entryorder,
 		'lastuser' => $server->getSession(Server::LOGIN_USERNAME)));
-	$server->getDatabase()->db->CommitTrans();
+	$server->getDatabase()->pdo->commit();
 
 	$response->ok(getFolder($id));
 }

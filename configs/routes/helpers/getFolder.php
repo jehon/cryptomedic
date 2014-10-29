@@ -45,7 +45,7 @@ function getFolder($id) {
 		if ($c == "orthopedic_devices") continue;
 		if ($c == "surgery_followups") continue;
 
-		$r = $server->getDatabase()->preparedStatement("SELECT * FROM $c WHERE patient_id = ?", $id);
+		$r = $server->getDatabase()->query("SELECT * FROM $c WHERE patient_id = :patient_id", array('patient_id' => $id));
 		foreach($r as $ri => $rv) {
 			$rv['_type'] = db2model($c);
 			$res['subFiles'][] = $rv;

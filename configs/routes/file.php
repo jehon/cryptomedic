@@ -7,17 +7,16 @@ require(__DIR__ . "/helpers/getFolder.php");
 if (!$request->routeIsEnded()) {
 	$type = $request->routeConsumeNext();
 	$type = type2db($type);
-	// $typeDB = new DBTable($server->getConfig("database"), $type, $server);
 	$typeDB = $server->getDatabase()->getTable($type);
 
 
 	if (!$request->routeIsEnded()) {
 		$id = $request->routeConsumeNext();
 
-		// UNLOCK
+		// Unlock file
 		if ($request->getMethod() == "UNLINK") {
 			// Unlock the file
-			$server->getDatabase()->preparedStatement("UPDATE $type SET modified = NOW(), lastuser = ? WHERE id = ?", array($server->getSession(Server::LOGIN_USERNAME), $id));
+			$server->getDatabase()->exec("UPDATE $type SET modified = NOW(), lastuser = :lastuser WHERE id = :id", array("lastuser" => $server->getSession(Server::LOGIN_USERNAME), "id" => $id));
 
 			// Get the folder id:
 			$nrec = $typeDB->rowGet($id);
@@ -44,7 +43,7 @@ if (!$request->routeIsEnded()) {
 			}
 
 			// Delete the record
-			$server->getDatabase()->preparedStatement("DELETE FROM $type WHERE id = ?", array($id));
+			$server->getDatabase()->exec("DELETE FROM $type WHERE id = :id", array("id" => $id));
 
 			if ($type == "patients") {
 				$response->ok();
@@ -83,7 +82,6 @@ if (!$request->routeIsEnded()) {
 
 			$data = getFolder($idfolder);
 			$data["newKey"] = $fid;
-			// header("NEWKEY: " . $fid);
 
 			// Send back the folder
 			$response->ok($data);
