@@ -5,8 +5,15 @@
 		The monthly report track the activity of the center according to various axes.
 		<br>
 		<a class='btn btn-primary' href='/rest/reports/monthly.html'>Monthly report</a>
+		<br>
 
-		<h3>Activity reports</h3>
+		<h3>Daily report</h3>
+		Report the daily activity as one center.<br>
+
+		<a class='btn btn-primary' href='/rest/reports/daily.html'>Daily report</a>
+		<br>
+		
+		<h3>Activity report</h3>
 		Report what has been done this last 12 months in the applications.<br>
 
 		<a class='btn btn-primary' href='/rest/reports/activity.html'>Activity report</a>
