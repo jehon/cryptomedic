@@ -65,60 +65,6 @@ class t {
 
 		$this->structure = $dbtable->getColumnInfos($this->field);
 
-		// switch ($this->structure->type) {
-		// 	case "tinyint":
-		// 	// case MYSQLI_TYPE_TINY:
-		// 	// case MYSQLI_TYPE_BIT:
-		// 		$this->myType = "boolean";
-		// 		break;
-		// 	// case MYSQLI_TYPE_DECIMAL:
-		// 	// case MYSQLI_TYPE_NEWDECIMAL:
-		// 	// case MYSQLI_TYPE_SHORT:
-		// 	// case MYSQLI_TYPE_LONG:
-		// 	// case MYSQLI_TYPE_LONGLONG:
-		// 	// case MYSQLI_TYPE_INT24:
-		// 	case "int":
-		// 	case "decimal":
-		// 		$this->myType = "numeric";
-		// 		break;
-		// 	// case MYSQLI_TYPE_FLOAT:
-		// 	// case MYSQLI_TYPE_DOUBLE:
-		// 	case "float":
-		// 		$this->myType = "float";
-		// 		break;
-		// 	case "datetime":
-		// 	// case MYSQLI_TYPE_TIMESTAMP:
-		// 	// case MYSQLI_TYPE_DATETIME:
-		// 		$this->myType = "datetime";
-		// 		break;
-		// 	case "date":
-		// 	// case MYSQLI_TYPE_DATE:
-		// 		$this->myType = "date";
-		// 		break;
-		// 	// case MYSQLI_TYPE_VAR_STRING:
-		// 	// case MYSQLI_TYPE_STRING:
-		// 	// case MYSQLI_TYPE_CHAR:
-		// 	// case MYSQLI_TYPE_TINY_BLOB:
-		// 	// case MYSQLI_TYPE_MEDIUM_BLOB:
-		// 	// case MYSQLI_TYPE_LONG_BLOB:
-		// 	// case MYSQLI_TYPE_BLOB:
-		// 	case "varchar":
-		// 	case "mediumtext":
-		// 		$this->myType = "text";
-		// 		break;
-		// 	// case MYSQLI_TYPE_TIME:
-		// 	// case MYSQLI_TYPE_YEAR:
-		// 	// case MYSQLI_TYPE_NEWDATE:
-		// 	// case MYSQLI_TYPE_INTERVAL:
-		// 	// case MYSQLI_TYPE_ENUM:
-		// 	// case MYSQLI_TYPE_SET:
-		// 	// case MYSQLI_TYPE_GEOMETRY:
-		// 	default:
-		// 		$this->res .= "<div class='jserror'>Unhandled type " . $this->structure->type . " for field {$this->field}</div>";
-		// 		$this->myType = "text";
-		// 		// throw new Exception("Unhandled type " . $this->structure->type . " for field {$this->field}");
-		// 		return;
-		// }
 		global $model_listing;
 		$this->isList = false;
 		$this->isListLinked = false;
