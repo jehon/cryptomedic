@@ -4,8 +4,8 @@ require_once(__DIR__ . "/../helpers/getFolder.php");
 require_once(__DIR__ . "/../../amd_listings.php");
 require_once(__DIR__ . "/../helpers/references.php");
 
-if (count($request->getRoute()) == 3) {
-	$folder = getFolder($request->getRoute(3));
+if (!$request->routeIsEnded()) {
+	$folder = getFolder($request->routeGetNext());
 
 	$heads = array();
 	$data = array();

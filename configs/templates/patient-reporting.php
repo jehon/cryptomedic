@@ -5,8 +5,6 @@
 <h1>Reporting for the patient</h1>
 <div ng-controller="ctrl_patient">
 <br>
-<a href='/amd/patients/view/{{id()}}' target='_new'>Go to the old application</a>
-
 	Get the whole patient file as a<br>
     <ul>
     	<li><a target="_new" href="/rest/reports/patients/{{id()}}.csv" >csv</a></li>

@@ -10,7 +10,7 @@ function getSqlConsult($label, $table) {
 			. "WHERE (c.NextAppointment = " . $server->getDatabase()->escape($request->getParameter("day", false)) . ") ";
 }
 
-if ((count($request->getRoute()) == 1) && ($request->getMethod() == Request::READ)) {
+if ($request->routeIsEnded() && ($request->getMethod() == Request::READ)) {
 	// $patients = new DBTable($server->getConfig("database"), "patients", $server);
 
 	// Search through them
@@ -26,12 +26,12 @@ if ((count($request->getRoute()) == 1) && ($request->getMethod() == Request::REA
 		. " JOIN patients ON (cc.patient_id = patients.id) ";
 
 	if ($request->getParameter("center", false)) 
-		$sql .= " AND (c_center = " . $server->database->escape($request->getParameter("center", false)) . ") ";
+		$sql .= " AND (c_center = " . $server->getDatabase()->escape($request->getParameter("center", false)) . ") ";
 
 	$sql .= " LIMIT 100";
 
 	debugHeader($sql, "SQL-SEARCH");
 
-	$listing = $server->database->query($sql);
+	$listing = $server->getDatabase()->query($sql);
 	$response->ok($listing);
 }

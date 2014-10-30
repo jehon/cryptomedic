@@ -101,7 +101,7 @@ $centers = $amd_listing['Centers'];
 $centers[] = '';
 unset($centers['labels']);
 
-$res = $server->getDatabase()->query("SELECT Center, Count(*) as `count` FROM bills WHERE $thismonth GROUP BY Center", "Center");
+$res = $server->getDatabase()->query("SELECT Center, Count(*) as `count` FROM bills WHERE $thismonth GROUP BY Center");
 
 foreach($centers as $c) {
 	_addLine("@ " . unreference("Bill", "Center", $c),

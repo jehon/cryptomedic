@@ -146,3 +146,6 @@ function between($i) {
 			?>    
        	</tbody>
 </table>
+<?php
+    
+?>
