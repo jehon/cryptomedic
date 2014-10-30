@@ -1,16 +1,26 @@
 <?php
 
 require_once(__DIR__ . "/../amd_listings.php");
+require_once(__DIR__ . "/helpers/references.php");
 
 $dateFormat = "shortDate";
 $dateTimeFormat = "short";
 
 class t {
+	const TYPE_LIST			= 0;
+	const TYPE_TIMESTAMP	= 1;
+	const TYPE_BOOLEAN		= 2;
+	const TYPE_INTEGER		= 3;
+	const TYPE_CHAR 		= 4;
+	const TYPE_TEXT 		= 5;
+	const TYPE_DATE			= 6;
+	
 	var $key;
 	var $options;
 	var $res = "";
 	var $linked2DB = false;
 	var $rawExpression = true;
+	var $listing = null;
 
 	private static $defaultOptions = [
 		"baseExpression" => "",
@@ -70,6 +80,7 @@ class t {
 		$this->isListLinked = false;
 		if (array_key_exists($this->key, $model_listing)) {
 			// $this->myType = "list";
+			$this->type = self::TYPE_LIST;
 			$this->isList = true;
 			$this->listing = $model_listing[$key];
 			if (array_key_exists('labels', $this->listing) && ($this->listing['labels'])) {
@@ -77,29 +88,55 @@ class t {
 				// $this->myType = "linkedList";
 				$this->isListLinked = true;
 				unset($list['labels']);
-				$this->listing = [];
-				foreach($list as $k => $v){
-					$this->listing[$v] = $this->_reference($v);
-				}
+				$this->listing = buildLinkedList($list);
 			} else {
 				// Labels = the value itself
 				$this->listing = array_combine($this->listing, $this->listing);
+			}
+		} else {
+			switch($this->structure['pdo_type']) {
+				case PDO::PARAM_BOOL:
+				case PDO::PARAM_STR: 
+				case PDO::PARAM_INT:
+					switch($this->structure['native_type']) {
+						case "TIMESTAMP":
+							$this->type = self::TYPE_TIMESTAMP;
+							break;
+						case "DATE":
+							$this->type = self::TYPE_DATE;
+							break;
+						case "TINY":
+							$this->type = self::TYPE_BOOLEAN;
+							break;
+						case "LONG":
+							$this->type = self::TYPE_INTEGER;
+							break;	
+						case "VAR_STRING":
+							if ($this->structure['len'] >= 256) {
+								$this->type = self::TYPE_TEXT;
+							} else {
+								$this->type = self::TYPE_CHAR;
+							}
+							break;
+						case "BLOB":
+							$this->type = self::TYPE_TEXT;
+							break;
+						default:
+							echo "Unhandled native_type in __construct";
+							var_dump($this->structure);
+							break;
+					}
+					break;
+				default:
+					echo "Unhandled type in __construct";
+					var_dump($this->structure);
+					break;				
 			}
 		}
 
 		$this->linked2DB = true;
 		$this->rawExpression = $this->options['baseExpression'] . $this->field;
 		return $this;
-	}
-
-	private function _reference($v) {
-		$sql = "SELECT * FROM `labels` WHERE `id` = $v" ;
-		
-		global $server;
-		$res = $server->getDatabase()->getTable("labels")->rowGet($v);
-		if ($res["english"] != $v && $res["english"] != "")
-			return $res["english"];
-		return $v;
 	}
 
 	function rawValue() {
@@ -114,31 +151,22 @@ class t {
 			$this->res .= "<span class='error'>Read: key is not in the database: '{$this->key}'</span>";
 			return;
 		}
-		// switch($this->myType) {
 		switch($this->structure['pdo_type']) {
 			case PDO::PARAM_BOOL:
-			// case 'boolean':
 				$this->res .= "<span id='{$this->key}' ng-show='{$this->rawExpression}'><img src='img/boolean-true.gif'></span>"
 						. "<span id='{$this->key}' ng-hide='{$this->rawExpression}'><img src='img/boolean-false.gif'></span>";
 				break;
 			case PDO::PARAM_INT:
 			case PDO::PARAM_STR: 
 				if ($this->structure['native_type'] == "TIMESTAMP") {
-					// case 'datetime':
 					// See https://docs.angularjs.org/api/ng/filter/date
 					$this->res .= "<span id='{$this->key}'>{{ {$this->rawExpression} | date:'$dateTimeFormat' }}</span>";
 				} elseif ($this->structure['native_type'] == "DATE") {
-					// case 'date':
 					// See https://docs.angularjs.org/api/ng/filter/date
 					$this->res .= "<span id='{$this->key}'>{{ {$this->rawExpression} | date:'$dateFormat' }}</span>";
 				} elseif ($this->isListLinked) {
-					// case 'linkedList':
 					$this->res .= "<span id='{$this->key}'>{{link( {$this->rawExpression} )}}</span>";
 				} else {
-					// case 'text':
-					// case 'numeric':
-					// case 'float':
-					// case 'list':
 					$this->res .= "<span id='{$this->key}'>{{ {$this->rawExpression} }}</span>";
 				}
 				break;
@@ -154,100 +182,74 @@ class t {
 			$this->res .= "<span class='error'>Write: key is not in the database: '{$this->key}'</span>";
 			return;
 		}
-
-		//var_dump($this->structure);
-
+		
 		$required = in_array('not_null', $this->structure['flags']);
-
-		// $this->res .= "(" . $this->structure->type . "=" . $this->myType . ($required ? "!" : "?"). ")";
 
 		$inline = "class='form-control' ng-model='{$this->rawExpression}' "
 			. ($required ? "required ng-required " : "")
 			. $this->options['inline'];
 
-		switch($this->structure['pdo_type']) {
-			// TODO: cases in pdo style
-			case PDO::PARAM_BOOL:
-			case PDO::PARAM_STR: 
-			case PDO::PARAM_INT:
-				if ($this->isList) {
-					// case 'linkedList':
-					// case 'list':
-					$count = count($this->listing);
-					if (!$required) $count++;
-	  				if ($count <= 6) {
-	  					$i = 0;
-	  					$this->res .= "<table style='width: 100%'><tr><td>";
-	  					foreach($this->listing as $k => $v) {
-	  						$this->res.= ""
-	  							. "<input type='radio' value='$k' ng-model='{$this->rawExpression}' {$this->options['inline']}>"
-	  							. "$v"
-	  							. "<br>"
-	  							;
-	  						if ($i == ceil($count/ 2) - 1) {
-	  							$this->res .= "</td><td>";
-	  						}
-	  						$i++;
-	  					}
-	  					// if (!array_key_exists('MYSQLI_NOT_NULL_FLAG', $this->myFlags)) {
-						if (!$required) {
-	  						$this->res.= ""
-								. "<input type='radio' ng-value='null' ng-model='{$this->rawExpression}' {$this->options['inline']}>"
-		  						. "?"
-		  						. "<br>"
-		  						;
-		  					$i++;
-	  					}
-	  					$this->res .= "</td></tr></table>";
-	  				} else {
-	  					$this->res .= "<select $inline>";
-	  					foreach($this->listing as $k => $v) {
-	  						$this->res .= "<option value='$k'>$v</option>";
-	  					}
-	  					// if (!array_key_exists('MYSQLI_NOT_NULL_FLAG', $this->myFlags)) {
-	  					if (!$required) {
-	  						$this->res .= "<option value=''>?</option>";
-	  					}
-	  					$this->res .= "</select>";
-	  				}
-					// break;
-				} else {
-					switch($this->structure['native_type']) {
-						// case 'datetime':
-						case "TIMESTAMP":
-							// always read-only
-							$this->read();
-							break;
-						case "DATE":
-							// case 'date':
-							$this->res .= "<input type='date' $inline placeholder='yyyy-MM-dd' mycalendar/>";
-							break;
-						case "TINY":
-							// case 'boolean':
-							$this->res .= "<input type='checkbox' ng-model='{$this->rawExpression}' ng-true-value='1' ng-false-value='0' />";
-							break;
-						case "LONG":
-							// case 'numeric':
-							// case 'float':
-							$this->res .= "<input type='number'  $inline />";	
-							break;	
-						case "VAR_STRING":
-							// case 'text':
-							if ($this->structure['len'] >= 256) {
-								$this->res .= "<textarea  cols=40 rows=4 $inline/>";
-							} else {
-								$this->res .= "<input $inline />";
-							}
-							break;
-					}
-				}
+		switch($this->type) {
+			case self::TYPE_LIST:
+				$count = count($this->listing);
+				if (!$required) $count++;
+  				if ($count <= 6) {
+  					$i = 0;
+  					$this->res .= "<table style='width: 100%'><tr><td>";
+  					foreach($this->listing as $k => $v) {
+  						$this->res.= ""
+  							. "<input type='radio' value='$k' ng-model='{$this->rawExpression}' {$this->options['inline']}>"
+  							. "$v"
+  							. "<br>"
+  							;
+  						if ($i == ceil($count/ 2) - 1) {
+  							$this->res .= "</td><td>";
+  						}
+  						$i++;
+  					}
+					if (!$required) {
+  						$this->res.= ""
+							. "<input type='radio' ng-value='null' ng-model='{$this->rawExpression}' {$this->options['inline']}>"
+	  						. "?"
+	  						. "<br>"
+	  						;
+	  					$i++;
+  					}
+  					$this->res .= "</td></tr></table>";
+  				} else {
+  					$this->res .= "<select $inline>";
+  					foreach($this->listing as $k => $v) {
+  						$this->res .= "<option value='$k'>$v</option>";
+  					}
+  					if (!$required) {
+  						$this->res .= "<option value=''>?</option>";
+  					}
+  					$this->res .= "</select>";
+  				}
+  				break;
+  			case self::TYPE_TIMESTAMP: 
+				$this->res .= "<span>{{ {$this->rawExpression} | date:'$dateTimeFormat' }}</span>";
+				break;
+			case self::TYPE_BOOLEAN:
+				$this->res .= "<input type='checkbox' ng-model='{$this->rawExpression}' ng-true-value='1' ng-false-value='0' />";
+				break;
+			case self::TYPE_INTEGER:
+				$this->res .= "<input type='number' $inline />";	
+				break;	
+			case self::TYPE_TEXT:
+				$this->res .= "<textarea  cols=40 rows=4 $inline></textarea>";
+				break;
+			case self::TYPE_CHAR:
+				$this->res .= "<input $inline />";
+				break;
+			case self::TYPE_DATE:
+				$this->res .= "<input type='date' $inline placeholder='yyyy-MM-dd' mycalendar/>";
 				break;
 			default:
+				$this->res .= "WW {$this->type} input ";
 				var_dump($this->structure);
-				$this->res .= "WW {$this->key} input ";
 				break;
 		}
-		return $this;
 	}
 
 	function value() {

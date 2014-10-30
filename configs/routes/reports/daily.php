@@ -1,21 +1,25 @@
 <?php
 
 require_once(__DIR__ . "/../helpers/getFolder.php");
-//require_once(__DIR__ . "/../../amd_listings.php");
+require_once(__DIR__ . "/../../amd_listings.php");
 require_once(__DIR__ . "/../helpers/references.php");
 
 $response->data = array();
-$response->formParameters = array("month" => array("text" => "Enter the month for the report (yyyy-mm - 2014-01)",
-            "default" => date("Y-m")
-        ),
+$response->formParameters = array(
+        "when" => array(
+            "text" => "Enther the day",
+            "type" => "date",
+            "default" => date("Y-m-d")
+            ),
         "who" => array(
             "text" => "Enter the physio",
-            "default" => "x"
+            "default" => "2"
             ),
         "where" => array(
             "text" => "Enther the center",
-            "default" => "200"
-            )
+            "default" => "200",
+            "list" => buildLinkedList($amd_listing['Centers'])
+            ),
     );
 
 // TODOJH: set parameters
@@ -30,6 +34,7 @@ $response->addLine();
 $response->addCell("Name of project: Ricktes in cox's Bazar", [ "colspan" => 5 ]);
 $response->addCell("When");
 $response->addCell($day);
+$response->addCell("");
 
 $response->addLine();
 $response->addCell("SARPV, CHAKARIA DISABILITY CENTER, CHAKARIA, COX'S BAZAR", [ "colspan" => 5 ]);
@@ -40,7 +45,7 @@ $response->addCell("");
 $response->addCell("Levels of the social level", [ "colspan" => 4 ]);
 
 $response->addLine();
-$response->addCell("Monthly report of " . $day, [ "colspan" => 5 ]);
+$response->addCell("Daily report of " . $day, [ "colspan" => 5 ]);
 $response->addCell("Where");
 $response->addCell(unreference("Bill", "Center", $where));
 $response->addCell("");
@@ -61,11 +66,11 @@ $response->addCell("Medical", [ "colspan" => 3 ]);
 $response->addCell("Price", [ "colspan" => 6 ]);
 
 $response->addLine();
-$response->addCell("N°");
+$response->addCell("N#");
 $response->addCell("Date");
 $response->addCell("Physio");
 $response->addCell("Place");
-$response->addCell("Record n°");
+$response->addCell("Record n#");
 
 $response->addCell("Patient name");
 $response->addCell("Age");

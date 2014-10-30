@@ -21,3 +21,21 @@ function unreference($table, $field, $value) {
 	}
 	return $value;
 }
+
+function buildLinkedList($list) {
+	global $server;
+	$labels = $server->getDatabase()->getTable("labels");
+
+	$res = array();
+	foreach($list as $k => $v){
+		if (!is_numeric($v)) continue;
+		$l = $labels->rowGet($v);
+		if ($l["english"] != $v && $l["english"] != "") {
+			$res[$v] = $l["english"];
+		} else {
+			$res[$v] = $v;
+		}
+	}
+	return $res;
+
+}
