@@ -318,6 +318,7 @@ if (($request->getMethod() == Request::READ) && !$request->routeIsEnded()) {
 	debugHeader($file, "X-TEMPLATE-ASKED");
 	if (file_exists($file)) {
 		include_once($file);
+		echo "<div style='font-size: x-small; color: lightgray'>" . date("Y-m-d h:M:s") . "</div>";
 		$response->ok();
 	}
 }
