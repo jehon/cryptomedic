@@ -1,7 +1,7 @@
 <?php 
 	t::setDefaultOption("baseExpression", "getCurrentFile().");
 ?>
-<div class='container-fluid' class="modeRead">
+<div class='container-fluid modeRead'>
 	<div class='row'>
 		<div class="col-sm-2" class="btn-group btn-group-justified btn-group-vertical">
 			<a ng-if='hasPermission("folder.edit")' ng-class="{ 'btn-warning': page === 'add'}" ng-href="#/folder/{{id()}}/add" class="btn btn-default" style="width: 100%">Add</a>
