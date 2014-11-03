@@ -17,6 +17,7 @@
     "respond": "latest",
     "html5shiv": "latest",
     "datejs": "latest",
-    "modernizr": "latest"
+    "modernizr": "latest",
+    "excellentexport": "latest"
   }
 }
