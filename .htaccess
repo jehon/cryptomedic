@@ -1,8 +1,8 @@
- <IfModule mod_expires.c>
+<IfModule mod_expires.c>
 	ExpiresActive 	On
 	ExpiresByType	img/*			"access plus 1 week"
 	ExpiresByType	css/*			"access plus 1 week"
-	ExpiresByType   js/*			"access plus 1 week"
+#	ExpiresByType   js/*			"access plus 1 week"
 	ExpiresDefault 	A0
 </IfModule>
 
