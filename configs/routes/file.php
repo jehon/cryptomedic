@@ -1,14 +1,11 @@
 <?php
 
-if (!defined("REST_LOADED")) die("Ca va pas la tête?");
-
 require(__DIR__ . "/helpers/getFolder.php");
 
 if (!$request->routeIsEnded()) {
 	$type = $request->routeConsumeNext();
 	$type = type2db($type);
 	$typeDB = $server->getDatabase()->getTable($type);
-
 
 	if (!$request->routeIsEnded()) {
 		$id = $request->routeConsumeNext();
