@@ -112,7 +112,7 @@ class t {
 							$this->type = self::TYPE_INTEGER;
 							break;	
 						case "VAR_STRING":
-							if ($this->structure['len'] >= 256) {
+								if ($this->structure['len'] >= 800) {
 								$this->type = self::TYPE_TEXT;
 							} else {
 								$this->type = self::TYPE_CHAR;
@@ -134,6 +134,8 @@ class t {
 			}
 		}
 
+		$this->required = in_array('not_null', $this->structure['flags']);
+
 		$this->linked2DB = true;
 		$this->rawExpression = $this->options['baseExpression'] . $this->field;
 		return $this;
@@ -151,24 +153,28 @@ class t {
 			$this->res .= "<span class='error'>Read: key is not in the database: '{$this->key}'</span>";
 			return;
 		}
-		switch($this->structure['pdo_type']) {
-			case PDO::PARAM_BOOL:
+		switch($this->type) {
+  			case self::TYPE_TIMESTAMP: 
+					// See https://docs.angularjs.org/api/ng/filter/date
+					$this->res .= "<span id='{$this->key}'>{{ {$this->rawExpression} | date:'$dateTimeFormat' }}</span>";
+					break;
+			case self::TYPE_BOOLEAN:
 				$this->res .= "<span id='{$this->key}' ng-show='{$this->rawExpression}'><img src='img/boolean-true.gif'></span>"
 						. "<span id='{$this->key}' ng-hide='{$this->rawExpression}'><img src='img/boolean-false.gif'></span>";
 				break;
-			case PDO::PARAM_INT:
-			case PDO::PARAM_STR: 
-				if ($this->structure['native_type'] == "TIMESTAMP") {
-					// See https://docs.angularjs.org/api/ng/filter/date
-					$this->res .= "<span id='{$this->key}'>{{ {$this->rawExpression} | date:'$dateTimeFormat' }}</span>";
-				} elseif ($this->structure['native_type'] == "DATE") {
-					// See https://docs.angularjs.org/api/ng/filter/date
-					$this->res .= "<span id='{$this->key}'>{{ {$this->rawExpression} | date:'$dateFormat' }}</span>";
-				} elseif ($this->isListLinked) {
+			case self::TYPE_DATE:
+				// See https://docs.angularjs.org/api/ng/filter/date
+				$this->res .= "<span id='{$this->key}'>{{ {$this->rawExpression} | date:'$dateFormat' }}</span>";
+				break;
+			case self::TYPE_LIST:
+				if ($this->isListLinked) {
 					$this->res .= "<span id='{$this->key}'>{{link( {$this->rawExpression} )}}</span>";
-				} else {
-					$this->res .= "<span id='{$this->key}'>{{ {$this->rawExpression} }}</span>";
+					break;
 				}
+			case self::TYPE_INTEGER:
+			case self::TYPE_TEXT:
+			case self::TYPE_CHAR:
+				$this->res .= "<span id='{$this->key}'>{{ {$this->rawExpression} }}</span>";
 				break;
 			default:
 				$this->res .= "{$this->key} input";
@@ -183,16 +189,14 @@ class t {
 			return;
 		}
 		
-		$required = in_array('not_null', $this->structure['flags']);
-
 		$inline = "class='form-control' ng-model='{$this->rawExpression}' "
-			. ($required ? "required ng-required " : "")
+			. ($this->required ? " required " : "")
 			. $this->options['inline'];
 
 		switch($this->type) {
 			case self::TYPE_LIST:
 				$count = count($this->listing);
-				if (!$required) $count++;
+				if (!$this->required) $count++;
   				if ($count <= 6) {
   					$i = 0;
   					$this->res .= "<table style='width: 100%'><tr><td>";
@@ -207,9 +211,9 @@ class t {
   						}
   						$i++;
   					}
-					if (!$required) {
+					if (!$this->required) {
   						$this->res.= ""
-							. "<input type='radio' ng-value='null' ng-model='{$this->rawExpression}' {$this->options['inline']}>"
+							. "<input type='radio' ng-value='0' ng-model='{$this->rawExpression}' {$this->options['inline']}>"
 	  						. "?"
 	  						. "<br>"
 	  						;
@@ -221,8 +225,8 @@ class t {
   					foreach($this->listing as $k => $v) {
   						$this->res .= "<option value='$k'>$v</option>";
   					}
-  					if (!$required) {
-  						$this->res .= "<option value=''>?</option>";
+  					if (!$this->required) {
+  						$this->res .= "<option value='0'>?</option>";
   					}
   					$this->res .= "</select>";
   				}
@@ -243,7 +247,7 @@ class t {
 				$this->res .= "<input $inline />";
 				break;
 			case self::TYPE_DATE:
-				$this->res .= "<input type='date' $inline placeholder='yyyy-MM-dd' mycalendar/>";
+				$this->res .= "<input type='date' $inline placeholder='yyyy-MM-dd' />";
 				break;
 			default:
 				$this->res .= "WW {$this->type} input ";
