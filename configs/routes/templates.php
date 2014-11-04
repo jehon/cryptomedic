@@ -247,7 +247,7 @@ class t {
 				$this->res .= "<input $inline />";
 				break;
 			case self::TYPE_DATE:
-				$this->res .= "<input type='date' $inline placeholder='yyyy-MM-dd' />";
+				$this->res .= "<input type='date' $inline placeholder='yyyy-MM-dd' mycalendar/>";
 				break;
 			default:
 				$this->res .= "WW {$this->type} input ";

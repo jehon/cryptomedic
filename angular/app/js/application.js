@@ -258,17 +258,18 @@ var mainApp = angular.module('app_main', [ 'ngRoute' ])
 	return function (scope, elem, attrs) {
 		if (!Modernizr.inputtypes.date) {
 			jQuery(elem).datepicker({ dateFormat: 'yy-mm-dd' });
-			elem.bind('blur', function() {
-				console.info("my blur event");
-				//scope.$apply(attrs.ngBlur);
-			});
-			elem.bind('focus', function() {
-				console.info("my focus event");
-				//scope.$apply(attrs.ngBlur);
-			});
+			 // elem.bind('blur', function() {
+			 	// console.info("my blur event");
+			 	//scope.$apply(attrs.ngBlur);
+			 // });
+			 // elem.bind('focus', function() {
+			 	// console.info("my focus event");
+			 	//scope.$apply(attrs.ngBlur);
+			 // });
 		}
 	}
 })
+
 // .directive('myFocus', function() {
 // 	return function (scope, elem, attrs) {
 // 		scope.$watch(attrs.ngFocus, function(newval) {
