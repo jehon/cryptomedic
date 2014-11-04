@@ -31,9 +31,8 @@ $config['database'] = array(
 
 $config['proxy'] = false;
 
-$config['upload_pictures'] = array();
-$config['upload_pictures']['path'] = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'uploadedPictures';
-$config['upload_pictures']['web'] = '/uploadedPictures';
+$config['pictures.storage'] = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'uploadedPictures';
+$config['pictures.url'] = '/uploadedPictures';
 
 
 /* Include the various modules */

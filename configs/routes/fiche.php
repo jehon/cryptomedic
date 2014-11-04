@@ -56,17 +56,20 @@ class RouteFiche extends RouteDBTable {
 		// Get the folder id (if it is a file -> will need the patient_id:
 		$nrec = $this->dbTable->rowGet($id);
 
-		// if (array_key_exists("file", $nrec) && $nrec["file"]) {
-		// 	if (!array_key_exists($type, $config) || !array_key_exists('upload', $config[$type]) || !$config[$type]['upload']) {
-		// 		throw new StorageDeleteError("File storage not defined");
-		// 	}
-		// 	$tfile = $config[$type]['upload'] . DIRECTORY_SEPARATOR . $nrec["file"];
-		// 	if (file_exists($tfile)) {
-		// 		if (!unlink($tfile)) {
-		// 			throw new StorageDeleteError("Could not delete the file");
-		// 		}
-		// 	}
-		// }
+		// If there is a file field, delete the related (configured) file  
+		if (array_key_exists("file", $nrec) && $nrec["file"]) {
+			$storage = $this->server->getConfig($this->table . ".storage", false);
+			if (!$storage) {
+			// if (!array_key_exists($type, $config) || !array_key_exists('upload', $config[$type]) || !$config[$type]['upload']) {
+				throw new StorageDeleteError("File storage not defined");
+			}
+			$tfile = $storage . DIRECTORY_SEPARATOR . $nrec["file"];
+			if (file_exists($tfile)) {
+				if (!unlink($tfile)) {
+					throw new StorageDeleteError("Could not delete the file");
+				}
+			}
+		}
 
 		// Delete the record
 		parent::elementDelete($id);
