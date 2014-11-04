@@ -8,7 +8,6 @@ mainApp.factory('service_rest', [ '$http', '$log' , '$rootScope', function($http
 	
 	function treatHttp(request, treatResponse) {
 		var def = jQuery.Deferred();
-
 		request.success(function(data, status, headers, config) {
 			$rootScope.$broadcast("rest_logged_in");
 			if (typeof(treatResponse) == 'function') {
@@ -97,30 +96,28 @@ mainApp.factory('service_rest', [ '$http', '$log' , '$rootScope', function($http
 		},
 		'unlockFile': function(data, folderId) {
 			cache.perish(folderId);
-		    return treatHttp($http({ method: "UNLINK", url: root + "/file/" + data['_type'] + "/" + data['id'] }), function(data) {
+		    return treatHttp($http({ method: "UNLINK", url: root + "/fiche/" + data['_type'] + "/" + data['id'] }), function(data) {
 				cache.set(data.getMainFile().id, data);
 				return data;				
 			});
 		},
 		'saveFile': function(data, folderId) {
 			cache.perish(folderId);
-			return treatHttp($http.put(root + "/file/" + data['_type'] + "/" + data['id'], data), function(data) {
+			return treatHttp($http.put(root + "/fiche/" + data['_type'] + "/" + data['id'], data), function(data) {
 				cache.set(data.getMainFile().id, data);
 				return data;				
 			});
 		},
 		'createFile': function(data, folderId) {
 			cache.perish(folderId);
-			return treatHttp($http.post(root + "/file/" + data['_type'], data), function(data, status, headers, config) {
-				// Access to headers???
-				// headers("NEWKEY");
+			return treatHttp($http.post(root + "/fiche/" + data['_type'], data), function(data, status, headers, config) {
 				cache.set(data.getMainFile().id, data);
 				return data;				
 			});
 		},
 		'deleteFile': function(data, folderId) {
 			cache.perish(folderId);
-			return treatHttp($http.delete(root + "/file/" + data['_type'] + "/" + data['id']), function(data) {
+			return treatHttp($http.delete(root + "/fiche/" + data['_type'] + "/" + data['id']), function(data) {
 				if (data instanceof application.models.Folder)
 					cache.set(data.getMainFile().id, data);
 				return data;				

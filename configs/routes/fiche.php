@@ -2,7 +2,7 @@
 
 require(__DIR__ . "/helpers/getFolder.php");
 
-class RouteFile extends RouteDBTable {
+class RouteFiche extends RouteDBTable {
 	public function collectionIndex() {
 		$this->notAllowed();
 	}
@@ -101,6 +101,6 @@ if (!$request->routeIsEnded()) {
 	$type = $request->routeConsumeNext();
 	$type = type2db($type);
 
-	$tdb = new RouteFile($request, $response, $server, $type);
+	$tdb = new RouteFiche($request, $response, $server, $type);
 	$tdb->routeAndRespond();
 }
