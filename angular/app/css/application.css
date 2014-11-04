@@ -117,6 +117,10 @@ fieldset > table > tbody > tr > td:nth-of-type(3), fieldset > table > thead > tr
 /********************************************
  * Input
  */
+input.ng-required {
+  border: 1px solid blue;
+}
+
 input.ng-invalid {
   border: 3px solid red;
 }
