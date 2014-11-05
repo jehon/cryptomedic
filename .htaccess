@@ -1,12 +1,12 @@
-<IfModule mod_expires.c>
-	ExpiresActive 	On
-	ExpiresByType	img/*			"access plus 1 week"
-	ExpiresByType	css/*			"access plus 1 week"
+#<IfModule mod_expires.c>
+#	ExpiresActive 	On
+#	ExpiresByType	img/*			"access plus 1 week"
+#	ExpiresByType	css/*			"access plus 1 week"
 #	ExpiresByType   js/*			"access plus 1 week"
-	ExpiresDefault 	A0
-</IfModule>
+#	ExpiresDefault 	A0
+#</IfModule>
 
-RewriteEngine on
+RewriteEngine On
 
-RewriteRule ^$ angular/app/		[QSA,L]
-RewriteRule (.*) angular/app/$1 [L]
+RewriteRule ^$ angular/app/index.php [QSA,L]
+RewriteRule ^(.*)$ angular/app/$1 [QSA,L]
