@@ -26,7 +26,7 @@ if ($request->getMethod() == Request::READ) {
 
 if ($request->getMethod() == Request::CREATE) {
 	// Create a reference
-	$server->getDatabase()->pdo->beginTrans();
+	$server->getDatabase()->pdo->beginTransaction();
 
 	// Check the patient
 	$res = checkReference($entryyear, $entryorder);
