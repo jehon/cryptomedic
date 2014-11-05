@@ -3,19 +3,29 @@
 require_once(__DIR__ . "/../helpers/getFolder.php");
 require_once(__DIR__ . "/../../amd_listings.php");
 require_once(__DIR__ . "/../helpers/references.php");
+require_once(__DIR__ . "/../helpers/prices.php");
 
-// TODOJH: manage parameters
+// TODOJH: manage borders
 $when = $request->getParameter("when", "todojh");
 $who = $request->getParameter("who", "todojh");
 $where = $request->getParameter("where", "todojh");
+
+$price = getPriceForDate($when);
 
 ?>
 <html>
 <div>
     <form>
         <label>Who ?</label><input name='who' value='<? echo $who; ?>'><br>
-        <label>Where ?</label><input name='where' value='<? echo $where; ?>'><br>
-        <label>When ?</label><input name='when' value='<? echo $when; ?>'><br>
+        <label>Where ?</label>
+                <select name='where'>
+                <?php 
+                    foreach(buildLinkedList($amd_listing['Centers']) as $k => $v) 
+                        echo "<option value='$k' " . ($k === $where ? "selected" : ""). " >$v</option>"; 
+                    ?>
+                </select>
+                <br>
+        <label>When ?</label><input name='when' type='date' value='<? echo $when; ?>'><br>
         <input type='submit' value='Calculate'>
     </form>
 </div>
@@ -30,15 +40,14 @@ $where = $request->getParameter("where", "todojh");
                 <th>When</th>
                 <th><? echo $when; ?></th>
                 <th></th>
-                <th></th>
-                <th colspan=4>Levels of the social level</th>
+                <th colspan=5>Levels of the social level</th>
             </tr>
             <tr>
                 <th colspan=5>SARPV, CHAKARIA DISABILITY CENTER, CHAKARIA, COX'S BAZAR</th>
                 <th>Who</th>
                 <th><? echo $who; ?></th>
                 <th></th>
-                <th></th>
+                <th>0</th>
                 <th>1</th>
                 <th>2</th>
                 <th>3</th>
@@ -49,11 +58,11 @@ $where = $request->getParameter("where", "todojh");
                 <th>Where</th>
                 <th><? echo unreference($where); ?></th>
                 <th></th>
-                <th></th>
-                <th>todojh</th>
-                <th>todojh</th>
-                <th>todojh</th>
-                <th>todojh</th>
+                <th>0-300</th>
+                <th>301-500</th>
+                <th>501-1500</th>
+                <th>1501-3000</th>
+                <th>3001-...</th>
             </tr>
             <tr>
                 <th colspan="4"></th>
@@ -95,8 +104,10 @@ $where = $request->getParameter("where", "todojh");
                 $result = $database->query("SELECT * FROM bills 
                     JOIN patients ON bills.patient_id = patients.id 
                     WHERE 
-                        (:physio = '' || bills.ExaminerName = :physio)
-                    LIMIT 100", array('physio' =>  $who));
+                        (:who = '' || bills.ExaminerName = :who)
+                        AND (:where = '' || bills.Center = :where)
+                        AND (:when = '' || bills.Date = :when)
+                    LIMIT 100", array('who' =>  $who, 'where' => $where, 'when' => $when));
                 foreach($result as $i => $v) {
                     ?>
                         <tr>

@@ -32,12 +32,7 @@ function buildLinkedList($list) {
 	$res = array();
 	foreach($list as $k => $v){
 		if (!is_numeric($v)) continue;
-		$l = $labels->rowGet($v);
-		if ($l["english"] != $v && $l["english"] != "") {
-			$res[$v] = $l["english"];
-		} else {
-			$res[$v] = $v;
-		}
+		$res[$v] = unreference($v);
 	}
 	return $res;
 
