@@ -14,7 +14,7 @@ if (!$request->routeIsEnded()) {
 	$data[] = array_keys($folder['mainFile']);
 
 	$heads[] = false;
-	$data[] = unreferenceArray("Patient", $folder['mainFile']);
+	$data[] = unreferenceObject("Patient", $folder['mainFile']);
 
 	$heads[] = false;
 	$data[] = "";
@@ -34,7 +34,7 @@ if (!$request->routeIsEnded()) {
 					$present = true;
 				}
 				$heads[] = false;
-				$data[] = unreferenceArray($m, $f);
+				$data[] = unreferenceObject($m, $f);
 			}
 		}
 		$heads[] = false;

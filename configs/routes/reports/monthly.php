@@ -104,7 +104,7 @@ unset($centers['labels']);
 $res = $server->getDatabase()->query("SELECT Center, Count(*) as `count` FROM bills WHERE $thismonth GROUP BY Center");
 
 foreach($centers as $c) {
-	_addLine("@ " . unreference("Bill", "Center", $c),
+	_addLine("@ " . unreference($c),
 		array_key_exists($c, $res) ? $res[$c]['count'] : 0
 		);
 }

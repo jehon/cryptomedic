@@ -47,7 +47,7 @@ $where = $request->getParameter("where", "todojh");
             <tr>
                 <th colspan=5>Daily report of <? echo $when; ?></th>
                 <th>Where</th>
-                <th><? echo unreference("Bill", "Center", $where); ?></th>
+                <th><? echo unreference($where); ?></th>
                 <th></th>
                 <th></th>
                 <th>todojh</th>
@@ -63,7 +63,7 @@ $where = $request->getParameter("where", "todojh");
                 <th colspan="6">Price</th>
             </tr>
             <tr>
-                <th>N#</th>
+                <th>N</th>
                 <th>Date</th>
                 <th>Physio</th>
                 <th>Place</th>
@@ -94,32 +94,34 @@ $where = $request->getParameter("where", "todojh");
             <?php
                 $result = $database->query("SELECT * FROM bills 
                     JOIN patients ON bills.patient_id = patients.id 
-                    LIMIT 100");
+                    WHERE 
+                        (:physio = '' || bills.ExaminerName = :physio)
+                    LIMIT 100", array('physio' =>  $who));
                 foreach($result as $i => $v) {
                     ?>
                         <tr>
                             <td><?php echo $i; ?></td>
                             <td><?php echo $v['Date']; ?></td>
                             <td><?php echo $v['ExaminerName']; ?></td>
-                            <td><?php echo unreference("Bills", "Center", $v['Center']); ?></td>
+                            <td><?php echo unreference($v['Center']); ?></td>
                             <td><?php echo $v['entryyear'] . "-" . $v['entryorder']; ?></td>
 
                             <td><?php echo $v['Firstname'] . " " . $v['Lastname']; ?></td>
                             <td><?php echo (Date('Y') - $v['Yearofbirth']); ?></td>
-                            <td><?php echo unreference("Patient", "Sex", $v['Sex']); ?></td>
-                            <td><?php echo "new/old"; ?></td>
+                            <td><?php echo unreference($v['Sex']); ?></td>
+                            <td><?php echo "#"; // todojh new/old ?></td>
                             <td><?php echo $v['Familysalaryinamonth']; ?></td>
                             <td><?php echo $v['Numberofhouseholdmembers']; ?></td>
-                            <td><?php echo ($v['Numberofhouseholdmembers'] > 0 ? $v['Familysalaryinamonth'] / $v['Numberofhouseholdmembers'] : "?"); ?></td>
+                            <td><?php echo ($v['Numberofhouseholdmembers'] > 0 ? round($v['Familysalaryinamonth'] / $v['Numberofhouseholdmembers']) : "?"); ?></td>
                             <td><?php echo $v['Sociallevel']; ?></td>
 
-                            <td><?php echo "todojh"; ?>diagno</td>
-                            <td><?php echo "todojh"; ?>actc</td>
-                            <td><?php echo "todojh"; ?>treatment</td>
+                            <td><?php echo "#"; // todojh diagno?></td>
+                            <td><?php echo "#"; // todojh act?></td>
+                            <td><?php echo "#"; // todojh treatment?></td>
 
-                            <td><?php echo "todojh"; ?>total consult</td>
-                            <td><?php echo "todojh"; ?>total medecine</td>
-                            <td><?php echo "todojh"; ?>total other</td>
+                            <td><?php echo "#"; // todojh total consult?></td>
+                            <td><?php echo "#"; // todojh total medecine?></td>
+                            <td><?php echo "#"; // todojh total other ?></td>
                             <td><?php echo $v['total_real']; ?></td>
                             <td><?php echo $v['total_asked']; ?></td>
                             <td><?php echo $v['total_paid']; ?></td>
@@ -133,20 +135,5 @@ $where = $request->getParameter("where", "todojh");
         </tbody>
     </table>
 <?
-$response->data = array();
-$response->formParameters = array(
-        "when" => array(
-            "text" => "Enther the day",
-            "type" => "date",
-            "default" => date("Y-m-d")
-            ),
-        "who" => array(
-            "text" => "Enter the physio",
-            "default" => "2"
-            ),
-        "where" => array(
-            "text" => "Enther the center",
-            "default" => "200",
-            "list" => buildLinkedList($amd_listing['Centers'])
-            ),
-    );
+
+$response->ok();

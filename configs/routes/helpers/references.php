@@ -3,21 +3,24 @@ require_once(__DIR__ . "/../../amd_listings.php");
 
 $labels = $server->getDatabase()->getTable("labels");
 
-function unreferenceArray($table, $array) {
+function unreferenceObject($table, $array) {
 	foreach($array as $f => $v) {
-		$array[$f] = unreference($table, $f, $v);
+		$array[$f] = unreference($v, $table, $f);
 	}
 	return $array;
 }
 
-function unreference($table, $field, $value) {
+function unreference($value, $table = "", $field = "") {
 	global $labels;
-	global $model_listing;
-	if (array_key_exists("$table.$field", $model_listing)) {
-		$res = $labels->rowGet($value);
-		if ($res) {
-			return $res["english"];
-		}
+	if ($table != "") {
+		global $model_listing;
+		if (!array_key_exists("$table.$field", $model_listing)) {
+			return $value;
+		}		
+	}
+	$res = $labels->rowGet($value);
+	if ($res) {
+		return $res["english"];
 	}
 	return $value;
 }
