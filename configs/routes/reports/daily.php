@@ -3,15 +3,36 @@
 require_once(__DIR__ . "/../helpers/getFolder.php");
 require_once(__DIR__ . "/../../amd_listings.php");
 require_once(__DIR__ . "/../helpers/references.php");
-require_once(__DIR__ . "/../helpers/prices.php");
+require_once(__DIR__ . "/../helpers/price.php");
+require_once(__DIR__ . "/../helpers/bill.php");
 
-// TODOJH: manage borders
-$when = $request->getParameter("when", "todojh");
-$who = $request->getParameter("who", "todojh");
-$where = $request->getParameter("where", "todojh");
+$who = $request->getParameter("who");
+$where = $request->getParameter("where", 992);
+$when = $request->getParameter("when", Date('Y-m-d'));
 
-$price = getPriceForDate($when);
+/*
+            (:who = '' || bills.ExaminerName = :who)
 
+*/
+$result = $database->query("SELECT 
+            " . Bill::getSQLFieldSumConsult() . " AS sum_consult, 
+            " . Bill::getSQLFieldSumWorkshop() . " AS sum_workshop, 
+            " . Bill::getSQLFieldSumSurgical() . " AS sum_surgical, 
+            " . Bill::getSQLFieldSumOther() . " AS sum_other,
+            bills.*,
+            patients.*
+        FROM bills 
+        JOIN patients ON bills.patient_id = patients.id 
+        JOIN prices ON bills.price_id = prices.id
+        WHERE (1 = 1)
+            AND (:where = '' || bills.Center = :where)
+            AND (:when = '' || bills.Date = :when)
+        LIMIT 500", 
+        array(
+            // 'who' =>  $who, 
+            'where' => $where, 
+            'when' => $when)
+    );
 ?>
 <html>
 <div>
@@ -29,95 +50,124 @@ $price = getPriceForDate($when);
         <input type='submit' value='Calculate'>
     </form>
 </div>
+<style>
+    table, thead, tbody, tr, th, td {
+        border-width: 1px;
+        border-color: blue;
+    }
+
+    table {
+        border: black 2px solid;
+        border-collapse: collapse;
+    }
+
+    thead {
+        border: black 2px solid;
+    }
+
+    .b_right {
+        border-right: gray 1px solid;
+    }
+
+    .b_left {
+        border-left: gray 1px solid;
+    }
+
+    .b_bottom {
+        border-bottom: gray 1px solid;
+    }
+
+    .b_all {
+        border: gray 1px solid;
+    }
+</style>
 <div>
     <table>
         <thead>
             <tr>
-                <th>SARPV - AMD - KDM</th>
+                <th colspan="23" class='b_all'>SARPV - AMD - KDM</th>
             </tr>
             <tr>
-                <th colspan=5>Name of project: Ricktes in cox's Bazar</th>
-                <th>When</th>
-                <th><? echo $when; ?></th>
+                <th colspan=5 class='b_all'>Name of project: Ricktes in cox's Bazar</th>
+                <th class='b_left'>When</th>
+                <th ><? echo $when; ?></th>
                 <th></th>
-                <th colspan=5>Levels of the social level</th>
+                <th colspan=5 class='b_left b_right'>Levels of the social level</th>
+                <th colspan=10></th>
             </tr>
             <tr>
                 <th colspan=5>SARPV, CHAKARIA DISABILITY CENTER, CHAKARIA, COX'S BAZAR</th>
-                <th>Who</th>
+                <th class='b_left'>Who</th>
                 <th><? echo $who; ?></th>
                 <th></th>
-                <th>0</th>
+                <th class='b_left'>0</th>
                 <th>1</th>
                 <th>2</th>
                 <th>3</th>
-                <th>4</th>
+                <th class='b_right'>4</th>
+                <th colspan="10"></th>
             </tr>
             <tr>
-                <th colspan=5>Daily report of <? echo $when; ?></th>
-                <th>Where</th>
-                <th><? echo unreference($where); ?></th>
-                <th></th>
-                <th>0-300</th>
-                <th>301-500</th>
-                <th>501-1500</th>
-                <th>1501-3000</th>
-                <th>3001-...</th>
+                <th colspan="5" class='b_bottom'>Daily report of <? echo $when; ?></th>
+                <th class='b_left b_bottom'>Where</th>
+                <th class='b_bottom'><? echo unreference($where); ?></th>
+                <th class='b_bottom'></th>
+                <th class='b_left b_bottom'>0-300</th>
+                <th class='b_bottom'>301-500</th>
+                <th class='b_bottom'>501-1500</th>
+                <th class='b_bottom'>1501-3000</th>
+                <th class='b_right b_bottom'>3001-...</th>
+                <th colspan="10" class='b_bottom'></th>
             </tr>
             <tr>
-                <th colspan="4"></th>
-                <th colspan="5">Identity</th>
-                <th colspan="4">SEL</th>
-                <th colspan="3">Medical</th>
-                <th colspan="6">Price</th>
+                <th colspan="5" class='b_left'></th>
+                <th colspan="4" class='b_left'>Identity</th>
+                <th colspan="4" class='b_left'>SEL</th>
+                <th colspan="3" class='b_left'>Medical</th>
+                <th colspan="7" class='b_left'>Price</th>
             </tr>
             <tr>
-                <th>N</th>
+                <th class='b_left'>N</th>
                 <th>Date</th>
                 <th>Physio</th>
                 <th>Place</th>
                 <th>Record n#</th>
 
-                <th>Patient name</th>
+                <th class='b_left'>Patient name</th>
                 <th>Age</th>
                 <th>M/F</th>
                 <th>New/Old</th>
-                <th>Tk income</th>
+
+                <th class='b_left'>Tk income</th>
                 <th>Nb pers</th>
                 <th>Tk per pers</th>
                 <th>SL</th>
 
-                <th>Diagno</th>
+                <th class='b_left'>Diagno</th>
                 <th>Act</th>
                 <th>Trt</th>
 
-                <th>Consult</th>
+                <th class='b_left'>Consult</th>
                 <th>Medicine</th>
+                <th>Workshop</th>
                 <th>Others</th>
                 <th>Full</th>
                 <th>Asked</th>
                 <th>Payed</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody  class='b_all'>
             <?php
-                $result = $database->query("SELECT * FROM bills 
-                    JOIN patients ON bills.patient_id = patients.id 
-                    WHERE 
-                        (:who = '' || bills.ExaminerName = :who)
-                        AND (:where = '' || bills.Center = :where)
-                        AND (:when = '' || bills.Date = :when)
-                    LIMIT 100", array('who' =>  $who, 'where' => $where, 'when' => $when));
                 foreach($result as $i => $v) {
                     ?>
                         <tr>
-                            <td><?php echo $i; ?></td>
+                            <td class='b_left'><?php echo $i; ?></td>
                             <td><?php echo $v['Date']; ?></td>
                             <td><?php echo $v['ExaminerName']; ?></td>
                             <td><?php echo unreference($v['Center']); ?></td>
                             <td><?php echo $v['entryyear'] . "-" . $v['entryorder']; ?></td>
 
-                            <td><?php echo $v['Firstname'] . " " . $v['Lastname']; ?></td>
+                            <td class='b_left'><?php echo $v['Firstname'] . " " . $v['Lastname']; ?></td>
                             <td><?php echo (Date('Y') - $v['Yearofbirth']); ?></td>
                             <td><?php echo unreference($v['Sex']); ?></td>
                             <td><?php echo "#"; // todojh new/old ?></td>
@@ -126,17 +176,17 @@ $price = getPriceForDate($when);
                             <td><?php echo ($v['Numberofhouseholdmembers'] > 0 ? round($v['Familysalaryinamonth'] / $v['Numberofhouseholdmembers']) : "?"); ?></td>
                             <td><?php echo $v['Sociallevel']; ?></td>
 
-                            <td><?php echo "#"; // todojh diagno?></td>
+                            <td class='b_left'><?php echo "#"; // todojh diagno?></td>
                             <td><?php echo "#"; // todojh act?></td>
                             <td><?php echo "#"; // todojh treatment?></td>
 
-                            <td><?php echo "#"; // todojh total consult?></td>
-                            <td><?php echo "#"; // todojh total medecine?></td>
-                            <td><?php echo "#"; // todojh total other ?></td>
+                            <td class='b_left'><?php echo $v['sum_consult']; ?></td>
+                            <td><?php echo $v['sum_surgical'];?></td>
+                            <td><?php echo $v['sum_workshop'] ?></td>
+                            <td><?php echo $v['sum_other'] ?></td>
                             <td><?php echo $v['total_real']; ?></td>
                             <td><?php echo $v['total_asked']; ?></td>
                             <td><?php echo $v['total_paid']; ?></td>
-                            <td><?php //var_dump($v); ?></td>
                         </tr>
                     <?php
                 }

@@ -3,6 +3,12 @@
 		<div class='col-sm-offset-3 col-sm-6'>
 			<fieldset id='add'>
 				<legend>Global reporting</legend>
+				<h3>Daily report</h3>
+				The daily report track the activity of a center.
+				<br>
+				<a class='btn btn-primary' href='/rest/reports/daily.html'>Daily report</a>
+				<br>
+
 				<h3>Monthly report</h3>
 				The monthly report track the activity of the center according to various axes.
 				<br>
