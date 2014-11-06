@@ -13,9 +13,9 @@ mainApp.config([ '$routeProvider', function($routeProvider) {
     }).when('/day', {
         templateUrl: '/rest/templates/day.html',
         controller: 'ctrl_day',
-    }).when('/reports', {
+    }).when('/reports/:report?', {
         templateUrl: '/rest/templates/reports.html',
-        // controller: 'ctrl_reports',
+        controller: 'ctrl_reports',
     }).otherwise({ 'redirectTo': '/home'});
 }]);
 
