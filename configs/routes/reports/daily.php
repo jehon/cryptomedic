@@ -72,7 +72,7 @@ $result = $database->query("SELECT
     }
 </style>
 <div>
-    <table>
+    <table id='datatable'>
         <thead>
             <tr>
                 <th colspan="23" class='b_all'>SARPV - AMD - KDM</th>
