@@ -41,4 +41,5 @@ mainApp.controller('ctrl_reports', [ '$scope', '$routeParams', function($scope, 
 		$scope.url = res;
 	}
 
+	$scope.refresh();
 }]);
