@@ -6,9 +6,15 @@ require_once(__DIR__ . "/../helpers/references.php");
 require_once(__DIR__ . "/../helpers/price.php");
 require_once(__DIR__ . "/../helpers/bill.php");
 
-$who = $request->getParameter("who");
-$where = $request->getParameter("where", 992);
-$when = $request->getParameter("when", Date('Y-m-d'));
+$who = $request->getParameter("examinerName", "");
+$where = $request->getParameter("center", 992);
+$when = $request->getParameter("date", new DateTime());
+if (!($when instanceof DateTime)) {
+    $when = ""; // new DateTime();
+} else {
+    $when = $when->format("Y-m-d");
+}
+
 
 /*
             (:who = '' || bills.ExaminerName = :who)
@@ -34,22 +40,6 @@ $result = $database->query("SELECT
             'when' => $when)
     );
 ?>
-<html>
-<div>
-    <form>
-        <label>Who ?</label><input name='who' value='<? echo $who; ?>'><br>
-        <label>Where ?</label>
-                <select name='where'>
-                <?php 
-                    foreach(buildLinkedList($amd_listing['Centers']) as $k => $v) 
-                        echo "<option value='$k' " . ($k === $where ? "selected" : ""). " >$v</option>"; 
-                    ?>
-                </select>
-                <br>
-        <label>When ?</label><input name='when' type='date' value='<? echo $when; ?>'><br>
-        <input type='submit' value='Calculate'>
-    </form>
-</div>
 <style>
     table, thead, tbody, tr, th, td {
         border-width: 1px;
