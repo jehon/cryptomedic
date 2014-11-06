@@ -36,6 +36,9 @@
 	(new Script("bower_components/html5-boilerplate/js/vendor/modernizr-2.6.2.min.js"))->dependFile()->toPrint();
 	(new Script("bower_components/angular/angular.min.js"))->dependFile()->toPrint();
 	(new Script("bower_components/angular-route/angular-route.min.js"))->dependFile()->toPrint();
+
+	// Other
+	(new Script("bower_components/excellentexport/excellentexport.min.js"))->dependFile()->toPrint();
 	
 	// personnal
 	(new Script("js/application.js"))->dependFile()->toPrint();
