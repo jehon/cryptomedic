@@ -1,28 +1,25 @@
+<table class='reporting'><tbody>
 <?php
 
 require_once(__DIR__ . "/../helpers/references.php");
 
-$response->data = array();
-$response->formParameters = array("month" => array("text" => "Enter the month for the report (yyyy-mm - 2014-01)",
-			"default" => date("Y-m")
-		)
-	);
-
 function _addLine($data) {
 	if (!is_array($data))
 		$data = func_get_args();
-	global $response;
-	$response->data[] = $data;
+	echo "<tr>";
 	if (count($data) == 1) {
-		$response->descriptiveData[] = "subheader";
+		echo "<td colspan=2 class='subheader'>" . $data[0] . "</td>";
 	} else {
-		$response->descriptiveData[] = array();
+		foreach($data as $v) {
+			echo "<td>$v</td>";
+		}
 	}
+	echo "</tr>\n";
 	if (count($data) > 1)
 		return $data[1];
 }
 
-$input = $request->getParameter('month', $response->formParameters['month']['default']);
+$input = $request->getParameter('month');
 $year = substr($input, 0, 4);
 $month = substr($input, 5, 2);
 
@@ -113,7 +110,7 @@ function billCountByType($filter, &$list) {
 	global $server;
 	global $thismonth;
 	global $bills;
-	foreach($bills->getColumns() as $f => $k) {
+	foreach($bills->getColumns() as $f) {
 		if ($list == "") $list = "(1=0)";
 		if (strtoupper(substr($f, 0, strlen($filter))) == strtoupper($filter)) {
 			$sql = "SELECT count(*) From bills WHERE $thismonth AND ($f > 0)";
@@ -171,3 +168,7 @@ billStats("Others", "NOT($anySurgery OR $anyWorkshop OR $anyConsult) AND $anyOth
 
 billStats("Grand Total", "(1=1)");
  
+?>
+</tbody></table>
+<?
+	$response->ok();
