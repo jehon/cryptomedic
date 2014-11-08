@@ -78,7 +78,7 @@ _addLine("Family income (mean)", $inco);
 _addLine("Nb household mb (mean)", $nbhous);
 
 if ($nbhous > 0)
-	_addLine("ratio (mean)", $inco / $nbhous);
+	_addLine("ratio (mean)", round($inco / $nbhous));
 else
 	_addLine("ratio (mean)", "-");
 
