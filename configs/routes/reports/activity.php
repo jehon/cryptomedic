@@ -169,4 +169,3 @@ function between($i) {
 </table>
 <?php
   	$response->ok();  
-?>

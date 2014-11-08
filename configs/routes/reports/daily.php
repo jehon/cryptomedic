@@ -185,6 +185,5 @@ $result = $database->query("SELECT
             ?>
         </tbody>
     </table>
-<?
-
-$response->ok();
+<?php
+    $response->ok();
