@@ -1,24 +1,3 @@
-<style>
-	th {
-		color: white;
-		background-color: gray;
-	}
-
-	td, th {
-		border-left: 1px solid black;
-		border-right: 1px solid black;
-		text-align: center;
-	}
-
-	td:nth-child(1) {
-		text-align: left;
-	}
-
-	.subheader {
-		background-color: lightgray;
-	}
-</style>
-
 <?php
 
 require_once(__DIR__ . "/../../amd_listings.php");
@@ -67,8 +46,8 @@ function between($i) {
 	return "BETWEEN '$db' AND '$de'";
 }
 ?>
-<table>
-    <thead class='colorize'>
+<table class="reporting">
+    <thead>
         <tr>
             <th>Number of files</th>
             <th>This month</th>

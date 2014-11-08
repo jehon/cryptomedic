@@ -39,15 +39,30 @@ h1 > img {
  * Reports
  */
 
-tr:nth-child(odd) {
-  background-color: lightgray;
-}
-
-td.subheader {
+table.reporting th {
+  color: white;
   background-color: gray;
 }
 
-td.subheader > td {
+table.reporting td, table.reporting th {
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  text-align: center;
+}
+
+table.reporting td:nth-child(1) {
+  text-align: left;
+}
+
+table.reporting tr:nth-child(odd) {
+  background-color: lightgray;
+}
+
+table.reporting td.subheader {
+  background-color: gray;
+}
+
+table.reporting td.subheader {
   padding: 5px;
   padding-top: 10px;
   text-align: center;
