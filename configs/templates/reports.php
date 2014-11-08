@@ -27,6 +27,12 @@
 							<input name='date' type='date' ng-model='values.date' class="form-control">
 						</div>
 				    </div>
+			      	<div ng-if="isParam('month')" class="form-group">
+				        <label class="col-sm-2 control-label">Month (yyyy-mm)</label>
+			        	<div class="col-sm-10">
+							<input name='month' ng-model='values.month' class="form-control">
+						</div>
+				    </div>
 			    	<div class="form-group">
 			    	    <div class="col-sm-offset-2 col-sm-10">
 					        <div class='btn btn-primary' ng-click="refresh()">Refresh</div>
@@ -61,7 +67,7 @@
 				<h3>Monthly report</h3>
 				The monthly report track the activity of the center according to various axes.
 				<br>
-				<a class='btn btn-primary' href='/rest/reports/monthly.html'>Monthly report</a>
+				<a class='btn btn-primary' href='#/reports/monthly'>Monthly report</a>
 				<br>
 			
 				<h3>Activity report</h3>
