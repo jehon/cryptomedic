@@ -35,6 +35,24 @@ h1 > img {
   height: 35px;
   margin-right: 20px;
 }
+/********************************************
+ * Reports
+ */
+
+tr:nth-child(odd) {
+  background-color: lightgray;
+}
+
+td.subheader {
+  background-color: gray;
+}
+
+td.subheader > td {
+  padding: 5px;
+  padding-top: 10px;
+  text-align: center;
+  font-weight: bold;
+}
 
 /********************************************
  * Data display (modes, emtpyValues)
