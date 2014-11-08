@@ -2,14 +2,18 @@
 
 mainApp.controller('ctrl_reports', [ '$scope', '$routeParams', function($scope, $routeParams) {
 	var report = $routeParams['report'];
+	var now = new Date();
 	$scope.values = {
 		'examinerName': '',
 		'date': new Date(),
-		'center': 992
+		'center': 992,
+		'month': now.getFullYear() + "-" + now.getMonth()
+
 	};
 
 	var reports = {
-		'daily': [ "center", "examinerName", "date" ]
+		'daily': [ "center", "examinerName", "date" ],
+		'monthly': [ "month"]
 	}
 
 	$scope.getReport = function() {
@@ -25,7 +29,6 @@ mainApp.controller('ctrl_reports', [ '$scope', '$routeParams', function($scope, 
 
 
 	$scope.refresh = function() {
-		console.log("refresh");
 		var res = report + ".html?";
 		console.log($scope.values);
 		angular.forEach(reports[report], function(value) {
