@@ -187,9 +187,3 @@
 		</div>
 	</div>
 </div>
-debug:
-{{currentFile().consult_medecine}}<br>
-{{currentfile().getPriceFor('consult_medecine')}}<br>
-{{currentfile().getTotalFor('consult_medecine')}}<br>
-{{currentfile().getPriceFor('consult_CDC_consultation_physio')}}<br>
-{{currentfile().getTotalFor('consult_CDC_consultation_physio')}}<br>
