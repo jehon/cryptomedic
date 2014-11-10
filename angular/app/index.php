@@ -147,7 +147,7 @@
 	    </div>
 	  </div>
 	</nav>
-	<div class="view-animate-container">
+	<div old-class="view-animate-container">
 		<div ng-view></div>
 	</div>
 </body>

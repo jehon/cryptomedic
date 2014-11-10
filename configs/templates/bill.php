@@ -10,16 +10,16 @@
 	function price($item, $label = null) {
 		$name = explode(".", $item);
 		$name = $name[1];
-		if ($label != null) $name = $label;
+		if ($label == null) $label = ;
 		echo "<tr "
 			. "ng-if=\"currentFile().getPriceFor('$name') > 0\" "
 			. "ng-class='{ notModeRead: !currentFile().$name }'"
 			. ">";
 		echo "<td>" 
-			. str_replace("_", " ", substr($item, strpos($item, '_') + 1)) 
+			. ($label === null ? str_replace("_", " ", substr($item, strpos($item, '_') + 1)) : $label)
 			. "</td>";
 		echo "<td>";
-		(new t($item, [ "inline" => "style='width: 4em' step=1 min=0" ]))->value()->p();
+			(new t($item, [ "inline" => "style='width: 4em' step=1 min=0" ]))->value()->p();
 		echo "</td>";
 		echo "<td><div pricefor='$item'>{{currentFile().getPriceFor('$name')}}</div></td>";
 		echo "<td>{{currentFile().getTotalFor('$name')}}</td>";
@@ -35,7 +35,6 @@
 					<?php (new t("Bill.Date"))->tr()->p(); ?>
 					<?php (new t("Bill.ExaminerName"))->tr("Examiner")->p(); ?>
 					<?php (new t("Bill.Center"))->tr("Center where consultation took place")->p(); ?>
-					<?php (new t("Bill.price_id"))->readonly()->tr("")->p(); ?>
 				</table>
 			</FieldSet>
 			<FieldSet>
@@ -182,6 +181,15 @@
 					</tr>
 				</table>
 			</FieldSet>
+			<div class='debug_infos'>
+				price_id: {{currentFile().price_id}}<br>
+			</div>
 		</div>
 	</div>
 </div>
+debug:
+{{currentFile().consult_medecine}}<br>
+{{currentfile().getPriceFor('consult_medecine')}}<br>
+{{currentfile().getTotalFor('consult_medecine')}}<br>
+{{currentfile().getPriceFor('consult_CDC_consultation_physio')}}<br>
+{{currentfile().getTotalFor('consult_CDC_consultation_physio')}}<br>

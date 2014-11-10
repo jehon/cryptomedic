@@ -1,4 +1,12 @@
 /*
+div[ng-cloak], div.ng-cloak {
+  background-color: red;
+  width: 100px;
+  height: 100px;
+  display: block;
+}
+*/
+/*
  * Globals
  */
 
@@ -14,6 +22,12 @@
 	border-right: solid 15px yellow;
  	border-color: yellow;
 }
+
+.debug_infos {
+  font-size: x-small; 
+  color: lightgray
+}
+
 
 .toberemoved {
   background-color: red;
