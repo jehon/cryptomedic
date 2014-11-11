@@ -14,7 +14,7 @@
 
 			<label>Center</label>
 	       	<?php
-	       		(new t("RicketConsult.Center"))->write()->p();
+	       		(new t("RicketConsult.Center"))->writeOnly()->tr()->p();
 	       	?>
 	       	<br>
 	       	<p class="text-center">
