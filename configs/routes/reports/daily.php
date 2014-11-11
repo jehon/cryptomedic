@@ -39,6 +39,8 @@ $result = $database->query("SELECT
             'where' => $where, 
             'when' => $when)
     );
+
+// var_dump($result[0]);
 ?>
 <style>
     table, thead, tbody, tr, th, td {
@@ -152,6 +154,7 @@ $result = $database->query("SELECT
         <tbody  class='b_all'>
             <?php
                 foreach($result as $i => $v) {
+                    // Calculate Medecine > Diagno
                     $v['pathology'] = array();
                     if ($v['pathology_Ricket']) $v['pathology'][] = 'R';
                     if ($v['pathology_Clubfoot']) $v['pathology'][] = 'CF';
@@ -161,6 +164,13 @@ $result = $database->query("SELECT
                     if ($v['pathology_Congenital']) $v['pathology'][] = 'C';
                     if ($v['pathology_Adult']) $v['pathology'][] = 'A';
                     if ($v['pathology_other']) $v['pathology'][] = '?';
+
+                    // Calculate Medecine > Act
+                    $v['medecine_act'] = array();
+                    if ($v['consult_CDC_consultation_physio']) $v['medecine_act'][] = 'CP';
+                    if ($v['consult_CDC_consultation_Doctor']) $v['medecine_act'][] = 'CD';
+                    if ($v['consult_field_visit']) $v['medecine_act'][] = 'FV';
+                    if ($v['consult_home_visit']) $v['medecine_act'][] = 'HV';
 
                     ?>
                         <tr>
@@ -180,7 +190,7 @@ $result = $database->query("SELECT
                             <td><?php echo $v['Sociallevel']; ?></td>
 
                             <td class='b_left'><?php echo implode($v['pathology'], ','); ?></td>
-                            <td><?php echo "#"; // todojh act ?></td>
+                            <td><?php echo implode($v['medecine_act'], ','); ?></td>
                             <td><?php echo "#"; // todojh treatment?></td>
 
                             <td class='b_left'><?php echo $v['sum_consult']; ?></td>
@@ -196,17 +206,24 @@ $result = $database->query("SELECT
 
 
             ?>
-        <tr class='subheader b_top'><td colspan='22'>Codes</td></tr>
-        <tr><td>Medecine</td><td></td></tr>
-        <tr><td>R</td><td>Ricket</td></tr>
-        <tr><td>CF</td><td>Club Foot</td></tr>
-        <tr><td>P</td><td>Polio</td></tr>
-        <tr><td>B</td><td>Burn</td></tr>
-        <tr><td>CP</td><td>CP</td></tr>
-        <tr><td>C</td><td>Congenital</td></tr>
-        <tr><td>A</td><td>Patient is adult</td></tr>
-        <tr><td>?</td><td>Other</td></tr>
         </tbody>
     </table>
+    <h1>Legend</h1>
+    <h3>Medecine</h3>
+    <span class="label label-default">R</span>Ricket<br>
+    <span class="label label-default">CF</span>Club Foot<br>
+    <span class="label label-default">P</span>Polio<br>
+    <span class="label label-default">B</span>Burn<br>
+    <span class="label label-default">CP</span>CP<br>
+    <span class="label label-default">C</span>Congenital<br>
+    <span class="label label-default">A</span>Patient is adult<br>
+    <span class="label label-default">?</span>Other<br>
+
+    <h3>Act</h3>
+    <span class="label label-default">CP</span>Consult physio<br>
+    <span class="label label-default">CD</span>Consult doctor<br>
+    <span class="label label-default">FV</span>Field visit<br>
+    <span class="label label-default">HV</span>Home visit<br>
+</div>
 <?php
     $response->ok();
