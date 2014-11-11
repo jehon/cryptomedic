@@ -10,7 +10,6 @@
 	function price($item, $label = null) {
 		$name = explode(".", $item);
 		$name = $name[1];
-		if ($label == null) $label = ;
 		echo "<tr "
 			. "ng-if=\"currentFile().getPriceFor('$name') > 0\" "
 			. "ng-class='{ notModeRead: !currentFile().$name }'"
@@ -179,6 +178,7 @@
 						<td>Price to be asked to the patient</td>
 						<td>{{currentFile().calculate_total_asked() | number:0}}</td>
 					</tr>
+					<?php (new t("Bill.total_paid"))->tr("Paid by the patient")->p(); ?>
 				</table>
 			</FieldSet>
 			<div class='debug_infos'>
