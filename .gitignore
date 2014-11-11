@@ -1,5 +1,13 @@
 /.project
 /.settings
 /.buildpath
+/.DS_Store
+/.idea
 
-app/webroot/angular/npm-debug.log
+!.gitkeep
+
+node_modules/
+**/logs
+**/tmp
+
+output/

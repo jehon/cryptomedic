@@ -15,7 +15,7 @@ exports.config = {
   ],
 
   //baseUrl: 'http://localhost:8000/app/',
-  baseUrl: 'http://localhost/amd/new/angular/app/index.php',
+  baseUrl: 'http://localhost/cryptomedic/app/index.php',
 
   framework: 'jasmine',
 
