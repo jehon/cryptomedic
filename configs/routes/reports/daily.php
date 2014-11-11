@@ -67,6 +67,10 @@ $result = $database->query("SELECT
         border-bottom: gray 1px solid;
     }
 
+    .b_top {
+        border-top: gray 1px solid;
+    }
+
     .b_all {
         border: gray 1px solid;
     }
@@ -75,7 +79,7 @@ $result = $database->query("SELECT
     <table>
         <thead>
             <tr>
-                <th colspan="23" class='b_all'>SARPV - AMD - KDM</th>
+                <th colspan="22" class='b_all'>SARPV - AMD - KDM</th>
             </tr>
             <tr>
                 <th colspan="5" class='b_all'>Name of project: Ricktes in cox's Bazar</th>
@@ -148,6 +152,16 @@ $result = $database->query("SELECT
         <tbody  class='b_all'>
             <?php
                 foreach($result as $i => $v) {
+                    $v['pathology'] = array();
+                    if ($v['pathology_Ricket']) $v['pathology'][] = 'R';
+                    if ($v['pathology_Clubfoot']) $v['pathology'][] = 'CF';
+                    if ($v['pathology_CP']) $v['pathology'][] = 'CP';
+                    if ($v['pathology_Polio']) $v['pathology'][] = 'P';
+                    if ($v['pathology_Burn']) $v['pathology'][] = 'B';
+                    if ($v['pathology_Congenital']) $v['pathology'][] = 'C';
+                    if ($v['pathology_Adult']) $v['pathology'][] = 'A';
+                    if ($v['pathology_other']) $v['pathology'][] = '?';
+
                     ?>
                         <tr>
                             <td class='b_left'><?php echo $i; ?></td>
@@ -159,14 +173,14 @@ $result = $database->query("SELECT
                             <td class='b_left'><?php echo $v['Firstname'] . " " . $v['Lastname']; ?></td>
                             <td><?php echo (Date('Y') - $v['Yearofbirth']); ?></td>
                             <td><?php echo unreference($v['Sex']); ?></td>
-                            
+
                             <td class='b_left'><?php echo $v['Familysalaryinamonth']; ?></td>
                             <td><?php echo $v['Numberofhouseholdmembers']; ?></td>
                             <td><?php echo ($v['Numberofhouseholdmembers'] > 0 ? round($v['Familysalaryinamonth'] / $v['Numberofhouseholdmembers']) : "?"); ?></td>
                             <td><?php echo $v['Sociallevel']; ?></td>
 
-                            <td class='b_left'><?php echo "#"; // todojh diagno?></td>
-                            <td><?php echo "#"; // todojh act?></td>
+                            <td class='b_left'><?php echo implode($v['pathology'], ','); ?></td>
+                            <td><?php echo "#"; // todojh act ?></td>
                             <td><?php echo "#"; // todojh treatment?></td>
 
                             <td class='b_left'><?php echo $v['sum_consult']; ?></td>
@@ -182,6 +196,16 @@ $result = $database->query("SELECT
 
 
             ?>
+        <tr class='subheader b_top'><td colspan='22'>Codes</td></tr>
+        <tr><td>Medecine</td><td></td></tr>
+        <tr><td>R</td><td>Ricket</td></tr>
+        <tr><td>CF</td><td>Club Foot</td></tr>
+        <tr><td>P</td><td>Polio</td></tr>
+        <tr><td>B</td><td>Burn</td></tr>
+        <tr><td>CP</td><td>CP</td></tr>
+        <tr><td>C</td><td>Congenital</td></tr>
+        <tr><td>A</td><td>Patient is adult</td></tr>
+        <tr><td>?</td><td>Other</td></tr>
         </tbody>
     </table>
 <?php

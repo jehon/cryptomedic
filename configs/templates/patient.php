@@ -38,14 +38,14 @@
 						Please select at least one pathology
 					</td>
 					</tr>
-					<?php (new t("Patient.pathology_Ricket"))->tr("Ricket")->p(); ?>
-					<?php (new t("Patient.pathology_Clubfoot"))->tr("Club foot")->p(); ?>
-					<?php (new t("Patient.pathology_Polio"))->tr("Polio")->p(); ?>
-					<?php (new t("Patient.pathology_Burn"))->tr("Burn")->p(); ?>
+					<?php (new t("Patient.pathology_Ricket"))->tr("Ricket (R)")->p(); ?>
+					<?php (new t("Patient.pathology_Clubfoot"))->tr("Club foot (CF)")->p(); ?>
+					<?php (new t("Patient.pathology_Polio"))->tr("Polio (P)")->p(); ?>
+					<?php (new t("Patient.pathology_Burn"))->tr("Burn (B)")->p(); ?>
 					<?php (new t("Patient.pathology_CP"))->tr("CP")->p(); ?>
-					<?php (new t("Patient.pathology_Congenital"))->tr("Congenital")->p(); ?>
-					<?php (new t("Patient.pathology_Adult"))->tr("Patient is adult")->p(); ?>
-					<?php (new t("Patient.pathology_other"))->tr("Other (please specify)")->p(); ?>
+					<?php (new t("Patient.pathology_Congenital"))->tr("Congenital (C)")->p(); ?>
+					<?php (new t("Patient.pathology_Adult"))->tr("Patient is adult (A)")->p(); ?>
+					<?php (new t("Patient.pathology_other"))->tr("Other (please specify) (?)")->p(); ?>
 					<?php (new t("Patient.historyofcomplaint"))->tr("History of the complaint")->p(); ?>
 				</table>
 			</fieldset>
