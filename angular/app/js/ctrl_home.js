@@ -54,5 +54,22 @@ mainApp.controller('ctrl_home', [ '$scope', '$location', 'service_rest' , functi
 			});
 		$scope.searched = true;
 	};
+	$scope.generateReference = function() {
+		var busyEnd = $scope.doBusy("Generating a the reference on the server");
+		service_rest.createReference($scope.entryyear, -1)
+			.done(function(data) {
+				busyEnd();
+				jQuery("#busy").modal('hide');
+				setTimeout(function() {
+					window.location.hash = "/folder/" + data.id + "/patient/edit";
+				}, 1);
+			})
+			.fail(function(data) {
+				console.error(data);
+			}).always(function() {
+				busyEnd();
+			});
+		$scope.searched = true;
+	}
 	
 }]);
