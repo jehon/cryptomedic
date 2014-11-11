@@ -12,7 +12,7 @@ mainApp.controller('ctrl_reports', [ '$scope', '$routeParams', function($scope, 
 	};
 
 	var reports = {
-		'daily': [ "center", "examinerName", "date" ],
+		'daily': [ "center", "date" ], //, "examinerName"
 		'monthly': [ "month"]
 	}
 

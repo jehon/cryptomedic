@@ -78,15 +78,15 @@ $result = $database->query("SELECT
                 <th colspan="23" class='b_all'>SARPV - AMD - KDM</th>
             </tr>
             <tr>
-                <th colspan=5 class='b_all'>Name of project: Ricktes in cox's Bazar</th>
+                <th colspan="5" class='b_all'>Name of project: Ricktes in cox's Bazar</th>
                 <th class='b_left'>When</th>
                 <th ><? echo $when; ?></th>
                 <th></th>
-                <th colspan=5 class='b_left b_right'>Levels of the social level</th>
-                <th colspan=10></th>
+                <th colspan="5" class='b_left b_right'>Levels of the social level</th>
+                <th colspan="9"></th>
             </tr>
             <tr>
-                <th colspan=5>SARPV, CHAKARIA DISABILITY CENTER, CHAKARIA, COX'S BAZAR</th>
+                <th colspan="5">SARPV, CHAKARIA DISABILITY CENTER, CHAKARIA, COX'S BAZAR</th>
                 <th class='b_left'>Who</th>
                 <th><? echo $who; ?></th>
                 <th></th>
@@ -95,7 +95,7 @@ $result = $database->query("SELECT
                 <th>2</th>
                 <th>3</th>
                 <th class='b_right'>4</th>
-                <th colspan="10"></th>
+                <th colspan="9"></th>
             </tr>
             <tr>
                 <th colspan="5" class='b_bottom'>Daily report of <? echo $when; ?></th>
@@ -107,11 +107,11 @@ $result = $database->query("SELECT
                 <th class='b_bottom'>501-1500</th>
                 <th class='b_bottom'>1501-3000</th>
                 <th class='b_right b_bottom'>3001-...</th>
-                <th colspan="10" class='b_bottom'></th>
+                <th colspan="9" class='b_bottom'></th>
             </tr>
             <tr>
                 <th colspan="5" class='b_left'></th>
-                <th colspan="4" class='b_left'>Identity</th>
+                <th colspan="3" class='b_left'>Identity</th>
                 <th colspan="4" class='b_left'>SEL</th>
                 <th colspan="3" class='b_left'>Medical</th>
                 <th colspan="7" class='b_left'>Price</th>
@@ -126,7 +126,6 @@ $result = $database->query("SELECT
                 <th class='b_left'>Patient name</th>
                 <th>Age</th>
                 <th>M/F</th>
-                <th>New/Old</th>
 
                 <th class='b_left'>Tk income</th>
                 <th>Nb pers</th>
@@ -160,8 +159,8 @@ $result = $database->query("SELECT
                             <td class='b_left'><?php echo $v['Firstname'] . " " . $v['Lastname']; ?></td>
                             <td><?php echo (Date('Y') - $v['Yearofbirth']); ?></td>
                             <td><?php echo unreference($v['Sex']); ?></td>
-                            <td><?php echo "#"; // todojh new/old ?></td>
-                            <td><?php echo $v['Familysalaryinamonth']; ?></td>
+                            
+                            <td class='b_left'><?php echo $v['Familysalaryinamonth']; ?></td>
                             <td><?php echo $v['Numberofhouseholdmembers']; ?></td>
                             <td><?php echo ($v['Numberofhouseholdmembers'] > 0 ? round($v['Familysalaryinamonth'] / $v['Numberofhouseholdmembers']) : "?"); ?></td>
                             <td><?php echo $v['Sociallevel']; ?></td>
