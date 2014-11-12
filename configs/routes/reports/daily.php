@@ -15,7 +15,6 @@ if (!($when instanceof DateTime)) {
     $when = $when->format("Y-m-d");
 }
 
-
 /*
             (:who = '' || bills.ExaminerName = :who)
 
@@ -39,8 +38,6 @@ $result = $database->query("SELECT
             'where' => $where, 
             'when' => $when)
     );
-
-// var_dump($result[0]);
 ?>
 <style>
     table, thead, tbody, tr, th, td {
