@@ -85,7 +85,7 @@ class RouteFiche extends RouteDBTable {
 	public function elementCustom($method, $id) {
 		if ($method == "UNLINK") {
 			// Unlock the file
-			$this->server->getDatabase()->exec("UPDATE {$this->table} SET modified = NOW(), lastuser = :lastuser WHERE id = :id", 
+			$this->server->getDatabase()->exec("UPDATE `{$this->table}` SET modified = NOW(), lastuser = :lastuser WHERE id = :id", 
 				array("lastuser" => $this->server->getSession(Server::LOGIN_USERNAME), "id" => $id));
 
 			// Get the folder id:

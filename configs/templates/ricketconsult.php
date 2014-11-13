@@ -38,8 +38,8 @@
 						<td>Left</td>
 						<td>Right</td>
 					</tr>
-					<?php (new t("RicketConsult.?Leg"))->trLeftRight()->p(); ?>
-					<?php (new t("RicketConsult.?legAngle"))->trLeftRight()->p(); ?>
+					<?php (new t("RicketConsult.?Leg"))->trLeftRight("Leg")->p(); ?>
+					<?php (new t("RicketConsult.?legAngle"))->trLeftRight("Leg Angle")->p(); ?>
 					<tr>
 						<td>Cross</td>
 						<td></td>
