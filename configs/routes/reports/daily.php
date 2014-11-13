@@ -1,8 +1,6 @@
 <?php
 
 require_once(__DIR__ . "/../helpers/getFolder.php");
-require_once(__DIR__ . "/../../amd_listings.php");
-require_once(__DIR__ . "/../helpers/references.php");
 require_once(__DIR__ . "/../helpers/price.php");
 require_once(__DIR__ . "/../helpers/bill.php");
 
@@ -103,7 +101,7 @@ $result = $database->query("SELECT
             <tr>
                 <th colspan="5" class='b_bottom'>Daily report of <? echo $when; ?></th>
                 <th class='b_left b_bottom'>Where</th>
-                <th class='b_bottom'><? echo unreference($where); ?></th>
+                <th class='b_bottom'><? echo References::unreference($where); ?></th>
                 <th class='b_bottom'></th>
                 <th class='b_left b_bottom'>0-300</th>
                 <th class='b_bottom'>301-500</th>
@@ -174,12 +172,12 @@ $result = $database->query("SELECT
                             <td class='b_left'><?php echo $i; ?></td>
                             <td><?php echo $v['Date']; ?></td>
                             <td><?php echo $v['ExaminerName']; ?></td>
-                            <td><?php echo unreference($v['Center']); ?></td>
+                            <td><?php echo References::unreference($v['Center']); ?></td>
                             <td><?php echo $v['entryyear'] . "-" . $v['entryorder']; ?></td>
 
                             <td class='b_left'><?php echo $v['Firstname'] . " " . $v['Lastname']; ?></td>
                             <td><?php echo (Date('Y') - $v['Yearofbirth']); ?></td>
-                            <td><?php echo unreference($v['Sex']); ?></td>
+                            <td><?php echo References::unreference($v['Sex']); ?></td>
 
                             <td class='b_left'><?php echo $v['Familysalaryinamonth']; ?></td>
                             <td><?php echo $v['Numberofhouseholdmembers']; ?></td>

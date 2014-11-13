@@ -94,14 +94,14 @@ for($i = 0; $i < 6;  $i++)
 	billsBySocialLevel($i);
 
 _addLine("Where");
-$centers = $amd_listing['Centers'];
+$centers = Refernces::$amd_listing['Centers'];
 $centers[] = '';
 unset($centers['labels']);
 
 $res = $server->getDatabase()->query("SELECT Center, Count(*) as `count` FROM bills WHERE $thismonth GROUP BY Center");
 
 foreach($centers as $c) {
-	_addLine("@ " . unreference($c),
+	_addLine("@ " . References::unreference($c),
 		array_key_exists($c, $res) ? $res[$c]['count'] : 0
 		);
 }

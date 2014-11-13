@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <?php 
-	require "../../rest/php/script.php";
+	require "../../rest/php/core.php";
+	// require "../../rest/php/script.php";
+	$server = new Server();
+	$request = new Request($server);
+
+	// use $request?
+    if ($request->isServedLocally()) {
+    	// require_once("compileTemplates.php");
+    }
+
 ?>
 <head>
 	<meta charset="utf-8">

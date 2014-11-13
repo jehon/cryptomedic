@@ -14,12 +14,12 @@ if (!$request->routeIsEnded()) {
 	$data[] = array_keys($folder['mainFile']);
 
 	$heads[] = false;
-	$data[] = unreferenceObject("Patient", $folder['mainFile']);
+	$data[] = References::unreferenceObject("Patient", $folder['mainFile']);
 
 	$heads[] = false;
 	$data[] = "";
 	
-	foreach($model2controller as $m => $t) {
+	foreach(References::$model2controller as $m => $t) {
 		$present = false;
 		$heads[] = "subheader";
 		$data[] = "*** $m ***";
@@ -34,7 +34,7 @@ if (!$request->routeIsEnded()) {
 					$present = true;
 				}
 				$heads[] = false;
-				$data[] = unreferenceObject($m, $f);
+				$data[] = References::unreferenceObject($m, $f);
 			}
 		}
 		$heads[] = false;

@@ -8,7 +8,6 @@ mainApp.controller('ctrl_reports', [ '$scope', '$routeParams', function($scope, 
 		'date': new Date(),
 		'center': 992,
 		'month': now.getFullYear() + "-" + now.getMonth()
-
 	};
 
 	var reports = {

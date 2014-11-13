@@ -40,3 +40,11 @@ if (file_exists(dirname(__DIR__) . DIRECTORY_SEPARATOR . "dev.php"))
 	include(dirname(__DIR__) . DIRECTORY_SEPARATOR . "dev.php");
 
 $config['debug'] = 1;
+
+// Application autoload classes
+spl_autoload_register(function ($class) {
+    if (requireIfExists(__DIR__ . "/php/" . strtolower($class) . ".php")) {
+        return true;
+    }
+    return false;
+});

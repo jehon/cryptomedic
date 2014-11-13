@@ -1,20 +1,16 @@
 <?php
-require(__DIR__ . "/../../amd_listings.php");
+// require(__DIR__ . "/../../amd_listings.php");
 
 function db2model($dbName) {
-	global $model2controller;
-	if (array_search($dbName, $model2controller) === false)
-		return $dbName;
-	else
-		return array_search($dbName, $model2controller);
-
+	return References::controller2model($dbName);
 }
 
 function type2db($type) {
-	global $model2controller;
-	if (array_key_exists($type, $model2controller))
-		return $model2controller[$type];
-	return $type;
+	return References::model2controller($type);
+	// global $model2controller;
+	// if (array_key_exists($type, $model2controller))
+	// 	return $model2controller[$type];
+	// return $type;
 }
 
 function getFolder($id) {
@@ -37,8 +33,7 @@ function getFolder($id) {
 	$res['subFiles'] = array();
 
 	//$rawTable = new DBTable($server->getConfig("database"), null, $server);
-	global $model2controller;
-	foreach($model2controller as $m => $c) {
+	foreach(References::$model2controller as $m => $c) {
 		// we work by controller = the same as in database?
 		if ($c == "patients") continue;
 		// TODO: remove references to this:

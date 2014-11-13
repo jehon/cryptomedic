@@ -55,7 +55,7 @@ function between($i) {
         </tr>
     </thead>
     <tbody>
-        <?php foreach($model2controller as $label => $t) { ?>
+        <?php foreach(References::$model2controller as $label => $t) { ?>
             <tr class="subheader">
                 <td colspan="13"><?php echo $label; ?></td>
             </tr>
