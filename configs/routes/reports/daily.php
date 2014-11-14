@@ -158,7 +158,7 @@ $result = $database->query("SELECT
                     if ($v['pathology_Burn']) $v['pathology'][] = 'B';
                     if ($v['pathology_Congenital']) $v['pathology'][] = 'C';
                     if ($v['pathology_Adult']) $v['pathology'][] = 'A';
-                    if ($v['pathology_other']) $v['pathology'][] = '?';
+                    if ($v['pathology_other']) $v['pathology'][] = 'Oth';
 
                     // Calculate Medecine > Act
                     $v['medecine_act'] = array();
@@ -212,7 +212,7 @@ $result = $database->query("SELECT
     <span class="label label-default">CP</span>CP<br>
     <span class="label label-default">C</span>Congenital<br>
     <span class="label label-default">A</span>Patient is adult<br>
-    <span class="label label-default">?</span>Other<br>
+    <span class="label label-default">Oth</span>Other<br>
 
     <h3>Act</h3>
     <span class="label label-default">CP</span>Consult physio<br>
