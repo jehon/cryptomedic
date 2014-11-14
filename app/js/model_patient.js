@@ -28,10 +28,10 @@ application.models.Patient = application.models.Data.extend({
 		 */
 		
 		if (typeof(this.ratioSalary()) == "string") throw new DataMissingException("Numberofhouseholdmembers");
-		if (this.ratioSalary() < 300) 	return 0;
-		if (this.ratioSalary() < 500)	return 1;
-		if (this.ratioSalary() < 1500)	return 2;
-		if (this.ratioSalary() < 3000)	return 3;
+		if (this.ratioSalary() <= 300) 	return 0;
+		if (this.ratioSalary() <= 500)	return 1;
+		if (this.ratioSalary() <= 1500)	return 2;
+		if (this.ratioSalary() <= 3000)	return 3;
 		return 4;
 	},
 	'validate': function(res) {
