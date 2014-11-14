@@ -35,7 +35,6 @@ application.models.Patient = application.models.Data.extend({
 		return 4;
 	},
 	'validate': function(res) {
-		console.log("validate patient");
 		res = this._super(res);
 
 		if (!this.pathology_Clubfoot
