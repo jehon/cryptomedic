@@ -65,12 +65,16 @@ application.models.Bill = application.models.File.extend({
 		}
 		this.price_id = -1;
 		var t = this;
-		if (typeof(this.Date) == "string") {
-			this.Date = new Date(this.Date);
-		}
+		var dref = this.Date;
+		// if (typeof(this.Date) == "string") {
+		// 	// this.Date = new Date(this.Date);
+		// 	dref = new Date(this.Date);
+		// }
+		// console.info(dref);
 		angular.forEach(cryptomedic.prices, function(p, i) {
-			if (((p['datefrom'] == null) || (p['datefrom'] <= t.Date))
-					&& ((p['dateto'] == null) || (p['dateto'] > t.Date))) {
+			// console.log(p);
+			if (((p['datefrom'] == null) || (p['datefrom'] <= dref))
+					&& ((p['dateto'] == null) || (p['dateto'] > dref))) {
 				t.price_id = i;
 			}
 		});

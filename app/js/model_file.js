@@ -29,7 +29,9 @@ application.models.File = application.models.Data.extend({
 		if (this.getPatient() == null) throw new DataMissingException("Patient");
 		if (!this.getPatient().isNotZero('Yearofbirth')) throw new DataMissingException("Year of Birth");
 
-		return (this.Date.getFullYear() - this.getPatient().Yearofbirth);
+		// TODOJH: date workaround
+		return this.Date.substr(0, 4) - this.getPatient().Yearofbirth;
+		// return (this.Date.getFullYear() - this.getPatient().Yearofbirth);
 	},
 	'ds_height': function() {
 		var sex = this.getPatient().sexStr();
