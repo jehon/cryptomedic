@@ -45,6 +45,12 @@ class t {
             self::setDefaultOption($key, $val);
     }
 
+    static private $uuid = 0;
+    static function UUID()  {
+        self::$uuid++;
+        return self::$uuid;
+    }
+
     function __construct($key, $options = array()) {
         $this->key = $key;
         $this->options = $options;
@@ -149,8 +155,6 @@ class t {
     }
     
     function read() {
-        // global $dateFormat;
-        // global $dateTimeFormat;
         if (!$this->linked2DB) {
             $this->res .= "<span class='error'>Read: key is not in the database: '{$this->key}'</span>";
             return $this;
@@ -164,15 +168,16 @@ class t {
                 $this->res .= "<span id='{$this->key}' ng-show='{$this->rawExpression}'><img src='img/boolean-true.gif'></span>"
                         . "<span id='{$this->key}' ng-hide='{$this->rawExpression}'><img src='img/boolean-false.gif'></span>";
                 break;
-            case self::TYPE_DATE:
-                // See https://docs.angularjs.org/api/ng/filter/date
-                $this->res .= "<span id='{$this->key}'>{{ {$this->rawExpression} | date:'{self::DATEFORMAT}' }}</span>";
-                break;
             case self::TYPE_LIST:
                 if ($this->isListLinked) {
                     $this->res .= "<span id='{$this->key}'>{{link( {$this->rawExpression} )}}</span>";
                     break;
                 }
+            case self::TYPE_DATE:
+            // TODOJH: recheck this later - Workaround!!!
+            //     // See https://docs.angularjs.org/api/ng/filter/date
+            //     $this->res .= "<span id='{$this->key}'>{{ {$this->rawExpression} | date:'{self::DATEFORMAT}' }}</span>";
+            //     break;
             case self::TYPE_INTEGER:
             case self::TYPE_TEXT:
             case self::TYPE_CHAR:
@@ -249,7 +254,12 @@ class t {
                 $this->res .= "<input $inline />";
                 break;
             case self::TYPE_DATE:
-                $this->res .= "<input type='date' $inline placeholder='yyyy-MM-dd' mycalendar/>";
+                // TODOJH: date workaround
+                $uuid = t::UUID();
+                $this->res .= "<input type='text' $inline placeholder='yyyy-MM-dd' mycalendar uuid='$uuid'/>";
+                $this->res .= "<span ng-if='errors.date_$uuid' class='jserror'>"
+                    . "Invalid date: please enter yyyy-mm-dd"
+                    . "</span>";
                 break;
             default:
                 $this->res .= "WW {$this->type} input ";

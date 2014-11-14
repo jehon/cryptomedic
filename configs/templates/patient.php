@@ -35,8 +35,8 @@
 					<tr>
 						<td></td>
 						<td ng-if="errors.noPathology" class='jserror'>
-						Please select at least one pathology
-					</td>
+							Please select at least one pathology
+						</td>
 					</tr>
 					<?php (new t("Patient.pathology_Ricket"))->tr("Ricket (R)")->p(); ?>
 					<?php (new t("Patient.pathology_Clubfoot"))->tr("Club foot (CF)")->p(); ?>

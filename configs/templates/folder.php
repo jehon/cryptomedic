@@ -13,7 +13,8 @@
 						class="btn btn-default left-menu-button"
 						ng-class="{ 'btn-warning': page === $index }"
 						>
-					{{f._type}} <span ng-if="f.Date">[{{f.Date | date:'<?php echo t::DATEFORMAT; ?>'}}]</span> 
+						<!-- | date:'<?php echo t::DATEFORMAT; ?>' -->
+					{{f._type}} <span ng-if="f.Date"><br>[{{f.Date }}]</span> 
 				</a>
 			</span>
 			<a ng-class="{ 'btn-warning': page === 'patient-reporting'}" ng-href="#/folder/{{id()}}/patient-reporting" class="btn btn-default" style="width: 100%">Reporting</a>

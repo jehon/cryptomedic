@@ -122,13 +122,14 @@ function objectify(what) {
             	if (what == "0000-00-00 00:00:00") return null;
                 return new Date(what.substr(0, 4), what.substr(5, 2) - 1, what.substr(8, 2),
                     what.substr(11, 2), what.substr(14, 2), what.substr(17, 2));
-			};
-			// TODO: problem with year parsing !!!
-            if (what.match("[0-9]{4}-[0-9]{2}-[0-9]{2}") == what) {
-            	if (what == "0000-00-00") return null;
-                var d = new Date(what.substr(0, 4), what.substr(5, 2) - 1, what.substr(8, 2));
-                return d;
-			};
+            };
+			// // TODO: problem with year parsing !!!
+			// TODOJH: workaround: do not manage yyyy-mm-dd in date() but stay in strings
+   //          if (what.match("[0-9]{4}-[0-9]{2}-[0-9]{2}") == what) {
+   //          	if (what == "0000-00-00") return null;
+   //              var d = new Date(what.substr(0, 4), what.substr(5, 2) - 1, what.substr(8, 2));
+   //              return d;
+			// };
 			return what;
 		case "object":
 			angular.forEach(what, function(val, i) {
@@ -148,7 +149,7 @@ function stringify(what) {
     if (what == null) return what;
     if (typeof(what) == "object") {
         if (what instanceof Date) {
-            return date2CanonicString(what);
+        	return date2CanonicString(what);
         }
         angular.forEach(what, function (v, k) {
             what[k] = stringify(what[k]);
@@ -256,17 +257,16 @@ var mainApp = angular.module('app_main', [ 'ngRoute' ])
 }])
 .directive('mycalendar', function() {
 	return function (scope, elem, attrs) {
-		if (!Modernizr.inputtypes.date) {
+		// if (!Modernizr.inputtypes.date) {
 			jQuery(elem).datepicker({ dateFormat: 'yy-mm-dd' });
 			 // elem.bind('blur', function() {
-			 	// console.info("my blur event");
+				// console.log('blur');
 			 	//scope.$apply(attrs.ngBlur);
 			 // });
 			 // elem.bind('focus', function() {
-			 	// console.info("my focus event");
 			 	//scope.$apply(attrs.ngBlur);
 			 // });
-		}
+		// }
 	}
 })
 

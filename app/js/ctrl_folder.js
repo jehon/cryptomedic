@@ -63,9 +63,9 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_rest', '$rou
 	}
 	
 	$scope.actionValidate = function() {
-		// TODO: use this in all modification actions
-		// TODO: jserror should have an icon before (danger)
-		// TODO: hide action button if form is not ok
+		// TODOJH: use this in all modification actions
+		// TODOJH: jserror should have an icon before (danger)
+		// TODOJH: hide action button if form is not ok
 		$scope.valide = true;
 
 		if (!jQuery("#fileForm")[0].checkValidity()) {
@@ -75,7 +75,17 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_rest', '$rou
 		}
 
 		$scope.errors = $scope.currentFile().validate();
-		console.log($scope.errors);
+
+		jQuery("input[mycalendar]:visible").each(function(){
+			var date = jQuery(this).val();
+			var ok = ((new Date(date) !== "Invalid Date" && !isNaN(new Date(date))))
+			if (!ok) {
+				var uuid = jQuery(this).attr('uuid');
+				$scope.errors['date_' + uuid] = true;
+				$scope.valide = false;
+			}
+		});
+
 		if (!jQuery.isEmptyObject($scope.errors)) {
 			console.log("Model invalid");
 			console.log($scope.errors);
