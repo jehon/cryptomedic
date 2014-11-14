@@ -153,7 +153,7 @@ class t {
         // global $dateTimeFormat;
         if (!$this->linked2DB) {
             $this->res .= "<span class='error'>Read: key is not in the database: '{$this->key}'</span>";
-            return;
+            return $this;
         }
         switch($this->type) {
             case self::TYPE_TIMESTAMP: 
@@ -188,7 +188,7 @@ class t {
     function write() {
         if (!$this->linked2DB) {
             $this->res .= "<span class='error'>Write: key is not in the database: '{$this->key}'</span>";
-            return;
+            return $this;
         }
         
         $inline = "class='form-control' ng-model='{$this->rawExpression}' "
