@@ -7,10 +7,10 @@ require_once(__DIR__ . "/../helpers/bill.php");
 $who = $request->getParameter("examinerName", "");
 $where = $request->getParameter("center", 992);
 $when = $request->getParameter("date", new DateTime());
-if (!($when instanceof DateTime)) {
-    $when = ""; // new DateTime();
-} else {
+if ($when instanceof DateTime) {
     $when = $when->format("Y-m-d");
+} else {
+    $when = substr($when, 0, 10);
 }
 
 /*
