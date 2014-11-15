@@ -35,6 +35,9 @@
 					<?php (new t("Bill.ExaminerName"))->tr("Examiner")->p(); ?>
 					<?php (new t("Bill.Center"))->tr("Center where consultation took place")->p(); ?>
 				</table>
+				<div class='debug_infos'>
+					price_id {{currentFile().price_id}}<br>
+				</div>
 			</FieldSet>
 			<FieldSet>
 				<legend>Consultation items</legend>
@@ -181,9 +184,6 @@
 					<?php (new t("Bill.total_paid"))->tr("Paid by the patient")->p(); ?>
 				</table>
 			</FieldSet>
-			<div class='debug_infos'>
-				price_id: {{currentFile().price_id}}<br>
-			</div>
 		</div>
 	</div>
 </div>
