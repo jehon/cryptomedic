@@ -24,8 +24,10 @@ div[ng-cloak], div.ng-cloak {
 }
 
 .debug_infos {
-  font-size: x-small; 
-  color: lightgray
+  font-size: xx-small; 
+  font-style: italic;
+  color: lightgray;
+  text-align: right;
 }
 
 
