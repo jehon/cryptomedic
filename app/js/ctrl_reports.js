@@ -30,10 +30,10 @@ mainApp.controller('ctrl_reports', [ '$scope', '$routeParams', function($scope, 
 	$scope.refresh = function() {
 		var res = report + ".html?";
 		if ($scope.values.date) {
-			console.log("here we are");
 			$scope.values.date.setUTCHours(0, 0, 0, 0);
 		}
-		console.log($scope.values);
+
+
 		angular.forEach(reports[report], function(value) {
 			if (typeof($scope.values[value]) != 'undefined') {
 				var v = $scope.values[value];
@@ -43,7 +43,7 @@ mainApp.controller('ctrl_reports', [ '$scope', '$routeParams', function($scope, 
 				res += value + "=" + v + "&";
 			}
 		});
-		console.log(res);
+		res += "ts=" + (new Date()).getTime();
 		$scope.url = res;
 	}
 
