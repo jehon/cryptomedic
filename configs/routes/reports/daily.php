@@ -22,6 +22,9 @@ $result = $database->query("SELECT
             " . Bill::getSQLFieldSumWorkshop() . " AS sum_workshop, 
             " . Bill::getSQLFieldSumSurgical() . " AS sum_surgical, 
             " . Bill::getSQLFieldSumOther() . " AS sum_other,
+            bills.total_real as total_real,
+            bills.total_asked as total_asked,
+            bills.total_paid as total_paid,
             bills.*,
             patients.*
         FROM bills 
@@ -169,7 +172,10 @@ $result = $database->query("SELECT
 
                     ?>
                         <tr>
-                            <td class='b_left'><?php echo $i; ?></td>
+                            <td class='b_left'><?php 
+                                echo $i; 
+                                //var_dump($v);
+                                ?></td>
                             <td><?php echo $v['Date']; ?></td>
                             <td><?php echo $v['ExaminerName']; ?></td>
                             <td><?php echo References::unreference($v['Center']); ?></td>
