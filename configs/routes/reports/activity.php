@@ -1,7 +1,5 @@
 <?php
 
-require_once(__DIR__ . "/../../amd_listings.php");
-
 $now = new DateTime();
 {
     $m = new DateTime($now->format("Y-M-1"));

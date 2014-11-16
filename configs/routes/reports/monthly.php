@@ -1,8 +1,6 @@
 <table class='reporting'><tbody>
 <?php
 
-require_once(__DIR__ . "/../helpers/references.php");
-
 function _addLine($data) {
 	if (!is_array($data))
 		$data = func_get_args();
@@ -94,7 +92,7 @@ for($i = 0; $i < 6;  $i++)
 	billsBySocialLevel($i);
 
 _addLine("Where");
-$centers = Refernces::$amd_listing['Centers'];
+$centers = References::$amd_listing['Centers'];
 $centers[] = '';
 unset($centers['labels']);
 
