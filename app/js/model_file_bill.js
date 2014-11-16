@@ -7,8 +7,12 @@ application.models.Bill = application.models.File.extend({
 			this._type = "Bill";
 		}
 	},
-	'calculate': function() {
-		if (!this.price_id) return 0;
+	'calculate_total_real': function() {
+		if (!this.price_id) {
+			this.total_real = 0;
+			this.total_asked = 0;
+			return -1;
+		}
 		var price = cryptomedic.prices[this.price_id];
 		var total = 0;
 		angular.forEach(price, function(p, i) {
@@ -31,23 +35,20 @@ application.models.Bill = application.models.File.extend({
 			if (typeof(this[i]) == 'undefined') return;
 			if (this[i] <= 0) return;
 			total += price[i] * this[i];
-			// 	$total += $price[$i] * $data[$i];
 		}, this);
-		return total;
-	},
-	'calculate_total_real': function() {
-		return this.calculate();
+		this.total_real = total;
+		return this.total_real;
 	},
 	'calculate_percentage_asked': function() {
 		if (!this.price_id) return 0;
+		this.calculate_total_real();
 		var sl = this['Sociallevel'];
 		if (sl == null || sl == 0) return 1;
 		var price = cryptomedic.prices[this.price_id];
 		if (typeof(price["socialLevelPercentage_" + this.price_id]) == "undefined") return 1;
-		return price["socialLevelPercentage_" + sl];
-	},
-	'calculate_total_asked': function() {
-		return this.calculate_total_real() * this.calculate_percentage_asked();
+		var perc = price["socialLevelPercentage_" + sl];
+		this.total_asked = this.total_real * perc;
+		return perc;
 	},
 	'getPriceFor': function(key) {
 		if (!this.price_id) return 0;
@@ -81,6 +82,7 @@ application.models.Bill = application.models.File.extend({
 		if (this.price_id < 0) {
 			throw new ApplicationException("Price Id not set");
 		}
+		this.calculate_total_real();
 	},
 	'tagIt': function() {
 		if (pi < 0) {

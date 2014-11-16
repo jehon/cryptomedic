@@ -179,7 +179,7 @@
 					</tr>
 		            <tr>
 						<td>Price to be asked to the patient</td>
-						<td>{{currentFile().calculate_total_asked() | number:0}}</td>
+						<td>{{currentFile().total_asked | number:0 }}</td>
 					</tr>
 					<?php (new t("Bill.total_paid"))->tr("Paid by the patient")->p(); ?>
 				</table>
