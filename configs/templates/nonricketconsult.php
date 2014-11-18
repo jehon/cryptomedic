@@ -22,16 +22,12 @@
 			</fieldset>
 		</div>
 		<div class="col-lg-6">
-			<div ng-include="'/rest/templates/patient-related.html'"></div>
+			<?php require("partials/patient-related.php"); ?>
 			<fieldset>
 				<legend>Conclusion</legend>
 				<table>
-					<?php //(new t("NonricketConsult.Physiotherapy61"))->tr()->p(); ?>
-					<?php //(new t("NonricketConsult.Plaster62"))->tr()->p(); ?>
-					<?php //(new t("NonricketConsult.Orthopedicdevice65"))->tr()->p(); ?>
 					<?php (new t("NonricketConsult.Surgery66"))->tr("Surgery")->p(); ?>
 					<?php (new t("NonricketConsult.Othertreatment68"))->tr("Other treatment")->p(); ?>
-					<?php //(new t("NonricketConsult.Comment"))->tr()->p(); ?>
 					<?php (new t("NonricketConsult.Nextappointment"))->tr()->p(); ?>
 					<?php (new t("NonricketConsult.NextCenter"))->tr()->p(); ?>
 				</table>
