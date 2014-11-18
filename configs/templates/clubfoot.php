@@ -2,11 +2,12 @@
 	// Example: 90658
 
 	t::setDefaultOption("baseExpression", "currentFile().");
+	t::setDefaultOption("model", "ClubFoot");
 ?>
 <div class='container-fluid' ng-controller='ctrl_file_clubfoots'>
 	<div class='row'>
 		<div class="col-lg-6">
-			<div ng-include="'/rest/templates/consult-introduction.php'"></div>
+			<?php require("partials/consult-introduction.php"); ?>
 			<FieldSet>
 				<legend>Club Foot Pirani Score</legend>
 				<table>

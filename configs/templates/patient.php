@@ -83,7 +83,7 @@
 			</fieldset>
 	 -->
 	 		<br/>
-			<fieldset>
+ 			<fieldset>
 				<legend>Social Data</legend>
 				<table>
 					<?php (new t("Patient.Familysalaryinamonth"))->tr("Family Salary in a Month")->p(); ?>
@@ -120,4 +120,4 @@
 			</fieldset>
 		</div>
 	</div>
-</div> 
+</div>

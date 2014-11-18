@@ -1,12 +1,12 @@
 <?php 
 	t::setDefaultOption("baseExpression", "currentFile().");
+	t::setDefaultOption("model", "NonricketConsult");
 	// Example: 10001
 ?>
 <div class='container-fluid'>
 	<div class='row'>
 		<div class="col-lg-6">
-			<div ng-include="'/rest/templates/consult-introduction.php'"></div>
-			<br>
+			<?php require("partials/consult-introduction.php"); ?>
 		<!--
 		 	<fieldset>
 				<legend>FoodData</legend>

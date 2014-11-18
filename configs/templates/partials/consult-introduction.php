@@ -1,14 +1,9 @@
-<?php 
-	t::setDefaultOption("baseExpression", "currentFile().");
-	//t::setDefaultOption("readOnly");
-?>
 <fieldset>
 	<legend>General data</legend>
 	<table>
-		<?php (new t("NonricketConsult.Date"))->tr("Date")->p(); ?>
-		<?php (new t("NonricketConsult.ExaminerName"))->tr("Examiner Name")->p(); ?>
-		<?php (new t("NonricketConsult.Center"))->tr("Center")->p(); ?>
-		<?php //(new t("NonricketConsult.SchoolClass"))->tr("School Class")->p(); ?>
+		<?php (new t("Date"))->tr("Date")->p(); ?>
+		<?php (new t("ExaminerName"))->tr("Examiner Name")->p(); ?>
+		<?php (new t("Center"))->tr("Center")->p(); ?>
 		<tr class='notModeWrite'>
 			<td>Age during consultation</td>
 			<td><span catch-it ng-model="folder" tryit="currentFile().ageAtConsultTime()">{{result | number:0 }} years old at consultation time</span></td>
@@ -27,14 +22,14 @@
 		</thead>
 		<tr ng-class='{ emptyValue: !currentFile().Weightkg}'>
 			<td>Weight (kg)</td>
-			<td class='tdright'><?php (new t("NonricketConsult.Weightkg"))->value()->p(); ?></td>
+			<td class='tdright'><?php (new t("Weightkg"))->value()->p(); ?></td>
 			<td class='notModeWrite'><span catch-it ng-model="folder" tryit="currentFile().ds_weight()">{{result | number:2 }} ds</span></td>
 		</tr><tr ng-class='{ emptyValue: !currentFile().Heightcm}'>
 			<td>Height (cm)</td>
-			<td class='tdright'><?php (new t("NonricketConsult.Heightcm"))->value()->p(); ?></td>
+			<td class='tdright'><?php (new t("Heightcm"))->value()->p(); ?></td>
 			<td class='notModeWrite'><span catch-it ng-model="folder" tryit="currentFile().ds_height()">{{result | number:2 }} ds</span></td>
 		</tr>
-		<?php (new t("NonricketConsult.Brachialcircumferencecm"))->tr()->p(); ?>
+		<?php (new t("Brachialcircumferencecm"))->tr("Brachial circumference (cm)")->p(); ?>
 		<tr ng-class='{ emptyValue: !currentFile().Heightcm || !currentFile().Weightkg}'
 				class='notModeWrite'
 				>
@@ -50,5 +45,4 @@
 		</tr>
 	</table>
 </fieldset>
-
 <!-- TODOJH: examiner name = list -->
