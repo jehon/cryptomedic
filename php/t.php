@@ -1,11 +1,5 @@
 <?php
 
-// require_once(__DIR__ . "/../configs/amd_listings.php");
-// require_once(__DIR__ . "/../configs/routes/helpers/references.php");
-
-// $dateFormat = "shortDate";
-// $dateTimeFormat = "short";
-
 class t {
     const TYPE_LIST         = 0;
     const TYPE_TIMESTAMP    = 1;
@@ -18,21 +12,17 @@ class t {
     const DATEFORMAT = "shortDate";
     const DATETIMEFORMAT = "short";
 
-    var $key;
-    var $options;
-    var $res = "";
-    var $linked2DB = false;
-    var $rawExpression = true;
-    var $listing = null;
-
-    private static $defaultOptions = [
+	static private $cacheUnused = array();
+    static private $defaultOptions = [
         "baseExpression" => "",
         "writeOnly" => false,
         "readOnly" => false,
         "forceAllowNull" => false,
-        "inline" => ""
+        "inline" => "",
+    	"model" => null
     ];
-
+    static private $uuid = 0;
+    
     static function setDefaultOption($key, $val = true) {
         if (!array_key_exists($key, self::$defaultOptions)) {
             return trace("Setting unsupported option: $key");
@@ -45,12 +35,18 @@ class t {
             self::setDefaultOption($key, $val);
     }
 
-    static private $uuid = 0;
     static function UUID()  {
         self::$uuid++;
         return self::$uuid;
     }
-
+    
+    var $key;
+    var $options;
+    var $res = "";
+    var $linked2DB = false;
+    var $rawExpression = true;
+    var $listing = null;
+    
     function __construct($key, $options = array()) {
         $this->key = $key;
         $this->options = $options;
@@ -65,13 +61,19 @@ class t {
 
         $data = explode(".", $this->key);
         if (count($data) != 2) {
-            $this->linked2DB = false;
-            return ;
+        	if ($this->options['model'] == null) {
+	            $this->linked2DB = false;
+    	        return ;
+        	} else {
+        		$this->field = $key;
+        		$this->model = $this->options['model'];
+        	}
+        } else {
+        	$this->model = $data[0];
+        	$this->field = $data[1];
         }
 
         $this->linked2DB = true;
-        $this->model = $data[0];
-        $this->field = $data[1];
 
         global $server;
         global $model2controller;
@@ -82,6 +84,8 @@ class t {
             return ;
         }
 
+        $this->used(References::model2controller($this->model), $this->field);
+        
         $this->structure = $dbtable->getColumnInfos($this->field);
 
         $this->isList = false;
@@ -326,4 +330,40 @@ class t {
         $this->options['writeOnly'] = true;
         return $this;
     }
+    
+    static public function used($table, $field) {
+    	if (!array_key_exists($table, self::$cacheUnused)) {
+    		global $server;
+			self::$cacheUnused[$table] = $server->getDatabase()->getTableColumnsInfos($table);
+			self::used($table, 'id');
+			self::used($table, 'created');
+			self::used($table, 'modified');
+			self::used($table, 'lastuser');
+			self::used($table, 'patient_id');
+    	}
+    	if (array_key_exists($field, self::$cacheUnused[$table])) {
+    		unset(self::$cacheUnused[$table][$field]);
+    	}
+    }
+    
+    static public function showUnused($table) {
+    	echo "<h1>Unused fields for $table</h1>";
+    	if (array_key_exists($table, self::$cacheUnused)) {
+	    	foreach(self::$cacheUnused[$table] as $field => $meta) {
+	    		echo "$field\n";
+	    		global $server;
+	    		$res = $server->getDatabase()->query("SELECT count(*) as n, $field as val FROM $table GROUP BY $field ORDER BY count(*) DESC LIMIT 5");
+				echo "<table>";
+				foreach($res as $rec) {
+					echo "<tr><td>{$rec['n']}</td><td>{$rec['val']}</td></tr>";
+				}
+				echo "</table>";
+				echo "ALTER TABLE `$table` DROP `$field`;<br>";
+	//     		var_dump($res);
+	    	}
+    	} else {
+    		echo "Table $table was not used in the template";
+    	}
+    }
+        
 }
