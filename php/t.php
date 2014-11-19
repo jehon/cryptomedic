@@ -359,7 +359,6 @@ class t {
 				}
 				echo "</table>";
 				echo "ALTER TABLE `$table` DROP `$field`;<br>";
-	//     		var_dump($res);
 	    	}
     	} else {
     		echo "Table $table was not used in the template";

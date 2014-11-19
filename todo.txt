@@ -1,16 +1,3 @@
-Done:
-- on delete: message box to confirm action
-- les checkbox ne sont pas cochées
-- export in xls
-- links -> patient reporting (complete xls file for a patient)
-- activity report (construct object)
-- display html report more cleanly
-- monthly report (construct object)
-- message pour upload picture
-- Bill: Il faudrait pouvoir rajouter l’item « Making Long plaster »  (600 tk)  et à la place de « making plaster » mettre « making short plaster » (400).
-- Bill: et à la place de « bill consult medecine » mettre « bill consult calcium 30*500mg »
-- change DB version to integer (decimal dotation add no special meaning)
-
 Pending:
 - fix name for download
 - limit patient delete if there are subfiles
@@ -23,12 +10,8 @@ Later:
 - validation automatique (cron)
 - put files list on menu bar collapsed ? check in "gsm" mode (page index.php?)
 - manage timestamps on partials
-- when connecting to a page unauthenticated, should reload everything after login (hint: on fail, relaunch instead of throw error???)
 - move application images, css, partials... out of angular into app\
 - change password
 - enforce rules server-side: patient_id not modified (created ok), lastuser, modified, created, id = non modifiable (black list?), ...
 - take out specific menu out of angular -> app\
-- create domains + filter by referer path? (see headers sent by server) 
 - change salt, cipher and db password
-- clean up activity report -> construct object instead of displaying table directly
-- reports: include them as partials -> get it from layout

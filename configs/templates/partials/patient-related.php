@@ -1,6 +1,4 @@
 <?php 
-// 	t::setDefaultOption("baseExpression", "folder.getMainFile().");
-// 	t::setDefaultOption("readOnly");
 	// Since this page should be included, do not use the default options
 	$opt = [ "readOnly" => true, 'baseExpression' => "folder.getMainFile()." ];
 ?>
