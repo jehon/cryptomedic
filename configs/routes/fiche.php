@@ -99,11 +99,9 @@ class RouteFiche extends RouteDBTable {
 	}
 }
 
-// TODOJH: restrict more ?
 if (!$request->routeIsEnded()) {
 	$type = $request->routeConsumeNext();
 	$type = References::model2db($type);
-	//$type = type2db($type);
 
 	$tdb = new RouteFiche($request, $response, $server, $type);
 	$tdb->routeAndRespond();

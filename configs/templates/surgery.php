@@ -10,7 +10,6 @@
 					<?php (new t("Surgery.Date"))->tr("Operation Date")->p(); ?>
 					<?php (new t("Surgery.ReportDiagnostic"))->tr()->p(); ?>
 					<?php (new t("Surgery.ReportSurgeon"))->tr()->p(); ?>
-					<?php //(new t("Surgery.ReportProcedure"))->tr()->p(); ?>
 					<?php (new t("Surgery.ReportSideR"))->tr()->p(); ?>
 					<?php (new t("Surgery.ReportSideL"))->tr()->p(); ?>
 					<?php (new t("Surgery.report_procedure"))->tr()->p(); ?>
