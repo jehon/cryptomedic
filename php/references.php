@@ -1,7 +1,7 @@
 <?php
 
 class References {
-    static $model2controller = array(
+    static $model2db = array(
             "Bill" => "bills",
             "ClubFoot" => "club_foots",
             "NonricketConsult" => "nonricket_consults",
@@ -14,18 +14,18 @@ class References {
     static $amd_listing = array();
     static $model_listing = array();
 
-    static function model2controller($model) {
-        if (array_key_exists($model, self::$model2controller))
-            return self::$model2controller[$model];
+    static function model2db($model) {
+        if (array_key_exists($model, self::$model2db))
+            return self::$model2db[$model];
         return $model;
     }
 
-    static function controller2model($dbName) {
-        if (array_search($dbName, self::$model2controller) === false) {
+    static function db2model($dbName) {
+        if (array_search($dbName, self::$model2db) === false) {
             return $dbName;
         }
         else {
-            return array_search($dbName, self::$model2controller);
+            return array_search($dbName, self::$model2db);
         }
     }
 

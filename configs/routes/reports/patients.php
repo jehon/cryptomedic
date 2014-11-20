@@ -19,7 +19,7 @@ if (!$request->routeIsEnded()) {
 	$heads[] = false;
 	$data[] = "";
 	
-	foreach(References::$model2controller as $m => $t) {
+	foreach(References::$model2db as $m => $t) {
 		$present = false;
 		$heads[] = "subheader";
 		$data[] = "*** $m ***";

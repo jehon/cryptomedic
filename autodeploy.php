@@ -3,7 +3,7 @@
 $deploy = array(
     'owner' => 'jehon',
     'repository' => 'cryptomedic',
-    'DatabaseHistoryPath' => __DIR__ . "/configs/database_scripts",
+    'DatabaseHistoryPath' => __DIR__ . "/configs/database_scripts/",
     'DatabaseDevSQL' => __DIR__ . "/dev.sql",
     'restoreDB' =>  array(
     	"prod2acc" => "C:\Users\jehon\Documents\amd_chakaria.sql",

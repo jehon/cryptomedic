@@ -76,15 +76,14 @@ class t {
         $this->linked2DB = true;
 
         global $server;
-        global $model2controller;
-        $dbtable = $server->getDatabase()->getTable(References::model2controller($this->model));
+        $dbtable = $server->getDatabase()->getTable(References::model2db($this->model));
 
         if (!$dbtable->isColumn($this->field)) {
             $this->linked2DB = false;
             return ;
         }
 
-        $this->used(References::model2controller($this->model), $this->field);
+        $this->used(References::model2db($this->model), $this->field);
         
         $this->structure = $dbtable->getColumnInfos($this->field);
 

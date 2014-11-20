@@ -1,17 +1,13 @@
 <?php
 // require(__DIR__ . "/../../amd_listings.php");
 
-function db2model($dbName) {
-	return References::controller2model($dbName);
-}
+// function db2model($dbName) {
+// 	return References::db2model($dbName);
+// }
 
-function type2db($type) {
-	return References::model2controller($type);
-	// global $model2controller;
-	// if (array_key_exists($type, $model2controller))
-	// 	return $model2controller[$type];
-	// return $type;
-}
+// function type2db($type) {
+// 	return References::model2db($type);
+// }
 
 function getFolder($id) {
 	global $server;
@@ -33,7 +29,7 @@ function getFolder($id) {
 	$res['subFiles'] = array();
 
 	//$rawTable = new DBTable($server->getConfig("database"), null, $server);
-	foreach(References::$model2controller as $m => $c) {
+	foreach(References::$model2db as $m => $c) {
 		// we work by controller = the same as in database?
 		if ($c == "patients") continue;
 		// TODO: remove references to this:
@@ -42,7 +38,8 @@ function getFolder($id) {
 
 		$r = $server->getDatabase()->query("SELECT * FROM $c WHERE patient_id = :patient_id", array('patient_id' => $id));
 		foreach($r as $ri => $rv) {
-			$rv['_type'] = db2model($c);
+			$rv['_type'] = References::db2model($c);
+// 			$rv['_type'] = db2model($c);
 			$res['subFiles'][] = $rv;
 		}
 	}
