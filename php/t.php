@@ -30,7 +30,7 @@ class t {
         self::$defaultOptions[$key] = $val;
     }
 
-    static function setDefaultOptions($defaultOptions) {
+    static function setDefaultOptions(array $defaultOptions) {
         foreach($defaultOptions as $key => $val)
             self::setDefaultOption($key, $val);
     }
@@ -47,7 +47,7 @@ class t {
     var $rawExpression = true;
     var $listing = null;
     
-    function __construct($key, $options = array()) {
+    function __construct($key, array $options = array()) {
         $this->key = $key;
         $this->options = $options;
         $this->field = $key;

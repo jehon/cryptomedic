@@ -19,7 +19,7 @@ class RouteFiche extends RouteDBTable {
 		$this->notAllowed();
 	}
 
-	public function elementCreate($data) {
+	public function elementCreate(array $data) {
 		$data['lastuser'] = $this->server->getSession(Server::LOGIN_USERNAME);
 
 		$idfolder = $data["patient_id"];
@@ -35,7 +35,7 @@ class RouteFiche extends RouteDBTable {
 		$this->notAllowed();
 	}
 	
-	public function elementUpdate($id, $data) {
+	public function elementUpdate($id, array $data) {
 		$data['lastuser'] = $this->server->getSession(Server::LOGIN_USERNAME);
 
 		// Modify the file

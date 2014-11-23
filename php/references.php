@@ -45,7 +45,7 @@ class References {
         return $value;
     }
 
-    static function unreferenceObject($table, $array) {
+    static function unreferenceObject($table, array $array) {
         foreach($array as $f => $v) {
             $array[$f] = self::unreference($v, $table, $f);
         }
