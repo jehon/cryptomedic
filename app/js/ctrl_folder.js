@@ -78,6 +78,9 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_rest', '$rou
 
 		jQuery("input[mycalendar]:visible").each(function(){
 			var date = jQuery(this).val();
+			if ((date == "") && !jQuery(this).is("[required]")) {
+				return;
+			}	
 			var ok = ((new Date(date) !== "Invalid Date" && !isNaN(new Date(date))))
 			if (!ok) {
 				var uuid = jQuery(this).attr('uuid');
