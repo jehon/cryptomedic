@@ -22,7 +22,7 @@
 		<td>#{{$index + 1}}</td>
 		<td>
 			<a href="#/folder/{{id()}}/{{$index}}" class="btn btn-default" style="width: 100%">
-				{{f._type}}<span ng-if="f.Date">[{{f.Date | date:'<?php echo $dateFormat; ?>'}}]</span>
+				{{f._type}}<span ng-if="f.Date">[{{ f.Date }}]</span>
 			</a>
 		</td>
 		<td>{{f.Date | date:'longDate' }}</td>
