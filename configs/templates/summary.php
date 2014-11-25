@@ -3,10 +3,12 @@
 ?>
 <table class='summary table table-striped'>
 	<thead>
-		<th></th>
-		<th>Element</th>
-		<th>Date</th>
-		<th>Details</th>
+		<tr>
+			<th></th>
+			<th>Element</th>
+			<th>Date</th>
+			<th>Details</th>
+		</tr>
 	</thead>
 	<tr ng-controller="ctrl_file">
 		<td></td>
@@ -28,4 +30,4 @@
 		<td>{{f.Date | date:'longDate' }}</td>
 		<td><span ng-include="'/rest/templates/'+f._type.toLowerCase()+'-summary.html'"></span></td>
 	</tr>
-</span>
+</table>

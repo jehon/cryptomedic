@@ -2,7 +2,7 @@
 	t::setDefaultOption("baseExpression", "currentFile().");
 	t::setDefaultOption("readOnly");
 ?>
-<table width="100%">
+<table style='width: 100%'>
 	<tbody>
 		<? (new t("NonricketConsult.Date"))->tr()->p(); ?>
 		<? (new t("NonricketConsult.Physiotherapy61"))->tr("Physiotherapy")->p(); ?>

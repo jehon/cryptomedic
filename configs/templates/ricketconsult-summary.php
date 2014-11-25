@@ -2,7 +2,7 @@
 	t::setDefaultOption("baseExpression", "currentFile().");
 	t::setDefaultOption("readOnly");
 ?>
-<table width="100%">
+<table style='width: 100%'>
 	<tbody>
 		<? (new t("RicketConsult.RightLeg"))->tr("Right Leg")->p(); ?>
 		<? (new t("RicketConsult.RightlegAngle"))->tr("Right Leg Angle")->p(); ?>

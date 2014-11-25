@@ -2,7 +2,7 @@
 	t::setDefaultOption("baseExpression", "currentFile().");
 	t::setDefaultOption("readOnly");
 ?>
-<table width="100%">
+<table style='width: 100%'>
 	<colgroup span="2" width="50%"></colgroup>
 	<tbody>
 		<? (new t("Bill.socialLevel"))->tr("Social Level")->p(); ?>
