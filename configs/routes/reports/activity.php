@@ -1,5 +1,8 @@
 <?php
 
+// TODOJH: not implemented
+throw new InvalidFunctionCall("This report is not implemented");
+
 $now = new DateTime();
 {
     $m = new DateTime($now->format("Y-M-1"));

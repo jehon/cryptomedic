@@ -70,10 +70,10 @@
 				<a class='btn btn-primary' href='#/reports/monthly'>Monthly report</a>
 				<br>
 			
-				<h3>Activity report</h3>
-				Report what has been done this last 12 months in the applications.<br>
+<!-- 				<h3>Activity report</h3> -->
+<!-- 				Report what has been done this last 12 months in the applications.<br> -->
 
-				<a class='btn btn-primary' href='#/reports/activity'>Activity report</a>
+<!-- 				<a class='btn btn-primary' href='#/reports/activity'>Activity report</a> -->
 				<br>
 			</fieldset>
 		</div>
