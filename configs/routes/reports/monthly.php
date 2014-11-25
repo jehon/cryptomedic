@@ -121,19 +121,24 @@ function billCountByType($filter, &$list) {
 _addLine("Consult Activity");
 $bills = $server->getDatabase()->getTable("bills");
 $anyConsult = "";
-billCountByType("CONSULT_", $anyConsult);
+billCountByType(Bill::CAT_CONSULT, $anyConsult);
+
+_addLine("Medical Activity");
+$bills = $server->getDatabase()->getTable("bills");
+$anyMedical = "";
+billCountByType(Bill::CAT_MEDECINE, $anyMedical);
 
 _addLine("Workshop Activity");
 $anyWorkshop = "";
-billCountByType("WORKSHOP_", $anyWorkshop);
+billCountByType(Bill::CAT_WORKSHOP, $anyWorkshop);
 
 _addLine("Surgical activity");
 $anySurgery = "";
-billCountByType("SURGICAL_", $anySurgery);
+billCountByType(Bill::CAT_SURGICAL, $anySurgery);
 
 _addLine("Other activity");
 $anyOther = "";
-billCountByType("OTHER_", $anyOther);
+billCountByType(Bill::CAT_OTHER, $anyOther);
 
 function billStats($header, $filter) {
 	global $server;
@@ -160,9 +165,10 @@ function billStats($header, $filter) {
 
 _addLine("Financials");
 billStats("Surgery", $anySurgery);
-billStats("Workshop (exl. surgeries)", "NOT($anySurgery) AND ($anyWorkshop)");
-billStats("Consults (ex. surgeries and workshops)", "NOT($anySurgery OR $anyWorkshop) AND $anyConsult");
-billStats("Others", "NOT($anySurgery OR $anyWorkshop OR $anyConsult) AND $anyOther");
+billStats("Medical (exl. above)", "NOT($anySurgery) AND ($anyMedical)");
+billStats("Workshop (exl. above)", "NOT($anyMedical OR $anySurgery) AND ($anyWorkshop)");
+billStats("Consults (exl. above)", "NOT($anyMedical OR $anySurgery OR $anyWorkshop) AND $anyConsult");
+billStats("Others (exl. above)", "NOT($anyMedical OR $anySurgery OR $anyWorkshop OR $anyConsult) AND $anyOther");
 
 billStats("Grand Total", "(1=1)");
  

@@ -2,7 +2,7 @@
 
 require_once(__DIR__ . "/../helpers/getFolder.php");
 require_once(__DIR__ . "/../helpers/price.php");
-require_once(__DIR__ . "/../helpers/bill.php");
+// require_once(__DIR__ . "/../helpers/bill.php");
 
 $who = $request->getParameter("examinerName", "");
 $where = $request->getParameter("center", 992);
@@ -17,11 +17,12 @@ if ($when instanceof DateTime) {
             (:who = '' || bills.ExaminerName = :who)
 
 */
-$result = $database->query("SELECT 
-            " . Bill::getSQLFieldSumConsult() . " AS sum_consult, 
-            " . Bill::getSQLFieldSumWorkshop() . " AS sum_workshop, 
-            " . Bill::getSQLFieldSumSurgical() . " AS sum_surgical, 
-            " . Bill::getSQLFieldSumOther() . " AS sum_other,
+$result = $server->getDatabase()->query("SELECT 
+            " . Bill::getSQLFieldsSum(Bill::CAT_CONSULT) . " AS sum_consult, 
+            " . Bill::getSQLFieldsSum(Bill::CAT_MEDECINE) . " AS sum_medecine, 
+			" . Bill::getSQLFieldsSum(Bill::CAT_WORKSHOP) . " AS sum_workshop, 
+            " . Bill::getSQLFieldsSum(Bill::CAT_SURGICAL) . " AS sum_surgical, 
+            " . Bill::getSQLFieldsSum(Bill::CAT_OTHER) . " AS sum_other,
             bills.total_real as total_real,
             bills.total_asked as total_asked,
             bills.total_paid as total_paid,
@@ -79,7 +80,7 @@ $result = $database->query("SELECT
     <table>
         <thead>
             <tr>
-                <th colspan="22" class='b_all'>SARPV - AMD - KDM</th>
+                <th colspan="23" class='b_all'>SARPV - AMD - KDM</th>
             </tr>
             <tr>
                 <th colspan="5" class='b_all'>Name of project: Ricktes in cox's Bazar</th>
@@ -87,7 +88,7 @@ $result = $database->query("SELECT
                 <th ><? echo $when; ?></th>
                 <th></th>
                 <th colspan="5" class='b_left b_right'>Levels of the social level</th>
-                <th colspan="9"></th>
+                <th colspan="10"></th>
             </tr>
             <tr>
                 <th colspan="5">SARPV, CHAKARIA DISABILITY CENTER, CHAKARIA, COX'S BAZAR</th>
@@ -99,7 +100,7 @@ $result = $database->query("SELECT
                 <th>2</th>
                 <th>3</th>
                 <th class='b_right'>4</th>
-                <th colspan="9"></th>
+                <th colspan="10"></th>
             </tr>
             <tr>
                 <th colspan="5" class='b_bottom'>Daily report of <? echo $when; ?></th>
@@ -111,14 +112,14 @@ $result = $database->query("SELECT
                 <th class='b_bottom'>501-1500</th>
                 <th class='b_bottom'>1501-3000</th>
                 <th class='b_right b_bottom'>3001-...</th>
-                <th colspan="9" class='b_bottom'></th>
+                <th colspan="10" class='b_bottom'></th>
             </tr>
             <tr>
                 <th colspan="5" class='b_left'></th>
                 <th colspan="3" class='b_left'>Identity</th>
                 <th colspan="4" class='b_left'>SEL</th>
                 <th colspan="3" class='b_left'>Medical</th>
-                <th colspan="7" class='b_left'>Price</th>
+                <th colspan="8" class='b_left'>Price</th>
             </tr>
             <tr>
                 <th class='b_left'>N</th>
@@ -142,6 +143,7 @@ $result = $database->query("SELECT
 
                 <th class='b_left'>Consult</th>
                 <th>Medicine</th>
+                <th>Surgical</th>
                 <th>Workshop</th>
                 <th>Others</th>
                 <th>Full</th>
@@ -195,8 +197,9 @@ $result = $database->query("SELECT
                             <td><?php echo "#"; // todojh treatment?></td>
 
                             <td class='b_left'><?php echo $v['sum_consult']; ?></td>
-                            <td><?php echo $v['sum_surgical'];?></td>
+                            <td><?php echo $v['sum_medecine'] ?></td>
                             <td><?php echo $v['sum_workshop'] ?></td>
+                            <td><?php echo $v['sum_surgical'];?></td>
                             <td><?php echo $v['sum_other'] ?></td>
                             <td><?php echo $v['total_real']; ?></td>
                             <td><?php echo $v['total_asked']; ?></td>
