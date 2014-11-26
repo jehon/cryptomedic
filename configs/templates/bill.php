@@ -29,8 +29,14 @@
 	}
 ?>
 <div class='container-fluid'>
-	<div class='row' ng-if='errors.consultPhisioAndDoctor' class='jserror'>Error: you could not bill "physio" and "doctor" together!</div>
-	<div class='row' ng-if='errors.homeVisitAndGiveAppointment' class='jserror'>Error: you could not bill a "home visit" with "give appointment" together!</div>
+	<div class='row'>
+		<div ng-if='errors.consultPhisioAndDoctor'>
+			<div class='alert alert-danger' >Error: you could not bill "physio" and "doctor" together!</div>
+		</div>
+		<div ng-if='errors.homeVisitAndGiveAppointment'>
+			<div class='alert alert-danger'>Error: you could not bill a "home visit" with "give appointment" together!</div>
+		</div>
+	</div>
 	<div class='row'>
 		<div class="col-lg-6" ng-controller="ctrl_file_bill">
 			<FieldSet>

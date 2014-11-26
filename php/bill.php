@@ -36,7 +36,6 @@ class Bill {
 	public static function getSQLFieldsSum($filter) {
 		$list = "( 0 ";
 		foreach(self::$dbTable->getColumns() as $v) {
-			//if (strtoupper(substr($v, 0, strlen($filter))) == strtoupper($filter)) {
 			if (self::is($v, $filter)) {
 				$list .= " + (prices.`$v` * bills.`$v`)";
 			}
