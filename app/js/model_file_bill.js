@@ -121,18 +121,20 @@ application.models.Bill = application.models.File.extend({
 		jQuery('#total_asked').html(total_social);
 	},
 	'validate': function(res) {
-		/* Business rules:
+		/* Business rules (price > 4):
 		- il faut pourvoir coder home visit ou give appointment mais pas les 2
 		- il faut pourvoir coder consultation physio ou doctor mais pas les 2
 		*/
 		res = this._super(res);
 
-		if ((this.consult_home_visit > 0) && (this.consult_give_appointment > 0)) {
-			res.homeVisitAndGiveAppointment = true;
-		}
-
-		if ((this.consult_CDC_consultation_physio > 0) && (this.consult_CDC_consultation_Doctor > 0)) {
-			res.consultPhisioAndDoctor = true;
+		if (this.price_id >= 2) {
+			if ((this.consult_home_visit > 0) && (this.consult_give_appointment > 0)) {
+				res.homeVisitAndGiveAppointment = true;
+			}
+	
+			if ((this.consult_CDC_consultation_physio > 0) && (this.consult_CDC_consultation_Doctor > 0)) {
+				res.consultPhisioAndDoctor = true;
+			}
 		}
 		return res;
 	}
