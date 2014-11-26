@@ -33,7 +33,6 @@ class References {
         global $server;
         $labels = $server->getDatabase()->getTable("labels");
         if ($table != "") {
-            require(__DIR__ . "/configs/amd_listings.php");
             if (!array_key_exists("$table.$field", References::$model_listing)) {
                 return $value;
             }       

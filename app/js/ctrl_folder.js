@@ -44,12 +44,17 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_rest', '$rou
 	};
 	
 	$scope.name = function() {
-		if ($scope.pageIsFile) {
-			return $scope.folder.getSubFile($scope.page)['_type'].toLowerCase() + ".html?mode=" + $scope.mode;
+		var m = $scope.mode;
+		if ($scope.mode != 'read') {
+			m = 'edit';
 		}
-		if ($scope.page == "") return "patient.html?mode=" + $scope.mode;
+		
+		if ($scope.pageIsFile) {
+			return $scope.folder.getSubFile($scope.page)['_type'].toLowerCase() + ".html?mode=" + m;
+		}
+		if ($scope.page == "") return "patient.html?mode=" + m;
 		if (typeof($scope.page) == "number") return "blank.html";
-		return $scope.page + ".html?mode=" + $scope.mode;
+		return $scope.page + ".html?mode=" + m;
 	};
 
 	function showMe(type, id) {

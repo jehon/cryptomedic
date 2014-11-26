@@ -27,8 +27,8 @@ $config['pictures.storage'] = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'uploaded
 $config['pictures.url'] = '/uploadedPictures';
 
 /* Include the various modules */
-@include(__DIR__ . DIRECTORY_SEPARATOR . "autodeploy.php");
-@include(dirname(__DIR__) . DIRECTORY_SEPARATOR . "rest" . DIRECTORY_SEPARATOR . "autodeploy.php");
+include(__DIR__ . DIRECTORY_SEPARATOR . "autodeploy.php");
+include(dirname(__DIR__) . DIRECTORY_SEPARATOR . "rest" . DIRECTORY_SEPARATOR . "autodeploy.php");
 
 $config['authenticate.loginRequest'] = 'SELECT users.username as login, users.group as `group` FROM users '
     . ' WHERE username = :username and password = SHA1(concat("' .  getSecret('authenticateSalt') . '", :password))';

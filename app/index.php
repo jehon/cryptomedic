@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <?php 
 	require "../../rest/php/core.php";
-	// require "../../rest/php/script.php";
 	$server = new Server();
 	$request = new Request($server);
 
@@ -40,9 +39,6 @@
 	(new Script("bower_components/bootstrap/dist/css/bootstrap.min.css"))->dependFile()->toPrint();
 
 	// angular
-// 	(new Script("bower_components/html5-boilerplate/css/normalize.css"))->dependFile()->toPrint();
-// 	(new Script("bower_components/html5-boilerplate/css/main.css"))->dependFile()->toPrint();
-// 	(new Script("bower_components/html5-boilerplate/js/vendor/modernizr-2.6.2.min.js"))->dependFile()->toPrint();
 	(new Script("bower_components/angular/angular.min.js"))->dependFile()->toPrint();
 	(new Script("bower_components/angular-route/angular-route.min.js"))->dependFile()->toPrint();
 
