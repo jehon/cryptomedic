@@ -1,3 +1,9 @@
+ALTER TABLE `prices` 
+	CHANGE `consult_CDC_consultation_Doctor` `consult_CDC_consultation_Doctor` INT(11) NULL DEFAULT '-1', 
+	CHANGE `consult_calcium_30x500mg` `consult_calcium_30x500mg` INT(11) NULL DEFAULT '-1', 
+	CHANGE `consult_make_long_plaster` `consult_make_long_plaster` INT(11) NULL DEFAULT '-1', 
+	CHANGE `consult_make_short_plaster` `consult_make_short_plaster` INT(11) NULL DEFAULT '-1';
+
 -- clean up prices = 0
  -- ok 
  -- ok 
