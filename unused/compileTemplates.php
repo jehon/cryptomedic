@@ -3,7 +3,7 @@
 $response = new Response($request);
 
 if (!$request->isServedLocally()) {
-   throw new Error("Only available locally");
+   throw new Exception("Only available locally");
 }
 
 // Check if a downloaded is old
