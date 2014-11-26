@@ -55,34 +55,77 @@ h1 > img {
  * Reports
  */
 
-table.reporting th {
+table.reporting > thead {
+  border: black 2px solid;
   color: white;
+}
+
+table.reporting > thead > tr > th {
   background-color: gray;
 }
 
-table.reporting td, table.reporting th {
-  border-left: 1px solid black;
-  border-right: 1px solid black;
-  text-align: center;
+table.reporting > thead > tr > th.b_right {
+    border-right: white 1px solid;
 }
 
-table.reporting td:nth-child(1) {
+table.reporting > thead > tr > th.b_left {
+    border-left: white 1px solid;
+}
+
+table.reporting > thead > tr > th.b_bottom {
+    border-bottom: white 1px solid;
+}
+
+table.reporting > thead > tr > th.b_top {
+    border-top: white 1px solid;
+}
+
+table.reporting > thead > tr > th.b_all {
+    border: white 1px solid;
+}
+
+table.reporting > tbody > tr > td, table.reporting > thead > tr > th {
+   text-align: center;
+}
+
+table.reporting > tbody {
+  border: black 2px solid;
+}
+
+table.reporting > tbody > tr > td:nth-child(1) {
   text-align: left;
 }
 
-table.reporting tr:nth-child(odd) {
+table.reporting > tbody > tr:nth-child(odd) {
   background-color: lightgray;
 }
 
-table.reporting td.subheader {
+table.reporting > tbody > tr > td.subheader {
   background-color: gray;
-}
-
-table.reporting td.subheader {
   padding: 5px;
   padding-top: 10px;
   text-align: center;
   font-weight: bold;
+}
+
+table.reporting > tbody > tr > td.b_right {
+    border-right: gray 1px solid;
+}
+
+table.reporting > tbody > tr > td.b_left {
+    border-left: gray 1px solid;
+}
+
+table.reporting > tbody > tr > td.b_bottom {
+    border-bottom: gray 1px solid;
+}
+
+table.reporting > tbody > tr > td.b_top {
+    border-top: gray 1px solid;
+}
+
+table.reporting > tbody > tr > td.b_all {
+    border: gray 1px solid;
 }
 
 /********************************************

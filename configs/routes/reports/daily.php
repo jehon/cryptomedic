@@ -41,43 +41,8 @@ $result = $server->getDatabase()->query("SELECT
             'when' => $when)
     );
 ?>
-<style>
-    table, thead, tbody, tr, th, td {
-        border-width: 1px;
-        border-color: blue;
-    }
-
-    table {
-        border: black 2px solid;
-        border-collapse: collapse;
-    }
-
-    thead {
-        border: black 2px solid;
-    }
-
-    .b_right {
-        border-right: gray 1px solid;
-    }
-
-    .b_left {
-        border-left: gray 1px solid;
-    }
-
-    .b_bottom {
-        border-bottom: gray 1px solid;
-    }
-
-    .b_top {
-        border-top: gray 1px solid;
-    }
-
-    .b_all {
-        border: gray 1px solid;
-    }
-</style>
 <div>
-    <table>
+    <table class='reporting'>
         <thead>
             <tr>
                 <th colspan="23" class='b_all'>SARPV - AMD - KDM</th>
