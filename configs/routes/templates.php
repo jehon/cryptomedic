@@ -6,7 +6,7 @@ if (($request->getMethod() == Request::READ) && !$request->routeIsEnded()) {
 	debugHeader($file, "X-TEMPLATE-ASKED");
 	if (file_exists($file)) {
 		include_once($file);
-		echo "<div class='debug_infos'>template " . basename($file) . "@" . date("Y-m-d h:M:s") . "</div>";
+		echo "<div class='debug_infos'>template " . basename($file) . "?mode=" . $request->getParameter("mode", "?") . "@" . date("Y-m-d h:M:s") . "</div>";
 		if ($request->getSystemParameter('unused', false)) {
 			t::showUnused($request->getSystemParameter('unused'));
 		}

@@ -275,13 +275,18 @@ class t {
         if ($this->options['readOnly']) return $this->read();
         if ($this->options['writeOnly']) return $this->write();
 
-        $this->res .= "<span class='notModeWrite'>";
-        $this->read();
-        $this->res .= "</span>";
+        global $request;
+		if ($request->getParameter("mode", "read") == "read") {
+			$this->res .= "<span class='notModeWrite'>";
+			$this->read();
+			$this->res .= "</span>";
+		}
 
-        $this->res .= "<span class='notModeRead'>";
-        $this->write();
-        $this->res .= "</span>";
+		if ($request->getParameter("mode", "edit") == "edit") {
+			$this->res .= "<span class='notModeRead'>";
+	        $this->write();
+	        $this->res .= "</span>";
+		}
         return $this;
     }
 

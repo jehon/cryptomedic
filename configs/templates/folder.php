@@ -55,7 +55,7 @@
 			<form id="fileForm">
 				<button id="fileFormSubmit" type='submit' style="display: none">For html5 validation through javascript</button>
 				<span ng-controller="ctrl_file">
-					<span ng-include="'/rest/templates/' + name() + '.html'">
+					<span ng-include="'/rest/templates/' + name()">
 						debug: Content {{page}}
 					</span>
 				</span>

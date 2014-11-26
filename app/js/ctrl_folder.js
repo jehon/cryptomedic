@@ -45,11 +45,11 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_rest', '$rou
 	
 	$scope.name = function() {
 		if ($scope.pageIsFile) {
-			return $scope.folder.getSubFile($scope.page)['_type'].toLowerCase();
+			return $scope.folder.getSubFile($scope.page)['_type'].toLowerCase() + ".html?mode=" + $scope.mode;
 		}
-		if ($scope.page == "") return "patient";
-		if (typeof($scope.page) == "number") return "blank";
-		return $scope.page;
+		if ($scope.page == "") return "patient.html?mode=" + $scope.mode;
+		if (typeof($scope.page) == "number") return "blank.html";
+		return $scope.page + ".html?mode=" + $scope.mode;
 	};
 
 	function showMe(type, id) {
