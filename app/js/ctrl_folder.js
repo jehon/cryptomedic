@@ -18,14 +18,14 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_rest', '$rou
 		$scope.page = page;
 
 		if (($scope.page === "") || ($scope.page === undefined) || ($scope.page === null)) {
-			console.log("redirect");
 			$scope.page = "patient";
 		}
 		$scope.pageIsFile = false;
 		if (parseInt($scope.page) == $scope.page) {
 			$scope.page = parseInt($scope.page);
-			if (($scope.folder.getSubFiles() != null) && ($scope.page < $scope.folder.getSubFiles().length))
+			if (($scope.folder.getSubFiles() != null) && ($scope.page < $scope.folder.getSubFiles().length)) {
 				$scope.pageIsFile = true;
+			}
 		}
 	};
 	
@@ -48,12 +48,18 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_rest', '$rou
 		if ($scope.mode != 'read') {
 			m = 'edit';
 		}
-		
 		if ($scope.pageIsFile) {
-			return $scope.folder.getSubFile($scope.page)['_type'].toLowerCase() + ".html?mode=" + m;
+			return "fiches/" + $scope.folder.getSubFile($scope.page)['_type'].toLowerCase() + ".html?mode=" + m;
 		}
-		if ($scope.page == "") return "patient.html?mode=" + m;
-		if (typeof($scope.page) == "number") return "blank.html";
+		if ($scope.page == "" || $scope.page == "patient") {
+			return "fiches/patient.html?mode=" + m;
+		}
+		if (typeof($scope.page) == "number") {
+			return "blank.html";
+		}
+		if ($scope.mode == 'add') {
+			return "fiches/" + $scope.page + ".html?mode=" + m;
+		}
 		return $scope.page + ".html?mode=" + m;
 	};
 

@@ -1,7 +1,8 @@
 <?php
 
 if (($request->getMethod() == Request::READ) && !$request->routeIsEnded()) {
-	$basename = basename($request->routeConsumeNext());
+	// $basename = basename($request->routeConsumeNext());
+	$basename = $request->routeGetEnd(); 
 	$file = __DIR__ . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . "templates" . DIRECTORY_SEPARATOR . strtolower($basename) .".php";
 	debugHeader($file, "X-TEMPLATE-ASKED");
 	if (file_exists($file)) {
