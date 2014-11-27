@@ -121,22 +121,73 @@ $result = $server->getDatabase()->query("SELECT
                 foreach($result as $i => $v) {
                     // Calculate Medecine > Diagno
                     $v['pathology'] = array();
-                    if ($v['pathology_Ricket']) $v['pathology'][] = 'R';
-                    if ($v['pathology_Clubfoot']) $v['pathology'][] = 'CF';
-                    if ($v['pathology_CP']) $v['pathology'][] = 'CP';
-                    if ($v['pathology_Polio']) $v['pathology'][] = 'P';
-                    if ($v['pathology_Burn']) $v['pathology'][] = 'B';
-                    if ($v['pathology_Congenital']) $v['pathology'][] = 'C';
-                    if ($v['pathology_Adult']) $v['pathology'][] = 'A';
-                    if ($v['pathology_other']) $v['pathology'][] = 'Oth';
+                    if ($v['pathology_Ricket']) {
+                    	$v['pathology'][] = 'R';
+                    }
+                    if ($v['pathology_Clubfoot']) {
+                    	$v['pathology'][] = 'CF';
+                    }
+                    if ($v['pathology_CP']) {
+                    	$v['pathology'][] = 'CP';
+                    }
+                    if ($v['pathology_Polio']) {
+                    	$v['pathology'][] = 'P';
+                    }
+                    if ($v['pathology_Burn']) {
+                    	$v['pathology'][] = 'B';
+                    }
+                    if ($v['pathology_Congenital']) {
+                    	$v['pathology'][] = 'C';
+                    }
+                    if ($v['pathology_Adult']) {
+                    	$v['pathology'][] = 'A';
+                    }
+                    if ($v['pathology_other']) {
+                    	$v['pathology'][] = 'Oth';
+                    }
 
                     // Calculate Medecine > Act
                     $v['medecine_act'] = array();
-                    if ($v['consult_CDC_consultation_physio']) $v['medecine_act'][] = 'CP';
-                    if ($v['consult_CDC_consultation_Doctor']) $v['medecine_act'][] = 'CD';
-                    if ($v['consult_field_visit']) $v['medecine_act'][] = 'FV';
-                    if ($v['consult_home_visit']) $v['medecine_act'][] = 'HV';
+                    if ($v['consult_CDC_consultation_physio']) {
+                    	$v['medecine_act'][] = 'CP';
+                    }
+                    if ($v['consult_CDC_consultation_Doctor']) {
+                    	$v['medecine_act'][] = 'CD';
+                    }
+                    if ($v['consult_field_visit']) {
+                    	$v['medecine_act'][] = 'FV';
+                    }
+                    if ($v['consult_home_visit']) {
+                    	$v['medecine_act'][] = 'HV';
+                    }
 
+                    $v['trt'] = array();
+                    // consult
+                    if ($v['sum_medecine']) {
+                    	$v['trt'][] = "Med";
+                    }
+                    if ($v['sum_workshop']) {
+                    	$v['trt'][] = "WS";
+                    }
+                    if ($v['sum_surgical']) {
+                    	$v['trt'][] = "Surg";
+                    }
+                    
+                    // other
+                    if ($v['other_making_plaster'] || $v['other_make_long_plaster'] || $v['other_make_short_plaster']) { 
+                    	$v['trt'][] = "Plast";
+                    }
+                    if ($v['other_making_dressing']) {
+                    	$v['trt'][] = "Dress";
+                    }
+                    if ($v['other_X_Ray']) {
+                    	$v['trt'][] = "XR";
+                    }
+                    if ($v['other_physiotherapy']) {
+                    	$v['trt'][] = "Physio";
+                    }
+                    if ($v['other_Other_consultation_care']) $v['trt'][] = "Other";
+                    
                     ?>
                         <tr>
                             <td class='b_left'><?php 
@@ -159,12 +210,12 @@ $result = $server->getDatabase()->query("SELECT
 
                             <td class='b_left'><?php echo implode($v['pathology'], ','); ?></td>
                             <td><?php echo implode($v['medecine_act'], ','); ?></td>
-                            <td><?php echo "#"; // todojh treatment?></td>
+                            <td><?php echo implode($v['trt'], ','); ?></td>
 
                             <td class='b_left'><?php echo $v['sum_consult']; ?></td>
                             <td><?php echo $v['sum_medecine'] ?></td>
-                            <td><?php echo $v['sum_workshop'] ?></td>
                             <td><?php echo $v['sum_surgical'];?></td>
+                            <td><?php echo $v['sum_workshop'] ?></td>
                             <td><?php echo $v['sum_other'] ?></td>
                             <td><?php echo $v['total_real']; ?></td>
                             <td><?php echo $v['total_asked']; ?></td>
@@ -193,6 +244,17 @@ $result = $server->getDatabase()->query("SELECT
     <span class="label label-default">CD</span>Consult doctor<br>
     <span class="label label-default">FV</span>Field visit<br>
     <span class="label label-default">HV</span>Home visit<br>
+    
+    <h3>Treatment</h3>
+    <span class="label label-default">Med</span>Medecine<br>
+    <span class="label label-default">WS</span>Workshop item<br>
+    <span class="label label-default">Surg</span>Surgery item<br>
+    
+    <span class="label label-default">Plast</span>Making plaster (in other)<br>
+    <span class="label label-default">Dress</span>Making dressing (in other)<br>
+    <span class="label label-default">XR</span>XRay (in other)<br>
+    <span class="label label-default">Physio</span>Physiotherapy (in other)<br>
+    <span class="label label-default">Other</span>Other consultation care<br>
 </div>
 <?php
     $response->ok();
