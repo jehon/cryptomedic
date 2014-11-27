@@ -31,10 +31,10 @@
 		addOne($s);
 	}
 	
-	echo "<h3>js</h3>";
-	foreach(MyFile::myglob("app/js/*.js", true) as $s) {
-		addOne($s);
-	}
+// 	echo "<h3>js</h3>";
+// 	foreach(MyFile::myglob("app/js/*.js", true) as $s) {
+// 		addOne($s);
+// 	}
 	
 	echo "<h3>css</h3>";
 	foreach(MyFile::myglob("app/css/*", true) as $s) {
