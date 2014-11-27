@@ -8,11 +8,12 @@
 	// TODOJH: add version infos
 	
 	ob_start();
-	require("index.php");
+	require("app\index.php");
 	ob_clean();
 
 	function addOne($f) {
 		global $file;
+		$f = str_replace("\\", "/", $f);
 		echo "adding $f<br>";
 		fwrite($file, $f . "\n");
 	}
@@ -45,10 +46,15 @@
 		addOne($s);
 	}
 	
-	echo "<h3>templates</h3>";
-	// TODOJH
-	foreach(MyFile::myglob("templates/*", true) as $s) {
+	echo "<h3>Templates</h3>";
+	foreach(MyFile::myglob("templates/*", false) as $s) {
 		addOne($s);
+	}
+	
+	echo "<h3>Templates fiches</h3>";
+	foreach(MyFile::myglob("templates/fiches/*", false) as $s) {
+		addOne($s . "?mode=read");
+		addOne($s . "?mode=edit");
 	}
 	
 	fclose($file);
