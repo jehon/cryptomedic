@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <?php 
-	require "../../rest/php/core.php";
+	require __DIR__ . "/../../rest/php/core.php";
 	$server = new Server();
 	$request = new Request($server);
 
@@ -26,6 +26,7 @@
 		</script>
 	<![endif]-->
 <?php 
+	Script::$rootPath = __DIR__;
 	// jquery
 	(new Script("bower_components/jquery/dist/jquery.min.js"))->dependFile()->toPrint();
 	(new Script("bower_components/jquery-ui/jquery-ui.min.js"))->dependFile()->toPrint();
