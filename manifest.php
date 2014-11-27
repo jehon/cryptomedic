@@ -4,9 +4,11 @@
 	$file = fopen("manifest.cache.building", "w");
 	fwrite($file, "CACHE MANIFEST\n");
 	fwrite($file, "\n");
+
+	// TODOJH: add version infos
 	
 	ob_start();
-	require("app/index.php");
+	require("index.php");
 	ob_clean();
 
 	function addOne($f) {
@@ -14,6 +16,9 @@
 		echo "adding $f<br>";
 		fwrite($file, $f . "\n");
 	}
+
+	echo "<h3>General</h3>";
+	addOne("/cryptomedic/app/index.php");
 	
 	echo "<h3>Scripts auto-import</h3>";
 	foreach(Script::$scriptsList as $s) {
