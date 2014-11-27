@@ -44,7 +44,8 @@
 						</span>
 						<span ng-if="!currentFile().isLocked()">
 				 			<span ng-if='hasPermission("folder.edit")' class="notModeWrite btn btn-default" ng-click="go('/folder/' + folder.id + '/' + page + '/edit')">Edit</span>
-							<span ng-if='hasPermission("folder.edit")' class="notModeRead btn btn-default" ng-click="actionSave()">Save</span>
+<!-- 				 			TODOJH problem here: save was hidden   -->
+							<span ng-if='hasPermission("folder.edit")' class="notModeRead_TODOJH btn btn-default" ng-click="actionSave()">Save</span>
 							<span ng-if='hasPermission("folder.delete") && ((page != "patient")  || (folder.getSubFiles().length == 0))' class="notModeRead btn btn-default" ng-click="actionDelete()">Delete</span>
 				 			<span class="notModeRead btn btn-default" ng-click="actionCancel()">Cancel</span>
 							<!-- <span ng-if='hasPermission("folder.delete")' class="notModeWrite btn btn-default">Delete</span> -->
