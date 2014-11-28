@@ -51,7 +51,6 @@
 	(new Script("js/cryptomedic.js"))->dependFile()->toPrint();
 	(new Script("js/amd_stats_datas.js"))->dependFile()->toPrint();
 	(new Script("js/exceptions.js"))->dependFile()->toPrint();
-
 	
 	(new AllScripts("js/model_*.js"))->dependFile()->toPrint();
 	(new AllScripts("js/service_*.js"))->dependFile()->toPrint();
