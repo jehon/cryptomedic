@@ -29,7 +29,7 @@
 						{{folder.getMainFile()._type}} #{{folder.getMainFile().id}} @{{page}} -> {{currentFile()._type}} #{{currentFile().id}}
 					</div>
 					<div class="col-sm-4 text-center" ng-if="(mode == 'add')" >
-						<span ng-if='hasPermission("folder.edit")' class="notModeRead btn btn-default" ng-click="actionCreate()">Create</span>
+						<span ng-if='hasPermission("folder.edit")' class="notModeRead btn btn-default" ng-click="actionCreate()">Create/Save</span>
 			 			<span class="notModeRead btn btn-default" ng-click="actionCancelCreate()">Cancel</span>
 					</div>
 					<div class="col-sm-4 text-center" ng-if="pageIsFile || (page == 'patient')" >
