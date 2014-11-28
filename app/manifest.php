@@ -3,7 +3,7 @@
 	
 	header("Content-Type: text/cache-manifest");
 
-	$file = fopen("manifest.cache.building", "w");
+// 	$file = fopen("manifest.cache.building", "w");
 	function addOne($f) {
 		global $file;
 		$f = str_replace("\\", "/", $f);
@@ -74,5 +74,5 @@
 		addOne($s . "?mode=edit");
 	}
 	
-	fclose($file);
-	rename("manifest.cache.building", "manifest.cache");
+// 	fclose($file);
+// 	rename("manifest.cache.building", "manifest.cache");
