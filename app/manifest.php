@@ -3,12 +3,10 @@
 	
 	header("Content-Type: text/cache-manifest");
 
-// 	$file = fopen("manifest.cache.building", "w");
 	function addOne($f) {
 		global $file;
 		$f = str_replace("\\", "/", $f);
 		echo "$f\n";
-// 		fwrite($file, $f . "\n");
 	}
 	
 	addOne("CACHE MANIFEST");
@@ -19,12 +17,17 @@
 	ob_clean();
 
 	// TODOJH: add version infos
+
 	if (file_exists("cryptomedic.version")) {
-		$v = file_get_contents("cryptomedic.version");
-	} else {
-		$v = date("YmdHis", filemtime("manifest.php"));
+		addOne("# cryptomedic version: " . file_get_contents("cryptomedic.version"));
 	}
-	addOne("# application version: $v");
+	if (file_exists("rest.version")) {
+		addOne("# rest version: " . file_get_contents("rest.version"));
+	}
+	addOne("# database version: " . $server->getDatabase()->getVersion());
+	if ($request->getSystemParameter("version", false)) {
+		addOne("# system parameter: " . $request->getSystemParameter("version"));
+	}
 	
 	addOne("");
 	addOne("# General");
@@ -61,18 +64,27 @@
 	
 	addOne("");
 	addOne("# Templates");
-	foreach(MyFile::myglob("../templates/*", false) as $s) {
+	foreach(MyFile::myglob("../templates/*.php") as $s) {
+		$s = str_replace("../", "/rest/", $s);
+		$s = str_replace(".php", ".html", $s);
 		addOne($s);
 	}
 	
 	addOne("");
 	addOne("# Templates fiches");
 	addOne("");
-	foreach(MyFile::myglob("../templates/fiches/*", false) as $s) {
+	foreach(MyFile::myglob("../templates/fiches/*.php") as $s) {
 		$s = str_replace("../", "/rest/", $s);
+		$s = str_replace(".php", ".html", $s);
 		addOne($s . "?mode=read");
 		addOne($s . "?mode=edit");
 	}
 	
-// 	fclose($file);
-// 	rename("manifest.cache.building", "manifest.cache");
+	addOne("");
+	addOne("");
+	addOne("NETWORK:");
+	foreach(Script::$scriptsLive as $s) {
+		addOne($s);
+	}
+	addOne("*");
+	
