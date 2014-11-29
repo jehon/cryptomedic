@@ -65,55 +65,6 @@
 ?>
 </head>
 <body ng-app="app_main" ng-controller="ctrl" id="ng-app">
-	<!--  Login screen -->
-	<div ng-if="!logged && !busy.shown" class="site-wrapper" id='loginForm'>
-		<div class="site-wrapper-inner col-sm-offset-4 col-sm-4">
-			<form class="form-signing" role="form">
-	    		<h2 class="form-signin-heading">Please sign in</h2>
-	    		<label for="username">Username</label>
-	        	<input id="login_username" ng-model="username" class="form-control" placeholder="Username" required autofocus>
-	    		<label for="password">Password</label>
-	        	<input id="login_password" ng-model="password" class="form-control" placeholder="Password" required type="password">
-				<br>
-				<div ng-if="loginError">
-				    <div id='login_error' class="alert alert-danger">
-	        			<a href="#" class="close" data-dismiss="alert">&times;</a>
-	        			Invalid username/password. Please try again
-					</div>
-				</div>
-				<br>
-	        	<button ng-disabled="{{pending}}" id="login.go" ng-click="doLogin()" class="btn btn-lg btn-primary btn-block">Log in</button>
-	      	</form>
-	      	<br>
-	      </div>
-	    </div>
-	  </div>
-	</div>
-	<!--  Pending screen -->
-	<!-- Modal -->
-	<div class="modal fade" id="busy" data-keyboard="false">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h4 class="modal-title">Waiting for:</h4>
-				</div>
-				<div class="modal-body">
-					<div ng-repeat="m in busy.messages">
-						<img ng-hide="m.status" src="img/waiting.gif" />
-						<span ng-show="m.status" class="glyphicon glyphicon-ok"></span>
-						{{m.message}}
-					</div>
-				</div>
-				<div class="modal-footer" ng-if="busy.done">
-					<button type="button" class="btn btn-default btn-success" data-dismiss="modal" ng-click="endbusy()">
-						<span class="glyphicon glyphicon-time"></span>
-						Dismiss
-					</button>
-				</div>
-			</div><!-- /.modal-content -->
-		</div><!-- /.modal-dialog -->
-	</div><!-- /.modal -->
-	
 	<!--  Navigation bar -->	
 	<nav class="navbar navbar-default navbar-static-top" role="navigation" ng-if="logged">
 	  <div class="container-fluid">
@@ -153,8 +104,61 @@
 	    </div>
 	  </div>
 	</nav>
-	<div old-class="view-animate-container">
-		<div ng-view></div>
+	<div class='container'>
+		<!--  Login screen -->
+		<div ng-if="!logged && !busy.shown" class="site-wrapper" id='loginForm'>
+			<div class="site-wrapper-inner col-sm-offset-4 col-sm-4">
+				<form class="form-signing" role="form">
+		    		<h2 class="form-signin-heading">Please sign in</h2>
+		    		<label for="username">Username</label>
+		        	<input id="login_username" ng-model="username" class="form-control" placeholder="Username" required autofocus>
+		    		<label for="password">Password</label>
+		        	<input id="login_password" ng-model="password" class="form-control" placeholder="Password" required type="password">
+					<br>
+					<div ng-if="loginError">
+					    <div id='login_error' class="alert alert-danger">
+		        			<a href="#" class="close" data-dismiss="alert">&times;</a>
+		        			Invalid username/password. Please try again
+						</div>
+					</div>
+					<br>
+		        	<button ng-disabled="{{pending}}" id="login.go" ng-click="doLogin()" class="btn btn-lg btn-primary btn-block">Log in</button>
+		      	</form>
+		      	<br>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		<!--  Pending screen -->
+		<!-- Modal -->
+		<div class="modal fade" id="busy" data-keyboard="false">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">Waiting for:</h4>
+					</div>
+					<div class="modal-body">
+						<div ng-repeat="m in busy.messages">
+							<img ng-hide="m.status" src="img/waiting.gif" />
+							<span ng-show="m.status" class="glyphicon glyphicon-ok"></span>
+							{{m.message}}
+						</div>
+					</div>
+					<div class="modal-footer" ng-if="busy.done">
+						<button type="button" class="btn btn-default btn-success" data-dismiss="modal" ng-click="endbusy()">
+							<span class="glyphicon glyphicon-time"></span>
+							Dismiss
+						</button>
+					</div>
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+		<div old-class="view-animate-container">
+			<div ng-view></div>
+		</div>
 	</div>
+	<footer class='footer'>
+		<p class="text-muted">Place sticky footer content here.</p>		
+	</footer>
 </body>
 </html>
