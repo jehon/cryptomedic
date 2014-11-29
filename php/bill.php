@@ -3,9 +3,9 @@
 class Bill {
 	const CAT_CONSULT = "consult";
 	const CAT_MEDECINE = "medecine";
+	const CAT_OTHER = "other";
 	const CAT_WORKSHOP = "workshop";
 	const CAT_SURGICAL = "surgical";
-	const CAT_OTHER = "other";
 	
 	public static $dbTable;
 	public static $categories = [ self::CAT_CONSULT, self::CAT_MEDECINE, self::CAT_WORKSHOP, self::CAT_SURGICAL, self::CAT_OTHER ];
