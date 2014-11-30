@@ -48,16 +48,16 @@
 	(new Script("bower_components/excellentexport/excellentexport.min.js"))->dependFile()->toPrint();
 	
 	// personnal
-	(new Script("js/application.js"))->dependFile()->toPrint();
-	(new Script("js/cryptomedic.js"))->dependFile()->toPrint();
-	(new Script("js/amd_stats_datas.js"))->dependFile()->toPrint();
-	(new Script("js/exceptions.js"))->dependFile()->toPrint();
+	(new Script("static/js/application.js"))->dependFile()->toPrint();
+	(new Script("static/js/cryptomedic.js"))->dependFile()->toPrint();
+	(new Script("static/js/amd_stats_datas.js"))->dependFile()->toPrint();
+	(new Script("static/js/exceptions.js"))->dependFile()->toPrint();
 	
-	(new AllScripts("js/model_*.js"))->dependFile()->toPrint();
-	(new AllScripts("js/service_*.js"))->dependFile()->toPrint();
-	(new AllScripts("js/ctrl_*.js"))->dependFile()->toPrint();
+	(new AllScripts("static/js/model_*.js"))->dependFile()->toPrint();
+	(new AllScripts("static/js/service_*.js"))->dependFile()->toPrint();
+	(new AllScripts("static/js/ctrl_*.js"))->dependFile()->toPrint();
 
-	(new Script("css/application.css"))->dependFile()->toPrint();
+	(new Script("static/css/application.css"))->dependFile()->toPrint();
 	
 	(new Script("/rest/authenticate/settings?JSONP=server.setSettings"))->js()->dependDBTable("settings")->live()->toPrint();
 	(new Script("/rest/labels?JSONP=cryptomedic.setLabels"))->js()->dependDBTable("labels")->toPrint();
