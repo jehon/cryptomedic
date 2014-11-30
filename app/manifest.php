@@ -14,12 +14,10 @@
 	
 	addLine("CACHE MANIFEST");
 	addLine("");
-
+	
 	ob_start();
 	require("application.php");
 	ob_clean();
-
-	// TODOJH: add version infos
 
 	if (file_exists("cryptomedic.version")) {
 		addLine("# cryptomedic version: " . file_get_contents("cryptomedic.version"));
