@@ -1,11 +1,8 @@
-<html manifest="manifest.php?_version=<?php echo time(); ?>">
+<html manifest="manifest.php">
 <?php 
 	require_once __DIR__ . "/../../rest/php/core.php";
 	Script::$rootPath = __DIR__;
 	
-	(new AllScripts("static/offline/*.js"))->dependFile()->toPrint();
-	
-	require_once("index.php");
-	
+	require_once("index.php");	
 ?>
 </html>

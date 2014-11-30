@@ -114,7 +114,7 @@
 		        	<input id="login_username" ng-model="username" class="form-control" placeholder="Username" required autofocus>
 		    		<label for="password">Password</label>
 		        	<input id="login_password" ng-model="password" class="form-control" placeholder="Password" required type="password">
-					<br>
+					<br />
 					<div ng-if="loginError">
 					    <div id='login_error' class="alert alert-danger">
 		        			<a href="#" class="close" data-dismiss="alert">&times;</a>
@@ -125,9 +125,7 @@
 		        	<button ng-disabled="{{pending}}" id="login.go" ng-click="doLogin()" class="btn btn-lg btn-primary btn-block">Log in</button>
 		      	</form>
 		      	<br>
-		      </div>
 		    </div>
-		  </div>
 		</div>
 		<!--  Pending screen -->
 		<!-- Modal -->
@@ -153,12 +151,17 @@
 				</div><!-- /.modal-content -->
 			</div><!-- /.modal-dialog -->
 		</div><!-- /.modal -->
-		<div old-class="view-animate-container">
+		<div>
 			<div ng-view></div>
 		</div>
 	</div>
-	<footer class='footer'>
-		<p class="text-muted">Place sticky footer content here.</p>		
-	</footer>
+	<div ng-if="logged" ng-controller='ctrl_offline'>
+		<nav class="navbar navbar-default navbar-fixed-bottom" role="navigation" ng-if="info_available">
+		 	<div class="container-fluid">
+		 		<p class="navbar-text">{{offline}}</p>
+		 		<button ng-if="refreshAvailable" type="button" class="btn btn-default navbar-btn" ng-click="applicationRefresh()">Refresh the application</button>
+		 	</div>
+		</nav>
+	</div>
 </body>
 </html>

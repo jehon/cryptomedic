@@ -2,15 +2,18 @@
 	define("GENERATE_MANIFEST", 1);
 	
 	header("Content-Type: text/cache-manifest");
-
+	
 	function addOne($f) {
-		global $file;
 		$f = str_replace("\\", "/", $f);
 		echo "$f\n";
 	}
 	
-	addOne("CACHE MANIFEST");
-	addOne("");
+	function addLine($f) {
+		echo $f . "\n";
+	}
+	
+	addLine("CACHE MANIFEST");
+	addLine("");
 
 	ob_start();
 	require("application.php");
@@ -19,60 +22,65 @@
 	// TODOJH: add version infos
 
 	if (file_exists("cryptomedic.version")) {
-		addOne("# cryptomedic version: " . file_get_contents("cryptomedic.version"));
+		addLine("# cryptomedic version: " . file_get_contents("cryptomedic.version"));
 	}
 	if (file_exists("rest.version")) {
-		addOne("# rest version: " . file_get_contents("rest.version"));
+		addLine("# rest version: " . file_get_contents("rest.version"));
 	}
-	addOne("# database version: " . $server->getDatabase()->getVersion());
+	addLine("# database version: " . $server->getDatabase()->getVersion());
 	if ($request->getSystemParameter("version", false)) {
-		addOne("# system parameter: " . $request->getSystemParameter("version"));
+		addLine("# system parameter: " . $request->getSystemParameter("version"));
+	}
+
+	if ($request->isServedLocally()) {
+		//addLine("# Served locally: " . time());
 	}
 	
-	addOne("");
-	addOne("# General");
-	addOne("");
-	addOne("/cryptomedic/app/application.php");
+	addLine("");
+	addLine("# General");
+	addLine("");
+	addOne("/cryptomedic/app/application.php?" . filemtime("application.php"));
 	
-	addOne("");
-	addOne("# Scripts auto-import");
-	addOne("");
+	addLine("");
+	addLine("# Scripts auto-import");
+	addLine("");
 	foreach(Script::$scriptsList as $s) {
 		addOne($s);
 	}
 	
-	addOne("");
-	addOne("# Images");
-	addOne("");
-	foreach(MyFile::myglob("img/*.*", true) as $s) {
-		addOne($s);
-	}
+	addLine("");
+	addLine("# Images");
+	addLine("");
+#	foreach(MyFile::myglob("static/img/*.*", true) as $s) {
+#		addOne($s);
+#	}
 	
-	addOne("");
-	addOne("# css");
-	addOne("");
-	foreach(MyFile::myglob("css/*", true) as $s) {
-		addOne($s);
-	}
+	addLine("");
+	addLine("# css");
+	addLine("");
+#	foreach(MyFile::myglob("static/css/*", true) as $s) {
+#		addOne($s);
+#	}
 
-	addOne("");
-	addOne("# static");
-	addOne("");
+	addLine("");
+	addLine("# static");
+	addLine("");
 	foreach(MyFile::myglob("static/*", true) as $s) {
+		if (in_array(basename($s), [ ".htaccess" ])) continue;
 		addOne($s);
 	}
 	
-	addOne("");
-	addOne("# Templates");
+	addLine("");
+	addLine("# Templates");
 	foreach(MyFile::myglob("../templates/*.php") as $s) {
 		$s = str_replace("../", "/rest/", $s);
 		$s = str_replace(".php", ".html", $s);
 		addOne($s);
 	}
 	
-	addOne("");
-	addOne("# Templates fiches");
-	addOne("");
+	addLine("");
+	addLine("# Templates fiches");
+	addLine("");
 	foreach(MyFile::myglob("../templates/fiches/*.php") as $s) {
 		$s = str_replace("../", "/rest/", $s);
 		$s = str_replace(".php", ".html", $s);
@@ -80,11 +88,11 @@
 		addOne($s . "?mode=edit");
 	}
 	
-	addOne("");
-	addOne("");
-	addOne("NETWORK:");
+	addLine("");
+	addLine("");
+	addLine("NETWORK:");
 	foreach(Script::$scriptsLive as $s) {
 		addOne($s);
 	}
-	addOne("*");
+	addLine("*");
 	
