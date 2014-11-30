@@ -246,6 +246,12 @@ button img {
   white-space: normal;
   line-height: 1;
 }
+
+.navbar img {
+	height: 		25px;
+	padding-right:  10px;	
+} 
+
 /********************************************
  *  Marks and graphics
  */

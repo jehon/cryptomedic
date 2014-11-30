@@ -5,10 +5,6 @@ mainApp.controller('ctrl_offline', [ '$scope', 'service_rest', function($scope, 
 	$scope.offline = "";
 	$scope.refreshAvailable = false;
 	
-//	window.applicationCache.ondownloading = function(progress) {
-//		console.info("++ downloading");
-//	};
-
 	window.applicationCache.onprogress = function(progress) {
 		console.log(progress.loaded);
 		$scope.info_available = true;

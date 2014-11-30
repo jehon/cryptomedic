@@ -3,7 +3,7 @@
 <div class='container-fluid'>
 	<div class='row'>
 		<div class='col-sm-offset-3 col-sm-6'>
-			<h1 class='text-center'><img src='img/home.gif'>Home</h1>
+			<h1 class='text-center'><img src='static/img/home.gif'>Home</h1>
 			<fieldset id='add'>
 				<legend>Check if a patient exists, and if not, create it</legend>
 				<div ng-if="!searched" style="text-align: left">

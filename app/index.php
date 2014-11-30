@@ -81,7 +81,7 @@
 	      <ul class="nav navbar-nav navbar-right">
         	<li><p class="navbar-text" id='login.logged.username'>{{server.settings.username}}</p></li>
 	      	<li><a href="#/home" class="navbar-link">
-		    	<img src="img/home.gif" height="20px"/>
+		    	<img src="static/img/home.gif" height="20px"/>
 				Home
 		    </a></li>
 	      	<li><a href="#/search" class="navbar-link">
@@ -89,7 +89,7 @@
 	      		Search a patient
 	      	</a></li>
 	      	<li><a href="#/day" class="navbar-link">
-	      		<img src="img/consultOfDay.gif" height="20px"/>
+	      		<img src="static/img/consultOfDay.gif" height="20px"/>
 	      		Consults of the day
 	      	</a></li>
 	      	<li><a href="#/reports" class="navbar-link">
@@ -97,7 +97,7 @@
 	      		Reports
 	      	</a></li>
 	      	<li><button type="button" class="btn btn-default navbar-btn" ng-click="doLogout()" >
-	      		<img src="img/logout.gif"/>
+	      		<img src="static/img/logout.gif"/>
 	      		Logout
 	      		</button></li>
 	      </ul>
@@ -158,7 +158,7 @@
 	<div ng-if="logged" ng-controller='ctrl_offline'>
 		<nav class="navbar navbar-default navbar-fixed-bottom" role="navigation" ng-if="info_available">
 		 	<div class="container-fluid">
-		 		<p class="navbar-text">{{offline}}</p>
+		 		<p ng-if="offline" class="navbar-text"><img src='static/img/sync.png'>{{offline}}</p>
 		 		<button ng-if="refreshAvailable" type="button" class="btn btn-default navbar-btn" ng-click="applicationRefresh()">Refresh the application</button>
 		 	</div>
 		</nav>

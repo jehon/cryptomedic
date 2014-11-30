@@ -34,11 +34,11 @@
 					</div>
 					<div class="col-sm-4 text-center" ng-if="pageIsFile || (page == 'patient')" >
 						<span ng-if="currentFile().isLocked()">
-							<img src='img/locked.gif' />
+							<img src='static/img/locked.gif' />
 							File is locked.
 							<span ng-if='!hasPermission("folder.unlock")'>You can not edit it anymore.</span>
 							<span ng-if='hasPermission("folder.unlock")' class="notModeWrite btn btn-default" ng-click='actionUnlock()'>
-								<img src='img/unlock.gif'>
+								<img src='static/img/unlock.gif'>
 								Unlock the file
 							</span>
 						</span>

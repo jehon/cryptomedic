@@ -3,7 +3,7 @@
 ?>
 <div class="row">
 	<div class='col-sm-offset-3 col-sm-6'>
-		<h1 class='text-center'><img src='img/consultOfDay.gif'>Who has a consultation planned?</h1>
+		<h1 class='text-center'><img src='static/img/consultOfDay.gif'>Who has a consultation planned?</h1>
 		<fieldset>
 			<legend>Date of the consultation</legend>
 			Here, you can receive the list of patients that you planned for that day.<br>

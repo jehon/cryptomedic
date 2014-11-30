@@ -39,7 +39,7 @@
 	addLine("");
 	addLine("# General");
 	addLine("");
-	addOne("/cryptomedic/app/application.php?" . filemtime("application.php"));
+	addOne("/cryptomedic/app/application.php?" . filemtime("application.php") . "&" . filemtime("index.php"));
 	
 	addLine("");
 	addLine("# Scripts auto-import");
