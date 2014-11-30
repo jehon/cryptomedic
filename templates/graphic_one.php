@@ -5,11 +5,8 @@
 <fieldset>
 	<legend>{{getVariableY()}} / {{getVariableX()}}</legend>
 	<div class='markContainer'>
-		<img ng-src="img/stats_{{getImageName()}}.jpg" width='100%'>
-<!-- 		<img ng-if="currentFile().Sex == 207" src='/amd/cryptomedic/img/graphics/weight-m.jpg' width='600px' height='360px'/>
-		<img ng-if="currentFile().Sex == 208" src='/amd/cryptomedic/img/graphics/weight-f.jpg' width='600px' height='360px'/>
-		<img ng-if="currentFile().Sex == 0"   src='/amd/cryptomedic/img/graphics/weight-u.jpg' width='600px' height='360px'/>
- -->	    <span ng-repeat="f in folder.getSubFiles()"
+		<img ng-src="static/img/stats_{{getImageName()}}.jpg" width='100%'>
+	    <span ng-repeat="f in folder.getSubFiles()"
 	        ng-if="getValidity($index) == 'v'"
 	        ng-mouseover="hover($index)"
 	    	ng-class="{ hovered: hovered == $index }"
