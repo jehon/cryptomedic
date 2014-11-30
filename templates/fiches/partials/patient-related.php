@@ -7,10 +7,10 @@
 		<table>
 			<tr>
 				<td rowspan='100' align='left' width='100px'>
-					<img src="img/patient.gif">
+					<img src="static/img/patient.gif">
 					<br/>
 					<a class='textbutton' href="#/folder/{{folder.getId()}}">
-						<img src="img/go.gif">
+						<img src="static/img/go.gif">
 						view
 					</a>
 				</td>

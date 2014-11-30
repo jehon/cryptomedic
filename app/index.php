@@ -18,8 +18,8 @@
 	<title>Cryptomedic</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link href="img/favicon.ico" type="image/x-icon" rel="icon" />
-	<link href="img/favicon.ico" type="image/x-icon" rel="shortcut icon" />
+	<link href="static/img/favicon.ico" type="image/x-icon" rel="icon" />
+	<link href="static/img/favicon.ico" type="image/x-icon" rel="shortcut icon" />
 	
 	<!-- Adapt upgrade.html also -->
 	<!--[if lt IE 9]>
@@ -85,7 +85,7 @@
 				Home
 		    </a></li>
 	      	<li><a href="#/search" class="navbar-link">
-	      		<img src="img/patientsSearch.gif" height="20px"/>
+	      		<img src="static/img/patientsSearch.gif" height="20px"/>
 	      		Search a patient
 	      	</a></li>
 	      	<li><a href="#/day" class="navbar-link">
@@ -93,7 +93,7 @@
 	      		Consults of the day
 	      	</a></li>
 	      	<li><a href="#/reports" class="navbar-link">
-	      		<img src="img/reports.gif" height="20px"/>
+	      		<img src="static/img/reports.gif" height="20px"/>
 	      		Reports
 	      	</a></li>
 	      	<li><button type="button" class="btn btn-default navbar-btn" ng-click="doLogout()" >

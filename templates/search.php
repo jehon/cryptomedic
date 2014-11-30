@@ -3,7 +3,7 @@
 	t::setDefaultOption("forceAllowNull");
 	t::setDefaultOption("writeOnly");
 ?>
-<h1><img src='img/patientsSearch.gif'>Search for a patient</h1>
+<h1><img src='static/img/patientsSearch.gif'>Search for a patient</h1>
 <div class='searchFields'>
 	<div class="row">
 		<div class="col-lg-6">
@@ -66,7 +66,7 @@
 	    		<td>
 	    		{{id}}
 	    			<a ng-href='#/folder/{{patient.id}}/patient'>
-	    				<img src='img/go.gif'>
+	    				<img src='static/img/go.gif'>
 	    			</a>
 	    		</td>
 	    		<td>

@@ -168,8 +168,8 @@ class t {
                     $this->res .= "<span id='{$this->key}'>{{ {$this->rawExpression} | date:'{self::DATETIMEFORMAT}' }}</span>";
                     break;
             case self::TYPE_BOOLEAN:
-                $this->res .= "<span id='{$this->key}' ng-show='{$this->rawExpression}'><img src='img/boolean-true.gif'></span>"
-                        . "<span id='{$this->key}' ng-hide='{$this->rawExpression}'><img src='img/boolean-false.gif'></span>";
+                $this->res .= "<span id='{$this->key}' ng-show='{$this->rawExpression}'><img src='static/img/boolean-true.gif'></span>"
+                        . "<span id='{$this->key}' ng-hide='{$this->rawExpression}'><img src='static/img/boolean-false.gif'></span>";
                 break;
             case self::TYPE_LIST:
                 if ($this->isListLinked) {
