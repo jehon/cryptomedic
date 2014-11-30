@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<html>
 <?php 
 	require_once __DIR__ . "/../../rest/php/core.php";
 	Script::$rootPath = __DIR__;
@@ -137,7 +138,7 @@
 					</div>
 					<div class="modal-body">
 						<div ng-repeat="m in busy.messages">
-							<img ng-hide="m.status" src="img/waiting.gif" />
+							<img ng-hide="m.status" src="static/img/waiting.gif" />
 							<span ng-show="m.status" class="glyphicon glyphicon-ok"></span>
 							{{m.message}}
 						</div>
