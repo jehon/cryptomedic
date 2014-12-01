@@ -22,6 +22,7 @@ mainApp.controller('ctrl_offline', [ '$scope', 'service_rest', function($scope, 
 	};
 
 	window.applicationCache.oncached = function(progress) {
+		console.log("cached event");
 		$scope.info_available = false;
 	};
 	
