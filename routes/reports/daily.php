@@ -18,6 +18,7 @@ if ($when instanceof DateTime) {
 
 */
 $result = $server->getDatabase()->query("SELECT 
+			bills.id as bid,
             " . Bill::getSQLFieldsSum(Bill::CAT_CONSULT) . " AS sum_consult, 
             " . Bill::getSQLFieldsSum(Bill::CAT_MEDECINE) . " AS sum_medecine, 
 			" . Bill::getSQLFieldsSum(Bill::CAT_WORKSHOP) . " AS sum_workshop, 
@@ -190,10 +191,11 @@ $result = $server->getDatabase()->query("SELECT
                     
                     ?>
                         <tr>
-                            <td class='b_left'><?php 
-                                echo $i; 
-                                //var_dump($v);
-                                ?></td>
+                            <td class='b_left'>
+                            	<button ng-click="goToFiche('Bill', <?php echo $v['bid']; ?>)">
+                            		Go <?php echo $i; ?>
+                            	</button>
+							</td>
                             <td><?php echo $v['Date']; ?></td>
                             <td><?php echo $v['ExaminerName']; ?></td>
                             <td><?php echo References::unreference($v['Center']); ?></td>

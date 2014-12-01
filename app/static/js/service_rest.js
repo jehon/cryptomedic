@@ -123,5 +123,11 @@ mainApp.factory('service_rest', [ '$http', '$log' , '$rootScope', function($http
 				return data;				
 			});
 		},
+		'getParent': function(type, id) {
+			return treatHttp($http.get(root + "/related/" + type + "/" + id), function(data) {
+				cache.set(data.getMainFile().id, data);
+				return data;				
+			});
+		}
 	};
 }]);
