@@ -2,8 +2,8 @@
 
 -- DROP PROCEDURE IF EXISTS create_price;
 
---CREATE PROCEDURE create_price()
---BEGIN
+-- CREATE PROCEDURE create_price()
+-- BEGIN
 --   	START TRANSACTION WITH CONSISTENT SNAPSHOT @#@
 --
 --	-- duplicate the entry
@@ -22,4 +22,6 @@
 --	DROP TEMPORARY TABLE IF EXISTS tmptable_1 @#@
 --	
 --	COMMIT @#@
---END;
+-- END;
+
+select 1;
