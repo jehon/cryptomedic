@@ -105,7 +105,7 @@
 	    </div>
 	  </div>
 	</nav>
-	<div class='container'>
+	<div class='container-fluid'>
 		<!--  Login screen -->
 		<div ng-if="!logged && !busy.shown" class="site-wrapper" id='loginForm'>
 			<div class="site-wrapper-inner col-sm-offset-4 col-sm-4">
