@@ -1,7 +1,5 @@
 "use strict";
 
-// TODO: partials depend on version (like script) -> caching opportunities
-
 var application = {};
 application.models = {};
 var server = {};
@@ -302,10 +300,13 @@ mainApp.controller('ctrl', [ '$scope', '$location', 'service_rest', function($sc
 		  }
 	};
 	
-	$scope.go = function ( path ) {
+	$scope.go = function(path, replaceInHistory) {
+		if ((typeof(replaceInHistory) !== "undefined") && replaceInHistory) {
+			$location.replace();
+		}
   		$location.path( path );
 	};
-
+	
 	$scope.logged = false;
 	// $scope.pending = false;
 
