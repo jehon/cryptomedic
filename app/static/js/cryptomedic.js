@@ -16,6 +16,9 @@ mainApp.config([ '$routeProvider', function($routeProvider) {
     }).when('/reports/:report?', {
         templateUrl: '/rest/templates/reports.html',
         controller: 'ctrl_reports',
+    }).when('/goto/:type/:id', {
+    	templateUrl: '/rest/templates/blank.html',
+    	controller: 'ctrl_goto',
     }).otherwise({ 'redirectTo': '/home'});
 }]);
 
