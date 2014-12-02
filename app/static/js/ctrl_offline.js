@@ -6,15 +6,12 @@ mainApp.controller('ctrl_offline', [ '$scope', 'service_rest', function($scope, 
 	$scope.refreshAvailable = false;
 	
 	window.applicationCache.onprogress = function(progress) {
-		console.log(progress.loaded);
 		$scope.info_available = true;
 		$scope.offline = "Downloading next version: " + progress.loaded + " of " + progress.total;
 		$scope.safeApply();
 	};
 
 	window.applicationCache.onupdateready = function(progress) {
-		console.log("update ready");
-		
 		$scope.info_available = true;
 		$scope.offline = "A new version of the application is available.";
 		$scope.refreshAvailable = true;
@@ -22,7 +19,6 @@ mainApp.controller('ctrl_offline', [ '$scope', 'service_rest', function($scope, 
 	};
 
 	window.applicationCache.oncached = function(progress) {
-		console.log("cached event");
 		$scope.info_available = false;
 		$scope.safeApply();
 	};

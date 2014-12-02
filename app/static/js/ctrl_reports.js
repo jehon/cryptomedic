@@ -1,20 +1,16 @@
  "use strict";
 
-mainApp.controller('ctrl_reports', [ '$scope', '$routeParams', 'service_rest', function($scope, $routeParams, service_rest) {
+mainApp.controller('ctrl_reports', [ '$scope', '$routeParams', 'service_rest', 'cache_commons', function($scope, $routeParams, service_rest, cache_commons) {
 	var report = $routeParams['report'];
-	var now = new Date();
-	$scope.values = {
-		'examinerName': '',
-		'date': new Date(),
-		'center': 992,
-		'month': now.getFullYear() + "-" + now.getMonth()
-	};
-
+	$scope.values = cache_commons.getAll();
+	console.log(localStorage);
+	console.log($scope.values);
+	
 	var reports = {
 		'daily': [ "center", "date" ], //, "examinerName"
 		'monthly': [ "month"]
 	}
-
+	
 	$scope.getReport = function() {
 		if (report) {
 			return report;
@@ -39,6 +35,13 @@ mainApp.controller('ctrl_reports', [ '$scope', '$routeParams', 'service_rest', f
 	};
 	
 	$scope.refresh = function() {
+//		reports[report].forEach(function(v) {
+		console.log($scope.values);
+		angular.forEach(reports[report], function(v) {
+			cache_commons.set(v, $scope.values[v]);
+		});
+		console.log($scope.values);
+
 		var res = report + ".html?";
 		if ($scope.values.date) {
 			$scope.values.date.setUTCHours(0, 0, 0, 0);

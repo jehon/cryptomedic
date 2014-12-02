@@ -1,6 +1,6 @@
 "use strict";
 
-// TODO: manage errors codes (interceptors ?)
+// TODOJH: manage errors codes (interceptors ?)
 
 mainApp.factory('service_rest', [ '$http', '$log' , '$rootScope', function($http, $log, $rootScope) {
 	var cache = perishableCache(10);

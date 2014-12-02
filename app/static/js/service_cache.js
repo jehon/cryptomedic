@@ -1,5 +1,6 @@
+"use strict";
 
-function perishableCache(n, perish) {
+function perishableCache(perish) {
 	var cache = {};
 	var timestamps = {};
 
@@ -9,10 +10,10 @@ function perishableCache(n, perish) {
 	}
 
 	function checkId(id) {
+		if (!perish) return;
 		var lim = new Date();
 		lim.setMinutes(lim.getMinutes() - 1);
 		if (timestamps[id] < lim) {
-			console.warn("AutoPerish " + id);
 			perish(id);
 		}
 	}
