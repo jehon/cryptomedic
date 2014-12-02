@@ -149,8 +149,8 @@ function objectify(what) {
 }
 
 function stringify(what) {
-    if (what == null) return what;
-    if (what == "") return null;
+    if (what === null) return what;
+    if (what === "") return null;
     if (typeof(what) == "object") {
         if (what instanceof Date) {
         	return date2CanonicString(what);
