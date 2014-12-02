@@ -192,9 +192,9 @@ $result = $server->getDatabase()->query("SELECT
                     ?>
                         <tr>
                             <td class='b_left'>
-                            	<button ng-click="goToFiche('Bill', <?php echo $v['bid']; ?>)">
+                            	<a href='#/goto/Bill/<?php echo $v['bid']; ?>'>
                             		Go <?php echo $i; ?>
-                            	</button>
+                            	</a>
 							</td>
                             <td><?php echo $v['Date']; ?></td>
                             <td><?php echo $v['ExaminerName']; ?></td>

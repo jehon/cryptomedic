@@ -3,8 +3,8 @@
 mainApp.controller('ctrl_reports', [ '$scope', '$routeParams', 'service_rest', 'cache_commons', function($scope, $routeParams, service_rest, cache_commons) {
 	var report = $routeParams['report'];
 	$scope.values = cache_commons.getAll();
-	console.log(localStorage);
-	console.log($scope.values);
+//	console.log(localStorage);
+//	console.log($scope.values);
 	
 	var reports = {
 		'daily': [ "center", "date" ], //, "examinerName"
@@ -22,25 +22,13 @@ mainApp.controller('ctrl_reports', [ '$scope', '$routeParams', 'service_rest', '
 		return reports[report].indexOf(name) > -1;
 	}
 
-	$scope.goToFiche = function(type, id) {
-		service_rest.getParent(type, id).then(function(parent) {
-			var j = 0;
-			angular.forEach(parent.getSubFiles(), function(v, i) {
-				if ((v['_type'] == type) && (v['id'] == id)) {
-					j = i;
-				}
-			});
-			$scope.go("/folder/" + parent.getId() + "/" + j);
-		});
-	};
-	
 	$scope.refresh = function() {
 //		reports[report].forEach(function(v) {
-		console.log($scope.values);
+//		console.log($scope.values);
 		angular.forEach(reports[report], function(v) {
 			cache_commons.set(v, $scope.values[v]);
 		});
-		console.log($scope.values);
+//		console.log($scope.values);
 
 		var res = report + ".html?";
 		if ($scope.values.date) {
