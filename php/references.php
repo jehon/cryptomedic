@@ -65,7 +65,6 @@ class References {
     }
 }
 
-
 References::$amd_listing["Centers"] = array( 992, 993, 993, 994, 995, 996, 997, 1002 );
 References::$amd_listing["Centers"]["labels"] = true;
 
@@ -256,12 +255,12 @@ References::$model_listing['NonricketConsult.Walk'] = References::$amd_listing['
 References::$model_listing['NonricketConsult.Center'] = References::$amd_listing['Centers'];
 References::$model_listing['NonricketConsult.NextCenter'] = References::$amd_listing["Centers"];
 
-References::$model_listing['OrthopedicDevice.Device'] = References::$amd_listing['Device'];
-References::$model_listing['OrthopedicDevice.Goal'] = References::$amd_listing['OrthopedicGoal'];
-References::$model_listing['OrthopedicDevice.Orthopedicdevice'] = References::$amd_listing['CHO/29'];
-References::$model_listing['OrthopedicDevice.Result'] = References::$amd_listing['CHO/26'];
-References::$model_listing['OrthopedicDevice.TypeOfMaterial'] = References::$amd_listing['Material'];
-References::$model_listing['OrthopedicDevice.UsingProposal'] = References::$amd_listing['OrthopedicUsage'];
+// References::$model_listing['OrthopedicDevice.Device'] = References::$amd_listing['Device'];
+// References::$model_listing['OrthopedicDevice.Goal'] = References::$amd_listing['OrthopedicGoal'];
+// References::$model_listing['OrthopedicDevice.Orthopedicdevice'] = References::$amd_listing['CHO/29'];
+// References::$model_listing['OrthopedicDevice.Result'] = References::$amd_listing['CHO/26'];
+// References::$model_listing['OrthopedicDevice.TypeOfMaterial'] = References::$amd_listing['Material'];
+// References::$model_listing['OrthopedicDevice.UsingProposal'] = References::$amd_listing['OrthopedicUsage'];
 
 References::$model_listing['Patient.District'] = References::$amd_listing['Districts'];
 References::$model_listing['Patient.Doesthechildrengotoschool'] = References::$amd_listing['SchoolAttendee'];
