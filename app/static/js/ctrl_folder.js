@@ -150,6 +150,16 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_rest', '$rou
 	$scope.actionCreate = function() {
 		var busyEnd = $scope.doBusy("Creating the file on the server");
 		var creatingType = fileCreating._type;
+		if (fileCreating.Date) {
+			cache().set("date", fileCreating.Date);
+		}
+		if (fileCreating.ExaminerName) {
+			cache().set("examinerName", fileCreating.ExaminerName);
+		}
+		if (fileCreating.Center) {
+			cache().set("center", fileCreating.Center);
+		}
+		
 		service_rest.createFile($scope.currentFile(), $scope.id())
 			.done(function(data) {
 				$scope.folder = data;

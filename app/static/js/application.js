@@ -308,7 +308,6 @@ mainApp.controller('ctrl', [ '$scope', '$location', 'service_rest', function($sc
 	};
 	
 	$scope.logged = false;
-	// $scope.pending = false;
 
 	$scope.hasPermission = function(transaction) {
 		if (typeof(server) == "undefined") return false;

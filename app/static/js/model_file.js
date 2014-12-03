@@ -14,6 +14,13 @@ application.models.File = application.models.Data.extend({
 		this._super(data);
 		if (data == null) {
 			this.patient_id = patient.id;
+			var c = cache();
+			this.ExaminerName = c.get("examinerName", "");
+			this.Center = c.get("center", 992);
+			this.Date = c.get("date", null);
+			if (this.Date == null) {
+				this.Date = date2CanonicString(new Date(), true);
+			}
 		} else {
 			if (typeof(patient) == "undefined") patient = null;
 			// this.patient = patient;
