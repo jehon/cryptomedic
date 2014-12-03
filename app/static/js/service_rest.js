@@ -38,6 +38,7 @@ mainApp.factory('service_rest', [ '$http', '$log' , '$rootScope', function($http
 			return treatHttp($http.post(root + "/authenticate/login", { 'username': username, 'password': password }));
 		},
 		'doLogout': function() {
+			cache().clear();
 			return treatHttp($http.get(root + "/authenticate/logout"), function(data) {
 				$rootScope.$broadcast("rest_logged_out");
 			});
