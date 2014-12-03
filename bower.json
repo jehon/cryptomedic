@@ -12,6 +12,7 @@
     "excellentexport": "latest",
     "jquery": "~1.11",
     "jquery-ui": "~1.11",
-    "modernizr": "latest"
-  }
+    "modernizr": "latest",
+    "es6-promise": "latest"
+    }
 }
