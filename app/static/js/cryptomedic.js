@@ -24,6 +24,7 @@ mainApp.config([ '$routeProvider', function($routeProvider) {
 
 var cryptomedic = {};
 cryptomedic.settings = {};
+cryptomedic.settings.offlineCache = false;
 
 cryptomedic.math = {
 	evaluatePoly: function (line, x) {

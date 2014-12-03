@@ -5,4 +5,10 @@
 	
 	require_once("index.php");	
 ?>
+<script>
+	if (indexedDB) {
+		console.info("[application mode] Enabling offline cache - TODOJH !!!! NOT DONE WHILE DEVELOPPING !!!!");
+// 		cryptomedic.settings.offlineCache = true;
+	}
+</script>
 </html>

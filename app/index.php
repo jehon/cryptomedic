@@ -164,5 +164,19 @@
 		 	</div>
 		</nav>
 	</div>
+	<?php 
+		// TODOJH: remove this when local cache is ok!
+		if ($request->isServedLocally()) {
+			?>
+				<script>
+					console.warn("Enabling offline cache in local dev while it should be only enabled in application.php");
+					if (indexedDB) {
+						cryptomedic.settings.offlineCache = true;
+					}
+				</script>
+			<?php 
+		}
+	?>
 </body>
 </html>
+	
