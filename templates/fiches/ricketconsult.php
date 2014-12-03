@@ -1,6 +1,6 @@
 <?php 
 	t::setDefaultOption("baseExpression", "currentFile().");
-	t::setDefaultOption("model", "NonricketConsult");
+	t::setDefaultOption("model", "RicketConsult");
 	// Example: 10001
 ?>
 <div class='container-fluid'>
