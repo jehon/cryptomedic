@@ -8,7 +8,7 @@ class t {
     const TYPE_CHAR         = 4;
     const TYPE_TEXT         = 5;
     const TYPE_DATE         = 6;
-    
+
     const DATEFORMAT = "shortDate";
     const DATETIMEFORMAT = "short";
 
@@ -89,11 +89,12 @@ class t {
 
         $this->isList = false;
         $this->isListLinked = false;
-        if (array_key_exists($this->key, References::$model_listing)) {
+        $header = $this->model . "." . $this->field;
+        if (array_key_exists($header, References::$model_listing)) {
             // $this->myType = "list";
             $this->type = self::TYPE_LIST;
             $this->isList = true;
-            $this->listing = References::$model_listing[$key];
+            $this->listing = References::$model_listing[$header];
             if (array_key_exists('labels', $this->listing) && ($this->listing['labels'])) {
                 $list = $this->listing;
                 // $this->myType = "linkedList";
@@ -157,11 +158,37 @@ class t {
         return $this;
     }
     
+	function meta($p) {
+		global $request;
+		if ($request) {
+			if ($request->getSystemParameter("meta", false)) {
+				$this->res .= "=" . $p . $this->key;
+				$this->res .= ($this->linked2DB ? "" : "##");
+				$this->res .= "-" . $this->model . "." . $this->field; 
+				$this->res .= ":" . $this->type;
+				if ($this->type == self::TYPE_LIST) {
+					$this->res .= "(";
+					foreach($this->listing as $k => $v) { 
+						$this->res .= $k . ":" . $v . ","; 
+					}
+					$this->res .= ")";
+				}
+				$this->res .= ($this->required ? "!" : "?");
+				$this->res .= "[" . $this->rawExpression . "]";
+				$this->res .= "=";
+				return true;
+			}
+		}
+		return false;
+	}
+    
     function read() {
         if (!$this->linked2DB) {
             $this->res .= "<span class='error'>Read: key is not in the database: '{$this->key}'</span>";
             return $this;
         }
+		if ($this->meta("r")) return $this;
+        
         switch($this->type) {
             case self::TYPE_TIMESTAMP: 
                     // See https://docs.angularjs.org/api/ng/filter/date
@@ -198,6 +225,7 @@ class t {
             $this->res .= "<span class='error'>Write: key is not in the database: '{$this->key}'</span>";
             return $this;
         }
+        if ($this->meta("w")) return $this;
         
         $inline = "class='form-control' ng-model='{$this->rawExpression}' "
             . ($this->required ? " required " : "")
