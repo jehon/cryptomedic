@@ -2,14 +2,36 @@
 
 // TODOJH: manage errors codes (interceptors ?)
 
+/*
+ * expected behavior:
+ * - always store what come back from the server in the cache
+ * - if offline, this data does not perish
+ * - if online, this data perish (see checkId which manage that)
+ * 
+ * Expected from the server:
+ * - if offline, the list of modifications since last time
+ * - if online, nothing special
+ *
+ * Tasks:
+ * 1. make this cache async in its calls (return promise)
+ * 2. manage the fallback mode: when no indexedDB are available (!db)
+ * 3. enrich when receiving data from the server and get from the indexedDB
+ * 
+ */
+
+
 mainApp.factory('service_rest', [ '$http', '$log' , '$rootScope', function($http, $log, $rootScope) {
-	var cache = perishableCache(10);
+	// TOODJH: Hook it to indexeddb
+	var pcache = perishableCache(10);
 	var root = "/rest/";
 	
 	function treatHttp(request, treatResponse) {
 		var def = jQuery.Deferred();
 		request.success(function(data, status, headers, config) {
 			$rootScope.$broadcast("rest_logged_in");
+			
+			// TODOJH: filter and treat __sync data
+			
 			if (typeof(treatResponse) == 'function') {
 				data = treatResponse(data, status, headers, config);
 			}
@@ -30,6 +52,7 @@ mainApp.factory('service_rest', [ '$http', '$log' , '$rootScope', function($http
 
 	return {
 		'checkLogin': function() {
+			// TODOJH: Give hime information about last sync
 			return treatHttp($http.get(root + "/authenticate/settings"));
 		},
 		'doLogin': function(username, password) {
@@ -82,51 +105,51 @@ mainApp.factory('service_rest', [ '$http', '$log' , '$rootScope', function($http
 						'entryyear': year, 
 						'entryorder': order
 					}), function(data) {
-				cache.set(data.getMainFile().id, data);
+				pcache.set(data.getMainFile().id, data);
 				return data;
 			}); 
 		},
 		'getFolder': function(id) {
-			if (cache.isCached(id)) {
-				return jQuery.Deferred().resolve(cache.get(id));
+			if (pcache.isCached(id)) {
+				return jQuery.Deferred().resolve(pcache.get(id));
 			}
 			return treatHttp($http.get(root + "/folders/" + id), function(data) {
-				cache.set(data.getMainFile().id, data);
+				pcache.set(data.getMainFile().id, data);
 				return data;				
 			});
 		},
 		'unlockFile': function(data, folderId) {
-			cache.perish(folderId);
+			pcache.perish(folderId);
 		    return treatHttp($http({ method: "UNLINK", url: root + "/fiche/" + data['_type'] + "/" + data['id'] }), function(data) {
-				cache.set(data.getMainFile().id, data);
+				pcache.set(data.getMainFile().id, data);
 				return data;				
 			});
 		},
 		'saveFile': function(data, folderId) {
-			cache.perish(folderId);
+			pcache.perish(folderId);
 			return treatHttp($http.put(root + "/fiche/" + data['_type'] + "/" + data['id'], data), function(data) {
-				cache.set(data.getMainFile().id, data);
+				pcache.set(data.getMainFile().id, data);
 				return data;				
 			});
 		},
 		'createFile': function(data, folderId) {
-			cache.perish(folderId);
+			pcache.perish(folderId);
 			return treatHttp($http.post(root + "/fiche/" + data['_type'], data), function(data, status, headers, config) {
-				cache.set(data.getMainFile().id, data);
+				pcache.set(data.getMainFile().id, data);
 				return data;				
 			});
 		},
 		'deleteFile': function(data, folderId) {
-			cache.perish(folderId);
+			pcache.perish(folderId);
 			return treatHttp($http.delete(root + "/fiche/" + data['_type'] + "/" + data['id']), function(data) {
 				if (data instanceof application.models.Folder)
-					cache.set(data.getMainFile().id, data);
+					pcache.set(data.getMainFile().id, data);
 				return data;				
 			});
 		},
 		'getParent': function(type, id) {
 			return treatHttp($http.get(root + "/related/" + type + "/" + id), function(data) {
-				cache.set(data.getMainFile().id, data);
+				pcache.set(data.getMainFile().id, data);
 				return data;				
 			});
 		}
