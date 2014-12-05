@@ -19,8 +19,8 @@ function cache() {
 		'get': function(key, def) {
 			types[key] = typeof(def);
 			if (values[key]) return angular.copy(values[key]);
-			if (localStorage && localStorage[key]) {
-				var it = localStorage.getItem(key);
+			if (sessionStorage && sessionStorage[key]) {
+				var it = sessionStorage.getItem(key);
 				if (it === "" || it === "null") {
 					values[key] = null;
 				} else {
@@ -46,14 +46,14 @@ function cache() {
 			var val = newVal;
 			if (val === null) val = "";
 			values[key] = val;
-			if (localStorage) {
-				localStorage.setItem(key, stringify(val));
+			if (sessionStorage) {
+				sessionStorage.setItem(key, stringify(val));
 			}
 		},
 		'clear': function() {
 			values = {};
-			if (localStorage) {
-				localStorage.clear();
+			if (sessionStorage) {
+				sessionStorage.clear();
 			}
 		}
 	}
