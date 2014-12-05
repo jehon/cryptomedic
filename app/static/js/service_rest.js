@@ -66,6 +66,22 @@ mainApp.factory('service_rest', [ '$http', '$log' , '$rootScope', function($http
 				$rootScope.$broadcast("rest_logged_out");
 			});
 		},
+		'getFolder': function(id) {
+			if (pcache.isCached(id)) {
+				return jQuery.Deferred().resolve(pcache.get(id));
+			}
+			return treatHttp($http.get(root + "/folders/" + id), function(data) {
+				pcache.set(data.getMainFile().id, data);
+				return data;				
+			});
+		},
+		'getParent': function(type, id) {
+			return treatHttp($http.get(root + "/related/" + type + "/" + id), function(data) {
+				pcache.set(data.getMainFile().id, data);
+				return data;				
+			});
+		},
+
 		'searchForPatients': function(params) {
 			return treatHttp($http.get(root + "/folders/", { 'params': params }), function(data) {
 				var list = [];
@@ -109,15 +125,6 @@ mainApp.factory('service_rest', [ '$http', '$log' , '$rootScope', function($http
 				return data;
 			}); 
 		},
-		'getFolder': function(id) {
-			if (pcache.isCached(id)) {
-				return jQuery.Deferred().resolve(pcache.get(id));
-			}
-			return treatHttp($http.get(root + "/folders/" + id), function(data) {
-				pcache.set(data.getMainFile().id, data);
-				return data;				
-			});
-		},
 		'unlockFile': function(data, folderId) {
 			pcache.perish(folderId);
 		    return treatHttp($http({ method: "UNLINK", url: root + "/fiche/" + data['_type'] + "/" + data['id'] }), function(data) {
@@ -144,12 +151,6 @@ mainApp.factory('service_rest', [ '$http', '$log' , '$rootScope', function($http
 			return treatHttp($http.delete(root + "/fiche/" + data['_type'] + "/" + data['id']), function(data) {
 				if (data instanceof application.models.Folder)
 					pcache.set(data.getMainFile().id, data);
-				return data;				
-			});
-		},
-		'getParent': function(type, id) {
-			return treatHttp($http.get(root + "/related/" + type + "/" + id), function(data) {
-				pcache.set(data.getMainFile().id, data);
 				return data;				
 			});
 		}
