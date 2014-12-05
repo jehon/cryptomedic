@@ -3,35 +3,6 @@
 //	https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API/Using_IndexedDB
 
 function perishableCache(perish) {
-	var error = function(event) {
-		console.error(event.target);
-	};
-	
-	var db = false;
-	
-	if (indexedDB) {
-		var request = indexedDB.open("cryptomedic", 1);
-		request.onerror = error;
-		request.onsuccess = function(event) {
-			  db = event.target.result;
-		};
-		request.onblocked = function(event) {
-			  // If some other tab is loaded with the database, then it needs to be closed
-			  // before we can proceed.
-			alert("Please close all other tabs with this site open!");
-		};
-		request.onupgradeneeded = function(event) {
-			var db = event.target.result;
-			var v = event.oldVersion;
-			console.log(event);
-			console.log("upgrading from " + v);
-			if (v < 1) {
-				console.log("upgrading to 1");
-				db.createObjectStore("patients", { keyPath: "id" });
-			}
-		};
-	}
-	
 	var cache = {};
 	var timestamps = {};
 
