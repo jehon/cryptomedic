@@ -75,7 +75,7 @@
 			?>
 		</div>
 		<div class="col-lg-6">
-			<div ng-include="'/rest/templates/patient-related.html'"></div>
+			<?php require_once 'partials/patient-related.php';?>
 			<FieldSet>
 				<legend>Summary</legend>
 				<table>
