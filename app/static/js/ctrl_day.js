@@ -1,6 +1,6 @@
 "use strict";
 
-mainApp.controller('ctrl_day', [ "$scope", "$routeParams", "service_rest", function($scope, $routeParams, service_rest) {
+mainApp.controller('ctrl_day', [ "$scope", "$routeParams", "service_backend", function($scope, $routeParams, service_backend) {
 	if (typeof($scope.listing) == 'undefined')
 		$scope.listing = [];
 	else 
@@ -15,7 +15,7 @@ mainApp.controller('ctrl_day', [ "$scope", "$routeParams", "service_rest", funct
 		var busyEnd = $scope.doBusy("Searching for matching consultations");
 		// Put it in the url ?
 
-		service_rest.searchForConsultations($scope.day, $scope.Center)
+		service_backend.searchForConsultations($scope.day, $scope.Center)
 			.done(function(data) {
 				$scope.listing = data;
 				$scope.searched = true;

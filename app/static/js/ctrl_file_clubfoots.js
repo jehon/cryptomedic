@@ -1,6 +1,6 @@
 "use strict";
 
-mainApp.controller('ctrl_file_clubfoots', [ '$scope', 'service_rest', function($scope, service_rest) {
+mainApp.controller('ctrl_file_clubfoots', [ '$scope', 'service_backend', function($scope, service_backend) {
 	function f(val) {
 		if (val == null) return 0;
 		if (typeof(val) == "string") return parseFloat(val);

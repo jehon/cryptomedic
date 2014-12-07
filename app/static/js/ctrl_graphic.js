@@ -1,6 +1,6 @@
 "use strict";
 
-mainApp.controller('ctrl_graphic', [ '$scope', '$element', 'service_rest', function($scope, $element, service_rest) {
+mainApp.controller('ctrl_graphic', [ '$scope', '$element', 'service_backend', function($scope, $element, service_backend) {
 	// This controller is intended for ONE graphic only
 	var x, y;
 	var stats;

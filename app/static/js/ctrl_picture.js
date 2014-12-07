@@ -1,6 +1,6 @@
 "use strict";
 
-mainApp.controller('ctrl_picture', [ '$scope', 'service_rest', function($scope, service_rest) {
+mainApp.controller('ctrl_picture', [ '$scope', 'service_backend', function($scope, service_backend) {
 	function checkSize() {
 	    jQuery('#PictureFilecontent')[0].addCustomValidation(function() {
 	        var s = jQuery(':input[type=file]').get(0).files[0].size;

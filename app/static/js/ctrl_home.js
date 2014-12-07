@@ -1,6 +1,6 @@
 "use strict";
 
-mainApp.controller('ctrl_home', [ '$scope', '$location', 'service_rest' , function($scope, $location, service_rest) { 
+mainApp.controller('ctrl_home', [ '$scope', '$location', 'service_backend' , function($scope, $location, service_backend) { 
 	if (typeof($scope.entryyear) == "undefined") {
 		$scope.searched = false;
 		$scope.entryyear = (new Date()).getFullYear();
@@ -14,7 +14,7 @@ mainApp.controller('ctrl_home', [ '$scope', '$location', 'service_rest' , functi
 	
 	$scope.checkReference = function() {
 		var busyEnd = $scope.doBusy("Checking the reference on the server");
-		service_rest.checkReference($scope.entryyear, $scope.entryorder)
+		service_backend.checkReference($scope.entryyear, $scope.entryorder)
 			.done(function(data) {
 				if (data === false) {
 					$scope.searched = true;
@@ -37,7 +37,7 @@ mainApp.controller('ctrl_home', [ '$scope', '$location', 'service_rest' , functi
 	
 	$scope.createReference = function() {
 		var busyEnd = $scope.doBusy("Creating the reference on the server");
-		service_rest.createReference($scope.entryyear, $scope.entryorder)
+		service_backend.createReference($scope.entryyear, $scope.entryorder)
 			.done(function(data) {
 				console.log(data);
 				busyEnd();
@@ -56,7 +56,7 @@ mainApp.controller('ctrl_home', [ '$scope', '$location', 'service_rest' , functi
 	};
 	$scope.generateReference = function() {
 		var busyEnd = $scope.doBusy("Generating a the reference on the server");
-		service_rest.createReference($scope.entryyear, -1)
+		service_backend.createReference($scope.entryyear, -1)
 			.done(function(data) {
 				busyEnd();
 				jQuery("#busy").modal('hide');

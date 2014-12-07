@@ -1,6 +1,6 @@
 "use strict";
 
-mainApp.controller('ctrl_offline', [ '$scope', 'service_rest', function($scope, service_rest) {
+mainApp.controller('ctrl_offline', [ '$scope', 'service_backend', function($scope, service_backend) {
 	$scope.info_available = false;
 	$scope.offline = "";
 	$scope.refreshAvailable = false;

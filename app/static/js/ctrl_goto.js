@@ -1,7 +1,7 @@
 
-mainApp.controller('ctrl_goto', [ '$scope', '$routeParams', 'service_rest', function($scope, $routeParams, service_rest) {
+mainApp.controller('ctrl_goto', [ '$scope', '$routeParams', 'service_backend', function($scope, $routeParams, service_backend) {
 	$scope.goToFiche = function(type, id) {
-		service_rest.getParent(type, id).then(function(parent) {
+		service_backend.getParent(type, id).then(function(parent) {
 			var j = 0;
 			angular.forEach(parent.getSubFiles(), function(v, i) {
 				if ((v['_type'] == type) && (v['id'] == id)) {

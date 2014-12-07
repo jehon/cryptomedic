@@ -1,6 +1,6 @@
  "use strict";
 
-mainApp.controller('ctrl_reports', [ '$scope', '$routeParams', 'service_rest', 'cache_commons', function($scope, $routeParams, service_rest, cache_commons) {
+mainApp.controller('ctrl_reports', [ '$scope', '$routeParams', 'service_backend', 'cache_commons', function($scope, $routeParams, service_backend, cache_commons) {
 	var report = $routeParams['report'];
 	$scope.values = cache_commons.getAll();
 //	console.log(localStorage);

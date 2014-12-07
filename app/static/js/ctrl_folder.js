@@ -1,6 +1,6 @@
 "use strict";
 
-mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_rest', '$routeParams' , function($scope, $location, service_rest, $routeParams) {
+mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_backend', '$routeParams' , function($scope, $location, service_backend, $routeParams) {
 	$scope.folder = new application.models.Folder();
 	$scope.page = "patient";
 	$scope.pageIsFile = false;
@@ -123,7 +123,7 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_rest', '$rou
 		var busyEnd = $scope.doBusy("Saving the file to the server");
 		var prevId = $scope.currentFile().id;
 		var prevType = $scope.currentFile()._type;
-		service_rest.saveFile($scope.currentFile(), $scope.id())
+		service_backend.saveFile($scope.currentFile(), $scope.id())
 			.done(function(data) {
 				$scope.folder = data;
 				// Find back the original file, if a change in date reorder it somewhere else
@@ -138,7 +138,7 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_rest', '$rou
 
 	$scope.actionUnlock = function() {
 		var busyEnd = $scope.doBusy("Unlocking the file on the server");
-		service_rest.unlockFile($scope.currentFile(), $scope.id())
+		service_backend.unlockFile($scope.currentFile(), $scope.id())
 			.done(function(data) {
 				$scope.folder = data;
 				$scope.safeApply();
@@ -160,7 +160,7 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_rest', '$rou
 			cache().set("center", fileCreating.Center);
 		}
 		
-		service_rest.createFile($scope.currentFile(), $scope.id())
+		service_backend.createFile($scope.currentFile(), $scope.id())
 			.done(function(data) {
 				$scope.folder = data;
 				fileCreating = null;
@@ -184,7 +184,7 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_rest', '$rou
 		}
 
 		var busyEnd = $scope.doBusy("Deleting the file on the server");
-		service_rest.deleteFile($scope.currentFile(), $scope.id())
+		service_backend.deleteFile($scope.currentFile(), $scope.id())
 			.done(function(data) {
 				if ($scope.page == 'Patient') {
 					console.log("going home");
@@ -201,7 +201,7 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_rest', '$rou
 
 	function refreshFolder() {
 		var busyEnd = $scope.doBusy("Getting the file from the server");
-		service_rest.getFolder(id)
+		service_backend.getFolder(id)
 			.done(function(data) {
 				$scope.folder = data;
 				$scope.select($scope.page);

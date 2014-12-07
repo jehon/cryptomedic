@@ -285,7 +285,7 @@ var mainApp = angular.module('app_main', [ 'ngRoute' ])
 // })
 ;
 
-mainApp.controller('ctrl', [ '$scope', '$location', 'service_rest', function($scope, $location, service_rest) { 
+mainApp.controller('ctrl', [ '$scope', '$location', 'service_backend', function($scope, $location, service_backend) { 
 	$scope.cryptomedic = cryptomedic;
 	$scope.application = application;
 	$scope.server = server;
@@ -389,7 +389,7 @@ mainApp.controller('ctrl', [ '$scope', '$location', 'service_rest', function($sc
 		// console.log($scope.username + "/" + $scope.password);
 		$scope.loginError = false;
 		var busyEnd = $scope.doBusy("Checking your login/password with the online server", true);
-		service_rest.doLogin(this.username, this.password)
+		service_backend.doLogin(this.username, this.password)
 			.done(function(data) {
 				console.log("login ok");
 				console.log(data);
@@ -415,7 +415,7 @@ mainApp.controller('ctrl', [ '$scope', '$location', 'service_rest', function($sc
 
 	$scope.doLogout = function() {
 		var busyEnd = $scope.doBusy("Disconnecting from the server", true);
-		service_rest.doLogout()
+		service_backend.doLogout()
 			.always(function(data) {
 				busyEnd();
 			});
