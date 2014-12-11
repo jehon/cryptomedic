@@ -2,25 +2,7 @@
 
 // TODOJH: manage errors codes (interceptors ?)
 
-/*
- * expected behavior:
- * - always store what come back from the server in the cache
- * - if offline, this data does not perish
- * - if online, this data perish (see checkId which manage that)
- * 
- * Expected from the server:
- * - if offline, the list of modifications since last time
- * - if online, nothing special
- *
- * Tasks:
- * 1. make this cache async in its calls (return promise)
- * 2. manage the fallback mode: when no indexedDB are available (!db)
- * 3. enrich when receiving data from the server and get from the indexedDB
- * 
- */
-
-
-mainApp.factory('service_rest', [ '$http', '$log' , '$rootScope', function($http, $log, $rootScope) {
+mainApp.factory('service_rest', [ '$http', '$rootScope', function($http, $rootScope) {
 	// TOODJH: Hook it to indexeddb
 	var pcache = perishableCache(10);
 	var root = "/rest/";

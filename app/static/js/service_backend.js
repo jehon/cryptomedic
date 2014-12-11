@@ -20,7 +20,7 @@
  */
 
 
-mainApp.factory('service_backend', [ '$http', '$log' , '$rootScope', function($http, $log, $rootScope) {
+mainApp.factory('service_backend', [ '$http', '$rootScope', function($http, $rootScope) {
 	// TOODJH: Hook it to indexeddb
 	var pcache = perishableCache(10);
 	var root = "/rest/";
