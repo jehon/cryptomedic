@@ -18,15 +18,15 @@
 			<tr>
 				<td><label>Reference</label></td>
 				<td>
-				<? (new t("Patient.entryyear", $opt))->value()->p(); ?>
+				<?php (new t("Patient.entryyear", $opt))->value()->p(); ?>
 				-
-				<? (new t("Patient.entryorder", $opt))->value()->p(); ?>
+				<?php (new t("Patient.entryorder", $opt))->value()->p(); ?>
 				</td>
 			</tr>
-			<? (new t("Patient.Firstname", $opt))->tr()->p(); ?>
-			<? (new t("Patient.Lastname", $opt))->tr()->p(); ?>
-			<? (new t("Patient.Yearofbirth", $opt))->tr("Year of birth")->p(); ?>
-			<? (new t("Patient.Sex", $opt))->tr("Sex")->p(); ?>
+			<?php (new t("Patient.Firstname", $opt))->tr()->p(); ?>
+			<?php (new t("Patient.Lastname", $opt))->tr()->p(); ?>
+			<?php (new t("Patient.Yearofbirth", $opt))->tr("Year of birth")->p(); ?>
+			<?php (new t("Patient.Sex", $opt))->tr("Sex")->p(); ?>
 		</tbody>						
 	</table>						
 </fieldset>

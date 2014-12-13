@@ -29,7 +29,7 @@
 	    	ng-class="{ hovered: hovered == $index }"
 	    	ng-click="go('/folder/' + folder.id + '/' + $index)"
 			>
-			<!-- | date:"<? echo t::DATEFORMAT; ?>" -->
+			<!-- | date:"<?php echo t::DATEFORMAT; ?>" -->
 	        <td>{{getValue($index, "Date") }}</td>
 	        <td>{{getValue($index, getVariableX()) | number:0}}</td>
 	        <td>{{getValue($index, getVariableY()) | number:0}}</td>

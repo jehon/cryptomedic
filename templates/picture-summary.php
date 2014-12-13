@@ -7,7 +7,7 @@
 	<tbody>
         <tr>
         	<td><img width='50px' ng-src="/uploadedPictures/{{currentFile().file}}"></td>
-			<td><? (new t("Picture.comment"))->read()->p(); ?></td>
+			<td><?php (new t("Picture.comment"))->read()->p(); ?></td>
 		</tr>
 	</tbody>
 </table>

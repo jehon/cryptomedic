@@ -40,7 +40,7 @@
 	</p>
 </div>
 <h1>Results</h1>
-<? 
+<?php
 	t::setDefaultOption("baseExpression", "patient.");
 	t::setDefaultOption("writeOnly", false);
 	t::setDefaultOption("readOnly");
