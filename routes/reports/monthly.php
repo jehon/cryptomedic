@@ -84,12 +84,14 @@ function billsBySocialLevel($sl) {
 	global $thismonth;
 	global $server;
 
-	_addLine("Social Level $sl", 
+	return _addLine("Social Level $sl", 
 		$server->getDatabase()->queryOneCell("SELECT Count(*) FROM bills WHERE SocialLevel = $sl and $thismonth"));
 }
 
+$allSL = 0;
 for($i = 0; $i < 5;  $i++)
-	billsBySocialLevel($i);
+	$allSL += billsBySocialLevel($i);
+_addLine("All social level together", $allSL);
 
 _addLine("Where");
 $centers = References::$amd_listing['Centers'];
