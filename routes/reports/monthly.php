@@ -51,6 +51,7 @@ function billsByPathology($header, $pathology, $simple = false) {
 	return 1;
 }
 
+_addLine("If patient have multiple pathologies, he will be counted more than once", "");
 billsByPathology("Ricket consults", "pathology_Ricket");
 billsByPathology("Club Foots", "pathology_Clubfoot");
 
@@ -60,6 +61,8 @@ billsByPathology("CP", "pathology_CP", true);
 billsByPathology("Congenital", "pathology_Congenital", true);
 billsByPathology("Adult", "pathology_Adult", true);
 billsByPathology("Other", "pathology_other", true);
+
+_addLine("All consultations", $server->getDatabase()->queryOneCell("SELECT count(*) FROM bills WHERE ${thismonth}"));
 
 _addLine("Social Level");
 $res = $server->getDatabase()->query(
@@ -102,13 +105,12 @@ $res2 = array();
 foreach($res as $line) {
 	$res2[$line['Center']] = $line['count'];
 }
-var_dump($res2);
 foreach($centers as $c) {
 	_addLine("@ " . References::unreference($c),
 		array_key_exists($c, $res2) ? $res2[$c] : 0
 		);
 }
-_addLine("center unspecified", $res['']);
+_addLine("center unspecified", $res2['']);
 
 function billCountByType($filter, &$list) {
 	global $server;
