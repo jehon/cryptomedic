@@ -8,7 +8,7 @@ class Bill {
 	const CAT_SURGICAL = "surgical";
 	
 	public static $dbTable;
-	public static $categories = [ self::CAT_CONSULT, self::CAT_MEDECINE, self::CAT_WORKSHOP, self::CAT_SURGICAL, self::CAT_OTHER ];
+	public static $categories = [ self::CAT_CONSULT, self::CAT_MEDECINE, self::CAT_OTHER, self::CAT_WORKSHOP, self::CAT_SURGICAL ];
 	public static $translations = [ ];	
 	
 	public function __construct($data) {
