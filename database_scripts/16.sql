@@ -1,7 +1,10 @@
+UPDATE prices SET lastuser = 'jehon' WHERE lastuser is null;
+
+
 CREATE TEMPORARY TABLE tmptable_1 SELECT * FROM prices WHERE dateto IS NULL ORDER BY id DESC LIMIT 1;
 
 -- get a new id
-UPDATE tmptable_1 SET id = NULL;
+UPDATE tmptable_1 SET id = (SELECT max(id) FROM prices) + 1;
 	
 -- set the date_from (new price) and date_to (old price)
 UPDATE tmptable_1 SET datefrom = NOW();
