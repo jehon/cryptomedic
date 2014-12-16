@@ -95,16 +95,20 @@ _addLine("All social level together", $allSL);
 
 _addLine("Where");
 $centers = References::$amd_listing['Centers'];
-$centers[] = '';
 unset($centers['labels']);
 
 $res = $server->getDatabase()->query("SELECT Center, Count(*) as `count` FROM bills WHERE $thismonth GROUP BY Center");
-
+$res2 = array();
+foreach($res as $line) {
+	$res2[$line['Center']] = $line['count'];
+}
+var_dump($res2);
 foreach($centers as $c) {
 	_addLine("@ " . References::unreference($c),
-		array_key_exists($c, $res) ? $res[$c]['count'] : 0
+		array_key_exists($c, $res2) ? $res2[$c] : 0
 		);
 }
+_addLine("center unspecified", $res['']);
 
 function billCountByType($filter, &$list) {
 	global $server;
