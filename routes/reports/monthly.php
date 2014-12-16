@@ -52,7 +52,7 @@ function billsByPathology($header, $pathology, $simple = false) {
 }
 
 billsByPathology("Ricket consults", "pathology_Ricket");
-billsByPathology("Club FootsRicket consults", "pathology_Clubfoot");
+billsByPathology("Club Foots", "pathology_Clubfoot");
 
 billsByPathology("Polio", "pathology_Polio", true);
 billsByPathology("Burn", "pathology_Burn", true);
