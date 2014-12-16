@@ -88,7 +88,7 @@ function billsBySocialLevel($sl) {
 		$server->getDatabase()->queryOneCell("SELECT Count(*) FROM bills WHERE SocialLevel = $sl and $thismonth"));
 }
 
-for($i = 0; $i < 6;  $i++)
+for($i = 0; $i < 5;  $i++)
 	billsBySocialLevel($i);
 
 _addLine("Where");
