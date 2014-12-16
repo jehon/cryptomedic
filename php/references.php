@@ -65,7 +65,7 @@ class References {
     }
 }
 
-References::$amd_listing["Centers"] = array( 992, 993, 993, 994, 995, 996, 997, 1002 );
+References::$amd_listing["Centers"] = array( 992, 993, 994, 995, 996, 997, 1002 );
 References::$amd_listing["Centers"]["labels"] = true;
 
 References::$amd_listing["NullValue"] = array( 0, 302 );
