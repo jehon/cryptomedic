@@ -116,20 +116,21 @@ function billCountByType($filter, &$list) {
 	global $server;
 	global $thismonth;
 	global $bills;
-	foreach($bills->getColumns() as $f) {
-		if ($list == "") $list = "(1=0)";
-		if (strtoupper(substr($f, 0, strlen($filter))) == strtoupper($filter)) {
+	if ($list == "") $list = "(1=0)";
+	foreach(Bill::getFielsList($filter) as $f) {
+// 	foreach($bills->getColumns() as $f) {
+// 		if (strtoupper(substr($f, 0, strlen($filter))) == strtoupper($filter)) {
 			$sql = "SELECT count(*) From bills WHERE $thismonth AND ($f > 0)";
 			_addLine(strtolower($f), $server->getDatabase()->queryOneCell($sql));
 			$list .= "OR($f>0)";	
-		}
+// 		}
 	}
+	$list = "(" . $list . ")";
 }
 
-_addLine("Consult Activity");
-$bills = $server->getDatabase()->getTable("bills");
-$anyConsult = "";
-billCountByType(Bill::CAT_CONSULT, $anyConsult);
+_addLine("Surgical activity");
+$anySurgery = "";
+billCountByType(Bill::CAT_SURGICAL, $anySurgery);
 
 _addLine("Medical Activity");
 $bills = $server->getDatabase()->getTable("bills");
@@ -140,9 +141,10 @@ _addLine("Workshop Activity");
 $anyWorkshop = "";
 billCountByType(Bill::CAT_WORKSHOP, $anyWorkshop);
 
-_addLine("Surgical activity");
-$anySurgery = "";
-billCountByType(Bill::CAT_SURGICAL, $anySurgery);
+_addLine("Consult Activity");
+$bills = $server->getDatabase()->getTable("bills");
+$anyConsult = "";
+billCountByType(Bill::CAT_CONSULT, $anyConsult);
 
 _addLine("Other activity");
 $anyOther = "";
