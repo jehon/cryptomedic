@@ -1,16 +1,20 @@
 "use strict";
 
-// TODOJH: manage errors codes (interceptors ?)
-
-mainApp.factory('service_rest', [ '$http', '$rootScope', function($http, $rootScope) {
-	// TOODJH: Hook it to indexeddb
+function service_rest($http) {
 	var pcache = perishableCache(10);
 	var root = "/rest/";
+	var onLogin = jQuery.Callbacks();
+	var onLogout = jQuery.Callbacks();
+	var onError = jQuery.Callbacks();
+
+	onLogin.add(function() { console.info("service_rest onLogin"); });
+	onLogout.add(function() { console.info("service_rest onLogout"); });
+	onError.add(function() { console.info("service_rest onError"); });
 	
 	function treatHttp(request, treatResponse) {
 		var def = jQuery.Deferred();
 		request.success(function(data, status, headers, config) {
-			$rootScope.$broadcast("rest_logged_in");
+			onLogin.fire();
 			
 			// TODOJH: filter and treat __sync data
 			
@@ -21,11 +25,11 @@ mainApp.factory('service_rest', [ '$http', '$rootScope', function($http, $rootSc
 		}).error(function(data, status, headers, config) {
 			if (status == 401) {
 				// 401: Unauthorized
-				$rootScope.$broadcast("rest_logged_out");
+				onLogout.fire();
 			} else {
 				// 403: Forbidden
 				//alert("rest error: " + status + "\n" + data.replace(/<(?:.|\n)*?>/gm, ''));
-				$rootScope.$broadcast("rest_error");
+				onError.fire();
 			}
 			def.reject(data);
 		});
@@ -45,7 +49,7 @@ mainApp.factory('service_rest', [ '$http', '$rootScope', function($http, $rootSc
 		'doLogout': function() {
 			cache().clear();
 			return treatHttp($http.get(root + "/authenticate/logout"), function(data) {
-				$rootScope.$broadcast("rest_logged_out");
+				onLogout.fire();
 			});
 		},
 		'getFolder': function(id) {
@@ -135,6 +139,9 @@ mainApp.factory('service_rest', [ '$http', '$rootScope', function($http, $rootSc
 					pcache.set(data.getMainFile().id, data);
 				return data;				
 			});
-		}
+		},
+		'onLogout': onLogout,
+		'onLogin': onLogin,
+		'onError': onError
 	};
-}]);
+};
