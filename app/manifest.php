@@ -38,6 +38,7 @@
 	addLine("# General");
 	addLine("");
 	addOne("/cryptomedic/app/application.php?" . filemtime("application.php") . "&" . filemtime("index.php"));
+	addOne("/cryptomedic/index.html?" . filemtime(__DIR__ . "/index.html") . "&" . filemtime("index.php"));
 	
 	addLine("");
 	addLine("# Scripts auto-import");
