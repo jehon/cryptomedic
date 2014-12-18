@@ -7,6 +7,7 @@ mainApp.controller('ctrl_file_bill', [ '$scope', 'service_backend', function($sc
 			$scope.safeApply();
 		} else {
 			console.info($scope);
+			$scope.safeApply();
 		}
 	});
 }]);
