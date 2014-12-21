@@ -386,7 +386,7 @@ class t {
 						. "WHERE `CONSTRAINT_SCHEMA` = :schema AND `TABLE_NAME` = :table AND `COLUMN_NAME` = :column", 
 						array("schema" => $server->getDatabase()->getDatabaseName(), "table" => $table, "column" => $field));
 				foreach($fk as $k) {
-					echo "ALTER TABLE `$table` DROP FOREIGN KEY ${k[k]}; ";
+					echo "ALTER TABLE `$table` DROP FOREIGN KEY ${k['k']}; ";
 				}
 				echo "ALTER TABLE `$table` DROP `$field`;<br>";
 	    	}
