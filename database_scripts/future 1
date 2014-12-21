@@ -29,13 +29,6 @@
 -- update `club_foots` SET DorsalFlexionMax = NULL WHERE DorsalFlexionMax=DorsalFlexionMaxRight;
 -- update `club_foots` SET PlantarFlexionMax = NULL WHERE PlantarFlexionMax=PlantarFlexionMaxRight;
 
--- ALTER TABLE `club_foots` DROP WalkingFloorContact;
--- ALTER TABLE `club_foots` DROP WalkingFirstContact;
--- ALTER TABLE `club_foots` DROP AdductionAngle;
--- ALTER TABLE `club_foots` DROP HindFootAngleW;
--- ALTER TABLE `club_foots` DROP DorsalFlexionMax;
--- ALTER TABLE `club_foots` DROP PlantarFlexionMax;
-
 ALTER TABLE `club_foots` 
     DROP FOREIGN KEY `club_foots_ibfk_1`;
 

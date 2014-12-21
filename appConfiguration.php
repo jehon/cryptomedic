@@ -14,7 +14,7 @@ $config['debug'] = false;
 $config['domain'] = 'cryptomedic';
 
 $config['database'] = array(
-    'pdo_host' => 'mysql:host=localhost;dbname=amd_chakaria',
+	'pdo_host' => 'mysql:host=localhost;dbname=amd_chakaria',
     'pdo_username' => 'amd_chakaria',
     'pdo_password' => getSecret("databasePassword"),
     'init' => "SET CHARACTER SET 'utf8'",

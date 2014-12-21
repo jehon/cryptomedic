@@ -21,6 +21,7 @@ mainApp.factory('service_backend', [ '$http', '$rootScope', function($http, $roo
 	var rest;
 	if (cryptomedic.settings.offlineCache) {
 		// TOODJH: Hook it to indexeddb
+		console.warn("Using service_indexeddb");
 		rest = service_rest($http);
 	} else {
 		rest = service_rest($http);
@@ -36,6 +37,7 @@ mainApp.factory('service_backend', [ '$http', '$rootScope', function($http, $roo
 
 	rest.onError.add(function() {
 		$rootScope.$broadcast("rest_error");
+		//alert("rest error: " + status + "\n" + data.replace(/<(?:.|\n)*?>/gm, ''));
 	});
 	
 	return rest;

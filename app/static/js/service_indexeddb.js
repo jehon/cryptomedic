@@ -1,8 +1,8 @@
 "use strict";
 
 function service_local() {
-	if (!cryptomedic.settings.offlineCache || !indexedDB) {
-		console.info("No indexed db - going to fallback");
+	if (!indexedDB) {
+		console.info("No indexed db - going to fallback service_rest");
 		return new service_rest($http);
 	}
 	
