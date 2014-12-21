@@ -46,7 +46,7 @@ application.models.Bill = application.models.File.extend({
 				return 1;
 			}
 			var sl = this['Sociallevel'];
-			if (sl == null || sl == 0) {
+			if (sl == null) {
 				console.warn("calculate_percentage_asked(): no social level");
 				return 1;
 			}
