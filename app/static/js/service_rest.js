@@ -16,8 +16,6 @@ function service_rest($http) {
 		request.success(function(data, status, headers, config) {
 			onLogin.fire();
 			
-			// TODOJH: filter and treat __sync data
-			
 			if (typeof(treatResponse) == 'function') {
 				data = treatResponse(data, status, headers, config);
 			}
@@ -28,7 +26,6 @@ function service_rest($http) {
 				onLogout.fire();
 			} else {
 				// 403: Forbidden
-				//alert("rest error: " + status + "\n" + data.replace(/<(?:.|\n)*?>/gm, ''));
 				onError.fire();
 			}
 			def.reject(data);

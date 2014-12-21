@@ -95,16 +95,6 @@ class t {
             $this->type = self::TYPE_LIST;
             $this->isList = true;
             $this->listing = References::$model_listing[$header];
-            if (array_key_exists('labels', $this->listing) && ($this->listing['labels'])) {
-                $list = $this->listing;
-                // $this->myType = "linkedList";
-                $this->isListLinked = true;
-                unset($list['labels']);
-                $this->listing = References::buildLinkedList($list);
-            } else {
-                // Labels = the value itself
-                $this->listing = array_combine($this->listing, $this->listing);
-            }
         } else {
             switch($this->structure['pdo_type']) {
                 case PDO::PARAM_BOOL:
@@ -390,6 +380,14 @@ class t {
 					echo "<tr><td>{$rec['n']}</td><td>{$rec['val']}</td></tr>";
 				}
 				echo "</table>";
+				
+				
+				$fk = $server->getDatabase()->query("SELECT `CONSTRAINT_NAME` as k FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE "
+						. "WHERE `CONSTRAINT_SCHEMA` = :schema AND `TABLE_NAME` = :table AND `COLUMN_NAME` = :column", 
+						array("schema" => $server->getDatabase()->getDatabaseName(), "table" => $table, "column" => $field));
+				foreach($fk as $k) {
+					echo "ALTER TABLE `$table` DROP FOREIGN KEY ${k[k]}; ";
+				}
 				echo "ALTER TABLE `$table` DROP `$field`;<br>";
 	    	}
     	} else {
