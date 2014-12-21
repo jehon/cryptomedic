@@ -14,6 +14,8 @@ UPDATE prices SET dateto = NOW() WHERE dateto IS NULL;
 INSERT INTO prices SELECT * FROM tmptable_1;
 DROP TEMPORARY TABLE IF EXISTS tmptable_1;
 
+UPDATE prices SET created = NOW(), modified = NOW() WHERE dateto is NULL
+
 UPDATE prices SET workshop_Other_orthodevice = -1,
 	surgical_other_operation = -1,
 	surgical_percutaneous_achil_tenotomy_bi_cmosh = -1,
