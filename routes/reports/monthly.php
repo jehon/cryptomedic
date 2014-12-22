@@ -57,7 +57,7 @@ billsByPathology("Club Foots", "pathology_Clubfoot");
 
 billsByPathology("Polio", "pathology_Polio", true);
 billsByPathology("Burn", "pathology_Burn", true);
-billsByPathology("CP", "pathology_CP", true);
+billsByPathology("CsP", "pathology_CP", true);
 billsByPathology("Congenital", "pathology_Congenital", true);
 billsByPathology("Adult", "pathology_Adult", true);
 billsByPathology("Other", "pathology_other", true);
