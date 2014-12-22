@@ -78,110 +78,40 @@ class References {
 // References::$amd_listing["CHO/6"] = References::buildLinkedList(array( 188, 189, 190, 191 ));
 
 References::$amd_listing["Centers"] = References::buildLinkedList(array( 992, 993, 994, 995, 996, 997, 1002 ));
-// References::$amd_listing["Centers"]["labels"] = true;
-
 References::$amd_listing["NullValue"] = References::buildLinkedList(array( 0, 302));
-// References::$amd_listing["NullValue"]["labels"] = true;
-
 References::$amd_listing["Surgery"] = References::buildLinkedList(array( 20, 312, 313, 314, 315, 316, 317, 318, 319 ));
-// References::$amd_listing["Surgery"]["labels"] = true;
-
 References::$amd_listing["Device"] = References::buildLinkedList(array( 42, 39, 37, 36, 33, 35, 38, 223, 40, 226, 232, 231, 225, 30, 224, 31, 234, 227, 230, 237, 235, 236, 29, 43 ));
-// References::$amd_listing["Device"]["labels"] = true;
-
 References::$amd_listing["Plaster"] = References::buildLinkedList(array( 51, 52, 53 ));
-// References::$amd_listing["Plaster"]["labels"] = true;
-
 References::$amd_listing["Unions"] = References::buildLinkedList(array( 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121 ));
-// References::$amd_listing["Unions"]["labels"] = true;
-
 References::$amd_listing["Upazilla"] = References::buildLinkedList(array( 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135 ));
-// References::$amd_listing["Upazilla"]["labels"] = true;
-
 References::$amd_listing["Districts"] = References::buildLinkedList(array( 136, 137, 138 ));
-// References::$amd_listing["Districts"]["labels"] = true;
-
-
 References::$amd_listing["Pain"] = References::buildLinkedList(array( 293, 294, 295 ));
-// References::$amd_listing["Pain"]["labels"] = true;
-
 References::$amd_listing["ConstructionMaterial"] = References::buildLinkedList(array( 196, 197, 198, 199, 200, 201, 202, 287 )); // CHO/4
-// References::$amd_listing["ConstructionMaterial"]["labels"] = true;
-
 References::$amd_listing["WalkingCapacities"] = References::buildLinkedList(array( 288, 289, 290, 291, 292 ));
-// References::$amd_listing["WalkingCapacities"]["labels"] = true;
-
 References::$amd_listing["NutritionalAdvice"] = References::buildLinkedList(array( 139, 140 ));
-// References::$amd_listing["NutritionalAdvice"]["labels"] = true;
-
 References::$amd_listing["YesMediumNo"] = References::buildLinkedList(array( 275, 276, 277 ));
-// References::$amd_listing["YesMediumNo"]["labels"] = true;
-
 References::$amd_listing["Pathology"] = References::buildLinkedList(array( 278, 279, 280, 281, 282, 283, 284, 285, 286 ));
-// References::$amd_listing["Pathology"]["labels"] = true;
-
 References::$amd_listing["Religions"] = References::buildLinkedList(array( 141, 142, 143, 144, 145 ));
-// References::$amd_listing["Religions"]["labels"] = true;
-
 References::$amd_listing["Operation"] = References::buildLinkedList(array( 149, 150, 151, 152, 153, 154, 155, 156 ));
-// References::$amd_listing["Operation"]["labels"] = true;
-
 References::$amd_listing["LegAnalysis"] = References::buildLinkedList(array( 157, 158 ));
-// References::$amd_listing["LegAnalysis"]["labels"] = true;
-
 References::$amd_listing["Schools"] = References::buildLinkedList(array( 159, 160, 161, 162 ));
-// References::$amd_listing["Schools"]["labels"] = true;
-
 References::$amd_listing["Side"] = References::buildLinkedList(array( 163, 164, 165 ));
-// References::$amd_listing["Side"]["labels"] = true;
-
 References::$amd_listing["BodyLocation"] = References::buildLinkedList(array( 166, 167, 168, 169, 170 )); // Was CHO/11
-
 References::$amd_listing["Owning"] = References::buildLinkedList(array( 171, 172, 173 ));
-// References::$amd_listing["Owning"]["labels"] = true;
-
 References::$amd_listing["SchoolAttendee"] = References::buildLinkedList(array( 203, 204, 205 ));
-// References::$amd_listing["SchoolAttendee"]["labels"] = true;
-
 References::$amd_listing["Gender"] = References::buildLinkedList(array( 206, 207 ));
-// References::$amd_listing["Gender"]["labels"] = true;
-
 References::$amd_listing["Frequency"] = References::buildLinkedList(array( 214, 215, 216, 217 ));
-// References::$amd_listing["Frequency"]["labels"] = true;
-
 References::$amd_listing["Eval03"] = References::buildLinkedList(array( 219, 220, 221, 222 ));
-// References::$amd_listing["Eval03"]["labels"] = true;
-
 References::$amd_listing["ParentalStatus"] = References::buildLinkedList(array( 192, 193, 194, 195 ));
-// References::$amd_listing["ParentalStatus"]["labels"] = true;
-
 References::$amd_listing["MedicalProblem"] = References::buildLinkedList(array( 239, 240, 241, 242, 245, 246, 247, 248 ));
-// References::$amd_listing["MedicalProblem"]["labels"] = true;
-
 References::$amd_listing["GoodBad"] = References::buildLinkedList(array( 249, 250 ));
-// References::$amd_listing["GoodBad"]["labels"] = true;
-
 References::$amd_listing["HeartBeat"] = References::buildLinkedList(array( 251, 252, 253, 254 ));
-// References::$amd_listing["HeartBeat"]["labels"] = true;
-
 References::$amd_listing["ChestAuscultation"] = References::buildLinkedList(array( 255, 256, 257, 258 ));
-// References::$amd_listing["ChestAuscultation"]["labels"] = true;
-
 References::$amd_listing["Skin"] = References::buildLinkedList(array( 259, 260, 261 ));
-// References::$amd_listing["Skin"]["labels"] = true;
-
 References::$amd_listing["Teeth"] = References::buildLinkedList(array( 262, 263 ));
-// References::$amd_listing["Teeth"]["labels"] = true;
-
 References::$amd_listing["OrthopedicGoal"] = References::buildLinkedList(array( 264, 265, 266, 267, 268 ));
-// References::$amd_listing["OrthopedicGoal"]["labels"] = true;
-
 References::$amd_listing["OrthopedicUsage"] = References::buildLinkedList(array( 269, 270, 271 ));
-// References::$amd_listing["OrthopedicUsage"]["labels"] = true;
-
 References::$amd_listing["Material"] = References::buildLinkedList(array( 272, 273, 274 ));
-// References::$amd_listing["Material"]["labels"] = true;
-
 References::$amd_listing["SocialLevel"] = References::buildValueList(array( 0, 1, 2, 3, 4 ));
 References::$amd_listing["Pirani"] = References::buildValueList(array(0, 0.5, 1));
 References::$amd_listing["0-10"] = References::buildValueList(array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
