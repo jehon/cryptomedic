@@ -1,7 +1,7 @@
 <?php
 
 require_once(__DIR__ . "/../helpers/getFolder.php");
-require_once(__DIR__ . "/../../amd_listings.php");
+// require_once(__DIR__ . "/../../amd_listings.php");
 require_once(__DIR__ . "/../helpers/references.php");
 
 if (!$request->routeIsEnded()) {
