@@ -43,7 +43,7 @@
 				<legend>General data</legend>
 				<table>
 					<?php (new t("Bill.Date"))->tr()->p(); ?>
-					<?php (new t("Bill.ExaminerName"))->tr("Examiner")->p(); ?>
+					<?php (new t("Bill.ExaminerName", [ "list" => References::$lists['examiner']]))->tr("Examiner")->p(); ?>
 					<?php (new t("Bill.Center"))->tr("Center where consultation took place")->p(); ?>
 				</table>
 				<div class='debug_infos'>

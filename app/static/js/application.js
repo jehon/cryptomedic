@@ -319,7 +319,8 @@ mainApp.controller('ctrl', [ '$scope', '$location', 'service_backend', function(
 	$scope.link = function(key) {
 		if (key == null) key = 0;
 		if (typeof(cryptomedic.labels[key]) == "undefined")
-			return "UNKNOWN LABEL " + key;
+			return key;
+			//return "UNKNOWN LABEL " + key;
 		return cryptomedic.labels[key];
 	};
 	

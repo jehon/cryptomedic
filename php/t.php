@@ -95,6 +95,10 @@ class t {
             $this->type = self::TYPE_LIST;
             $this->isList = true;
             $this->listing = References::$model_listing[$header];
+        } elseif ($options['list']) {
+        	$this->type = self::TYPE_LIST;
+        	$this->isList = true;
+        	$this->listing = $options['list'];
         } else {
             switch($this->structure['pdo_type']) {
                 case PDO::PARAM_BOOL:
@@ -148,11 +152,11 @@ class t {
         return $this;
     }
     
-	function meta($p) {
+	function displayCode($mode) {
 		global $request;
 		if ($request) {
 			if ($request->getSystemParameter("meta", false)) {
-				$this->res .= "=" . $p . $this->key;
+				$this->res .= "=" . $mode . $this->key;
 				$this->res .= ($this->linked2DB ? "" : "##");
 				$this->res .= "-" . $this->model . "." . $this->field; 
 				$this->res .= ":" . $this->type;
@@ -177,7 +181,7 @@ class t {
             $this->res .= "<span class='error'>Read: key is not in the database: '{$this->key}'</span>";
             return $this;
         }
-		if ($this->meta("r")) return $this;
+		if ($this->displayCode("r")) return $this;
         
         switch($this->type) {
             case self::TYPE_TIMESTAMP: 
@@ -189,10 +193,8 @@ class t {
                         . "<span id='{$this->key}' ng-hide='{$this->rawExpression}'><img src='static/img/boolean-false.gif'></span>";
                 break;
             case self::TYPE_LIST:
-                if ($this->isListLinked) {
-                    $this->res .= "<span id='{$this->key}'>{{link( {$this->rawExpression} )}}</span>";
-                    break;
-                }
+                $this->res .= "<span id='{$this->key}'>{{link( {$this->rawExpression} )}}</span>";
+                break;
             case self::TYPE_DATE:
             // TODOJH: recheck this later - Workaround!!!
             //     // See https://docs.angularjs.org/api/ng/filter/date
@@ -215,7 +217,7 @@ class t {
             $this->res .= "<span class='error'>Write: key is not in the database: '{$this->key}'</span>";
             return $this;
         }
-        if ($this->meta("w")) return $this;
+        if ($this->displayCode("w")) return $this;
         
         $inline = "class='form-control' ng-model='{$this->rawExpression}' "
             . ($this->required ? " required " : "")
