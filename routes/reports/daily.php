@@ -150,7 +150,7 @@ $result = $server->getDatabase()->query("SELECT
                     // Calculate Medecine > Act
                     $v['medecine_act'] = array();
                     if ($v['consult_CDC_consultation_physio']) {
-                    	$v['medecine_act'][] = 'CP';
+                    	$v['medecine_act'][] = 'CsP';
                     }
                     if ($v['consult_CDC_consultation_Doctor']) {
                     	$v['medecine_act'][] = 'CD';

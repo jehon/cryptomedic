@@ -57,7 +57,7 @@ billsByPathology("Club Foots", "pathology_Clubfoot");
 
 billsByPathology("Polio", "pathology_Polio", true);
 billsByPathology("Burn", "pathology_Burn", true);
-billsByPathology("CsP", "pathology_CP", true);
+billsByPathology("CP", "pathology_CP", true);
 billsByPathology("Congenital", "pathology_Congenital", true);
 billsByPathology("Adult", "pathology_Adult", true);
 billsByPathology("Other", "pathology_other", true);
@@ -97,7 +97,7 @@ for($i = 0; $i < 5;  $i++)
 _addLine("All social level together", $allSL);
 
 _addLine("Where");
-$centers = References::$amd_listing['Centers'];
+$centers = References::$lists['Centers'];
 unset($centers['labels']);
 
 $res = $server->getDatabase()->query("SELECT Center, Count(*) as `count` FROM bills WHERE $thismonth GROUP BY Center");
