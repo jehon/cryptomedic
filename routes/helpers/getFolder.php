@@ -1,14 +1,4 @@
 <?php
-// require(__DIR__ . "/../../amd_listings.php");
-
-// function db2model($dbName) {
-// 	return References::db2model($dbName);
-// }
-
-// function type2db($type) {
-// 	return References::model2db($type);
-// }
-
 function getFolder($id) {
 	global $server;
 	$patients = $server->getDatabase()->getTable("patients");

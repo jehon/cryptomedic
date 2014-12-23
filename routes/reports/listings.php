@@ -13,7 +13,7 @@
     <tbody>
         <?php
             $labels = $server->getDatabase()->getTable("labels");
-            foreach(References::$amd_listing as $name => $l) {
+            foreach(References::$lists as $name => $l) {
                 foreach($l as $i => $k) {
                     if ($i === "labels") continue;
                     echo "<tr>";
