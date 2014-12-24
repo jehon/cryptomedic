@@ -15,7 +15,7 @@
 			        	<div class="col-sm-10">
 			                <select name='center' ng-model='values.center' class="form-control">
 			                <?php 
-			                    foreach(References::buildLinkedList(References::$amd_listing['Centers']) as $k => $v) 
+			                    foreach(References::buildLinkedList(References::$lists['Centers']) as $k => $v) 
 			                        echo "<option value='$k' >$v</option>"; 
 			                    ?>
 			                </select>
