@@ -1,5 +1,11 @@
 "use strict";
 
+/*
+ * Some sevices are always done online: reports, ... 
+ * --> check first that nothing is left in the cache
+ * 
+ */
+
 function service_local() {
 	if (!indexedDB) {
 		console.info("No indexed db - going to fallback service_rest");

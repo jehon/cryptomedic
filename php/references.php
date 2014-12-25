@@ -57,11 +57,13 @@ class References {
 
         $res = array();
         foreach($list as $k => $v){
-            if (!is_numeric($v)) continue;
-            $res[$v] = self::unreference($v);
+            if (is_numeric($v)) {
+            	$res[$v] = self::unreference($v);
+            } else {
+            	$res[$v] = $v;
+            }
         }
         return $res;
-
     }
     
     static function buildValueList($list) {

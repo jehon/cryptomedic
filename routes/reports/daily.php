@@ -5,7 +5,7 @@ require_once(__DIR__ . "/../helpers/price.php");
 // require_once(__DIR__ . "/../helpers/bill.php");
 
 $who = $request->getParameter("examinerName", "");
-$where = $request->getParameter("center", 992);
+$where = $request->getParameter("center", '');
 $when = $request->getParameter("date", new DateTime());
 if ($when instanceof DateTime) {
     $when = $when->format("Y-m-d");

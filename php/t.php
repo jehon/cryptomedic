@@ -95,7 +95,7 @@ class t {
             $this->type = self::TYPE_LIST;
             $this->isList = true;
             $this->listing = References::$model_listing[$header];
-        } elseif ($options['list']) {
+        } elseif (array_key_exists("list", $option) && $options['list']) {
         	$this->type = self::TYPE_LIST;
         	$this->isList = true;
         	$this->listing = $options['list'];

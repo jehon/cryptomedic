@@ -15,9 +15,10 @@
 			        	<div class="col-sm-10">
 			                <select name='center' ng-model='values.center' class="form-control">
 			                <?php 
-			                    foreach(References::buildLinkedList(References::$lists['Centers']) as $k => $v) 
+			                	echo "<option value='' >* Any place *</option>"; 
+			                	foreach(References::$lists['Centers'] as $k => $v) 
 			                        echo "<option value='$k' >$v</option>"; 
-			                    ?>
+								?>
 			                </select>
 			            </div>
 				    </div>
