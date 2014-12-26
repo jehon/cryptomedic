@@ -90,15 +90,15 @@ class t {
         $this->isList = false;
         $this->isListLinked = false;
         $header = $this->model . "." . $this->field;
-        if (array_key_exists($header, References::$model_listing)) {
+        if (array_key_exists("list", $options) && $options['list']) {
+        	$this->type = self::TYPE_LIST;
+        	$this->isList = true;
+        	$this->listing = $options['list'];
+        } else if (array_key_exists($header, References::$model_listing)) {
             // $this->myType = "list";
             $this->type = self::TYPE_LIST;
             $this->isList = true;
             $this->listing = References::$model_listing[$header];
-        } elseif (array_key_exists("list", $option) && $options['list']) {
-        	$this->type = self::TYPE_LIST;
-        	$this->isList = true;
-        	$this->listing = $options['list'];
         } else {
             switch($this->structure['pdo_type']) {
                 case PDO::PARAM_BOOL:
