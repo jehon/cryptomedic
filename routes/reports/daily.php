@@ -2,7 +2,6 @@
 
 require_once(__DIR__ . "/../helpers/getFolder.php");
 require_once(__DIR__ . "/../helpers/price.php");
-// require_once(__DIR__ . "/../helpers/bill.php");
 
 $examiner = $request->getParameter("examiner", "");
 $where = $request->getParameter("center", '');
@@ -34,7 +33,6 @@ $result = $server->getDatabase()->query("SELECT
             AND (:examiner = '' || bills.ExaminerName = :examiner)
 		LIMIT 500", 
         array(
-            // 'who' =>  $who, 
             'where' => $where, 
             'when' => $when,
         	'examiner' => $examiner
@@ -58,7 +56,7 @@ $result = $server->getDatabase()->query("SELECT
             <tr>
                 <th colspan="5">SARPV, CHAKARIA DISABILITY CENTER, CHAKARIA, COX'S BAZAR</th>
                 <th class='b_left'>Who</th>
-                <th><?php echo $who; ?></th>
+                <th><?php echo $examiner; ?></th>
                 <th></th>
                 <th class='b_left'>0</th>
                 <th>1</th>
