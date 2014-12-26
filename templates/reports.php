@@ -71,8 +71,14 @@
 				<a class='btn btn-primary' href='#/reports/daily'>Daily report</a>
 				<br>
 
-				<h3>Monthly report</h3>
-				The monthly report track the activity of the center according to various axes.
+				<h3>Personal Monthly report</h3>
+				Report of all the patients visited during a month.
+				<br>
+				<a class='btn btn-primary' href='#/reports/persoMonthlyReport'>Personnal Monthly report</a>
+				<br>
+				
+				<h3>Monthly summary report</h3>
+				The monthly report track the aggregated activity of the center according to various axes.
 				<br>
 				<a class='btn btn-primary' href='#/reports/monthly'>Monthly report</a>
 				<br>

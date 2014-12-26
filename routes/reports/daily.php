@@ -5,11 +5,17 @@ require_once(__DIR__ . "/../helpers/price.php");
 
 $examiner = $request->getParameter("examiner", "");
 $where = $request->getParameter("center", '');
-$when = $request->getParameter("date", new DateTime());
+$when = $request->getParameter("date", "");
 if ($when instanceof DateTime) {
     $when = $when->format("Y-m-d");
 } else {
     $when = substr($when, 0, 10);
+}
+$month = $request->getParameter("month", "");
+if ($month instanceof DateTime) {
+	$month = $month->format("Y-m");
+} else {
+	$month = substr($month, 0, 7);
 }
 
 $result = $server->getDatabase()->query("SELECT 
@@ -31,11 +37,13 @@ $result = $server->getDatabase()->query("SELECT
             AND (:where = '' || bills.Center = :where)
             AND (:when = '' || bills.Date = :when)
             AND (:examiner = '' || bills.ExaminerName = :examiner)
+			AND (:month = '' || DATE_FORMAT(bills.Date, \"%Y-%m\") = :month)
 		LIMIT 500", 
         array(
             'where' => $where, 
             'when' => $when,
-        	'examiner' => $examiner
+        	'examiner' => $examiner,
+        	'month' => $month
         )
     );
 ?>
