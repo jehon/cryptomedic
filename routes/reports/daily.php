@@ -4,7 +4,7 @@ require_once(__DIR__ . "/../helpers/getFolder.php");
 require_once(__DIR__ . "/../helpers/price.php");
 // require_once(__DIR__ . "/../helpers/bill.php");
 
-$who = $request->getParameter("examinerName", "");
+$examiner = $request->getParameter("examiner", "");
 $where = $request->getParameter("center", '');
 $when = $request->getParameter("date", new DateTime());
 if ($when instanceof DateTime) {
@@ -13,10 +13,6 @@ if ($when instanceof DateTime) {
     $when = substr($when, 0, 10);
 }
 
-/*
-            (:who = '' || bills.ExaminerName = :who)
-
-*/
 $result = $server->getDatabase()->query("SELECT 
 			bills.id as bid,
             " . Bill::getSQLFieldsSum(Bill::CAT_CONSULT) . " AS sum_consult, 
@@ -35,11 +31,14 @@ $result = $server->getDatabase()->query("SELECT
         WHERE (1 = 1)
             AND (:where = '' || bills.Center = :where)
             AND (:when = '' || bills.Date = :when)
-        LIMIT 500", 
+            AND (:examiner = '' || bills.ExaminerName = :examiner)
+		LIMIT 500", 
         array(
             // 'who' =>  $who, 
             'where' => $where, 
-            'when' => $when)
+            'when' => $when,
+        	'examiner' => $examiner
+        )
     );
 ?>
 <div>
@@ -90,7 +89,7 @@ $result = $server->getDatabase()->query("SELECT
             <tr>
                 <th class='b_left'>N</th>
                 <th>Date</th>
-                <th>Physio</th>
+                <th>Examiner</th>
                 <th>Place</th>
                 <th>Record n#</th>
 

@@ -3,7 +3,7 @@
 mainApp.factory('cache_commons', [ function() {
 	var now = new Date();
 	var c = cache();
-	c.get("examinerName", "");
+	c.get("examiner", "");
 	c.get("center", 992);
 	c.get("date", now);
 	c.get("month", now.getFullYear() + "-" + now.getMonth());
@@ -21,7 +21,7 @@ function cache() {
 			if (values[key]) return angular.copy(values[key]);
 			if (sessionStorage && sessionStorage[key]) {
 				var it = sessionStorage.getItem(key);
-				if (it === "" || it === "null") {
+				if (it === "null") {
 					values[key] = null;
 				} else {
 					values[key] = objectify(it);
@@ -38,13 +38,17 @@ function cache() {
 			var res = {};
 			var t = this;
 			angular.forEach(values, function(v, k) {
-				res[k] = t.get(k);
+				if (typeof(t.get(k)) == "undefined") {
+					res[k] = null;
+				} else { 
+					res[k] = t.get(k);
+				}
 			});
 			return res;
 		},
 		'set': function(key, newVal) {
 			var val = newVal;
-			if (val === null) val = "";
+			if (val === null || typeof(val) == 'undefined') val = "";
 			values[key] = val;
 			if (sessionStorage) {
 				sessionStorage.setItem(key, stringify(val));

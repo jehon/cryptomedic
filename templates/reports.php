@@ -4,10 +4,16 @@
 			<fieldset>
 				<legend>Parameters</legend>
 				<form class="form-horizontal" role="form">
-			    	<div ng-if="isParam('examinerName')" class="form-group">
-			        	<label class="col-sm-2 control-label">Who ?</label>
+			    	<div ng-if="isParam('examiner')" class="form-group">
+			        	<label class="col-sm-2 control-label">Examiner</label>
 			        	<div class="col-sm-10">
-			        		<input name='ExaminerName' ng-model='values.examinerName' class="form-control">
+			                <select name='center' ng-model='values.examiner' class="form-control">
+			                <?php 
+			                	echo "<option value='' >* Anybody *</option>"; 
+			                	foreach(References::$lists['examiner'] as $k => $v) 
+			                        echo "<option value='$k' >$v</option>"; 
+							?>
+			                </select>
 			        	</div>
 			        </div>
 			    	<div ng-if="isParam('center')" class="form-group">
@@ -18,7 +24,7 @@
 			                	echo "<option value='' >* Any place *</option>"; 
 			                	foreach(References::$lists['Centers'] as $k => $v) 
 			                        echo "<option value='$k' >$v</option>"; 
-								?>
+							?>
 			                </select>
 			            </div>
 				    </div>

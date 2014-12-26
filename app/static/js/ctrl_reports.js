@@ -3,12 +3,13 @@
 mainApp.controller('ctrl_reports', [ '$scope', '$routeParams', 'service_backend', 'cache_commons', function($scope, $routeParams, service_backend, cache_commons) {
 	var report = $routeParams['report'];
 	$scope.values = cache_commons.getAll();
-//	console.log(localStorage);
-//	console.log($scope.values);
+	angular.forEach($scope.values, function(v, k) {
+		if (v === null) $scope.values[k] = "";
+	});
 	
 	var reports = {
-		'daily': [ "center", "date" ], //, "examinerName"
-		'monthly': [ "month"]
+		'daily': [ "center", "date", "examiner" ],
+		'monthly': [ "month" ]
 	}
 	
 	$scope.getReport = function() {
@@ -23,18 +24,14 @@ mainApp.controller('ctrl_reports', [ '$scope', '$routeParams', 'service_backend'
 	}
 
 	$scope.refresh = function() {
-//		reports[report].forEach(function(v) {
-//		console.log($scope.values);
 		angular.forEach(reports[report], function(v) {
 			cache_commons.set(v, $scope.values[v]);
 		});
-//		console.log($scope.values);
 
 		var res = report + ".html?";
 		if ($scope.values.date) {
 			$scope.values.date.setUTCHours(0, 0, 0, 0);
 		}
-
 
 		angular.forEach(reports[report], function(value) {
 			if (typeof($scope.values[value]) != 'undefined') {
