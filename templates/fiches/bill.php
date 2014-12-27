@@ -76,7 +76,23 @@
 		</div>
 		<div class="col-lg-6">
 			<?php require_once 'partials/patient-related.php';?>
-			<FieldSet>
+			<fieldset>
+				<legend>Social Data</legend>
+				<table>
+					<?php (new t("Bill.sl_familySalary"))->tr("Family Salary in a Month")->p(); ?>
+					<?php (new t("Bill.sl_numberOfHouseholdMembers"))->tr("Number of Houslehold Members")->p(); ?>
+					<tr>
+						<td>Salary ratio</td>
+						<td><span catch-it ng-model="folder" tryit="currentFile().ratioSalary()">{{ result | number:0 }}</span></td>
+					</tr><tr>
+						<td>Calculated Social Level</td>
+						<td><span catch-it ng-model="folder" tryit="currentFile().calculateSocialLevel()">
+							level {{ result | number:0 }}
+							</span></td>
+					</tr>
+				</table>
+			</fieldset>
+			<fieldSet>
 				<legend>Summary</legend>
 				<table>
 					<tr>
