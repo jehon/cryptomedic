@@ -65,22 +65,25 @@
 		<div class='col-sm-offset-3 col-sm-6'>
 			<fieldset id='add'>
 				<legend>Global reporting</legend>
-				<h3>Daily report</h3>
-				The daily report track the activity of a center.
+				<h3>Daily Report</h3>
+				The daily report track the activity of a center.<br>
+				Choose the day, and optionnaly the examiner and the center.<br>
 				<br>
-				<a class='btn btn-primary' href='#/reports/daily'>Daily report</a>
+				<a class='btn btn-primary' href='#/reports/dailyActivity'>Daily report</a>
 				<br>
 
-				<h3>Personal Monthly report</h3>
-				Report of all the patients visited during a month.
+				<h3>Monthly Activity Report</h3>
+				Report of all the patients visited during a month.<br>
+				Choose the month, and optionnaly the examiner and the center.<br>
 				<br>
-				<a class='btn btn-primary' href='#/reports/persoMonthlyReport'>Personnal Monthly report</a>
+				<a class='btn btn-primary' href='#/reports/monthlyActivity'>Monthly Activity Report</a>
 				<br>
 				
-				<h3>Monthly summary report</h3>
-				The monthly report track the aggregated activity of the center according to various axes.
+				<h3>Monthly Statistical Report</h3>
+				The monthly report track the aggregated activity of the center according to various axes.<br>
+				Choose the month.<br>
 				<br>
-				<a class='btn btn-primary' href='#/reports/monthly'>Monthly report</a>
+				<a class='btn btn-primary' href='#/reports/monthlyStatistical'>Monthly Statistical Report</a>
 				<br>
 			
 <!-- 				<h3>Activity report</h3> -->

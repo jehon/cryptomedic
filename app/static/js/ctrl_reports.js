@@ -8,9 +8,9 @@ mainApp.controller('ctrl_reports', [ '$scope', '$routeParams', 'service_backend'
 	});
 	
 	var reports = {
-		'daily': [ "center", "date", "examiner" ],
-		'persoMonthlyReport': [ "center", "examiner", "month" ],
-		'monthly': [ "month" ]
+		'dailyActivity': [ "center", "date", "examiner" ],
+		'monthlyActivity': [ "center", "examiner", "month" ],
+		'monthlyStatistical': [ "month" ]
 	}
 	
 	$scope.getReport = function() {
