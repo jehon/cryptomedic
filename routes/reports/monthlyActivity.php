@@ -1,2 +1,2 @@
 <?php
-require 'daily.php';
+require 'dailyActivity.php';
