@@ -7,9 +7,10 @@
  */
 
 function service_local() {
+	var rest = new service_rest($http);
 	if (!indexedDB) {
 		console.info("No indexed db - going to fallback service_rest");
-		return new service_rest($http);
+		return rest;
 	}
 	
 	var error = function(event) {
@@ -38,11 +39,12 @@ function service_local() {
 			db.createObjectStore("patients", { keyPath: "id" });
 		}
 	};
+
+	
 	
 	/* 
 	 * Old methods !!! 
 	 */
-	
 	var pcache = perishableCache(10);
 	var root = "/rest/";
 	

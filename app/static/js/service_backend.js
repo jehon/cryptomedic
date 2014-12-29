@@ -20,7 +20,6 @@
 mainApp.factory('service_backend', [ '$http', '$rootScope', function($http, $rootScope) {
 	var rest;
 	if (cryptomedic.settings.offlineCache) {
-		// TOODJH: Hook it to indexeddb
 		console.warn("Using service_indexeddb");
 		rest = service_rest($http);
 	} else {

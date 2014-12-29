@@ -232,7 +232,7 @@ class t {
                     $this->res .= "<table style='width: 100%'><tr><td>";
                     foreach($this->listing as $k => $v) {
                         $this->res.= ""
-                            . "<input type='radio' value='$k' ng-model='{$this->rawExpression}' {$this->options['inline']}>"
+                            . "<input type='radio' value=\"" . htmlentities($k) . "\" ng-model='{$this->rawExpression}' {$this->options['inline']}>"
                             . "$v"
                             . "<br>"
                             ;
@@ -253,7 +253,7 @@ class t {
                 } else {
                     $this->res .= "<select $inline>";
                     foreach($this->listing as $k => $v) {
-                        $this->res .= "<option value='$k'>$v</option>";
+                        $this->res .= "<option value=\"" . htmlentities($k) . "\">$v</option>";
                     }
                     if (!$this->required) {
                         $this->res .= "<option value='0'>?</option>";
@@ -382,7 +382,7 @@ class t {
 					echo "<tr><td>{$rec['n']}</td><td>{$rec['val']}</td></tr>";
 				}
 				echo "</table>";
-				
+	
 				
 				$fk = $server->getDatabase()->query("SELECT `CONSTRAINT_NAME` as k FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE "
 						. "WHERE `CONSTRAINT_SCHEMA` = :schema AND `TABLE_NAME` = :table AND `COLUMN_NAME` = :column", 
@@ -395,6 +395,5 @@ class t {
     	} else {
     		echo "Table $table was not used in the template";
     	}
-    }
-        
+    }        
 }
