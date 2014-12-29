@@ -7,7 +7,7 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_backend', '$
 	$scope.mode = $routeParams['mode'];
 
 	var id = parseInt($routeParams['id']);
-	var fileCreating = {};
+	var fileCreating = null;
 	if (typeof($scope.mode) == "undefined") $scope.mode = "read";
 
 	$scope.id = function() { 
@@ -31,6 +31,9 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_backend', '$
 	
 	$scope.currentFile = function() {
 		if ($scope.mode == "add") {
+			if (!fileCreating) {
+				fileCreating = {};
+			}
 			return fileCreating;
 		}
 		if ($scope.pageIsFile) {
@@ -174,7 +177,7 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_backend', '$
 	}
 
 	$scope.actionCancelCreate = function() {
-		fileCreating = {};
+		fileCreating = null;
 		$scope.go("/folder/" + $scope.id() + "/");
 	}
 
@@ -207,7 +210,7 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_backend', '$
 				$scope.select($scope.page);
 				$scope.safeApply();
 				if (($scope.mode == "add") && (!$scope.fileCreating)) {
-					fileCreating = new application.models[$scope.page](null, $scope.folder.getMainFile());
+					fileCreating = new application.models[$scope.page](null, $scope.folder);
 				}
 			}).always(function() {
 				busyEnd();

@@ -10,10 +10,10 @@
 // test({});
 
 application.models.File = application.models.Data.extend({
-	'init': function(data, patient) {
-		this._super(data);
+	'init': function(data, folder) {
+		this._super(data, folder);
 		if (data == null) {
-			this.patient_id = patient.id;
+			this.patient_id = folder.getMainFile().id;
 			var c = cache();
 			this.ExaminerName = c.get("examinerName", "");
 			this.Center = c.get("center", 992);
@@ -22,10 +22,14 @@ application.models.File = application.models.Data.extend({
 				this.Date = date2CanonicString(new Date(), true);
 			}
 		} else {
-			if (typeof(patient) == "undefined") patient = null;
+			if (typeof(folder) == "undefined") folder = null;
 			// this.patient = patient;
 		}
-		this.setPatient(patient);
+		if (folder && folder.getMainFile) {
+			this.setPatient(folder.getMainFile());
+		} else {
+			this.setPatient(null);
+		}
 	},
 	'setPatient': function(patient) {
 		this.getPatient = function() { return patient; }; 

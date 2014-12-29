@@ -1,9 +1,27 @@
 "use strict";
 
 application.models.Bill = application.models.File.extend({
-	'init': function(data, patient) {
-		this._super(data, patient);
+	'init': function(data, folder) {
+		this._super(data, folder);
 		if (!data) {
+			// Initialize social level from last bill (if any)
+			var last_bill = null;
+			angular.forEach(folder.subFiles, function(v, k) {
+				if (v._type == "Bill") {
+					console.log(v);
+					if (!last_bill) {
+						last_bill = v;
+					} else {
+						if (last_bill.Date < v.Date) {
+							last_bill = v;
+						}
+					}
+				}
+			});
+			if (last_bill) {
+				this.sl_familySalary = last_bill.sl_familySalary;
+				this.sl_numberOfHouseholdMembers = last_bill.sl_numberOfHouseholdMembers;
+			}
 			this._type = "Bill";
 		}
 	},
