@@ -30,7 +30,7 @@ if (!$rec['file']) {
 		if (!array_key_exists('fileContent', $_FILES)) throw new HttpInvalidData("file['fileContent'] not received");
 
 		$fileContent = $_FILES['fileContent'];
-		if ($fileContent['size'] < 1) throw new HttpInvalidData("file is empty");
+		if ($fileContent['size'] < 1) throw new HttpInvalidData("File is empty or file was too big");
 
 		$ext = substr($fileContent['name'], strrpos($fileContent['name'], '.') + 1);
 		$tname = $id . "." . $ext;
@@ -59,7 +59,7 @@ if (!$rec['file']) {
 			</form>
 			<i>Max upload size: <?php echo $maxUploadSizeMb; ?>Mb</i><br>
 		<?php
-		die("no files");
+		throw new HttpAlreadyDone("no files");
 	}
 }
 
