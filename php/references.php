@@ -69,6 +69,12 @@ class References {
     static function buildValueList($list) {
     	return array_combine($list, $list);
     }
+    
+    static function sortNatural($array) {
+    	$narray = $array;
+    	natsort($narray);
+    	return $narray;
+    }
 }
 
 // References::$lists["CHO/27"] = References::buildLinkedList(array( 21, 22, 23, 24, 25 ));
@@ -79,14 +85,88 @@ class References {
 // References::$lists["CHO/7"] = References::buildLinkedList(array( 185, 186, 187 ));
 // References::$lists["CHO/6"] = References::buildLinkedList(array( 188, 189, 190, 191 ));
 
+// References::$lists["Upazilla"] = References::buildLinkedList(array( 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135 ));
+References::$lists["Upazilla"] = References::buildValueList(
+	array_merge(
+		References::sortNatural([ "Chakaria", "Cox's Bazar Shadar", "Chandanish", "Patia", "Shatkania", "Lohagora", "Teknaf", "Ukhia", "Ramo", "Pekua", "Kutubdia", "Moheshkhali" ]),
+	 	[ "~ Other ~" ])
+	);
+
+//References::$lists["Unions"] = References::buildLinkedList(array( 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121 ));
+References::$lists["Unions"] = References::buildValueList(
+	array_merge(
+		References::sortNatural([ "Palong Khali",
+			"Jalia palong",
+			"Raza Palong",
+			"Ratna palong",
+			"Holodia Palong",
+			"Sabrang",
+			"Saint martin",
+			"Teknaf Paurashava",
+			"Teknaf sadar",
+			"Baharchara",
+			"Hnila",
+			"Hoaikkong",
+			"Pukkhali",
+			"Chaufal Dandi",
+			"Bharua khali",
+			"Eidgaon",
+			"Islampur",
+			"Islamabad",
+			"Jalalabad",
+			"PM Khali",
+			"Cox's bazar Paurashava",
+			"Khurushkhul",
+			"Jhilongga",
+			"Khunia Palong",
+			"Joaria nala",
+			"Dakkin MithaChari",
+			"Chakmarkul",
+			"Rashid Nagar",
+			"Fotekharkul",
+			"Eidgon",
+			"Kossapia",
+			"Gorjania",
+			"Kauarkhop",
+			"Razarkul",
+			"Kotobjum",
+			"Shaplapur",
+			"Chota Moheshkhali",
+			"Bara Moheshkhli",
+			"Hoanok",
+			"Matarbari",
+			"Dhalghat",
+			"Kalarmarchara",
+			"Chakaria purashova",
+			"Khutakhali",
+			"Dulahazara",
+			"Fashiakhali",
+			"Shaharbil",
+			"Pashchimbara Veula",
+			"Badarkhali",
+			"Dhemoshia",
+			"Konakhaly",
+			"Veulaminikchar",
+			"Purbabara Veula",
+			"Bomobil chari",
+			"Manikpur",
+			"Shurazpur",
+			"Kakara",
+			"Kayerbil",
+			"Baraitaly",
+			"Harbang",
+			"Chiringa" ]), 
+	[ "~ Other ~" ])
+	);
+
+// References::$lists["Districts"] = References::buildLinkedList(array( 136, 137, 138 ));
+References::$lists["Districts"] = References::buildValueList([ "Chittagong", "Cox's Bazar", "~ Other ~" ]);
+		
 References::$lists["Centers"] = References::buildLinkedList(array( 992, 993, 994, 995, 996, 997, 1002 ));
 References::$lists["NullValue"] = References::buildLinkedList(array( 0, 302));
 References::$lists["Surgery"] = References::buildLinkedList(array( 20, 312, 313, 314, 315, 316, 317, 318, 319 ));
 References::$lists["Device"] = References::buildLinkedList(array( 42, 39, 37, 36, 33, 35, 38, 223, 40, 226, 232, 231, 225, 30, 224, 31, 234, 227, 230, 237, 235, 236, 29, 43 ));
 References::$lists["Plaster"] = References::buildLinkedList(array( 51, 52, 53 ));
-References::$lists["Unions"] = References::buildLinkedList(array( 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121 ));
-References::$lists["Upazilla"] = References::buildLinkedList(array( 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135 ));
-References::$lists["Districts"] = References::buildLinkedList(array( 136, 137, 138 ));
 References::$lists["Pain"] = References::buildLinkedList(array( 293, 294, 295 ));
 References::$lists["ConstructionMaterial"] = References::buildLinkedList(array( 196, 197, 198, 199, 200, 201, 202, 287 )); // CHO/4
 References::$lists["WalkingCapacities"] = References::buildLinkedList(array( 288, 289, 290, 291, 292 ));
@@ -195,8 +275,8 @@ References::$model_listing['Patient.Religion'] = References::$lists['Religions']
 References::$model_listing['Patient.Roof'] = References::$lists['ConstructionMaterial'];
 References::$model_listing['Patient.Sex'] = References::$lists['Gender'];
 References::$model_listing['Patient.Sociallevel'] = References::$lists['SocialLevel'];
-References::$model_listing['Patient.Union_'] = References::$lists['Unions'];
-References::$model_listing['Patient.Upazilla'] = References::$lists['Upazilla'];
+// References::$model_listing['Patient.Union_'] = References::$lists['Unions'];
+//References::$model_listing['Patient.Upazilla'] = References::$lists['Upazilla'];
 References::$model_listing['Patient.Wall'] = References::$lists['ConstructionMaterial'];
 
 References::$model_listing['RicketConsult.Bossingforehead'] = References::$lists['Eval03'];

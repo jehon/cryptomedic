@@ -19,9 +19,9 @@
 						<td>Age (today)</td>
 						<td><span catch-it ng-model="folder" tryit="currentFile().actualAge()">{{result}} years old</span></td>
 					</tr>
-					<?php (new t("Patient.District"))->tr()->p(); ?>
-					<?php (new t("Patient.Upazilla"))->tr()->p(); ?>
-					<?php (new t("Patient.Union_"))->tr("Union")->p(); ?>
+					<?php (new t("Patient.District", [ "list" => References::$lists['Districts']]))->tr()->p(); ?>
+					<?php (new t("Patient.Upazilla", [ "list" => References::$lists['Upazilla']]))->tr()->p(); ?>
+					<?php (new t("Patient.Union_", [ "list" => References::$lists['Unions']]))->tr("Union")->p(); ?>
 					<?php (new t("Patient.Telephone"))->tr()->p(); ?>
 					<?php (new t("Patient.AddressNotes"))->tr("Adress Notes")->p(); ?>
 				</table>
