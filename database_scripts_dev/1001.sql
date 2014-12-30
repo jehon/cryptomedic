@@ -8,23 +8,6 @@ ALTER TABLE `nonricket_consults` DROP FOREIGN KEY nonricket_consults_ibfk_7; ALT
 ALTER TABLE `nonricket_consults` DROP FOREIGN KEY nonricket_consults_ibfk_8; ALTER TABLE `nonricket_consults` DROP `Orthopedicdevice65`;
 ALTER TABLE `nonricket_consults` DROP `Worms`;
 
-ALTER TABLE `patients` DROP FOREIGN KEY  `patients_ibfk_7` ; ALTER TABLE `patients` DROP `Fatherswork`;
-ALTER TABLE `patients` DROP FOREIGN KEY  `patients_ibfk_8` ; ALTER TABLE `patients` DROP `Motherswork`;
-ALTER TABLE `patients` DROP `Homesteadgarden`;
-ALTER TABLE `patients` DROP `Drinkingwaterfromtubewell`;
-ALTER TABLE `patients` DROP `Anyloanforfoodthisyear`;
-ALTER TABLE `patients` DROP `Consanguineousfamily`;
-ALTER TABLE `patients` DROP `Fatherseducation`;
-ALTER TABLE `patients` DROP `Motherseducation`;
-ALTER TABLE `patients` DROP `Howmanymealperday`;
-ALTER TABLE `patients` DROP `Notesforthepatient`;
-ALTER TABLE `patients` DROP FOREIGN KEY patients_ibfk_3; ALTER TABLE `patients` DROP `Religion`;
-ALTER TABLE `patients` DROP FOREIGN KEY patients_ibfk_6; ALTER TABLE `patients` DROP `Doesthechildrengotoschool`;
-ALTER TABLE `patients` DROP `disease_diarrhoea`;
-ALTER TABLE `patients` DROP `disease_respiratory_infection`;
-ALTER TABLE `patients` DROP `disease_malaria`;
-ALTER TABLE `patients` DROP `disease_typhoid`;
-
 ALTER TABLE `ricket_consults` DROP `HeightcmLying`;
 ALTER TABLE `ricket_consults` DROP `Sittingheightcm`;
 ALTER TABLE `ricket_consults` DROP `Ageofbeginningofthedeformitiesyear`;
