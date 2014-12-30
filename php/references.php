@@ -161,7 +161,10 @@ References::$lists["Unions"] = References::buildValueList(
 
 // References::$lists["Districts"] = References::buildLinkedList(array( 136, 137, 138 ));
 References::$lists["Districts"] = References::buildValueList([ "Chittagong", "Cox's Bazar", "~ Other ~" ]);
-		
+
+// References::$lists["Gender"] = References::buildLinkedList(array( 206, 207 ));
+References::$lists["Gender"] = References::buildValueList([ "Male", "Female" ]);
+
 References::$lists["Centers"] = References::buildLinkedList(array( 992, 993, 994, 995, 996, 997, 1002 ));
 References::$lists["NullValue"] = References::buildLinkedList(array( 0, 302));
 References::$lists["Surgery"] = References::buildLinkedList(array( 20, 312, 313, 314, 315, 316, 317, 318, 319 ));
@@ -181,7 +184,6 @@ References::$lists["Side"] = References::buildLinkedList(array( 163, 164, 165 ))
 References::$lists["BodyLocation"] = References::buildLinkedList(array( 166, 167, 168, 169, 170 )); // Was CHO/11
 References::$lists["Owning"] = References::buildLinkedList(array( 171, 172, 173 ));
 References::$lists["SchoolAttendee"] = References::buildLinkedList(array( 203, 204, 205 ));
-References::$lists["Gender"] = References::buildLinkedList(array( 206, 207 ));
 References::$lists["Frequency"] = References::buildLinkedList(array( 214, 215, 216, 217 ));
 References::$lists["Eval03"] = References::buildLinkedList(array( 219, 220, 221, 222 ));
 References::$lists["ParentalStatus"] = References::buildLinkedList(array( 192, 193, 194, 195 ));
@@ -275,8 +277,8 @@ References::$model_listing['Patient.Religion'] = References::$lists['Religions']
 References::$model_listing['Patient.Roof'] = References::$lists['ConstructionMaterial'];
 References::$model_listing['Patient.Sex'] = References::$lists['Gender'];
 References::$model_listing['Patient.Sociallevel'] = References::$lists['SocialLevel'];
-// References::$model_listing['Patient.Union_'] = References::$lists['Unions'];
-//References::$model_listing['Patient.Upazilla'] = References::$lists['Upazilla'];
+References::$model_listing['Patient.Union_'] = References::$lists['Unions'];
+References::$model_listing['Patient.Upazilla'] = References::$lists['Upazilla'];
 References::$model_listing['Patient.Wall'] = References::$lists['ConstructionMaterial'];
 
 References::$model_listing['RicketConsult.Bossingforehead'] = References::$lists['Eval03'];

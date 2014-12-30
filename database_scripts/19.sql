@@ -17,6 +17,16 @@ ALTER TABLE `patients` CHANGE COLUMN District District VARCHAR(24) NULL;
 UPDATE patients, labels SET District = labels.english 
 WHERE patients.District = labels.id;
 
+
+ALTER TABLE `patients` DROP FOREIGN KEY  `patients_ibfk_1` ;
+ALTER TABLE patients DROP INDEX patients_Sex;
+ALTER TABLE `patients` CHANGE COLUMN Sex Sex VARCHAR(24) NULL; 
+UPDATE patients, labels SET Sex = labels.english 
+WHERE patients.Sex = labels.id;
+
+-- Transform to enum
+ALTER TABLE  `patients` CHANGE  `Sex`  `Sex` ENUM( "Male",  "Female" ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ;
+
 ALTER TABLE `patients` DROP FOREIGN KEY  `patients_ibfk_7` ; ALTER TABLE `patients` DROP `Fatherswork`;
 ALTER TABLE `patients` DROP FOREIGN KEY  `patients_ibfk_8` ; ALTER TABLE `patients` DROP `Motherswork`;
 ALTER TABLE `patients` DROP `Homesteadgarden`;

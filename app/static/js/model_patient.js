@@ -9,8 +9,11 @@ application.models.Patient = application.models.Data.extend({
 		return (date.getUTCFullYear() - this.Yearofbirth);
 	},
 	'sexStr': function() {
-		if (!this.isNotZero('Sex')) return null;
-		return this.Sex == 207 ? "m" : "f"; 
+	    	if (!this.isNotZero('Sex')) return null;
+	    	if (this.Sex == "Male") return "m";
+	    	if (this.Sex == "Female") return "f";
+	    	return null;
+//		return this.Sex == 207 ? "m" : "f"; 
 	},
 //	'ratioSalary': function() {
 //		if (!this.isNotZero('Numberofhouseholdmembers')) throw new DataMissingException("Numberofhouseholdmembers");
