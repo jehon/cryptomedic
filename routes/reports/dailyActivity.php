@@ -38,7 +38,7 @@ $result = $server->getDatabase()->query("SELECT
             AND (:when = '' || bills.Date = :when)
             AND (:examiner = '' || bills.ExaminerName = :examiner)
 			AND (:month = '' || DATE_FORMAT(bills.Date, \"%Y-%m\") = :month)
-		LIMIT 500", 
+		", 
         array(
             'where' => $where, 
             'when' => $when,
