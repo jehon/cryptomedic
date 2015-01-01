@@ -66,9 +66,9 @@ _addLine("All consultations", $server->getDatabase()->queryOneCell("SELECT count
 
 _addLine("Social Level");
 $res = $server->getDatabase()->query(
-		"SELECT CAST(SUM(patients.Familysalaryinamonth) / COUNT(*) AS DECIMAL) as income, 
-			SUM(patients.Numberofhouseholdmembers) / COUNT(*) nbhous 
-			FROM bills JOIN patients ON (bills.patient_id = patients.id)
+		"SELECT CAST(SUM(sl_familySalary) / COUNT(*) AS DECIMAL) as income, 
+			SUM(sl_numberOfHouseholdMembers) / COUNT(*) as nbhous 
+			FROM bills
 			WHERE $thismonth"
 	);
 $res = array_pop($res);
