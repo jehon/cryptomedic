@@ -201,7 +201,7 @@ References::$lists["Pirani"] = References::buildValueList(array(0, 0.5, 1));
 References::$lists["0-10"] = References::buildValueList(array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
 
 References::$lists["examiner"] = References::buildValueList([ 
-	"Ershad", "Rezaul", "Ricta", "Shetou", "Murshed", // physio 
+	"Ershad", "Rezaul", "Ricta", "Shetou", "Murshed", "Rina", // physio 
 	"Debashish", "Hassan 1", "Hassan 2", "Liton", // orthesis
 	"Shudir", "Rokeya", "Prytosh", "Kobir", "Nur Alam", "Zia", // Field monitors
 	"Taslim", "Monir", "AMD doctor" // Doctors
