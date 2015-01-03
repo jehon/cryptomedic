@@ -208,7 +208,7 @@ $result = $server->getDatabase()->query("SELECT
 
                             <td class='b_left'><?php echo $v['Firstname'] . " " . $v['Lastname']; ?></td>
                             <td><?php echo (Date('Y') - $v['Yearofbirth']); ?></td>
-                            <td><?php echo References::unreference($v['Sex']); ?></td>
+                            <td><?php echo ($v['Sex'] > "" ? $v['Sex'] : "?"); ?></td>
 
                             <td class='b_left'><?php echo $v['Familysalaryinamonth']; ?></td>
                             <td><?php echo $v['Numberofhouseholdmembers']; ?></td>
