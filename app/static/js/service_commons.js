@@ -6,7 +6,16 @@ mainApp.factory('cache_commons', [ function() {
 	c.get("examiner", "");
 	c.get("center", 992);
 	c.get("date", now);
-	c.get("month", now.getFullYear() + "-" + now.getMonth());
+	// For month: take last month
+	// !! month is take from 0 in javascript, transform that
+	var month = "0" + (now.getMonth());
+	var year = now.getFullYear();
+	if (month == "00") {
+	    month = "12";
+	    year = year - 1;
+	}
+	month = month.substring(month.length - 2);
+	c.get("month", year + "-" + month);
 	return c;
 }]);
  

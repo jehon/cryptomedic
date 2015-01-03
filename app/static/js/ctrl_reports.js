@@ -32,7 +32,6 @@ mainApp.controller('ctrl_reports', [ '$scope', '$routeParams', 'service_backend'
 		var res = report + ".html?";
 		if ($scope.values.date) {
 			$scope.values.date = new Date($scope.values.date);
-			console.log($scope.values.date);
 			$scope.values.date.setUTCHours(0, 0, 0, 0);
 		}
 

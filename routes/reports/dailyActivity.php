@@ -16,6 +16,9 @@ if ($month instanceof DateTime) {
 	$month = $month->format("Y-m");
 } else {
 	$month = substr($month, 0, 7);
+	if (strlen($month) == 6) {
+		$month = substr($month, 0, 4) . "-0" . substr($month, 5, 1);
+	}
 }
 
 $result = $server->getDatabase()->query("SELECT 
