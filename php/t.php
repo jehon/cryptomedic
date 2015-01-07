@@ -201,9 +201,11 @@ class t {
             //     $this->res .= "<span id='{$this->key}'>{{ {$this->rawExpression} | date:'{self::DATEFORMAT}' }}</span>";
             //     break;
             case self::TYPE_INTEGER:
-            case self::TYPE_TEXT:
             case self::TYPE_CHAR:
-                $this->res .= "<span id='{$this->key}'>{{ {$this->rawExpression} }}</span>";
+            	$this->res .= "<span id='{$this->key}'>{{ {$this->rawExpression} }}</span>";
+                break;
+            case self::TYPE_TEXT:
+                $this->res .= "<span id='{$this->key}' style='white-space: pre'>{{ {$this->rawExpression} }}</span>";
                 break;
             default:
                 $this->res .= "{$this->key} input";
