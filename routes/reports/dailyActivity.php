@@ -277,10 +277,6 @@ $result = $server->getDatabase()->query("SELECT
         </tbody>
     </table>
                	
-    <?php 
-    	var_dump($sum);
-    ?>
-    
     <h1>Legend</h1>
     <h3>Medecine</h3>
     <span class="label label-default">R</span>Ricket<br>
