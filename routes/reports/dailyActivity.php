@@ -127,7 +127,16 @@ $result = $server->getDatabase()->query("SELECT
         </thead>
         <tbody  class='b_all'>
             <?php
+				$sum = array();            
                 foreach($result as $i => $v) {
+					// Calculate the sums by columns
+                	foreach (array_keys($v) as $key) {
+                		if (!array_key_exists($key, $sum)) {
+                			$sum[$key] = 0;
+                		}
+                	    $sum[$key] = $sum[$key] + $v[$key];
+                	}
+                    
                     // Calculate Medecine > Diagno
                     $v['pathology'] = array();
                     if ($v['pathology_Ricket']) {
@@ -236,8 +245,42 @@ $result = $server->getDatabase()->query("SELECT
 
 
             ?>
+        	<tr>
+        		<td colspan=15 class='b_all'></td>
+        		<td colspan=8 class='b_all'>Total</td>
+        	</tr>
+            <tr>
+        		<td></td>
+        		<td></td>
+        		<td></td>
+        		<td></td>
+				<td></td>
+				<td class='b_left'></td>
+				<td></td>
+				<td></td>
+				<td class='b_left'></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td class='b_left'></td>
+				<td></td>
+				<td></td>
+				<td class='b_left'><?php echo $sum['sum_consult']; ?></td>
+				<td><?php echo $sum['sum_medecine']; ?></td>
+				<td><?php echo $sum['sum_surgical']; ?></td>
+				<td><?php echo $sum['sum_workshop']; ?></td>
+				<td><?php echo $sum['sum_other']; ?></td>
+				<td><?php echo $sum['total_real']; ?></td>
+				<td><?php echo $sum['total_asked']; ?></td>
+				<td><?php echo $sum['total_paid']; ?></td>
+			</tr>
         </tbody>
     </table>
+               	
+    <?php 
+    	var_dump($sum);
+    ?>
+    
     <h1>Legend</h1>
     <h3>Medecine</h3>
     <span class="label label-default">R</span>Ricket<br>
