@@ -11,6 +11,14 @@
 	function addLine($f) {
 		echo $f . "\n";
 	}
+
+	function addTs($f) {
+		if (file_exists($f)) {
+			addLine("# $f: " . filemtime($f));
+		} else {
+			addLine("# $f: does not exists");
+		}
+	}
 	
 	addLine("CACHE MANIFEST");
 	addLine("");
@@ -38,7 +46,17 @@
 	addLine("# General");
 	addLine("");
 	addOne("/cryptomedic/app/application.php?" . filemtime("application.php") . "&" . filemtime("index.php"));
-	addOne("/cryptomedic/index.html?" . filemtime(__DIR__ . "/index.html") . "&" . filemtime("index.php"));
+	addOne("/cryptomedic/index.html?" . filemtime(basename(__DIR__) . "/index.html") . "&" . filemtime("index.php"));
+	
+	addLine("");
+	addLine("# Include dependant php scripts");
+	addLine("");
+	foreach(MyFile::myglob("../php/*") as $f) {
+		addTs($f);
+	}
+	foreach(MyFile::myglob("../routes/*") as $f) {
+		addTs($f);
+	}
 	
 	addLine("");
 	addLine("# Scripts auto-import");
@@ -64,15 +82,17 @@
 	addLine("");
 	addLine("# static");
 	addLine("");
-	foreach(MyFile::myglob("static/*", true) as $s) {
-		if (in_array(basename($s), [ ".htaccess" ])) continue;
-		addOne($s);
+	foreach(MyFile::myglob("static/*", true) as $f) {
+		if (in_array(basename($f), [ ".htaccess" ])) continue;
+		addTs($f);
+		addOne($f);
 	}
 	
 	addLine("");
 	addLine("# Templates");
-	foreach(MyFile::myglob("../templates/*.php") as $s) {
-		$s = str_replace("../", "/rest/", $s);
+	foreach(MyFile::myglob("../templates/*.php") as $f) {
+		addTs($f);
+		$s = str_replace("../", "/rest/", $f);
 		$s = str_replace(".php", ".html", $s);
 		addOne($s);
 	}
@@ -80,18 +100,20 @@
 	addLine("");
 	addLine("# Templates fiches");
 	addLine("");
-	foreach(MyFile::myglob("../templates/fiches/*.php") as $s) {
-		$s = str_replace("../", "/rest/", $s);
+	foreach(MyFile::myglob("../templates/fiches/*.php") as $f) {
+		addTs($f);
+		$s = str_replace("../", "/rest/", $f);
 		$s = str_replace(".php", ".html", $s);
 		addOne($s . "?mode=read");
 		addOne($s . "?mode=edit");
 	}
 	
 	addLine("");
-	addLine("");
+	addLine("# fallback: ");
 	addLine("NETWORK:");
-	foreach(Script::$scriptsLive as $s) {
-		addOne($s);
+	foreach(Script::$scriptsLive as $f) {
+		addTs($f);
+		addOne($f);
 	}
 	addLine("*");
 	
