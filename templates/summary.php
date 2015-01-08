@@ -21,10 +21,10 @@
 		<td ng-include="'/rest/templates/patient-summary.html'"></td>
 	</tr>
 	<tr ng-repeat="f in folder.getSubFiles()" ng-controller="ctrl_file">
-		<td>#{{$index + 1}}</td>
+		<td>#{{$index}}</td>
 		<td>
 			<a href="#/folder/{{id()}}/{{$index}}" class="btn btn-default" style="width: 100%">
-				{{f._type}}<span ng-if="f.Date">[{{ f.Date }}]</span>
+				{{f._type}}
 			</a>
 		</td>
 		<td>{{f.Date | date:'longDate' }}</td>
