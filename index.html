@@ -1,4 +1,16 @@
 <html manifest="app/manifest.php">
+<head>
+	<style>
+		table {
+			border-collapse: collapse;
+		}
+		
+		th, td {
+			border: 1px solid black;
+		}
+	</style>
+</head>
+<body>
 	<h1><img src='app/static/img/boolean-true.gif' alt='ok'>Informations about cryptomedic</h1>
 	Dear sir,<br>
 	<br>
@@ -7,21 +19,40 @@
 	We have made this page, to inform you about changes in the application, when they occur.<br>
 	<br>
 	<h3>Access the application</h3>
-	Please access the application here: <a href='app/application.php'>Application optimized for Bangladesh 
-		<img src='app/static/img/bangladesh.svg' alt='Bangladesh flag' height='20px'>
-		</a>.<br>
+	<table>
+		<tr>
+			<th>When ?</th><th>Access there</th>
+		</tr>
+		<tr>
+			<td>
+				<img src='app/static/img/bangladesh.svg' alt='Bangladesh flag' height='20px'>
+				Application optimized for Bangladesh. Please use this version most of the time.
+			</td>
+			<td>
+				<a href='app/index.php'>
+					<img src='app/static/img/go.gif'>
+					Normal access to the application
+				</a>  
+			</td>
+		</tr>
+			<td>
+				If you have problems with the link above, 
+				or if you are told to do so by someone from France (Thierry, Freddy, ...), 
+			</td>
+			<td>
+				<a href='app/online.php'>
+					<img src='app/static/img/go.gif'>
+					In case of problems.
+				</a>  
+			</td>
+		<tr>
+		</tr>
+	</table>
 	<br>
-	If you have problems with the link above, or if you are told to do so by someone from France (Thierry, Freddy, ...), 
-	please access the application here: <a href='app/index.php'>Fallback in case of problems</a><br>
+	<br>
+	<br>
 	<br>
 	Have a good day<br>
 	The cryptomedic team<br>
-	<br>
-	<h3>History of changes</h3>
-	<h5>December 17, 2014</h5>
-	<ul>
-		<li>This information page has been added</li>
-		<li>The order of the boxes on the Bill has change: now the order is: consult, medecine, other, workshop and surgery at last.</li>
-		<li>The monthly report now report correctly the numbers.</li>
-	</ul>
+</body>
 </html>

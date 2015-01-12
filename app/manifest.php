@@ -24,7 +24,7 @@
 	addLine("");
 	
 	ob_start();
-	require("application.php");
+	require("index.php");
 	ob_clean();
 
 	if (file_exists("cryptomedic.version")) {
@@ -45,7 +45,7 @@
 	addLine("");
 	addLine("# General");
 	addLine("");
-	addOne("/cryptomedic/app/application.php?" . filemtime("application.php") . "&" . filemtime("index.php"));
+	addOne("/cryptomedic/app/index.php?" . filemtime("index.php") . "&" . filemtime("online.php"));
 	addOne("/cryptomedic/index.html?" . filemtime(basename(__DIR__) . "/index.html") . "&" . filemtime("index.php"));
 	
 	addLine("");
