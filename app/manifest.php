@@ -45,8 +45,13 @@
 	addLine("");
 	addLine("# General");
 	addLine("");
-	addOne("/cryptomedic/app/index.php?" . filemtime("index.php") . "&" . filemtime("online.php"));
-	addOne("/cryptomedic/index.html?" . filemtime(basename(__DIR__) . "/index.html") . "&" . filemtime("index.php"));
+	addOne("/cryptomedic/app/index.php");
+	addTs("index.php");
+	addTs("content.php");
+	// 	addOne("/cryptomedic/app/index.php?" . filemtime("index.php") . "&" . filemtime("content.php"));
+	addOne("/cryptomedic/index.html");
+	addTs("index.html");
+	// 	addOne("/cryptomedic/index.html?" . filemtime(basename(__DIR__) . "/index.html") . "&" . filemtime("index.php"));
 	
 	addLine("");
 	addLine("# Include dependant php scripts");
@@ -109,11 +114,13 @@
 	}
 	
 	addLine("");
-	addLine("# fallback: ");
+	addLine("# online content (no cache) ");
+	addLine("");
 	addLine("NETWORK:");
 	foreach(Script::$scriptsLive as $f) {
 		addTs($f);
 		addOne($f);
 	}
+	addLine("");
 	addLine("*");
 	
