@@ -1,75 +1,38 @@
 
 -- == club foots == --
-
--- to migrate
--- update `club_foots` SET WalkingFloorContactLeft = WalkingFloorContact WHERE (Side = 165 or Side = 163 or Side is NULL) AND WalkingFloorContact > 0 AND (WalkingFloorContactLeft is null OR WalkingFloorContactLeft = 0);
--- update `club_foots` SET WalkingFirstContactLeft = WalkingFirstContact WHERE (Side = 165 or Side = 163 or Side is NULL) AND WalkingFirstContact > 0 AND (WalkingFirstContactLeft is null OR WalkingFirstContactLeft = 0);
--- update `club_foots` SET AdductionAngleLeft = AdductionAngle WHERE (Side = 165 or Side = 163 or Side is NULL) AND AdductionAngle > 0 AND (AdductionAngleLeft is null OR AdductionAngleLeft = 0);
--- update `club_foots` SET HindFootAngleWLeft = HindFootAngleW WHERE (Side = 165 or Side = 163 or Side is NULL) AND HindFootAngleW > 0 AND (HindFootAngleWLeft is null OR HindFootAngleWLeft = 0);
--- update `club_foots` SET DorsalFlexionMaxLeft = DorsalFlexionMax WHERE (Side = 165 or Side = 163 or Side is NULL) AND DorsalFlexionMax > 0 AND (DorsalFlexionMaxLeft is null OR DorsalFlexionMaxLeft = 0);
--- update `club_foots` SET PlantarFlexionMaxLeft = PlantarFlexionMax WHERE (Side = 165 or Side = 163 or Side is NULL) AND PlantarFlexionMax > 0 AND (PlantarFlexionMaxLeft is null OR PlantarFlexionMaxLeft = 0);
---
--- update `club_foots` SET WalkingFloorContactRight = WalkingFloorContact WHERE (Side = 165 or Side = 164 or Side is NULL) AND WalkingFloorContact > 0 AND (WalkingFloorContactRight is null OR WalkingFloorContactRight = 0);
--- update `club_foots` SET WalkingFirstContactRight = WalkingFirstContact WHERE (Side = 165 or Side = 164 or Side is NULL) AND WalkingFirstContact > 0 AND (WalkingFirstContactRight is null OR WalkingFirstContactRight = 0);
--- update `club_foots` SET AdductionAngleRight = AdductionAngle WHERE (Side = 165 or Side = 164 or Side is NULL) AND AdductionAngle > 0 AND (AdductionAngleRight is null OR AdductionAngleRight = 0);
--- update `club_foots` SET HindFootAngleWRight = HindFootAngleW WHERE (Side = 165 or Side = 164 or Side is NULL) AND HindFootAngleW > 0 AND (HindFootAngleWRight is null OR HindFootAngleWRight = 0);
--- update `club_foots` SET DorsalFlexionMaxRight = DorsalFlexionMax WHERE (Side = 165 or Side = 164 or Side is NULL) AND DorsalFlexionMax > 0 AND (DorsalFlexionMaxRight is null OR DorsalFlexionMaxRight = 0);
--- update `club_foots` SET PlantarFlexionMaxRight = PlantarFlexionMax WHERE (Side = 165 or Side = 164 or Side is NULL) AND PlantarFlexionMax > 0 AND (PlantarFlexionMaxRight is null OR PlantarFlexionMaxRight = 0);
---
--- update `club_foots` SET WalkingFloorContact = NULL WHERE WalkingFloorContact=WalkingFloorContactLeft;
--- update `club_foots` SET WalkingFirstContact = NULL WHERE WalkingFirstContact=WalkingFirstContactLeft;
--- update `club_foots` SET AdductionAngle = NULL WHERE AdductionAngle=AdductionAngleLeft;
--- update `club_foots` SET HindFootAngleW = NULL WHERE HindFootAngleW=HindFootAngleWLeft;
--- update `club_foots` SET DorsalFlexionMax = NULL WHERE DorsalFlexionMax=DorsalFlexionMaxLeft;
--- update `club_foots` SET PlantarFlexionMax = NULL WHERE PlantarFlexionMax=PlantarFlexionMaxLeft;
---
--- update `club_foots` SET WalkingFloorContact = NULL WHERE WalkingFloorContact=WalkingFloorContactRight;
--- update `club_foots` SET WalkingFirstContact = NULL WHERE WalkingFirstContact=WalkingFirstContactRight;
--- update `club_foots` SET AdductionAngle = NULL WHERE AdductionAngle=AdductionAngleRight;
--- update `club_foots` SET HindFootAngleW = NULL WHERE HindFootAngleW=HindFootAngleWRight;
--- update `club_foots` SET DorsalFlexionMax = NULL WHERE DorsalFlexionMax=DorsalFlexionMaxRight;
--- update `club_foots` SET PlantarFlexionMax = NULL WHERE PlantarFlexionMax=PlantarFlexionMaxRight;
-
-ALTER TABLE `club_foots` 
-    DROP FOREIGN KEY `club_foots_ibfk_1`;
-
-ALTER TABLE `club_foots` 
-    DROP FOREIGN KEY `club_foots_ibfk_2`;
-
--- empty values (or nearly empty values)
-ALTER TABLE `club_foots`
-  DROP `SchoolClass`,
-  DROP `MUAC`,
-  DROP `Walking`,
-  DROP `Sport`,
-  DROP `JumpingReception`,
-  DROP `Adduction`,
-  DROP `HindFootAngleD`,
-  DROP `ThighFoot`,
-  DROP `ThighFootAngle`,
-  DROP `SupinationMax`,
-  DROP `PronationMax`,
-  DROP `EquinusReduc`,
-  DROP `VarusReduc`,
-  DROP `CPBRotation`,
-  DROP `CavusFoot`,
-  DROP `AbnormalMuscle`,
-  DROP `DeepPosteriorCrease`,
-  DROP `DeepMedialCrease`,
-  DROP `DIMEGLIO`,
-  DROP `Run`,
-  DROP `Pain`,
-  DROP `JumpingOneLeg`,
-  DROP `Side`,
-  DROP `WalkingFloorContact`,
-  DROP `WalkingFirstContact`,
-  DROP `AdductionAngle`,
-  DROP `HindFootAngleW`,
-  DROP `DorsalFlexionMax`,
-  DROP `AdductionReduc`,
-  DROP `PlantarFlexionMax`;
-  
-  
+ALTER TABLE `club_foots` DROP FOREIGN KEY `club_foots_ibfk_1`;
+ALTER TABLE `club_foots` DROP FOREIGN KEY `club_foots_ibfk_2`;
+ALTER TABLE `club_foots` DROP `SchoolClass`;
+ALTER TABLE `club_foots` DROP `MUAC`;
+ALTER TABLE `club_foots` DROP `Walking`;
+ALTER TABLE `club_foots` DROP `Sport`;
+ALTER TABLE `club_foots` DROP `JumpingReception`;
+ALTER TABLE `club_foots` DROP `Adduction`;
+ALTER TABLE `club_foots` DROP `HindFootAngleD`;
+ALTER TABLE `club_foots` DROP `ThighFoot`;
+ALTER TABLE `club_foots` DROP `ThighFootAngle`;
+ALTER TABLE `club_foots` DROP `SupinationMax`;
+ALTER TABLE `club_foots` DROP `PronationMax`;
+ALTER TABLE `club_foots` DROP `EquinusReduc`;
+ALTER TABLE `club_foots` DROP `VarusReduc`;
+ALTER TABLE `club_foots` DROP `CPBRotation`;
+ALTER TABLE `club_foots` DROP `CavusFoot`;
+ALTER TABLE `club_foots` DROP `AbnormalMuscle`;
+ALTER TABLE `club_foots` DROP `DeepPosteriorCrease`;
+ALTER TABLE `club_foots` DROP `DeepMedialCrease`;
+ALTER TABLE `club_foots` DROP `DIMEGLIO`;
+ALTER TABLE `club_foots` DROP `Run`;
+ALTER TABLE `club_foots` DROP `Pain`;
+ALTER TABLE `club_foots` DROP `JumpingOneLeg`;
+ALTER TABLE `club_foots` DROP `Side`;
+ALTER TABLE `club_foots` DROP `WalkingFloorContact`;
+ALTER TABLE `club_foots` DROP `WalkingFirstContact`;
+ALTER TABLE `club_foots` DROP `AdductionAngle`;
+ALTER TABLE `club_foots` DROP `HindFootAngleW`;
+ALTER TABLE `club_foots` DROP `DorsalFlexionMax`;
+ALTER TABLE `club_foots` DROP `AdductionReduc`;
+ALTER TABLE `club_foots` DROP `PlantarFlexionMax`;
+   
 ALTER TABLE `nonricket_consults` DROP `SchoolClass`;
 ALTER TABLE `nonricket_consults` DROP FOREIGN KEY nonricket_consults_ibfk_4; ALTER TABLE `nonricket_consults` DROP `Pathology`;
 ALTER TABLE `nonricket_consults` DROP `Comment`;

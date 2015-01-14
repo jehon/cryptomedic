@@ -233,28 +233,6 @@ var mainApp = angular.module('app_main', [ 'ngRoute' ])
       			});
       		};
       	},
-		// template: '<span ng-if="iserror">{{msg}}</span><span ng-if="!iserror" y-ng-transclude>{{result}}</span>',
-		// link: function($scope, iElement, iAttrs) {
-  //           // var html ='<div ng-repeat="item in items">I should not be red</div>';
-  //           // var e =$compile(html)(scope);
-  //           // element.replaceWith(e);
-		// 	function testIt() {
-		// 		$scope.iserror = false;
-		// 		try {
-		// 			$scope.result = $scope.tryit();
-		// 		} catch (e) {
-		// 			if (e instanceof ApplicationException) {
-		// 				console.warn(e);
-		// 				$scope.iserror = true;
-		// 				$scope.msg = "[" + e.getMessage() + "]";
-		// 			} else {
-		// 				console.info("not a correct error");
-		// 				throw e;
-		// 			}
-		// 		}
-		// 	}
-		// 	$scope.$watch("ngModel", testIt);
-		// }
 	};
 }])
 .directive('mycalendar', function() {
@@ -270,20 +248,7 @@ var mainApp = angular.module('app_main', [ 'ngRoute' ])
 			 // });
 		// }
 	}
-})
-
-// .directive('myFocus', function() {
-// 	return function (scope, elem, attrs) {
-// 		scope.$watch(attrs.ngFocus, function(newval) {
-// 			if (newval) {
-// 				$timeout(function() {
-// 					elem[0].focus();
-// 				}, 0, false);
-// 			}
-// 		});
-// 	}
-// })
-;
+});
 
 mainApp.controller('ctrl', [ '$scope', '$location', 'service_backend', function($scope, $location, service_backend) { 
 	$scope.cryptomedic = cryptomedic;
@@ -382,12 +347,8 @@ mainApp.controller('ctrl', [ '$scope', '$location', 'service_backend', function(
 	}
 
 	$scope.doLogin = function() {
-		// console.log(jQuery("#login_username").val() + " vs " + $scope.username);
-		// console.log(jQuery("#login_password").val() + " vs " + $scope.password);
-		// console.log($scope.username + "/" + $scope.password);
 		$scope.username = jQuery("#login_username").val();
 		$scope.password = jQuery("#login_password").val();
-		// console.log($scope.username + "/" + $scope.password);
 		$scope.loginError = false;
 		var busyEnd = $scope.doBusy("Checking your login/password with the online server", true);
 		service_backend.doLogin(this.username, this.password)
@@ -430,9 +391,6 @@ mainApp.controller('ctrl', [ '$scope', '$location', 'service_backend', function(
 	$scope.$on("rest_logged_in", function(msg) { 
 		$scope.logged = true; 
 	});
-
-	// $scope.$on("pending", $scope.pending);
-	// $scope.$on("clear", $scope.clear);
 
 	$scope.$on("$routeChangeError", function() { console.log("error in routes"); console.log(arguments); });
 }]);
