@@ -222,9 +222,9 @@ $result = $server->getDatabase()->query("SELECT
                             <td><?php echo (Date('Y') - $v['Yearofbirth']); ?></td>
                             <td><?php echo ($v['Sex'] > "" ? $v['Sex'] : "?"); ?></td>
 
-                            <td class='b_left'><?php echo $v['Familysalaryinamonth']; ?></td>
-                            <td><?php echo $v['Numberofhouseholdmembers']; ?></td>
-                            <td><?php echo ($v['Numberofhouseholdmembers'] > 0 ? round($v['Familysalaryinamonth'] / $v['Numberofhouseholdmembers']) : "?"); ?></td>
+                            <td class='b_left'><?php echo $v['sl_familySalary']; ?></td>
+                            <td><?php echo $v['sl_numberOfHouseholdMembers']; ?></td>
+                            <td><?php echo ($v['sl_numberOfHouseholdMembers'] > 0 ? round($v['sl_familySalary'] / $v['sl_numberOfHouseholdMembers']) : "?"); ?></td>
                             <td><?php echo $v['Sociallevel']; ?></td>
 
                             <td class='b_left'><?php echo implode($v['pathology'], ','); ?></td>
