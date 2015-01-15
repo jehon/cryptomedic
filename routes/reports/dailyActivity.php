@@ -79,7 +79,7 @@ $result = $server->getDatabase()->query("SELECT
             <tr>
                 <th colspan="5" class='b_bottom'>Daily report of <?php echo $when; ?></th>
                 <th class='b_left b_bottom'>Where</th>
-                <th class='b_bottom'><?php echo References::unreference($where); ?></th>
+                <th class='b_bottom'><?php echo $where; ?></th>
                 <th class='b_bottom'></th>
                 <th class='b_left b_bottom'>0-300</th>
                 <th class='b_bottom'>301-500</th>
@@ -215,7 +215,7 @@ $result = $server->getDatabase()->query("SELECT
 							</td>
                             <td><?php echo $v['Date']; ?></td>
                             <td><?php echo $v['ExaminerName']; ?></td>
-                            <td><?php echo References::unreference($v['Center']); ?></td>
+                            <td><?php echo $v['Center']; ?></td>
                             <td><?php echo $v['entryyear'] . "-" . $v['entryorder']; ?></td>
 
                             <td class='b_left'><?php echo $v['Firstname'] . " " . $v['Lastname']; ?></td>
@@ -266,13 +266,13 @@ $result = $server->getDatabase()->query("SELECT
 				<td></td>
 				<td></td>
 				<td class='b_left'><?php echo $sum['sum_consult']; ?></td>
-				<td><?php echo $sum['sum_medecine']; ?></td>
-				<td><?php echo $sum['sum_surgical']; ?></td>
-				<td><?php echo $sum['sum_workshop']; ?></td>
-				<td><?php echo $sum['sum_other']; ?></td>
-				<td><?php echo $sum['total_real']; ?></td>
-				<td><?php echo $sum['total_asked']; ?></td>
-				<td><?php echo $sum['total_paid']; ?></td>
+				<td class='b_left'><?php echo $sum['sum_medecine']; ?></td>
+				<td class='b_left'><?php echo $sum['sum_surgical']; ?></td>
+				<td class='b_left'><?php echo $sum['sum_workshop']; ?></td>
+				<td class='b_left'><?php echo $sum['sum_other']; ?></td>
+				<td class='b_left'><?php echo $sum['total_real']; ?></td>
+				<td class='b_left'><?php echo $sum['total_asked']; ?></td>
+				<td class='b_left'><?php echo $sum['total_paid']; ?></td>
 			</tr>
         </tbody>
     </table>

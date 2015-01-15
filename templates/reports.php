@@ -11,7 +11,7 @@
 			                <?php 
 			                	echo "<option value='' >* Anybody *</option>"; 
 			                	foreach(References::$lists['examiner'] as $k => $v) 
-			                        echo "<option value='$k' >$v</option>"; 
+			                        echo "<option value=\"". htmlentities($v). "\" >$v</option>"; 
 							?>
 			                </select>
 			        	</div>
@@ -23,7 +23,7 @@
 			                <?php 
 			                	echo "<option value='' >* Any place *</option>"; 
 			                	foreach(References::$lists['Centers'] as $k => $v) 
-			                        echo "<option value='$k' >$v</option>"; 
+			                        echo "<option value=\"". htmlentities($v). "\"' >$v</option>"; 
 							?>
 			                </select>
 			            </div>

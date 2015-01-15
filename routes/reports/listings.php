@@ -1,5 +1,5 @@
 <?php
-
+	if ($request->routeIsEnded()) {
 ?>
 <table>
     <thead>
@@ -40,4 +40,17 @@
 </table>
 
 <?php
+	} else {
+		// References::$lists["Districts"] = References::buildValueList([ "Chittagong", "Cox's Bazar", "~ Other ~" ]);
+		
+		$list = $request->routeGetNext();
+		if (array_key_exists($list, References::$lists)) {
+			$l = References::$lists[$list];
+			var_dump($l);
+			echo 'References::$lists["' . $list . '"] = References::buildValueList(["' . implode('", "', array_values($l)) . '"]);';
+		} else {
+			echo "List does not exists: $list";
+		}
+	}
+	
     $response->ok();

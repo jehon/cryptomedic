@@ -16,7 +16,10 @@ application.models.File = application.models.Data.extend({
 			this.patient_id = folder.getMainFile().id;
 			var c = cache();
 			this.ExaminerName = c.get("examinerName", "");
-			this.Center = c.get("center", 992);
+			this.Center = c.get("center", "Chakaria");
+//			if (this.Center == "992") {
+//			    this.center = "Chakaria";
+//			}
 			this.Date = c.get("date", null);
 			if (this.Date == null) {
 				this.Date = date2CanonicString(new Date(), true);

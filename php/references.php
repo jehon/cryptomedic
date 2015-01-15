@@ -77,6 +77,9 @@ class References {
     }
 }
 
+
+// Helper: http://localhost/rest/reports/listings/Centers
+
 // References::$lists["CHO/27"] = References::buildLinkedList(array( 21, 22, 23, 24, 25 ));
 // References::$lists["CHO/26"] = References::buildLinkedList(array( 26, 27, 28 ));
 // References::$lists["CHO/29"] = References::buildLinkedList(array( 308, 309, 310, 311 ));
@@ -85,88 +88,33 @@ class References {
 // References::$lists["CHO/7"] = References::buildLinkedList(array( 185, 186, 187 ));
 // References::$lists["CHO/6"] = References::buildLinkedList(array( 188, 189, 190, 191 ));
 
-// References::$lists["Upazilla"] = References::buildLinkedList(array( 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135 ));
 References::$lists["Upazilla"] = References::buildValueList(
 	array_merge(
 		References::sortNatural([ "Chakaria", "Cox's Bazar Shadar", "Chandanish", "Patia", "Shatkania", "Lohagora", "Teknaf", "Ukhia", "Ramo", "Pekua", "Kutubdia", "Moheshkhali" ]),
 	 	[ "~ Other ~" ])
 	);
 
-//References::$lists["Unions"] = References::buildLinkedList(array( 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121 ));
 References::$lists["Unions"] = References::buildValueList(
 	array_merge(
-		References::sortNatural([ "Palong Khali",
-			"Jalia palong",
-			"Raza Palong",
-			"Ratna palong",
-			"Holodia Palong",
-			"Sabrang",
-			"Saint martin",
-			"Teknaf Paurashava",
-			"Teknaf sadar",
-			"Baharchara",
-			"Hnila",
-			"Hoaikkong",
-			"Pukkhali",
-			"Chaufal Dandi",
-			"Bharua khali",
-			"Eidgaon",
-			"Islampur",
-			"Islamabad",
-			"Jalalabad",
-			"PM Khali",
-			"Cox's bazar Paurashava",
-			"Khurushkhul",
-			"Jhilongga",
-			"Khunia Palong",
-			"Joaria nala",
-			"Dakkin MithaChari",
-			"Chakmarkul",
-			"Rashid Nagar",
-			"Fotekharkul",
-			"Eidgon",
-			"Kossapia",
-			"Gorjania",
-			"Kauarkhop",
-			"Razarkul",
-			"Kotobjum",
-			"Shaplapur",
-			"Chota Moheshkhali",
-			"Bara Moheshkhli",
-			"Hoanok",
-			"Matarbari",
-			"Dhalghat",
-			"Kalarmarchara",
-			"Chakaria purashova",
-			"Khutakhali",
-			"Dulahazara",
-			"Fashiakhali",
-			"Shaharbil",
-			"Pashchimbara Veula",
-			"Badarkhali",
-			"Dhemoshia",
-			"Konakhaly",
-			"Veulaminikchar",
-			"Purbabara Veula",
-			"Bomobil chari",
-			"Manikpur",
-			"Shurazpur",
-			"Kakara",
-			"Kayerbil",
-			"Baraitaly",
-			"Harbang",
-			"Chiringa" ]), 
-	[ "~ Other ~" ])
+		References::sortNatural([ "Palong Khali", "Jalia palong", "Raza Palong", "Ratna palong", "Holodia Palong", "Sabrang",
+			"Saint martin", "Teknaf Paurashava", "Teknaf sadar", "Baharchara", "Hnila", "Hoaikkong", "Pukkhali",
+			"Chaufal Dandi", "Bharua khali", "Eidgaon", "Islampur", "Islamabad", "Jalalabad", "PM Khali",
+			"Cox's bazar Paurashava", "Khurushkhul", "Jhilongga", "Khunia Palong", "Joaria nala", "Dakkin MithaChari",
+			"Chakmarkul", "Rashid Nagar", "Fotekharkul", "Eidgon", "Kossapia", "Gorjania", "Kauarkhop",
+			"Razarkul", "Kotobjum", "Shaplapur", "Chota Moheshkhali", "Bara Moheshkhli", "Hoanok", "Matarbari",
+			"Dhalghat", "Kalarmarchara", "Chakaria purashova", "Khutakhali", "Dulahazara", "Fashiakhali",
+			"Shaharbil", "Pashchimbara Veula", "Badarkhali", "Dhemoshia", "Konakhaly", "Veulaminikchar",
+			"Purbabara Veula", "Bomobil chari", "Manikpur", "Shurazpur", "Kakara", "Kayerbil", "Baraitaly",
+			"Harbang", "Chiringa" ]), 
+		[ "~ Other ~" ])
 	);
 
-// References::$lists["Districts"] = References::buildLinkedList(array( 136, 137, 138 ));
 References::$lists["Districts"] = References::buildValueList([ "Chittagong", "Cox's Bazar", "~ Other ~" ]);
-
-// References::$lists["Gender"] = References::buildLinkedList(array( 206, 207 ));
 References::$lists["Gender"] = References::buildValueList([ "Male", "Female" ]);
+// References::$lists["Centers"] = References::buildLinkedList(array( 992, 993, 994, 995, 996, 997, 1002 ));
+References::$lists["Centers"] = References::buildValueList(["Chakaria", "Moeshkali", "Ukhia", "Ramu", "Cox's Bazar", "Other place", "CMOSH"]);
 
-References::$lists["Centers"] = References::buildLinkedList(array( 992, 993, 994, 995, 996, 997, 1002 ));
-References::$lists["NullValue"] = References::buildLinkedList(array( 0, 302));
+// References::$lists["NullValue"] = References::buildLinkedList(array( 0, 302));
 References::$lists["Surgery"] = References::buildLinkedList(array( 20, 312, 313, 314, 315, 316, 317, 318, 319 ));
 References::$lists["Device"] = References::buildLinkedList(array( 42, 39, 37, 36, 33, 35, 38, 223, 40, 226, 232, 231, 225, 30, 224, 31, 234, 227, 230, 237, 235, 236, 29, 43 ));
 References::$lists["Plaster"] = References::buildLinkedList(array( 51, 52, 53 ));
@@ -174,7 +122,7 @@ References::$lists["Pain"] = References::buildLinkedList(array( 293, 294, 295 ))
 // References::$lists["ConstructionMaterial"] = References::buildLinkedList(array( 196, 197, 198, 199, 200, 201, 202, 287 )); // CHO/4
 References::$lists["WalkingCapacities"] = References::buildLinkedList(array( 288, 289, 290, 291, 292 ));
 References::$lists["NutritionalAdvice"] = References::buildLinkedList(array( 139, 140 ));
-References::$lists["YesMediumNo"] = References::buildLinkedList(array( 275, 276, 277 ));
+// References::$lists["YesMediumNo"] = References::buildLinkedList(array( 275, 276, 277 ));
 References::$lists["Pathology"] = References::buildLinkedList(array( 278, 279, 280, 281, 282, 283, 284, 285, 286 ));
 // References::$lists["Religions"] = References::buildLinkedList(array( 141, 142, 143, 144, 145 ));
 References::$lists["Operation"] = References::buildLinkedList(array( 149, 150, 151, 152, 153, 154, 155, 156 ));
@@ -222,11 +170,12 @@ References::$model_listing['ClubFoot.VarusReduc'] = References::buildValueList(a
 References::$model_listing['ClubFoot.CPBRotation'] = References::buildValueList(array(1, 2, 3, 4));
 References::$model_listing['ClubFoot.AdductionReduc'] = References::buildValueList(array(1, 2, 3, 4));
 References::$model_listing['ClubFoot.DIMEGLIO'] = References::buildValueList(array(1, 2, 3, 4));
-References::$model_listing['ClubFoot.Center'] = References::$lists['Centers'];
 References::$model_listing['ClubFoot.EquinusReduc'] = References::buildValueList(array(1, 2, 3, 4));
 References::$model_listing['ClubFoot.VarusReduc'] = References::buildValueList(array(1, 2, 3, 4));
 References::$model_listing['ClubFoot.CPBRotation'] = References::buildValueList(array(1, 2, 3, 4));
 References::$model_listing['ClubFoot.AdductionReduc'] = References::buildValueList(array(1, 2, 3, 4));
+References::$model_listing['ClubFoot.Center'] = References::$lists['Centers'];
+References::$model_listing['ClubFoot.NextCenter'] = References::$lists["Centers"];
 
 /* new one */
 References::$model_listing['ClubFoot.CurvedLateralBorderLeft'] = References::$lists['Pirani'];
@@ -241,6 +190,7 @@ References::$model_listing['ClubFoot.RigidEquinusLeft'] = References::$lists['Pi
 References::$model_listing['ClubFoot.RigidEquinusRight'] = References::$lists['Pirani'];
 References::$model_listing['ClubFoot.EmptyHeelLeft'] = References::$lists['Pirani'];
 References::$model_listing['ClubFoot.EmptyHeelRight'] = References::$lists['Pirani'];
+References::$model_listing['ClubFoot.ExaminerName'] = References::$lists["examiner"];
 
 References::$model_listing['ClubFoot.PainLeft'] = References::buildValueList(array(0, 1, 2));
 References::$model_listing['ClubFoot.PainRight'] = References::buildValueList(array(0, 1, 2));
@@ -254,7 +204,6 @@ References::$model_listing['ClubFoot.RunLeft'] = References::buildValueList(arra
 References::$model_listing['ClubFoot.RunRight'] = References::buildValueList(array(0, 1, 2));
 References::$model_listing['ClubFoot.MuscularInbalanceLeft'] = References::$lists["0-10"];
 References::$model_listing['ClubFoot.MuscularInbalanceRight'] = References::$lists["0-10"];
-References::$model_listing['ClubFoot.NextCenter'] = References::$lists["Centers"];
 
 
 References::$model_listing['NonricketConsult.Orthopedicdevice65'] = References::$lists['Device'];
@@ -266,6 +215,7 @@ References::$model_listing['NonricketConsult.Surgery66'] = References::$lists['S
 References::$model_listing['NonricketConsult.Walk'] = References::$lists['WalkingCapacities'];
 References::$model_listing['NonricketConsult.Center'] = References::$lists['Centers'];
 References::$model_listing['NonricketConsult.NextCenter'] = References::$lists["Centers"];
+References::$model_listing['NonricketConsult.ExaminerName'] = References::$lists["examiner"];
 
 References::$model_listing['Patient.District'] = References::$lists['Districts'];
 // References::$model_listing['Patient.Doesthechildrengotoschool'] = References::$lists['SchoolAttendee'];
@@ -301,6 +251,7 @@ References::$model_listing['RicketConsult.WalkingDifficulties'] = References::$l
 References::$model_listing['RicketConsult.Wristenlargement'] = References::$lists['Eval03'];
 References::$model_listing['RicketConsult.Center'] = References::$lists['Centers'];
 References::$model_listing['RicketConsult.NextCenter'] = References::$lists["Centers"];
+References::$model_listing['RicketConsult.ExaminerName'] = References::$lists["examiner"];
 
 References::$model_listing['Surgery.ChestAuscultation'] = References::$lists['ChestAuscultation'];
 References::$model_listing['Surgery.GeneralCondition'] = References::$lists['GoodBad'];
