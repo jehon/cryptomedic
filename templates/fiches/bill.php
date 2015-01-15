@@ -47,7 +47,7 @@
 					<?php (new t("Bill.Center"))->tr("Center where consultation took place")->p(); ?>
 				</table>
 				<div class='debug_infos'>
-					price_id {{currentFile().price_id}}<br>
+					price_id <?php (new t("Bill.price_id"))->read()->p(); ?><br>
 				</div>
 			</FieldSet>
 			<?php 
@@ -97,7 +97,7 @@
 				<table>
 					<tr>
 						<td>Raw Calculated total</td>
-						<td>{{currentFile().calculate_total_real()}}</td>
+						<td>{{currentFile().calculate_total_real()}}<?php new t("Bill.total_real"); ?></td>
 					</tr>
 					<?php (new t("Bill.Sociallevel"))->tr("Social Level")->p(); ?>
 		            <tr>
@@ -106,7 +106,7 @@
 					</tr>
 		            <tr>
 						<td>Price to be asked to the patient</td>
-						<td>{{currentFile().total_asked | number:0 }}</td>
+						<td>{{currentFile().total_asked | number:0 }}<?php (new t("Bill.total_asked")); ?></td>
 					</tr>
 					<?php (new t("Bill.total_paid"))->tr("Paid by the patient")->p(); ?>
 				</table>
