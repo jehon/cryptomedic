@@ -40,5 +40,3 @@ ALTER TABLE `ricket_consults` CHANGE COLUMN NextCenter NextCenter VARCHAR(24) NU
 UPDATE ricket_consults, labels SET NextCenter = labels.english WHERE ricket_consults.NextCenter = labels.id;
 UPDATE ricket_consults SET NextCenter = NULL WHERE ricket_consults.NextCenter = 0;
 UPDATE ricket_consults SET NextCenter = NULL WHERE ricket_consults.NextCenter = "??";
-
-

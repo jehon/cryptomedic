@@ -26,3 +26,9 @@ ALTER TABLE `surgeries` DROP `Notes`;
 ALTER TABLE `surgeries` DROP FOREIGN KEY surgeries_ibfk_6; ALTER TABLE `surgeries` DROP `GeneralCondition`;
 ALTER TABLE `surgeries` DROP `Treatment`;
 ALTER TABLE `surgeries` DROP `ReportProcedure`;
+
+ALTER TABLE `surgeries` DROP FOREIGN KEY surgeries_ibfk_2; ALTER TABLE `surgeries` DROP `Operation`;
+ALTER TABLE `surgeries` DROP FOREIGN KEY surgeries_ibfk_3; ALTER TABLE `surgeries` DROP `Location`;
+ALTER TABLE `surgeries` DROP FOREIGN KEY surgeries_ibfk_4; ALTER TABLE `surgeries` DROP `Side`;
+ALTER TABLE `surgeries` DROP `Weight`;
+ALTER TABLE `surgeries` DROP `Heightcm`;
