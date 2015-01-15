@@ -20,3 +20,9 @@ ALTER TABLE `ricket_consults` DROP FOREIGN KEY ricket_consults_ibfk_22; ALTER TA
 ALTER TABLE `ricket_consults` DROP `KneeMobilityF`;
 ALTER TABLE `ricket_consults` DROP `Medical`;
 ALTER TABLE `ricket_consults` DROP `conclusion_medical_codLiverOil`;
+
+-- What to do with these?
+-- ALTER TABLE `ricket_consults` DROP FOREIGN KEY ricket_consults_ibfk_18; ALTER TABLE `ricket_consults` DROP `LaxityRight`;
+-- ALTER TABLE `ricket_consults` DROP FOREIGN KEY ricket_consults_ibfk_19; ALTER TABLE `ricket_consults` DROP `LaxityLeft`;26	
+ALTER TABLE `ricket_consults` DROP `PatelladislocationLeft`;
+ALTER TABLE `ricket_consults` DROP `PatelladislocationRight`;
