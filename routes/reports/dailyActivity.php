@@ -41,6 +41,7 @@ $result = $server->getDatabase()->query("SELECT
             AND (:when = '' || bills.Date = :when)
             AND (:examiner = '' || bills.ExaminerName = :examiner)
 			AND (:month = '' || DATE_FORMAT(bills.Date, \"%Y-%m\") = :month)
+		ORDER BY bills.Date ASC
 		", 
         array(
             'where' => $where, 
