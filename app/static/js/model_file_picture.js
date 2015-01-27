@@ -9,7 +9,7 @@ application.models.Picture = application.models.File.extend({
     },
     'validate' : function(res) {
 	res = this._super(res);
-	if (!this.fileContent) {
+	if (!this.fileContent && !this.file) {
 	    res.pictureRequired = true;
 	}
 	return res;
