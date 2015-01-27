@@ -123,7 +123,17 @@ class RouteFiche extends RouteDBTable {
 		$mimetype = substr($v, 0, strpos($v, ";"));
 		$content64 = substr($v, strpos($v, ",") + 1);
 		
-		$tname = $id . ".png";
+		switch ($mimetype) {
+			case "image/png": 
+				$ext = "png";
+				break;
+			case "image/jpeg":
+				$ext = "jpg";
+				break;
+			default:
+				 throw new StorageCreateError("Invalid extension");
+		}
+		$tname = $id . $ext;
 		$tfile = $storage . DIRECTORY_SEPARATOR . $tname;
 		debugHeader($tfile, "SAVING-FILE");
 		$contentRaw = base64_decode($content64);

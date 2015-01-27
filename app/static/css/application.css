@@ -217,7 +217,7 @@ input.ng-required {
   border: 1px solid blue;
 }
 
-input.ng-invalid {
+input.ng-invalid, .error {
   border: 3px solid red;
 }
 

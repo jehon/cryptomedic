@@ -109,10 +109,11 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_backend', '$
 			$scope.valide = false;
 		} 
 
-		console.log("Conclusion: " + ($scope.valide ? "ok" : "ko"));
+//		console.log("Conclusion: " + ($scope.valide ? "ok" : "ko"));
 		return $scope.valide;
 	};
-
+	$scope.$on("revalidate", $scope.actionValidate);
+	
 	$scope.actionCancel = function() {
 		refreshFolder();
 		$scope.go("/folder/" + $scope.folder.getId() + "/" + $scope.page);

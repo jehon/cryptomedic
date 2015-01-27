@@ -303,14 +303,16 @@ var mainApp = angular.module('app_main', [ 'ngRoute' ])
 			    canvas.height = h;
 			    canvas.style.width = w;
 			    canvas.style.height = h;
-			    
+
 			    // Add the image to the canvas
 			    ctx.drawImage(img, 0, 0, w, h);
 			    canvas.style.display = 'block';
 		
-			    var dataURI = canvas.toDataURL("image/png");
+//			    var dataURI = canvas.toDataURL("image/png");
+			    var dataURI = canvas.toDataURL("image/jpeg");
 			    $scope.currentFile().fileContent = dataURI;
 			    $scope.currentFile().OriginalName = file.name;
+			    $scope.$emit("revalidate");
 			    busy();
 			};
 		    }
