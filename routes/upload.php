@@ -32,12 +32,17 @@ if (!$rec['file']) {
 		$fileContent = $_FILES['fileContent'];
 		if ($fileContent['size'] < 1) throw new HttpInvalidData("File is empty or file was too big");
 
-		$ext = substr($fileContent['name'], strrpos($fileContent['name'], '.') + 1);
+		if (strrpos($fileContent['name'], '.')) {
+			$ext = substr($fileContent['name'], strrpos($fileContent['name'], '.') + 1);
+		} else {
+			$ext = "png";
+		}
 		$tname = $id . "." . $ext;
 		$tfile = $storage . DIRECTORY_SEPARATOR . $tname;
 		debugHeader("SAVING-FILE", $tfile);
 
 		if (file_exists($tfile)) {
+			var_dump("ok, that's it: $tfile");
 			throw new StorageCreateError("Moving uploaded file: already exists");
 		}
 
@@ -65,13 +70,7 @@ if (!$rec['file']) {
 
 if ($rec['file']) {
 	$filepath = $storage . DIRECTORY_SEPARATOR . $rec['file'];
-	if (file_exists($filepath)) {
-		?>
-			<script>
-				//console.log(window.top.location.hash);
-				// window.top.location.reload()// = window.top.location;
-			</script>
-		<?php
+	if (file_exists($filepath) && $rec['file'] && $storage) {
 		echo "<img width='100%' src='" . $uri . "/" . $rec['file'] . "'>";
 	} else {
 		echo "File has dissapeared from the system: " . $rec['file'];
