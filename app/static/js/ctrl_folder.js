@@ -151,8 +151,6 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_backend', '$
 	}
 
 	$scope.actionCreate = function() {
-		var busyEnd = $scope.doBusy("Creating the file on the server");
-		var creatingType = fileCreating._type;
 		if (fileCreating.Date) {
 			cache().set("date", fileCreating.Date);
 		}
@@ -162,6 +160,12 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_backend', '$
 		if (fileCreating.Center) {
 			cache().set("center", fileCreating.Center);
 		}
+		if (!$scope.actionValidate()) {
+			alert("You have errors in your data. Please correct them and try again");
+			return ;
+		}
+		var busyEnd = $scope.doBusy("Creating the file on the server");
+		var creatingType = fileCreating._type;
 		
 		service_backend.createFile($scope.currentFile(), $scope.id())
 			.done(function(data) {
