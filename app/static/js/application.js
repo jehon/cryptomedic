@@ -197,8 +197,8 @@ var mainApp = angular.module('app_main', [ 'ngRoute' ])
 		},
 		// http://tutorials.jenkov.com/angularjs/custom-directives.html#compile-and-link
 		compile: function(cElement, cAttrs, cTransclude) {
-      		// TODO: what hapen if data is updated ? -> see the write mode
-			return function($scope, $element, $attrs, ctrl, $transclude) {
+		    // TODO: what hapen if data is updated ? -> see the write mode
+		    return function($scope, $element, $attrs, ctrl, $transclude) {
 				var transcludeScope = $scope.$parent.$new();
 
 				function testIt() {
@@ -248,7 +248,79 @@ var mainApp = angular.module('app_main', [ 'ngRoute' ])
 			 // });
 		// }
 	}
-});
+})
+.directive('preview', [ "$compile", function($compile) {
+    return {
+	restrict: 'A',
+	// http://tutorials.jenkov.com/angularjs/custom-directives.html#compile-and-link
+	compile: function(cElement, cAttrs, cTransclude) {
+	    console.log("compiling preview");
+	    return function($scope, $element, $attrs, ctrl, $transclude) {
+		var canvas = document.getElementById($attrs.preview);
+		var transcludeScope = $scope.$parent.$new();
+		
+		$element[0].onchange = function() {
+		    var busy = $scope.doBusy("Reducing the picture");
+
+		    // http://hacks.mozilla.org/2011/01/how-to-develop-a-html5-image-uploader/
+		    var file = $element[0].files[0];
+		    console.log("directive changed");
+		    if (!file.type.match(/image.*/)) {
+			console.error("Not a picture?");
+			busy();
+		    }
+			
+		    var img = document.createElement("img");
+		    var reader = new FileReader();
+		    reader.onerror = function(e) {
+			console.error(e);
+			busy();
+		    };
+			
+		    reader.onload = function(e) {
+			console.log("reader loaded");
+			img.src = e.target.result;
+		    
+			//var canvas = document.createElement("canvas");
+			img.onload = function() {
+			    var canvas = document.getElementById("preview");
+			    var ctx = canvas.getContext("2d");
+		
+			    var schrink = 1;
+			    var h = img.naturalHeight;
+			    var w = img.naturalWidth;
+				
+			    // Resize the image
+			    var MAX_SIZE = 200*1024;
+			    if (h * w > MAX_SIZE) {
+				schrink = Math.sqrt(h * w / MAX_SIZE);
+				w = w / schrink;
+				h = h / schrink;
+			    }
+		
+			    // Adapt the canvas
+			    canvas.width = w;
+			    canvas.height = h;
+			    canvas.style.width = w;
+			    canvas.style.height = h;
+			    
+			    // Add the image to the canvas
+			    ctx.drawImage(img, 0, 0, w, h);
+			    canvas.style.display = 'block';
+		
+			    var dataURI = canvas.toDataURL("image/png");
+			    $scope.currentFile().fileContent = dataURI;
+			    $scope.currentFile().OriginalName = file.name;
+			    busy();
+			};
+		    }
+		    reader.readAsDataURL(file);
+		}
+	    };
+	}
+    }
+}])
+;
 
 mainApp.controller('ctrl', [ '$scope', '$location', 'service_backend', function($scope, $location, service_backend) { 
 	$scope.cryptomedic = cryptomedic;
@@ -396,26 +468,25 @@ mainApp.controller('ctrl', [ '$scope', '$location', 'service_backend', function(
 }]);
 
 function debug_showLabels() {
-	jQuery("label[for]").each(function(el) {
-		jQuery(this).text(jQuery(this).attr("for"));
-		jQuery(this).addClass("debug");
-	})
+    jQuery("label[for]").each(function(el) {
+	jQuery(this).text(jQuery(this).attr("for"));
+	jQuery(this).addClass("debug");
+    });
 }
 
 server.setSettings = function(data) {
-	server.settings = objectify(data);
+    server.settings = objectify(data);
 }
 
 function are_cookies_enabled() {
     var cookieEnabled = (navigator.cookieEnabled) ? true : false;
 
-    if (typeof navigator.cookieEnabled == "undefined" && !cookieEnabled)
-    { 
+    if (typeof(navigator.cookieEnabled) == "undefined" && !cookieEnabled) { 
         document.cookie="testcookie";
         cookieEnabled = (document.cookie.indexOf("testcookie") != -1) ? true : false;
     }
     return (cookieEnabled);
 }
 if (!are_cookies_enabled()) {
-	alert("Your cookie are disabled. Please enable them.\nVos cookies sont désactivés. Merci de les activer.");
+    alert("Your cookie are disabled. Please enable them.\nVos cookies sont désactivés. Merci de les activer.");
 }
