@@ -3,6 +3,8 @@
 require(__DIR__ . "/helpers/getFolder.php");
 
 class RouteFiche extends RouteDBTable {
+	const DATA_PREFIX = "data:image/";
+	
 	public function collectionIndex() {
 		$this->notAllowed();
 	}
@@ -21,10 +23,25 @@ class RouteFiche extends RouteDBTable {
 
 	public function elementCreate(array $data) {
 		$data['lastuser'] = $this->server->getSession(Server::LOGIN_USERNAME);
-
+		$file = null;
+		foreach($data as $k => $v) {
+			if (substr($v, 0, strlen(self::DATA_PREFIX)) == self::DATA_PREFIX) {
+				// Test the existence of the storage, to trow exception in case it is not defined
+				global $server;
+				$storage = $server->getConfig($this->table . ".storage");
+				$file = $v;
+				unset($data[$k]);
+			}
+		}
+		
 		$idfolder = $data["patient_id"];
 		$fid = parent::elementCreate($data);
 
+		if ($fid && $file) {
+			$fname = $this->saveFile($file, $fid);
+			$this->dbTable->rowUpdate(array("id" => $fid, "file" => $fname));
+		}		
+		
 		// Send back the folder
 		$data = getFolder($idfolder);
 		$data["newKey"] = $fid;
@@ -49,7 +66,6 @@ class RouteFiche extends RouteDBTable {
 			return getFolder($nrec["patient_id"]);
 		else
 			return getFolder($nrec["id"]);
-
 	}
 	
 	public function elementDelete($id) {
@@ -96,6 +112,33 @@ class RouteFiche extends RouteDBTable {
 		} else {
 			parent::elementcustom($method, $id);
 		}
+	}
+	
+	public function saveFile($dataURI, $id) {
+		global $server;
+		$storage = $server->getConfig($this->table . ".storage");
+			
+		// data:image/jpeg;base64
+		$v = substr($dataURI, strlen("data:"));
+		$mimetype = substr($v, 0, strpos($v, ";"));
+		$content64 = substr($v, strpos($v, ",") + 1);
+		
+		$tname = $id . ".png";
+		$tfile = $storage . DIRECTORY_SEPARATOR . $tname;
+		debugHeader($tfile, "SAVING-FILE");
+		$contentRaw = base64_decode($content64);
+		if (!$contentRaw) {
+			throw new StorageCreateError("Received data is empty");
+		}
+		if (file_exists($tfile)) {
+			throw new StorageCreateError("Moving uploaded file to $tfile: already exists");
+		}
+		if (!file_put_contents($tfile, $contentRaw)) {
+			throw new StorageCreateError("Moving uploaded file to $tfile");
+		}
+			
+		debugHeader($tfile, "SAVING-FILE-OK");
+		return $tname;
 	}
 }
 
