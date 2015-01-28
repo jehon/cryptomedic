@@ -21,7 +21,8 @@ mainApp.controller('ctrl_reports', [ '$scope', '$routeParams', 'service_backend'
 	}
 
 	$scope.isParam = function(name) {
-		return reports[report].indexOf(name) > -1;
+	    if (!reports[report]) return false;
+	    return reports[report].indexOf(name) > -1;
 	}
 
 	$scope.refresh = function() {

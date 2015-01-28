@@ -264,9 +264,9 @@ var mainApp = angular.module('app_main', [ 'ngRoute' ])
 
 		    // http://hacks.mozilla.org/2011/01/how-to-develop-a-html5-image-uploader/
 		    var file = $element[0].files[0];
-		    console.log("directive changed");
 		    if (!file.type.match(/image.*/)) {
 			console.error("Not a picture?");
+			alert("Are you sure it is a picture? If it is a picture, please send it by email to marielineet.jean@gmail.com to debug the application. Thank you");
 			busy();
 		    }
 			
