@@ -14,7 +14,7 @@
 
 	function addTs($f) {
 		if (file_exists($f)) {
-			addLine("# $f: " . filemtime($f));
+			addLine("# " . filemtime($f). " $f");
 		} else {
 			addLine("# $f: does not exists");
 		}
@@ -43,15 +43,13 @@
 	}
 	
 	addLine("");
-	addLine("# General");
+	addLine("# Manually added elements");
 	addLine("");
 	addOne("/cryptomedic/app/index.php");
 	addTs("index.php");
 	addTs("content.php");
-	// 	addOne("/cryptomedic/app/index.php?" . filemtime("index.php") . "&" . filemtime("content.php"));
 	addOne("/cryptomedic/index.html");
 	addTs("index.html");
-	// 	addOne("/cryptomedic/index.html?" . filemtime(basename(__DIR__) . "/index.html") . "&" . filemtime("index.php"));
 	
 	addLine("");
 	addLine("# Include dependant php scripts");
@@ -70,20 +68,6 @@
 		addOne($s);
 	}
 	
-	addLine("");
-	addLine("# Images");
-	addLine("");
-#	foreach(MyFile::myglob("static/img/*.*", true) as $s) {
-#		addOne($s);
-#	}
-	
-	addLine("");
-	addLine("# css");
-	addLine("");
-#	foreach(MyFile::myglob("static/css/*", true) as $s) {
-#		addOne($s);
-#	}
-
 	addLine("");
 	addLine("# static");
 	addLine("");
@@ -112,7 +96,7 @@
 		addOne($s . "?mode=read");
 		addOne($s . "?mode=edit");
 	}
-	
+
 	addLine("");
 	addLine("# online content (no cache) ");
 	addLine("");
