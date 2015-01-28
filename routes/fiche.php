@@ -36,10 +36,12 @@ class RouteFiche extends RouteDBTable {
 		
 		$idfolder = $data["patient_id"];
 		$fid = parent::elementCreate($data);
-
+		
 		if ($fid && $file) {
-			$fname = $this->saveFile($file, $fid);
-			$this->dbTable->rowUpdate(array("id" => $fid, "file" => $fname));
+			$data = $this->dbTable->rowGet($fid);
+			$fname = $data['patient_id'] . "_" . ($data['Date'] == null ? "undated" : $data['Date']) . "_" . $fid;
+			$tname = $this->saveFile($file, $fname);
+			$this->dbTable->rowUpdate(array("id" => $fid, "file" => $tname));
 		}		
 		
 		// Send back the folder
@@ -114,7 +116,7 @@ class RouteFiche extends RouteDBTable {
 		}
 	}
 	
-	public function saveFile($dataURI, $id) {
+	public function saveFile($dataURI, $fname) {
 		global $server;
 		$storage = $server->getConfig($this->table . ".storage");
 			
@@ -133,7 +135,7 @@ class RouteFiche extends RouteDBTable {
 			default:
 				 throw new StorageCreateError("Invalid extension");
 		}
-		$tname = $id . $ext;
+		$tname = $fname . "." . $ext;
 		$tfile = $storage . DIRECTORY_SEPARATOR . $tname;
 		debugHeader($tfile, "SAVING-FILE");
 		$contentRaw = base64_decode($content64);
