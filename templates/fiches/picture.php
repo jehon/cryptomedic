@@ -39,10 +39,11 @@
 			<div ng-include="'/rest/templates/patient-related.html'"></div>
 		</div>
 	</div>
+	<hr>
 	<div style='text-align: center' class="row">
 		<div class="col-lg-offset-1 col-lg-10">
 			<div ng-if="currentFile().file">
-				<img width='100%' ng-src="/uploadedPictures/{{currentFile().file}}">
+				<img style="width:100%; max-width: 600px" ng-src="{{getFileSrc()}}" alt="Sorry, image not found on the server." >
 			</div>
 			<div class='notModeRead text-center' ng-if="!currentFile().file && hasPermission('folder.edit')">
 				<canvas id='preview'></canvas>
