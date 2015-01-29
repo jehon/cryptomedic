@@ -77,11 +77,17 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_backend', '$
 	}
 	
 	$scope.actionValidate = function() {
-		// TODOJH: use this in all modification actions
+	    console.log("action validate");
 		// TODOJH: jserror should have an icon before (danger)
 		// TODOJH: hide action button if form is not ok
 		$scope.valide = true;
 
+		jQuery("input[type=number][required]").each(function() {
+		    if (jQuery(this).val() == "") {
+			jQuery(this).val(0);
+		    }
+		});
+		
 		if (!jQuery("#fileForm")[0].checkValidity()) {
 			console.log("Form invalid");
 			jQuery("#fileFormSubmit").click();
@@ -109,7 +115,7 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_backend', '$
 			$scope.valide = false;
 		} 
 
-//		console.log("Conclusion: " + ($scope.valide ? "ok" : "ko"));
+		console.log($scope.errors);
 		return $scope.valide;
 	};
 	$scope.$on("revalidate", $scope.actionValidate);
@@ -161,6 +167,7 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_backend', '$
 		if (fileCreating.Center) {
 			cache().set("center", fileCreating.Center);
 		}
+
 		if (!$scope.actionValidate()) {
 			alert("You have errors in your data. Please correct them and try again");
 			return ;
