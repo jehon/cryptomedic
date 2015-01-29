@@ -231,7 +231,12 @@ input[type=checkbox].form-control {
 }
 
 .jserror {
-  color: red;
+  	color: red;
+  	min-height: 20px;
+  	background-image: url('img/error.png');
+	background-repeat: no-repeat;
+	background-size: 20px;
+	padding-left: 25px; 
 }
 
 /********************************************
