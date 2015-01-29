@@ -27,9 +27,9 @@
 						<td>Upload a file</td>
 						<td>
 							<input preview='preview' type="file" name="fileContent" id='file'>
-		<div ng-if='errors.pictureRequired'>
-			<div class='alert alert-danger'>Error: you need to add the picture before saving the file.</div>
-		</div>
+							<div ng-if='errors.pictureRequired'>
+								<div class='jserror'>Error: you need to add the picture before saving the file.</div>
+							</div>
 							</td>
 					</tr>
 				</table>
@@ -47,12 +47,12 @@
 			</div>
 			<div class='notModeRead text-center' ng-if="!currentFile().file && hasPermission('folder.edit')">
 				<canvas id='preview'></canvas>
-<!-- 			</div> -->
+			</div>
 <!-- 			<div class='notModeWrite text-center' ng-if="!currentFile().file && hasPermission('folder.edit')"> -->
 <!-- 				You didn't upload a file yet. Please do so!<br> -->
 <!-- 				<br> -->
 <!-- 				<iframe ng-src="{{getURLUploadIFrame()}}" width='100%' height='300px'></iframe> -->
 <!-- 			</div> -->
-<!-- 		</div> -->
+		</div>
 	</div>
 </span>
