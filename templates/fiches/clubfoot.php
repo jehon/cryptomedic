@@ -28,8 +28,8 @@
 					<?php (new t("ClubFoot.EmptyHeel"))->trLeftRight()->p(); ?>
 					<tr>
 						<td>Total</td>
-						<td>{{getPiraniLeft()}}</td>
-						<td>{{getPiraniRight()}}</td>
+						<td>{{currentFile().getPiraniLeft()}}</td>
+						<td>{{currentFile().getPiraniRight()}}</td>
 					</tr>				
 				</table>
 			</FieldSet>

@@ -6,5 +6,13 @@
 	<colgroup span="2" width="50%"></colgroup>
 	<tbody>
 		<?php (new t("ClubFoot.Treatment"))->tr()->p(); ?>
-	</tbody>
+		<tr>
+			<td>Pirani left</td>
+			<td>{{currentFile().getPiraniLeft()}}</td>
+		</tr>
+		<tr>
+			<td>Pirani right</td>
+			<td>{{currentFile().getPiraniRight()}}</td>
+		</tr>
+		</tbody>
 </table>
