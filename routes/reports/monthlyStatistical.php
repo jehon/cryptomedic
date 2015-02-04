@@ -107,7 +107,7 @@ foreach($res as $line) {
 foreach($centers as $c) {
 	_addLine("@ " . $c, array_key_exists($c, $res2) ? $res2[$c] : 0);
 }
-_addLine("center unspecified", $res2['']);
+_addLine("center unspecified", array_key_exists('', $res2) ? $res2[''] : 0);
 
 function billCountByType($filter, &$list) {
 	global $server;

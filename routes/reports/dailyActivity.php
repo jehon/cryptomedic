@@ -128,7 +128,17 @@ $result = $server->getDatabase()->query("SELECT
         </thead>
         <tbody  class='b_all'>
             <?php
-				$sum = array();            
+				$sum = array( 
+						'sum_medecine' => 0, 
+						'sum_surgical' => 0,
+						'sum_workshop' => 0,
+						'sum_consult' => 0,
+						'sum_other' => 0,
+						'total_real' => 0,
+						'total_asked' => 0,
+						'total_paid' =>  0
+				);
+				
                 foreach($result as $i => $v) {
 					// Calculate the sums by columns
                 	foreach (array_keys($v) as $key) {
