@@ -1,8 +1,6 @@
 <?php
 
 require_once(__DIR__ . "/../helpers/getFolder.php");
-// require_once(__DIR__ . "/../../amd_listings.php");
-require_once(__DIR__ . "/../helpers/references.php");
 
 if (!$request->routeIsEnded()) {
 	$folder = getFolder($request->routeGetNext());
@@ -14,7 +12,8 @@ if (!$request->routeIsEnded()) {
 	$data[] = array_keys($folder['mainFile']);
 
 	$heads[] = false;
-	$data[] = References::unreferenceObject("Patient", $folder['mainFile']);
+	$data[] = $folder['mainFile'];
+// 	$data[] = References::unreferenceObject("Patient", $folder['mainFile']);
 
 	$heads[] = false;
 	$data[] = "";
@@ -34,7 +33,8 @@ if (!$request->routeIsEnded()) {
 					$present = true;
 				}
 				$heads[] = false;
-				$data[] = References::unreferenceObject($m, $f);
+				$data[] = $f;
+// 				$data[] = References::unreferenceObject($m, $f);
 			}
 		}
 		$heads[] = false;

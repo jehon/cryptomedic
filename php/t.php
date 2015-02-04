@@ -163,7 +163,7 @@ class t {
 				if ($this->type == self::TYPE_LIST) {
 					$this->res .= "(";
 					foreach($this->listing as $k => $v) { 
-						$this->res .= $k . ":" . $v . ","; 
+						$this->res .= $v . ","; 
 					}
 					$this->res .= ")";
 				}
@@ -193,7 +193,7 @@ class t {
                         . "<span id='{$this->key}' ng-hide='{$this->rawExpression}'><img src='static/img/boolean-false.gif'></span>";
                 break;
             case self::TYPE_LIST:
-                $this->res .= "<span id='{$this->key}'>{{link( {$this->rawExpression} )}}</span>";
+                $this->res .= "<span id='{$this->key}'>{{ {$this->rawExpression} }}</span>";
                 break;
             case self::TYPE_DATE:
             // TODOJH: recheck this later - Workaround!!!
@@ -234,7 +234,7 @@ class t {
                     $this->res .= "<table style='width: 100%'><tr><td>";
                     foreach($this->listing as $k => $v) {
                         $this->res.= ""
-                            . "<input type='radio' value=\"" . htmlentities($k) . "\" ng-model='{$this->rawExpression}' {$this->options['inline']}>"
+                            . "<input type='radio' value=\"" . htmlentities($v) . "\" ng-model='{$this->rawExpression}' {$this->options['inline']}>"
                             . "$v"
                             . "<br>"
                             ;
@@ -255,7 +255,7 @@ class t {
                 } else {
                     $this->res .= "<select $inline>";
                     foreach($this->listing as $k => $v) {
-                        $this->res .= "<option value=\"" . htmlentities($k) . "\">$v</option>";
+                        $this->res .= "<option value=\"" . htmlentities($v) . "\">$v</option>";
                     }
                     if (!$this->required) {
                         $this->res .= "<option value='0'>?</option>";

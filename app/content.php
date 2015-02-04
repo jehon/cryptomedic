@@ -61,7 +61,7 @@
 	(new Script("static/css/application.css"))->dependFile()->toPrint();
 	
 	(new Script("/rest/authenticate/settings?JSONP=server.setSettings"))->js()->dependDBTable("settings")->live()->toPrint();
-	(new Script("/rest/labels?JSONP=cryptomedic.setLabels"))->js()->dependDBTable("labels")->toPrint();
+// 	(new Script("/rest/labels?JSONP=cryptomedic.setLabels"))->js()->dependDBTable("labels")->toPrint();
 	(new Script("/rest/prices?JSONP=cryptomedic.setPrices"))->js()->dependDBTable("prices")->toPrint(); 
 ?>
 </head>

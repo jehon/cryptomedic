@@ -29,27 +29,27 @@ class References {
         }
     }
 
-    static function unreference($value, $table = "", $field = "") {
-        global $server;
-        $labels = $server->getDatabase()->getTable("labels");
-        if ($table != "") {
-            if (!array_key_exists("$table.$field", References::$model_listing)) {
-                return $value;
-            }       
-        }
-        $res = $labels->rowGet($value);
-        if ($res) {
-            return $res["english"];
-        }
-        return $value;
-    }
+//     static function unreference($value, $table = "", $field = "") {
+//         global $server;
+//         $labels = $server->getDatabase()->getTable("labels");
+//         if ($table != "") {
+//             if (!array_key_exists("$table.$field", References::$model_listing)) {
+//                 return $value;
+//             }       
+//         }
+//         $res = $labels->rowGet($value);
+//         if ($res) {
+//             return $res["english"];
+//         }
+//         return $value;
+//     }
 
-    static function unreferenceObject($table, array $array) {
-        foreach($array as $f => $v) {
-            $array[$f] = self::unreference($v, $table, $f);
-        }
-        return $array;
-    }
+//     static function unreferenceObject($table, array $array) {
+//         foreach($array as $f => $v) {
+//             $array[$f] = self::unreference($v, $table, $f);
+//         }
+//         return $array;
+//     }
 
 //     static function buildLinkedList($list) {
 //         global $server;
@@ -77,8 +77,6 @@ class References {
     }
 }
 
-
-// Helper: http://localhost/rest/reports/listings/Centers
 
 References::$lists["Upazilla"] = References::buildValueList(
 	array_merge(

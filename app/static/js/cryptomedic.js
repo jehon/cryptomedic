@@ -68,6 +68,6 @@ cryptomedic.setPrices = function(data) {
     cryptomedic.prices = objectify(data);
 };
 
-cryptomedic.setLabels = function(data) {
-    cryptomedic.labels = objectify(data);
-};
+//cryptomedic.setLabels = function(data) {
+//    cryptomedic.labels = objectify(data);
+//};
