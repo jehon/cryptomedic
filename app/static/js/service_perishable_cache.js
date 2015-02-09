@@ -36,6 +36,10 @@ function perishableCache(perish) {
 			cache[id] = angular.copy(data);
 			timestamps[id] = new Date();
 			return data;
+		},
+		'clear': function() {
+		    cache = {};
+		    timestamps = {};
 		}
 	};
 };
