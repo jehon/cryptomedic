@@ -153,25 +153,22 @@ class t {
     }
     
 	function displayCode($mode) {
-		global $request;
-		if ($request) {
-			if ($request->getSystemParameter("meta", false)) {
-				$this->res .= "=" . $mode . $this->key;
-				$this->res .= ($this->linked2DB ? "" : "##");
-				$this->res .= "-" . $this->model . "." . $this->field; 
-				$this->res .= ":" . $this->type;
-				if ($this->type == self::TYPE_LIST) {
-					$this->res .= "(";
-					foreach($this->listing as $k => $v) { 
-						$this->res .= $v . ","; 
-					}
-					$this->res .= ")";
+		if (Server::getInstance()->getRequest()->getSystemParameter("meta", false)) {
+			$this->res .= "=" . $mode . $this->key;
+			$this->res .= ($this->linked2DB ? "" : "##");
+			$this->res .= "-" . $this->model . "." . $this->field; 
+			$this->res .= ":" . $this->type;
+			if ($this->type == self::TYPE_LIST) {
+				$this->res .= "(";
+				foreach($this->listing as $k => $v) { 
+					$this->res .= $v . ","; 
 				}
-				$this->res .= ($this->required ? "!" : "?");
-				$this->res .= "[" . $this->rawExpression . "]";
-				$this->res .= "=";
-				return true;
+				$this->res .= ")";
 			}
+			$this->res .= ($this->required ? "!" : "?");
+			$this->res .= "[" . $this->rawExpression . "]";
+			$this->res .= "=";
+			return true;
 		}
 		return false;
 	}
@@ -297,14 +294,13 @@ class t {
         if ($this->options['readOnly']) return $this->read();
         if ($this->options['writeOnly']) return $this->write();
 
-        global $request;
-		if ($request->getParameter("mode", "read") == "read") {
+		if (Server::getInstance()->getRequest()->getParameter("mode", "read") == "read") {
 			$this->res .= "<span class='notModeWrite'>";
 			$this->read();
 			$this->res .= "</span>";
 		}
 
-		if ($request->getParameter("mode", "edit") == "edit") {
+		if (Server::getInstance()->getRequest()->getParameter("mode", "edit") == "edit") {
 			$this->res .= "<span class='notModeRead'>";
 	        $this->write();
 	        $this->res .= "</span>";
