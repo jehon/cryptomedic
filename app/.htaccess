@@ -1,2 +1,6 @@
+
+
+#RewriteRule manifest.appcache manifest.php
+
 RewriteRule ^$ index.php
 RewriteRule index.html index.php
