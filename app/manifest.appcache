@@ -1,4 +1,17 @@
--
+CACHE MANIFEST
+
+
+# cryptomedic version: vtest
+# rest version: undefined
+# database version: 1000
+# system parameter: #NA#
+
+CACHE:
+
+/cryptomedic/app/index.php
+# 1423517733 index.php
+/cryptomedic/index.html
+# 1423116564 ../index.html
 
 # Include dependant php scripts
 
@@ -18,243 +31,243 @@
 # Scripts auto-import
 
 bower_components/jquery/dist/jquery.min.js?_cache=1&_version=20141216212152
-## 4 ##bower_components/jquery-ui/jquery-ui.min.js?_cache=1&_version=20141216212152
-## 5 ##bower_components/jquery-ui/themes/ui-lightness/jquery-ui.min.css?_cache=1&_version=20141216212152
-## 6 ##bower_components/modernizr/modernizr.js?_cache=1&_version=20141216212152
-## 7 ##bower_components/bootstrap/dist/js/bootstrap.min.js?_cache=1&_version=20141216212152
-## 8 ##bower_components/bootstrap/dist/css/bootstrap.min.css?_cache=1&_version=20141216212152
-## 9 ##bower_components/angular/angular.min.js?_cache=1&_version=20141216212152
-## 10 ##bower_components/angular-route/angular-route.min.js?_cache=1&_version=20141216212152
-## 11 ##bower_components/excellentexport/excellentexport.min.js?_cache=1&_version=20141216212152
-## 12 ##static/js/application.js?_cache=1&_version=20150204163525
-## 13 ##static/js/cryptomedic.js?_cache=1&_version=20150209070849
-## 14 ##static/js/amd_stats_datas.js?_cache=1&_version=20141216212152
-## 15 ##static/js/exceptions.js?_cache=1&_version=20141216212152
-## 16 ##static/js/model_abstract.js?_cache=1&_version=20141216212152
-## 17 ##static/js/model_data.js?_cache=1&_version=20141216212152
-## 18 ##static/js/model_file.js?_cache=1&_version=20150115064523
-## 19 ##static/js/model_file_bill.js?_cache=1&_version=20141229151715
-## 20 ##static/js/model_file_clubfoot.js?_cache=1&_version=20150203194609
-## 21 ##static/js/model_file_nonricketconsult.js?_cache=1&_version=20141229150448
-## 22 ##static/js/model_file_picture.js?_cache=1&_version=20150127162357
-## 23 ##static/js/model_file_ricketconsult.js?_cache=1&_version=20141229150520
-## 24 ##static/js/model_file_surgery.js?_cache=1&_version=20141229150524
-## 25 ##static/js/model_folder.js?_cache=1&_version=20141216212152
-## 26 ##static/js/model_patient.js?_cache=1&_version=20141230215101
-## 27 ##static/js/service_backend.js?_cache=1&_version=20141229210107
-## 28 ##static/js/service_commons.js?_cache=1&_version=20150103075517
-## 29 ##static/js/service_indexeddb.js?_cache=1&_version=20141229210756
-## 30 ##static/js/service_perishable_cache.js?_cache=1&_version=20150205074112
-## 31 ##static/js/service_rest.js?_cache=1&_version=20150205080510
-## 32 ##static/js/ctrl_allgraphics.js?_cache=1&_version=20141216212152
-## 33 ##static/js/ctrl_day.js?_cache=1&_version=20141216212152
-## 34 ##static/js/ctrl_file.js?_cache=1&_version=20150126071823
-## 35 ##static/js/ctrl_file_bill.js?_cache=1&_version=20141218155938
-## 36 ##static/js/ctrl_file_clubfoots.js?_cache=1&_version=20150203194746
-## 37 ##static/js/ctrl_folder.js?_cache=1&_version=20150209073935
-## 38 ##static/js/ctrl_goto.js?_cache=1&_version=20141216212152
-## 39 ##static/js/ctrl_graphic.js?_cache=1&_version=20141216212152
-## 40 ##static/js/ctrl_home.js?_cache=1&_version=20141216212152
-## 41 ##static/js/ctrl_offline.js?_cache=1&_version=20150208120346
-## 42 ##static/js/ctrl_patient.js?_cache=1&_version=20141216212152
-## 43 ##static/js/ctrl_picture.js?_cache=1&_version=20150128070705
-## 44 ##static/js/ctrl_reports.js?_cache=1&_version=20150127163933
-## 45 ##static/js/ctrl_search.js?_cache=1&_version=20141216212152
-## 46 ##static/css/application.css?_cache=1&_version=20150129220905
-## 47 ##/rest/prices?JSONP=cryptomedic.setPrices&_cache=1&_version=2014-12-18203812
+bower_components/jquery-ui/jquery-ui.min.js?_cache=1&_version=20141216212152
+bower_components/jquery-ui/themes/ui-lightness/jquery-ui.min.css?_cache=1&_version=20141216212152
+bower_components/modernizr/modernizr.js?_cache=1&_version=20141216212152
+bower_components/bootstrap/dist/js/bootstrap.min.js?_cache=1&_version=20141216212152
+bower_components/bootstrap/dist/css/bootstrap.min.css?_cache=1&_version=20141216212152
+bower_components/angular/angular.min.js?_cache=1&_version=20141216212152
+bower_components/angular-route/angular-route.min.js?_cache=1&_version=20141216212152
+bower_components/excellentexport/excellentexport.min.js?_cache=1&_version=20141216212152
+static/js/application.js?_cache=1&_version=20150204163525
+static/js/cryptomedic.js?_cache=1&_version=20150209070849
+static/js/amd_stats_datas.js?_cache=1&_version=20141216212152
+static/js/exceptions.js?_cache=1&_version=20141216212152
+static/js/model_abstract.js?_cache=1&_version=20141216212152
+static/js/model_data.js?_cache=1&_version=20141216212152
+static/js/model_file.js?_cache=1&_version=20150115064523
+static/js/model_file_bill.js?_cache=1&_version=20141229151715
+static/js/model_file_clubfoot.js?_cache=1&_version=20150203194609
+static/js/model_file_nonricketconsult.js?_cache=1&_version=20141229150448
+static/js/model_file_picture.js?_cache=1&_version=20150127162357
+static/js/model_file_ricketconsult.js?_cache=1&_version=20141229150520
+static/js/model_file_surgery.js?_cache=1&_version=20141229150524
+static/js/model_folder.js?_cache=1&_version=20141216212152
+static/js/model_patient.js?_cache=1&_version=20141230215101
+static/js/service_backend.js?_cache=1&_version=20141229210107
+static/js/service_commons.js?_cache=1&_version=20150103075517
+static/js/service_indexeddb.js?_cache=1&_version=20141229210756
+static/js/service_perishable_cache.js?_cache=1&_version=20150205074112
+static/js/service_rest.js?_cache=1&_version=20150205080510
+static/js/ctrl_allgraphics.js?_cache=1&_version=20141216212152
+static/js/ctrl_day.js?_cache=1&_version=20141216212152
+static/js/ctrl_file.js?_cache=1&_version=20150126071823
+static/js/ctrl_file_bill.js?_cache=1&_version=20141218155938
+static/js/ctrl_file_clubfoots.js?_cache=1&_version=20150203194746
+static/js/ctrl_folder.js?_cache=1&_version=20150209073935
+static/js/ctrl_goto.js?_cache=1&_version=20141216212152
+static/js/ctrl_graphic.js?_cache=1&_version=20141216212152
+static/js/ctrl_home.js?_cache=1&_version=20141216212152
+## 41 ## static/js/ctrl_offline.js?_cache=1&_version=20150208120346
+## 42 ## static/js/ctrl_patient.js?_cache=1&_version=20141216212152
+## 43 ## static/js/ctrl_picture.js?_cache=1&_version=20150128070705
+## 44 ## static/js/ctrl_reports.js?_cache=1&_version=20150127163933
+## 45 ## static/js/ctrl_search.js?_cache=1&_version=20141216212152
+## 46 ## static/css/application.css?_cache=1&_version=20150129220905
+## 47 ## /rest/prices?JSONP=cryptomedic.setPrices&_cache=1&_version=2014-12-18203812
 
 # static
 
 # 1422565745 static/css/application.css
-## 48 ##static/css/application.css
+## 48 ## static/css/application.css
 # 1418809249 static/img/bangladesh.svg
-## 49 ##static/img/bangladesh.svg
+## 49 ## static/img/bangladesh.svg
 # 1418761312 static/img/boolean-false.gif
-## 50 ##static/img/boolean-false.gif
+## 50 ## static/img/boolean-false.gif
 # 1418761312 static/img/boolean-true.gif
-## 51 ##static/img/boolean-true.gif
+## 51 ## static/img/boolean-true.gif
 # 1418761312 static/img/consultOfDay.gif
-## 52 ##static/img/consultOfDay.gif
+## 52 ## static/img/consultOfDay.gif
 # 1418761312 static/img/favicon.ico
-## 53 ##static/img/favicon.ico
+## 53 ## static/img/favicon.ico
 # 1422425213 static/img/file_not_defined.png
-## 54 ##static/img/file_not_defined.png
+## 54 ## static/img/file_not_defined.png
 # 1418761312 static/img/go.gif
-## 55 ##static/img/go.gif
+## 55 ## static/img/go.gif
 # 1418761312 static/img/home.gif
-## 56 ##static/img/home.gif
+## 56 ## static/img/home.gif
 # 1418761312 static/img/locked.gif
-## 57 ##static/img/locked.gif
+## 57 ## static/img/locked.gif
 # 1418761312 static/img/logout.gif
-## 58 ##static/img/logout.gif
+## 58 ## static/img/logout.gif
 # 1418761312 static/img/patient.gif
-## 59 ##static/img/patient.gif
+## 59 ## static/img/patient.gif
 # 1418761312 static/img/patientsSearch.gif
-## 60 ##static/img/patientsSearch.gif
+## 60 ## static/img/patientsSearch.gif
 # 1418761312 static/img/reports.gif
-## 61 ##static/img/reports.gif
+## 61 ## static/img/reports.gif
 # 1418761312 static/img/stats_bmi-f.jpg
-## 62 ##static/img/stats_bmi-f.jpg
+## 62 ## static/img/stats_bmi-f.jpg
 # 1418761312 static/img/stats_bmi-m.jpg
-## 63 ##static/img/stats_bmi-m.jpg
+## 63 ## static/img/stats_bmi-m.jpg
 # 1418761312 static/img/stats_bmi-null.jpg
-## 64 ##static/img/stats_bmi-null.jpg
+## 64 ## static/img/stats_bmi-null.jpg
 # 1418761312 static/img/stats_height-f.jpg
-## 65 ##static/img/stats_height-f.jpg
+## 65 ## static/img/stats_height-f.jpg
 # 1418761312 static/img/stats_height-m.jpg
-## 66 ##static/img/stats_height-m.jpg
+## 66 ## static/img/stats_height-m.jpg
 # 1418761312 static/img/stats_height-null.jpg
-## 67 ##static/img/stats_height-null.jpg
+## 67 ## static/img/stats_height-null.jpg
 # 1418761312 static/img/stats_weight-f.jpg
-## 68 ##static/img/stats_weight-f.jpg
+## 68 ## static/img/stats_weight-f.jpg
 # 1418761312 static/img/stats_weight-m.jpg
-## 69 ##static/img/stats_weight-m.jpg
+## 69 ## static/img/stats_weight-m.jpg
 # 1418761312 static/img/stats_weight-null.jpg
-## 70 ##static/img/stats_weight-null.jpg
+## 70 ## static/img/stats_weight-null.jpg
 # 1418761312 static/img/stats_wh-f.jpg
-## 71 ##static/img/stats_wh-f.jpg
+## 71 ## static/img/stats_wh-f.jpg
 # 1418761312 static/img/stats_wh-m.jpg
-## 72 ##static/img/stats_wh-m.jpg
+## 72 ## static/img/stats_wh-m.jpg
 # 1418761312 static/img/stats_wh-null.jpg
-## 73 ##static/img/stats_wh-null.jpg
+## 73 ## static/img/stats_wh-null.jpg
 # 1418761312 static/img/sync.png
-## 74 ##static/img/sync.png
+## 74 ## static/img/sync.png
 # 1418761312 static/img/unlock.gif
-## 75 ##static/img/unlock.gif
+## 75 ## static/img/unlock.gif
 # 1418761312 static/img/waiting.gif
-## 76 ##static/img/waiting.gif
+## 76 ## static/img/waiting.gif
 # 1418761312 static/js/amd_stats_datas.js
-## 77 ##static/js/amd_stats_datas.js
+## 77 ## static/js/amd_stats_datas.js
 # 1423064125 static/js/application.js
-## 78 ##static/js/application.js
+## 78 ## static/js/application.js
 # 1423462129 static/js/cryptomedic.js
-## 79 ##static/js/cryptomedic.js
+## 79 ## static/js/cryptomedic.js
 # 1418761312 static/js/ctrl_allgraphics.js
-## 80 ##static/js/ctrl_allgraphics.js
+## 80 ## static/js/ctrl_allgraphics.js
 # 1418761312 static/js/ctrl_day.js
-## 81 ##static/js/ctrl_day.js
+## 81 ## static/js/ctrl_day.js
 # 1422253103 static/js/ctrl_file.js
-## 82 ##static/js/ctrl_file.js
+## 82 ## static/js/ctrl_file.js
 # 1418914778 static/js/ctrl_file_bill.js
-## 83 ##static/js/ctrl_file_bill.js
+## 83 ## static/js/ctrl_file_bill.js
 # 1422989266 static/js/ctrl_file_clubfoots.js
-## 84 ##static/js/ctrl_file_clubfoots.js
+## 84 ## static/js/ctrl_file_clubfoots.js
 # 1423463975 static/js/ctrl_folder.js
-## 85 ##static/js/ctrl_folder.js
+## 85 ## static/js/ctrl_folder.js
 # 1418761312 static/js/ctrl_goto.js
-## 86 ##static/js/ctrl_goto.js
+## 86 ## static/js/ctrl_goto.js
 # 1418761312 static/js/ctrl_graphic.js
-## 87 ##static/js/ctrl_graphic.js
+## 87 ## static/js/ctrl_graphic.js
 # 1418761312 static/js/ctrl_home.js
-## 88 ##static/js/ctrl_home.js
+## 88 ## static/js/ctrl_home.js
 # 1423393426 static/js/ctrl_offline.js
-## 89 ##static/js/ctrl_offline.js
+## 89 ## static/js/ctrl_offline.js
 # 1418761312 static/js/ctrl_patient.js
-## 90 ##static/js/ctrl_patient.js
+## 90 ## static/js/ctrl_patient.js
 # 1422425225 static/js/ctrl_picture.js
-## 91 ##static/js/ctrl_picture.js
+## 91 ## static/js/ctrl_picture.js
 # 1422373173 static/js/ctrl_reports.js
-## 92 ##static/js/ctrl_reports.js
+## 92 ## static/js/ctrl_reports.js
 # 1418761312 static/js/ctrl_search.js
-## 93 ##static/js/ctrl_search.js
+## 93 ## static/js/ctrl_search.js
 # 1418761312 static/js/exceptions.js
-## 94 ##static/js/exceptions.js
+## 94 ## static/js/exceptions.js
 # 1418761312 static/js/model_abstract.js
-## 95 ##static/js/model_abstract.js
+## 95 ## static/js/model_abstract.js
 # 1418761312 static/js/model_data.js
-## 96 ##static/js/model_data.js
+## 96 ## static/js/model_data.js
 # 1421300723 static/js/model_file.js
-## 97 ##static/js/model_file.js
+## 97 ## static/js/model_file.js
 # 1419862635 static/js/model_file_bill.js
-## 98 ##static/js/model_file_bill.js
+## 98 ## static/js/model_file_bill.js
 # 1422989169 static/js/model_file_clubfoot.js
-## 99 ##static/js/model_file_clubfoot.js
+## 99 ## static/js/model_file_clubfoot.js
 # 1419861888 static/js/model_file_nonricketconsult.js
-## 100 ##static/js/model_file_nonricketconsult.js
+## 100 ## static/js/model_file_nonricketconsult.js
 # 1422372237 static/js/model_file_picture.js
-## 101 ##static/js/model_file_picture.js
+## 101 ## static/js/model_file_picture.js
 # 1419861920 static/js/model_file_ricketconsult.js
-## 102 ##static/js/model_file_ricketconsult.js
+## 102 ## static/js/model_file_ricketconsult.js
 # 1419861924 static/js/model_file_surgery.js
-## 103 ##static/js/model_file_surgery.js
+## 103 ## static/js/model_file_surgery.js
 # 1418761312 static/js/model_folder.js
-## 104 ##static/js/model_folder.js
+## 104 ## static/js/model_folder.js
 # 1419972661 static/js/model_patient.js
-## 105 ##static/js/model_patient.js
+## 105 ## static/js/model_patient.js
 # 1419883267 static/js/service_backend.js
-## 106 ##static/js/service_backend.js
+## 106 ## static/js/service_backend.js
 # 1420268117 static/js/service_commons.js
-## 107 ##static/js/service_commons.js
+## 107 ## static/js/service_commons.js
 # 1419883676 static/js/service_indexeddb.js
-## 108 ##static/js/service_indexeddb.js
+## 108 ## static/js/service_indexeddb.js
 # 1423118472 static/js/service_perishable_cache.js
-## 109 ##static/js/service_perishable_cache.js
+## 109 ## static/js/service_perishable_cache.js
 # 1423119910 static/js/service_rest.js
-## 110 ##static/js/service_rest.js
+## 110 ## static/js/service_rest.js
 # 1418761312 static/upgrade.html
-## 111 ##static/upgrade.html
+## 111 ## static/upgrade.html
 
 # Templates
 # 1423463121 templates/fiches/bill.php
-## 112 ##templates/fiches/bill.php?mode=read
-## 113 ##templates/fiches/bill.php?mode=edit
+## 112 ## templates/fiches/bill.php?mode=read
+## 113 ## templates/fiches/bill.php?mode=edit
 # 1423463118 templates/fiches/clubfoot.php
-## 114 ##templates/fiches/clubfoot.php?mode=read
-## 115 ##templates/fiches/clubfoot.php?mode=edit
+## 114 ## templates/fiches/clubfoot.php?mode=read
+## 115 ## templates/fiches/clubfoot.php?mode=edit
 # 1423463115 templates/fiches/nonricketconsult.php
-## 116 ##templates/fiches/nonricketconsult.php?mode=read
-## 117 ##templates/fiches/nonricketconsult.php?mode=edit
+## 116 ## templates/fiches/nonricketconsult.php?mode=read
+## 117 ## templates/fiches/nonricketconsult.php?mode=edit
 # 1423463112 templates/fiches/patient.php
-## 118 ##templates/fiches/patient.php?mode=read
-## 119 ##templates/fiches/patient.php?mode=edit
+## 118 ## templates/fiches/patient.php?mode=read
+## 119 ## templates/fiches/patient.php?mode=edit
 # 1423463109 templates/fiches/picture.php
-## 120 ##templates/fiches/picture.php?mode=read
-## 121 ##templates/fiches/picture.php?mode=edit
+## 120 ## templates/fiches/picture.php?mode=read
+## 121 ## templates/fiches/picture.php?mode=edit
 # 1423463106 templates/fiches/ricketconsult.php
-## 122 ##templates/fiches/ricketconsult.php?mode=read
-## 123 ##templates/fiches/ricketconsult.php?mode=edit
+## 122 ## templates/fiches/ricketconsult.php?mode=read
+## 123 ## templates/fiches/ricketconsult.php?mode=edit
 # 1423463102 templates/fiches/surgery.php
-## 124 ##templates/fiches/surgery.php?mode=read
-## 125 ##templates/fiches/surgery.php?mode=edit
+## 124 ## templates/fiches/surgery.php?mode=read
+## 125 ## templates/fiches/surgery.php?mode=edit
 # 1423462265 templates/folder_pages/add.php
-## 126 ##templates/folder_pages/add.php
+## 126 ## templates/folder_pages/add.php
 # 1423462391 templates/folder_pages/graphic_one.php
-## 127 ##templates/folder_pages/graphic_one.php
+## 127 ## templates/folder_pages/graphic_one.php
 # 1423464016 templates/folder_pages/graphics.php
-## 128 ##templates/folder_pages/graphics.php
+## 128 ## templates/folder_pages/graphics.php
 # 1423462415 templates/folder_pages/summary.php
-## 129 ##templates/folder_pages/summary.php
+## 129 ## templates/folder_pages/summary.php
 # 1418761312 templates/pages/blank.php
-## 130 ##templates/pages/blank.php
+## 130 ## templates/pages/blank.php
 # 1423459720 templates/pages/day.php
-## 131 ##templates/pages/day.php
+## 131 ## templates/pages/day.php
 # 1423463082 templates/pages/folder.php
-## 132 ##templates/pages/folder.php
+## 132 ## templates/pages/folder.php
 # 1423459729 templates/pages/home.php
-## 133 ##templates/pages/home.php
+## 133 ## templates/pages/home.php
 # 1423460735 templates/pages/reports.php
-## 134 ##templates/pages/reports.php
+## 134 ## templates/pages/reports.php
 # 1423460568 templates/pages/search.php
-## 135 ##templates/pages/search.php
+## 135 ## templates/pages/search.php
 # 1423461542 templates/summary/bill-summary.php
-## 136 ##templates/summary/bill-summary.php
+## 136 ## templates/summary/bill-summary.php
 # 1423461540 templates/summary/clubfoot-summary.php
-## 137 ##templates/summary/clubfoot-summary.php
+## 137 ## templates/summary/clubfoot-summary.php
 # 1423461538 templates/summary/nonricketconsult-summary.php
-## 138 ##templates/summary/nonricketconsult-summary.php
+## 138 ## templates/summary/nonricketconsult-summary.php
 # 1423461535 templates/summary/patient-summary.php
-## 139 ##templates/summary/patient-summary.php
+## 139 ## templates/summary/patient-summary.php
 # 1423461532 templates/summary/picture-summary.php
-## 140 ##templates/summary/picture-summary.php
+## 140 ## templates/summary/picture-summary.php
 # 1423461530 templates/summary/ricketconsult-summary.php
-## 141 ##templates/summary/ricketconsult-summary.php
+## 141 ## templates/summary/ricketconsult-summary.php
 # 1423461527 templates/summary/surgery-summary.php
-## 142 ##templates/summary/surgery-summary.php
+## 142 ## templates/summary/surgery-summary.php
 
 # online content (no cache) 
 
 NETWORK:
 # /rest/authenticate/settings?JSONP=server.setSettings&_version=2015-02-09131234: does not exists
-## 143 ##/rest/authenticate/settings?JSONP=server.setSettings&_version=2015-02-09131234
+## 143 ## /rest/authenticate/settings?JSONP=server.setSettings&_version=2015-02-09131234
 *
 
