@@ -1,5 +1,17 @@
 <!DOCTYPE html>
-<html <?php echo (array_key_exists("online", $_REQUEST) ? "" : "manifest='manifest.php'"); ?> >
+<html <?php 
+	if (array_key_exists("online", $_REQUEST)) {
+		$mode = "online";
+	} else {
+		if (file_exists("manifest.appcache")) {
+			$mode = "appcache";
+			echo "manifest='manifest.appcache'";
+		} else {
+			$mode = "application";
+			echo "manifest='manifest.php'";
+		}
+	}
+?> >
 <?php 
 	require_once __DIR__ . "/../../rest/php/core.php";
 	Script::$rootPath = __DIR__;
@@ -78,7 +90,6 @@
 		(new Script("static/css/application.css"))->dependFile()->toPrint();
 		
 		(new Script("/rest/authenticate/settings?JSONP=server.setSettings"))->js()->dependDBTable("settings")->live()->toPrint();
-	// 	(new Script("/rest/labels?JSONP=cryptomedic.setLabels"))->js()->dependDBTable("labels")->toPrint();
 		(new Script("/rest/prices?JSONP=cryptomedic.setPrices"))->js()->dependDBTable("prices")->toPrint(); 
 	?>
 	</head>
@@ -98,6 +109,7 @@
 		    <div class="collapse navbar-collapse" id="menuMain">
 		      <ul class="nav navbar-nav navbar-right">
 	        	<li><p class="navbar-text" id='login.logged.username'>{{server.settings.username}}</p></li>
+	        	<li><p class="navbar-text" id='appCache_mode'><?php echo $mode; ?></p></li>
 		      	<li><a href="#/home" class="navbar-link">
 			    	<img src="static/img/home.gif" height="20px"/>
 					Home
