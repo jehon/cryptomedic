@@ -122,7 +122,7 @@ References::$model_listing['ClubFoot.RunLeft'] = References::buildValueList(arra
 References::$model_listing['ClubFoot.RunRight'] = References::buildValueList(array(0, 1, 2));
 // References::$model_listing['ClubFoot.MuscularInbalanceLeft'] = References::$lists["0-10"];
 // References::$model_listing['ClubFoot.MuscularInbalanceRight'] = References::$lists["0-10"];
-References::$model_listing['ClubFoot.Treatment'] = References::buildValueList(array("plaster", "tenotomy", "DB splint"));
+References::$model_listing['ClubFoot.Treatment'] = References::buildValueList(array("plaster", "tenotomy", "DB splint", "surgery"));
 
 References::$model_listing['NonricketConsult.Pain'] = References::$lists['Pain'];
 References::$model_listing['NonricketConsult.Side'] = References::$lists['Side'];
