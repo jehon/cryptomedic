@@ -2,27 +2,26 @@
 
 mainApp.config([ '$routeProvider', function($routeProvider) {
     $routeProvider.when('/home', {
-        templateUrl: '/rest/templates/home.html',
+        templateUrl: 'templates/pages/home.php',
         controller: 'ctrl_home'
     }).when('/search', {
-        templateUrl: '/rest/templates/search.html',
+        templateUrl: 'templates/pages/search.php',
         controller: 'ctrl_search',
     }).when('/folder/:id/:page?/:mode?', {
-        templateUrl: '/rest/templates/folder.html',
+        templateUrl: 'templates/pages/folder.php',
         controller: 'ctrl_folder',
     }).when('/day', {
-        templateUrl: '/rest/templates/day.html',
+        templateUrl: 'templates/pages/day.php',
         controller: 'ctrl_day',
     }).when('/reports/:report?', {
-        templateUrl: '/rest/templates/reports.html',
+        templateUrl: 'templates/pages/reports.php',
         controller: 'ctrl_reports',
     }).when('/goto/:type/:id', {
-    	templateUrl: '/rest/templates/blank.html',
+    	templateUrl: 'templates/pages/blank.php',
     	controller: 'ctrl_goto',
     }).otherwise({ 'redirectTo': '/home'});
 }]);
 
-var cryptomedic = {};
 cryptomedic.settings = {};
 cryptomedic.settings.offlineCache = false;
 
@@ -67,7 +66,3 @@ cryptomedic.math = {
 cryptomedic.setPrices = function(data) {
     cryptomedic.prices = objectify(data);
 };
-
-//cryptomedic.setLabels = function(data) {
-//    cryptomedic.labels = objectify(data);
-//};

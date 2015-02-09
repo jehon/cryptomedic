@@ -1,4 +1,5 @@
 <?php
+	require_once("../../../php/core.php");
 ?>
 <div class='container-fluid'>
 	<div class='row'>

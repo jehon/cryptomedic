@@ -1,4 +1,6 @@
 <?php 
+	require_once("../../../php/core.php");
+
 	t::setDefaultOption("baseExpression", "params.");
 	t::setDefaultOption("forceAllowNull");
 	t::setDefaultOption("writeOnly");

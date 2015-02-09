@@ -1,4 +1,6 @@
 <?php 
+	require_once("../../../php/core.php");
+
 	t::setDefaultOption("baseExpression", "currentFile().");
 ?>
 <h1>Add a file</h1>

@@ -1,8 +1,14 @@
 <?php
-	define("GENERATE_MANIFEST", 1);
-	
 	header("Content-Type: text/cache-manifest");
+	header("Expires: Wed, 11 Jan 1984 05:00:00 GMT");
+	header("Pragma: public");
+
+	require_once __DIR__ . "/../../rest/php/core.php";
 	
+	Server::setOption(Server::OPTION_NO_SESSION);
+	$server = Server::getInstance();
+	$request = new Request($server);
+
 	function addOne($f) {
 		$f = str_replace("\\", "/", $f);
 		echo "$f\n";
@@ -22,35 +28,34 @@
 	
 	addLine("CACHE MANIFEST");
 	addLine("");
-	
-	ob_start();
-	require("index.php");
-	ob_clean();
+	addLine("");
 
-	if (file_exists("cryptomedic.version")) {
-		addLine("# cryptomedic version: " . file_get_contents("cryptomedic.version"));
-	}
-	if (file_exists("rest.version")) {
-		addLine("# rest version: " . file_get_contents("rest.version"));
-	}
+	addLine("# cryptomedic version: " . $server->getVersion("cryptomedic"));
+	addLine("# rest version: " . $server->getVersion());
 	addLine("# database version: " . $server->getDatabase()->getVersion());
+
 	if ($request->getSystemParameter("version", false)) {
 		addLine("# system parameter: " . $request->getSystemParameter("version"));
 	}
 
-	if ($request->isServedLocally()) {
-		//addLine("# Served locally: " . time());
-	}
-	
 	addLine("");
+	
+	addLine("CACHE:");
 	addLine("# Manually added elements");
 	addLine("");
 	addOne("/cryptomedic/app/index.php");
 	addTs("index.php");
-	addTs("content.php");
 	addOne("/cryptomedic/index.html");
-	addTs("index.html");
+	addTs("../index.html");
 	
+	// Will prevent outputting headers in require
+
+	echo "#";
+// 	ob_start();	
+// 	require("index.php"); 
+// 	ob_clean();
+	echo "-\n";
+		
 	addLine("");
 	addLine("# Include dependant php scripts");
 	addLine("");
@@ -64,9 +69,9 @@
 	addLine("");
 	addLine("# Scripts auto-import");
 	addLine("");
-	foreach(Script::$scriptsList as $s) {
-		addOne($s);
-	}
+// 	foreach(Script::$scriptsList as $s) {
+// 		addOne($s);
+// 	}
 	
 	addLine("");
 	addLine("# static");
@@ -79,32 +84,33 @@
 	
 	addLine("");
 	addLine("# Templates");
-	foreach(MyFile::myglob("../templates/*.php") as $f) {
+	foreach(MyFile::myglob("templates/*.php", true) as $f) {
 		addTs($f);
-		$s = str_replace("../", "/rest/", $f);
-		$s = str_replace(".php", ".html", $s);
-		addOne($s);
+		if (substr($f, 0, strlen("templates/fiches")) == "templates/fiches") {
+			addOne($f . "?mode=read");
+			addOne($f . "?mode=edit");		
+		} else {
+			addOne($f);
+		}
 	}
 	
 	addLine("");
 	addLine("# Templates fiches");
 	addLine("");
-	foreach(MyFile::myglob("../templates/fiches/*.php") as $f) {
-		addTs($f);
-		$s = str_replace("../", "/rest/", $f);
-		$s = str_replace(".php", ".html", $s);
-		addOne($s . "?mode=read");
-		addOne($s . "?mode=edit");
-	}
+// 	foreach(MyFile::myglob("../templates/fiches/*.php") as $f) {
+// 		addTs($f);
+// 		addOne($f . "?mode=read");
+// 		addOne($f . "?mode=edit");
+// 	}
 
 	addLine("");
 	addLine("# online content (no cache) ");
 	addLine("");
 	addLine("NETWORK:");
-	foreach(Script::$scriptsLive as $f) {
-		addTs($f);
-		addOne($f);
-	}
-	addLine("");
+// 	foreach(Script::$scriptsLive as $f) {
+// 		addTs($f);
+// 		addOne($f);
+// 	}
 	addLine("*");
+	addLine("");
 	

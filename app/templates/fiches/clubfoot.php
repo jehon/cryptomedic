@@ -1,5 +1,6 @@
 <?php 
 	// Example: 90658
+	require_once("../../../php/core.php");
 
 	t::setDefaultOption("baseExpression", "currentFile().");
 	t::setDefaultOption("model", "ClubFoot");

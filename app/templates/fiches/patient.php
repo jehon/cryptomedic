@@ -1,4 +1,6 @@
 <?php 
+	require_once("../../../php/core.php");
+	
 	t::setDefaultOption("baseExpression", "folder.getMainFile().");
 ?>
 <div class='container-fluid' ng-controller="ctrl_patient">

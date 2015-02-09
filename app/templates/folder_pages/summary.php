@@ -1,4 +1,6 @@
 <?php 
+	require_once("../../../php/core.php");
+
 	t::setDefaultOption("baseExpression", "currentFile().");
 ?>
 <table class='summary table table-striped'>
@@ -18,7 +20,7 @@
 			</a>
 		</td>
 		<td></td>
-		<td ng-include="'/rest/templates/patient-summary.html'"></td>
+		<td ng-include="'templates/summary/patient-summary.php'"></td>
 	</tr>
 	<tr ng-repeat="f in folder.getSubFiles()" ng-controller="ctrl_file">
 		<td>#{{$index}}</td>
@@ -28,6 +30,6 @@
 			</a>
 		</td>
 		<td>{{f.Date | date:'longDate' }}</td>
-		<td><span ng-include="'/rest/templates/'+f._type.toLowerCase()+'-summary.html'"></span></td>
+		<td><span ng-include="'templates/summary/'+f._type.toLowerCase()+'-summary.php'"></span></td>
 	</tr>
 </table>

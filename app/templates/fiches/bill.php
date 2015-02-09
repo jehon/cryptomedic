@@ -4,6 +4,8 @@
 	// Example: 91513 (2012)
 	// Example: 97573 (2014 = price 2)
 	// Hack: 10010
+	require_once("../../../php/core.php");
+
 	t::setDefaultOption("baseExpression", "currentFile().");
 ?>
 <?php 

@@ -1,3 +1,6 @@
+<?php 
+	require_once("../../../php/core.php");
+?>
 <div ng-if="getReport()" class='container-fluid'>
 	<div class='row'>
 		<div class='col-sm-offset-3 col-sm-6'>

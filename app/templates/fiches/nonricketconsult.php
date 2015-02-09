@@ -1,4 +1,6 @@
 <?php 
+	require_once("../../../php/core.php");
+
 	t::setDefaultOption("baseExpression", "currentFile().");
 	t::setDefaultOption("model", "NonricketConsult");
 	// Example: 71154

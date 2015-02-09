@@ -1,4 +1,6 @@
 <?php 
+	require_once("../../../php/core.php");
+	
 	t::setDefaultOption("baseExpression", "getCurrentFile().");
 ?>
 <div class='container-fluid modeRead'>
@@ -6,8 +8,8 @@
 		<div class="col-sm-2" class="btn-group btn-group-justified btn-group-vertical">
 			<a ng-if='hasPermission("folder.edit")' ng-class="{ 'btn-warning': page === 'add'}" ng-href="#/folder/{{id()}}/add" class="btn btn-default" style="width: 100%">Add</a>
 			<a ng-class="{ 'btn-warning': page === 'summary'}" ng-href="#/folder/{{id()}}/summary" class="btn btn-default" style="width: 100%">Summary</a>
-			<a ng-class="{ 'btn-warning': page === 'graphics'}" href="#/folder/{{id()}}/graphics" class="btn btn-default" style="width: 100%">Graphics</a>
-			<a ng-class="{ 'btn-warning': page === 'patient'}" href="#/folder/{{id()}}/patient" class="btn btn-default" style="width: 100%">Patient</a>
+			<a ng-class="{ 'btn-warning': page === 'graphics'}" ng-href="#/folder/{{id()}}/graphics" class="btn btn-default" style="width: 100%">Graphics</a>
+			<a ng-class="{ 'btn-warning': page === 'patient'}" ng-href="#/folder/{{id()}}/patient" class="btn btn-default" style="width: 100%">Patient</a>
 			<span ng-repeat="f in folder.getSubFiles()">
 				<a href="#/folder/{{id()}}/{{$index}}" 
 						class="btn btn-default left-menu-button"
@@ -55,7 +57,7 @@
 			<form id="fileForm">
 				<button id="fileFormSubmit" type='submit' style="display: none">For html5 validation through javascript</button>
 				<span ng-controller="ctrl_file">
-					<span ng-include="'/rest/templates/' + name()">
+					<span ng-include="'templates/' + name()">
 						debug: Content {{page}}
 					</span>
 				</span>

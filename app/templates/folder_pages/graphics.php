@@ -1,5 +1,7 @@
 <?php 
-    t::setDefaultOption("baseExpression", "currentFile().");
+	require_once("../../../php/core.php");
+
+	t::setDefaultOption("baseExpression", "currentFile().");
     t::setDefaultOption("readOnly");
 ?>
 <div id='headerContainer' class='headerContainer'></div>
@@ -7,18 +9,18 @@
     <div class='row'>
         <div class="col-lg-6">
             <span ng-controller="ctrl_graphic" ng-init="axis('ageAtConsultTime', 'Weightkg')">
-                <span ng-include="'/rest/templates/graphic_one.html'"></span>
+                <span ng-include="'templates/folder_pages/graphic_one.php'"></span>
             </span>
             <span ng-controller="ctrl_graphic" ng-init="axis('ageAtConsultTime', 'Heightcm')">
-                <span ng-include="'/rest/templates/graphic_one.html'"></span>
+                <span ng-include="'templates/folder_pages/graphic_one.php'"></span>
             </span>
         </div>
         <div class="col-lg-6">
             <span ng-controller="ctrl_graphic" ng-init="axis('Heightcm', 'Weightkg')">
-                <span ng-include="'/rest/templates/graphic_one.html'"></span>
+                <span ng-include="'templates/folder_pages/graphic_one.php'"></span>
             </span>
             <span ng-controller="ctrl_graphic" ng-init="axis('ageAtConsultTime', 'bmi')">
-                <span ng-include="'/rest/templates/graphic_one.html'"></span>
+                <span ng-include="'templates/folder_pages/graphic_one.php'"></span>
             </span>
         </div>
     </div>

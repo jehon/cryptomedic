@@ -52,18 +52,18 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_backend', '$
 			m = 'edit';
 		}
 		if ($scope.pageIsFile) {
-			return "fiches/" + $scope.folder.getSubFile($scope.page)['_type'].toLowerCase() + ".html?mode=" + m;
+			return "fiches/" + $scope.folder.getSubFile($scope.page)['_type'].toLowerCase() + ".php?mode=" + m;
 		}
 		if ($scope.page == "" || $scope.page == "patient") {
-			return "fiches/patient.html?mode=" + m;
+			return "fiches/patient.php?mode=" + m;
 		}
 		if (typeof($scope.page) == "number") {
-			return "blank.html";
+			return "blank.php";
 		}
 		if ($scope.mode == 'add') {
-			return "fiches/" + $scope.page + ".html?mode=" + m;
+			return "fiches/" + $scope.page + ".php?mode=" + m;
 		}
-		return $scope.page + ".html?mode=" + m;
+		return "folder_pages/" + $scope.page + ".php?mode=" + m;
 	};
 
 	function showMe(type, id) {
