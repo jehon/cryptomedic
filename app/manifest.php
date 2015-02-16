@@ -1,8 +1,14 @@
 <?php
-	header("Content-Type: text/cache-manifest");
-	header("Expires: Wed, 11 Jan 1984 05:00:00 GMT");
-	header("Pragma: public");
+	// testing
+	$test_around = 124;
 
+	header("Content-Type: text/cache-manifest");
+	header("Expires: Wed, 11 Jan 1984 00:00:00 GMT");
+	header("Pragma: public");
+	
+// 	header("Etag: $test_around");
+// 	header("Cache-Control: max-age=0");
+	
 	require_once __DIR__ . "/../../rest/php/core.php";
 	
 	Server::setOption(Server::OPTION_NO_SESSION, true);
@@ -14,7 +20,8 @@
 		$f = str_replace("\\", "/", $f);
 		global $fi; 
 		$fi++;
-		if ($fi > 40) {
+		# 46 = prices -> problem?
+		if ($fi > 108) {
 			addLine("## $fi ## $f");
 		} else {
 			addLine("$f");
@@ -36,30 +43,31 @@
 		}
 	}
 	
-	addLine("CACHE MANIFEST");
-	addLine("");
-	addLine("");
+// 	addLine("CACHE MANIFEST");
+// 	addLine("");
+// 	addLine("");
 
 	addLine("# cryptomedic version: " . $server->getVersion("cryptomedic"));
 	addLine("# rest version: " . $server->getVersion());
 	addLine("# database version: " . $server->getDatabase()->getVersion());
 	addLine("# system parameter: " . $server->getRequest()->getSystemParameter("version", "#NA#"));
-
+	addLine("# system parameter: $test_around");
+	
 	addLine("");
 	
 	addLine("CACHE:");
 	addLine("");
 	// Manually added elements
-	addOne("/cryptomedic/app/index.php");
+// Will be automatically added:
+// 	addOne("/cryptomedic/app/index.php");
 	addTs("index.php");
-	addOne("/cryptomedic/index.html");
+// Will be automatically added:
+// 	addOne("/cryptomedic/index.html");
 	addTs("../index.html");
 	
-	echo "#";
 	ob_start();	
 	require("index.php"); 
 	ob_clean();
-	echo "-\n";
 		
 	addLine("");
 	addLine("# Include dependant php scripts");
@@ -104,18 +112,16 @@
 	addLine("# online content (no cache) ");
 	addLine("");
 	addLine("NETWORK:");
-	foreach(Script::$scriptsLive as $f) {
-		addTs($f);
-		addOne($f);
-	}
+// 	foreach(Script::$scriptsLive as $f) {
+// 		addTs($f);
+// 		addOne($f);
+// 	}
 	addLine("*");
 	addLine("");
 
-	echo $manifest;
-	
 	if (is_writable("manifest.appcache")) {
+		addLine("# manifest written on " . time());
 		file_put_contents("manifest.appcache", $manifest);
-		addLine("# manifest.appcache written");
 	} else {
 		addLine("# Could not write manifest");
 	}

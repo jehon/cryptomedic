@@ -3,13 +3,13 @@
 	if (array_key_exists("online", $_REQUEST)) {
 		$mode = "online";
 	} else {
-		if (file_exists("manifest.appcache")) {
+// 		if (file_exists("manifest.appcache")) {
 			$mode = "appcache";
 			echo "manifest='manifest.appcache'";
-		} else {
-			$mode = "application";
-			echo "manifest='manifest.php'";
-		}
+// 		} else {
+// 			$mode = "application";
+// 			echo "manifest='manifest.php'";
+// 		}
 	}
 ?> >
 <?php 
@@ -90,7 +90,7 @@
 		(new Script("static/css/application.css"))->dependFile()->toPrint();
 		
 		(new Script("/rest/authenticate/settings?JSONP=server.setSettings"))->js()->dependDBTable("settings")->live()->toPrint();
-		(new Script("/rest/prices?JSONP=cryptomedic.setPrices"))->js()->dependDBTable("prices")->toPrint(); 
+		(new Script("/rest/prices?JSONP=cryptomedic.setPrices"))->js()->dependDBTable("prices")->live()->toPrint(); 
 	?>
 	</head>
 	<body ng-app="app_main" ng-controller="ctrl" id="ng-app">
