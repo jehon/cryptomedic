@@ -1,8 +1,13 @@
 
 
-#RewriteRule manifest.appcache manifest.php
+# RewriteRule manifest.appcache manifest.php
 
 AddType text/cache-manifest .appcache
+
+<ifmodule mod_expires>
+ 	ExpiresActive On
+  	ExpiresByType text/cache-manifest A0
+</ifmodule>
 
 RewriteRule ^$ index.php
 RewriteRule index.html index.php
