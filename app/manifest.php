@@ -3,7 +3,9 @@
 	header("Expires: Wed, 11 Jan 1984 00:00:00 GMT");
 	header("Pragma: public");
 
-// TODO: check some stuffs to see if these data need to be recalculated or not !!!
+	define("TS_FORMAT", "Y-m-d H:i:s");
+	
+// TODO: check and cache some stuffs to see if these data need to be recalculated or not !!!
 	
 	// By default, consider manifest mtime as a minimum
 	// This will be updated in addTs();
@@ -17,37 +19,31 @@
 		Server::setOption(Server::OPTION_NO_SESSION, true);
 		$server = Server::getInstance();
 		$request = $server->getRequest();
+		
+		function addLine($f) {
+			echo $f . "\n";
+		}
 	
-		$fi = 0;
 		function addOne($f) {
 			$f = str_replace("\\", "/", $f);
-			global $fi; 
-			$fi++;
-			# 46 = prices -> problem?
-			if ($fi > 108) {
-				addLine("## $fi ## $f");
-			} else {
-				addLine("$f");
+			addLine("$f");
+		}
+		
+		function addTs($ts, $header = "") {
+			// Update the global Last-modified time
+			if (!is_numeric($ts)) {
+				return addLine("# $ts: not numeric");
 			}
+			global $lastModif;
+			addLine("# " . date(constant("TS_FORMAT"), $ts) . " " . ($header ? $header : "explicit timestamp"));	
+			$modifTime = max($lastModif, $ts);
 		}
-	
-		$manifest = "";
-		function addLine($f) {
-			global $manifest;
-			echo $f . "\n";
-			$manifest .= "$f\n";
-		}
-	
-		function addTs($f) {
-			if (file_exists($f)) {
-				addLine("# " . filemtime($f). " $f");
-
-				// Update the global Last-modified time
-				global $lastModif;
-				$modifTime = max($lastModif, filemtime($f) );
-			} else {
+		
+		function addFileTs($f) {
+			if (!file_exists($f)) {
 				addLine("# $f: does not exists");
 			}
+			return addTs(filemtime($f), $f);
 		}
 		
 		addLine("CACHE MANIFEST");
@@ -63,13 +59,14 @@
 		
 		addLine("CACHE:");
 		addLine("");
-		// Manually added elements
-// 		addOne("/cryptomedic/app/index.php");
-		addTs("index.php");
-// 		addOne("/cryptomedic/index.html");
-		addTs("../index.html");
+		
+		addLine("# Manually added elements");
+		addOne("/cryptomedic/app/index.php");
+		addFileTs("index.php");
+		addOne("/cryptomedic/index.html");
+		addFileTs("../index.html");
 		// Add the manifest itself
-		addTs(basename(__FILE__));
+		addFileTs(basename(__FILE__));
 		
 		// Use the index for import
 		ob_start();	
@@ -80,18 +77,18 @@
 		addLine("# Include dependant php scripts");
 		addLine("");
 		foreach(MyFile::myglob("../php/*") as $f) {
-			addTs($f);
+			addFileTs($f);
 		}
 		foreach(MyFile::myglob("../routes/*") as $f) {
-			addTs($f);
+			addFileTs($f);
 		}
 		
 		addLine("");
 		addLine("# Scripts auto-import");
 		addLine("");
-		// addOne("/cryptomedic/cache/123/bower_components/jquery-ui/jquery-ui.min.js");
 		foreach(Script::$scriptsList as $s) {
-			addOne($s);
+			addTs($s["ts"]);
+			addOne($s["url"]);
 		}
 		
 		addLine("");
@@ -99,14 +96,17 @@
 		addLine("");
 		foreach(MyFile::myglob("static/*", true) as $f) {
 			if (in_array(basename($f), [ ".htaccess" ])) continue;
-			addTs($f);
+			addFileTs($f);
 			addOne($f);
 		}
 		
 		addLine("");
 		addLine("# Templates");
 		foreach(MyFile::myglob("templates/*.php", true) as $f) {
-			addTs($f);
+			addFileTs($f);
+			if (substr($f, 0, strlen("templates/fiches/partials")) == "templates/fiches/partials") {
+				continue;
+			}	
 			if (substr($f, 0, strlen("templates/fiches")) == "templates/fiches") {
 				addOne($f . "?mode=read");
 				addOne($f . "?mode=edit");		
@@ -120,7 +120,7 @@
 		addLine("");
 		addLine("NETWORK:");
 	// 	foreach(Script::$scriptsLive as $f) {
-	// 		addTs($f);
+	// 		addFileTs($f);
 	// 		addOne($f);
 	// 	}
 		addLine("*");
@@ -136,5 +136,5 @@
 	ob_flush();
 
 	addLine("# manifest last modif (second): " . $lastModif);
-	addLine("# manifest last modif (time): " . gmdate('D, d M Y H:i:s T', $lastModif));
+	addLine("# manifest last modif (time): " . date('D, d M Y H:i:s T', $lastModif));
 	
