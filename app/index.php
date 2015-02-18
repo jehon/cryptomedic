@@ -1,17 +1,3 @@
-<!DOCTYPE html>
-<html <?php 
-	if (array_key_exists("online", $_REQUEST)) {
-		$mode = "online";
-	} else {
-// 		if (file_exists("manifest.appcache")) {
-			$mode = "appcache";
-			echo "manifest='manifest.appcache'";
-// 		} else {
-// 			$mode = "application";
-// 			echo "manifest='manifest.php'";
-// 		}
-	}
-?> >
 <?php 
 	require_once __DIR__ . "/../../rest/php/core.php";
 	Script::$rootPath = __DIR__;
@@ -20,7 +6,19 @@
 	$server = Server::getInstance();
 	$request = new Request($server);
 
-?>
+?><!DOCTYPE html>
+<html <?php 
+	if ($server->getRequest()->isServedLocally()) {
+		if (array_key_exists("online", $_REQUEST)) {
+			$mode = "online";
+		} else {
+			$mode = "appcache";
+			echo "manifest='manifest.appcache'";
+		}
+	} else {
+		$mode = "";
+	}
+?> >
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
