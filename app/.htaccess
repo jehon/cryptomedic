@@ -1,6 +1,5 @@
 
-
-# RewriteRule manifest.appcache manifest.php
+RewriteRule manifest.appcache manifest.php
 
 AddType text/cache-manifest .appcache
 
