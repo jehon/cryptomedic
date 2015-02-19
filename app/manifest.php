@@ -61,10 +61,12 @@
 		addLine("");
 		
 		addLine("# Manually added elements");
-		addOne("/cryptomedic/app/index.php");
 		addFileTs("index.php");
-		addOne("/cryptomedic/index.html");
+		addOne("/cryptomedic/app/");
+		addOne("/cryptomedic/app/index.php");
 		addFileTs("../index.html");
+		addOne("/cryptomedic/");
+		addOne("/cryptomedic/index.html");
 		// Add the manifest itself
 		addFileTs(basename(__FILE__));
 		
