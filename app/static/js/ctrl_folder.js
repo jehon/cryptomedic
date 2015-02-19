@@ -1,5 +1,6 @@
 "use strict";
 
+
 mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_backend', '$routeParams' , function($scope, $location, service_backend, $routeParams) {
 	$scope.folder = new application.models.Folder();
 	$scope.page = "patient";
@@ -63,7 +64,7 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_backend', '$
 		if ($scope.mode == 'add') {
 			return "fiches/" + $scope.page + ".php?mode=" + m;
 		}
-		return "folder_pages/" + $scope.page + ".php?mode=" + m;
+		return "folder_pages/" + $scope.page + ".php"; // + ".php?mode=" + m;
 	};
 
 	function showMe(type, id) {

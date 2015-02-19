@@ -10,7 +10,7 @@ mainApp.controller('ctrl_offline', [ '$scope', 'service_backend', function($scop
     window.applicationCache.addEventListener("progress", function(progress) {
 //	$scope.info_available = true;
 //	$scope.offline = "Downloading next version";
-	if (progress.total) $sope.offline += " " + progress.loaded + " of " + progress.total;
+	if (progress.total) $scope.offline += " " + progress.loaded + " of " + progress.total;
 	$scope.safeApply();
     });
 
