@@ -62,8 +62,9 @@
 		
 		addLine("# Manually added elements");
 		addFileTs("index.php");
-		addOne("/cryptomedic/app/");
-		addOne("/cryptomedic/app/index.php");
+//disable these to allow mode online and offline automatically
+// 		addOne("/cryptomedic/app/");
+// 		addOne("/cryptomedic/app/index.php");
 		addFileTs("../index.html");
 		addOne("/cryptomedic/");
 		addOne("/cryptomedic/index.html");
@@ -78,10 +79,10 @@
 		addLine("");
 		addLine("# Include dependant php scripts");
 		addLine("");
-		foreach(MyFile::myglob("../php/*") as $f) {
+		foreach(MyFiles::glob("../php/*") as $f) {
 			addFileTs($f);
 		}
-		foreach(MyFile::myglob("../routes/*") as $f) {
+		foreach(MyFiles::glob("../routes/*") as $f) {
 			addFileTs($f);
 		}
 		
@@ -96,7 +97,7 @@
 		addLine("");
 		addLine("# static");
 		addLine("");
-		foreach(MyFile::myglob("static/*", true) as $f) {
+		foreach(MyFiles::glob("static/*", true) as $f) {
 			if (in_array(basename($f), [ ".htaccess" ])) continue;
 			addFileTs($f);
 			addOne($f);
@@ -104,7 +105,7 @@
 		
 		addLine("");
 		addLine("# Templates");
-		foreach(MyFile::myglob("templates/*.php", true) as $f) {
+		foreach(MyFiles::glob("templates/*.php", true) as $f) {
 			addFileTs($f);
 			if (substr($f, 0, strlen("templates/fiches/partials")) == "templates/fiches/partials") {
 				continue;
@@ -121,11 +122,8 @@
 		addLine("# online content (no cache) ");
 		addLine("");
 		addLine("NETWORK:");
-	// 	foreach(Script::$scriptsLive as $f) {
-	// 		addFileTs($f);
-	// 		addOne($f);
-	// 	}
 		addLine("*");
+
 		addLine("");
 	}	
 

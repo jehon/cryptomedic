@@ -154,6 +154,9 @@ class RouteFiche extends RouteDBTable {
 	}
 }
 
+class StorageDeleteError extends HttpInternalError {};
+class StorageCreateError extends HttpInternalError {};
+
 if (!$request->routeIsEnded()) {
 	$type = $request->routeConsumeNext();
 	$type = References::model2db($type);
@@ -161,3 +164,5 @@ if (!$request->routeIsEnded()) {
 	$tdb = new RouteFiche($request, $response, $server, $type);
 	$tdb->routeAndRespond();
 }
+
+

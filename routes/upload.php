@@ -3,6 +3,9 @@
 
 if (!defined("REST_LOADED")) die("Ca va pas la tête?");
 
+class StorageCreateError extends HttpInternalError {};
+class StorageNotAllowed extends HttpNotFound {};
+
 $type = $request->routeConsumeNext();
 $id = $request->routeConsumeNext();
 

@@ -18,7 +18,7 @@
 <?php
 	$it = 0;
 	$if = 0;
-	foreach(MyFile::myglob($server->getConfig("pictures.storage") . "/*", false) as $filename) {
+	foreach(MyFiles::glob($server->getConfig("pictures.storage") . "/*", false) as $filename) {
 		$if++;
 		echo "<tr><td>";
 		echo $if;

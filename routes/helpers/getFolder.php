@@ -1,16 +1,14 @@
 <?php
+
 function getFolder($id) {
 	global $server;
 	$patients = $server->getDatabase()->getTable("patients");
-	//new DBTable($server->getConfig("database"), "patients", $server);
 
 	$res = array();
 	$p = $patients->rowGet($id);
 	if ($p === false || count($p) == 0) {
-		throw New DBNotFound("No data matching $id");
+		throw New HttpInvalidData("No data matching $id");
 	}
-	// if (count($p) < 1) $response->notFound("id = " . $id);
-	// $p = $p[0];
 	$p['_type'] = 'Patient';
 
 	$res['_type'] = 'Folder';
@@ -18,7 +16,6 @@ function getFolder($id) {
 	$res['mainFile'] = $p;
 	$res['subFiles'] = array();
 
-	//$rawTable = new DBTable($server->getConfig("database"), null, $server);
 	foreach(References::$model2db as $m => $c) {
 		// we work by controller = the same as in database?
 		if ($c == "patients") continue;
