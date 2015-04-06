@@ -1,7 +1,7 @@
 <?php
 
 // TODOJH: not implemented
-throw new InvalidFunctionCall("This report is not implemented");
+throw new Exception("This report is not implemented");
 
 $now = new DateTime();
 {

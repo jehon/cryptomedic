@@ -1,10 +1,13 @@
 <?php 
 	require_once __DIR__ . "/../../rest/php/core.php";
+// 	use Rest\Script;
+	use Rest\AllScripts;
+	use Rest\MyFiles;
+	
 	Script::$rootPath = __DIR__;
 	
 	Server::setOption(Server::OPTION_NO_SESSION);
 	$server = Server::getInstance();
-	$request = new Request($server);
 
 ?><!DOCTYPE html>
 <html <?php 
@@ -45,7 +48,7 @@
 		
 			<?php 
 				// TODOJH: remove this when local cache is ok!
-				if ($request->isServedLocally()) {
+				if ($server->getRequest()->isServedLocally()) {
 					?>
 						if (indexedDB) {
 							console.warn("Enabling offline cache in local dev");

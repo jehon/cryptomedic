@@ -2,23 +2,23 @@
 
 require(__DIR__ . "/helpers/getFolder.php");
 
-class RouteFiche extends RouteDBTable {
+class RouteFiche extends \Rest\RouteDBTable {
 	const DATA_PREFIX = "data:image/";
 	
 	public function collectionIndex() {
-		$this->notAllowed();
+		$this->die_systemError("Not implemented");
 	}
 
 	public function collectionDelete() {
-		$this->notAllowed();
+		$this->die_systemError("Not implemented");
 	}
 
 	public function collectionModify() {
-		$this->notAllowed();
+		$this->die_systemError("Not implemented");
 	}
 
 	public function collectionCustom($method) {
-		$this->notAllowed();
+		$this->die_systemError("Not implemented");
 	}
 
 	public function elementCreate(array $data) {
@@ -51,7 +51,7 @@ class RouteFiche extends RouteDBTable {
 	}
 	
 	public function elementRead($id) {
-		$this->notAllowed();
+		$this->die_systemError("Not implemented");
 	}
 	
 	public function elementUpdate($id, array $data) {
@@ -104,7 +104,7 @@ class RouteFiche extends RouteDBTable {
 		if ($method == "UNLINK") {
 			// Unlock the file
 			$this->server->getDatabase()->exec("UPDATE `{$this->table}` SET modified = NOW(), lastuser = :lastuser WHERE id = :id", 
-				array("lastuser" => $this->server->getSession(Server::LOGIN_USERNAME), "id" => $id));
+				array("lastuser" => $this->server->getSession(\Rest\Server::LOGIN_USERNAME), "id" => $id));
 
 			// Get the folder id:
 			$nrec = $this->dbTable->rowGet($id);
@@ -154,8 +154,8 @@ class RouteFiche extends RouteDBTable {
 	}
 }
 
-class StorageDeleteError extends HttpInternalError {};
-class StorageCreateError extends HttpInternalError {};
+class StorageDeleteError extends Exception {};
+class StorageCreateError extends Exception {};
 
 if (!$request->routeIsEnded()) {
 	$type = $request->routeConsumeNext();
@@ -164,5 +164,3 @@ if (!$request->routeIsEnded()) {
 	$tdb = new RouteFiche($request, $response, $server, $type);
 	$tdb->routeAndRespond();
 }
-
-

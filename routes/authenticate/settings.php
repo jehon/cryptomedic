@@ -1,5 +1,7 @@
 <?php
 
+use \Rest\Server;
+
 $data = array();
 $data['username'] = $server->getSession(Server::LOGIN_USERNAME);
 $data['group'] = $server->getSession(Server::LOGIN_GROUP);
@@ -11,11 +13,11 @@ $data['group'] = $server->getSession(Server::LOGIN_GROUP);
 $data["denied"] = array();
 
 // TODO: refine denied list -> better an authorize list?
-if (isAuthorized("folder", "PUT"))
+if (\Rest\isAuthorized("folder", "PUT"))
 	$data ['authorized'] [] = "folder.edit";
-if (isAuthorized("folder", "DELETE"))
+if (\Rest\isAuthorized("folder", "DELETE"))
 	$data ['authorized'] [] = "folder.delete";
-if (isAuthorized("folder", "UNLOCK"))
+if (\Rest\isAuthorized("folder", "UNLOCK"))
 	$data ['authorized'] [] = "folder.unlock";
 
 $response->ok($data);
