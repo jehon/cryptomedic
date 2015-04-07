@@ -104,7 +104,7 @@ class t {
                 case PDO::PARAM_BOOL:
                 case PDO::PARAM_STR: 
                 case PDO::PARAM_INT:
-                    switch($this->structure['native_type']) {
+                	switch($this->structure['native_type']) {
                         case "TIMESTAMP":
                             $this->type = self::TYPE_TIMESTAMP;
                             break;
