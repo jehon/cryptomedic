@@ -10,7 +10,7 @@ function getSqlConsult($label, $table) {
 			. "WHERE (c.NextAppointment = " . $server->getDatabase()->escape($request->getParameter("day", false)) . ") ";
 }
 
-if ($request->routeIsEnded() && ($request->getMethod() == Rest\Request::READ)) {
+if ($request->routeIsEnded() && ($request->getMethod() == Request::READ)) {
 	// Search through them
 	$sql = "SELECT cc.*, patients.*
 		FROM "

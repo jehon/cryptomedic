@@ -50,7 +50,7 @@
 					<?php (new t("ClubFoot.JumpingOneLeg"))->trLeftRight()->p(); ?>
 					<?php (new t("ClubFoot.Run"))->trLeftRight()->p(); ?>
 					<?php (new t("ClubFoot.AdductionAngle", array("inline" => "min=-90 max=90")))->trLeftRight()->p(); ?>
-					<?php (new t("ClubFoot.HindFootAngleW", array("inline" => "min=0 max=90")))->trLeftRight()->p(); ?>
+					<?php (new t("ClubFoot.HindFootAngleW", array("inline" => "min=-90 max=90")))->trLeftRight()->p(); ?>
 					<?php (new t("ClubFoot.DorsalFlexionMax", array("inline" => "min=-90 max=90")))->trLeftRight()->p(); ?>
 					<?php (new t("ClubFoot.PlantarFlexionMax", array("inline" => "min=0 max=90")))->trLeftRight()->p(); ?>
 					<?php (new t("ClubFoot.MuscularInbalance"))->trLeftRight()->p(); ?>

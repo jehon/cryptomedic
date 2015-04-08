@@ -62,6 +62,5 @@ if (!$request->routeIsEnded()) {
 	foreach($listing as $k => $v) {
 		$listing[$k]['_type'] = 'Patient';
 	}
-	
 	$response->ok($listing);
 }

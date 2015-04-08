@@ -1,9 +1,4 @@
 <?php
-	use Rest\MyFiles;
-	use Rest\Server;
-	use Rest\Script;
-	use Rest\AllScripts;
-
 	
 	header("Content-Type: text/cache-manifest");
 	header("Expires: Wed, 11 Jan 1984 00:00:00 GMT");

@@ -20,8 +20,6 @@ $config['database'] = array(
     'init' => "SET CHARACTER SET 'utf8'",
 );
 
-// $config['database'] = "";
-
 $config['proxy'] = false;
 
 // Upload

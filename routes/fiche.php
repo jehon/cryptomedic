@@ -2,23 +2,23 @@
 
 require(__DIR__ . "/helpers/getFolder.php");
 
-class RouteFiche extends \Rest\RouteDBTable {
+class RouteFiche extends RouteDBTable {
 	const DATA_PREFIX = "data:image/";
 	
 	public function collectionIndex() {
-		$this->die_systemError("Not implemented");
+		throw new Exception("Not allowed");
 	}
 
 	public function collectionDelete() {
-		$this->die_systemError("Not implemented");
+		throw new Exception("Not allowed");
 	}
 
 	public function collectionModify() {
-		$this->die_systemError("Not implemented");
+		throw new Exception("Not allowed");
 	}
 
 	public function collectionCustom($method) {
-		$this->die_systemError("Not implemented");
+		throw new Exception("Not allowed");
 	}
 
 	public function elementCreate(array $data) {
@@ -51,7 +51,7 @@ class RouteFiche extends \Rest\RouteDBTable {
 	}
 	
 	public function elementRead($id) {
-		$this->die_systemError("Not implemented");
+		throw new Exception("Not allowed");
 	}
 	
 	public function elementUpdate($id, array $data) {
@@ -104,7 +104,7 @@ class RouteFiche extends \Rest\RouteDBTable {
 		if ($method == "UNLINK") {
 			// Unlock the file
 			$this->server->getDatabase()->exec("UPDATE `{$this->table}` SET modified = NOW(), lastuser = :lastuser WHERE id = :id", 
-				array("lastuser" => $this->server->getSession(\Rest\Server::LOGIN_USERNAME), "id" => $id));
+				array("lastuser" => $this->server->getSession(Server::LOGIN_USERNAME), "id" => $id));
 
 			// Get the folder id:
 			$nrec = $this->dbTable->rowGet($id);
