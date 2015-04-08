@@ -32,10 +32,10 @@ UPDATE `prices`
 		other_physiotherapy_child = 100, 
 		other_physiotherapy_adult = 200,
 		other_physiotherapy = -1,
-		other_group_physiotherapy = -1
+		other_group_physiotherapy = -1,
+		medecine_medecine = -1
 	WHERE dateto is NULL;
 
-	
 -- reorder
 ALTER TABLE `prices` CHANGE `other_making_plaster` `other_making_plaster` INT(11) NULL DEFAULT '-1' AFTER `surgical_burn_little_release`, CHANGE `other_make_long_plaster` `other_make_long_plaster` INT(11) NULL DEFAULT '-1' AFTER `surgical_burn_little_release`, CHANGE `other_make_short_plaster` `other_make_short_plaster` INT(11) NULL DEFAULT '-1' AFTER `surgical_burn_little_release`, CHANGE `other_making_dressing` `other_making_dressing` INT(11) NULL DEFAULT '-1' AFTER `surgical_burn_little_release`, CHANGE `other_X_Ray` `other_X_Ray` INT(11) NULL DEFAULT '-1' AFTER `surgical_burn_little_release`, CHANGE `other_physiotherapy` `other_physiotherapy` INT(11) NULL DEFAULT '-1' AFTER `surgical_burn_little_release`, CHANGE `other_Other_consultation_care` `other_Other_consultation_care` INT(11) NULL DEFAULT '-1' AFTER `surgical_burn_little_release`, CHANGE `other_microbus` `other_microbus` INT(11) NULL DEFAULT '-1' AFTER `surgical_burn_little_release`, CHANGE `other_CMOSH_follow_up` `other_CMOSH_follow_up` INT(11) NULL DEFAULT '-1' AFTER `surgical_burn_little_release`, CHANGE `other_nutritionalAdvice` `other_nutritionalAdvice` INT(11) NULL DEFAULT '-1' AFTER `surgical_burn_little_release`, CHANGE `other_nutritionalSupport` `other_nutritionalSupport` INT(11) NULL DEFAULT '-1' AFTER `surgical_burn_little_release`, CHANGE `other_group_physiotherapy` `other_group_physiotherapy` INT(11) NULL DEFAULT '-1' AFTER `surgical_burn_little_release`, CHANGE `other_physiotherapy_child` `other_physiotherapy_child` INT(11) NOT NULL DEFAULT '-1' AFTER `surgical_burn_little_release`, CHANGE `other_physiotherapy_adult` `other_physiotherapy_adult` INT(11) NOT NULL DEFAULT '-1' AFTER `surgical_burn_little_release`;
 
