@@ -10,4 +10,12 @@ mainApp.controller('ctrl_file_bill', [ '$scope', 'service_backend', function($sc
 			$scope.safeApply();
 		}
 	});
+	
+	$scope.$watch("currentFile().sl_numberOfHouseholdMembers", function() {
+	    $scope.currentFile().calculateSocialLevel();
+	});
+	
+	$scope.$watch("currentFile().sl_familySalary", function() {
+	    $scope.currentFile().calculateSocialLevel();
+	});
 }]);

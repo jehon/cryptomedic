@@ -40,11 +40,25 @@ application.models.Bill = application.models.File.extend({
 		 */
 
 		if (typeof(this.ratioSalary()) == "string") throw new DataMissingException("sl_numberOfHouseholdMembers");
-		if (this.ratioSalary() <= 300) 	return 0;
-		if (this.ratioSalary() <= 500)	return 1;
-		if (this.ratioSalary() <= 1500)	return 2;
-		if (this.ratioSalary() <= 3000)	return 3;
-		return 4;
+		if (this.ratioSalary() <= 300) 	{
+		    this.Sociallevel = 0;
+		} else {
+		    if (this.ratioSalary() <= 500) { 
+			this.Sociallevel = 1;
+		    } else {
+			if (this.ratioSalary() <= 1500)	{
+			    this.Sociallevel = 2;
+			} else {
+			    if (this.ratioSalary() <= 3000) {
+				    this.Sociallevel = 3;
+			    } else {
+				    this.Sociallevel = 4;
+			    }
+			}
+		    }
+		}
+		console.log(this.Sociallevel);
+		return this.Sociallevel;
 	},
 	'calculate_total_real': function() {
 		if (!this.price_id) {

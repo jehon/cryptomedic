@@ -101,7 +101,7 @@
 						<td>Raw Calculated total</td>
 						<td>{{currentFile().calculate_total_real()}}<?php new t("Bill.total_real"); ?></td>
 					</tr>
-					<?php (new t("Bill.Sociallevel"))->tr("Social Level")->p(); ?>
+					<?php (new t("Bill.Sociallevel"))->readOnly()->tr("Social Level")->p(); ?>
 		            <tr>
 						<td>Percentage of price to be asked</td>
 						<td>{{currentFile().calculate_percentage_asked() | mypercentage:1 }}</td>
