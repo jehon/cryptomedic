@@ -12,16 +12,20 @@ if( is_file( $cache_file ) ) {
 
 // inspiré de http://stackoverflow.com/a/3787258
 // cache via output buffering, with callback
-ob_start( 'cache_output' );
 
-function cache_output( $content ) {
+function template_cache_output( $content ) {
 	global $cache_file;
-	if (is_writable($cache_file)) {
-		file_put_contents( $cache_file, $content );
-	}
-	echo $content;
-	return $content;
+	$res = $content;
+// 	if (is_writable($cache_file)) {
+	file_put_contents( $cache_file, $content ) or $res = "not written " . $res;
+// 	} else {
+// 		$res = " not write - " . $content;
+// 		error_log("Could not write to $cache_file");
+// 	}
+	return "final -- " . $res;
 }
+
+ob_start( 'template_cache_output' );
 
 class t {
     const TYPE_LIST         = 0;
