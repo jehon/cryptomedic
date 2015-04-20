@@ -1,5 +1,26 @@
 <?php
 
+global $cache_file;
+$cache_file = __DIR__ . "/../cache/" . str_replace(array("?", "&", ".", "/", "\\", "%", " ", ":"),  "_", $_SERVER['REQUEST_URI']);
+
+// if we have a cache file, deliver it
+if( is_file( $cache_file ) ) {
+	echo "<!-- from cache $cache_file -->";
+	readfile( $cache_file );
+	exit;
+}
+
+// inspiré de http://stackoverflow.com/a/3787258
+// cache via output buffering, with callback
+ob_start( 'cache_output' );
+
+function cache_output( $content ) {
+	global $cache_file;
+	file_put_contents( $cache_file, $content );
+	echo $content;
+	return $content;
+}
+
 class t {
     const TYPE_LIST         = 0;
     const TYPE_TIMESTAMP    = 1;
