@@ -95,17 +95,17 @@ application.models.Bill = application.models.File.extend({
 	},
 	'calculate_percentage_asked': function() {
 		if (!this.price_id) {
-			console.warn("calculate_percentage_asked(): no price id");
+			//console.warn("calculate_percentage_asked(): no price id");
 			return 1;
 		}
 		var sl = this['Sociallevel'];
 		if (sl == null) {
-			console.warn("calculate_percentage_asked(): no social level");
+			//console.warn("calculate_percentage_asked(): no social level");
 			return 1;
 		}
 		var price = cryptomedic.prices[this.price_id];
 		if (typeof(price["socialLevelPercentage_" + sl]) == "undefined") {
-			console.warn("calculate_percentage_asked(): no social level in price for sl " + sl);
+			//console.warn("calculate_percentage_asked(): no social level in price for sl " + sl);
 			return 1;
 		}
 		var perc = price["socialLevelPercentage_" + sl];

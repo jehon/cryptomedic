@@ -16,7 +16,9 @@ ob_start( 'cache_output' );
 
 function cache_output( $content ) {
 	global $cache_file;
-	file_put_contents( $cache_file, $content );
+	if (is_writable($cache_file)) {
+		file_put_contents( $cache_file, $content );
+	}
 	echo $content;
 	return $content;
 }
