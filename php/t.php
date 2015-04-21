@@ -4,8 +4,9 @@ global $cache_file;
 $cache_file = __DIR__ . "/../cache/" . str_replace(array("?", "&", ".", "/", "\\", "%", " ", ":"),  "_", $_SERVER['REQUEST_URI']);
 
 // if we have a cache file, deliver it
-if( is_file( $cache_file ) ) {
-	echo "<!-- from cache $cache_file -->";
+global $server;
+if( is_file( $cache_file ) && !$server->getRequest()->isServedLocally()) {
+	echo "<!-- from cache -->";
 	readfile( $cache_file );
 	exit;
 }
@@ -15,14 +16,8 @@ if( is_file( $cache_file ) ) {
 
 function template_cache_output( $content ) {
 	global $cache_file;
-	$res = $content;
-// 	if (is_writable($cache_file)) {
-	file_put_contents( $cache_file, $content ) or $res = "not written " . $res;
-// 	} else {
-// 		$res = " not write - " . $content;
-// 		error_log("Could not write to $cache_file");
-// 	}
-	return "final -- " . $res;
+	file_put_contents( $cache_file, $content );
+	return $content;
 }
 
 ob_start( 'template_cache_output' );
