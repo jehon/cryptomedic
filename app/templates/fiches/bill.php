@@ -85,13 +85,9 @@
 					<?php (new t("Bill.sl_numberOfHouseholdMembers"))->tr("Number of Houslehold Members")->p(); ?>
 					<tr>
 						<td>Salary ratio</td>
-						<td><span catch-it ng-model="folder" tryit="currentFile().ratioSalary()">{{ result | number:0 }}</span></td>
-					</tr><tr>
-						<td>Calculated Social Level</td>
-						<td><span catch-it ng-model="folder" tryit="currentFile().calculateSocialLevel()">
-							level {{ result | number:0 }}
-							</span></td>
+						<td><span catch-it ng-model="folder" tryit="currentFile().ratioSalary()">{{ currentFile().ratioSalary() | number:0 }}</span></td>
 					</tr>
+					<?php (new t("Bill.Sociallevel"))->readOnly()->tr("Calculated Social Level")->p(); ?>
 				</table>
 			</fieldset>
 			<fieldSet>
