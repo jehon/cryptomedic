@@ -26,30 +26,31 @@ application.models.Bill = application.models.File.extend({
 		}
 	},
 	'ratioSalary': function() {
-		if (!this.isNotZero('sl_numberOfHouseholdMembers')) throw new DataMissingException("sl_numberOfHouseholdMembers");
-		return Math.ceil(this.sl_familySalary / this.sl_numberOfHouseholdMembers);
-	},
-	'calculateSocialLevel': function() {
-		/**
-			From TC:
-		 	Level 0 is when the familial ration is < 300
-			Level 1 is when the familial ration is 300<  FR < 500
-			Level 2 is when the familial ration is 500< FR < 1500
-			Level 3 is when the familial ration is 1500< FR < 3000
-			Level 4 is when the familial ration is 3000< FR  
-		 */
+	/**
+		From TC:
+	 	Level 0 is when the familial ration is < 300
+		Level 1 is when the familial ration is 300<  FR < 500
+		Level 2 is when the familial ration is 500< FR < 1500
+		Level 3 is when the familial ration is 1500< FR < 3000
+		Level 4 is when the familial ration is 3000< FR  
+	 */
+		this.Sociallevel = 4;
+		if (!this.isNotZero('sl_numberOfHouseholdMembers')) {
+		    throw new DataMissingException("sl_numberOfHouseholdMembers");
+		}
 
-		if (typeof(this.ratioSalary()) == "string") throw new DataMissingException("sl_numberOfHouseholdMembers");
-		if (this.ratioSalary() <= 300) 	{
+		var rs = Math.ceil(this.sl_familySalary / this.sl_numberOfHouseholdMembers);
+		
+		if (rs <= 300) 	{
 		    this.Sociallevel = 0;
 		} else {
-		    if (this.ratioSalary() <= 500) { 
+		    if (rs <= 500) { 
 			this.Sociallevel = 1;
 		    } else {
-			if (this.ratioSalary() <= 1500)	{
+			if (rs <= 1500)	{
 			    this.Sociallevel = 2;
 			} else {
-			    if (this.ratioSalary() <= 3000) {
+			    if (rs <= 3000) {
 				    this.Sociallevel = 3;
 			    } else {
 				    this.Sociallevel = 4;
@@ -57,9 +58,39 @@ application.models.Bill = application.models.File.extend({
 			}
 		    }
 		}
-		console.log(this.Sociallevel);
-		return this.Sociallevel;
+		
+		return rs;
 	},
+//	'calculateSocialLevel': function() {
+//		/**
+//			From TC:
+//		 	Level 0 is when the familial ration is < 300
+//			Level 1 is when the familial ration is 300<  FR < 500
+//			Level 2 is when the familial ration is 500< FR < 1500
+//			Level 3 is when the familial ration is 1500< FR < 3000
+//			Level 4 is when the familial ration is 3000< FR  
+//		 */
+//
+//		if (typeof(this.ratioSalary()) == "string") throw new DataMissingException("sl_numberOfHouseholdMembers");
+//		if (this.ratioSalary() <= 300) 	{
+//		    this.Sociallevel = 0;
+//		} else {
+//		    if (this.ratioSalary() <= 500) { 
+//			this.Sociallevel = 1;
+//		    } else {
+//			if (this.ratioSalary() <= 1500)	{
+//			    this.Sociallevel = 2;
+//			} else {
+//			    if (this.ratioSalary() <= 3000) {
+//				    this.Sociallevel = 3;
+//			    } else {
+//				    this.Sociallevel = 4;
+//			    }
+//			}
+//		    }
+//		}
+//		return this.Sociallevel;
+//	},
 	'calculate_total_real': function() {
 		if (!this.price_id) {
 			this.total_real = 0;
@@ -128,11 +159,6 @@ application.models.Bill = application.models.File.extend({
 		this.price_id = -1;
 		var t = this;
 		var dref = this.Date;
-		// if (typeof(this.Date) == "string") {
-		// 	// this.Date = new Date(this.Date);
-		// 	dref = new Date(this.Date);
-		// }
-		// console.info(dref);
 		angular.forEach(cryptomedic.prices, function(p, i) {
 			// console.log(p);
 			if (((p['datefrom'] == null) || (p['datefrom'] <= dref))
@@ -160,7 +186,6 @@ application.models.Bill = application.models.File.extend({
 		}
 	},
 	'calculateIt': function() {
-		console.log("calculating");
 		var pi = jQuery('[name="data[price_id]"]').val();
 		var total = 0;
 		_(jQuery('input:enabled[type=number]')).each(function(v, i) {
