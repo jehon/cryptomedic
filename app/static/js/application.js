@@ -69,7 +69,6 @@ function inherit(parent, constructor) {
 function ApplicationException(msg) {
     this.message = msg;
 }
-// ApplicationException.prototype = new Error();
 
 inherit(Error, ApplicationException);
 ApplicationException.prototype.getMessage = function() { return this.message; };
@@ -187,66 +186,61 @@ var mainApp = angular.module('app_main', [ 'ngRoute' ])
 	};
 })
 .directive('catchIt', [ "$compile", function($compile) {
-	return {
-		restrict: 'A',
-		require: '^ngModel',
-		transclude: true,
-		scope: {
-			'tryit': '&', // executed in parent scope
-			'ngModel': '=',
-		},
-		// http://tutorials.jenkov.com/angularjs/custom-directives.html#compile-and-link
-		compile: function(cElement, cAttrs, cTransclude) {
-		    // TODO: what hapen if data is updated ? -> see the write mode
-		    return function($scope, $element, $attrs, ctrl, $transclude) {
-				var transcludeScope = $scope.$parent.$new();
+    // http://tutorials.jenkov.com/angularjs/custom-directives.html#compile-and-link
+    // http://stackoverflow.com/a/15298620
+    return {
+	restrict: 'A',
+//	require: '^ngModel',
+	transclude: true,
+	scope: {
+//		'ngModel': '=',
+	    'tryit': '&', // executed in parent scope
+	},
+	template: "<span ng-if='error' class='catchedError'>{{errorMsg}}</span><span ng-if='!error' ng-transclude></span>",
+	link:
+	    function($scope, $element, $attrs, ctrl, $transclude) {
+//		$scope.$watch($scope.ngModel, function() {
+//		    console.log("changed");
+//		    testIt();
+//		}, true);
 
-				function testIt() {
-	        		//linking function here (not in the main attribute, thus)
-					try {
-						transcludeScope.result = $scope.tryit();
-						// Angular.js#5350
-						// TODO: clone scope and add result
-						// parent.$new()
-						// $destroy() when???
-					    $transclude(transcludeScope, function(clone) {
-							$element.empty();
-					    	$element.append(clone);
-					    });
-						// var tr = cTransclude($scope);
-						// $element.html(tr);
-					} catch (e) {
-						if (e instanceof ApplicationException) {
-							$element.html("<span class='catchedError'>[" + e.getMessage() + "]</span>");
-						} else {
-							console.warn("not a correct error");
-							console.warn(e);
-							throw e;
-						}
-					}
-				}
-				$scope.$watch("ngModel", testIt);
-
-				// Destroy of the element
-				$element.on('$destroy', function() {
-					transcludeScope.$destroy();
-      			});
-      		};
-      	},
-	};
+		$scope.$watch(function() {
+        	    try  {
+        		return $scope.tryit();
+        	    } catch (e) {
+        		return null;
+        	    }
+		}, testIt);
+			
+		function testIt() {
+		    try {
+			$scope.error = false;
+			$scope.result = "";
+			$scope.errorMSg = "";
+			$scope.result = $scope.tryit();
+		    } catch (e) {
+			$scope.error = true;
+			if (e instanceof ApplicationException) {
+			    $scope.errorMsg = e.getMessage();
+			} else {
+			    $scope.errorMsg = "Uncatchable error";
+			    console.error(e);
+			    throw e;
+			}
+		    }
+		}
+		testIt();
+			
+		// Destroy of the element
+		$element.on('$destroy', function() {
+		    $scope.$destroy();
+		});
+	} // end of link function
+    };
 }])
 .directive('mycalendar', function() {
 	return function (scope, elem, attrs) {
-		// if (!Modernizr.inputtypes.date) {
-			jQuery(elem).datepicker({ dateFormat: 'yy-mm-dd' });
-			 // elem.bind('blur', function() {
-				// console.log('blur');
-			 	//scope.$apply(attrs.ngBlur);
-			 // });
-			 // elem.bind('focus', function() {
-			 	//scope.$apply(attrs.ngBlur);
-			 // });
-		// }
+	    jQuery(elem).datepicker({ dateFormat: 'yy-mm-dd' });
 	}
 })
 .directive('preview', [ "$compile", function($compile) {
