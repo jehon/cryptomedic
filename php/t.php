@@ -1,10 +1,23 @@
 <?php
+/**
+ * 
+ * $server->getRequest()->isServedLocally()
+ * Server::getInstance()->getRequest()->getSystemParameter("meta", false)
+ * Server::getInstance()->getRequest()->getParameter("mode", "edit")
+ * 
+ * $server->getDatabase()->query()
+ * $server->getDatabase()->getTable(References::model2db($this->model))
+ * $dbtable->isColumn($this->field)
+ * $dbtable->getColumnInfos($this->field)
+ * 
+ */
 
 global $cache_file;
 $cache_file = __DIR__ . "/../cache/" . str_replace(array("?", "&", ".", "/", "\\", "%", " ", ":"),  "_", $_SERVER['REQUEST_URI']);
 
-// if we have a cache file, deliver it
+/** DEPENDENCY */
 global $server;
+// if we have a cache file, deliver it
 if( is_file( $cache_file ) && !$server->getRequest()->isServedLocally()) {
 	echo "<!-- from cache -->";
 	readfile( $cache_file );
@@ -97,9 +110,11 @@ class t {
 
         $this->linked2DB = true;
 
+/** DEPENDENCY */
         global $server;
         $dbtable = $server->getDatabase()->getTable(References::model2db($this->model));
 
+/** DEPENDENCY */
         if (!$dbtable->isColumn($this->field)) {
             $this->linked2DB = false;
             return ;
@@ -107,6 +122,7 @@ class t {
 
         $this->used(References::model2db($this->model), $this->field);
         
+/** DEPENDENCY */
         $this->structure = $dbtable->getColumnInfos($this->field);
 
         $this->isList = false;
@@ -175,7 +191,8 @@ class t {
     }
     
 	function displayCode($mode) {
-		if (Server::getInstance()->getRequest()->getSystemParameter("meta", false)) {
+/** DEPENDENCY */
+			if (Server::getInstance()->getRequest()->getSystemParameter("meta", false)) {
 			$this->res .= "=" . $mode . $this->key;
 			$this->res .= ($this->linked2DB ? "" : "##");
 			$this->res .= "-" . $this->model . "." . $this->field; 
@@ -315,13 +332,15 @@ class t {
     function value() {
         if ($this->options['readOnly']) return $this->read();
         if ($this->options['writeOnly']) return $this->write();
-
+        
+/** DEPENDENCY */
 		if (Server::getInstance()->getRequest()->getParameter("mode", "read") == "read") {
 			$this->res .= "<span class='notModeWrite'>";
 			$this->read();
 			$this->res .= "</span>";
 		}
 
+/** DEPENDENCY */
 		if (Server::getInstance()->getRequest()->getParameter("mode", "edit") == "edit") {
 			$this->res .= "<span class='notModeRead'>";
 	        $this->write();
@@ -377,6 +396,8 @@ class t {
     
     static public function used($table, $field) {
     	if (!array_key_exists($table, self::$cacheUnused)) {
+    		
+/** DEPENDENCY */
     		global $server;
 			self::$cacheUnused[$table] = $server->getDatabase()->getTableColumnsInfos($table);
 			self::used($table, 'id');
@@ -395,6 +416,8 @@ class t {
     	if (array_key_exists($table, self::$cacheUnused)) {
 	    	foreach(self::$cacheUnused[$table] as $field => $meta) {
 	    		echo "$field\n";
+	    		
+/** DEPENDENCY */
 	    		global $server;
 	    		$res = $server->getDatabase()->query("SELECT count(*) as n, $field as val FROM $table GROUP BY $field ORDER BY count(*) DESC LIMIT 5");
 				echo "<table>";
@@ -403,7 +426,7 @@ class t {
 				}
 				echo "</table>";
 	
-				
+/** DEPENDENCY */
 				$fk = $server->getDatabase()->query("SELECT `CONSTRAINT_NAME` as k FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE "
 						. "WHERE `CONSTRAINT_SCHEMA` = :schema AND `TABLE_NAME` = :table AND `COLUMN_NAME` = :column", 
 						array("schema" => $server->getDatabase()->getDatabaseName(), "table" => $table, "column" => $field));
