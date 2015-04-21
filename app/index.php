@@ -33,14 +33,18 @@
 				window.location.href = "static/upgrade.html";
 			</script>
 		<![endif]-->
-		<script>
+		<script type="text/javascript">
+			if (!Promise) {
+			    window.location.href = "static/upgrade.html";
+			}
+
+			if (!indexedDB) {
+			    window.location.href = "static/upgrade.html";
+			}
+			
 			var cryptomedic = {};
 			cryptomedic.version = '<?php echo $server->getVersion("cryptomedic"); ?>';
 			cryptomedic.settings = {};
-			if (indexedDB) {
-				console.info("[application mode] Enabling offline cache - TODOJH !!!! NOT DONE WHILE DEVELOPPING !!!!");
-		// 		cryptomedic.settings.offlineCache = true;
-			}
 		
 			<?php 
 				// TODOJH: remove this when local cache is ok!
@@ -73,6 +77,7 @@
 	
 		// Other
 		(new Script("bower_components/excellentexport/excellentexport.min.js"))->dependFile()->toPrint();
+		//(new Script("bower_components/es6-promise/promise.min.js"))->dependFile()->toPrint();
 		
 		// personnal
 		(new Script("static/js/application.js"))->dependFile()->toPrint();

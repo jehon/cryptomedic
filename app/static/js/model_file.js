@@ -1,20 +1,11 @@
 "use strict";
 
-// function test(a) { 
-// 	(a !== undefined) || (a = 123);
-// 	console.log(a); 
-// }; 
-// test();
-// test(null);
-// test(false);
-// test({});
-
 application.models.File = application.models.Data.extend({
 	'init': function(data, folder) {
 		this._super(data, folder);
 		if (data == null) {
 			this.patient_id = folder.getMainFile().id;
-			var c = cache();
+			var c = cache_storage();
 			this.ExaminerName = c.get("examinerName", "");
 			this.Center = c.get("center", "Chakaria");
 			this.Date = c.get("date", null);
