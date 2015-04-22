@@ -63,7 +63,7 @@ mainApp.controller('ctrl_offline', [ '$scope', 'service_backend', function($scop
     function logEvent(e) {
         var online, status, type, message;
         online = (navigator.onLine) ? 'yes' : 'no';
-        status = cacheStatusValues[cache.status];
+        status = cacheStatusValues[window.applicationCache.status];
         type = e.type;
         message = 'online: ' + online;
         message+= ', event: ' + type;
