@@ -7,16 +7,16 @@
 
 ?><!DOCTYPE html>
 <html <?php 
-	if ($server->getRequest()->isServedLocally()) {
+// 	if ($server->getRequest()->isServedLocally()) {
 		if (array_key_exists("online", $_REQUEST)) {
 			$mode = "online";
 		} else {
 			$mode = "appcache";
 			echo "manifest='manifest.appcache'";
 		}
-	} else {
-		$mode = "";
-	}
+// 	} else {
+// 		$mode = "";
+// 	}
 ?> >
 	<head>
 		<meta charset="utf-8">
