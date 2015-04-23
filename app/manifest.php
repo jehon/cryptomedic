@@ -47,7 +47,7 @@
 		
 		function addFileTs($f) {
 			if (!file_exists($f)) {
-				addLine("# $f: does not exists");
+				return addLine("# $f: does not exists");
 			}
 			return addTs(filemtime($f), $f);
 		}
@@ -68,15 +68,15 @@
 		
 		addLine("# Manually added elements");
 		addFileTs("index.php");
-//disable these to allow mode online and offline automatically
-// 		addOne("/cryptomedic/app/");
-// 		addOne("/cryptomedic/app/index.php");
+//disable this one to allow mode online and offline automatically
+		addOne("/cryptomedic/app/");
 		addFileTs("../index.html");
-		addOne("/cryptomedic/");
-		addOne("/cryptomedic/index.html");
+		addOne("../");
 		// Add the manifest itself
 		addFileTs(basename(__FILE__));
-
+		addFileTs("../../cryptomedic.version");
+		addFileTs("../../rest.version");
+		
 		// Use the index for import
 		ob_start();	
 		require("index.php"); 
