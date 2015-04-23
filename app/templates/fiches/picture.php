@@ -38,7 +38,7 @@
 			</FieldSet>
 		</div>
 		<div class="col-lg-6">
-			<div ng-include="'/rest/templates/patient-related.html'"></div>
+			<?php require("partials/patient-related.php"); ?>
 		</div>
 	</div>
 	<hr>
