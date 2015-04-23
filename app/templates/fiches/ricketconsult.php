@@ -18,19 +18,24 @@
 					<?php (new t("RicketConsult.Wristenlargement"))->tr()->p(); ?>
 					<?php (new t("RicketConsult.Ribbeading"))->tr()->p(); ?>
 					<tr>
-						<td>Legs</td>
-						<td>Left</td>
-						<td>Right</td>
+						<th colspan=3>
+							<div class='alert alert-danger'>Warning! Left and right sides are opposite.</div>
+						</th>
 					</tr>
-					<?php (new t("RicketConsult.?Leg"))->trLeftRight("Leg")->p(); ?>
-					<?php (new t("RicketConsult.?legAngle"))->trLeftRight("Leg Angle")->p(); ?>
+					<tr>
+						<th>Legs</th>
+						<th>Right</th>
+						<th>Left</th>
+					</tr>
+					<?php (new t("RicketConsult.?Leg"))->trRightLeft("Leg")->p(); ?>
+					<?php (new t("RicketConsult.?legAngle"))->trRightLeft("Leg Angle")->p(); ?>
 					<tr>
 						<td>Cross</td>
 						<td></td>
 						<td></td>
 					</tr>
-					<?php (new t("RicketConsult.Cross?T"))->trLeftRight()->p(); ?>
-					<?php (new t("RicketConsult.Cross?F"))->trLeftRight()->p(); ?>
+					<?php (new t("RicketConsult.Cross?T"))->trRightLeft()->p(); ?>
+					<?php (new t("RicketConsult.Cross?F"))->trRightLeft()->p(); ?>
 					<?php (new t("RicketConsult.IMICDistance"))->tr()->p(); ?>
 					<?php (new t("RicketConsult.XRay"))->tr()->p(); ?>
 				</table>

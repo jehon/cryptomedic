@@ -361,18 +361,18 @@ class t {
         return $this;
     }
 
-    function trLeftRight($label = null) {
+    function trRightLeft($label = null) {
         if ($label == null) $label = str_replace("?", "", $this->key);
         if (strpos($this->key, "?") === false) $this->key = $this->key . "?";
 
         $left = new t(str_replace("?", "Left", $this->key), $this->options);
         $right = new t(str_replace("?", "Right", $this->key), $this->options);
-
+        
         $this->res .= "<tr ng-class='{ emptyValue: !{$left->rawExpression} && !{$right->rawExpression} }'>\n";
             $this->res .= " <td>$label</td>\n";
-            $this->res .= " <td>" . $left->value()->getText() . "</td>\n";
             $this->res .= " <td>" . $right->value()->getText() . "</td>\n";
-        $this->res .= "</tr>\n";
+            $this->res .= " <td>" . $left->value()->getText() . "</td>\n";
+            $this->res .= "</tr>\n";
         return $this;
     }
 

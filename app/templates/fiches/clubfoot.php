@@ -14,19 +14,24 @@
 				<table>
 					<thead>
 						<tr>
+							<th colspan=3>
+								<div class='alert alert-danger'>Warning! Left and right sides are opposite.</div>
+							</th>
+						</tr>
+						<tr>
 							<th></th>
-							<th>Left</th>
 							<th>Right</th>
+							<th>Left</th>
 						</tr>
 					</thead>
 					<tr><td>Mid foot</td><td></td><td></td></tr>
-					<?php (new t("ClubFoot.CurvedLateralBorder"))->trLeftRight()->p(); ?>
-					<?php (new t("ClubFoot.MedialCrease"))->trLeftRight()->p(); ?>
-					<?php (new t("ClubFoot.TalarHeadCoverage"))->trLeftRight()->p(); ?>
+					<?php (new t("ClubFoot.CurvedLateralBorder"))->trRightLeft()->p(); ?>
+					<?php (new t("ClubFoot.MedialCrease"))->trRightLeft()->p(); ?>
+					<?php (new t("ClubFoot.TalarHeadCoverage"))->trRightLeft()->p(); ?>
 					<tr><td>Hind foot</td><td></td><td></td></tr>
-					<?php (new t("ClubFoot.PosteriorCrease"))->trLeftRight()->p(); ?>
-					<?php (new t("ClubFoot.RigidEquinus"))->trLeftRight()->p(); ?>
-					<?php (new t("ClubFoot.EmptyHeel"))->trLeftRight()->p(); ?>
+					<?php (new t("ClubFoot.PosteriorCrease"))->trRightLeft()->p(); ?>
+					<?php (new t("ClubFoot.RigidEquinus"))->trRightLeft()->p(); ?>
+					<?php (new t("ClubFoot.EmptyHeel"))->trRightLeft()->p(); ?>
 					<tr>
 						<td>Total</td>
 						<td>{{currentFile().getPiraniLeft()}}</td>
@@ -39,21 +44,26 @@
 				<table>
 					<thead>
 						<tr>
+							<th colspan=3>
+								<div class='alert alert-danger'>Warning! Left and right sides are opposite.</div>
+							</th>
+						</tr>
+						<tr>
 							<th></th>
-							<th>Left</th>
 							<th>Right</th>
+							<th>Left</th>
 						</tr>
 					</thead>
-					<?php (new t("ClubFoot.Pain"))->trLeftRight()->p(); ?>
-					<?php (new t("ClubFoot.WalkingFloorContact"))->trLeftRight()->p(); ?>
-					<?php (new t("ClubFoot.WalkingFirstContact"))->trLeftRight()->p(); ?>
-					<?php (new t("ClubFoot.JumpingOneLeg"))->trLeftRight()->p(); ?>
-					<?php (new t("ClubFoot.Run"))->trLeftRight()->p(); ?>
-					<?php (new t("ClubFoot.AdductionAngle", array("inline" => "min=-90 max=90")))->trLeftRight()->p(); ?>
-					<?php (new t("ClubFoot.HindFootAngleW", array("inline" => "min=-90 max=90")))->trLeftRight()->p(); ?>
-					<?php (new t("ClubFoot.DorsalFlexionMax", array("inline" => "min=-90 max=90")))->trLeftRight()->p(); ?>
-					<?php (new t("ClubFoot.PlantarFlexionMax", array("inline" => "min=0 max=90")))->trLeftRight()->p(); ?>
-					<?php (new t("ClubFoot.MuscularInbalance"))->trLeftRight()->p(); ?>
+					<?php (new t("ClubFoot.Pain"))->trRightLeft()->p(); ?>
+					<?php (new t("ClubFoot.WalkingFloorContact"))->trRightLeft()->p(); ?>
+					<?php (new t("ClubFoot.WalkingFirstContact"))->trRightLeft()->p(); ?>
+					<?php (new t("ClubFoot.JumpingOneLeg"))->trRightLeft()->p(); ?>
+					<?php (new t("ClubFoot.Run"))->trRightLeft()->p(); ?>
+					<?php (new t("ClubFoot.AdductionAngle", array("inline" => "min=-90 max=90")))->trRightLeft()->p(); ?>
+					<?php (new t("ClubFoot.HindFootAngleW", array("inline" => "min=-90 max=90")))->trRightLeft()->p(); ?>
+					<?php (new t("ClubFoot.DorsalFlexionMax", array("inline" => "min=-90 max=90")))->trRightLeft()->p(); ?>
+					<?php (new t("ClubFoot.PlantarFlexionMax", array("inline" => "min=0 max=90")))->trRightLeft()->p(); ?>
+					<?php (new t("ClubFoot.MuscularInbalance"))->trRightLeft()->p(); ?>
 				</table>
 			</FieldSet>
 		</div>
