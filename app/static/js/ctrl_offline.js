@@ -10,16 +10,14 @@ mainApp.controller('ctrl_offline', [ '$scope', 'service_backend', function($scop
     window.applicationCache.addEventListener("progress", function(progress) {
 //	$scope.info_available = true;
 //	$scope.offline = "Downloading next version";
-	if (progress.total) $scope.offline += " " + progress.loaded + " of " + progress.total;
-	$scope.safeApply();
+	if (progress.total) {
+	    console.log(progress.loaded + "/" + progress.total);
+//	    $scope.offline += " " + progress.loaded + " of " + progress.total;
+	}
+//	$scope.safeApply();
     });
 
     window.applicationCache.addEventListener("updateready", function(event) {
-	if (window.applicationCache.status === window.applicationCache.UPDATEREADY) {
-	    window.applicationCache.swapCache();
-	    console.log('swap cache has been called');
-	}
-
         $scope.info_available = true;
 	$scope.offline = "A new version of the application is available.";
 	$scope.refreshAvailable = true;

@@ -444,11 +444,11 @@ mainApp.controller('ctrl', [ '$scope', '$location', 'service_backend', function(
 	};
 
 	// Events from the service_*
-	$scope.$on("rest_logged_out", function(msg) { 
+	$scope.$on("backend_logged_out", function(msg) { 
 		$scope.logged = false; 
 	});
 
-	$scope.$on("rest_logged_in", function(msg) { 
+	$scope.$on("backend_logged_in", function(msg) { 
 		$scope.logged = true; 
 	});
 

@@ -1,5 +1,4 @@
 <?php
-	
 	header("Content-Type: text/cache-manifest");
 	header("Expires: Wed, 11 Jan 1984 00:00:00 GMT");
 	header("Pragma: public");
@@ -7,7 +6,7 @@
 	define("TS_FORMAT", "Y-m-d H:i:s");
 	
 // TODO: check and cache some stuffs to see if these data need to be recalculated or not !!!
-	
+
 	// By default, consider manifest mtime as a minimum
 	// This will be updated in addTs();
 	$lastModif = filemtime(__FILE__);
@@ -27,7 +26,11 @@
 	
 		function addOne($f) {
 			$f = str_replace("\\", "/", $f);
-			addLine("$f");
+// 			if ($f[0] == "/") {
+				addLine("$f");
+// 			} else {
+// 				addLine("/cryptomedic/app/$f");
+// 			}
 		}
 		
 		function addTs($ts, $header = "") {
@@ -36,8 +39,10 @@
 				return addLine("# $ts: not numeric");
 			}
 			global $lastModif;
-			addLine("# " . date(constant("TS_FORMAT"), $ts) . " " . ($header ? $header : "explicit timestamp"));	
-			$modifTime = max($lastModif, $ts);
+			addLine("# " . date(constant("TS_FORMAT"), $ts) . " " . ($header ? $header : "explicit timestamp"));
+			if ($ts > $lastModif) {
+				$lastModif = $ts;
+			}
 		}
 		
 		function addFileTs($f) {
@@ -71,7 +76,7 @@
 		addOne("/cryptomedic/index.html");
 		// Add the manifest itself
 		addFileTs(basename(__FILE__));
-		
+
 		// Use the index for import
 		ob_start();	
 		require("index.php"); 
@@ -86,7 +91,7 @@
 		foreach(MyFiles::glob("../routes/*") as $f) {
 			addFileTs($f);
 		}
-		
+
 		addLine("");
 		addLine("# Scripts auto-import");
 		addLine("");
@@ -118,7 +123,6 @@
 				addOne($f);
 			}
 		}
-	
 		addLine("");
 		addLine("# online content (no cache) ");
 		addLine("");
