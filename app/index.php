@@ -80,7 +80,7 @@
 	
 		(new Script("static/css/application.css"))->dependFile()->toPrint();
 		
-		(new Script("/rest/authenticate/settings?JSONP=server.setSettings&version=" . $server->getVersion("cryptomedic") . "#" . $server->getVersion("rest")))->js()->dependDBTable("settings")->live()->toPrint();
+		(new Script("/rest/authenticate/settings?JSONP=server.setSettings&version=" . $server->getVersion("cryptomedic") . " - " . $server->getVersion("rest")))->js()->dependDBTable("settings")->live()->toPrint();
 		(new Script("/rest/prices?JSONP=cryptomedic.setPrices"))->js()->dependDBTable("prices")->live()->toPrint(); 
 	?>
 	</head>
