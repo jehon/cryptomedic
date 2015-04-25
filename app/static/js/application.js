@@ -409,6 +409,14 @@ mainApp.controller('ctrl', [ '$scope', '$location', 'service_backend', function(
 	$scope.doLogin = function() {
 		$scope.username = jQuery("#login_username").val();
 		$scope.password = jQuery("#login_password").val();
+		if ($scope.username == "") {
+		    alert("No username detected");
+		    return;
+		}
+		if ($scope.password == "") {
+		    alert("No password detected");
+		    return;
+		}
 		$scope.loginError = false;
 		var busyEnd = $scope.doBusy("Checking your login/password with the online server", true);
 		service_backend.doLogin(this.username, this.password)
