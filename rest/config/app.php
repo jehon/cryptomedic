@@ -1,5 +1,7 @@
 <?php
 
+require_once(__DIR__ . "/../../../secrets.php");
+
 return [
 
 	/*
@@ -13,7 +15,7 @@ return [
 	|
 	*/
 
-	'debug' => env('APP_DEBUG', false),
+	'debug' => env('APP_DEBUG', getSecret("debug")),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -78,7 +80,7 @@ return [
 	|
 	*/
 
-	'key' => env('APP_KEY', 'SomeRandomString'),
+	'key' => env('APP_KEY', getSecret('laravelRandomString')),
 
 	'cipher' => MCRYPT_RIJNDAEL_128,
 
