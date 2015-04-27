@@ -34,8 +34,8 @@
 					<?php (new t("ClubFoot.EmptyHeel"))->trRightLeft()->p(); ?>
 					<tr>
 						<td>Total</td>
-						<td>{{currentFile().getPiraniLeft()}}</td>
 						<td>{{currentFile().getPiraniRight()}}</td>
+						<td>{{currentFile().getPiraniLeft()}}</td>
 					</tr>				
 				</table>
 			</FieldSet>
