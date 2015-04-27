@@ -12,5 +12,5 @@ $deploy = array(
     	//"prod2acc" => "C:\Users\jehon\Documents\amd_chakaria.sql",
 	"prod2acc" => "/home/jehon/amd_chakaria.sql"
     ),
-    'emails' => getSecret("emailsNotifications")
+//    'emails' => getSecret("emailsNotifications")
 );
