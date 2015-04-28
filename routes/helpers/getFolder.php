@@ -22,8 +22,8 @@ function getFolder($id) {
 		// we work by controller = the same as in database?
 		if ($c == "patients") continue;
 		// TODO: remove references to this:
-		if ($c == "orthopedic_devices") continue;
-		if ($c == "surgery_followups") continue;
+// 		if ($c == "orthopedic_devices") continue;
+// 		if ($c == "surgery_followups") continue;
 
 		$r = $server->getDatabase()->query("SELECT * FROM $c WHERE patient_id = :patient_id", array('patient_id' => $id));
 		foreach($r as $ri => $rv) {
