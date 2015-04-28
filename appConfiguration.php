@@ -30,7 +30,7 @@ $config['pictures.url'] = '/uploadedPictures';
 include(__DIR__ . DIRECTORY_SEPARATOR . "autodeploy.php");
 include(dirname(__DIR__) . DIRECTORY_SEPARATOR . "rest" . DIRECTORY_SEPARATOR . "autodeploy.php");
 
-$config['authenticate.loginRequest'] = 'SELECT users.username as login, users.group as `group` FROM users '
+$config['authenticate.loginRequest'] = 'SELECT users.username as login, users.group as `group`, users.id as id FROM users '
     . ' WHERE username = :username and password = SHA1(concat("' .  getSecret('authenticateSalt') . '", :password))';
 $config['authenticate.updatePasswordRequest'] = 'UPDATE users SET password = SHA1(concat("'.getSecret('authenticateSalt') .'", :password)) WHERE id = :id';
 $config['authenticate.disablePasswordRequest'] = 'UPDATE users SET password = "[disabled password]" WHERE id = :id';
