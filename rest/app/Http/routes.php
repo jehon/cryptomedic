@@ -23,16 +23,12 @@ Response::macro('jsonOrJSONP', function($value)
 	// add a callback JSONP parameter if necessary
 	if (Request::has('JSONP')) {
 		$res->setCallback(Request::input('JSONP'));
-// 			->header("Content-Type", "application/javascript");
 	}
-	
 	return $res;
 });
 
 
 Route::get('/', 'WelcomeController@index');
-
-Route::get('home', 'HomeController@index');
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',
@@ -43,19 +39,16 @@ Route::controllers([
  * Authenticated user needed
  */
 Route::group(array('middleware' => 'auth'), function() {
+	Route::get('home', 'HomeController@index');
+	
 	Route::resource('folder', "FolderController");
 
 	Route::get('related/{model}/{id}', [
-// 	"middleware" => 'auth',
-	"uses" => "FolderController@related"
+//		"middleware" => 'auth',
+		"uses" => "FolderController@related"
 	]);
 	
 });
-
-// Route::get('related/{model}/{id}', [
-// 	"middleware" => 'auth',
-// 	"uses" => "FolderController@related"
-// ]);
 
 // Route::any('folder/{id}', [ 
 // 	"uses" => "FolderController@get"

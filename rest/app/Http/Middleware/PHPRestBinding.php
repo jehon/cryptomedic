@@ -32,16 +32,18 @@ class PHPRestBinding {
      */
     public function handle($request, Closure $next)
     {
-    	session_start();
-    	
-    	if (array_key_exists('cryptomedic', $_SESSION) 
-    			&& array_key_exists('login.id', $_SESSION['cryptomedic']) 
-    			&& $_SESSION['cryptomedic']['login.id']) {
-			$id = $_SESSION['cryptomedic']['login.id'];
-			$user = User::find($id);
-			$this->auth->login($user);
+		if (!headers_sent()) {
+	    	session_start();
 		}
-		
+		if (isset($_SESSION) && is_array($_SESSION)) {	    	
+	    	if (array_key_exists('cryptomedic', $_SESSION) 
+	    			&& array_key_exists('login.id', $_SESSION['cryptomedic']) 
+	    			&& $_SESSION['cryptomedic']['login.id']) {
+				$id = $_SESSION['cryptomedic']['login.id'];
+				$user = User::find($id);
+				$this->auth->login($user);
+			}
+		}		
     	return $next($request);
     }
 

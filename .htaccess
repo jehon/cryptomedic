@@ -6,8 +6,3 @@
 	ExpiresByType   text/cache-manifest			A0	
 	ExpiresDefault 	A0
 </IfModule>
-
-RewriteEngine On
-
-#RewriteRule ^$ app/index.php [QSA,L]
-#RewriteRule ^(.*)$ app/$1 [QSA,L]
