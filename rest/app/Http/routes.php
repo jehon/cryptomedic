@@ -12,8 +12,6 @@
 */
 
 Route::pattern('id', '[0-9]+');
-//Route::model('folder', 'App\Folder');
-
 
 Response::macro('jsonOrJSONP', function($value)
 {
@@ -35,21 +33,41 @@ Route::controllers([
 	'password' => 'Auth\PasswordController',
 ]);
 
+// TODO: settings
+
 /**
  * Authenticated user needed
  */
 Route::group(array('middleware' => 'auth'), function() {
 	Route::get('home', 'HomeController@index');
 	
+	// Search folders
+	// Get one folder
 	Route::resource('folder', "FolderController");
 
+	// Related route
 	Route::get('related/{model}/{id}', [
-//		"middleware" => 'auth',
 		"uses" => "FolderController@related"
 	]);
-	
+
+	// TODO: consultations
+	// TODO: prices
+	// TODO: references
+	// TODO: templates
+	// TODO: report activity
+	// TODO: report dailyActivity
+	// TODO: report monthlyActivity
+	// TODO: report monthlyStatistical
+	// TODO: report patients
 });
 
+// Route::model('folder', 'App\Folder');
+
+// TODO: fiches (write mode)
+// TODO: upload (write mode)
+// TODO: report resizePicture (admin mode)
+	
 // Route::any('folder/{id}', [ 
+//		"middleware" => 'auth',
 // 	"uses" => "FolderController@get"
 // ]);
