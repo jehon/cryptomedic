@@ -42,9 +42,7 @@
 			cryptomedic.versions = {};
 			cryptomedic.versions.cryptomedic = '<?php echo $server->getVersion("cryptomedic"); ?>';
 			cryptomedic.versions.rest = '<?php echo $server->getVersion("rest"); ?>';
-			cryptomedic.versions.agglomerated = 
-				"cryptomedic: " + cryptomedic.versions.cryptomedic 
-				+ " rest:" + cryptomedic.versions.rest;
+			cryptomedic.versions.agglomerated = cryptomedic.versions.cryptomedic + " - " + cryptomedic.versions.rest;
 			cryptomedic.settings = {};
 		</script>
 	<?php 
@@ -79,8 +77,8 @@
 	
 		(new Script("static/css/application.css"))->dependFile()->toPrint();
 		
-		(new Script("/rest/authenticate/settings?JSONP=server.setSettings&version=" . $server->getVersion("cryptomedic") . " - " . $server->getVersion("rest")))->js()->dependDBTable("settings")->live()->toPrint();
-		(new Script("/rest/prices?JSONP=cryptomedic.setPrices"))->js()->dependDBTable("prices")->live()->toPrint(); 
+ 		(new Script("/rest/authenticate/settings?JSONP=server.setSettings&appVersion=" . $server->getVersion("cryptomedic") . " - " . $server->getVersion("rest")))->js()->dependDBTable("settings")->live()->toPrint();
+		(new Script("/rest/prices?JSONP=cryptomedic.setPrices"))->js()->dependDBTable("prices")->live()->toPrint();
 	?>
 	</head>
 	<body ng-app="app_main" ng-controller="ctrl" id="ng-app">
