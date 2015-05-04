@@ -68,10 +68,8 @@ Route::group(array('middleware' => 'auth'), function() {
 	
 	// TODO: report activity (not implemented)
 	// TODO: report patients (not implemented)
-	
 });
 
-// Route::model('folder', 'App\Folder');
 
 // TODO: fiches (write mode)
 // TODO: upload (write mode)
@@ -81,7 +79,11 @@ Route::group(array('middleware' => 'auth'), function() {
 // 		"uses" => "FolderController@reference"
 // 	]);
 	
-	
+
+// *** Other examples ***
+
+// Route::model('folder', 'App\Folder');
+
 // Route::any('folder/{id}', [ 
 //		"middleware" => 'auth',
 // 	"uses" => "FolderController@get"

@@ -43,7 +43,6 @@ class ReportController extends Controller {
 		return response()->jsonOrJSONP($listing);
 	}	
 	
-	public function activity() {
-		
-	}
+// 	public function activity() {
+// 	}
 }
