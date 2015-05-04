@@ -18,18 +18,26 @@ $cache_file = __DIR__ . "/../cache/" . str_replace(array("?", "&", ".", "/", "\\
 /** DEPENDENCY */
 global $server;
 // if we have a cache file, deliver it
-if( is_file( $cache_file ) && !$server->getRequest()->isServedLocally()) {
-	echo "<!-- from cache -->";
-	readfile( $cache_file );
-	exit;
+if (defined("NOCACHE") && (constant("NOCACHE") > 0)) {
+	if( is_file( $cache_file ) && !$server->getRequest()->isServedLocally()) {
+		echo "<!-- from cache -->";
+		readfile( $cache_file );
+		exit;
+	}
 }
 
 // inspiré de http://stackoverflow.com/a/3787258
 // cache via output buffering, with callback
 
 function template_cache_output( $content ) {
-	global $cache_file;
-	file_put_contents( $cache_file, $content );
+	if (defined("NOCACHE") && (constant("NOCACHE") > 0)) {
+		global $cache_file;
+		try {
+			file_put_contents( $cache_file, $content );
+		} catch (Exception $e) {
+			debugHeader($e->getMessage(), "X-CACHE-WRITING-PROBLEM");
+		}
+	}
 	return $content;
 }
 

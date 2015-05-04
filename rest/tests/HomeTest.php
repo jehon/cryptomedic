@@ -1,6 +1,6 @@
 <?php
 
-require_once("RouteSecurityTestCase.php");
+require_once(__DIR__ . "/RouteReferenceTestCase.php");
 
 class HomeTest extends RouteReferenceTestCase {
 

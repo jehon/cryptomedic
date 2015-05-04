@@ -66,7 +66,6 @@
 	
 		// Other
 		(new Script("bower_components/excellentexport/excellentexport.min.js"))->dependFile()->toPrint();
-		//(new Script("bower_components/es6-promise/promise.min.js"))->dependFile()->toPrint();
 		
 		// personnal
 		(new Script("static/js/application.js"))->dependFile()->toPrint();

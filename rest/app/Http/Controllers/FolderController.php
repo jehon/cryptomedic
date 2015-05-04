@@ -130,4 +130,8 @@ class FolderController extends Controller {
 		return $this->show($r->patient_id);
 // 		return response()->jsonOrJSONP($r->patient_id);
 	}
+	
+	public function reference() {
+		// TODO
+	}
 }

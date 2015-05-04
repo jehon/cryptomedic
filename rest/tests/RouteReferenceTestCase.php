@@ -3,9 +3,16 @@
 use App\User;
 
 class RouteReferenceTestCase extends TestCase {
-	public function setUp($url = null) {
-		$this->url = $url;
+	private $url = "";
+	
+	public function setUp($url = null, $params = array()) {
 		parent::setUp();
+ 		$this->setUrl($url);
+	}
+
+	protected function setUrl($url, $param = array()) {
+		$this->url = $url;
+		// TODO: manage params
 	}
 	
 	protected function preAuthenticate($group = null) {
@@ -26,6 +33,13 @@ class RouteReferenceTestCase extends TestCase {
 		$response = $this->call('GET', $this->url);
 		$this->assertResponseOk();
 		return $response;
+	}
+
+	protected function myAssertJSON($group = null) {
+		$response = $this->myAssertAuthorized($group);
+		$json = json_decode($response->getContent());
+		$this->assertNotNull($json, "Error parsing json");
+		return $json;
 	}
 	
 	protected function myAssertResponseForReference($group = null, $file = null) {

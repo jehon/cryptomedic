@@ -49,16 +49,26 @@ Route::group(array('middleware' => 'auth'), function() {
 	Route::get('related/{model}/{id}', [
 		"uses" => "FolderController@related"
 	]);
-
-	// TODO: consultations
-	// TODO: prices
-	// TODO: references
-	// TODO: templates
-	// TODO: report activity
+	
+	Route::resource('price', "PriceController");
+	
+	Route::get('reports/consultations', [
+		"uses" => "ReportController@consultations"
+	]);
+	
+	Route::get('report/dailyActivity', [
+		"uses" => "ReportController@activity"
+	]);
+	
 	// TODO: report dailyActivity
 	// TODO: report monthlyActivity
 	// TODO: report monthlyStatistical
-	// TODO: report patients
+	
+	// TODO: templates (!! caching)
+	
+	// TODO: report activity (not implemented)
+	// TODO: report patients (not implemented)
+	
 });
 
 // Route::model('folder', 'App\Folder');
@@ -66,6 +76,11 @@ Route::group(array('middleware' => 'auth'), function() {
 // TODO: fiches (write mode)
 // TODO: upload (write mode)
 // TODO: report resizePicture (admin mode)
+// TODO: references
+// 	Route::get('references', [ // TODO
+// 		"uses" => "FolderController@reference"
+// 	]);
+	
 	
 // Route::any('folder/{id}', [ 
 //		"middleware" => 'auth',

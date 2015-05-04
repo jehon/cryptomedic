@@ -1,17 +1,19 @@
 <?php
 
+define("NOCACHE", "1");
+
 require_once(__DIR__ . "/../helpers/getFolder.php");
 require_once(__DIR__ . "/../helpers/price.php");
 
-$examiner = $request->getParameter("examiner", "");
-$where = $request->getParameter("center", '');
-$when = $request->getParameter("date", "");
+$examiner = $server->getRequest()->getParameter("examiner", "");
+$where = $server->getRequest()->getParameter("center", '');
+$when = $server->getRequest()->getParameter("date", "");
 if ($when instanceof DateTime) {
     $when = $when->format("Y-m-d");
 } else {
     $when = substr($when, 0, 10);
 }
-$month = $request->getParameter("month", "");
+$month = $server->getRequest()->getParameter("month", "");
 if ($month instanceof DateTime) {
 	$month = $month->format("Y-m");
 } else {

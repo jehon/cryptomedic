@@ -21,7 +21,8 @@ mainApp.factory('service_backend', [ '$http', '$rootScope', function($http, $roo
 //    var rest = service_rest($http);
 
     var pcache = perishableCache(10);
-    var root = "/rest/";
+    var phprest = "/rest/";
+    var rest = "/cryptomedic/rest/public/";
     var onLogin = jQuery.Callbacks();
     var onLogout = jQuery.Callbacks();
     var onError = jQuery.Callbacks();
@@ -66,17 +67,17 @@ mainApp.factory('service_backend', [ '$http', '$rootScope', function($http, $roo
     return {
 	'checkLogin': function() {
 	    // TODOJH: Give hime information about last sync
-	    return treatHttp($http.get(root + "/authenticate/settings&version=" + cryptomedic.versions.agglomerated));
+	    return treatHttp($http.get(phprest + "/authenticate/settings&version=" + cryptomedic.versions.agglomerated));
 	},
 	'doLogin': function(username, password) {
 	    // Hack: if no username is given, then checkLogin instead
 	    if (username == "") return this.checkLogin();
-	    return treatHttp($http.post(root + "/authenticate/login", { 'username': username, 'password': password, 'version': cryptomedic.versions.agglomerated }));
+	    return treatHttp($http.post(phprest + "/authenticate/login", { 'username': username, 'password': password, 'version': cryptomedic.versions.agglomerated }));
 	},
 	'doLogout': function() {
 	    // TODO: more cleanup
 	    pcache.clear();
-	    return treatHttp($http.get(root + "/authenticate/logout"), function(data) {
+	    return treatHttp($http.get(phprest + "/authenticate/logout"), function(data) {
 		onLogout.fire();
 	    });
 	},
@@ -84,19 +85,19 @@ mainApp.factory('service_backend', [ '$http', '$rootScope', function($http, $roo
 	    if (pcache.isCached(id)) {
 		return jQuery.Deferred().resolve(pcache.get(id));
 	    }
-	    return treatHttp($http.get(root + "/folders/" + id), function(data) {
+	    return treatHttp($http.get(rest + "/folder/" + id), function(data) {
 		pcache.set(data.getMainFile().id, data);
 		return data;				
 	    });
 	},
 	'getParent': function(type, id) {
-	    return treatHttp($http.get(root + "/related/" + type + "/" + id), function(data) {
+	    return treatHttp($http.get(phprest + "/related/" + type + "/" + id), function(data) {
 		pcache.set(data.getMainFile().id, data);
 		return data;				
 	    });
 	},
 	'searchForPatients': function(params) {
-	    return treatHttp($http.get(root + "/folders/", { 'params': params }), function(data) {
+	    return treatHttp($http.get(rest + "/folder", { 'params': params }), function(data) {
 		var list = [];
 		for(var i in data) {
 		    list.push(new application.models.Patient(data[i]));
@@ -106,7 +107,7 @@ mainApp.factory('service_backend', [ '$http', '$rootScope', function($http, $roo
 	},
 	'searchForConsultations': function(day, center) {
 	    day = date2CanonicString(day, true);
-	    return treatHttp($http.get(root + "/consultations/", { 'params': { 'day': day, 'center': center} }), function(data) {
+	    return treatHttp($http.get(rest + "/reports/consultations", { 'params': { 'day': day, 'center': center} }), function(data) {
 		var list = [];
 		for(var i in data) {
 		    list.push(new application.models.Patient(data[i]));
@@ -115,7 +116,7 @@ mainApp.factory('service_backend', [ '$http', '$rootScope', function($http, $roo
 	    });
 	},
 	'checkReference': function(year, order) {
-	    return treatHttp($http.get(root + "/references/", 
+	    return treatHttp($http.get(phprest + "/references/", 
 		{ 'params': { 
 		    'entryyear': year, 
 		    'entryorder': order
@@ -129,7 +130,7 @@ mainApp.factory('service_backend', [ '$http', '$rootScope', function($http, $roo
 		});
 	},
 	'createReference': function(year, order) {
-	    return treatHttp($http.post(root + "/references/", 
+	    return treatHttp($http.post(phprest + "/references/", 
 		{ 
 			'entryyear': year, 
 			'entryorder': order
@@ -140,28 +141,28 @@ mainApp.factory('service_backend', [ '$http', '$rootScope', function($http, $roo
 	},
 	'unlockFile': function(data, folderId) {
 	    pcache.perish(folderId);
-	    return treatHttp($http({ method: "UNLINK", url: root + "/fiche/" + data['_type'] + "/" + data['id'] }), function(data) {
+	    return treatHttp($http({ method: "UNLINK", url: phprest + "/fiche/" + data['_type'] + "/" + data['id'] }), function(data) {
 		pcache.set(data.getMainFile().id, data);
 		return data;				
 	    });
 	},
 	'saveFile': function(data, folderId) {
 	    pcache.perish(folderId);
-	    return treatHttp($http.put(root + "/fiche/" + data['_type'] + "/" + data['id'], data), function(data) {
+	    return treatHttp($http.put(phprest + "/fiche/" + data['_type'] + "/" + data['id'], data), function(data) {
 		pcache.set(data.getMainFile().id, data);
 		return data;				
 	    });
 	},
 	'createFile': function(data, folderId) {
 	    pcache.perish(folderId);
-	    return treatHttp($http.post(root + "/fiche/" + data['_type'], data), function(data, status, headers, config) {
+	    return treatHttp($http.post(phprest + "/fiche/" + data['_type'], data), function(data, status, headers, config) {
 		pcache.set(data.getMainFile().id, data);
 		return data;				
 	    });
 	},
 	'deleteFile': function(data, folderId) {
 	    pcache.perish(folderId);
-	    return treatHttp($http.delete(root + "/fiche/" + data['_type'] + "/" + data['id']), function(data) {
+	    return treatHttp($http.delete(phprest + "/fiche/" + data['_type'] + "/" + data['id']), function(data) {
 		if (data instanceof application.models.Folder) {
 		    pcache.set(data.getMainFile().id, data);
 		}

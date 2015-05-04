@@ -9,7 +9,6 @@ function getSqlConsult($label, $table) {
 	return "SELECT \"$label\" as c_type, c.id as c_id, c.Date as c_Date, c.NextCenter as c_Center, c.patient_id as patient_id FROM $table as c "
 			. "WHERE (c.NextAppointment = " . $server->getDatabase()->escape($request->getParameter("day", false)) . ") ";
 }
-
 if ($request->routeIsEnded() && ($request->getMethod() == Request::READ)) {
 	// Search through them
 	$sql = "SELECT cc.*, patients.*
@@ -31,5 +30,6 @@ if ($request->routeIsEnded() && ($request->getMethod() == Request::READ)) {
 	debugHeader($sql, "SQL-SEARCH");
 
 	$listing = $server->getDatabase()->query($sql);
+	
 	$response->ok($listing);
 }
