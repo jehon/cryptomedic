@@ -6,11 +6,12 @@
 	"type": "project",
 	"require": {
 		"laravel/framework": "5.0.*",
-	        "cgross/laraguard": "~1.0"
+		"cgross/laraguard": "~1.0"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "~4.0",
-		"phpspec/phpspec": "~2.1"
+		"phpspec/phpspec": "~2.1",
+		"phpdocumentor/phpdocumentor": "2.*"		
 	},
 	"autoload": {
 		"classmap": [
@@ -37,6 +38,14 @@
 		"post-create-project-cmd": [
 			"php -r \"copy('.env.example', '.env');\"",
 			"php artisan key:generate"
+		],
+		"test": [
+			"phpunit"
+		],
+		"site": [
+			"phpunit --coverage-clover=tmp/coverage.xml --coverage-html=tmp/coverage/",
+			"sonarrunner",
+			"phpdoc"
 		]
 	},
 	"config": {

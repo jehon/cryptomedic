@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<phpdoc>
+	<parser>
+		<target>tmp/phpdocparser</target>
+	</parser>
+	<transformer>
+		<target>tmp/phpdoc</target>
+	</transformer>
+	<files>
+		<directory>app</directory>
+	</files>
+    <transformations>
+        <template name="zend" />
+    </transformations>
+  </phpdoc>
