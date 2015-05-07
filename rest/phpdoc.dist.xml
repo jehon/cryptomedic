@@ -1,15 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <phpdoc>
+	<title><![CDATA[Cryptomedic Laravel Rest server]]></title>
+	<files>
+<!-- 		<directory>.</directory>
+ -->		
+ 		<file>app/Bill.php</file>
+		<ignore>vendor/*</ignore>
+	</files>
 	<parser>
 		<target>tmp/phpdocparser</target>
 	</parser>
 	<transformer>
 		<target>tmp/phpdoc</target>
 	</transformer>
-	<files>
-		<directory>app</directory>
-	</files>
-    <transformations>
-        <template name="zend" />
-    </transformations>
-  </phpdoc>
+	<!-- <plugins> <plugin path="Core" /> </plugins> <transformations> <template 
+		name="clean" /> </transformations> -->
+
+
+
+</phpdoc>
