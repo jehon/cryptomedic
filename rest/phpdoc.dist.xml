@@ -2,9 +2,7 @@
 <phpdoc>
 	<title><![CDATA[Cryptomedic Laravel Rest server]]></title>
 	<files>
-<!-- 		<directory>.</directory>
- -->		
- 		<file>app/Bill.php</file>
+		<directory>app</directory>
 		<ignore>vendor/*</ignore>
 	</files>
 	<parser>
@@ -13,9 +11,8 @@
 	<transformer>
 		<target>tmp/phpdoc</target>
 	</transformer>
-	<!-- <plugins> <plugin path="Core" /> </plugins> <transformations> <template 
-		name="clean" /> </transformations> -->
-
-
-
+	<!-- <plugins> <plugin path="Core" /> </plugins> -->
+	<transformations>
+		<template name="clean" />
+	</transformations>
 </phpdoc>

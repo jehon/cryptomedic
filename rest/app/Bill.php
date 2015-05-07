@@ -4,14 +4,10 @@
  * 
  * With a summary...
  * 
- * @class Bill
+ * @package test
  * @author jehon
  */
 
-/**
- * Anyway.
- * 
- */
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
@@ -26,10 +22,6 @@ use App\LockedModel;
  *
  */
 class Bill extends LockedModel {
-	/**
-	 * All consultation fields
-	 * @var unknown
-	 */
 	const CAT_CONSULT = "consult";
 	const CAT_MEDECINE = "medecine";
 	const CAT_OTHER = "other";
@@ -39,6 +31,13 @@ class Bill extends LockedModel {
 	public static $categories = [ self::CAT_CONSULT, self::CAT_MEDECINE, self::CAT_OTHER, self::CAT_WORKSHOP, self::CAT_SURGICAL ];
 	public static $translations = [ ];	
 	
+	/**
+	 * A function testing field appartenance
+	 * 
+	 * @param unknown $field
+	 * @param unknown $filter
+	 * @return boolean
+	 */
 	protected static function is($field, $filter) {
 		if (strtoupper(substr($field, 0, strlen($filter))) == strtoupper($filter)) {
 			return true;
