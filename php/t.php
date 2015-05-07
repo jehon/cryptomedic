@@ -1,25 +1,12 @@
 <?php
-/**
- * 
- * $server->getRequest()->isServedLocally()
- * Server::getInstance()->getRequest()->getSystemParameter("meta", false)
- * Server::getInstance()->getRequest()->getParameter("mode", "edit")
- * 
- * $server->getDatabase()->query()
- * $server->getDatabase()->getTable(References::model2db($this->model))
- * $dbtable->isColumn($this->field)
- * $dbtable->getColumnInfos($this->field)
- * 
- */
 
 global $cache_file;
 $cache_file = __DIR__ . "/../cache/" . str_replace(array("?", "&", ".", "/", "\\", "%", " ", ":"),  "_", $_SERVER['REQUEST_URI']);
 
-/** DEPENDENCY */
-global $server;
 // if we have a cache file, deliver it
 if (defined("NOCACHE") && (constant("NOCACHE") > 0)) {
-	if( is_file( $cache_file ) && !$server->getRequest()->isServedLocally()) {
+	// If we have a cache file, but that we are not working locally:
+	if( is_file( $cache_file ) && (strcasecmp(substr($_SERVER['HTTP_HOST'], 0, 9), "localhost") != 0)) {
 		echo "<!-- from cache -->";
 		readfile( $cache_file );
 		exit;
@@ -55,6 +42,7 @@ class t {
     const DATEFORMAT = "shortDate";
     const DATETIMEFORMAT = "short";
 
+    static protected $pdo = false;
 	static private $cacheUnused = array();
     static private $defaultOptions = [
         "baseExpression" => "",
@@ -65,6 +53,7 @@ class t {
     	"model" => null
     ];
     static private $uuid = 0;
+    static $sqlAllTableStructure = array();
     
     static function setDefaultOption($key, $val = true) {
         if (!array_key_exists($key, self::$defaultOptions)) {
@@ -82,6 +71,17 @@ class t {
         self::$uuid++;
         return self::$uuid;
     }
+
+    static function cacheSqlStructureFor($sqlTable) {
+    	if (!array_key_exists($sqlTable, self::$sqlAllTableStructure)) {
+    		self::$sqlAllTableStructure[$sqlTable] = array();
+    		$rows = self::$pdo->query("SELECT * FROM `{$sqlTable}` LIMIT 1");
+    		for($i = 0; $i < $rows->columnCount(); $i++) {
+    			$meta = $rows->getColumnMeta($i);
+    			self::$sqlAllTableStructure[$sqlTable][$meta['name']] = $meta;
+    		}
+    	}
+    }
     
     var $key;
     var $options;
@@ -94,14 +94,27 @@ class t {
         $this->key = $key;
         $this->options = $options;
         $this->field = $key;
-
+        
+    	global $config;
+		require(__DIR__ . "/../appConfiguration.php");
+		if (!self::$pdo) {
+			try {
+				self::$pdo = new PDO(
+						"mysql:host=" . $config['database']['pdo_host'] . ";dbname=" . $config['database']['pdo_schema'], 
+						$config['database']['pdo_username'], 
+						$config['database']['pdo_password']);
+			} catch (PDOException $e) {
+				throw new Exception($e->getMessage());
+			}
+		}
+        
         if (!is_array($options)) {
             trace("options are not an array");
             $this->options = array();
         }
 
         $this->options = array_merge(self::$defaultOptions, $this->options);
-
+        
         $data = explode(".", $this->key);
         if (count($data) != 2) {
         	if ($this->options['model'] == null) {
@@ -118,21 +131,19 @@ class t {
 
         $this->linked2DB = true;
 
-/** DEPENDENCY */
-        global $server;
-        $dbtable = $server->getDatabase()->getTable(References::model2db($this->model));
-
-/** DEPENDENCY */
-        if (!$dbtable->isColumn($this->field)) {
+		$this->sqlTable = References::model2db($this->model);
+		
+		self::cacheSqlStructureFor($this->sqlTable);
+		
+		if (!array_key_exists($this->field, self::$sqlAllTableStructure[$this->sqlTable])) {
             $this->linked2DB = false;
             return ;
         }
 
-        $this->used(References::model2db($this->model), $this->field);
-        
-/** DEPENDENCY */
-        $this->structure = $dbtable->getColumnInfos($this->field);
+        $this->structure = self::$sqlAllTableStructure[$this->sqlTable][$this->field];
 
+        $this->used($this->sqlTable, $this->field);
+                
         $this->isList = false;
         $this->isListLinked = false;
         $header = $this->model . "." . $this->field;
@@ -199,8 +210,7 @@ class t {
     }
     
 	function displayCode($mode) {
-/** DEPENDENCY */
-			if (Server::getInstance()->getRequest()->getSystemParameter("meta", false)) {
+			if (array_key_exists("_meta", $_REQUEST) && $_REQUEST['_meta']) {
 			$this->res .= "=" . $mode . $this->key;
 			$this->res .= ($this->linked2DB ? "" : "##");
 			$this->res .= "-" . $this->model . "." . $this->field; 
@@ -341,15 +351,15 @@ class t {
         if ($this->options['readOnly']) return $this->read();
         if ($this->options['writeOnly']) return $this->write();
         
-/** DEPENDENCY */
-		if (Server::getInstance()->getRequest()->getParameter("mode", "read") == "read") {
+        if (!array_key_exists("mode", $_REQUEST) || ($_REQUEST['mode'] == "read")) {
 			$this->res .= "<span class='notModeWrite'>";
 			$this->read();
 			$this->res .= "</span>";
 		}
 
-/** DEPENDENCY */
-		if (Server::getInstance()->getRequest()->getParameter("mode", "edit") == "edit") {
+		// TODO: check this is ok
+        if (array_key_exists("mode", $_REQUEST) && ($_REQUEST['mode'] == "edit")) {
+// 		if (Server::getInstance()->getRequest()->getParameter("mode", "edit") == "edit") {
 			$this->res .= "<span class='notModeRead'>";
 	        $this->write();
 	        $this->res .= "</span>";
@@ -402,49 +412,52 @@ class t {
         return $this;
     }
     
-    static public function used($table, $field) {
-    	if (!array_key_exists($table, self::$cacheUnused)) {
-    		
-/** DEPENDENCY */
-    		global $server;
-			self::$cacheUnused[$table] = $server->getDatabase()->getTableColumnsInfos($table);
-			self::used($table, 'id');
-			self::used($table, 'created');
-			self::used($table, 'modified');
-			self::used($table, 'lastuser');
-			self::used($table, 'patient_id');
+    static public function used($sqlTable, $field) {
+    	if (!array_key_exists($sqlTable, self::$cacheUnused)) {
+			self::cacheSqlStructureFor($sqlTable);
+			self::$cacheUnused[$sqlTable] = self::$sqlAllTableStructure[$sqlTable];
+ 			self::used($sqlTable, 'id');
+			self::used($sqlTable, 'created');
+			self::used($sqlTable, 'modified');
+			self::used($sqlTable, 'lastuser');
+ 			self::used($sqlTable, 'patient_id');
     	}
-    	if (array_key_exists($field, self::$cacheUnused[$table])) {
-    		unset(self::$cacheUnused[$table][$field]);
+    	if (array_key_exists($field, self::$cacheUnused[$sqlTable])) {
+    		unset(self::$cacheUnused[$sqlTable][$field]);
     	}
     }
     
-    static public function showUnused($table) {
+    static public function showUnused() {
+    	global $config;
+
+    	$table = $_REQUEST['_unused'];
     	echo "<h1>Unused fields for $table</h1>";
     	if (array_key_exists($table, self::$cacheUnused)) {
 	    	foreach(self::$cacheUnused[$table] as $field => $meta) {
 	    		echo "$field\n";
-	    		
-/** DEPENDENCY */
-	    		global $server;
-	    		$res = $server->getDatabase()->query("SELECT count(*) as n, $field as val FROM $table GROUP BY $field ORDER BY count(*) DESC LIMIT 5");
+	    		$res = self::$pdo->query("SELECT count(*) as n, $field as val FROM $table GROUP BY $field ORDER BY count(*) DESC LIMIT 5");
 				echo "<table>";
 				foreach($res as $rec) {
 					echo "<tr><td>{$rec['n']}</td><td>{$rec['val']}</td></tr>";
 				}
 				echo "</table>";
-	
-/** DEPENDENCY */
-				$fk = $server->getDatabase()->query("SELECT `CONSTRAINT_NAME` as k FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE "
-						. "WHERE `CONSTRAINT_SCHEMA` = :schema AND `TABLE_NAME` = :table AND `COLUMN_NAME` = :column", 
-						array("schema" => $server->getDatabase()->getDatabaseName(), "table" => $table, "column" => $field));
-				foreach($fk as $k) {
-					echo "ALTER TABLE `$table` DROP FOREIGN KEY ${k['k']}; ";
-				}
+
+				$stmt = self::$pdo->prepare("SELECT `CONSTRAINT_NAME` as k FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE "
+						. "WHERE `CONSTRAINT_SCHEMA` = :schema AND `TABLE_NAME` = :table AND `COLUMN_NAME` = :column");
+				$res = $stmt->execute(array("schema" => $config['database']['pdo_schema'], "table" => $table, "column" => $field));
+				if ($res) {
+					foreach($stmt->fetchAll() as $k) {
+						echo "ALTER TABLE `$table` DROP FOREIGN KEY ${k['k']}; ";
+					}
+	    		}
 				echo "ALTER TABLE `$table` DROP `$field`;<br>";
 	    	}
     	} else {
     		echo "Table $table was not used in the template";
     	}
     }        
+}
+
+if (array_key_exists("_unused", $_REQUEST) && $_REQUEST['_unused']) {
+ 	register_shutdown_function("T::showUnused");	
 }

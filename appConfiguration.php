@@ -13,8 +13,11 @@ $config['appRoot'] = __DIR__;
 $config['debug'] = false;
 $config['domain'] = 'cryptomedic';
 
+// TODO: split pdo_host into host and schema
 $config['database'] = array(
-	'pdo_host' => 'mysql:host=localhost;dbname=amd_chakaria',
+// 	'pdo_host' => 'mysql:host=localhost;dbname=amd_chakaria',
+	'pdo_host' => 'localhost',
+	'pdo_schema' => 'amd_chakaria',
     'pdo_username' => 'amd_chakaria',
     'pdo_password' => getSecret("databasePassword"),
     'init' => "SET CHARACTER SET 'utf8'",

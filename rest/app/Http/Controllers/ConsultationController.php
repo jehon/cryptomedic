@@ -8,7 +8,8 @@ use Illuminate\Support\Facades\Request;
 require_once(__DIR__ . "/../../../../php/references.php");
 use \References;
 
-class ReportController extends Controller {
+class ConsultationController extends Controller {
+	/* Consultations */
 	protected function consultations_getSqlConsult($label, $table, &$params) {
 		$sql = "SELECT \"$label\" as c_type, c.id as c_id, c.Date as c_Date, c.NextCenter as c_Center, c.NextAppointment as c_nextAppointment, c.patient_id as patient_id FROM $table as c ";
 		$sql .= " WHERE (1 = 1)";
@@ -25,7 +26,7 @@ class ReportController extends Controller {
 		return $sql;
 	}
 		
-	public function consultations() {
+	public function index() {
 		$params = array();
 		$sql = "SELECT cc.*, patients.*
 		FROM "
@@ -42,7 +43,4 @@ class ReportController extends Controller {
 		$listing = DB::select($sql, $params);
 		return response()->jsonOrJSONP($listing);
 	}	
-	
-// 	public function activity() {
-// 	}
 }

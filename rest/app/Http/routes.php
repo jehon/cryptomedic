@@ -53,19 +53,17 @@ Route::group(array('middleware' => 'auth'), function() {
 	Route::resource('price', "PriceController");
 	
 	Route::get('reports/consultations', [
-		"uses" => "ReportController@consultations"
+		"uses" => "ConsultationController@index"
 	]);
 	
-	Route::get('report/dailyActivity', [
-		"uses" => "ReportController@activity"
+	Route::get('reports/activity', [
+		"uses" => "ReportActivityController@index"
 	]);
 	
 	// TODO: report dailyActivity
 	// TODO: report monthlyActivity
 	// TODO: report monthlyStatistical
-	
-	// TODO: templates (!! caching)
-	
+
 	// TODO: report activity (not implemented)
 	// TODO: report patients (not implemented)
 });
@@ -73,9 +71,13 @@ Route::group(array('middleware' => 'auth'), function() {
 
 // TODO: fiches (write mode)
 // TODO: upload (write mode)
-// TODO: report resizePicture (admin mode)
-// TODO: references
-// 	Route::get('references', [ // TODO
+// TODO: references (new system?)
+// TODO: users (admin mode)
+// TODO: offline sync --> middleware
+
+// TODO: migrate "myfiles" and "database->getVersion()" to cryptomedic
+
+// 	Route::get('references', [
 // 		"uses" => "FolderController@reference"
 // 	]);
 	

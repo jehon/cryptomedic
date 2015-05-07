@@ -95,7 +95,7 @@ mainApp.factory('service_backend', [ '$http', '$rootScope', function($http, $roo
 	    });
 	},
 	'getParent': function(type, id) {
-	    return treatHttp($http.get(phprest + "/related/" + type + "/" + id), function(data) {
+	    return treatHttp($http.get(rest + "/related/" + type + "/" + id), function(data) {
 		pcache.set(data.getMainFile().id, data);
 		return data;				
 	    });
