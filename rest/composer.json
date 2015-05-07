@@ -10,8 +10,11 @@
 	},
 	"require-dev": {
 		"phpunit/phpunit": "~4.0",
-		"phpspec/phpspec": "~2.1",
-		"phpdocumentor/phpdocumentor": "~2"
+		"phpspec/phpspec": "~2.1"
+	},
+	"unused": {
+               "phpdocumentor/phpdocumentor": "dev-master",
+                "neuralys/sonar": "dev-master"
 	},
 	"autoload": {
 		"classmap": [
@@ -45,7 +48,7 @@
 		"site": [
 			"phpunit --coverage-clover=tmp/coverage.xml --coverage-html=tmp/coverage/",
 			"sonarrunner",
-			"phpdoc"
+			"/usr/local/bin/phpDocumentor.phar"
 		]
 	},
 	"config": {

@@ -56,12 +56,14 @@ Route::group(array('middleware' => 'auth'), function() {
 		"uses" => "ConsultationController@index"
 	]);
 	
-	Route::get('reports/activity', [
-		"uses" => "ReportActivityController@index"
+	Route::get('reports/dailyActivity', [
+		"uses" => "ReportActivityController@daily"
 	]);
 	
-	// TODO: report dailyActivity
-	// TODO: report monthlyActivity
+	Route::get('reports/monthlyActivity', [
+			"uses" => "ReportActivityController@monthly"
+	]);
+	
 	// TODO: report monthlyStatistical
 
 	// TODO: report activity (not implemented)

@@ -4,15 +4,20 @@ use App\User;
 
 class RouteReferenceTestCase extends TestCase {
 	private $url = "";
+	private $params = array();
 	
 	public function setUp($url = null, $params = array()) {
 		parent::setUp();
- 		$this->setUrl($url);
+ 		$this->setUrl($url, $params);
 	}
 
-	protected function setUrl($url, $param = array()) {
+	protected function setUrl($url, $params = array()) {
 		$this->url = $url;
-		// TODO: manage params
+		$this->params = $params;
+	}
+
+	protected function setParams($params = array()) {
+		$this->params = $params;
 	}
 	
 	protected function preAuthenticate($group = null) {
@@ -23,14 +28,14 @@ class RouteReferenceTestCase extends TestCase {
 
 	protected function myAssertUnauthorized($group = null) {
 		$this->preAuthenticate($group);
-		$response = $this->call('GET', $this->url);
+		$response = $this->call('GET', $this->url, $this->params);
 		$this->assertResponseStatus(302);
 		return $response;
 	}
 
 	protected function myAssertAuthorized($group = null) {
 		$this->preAuthenticate($group);
-		$response = $this->call('GET', $this->url);
+		$response = $this->call('GET', $this->url, $this->params);
 		$this->assertResponseOk();
 		return $response;
 	}
@@ -50,7 +55,8 @@ class RouteReferenceTestCase extends TestCase {
  		$stv = array_shift($st);
  		$stv = array_shift($st);
  		if ($file === null) {
- 			$file = $stv['class'] . '.' . $stv['function'] . '.json';
+ 			// $stv['class']
+ 			$file = get_called_class()  . '.' . $stv['function'] . '.json';
  		}
  		$pfile = __DIR__  . "/references/" . $file;
  		
@@ -70,7 +76,14 @@ class RouteReferenceTestCase extends TestCase {
 			}
 		} else {
 			/* Assert the difference */
-			$res = $this->assertStringEqualsFile($pfile, $response->getContent());
+			if (file_exists($pfile)) {
+				$res = $this->assertStringEqualsFile($pfile, $response->getContent(), 
+						"Result is invalid [$file - $pfile] >" . strlen($response->getContent() . 
+								substr($response->getContent(), 0, 20) .
+								(strlen($response->getContent() > 20 ? "..." : ""))));
+			} else {
+				$this->fail("Reference file not found: $file");
+			}
 		}
 	}
 }
