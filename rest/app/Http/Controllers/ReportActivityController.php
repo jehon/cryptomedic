@@ -10,45 +10,21 @@ require_once(__DIR__ . "/../../../../php/references.php");
 use \References;
 
 
-class ReportActivityController extends Controller {
-	const DAILY = 0;
-	const MONTHLY = 1;
-	
-	
+class ReportActivityController extends ReportController {
 	public function daily() {
-		$when = Request::input("date", "");
-			if ($when instanceof DateTime) {
-			$when = $when->format("Y-m-d");
-		} else {
-			if (strlen($when) > 9) {
-				$when = substr($when, 0, 10);
-			}
-		}
-		return $this->index($when);
+		return $this->index($this->getReportParams('date', (new \DateTime())->format("Y-m-d") ));
 	}
 	
 	public function monthly() {
-		$month = Request::input("month", "");
-		if ($month instanceof DateTime) {
-			$month = $month->format("Y-m");
-		} else {
-			$month = substr($month, 0, 7);
-			if (strlen($month) == 6) {
-				$month = substr($month, 0, 4) . "-0" . substr($month, 5, 1);
-			}
-		}
-		return $this->index($month);
+		return $this->index($this->getReportParams('month', (new \DateTime())->format("Y-m") ));
 	}
-	
-	public function index($when) {
-		$result = array();
-		$result['params'] = array();
-		$result['params']['when'] = $when;
 		
+	public function index($when) {
+		$this->result['params']['when'] = $when;
 		$examiner = Request::input("examiner", "");
 		$where = Request::input("center", "");
 		
-		$result['list'] = DB::select("SELECT
+		$this->result['list'] = DB::select("SELECT
 				bills.id as bid,
 				patients.id as pid,
 				bills.Date as Date,
@@ -87,15 +63,15 @@ class ReportActivityController extends Controller {
 			)
 		);
 		
-		$result['totals'] = array();
-		foreach($result['list'] as $i => $e) {
+		$this->result['totals'] = array();
+		foreach($this->result['list'] as $i => $e) {
 			foreach($e as $k => $v) {
-				if (!array_key_exists($k, $result['totals'])) {
-					$result['totals'][$k] = 0;
+				if (!array_key_exists($k, $this->result['totals'])) {
+					$this->result['totals'][$k] = 0;
 				}
-				$result['totals'][$k] += $v;
+				$this->result['totals'][$k] += $v;
 			}
 		}
-		return response()->jsonOrJSONP($result);
+		return response()->jsonOrJSONP($this->result);
 	}
 }
