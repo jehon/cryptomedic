@@ -34,14 +34,14 @@ class Authenticate {
 	{
 		if ($this->auth->guest())
 		{
-			if ($request->ajax())
+// 			if ($request->ajax())
 			{
 				return response('Unauthorized.', 401);
 			}
-			else
-			{
-				return redirect()->guest('auth/login');
-			}
+// 			else
+// 			{
+// 				return redirect()->guest('auth/login');
+// 			}
 		}
 
 		return $next($request);
