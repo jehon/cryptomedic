@@ -174,15 +174,9 @@ mainApp.factory('service_backend', [ '$http', '$rootScope', function($http, $roo
 	    });
 	},
 	'getReport': function(reportName, data) {
-	    console.log("getreport: " + reportName + "@" + rest + "/reports/" + reportName);
 	    return treatHttp($http.get(rest + "/reports/" + reportName, { 'params': data }), 
-		    function(data) {
-			if (data.length == 1) {
-			    return data[0]['id'];
-			} else {
-			    return false;
-			}
-		});
+		    function(data) { return data; }
+	    	);
 	},
 	'onLogout': onLogout,
 	'onLogin': onLogin,

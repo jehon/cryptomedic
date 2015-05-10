@@ -8,9 +8,15 @@ mainApp.controller('ctrl_reports', [ '$scope', '$routeParams', 'service_backend'
 	});
 	
 	var reports = {
-		'dailyActivity': [ "center", "date", "examiner" ],
-		'monthlyActivity': [ "center", "examiner", "month" ],
-		'monthlyStatistical': [ "month" ]
+		'dailyActivity': { 
+		    params: [ "center", "date", "examiner" ]
+		},
+		'monthlyActivity': {
+		    params: [ "center", "examiner", "month" ]
+		},
+		'monthlyStatistical': {
+		    params: [ "month" ]
+		}
 	}
 	
 	$scope.getReport = function() {
@@ -22,7 +28,7 @@ mainApp.controller('ctrl_reports', [ '$scope', '$routeParams', 'service_backend'
 
 	$scope.isParam = function(name) {
 	    if (!reports[report]) return false;
-	    return reports[report].indexOf(name) > -1;
+	    return reports[report]['params'].indexOf(name) > -1;
 	}
 
 	$scope.refresh = function() {
@@ -36,6 +42,10 @@ mainApp.controller('ctrl_reports', [ '$scope', '$routeParams', 'service_backend'
 			$scope.values.date.setUTCHours(0, 0, 0, 0);
 		}
 
+		service_backend.getReport(report, $scope.values).done(function(data) {
+		    $scope.result = data;
+		});
+		
 		angular.forEach(reports[report], function(value) {
 			if (typeof($scope.values[value]) != 'undefined') {
 				var v = $scope.values[value];
