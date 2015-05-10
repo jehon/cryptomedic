@@ -62,7 +62,7 @@ $result = $server->getDatabase()->query("SELECT
             <tr>
                 <th colspan="5" class='b_all'>Name of project: Ricktes in cox's Bazar</th>
                 <th class='b_left'>When</th>
-                <th ><?php echo $when; ?></th>
+                <th >{{result.params.when}}</th>
                 <th></th>
                 <th colspan="5" class='b_left b_right'>Levels of the social level</th>
                 <th colspan="10"></th>
@@ -70,7 +70,7 @@ $result = $server->getDatabase()->query("SELECT
             <tr>
                 <th colspan="5">SARPV, CHAKARIA DISABILITY CENTER, CHAKARIA, COX'S BAZAR</th>
                 <th class='b_left'>Who</th>
-                <th><?php echo $examiner; ?></th>
+                <th>{{result.params.examiner}}</th>
                 <th></th>
                 <th class='b_left'>0</th>
                 <th>1</th>
@@ -80,9 +80,9 @@ $result = $server->getDatabase()->query("SELECT
                 <th colspan="10"></th>
             </tr>
             <tr>
-                <th colspan="5" class='b_bottom'>Daily report of <?php echo $when; ?></th>
+                <th colspan="5" class='b_bottom'>Daily report of {{result.params.when}}</th>
                 <th class='b_left b_bottom'>Where</th>
-                <th class='b_bottom'><?php echo $where; ?></th>
+                <th class='b_bottom'>{{result.params.center}}</th>
                 <th class='b_bottom'></th>
                 <th class='b_left b_bottom'>0-300</th>
                 <th class='b_bottom'>301-500</th>
