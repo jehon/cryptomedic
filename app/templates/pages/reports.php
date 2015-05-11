@@ -68,32 +68,11 @@
 		<div class='col-sm-offset-3 col-sm-6'>
 			<fieldset id='add'>
 				<legend>Global reporting</legend>
-				<h3>Daily Report</h3>
-				If you want to know your daily activity, choose this report.<br>
-				Options: the day, and optionnaly the examiner and the center.<br>
-				<br>
-				<a class='btn btn-primary' href='#/reports/dailyActivity'>Daily report</a>
-				<br>
-
-				<h3>Monthly Activity Report</h3>
-				If you want to know your activity on a month, choose this report<br>
-				Options: the month, and optionnaly the examiner and the center.<br>
-				<br>
-				<a class='btn btn-primary' href='#/reports/monthlyActivity'>Monthly Activity Report</a>
-				<br>
-				
-				<h3>Monthly Statistical Report</h3>
-				If you want to know the monthly activity of the SARPV CDC, choose this report<br>
-				Options: the month.<br>
-				<br>
-				<a class='btn btn-primary' href='#/reports/monthlyStatistical'>Monthly Statistical Report</a>
-				<br>
-			
-<!-- 				<h3>Activity report</h3> -->
-<!-- 				Report what has been done this last 12 months in the applications.<br> -->
-
-<!-- 				<a class='btn btn-primary' href='#/reports/activity'>Activity report</a> -->
-				<br>
+				<div ng-repeat='(k,r) in reports'>
+					<h3>{{r.name}}</h3>
+					<div ng-bind-html="r.description"></div>
+					<a class='btn btn-primary' href='#/reports/{{k}}'>{{r.name}}</a>
+				</div>
 			</fieldset>
 		</div>
 	</div>
