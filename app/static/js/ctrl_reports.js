@@ -29,6 +29,7 @@ mainApp.controller('ctrl_reports', [ '$scope', '$routeParams', 'service_backend'
 	}
 	
 	for(var k in $scope.reports) {
+	    // Make the content "trustable" to be shown as html
 	    $scope.reports[k].description = $sce.trustAsHtml($scope.reports[k].description);
 	}
 	$scope.getReport = function() {
@@ -44,31 +45,34 @@ mainApp.controller('ctrl_reports', [ '$scope', '$routeParams', 'service_backend'
 	}
 
 	$scope.refresh = function() {
-		angular.forEach($scope.reports[report], function(v) {
-			cache_commons.set(v, $scope.values[v]);
-		});
+	    if (!report) {
+		return;
+	    }
+	    angular.forEach($scope.reports[report], function(v) {
+		cache_commons.set(v, $scope.values[v]);
+	    });
 
-		var res = report + ".html?";
-		if ($scope.values.date) {
-			$scope.values.date = new Date($scope.values.date);
-			$scope.values.date.setUTCHours(0, 0, 0, 0);
-		}
+	    var res = report + ".html?";
+	    if ($scope.values.date) {
+		$scope.values.date = new Date($scope.values.date);
+		$scope.values.date.setUTCHours(0, 0, 0, 0);
+	    }
 
-		service_backend.getReport(report, $scope.values).done(function(data) {
-		    $scope.result = data;
-		});
+	    service_backend.getReport(report, $scope.values).done(function(data) {
+		$scope.result = data;
+	    });
 		
-		angular.forEach($scope.reports[report], function(value) {
-			if (typeof($scope.values[value]) != 'undefined') {
-				var v = $scope.values[value];
-				if (v instanceof Date) {
-					v = v.toISOString();
-				}
-				res += value + "=" + v + "&";
-			}
-		});
-		res += "ts=" + (new Date()).getTime();
-		$scope.url = res;
+	    angular.forEach($scope.reports[report].params, function(value) {
+		if (typeof($scope.values[value]) != 'undefined') {
+		    var v = $scope.values[value];
+		    if (v instanceof Date) {
+			v = v.toISOString();
+		    }
+		    res += value + "=" + v + "&";
+		}
+	    });
+	    res += "ts=" + (new Date()).getTime();
+	    $scope.url = res;
 	}
 
 	$scope.refresh();

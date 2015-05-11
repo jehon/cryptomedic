@@ -174,6 +174,8 @@ mainApp.factory('service_backend', [ '$http', '$rootScope', function($http, $roo
 	    });
 	},
 	'getReport': function(reportName, data) {
+	    console.log(reportName);
+	    console.log(data);
 	    return treatHttp($http.get(rest + "/reports/" + reportName, { 'params': data }), 
 		    function(data) { return data; }
 	    	);

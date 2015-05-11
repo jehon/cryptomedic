@@ -21,8 +21,8 @@ class ReportActivityController extends ReportController {
 		
 	public function index($when) {
 		$this->result['params']['when'] = $when;
-		$examiner = Request::input("examiner", "");
-		$where = Request::input("center", "");
+		$examiner = $this->getReportParams("examiner", "");
+		$where = $this->getReportParams("center", "");
 		
 		$this->result['list'] = DB::select("SELECT
 				bills.id as bid,
