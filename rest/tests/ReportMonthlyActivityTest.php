@@ -2,7 +2,7 @@
 
 require_once("RouteReferenceTestCase.php");
 
-class ReportMonthlyActivityTest extends ReportDailyTest {
+class ReportMonthlyActivityTest extends ReportDailyActivityTest {
 
 	public function setUp() {
 		parent::setUp();
