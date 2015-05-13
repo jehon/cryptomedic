@@ -19,12 +19,12 @@ class ReportController extends Controller {
 		$this->beforeFilter(function() {
 			$this->params = Request::all();
 			
-			if (array_key_exists('data', $this->params)) {
+			if (array_key_exists('date', $this->params)) {
 				// Special treatment for date
 				if ($this->params['date'] instanceof DateTime) {
 					$this->params['date'] = $this->params['date']->format("Y-m-d");
 				} else {
-					if (strlen($result->params['date']) > 9) {
+					if (strlen($this->params['date']) > 9) {
 						$this->params['date'] = substr($this->params['date'], 0, 10);
 					}
 				}
@@ -45,8 +45,11 @@ class ReportController extends Controller {
 		});		
 	}
 	
-	public function getReportParams($name, $default) {
-		$ret = Request::input($name, $default);
+	public function getReportParams($name, $default = null) {
+		$ret = $default;
+		if (array_key_exists($name, $this->params)) {
+			$ret = $this->params[$name];
+		}
 		$this->result['params'][$name] = $ret;
 		return $ret;
 	}
