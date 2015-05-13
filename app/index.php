@@ -109,7 +109,7 @@
 		      		<img src="static/img/patientsSearch.gif" height="20px"/>
 		      		Search a patient
 		      	</a></li>
-		      	<li><a href="#/day" class="navbar-link">
+		      	<li><a href="#/reports/consultations" class="navbar-link">
 		      		<img src="static/img/consultOfDay.gif" height="20px"/>
 		      		Consults of the day
 		      	</a></li>
