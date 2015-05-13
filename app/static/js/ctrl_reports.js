@@ -7,24 +7,36 @@ mainApp.controller('ctrl_reports', [ '$scope', '$routeParams', 'service_backend'
 		if (v === null) $scope.values[k] = "";
 	});
 	
+	var templateBase = "templates/reports/";
 	$scope.reports = {
 		'dailyActivity': { 
 		    name: 'Daily Report',
 		    description: "If you want to know your daily activity, choose this report.<br>"
 			+ "Options: the day, and optionnaly the examiner and the center.<br>",
-		    params: [ "center", "date", "examiner" ]
+		    params: [ "center", "date", "examiner" ],
+		    templateUrl: templateBase + "dailyActivity.php"
 		},
 		'monthlyActivity': {
-		    name: 'Monthly Activity Report',
+		    name: 'Monthly Report',
 		    description: "If you want to know your activity on a month, choose this report<br>"
 			+ "Options: the month, and optionnaly the examiner and the center.<br>",
-		    params: [ "center", "examiner", "month" ]
+		    params: [ "center", "examiner", "month" ],
+		    templateUrl: templateBase + "dailyActivity.php"
 		},
 		'monthlyStatistical': {
 		    name: 'Monthly Statistical Report',
 		    description: "If you want to know the monthly activity of the SARPV CDC, choose this report<br>"
 			+ "Options: the month.",
-		    params: [ "month" ]
+		    params: [ "month" ],
+		    templateUrl: '/rest/reports/monthlyStatistical'
+		},
+		'consultations': {
+		    name: 'Consultations planned',
+		    description: "List of consultations planned on a specific day in a specific center.<br>"
+			+ "See also the button in the menu<br>"
+			+ "Options: the day and the center.",
+		    params: [ "date", "center" ],
+		    templateUrl: templateBase + "consultations.php"
 		}
 	}
 	
@@ -34,7 +46,7 @@ mainApp.controller('ctrl_reports', [ '$scope', '$routeParams', 'service_backend'
 	}
 	$scope.getReport = function() {
 		if (report) {
-			return report;
+			return $scope.reports[report];
 		}
 		return false;
 	}
@@ -48,32 +60,28 @@ mainApp.controller('ctrl_reports', [ '$scope', '$routeParams', 'service_backend'
 	    if (!report) {
 		return;
 	    }
-	    angular.forEach($scope.reports[report], function(v) {
-		cache_commons.set(v, $scope.values[v]);
-	    });
 
-	    var res = report + ".html?";
 	    if ($scope.values.date) {
 		$scope.values.date = new Date($scope.values.date);
 		$scope.values.date.setUTCHours(0, 0, 0, 0);
 	    }
 
+	    angular.forEach($scope.reports[report].params, function(v) {
+		console.info("saving " + v + " = " + $scope.values[v]);
+		cache_commons.set(v, $scope.values[v]);
+	    });
+
 	    service_backend.getReport(report, $scope.values).done(function(data) {
 		$scope.result = data;
 	    });
-		
-	    angular.forEach($scope.reports[report].params, function(value) {
-		if (typeof($scope.values[value]) != 'undefined') {
-		    var v = $scope.values[value];
-		    if (v instanceof Date) {
-			v = v.toISOString();
-		    }
-		    res += value + "=" + v + "&";
-		}
-	    });
-	    res += "ts=" + (new Date()).getTime();
-	    $scope.url = res;
 	}
 
 	$scope.refresh();
+	
+	$scope.age = function(year) {
+	    if (year) {
+		return (new Date()).getFullYear() - year;
+	    }
+	    return "-";
+	}
 }]);

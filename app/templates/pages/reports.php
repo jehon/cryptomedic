@@ -3,7 +3,11 @@
 ?>
 <div ng-if="getReport()" class='container-fluid'>
 	<div class='row'>
-		<div class='col-sm-offset-3 col-sm-6'>
+		<div class='col-sm-6'>
+			<h1>{{getReport().name}}</h1>
+			<div ng-bind-html='getReport().description'></div>
+		</div>
+		<div class='col-sm-6'>
 			<fieldset>
 				<legend>Parameters</legend>
 				<form class="form-horizontal" role="form">
@@ -60,7 +64,7 @@
 		    		onclick="return ExcellentExport.excel(this, jQuery('#report_table table')[0], 'cryptomedic');">
 		    	Export current table in XLS</a>
     </div>
-	<div ng-include="'/rest/reports/' + url	" id='report_table'></div>
+	<div ng-include="getReport().templateUrl" id='report_table'></div>
 </div>
 
 <div class='container-fluid' ng-if="!getReport()">
@@ -71,7 +75,10 @@
 				<div ng-repeat='(k,r) in reports'>
 					<h3>{{r.name}}</h3>
 					<div ng-bind-html="r.description"></div>
-					<a class='btn btn-primary' href='#/reports/{{k}}'>{{r.name}}</a>
+					<br>
+					<div>
+						<a class='btn btn-primary' href='#/reports/{{k}}'>{{r.name}}</a>
+					</div>
 				</div>
 			</fieldset>
 		</div>
