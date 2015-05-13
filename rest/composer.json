@@ -45,6 +45,9 @@
 		"test": [
 			"phpunit"
 		],
+		"testcommit": [
+			"export COMMIT=1 && phpunit"
+		],
 		"site": [
 			"phpunit --coverage-clover=tmp/coverage.xml --coverage-html=tmp/coverage/",
 			"sonarrunner",
