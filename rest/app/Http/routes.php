@@ -53,7 +53,7 @@ Route::group(array('middleware' => 'auth'), function() {
 	Route::resource('price', "PriceController");
 	
 	Route::get('reports/consultations', [
-		"uses" => "ConsultationController@index"
+		"uses" => "ReportConsultationsController@index"
 	]);
 	
 	Route::get('reports/dailyActivity', [
