@@ -2,9 +2,9 @@
 
 require_once("RouteReferenceTestCase.php");
 
-class DailyActivityReportTest extends RouteReferenceTestCase {
+class ReportDailyActivityTest extends RouteReferenceTestCase {
 	protected $dateParam;
-	
+
 	protected function thisAssertResponse($json) {
 		$this->assertObjectHasAttribute('params', $json);
 		$this->assertObjectHasAttribute('list', $json);

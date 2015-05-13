@@ -2,10 +2,14 @@
 
 require_once("RouteReferenceTestCase.php");
 
-class ReportTest extends RouteReferenceTestCase {
-
-	public function testsConsultation() {
+class ReportConsultationsTest extends RouteReferenceTestCase {
+	public function setUp() {
+		parent::setUp();
 		$this->setUrl("reports/consultations");
+	}
+	
+	public function testsConsultation() {
+		$this->setParams([ "day" => "2015-04-26" ]);
 		$this->myAssertUnauthorized();
 
 		$this->myAssertResponseForReference("readonly");
@@ -14,11 +18,13 @@ class ReportTest extends RouteReferenceTestCase {
 		$this->myAssertResponseForReference("admin");
 		
 		$json = $this->myAssertJSON("admin");
-		$this->assertEquals(100, count($json));
+		$this->assertObjectHasAttribute('params', $json);
+		$this->assertObjectHasAttribute('list', $json);
+		$this->assertTrue(count($json->list) >= 1);
 	}
 	
 	public function testsConsultationByDay() {
-		$this->setUrl("reports/consultations?day=2015-04-26");
+		$this->setParams([ "day" => "2015-04-26" ]);
 		$this->myAssertUnauthorized();
 		
 		$this->myAssertResponseForReference("readonly");
@@ -28,13 +34,13 @@ class ReportTest extends RouteReferenceTestCase {
 
 		$json = $this->myAssertJSON("admin");
 		$this->assertLessThanOrEqual(100, count($json));
-		foreach($json as $k => $v) {
+		foreach($json->list as $k => $v) {
 			$this->assertEquals($v->c_nextAppointment, "2015-04-26");
 		}
 	}
 
 	public function testsConsultationByCenter() {
-		$this->setUrl("reports/consultations?center=Chakaria");
+		$this->setParams([ "center" => "Chakaria" ]);
 		$this->myAssertUnauthorized();
 	
 		$this->myAssertResponseForReference("readonly");
@@ -44,13 +50,13 @@ class ReportTest extends RouteReferenceTestCase {
 	
 		$json = $this->myAssertJSON("admin");
 		$this->assertLessThanOrEqual(100, count($json));
-		foreach($json as $k => $v) {
+		foreach($json->list as $k => $v) {
 			$this->assertEquals($v->c_Center, "Chakaria");
 		}
 	}
 
 	public function testsConsultationByDayAndCenter() {
-		$this->setUrl("reports/consultations?day=2015-04-26&center=Chakaria");
+		$this->setParams([ "day" => "2015-04-26", "center" => "Chakaria" ]);
 		$this->myAssertUnauthorized();
 	
 		$this->myAssertResponseForReference("readonly");
@@ -60,7 +66,7 @@ class ReportTest extends RouteReferenceTestCase {
 	
 		$json = $this->myAssertJSON("admin");
 		$this->assertLessThanOrEqual(100, count($json));
-		foreach($json as $k => $v) {
+		foreach($json->list as $k => $v) {
 			$this->assertEquals($v->c_nextAppointment, "2015-04-26");
 			$this->assertEquals($v->c_Center, "Chakaria");
 		}
