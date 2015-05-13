@@ -4,7 +4,7 @@ mainApp.factory('cache_commons', [ function() {
 	var now = new Date();
 	var c = cache_storage();
 	c.get("examiner", "");
-	c.get("center", 992);
+	c.get("center", "");
 	c.get("date", now);
 	// For month: take last month
 	// !! month is take from 0 in javascript, transform that
