@@ -11,3 +11,8 @@
 		}
 		return false;
 	});
+
+	// Same as from ReportController
+	function clean($c) {
+		return str_replace(["'", " ", "\""], "", $c);
+	}	
