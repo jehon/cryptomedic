@@ -53,4 +53,35 @@ class ReportController extends Controller {
 		$this->result['params'][$name] = $ret;
 		return $ret;
 	}
+
+	/**
+	 * 
+	 * @param unknown $sql A sql statement returning "res"
+	 */
+	function getOneBySQL($sql) {
+		$res = DB::select($sql);
+		$res = array_pop($res);
+		return $res->res;
+	}
+	
+	/**
+	 * Set a value into an array with a dot notation path
+	 * @param unknown $path "key1.key2.key3"
+	 * @param unknown $val
+	 * @return unknown $val
+	 */
+	public function resultPathSet($path, $val) {
+		$loc = &$this->result;
+		foreach(explode('.', $path) as $step) {
+			if (!array_key_exists($step, $loc)) {
+				$loc[$step] = array();
+			}
+			$loc = &$loc[$step];
+		}
+		return $loc = $val;
+	}
+
+	static public function clean($c) {
+		return str_replace(["'", " ", "\""], "", $c);
+	}
 }
