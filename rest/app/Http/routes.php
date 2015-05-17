@@ -41,11 +41,8 @@ Route::controllers([
 Route::group(array('middleware' => 'auth'), function() {
 	Route::get('home', 'HomeController@index');
 	
-	// Search folders
-	// Get one folder
 	Route::resource('folder', "FolderController");
 
-	// Related route
 	Route::get('related/{model}/{id}', [
 		"uses" => "FolderController@related"
 	]);
@@ -64,8 +61,11 @@ Route::group(array('middleware' => 'auth'), function() {
 			"uses" => "ReportActivityController@monthly"
 	]);
 	
+	Route::get('reports/monthlyStatistical', [
+			"uses" => "ReportStatisticalController@monthly"
+	]);
+	
 	// TODO: report monthlyStatistical
-
 	// TODO: report activity (not implemented)
 	// TODO: report patients (not implemented)
 });

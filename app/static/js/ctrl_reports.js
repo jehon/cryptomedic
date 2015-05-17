@@ -28,7 +28,7 @@ mainApp.controller('ctrl_reports', [ '$scope', '$routeParams', 'service_backend'
 		    description: "If you want to know the monthly activity of the SARPV CDC, choose this report<br>"
 			+ "Options: the month.",
 		    params: [ "month" ],
-		    templateUrl: '/rest/reports/monthlyStatistical'
+		    templateUrl: templateBase + "monthlyStatistical.php"
 		},
 		'consultations': {
 		    name: 'Consultations planned',

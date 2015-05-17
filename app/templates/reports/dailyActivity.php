@@ -1,3 +1,6 @@
+<?php
+	require_once("../../../php/core.php");
+?>
 <div>
     <table class='reporting'>
         <thead>
