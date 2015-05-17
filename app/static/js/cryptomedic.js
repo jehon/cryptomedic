@@ -10,9 +10,10 @@ mainApp.config([ '$routeProvider', function($routeProvider) {
     }).when('/folder/:id/:page?/:mode?', {
         templateUrl: 'templates/pages/folder.php',
         controller: 'ctrl_folder',
-    }).when('/day', {
-        templateUrl: 'templates/pages/day.php',
-        controller: 'ctrl_day',
+// TODO: remove ctrl and template
+//    }).when('/day', {
+//        templateUrl: 'templates/pages/day.php',
+//        controller: 'ctrl_day',
     }).when('/reports/:report?', {
         templateUrl: 'templates/pages/reports.php',
         controller: 'ctrl_reports',

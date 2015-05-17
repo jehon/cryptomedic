@@ -109,16 +109,16 @@ mainApp.factory('service_backend', [ '$http', '$rootScope', function($http, $roo
 		return list;
 	    });
 	},
-	'searchForConsultations': function(day, center) {
-	    day = date2CanonicString(day, true);
-	    return treatHttp($http.get(rest + "/reports/consultations", { 'params': { 'day': day, 'center': center} }), function(data) {
-		var list = [];
-		for(var i in data) {
-		    list.push(new application.models.Patient(data[i]));
-		}
-		return list;
-	    });
-	},
+//	'searchForConsultations': function(day, center) {
+//	    day = date2CanonicString(day, true);
+//	    return treatHttp($http.get(rest + "/reports/consultations", { 'params': { 'day': day, 'center': center} }), function(data) {
+//		var list = [];
+//		for(var i in data) {
+//		    list.push(new application.models.Patient(data[i]));
+//		}
+//		return list;
+//	    });
+//	},
 	'checkReference': function(year, order) {
 	    return treatHttp($http.get(phprest + "/references/", 
 		{ 'params': { 
@@ -174,8 +174,6 @@ mainApp.factory('service_backend', [ '$http', '$rootScope', function($http, $roo
 	    });
 	},
 	'getReport': function(reportName, data) {
-	    console.log(reportName);
-	    console.log(data);
 	    return treatHttp($http.get(rest + "/reports/" + reportName, { 'params': data }), 
 		    function(data) { return data; }
 	    	);
