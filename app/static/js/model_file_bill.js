@@ -97,7 +97,7 @@ application.models.Bill = application.models.File.extend({
 			this.total_asked = 0;
 			return -1;
 		}
-		var price = cryptomedic.prices[this.price_id];
+		var price = server.settings.prices[this.price_id];
 		var total = 0;
 		angular.forEach(price, function(p, i) {
 			if (i[0] == "_") return;
@@ -134,7 +134,7 @@ application.models.Bill = application.models.File.extend({
 			//console.warn("calculate_percentage_asked(): no social level");
 			return 1;
 		}
-		var price = cryptomedic.prices[this.price_id];
+		var price = server.settings.prices[this.price_id];
 		if (typeof(price["socialLevelPercentage_" + sl]) == "undefined") {
 			//console.warn("calculate_percentage_asked(): no social level in price for sl " + sl);
 			return 1;
@@ -144,12 +144,12 @@ application.models.Bill = application.models.File.extend({
 	},
 	'getPriceFor': function(key) {
 		if (!this.price_id) return 0;
-		return cryptomedic.prices[this.price_id][key];
+		return server.settings.prices[this.price_id][key];
 	},
 	'getTotalFor': function(key) {
 		if (!this.price_id) return 0;
 		if (!this[key]) return 0;
-		return cryptomedic.prices[this.price_id][key] * this[key];
+		return server.settings.prices[this.price_id][key] * this[key];
 	},
 	'calculatePriceId': function() {
 		if (typeof(this.Date) == "undefined") {
@@ -159,7 +159,7 @@ application.models.Bill = application.models.File.extend({
 		this.price_id = -1;
 		var t = this;
 		var dref = this.Date;
-		angular.forEach(cryptomedic.prices, function(p, i) {
+		angular.forEach(server.settings.prices, function(p, i) {
 			// console.log(p);
 			if (((p['datefrom'] == null) || (p['datefrom'] <= dref))
 					&& ((p['dateto'] == null) || (p['dateto'] > dref))) {
@@ -173,7 +173,7 @@ application.models.Bill = application.models.File.extend({
 	},
 	'tagIt': function() {
 		if (pi < 0) {
-			angular.forEach(cryptomedic.prices[pi], function(v, i) {
+			angular.forEach(server.settings.prices[pi], function(v, i) {
 				var tag = "[pricefor=" + i + "]";
 				if (v > 0) {
 					jQuery(tag).html(v);
@@ -190,7 +190,7 @@ application.models.Bill = application.models.File.extend({
 		var total = 0;
 		_(jQuery('input:enabled[type=number]')).each(function(v, i) {
 			var n = jQuery(v).attr('name').replace("data[", "").replace("]", "");
-			var p = cryptomedic.prices[pi][n]; 
+			var p = server.settings.prices[pi][n]; 
 			if ((typeof(p) != 'undefined') && (p > 0)) {
 				total += p * jQuery(v).val();
 			}
@@ -199,7 +199,7 @@ application.models.Bill = application.models.File.extend({
 		var total_social = total;
 		var sl = jQuery('[name="data[Sociallevel]"]:checked').val();
 		if ((typeof(sl) != undefined) && (sl >= "")) {
-			var psl = cryptomedic.prices[pi]['socialLevelPercentage_' + sl];
+			var psl = server.settings.prices[pi]['socialLevelPercentage_' + sl];
 			if ((typeof(psl) != 'undefined') && (psl >= 0)) {
 				total_social = total * psl;
 			}

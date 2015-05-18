@@ -77,11 +77,9 @@
 	
 		(new Script("static/css/application.css"))->dependFile()->toPrint();
 		
-// These two scripts require authentification...
+// This script require authentification...
 // TODO: put them in xhr? --> could pass the computer id in the call (and application version too)
-// TODO: put prices in settings...
 		(new Script("/rest/authenticate/settings?JSONP=server.setSettings&appVersion=" . $server->getVersion("cryptomedic") . " - " . $server->getVersion("rest")))->js()->dependDBTable("settings")->live()->toPrint();
-		(new Script("/rest/prices?JSONP=cryptomedic.setPrices"))->js()->dependDBTable("prices")->live()->toPrint();
 	?>
 	</head>
 	<body ng-app="app_main" ng-controller="ctrl" id="ng-app">

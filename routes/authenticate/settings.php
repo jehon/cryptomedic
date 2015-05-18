@@ -23,4 +23,11 @@ if ($v = $server->getRequest()->getParameter("version", false)) {
 	$data['version'] = $v;
 }
 
+$prices = $server->getDatabase()->query("SELECT * FROM prices");
+$prices2 = array();
+foreach($prices as $v) {
+	$prices2[$v['id']] = $v;
+}
+$data['prices'] = $prices2;
+
 $response->ok($data);

@@ -33,8 +33,6 @@ Route::controllers([
 	'password' => 'Auth\PasswordController',
 ]);
 
-// TODO: settings
-
 /**
  * Authenticated user needed
  */
@@ -65,18 +63,18 @@ Route::group(array('middleware' => 'auth'), function() {
 			"uses" => "ReportStatisticalController@monthly"
 	]);
 	
-	// TODO: report monthlyStatistical
-	// TODO: report activity (not implemented)
-	// TODO: report patients (not implemented)
+	// FIXME: report activity (not implemented)
+	// FIXME: report patients (not implemented)
 });
 
 
 // TODO: fiches (write mode)
 // TODO: upload (write mode)
 // TODO: references (new system?)
+// TODO: settings
 // TODO: users (admin mode)
 // TODO: offline sync --> middleware
-
+	
 // TODO: migrate "myfiles" and "database->getVersion()" to cryptomedic
 
 // 	Route::get('references', [

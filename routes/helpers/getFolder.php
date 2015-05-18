@@ -1,7 +1,5 @@
 <?php
 
-require_once("offline-sync.php");
-	
 function getFolder($id) {
 	global $server;
 	$patients = $server->getDatabase()->getTable("patients");
@@ -32,7 +30,6 @@ function getFolder($id) {
 			$res['subFiles'][] = $rv;
 		}
 	}
-	$res['_listing'] = getOfflineSyncData();
-	
+
 	return $res;
 }
