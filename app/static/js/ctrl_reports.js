@@ -7,28 +7,28 @@ mainApp.controller('ctrl_reports', [ '$scope', '$routeParams', 'service_backend'
 		if (v === null) $scope.values[k] = "";
 	});
 	
-	var templateBase = "templates/reports/";
+	var templateReportBase = cryptomedic.templateRoot + "/reports/";
 	$scope.reports = {
 		'dailyActivity': { 
 		    name: 'Daily Report',
 		    description: "If you want to know your daily activity, choose this report.<br>"
 			+ "Options: the day, and optionnaly the examiner and the center.<br>",
 		    params: [ "center", "date", "examiner" ],
-		    templateUrl: templateBase + "dailyActivity.php"
+		    templateUrl: templateReportBase + "dailyActivity.php"
 		},
 		'monthlyActivity': {
 		    name: 'Monthly Report',
 		    description: "If you want to know your activity on a month, choose this report<br>"
 			+ "Options: the month, and optionnaly the examiner and the center.<br>",
 		    params: [ "center", "examiner", "month" ],
-		    templateUrl: templateBase + "dailyActivity.php"
+		    templateUrl: templateReportBase + "dailyActivity.php"
 		},
 		'monthlyStatistical': {
 		    name: 'Monthly Statistical Report',
 		    description: "If you want to know the monthly activity of the SARPV CDC, choose this report<br>"
 			+ "Options: the month.",
 		    params: [ "month" ],
-		    templateUrl: templateBase + "monthlyStatistical.php"
+		    templateUrl: templateReportBase + "monthlyStatistical.php"
 		},
 		'consultations': {
 		    name: 'Consultations planned',
@@ -36,7 +36,7 @@ mainApp.controller('ctrl_reports', [ '$scope', '$routeParams', 'service_backend'
 			+ "See also the button in the menu<br>"
 			+ "Options: the day and the center.",
 		    params: [ "date", "center" ],
-		    templateUrl: templateBase + "consultations.php"
+		    templateUrl: templateReportBase + "consultations.php"
 		}
 	}
 	

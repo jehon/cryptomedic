@@ -5,8 +5,6 @@
 
 	define("TS_FORMAT", "Y-m-d H:i:s");
 	
-// TODO: check and cache some stuffs to see if these data need to be recalculated or not !!!
-
 	// By default, consider manifest mtime as a minimum
 	// This will be updated in addTs();
 	$lastModif = filemtime(__FILE__);
@@ -130,7 +128,7 @@
 		addLine("*");
 
 		addLine("");
-	}	
+	} // End of cache calculation	
 
 	if (isset($_SERVER['HTTP_IF_MODIFIED_SINCE']) && strtotime($_SERVER['HTTP_IF_MODIFIED_SINCE']) >= $lastModif) {
 		header('HTTP/1.0 304 Not Modified');

@@ -10,7 +10,7 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+//use Illuminate\Database\Eloquent\Model;
 use App\LockedModel;
 
 /**
@@ -45,9 +45,12 @@ class Bill extends LockedModel {
 		return false;
 	}
 	
-	public static function getFielsList($filter) {
+	public static function getFieldsList($filter, $fieldList = null) {
 		$res = array();
-		foreach(self::getTableColumnsList() as $v) {
+		if ($fieldList == null) {
+			$fieldList = self::getTableColumnsList();
+		}
+		foreach($fieldList as $v) {
 			if (self::is($v, $filter)) {
 				$res[] = $v;								
 			}

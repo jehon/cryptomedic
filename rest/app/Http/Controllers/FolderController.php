@@ -16,79 +16,65 @@ class FolderController extends Controller {
 		// Search through them
 		$req = DB::table('patients');
 	
-		if (Request::input("entryyear", false))
-		{
+		if (Request::input("entryyear", false)) {
 			$req->where('entryyear', '=', Request::input("entryyear", false));
 		} 
 	
-		if (Request::input("entryorder", false)) 
-		{ 
+		if (Request::input("entryorder", false)) { 
 			$req->where('entryorder', '=', Request::input("entryorder", false));
 		} 
 	
-		if (Request::input("Lastname", false))  
-		{
+		if (Request::input("Lastname", false)) {
 			$req->where(function($req) {
 				$req->where("Firstname", 'like', '%' . str_replace("j", "z", Request::input("Lastname", false)) .'%')
 					->orWhere("Lastname", 'like', '%' . str_replace("j", "z", Request::input("Lastname", false)) . '%');
 			});
 		}
 	
-		if (Request::input("Sex", false)) 
-		{ 
+		if (Request::input("Sex", false)) { 
 			$req->where('Sex', '=', Request::input("Sex", false));
 		} 
 	
-		if (Request::input("Yearofbirth", false)) 
-		{ 
+		if (Request::input("Yearofbirth", false)) { 
 			$req->where('Yearofbirth', '=', Request::input("Yearofbirth", false));
 		} 
 	
-		if (Request::input("Telephone", false)) 
-		{ 
+		if (Request::input("Telephone", false)) { 
 			$req->where('Telephone', 'like', '%' . Request::input("Telephone", false) . '%');
 		} 
 	
-		if (Request::input("pathology_Ricket", false)) 
-		{ 
+		if (Request::input("pathology_Ricket", false)) { 
 			$req->where('pathology_Ricket', '=', '1');
 		} 
 	
-		if (Request::input("pathology_Clubfoot", false)) 
-		{ 
+		if (Request::input("pathology_Clubfoot", false)) { 
 			$req->where('pathology_Clubfoot', '=', '1'); 
 		}
 		
-		if (Request::input("pathology_Burn", false)) 
-		{ 
+		if (Request::input("pathology_Burn", false)) { 
 			$req->where('pathology_Burn', '=', '1'); 
 		}
 		
-		if (Request::input("pathology_Polio", false)) 
-		{ 
+		if (Request::input("pathology_Polio", false)) { 
 			$req->where('pathology_Polio', '=', '1');  
 		}
 		
-		if (Request::input("pathology_CP", false)) 
-		{ 
+		if (Request::input("pathology_CP", false)) { 
 			$req->where('pathology_CP', '=', '1'); 
 		}
 		
-		if (Request::input("pathology_Congenital", false)) 
-		{ 
+		if (Request::input("pathology_Congenital", false)) { 
 			$req->where('pathology_Congenital', '=', '1'); 
 		}
 		
-		if (Request::input("pathology_Adult", false)) 
-		{ 
+		if (Request::input("pathology_Adult", false)) {
 			$req->where('pathology_Adult', '=', '1'); 
 		}
 		
 		$req->orderBy('entryyear', 'DESC')->take(100);
 	
-		$listing = $req->get(); //$server->getDatabase()->query($sql);
-		foreach($listing as $k => $v) 
-		{
+		$listing = $req->get();
+		foreach($listing as $k => $v) {
 			$listing[$k]->_type = 'Patient';
 		}
 		return response()->jsonOrJSONP($listing);
@@ -128,7 +114,6 @@ class FolderController extends Controller {
 		}
 		$r = array_pop($r);
 		return $this->show($r->patient_id);
-// 		return response()->jsonOrJSONP($r->patient_id);
 	}
 	
 	public function reference() {

@@ -109,16 +109,6 @@ mainApp.factory('service_backend', [ '$http', '$rootScope', function($http, $roo
 		return list;
 	    });
 	},
-//	'searchForConsultations': function(day, center) {
-//	    day = date2CanonicString(day, true);
-//	    return treatHttp($http.get(rest + "/reports/consultations", { 'params': { 'day': day, 'center': center} }), function(data) {
-//		var list = [];
-//		for(var i in data) {
-//		    list.push(new application.models.Patient(data[i]));
-//		}
-//		return list;
-//	    });
-//	},
 	'checkReference': function(year, order) {
 	    return treatHttp($http.get(phprest + "/references/", 
 		{ 'params': { 
@@ -143,9 +133,9 @@ mainApp.factory('service_backend', [ '$http', '$rootScope', function($http, $roo
 			return data;
 		}); 
 	},
-	'unlockFile': function(data, folderId) {
+	'createFile': function(data, folderId) {
 	    pcache.perish(folderId);
-	    return treatHttp($http({ method: "UNLINK", url: phprest + "/fiche/" + data['_type'] + "/" + data['id'] }), function(data) {
+	    return treatHttp($http.post(phprest + "/fiche/" + data['_type'], data), function(data, status, headers, config) {
 		pcache.set(data.getMainFile().id, data);
 		return data;				
 	    });
@@ -157,19 +147,19 @@ mainApp.factory('service_backend', [ '$http', '$rootScope', function($http, $roo
 		return data;				
 	    });
 	},
-	'createFile': function(data, folderId) {
-	    pcache.perish(folderId);
-	    return treatHttp($http.post(phprest + "/fiche/" + data['_type'], data), function(data, status, headers, config) {
-		pcache.set(data.getMainFile().id, data);
-		return data;				
-	    });
-	},
 	'deleteFile': function(data, folderId) {
 	    pcache.perish(folderId);
 	    return treatHttp($http.delete(phprest + "/fiche/" + data['_type'] + "/" + data['id']), function(data) {
 		if (data instanceof application.models.Folder) {
 		    pcache.set(data.getMainFile().id, data);
 		}
+		return data;				
+	    });
+	},
+	'unlockFile': function(data, folderId) {
+	    pcache.perish(folderId);
+	    return treatHttp($http({ method: "UNLINK", url: phprest + "/fiche/" + data['_type'] + "/" + data['id'] }), function(data) {
+		pcache.set(data.getMainFile().id, data);
 		return data;				
 	    });
 	},

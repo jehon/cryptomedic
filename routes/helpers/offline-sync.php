@@ -1,7 +1,7 @@
 <?php
 
 function getOfflineSyncData() {
-	// TODO
+	// TODO: offline sync
 	return null;
 	
 	

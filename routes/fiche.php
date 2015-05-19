@@ -1,6 +1,7 @@
 <?php
 
-require(__DIR__ . "/helpers/getFolder.php");
+require_once(__DIR__ . "/helpers/getFolder.php");
+require_once(__DIR__ . "/../php/references.php");
 
 class RouteFiche extends RouteDBTable {
 	const DATA_PREFIX = "data:image/";

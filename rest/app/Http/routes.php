@@ -36,7 +36,7 @@ Route::controllers([
 /**
  * Authenticated user needed
  */
-Route::group(array('middleware' => 'auth'), function() {
+Route::group(array('middleware' => 'authenticated'), function() {
 	Route::get('home', 'HomeController@index');
 	
 	Route::resource('folder', "FolderController");
@@ -62,17 +62,28 @@ Route::group(array('middleware' => 'auth'), function() {
 	Route::get('reports/monthlyStatistical', [
 			"uses" => "ReportStatisticalController@monthly"
 	]);
-	
-	// FIXME: report activity (not implemented)
-	// FIXME: report patients (not implemented)
 });
 
+Route::group(array('middleware' => 'writeGroup'), function() {
+	Route::resource('bills', "BillController", [ "only" => [ "show", "store", "update", "destroy" ]]);
+});
 
-// TODO: fiches (write mode)
-// TODO: upload (write mode)
+Route::group(array('middleware' => 'unFreezeGroup'), function() {
+	Route::get('unfreeze/bills/{id}', 'BillController@unfreeze');
+});
+	
+	
+// TODO: fiches bills
+// TODO: fiches ricket_consults
+// TODO: fiches nonricket_consults
+// TODO: fiches clubfoots
+// TODO: fiches surgery
+// TODO: fiches picture
+
 // TODO: references (new system?)
-// TODO: settings
+// TODO: authentification (+ settings)
 // TODO: users (admin mode)
+
 // TODO: offline sync --> middleware
 	
 // TODO: migrate "myfiles" and "database->getVersion()" to cryptomedic

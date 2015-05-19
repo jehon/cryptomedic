@@ -84,14 +84,6 @@ References::$lists["Pirani"] = References::buildValueList(array(0, 0.5, 1));
 References::$lists["0-10"] = References::buildValueList(array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
 References::$lists["Eval03"] = References::buildValueList([0, 1, 2, 3]);
 
-// References::$lists["oSurgery"] = References::buildLinkedList(array( 20, 312, 313, 314, 315, 316, 317, 318, 319 ));
-// References::$lists["oDevice"] = References::buildLinkedList(array( 42, 39, 37, 36, 33, 35, 38, 223, 40, 226, 232, 231, 225, 30, 224, 31, 234, 227, 230, 237, 235, 236, 29, 43 ));
-// References::$lists["oPain"] = References::buildLinkedList(array( 293, 294, 295 ));
-// References::$lists["oWalkingCapacities"] = References::buildLinkedList(array( 288, 289, 290, 291, 292 ));
-// References::$lists["oLegAnalysis"] = References::buildLinkedList(array( 157, 158 ));
-// References::$lists["oSide"] = References::buildLinkedList(array( 163, 164, 165 ));
-// References::$lists["oEval03"] = References::buildLinkedList(array( 219, 220, 221, 222 ));
-
 References::$model_listing['Bill.Center'] = References::$lists['Centers'];
 References::$model_listing['Bill.Sociallevel'] = References::$lists['SocialLevel'];
 
@@ -116,12 +108,10 @@ References::$model_listing['ClubFoot.WalkingFloorContactLeft'] = References::bui
 References::$model_listing['ClubFoot.WalkingFloorContactRight'] = References::buildValueList(array(0, 1, 2));
 References::$model_listing['ClubFoot.WalkingFirstContactLeft'] = References::buildValueList(array(0, 1, 2));
 References::$model_listing['ClubFoot.WalkingFirstContactRight'] = References::buildValueList(array(0, 1, 2));
-References::$model_listing['ClubFoot.JumpingOneLegLeft'] = References::buildValueList(array(0, 1)); // TODO: what is this?
-References::$model_listing['ClubFoot.JumpingOneLegRight'] = References::buildValueList(array(0, 1)); // TODO: what is this?
+References::$model_listing['ClubFoot.JumpingOneLegLeft'] = References::buildValueList(array(0, 1));
+References::$model_listing['ClubFoot.JumpingOneLegRight'] = References::buildValueList(array(0, 1));
 References::$model_listing['ClubFoot.RunLeft'] = References::buildValueList(array(0, 1, 2));
 References::$model_listing['ClubFoot.RunRight'] = References::buildValueList(array(0, 1, 2));
-// References::$model_listing['ClubFoot.MuscularInbalanceLeft'] = References::$lists["0-10"];
-// References::$model_listing['ClubFoot.MuscularInbalanceRight'] = References::$lists["0-10"];
 References::$model_listing['ClubFoot.Treatment'] = References::buildValueList(array("plaster", "tenotomy", "DB splint", "surgery"));
 
 References::$model_listing['NonricketConsult.Pain'] = References::$lists['Pain'];
