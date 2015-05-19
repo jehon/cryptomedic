@@ -15,7 +15,7 @@ INSERT INTO prices SELECT * FROM tmptable_1;
 -- drop the temporary table
 DROP TEMPORARY TABLE IF EXISTS tmptable_1;
 
-UPDATE prices SET created = NOW(), modified = NOW() WHERE dateto is NULL
+UPDATE prices SET created = NOW(), modified = NOW() WHERE dateto is NULL;
 
 -- add fields
 ALTER TABLE `bills` 
