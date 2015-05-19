@@ -1,4 +1,5 @@
 <?php
+require_once(__DIR__ . "/../../php/references.php");
 
 function getFolder($id) {
 	global $server;
@@ -23,7 +24,6 @@ function getFolder($id) {
 		$r = $server->getDatabase()->query("SELECT * FROM $c WHERE patient_id = :patient_id", array('patient_id' => $id));
 		foreach($r as $ri => $rv) {
 			$rv['_type'] = References::db2model($c);
-// 			$rv['_type'] = db2model($c);
 			$res['subFiles'][] = $rv;
 		}
 	}
