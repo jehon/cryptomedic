@@ -71,9 +71,11 @@
 				<legend>Conclusion</legend>
 				<table>
 					<?php (new t("ClubFoot.Treatment"))->tr()->p(); ?>
-					<?php (new t("ClubFoot.Comment"))->tr()->p(); ?>
-					<?php (new t("ClubFoot.Nextappointment"))->tr()->p(); ?>
-					<?php (new t("ClubFoot.NextCenter"))->tr()->p(); ?>
+
+					<?php //(new t("ClubFoot.Comment"))->tr()->p(); ?>
+					<?php //(new t("ClubFoot.Nextappointment"))->tr()->p(); ?>
+					<?php //(new t("ClubFoot.NextCenter"))->tr()->p(); ?>
+					<?php require("partials/consult-conclusion.php"); ?>
 				</table>
 			</FieldSet>
 		</div>

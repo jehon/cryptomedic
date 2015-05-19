@@ -84,11 +84,16 @@ References::$lists["Pirani"] = References::buildValueList(array(0, 0.5, 1));
 References::$lists["0-10"] = References::buildValueList(array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
 References::$lists["Eval03"] = References::buildValueList([0, 1, 2, 3]);
 
-References::$model_listing['Bill.Center'] = References::$lists['Centers'];
+/* Common fields */
+References::$model_listing['*.Center'] = References::$lists['Centers'];
+References::$model_listing['*.NextCenter'] = References::$lists["Centers"];
+References::$model_listing['*.TreatmentEvaluation'] = References::buildValueList(array(0, 1, 2, 3, 4));
+References::$model_listing['*.ExaminerName'] = References::$lists["examiner"];
+
+// References::$model_listing['Bill.Center'] = References::$lists['Centers'];
 References::$model_listing['Bill.Sociallevel'] = References::$lists['SocialLevel'];
 
-References::$model_listing['ClubFoot.Center'] = References::$lists['Centers'];
-References::$model_listing['ClubFoot.NextCenter'] = References::$lists["Centers"];
+// References::$model_listing['ClubFoot.NextCenter'] = References::$lists["Centers"];
 References::$model_listing['ClubFoot.CurvedLateralBorderLeft'] = References::$lists['Pirani'];
 References::$model_listing['ClubFoot.CurvedLateralBorderRight'] = References::$lists['Pirani'];
 References::$model_listing['ClubFoot.MedialCreaseLeft'] = References::$lists['Pirani'];
@@ -101,7 +106,7 @@ References::$model_listing['ClubFoot.RigidEquinusLeft'] = References::$lists['Pi
 References::$model_listing['ClubFoot.RigidEquinusRight'] = References::$lists['Pirani'];
 References::$model_listing['ClubFoot.EmptyHeelLeft'] = References::$lists['Pirani'];
 References::$model_listing['ClubFoot.EmptyHeelRight'] = References::$lists['Pirani'];
-References::$model_listing['ClubFoot.ExaminerName'] = References::$lists["examiner"];
+// References::$model_listing['ClubFoot.ExaminerName'] = References::$lists["examiner"];
 References::$model_listing['ClubFoot.PainLeft'] = References::buildValueList(array(0, 1, 2));
 References::$model_listing['ClubFoot.PainRight'] = References::buildValueList(array(0, 1, 2));
 References::$model_listing['ClubFoot.WalkingFloorContactLeft'] = References::buildValueList(array(0, 1, 2));
@@ -118,9 +123,9 @@ References::$model_listing['NonricketConsult.Pain'] = References::$lists['Pain']
 References::$model_listing['NonricketConsult.Side'] = References::$lists['Side'];
 References::$model_listing['NonricketConsult.Surgery66'] = References::$lists['Surgery'];
 References::$model_listing['NonricketConsult.Walk'] = References::$lists['WalkingCapacities'];
-References::$model_listing['NonricketConsult.Center'] = References::$lists['Centers'];
-References::$model_listing['NonricketConsult.NextCenter'] = References::$lists["Centers"];
-References::$model_listing['NonricketConsult.ExaminerName'] = References::$lists["examiner"];
+// References::$model_listing['NonricketConsult.Center'] = References::$lists['Centers'];
+// References::$model_listing['NonricketConsult.NextCenter'] = References::$lists["Centers"];
+// References::$model_listing['NonricketConsult.ExaminerName'] = References::$lists["examiner"];
 
 References::$model_listing['Patient.District'] = References::$lists['Districts'];
 References::$model_listing['Patient.Sex'] = References::$lists['Sex'];
@@ -135,6 +140,6 @@ References::$model_listing['RicketConsult.RightLeg'] = References::$lists['LegAn
 References::$model_listing['RicketConsult.Surgery'] = References::$lists['Surgery'];
 References::$model_listing['RicketConsult.WalkingDifficulties'] = References::$lists['WalkingCapacities'];
 References::$model_listing['RicketConsult.Wristenlargement'] = References::$lists['Eval03'];
-References::$model_listing['RicketConsult.Center'] = References::$lists['Centers'];
-References::$model_listing['RicketConsult.NextCenter'] = References::$lists["Centers"];
-References::$model_listing['RicketConsult.ExaminerName'] = References::$lists["examiner"];
+// References::$model_listing['RicketConsult.Center'] = References::$lists['Centers'];
+// References::$model_listing['RicketConsult.NextCenter'] = References::$lists["Centers"];
+// References::$model_listing['RicketConsult.ExaminerName'] = References::$lists["examiner"];

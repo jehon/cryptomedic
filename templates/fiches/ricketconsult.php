@@ -50,9 +50,11 @@
 					<?php (new t("RicketConsult.conclusion_medical_vitaminD"))->tr()->p(); ?>
 					<?php (new t("RicketConsult.Surgery"))->tr()->p(); ?>
 					<?php (new t("RicketConsult.Brace"))->tr()->p(); ?>
-					<?php (new t("RicketConsult.Commentary"))->tr()->p(); ?>
-					<?php (new t("RicketConsult.Nextappointment"))->tr()->p(); ?>
-					<?php (new t("RicketConsult.NextCenter"))->tr()->p(); ?>
+
+					<?php //(new t("RicketConsult.Commentary"))->tr()->p(); ?>
+					<?php //(new t("RicketConsult.Nextappointment"))->tr()->p(); ?>
+					<?php //(new t("RicketConsult.NextCenter"))->tr()->p(); ?>
+					<?php require("partials/consult-conclusion.php"); ?>
 				</table>
 			</fieldset>
 		</div>

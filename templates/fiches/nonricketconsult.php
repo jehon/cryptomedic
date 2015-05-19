@@ -27,9 +27,11 @@
 				<legend>Conclusion</legend>
 				<table>
 					<?php (new t("NonricketConsult.Surgery66"))->tr("Surgery")->p(); ?>
-					<?php (new t("NonricketConsult.Othertreatment68"))->tr("Other treatment")->p(); ?>
-					<?php (new t("NonricketConsult.Nextappointment"))->tr()->p(); ?>
-					<?php (new t("NonricketConsult.NextCenter"))->tr()->p(); ?>
+					<?php //(new t("NonricketConsult.Othertreatment68"))->tr("Other treatment")->p(); ?>
+
+					<?php // (new t("NonricketConsult.Nextappointment"))->tr()->p(); ?>
+					<?php // (new t("NonricketConsult.NextCenter"))->tr()->p(); ?>
+					<?php require("partials/consult-conclusion.php"); ?>
 				</table>
 			</fieldset>		
 		</div>

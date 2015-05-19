@@ -155,10 +155,15 @@ class t {
         	$this->isList = true;
         	$this->listing = $options['list'];
         } else if (array_key_exists($header, References::$model_listing)) {
-            // $this->myType = "list";
+        	// Model.Field specific list
             $this->type = self::TYPE_LIST;
             $this->isList = true;
             $this->listing = References::$model_listing[$header];
+        } else if (array_key_exists("*.{$this->field}", References::$model_listing)) {
+        	// *.Field generic list
+            $this->type = self::TYPE_LIST;
+            $this->isList = true;
+            $this->listing = References::$model_listing["*.{$this->field}"];
         } else {
             switch($this->structure['pdo_type']) {
                 case PDO::PARAM_BOOL:

@@ -109,12 +109,12 @@
 		
 		addLine("");
 		addLine("# Templates");
-		foreach(MyFiles::glob("templates/*.php", true) as $f) {
+		foreach(MyFiles::glob("../templates/*.php", true) as $f) {
 			addFileTs($f);
-			if (substr($f, 0, strlen("templates/fiches/partials")) == "templates/fiches/partials") {
+			if (strpos($f, "partials") > 0) {
 				continue;
 			}	
-			if (substr($f, 0, strlen("templates/fiches")) == "templates/fiches") {
+			if (strpos($f, "fiches") > 0) {
 				addOne($f . "?mode=read");
 				addOne($f . "?mode=edit");		
 			} else {
