@@ -35,7 +35,7 @@ class ReportStatisticalController extends ReportController {
 		if ($list == "") { 
 			$list = "(1=0)";
 		}
-		foreach(Bill::getFielsList($filter) as $f) {
+		foreach(Bill::getFieldsList($filter) as $f) {
 			$this->resultPathSet("summary.$f", $this->getOneBySQL("SELECT count(*) as res From bills WHERE {$this->thismonth} AND ($f > 0)"));
 			$list .= "OR($f>0)";
 		}

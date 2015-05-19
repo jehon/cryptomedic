@@ -1,5 +1,9 @@
-<?php
-
+<?php 
+// 	echo "<pre>";
+// 	var_dump($_REQUEST);
+// 	var_dump($_SERVER);
+// 	echo "</pre>";
+	
 require_once("../config.php");
 require_once("../php/references.php");
 
@@ -475,7 +479,7 @@ if (array_key_exists("_unused", $_REQUEST) && $_REQUEST['_unused']) {
  	register_shutdown_function("T::showUnused");	
 }
 
-if (array_key_exists('REDIRECT_subquery', $_SERVER)) {
+if (array_key_exists('page', $_REQUEST) && $_REQUEST['page'] && ($_REQUEST['page'] != basename(__FILE__))) {
 	$template = $_SERVER['REDIRECT_subquery'];
 	// FIXME check that we don't go upstair the templates dir
 	$filename = __DIR__ . "/" . $template;
@@ -493,4 +497,6 @@ if (array_key_exists('REDIRECT_subquery', $_SERVER)) {
 			return 100;
 		}
 	}
+} else {
+	die("I say: invalid call");
 }

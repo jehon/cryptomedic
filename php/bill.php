@@ -22,7 +22,7 @@ class Bill {
 		return false;
 	}
 	
-	public static function getFielsList($filter) {
+	public static function getFieldsList($filter) {
 		$res = array();
 		foreach(self::$dbTable->getColumns() as $v) {
 			if (self::is($v, $filter)) {
