@@ -19,7 +19,8 @@
 		$request = $server->getRequest();
 		
 		function addLine($f) {
-			echo $f . "\n";
+// TODO: reactivate manifest
+// 			echo $f . "\n";
 		}
 	
 		function addOne($f) {
@@ -124,10 +125,10 @@
 		addLine("");
 		addLine("# online content (no cache) ");
 		addLine("");
-		addLine("NETWORK:");
-		addLine("*");
-
-		addLine("");
+	?>
+NETWORK:
+*
+	<?php 
 	} // End of cache calculation	
 
 	if (isset($_SERVER['HTTP_IF_MODIFIED_SINCE']) && strtotime($_SERVER['HTTP_IF_MODIFIED_SINCE']) >= $lastModif) {

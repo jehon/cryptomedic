@@ -11,14 +11,6 @@ use \References;
 
 
 class ReportActivityController extends ReportController {
-	public function daily() {
-		return $this->index($this->getReportParams('date', (new \DateTime())->format("Y-m-d") ));
-	}
-	
-	public function monthly() {
-		return $this->index($this->getReportParams('month', (new \DateTime())->format("Y-m") ));
-	}
-		
 	public function index($when) {
 		$this->result['params']['when'] = $when;
 		$examiner = $this->getReportParams("examiner", "");
@@ -52,18 +44,12 @@ class ReportActivityController extends ReportController {
 	        JOIN patients ON bills.patient_id = patients.id
 	        JOIN prices ON bills.price_id = prices.id
 	        WHERE (1 = 1)
-				AND (FIELD(:when, bills.Date, DATE_FORMAT(bills.Date, \"%Y-%m\"), DATE_FORMAT(bills.Date, \"%Y\")) > 0)
-				AND (FIELD(:where, '', bills.Center) > 0)
-	            AND (FIELD(:examiner, '', bills.ExaminerName) > 0)
+				AND " . $this->getReportParamFilter("when", "bills.Date") . "
+				AND " . $this->getReportParamFilter("center", "bills.Center") . "
+				AND " . $this->getReportParamFilter("examiner", "bills.ExaminerName") . "
 			ORDER BY bills.Date ASC, patients.entryyear ASC, patients.entryorder ASC
-			",
-			array(
-					'where' => $where,
-					'when' => $when,
-					'examiner' => $examiner
-			)
+			", $this->sqlBindParams
 		);
-		
 		$this->result['totals'] = array();
 		foreach($this->result['list'] as $i => $e) {
 			foreach($e as $k => $v) {

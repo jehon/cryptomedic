@@ -12,7 +12,8 @@
 		$mode = "online";
 	} else {
 		$mode = "appcache";
-		echo "manifest='manifest.php'";
+// TODO: reactivate manifest
+// 		echo "manifest='manifest.php'";
 	}
 ?> >
 	<head>

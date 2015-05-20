@@ -13,29 +13,36 @@ mainApp.controller('ctrl_reports', [ '$scope', '$routeParams', 'service_backend'
 		    name: 'Daily Report',
 		    description: "If you want to know your daily activity, choose this report.<br>"
 			+ "Options: the day, and optionnaly the examiner and the center.<br>",
-		    params: [ "center", "date", "examiner" ],
-		    templateUrl: templateReportBase + "dailyActivity.php"
+		    params: [ "center", "day", "examiner" ],
+		    templateUrl: templateReportBase + "activity.php"
 		},
 		'monthlyActivity': {
 		    name: 'Monthly Report',
 		    description: "If you want to know your activity on a month, choose this report<br>"
 			+ "Options: the month, and optionnaly the examiner and the center.<br>",
 		    params: [ "center", "examiner", "month" ],
-		    templateUrl: templateReportBase + "dailyActivity.php"
+		    templateUrl: templateReportBase + "activity.php"
 		},
 		'monthlyStatistical': {
 		    name: 'Monthly Statistical Report',
 		    description: "If you want to know the monthly activity of the SARPV CDC, choose this report<br>"
 			+ "Options: the month.",
 		    params: [ "month" ],
-		    templateUrl: templateReportBase + "monthlyStatistical.php"
+		    templateUrl: templateReportBase + "statistical.php"
+		},
+		'yearlyStatistical': {
+		    name: 'Yearly Statistical Report',
+		    description: "If you want to know the yearly activity of the SARPV CDC, choose this report<br>"
+			+ "Options: the year.",
+		    params: [ "year", "center", "examiner" ],
+		    templateUrl: templateReportBase + "statistical.php"
 		},
 		'consultations': {
 		    name: 'Consultations planned',
 		    description: "List of consultations planned on a specific day in a specific center.<br>"
 			+ "See also the button in the menu<br>"
 			+ "Options: the day and the center.",
-		    params: [ "date", "center" ],
+		    params: [ "day", "center" ],
 		    templateUrl: templateReportBase + "consultations.php"
 		}
 	}
@@ -61,9 +68,9 @@ mainApp.controller('ctrl_reports', [ '$scope', '$routeParams', 'service_backend'
 		return;
 	    }
 
-	    if ($scope.values.date) {
-		$scope.values.date = new Date($scope.values.date);
-		$scope.values.date.setUTCHours(0, 0, 0, 0);
+	    if ($scope.values.day) {
+		$scope.values.day = new Date($scope.values.day);
+		$scope.values.day.setUTCHours(0, 0, 0, 0);
 	    }
 
 	    angular.forEach($scope.reports[report].params, function(v) {

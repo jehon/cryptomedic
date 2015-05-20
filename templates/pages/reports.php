@@ -32,10 +32,10 @@
 			                </select>
 			            </div>
 				    </div>
-			      	<div ng-if="isParam('date')" class="form-group">
-				        <label class="col-sm-2 control-label">When ?</label>
+			      	<div ng-if="isParam('day')" class="form-group">
+				        <label class="col-sm-2 control-label">Day (yyyy-mm-dd)?</label>
 			        	<div class="col-sm-10">
-							<input name='date' type='date' ng-model='values.date' class="form-control">
+							<input name='day' type='date' ng-model='values.day' class="form-control">
 						</div>
 				    </div>
 			      	<div ng-if="isParam('month')" class="form-group">
@@ -44,7 +44,13 @@
 							<input name='month' ng-model='values.month' class="form-control">
 						</div>
 				    </div>
-			    	<div class="form-group">
+			      	<div ng-if="isParam('year')" class="form-group">
+				        <label class="col-sm-2 control-label">Year (yyyy)</label>
+			        	<div class="col-sm-10">
+							<input name='year' ng-model='values.year' class="form-control">
+						</div>
+				    </div>
+				    <div class="form-group">
 			    	    <div class="col-sm-offset-2 col-sm-10">
 					        <div class='btn btn-primary' ng-click="refresh()">Refresh</div>
 					    </div>

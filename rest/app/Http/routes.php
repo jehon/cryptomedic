@@ -62,6 +62,10 @@ Route::group(array('middleware' => 'authenticated'), function() {
 	Route::get('reports/monthlyStatistical', [
 			"uses" => "ReportStatisticalController@monthly"
 	]);
+
+	Route::get('reports/yearlyStatistical', [
+			"uses" => "ReportStatisticalController@yearly"
+	]);
 });
 
 Route::group(array('middleware' => 'writeGroup'), function() {
