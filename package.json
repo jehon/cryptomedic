@@ -9,6 +9,9 @@
     "bower": "^1.3",
     "grunt": "^0.4.5",
     "grunt-releaser": "latest",
+    "gulp": "^3.8.11",
+    "gulp-nightwatch": "^0.1.1",
+    "gulp-watch": "^4.2.4",
     "http-server": "latest",
     "karma": "latest",
     "karma-chrome-launcher": "latest",
@@ -18,6 +21,8 @@
     "karma-jasmine-html-reporter": "latest",
     "karma-junit-reporter": "latest",
     "karma-phantomjs-launcher": "latest",
+    "nightwatch": "^0.6.12",
+    "nightwatch-html-reporter": "^1.0.2",
     "phantomjs": "latest",
     "protractor": "~0.20.1",
     "shelljs": "latest"

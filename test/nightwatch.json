@@ -1,0 +1,34 @@
+{
+    "src_folders" : [ "test/end2end" ],
+    "output_folder" : "tmp/end2end",
+
+    "selenium" : {
+	"start_process" : true,
+	"start_session" : true,
+	"server_path" : "test/selenium-server-standalone-2.40.0.jar",
+	"log_path" : "tmp/output.log",
+	"host" : "127.0.0.1",
+	"port" : 4444,
+	"cli_args" : {
+	    "webdriver.chrome.driver" : "",
+	    "webdriver.ie.driver" : ""
+	}
+    },
+    "test_settings" : {
+	"default" : {
+	    "launch_url" : "http://localhost",
+	    "selenium_port"  : 4444,
+	    "selenium_host"  : "127.0.0.1",
+	    "silent": false,
+	    "screenshots" : {
+		"enabled" : false,
+		"path" : "tmp/end2end/images"
+	    },
+	    "desiredCapabilities": {
+		"browserName": "firefox",
+		"javascriptEnabled": true,
+		"acceptSslCerts": true
+	    }
+	}
+    }
+}
