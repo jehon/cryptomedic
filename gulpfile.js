@@ -21,5 +21,21 @@ gulp.task('test', function() {
     		}));
 });
 
+gulp.task('test-firefox', function() {
+        gulp.src('')
+        .pipe(nightwatch({
+                	configFile: 'test/nightwatch.json',
+			cliArgs: [ '--env firefox' ]
+                }));
+});
+
+gulp.task('test-live', function() {
+    gulp.src('')
+    .pipe(nightwatch({
+            	configFile: 'test/nightwatch.json',
+			cliArgs: [ '--env live' ]
+            }));
+});
+
 gulp.task('default', [ 'test' ]);
 

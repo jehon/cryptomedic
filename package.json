@@ -10,6 +10,7 @@
     "grunt": "^0.4.5",
     "grunt-releaser": "latest",
     "gulp": "^3.8.11",
+	"gulp-load-plugins": "latest",
     "gulp-nightwatch": "^0.1.1",
     "gulp-watch": "^4.2.4",
     "http-server": "latest",
@@ -23,7 +24,7 @@
     "karma-phantomjs-launcher": "latest",
     "nightwatch": "^0.6.12",
     "nightwatch-html-reporter": "^1.0.2",
-    "phantomjs": "latest",
+    "phantomjs": "^1.9.7",
     "protractor": "~0.20.1",
     "shelljs": "latest"
   },
