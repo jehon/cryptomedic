@@ -1,6 +1,17 @@
 var gulp = require('gulp');
 var plugins = require('gulp-load-plugins')();
 
+var exitStatus = 0;
+//gulp.on('err', function () {
+//	exitStatus = 1;
+//});
+
+process.on('exit', function (status) {
+	if (status < exitStatus) {
+	    process.exit(exitStatus);
+	}
+});
+
 // var browserSync = require('browser-sync').create();
 //gulp.task('serve', [ 'sass' ], function() {
 //    browserSync.init({
@@ -15,16 +26,19 @@ gulp.task('help', plugins.taskListing);
 
 gulp.task('test', function() {
     return gulp.src('')
-    .pipe(plugins.plumber({errorHandler: plugins.notify.onError("Error during task " + this.seq.slice(-1)[0] + ": <%= error.message %>")}))
+    .pipe(plugins.plumber({ errorHandler: plugins.notify.onError("Error during task " + this.seq.slice(-1)[0] + ": <%= error.message %>") }))
+    .pipe(plugins.plumber({ errorHandler: function() { process.exit(1); } }))
     .pipe(plugins.nightwatch({
 		configFile : 'test/nightwatch.json'
-    	}))
-    .pipe(plugins.notify(this.seq.slice(-1)[0] + ": done"));
+    }))
+    .pipe(plugins.notify(this.seq.slice(-1)[0] + ": done"))
+	;
 });
 
 gulp.task('test-phantomjs', function() {
     return gulp.src('')
     .pipe(plugins.plumber({errorHandler: plugins.notify.onError("Error during task " + this.seq.slice(-1)[0] + ": <%= error.message %>")}))
+    .pipe(plugins.plumber({ errorHandler: function() { process.exit(1); } }))
     .pipe(plugins.nightwatch({
 	configFile : 'test/nightwatch.json',
 	cliArgs : [ '--env phantomjs' ]
@@ -35,6 +49,7 @@ gulp.task('test-phantomjs', function() {
 gulp.task('test-live', function() {
     return gulp.src('')
     .pipe(plugins.plumber({errorHandler: plugins.notify.onError("Error during task " + this.seq.slice(-1)[0] + ": <%= error.message %>")}))
+    .pipe(plugins.plumber({ errorHandler: function() { process.exit(1); } }))
     .pipe(plugins.nightwatch({
 	configFile : 'test/nightwatch.json',
 	cliArgs : [ '--env live' ]
@@ -49,3 +64,4 @@ gulp.task('test-live', function() {
 // });
 
 gulp.task('default', [ 'help' ]);
+

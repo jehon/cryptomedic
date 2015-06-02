@@ -20,6 +20,7 @@
     "http-server": "latest",
     "nightwatch": "^0.6.12",
     "nightwatch-html-reporter": "^1.0.2",
+    "nightwatch-custom-commands-assertions": "https://github.com/jehon/nightwatch-custom-commands-assertions.git",
     "phantomjs": "latest",
     "protractor": "~0.20.1",
     "selenium-server": "latest",
