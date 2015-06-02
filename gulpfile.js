@@ -14,7 +14,7 @@ var plugins = require('gulp-load-plugins')();
 gulp.task('help', plugins.taskListing);
 
 gulp.task('test', function() {
-    gulp.src('')
+    return gulp.src('')
     .pipe(plugins.plumber({errorHandler: plugins.notify.onError("Error during task " + this.seq.slice(-1)[0] + ": <%= error.message %>")}))
     .pipe(plugins.nightwatch({
 		configFile : 'test/nightwatch.json'
@@ -23,7 +23,7 @@ gulp.task('test', function() {
 });
 
 gulp.task('test-phantomjs', function() {
-    gulp.src('')
+    return gulp.src('')
     .pipe(plugins.plumber({errorHandler: plugins.notify.onError("Error during task " + this.seq.slice(-1)[0] + ": <%= error.message %>")}))
     .pipe(plugins.nightwatch({
 	configFile : 'test/nightwatch.json',
@@ -33,7 +33,7 @@ gulp.task('test-phantomjs', function() {
 });
 
 gulp.task('test-live', function() {
-    gulp.src('')
+    return gulp.src('')
     .pipe(plugins.plumber({errorHandler: plugins.notify.onError("Error during task " + this.seq.slice(-1)[0] + ": <%= error.message %>")}))
     .pipe(plugins.nightwatch({
 	configFile : 'test/nightwatch.json',
