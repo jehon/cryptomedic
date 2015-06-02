@@ -2,7 +2,9 @@
     "src_folders" : [ "test/end2end" ],
     "output_folder" : "tmp/end2end",
     "page_objects_path" : "test/end2end/pages",
-
+    "custom_commands_path": "node_modules/nightwatch-custom-commands-assertions/js/commands",
+    "custom_assertions_path": "node_modules/nightwatch-custom-commands-assertions/js/assertions",
+    
     "selenium" : {
 	"start_process" : true,
 	"start_session" : true,
@@ -19,7 +21,18 @@
 	    "silent": true,
 	    "screenshots" : {
 		"enabled" : true,
-		"path" : "tmp/end2end/"
+		"path" : "tmp/end2end/firefox/"
+	    },
+    	    "desiredCapabilities": {
+		"browserName": "firefox",
+		"javascriptEnabled": true,
+		"acceptSslCerts": true
+	    }
+	},
+	"phantomjs" : {
+	    "screenshots" : {
+		"enabled" : true,
+		"path" : "tmp/end2end/phantomjs/"
 	    },
       	    "desiredCapabilities": {
 	        "browserName": "phantomjs",
@@ -28,16 +41,13 @@
 		"phantomjs.binary.path" : "node_modules/phantomjs/bin/phantomjs",
 		"path": "/var/ww/cryptomedic/"
       	    }
-	},
-	"firefox" : {
-    	    "desiredCapabilities": {
-		"browserName": "firefox",
-		"javascriptEnabled": true,
-		"acceptSslCerts": true
-	    }
     	},
     	"live": {
     	    "launch_url": "http://www.cryptomedic.org/",
+	    "screenshots" : {
+		"enabled" : false,
+		"path" : "tmp/end2end/live/"
+	    },
     	    "desiredCapabilities": {
 		"browserName": "firefox",
 		"javascriptEnabled": true,

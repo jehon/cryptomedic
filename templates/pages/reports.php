@@ -11,7 +11,7 @@
 			    	<div ng-if="isParam('examiner')" class="form-group">
 			        	<label class="col-sm-2 control-label">Examiner</label>
 			        	<div class="col-sm-10">
-			                <select name='center' ng-model='values.examiner' class="form-control">
+			                <select name='examiner' ng-model='values.examiner' class="form-control">
 			                <?php 
 			                	echo "<option value='' >* Anybody *</option>"; 
 			                	foreach(References::$lists['examiner'] as $k => $v) 
@@ -52,7 +52,7 @@
 				    </div>
 				    <div class="form-group">
 			    	    <div class="col-sm-offset-2 col-sm-10">
-					        <div class='btn btn-primary' ng-click="refresh()">Refresh</div>
+					        <div id='report_refresh_button' class='btn btn-primary' ng-click="refresh()">Refresh</div>
 					    </div>
 				    </div>
 			    </form>
@@ -80,7 +80,7 @@
 					<div ng-bind-html="r.description"></div>
 					<br>
 					<div>
-						<a class='btn btn-primary' href='#/reports/{{k}}'>{{r.name}}</a>
+						<a id='launch_report_{{k}}' class='btn btn-primary' href='#/reports/{{k}}'>{{r.name}}</a>
 					</div>
 				</div>
 			</fieldset>

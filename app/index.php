@@ -78,7 +78,7 @@
 		(new AllScripts("static/js/ctrl_*.js"))->dependFile()->toPrint();
 	
 		(new Script("static/css/application.css"))->dependFile()->toPrint();
-		
+
 // This script require authentification...
 // TODO: put them in xhr? --> could pass the computer id in the call (and application version too)
 		(new Script("/rest/authenticate/settings?JSONP=server.setSettings&appVersion=" . $server->getVersion("cryptomedic") . " - " . $server->getVersion("rest")))->js()->dependDBTable("settings")->live()->toPrint();
@@ -99,7 +99,7 @@
 		    <!-- Collect the nav links, forms, and other content for toggling -->
 		    <div class="collapse navbar-collapse" id="menuMain">
 		      <ul class="nav navbar-nav navbar-right">
-	        	<li><p class="navbar-text" id='login.logged.username'>{{server.settings.username}}</p></li>
+	        	<li><p class="navbar-text" id='login_loggedusername' ng-if='server.settings.username'>{{server.settings.username}}</p></li>
 	        	<li><p class="navbar-text" id='appCache_mode'><?php echo $mode; ?></p></li>
 		      	<li><a href="#/home" class="navbar-link">
 			    	<img src="static/img/home.gif" height="20px"/>
@@ -109,11 +109,11 @@
 		      		<img src="static/img/patientsSearch.gif" height="20px"/>
 		      		Search a patient
 		      	</a></li>
-		      	<li><a href="#/reports/consultations" class="navbar-link">
+		      	<li><a id=menu_consults href="#/reports/consultations" class="navbar-link">
 		      		<img src="static/img/consultOfDay.gif" height="20px"/>
 		      		Consults of the day
 		      	</a></li>
-		      	<li><a href="#/reports" class="navbar-link">
+		      	<li><a id=menu_reports href="#/reports" class="navbar-link">
 		      		<img src="static/img/reports.gif" height="20px"/>
 		      		Reports
 		      	</a></li>
@@ -143,7 +143,7 @@
 							</div>
 						</div>
 						<br>
-			        	<button ng-disabled="{{pending}}" id="login.go" ng-click="doLogin()" class="btn btn-lg btn-primary btn-block">Log in</button>
+			        	<button ng-disabled="{{pending}}" id="login_go" ng-click="doLogin()" class="btn btn-lg btn-primary btn-block">Log in</button>
 			      	</form>
 			      	<br>
 			    </div>
