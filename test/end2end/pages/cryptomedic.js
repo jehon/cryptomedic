@@ -12,7 +12,7 @@ module.exports = function(client) {
 		.setValue("#login_username", login)
 		.setValue("#login_password", password)
 		.pause(100)
-		.click("button#login_go")
+		.jqueryClick("button#login_go")
 		
 		.pause(100)
 		.saveScreenshot(client.screenshotsPath + "/1-2-loggin-in.png")
@@ -48,4 +48,21 @@ module.exports = function(client) {
 		.waitForElementVisible("#report_table table", 1000)
 	return client;
     }
+
+
+    this.myAssertCellContain = function(table, row, column, value) {
+	var selector = table + " tr:nth-child(" + row + ") td:nth-child(" +  column +")";
+	console.log(selector);
+	client.assert.containsText(selector, value);
+	return this;
+    }
+    
+    this.myClick = function(element) {
+	console.log(this);
+	
+	// window._phantom
+	
+	return this;
+    }
+    
 };
