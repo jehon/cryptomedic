@@ -112,6 +112,7 @@ class t {
     
     function __construct($key, array $options = array()) {
         $this->key = $key;
+        $this->jsId = str_replace([".", "#", " ", "/", "\\" ], "_", $this->key);
         $this->options = $options;
         $this->field = $key;
         
@@ -244,7 +245,7 @@ class t {
     
     function read() {
         if (!$this->linked2DB) {
-            $this->res .= "<span class='error'>Read: key is not in the database: '{$this->key}'</span>";
+            $this->res .= "<span id='{$this->jsId}' class='error'>Read: key is not in the database: '{$this->key}'</span>";
             return $this;
         }
 		if ($this->displayCode("r")) return $this;
@@ -252,29 +253,29 @@ class t {
         switch($this->type) {
             case self::TYPE_TIMESTAMP: 
                     // See https://docs.angularjs.org/api/ng/filter/date
-                    $this->res .= "<span id='{$this->key}'>{{ {$this->rawExpression} | date:'{self::DATETIMEFORMAT}' }}</span>";
+                    $this->res .= "<span id='{$this->jsId}'>{{ {$this->rawExpression} | date:'{self::DATETIMEFORMAT}' }}</span>";
                     break;
             case self::TYPE_BOOLEAN:
-                $this->res .= "<span id='{$this->key}' ng-show='{$this->rawExpression}'><img src='static/img/boolean-true.gif'></span>"
-                        . "<span id='{$this->key}' ng-hide='{$this->rawExpression}'><img src='static/img/boolean-false.gif'></span>";
+                $this->res .= "<span id='{$this->jsId}' ng-show='{$this->rawExpression}'><img src='static/img/boolean-true.gif'></span>"
+                        . "<span id='{$this->jsId}' ng-hide='{$this->rawExpression}'><img src='static/img/boolean-false.gif'></span>";
                 break;
             case self::TYPE_LIST:
-                $this->res .= "<span id='{$this->key}'>{{ {$this->rawExpression} }}</span>";
+                $this->res .= "<span id='{$this->jsId}'>{{ {$this->rawExpression} }}</span>";
                 break;
             case self::TYPE_DATE:
             // TODOJH: recheck this later - Workaround!!!
             //     // See https://docs.angularjs.org/api/ng/filter/date
-            //     $this->res .= "<span id='{$this->key}'>{{ {$this->rawExpression} | date:'{self::DATEFORMAT}' }}</span>";
+            //     $this->res .= "<span id='{$this->jsId}'>{{ {$this->rawExpression} | date:'{self::DATEFORMAT}' }}</span>";
             //     break;
             case self::TYPE_INTEGER:
             case self::TYPE_CHAR:
-            	$this->res .= "<span id='{$this->key}'>{{ {$this->rawExpression} }}</span>";
+            	$this->res .= "<span id='{$this->jsId}'>{{ {$this->rawExpression} }}</span>";
                 break;
             case self::TYPE_TEXT:
-                $this->res .= "<span id='{$this->key}' style='white-space: pre'>{{ {$this->rawExpression} }}</span>";
+                $this->res .= "<span id='{$this->jsId}' style='white-space: pre'>{{ {$this->rawExpression} }}</span>";
                 break;
             default:
-                $this->res .= "{$this->key} input";
+                $this->res .= "{$this->key} input id={$this->jsId}";
                 break;
         }
         return $this;
@@ -282,12 +283,12 @@ class t {
 
     function write() {
         if (!$this->linked2DB) {
-            $this->res .= "<span class='error'>Write: key is not in the database: '{$this->key}'</span>";
+            $this->res .= "<span id='{$this->jsId}'class='error'>Write: key is not in the database: '{$this->key}'</span>";
             return $this;
         }
         if ($this->displayCode("w")) return $this;
         
-        $inline = "class='form-control' ng-model='{$this->rawExpression}' "
+        $inline = "class='form-control' id='{$this->jsId}' ng-model='{$this->rawExpression}' "
             . ($this->required ? " required " : "")
             . $this->options['inline'];
 
@@ -330,7 +331,7 @@ class t {
                 }
                 break;
             case self::TYPE_TIMESTAMP: 
-                $this->res .= "<span>{{ {$this->rawExpression} | date:'{self::DATETIMEFORMAT}' }}</span>";
+                $this->res .= "<span id='{$this->jsId}'>{{ {$this->rawExpression} | date:'{self::DATETIMEFORMAT}' }}</span>";
                 break;
             case self::TYPE_BOOLEAN:
                 $this->res .= "<input type='checkbox' ng-model='{$this->rawExpression}' ng-true-value='1' ng-false-value='0' />";
@@ -339,7 +340,7 @@ class t {
                 $this->res .= "<input type='number' $inline />";    
                 break;  
             case self::TYPE_TEXT:
-                $this->res .= "<textarea  cols=40 rows=4 $inline></textarea>";
+                $this->res .= "<textarea cols=40 rows=4 $inline></textarea>";
                 break;
             case self::TYPE_CHAR:
                 $this->res .= "<input $inline />";
@@ -347,7 +348,7 @@ class t {
             case self::TYPE_DATE:
                 // TODOJH: date workaround
                 $uuid = self::UUID();
-                $this->res .= "<input type='text' $inline placeholder='yyyy-MM-dd' mycalendar uuid='$uuid'/>";
+                $this->res .= "<input id='{$this->jsId}' type='text' $inline placeholder='yyyy-MM-dd' mycalendar uuid='$uuid'/>";
                 $this->res .= "<span ng-if='errors.date_$uuid' class='jserror'>"
                     . "Invalid date: please enter yyyy-mm-dd"
                     . "</span>";

@@ -1,5 +1,12 @@
 module.exports = {
-	
+	'readonly': function(client) {
+	    client.page.cryptomedic()
+	    	.authenticate("readonly") 
+	    	.myClick("#menu_search")
+	    	.waitForElementPresent(".searchFields", 1000)
+	    	.waitForElementPresent("#Patient_entryyear", 1000)
+	    	.end();
+	},
 	
 	
     'reportMonthlyStatistical' : function(client) {

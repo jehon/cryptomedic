@@ -105,15 +105,15 @@
 			    	<img src="static/img/home.gif" height="20px"/>
 					Home
 			    </a></li>
-		      	<li><a href="#/search" class="navbar-link">
+		      	<li><a id='menu_search' href="#/search" class="navbar-link">
 		      		<img src="static/img/patientsSearch.gif" height="20px"/>
 		      		Search a patient
 		      	</a></li>
-		      	<li><a id=menu_consults href="#/reports/consultations" class="navbar-link">
+		      	<li><a id='menu_consults' href="#/reports/consultations" class="navbar-link">
 		      		<img src="static/img/consultOfDay.gif" height="20px"/>
 		      		Consults of the day
 		      	</a></li>
-		      	<li><a id=menu_reports href="#/reports" class="navbar-link">
+		      	<li><a id='menu_reports' href="#/reports" class="navbar-link">
 		      		<img src="static/img/reports.gif" height="20px"/>
 		      		Reports
 		      	</a></li>

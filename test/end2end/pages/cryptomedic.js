@@ -5,6 +5,9 @@ module.exports = function(client) {
     
     this.authenticate = function(login, password) {
 	password = password || "test";
+	if (!login) {
+	    throw new Error("Authenticate expect parameter 1 to be the login");
+	}
 	client.url(client.launch_url + '/cryptomedic/app/')
 		.watchLog(true)
 		.waitForElementVisible('body', 1000)
