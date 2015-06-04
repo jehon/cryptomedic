@@ -6,22 +6,23 @@ module.exports = function(client) {
     this.authenticate = function(login, password) {
 	password = password || "test";
 	client.url(client.launch_url + '/cryptomedic/app/')
+		.watchLog(true)
 		.waitForElementVisible('body', 1000)
 		.assert.title('Cryptomedic')
 		.saveScreenshot(client.screenshotsPath + "/1-1-loginpage.png")
 		.setValue("#login_username", login)
 		.setValue("#login_password", password)
 		.pause(100)
-		.jqueryClick("button#login_go")
-		
-		.pause(100)
-		.saveScreenshot(client.screenshotsPath + "/1-2-loggin-in.png")
-		.waitForElementPresent("#login_loggedusername", 1000)
+		.saveScreenshot(client.screenshotsPath + "/1-2-before-myclick.png")
+		.myClick("button#login_go")
+		.saveScreenshot(client.screenshotsPath + "/1-3-loggin-in.png")
+		.waitForElementPresent("#login_loggedusername", 5000)
+		.saveScreenshot(client.screenshotsPath + "/1-5-logged-in.png")
 		.assert.containsText("#login_loggedusername", login)
 		.assert.title('Cryptomedic')
-		.saveScreenshot(client.screenshotsPath + "/1-3-logged-in.png")
-	return client;
+		.saveScreenshot(client.screenshotsPath + "/1-6-ok.png")
 	authenticated = true;
+	return client;
     };   
     
     this.report = function(reportName, params) {
@@ -47,22 +48,5 @@ module.exports = function(client) {
 		.waitForElementVisible("#report_table", 5000)
 		.waitForElementVisible("#report_table table", 1000)
 	return client;
-    }
-
-
-    this.myAssertCellContain = function(table, row, column, value) {
-	var selector = table + " tr:nth-child(" + row + ") td:nth-child(" +  column +")";
-	console.log(selector);
-	client.assert.containsText(selector, value);
-	return this;
-    }
-    
-    this.myClick = function(element) {
-	console.log(this);
-	
-	// window._phantom
-	
-	return this;
-    }
-    
+    }    
 };
