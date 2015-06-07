@@ -52,7 +52,7 @@ gulp.task('test-live', function() {
     .pipe(plugins.plumber({ errorHandler: function() { process.exit(1); } }))
     .pipe(plugins.nightwatch({
 	configFile : 'test/nightwatch.json',
-	cliArgs : [ '--env live' ]
+	cliArgs : [ '--env live', '--tags readonly' ]
     }))
     .pipe(plugins.notify(this.seq.slice(-1)[0] + ": done"));
 });

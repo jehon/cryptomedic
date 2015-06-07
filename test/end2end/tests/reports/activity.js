@@ -1,5 +1,6 @@
 module.exports = {
-        'reportMonthlyActivity': function(client) {
+	'tags': [ 'readonly', 'reports' ],
+	'reportMonthlyActivity': function(client) {
             client.page.cryptomedic().report("monthlyActivity", { "month": "2014-10" })
             	.assert.myAssertCell("#report_table table", 1, 2, "2014-10-01")
             	.assert.myAssertCell("Ershad")

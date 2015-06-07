@@ -48,6 +48,8 @@
 		"enabled" : true,
 		"path" : "tmp/end2end/live/"
 	    },
+	    "tags": "readonly",
+	    "globals_path": "../../nightwatch_globals.json",
     	    "desiredCapabilities": {
 		"browserName": "firefox",
 		"javascriptEnabled": true,

@@ -36,7 +36,7 @@
 		</div>
 	</div>
    	<p class="text-center">
-		<span class="btn btn-primary" ng-click="submit()">Submit</span>
+		<span id='button_submit' class="btn btn-primary" ng-click="submit()">Submit</span>
 	</p>
 </div>
 <h1>Results</h1>
@@ -49,7 +49,7 @@
 	<div ng-if="listing.length == 0">No results</div>
 	<div ng-if="listing.length > 0">
         <div style='text-align: center; color: red'>Only the first 100 results are shown</div>
-	    <table class='table table-hover table-bordered tablesorter' pagesize="10">
+	    <table id='search_results' class='table table-hover table-bordered tablesorter' pagesize="10">
 	    	<thead>
 	    		<tr>
 	    			<th></th>
