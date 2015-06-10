@@ -15,8 +15,8 @@ class ReportController extends Controller {
 	protected $result = array();
 	
 // 	private $internalWhenFilter = " (1=1) ";
-	private $internalWhenFrom = "";
-	private $internalWhenTo = "";
+	protected $internalWhenFrom = "";
+	protected $internalWhenTo = "";
 	protected $sqlBindParams = array();
 	
 	public function yearly() {
@@ -86,6 +86,7 @@ class ReportController extends Controller {
 					}
 				}
 			}
+
 			$this->result['params'] = array();
 		});		
 	}
@@ -96,6 +97,10 @@ class ReportController extends Controller {
 			$ret = $this->params[$name];
 		}
 		$this->result['params'][$name] = $ret;
+		if ($name == "when") {
+			$this->result['params']['whenFrom'] = $this->internalWhenFrom;
+			$this->result['params']['whenTo'] = $this->internalWhenTo;
+		}
 		return $ret;
 	}
 
@@ -107,7 +112,7 @@ class ReportController extends Controller {
 			return "($fieldName BETWEEN :{$sqlParam}From AND :{$sqlParam}To)";
 		}
 		
-		$param = $this->getReportParams($paramName);
+		$param = $this->getReportParams($paramName, "");
 		$sqlParam = $paramName . count($this->sqlBindParams);
 		$this->sqlBindParams[$sqlParam] = $this->getReportParams($paramName);
 		

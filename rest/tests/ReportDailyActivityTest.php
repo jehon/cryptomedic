@@ -17,7 +17,7 @@ class ReportDailyActivityTest extends RouteReferenceTestCase {
 	}
 	
 	public function testByDate() {
-		$this->setParams(array( 'date' => '2014-10-01', 'month' => '2014-10' ));
+		$this->setParams(array( 'day' => '2014-10-01', 'month' => '2014-10', 'center' => 'Chakaria', 'examiner' => ''));
 		$this->myAssertUnauthorized();
 
 		$this->myAssertResponseForReference("readonly");
@@ -30,7 +30,7 @@ class ReportDailyActivityTest extends RouteReferenceTestCase {
 	}
 	
  	public function testsConsultationByCenter() {
-		$this->setParams(array( 'date' => '2014-10-01', 'month' => '2014-10', 'center' => 'Chakaria'));
+		$this->setParams(array( 'day' => '2014-10-01', 'month' => '2014-10', 'center' => 'Chakaria', 'examiner' => ''));
  		$this->myAssertResponseForReference("manager");
 		$json = $this->myAssertJSON("manager");
 		$this->thisAssertResponse($json);
@@ -40,17 +40,17 @@ class ReportDailyActivityTest extends RouteReferenceTestCase {
  	}
 
  	public function testsConsultationByExaminer() {
- 		$this->setParams(array( 'date' => '2014-10-01', 'month' => '2014-10', 'examiner' => 'Ershad'));
+ 		$this->setParams(array( 'day' => '2014-10-01', 'month' => '2014-10', 'center' => '', 'examiner' => 'Ershad'));
  		$this->myAssertResponseForReference("manager");
  		$json = $this->myAssertJSON("manager");
- 		$this->thisAssertResponse($json);
+		$this->thisAssertResponse($json);
  		foreach($json->list as $k => $v) {
  			$this->assertEquals("Ershad", $v->ExaminerName);
   		}
  	}
  	
  	public function testsConsultationByCenterAndExaminer() {
- 		$this->setParams(array( 'date' => '2014-10-01', 'month' => '2014-10', 'center' => "Chakaria", 'examiner' => 'Ershad'));
+ 		$this->setParams(array( 'day' => '2014-10-01', 'month' => '2014-10', 'center' => "Chakaria", 'examiner' => 'Ershad'));
  		$this->myAssertResponseForReference("manager");
  		$json = $this->myAssertJSON("manager");
  		$this->thisAssertResponse($json);

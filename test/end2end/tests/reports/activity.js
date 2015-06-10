@@ -6,9 +6,10 @@ module.exports = {
             	.assert.myAssertCell("Ershad")
             	.assert.myAssertCell("Chakaria")
             	.assert.myAssertCell("2013-254")
-            	.assert.myAssertCell("MOHAMMADUL MOHAMMED")
+            	.assert.myAssertCell("Md Mahamud")
             	.assert.myAssertCell("3")
             	.assert.myAssertCell("Male")
+            	.assert.myAssertCell("Old")
             	.assert.myAssertCell("10000")
             	.assert.myAssertCell("12")
             	.assert.myAssertCell("833")
@@ -25,7 +26,7 @@ module.exports = {
             	.assert.myAssertCell("70")
             	.assert.myAssertCell("0")
             	
-            	.assert.myAssertCell("=", "last", 16, "83650")
+            	.assert.myAssertCell("=", "last", 17, "83650")
             	.assert.myAssertCell("=", "last", "last", "32026")
             	.end();
         },
@@ -36,9 +37,10 @@ module.exports = {
             	.assert.myAssertCell("Ershad")
             	.assert.myAssertCell("Chakaria")
             	.assert.myAssertCell("2013-254")
-            	.assert.myAssertCell("MOHAMMADUL MOHAMMED")
+            	.assert.myAssertCell("Md Mahamud")
             	.assert.myAssertCell("3")
             	.assert.myAssertCell("Male")
+            	.assert.myAssertCell("Old")
             	.assert.myAssertCell("10000")
             	.assert.myAssertCell("12")
             	.assert.myAssertCell("833")
@@ -55,7 +57,7 @@ module.exports = {
             	.assert.myAssertCell("70")
             	.assert.myAssertCell("0")
             	
-            	.assert.myAssertCell("=", "last", 16, "3800")
+            	.assert.myAssertCell("=", "last", 17, "3800")
             	.assert.myAssertCell("=", "last", "last", "1130")
             	.end();
         }

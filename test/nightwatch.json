@@ -4,6 +4,7 @@
     "page_objects_path" : "test/end2end/pages",
     "custom_commands_path": [ "node_modules/nightwatch-custom-commands-assertions/js/commands", "test/end2end/commands" ],
     "custom_assertions_path": [ "node_modules/nightwatch-custom-commands-assertions/js/assertions", "test/end2end/assertions" ],
+    "globals_path": "../nightwatch_globals.js",
     
     "selenium" : {
 	"start_process" : true,
@@ -48,8 +49,8 @@
 		"enabled" : true,
 		"path" : "tmp/end2end/live/"
 	    },
+	    "globals": { "live": true },
 	    "tags": "readonly",
-	    "globals_path": "../../nightwatch_globals.json",
     	    "desiredCapabilities": {
 		"browserName": "firefox",
 		"javascriptEnabled": true,

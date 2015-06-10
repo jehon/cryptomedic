@@ -9,8 +9,9 @@ module.exports = function(client) {
 	    throw new Error("Authenticate expect parameter 1 to be the login");
 	}
 	if (!password) {
-	    if (this.globals && this.globals.cryptomedic && this.globals.cryptomedic[login]) {
-		password = this.globals.cryptomedic[login];
+	    if (client.globals.live && client.globals && client.globals.cryptomedic && client.globals.cryptomedic[login]) {
+		console.log("using global password");
+		password = client.globals.cryptomedic[login];
 	    } else {
 		password = "test";
 	    }

@@ -9,7 +9,7 @@ class ReportConsultationsTest extends RouteReferenceTestCase {
 	}
 	
 	public function testsConsultation() {
-		$this->setParams([ "day" => "2015-04-26" ]);
+		$this->setParams([ "day" => "2015-04-26", "center" => "" ]);
 		$this->myAssertUnauthorized();
 
 		$this->myAssertResponseForReference("readonly");
@@ -24,7 +24,7 @@ class ReportConsultationsTest extends RouteReferenceTestCase {
 	}
 	
 	public function testsConsultationByDay() {
-		$this->setParams([ "day" => "2015-04-26" ]);
+		$this->setParams([ "day" => "2015-04-26", "center" => "" ]);
 		$this->myAssertUnauthorized();
 		
 		$this->myAssertResponseForReference("readonly");
@@ -36,22 +36,6 @@ class ReportConsultationsTest extends RouteReferenceTestCase {
 		$this->assertLessThanOrEqual(100, count($json));
 		foreach($json->list as $k => $v) {
 			$this->assertEquals($v->c_nextAppointment, "2015-04-26");
-		}
-	}
-
-	public function testsConsultationByCenter() {
-		$this->setParams([ "center" => "Chakaria" ]);
-		$this->myAssertUnauthorized();
-	
-		$this->myAssertResponseForReference("readonly");
-		$this->myAssertResponseForReference("cdc");
-		$this->myAssertResponseForReference("manager");
-		$this->myAssertResponseForReference("admin");
-	
-		$json = $this->myAssertJSON("admin");
-		$this->assertLessThanOrEqual(100, count($json));
-		foreach($json->list as $k => $v) {
-			$this->assertEquals($v->c_Center, "Chakaria");
 		}
 	}
 

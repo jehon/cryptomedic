@@ -12,10 +12,10 @@ use \References;
 
 class ReportActivityController extends ReportController {
 	public function index($when) {
-		$this->result['params']['when'] = $when;
+		$this->getReportParams("when", $when);
 		$examiner = $this->getReportParams("examiner", "");
 		$where = $this->getReportParams("center", "");
-		
+
 		$this->result['list'] = DB::select("SELECT
 				bills.id as bid,
 				patients.id as pid,
@@ -39,8 +39,9 @@ class ReportActivityController extends ReportController {
 	            " . Bill::getSQLFieldsSum(Bill::CAT_OTHER) . " AS price_other,
 	            bills.total_real as total_real,
 	            bills.total_asked as total_asked,
-	            bills.total_paid as total_paid
-	        FROM bills
+	            bills.total_paid as total_paid,
+				exists(select * from bills as b2 where b2.patient_id = bills.patient_id and b2.Date < :whenFrom12) as oldPatient 
+			FROM bills
 	        JOIN patients ON bills.patient_id = patients.id
 	        JOIN prices ON bills.price_id = prices.id
 	        WHERE (1 = 1)
@@ -48,8 +49,10 @@ class ReportActivityController extends ReportController {
 				AND " . $this->getReportParamFilter("center", "bills.Center") . "
 				AND " . $this->getReportParamFilter("examiner", "bills.ExaminerName") . "
 			ORDER BY bills.Date ASC, patients.entryyear ASC, patients.entryorder ASC
-			", $this->sqlBindParams
+			", $this->sqlBindParams + [ "whenFrom12" => $this->internalWhenFrom ]
 		);
+//				exists(select * from bills as b2 where b2.patient_id = bills.patient_id and b2.Date < :whenFrom12) as mOLD 
+
 		$this->result['totals'] = array();
 		foreach($this->result['list'] as $i => $e) {
 			foreach($e as $k => $v) {

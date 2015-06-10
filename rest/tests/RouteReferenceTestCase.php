@@ -52,10 +52,10 @@ class RouteReferenceTestCase extends TestCase {
 		/* Calculate the reference file */
 		$response = $this->myAssertAuthorized($group);
 		
-		$st = debug_backtrace();
- 		$stv = array_shift($st);
- 		$stv = array_shift($st);
  		if ($file === null) {
+			$st = debug_backtrace();
+	 		$stv = array_shift($st);
+	 		$stv = array_shift($st);
  			// $stv['class']
  			$file = get_called_class()  . '.' . $stv['function'] . '.json';
  		}
@@ -79,7 +79,7 @@ class RouteReferenceTestCase extends TestCase {
 			/* Assert the difference */
 			if (file_exists($pfile)) {
 				$res = $this->assertStringEqualsFile($pfile, $response->getContent(), 
-						"Result is invalid [$file - $pfile] >" . strlen($response->getContent() . 
+						"Result is invalid [$file - $pfile] @{$this->url}>" . strlen($response->getContent() . 
 								substr($response->getContent(), 0, 20) .
 								(strlen($response->getContent() > 20 ? "..." : ""))));
 			} else {
