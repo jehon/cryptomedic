@@ -67,7 +67,7 @@
 		    		onclick="return ExcellentExport.excel(this, jQuery('#report_table table')[0], 'cryptomedic');">
 		    	Export current table in XLS</a>
     </div>
-	<div ng-include="getReport().templateUrl" id='report_table'></div>
+	<div onload='console.log("ok")' ng-include="getReport().templateUrl" id='report_table'></div>
 </div>
 
 <div class='container-fluid' ng-if="!getReport()">

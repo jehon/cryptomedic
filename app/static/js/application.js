@@ -315,6 +315,15 @@ var mainApp = angular.module('app_main', [ 'ngRoute' ])
 	}
     }
 }])
+.directive('afterRender', function($timeout) {
+    return {
+	restrict: 'A',
+	link: function(scope, element, attr) {
+	    console.log("afterRender");
+	    console.log("$timeout");
+	}
+    }
+})
 ;
 
 mainApp.controller('ctrl', [ '$scope', '$location', 'service_backend', function($scope, $location, service_backend) { 
@@ -460,6 +469,9 @@ mainApp.controller('ctrl', [ '$scope', '$location', 'service_backend', function(
 	});
 
 	$scope.$on("$routeChangeError", function() { console.log("error in routes"); console.log(arguments); });
+	
+	$scope.$on("$viewContentLoaded", function() { console.log("$viewContentLoaded"); });
+	$scope.$on("$includeContentLoaded", function() { console.log("$includeContentLoaded"); });
 }]);
 
 function debug_showLabels() {

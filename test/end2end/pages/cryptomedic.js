@@ -3,20 +3,24 @@ module.exports = function(client) {
     // object in order to be able to be queued
     var authenticated = false;
     var timeout = 10 * 1000;
+    var livePasswords = {};
     
-    this.authenticate = function(login, password) {
+    this.authenticate = function(login) {
 	if (!login) {
 	    throw new Error("Authenticate expect parameter 1 to be the login");
 	}
-	if (!password) {
-	    if (client.globals.live && client.globals && client.globals.cryptomedic && client.globals.cryptomedic[login]) {
-		console.log("using global password");
-		password = client.globals.cryptomedic[login];
+
+	var password = "test";
+	if (client.globals && client.globals.live) {
+	    data = require("./../../../../secrets.json");
+	    if (client.globals && client.globals.live && data.cryptomedic && data.cryptomedic.passwords && data.cryptomedic.passwords[login]) {
+		console.log("using secret password for user " + login);
+		password = data.cryptomedic.passwords[login];
 	    } else {
-		password = "test";
+		throw new Error("Authenticate did not found secret passord for " + login);
 	    }
 	}
-//	password = password || "test";
+
 	client.url(client.launch_url + '/cryptomedic/app/')
 		.watchLog(true)
 		.waitForElementVisible('body', timeout)
@@ -47,18 +51,19 @@ module.exports = function(client) {
 		;
       for(var k in params) {
 	  var el = "input[name=" + k + "]";
-	  client.waitForElementVisible(el, timeout)
-	  	.clearValue(el);
-	  if (params[k]) {
-	      client.setValue(el, params[k]);
-	  }
+      	  client
+      			.waitForElementVisible(el, timeout, "@@ Waiting for parameter " + k + " => " + params[k])
+      		    	.clearValue(el);
+      	  if (params[k]) {
+      	      client.setValue(el, params[k]);
+      	  }
       }
       client
       		.waitForElementVisible("#report_refresh_button", timeout)
 		.click("#report_refresh_button")
-		
 		.waitForElementVisible("#report_table", timeout)
-		.waitForElementVisible("#report_table table", timeout)
-	return client;
+		.waitForElementVisible("#report_table table", timeout);
+      
+      return client;
     }    
 };
