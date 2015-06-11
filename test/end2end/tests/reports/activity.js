@@ -1,7 +1,9 @@
 module.exports = {
 	'tags': [ 'readonly', 'reports' ],
 	'reportMonthlyActivity': function(client) {
-            client.page.cryptomedic().report("monthlyActivity", { "month": "2014-10" })
+            client
+            	.page.cryptomedic().authenticate("readonly")
+            	.page.cryptomedic().report("monthlyActivity", { "month": "2014-10" })
             	.assert.myAssertCell("#report_table table", 1, 2, "2014-10")
             	.assert.myAssertCell("Ershad")
             	.assert.myAssertCell("Chakaria")
@@ -32,7 +34,9 @@ module.exports = {
         },
     
         'reportDailyActivity': function(client) {
-            client.page.cryptomedic().report("dailyActivity", { "day": "2014-10-01" })
+            client
+            	.page.cryptomedic().authenticate("readonly")
+            	.page.cryptomedic().report("dailyActivity", { "day": "2014-10-01" })
             	.assert.myAssertCell("#report_table table", 1, 2, "2014-10-01")
             	.assert.myAssertCell("Ershad")
             	.assert.myAssertCell("Chakaria")

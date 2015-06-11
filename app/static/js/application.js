@@ -239,7 +239,7 @@ var mainApp = angular.module('app_main', [ 'ngRoute' ])
 }])
 .directive('mycalendar', function() {
 	return function (scope, elem, attrs) {
-	    jQuery(elem).datepicker({ dateFormat: 'yy-mm-dd' });
+	    jQuery(elem).datepicker({ dateFormat: 'yyyy-mm-dd' });
 	}
 })
 .directive('preview', [ "$compile", function($compile) {
@@ -315,12 +315,15 @@ var mainApp = angular.module('app_main', [ 'ngRoute' ])
 	}
     }
 }])
-.directive('afterRender', function($timeout) {
+.directive('myready', function($timeout) { // unused
     return {
 	restrict: 'A',
 	link: function(scope, element, attr) {
-	    console.log("afterRender");
-	    console.log("$timeout");
+	    console.log("myready link")
+	    $timeout(function () {
+		//DOM has finished rendering
+		console.log("myready $timeout")
+	    });
 	}
     }
 })

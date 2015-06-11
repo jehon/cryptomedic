@@ -68,12 +68,15 @@ Route::group(array('middleware' => 'authenticated'), function() {
 	]);
 });
 
-Route::group(array('middleware' => 'writeGroup'), function() {
-	Route::resource('bills', "BillController", [ "only" => [ "show", "store", "update", "destroy" ]]);
+Route::group(array('middleware' => [ "authenticated", "writeGroup" ] ), function() {
+	// 	Route::resource('bills', "BillController", [ "only" => [ "store", "update", "destroy" ]]);
+	Route::POST('/model/{model}/{id}', 'ModelController@store');
+	Route::PUT('/model/{model}/{id}', 'ModelController@update');
+	Route::DELETE('/model/{model}/{id}', 'ModelController@destroy');
 });
 
-Route::group(array('middleware' => 'unFreezeGroup'), function() {
-	Route::get('unfreeze/bills/{id}', 'BillController@unfreeze');
+Route::group(array('middleware' => [ "authenticated", 'unFreezeGroup' ]), function() {
+	Route::get('unfreeze/{model}/{id}', 'ModelController@unfreeze');
 });
 	
 	

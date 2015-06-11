@@ -35,7 +35,7 @@
 			      	<div ng-if="isParam('day')" class="form-group">
 				        <label class="col-sm-2 control-label">Day (yyyy-mm-dd)?</label>
 			        	<div class="col-sm-10">
-							<input name='day' type='date' ng-model='values.day' class="form-control">
+							<input name='day' oldtype='date' ng-model='values.day' class="form-control" mycalendar>
 						</div>
 				    </div>
 			      	<div ng-if="isParam('month')" class="form-group">
@@ -60,14 +60,19 @@
 	    </div>
 	</div>
     <hr>
-    <div class='text-right'>
+    <div ng-if="!result" class='loading'>
+    	Loading
+    </div>
+    <div ng-if="result">
+    	<div class='text-right'>
 		    <a class='btn' style='background-color: green; color: white' 
 		    		download="somedata.xls" 
 		    		href="#"  
 		    		onclick="return ExcellentExport.excel(this, jQuery('#report_table table')[0], 'cryptomedic');">
 		    	Export current table in XLS</a>
+    	</div>
+		<div ng-include="getReport().templateUrl" id='report_table'></div>
     </div>
-	<div onload='console.log("ok")' ng-include="getReport().templateUrl" id='report_table'></div>
 </div>
 
 <div class='container-fluid' ng-if="!getReport()">

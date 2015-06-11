@@ -1,7 +1,7 @@
 module.exports = {
-	'readonly': function(client) {
-	    client.page.cryptomedic()
-	    	.authenticate("readonly") 
+	'searchPatient2000': function(client) {
+	    client
+	    	.page.cryptomedic().authenticate("readonly") 
 	    	.myClick("#menu_search")
 	    	.waitForElementPresent(".searchFields", 1000)
 	    	.setValue("#Patient_entryyear", 2000)
@@ -14,15 +14,16 @@ module.exports = {
 	    	.end();
 	},
 	
-	
 //    'reportMonthlyStatistical' : function(client) {
 //	client
+//		.page.cryptomedic().authenticate("readonly")
 //		.page.cryptomedic().report("monthlyStatistical", { "month" : "2014-10" })
 //		.assert.myAssertCell("#report_table table", 2, 2, "2014-10")
 //		.end();
 //    },
 //    'reportYearlyStatistical' : function(client) {
 //	client
+//		.page.cryptomedic().authenticate("readonly")
 //		.page.cryptomedic().report("yearlyStatistical", { "year" : "2014" })
 //		.assert.myAssertCell("#report_table table", 2, 2, "2014").end();
 //    }

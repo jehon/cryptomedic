@@ -31,6 +31,19 @@ gulp.task('test-js', function() {
 	;
 });
 
+gulp.task('test-chrome', function() {
+    return gulp.src('')
+    .pipe(plugins.plumber({ errorHandler: plugins.notify.onError("Error during task " + this.seq.slice(-1)[0] + ": <%= error.message %>") }))
+    .pipe(plugins.plumber({ errorHandler: function() { process.exit(1); } }))
+    .pipe(plugins.nightwatch({
+		configFile : 'test/nightwatch.json',
+		cliArgs : [ '--env chrome' ]
+
+    }))
+    .pipe(plugins.notify(this.seq.slice(-1)[0] + ": done"))
+	;
+});
+
 gulp.task('test', [ 'test-js', 'test-php' ]);
 
 gulp.task('test-phantomjs', function() {

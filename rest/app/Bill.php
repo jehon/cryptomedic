@@ -21,7 +21,7 @@ use App\LockedModel;
  * @author jehon
  *
  */
-class Bill extends LockedModel {
+class Bill extends OptimisticLockedModel {
 	const CAT_CONSULT = "consult";
 	const CAT_MEDECINE = "medecine";
 	const CAT_OTHER = "other";

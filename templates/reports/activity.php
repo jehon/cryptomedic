@@ -1,4 +1,4 @@
-<div>
+<div myready>
     <table class='reporting'>
         <thead>
             <tr>

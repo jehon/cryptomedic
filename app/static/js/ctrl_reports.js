@@ -67,7 +67,8 @@ mainApp.controller('ctrl_reports', [ '$scope', '$routeParams', 'service_backend'
 	    if (!report) {
 		return;
 	    }
-
+	    $scope.result = null;
+	    
 	    if ($scope.values.day) {
 		$scope.values.day = new Date($scope.values.day);
 		$scope.values.day.setUTCHours(0, 0, 0, 0);

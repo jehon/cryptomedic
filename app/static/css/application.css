@@ -1,11 +1,10 @@
-/*
-div[ng-cloak], div.ng-cloak {
+/* div[ng-cloak], div.ng-cloak {
   background-color: red;
   width: 100px;
   height: 100px;
   display: block;
 }
-*/
+ */
 /*
  * Globals
  */
@@ -33,6 +32,14 @@ div[ng-cloak], div.ng-cloak {
 
 .toberemoved {
   background-color: red;
+}
+
+.loading {
+	text-align: center;
+}
+
+.loading:before {
+	content: url(img/waiting.gif);
 }
 
 /*
