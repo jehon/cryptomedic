@@ -10,8 +10,8 @@
 
 namespace App;
 
-//use Illuminate\Database\Eloquent\Model;
-use App\LockedModel;
+// require_once("OptimisticLockedModel.php");
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * This is the Bill model, encapsulating various function used around the "Bill" concept

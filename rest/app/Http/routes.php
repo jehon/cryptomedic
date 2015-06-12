@@ -95,7 +95,6 @@ Route::group(array('middleware' => 'authenticated'), function() {
 });
 
 Route::group(array('middleware' => [ "authenticated", "writeGroup" ] ), function() {
-	// 	Route::resource('bills', "BillController", [ "only" => [ "store", "update", "destroy" ]]);
 	Route::POST('/fiche/{model}', 'ModelController@store');
 	Route::PUT('/fiche/{model}/{id}', 'ModelController@update');
 	Route::DELETE('/fiche/{model}/{id}', 'ModelController@destroy');

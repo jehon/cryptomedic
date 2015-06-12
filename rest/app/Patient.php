@@ -13,7 +13,7 @@ namespace App;
 // http://laravel.com/docs/5.0/eloquent#model-events
 
 //use Illuminate\Database\Eloquent\Model;
-use App\LockedModel;
+use App\OptimisticLockedModel;
 
 /**
  * This is the Bill model, encapsulating various function used around the "Bill" concept
@@ -23,5 +23,5 @@ use App\LockedModel;
  * @author jehon
  *
  */
-class ClubFoot extends OptimisticLockedModel {
+class Patient extends OptimisticLockedModel {
 }

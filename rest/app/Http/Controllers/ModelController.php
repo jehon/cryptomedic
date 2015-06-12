@@ -40,6 +40,9 @@ class ModelController extends Controller {
 		$m = $this->getModel($model);
 		$obj = $this->getModelObject($data['id']);
 // 		$affectedRows = $m::where(getCreate_at(), '=', $modified)->where("id", "=", $id)->update($data);
+// 		if ($affectedRows != 1) {
+// 			abort(409, "Concurrent access exception to $model@$id#" . $data->modified);
+// 		}
 		return response()->folder($obj->patient_id);
 	}
 	
@@ -47,7 +50,7 @@ class ModelController extends Controller {
 	public function destroy($model, $id) {
 		$obj = $this->getModelObject($model, $id);
 		if(!$obj->delete()) {
-			abort("Could not delete $model@$id");
+			abort(404, "Could not delete $model@$id");
 		}
 		// quid if patient has dependancies? -> see Patient model http://laravel.com/docs/5.0/eloquent#model-events
 		return response()->folder($obj->patient_id);

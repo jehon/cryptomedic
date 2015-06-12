@@ -80,7 +80,8 @@
         <tbody  class='b_all'>
 			<tr ng-repeat='l in result.list'>
                             <td class='b_left'>
-                            	<a href='#/goto/Bill/{{l.bid}}'>View bill</a>
+                            	#{{$index}}
+                            	<a href='#/goto/Bill/{{l.bid}}'>View</a>
 							</td>
                             <td>{{l.Date}}</td>
                             <td>{{l.ExaminerName}}</td>

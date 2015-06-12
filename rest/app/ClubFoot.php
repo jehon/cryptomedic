@@ -11,7 +11,7 @@
 namespace App;
 
 //use Illuminate\Database\Eloquent\Model;
-use App\LockedModel;
+use App\OptimisticLockedModel;
 
 /**
  * This is the Bill model, encapsulating various function used around the "Bill" concept
@@ -21,5 +21,5 @@ use App\LockedModel;
  * @author jehon
  *
  */
-class Patient extends OptimisticLockedModel {
+class ClubFoot extends OptimisticLockedModel {
 }
