@@ -11,8 +11,7 @@ use \References;
 class FolderController extends Controller {
 	// @see http://laravel.com/docs/5.0/controllers
 	
-	public function index() 
-	{
+	public function index() {
 		// Search through them
 		$req = DB::table('patients');
 	
@@ -80,30 +79,8 @@ class FolderController extends Controller {
 		return response()->jsonOrJSONP($listing);
 	}
 	
-	public function show($id)
-	{
-		$master = [];
-		$master['_type'] = 'Folder';
-		$master['id'] = $id; 
-		$master['mainFile'] = DB::table('patients')->where('id', $id)->first();
-		if (!$master['mainFile']) {
-			abort(404);
-		}
-		$master['mainFile']->_type = 'Patient';
-	
-		$master['subFiles'] = array();
-		
-		
-		foreach(References::$model2db as $m => $c) {
-			if ($c == "patients") continue;
-			
-			$r = DB::select("SELECT * FROM $c WHERE patient_id = :patient_id", array('patient_id' => $id));
-			foreach($r as $ri => $rv) {
-				$rv->_type = References::db2model($c);
-				$master['subFiles'][] = $rv;
-			}
-		}
-		return response()->jsonOrJSONP($master);
+	public function show($id) {
+		return response()->folder($id);
 	}
 	
 	public function related($model, $id) {
@@ -113,7 +90,7 @@ class FolderController extends Controller {
 			abort(404);
 		}
 		$r = array_pop($r);
-		return $this->show($r->patient_id);
+		return response()->folder($id);
 	}
 	
 	public function reference() {

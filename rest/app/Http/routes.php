@@ -25,6 +25,32 @@ Response::macro('jsonOrJSONP', function($value)
 	return $res;
 });
 
+// TODO
+Response::macro('folder', function($id) {
+	$master = [];
+	$master['_type'] = 'Folder';
+	$master['id'] = $id;
+	$master['mainFile'] = DB::table('patients')->where('id', $id)->first();
+	if (!$master['mainFile']) {
+		abort(404);
+	}
+	$master['mainFile']->_type = 'Patient';
+	
+	$master['subFiles'] = array();
+	
+	
+	foreach(References::$model2db as $m => $c) {
+		if ($c == "patients") continue;
+			
+		$r = DB::select("SELECT * FROM $c WHERE patient_id = :patient_id", array('patient_id' => $id));
+		foreach($r as $ri => $rv) {
+			$rv->_type = References::db2model($c);
+			$master['subFiles'][] = $rv;
+		}
+	}
+	return response()->jsonOrJSONP($master);
+});
+
 
 Route::get('/', 'WelcomeController@index');
 
@@ -70,9 +96,9 @@ Route::group(array('middleware' => 'authenticated'), function() {
 
 Route::group(array('middleware' => [ "authenticated", "writeGroup" ] ), function() {
 	// 	Route::resource('bills', "BillController", [ "only" => [ "store", "update", "destroy" ]]);
-	Route::POST('/model/{model}/{id}', 'ModelController@store');
-	Route::PUT('/model/{model}/{id}', 'ModelController@update');
-	Route::DELETE('/model/{model}/{id}', 'ModelController@destroy');
+	Route::POST('/fiche/{model}', 'ModelController@store');
+	Route::PUT('/fiche/{model}/{id}', 'ModelController@update');
+	Route::DELETE('/fiche/{model}/{id}', 'ModelController@destroy');
 });
 
 Route::group(array('middleware' => [ "authenticated", 'unFreezeGroup' ]), function() {
@@ -108,3 +134,5 @@ Route::group(array('middleware' => [ "authenticated", 'unFreezeGroup' ]), functi
 //		"middleware" => 'auth',
 // 	"uses" => "FolderController@get"
 // ]);
+
+
