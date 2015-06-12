@@ -45,13 +45,10 @@ class ModelController extends Controller {
 	
 	// DELETE
 	public function destroy($model, $id) {
-		var_dump($model);
-		var_dump($id);
-		
-		$obj = $this->getModelObject($id);
-// 		if(!$obj->delete()) {
-// 			abort("Could not delete $model@$id");
-// 		}
+		$obj = $this->getModelObject($model, $id);
+		if(!$obj->delete()) {
+			abort("Could not delete $model@$id");
+		}
 		// quid if patient has dependancies? -> see Patient model http://laravel.com/docs/5.0/eloquent#model-events
 		return response()->folder($obj->patient_id);
 	}

@@ -21,5 +21,5 @@ use App\LockedModel;
  * @author jehon
  *
  */
-class NonricketConsult extends OptimisticLockedModel {
+class RicketConsult extends OptimisticLockedModel {
 }
