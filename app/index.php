@@ -13,7 +13,7 @@
 	} else {
 		$mode = "appcache";
 // TODO: reactivate manifest
-// 		echo "manifest='manifest.php'";
+		echo "manifest='manifest.php'";
 	}
 ?> >
 	<head>
@@ -185,4 +185,7 @@
 			</nav>
 		</div>
 	</body>
+	<script>
+		jQuery("#appCache_mode").html("version[" + cryptomedic.versions.cryptomedic + "]")
+	</script>
 </html>
