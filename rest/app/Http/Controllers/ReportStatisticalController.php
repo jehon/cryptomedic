@@ -47,9 +47,9 @@ class ReportStatisticalController extends ReportController {
 		SUM(total_asked) as total_asked,
 		SUM(total_paid) as total_paid
 		FROM bills
-		WHERE " . $this->getReportParamFilter("when", "Date") . " AND ($filter)";
-	
-		$stats = DB::select($sql);
+		WHERE ({$this->filter}) AND ({$filter})";
+
+		$stats = DB::select($sql, $this->sqlBindParams);
 		$stats = array_pop($stats);
 		$this->resultPathSet("$header.real", $stats->total_real);
 		$this->resultPathSet("$header.asked", $stats->total_asked);
@@ -81,8 +81,8 @@ class ReportStatisticalController extends ReportController {
 		$res = DB::select("SELECT CAST(SUM(sl_familySalary) / COUNT(*) AS DECIMAL) as income,
 				SUM(sl_numberOfHouseholdMembers) / COUNT(*) as nbhous
 				FROM bills
-				WHERE {$this->filter} ", $this->sqlBindParams
-			);
+				WHERE {$this->filter} ", 
+				$this->sqlBindParams);
 		$res = array_pop($res);
 		
 		$this->resultPathSet("summary.sociallevel.familyincome", $res->income);
@@ -98,7 +98,8 @@ class ReportStatisticalController extends ReportController {
 				
 		// By center
 		$centers = References::$lists['Centers'];
-		$res = DB::select("SELECT Center, Count(*) as `count` FROM bills WHERE {$this->filter} GROUP BY Center");
+		$res = DB::select("SELECT Center, Count(*) as `count` FROM bills WHERE {$this->filter} GROUP BY Center", 
+			$this->sqlBindParams);
 		$res2 = array();
 		foreach($res as $line) {
 			$res2[$line->Center] = $line->count;
