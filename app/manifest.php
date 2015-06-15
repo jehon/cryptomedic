@@ -4,6 +4,11 @@
 	header("Pragma: public");
 
 	define("TS_FORMAT", "Y-m-d H:i:s");
+?>
+CACHE MANIFEST
+
+
+<?php
 	
 	// By default, consider manifest mtime as a minimum
 	// This will be updated in addTs();
@@ -51,10 +56,6 @@
 			return addTs(filemtime($f), $f);
 		}
 		
-		addLine("CACHE MANIFEST");
-		addLine("");
-		addLine("");
-	
 		addLine("# cryptomedic version: " . $server->getVersion("cryptomedic"));
 		addLine("# rest version: " . $server->getVersion());
 		addLine("# database version: " . $server->getDatabase()->getVersion());
