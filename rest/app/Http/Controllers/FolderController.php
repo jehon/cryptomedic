@@ -90,7 +90,7 @@ class FolderController extends Controller {
 			abort(404);
 		}
 		$r = array_pop($r);
-		return response()->folder($id);
+		return response()->folder($r->patient_id);
 	}
 	
 	public function reference() {
