@@ -100,10 +100,6 @@
 		        <span class="sr-only">Toggle navigation</span>
 		      </button>
 		      <a class="navbar-brand" href="#">Menu</a>
-		      <a id='menu_search' href="#/search" class="navbar-link">
-		      		<img src="static/img/patientsSearch.gif" height="20px"/>
-		      		Search a patient
-		      	</a>
 		    </div>
 		
 		    <!-- Collect the nav links, forms, and other content for toggling -->
@@ -127,11 +123,15 @@
 		      		<img src="static/img/reports.gif" height="20px"/>
 		      		Reports
 		      	</a></li>
+		      	<li><a id='bug_reporting' href="javascript:bug_reporting()" class="navbar-link">
+		      		<img src="static/img/bug.jpeg"/>
+		      		Bug
+		      		</a></li>
 		      	<li><button type="button" class="btn btn-default navbar-btn" ng-click="doLogout()" >
 		      		<img src="static/img/logout.gif"/>
 		      		Logout
 		      		</button></li>
-		      </ul>
+		      	</ul>
 		    </div>
 		  </div>
 		</nav>
