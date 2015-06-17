@@ -30,6 +30,7 @@
 				return { 'cryptomedic': cryptomedic, 'server': server };
 			});
 		</script>
+		<script type="text/javascript" src="/maintenance/html/html2canvas.js"></script>
 		
 		<!-- Adapt upgrade.html also -->
 		<!--[if lt IE 9]>
