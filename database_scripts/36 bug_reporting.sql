@@ -14,3 +14,4 @@ ALTER TABLE `bug_reporting` ADD `email` VARCHAR(256) NULL AFTER `username`;
 ALTER TABLE `bug_reporting` CHANGE `browser_state` `browser_state` LONGTEXT CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL;
 ALTER TABLE `bug_reporting` CHANGE `description` `description` TEXT CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL AFTER `email`;
 ALTER TABLE `bug_reporting` ADD `browser_console` LONGTEXT NULL ;
+ALTER TABLE `bug_reporting` ADD `browser_useragent` VARCHAR(256) NULL AFTER `description`;

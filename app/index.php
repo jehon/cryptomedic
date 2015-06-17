@@ -24,6 +24,12 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link href="static/img/favicon.ico" type="image/x-icon" rel="icon" />
 		<link href="static/img/favicon.ico" type="image/x-icon" rel="shortcut icon" />
+		<script type="text/javascript" src="/maintenance/html/bugreporting.js"></script>
+		<script type="text/javascript">
+			window.bug_reporting.setApplicationState(function() {
+				return { 'cryptomedic': cryptomedic, 'server': server };
+			});
+		</script>
 		
 		<!-- Adapt upgrade.html also -->
 		<!--[if lt IE 9]>
@@ -94,6 +100,10 @@
 		        <span class="sr-only">Toggle navigation</span>
 		      </button>
 		      <a class="navbar-brand" href="#">Menu</a>
+		      <a id='menu_search' href="#/search" class="navbar-link">
+		      		<img src="static/img/patientsSearch.gif" height="20px"/>
+		      		Search a patient
+		      	</a>
 		    </div>
 		
 		    <!-- Collect the nav links, forms, and other content for toggling -->
