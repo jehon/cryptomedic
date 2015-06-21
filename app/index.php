@@ -12,7 +12,6 @@
 		$mode = "online";
 	} else {
 		$mode = "appcache";
-// TODO: reactivate manifest
 		echo "manifest='manifest.php'";
 	}
 ?> >
@@ -29,7 +28,13 @@
 			window.bug_reporting.setApplicationState(function() {
 				return { 'cryptomedic': cryptomedic, 'server': server };
 			});
-		</script>
+			window.bug_reporting.setUsernameFunction(function() {
+				return server.settings.username;
+			});
+			window.bug_reporting.setEmailFunction(function() {
+				return "";
+			});
+			</script>
 		<script type="text/javascript" src="/maintenance/html/html2canvas.js"></script>
 		
 		<!-- Adapt upgrade.html also -->
