@@ -135,21 +135,21 @@ mainApp.factory('service_backend', [ '$http', '$rootScope', function($http, $roo
 	},
 	'createFile': function(data, folderId) {
 	    pcache.perish(folderId);
-	    return treatHttp($http.post(phprest + "/fiche/" + data['_type'], data), function(data, status, headers, config) {
+	    return treatHttp($http.post(rest + "/fiche/" + data['_type'], data), function(data, status, headers, config) {
 		pcache.set(data.getMainFile().id, data);
 		return data;				
 	    });
 	},
 	'saveFile': function(data, folderId) {
 	    pcache.perish(folderId);
-	    return treatHttp($http.put(phprest + "/fiche/" + data['_type'] + "/" + data['id'], data), function(data) {
+	    return treatHttp($http.put(rest + "/fiche/" + data['_type'] + "/" + data['id'], data), function(data) {
 		pcache.set(data.getMainFile().id, data);
 		return data;				
 	    });
 	},
 	'deleteFile': function(data, folderId) {
 	    pcache.perish(folderId);
-	    return treatHttp($http.delete(phprest + "/fiche/" + data['_type'] + "/" + data['id']), function(data) {
+	    return treatHttp($http['delete'](rest + "/fiche/" + data['_type'] + "/" + data['id']), function(data) {
 		if (data instanceof application.models.Folder) {
 		    pcache.set(data.getMainFile().id, data);
 		}
@@ -158,7 +158,7 @@ mainApp.factory('service_backend', [ '$http', '$rootScope', function($http, $roo
 	},
 	'unlockFile': function(data, folderId) {
 	    pcache.perish(folderId);
-	    return treatHttp($http({ method: "UNLINK", url: phprest + "/fiche/" + data['_type'] + "/" + data['id'] }), function(data) {
+	    return treatHttp($http.get(rest + "/unfreeze/" + data['_type'] + "/" + data['id']), function(data) {
 		pcache.set(data.getMainFile().id, data);
 		return data;				
 	    });

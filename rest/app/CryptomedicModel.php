@@ -3,6 +3,8 @@
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+
 
 // See https://github.com/laravel/framework/issues/5276
 
@@ -33,7 +35,7 @@ class CryptomedicModel extends Model {
 	
 	public function save(array $options = Array()) {
 		if ($this->isDirty()) {
-			$this->lastuser = "moi-save";
+			$this->lastuser = Auth::user()->username;
 			// TODO: re-enable optimistic lock -> get the updated_at from request !!!
 // 			if ($updated != $this->{$this->getUpdatedAtColumn()}) {
 				// 			var_dump("optimistic locking exception");
