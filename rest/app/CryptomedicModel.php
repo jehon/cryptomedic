@@ -26,8 +26,8 @@ class CryptomedicModel extends Model {
 	}
 	
 	public static function create(array $attributes) {
-		$attributes['lastuser'] = 'moi-create';
-		$attributes = $m::filterData($attributes);
+		$attributes = self::filterData($attributes);
+		// Create will call the "save"
 		return parent::create($attributes);
 	}
 	

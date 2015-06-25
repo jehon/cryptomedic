@@ -22,8 +22,12 @@ use Illuminate\Support\Facades\Input;
  *
  */
 class Picture extends CryptomedicModel {
-	// TODO: creating, updating and saving...
 	const DATA_PREFIX = "data:image/";
+
+	public function getPhysicalPath() {
+		return dirname(dirname(dirname(__DIR__))) . DIRECTORY_SEPARATOR . "uploadedPictures"
+				. DIRECTORY_SEPARATOR . $this->file;	
+	}
 	
 	public static function create(array $attributes) {
 		$model = parent::create($attributes);
@@ -33,13 +37,9 @@ class Picture extends CryptomedicModel {
 		}
 		
 		if (Request::has('fileContent')) {
-			
-// 			$model->file = 
-			$model->save();	
-			
 			$dataURI = Request::input('fileContent');
 	
-			// data:image/jpeg;base64
+			// example = data:image/jpeg;base64
 			$v = substr($dataURI, strlen("data:"));
 			$mimetype = substr($v, 0, strpos($v, ";"));
 			$content64 = substr($v, strpos($v, ",") + 1);
@@ -57,22 +57,25 @@ class Picture extends CryptomedicModel {
 			$model->file = "{$model->patient_id}_"
 						. ($model->Date == null ? "undated" : $model->Date) 
 						. "_{$model->id}.{$ext}";
-			$tfile = dirname(dirname(dirname(__DIR__))) . DIRECTORY_SEPARATOR . "uploadedPictures" 
-					. DIRECTORY_SEPARATOR . $model->file;
 			$contentRaw = base64_decode($content64);
 			if (!$contentRaw) {
 				abort(500, "Received data is empty");
 			}
-			if (file_exists($tfile)) {
-				abort(500, "Moving uploaded file to $tfile: already exists");
+			if (file_exists($model->getPhysicalPath())) {
+				abort(500, "Moving uploaded file to " . $model->getPhysicalPath() . ": already exists");
 			}
-			if (!file_put_contents($tfile, $contentRaw)) {
-				abort(500, "Storing uploaded file to $tfile");
+			if (!file_put_contents($model->getPhysicalPath(), $contentRaw)) {
+				abort(500, "Storing uploaded file to " . $model->getPhysicalPath());
 			}
 			$model->save();
 		}
 		return $model;
 	}
-
-	
+ 	
+	public function delete() {
+		if ($this->file && file_exists($this->getPhysicalPath())) {
+			unlink($this->getPhysicalPath());
+		}
+		return parent::delete();
+	}
 }
