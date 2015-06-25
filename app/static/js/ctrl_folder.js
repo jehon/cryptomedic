@@ -202,7 +202,9 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_backend', '$
 		var busyEnd = $scope.doBusy("Deleting the file on the server");
 		service_backend.deleteFile($scope.currentFile(), $scope.id())
 			.done(function(data) {
-				if ($scope.page == 'Patient') {
+				if (($scope.page == 'patient') || (!data)) {
+				    	// TODO: transform that into information message
+				    	alert("The patient has been deleted");
 					console.log("going home");
 					$scope.go("/home");
 				} else {

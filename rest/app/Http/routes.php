@@ -25,8 +25,8 @@ Response::macro('jsonOrJSONP', function($value)
 	return $res;
 });
 
-// TODO
-Response::macro('folder', function($id) {
+// TODO: add offline sync data
+Response::macro('folder', function($id, $addData = array()) {
 	$master = [];
 	$master['_type'] = 'Folder';
 	$master['id'] = $id;
@@ -38,7 +38,6 @@ Response::macro('folder', function($id) {
 	
 	$master['subFiles'] = array();
 	
-	
 	foreach(References::$model2db as $m => $c) {
 		if ($c == "patients") continue;
 			
@@ -48,7 +47,7 @@ Response::macro('folder', function($id) {
 			$master['subFiles'][] = $rv;
 		}
 	}
-	return response()->jsonOrJSONP($master);
+	return response()->jsonOrJSONP(array_merge($master, $addData));
 });
 
 
@@ -105,33 +104,12 @@ Route::group(array('middleware' => [ "authenticated", 'unFreezeGroup' ]), functi
 });
 	
 	
-// TODO: fiches bills
-// TODO: fiches ricket_consults
-// TODO: fiches nonricket_consults
-// TODO: fiches clubfoots
-// TODO: fiches surgery
 // TODO: fiches picture
-
 // TODO: references (new system?)
 // TODO: authentification (+ settings)
 // TODO: users (admin mode)
 
-// TODO: offline sync --> middleware
-	
 // TODO: migrate "myfiles" and "database->getVersion()" to cryptomedic
-
-// 	Route::get('references', [
-// 		"uses" => "FolderController@reference"
-// 	]);
-	
-
-// *** Other examples ***
-
-// Route::model('folder', 'App\Folder');
-
-// Route::any('folder/{id}', [ 
-//		"middleware" => 'auth',
-// 	"uses" => "FolderController@get"
-// ]);
+// TODO: offline sync --> middleware
 
 

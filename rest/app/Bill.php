@@ -10,7 +10,6 @@
 
 namespace App;
 
-// require_once("OptimisticLockedModel.php");
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -21,7 +20,7 @@ use Illuminate\Database\Eloquent\Model;
  * @author jehon
  *
  */
-class Bill extends OptimisticLockedModel {
+class Bill extends CryptomedicModel {
 	const CAT_CONSULT = "consult";
 	const CAT_MEDECINE = "medecine";
 	const CAT_OTHER = "other";

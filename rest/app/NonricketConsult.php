@@ -11,7 +11,7 @@
 namespace App;
 
 //use Illuminate\Database\Eloquent\Model;
-use App\OptimisticLockedModel;
+use App\CryptomedicModel;
 
 /**
  * This is the Bill model, encapsulating various function used around the "Bill" concept
@@ -21,6 +21,6 @@ use App\OptimisticLockedModel;
  * @author jehon
  *
  */
-class NonricketConsult extends OptimisticLockedModel {
+class NonricketConsult extends CryptomedicModel {
 	
 }

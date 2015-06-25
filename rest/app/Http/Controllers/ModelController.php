@@ -4,6 +4,7 @@ use App\Http\Controllers\Controller;
 use DB;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\Input;
 
 require_once(__DIR__ . "/../../../../php/references.php");
 use \References;
@@ -22,27 +23,48 @@ class ModelController extends Controller {
 	}
 	
 	// POST = create
-	public function store($model, $data) {
-		var_dump($model);
-		var_dump($data);
+	public function store($model) {
+		$data = Input::except('_type');
+		if ($model == "Patient") {
+			// What to do here ?						
+		} else {
+			if (!Input::has('patient_id')) {
+				abort(500, "No identification of patients");
+			}
+		}		
 		
 		$m = $this->getModel($model);
-		// TODO
-		return response()->folder($obj->patient_id);
+		$newObj = $m::create($data);
+		if (!$newObj->id) {
+			abort(500, "Could not create the file");
+		}
+		return response()->folder(
+				$data['patient_id'], 
+				array('newKey' => $newObj->id)
+				);
 	}	
 	
 	// PUT / PATCH
-	public function update($model, $id, $data) {
-		var_dump($model);
-		var_dump($id);
-		var_dump($data);
+	public function update($model, $id) {
+		$attributes = Input::except('_type', 'patient_id');
 		
 		$m = $this->getModel($model);
-		$obj = $this->getModelObject($data['id']);
-// 		$affectedRows = $m::where(getCreate_at(), '=', $modified)->where("id", "=", $id)->update($data);
-// 		if ($affectedRows != 1) {
-// 			abort(409, "Concurrent access exception to $model@$id#" . $data->modified);
-// 		}
+		$obj = $this->getModelObject($model, $id);
+		foreach($attributes as $k => $v) {
+			// Skip system fields
+			if (in_array($k, [ $obj->getUpdatedAtColumn(), $obj->getCreatedAtColumn(), "modified", "created" ])) {
+				continue;
+			}
+			// Set existing fields
+			if (array_key_exists($k, $obj->getAttributes()) && ($obj->getAttribute($k) != $v)) {
+				$obj->{$k} = $v;
+			}
+		}
+		
+		$obj->save();
+		if ($model == "Patient") {
+			return response()->folder($obj->id);
+		}
 		return response()->folder($obj->patient_id);
 	}
 	
@@ -53,6 +75,9 @@ class ModelController extends Controller {
 			abort(404, "Could not delete $model@$id");
 		}
 		// quid if patient has dependancies? -> see Patient model http://laravel.com/docs/5.0/eloquent#model-events
+		if ($model == "Patient") {
+			return response()->jsonOrJSONP(array());
+		}
 		return response()->folder($obj->patient_id);
 	}
 

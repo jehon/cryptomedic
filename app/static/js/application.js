@@ -315,18 +315,18 @@ var mainApp = angular.module('app_main', [ 'ngRoute' ])
 	}
     }
 }])
-.directive('myready', function($timeout) { // unused
-    return {
-	restrict: 'A',
-	link: function(scope, element, attr) {
-	    console.log("myready link")
-	    $timeout(function () {
-		//DOM has finished rendering
-		console.log("myready $timeout")
-	    });
-	}
-    }
-})
+//.directive('myready', function($timeout) { // unused
+//    return {
+//	restrict: 'A',
+//	link: function(scope, element, attr) {
+//	    console.log("myready link")
+//	    $timeout(function () {
+//		//DOM has finished rendering
+//		console.log("myready $timeout")
+//	    });
+//	}
+//    }
+//})
 ;
 
 mainApp.controller('ctrl', [ '$scope', '$location', 'service_backend', function($scope, $location, service_backend) { 
