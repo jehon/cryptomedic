@@ -17,6 +17,7 @@ class ReportConsultationsController extends ReportController {
 		$sql .= " WHERE (1 = 1) " .
 			"AND " . $this->getReportParamFilter("day", "Nextappointment", true) .
 			"AND " . $this->getReportParamFilter("center", "NextCenter");
+		$sql .= " ORDER BY c.id";
 		return $sql;
 	}
 		

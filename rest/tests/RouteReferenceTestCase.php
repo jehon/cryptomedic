@@ -61,6 +61,9 @@ class RouteReferenceTestCase extends TestCase {
  		}
  		$pfile = __DIR__  . "/references/" . $file;
  		
+	 	$json = json_decode($response->getContent());
+	 	$json = json_encode($json, JSON_PRETTY_PRINT);
+ 		
  		/* Assert or update the reference */
 		if (getenv("COMMIT") > 0) {
 		 	/* Read it and load $reference */
@@ -71,17 +74,17 @@ class RouteReferenceTestCase extends TestCase {
 	 		}
 	 		
 			/* Commit to the file */
-	 		if (strcmp($reference, $response->getContent()) != 0) {
-				file_put_contents($pfile, $response->getContent());
+	 		if (strcmp($reference, $json) != 0) {
+				file_put_contents($pfile, $json);
 				echo "[$file updated]";
 			}
 		} else {
 			/* Assert the difference */
 			if (file_exists($pfile)) {
-				$res = $this->assertStringEqualsFile($pfile, $response->getContent(), 
-						"Result is invalid [$file - $pfile] @{$this->url}>" . strlen($response->getContent() . 
-								substr($response->getContent(), 0, 20) .
-								(strlen($response->getContent() > 20 ? "..." : ""))));
+				$res = $this->assertStringEqualsFile($pfile, $json); 
+// 						"Result is invalid [$file - $pfile] @{$this->url}>" . strlen($json . 
+// 								substr($json, 0, 20) .
+// 								(strlen($json > 20 ? "..." : ""))));
 			} else {
 				$this->fail("Reference file not found: $file");
 			}
