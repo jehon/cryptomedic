@@ -1,4 +1,3 @@
-// TODO: check headers -> howto parse H
 // http://nightwatchjs.org/guide#writing-custom-commands
 // https://github.com/beatfactor/nightwatch/blob/master/lib/api/assertions/containsText.js
 var util = require('util');

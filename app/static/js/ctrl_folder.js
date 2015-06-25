@@ -68,13 +68,15 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_backend', '$
 	};
 
 	function showMe(type, id) {
-		for(var i = 0; i < $scope.folder.getSubFiles().length; i++) {
-			if (($scope.folder.getSubFile(i)._type == type)
-				&& ($scope.folder.getSubFile(i).id == id)) {
-				$scope.go("/folder/" + $scope.id() + "/" + i);
-				return;
-			}
+	    // TODO HIGH: when the order of the files change (due to Date change), the application handle it incorrectly 
+
+	    for(var i = 0; i < $scope.folder.getSubFiles().length; i++) {
+		if (($scope.folder.getSubFile(i)._type == type)
+			&& ($scope.folder.getSubFile(i).id == id)) {
+		    $scope.go("/folder/" + $scope.id() + "/" + i);
+		    return;
 		}
+	    }
 	}
 	
 	$scope.actionValidate = function() {
@@ -203,7 +205,7 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_backend', '$
 		service_backend.deleteFile($scope.currentFile(), $scope.id())
 			.done(function(data) {
 				if (($scope.page == 'patient') || (!data)) {
-				    	// TODO: transform that into information message
+				    	// TODO GUI: transform that into information message
 				    	alert("The patient has been deleted");
 					console.log("going home");
 					$scope.go("/home");

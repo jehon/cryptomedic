@@ -1,6 +1,6 @@
 "use strict";
 
-// TODO: use -> new Promise()
+// TODO LOW: use -> new Promise()
 
 function cache_storage(onReady) {
     var values = {};

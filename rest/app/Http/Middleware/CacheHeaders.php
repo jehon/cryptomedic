@@ -26,7 +26,7 @@ class CacheHeaders {
      */
     public function handle($request, Closure $next)
     {
-    	// TODOJH: manage caching
+    	// TODO: manage caching of pages
     	$now = new \DateTime();
     	$response = $next($request);
     	

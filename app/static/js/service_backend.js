@@ -79,7 +79,7 @@ mainApp.factory('service_backend', [ '$http', '$rootScope', function($http, $roo
 		    }));
 	},
 	'doLogout': function() {
-	    // TODO: more cleanup
+	    // TODO SECURITY: more cleanup
 	    pcache.clear();
 	    return treatHttp($http.get(phprest + "/authenticate/logout"), function(data) {
 		onLogout.fire();

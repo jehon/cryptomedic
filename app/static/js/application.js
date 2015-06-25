@@ -123,7 +123,7 @@ function objectify(what) {
                 return new Date(what.substr(0, 4), what.substr(5, 2) - 1, what.substr(8, 2),
                     what.substr(11, 2), what.substr(14, 2), what.substr(17, 2));
             };
-			// // TODO: problem with year parsing !!!
+			// // TODO LOW: problem with year parsing !!!
 			// TODOJH: workaround: do not manage yyyy-mm-dd in date() but stay in strings
    //          if (what.match("[0-9]{4}-[0-9]{2}-[0-9]{2}") == what) {
    //          	if (what == "0000-00-00") return null;
@@ -365,8 +365,10 @@ mainApp.controller('ctrl', [ '$scope', '$location', 'service_backend', function(
 	$scope.busy.done = false;
 	$scope.busy.isVisible = false;
 	$scope.doBusy = function(msg, wait) {
-		// TODO: wait 500ms before hide, anyway, but also check in hide if anything is pending...
-		if (typeof(wait) == 'undefined') wait = false;
+		// TODO LOW GUI: auto hide the message box after 500ms if anything is pending ?
+		if (typeof(wait) == 'undefined') {
+		    wait = false;
+		}
 		var c = $scope.busy.messages.push({ 'message': msg, 'done': false }) - 1;
 		$scope.busy.done = false;
 		if (!$scope.busy.isVisible) {

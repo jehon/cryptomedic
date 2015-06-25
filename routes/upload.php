@@ -24,7 +24,6 @@ $maxUploadSizeMb = min(
 		(int) (ini_get('memory_limit') * 0.5)
 	);
 
-// TODOJH Enable config file limit
 // if (array_key_exists('maxSize', $upload))
 // 	$maxUploadSizeMb = min($maxUploadSizeMb, $upload['maxSize']);
 

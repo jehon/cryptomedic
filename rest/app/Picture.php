@@ -37,6 +37,8 @@ class Picture extends CryptomedicModel {
 		}
 		
 		if (Request::has('fileContent')) {
+			// TODO SECURITY: Enforce file size limit
+			
 			$dataURI = Request::input('fileContent');
 	
 			// example = data:image/jpeg;base64

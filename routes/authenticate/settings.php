@@ -10,7 +10,7 @@ $data['group'] = $server->getSession(Server::LOGIN_GROUP);
 // );
 $data["denied"] = array();
 
-// TODO: refine denied list -> better an authorize list?
+// TODO LOW SECURITY: change the authorized list? Link it to real security?
 if (isAuthorized("folder", "PUT"))
 	$data ['authorized'] [] = "folder.edit";
 if (isAuthorized("folder", "DELETE"))

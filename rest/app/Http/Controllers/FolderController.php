@@ -94,6 +94,6 @@ class FolderController extends Controller {
 	}
 	
 	public function reference() {
-		// TODO
+		// TODO HIGH: build up the references
 	}
 }

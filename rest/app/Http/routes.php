@@ -25,7 +25,7 @@ Response::macro('jsonOrJSONP', function($value)
 	return $res;
 });
 
-// TODO: add offline sync data
+// TODO OFFLINE: add offline sync data
 Response::macro('folder', function($id, $addData = array()) {
 	$master = [];
 	$master['_type'] = 'Folder';
@@ -103,13 +103,9 @@ Route::group(array('middleware' => [ "authenticated", 'unFreezeGroup' ]), functi
 	Route::get('unfreeze/{model}/{id}', 'ModelController@unfreeze');
 });
 	
-	
-// TODO: fiches picture
-// TODO: references (new system?)
-// TODO: authentification (+ settings)
-// TODO: users (admin mode)
+// TODO MIGRATION: references (new system?)
+// TODO MIGRATION: authentification (+ settings)
+// TODO MIGRATION: users (admin mode)
 
-// TODO: migrate "myfiles" and "database->getVersion()" to cryptomedic
-// TODO: offline sync --> middleware
-
-
+// TODO MIGRATION: migrate "myfiles" and "database->getVersion()" to cryptomedic
+// TODO MIGRATION: offline sync --> middleware

@@ -8,7 +8,7 @@ mainApp.controller('ctrl_search', [ "$scope", "service_backend", function($scope
 		$scope.listing = [];
 
 	$scope.page = function() {
-		// TODO: paginate this
+		// TODO GUI: render the results in pages of 20 ?
 		$scope.currentPage = $scope.listing;
 	}
 

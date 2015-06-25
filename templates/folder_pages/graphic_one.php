@@ -2,13 +2,13 @@
 	<legend>{{getVariableY()}} / {{getVariableX()}}</legend>
 	<div class='markContainer'>
 		<img ng-src="static/img/stats_{{getImageName()}}.jpg" width='100%'>
-	    <span ng-repeat="f in folder.getSubFiles()"
-	        ng-if="getValidity($index) == 'v'"
-	        ng-mouseover="hover($index)"
-	    	ng-class="{ hovered: hovered == $index }"
-	        class="mark"
-	        style="left: {{getAbscisse($index)}}%; top: {{getOrdonnee($index)}}%"
-	        >
+		    <span ng-repeat="f in folder.getSubFiles()"
+		        ng-if="getValidity($index) == 'v'"
+		        ng-mouseover="hover($index)"
+		    	ng-class="{ hovered: hovered == $index }"
+		        class="mark"
+		        style="left: {{getAbscisse($index)}}%; top: {{getOrdonnee($index)}}%"
+		        >
 		        <span id="stat_{{$index}}">+</span>
 		    </span>
 		</img>
