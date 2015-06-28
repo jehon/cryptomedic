@@ -60,9 +60,12 @@
 	    </div>
 	</div>
     <hr>
+	<div ng-if="isParam('year')" class='alert alert-warning'>
+		Attention! Generating a yearly report may take a very very long time (ex: 5 minutes).
+	</div>
     <div ng-if="!result" class='loading'>
     	Loading
-    </div>
+    	</div>
     <div ng-if="result">
     	<div class='text-right'>
 		    <a class='btn' style='background-color: green; color: white' 
