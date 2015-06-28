@@ -44,6 +44,13 @@ mainApp.controller('ctrl_reports', [ '$scope', '$routeParams', 'service_backend'
 			+ "Options: the day and the center.",
 		    params: [ "day", "center" ],
 		    templateUrl: templateReportBase + "consultations.php"
+		},
+		'yearlySurgical': {
+		    name: 'Yearly Surgical Report',
+		    description: "Follow up of the surgical activity of the year<br>"
+			+ "Options: the year.",
+		    params: [ "year" ],
+		    templateUrl: templateReportBase + "surgery.php"
 		}
 	}
 	

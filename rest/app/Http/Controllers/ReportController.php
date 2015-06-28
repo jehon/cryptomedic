@@ -9,7 +9,6 @@ use App\Bill;
 require_once(__DIR__ . "/../../../../php/references.php");
 use \References;
 
-
 class ReportController extends Controller {
 	protected $params = array();
 	protected $result = array();
