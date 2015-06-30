@@ -40,7 +40,10 @@ class ReportSurgicalController extends ReportController {
 	            bills.total_real as total_real,
 	            bills.total_asked as total_asked,
 	            bills.total_paid as total_paid,
-				exists(select * from bills as b2 where b2.patient_id = bills.patient_id and b2.Date < :whenFrom12) as oldPatient 
+				exists(select * from bills as b2 where b2.patient_id = bills.patient_id and b2.Date < :whenFrom12) as oldPatient,
+				1 as last_seen,
+				1 as last_treat_result,
+				1 as last_treat_ended 
 			FROM bills
 	        JOIN patients ON bills.patient_id = patients.id
 	        JOIN prices ON bills.price_id = prices.id

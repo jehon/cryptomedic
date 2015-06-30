@@ -118,9 +118,9 @@
                             <td>{{l.act}}</td>
                             <td>{{l.treatment}}</td>
                             
-                            <td class='b_left'>{{l.lastSeen}}</td>
-                            <td>{{l.treat_result}}</td>
-                            <td>{{l.treat_done}}</td>
+                            <td class='b_left'>{{l.last_seen}}</td>
+                            <td>{{l.last_treat_result}}</td>
+                            <td>{{l.treat_ended}}</td>
                             
                             <td class='b_left'>{{l.price_consult}}</td>
                             <td>{{l.price_medecine}}</td>
