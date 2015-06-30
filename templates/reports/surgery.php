@@ -2,7 +2,7 @@
     <table class='reporting'>
         <thead>
             <tr>
-                <th colspan="27" class='b_all'>SARPV - AMD - KDM</th>
+                <th colspan="30" class='b_all'>SARPV - AMD - KDM 2</th>
             </tr>
             <tr>
                 <th colspan="5" class='b_all'>Name of project: Ricktes in cox's Bazar</th>
@@ -120,7 +120,7 @@
                             
                             <td class='b_left'>{{l.last_seen}}</td>
                             <td>{{l.last_treat_result}}</td>
-                            <td>{{l.treat_ended}}</td>
+                            <td>{{l.last_treat_ended}}</td>
                             
                             <td class='b_left'>{{l.price_consult}}</td>
                             <td>{{l.price_medecine}}</td>
