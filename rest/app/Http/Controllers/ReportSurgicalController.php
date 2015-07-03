@@ -19,8 +19,6 @@ class ReportSurgicalController extends ReportController {
 				bills.id as bid,
 				patients.id as pid,
 				bills.Date as Date,
-				bills.ExaminerName as ExaminerName,
-				bills.Center as Center,
 				CONCAT(patients.entryyear, '-', patients.entryorder) as patient_reference,
 				CONCAT(patients.FirstName, ' ', patients.LastName) as patient_name,
 				patients.yearofbirth,
@@ -48,8 +46,6 @@ class ReportSurgicalController extends ReportController {
 	            JOIN prices ON bills.price_id = prices.id
 	        WHERE (1 = 1)
 				AND " . $this->getReportParamFilter("when", "bills.Date") . "
-				AND " . $this->getReportParamFilter("center", "bills.Center") . "
-				AND " . $this->getReportParamFilter("examiner", "bills.ExaminerName") . "
 			ORDER BY bills.Date ASC, patients.entryyear ASC, patients.entryorder ASC, bills.id ASC
 			", $this->sqlBindParams + [ "whenFrom12" => $this->internalWhenFrom ]
 		);

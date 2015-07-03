@@ -132,7 +132,7 @@
                             <td>{{l.total_paid}}</td>
 			</tr>
         	<tr>
-        		<td colspan=16 class='b_all'></td>
+        		<td colspan=19 class='b_all'></td>
         		<td colspan=8 class='b_all'>Total</td>
         	</tr>
             <tr>
