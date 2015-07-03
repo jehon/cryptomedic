@@ -163,8 +163,8 @@ mainApp.factory('service_backend', [ '$http', '$rootScope', function($http, $roo
 		return data;				
 	    });
 	},
-	'getReport': function(reportName, data) {
-	    return treatHttp($http.get(rest + "/reports/" + reportName, { 'params': data }), 
+	'getReport': function(reportName, data, timing) {
+	    return treatHttp($http.get(rest + "/reports/" + reportName + (timing ? "/" + timing : ""), { 'params': data }), 
 		    function(data) { return data; }
 	    	);
 	},

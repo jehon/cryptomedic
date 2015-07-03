@@ -32,7 +32,17 @@
 			                </select>
 			            </div>
 				    </div>
-			      	<div ng-if="isParam('day')" class="form-group">
+					<div ng-if="isParam('timing')" class="form-group">
+				        <label class="col-sm-2 control-label">Timing</label>
+			        	<div class="col-sm-10">
+							<select ng-model="values.timing">
+								<option value='day'>daily</option>
+								<option value='month'>monthly</option>
+								<option value='year'>Yearly</option>
+							</select>
+						</div>
+					</div>
+				    <div ng-if="isParam('day')" class="form-group">
 				        <label class="col-sm-2 control-label">Day (yyyy-mm-dd)?</label>
 			        	<div class="col-sm-10">
 							<input name='day' oldtype='date' ng-model='values.day' class="form-control" mycalendar>

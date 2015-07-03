@@ -6,6 +6,10 @@ mainApp.controller('ctrl_reports', [ '$scope', '$routeParams', 'service_backend'
 	angular.forEach($scope.values, function(v, k) {
 		if (v === null) $scope.values[k] = "";
 	});
+	if (!$scope.values['timing']) {
+	    console.log("set timing");
+	    $scope.values['timing'] = 'month';
+	}
 	
 	var templateReportBase = cryptomedic.templateRoot + "/reports/";
 	$scope.reports = {
@@ -49,7 +53,8 @@ mainApp.controller('ctrl_reports', [ '$scope', '$routeParams', 'service_backend'
 		    name: 'Yearly Surgical Report',
 		    description: "Follow up of the surgical activity of the year<br>"
 			+ "Options: the year.",
-		    params: [ "year" ],
+		    params: [ "timing" ],
+		    dataGenerator: 'surgical',
 		    templateUrl: templateReportBase + "surgery.php"
 		}
 	}
@@ -67,6 +72,15 @@ mainApp.controller('ctrl_reports', [ '$scope', '$routeParams', 'service_backend'
 
 	$scope.isParam = function(name) {
 	    if (!$scope.reports[report]) return false;
+
+	    if (($scope.reports[report]['params'].indexOf('timing') > -1)) {
+		console.log("1 " + name);
+		if (name == $scope.values['timing']) {
+		    console.log("2 " + name);
+		    return true;
+		}
+	    }
+	    console.log("3 " + name);
 	    return $scope.reports[report]['params'].indexOf(name) > -1;
 	}
 
@@ -86,7 +100,17 @@ mainApp.controller('ctrl_reports', [ '$scope', '$routeParams', 'service_backend'
 		cache_commons.set(v, $scope.values[v]);
 	    });
 
-	    service_backend.getReport(report, $scope.values).done(function(data) {
+	    // TODO: the name of the report could be different than the index
+	    // TODO: add here the daily / ...
+	    var dataGenerator = report;
+	    if (typeof($scope.reports[report].dataGenerator) != 'undefined') {
+		dataGenerator = $scope.reports[report].dataGenerator;
+	    }
+	    service_backend.getReport(dataGenerator, 
+		    	$scope.values, 
+		    	($scope.isParam('timing') ? $scope.values.timing : null)
+		    )
+		    .done(function(data) {
 		$scope.result = data;
 	    });
 	}
