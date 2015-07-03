@@ -12,8 +12,6 @@ use \References;
 class ReportSurgicalController extends ReportController {
 	public function index($when) {
 		$this->getReportParams("when", $when);
-		$examiner = $this->getReportParams("examiner", "");
-		$where = $this->getReportParams("center", "");
 
 		$this->result['list'] = DB::select("SELECT
 				bills.id as bid,

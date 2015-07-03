@@ -92,8 +92,8 @@ Route::group(array('middleware' => 'authenticated'), function() {
 			"uses" => "ReportStatisticalController@yearly"
 	]);
 
-	Route::get('reports/yearlySurgical', [
-			"uses" => "ReportSurgicalController@yearly"
+	Route::get('reports/surgical/{timing}', [
+			"uses" => "ReportSurgicalController@byTiming"
 	]);
 });
 

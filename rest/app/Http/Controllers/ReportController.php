@@ -17,6 +17,15 @@ class ReportController extends Controller {
 	protected $internalWhenFrom = "";
 	protected $internalWhenTo = "";
 	protected $sqlBindParams = array();
+
+	public function byTiming($timing) {
+		switch($timing) {
+			case 'day': return $this->daily();
+			case 'month': return $this->monthly();
+			case 'year': return $this->yearly(); 
+		}
+		abort(404, "No correct timing found");
+	}
 	
 	public function yearly() {
 		$when = $this->getReportParams('year', (new \DateTime())->format("Y"));
