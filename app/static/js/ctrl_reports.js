@@ -6,12 +6,13 @@ mainApp.controller('ctrl_reports', [ '$scope', '$routeParams', 'service_backend'
 	angular.forEach($scope.values, function(v, k) {
 		if (v === null) $scope.values[k] = "";
 	});
-	if (!$scope.values['timing']) {
-	    console.log("set timing");
-	    $scope.values['timing'] = 'month';
+	if (!$scope.values['period']) {
+	    console.log("set period");
+	    $scope.values['period'] = 'month';
 	}
 	
 	var templateReportBase = cryptomedic.templateRoot + "/reports/";
+	// TODO: add "defaultValues" => period = month => generalize dailyActivity and monthlyActivity into one backend
 	$scope.reports = {
 		'dailyActivity': { 
 		    name: 'Daily Report',
@@ -27,20 +28,13 @@ mainApp.controller('ctrl_reports', [ '$scope', '$routeParams', 'service_backend'
 		    params: [ "center", "examiner", "month" ],
 		    templateUrl: templateReportBase + "activity.php"
 		},
-		'monthlyStatistical': {
-		    name: 'Monthly Statistical Report',
-		    description: "If you want to know the monthly activity of the SARPV CDC, choose this report<br>"
-			+ "Options: the month.",
-		    params: [ "month" ],
-		    templateUrl: templateReportBase + "statistical.php"
-		},
-		'yearlyStatistical': {
-		    name: 'Yearly Statistical Report',
-		    description: "If you want to know the yearly activity of the SARPV CDC, choose this report<br>"
-			+ "Options: the year.",
-		    params: [ "year", "center", "examiner" ],
-		    templateUrl: templateReportBase + "statistical.php"
-		},
+//		'monthlyStatistical': {
+//		    name: 'Monthly Statistical Report',
+//		    description: "If you want to know the monthly activity of the SARPV CDC, choose this report<br>"
+//			+ "Options: the month.",
+//		    params: [ "month" ],
+//		    templateUrl: templateReportBase + "statistical.php"
+//		},
 		'consultations': {
 		    name: 'Consultations planned',
 		    description: "List of consultations planned on a specific day in a specific center.<br>"
@@ -49,11 +43,17 @@ mainApp.controller('ctrl_reports', [ '$scope', '$routeParams', 'service_backend'
 		    params: [ "day", "center" ],
 		    templateUrl: templateReportBase + "consultations.php"
 		},
-		'yearlySurgical': {
-		    name: 'Yearly Surgical Report',
-		    description: "Follow up of the surgical activity of the year<br>"
-			+ "Options: the year.",
-		    params: [ "timing" ],
+		'statistical': {
+		    name: 'Statistical Report',
+		    description: "If you want to know the activity of the SARPV CDC on a period, choose this report",
+		    params: [ "period", "center", "examiner" ],
+		    dataGenerator: "statistical",
+		    templateUrl: templateReportBase + "statistical.php"
+		},
+		'surgical': {
+		    name: 'Surgical Report',
+		    description: "Follow up of the surgical activity of the period",
+		    params: [ "period" ],
 		    dataGenerator: 'surgical',
 		    templateUrl: templateReportBase + "surgery.php"
 		}
@@ -73,9 +73,9 @@ mainApp.controller('ctrl_reports', [ '$scope', '$routeParams', 'service_backend'
 	$scope.isParam = function(name) {
 	    if (!$scope.reports[report]) return false;
 
-	    if (($scope.reports[report]['params'].indexOf('timing') > -1)) {
+	    if (($scope.reports[report]['params'].indexOf('period') > -1)) {
 		console.log("1 " + name);
-		if (name == $scope.values['timing']) {
+		if (name == $scope.values['period']) {
 		    console.log("2 " + name);
 		    return true;
 		}
@@ -108,7 +108,7 @@ mainApp.controller('ctrl_reports', [ '$scope', '$routeParams', 'service_backend'
 	    }
 	    service_backend.getReport(dataGenerator, 
 		    	$scope.values, 
-		    	($scope.isParam('timing') ? $scope.values.timing : null)
+		    	($scope.isParam('period') ? $scope.values.period : null)
 		    )
 		    .done(function(data) {
 		$scope.result = data;

@@ -32,13 +32,13 @@
 			                </select>
 			            </div>
 				    </div>
-					<div ng-if="isParam('timing')" class="form-group">
-				        <label class="col-sm-2 control-label">Timing</label>
+					<div ng-if="isParam('period')" class="form-group">
+				        <label class="col-sm-2 control-label">Perdio</label>
 			        	<div class="col-sm-10">
-							<select ng-model="values.timing">
+							<select ng-model="values.period">
 								<option value='day'>daily</option>
 								<option value='month'>monthly</option>
-								<option value='year'>Yearly</option>
+								<option value='year'>yearly</option>
 							</select>
 						</div>
 					</div>

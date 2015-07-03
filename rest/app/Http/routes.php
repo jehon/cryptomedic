@@ -84,6 +84,8 @@ Route::group(array('middleware' => 'authenticated'), function() {
 			"uses" => "ReportActivityController@monthly"
 	]);
 	
+	// Old routes
+	
 	Route::get('reports/monthlyStatistical', [
 			"uses" => "ReportStatisticalController@monthly"
 	]);
@@ -91,7 +93,12 @@ Route::group(array('middleware' => 'authenticated'), function() {
 	Route::get('reports/yearlyStatistical', [
 			"uses" => "ReportStatisticalController@yearly"
 	]);
-
+	
+	// New route
+	Route::get('reports/statistical/{timing}', [
+			"uses" => "ReportStatisticalController@byTiming"
+	]);
+	
 	Route::get('reports/surgical/{timing}', [
 			"uses" => "ReportSurgicalController@byTiming"
 	]);
