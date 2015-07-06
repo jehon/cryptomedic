@@ -7,10 +7,21 @@
 	        <fieldset>
 				<legend>General data</legend>
 				<table>
-					<tr>
+					<tr ng-if="id() > -1">
 						<td>Entry Number</td>
 						<td><?php (new t("Patient.entryyear"))->read()->p(); ?>-<?php (new t("Patient.entryorder"))->read()->p(); ?></td>
 					</tr>
+					<tr ng-if="id()==-1">
+						<td>Entry Year</td>
+						<td>
+							<div class='alert alert-info'>
+								You asked the system to generate a reference for you. This reference will be generated
+								when you will save this file. I just need the year to build up the reference.
+								<?php (new t("Patient.entryyear", [ "required" => "required" ]))->write()->p(); ?>
+							</div>
+						</td>
+					</tr>
+					
 					<?php (new t("Patient.Firstname"))->tr("First Name")->p(); ?>
 					<?php (new t("Patient.Lastname"))->tr("Last Name")->p(); ?>
 					<?php (new t("Patient.Sex"))->tr()->p(); ?>
@@ -28,8 +39,9 @@
 			</fieldset>
 	 	</div>
 		<div class="col-lg-6">
-			<fieldset id='PatientPathology' ng-class='{ errors.noPathology: jserror }'>
-				<legend>Pathology</legend>
+<!-- 			<fieldset id='PatientPathology' ng-class='{ errors.noPathology: jserror }'> -->
+			<fieldset id='PatientPathology' ng-class='{ jserror: errors.noPathology }'>
+			<legend>Pathology</legend>
 				<table>
 					<tr>
 						<td></td>
@@ -49,28 +61,6 @@
 				</table>
 			</fieldset>
 	 		<br/>
-<?php /*
-	 		<fieldset>
-				<legend>Social Data</legend>
-				<table>
-					<?php (new t("Patient.Familysalaryinamonth"))->tr("Family Salary in a Month")->p(); ?>
-					<?php (new t("Patient.Numberofhouseholdmembers"))->tr("Number of Houslehold Members")->p(); ?>
-					<tr>
-						<td>Salary ratio</td>
-						<td><span catch-it ng-model="folder" tryit="currentFile().ratioSalary()">{{ result | number:0 }}</span></td>
-					</tr>
-	 				<tr>
-						<td><hr/></td><td><hr/></td>
-					</tr><tr>
-						<td>Calculated Social Level</td>
-						<td><span catch-it ng-model="folder" tryit="currentFile().calculateSocialLevel()">
-							level {{ result | number:0 }}
-							</span></td>
-					</tr>
-					<?php (new t("Patient.Sociallevel"))->tr("Entered Social Level")->p(); ?>
-				</table>
-			</fieldset>
-*/ ?>
 		</div>
 	</div>
 </div>
