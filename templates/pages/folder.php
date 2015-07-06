@@ -3,7 +3,7 @@
 ?>
 <div class='container-fluid modeRead'>
 	<div class='row'>
-		<div class="col-sm-2" class="btn-group btn-group-justified btn-group-vertical">
+		<div ng-if="id() >= 0" class="col-sm-2" class="btn-group btn-group-justified btn-group-vertical">
 			<a ng-if='hasPermission("folder.edit")' ng-class="{ 'btn-warning': page === 'add'}" ng-href="#/folder/{{id()}}/add" class="btn btn-default" style="width: 100%">Add</a>
 			<a ng-class="{ 'btn-warning': page === 'summary'}" ng-href="#/folder/{{id()}}/summary" class="btn btn-default" style="width: 100%">Summary</a>
 			<a ng-class="{ 'btn-warning': page === 'graphics'}" ng-href="#/folder/{{id()}}/graphics" class="btn btn-default" style="width: 100%">Graphics</a>
@@ -21,7 +21,7 @@
 		</div>
 		<div class="col-sm-10">
 			<div class="submenu .container-fluid">
-				<div class="row">
+				<div class="row" ng-if="id() >= 0">
 					<div class="col-sm-4 text-left" style="font-size: x-small">
 						Modified on {{currentFile().modified | date:'yyyy-MM-dd HH:mm:ss' }}
 						by {{currentFile().lastuser}}
@@ -42,14 +42,18 @@
 								Unlock the file
 							</span>
 						</span>
-						<span ng-if="!currentFile().isLocked()">
+						<span ng-if="!currentFile().isLocked()" >
 				 			<span ng-if='hasPermission("folder.edit")' class="notModeWrite btn btn-default" ng-click="go('/folder/' + folder.id + '/' + page + '/edit')">Edit</span>
 							<span ng-if='hasPermission("folder.edit")' class="notModeRead btn btn-default" ng-click="actionSave()">Save</span>
-							<span ng-if='hasPermission("folder.delete") && ((page != "patient")  || (folder.getSubFiles().length == 0))' class="notModeRead btn btn-default" ng-click="actionDelete()">Delete</span>
+							<span ng-if='hasPermission("folder.delete") && ((page != "patient") || (folder.getSubFiles().length == 0))' class="notModeRead btn btn-default" ng-click="actionDelete()">Delete</span>
 				 			<span class="notModeRead btn btn-default" ng-click="actionCancel()">Cancel</span>
 							<!-- <span ng-if='hasPermission("folder.delete")' class="notModeWrite btn btn-default">Delete</span> -->
 				 		</span>
 					</div>
+				</div>
+				<div ng-if="id() < 0" class='text-center'>
+					<span ng-if='hasPermission("folder.edit")' class="notModeRead btn btn-default" ng-click="actionCreatePatient()">Create patient</span>
+				 	<span class="notModeRead btn btn-default" ng-click="go('/home')">Cancel</span>
 				</div>
 			</div>
 			<form id="fileForm">
