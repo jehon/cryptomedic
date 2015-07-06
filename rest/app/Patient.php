@@ -23,10 +23,4 @@ use App\CryptomedicModel;
  * @author jehon
  *
  */
-class Patient extends CryptomedicModel {
-	
-	public static function create(array $attributes) {
-		// TODO: manage reference !!!
-		return parent::create($attributes);
-	}
-}
+class Patient extends CryptomedicModel {}

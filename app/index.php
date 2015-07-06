@@ -53,10 +53,7 @@
 			}
 			
 			var cryptomedic = {};
-			cryptomedic.versions = {};
-			cryptomedic.versions.cryptomedic = '<?php echo $server->getVersion("cryptomedic"); ?>';
-			cryptomedic.versions.rest = '<?php echo $server->getVersion("rest"); ?>';
-			cryptomedic.versions.agglomerated = cryptomedic.versions.cryptomedic + " - " + cryptomedic.versions.rest;
+			cryptomedic.version = '<?php echo $server->getVersion("cryptomedic"); ?>';
 			cryptomedic.settings = {};
 		</script>
 	<?php 
@@ -203,6 +200,6 @@
 	</body>
 	<script>
 		// Display the application version into the header
-		jQuery("#appCache_mode").html("version[" + cryptomedic.versions.cryptomedic + "]")
+		jQuery("#appCache_mode").html("v" + cryptomedic.version);
 	</script>
 </html>

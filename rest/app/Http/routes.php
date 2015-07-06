@@ -121,7 +121,7 @@ Route::group(array('middleware' => [ "authenticated", 'unFreezeGroup' ]), functi
 	Route::get('unfreeze/{model}/{id}', 'ModelController@unfreeze');
 });
 	
-// TODO MIGRATION: authentification (+ settings)
+// TODO HIGH MIGRATION: authentification (+ settings)
 // TODO MIGRATION: users (admin mode)
 
 // TODO MIGRATION: migrate "myfiles" and "database->getVersion()" to cryptomedic

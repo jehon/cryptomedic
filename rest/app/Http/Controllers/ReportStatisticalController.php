@@ -9,8 +9,6 @@ use App\Bill;
 require_once(__DIR__ . "/../../../../php/references.php");
 use \References;
 
-// TODO: use center and examiner
-
 class ReportStatisticalController extends ReportController {
 	protected $filter = "(1=1)";
 	

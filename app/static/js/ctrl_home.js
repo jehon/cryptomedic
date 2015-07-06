@@ -35,7 +35,6 @@ mainApp.controller('ctrl_home', [ '$scope', '$location', 'service_backend' , fun
 	};
 	
 	$scope.createReference = function() {
-	    	// TODO MIGRATION: avoid server call for patient creation
 	    	var busyEnd = $scope.doBusy("Creating the reference on the server");
 		service_backend.createReference($scope.entryyear, $scope.entryorder)
 			.done(function(data) {

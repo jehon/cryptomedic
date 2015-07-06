@@ -7,7 +7,6 @@
 ?>
 CACHE MANIFEST
 
-
 <?php
 	
 	// By default, consider manifest mtime as a minimum
@@ -24,7 +23,6 @@ CACHE MANIFEST
 		$request = $server->getRequest();
 		
 		function addLine($f) {
-// TODO: reactivate manifest
 // 			echo $f . "\n";
 		}
 	
@@ -68,12 +66,9 @@ CACHE MANIFEST
 		
 		addLine("# Manually added elements");
 		addFileTs("index.php");
-//disable this one to allow mode online and offline automatically
 		addOne("/cryptomedic/app/");
 		addFileTs("../index.html");
 		addOne("../");
-		// Add the manifest itself
-		addFileTs(basename(__FILE__));
 		addFileTs("../../cryptomedic.version");
 		addFileTs("../../rest.version");
 		

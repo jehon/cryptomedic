@@ -67,7 +67,7 @@ mainApp.factory('service_backend', [ '$http', '$rootScope', function($http, $roo
     return {
 	'checkLogin': function() {
 	    // TODOJH: Give hime information about last sync
-	    return treatHttp($http.get(phprest + "/authenticate/settings&appVersion=" + cryptomedic.versions.agglomerated));
+	    return treatHttp($http.get(phprest + "/authenticate/settings&appVersion=" + cryptomedic.version));
 	},
 	'doLogin': function(username, password) {
 	    // Hack: if no username is given, then checkLogin instead
@@ -75,7 +75,7 @@ mainApp.factory('service_backend', [ '$http', '$rootScope', function($http, $roo
 	    return treatHttp($http.post(phprest + "/authenticate/login", 
 		    { 'username': username, 
 			'password': password, 
-			'appVersion': cryptomedic.versions.agglomerated 
+			'appVersion': cryptomedic.version
 		    }));
 	},
 	'doLogout': function() {

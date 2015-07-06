@@ -12,7 +12,6 @@ mainApp.controller('ctrl_reports', [ '$scope', '$routeParams', 'service_backend'
 	}
 	
 	var templateReportBase = cryptomedic.templateRoot + "/reports/";
-	// TODO: add "defaultValues" => period = month => generalize dailyActivity and monthlyActivity into one backend
 	$scope.reports = {
 		'dailyActivity': { 
 		    name: 'Daily Report',
@@ -100,8 +99,6 @@ mainApp.controller('ctrl_reports', [ '$scope', '$routeParams', 'service_backend'
 		cache_commons.set(v, $scope.values[v]);
 	    });
 
-	    // TODO: the name of the report could be different than the index
-	    // TODO: add here the daily / ...
 	    var dataGenerator = report;
 	    if (typeof($scope.reports[report].dataGenerator) != 'undefined') {
 		dataGenerator = $scope.reports[report].dataGenerator;
