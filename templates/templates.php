@@ -358,6 +358,7 @@ class t {
                 var_dump($this->structure);
                 break;
         }
+        return $this;
     }
 
     function value() {
