@@ -110,21 +110,17 @@ mainApp.factory('service_backend', [ '$http', '$rootScope', function($http, $roo
 	    });
 	},
 	'checkReference': function(year, order) {
-	    return treatHttp($http.get(phprest + "/references/", 
-		{ 'params': { 
-		    'entryyear': year, 
-		    'entryorder': order
-		}}), 
+	    return treatHttp($http.get(rest + "/reference/" + year + "/" + order),
 		function(data) {
-			if (data.length == 1) {
-			    return data[0]['id'];
+			if ((typeof(data._type) != 'undefined') && (data._type == 'Folder')) {
+			    return data['id'];
 			} else {
 			    return false;
 			}
 		});
 	},
 	'createReference': function(year, order) {
-	    return treatHttp($http.post(phprest + "/references/", 
+	    return treatHttp($http.post(rest + "/reference", 
 		{ 
 			'entryyear': year, 
 			'entryorder': order

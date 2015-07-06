@@ -5,7 +5,6 @@ mainApp.controller('ctrl_home', [ '$scope', '$location', 'service_backend' , fun
 		$scope.searched = false;
 		$scope.entryyear = (new Date()).getFullYear();
 		$scope.entryorder = "";
-		$scope.generate = false;
 	}
 
 	$scope.resetSearched = function() {
@@ -36,10 +35,10 @@ mainApp.controller('ctrl_home', [ '$scope', '$location', 'service_backend' , fun
 	};
 	
 	$scope.createReference = function() {
-		var busyEnd = $scope.doBusy("Creating the reference on the server");
+	    	// TODO MIGRATION: avoid server call for patient creation
+	    	var busyEnd = $scope.doBusy("Creating the reference on the server");
 		service_backend.createReference($scope.entryyear, $scope.entryorder)
 			.done(function(data) {
-				console.log(data);
 				busyEnd();
 				// end the busy mode
 				jQuery("#busy").modal('hide');
@@ -55,21 +54,7 @@ mainApp.controller('ctrl_home', [ '$scope', '$location', 'service_backend' , fun
 		$scope.searched = true;
 	};
 	$scope.generateReference = function() {
-		var busyEnd = $scope.doBusy("Generating a the reference on the server");
-		service_backend.createReference($scope.entryyear, -1)
-			.done(function(data) {
-				busyEnd();
-				jQuery("#busy").modal('hide');
-				setTimeout(function() {
-					window.location.hash = "/folder/" + data.id + "/patient/edit";
-				}, 1);
-			})
-			.fail(function(data) {
-				console.error(data);
-			}).always(function() {
-				busyEnd();
-			});
-		$scope.searched = true;
+	    window.location.hash = "/folder/-1/patient/edit";
+	    return;
 	}
-	
 }]);

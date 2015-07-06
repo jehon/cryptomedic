@@ -1,8 +1,10 @@
 <?php namespace App\Http\Controllers;
 
+use App\Patient;
 use App\Http\Controllers\Controller;
 use DB;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Request;
 
 require_once(__DIR__ . "/../../../../php/references.php");
@@ -93,7 +95,25 @@ class FolderController extends Controller {
 		return response()->folder($r->patient_id);
 	}
 	
-	public function reference() {
-		// TODO HIGH: build up the references
+	public function reference($entryyear, $entryorder) {
+		$r = DB::select("SELECT * FROM patients WHERE entryyear = ? and entryorder = ?", array($entryyear, $entryorder));
+		if (count($r) != 1) {
+			return response()->jsonOrJSONP(null);
+		}
+		$r = array_pop($r);
+		return response()->folder($r->id);
+	}
+	
+	// TODO: non cannonic name to avoid readonly access though "use"
+	public function createFile() {
+		$data = Input::except('_type');
+		
+		$newObj = Patient::create($data);
+		if (!$newObj->id) {
+			abort(500, "Could not create the patient");
+		}
+		return response()->folder(
+				$newObj->id
+			);
 	}
 }

@@ -25,16 +25,31 @@ class ModelController extends Controller {
 	// POST = create
 	public function store($model) {
 		$data = Input::except('_type');
+		$m = $this->getModel($model);
 		if ($model == "Patient") {
-			// What to do here ?						
+			// In case we create a patient, things are a bit more complicated!!!
+			if (!DB::insert("INSERT INTO patients(entryyear, entryorder) 
+					 VALUE(?, coalesce(
+							greatest(10000,
+								(select i from (select (max(entryorder) + 1) as i from patients where entryyear = ? and entryorder BETWEEN 10000 AND 19999) as j )
+							), 
+					10000))", [ Request::input("entryyear"), Request::input("entryyear") ])) {
+				abort(500, "Could not create the patient");
+			}
+			// TODO: how does Laravel does that cleanly???
+			$id = DB::select("SELECT LAST_INSERT_ID() as id");
+			$id = $id[0]->id;
+			
+			$m::findOrFail($id);
+			$res = $this->update("Patient", $id);
+			return response()->folder($id);
 		} else {
 			if (!Input::has('patient_id')) {
 				abort(500, "No identification of patients");
 			}
+			$newObj = $m::create($data);
 		}		
 		
-		$m = $this->getModel($model);
-		$newObj = $m::create($data);
 		if (!$newObj->id) {
 			abort(500, "Could not create the file");
 		}

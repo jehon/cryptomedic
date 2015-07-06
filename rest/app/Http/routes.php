@@ -64,10 +64,15 @@ Route::controllers([
 Route::group(array('middleware' => 'authenticated'), function() {
 	Route::get('home', 'HomeController@index');
 	
+	// TODO URGENT: limit this to what???
 	Route::resource('folder', "FolderController");
 
 	Route::get('related/{model}/{id}', [
 		"uses" => "FolderController@related"
+	]);
+
+	Route::get('reference/{entryyear}/{entryorder}', [
+		"uses" => "FolderController@reference"
 	]);
 	
 	Route::resource('price', "PriceController");
@@ -84,8 +89,15 @@ Route::group(array('middleware' => 'authenticated'), function() {
 			"uses" => "ReportActivityController@monthly"
 	]);
 	
-	// Old routes
+	Route::get('reports/statistical/{timing}', [
+			"uses" => "ReportStatisticalController@byTiming"
+	]);
 	
+	Route::get('reports/surgical/{timing}', [
+			"uses" => "ReportSurgicalController@byTiming"
+	]);
+
+	// TODO: remove old routes
 	Route::get('reports/monthlyStatistical', [
 			"uses" => "ReportStatisticalController@monthly"
 	]);
@@ -94,27 +106,21 @@ Route::group(array('middleware' => 'authenticated'), function() {
 			"uses" => "ReportStatisticalController@yearly"
 	]);
 	
-	// New route
-	Route::get('reports/statistical/{timing}', [
-			"uses" => "ReportStatisticalController@byTiming"
-	]);
-	
-	Route::get('reports/surgical/{timing}', [
-			"uses" => "ReportSurgicalController@byTiming"
-	]);
 });
 
 Route::group(array('middleware' => [ "authenticated", "writeGroup" ] ), function() {
 	Route::POST('/fiche/{model}', 'ModelController@store');
 	Route::PUT('/fiche/{model}/{id}', 'ModelController@update');
 	Route::DELETE('/fiche/{model}/{id}', 'ModelController@destroy');
+
+	// TODO: normalize this name when FolderController is correctly protected above 
+	Route::POST('/reference', 'FolderController@createfile');
 });
 
 Route::group(array('middleware' => [ "authenticated", 'unFreezeGroup' ]), function() {
 	Route::get('unfreeze/{model}/{id}', 'ModelController@unfreeze');
 });
 	
-// TODO MIGRATION: references (new system?)
 // TODO MIGRATION: authentification (+ settings)
 // TODO MIGRATION: users (admin mode)
 
