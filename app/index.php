@@ -90,8 +90,9 @@
 
 // This script require authentification...
 // TODO SECURITY: put them in xhr? --> could pass the computer id in the call (and application version too)
-		(new Script("/rest/authenticate/settings?JSONP=server.setSettings&appVersion=" . $server->getVersion("cryptomedic") . " - " . $server->getVersion("rest")))->js()->dependDBTable("settings")->live()->toPrint();
-	?>
+// 		(new Script("/rest/authenticate/settings?JSONP=server.setSettings&appVersion=" . $server->getVersion("cryptomedic") . " - " . $server->getVersion("rest")))->js()->dependDBTable("settings")->live()->toPrint();
+		(new Script("/cryptomedic/rest/public/auth/settings?JSONP=server.setSettings&appVersion=" . $server->getVersion("cryptomedic") . " - " . $server->getVersion("rest")))->js()->dependDBTable("settings")->live()->toPrint();
+		?>
 	</head>
 	<body ng-app="app_main" ng-controller="ctrl" id="ng-app">
 		<!--  Navigation bar -->	
