@@ -50,13 +50,15 @@ Response::macro('folder', function($id, $addData = array()) {
 	return response()->jsonOrJSONP(array_merge($master, $addData));
 });
 
-
-Route::get('/', 'WelcomeController@index');
-
+/**
+ * For anybody
+ */
+// Route::get('/', 'WelcomeController@index');
 Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
 ]);
+Route::resource('price', "PriceController");
 
 /**
  * Authenticated user needed
@@ -74,8 +76,6 @@ Route::group(array('middleware' => 'authenticated'), function() {
 	Route::get('reference/{entryyear}/{entryorder}', [
 		"uses" => "FolderController@reference"
 	]);
-	
-	Route::resource('price', "PriceController");
 	
 	Route::get('reports/consultations', [
 		"uses" => "ReportConsultationsController@index"
