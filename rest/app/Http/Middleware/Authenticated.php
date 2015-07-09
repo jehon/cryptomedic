@@ -32,7 +32,7 @@ class Authenticated {
 	 */
 	public function handle($request, Closure $next)
 	{
-		if ($this->auth->guest())
+		if ($this->auth->guest() || !$request->user()->group)
 		{
 // 			if ($request->ajax())
 // 			{
