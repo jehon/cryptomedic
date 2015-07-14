@@ -1,5 +1,6 @@
 language: php
 #language: node_js
+
 node_js:
   - 0.12
 
@@ -8,8 +9,10 @@ before_script:
   - sh -e /etc/init.d/xvfb start
   - php --version
   - npm --version
+  - npm install
 #  - npm start > /dev/null &
 #  - npm run update-webdriver
+  
   - sleep 1 # give server time to start
 
 #script:

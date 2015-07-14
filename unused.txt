@@ -1,0 +1,13 @@
+
+package.json:
+    "grunt": "^0.4.5",
+    "grunt-releaser": "latest",
+    "node-php-server": "^0.1.2",
+    "http-server": "latest",
+    "nightwatch-custom-commands-assertions": "https://github.com/jehon/nightwatch-custom-commands-assertions.git",
+    "protractor": "~0.20.1",
+    "shelljs": "latest"
+    
+bower.json:
+    "es6-promise": "latest"
+    

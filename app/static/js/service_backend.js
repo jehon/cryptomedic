@@ -21,7 +21,6 @@ mainApp.factory('service_backend', [ '$http', '$rootScope', function($http, $roo
 //    var rest = service_rest($http);
 
     var pcache = perishableCache(10);
-    var phprest = "/rest/";
     var rest = "/cryptomedic/rest/public/";
     var onLogin = jQuery.Callbacks();
     var onLogout = jQuery.Callbacks();
@@ -67,12 +66,12 @@ mainApp.factory('service_backend', [ '$http', '$rootScope', function($http, $roo
     return {
 	'checkLogin': function() {
 	    // TODOJH: Give hime information about last sync
-	    return treatHttp($http.get(phprest + "/authenticate/settings&appVersion=" + cryptomedic.version));
+	    return treatHttp($http.get(rest + "/auth/settings&appVersion=" + cryptomedic.version));
 	},
 	'doLogin': function(username, password) {
 	    // Hack: if no username is given, then checkLogin instead
 	    if (username == "") return this.checkLogin();
-	    return treatHttp($http.post(phprest + "/authenticate/login", 
+	    return treatHttp($http.post(rest + "/auth/mylogin", 
 		    { 'username': username, 
 			'password': password, 
 			'appVersion': cryptomedic.version
@@ -81,7 +80,7 @@ mainApp.factory('service_backend', [ '$http', '$rootScope', function($http, $roo
 	'doLogout': function() {
 	    // TODO SECURITY: more cleanup
 	    pcache.clear();
-	    return treatHttp($http.get(phprest + "/authenticate/logout"), function(data) {
+	    return treatHttp($http.get(rest + "/auth/logout"), function(data) {
 		onLogout.fire();
 	    });
 	},

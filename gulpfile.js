@@ -3,6 +3,12 @@ var gulp = require('gulp-param')(require('gulp'), process.argv);
 //var gulp = require('gulp');
 var plugins = require('gulp-load-plugins')();
 
+/*
+ * TODO: gulp-release-tasks
+ * TODO: node-php-server
+ *  
+ */
+
 var exitStatus = 0;
 process.on('exit', function (status) {
 	if (status < exitStatus) {
