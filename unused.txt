@@ -7,7 +7,12 @@ package.json:
     "nightwatch-custom-commands-assertions": "https://github.com/jehon/nightwatch-custom-commands-assertions.git",
     "protractor": "~0.20.1",
     "shelljs": "latest"
+    "gulp-param": "^0.6.3",
     
 bower.json:
     "es6-promise": "latest"
+
+nightwatch.json:
+    "custom_commands_path": [ "node_modules/nightwatch-custom-commands-assertions/js/commands", "test/end2end/commands" ],
+    "custom_assertions_path": [ "node_modules/nightwatch-custom-commands-assertions/js/assertions", "test/end2end/assertions" ],
     

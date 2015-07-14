@@ -2,8 +2,8 @@
     "src_folders" : [ "test/end2end/tests" ],
     "output_folder" : "tmp/end2end",
     "page_objects_path" : "test/end2end/pages",
-    "custom_commands_path": [ "node_modules/nightwatch-custom-commands-assertions/js/commands", "test/end2end/commands" ],
-    "custom_assertions_path": [ "node_modules/nightwatch-custom-commands-assertions/js/assertions", "test/end2end/assertions" ],
+    "custom_commands_path": [ "test/end2end/commands" ],
+    "custom_assertions_path": [ "test/end2end/assertions" ],
     
     "selenium" : {
 	"start_process" : true,
