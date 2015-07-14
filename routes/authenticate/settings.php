@@ -19,7 +19,6 @@ if (isAuthorized("folder", "UNLOCK"))
 	$data ['authorized'] [] = "folder.unlock";
 
 if ($v = $server->getRequest()->getParameter("version", false)) {
-	
 	$data['version'] = $v;
 }
 
