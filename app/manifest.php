@@ -55,7 +55,6 @@ CACHE MANIFEST
 		}
 		
 		addLine("# cryptomedic version: " . $server->getVersion("cryptomedic"));
-		addLine("# rest version: " . $server->getVersion());
 		addLine("# database version: " . $server->getDatabase()->getVersion());
 		addLine("# system parameter: " . $server->getRequest()->getSystemParameter("version", "#NA#"));
 		
@@ -70,7 +69,6 @@ CACHE MANIFEST
 		addFileTs("../index.html");
 		addOne("../");
 		addFileTs("../../cryptomedic.version");
-		addFileTs("../../rest.version");
 		
 		// Use the index for import
 		ob_start();	

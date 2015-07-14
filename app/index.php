@@ -1,10 +1,7 @@
 <?php 
 	require_once(__DIR__ . "/../php/allscripts.php");
-	require_once __DIR__ . "/../../rest/php/core.php";
+	require_once(__DIR__ . "/../php/core.php");
 	Script::$rootPath = __DIR__;
-	
-	Server::setOption(Server::OPTION_NO_SESSION);
-	$server = Server::getInstance();
 
 ?><!DOCTYPE html>
 <html <?php 
@@ -53,7 +50,7 @@
 			}
 			
 			var cryptomedic = {};
-			cryptomedic.version = '<?php echo $server->getVersion("cryptomedic"); ?>';
+			cryptomedic.version = '<?php echo getVersion(); ?>';
 			cryptomedic.settings = {};
 		</script>
 	<?php 
@@ -90,8 +87,8 @@
 
 // This script require authentification...
 // TODO SECURITY: put them in xhr? --> could pass the computer id in the call (and application version too)
-// 		(new Script("/rest/authenticate/settings?JSONP=server.setSettings&appVersion=" . $server->getVersion("cryptomedic") . " - " . $server->getVersion("rest")))->js()->dependDBTable("settings")->live()->toPrint();
-		(new Script("/cryptomedic/rest/public/auth/settings?JSONP=server.setSettings&appVersion=" . $server->getVersion("cryptomedic") . " - " . $server->getVersion("rest")))->js()->dependDBTable("settings")->live()->toPrint();
+// 		(new Script("/rest/authenticate/settings?JSONP=server.setSettings&appVersion=" . $server->getVersion("cryptomedic")))->js()->dependDBTable("settings")->live()->toPrint();
+		(new Script("/cryptomedic/rest/public/auth/settings?JSONP=server.setSettings&appVersion=" . getVersion("cryptomedic")))->js()->dependDBTable("settings")->live()->toPrint();
 		?>
 	</head>
 	<body ng-app="app_main" ng-controller="ctrl" id="ng-app">
