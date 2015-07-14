@@ -53,7 +53,6 @@ Response::macro('folder', function($id, $addData = array()) {
 /**
  * For anybody
  */
-// Route::get('/', 'WelcomeController@index');
 Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',

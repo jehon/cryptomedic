@@ -2,13 +2,13 @@
 
 require_once(__DIR__ . "/RouteReferenceTestCase.php");
 
-class RootTest extends RouteReferenceTestCase {
+// class RootTest extends RouteReferenceTestCase {
 
-	public function setUp() {
-		parent::setUp("/");
-	}
+// 	public function setUp() {
+// 		parent::setUp("/");
+// 	}
 	
-	public function testUnauthenticated() {
-		$this->myAssertAuthorized();
-	}
-}
+// 	public function testUnauthenticated() {
+// 		$this->myAssertAuthorized();
+// 	}
+// }
