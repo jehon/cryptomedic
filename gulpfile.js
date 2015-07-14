@@ -6,7 +6,6 @@ var plugins = require('gulp-load-plugins')();
 /*
  * TODO: gulp-release-tasks
  */
-
 var exitStatus = 0;
 process.on('exit', function (status) {
 	if (status < exitStatus) {
@@ -24,7 +23,7 @@ gulp.task('test-php', function() {
     	.pipe(plugins.notify(this.seq.slice(-1)[0] + ": done"))
 });
 
-gulp.task('test-js', function() {
+gulp.task('test-js', [ 'test-php' ], function() {
     return gulp.src('')
     .pipe(plugins.plumber({ errorHandler: plugins.notify.onError("Error during task " + this.seq.slice(-1)[0] + ": <%= error.message %>") }))
     .pipe(plugins.plumber({ errorHandler: function() { process.exit(1); } }))
