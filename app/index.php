@@ -85,9 +85,7 @@
 	
 		(new Script("static/css/application.css"))->dependFile()->toPrint();
 
-// This script require authentification...
-// TODO SECURITY: put them in xhr? --> could pass the computer id in the call (and application version too)
-// 		(new Script("/rest/authenticate/settings?JSONP=server.setSettings&appVersion=" . $server->getVersion("cryptomedic")))->js()->dependDBTable("settings")->live()->toPrint();
+		// TODO SECURITY: put them in xhr? --> could pass the computer id in the call (and application version too)
 		(new Script("/cryptomedic/rest/public/auth/settings?JSONP=server.setSettings&appVersion=" . getVersion("cryptomedic")))->js()->dependDBTable("settings")->live()->toPrint();
 		?>
 	</head>

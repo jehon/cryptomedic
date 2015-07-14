@@ -1,6 +1,6 @@
 <?php
 
-require_once(__DIR__ . "/../../../secrets.php");
+require_once(__DIR__ . "/../../globalConfig.php");
 
 return [
 
@@ -50,9 +50,9 @@ return [
 		'mysql' => [
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
-			'database'  => 'amd_chakaria',
-			'username'  => 'amd_chakaria',
-			'password'  => getSecret("databasePassword"),
+			'database'  => getGlobalConfig("databaseName"),
+			'username'  => getGlobalConfig("databaseUsername"),
+			'password'  => getGlobalConfig("databasePassword"),
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',

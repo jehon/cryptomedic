@@ -1,7 +1,6 @@
 <?php
 
 function getOfflineSyncData() {
-	// TODO MEDIUM: add offline data
 	return null;
 	
 	

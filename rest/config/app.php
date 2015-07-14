@@ -1,6 +1,6 @@
 <?php
 
-require_once(__DIR__ . "/../../../secrets.php");
+require_once(__DIR__ . "/../../globalConfig.php");
 
 return [
 
@@ -15,7 +15,7 @@ return [
 	|
 	*/
 
-	'debug' => env('APP_DEBUG', getSecret("debug")),
+	'debug' => env('APP_DEBUG', getGlobalConfig("debug")),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -80,7 +80,7 @@ return [
 	|
 	*/
 
-	'key' => env('APP_KEY', getSecret('laravelRandomString')),
+	'key' => env('APP_KEY', getGlobalConfig('laravelRandomString')),
 
 	'cipher' => MCRYPT_RIJNDAEL_128,
 

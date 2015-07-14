@@ -89,7 +89,7 @@ class AuthController extends Controller {
 		} else {
 			/* Attemp old school */
 			$res = DB::select('SELECT users.username as login, users.group as `group`, users.id as id FROM users '
-    			. ' WHERE username = :username and old_password = SHA1(concat("' .  getSecret('authenticateSalt') . '", :password))', 
+    			. ' WHERE username = :username and old_password = SHA1(concat("' .  getGlobalConfig('authenticateSalt') . '", :password))', 
 				$credentials);
 			if (count($res) == 1) {
 				$user = array_pop($res);

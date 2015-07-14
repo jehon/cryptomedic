@@ -25,7 +25,6 @@ Response::macro('jsonOrJSONP', function($value)
 	return $res;
 });
 
-// TODO OFFLINE: add offline sync data
 Response::macro('folder', function($id, $addData = array()) {
 	$master = [];
 	$master['_type'] = 'Folder';
@@ -96,7 +95,7 @@ Route::group(array('middleware' => 'authenticated'), function() {
 			"uses" => "ReportSurgicalController@byTiming"
 	]);
 
-	// TODO: remove old routes
+	// TODO CLEANUP: remove old routes (as of before 14/07)
 	Route::get('reports/monthlyStatistical', [
 			"uses" => "ReportStatisticalController@monthly"
 	]);
@@ -120,8 +119,4 @@ Route::group(array('middleware' => [ "authenticated", 'unFreezeGroup' ]), functi
 	Route::get('unfreeze/{model}/{id}', 'ModelController@unfreeze');
 });
 	
-// TODO HIGH MIGRATION: authentification (+ settings)
 // TODO MIGRATION: users (admin mode)
-
-// TODO MIGRATION: migrate "myfiles" and "database->getVersion()" to cryptomedic
-// TODO MIGRATION: offline sync --> middleware

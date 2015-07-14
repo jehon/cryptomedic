@@ -36,17 +36,6 @@ class CryptomedicModel extends Model {
 	public function save(array $options = Array()) {
 		if ($this->isDirty()) {
 			$this->lastuser = Auth::user()->username;
-			// TODO: re-enable optimistic lock -> get the updated_at from request !!!
-// 			if ($updated != $this->{$this->getUpdatedAtColumn()}) {
-				// 			var_dump("optimistic locking exception");
-// 			}
-// 			$affectedRows = $this::where("id", "=", $this->id)
-// 	// 			->where($this->getUpdatedAtColumn(), '=', $updated)
-// 				->update($attributes);
-// 			// TODO: optimistic locking - detect if a change is needed otherwise it will always fail
-// 			if ($affectedRows != 1) {
-// 	// 			abort(409, "Concurrent access exception to $model@$id#" . $obj[$obj->getUpdatedAtColumn()] . " <> " . $obj[$obj->getUpdatedAtColumn()]);
-// 			}
 			return parent::save($options);
 		}
 		return true;

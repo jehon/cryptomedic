@@ -10,7 +10,6 @@ $data['group'] = $server->getSession(Server::LOGIN_GROUP);
 // );
 $data["denied"] = array();
 
-// TODO LOW SECURITY: change the authorized list? Link it to real security? -> will disapear with migration
 if (isAuthorized("folder", "PUT"))
 	$data ['authorized'] [] = "folder.edit";
 if (isAuthorized("folder", "DELETE"))
