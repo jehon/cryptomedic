@@ -43,6 +43,9 @@ class AuthController extends Controller {
 	
 	public function getSettings() {
 		$data = array();
+		if (!Auth::user()) {
+			abort(401);
+		}
 		$data['username'] = Auth::user()->username;
 		$data['group'] = Auth::user()->group;
 
