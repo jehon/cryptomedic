@@ -44,6 +44,7 @@ class ReportSurgicalController extends ReportController {
 	            JOIN prices ON bills.price_id = prices.id
 	        WHERE (1 = 1)
 				AND " . $this->getReportParamFilter("when", "bills.Date") . "
+				AND " . Bill::getSQLFieldsSum(Bill::CAT_SURGICAL) . " > 0
 			ORDER BY bills.Date ASC, patients.entryyear ASC, patients.entryorder ASC, bills.id ASC
 			", $this->sqlBindParams + [ "whenFrom12" => $this->internalWhenFrom ]
 		);
