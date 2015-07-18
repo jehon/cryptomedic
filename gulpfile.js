@@ -13,6 +13,32 @@ process.on('exit', function (status) {
 	}
 });
 
+/*
+ * Some variables
+ */
+//var allCSS = [ 
+//               "app/bower_components/jquery-ui/themes/ui-lightness/jquery-ui.min.css",
+//               "app/bower_components/bootstrap/dist/css/bootstrap.min.css",
+//               "app/static/css/application.css" 
+//              ];
+//
+//var allJS = [
+//             "app/bower_components/jquery/dist/jquery.min.js",
+//             "app/bower_components/jquery-ui/jquery-ui.min.js",
+//             "app/bower_components/modernizr/modernizr.js",
+//             "app/bower_components/bootstrap/dist/js/bootstrap.min.js",
+//             "bower_components/angular/angular.min.js",
+//             "bower_components/angular-route/angular-route.min.js",
+//             "bower_components/excellentexport/excellentexport.min.js",
+//             "app/static/js/application.js", 
+//             "app/static/js/cryptomedic.js", 
+//             "app/static/js/amd_stats_datas.js",
+//             "app/static/js/exceptions.js",
+//             "app/static/js/model_*.js",
+//             "app/static/js/service_*.js",
+//             "app/static/js/ctrl_*.js"
+//             ];
+
 gulp.task('help', plugins.taskListing);
 
 gulp.task('test-php', function() {
@@ -70,5 +96,35 @@ gulp.task('test-live', function() {
     }))
     .pipe(plugins.notify(this.seq.slice(-1)[0] + ": done"));
 });
+
+//gulp.task('minify-css', function() {
+//    gulp.src(allCSS, { base: __dirname + '/cache' })
+//    	.pipe(plugins.sourcemaps.init())
+//    	.pipe(plugins.concatCss('application.min.css'))
+//    	.pipe(plugins.minifyCss())
+//    	.pipe(plugins.sourcemaps.write()) //'cache/application.min.css.map'
+//    	.pipe(gulp.dest('cache/'));
+//});
+//
+//gulp.task('minify-js', function() {
+//    gulp.src(allJS)
+//        .pipe(plugins.sourcemaps.init())
+//        .pipe(plugins.concat('application.min.js'))
+//        .pipe(plugins.uglify())
+//        .pipe(plugins.sourcemaps.write())
+//        .pipe(gulp.dest('cache/'));
+//});
+//
+//gulp.task('watch', [ 'minify-css', 'minify-js' ], function() {
+//    gulp.watch(allCSS, [ 'minify-css' ])
+//    	.on('change', function(event) {
+//    	    console.log('CSS File ' + event.path + ' was ' + event.type + ', running tasks...');
+//    	});
+//    gulp.watch(allJS, [ 'minify-js' ])
+//	.on('change', function(event) {
+//	    console.log('JS File ' + event.path + ' was ' + event.type + ', running tasks...');
+//	});
+//
+//})
 
 gulp.task('default', [ 'help' ]);

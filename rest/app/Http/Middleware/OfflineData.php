@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken as BaseVerifier;
 
-class VerifyCsrfToken extends BaseVerifier {
+class OfflineData {
 
 	/**
 	 * Handle an incoming request.
@@ -16,7 +16,8 @@ class VerifyCsrfToken extends BaseVerifier {
 	 */
 	public function handle($request, Closure $next)
 	{
-		$req = parent::handle($request, $next);
+		$response = $next($request);
+// 		$req = parent::handle($request, $next);
 		// TODO OFFLINE: add offline data to request
 		// Question: what is the format of the request -> how to get the original data and not the JSON formatted data?
 		
@@ -32,7 +33,8 @@ class VerifyCsrfToken extends BaseVerifier {
 // 		global $server;
 // 		$res = $server->getDatabase()->query("$sql ORDER BY modified, t, id LIMIT 10");
 // 		return $res;
-		return $req;
+		
+		return $response;
 	}
 
 }

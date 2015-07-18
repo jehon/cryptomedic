@@ -15,8 +15,8 @@ function getGlobalConfig($key) {
 	}
 	
 	switch ($key) {
-		case 'repos':
-			return [ "cryptomedic", "maintenance" ];
+// 		case 'repos':
+// 			return [ "cryptomedic", "maintenance" ];
 		case 'logs':
 			$logs = [ __DIR__ . "/cryptomedic/rest/storage/logs" ];
 			if ($localhost) {
@@ -33,11 +33,13 @@ function getGlobalConfig($key) {
 				return false;
 			}
 			return $localhost;
+		case 'laravelRandomString':
+			return "123";	
 		case 'databaseName':
 		case 'databaseUsername':
+			return "travis";
 		case 'databasePassword':
-		case 'laravelRandomString':
-	
+			return "";
 	}
 	throw new Exception("GlobalConfig not configured: $key");
 }
