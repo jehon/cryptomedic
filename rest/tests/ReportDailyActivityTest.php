@@ -12,7 +12,7 @@ class ReportDailyActivityTest extends RouteReferenceTestCase {
 		$this->assertTrue(count($json->list) > 2);
 	}
 	
-	public function setUp() {
+	public function setUp($url = null, $params = array()) {
 		parent::setUp("reports/dailyActivity");
 	}
 	

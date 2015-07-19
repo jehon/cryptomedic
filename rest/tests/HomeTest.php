@@ -4,7 +4,7 @@ require_once(__DIR__ . "/RouteReferenceTestCase.php");
 
 class HomeTest extends RouteReferenceTestCase {
 
-	public function setUp() {
+	public function setUp($url = null, $params = array()) {
 		parent::setUp("/home");
 	}
 	

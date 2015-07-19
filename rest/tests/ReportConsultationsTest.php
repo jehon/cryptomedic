@@ -3,7 +3,7 @@
 require_once("RouteReferenceTestCase.php");
 
 class ReportConsultationsTest extends RouteReferenceTestCase {
-	public function setUp() {
+	public function setUp($url = null, $params = array()) {
 		parent::setUp();
 		$this->setUrl("reports/consultations");
 	}

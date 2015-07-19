@@ -4,7 +4,7 @@ require_once("RouteReferenceTestCase.php");
 
 class FolderTest extends RouteReferenceTestCase {
 
-	public function setUp() {
+	public function setUp($url = null, $params = array()) {
 		parent::setUp("folder/10001");
 	}
 	
