@@ -20,3 +20,6 @@ script:
    - gulp test-php
 #  - node_modules/.bin/karma start test/karma.conf.js --no-auto-watch --single-run --reporters=dots --browsers=Firefox
 #  - node_modules/.bin/protractor test/protractor-conf.js --browser=firefox
+
+after_failure:
+	- cat rest/storage/log/*
