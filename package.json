@@ -10,6 +10,7 @@
     "gulp": "latest",
     "gulp-concat": "^2.6.0",
     "gulp-concat-css": "^2.2.0",
+    "gulp-livereload": "^3.8.0",
     "gulp-load-plugins": "latest",
     "gulp-minify-css": "^1.2.0",
     "gulp-nightwatch": "^0.2",
@@ -19,11 +20,12 @@
     "gulp-release-tasks": "0.0.3",
     "gulp-sourcemaps": "^1.5.2",
     "gulp-task-listing": "^1.0.0",
-	"gulp-uglify": "latest",
+    "gulp-uglify": "latest",
     "nightwatch": "^0.7",
     "nightwatch-html-reporter": "^1.0.2",
     "phantomjs": "latest",
-    "selenium-server": "latest"
+    "selenium-server": "latest",
+    "shelljs": "^0.5.1"
   },
   "scripts": {
     "postinstall": "bower install",

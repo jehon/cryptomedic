@@ -9,7 +9,7 @@
 		$mode = "online";
 	} else {
 		$mode = "appcache";
-		echo "manifest='manifest.php'";
+		echo "manifest='../cache/manifest.manifest'";
 	}
 ?> >
 	<head>

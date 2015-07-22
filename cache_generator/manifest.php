@@ -1,5 +1,5 @@
 <?php
-	header("Content-Type: text/cache-manifest");
+ 	header("Content-Type: text/cache-manifest");
 	header("Expires: Wed, 11 Jan 1984 00:00:00 GMT");
 	header("Pragma: public");
 
@@ -14,25 +14,19 @@ CACHE MANIFEST
 	$lastModif = filemtime(__FILE__);
 
 	// Prevent output from here, since we will generate a header at the end of this file
-	ob_start();
-	{	
-		require_once __DIR__ . "/../../rest/php/core.php";
-		
-		Server::setOption(Server::OPTION_NO_SESSION, true);
-		$server = Server::getInstance();
-		$request = $server->getRequest();
-		
+		require_once __DIR__ . "/../php/core.php";
+
 		function addLine($f) {
-// 			echo $f . "\n";
+			echo $f . "\n";
 		}
 	
 		function addOne($f) {
 			$f = str_replace("\\", "/", $f);
-// 			if ($f[0] == "/") {
+			if ($f[0] == "/") {
 				addLine("$f");
-// 			} else {
-// 				addLine("/cryptomedic/app/$f");
-// 			}
+			} else {
+				addLine("/cryptomedic/app/$f");
+			}
 		}
 		
 		function addTs($ts, $header = "") {
@@ -54,9 +48,9 @@ CACHE MANIFEST
 			return addTs(filemtime($f), $f);
 		}
 		
-		addLine("# cryptomedic version: " . $server->getVersion("cryptomedic"));
-		addLine("# database version: " . $server->getDatabase()->getVersion());
-		addLine("# system parameter: " . $server->getRequest()->getSystemParameter("version", "#NA#"));
+		addLine("# cryptomedic version: " . getVersion());
+// 		addLine("# cryptomedic version: " . $server->getVersion("cryptomedic"));
+// 		addLine("# database version: " . $server->getDatabase()->getVersion());
 		
 		addLine("");
 		
@@ -64,24 +58,21 @@ CACHE MANIFEST
 		addLine("");
 		
 		addLine("# Manually added elements");
-		addFileTs("index.php");
+		addFileTs("../app/index.php");
 		addOne("/cryptomedic/app/");
 		addFileTs("../index.html");
-		addOne("../");
+		addOne("/cryptomedic/");
 		addFileTs("../../cryptomedic.version");
 		
 		// Use the index for import
 		ob_start();	
-		require("index.php"); 
+		require("../app/index.php"); 
 		ob_clean();
 			
 		addLine("");
 		addLine("# Include dependant php scripts");
 		addLine("");
 		foreach(MyFiles::glob("../php/*") as $f) {
-			addFileTs($f);
-		}
-		foreach(MyFiles::glob("../routes/*") as $f) {
 			addFileTs($f);
 		}
 
@@ -96,43 +87,34 @@ CACHE MANIFEST
 		addLine("");
 		addLine("# static");
 		addLine("");
-		foreach(MyFiles::glob("static/*", true) as $f) {
+		foreach(MyFiles::glob("../app/static/*", true) as $f) {
 			if (in_array(basename($f), [ ".htaccess" ])) continue;
 			addFileTs($f);
 			addOne($f);
 		}
 		
-		addLine("");
-		addLine("# Templates");
-		foreach(MyFiles::glob("../templates/*.php", true) as $f) {
-			addFileTs($f);
-			if (strpos($f, "partials") > 0) {
-				continue;
-			}	
-			if (strpos($f, "fiches") > 0) {
-				addOne($f . "?mode=read");
-				addOne($f . "?mode=edit");		
-			} else {
-				addOne($f);
-			}
-		}
-		addLine("");
-		addLine("# online content (no cache) ");
-		addLine("");
+// 		addLine("");
+// 		addLine("# Templates");
+// 		foreach(MyFiles::glob("../templates/*.php", true) as $f) {
+// 			addFileTs($f);
+// 			if (strpos($f, "partials") > 0) {
+// 				continue;
+// 			}	
+// 			if (strpos($f, "fiches") > 0) {
+// 				addOne($f . "?mode=read");
+// 				addOne($f . "?mode=edit");		
+// 			} else {
+// 				addOne($f);
+// 			}
+// 		}
 	?>
+
 NETWORK:
+# online content (no cache)
 *
-	<?php 
-	} // End of cache calculation	
-
-	if (isset($_SERVER['HTTP_IF_MODIFIED_SINCE']) && strtotime($_SERVER['HTTP_IF_MODIFIED_SINCE']) >= $lastModif) {
-		header('HTTP/1.0 304 Not Modified');
-		exit;
-	}
+<?php 
 	
-	header("Last-Modified:" . gmdate('D, d M Y H:i:s T', $lastModif));
-	ob_flush();
-
+	addLine("");
 	addLine("# manifest last modif (second): " . $lastModif);
 	addLine("# manifest last modif (time): " . date('D, d M Y H:i:s T', $lastModif));
 	

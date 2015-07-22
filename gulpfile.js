@@ -2,6 +2,7 @@
 //var gulp = require('gulp-param')(require('gulp'), process.argv);
 var gulp = require('gulp');
 var plugins = require('gulp-load-plugins')();
+var shelljs = require('shelljs');
 
 /*
  * TODO: gulp-release-tasks
@@ -16,12 +17,12 @@ process.on('exit', function (status) {
 /*
  * Some variables
  */
-//var allCSS = [ 
-//               "app/bower_components/jquery-ui/themes/ui-lightness/jquery-ui.min.css",
-//               "app/bower_components/bootstrap/dist/css/bootstrap.min.css",
-//               "app/static/css/application.css" 
-//              ];
-//
+var allCSS = [ 
+               "app/bower_components/jquery-ui/themes/ui-lightness/jquery-ui.min.css",
+               "app/bower_components/bootstrap/dist/css/bootstrap.min.css",
+               "app/static/css/application.css" 
+              ];
+
 //var allJS = [
 //             "app/bower_components/jquery/dist/jquery.min.js",
 //             "app/bower_components/jquery-ui/jquery-ui.min.js",
@@ -114,8 +115,8 @@ gulp.task('test-live', function() {
 //        .pipe(plugins.sourcemaps.write())
 //        .pipe(gulp.dest('cache/'));
 //});
-//
-//gulp.task('watch', [ 'minify-css', 'minify-js' ], function() {
+
+gulp.task('watch', function() {
 //    gulp.watch(allCSS, [ 'minify-css' ])
 //    	.on('change', function(event) {
 //    	    console.log('CSS File ' + event.path + ' was ' + event.type + ', running tasks...');
@@ -124,7 +125,11 @@ gulp.task('test-live', function() {
 //	.on('change', function(event) {
 //	    console.log('JS File ' + event.path + ' was ' + event.type + ', running tasks...');
 //	});
-//
-//})
+    gulp.watch([ 'cache_generator/**' ], null, function(event) {
+	console.log('Cache_generator file ' + event.path + ' was ' + event.type + '.');
+	shelljs.rm("-f", "cache/manifest.manifest");
+    });
+
+})
 
 gulp.task('default', [ 'help' ]);
