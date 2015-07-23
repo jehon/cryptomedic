@@ -1,22 +1,22 @@
 "use strict";
 
-cryptomedic.templateRoot = "/cryptomedic/templates/";
+cryptomedic.templateRoot = "/cryptomedic/cache/templates/";
 
 mainApp.config([ '$routeProvider', function($routeProvider) {
     $routeProvider.when('/home', {
-        templateUrl: cryptomedic.templateRoot + '/pages/home.php',
+        templateUrl: cryptomedic.templateRoot + '/pages/home.html',
         controller: 'ctrl_home'
     }).when('/search', {
-        templateUrl: cryptomedic.templateRoot + '/pages/search.php',
+        templateUrl: cryptomedic.templateRoot + '/pages/search.html',
         controller: 'ctrl_search',
     }).when('/folder/:id/:page?/:mode?', {
-        templateUrl: cryptomedic.templateRoot + '/pages/folder.php',
+        templateUrl: cryptomedic.templateRoot + '/pages/folder.html',
         controller: 'ctrl_folder',
     }).when('/reports/:report?', {
-        templateUrl: cryptomedic.templateRoot + '/pages/reports.php',
+        templateUrl: cryptomedic.templateRoot + '/pages/reports.html',
         controller: 'ctrl_reports',
     }).when('/goto/:type/:id', {
-    	templateUrl: cryptomedic.templateRoot + '/pages/blank.php',
+    	templateUrl: cryptomedic.templateRoot + '/pages/blank.html',
     	controller: 'ctrl_goto',
     }).otherwise({ 'redirectTo': '/home'});
 }]);

@@ -53,18 +53,19 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_backend', '$
 	    m = 'edit';
 	}
 	if ($scope.pageIsFile) {
-	    return "fiches/" + $scope.folder.getSubFile($scope.page)['_type'].toLowerCase() + ".php?mode=" + m;
+	    return ($scope.mode == 'read' ? "fiches" : "writes")
+	    	+ "/" + $scope.folder.getSubFile($scope.page)['_type'].toLowerCase() + ".html";
 	}
 	if ($scope.page == "" || $scope.page == "patient") {
-	    return "fiches/patient.php?mode=" + m;
+	    return ($scope.mode == 'read' ? "fiches" : "writes") + "/patient.html";
 	}
 	if (typeof($scope.page) == "number") {
-	    return "blank.php";
+	    return "blank.html";
 	}
 	if ($scope.mode == 'add') {
-	    return "fiches/" + $scope.page.toLowerCase() + ".php?mode=" + m;
+	    return "writes/" + $scope.page.toLowerCase() + ".html?mode=" + m;
 	}
-	return "folder_pages/" + $scope.page + ".php"; // + ".php?mode=" + m;
+	return "folder_pages/" + $scope.page + ".html";
     };
 
     function showMe(type, id) {

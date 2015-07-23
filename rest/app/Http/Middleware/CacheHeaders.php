@@ -26,28 +26,13 @@ class CacheHeaders {
      */
     public function handle($request, Closure $next)
     {
-    	// TODO: manage caching of pages
+    	// TODO: is it necessary to manage this here? all should be cached anyway...
     	$now = new \DateTime();
     	$response = $next($request);
-    	
-// 		$response->header("Date", gmdate("D, j M Y G:i:s ", time()) . 'GMT');
-// 		$response->setDate($now);
-// 		$response->header("Last-Modified", gmdate("D, d M Y H:i:s") . " GMT");
+
     	$response->setLastModified(new DateTime("now"));
-				
-		if ($request->input("_version", false)) {
-    		$response->setExpires(new DateTime("tomorrow"));
-// 			$response->setMaxAge($this->cachingTime);
-//     		$response->setPrivate();
-//     		$response->expire($now);
-// 			$response->header("Pragma", "cache");
-			$response->header("Expires", $this->cachingTime);
-			$response->header("Cache-Control", ($this->cachingPublic ? "public" : "private") . " max-age=" . ($this->cachingTime - time()) );
-// 		} else {
-// 			$response->header("Pragma", "no-cache");
-// 			$response->header("Expires", "Mon, 26 Jul 1997 05:00:00 GMT");
-// 			$response->header("Cache-Control", "no-cache");
-		}
+		$response->header("Expires", $this->cachingTime);
+		$response->header("Cache-Control", ($this->cachingPublic ? "public" : "private") . " max-age=" . ($this->cachingTime - time()) );
 					
     	return $response;
     }

@@ -14,100 +14,92 @@ CACHE MANIFEST
 	$lastModif = filemtime(__FILE__);
 
 	// Prevent output from here, since we will generate a header at the end of this file
-		require_once __DIR__ . "/../php/core.php";
+	require_once __DIR__ . "/../php/core.php";
 
-		function addLine($f) {
-			echo $f . "\n";
-		}
+	function addLine($f) {
+		echo $f . "\n";
+	}
 	
-		function addOne($f) {
-			$f = str_replace("\\", "/", $f);
-			if ($f[0] == "/") {
-				addLine("$f");
-			} else {
-				addLine("/cryptomedic/app/$f");
-			}
+	function addOne($f) {
+		$f = str_replace("\\", "/", $f);
+		if ($f[0] == "/") {
+			addLine("$f");
+		} else {
+			addLine("/cryptomedic/app/$f");
 		}
+	}
 		
-		function addTs($ts, $header = "") {
-			// Update the global Last-modified time
-			if (!is_numeric($ts)) {
-				return addLine("# $ts: not numeric");
-			}
-			global $lastModif;
-			addLine("# " . date(constant("TS_FORMAT"), $ts) . " " . ($header ? $header : "explicit timestamp"));
-			if ($ts > $lastModif) {
-				$lastModif = $ts;
-			}
+	function addTs($ts, $header = "") {
+		// Update the global Last-modified time
+		if (!is_numeric($ts)) {
+			return addLine("# $ts: not numeric");
 		}
-		
-		function addFileTs($f) {
-			if (!file_exists($f)) {
-				return addLine("# $f: does not exists");
-			}
-			return addTs(filemtime($f), $f);
+		global $lastModif;
+		addLine("# " . date(constant("TS_FORMAT"), $ts) . " " . ($header ? $header : "explicit timestamp"));
+		if ($ts > $lastModif) {
+			$lastModif = $ts;
 		}
+	}
 		
-		addLine("# cryptomedic version: " . getVersion());
-// 		addLine("# cryptomedic version: " . $server->getVersion("cryptomedic"));
-// 		addLine("# database version: " . $server->getDatabase()->getVersion());
-		
-		addLine("");
-		
-		addLine("CACHE:");
-		addLine("");
-		
-		addLine("# Manually added elements");
-		addFileTs("../app/index.php");
-		addOne("/cryptomedic/app/");
-		addFileTs("../index.html");
-		addOne("/cryptomedic/");
-		addFileTs("../../cryptomedic.version");
-		
-		// Use the index for import
-		ob_start();	
-		require("../app/index.php"); 
-		ob_clean();
-			
-		addLine("");
-		addLine("# Include dependant php scripts");
-		addLine("");
-		foreach(MyFiles::glob("../php/*") as $f) {
-			addFileTs($f);
+	function addFileTs($f) {
+		if (!file_exists($f)) {
+			return addLine("# $f: does not exists");
 		}
+		return addTs(filemtime($f), $f);
+	}
+	
+	addLine("# cryptomedic version: " . getVersion());
+	addLine("");
+	
+	addLine("CACHE:");
+	addLine("");
+	
+	addLine("# Manually added elements");
+	addFileTs("../app/index.php");
+	addOne("/cryptomedic/app/");
+	addFileTs("../index.html");
+	addOne("/cryptomedic/");
+	addFileTs("../../cryptomedic.version");
+	
+	// Use the index for import
+	ob_start();	
+	require("../app/index.php"); 
+	ob_clean();
+	
+	addLine("");
+	
+	addLine("# Include dependant php scripts");
+	addLine("");
+	foreach(MyFiles::glob("../php/*") as $f) {
+		addFileTs($f);
+	}
+	addLine("");
+	
+	addLine("# Scripts auto-import");
+	addLine("");
+	foreach(Script::$scriptsList as $s) {
+		addTs($s["ts"]);
+		addOne($s["url"]);
+	}
+	addLine("");
 
-		addLine("");
-		addLine("# Scripts auto-import");
-		addLine("");
-		foreach(Script::$scriptsList as $s) {
-			addTs($s["ts"]);
-			addOne($s["url"]);
-		}
+	addLine("# static");
+	addLine("");
+	foreach(MyFiles::glob("../app/static/*", true) as $f) {
+		if (in_array(basename($f), [ ".htaccess" ])) continue;
+		addFileTs($f);
+		addOne($f);
+	}
+	addLine("");
 		
-		addLine("");
-		addLine("# static");
-		addLine("");
-		foreach(MyFiles::glob("../app/static/*", true) as $f) {
-			if (in_array(basename($f), [ ".htaccess" ])) continue;
-			addFileTs($f);
-			addOne($f);
-		}
-		
-// 		addLine("");
-// 		addLine("# Templates");
-// 		foreach(MyFiles::glob("../templates/*.php", true) as $f) {
-// 			addFileTs($f);
-// 			if (strpos($f, "partials") > 0) {
-// 				continue;
-// 			}	
-// 			if (strpos($f, "fiches") > 0) {
-// 				addOne($f . "?mode=read");
-// 				addOne($f . "?mode=edit");		
-// 			} else {
-// 				addOne($f);
-// 			}
-// 		}
-	?>
+	addLine("# cache");
+	addLine("");
+	foreach(MyFiles::glob("../cache/*", true) as $f) {
+		if (in_array(basename($f), [ ".htaccess" ])) continue;
+		addFileTs($f);
+// 			addOne($f);
+	}
+?>
 
 NETWORK:
 # online content (no cache)
@@ -115,6 +107,6 @@ NETWORK:
 <?php 
 	
 	addLine("");
-	addLine("# manifest last modif (second): " . $lastModif);
-	addLine("# manifest last modif (time): " . date('D, d M Y H:i:s T', $lastModif));
+	addLine("# manifest last modif detected (second): " . $lastModif);
+	addLine("# manifest last modif detected (time): " . date('D, d M Y H:i:s T', $lastModif));
 	

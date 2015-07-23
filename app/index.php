@@ -85,11 +85,10 @@
 	
 		(new Script("static/css/application.css"))->dependFile()->toPrint();
 
-		// TODO SECURITY: put them in xhr? --> could pass the computer id in the call (and application version too)
-		(new Script("/cryptomedic/rest/public/auth/settings?JSONP=server.setSettings&appVersion=" . getVersion("cryptomedic")))->js()->dependDBTable("settings")->live()->toPrint();
+// 		(new Script("/cryptomedic/rest/public/auth/settings?JSONP=server.setSettings&appVersion=" . getVersion("cryptomedic")))->js()->dependDBTable("settings")->live()->toPrint();
 		?>
 	</head>
-	<body ng-app="app_main" ng-controller="ctrl" id="ng-app">
+	<body ng-app="app_main" ng-controller="ctrl" id="ng-app" >
 		<!--  Navigation bar -->	
 		<nav class="navbar navbar-default navbar-static-top" role="navigation" ng-if="logged">
 		  <div class="container-fluid">

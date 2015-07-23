@@ -65,8 +65,8 @@ mainApp.factory('service_backend', [ '$http', '$rootScope', function($http, $roo
 
     return {
 	'checkLogin': function() {
-	    // TODOJH: Give hime information about last sync
-	    return treatHttp($http.get(rest + "/auth/settings&appVersion=" + cryptomedic.version));
+	    // TODO OFFLINE: Give information about last sync
+	    return treatHttp($http.get(rest + "/auth/settings?appVersion=" + cryptomedic.version));
 	},
 	'doLogin': function(username, password) {
 	    // Hack: if no username is given, then checkLogin instead

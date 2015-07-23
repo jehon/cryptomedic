@@ -1,39 +1,17 @@
 <?php 
-// 	echo "<pre>";
-// 	var_dump($_REQUEST);
-// 	var_dump($_SERVER);
-// 	echo "</pre>";
-	
-require_once("../config.php");
+/**
+ * Generate a template into the cache
+ * 
+ * Parameters available:
+ * @param meta: if set, meta informations will be shown
+ * @param unused table: if set, show unused fields of the <table> in the database
+ * 
+ * special treatment:
+ * /templates/writes/blablabla.html -> will go to /templates/fiches/blablabla.html, but in write mode (writeOnly forced)
+ */
+
+
 require_once("../php/references.php");
-
-global $cache_file;
-
-$cache_file = $config['tempDir'] . "/templates/" . str_replace(array("?", "&", ".", "/", "\\", "%", " ", ":"),  "_", $_SERVER['REQUEST_URI']);
-
-// If we have a cache file, but that we are not working locally:
-if (is_file( $cache_file ) && (strcasecmp(substr($_SERVER['HTTP_HOST'], 0, 9), "localhost") != 0)) {
-	echo "<!-- from cache -->";
-	readfile( $cache_file );
-	exit;
-}
-
-// inspiré de http://stackoverflow.com/a/3787258
-// cache via output buffering, with callback
-function template_cache_output( $content ) {
-	// If we defined not to cache the template, then do not save it...
-// 	if (defined("NOCACHE") && (constant("NOCACHE") > 0)) {
-		global $cache_file;
-		try {
-			file_put_contents( $cache_file, $content );
-		} catch (Exception $e) {
-			debugHeader($e->getMessage(), "X-CACHE-WRITING-PROBLEM");
-		}
-// 	}
-	return $content;
-}
-
-ob_start( 'template_cache_output' );
 
 class t {
     const TYPE_LIST         = 0;
@@ -61,14 +39,12 @@ class t {
     static $sqlAllTableStructure = array();
     
     static function initialize() {
-    	global $config;
-		require(__DIR__ . "/../config.php");
-        
+    	global $generator;
     	try {
     		self::$pdo = new PDO(
-    				"mysql:host=" . $config['database']['pdo_host'] . ";dbname=" . $config['database']['pdo_schema'],
-    				$config['database']['pdo_username'],
-    				$config['database']['pdo_password']);
+    				"mysql:host=" . $generator['database']['pdo_host'] . ";dbname=" . $generator['database']['pdo_schema'],
+    				$generator['database']['pdo_username'],
+    				$generator['database']['pdo_password']);
     	} catch (PDOException $e) {
     		throw new Exception($e->getMessage());
     	}
@@ -223,7 +199,7 @@ class t {
     }
     
 	function displayCode($mode) {
-			if (array_key_exists("_meta", $_REQUEST) && $_REQUEST['_meta']) {
+		if (array_key_exists("_meta", $_REQUEST) && $_REQUEST['_meta']) {
 			$this->res .= "=" . $mode . $this->key;
 			$this->res .= ($this->linked2DB ? "" : "##");
 			$this->res .= "-" . $this->model . "." . $this->field; 
@@ -362,20 +338,21 @@ class t {
     }
 
     function value() {
-        if ($this->options['readOnly']) return $this->read();
-        if ($this->options['writeOnly']) return $this->write();
-        
-        if (!array_key_exists("mode", $_REQUEST) || ($_REQUEST['mode'] == "read")) {
-			$this->res .= "<span class='notModeWrite'>";
-			$this->read();
-			$this->res .= "</span>";
-		}
+    	if ($this->options['readOnly']) return $this->read();
+    	if ($this->options['writeOnly']) return $this->write();
+    	return $this->read();
+    	
+//         if (!array_key_exists("mode", $_REQUEST) || ($_REQUEST['mode'] == "read")) {
+// 			$this->res .= "<span class='notModeWrite'>";
+// 			$this->read();
+// 			$this->res .= "</span>";
+// 		}
 
-        if (array_key_exists("mode", $_REQUEST) && ($_REQUEST['mode'] == "edit")) {
-			$this->res .= "<span class='notModeRead'>";
-	        $this->write();
-	        $this->res .= "</span>";
-		}
+//         if (array_key_exists("mode", $_REQUEST) && ($_REQUEST['mode'] == "edit")) {
+// 			$this->res .= "<span class='notModeRead'>";
+// 	        $this->write();
+// 	        $this->res .= "</span>";
+// 		}
         return $this;
     }
 
@@ -473,32 +450,33 @@ class t {
 t::initialize();
 
 // Same as from ReportController
-function clean($c) {
-	return str_replace(["'", " ", "\""], "", $c);
-}
+// function clean($c) {
+// 	return str_replace(["'", " ", "\""], "", $c);
+// }
 
 if (array_key_exists("_unused", $_REQUEST) && $_REQUEST['_unused']) {
  	register_shutdown_function("T::showUnused");	
 }
 
-if (array_key_exists('page', $_REQUEST) && $_REQUEST['page'] && ($_REQUEST['page'] != basename(__FILE__))) {
-	$template = $_SERVER['REDIRECT_subquery'];
-	// FIXME check that we don't go upstair the templates dir
-	$filename = __DIR__ . "/" . $template;
-	if (file_exists($filename)) {
-		$cachingTime = 3600*24*100;
-		$lastModified = max(filemtime(__FILE__), filemtime($filename));
-		header("Last-Modified: ".  gmdate("D, d M Y H:i:s", $lastModified) . " GMT");
-		header("Expires: " . gmdate("D, d M Y H:i:s", $lastModified + $cachingTime) . " GMT");
-		header("Cache-Control: public max-age=" . $cachingTime);
+if (substr($generator['target'], -5) != ".html") {
+	throw new Exception("Invalid extension");
+}
 
-		try {
-			include($filename);
-		} catch (Exception $e) {
-			var_dump($e);
-			return 100;
-		}
-	}
-} else {
-	die("I say: invalid call");
+$template = str_replace(".html", ".php", $generator['target']);
+
+if (substr($template, 0, 16) == "templates/writes") {
+	$template = "templates/fiches" . substr($template, 16);
+	t::setDefaultOption("writeOnly", true);
+}
+
+$template = __DIR__ . "/" . $template;
+if (!file_exists($template)) {
+	throw new Exception("I say: not found");	
+}
+
+try {
+	include($template);
+} catch (Exception $e) {
+	var_dump($e);
+	return 100;
 }

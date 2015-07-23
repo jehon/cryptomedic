@@ -104,7 +104,6 @@ class FolderController extends Controller {
 		return response()->folder($r->id);
 	}
 	
-	// TODO: non cannonic name to avoid readonly access though "use"
 	public function createFile() {
 		$data = Input::except('_type');
 		

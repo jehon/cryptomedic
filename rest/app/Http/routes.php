@@ -63,9 +63,9 @@ Route::resource('price', "PriceController");
  */
 Route::group(array('middleware' => 'authenticated'), function() {
 	Route::get('home', 'HomeController@index');
-	
-	// TODO URGENT: limit this to what???
-	Route::resource('folder', "FolderController");
+
+	// TODO - LAST FIX - is it ok?
+	Route::resource('folder', "FolderController", [ "only" => [ "index", "show" ]]);
 
 	Route::get('related/{model}/{id}', [
 		"uses" => "FolderController@related"
@@ -88,20 +88,20 @@ Route::group(array('middleware' => 'authenticated'), function() {
 	]);
 	
 	Route::get('reports/statistical/{timing}', [
-			"uses" => "ReportStatisticalController@byTiming"
+		"uses" => "ReportStatisticalController@byTiming"
 	]);
 	
 	Route::get('reports/surgical/{timing}', [
-			"uses" => "ReportSurgicalController@byTiming"
+		"uses" => "ReportSurgicalController@byTiming"
 	]);
 
 	// TODO CLEANUP: remove old routes (as of before 14/07)
 	Route::get('reports/monthlyStatistical', [
-			"uses" => "ReportStatisticalController@monthly"
+		"uses" => "ReportStatisticalController@monthly"
 	]);
 
 	Route::get('reports/yearlyStatistical', [
-			"uses" => "ReportStatisticalController@yearly"
+		"uses" => "ReportStatisticalController@yearly"
 	]);
 	
 });
@@ -110,8 +110,6 @@ Route::group(array('middleware' => [ "authenticated", "writeGroup" ] ), function
 	Route::POST('/fiche/{model}', 'ModelController@store');
 	Route::PUT('/fiche/{model}/{id}', 'ModelController@update');
 	Route::DELETE('/fiche/{model}/{id}', 'ModelController@destroy');
-
-	// TODO: normalize this name when FolderController is correctly protected above 
 	Route::POST('/reference', 'FolderController@createfile');
 });
 

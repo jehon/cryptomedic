@@ -1,32 +1,54 @@
 <?php
+$generator = array();
+
+// $cache_file = $config['tempDir'] . "/templates/" . str_replace(array("?", "&", ".", "/", "\\", "%", " ", ":"),  "_", $_SERVER['REQUEST_URI']);
+
+require_once(dirname(__DIR__) . DIRECTORY_SEPARATOR . "globalConfig.php");
+
+$generator['database'] = array(
+		'pdo_host' => 'localhost',
+		'pdo_schema' => getGlobalConfig("databaseName"),
+		'pdo_username' => getGlobalConfig("databaseUsername"),
+		'pdo_password' => getGlobalConfig("databasePassword"),
+		'init' => "SET CHARACTER SET 'utf8'",
+);
+
+$generator['target'] = $_REQUEST['target'];
+$generator['path'] = explode("/", $generator['target']);
+$generator['runtime'] = pathinfo($generator['path'][0], PATHINFO_FILENAME) . ".php";
+$generator['dest'] = __DIR__ . "/../cache/" . $generator['target'];
+
+foreach($generator['path'] as $p) {
+	if ($p == "..") {
+		die("I say: invalid request");
+	}
+}
+if (!file_exists($generator['runtime'])) {
+	die("Generator not found");
+}
+
+// FIXME: If we had some parameters, do not save it to file?
+
+try {
+	ob_start();
+	
+	include($generator['runtime']);
+
 	umask(02);
 
-	$path = explode("/", $_REQUEST['target']);
-	$generator = pathinfo($path[0], PATHINFO_FILENAME) . ".php";
-	$dest = "../cache/" . $_REQUEST['target'];
-
-	// create path if necessary
-	if (!file_exists(dirname($dest))) {
-		mkdir(dirname($dest, 0775, true));
+	// create path if necessary - wrong permissions!
+	if (!file_exists(dirname($generator['dest']))) {
+		mkdir(dirname($generator['dest']), 0775, true);
 	}
 	
-	$fdest = fopen($dest, "w");
-	ftruncate($fdest, 0);
-
-	if (!flock($fdest, LOCK_EX)) {
-		http_response_code(404);
-		die("Could not get the lock");
-	}
-
-	$page = "";
-	ob_start(function($buffer) use ($fdest, $dest) { 
-		fwrite($fdest, $buffer);
-		fflush($fdest);
-		fclose($fdest);
-		flock($fdest, LOCK_UN);
-		chmod($dest, 0664);
-		return false;
-	});	
-	include($generator);
+	$generator['fdest'] = fopen($generator['dest'], "w");
+	ftruncate($generator['fdest'], 0);
+	fwrite($generator['fdest'], ob_get_contents());
+	fflush($generator['fdest']);
+	fclose($generator['fdest']);
 	ob_end_flush();
 	
+} catch (Exception $e) {
+	echo "Error received - not caching the file";
+	var_dump($e);
+}

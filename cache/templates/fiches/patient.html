@@ -1,0 +1,117 @@
+<div class='container-fluid' ng-controller="ctrl_patient">
+	<div class='row'>
+		<div class="col-lg-6">
+	        <fieldset>
+				<legend>General data</legend>
+				<table>
+					<tr ng-if="id() > -1">
+						<td>Entry Number</td>
+						<td><span id='Patient_entryyear'>{{ folder.getMainFile().entryyear }}</span>-<span id='Patient_entryorder'>{{ folder.getMainFile().entryorder }}</span></td>
+					</tr>
+					<tr ng-if="id()==-1">
+						<td>Entry Year</td>
+						<td>
+							<div class='alert alert-info'>
+								You asked the system to generate a reference for you. This reference will be generated
+								when you will save this file. I just need the year to build up the reference.
+								<input type='number' class='form-control' id='Patient_entryyear' ng-model='folder.getMainFile().entryyear'  required  />							</div>
+						</td>
+					</tr>
+					
+					<tr ng-class='{ emptyValue: !folder.getMainFile().Firstname}'>
+ <td>First Name</td>
+ <td><span id='Patient_Firstname'>{{ folder.getMainFile().Firstname }}</span></td>
+</tr>
+					<tr ng-class='{ emptyValue: !folder.getMainFile().Lastname}'>
+ <td>Last Name</td>
+ <td><span id='Patient_Lastname'>{{ folder.getMainFile().Lastname }}</span></td>
+</tr>
+					<tr ng-class='{ emptyValue: !folder.getMainFile().Sex}'>
+ <td>Sex</td>
+ <td><span id='Patient_Sex'>{{ folder.getMainFile().Sex }}</span></td>
+</tr>
+					<tr ng-class='{ emptyValue: !folder.getMainFile().Yearofbirth}'>
+ <td>Year of birth</td>
+ <td><span id='Patient_Yearofbirth'>{{ folder.getMainFile().Yearofbirth }}</span></td>
+</tr>
+</td>
+					<tr class='notModeWrite'>
+						<td>Age (today)</td>
+						<td><span catch-it ng-model="folder" tryit="currentFile().actualAge()">{{result}} years old</span></td>
+					</tr>
+					<tr ng-class='{ emptyValue: !folder.getMainFile().District}'>
+ <td>District</td>
+ <td><span id='Patient_District'>{{ folder.getMainFile().District }}</span></td>
+</tr>
+					<tr ng-class='{ emptyValue: !folder.getMainFile().Upazilla}'>
+ <td>Upazilla</td>
+ <td><span id='Patient_Upazilla'>{{ folder.getMainFile().Upazilla }}</span></td>
+</tr>
+					<tr ng-class='{ emptyValue: !folder.getMainFile().Union_}'>
+ <td>Union</td>
+ <td><span id='Patient_Union_'>{{ folder.getMainFile().Union_ }}</span></td>
+</tr>
+					<tr ng-class='{ emptyValue: !folder.getMainFile().Telephone}'>
+ <td>Telephone</td>
+ <td><span id='Patient_Telephone'>{{ folder.getMainFile().Telephone }}</span></td>
+</tr>
+					<tr ng-class='{ emptyValue: !folder.getMainFile().AddressNotes}'>
+ <td>Adress Notes</td>
+ <td><span id='Patient_AddressNotes' style='white-space: pre'>{{ folder.getMainFile().AddressNotes }}</span></td>
+</tr>
+				</table>
+			</fieldset>
+	 	</div>
+		<div class="col-lg-6">
+<!-- 			<fieldset id='PatientPathology' ng-class='{ errors.noPathology: jserror }'> -->
+			<fieldset id='PatientPathology' ng-class='{ jserror: errors.noPathology }'>
+			<legend>Pathology</legend>
+				<table>
+					<tr>
+						<td></td>
+						<td ng-if="errors.noPathology" class='jserror'>
+							Please select at least one pathology
+						</td>
+					</tr>
+					<tr ng-class='{ emptyValue: !folder.getMainFile().pathology_Ricket}'>
+ <td>Ricket (R)</td>
+ <td><span id='Patient_pathology_Ricket' ng-show='folder.getMainFile().pathology_Ricket'><img src='static/img/boolean-true.gif'></span><span id='Patient_pathology_Ricket' ng-hide='folder.getMainFile().pathology_Ricket'><img src='static/img/boolean-false.gif'></span></td>
+</tr>
+					<tr ng-class='{ emptyValue: !folder.getMainFile().pathology_Clubfoot}'>
+ <td>Club foot (CF)</td>
+ <td><span id='Patient_pathology_Clubfoot' ng-show='folder.getMainFile().pathology_Clubfoot'><img src='static/img/boolean-true.gif'></span><span id='Patient_pathology_Clubfoot' ng-hide='folder.getMainFile().pathology_Clubfoot'><img src='static/img/boolean-false.gif'></span></td>
+</tr>
+					<tr ng-class='{ emptyValue: !folder.getMainFile().pathology_Polio}'>
+ <td>Polio (P)</td>
+ <td><span id='Patient_pathology_Polio' ng-show='folder.getMainFile().pathology_Polio'><img src='static/img/boolean-true.gif'></span><span id='Patient_pathology_Polio' ng-hide='folder.getMainFile().pathology_Polio'><img src='static/img/boolean-false.gif'></span></td>
+</tr>
+					<tr ng-class='{ emptyValue: !folder.getMainFile().pathology_Burn}'>
+ <td>Burn (B)</td>
+ <td><span id='Patient_pathology_Burn' ng-show='folder.getMainFile().pathology_Burn'><img src='static/img/boolean-true.gif'></span><span id='Patient_pathology_Burn' ng-hide='folder.getMainFile().pathology_Burn'><img src='static/img/boolean-false.gif'></span></td>
+</tr>
+					<tr ng-class='{ emptyValue: !folder.getMainFile().pathology_CP}'>
+ <td>CP</td>
+ <td><span id='Patient_pathology_CP' ng-show='folder.getMainFile().pathology_CP'><img src='static/img/boolean-true.gif'></span><span id='Patient_pathology_CP' ng-hide='folder.getMainFile().pathology_CP'><img src='static/img/boolean-false.gif'></span></td>
+</tr>
+					<tr ng-class='{ emptyValue: !folder.getMainFile().pathology_Congenital}'>
+ <td>Congenital (C)</td>
+ <td><span id='Patient_pathology_Congenital' ng-show='folder.getMainFile().pathology_Congenital'><img src='static/img/boolean-true.gif'></span><span id='Patient_pathology_Congenital' ng-hide='folder.getMainFile().pathology_Congenital'><img src='static/img/boolean-false.gif'></span></td>
+</tr>
+					<tr ng-class='{ emptyValue: !folder.getMainFile().pathology_Adult}'>
+ <td>Patient is adult (A)</td>
+ <td><span id='Patient_pathology_Adult' ng-show='folder.getMainFile().pathology_Adult'><img src='static/img/boolean-true.gif'></span><span id='Patient_pathology_Adult' ng-hide='folder.getMainFile().pathology_Adult'><img src='static/img/boolean-false.gif'></span></td>
+</tr>
+					<tr ng-class='{ emptyValue: !folder.getMainFile().pathology_other}'>
+ <td>Other (Oth)</td>
+ <td><span id='Patient_pathology_other' ng-show='folder.getMainFile().pathology_other'><img src='static/img/boolean-true.gif'></span><span id='Patient_pathology_other' ng-hide='folder.getMainFile().pathology_other'><img src='static/img/boolean-false.gif'></span></td>
+</tr>
+					<tr ng-class='{ emptyValue: !folder.getMainFile().historyofcomplaint}'>
+ <td>History of the complaint</td>
+ <td><span id='Patient_historyofcomplaint' style='white-space: pre'>{{ folder.getMainFile().historyofcomplaint }}</span></td>
+</tr>
+				</table>
+			</fieldset>
+	 		<br/>
+		</div>
+	</div>
+</div>

@@ -15,8 +15,6 @@ function getGlobalConfig($key) {
 	}
 	
 	switch ($key) {
-// 		case 'repos':
-// 			return [ "cryptomedic", "maintenance" ];
 		case 'logs':
 			$logs = [ __DIR__ . "/cryptomedic/rest/storage/logs" ];
 			if ($localhost) {

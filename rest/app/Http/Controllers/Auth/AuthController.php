@@ -73,9 +73,13 @@ class AuthController extends Controller {
 				break;
 				
 		}
-		
-		// TODO: update last_login timestamp
+
+		// Update last_login timestamp
+		$user = Auth::user();
+		$user->last_login = new \DateTime();
 		// TODO: log/record appVersion
+		
+		$user->save();
 		
 		return response()->jsonOrJSONP($data);		
 	}
@@ -85,9 +89,6 @@ class AuthController extends Controller {
 		
 		if (Auth::attempt($credentials))
 		{
-			$user = Auth::user();
-			$user->last_login = new \DateTime();
-			$user->save();
 			return $this->getSettings();
 		} else {
 			/* Attemp old school */

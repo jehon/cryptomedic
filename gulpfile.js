@@ -125,9 +125,15 @@ gulp.task('watch', function() {
 //	.on('change', function(event) {
 //	    console.log('JS File ' + event.path + ' was ' + event.type + ', running tasks...');
 //	});
-    gulp.watch([ 'cache_generator/**' ], null, function(event) {
-	console.log('Cache_generator file ' + event.path + ' was ' + event.type + '.');
+    gulp.watch([ 'cache_generator/**', 'php/**/*', 'app/**/*' ], null, function(event) {
+	console.log('Cache_generator: file ' + event.path + ' was ' + event.type + '.');
 	shelljs.rm("-f", "cache/manifest.manifest");
+    });
+
+    gulp.watch([ 'cache_generator/**', 'php/**/*', 'app/**/*' ], null, function(event) {
+	console.log('Cache_generator: file ' + event.path + ' was ' + event.type + '.');
+	// TODOJH: how to manage update of templates? delete does not work --> find???
+//	shelljs.rm("-f", "cache/manifest.manifest");
     });
 
 })

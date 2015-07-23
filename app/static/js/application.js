@@ -434,8 +434,6 @@ mainApp.controller('ctrl', [ '$scope', '$location', 'service_backend', function(
 		var busyEnd = $scope.doBusy("Checking your login/password with the online server", true);
 		service_backend.doLogin(this.username, this.password)
 			.done(function(data) {
-				console.log("login ok");
-				console.log(data);
 				server.settings = data;
 				$scope.loginError = false;
 				$scope.logged = true;
@@ -447,7 +445,6 @@ mainApp.controller('ctrl', [ '$scope', '$location', 'service_backend', function(
 				$scope.safeApply();
 			})
 			.fail(function(data) {
-				console.log("login ko");
 				$scope.loginError = true;
 				$scope.logged = false;
 			})
@@ -456,6 +453,24 @@ mainApp.controller('ctrl', [ '$scope', '$location', 'service_backend', function(
 			});
 	};
 
+	$scope.doCheckLogin = function() {
+		$scope.loginError = false;
+		var busyEnd = $scope.doBusy("Checking your login/password with the online server", true);
+		service_backend.checkLogin()
+			.done(function(data) {
+				server.settings = data;
+				$scope.logged = true;
+				$scope.safeApply();
+			})
+			.fail(function(data) {
+				$scope.logged = false;
+				$scope.safeApply();
+			})
+			.always(function() {
+				busyEnd();
+			});
+	}
+	
 	$scope.doLogout = function() {
 		var busyEnd = $scope.doBusy("Disconnecting from the server", true);
 		service_backend.doLogout()
@@ -474,9 +489,8 @@ mainApp.controller('ctrl', [ '$scope', '$location', 'service_backend', function(
 	});
 
 	$scope.$on("$routeChangeError", function() { console.log("error in routes"); console.log(arguments); });
-	
-	$scope.$on("$viewContentLoaded", function() { console.log("$viewContentLoaded"); });
-	$scope.$on("$includeContentLoaded", function() { console.log("$includeContentLoaded"); });
+
+	$scope.doCheckLogin();
 }]);
 
 function debug_showLabels() {

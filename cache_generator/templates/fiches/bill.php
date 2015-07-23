@@ -6,7 +6,7 @@
 	// Hack: 10010
 	namespace App;
 	class CryptomedicModel {};
-	require(__DIR__ . "/../../rest/app/Bill.php");
+	require(__DIR__ . "/../../../rest/app/Bill.php");
 	
 	use \App\Bill;
 	use \References;

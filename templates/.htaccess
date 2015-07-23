@@ -1,4 +1,0 @@
-RewriteEngine On
-
-RewriteRule ^$ templates.php [QSA,L]
-RewriteRule ^(.+)$ templates.php?page=$1 [QSA,L,E=subquery:$1]
