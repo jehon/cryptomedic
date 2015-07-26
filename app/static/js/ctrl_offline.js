@@ -40,7 +40,7 @@ mainApp.controller('ctrl_offline', [ '$scope', 'service_backend', function($scop
 	console.log("let's go !");
 	window.location.reload();
     }
-    
+/*    
     var cacheStatusValues = [];
     cacheStatusValues[0] = 'uncached';
     cacheStatusValues[1] = 'idle';
@@ -71,7 +71,7 @@ mainApp.controller('ctrl_offline', [ '$scope', 'service_backend', function($scop
         }
         console.warn(message);
     }
-
+*/
     if (window.applicationCache) {
         if (window.applicationCache.status === window.applicationCache.UPDATEREADY) {
             window.applicationCache.swapCache();

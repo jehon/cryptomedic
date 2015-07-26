@@ -481,11 +481,11 @@ mainApp.controller('ctrl', [ '$scope', '$location', 'service_backend', function(
 
 	// Events from the service_*
 	$scope.$on("backend_logged_out", function(msg) { 
-		$scope.logged = false; 
+	    $scope.logged = false; 
 	});
 
 	$scope.$on("backend_logged_in", function(msg) { 
-		$scope.logged = true; 
+	    $scope.logged = true; 
 	});
 
 	$scope.$on("$routeChangeError", function() { console.log("error in routes"); console.log(arguments); });

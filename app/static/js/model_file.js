@@ -5,7 +5,7 @@ application.models.File = application.models.Data.extend({
 		this._super(data, folder);
 		if (data == null) {
 			this.patient_id = folder.getMainFile().id;
-			var c = cache_storage();
+			var c = service_session_storage();
 			this.ExaminerName = c.get("examinerName", "");
 			this.Center = c.get("center", "Chakaria");
 			this.Date = c.get("date", null);

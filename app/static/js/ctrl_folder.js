@@ -63,7 +63,7 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_backend', '$
 	    return "blank.html";
 	}
 	if ($scope.mode == 'add') {
-	    return "writes/" + $scope.page.toLowerCase() + ".html?mode=" + m;
+	    return "writes/" + $scope.page.toLowerCase() + ".html";
 	}
 	return "folder_pages/" + $scope.page + ".html";
     };

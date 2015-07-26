@@ -9,11 +9,6 @@
 // use new Promise();
 
 function cache_indexeddb(onReady) {
-//    if (!indexedDB) {
-//	console.info("No indexed db - going to fallback service_rest");
-//	return cache_storage(onReady);
-//    }
-	
     var error = function(event) {
 	console.error(event.target);
     };
