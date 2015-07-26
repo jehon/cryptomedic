@@ -17,34 +17,33 @@
  * 
  */
 
-mainApp.factory('service_backend', [ '$http', '$rootScope', function($http, $rootScope) {
-//    var rest = service_rest($http);
-
+//mainApp.factory('service_backend', [ '$http', '$rootScope', '$injector', function($http, $rootScope, $injector) {
+mainApp.factory('service_backend', [ '$rootScope', '$injector', function($rootScope, $injector) {
     var pcache = perishableCache(10);
     var rest = "/cryptomedic/rest/public/";
-    var onLogin = jQuery.Callbacks();
-    var onLogout = jQuery.Callbacks();
-    var onError = jQuery.Callbacks();
+//    var onLogin = jQuery.Callbacks();
+//    var onLogout = jQuery.Callbacks();
+//    var onError = jQuery.Callbacks();
+    
+//    onLogin.add(function() { 
+//	console.info("service_backend.onLogin"); 
+//	$rootScope.$broadcast("backend_logged_in");
+//    });
 
-    onLogin.add(function() { 
-	console.info("service_backend.onLogin"); 
-	$rootScope.$broadcast("backend_logged_in");
-    });
+//    onLogout.add(function() { 
+//	console.info("service_backend.onLogout"); 
+//	$rootScope.$broadcast("backend_logged_out");
+//    });
 
-    onLogout.add(function() { 
-	console.info("service_backend.onLogout"); 
-	$rootScope.$broadcast("backend_logged_out");
-    });
-
-    onError.add(function() { 
-	console.info("service_backend.onError"); 
-	$rootScope.$broadcast("backend_logged_error");
-    });
-
+//    onError.add(function() { 
+//	console.info("service_backend.onError"); 
+//	$rootScope.$broadcast("backend_logged_error");
+//    });
+    
     function treatHttp(request, treatResponse) {
 	var def = jQuery.Deferred();
 	request.success(function(data, status, headers, config) {
-	    onLogin.fire();
+//	    onLogin.fire();
 			
 	    if (typeof(treatResponse) == 'function') {
 		data = treatResponse(data, status, headers, config);
@@ -53,10 +52,10 @@ mainApp.factory('service_backend', [ '$http', '$rootScope', function($http, $roo
 	}).error(function(data, status, headers, config) {
 	    if (status == 401) {
 		// 401: Unauthorized
-		onLogout.fire();
+//		onLogout.fire();
 	    } else {
 		// 403: Forbidden
-		onError.fire();
+//		onError.fire();
 	    }
 	    def.reject(data);
 	});
@@ -65,26 +64,36 @@ mainApp.factory('service_backend', [ '$http', '$rootScope', function($http, $roo
 
     return {
 	'checkLogin': function() {
+	    var $http = $injector.get("$http");
 	    // TODO OFFLINE: Give information about last sync
-	    return treatHttp($http.get(rest + "/auth/settings?appVersion=" + cryptomedic.version));
+	    return treatHttp($http.get(rest + "/auth/settings?appVersion=" + cryptomedic.version), function(data) {
+		console.info("broadcast backend_logged_in from checkLogin");
+		$rootScope.$broadcast("backend_logged_in");
+	    });
 	},
 	'doLogin': function(username, password) {
+	    var $http = $injector.get("$http");
 	    // Hack: if no username is given, then checkLogin instead
 	    if (username == "") return this.checkLogin();
 	    return treatHttp($http.post(rest + "/auth/mylogin", 
 		    { 'username': username, 
 			'password': password, 
 			'appVersion': cryptomedic.version
-		    }));
+		    }), function(data) {
+			console.info("broadcast backend_logged_in from doLogin");
+			$rootScope.$broadcast("backend_logged_in");
+	    });
 	},
 	'doLogout': function() {
+	    var $http = $injector.get("$http");
 	    // TODO SECURITY: more cleanup
 	    pcache.clear();
 	    return treatHttp($http.get(rest + "/auth/logout"), function(data) {
-		onLogout.fire();
+	            $rootScope.$broadcast("backend_logged_out");
 	    });
 	},
 	'getFolder': function(id) {
+	    var $http = $injector.get("$http");
 	    if (pcache.isCached(id)) {
 		return jQuery.Deferred().resolve(pcache.get(id));
 	    }
@@ -94,12 +103,14 @@ mainApp.factory('service_backend', [ '$http', '$rootScope', function($http, $roo
 	    });
 	},
 	'getParent': function(type, id) {
+	    var $http = $injector.get("$http");
 	    return treatHttp($http.get(rest + "/related/" + type + "/" + id), function(data) {
 		pcache.set(data.getMainFile().id, data);
 		return data;				
 	    });
 	},
 	'searchForPatients': function(params) {
+	    var $http = $injector.get("$http");
 	    return treatHttp($http.get(rest + "/folder", { 'params': params }), function(data) {
 		var list = [];
 		for(var i in data) {
@@ -109,6 +120,7 @@ mainApp.factory('service_backend', [ '$http', '$rootScope', function($http, $roo
 	    });
 	},
 	'checkReference': function(year, order) {
+	    var $http = $injector.get("$http");
 	    return treatHttp($http.get(rest + "/reference/" + year + "/" + order),
 		function(data) {
 			if ((typeof(data._type) != 'undefined') && (data._type == 'Folder')) {
@@ -119,6 +131,7 @@ mainApp.factory('service_backend', [ '$http', '$rootScope', function($http, $roo
 		});
 	},
 	'createReference': function(year, order) {
+	    var $http = $injector.get("$http");
 	    return treatHttp($http.post(rest + "/reference", 
 		{ 
 			'entryyear': year, 
@@ -129,6 +142,7 @@ mainApp.factory('service_backend', [ '$http', '$rootScope', function($http, $roo
 		}); 
 	},
 	'createFile': function(data, folderId) {
+	    var $http = $injector.get("$http");
 	    pcache.perish(folderId);
 	    return treatHttp($http.post(rest + "/fiche/" + data['_type'], data), function(data, status, headers, config) {
 		pcache.set(data.getMainFile().id, data);
@@ -136,6 +150,7 @@ mainApp.factory('service_backend', [ '$http', '$rootScope', function($http, $roo
 	    });
 	},
 	'saveFile': function(data, folderId) {
+	    var $http = $injector.get("$http");
 	    pcache.perish(folderId);
 	    return treatHttp($http.put(rest + "/fiche/" + data['_type'] + "/" + data['id'], data), function(data) {
 		pcache.set(data.getMainFile().id, data);
@@ -143,6 +158,7 @@ mainApp.factory('service_backend', [ '$http', '$rootScope', function($http, $roo
 	    });
 	},
 	'deleteFile': function(data, folderId) {
+	    var $http = $injector.get("$http");
 	    pcache.perish(folderId);
 	    return treatHttp($http['delete'](rest + "/fiche/" + data['_type'] + "/" + data['id']), function(data) {
 		if (data instanceof application.models.Folder) {
@@ -152,6 +168,7 @@ mainApp.factory('service_backend', [ '$http', '$rootScope', function($http, $roo
 	    });
 	},
 	'unlockFile': function(data, folderId) {
+	    var $http = $injector.get("$http");
 	    pcache.perish(folderId);
 	    return treatHttp($http.get(rest + "/unfreeze/" + data['_type'] + "/" + data['id']), function(data) {
 		pcache.set(data.getMainFile().id, data);
@@ -159,12 +176,73 @@ mainApp.factory('service_backend', [ '$http', '$rootScope', function($http, $roo
 	    });
 	},
 	'getReport': function(reportName, data, timing) {
+	    var $http = $injector.get("$http");
 	    return treatHttp($http.get(rest + "/reports/" + reportName + (timing ? "/" + timing : ""), { 'params': data }), 
 		    function(data) { return data; }
 	    	);
 	},
-	'onLogout': onLogout,
-	'onLogin': onLogin,
-	'onError': onError
+//	'onLogout': onLogout,
+//	'onLogin': onLogin,
+//	'onError': onError,
+
+//	// $http interceptors
+//	'request': function(config) {
+//	    console.info(config);
+//	    // do something on success
+//	    return config;
+//	},
+//	'requestError': function(rejection) {
+//	    if (canRecover(rejection)) {
+//		return responseOrNewPromise
+//	    }
+//	    return $q.reject(rejection);
+//	},
+//	'response': function(response) {
+//	    console.warn(response);
+//	    // do something on success
+//	    return response;
+//	},
+//	'responseError': function(rejection) {
+//	    // do something on error
+//	    if (canRecover(rejection)) {
+//		return responseOrNewPromise
+//	    }
+//	    return $q.reject(rejection);
+//	}
     };
+}]);
+
+// https://docs.angularjs.org/api/ng/service/$http
+// http://www.webdeveasy.com/interceptors-in-angularjs-and-useful-examples/
+mainApp.factory('sessionInjector', [ '$q', '$injector', 'service_backend', '$rootScope', function($q, $injector, service_backend, $rootScope) {
+    return {
+        'request': function(config) {
+            // Add last sync header to the call
+            config.headers['X-last-sync'] = "2015-01-01 01:01:01|bills|15";
+            return config;
+        },
+        'response': function(response) {
+//	    // do something on success
+//	    console.warn(response);
+	    return response;
+        },
+	'responseError': function(rejection) {
+	    switch(rejection.status) {
+	    case 401: // Unauthorized
+		console.log("broadcast backend_logged_out");
+		$rootScope.$broadcast("backend_logged_out");
+		break;		
+	    case 403: // Forbidden
+		$rootScope.$broadcast("backend_logged_error");
+		break;		
+	    default:
+		console.warn(rejection);    
+	    }
+	    return $q.reject(rejection);
+	},
+    };
+}]);
+
+mainApp.config(['$httpProvider', function($httpProvider) {  
+    $httpProvider.interceptors.push('sessionInjector');
 }]);

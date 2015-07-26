@@ -185,13 +185,13 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_backend', '$
 
     $scope.actionCreate = function() {
 	if (fileCreating.Date) {
-	    cache_storage().set("date", fileCreating.Date);
+	    service_session_storage().set("date", fileCreating.Date);
 	}
 	if (fileCreating.ExaminerName) {
-	    cache_storage().set("examinerName", fileCreating.ExaminerName);
+	    service_session_storage().set("examinerName", fileCreating.ExaminerName);
 	}
 	if (fileCreating.Center) {
-	    cache_storage().set("center", fileCreating.Center);
+	    service_session_storage().set("center", fileCreating.Center);
 	}
 
 	if (!$scope.actionValidate()) {
