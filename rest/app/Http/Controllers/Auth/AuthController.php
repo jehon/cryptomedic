@@ -48,7 +48,8 @@ class AuthController extends Controller {
 		$data = array();
 		$data['username'] = Auth::user()->username;
 		$data['group'] = Auth::user()->group;
-
+		$data['name'] = Auth::user()->name;
+		
 		
 		$listing = DB::table('prices')->orderBy('id', 'ASC')->get();
 		$data['prices'] = array();
