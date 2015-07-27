@@ -21,52 +21,27 @@
 mainApp.factory('service_backend', [ '$rootScope', '$injector', function($rootScope, $injector) {
     var pcache = perishableCache(10);
     var rest = "/cryptomedic/rest/public/";
-//    var onLogin = jQuery.Callbacks();
-//    var onLogout = jQuery.Callbacks();
-//    var onError = jQuery.Callbacks();
-    
-//    onLogin.add(function() { 
-//	console.info("service_backend.onLogin"); 
-//	$rootScope.$broadcast("backend_logged_in");
-//    });
-
-//    onLogout.add(function() { 
-//	console.info("service_backend.onLogout"); 
-//	$rootScope.$broadcast("backend_logged_out");
-//    });
-
-//    onError.add(function() { 
-//	console.info("service_backend.onError"); 
-//	$rootScope.$broadcast("backend_logged_error");
-//    });
     
     function treatHttp(request, treatResponse) {
 	var def = jQuery.Deferred();
 	request.success(function(data, status, headers, config) {
-//	    onLogin.fire();
-			
 	    if (typeof(treatResponse) == 'function') {
 		data = treatResponse(data, status, headers, config);
 	    }
 	    def.resolve(data);
 	}).error(function(data, status, headers, config) {
-	    if (status == 401) {
-		// 401: Unauthorized
-//		onLogout.fire();
-	    } else {
-		// 403: Forbidden
-//		onError.fire();
-	    }
 	    def.reject(data);
 	});
 	return def;
     }
 
     return {
+	/*******************************
+	 * Authentification oriented services 
+	 */
 	'checkLogin': function() {
 	    var $http = $injector.get("$http");
-	    // TODO OFFLINE: Give information about last sync
-	    return treatHttp($http.get(rest + "/auth/settings?appVersion=" + cryptomedic.version), function(data) {
+	    return $http.get(rest + "/auth/settings?appVersion=" + cryptomedic.version).success(function(data) {
 		console.info("broadcast backend_logged_in from checkLogin");
 		$rootScope.$broadcast("backend_logged_in");
 	    });
@@ -75,23 +50,27 @@ mainApp.factory('service_backend', [ '$rootScope', '$injector', function($rootSc
 	    var $http = $injector.get("$http");
 	    // Hack: if no username is given, then checkLogin instead
 	    if (username == "") return this.checkLogin();
-	    return treatHttp($http.post(rest + "/auth/mylogin", 
-		    { 'username': username, 
+	    return $http.post(rest + "/auth/mylogin", 
+		{ 'username': username, 
 			'password': password, 
 			'appVersion': cryptomedic.version
-		    }), function(data) {
-			console.info("broadcast backend_logged_in from doLogin");
-			$rootScope.$broadcast("backend_logged_in");
-	    });
+		}).success(function(data) {
+		    $rootScope.$broadcast("backend_logged_in");
+	    	});
 	},
 	'doLogout': function() {
 	    var $http = $injector.get("$http");
 	    // TODO SECURITY: more cleanup
 	    pcache.clear();
-	    return treatHttp($http.get(rest + "/auth/logout"), function(data) {
+	    return $http.get(rest + "/auth/logout").success(function(data) {
 	            $rootScope.$broadcast("backend_logged_out");
 	    });
 	},
+
+	/*******************************
+	 * Data oriented services
+	 */
+
 	'getFolder': function(id) {
 	    var $http = $injector.get("$http");
 	    if (pcache.isCached(id)) {
@@ -181,34 +160,6 @@ mainApp.factory('service_backend', [ '$rootScope', '$injector', function($rootSc
 		    function(data) { return data; }
 	    	);
 	},
-//	'onLogout': onLogout,
-//	'onLogin': onLogin,
-//	'onError': onError,
-
-//	// $http interceptors
-//	'request': function(config) {
-//	    console.info(config);
-//	    // do something on success
-//	    return config;
-//	},
-//	'requestError': function(rejection) {
-//	    if (canRecover(rejection)) {
-//		return responseOrNewPromise
-//	    }
-//	    return $q.reject(rejection);
-//	},
-//	'response': function(response) {
-//	    console.warn(response);
-//	    // do something on success
-//	    return response;
-//	},
-//	'responseError': function(rejection) {
-//	    // do something on error
-//	    if (canRecover(rejection)) {
-//		return responseOrNewPromise
-//	    }
-//	    return $q.reject(rejection);
-//	}
     };
 }]);
 
@@ -217,11 +168,13 @@ mainApp.factory('service_backend', [ '$rootScope', '$injector', function($rootSc
 mainApp.factory('sessionInjector', [ '$q', '$injector', 'service_backend', '$rootScope', function($q, $injector, service_backend, $rootScope) {
     return {
         'request': function(config) {
-            // Add last sync header to the call
+	    // TODO OFFLINE: Add last sync header to the call
             config.headers['X-last-sync'] = "2015-01-01 01:01:01|bills|15";
             return config;
         },
         'response': function(response) {
+	    // TODO OFFLINE: Catch the data
+            // TODO: Cache the folder data into service_backend?
 //	    // do something on success
 //	    console.warn(response);
 	    return response;
@@ -229,7 +182,6 @@ mainApp.factory('sessionInjector', [ '$q', '$injector', 'service_backend', '$roo
 	'responseError': function(rejection) {
 	    switch(rejection.status) {
 	    case 401: // Unauthorized
-		console.log("broadcast backend_logged_out");
 		$rootScope.$broadcast("backend_logged_out");
 		break;		
 	    case 403: // Forbidden

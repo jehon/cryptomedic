@@ -229,8 +229,7 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_backend', '$
 		.done(function(data) {
 		    if (($scope.page == 'patient') || (!data)) {
 			// TODO GUI: transform that into information message
-			alert("The patient has been deleted");
-			console.log("going home");
+			$scope.$broadcast("message", { "text": "The patient has been deleted"});
 			$scope.go("/home");
 		    } else {
 			$scope.folder = data;

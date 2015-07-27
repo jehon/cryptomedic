@@ -433,7 +433,7 @@ mainApp.controller('ctrl', [ '$scope', '$location', 'service_backend', function(
 		$scope.loginError = false;
 		var busyEnd = $scope.doBusy("Checking your login/password with the online server", true);
 		service_backend.doLogin(this.username, this.password)
-			.done(function(data) {
+			.success(function(data) {
 				server.settings = data;
 				$scope.loginError = false;
 				$scope.logged = true;
@@ -444,11 +444,11 @@ mainApp.controller('ctrl', [ '$scope', '$location', 'service_backend', function(
 				// }
 				$scope.safeApply();
 			})
-			.fail(function(data) {
+			.error(function(data) {
 				$scope.loginError = true;
 				$scope.logged = false;
 			})
-			.always(function() {
+			.finally(function() {
 				busyEnd();
 			});
 	};
@@ -457,16 +457,17 @@ mainApp.controller('ctrl', [ '$scope', '$location', 'service_backend', function(
 		$scope.loginError = false;
 		var busyEnd = $scope.doBusy("Checking your login/password with the online server", true);
 		service_backend.checkLogin()
-			.done(function(data) {
+			.success(function(data) {
 				server.settings = data;
 				$scope.logged = true;
+				$scope.$broadcast("message", { "level": "info", "text": "Welcome " +  data.name + "!"});
 				$scope.safeApply();
 			})
-			.fail(function(data) {
+			.error(function(data) {
 				$scope.logged = false;
 				$scope.safeApply();
 			})
-			.always(function() {
+			.finally(function() {
 				busyEnd();
 			});
 	}
@@ -474,7 +475,7 @@ mainApp.controller('ctrl', [ '$scope', '$location', 'service_backend', function(
 	$scope.doLogout = function() {
 		var busyEnd = $scope.doBusy("Disconnecting from the server", true);
 		service_backend.doLogout()
-			.always(function(data) {
+			.finally(function(data) {
 				busyEnd();
 			});
 	};
@@ -490,6 +491,27 @@ mainApp.controller('ctrl', [ '$scope', '$location', 'service_backend', function(
 
 	$scope.$on("$routeChangeError", function() { console.log("error in routes"); console.log(arguments); });
 
+	$scope.messages = [];
+	var interval = 0;
+	$scope.$on("message", function(event, data) {
+	   data = jQuery.extend({}, { level: "success", text: "Error!", seconds: 8 }, data);
+	   var t = new Date();
+	   data.timeout = t.setSeconds(t.getSeconds() + data.seconds);
+	   $scope.messages.push(data);
+	   if (interval == 0) {
+	       	interval = setInterval(function() {
+	       	    var now = new Date();
+	       	    $scope.messages = $scope.messages.filter(function(value, index) {
+	       		return (value.timeout >= now);
+	       	    });
+	       	    if ($scope.messages.length == 0) {
+	       		clearInterval(interval);
+	       	    }
+	       	    $scope.safeApply();
+        	}, 1000);
+	   }
+	});
+	
 	$scope.doCheckLogin();
 }]);
 

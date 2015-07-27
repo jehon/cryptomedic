@@ -181,6 +181,14 @@
 				</div><!-- /.modal-dialog -->
 			</div><!-- /.modal -->
 			<div>
+				<span ng-repeat="m in messages">
+					<div class="alert alert-dismissible" ng-class="'alert-' + m.level" alert-dismissible>
+	 					<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						{{m.text}}
+					</div>
+ 
+					
+				</span>
 				<div ng-view></div>
 			</div>
 		</div>

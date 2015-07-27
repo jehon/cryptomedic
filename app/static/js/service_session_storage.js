@@ -29,12 +29,13 @@ function service_session_storage(onReady) {
 	values[key] = def;
 	return def;
     }
+
+    // Set default values
     var now = new Date();
     var year = now.getFullYear();
     var month = "0" + (now.getMonth() + 1);
     month = month.substring(month.length - 2); 
 		
-    // Set default values
     get("examiner", "");
     get("center", "");
     get("day", now);
