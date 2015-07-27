@@ -203,6 +203,6 @@
 	</body>
 	<script>
 		// Display the application version into the header
-		jQuery("#appCache_mode").html("v" + cryptomedic.version);
+// 		jQuery("#appCache_mode").html("v" + cryptomedic.version);
 	</script>
 </html>
