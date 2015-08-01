@@ -78,7 +78,10 @@ class AuthController extends Controller {
 		// Update last_login timestamp
 		$user = Auth::user();
 		$user->last_login = new \DateTime();
+		
 		// TODO: log/record appVersion
+		
+// 		$computer = LogComputer::find([ "computer_id" => Request::input("")])
 		
 		$user->save();
 		

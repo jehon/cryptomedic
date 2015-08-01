@@ -459,7 +459,7 @@ if (array_key_exists("_unused", $_REQUEST) && $_REQUEST['_unused']) {
 }
 
 if (substr($generator['target'], -5) != ".html") {
-	throw new Exception("Invalid extension");
+	throw new Exception("Invalid extension for " . $generator['target']);
 }
 
 $template = str_replace(".html", ".php", $generator['target']);
@@ -469,13 +469,12 @@ if (substr($template, 0, 16) == "templates/writes") {
 	t::setDefaultOption("writeOnly", true);
 }
 
-$template = __DIR__ . "/" . $template;
-if (!file_exists($template)) {
-	throw new Exception("I say: not found");	
+if (!file_exists(__DIR__ . "/" . $template)) {
+	throw new Exception("I say: not found " . $template);	
 }
 
 try {
-	include($template);
+	include(__DIR__ . "/" . $template);
 } catch (Exception $e) {
 	var_dump($e);
 	return 100;

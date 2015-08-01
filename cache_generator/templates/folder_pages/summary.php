@@ -15,7 +15,7 @@
 			</a>
 		</td>
 		<td></td>
-		<td ng-include="cryptomedic.templateRoot + '/summary/patient-summary.php'"></td>
+		<td ng-include="cryptomedic.templateRoot + '/summary/patient-summary.html'"></td>
 	</tr>
 	<tr ng-repeat="f in folder.getSubFiles()" ng-controller="ctrl_file">
 		<td>#{{$index}}</td>
@@ -25,6 +25,6 @@
 			</a>
 		</td>
 		<td>{{f.Date | date:'longDate' }}</td>
-		<td><span ng-include="cryptomedic.templateRoot + '/summary/'+f._type.toLowerCase()+'-summary.php'"></span></td>
+		<td><span ng-include="cryptomedic.templateRoot + '/summary/'+f._type.toLowerCase()+'-summary.html'"></span></td>
 	</tr>
 </table>

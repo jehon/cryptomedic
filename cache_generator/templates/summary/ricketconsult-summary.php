@@ -8,7 +8,7 @@
 		<?php (new t("RicketConsult.RightlegAngle"))->tr("Right Leg Angle")->p(); ?>
 		<?php (new t("RicketConsult.LeftLeg"))->tr("Left Leg")->p(); ?>
 		<?php (new t("RicketConsult.LeftlegAngle"))->tr("Left Leg Angle")->p(); ?>
-		<?php (new t("RicketConsult.Commentary"))->tr("Comment")->p(); ?>
+		<?php (new t("RicketConsult.Comments"))->tr("Commentary")->p(); ?>
 		<?php (new t("RicketConsult.Heightcm"))->tr("Height (cm)")->p(); ?>
 		<?php (new t("RicketConsult.Weightkg"))->tr("Weight (kg)")->p(); ?>
 	</tbody>
