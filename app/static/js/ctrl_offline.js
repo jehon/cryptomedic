@@ -8,13 +8,9 @@ mainApp.controller('ctrl_offline', [ '$scope', 'service_backend', function($scop
     $scope.refreshAvailable = false;
 		
     window.applicationCache.addEventListener("progress", function(progress) {
-//	$scope.info_available = true;
-//	$scope.offline = "Downloading next version";
 	if (progress.total) {
 	    console.log(progress.loaded + "/" + progress.total);
-//	    $scope.offline += " " + progress.loaded + " of " + progress.total;
 	}
-//	$scope.safeApply();
     });
 
     window.applicationCache.addEventListener("updateready", function(event) {
@@ -40,6 +36,14 @@ mainApp.controller('ctrl_offline', [ '$scope', 'service_backend', function($scop
 	console.log("let's go !");
 	window.location.reload();
     }
+
+    if (window.applicationCache) {
+        if (window.applicationCache.status === window.applicationCache.UPDATEREADY) {
+            window.applicationCache.swapCache();
+            console.log('swap cache has been called');
+        }
+    }
+
 /*    
     var cacheStatusValues = [];
     cacheStatusValues[0] = 'uncached';
@@ -72,29 +76,4 @@ mainApp.controller('ctrl_offline', [ '$scope', 'service_backend', function($scop
         console.warn(message);
     }
 */
-    if (window.applicationCache) {
-        if (window.applicationCache.status === window.applicationCache.UPDATEREADY) {
-            window.applicationCache.swapCache();
-            console.log('swap cache has been called');
-        }
-    }
 }]);
-
-
-
-/* Debugging offline cache following 
- * https://jonathanstark.com/blog/debugging-html-5-offline-application-cache?filename=2009/09/27/debugging-html-5-offline-application-cache/
- **/
-//applicationCache.myDebug = function() {
-//    window.applicationCache.addEventListener(
-//        'updateready', 
-//        function(){
-//            window.applicationCache.swapCache();
-//            console.log('swap cache has been called');
-//        }, 
-//        false
-//    );    
-//    console.warn("Calling update");
-//    window.applicationCache.update();
-//    console.warn("Calling update done");
-//}

@@ -26,6 +26,7 @@ Response::macro('jsonOrJSONP', function($value)
 });
 
 Response::macro('folder', function($id, $addData = array()) {
+	// TODO: remove this macro? use the offline middleware? at least, use the function!!
 	$master = [];
 	$master['_type'] = 'Folder';
 	$master['id'] = $id;
@@ -49,6 +50,30 @@ Response::macro('folder', function($id, $addData = array()) {
 	return response()->jsonOrJSONP(array_merge($master, $addData));
 });
 
+function getFolder($id, $addData = array()) {
+	$master = [];
+	$master['_type'] = 'Folder';
+	$master['id'] = $id;
+	$master['mainFile'] = DB::table('patients')->where('id', $id)->first();
+	if (!$master['mainFile']) {
+		abort(404);
+	}
+	$master['mainFile']->_type = 'Patient';
+	
+	$master['subFiles'] = array();
+	
+	foreach(References::$model2db as $m => $c) {
+		if ($c == "patients") continue;
+			
+		$r = DB::select("SELECT * FROM $c WHERE patient_id = :patient_id", array('patient_id' => $id));
+		foreach($r as $ri => $rv) {
+			$rv->_type = References::db2model($c);
+			$master['subFiles'][] = $rv;
+		}
+	}
+	return $master;
+}
+
 /**
  * For anybody
  */
@@ -64,9 +89,10 @@ Route::resource('price', "PriceController");
 Route::group(array('middleware' => 'authenticated'), function() {
 	Route::get('home', 'HomeController@index');
 
-	// TODO - LAST FIX - is it ok?
 	Route::resource('folder', "FolderController", [ "only" => [ "index", "show" ]]);
 
+	Route::get('foldersync', [ "uses" => "FolderController@sync" ]);
+	
 	Route::get('related/{model}/{id}', [
 		"uses" => "FolderController@related"
 	]);
@@ -94,16 +120,6 @@ Route::group(array('middleware' => 'authenticated'), function() {
 	Route::get('reports/surgical/{timing}', [
 		"uses" => "ReportSurgicalController@byTiming"
 	]);
-
-	// TODO CLEANUP: remove old routes (as of before 14/07)
-	Route::get('reports/monthlyStatistical', [
-		"uses" => "ReportStatisticalController@monthly"
-	]);
-
-	Route::get('reports/yearlyStatistical', [
-		"uses" => "ReportStatisticalController@yearly"
-	]);
-	
 });
 
 Route::group(array('middleware' => [ "authenticated", "writeGroup" ] ), function() {

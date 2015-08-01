@@ -1,3 +1,8 @@
-
+ExpiresByType text/cache-manifest "access plus 0 seconds"
+ 
 RewriteRule ^$ index.php
+
 RewriteRule index.html index.php
+
+# Temp redirect:
+RewriteRule manifest.php manifest.manifest

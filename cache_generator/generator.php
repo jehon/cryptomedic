@@ -1,8 +1,6 @@
 <?php
 $generator = array();
 
-// $cache_file = $config['tempDir'] . "/templates/" . str_replace(array("?", "&", ".", "/", "\\", "%", " ", ":"),  "_", $_SERVER['REQUEST_URI']);
-
 require_once(dirname(__DIR__) . DIRECTORY_SEPARATOR . "globalConfig.php");
 
 $generator['database'] = array(
@@ -27,7 +25,7 @@ if (!file_exists($generator['runtime'])) {
 	die("Generator not found");
 }
 
-// FIXME: If we had some parameters, do not save it to file?
+// TODO CHECK: If we had some parameters, do not save it to file?
 
 try {
 	ob_start();

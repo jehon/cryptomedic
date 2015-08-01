@@ -52,12 +52,12 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_backend', '$
 	if ($scope.mode != 'read') {
 	    m = 'edit';
 	}
+	if ($scope.page === "" || $scope.page == "patient") {
+	    return ($scope.mode == 'read' ? "fiches" : "writes") + "/patient.html";
+	}
 	if ($scope.pageIsFile) {
 	    return ($scope.mode == 'read' ? "fiches" : "writes")
 	    	+ "/" + $scope.folder.getSubFile($scope.page)['_type'].toLowerCase() + ".html";
-	}
-	if ($scope.page == "" || $scope.page == "patient") {
-	    return ($scope.mode == 'read' ? "fiches" : "writes") + "/patient.html";
 	}
 	if (typeof($scope.page) == "number") {
 	    return "blank.html";
@@ -80,7 +80,6 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_backend', '$
     }
 
     $scope.actionValidate = function() {
-	console.log("action validate");
 	// TODOJH: jserror should have an icon before (danger)
 	// TODOJH: hide action button if form is not ok
 	$scope.valide = true;
@@ -113,8 +112,6 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_backend', '$
         });
     
         if (!jQuery.isEmptyObject($scope.errors)) {
-    	console.log("Model invalid");
-    	console.log($scope.errors);
     	$scope.valide = false;
         } 
 
@@ -138,6 +135,8 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_backend', '$
 	var prevType = $scope.currentFile()._type;
 	service_backend.saveFile($scope.currentFile(), $scope.id())
 	    .done(function(data) {
+		$scope.$emit("message", { "level": "success", "text": 
+		    "The " + $scope.currentFile()._type + " has been saved."});
 		$scope.folder = data;
 		// Find back the original file, if a change in date reorder it somewhere else
 		showMe(prevType, prevId);
@@ -153,6 +152,8 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_backend', '$
 	var busyEnd = $scope.doBusy("Unlocking the file on the server");
 	service_backend.unlockFile($scope.currentFile(), $scope.id())
 	    .done(function(data) {
+		$scope.$emit("message", { "level": "success", "text": 
+		    "The " + fileCreating._type + " has been unlocked."});
 		$scope.folder = data;
 		$scope.safeApply();
 	    }).always(function() {
@@ -165,13 +166,14 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_backend', '$
 	    alert("You have errors in your data. Please correct them and try again");
 	    return ;
 	}
-	console.log($scope.currentFile());
 	$scope.currentFile()._type = "Patient";
 	var busyEnd = $scope.doBusy("Creating the patient on the server");
 	var creatingType = $scope.currentFile()._type;
 		
 	service_backend.createFile($scope.currentFile(), $scope.id())
 	    .done(function(data) {
+		$scope.$emit("message", { "level": "success", "text": 
+		    "The patient has been created."});
 		$scope.folder = data;
 		fileCreating = null;
 
@@ -203,6 +205,8 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_backend', '$
 		
 	service_backend.createFile($scope.currentFile(), $scope.id())
 	    .done(function(data) {
+		$scope.$emit("message", { "level": "success", "text": 
+		    "The " + fileCreating._type + " has been created."});
 		$scope.folder = data;
 		fileCreating = null;
 
@@ -228,10 +232,16 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_backend', '$
 	service_backend.deleteFile($scope.currentFile(), $scope.id())
 		.done(function(data) {
 		    if (($scope.page == 'patient') || (!data)) {
-			// TODO GUI: transform that into information message
-			$scope.$broadcast("message", { "text": "The patient has been deleted"});
+			$scope.$emit("message", { "level": "success", "text": 
+			    "The patient " 
+			    + $scope.currentFile().entryyear + "-" + $scope.currentFile().entryorder 
+			    + " has been deleted"});
 			$scope.go("/home");
 		    } else {
+			$scope.$emit("message", { "level": "success", "text": 
+			    "The " + $scope.currentFile()._type 
+			    +  " of " + $scope.currentFile().Date 
+			    + " has been deleted"});
 			$scope.folder = data;
 			$scope.go("/folder/" + $scope.id() + "/patient");					
 		    }

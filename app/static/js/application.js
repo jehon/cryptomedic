@@ -7,32 +7,20 @@ var server = {};
 /**
  * For this f*** old IE6-8
  */
-/* istanbul ignore next */
 if (typeof(console) === 'undefined') { console = {}; }
-/* istanbul ignore next */
 if (typeof(console.log) !== 'function') { console.log = function() {}; }
-/* istanbul ignore next */
 if (typeof(console.info) !== 'function') { console.info = console.log; }
-/* istanbul ignore next */
 if (typeof(console.error) !== 'function') { console.error = console.log; }
-/* istanbul ignore next */
 if (typeof(console.trace) !== 'function') { console.trace = console.log; }
-/* istanbul ignore next */
 if (typeof(console.warn) !== 'function') { console.warn = console.log; }
-/* istanbul ignore next */
-if (typeof(console.group) !== 'function') { console.group = function(group) { console.log("GROUP: " + group); }; }
-/* istanbul ignore next */
-if (typeof(console.groupCollapsed) !== 'function') { console.groupCollapsed = console.group; }
-/* istanbul ignore next */
-if (typeof(console.groupEnd) !== 'function') { console.groupEnd = function() { console.log("GROUP END"); } ; }
 
-/* istanbul ignore next */
-if (window.location.search) {
-	if (window.location.search.search("_nocollapse") > 0) {
-		console.log("mode no-collapse");
-		console.groupCollapsed = console.group;
-	}
-}
+// Inspired from http://www.2ality.com/2014/10/es6-promises-api.html
+Promise.prototype.myfinallydone = function (callback) {
+    callback = callback || function(data) { return data; };
+    return this
+    	.then(callback, callback)
+    	.catch(function(reason) { console.error(reason); });
+};
 
 function inherit(parent, constructor) {
 	// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/create
@@ -189,20 +177,13 @@ var mainApp = angular.module('app_main', [ 'ngRoute' ])
     // http://stackoverflow.com/a/15298620
     return {
 	restrict: 'A',
-//	require: '^ngModel',
 	transclude: true,
 	scope: {
-//		'ngModel': '=',
 	    'tryit': '&', // executed in parent scope
 	},
 	template: "<span ng-if='error' class='catchedError'>{{errorMsg}}</span><span ng-if='!error' ng-transclude></span>",
 	link:
 	    function($scope, $element, $attrs, ctrl, $transclude) {
-//		$scope.$watch($scope.ngModel, function() {
-//		    console.log("changed");
-//		    testIt();
-//		}, true);
-
 		$scope.$watch(function() {
         	    try  {
         		return $scope.tryit();
@@ -301,36 +282,36 @@ var mainApp = angular.module('app_main', [ 'ngRoute' ])
 			    ctx.drawImage(img, 0, 0, w, h);
 			    canvas.style.display = 'block';
 		
-//			    var dataURI = canvas.toDataURL("image/png");
 			    var dataURI = canvas.toDataURL("image/jpeg");
 			    $scope.currentFile().fileContent = dataURI;
 			    $scope.currentFile().OriginalName = file.name;
 			    $scope.$emit("revalidate");
 			    busy();
 			};
-		    }
+		    };
 		    reader.readAsDataURL(file);
 		}
 	    };
 	}
     }
 }])
-//.directive('myready', function($timeout) { // unused
-//    return {
-//	restrict: 'A',
-//	link: function(scope, element, attr) {
-//	    console.log("myready link")
-//	    $timeout(function () {
-//		//DOM has finished rendering
-//		console.log("myready $timeout")
-//	    });
-//	}
-//    }
-//})
 ;
 
 mainApp.controller('ctrl', [ '$scope', '$location', 'service_backend', function($scope, $location, service_backend) { 
-	$scope.cryptomedic = cryptomedic;
+    var backend = service_my_backend({
+	onUnauthorized: function(response) {
+	    console.info("ctrl: unauthorized");
+	    $scope.logged = false; 
+	},
+	onCacheProgress: function(lastSync, _final) {
+	    console.log("Cache progress: " + lastSync + " " + (_final ? " terminated " : " data pending")); 
+	    $scope.sync.lastSync = lastSync;
+	    $scope.sync._final = _final;
+	}
+    });
+    $scope.sync = { lastSync: '?', _final: false };
+    
+    $scope.cryptomedic = cryptomedic;
 	$scope.application = application;
 	$scope.server = server;
 	$scope.safeApply = function (fn) {
@@ -410,14 +391,13 @@ mainApp.controller('ctrl', [ '$scope', '$location', 'service_backend', function(
 		};
 	};
 
-	$scope.endBusy = function() {}
+	$scope.endBusy = function() {};
 
-	// On load, if cryptomedic.settings is set, we are logged in!
 	$scope.username = "";
 	$scope.password = "";
-	if (typeof(server) != "undefined" && server.settings && server.settings.username) {
-		$scope.logged = true;
-	}
+//	if (typeof(server) != "undefined" && server.settings && server.settings.username) {
+//		$scope.logged = true;
+//	}
 
 	$scope.doLogin = function() {
 		$scope.username = jQuery("#login_username").val();
@@ -432,23 +412,21 @@ mainApp.controller('ctrl', [ '$scope', '$location', 'service_backend', function(
 		}
 		$scope.loginError = false;
 		var busyEnd = $scope.doBusy("Checking your login/password with the online server", true);
-		service_backend.doLogin(this.username, this.password)
-			.success(function(data) {
+		backend.login(this.username, this.password)
+			.then(function(data) {
 				server.settings = data;
 				$scope.loginError = false;
 				$scope.logged = true;
-
 				// if (typeof(server) == "undefined" || !server.settings || !server.settings.username) {
 					console.log("Reloading the page");
 					window.location.reload();
 				// }
 				$scope.safeApply();
 			})
-			.error(function(data) {
+			.catch(function(data) {
 				$scope.loginError = true;
-				$scope.logged = false;
 			})
-			.finally(function() {
+			.myfinallydone(function() {
 				busyEnd();
 			});
 	};
@@ -456,27 +434,27 @@ mainApp.controller('ctrl', [ '$scope', '$location', 'service_backend', function(
 	$scope.doCheckLogin = function() {
 		$scope.loginError = false;
 		var busyEnd = $scope.doBusy("Checking your login/password with the online server", true);
-		service_backend.checkLogin()
-			.success(function(data) {
-				server.settings = data;
-				$scope.logged = true;
-				$scope.$broadcast("message", { "level": "info", "text": "Welcome " +  data.name + "!"});
-				$scope.safeApply();
+		backend.checkLogin()
+			.then(function(data) {
+			    server.settings = data;
+			    $scope.logged = true;
+			    $scope.$broadcast("message", { "level": "info", "text": "Welcome " +  data.name + "!"});
+			    $scope.safeApply();
 			})
-			.error(function(data) {
-				$scope.logged = false;
-				$scope.safeApply();
-			})
-			.finally(function() {
-				busyEnd();
+			.myfinallydone(function() {
+			    busyEnd();
 			});
 	}
 	
 	$scope.doLogout = function() {
 		var busyEnd = $scope.doBusy("Disconnecting from the server", true);
-		service_backend.doLogout()
-			.finally(function(data) {
-				busyEnd();
+		backend.logout()
+			.then(function(data) {
+    				server.settings = null;
+				$scope.logged = false;
+			})
+			.myfinallydone(function(data) {
+			    busyEnd();
 			});
 	};
 
@@ -485,20 +463,16 @@ mainApp.controller('ctrl', [ '$scope', '$location', 'service_backend', function(
 	    $scope.logged = false; 
 	});
 
-	$scope.$on("backend_logged_in", function(msg) { 
-	    $scope.logged = true; 
-	});
-
 	$scope.$on("$routeChangeError", function() { console.log("error in routes"); console.log(arguments); });
 
 	$scope.messages = [];
 	var interval = 0;
 	$scope.$on("message", function(event, data) {
-	   data = jQuery.extend({}, { level: "success", text: "Error!", seconds: 8 }, data);
-	   var t = new Date();
-	   data.timeout = t.setSeconds(t.getSeconds() + data.seconds);
-	   $scope.messages.push(data);
-	   if (interval == 0) {
+	    data = jQuery.extend({}, { level: "success", text: "Error!", seconds: 8 }, data);
+	    var t = new Date();
+	    data.timeout = t.setSeconds(t.getSeconds() + data.seconds);
+	    $scope.messages.push(data);
+	    if (interval == 0) {
 	       	interval = setInterval(function() {
 	       	    var now = new Date();
 	       	    $scope.messages = $scope.messages.filter(function(value, index) {
@@ -506,10 +480,11 @@ mainApp.controller('ctrl', [ '$scope', '$location', 'service_backend', function(
 	       	    });
 	       	    if ($scope.messages.length == 0) {
 	       		clearInterval(interval);
+	       		interval = 0;
 	       	    }
 	       	    $scope.safeApply();
         	}, 1000);
-	   }
+	    }
 	});
 	
 	$scope.doCheckLogin();
@@ -535,6 +510,7 @@ function are_cookies_enabled() {
     }
     return (cookieEnabled);
 }
+
 if (!are_cookies_enabled()) {
     alert("Your cookie are disabled. Please enable them.\nVos cookies sont désactivés. Merci de les activer.");
 }

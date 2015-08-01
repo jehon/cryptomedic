@@ -36,7 +36,7 @@ class ModelController extends Controller {
 					10000))", [ Request::input("entryyear"), Request::input("entryyear") ])) {
 				abort(500, "Could not create the patient");
 			}
-			// TODO: how does Laravel does that cleanly???
+			// TODO: how does Laravel get last_insert_id cleanly???
 			$id = DB::select("SELECT LAST_INSERT_ID() as id");
 			$id = $id[0]->id;
 			
