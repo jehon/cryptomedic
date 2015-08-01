@@ -1,4 +1,6 @@
 <?php 
+	// TODO: put this into cache + create a "offline.php" that include this + how to redirect old page to this one?
+
 	require_once(__DIR__ . "/../php/allscripts.php");
 	require_once(__DIR__ . "/../php/core.php");
 	Script::$rootPath = __DIR__;
@@ -9,7 +11,7 @@
 		$mode = "online";
 	} else {
 		$mode = "appcache";
-		echo "manifest='../cache/manifest.manifest'";
+// 		echo "manifest='../cache/manifest.manifest'";
 	}
 ?> >
 	<head>
@@ -72,6 +74,10 @@
 	
 		// Other
 		(new Script("bower_components/excellentexport/excellentexport.min.js"))->dependFile()->toPrint();
+		(new Script("bower_components/dexie/dist/latest/Dexie.min.js"))->dependFile()->toPrint();
+		
+		// Polyfill
+		(new Script("bower_components/fetch/fetch.js"))->dependFile()->toPrint();
 		
 		// personnal
 		(new Script("static/js/application.js"))->dependFile()->toPrint();
