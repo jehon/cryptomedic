@@ -1,5 +1,7 @@
 <?php namespace App\Http\Middleware;
 
+// TODO: not used !!!
+
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
 use App\User;
@@ -26,7 +28,6 @@ class CacheHeaders {
      */
     public function handle($request, Closure $next)
     {
-    	// TODO: is it necessary to manage this here? all should be cached anyway...
     	$now = new \DateTime();
     	$response = $next($request);
 

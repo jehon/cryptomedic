@@ -13,21 +13,8 @@ if (!window.localStorage.computer_id) {
 }
 
 /* service_my_backend */
-function service_my_backend(options) {
+function service_my_backend() {
     var rest = "/cryptomedic/rest/public";
-    options = jQuery.extend({
-	onInternalServerError: function(response) { 
-	    console.error("Internal server error: " + response.url);
-	    console.error(response.body.text);
-	},
-//	onUnAuthorized: function(response) { 
-//	    console.error("Unauthorized: " + response.url); 
-//	},
-	onForbidden: function(response) { 
-	    console.error("Forbidden: " + response.url); 
-	},
-    }, options);
-   
     /** 
      * Manage the indexeddb
      */
@@ -93,20 +80,19 @@ function service_my_backend(options) {
 	    if (!response.ok) {  
 		switch(response.status) {
 		case 403: // forbidden
-		    options.onForbidden(response);
+		    triggerEvent("backend_forbidden");
 		    break;
 		case 401: // unauthorized
 		    triggerEvent("backend_unauthorized");
 		    break;
 		case 500: // internal server error
-		    options.onInternalServerError(response);
+		    triggerEvent("backend_internal_server_error");
 		    break;
 		}
 		throw new Error(response.status);
 	    }
 	    return response;
-	})
-	;
+	});
     }
 
     function json(response) { 
@@ -212,6 +198,7 @@ mainApp.factory('service_backend', [ '$rootScope', '$injector', function($rootSc
 	return def;
     }
 
+    // TODO: migrate all these services to the new infrastructure
     return {
 	/*******************************
 	 * Data oriented services

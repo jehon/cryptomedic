@@ -1,7 +1,5 @@
 "use strict";
 
-// TODO LOW: use -> new Promise()
-
 function service_session_storage(onReady) {
     var values = {};
     var defaults = {};

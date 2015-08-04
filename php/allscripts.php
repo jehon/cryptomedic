@@ -77,18 +77,11 @@ class Script {
 		return $this;
 	}
 
-	function dependDb() {
-		$this->opt["_version"] = 1;
-		$this->opt[] = 1;
-		return $this;
-	}
-
-	function dependDbTable($table) {
-		global $server;
-		// TODO: reactivate the "dependDBTable"
-// 		$this->opt["_version"] = filter_var($server->getDatabase()->getTable($table)->getLastestTimestamp(), FILTER_SANITIZE_NUMBER_INT);
-		return $this;
-	}
+// 	function dependDb() {
+// 		$this->opt["_version"] = 1;
+// 		$this->opt[] = 1;
+// 		return $this;
+// 	}
 
 	private function _params() {
 		return http_build_query($this->opt, "dep");
