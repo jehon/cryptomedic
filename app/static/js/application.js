@@ -298,196 +298,199 @@ var mainApp = angular.module('app_main', [ 'ngRoute' ])
 ;
 
 mainApp.controller('ctrl', [ '$scope', '$location', 'service_backend', function($scope, $location, service_backend) { 
-    var backend = service_my_backend({
-	onUnauthorized: function(response) {
-	    console.info("ctrl: unauthorized");
-	    $scope.logged = false; 
-	},
-	onCacheProgress: function(lastSync, _final) {
-	    console.log("Cache progress: " + lastSync + " " + (_final ? " terminated " : " data pending")); 
-	    $scope.sync.lastSync = lastSync;
-	    $scope.sync._final = _final;
+    $scope.cryptomedic = cryptomedic;
+    $scope.application = application;
+    $scope.server = server;
+    $scope.safeApply = function (fn) {
+	var phase = this.$root.$$phase;
+	if(phase == '$apply' || phase == '$digest') {
+	    if(fn && (typeof(fn) === 'function')) {
+		fn();
+	    }
+	} else {
+	    this.$apply(fn);
 	}
-    });
+    };
+	
+    $scope.go = function(path, replaceInHistory) {
+	if ((typeof(replaceInHistory) !== "undefined") && replaceInHistory) {
+	    $location.replace();
+	}
+  	$location.path( path );
+    };
+	
+    var backend = service_my_backend();
     $scope.sync = { lastSync: '?', _final: false };
     
-    $scope.cryptomedic = cryptomedic;
-	$scope.application = application;
-	$scope.server = server;
-	$scope.safeApply = function (fn) {
-		  var phase = this.$root.$$phase;
-		  if(phase == '$apply' || phase == '$digest') {
-			  	if(fn && (typeof(fn) === 'function')) {
-		    		fn();
-		    	}
-		  } else {
-			  this.$apply(fn);
-		  }
-	};
-	
-	$scope.go = function(path, replaceInHistory) {
-		if ((typeof(replaceInHistory) !== "undefined") && replaceInHistory) {
-			$location.replace();
-		}
-  		$location.path( path );
-	};
-	
-	$scope.logged = false;
-
-	$scope.hasPermission = function(transaction) {
-		if (typeof(server) == "undefined") return false;
-		if (typeof(server.settings) == "undefined") return false;
-		if (typeof(server.settings.authorized) == "undefined") return false;
-		return (server.settings.authorized.indexOf(transaction) >= 0);
-	};
-	
-	$scope.busy = [];
-	$scope.busy.messages = [ ];
-	$scope.busy.done = false;
-	$scope.busy.isVisible = false;
-	$scope.doBusy = function(msg, wait) {
-		// TODO LOW GUI: auto hide the message box after 500ms if anything is pending ?
-		if (typeof(wait) == 'undefined') {
-		    wait = false;
-		}
-		var c = $scope.busy.messages.push({ 'message': msg, 'done': false }) - 1;
-		$scope.busy.done = false;
-		if (!$scope.busy.isVisible) {
-			jQuery("#busy").modal('show');
-			$scope.busy.isVisible = true;
-		}
-		$scope.safeApply();
-		function allOk() {
-			var ok = true;
-			for(var m in $scope.busy.messages) {
-				ok = ok && $scope.busy.messages[m].status;
-			}
-			return ok;
-		}
-
-		function endBusy() {
-			if (allOk()) {
-				jQuery("#busy").modal('hide');
-				$scope.busy.done = true;
-				$scope.busy.isVisible = false;
-				$scope.busy.messages = [];
-				// See http://stackoverflow.com/a/11544860
-				jQuery('body').removeClass('modal-open');
-				jQuery(".modal-backdrop").remove();
-			} else {
-				console.warn("end busy with not allOk");
-			}
-		}
-		$scope.endBusy = endBusy;
-
-		return function() { 
-			$scope.busy.messages[c].status = true;
-			$scope.safeApply();
-			// If all messages are ok, then hide it
-			if (allOk()) {
-				$scope.busy.done = true;
-				setTimeout(endBusy, (wait ? 2000 : 1));
-			}
-		};
-	};
-
-	$scope.endBusy = function() {};
-
-	$scope.username = "";
-	$scope.password = "";
-//	if (typeof(server) != "undefined" && server.settings && server.settings.username) {
-//		$scope.logged = true;
-//	}
-
-	$scope.doLogin = function() {
-		$scope.username = jQuery("#login_username").val();
-		$scope.password = jQuery("#login_password").val();
-		if ($scope.username == "") {
-		    alert("No username detected");
-		    return;
-		}
-		if ($scope.password == "") {
-		    alert("No password detected");
-		    return;
-		}
-		$scope.loginError = false;
-		var busyEnd = $scope.doBusy("Checking your login/password with the online server", true);
-		backend.login(this.username, this.password)
-			.then(function(data) {
-				server.settings = data;
-				$scope.loginError = false;
-				$scope.logged = true;
-				// if (typeof(server) == "undefined" || !server.settings || !server.settings.username) {
-					console.log("Reloading the page");
-					window.location.reload();
-				// }
-				$scope.safeApply();
-			})
-			.catch(function(data) {
-				$scope.loginError = true;
-			})
-			.myfinallydone(function() {
-				busyEnd();
-			});
-	};
-
-	$scope.doCheckLogin = function() {
-		$scope.loginError = false;
-		var busyEnd = $scope.doBusy("Checking your login/password with the online server", true);
-		backend.checkLogin()
-			.then(function(data) {
-			    server.settings = data;
-			    $scope.logged = true;
-			    $scope.$broadcast("message", { "level": "info", "text": "Welcome " +  data.name + "!"});
-			    $scope.safeApply();
-			})
-			.myfinallydone(function() {
-			    busyEnd();
-			});
+    $scope.busy = [];
+    $scope.busy.messages = [ ];
+    $scope.busy.done = false;
+    $scope.busy.isVisible = false;
+    $scope.doBusy = function(msg, wait) {
+	// TODO LOW GUI: auto hide the message box after 500ms if anything is pending ?
+	if (typeof(wait) == 'undefined') {
+	    wait = false;
 	}
-	
-	$scope.doLogout = function() {
-		var busyEnd = $scope.doBusy("Disconnecting from the server", true);
-		backend.logout()
-			.then(function(data) {
-    				server.settings = null;
-				$scope.logged = false;
-			})
-			.myfinallydone(function(data) {
-			    busyEnd();
-			});
-	};
-
-	// Events from the service_*
-	$scope.$on("backend_logged_out", function(msg) { 
-	    $scope.logged = false; 
-	});
-
-	$scope.$on("$routeChangeError", function() { console.log("error in routes"); console.log(arguments); });
-
-	$scope.messages = [];
-	var interval = 0;
-	$scope.$on("message", function(event, data) {
-	    data = jQuery.extend({}, { level: "success", text: "Error!", seconds: 8 }, data);
-	    var t = new Date();
-	    data.timeout = t.setSeconds(t.getSeconds() + data.seconds);
-	    $scope.messages.push(data);
-	    if (interval == 0) {
-	       	interval = setInterval(function() {
-	       	    var now = new Date();
-	       	    $scope.messages = $scope.messages.filter(function(value, index) {
-	       		return (value.timeout >= now);
-	       	    });
-	       	    if ($scope.messages.length == 0) {
-	       		clearInterval(interval);
-	       		interval = 0;
-	       	    }
-	       	    $scope.safeApply();
-        	}, 1000);
+	var c = $scope.busy.messages.push({ 'message': msg, 'done': false }) - 1;
+	$scope.busy.done = false;
+	if (!$scope.busy.isVisible) {
+	    jQuery("#busy").modal('show');
+	    $scope.busy.isVisible = true;
+	}
+	$scope.safeApply();
+	function allOk() {
+	    var ok = true;
+	    for(var m in $scope.busy.messages) {
+		ok = ok && $scope.busy.messages[m].status;
 	    }
-	});
+	    return ok;
+	}
+
+	function endBusy() {
+	    if (allOk()) {
+		jQuery("#busy").modal('hide');
+		$scope.busy.done = true;
+		$scope.busy.isVisible = false;
+		$scope.busy.messages = [];
+		// See http://stackoverflow.com/a/11544860
+		jQuery('body').removeClass('modal-open');
+		jQuery(".modal-backdrop").remove();
+	    } else {
+		console.warn("end busy with not allOk");
+	    }
+	}
+	$scope.endBusy = endBusy;
+
+	return function() { 
+	    $scope.busy.messages[c].status = true;
+	    $scope.safeApply();
+	    // If all messages are ok, then hide it
+	    if (allOk()) {
+		$scope.busy.done = true;
+		setTimeout(endBusy, (wait ? 2000 : 1));
+	    }
+	};
+    };
+
+    $scope.endBusy = function() {};
+
+    $scope.logged = false;
+    $scope.username = "";
+    $scope.password = "";
+    $scope.hasPermission = function(transaction) {
+	if (typeof(server) == "undefined") return false;
+	if (typeof(server.settings) == "undefined") return false;
+	if (typeof(server.settings.authorized) == "undefined") return false;
+	return (server.settings.authorized.indexOf(transaction) >= 0);
+    };
 	
-	$scope.doCheckLogin();
+    document.addEventListener('backend_cache_progress', function (e) {
+	console.log("Cache progress: " + e.detail.checkpoint + " " + (e.detail.final ? " terminated " : " data pending")); 
+	$scope.sync.checkpoint = e.detail.checkpoint;
+	$scope.sync.final = e.detail.final;
+	$scope.safeApply();
+    }, false);
+    
+    document.addEventListener('backend_unauthorized', function (e) { 
+	console.info("ctrl: unauthorized");
+	$scope.logged = false; 
+    });
+
+    $scope.doLogin = function() {
+	$scope.username = jQuery("#login_username").val();
+	$scope.password = jQuery("#login_password").val();
+	if ($scope.username == "") {
+	    alert("No username detected");
+	    return;
+	}
+	if ($scope.password == "") {
+	    alert("No password detected");
+	    return;
+	}
+	$scope.loginError = false;
+	var busyEnd = $scope.doBusy("Checking your login/password with the online server", true);
+	backend.login(this.username, this.password)
+		.then(function(data) {
+		    server.settings = data;
+		    $scope.loginError = false;
+		    $scope.logged = true;
+		    // if (typeof(server) == "undefined" || !server.settings || !server.settings.username) {
+		    console.log("Reloading the page");
+		    window.location.reload();
+		    // }
+		    $scope.safeApply();
+		})
+		.catch(function(data) {
+		    $scope.loginError = true;
+		})
+		.myfinallydone(function() {
+		    busyEnd();
+		});
+    };
+    
+    $scope.doCheckLogin = function() {
+	$scope.loginError = false;
+	var busyEnd = $scope.doBusy("Checking your login/password with the online server", true);
+	backend.checkLogin()
+		.then(function(data) {
+		    server.settings = data;
+		    $scope.logged = true;
+		    $scope.$broadcast("message", { "level": "info", "text": "Welcome " +  data.name + "!"});
+		    $scope.safeApply();
+		})
+		.myfinallydone(function() {
+		    busyEnd();
+		});
+    };
+
+    $scope.doSync = function() {
+	backend.sync().then(function(data) {
+	    console.log("sync executed");
+	})
+    };
+    
+    $scope.doLogout = function() {
+	var busyEnd = $scope.doBusy("Disconnecting from the server", true);
+	backend.logout()
+		.then(function(data) {
+    			server.settings = null;
+			$scope.logged = false;
+		})
+		.myfinallydone(function(data) {
+		    busyEnd();
+		});
+    };
+
+    // Events from the service_*
+    $scope.$on("backend_logged_out", function(msg) { 
+	$scope.logged = false; 
+    });
+    
+    $scope.$on("$routeChangeError", function() { console.log("error in routes"); console.log(arguments); });
+
+    $scope.messages = [];
+    var interval = 0;
+    $scope.$on("message", function(event, data) {
+	data = jQuery.extend({}, { level: "success", text: "Error!", seconds: 8 }, data);
+	var t = new Date();
+	data.timeout = t.setSeconds(t.getSeconds() + data.seconds);
+	$scope.messages.push(data);
+	if (interval == 0) {
+	    interval = setInterval(function() {
+		var now = new Date();
+	       	$scope.messages = $scope.messages.filter(function(value, index) {
+	       	    return (value.timeout >= now);
+	       	});
+	       	if ($scope.messages.length == 0) {
+	       	    clearInterval(interval);
+	       	    interval = 0;
+	       	}
+	       	$scope.safeApply();
+	    }, 1000);
+	}
+    });
+	
+    $scope.doCheckLogin();
 }]);
 
 function debug_showLabels() {
