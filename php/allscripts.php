@@ -77,12 +77,6 @@ class Script {
 		return $this;
 	}
 
-// 	function dependDb() {
-// 		$this->opt["_version"] = 1;
-// 		$this->opt[] = 1;
-// 		return $this;
-// 	}
-
 	private function _params() {
 		return http_build_query($this->opt, "dep");
 	}

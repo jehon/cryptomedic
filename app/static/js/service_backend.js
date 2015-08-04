@@ -1,15 +1,15 @@
 "use strict";
 
 /* Initialize the computer id */
-if (!window.localStorage.computer_id) {
-	console.log("generate computer_id");
+if (!window.localStorage.cryptomedicComputerId) {
+	console.log("generate cryptomedic_computer_id");
 	var mask = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 	var result = "";
 	for (var i = 0; i < 32; i++) {
 	    result += mask[Math.floor(Math.random() * mask.length)];
 	}
 	console.log(result);
-	window.localStorage.computer_id = result;
+	window.localStorage.cryptomedicComputerId = result;
 }
 
 /* service_my_backend */
@@ -67,11 +67,11 @@ function service_my_backend() {
 		init.body = fd;
 	    }
 	}
-	if (!localStorage.lastSync) {
-	    localStorage.lastSync = false;
+	if (!localStorage.cryptomedicLastSync) {
+	    localStorage.cryptomedicLastSync = false;
 	}
 	init.headers.append("Accept", "application/json, text/plain, */*");
-	init.headers.append('X-OFFLINE-CP', localStorage.lastSync);
+	init.headers.append('X-OFFLINE-CP', localStorage.cryptomedicLastSync);
 	init.headers.append('X-OFFLINE-N', 50);
 	
 	var req = new Request(url, init);
@@ -111,7 +111,7 @@ function service_my_backend() {
 			'username': username, 
 			'password': password, 
 			'appVersion': cryptomedic.version,
-			'computerId': window.localStorage.computer_id
+			'computerId': window.localStorage.cryptomedicComputerId
 		    })
 	    .then(json)
 	    .then(this.extractCache);
@@ -120,7 +120,7 @@ function service_my_backend() {
 	    return getFetch(rest + "/auth/settings", null, 
 		    { 
 			'appVersion': cryptomedic.version,
-			'computerId': window.localStorage.computer_id
+			'computerId': window.localStorage.cryptomedicComputerId
 		    }
 	    )
 	    .then(json)
@@ -139,7 +139,7 @@ function service_my_backend() {
 	    .then(function(data) { return localStorage._final; });
 	},
 	'reset': function() {
-	    delete(localStorage.lastSync);
+	    delete(localStorage.cryptomedicLastSync);
 	    db.delete().then(function() {
 		alert("Database is erased. Please reload the page.");
 		window.location = "/cryptomedic";
@@ -163,7 +163,7 @@ function service_my_backend() {
 		    Promise.all(waitme).then(function() {
 			// cache progress is triggered only when everything is saved
 			// to follow the sync, follow the cache progress callback
-			localStorage.lastSync = lastSync;
+			localStorage.cryptomedicLastSync = lastSync;
 			triggerEvent("backend_cache_progress", { "checkpoint": offdata._checkpoint, "final": offdata._final });
 			if (!offdata._final) {
 			    // relaunch the sync upto completion
@@ -180,17 +180,19 @@ function service_my_backend() {
 };
 
 /******* OLD INTERFACE **********/
+/******* OLD INTERFACE **********/
+/******* OLD INTERFACE **********/
+/******* OLD INTERFACE **********/
+/******* OLD INTERFACE **********/
 
 mainApp.factory('service_backend', [ '$rootScope', '$injector', function($rootScope, $injector) {
     var pcache = perishableCache(10);
     var rest = "/cryptomedic/rest/public/";
     
-    function treatHttp(request, treatResponse) {
+    // Transform the $http request into a promise
+    function treatHttp(request) {
 	var def = jQuery.Deferred();
 	request.success(function(data, status, headers, config) {
-	    if (typeof(treatResponse) == 'function') {
-		data = treatResponse(data, status, headers, config);
-	    }
 	    def.resolve(data);
 	}).error(function(data, status, headers, config) {
 	    def.reject(data);
@@ -208,21 +210,21 @@ mainApp.factory('service_backend', [ '$rootScope', '$injector', function($rootSc
 	    if (pcache.isCached(id)) {
 		return jQuery.Deferred().resolve(pcache.get(id));
 	    }
-	    return treatHttp($http.get(rest + "/folder/" + id), function(data) {
+	    return treatHttp($http.get(rest + "/folder/" + id)).then(function(data) {
 		pcache.set(data.getMainFile().id, data);
 		return data;				
 	    });
 	},
 	'getParent': function(type, id) {
 	    var $http = $injector.get("$http");
-	    return treatHttp($http.get(rest + "/related/" + type + "/" + id), function(data) {
+	    return treatHttp($http.get(rest + "/related/" + type + "/" + id)).then(function(data) {
 		pcache.set(data.getMainFile().id, data);
 		return data;				
 	    });
 	},
 	'searchForPatients': function(params) {
 	    var $http = $injector.get("$http");
-	    return treatHttp($http.get(rest + "/folder", { 'params': params }), function(data) {
+	    return treatHttp($http.get(rest + "/folder", { 'params': params })).then(function(data) {
 		var list = [];
 		for(var i in data) {
 		    list.push(new application.models.Patient(data[i]));
@@ -232,8 +234,7 @@ mainApp.factory('service_backend', [ '$rootScope', '$injector', function($rootSc
 	},
 	'checkReference': function(year, order) {
 	    var $http = $injector.get("$http");
-	    return treatHttp($http.get(rest + "/reference/" + year + "/" + order),
-		function(data) {
+	    return treatHttp($http.get(rest + "/reference/" + year + "/" + order)).then(function(data) {
 			if ((typeof(data._type) != 'undefined') && (data._type == 'Folder')) {
 			    return data['id'];
 			} else {
@@ -247,7 +248,7 @@ mainApp.factory('service_backend', [ '$rootScope', '$injector', function($rootSc
 		{ 
 			'entryyear': year, 
 			'entryorder': order
-		}), function(data) {
+		})).then(function(data) {
 			pcache.set(data.getMainFile().id, data);
 			return data;
 		}); 
@@ -255,7 +256,7 @@ mainApp.factory('service_backend', [ '$rootScope', '$injector', function($rootSc
 	'createFile': function(data, folderId) {
 	    var $http = $injector.get("$http");
 	    pcache.perish(folderId);
-	    return treatHttp($http.post(rest + "/fiche/" + data['_type'], data), function(data, status, headers, config) {
+	    return treatHttp($http.post(rest + "/fiche/" + data['_type'], data)).then(function(data) {
 		pcache.set(data.getMainFile().id, data);
 		return data;				
 	    });
@@ -263,7 +264,7 @@ mainApp.factory('service_backend', [ '$rootScope', '$injector', function($rootSc
 	'saveFile': function(data, folderId) {
 	    var $http = $injector.get("$http");
 	    pcache.perish(folderId);
-	    return treatHttp($http.put(rest + "/fiche/" + data['_type'] + "/" + data['id'], data), function(data) {
+	    return treatHttp($http.put(rest + "/fiche/" + data['_type'] + "/" + data['id'], data)).then(function(data) {
 		pcache.set(data.getMainFile().id, data);
 		return data;				
 	    });
@@ -271,7 +272,7 @@ mainApp.factory('service_backend', [ '$rootScope', '$injector', function($rootSc
 	'deleteFile': function(data, folderId) {
 	    var $http = $injector.get("$http");
 	    pcache.perish(folderId);
-	    return treatHttp($http['delete'](rest + "/fiche/" + data['_type'] + "/" + data['id']), function(data) {
+	    return treatHttp($http['delete'](rest + "/fiche/" + data['_type'] + "/" + data['id'])).then(function(data) {
 		if (data instanceof application.models.Folder) {
 		    pcache.set(data.getMainFile().id, data);
 		}
@@ -281,7 +282,7 @@ mainApp.factory('service_backend', [ '$rootScope', '$injector', function($rootSc
 	'unlockFile': function(data, folderId) {
 	    var $http = $injector.get("$http");
 	    pcache.perish(folderId);
-	    return treatHttp($http.get(rest + "/unfreeze/" + data['_type'] + "/" + data['id']), function(data) {
+	    return treatHttp($http.get(rest + "/unfreeze/" + data['_type'] + "/" + data['id'])).then(function(data) {
 		pcache.set(data.getMainFile().id, data);
 		return data;				
 	    });
@@ -300,7 +301,7 @@ mainApp.factory('service_backend', [ '$rootScope', '$injector', function($rootSc
 mainApp.factory('sessionInjector', [ '$q', '$injector', 'service_backend', '$rootScope', function($q, $injector, service_backend, $rootScope) {
     return {
         'request': function(config) {
-           config.headers['X-OFFLINE-CP'] = localStorage.lastSync;
+           config.headers['X-OFFLINE-CP'] = localStorage.cryptomedicLastSync;
             return config;
         },
         'response': function(response) {
@@ -314,9 +315,6 @@ mainApp.factory('sessionInjector', [ '$q', '$injector', 'service_backend', '$roo
 	    switch(rejection.status) {
 	    case 401: // Unauthorized
 		$rootScope.$broadcast("backend_logged_out");
-		break;		
-	    case 403: // Forbidden
-		$rootScope.$broadcast("backend_logged_error");
 		break;		
 	    default:
 		console.warn(rejection);    
