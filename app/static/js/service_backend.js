@@ -20,15 +20,12 @@ function service_my_backend(options) {
 	    console.error("Internal server error: " + response.url);
 	    console.error(response.body.text);
 	},
-	onUnAuthorized: function(response) { 
-	    console.error("Unauthorized: " + response.url); 
-	},
+//	onUnAuthorized: function(response) { 
+//	    console.error("Unauthorized: " + response.url); 
+//	},
 	onForbidden: function(response) { 
 	    console.error("Forbidden: " + response.url); 
 	},
-	onCacheProgress: function(lastSync, _final) {
-	    console.log("Cache progress: " + lastSync + " " + (_final ? " terminated " : " data pending")); 
-	}
     }, options);
    
     /** 
@@ -38,20 +35,33 @@ function service_my_backend(options) {
     db.version(1).stores({
         patients: '++id',
     });
+    
     db.on('blocked', function () {
 	    console.error("DB is blocked");
     });
+    
     db.open();
+
+    /**
+     * Trigger a custom event
+     * 
+     * @param name: name of the event to be triggered
+     * @param params: additionnal cusom parameters 
+     * 
+     */
+    function triggerEvent(name, params) {
+	document.dispatchEvent(new CustomEvent(name, { 'detail' : params}));	
+    }
     
     /**
      * Launch a fetch request
      * 
      * - init Optional
-	. method: The request method, e.g., GET, POST.
-	. headers: Any headers you want to add to your request, contained within a Headers object or ByteString.
-	. body: Any body that you want to add to your request: this can be a Blob, BufferSource, FormData, URLSearchParams, or USVString object. Note that a request using the GET or HEAD method cannot have a body.
-	. mode: The mode you want to use for the request, e.g., cors, no-cors, or same-origin.
-	. cache: The cache mode you want to use for the request: default, no-store, reload, no-cache, force-cache, or only-if-cached.
+     *  . method: The request method, e.g., GET, POST.
+     *  . headers: Any headers you want to add to your request, contained within a Headers object or ByteString.
+     *  . body: Any body that you want to add to your request: this can be a Blob, BufferSource, FormData, URLSearchParams, or USVString object. Note that a request using the GET or HEAD method cannot have a body.
+     *  . mode: The mode you want to use for the request, e.g., cors, no-cors, or same-origin.
+     *  . cache: The cache mode you want to use for the request: default, no-store, reload, no-cache, force-cache, or only-if-cached.
      */
     function getFetch(url, init, data) {
 	init = jQuery.extend({
@@ -70,8 +80,12 @@ function service_my_backend(options) {
 		init.body = fd;
 	    }
 	}
+	if (!localStorage.lastSync) {
+	    localStorage.lastSync = false;
+	}
 	init.headers.append("Accept", "application/json, text/plain, */*");
 	init.headers.append('X-OFFLINE-CP', localStorage.lastSync);
+	init.headers.append('X-OFFLINE-N', 50);
 	
 	var req = new Request(url, init);
 	return fetch(req).then(function(response) {
@@ -82,8 +96,7 @@ function service_my_backend(options) {
 		    options.onForbidden(response);
 		    break;
 		case 401: // unauthorized
-		    console.log(options);
-		    options.onUnAuthorized(response);
+		    triggerEvent("backend_unauthorized");
 		    break;
 		case 500: // internal server error
 		    options.onInternalServerError(response);
@@ -100,26 +113,9 @@ function service_my_backend(options) {
 	return response.json();
     }
     
-    function extractCache(json) {
-	if (json._offline) {
-	    var lastSync = json._offline._checkpoint;
-	    options.onCacheProgress(json._offline._checkpoint, json._offline._final);
-	    delete json._offline._checkpoint;
-	    delete json._offline._final;
-	    var waitme = [];
-	    for (var key in json._offline) {
-		  if (json._offline.hasOwnProperty(key)) {
-		      waitme[key] = db.patients.put(json._offline[key]);
-		  }
-	    }
-	    Promise.all(waitme).then(function() {
-		delete json._offline;
-		localStorage.lastSync = lastSync;
-//		console.log("all is done");
-	    });
-	}
-	return json;
-    }
+    window.onbeforeunload = function (e) {
+	db.close();
+    };
     
     return {
 	/* Authentification */
@@ -132,7 +128,7 @@ function service_my_backend(options) {
 			'computerId': window.localStorage.computer_id
 		    })
 	    .then(json)
-	    .then(extractCache);
+	    .then(this.extractCache);
 	},
 	'checkLogin': function() {
 	    return getFetch(rest + "/auth/settings", null, 
@@ -142,26 +138,63 @@ function service_my_backend(options) {
 		    }
 	    )
 	    .then(json)
-	    .then(extractCache);
+	    .then(this.extractCache);
 	},
 	'logout': function() {
 	    // TODO: clean up the cache --> cache managed in other object???
 	    return getFetch(rest + "/auth/logout")
-	    .then(json);
+	    .then(this.json);
 	},
 	/* Data Sync */
 	'sync': function() {
 	    return getFetch(rest + "/foldersync")
 	    .then(json)
-	    .then(extractCache)
+	    .then(this.extractCache)
 	    .then(function(data) { return localStorage._final; });
+	},
+	'reset': function() {
+	    delete(localStorage.lastSync);
+	    db.delete().then(function() {
+		alert("Database is erased. Please reload the page.");
+		window.location = "/cryptomedic";
+	    });
+	},
+	'extractCache': function(json) {
+	    if (json._offline) {
+		var lastSync = json._offline._checkpoint;
+		var offdata = jQuery.extend(true, {}, json._offline);
+		delete json._offline;
+		var waitme = [];
+		setTimeout(function() {
+		    for (var key in offdata) {
+			if (key === "_checkpoint" || key == "_final") {
+			    continue;
+			}
+			if (offdata.hasOwnProperty(key)) {
+			      waitme[key] = db.patients.put(offdata[key]);
+			}
+		    }
+		    Promise.all(waitme).then(function() {
+			// cache progress is triggered only when everything is saved
+			// to follow the sync, follow the cache progress callback
+			localStorage.lastSync = lastSync;
+			triggerEvent("backend_cache_progress", { "checkpoint": offdata._checkpoint, "final": offdata._final });
+			if (!offdata._final) {
+			    // relaunch the sync upto completion
+			    setTimeout(function() {
+				service_my_backend().sync();
+			    }, 1000);
+			}
+		    });
+		});
+	    }
+	    return json;
 	}
     };
 };
 
 /******* OLD INTERFACE **********/
 
-//mainApp.factory('service_backend', [ '$http', '$rootScope', '$injector', function($http, $rootScope, $injector) {
 mainApp.factory('service_backend', [ '$rootScope', '$injector', function($rootScope, $injector) {
     var pcache = perishableCache(10);
     var rest = "/cryptomedic/rest/public/";
@@ -280,15 +313,14 @@ mainApp.factory('service_backend', [ '$rootScope', '$injector', function($rootSc
 mainApp.factory('sessionInjector', [ '$q', '$injector', 'service_backend', '$rootScope', function($q, $injector, service_backend, $rootScope) {
     return {
         'request': function(config) {
-	    // TODO OFFLINE: Add last sync header to the call
-            config.headers['X-last-sync'] = "2015-01-01 01:01:01|bills|15";
+           config.headers['X-OFFLINE-CP'] = localStorage.lastSync;
             return config;
         },
         'response': function(response) {
-	    // do something on success
-	    // TODO OFFLINE: Catch the data
-            // TODO: Cache the folder data into service_backend?
-//	    console.warn(response);
+	    // Take away the "offline" data with the new service
+            if (response.data[0] != "{") return response;
+            var d = service_my_backend().extractCache(response.data);
+            response.data = d;
             return response;
         },
 	'responseError': function(rejection) {
@@ -310,37 +342,3 @@ mainApp.factory('sessionInjector', [ '$q', '$injector', 'service_backend', '$roo
 mainApp.config(['$httpProvider', function($httpProvider) {  
     $httpProvider.interceptors.push('sessionInjector');
 }]);
-
-
-
-
-/*
-var paramsString = "q=URLUtils.searchParams&topic=api"
-var searchParams = new URLSearchParams(paramsString);
-
-searchParams.has("topic") === true; // true
-searchParams.get("topic") === "api"; // true
-searchParams.getAll("topic"); // ["api"]
-searchParams.get("foo") === null; // true
-searchParams.append("topic", "webdev");
-searchParams.toString(); // "q=URLUtils.searchParams&topic=api&topic=webdev"
-searchParams.delete("topic");
-searchParams.toString(); // "q=URLUtils.searchParams"
-
-formData.append(name, value, filename);
-formData.append('userpic', myFileInput.files[0], 'chris.jpg');
-*/
-
-function mytest() {
-    return service_my_backend().checkLogin().then(function(data) {
-	console.info("my test / then");
-	console.info(data);
-    }).catch(function(data) {
-	console.warn("my test / catch");
-	console.warn(data);
-    })
-}
-
-function l(data) {
-    console.log(data);
-}
