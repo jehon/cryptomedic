@@ -1,8 +1,8 @@
 <?php
 	namespace App;
 
-	require(__DIR__ . "/../../../rest/app/Bill.php");
-	require(__DIR__ . "/../../../php/core.php");
+	require_once(__DIR__ . "/../../../rest/app/Bill.php");
+	require_once(__DIR__ . "/../../../php/core.php");
 	
 	use \App\Bill;
 	use \References;

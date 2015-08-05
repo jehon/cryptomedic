@@ -1,8 +1,10 @@
 <?php
- 	header("Content-Type: text/cache-manifest");
-	header("Expires: Wed, 11 Jan 1984 00:00:00 GMT");
-	header("Pragma: public");
-
+	if (!headers_sent()) {
+		header("Content-Type: text/cache-manifest");
+		header("Expires: Wed, 11 Jan 1984 00:00:00 GMT");
+		header("Pragma: public");
+	}
+	
 	define("TS_FORMAT", "Y-m-d H:i:s");
 ?>
 CACHE MANIFEST

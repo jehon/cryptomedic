@@ -1,5 +1,6 @@
 <?php
-define("secretFile", __DIR__ . "/../secrets.php");
+if (!defined("secretFile"))
+	define("secretFile", __DIR__ . "/../secrets.php");
 
 function getGlobalConfig($key) {
 	$localhost = ($_SERVER['HTTP_HOST'] == "localhost");

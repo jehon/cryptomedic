@@ -81,7 +81,7 @@
 			?>
 		</div>
 		<div class="col-lg-6">
-			<?php require_once 'partials/patient-related.php';?>
+			<?php require('partials/patient-related.php');?>
 			<fieldset>
 				<legend>Social Data</legend>
 				<table>

@@ -36,9 +36,6 @@ class ManifestTest extends PHPUnit_Framework_TestCase
 		$this->assertContains("CACHE:", $content);
 	}
 	
-	/**
-	 * @runInSeparateProcess
-	 */
 	public function testTemplates() {
 		$cwd = getcwd();
 		chdir(__DIR__ . "/../../../cache_generator/templates");

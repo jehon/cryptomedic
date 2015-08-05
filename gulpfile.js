@@ -3,6 +3,7 @@
 var gulp = require('gulp');
 var plugins = require('gulp-load-plugins')();
 var shelljs = require('shelljs');
+var path = require("path");
 
 /*
  * TODO: gulp-release-tasks
@@ -48,7 +49,6 @@ gulp.task('cache-clean', function(cb) {
 });
 
 gulp.task('cache-test', function() {
-    // TODO: PHPUnit is run twice ???//
     gulp.src('test/phpunit/phpunit.xml')
     	.pipe(plugins.plumber({ errorHandler: plugins.notify.onError("Error during task " + this.seq.slice(-1)[0] + ": <%= error.message %>") }))
     	.pipe(plugins.plumber({ errorHandler: function() { process.exit(1); } }))
@@ -57,19 +57,19 @@ gulp.task('cache-test', function() {
 });
 
 gulp.task('cache-watch', function() {
-    gulp.watch([ 'cache_generator/manifest.php', 'php/**/*' ], null, function(event) {
+    gulp.watch([ 'cache_generator/generator.php', 'cache_generator/templates.php', 'php/**/*' ], [ 'cache-clean' ]);
+    
+    gulp.watch([ 'cache_generator/**/*', 'app/**/*' ], null, function(event) {
 	console.log('Cache_generator manifest: file ' + event.path + ' was ' + event.type + '.');
 	shelljs.rm("-f", "cache/manifest.manifest");
     });
 
-    gulp.watch([ 'cache_generator/templates.php', 'cache_generator/templates/**', 'php/**/*' ], null, function(event) {
-	console.log('Cache_generator templates: file ' + event.path + ' was ' + event.type + '.');
-	// TODOJH: how to delete only the offending cache file?
-	shelljs.rm("-fr", "cache/templates/*");
+    gulp.watch([ 'cache_generator/templates/**/*.php' ], null, function(event) {
+	var html = __dirname + "/cache" + path.relative(__dirname, event.path).substring("cache_generator".length).replace(".php", ".html");
+	console.log('Cache_generator templates: file ' + event.path + ' was ' + event.type + ' (mapping to ' + html + ').');
+	shelljs.rm("-fr", html);
     });
 })
-
-
 
 gulp.task('rest-test', [ 'cache-test' ], function() {
     gulp.src('rest/phpunit.xml')
