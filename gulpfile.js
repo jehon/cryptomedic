@@ -42,15 +42,45 @@ var allCSS = [
 
 gulp.task('help', plugins.taskListing);
 
-gulp.task('test-php', function() {
+//gulp.task('cache-clean', function() {
+//   gulp.src([ 'cache/**/*.html', 'cache/manifest.manifest'])
+//   	.pipe(sheejs.rm)
+//});
+
+gulp.task('cache-test', function() {
+    // TODO: PHPUnit is run twice ???//
+    gulp.src('test/phpunit/phpunit.xml')
+    	.pipe(plugins.plumber({ errorHandler: plugins.notify.onError("Error during task " + this.seq.slice(-1)[0] + ": <%= error.message %>") }))
+    	.pipe(plugins.plumber({ errorHandler: function() { process.exit(1); } }))
+    	.pipe(plugins.phpunit('./vendor/bin/phpunit', { notify: true }))
+//    .pipe(plugins.notify(this.seq.slice(-1)[0] + ": done"))
+});
+
+gulp.task('cache-watch', function() {
+    gulp.watch([ 'cache_generator/manifest.php', 'php/**/*' ], null, function(event) {
+	console.log('Cache_generator manifest: file ' + event.path + ' was ' + event.type + '.');
+	shelljs.rm("-f", "cache/manifest.manifest");
+    });
+
+    gulp.watch([ 'cache_generator/templates.php', 'cache_generator/templates/**', 'php/**/*' ], null, function(event) {
+	console.log('Cache_generator templates: file ' + event.path + ' was ' + event.type + '.');
+	// TODOJH: how to delete only the offending cache file?
+	shelljs.rm("-fr", "cache/templates/*");
+    });
+})
+
+
+
+gulp.task('rest-test', [ 'cache-test' ], function() {
     gulp.src('rest/phpunit.xml')
         .pipe(plugins.plumber({ errorHandler: plugins.notify.onError("Error during task " + this.seq.slice(-1)[0] + ": <%= error.message %>") }))
         .pipe(plugins.plumber({ errorHandler: function() { process.exit(1); } }))
     	.pipe(plugins.phpunit('./vendor/bin/phpunit', { notify: true }))
-    	.pipe(plugins.notify(this.seq.slice(-1)[0] + ": done"))
+//    	.pipe(plugins.notify(this.seq.slice(-1)[0] + ": done"))
 });
 
-gulp.task('test-js', [ 'test-php' ], function() {
+
+gulp.task('test-js', [ 'rest-test', 'cache-test' ], function() {
     return gulp.src('')
     .pipe(plugins.plumber({ errorHandler: plugins.notify.onError("Error during task " + this.seq.slice(-1)[0] + ": <%= error.message %>") }))
     .pipe(plugins.plumber({ errorHandler: function() { process.exit(1); } }))
@@ -115,27 +145,5 @@ gulp.task('test-live', function() {
 //        .pipe(plugins.sourcemaps.write())
 //        .pipe(gulp.dest('cache/'));
 //});
-
-gulp.task('watch', function() {
-//    gulp.watch(allCSS, [ 'minify-css' ])
-//    	.on('change', function(event) {
-//    	    console.log('CSS File ' + event.path + ' was ' + event.type + ', running tasks...');
-//    	});
-//    gulp.watch(allJS, [ 'minify-js' ])
-//	.on('change', function(event) {
-//	    console.log('JS File ' + event.path + ' was ' + event.type + ', running tasks...');
-//	});
-    gulp.watch([ 'cache_generator/**', 'php/**/*', 'app/**/*' ], null, function(event) {
-	console.log('Cache_generator: file ' + event.path + ' was ' + event.type + '.');
-	shelljs.rm("-f", "cache/manifest.manifest");
-    });
-
-    gulp.watch([ 'cache_generator/**', 'php/**/*', 'app/**/*' ], null, function(event) {
-	console.log('Cache_generator: file ' + event.path + ' was ' + event.type + '.');
-	// TODOJH: how to manage update of templates? delete does not work --> find???
-//	shelljs.rm("-f", "cache/manifest.manifest");
-    });
-
-})
 
 gulp.task('default', [ 'help' ]);

@@ -64,7 +64,7 @@ CACHE MANIFEST
 	// Use the index for import
 	ob_start();	
 	require("../app/index.php"); 
-	ob_clean();
+	ob_end_clean();
 	
 	addLine("");
 	
