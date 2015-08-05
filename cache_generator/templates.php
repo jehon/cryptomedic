@@ -11,7 +11,7 @@
  */
 
 
-require_once("../php/references.php");
+require_once(__DIR__ . "/../php/references.php");
 
 class t {
     const TYPE_LIST         = 0;
@@ -449,11 +449,6 @@ class t {
 
 t::initialize();
 
-// Same as from ReportController
-// function clean($c) {
-// 	return str_replace(["'", " ", "\""], "", $c);
-// }
-
 if (array_key_exists("_unused", $_REQUEST) && $_REQUEST['_unused']) {
  	register_shutdown_function("T::showUnused");	
 }
@@ -473,9 +468,4 @@ if (!file_exists(__DIR__ . "/" . $template)) {
 	throw new Exception("I say: not found " . $template);	
 }
 
-try {
-	include(__DIR__ . "/" . $template);
-} catch (Exception $e) {
-	var_dump($e);
-	return 100;
-}
+include(__DIR__ . "/" . $template);
