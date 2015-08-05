@@ -1,8 +1,8 @@
 language: php
 #language: node_js
 
-node_js:
-  - 0.12
+#node_js:
+#  - 0.12
 
 before_script:
   - export DISPLAY=:99.0
@@ -21,4 +21,4 @@ script:
 #  - node_modules/.bin/protractor test/protractor-conf.js --browser=firefox
 
 after_failure:
-	- cat rest/storage/log/*
+   - cat rest/storage/log/*
