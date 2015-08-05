@@ -14,7 +14,8 @@ before_script:
 #  - npm start > /dev/null &
 #  - npm run update-webdriver
 #  - sleep 1 # give server time to start
-
+   - mysql -e "create database IF NOT EXISTS travis;" -uroot
+   
 script:
    - gulp cache-test
 #  - node_modules/.bin/karma start test/karma.conf.js --no-auto-watch --single-run --reporters=dots --browsers=Firefox
