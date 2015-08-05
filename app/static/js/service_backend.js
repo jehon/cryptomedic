@@ -30,17 +30,6 @@ function service_my_backend() {
     db.open();
 
     /**
-     * Trigger a custom event
-     * 
-     * @param name: name of the event to be triggered
-     * @param params: additionnal cusom parameters 
-     * 
-     */
-    function triggerEvent(name, params) {
-	document.dispatchEvent(new CustomEvent(name, { 'detail' : params}));	
-    }
-    
-    /**
      * Launch a fetch request
      * 
      * - init Optional
@@ -49,6 +38,7 @@ function service_my_backend() {
      *  . body: Any body that you want to add to your request: this can be a Blob, BufferSource, FormData, URLSearchParams, or USVString object. Note that a request using the GET or HEAD method cannot have a body.
      *  . mode: The mode you want to use for the request, e.g., cors, no-cors, or same-origin.
      *  . cache: The cache mode you want to use for the request: default, no-store, reload, no-cache, force-cache, or only-if-cached.
+     *  
      */
     function getFetch(url, init, data) {
 	init = jQuery.extend({
@@ -58,6 +48,8 @@ function service_my_backend() {
 	}, init);
 	if (data) {
 	    if (init.method == "GET") {
+		console.log(data);
+		console.log(jQuery.param(data));
 		url = url + "?" + jQuery.param(data);
 	    } else {
 		var fd = new FormData()
@@ -80,13 +72,13 @@ function service_my_backend() {
 	    if (!response.ok) {  
 		switch(response.status) {
 		case 403: // forbidden
-		    triggerEvent("backend_forbidden");
+		    myEvents.trigger("backend_forbidden");
 		    break;
 		case 401: // unauthorized
-		    triggerEvent("backend_unauthorized");
+		    myEvents.trigger("backend_unauthorized");
 		    break;
 		case 500: // internal server error
-		    triggerEvent("backend_internal_server_error");
+		    myEvents.trigger("backend_internal_server_error");
 		    break;
 		}
 		throw new Error(response.status);
@@ -164,7 +156,7 @@ function service_my_backend() {
 			// cache progress is triggered only when everything is saved
 			// to follow the sync, follow the cache progress callback
 			localStorage.cryptomedicLastSync = lastSync;
-			triggerEvent("backend_cache_progress", { "checkpoint": offdata._checkpoint, "final": offdata._final });
+			myEvents.trigger("backend_cache_progress", { "checkpoint": offdata._checkpoint, "final": offdata._final });
 			if (!offdata._final) {
 			    // relaunch the sync upto completion
 			    setTimeout(function() {
@@ -175,7 +167,12 @@ function service_my_backend() {
 		});
 	    }
 	    return json;
-	}
+	},
+	'getReport': function(reportName, data, timing) {
+	    return getFetch(rest + "/reports/" + reportName + (timing ? "/" + timing : ""), null, data)
+	    	.then(json)
+	    	.then(this.extractCache);
+	},
     };
 };
 
@@ -287,12 +284,12 @@ mainApp.factory('service_backend', [ '$rootScope', '$injector', function($rootSc
 		return data;				
 	    });
 	},
-	'getReport': function(reportName, data, timing) {
-	    var $http = $injector.get("$http");
-	    return treatHttp($http.get(rest + "/reports/" + reportName + (timing ? "/" + timing : ""), { 'params': data }), 
-		    function(data) { return data; }
-	    	);
-	},
+//	'getReport': function(reportName, data, timing) {
+//	    var $http = $injector.get("$http");
+//	    return treatHttp($http.get(rest + "/reports/" + reportName + (timing ? "/" + timing : ""), { 'params': data }), 
+//		    function(data) { return data; }
+//	    	);
+//	},
     };
 }]);
 

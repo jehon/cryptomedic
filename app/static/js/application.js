@@ -22,6 +22,35 @@ Promise.prototype.myfinallydone = function (callback) {
     	.catch(function(reason) { console.error(reason); });
 };
 
+window.myEvents = function() {
+    return {
+	 /**
+	  * Trigger a custom event
+	  * 
+	  * @param name: name of the event to be triggered
+	  * @param params: additionnal cusom parameters 
+	  * 
+	  */
+	'trigger': function(name, params) {
+	    params = params || {};
+	    document.dispatchEvent(new CustomEvent(name, { 'detail' : params }));	
+	},
+	/**
+	 * Listen to a specific event
+	 * 
+	 * @param string name: name of the event
+	 * @param function callback: callback will be called fn(params);
+	 * 
+	 */
+	'on': function(name, callback) {
+	    document.addEventListener(name, function (e) {
+		callback(e.detail);
+	    });
+	}
+    }
+}();
+
+
 function inherit(parent, constructor) {
 	// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/create
 
@@ -383,15 +412,15 @@ mainApp.controller('ctrl', [ '$scope', '$location', 'service_backend', function(
 	if (typeof(server.settings.authorized) == "undefined") return false;
 	return (server.settings.authorized.indexOf(transaction) >= 0);
     };
-	
-    document.addEventListener('backend_cache_progress', function (e) {
-	console.log("Cache progress: " + e.detail.checkpoint + " " + (e.detail.final ? " terminated " : " data pending")); 
-	$scope.sync.checkpoint = e.detail.checkpoint;
-	$scope.sync.final = e.detail.final;
+
+    myEvents.on('backend_cache_progress', function(data) {
+	console.log("Cache progress: " + data.checkpoint + " " + (data.final ? " terminated " : " data pending")); 
+	$scope.sync.checkpoint = data.checkpoint;
+	$scope.sync.final = data.final;
 	$scope.safeApply();
     }, false);
     
-    document.addEventListener('backend_unauthorized', function (e) { 
+    myEvents.on('backend_unauthorized', function(data) {
 	console.info("ctrl: unauthorized");
 	$scope.logged = false; 
     });
