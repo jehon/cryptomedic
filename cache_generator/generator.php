@@ -1,6 +1,5 @@
 <?php
 try {
-
 	global $generator;
 	$generator = array();
 	

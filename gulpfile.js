@@ -42,10 +42,10 @@ var allCSS = [
 
 gulp.task('help', plugins.taskListing);
 
-//gulp.task('cache-clean', function() {
-//   gulp.src([ 'cache/**/*.html', 'cache/manifest.manifest'])
-//   	.pipe(sheejs.rm)
-//});
+gulp.task('cache-clean', function(cb) {
+    shelljs.rm("-fr", "cache/templates/*");
+    shelljs.rm("-fr", "cache/manifest.manifest");
+});
 
 gulp.task('cache-test', function() {
     // TODO: PHPUnit is run twice ???//

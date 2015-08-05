@@ -5,8 +5,7 @@
 	// Example: 97573 (2014 = price 2)
 	// Hack: 10010
 	namespace App;
-	class CryptomedicModel {};
-	require(__DIR__ . "/../../../rest/app/Bill.php");
+	require_once(__DIR__ . "/../../../rest/app/Bill.php");
 	
 	use \App\Bill;
 	use \References;

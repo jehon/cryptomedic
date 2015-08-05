@@ -17,3 +17,4 @@ commit.msg
 phantomjsdriver.log
 
 /.tern-project
+/npm-debug.log
