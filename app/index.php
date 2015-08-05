@@ -1,6 +1,4 @@
 <?php 
-	// TODO: put this into cache + create a "offline.php" that include this + how to redirect old page to this one?
-
 	require_once(__DIR__ . "/../php/allscripts.php");
 	require_once(__DIR__ . "/../php/core.php");
 	Script::$rootPath = __DIR__;
@@ -11,18 +9,42 @@
 		$mode = "online";
 	} else {
 		$mode = "appcache";
-// 		echo "manifest='../cache/manifest.manifest'";
+// TODO: echo "manifest='../cache/manifest.manifest'";
 	}
 ?> >
 	<head>
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<title>Cryptomedic</title>
+		<meta charset="utf-8">
 		<meta name="description" content="">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link href="static/img/favicon.ico" type="image/x-icon" rel="icon" />
 		<link href="static/img/favicon.ico" type="image/x-icon" rel="shortcut icon" />
-		<script type="text/javascript" src="/maintenance/html/bugreporting.js"></script>
+	<?php 
+		// jquery
+		(new Script("bower_components/jquery/dist/jquery.min.js"))->dependFile()->toPrint();
+		(new Script("bower_components/jquery-ui/jquery-ui.min.js"))->dependFile()->toPrint();
+		(new Script("bower_components/jquery-ui/themes/ui-lightness/jquery-ui.min.css"))->dependFile()->toPrint();
+		
+		// Modernizr	
+		(new Script("bower_components/modernizr/modernizr.js"))->dependFile()->toPrint();
+	?>
+		<script type="text/javascript">
+			// REQUIRED CAPACITIES
+			if (!Promise || !Modernizr.indexeddb || !Modernizr.localstorage) {
+			    window.location.href = "static/upgrade.html";
+			}
+			// support for class: class C {}; return typeof C === "	function";
+
+			// CONFIGURE LATER LIBRARIES
+			var cryptomedic = {};
+			cryptomedic.version = '<?php echo getVersion(); ?>';
+			cryptomedic.settings = {};
+		</script>
+	<?php 	
+		// Custom bug reporting script:
+		(new Script("../../maintenance/html/bugreporting.js"))->dependFile()->toPrint();
+		(new Script("../../maintenance/html/html2canvas.js"))->dependFile()->toPrint();
+?>
 		<script type="text/javascript">
 			window.bug_reporting.setApplicationState(function() {
 				return { 'cryptomedic': cryptomedic, 'server': server };
@@ -33,37 +55,9 @@
 			window.bug_reporting.setEmailFunction(function() {
 				return "";
 			});
-			</script>
-		<script type="text/javascript" src="/maintenance/html/html2canvas.js"></script>
-		
-		<!-- Adapt upgrade.html also -->
-		<!--[if lt IE 9]>
-			<script type="text/javascript">
-				window.location.href = "static/upgrade.html";
-			</script>
-		<![endif]-->
-		<script type="text/javascript">
-			if (!Promise) {
-			    window.location.href = "static/upgrade.html";
-			}
-
-			if (!indexedDB) {
-			    window.location.href = "static/upgrade.html";
-			}
-			
-			var cryptomedic = {};
-			cryptomedic.version = '<?php echo getVersion(); ?>';
-			cryptomedic.settings = {};
 		</script>
-	<?php 
-		// jquery
-		(new Script("bower_components/jquery/dist/jquery.min.js"))->dependFile()->toPrint();
-		(new Script("bower_components/jquery-ui/jquery-ui.min.js"))->dependFile()->toPrint();
-		(new Script("bower_components/jquery-ui/themes/ui-lightness/jquery-ui.min.css"))->dependFile()->toPrint();
-	
-		// Modernizr	
-		(new Script("bower_components/modernizr/modernizr.js"))->dependFile()->toPrint();
-	
+<?php 
+		
 		// bootstrap
 		(new Script("bower_components/bootstrap/dist/js/bootstrap.min.js"))->dependFile()->toPrint();
 		(new Script("bower_components/bootstrap/dist/css/bootstrap.min.css"))->dependFile()->toPrint();
@@ -72,12 +66,12 @@
 		(new Script("bower_components/angular/angular.min.js"))->dependFile()->toPrint();
 		(new Script("bower_components/angular-route/angular-route.min.js"))->dependFile()->toPrint();
 	
+		// Polyfill
+		(new Script("bower_components/fetch/fetch.js"))->dependFile()->toPrint();
+		
 		// Other
 		(new Script("bower_components/excellentexport/excellentexport.min.js"))->dependFile()->toPrint();
 		(new Script("bower_components/dexie/dist/latest/Dexie.min.js"))->dependFile()->toPrint();
-		
-		// Polyfill
-		(new Script("bower_components/fetch/fetch.js"))->dependFile()->toPrint();
 		
 		// personnal
 		(new Script("static/js/application.js"))->dependFile()->toPrint();
@@ -90,8 +84,6 @@
 		(new AllScripts("static/js/ctrl_*.js"))->dependFile()->toPrint();
 	
 		(new Script("static/css/application.css"))->dependFile()->toPrint();
-
-// 		(new Script("/cryptomedic/rest/public/auth/settings?JSONP=server.setSettings&appVersion=" . getVersion("cryptomedic")))->js()->dependDBTable("settings")->live()->toPrint();
 		?>
 	</head>
 	<body ng-app="app_main" ng-controller="ctrl" id="ng-app" >
@@ -103,11 +95,14 @@
 		      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#menuMain">
 		        <span class="sr-only">Toggle navigation</span>
 		      </button>
-		      <a class="navbar-brand" href="#">Menu</a>
+				<a class="navbar-brand" href="#">Menu</a>
 		    </div>
 		
 		    <!-- Collect the nav links, forms, and other content for toggling -->
 		    <div class="collapse navbar-collapse" id="menuMain">
+		      <ul class="nav navbar-nav">
+	        	<li><p class="navbar-text" id='sync_status'>{{sync.final ? "up-to-date" : "syncing"}} - {{sync.checkpoint}}</p></li>
+			  </ul>
 		      <ul class="nav navbar-nav navbar-right">
 	        	<li><p class="navbar-text" id='login_loggedusername' ng-if='server.settings.username'>{{server.settings.username}}</p></li>
 	        	<li><p class="navbar-text" id='appCache_mode'><?php echo $mode; ?></p></li>
