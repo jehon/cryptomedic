@@ -4,8 +4,6 @@ require_once(__DIR__ . "/../../../php/myfiles.php");
 
 class ManifestTest extends PHPUnit_Framework_TestCase
 {
-	const GENERATOR = __DIR__ . "/../../../cache_generator/generator.php";
-
 	protected function _testOneCachedFile($target) {
 		$_REQUEST = array();
 		$_REQUEST['target'] = $target;
@@ -15,7 +13,7 @@ class ManifestTest extends PHPUnit_Framework_TestCase
 			unlink($target);
 		}
 		ob_start();
-		require(self::GENERATOR);
+		require(__DIR__ . "/../../../cache_generator/generator.php");
 		$content = ob_get_contents();
 		ob_end_clean();
 		chdir($cwd);
