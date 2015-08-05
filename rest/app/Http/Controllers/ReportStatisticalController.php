@@ -1,19 +1,21 @@
 <?php namespace App\Http\Controllers;
 
+require_once(__DIR__ . "/../../../../php/core.php");
+require_once(__DIR__ . "/../../../../php/references.php");
+
 use App\Http\Controllers\Controller;
 use DB;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Request;
 use App\Bill;
-
-require_once(__DIR__ . "/../../../../php/references.php");
+use \myCleanValue;
 use \References;
 
 class ReportStatisticalController extends ReportController {
 	protected $filter = "(1=1)";
 	
 	protected function billsByPathology($header, $pathology) {
-		$newPatients = " (patients.entryyear >= YEAR(bills.Date)) AND (ADDDATE(patients.created, INTERVAL 1 MONTH) >= bills.Date) ";
+		$newPatients = " (patients.entryyear >= YEAR(bills.Date)) AND (ADDDATE(patients.created_at, INTERVAL 1 MONTH) >= bills.Date) ";
 		$sql = "SELECT count(*) as res FROM bills JOIN patients ON (bills.patient_id = patients.id)"
 				. " WHERE {$this->filter} AND patients.$pathology > 0";
 		$all = $this->getOneBySQL($sql);
@@ -103,7 +105,7 @@ class ReportStatisticalController extends ReportController {
 			$res2[$line->Center] = $line->count;
 		}
 		foreach($centers as $c) {
-			$this->resultPathSet("summary.centers." . $this->clean($c), array_key_exists($c, $res2) ? $res2[$c] : 0);
+			$this->resultPathSet("summary.centers." . myCleanValue($c), array_key_exists($c, $res2) ? $res2[$c] : 0);
 		}
 		$this->resultPathSet("summary.centers.unspecified", array_key_exists('', $res2) ? $res2[''] : 0);
 		
