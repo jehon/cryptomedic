@@ -92,13 +92,13 @@ mainApp.controller('ctrl_reports', [ '$scope', '$routeParams', 'service_backend'
 	    if (typeof($scope.reports[report].dataGenerator) != 'undefined') {
 		dataGenerator = $scope.reports[report].dataGenerator;
 	    }
-	    service_backend.getReport(dataGenerator, 
+	    service_my_backend().getReport(dataGenerator, 
 		    	$scope.values, 
 		    	($scope.isParam('period') ? $scope.values.period : null)
 		    )
-		    .done(function(data) {
-		$scope.result = data;
-	    });
+		    .then(function(data) {
+			$scope.result = data;
+		    });
 	}
 
 	$scope.refresh();
