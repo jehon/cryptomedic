@@ -5,16 +5,16 @@ language: php
 #  - 0.12
 
 before_script:
-  - export DISPLAY=:99.0
-  - sh -e /etc/init.d/xvfb start
-  - php --version
-  - npm --version
-  - npm install
+   - export DISPLAY=:99.0
+   - sh -e /etc/init.d/xvfb start
+   - php --version
+   - npm --version
+   - npm install
+   - mysql -e "create database IF NOT EXISTS travis;" -uroot
 #  - npm install -g gulp
 #  - npm start > /dev/null &
 #  - npm run update-webdriver
 #  - sleep 1 # give server time to start
-   - mysql -e "create database IF NOT EXISTS travis;" -uroot
    
 script:
    - gulp cache-test
