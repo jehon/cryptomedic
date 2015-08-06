@@ -10,6 +10,7 @@
     "gulp": "latest",
     "gulp-concat": "^2.6.0",
     "gulp-concat-css": "^2.2.0",
+    "gulp-fn": "0.0.0",
     "gulp-livereload": "^3.8.0",
     "gulp-load-plugins": "latest",
     "gulp-minify-css": "^1.2.0",
@@ -25,7 +26,8 @@
     "nightwatch-html-reporter": "^1.0.2",
     "phantomjs": "latest",
     "selenium-server": "latest",
-    "shelljs": "^0.5.1"
+    "shelljs": "^0.5.1",
+    "travis-lint": "0.0.5"
   },
   "scripts": {
     "postinstall": "bower install",

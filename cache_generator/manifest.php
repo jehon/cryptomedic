@@ -62,12 +62,6 @@ CACHE MANIFEST
 	addFileTs("../index.html");
 	addOne("/cryptomedic/");
 	addFileTs("../../cryptomedic.version");
-	
-	// Use the index for import
-	ob_start();	
-	require("../app/index.php"); 
-	ob_end_clean();
-	
 	addLine("");
 	
 	addLine("# Include dependant php scripts");
@@ -76,6 +70,11 @@ CACHE MANIFEST
 		addFileTs($f);
 	}
 	addLine("");
+	
+	// Use the index for import
+	ob_start();	
+	require("../app/index.php"); 
+	ob_end_clean();
 	
 	addLine("# Scripts auto-import");
 	addLine("");

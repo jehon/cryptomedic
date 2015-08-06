@@ -125,7 +125,28 @@ gulp.task('test-live', function() {
 	configFile : 'test/nightwatch.json',
 	cliArgs : [ '--env live', '--tags readonly' ]
     }))
-    .pipe(plugins.notify(this.seq.slice(-1)[0] + ": done"));
+   .pipe(plugins.notify(this.seq.slice(-1)[0] + ": done"));
+});
+
+gulp.task('release-prepare', [ 'cache-test' ], function() {
+    return gulp.src('.travis.yml')
+        .pipe(plugins.plumber({errorHandler: plugins.notify.onError("Error during task " + this.seq.slice(-1)[0] + ": <%= error.message %>")}))
+        .pipe(plugins.plumber({ errorHandler: function() { process.exit(1); } }))
+    	.pipe(plugins.fn(function(file) { 
+    	    var fs = require('fs');
+    	    var lint = require('travis-lint');
+    	    lint(fs.readFileSync(file.path), function (err, warnings) {
+    	              // warnings is an array of the issues with your yml file
+    	              if (err) {
+    	        	  console.error("Travis-lint send back errors: ");
+    	        	  console.error(err);
+    	              }
+    	              if (warnings.length) {
+    	        	  console.warn("Travis-lint send back warnings: ");
+    	        	  console.warn(warnings);
+    	              }
+    	          });
+    	}));
 });
 
 //gulp.task('minify-css', function() {
