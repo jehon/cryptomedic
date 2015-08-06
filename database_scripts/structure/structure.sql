@@ -32,8 +32,8 @@ DROP TABLE IF EXISTS `bills`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `bills` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `lastuser` varchar(50) DEFAULT NULL,
   `patient_id` int(10) unsigned NOT NULL,
   `sl_familySalary` int(11) DEFAULT NULL,
@@ -170,8 +170,8 @@ DROP TABLE IF EXISTS `club_foots`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `club_foots` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `lastuser` varchar(50) DEFAULT NULL,
   `patient_id` int(10) unsigned NOT NULL,
   `Date` date NOT NULL DEFAULT '0000-00-00',
@@ -258,7 +258,7 @@ DROP TABLE IF EXISTS `deleted`;
 CREATE TABLE `deleted` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `entity_type` varchar(20) NOT NULL,
   `entity_id` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`)
@@ -275,7 +275,7 @@ DROP TABLE IF EXISTS `log_computers`;
 CREATE TABLE `log_computers` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `modified_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `modified_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `user_id` int(10) unsigned NOT NULL,
   `computer_id` varchar(64) NOT NULL,
   `useragent` varchar(255) DEFAULT NULL,
@@ -294,8 +294,8 @@ DROP TABLE IF EXISTS `nonricket_consults`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `nonricket_consults` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `lastuser` varchar(50) DEFAULT NULL,
   `patient_id` int(10) unsigned NOT NULL,
   `Date` date NOT NULL DEFAULT '0000-00-00',
@@ -333,8 +333,8 @@ DROP TABLE IF EXISTS `patients`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `patients` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `lastuser` varchar(50) DEFAULT NULL,
   `entryyear` int(4) unsigned NOT NULL,
   `entryorder` int(4) DEFAULT NULL,
@@ -370,8 +370,8 @@ DROP TABLE IF EXISTS `pictures`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `pictures` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `lastuser` varchar(50) DEFAULT NULL,
   `patient_id` int(10) unsigned NOT NULL,
   `OriginalName` varchar(255) DEFAULT NULL,
@@ -393,8 +393,8 @@ DROP TABLE IF EXISTS `prices`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `prices` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `lastuser` varchar(50) DEFAULT NULL,
   `datefrom` date DEFAULT NULL,
   `dateto` date DEFAULT NULL,
@@ -499,8 +499,8 @@ DROP TABLE IF EXISTS `ricket_consults`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `ricket_consults` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `lastuser` varchar(50) DEFAULT NULL,
   `patient_id` int(10) unsigned NOT NULL,
   `Date` date NOT NULL DEFAULT '0000-00-00',
@@ -550,7 +550,7 @@ DROP TABLE IF EXISTS `settings`;
 CREATE TABLE `settings` (
   `id` varchar(50) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `value` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -565,8 +565,8 @@ DROP TABLE IF EXISTS `surgeries`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `surgeries` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `lastuser` varchar(50) DEFAULT NULL,
   `patient_id` int(10) unsigned NOT NULL,
   `Date` date DEFAULT NULL,
@@ -598,8 +598,8 @@ CREATE TABLE `users` (
   `email` varchar(255) DEFAULT NULL,
   `notes` varchar(255) DEFAULT NULL,
   `group` char(10) DEFAULT '',
-  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `lastuser` varchar(50) DEFAULT NULL,
   `last_login` timestamp NULL DEFAULT NULL,
   `remember_token` varchar(255) NOT NULL,

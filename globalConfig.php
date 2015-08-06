@@ -3,7 +3,7 @@ if (!defined("secretFile"))
 	define("secretFile", __DIR__ . "/../secrets.php");
 
 function getGlobalConfig($key) {
-	$localhost = ($_SERVER['HTTP_HOST'] == "localhost");
+	$localhost = $_SERVER && array_key_exists('HTTP_HOST', $_SERVER) && ($_SERVER['HTTP_HOST'] == "localhost");
 	if (file_exists(constant("secretFile"))) {
 		// In phpunit testing, some tests would run in separate database?
 		require_once(constant("secretFile"));
