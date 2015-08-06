@@ -16,4 +16,6 @@ unlink($target);
 var_dump(exec("$mysqldump --no-data --databases amd_chakaria > '" . $target ."'"));
 
 // var_dump(exec("$mysqldump amd_chakaria --tables > '" . __DIR__ . "/../database_scripts/structure/0 structure.sql'"));
+var_dump(exec("git add '$target'"));
 
+var_dump("done");
