@@ -81,7 +81,7 @@ class AuthController extends Controller {
 		
 		// TODO: log/record appVersion
 		
-// 		$computer = LogComputer::find([ "computer_id" => Request::input("")])
+// 		$computer = LogComputer::find([ "computerId" => Request::input("")])
 		
 		$user->save();
 		
