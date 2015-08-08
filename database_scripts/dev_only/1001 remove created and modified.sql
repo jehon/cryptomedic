@@ -60,6 +60,3 @@ UPDATE `users` SET updated_at = modified WHERE updated_at IS NULL or updated_at 
 ALTER TABLE `users` DROP `modified`, DROP `created`;
 ALTER TABLE `users` CHANGE `created_at` `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP; 
 ALTER TABLE `users` CHANGE `updated_at` `updated_at` TIMESTAMP NULL DEFAULT NULL; 
-
-
-ALTER TABLE `log_computers` CHANGE `modified_at` `modified_at` TIMESTAMP on update CURRENT_TIMESTAMP NULL DEFAULT NULL;

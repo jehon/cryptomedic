@@ -250,7 +250,7 @@ CREATE TABLE IF NOT EXISTS `deleted` (
 CREATE TABLE IF NOT EXISTS `log_computers` (
 `id` int(10) unsigned NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `modified_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `modified_at` timestamp NULL DEFAULT NULL,
   `user_id` int(10) unsigned NOT NULL,
   `computer_id` varchar(64) NOT NULL,
   `useragent` varchar(255) DEFAULT NULL
