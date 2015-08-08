@@ -1,16 +1,37 @@
+-- phpMyAdmin SQL Dump
+-- version 4.2.12deb2
+-- http://www.phpmyadmin.net
+--
+-- Host: localhost
+-- Generation Time: Aug 08, 2015 at 10:31 PM
+-- Server version: 5.6.25-0ubuntu0.15.04.1
+-- PHP Version: 5.6.4-4ubuntu6.2
+
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
+
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8 */;
 
+--
+-- Database: `amd_chakaria`
+--
+CREATE DATABASE IF NOT EXISTS `amd_chakaria` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `amd_chakaria`;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bills`
+--
 
 CREATE TABLE IF NOT EXISTS `bills` (
 `id` int(10) unsigned NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT NULL,
   `lastuser` varchar(50) DEFAULT NULL,
   `patient_id` int(10) unsigned NOT NULL,
   `sl_familySalary` int(11) DEFAULT NULL,
@@ -106,7 +127,13 @@ CREATE TABLE IF NOT EXISTS `bills` (
   `surgical_percutaneous_achil_tenotomy_bi_cdc` int(11) NOT NULL DEFAULT '0',
   `surgical_PMR_club_club_foot_bi` int(11) NOT NULL DEFAULT '0',
   `surgical_burn_little_release` int(11) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB AUTO_INCREMENT=23030 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=23029 DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bug_reporting`
+--
 
 CREATE TABLE IF NOT EXISTS `bug_reporting` (
 `id` int(11) NOT NULL,
@@ -122,10 +149,16 @@ CREATE TABLE IF NOT EXISTS `bug_reporting` (
   `screenshot` longblob
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `club_foots`
+--
+
 CREATE TABLE IF NOT EXISTS `club_foots` (
 `id` int(10) unsigned NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT NULL,
   `lastuser` varchar(50) DEFAULT NULL,
   `patient_id` int(10) unsigned NOT NULL,
   `Date` date NOT NULL DEFAULT '0000-00-00',
@@ -173,6 +206,12 @@ CREATE TABLE IF NOT EXISTS `club_foots` (
   `NextCenter` varchar(24) DEFAULT NULL,
   `Brachialcircumferencecm` int(3) DEFAULT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=1516 DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `consults`
+--
 CREATE TABLE IF NOT EXISTS `consults` (
 `source` varchar(18)
 ,`id` int(11) unsigned
@@ -188,6 +227,12 @@ CREATE TABLE IF NOT EXISTS `consults` (
 ,`Nextappointment` date
 ,`NextCenter` varchar(24)
 );
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `deleted`
+--
+
 CREATE TABLE IF NOT EXISTS `deleted` (
 `id` int(10) unsigned NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
@@ -195,6 +240,12 @@ CREATE TABLE IF NOT EXISTS `deleted` (
   `entity_type` varchar(20) NOT NULL,
   `entity_id` int(10) unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `log_computers`
+--
 
 CREATE TABLE IF NOT EXISTS `log_computers` (
 `id` int(10) unsigned NOT NULL,
@@ -205,10 +256,16 @@ CREATE TABLE IF NOT EXISTS `log_computers` (
   `useragent` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `nonricket_consults`
+--
+
 CREATE TABLE IF NOT EXISTS `nonricket_consults` (
 `id` int(10) unsigned NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT NULL,
   `lastuser` varchar(50) DEFAULT NULL,
   `patient_id` int(10) unsigned NOT NULL,
   `Date` date NOT NULL DEFAULT '0000-00-00',
@@ -233,10 +290,16 @@ CREATE TABLE IF NOT EXISTS `nonricket_consults` (
   `NextCenter` varchar(24) DEFAULT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=2306 DEFAULT CHARSET=utf8;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `patients`
+--
+
 CREATE TABLE IF NOT EXISTS `patients` (
 `id` int(10) unsigned NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT NULL,
   `lastuser` varchar(50) DEFAULT NULL,
   `entryyear` int(4) unsigned NOT NULL,
   `entryorder` int(4) DEFAULT NULL,
@@ -260,10 +323,16 @@ CREATE TABLE IF NOT EXISTS `patients` (
   `pathology_Congenital` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB AUTO_INCREMENT=101169 DEFAULT CHARSET=utf8;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pictures`
+--
+
 CREATE TABLE IF NOT EXISTS `pictures` (
 `id` int(10) unsigned NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT NULL,
   `lastuser` varchar(50) DEFAULT NULL,
   `patient_id` int(10) unsigned NOT NULL,
   `OriginalName` varchar(255) DEFAULT NULL,
@@ -272,10 +341,16 @@ CREATE TABLE IF NOT EXISTS `pictures` (
   `comment` mediumtext
 ) ENGINE=InnoDB AUTO_INCREMENT=4003 DEFAULT CHARSET=utf8;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `prices`
+--
+
 CREATE TABLE IF NOT EXISTS `prices` (
 `id` int(10) unsigned NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT NULL,
   `lastuser` varchar(50) DEFAULT NULL,
   `datefrom` date DEFAULT NULL,
   `dateto` date DEFAULT NULL,
@@ -369,10 +444,16 @@ CREATE TABLE IF NOT EXISTS `prices` (
   `socialLevelPercentage_0` float NOT NULL DEFAULT '-1'
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ricket_consults`
+--
+
 CREATE TABLE IF NOT EXISTS `ricket_consults` (
 `id` int(10) unsigned NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT NULL,
   `lastuser` varchar(50) DEFAULT NULL,
   `patient_id` int(10) unsigned NOT NULL,
   `Date` date NOT NULL DEFAULT '0000-00-00',
@@ -408,6 +489,12 @@ CREATE TABLE IF NOT EXISTS `ricket_consults` (
   `conclusion_medical_vitaminD` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB AUTO_INCREMENT=9099 DEFAULT CHARSET=utf8;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `settings`
+--
+
 CREATE TABLE IF NOT EXISTS `settings` (
   `id` varchar(50) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
@@ -415,10 +502,16 @@ CREATE TABLE IF NOT EXISTS `settings` (
   `value` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `surgeries`
+--
+
 CREATE TABLE IF NOT EXISTS `surgeries` (
 `id` int(10) unsigned NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT NULL,
   `lastuser` varchar(50) DEFAULT NULL,
   `patient_id` int(10) unsigned NOT NULL,
   `Date` date DEFAULT NULL,
@@ -430,6 +523,12 @@ CREATE TABLE IF NOT EXISTS `surgeries` (
   `FollowUpComplication` mediumtext
 ) ENGINE=InnoDB AUTO_INCREMENT=556 DEFAULT CHARSET=utf8;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
 CREATE TABLE IF NOT EXISTS `users` (
 `id` int(11) NOT NULL,
   `username` varchar(255) DEFAULT NULL,
@@ -440,97 +539,205 @@ CREATE TABLE IF NOT EXISTS `users` (
   `notes` varchar(255) DEFAULT NULL,
   `group` char(10) DEFAULT '',
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT NULL,
   `lastuser` varchar(50) DEFAULT NULL,
   `last_login` timestamp NULL DEFAULT NULL,
   `remember_token` varchar(255) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `consults`
+--
 DROP TABLE IF EXISTS `consults`;
 
 CREATE ALGORITHM=UNDEFINED DEFINER=`amd_chakaria`@`localhost` SQL SECURITY DEFINER VIEW `consults` AS (select 'club_foots' AS `source`,`club_foots`.`id` AS `id`,`club_foots`.`created_at` AS `created_at`,`club_foots`.`updated_at` AS `updated_at`,`club_foots`.`lastuser` AS `lastuser`,`club_foots`.`patient_id` AS `patient_id`,`club_foots`.`Date` AS `Date`,`club_foots`.`ExaminerName` AS `ExaminerName`,`club_foots`.`Center` AS `Center`,`club_foots`.`TreatmentEvaluation` AS `TreatmentEvaluation`,`club_foots`.`TreatmentFinished` AS `TreatmentFinished`,`club_foots`.`Nextappointment` AS `Nextappointment`,`club_foots`.`NextCenter` AS `NextCenter` from `club_foots`) union (select 'nonricket_consults' AS `source`,`nonricket_consults`.`id` AS `id`,`nonricket_consults`.`created_at` AS `created_at`,`nonricket_consults`.`updated_at` AS `updated_at`,`nonricket_consults`.`lastuser` AS `lastuser`,`nonricket_consults`.`patient_id` AS `patient_id`,`nonricket_consults`.`Date` AS `Date`,`nonricket_consults`.`ExaminerName` AS `ExaminerName`,`nonricket_consults`.`Center` AS `Center`,`nonricket_consults`.`TreatmentEvaluation` AS `TreatmentEvaluation`,`nonricket_consults`.`TreatmentFinished` AS `TreatmentFinished`,`nonricket_consults`.`Nextappointment` AS `Nextappointment`,`nonricket_consults`.`NextCenter` AS `NextCenter` from `nonricket_consults`) union (select 'ricket_consults' AS `source`,`ricket_consults`.`id` AS `id`,`ricket_consults`.`created_at` AS `created_at`,`ricket_consults`.`updated_at` AS `updated_at`,`ricket_consults`.`lastuser` AS `lastuser`,`ricket_consults`.`patient_id` AS `patient_id`,`ricket_consults`.`Date` AS `Date`,`ricket_consults`.`ExaminerName` AS `ExaminerName`,`ricket_consults`.`Center` AS `Center`,`ricket_consults`.`TreatmentEvaluation` AS `TreatmentEvaluation`,`ricket_consults`.`TreatmentFinished` AS `TreatmentFinished`,`ricket_consults`.`Nextappointment` AS `Nextappointment`,`ricket_consults`.`NextCenter` AS `NextCenter` from `ricket_consults`);
 
+--
+-- Indexes for dumped tables
+--
 
+--
+-- Indexes for table `bills`
+--
 ALTER TABLE `bills`
  ADD PRIMARY KEY (`id`), ADD KEY `patient_id` (`patient_id`), ADD KEY `price_id_fk` (`price_id`);
 
+--
+-- Indexes for table `bug_reporting`
+--
 ALTER TABLE `bug_reporting`
  ADD PRIMARY KEY (`id`), ADD KEY `url` (`url`,`session`,`username`);
 
+--
+-- Indexes for table `club_foots`
+--
 ALTER TABLE `club_foots`
  ADD PRIMARY KEY (`id`), ADD KEY `entity_name` (`patient_id`);
 
+--
+-- Indexes for table `deleted`
+--
 ALTER TABLE `deleted`
  ADD PRIMARY KEY (`id`);
 
+--
+-- Indexes for table `log_computers`
+--
 ALTER TABLE `log_computers`
  ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `computer_id` (`computer_id`), ADD KEY `user_id` (`user_id`);
 
+--
+-- Indexes for table `nonricket_consults`
+--
 ALTER TABLE `nonricket_consults`
  ADD PRIMARY KEY (`id`), ADD KEY `patient_id` (`patient_id`);
 
+--
+-- Indexes for table `patients`
+--
 ALTER TABLE `patients`
  ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `patients_entrynumber` (`entryyear`,`entryorder`);
 
+--
+-- Indexes for table `pictures`
+--
 ALTER TABLE `pictures`
  ADD PRIMARY KEY (`id`), ADD KEY `entity_name` (`patient_id`);
 
+--
+-- Indexes for table `prices`
+--
 ALTER TABLE `prices`
  ADD PRIMARY KEY (`id`);
 
+--
+-- Indexes for table `ricket_consults`
+--
 ALTER TABLE `ricket_consults`
  ADD PRIMARY KEY (`id`), ADD KEY `patient_id` (`patient_id`);
 
+--
+-- Indexes for table `settings`
+--
 ALTER TABLE `settings`
  ADD PRIMARY KEY (`id`);
 
+--
+-- Indexes for table `surgeries`
+--
 ALTER TABLE `surgeries`
  ADD PRIMARY KEY (`id`), ADD KEY `patient_id` (`patient_id`);
 
+--
+-- Indexes for table `users`
+--
 ALTER TABLE `users`
  ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `username` (`username`), ADD KEY `group` (`group`);
 
+--
+-- AUTO_INCREMENT for dumped tables
+--
 
+--
+-- AUTO_INCREMENT for table `bills`
+--
 ALTER TABLE `bills`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=23030;
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=23029;
+--
+-- AUTO_INCREMENT for table `bug_reporting`
+--
 ALTER TABLE `bug_reporting`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `club_foots`
+--
 ALTER TABLE `club_foots`
 MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1516;
+--
+-- AUTO_INCREMENT for table `deleted`
+--
 ALTER TABLE `deleted`
 MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `log_computers`
+--
 ALTER TABLE `log_computers`
 MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `nonricket_consults`
+--
 ALTER TABLE `nonricket_consults`
 MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2306;
+--
+-- AUTO_INCREMENT for table `patients`
+--
 ALTER TABLE `patients`
 MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=101169;
+--
+-- AUTO_INCREMENT for table `pictures`
+--
 ALTER TABLE `pictures`
 MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4003;
+--
+-- AUTO_INCREMENT for table `prices`
+--
 ALTER TABLE `prices`
 MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
+--
+-- AUTO_INCREMENT for table `ricket_consults`
+--
 ALTER TABLE `ricket_consults`
 MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9099;
+--
+-- AUTO_INCREMENT for table `surgeries`
+--
 ALTER TABLE `surgeries`
 MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=556;
+--
+-- AUTO_INCREMENT for table `users`
+--
 ALTER TABLE `users`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=48;
+--
+-- Constraints for dumped tables
+--
 
+--
+-- Constraints for table `bills`
+--
 ALTER TABLE `bills`
 ADD CONSTRAINT `bills_ibfk_1` FOREIGN KEY (`patient_id`) REFERENCES `patients` (`id`) ON UPDATE CASCADE,
 ADD CONSTRAINT `bills_ibfk_3` FOREIGN KEY (`price_id`) REFERENCES `prices` (`id`) ON UPDATE CASCADE;
 
+--
+-- Constraints for table `club_foots`
+--
 ALTER TABLE `club_foots`
 ADD CONSTRAINT `club_foots_ibfk_3` FOREIGN KEY (`patient_id`) REFERENCES `patients` (`id`) ON UPDATE CASCADE;
 
+--
+-- Constraints for table `nonricket_consults`
+--
 ALTER TABLE `nonricket_consults`
 ADD CONSTRAINT `nonricket_consults_ibfk_1` FOREIGN KEY (`patient_id`) REFERENCES `patients` (`id`) ON UPDATE CASCADE;
 
+--
+-- Constraints for table `pictures`
+--
 ALTER TABLE `pictures`
 ADD CONSTRAINT `pictures_ibfk_1` FOREIGN KEY (`patient_id`) REFERENCES `patients` (`id`) ON UPDATE CASCADE;
 
+--
+-- Constraints for table `ricket_consults`
+--
 ALTER TABLE `ricket_consults`
 ADD CONSTRAINT `ricket_consults_ibfk_1` FOREIGN KEY (`patient_id`) REFERENCES `patients` (`id`) ON UPDATE CASCADE;
 
+--
+-- Constraints for table `surgeries`
+--
 ALTER TABLE `surgeries`
 ADD CONSTRAINT `surgeries_ibfk_1` FOREIGN KEY (`patient_id`) REFERENCES `patients` (`id`) ON UPDATE CASCADE;
 
