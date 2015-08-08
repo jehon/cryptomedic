@@ -42,8 +42,8 @@
 		</script>
 	<?php 	
 		// Custom bug reporting script:
-		(new Script("../../maintenance/html/bugreporting.js"))->dependFile()->toPrint();
-		(new Script("../../maintenance/html/html2canvas.js"))->dependFile()->toPrint();
+		(new Script("static/js/bugreporting.js"))->dependFile()->toPrint();
+		(new Script("static/js/html2canvas.js"))->dependFile()->toPrint();
 ?>
 		<script type="text/javascript">
 			window.bug_reporting.setApplicationState(function() {
