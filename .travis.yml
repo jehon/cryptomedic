@@ -10,8 +10,8 @@ before_script:
    - php --version
    - npm --version
    - npm install
-   - mysql -e "create database IF NOT EXISTS travis;" -uroot
-   - mysql --database=travis -uroot < database_scripts/structure/structure.sql
+   - mysql -e "create database IF NOT EXISTS amd_chakaria;" -uroot
+   - mysql --database=amd_chakaria -uroot < database_scripts/structure/structure.sql
 #  - npm install -g gulp
 #  - npm start > /dev/null &
 #  - npm run update-webdriver

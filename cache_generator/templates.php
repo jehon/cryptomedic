@@ -71,7 +71,7 @@ if (!class_exists("t")) {
 	    static function cacheSqlStructureFor($sqlTable) {
 	    	if (!array_key_exists($sqlTable, self::$sqlAllTableStructure)) {
 	    		self::$sqlAllTableStructure[$sqlTable] = array();
-	    		foreach  (self::$pdo->query("SHOW COLUMNS FROM `{$sqlTable}`") as $row) {
+	    		foreach(self::$pdo->query("SHOW COLUMNS FROM `{$sqlTable}`") as $row) {
 	    			self::$sqlAllTableStructure[$sqlTable][$row['Field']] = $row;
 	    		}
 	    	}
