@@ -57,14 +57,16 @@ gulp.task('cache-test', function() {
 });
 
 gulp.task('cache-watch', function() {
-    gulp.watch([ 'cache_generator/generator.php', 'cache_generator/templates.php', 'php/**/*' ], [ 'cache-clean' ]);
+    gulp.watch([ 'cache_generator/generator.php', 'php/**/*' ], [ 'cache-clean' ], function(event) {
+	console.log('Cache generator global: file ' + event.path + ' was ' + event.type + '.');
+    });
     
     gulp.watch([ 'cache_generator/**/*', 'app/**/*' ], null, function(event) {
 	console.log('Cache_generator manifest: file ' + event.path + ' was ' + event.type + '.');
 	shelljs.rm("-f", "cache/manifest.manifest");
     });
 
-    gulp.watch([ 'cache_generator/templates/**/*.php' ], null, function(event) {
+    gulp.watch([ 'cache_generator/templates.php', 'cache_generator/templates/**/*.php' ], null, function(event) {
 	var html = __dirname + "/cache" + path.relative(__dirname, event.path).substring("cache_generator".length).replace(".php", ".html");
 	console.log('Cache_generator templates: file ' + event.path + ' was ' + event.type + ' (mapping to ' + html + ').');
 	shelljs.rm("-fr", html);

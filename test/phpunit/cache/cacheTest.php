@@ -22,20 +22,11 @@ class CacheTest extends PHPUnit_Framework_TestCase
 		return $content;
 	}
 	
-	protected function _createIf($filename) {
-		if (!file_exists($filename)) {
-			touch($filename);
-		}
-	}
-	
 	/**
 	 * @runInSeparateProcess
 	 */
 	public function testManifest()
 	{	
-		$this->_createIf(__DIR__ . "/../../../../maintenance/html/bugreporting.js");
-		$this->_createIf(__DIR__ . "/../../../../maintenance/html/html2canvas.js");
-		
 		$content = $this->_testOneCachedFile("manifest.manifest");
 		$this->assertNotEmpty($content);
 		$this->assertStringStartsWith("CACHE MANIFEST", $content);

@@ -70,7 +70,7 @@
 										<th>Total</th>
 									</tr>
 								</thead>
-								<?php foreach(Bill::getFieldsList($cat, array_keys(t::cacheSqlStructureFor('bills'))) as $field) {
+								<?php foreach(Bill::getFieldsList($cat, t::getColumnsOfTable('bills')) as $field) {
 										price("Bill." . $field);
 									} 
 								?>

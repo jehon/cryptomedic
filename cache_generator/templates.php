@@ -71,13 +71,15 @@ if (!class_exists("t")) {
 	    static function cacheSqlStructureFor($sqlTable) {
 	    	if (!array_key_exists($sqlTable, self::$sqlAllTableStructure)) {
 	    		self::$sqlAllTableStructure[$sqlTable] = array();
-	    		$rows = self::$pdo->query("SELECT * FROM `{$sqlTable}` LIMIT 1");
-	    		for($i = 0; $i < $rows->columnCount(); $i++) {
-	    			$meta = $rows->getColumnMeta($i);
-	    			self::$sqlAllTableStructure[$sqlTable][$meta['name']] = $meta;
+	    		foreach  (self::$pdo->query("SHOW COLUMNS FROM `{$sqlTable}`") as $row) {
+	    			self::$sqlAllTableStructure[$sqlTable][$row['Field']] = $row;
 	    		}
 	    	}
 	    	return self::$sqlAllTableStructure[$sqlTable];
+	    }
+	    
+	    static function getColumnsOfTable($sqlTable) {
+	    	return array_keys(self::cacheSqlStructureFor($sqlTable));
 	    }
 	    
 	    var $key;
@@ -114,17 +116,16 @@ if (!class_exists("t")) {
 	        	$this->field = $data[1];
 	        }
 	
-	        $this->linked2DB = true;
-	
 			$this->sqlTable = References::model2db($this->model);
 			
 			self::cacheSqlStructureFor($this->sqlTable);
 			
-			if (!array_key_exists($this->field, self::$sqlAllTableStructure[$this->sqlTable])) {
+			if (!in_array($this->field, self::getColumnsOfTable($this->sqlTable))) {
 	            $this->linked2DB = false;
 	            return ;
 	        }
-	
+	        $this->linked2DB = true;
+	         
 	        $this->structure = self::$sqlAllTableStructure[$this->sqlTable][$this->field];
 	
 	        $this->used($this->sqlTable, $this->field);
@@ -133,87 +134,109 @@ if (!class_exists("t")) {
 	        $this->isListLinked = false;
 	        $header = $this->model . "." . $this->field;
 	        if (array_key_exists("list", $options) && $options['list']) {
-	        	$this->type = self::TYPE_LIST;
+	        	$this->struct_type = self::TYPE_LIST;
 	        	$this->isList = true;
 	        	$this->listing = $options['list'];
 	        } else if (array_key_exists($header, References::$model_listing)) {
 	        	// Model.Field specific list
-	            $this->type = self::TYPE_LIST;
+	            $this->struct_type = self::TYPE_LIST;
 	            $this->isList = true;
 	            $this->listing = References::$model_listing[$header];
 	        } else if (array_key_exists("*.{$this->field}", References::$model_listing)) {
 	        	// *.Field generic list
-	            $this->type = self::TYPE_LIST;
+	            $this->struct_type = self::TYPE_LIST;
 	            $this->isList = true;
 	            $this->listing = References::$model_listing["*.{$this->field}"];
 	        } else {
-	            switch($this->structure['pdo_type']) {
-	                case PDO::PARAM_BOOL:
-	                case PDO::PARAM_STR: 
-	                case PDO::PARAM_INT:
-	                	switch($this->structure['native_type']) {
-	                        case "TIMESTAMP":
-	                            $this->type = self::TYPE_TIMESTAMP;
-	                            break;
-	                        case "DATE":
-	                            $this->type = self::TYPE_DATE;
-	                            break;
-	                        case "TINY":
-	                            $this->type = self::TYPE_BOOLEAN;
-	                            break;
-	                        case "LONG":
-	                            $this->type = self::TYPE_INTEGER;
-	                            break;  
-	                        case "VAR_STRING":
-	                                if ($this->structure['len'] >= 800) {
-	                                $this->type = self::TYPE_TEXT;
-	                            } else {
-	                                $this->type = self::TYPE_CHAR;
-	                            }
-	                            break;
-	                        case "BLOB":
-	                            $this->type = self::TYPE_TEXT;
-	                            break;
-	                        default:
-	                            echo "Unhandled native_type in __construct";
-	                            var_dump($this->structure);
-	                            break;
-	                    }
+				$matches = array();
+				if (false === preg_match("/([a-z]+)(\(([0-9]+)\)(.*[a-zA-Z]+)?)?/", strtolower($this->structure['Type']), $matches)) {
+					die("Error in preg_match");
+				}
+				/* 
+				 * ==== $matches ====
+				 * 1: type natif 
+				 * 3: length
+				 * 4: qualificatif (unsigned)
+				 * 
+				 * All matches are lowercase
+				 */
+				$this->struct_type = $matches[1];
+				$this->struct_length = (count($matches) > 3 ? intval($matches[3]) : 0);
+				$this->struct_unsigned = (count($matches) > 4 ? $matches[4] : "");
+				// Special case:
+				switch($this->struct_type) {
+	                case "date":
+                        $this->struct_type = self::TYPE_DATE;
+                        break;
+	                case "tinyint":
+	                case "int":
+						if ($this->struct_length == 1) {
+							$this->struct_type = self::TYPE_BOOLEAN;
+						} else {
+	                		$this->struct_type = self::TYPE_INTEGER;
+						}
+	                	break;
+	                case "varchar":
+	                	if ($this->struct_length >= 800) {
+	                		// Long text = blob
+	                		$this->struct_type = self::TYPE_TEXT;
+	                	} else {
+	                		$this->struct_type = self::TYPE_CHAR;
+	                	}
+						break;
+	                case "mediumtext":
+	                	$this->struct_type = self::TYPE_TEXT;
+	                	break;
+					case "timestamp":
+	                	$this->struct_type = self::TYPE_TIMESTAMP;
 	                    break;
+//                  case "LONG":
+//                         $this->type = self::TYPE_INTEGER;
+//                         break;  
+// 	                case "BLOB":
+// 	                    $this->type = self::TYPE_TEXT;
+// 	                     break;
 	                default:
-	                    echo "Unhandled type in __construct";
+	                    echo "Unhandled type in __construct: {$this->struct_type}";
 	                    var_dump($this->structure);
+	                    throw new Exception("Unhandled type in __construct: {$this->struct_type}");
 	                    break;              
 	            }
 	        }
-	
-	        $this->required = in_array('not_null', $this->structure['flags']);
-	
-	        $this->linked2DB = true;
-	        $this->rawExpression = $this->options['baseExpression'] . $this->field;
 	        return $this;
 	    }
 	
-	    function rawValue() {
-	        $this->res .= "{{" . $this->rawExpression . "}}";
-	        return $this;
+		function fieldGetKey() {
+			return $this->options['baseExpression'] . $this->field;
+		}
+	    
+	    function fieldIsRequired() {
+	    	return $this->structure['Null'] == "NO";
+	    }
+	    
+	    function fieldGetType() {
+	    	return $this->struct_type;
+	    }
+	    
+	    function fieldGetList() {
+	    	
 	    }
 	    
 		function displayCode($mode) {
 			if (array_key_exists("_meta", $_REQUEST) && $_REQUEST['_meta']) {
 				$this->res .= "=" . $mode . $this->key;
-				$this->res .= ($this->linked2DB ? "" : "##");
+				$this->res .= ($this->linked2DB ? "db" : "##");
 				$this->res .= "-" . $this->model . "." . $this->field; 
-				$this->res .= ":" . $this->type;
-				if ($this->type == self::TYPE_LIST) {
+				$this->res .= ":" . $this->fieldGetType();
+				if ($this->fieldGetType() == self::TYPE_LIST) {
 					$this->res .= "(";
 					foreach($this->listing as $k => $v) { 
 						$this->res .= $v . ","; 
 					}
 					$this->res .= ")";
 				}
-				$this->res .= ($this->required ? "!" : "?");
-				$this->res .= "[" . $this->rawExpression . "]";
+				$this->res .= ($this->fieldIsRequired() ? "!" : "?");
+				$this->res .= "[" . $this->fieldGetKey() . "]";
 				$this->res .= "=";
 				return true;
 			}
@@ -227,29 +250,29 @@ if (!class_exists("t")) {
 	        }
 			if ($this->displayCode("r")) return $this;
 	        
-	        switch($this->type) {
+	        switch($this->fieldGetType()) {
 	            case self::TYPE_TIMESTAMP: 
 	                    // See https://docs.angularjs.org/api/ng/filter/date
-	                    $this->res .= "<span id='{$this->jsId}'>{{ {$this->rawExpression} | date:'{self::DATETIMEFORMAT}' }}</span>";
+	                    $this->res .= "<span id='{$this->jsId}'>{{ {$this->fieldGetKey()} | date:'{self::DATETIMEFORMAT}' }}</span>";
 	                    break;
 	            case self::TYPE_BOOLEAN:
-	                $this->res .= "<span id='{$this->jsId}' ng-show='{$this->rawExpression}'><img src='static/img/boolean-true.gif'></span>"
-	                        . "<span id='{$this->jsId}' ng-hide='{$this->rawExpression}'><img src='static/img/boolean-false.gif'></span>";
+	                $this->res .= "<span id='{$this->jsId}' ng-show='{$this->fieldGetKey()}'><img src='static/img/boolean-true.gif'></span>"
+	                        . "<span id='{$this->jsId}' ng-hide='{$this->fieldGetKey()}'><img src='static/img/boolean-false.gif'></span>";
 	                break;
 	            case self::TYPE_LIST:
-	                $this->res .= "<span id='{$this->jsId}'>{{ {$this->rawExpression} }}</span>";
+	                $this->res .= "<span id='{$this->jsId}'>{{ {$this->fieldGetKey()} }}</span>";
 	                break;
 	            case self::TYPE_DATE:
 	            // TODOJH: recheck this later - Workaround!!!
 	            //     // See https://docs.angularjs.org/api/ng/filter/date
-	            //     $this->res .= "<span id='{$this->jsId}'>{{ {$this->rawExpression} | date:'{self::DATEFORMAT}' }}</span>";
+	            //     $this->res .= "<span id='{$this->jsId}'>{{ {$this->fieldGetKey()} | date:'{self::DATEFORMAT}' }}</span>";
 	            //     break;
 	            case self::TYPE_INTEGER:
 	            case self::TYPE_CHAR:
-	            	$this->res .= "<span id='{$this->jsId}'>{{ {$this->rawExpression} }}</span>";
+	            	$this->res .= "<span id='{$this->jsId}'>{{ {$this->fieldGetKey()} }}</span>";
 	                break;
 	            case self::TYPE_TEXT:
-	                $this->res .= "<span id='{$this->jsId}' style='white-space: pre'>{{ {$this->rawExpression} }}</span>";
+	                $this->res .= "<span id='{$this->jsId}' style='white-space: pre'>{{ {$this->fieldGetKey()} }}</span>";
 	                break;
 	            default:
 	                $this->res .= "{$this->key} input id={$this->jsId}";
@@ -265,20 +288,20 @@ if (!class_exists("t")) {
 	        }
 	        if ($this->displayCode("w")) return $this;
 	        
-	        $inline = "class='form-control' id='{$this->jsId}' ng-model='{$this->rawExpression}' "
-	            . ($this->required ? " required " : "")
+	        $inline = "class='form-control' id='{$this->jsId}' ng-model='{$this->fieldGetKey()}' "
+	            . ($this->fieldIsRequired() ? " required " : "")
 	            . $this->options['inline'];
 	
-	        switch($this->type) {
+	        switch($this->fieldGetType()) {
 	            case self::TYPE_LIST:
 	                $count = count($this->listing);
-	                if (!$this->required) $count++;
+	                if (!$this->fieldIsRequired()) $count++;
 	                if ($count <= 6) {
 	                    $i = 0;
 	                    $this->res .= "<table style='width: 100%'><tr><td>";
 	                    foreach($this->listing as $k => $v) {
 	                        $this->res.= ""
-	                            . "<input type='radio' value=\"" . htmlentities($v) . "\" ng-model='{$this->rawExpression}' {$this->options['inline']}>"
+	                            . "<input type='radio' value=\"" . htmlentities($v) . "\" ng-model='{$this->fieldGetKey()}' {$this->options['inline']}>"
 	                            . "$v"
 	                            . "<br>"
 	                            ;
@@ -287,9 +310,9 @@ if (!class_exists("t")) {
 	                        }
 	                        $i++;
 	                    }
-	                    if (!$this->required) {
+	                    if (!$this->fieldIsRequired()) {
 	                        $this->res.= ""
-	                            . "<input type='radio' ng-value='0' ng-model='{$this->rawExpression}' {$this->options['inline']}>"
+	                            . "<input type='radio' ng-value='0' ng-model='{$this->fieldGetKey()}' {$this->options['inline']}>"
 	                            . "?"
 	                            . "<br>"
 	                            ;
@@ -301,17 +324,17 @@ if (!class_exists("t")) {
 	                    foreach($this->listing as $k => $v) {
 	                        $this->res .= "<option value=\"" . htmlentities($v) . "\">$v</option>";
 	                    }
-	                    if (!$this->required) {
+	                    if (!$this->fieldIsRequired()) {
 	                        $this->res .= "<option value='0'>?</option>";
 	                    }
 	                    $this->res .= "</select>";
 	                }
 	                break;
 	            case self::TYPE_TIMESTAMP: 
-	                $this->res .= "<span id='{$this->jsId}'>{{ {$this->rawExpression} | date:'{self::DATETIMEFORMAT}' }}</span>";
+	                $this->res .= "<span id='{$this->jsId}'>{{ {$this->fieldGetKey()} | date:'{self::DATETIMEFORMAT}' }}</span>";
 	                break;
 	            case self::TYPE_BOOLEAN:
-	                $this->res .= "<input type='checkbox' ng-model='{$this->rawExpression}' ng-true-value='1' ng-false-value='0' />";
+	                $this->res .= "<input type='checkbox' ng-model='{$this->fieldGetKey()}' ng-true-value='1' ng-false-value='0' />";
 	                break;
 	            case self::TYPE_INTEGER:
 	                $this->res .= "<input type='number' $inline />";    
@@ -331,7 +354,7 @@ if (!class_exists("t")) {
 	                    . "</span>";
 	                break;
 	            default:
-	                $this->res .= "WW {$this->type} input ";
+	                $this->res .= "WW {$this->fieldGetType()} input ";
 	                var_dump($this->structure);
 	                break;
 	        }
@@ -342,25 +365,12 @@ if (!class_exists("t")) {
 	    	if ($this->options['readOnly']) return $this->read();
 	    	if ($this->options['writeOnly']) return $this->write();
 	    	return $this->read();
-	    	
-	//         if (!array_key_exists("mode", $_REQUEST) || ($_REQUEST['mode'] == "read")) {
-	// 			$this->res .= "<span class='notModeWrite'>";
-	// 			$this->read();
-	// 			$this->res .= "</span>";
-	// 		}
-	
-	//         if (array_key_exists("mode", $_REQUEST) && ($_REQUEST['mode'] == "edit")) {
-	// 			$this->res .= "<span class='notModeRead'>";
-	// 	        $this->write();
-	// 	        $this->res .= "</span>";
-	// 		}
-	        return $this;
 	    }
 	
 	    function tr($label = null) {
 	        if ($label == null) $label = $this->field;
 	
-	        $this->res .= "<tr ng-class='{ emptyValue: !$this->rawExpression}'>\n";
+	        $this->res .= "<tr ng-class='{ emptyValue: !{$this->fieldGetKey()}}'>\n";
 	        $this->res .= " <td>$label</td>\n";
 	        $this->res .= " <td>";
 	        $this->value();
@@ -404,11 +414,10 @@ if (!class_exists("t")) {
 	    
 	    static public function used($sqlTable, $field) {
 	    	if (!array_key_exists($sqlTable, self::$cacheUnused)) {
-				self::cacheSqlStructureFor($sqlTable);
-				self::$cacheUnused[$sqlTable] = self::$sqlAllTableStructure[$sqlTable];
+				self::$cacheUnused[$sqlTable] = self::cacheSqlStructureFor($sqlTable);
 	 			self::used($sqlTable, 'id');
-				self::used($sqlTable, 'created');
-				self::used($sqlTable, 'modified');
+				self::used($sqlTable, 'created_at');
+				self::used($sqlTable, 'updated_at');
 				self::used($sqlTable, 'lastuser');
 	 			self::used($sqlTable, 'patient_id');
 	    	}

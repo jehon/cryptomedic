@@ -27,9 +27,6 @@ try {
 		throw new Exception("Generator " . $generator['runtime'] . " not found");
 	}
 
-	if (count($_REQUEST) > 1) {
-		throw new Exception("Paramters are not allowed: " . implode($_REQUEST));
-	}
 	// TODO CHECK: If we had some parameters, do not save it to file?
 	
 	ob_start();
@@ -38,6 +35,11 @@ try {
 
 	umask(02);
 
+	if (count($_REQUEST) > 1) {
+		echo "Paramters are not allowed: " . implode($_REQUEST);
+		die("File will not be saved");
+	}
+	
 	// create path if necessary - wrong permissions!
 	if (!file_exists(dirname($generator['dest']))) {
 		mkdir(dirname($generator['dest']), 0775, true);

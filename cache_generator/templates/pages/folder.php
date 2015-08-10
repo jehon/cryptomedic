@@ -23,7 +23,7 @@
 			<div class="submenu .container-fluid">
 				<div class="row" ng-if="id() >= 0">
 					<div class="col-sm-4 text-left" style="font-size: x-small">
-						Modified on {{currentFile().modified | date:'yyyy-MM-dd HH:mm:ss' }}
+						Modified on {{currentFile().updated_at | date:'yyyy-MM-dd HH:mm:ss' }}
 						by {{currentFile().lastuser}}
 						<br>
 						{{folder.getMainFile()._type}} #{{folder.getMainFile().id}} @{{page}} -> {{currentFile()._type}} #{{currentFile().id}}
