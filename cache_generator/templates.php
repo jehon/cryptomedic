@@ -46,6 +46,7 @@ if (!class_exists("t")) {
 	    				"mysql:host=" . $generator['database']['pdo_host'] . ";dbname=" . $generator['database']['pdo_schema'],
 	    				$generator['database']['pdo_username'],
 	    				$generator['database']['pdo_password']);
+	    		self::$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	    	} catch (PDOException $e) {
 	    		throw new Exception($e->getMessage());
 	    	}

@@ -35,6 +35,7 @@ function getGlobalConfig($key) {
 		case 'laravelRandomString':
 			return "123";	
 		case 'databaseName':
+			return "amd_chakaria";
 		case 'databaseUsername':
 			return "travis";
 		case 'databasePassword':
