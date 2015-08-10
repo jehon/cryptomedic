@@ -80,9 +80,7 @@ gulp.task('rest-test', [ 'cache-test' ], function() {
         .pipe(plugins.plumber({ errorHandler: plugins.notify.onError("Error during task " + this.seq.slice(-1)[0] + ": <%= error.message %>") }))
         .pipe(plugins.plumber({ errorHandler: function() { process.exit(1); } }))
     	.pipe(plugins.phpunit('./vendor/bin/phpunit', { notify: true }))
-//    	.pipe(plugins.notify(this.seq.slice(-1)[0] + ": done"))
 });
-
 
 //---------------- JS ---------------------------
 
@@ -160,18 +158,19 @@ gulp.task('release-prepare-travis', function(result) {
     });
 });
 
-gulp.task('release-prepare-database', function(result) {
-    var exec = require('child_process').exec;
-    exec('php php/dump.php', function (error, stdout, stderr) {
-	console.log('stdout: ' + stdout);
-	console.log('stderr: ' + stderr);
-	if (error !== null) {
-	    console.log('exec error: ' + error);
-	}
-    });
-});
+//gulp.task('release-prepare-database', function(result) {
+//    var exec = require('child_process').exec;
+//    exec('php php/dump.php', function (error, stdout, stderr) {
+//	console.log('stdout: ' + stdout);
+//	console.log('stderr: ' + stderr);
+//	if (error !== null) {
+//	    console.log('exec error: ' + error);
+//	}
+//    });
+//});
+// , 'release-prepare-database'
 
-gulp.task('release-prepare', [ 'cache-test', 'release-prepare-travis', 'release-prepare-database' ]);
+gulp.task('release-prepare', [ 'cache-test', 'release-prepare-travis' ]);
 
 //gulp.task('minify-css', function() {
 //    gulp.src(allCSS, { base: __dirname + '/cache' })
