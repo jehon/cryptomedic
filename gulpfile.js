@@ -41,7 +41,7 @@ var allCSS = [
 //             "app/static/js/ctrl_*.js"
 //             ];
 
-gulp.task('help', plugins.taskListing);
+//---------------- CACHE ---------------------------
 
 gulp.task('cache-clean', function(cb) {
     shelljs.rm("-fr", "cache/templates/*");
@@ -73,6 +73,8 @@ gulp.task('cache-watch', function() {
     });
 })
 
+// ---------------- REST ---------------------------
+
 gulp.task('rest-test', [ 'cache-test' ], function() {
     gulp.src('rest/phpunit.xml')
         .pipe(plugins.plumber({ errorHandler: plugins.notify.onError("Error during task " + this.seq.slice(-1)[0] + ": <%= error.message %>") }))
@@ -81,6 +83,8 @@ gulp.task('rest-test', [ 'cache-test' ], function() {
 //    	.pipe(plugins.notify(this.seq.slice(-1)[0] + ": done"))
 });
 
+
+//---------------- JS ---------------------------
 
 gulp.task('test-js', [ 'rest-test', 'cache-test' ], function() {
     return gulp.src('')
@@ -92,6 +96,8 @@ gulp.task('test-js', [ 'rest-test', 'cache-test' ], function() {
     .pipe(plugins.notify(this.seq.slice(-1)[0] + ": done"))
 	;
 });
+
+//---------------- BROWSERS ---------------------------
 
 gulp.task('test-chrome', function() {
     return gulp.src('')
@@ -105,8 +111,6 @@ gulp.task('test-chrome', function() {
     .pipe(plugins.notify(this.seq.slice(-1)[0] + ": done"))
 	;
 });
-
-gulp.task('test', [ 'test-js', 'test-php' ]);
 
 gulp.task('test-phantomjs', function() {
     return gulp.src('')
@@ -129,6 +133,8 @@ gulp.task('test-live', function() {
     }))
    .pipe(plugins.notify(this.seq.slice(-1)[0] + ": done"));
 });
+
+//---------------- RELEASE MANAGEMENT ---------------------------
 
 gulp.task('release-prepare-travis', function(result) {
     var fs = require('fs');
@@ -185,4 +191,11 @@ gulp.task('release-prepare', [ 'cache-test', 'release-prepare-travis', 'release-
 //        .pipe(gulp.dest('cache/'));
 //});
 
+// ---------------- GENERIC TASKS ---------------------------
+
+//gulp.task('test', [ 'test-js', 'test-php' ]);
+gulp.task('help', plugins.taskListing);
+gulp.task('clean', [ 'cache-clean' ]);
+gulp.task('test', [ 'cache-test' ]);
+gulp.task('watch', [ 'cache-watch' ]);
 gulp.task('default', [ 'help' ]);
