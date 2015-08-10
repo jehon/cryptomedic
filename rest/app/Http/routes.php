@@ -29,28 +29,30 @@ Response::macro('folder', function($id, $addData = array()) {
 	return response()->jsonOrJSONP(array_merge(getFolder($id), $addData));
 });
 
-function getFolder($id) {
-	$master = [];
-	$master['_type'] = 'Folder';
-	$master['id'] = $id;
-	$master['mainFile'] = DB::table('patients')->where('id', $id)->first();
-	if (!$master['mainFile']) {
-		abort(404);
-	}
-	$master['mainFile']->_type = 'Patient';
-	
-	$master['subFiles'] = array();
-	
-	foreach(References::$model2db as $m => $c) {
-		if ($c == "patients") continue;
-			
-		$r = DB::select("SELECT * FROM $c WHERE patient_id = :patient_id", array('patient_id' => $id));
-		foreach($r as $ri => $rv) {
-			$rv->_type = References::db2model($c);
-			$master['subFiles'][] = $rv;
+if (!function_exists("getFolder")) {
+	function getFolder($id) {
+		$master = [];
+		$master['_type'] = 'Folder';
+		$master['id'] = $id;
+		$master['mainFile'] = DB::table('patients')->where('id', $id)->first();
+		if (!$master['mainFile']) {
+			abort(404);
 		}
+		$master['mainFile']->_type = 'Patient';
+		
+		$master['subFiles'] = array();
+		
+		foreach(References::$model2db as $m => $c) {
+			if ($c == "patients") continue;
+				
+			$r = DB::select("SELECT * FROM $c WHERE patient_id = :patient_id", array('patient_id' => $id));
+			foreach($r as $ri => $rv) {
+				$rv->_type = References::db2model($c);
+				$master['subFiles'][] = $rv;
+			}
+		}
+		return $master;
 	}
-	return $master;
 }
 
 /**
