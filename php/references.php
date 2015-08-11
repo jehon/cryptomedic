@@ -15,17 +15,17 @@ class References {
     static $model_listing = array();
 
     static function model2db($model) {
-        if (array_key_exists($model, self::$model2db))
-            return self::$model2db[$model];
+        if (array_key_exists($model, static::$model2db))
+            return static::$model2db[$model];
         return $model;
     }
 
     static function db2model($dbName) {
-        if (array_search($dbName, self::$model2db) === false) {
+        if (array_search($dbName, static::$model2db) === false) {
             return $dbName;
         }
         else {
-            return array_search($dbName, self::$model2db);
+            return array_search($dbName, static::$model2db);
         }
     }
 

@@ -68,8 +68,10 @@ class AuthController extends Controller {
 			case "manager":
 				$data['authorized'][] = "folder.edit";
 				$data['authorized'][] = "folder.delete";
-				// and the rights of cdc:
+				break;
 			case "cdc":
+				$data['authorized'][] = "folder.edit";
+				$data['authorized'][] = "folder.delete";
 				$data['authorized'][] = "folder.unlock";
 				break;
 				

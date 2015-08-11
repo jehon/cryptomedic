@@ -1,4 +1,4 @@
-<h1>Add a file</h1>
+<?php ?><h1>Add a file</h1>
 Here, you can add a new file to the patient: bill, consult, ...<br/>
 
 <a ng-href="#/folder/{{id()}}/Bill/add" class="btn btn-default">

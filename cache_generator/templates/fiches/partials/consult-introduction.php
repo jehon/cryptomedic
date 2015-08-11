@@ -1,4 +1,4 @@
-<fieldset>
+<?php ?><fieldset>
 	<legend>General data</legend>
 	<table>
 		<?php (new t("Date"))->tr("Date")->p(); ?>

@@ -1,9 +1,9 @@
 <?php 
-	die("TODO: Not implemented");
+	throw new Exception("TODO: Not implemented");
 	
-	if (!defined("REST_LOADED")) { 
-	        throw new Exception("Ca va pas la tete?"); 
-	}
+// 	if (!defined("REST_LOADED")) { 
+// 	        throw new Exception("Ca va pas la tete?"); 
+// 	}
 ?>
 
 <table class='reporting' style='width: 100%'>

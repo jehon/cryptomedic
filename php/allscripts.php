@@ -52,11 +52,13 @@ class Script {
 	}
 
 	function css() {
-		$this->type = "css"; return $this;
+		$this->type = "css"; 
+		return $this;
 	}
 
 	function js() {
-		$this->type = "js"; return $this;
+		$this->type = "js"; 
+		return $this;
 	}
 
 	function live() {
@@ -68,7 +70,7 @@ class Script {
 		if ($file == null) {
 			$file = $this->_url;
 		}
-		$file = self::$rootPath . "/" . $file;
+		$file = static::$rootPath . "/" . $file;
 		if (!file_exists($file)) {
 			throw new Exception("Script: $file does not exists");
 		}
@@ -88,10 +90,10 @@ class Script {
 		}
 
 		switch($this->type) {
-			case self::TYPE_JS:
+			case static::TYPE_JS:
 				echo "<script type='text/javascript' src='$url'></script>\n";
 				break;
-			case self::TYPE_CSS:
+			case static::TYPE_CSS:
 				echo "<link rel='stylesheet' href='$url'/>\n";
 				break;
 			default:

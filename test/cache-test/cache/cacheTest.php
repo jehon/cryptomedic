@@ -23,7 +23,7 @@ class CacheTest extends PHPUnit_Framework_TestCase
 	}
 	
 	/**
-	 * @runInSeparateProcess
+	 * @   runInSeparateProcess
 	 */
 	public function testManifest()
 	{	

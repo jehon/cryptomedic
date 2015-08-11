@@ -12,7 +12,9 @@ class MyFiles {
     static function glob($glob, $recursive = false) {
     	$pattern = basename($glob);
     	$path = dirname($glob);
-		if ($path == DIRECTORY_SEPARATOR) return ".";
+		if ($path == DIRECTORY_SEPARATOR) {
+			return ".";
+		}
     	
     	$handle = opendir($path);
     	if ($handle === false) {
@@ -27,12 +29,14 @@ class MyFiles {
         	if ($file == "..") {
                 continue;
             }
-			if (in_array($file, self::$excludes)) continue;
+			if (in_array($file, static::$excludes)) {
+				continue;
+			}
             if (is_file(dirname($glob) . DIRECTORY_SEPARATOR . $file) && fnmatch($pattern, $file)) {
         		$list[] = $path . DIRECTORY_SEPARATOR . $file;
         	}
         	if (is_dir(dirname($glob) . DIRECTORY_SEPARATOR . $file) && $recursive) {
-        		$res = self::glob(dirname($glob) . DIRECTORY_SEPARATOR . $file . DIRECTORY_SEPARATOR . basename($glob), $recursive);
+        		$res = static::glob(dirname($glob) . DIRECTORY_SEPARATOR . $file . DIRECTORY_SEPARATOR . basename($glob), $recursive);
         		$list = array_merge($list, $res);
         	}
         }

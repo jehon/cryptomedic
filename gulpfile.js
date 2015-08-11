@@ -18,12 +18,12 @@ process.on('exit', function (status) {
 /*
  * Some variables
  */
-var allCSS = [ 
-               "app/bower_components/jquery-ui/themes/ui-lightness/jquery-ui.min.css",
-               "app/bower_components/bootstrap/dist/css/bootstrap.min.css",
-               "app/static/css/application.css" 
-              ];
-
+//var allCSS = [ 
+//               "app/bower_components/jquery-ui/themes/ui-lightness/jquery-ui.min.css",
+//               "app/bower_components/bootstrap/dist/css/bootstrap.min.css",
+//               "app/static/css/application.css" 
+//              ];
+//
 //var allJS = [
 //             "app/bower_components/jquery/dist/jquery.min.js",
 //             "app/bower_components/jquery-ui/jquery-ui.min.js",
@@ -49,7 +49,7 @@ gulp.task('cache-clean', function(cb) {
 });
 
 gulp.task('cache-test', function() {
-    gulp.src('test/phpunit/phpunit.xml')
+    gulp.src('test/cache-test/phpunit.xml')
     	.pipe(plugins.plumber({ errorHandler: plugins.notify.onError("Error during task " + this.seq.slice(-1)[0] + ": <%= error.message %>") }))
     	.pipe(plugins.plumber({ errorHandler: function() { process.exit(1); } }))
     	.pipe(plugins.phpunit('./vendor/bin/phpunit', { notify: true }))
@@ -158,37 +158,26 @@ gulp.task('release-prepare-travis', function(result) {
     });
 });
 
-//gulp.task('release-prepare-database', function(result) {
-//    var exec = require('child_process').exec;
-//    exec('php php/dump.php', function (error, stdout, stderr) {
-//	console.log('stdout: ' + stdout);
-//	console.log('stderr: ' + stderr);
-//	if (error !== null) {
-//	    console.log('exec error: ' + error);
-//	}
-//    });
-//});
-// , 'release-prepare-database'
+gulp.task('release-prepare-sonar', [ 'test' ], function(result) {
+    var package_json = JSON.parse(require('fs').readFileSync('package.json', 'utf8'));
+    var spawn = require('child_process').spawn;
+    var sr = spawn('sonarrunner', 
+	    [ 
+	      '-Dsonar.projectVersion=' + package_json.version, 
+	      '-Dproject.settings=test/sonar-project.properties',
+	      '-Dsonar.scm.disabled=true'
+	    ], 
+	    {
+		stdio: 'inherit'
+	    });
+    sr.on('exit', function(returnCode) {
+	console.log(returnCode);
+	result();
+    });
+});
 
-gulp.task('release-prepare', [ 'cache-test', 'release-prepare-travis' ]);
+gulp.task('release-prepare', [ 'test', 'release-prepare-travis', 'release-prepare-sonar' ]);
 
-//gulp.task('minify-css', function() {
-//    gulp.src(allCSS, { base: __dirname + '/cache' })
-//    	.pipe(plugins.sourcemaps.init())
-//    	.pipe(plugins.concatCss('application.min.css'))
-//    	.pipe(plugins.minifyCss())
-//    	.pipe(plugins.sourcemaps.write()) //'cache/application.min.css.map'
-//    	.pipe(gulp.dest('cache/'));
-//});
-//
-//gulp.task('minify-js', function() {
-//    gulp.src(allJS)
-//        .pipe(plugins.sourcemaps.init())
-//        .pipe(plugins.concat('application.min.js'))
-//        .pipe(plugins.uglify())
-//        .pipe(plugins.sourcemaps.write())
-//        .pipe(gulp.dest('cache/'));
-//});
 
 // ---------------- GENERIC TASKS ---------------------------
 
@@ -198,3 +187,73 @@ gulp.task('clean', [ 'cache-clean' ]);
 gulp.task('test', [ 'cache-test' ]);
 gulp.task('watch', [ 'cache-watch' ]);
 gulp.task('default', [ 'help' ]);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//gulp.task('release-prepare-database', function(result) {
+//  var exec = require('child_process').exec;
+//  exec('php php/dump.php', function (error, stdout, stderr) {
+//	console.log('stdout: ' + stdout);
+//	console.log('stderr: ' + stderr);
+//	if (error !== null) {
+//	    console.log('exec error: ' + error);
+//	}
+//  });
+//});
+//, 'release-prepare-database'
+
+//gulp.task('minify-css', function() {
+//  gulp.src(allCSS, { base: __dirname + '/cache' })
+//  	.pipe(plugins.sourcemaps.init())
+//  	.pipe(plugins.concatCss('application.min.css'))
+//  	.pipe(plugins.minifyCss())
+//  	.pipe(plugins.sourcemaps.write()) //'cache/application.min.css.map'
+//  	.pipe(gulp.dest('cache/'));
+//});
+//
+//gulp.task('minify-js', function() {
+//  gulp.src(allJS)
+//      .pipe(plugins.sourcemaps.init())
+//      .pipe(plugins.concat('application.min.js'))
+//      .pipe(plugins.uglify())
+//      .pipe(plugins.sourcemaps.write())
+//      .pipe(gulp.dest('cache/'));
+//});
+

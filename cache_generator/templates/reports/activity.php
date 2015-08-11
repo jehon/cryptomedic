@@ -1,4 +1,4 @@
-<div myready>
+<?php ?><div myready>
     <table class='reporting'>
         <thead>
             <tr>

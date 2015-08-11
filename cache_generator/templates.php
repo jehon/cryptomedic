@@ -42,45 +42,45 @@ if (!class_exists("t")) {
 	    static function initialize() {
 	    	global $generator;
 	    	try {
-	    		self::$pdo = new PDO(
+	    		static::$pdo = new PDO(
 	    				"mysql:host=" . $generator['database']['pdo_host'] . ";dbname=" . $generator['database']['pdo_schema'],
 	    				$generator['database']['pdo_username'],
 	    				$generator['database']['pdo_password']);
-	    		self::$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	    		static::$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	    	} catch (PDOException $e) {
-	    		throw new Exception($e->getMessage());
+	    		throw new Exception($e->getMessage()); // @codeCoverageIgnore
 	    	}
 	    }
 	    
 	    static function setDefaultOption($key, $val = true) {
-	        if (!array_key_exists($key, self::$defaultOptions)) {
-	            return trace("Setting unsupported option: $key");
+	        if (!array_key_exists($key, static::$defaultOptions)) {
+	            return trace("Setting unsupported option: $key"); // @codeCoverageIgnore
 	        }
-	        self::$defaultOptions[$key] = $val;
+	        static::$defaultOptions[$key] = $val;
 	    }
 	
-	    static function setDefaultOptions(array $defaultOptions) {
-	        foreach($defaultOptions as $key => $val)
-	            self::setDefaultOption($key, $val);
-	    }
+// 	    static function setDefaultOptions(array $defaultOptions) {
+// 	        foreach($defaultOptions as $key => $val)
+// 	            static::setDefaultOption($key, $val);
+// 	    }
 	
 	    static function UUID()  {
-	        self::$uuid++;
-	        return self::$uuid;
+	        static::$uuid++;
+	        return static::$uuid;
 	    }
 	
 	    static function cacheSqlStructureFor($sqlTable) {
-	    	if (!array_key_exists($sqlTable, self::$sqlAllTableStructure)) {
-	    		self::$sqlAllTableStructure[$sqlTable] = array();
-	    		foreach(self::$pdo->query("SHOW COLUMNS FROM `{$sqlTable}`") as $row) {
-	    			self::$sqlAllTableStructure[$sqlTable][$row['Field']] = $row;
+	    	if (!array_key_exists($sqlTable, static::$sqlAllTableStructure)) {
+	    		static::$sqlAllTableStructure[$sqlTable] = array();
+	    		foreach(static::$pdo->query("SHOW COLUMNS FROM `{$sqlTable}`") as $row) {
+	    			static::$sqlAllTableStructure[$sqlTable][$row['Field']] = $row;
 	    		}
 	    	}
-	    	return self::$sqlAllTableStructure[$sqlTable];
+	    	return static::$sqlAllTableStructure[$sqlTable];
 	    }
 	    
 	    static function getColumnsOfTable($sqlTable) {
-	    	return array_keys(self::cacheSqlStructureFor($sqlTable));
+	    	return array_keys(static::cacheSqlStructureFor($sqlTable));
 	    }
 	    
 	    var $key;
@@ -95,13 +95,7 @@ if (!class_exists("t")) {
 	        $this->jsId = str_replace([".", "#", " ", "/", "\\" ], "_", $this->key);
 	        $this->options = $options;
 	        $this->field = $key;
-	        
-	        if (!is_array($options)) {
-	            trace("options are not an array");
-	            $this->options = array();
-	        }
-	
-	        $this->options = array_merge(self::$defaultOptions, $this->options);
+	        $this->options = array_merge(static::$defaultOptions, $this->options);
 	        
 	        $data = explode(".", $this->key);
 	        if (count($data) != 2) {
@@ -119,15 +113,15 @@ if (!class_exists("t")) {
 	
 			$this->sqlTable = References::model2db($this->model);
 			
-			self::cacheSqlStructureFor($this->sqlTable);
+			static::cacheSqlStructureFor($this->sqlTable);
 			
-			if (!in_array($this->field, self::getColumnsOfTable($this->sqlTable))) {
+			if (!in_array($this->field, static::getColumnsOfTable($this->sqlTable))) {
 	            $this->linked2DB = false;
 	            return ;
 	        }
 	        $this->linked2DB = true;
 	         
-	        $this->structure = self::$sqlAllTableStructure[$this->sqlTable][$this->field];
+	        $this->structure = static::$sqlAllTableStructure[$this->sqlTable][$this->field];
 	
 	        $this->used($this->sqlTable, $this->field);
 	                
@@ -135,23 +129,23 @@ if (!class_exists("t")) {
 	        $this->isListLinked = false;
 	        $header = $this->model . "." . $this->field;
 	        if (array_key_exists("list", $options) && $options['list']) {
-	        	$this->struct_type = self::TYPE_LIST;
+	        	$this->struct_type = static::TYPE_LIST;
 	        	$this->isList = true;
 	        	$this->listing = $options['list'];
 	        } else if (array_key_exists($header, References::$model_listing)) {
 	        	// Model.Field specific list
-	            $this->struct_type = self::TYPE_LIST;
+	            $this->struct_type = static::TYPE_LIST;
 	            $this->isList = true;
 	            $this->listing = References::$model_listing[$header];
 	        } else if (array_key_exists("*.{$this->field}", References::$model_listing)) {
 	        	// *.Field generic list
-	            $this->struct_type = self::TYPE_LIST;
+	            $this->struct_type = static::TYPE_LIST;
 	            $this->isList = true;
 	            $this->listing = References::$model_listing["*.{$this->field}"];
 	        } else {
 				$matches = array();
 				if (false === preg_match("/([a-z]+)(\(([0-9]+)\)(.*[a-zA-Z]+)?)?/", strtolower($this->structure['Type']), $matches)) {
-					die("Error in preg_match");
+					throw new Exception("Error in preg_match"); // @codeCoverageIgnore
 				}
 				/* 
 				 * ==== $matches ====
@@ -167,36 +161,30 @@ if (!class_exists("t")) {
 				// Special case:
 				switch($this->struct_type) {
 	                case "date":
-                        $this->struct_type = self::TYPE_DATE;
+                        $this->struct_type = static::TYPE_DATE;
                         break;
 	                case "tinyint":
 	                case "int":
 						if ($this->struct_length == 1) {
-							$this->struct_type = self::TYPE_BOOLEAN;
+							$this->struct_type = static::TYPE_BOOLEAN;
 						} else {
-	                		$this->struct_type = self::TYPE_INTEGER;
+	                		$this->struct_type = static::TYPE_INTEGER;
 						}
 	                	break;
 	                case "varchar":
 	                	if ($this->struct_length >= 800) {
 	                		// Long text = blob
-	                		$this->struct_type = self::TYPE_TEXT;
+	                		$this->struct_type = static::TYPE_TEXT;
 	                	} else {
-	                		$this->struct_type = self::TYPE_CHAR;
+	                		$this->struct_type = static::TYPE_CHAR;
 	                	}
 						break;
 	                case "mediumtext":
-	                	$this->struct_type = self::TYPE_TEXT;
+	                	$this->struct_type = static::TYPE_TEXT;
 	                	break;
 					case "timestamp":
-	                	$this->struct_type = self::TYPE_TIMESTAMP;
+	                	$this->struct_type = static::TYPE_TIMESTAMP;
 	                    break;
-//                  case "LONG":
-//                         $this->type = self::TYPE_INTEGER;
-//                         break;  
-// 	                case "BLOB":
-// 	                    $this->type = self::TYPE_TEXT;
-// 	                     break;
 	                default:
 	                    echo "Unhandled type in __construct: {$this->struct_type}";
 	                    var_dump($this->structure);
@@ -229,7 +217,7 @@ if (!class_exists("t")) {
 				$this->res .= ($this->linked2DB ? "db" : "##");
 				$this->res .= "-" . $this->model . "." . $this->field; 
 				$this->res .= ":" . $this->fieldGetType();
-				if ($this->fieldGetType() == self::TYPE_LIST) {
+				if ($this->fieldGetType() == static::TYPE_LIST) {
 					$this->res .= "(";
 					foreach($this->listing as $k => $v) { 
 						$this->res .= $v . ","; 
@@ -249,30 +237,32 @@ if (!class_exists("t")) {
 	            $this->res .= "<span id='{$this->jsId}' class='error'>Read: key is not in the database: '{$this->key}'</span>";
 	            return $this;
 	        }
-			if ($this->displayCode("r")) return $this;
+			if ($this->displayCode("r")) {
+				return $this;
+			}
 	        
 	        switch($this->fieldGetType()) {
-	            case self::TYPE_TIMESTAMP: 
+	            case static::TYPE_TIMESTAMP: 
 	                    // See https://docs.angularjs.org/api/ng/filter/date
-	                    $this->res .= "<span id='{$this->jsId}'>{{ {$this->fieldGetKey()} | date:'{self::DATETIMEFORMAT}' }}</span>";
+	                    $this->res .= "<span id='{$this->jsId}'>{{ {$this->fieldGetKey()} | date:'{static::DATETIMEFORMAT}' }}</span>";
 	                    break;
-	            case self::TYPE_BOOLEAN:
+	            case static::TYPE_BOOLEAN:
 	                $this->res .= "<span id='{$this->jsId}' ng-show='{$this->fieldGetKey()}'><img src='static/img/boolean-true.gif'></span>"
 	                        . "<span id='{$this->jsId}' ng-hide='{$this->fieldGetKey()}'><img src='static/img/boolean-false.gif'></span>";
 	                break;
-	            case self::TYPE_LIST:
+	            case static::TYPE_LIST:
 	                $this->res .= "<span id='{$this->jsId}'>{{ {$this->fieldGetKey()} }}</span>";
 	                break;
-	            case self::TYPE_DATE:
+	            case static::TYPE_DATE:
 	            // TODOJH: recheck this later - Workaround!!!
 	            //     // See https://docs.angularjs.org/api/ng/filter/date
-	            //     $this->res .= "<span id='{$this->jsId}'>{{ {$this->fieldGetKey()} | date:'{self::DATEFORMAT}' }}</span>";
+	            //     $this->res .= "<span id='{$this->jsId}'>{{ {$this->fieldGetKey()} | date:'{static::DATEFORMAT}' }}</span>";
 	            //     break;
-	            case self::TYPE_INTEGER:
-	            case self::TYPE_CHAR:
+	            case static::TYPE_INTEGER:
+	            case static::TYPE_CHAR:
 	            	$this->res .= "<span id='{$this->jsId}'>{{ {$this->fieldGetKey()} }}</span>";
 	                break;
-	            case self::TYPE_TEXT:
+	            case static::TYPE_TEXT:
 	                $this->res .= "<span id='{$this->jsId}' style='white-space: pre'>{{ {$this->fieldGetKey()} }}</span>";
 	                break;
 	            default:
@@ -287,16 +277,20 @@ if (!class_exists("t")) {
 	            $this->res .= "<span id='{$this->jsId}'class='error'>Write: key is not in the database: '{$this->key}'</span>";
 	            return $this;
 	        }
-	        if ($this->displayCode("w")) return $this;
+	        if ($this->displayCode("w")) {
+	        	return $this;
+	        }
 	        
 	        $inline = "class='form-control' id='{$this->jsId}' ng-model='{$this->fieldGetKey()}' "
 	            . ($this->fieldIsRequired() ? " required " : "")
 	            . $this->options['inline'];
 	
 	        switch($this->fieldGetType()) {
-	            case self::TYPE_LIST:
+	            case static::TYPE_LIST:
 	                $count = count($this->listing);
-	                if (!$this->fieldIsRequired()) $count++;
+	                if (!$this->fieldIsRequired()) {
+	                	$count++;
+	                }
 	                if ($count <= 6) {
 	                    $i = 0;
 	                    $this->res .= "<table style='width: 100%'><tr><td>";
@@ -331,24 +325,24 @@ if (!class_exists("t")) {
 	                    $this->res .= "</select>";
 	                }
 	                break;
-	            case self::TYPE_TIMESTAMP: 
-	                $this->res .= "<span id='{$this->jsId}'>{{ {$this->fieldGetKey()} | date:'{self::DATETIMEFORMAT}' }}</span>";
+	            case static::TYPE_TIMESTAMP: 
+	                $this->res .= "<span id='{$this->jsId}'>{{ {$this->fieldGetKey()} | date:'{static::DATETIMEFORMAT}' }}</span>";
 	                break;
-	            case self::TYPE_BOOLEAN:
+	            case static::TYPE_BOOLEAN:
 	                $this->res .= "<input type='checkbox' ng-model='{$this->fieldGetKey()}' ng-true-value='1' ng-false-value='0' />";
 	                break;
-	            case self::TYPE_INTEGER:
+	            case static::TYPE_INTEGER:
 	                $this->res .= "<input type='number' $inline />";    
 	                break;  
-	            case self::TYPE_TEXT:
+	            case static::TYPE_TEXT:
 	                $this->res .= "<textarea cols=40 rows=4 $inline></textarea>";
 	                break;
-	            case self::TYPE_CHAR:
+	            case static::TYPE_CHAR:
 	                $this->res .= "<input $inline />";
 	                break;
-	            case self::TYPE_DATE:
+	            case static::TYPE_DATE:
 	                // TODOJH: date workaround
-	                $uuid = self::UUID();
+	                $uuid = static::UUID();
 	                $this->res .= "<input id='{$this->jsId}' type='text' $inline placeholder='yyyy-MM-dd' mycalendar uuid='$uuid'/>";
 	                $this->res .= "<span ng-if='errors.date_$uuid' class='jserror'>"
 	                    . "Invalid date: please enter yyyy-mm-dd"
@@ -363,8 +357,12 @@ if (!class_exists("t")) {
 	    }
 	
 	    function value() {
-	    	if ($this->options['readOnly']) return $this->read();
-	    	if ($this->options['writeOnly']) return $this->write();
+	    	if ($this->options['readOnly']) {
+	    		return $this->read();
+	    	}
+	    	if ($this->options['writeOnly']) {
+	    		return $this->write();
+	    	}
 	    	return $this->read();
 	    }
 	
@@ -381,14 +379,18 @@ if (!class_exists("t")) {
 	    }
 	
 	    function trRightLeft($label = null) {
-	        if ($label == null) $label = str_replace("?", "", $this->key);
-	        if (strpos($this->key, "?") === false) $this->key = $this->key . "?";
+	        if ($label == null) {
+	        	$label = str_replace("?", "", $this->key);
+	        }
+	        if (strpos($this->key, "?") === false) {
+	        	$this->key = $this->key . "?";
+	        }
 	
 	        $left = new t(str_replace("?", "Left", $this->key), $this->options);
 	        $right = new t(str_replace("?", "Right", $this->key), $this->options);
 	        
 	        $this->res .= "<tr ng-class='{ emptyValue: !{$left->rawExpression} && !{$right->rawExpression} }'>\n";
-	            $this->res .= " <td>$label</td>\n";
+	        	$this->res .= " <td>$label</td>\n";
 	            $this->res .= " <td>" . $right->value()->getText() . "</td>\n";
 	            $this->res .= " <td>" . $left->value()->getText() . "</td>\n";
 	            $this->res .= "</tr>\n";
@@ -414,16 +416,16 @@ if (!class_exists("t")) {
 	    }
 	    
 	    static public function used($sqlTable, $field) {
-	    	if (!array_key_exists($sqlTable, self::$cacheUnused)) {
-				self::$cacheUnused[$sqlTable] = self::cacheSqlStructureFor($sqlTable);
-	 			self::used($sqlTable, 'id');
-				self::used($sqlTable, 'created_at');
-				self::used($sqlTable, 'updated_at');
-				self::used($sqlTable, 'lastuser');
-	 			self::used($sqlTable, 'patient_id');
+	    	if (!array_key_exists($sqlTable, static::$cacheUnused)) {
+				static::$cacheUnused[$sqlTable] = static::cacheSqlStructureFor($sqlTable);
+	 			static::used($sqlTable, 'id');
+				static::used($sqlTable, 'created_at');
+				static::used($sqlTable, 'updated_at');
+				static::used($sqlTable, 'lastuser');
+	 			static::used($sqlTable, 'patient_id');
 	    	}
-	    	if (array_key_exists($field, self::$cacheUnused[$sqlTable])) {
-	    		unset(self::$cacheUnused[$sqlTable][$field]);
+	    	if (array_key_exists($field, static::$cacheUnused[$sqlTable])) {
+	    		unset(static::$cacheUnused[$sqlTable][$field]);
 	    	}
 	    }
 	    
@@ -432,17 +434,17 @@ if (!class_exists("t")) {
 	
 	    	$table = $_REQUEST['_unused'];
 	    	echo "<h1>Unused fields for $table</h1>";
-	    	if (array_key_exists($table, self::$cacheUnused)) {
-		    	foreach(self::$cacheUnused[$table] as $field => $meta) {
+	    	if (array_key_exists($table, static::$cacheUnused)) {
+		    	foreach(static::$cacheUnused[$table] as $field => $meta) {
 		    		echo "$field\n";
-		    		$res = self::$pdo->query("SELECT count(*) as n, $field as val FROM $table GROUP BY $field ORDER BY count(*) DESC LIMIT 5");
+		    		$res = static::$pdo->query("SELECT count(*) as n, $field as val FROM $table GROUP BY $field ORDER BY count(*) DESC LIMIT 5");
 					echo "<table>";
 					foreach($res as $rec) {
 						echo "<tr><td>{$rec['n']}</td><td>{$rec['val']}</td></tr>";
 					}
 					echo "</table>";
 	
-					$stmt = self::$pdo->prepare("SELECT `CONSTRAINT_NAME` as k FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE "
+					$stmt = static::$pdo->prepare("SELECT `CONSTRAINT_NAME` as k FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE "
 							. "WHERE `CONSTRAINT_SCHEMA` = :schema AND `TABLE_NAME` = :table AND `COLUMN_NAME` = :column");
 					$res = $stmt->execute(array("schema" => $config['database']['pdo_schema'], "table" => $table, "column" => $field));
 					if ($res) {

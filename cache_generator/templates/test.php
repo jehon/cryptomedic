@@ -1,7 +1,5 @@
-<h1>List of all templates</h1>
-
+<?php ?><h1>List of all templates</h1>
 <?php
-
 if (!isset($_SERVER['HTTP_HOST']) || strcasecmp(substr($_SERVER['HTTP_HOST'], 0, 9), "localhost") >= 0) {
 	function testOne($f) {
 		if (is_dir($f)) {

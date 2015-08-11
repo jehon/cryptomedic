@@ -1,4 +1,4 @@
-<table class='summary table table-striped'>
+<?php ?><table class='summary table table-striped'>
 	<thead>
 		<tr>
 			<th></th>

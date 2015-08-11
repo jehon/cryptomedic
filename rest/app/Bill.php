@@ -47,10 +47,10 @@ class Bill extends CryptomedicModel {
 	public static function getFieldsList($filter, $fieldList = null) {
 		$res = array();
 		if ($fieldList == null) {
-			$fieldList = self::getTableColumnsList();
+			$fieldList = static::getTableColumnsList();
 		}
 		foreach($fieldList as $v) {
-			if (self::is($v, $filter)) {
+			if (static::is($v, $filter)) {
 				$res[] = $v;								
 			}
 		}
@@ -60,8 +60,8 @@ class Bill extends CryptomedicModel {
 	
 	public static function getSQLFieldsSum($filter) {
 		$list = "( 0 ";
-		foreach(self::getTableColumnsList() as $v) {
-			if (self::is($v, $filter)) {
+		foreach(static::getTableColumnsList() as $v) {
+			if (static::is($v, $filter)) {
 				$list .= " + (prices.`$v` * bills.`$v`)";
 			}
 		}
@@ -103,11 +103,11 @@ class Bill extends CryptomedicModel {
 
 	public static function getSQLTreatment() {
 		return "TRIM(CONCAT(" .
-				"IF(" . self::getSQLFieldsSum(self::CAT_MEDECINE) . ", 'Med ', '')" .
+				"IF(" . static::getSQLFieldsSum(static::CAT_MEDECINE) . ", 'Med ', '')" .
 				", " .
-				"IF(" . self::getSQLFieldsSum(self::CAT_WORKSHOP) . ", 'WS ', '')" .
+				"IF(" . static::getSQLFieldsSum(static::CAT_WORKSHOP) . ", 'WS ', '')" .
 				", " .
-				"IF(" . self::getSQLFieldsSum(self::CAT_SURGICAL) . ", 'Surg ', '')" .
+				"IF(" . static::getSQLFieldsSum(static::CAT_SURGICAL) . ", 'Surg ', '')" .
 				", " .
 				"IF(bills.other_making_plaster + bills.other_make_long_plaster + bills.other_make_short_plaster, 'Plast ', '')" .
 				", " .

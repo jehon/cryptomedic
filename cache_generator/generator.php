@@ -35,10 +35,10 @@ try {
 
 	umask(02);
 
-	if (count($_REQUEST) > 1) {
-		echo "Paramters are not allowed: " . implode($_REQUEST);
-		die("File will not be saved");
-	}
+// 	if (count($_REQUEST) > 1) {
+// 		echo "Paramters are not allowed: " . implode($_REQUEST);
+// 		die("File will not be saved");
+// 	}
 	
 	// create path if necessary - wrong permissions!
 	if (!file_exists(dirname($generator['dest']))) {
