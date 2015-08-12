@@ -54,7 +54,7 @@ class ReportActivityController extends ReportController {
 //				exists(select * from bills as b2 where b2.patient_id = bills.patient_id and b2.Date < :whenFrom12) as mOLD 
 
 		$this->result['totals'] = array();
-		foreach($this->result['list'] as $i => $e) {
+		foreach($this->result['list'] as $e) {
 			foreach($e as $k => $v) {
 				if (!array_key_exists($k, $this->result['totals'])) {
 					$this->result['totals'][$k] = 0;

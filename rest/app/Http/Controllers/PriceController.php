@@ -13,7 +13,7 @@ class PriceController extends Controller {
 	{
 		$listing = DB::table('prices')->orderBy('id', 'ASC')->get();
 		$nlisting = array();
-		foreach($listing as $k => $v) 
+		foreach($listing as $v) 
 		{
 			$nlisting[$v->id] = $v;
 		}

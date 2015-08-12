@@ -42,11 +42,11 @@ if (!function_exists("getFolder")) {
 		
 		$master['subFiles'] = array();
 		
-		foreach(References::$model2db as $m => $c) {
+		foreach(References::$model2db as $c) {
 			if ($c == "patients") continue;
 				
 			$r = DB::select("SELECT * FROM $c WHERE patient_id = :patient_id", array('patient_id' => $id));
-			foreach($r as $ri => $rv) {
+			foreach($r as $rv) {
 				$rv->_type = References::db2model($c);
 				$master['subFiles'][] = $rv;
 			}

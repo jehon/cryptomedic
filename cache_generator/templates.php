@@ -219,7 +219,7 @@ if (!class_exists("t")) {
 				$this->res .= ":" . $this->fieldGetType();
 				if ($this->fieldGetType() == static::TYPE_LIST) {
 					$this->res .= "(";
-					foreach($this->listing as $k => $v) { 
+					foreach($this->listing as $v) { 
 						$this->res .= $v . ","; 
 					}
 					$this->res .= ")";
@@ -316,7 +316,7 @@ if (!class_exists("t")) {
 	                    $this->res .= "</td></tr></table>";
 	                } else {
 	                    $this->res .= "<select $inline>";
-	                    foreach($this->listing as $k => $v) {
+	                    foreach($this->listing as $v) {
 	                        $this->res .= "<option value=\"" . htmlentities($v) . "\">$v</option>";
 	                    }
 	                    if (!$this->fieldIsRequired()) {

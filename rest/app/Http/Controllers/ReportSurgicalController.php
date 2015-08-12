@@ -50,7 +50,7 @@ class ReportSurgicalController extends ReportController {
 		);
 
 		$this->result['totals'] = array();
-		foreach($this->result['list'] as $i => $e) {
+		foreach($this->result['list'] as $e) {
 			foreach($e as $k => $v) {
 				if (!array_key_exists($k, $this->result['totals'])) {
 					$this->result['totals'][$k] = 0;
