@@ -9,7 +9,7 @@ CREATE TABLE `log_computers` (
  `useragent` varchar(255) DEFAULT NULL,
  	PRIMARY KEY (`id`),
  	UNIQUE KEY `computer_id` (`computer_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 ALTER TABLE `log_computers` ADD `last_sync` VARCHAR(100) NULL ; 
 ALTER TABLE `log_computers` ADD `last_sync_final` TINYINT(1) NOT NULL DEFAULT '0' ; 

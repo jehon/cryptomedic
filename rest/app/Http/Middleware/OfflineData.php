@@ -61,7 +61,6 @@ class OfflineData {
 			$sql .= "GROUP BY patient_id ";
 			$sql .= "ORDER BY MAX(ts), patient_id LIMIT $n";
 				
-// 			echo "<pre>$sql</pre>\n";
 			$res = DB::select($sql, $params);
 			
 			$last = "";
@@ -72,7 +71,6 @@ class OfflineData {
 			}
 			$offline["_checkpoint"] = ($last ? $last : $old_cp);
 			$offline["_final"] = (count($res) < $n);
-			
 			
 			if (is_array($data)) {
 				$data['_offline'] = $offline;
