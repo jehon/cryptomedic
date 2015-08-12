@@ -30,24 +30,24 @@ class ReportStatisticalController extends ReportController {
 	}
 	
 	// By bill element
-	protected function billCountByType($filter, &$list) {
+	protected function billCountByType($count_filter, &$list) {
 		global $bills;
 		if ($list == "") { 
 			$list = "(1=0)";
 		}
-		foreach(Bill::getFieldsList($filter) as $f) {
+		foreach(Bill::getFieldsList($count_filter) as $f) {
 			$this->resultPathSet("summary.$f", $this->getOneBySQL("SELECT count(*) as res From bills WHERE {$this->filter} AND ($f > 0)"));
 			$list .= "OR($f>0)";
 		}
 		$list = "(" . $list . ")";
 	}
 
-	protected function billStats($header, $filter) {
+	protected function billStats($header, $stat_filter) {
 		$sql = "SELECT SUM(total_real) AS total_real,
 		SUM(total_asked) as total_asked,
 		SUM(total_paid) as total_paid
 		FROM bills
-		WHERE ({$this->filter}) AND ({$filter})";
+		WHERE ({$this->filter}) AND ({$stat_filter})";
 
 		$stats = DB::select($sql, $this->sqlBindParams);
 		$stats = array_pop($stats);

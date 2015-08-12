@@ -342,9 +342,9 @@ if (!class_exists("t")) {
 	                break;
 	            case static::TYPE_DATE:
 	                // TODOJH: date workaround
-	                $uuid = static::UUID();
-	                $this->res .= "<input id='{$this->jsId}' type='text' $inline placeholder='yyyy-MM-dd' mycalendar uuid='$uuid'/>";
-	                $this->res .= "<span ng-if='errors.date_$uuid' class='jserror'>"
+	                $uuid_date = static::UUID();
+	                $this->res .= "<input id='{$this->jsId}' type='text' $inline placeholder='yyyy-MM-dd' mycalendar uuid='$uuid_date'/>";
+	                $this->res .= "<span ng-if='errors.date_$uuid_date' class='jserror'>"
 	                    . "Invalid date: please enter yyyy-mm-dd"
 	                    . "</span>";
 	                break;

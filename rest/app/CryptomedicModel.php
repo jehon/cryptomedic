@@ -18,7 +18,7 @@ class CryptomedicModel extends Model {
 	}
 	
 	static public function filterData($data) {
-		$columns = self::getTableColumnsList();
+		$columns = static::getTableColumnsList();
 		unset($data['created']);
 		unset($data['modified']);
 		unset($data['created_at']);
@@ -28,7 +28,7 @@ class CryptomedicModel extends Model {
 	}
 	
 	public static function create(array $attributes) {
-		$attributes = self::filterData($attributes);
+		$attributes = static::filterData($attributes);
 		// Create will call the "save"
 		return parent::create($attributes);
 	}

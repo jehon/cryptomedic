@@ -76,6 +76,9 @@ class OfflineData {
 				$data['_offline'] = $offline;
 			} else if (is_object($data)) {
 				$data->_offline = $offline;
+			} else {
+				// Could not add data here...
+				return $response;
 			}
 
 			// Store the information for helping understanding what is happening out there...
