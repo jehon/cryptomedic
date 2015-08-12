@@ -283,13 +283,7 @@ mainApp.factory('service_backend', [ '$rootScope', '$injector', function($rootSc
 		pcache.set(data.getMainFile().id, data);
 		return data;				
 	    });
-	},
-//	'getReport': function(reportName, data, timing) {
-//	    var $http = $injector.get("$http");
-//	    return treatHttp($http.get(rest + "/reports/" + reportName + (timing ? "/" + timing : ""), { 'params': data }), 
-//		    function(data) { return data; }
-//	    	);
-//	},
+	}
     };
 }]);
 

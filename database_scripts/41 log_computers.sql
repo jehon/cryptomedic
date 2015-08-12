@@ -11,5 +11,6 @@ CREATE TABLE `log_computers` (
  	UNIQUE KEY `computer_id` (`computer_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+ALTER TABLE `log_computers` ADD `cryptomedic_version` VARCHAR(255) NOT NULL DEFAULT '0' ; 
 ALTER TABLE `log_computers` ADD `last_sync` VARCHAR(100) NULL ; 
 ALTER TABLE `log_computers` ADD `last_sync_final` TINYINT(1) NOT NULL DEFAULT '0' ; 
