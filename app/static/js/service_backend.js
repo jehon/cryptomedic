@@ -158,7 +158,6 @@ function service_my_backend() {
 	},
 	'extractCache': function(json) {
 	    if (json._offline) {
-		// TODO URGENT: manage deleted records
 		var lastSync = json._offline._checkpoint;
 		var offdata = jQuery.extend(true, {}, json._offline);
 		delete json._offline;
@@ -168,8 +167,13 @@ function service_my_backend() {
 			if (key === "_checkpoint" || key == "_final") {
 			    continue;
 			}
+			// TODO: sequentialize this...
 			if (offdata.hasOwnProperty(key)) {
-			      waitme[key] = db.patients.put(offdata[key]);
+			    if (offdata[key]._deleted) {
+				waitme[key] = db.patients.delete(offdata[key].id);
+			    } else {
+				waitme[key] = db.patients.put(offdata[key]);
+			    }
 			}
 		    }
 		    Promise.all(waitme).then(function() {
@@ -181,7 +185,7 @@ function service_my_backend() {
 			    // relaunch the sync upto completion
 			    setTimeout(function() {
 				service_my_backend().sync();
-			    }, 1000);
+			    }, 100);
 			}
 		    });
 		});

@@ -45,7 +45,7 @@ class OfflineData {
 
 			// TODO URGENT: give information about deleted elements
 			
-			foreach(References::$model2db as $m => $t) {
+			foreach((References::$model2db + [ "Deleted" => "deleteds" ]) as $m => $t) {
 				if ($sql) {
 					$sql .= " UNION \n";
 				}
@@ -68,7 +68,11 @@ class OfflineData {
 			$last = "";
 			$offline = [];
 			foreach($res as $i => $r) {
-	 			$offline[$i] = getFolder($r->patient_id);
+				if ($r->t == 'deleteds') {
+					$offline[$i] = [ 'id' => $r->patient_id, '_deleted' => true ];	
+				} else {
+					$offline[$i] = getFolder($r->patient_id);
+				}
 				$last = $r->ts . "|" . $r->patient_id;
 			}
 			$offline["_checkpoint"] = ($last ? $last : $old_cp);
