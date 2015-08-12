@@ -1,15 +1,17 @@
 <?php namespace App;
 
+require_once __DIR__ . "/../../php/references.php";
+
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
-
 // See https://github.com/laravel/framework/issues/5276
 
+// TODO: restrict operations to unlocked files
 class CryptomedicModel extends Model {
-	protected $guarded = array('id', 'modified', 'created');
+	protected $guarded = array('id', 'modified', 'created'); // TODO: modified and created should be removed
 	
 	static public function getTableColumnsList() {
 		// @see http://stackoverflow.com/a/19953826/1954789
@@ -39,6 +41,28 @@ class CryptomedicModel extends Model {
 			return parent::save($options);
 		}
 		return true;
+	}
+
+	public function delete() {
+		// Track deleted elements...
+		$classname = get_called_class();
+		if (preg_match('@\\\\([\w]+)$@', $classname, $matches)) {
+			$classname = $matches[1];
+		}
+		$dbname = \References::model2db($classname);
+		$id = $this->id;
+		$deleted = new Deleted;
+		$deleted->entity_type = $dbname;
+		$deleted->entity_id = $id;
+		if ($dbname == "patients") {
+			$deleted->patient_id = $id;
+		} else {
+			$deleted->patient_id = $this->patient_id;
+		}
+		$deleted->save();
+		
+		// Let's go delete it...
+		return parent::delete();
 	}
 	
 // TODO: optimistic locking of files

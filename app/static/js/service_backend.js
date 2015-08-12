@@ -1,5 +1,24 @@
 "use strict";
 
+/* TODO: Queue principle
+  - !! when connecting, a key is generated on the server
+  	- we receive it inside the "settings"
+  	- ?? if no connection is available, where to retreive it?
+  - all changes are stored locally, in a "queue"
+  	- the queue is signed with a key received from the server
+  	- test it with simple changes (save-and-queue and unlock-and-queue?)
+  	- a gui element show the queue status
+  - when displaying data, the pending data is shown on screen
+  	- could it be modified again?
+  - when a connection is made, queue is sent to the server
+  	- by url or in one entry point?
+  	- server check the key
+  	- a status is sent along with the queue
+  	- optimistic locking is used
+  	- positive feedback is received through the "sync" mechanism
+  	- ?? quid on change already made in parallel?
+ */
+
 /* Initialize the computer id */
 if (!window.localStorage.cryptomedicComputerId) {
 	console.log("generate cryptomedic_computer_id");
@@ -139,6 +158,7 @@ function service_my_backend() {
 	},
 	'extractCache': function(json) {
 	    if (json._offline) {
+		// TODO URGENT: manage deleted records
 		var lastSync = json._offline._checkpoint;
 		var offdata = jQuery.extend(true, {}, json._offline);
 		delete json._offline;
@@ -182,6 +202,7 @@ function service_my_backend() {
 /******* OLD INTERFACE **********/
 /******* OLD INTERFACE **********/
 
+// TODO: use the new "queue" system
 mainApp.factory('service_backend', [ '$rootScope', '$injector', function($rootScope, $injector) {
     var pcache = perishableCache(10);
     var rest = "/cryptomedic/rest/public/";

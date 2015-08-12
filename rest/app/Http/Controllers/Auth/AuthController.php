@@ -93,6 +93,22 @@ class AuthController extends Controller {
 			$computer->save();
 			session()->put('computerId', $computerId);
 		}
+		
+		/*
+		 * TODO: Define a security key
+		 * 
+		 * - The security key should be unique by [ computerId ]
+		 * - How and when should we deprecate a key?
+		 * 		- two keys: old and new -> when we receive data signed with "new" key, old is deprecated
+		 * - What to sign, and how to sign it?
+		 * 		- date of modification
+		 *      - type of modification
+		 *      - user who made it (for security checks) 
+		 *      - data
+		 *      - folderId (for tracking)
+		 */
+		// TODO: define security key
+		
 		return response()->jsonOrJSONP($data);		
 	}
 	
