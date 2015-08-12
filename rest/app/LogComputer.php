@@ -1,26 +1,10 @@
 <?php 
-/**
- * Bill model.
- * 
- * With a summary...
- * 
- * @package test
- * @author jehon
- */
+// TODO: How to "forget" a computer? -> delete it from the database. But what if he reconnect later??? -> force a resync !
 
 namespace App;
 
-//use Illuminate\Database\Eloquent\Model;
 use App\CryptomedicModel;
 
-/**
- * This is the Bill model, encapsulating various function used around the "Bill" concept
- * 
- * This is a summary? I think so...
- * 
- * @author jehon
- *
- */
 class LogComputer extends CryptomedicModel {
 	
 }

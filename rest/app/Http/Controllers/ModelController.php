@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Input;
 require_once(__DIR__ . "/../../../../php/references.php");
 use \References;
 
+// TODO: protect to not frozen files
 class ModelController extends Controller {
 	// @see http://laravel.com/docs/5.0/controllers
 	

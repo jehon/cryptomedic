@@ -42,6 +42,8 @@ class OfflineData {
 			
 			$sql = "";
 			$params = array();
+
+			// TODO URGENT: give information about deleted elements
 			
 			foreach(References::$model2db as $m => $t) {
 				if ($sql) {

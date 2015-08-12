@@ -14,3 +14,4 @@ CREATE TABLE `log_computers` (
 ALTER TABLE `log_computers` ADD `cryptomedic_version` VARCHAR(255) NOT NULL DEFAULT '0' ; 
 ALTER TABLE `log_computers` ADD `last_sync` VARCHAR(100) NULL ; 
 ALTER TABLE `log_computers` ADD `last_sync_final` TINYINT(1) NOT NULL DEFAULT '0' ; 
+ALTER TABLE `log_computers` ADD `queue_size` INT(16) NULL; 
