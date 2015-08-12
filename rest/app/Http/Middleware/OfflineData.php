@@ -8,6 +8,7 @@ use Closure;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken as BaseVerifier;
 use \References;
 use \DB;
+use \App\LogComputer;
 
 class OfflineData {
 
@@ -71,11 +72,21 @@ class OfflineData {
 			}
 			$offline["_checkpoint"] = ($last ? $last : $old_cp);
 			$offline["_final"] = (count($res) < $n);
+			
+			
 			if (is_array($data)) {
 				$data['_offline'] = $offline;
 			} else if (is_object($data)) {
 				$data->_offline = $offline;
 			}
+
+			// Store the information for helping understanding what is happening out there...
+			$computerId = session()->get('computerId');
+			$computer = LogComputer::firstOrCreate([ "computer_id" => $computerId ]);
+			$computer->last_sync = $old_cp;
+			$computer->last_sync_final = $offline['_final'];
+			$computer->save();
+
 			$response->setData($data);
 			return $response;
 		}

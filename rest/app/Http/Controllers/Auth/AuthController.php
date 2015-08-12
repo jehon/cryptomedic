@@ -1,6 +1,7 @@
 <?php namespace App\Http\Controllers\Auth;
 
 use DB;
+use App\LogComputer;
 use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -50,11 +51,9 @@ class AuthController extends Controller {
 		$data['group'] = Auth::user()->group;
 		$data['name'] = Auth::user()->name;
 		
-		
 		$listing = DB::table('prices')->orderBy('id', 'ASC')->get();
 		$data['prices'] = array();
-		foreach($listing as $k => $v)
-		{
+		foreach($listing as $v) {
 			$data['prices'][$v->id] = $v;
 		}
 		
@@ -80,12 +79,19 @@ class AuthController extends Controller {
 		// Update last_login timestamp
 		$user = Auth::user();
 		$user->last_login = new \DateTime();
-		
-		// TODO: log/record appVersion
-		
-// 		$computer = LogComputer::find([ "computerId" => Request::input("")])
-		
 		$user->save();
+		
+		if (Request::input("computerId", false)) {
+			// Record the computer Id into database and session
+			$computerId = Request::input("computerId", false);
+			$computer = LogComputer::firstOrCreate([ "computer_id" => $computerId ]);
+			$computer->useragent = $_SERVER['HTTP_USER_AGENT'];
+			if (strpos($computer->user_list, Auth::user()->username) === false) {
+				$computer->user_list .= ',' . Auth::user()->username;
+			}
+			$computer->save();
+			session()->put('computerId', $computerId);
+		}
 		
 		return response()->jsonOrJSONP($data);		
 	}
