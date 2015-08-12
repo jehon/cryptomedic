@@ -1,5 +1,7 @@
 <?php
 
+// TODO: on the frontend, some day, we will need a blocking syncing screen
+
 namespace App\Http\Middleware;
 
 require_once __DIR__ . '/../../../../php/references.php';
@@ -73,6 +75,7 @@ class OfflineData {
 				} else {
 					$offline[$i] = getFolder($r->patient_id);
 				}
+				$offline[$i]['_dueTo'] = $r->t . "# pid" . $r->patient_id;
 				$last = $r->ts . "|" . $r->patient_id;
 			}
 			$offline["_checkpoint"] = ($last ? $last : $old_cp);

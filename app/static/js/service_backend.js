@@ -67,8 +67,6 @@ function service_my_backend() {
 	}, init);
 	if (data) {
 	    if (init.method == "GET") {
-		console.log(data);
-		console.log(jQuery.param(data));
 		url = url + "?" + jQuery.param(data);
 	    } else {
 		var fd = new FormData()
@@ -162,19 +160,23 @@ function service_my_backend() {
 		var offdata = jQuery.extend(true, {}, json._offline);
 		delete json._offline;
 		var waitme = [];
+		// http://www.sitepoint.com/deeper-dive-javascript-promises/
+//		var prevPromise = Promise.resolve(); // initial Promise always resolves
 		setTimeout(function() {
 		    for (var key in offdata) {
 			if (key === "_checkpoint" || key == "_final") {
 			    continue;
 			}
-			// TODO: sequentialize this...
-			if (offdata.hasOwnProperty(key)) {
-			    if (offdata[key]._deleted) {
-				waitme[key] = db.patients.delete(offdata[key].id);
-			    } else {
-				waitme[key] = db.patients.put(offdata[key]);
-			    }
-			}
+			// sequentialize the operations
+//			prevPromise = prevPromise.then(function() {
+			    if (offdata.hasOwnProperty(key)) {
+    			    	if (offdata[key]._deleted) {
+    			    	    waitme[key] = db.patients.delete(offdata[key].id);
+    			    	} else {
+    			    	    waitme[key] = db.patients.put(offdata[key]);
+    			    	}
+    			    }
+//			});
 		    }
 		    Promise.all(waitme).then(function() {
 			// cache progress is triggered only when everything is saved
