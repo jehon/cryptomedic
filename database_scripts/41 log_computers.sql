@@ -1,5 +1,5 @@
 
-CREATE TABLE `log_computers` (
+CREATE TABLE `sync_computers` (
  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
  `updated_at` timestamp NULL DEFAULT NULL,
@@ -11,7 +11,7 @@ CREATE TABLE `log_computers` (
  	UNIQUE KEY `computer_id` (`computer_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-ALTER TABLE `log_computers` ADD `cryptomedic_version` VARCHAR(255) NOT NULL DEFAULT '0' ; 
-ALTER TABLE `log_computers` ADD `last_sync` VARCHAR(100) NULL ; 
-ALTER TABLE `log_computers` ADD `last_sync_final` TINYINT(1) NOT NULL DEFAULT '0' ; 
-ALTER TABLE `log_computers` ADD `queue_size` INT(16) NULL; 
+ALTER TABLE `sync_computers` ADD `cryptomedic_version` VARCHAR(255) NOT NULL DEFAULT '0' ; 
+ALTER TABLE `sync_computers` ADD `last_sync` VARCHAR(100) NULL ; 
+ALTER TABLE `sync_computers` ADD `last_sync_final` TINYINT(1) NOT NULL DEFAULT '0' ; 
+ALTER TABLE `sync_computers` ADD `queue_size` INT(16) NULL; 

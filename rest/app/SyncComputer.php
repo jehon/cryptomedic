@@ -5,6 +5,6 @@ namespace App;
 
 use App\CryptomedicModel;
 
-class LogComputer extends CryptomedicModel {
+class SyncComputer extends CryptomedicModel {
 	
 }

@@ -1,7 +1,7 @@
 <?php namespace App\Http\Controllers\Auth;
 
 use DB;
-use App\LogComputer;
+use App\SyncComputer;
 use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -67,11 +67,11 @@ class AuthController extends Controller {
 			case "manager":
 				$data['authorized'][] = "folder.edit";
 				$data['authorized'][] = "folder.delete";
+				$data['authorized'][] = "folder.unlock";
 				break;
 			case "cdc":
 				$data['authorized'][] = "folder.edit";
 				$data['authorized'][] = "folder.delete";
-				$data['authorized'][] = "folder.unlock";
 				break;
 				
 		}
@@ -84,7 +84,7 @@ class AuthController extends Controller {
 		if (Request::input("computerId", false)) {
 			// Record the computer Id into database and session
 			$computerId = Request::input("computerId", false);
-			$computer = LogComputer::firstOrCreate([ "computer_id" => $computerId ]);
+			$computer = SyncComputer::firstOrCreate([ "computer_id" => $computerId ]);
 			$computer->useragent = $_SERVER['HTTP_USER_AGENT'];
 			$computer->cryptomedic_version = Request::input("appVersion", "");
 			if (strpos($computer->user_list, Auth::user()->username) === false) {
@@ -107,7 +107,6 @@ class AuthController extends Controller {
 		 *      - data
 		 *      - folderId (for tracking)
 		 */
-		// TODO: define security key
 		
 		return response()->jsonOrJSONP($data);		
 	}

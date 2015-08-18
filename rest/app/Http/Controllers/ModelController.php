@@ -101,7 +101,7 @@ class ModelController extends Controller {
 	public function unfreeze($model, $id) {
 		$m = $this->getModel($model);
 		$obj = $this->getModelObject($model, $id);
-		$affectedRows = $m::where("id", "=", $id)->update([ "modified" => new \DateTime() ]);
+		$affectedRows = $m::where("id", "=", $id)->update([ "updated_at" => new \DateTime() ]);
 		if ($affectedRows > 1) {
 			abort(500, "Affected rows: " . $affectedRows);
 		}
