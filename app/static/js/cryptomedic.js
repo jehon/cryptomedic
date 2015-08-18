@@ -6,6 +6,9 @@ mainApp.config([ '$routeProvider', function($routeProvider) {
     $routeProvider.when('/home', {
         templateUrl: cryptomedic.templateRoot + '/pages/home.html',
         controller: 'ctrl_home'
+    }).when('/test', {
+        templateUrl: cryptomedic.templateRoot + '/pages/test.html',
+        controller: 'ctrl_search',
     }).when('/search', {
         templateUrl: cryptomedic.templateRoot + '/pages/search.html',
         controller: 'ctrl_search',
@@ -61,3 +64,4 @@ cryptomedic.math = {
     // 1.64485 = sigma at 90 for normal distribution
     sigma: 1.64485
 };
+

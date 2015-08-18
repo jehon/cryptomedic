@@ -153,7 +153,7 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_backend', '$
 	service_backend.unlockFile($scope.currentFile(), $scope.id())
 	    .done(function(data) {
 		$scope.$emit("message", { "level": "success", "text": 
-		    "The " + fileCreating._type + " has been unlocked."});
+		    "The " + $scope.currentFile()._type + " #" + $scope.currentFile().id + " has been unlocked."});
 		$scope.folder = data;
 		$scope.safeApply();
 	    }).always(function() {

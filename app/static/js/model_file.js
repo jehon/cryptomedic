@@ -82,8 +82,8 @@ application.models.File = application.models.Data.extend({
 		return cryptomedic.math.stdDeviation(amd_stats[sex]['bmi'], age, this.bmi());
 	},
 	'isLocked': function () {
-		if (!this.modified) return false;
-		var dlock = new Date(this.modified);
+		if (!this.updated_at) return false;
+		var dlock = new Date(this.updated_at);
 		dlock.setDate(dlock.getDate() + 5);
 		return (dlock < new Date());
 	},

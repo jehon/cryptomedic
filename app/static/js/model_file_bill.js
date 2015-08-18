@@ -1,5 +1,7 @@
 "use strict";
 
+// TODO: there seems to have a race condition around here...
+
 application.models.Bill = application.models.File.extend({
 	'init': function(data, folder) {
 		this._super(data, folder);
@@ -143,8 +145,9 @@ application.models.Bill = application.models.File.extend({
 		return perc;
 	},
 	'getPriceFor': function(key) {
-		if (!this.price_id) return 0;
-		return server.settings.prices[this.price_id][key];
+	    if (!this.price_id) return 0;
+	    if (typeof(server.settings.prices[this.price_id]) == 'undefined') return 0;
+	    return server.settings.prices[this.price_id][key];
 	},
 	'getTotalFor': function(key) {
 		if (!this.price_id) return 0;

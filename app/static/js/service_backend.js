@@ -19,6 +19,9 @@
   	- ?? quid on change already made in parallel?
  */
 
+// Test cryptographic:
+// Documentation: https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto
+
 /* Initialize the computer id */
 if (!window.localStorage.cryptomedicComputerId) {
 	console.log("generate cryptomedic_computer_id");
@@ -48,6 +51,25 @@ function service_my_backend() {
     
     db.open();
 
+    /**
+     * Enqueue an action in the waiting queue, with additionnal data (encryption, timestamp, ...)
+     * 
+     * @param name: name of the action
+     * @param data: the additionnal data
+     * 
+     * @caveat: not all service shall use this. Only "offline" services would go through this.
+     */
+    function enqueueAction(name, data) {
+	request = {
+		name: name,
+        	created: new Date(),
+		data: data,
+        	username: "test",
+        	hash: "123"
+	};
+	// TODO: enqueue + send queue in thread
+    }
+    
     /**
      * Launch a fetch request
      * 
