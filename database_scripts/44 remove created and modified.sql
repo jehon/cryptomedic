@@ -15,7 +15,7 @@ ALTER TABLE `club_foots` CHANGE `updated_at` `updated_at` TIMESTAMP NULL DEFAULT
 
 UPDATE `deleteds` SET updated_at = modified WHERE updated_at IS NULL or updated_at = 0;
 ALTER TABLE `deleteds` DROP `modified`;
-ALTER TABLE `deleteds` CHANGE `updated_at` `updated_at` TIMESTAMP on update CURRENT_TIMESTAMP NULL DEFAULT NULL; 
+-- ALTER TABLE `deleteds` CHANGE `updated_at` `updated_at` TIMESTAMP on update CURRENT_TIMESTAMP NULL DEFAULT NULL; 
   
 ALTER TABLE `nonricket_consults` CHANGE `modified` `modified` TIMESTAMP NULL DEFAULT NULL; 
 UPDATE `nonricket_consults` SET created_at = created  WHERE created_at IS NULL or created_at = 0;
