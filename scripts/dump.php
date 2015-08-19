@@ -13,134 +13,15 @@ $mysqldump = "mysqldump --user=" . getGlobalConfig("databaseUsername")
 			
 $target = __DIR__ . "/../database_scripts/structure/structure.sql";
 unlink($target);
+
+// Backup the structure
 var_dump(exec("$mysqldump --databases amd_chakaria --no-data > '" . $target ."'"));
+
+// Backup the table settings
 var_dump(exec("$mysqldump --databases amd_chakaria --tables settings >> '" . $target ."'"));
 
-var_dump(exec("$mysqldump amd_chakaria --tables > '" . __DIR__ . "/../database_scripts/structure/0 structure.sql'"));
-
-// TODO: How to commit only one file, whatever the state of the repository?
-// var_dump(exec("git commit -m 'updating the structure' '$target'"));
+// Commit the file to the repository
+var_dump(exec("git commit -m 'updating the structure' '$target'"));
 
 var_dump("done");
-
-
-/*
-
-Travis:
-- prendre la structure en production --> dump.php depuis la prod + qq settings? ==> à transformer complètement !!!
-- appliquer les patchs restant
-    - filtrer les fichiers % version
-        - en prepare: voir % structure de prod, quels fichiers archiver?
-        	- avoir la structure de prod
-        	- filtrer les fichiers
-    - executer les scripts
-    	- mysql en cmdline ou en php?
-    	    ? en cmdline = ok pour travis, quid en local?
-    	    ? en php = ok pour tous environnements, mais où mettre le script?
-- commiter dans la db
-
-En local:
-idem, sauf que la structure de la prod est dispo => étape 1 déjà faite ? NON, mais cacher ce résultat en local = ok
-
-http://localhost/phpmyadmin/export.php
-
-db=amd_chakaria&token=fd5cba06108ab2626bb1a9a755f10b37&export_type=database&export_method=quick&quick_or_custom=custom&table_select%5B%5D=bills&table_select%5B%5D=bug_reporting&table_select%5B%5D=club_foots&table_select%5B%5D=consults&table_select%5B%5D=deleted&table_select%5B%5D=log_computers&table_select%5B%5D=nonricket_consults&table_select%5B%5D=patients&table_select%5B%5D=pictures&table_select%5B%5D=prices&table_select%5B%5D=ricket_consults&table_select%5B%5D=settings&table_select%5B%5D=surgeries&table_select%5B%5D=users&output_format=sendit&filename_template=%40DATABASE%40&remember_template=on&charset_of_file=utf-8&compression=none&maxsize=&what=sql&ods_null=NULL&ods_structure_or_data=data&pdf_report_title=&pdf_structure_or_data=data&phparray_structure_or_data=data&csv_separator=%2C&csv_enclosed=%22&csv_escaped=%22&csv_terminated=AUTO&csv_null=NULL&csv_structure_or_data=data&yaml_structure_or_data=data&latex_caption=something&latex_structure_or_data=structure_and_data&latex_structure_caption=Structure+of+table+%40TABLE%40&latex_structure_continued_caption=Structure+of+table+%40TABLE%40+%28continued%29&latex_structure_label=tab%3A%40TABLE%40-structure&latex_relation=something&latex_comments=something&latex_mime=something&latex_columns=something&latex_data_caption=Content+of+table+%40TABLE%40&latex_data_continued_caption=Content+of+table+%40TABLE%40+%28continued%29&latex_data_label=tab%3A%40TABLE%40-data&latex_null=%5Ctextit%7BNULL%7D&excel_null=NULL&excel_edition=win&excel_structure_or_data=data&codegen_structure_or_data=data&codegen_format=0&odt_structure_or_data=structure_and_data&odt_relation=something&odt_comments=something&odt_mime=something&odt_columns=something&odt_null=NULL&xml_structure_or_data=data&xml_export_events=something&xml_export_functions=something&xml_export_procedures=something&xml_export_tables=something&xml_export_triggers=something&xml_export_views=something&xml_export_contents=something&texytext_structure_or_data=structure_and_data&texytext_null=NULL&htmlword_structure_or_data=structure_and_data&htmlword_null=NULL&sql_include_comments=something&sql_header_comment=&sql_compatibility=NONE&sql_structure_or_data=structure&sql_create_table=something&sql_create_view=something&sql_procedure_function=something&sql_create_trigger=something&sql_create_table_statements=something&sql_if_not_exists=something&sql_auto_increment=something&sql_backquotes=something&sql_type=INSERT&sql_insert_syntax=both&sql_max_query_size=50000&sql_hex_for_binary=something&sql_utc_time=something&json_structure_or_data=data&mediawiki_structure_or_data=data&mediawiki_caption=something&mediawiki_headers=something
-
-
-db:amd_chakaria
-token:fd5cba06108ab2626bb1a9a755f10b37
-export_type:database
-export_method:quick
-quick_or_custom:custom
-table_select[]:bills
-table_select[]:bug_reporting
-table_select[]:club_foots
-table_select[]:consults
-table_select[]:deleted
-table_select[]:log_computers
-table_select[]:nonricket_consults
-table_select[]:patients
-table_select[]:pictures
-table_select[]:prices
-table_select[]:ricket_consults
-table_select[]:settings
-table_select[]:surgeries
-table_select[]:users
-output_format:sendit
-filename_template:@DATABASE@
-remember_template:on
-charset_of_file:utf-8
-compression:none
-maxsize:
-what:sql
-ods_null:NULL
-ods_structure_or_data:data
-pdf_report_title:
-pdf_structure_or_data:data
-phparray_structure_or_data:data
-csv_separator:,
-csv_enclosed:"
-csv_escaped:"
-csv_terminated:AUTO
-csv_null:NULL
-csv_structure_or_data:data
-yaml_structure_or_data:data
-latex_caption:something
-latex_structure_or_data:structure_and_data
-latex_structure_caption:Structure of table @TABLE@
-latex_structure_continued_caption:Structure of table @TABLE@ (continued)
-latex_structure_label:tab:@TABLE@-structure
-latex_relation:something
-latex_comments:something
-latex_mime:something
-latex_columns:something
-latex_data_caption:Content of table @TABLE@
-latex_data_continued_caption:Content of table @TABLE@ (continued)
-latex_data_label:tab:@TABLE@-data
-latex_null:\textit{NULL}
-excel_null:NULL
-excel_edition:win
-excel_structure_or_data:data
-codegen_structure_or_data:data
-codegen_format:0
-odt_structure_or_data:structure_and_data
-odt_relation:something
-odt_comments:something
-odt_mime:something
-odt_columns:something
-odt_null:NULL
-xml_structure_or_data:data
-xml_export_events:something
-xml_export_functions:something
-xml_export_procedures:something
-xml_export_tables:something
-xml_export_triggers:something
-xml_export_views:something
-xml_export_contents:something
-texytext_structure_or_data:structure_and_data
-texytext_null:NULL
-htmlword_structure_or_data:structure_and_data
-htmlword_null:NULL
-sql_include_comments:something
-sql_header_comment:
-sql_compatibility:NONE
-sql_structure_or_data:structure
-sql_create_table:something
-sql_create_view:something
-sql_procedure_function:something
-sql_create_trigger:something
-sql_create_table_statements:something
-sql_if_not_exists:something
-sql_auto_increment:something
-sql_backquotes:something
-sql_type:INSERT
-sql_insert_syntax:both
-sql_max_query_size:50000
-sql_hex_for_binary:something
-sql_utc_time:something
-json_structure_or_data:data
-mediawiki_structure_or_data:data
-mediawiki_caption:something
-mediawiki_headers:something
-*/
  
