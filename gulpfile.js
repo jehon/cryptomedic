@@ -176,7 +176,22 @@ gulp.task('release-prepare-sonar', [ 'test' ], function(result) {
     });
 });
 
-gulp.task('release-prepare', [ 'test', 'release-prepare-travis', 'release-prepare-sonar' ]);
+gulp.task('release-prepare-dbstructure', function(result) {
+    var spawn = require('child_process').spawn;
+    var sr = spawn('php', 
+	    [ 
+	     	'scripts/dump.php'
+	    ], 
+	    {
+		stdio: 'inherit'
+	    });
+    sr.on('exit', function(returnCode) {
+	console.log(returnCode);
+	result();
+    });
+});
+
+gulp.task('release-prepare', [ 'test', 'release-prepare-travis', 'release-prepare-sonar', 'release-prepare-dbstructure' ]);
 
 
 // ---------------- GENERIC TASKS ---------------------------
