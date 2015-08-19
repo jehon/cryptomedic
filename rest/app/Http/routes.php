@@ -62,7 +62,7 @@ Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
 ]);
-Route::resource('price', "PriceController");
+// Route::resource('price', "PriceController");
 
 /**
  * Authenticated user needed
@@ -74,9 +74,9 @@ Route::group(array('middleware' => 'authenticated'), function() {
 
 	Route::get('foldersync', [ "uses" => "FolderController@sync" ]);
 	
-	Route::get('related/{model}/{id}', [
-		"uses" => "FolderController@related"
-	]);
+// 	Route::get('related/{model}/{id}', [
+// 		"uses" => "FolderController@related"
+// 	]);
 
 	Route::get('reference/{entryyear}/{entryorder}', [
 		"uses" => "FolderController@reference"

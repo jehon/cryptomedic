@@ -261,13 +261,13 @@ mainApp.factory('service_backend', [ '$rootScope', '$injector', function($rootSc
 		return data;				
 	    });
 	},
-	'getParent': function(type, id) {
-	    var $http = $injector.get("$http");
-	    return treatHttp($http.get(rest + "/related/" + type + "/" + id)).then(function(data) {
-		pcache.set(data.getMainFile().id, data);
-		return data;				
-	    });
-	},
+//	'getParent': function(type, id) {
+//	    var $http = $injector.get("$http");
+//	    return treatHttp($http.get(rest + "/related/" + type + "/" + id)).then(function(data) {
+//		pcache.set(data.getMainFile().id, data);
+//		return data;				
+//	    });
+//	},
 	'searchForPatients': function(params) {
 	    var $http = $injector.get("$http");
 	    return treatHttp($http.get(rest + "/folder", { 'params': params })).then(function(data) {

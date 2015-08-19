@@ -81,7 +81,7 @@
 			<tr ng-repeat='l in result.list'>
                             <td class='b_left'>
                             	#{{$index}}
-                            	<a href='#/goto/Bill/{{l.bid}}'>View</a>
+                            	<a href='#/goto/{{l.pid}}/Bill/{{l.bid}}'>View</a>
 							</td>
                             <td>{{l.Date}}</td>
                             <td>{{l.ExaminerName}}</td>

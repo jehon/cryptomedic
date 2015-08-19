@@ -18,7 +18,7 @@ mainApp.config([ '$routeProvider', function($routeProvider) {
     }).when('/reports/:report?', {
         templateUrl: cryptomedic.templateRoot + '/pages/reports.html',
         controller: 'ctrl_reports',
-    }).when('/goto/:type/:id', {
+    }).when('/goto/:patient_id/:type/:id', {
     	templateUrl: cryptomedic.templateRoot + '/pages/blank.html',
     	controller: 'ctrl_goto',
     }).otherwise({ 'redirectTo': '/home'});
