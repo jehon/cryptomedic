@@ -258,7 +258,7 @@ DROP TABLE IF EXISTS `deleteds`;
 CREATE TABLE `deleteds` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT NULL,
   `patient_id` int(10) unsigned NOT NULL,
   `entity_type` varchar(20) NOT NULL,
   `entity_id` int(10) unsigned NOT NULL,
@@ -585,7 +585,7 @@ CREATE TABLE `sync_computers` (
   `queue_size` int(16) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `computer_id` (`computer_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
