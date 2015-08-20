@@ -2349,14 +2349,14 @@ NodeParser.prototype.renderTextDecoration = function(container, bounds, metrics)
     switch(container.css("textDecoration").split(" ")[0]) {
     case "underline":
         // Draws a line at the baseline of the font
-        // TODO As some browsers display the line as more than 1px if the font-size is big, need to take that into account both in position and size
+        // TODO: As some browsers display the line as more than 1px if the font-size is big, need to take that into account both in position and size
         this.renderer.rectangle(bounds.left, Math.round(bounds.top + metrics.baseline + metrics.lineWidth), bounds.width, 1, container.color("color"));
         break;
     case "overline":
         this.renderer.rectangle(bounds.left, Math.round(bounds.top), bounds.width, 1, container.color("color"));
         break;
     case "line-through":
-        // TODO try and find exact position for line-through
+        // TODO: try and find exact position for line-through
         this.renderer.rectangle(bounds.left, Math.ceil(bounds.top + metrics.middle + metrics.lineWidth), bounds.width, 1, container.color("color"));
         break;
     }

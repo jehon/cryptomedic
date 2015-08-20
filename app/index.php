@@ -71,7 +71,7 @@
 		
 		// Other
 		(new Script("bower_components/excellentexport/excellentexport.min.js"))->dependFile()->toPrint();
-		(new Script("bower_components/dexie/dist/latest/Dexie.min.js"))->dependFile()->toPrint();
+		(new Script("bower_components/dexie/dist/latest/Dexie.min.js"))->dependFile()->toPrint(); // TODO: for the worker
 		
 		// personnal
 		(new Script("static/js/application.js"))->dependFile()->toPrint();
@@ -100,9 +100,6 @@
 		
 		    <!-- Collect the nav links, forms, and other content for toggling -->
 		    <div class="collapse navbar-collapse" id="menuMain">
-		      <ul class="nav navbar-nav">
-	        	<li><p class="navbar-text" id='sync_status'>{{sync.final ? "up-to-date" : "syncing"}} - {{sync.checkpoint}}</p></li>
-			  </ul>
 		      <ul class="nav navbar-nav navbar-right">
 	        	<li><p class="navbar-text" id='login_loggedusername' ng-if='server.settings.username'>{{server.settings.username}}</p></li>
 	        	<li><p class="navbar-text" id='appCache_mode'><?php echo $mode; ?></p></li>
@@ -182,6 +179,19 @@
 				</div><!-- /.modal-dialog -->
 			</div><!-- /.modal -->
 			<div>
+				<span ng-if="!sync.final">
+					<div class="alert alert-dismissible alert-info">
+						<span ng-if="!sync.final">
+							Loading data from the server:
+							<div class="progress">
+								<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{sync.total - sync.remaining}}" aria-valuemin="0" aria-valuemax="{{sync.total}}" 
+										style="width: {{(sync.total - sync.remaining)/sync.total * 100}}%;">
+							    	{{sync.total - sync.remaining}} / {{sync.total}}
+								</div>
+							</div>
+						</span>
+					</div>
+				</span>
 				<span ng-repeat="m in messages">
 					<div class="alert alert-dismissible" ng-class="'alert-' + m.level" alert-dismissible>
 	 					<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>

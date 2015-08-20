@@ -1,5 +1,5 @@
 <?php 
-// TODO: delete "deleted" records older than the last synced computer... (LogComputer->updated_at is a good enough estimation)
+// TODO-CLEAN: delete "deleted" records older than the last synced computer... (LogComputer->updated_at is a good enough estimation)
 
 namespace App;
 

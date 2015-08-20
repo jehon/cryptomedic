@@ -85,16 +85,6 @@ class FolderController extends Controller {
 		return response()->folder($id);
 	}
 	
-// 	public function related($model, $id) {
-// 		$type = References::model2db($model);
-// 		$r = DB::select("SELECT * FROM $type WHERE id = ?", array($id));
-// 		if (count($r) != 1) {
-// 			abort(404);
-// 		}
-// 		$r = array_pop($r);
-// 		return response()->folder($r->patient_id);
-// 	}
-	
 	public function reference($entryyear, $entryorder) {
 		$r = DB::select("SELECT * FROM patients WHERE entryyear = ? and entryorder = ?", array($entryyear, $entryorder));
 		if (count($r) != 1) {

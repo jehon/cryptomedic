@@ -348,7 +348,6 @@ mainApp.controller('ctrl', [ '$scope', '$location', 'service_backend', function(
   	$location.path( path );
     };
 	
-    var backend = service_my_backend();
     $scope.sync = { lastSync: '?', _final: false };
     
     $scope.busy = [];
@@ -414,9 +413,9 @@ mainApp.controller('ctrl', [ '$scope', '$location', 'service_backend', function(
     };
 
     myEvents.on('backend_cache_progress', function(data) {
+	console.log(data);
 	console.log("Cache progress: " + data.checkpoint + " " + (data.final ? " terminated " : " data pending")); 
-	$scope.sync.checkpoint = data.checkpoint;
-	$scope.sync.final = data.final;
+	$scope.sync = data;
 	$scope.safeApply();
     }, false);
     
@@ -438,7 +437,7 @@ mainApp.controller('ctrl', [ '$scope', '$location', 'service_backend', function(
 	}
 	$scope.loginError = false;
 	var busyEnd = $scope.doBusy("Checking your login/password with the online server", true);
-	backend.login(this.username, this.password)
+	service_my_backend.login(this.username, this.password)
 		.then(function(data) {
 		    server.settings = data;
 		    $scope.loginError = false;
@@ -460,7 +459,7 @@ mainApp.controller('ctrl', [ '$scope', '$location', 'service_backend', function(
     $scope.doCheckLogin = function() {
 	$scope.loginError = false;
 	var busyEnd = $scope.doBusy("Checking your login/password with the online server", true);
-	backend.checkLogin()
+	service_my_backend.checkLogin()
 		.then(function(data) {
 		    server.settings = data;
 		    $scope.logged = true;
@@ -473,14 +472,14 @@ mainApp.controller('ctrl', [ '$scope', '$location', 'service_backend', function(
     };
 
     $scope.doSync = function() {
-	backend.sync().then(function(data) {
+	service_my_backend.sync().then(function(data) {
 	    console.log("sync executed");
 	})
     };
     
     $scope.doLogout = function() {
 	var busyEnd = $scope.doBusy("Disconnecting from the server", true);
-	backend.logout()
+	service_my_backend.logout()
 		.then(function(data) {
     			server.settings = null;
 			$scope.logged = false;
