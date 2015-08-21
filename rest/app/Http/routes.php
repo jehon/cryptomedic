@@ -74,10 +74,6 @@ Route::group(array('middleware' => 'authenticated'), function() {
 
 	Route::get('foldersync', [ "uses" => "FolderController@sync" ]);
 	
-// 	Route::get('related/{model}/{id}', [
-// 		"uses" => "FolderController@related"
-// 	]);
-
 	Route::get('reference/{entryyear}/{entryorder}', [
 		"uses" => "FolderController@reference"
 	]);

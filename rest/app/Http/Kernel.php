@@ -16,7 +16,6 @@ class Kernel extends HttpKernel {
 		'Illuminate\Session\Middleware\StartSession',
 		'Illuminate\View\Middleware\ShareErrorsFromSession',
 //		'App\Http\Middleware\VerifyCsrfToken', // TODO: reactivate CSRF protection
-		'App\Http\Middleware\PHPRestBinding', // TODO CLEANUP: remove link with old rest package (as of before 14/07)
 		'App\Http\Middleware\OfflineData'
 	];
 	
