@@ -33,7 +33,7 @@
 			            </div>
 				    </div>
 					<div ng-if="isParam('period')" class="form-group">
-				        <label class="col-sm-2 control-label">Perdio</label>
+				        <label class="col-sm-2 control-label">Period</label>
 			        	<div class="col-sm-10">
 							<select ng-model="values.period">
 								<option value='day'>daily</option>
@@ -45,7 +45,7 @@
 				    <div ng-if="isParam('day')" class="form-group">
 				        <label class="col-sm-2 control-label">Day (yyyy-mm-dd)?</label>
 			        	<div class="col-sm-10">
-							<input name='day' oldtype='date' ng-model='values.day' class="form-control" mycalendar>
+							<input name='day' ng-model='values.day' class="form-control" mycalendar>
 						</div>
 				    </div>
 			      	<div ng-if="isParam('month')" class="form-group">

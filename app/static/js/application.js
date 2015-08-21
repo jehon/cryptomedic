@@ -249,7 +249,11 @@ var mainApp = angular.module('app_main', [ 'ngRoute' ])
 }])
 .directive('mycalendar', function() {
 	return function (scope, elem, attrs) {
-	    jQuery(elem).datepicker({ dateFormat: 'yy-mm-dd' });
+	    jQuery(elem).datepicker({ 
+		dateFormat: "yy-mm-dd",
+		changeMonth: true, 
+		changeYear: true 
+	    });
 	}
 })
 .directive('preview', [ "$compile", function($compile) {

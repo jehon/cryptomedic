@@ -17,7 +17,8 @@ function service_session_storage(onReady) {
 	    if (it === "null") {
 		values[key] = null;
 	    } else {
-		values[key] = objectify(it);
+//		values[key] = objectify(it);
+		values[key] = it;
 	    }
 	    if (typeof(def) != types[key]) {
 		return def;
@@ -32,11 +33,15 @@ function service_session_storage(onReady) {
     var now = new Date();
     var year = now.getFullYear();
     var month = "0" + (now.getMonth() + 1);
-    month = month.substring(month.length - 2); 
+    month = month.substring(month.length - 2);
+    var day = "0" + now.getDate();
+    day = day.substring(day.length - 2);
 		
+    console.log(day);
+    
     get("examiner", "");
     get("center", "");
-    get("day", now);
+    get("day", day);
     get("month", year + "-" + month);
     get("year", year);
 
@@ -63,6 +68,7 @@ function service_session_storage(onReady) {
 	    values[key] = val;
 	    if (sessionStorage) {
 		sessionStorage.setItem(key, stringify(val));
+//		sessionStorage.setItem(key, val);
 	    }
 	},
 	'clear': function() {

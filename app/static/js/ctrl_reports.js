@@ -7,7 +7,6 @@ mainApp.controller('ctrl_reports', [ '$scope', '$routeParams', 'service_backend'
 		if (v === null) $scope.values[k] = "";
 	});
 	if (!$scope.values['period']) {
-	    console.log("set period");
 	    $scope.values['period'] = 'month';
 	}
 	
@@ -79,10 +78,10 @@ mainApp.controller('ctrl_reports', [ '$scope', '$routeParams', 'service_backend'
 	    }
 	    $scope.result = null;
 	    
-	    if ($scope.values.day) {
-		$scope.values.day = new Date($scope.values.day);
-		$scope.values.day.setUTCHours(0, 0, 0, 0);
-	    }
+//	    if ($scope.values.day) {
+//		$scope.values.day = new Date($scope.values.day);
+//		$scope.values.day.setUTCHours(0, 0, 0, 0);
+//	    }
 
 	    angular.forEach($scope.reports[report].params, function(v) {
 		service_session_storage().set(v, $scope.values[v]);
