@@ -28,7 +28,7 @@
 					<?php (new t("Patient.Yearofbirth",  [ "min" => 900, "max" => 2100]))->tr("Year of birth")->p(); ?></td>
 					<tr class='notModeWrite'>
 						<td>Age (today)</td>
-						<td><span catch-it ng-model="folder" tryit="currentFile().actualAge()">{{result}} years old</span></td>
+						<td><span catch-it ng-model="folder" tryit="currentFile().actualAge()">{{currentFile().actualAge()}} years old</span></td>
 					</tr>
 					<?php (new t("Patient.District", [ "list" => References::$lists['Districts']]))->tr()->p(); ?>
 					<?php (new t("Patient.Upazilla", [ "list" => References::$lists['Upazilla']]))->tr()->p(); ?>
