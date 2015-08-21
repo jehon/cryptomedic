@@ -260,9 +260,9 @@ var service_my_backend = (function () {
 		}
 		promise = promise.then(function() {
 		    db.patients.bulk(offdata.data, function(data) {
+			// TODO: commit the checkpoint
 //			console.info(data);
 		    }).then(function() {
-//			console.log("after bulk insert (then)");
 			localStorage.cryptomedicLastSync = offdata.checkpoint;
 			myEvents.trigger("backend_cache_progress", { 
 			    "checkpoint": offdata.checkpoint, 
@@ -273,7 +273,8 @@ var service_my_backend = (function () {
 			if (!offdata.isfinal) {
 			    // relaunch the sync upto completion
 			    setTimeout(function() {
-				service_my_backend.sync();
+// TODO: re-enable sync relaunch automatically
+				//service_my_backend.sync();
 			    }, 100);
 			}
 		    });
