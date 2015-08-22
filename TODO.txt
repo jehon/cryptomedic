@@ -1,9 +1,6 @@
-
-TODO: http://www.cryptomedic.org//maintenance/routes/viewBug.php?id=9 (age de la consultation)
- 
 TODO Bills:  
- dans la bill partie "surgical item", il faudrait enlever les item "percutaneous achil tenotomy bi cmosh", "percutaneous AL club foot"
-   'description' => 'je viens de te faire une requète concernant l\'annulation des item chirurgicaux "tenotomy", ceux qui sont codés il faut les transférer dans l\'item "percutaneous achil tenotomy bi cdc"
+ 1/ dans la bill partie "surgical item", il faudrait enlever les item "percutaneous achil tenotomy bi cmosh", "percutaneous AL club foot"
+ 2/ je viens de te faire une requète concernant l\'annulation des item chirurgicaux "tenotomy", ceux qui sont codés il faut les transférer dans l\'item "percutaneous achil tenotomy bi cdc
 	
 New feature:   
   TODO: http://www.cryptomedic.org//maintenance/routes/viewBug.php?id=7
