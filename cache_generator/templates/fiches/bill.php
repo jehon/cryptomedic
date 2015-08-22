@@ -26,10 +26,11 @@
 			. "ng-class='{ notModeRead: !currentFile().$name }'"
 			. ">";
 		echo "<td>$label</td>";
+		echo "<td ng-if=\"currentFile().getPriceFor('$name')<=1\">1x</td>";
 		echo "<td>";
 			(new t($item, [ "inline" => "style='width: 4em' step=1 min=0" ]))->value()->p();
 		echo "</td>";
-		echo "<td><div pricefor='$item'>{{currentFile().getPriceFor('$name')}}</div></td>";
+		echo "<td ng-if=\"currentFile().getPriceFor('$name')>1\"><div pricefor='$item'>{{currentFile().getPriceFor('$name')}}</div></td>";
 		echo "<td>{{currentFile().getTotalFor('$name')}}</td>";
 		echo "</tr>";
 	}
