@@ -34,7 +34,7 @@
 				class='notModeWrite'
 				>
 			<td>Weight/Height Ratio</td>
-			<td class='tdright'><span catch-it ng-model="folder" tryit="currentFile().wh()">{{"currentFile().wh() | number:2 }}</span></td>
+			<td class='tdright'><span catch-it ng-model="folder" tryit="currentFile().wh()">{{currentFile().wh() | number:2 }}</span></td>
 			<td class='notModeWrite'><span catch-it ng-model="folder" tryit="currentFile().ds_weight_height()">{{currentFile().ds_weight_height() | number:2 }} ds</span></td>
 		</tr><tr ng-class='{ emptyValue: !currentFile().Heightcm || !currentFile().Weightkg}'
 				class='notModeWrite'

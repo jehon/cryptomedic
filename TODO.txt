@@ -4,10 +4,7 @@ TODO: http://www.cryptomedic.org//maintenance/routes/viewBug.php?id=9 (age de la
 TODO Bills:  
  dans la bill partie "surgical item", il faudrait enlever les item "percutaneous achil tenotomy bi cmosh", "percutaneous AL club foot"
    'description' => 'je viens de te faire une requète concernant l\'annulation des item chirurgicaux "tenotomy", ceux qui sont codés il faut les transférer dans l\'item "percutaneous achil tenotomy bi cdc"
-
-TODO Bills: hide price when price is 1 tk
-   'description' => 'Concernant le fiche bill, le tarif de "other operation" et "other brace" est de 1 taka non modifiable. Serait-il possible de saisir le prix de l\'operation qui peut aller de 5000 à 40 000 tk?
-
+	
 New feature:   
   TODO: http://www.cryptomedic.org//maintenance/routes/viewBug.php?id=7
     serait-t-il possible de faire que la colonne "last seen" qui correspond la derniÃ¨re fois que l'enfant a Ã©tÃ© bilantÃ© avec la derniÃ¨re bill et non avec la derniÃ¨re consultation saisie. En effet nous saisissions bien les bill, mais pas rÃ©guliÃ¨rement les donnÃ©es cliniques. Donc cela sera plus juste pour savoir si l'enfant est suivi correctement ou non.
