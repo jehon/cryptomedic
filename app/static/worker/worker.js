@@ -1,4 +1,13 @@
 /**
+ * Phases: 
+ *   ok- computer is authentified -> sync read-only (as of today)
+ *   - same, but in worker
+ *   - hook (ro) getFolder, checkReference
+ *   - hook (ro) searchForPatients
+ *   - hook (ro) reports
+ *   - user are authentified -> no reload of page at beginning
+ *   - queue changes
+ * 
  * Interface:
  * postMessage({ name: '*', data: {}})
  * 
