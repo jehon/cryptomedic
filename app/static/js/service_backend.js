@@ -62,13 +62,21 @@ var service_my_backend = (function () {
      */
     var db = new Dexie("cryptomedic");
     db.version(1).stores({
-        patients: '++id',
+        patients: '++id'
     });
 
     db.version(2).stores({
+	patients: '++id[mainFile.entryyear+mainFile.entryorder]'
+    });
+    
+    db.version(1).stores({
+        patients: '++id'
+    });
+
+    db.version(4).stores({
 	//  @see db.relations.where('[userId1+userId2]').equals([2,3]).or('[userId1+userId2]').equals([3,2]) - will give you all the relations that user 1 has to user 2 or user 2 has to user 1.
 	patients: '++id,[mainFile.entryyear+mainFile.entryorder]'
-    })
+    });
     
     db.on('blocked', function () {
 	console.error("DB is blocked");
@@ -247,7 +255,7 @@ var service_my_backend = (function () {
 		    thisSyncRemaining = offdata["remaining"];
 		    console.log("taking point: " + thisSyncRemaining);
 		} else {
-		    console.log("progress: " + (1 - (offdata["remaining"] / thisSyncRemaining)));
+		    console.log("progress: " + (1 - (offdata["remaining"] / thisSyncRemaining)) * 100 + "%");
 		}
 		
 		var lastSync = offdata._checkpoint;

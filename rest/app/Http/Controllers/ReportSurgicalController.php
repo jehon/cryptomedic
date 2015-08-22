@@ -36,7 +36,7 @@ class ReportSurgicalController extends ReportController {
 	            bills.total_asked as total_asked,
 	            bills.total_paid as total_paid,
 				exists(select * from bills as b2 where b2.patient_id = bills.patient_id and b2.Date < :whenFrom12) as oldPatient,
-				(select consults.Date                from consults where consults.patient_id = bills.patient_id ORDER BY consults.Date DESC LIMIT 1) as last_seen,
+				(select b2.Date                	     from bills as b2 where b2.patient_id = bills.patient_id ORDER BY b2.Date DESC LIMIT 1) as last_seen,
 				(select consults.TreatmentEvaluation from consults where consults.patient_id = bills.patient_id ORDER BY consults.Date DESC LIMIT 1) as last_treat_result,
 				(select consults.TreatmentFinished   from consults where consults.patient_id = bills.patient_id ORDER BY consults.Date DESC LIMIT 1) as last_treat_ended 
 			FROM bills

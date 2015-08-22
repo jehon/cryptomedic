@@ -37,8 +37,6 @@ function service_session_storage(onReady) {
     var day = "0" + now.getDate();
     day = day.substring(day.length - 2);
 		
-    console.log(day);
-    
     get("examiner", "");
     get("center", "");
     get("day", day);

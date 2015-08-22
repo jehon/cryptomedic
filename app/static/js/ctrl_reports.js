@@ -97,6 +97,7 @@ mainApp.controller('ctrl_reports', [ '$scope', '$routeParams', 'service_backend'
 		    )
 		    .then(function(data) {
 			$scope.result = data;
+			$scope.safeApply();
 		    });
 	}
 
