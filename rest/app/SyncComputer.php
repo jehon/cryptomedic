@@ -3,8 +3,8 @@
 
 namespace App;
 
-use App\CryptomedicModel;
+use Illuminate\Database\Eloquent\Model;
 
-class SyncComputer extends CryptomedicModel {
-	
+class SyncComputer extends Model {
+	protected $guarded = array('id'); // TODO: modified and created should be removed
 }

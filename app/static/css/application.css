@@ -246,6 +246,10 @@ input[type=checkbox].form-control {
 	padding-left: 25px; 
 }
 
+.ui-datepicker-month, .ui-datepicker-year {
+	color: black;
+}
+
 /********************************************
  * Menu / buttons
  */

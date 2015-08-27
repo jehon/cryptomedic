@@ -4,6 +4,8 @@
 
 namespace App\Http\Middleware;
 
+define("n", 200);
+
 require_once __DIR__ . '/../../../../php/references.php';
 
 use Closure;
@@ -30,7 +32,6 @@ class OfflineData {
 		
 		$old_cp = $request->header("X-OFFLINE-CP", $request->input("_x_offline_cp", false));
 		if ($old_cp !== false) {
-			$n = $request->header("X-OFFLINE-N", $request->input("_x_offline_n", 25));
 			$data = $response->getData();
 			if (!is_array($data) && !is_object($data)) {
 				return $response;
@@ -50,6 +51,12 @@ class OfflineData {
 					$offline['reset'] = 0;
 				}
 			}
+
+// TODO: reset
+// 			if (strpos($cp[1], "-") === false) {
+// 				// Old system, let's restart the sync!
+// 				$offline['reset'] = 1;
+// 			}
 			
 			$sqlu = "";
 			$params = array();
@@ -74,7 +81,7 @@ class OfflineData {
 			$offline["remaining"] = $res[0]->c;
 			
 			$sql .= "ORDER BY MAX(ts), patient_id ";
-			$sql .= "LIMIT $n";
+			$sql .= "LIMIT " . constant("n");
 
 			$res = DB::select($sql, $params);
 			
@@ -90,7 +97,7 @@ class OfflineData {
 				$last = $offline['data'][$i]['checkpoint'] = $r->ts . "|" . $r->patient_id;
 			}
 			$offline["checkpoint"] = ($last ? $last : $old_cp);
-			$offline["isfinal"] = (count($res) < $n);
+			$offline["isfinal"] = (count($res) < constant("n"));
 			if (is_array($data)) {
 				$data['_offline'] = $offline;
 			} else if (is_object($data)) {

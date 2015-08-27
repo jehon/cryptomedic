@@ -2,9 +2,5 @@ TODO Bills:
  1/ dans la bill partie "surgical item", il faudrait enlever les item "percutaneous achil tenotomy bi cmosh", "percutaneous AL club foot"
  2/ je viens de te faire une requète concernant l\'annulation des item chirurgicaux "tenotomy", ceux qui sont codés il faut les transférer dans l\'item "percutaneous achil tenotomy bi cdc
 	
-TODO: http://www.cryptomedic.org//maintenance/routes/viewBug.php?id=7
-  serait-t-il possible de faire que la colonne "last seen" qui correspond la derniÃ¨re fois que l'enfant a Ã©tÃ© bilantÃ© avec la derniÃ¨re bill et non avec la derniÃ¨re consultation saisie. En effet nous saisissions bien les bill, mais pas rÃ©guliÃ¨rement les donnÃ©es cliniques. Donc cela sera plus juste pour savoir si l'enfant est suivi correctement ou non.
-
 TODO rendez-vous:
   Pour créer un nouveau rendez-vous de consultation il faut obligatoirement faire une fiche de consultation. Souvent cette consultation n\'a pas forcément eut lieu et on crée donc une fiche sans information utile. Serait-il possible de rajouter dans les possibilités de "add" une fonction donner un rendez vous de consultation sans forcément ouvrir une fiche de consult?
-  

@@ -3,6 +3,7 @@
  *   ok- computer is authentified -> sync read-only (as of today)
  *   - same, but in worker
  *   - hook (ro) getFolder, checkReference
+ *   - react to conflicts
  *   - hook (ro) searchForPatients
  *   - hook (ro) reports
  *   - user are authentified -> no reload of page at beginning
