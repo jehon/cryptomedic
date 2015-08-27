@@ -1,28 +1,5 @@
 "use strict";
 
-/* TODO: Queue principle
-  - !! when connecting, a key is generated on the server
-  	- we receive it inside the "settings"
-  	- ?? if no connection is available, where to retreive it?
-  - all changes are stored locally, in a "queue"
-  	- the queue is signed with a key received from the server
-  	- test it with simple changes (save-and-queue and unlock-and-queue?)
-  	- a gui element show the queue status
-  - when displaying data, the pending data is shown on screen
-  	- could it be modified again?
-  - when a connection is made, queue is sent to the server
-  	- by url or in one entry point?
-  	- server check the key
-  	- a status is sent along with the queue
-  	- optimistic locking is used
-  	- positive feedback is received through the "sync" mechanism
-  	- ?? quid on change already made in parallel?
-  	
-  - TODO: when receiving a message from the worker, first check if it is for us
-        - lockFolder(id)?
-        - send all messages + controller will see what to do?
- */
-
 // Test cryptographic:
 // Documentation: https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto
 
@@ -36,8 +13,6 @@ if (!window.localStorage.cryptomedicComputerId) {
 	}
 	window.localStorage.cryptomedicComputerId = result;
 }
-
-// TODO-URGENT: this is not a singleton, thus the worker is spanned a lot of times...
 
 /* service_my_backend */
 var service_my_backend = (function () {
@@ -152,24 +127,11 @@ var service_my_backend = (function () {
 	    return getFetch(rest + "/auth/logout")
 	    .then(this.json);
 	},
-	/* Data Sync */
 	'sync': function() {
 	    myPostMessage("sync");
-//	    return getFetch(rest + "/foldersync")
-//	    .then(json)
-//	    .then(this.extractCache)
-//	    .then(function(data) { return localStorage._final; });
 	},
-//	'resync': function() {
-//	    delete(localStorage.cryptomedicLastSync);
-//	    this.sync();
-//	},
-	'reset': function() {
-	    delete(localStorage.cryptomedicLastSync);
-	    db.delete().then(function() {
-		alert("Database is erased. Please reload the page.");
-		window.location = "/cryptomedic";
-	    });
+	'reSync': function() {
+	    myPostMessage("reSync");
 	},
 	'extractCache': function(json) {
 	    if (json._offline) {
@@ -299,17 +261,6 @@ mainApp.factory('service_backend', [ '$rootScope', '$injector', function($rootSc
 // http://www.webdeveasy.com/interceptors-in-angularjs-and-useful-examples/
 mainApp.factory('sessionInjector', [ '$q', '$injector', 'service_backend', '$rootScope', function($q, $injector, service_backend, $rootScope) {
     return {
-//        'request': function(config) {
-//           config.headers['X-OFFLINE-CP'] = localStorage.cryptomedicLastSync;
-//            return config;
-//        },
-//        'response': function(response) {
-//	    // Take away the "offline" data with the new service
-//            if (response.data[0] != "{") return response;
-//            var d = service_my_backend.extractCache(response.data);
-//            response.data = d;
-//            return response;
-//        },
 	'responseError': function(rejection) {
 	    switch(rejection.status) {
 	    case 401: // Unauthorized
@@ -325,12 +276,16 @@ mainApp.factory('sessionInjector', [ '$q', '$injector', 'service_backend', '$roo
 
 mainApp.config(['$httpProvider', function($httpProvider) {  
     $httpProvider.defaults.transformResponse.push(function(responseData){
-	if (typeof responseData !== "object") return responseData;
-		return objectify(responseData);
+	if (typeof responseData !== "object") {
+	    return responseData;
+	}
+	return objectify(responseData);
     });
     $httpProvider.defaults.transformRequest.unshift(function(requestData){
-	if (typeof requestData !== "object") return requestData;
-		return stringify(requestData);
+	if (typeof requestData !== "object") {
+	    return requestData;
+	}
+	return stringify(requestData);
     });
     $httpProvider.interceptors.push('sessionInjector');
 }]);

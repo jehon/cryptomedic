@@ -1,35 +1,60 @@
 /*
- * Phases: 
- * ok- computer is authentified -> sync read-only (as of today) - same,
- * ok- but in worker 
- * - hook (ro) getFolder (= by entryyear/number? => adapt reports), checkReference (what if not finish syncing ? -> go directly to server)
- * - react to conflicts 
- * - hook (ro) searchForPatients 
- * - hook (ro) reports 
- * - user are authentified -> no reload of page at beginning 
- * - queue changes
- * - reset remotely
- *
- * Interface: postMessage({ name: '*', data: {}})
- * 
- * ** Available requests: 
- * userLogin -> user settings 
- * userLogout -> ok 
- * getFolder -> folder data 
- * folderCreate -> ok/ko 
- * fileCreate -> ok/ko 
- * fileModify -> ok/ko
- * fileDelete -> ok/ko
- * 
- * ** Sending messages: 
- * -> folderUpdated (folder data) 
- * -> conflict (conflict data)
- * -> progress(sync status, queue length, etc...)
- * 
- * Questions: 
- * - how to log in a user? = subscribe on this computer OR check the password in the local database 
- * - how to log out a user? = forget from this computer 
- * - what happen if the computer key is "forgotten" ? (ex: erased from server) -> reset it ?
+ Phases: 
+  ok- computer is authentified -> sync read-only (as of today) - same,
+  ok- but in worker 
+  - hook (ro) getFolder (= by entryyear/number? => adapt reports), 
+  - hook (ro) checkReference (what if not finish syncing ? -> go directly to server)
+  - react to conflicts 
+  - hook (ro) searchForPatients 
+  - hook (ro) reports 
+  - user are authentified -> no reload of page at beginning 
+  - queue changes
+  - reset remotely
+ 
+  Interface: postMessage({ name: '*', data: {}})
+  
+ ** Available requests: 
+  userLogin -> user settings 
+  userLogout -> ok 
+  getFolder -> folder data 
+  folderCreate -> ok/ko 
+  fileCreate -> ok/ko 
+  fileModify -> ok/ko
+  fileDelete -> ok/ko
+  
+ ** Sending messages: 
+  -> folderUpdated (folder data) 
+  -> conflict (conflict data)
+  -> progress(sync status, queue length, etc...)
+  
+ Questions: 
+  - how to log in a user? = subscribe on this computer OR check the password in the local database 
+  - how to log out a user? = forget from this computer 
+  - what happen if the computer key is "forgotten" ? (ex: erased from server) -> reset it ?
+ */
+
+
+/* TODO: Queue principle
+  - !! when connecting, a key is generated on the server
+  	- we receive it inside the "settings"
+  	- ?? if no connection is available, where to retreive it?
+  - all changes are stored locally, in a "queue"
+  	- the queue is signed with a key received from the server
+  	- test it with simple changes (save-and-queue and unlock-and-queue?)
+  	- a gui element show the queue status
+  - when displaying data, the pending data is shown on screen
+  	- could it be modified again?
+  - when a connection is made, queue is sent to the server
+  	- by url or in one entry point?
+  	- server check the key
+  	- a status is sent along with the queue
+  	- optimistic locking is used
+  	- positive feedback is received through the "sync" mechanism
+  	- ?? quid on change already made in parallel?
+  	
+  - TODO: when receiving a message from the worker, first check if it is for us
+        - lockFolder(id)?
+        - send all messages + controller will see what to do?
  */
 
 importScripts("../../bower_components/fetch/fetch.js");
@@ -195,19 +220,43 @@ function myPostMessage(name, data) {
     postMessage({ name: name, data: data });
 }
 
+var syncTimer = null;
+var syncLock = false;
+/**
+ * Rearm the waiting queue
+ * 
+ * @param finished 
+ * 	if finished, the cron will restart later than if not finished
+ * @returns
+ */
+function setCron(finished) {
+    finished = finished | false;
+    if (syncTimer) {
+	// Cancel currently running timer
+	clearTimeout(syncTimer);
+    }
+    syncTimer = setTimeout(routeSync, (finished ? 60 * 1000 : 500));
+    syncLock = false;
+}
+
 /*
  * 
  * Routing functions
  * 
  */
-var syncTimer = null;
 function routeStoreData(offdata) {
+    if (syncLock) {
+	console.log("Worker: sync is locked");
+	return;
+    }
+    syncLock = true;
     // TODO: rearm sync in all conditions
     if (syncTimer) {
 	// Cancel currently running timer
 	clearTimeout(syncTimer);
     }
     if (!offdata.remaining) {
+	setCron(true);
 	return myPostMessage("progress", { 
     		"checkpoint": syncLastCheckpoint, 
     		"final": 1,
@@ -231,6 +280,8 @@ function routeStoreData(offdata) {
     if (offdata.data) {
         promise = promise.then(function() {
             return db.patients.bulk(offdata.data).then(function() {
+        	// relaunch the sync upto completion
+        	setCron(offdata.isfinal);
         	syncLastCheckpoint = offdata.checkpoint;
         	myPostMessage("progress", { 
         	    "checkpoint": offdata.checkpoint, 
@@ -241,10 +292,6 @@ function routeStoreData(offdata) {
         	if (offdata.isfinal) {
         	    syncTotalToDo = 0;
         	}
-        	// relaunch the sync upto completion
-        	syncTimer = setTimeout(function() {
-        	    routeSync();
-        	}, (offdata.isfinal ? 60 * 1000 : 500));
             }, function(e) { 
         	// Catch error and display it
         	console.error("Error in bulk insert", e); 
@@ -252,11 +299,16 @@ function routeStoreData(offdata) {
             });
         });
     }
+    return promise;
 }
 
-function routeSync() {
+function routeSync(request) {
+    if (request) {
+	console.warn("sync with request", request);
+    }
+    
     return getFetch(rest + "/foldersync").then(function(result) {
-	routeStoreData(result._offline);
+	return routeStoreData(result._offline);
     });
 }
 
@@ -272,6 +324,9 @@ function route(e) {
     	case "storeData":
     	    return routeStoreData(e.data.data);
     	case "sync":
+    	    return routeSync();
+    	case "reSync":
+    	    syncLastCheckpoint = "";
     	    return routeSync();
     	default:
 	    return console.error("unkown message: " + e.data.name, e.data);
