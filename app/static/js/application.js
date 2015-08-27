@@ -4,15 +4,15 @@ var application = {};
 application.models = {};
 var server = {};
 
-/**
- * For this f*** old IE6-8
- */
-if (typeof(console) === 'undefined') { console = {}; }
-if (typeof(console.log) !== 'function') { console.log = function() {}; }
-if (typeof(console.info) !== 'function') { console.info = console.log; }
-if (typeof(console.error) !== 'function') { console.error = console.log; }
-if (typeof(console.trace) !== 'function') { console.trace = console.log; }
-if (typeof(console.warn) !== 'function') { console.warn = console.log; }
+///**
+// * For this f*** old IE6-8
+// */
+//if (typeof(console) === 'undefined') { console = {}; }
+//if (typeof(console.log) !== 'function') { console.log = function() {}; }
+//if (typeof(console.info) !== 'function') { console.info = console.log; }
+//if (typeof(console.error) !== 'function') { console.error = console.log; }
+//if (typeof(console.trace) !== 'function') { console.trace = console.log; }
+//if (typeof(console.warn) !== 'function') { console.warn = console.log; }
 
 // Inspired from http://www.2ality.com/2014/10/es6-promises-api.html
 Promise.prototype.myfinallydone = function (callback) {
@@ -140,14 +140,7 @@ function objectify(what) {
                 return new Date(what.substr(0, 4), what.substr(5, 2) - 1, what.substr(8, 2),
                     what.substr(11, 2), what.substr(14, 2), what.substr(17, 2));
             };
-			// // TODO LOW: problem with year parsing !!!
-			// TODOJH: workaround: do not manage yyyy-mm-dd in date() but stay in strings
-   //          if (what.match("[0-9]{4}-[0-9]{2}-[0-9]{2}") == what) {
-   //          	if (what == "0000-00-00") return null;
-   //              var d = new Date(what.substr(0, 4), what.substr(5, 2) - 1, what.substr(8, 2));
-   //              return d;
-			// };
-			return what;
+            return what;
 	case "object":
 	    angular.forEach(what, function(val, i) {
 		what[i] = objectify(what[i]);
