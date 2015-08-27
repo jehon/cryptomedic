@@ -39,10 +39,10 @@ function service_session_storage(onReady) {
 		
     get("examiner", "");
     get("center", "");
+    get("period", "month");
     get("day", day);
     get("month", year + "-" + month);
     get("year", year);
-
     
     return {
 	'get': get,
@@ -65,8 +65,8 @@ function service_session_storage(onReady) {
 	    }
 	    values[key] = val;
 	    if (sessionStorage) {
-		sessionStorage.setItem(key, stringify(val));
-//		sessionStorage.setItem(key, val);
+//		sessionStorage.setItem(key, stringify(val));
+		sessionStorage.setItem(key, val);
 	    }
 	},
 	'clear': function() {
