@@ -180,16 +180,6 @@ var mainApp = angular.module('app_main', [ 'ngRoute' ])
 	$compileProvider.aHrefSanitizationWhitelist(/^\s*((https?|ftp|mailto|chrome-extension):|data:text,)/);
 	$compileProvider.imgSrcSanitizationWhitelist($compileProvider.aHrefSanitizationWhitelist());
 }])
-.config(["$httpProvider", function ($httpProvider) {
-	$httpProvider.defaults.transformResponse.push(function(responseData){
-		if (typeof responseData !== "object") return responseData;
-		return objectify(responseData);
-	});
-	$httpProvider.defaults.transformRequest.unshift(function(requestData){
-		if (typeof requestData !== "object") return requestData;
-		return stringify(requestData);
-	});
-}])
 .filter('mypercentage', function() {
 	return function(text, rnd) {
 		text = text || '';
@@ -417,7 +407,6 @@ mainApp.controller('ctrl', [ '$scope', '$location', 'service_backend', function(
     };
 
     myEvents.on('backend_cache_progress', function(data) {
-	console.log(data);
 	console.log("Cache progress: " + data.checkpoint + " " + (data.final ? " terminated " : " data pending")); 
 	$scope.sync = data;
 	$scope.safeApply();

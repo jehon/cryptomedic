@@ -71,7 +71,6 @@
 		
 		// Other
 		(new Script("bower_components/excellentexport/excellentexport.min.js"))->dependFile()->toPrint();
-		(new Script("bower_components/dexie/dist/latest/Dexie.min.js"))->dependFile()->toPrint(); // TODO: for the worker
 		
 		// personnal
 		(new Script("static/js/application.js"))->dependFile()->toPrint();
@@ -180,11 +179,12 @@
 			</div><!-- /.modal -->
 			<div>
 				<!-- Sync informations -->
-<!-- TODO: Sync disabled on screen informations 
+<!-- TODO: Sync disabled on screen informations -->
 				<span ng-if="!sync.final">
 					<div class="alert alert-dismissible alert-info">
 						<span ng-if="!sync.final">
 							Loading data from the server:
+							(you may use the application during the loading)
 							<div class="progress">
 								<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{sync.total - sync.remaining}}" aria-valuemin="0" aria-valuemax="{{sync.total}}" 
 										style="width: {{(sync.total - sync.remaining)/sync.total * 100}}%;">
@@ -194,7 +194,7 @@
 						</span>
 					</div>
 				</span>
--->
+<!-- -->
 				<span ng-repeat="m in messages">
 					<div class="alert alert-dismissible" ng-class="'alert-' + m.level" alert-dismissible>
 	 					<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>

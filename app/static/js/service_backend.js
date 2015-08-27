@@ -41,102 +41,33 @@ if (!window.localStorage.cryptomedicComputerId) {
 
 /* service_my_backend */
 var service_my_backend = (function () {
-//    var worker = new Worker("static/worker/worker.js?r=" + Math.random())
-//    worker.onmessage = function(e) {
-//        console.log('Message received from worker: ' + e.data.name);
-//        console.log(e.data.data);
-//    }
-//
-//    function post(name, data) {
-//	worker.postMessage({ name: name, data: data });
-//    }
-//    post("ping", "hehehe");
-    
-    var rest = "/cryptomedic/rest/public";
-    /**
-     * Hold, for the current run, the first "remaining" -> idea of a progress
-     */
-    var thisSyncRemaining = 0;
-    /** 
-     * Manage the indexeddb
-     */
-    var db = new Dexie("cryptomedic");
-    db.version(1).stores({
-        patients: '++id'
-    });
+    var worker = new Worker("static/worker/worker.js");
+    worker.onmessage = function(e) {
+        console.log('<- worker: ' + e.data.name, e.data.data);
+        switch(e.data.name) {
+        	case "progress":
+        	    localStorage.cryptomedicLastSync = e.data.data.checkpoint;
+        	    myEvents.trigger("backend_cache_progress", e.data.data);
+    	    	    break;
+        	default:
+    	    	    console.error("Unknown message: " + e.data.name, e.data);
+        }
+    };
 
-    db.version(2).stores({
-	patients: '++id[mainFile.entryyear+mainFile.entryorder]'
-    });
-    
-    db.version(1).stores({
-        patients: '++id'
-    });
-
-    db.version(4).stores({
-	//  @see db.relations.where('[userId1+userId2]').equals([2,3]).or('[userId1+userId2]').equals([3,2]) - will give you all the relations that user 1 has to user 2 or user 2 has to user 1.
-	patients: '++id,[mainFile.entryyear+mainFile.entryorder]'
-    });
-    
-    db.on('blocked', function () {
-	console.error("DB is blocked");
-    });
-    
-    
-    // Create a bulk management
-    db.Table.prototype.bulk = function(data, oninsert) {
-	var self = this,
-            creatingHook = this.hook.creating.fire;
-        return this._idbstore("readwrite", function (resolve, reject, idbstore, trans) {
-            var thisCtx = {};
-            var prevPromise = Promise.resolve(); // initial Promise always resolves
-            for (var key in data) {
-        	prevPromise = prevPromise.then((function(key) {
-        	    return new Promise(function(iresolve, ireject) {
-        		var req;
-        		if (data[key]['_deleted']) {
-        		    req = idbstore.delete(key);
-        		} else {
-        		    req = idbstore.add(data[key]['record']);
-        		}
-        		req.onerror = function (e) {
-        		    console.error(e.originalTarget);
-        		    ireject(e);
-        		};
-        		req.onsuccess = function (ev) {
-        		    if (oninsert) {
-        			oninsert(data[key]);
-        		    }
-        		    iresolve();
-        		};
-        	    });
-        	})(key));
-            }
-            prevPromise.then(function() { resolve(); }, function(e) { reject(e); });
-        });
+    worker.onerror = function(e) {
+	console.error("Error in worker: ", e);
     };
     
-    db.open();
-
-    /**
-     * Enqueue an action in the waiting queue, with additionnal data (encryption, timestamp, ...)
-     * 
-     * @param name: name of the action
-     * @param data: the additionnal data
-     * 
-     * @caveat: not all service shall use this. Only "offline" services would go through this.
-     */
-    function enqueueAction(name, data) {
-	request = {
-		name: name,
-        	created: new Date(),
-		data: data,
-        	username: "test",
-        	hash: "123"
-	};
-	// TODO: enqueue + send queue in thread
+    function myPostMessage(name, data) {
+	worker.postMessage({ name: name, data: data });
     }
     
+    myPostMessage("init", {
+	checkpoint: (localStorage.cryptomedicLastSync ? localStorage.cryptomedicLastSync : "") 
+    });
+    
+    var rest = "/cryptomedic/rest/public";
+
     /**
      * Launch a fetch request
      * 
@@ -165,12 +96,8 @@ var service_my_backend = (function () {
 		init.body = fd;
 	    }
 	}
-	if (!localStorage.cryptomedicLastSync) {
-	    localStorage.cryptomedicLastSync = false;
-	}
 	init.headers.append("Accept", "application/json, text/plain, */*");
 	init.headers.append('X-OFFLINE-CP', localStorage.cryptomedicLastSync);
-	init.headers.append('X-OFFLINE-N', 100);
 	
 	var req = new Request(url, init);
 	return fetch(req).then(function(response) {
@@ -196,11 +123,7 @@ var service_my_backend = (function () {
     function json(response) { 
 	return response.json();
     }
-    
-    window.onbeforeunload = function (e) {
-	db.close();
-    };
-    
+        
     return {
 	/* Authentification */
 	'login': function(username, password) {
@@ -231,15 +154,16 @@ var service_my_backend = (function () {
 	},
 	/* Data Sync */
 	'sync': function() {
-	    return getFetch(rest + "/foldersync")
-	    .then(json)
-	    .then(this.extractCache)
-	    .then(function(data) { return localStorage._final; });
+	    myPostMessage("sync");
+//	    return getFetch(rest + "/foldersync")
+//	    .then(json)
+//	    .then(this.extractCache)
+//	    .then(function(data) { return localStorage._final; });
 	},
-	'resync': function() {
-	    localStorage.cryptomedicLastSync = "";
-	    this.sync();
-	},
+//	'resync': function() {
+//	    delete(localStorage.cryptomedicLastSync);
+//	    this.sync();
+//	},
 	'reset': function() {
 	    delete(localStorage.cryptomedicLastSync);
 	    db.delete().then(function() {
@@ -251,42 +175,7 @@ var service_my_backend = (function () {
 	    if (json._offline) {
 		var offdata = jQuery.extend(true, {}, json._offline);
 		delete json._offline;
-		if (thisSyncRemaining == 0 || !localStorage.cryptomedicLastSync || thisSyncRemaining < offdata["remaining"]) {
-		    thisSyncRemaining = offdata["remaining"];
-		    console.log("taking point: " + thisSyncRemaining);
-		} else {
-		    console.log("progress: " + (1 - (offdata["remaining"] / thisSyncRemaining)) * 100 + "%");
-		}
-		
-		var lastSync = offdata._checkpoint;
-		var promise = Promise.resolve();
-		if (offdata.reset) {
-		    promise = promise.then(function() { 
-			console.log("resetting the patients");
-			db.patients.clear(); 
-		    });
-		}
-		promise = promise.then(function() {
-		    db.patients.bulk(offdata.data, function(data) {
-			// TODO: commit the checkpoint
-//			console.info(data);
-		    }).then(function() {
-			localStorage.cryptomedicLastSync = offdata.checkpoint;
-			myEvents.trigger("backend_cache_progress", { 
-			    "checkpoint": offdata.checkpoint, 
-			    "final": offdata.isfinal,
-			    "total": thisSyncRemaining,
-			    "remaining": offdata.remaining--
-			});
-			if (!offdata.isfinal) {
-			    // relaunch the sync upto completion
-			    setTimeout(function() {
-// TODO: re-enable sync relaunch automatically
-				//service_my_backend.sync();
-			    }, 100);
-			}
-		    });
-		});
+		myPostMessage("storeData", offdata);
 	    }
 	    return json;
 	},
@@ -410,17 +299,17 @@ mainApp.factory('service_backend', [ '$rootScope', '$injector', function($rootSc
 // http://www.webdeveasy.com/interceptors-in-angularjs-and-useful-examples/
 mainApp.factory('sessionInjector', [ '$q', '$injector', 'service_backend', '$rootScope', function($q, $injector, service_backend, $rootScope) {
     return {
-        'request': function(config) {
-           config.headers['X-OFFLINE-CP'] = localStorage.cryptomedicLastSync;
-            return config;
-        },
-        'response': function(response) {
-	    // Take away the "offline" data with the new service
-            if (response.data[0] != "{") return response;
-            var d = service_my_backend.extractCache(response.data);
-            response.data = d;
-            return response;
-        },
+//        'request': function(config) {
+//           config.headers['X-OFFLINE-CP'] = localStorage.cryptomedicLastSync;
+//            return config;
+//        },
+//        'response': function(response) {
+//	    // Take away the "offline" data with the new service
+//            if (response.data[0] != "{") return response;
+//            var d = service_my_backend.extractCache(response.data);
+//            response.data = d;
+//            return response;
+//        },
 	'responseError': function(rejection) {
 	    switch(rejection.status) {
 	    case 401: // Unauthorized
@@ -435,5 +324,13 @@ mainApp.factory('sessionInjector', [ '$q', '$injector', 'service_backend', '$roo
 }]);
 
 mainApp.config(['$httpProvider', function($httpProvider) {  
+    $httpProvider.defaults.transformResponse.push(function(responseData){
+	if (typeof responseData !== "object") return responseData;
+		return objectify(responseData);
+    });
+    $httpProvider.defaults.transformRequest.unshift(function(requestData){
+	if (typeof requestData !== "object") return requestData;
+		return stringify(requestData);
+    });
     $httpProvider.interceptors.push('sessionInjector');
 }]);
