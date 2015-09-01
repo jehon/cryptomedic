@@ -67,6 +67,7 @@ Route::controllers([
 /**
  * Computer based authenticated routes
  */
+ // TODO: protect with computer authentication instead of user authentication
 Route::group(array('middleware' => 'authenticated'), function() {
 	Route::any('sync', [ "uses" => "SyncController@sync" ]);
 });

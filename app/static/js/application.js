@@ -318,14 +318,13 @@ mainApp.controller('ctrl', [ '$scope', '$location', 'service_backend', function(
     $scope.application = application;
     $scope.server = server;
     $scope.safeApply = function (fn) {
-	var phase = this.$root.$$phase;
-	if(phase == '$apply' || phase == '$digest') {
-	    if(fn && (typeof(fn) === 'function')) {
-		fn();
-	    }
-	} else {
-	    this.$apply(fn);
-	}
+    	if (this.$root && (this.$root.$$phase == '$apply' || this.$root.$$phase == '$digest')) {
+    	    if(fn && (typeof(fn) === 'function')) {
+    		fn();
+    	    }
+    	} else {
+    	    this.$apply(fn);
+    	}
     };
 	
     $scope.go = function(path, replaceInHistory) {

@@ -8,15 +8,32 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_backend', '$
     $scope.errors = {};
 	
     var id = parseInt($routeParams['id']);
+
     var fileCreating = null;
     if (typeof($scope.mode) == "undefined") $scope.mode = "read";
 
     $scope.id = function() { 
 	return id;
     };
-	
+
+    myEvents.on("folder", function(data) {
+	if (data.id == $scope.id()) {
+	    // TODO: detect if already stored and show warning in this case
+//	    console.log(data);
+	    $scope.folder = objectify(data);
+	    $scope.select();
+	    $scope.safeApply();
+	    // FIXME: How to refresh the "select" page?
+	} else {
+	    console.log("skipping ", data);
+	}
+    });
+    
+
     $scope.select = function(page) {
-	$scope.page = page;
+	if (page) {
+	    $scope.page = page;
+	}
 
 	if (($scope.page === "") || ($scope.page === undefined) || ($scope.page === null)) {
 	    $scope.page = "patient";

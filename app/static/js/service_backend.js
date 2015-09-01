@@ -32,7 +32,7 @@ var service_my_backend = (function () {
         	    myEvents.trigger("backend_cache_progress", data);
     	    	    break;
         	case "folder":
-        	    console.log("hehehe");
+        	    myEvents.trigger("folder", data);
         	    break;
         	default:
     	    	    console.error("Unknown message: " + name, data);

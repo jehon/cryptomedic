@@ -350,8 +350,10 @@ function routeSync(request) {
 }
 
 function routeGetFolder(id) {
-    console.log(id);
-    mySendEvent("folder", { id: id, mainFile: "test" });
+    // TODO if not final, then fallback to server
+    db.patients.get("" + id).then(function(data) {
+	mySendEvent("folder", data);
+    });
 }
 
 /*
