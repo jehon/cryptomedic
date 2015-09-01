@@ -19,13 +19,13 @@ var service_my_backend = (function () {
     var rest = "/cryptomedic/rest/public";
     var worker = new Worker("static/worker/worker.js?r=" + Math.random());
     worker.onerror = function(e) {
-	console.error("<- service: Error in worker: ", e);
+	console.error("@service: Error in worker: ", e);
     };
     
     worker.onmessage = function(e) {
         var name = e.data.name;
         var data = e.data.data;
-        console.log('<- service: ' + name + ': ', data);
+        console.log('@service: ' + name + ': ', data);
         switch(name) {
         	case "progress":
         	    localStorage.cryptomedicLastSync = data.checkpoint;
@@ -40,7 +40,6 @@ var service_my_backend = (function () {
     };
 
     function mySendAction(name, data) {
-	console.log("service -> " + name, data);
 	worker.postMessage({ name: name, data: data });
     }
 
@@ -60,7 +59,6 @@ var service_my_backend = (function () {
      *  
      */
     function getFetch(url, init, data) {
-	console.log("getFetch");
 	init = jQuery.extend({
 	    headers: new Headers(),
 	    method: "GET",
@@ -79,13 +77,10 @@ var service_my_backend = (function () {
 	}
 	init.headers.append("Accept", "application/json, text/plain, */*");
 	init.headers.append('X-OFFLINE-CP', localStorage.cryptomedicLastSync);
-	console.log("getFetch 2");
 	
 	var req = new Request(url, init);
-	console.log("getFetch 3");
 
 	return fetch(req).then(function(response) {
-	    console.log("getFetch 4", response);
 	    // Response: ok, status, statusText
 	    if (!response.ok) {  
 		console.log("getFetch 5", response.status);
@@ -102,7 +97,6 @@ var service_my_backend = (function () {
 		}
 		throw new Error(response.status);
 	    }
-	    console.log("getFetch 6", response);
 	    return response;
 	}, function(e) {
 	    console.error("Fetch error: ", e);
@@ -111,7 +105,6 @@ var service_my_backend = (function () {
     }
 
     function json(response) {
-	console.log("response 2 json 1", response);
 	return response.json();
     }
         
@@ -137,8 +130,6 @@ var service_my_backend = (function () {
 	    )
 	    .then(json)
 	    .then(this.extractCache)
-	    .then(function() { console.log("checklogin done"); });
-	    console.log("login");
 	},
 	'logout': function() {
 	    // TODO: clean up the cache --> cache managed in other object???
@@ -166,14 +157,11 @@ var service_my_backend = (function () {
 
 	// Temp function
 	'extractCache': function(json) {
-	    console.log("extract cache");
 	    if (json._offline) {
-		console.log("extract cache 2");
 		var offdata = jQuery.extend(true, {}, json._offline);
 		delete json._offline;
 		mySendAction("storeData", offdata);
 	    }
-	    console.log("extract cache 3");
 	    return json;
 	},
 	'deleteAll': function() {

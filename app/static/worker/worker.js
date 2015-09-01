@@ -107,7 +107,8 @@ db.on('blocked', function () {
 	console.error("DB is blocked");
 });
 
-db.open().then(function() { console.log("opened")}, function(e) { console.error("could not open", e); });
+db.open();
+//.then(function() { console.log("opened")}, function(e) { console.error("could not open", e); });
 
 /**
  * Insert data in bulk, in one transaction (faster than the simple insert)
@@ -157,7 +158,6 @@ db.Table.prototype.bulk = function(bulk) {
     for (var key in bulk) {
         prevPromise = prevPromise.then((function(key) {
         	return new Promise(function(iresolve, ireject) {
-        	   console.log("bulk key", key);
         	   var req;
         	   if (bulk[key]['_deleted']) {
         	       req = self.delete(key);
@@ -301,9 +301,7 @@ function doStoreData(offdata) {
     }
     if (offdata.data) {
         promise = promise.then(function() {
-            console.log("offdata there", offdata.data);
             return db.patients.bulk(offdata.data).then(function() {
-        	console.log("sync done");
         	// relaunch the sync upto completion
         	setCron(offdata.isfinal);
         	syncLastCheckpoint = offdata.checkpoint;
@@ -362,7 +360,7 @@ function routeGetFolder(id) {
 function route(e) {
     var name = e.data.name;
     var data = e.data.data;
-    console.log("-> worker: " + name, data);
+    console.log("@worker: " + name, data);
     switch(name) {
     	case "init":
     	    syncLastCheckpoint = data.checkpoint;

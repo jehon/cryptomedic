@@ -68,7 +68,7 @@ Route::controllers([
  * Computer based authenticated routes
  */
 Route::group(array('middleware' => 'authenticated'), function() {
-	Route::all('sync', [ "uses" => "SyncController@sync" ]);
+	Route::any('sync', [ "uses" => "SyncController@sync" ]);
 });
 
 /**

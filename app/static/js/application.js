@@ -400,7 +400,7 @@ mainApp.controller('ctrl', [ '$scope', '$location', 'service_backend', function(
     };
 
     myEvents.on('backend_cache_progress', function(data) {
-	console.log("Cache progress: " + data.checkpoint + " " + (data.final ? " terminated " : " data pending")); 
+//	console.log("Cache progress: " + data.checkpoint + " " + (data.final ? " terminated " : " data pending")); 
 	$scope.sync = data;
 	$scope.safeApply();
     }, false);
