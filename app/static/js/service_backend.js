@@ -16,33 +16,38 @@ if (!window.localStorage.cryptomedicComputerId) {
 
 /* service_my_backend */
 var service_my_backend = (function () {
-    var worker = new Worker("static/worker/worker.js");
+    var rest = "/cryptomedic/rest/public";
+    var worker = new Worker("static/worker/worker.js?r=" + Math.random());
+    worker.onerror = function(e) {
+	console.error("<- service: Error in worker: ", e);
+    };
+    
     worker.onmessage = function(e) {
-        console.log('<- worker: ' + e.data.name, e.data.data);
-        switch(e.data.name) {
+        var name = e.data.name;
+        var data = e.data.data;
+        console.log('<- service: ' + name + ': ', data);
+        switch(name) {
         	case "progress":
-        	    localStorage.cryptomedicLastSync = e.data.data.checkpoint;
-        	    myEvents.trigger("backend_cache_progress", e.data.data);
+        	    localStorage.cryptomedicLastSync = data.checkpoint;
+        	    myEvents.trigger("backend_cache_progress", data);
     	    	    break;
+        	case "folder":
+        	    console.log("hehehe");
+        	    break;
         	default:
-    	    	    console.error("Unknown message: " + e.data.name, e.data);
+    	    	    console.error("Unknown message: " + name, data);
         }
     };
 
-    worker.onerror = function(e) {
-	console.error("Error in worker: ", e);
-    };
-    
-    function myPostMessage(name, data) {
+    function mySendAction(name, data) {
+	console.log("service -> " + name, data);
 	worker.postMessage({ name: name, data: data });
     }
-    
-    myPostMessage("init", {
+
+    mySendAction("init", {
 	checkpoint: (localStorage.cryptomedicLastSync ? localStorage.cryptomedicLastSync : "") 
     });
     
-    var rest = "/cryptomedic/rest/public";
-
     /**
      * Launch a fetch request
      * 
@@ -55,6 +60,7 @@ var service_my_backend = (function () {
      *  
      */
     function getFetch(url, init, data) {
+	console.log("getFetch");
 	init = jQuery.extend({
 	    headers: new Headers(),
 	    method: "GET",
@@ -73,11 +79,16 @@ var service_my_backend = (function () {
 	}
 	init.headers.append("Accept", "application/json, text/plain, */*");
 	init.headers.append('X-OFFLINE-CP', localStorage.cryptomedicLastSync);
+	console.log("getFetch 2");
 	
 	var req = new Request(url, init);
+	console.log("getFetch 3");
+
 	return fetch(req).then(function(response) {
+	    console.log("getFetch 4", response);
 	    // Response: ok, status, statusText
 	    if (!response.ok) {  
+		console.log("getFetch 5", response.status);
 		switch(response.status) {
 		case 403: // forbidden
 		    myEvents.trigger("backend_forbidden");
@@ -91,11 +102,16 @@ var service_my_backend = (function () {
 		}
 		throw new Error(response.status);
 	    }
+	    console.log("getFetch 6", response);
 	    return response;
+	}, function(e) {
+	    console.error("Fetch error: ", e);
+	    return null;
 	});
     }
 
-    function json(response) { 
+    function json(response) {
+	console.log("response 2 json 1", response);
 	return response.json();
     }
         
@@ -120,27 +136,49 @@ var service_my_backend = (function () {
 		    }
 	    )
 	    .then(json)
-	    .then(this.extractCache);
+	    .then(this.extractCache)
+	    .then(function() { console.log("checklogin done"); });
+	    console.log("login");
 	},
 	'logout': function() {
 	    // TODO: clean up the cache --> cache managed in other object???
 	    return getFetch(rest + "/auth/logout")
 	    .then(this.json);
 	},
+
 	'sync': function() {
-	    myPostMessage("sync");
+	    console.log("sync start");
+	    mySendAction("sync");
+	    console.log("sync end");
 	},
 	'reSync': function() {
-	    myPostMessage("reSync");
+	    mySendAction("reSync");
 	},
+	'getFolder': function(id) {
+	    return new Promise(function(resolve, reject) {
+        	    mySendAction("getFolder", id).then(function(data) {
+        		console.log("receiving data", data);
+        	    }, function(e) {
+        		console.error("problem receiving data", e);
+        	    });
+	    });
+	},
+
+	// Temp function
 	'extractCache': function(json) {
+	    console.log("extract cache");
 	    if (json._offline) {
+		console.log("extract cache 2");
 		var offdata = jQuery.extend(true, {}, json._offline);
 		delete json._offline;
-		myPostMessage("storeData", offdata);
+		mySendAction("storeData", offdata);
 	    }
+	    console.log("extract cache 3");
 	    return json;
 	},
+	'deleteAll': function() {
+	    mySendAction("deleteAll");
+	},	
 	'getReport': function(reportName, data, timing) {
 	    return getFetch(rest + "/reports/" + reportName + (timing ? "/" + timing : ""), null, data)
 	    	.then(json)
@@ -177,16 +215,6 @@ mainApp.factory('service_backend', [ '$rootScope', '$injector', function($rootSc
 	 * Data oriented services
 	 */
 // READONLY -> when sync is done, this is to be managed on the idb !!!
-	'getFolder': function(id) {
-	    var $http = $injector.get("$http");
-	    if (pcache.isCached(id)) {
-		return jQuery.Deferred().resolve(pcache.get(id));
-	    }
-	    return treatHttp($http.get(rest + "/folder/" + id)).then(function(data) {
-		pcache.set(data.getMainFile().id, data);
-		return data;				
-	    });
-	},
 	'searchForPatients': function(params) {
 	    var $http = $injector.get("$http");
 	    return treatHttp($http.get(rest + "/folder", { 'params': params })).then(function(data) {

@@ -29,6 +29,7 @@ Response::macro('folder', function($id, $addData = array()) {
 	return response()->jsonOrJSONP(array_merge(getFolder($id), $addData));
 });
 
+// TODO: redefine the getFolder on FolderController
 if (!function_exists("getFolder")) {
 	function getFolder($id) {
 		$master = [];
@@ -62,7 +63,13 @@ Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
 ]);
-// Route::resource('price', "PriceController");
+
+/**
+ * Computer based authenticated routes
+ */
+Route::group(array('middleware' => 'authenticated'), function() {
+	Route::all('sync', [ "uses" => "SyncController@sync" ]);
+});
 
 /**
  * Authenticated user needed
@@ -72,8 +79,6 @@ Route::group(array('middleware' => 'authenticated'), function() {
 
 	Route::resource('folder', "FolderController", [ "only" => [ "index", "show" ]]);
 
-	Route::get('foldersync', [ "uses" => "FolderController@sync" ]);
-	
 	Route::get('reference/{entryyear}/{entryorder}', [
 		"uses" => "FolderController@reference"
 	]);

@@ -1,19 +1,18 @@
 /*
  Phases: 
-  ok- computer is authentified -> sync read-only (as of today) - same,
-  ok- but in worker 
   - hook (ro) getFolder (= by entryyear/number? => adapt reports), 
   - hook (ro) checkReference (what if not finish syncing ? -> go directly to server)
-  - react to conflicts 
+  - show conflicts (on folder update) -> simple reload page?
   - hook (ro) searchForPatients 
   - hook (ro) reports 
+  - authenticate browser in server
+  - authenticate user in browser
   - user are authentified -> no reload of page at beginning 
   - queue changes
-  - reset remotely
+  - show conflicts (rich version)
+  - advanced reset (indexedDB reset completely)
  
-  Interface: postMessage({ name: '*', data: {}})
-  
- ** Available requests: 
+ ** service -> worker (actions): 
   userLogin -> user settings 
   userLogout -> ok 
   getFolder -> folder data 
@@ -22,10 +21,10 @@
   fileModify -> ok/ko
   fileDelete -> ok/ko
   
- ** Sending messages: 
-  -> folderUpdated (folder data) 
-  -> conflict (conflict data)
-  -> progress(sync status, queue length, etc...)
+ ** worker -> service (events): 
+  -> progress({ sync status, queue length })
+  -> folder(data) 
+  -> conflict ({ updated: data, modified: data }) (conflict calculation is done in service)
   
  Questions: 
   - how to log in a user? = subscribe on this computer OR check the password in the local database 
@@ -80,10 +79,6 @@ var rest = "/cryptomedic/rest/public";
  */
 var db = new Dexie("cryptomedic");
 
-Dexie.Promise.on("error", function(e) {
-    console.error("Error in Dexie: ", e);
-});
-
 db.version(1).stores({
     patients: '++id'
 });
@@ -104,9 +99,15 @@ db.version(4).stores({
 	patients: '++id,[mainFile.entryyear+mainFile.entryorder]'
 });
 
+Dexie.Promise.on("error", function(e) {
+    console.error("Error in Dexie: ", e);
+});
+
 db.on('blocked', function () {
 	console.error("DB is blocked");
 });
+
+db.open().then(function() { console.log("opened")}, function(e) { console.error("could not open", e); });
 
 /**
  * Insert data in bulk, in one transaction (faster than the simple insert)
@@ -114,36 +115,65 @@ db.on('blocked', function () {
  * @param bulk: array of object to be inserted if the bulk[].key = "_deleted",
  *                delete it otherwise, store bulk[].record into the store
  */
+//db.Table.prototype.bulk = function(bulk) {
+//    var self = this;
+//    return this._idbstore("readwrite", function (resolve, reject, idbstore) {
+//	var thisCtx = {};
+//        var prevPromise = Promise.resolve(); // initial Promise always
+//						// resolves
+//        for (var key in bulk) {
+//            prevPromise = prevPromise.then((function(key) {
+//        	return new Promise(function(iresolve, ireject) {
+//        	    console.log("bulk key", key);
+//        	    var req;
+//        	    if (bulk[key]['_deleted']) {
+//        		req = idbstore.delete(key);
+//        	    } else {
+//        		req = idbstore.put(bulk[key]['record']);
+//        	    }
+//        	    req.onerror = function (e) {
+//        		ireject(e);
+//        	    };
+//        	    req.onsuccess = function (ev) {
+//        		iresolve();
+//        	    };
+//        	    
+//        	});
+//            })(key));
+//        }
+//        console.log("bulk: end of promised")
+//        prevPromise.then(function() { 
+//            console.log("bulk; end of then");
+//            resolve();
+//        }, function(e) { 
+//            console.error("bulk: error", e);
+//            reject(e); 
+//        });
+//    });
+//};
 db.Table.prototype.bulk = function(bulk) {
-    var self = this,
-    creatingHook = this.hook.creating.fire;
-    return this._idbstore("readwrite", function (resolve, reject, idbstore, trans) {
-	var thisCtx = {};
-        var prevPromise = Promise.resolve(); // initial Promise always
-						// resolves
-        for (var key in bulk) {
-            prevPromise = prevPromise.then((function(key) {
+    var self = this;
+    var prevPromise = Promise.resolve(); // initial Promise always resolve
+    for (var key in bulk) {
+        prevPromise = prevPromise.then((function(key) {
         	return new Promise(function(iresolve, ireject) {
-        	    var req;
-        	    if (bulk[key]['_deleted']) {
-        		req = idbstore.delete(key);
-        	    } else {
-        		req = idbstore.put(bulk[key]['record']);
-        	    }
-        	    req.onerror = function (e) {
-        		ireject(e);
-        	    };
-        	    req.onsuccess = function (ev) {
-        		iresolve();
-        	    };
+        	   console.log("bulk key", key);
+        	   var req;
+        	   if (bulk[key]['_deleted']) {
+        	       req = self.delete(key);
+        	   } else {
+        	       req = self.put(bulk[key]['record']);
+        	   }
+        	   req.then(function (e) {
+        	       ireject(e);
+        	   }, function (ev) {
+        	       iresolve();
+        	   });
         	});
-            })(key));
-        }
-        prevPromise.then(function() { resolve(); }, function(e) { reject(e); });
-    });
+        })(key));
+    }
+    return prevPromise;
 };
-
-db.open();
 
 /**
  * Launch a fetch request
@@ -157,26 +187,20 @@ db.open();
  *  
  */
 function getFetch(url, init, data) {
-    // TODO: jquery not in page
     init = init || {};
-    if (!init.headers) {
-	init.headers = new Headers();
-    }
     if (!init.method) {
 	init.method = "GET";
     }
     if (!init.credentials) {
 	init.credentials = "include";
     }
-//    init = Object.assign({
-//    init = jQuery.extend({
-//	headers: new Headers(),
-//	method: "GET",
-//	credentials: 'include'
-//    }, init);
+
     if (data) {
 	if (init.method == "GET") {
-	    url = url + "?" + jQuery.param(data);
+	    url = url + "?";
+	    for(var a in data) {
+		url = url + encodeURIComponent(a) + "=" + encodeURIComponent(data[a]) + "&";
+	    }
 	} else {
 	    var fd = new FormData();
 	    for(var a in data) {
@@ -186,25 +210,22 @@ function getFetch(url, init, data) {
 	}
     }
 
-    init.headers.append("Accept", "application/json, text/plain, */*");
-    init.headers.append('X-OFFLINE-CP', (syncLastCheckpoint ? syncLastCheckpoint : "false"));
-	
     var req = new Request(url, init);
     return fetch(req).then(function(response) {
 	// Response: ok, status, statusText
 	if (!response.ok) {  
 	    switch(response.status) {
-	    	case 403: // forbidden
-		    myEvents.trigger("backend_forbidden");
-		    break;
 		case 401: // unauthorized
-		    myEvents.trigger("backend_unauthorized");
+		    mySendEvent("backend_unauthorized");
+		    break;
+	    	case 403: // forbidden
+		    mySendEvent("backend_forbidden");
 		    break;
 		case 500: // internal server error
-		    myEvents.trigger("backend_internal_server_error");
+		    mySendEvent("backend_internal_server_error");
 		    break;
 	    }
-	throw new Error(response.status);
+	    return null;
 	}
 	return response.json();
     });
@@ -216,7 +237,7 @@ function getFetch(url, init, data) {
  * @param name name of the message
  * @param data data associated with it
  */
-function myPostMessage(name, data) {
+function mySendEvent(name, data) {
     postMessage({ name: name, data: data });
 }
 
@@ -235,16 +256,16 @@ function setCron(finished) {
 	// Cancel currently running timer
 	clearTimeout(syncTimer);
     }
-    syncTimer = setTimeout(routeSync, (finished ? 60 * 1000 : 500));
+    syncTimer = setTimeout(routeSync, (finished ? (60 * 1000) : (500)));
     syncLock = false;
 }
 
-/*
- * 
- * Routing functions
- * 
+/**
+ * Store the data present in "offdata" into the indexedDB
+ * @param offdata
+ * @returns
  */
-function routeStoreData(offdata) {
+function doStoreData(offdata) {
     if (syncLock) {
 	console.log("Worker: sync is locked");
 	return;
@@ -255,9 +276,10 @@ function routeStoreData(offdata) {
 	// Cancel currently running timer
 	clearTimeout(syncTimer);
     }
+
     if (!offdata.remaining) {
 	setCron(true);
-	return myPostMessage("progress", { 
+	return mySendEvent("progress", { 
     		"checkpoint": syncLastCheckpoint, 
     		"final": 1,
     		"total": syncTotalToDo,
@@ -274,16 +296,18 @@ function routeStoreData(offdata) {
     if (offdata.reset) {
 	promise = promise.then(function() { 
 	    console.log("resetting the database patients");
-	    return db.patients.clear(); 
+	    return db.patients.clear();
 	});
     }
     if (offdata.data) {
         promise = promise.then(function() {
+            console.log("offdata there", offdata.data);
             return db.patients.bulk(offdata.data).then(function() {
+        	console.log("sync done");
         	// relaunch the sync upto completion
         	setCron(offdata.isfinal);
         	syncLastCheckpoint = offdata.checkpoint;
-        	myPostMessage("progress", { 
+        	mySendEvent("progress", { 
         	    "checkpoint": offdata.checkpoint, 
         	    "final": offdata.isfinal,
         	    "total": syncTotalToDo,
@@ -302,34 +326,64 @@ function routeStoreData(offdata) {
     return promise;
 }
 
+/*
+ * 
+ * Routing functions
+ * 
+ */
 function routeSync(request) {
     if (request) {
 	console.warn("sync with request", request);
     }
     
-    return getFetch(rest + "/foldersync").then(function(result) {
-	return routeStoreData(result._offline);
-    });
+    try {
+        return getFetch(rest + "/sync", {}, {
+    		cp: syncLastCheckpoint 
+        }).then(function(result) {
+            if (result == null) {
+        	console.log("unauthenticated?");
+        	return;
+            }
+            return doStoreData(result._offline);
+    	});
+    } catch(e) {
+	console.error("catched error in sync: ", e);
+    }
+}
+
+function routeGetFolder(id) {
+    console.log(id);
+    mySendEvent("folder", { id: id, mainFile: "test" });
 }
 
 /*
  * Handle the routing
  */
 function route(e) {
-    console.log("-> worker: " + e.data.name, e.data.data);
-    switch(e.data.name) {
+    var name = e.data.name;
+    var data = e.data.data;
+    console.log("-> worker: " + name, data);
+    switch(name) {
     	case "init":
-    	    syncLastCheckpoint = e.data.data.checkpoint;
+    	    syncLastCheckpoint = data.checkpoint;
+    	    routeSync();
     	    break;
-    	case "storeData":
-    	    return routeStoreData(e.data.data);
     	case "sync":
     	    return routeSync();
     	case "reSync":
     	    syncLastCheckpoint = "";
     	    return routeSync();
+    	case "getFolder":
+    	    return routeGetFolder(data);
+    	case "deleteAll":
+    	    db.delete().then(function() {
+    		console.log("done");
+    	    }, function(e) {
+    		console.error(e);
+    	    });
+    	    break;
     	default:
-	    return console.error("unkown message: " + e.data.name, e.data);
+	    return console.error("unkown message: " + name, data);
     }
 }
 

@@ -105,8 +105,4 @@ class FolderController extends Controller {
 				$newObj->id
 			);
 	}
-
-	public function sync() {
-		return response()->jsonOrJSONP([ "result" => true ]);
-	}
 }
