@@ -6,5 +6,5 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 
 class SyncComputer extends Model {
-	protected $guarded = array('id'); // TODO: modified and created should be removed
+	protected $guarded = array('id');
 }

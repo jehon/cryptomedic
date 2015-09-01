@@ -253,15 +253,15 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_backend', '$
 	
     function refreshFolder() {
 	var busyEnd = $scope.doBusy("Getting the file from the server");
-	service_backend.getFolder(id)
-		.done(function(data) {
+	service_my_backend.getFolder(id)
+		.then(function(data) {
 		    $scope.folder = data;
 		    $scope.select($scope.page);
 		    $scope.safeApply();
 		    if (($scope.mode == "add") && (!$scope.fileCreating)) {
 			fileCreating = new application.models[$scope.page](null, $scope.folder);
 		    }
-		}).always(function() {
+		}).myFinallyDone(function() {
 		    busyEnd();
 		});
 	}

@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 
 // TODO: restrict operations to unlocked files
 class CryptomedicModel extends Model {
-	protected $guarded = array('id', 'modified', 'created'); // TODO: modified and created should be removed
+	protected $guarded = array('id');
 	
 	static public function getTableColumnsList() {
 		// @see http://stackoverflow.com/a/19953826/1954789

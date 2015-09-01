@@ -1,7 +1,7 @@
 
 mainApp.controller('ctrl_goto', [ '$scope', '$routeParams', 'service_backend', function($scope, $routeParams, service_backend) {
 	$scope.goToFiche = function(patient_id, type, id) {
-		service_backend.getFolder(patient_id).then(function(parent) {
+		service_my_backend.getFolder(patient_id).then(function(parent) {
 			var j = 0;
 			angular.forEach(parent.getSubFiles(), function(v, i) {
 				if ((v['_type'] == type) && (v['id'] == id)) {

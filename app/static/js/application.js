@@ -15,7 +15,7 @@ var server = {};
 //if (typeof(console.warn) !== 'function') { console.warn = console.log; }
 
 // Inspired from http://www.2ality.com/2014/10/es6-promises-api.html
-Promise.prototype.myfinallydone = function (callback) {
+Promise.prototype.myFinallyDone = function (callback) {
     callback = callback || function(data) { return data; };
     return this
     	.then(callback, callback)
@@ -437,7 +437,7 @@ mainApp.controller('ctrl', [ '$scope', '$location', 'service_backend', function(
 		.catch(function(data) {
 		    $scope.loginError = true;
 		})
-		.myfinallydone(function() {
+		.myFinallyDone(function() {
 		    busyEnd();
 		});
     };
@@ -452,7 +452,7 @@ mainApp.controller('ctrl', [ '$scope', '$location', 'service_backend', function(
 		    $scope.$broadcast("message", { "level": "info", "text": "Welcome " +  data.name + "!"});
 		    $scope.safeApply();
 		})
-		.myfinallydone(function() {
+		.myFinallyDone(function() {
 		    busyEnd();
 		});
     };
@@ -470,7 +470,7 @@ mainApp.controller('ctrl', [ '$scope', '$location', 'service_backend', function(
     			server.settings = null;
 			$scope.logged = false;
 		})
-		.myfinallydone(function(data) {
+		.myFinallyDone(function(data) {
 		    busyEnd();
 		});
     };
