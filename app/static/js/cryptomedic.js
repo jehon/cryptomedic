@@ -18,9 +18,12 @@ mainApp.config([ '$routeProvider', function($routeProvider) {
     }).when('/reports/:report?', {
         templateUrl: cryptomedic.templateRoot + '/pages/reports.html',
         controller: 'ctrl_reports',
-    }).when('/goto/:patient_id/:type/:id', {
+    }).when('/goto/:patient_id/:type/:id', { // TODO: obsolete route goto
     	templateUrl: cryptomedic.templateRoot + '/pages/blank.html',
     	controller: 'ctrl_goto',
+//    }).when('/goto/:id/:type/:id', { // TODO: make the new goto route work
+//        templateUrl: cryptomedic.templateRoot + '/pages/folder.html',
+//        controller: 'ctrl_folder',
     }).otherwise({ 'redirectTo': '/home'});
 }]);
 
