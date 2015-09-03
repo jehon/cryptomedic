@@ -104,8 +104,8 @@ application.models.Bill = application.models.File.extend({
 		angular.forEach(price, function(p, i) {
 			if (i[0] == "_") return;
 			if (i == "id") return;
-			if (i == "modified") return;
-			if (i == "created") return;
+			if (i == "created_at") return;
+			if (i == "updated_at") return;
 			if (i == "lastuser") return;
 			if (i == "datefrom") return;
 			if (i == "dateto") return;
