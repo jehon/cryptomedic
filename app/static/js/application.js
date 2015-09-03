@@ -140,6 +140,12 @@ function objectify(what) {
                 return new Date(what.substr(0, 4), what.substr(5, 2) - 1, what.substr(8, 2),
                     what.substr(11, 2), what.substr(14, 2), what.substr(17, 2));
             };
+            if (what.match("[0-9]+") == what) {
+        	return parseInt(what);
+            }
+            if (what.match("[0-9]+.[0-9]+") == what) {
+        	return parseFloat(what);
+            }
             return what;
 	case "object":
 	    angular.forEach(what, function(val, i) {
@@ -200,9 +206,11 @@ var mainApp = angular.module('app_main', [ 'ngRoute' ])
         	    try  {
         		return $scope.tryit();
         	    } catch (e) {
-        		return null;
+        		return e.toString();
         	    }
-		}, testIt);
+		}, function() {
+		    testIt();
+		});
 			
 		function testIt() {
 		    try {
@@ -327,6 +335,20 @@ mainApp.controller('ctrl', [ '$scope', '$location', 'service_backend', function(
     	}
     };
 	
+//    $scope.tryMe = function(fn) {
+//	try {
+//	    return fn();
+//	} catch(e) {
+//	    if (e instanceof ApplicationException) {
+//		return e.getMessage();
+//	    } else {
+//		return "Uncatchable error";
+//		console.error(e);
+//		throw e;
+//	    }
+//	}
+//    }
+    
     $scope.go = function(path, replaceInHistory) {
 	if ((typeof(replaceInHistory) !== "undefined") && replaceInHistory) {
 	    $location.replace();
