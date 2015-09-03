@@ -19,11 +19,10 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_backend', '$
     myEvents.on("folder", function(data) {
 	if (data.id == $scope.id()) {
 	    // TODO: detect if already stored and show warning in this case
-//	    console.log(data);
 	    $scope.folder = objectify(data);
 	    $scope.select();
 	    $scope.safeApply();
-	    // FIXME: How to refresh the "select" page?
+	    $scope.$broadcast("refresh");
 	} else {
 	    console.log("skipping ", data);
 	}
@@ -50,7 +49,9 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_backend', '$
     $scope.currentFile = function() {
 	if ($scope.mode == "add") {
 	    if (!fileCreating) {
-		fileCreating = {};
+		console.log("should be initialized " + $routeParams['page']);
+		fileCreating = new application.models[$routeParams['page']](null, $scope.folder);
+		fileCreating.patient_id = $scope.id();
 	    }
 	    return fileCreating;
 	}
