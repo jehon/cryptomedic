@@ -182,6 +182,7 @@ var service_my_backend = (function () {
 /******* OLD INTERFACE **********/
 
 // TODO: use the new "queue" system
+// TODO: when updating data, the information is not synced after
 mainApp.factory('service_backend', [ '$rootScope', '$injector', function($rootScope, $injector) {
     var pcache = perishableCache(10);
     var rest = "/cryptomedic/rest/public/";
