@@ -1,6 +1,7 @@
 <?php namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\FolderController;
 use DB;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Request;
@@ -54,9 +55,8 @@ class ModelController extends Controller {
 		if (!$newObj->id) {
 			abort(500, "Could not create the file");
 		}
-		return response()->folder(
-				$data['patient_id'], 
-				array('newKey' => $newObj->id)
+		return response()->folder($data['patient_id'], 
+					array('newKey' => $newObj->id)
 				);
 	}	
 	

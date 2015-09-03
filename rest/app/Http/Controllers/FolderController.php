@@ -12,6 +12,30 @@ use \References;
 
 class FolderController extends Controller {
 	// @see http://laravel.com/docs/5.0/controllers
+
+	public static function getFolder($id) {
+		$master = [];
+		$master['_type'] = 'Folder';
+		$master['id'] = $id;
+		$master['mainFile'] = DB::table('patients')->where('id', $id)->first();
+		if (!$master['mainFile']) {
+			abort(404);
+		}
+		$master['mainFile']->_type = 'Patient';
+		
+		$master['subFiles'] = array();
+		
+		foreach(References::$model2db as $c) {
+			if ($c == "patients") continue;
+				
+			$r = DB::select("SELECT * FROM $c WHERE patient_id = :patient_id", array('patient_id' => $id));
+			foreach($r as $rv) {
+				$rv->_type = References::db2model($c);
+				$master['subFiles'][] = $rv;
+			}
+		}
+		return $master;
+	}
 	
 	public function index() {
 		// Search through them
@@ -101,8 +125,6 @@ class FolderController extends Controller {
 		if (!$newObj->id) {
 			abort(500, "Could not create the patient");
 		}
-		return response()->folder(
-				$newObj->id
-			);
+		return response()->folder($newObj->id);
 	}
 }
