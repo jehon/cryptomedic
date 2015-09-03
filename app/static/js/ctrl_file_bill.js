@@ -4,7 +4,7 @@ mainApp.controller('ctrl_file_bill', [ '$scope', 'service_backend', function($sc
     $scope.$watch(function() {
 	return server.settings;
     }, function() {
-	console.log("server.settings available");
+	console.log("server.settings are now available");
 	$scope.currentFile().calculatePriceId();
 	$scope.safeApply();
     });

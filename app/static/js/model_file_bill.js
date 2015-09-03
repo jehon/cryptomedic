@@ -10,7 +10,6 @@ application.models.Bill = application.models.File.extend({
 			var last_bill = null;
 			angular.forEach(folder.subFiles, function(v, k) {
 				if (v._type == "Bill") {
-					console.log(v);
 					if (!last_bill) {
 						last_bill = v;
 					} else {

@@ -349,6 +349,8 @@ mainApp.controller('ctrl', [ '$scope', '$location', 'service_backend', function(
     $scope.busy.done = false;
     $scope.busy.isVisible = false;
     $scope.doBusy = function(msg, wait) {
+	// TODO: refactor this with the new system!!!
+	
 	// TODO LOW GUI: auto hide the message box after 500ms if anything is pending ?
 	if (typeof(wait) == 'undefined') {
 	    wait = false;

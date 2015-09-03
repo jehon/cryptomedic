@@ -1,17 +1,19 @@
+// TODO: obsolete route goto
 
 mainApp.controller('ctrl_goto', [ '$scope', '$routeParams', 'service_backend', function($scope, $routeParams, service_backend) {
-	$scope.goToFiche = function(patient_id, type, id) {
-		service_my_backend.getFolder(patient_id).then(function(parent) {
-			var j = 0;
-			angular.forEach(parent.getSubFiles(), function(v, i) {
-				if ((v['_type'] == type) && (v['id'] == id)) {
-					j = i;
-				}
-			});
-			$scope.go("/folder/" + parent.getId() + "/" + j, true);
-		});
-	};
+    $scope.goToFiche = function(patient_id, type, id) {
+	// TODO: this does not get to work
+	service_my_backend.getFolder(patient_id).then(function(parent) {
+	    var j = 0;
+	    angular.forEach(parent.getSubFiles(), function(v, i) {
+		if ((v['_type'] == type) && (v['id'] == id)) {
+		    j = i;
+		}
+	    });
+	    $scope.go("/folder/" + parent.getId() + "/" + j, true);
+	});
+    };
 
-	console.log("Redirecting to the correct fiche: " + $routeParams['type'] + "#" + $routeParams['id'])
-	$scope.goToFiche($routeParams['patient_id'], $routeParams['type'], $routeParams['id']);
+    console.log("Redirecting to the correct fiche: " + $routeParams['type'] + "#" + $routeParams['id'])
+    $scope.goToFiche($routeParams['patient_id'], $routeParams['type'], $routeParams['id']);
 }]);	
