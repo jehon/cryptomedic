@@ -1,6 +1,5 @@
 /*
  Phases: 
-  - hook (ro) getFolder (= by entryyear/number? => adapt reports), 
   - hook (ro) checkReference (what if not finish syncing ? -> go directly to server)
   - show conflicts (on folder update) -> simple reload page?
   - hook (ro) searchForPatients 
@@ -356,6 +355,13 @@ function routeGetFolder(id) {
     });
 }
 
+function routeGetByReference(entryyear, entryorder) {
+    // TODO if not final, then fallback to server
+    db.patients.where("", {entryyear, entryorder}).then(function(data) {
+	console.info(data);
+    });
+}
+
 /*
  * Handle the routing
  */
@@ -368,6 +374,8 @@ function route(e) {
     	    syncLastCheckpoint = data.checkpoint;
     	    routeSync();
     	    break;
+    	case "storeData":
+    	    return doStoreData(data);
     	case "sync":
     	    return routeSync();
     	case "reSync":
@@ -375,6 +383,8 @@ function route(e) {
     	    return routeSync();
     	case "getFolder":
     	    return routeGetFolder(data);
+    	case "getByReference":
+    	    return routeGetReference(data.entryyear, data.entryorder);
     	case "deleteAll":
     	    db.delete().then(function() {
     		console.log("done");
