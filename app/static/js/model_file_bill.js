@@ -94,7 +94,7 @@ application.models.Bill = application.models.File.extend({
 //		return this.Sociallevel;
 //	},
 	'calculate_total_real': function() {
-		if (!this.price_id) {
+		if (!this.price_id || !server.settings) {
 			this.total_real = 0;
 			this.total_asked = 0;
 			return -1;
@@ -127,7 +127,7 @@ application.models.Bill = application.models.File.extend({
 		return this.total_real;
 	},
 	'calculate_percentage_asked': function() {
-		if (!this.price_id) {
+		if (!this.price_id || !server.settings) {
 			//console.warn("calculate_percentage_asked(): no price id");
 			return 1;
 		}
@@ -145,17 +145,17 @@ application.models.Bill = application.models.File.extend({
 		return perc;
 	},
 	'getPriceFor': function(key) {
-	    if (!this.price_id) return 0;
+	    if (!this.price_id || !server.settings) return 0;
 	    if (typeof(server.settings.prices[this.price_id]) == 'undefined') return 0;
 	    return server.settings.prices[this.price_id][key];
 	},
 	'getTotalFor': function(key) {
-		if (!this.price_id) return 0;
-		if (!this[key]) return 0;
-		return server.settings.prices[this.price_id][key] * this[key];
+	    if (!this.price_id || !server.settings) return 0;
+	    if (!this[key]) return 0;
+	    return server.settings.prices[this.price_id][key] * this[key];
 	},
 	'calculatePriceId': function() {
-		if (typeof(this.Date) == "undefined") {
+		if (typeof(this.Date) == "undefined" || !server.settings) {
 			this.price_id = 1;
 			return 0;
 		}
@@ -189,6 +189,7 @@ application.models.Bill = application.models.File.extend({
 		}
 	},
 	'calculateIt': function() {
+	    if (!!server.settings) return 0;
 		var pi = jQuery('[name="data[price_id]"]').val();
 		var total = 0;
 		_(jQuery('input:enabled[type=number]')).each(function(v, i) {

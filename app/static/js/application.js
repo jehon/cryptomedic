@@ -335,20 +335,6 @@ mainApp.controller('ctrl', [ '$scope', '$location', 'service_backend', function(
     	}
     };
 	
-//    $scope.tryMe = function(fn) {
-//	try {
-//	    return fn();
-//	} catch(e) {
-//	    if (e instanceof ApplicationException) {
-//		return e.getMessage();
-//	    } else {
-//		return "Uncatchable error";
-//		console.error(e);
-//		throw e;
-//	    }
-//	}
-//    }
-    
     $scope.go = function(path, replaceInHistory) {
 	if ((typeof(replaceInHistory) !== "undefined") && replaceInHistory) {
 	    $location.replace();
