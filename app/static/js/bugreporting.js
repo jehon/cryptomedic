@@ -36,15 +36,14 @@ window.bug_reporting = (function (initial) {
             var durl = canvas.toDataURL();
             //document.body.appendChild(canvas);
             jQuery("body").html(txt);
+            // Username
+            jQuery("[name=username]").val(server.settings.username);
+            // User email
+            jQuery("[name=email]").val("");
+            // Browser custom state
+            jQuery("[name=browser_state]").val(JSON.stringify({ 'cryptomedic': cryptomedic, 'server': server }));
             jQuery("[name=url]").val(window.location);
-            jQuery("[name=username]").val(applicationUsername());
-            jQuery("[name=email]").val(applicationEmail());
             jQuery("[name=browser_useragent]").val(navigator.userAgent);
-            try {
-                jQuery("[name=browser_state]").val(JSON.stringify(applicationState()));
-            } catch (e) {
-                jQuery("[name=browser_state]").val("Got an error: " + e.getMessage());
-            }
             jQuery("[name=browser_console]").val(JSON.stringify(allConsole));
             jQuery("[name=screenshot]").val(durl);
         });
@@ -65,6 +64,7 @@ window.bug_reporting = (function (initial) {
     
     var allConsole = [];
 
+    // Capture the console
     if (window.location.host != 'localhost') { 
         // http://stackoverflow.com/a/9278067/1954789
         var consoleLog = window.console.log;
@@ -87,30 +87,6 @@ window.bug_reporting = (function (initial) {
         }
     } else {
 	console.info("Disabling capturing console.log/info/error on localhost");
-    }
-    
-    var applicationState = function() {
-	return "No getApplicationState defined";
-    }
-    
-    var applicationUsername = function() {
-	return "";
-    }
-    
-    var applicationEmail = function() {
-	return "";
-    }
-
-    bug_reporting.setApplicationState = function(fn) {
-	applicationState = fn;
-    }
-    
-    bug_reporting.setUsernameFunction = function(fn) {
-	applicationUsername = fn;
-    }
-    
-    bug_reporting.setEmailFunction = function(fn) {
-	applicationEmail = fn;
     }
     return bug_reporting;
 })(window.bug_reporting);

@@ -2,7 +2,6 @@
 	require_once(__DIR__ . "/../php/allscripts.php");
 	require_once(__DIR__ . "/../php/core.php");
 	Script::$rootPath = __DIR__;
-
 ?><!DOCTYPE html>
 <html <?php 
 	if (array_key_exists("online", $_REQUEST)) {
@@ -44,19 +43,6 @@
 		// Custom bug reporting script:
 		(new Script("static/js/bugreporting.js"))->dependFile()->toPrint();
 		(new Script("static/js/html2canvas.js"))->dependFile()->toPrint();
-?>
-		<script type="text/javascript">
-			window.bug_reporting.setApplicationState(function() {
-				return { 'cryptomedic': cryptomedic, 'server': server };
-			});
-			window.bug_reporting.setUsernameFunction(function() {
-				return server.settings.username;
-			});
-			window.bug_reporting.setEmailFunction(function() {
-				return "";
-			});
-		</script>
-<?php 
 		
 		// bootstrap
 		(new Script("bower_components/bootstrap/dist/js/bootstrap.min.js"))->dependFile()->toPrint();
@@ -66,11 +52,11 @@
 		(new Script("bower_components/angular/angular.min.js"))->dependFile()->toPrint();
 		(new Script("bower_components/angular-route/angular-route.min.js"))->dependFile()->toPrint();
 	
-		// Polyfill
-		(new Script("bower_components/fetch/fetch.js"))->dependFile()->toPrint();
-		
 		// Other
 		(new Script("bower_components/excellentexport/excellentexport.min.js"))->dependFile()->toPrint();
+		
+		// Polyfill
+		(new Script("bower_components/fetch/fetch.js"))->dependFile()->toPrint();
 		
 		// personnal
 		(new Script("static/js/application.js"))->dependFile()->toPrint();
@@ -215,8 +201,4 @@
 			</nav>
 		</div>
 	</body>
-	<script>
-		// Display the application version into the header
-// 		jQuery("#appCache_mode").html("v" + cryptomedic.version);
-	</script>
 </html>
