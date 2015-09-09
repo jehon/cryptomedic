@@ -3,25 +3,23 @@
 ?>
 <div class='container-fluid modeRead'>
 	<div class='row'>
-		<div ng-if="id() >= 0" class="col-sm-2" class="btn-group btn-group-justified btn-group-vertical">
-			<a ng-if='hasPermission("folder.edit")' ng-class="{ 'btn-warning': page === 'add'}" ng-href="#/folder/{{id()}}/add" class="btn btn-default" style="width: 100%">Add</a>
-			<a ng-class="{ 'btn-warning': page === 'summary'}" ng-href="#/folder/{{id()}}/summary" class="btn btn-default" style="width: 100%">Summary</a>
-			<a ng-class="{ 'btn-warning': page === 'graphics'}" ng-href="#/folder/{{id()}}/graphics" class="btn btn-default" style="width: 100%">Graphics</a>
-			<a ng-class="{ 'btn-warning': page === 'patient'}" ng-href="#/folder/{{id()}}/patient" class="btn btn-default" style="width: 100%">Patient</a>
+		<div ng-if="patient_id >= 0" class="col-sm-2" class="btn-group btn-group-justified btn-group-vertical">
+			<a ng-if='hasPermission("folder.edit")' ng-class="{ 'btn-warning': page == 'add'}" ng-href="#/folder/{{patient_id}}/add" class="btn btn-default" style="width: 100%">Add</a>
+			<a ng-class="{ 'btn-warning': page == 'summary'}" ng-href="#/folder/{{patient_id}}/summary" class="btn btn-default" style="width: 100%">Summary</a>
+			<a ng-class="{ 'btn-warning': page == 'graphics'}" ng-href="#/folder/{{patient_id}}/graphics" class="btn btn-default" style="width: 100%">Graphics</a>
+			<a ng-class="{ 'btn-warning': !page}" ng-href="#/folder/{{patient_id}}" class="btn btn-default" style="width: 100%">Patient</a>
 			<span ng-repeat="f in folder.getSubFiles()">
-				<a href="#/folder/{{id()}}/{{$index}}" 
+				<a href="#/folder/{{patient_id}}/file/{{f._type}}/{{f.id}}" 
 						class="btn btn-default left-menu-button"
-						ng-class="{ 'btn-warning': page === $index }"
+						ng-class="{ 'btn-warning': page + subtype + subid == 'file' + f._type + f.id }"
 						>
-						<!-- | date:'<?php echo t::DATEFORMAT; ?>' -->
-					{{f._type}} <span ng-if="f.Date"><br>[{{f.Date }}]</span> 
+					{{f._type}}<span ng-if="f.Date"><br>[{{f.Date }}]</span> 
 				</a>
 			</span>
-			<a ng-class="{ 'btn-warning': page === 'patient-reporting'}" ng-href="#/folder/{{id()}}/patient-reporting" class="btn btn-default" style="width: 100%">Reporting</a>
 		</div>
 		<div class="col-sm-10">
 			<div class="submenu .container-fluid">
-				<div class="row" ng-if="id() >= 0">
+				<div class="row" ng-if="patient_id >= 0">
 					<div class="col-sm-4 text-left" style="font-size: x-small">
 						Modified on {{currentFile().updated_at | date:'yyyy-MM-dd HH:mm:ss' }}
 						by {{currentFile().lastuser}}
@@ -29,10 +27,12 @@
 						{{folder.getMainFile()._type}} #{{folder.getMainFile().id}} @{{page}} -> {{currentFile()._type}} #{{currentFile().id}}
 					</div>
 					<div class="col-sm-4 text-center" ng-if="(mode == 'add')" >
+						<!--  Add file route -->
 						<span ng-if='hasPermission("folder.edit")' class="notModeRead btn btn-default" ng-click="actionCreate()">Create/Save</span>
-			 			<span class="notModeRead btn btn-default" ng-click="actionCancelCreate()">Cancel</span>
+			 			<span class="notModeRead btn btn-default" ng-click="actionCancel()">Cancel</span>
 					</div>
-					<div class="col-sm-4 text-center" ng-if="pageIsFile || (page == 'patient')" >
+					<div class="col-sm-4 text-center" ng-if="(page == 'file')" >
+						<!--  Modify file route -->
 						<span ng-if="currentFile().isLocked()">
 							<img src='static/img/locked.gif' />
 							File is locked.
@@ -43,15 +43,21 @@
 							</span>
 						</span>
 						<span ng-if="!currentFile().isLocked()" >
-				 			<span ng-if='hasPermission("folder.edit")' class="notModeWrite btn btn-default" ng-click="go('/folder/' + folder.id + '/' + page + '/edit')">Edit</span>
+				 			<span ng-if='hasPermission("folder.edit")' class="notModeWrite btn btn-default" ng-click="go('/folder/' + patient_id + '/file/' + subtype + '/' + subid + '/edit')">Edit</span>
 							<span ng-if='hasPermission("folder.edit")' class="notModeRead btn btn-default" ng-click="actionSave()">Save</span>
 							<span ng-if='hasPermission("folder.delete") && ((page != "patient") || (folder.getSubFiles().length == 0))' class="notModeRead btn btn-default" ng-click="actionDelete()">Delete</span>
 				 			<span class="notModeRead btn btn-default" ng-click="actionCancel()">Cancel</span>
-							<!-- <span ng-if='hasPermission("folder.delete")' class="notModeWrite btn btn-default">Delete</span> -->
 				 		</span>
 					</div>
+					<div class="col-sm-4 text-center" ng-if="(!page)" >
+						<!--  Modify patient route -->
+			 			<span ng-if='hasPermission("folder.edit")' class="notModeWrite btn btn-default" ng-click="go('/folder/' + patient_id + '/edit')">Edit</span>
+						<span ng-if='hasPermission("folder.edit")' class="notModeRead btn btn-default" ng-click="actionSavePatient()">Save</span>
+			 			<span class="notModeRead btn btn-default" ng-click="actionCancel()">Cancel</span>
+					</div>
 				</div>
-				<div ng-if="id() < 0" class='text-center'>
+				<div ng-if="patient_id < 0" class='text-center'>
+					<!--  Add patient route -->
 					<span ng-if='hasPermission("folder.edit")' class="notModeRead btn btn-default" ng-click="actionCreatePatient()">Create patient</span>
 				 	<span class="notModeRead btn btn-default" ng-click="go('/home')">Cancel</span>
 				</div>
@@ -59,8 +65,8 @@
 			<form id="fileForm">
 				<button id="fileFormSubmit" type='submit' style="display: none">For html5 validation through javascript</button>
 				<span ng-controller="ctrl_file">
-					<span ng-include="cryptomedic.templateRoot + '/' + name()">
-						debug: Content {{page}}
+					<span ng-include="cryptomedic.templateRoot + '/' + getTemplateName()">
+						debug: Content {{getTemplateName()}}
 					</span>
 				</span>
 			</form>

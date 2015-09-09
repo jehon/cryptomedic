@@ -202,16 +202,6 @@ var mainApp = angular.module('app_main', [ 'ngRoute' ])
 	template: "<span ng-if='error' class='catchedError'>{{errorMsg}}</span><span ng-if='!error' ng-transclude></span>",
 	link:
 	    function($scope, $element, $attrs, ctrl, $transclude) {
-		$scope.$watch(function() {
-        	    try  {
-        		return $scope.tryit();
-        	    } catch (e) {
-        		return e.toString();
-        	    }
-		}, function() {
-		    testIt();
-		});
-			
 		function testIt() {
 		    try {
 			$scope.error = false;
@@ -224,11 +214,20 @@ var mainApp = angular.module('app_main', [ 'ngRoute' ])
 			    $scope.errorMsg = e.getMessage();
 			} else {
 			    $scope.errorMsg = "Uncatchable error";
-			    console.error(e);
+			    console.warn(e);
 			    throw e;
 			}
 		    }
 		}
+		$scope.$watch(function() {
+        	    try  {
+        		return $scope.tryit();
+        	    } catch (e) {
+        		return e.toString();
+        	    }
+		}, function() {
+		    testIt();
+		});
 		testIt();
 			
 		// Destroy of the element

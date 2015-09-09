@@ -22,7 +22,7 @@ mainApp.controller('ctrl_home', [ '$scope', '$location', 'service_backend' , fun
 					// end the busy mode
 					jQuery("#busy").modal('hide');
 					setTimeout(function() {
-						window.location.hash = "/folder/" + data + "/patient";
+						window.location.hash = "/folder/" + data;
 					}, 1);
 				}
 			})
@@ -42,7 +42,7 @@ mainApp.controller('ctrl_home', [ '$scope', '$location', 'service_backend' , fun
 				// end the busy mode
 				jQuery("#busy").modal('hide');
 				setTimeout(function() {
-					window.location.hash = "/folder/" + data.id + "/patient/edit";
+					window.location.hash = "/folder/" + data.id + "/edit";
 				}, 1);
 			})
 			.fail(function(data) {
@@ -53,7 +53,7 @@ mainApp.controller('ctrl_home', [ '$scope', '$location', 'service_backend' , fun
 		$scope.searched = true;
 	};
 	$scope.generateReference = function() {
-	    window.location.hash = "/folder/-1/patient/edit";
+	    window.location.hash = "/folder/-1/edit";
 	    return;
 	}
 }]);

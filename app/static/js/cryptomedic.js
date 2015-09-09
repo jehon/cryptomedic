@@ -3,27 +3,19 @@
 cryptomedic.templateRoot = "/cryptomedic/cache/templates/";
 
 mainApp.config([ '$routeProvider', function($routeProvider) {
-    $routeProvider.when('/home', {
+    $routeProvider
+    .when('/home', {
         templateUrl: cryptomedic.templateRoot + '/pages/home.html',
         controller: 'ctrl_home'
-    }).when('/test', {
-        templateUrl: cryptomedic.templateRoot + '/pages/test.html',
-        controller: 'ctrl_search',
+    }).when('/folder/:patient_id/:page?/:subtype?/:subid?/:mode?', {
+        templateUrl: cryptomedic.templateRoot + '/pages/folder.html',
+        controller: 'ctrl_folder',
     }).when('/search', {
         templateUrl: cryptomedic.templateRoot + '/pages/search.html',
         controller: 'ctrl_search',
-    }).when('/folder/:id/:page?/:mode?', {
-        templateUrl: cryptomedic.templateRoot + '/pages/folder.html',
-        controller: 'ctrl_folder',
     }).when('/reports/:report?', {
         templateUrl: cryptomedic.templateRoot + '/pages/reports.html',
         controller: 'ctrl_reports',
-    }).when('/goto/:patient_id/:type/:id', { // TODO: obsolete route goto
-    	templateUrl: cryptomedic.templateRoot + '/pages/blank.html',
-    	controller: 'ctrl_goto',
-//    }).when('/goto/:id/:type/:id', { // TODO: make the new goto route work
-//        templateUrl: cryptomedic.templateRoot + '/pages/folder.html',
-//        controller: 'ctrl_folder',
     }).otherwise({ 'redirectTo': '/home'});
 }]);
 

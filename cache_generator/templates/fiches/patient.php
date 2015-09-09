@@ -1,17 +1,17 @@
 <?php 
 	t::setDefaultOption("baseExpression", "folder.getMainFile().");
 ?>
-<div class='container-fluid' ng-controller="ctrl_patient">
+<div class='container-fluid'>
 	<div class='row'>
 		<div class="col-lg-6">
 	        <fieldset>
 				<legend>General data</legend>
 				<table>
-					<tr ng-if="id() > -1">
+					<tr ng-if="patient_id > -1">
 						<td>Entry Number</td>
 						<td><?php (new t("Patient.entryyear"))->read()->p(); ?>-<?php (new t("Patient.entryorder"))->read()->p(); ?></td>
 					</tr>
-					<tr ng-if="id()==-1">
+					<tr ng-if="patient_id == -1">
 						<td>Entry Year</td>
 						<td>
 							<div class='alert alert-info'>

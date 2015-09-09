@@ -2,7 +2,7 @@
 	// Since this page should be included, do not use the default options
 	$opt = [ "readOnly" => true, 'baseExpression' => "folder.getMainFile()." ];
 ?>
-<fieldset ng-controller='ctrl_patient' class='related'>
+<fieldset class='related'>
 	<legend>Related Patient</legend>
 		<table>
 			<tr>

@@ -146,13 +146,17 @@ var service_my_backend = (function () {
 	    mySendAction("reSync");
 	},
 	'getFolder': function(id) {
-	    return new Promise(function(resolve, reject) {
-        	    mySendAction("getFolder", id).then(function(data) {
-        		console.log("receiving data", data);
-        	    }, function(e) {
-        		console.error("problem receiving data", e);
-        	    });
-	    });
+//	    return new Promise(function(resolve, reject) {
+        	    mySendAction("getFolder", id);
+//        	    .then(function(data) {
+//        		console.log("receiving data", data);
+//        	    }, function(e) {
+//        		console.error("problem receiving data", e);
+//        	    });
+//	    });
+	},
+	'createReference': function(year, order) {
+	    mySendAction("getByReference", { 'entryyear': year, 'entryorder': order});
 	},
 
 	// Temp function
@@ -182,7 +186,6 @@ var service_my_backend = (function () {
 /******* OLD INTERFACE **********/
 
 // TODO: use the new "queue" system
-// TODO: when updating data, the information is not synced after
 mainApp.factory('service_backend', [ '$rootScope', '$injector', function($rootScope, $injector) {
     var pcache = perishableCache(10);
     var rest = "/cryptomedic/rest/public/";
@@ -278,6 +281,18 @@ mainApp.factory('service_backend', [ '$rootScope', '$injector', function($rootSc
 // http://www.webdeveasy.com/interceptors-in-angularjs-and-useful-examples/
 mainApp.factory('sessionInjector', [ '$q', '$injector', 'service_backend', '$rootScope', function($q, $injector, service_backend, $rootScope) {
     return {
+        'request': function(config) {
+           config.headers['X-OFFLINE-CP'] = localStorage.cryptomedicLastSync;
+            return config;
+        },
+        'response': function(response) {
+	    // Take away the "offline" data with the new service
+            if (response.data[0] != "{") return response;
+            // This will strip out the offline data;
+            var d = service_my_backend().extractCache(response.data);
+            response.data = d;
+            return response;
+        },
 	'responseError': function(rejection) {
 	    switch(rejection.status) {
 	    case 401: // Unauthorized
