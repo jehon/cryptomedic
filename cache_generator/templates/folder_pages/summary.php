@@ -7,7 +7,7 @@
 			<th>Details</th>
 		</tr>
 	</thead>
-	<tr ng-controller="ctrl_file">
+	<tr>
 		<td></td>
 		<td>
 			<a href="#/folder/{{id()}}/" class="btn btn-default" style="width: 100%">
@@ -20,7 +20,7 @@
 	<tr ng-repeat="f in folder.getSubFiles()" ng-controller="ctrl_file">
 		<td>#{{$index}}</td>
 		<td>
-			<a href="#/folder/{{id()}}/{{$index}}" class="btn btn-default" style="width: 100%">
+			<a href="#/folder/{{patient_id}}/file/{{currentFile()._type}}/{{currentFile().id}}" class="btn btn-default" style="width: 100%">
 				{{f._type}}
 			</a>
 		</td>
