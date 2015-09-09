@@ -1,0 +1,5 @@
+<?php ?>
+<p></p>
+<p class="text-center alert alert-warning">
+	<img src='static/img/waiting.gif'> Waiting for data...
+</p>
