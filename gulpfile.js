@@ -200,7 +200,7 @@ gulp.task('release-prepare', [ 'test', 'release-prepare-travis', 'release-prepar
 gulp.task('help', plugins.taskListing);
 gulp.task('clean', [ 'cache-clean' ]);
 gulp.task('test', [ 'cache-test' ]);
-gulp.task('watch', [ 'cache-watch' ]);
+gulp.task('watch', [ 'clean', 'cache-watch' ]);
 gulp.task('default', [ 'help' ]);
 
 
