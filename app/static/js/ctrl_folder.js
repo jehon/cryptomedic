@@ -91,6 +91,14 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_backend', '$
     $scope.currentFile = function() {
 	return cachedCurrentFile;
     };
+    
+    $scope.getPathTo = function(mode, index) {
+	var f = cachedCurrentFile;
+	if (index) {
+	    f = folder.getSubFile(index);
+	}
+	return "/folder/" + f.patient_id + "/fiche/" + f._type + "/" + f.id + (mode ? "/" + mode : "");
+    }
 	
     //----------------------
     //   Actions

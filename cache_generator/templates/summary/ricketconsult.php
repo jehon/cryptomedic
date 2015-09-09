@@ -1,5 +1,5 @@
 <?php 
-	t::setDefaultOption("baseExpression", "currentFile().");
+	t::setDefaultOption("baseExpression", "folder.getSubFile(\$index).");
 	t::setDefaultOption("readOnly");
 ?>
 <table style='width: 100%'>

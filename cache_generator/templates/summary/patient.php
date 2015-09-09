@@ -1,5 +1,5 @@
 <?php 
-	t::setDefaultOption("baseExpression", "currentFile().");
+	t::setDefaultOption("baseExpression", "folder.getMainFile().");
 	t::setDefaultOption("readOnly");
 ?>
 <table>
