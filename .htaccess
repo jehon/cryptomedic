@@ -6,3 +6,7 @@
 	ExpiresByType   text/cache-manifest			A0	
 	ExpiresDefault 	A0
 </IfModule>
+
+<Directory vendor>
+	Deny from all
+</Directory>
