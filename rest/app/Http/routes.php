@@ -31,7 +31,7 @@ Response::macro('jsonOrJSONP', function($value)
 });
 
 Response::macro('folder', function($id, $addData = array()) {
-	return response()->jsonOrJSONP(array_merge(FolderController::getFolder($id), $addData));
+	return response()->jsonOrJSONP(array_merge(FolderController::getFolderOrFail($id), $addData));
 });
 
 // TODO: redefine the getFolder on FolderController
