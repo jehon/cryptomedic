@@ -41,15 +41,15 @@ try {
 // 	}
 	
 	// create path if necessary - wrong permissions!
-	if (!file_exists(dirname($generator['dest']))) {
-		mkdir(dirname($generator['dest']), 0775, true);
-	}
+// 	if (!file_exists(dirname($generator['dest']))) {
+// 		mkdir(dirname($generator['dest']), 0775, true);
+// 	}
 	
-	$generator['fdest'] = fopen($generator['dest'], "w");
-	ftruncate($generator['fdest'], 0);
-	fwrite($generator['fdest'], ob_get_contents());
-	fflush($generator['fdest']);
-	fclose($generator['fdest']);
+// 	$generator['fdest'] = fopen($generator['dest'], "w");
+// 	ftruncate($generator['fdest'], 0);
+// 	fwrite($generator['fdest'], ob_get_contents());
+// 	fflush($generator['fdest']);
+// 	fclose($generator['fdest']);
 	ob_end_flush();
 } catch (Exception $e) {
 	ob_end_clean();
