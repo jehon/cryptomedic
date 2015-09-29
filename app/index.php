@@ -54,12 +54,14 @@
 	
 		// Other
 		(new Script("bower_components/excellentexport/excellentexport.min.js"))->dependFile()->toPrint();
+		(new Script("bower_components/dexie/dist/latest/Dexie.min.js"))->dependFile()->toPrint();
 		
 		// Polyfill
 		(new Script("bower_components/fetch/fetch.js"))->dependFile()->toPrint();
 		
 		// personnal
 		(new Script("static/js/application.js"))->dependFile()->toPrint();
+		(new Script("static/js/database.js"))->dependFile()->toPrint();
 		(new Script("static/js/cryptomedic.js"))->dependFile()->toPrint();
 		(new Script("static/js/amd_stats_datas.js"))->dependFile()->toPrint();
 		(new Script("static/js/exceptions.js"))->dependFile()->toPrint();
@@ -168,16 +170,15 @@
 <!-- TODO: Sync disabled on screen informations -->
 				<span ng-if="!sync.final">
 					<div class="alert alert-dismissible alert-info">
-						<span ng-if="!sync.final">
-							Loading data from the server:
-							(you may use the application during the loading)
-							<div class="progress">
-								<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{sync.total - sync.remaining}}" aria-valuemin="0" aria-valuemax="{{sync.total}}" 
-										style="width: {{(sync.total - sync.remaining)/sync.total * 100}}%;">
-							    	{{sync.total - sync.remaining}} / {{sync.total}}
-								</div>
+						Loading data from the server:
+						(you may use the application during the loading)
+						<div class="progress">
+							<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{syncProgressMax - sync.remaining}}" aria-valuemin="0" aria-valuemax="{{syncProgressMax}}" 
+									style="width: {{(syncProgressMax - sync.remaining)/syncProgressMax * 100}}%;">
+						    	{{syncProgressMax - sync.remaining}} / {{syncProgressMax}}
+						    	
 							</div>
-						</span>
+						</div>
 					</div>
 				</span>
 <!-- -->
