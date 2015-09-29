@@ -1,6 +1,6 @@
 <?php
 
-require_once(__DIR__ . "/../../globalConfig.php");
+require_once(__DIR__ . "/../../config.php");
 
 return [
 
