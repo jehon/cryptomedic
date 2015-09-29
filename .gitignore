@@ -3,6 +3,7 @@
 /.buildpath
 /.DS_Store
 /.idea
+/.externalToolBuilders/
 
 !.gitkeep
 
