@@ -3,7 +3,7 @@ try {
 	global $generator;
 	$generator = array();
 	
-	require_once(dirname(__DIR__) . DIRECTORY_SEPARATOR . "globalConfig.php");
+	require_once(dirname(__DIR__) . DIRECTORY_SEPARATOR . "config.php");
 
 	$generator['database'] = array(
 			'pdo_host' => 'localhost',

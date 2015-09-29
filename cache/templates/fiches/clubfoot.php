@@ -3,7 +3,7 @@
 	t::setDefaultOption("baseExpression", "currentFile().");
 	t::setDefaultOption("model", "ClubFoot");
 ?>
-<div class='container-fluid' ng-controller='ctrl_file_clubfoots'>
+<div class='container-fluid'>
 	<div class='row'>
 		<div class="col-lg-6">
 			<?php require("partials/consult-introduction.php"); ?>
