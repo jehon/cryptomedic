@@ -44,34 +44,31 @@ process.on('exit', function (status) {
 //---------------- CACHE ---------------------------
 
 gulp.task('cache-clean', function(cb) {
-    shelljs.rm("-fr", "cache/templates/*");
-    shelljs.rm("-fr", "cache/manifest.manifest");
+    //shelljs.rm("-fr", "cache/templates/*");
+    //shelljs.rm("-fr", "cache/manifest.manifest");
 });
 
 gulp.task('cache-test', function() {
-    gulp.src('test/cache-test/phpunit.xml')
+    gulp.src('tests/cache-test/phpunit.xml')
     	.pipe(plugins.plumber({ errorHandler: plugins.notify.onError("Error during task " + this.seq.slice(-1)[0] + ": <%= error.message %>") }))
     	.pipe(plugins.plumber({ errorHandler: function() { process.exit(1); } }))
-    	.pipe(plugins.phpunit('./vendor/bin/phpunit', { notify: true }))
+    	.pipe(plugins.phpunit('./tests/libs/bin/phpunit', { notify: true }))
 //    .pipe(plugins.notify(this.seq.slice(-1)[0] + ": done"))
 });
 
 gulp.task('cache-watch', function() {
-    gulp.watch([ 'cache_generator/generator.php', 'php/**/*' ], [ 'cache-clean' ], function(event) {
-	console.log('Cache generator global: file ' + event.path + ' was ' + event.type + '.');
-    });
+    //gulp.watch([ 'cache_generator/generator.php', 'php/**/*' ], [ 'cache-clean' ], function(event) {
+    //});
     
-    gulp.watch([ 'cache_generator/**/*', 'app/**/*' ], null, function(event) {
-	console.log('Cache_generator manifest: file ' + event.path + ' was ' + event.type + '.');
-	shelljs.rm("-f", "cache/manifest.manifest");
-    });
+    //gulp.watch([ 'cache_generator/**/*', 'app/**/*' ], null, function(event) {
+	//shelljs.rm("-f", "cache/manifest.manifest");
+    //});
 
-    gulp.watch([ 'cache_generator/templates.php', 'cache_generator/templates/**/*.php' ], null, function(event) {
-	var html = __dirname + "/cache" + path.relative(__dirname, event.path).substring("cache_generator".length).replace(".php", ".html");
-	console.log('Cache_generator templates: file ' + event.path + ' was ' + event.type + ' (mapping to ' + html + ').');
-	shelljs.rm("-fr", html);
-    });
-})
+    //gulp.watch([ 'cache_generator/templates.php', 'cache_generator/templates/**/*.php' ], null, function(event) {
+    //	var html = __dirname + "/cache" + path.relative(__dirname, event.path).substring("cache_generator".length).replace(".php", ".html");
+    //	shelljs.rm("-fr", html);
+    //});
+});
 
 // ---------------- REST ---------------------------
 
@@ -79,7 +76,7 @@ gulp.task('rest-test', [ 'cache-test' ], function() {
     gulp.src('rest/phpunit.xml')
         .pipe(plugins.plumber({ errorHandler: plugins.notify.onError("Error during task " + this.seq.slice(-1)[0] + ": <%= error.message %>") }))
         .pipe(plugins.plumber({ errorHandler: function() { process.exit(1); } }))
-    	.pipe(plugins.phpunit('./vendor/bin/phpunit', { notify: true }))
+    	.pipe(plugins.phpunit('./tests/libs/bin/phpunit', { notify: true }))
 });
 
 //---------------- JS ---------------------------
@@ -89,7 +86,7 @@ gulp.task('test-js', [ 'rest-test', 'cache-test' ], function() {
     .pipe(plugins.plumber({ errorHandler: plugins.notify.onError("Error during task " + this.seq.slice(-1)[0] + ": <%= error.message %>") }))
     .pipe(plugins.plumber({ errorHandler: function() { process.exit(1); } }))
     .pipe(plugins.nightwatch({
-		configFile : 'test/nightwatch.json'
+		configFile : 'tests/nightwatch.json'
     }))
     .pipe(plugins.notify(this.seq.slice(-1)[0] + ": done"))
 	;
@@ -102,7 +99,7 @@ gulp.task('test-chrome', function() {
     .pipe(plugins.plumber({ errorHandler: plugins.notify.onError("Error during task " + this.seq.slice(-1)[0] + ": <%= error.message %>") }))
     .pipe(plugins.plumber({ errorHandler: function() { process.exit(1); } }))
     .pipe(plugins.nightwatch({
-		configFile : 'test/nightwatch.json',
+		configFile : 'tests/nightwatch.json',
 		cliArgs : [ '--env chrome' ]
 
     }))
@@ -115,7 +112,7 @@ gulp.task('test-phantomjs', function() {
     .pipe(plugins.plumber({errorHandler: plugins.notify.onError("Error during task " + this.seq.slice(-1)[0] + ": <%= error.message %>")}))
     .pipe(plugins.plumber({ errorHandler: function() { process.exit(1); } }))
     .pipe(plugins.nightwatch({
-	configFile : 'test/nightwatch.json',
+	configFile : 'tests/nightwatch.json',
 	cliArgs : [ '--env phantomjs' ]
     }))
     .pipe(plugins.notify(this.seq.slice(-1)[0] + ": done"));
@@ -126,7 +123,7 @@ gulp.task('test-live', function() {
     .pipe(plugins.plumber({errorHandler: plugins.notify.onError("Error during task " + this.seq.slice(-1)[0] + ": <%= error.message %>")}))
     .pipe(plugins.plumber({ errorHandler: function() { process.exit(1); } }))
     .pipe(plugins.nightwatch({
-	configFile : 'test/nightwatch.json',
+	configFile : 'tests/nightwatch.json',
 	cliArgs : [ '--env live', '--tags readonly' ]
     }))
    .pipe(plugins.notify(this.seq.slice(-1)[0] + ": done"));
@@ -164,7 +161,7 @@ gulp.task('release-prepare-sonar', [ 'test' ], function(result) {
     var sr = spawn('sonarrunner', 
 	    [ 
 	      '-Dsonar.projectVersion=' + package_json.version, 
-	      '-Dproject.settings=test/sonar-project.properties',
+	      '-Dproject.settings=tests/sonar-project.properties',
 	      '-Dsonar.scm.disabled=true'
 	    ], 
 	    {
@@ -201,22 +198,8 @@ gulp.task('help', plugins.taskListing);
 gulp.task('clean', [ 'cache-clean' ]);
 gulp.task('test', [ 'cache-test' ]);
 gulp.task('watch', [ 'clean', 'cache-watch' ]);
+gulp.task('eclipse-build', [ 'clean' ]);
 gulp.task('default', [ 'help' ]);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
