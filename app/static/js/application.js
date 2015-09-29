@@ -22,6 +22,19 @@ Promise.prototype.myFinallyDone = function (callback) {
     	.catch(function(reason) { console.error(reason); });
 };
 
+// For helping debugging everything
+var l = function(data) { console.log(data); };
+var e = function(data) { console.error(data); };
+
+Promise.prototype.mylog = function () {
+    return this
+    	.then(function(data) {
+    	    console.log(data);
+    	}, function(error) {
+    	    console.error(error);
+    	});
+};
+
 window.myEvents = function() {
     return {
 	 /**
@@ -324,6 +337,8 @@ mainApp.controller('ctrl', [ '$scope', '$location', 'service_backend', function(
     $scope.cryptomedic = cryptomedic;
     $scope.application = application;
     $scope.server = server;
+    $scope.syncProgressMax = 0;
+    
     $scope.safeApply = function (fn) {
     	if (this.$root && (this.$root.$$phase == '$apply' || this.$root.$$phase == '$digest')) {
     	    if(fn && (typeof(fn) === 'function')) {
@@ -408,8 +423,11 @@ mainApp.controller('ctrl', [ '$scope', '$location', 'service_backend', function(
     };
 
     myEvents.on('backend_cache_progress', function(data) {
-//	console.log("Cache progress: " + data.checkpoint + " " + (data.final ? " terminated " : " data pending")); 
 	$scope.sync = data;
+	$scope.syncProgressMax = Math.max(data.remaining, $scope.syncProgressMax);
+	if ($scope.sync.isfinal) {
+	    $scope.syncProgressMax = 0;
+	}
 	$scope.safeApply();
     }, false);
     
