@@ -1,0 +1,17 @@
+{
+	"name": "jehon/cryptomedic",
+	"description": "Cryptomedic software",
+	"repositories": [
+        {
+        	"type": "vcs",
+            "url": "/var/www/maintenance/"
+    	}
+    ],
+	
+	"require": {
+		"jehon/maintenance": "master-dev"
+	},
+ 	"old-require-dev": {
+		"phpunit/phpunit": "4.8.*"
+	}
+}
