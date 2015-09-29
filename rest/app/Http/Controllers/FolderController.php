@@ -19,7 +19,7 @@ class FolderController extends Controller {
 		$master['id'] = $id;
 		$master['mainFile'] = DB::table('patients')->where('id', $id)->first();
 		if (!$master['mainFile']) {
-			abort(404);
+			return null;
 		}
 		$master['mainFile']->_type = 'Patient';
 		
@@ -35,6 +35,14 @@ class FolderController extends Controller {
 			}
 		}
 		return $master;
+	}
+	
+	public static function getFolderOrFail($id) {
+		$res = self::getFolder($id);
+		if (!$res) {
+			abort(404);
+		}
+		return $res;
 	}
 	
 	public function index() {
