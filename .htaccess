@@ -7,6 +7,4 @@
 	ExpiresDefault 	A0
 </IfModule>
 
-<Directory vendor>
-	Deny from all
-</Directory>
+RedirectMatch		404				vendor
