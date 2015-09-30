@@ -1,5 +1,14 @@
 "use strict";
 
+function plog(p) {
+    return p
+    	.then(function(data) {
+	    console.log(data);
+	}, function(error) {
+	    console.error(error);
+	});
+}
+
 Dexie.Promise.on("error", function(e) {
     console.error("Error in Dexie: ", e);
 });
@@ -10,45 +19,43 @@ Dexie.Promise.on("error", function(e) {
  * @param withVersions if true, upgrade the database
  * @returns a db_patients proxy
  */
-function build_db_patients(withVersions) {
+function build_db(withVersions) {
     var db = new Dexie("cryptomedic");
 
-    if (withVersions) {
-        db.version(1).stores({
-            patients: '++id'
+    db.version(1).stores({
+        patients: '++id'
+    });
+
+    db.version(2).stores({
+    	patients: '++id,[mainFile.entryyear+mainFile.entryorder]'
+    });
+
+    db.version(3).stores({
+        patients: '++id'
+    });
+
+    db.version(4).stores({
+    	// @see
+    	// db.relations.where('[userId1+userId2]').equals([2,3]).or('[userId1+userId2]').equals([3,2])
+    	// - will give you all the relations that user 1 has to user 2 or user 2
+    	// has to user 1.
+    	patients: '++id,[mainFile.entryyear+mainFile.entryorder]'
+    });
+
+    db.version(5).upgrade(function(trans) {
+        trans.patients.toCollection().modify(function(p) {
+    	if (typeof(p.id) == "number") {
+    	    console.log("deleting", p.id);
+    	    delete this.value;
+    	}
+    	p.id = "" + p.id;
         });
+    });
     
-        db.version(2).stores({
-        	patients: '++id,[mainFile.entryyear+mainFile.entryorder]'
-        });
-    
-        db.version(3).stores({
-            patients: '++id'
-        });
-    
-        db.version(4).stores({
-        	// @see
-        	// db.relations.where('[userId1+userId2]').equals([2,3]).or('[userId1+userId2]').equals([3,2])
-        	// - will give you all the relations that user 1 has to user 2 or user 2
-        	// has to user 1.
-        	patients: '++id,[mainFile.entryyear+mainFile.entryorder]'
-        });
-    
-        db.version(5).upgrade(function(trans) {
-            trans.patients.toCollection().modify(function(p) {
-        	if (typeof(p.id) == "number") {
-        	    console.log("deleting", p.id);
-        	    delete this.value;
-        	}
-        	p.id = "" + p.id;
-            });
-        });
-        
-        db.version(6).stores({
-            patients: '++id,[mainFile.entryyear+mainFile.entryorder]',
-            settings: 'key'
-        });
-    }
+    db.version(6).stores({
+        patients: '++id,[mainFile.entryyear+mainFile.entryorder]',
+        settings: 'key'
+    });
     
     db.open();
 
@@ -115,19 +122,39 @@ function build_db_patients(withVersions) {
     };
 
     // ------------------ System functions ------------------------------
-    function version() {
-	return db.verno;
+    function getSetting(key, def) {
+	return db.settings.get("" + key).then(function(data) {
+            if (data) {
+        	return data.value;
+            } else {
+        	def = def || false;
+        	return def;
+            }
+        });
+    }
+    
+    function setSetting(key, value) {
+	return db.settings.put({ key: "" + key, value: value});
     }
     
     function clear() {
-	return db.patients.clear();
+	return db.patients.clear().then(function() {
+	    return db.settings.clear();
+	});
+    }
+
+    function version() {
+	return db.verno;
     }
     
     return {
 	'getFolder': getFolder,
 	'getByReference': getByReference,
-	'clear': clear,
 	'bulkUpdate': bulkUpdate,
+	
+	'getSetting': getSetting,
+	'setSetting': setSetting,
+	'clear': clear,
 	'version': version
     };
 };
