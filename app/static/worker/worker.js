@@ -83,7 +83,7 @@ function storeData(offdata) {
     var promise = Promise.resolve();
     if (offdata.reset) {
         promise = promise.then(function() { 
-            console.log("Worker: resetting the database patients");
+            console.info("Worker: resetting the database patients");
             return db.clear();
         });
     }
@@ -100,7 +100,8 @@ function storeData(offdata) {
                 mySendEvent("progress", { 
                     "checkpoint": 	offdata.checkpoint, 
                     "final": 		offdata.isfinal,
-                    "remaining": 	syncRemaining
+                    "remaining": 	syncRemaining,
+                    "done":		offdata.data.length
                 });
             }, function(e) { 
         	// Catch error and display it
@@ -113,12 +114,12 @@ function storeData(offdata) {
 }
 
 function reprogram() {
-    console.log("we reprogram");
     if (syncTimer) {
 	// Cancel currently running timer
 	clearTimeout(syncTimer);
     }
-//    syncTimer = setTimeout(routeSync, (syncRemaining > 0 ? (500) : (60 * 1000)));
+    // reprogram the timer...
+    syncTimer = setTimeout(routeSync, (syncRemaining > 0 ? (500) : (60 * 1000)));
 }
 
 function routeStoreData(offdata) {
@@ -144,12 +145,11 @@ function routeSync() {
 	syncTimer = false;
     }
     return db.getSetting("checkpoint").then(function(cp) {
-        console.log("Using checkpoint: ", cp);
 	return myFetch(rest + "/sync", {}, {
             cp: cp
         }).then(function(result) {
             if (result == null) {
-                console.log("unauthenticated?");
+                console.warn("unauthenticated?");
                 return;
             }
             return storeData(result._offline).then(function() {
