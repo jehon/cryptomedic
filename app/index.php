@@ -62,6 +62,7 @@
 		// personnal
 		(new Script("static/js/application.js"))->dependFile()->toPrint();
 		(new Script("static/js/database.js"))->dependFile()->toPrint();
+		(new Script("static/js/myfetch.js"))->dependFile()->toPrint();
 		(new Script("static/js/cryptomedic.js"))->dependFile()->toPrint();
 		(new Script("static/js/amd_stats_datas.js"))->dependFile()->toPrint();
 		(new Script("static/js/exceptions.js"))->dependFile()->toPrint();
