@@ -87,9 +87,28 @@ function build_db(withVersions) {
     }
 
     // ------------------ Enhanced functions ------------------------------
+    function updateCheckpoint(cp) {
+	var key = "checkpoint";
+	if (cp == false) {
+//	    console.log("DB: resetting CP");
+	    return setSettings(key, "");
+	} else {
+	    return getSetting(key, "").then(function(val) {
+    		if (!val || val < cp) {
+//    		    console.log("Changing checkpoint: ", cp);
+    		    return setSetting(key, cp);
+    		} else {
+//    		    console.log("Not changing checkpoint: ", cp, val);
+    		    return val;
+    		}
+	    })
+	}
+    }
     
     /**
      * Insert data in bulk, in one transaction (faster than the simple insert)
+     * 
+     * The checkpoint is automatically inserted into the settings table.
      * 
      * @param bulk: array of object to be inserted if the bulk[].key = "_deleted",
      *                delete it otherwise, store bulk[].record into the store
@@ -107,6 +126,9 @@ function build_db(withVersions) {
             	       bulk[key]['record']['id'] = "" + bulk[key]['record']['id']; 
             	       req = self.put(bulk[key]['record']);
             	   }
+            	   req.then(function() {
+            	       return updateCheckpoint(bulk[key]['checkpoint']);
+            	   });
             	   req.then(function (e) {
             	       if (feedback) {
             		   feedback(bulk[key]['record']);
@@ -134,7 +156,11 @@ function build_db(withVersions) {
     }
     
     function setSetting(key, value) {
-	return db.settings.put({ key: "" + key, value: value});
+	return db.settings.put({ key: "" + key, value: value})
+		.then(function(data) {
+		    // Prefer to return the value than the key
+		    return value;
+		});
     }
     
     function clear() {
@@ -151,10 +177,11 @@ function build_db(withVersions) {
 	'getFolder': getFolder,
 	'getByReference': getByReference,
 	'bulkUpdate': bulkUpdate,
+	'updateCheckpoint': updateCheckpoint,
 	
 	'getSetting': getSetting,
 	'setSetting': setSetting,
 	'clear': clear,
-	'version': version
+	'version': version,
     };
 };
