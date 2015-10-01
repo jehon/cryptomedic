@@ -99,7 +99,7 @@ function storeData(offdata) {
                 }
                 mySendEvent("progress", { 
                     "checkpoint": 	offdata.checkpoint, 
-                    "final": 		offdata.isfinal,
+                    "isfinal": 		offdata.isfinal,
                     "remaining": 	syncRemaining,
                     "done":		offdata.data.length
                 });
