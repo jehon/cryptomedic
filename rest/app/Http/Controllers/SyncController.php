@@ -12,6 +12,7 @@ require_once(__DIR__ . "/../../../../php/references.php");
 use \References;
 
 // TODO: If the computer key is forgotten, then reset the client... 
+
 define("sync_packet_size", 100);
 
 class SyncController extends Controller {
@@ -80,7 +81,6 @@ class SyncController extends Controller {
 		}
 
 		$offline['data'] = $this->_getList($old_cp, constant("sync_packet_size"));
-		// TODO: remaining should be calculated based on the new CP
 		
 		if (count($offline['data']) > 0) {
 			$offline["checkpoint"] = end($offline['data'])['checkpoint'];
