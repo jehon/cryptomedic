@@ -3,6 +3,30 @@
 // Test cryptographic:
 // Documentation: https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto
 
+/*
+ * Authentication flow
+ * 	[init]
+ * 	- user open application
+ * 	- if a key exists, go to [keyok]
+ * 	- generate a key
+ *      - show login form and ask for credentials with the generated key
+ *      - if the login is ok, the key is validated. The key is stored
+ *      - if there are data in the queue, show them and sign them again with the new key
+ *      - continue
+ *      [keyok] 
+ *      - send sync and each operation with the key authentication
+ *      - each operation will be stored with a hash in the queue
+ *      - loop to [keyok]
+ *      [problem] if sync/queue fail with 403 (unauthenticated),
+ *      - delete the key
+ *      - go back to init
+ *      
+ *      Temporarly:
+ *      - user login
+ *      - sync is running
+ *      - ops are send directly and not queued
+ */
+
 /* Initialize the computer id */
 if (!window.localStorage.cryptomedicComputerId) {
 	console.log("generate cryptomedic_computer_id");
@@ -17,6 +41,9 @@ if (!window.localStorage.cryptomedicComputerId) {
 /* service_my_backend */
 var service_my_backend = (function () {
     var rest = "/cryptomedic/rest/public";
+
+    var db = build_db(true);
+    
     var worker = new Worker("static/worker/worker.js?r=" + Math.random());
     worker.onerror = function(e) {
 	console.error("@service: Error in worker: ", e);
@@ -25,18 +52,16 @@ var service_my_backend = (function () {
     worker.onmessage = function(e) {
         var name = e.data.name;
         var data = e.data.data;
-        console.log('@service: ' + name + ': ', data);
+        // console.log('@service: ' + name + ': ', data);
         switch(name) {
         	case "progress":
         	    localStorage.cryptomedicLastSync = data.checkpoint;
+        	    // To be compatible with old version
         	    myEvents.trigger("backend_cache_progress", data);
     	    	    break;
-        	case "folder":
-        	    myEvents.trigger("folder", data);
-        	    break;
-        	default:
-    	    	    console.error("Unknown message: " + name, data);
         }
+        // Propagate event
+        myEvents.trigger("backend_" + name, data);
     };
 
     function mySendAction(name, data) {
@@ -46,135 +71,65 @@ var service_my_backend = (function () {
     mySendAction("init", {
 	checkpoint: (localStorage.cryptomedicLastSync ? localStorage.cryptomedicLastSync : "") 
     });
-    
-    /**
-     * Launch a fetch request
-     * 
-     * - init Optional
-     *  . method: The request method, e.g., GET, POST.
-     *  . headers: Any headers you want to add to your request, contained within a Headers object or ByteString.
-     *  . body: Any body that you want to add to your request: this can be a Blob, BufferSource, FormData, URLSearchParams, or USVString object. Note that a request using the GET or HEAD method cannot have a body.
-     *  . mode: The mode you want to use for the request, e.g., cors, no-cors, or same-origin.
-     *  . cache: The cache mode you want to use for the request: default, no-store, reload, no-cache, force-cache, or only-if-cached.
-     *  
-     */
-    function getFetch(url, init, data) {
-	init = jQuery.extend({
-	    headers: new Headers(),
-	    method: "GET",
-	    credentials: 'include'
-	}, init);
-	if (data) {
-	    if (init.method == "GET") {
-		url = url + "?" + jQuery.param(data);
-	    } else {
-		var fd = new FormData()
-		for(var a in data) {
-		    fd.append(a, data[a]);
-		}
-		init.body = fd;
-	    }
-	}
-	init.headers.append("Accept", "application/json, text/plain, */*");
-	init.headers.append('X-OFFLINE-CP', localStorage.cryptomedicLastSync);
-	
-	var req = new Request(url, init);
-
-	return fetch(req).then(function(response) {
-	    // Response: ok, status, statusText
-	    if (!response.ok) {  
-		console.log("getFetch 5", response.status);
-		switch(response.status) {
-		case 403: // forbidden
-		    myEvents.trigger("backend_forbidden");
-		    break;
-		case 401: // unauthorized
-		    myEvents.trigger("backend_unauthorized");
-		    break;
-		case 500: // internal server error
-		    myEvents.trigger("backend_internal_server_error");
-		    break;
-		}
-		throw new Error(response.status);
-	    }
-	    return response;
-	}, function(e) {
-	    console.error("Fetch error: ", e);
-	    return null;
-	});
-    }
-
-    function json(response) {
-	return response.json();
-    }
-        
+   
     return {
 	/* Authentification */
 	'login': function(username, password) {
-	    return getFetch(rest + "/auth/mylogin", { method: "POST" }, 
+	    return myFetch(rest + "/auth/mylogin", { method: "POST" }, 
 		    { 
 			'username': username, 
 			'password': password, 
 			'appVersion': cryptomedic.version,
 			'computerId': window.localStorage.cryptomedicComputerId
 		    })
-	    .then(json)
-	    .then(this.extractCache);
+		    .then(this.storeData);
 	},
 	'checkLogin': function() {
-	    return getFetch(rest + "/auth/settings", null, 
+	    return myFetch(rest + "/auth/settings", null, 
 		    { 
 			'appVersion': cryptomedic.version,
 			'computerId': window.localStorage.cryptomedicComputerId
 		    }
 	    )
-	    .then(json)
-	    .then(this.extractCache)
+	    .then(this.storeData)
 	},
 	'logout': function() {
 	    // TODO: clean up the cache --> cache managed in other object???
-	    return getFetch(rest + "/auth/logout")
-	    .then(this.json);
+	    return myFetch(rest + "/auth/logout");
 	},
 
+	// Go to the worker
 	'sync': function() {
-	    console.log("sync start");
 	    mySendAction("sync");
-	    console.log("sync end");
 	},
-	'reSync': function() {
-	    mySendAction("reSync");
+	'resync': function() {
+	    mySendAction("resync");
 	},
-	'getFolder': function(id) {
-//	    return new Promise(function(resolve, reject) {
-        	    mySendAction("getFolder", id);
-//        	    .then(function(data) {
-//        		console.log("receiving data", data);
-//        	    }, function(e) {
-//        		console.error("problem receiving data", e);
-//        	    });
-//	    });
-	},
-	'createReference': function(year, order) {
-	    mySendAction("getByReference", { 'entryyear': year, 'entryorder': order});
-	},
-
 	// Temp function
-	'extractCache': function(json) {
+	'storeData': function(json) {
 	    if (json._offline) {
 		var offdata = jQuery.extend(true, {}, json._offline);
-		delete json._offline;
 		mySendAction("storeData", offdata);
+		delete json._offline;
 	    }
 	    return json;
 	},
-	'deleteAll': function() {
-	    mySendAction("deleteAll");
+
+	// Go to the database
+	'getFolder': function(id) {
+       	    return db.getFolder(id);
+	},
+	'getByReference': function(year, order) {
+	    return db.getByReference(year, order);
+	},
+	'clear': function() {
+	    return db.clear();
 	},	
+
+	// Go to the rest server
 	'getReport': function(reportName, data, timing) {
-	    return getFetch(rest + "/reports/" + reportName + (timing ? "/" + timing : ""), null, data)
-	    	.then(json)
-	    	.then(this.extractCache);
+	    return myFetch(rest + "/reports/" + reportName + (timing ? "/" + timing : ""), null, data)
+	    	.then(this.storeData);
 	},
     };
 })();
@@ -186,8 +141,7 @@ var service_my_backend = (function () {
 /******* OLD INTERFACE **********/
 
 // TODO: use the new "queue" system
-mainApp.factory('service_backend', [ '$rootScope', '$injector', function($rootScope, $injector) {
-    var pcache = perishableCache(10);
+mainApp.factory('service_backend', [ '$rootScope', '$http', function($rootScope, $http) {
     var rest = "/cryptomedic/rest/public/";
     
     // Transform the $http request into a promise
@@ -208,7 +162,6 @@ mainApp.factory('service_backend', [ '$rootScope', '$injector', function($rootSc
 	 */
 // READONLY -> when sync is done, this is to be managed on the idb !!!
 	'searchForPatients': function(params) {
-	    var $http = $injector.get("$http");
 	    return treatHttp($http.get(rest + "/folder", { 'params': params })).then(function(data) {
 		var list = [];
 		for(var i in data) {
@@ -218,7 +171,6 @@ mainApp.factory('service_backend', [ '$rootScope', '$injector', function($rootSc
 	    });
 	},
 	'checkReference': function(year, order) {
-	    var $http = $injector.get("$http");
 	    return treatHttp($http.get(rest + "/reference/" + year + "/" + order)).then(function(data) {
 			if ((typeof(data._type) != 'undefined') && (data._type == 'Folder')) {
 			    return data['id'];
@@ -230,67 +182,47 @@ mainApp.factory('service_backend', [ '$rootScope', '$injector', function($rootSc
 
 // READWRITE
 	'createReference': function(year, order) {
-	    var $http = $injector.get("$http");
 	    return treatHttp($http.post(rest + "/reference", 
 		{ 
 			'entryyear': year, 
 			'entryorder': order
-		})).then(function(data) {
-			pcache.set(data.getMainFile().id, data);
-			return data;
-		}); 
+		})); 
 	},
 	'createFile': function(data, folderId) {
-	    var $http = $injector.get("$http");
-	    pcache.perish(folderId);
-	    return treatHttp($http.post(rest + "/fiche/" + data['_type'], data)).then(function(data) {
-		pcache.set(data.getMainFile().id, data);
-		return data;				
-	    });
+	    return treatHttp($http.post(rest + "/fiche/" + data['_type'], data));
 	},
 	'saveFile': function(data, folderId) {
-	    var $http = $injector.get("$http");
-	    pcache.perish(folderId);
-	    return treatHttp($http.put(rest + "/fiche/" + data['_type'] + "/" + data['id'], data)).then(function(data) {
-		pcache.set(data.getMainFile().id, data);
-		return data;				
-	    });
+	    return treatHttp($http.put(rest + "/fiche/" + data['_type'] + "/" + data['id'], data));
 	},
 	'deleteFile': function(data, folderId) {
-	    var $http = $injector.get("$http");
-	    pcache.perish(folderId);
-	    return treatHttp($http['delete'](rest + "/fiche/" + data['_type'] + "/" + data['id'])).then(function(data) {
-		if (data instanceof application.models.Folder) {
-		    pcache.set(data.getMainFile().id, data);
-		}
-		return data;				
-	    });
+	    return treatHttp($http['delete'](rest + "/fiche/" + data['_type'] + "/" + data['id']));
 	},
 	'unlockFile': function(data, folderId) {
-	    var $http = $injector.get("$http");
-	    pcache.perish(folderId);
-	    return treatHttp($http.get(rest + "/unfreeze/" + data['_type'] + "/" + data['id'])).then(function(data) {
-		pcache.set(data.getMainFile().id, data);
-		return data;				
-	    });
+	    return treatHttp($http.get(rest + "/unfreeze/" + data['_type'] + "/" + data['id']));
 	}
     };
 }]);
 
 // https://docs.angularjs.org/api/ng/service/$http
 // http://www.webdeveasy.com/interceptors-in-angularjs-and-useful-examples/
-mainApp.factory('sessionInjector', [ '$q', '$injector', 'service_backend', '$rootScope', function($q, $injector, service_backend, $rootScope) {
+mainApp.factory('sessionInjector', [ '$q', '$rootScope', function($q, $rootScope) {
     return {
         'request': function(config) {
-           config.headers['X-OFFLINE-CP'] = localStorage.cryptomedicLastSync;
+            if (config.data) {
+        	config.data = stringify(config.data);
+            }
+            config.headers['X-OFFLINE-CP'] = localStorage.cryptomedicLastSync;
             return config;
         },
         'response': function(response) {
 	    // Take away the "offline" data with the new service
-            if (response.data[0] != "{") return response;
-            // This will strip out the offline data;
-            var d = service_my_backend().extractCache(response.data);
-            response.data = d;
+            if (typeof(response.data) == "object") {
+                // This will strip out the offline data;
+                var d = service_my_backend.storeData(response.data);
+                response.data = d;
+            }
+            // return response;
+            response.data = objectify(response.data)
             return response;
         },
 	'responseError': function(rejection) {
@@ -307,17 +239,5 @@ mainApp.factory('sessionInjector', [ '$q', '$injector', 'service_backend', '$roo
 }]);
 
 mainApp.config(['$httpProvider', function($httpProvider) {  
-    $httpProvider.defaults.transformResponse.push(function(responseData){
-	if (typeof responseData !== "object") {
-	    return responseData;
-	}
-	return objectify(responseData);
-    });
-    $httpProvider.defaults.transformRequest.unshift(function(requestData){
-	if (typeof requestData !== "object") {
-	    return requestData;
-	}
-	return stringify(requestData);
-    });
     $httpProvider.interceptors.push('sessionInjector');
 }]);
