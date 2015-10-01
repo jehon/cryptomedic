@@ -4,16 +4,6 @@ var application = {};
 application.models = {};
 var server = {};
 
-///**
-// * For this f*** old IE6-8
-// */
-//if (typeof(console) === 'undefined') { console = {}; }
-//if (typeof(console.log) !== 'function') { console.log = function() {}; }
-//if (typeof(console.info) !== 'function') { console.info = console.log; }
-//if (typeof(console.error) !== 'function') { console.error = console.log; }
-//if (typeof(console.trace) !== 'function') { console.trace = console.log; }
-//if (typeof(console.warn) !== 'function') { console.warn = console.log; }
-
 // Inspired from http://www.2ality.com/2014/10/es6-promises-api.html
 Promise.prototype.myFinallyDone = function (callback) {
     callback = callback || function(data) { return data; };
@@ -422,9 +412,10 @@ mainApp.controller('ctrl', [ '$scope', '$location', 'service_backend', function(
 	return (server.settings.authorized.indexOf(transaction) >= 0);
     };
 
-    myEvents.on('backend_cache_progress', function(data) {
+    myEvents.on('backend_progress', function(data) {
+	console.log(data);
 	$scope.sync = data;
-	$scope.syncProgressMax = Math.max(data.remaining, $scope.syncProgressMax);
+	$scope.syncProgressMax = Math.max(data.remaining + data.done, $scope.syncProgressMax);
 	if ($scope.sync.isfinal) {
 	    $scope.syncProgressMax = 0;
 	}
