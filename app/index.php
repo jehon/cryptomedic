@@ -168,7 +168,6 @@
 			</div><!-- /.modal -->
 			<div>
 				<!-- Sync informations -->
-<!-- TODO: Sync disabled on screen informations -->
 				<span ng-if="!sync.isfinal">
 					<div class="alert alert-dismissible alert-info">
 						Loading data from the server:
