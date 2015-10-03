@@ -13,17 +13,17 @@ Promise.prototype.myFinallyDone = function (callback) {
 };
 
 // For helping debugging everything
-var l = function(data) { console.log(data); };
-var e = function(data) { console.error(data); };
-
-Promise.prototype.mylog = function () {
-    return this
-    	.then(function(data) {
-    	    console.log(data);
-    	}, function(error) {
-    	    console.error(error);
-    	});
-};
+//var l = function(data) { console.log(data); };
+//var e = function(data) { console.error(data); };
+//
+//Promise.prototype.mylog = function () {
+//    return this
+//    	.then(function(data) {
+//    	    console.log(data);
+//    	}, function(error) {
+//    	    console.error(error);
+//    	});
+//};
 
 window.myEvents = function() {
     return {
@@ -331,7 +331,7 @@ mainApp.controller('ctrl', [ '$scope', '$location', 'service_backend', function(
     
     $scope.safeApply = function (fn) {
     	if (this.$root && (this.$root.$$phase == '$apply' || this.$root.$$phase == '$digest')) {
-    	    if(fn && (typeof(fn) === 'function')) {
+    	    if (fn && (typeof(fn) === 'function')) {
     		fn();
     	    }
     	} else {
@@ -524,12 +524,12 @@ mainApp.controller('ctrl', [ '$scope', '$location', 'service_backend', function(
     $scope.doCheckLogin();
 }]);
 
-function debug_showLabels() {
-    jQuery("label[for]").each(function(el) {
-	jQuery(this).text(jQuery(this).attr("for"));
-	jQuery(this).addClass("debug");
-    });
-}
+//function debug_showLabels() {
+//    jQuery("label[for]").each(function(el) {
+//	jQuery(this).text(jQuery(this).attr("for"));
+//	jQuery(this).addClass("debug");
+//    });
+//}
 
 server.setSettings = function(data) {
     server.settings = objectify(data);
