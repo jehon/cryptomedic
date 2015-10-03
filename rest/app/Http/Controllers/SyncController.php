@@ -18,6 +18,31 @@ define("sync_packet_size", 100);
 class SyncController extends Controller {
 	// @see http://laravel.com/docs/5.0/controllers
 	
+// 	public function old_getUnionSQL($cp) {
+// 		$this->sqlParamsUnion = [];
+// 		$sql = "";
+		
+// 		$cpe = explode("|", $cp);
+// 		$ts = $cpe[0];
+// 		$id = $cpe[1];
+		
+// 		foreach((References::$model2db + [ "Deleted" => "deleteds" ]) as $m => $t) {
+// 			if ($sql) {
+// 				$sql .= " UNION \n";
+// 			}
+// 			$patient_id = ($t == "patients" ? "id" : "patient_id");
+// 			$sql .= "("
+// 					. "SELECT greatest(created_at, updated_at) as ts, '$t' as t, $patient_id as patient_id"
+// 					. " FROM $t "
+// 					. " WHERE (greatest(created_at, updated_at) > :ts0_{$m}) "
+// 					. "   OR ((greatest(created_at, updated_at) = :ts1_{$m}) AND ($patient_id > :id1_${m}))"
+// 					. " ORDER BY greatest(created_at, updated_at), $patient_id)";
+// 			$this->sqlParamsUnion["ts0_{$m}"]    = $this->sqlParamsUnion["ts1_${m}"]    = $ts;
+// 			$this->sqlParamsUnion["id1_{$m}"]    = $id;
+// 		}
+// 		return "SELECT MAX(ts) as ts, patient_id, MAX(t) as t \n FROM (\n$sql\n) as p GROUP BY patient_id ";
+// 	}
+	
 	public function _getUnionSQL($cp) {
 		$this->sqlParamsUnion = [];
 		$sql = "";
@@ -25,22 +50,25 @@ class SyncController extends Controller {
 		$cpe = explode("|", $cp);
 		$ts = $cpe[0];
 		$id = $cpe[1];
-		
-		foreach((References::$model2db + [ "Deleted" => "deleteds" ]) as $m => $t) {
-			if ($sql) {
-				$sql .= " UNION \n";
-			}
-			$patient_id = ($t == "patients" ? "id" : "patient_id");
-			$sql .= "("
-					. "SELECT greatest(created_at, updated_at) as ts, '$t' as t, $patient_id as patient_id"
-					. " FROM $t "
-					. " WHERE (greatest(created_at, updated_at) > :ts0_{$m}) "
-					. "   OR ((greatest(created_at, updated_at) = :ts1_{$m}) AND ($patient_id > :id1_${m}))"
-					. " ORDER BY greatest(created_at, updated_at), $patient_id)";
-			$this->sqlParamsUnion["ts0_{$m}"]    = $this->sqlParamsUnion["ts1_${m}"]    = $ts;
-			$this->sqlParamsUnion["id1_{$m}"]    = $id;
-		}
-		return "SELECT MAX(ts) as ts, patient_id, MAX(t) as t \n FROM (\n$sql\n) as p GROUP BY patient_id ";
+
+		$list = References::$model2db + [ "Deleted" => "deleteds" ];
+		return "SELECT MAX(ts) as ts, patient_id, MAX(t) as t \n FROM (\n" 
+				. implode(" \n UNION ", 
+					array_map(
+							function($t, $m) {
+								$patient_id = ($t == "patients" ? "id" : "patient_id");
+								return "("
+										. "SELECT greatest(created_at, updated_at) as ts, '$t' as t, $patient_id as patient_id"
+										. " FROM $t "
+										. " WHERE (greatest(created_at, updated_at) > :ts0_{$m}) "
+										. "   OR ((greatest(created_at, updated_at) = :ts1_{$m}) AND ($patient_id > :id1_${m}))"
+										. " ORDER BY greatest(created_at, updated_at), $patient_id)";
+								$this->sqlParamsUnion["ts0_{$m}"]    = $this->sqlParamsUnion["ts1_${m}"]    = $ts;
+								$this->sqlParamsUnion["id1_{$m}"]    = $id;
+							}, $list, array_keys($list)
+					)
+				)
+			. ")\n as p GROUP BY patient_id ";
 	}
 	
 	// Send back incorrect result...
@@ -80,7 +108,8 @@ class SyncController extends Controller {
 			$offline['reset'] = 0;
 		}
 
-		$offline['data'] = $this->_getList($old_cp, constant("sync_packet_size"));
+		$offline['data'] = $this->_getList($old_cp, 
+				Request::Input("n", constant("sync_packet_size")));
 		
 		if (count($offline['data']) > 0) {
 			$offline["checkpoint"] = end($offline['data'])['checkpoint'];
@@ -108,7 +137,7 @@ class SyncController extends Controller {
 	public function sync() {
 		$old_cp = Request::input("cp", false);
 		if ($old_cp === false) {
-			return response();
+			abort(412);
 		}
 		$data = array("_offline" => $this->_syncData($old_cp));
 	
