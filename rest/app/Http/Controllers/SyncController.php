@@ -50,21 +50,21 @@ class SyncController extends Controller {
 		$cpe = explode("|", $cp);
 		$ts = $cpe[0];
 		$id = $cpe[1];
-
+		
 		$list = References::$model2db + [ "Deleted" => "deleteds" ];
-		return "SELECT MAX(ts) as ts, patient_id, MAX(t) as t \n FROM (\n" 
-				. implode(" \n UNION ", 
+		return "SELECT MAX(ts) as ts, patient_id, MAX(t) as t \n FROM (" 
+				. implode(" \n UNION \n ", 
 					array_map(
-							function($t, $m) {
+							function($t, $m) use ($ts, $id) {
 								$patient_id = ($t == "patients" ? "id" : "patient_id");
+								$this->sqlParamsUnion["ts0_{$m}"]    = $this->sqlParamsUnion["ts1_${m}"]    = $ts;
+								$this->sqlParamsUnion["id1_{$m}"]    = $id;
 								return "("
 										. "SELECT greatest(created_at, updated_at) as ts, '$t' as t, $patient_id as patient_id"
 										. " FROM $t "
 										. " WHERE (greatest(created_at, updated_at) > :ts0_{$m}) "
 										. "   OR ((greatest(created_at, updated_at) = :ts1_{$m}) AND ($patient_id > :id1_${m}))"
 										. " ORDER BY greatest(created_at, updated_at), $patient_id)";
-								$this->sqlParamsUnion["ts0_{$m}"]    = $this->sqlParamsUnion["ts1_${m}"]    = $ts;
-								$this->sqlParamsUnion["id1_{$m}"]    = $id;
 							}, $list, array_keys($list)
 					)
 				)
@@ -80,6 +80,8 @@ class SyncController extends Controller {
 	
 	public function _getList($cp, $n) {
 		$sqlu = $this->_getUnionSQL($cp);
+		//echo $sqlu;
+		//var_dump($this->sqlParamsUnion);
 		$res = DB::select($sqlu . "ORDER BY MAX(ts), patient_id LIMIT $n", $this->sqlParamsUnion);
 		$data = [];
 		
