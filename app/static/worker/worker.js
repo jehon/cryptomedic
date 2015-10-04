@@ -93,15 +93,15 @@ function storeData(offdata) {
                 mySendEvent("folder", data);
             }).then(function() {
         	// relaunch the sync upto completion
-                syncRemaining = offdata.remaining - offdata.data.length;
+                syncRemaining = offdata.remaining;
                 if (offdata.isfinal) {
                     syncRemaining = 0;
                 }
                 mySendEvent("progress", { 
                     "checkpoint": 	offdata.checkpoint, 
                     "isfinal": 		offdata.isfinal,
-                    "remaining": 	syncRemaining,
-                    "done":		offdata.data.length
+                    "remaining": 	parseInt(offdata.remaining),
+                    "done":		parseInt(offdata.data.length)
                 });
             }, function(e) { 
         	// Catch error and display it
@@ -113,24 +113,32 @@ function storeData(offdata) {
     return promise;
 }
 
+var syncRunning = false;
 function reprogram() {
     if (syncTimer) {
 	// Cancel currently running timer
 	clearTimeout(syncTimer);
     }
     // reprogram the timer...
+    syncRunning = false;
     syncTimer = setTimeout(routeSync, (syncRemaining > 0 ? (500) : (60 * 1000)));
+    return Promise.resolved();
 }
 
-function routeStoreData(offdata) {
+function running() {
     // Cancel currently running timer
     if (syncTimer) {
 	clearTimeout(syncTimer);
 	syncTimer = false;
     }
-    return storeData(offdata).then(function() {
-	reprogram();
-    });
+    syncRunning = true;
+    return Promise.resolve();
+}
+
+function routeStoreData(offdata) {
+    running()
+    	.then(function() { storeData(offdata); })
+    	.then(reprogram, reprogram);
 }
 
 /*
@@ -139,24 +147,23 @@ function routeStoreData(offdata) {
  * 
  */
 function routeSync() {
-    // Cancel currently running timer
-    if (syncTimer) {
-	clearTimeout(syncTimer);
-	syncTimer = false;
-    }
-    return db.getSetting("checkpoint").then(function(cp) {
-	return myFetch(rest + "/sync", {}, {
-            cp: cp
-        }).then(function(result) {
+    running()
+    	.then(function() {
+    	    return db.getSetting("checkpoint")
+    	})
+    	.then(function(cp) {
+    	    return myFetch(rest + "/sync", {}, {
+    		cp: cp
+    	    });
+    	})
+    	.then(function(result) {
             if (result == null) {
                 console.warn("unauthenticated?");
                 return;
             }
-            return storeData(result._offline).then(function() {
-                reprogram();
-            });
-        });
-    });
+            return storeData(result._offline);
+    	})
+    	.then(reprogram, reprogram);
 }
 
 // Worker
@@ -178,3 +185,10 @@ onmessage = function(message) {
         return console.error("unkown message: " + name, data);
     }
 }
+
+var catchAllCron = setInterval(function() {
+    if (!syncTimer && !syncRunning) {
+	console.info("Worker: catchAll reprogram");
+	reprogram();
+    }
+}, 10 * 1000);
