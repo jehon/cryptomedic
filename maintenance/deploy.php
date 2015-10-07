@@ -1,11 +1,10 @@
 <?php
 
-// 	require_once(__DIR__ . "/vendor/autoload.php");
+	require_once(__DIR__ . "/../vendor/autoload.php");
 	
 	require(__DIR__ . "/../config.php");
+
+	\Jehon\Maintenance\TryCatch::run();
+	\Jehon\Maintenance\SessionProtect::run($maintenance["maintenance"]["code"], $maintenance["maintenance"]["token"]);
 	
-	require_once(__DIR__ . "/../vendor/jehon/maintenance/bin/require_session.php");
-	require_once(__DIR__ . "/../vendor/jehon/maintenance/bin/try_catch.php");
-	
-	require_once(__DIR__ . "/../vendor/jehon/maintenance/bin/deploy.php");
-	
+	\Jehon\Maintenance\Deploy::run(dirname(__DIR__), "jehon", "cryptomedic");
