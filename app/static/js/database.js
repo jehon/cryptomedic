@@ -89,6 +89,7 @@ function build_db(withVersions) {
     // ------------------ Enhanced functions ------------------------------
     function updateCheckpoint(cp) {
 	var key = "checkpoint";
+	//console.log("updateCheckpoint", cp);
 	if (cp == false) {
 //	    console.log("DB: resetting CP");
 	    return setSettings(key, "");

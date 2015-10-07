@@ -79,5 +79,3 @@ $maintenance["deploy"]["root"] = __DIR__;
 $maintenance["deploy"]["repository"] = array();
 $maintenance["deploy"]["repository"]["owner"] = "jehon";
 $maintenance["deploy"]["repository"]["project"] = "cryptomedic";
-
-
