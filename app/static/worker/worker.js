@@ -122,7 +122,7 @@ function reprogram() {
     // reprogram the timer...
     syncRunning = false;
     syncTimer = setTimeout(routeSync, (syncRemaining > 0 ? (500) : (60 * 1000)));
-    return Promise.resolved();
+    return Promise.resolve();
 }
 
 function running() {
