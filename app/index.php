@@ -71,7 +71,7 @@
 		(new AllScripts("static/js/service_*.js"))->dependFile()->toPrint();
 		(new AllScripts("static/js/ctrl_*.js"))->dependFile()->toPrint();
 	
-		(new Script("static/css/application.css"))->dependFile()->toPrint();
+		(new AllScripts("static/css/*.css"))->css()->dependFile()->toPrint();
 		?>
 	</head>
 	<body ng-app="app_main" ng-controller="ctrl" id="ng-app" >
