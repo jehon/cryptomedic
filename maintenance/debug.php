@@ -7,8 +7,4 @@
 	\Jehon\Maintenance\TryCatch::run();
 	\Jehon\Maintenance\SessionProtect::run($maintenance["maintenance"]["code"], $maintenance["maintenance"]["token"]);
 	
-	\Jehon\Maintenance\Logs::run([
-		__DIR__ . "/../rest/storage/logs",
-		"/var/log/apache2/",
-		__DIR__ . "/../logs/"
-	]);
+	\Jehon\Maintenance\Debug::run();
