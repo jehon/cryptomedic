@@ -1,10 +1,17 @@
 <?php
 
-// 	require_once(__DIR__ . "/vendor/autoload.php");
+	require_once(__DIR__ . "/../vendor/autoload.php");
 	
 	require(__DIR__ . "/../config.php");
 	
-	require_once(__DIR__ . "/../vendor/jehon/maintenance/bin/try_catch.php");
+	\Jehon\Maintenance\TryCatch::run();
 	
-	require_once(__DIR__ . "/../vendor/jehon/maintenance/bin/bug_submit.php");
+	$db = new \Jehon\Maintenance\Database(
+			$myconfig['database']['database'],
+			$myconfig['database']['username'],
+			$myconfig['database']['password'],
+			$myconfig['database']['options']
+	);
+	
+	\Jehon\Maintenance\BugReporting::record($db, "http://www.cryptomedic.org/cryptomedic/maintenance/bug_view.php");
 	
