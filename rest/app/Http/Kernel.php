@@ -28,6 +28,6 @@ class Kernel extends HttpKernel {
 		'writeGroup' => 'App\Http\Middleware\WriteGroup',
 		'unFreezeGroup' => 'App\Http\Middleware\UnFreezeGroup',
 		'auth.basic' => 'Illuminate\Auth\Middleware\AuthenticateWithBasicAuth',
-		'guest' => 'App\Http\Middleware\RedirectIfAuthenticated',
+		//'guest' => 'App\Http\Middleware\RedirectIfAuthenticated',
 	];
 }

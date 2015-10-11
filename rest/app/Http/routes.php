@@ -34,33 +34,6 @@ Response::macro('folder', function($id, $addData = array()) {
 	return response()->jsonOrJSONP(array_merge(FolderController::getFolderOrFail($id), $addData));
 });
 
-// TODO: redefine the getFolder on FolderController
-// if (!function_exists("getFolder")) {
-// 	function getFolder($id) {
-// 		$master = [];
-// 		$master['_type'] = 'Folder';
-// 		$master['id'] = $id;
-// 		$master['mainFile'] = DB::table('patients')->where('id', $id)->first();
-// 		if (!$master['mainFile']) {
-// 			abort(404);
-// 		}
-// 		$master['mainFile']->_type = 'Patient';
-		
-// 		$master['subFiles'] = array();
-		
-// 		foreach(References::$model2db as $c) {
-// 			if ($c == "patients") continue;
-				
-// 			$r = DB::select("SELECT * FROM $c WHERE patient_id = :patient_id", array('patient_id' => $id));
-// 			foreach($r as $rv) {
-// 				$rv->_type = References::db2model($c);
-// 				$master['subFiles'][] = $rv;
-// 			}
-// 		}
-// 		return $master;
-// 	}
-// }
-
 /**
  * For anybody
  */
@@ -108,17 +81,19 @@ Route::group(array('middleware' => 'authenticated'), function() {
 	Route::get('reports/surgical/{timing}', [
 		"uses" => "ReportSurgicalController@byTiming"
 	]);
+
+	Route::group(array('middleware' => [ "writeGroup" ] ), function() {
+		Route::POST('/fiche/{model}', 'ModelController@store');
+		Route::PUT('/fiche/{model}/{id}', 'ModelController@update');
+		Route::DELETE('/fiche/{model}/{id}', 'ModelController@destroy');
+		Route::POST('/reference', 'FolderController@createfile');
+	});
+
+	Route::group(array('middleware' => [ "unFreezeGroup" ]), function() {
+		Route::get('unfreeze/{model}/{id}', 'ModelController@unfreeze');
+	});
+
 });
 
-Route::group(array('middleware' => [ "authenticated", "writeGroup" ] ), function() {
-	Route::POST('/fiche/{model}', 'ModelController@store');
-	Route::PUT('/fiche/{model}/{id}', 'ModelController@update');
-	Route::DELETE('/fiche/{model}/{id}', 'ModelController@destroy');
-	Route::POST('/reference', 'FolderController@createfile');
-});
-
-Route::group(array('middleware' => [ "authenticated", 'unFreezeGroup' ]), function() {
-	Route::get('unfreeze/{model}/{id}', 'ModelController@unfreeze');
-});
 	
 // TODO MIGRATION: users (admin mode)

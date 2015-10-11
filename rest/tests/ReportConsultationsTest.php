@@ -3,13 +3,15 @@
 require_once("RouteReferenceTestCase.php");
 
 class ReportConsultationsTest extends RouteReferenceTestCase {
+	static public $nday = "2015-04-28";
+
 	public function setUp($url = null, $params = array()) {
 		parent::setUp();
 		$this->setUrl("reports/consultations");
 	}
 	
 	public function testsConsultation() {
-		$this->setParams([ "day" => "2015-04-26", "center" => "" ]);
+		$this->setParams([ "day" => self::$nday, "center" => "" ]);
 		$this->myAssertUnauthorized();
 
 		$this->myAssertResponseForReference("readonly");
@@ -20,11 +22,11 @@ class ReportConsultationsTest extends RouteReferenceTestCase {
 		$json = $this->myAssertJSON("admin");
 		$this->assertObjectHasAttribute('params', $json);
 		$this->assertObjectHasAttribute('list', $json);
-		$this->assertTrue(count($json->list) >= 1);
+		$this->assertEquals(count($json->list), 3);
 	}
 	
 	public function testsConsultationByDay() {
-		$this->setParams([ "day" => "2015-04-26", "center" => "" ]);
+		$this->setParams([ "day" => self::$nday, "center" => "" ]);
 		$this->myAssertUnauthorized();
 		
 		$this->myAssertResponseForReference("readonly");
@@ -33,14 +35,14 @@ class ReportConsultationsTest extends RouteReferenceTestCase {
 		$this->myAssertResponseForReference("admin");
 
 		$json = $this->myAssertJSON("admin");
-		$this->assertLessThanOrEqual(100, count($json));
+		$this->assertEquals(count($json->list), 3);
 		foreach($json->list as $k => $v) {
-			$this->assertEquals($v->c_nextAppointment, "2015-04-26");
+			$this->assertEquals($v->c_nextAppointment, self::$nday);
 		}
 	}
 
 	public function testsConsultationByDayAndCenter() {
-		$this->setParams([ "day" => "2015-04-26", "center" => "Chakaria" ]);
+		$this->setParams([ "day" => self::$nday, "center" => "Chakaria" ]);
 		$this->myAssertUnauthorized();
 	
 		$this->myAssertResponseForReference("readonly");
@@ -49,9 +51,9 @@ class ReportConsultationsTest extends RouteReferenceTestCase {
 		$this->myAssertResponseForReference("admin");
 	
 		$json = $this->myAssertJSON("admin");
-		$this->assertLessThanOrEqual(100, count($json));
+		$this->assertEquals(count($json->list), 1);
 		foreach($json->list as $k => $v) {
-			$this->assertEquals($v->c_nextAppointment, "2015-04-26");
+			$this->assertEquals($v->c_nextAppointment, self::$nday);
 			$this->assertEquals($v->c_Center, "Chakaria");
 		}
 	}

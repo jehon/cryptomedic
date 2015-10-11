@@ -18,31 +18,6 @@ define("sync_packet_size", 100);
 class SyncController extends Controller {
 	// @see http://laravel.com/docs/5.0/controllers
 	
-// 	public function old_getUnionSQL($cp) {
-// 		$this->sqlParamsUnion = [];
-// 		$sql = "";
-		
-// 		$cpe = explode("|", $cp);
-// 		$ts = $cpe[0];
-// 		$id = $cpe[1];
-		
-// 		foreach((References::$model2db + [ "Deleted" => "deleteds" ]) as $m => $t) {
-// 			if ($sql) {
-// 				$sql .= " UNION \n";
-// 			}
-// 			$patient_id = ($t == "patients" ? "id" : "patient_id");
-// 			$sql .= "("
-// 					. "SELECT greatest(created_at, updated_at) as ts, '$t' as t, $patient_id as patient_id"
-// 					. " FROM $t "
-// 					. " WHERE (greatest(created_at, updated_at) > :ts0_{$m}) "
-// 					. "   OR ((greatest(created_at, updated_at) = :ts1_{$m}) AND ($patient_id > :id1_${m}))"
-// 					. " ORDER BY greatest(created_at, updated_at), $patient_id)";
-// 			$this->sqlParamsUnion["ts0_{$m}"]    = $this->sqlParamsUnion["ts1_${m}"]    = $ts;
-// 			$this->sqlParamsUnion["id1_{$m}"]    = $id;
-// 		}
-// 		return "SELECT MAX(ts) as ts, patient_id, MAX(t) as t \n FROM (\n$sql\n) as p GROUP BY patient_id ";
-// 	}
-	
 	public function _getUnionSQL($cp) {
 		$this->sqlParamsUnion = [];
 		$sql = "";
@@ -92,7 +67,7 @@ class SyncController extends Controller {
 			} else {
 				$data[$i] = [ 'id' => $r->patient_id, '_deleted' => true ];
 			}
-			$data[$i]['_dueTo'] = $r->t . "#" . $r->patient_id;
+			//$data[$i]['_dueTo'] = $r->t . "#" . $r->patient_id;
 			$data[$i]['checkpoint'] = $r->ts . "|" . $r->patient_id;
 		}
 		
@@ -106,8 +81,6 @@ class SyncController extends Controller {
 		if ($old_cp == "" || count(explode("|", $old_cp)) != 2) {
 			$old_cp = "|-1";
 			$offline['reset'] = 1;
-		} else {
-			$offline['reset'] = 0;
 		}
 
 		$offline['data'] = $this->_getList($old_cp, 
@@ -128,10 +101,13 @@ class SyncController extends Controller {
 		
 		// Store the information for helping understanding what is happening out there...
 		$computerId = session()->get('computerId');
-		$computer = SyncComputer::firstOrCreate([ "computer_id" => $computerId ]);
-		$computer->last_sync = $old_cp;
-		$computer->last_sync_final = ($offline['remaining'] == 0);
-		$computer->save();
+		if ($computerId) {
+			// In unit tests, we don't have a computerId...
+			$computer = SyncComputer::firstOrCreate([ "computer_id" => $computerId ]);
+			$computer->last_sync = $old_cp;
+			$computer->last_sync_final = ($offline['remaining'] == 0);
+			$computer->save();			
+		}
 		
 		return $offline;
 	}

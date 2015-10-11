@@ -57,12 +57,18 @@
     },
     {
         "name": "jehon/maintenance",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
+        "version": "v2.0.1",
+        "version_normalized": "2.0.1.0",
         "source": {
             "type": "git",
-            "url": "/var/www/maintenance/",
-            "reference": "4dae53c04e6ac0bd0d3ea33c7e0d488198fb1134"
+            "url": "https://github.com/jehon/maintenance.git",
+            "reference": "f47195500f86c09de17ff11df7a3b3960a6922b1"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/jehon/maintenance/zipball/f47195500f86c09de17ff11df7a3b3960a6922b1",
+            "reference": "f47195500f86c09de17ff11df7a3b3960a6922b1",
+            "shasum": ""
         },
         "require": {
             "dflydev/dot-access-data": "v1.0"
@@ -70,17 +76,21 @@
         "require-dev": {
             "phpunit/phpunit": "4.8.*"
         },
-        "time": "2015-09-29 12:13:09",
+        "time": "2015-10-07 20:28:15",
         "type": "library",
-        "installation-source": "source",
+        "installation-source": "dist",
         "autoload": {
             "psr-4": {
-                "Jehon\\Maintenance\\": "bin/"
+                "Jehon\\Maintenance\\": "."
             }
         },
         "license": [
             "GPL-3.0"
         ],
-        "description": "Various script to maintain and deploy a php project"
+        "description": "Various script to maintain and deploy a php project",
+        "support": {
+            "source": "https://github.com/jehon/maintenance/tree/v2.0.1",
+            "issues": "https://github.com/jehon/maintenance/issues"
+        }
     }
 ]

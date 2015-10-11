@@ -4,12 +4,12 @@
 	"repositories": [
         {
         	"type": "vcs",
-            "url": "/var/www/maintenance/"
+            	"url": "https://www.github.com/jehon/maintenance"
     	}
     ],
 	
 	"require": {
-		"jehon/maintenance": "master-dev"
+		"jehon/maintenance": ">=2.0"
 	},
  	"old-require-dev": {
 		"phpunit/phpunit": "4.8.*"

@@ -6,5 +6,5 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'Jehon\\Maintenance\\' => array($vendorDir . '/jehon/maintenance/bin'),
+    'Jehon\\Maintenance\\' => array($vendorDir . '/jehon/maintenance'),
 );

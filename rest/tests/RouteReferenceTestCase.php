@@ -37,6 +37,7 @@ class RouteReferenceTestCase extends TestCase {
 	protected function myAssertAuthorized($group = null) {
 		$this->preAuthenticate($group);
 		$response = $this->call('GET', $this->url, $this->params);
+		// var_dump($response->getContent());
 		$this->assertResponseOk();
 		return $response;
 	}
@@ -58,11 +59,13 @@ class RouteReferenceTestCase extends TestCase {
 	 		$stv = array_shift($st);
  			// $stv['class']
  			$file = get_called_class()  . '.' . $stv['function'] . '.json';
+ 		} else {
+ 			$file = $file . ".json";
  		}
  		$pfile = __DIR__  . "/references/" . $file;
  		
-	 	$json = json_decode($response->getContent());
-	 	$json = json_encode($json, JSON_PRETTY_PRINT);
+	 	$json_obj = json_decode($response->getContent());
+	 	$json = json_encode($json_obj, JSON_PRETTY_PRINT);
  		
  		/* Assert or update the reference */
 		if (getenv("COMMIT") > 0) {
@@ -89,5 +92,6 @@ class RouteReferenceTestCase extends TestCase {
 				$this->fail("Reference file not found: $file");
 			}
 		}
+		return $json_obj;
 	}
 }
