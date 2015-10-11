@@ -10,6 +10,9 @@ if (file_exists(constant("secretFile"))) {
 global $localhost;
 $localhost = $_SERVER && array_key_exists('HTTP_HOST', $_SERVER) && ($_SERVER['HTTP_HOST'] == "localhost");
 
+global $cli;
+$cli = $_SERVER && !array_key_exists('HTTP_HOST', $_SERVER);
+
 function getGlobalConfig($key) {
 	if (function_exists("getSecret")) {
 		$res = getSecret($key, false);
