@@ -1,10 +1,10 @@
 <?php
 
-	require_once(__DIR__ . "/../vendor/autoload.php");
-	
-	require(__DIR__ . "/../config.php");
+require_once(__DIR__ . "/../vendor/autoload.php");
 
-	\Jehon\Maintenance\TryCatch::run();
-	\Jehon\Maintenance\SessionProtect::run($maintenance["maintenance"]["code"], $maintenance["maintenance"]["token"]);
-	
-	\Jehon\Maintenance\Debug::run();
+require(__DIR__ . "/../config.php");
+
+\Jehon\Maintenance\TryCatch::run();
+\Jehon\Maintenance\SessionProtect::run(getGlobalConfig("maintenance.code"), getGlobalConfig("maintenance.token"));
+
+\Jehon\Maintenance\Debug::run();

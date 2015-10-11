@@ -33,6 +33,11 @@ function getGlobalConfig($key) {
 			return "travis";
 		case 'databasePassword':
 			return "";
+		case 'maintenance.token':
+		case 'maintenance.code':
+			if ($cli) {
+				return "ok";
+			}
 	}
 	throw new Exception("GlobalConfig not configured: $key");
 }
@@ -57,17 +62,17 @@ if ($localhost || $cli) {
 	$myconfig['database']['patches'][] = __DIR__ . "/conf/database_scripts/dev_only";
 }
 
-$maintenance = $myconfig;
+// $maintenance = $myconfig;
 
-$maintenance["maintenance"]["code"] = getGlobalConfig("maintenance.code");
-$maintenance["maintenance"]["token"] = getGlobalConfig("maintenance.token");
-$maintenance["maintenance"]["logs"] = getGlobalConfig("logs");
-$maintenance["bug"] = array();
-$maintenance["bug"]["url_view"] = "http://www.cryptomedic.org/cryptomedic/maintenance/bug_view.php";
-$maintenance["bug"]["url_submit"] = "http://www.cryptomedic.org/cryptomedic/maintenance/bub_submit.php";
+// $maintenance["maintenance"]["code"] = getGlobalConfig("maintenance.code");
+// $maintenance["maintenance"]["token"] = getGlobalConfig("maintenance.token");
+// $maintenance["maintenance"]["logs"] = getGlobalConfig("logs");
+// $maintenance["bug"] = array();
+// $maintenance["bug"]["url_view"] = "http://www.cryptomedic.org/cryptomedic/maintenance/bug_view.php";
+// $maintenance["bug"]["url_submit"] = "http://www.cryptomedic.org/cryptomedic/maintenance/bub_submit.php";
 
-$maintenance["deploy"] = array();
-$maintenance["deploy"]["root"] = __DIR__;
-$maintenance["deploy"]["repository"] = array();
-$maintenance["deploy"]["repository"]["owner"] = "jehon";
-$maintenance["deploy"]["repository"]["project"] = "cryptomedic";
+// $maintenance["deploy"] = array();
+// $maintenance["deploy"]["root"] = __DIR__;
+// $maintenance["deploy"]["repository"] = array();
+// $maintenance["deploy"]["repository"]["owner"] = "jehon";
+// $maintenance["deploy"]["repository"]["project"] = "cryptomedic";
