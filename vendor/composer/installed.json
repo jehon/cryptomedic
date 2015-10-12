@@ -1,0 +1,96 @@
+[
+    {
+        "name": "dflydev/dot-access-data",
+        "version": "v1.0.0",
+        "version_normalized": "1.0.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/dflydev/dflydev-dot-access-data.git",
+            "reference": "d493ca16fe1a7e82e56810124ec0b556e6ed9113"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/dflydev/dflydev-dot-access-data/zipball/d493ca16fe1a7e82e56810124ec0b556e6ed9113",
+            "reference": "d493ca16fe1a7e82e56810124ec0b556e6ed9113",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.2"
+        },
+        "time": "2012-07-17 20:32:32",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.0-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "Dflydev\\DotAccessData": "src"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Dragonfly Development Inc.",
+                "email": "info@dflydev.com",
+                "homepage": "http://dflydev.com"
+            },
+            {
+                "name": "Beau Simensen",
+                "email": "beau@dflydev.com",
+                "homepage": "http://beausimensen.com"
+            }
+        ],
+        "description": "Given a deep data structure, access data by dot notation.",
+        "homepage": "https://github.com/dflydev/dflydev-dot-access-data",
+        "keywords": [
+            "access",
+            "data",
+            "dot",
+            "notation"
+        ]
+    },
+    {
+        "name": "jehon/maintenance",
+        "version": "v2.0.1",
+        "version_normalized": "2.0.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/jehon/maintenance.git",
+            "reference": "f47195500f86c09de17ff11df7a3b3960a6922b1"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/jehon/maintenance/zipball/f47195500f86c09de17ff11df7a3b3960a6922b1",
+            "reference": "f47195500f86c09de17ff11df7a3b3960a6922b1",
+            "shasum": ""
+        },
+        "require": {
+            "dflydev/dot-access-data": "v1.0"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "4.8.*"
+        },
+        "time": "2015-10-07 20:28:15",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Jehon\\Maintenance\\": "."
+            }
+        },
+        "license": [
+            "GPL-3.0"
+        ],
+        "description": "Various script to maintain and deploy a php project",
+        "support": {
+            "source": "https://github.com/jehon/maintenance/tree/v2.0.1",
+            "issues": "https://github.com/jehon/maintenance/issues"
+        }
+    }
+]

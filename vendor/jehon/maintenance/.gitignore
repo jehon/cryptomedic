@@ -3,7 +3,6 @@
 /.buildpath
 /.DS_Store
 /.idea
-/.externalToolBuilders/
 
 !.gitkeep
 
@@ -11,13 +10,6 @@ node_modules/
 **/logs
 **/tmp
 
-output/
-
 commit.msg
-phantomjsdriver.log
-
-/.tern-project
-/npm-debug.log
-
+vendor/
 composer.lock
-vendor/**/.git
