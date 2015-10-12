@@ -1,39 +1,39 @@
 /*
- Phases: 
-  - show conflicts (on folder update) -> simple reload page?
-  - authenticate browser in server
-  - authenticate user in browser
-  - user are authentified -> no reload of page at beginning 
-  - queue changes
-  - show conflicts (rich version)
-  - advanced reset (indexedDB reset completely)
-  - manage http error (timeout, etc...)
+    Phases: 
+    - show conflicts (on folder update) -> simple reload page?
+    - authenticate browser in server
+    - authenticate user in browser
+    - user are authentified -> no reload of page at beginning 
+    - queue changes
+    - show conflicts (rich version)
+    - advanced reset (indexedDB reset completely)
+    - manage http error (timeout, etc...)
  
- ** service -> worker (actions): 
-  init 		-> / (launch first sync) ==> temp?
-  userLogin 	-> user settings 
-  userLogout 	-> ok 
-  
- ** worker -> service (events): 
-  -> progress({ sync status, queue length })
-  -> folderUpdate(data) 
-  -> conflict ({ updated: data, modified: data }) (conflict calculation is done in service)
-  
- Questions: 
-  - how to log in a user? = subscribe on this computer OR check the password in the local database 
-  - how to log out a user? = forget from this computer 
-  - what happen if the computer key is "forgotten" ? (ex: erased from server) -> reset it ?
+    ** service -> worker (actions): 
+    init 		-> / (launch first sync) ==> temp?
+    userLogin 	-> user settings 
+    userLogout 	-> ok 
 
- Signing Queue principle
-  - when connecting, a key is generated
-  - all changes are stored locally, in a "queue"
-  	- the queue is signed with a key received from the server
-  	- test it with simple changes (save-and-queue and unlock-and-queue?)
-  	- a gui element show the queue status
-  - when displaying data, the pending data is shown on screen
-  - when a connection is made, queue is sent to the server
-  	- optimistic locking is used
-  	- positive feedback is received through the "sync" mechanism
+    ** worker -> service (events): 
+    -> progress({ sync status, queue length })
+    -> folderUpdate(data) 
+    -> conflict ({ updated: data, modified: data }) (conflict calculation is done in service)
+
+    Questions: 
+    - how to log in a user? = subscribe on this computer OR check the password in the local database 
+    - how to log out a user? = forget from this computer 
+    - what happen if the computer key is "forgotten" ? (ex: erased from server) -> reset it ?
+
+    Signing Queue principle
+    - when connecting, a key is generated
+    - all changes are stored locally, in a "queue"
+    	- the queue is signed with a key received from the server
+    	- test it with simple changes (save-and-queue and unlock-and-queue?)
+    	- a gui element show the queue status
+    - when displaying data, the pending data is shown on screen
+    - when a connection is made, queue is sent to the server
+    	- optimistic locking is used
+    	- positive feedback is received through the "sync" mechanism
  */
 
 importScripts("../../bower_components/fetch/fetch.js");
@@ -90,12 +90,16 @@ function storeData(offdata) {
     if (offdata.data) {
         promise = promise.then(function() {
             return db.bulkUpdate(offdata.data, function(data) {
+                //console.log("feedback from bulkUpdate",data);
                 mySendEvent("folder", data);
             }).then(function() {
         	// relaunch the sync upto completion
                 syncRemaining = offdata.remaining;
                 if (offdata.isfinal) {
                     syncRemaining = 0;
+                    offdata.isfinal = true;
+                } else {
+                    offdata.isfinal = false;
                 }
                 mySendEvent("progress", { 
                     "checkpoint": 	offdata.checkpoint, 
