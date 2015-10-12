@@ -43,7 +43,6 @@ function getGlobalConfig($key) {
 }
 
 global $myconfig;
-//global $maintenance;
 
 $myconfig['database'] = array(
 		'database' => "mysql:host=localhost;dbname=amd_chakaria",
@@ -61,18 +60,3 @@ $myconfig['database']['patches'][] = __DIR__ . "/conf/database_scripts";
 if ($localhost || $cli) {
 	$myconfig['database']['patches'][] = __DIR__ . "/conf/database_scripts/dev_only";
 }
-
-// $maintenance = $myconfig;
-
-// $maintenance["maintenance"]["code"] = getGlobalConfig("maintenance.code");
-// $maintenance["maintenance"]["token"] = getGlobalConfig("maintenance.token");
-// $maintenance["maintenance"]["logs"] = getGlobalConfig("logs");
-// $maintenance["bug"] = array();
-// $maintenance["bug"]["url_view"] = "http://www.cryptomedic.org/cryptomedic/maintenance/bug_view.php";
-// $maintenance["bug"]["url_submit"] = "http://www.cryptomedic.org/cryptomedic/maintenance/bub_submit.php";
-
-// $maintenance["deploy"] = array();
-// $maintenance["deploy"]["root"] = __DIR__;
-// $maintenance["deploy"]["repository"] = array();
-// $maintenance["deploy"]["repository"]["owner"] = "jehon";
-// $maintenance["deploy"]["repository"]["project"] = "cryptomedic";

@@ -11,6 +11,7 @@ before_script:
    - npm --version
    - npm install
    - mysql -e "create database IF NOT EXISTS amd_chakaria;" -uroot
+   - mysql -e "GRANT * ON * TO USER amd_chakaria" -uroot
 #  - npm install -g gulp
 #  - npm start > /dev/null &
 #  - npm run update-webdriver
