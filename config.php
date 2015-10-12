@@ -43,7 +43,7 @@ function getGlobalConfig($key) {
 }
 
 global $myconfig;
-global $maintenance;
+//global $maintenance;
 
 $myconfig['database'] = array(
 		'database' => "mysql:host=localhost;dbname=amd_chakaria",
