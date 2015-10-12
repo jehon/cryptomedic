@@ -1,6 +1,6 @@
 <?php
 
-require_once(__DIR__ . "/../vendor/autoload.php");
+require_once(__DIR__ . "/../../../autoload.php");
 
 // Beyond the limits
 ini_set('default_socket_timeout', -1);

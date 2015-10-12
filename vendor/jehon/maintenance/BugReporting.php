@@ -5,9 +5,6 @@ require_once(__DIR__ . "/lib/extended_session.php");
 require_once(__DIR__ . "/lib/parameters.php");
 
 use Jehon\Maintenance\Lib;
-use function Jehon\Maintenance\Lib\getConfig;
-use function Jehon\Maintenance\Lib\getParameter;
-use function Jehon\Maintenance\Lib\databasePrepareSqlStatement;
 
 class BugReporting {
 	protected $db;
@@ -42,15 +39,15 @@ class BugReporting {
 				. "(url, session, username, email, description, browser_useragent, browser_state, browser_console, screenshot) "
 				. "VALUE(:url, :session, :username, :email, :description, :browser_useragent, :browser_state, :browser_console, :screenshot)",
 				array(
-						'url' => getParameter("url"),
+						'url' => \Jehon\Maintenance\Lib\getParameter("url"),
 						'session' => session_id(),
-						'username' => getParameter("username"),
-						'email' => getParameter("email"),
-						'description' => getParameter("description"),
-						'browser_useragent' => getParameter("browser_useragent"),
-						'browser_state' => getParameter("browser_state"),
-						'browser_console' => getParameter("browser_console"),
-						'screenshot' => getParameter("screenshot")
+						'username' => \Jehon\Maintenance\Lib\getParameter("username"),
+						'email' => \Jehon\Maintenance\Lib\getParameter("email"),
+						'description' => \Jehon\Maintenance\Lib\getParameter("description"),
+						'browser_useragent' => \Jehon\Maintenance\Lib\getParameter("browser_useragent"),
+						'browser_state' => \Jehon\Maintenance\Lib\getParameter("browser_state"),
+						'browser_console' => \Jehon\Maintenance\Lib\getParameter("browser_console"),
+						'screenshot' => \Jehon\Maintenance\Lib\getParameter("screenshot")
 				)
 		);
 		
@@ -104,7 +101,7 @@ EMAIL
 	
 	public function viewOne($id) {
 		try {
-			$list = $this->db->runPrepareSqlStatement("SELECT * FROM bug_reporting WHERE id = :id", array('id' => getParameter("id")));
+			$list = $this->db->runPrepareSqlStatement("SELECT * FROM bug_reporting WHERE id = :id", array('id' => \Jehon\Maintenance\Lib\getParameter("id")));
 			$bug = array_pop($list);
 		} catch (PDOException $e) {
 			var_dump($e);
@@ -195,12 +192,12 @@ EMAIL
 	}
 	
 	public function route() {
-	 	if (getParameter("id", -1) < 0) {
+	 	if (\Jehon\Maintenance\Lib\getParameter("id", -1) < 0) {
 	 		$this->viewList();
 	 	} else {
 	 		$id = getParameter("id");
 			// Delete it?
-	 		if (getParameter("fix", false)) {
+	 		if (\Jehon\Maintenance\Lib\getParameter("fix", false)) {
 				$this->fixIt($id);
 	 		}
 	 		$this->viewOne($id);

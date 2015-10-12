@@ -7,8 +7,6 @@ require_once(__DIR__ . "/lib/myglob.php");
 use \PDO;
 use \PDOException;
 use \Exception;
-use function \Jehon\Maintenance\Lib\myglob;
-
 
 class Database {
 	public $pdo;
@@ -140,7 +138,7 @@ class Database {
 	
 	public function runDirectory($fromDir) {
 		$version = $this->getVersion();
-		$list = myglob($fromDir . "/*.sql");
+		$list = \Jehon\Maintenance\Lib\myglob($fromDir . "/*.sql");
 		natsort($list);
 	
 		foreach($list as $f) {
@@ -174,23 +172,23 @@ class Database {
 	}
 	
 	public function runOne($pathOrFile) {
-		if (is_dir($pathOrFile)) {
-			$this->runDirectory($pathOrFile);
-		} else {
-			$this->runFile($pathOrFile);
+		echo "\n*** $pathOrFile ***\n";
+		try {
+			if (is_dir($pathOrFile)) {
+				$this->runDirectory($pathOrFile);
+			} else {
+				$this->runFile($pathOrFile);
+			}
+		} catch (Exception $e) {
+			var_dump($e);
+			exit (-1);
 		}
+		echo "\n";	
 	}
 	
 	public function runAll($list) {
 		foreach($list as $l) {
-			echo "\n*** $l ***\n";
-			try {
-				$this->runOne($l);
-			} catch (Exception $e) {
-				var_dump($e);
-				exit (-1);
-			}
-			echo "\n";	
+			$this->runOne($l);
 		}
 	}
 	

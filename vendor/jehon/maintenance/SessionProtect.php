@@ -1,11 +1,6 @@
 <?php
 namespace Jehon\Maintenance;
 
-require_once(__DIR__ . "/lib/parameters.php");
-
-use function Jehon\Maintenance\Lib\getConfig;
-use function Jehon\Maintenance\Lib\getParameter;
-
 class SessionProtect {
 	protected $code;
 	protected $source = "";

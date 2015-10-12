@@ -13,8 +13,6 @@ use \DateTime;
 use \ZipArchive;
 
 use Jehon\Maintenance\Lib;
-use function Jehon\Maintenance\Lib\getByCurl;
-use function Jehon\Maintenance\Lib\isServedLocally;
 
 class Deploy {
 	public static function run($targetDir, $owner, $project) {
@@ -41,7 +39,7 @@ class Deploy {
 				throw new Exception('! Cannot open file for writing: ' . $tzip);
 			}
 				
-			file_put_contents($tzip, getByCurl($uri));
+			file_put_contents($tzip, \Jehon\Maintenance\Lib\getByCurl($uri));
 			fclose($fp);
 				
 			if (filesize($tzip) < 10) {
@@ -159,7 +157,7 @@ class Deploy {
 	}
 	
 	public function runOne($targetDir, $owner, $project) {
-		if (isServedLocally()) {
+		if (\Jehon\Maintenance\Lib\isServedLocally()) {
 			echo "Served locally<br>";
 			$targetDir = $targetDir . "-test";
 		}
@@ -183,7 +181,7 @@ class Deploy {
 			
 			<h3>Rates curl authorized</h3>
 			<?php 
-				$rates = json_decode(getByCurl( "https://api.github.com/rate_limit" ), true);
+				$rates = json_decode(\Jehon\Maintenance\Lib\getByCurl( "https://api.github.com/rate_limit" ), true);
 				$rates['resources']['core']['reset2'] = (new DateTime())->setTimestamp($rates['resources']['core']['reset'])->format('Y-m-d H:i:s');
 				var_dump($rates['resources']['core']);
 			

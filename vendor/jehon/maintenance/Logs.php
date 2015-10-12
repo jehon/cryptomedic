@@ -5,9 +5,6 @@ require_once(__DIR__ . "/lib/parameters.php");
 require_once(__DIR__ . '/lib/myglob.php');
 
 use Jehon\Maintenance\Lib;
-use function Jehon\Maintenance\Lib\getConfig;
-use function Jehon\Maintenance\Lib\getParameter;
-use function Jehon\Maintenance\Lib\myglob;
 
 class Logs {
 	protected $list;
@@ -15,10 +12,10 @@ class Logs {
 
 	static public function run($list) {
 		$logs = new Logs($list);
-		if (getParameter("file", -1) < 0) {
+		if (\Jehon\Maintenance\Lib\getParameter("file", -1) < 0) {
 			$logs->showListing();
 		} else {
-			$logs->showOne($logs->files[getParameter("file")]);
+			$logs->showOne($logs->files[\Jehon\Maintenance\Lib\getParameter("file")]);
 		}
 	}
 	
@@ -35,7 +32,7 @@ class Logs {
 	}
 
 	protected function addDir($dir) {
-		foreach(myglob($dir . "/*") as $f) {
+		foreach(\Jehon\Maintenance\Lib\myglob($dir . "/*") as $f) {
 			if (basename($f)[0] == ".") {
 				continue;
 			}
