@@ -21,8 +21,7 @@ class Database {
 	public function __construct($pdoURI, $username, $password, $options = array()) {
 		$this->pdo = new PDO($pdoURI, $username, $password, $options);
 		$this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		$this->pdo->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, true);
-		$this->pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, true);
+		$this->pdo->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, false);
 	}
 
 	public function runPrepareSqlStatement($sql, $data = array()) {
