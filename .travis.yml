@@ -12,7 +12,7 @@ before_script:
   - mysql -e "create database IF NOT EXISTS amd_chakaria;" -uroot
   - mysql -e "GRANT ALL ON *.* TO amd_chakaria@localhost" -uroot
   - mysql -e "SELECT @@global.time_zone, @@session.time_zone;" -uroot
-  - mysql -e "SET GLOBAL time_zone = +00;" -uroot
+  - mysql -e "SET GLOBAL time_zone = +00:00;" -uroot
   - mysql -e "SELECT @@global.time_zone, @@session.time_zone;" -uroot
 #  - npm install -g gulp
 #  - npm start > /dev/null &
