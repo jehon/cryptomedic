@@ -8,6 +8,7 @@ before_script:
 #   - export DISPLAY=:99.0
 #   - sh -e /etc/init.d/xvfb start
 #   - npm install
+  - echo -e "[server]\nmax_allowed_packet=64M" | sudo tee -a /etc/mysql/conf.d/drupal.cnf
   - mysql -e "create database IF NOT EXISTS amd_chakaria;" -uroot
   - mysql -e "GRANT ALL ON *.* TO amd_chakaria@localhost" -uroot
   - mysql -e "SET GLOBAL max_allowed_packet=1073741824" -uroot
