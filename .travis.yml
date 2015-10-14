@@ -11,9 +11,7 @@ before_script:
   - echo -e "[server]\nmax_allowed_packet=64M" | sudo tee -a /etc/mysql/my.cnf
   - mysql -e "create database IF NOT EXISTS amd_chakaria;" -uroot
   - mysql -e "GRANT ALL ON *.* TO amd_chakaria@localhost" -uroot
-  - mysql -e "SELECT @@global.time_zone, @@session.time_zone;" -uroot
   - mysql -e "SET GLOBAL time_zone = '+00:00'" -uroot
-  - mysql -e "SELECT @@global.time_zone, @@session.time_zone;" -uroot
 #  - npm install -g gulp
 #  - npm start > /dev/null &
 #  - npm run update-webdriver
