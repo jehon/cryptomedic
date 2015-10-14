@@ -5,7 +5,7 @@ use App\User;
 class RouteReferenceTestCase extends TestCase {
 	private $url = "";
 	private $params = array();
-	
+
 	public function setUp($url = null, $params = array()) {
 		parent::setUp();
  		$this->setUrl($url, $params);
@@ -19,7 +19,7 @@ class RouteReferenceTestCase extends TestCase {
 	protected function setParams($params = array()) {
 		$this->params = $params;
 	}
-	
+
 	protected function preAuthenticate($group = null) {
 		if ($group === null) return;
 		$user = new User(['name' => 'test', 'group' => $group ]);
@@ -48,11 +48,11 @@ class RouteReferenceTestCase extends TestCase {
 		$this->assertNotNull($json, "Error parsing json");
 		return $json;
 	}
-	
+
 	protected function myAssertResponseForReference($group = null, $file = null) {
 		/* Calculate the reference file */
 		$response = $this->myAssertAuthorized($group);
-		
+
  		if ($file === null) {
 			$st = debug_backtrace();
 	 		$stv = array_shift($st);
@@ -63,10 +63,10 @@ class RouteReferenceTestCase extends TestCase {
  			$file = $file . ".json";
  		}
  		$pfile = __DIR__  . "/references/" . $file;
- 		
+
 	 	$json_obj = json_decode($response->getContent());
 	 	$json = json_encode($json_obj, JSON_PRETTY_PRINT);
- 		
+
  		/* Assert or update the reference */
 		if (getenv("COMMIT") > 0) {
 		 	/* Read it and load $reference */
@@ -75,7 +75,7 @@ class RouteReferenceTestCase extends TestCase {
 	 		} else {
 	 			$reference = "";
 	 		}
-	 		
+
 			/* Commit to the file */
 	 		if (strcmp($reference, $json) != 0) {
 				file_put_contents($pfile, $json);
@@ -84,8 +84,8 @@ class RouteReferenceTestCase extends TestCase {
 		} else {
 			/* Assert the difference */
 			if (file_exists($pfile)) {
-				$res = $this->assertStringEqualsFile($pfile, $json); 
-// 						"Result is invalid [$file - $pfile] @{$this->url}>" . strlen($json . 
+				$res = $this->assertStringEqualsFile($pfile, $json);
+// 						"Result is invalid [$file - $pfile] @{$this->url}>" . strlen($json .
 // 								substr($json, 0, 20) .
 // 								(strlen($json > 20 ? "..." : ""))));
 			} else {
