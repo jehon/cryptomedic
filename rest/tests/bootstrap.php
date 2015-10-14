@@ -1,15 +1,15 @@
 <?php
 	// Set up the database
-		
+
 	require_once(__DIR__ . "/../bootstrap/autoload.php");
-	
+
 	require_once(__DIR__ . "/../../vendor/autoload.php");
-	
+
 	require_once(__DIR__ . "/../../config.php");
-	
+
 	\Jehon\Maintenance\Database::run(
-			[ 
-					__DIR__ . "/../../conf/database_scripts/dev_only/reset.sql",
+			[
+//					__DIR__ . "/../../conf/database_scripts/dev_only/reset.sql",
 					__DIR__ . "/../../conf/database_scripts/dev_only/testing.sql",
 					__DIR__ . "/../../conf/database_scripts",
 					__DIR__ . "/../../conf/database_scripts/dev_only"
