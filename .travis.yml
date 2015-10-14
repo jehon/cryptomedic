@@ -8,16 +8,16 @@ before_script:
 #   - export DISPLAY=:99.0
 #   - sh -e /etc/init.d/xvfb start
 #   - npm install
-   - mysql -e "create database IF NOT EXISTS amd_chakaria;" -uroot
-   - mysql -e "GRANT ALL ON *.* TO amd_chakaria@localhost" -uroot
-   - mysql -e "SET GLOBAL max_allowed_packet=1073741824" -uroot
-   - npm install -g gulp
+  - mysql -e "create database IF NOT EXISTS amd_chakaria;" -uroot
+  - mysql -e "GRANT ALL ON *.* TO amd_chakaria@localhost" -uroot
+  - mysql -e "SET GLOBAL max_allowed_packet=1073741824" -uroot
+#  - npm install -g gulp
 #  - npm start > /dev/null &
 #  - npm run update-webdriver
-#  - sleep 1 # give server time to start
+  - sleep 1 # give server time to start
 
 script:
-   - cd rest && ../test/libs/bin/phpunit
+  - cd rest && ../test/libs/bin/phpunit
 #   - gulp test
 #  - node_modules/.bin/karma start test/karma.conf.js --no-auto-watch --single-run --reporters=dots --browsers=Firefox
 #  - node_modules/.bin/protractor test/protractor-conf.js --browser=firefox
