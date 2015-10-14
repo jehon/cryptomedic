@@ -50,7 +50,7 @@ $myconfig['database'] = array(
 		'database' => "mysql:host=localhost;dbname=amd_chakaria",
 		'username' => 'amd_chakaria',
 		'password' => getGlobalConfig("databasePassword"),
-		'options' => [ PDO::MYSQL_ATTR_INIT_COMMAND  => "SET CHARACTER SET 'utf8'; SET time_zone = '+00:00'" ],
+		'options' => [ PDO::MYSQL_ATTR_INIT_COMMAND  => "SET CHARACTER SET 'utf8'" ],//; SET time_zone = '+00:00'" ],
 		'patches' => array()
 );
 
