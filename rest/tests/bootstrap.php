@@ -15,7 +15,7 @@
 					__DIR__ . "/../../conf/database_scripts/dev_only"
 			],
 			$myconfig['database']['database'],
-			"root", //$myconfig['database']['username'],
+			$myconfig['database']['username'],
 			$myconfig['database']['password'],
 			$myconfig['database']['options']
 	);
