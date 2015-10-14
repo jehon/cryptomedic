@@ -98,7 +98,7 @@ class Database {
 			return false;
 		}
 		if ($transactionnel) {
-			$this->pdo->beginTransaction();
+			// $this->pdo->beginTransaction();
 		}
 		$query = array();
 		$i = 0;
@@ -130,7 +130,7 @@ class Database {
 		}
 		fclose($file);
 		if ($transactionnel) {
-			return $this->pdo->commit();
+			// return $this->pdo->commit();
 		}
 		return true;
 	}
