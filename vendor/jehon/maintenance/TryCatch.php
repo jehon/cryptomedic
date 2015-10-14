@@ -3,9 +3,9 @@ namespace Jehon\Maintenance;
 
 class TryCatch {
 	static public function run() {
-		register_shutdown_function('Jehon\Maintenance\TryCatch::shutdown');
+		//register_shutdown_function('Jehon\Maintenance\TryCatch::shutdown');
 	}
-	
+
 	static public function shutdown() {
 		echo "<hr>";
 		$error = error_get_last();
@@ -13,11 +13,11 @@ class TryCatch {
 			echo "Terminated ok.";
 			return;
 		}
-	
+
 		if (!headers_sent()) {
 			http_response_code(500);
 		}
-	
+
 		echo "<pre>";
 		echo $error['message'];
 		echo "\n";
