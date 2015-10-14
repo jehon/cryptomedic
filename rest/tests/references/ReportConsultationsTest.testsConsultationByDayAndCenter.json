@@ -6,12 +6,12 @@
     "list": [
         {
             "c_type": "ricket",
-            "c_id": 1070,
+            "c_id": 1,
             "c_Date": "2003-05-11",
             "c_Center": "Chakaria",
             "c_nextAppointment": "2015-04-28",
-            "patient_id": 10001,
-            "id": 10001,
+            "patient_id": 6,
+            "id": 6,
             "created_at": "2014-10-28 07:13:29",
             "updated_at": "2015-04-24 05:28:14",
             "lastuser": "jehon",

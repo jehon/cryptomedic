@@ -28,7 +28,7 @@ class SyncTest extends RouteReferenceTestCase {
 	public function setUp($url = null, $params = array()) {
 		parent::setUp("sync");
 	}
-	
+
 	protected function thisAssertResponse($json) {
 
 		return $offline;
@@ -42,31 +42,31 @@ class SyncTest extends RouteReferenceTestCase {
 	public function testFlow() {
 		$offline = self::getNext(1);
 		$this->assertArrayHasKey(0, $offline->data);
-		$this->assertEquals(10004, $offline->data[0]->record->id);
+		$this->assertEquals(7, $offline->data[0]->record->id);
 
 		$offline = self::getNext(1);
 		$this->assertArrayHasKey(0, $offline->data);
-		$this->assertEquals(11, $offline->data[0]->record->id);
+		$this->assertEquals(2, $offline->data[0]->record->id);
 
 		$offline = self::getNext(1);
 		$this->assertArrayHasKey(0, $offline->data);
-		$this->assertEquals(12, $offline->data[0]->record->id);
+		$this->assertEquals(3, $offline->data[0]->record->id);
 
 		$offline = self::getNext(1);
 		$this->assertArrayHasKey(0, $offline->data);
-		$this->assertEquals(13, $offline->data[0]->record->id);
+		$this->assertEquals(4, $offline->data[0]->record->id);
 
 		$offline = self::getNext(1);
 		$this->assertArrayHasKey(0, $offline->data);
-		$this->assertEquals(10, $offline->data[0]->record->id);
+		$this->assertEquals(1, $offline->data[0]->record->id);
 
 		$offline = self::getNext(1);
 		$this->assertArrayHasKey(0, $offline->data);
-		$this->assertEquals(10001, $offline->data[0]->record->id);
+		$this->assertEquals(6, $offline->data[0]->record->id);
 
 		$offline = self::getNext(1);
 		$this->assertArrayHasKey(0, $offline->data);
-		$this->assertEquals(14, $offline->data[0]->record->id);
+		$this->assertEquals(5, $offline->data[0]->record->id);
 
 		$offline = self::getNext(1);
 		$this->assertArrayHasKey(0, $offline->data);
