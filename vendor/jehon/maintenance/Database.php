@@ -22,6 +22,7 @@ class Database {
 		$this->pdo = new PDO($pdoURI, $username, $password, $options);
 		$this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		$this->pdo->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, false);
+		$this->runPrepareSqlStatement("SET time_zone = '+00:00'");
 	}
 
 	public function runPrepareSqlStatement($sql, $data = array()) {
