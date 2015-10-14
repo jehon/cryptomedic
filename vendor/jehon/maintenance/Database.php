@@ -33,6 +33,9 @@ class Database {
 		try {
 			$stmt = $this->pdo->prepare($sql);
 		} catch (Exception $e) {
+			if ($stmt) {
+				$stmt->closeCursor();
+			}
 			throw new Exception("[$dbgMsg] Invalid statement: " . $sql, $e);
 		}
 
@@ -109,12 +112,7 @@ class Database {
 					continue;
 				}
 
-				try {
-					$this->runPrepareSqlStatement($query, array(), "running query $i");
-				} catch (Exception $e) {
-					var_dump($e);
-					die("Error executing sql: " . $query);
-				}
+				$this->runPrepareSqlStatement($query, array(), "running query $i");
 				echo ".";
 				if ($i % 50 == 0) {
 					echo "$i\n";
@@ -174,15 +172,10 @@ class Database {
 
 	public function runOne($pathOrFile) {
 		echo "\n*** $pathOrFile ***\n";
-		try {
-			if (is_dir($pathOrFile)) {
-				$this->runDirectory($pathOrFile);
-			} else {
-				$this->runFile($pathOrFile);
-			}
-		} catch (Exception $e) {
-			var_dump($e);
-			exit (-1);
+		if (is_dir($pathOrFile)) {
+			$this->runDirectory($pathOrFile);
+		} else {
+			$this->runFile($pathOrFile);
 		}
 		echo "\n";
 	}

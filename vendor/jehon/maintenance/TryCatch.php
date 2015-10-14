@@ -3,7 +3,7 @@ namespace Jehon\Maintenance;
 
 class TryCatch {
 	static public function run() {
-		//register_shutdown_function('Jehon\Maintenance\TryCatch::shutdown');
+		register_shutdown_function('Jehon\Maintenance\TryCatch::shutdown');
 	}
 
 	static public function shutdown() {
@@ -21,8 +21,9 @@ class TryCatch {
 		echo "<pre>";
 		echo $error['message'];
 		echo "\n";
-		if (method_exists($error, 'getTrace')) {
-			var_dump($error->getTrace());
+		if (method_exists($error, 'getTraceAsString')) {
+			// var_dump($error->getTrace());
+			echo $error->getTraceAsString();
 		}
 	}
 }

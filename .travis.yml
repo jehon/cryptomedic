@@ -5,11 +5,9 @@ language: php
 #  - 0.12
 
 before_script:
-   - export DISPLAY=:99.0
-   - sh -e /etc/init.d/xvfb start
-   - php --version
-   - npm --version
-   - npm install
+#   - export DISPLAY=:99.0
+#   - sh -e /etc/init.d/xvfb start
+#   - npm install
    - mysql -e "create database IF NOT EXISTS amd_chakaria;" -uroot
    - mysql -e "GRANT ALL ON *.* TO amd_chakaria@localhost" -uroot
 #  - npm install -g gulp
@@ -24,4 +22,4 @@ script:
 #  - node_modules/.bin/protractor test/protractor-conf.js --browser=firefox
 
 after_failure:
-   - cat rest/storage/log/*
+#   - cat rest/storage/log/*
