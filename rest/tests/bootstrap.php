@@ -9,13 +9,13 @@
 
 	\Jehon\Maintenance\Database::run(
 			[
-//					__DIR__ . "/../../conf/database_scripts/dev_only/reset.sql",
+					__DIR__ . "/../../conf/database_scripts/dev_only/reset.sql",
 					__DIR__ . "/../../conf/database_scripts/dev_only/testing.sql",
 					__DIR__ . "/../../conf/database_scripts",
 					__DIR__ . "/../../conf/database_scripts/dev_only"
 			],
 			$myconfig['database']['database'],
-			$myconfig['database']['username'],
+			"root", //$myconfig['database']['username'],
 			$myconfig['database']['password'],
 			$myconfig['database']['options']
 	);
