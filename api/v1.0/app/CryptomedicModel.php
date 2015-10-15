@@ -1,6 +1,6 @@
 <?php namespace App;
 
-require_once __DIR__ . "/../../../php/references.php";
+#require_once __DIR__ . "/../../../php/references.php";
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;

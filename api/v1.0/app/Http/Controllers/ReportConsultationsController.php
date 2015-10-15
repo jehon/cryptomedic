@@ -7,7 +7,7 @@ use DB;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Request;
 
-require_once(__DIR__ . "/../../../../php/references.php");
+#require_once(__DIR__ . "/../../../../php/references.php");
 use \References;
 
 class ReportConsultationsController extends ReportController {
@@ -20,7 +20,7 @@ class ReportConsultationsController extends ReportController {
 		$sql .= " ORDER BY c.id";
 		return $sql;
 	}
-		
+
 	public function index() {
 		$sql = "SELECT cc.*, patients.*
 		FROM "
@@ -36,5 +36,5 @@ class ReportConsultationsController extends ReportController {
 		$sql .= " LIMIT 100";
 		$this->result['list'] = DB::select($sql, $this->sqlBindParams);
 		return response()->jsonOrJSONP($this->result);
-	}	
+	}
 }

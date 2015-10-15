@@ -7,7 +7,7 @@
             	"url": "https://www.github.com/jehon/maintenance"
     	}
     ],
-	
+
 	"require": {
 		"jehon/maintenance": ">=2.0"
 	},

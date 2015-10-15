@@ -1,6 +1,8 @@
 <?php
 date_default_timezone_set("GMT");
 
+require_once(__DIR__ . "/php/references.php");
+
 if (!defined("secretFile")) {
 	define("secretFile", __DIR__ . "/../secrets.php");
 }

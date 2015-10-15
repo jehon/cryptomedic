@@ -6,7 +6,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Request;
 use App\Bill;
 
-require_once(__DIR__ . "/../../../../php/references.php");
+#require_once(__DIR__ . "/../../../../php/references.php");
 use \References;
 
 
@@ -29,9 +29,9 @@ class ReportActivityController extends ReportController {
 				bills.sl_familySalary,
 				bills.sl_numberOfHouseholdMembers,
 				bills.Sociallevel,
-				" . Bill::getSQLDiagno() . " as diagno, 
-				" . Bill::getSQLAct() . " as act, 
-				" . Bill::getSQLTreatment() . " as treatment, 
+				" . Bill::getSQLDiagno() . " as diagno,
+				" . Bill::getSQLAct() . " as act,
+				" . Bill::getSQLTreatment() . " as treatment,
 				" . Bill::getSQLFieldsSum(Bill::CAT_CONSULT) . " AS price_consult,
 	            " . Bill::getSQLFieldsSum(Bill::CAT_MEDECINE) . " AS price_medecine,
 				" . Bill::getSQLFieldsSum(Bill::CAT_WORKSHOP) . " AS price_workshop,
@@ -40,7 +40,7 @@ class ReportActivityController extends ReportController {
 	            bills.total_real as total_real,
 	            bills.total_asked as total_asked,
 	            bills.total_paid as total_paid,
-				exists(select * from bills as b2 where b2.patient_id = bills.patient_id and b2.Date < :whenFrom12) as oldPatient 
+				exists(select * from bills as b2 where b2.patient_id = bills.patient_id and b2.Date < :whenFrom12) as oldPatient
 			FROM bills
 	        JOIN patients ON bills.patient_id = patients.id
 	        JOIN prices ON bills.price_id = prices.id
@@ -51,7 +51,7 @@ class ReportActivityController extends ReportController {
 			ORDER BY bills.Date ASC, patients.entryyear ASC, patients.entryorder ASC, bills.id ASC
 			", $this->sqlBindParams + [ "whenFrom12" => $this->internalWhenFrom ]
 		);
-//				exists(select * from bills as b2 where b2.patient_id = bills.patient_id and b2.Date < :whenFrom12) as mOLD 
+//				exists(select * from bills as b2 where b2.patient_id = bills.patient_id and b2.Date < :whenFrom12) as mOLD
 
 		$this->result['totals'] = array();
 		foreach($this->result['list'] as $e) {

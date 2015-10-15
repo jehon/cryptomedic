@@ -6,7 +6,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Request;
 use App\Bill;
 
-require_once(__DIR__ . "/../../../../php/references.php");
+#require_once(__DIR__ . "/../../../../php/references.php");
 use \References;
 
 class ReportSurgicalController extends ReportController {
@@ -24,9 +24,9 @@ class ReportSurgicalController extends ReportController {
 				bills.sl_familySalary,
 				bills.sl_numberOfHouseholdMembers,
 				bills.Sociallevel,
-				" . Bill::getSQLDiagno() . " as diagno, 
-				" . Bill::getSQLAct() . " as act, 
-				" . Bill::getSQLTreatment() . " as treatment, 
+				" . Bill::getSQLDiagno() . " as diagno,
+				" . Bill::getSQLAct() . " as act,
+				" . Bill::getSQLTreatment() . " as treatment,
 				" . Bill::getSQLFieldsSum(Bill::CAT_CONSULT) . " AS price_consult,
 	            " . Bill::getSQLFieldsSum(Bill::CAT_MEDECINE) . " AS price_medecine,
 				" . Bill::getSQLFieldsSum(Bill::CAT_WORKSHOP) . " AS price_workshop,
@@ -38,7 +38,7 @@ class ReportSurgicalController extends ReportController {
 				exists(select * from bills as b2 where b2.patient_id = bills.patient_id and b2.Date < :whenFrom12) as oldPatient,
 				(select b2.Date                	     from bills as b2 where b2.patient_id = bills.patient_id ORDER BY b2.Date DESC LIMIT 1) as last_seen,
 				(select consults.TreatmentEvaluation from consults where consults.patient_id = bills.patient_id ORDER BY consults.Date DESC LIMIT 1) as last_treat_result,
-				(select consults.TreatmentFinished   from consults where consults.patient_id = bills.patient_id ORDER BY consults.Date DESC LIMIT 1) as last_treat_ended 
+				(select consults.TreatmentFinished   from consults where consults.patient_id = bills.patient_id ORDER BY consults.Date DESC LIMIT 1) as last_treat_ended
 			FROM bills
 	            JOIN patients ON bills.patient_id = patients.id
 	            JOIN prices ON bills.price_id = prices.id

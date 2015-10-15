@@ -8,7 +8,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Request;
 
-require_once(__DIR__ . "/../../../../../php/references.php");
+#require_once(__DIR__ . "/../../../../../php/references.php");
 use \References;
 
 // TODO: If the computer key is forgotten, then reset the client...

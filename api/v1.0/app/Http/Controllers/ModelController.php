@@ -7,7 +7,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Input;
 
-require_once(__DIR__ . "/../../../../php/references.php");
+#require_once(__DIR__ . "/../../../../php/references.php");
 use \References;
 
 // TODO: protect frozen files

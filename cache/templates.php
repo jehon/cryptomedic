@@ -1,11 +1,11 @@
-<?php 
+<?php
 /**
  * Generate a template into the cache
- * 
+ *
  * Parameters available:
  * @param meta: if set, meta informations will be shown
  * @param unused table: if set, show unused fields of the <table> in the database
- * 
+ *
  * special treatment:
  * /templates/writes/blablabla.html -> will go to /templates/fiches/blablabla.html, but in write mode (writeOnly forced)
  */
@@ -22,10 +22,10 @@ if (!class_exists("t")) {
 	    const TYPE_CHAR         = 4;
 	    const TYPE_TEXT         = 5;
 	    const TYPE_DATE         = 6;
-	
+
 	    const DATEFORMAT = "shortDate";
 	    const DATETIMEFORMAT = "short";
-	
+
 	    static protected $pdo = false;
 		static private $cacheUnused = array();
 	    static private $defaultOptions = [
@@ -38,7 +38,7 @@ if (!class_exists("t")) {
 	    ];
 	    static private $uuid = 0;
 	    static $sqlAllTableStructure = array();
-	    
+
 	    static function initialize() {
 	    	global $generator;
 	    	try {
@@ -51,24 +51,24 @@ if (!class_exists("t")) {
 	    		throw new Exception($e->getMessage()); // @codeCoverageIgnore
 	    	}
 	    }
-	    
+
 	    static function setDefaultOption($key, $val = true) {
 	        if (!array_key_exists($key, static::$defaultOptions)) {
 	            return trace("Setting unsupported option: $key"); // @codeCoverageIgnore
 	        }
 	        static::$defaultOptions[$key] = $val;
 	    }
-	
+
 // 	    static function setDefaultOptions(array $defaultOptions) {
 // 	        foreach($defaultOptions as $key => $val)
 // 	            static::setDefaultOption($key, $val);
 // 	    }
-	
+
 	    static function UUID()  {
 	        static::$uuid++;
 	        return static::$uuid;
 	    }
-	
+
 	    static function cacheSqlStructureFor($sqlTable) {
 	    	if (!array_key_exists($sqlTable, static::$sqlAllTableStructure)) {
 	    		static::$sqlAllTableStructure[$sqlTable] = array();
@@ -78,25 +78,25 @@ if (!class_exists("t")) {
 	    	}
 	    	return static::$sqlAllTableStructure[$sqlTable];
 	    }
-	    
+
 	    static function getColumnsOfTable($sqlTable) {
 	    	return array_keys(static::cacheSqlStructureFor($sqlTable));
 	    }
-	    
+
 	    var $key;
 	    var $options;
 	    var $res = "";
 	    var $linked2DB = false;
 	    var $rawExpression = true;
 	    var $listing = null;
-	    
+
 	    function __construct($key, array $options = array()) {
 	        $this->key = $key;
 	        $this->jsId = str_replace([".", "#", " ", "/", "\\" ], "_", $this->key);
 	        $this->options = $options;
 	        $this->field = $key;
 	        $this->options = array_merge(static::$defaultOptions, $this->options);
-	        
+
 	        $data = explode(".", $this->key);
 	        if (count($data) != 2) {
 	        	if ($this->options['model'] == null) {
@@ -110,21 +110,21 @@ if (!class_exists("t")) {
 	        	$this->model = $data[0];
 	        	$this->field = $data[1];
 	        }
-	
+
 			$this->sqlTable = References::model2db($this->model);
-			
+
 			static::cacheSqlStructureFor($this->sqlTable);
-			
+
 			if (!in_array($this->field, static::getColumnsOfTable($this->sqlTable))) {
 	            $this->linked2DB = false;
 	            return ;
 	        }
 	        $this->linked2DB = true;
-	         
+
 	        $this->structure = static::$sqlAllTableStructure[$this->sqlTable][$this->field];
-	
+
 	        $this->used($this->sqlTable, $this->field);
-	                
+
 	        $this->isList = false;
 	        $this->isListLinked = false;
 	        $header = $this->model . "." . $this->field;
@@ -147,12 +147,12 @@ if (!class_exists("t")) {
 				if (false === preg_match("/([a-z]+)(\(([0-9]+)\)(.*[a-zA-Z]+)?)?/", strtolower($this->structure['Type']), $matches)) {
 					throw new Exception("Error in preg_match"); // @codeCoverageIgnore
 				}
-				/* 
+				/*
 				 * ==== $matches ====
-				 * 1: type natif 
+				 * 1: type natif
 				 * 3: length
 				 * 4: qualificatif (unsigned)
-				 * 
+				 *
 				 * All matches are lowercase
 				 */
 				$this->struct_type = $matches[1];
@@ -189,38 +189,38 @@ if (!class_exists("t")) {
 	                    echo "Unhandled type in __construct: {$this->struct_type}";
 	                    var_dump($this->structure);
 	                    throw new Exception("Unhandled type in __construct: {$this->struct_type}");
-	                    break;              
+	                    break;
 	            }
 	        }
 	        return $this;
 	    }
-	
+
 		function fieldGetKey() {
 			return $this->options['baseExpression'] . $this->field;
 		}
-	    
+
 	    function fieldIsRequired() {
 	    	return $this->structure['Null'] == "NO";
 	    }
-	    
+
 	    function fieldGetType() {
 	    	return $this->struct_type;
 	    }
-	    
+
 	    function fieldGetList() {
-	    	
+
 	    }
-	    
+
 		function displayCode($mode) {
 			if (array_key_exists("_meta", $_REQUEST) && $_REQUEST['_meta']) {
 				$this->res .= "=" . $mode . $this->key;
 				$this->res .= ($this->linked2DB ? "db" : "##");
-				$this->res .= "-" . $this->model . "." . $this->field; 
+				$this->res .= "-" . $this->model . "." . $this->field;
 				$this->res .= ":" . $this->fieldGetType();
 				if ($this->fieldGetType() == static::TYPE_LIST) {
 					$this->res .= "(";
-					foreach($this->listing as $v) { 
-						$this->res .= $v . ","; 
+					foreach($this->listing as $v) {
+						$this->res .= $v . ",";
 					}
 					$this->res .= ")";
 				}
@@ -231,7 +231,7 @@ if (!class_exists("t")) {
 			}
 			return false;
 		}
-	    
+
 	    function read() {
 	        if (!$this->linked2DB) {
 	            $this->res .= "<span id='{$this->jsId}' class='error'>Read: key is not in the database: '{$this->key}'</span>";
@@ -240,9 +240,9 @@ if (!class_exists("t")) {
 			if ($this->displayCode("r")) {
 				return $this;
 			}
-	        
+
 	        switch($this->fieldGetType()) {
-	            case static::TYPE_TIMESTAMP: 
+	            case static::TYPE_TIMESTAMP:
 	                    // See https://docs.angularjs.org/api/ng/filter/date
 	                    $this->res .= "<span id='{$this->jsId}'>{{ {$this->fieldGetKey()} | date:'{static::DATETIMEFORMAT}' }}</span>";
 	                    break;
@@ -271,7 +271,7 @@ if (!class_exists("t")) {
 	        }
 	        return $this;
 	    }
-	
+
 	    function write() {
 	        if (!$this->linked2DB) {
 	            $this->res .= "<span id='{$this->jsId}'class='error'>Write: key is not in the database: '{$this->key}'</span>";
@@ -280,11 +280,11 @@ if (!class_exists("t")) {
 	        if ($this->displayCode("w")) {
 	        	return $this;
 	        }
-	        
+
 	        $inline = "class='form-control' id='{$this->jsId}' ng-model='{$this->fieldGetKey()}' "
 	            . ($this->fieldIsRequired() ? " required " : "")
 	            . $this->options['inline'];
-	
+
 	        switch($this->fieldGetType()) {
 	            case static::TYPE_LIST:
 	                $count = count($this->listing);
@@ -325,15 +325,15 @@ if (!class_exists("t")) {
 	                    $this->res .= "</select>";
 	                }
 	                break;
-	            case static::TYPE_TIMESTAMP: 
+	            case static::TYPE_TIMESTAMP:
 	                $this->res .= "<span id='{$this->jsId}'>{{ {$this->fieldGetKey()} | date:'{static::DATETIMEFORMAT}' }}</span>";
 	                break;
 	            case static::TYPE_BOOLEAN:
 	                $this->res .= "<input type='checkbox' ng-model='{$this->fieldGetKey()}' ng-true-value='1' ng-false-value='0' />";
 	                break;
 	            case static::TYPE_INTEGER:
-	                $this->res .= "<input type='number' $inline />";    
-	                break;  
+	                $this->res .= "<input type='number' $inline />";
+	                break;
 	            case static::TYPE_TEXT:
 	                $this->res .= "<textarea cols=40 rows=4 $inline></textarea>";
 	                break;
@@ -355,7 +355,7 @@ if (!class_exists("t")) {
 	        }
 	        return $this;
 	    }
-	
+
 	    function value() {
 	    	if ($this->options['readOnly']) {
 	    		return $this->read();
@@ -365,10 +365,10 @@ if (!class_exists("t")) {
 	    	}
 	    	return $this->read();
 	    }
-	
+
 	    function tr($label = null) {
 	        if ($label == null) $label = $this->field;
-	
+
 	        $this->res .= "<tr ng-class='{ emptyValue: !{$this->fieldGetKey()}}'>\n";
 	        $this->res .= " <td>$label</td>\n";
 	        $this->res .= " <td>";
@@ -377,7 +377,7 @@ if (!class_exists("t")) {
 	        $this->res .= "</tr>\n";
 	        return $this;
 	    }
-	
+
 	    function trRightLeft($label = null) {
 	        if ($label == null) {
 	        	$label = str_replace("?", "", $this->key);
@@ -385,10 +385,10 @@ if (!class_exists("t")) {
 	        if (strpos($this->key, "?") === false) {
 	        	$this->key = $this->key . "?";
 	        }
-	
+
 	        $left = new t(str_replace("?", "Left", $this->key), $this->options);
 	        $right = new t(str_replace("?", "Right", $this->key), $this->options);
-	        
+
 	        $this->res .= "<tr ng-class='{ emptyValue: !{$left->rawExpression} && !{$right->rawExpression} }'>\n";
 	        	$this->res .= " <td>$label</td>\n";
 	            $this->res .= " <td>" . $right->value()->getText() . "</td>\n";
@@ -396,25 +396,25 @@ if (!class_exists("t")) {
 	            $this->res .= "</tr>\n";
 	        return $this;
 	    }
-	
+
 	    function getText() {
 	        return $this->res;
 	    }
-	
+
 	    function p() {
 	        echo $this->res;
 	    }
-	
+
 	    function readOnly() {
 	        $this->options['readOnly'] = true;
 	        return $this;
 	    }
-	
+
 	    function writeOnly() {
 	        $this->options['writeOnly'] = true;
 	        return $this;
 	    }
-	    
+
 	    static public function used($sqlTable, $field) {
 	    	if (!array_key_exists($sqlTable, static::$cacheUnused)) {
 				static::$cacheUnused[$sqlTable] = static::cacheSqlStructureFor($sqlTable);
@@ -428,10 +428,10 @@ if (!class_exists("t")) {
 	    		unset(static::$cacheUnused[$sqlTable][$field]);
 	    	}
 	    }
-	    
+
 	    static public function showUnused() {
 	    	global $config;
-	
+
 	    	$table = $_REQUEST['_unused'];
 	    	echo "<h1>Unused fields for $table</h1>";
 	    	if (array_key_exists($table, static::$cacheUnused)) {
@@ -443,7 +443,7 @@ if (!class_exists("t")) {
 						echo "<tr><td>{$rec['n']}</td><td>{$rec['val']}</td></tr>";
 					}
 					echo "</table>";
-	
+
 					$stmt = static::$pdo->prepare("SELECT `CONSTRAINT_NAME` as k FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE "
 							. "WHERE `CONSTRAINT_SCHEMA` = :schema AND `TABLE_NAME` = :table AND `COLUMN_NAME` = :column");
 					$res = $stmt->execute(array("schema" => $config['database']['pdo_schema'], "table" => $table, "column" => $field));
@@ -457,14 +457,14 @@ if (!class_exists("t")) {
 	    	} else {
 	    		echo "Table $table was not used in the template";
 	    	}
-	    }        
+	    }
 	}
 }
 
 t::initialize();
 
 if (array_key_exists("_unused", $_REQUEST) && $_REQUEST['_unused']) {
- 	register_shutdown_function("T::showUnused");	
+ 	register_shutdown_function("T::showUnused");
 }
 
 if (substr($generator['target'], -5) != ".html") {
@@ -479,7 +479,7 @@ if (substr($template, 0, 16) == "templates/writes") {
 }
 
 if (!file_exists(__DIR__ . "/" . $template)) {
-	throw new Exception("I say: not found " . $template);	
+	throw new Exception("I say: not found " . $template);
 }
 
 include(__DIR__ . "/" . $template);
