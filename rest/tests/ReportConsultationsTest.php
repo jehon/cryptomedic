@@ -9,7 +9,7 @@ class ReportConsultationsTest extends RouteReferenceTestCase {
 		parent::setUp();
 		$this->setUrl("reports/consultations");
 	}
-	
+
 	public function testsConsultation() {
 		$this->setParams([ "day" => self::$nday, "center" => "" ]);
 		$this->myAssertUnauthorized();
@@ -18,17 +18,17 @@ class ReportConsultationsTest extends RouteReferenceTestCase {
 		$this->myAssertResponseForReference("cdc");
 		$this->myAssertResponseForReference("manager");
 		$this->myAssertResponseForReference("admin");
-		
+
 		$json = $this->myAssertJSON("admin");
 		$this->assertObjectHasAttribute('params', $json);
 		$this->assertObjectHasAttribute('list', $json);
 		$this->assertEquals(count($json->list), 3);
 	}
-	
+
 	public function testsConsultationByDay() {
 		$this->setParams([ "day" => self::$nday, "center" => "" ]);
 		$this->myAssertUnauthorized();
-		
+
 		$this->myAssertResponseForReference("readonly");
 		$this->myAssertResponseForReference("cdc");
 		$this->myAssertResponseForReference("manager");
@@ -44,12 +44,12 @@ class ReportConsultationsTest extends RouteReferenceTestCase {
 	public function testsConsultationByDayAndCenter() {
 		$this->setParams([ "day" => self::$nday, "center" => "Chakaria" ]);
 		$this->myAssertUnauthorized();
-	
+
 		$this->myAssertResponseForReference("readonly");
 		$this->myAssertResponseForReference("cdc");
 		$this->myAssertResponseForReference("manager");
 		$this->myAssertResponseForReference("admin");
-	
+
 		$json = $this->myAssertJSON("admin");
 		$this->assertEquals(count($json->list), 1);
 		foreach($json->list as $k => $v) {

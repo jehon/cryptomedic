@@ -42,11 +42,6 @@ class SyncTest extends RouteReferenceTestCase {
 		parent::setUp("sync");
 	}
 
-	protected function thisAssertResponse($json) {
-
-		return $offline;
-	}
-
 	public function testsUnauthenticated() {
 		$this->setUrl("sync", [ "cp" => "" ]);
 		$this->myAssertUnauthorized();
@@ -84,9 +79,7 @@ class SyncTest extends RouteReferenceTestCase {
 		$offline = self::getNext(1);
 		$this->assertArrayHasKey(0, $offline->data);
 		$this->assertEquals(2, $offline->data[0]->record->id);
-
-		$this->assertObjectHasAttribute('isfinal', $offline);
-		$this->assertEquals(1, $offline->isfinal);
+		$this->isFinal();
 
 		self::$initialCP = $this->cp;
 	}
