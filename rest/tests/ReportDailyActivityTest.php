@@ -7,12 +7,14 @@ class ReportDailyActivityTest extends RouteReferenceTestCase {
 	static public $nmonth = "2014-05";
 
 	protected $dateParam;
+	protected $type = 0;
 
-	protected function thisAssertResponse($json) {
+	protected function thisAssertResponse($json, $nbr) {
 		$this->assertObjectHasAttribute('params', $json);
 		$this->assertObjectHasAttribute('list', $json);
 		$this->assertObjectHasAttribute('totals', $json);
 		$this->assertTrue(count($json->list) >= 1);
+		$this->assertEquals($nbr[$this->type], count($json->list));
 	}
 
 	public function setUp($url = null, $params = array()) {
@@ -29,41 +31,37 @@ class ReportDailyActivityTest extends RouteReferenceTestCase {
 		$this->myAssertResponseForReference("admin");
 
 		$json = $this->myAssertJSON("admin");
-		$this->thisAssertResponse($json);
-		$this->assertEquals(count($json->list), 3);
+		$this->thisAssertResponse($json, [ 3, 5 ]);
 	}
 
  	public function testsConsultationByCenter() {
 		$this->setParams(array( 'day' => self::$nday, 'month' => self::$nmonth, 'center' => 'Chakaria', 'examiner' => ''));
  		$this->myAssertResponseForReference("manager");
 		$json = $this->myAssertJSON("manager");
-		$this->thisAssertResponse($json);
+		$this->thisAssertResponse($json, [ 2, 3 ]);
 		foreach($json->list as $k => $v) {
 			$this->assertEquals("Chakaria", $v->Center);
 		}
- 		$this->assertEquals(count($json->list), 2);
 	}
 
  	public function testsConsultationByExaminer() {
  		$this->setParams(array( 'day' => self::$nday, 'month' => self::$nmonth, 'center' => '', 'examiner' => 'Ershad'));
  		$this->myAssertResponseForReference("manager");
  		$json = $this->myAssertJSON("manager");
-		$this->thisAssertResponse($json);
+		$this->thisAssertResponse($json, [ 2, 3 ]);
  		foreach($json->list as $k => $v) {
  			$this->assertEquals("Ershad", $v->ExaminerName);
-  		}
- 		$this->assertEquals(count($json->list), 2);
+ 		}
  	}
 
  	public function testsConsultationByCenterAndExaminer() {
  		$this->setParams(array( 'day' => self::$nday, 'month' => self::$nmonth, 'center' => "Chakaria", 'examiner' => 'Ershad'));
  		$this->myAssertResponseForReference("manager");
  		$json = $this->myAssertJSON("manager");
- 		$this->thisAssertResponse($json);
+ 		$this->thisAssertResponse($json, [ 1, 2 ]);
  		foreach($json->list as $k => $v) {
  			$this->assertEquals("Ershad", $v->ExaminerName);
 			$this->assertEquals("Chakaria", $v->Center);
  		}
-	 	$this->assertEquals(count($json->list), 1);
  	}
 }

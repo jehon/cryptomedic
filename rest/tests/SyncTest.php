@@ -46,10 +46,6 @@ class SyncTest extends RouteReferenceTestCase {
 
 		$offline = self::getNext(1);
 		$this->assertArrayHasKey(0, $offline->data);
-		$this->assertEquals(2, $offline->data[0]->record->id);
-
-		$offline = self::getNext(1);
-		$this->assertArrayHasKey(0, $offline->data);
 		$this->assertEquals(3, $offline->data[0]->record->id);
 
 		$offline = self::getNext(1);
@@ -71,6 +67,10 @@ class SyncTest extends RouteReferenceTestCase {
 		$offline = self::getNext(1);
 		$this->assertArrayHasKey(0, $offline->data);
 		$this->assertEquals(9, $offline->data[0]->id);
+
+		$offline = self::getNext(1);
+		$this->assertArrayHasKey(0, $offline->data);
+		$this->assertEquals(2, $offline->data[0]->record->id);
 
 		$this->assertObjectHasAttribute('isfinal', $offline);
 		$this->assertEquals(1, $offline->isfinal);
