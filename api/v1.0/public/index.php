@@ -1,4 +1,5 @@
 <?php
+  require_once(__DIR__ . "/../../../config.php");
 /**
  * Laravel - A PHP Framework For Web Artisans
  *

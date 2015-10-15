@@ -13,14 +13,14 @@
  *      - if the login is ok, the key is validated. The key is stored
  *      - if there are data in the queue, show them and sign them again with the new key
  *      - continue
- *      [keyok] 
+ *      [keyok]
  *      - send sync and each operation with the key authentication
  *      - each operation will be stored with a hash in the queue
  *      - loop to [keyok]
  *      [problem] if sync/queue fail with 403 (unauthenticated),
  *      - delete the key
  *      - go back to init
- *      
+ *
  *      Temporarly:
  *      - user login
  *      - sync is running
@@ -40,15 +40,15 @@ if (!window.localStorage.cryptomedicComputerId) {
 
 /* service_my_backend */
 var service_my_backend = (function () {
-    var rest = "/cryptomedic/rest/public";
+    var rest = "/cryptomedic/api/v1.0";
 
     var db = build_db(true);
-    
+
     var worker = new Worker("static/worker/worker.js?r=" + Math.random());
     worker.onerror = function(e) {
     console.error("@service: Error in worker: ", e);
     };
-    
+
     worker.onmessage = function(e) {
         var name = e.data.name;
         var data = e.data.data;
@@ -69,24 +69,24 @@ var service_my_backend = (function () {
     }
 
     mySendAction("init", {
-        // checkpoint: (localStorage.cryptomedicLastSync ? localStorage.cryptomedicLastSync : "") 
+        // checkpoint: (localStorage.cryptomedicLastSync ? localStorage.cryptomedicLastSync : "")
     });
-   
+
     return {
     /* Authentification */
     'login': function(username, password) {
-        return myFetch(rest + "/auth/mylogin", { method: "POST" }, 
-            { 
-                'username': username, 
-                'password': password, 
+        return myFetch(rest + "/auth/mylogin", { method: "POST" },
+            {
+                'username': username,
+                'password': password,
                 'appVersion': cryptomedic.version,
                 'computerId': window.localStorage.cryptomedicComputerId
             })
             .then(this.storeData);
     },
     'checkLogin': function() {
-        return myFetch(rest + "/auth/settings", null, 
-            { 
+        return myFetch(rest + "/auth/settings", null,
+            {
                 'appVersion': cryptomedic.version,
                 'computerId': window.localStorage.cryptomedicComputerId
             }
@@ -125,7 +125,7 @@ var service_my_backend = (function () {
     },
     'clear': function() {
         return db.clear();
-    },  
+    },
 
     // Go to the rest server
     'getReport': function(reportName, data, timing) {
@@ -143,8 +143,8 @@ var service_my_backend = (function () {
 
 // TODO: use the new "queue" system
 mainApp.factory('service_backend', [ '$http', function($http) {
-    var rest = "/cryptomedic/rest/public/";
-    
+    var rest = "/cryptomedic/api/v1.0/";
+
     // Transform the $http request into a promise
     function treatHttp(request) {
         var def = jQuery.Deferred();
@@ -183,11 +183,11 @@ mainApp.factory('service_backend', [ '$http', function($http) {
 
     // READWRITE
     'createReference': function(year, order) {
-        return treatHttp($http.post(rest + "/reference", 
-        { 
-            'entryyear': year, 
+        return treatHttp($http.post(rest + "/reference",
+        {
+            'entryyear': year,
             'entryorder': order
-        })); 
+        }));
     },
     'createFile': function(data, folderId) {
         return treatHttp($http.post(rest + "/fiche/" + data['_type'], data));
@@ -229,15 +229,15 @@ mainApp.factory('sessionInjector', [ '$q', '$rootScope', function($q, $rootScope
             switch(rejection.status) {
                 case 401: // Unauthorized
                     $rootScope.$broadcast("backend_logged_out");
-                    break;      
+                    break;
                 default:
-                console.warn(rejection);    
+                console.warn(rejection);
             }
             return $q.reject(rejection);
         },
     };
 }]);
 
-mainApp.config(['$httpProvider', function($httpProvider) {  
+mainApp.config(['$httpProvider', function($httpProvider) {
     $httpProvider.interceptors.push('sessionInjector');
 }]);

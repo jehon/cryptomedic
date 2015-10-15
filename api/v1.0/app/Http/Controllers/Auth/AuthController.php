@@ -1,4 +1,6 @@
-<?php namespace App\Http\Controllers\Auth;
+<?php
+
+namespace App\Http\Controllers\Auth;
 
 use DB;
 use App\SyncComputer;

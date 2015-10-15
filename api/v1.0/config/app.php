@@ -1,7 +1,5 @@
 <?php
 
-require_once(__DIR__ . "/../../config.php");
-
 return [
 
 	/*
@@ -28,7 +26,7 @@ return [
 	|
 	*/
 
-	'url' => 'http://localhost/cryptomedic/rest/',
+	'url' => 'http://localhost/cryptomedic/',
 
 	/*
 	|--------------------------------------------------------------------------
