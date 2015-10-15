@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Oct 15, 2015 at 07:16 AM
+-- Generation Time: Oct 15, 2015 at 10:55 AM
 -- Server version: 5.6.25-0ubuntu0.15.04.1
 -- PHP Version: 5.6.4-4ubuntu6.3
 
@@ -603,7 +603,7 @@ CREATE TABLE IF NOT EXISTS `settings` (
 --
 
 INSERT INTO `settings` (`id`, `created_at`, `updated_at`, `value`) VALUES
-('structure_version', '0000-00-00 00:00:00', '2015-10-08 20:45:54', '1000');
+('structure_version', '0000-00-00 00:00:00', '2015-10-15 08:55:01', '46');
 
 -- --------------------------------------------------------
 

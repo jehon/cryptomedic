@@ -3,12 +3,24 @@
 require_once("RouteReferenceTestCase.php");
 
 class SyncTest extends RouteReferenceTestCase {
-	public static $cp = "";
-	public static $ord = 0;
+	protected $cp = "";
+	protected $offline = null;
+	static protected $initialCP = "";
+
+	protected function showURL() {
+		echo "\n";
+		echo "http://localhost/cryptomedic/rest/public/sync?cp=" . $this->cp;
+		echo "\n";
+	}
+
+	public function isFinal() {
+		$this->assertObjectHasAttribute('isfinal', $this->offline);
+		$this->assertEquals(1, $this->offline->isfinal);
+	}
 
 	public function getNext($n = 1) {
-		$this->setUrl("sync", [ "cp" => self::$cp, "n" => $n ]);
-		$json = $this->myAssertJSON("readonly"); //, "sync-" . self::$ord++);
+		$this->setUrl("sync", [ "cp" => $this->cp, "n" => $n ]);
+		$json = $this->myAssertJSON("readonly");
 
 		$this->assertObjectHasAttribute('_offline', $json);
 		$offline = $json->_offline;
@@ -17,11 +29,12 @@ class SyncTest extends RouteReferenceTestCase {
 			$this->assertObjectHasAttribute('data', $offline);
 		}
 		$this->assertObjectHasAttribute('checkpoint', $offline);
-		if (!self::$cp) {
+		if (!$this->cp) {
 			$this->assertObjectHasAttribute('reset', $offline);
 			$this->assertEquals(1, $offline->reset);
 		}
-		self::$cp = $offline->checkpoint;
+		$this->cp = $offline->checkpoint;
+		$this->offline = $offline;
 		return $offline;
 	}
 
@@ -74,6 +87,36 @@ class SyncTest extends RouteReferenceTestCase {
 
 		$this->assertObjectHasAttribute('isfinal', $offline);
 		$this->assertEquals(1, $offline->isfinal);
+
+		self::$initialCP = $this->cp;
 	}
 
+	public function testChangesInDatabase() {
+		$this->cp = self::$initialCP;
+
+		// The sync is final before starting
+		$offline = self::getNext(1);
+		$this->isFinal();
+
+		// Change patient
+		DB::statement("UPDATE patients SET updated_at = NOW() WHERE id = 1");
+		$offline = self::getNext(1);
+		$this->assertArrayHasKey(0, $offline->data);
+		$this->assertEquals(1, $offline->data[0]->record->id);
+		$this->isFinal();
+
+		// Change file
+		DB::statement("UPDATE bills SET updated_at = NOW() + 1 WHERE patient_id = 3 LIMIT 1");
+		$offline = self::getNext(1);
+		$this->assertArrayHasKey(0, $offline->data);
+		$this->assertEquals(3, $offline->data[0]->record->id);
+		$this->isFinal();
+
+		// Simulating deleting a sub file for a patient
+		$res = DB::statement("INSERT INTO deleteds(created_at, patient_id, entity_type, entity_id) VALUES (NOW() + 2, '4', 'bills', '10'); ");
+		$offline = self::getNext(1);
+		$this->assertArrayHasKey(0, $offline->data);
+		$this->assertEquals(4, $offline->data[0]->record->id);
+		$this->isFinal();
+	}
 }

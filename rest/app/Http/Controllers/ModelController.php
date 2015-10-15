@@ -13,35 +13,38 @@ use \References;
 // TODO: protect frozen files
 class ModelController extends Controller {
 	// @see http://laravel.com/docs/5.0/controllers
-	
+
 	protected function getModel($model) {
 		$model = "\\App\\" . \References::db2model($model);
 		return $model;
 	}
-	
+
 	protected function getModelObject($model, $id) {
 		$m = $this->getModel($model);
 		return $m::findOrFail($id);
 	}
-	
+
 	// POST = create
 	public function store($model) {
 		$data = Input::except('_type');
 		$m = $this->getModel($model);
 		if ($model == "Patient") {
 			// In case we create a patient, things are a bit more complicated!!!
-			if (!DB::insert("INSERT INTO patients(entryyear, entryorder) 
+
+			//TODO(0): check this
+			$id = DB::insertGetId("INSERT INTO patients(entryyear, entryorder)
 					 VALUE(?, coalesce(
 							greatest(10000,
 								(select i from (select (max(entryorder) + 1) as i from patients where entryyear = ? and entryorder BETWEEN 10000 AND 19999) as j )
-							), 
-					10000))", [ Request::input("entryyear"), Request::input("entryyear") ])) {
+							),
+					10000))", [ Request::input("entryyear"), Request::input("entryyear") ]);
+			if (!$id) {
 				abort(500, "Could not create the patient");
 			}
 			// TODO: how does Laravel get last_insert_id cleanly???
-			$id = DB::select("SELECT LAST_INSERT_ID() as id");
-			$id = $id[0]->id;
-			
+			// $id = DB::select("SELECT LAST_INSERT_ID() as id");
+			// $id = $id[0]->id;
+
 			$m::findOrFail($id);
 			$res = $this->update("Patient", $id);
 			return response()->folder($id);
@@ -50,20 +53,20 @@ class ModelController extends Controller {
 				abort(500, "No identification of patients");
 			}
 			$newObj = $m::create($data);
-		}		
-		
+		}
+
 		if (!$newObj->id) {
 			abort(500, "Could not create the file");
 		}
-		return response()->folder($data['patient_id'], 
+		return response()->folder($data['patient_id'],
 					array('newKey' => $newObj->id)
 				);
-	}	
-	
+	}
+
 	// PUT / PATCH
 	public function update($model, $id) {
 		$attributes = Input::except('_type', 'patient_id');
-		
+
 		$m = $this->getModel($model);
 		$obj = $this->getModelObject($model, $id);
 		foreach($attributes as $k => $v) {
@@ -76,14 +79,14 @@ class ModelController extends Controller {
 				$obj->{$k} = $v;
 			}
 		}
-		
+
 		$obj->save();
 		if ($model == "Patient") {
 			return response()->folder($obj->id);
 		}
 		return response()->folder($obj->patient_id);
 	}
-	
+
 	// DELETE
 	public function destroy($model, $id) {
 		$m = $this->getModel($model);
@@ -94,7 +97,7 @@ class ModelController extends Controller {
 		if(!$obj->delete()) {
 			abort(404, "Could not delete $model@$id");
 		}
-		
+
 		// quid if patient has dependancies? -> see Patient model http://laravel.com/docs/5.0/eloquent#model-events
 		if ($model == "Patient") {
 			return response()->jsonOrJSONP(array());
