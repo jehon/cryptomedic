@@ -75,4 +75,5 @@ class SyncTest extends RouteReferenceTestCase {
 		$this->assertObjectHasAttribute('isfinal', $offline);
 		$this->assertEquals(1, $offline->isfinal);
 	}
+
 }

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Oct 14, 2015 at 11:01 PM
+-- Generation Time: Oct 15, 2015 at 06:30 AM
 -- Server version: 5.6.25-0ubuntu0.15.04.1
 -- PHP Version: 5.6.4-4ubuntu6.3
 
@@ -125,7 +125,7 @@ CREATE TABLE IF NOT EXISTS `bills` (
   `surgical_percutaneous_achil_tenotomy_bi_cdc` int(11) NOT NULL DEFAULT '0',
   `surgical_PMR_club_club_foot_bi` int(11) NOT NULL DEFAULT '0',
   `surgical_burn_little_release` int(11) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB AUTO_INCREMENT=23836 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `bills`
@@ -142,8 +142,8 @@ INSERT INTO `bills` (`id`, `created_at`, `updated_at`, `lastuser`, `patient_id`,
 (8, '2014-03-02 07:50:43', '2015-01-19 15:12:59', 'josiane', 4, 7000, 10, '2014-01-25', 2, 'Ukhia', 'Ershad', 500, 2, 200, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
 (9, '2014-06-20 05:58:08', '2015-01-19 15:12:59', 'josiane', 5, 5000, 5, '2014-05-31', 2, 'Ukhia', 'Murshed', 100, 2, 40, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
 (10, '2014-06-21 08:44:48', '2015-01-19 15:12:59', 'josiane', 3, 4500, 9, '2014-05-05', 2, 'Moeshkali', 'Rezaul', 100, 2, 40, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(11, '2014-06-22 15:45:37', '2015-01-19 15:12:59', 'josiane', 3, 4500, 9, '2014-05-20', 2, 'Chakaria', 'Rezaul', 500, 2, 200, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(12, '2014-06-25 05:20:49', '2015-01-19 15:12:59', 'josiane', 2, 20000, 8, '2014-05-20', 2, 'Chakaria', 'Ershad', 500, 2, 200, 300, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(11, '2014-06-22 15:45:37', '2015-01-19 15:12:59', 'josiane', 3, 4500, 9, '2014-05-20', 2, 'Ramu', 'Ershad', 500, 2, 200, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(12, '2014-06-25 05:20:49', '2015-10-15 04:29:50', 'josiane', 2, 20000, 8, '2014-05-20', 2, 'Chakaria', 'Ershad', 500, 2, 200, 300, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
 (13, '2014-07-05 07:52:07', '2015-01-19 15:12:59', 'josiane', 2, 20000, 8, '2014-05-20', 2, 'Chakaria', 'Hassan 1', 3000, 2, 1200, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
@@ -223,7 +223,7 @@ CREATE TABLE IF NOT EXISTS `club_foots` (
   `Nextappointment` date DEFAULT NULL,
   `NextCenter` varchar(24) DEFAULT NULL,
   `Brachialcircumferencecm` int(3) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=1554 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `club_foots`
@@ -270,7 +270,7 @@ CREATE TABLE IF NOT EXISTS `deleteds` (
   `patient_id` int(10) unsigned NOT NULL,
   `entity_type` varchar(20) NOT NULL,
   `entity_id` int(10) unsigned NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `deleteds`
@@ -311,7 +311,7 @@ CREATE TABLE IF NOT EXISTS `nonricket_consults` (
   `TreatmentFinished` tinyint(4) DEFAULT NULL,
   `Nextappointment` date DEFAULT NULL,
   `NextCenter` varchar(24) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2499 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `nonricket_consults`
@@ -351,7 +351,7 @@ CREATE TABLE IF NOT EXISTS `patients` (
   `pathology_Polio` tinyint(1) NOT NULL DEFAULT '0',
   `pathology_Burn` tinyint(1) NOT NULL DEFAULT '0',
   `pathology_Congenital` tinyint(1) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB AUTO_INCREMENT=101372 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `patients`
@@ -382,7 +382,7 @@ CREATE TABLE IF NOT EXISTS `pictures` (
   `file` varchar(255) DEFAULT NULL,
   `Date` date NOT NULL DEFAULT '0000-00-00',
   `comment` mediumtext
-) ENGINE=InnoDB AUTO_INCREMENT=4204 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `pictures`
@@ -495,7 +495,7 @@ CREATE TABLE IF NOT EXISTS `prices` (
   `socialLevelPercentage_2` float NOT NULL DEFAULT '-1',
   `socialLevelPercentage_1` float NOT NULL DEFAULT '-1',
   `socialLevelPercentage_0` float NOT NULL DEFAULT '-1'
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `prices`
@@ -523,7 +523,7 @@ CREATE TABLE IF NOT EXISTS `rendez_vous` (
   `Nextappointment` date DEFAULT NULL,
   `NextCenter` varchar(24) DEFAULT NULL,
   `Brachialcircumferencecm` int(3) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=1516 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -568,7 +568,7 @@ CREATE TABLE IF NOT EXISTS `ricket_consults` (
   `conclusion_medical_calcium500` tinyint(1) NOT NULL DEFAULT '0',
   `conclusion_medical_calcium1000` tinyint(1) NOT NULL DEFAULT '0',
   `conclusion_medical_vitaminD` tinyint(1) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB AUTO_INCREMENT=9152 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `ricket_consults`
@@ -624,7 +624,7 @@ CREATE TABLE IF NOT EXISTS `surgeries` (
   `ReportSideL` tinyint(1) DEFAULT NULL,
   `report_procedure` varchar(250) DEFAULT NULL,
   `FollowUpComplication` mediumtext
-) ENGINE=InnoDB AUTO_INCREMENT=568 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -651,7 +651,7 @@ CREATE TABLE IF NOT EXISTS `sync_computers` (
 --
 
 INSERT INTO `sync_computers` (`id`, `created_at`, `updated_at`, `lastuser`, `user_list`, `computer_id`, `useragent`, `cryptomedic_version`, `last_sync`, `last_sync_final`, `queue_size`) VALUES
-(12, '2015-10-10 17:53:11', '2015-10-11 11:23:13', NULL, ',jehon', 'KQeZXEAiklSUaMMY3loUxPPVRrQdZaEA', 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:41.0) Gecko/20100101 Firefox/41.0', '2015-01-01T01:01:01.111', '2015-08-21 14:32:35|9', 1, NULL);
+(12, '2015-10-10 17:53:11', '2015-10-15 04:29:05', NULL, ',jehon', 'KQeZXEAiklSUaMMY3loUxPPVRrQdZaEA', 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:41.0) Gecko/20100101 Firefox/41.0', '2015-01-01T01:01:01.111', '2015-08-21 12:32:35|9', 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -687,7 +687,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `lastuser` varchar(50) DEFAULT NULL,
   `last_login` timestamp NULL DEFAULT NULL,
   `remember_token` varchar(255) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `users`
@@ -695,7 +695,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 
 INSERT INTO `users` (`id`, `username`, `name`, `password`, `old_password`, `email`, `notes`, `group`, `created_at`, `updated_at`, `lastuser`, `last_login`, `remember_token`) VALUES
 (1, 'thierry', 'Thierry Craviari', '$2y$10$1XkouAzPDXGY43uAM4IhR.5CJbKym6xTsiqxgoCW0rbvdMNdJCsx2', NULL, 'thierry.craviari@gmail.com', '', 'manager', '2011-10-18 04:24:37', '2015-08-24 11:16:20', 'thierry', '2015-08-24 11:16:20', ''),
-(2, 'jehon', 'Jean Honlet', '$2y$10$Lg5g2xFUTCDdBtNWljWix.NSYBxDY2z3fyl95UKWJoahK8d5/g0Oi', NULL, 'marielineet.jean@gmail.com', '', 'admin', '2011-10-18 04:24:37', '2015-10-10 17:56:18', 'jehon', '2015-10-10 17:56:18', ''),
+(2, 'jehon', 'Jean Honlet', '$2y$10$Lg5g2xFUTCDdBtNWljWix.NSYBxDY2z3fyl95UKWJoahK8d5/g0Oi', NULL, 'marielineet.jean@gmail.com', '', 'admin', '2011-10-18 04:24:37', '2015-10-15 04:19:55', 'jehon', '2015-10-15 04:19:55', ''),
 (3, 'murshed', 'Morshedul Alam', '$2y$10$dtk/wdKH2cIPn3/aPUtG5.5Xorqhg8FyblvmbS0a13mIIjZwZgFoW', NULL, 'bgdcox1@yahoo.com', '', 'cdc', '2011-10-18 04:24:37', '2015-08-23 07:43:19', 'murshed', '2015-08-23 07:43:19', ''),
 (4, 'readonly', 'readonly', '53cea9a9492b3397c1f2cb91fec685fc63d232ed', '83998c0388c12fe57c1e75d4c50c904fe774a8ec', NULL, NULL, 'readonly', '2011-10-18 04:24:37', '2015-08-18 20:17:41', NULL, '2015-06-17 16:28:08', '');
 
@@ -810,7 +810,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `bills`
 --
 ALTER TABLE `bills`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=23836;
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=14;
 --
 -- AUTO_INCREMENT for table `bug_reporting`
 --
@@ -820,47 +820,47 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT for table `club_foots`
 --
 ALTER TABLE `club_foots`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1554;
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `deleteds`
 --
 ALTER TABLE `deleteds`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=37;
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=26;
 --
 -- AUTO_INCREMENT for table `nonricket_consults`
 --
 ALTER TABLE `nonricket_consults`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2499;
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `patients`
 --
 ALTER TABLE `patients`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=101372;
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `pictures`
 --
 ALTER TABLE `pictures`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4204;
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `prices`
 --
 ALTER TABLE `prices`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `rendez_vous`
 --
 ALTER TABLE `rendez_vous`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1516;
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `ricket_consults`
 --
 ALTER TABLE `ricket_consults`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9152;
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT for table `surgeries`
 --
 ALTER TABLE `surgeries`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=568;
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `sync_computers`
 --
@@ -875,7 +875,7 @@ MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=48;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 -- Constraints for dumped tables
 --

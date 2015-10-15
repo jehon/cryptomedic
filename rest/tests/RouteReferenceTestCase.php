@@ -1,8 +1,11 @@
 <?php
 
 use App\User;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class RouteReferenceTestCase extends TestCase {
+	use DatabaseTransactions;
+
 	private $url = "";
 	private $params = array();
 
