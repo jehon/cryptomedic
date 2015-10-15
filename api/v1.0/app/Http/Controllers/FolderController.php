@@ -7,11 +7,28 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Request;
 
-#require_once(__DIR__ . "/../../../../../php/references.php");
 use \References;
 
 class FolderController extends Controller {
 	// @see http://laravel.com/docs/5.0/controllers
+
+	public static function sortFiles($a, $b) {
+		if ($a->_type != $b->_type) {
+			if ($a->_type == 'Patient') {
+				return -1;
+			}
+			if ($b->_type == 'Patient') {
+				return 1;
+			}
+			return strcmp($a->_type, $b->_type);
+		} else {
+			if ($a->id != $b->id) {
+				return strcmp($a->id, $b->id);
+			} else {
+				return 0;
+			}
+		}
+	}
 
 	public static function getFolder($id) {
 		$master = [];
@@ -34,6 +51,7 @@ class FolderController extends Controller {
 				$master['subFiles'][] = $rv;
 			}
 		}
+		usort($master['subFiles'], "self::sortFiles");
 		return $master;
 	}
 
