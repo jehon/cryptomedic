@@ -33,7 +33,8 @@ class ReportConsultationsController extends ReportController {
 				.")) AS cc "
 				. " JOIN patients ON (cc.patient_id = patients.id) ";
 
-		$sql .= " LIMIT 100";
+		$sql .= " ORDER BY cc.c_Date, patients.id, cc.c_type ";
+		$sql .= "LIMIT 100";
 		$this->result['list'] = DB::select($sql, $this->sqlBindParams);
 		return response()->jsonOrJSONP($this->result);
 	}
