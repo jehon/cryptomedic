@@ -9,7 +9,8 @@
 # PRJ_DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
 
 PRJ_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-PRJ_DIR=$(dirname "PRJ_DIR")
+#PRJ_DIR=$(realpath "$PRJ_DIR")
+PRJ_DIR=$(dirname "$PRJ_DIR")
 
 echo "Project directory is $PRJ_DIR"
 
