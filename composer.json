@@ -11,7 +11,7 @@
 	"require": {
 		"jehon/maintenance": ">=2.0"
 	},
- 	"old-require-dev": {
-		"phpunit/phpunit": "4.8.*"
+ 	"require-dev": {
+		"phpunit/phpunit": "~5"
 	}
 }

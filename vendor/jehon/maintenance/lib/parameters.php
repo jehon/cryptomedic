@@ -13,31 +13,20 @@ global $maintenance;
 // 	die("Maintenance is not an array");
 // }
 
-use Dflydev\DotAccessData\Data;
-
-// function getConfig($name, $default = null) {
-// 	global $maintenance;
-// 	$data = new Data($maintenance);
-// 	$res = $data->get($name);
-	
-// 	if ($res === null && ($default === null)) {
-// 		throw new Exception("Could not get key $name");
-// 	}
-	
-// 	return $res;
-// }
+// use Dflydev\DotAccessData\Data;
 
 function getParameter($name, $default = null) {
-	$data = new Data($_REQUEST);
-	$res = $data->get($name);
+	// $data = new Data($_REQUEST);
+	// $res = $data->get($name);
 
-	if ($res === null) {
+	if (array_key_exists($name, $_REQUEST)) {
+		return $_REQUEST[$name];
+	} else {
+	// if ($res === null) {
 		if ($default === null) {
 			throw new Exception("Could not get key $name");
 		} else {
 			return $default;
 		}
 	}
-
-	return $res;
 }

@@ -2,9 +2,6 @@
 	"name": "jehon/maintenance",
 	"description": "Various script to maintain and deploy a php project",
 	"license": "GPL-3.0",
-	"require": {
-		"dflydev/dot-access-data": "v1.0"
-	},
  	"require-dev": {
 		"phpunit/phpunit": "4.8.*"
 	},
