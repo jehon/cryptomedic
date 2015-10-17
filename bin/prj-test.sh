@@ -14,7 +14,7 @@ PRJ_DIR=$(dirname "$PRJ_DIR")
 
 echo "Project directory is $PRJ_DIR"
 
-cd "$PRJ_DIR/.."
+cd "$PRJ_DIR"
 
 for V in api/* ; do
   cd "$PRJ_DIR/$V" && vendor/bin/phpunit
