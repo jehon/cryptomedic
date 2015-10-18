@@ -1,18 +1,18 @@
-<?php 
+<?php
 	// Example: 90420 (2010)
 	// Example: 10018 (2011)
 	// Example: 91513 (2012)
 	// Example: 97573 (2014 = price 2)
 	// Hack: 10010
 	namespace App;
-	require_once(__DIR__ . "/../../../rest/app/Bill.php");
-	
+	require_once(__DIR__ . "/../../../api/v1.0/app/Bill.php");
+
 	use \App\Bill;
 	use \References;
 	use \t;
 
 	t::setDefaultOption("baseExpression", "currentFile().");
-	
+
 	function price($item) {
 		$name = explode(".", $item);
 		$name = $name[1];
@@ -20,7 +20,7 @@
 		if (array_key_exists($item, Bill::$translations)) {
 			$label = Bill::$translations[$item];
 		}
-			
+
 		echo "<tr "
 			. "ng-if=\"currentFile().getPriceFor('$name') > 0\" "
 			. "ng-class='{ notModeRead: !currentFile().$name }'"
@@ -57,7 +57,7 @@
 					price_id <?php (new t("Bill.price_id"))->read()->p(); ?><br>
 				</div>
 			</FieldSet>
-			<?php 
+			<?php
 				foreach(Bill::$categories as $cat) {
 					?>
 						<FieldSet>
@@ -73,11 +73,11 @@
 								</thead>
 								<?php foreach(Bill::getFieldsList($cat, t::getColumnsOfTable('bills')) as $field) {
 										price("Bill." . $field);
-									} 
+									}
 								?>
 							</table>
-						</FieldSet>										
-					<?php 
+						</FieldSet>
+					<?php
 				}
 			?>
 		</div>

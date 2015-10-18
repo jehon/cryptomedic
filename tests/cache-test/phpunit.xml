@@ -28,7 +28,7 @@
 		</blacklist> 
 -->
 		<whitelist processUncoveredFilesFromWhitelist="false">
-			<directory suffix=".php">../../cache_generator/</directory>
+			<directory suffix=".php">../../cache/</directory>
 		</whitelist>
 	</filter>
 	<php>
