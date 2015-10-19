@@ -105,7 +105,7 @@ class PHP_CodeCoverage_Report_Factory
      */
     private function buildDirectoryStructure($files)
     {
-        $result = [];
+        $result = array();
 
         foreach ($files as $path => $file) {
             $path    = explode('/', $path);

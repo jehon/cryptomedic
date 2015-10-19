@@ -9,21 +9,23 @@
  */
 
 /**
- * @since Class available since Release 3.0.0
+ * Factory for PHP_CodeCoverage_Exception objects that are used to describe
+ * invalid arguments passed to a function or method.
+ *
+ * @since Class available since Release 1.2.0
  */
-class PHP_CodeCoverage_InvalidArgumentException extends InvalidArgumentException implements PHP_CodeCoverage_Exception
+class PHP_CodeCoverage_Util_InvalidArgumentHelper
 {
     /**
-     * @param  int                                       $argument
-     * @param  string                                    $type
-     * @param  mixed                                     $value
-     * @return PHP_CodeCoverage_InvalidArgumentException
+     * @param int    $argument
+     * @param string $type
+     * @param mixed  $value
      */
-    public static function create($argument, $type, $value = null)
+    public static function factory($argument, $type, $value = null)
     {
         $stack = debug_backtrace(false);
 
-        return new self(
+        return new PHP_CodeCoverage_Exception(
             sprintf(
                 'Argument #%d%sof %s::%s() must be a %s',
                 $argument,

@@ -35,7 +35,7 @@ class PHPUnit_Util_Filter
         if ($asString === true) {
             $filteredStacktrace = '';
         } else {
-            $filteredStacktrace = [];
+            $filteredStacktrace = array();
         }
 
         if ($e instanceof PHPUnit_Framework_SyntheticError) {
@@ -58,7 +58,7 @@ class PHPUnit_Util_Filter
         if (!self::frameExists($eTrace, $eFile, $eLine)) {
             array_unshift(
                 $eTrace,
-                ['file' => $eFile, 'line' => $eLine]
+                array('file' => $eFile, 'line' => $eLine)
             );
         }
 

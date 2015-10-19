@@ -111,7 +111,7 @@ abstract class PHP_CodeCoverage_Report_Node implements Countable
     {
         if ($this->pathArray === null) {
             if ($this->parent === null) {
-                $this->pathArray = [];
+                $this->pathArray = array();
             } else {
                 $this->pathArray = $this->parent->getPathAsArray();
             }

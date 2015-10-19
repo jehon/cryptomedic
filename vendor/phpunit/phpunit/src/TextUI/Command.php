@@ -19,76 +19,71 @@ class PHPUnit_TextUI_Command
     /**
      * @var array
      */
-    protected $arguments = [
+    protected $arguments = array(
         'listGroups'              => false,
         'loader'                  => null,
         'useDefaultConfiguration' => true
-    ];
+    );
 
     /**
      * @var array
      */
-    protected $options = [];
+    protected $options = array();
 
     /**
      * @var array
      */
-    protected $longOptions = [
-        'atleast-version='        => null,
-        'bootstrap='              => null,
-        'colors=='                => null,
-        'columns='                => null,
-        'configuration='          => null,
-        'coverage-clover='        => null,
-        'coverage-crap4j='        => null,
-        'coverage-html='          => null,
-        'coverage-php='           => null,
-        'coverage-text=='         => null,
-        'coverage-xml='           => null,
-        'debug'                   => null,
-        'disallow-test-output'    => null,
-        'disallow-resource-usage' => null,
-        'disallow-todo-tests'     => null,
-        'enforce-time-limit'      => null,
-        'exclude-group='          => null,
-        'filter='                 => null,
-        'group='                  => null,
-        'help'                    => null,
-        'include-path='           => null,
-        'list-groups'             => null,
-        'loader='                 => null,
-        'log-json='               => null,
-        'log-junit='              => null,
-        'log-tap='                => null,
-        'log-teamcity='           => null,
-        'no-configuration'        => null,
-        'no-coverage'             => null,
-        'no-globals-backup'       => null,
-        'printer='                => null,
-        'process-isolation'       => null,
-        'repeat='                 => null,
-        'report-useless-tests'    => null,
-        'reverse-list'            => null,
-        'static-backup'           => null,
-        'stderr'                  => null,
-        'stop-on-error'           => null,
-        'stop-on-failure'         => null,
-        'stop-on-incomplete'      => null,
-        'stop-on-risky'           => null,
-        'stop-on-skipped'         => null,
-        'strict-coverage'         => null,
-        'strict-global-state'     => null,
-        'tap'                     => null,
-        'teamcity'                => null,
-        'testdox'                 => null,
-        'testdox-html='           => null,
-        'testdox-text='           => null,
-        'test-suffix='            => null,
-        'testsuite='              => null,
-        'verbose'                 => null,
-        'version'                 => null,
-        'whitelist='              => null
-    ];
+    protected $longOptions = array(
+        'colors=='             => null,
+        'bootstrap='           => null,
+        'columns='             => null,
+        'configuration='       => null,
+        'coverage-clover='     => null,
+        'coverage-crap4j='     => null,
+        'coverage-html='       => null,
+        'coverage-php='        => null,
+        'coverage-text=='      => null,
+        'coverage-xml='        => null,
+        'debug'                => null,
+        'exclude-group='       => null,
+        'filter='              => null,
+        'testsuite='           => null,
+        'group='               => null,
+        'help'                 => null,
+        'include-path='        => null,
+        'list-groups'          => null,
+        'loader='              => null,
+        'log-json='            => null,
+        'log-junit='           => null,
+        'log-tap='             => null,
+        'process-isolation'    => null,
+        'repeat='              => null,
+        'stderr'               => null,
+        'stop-on-error'        => null,
+        'stop-on-failure'      => null,
+        'stop-on-incomplete'   => null,
+        'stop-on-risky'        => null,
+        'stop-on-skipped'      => null,
+        'report-useless-tests' => null,
+        'strict-coverage'      => null,
+        'disallow-test-output' => null,
+        'enforce-time-limit'   => null,
+        'disallow-todo-tests'  => null,
+        'strict-global-state'  => null,
+        'strict'               => null,
+        'tap'                  => null,
+        'testdox'              => null,
+        'testdox-html='        => null,
+        'testdox-text='        => null,
+        'test-suffix='         => null,
+        'no-configuration'     => null,
+        'no-coverage'          => null,
+        'no-globals-backup'    => null,
+        'printer='             => null,
+        'static-backup'        => null,
+        'verbose'              => null,
+        'version'              => null
+    );
 
     /**
      * @var bool
@@ -377,10 +372,6 @@ class PHPUnit_TextUI_Command
                     $this->arguments['tapLogfile'] = $option[1];
                     break;
 
-                case '--log-teamcity':
-                    $this->arguments['teamcityLogfile'] = $option[1];
-                    break;
-
                 case '--process-isolation':
                     $this->arguments['processIsolation'] = true;
                     break;
@@ -417,10 +408,6 @@ class PHPUnit_TextUI_Command
                     $this->arguments['printer'] = 'PHPUnit_Util_Log_TAP';
                     break;
 
-                case '--teamcity':
-                    $this->arguments['printer'] = 'PHPUnit_Util_Log_TeamCity';
-                    break;
-
                 case '--testdox':
                     $this->arguments['printer'] = 'PHPUnit_Util_TestDox_ResultPrinter_Text';
                     break;
@@ -454,13 +441,6 @@ class PHPUnit_TextUI_Command
                     $this->arguments['verbose'] = true;
                     break;
 
-                case '--atleast-version':
-                    exit(version_compare(PHPUnit_Runner_Version::id(), $option[1], '>=')
-                        ? PHPUnit_TextUI_TestRunner::SUCCESS_EXIT
-                        : PHPUnit_TextUI_TestRunner::FAILURE_EXIT
-                    );
-                    break;
-
                 case '--version':
                     $this->printVersionString();
                     exit(PHPUnit_TextUI_TestRunner::SUCCESS_EXIT);
@@ -475,15 +455,11 @@ class PHPUnit_TextUI_Command
                     break;
 
                 case '--strict-global-state':
-                    $this->arguments['beStrictAboutChangesToGlobalState'] = true;
+                    $this->arguments['disallowChangesToGlobalState'] = true;
                     break;
 
                 case '--disallow-test-output':
                     $this->arguments['disallowTestOutput'] = true;
-                    break;
-
-                case '--disallow-resource-usage':
-                    $this->arguments['beStrictAboutResourceUsageDuringSmallTests'] = true;
                     break;
 
                 case '--enforce-time-limit':
@@ -494,8 +470,13 @@ class PHPUnit_TextUI_Command
                     $this->arguments['disallowTodoAnnotatedTests'] = true;
                     break;
 
-                case '--reverse-list':
-                    $this->arguments['reverseList'] = true;
+                case '--strict':
+                    $this->arguments['reportUselessTests']         = true;
+                    $this->arguments['strictCoverage']             = true;
+                    $this->arguments['disallowTestOutput']         = true;
+                    $this->arguments['enforceTimeLimit']           = true;
+                    $this->arguments['disallowTodoAnnotatedTests'] = true;
+                    $this->arguments['deprecatedStrictModeOption'] = true;
                     break;
 
                 case '--check-version':
@@ -525,7 +506,7 @@ class PHPUnit_TextUI_Command
                         $handler = $this->longOptions[$optionName . '='];
                     }
 
-                    if (isset($handler) && is_callable([$this, $handler])) {
+                    if (isset($handler) && is_callable(array($this, $handler))) {
                         $this->$handler($option[1]);
                     }
             }
@@ -553,7 +534,7 @@ class PHPUnit_TextUI_Command
         }
 
         if (!isset($this->arguments['testSuffixes'])) {
-            $this->arguments['testSuffixes'] = ['Test.php', '.phpt'];
+            $this->arguments['testSuffixes'] = array('Test.php', '.phpt');
         }
 
         if (isset($includePath)) {
@@ -604,7 +585,7 @@ class PHPUnit_TextUI_Command
                 exit(PHPUnit_TextUI_TestRunner::FAILURE_EXIT);
             }
 
-            $phpunitConfiguration = $configuration->getPHPUnitConfiguration();
+            $phpunit = $configuration->getPHPUnitConfiguration();
 
             $configuration->handlePHPConfiguration();
 
@@ -613,45 +594,55 @@ class PHPUnit_TextUI_Command
              */
             if (isset($this->arguments['bootstrap'])) {
                 $this->handleBootstrap($this->arguments['bootstrap']);
-            } elseif (isset($phpunitConfiguration['bootstrap'])) {
-                $this->handleBootstrap($phpunitConfiguration['bootstrap']);
+            } elseif (isset($phpunit['bootstrap'])) {
+                $this->handleBootstrap($phpunit['bootstrap']);
             }
 
             /*
              * Issue #657
              */
-            if (isset($phpunitConfiguration['stderr']) && ! isset($this->arguments['stderr'])) {
-                $this->arguments['stderr'] = $phpunitConfiguration['stderr'];
+            if (isset($phpunit['stderr']) && ! isset($this->arguments['stderr'])) {
+                $this->arguments['stderr'] = $phpunit['stderr'];
             }
 
-            if (isset($phpunitConfiguration['columns']) && ! isset($this->arguments['columns'])) {
-                $this->arguments['columns'] = $phpunitConfiguration['columns'];
+            if (isset($phpunit['columns']) && ! isset($this->arguments['columns'])) {
+                $this->arguments['columns'] = $phpunit['columns'];
             }
 
-            if (!isset($this->arguments['printer']) && isset($phpunitConfiguration['printerClass'])) {
-                if (isset($phpunitConfiguration['printerFile'])) {
-                    $file = $phpunitConfiguration['printerFile'];
+            if (isset($phpunit['printerClass'])) {
+                if (isset($phpunit['printerFile'])) {
+                    $file = $phpunit['printerFile'];
                 } else {
                     $file = '';
                 }
 
                 $this->arguments['printer'] = $this->handlePrinter(
-                    $phpunitConfiguration['printerClass'],
+                    $phpunit['printerClass'],
                     $file
                 );
             }
 
-            if (isset($phpunitConfiguration['testSuiteLoaderClass'])) {
-                if (isset($phpunitConfiguration['testSuiteLoaderFile'])) {
-                    $file = $phpunitConfiguration['testSuiteLoaderFile'];
+            if (isset($phpunit['testSuiteLoaderClass'])) {
+                if (isset($phpunit['testSuiteLoaderFile'])) {
+                    $file = $phpunit['testSuiteLoaderFile'];
                 } else {
                     $file = '';
                 }
 
                 $this->arguments['loader'] = $this->handleLoader(
-                    $phpunitConfiguration['testSuiteLoaderClass'],
+                    $phpunit['testSuiteLoaderClass'],
                     $file
                 );
+            }
+
+            $browsers = $configuration->getSeleniumBrowserConfiguration();
+
+            if (!empty($browsers)) {
+                $this->arguments['deprecatedSeleniumConfiguration'] = true;
+
+                if (class_exists('PHPUnit_Extensions_SeleniumTestCase')) {
+                    PHPUnit_Extensions_SeleniumTestCase::$browsers = $browsers;
+                }
             }
 
             if (!isset($this->arguments['test'])) {
@@ -835,13 +826,18 @@ class PHPUnit_TextUI_Command
 
         print 'Updating the PHPUnit PHAR ... ';
 
-        $options = [
-            'ssl' => [
+        $options = array(
+            'ssl' => array(
                 'allow_self_signed' => false,
                 'cafile'            => $caFile,
                 'verify_peer'       => true
-            ]
-        ];
+            )
+        );
+
+        if (PHP_VERSION_ID < 50600) {
+            $options['ssl']['CN_match']        = 'phar.phpunit.de';
+            $options['ssl']['SNI_server_name'] = 'phar.phpunit.de';
+        }
 
         file_put_contents(
             $tempFilename,
@@ -916,17 +912,14 @@ Code Coverage Options:
   --coverage-text=<file>    Generate code coverage report in text format.
                             Default: Standard output.
   --coverage-xml <dir>      Generate code coverage report in PHPUnit XML format.
-  --whitelist <dir>         Whitelist <dir> for code coverage analysis.
 
 Logging Options:
 
   --log-junit <file>        Log test execution in JUnit XML format to file.
   --log-tap <file>          Log test execution in TAP format to file.
-  --log-teamcity <file>     Log test execution in TeamCity format to file.
   --log-json <file>         Log test execution in JSON format.
   --testdox-html <file>     Write agile documentation in HTML format to file.
   --testdox-text <file>     Write agile documentation in Text format to file.
-  --reverse-list            Print defects in reverse order
 
 Test Selection Options:
 
@@ -944,7 +937,6 @@ Test Execution Options:
   --strict-coverage         Be strict about unintentionally covered code.
   --strict-global-state     Be strict about changes to global state
   --disallow-test-output    Be strict about output during tests.
-  --disallow-resource-usage Be strict about resource usage during small tests.
   --enforce-time-limit      Enforce time limit based on test size.
   --disallow-todo-tests     Disallow @todo-annotated tests.
 
@@ -967,7 +959,6 @@ Test Execution Options:
   --loader <loader>         TestSuiteLoader implementation to use.
   --repeat <times>          Runs the test(s) repeatedly.
   --tap                     Report test execution progress in TAP format.
-  --teamcity                Report test execution progress in TeamCity format.
   --testdox                 Report test execution progress in TestDox format.
   --printer <printer>       TestListener implementation to use.
 
@@ -984,7 +975,6 @@ Miscellaneous Options:
 
   -h|--help                 Prints this usage information.
   --version                 Prints the version and exits.
-  --atleast-version <min>   Checks that version is greater than min and exits.
 
 EOT;
 

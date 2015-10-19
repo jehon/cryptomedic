@@ -27,7 +27,7 @@ $GLOBALS['i']  = 'i';
  */
 class Framework_TestCaseTest extends PHPUnit_Framework_TestCase
 {
-    protected $backupGlobalsBlacklist = ['i', 'singleton'];
+    protected $backupGlobalsBlacklist = array('i', 'singleton');
 
     /**
      * Used be testStaticAttributesBackupPre

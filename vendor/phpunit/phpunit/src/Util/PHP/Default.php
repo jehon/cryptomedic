@@ -27,17 +27,17 @@ class PHPUnit_Util_PHP_Default extends PHPUnit_Util_PHP
      *
      * @throws PHPUnit_Framework_Exception
      */
-    public function runJob($job, array $settings = [])
+    public function runJob($job, array $settings = array())
     {
         $runtime = new Runtime;
 
         $process = proc_open(
             $runtime->getBinary() . $this->settingsToParameters($settings),
-            [
-            0 => ['pipe', 'r'],
-            1 => ['pipe', 'w'],
-            2 => ['pipe', 'w']
-            ],
+            array(
+            0 => array('pipe', 'r'),
+            1 => array('pipe', 'w'),
+            2 => array('pipe', 'w')
+            ),
             $pipes
         );
 
@@ -59,7 +59,7 @@ class PHPUnit_Util_PHP_Default extends PHPUnit_Util_PHP
         proc_close($process);
         $this->cleanup();
 
-        return ['stdout' => $stdout, 'stderr' => $stderr];
+        return array('stdout' => $stdout, 'stderr' => $stderr);
     }
 
     /**

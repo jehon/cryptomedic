@@ -62,7 +62,7 @@ abstract class PHPUnit_Util_PHP
      *
      * @throws PHPUnit_Framework_Exception
      */
-    abstract public function runJob($job, array $settings = []);
+    abstract public function runJob($job, array $settings = array());
 
     /**
      * @param array $settings
@@ -203,7 +203,7 @@ abstract class PHPUnit_Util_PHP
         $exception = $error->thrownException();
 
         if ($exception instanceof __PHP_Incomplete_Class) {
-            $exceptionArray = [];
+            $exceptionArray = array();
             foreach ((array) $exception as $key => $value) {
                 $key                  = substr($key, strrpos($key, "\0") + 1);
                 $exceptionArray[$key] = $value;

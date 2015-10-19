@@ -8,8 +8,6 @@
  * file that was distributed with this source code.
  */
 
-use SebastianBergmann\ResourceOperations\ResourceOperations;
-
 /**
  * A TestResult collects the results of executing a test case.
  *
@@ -20,37 +18,37 @@ class PHPUnit_Framework_TestResult implements Countable
     /**
      * @var array
      */
-    protected $passed = [];
+    protected $passed = array();
 
     /**
      * @var array
      */
-    protected $errors = [];
+    protected $errors = array();
 
     /**
      * @var array
      */
-    protected $failures = [];
+    protected $failures = array();
 
     /**
      * @var array
      */
-    protected $notImplemented = [];
+    protected $notImplemented = array();
 
     /**
      * @var array
      */
-    protected $risky = [];
+    protected $risky = array();
 
     /**
      * @var array
      */
-    protected $skipped = [];
+    protected $skipped = array();
 
     /**
      * @var array
      */
-    protected $listeners = [];
+    protected $listeners = array();
 
     /**
      * @var int
@@ -107,32 +105,12 @@ class PHPUnit_Framework_TestResult implements Countable
     /**
      * @var bool
      */
+    protected $beStrictAboutTestSize = false;
+
+    /**
+     * @var bool
+     */
     protected $beStrictAboutTodoAnnotatedTests = false;
-
-    /**
-     * @var bool
-     */
-    protected $beStrictAboutResourceUsageDuringSmallTests = false;
-
-    /**
-     * @var bool
-     */
-    protected $enforceTimeLimit = false;
-
-    /**
-     * @var int
-     */
-    protected $timeoutForSmallTests = 1;
-
-    /**
-     * @var int
-     */
-    protected $timeoutForMediumTests = 10;
-
-    /**
-     * @var int
-     */
-    protected $timeoutForLargeTests = 60;
 
     /**
      * @var bool
@@ -153,6 +131,21 @@ class PHPUnit_Framework_TestResult implements Countable
      * @var bool
      */
     protected $lastTestFailed = false;
+
+    /**
+     * @var int
+     */
+    protected $timeoutForSmallTests = 1;
+
+    /**
+     * @var int
+     */
+    protected $timeoutForMediumTests = 10;
+
+    /**
+     * @var int
+     */
+    protected $timeoutForLargeTests = 60;
 
     /**
      * Registers a TestListener.
@@ -351,13 +344,13 @@ class PHPUnit_Framework_TestResult implements Countable
             $class  = get_class($test);
             $key    = $class . '::' . $test->getName();
 
-            $this->passed[$key] = [
+            $this->passed[$key] = array(
                 'result' => $test->getResult(),
                 'size'   => PHPUnit_Util_Test::getSize(
                     $class,
                     $test->getName(false)
                 )
-            ];
+            );
 
             $this->time += $time;
         }
@@ -562,7 +555,7 @@ class PHPUnit_Framework_TestResult implements Countable
 
         if ($this->convertErrorsToExceptions) {
             $oldErrorHandler = set_error_handler(
-                ['PHPUnit_Util_ErrorHandler', 'handleError'],
+                array('PHPUnit_Util_ErrorHandler', 'handleError'),
                 E_ALL | E_STRICT
             );
 
@@ -578,16 +571,18 @@ class PHPUnit_Framework_TestResult implements Countable
                                !$test instanceof PHPUnit_Framework_Warning;
 
         if ($collectCodeCoverage) {
+            // We need to blacklist test source files when no whitelist is used.
+            if (!$this->codeCoverage->filter()->hasWhitelist()) {
+                $classes = $this->getHierarchy(get_class($test), true);
+
+                foreach ($classes as $class) {
+                    $this->codeCoverage->filter()->addFileToBlacklist(
+                        $class->getFileName()
+                    );
+                }
+            }
+
             $this->codeCoverage->start($test);
-        }
-
-        $monitorFunctions = $this->beStrictAboutResourceUsageDuringSmallTests &&
-                            !$test instanceof PHPUnit_Framework_Warning &&
-                            $test->getSize() == PHPUnit_Util_Test::SMALL &&
-                            function_exists('xdebug_start_function_monitor');
-
-        if ($monitorFunctions) {
-            xdebug_start_function_monitor(ResourceOperations::getFunctions());
         }
 
         PHP_Timer::start();
@@ -595,7 +590,7 @@ class PHPUnit_Framework_TestResult implements Countable
         try {
             if (!$test instanceof PHPUnit_Framework_Warning &&
                 $test->getSize() != PHPUnit_Util_Test::UNKNOWN &&
-                $this->enforceTimeLimit &&
+                $this->beStrictAboutTestSize &&
                 extension_loaded('pcntl') && class_exists('PHP_Invoker')) {
                 switch ($test->getSize()) {
                     case PHPUnit_Util_Test::SMALL:
@@ -612,7 +607,7 @@ class PHPUnit_Framework_TestResult implements Countable
                 }
 
                 $invoker = new PHP_Invoker;
-                $invoker->invoke([$test, 'runBare'], [], $_timeout);
+                $invoker->invoke(array($test, 'runBare'), array(), $_timeout);
             } else {
                 $test->runBare();
             }
@@ -639,29 +634,6 @@ class PHPUnit_Framework_TestResult implements Countable
         $time = PHP_Timer::stop();
         $test->addToAssertionCount(PHPUnit_Framework_Assert::getCount());
 
-        if ($monitorFunctions) {
-            $blacklist = new PHPUnit_Util_Blacklist;
-            $functions = xdebug_get_monitored_functions();
-            xdebug_stop_function_monitor();
-
-            foreach ($functions as $function) {
-                if (!$blacklist->isBlacklisted($function['filename'])) {
-                    $this->addFailure(
-                        $test,
-                        new PHPUnit_Framework_RiskyTestError(
-                            sprintf(
-                                '%s() used in %s:%s',
-                                $function['function'],
-                                $function['filename'],
-                                $function['lineno']
-                            )
-                        ),
-                        $time
-                    );
-                }
-            }
-        }
-
         if ($this->beStrictAboutTestsThatDoNotTestAnything &&
             $test->getNumAssertions() == 0) {
             $risky = true;
@@ -669,8 +641,8 @@ class PHPUnit_Framework_TestResult implements Countable
 
         if ($collectCodeCoverage) {
             $append           = !$risky && !$incomplete && !$skipped;
-            $linesToBeCovered = [];
-            $linesToBeUsed    = [];
+            $linesToBeCovered = array();
+            $linesToBeUsed    = array();
 
             if ($append && $test instanceof PHPUnit_Framework_TestCase) {
                 $linesToBeCovered = PHPUnit_Util_Test::getLinesToBeCovered(
@@ -690,7 +662,7 @@ class PHPUnit_Framework_TestResult implements Countable
                     $linesToBeCovered,
                     $linesToBeUsed
                 );
-            } catch (PHP_CodeCoverage_UnintentionallyCoveredCodeException $cce) {
+            } catch (PHP_CodeCoverage_Exception_UnintentionallyCoveredCode $cce) {
                 $this->addFailure(
                     $test,
                     new PHPUnit_Framework_UnintentionallyCoveredCodeError(
@@ -936,51 +908,25 @@ class PHPUnit_Framework_TestResult implements Countable
      *
      * @throws PHPUnit_Framework_Exception
      *
-     * @since  Method available since Release 5.0.0
+     * @since  Method available since Release 4.0.0
      */
-    public function beStrictAboutResourceUsageDuringSmallTests($flag)
+    public function beStrictAboutTestSize($flag)
     {
         if (!is_bool($flag)) {
             throw PHPUnit_Util_InvalidArgumentHelper::factory(1, 'boolean');
         }
 
-        $this->beStrictAboutResourceUsageDuringSmallTests = $flag;
+        $this->beStrictAboutTestSize = $flag;
     }
 
     /**
      * @return bool
      *
-     * @since  Method available since Release 5.0.0
+     * @since  Method available since Release 4.0.0
      */
-    public function isStrictAboutResourceUsageDuringSmallTests()
+    public function isStrictAboutTestSize()
     {
-        return $this->beStrictAboutResourceUsageDuringSmallTests;
-    }
-
-    /**
-     * @param bool $flag
-     *
-     * @throws PHPUnit_Framework_Exception
-     *
-     * @since  Method available since Release 5.0.0
-     */
-    public function enforceTimeLimit($flag)
-    {
-        if (!is_bool($flag)) {
-            throw PHPUnit_Util_InvalidArgumentHelper::factory(1, 'boolean');
-        }
-
-        $this->enforceTimeLimit = $flag;
-    }
-
-    /**
-     * @return bool
-     *
-     * @since  Method available since Release 5.0.0
-     */
-    public function enforcesTimeLimit()
-    {
-        return $this->enforceTimeLimit;
+        return $this->beStrictAboutTestSize;
     }
 
     /**
@@ -1148,9 +1094,9 @@ class PHPUnit_Framework_TestResult implements Countable
     protected function getHierarchy($className, $asReflectionObjects = false)
     {
         if ($asReflectionObjects) {
-            $classes = [new ReflectionClass($className)];
+            $classes = array(new ReflectionClass($className));
         } else {
-            $classes = [$className];
+            $classes = array($className);
         }
 
         $done = false;

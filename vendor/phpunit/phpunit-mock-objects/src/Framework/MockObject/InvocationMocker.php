@@ -22,12 +22,12 @@ class PHPUnit_Framework_MockObject_InvocationMocker implements PHPUnit_Framework
     /**
      * @var PHPUnit_Framework_MockObject_Matcher_Invocation[]
      */
-    protected $matchers = [];
+    protected $matchers = array();
 
     /**
      * @var PHPUnit_Framework_MockObject_Builder_Match[]
      */
-    protected $builderMap = [];
+    protected $builderMap = array();
 
     /**
      * @param PHPUnit_Framework_MockObject_Matcher_Invocation $matcher
@@ -102,8 +102,7 @@ class PHPUnit_Framework_MockObject_InvocationMocker implements PHPUnit_Framework
         $hasReturnValue = false;
 
         if (strtolower($invocation->methodName) == '__tostring') {
-            $hasReturnValue = true;
-            $returnValue    = '';
+            $returnValue = '';
         } else {
             $returnValue = null;
         }
@@ -127,11 +126,7 @@ class PHPUnit_Framework_MockObject_InvocationMocker implements PHPUnit_Framework
             throw $exception;
         }
 
-        if ($hasReturnValue) {
-            return $returnValue;
-        }
-
-        return $invocation->generateReturnValue();
+        return $returnValue;
     }
 
     /**

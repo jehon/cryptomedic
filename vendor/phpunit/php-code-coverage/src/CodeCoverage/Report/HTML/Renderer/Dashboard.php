@@ -37,7 +37,7 @@ class PHP_CodeCoverage_Report_HTML_Renderer_Dashboard extends PHP_CodeCoverage_R
         $projectRisks         = $this->projectRisks($classes, $baseLink);
 
         $template->setVar(
-            [
+            array(
                 'insufficient_coverage_classes' => $insufficientCoverage['class'],
                 'insufficient_coverage_methods' => $insufficientCoverage['method'],
                 'project_risks_classes'         => $projectRisks['class'],
@@ -46,7 +46,7 @@ class PHP_CodeCoverage_Report_HTML_Renderer_Dashboard extends PHP_CodeCoverage_R
                 'complexity_method'             => $complexity['method'],
                 'class_coverage_distribution'   => $coverageDistribution['class'],
                 'method_coverage_distribution'  => $coverageDistribution['method']
-            ]
+            )
         );
 
         $template->renderTo($file);
@@ -61,7 +61,7 @@ class PHP_CodeCoverage_Report_HTML_Renderer_Dashboard extends PHP_CodeCoverage_R
      */
     protected function complexity(array $classes, $baseLink)
     {
-        $result = ['class' => [], 'method' => []];
+        $result = array('class' => array(), 'method' => array());
 
         foreach ($classes as $className => $class) {
             foreach ($class['methods'] as $methodName => $method) {
@@ -69,7 +69,7 @@ class PHP_CodeCoverage_Report_HTML_Renderer_Dashboard extends PHP_CodeCoverage_R
                     $methodName = $className . '::' . $methodName;
                 }
 
-                $result['method'][] = [
+                $result['method'][] = array(
                     $method['coverage'],
                     $method['ccn'],
                     sprintf(
@@ -77,10 +77,10 @@ class PHP_CodeCoverage_Report_HTML_Renderer_Dashboard extends PHP_CodeCoverage_R
                         str_replace($baseLink, '', $method['link']),
                         $methodName
                     )
-                ];
+                );
             }
 
-            $result['class'][] = [
+            $result['class'][] = array(
                 $class['coverage'],
                 $class['ccn'],
                 sprintf(
@@ -88,13 +88,13 @@ class PHP_CodeCoverage_Report_HTML_Renderer_Dashboard extends PHP_CodeCoverage_R
                     str_replace($baseLink, '', $class['link']),
                     $className
                 )
-            ];
+            );
         }
 
-        return [
+        return array(
             'class'  => json_encode($result['class']),
             'method' => json_encode($result['method'])
-        ];
+        );
     }
 
     /**
@@ -105,8 +105,8 @@ class PHP_CodeCoverage_Report_HTML_Renderer_Dashboard extends PHP_CodeCoverage_R
      */
     protected function coverageDistribution(array $classes)
     {
-        $result = [
-            'class' => [
+        $result = array(
+            'class' => array(
                 '0%'      => 0,
                 '0-10%'   => 0,
                 '10-20%'  => 0,
@@ -119,8 +119,8 @@ class PHP_CodeCoverage_Report_HTML_Renderer_Dashboard extends PHP_CodeCoverage_R
                 '80-90%'  => 0,
                 '90-100%' => 0,
                 '100%'    => 0
-            ],
-            'method' => [
+            ),
+            'method' => array(
                 '0%'      => 0,
                 '0-10%'   => 0,
                 '10-20%'  => 0,
@@ -133,8 +133,8 @@ class PHP_CodeCoverage_Report_HTML_Renderer_Dashboard extends PHP_CodeCoverage_R
                 '80-90%'  => 0,
                 '90-100%' => 0,
                 '100%'    => 0
-            ]
-        ];
+            )
+        );
 
         foreach ($classes as $class) {
             foreach ($class['methods'] as $methodName => $method) {
@@ -160,10 +160,10 @@ class PHP_CodeCoverage_Report_HTML_Renderer_Dashboard extends PHP_CodeCoverage_R
             }
         }
 
-        return [
+        return array(
             'class'  => json_encode(array_values($result['class'])),
             'method' => json_encode(array_values($result['method']))
-        ];
+        );
     }
 
     /**
@@ -175,9 +175,9 @@ class PHP_CodeCoverage_Report_HTML_Renderer_Dashboard extends PHP_CodeCoverage_R
      */
     protected function insufficientCoverage(array $classes, $baseLink)
     {
-        $leastTestedClasses = [];
-        $leastTestedMethods = [];
-        $result             = ['class' => '', 'method' => ''];
+        $leastTestedClasses = array();
+        $leastTestedMethods = array();
+        $result             = array('class' => '', 'method' => '');
 
         foreach ($classes as $className => $class) {
             foreach ($class['methods'] as $methodName => $method) {
@@ -233,9 +233,9 @@ class PHP_CodeCoverage_Report_HTML_Renderer_Dashboard extends PHP_CodeCoverage_R
      */
     protected function projectRisks(array $classes, $baseLink)
     {
-        $classRisks  = [];
-        $methodRisks = [];
-        $result      = ['class' => '', 'method' => ''];
+        $classRisks  = array();
+        $methodRisks = array();
+        $result      = array('class' => '', 'method' => '');
 
         foreach ($classes as $className => $class) {
             foreach ($class['methods'] as $methodName => $method) {
