@@ -7,8 +7,19 @@ echo "Project directory is $PRJ_DIR"
 cd "$PRJ_DIR"
 
 echo -e "\e[1m\e[45mNPM install $V\e[0m"
-npm install
+if npm install; then
+    echo -e "\e[0;45mNPM install: \e[1;42msuccess.\e[0m"
+  else
+    echo -e "\e[0;45mNPM install: \e[1;41mfailed\e[0m"
+    exit 1;
+fi
+
 echo -e "\e[1m\e[45mComposer install $V\e[0m"
-composer.phar install
+if composer.phar install; then
+    echo -e "\e[0;45mNPM install: \e[1;42msuccess.\e[0m"
+  else
+    echo -e "\e[0;45mNPM install: \e[1;41mfailed\e[0m"
+    exit 1;
+fi
 
 echo -e "\e[1m\e[45mAll test terminated $V\e[0m"
