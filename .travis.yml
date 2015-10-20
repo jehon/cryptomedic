@@ -13,7 +13,6 @@ before_script:
   - mysql -e "GRANT ALL ON *.* TO amd_chakaria@localhost" -uroot
   - mysql -e "SET GLOBAL time_zone = '+00:00'" -uroot
   - bin/prj-install.sh
-  - bin/prj-build.sh
 #  - npm start > /dev/null &
 #  - npm run update-webdriver
   - sleep 1 # give server time to start
