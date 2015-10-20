@@ -18,10 +18,10 @@ process.on('exit', function (status) {
 /*
  * Some variables
  */
-//var allCSS = [ 
+//var allCSS = [
 //               "app/bower_components/jquery-ui/themes/ui-lightness/jquery-ui.min.css",
 //               "app/bower_components/bootstrap/dist/css/bootstrap.min.css",
-//               "app/static/css/application.css" 
+//               "app/static/css/application.css"
 //              ];
 //
 //var allJS = [
@@ -32,8 +32,8 @@ process.on('exit', function (status) {
 //             "bower_components/angular/angular.min.js",
 //             "bower_components/angular-route/angular-route.min.js",
 //             "bower_components/excellentexport/excellentexport.min.js",
-//             "app/static/js/application.js", 
-//             "app/static/js/cryptomedic.js", 
+//             "app/static/js/application.js",
+//             "app/static/js/cryptomedic.js",
 //             "app/static/js/amd_stats_datas.js",
 //             "app/static/js/exceptions.js",
 //             "app/static/js/model_*.js",
@@ -49,17 +49,17 @@ gulp.task('cache-clean', function(cb) {
 });
 
 gulp.task('cache-test', function() {
-    gulp.src('tests/cache-test/phpunit.xml')
-    	.pipe(plugins.plumber({ errorHandler: plugins.notify.onError("Error during task " + this.seq.slice(-1)[0] + ": <%= error.message %>") }))
-    	.pipe(plugins.plumber({ errorHandler: function() { process.exit(1); } }))
-    	.pipe(plugins.phpunit('./tests/libs/bin/phpunit', { notify: true }))
+    // gulp.src('tests/cache-test/phpunit.xml')
+    // 	.pipe(plugins.plumber({ errorHandler: plugins.notify.onError("Error during task " + this.seq.slice(-1)[0] + ": <%= error.message %>") }))
+    // 	.pipe(plugins.plumber({ errorHandler: function() { process.exit(1); } }))
+    // 	.pipe(plugins.phpunit('./tests/libs/bin/phpunit', { notify: true }))
 //    .pipe(plugins.notify(this.seq.slice(-1)[0] + ": done"))
 });
 
 gulp.task('cache-watch', function() {
     //gulp.watch([ 'cache_generator/generator.php', 'php/**/*' ], [ 'cache-clean' ], function(event) {
     //});
-    
+
     //gulp.watch([ 'cache_generator/**/*', 'app/**/*' ], null, function(event) {
 	//shelljs.rm("-f", "cache/manifest.manifest");
     //});
@@ -73,18 +73,18 @@ gulp.task('cache-watch', function() {
 // ---------------- REST ---------------------------
 
 gulp.task('rest-test', [ 'cache-test' ], function() {
-    gulp.src('rest/phpunit.xml')
-        .pipe(plugins.plumber({ errorHandler: plugins.notify.onError("Error during task " + this.seq.slice(-1)[0] + ": <%= error.message %>") }))
-        .pipe(plugins.plumber({ errorHandler: function() { process.exit(1); } }))
-    	.pipe(plugins.phpunit('./tests/libs/bin/phpunit', { notify: true }))
+    // gulp.src('rest/phpunit.xml')
+    //     .pipe(plugins.plumber({ errorHandler: plugins.notify.onError("Error during task " + this.seq.slice(-1)[0] + ": <%= error.message %>") }))
+    //     .pipe(plugins.plumber({ errorHandler: function() { process.exit(1); } }))
+    // 	.pipe(plugins.phpunit('./tests/libs/bin/phpunit', { notify: true }))
 });
 
 //---------------- JS ---------------------------
 
 gulp.task('test-js', [ 'rest-test', 'cache-test' ], function() {
     return gulp.src('')
-    .pipe(plugins.plumber({ errorHandler: plugins.notify.onError("Error during task " + this.seq.slice(-1)[0] + ": <%= error.message %>") }))
-    .pipe(plugins.plumber({ errorHandler: function() { process.exit(1); } }))
+    // .pipe(plugins.plumber({ errorHandler: plugins.notify.onError("Error during task " + this.seq.slice(-1)[0] + ": <%= error.message %>") }))
+    // .pipe(plugins.plumber({ errorHandler: function() { process.exit(1); } }))
     .pipe(plugins.nightwatch({
 		configFile : 'tests/nightwatch.json'
     }))
@@ -158,12 +158,12 @@ gulp.task('release-prepare-travis', function(result) {
 gulp.task('release-prepare-sonar', [ 'test' ], function(result) {
     var package_json = JSON.parse(require('fs').readFileSync('package.json', 'utf8'));
     var spawn = require('child_process').spawn;
-    var sr = spawn('sonarrunner', 
-	    [ 
-	      '-Dsonar.projectVersion=' + package_json.version, 
+    var sr = spawn('sonarrunner',
+	    [
+	      '-Dsonar.projectVersion=' + package_json.version,
 	      '-Dproject.settings=tests/sonar-project.properties',
 	      '-Dsonar.scm.disabled=true'
-	    ], 
+	    ],
 	    {
 		stdio: 'inherit'
 	    });
@@ -175,10 +175,10 @@ gulp.task('release-prepare-sonar', [ 'test' ], function(result) {
 
 gulp.task('release-prepare-dbstructure', function(result) {
     var spawn = require('child_process').spawn;
-    var sr = spawn('php', 
-	    [ 
+    var sr = spawn('php',
+	    [
 	     	'scripts/dump.php'
-	    ], 
+	    ],
 	    {
 		stdio: 'inherit'
 	    });

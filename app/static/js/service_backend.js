@@ -68,9 +68,7 @@ var service_my_backend = (function () {
         worker.postMessage({ name: name, data: data });
     }
 
-    mySendAction("init", {
-        // checkpoint: (localStorage.cryptomedicLastSync ? localStorage.cryptomedicLastSync : "")
-    });
+    mySendAction("init", {});
 
     return {
     /* Authentification */

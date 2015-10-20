@@ -7,6 +7,16 @@
   "license": "MIT",
   "devDependencies": {
     "bower": "^1.3",
+    "nightwatch": "latest",
+    "nightwatch-html-reporter": "latest",
+    "phantomjs": "latest",
+    "selenium-wrapper": "latest",
+    "selenium-please": "latest",
+    "selenium-server": "latest",
+    "selenium-standalone": "latest",
+    "shelljs": "latest"
+  },
+  "x-old": {
     "gulp": "latest",
     "gulp-concat": "^2.6.0",
     "gulp-concat-css": "^2.2.0",
@@ -22,17 +32,13 @@
     "gulp-sourcemaps": "^1.5.2",
     "gulp-task-listing": "^1.0.0",
     "gulp-uglify": "latest",
-    "nightwatch": "^0.7",
-    "nightwatch-html-reporter": "^1.0.2",
-    "phantomjs": "latest",
-    "selenium-server": "latest",
-    "shelljs": "^0.5.1",
     "travis-lint": "0.0.5"
   },
   "scripts": {
     "postinstall": "bower install",
     "postupdate": "bower update",
     "test": "gulp test",
+    "test:e2e-headless": "xvfb-run --server-args='-screen 0, 1366x768x24' npm run test:e2e",
     "disabled-prestart": "npm install",
     "disabled-pretest": "npm install",
     "disabled-test": "karma start test/karma.conf.js",

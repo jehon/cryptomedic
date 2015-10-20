@@ -1,0 +1,8 @@
+notes.txt
+
+https://developer.github.com/v3/repos/releases/#get-the-latest-release
+
+GET /repos/:owner/:repo/releases/latest
+
+
+https://github.com/SeleniumHQ/selenium/releases
