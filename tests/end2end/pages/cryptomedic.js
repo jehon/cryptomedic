@@ -14,16 +14,16 @@ module.exports = (function() {
       }
 
       var password = "test";
-      if (client.globals && client.globals.live) {
-        // TODO: manage the passwords otherwise ! (fakeauth?)
-        var liveData = require("./../../../../secrets.json");
-        if (client.globals && client.globals.live && liveData.cryptomedic && liveData.cryptomedic.passwords && liveData.cryptomedic.passwords[login]) {
-          console.log("using secret password for user " + login);
-          password = liveData.cryptomedic.passwords[login];
-        } else {
-          throw new Error("Authenticate did not found secret passord for " + login);
-        }
-      }
+      // if (client.globals && client.globals.live) {
+      //   // TODO: manage the passwords otherwise ! (fakeauth?)
+      //   var liveData = require("./../../../../secrets.json");
+      //   if (client.globals && client.globals.live && liveData.cryptomedic && liveData.cryptomedic.passwords && liveData.cryptomedic.passwords[login]) {
+      //     console.log("using secret password for user " + login);
+      //     password = liveData.cryptomedic.passwords[login];
+      //   } else {
+      //     throw new Error("Authenticate did not found secret passord for " + login);
+      //   }
+      // }
 
       client.url(client.launch_url + '/cryptomedic/app/')
         .watchLog(true)
