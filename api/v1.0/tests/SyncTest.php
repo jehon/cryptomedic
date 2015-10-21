@@ -5,6 +5,7 @@ require_once("RouteReferenceTestCase.php");
 class SyncTest extends RouteReferenceTestCase {
 	protected $cp = "";
 	protected $offline = null;
+	static protected $timeShift = 1;
 	static protected $initialCP = "";
 
 	protected function showURL() {
@@ -92,21 +93,21 @@ class SyncTest extends RouteReferenceTestCase {
 		$this->isFinal();
 
 		// Change patient
-		DB::statement("UPDATE patients SET updated_at = NOW() WHERE id = 1");
+		DB::statement("UPDATE patients SET updated_at = NOW() + " . self::$timeShift++ . " WHERE id = 1");
 		$offline = self::getNext(1);
 		$this->assertArrayHasKey(0, $offline->data);
 		$this->assertEquals(1, $offline->data[0]->record->id);
 		$this->isFinal();
 
 		// Change file
-		DB::statement("UPDATE bills SET updated_at = NOW() + 1 WHERE patient_id = 3 LIMIT 1");
+		DB::statement("UPDATE bills SET updated_at = NOW() + " . self::$timeShift++ . " WHERE patient_id = 3 LIMIT 1");
 		$offline = self::getNext(1);
 		$this->assertArrayHasKey(0, $offline->data);
 		$this->assertEquals(3, $offline->data[0]->record->id);
 		$this->isFinal();
 
 		// Simulating deleting a sub file for a patient
-		$res = DB::statement("INSERT INTO deleteds(created_at, patient_id, entity_type, entity_id) VALUES (NOW() + 2, '4', 'bills', '10'); ");
+		$res = DB::statement("INSERT INTO deleteds(created_at, patient_id, entity_type, entity_id) VALUES (NOW() + " . self::$timeShift++ . ", '4', 'bills', '10'); ");
 		$offline = self::getNext(1);
 		$this->assertArrayHasKey(0, $offline->data);
 		$this->assertEquals(4, $offline->data[0]->record->id);
