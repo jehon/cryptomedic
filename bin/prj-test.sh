@@ -26,6 +26,12 @@ test_dir() {
   fi
 }
 
+
+if [ "$FRONT" = "" ]; then
+  # If FRONT is not set, then do that is the background
+  export DISPLAY=:99.0
+fi
+
 if [ "$1" ]; then
   echo "Test override to path $1"
   cd "$PRJ_DIR/$1" && test_dir "Override $1"
