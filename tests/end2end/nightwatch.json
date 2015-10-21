@@ -9,7 +9,7 @@
     "start_process" : true,
     "start_session" : true,
     "server_path" : "../../node_modules/selenium-server/lib/runner/selenium-server-standalone-2.48.2.jar",
-    "x-log_path" : false,
+    "log_path" : false,
     "host" : "127.0.0.1",
     "port" : 4444,
     "x-cli_args" : {

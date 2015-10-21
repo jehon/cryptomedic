@@ -26,6 +26,12 @@ test_dir() {
   fi
 }
 
+if [ "$1" ]; then
+  echo "Test override to path $1"
+  cd "$PRJ_DIR/$1" && test_dir "Override $1"
+  exit 0
+fi
+
 for V in "$PRJ_DIR"/api/* ; do
   N=`basename "$V"`
   cd "$V" && test_dir "version api/$N"
