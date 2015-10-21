@@ -13,16 +13,29 @@ test_dir() {
 
   N=`pwd`
   N=`basename "$N"`
+  L="$1"
+  shift
   if [ -r phpunit.xml ]; then
-    echo -e "\e[0;45m[\e[1;45m$N/phpunit\e[0;45m] Testing $1\e[0m"
+    echo -e "\e[0;45m[\e[1;45m$N/phpunit\e[0;45m] Testing $L\e[0m"
     $PRJ_DIR/vendor/bin/phpunit \
         --coverage-html   "$PRJ_DIR/tmp/$N" \
-        --coverage-xml    "$PRJ_DIR/tmp/$N"
+        --coverage-xml    "$PRJ_DIR/tmp/$N" \
+        "$@"
   fi
 
   if [ -r nightwatch.json ]; then
-    echo -e "\e[0;45m[\e[1;45m$N/nightwatch\e[0;45m] Testing $1\e[0m"
-    node $PRJ_DIR/node_modules/.bin/nightwatch
+    echo -e "\e[0;45m[\e[1;45m$N/nightwatch\e[0;45m] Testing $L\e[0m"
+    if [ "$FRONT" ]; then
+      node $PRJ_DIR/node_modules/.bin/nightwatch "$@"
+    else
+      node $PRJ_DIR/node_modules/.bin/nightwatch -e default,chrome "$@"
+    fi
+  fi
+
+  if [ -r karma.conf.js ]; then
+    echo -e "\e[0;45m[\e[1;45m$N/karma\e[0;45m] Testing $L\e[0m"
+    echo "DISABLED"
+    #../../node_modules/.bin/karma start "$@"
   fi
 }
 
@@ -34,7 +47,8 @@ fi
 
 if [ "$1" ]; then
   echo "Test override to path $1"
-  cd "$PRJ_DIR/$1" && test_dir "Override $1"
+  D="$1"
+  cd "$PRJ_DIR/$D" && test_dir "Override $D" "$@"
   exit 0
 fi
 
