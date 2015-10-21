@@ -1,17 +1,19 @@
 <?php
 
+define("ROOT", __DIR__ . "/../../cache/");
+
 class CacheTest extends PHPUnit_Framework_TestCase
 {
 	protected function _testOneCachedFile($target) {
 		$_REQUEST = array();
 		$_REQUEST['target'] = $target;
 		$cwd = getcwd();
-		chdir(__DIR__ . "/../../../cache/");
+		chdir(ROOT);
 		if (file_exists($target)) {
 			unlink($target);
 		}
 		ob_start();
-		require(__DIR__ . "/../../../cache/generator.php");
+		require(ROOT . "/generator.php");
 		$content = ob_get_contents();
 		ob_end_clean();
 		chdir($cwd);
@@ -34,7 +36,7 @@ class CacheTest extends PHPUnit_Framework_TestCase
 
 	public function testTemplates() {
 		$cwd = getcwd();
-		chdir(__DIR__ . "/../../../cache/templates");
+		chdir(ROOT . "/templates");
 		foreach(MyFiles::glob("*.php", true) as $f) {
 			$f = "templates/" . str_replace(".php", ".html", substr($f, 2));
 			$content = $this->_testOneCachedFile($f);
