@@ -10,7 +10,7 @@ before_script:
   - bin/prj-install.sh
 
   # Start a virtual server on port 1234
-  - php -S localhost:1234 tests/router.php -t . &
+  - php -S localhost:1234 tests/router.php -t . >/dev/null &
 #  - npm start > /dev/null &
 #  - npm run update-webdriver
   - sleep 3 # give xvfb server time to start
