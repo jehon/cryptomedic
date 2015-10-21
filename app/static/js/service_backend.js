@@ -141,7 +141,7 @@ var service_my_backend = (function () {
 
 // TODO: use the new "queue" system
 mainApp.factory('service_backend', [ '$http', function($http) {
-    var rest = "/cryptomedic/api/v1.0/";
+    var rest = "/cryptomedic/api/v1.0";
 
     // Transform the $http request into a promise
     function treatHttp(request) {
