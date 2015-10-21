@@ -28,7 +28,8 @@ test_dir() {
     if [ "$FRONT" ]; then
       node $PRJ_DIR/node_modules/.bin/nightwatch "$@"
     else
-      node $PRJ_DIR/node_modules/.bin/nightwatch -e default,chrome "$@"
+      node $PRJ_DIR/node_modules/.bin/nightwatch "$@"
+      #node $PRJ_DIR/node_modules/.bin/nightwatch -e default,chrome "$@"
     fi
   fi
 
