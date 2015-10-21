@@ -12,8 +12,8 @@
     "log_path" : false,
     "host" : "127.0.0.1",
     "port" : 4444,
-    "x-cli_args" : {
-      "webdriver.chrome.driver" : "../../node_modules/selenium-wrapper/chromedriver"
+    "cli_args" : {
+      "webdriver.chrome.driver" : "../..//node_modules/selenium-standalone/.selenium/chromedriver/2.18-x64-chromedriver"
     }
   },
   "test_settings" : {
@@ -32,7 +32,7 @@
         "acceptSslCerts": true
       }
     },
-    "x-phantomjs" : {
+    "phantomjs" : {
       "screenshots" : {
         "enabled" : true,
         "path" : "../../tmp/end2end/phantomjs/"
@@ -45,7 +45,7 @@
         "path": "/var/ww/cryptomedic/"
       }
     },
-    "x-chrome" : {
+    "chrome" : {
       "screenshots" : {
         "enabled" : true,
         "path" : "../../tmp/end2end/chrome/"
