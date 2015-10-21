@@ -358,7 +358,7 @@ CREATE TABLE IF NOT EXISTS `patients` (
 --
 
 INSERT INTO `patients` (`id`, `created_at`, `updated_at`, `lastuser`, `entryyear`, `entryorder`, `Firstname`, `Lastname`, `Sex`, `Yearofbirth`, `AddressNotes`, `Telephone`, `District`, `Upazilla`, `Union_`, `pathology_Clubfoot`, `pathology_Ricket`, `pathology_other`, `historyofcomplaint`, `pathology_Adult`, `pathology_CP`, `pathology_Polio`, `pathology_Burn`, `pathology_Congenital`) VALUES
-(1, '2014-10-29 08:04:03', '2014-12-31 12:47:09', 'Thierry', 2000, 0, 'rezaul', 'islam', 'Male', 1998, '', '', 'Chittagong', NULL, NULL, 1, 0, 0, '', 0, 0, 0, 0, 0),
+(1, '2014-10-29 08:04:03', '2014-12-31 12:47:09', 'Thierry', 2000, 1, 'rezaul', 'islam', 'Male', 1998, '', '', 'Chittagong', NULL, NULL, 1, 0, 0, '', 0, 0, 0, 0, 0),
 (2, '2014-02-28 11:56:41', '2014-12-31 12:47:09', 'josiane', 2014, 107, 'RIFATH', 'MOHAMED', 'Male', 2002, '', '', NULL, NULL, NULL, 1, 0, 0, '', 0, 0, 0, 0, 0),
 (3, '2014-02-28 15:10:19', '2014-12-31 12:47:09', 'josiane', 2014, 103, 'OSMAN', '', 'Male', 2009, '', '', NULL, NULL, NULL, 1, 0, 0, '', 0, 0, 0, 0, 0),
 (4, '2014-03-01 07:01:39', '2014-12-31 12:47:09', 'josiane', 2014, 104, 'RAHAMAN', 'MOHAMED', 'Male', 2007, '', '', NULL, NULL, NULL, 1, 0, 0, '', 0, 0, 0, 0, 0),
