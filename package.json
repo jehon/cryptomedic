@@ -18,6 +18,7 @@
     "nightwatch-html-reporter": "latest",
     "phantomjs": "latest",
     "selenium-server": "latest",
+    "selenium-standalone": "latest",
     "shelljs": "latest"
   },
   "x-old": {
