@@ -61,7 +61,7 @@ for T in "$PRJ_DIR"/tests/* ; do
   N=`basename "$T"`
   TITLE="Custom test $N"
   if [ -d "$T" ]; then
-    cd "$T" && test_dir $TITLE
+    cd "$T" && test_dir "$TITLE"
   fi
 done
 
