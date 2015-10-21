@@ -5,8 +5,8 @@ language: php
 #  - 0.12
 
 before_script:
-  - export DISPLAY=:99.0
-  - sh -e /etc/init.d/xvfb start
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
   - echo -e "[server]\nmax_allowed_packet=64M" | sudo tee -a /etc/mysql/my.cnf
   - mysql -e "create database IF NOT EXISTS amd_chakaria;" -uroot
   - mysql -e "GRANT ALL ON *.* TO amd_chakaria@localhost" -uroot
@@ -14,7 +14,7 @@ before_script:
   - bin/prj-install.sh
 #  - npm start > /dev/null &
 #  - npm run update-webdriver
-  - sleep 1 # give server time to start
+  - sleep 3 # give xvfb server time to start
 
 script:
   - bin/prj-test.sh
