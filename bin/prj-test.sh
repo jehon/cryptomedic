@@ -39,7 +39,7 @@ test_dir() {
     fi
 
     echo -e "\e[0;45m[\e[1;45m$N/nightwatch\e[0;45m] Stoping server @$PHPSERV\e[0m"
-    kill $PHPSERV
+    kill -s SIGINT $PHPSERV
   fi
 
   if [ -r karma.conf.js ]; then
