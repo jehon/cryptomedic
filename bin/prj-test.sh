@@ -35,7 +35,6 @@ test_dir() {
       node $PRJ_DIR/node_modules/.bin/nightwatch "$@"
     else
       node $PRJ_DIR/node_modules/.bin/nightwatch "$@"
-      #node $PRJ_DIR/node_modules/.bin/nightwatch -e default,chrome "$@"
     fi
 
     echo -e "\e[0;45m[\e[1;45m$N/nightwatch\e[0;45m] Stoping server @$PHPSERV\e[0m"
