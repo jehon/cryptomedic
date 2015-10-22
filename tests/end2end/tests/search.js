@@ -5,6 +5,7 @@ module.exports = {
         .myClick("#menu_search")
         .waitForElementPresent(".searchFields", 1000)
         .setValue("#Patient_entryyear", "2000")
+        .pause(500)
         .myClick("#button_submit")
         .pause(2000)
         .waitForElementPresent("#search_results", 1000)
