@@ -11,6 +11,7 @@ before_script:
   - mysql -e "GRANT ALL ON *.* TO amd_chakaria@localhost" -uroot
   - mysql -e "SET GLOBAL time_zone = '+00:00'" -uroot
   - bin/prj-install.sh
+  - php -r "var_dump(getenv('BYPASS_AUTHENTICATION'));"
 
   # Start a virtual server on port 1234
   - php -S localhost:1234 tests/router.php -t . >/dev/null &
