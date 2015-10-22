@@ -25,12 +25,21 @@ test_dir() {
 
   if [ -r nightwatch.json ]; then
     echo -e "\e[0;45m[\e[1;45m$N/nightwatch\e[0;45m] Testing $L\e[0m"
+    echo -e "\e[0;45m[\e[1;45m$N/nightwatch\e[0;45m] Starting server\e[0m"
+    cd $PRJ_DIR
+    BYPASS_AUTHENTICATION=1 php -S localhost:1234 tests/router.php -t . &
+    PHPSERV=$!
+    cd -
+    echo -e "\e[0;45m[\e[1;45m$N/nightwatch\e[0;45m] Starting Test\e[0m"
     if [ "$FRONT" ]; then
       node $PRJ_DIR/node_modules/.bin/nightwatch "$@"
     else
       node $PRJ_DIR/node_modules/.bin/nightwatch "$@"
       #node $PRJ_DIR/node_modules/.bin/nightwatch -e default,chrome "$@"
     fi
+
+    echo -e "\e[0;45m[\e[1;45m$N/nightwatch\e[0;45m] Stoping server @$PHPSERV\e[0m"
+    kill $PHPSERV
   fi
 
   if [ -r karma.conf.js ]; then
@@ -49,21 +58,24 @@ fi
 if [ "$1" ]; then
   echo "Test override to path $1"
   D="$1"
+  shift
   cd "$PRJ_DIR/$D" && test_dir "Override $D" "$@"
-  exit 0
+else
+  echo -e "\e[0;45mCleaning old tests\e[0m"
+  find "$PRJ_DIR/tmp/" -mindepth 1 -delete;
+
+  for V in "$PRJ_DIR"/api/* ; do
+    N=`basename "$V"`
+    cd "$V" && test_dir "version api/$N"
+  done
+
+  for T in "$PRJ_DIR"/tests/* ; do
+    N=`basename "$T"`
+    TITLE="Custom test $N"
+    if [ -d "$T" ]; then
+      cd "$T" && test_dir "$TITLE"
+    fi
+  done
 fi
-
-for V in "$PRJ_DIR"/api/* ; do
-  N=`basename "$V"`
-  cd "$V" && test_dir "version api/$N"
-done
-
-for T in "$PRJ_DIR"/tests/* ; do
-  N=`basename "$T"`
-  TITLE="Custom test $N"
-  if [ -d "$T" ]; then
-    cd "$T" && test_dir "$TITLE"
-  fi
-done
 
 echo -e "\e[1m\e[45mTerminated ok.\e[0m"
