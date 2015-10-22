@@ -1,5 +1,11 @@
 "use strict";
 
+if (typeof(cryptomedic) == "undefined") {
+    var cryptomedic = {
+        settings: {}
+    };
+}
+
 cryptomedic.templateRoot = "/cryptomedic/cache/templates/";
 
 mainApp.config([ '$routeProvider', function($routeProvider) {

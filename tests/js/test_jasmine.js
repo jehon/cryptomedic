@@ -6,11 +6,11 @@ describe('Jasmine', function() {
 		expect(a).toBe(true);
 		expect(a).toEqual(true);
 	});
-	
+
 	it('prints jasmine version', function() {
-		expect(jasmine.version).toMatch("2.0");
+		expect(jasmine.version).toMatch("2.3.4");
 	});
-	
+
 	it('manage exceptions', function() {
 		expect(function() { throw "test"; }).toThrow();
 		expect(function() { throw "test"; }).toThrow("test");

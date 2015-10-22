@@ -5,29 +5,30 @@ module.exports = function(config) {
                 'karma-firefox-launcher',
                 'karma-jasmine',
                 'karma-junit-reporter',
-                // 'karma-phantomjs-launcher',
                 'karma-coverage',
-                'karma-html-reporter'
+                // 'karma-html-reporter'
     ],
     reporters : [
                   'progress',
-                  // 'coverage'
-//                  'html'
-                 ],
+                  'coverage',
+                  // 'html'
+                ],
 
-    basePath : '../',
+    basePath : '../../',
 
     files : [
-              'app/bower_components/jQuery/dist/jquery.min.js',
+              'app/bower_components/jquery/dist/jquery.min.js',
               'app/bower_components/angular/angular.js',
               'app/bower_components/angular-route/angular-route.js',
               'app/bower_components/angular-mocks/angular-mocks.js',
-              'app/js/**/*.js',
+              'app/bower_components/dexie/dist/latest/Dexie.min.js',
+              'app/static/js/*.js',
               'tests/js/**/*.js',
               { pattern : 'tests/js/mocks/*.json', watched : true, served : true, included : false }
             ],
 
-    autoWatch : true,
+    singleRun: true,
+    //autoWatch : true,
 
     frameworks : [ 'jasmine' ],
 
@@ -45,11 +46,11 @@ module.exports = function(config) {
     coverageReporter: {
       type : 'html',
       dir : 'tmp/js/'
-    },
-
-    htmlReporter: {
-      outputDir: 'tmp',
-      templatePath: 'tmp/jasmine_template.html'
     }
+
+    // htmlReporter: {
+    //   outputDir: 'tmp',
+    //   templatePath: '../tmp/jasmine_template.html'
+    // }
   });
 };
