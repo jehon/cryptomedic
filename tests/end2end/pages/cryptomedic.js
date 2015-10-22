@@ -13,7 +13,7 @@ module.exports = (function() {
           throw new Error("Cryptomedic: Authenticate expect parameter 1 to be the login");
       }
 
-      var password = "test";
+      var password = "this will not be read by the server in tests";
       // if (client.globals && client.globals.live) {
       //   // TODO: manage the passwords otherwise ! (fakeauth?)
       //   var liveData = require("./../../../../secrets.json");
