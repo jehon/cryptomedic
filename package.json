@@ -24,7 +24,6 @@
   "x-old": {
     "selenium-wrapper": "latest",
     "selenium-please": "latest",
-    "selenium-standalone": "latest",
     "travis-lint": "0.0.5"
   },
   "scripts": {
