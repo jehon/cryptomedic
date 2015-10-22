@@ -29,7 +29,7 @@ test_dir() {
     cd $PRJ_DIR
     BYPASS_AUTHENTICATION=1 php -S localhost:1234 tests/router.php -t . &
     PHPSERV=$!
-    cd -
+    cd - > /dev/null
     echo -e "\e[0;45m[\e[1;45m$N/nightwatch\e[0;45m] Starting Test\e[0m"
     if [ "$FRONT" ]; then
       node $PRJ_DIR/node_modules/.bin/nightwatch "$@"
@@ -62,7 +62,11 @@ if [ "$1" ]; then
   cd "$PRJ_DIR/$D" && test_dir "Override $D" "$@"
 else
   echo -e "\e[0;45mCleaning old tests\e[0m"
-  find "$PRJ_DIR/tmp/" -mindepth 1 -delete;
+  if [ -d "$PRJ_DIR/tmp" ]; then
+    find "$PRJ_DIR/tmp/" -mindepth 1 -delete;
+  else
+    mkdir -p "$PRJ_DIR/tmp"
+  fi
 
   for V in "$PRJ_DIR"/api/* ; do
     N=`basename "$V"`
