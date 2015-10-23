@@ -44,7 +44,7 @@ var service_my_backend = (function () {
 
     var db = build_db(true);
 
-    var worker = new Worker("static/worker/worker.js?r=" + Math.random());
+    var worker = new Worker("static/worker/worker.js");
     worker.onerror = function(e) {
     console.error("@service: Error in worker: ", e);
     };
