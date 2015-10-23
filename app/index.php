@@ -1,9 +1,9 @@
-<?php 
+<?php
 	require_once(__DIR__ . "/../php/allscripts.php");
 	require_once(__DIR__ . "/../php/core.php");
 	Script::$rootPath = __DIR__;
 ?><!DOCTYPE html>
-<html <?php 
+<html <?php
 	if (array_key_exists("online", $_REQUEST)) {
 		$mode = "online";
 	} else {
@@ -18,18 +18,18 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link href="static/img/favicon.ico" type="image/x-icon" rel="icon" />
 		<link href="static/img/favicon.ico" type="image/x-icon" rel="shortcut icon" />
-	<?php 
+	<?php
 		// jquery
 		(new Script("bower_components/jquery/dist/jquery.min.js"))->dependFile()->toPrint();
 		(new Script("bower_components/jquery-ui/jquery-ui.min.js"))->dependFile()->toPrint();
 		(new Script("bower_components/jquery-ui/themes/ui-lightness/jquery-ui.min.css"))->dependFile()->toPrint();
-		
-		// Modernizr	
-		(new Script("bower_components/modernizr/modernizr.js"))->dependFile()->toPrint();
+
+		// Modernizr
+		// (new Script("bower_components/modernizr/modernizr.js"))->dependFile()->toPrint();
 	?>
 		<script type="text/javascript">
 			// REQUIRED CAPACITIES
-			if (!Promise || !Modernizr.indexeddb || !Modernizr.localstorage) {
+			if (!Promise || !indexedDB || !sessionStorage) {
 			    window.location.href = "static/upgrade.html";
 			}
 			// support for class: class C {}; return typeof C === "	function";
@@ -39,26 +39,26 @@
 			cryptomedic.version = '<?php echo getVersion(); ?>';
 			cryptomedic.settings = {};
 		</script>
-	<?php 	
+	<?php
 		// Custom bug reporting script:
 		(new Script("static/js/bugreporting.js"))->dependFile()->toPrint();
 		(new Script("static/js/html2canvas.js"))->dependFile()->toPrint();
-		
+
 		// bootstrap
 		(new Script("bower_components/bootstrap/dist/js/bootstrap.min.js"))->dependFile()->toPrint();
 		(new Script("bower_components/bootstrap/dist/css/bootstrap.min.css"))->dependFile()->toPrint();
-	
+
 		// angular
 		(new Script("bower_components/angular/angular.min.js"))->dependFile()->toPrint();
 		(new Script("bower_components/angular-route/angular-route.min.js"))->dependFile()->toPrint();
-	
+
 		// Other
 		(new Script("bower_components/excellentexport/excellentexport.min.js"))->dependFile()->toPrint();
 		(new Script("bower_components/dexie/dist/latest/Dexie.min.js"))->dependFile()->toPrint();
-		
+
 		// Polyfill
 		(new Script("bower_components/fetch/fetch.js"))->dependFile()->toPrint();
-		
+
 		// personnal
 		(new Script("static/js/application.js"))->dependFile()->toPrint();
 		(new Script("static/js/database.js"))->dependFile()->toPrint();
@@ -66,16 +66,16 @@
 		(new Script("static/js/cryptomedic.js"))->dependFile()->toPrint();
 		(new Script("static/js/amd_stats_datas.js"))->dependFile()->toPrint();
 		(new Script("static/js/exceptions.js"))->dependFile()->toPrint();
-		
+
 		(new AllScripts("static/js/model_*.js"))->dependFile()->toPrint();
 		(new AllScripts("static/js/service_*.js"))->dependFile()->toPrint();
 		(new AllScripts("static/js/ctrl_*.js"))->dependFile()->toPrint();
-	
+
 		(new AllScripts("static/css/*.css"))->css()->dependFile()->toPrint();
 		?>
 	</head>
 	<body ng-app="app_main" ng-controller="ctrl" id="ng-app" >
-		<!--  Navigation bar -->	
+		<!--  Navigation bar -->
 		<nav class="navbar navbar-default navbar-static-top" role="navigation" ng-if="logged">
 		  <div class="container-fluid">
 		    <!-- Brand and toggle get grouped for better mobile display -->
@@ -85,7 +85,7 @@
 		      </button>
 				<a class="navbar-brand" href="#">Menu</a>
 		    </div>
-		
+
 		    <!-- Collect the nav links, forms, and other content for toggling -->
 		    <div class="collapse navbar-collapse" id="menuMain">
 		      <ul class="nav navbar-nav navbar-right">
@@ -173,10 +173,10 @@
 						Loading data from the server:
 						(you may use the application during the loading)
 						<div class="progress">
-							<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{syncProgressMax - sync.remaining}}" aria-valuemin="0" aria-valuemax="{{syncProgressMax}}" 
+							<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{syncProgressMax - sync.remaining}}" aria-valuemin="0" aria-valuemax="{{syncProgressMax}}"
 									style="width: {{(syncProgressMax - sync.remaining)/syncProgressMax * 100}}%;">
 						    	{{syncProgressMax - sync.remaining}} / {{syncProgressMax}}
-						    	
+
 							</div>
 						</div>
 					</div>
@@ -186,8 +186,8 @@
 	 					<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 						{{m.text}}
 					</div>
- 
-					
+
+
 				</span>
 				<div ng-view></div>
 			</div>
