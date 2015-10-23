@@ -35,7 +35,6 @@ module.exports = (function() {
         .waitForElementPresent("#login_loggedusername", timeout)
         .assert.containsText("#login_loggedusername", login)
         .assert.title('Cryptomedic')
-        .saveScreenshot(client.screenshotsPath + "/1-6-ok.png")
         .pause(1000)
         ;
       authenticated = true;
