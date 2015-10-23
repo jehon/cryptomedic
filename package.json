@@ -19,7 +19,8 @@
     "phantomjs": "latest",
     "selenium-server": "latest",
     "selenium-standalone": "latest",
-    "shelljs": "latest"
+    "shelljs": "latest",
+    "protractor": "latest"
   },
   "x-old": {
     "selenium-wrapper": "latest",

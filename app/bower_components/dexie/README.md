@@ -3,51 +3,61 @@ Dexie.js
 
 [![NPM Version][npm-image]][npm-url]
 
-Simple and robust indexedDB wrapper.
+#### What is Dexie.js?
+Dexie.js is a wrapper library for indexedDB.
 
- * Minimalistic and straight forward API, easy to use.
- * Code Completion friendly - Your IDE will guide you as you type!
- * Human readable queries: db.friends.where("lastName").anyOf("Helenius", "Fahlander").each(function(friend){...})
- * Bullet proof error handling using transaction scopes
- * The only indexedDB wrapper (so far) to support case insensitive search, set matching and logical OR operations.
- * Promise/A+ compliant
- * Does not hide backend indexedDB from the caller - always possible to reach the backend IDB objects.
- * Performance focused
- * Portable across all browsers:
-   * IE10+
-   * Chrome
-   * Firefox
-   * Opera 15+
-   * Android browser (untested)
-   * Blackberry browser (untested)
-   * Opera mobile 16+
-   * Chrome for Android
-   * Firefox for Android
-   * IE Mobile (untested)
-   * Safari 8 (with some limitations)
-   * IOS Safari 8 (with some limitations)
- * Extended key range queries: equalsIgnoreCase(), anyOf([a,b,c,d,...]), startsWith(), startsWithIgnoreCase()
- * Logical "OR": friends.where("age").below(40).or("length").above(200).toArray(...);
- * Built to be easily extended and build addons upon.
- * Simplified upgrading framework
- * Thoroughly unit tested
+#### Why is Dexie.js needed?
+Dexie solves three main issues with the native IndexedDB API:
+
+ 1. Ambivalent error handling
+ 2. Poor queries
+ 3. Code complexity
+
+Dexie.js solves these limitations and provides a neat database API. Dexie.js aims to be the first-hand choice of a IDB Wrapper Library due to its well thought-through API design, robust error handling, extendability, change tracking awareness and its extended KeyRange support (case insensitive search, set matches and OR operations).
+
+#### Please Show me a Hello World Example
+
+```js
+//
+// Declare Database
+//
+var db = new Dexie("FriendDatabase");
+db.version(1).stores({ friends: "++id,name,age" });
+db.open();
+
+//
+// Manipulate and Query Database
+//
+db.friends.add({name: "Josephine", age: 21}).then(function() {
+    return db.friends.where("age").below(25).toArray();
+}).then(function (youngFriends) {
+    console.log("My young friends: " + JSON.stringify(youngFriends));
+});
+```
+
 
 Documentation
 -------------
-https://github.com/dfahlander/Dexie.js/wiki/Dexie.js
+[https://github.com/dfahlander/Dexie.js/wiki/Dexie.js](https://github.com/dfahlander/Dexie.js/wiki/Dexie.js)
 
 Samples
 -------
-https://github.com/dfahlander/Dexie.js/wiki/Samples
+[https://github.com/dfahlander/Dexie.js/wiki/Samples](https://github.com/dfahlander/Dexie.js/wiki/Samples)
 
 Forum
 -----
-https://groups.google.com/forum/#!forum/dexiejs
+[https://groups.google.com/forum/#!forum/dexiejs](https://groups.google.com/forum/#!forum/dexiejs)
+
+Website
+-------
+[http://www.dexie.org](http://www.dexie.org)
 
 Download
 --------
-https://raw.githubusercontent.com/dfahlander/Dexie.js/master/dist/latest/Dexie.js
-https://raw.githubusercontent.com/dfahlander/Dexie.js/master/dist/latest/Dexie.min.js
+[https://raw.githubusercontent.com/dfahlander/Dexie.js/master/dist/latest/Dexie.js](https://raw.githubusercontent.com/dfahlander/Dexie.js/master/dist/latest/Dexie.js)
+[https://raw.githubusercontent.com/dfahlander/Dexie.js/master/dist/latest/Dexie.min.js]([https://raw.githubusercontent.com/dfahlander/Dexie.js/master/dist/latest/Dexie.min.js)
+[https://raw.githubusercontent.com/dfahlander/Dexie.js/master/dist/latest/Dexie.min.js.map]([https://raw.githubusercontent.com/dfahlander/Dexie.js/master/dist/latest/Dexie.min.js.map)
+[https://raw.githubusercontent.com/dfahlander/Dexie.js/master/src/Dexie.d.ts]([https://raw.githubusercontent.com/dfahlander/Dexie.js/master/src/Dexie.d.ts)
 
 [npm-image]: https://img.shields.io/npm/v/dexie.svg?style=flat
 [npm-url]: https://npmjs.org/package/dexie

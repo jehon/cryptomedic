@@ -1,6 +1,5 @@
 {
   "name": "fetch",
-  "version": "0.9.0",
   "main": "fetch.js",
   "devDependencies": {
     "es6-promise": "1.0.0"
@@ -15,14 +14,14 @@
     "test/"
   ],
   "homepage": "https://github.com/github/fetch",
-  "_release": "0.9.0",
+  "version": "0.10.0",
+  "_release": "0.10.0",
   "_resolution": {
     "type": "version",
-    "tag": "v0.9.0",
-    "commit": "030e72106cd7b2f1e616a4af6503ee3a6df0bdf5"
+    "tag": "v0.10.0",
+    "commit": "92de9f1b87f0defc3673470044a4477080533324"
   },
-  "_source": "git://github.com/github/fetch.git",
-  "_target": "~0.9.0",
-  "_originalSource": "fetch",
-  "_direct": true
+  "_source": "https://github.com/github/fetch.git",
+  "_target": "*",
+  "_originalSource": "fetch"
 }

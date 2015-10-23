@@ -8,10 +8,12 @@
   "dependencies": {
     "angular": "1.4.x",
     "angular-route": "1.4.x",
+    "angular-mocks": "1.4.x",
     "bootstrap": "latest",
     "excellentexport": "latest",
+    "dexie": "latest",
+    "fetch": "latest",
     "jquery": "~1.11",
-    "jquery-ui": "~1.11",
-    "modernizr": "latest"
+    "jquery-ui": "~1.11"
   }
 }
