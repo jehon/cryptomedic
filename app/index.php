@@ -23,9 +23,6 @@
 		(new Script("bower_components/jquery/dist/jquery.min.js"))->dependFile()->toPrint();
 		(new Script("bower_components/jquery-ui/jquery-ui.min.js"))->dependFile()->toPrint();
 		(new Script("bower_components/jquery-ui/themes/ui-lightness/jquery-ui.min.css"))->dependFile()->toPrint();
-
-		// Modernizr
-		// (new Script("bower_components/modernizr/modernizr.js"))->dependFile()->toPrint();
 	?>
 		<script type="text/javascript">
 			// REQUIRED CAPACITIES

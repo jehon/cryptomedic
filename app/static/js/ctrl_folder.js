@@ -1,38 +1,32 @@
 "use strict";
 
 mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_backend', '$routeParams' , function($scope, $location, service_backend, $routeParams) {
-    /*
-     * '/folder/:patient_id/:page?/:subtype?/:subid?/:mode?'
-     * 
-     *  '/folder/123				view the patient file
-     *  '/folder/123/edit			edit the patient	(page ~> mode)
-     *  '/folder/123/add			add a patient    	(page ~> mode)
-     *  '/folder/123/file/Bills/456		view the sub file
-     *  '/folder/123/file/Bills/456/edit	edit the sub file
-     *  '/folder/123/file/Bills			add a bill
-     *  '/folder/123/summary
-     *  '/folder/123/graphics
-     *  
-     */
-    
-    $scope.patient_id = $routeParams['patient_id'];
-    $scope.page = $routeParams['page'];
-    $scope.subtype = $routeParams['subtype'];
-    $scope.subid = $routeParams['subid'];
-    $scope.mode = ($routeParams['mode'] ? $routeParams['mode'] : "read");
+  /*
+   * '/folder/:patient_id/:page?/:subtype?/:subid?/:mode?'
+   *
+   *  '/folder/123        view the patient file
+   *  '/folder/123/edit     edit the patient  (page ~> mode)
+   *  '/folder/       add a patient     (page ~> mode)
+   *  '/folder/123/file/Bills/456   view the sub file
+   *  '/folder/123/file/Bills/456/edit  edit the sub file
+   *  '/folder/123/file/Bills     add a bill
+   *  '/folder/123/summary
+   *  '/folder/123/graphics
+   *  '/folder/123/addfile
+   *
+   */
 
     // Map page to the mode (see ~>) in case of patient (short url, but wrong parameters)
     if ($scope.page == 'edit' || $scope.page == 'add') {
 	$scope.mode = $scope.page;
 	$scope.page = false;
     }
-    
+    $scope.mode = $scope.page;
     //----------------------
     //   Get data from the server
     //----------------------
     $scope.folder = false;
     var cachedCurrentFile = null;
-    
     myEvents.on("folder", function(data) {
 	if (data.id == $scope.patient_id) {
 	    // TODO: detect if already stored and show warning in this case
@@ -66,7 +60,7 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_backend', '$
     });
 
     function askFolder() {
-	service_my_backend.getFolder($scope.patient_id);
+      service_my_backend.getFolder($scope.patient_id);
     }
     askFolder();
 
@@ -74,32 +68,32 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_backend', '$
     //  Display helpers
     // ------------------------
     $scope.getTemplateName = function() {
-	if (!$scope.folder) {
-	    return "waiting.html";
-	}
-	if (!$scope.page) {
-	    return ($scope.mode == 'read' ? "fiches" : "writes") + "/patient.html";
-	}
+  if (!$scope.folder) {
+      return "waiting.html";
+  }
+  if (!$scope.page) {
+      return ($scope.mode == 'read' ? "fiches" : "writes") + "/patient.html";
+  }
 
-	if ($scope.page == 'file') {
-	    return ($scope.mode == 'read' ? "fiches" : "writes") + "/" + $scope.subtype.toLowerCase() + ".html";
-	}
+  if ($scope.page == 'file') {
+      return ($scope.mode == 'read' ? "fiches" : "writes") + "/" + $scope.subtype.toLowerCase() + ".html";
+  }
 
-	return "folder_pages/" + $scope.page + ".html";
+  return "folder_pages/" + $scope.page + ".html";
     };
 
     $scope.currentFile = function() {
-	return cachedCurrentFile;
+  return cachedCurrentFile;
     };
-    
+
     $scope.getPathTo = function(mode, index) {
-	var f = cachedCurrentFile;
-	if (index) {
-	    f = folder.getSubFile(index);
-	}
-	return "/folder/" + f.patient_id + "/fiche/" + f._type + "/" + f.id + (mode ? "/" + mode : "");
+  var f = cachedCurrentFile;
+  if (index) {
+      f = folder.getSubFile(index);
+  }
+  return "/folder/" + f.patient_id + "/fiche/" + f._type + "/" + f.id + (mode ? "/" + mode : "");
     }
-	
+
     //----------------------
     //   Actions
     //----------------------
@@ -144,10 +138,10 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_backend', '$
         	$scope.valide = false;
     	    }
         });
-    
+
         if (!jQuery.isEmptyObject($scope.errors)) {
             $scope.valide = false;
-        } 
+        }
 
     	console.log($scope.errors);
     	return $scope.valide;
@@ -236,40 +230,41 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_backend', '$
     }
 
     $scope.actionCreatePatient = function() {
-	if (!$scope.actionValidate()) {
-	    alert("You have errors in your data. Please correct them and try again");
-	    return ;
-	}
-	$scope.folder = false;
-	$scope.currentFile()._type = "Patient";
-	service_backend.createFile($scope.currentFile(), $scope.patient_id)
-	    .done(function(data) {
-		$scope.$emit("message", { "level": "success", "text":  "The patient has been created."});
-		$scope.folder = data;
-		$scope.go("/folder/" + data.patient_id);
-		$scope.safeApply();
-//	    }).always(function() {
-//		busyEnd();
-	    });
+  if (!$scope.actionValidate()) {
+      alert("You have errors in your data. Please correct them and try again");
+      return ;
+  }
+  $scope.folder = false;
+  $scope.currentFile()._type = "Patient";
+  service_backend.createFile($scope.currentFile(), $scope.patient_id)
+      .done(function(data) {
+    $scope.$emit("message", { "level": "success", "text":  "The patient has been created."});
+    $scope.folder = data;
+    $scope.go("/folder/" + data.patient_id);
+    $scope.safeApply();
+//      }).always(function() {
+//    busyEnd();
+      });
     }
 	
     $scope.actionSavePatient = function() {
-	if (!$scope.actionValidate()) {
-	    alert("You have errors in your data. Please correct them and try again");
-	    return ;
-	}
-	$scope.folder = false;
-	service_backend.saveFile(cachedCurrentFile, $scope.patient_id)
-	    .done(function(data) {
-		// The data is refreshed by navigating away...
-		$scope.$emit("message", { "level": "success", "text": "The patient has been saved."});
-		$scope.go("/folder/" + $scope.patient_id);
-		$scope.folder = data;
-		$scope.safeApply();
-	    });
+  if (!$scope.actionValidate()) {
+      alert("You have errors in your data. Please correct them and try again");
+      return ;
+  }
+  $scope.folder = false;
+  $scope.safeApply();
+  service_backend.saveFile(cachedCurrentFile, $scope.patient_id)
+      .done(function(data) {
+    // The data is refreshed by navigating away...
+    $scope.$emit("message", { "level": "success", "text": "The patient has been saved."});
+    $scope.go("/folder/" + $scope.patient_id);
+    $scope.folder = data;
+    $scope.safeApply();
+      });
     }
     
 //    if ($scope.mode == "edit" || $scope.mode == "add") {
-//	jQuery(".modeRead").removeClass('modeRead').addClass('modeWrite');
+//  jQuery(".modeRead").removeClass('modeRead').addClass('modeWrite');
 //    }
 }]);

@@ -22,11 +22,6 @@
     "shelljs": "latest",
     "protractor": "latest"
   },
-  "x-old": {
-    "selenium-wrapper": "latest",
-    "selenium-please": "latest",
-    "travis-lint": "0.0.5"
-  },
   "scripts": {
     "postinstall": "bower install",
     "postupdate": "bower update",
