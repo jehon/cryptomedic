@@ -4,7 +4,7 @@ describe("Patient", function() {
 	describe("with mock_patient_10.json", function() {
 		var folder = new cryptomedic.models.Folder();
 		it("should have correct properties", function (done) {
-			folder.loadFrom("/base/test/mocks/mock_patient_10.json").done(function() {
+			folder.loadFrom("/base/tests/js/mocks/mock_patient_10.json").done(function() {
 				expect(folder instanceof cryptomedic.models.Folder).toBeTruthy();
 				expect(folder.getMainFile() instanceof cryptomedic.models.Patient).toBeTruthy();
 				expect(folder.getMainFile().id).toBe(10);

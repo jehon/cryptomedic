@@ -17,22 +17,28 @@ module.exports = function(config) {
     basePath : '../../',
 
     files : [
+              'tests/js/kickoff.js',
               'app/bower_components/jquery/dist/jquery.min.js',
               'app/bower_components/angular/angular.js',
               'app/bower_components/angular-route/angular-route.js',
               'app/bower_components/angular-mocks/angular-mocks.js',
               'app/bower_components/dexie/dist/latest/Dexie.min.js',
-              'app/static/js/*.js',
+              'app/static/js/application.js',
+              'app/static/js/database.js',
+              'app/static/js/myfetch.js',
+              'app/static/js/cryptomedic.js',
+              'app/static/js/exceptions*.js',
+              'app/static/js/model*.js',
               'tests/js/**/*.js',
               { pattern : 'tests/js/mocks/*.json', watched : true, served : true, included : false }
             ],
 
-    singleRun: true,
-    //autoWatch : true,
+    autoWatch : true,
 
     frameworks : [ 'jasmine' ],
 
-    browsers: [ 'Chrome', "Firefox" ],
+//    browsers: [ 'Chrome', "Firefox" ],
+    browsers: [ "Firefox" ],
 
     junitReporter : {
       outputFile : 'tmp/js/unit.xml',

@@ -8,7 +8,7 @@ describe("File", function() {
 		var folder = new application.models.Folder();
 		it("should have correct properties", function(done) {
 			// Go through the rest_service !!!
-			folder.loadFrom("/base/test/mocks/mock_patient_10.json").done(function() {
+			folder.loadFrom("/base/tests/js/mocks/mock_patient_10.json").done(function() {
 				expect(folder instanceof application.models.Folder).toBeTruthy();
 
 				expect(folder.getMainFile() instanceof application.models.Patient).toBeTruthy();
