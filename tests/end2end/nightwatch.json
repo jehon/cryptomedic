@@ -56,6 +56,7 @@
         "browserName": "chrome",
         "javascriptEnabled": true,
         "acceptSslCerts": true,
+        "args": "--no-sandbox",
         "path": "/var/www/cryptomedic/"
       }
     },
