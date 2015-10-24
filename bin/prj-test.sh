@@ -43,8 +43,7 @@ test_dir() {
 
   if [ -r karma.conf.js ]; then
     echo -e "\e[0;45m[\e[1;45m$N/karma\e[0;45m] Testing $L\e[0m"
-    echo "DISABLED"
-    #../../node_modules/.bin/karma start "$@"
+    ../../node_modules/.bin/karma start --single-run "$@"
   fi
 }
 

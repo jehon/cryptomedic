@@ -7,7 +7,6 @@ sudo: false
 before_script:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
-  # Show the max allowed packet size for info
   - mysql -e "show variables like 'max%' " -uroot
 #  - mysql -e "SET GLOBAL max_allowed_packet = 64M;" -uroot
 #  - echo -e "[server]\nmax_allowed_packet=64M" | sudo tee -a /etc/mysql/my.cnf
