@@ -1,5 +1,5 @@
 module.exports = function(config) {
-  config.set({
+  var configuration = {
     plugins : [
                 'karma-chrome-launcher',
                 'karma-firefox-launcher',
@@ -40,6 +40,14 @@ module.exports = function(config) {
 //    browsers: [ 'Chrome', "Firefox" ],
     browsers: [ "Firefox" ],
 
+    customLaunchers: {
+      // http://stackoverflow.com/questions/19255976/how-to-make-travis-execute-angular-tests-on-chrome-please-set-env-variable-chr
+      Chrome_travis_ci: {
+        base: 'Chrome',
+        flags: ['--no-sandbox']
+      }
+    },
+
     junitReporter : {
       outputFile : 'tmp/js/unit.xml',
       suite : 'unit'
@@ -58,5 +66,14 @@ module.exports = function(config) {
     //   outputDir: 'tmp',
     //   templatePath: '../tmp/jasmine_template.html'
     // }
-  });
+  };
+
+  if(process.env.TRAVIS){
+    // configuration.browsers = [ 'Firefox', 'Chrome_travis_ci' ];
+    configuration.browsers = [ 'Firefox' ];
+  } else {
+    configuration.browsers = [ 'Firefox', 'Chrome' ];
+  }
+
+  config.set(configuration);
 };
