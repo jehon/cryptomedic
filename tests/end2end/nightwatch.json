@@ -16,9 +16,6 @@
       "webdriver.chrome.driver" : "../../node_modules/protractor/selenium/chromedriver"
     }
   },
-  "x" : {
-    "server_path" : "../../node_modules/selenium-server/lib/runner/selenium-server-standalone-2.48.2.jar"
-  },
   "test_settings" : {
     "default" : {
       "launch_url" : "http://localhost:1234",
@@ -27,6 +24,8 @@
       "silent": true,
       "screenshots" : {
         "enabled" : true,
+        "on_failure" : true,
+        "on_error" : true,
         "path" : "../../tmp/end2end/firefox/"
       },
       "desiredCapabilities": {
@@ -45,7 +44,7 @@
         "javascriptEnabled": true,
         "acceptSslCerts": true,
         "phantomjs.binary.path" : "../../node_modules/phantomjs/bin/phantomjs",
-        "path": "/var/ww/cryptomedic/"
+        "path": "/var/www/cryptomedic/"
       }
     },
     "chrome" : {
@@ -57,7 +56,7 @@
         "browserName": "chrome",
         "javascriptEnabled": true,
         "acceptSslCerts": true,
-        "path": "/var/ww/cryptomedic/"
+        "path": "/var/www/cryptomedic/"
       }
     },
     "x-live": {
