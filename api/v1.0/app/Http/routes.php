@@ -57,8 +57,6 @@ Route::group([ 'prefix' => '/cryptomedic/api/' . basename(dirname(dirname(__DIR_
 	 * Authenticated user needed
 	 */
 	Route::group(array('middleware' => 'authenticated'), function() {
-		Route::get('home', 'HomeController@index');
-
 		Route::resource('folder', "FolderController", [ "only" => [ "index", "show" ]]);
 
 		Route::get('reference/{entryyear}/{entryorder}', [
