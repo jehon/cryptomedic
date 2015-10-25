@@ -17,14 +17,17 @@
     "nightwatch": "latest",
     "nightwatch-html-reporter": "latest",
     "phantomjs": "latest",
-    "selenium-server": "latest",
-    "selenium-standalone": "latest",
     "shelljs": "latest",
     "protractor": "latest"
   },
   "scripts": {
     "postinstall": "bower install",
-    "postupdate": "bower update",
+    "postupdate": "bower update"
+  },
+  "x": {
+    "selenium-server": "latest",
+    "selenium-standalone": "latest",
+
     "test": "gulp test",
     "test:e2e-headless": "xvfb-run --server-args='-screen 0, 1366x768x24' npm run test:e2e",
     "disabled-prestart": "npm install",
@@ -36,6 +39,7 @@
     "disabled-update-webdriver": "webdriver-manager update",
     "disabled-preprotractor": "npm run update-webdriver",
     "disabled-protractor": "protractor test/protractor-conf.js",
-    "disabled-update-index-async": "node -e \"require('shelljs/global'); sed('-i', /\\/\\/@@NG_LOADER_START@@[\\s\\S]*\\/\\/@@NG_LOADER_END@@/, '//@@NG_LOADER_START@@\\n' + cat('app/bower_components/angular-loader/angular-loader.min.js') + '\\n//@@NG_LOADER_END@@', 'app/index-async.html');\""
+    "disabled-update-index-async": "node -e \"require('shelljs/global'); sed('-i', /\\/\\/@@NG_LOADER_START@@[\\s\\S]*\\/\\/@@NG_LOADER_END@@/, '//@@NG_LOADER_START@@\\n' + cat('app/bower_components/angular-loader/angular-loader.min.js') + '\\n//@@NG_LOADER_END@@', 'app/index-async.html');\"",
+    "x": ""
   }
 }
