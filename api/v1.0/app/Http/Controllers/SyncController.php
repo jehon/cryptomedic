@@ -12,8 +12,6 @@ use Illuminate\Support\Facades\Request;
 
 use \References;
 
-// TODO: If the computer key is forgotten, then reset the client...
-
 define("sync_packet_size", 100);
 
 class SyncController extends Controller {
@@ -83,7 +81,7 @@ class SyncController extends Controller {
       // In unit tests, we don't have a computerId...
       $computer = SyncComputer::firstOrNew([ "computer_id" => $computerId ]);
       if (!$computer->last_sync) {
-        // If not known from the system, then resync
+        // If computer not known (anymore?) from the system, then resync
         $old_cp = "";
       }
     } else {
