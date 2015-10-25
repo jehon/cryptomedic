@@ -39,7 +39,7 @@ if (!window.localStorage.cryptomedicComputerId) {
 }
 
 /* service_my_backend */
-var service_my_backend = (function () {
+function service_my_backend_fn() {
     var rest = "/cryptomedic/api/v1.0";
 
     var db = build_db(true);
@@ -131,7 +131,7 @@ var service_my_backend = (function () {
             .then(this.storeData);
         },
     };
-})();
+};
 
 /******* OLD INTERFACE **********/
 /******* OLD INTERFACE **********/

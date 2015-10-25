@@ -71,6 +71,9 @@
 		(new AllScripts("static/css/*.css"))->css()->dependFile()->toPrint();
 
 		?>
+		<script>
+			service_my_backend = service_my_backend_fn();
+		</script>
 	</head>
 	<body ng-app="app_main" ng-controller="ctrl" id="ng-app" >
 		<!--  Navigation bar -->
