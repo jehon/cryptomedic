@@ -81,7 +81,7 @@ class AuthController extends Controller {
 		if (Request::input("computerId", false)) {
 			// Record the computer Id into database and session
 			$computerId = Request::input("computerId");
-			$computer = SyncComputer::firstOrCreate([ "computer_id" => $computerId ]);
+			$computer = SyncComputer::firstOrNew([ "computer_id" => $computerId ]);
 			$computer->useragent = $_SERVER['HTTP_USER_AGENT'];
 			$computer->cryptomedic_version = Request::input("appVersion", "");
 			if (strpos($computer->user_list, Auth::user()->username) === false) {

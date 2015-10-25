@@ -105,7 +105,7 @@ class SyncController extends Controller {
     $computerId = session()->get('computerId');
     if ($computerId) {
       // In unit tests, we don't have a computerId...
-      $computer = SyncComputer::firstOrCreate([ "computer_id" => $computerId ]);
+      // $computer = SyncComputer::firstOrCreate([ "computer_id" => $computerId ]);
       $computer->last_sync = $old_cp;
       $computer->last_sync_final = ($offline['remaining'] == 0);
       $computer->save();
