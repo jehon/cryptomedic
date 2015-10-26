@@ -41,6 +41,15 @@ module.exports = (function() {
       return client;
     };
 
+    this.sync = function() {
+      if (!authenticated) {
+        throw new Error("Cryptomedic: You should be authenticated to use report function");
+      }
+      client
+        .waitForElementVisible("img#sync-ok", timeout)
+      return client;
+    };
+
     this.report = function(reportName, params) {
       if (!authenticated) {
         throw new Error("Cryptomedic: You should be authenticated to use report function");
@@ -72,6 +81,17 @@ module.exports = (function() {
       if (!authenticated) {
           throw new Error("Cryptomedic: You should be authenticated to use report function");
       }
+      this.sync();
+      client
+        .waitForElementVisible('input[ng-model="entryyear"]', timeout)
+        .clearValue('input[ng-model="entryyear"]')
+        .setValue('input[ng-model="entryyear"]', entryyear)
+        .clearValue('input[ng-model="entryorder"]')
+        .setValue('input[ng-model="entryorder"]', entryorder)
+        .waitForElementVisible('[ng-click="checkReference()"]', timeout)
+        .myClick('[ng-click="checkReference()"]')
+        ;
+
       return client;
     }
   };
