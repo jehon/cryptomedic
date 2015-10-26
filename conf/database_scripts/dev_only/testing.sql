@@ -646,13 +646,6 @@ CREATE TABLE IF NOT EXISTS `sync_computers` (
   `queue_size` int(16) DEFAULT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `sync_computers`
---
-
--- INSERT INTO `sync_computers` (`id`, `created_at`, `updated_at`, `lastuser`, `user_list`, `computer_id`, `useragent`, `cryptomedic_version`, `last_sync`, `last_sync_final`, `queue_size`) VALUES
--- (12, '2015-10-10 17:53:11', '2015-10-15 05:16:27', NULL, ',jehon', 'KQeZXEAiklSUaMMY3loUxPPVRrQdZaEA', 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:41.0) Gecko/20100101 Firefox/41.0', '2015-01-01T01:01:01.111', '2015-10-15 04:29:50|2', 1, NULL);
-
 -- --------------------------------------------------------
 
 --
