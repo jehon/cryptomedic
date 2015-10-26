@@ -84,7 +84,18 @@
 		      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#menuMain">
 		        <span class="sr-only">Toggle navigation</span>
 		      </button>
-				<a class="navbar-brand" href="#">Menu</a>
+					<a class="navbar-brand" href="#">Menu</a>
+					<ul class="nav navbar-nav navbar-right" ng-if='server.settings.username'>
+	        	<li ng-if='!sync'><p class="navbar-text">
+	        			<img height="20px" id='sync-unknown' src="static/img/sync/unknown.png">
+	        	</p></li>
+	        	<li ng-if='!sync.isfinal'><p class="navbar-text">
+	        			<img height="20px" id='sync-download' src="static/img/sync/download.png">
+	        	</p></li>
+	        	<li ng-if='sync.isfinal'><p class="navbar-text">
+	        			<img height="20px" id='sync-ok' src="static/img/sync/ok.png">
+	        	</p></li>
+					</ul>
 		    </div>
 
 		    <!-- Collect the nav links, forms, and other content for toggling -->
@@ -93,9 +104,9 @@
 	        	<li><p class="navbar-text" id='login_loggedusername' ng-if='server.settings.username'>{{server.settings.username}}</p></li>
 	        	<li><p class="navbar-text" id='appCache_mode'><?php echo $mode; ?></p></li>
 		      	<li><a href="#/home" class="navbar-link">
-			    	<img src="static/img/home.gif" height="20px"/>
-					Home
-			    </a></li>
+				    	<img src="static/img/home.gif" height="20px"/>
+							Home
+				    </a></li>
 		      	<li><a id='menu_search' href="#/search" class="navbar-link">
 		      		<img src="static/img/patientsSearch.gif" height="20px"/>
 		      		Search a patient
