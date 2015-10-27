@@ -17,7 +17,8 @@ test_dir() {
   shift
   if [ -r phpunit.xml ]; then
     echo -e "\e[0;45m[\e[1;45m$N/phpunit\e[0;45m] Testing $L\e[0m"
-    $PRJ_DIR/vendor/bin/phpunit \
+    #$PRJ_DIR/vendor/bin/
+    phpunit \
         --coverage-html   "$PRJ_DIR/tmp/$N" \
         --coverage-xml    "$PRJ_DIR/tmp/$N" \
         "$@"
