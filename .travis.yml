@@ -27,3 +27,4 @@ script:
 
 after_failure:
 #   - cat rest/storage/log/*
+    - ls tmp/end2end/firefox/
