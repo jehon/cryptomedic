@@ -10,7 +10,6 @@ module.exports = {
         .myClick("#button_submit")
         .pause(2000)
         .waitForElementPresent("#search_results", 1000)
-        .saveScreenshot(client.screenshotsPath + "/search.png")
         .assert.myAssertTableCountRows("#search_results", 1)
         .myClick("#search_results tbody tr:nth-child(1) td:nth-child(1) img")
         .assert.myAssertHashIs("#/folder/1")
