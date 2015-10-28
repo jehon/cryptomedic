@@ -2,13 +2,13 @@
 namespace Jehon\Maintenance;
 
 require_once(__DIR__ . "/lib/extended_session.php");
-require_once(__DIR__ . "/lib/parameters.php");
+require_once(__DIR__ . "/lib/getParameter.php");
 
 use Jehon\Maintenance\Lib;
 
 class BugReporting {
 	protected $db;
-	
+
 	static public function run($db) {
 		?>
 			<style>
@@ -18,22 +18,22 @@ class BugReporting {
 				table, td {
 					border: 1px gray solid;
 					border-collapse: collapse;
-				}	
+				}
 				td {
 					padding-left: 10px;
 					padding-right: 10px;
 					vertical-align: top;
 				}
 			</style>
-		<?php 
+		<?php
 		$bg = new BugReporting($db);
 		$bg->route();
 	}
-	
+
 	public function __construct(Database $db) {
 		$this->db = $db;
 	}
-	
+
 	static public function record(Database $db, $urlBugView) {
 		$res = $db->runPrepareSqlStatement("INSERT INTO bug_reporting"
 				. "(url, session, username, email, description, browser_useragent, browser_state, browser_console, screenshot) "
@@ -50,17 +50,17 @@ class BugReporting {
 						'screenshot' => \Jehon\Maintenance\Lib\getParameter("screenshot")
 				)
 		);
-		
+
 		$id = $db->pdo->lastInsertId();
 		$url_path = $urlBugView . "?id=$id";
-		
+
 		if ($res) {
 			mail("marielineetjean+cryptomedic@gmail.com", "Bug report $id", <<<EMAIL
 		Hello
 				A new bug report has been entered. Please go and see it...
-	
+
 				Bug id = $id
-		
+
 				<a href='{$url_path}'>View it</a><br>
 EMAIL
 		. var_export($_REQUEST, true)
@@ -69,9 +69,9 @@ EMAIL
 			echo "Your bug report has been recorded. You should receive a reply shortly<br>";
 			echo "View it here: <a href='{$url_path}'>your bug report</a>";
 		}
-		
+
 	}
-	
+
 	public function viewList() {
 		// Show listing
 		$list = $this->db->runPrepareSqlStatement("SELECT * FROM bug_reporting WHERE fixed IS NULL");
@@ -98,7 +98,7 @@ EMAIL
 			</table>
 		<?php
 	}
-	
+
 	public function viewOne($id) {
 		try {
 			$list = $this->db->runPrepareSqlStatement("SELECT * FROM bug_reporting WHERE id = :id", array('id' => \Jehon\Maintenance\Lib\getParameter("id")));
@@ -151,7 +151,7 @@ EMAIL
 					<td>Browser Console</td>
 					<td>
 						<table>
-							<?php 
+							<?php
 								foreach(json_decode($bug['browser_console']) as $i => $w) {
 									echo "<tr>";
 										echo "<td>$i</td>";
@@ -183,14 +183,14 @@ EMAIL
 			</table>
 		<?php
 	}
-	
+
 	public function fixIt($id) {
 		echo "<hr>";
 		echo "Fixing bug $id<br>";
 		echo "<hr>";
-		$this->db->runPrepareSqlStatement("UPDATE bug_reporting SET fixed = NOW() WHERE id = :id", array("id" => $id));	
+		$this->db->runPrepareSqlStatement("UPDATE bug_reporting SET fixed = NOW() WHERE id = :id", array("id" => $id));
 	}
-	
+
 	public function route() {
 	 	if (\Jehon\Maintenance\Lib\getParameter("id", -1) < 0) {
 	 		$this->viewList();

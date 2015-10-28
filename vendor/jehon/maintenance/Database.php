@@ -1,7 +1,7 @@
 <?php
 namespace Jehon\Maintenance;
 
-require_once(__DIR__ . "/lib/parameters.php");
+require_once(__DIR__ . "/lib/getParameter.php");
 require_once(__DIR__ . "/lib/myglob.php");
 
 use \PDO;

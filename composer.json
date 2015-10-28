@@ -9,7 +9,7 @@
     ],
 
 	"require": {
-		"jehon/maintenance": ">=2.0"
+		"jehon/maintenance": "master-dev"
 	},
  	"require-dev": {
 		"phpunit/phpunit": "~4"

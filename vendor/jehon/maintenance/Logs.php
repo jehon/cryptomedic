@@ -1,7 +1,7 @@
 <?php
 namespace Jehon\Maintenance;
 
-require_once(__DIR__ . "/lib/parameters.php");
+require_once(__DIR__ . "/lib/getParameter.php");
 require_once(__DIR__ . '/lib/myglob.php');
 
 use Jehon\Maintenance\Lib;
@@ -18,7 +18,7 @@ class Logs {
 			$logs->showOne($logs->files[\Jehon\Maintenance\Lib\getParameter("file")]);
 		}
 	}
-	
+
 	public function __construct($list) {
 		$this->list = $list;
 		$this->files = [ ];
@@ -49,7 +49,7 @@ class Logs {
 		}
 		$this->files[] = $f;
 	}
-	
+
 	public function showOne($file) {
 		echo "<h1>" . $file ."</h1>";
 		echo "<a href='?'>Go listing</a><br>";
@@ -63,7 +63,7 @@ class Logs {
 			var_dump($e);
 		}
 	}
-	
+
 	public function showListing() {
 		foreach($this->files as $i => $f) {
 			if (is_readable($f)) {
@@ -71,7 +71,7 @@ class Logs {
 			} else {
 				echo "$f<br>";
 			}
-		}		
+		}
 	}
 }
-	
+
