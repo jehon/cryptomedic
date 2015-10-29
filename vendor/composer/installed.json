@@ -990,18 +990,18 @@
         "source": {
             "type": "git",
             "url": "https://github.com/jehon/maintenance.git",
-            "reference": "e0730f5508a3aabfe0f83845c7c09a8d686c94e4"
+            "reference": "ce27352fac30e4fd5851b3a0f5f27222891aab51"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/jehon/maintenance/zipball/e0730f5508a3aabfe0f83845c7c09a8d686c94e4",
-            "reference": "e0730f5508a3aabfe0f83845c7c09a8d686c94e4",
+            "url": "https://api.github.com/repos/jehon/maintenance/zipball/ce27352fac30e4fd5851b3a0f5f27222891aab51",
+            "reference": "ce27352fac30e4fd5851b3a0f5f27222891aab51",
             "shasum": ""
         },
         "require-dev": {
             "phpunit/phpunit": "4.8.*"
         },
-        "time": "2015-10-29 05:45:58",
+        "time": "2015-10-29 16:20:02",
         "type": "library",
         "installation-source": "source",
         "autoload": {

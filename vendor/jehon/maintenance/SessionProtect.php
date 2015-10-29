@@ -5,13 +5,13 @@ class SessionProtect {
 	protected $code;
 	protected $source = "";
 	protected $once = false;
-	
+
 	static public function run($code, $token = false) {
 		$session = new SessionProtect($code, $token);
 		$session->protect();
 		$session->showHeader();
 	}
-	
+
 	public function __construct($code, $token = false) {
 		if (!$code) {
 			throw new \Exception("No code given");
@@ -21,19 +21,19 @@ class SessionProtect {
 		}
 		$this->code = $code;
 		$this->token = $token;
-		
+
 		if (!isset($_SESSION)) {
 			session_start();
 		}
-		
+
 		if (!array_key_exists('maintenance_authorized', $_SESSION)) {
 			$_SESSION['maintenance_authorized'] = false;
 		}
-		
+
 		if (array_key_exists("maintenance_logout", $_REQUEST)) {
 			$_SESSION['maintenance_authorized'] = false;
 		}
-		
+
 		if (array_key_exists('maintenance_code', $_REQUEST)) {
 			if ($code == $_REQUEST['maintenance_code']) {
 				$_SESSION['maintenance_authorized'] = true;
@@ -48,7 +48,7 @@ class SessionProtect {
 			}
 		}
 	}
-	
+
 	public function protect() {
 		if (!$_SESSION['maintenance_authorized'] && !$this->once) {
 			http_response_code(403);
@@ -62,14 +62,15 @@ class SessionProtect {
 			die("Not authorized");
 		}
 	}
-	
+
 	public function showHeader() {
-		echo "Authorization: " 
+		if (\Jehon\Maintenance\Lib\getParameter("quiet", false)) {
+			return;
+		}
+		echo "Authorization: "
 				. $this->source
 				. " "
-				. ($this->once ? "once" : "")
-				. "<a href='?maintenance_logout=1'>Logout</a><br>"
-				. "";
-		echo "<hr>";
+				. ($this->once ? "" : "<a href='?maintenance_logout=1'>Logout</a><br><hr>")
+				. "\n";
 	}
 }

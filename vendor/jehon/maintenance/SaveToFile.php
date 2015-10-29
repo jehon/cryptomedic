@@ -15,7 +15,7 @@ class SaveToFile {
 
   static public function run($targetDir) {
     $d = new SaveToFile($targetDir);
-    $d->runOne();
+    return $d->runOne();
   }
 
   public function __construct($targetDir) {
@@ -36,14 +36,12 @@ class SaveToFile {
       $uploadfile = basename($_FILES['file']['name']);
     }
 
-    $uploadfile = $this->targetDir . "/" . preg_replace('/[^a-zA-Z0-9-_.]/', '_', $uploadfile);
+    $uploadfile = preg_replace('/[^a-zA-Z0-9-_.]/', '_', $uploadfile);
 
-    // foreach($_FILES as $f => $data) {
-    if (move_uploaded_file($_FILES['file']['tmp_name'], $uploadfile)) {
-        echo "File is valid, and was successfully uploaded to $uploadfile\n";
-    } else {
-        echo "Possible file upload attack!\n";
+    if (!move_uploaded_file($_FILES['file']['tmp_name'], $this->targetDir . "/" . $uploadfile)) {
+        throw new \Exception("Possible file upload attack?");
     }
-    // }
+    echo "File is valid, and was successfully uploaded to $uploadfile.";
+    return $uploadfile;
   }
 }

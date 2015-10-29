@@ -7,9 +7,13 @@ class TryCatch {
   }
 
   static public function shutdown() {
-    echo "<hr>";
     $error = error_get_last();
     if ($error === null) {
+      if (\Jehon\Maintenance\Lib\getParameter("quiet", false)) {
+        return;
+      }
+
+      echo "<hr>";
       echo "Terminated ok.";
       echo "\n";
       return;
@@ -19,6 +23,7 @@ class TryCatch {
       http_response_code(500);
     }
 
+    echo "<hr>";
     echo "<pre>";
     echo $error['message'];
     echo "\n";
