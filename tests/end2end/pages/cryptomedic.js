@@ -90,8 +90,6 @@ module.exports = (function() {
         .setValue('input[ng-model="entryorder"]', entryorder)
         .waitForElementVisible('[ng-click="checkReference()"]', timeout)
         .myClick('[ng-click="checkReference()"]')
-        // .waitForElementVisible('#folder_id', timeout)
-        // .assert.containsText("#folder_id", id)
         .waitForElementVisible('#Patient_entryyear', timeout)
         .assert.containsText("#Patient_entryyear", entryyear)
         .waitForElementVisible('#Patient_entryorder', timeout)
