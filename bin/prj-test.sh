@@ -5,6 +5,11 @@ set -e
 PRJ_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 PRJ_DIR=$(dirname "$PRJ_DIR")
 echo "Project directory is $PRJ_DIR"
+PHPUNIT="$PRJ_DIR/vendor/bin/phpunit"
+
+if [ "$TRAVIS" ]; then
+  PHPUNIT=phpunit
+fi
 
 cd "$PRJ_DIR"
 
@@ -17,8 +22,7 @@ test_dir() {
   shift
   if [ -r phpunit.xml ]; then
     echo -e "\e[0;45m[\e[1;45m$N/phpunit\e[0;45m] Testing $L\e[0m"
-    #$PRJ_DIR/vendor/bin/
-    phpunit \
+    $PHPUNIT \
         --coverage-html   "$PRJ_DIR/tmp/$N" \
         --coverage-xml    "$PRJ_DIR/tmp/$N" \
         "$@"
