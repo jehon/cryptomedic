@@ -7,7 +7,7 @@ if [ "$1" = "" ]; then
   return 0
 fi
 
-curl
+curl  \
   --header "Token: $RESULT_UPLOAD" \
   -F "travis=test_$TRAVIS_BUILD_NUMBER" \
   -F "original=$1" \
