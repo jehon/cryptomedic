@@ -116,15 +116,16 @@ class Database {
 				}
 
 				$this->runPrepareSqlStatement($query, array(), "running query $i");
-				echo ".";
+				// echo ".";
 				if ($i % 50 == 0) {
 					echo "$i\n";
+					flush();
 				}
 
-				while (ob_get_level() > 0) {
-					ob_end_flush();
-				}
-				flush();
+				// while (ob_get_level() > 0) {
+					// ob_end_flush();
+				// }
+				// flush();
 			}
 
 			if (is_string($query) === true) {

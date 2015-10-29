@@ -30,16 +30,20 @@ class SaveToFile {
       }
     }
 
-    foreach($_FILES as $f => $data) {
-    // $f = "file";
-      $uploadfile = $this->targetDir . "/" . basename($_FILES[$f]['name']);
-      if (move_uploaded_file($_FILES[$f]['tmp_name'], $uploadfile)) {
-          echo "File is valid, and was successfully uploaded to $uploadfile\n";
-      } else {
-          echo "Possible file upload attack!\n";
-          var_dump($_FILES[$f]);
-      }
+    if (array_key_exists('original', $_REQUEST) && $_REQUEST['original']) {
+      $uploadfile = $_REQUEST['original'];
+    } else {
+      $uploadfile = basename($_FILES['file']['name']);
     }
-    echo "\n";
+
+    $uploadfile = $this->targetDir . "/" . preg_replace('/[^a-zA-Z0-9-_.]/', '_', $uploadfile);
+
+    // foreach($_FILES as $f => $data) {
+    if (move_uploaded_file($_FILES['file']['tmp_name'], $uploadfile)) {
+        echo "File is valid, and was successfully uploaded to $uploadfile\n";
+    } else {
+        echo "Possible file upload attack!\n";
+    }
+    // }
   }
 }
