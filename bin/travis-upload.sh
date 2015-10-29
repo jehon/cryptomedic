@@ -1,7 +1,6 @@
 #!/bin/bash
 
 HOST=http://www.cryptomedic.org/
-HOST=http://localhost/
 
 if [ "$1" = "" ]; then
   echo "No file given"
