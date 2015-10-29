@@ -28,4 +28,5 @@ script:
 
 after_failure:
 #   - cat rest/storage/log/*
-    - ls tmp/end2end/firefox/
+  - find tmp/ -name "*.png"
+  - find tmp/ -name "*.png" -exec "bin/travis-upload.sh" "{}" ";"
