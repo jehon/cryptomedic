@@ -95,6 +95,7 @@ class SyncTest extends RouteReferenceTestCase {
 		// Change patient
 		DB::statement("UPDATE patients SET updated_at = NOW() + " . self::$timeShift++ . " WHERE id = 1");
 		$offline = self::getNext(1);
+		var_dump($offline);
 		$this->assertArrayHasKey(0, $offline->data);
 		$this->assertEquals(1, $offline->data[0]->record->id);
 		$this->isFinal();
@@ -102,6 +103,7 @@ class SyncTest extends RouteReferenceTestCase {
 		// Change file
 		DB::statement("UPDATE bills SET updated_at = NOW() + " . self::$timeShift++ . " WHERE patient_id = 3 LIMIT 1");
 		$offline = self::getNext(1);
+		var_dump($offline);
 		$this->assertArrayHasKey(0, $offline->data);
 		$this->assertEquals(3, $offline->data[0]->record->id);
 		$this->isFinal();
