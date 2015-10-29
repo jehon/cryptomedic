@@ -5,7 +5,7 @@ require_once("RouteReferenceTestCase.php");
 class SyncTest extends RouteReferenceTestCase {
 	protected $cp = "";
 	protected $offline = null;
-	static protected $timeShift = 1;
+	static protected $timeShift = 2;
 	static protected $initialCP = "";
 
 	protected function showURL() {
