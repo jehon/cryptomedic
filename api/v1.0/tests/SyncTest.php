@@ -93,7 +93,8 @@ class SyncTest extends RouteReferenceTestCase {
 		$this->isFinal();
 
 		// Change patient
-		DB::statement("UPDATE patients SET updated_at = NOW() + " . self::$timeShift++ . " WHERE id = 1");
+		$res = DB::statement("UPDATE patients SET updated_at = NOW() + " . self::$timeShift++ . " WHERE id = 1 LIMIT 1");
+		var_dump($res);
 		$offline = self::getNext(1);
 		var_dump($offline);
 		$this->assertArrayHasKey(0, $offline->data);
@@ -101,7 +102,8 @@ class SyncTest extends RouteReferenceTestCase {
 		$this->isFinal();
 
 		// Change file
-		DB::statement("UPDATE bills SET updated_at = NOW() + " . self::$timeShift++ . " WHERE patient_id = 3 LIMIT 1");
+		$res = DB::statement("UPDATE bills SET updated_at = NOW() + " . self::$timeShift++ . " WHERE patient_id = 3 LIMIT 1");
+		var_dump($res);
 		$offline = self::getNext(1);
 		var_dump($offline);
 		$this->assertArrayHasKey(0, $offline->data);
@@ -110,7 +112,9 @@ class SyncTest extends RouteReferenceTestCase {
 
 		// Simulating deleting a sub file for a patient
 		$res = DB::statement("INSERT INTO deleteds(created_at, patient_id, entity_type, entity_id) VALUES (NOW() + " . self::$timeShift++ . ", '4', 'bills', '10'); ");
+		var_dump($res);
 		$offline = self::getNext(1);
+		var_dump($offline);
 		$this->assertArrayHasKey(0, $offline->data);
 		$this->assertEquals(4, $offline->data[0]->record->id);
 		$this->isFinal();
