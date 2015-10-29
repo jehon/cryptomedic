@@ -10,4 +10,6 @@ use Jehon\Maintenance\Lib\getParameter;
 \Jehon\Maintenance\TryCatch::run();
 \Jehon\Maintenance\SessionProtect::run(getGlobalConfig("travis.upload"));
 
-\Jehon\Maintenance\SaveToFile::run(__DIR__ . "/../../travis/" . filter_input(INPUT_POST, "travis", FILTER_SANITIZE_STRING));
+$file = \Jehon\Maintenance\SaveToFile::run(__DIR__ . "/../../travis/" . filter_input(INPUT_POST, "travis", FILTER_SANITIZE_STRING));
+
+echo "<a href=http://www.cryptomedic.org/travis/$file'>$file</a>";
