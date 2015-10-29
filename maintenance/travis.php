@@ -12,4 +12,4 @@ use Jehon\Maintenance\Lib\getParameter;
 
 $file = \Jehon\Maintenance\SaveToFile::run(__DIR__ . "/../../travis/" . filter_input(INPUT_POST, "travis", FILTER_SANITIZE_STRING));
 
-echo "<a href=http://www.cryptomedic.org/travis/$file'>$file</a>";
+echo " => http://www.cryptomedic.org/travis/$file\n";
