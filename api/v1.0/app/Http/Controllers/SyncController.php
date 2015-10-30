@@ -56,8 +56,8 @@ class SyncController extends Controller {
 
   public function _getList($cp, $n) {
     $sqlu = $this->_getUnionSQL($cp);
-    echo $sqlu;
-    var_dump($this->sqlParamsUnion);
+    // echo $sqlu;
+    // var_dump($this->sqlParamsUnion);
 
     $res = DB::select($sqlu . "ORDER BY MAX(ts), patient_id LIMIT $n", $this->sqlParamsUnion);
     //$res = DB::select("SELECT * FROM ($sqlu) as p ORDER BY MAX(ts), patient_id LIMIT $n", $this->sqlParamsUnion);
