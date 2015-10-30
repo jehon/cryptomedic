@@ -26,7 +26,7 @@ class SyncController extends Controller {
     $id = $cpe[1];
 
     $list = References::$model2db + [ "Deleted" => "deleteds" ];
-    return "SELECT MAX(ts) as ts, patient_id, MAX(t) as t \n FROM ("
+    return "SELECT MAX(ts) as ts, patient_id \n FROM ("
         . implode(" \n UNION \n ",
           array_map(
               function($t, $m) use ($ts, $id) {
@@ -34,11 +34,13 @@ class SyncController extends Controller {
                 $this->sqlParamsUnion["ts0_{$m}"]    = $this->sqlParamsUnion["ts1_{$m}"]    = $ts;
                 $this->sqlParamsUnion["id1_{$m}"]    = $id;
                 return "("
-                    . "SELECT greatest(created_at, updated_at) as ts, '$t' as t, $patient_id as patient_id"
+                    . "SELECT greatest(created_at, updated_at) as ts, $patient_id as patient_id"
                     . " FROM $t "
                     . " WHERE (greatest(created_at, updated_at) > :ts0_{$m}) "
+                    // . "   OR (greatest(created_at, updated_at) = NOW())"
                     . "   OR ((greatest(created_at, updated_at) = :ts1_{$m}) AND ($patient_id > :id1_{$m}))"
-                    . " ORDER BY greatest(created_at, updated_at), $patient_id)";
+                    // . " ORDER BY greatest(created_at, updated_at), $patient_id"
+                    .")";
               }, $list, array_keys($list)
           )
         )
@@ -54,10 +56,11 @@ class SyncController extends Controller {
 
   public function _getList($cp, $n) {
     $sqlu = $this->_getUnionSQL($cp);
-    // echo $sqlu;
-    // var_dump($this->sqlParamsUnion);
+    echo $sqlu;
+    var_dump($this->sqlParamsUnion);
 
     $res = DB::select($sqlu . "ORDER BY MAX(ts), patient_id LIMIT $n", $this->sqlParamsUnion);
+    //$res = DB::select("SELECT * FROM ($sqlu) as p ORDER BY MAX(ts), patient_id LIMIT $n", $this->sqlParamsUnion);
     $data = [];
 
     foreach($res as $i => $r) {
@@ -67,7 +70,6 @@ class SyncController extends Controller {
       } else {
         $data[$i] = [ 'id' => $r->patient_id, '_deleted' => true ];
       }
-      //$data[$i]['_dueTo'] = $r->t . "#" . $r->patient_id;
       $data[$i]['checkpoint'] = $r->ts . "|" . $r->patient_id;
     }
 
