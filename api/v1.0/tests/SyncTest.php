@@ -85,18 +85,11 @@ class SyncTest extends RouteReferenceTestCase {
 		self::$initialCP = $this->cp;
 	}
 
-	public function testChangesInDatabase() {
-		$this->cp = self::$initialCP;
-
-		// The sync is final before starting
-		$offline = self::getNext(1);
-		$this->isFinal();
-
+	public function _createSyncAndDelete() {
 		// Change patient
 		$res = DB::statement("UPDATE patients SET updated_at = NOW() + " . self::$timeShift++ . " WHERE id = 1 LIMIT 1");
 		$this->assertTrue($res);
 		$offline = self::getNext(1);
-		var_dump($offline);
 		$this->assertArrayHasKey(0, $offline->data, "First step: update patient");
 		$this->assertEquals(1, $offline->data[0]->record->id);
 		$this->isFinal();
@@ -105,7 +98,6 @@ class SyncTest extends RouteReferenceTestCase {
 		$res = DB::statement("UPDATE bills SET updated_at = NOW() + " . self::$timeShift++ . " WHERE patient_id = 3 LIMIT 1");
 		$this->assertTrue($res);
 		$offline = self::getNext(1);
-		var_dump($offline);
 		$this->assertArrayHasKey(0, $offline->data, "Second step: update bill");
 		$this->assertEquals(3, $offline->data[0]->record->id);
 		$this->isFinal();
@@ -114,9 +106,23 @@ class SyncTest extends RouteReferenceTestCase {
 		$res = DB::statement("INSERT INTO deleteds(created_at, patient_id, entity_type, entity_id) VALUES (NOW() + " . self::$timeShift++ . ", '4', 'bills', '10'); ");
 		$this->assertTrue($res);
 		$offline = self::getNext(1);
-		var_dump($offline);
 		$this->assertArrayHasKey(0, $offline->data, "Third step: deleted");
 		$this->assertEquals(4, $offline->data[0]->record->id);
 		$this->isFinal();
+
+	}
+
+	public function testChangesInDatabase() {
+		$this->cp = self::$initialCP;
+
+		// The sync is final before starting
+		$offline = self::getNext(1);
+		$this->isFinal();
+		$this->_createSyncAndDelete();
+	}
+
+	public function testAThousandTimes() {
+		for($i = 0; $i < 1000; $i++)
+			$this->_createSyncAndDelete();
 	}
 }
