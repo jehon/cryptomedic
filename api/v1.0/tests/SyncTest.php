@@ -14,9 +14,23 @@ class SyncTest extends RouteReferenceTestCase {
 		echo "\n";
 	}
 
-	public function isFinal() {
-		$this->assertObjectHasAttribute('isfinal', $this->offline);
-		$this->assertEquals(1, $this->offline->isfinal);
+	// public function _isFinal() {
+	// 	$this->assertObjectHasAttribute('isfinal', $this->offline);
+	// 	$this->assertEquals(1, $this->offline->isfinal);
+	// }
+
+	public function _hasPatient($id, $msg = null) {
+		$msg = $msg || "has patient $id";
+		foreach($this->offline->data as $i => $item) {
+			if (property_exists($item, 'record') && ($item->record->id == $id)) {
+				return true;
+			}
+			if (property_exists(($item), "_deleted") && ($item->id == $id)) {
+				return true;
+			}
+		}
+		var_dump($this->offline);
+		return false;
 	}
 
 	public function getNext($n = 1) {
@@ -29,12 +43,18 @@ class SyncTest extends RouteReferenceTestCase {
 		if (!property_exists($offline, "isfinal") || !$offline->isfinal) {
 			$this->assertObjectHasAttribute('data', $offline);
 		}
-		$this->assertObjectHasAttribute('checkpoint', $offline);
+		// $this->assertObjectHasAttribute('checkpoint', $offline);
 		if (!$this->cp) {
 			$this->assertObjectHasAttribute('reset', $offline);
 			$this->assertEquals(1, $offline->reset);
 		}
-		$this->cp = $offline->checkpoint;
+		if (count($offline->data) > 0) {
+			$newCP = end($offline->data)->checkpoint;
+			if ($newCP) {
+				$this->cp = $newCP;
+			}
+		}
+		// $this->cp = $offline->checkpoint;
 		$this->offline = $offline;
 		return $offline;
 	}
@@ -49,80 +69,67 @@ class SyncTest extends RouteReferenceTestCase {
 	}
 
 	public function testFlow() {
-		$offline = self::getNext(1);
-		$this->assertArrayHasKey(0, $offline->data);
-		$this->assertEquals(7, $offline->data[0]->record->id);
+		$offline = $this->getNext(1);
+		$this->assertTrue($this->_hasPatient(7));
 
-		$offline = self::getNext(1);
-		$this->assertArrayHasKey(0, $offline->data);
-		$this->assertEquals(3, $offline->data[0]->record->id);
+		$offline = $this->getNext(1);
+		$this->assertTrue($this->_hasPatient(3));
 
-		$offline = self::getNext(1);
-		$this->assertArrayHasKey(0, $offline->data);
-		$this->assertEquals(4, $offline->data[0]->record->id);
+		$offline = $this->getNext(1);
+		$this->assertTrue($this->_hasPatient(4));
 
-		$offline = self::getNext(1);
-		$this->assertArrayHasKey(0, $offline->data);
-		$this->assertEquals(1, $offline->data[0]->record->id);
+		$offline = $this->getNext(1);
+		$this->assertTrue($this->_hasPatient(1));
 
-		$offline = self::getNext(1);
-		$this->assertArrayHasKey(0, $offline->data);
-		$this->assertEquals(6, $offline->data[0]->record->id);
+		$offline = $this->getNext(1);
+		$this->assertTrue($this->_hasPatient(6));
 
-		$offline = self::getNext(1);
-		$this->assertArrayHasKey(0, $offline->data);
-		$this->assertEquals(5, $offline->data[0]->record->id);
+		$offline = $this->getNext(1);
+		$this->assertTrue($this->_hasPatient(5));
 
-		$offline = self::getNext(1);
-		$this->assertArrayHasKey(0, $offline->data);
-		$this->assertEquals(9, $offline->data[0]->id);
+		$offline = $this->getNext(1);
+		// $this->assertArrayHasKey(0, $offline->data);
+		// $this->assertEquals(9, $offline->data[0]->id);
+		$this->assertTrue($this->_hasPatient(9));
 
-		$offline = self::getNext(1);
-		$this->assertArrayHasKey(0, $offline->data);
-		$this->assertEquals(2, $offline->data[0]->record->id);
-		$this->isFinal();
+		$offline = $this->getNext(1);
+		$this->assertTrue($this->_hasPatient(2));
+		// $this->_isFinal();
 
 		self::$initialCP = $this->cp;
 	}
 
-	public function _createSyncAndDelete() {
+	public function _createSyncAndDelete($cnt) {
 		// Change patient
 		$res = DB::statement("UPDATE patients SET updated_at = NOW() + " . self::$timeShift++ . " WHERE id = 1 LIMIT 1");
 		$this->assertTrue($res);
-		$offline = self::getNext(1);
-		$this->assertArrayHasKey(0, $offline->data, "First step: update patient");
-		$this->assertEquals(1, $offline->data[0]->record->id);
-		$this->isFinal();
+		$offline = self::getNext(10);
+		$this->assertTrue($this->_hasPatient(1), "Update patient #" . $cnt);
 
 		// Change file
 		$res = DB::statement("UPDATE bills SET updated_at = NOW() + " . self::$timeShift++ . " WHERE patient_id = 3 LIMIT 1");
 		$this->assertTrue($res);
-		$offline = self::getNext(1);
-		$this->assertArrayHasKey(0, $offline->data, "Second step: update bill");
-		$this->assertEquals(3, $offline->data[0]->record->id);
-		$this->isFinal();
+		$offline = self::getNext(10);
+		$this->assertTrue($this->_hasPatient(3), "Update bill #" . $cnt);
 
 		// Simulating deleting a sub file for a patient
 		$res = DB::statement("INSERT INTO deleteds(created_at, patient_id, entity_type, entity_id) VALUES (NOW() + " . self::$timeShift++ . ", '4', 'bills', '10'); ");
 		$this->assertTrue($res);
-		$offline = self::getNext(1);
-		$this->assertArrayHasKey(0, $offline->data, "Third step: deleted");
-		$this->assertEquals(4, $offline->data[0]->record->id);
-		$this->isFinal();
-
+		$offline = self::getNext(10);
+		$this->assertTrue($this->_hasPatient(4), "Delete one #" . $cnt);
 	}
 
 	public function testChangesInDatabase() {
 		$this->cp = self::$initialCP;
 
 		// The sync is final before starting
-		$offline = self::getNext(1);
-		$this->isFinal();
-		$this->_createSyncAndDelete();
+		$offline = self::getNext(10);
+		// $this->_isFinal();
+		$this->_createSyncAndDelete("#");
 	}
 
 	public function testAThousandTimes() {
-		for($i = 0; $i < 1000; $i++)
-			$this->_createSyncAndDelete();
+		for($i = 0; $i < 100; $i++)
+			$this->_createSyncAndDelete($i);
 	}
 }

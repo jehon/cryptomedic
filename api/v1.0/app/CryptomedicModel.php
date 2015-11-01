@@ -1,7 +1,5 @@
 <?php namespace App;
 
-#require_once __DIR__ . "/../../../php/references.php";
-
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
@@ -35,7 +33,7 @@ class CryptomedicModel extends Model {
 		return parent::create($attributes);
 	}
 
-	public function save(array $options = Array()) {
+	public function save(array $options = array()) {
 		if ($this->isDirty()) {
 			$this->lastuser = Auth::user()->username;
 			return parent::save($options);
