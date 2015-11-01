@@ -84,7 +84,9 @@ function storeData(offdata) {
     if (offdata.reset) {
         promise = promise.then(function() {
             console.info("Worker: resetting the database patients");
-            return db.clear();
+            return db.clear().then(function() {
+                db.updateCheckpoint("");
+            });
         });
     }
     if (offdata.data) {
@@ -102,13 +104,13 @@ function storeData(offdata) {
                     offdata.isfinal = false;
                 }
                 mySendEvent("progress", {
-                    "checkpoint": 	offdata.checkpoint,
+                    // "checkpoint": 	offdata.checkpoint,
                     "isfinal": 		offdata.isfinal,
                     "remaining": 	parseInt(offdata.remaining),
                     "done":		parseInt(offdata.data.length)
                 });
             }, function(e) {
-        	// Catch error and display it
+            	// Catch error and display it
                 console.error("Error in bulk insert", e);
                 throw e;
             });

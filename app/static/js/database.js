@@ -1,11 +1,11 @@
 "use strict";
 
 function plog(p) {
-    return p
-        .then(function(data) {
-        console.log(data);
+  return p
+    .then(function(data) {
+      console.log(data);
     }, function(error) {
-        console.error(error);
+      console.error(error);
     });
 }
 
@@ -15,7 +15,7 @@ Dexie.Promise.on("error", function(e) {
 
 /**
  * Build up the db_patients service
- * 
+ *
  * @param withVersions if true, upgrade the database
  * @returns a db_patients proxy
  */
@@ -51,12 +51,12 @@ function build_db(withVersions) {
         p.id = "" + p.id;
         });
     });
-    
+
     db.version(6).stores({
         patients: '++id,[mainFile.entryyear+mainFile.entryorder]',
         settings: 'key'
     });
-    
+
     db.open();
 
     // ------------------ Business functions ------------------------------
@@ -72,7 +72,7 @@ function build_db(withVersions) {
             }
         });
     }
-    
+
     /**
      * Get the folder by the reference
      */
@@ -86,31 +86,34 @@ function build_db(withVersions) {
         });
     }
 
-    // ------------------ Enhanced functions ------------------------------
-    function updateCheckpoint(cp) {
-        var key = "checkpoint";
-        //console.log("updateCheckpoint", cp);
-        if (cp == false) {
-    //      console.log("DB: resetting CP");
-            return setSetting(key, "");
-        } else {
-            return getSetting(key, "").then(function(val) {
-                if (!val || val < cp) {
-    //              console.log("Changing checkpoint: ", cp);
-                    return setSetting(key, cp);
-                } else {
-    //              console.log("Not changing checkpoint: ", cp, val);
-                    return val;
-                }
-            })
-        }
+  // ------------------ Enhanced functions ------------------------------
+  function updateCheckpoint(cp) {
+    var key = "checkpoint";
+    //console.log("updateCheckpoint", cp);
+    if (cp == "") {
+      return Promise.resolve("");
     }
-    
+    if (cp === false) {
+      console.log("DB: resetting CP");
+      return setSetting(key, "");
+    } else {
+      return getSetting(key, "").then(function(val) {
+        if (!val || val < cp) {
+          console.log("Changing checkpoint: ", cp);
+          return setSetting(key, cp);
+        } else {
+          console.log("Not changing checkpoint: ", cp, val);
+          return val;
+        }
+      })
+    }
+  }
+
     /**
      * Insert data in bulk, in one transaction (faster than the simple insert)
-     * 
+     *
      * The checkpoint is automatically inserted into the settings table.
-     * 
+     *
      * @param bulk: array of object to be inserted if the bulk[].key = "_deleted",
      *                delete it otherwise, store bulk[].record into the store
      */
@@ -123,7 +126,7 @@ function build_db(withVersions) {
                     if (bulk[key]['_deleted']) {
                        req = db.patients.delete("" + key);
                     } else {
-                       bulk[key]['record']['id'] = "" + bulk[key]['record']['id']; 
+                       bulk[key]['record']['id'] = "" + bulk[key]['record']['id'];
                        req = db.patients.put(bulk[key]['record']);
                     }
                     req.then(function() {
@@ -143,26 +146,26 @@ function build_db(withVersions) {
         return prevPromise;
     };
 
-    // ------------------ System functions ------------------------------
-    function getSetting(key, def) {
-    return db.settings.get("" + key).then(function(data) {
-            if (data) {
-            return data.value;
-            } else {
-            def = def || false;
-            return def;
-            }
-        });
-    }
-    
-    function setSetting(key, value) {
-        return db.settings.put({ key: "" + key, value: value})
-            .then(function(data) {
-                // Prefer to return the value than the key
-                return value;
-        });
-    }
-    
+  // ------------------ System functions ------------------------------
+  function getSetting(key, def) {
+  return db.settings.get("" + key).then(function(data) {
+      if (data) {
+        return data.value;
+      } else {
+        def = def || false;
+        return def;
+      }
+    });
+  }
+
+  function setSetting(key, value) {
+    return db.settings.put({ key: "" + key, value: value})
+      .then(function(data) {
+        // Prefer to return the value than the key
+        return value;
+    });
+  }
+
     function clear() {
         return db.patients.clear().then(function() {
            return db.settings.clear();
@@ -172,13 +175,13 @@ function build_db(withVersions) {
     function version() {
        return db.verno;
     }
-    
+
     return {
         'getFolder': getFolder,
         'getByReference': getByReference,
         'bulkUpdate': bulkUpdate,
         'updateCheckpoint': updateCheckpoint,
-        
+
         'getSetting': getSetting,
         'setSetting': setSetting,
         'clear': clear,
