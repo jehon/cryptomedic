@@ -129,7 +129,9 @@ class SyncController extends Controller {
     // Store the information for helping understanding what is happening out there...
     if ($computer) {
       // In unit tests, we don't have a computerId...
-      $computer->last_sync = $new_checkpoint;
+      if ($new_checkpoint) {
+        $computer->last_sync = $new_checkpoint;
+      }
       $computer->last_sync_final = ($offline['remaining'] == 0);
       $computer->save();
     }
