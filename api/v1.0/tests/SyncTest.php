@@ -5,7 +5,6 @@ require_once("RouteReferenceTestCase.php");
 class SyncTest extends RouteReferenceTestCase {
 	protected $cp = "";
 	protected $offline = null;
-	static protected $timeShift = 2;
 	static protected $initialCP = "";
 
 	protected function showURL() {
@@ -25,11 +24,17 @@ class SyncTest extends RouteReferenceTestCase {
 			if (property_exists($item, 'record') && ($item->record->id == $id)) {
 				return true;
 			}
+		}
+		return false;
+	}
+
+	public function _hasDeleted($id, $msg = null) {
+		$msg = $msg || "deletes patient $id";
+		foreach($this->offline->data as $i => $item) {
 			if (property_exists(($item), "_deleted") && ($item->id == $id)) {
 				return true;
 			}
 		}
-		var_dump($this->offline);
 		return false;
 	}
 
@@ -88,9 +93,7 @@ class SyncTest extends RouteReferenceTestCase {
 		$this->assertTrue($this->_hasPatient(5));
 
 		$offline = $this->getNext(1);
-		// $this->assertArrayHasKey(0, $offline->data);
-		// $this->assertEquals(9, $offline->data[0]->id);
-		$this->assertTrue($this->_hasPatient(9));
+		$this->assertTrue($this->_hasDeleted(9));
 
 		$offline = $this->getNext(1);
 		$this->assertTrue($this->_hasPatient(2));
@@ -101,22 +104,22 @@ class SyncTest extends RouteReferenceTestCase {
 
 	public function _createSyncAndDelete($cnt) {
 		// Change patient
-		$res = DB::statement("UPDATE patients SET updated_at = NOW() + " . self::$timeShift++ . " WHERE id = 1 LIMIT 1");
+		$res = DB::statement("UPDATE patients SET updated_at = NOW() WHERE id = 1 LIMIT 1");
 		$this->assertTrue($res);
 		$offline = self::getNext(10);
 		$this->assertTrue($this->_hasPatient(1), "Update patient #" . $cnt);
 
 		// Change file
-		$res = DB::statement("UPDATE bills SET updated_at = NOW() + " . self::$timeShift++ . " WHERE patient_id = 3 LIMIT 1");
+		$res = DB::statement("UPDATE bills SET updated_at = NOW() WHERE patient_id = 3 LIMIT 1");
 		$this->assertTrue($res);
 		$offline = self::getNext(10);
 		$this->assertTrue($this->_hasPatient(3), "Update bill #" . $cnt);
 
 		// Simulating deleting a sub file for a patient
-		$res = DB::statement("INSERT INTO deleteds(created_at, patient_id, entity_type, entity_id) VALUES (NOW() + " . self::$timeShift++ . ", '4', 'bills', '10'); ");
+		$res = DB::statement("INSERT INTO deleteds(created_at, patient_id, entity_type, entity_id) VALUES (NOW(), '1010', 'bills', '10'); ");
 		$this->assertTrue($res);
 		$offline = self::getNext(10);
-		$this->assertTrue($this->_hasPatient(4), "Delete one #" . $cnt);
+		$this->assertTrue($this->_hasDeleted(1010), "Delete one #" . $cnt);
 	}
 
 	public function testChangesInDatabase() {
@@ -125,10 +128,10 @@ class SyncTest extends RouteReferenceTestCase {
 		// The sync is final before starting
 		$offline = self::getNext(10);
 		// $this->_isFinal();
-		$this->_createSyncAndDelete("#");
+		$this->_createSyncAndDelete("-");
 	}
 
-	public function testAThousandTimes() {
+	public function testALotOfTimes() {
 		for($i = 0; $i < 100; $i++)
 			$this->_createSyncAndDelete($i);
 	}
