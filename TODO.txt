@@ -1,6 +1,0 @@
-TODO Bills:  
- 1/ dans la bill partie "surgical item", il faudrait enlever les item "percutaneous achil tenotomy bi cmosh", "percutaneous AL club foot"
- 2/ je viens de te faire une requète concernant l\'annulation des item chirurgicaux "tenotomy", ceux qui sont codés il faut les transférer dans l\'item "percutaneous achil tenotomy bi cdc
-	
-TODO rendez-vous:
-  Pour créer un nouveau rendez-vous de consultation il faut obligatoirement faire une fiche de consultation. Souvent cette consultation n\'a pas forcément eut lieu et on crée donc une fiche sans information utile. Serait-il possible de rajouter dans les possibilités de "add" une fonction donner un rendez vous de consultation sans forcément ouvrir une fiche de consult?

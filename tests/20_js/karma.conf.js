@@ -17,7 +17,7 @@ module.exports = function(config) {
     basePath : '../../',
 
     files : [
-              'tests/js/kickoff.js',
+              'tests/20_js/kickoff.js',
               'app/bower_components/jquery/dist/jquery.min.js',
               'app/bower_components/angular/angular.js',
               'app/bower_components/angular-route/angular-route.js',
@@ -29,8 +29,8 @@ module.exports = function(config) {
               'app/static/js/cryptomedic.js',
               'app/static/js/exceptions*.js',
               'app/static/js/model*.js',
-              'tests/js/**/*.js',
-              { pattern : 'tests/js/mocks/*.json', watched : true, served : true, included : false }
+              'tests/20_js/**/*.js',
+              { pattern : 'tests/20_js/mocks/*.json', watched : true, served : true, included : false }
             ],
 
     autoWatch : true,

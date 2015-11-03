@@ -1,5 +1,0 @@
-
-RewriteEngine on
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ ../cache_generator/generator.php?target=$1 [L,qsappend]
