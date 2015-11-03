@@ -14,10 +14,10 @@ class SyncTest extends RouteReferenceTestCase {
 		echo "\n";
 	}
 
-	// public function _isFinal() {
-	// 	$this->assertObjectHasAttribute('isfinal', $this->offline);
-	// 	$this->assertEquals(1, $this->offline->isfinal);
-	// }
+	public function _isFinal() {
+		$this->assertObjectHasAttribute('isfinal', $this->offline);
+		$this->assertEquals(1, $this->offline->isfinal);
+	}
 
 	public function _hasPatient($id, $msg = null) {
 		$msg = $msg || "has patient $id";

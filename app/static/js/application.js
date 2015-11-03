@@ -312,7 +312,6 @@ mainApp.controller('ctrl', [ '$scope', '$location', 'service_backend', function(
   $scope.cryptomedic = cryptomedic;
   $scope.application = application;
   $scope.server = server;
-  $scope.syncProgressMax = 0;
 
   $scope.safeApply = function (fn) {
     if (this.$root && (this.$root.$$phase == '$apply' || this.$root.$$phase == '$digest')) {
@@ -331,7 +330,7 @@ mainApp.controller('ctrl', [ '$scope', '$location', 'service_backend', function(
     $location.path( path );
   };
 
-  $scope.sync = { lastSync: '?', _final: false };
+  $scope.sync = false;
 
   $scope.busy = [];
   $scope.busy.messages = [ ];
@@ -400,10 +399,6 @@ mainApp.controller('ctrl', [ '$scope', '$location', 'service_backend', function(
   myEvents.on('backend_progress', function(data) {
     console.log(data);
     $scope.sync = data;
-    $scope.syncProgressMax = Math.max(data.remaining + data.done, $scope.syncProgressMax);
-    if ($scope.sync.isfinal) {
-      $scope.syncProgressMax = 0;
-    }
     $scope.safeApply();
   }, false);
 
@@ -457,12 +452,6 @@ mainApp.controller('ctrl', [ '$scope', '$location', 'service_backend', function(
       .myFinallyDone(function() {
         busyEnd();
       });
-  };
-
-  $scope.doSync = function() {
-    service_my_backend.sync().then(function(data) {
-        console.log("sync executed");
-    })
   };
 
   $scope.doLogout = function() {

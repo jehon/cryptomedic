@@ -40,28 +40,27 @@ if (!window.localStorage.cryptomedicComputerId) {
 
 /* service_my_backend */
 function service_my_backend_fn() {
-    var rest = "/cryptomedic/api/v1.0";
+  var rest = "/cryptomedic/api/v1.0";
 
-    var db = build_db(true);
+  var db = build_db(true);
 
-    var worker = new Worker("static/worker/worker.js");
+  var worker = new Worker("static/worker/worker.js");
     worker.onerror = function(e) {
     console.error("@service: Error in worker: ", e);
-    };
+  };
 
-    worker.onmessage = function(e) {
-        var name = e.data.name;
-        var data = e.data.data;
-        // console.log('@service: ' + name + ': ', data);
-        switch(name) {
-            case "progress":
-                // localStorage.cryptomedicLastSync = data.checkpoint;
-                // To be compatible with old version
-                myEvents.trigger("backend_cache_progress", data);
-                    break;
-        }
+  worker.onmessage = function(e) {
+    var name = e.data.name;
+    var data = e.data.data;
+    switch(name) {
+      case "progress":
+        // localStorage.cryptomedicLastSync = data.checkpoint;
+        // To be compatible with old version
+        myEvents.trigger("backend_cache_progress", data);
+        break;
+      }
         // Propagate event
-        myEvents.trigger("backend_" + name, data);
+      myEvents.trigger("backend_" + name, data);
     };
 
     function mySendAction(name, data) {
@@ -70,7 +69,7 @@ function service_my_backend_fn() {
 
     mySendAction("init", {});
 
-    return {
+  return {
     /* Authentification */
     'login': function(username, password) {
         return myFetch(rest + "/auth/mylogin", { method: "POST" },
@@ -122,7 +121,10 @@ function service_my_backend_fn() {
         return db.getByReference(year, order);
     },
     'clear': function() {
-        return db.clear();
+      return db.clear()
+        .then(function() {
+          myEvents.trigger("backend_progress", { isfinal: false, data: false });
+        });
     },
 
     // Go to the rest server

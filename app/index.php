@@ -86,12 +86,12 @@
           </button>
           <a class="navbar-brand" href="#">Menu</a>
           <ul class="nav navbar-nav navbar-right" ng-if='server.settings.username'>
-            <li ng-if='!sync'><p class="navbar-text">
+            <li ng-hide='sync'><p class="navbar-text">
                 <img height="20px" id='sync-unknown' src="static/img/sync/unknown.png"
                   data-toggle="tooltip" data-placement="bottom" title="Connecting to the server to get status of your browser"
                   >
             </p></li>
-            <li ng-if='!sync.isfinal'><p class="navbar-text">
+            <li ng-show='!sync.isfinal'><p class="navbar-text">
                 <img height="20px" id='sync-download' src="static/img/sync/download.png"
                   data-toggle="tooltip" data-placement="bottom" title="Copying data from the server into your browser"
                   >

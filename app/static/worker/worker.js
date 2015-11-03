@@ -10,9 +10,9 @@
     - manage http error (timeout, etc...)
 
     ** service -> worker (actions):
-    init 		-> / (launch first sync) ==> temp?
-    userLogin 	-> user settings
-    userLogout 	-> ok
+    init    -> / (launch first sync) ==> temp?
+    userLogin   -> user settings
+    userLogout  -> ok
 
     ** worker -> service (events):
     -> progress({ sync status, queue length })
@@ -27,13 +27,13 @@
     Signing Queue principle
     - when connecting, a key is generated
     - all changes are stored locally, in a "queue"
-    	- the queue is signed with a key received from the server
-    	- test it with simple changes (save-and-queue and unlock-and-queue?)
-    	- a gui element show the queue status
+      - the queue is signed with a key received from the server
+      - test it with simple changes (save-and-queue and unlock-and-queue?)
+      - a gui element show the queue status
     - when displaying data, the pending data is shown on screen
     - when a connection is made, queue is sent to the server
-    	- optimistic locking is used
-    	- positive feedback is received through the "sync" mechanism
+      - optimistic locking is used
+      - positive feedback is received through the "sync" mechanism
  */
 
 importScripts("../../bower_components/fetch/fetch.js");
@@ -49,11 +49,6 @@ var db = build_db();
 var rest = "/cryptomedic/api/v1.0";
 
 /**
- * How much remain to be synced
- */
-var syncRemaining = 0;
-
-/**
  * Timer of the next sync
  */
 var syncTimer = null;
@@ -62,6 +57,11 @@ var syncTimer = null;
  * SyncLock track if a sync is already running
  */
 var syncLock = false;
+
+/**
+ *  See if the last sync was final or not
+ */
+var syncWasFinal = false;
 
 /**
  * Reply to a call
@@ -79,72 +79,74 @@ function mySendEvent(name, data) {
  * @returns
  */
 function storeData(offdata) {
-    var lastSync = offdata._checkpoint;
-    var promise = Promise.resolve();
-    if (offdata.reset) {
-        promise = promise.then(function() {
-            console.info("Worker: resetting the database patients");
-            return db.clear().then(function() {
-                db.updateCheckpoint("");
-            });
-        });
-    }
-    if (offdata.data) {
-        promise = promise.then(function() {
-            return db.bulkUpdate(offdata.data, function(data) {
-                //console.log("feedback from bulkUpdate",data);
-                mySendEvent("folder", data);
-            }).then(function() {
-        	// relaunch the sync upto completion
-                syncRemaining = offdata.remaining;
-                if (offdata.isfinal) {
-                    syncRemaining = 0;
-                    offdata.isfinal = true;
-                } else {
-                    offdata.isfinal = false;
-                }
-                mySendEvent("progress", {
-                    // "checkpoint": 	offdata.checkpoint,
-                    "isfinal": 		offdata.isfinal,
-                    "remaining": 	parseInt(offdata.remaining),
-                    "done":		parseInt(offdata.data.length)
-                });
-            }, function(e) {
-            	// Catch error and display it
-                console.error("Error in bulk insert", e);
-                throw e;
-            });
-        });
-    }
-    return promise;
+  var promise = Promise.resolve();
+  if (offdata.reset) {
+    promise = promise.then(function() {
+      console.info("Worker: resetting the database patients");
+      return db.clear().then(function() {
+        db.updateCheckpoint("");
+      });
+    });
+  }
+  syncWasFinal = offdata.isfinal;
+  if (offdata.data) {
+    promise = promise.then(function() {
+      return db.bulkUpdate(offdata.data, function(data) {
+        mySendEvent("folder", data);
+      }).then(function() {
+        // relaunch the sync upto completion
+        if (offdata.isfinal) {
+          mySendEvent("progress", {
+            isfinal:      true
+          });
+        } else {
+          mySendEvent("progress", {
+            // "checkpoint":  offdata.checkpoint,
+            "isfinal":    false,
+            "remaining":  parseInt(offdata.remaining),
+            "done":       parseInt(offdata.data.length)
+          });
+        }
+      }, function(e) {
+        // Catch error and display it
+        console.error("Error in bulk insert", e);
+        throw e;
+      });
+    });
+  } else {
+    mySendEvent("progress", {
+      isfinal: true
+    });
+  }
+  return promise;
 }
 
 var syncRunning = false;
 function reprogram() {
-    if (syncTimer) {
-	// Cancel currently running timer
-	clearTimeout(syncTimer);
-    }
-    // reprogram the timer...
-    syncRunning = false;
-    syncTimer = setTimeout(routeSync, (syncRemaining > 0 ? (500) : (60 * 1000)));
-    return Promise.resolve();
+  if (syncTimer) {
+    // Cancel currently running timer
+    clearTimeout(syncTimer);
+  }
+  // reprogram the timer...
+  syncRunning = false;
+  syncTimer = setTimeout(routeSync, (syncWasFinal ? (60 * 1000) : 500));
+  return Promise.resolve();
 }
 
 function running() {
     // Cancel currently running timer
-    if (syncTimer) {
-	clearTimeout(syncTimer);
-	syncTimer = false;
-    }
-    syncRunning = true;
-    return Promise.resolve();
+  if (syncTimer) {
+    clearTimeout(syncTimer);
+    syncTimer = false;
+  }
+  syncRunning = true;
+  return Promise.resolve();
 }
 
 function routeStoreData(offdata) {
-    running()
-    	.then(function() { storeData(offdata); })
-    	.then(reprogram, reprogram);
+  running()
+    .then(function() { storeData(offdata); })
+    .then(reprogram, reprogram);
 }
 
 /*
@@ -153,48 +155,48 @@ function routeStoreData(offdata) {
  *
  */
 function routeSync() {
-    running()
-    	.then(function() {
-    	    return db.getSetting("checkpoint")
-    	})
-    	.then(function(cp) {
-    	    return myFetch(rest + "/sync", {}, {
-    		cp: cp
-    	    });
-    	})
-    	.then(function(result) {
-            if (result == null) {
-                console.warn("unauthenticated?");
-                return;
-            }
-            return storeData(result._offline);
-    	})
-    	.then(reprogram, reprogram);
+  running()
+    .then(function() {
+      return db.getSetting("checkpoint")
+    })
+    .then(function(cp) {
+      return myFetch(rest + "/sync", {}, {
+        cp: cp
+      });
+    })
+    .then(function(result) {
+      if (result == null) {
+        console.warn("unauthenticated?");
+        return;
+      }
+      return storeData(result._offline);
+    })
+    .then(reprogram, reprogram);
 }
 
 // Worker
 onmessage = function(message) {
-    var name = message.data.name;
-    var data = message.data.data;
+  var name = message.data.name;
+  var data = message.data.data;
 
-    switch(name) {
-    case "init":
-        return routeSync();
-    case "storeData":
-        return routeStoreData(data);
-    case "sync":
-        return routeSync();
-    case "resync":
-	db.updateCheckpoint(false);
-	return routeSync();
-    default:
-        return console.error("unkown message: " + name, data);
-    }
+  switch(name) {
+  case "init":
+    return routeSync();
+  case "storeData":
+    return routeStoreData(data);
+  case "sync":
+    return routeSync();
+  case "resync":
+    db.updateCheckpoint(false);
+    return routeSync();
+  default:
+    return console.error("unkown message: " + name, data);
+  }
 }
 
 var catchAllCron = setInterval(function() {
     if (!syncTimer && !syncRunning) {
-	console.info("Worker: catchAll reprogram");
-	reprogram();
+  console.info("Worker: catchAll reprogram");
+  reprogram();
     }
 }, 10 * 1000);
