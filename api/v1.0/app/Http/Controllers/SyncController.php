@@ -26,8 +26,9 @@ class SyncController extends Controller {
     $id = $cpe[1];
 
     $list = References::$model2db + [ "Deleted" => "deleteds" ];
-    return "SELECT MAX(ts) as ts, patient_id, "
-        . "IF(MAX(ts) < NOW(), CONCAT(MAX(ts), '|', patient_id), '') as checkpoint"
+    return "SELECT MAX(ts) as ts, "
+          . "patient_id, "
+          . "IF(MAX(ts) < NOW(), CONCAT(MAX(ts), '|', patient_id), '') as checkpoint"
         . "\n FROM ("
         . implode(" \n UNION \n ",
           array_map(
@@ -36,13 +37,11 @@ class SyncController extends Controller {
                 $this->sqlParamsUnion["ts0_{$m}"]    = $this->sqlParamsUnion["ts1_{$m}"]    = $ts;
                 $this->sqlParamsUnion["id1_{$m}"]    = $id;
                 return "("
-                    . "SELECT greatest(created_at, updated_at) AS ts, "
-                    . "    $patient_id AS patient_id"
+                    . "SELECT greatest(created_at, updated_at) AS ts, $patient_id AS patient_id"
                     . " FROM $t "
                     . " WHERE (greatest(created_at, updated_at) > :ts0_{$m}) "
                     . "   OR (greatest(created_at, updated_at) = NOW())"
                     . "   OR ((greatest(created_at, updated_at) = :ts1_{$m}) AND ($patient_id > :id1_{$m}))"
-                    // . " ORDER BY greatest(created_at, updated_at), $patient_id"
                     .")";
               }, $list, array_keys($list)
           )
@@ -74,11 +73,6 @@ class SyncController extends Controller {
         $data[$i] = [ 'id' => $r->patient_id, '_deleted' => true ];
       }
       $data[$i]['checkpoint'] = $r->checkpoint;
-      // if ($r->current) {
-      //   $data[$i]['checkpoint'] = $r->ts . "|" . "-1";
-      // } else {
-      //   $data[$i]['checkpoint'] = $r->ts . "|" . $r->patient_id;
-      // }
     }
     return $data;
   }
@@ -107,32 +101,34 @@ class SyncController extends Controller {
 
     $offline['data'] = $this->_getList($old_cp, $n);
 
-    if (count($offline['data']) > 0) {
-      // $offline["checkpoint"] = end($offline['data'])['checkpoint'];
-      if (count($offline['data']) < $n) {
-        $offline["isfinal"] = true;
-      } else {
-        $offline["isfinal"] = false;
-      }
-    } else {
-      // $offline["checkpoint"] = $old_cp;
+    if (count($offline['data']) < $n) {
       $offline["isfinal"] = true;
+    } else {
+      $offline["isfinal"] = false;
     }
 
-    $new_checkpoint = end($offline['data'])['checkpoint'];
+    // FIXME: the new_checkpoint is wrongly calculated !!!
+    $new_checkpoint = "";
+    foreach($offline["data"] as $d) {
+      if (array_key_exists("checkpoint", $d)) {
+        $new_checkpoint = $d["checkpoint"];
+      }
+    }
+
+    // Get the remaining count
     if ($new_checkpoint > "") {
       $offline['remaining'] = $this->_getCount($new_checkpoint);
-    } else {
-      $offline['remaining'] = 0;
+    // } else {
+    //   $offline['remaining'] = 0;
     }
 
     // Store the information for helping understanding what is happening out there...
     if ($computer) {
       // In unit tests, we don't have a computerId...
       if ($new_checkpoint) {
-        $computer->last_sync = $new_checkpoint;
+        $computer->last_sync        = $new_checkpoint;
       }
-      $computer->last_sync_final = ($offline['remaining'] == 0);
+      $computer->last_sync_final = $offline['isfinal'];
       $computer->save();
     }
 
