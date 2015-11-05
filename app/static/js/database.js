@@ -10,7 +10,7 @@ function plog(p) {
 }
 
 Dexie.Promise.on("error", function(e) {
-    console.error("Error in Dexie: ", e);
+  console.error("Error in Dexie: ", e);
 });
 
 /**
@@ -20,44 +20,44 @@ Dexie.Promise.on("error", function(e) {
  * @returns a db_patients proxy
  */
 function build_db(withVersions) {
-    var db = new Dexie("cryptomedic");
+  var db = new Dexie("cryptomedic");
 
-    db.version(1).stores({
-        patients: '++id'
+  db.version(1).stores({
+    patients: '++id'
+  });
+
+  db.version(2).stores({
+    patients: '++id,[mainFile.entryyear+mainFile.entryorder]'
+  });
+
+  db.version(3).stores({
+    patients: '++id'
+  });
+
+  db.version(4).stores({
+    // @see
+    // db.relations.where('[userId1+userId2]').equals([2,3]).or('[userId1+userId2]').equals([3,2])
+    // - will give you all the relations that user 1 has to user 2 or user 2
+    // has to user 1.
+    patients: '++id,[mainFile.entryyear+mainFile.entryorder]'
+  });
+
+  db.version(5).upgrade(function(trans) {
+    trans.patients.toCollection().modify(function(p) {
+    if (typeof(p.id) == "number") {
+        console.log("deleting", p.id);
+        delete this.value;
+    }
+      p.id = "" + p.id;
     });
+  });
 
-    db.version(2).stores({
-        patients: '++id,[mainFile.entryyear+mainFile.entryorder]'
-    });
+  db.version(6).stores({
+    patients: '++id,[mainFile.entryyear+mainFile.entryorder]',
+    settings: 'key'
+  });
 
-    db.version(3).stores({
-        patients: '++id'
-    });
-
-    db.version(4).stores({
-        // @see
-        // db.relations.where('[userId1+userId2]').equals([2,3]).or('[userId1+userId2]').equals([3,2])
-        // - will give you all the relations that user 1 has to user 2 or user 2
-        // has to user 1.
-        patients: '++id,[mainFile.entryyear+mainFile.entryorder]'
-    });
-
-    db.version(5).upgrade(function(trans) {
-        trans.patients.toCollection().modify(function(p) {
-        if (typeof(p.id) == "number") {
-            console.log("deleting", p.id);
-            delete this.value;
-        }
-        p.id = "" + p.id;
-        });
-    });
-
-    db.version(6).stores({
-        patients: '++id,[mainFile.entryyear+mainFile.entryorder]',
-        settings: 'key'
-    });
-
-    db.open();
+  db.open();
 
     // ------------------ Business functions ------------------------------
     /**
@@ -104,42 +104,58 @@ function build_db(withVersions) {
     }
   }
 
-    /**
-     * Insert data in bulk, in one transaction (faster than the simple insert)
-     *
-     * The checkpoint is automatically inserted into the settings table.
-     *
-     * @param bulk: array of object to be inserted if the bulk[].key = "_deleted",
-     *                delete it otherwise, store bulk[].record into the store
-     */
-    function bulkUpdate(bulk, feedback) {
-        var prevPromise = Promise.resolve(); // initial Promise always resolve
-        for (var key in bulk) {
-            prevPromise = prevPromise.then((function(key) {
-                return new Promise(function(iresolve, ireject) {
-                    var req;
-                    if (bulk[key]['_deleted']) {
-                       req = db.patients.delete("" + key);
-                    } else {
-                       bulk[key]['record']['id'] = "" + bulk[key]['record']['id'];
-                       req = db.patients.put(bulk[key]['record']);
-                    }
-                    req.then(function() {
-                       return updateCheckpoint(bulk[key]['checkpoint']);
-                    });
-                    req.then(function (e) {
-                       if (feedback) {
-                       feedback(bulk[key]['record']);
-                       }
-                       iresolve();
-                    }, function (ev) {
-                       ireject(e);
-                    });
-                });
-            })(key));
-        }
-        return prevPromise;
-    };
+  function storeRecord(record) {
+    var req;
+    var data;
+    if (record['_deleted']) {
+      req = db.patients.delete("" + record['id']);
+      data = "" + record['id'];
+    } else {
+      record['record']['id'] += "";
+      record['record']['mainFile']['entryyear'] += "";
+      record['record']['mainFile']['entryorder'] += "";
+      req = db.patients.put(record['record']);
+      data = record['record'];
+    }
+    req.then(function(data) {
+      return updateCheckpoint(record['checkpoint']);
+    });
+    // Fix the value in the "thenable" chain
+    return req.then(function() {
+      return data;
+    });
+  }
+
+  /**
+   * Insert data in bulk, in one transaction (faster than the simple insert)
+   *
+   * The checkpoint is automatically inserted into the settings table.
+   *
+   * @param bulk: array of object to be inserted if the bulk[].key = "_deleted",
+   *                delete it otherwise, store bulk[].record into the store
+   */
+  function bulkUpdate(bulk, feedback) {
+    var prevPromise = Promise.resolve(); // initial Promise always resolve
+    for (var key in bulk) {
+      prevPromise = prevPromise.then(
+        (function(key) {
+          return new Promise(function(iresolve, ireject) {
+            storeRecord(bulk[key])
+              .then(function (data) {
+                if (feedback) {
+                  feedback(data);
+                }
+                iresolve();
+              }, function (ev) {
+                ireject(e);
+              });
+            });
+          }
+        )(key)
+      );
+    }
+    return prevPromise;
+  };
 
   // ------------------ System functions ------------------------------
   function getSetting(key, def) {
@@ -161,25 +177,26 @@ function build_db(withVersions) {
     });
   }
 
-    function clear() {
-        return db.patients.clear().then(function() {
-           return db.settings.clear();
-        });
-    }
+  function clear() {
+    return db.patients.clear().then(function() {
+      return db.settings.clear();
+    });
+  }
 
-    function version() {
-       return db.verno;
-    }
+  function version() {
+    return db.verno;
+  }
 
-    return {
-        'getFolder': getFolder,
-        'getByReference': getByReference,
-        'bulkUpdate': bulkUpdate,
-        'updateCheckpoint': updateCheckpoint,
+  return {
+    'getFolder': getFolder,
+    'getByReference': getByReference,
+    'storeRecord': storeRecord,
+    'bulkUpdate': bulkUpdate,
 
-        'getSetting': getSetting,
-        'setSetting': setSetting,
-        'clear': clear,
-        'version': version,
-    };
+    'updateCheckpoint': updateCheckpoint,
+    'getSetting': getSetting,
+    'setSetting': setSetting,
+    'clear': clear,
+    'version': version,
+  };
 };
