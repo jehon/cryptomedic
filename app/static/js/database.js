@@ -69,8 +69,7 @@ function build_db(withVersions) {
      if (data) {
         return applyModificationsOn(data);
       } else {
-        throw "I say, patient not found";
-        // return false;
+        throw "I say, this patient is not found #" + id;
       }
     });
   }
@@ -83,8 +82,7 @@ function build_db(withVersions) {
       if (data && data.length == 1) {
         return applyModificationsOn(data[0]);
       } else {
-        throw "I say, reference not found";
-        // return false;
+        throw "I say, reference not found #" + entryyear + "." + entryorder;
       }
     });
   }
@@ -140,6 +138,7 @@ function build_db(withVersions) {
    *
    * @param bulk: array of object to be inserted if the bulk[].key = "_deleted",
    *                delete it otherwise, store bulk[].record into the store
+               Come from (json.)_offline.data
    */
   function bulkUpdate(bulk, feedback) {
     var prevPromise = Promise.resolve(); // initial Promise always resolve
@@ -153,7 +152,7 @@ function build_db(withVersions) {
                   feedback(data);
                 }
                 iresolve();
-              }, function (ev) {
+              }, function (e) {
                 ireject(e);
               });
             });
