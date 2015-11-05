@@ -29,6 +29,7 @@ module.exports = function(config) {
               'app/static/js/cryptomedic.js',
               'app/static/js/exceptions*.js',
               'app/static/js/model*.js',
+              'app/static/js/service*.js',
               'tests/20_js/**/*.js',
               { pattern : 'tests/20_js/mocks/*.json', watched : true, served : true, included : false }
             ],
