@@ -23,10 +23,13 @@ describe("DB/Patients", function() {
       .then(function(data) {
         expect(data).toBe("456");
       })
-      // .then(db.getFolder.bind(db, 456))
+      .then(db.getFolder.bind(db, 456))
       .then(function(data) {
-        expect(db.getFolder.bind(db, 456)).toThrow();
-        // expect(data).toBe(false);
+        // Unexpected!!!
+        expect(false).toBe(true);
+        done();
+      }, function(data) {
+        expect(true).toBe(true);
         done();
       });
   });
@@ -46,7 +49,10 @@ describe("DB/Patients", function() {
   it("should fallback if reference does not exists", function(done) {
     db.getByReference(2999, 9999)
       .then(function(data) {
-        expect(data).toBe(false);
+        expect(true).toBe(false);
+        done();
+      }, function(data) {
+        expect(true).toBe(true);
         done();
       });
   });
