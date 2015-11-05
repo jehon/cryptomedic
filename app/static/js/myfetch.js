@@ -1,7 +1,7 @@
 
 /**
  * Launch a fetch request
- * 
+ *
  * @params init Optional
  *  - method: The request method, e.g., GET, POST.
  *  - headers: Any headers you want to add to your request, contained within a Headers object or ByteString.
@@ -34,7 +34,7 @@ function myFetch(url, init, data) {
     var req = new Request(url, init);
     return fetch(req).then(function(response) {
         // Response: ok, status, statusText
-        if (!response.ok) {  
+        if (!response.ok) {
     	switch(response.status) {
     	case 401: // unauthorized
     	    mySendEvent("backend_unauthorized");
