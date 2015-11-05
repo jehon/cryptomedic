@@ -41,12 +41,12 @@ module.exports = {
         .end();
   },
 
-  // 'view6': function(client) {
-  //     client
-  //       .page.cryptomedic().authenticate("readonly")
-  //       .page.cryptomedic().goPatient(2001, 1)
-  //       .end();
-  // },
+  'view6': function(client) {
+      client
+        .page.cryptomedic().authenticate("readonly")
+        .page.cryptomedic().goPatient(2001, 1)
+        .end();
+  },
 
   'view7': function(client) {
       client
