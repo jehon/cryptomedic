@@ -85,6 +85,9 @@ function build_db(withVersions) {
             }
         });
     }
+  function applyModificationsOn(folder) {
+    return folder;
+  }
 
   // ------------------ Enhanced functions ------------------------------
   function updateCheckpoint(cp) {
