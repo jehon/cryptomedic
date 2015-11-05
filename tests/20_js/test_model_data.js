@@ -47,7 +47,7 @@ describe("Data", function() {
 	describe("with data loaded remotely", function() {
 		it("should load correctly load_test.json and store it", function(done) {
 			var data = new application.models.Data();
-			data.loadFrom("/base/tests/20_js/mocks/mock_load_test.json").done(function(data) {
+			data.loadFrom(rootMock + "/mock_load_test.json").done(function(data) {
 				expect(data.data1).toBe("data1");
 				expect(data.dataArray).toContain(1);
 				expect(data.dataArray).toContain(2);
@@ -62,7 +62,7 @@ describe("Data", function() {
 	describe("with data loaded remotely tested through myAsyncTest", function() {
 		var data = new application.models.Data();
 		it("should load correctly load_test.json and store it", function(done) {
-			data.loadFrom("/base/tests/20_js/mocks/mock_load_test.json").done(function() {
+			data.loadFrom(rootMock + "/mock_load_test.json").done(function() {
 				expect(data.data1).toBe("data1");
 				expect(data.dataArray).toContain(1);
 				expect(data.dataArray).toContain(2);
