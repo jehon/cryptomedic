@@ -11,6 +11,7 @@ function plog(p) {
 
 Dexie.Promise.on("error", function(e) {
   console.error("Error in Dexie: ", e);
+  throw e;
 });
 
 /**
@@ -59,32 +60,35 @@ function build_db(withVersions) {
 
   db.open();
 
-    // ------------------ Business functions ------------------------------
-    /**
-     * Get the folder, with all the currently awaiting modifications applied
-     */
-    function getFolder(id) {
-        return db.patients.get("" + id).then(function(data) {
-            if (data) {
-            return data;
-            } else {
-            throw "I say, patient not found";
-            }
-        });
-    }
+  // ------------------ Business functions ------------------------------
+  /**
+   * Get the folder, with all the currently awaiting modifications applied
+   */
+  function getFolder(id) {
+    return db.patients.get("" + id).then(function(data) {
+     if (data) {
+        return applyModificationsOn(data);
+      } else {
+        throw "I say, patient not found";
+        // return false;
+      }
+    });
+  }
 
-    /**
-     * Get the folder by the reference
-     */
-    function getByReference(entryyear, entryorder) {
-        return db.patients.where("[mainFile.entryyear+mainFile.entryorder]").equals([""+entryyear, ""+entryorder]).toArray(function(data) {
-            if (data.length == 1) {
-            return getFolder(data[0]['id']);
-            } else {
-            throw "I say, reference not found";
-            }
-        });
-    }
+  /**
+   * Get the folder by the reference
+   */
+  function getByReference(entryyear, entryorder) {
+    return db.patients.where("[mainFile.entryyear+mainFile.entryorder]").equals([""+entryyear, ""+entryorder]).toArray(function(data) {
+      if (data && data.length == 1) {
+        return applyModificationsOn(data[0]);
+      } else {
+        throw "I say, reference not found";
+        // return false;
+      }
+    });
+  }
+
   function applyModificationsOn(folder) {
     return folder;
   }
