@@ -5,6 +5,19 @@ describe("DB/Patients", function() {
   var def = { record: { id: 123, test: true, mainFile: { entryyear: 2001, entryorder: 2323 }}};
   var def_deleted = { id: 456, _deleted: true };
 
+  function checkFolder(id, entryyear, entryorder) {
+    return db.getFolder(id)
+      .then(function(data) {
+        expect(data.id).toBe("" + id);
+        return data;
+      })
+      .then(db.getByReference.bind(db, entryyear, entryorder))
+      .then(function(data) {
+        expect(data.id).toBe("" + id);
+        return data;
+      });
+  }
+
   it("should store patient", function(done) {
     db.storeRecord(buildRecord(def))
       .then(function(data) {
@@ -26,7 +39,7 @@ describe("DB/Patients", function() {
       .then(db.getFolder.bind(db, 456))
       .then(function(data) {
         // Unexpected!!!
-        expect(false).toBe(true);
+        expect(true).toBe(false);
         done();
       }, function(data) {
         expect(true).toBe(true);
@@ -57,17 +70,40 @@ describe("DB/Patients", function() {
       });
   });
 
-  // it("should load correctly load_test.json and store it", function(done) {
-  //   var data = new application.models.Data();
-  //   data.loadFrom(rootMock + "/mock_load_test.json").done(function(data) {
-  //     // expect(data.data1).toBe("data1");
-  //     // expect(data.dataArray).toContain(1);
-  //     // expect(data.dataArray).toContain(2);
-  //     // expect(data.dataArray).toContain(3);
-  //     // expect(data.dataArray).not.toContain(4);
-  //     // expect(data.anything).toBeUndefined();
-  //     done();
-  //   });
-  // });
+  it("should be able to store any patient", function(done) {
+    // http://localhost/cryptomedic/api/v1.0/sync?cp=
+    jQuery.getJSON(rootMock + "/mock_sync.json").done(function(json) {
+      var p = db.clear();
+      for(var i in json._offline.data) {
+        p = p.then(db.storeRecord.bind(db, json._offline.data[i]));
+      }
+      p
+        .then(checkFolder.bind(db, 7, 2001, 4))
+        .then(checkFolder.bind(db, 3, 2014, 103))
+        .then(checkFolder.bind(db, 4, 2014, 104))
+        .then(checkFolder.bind(db, 1, 2000, 1))
+        .then(checkFolder.bind(db, 6, 2001, 1))
+        .then(checkFolder.bind(db, 5, 2014, 105))
+        .then(checkFolder.bind(db, 2, 2014, 107))
+        .then(done);
+    });
+
+  });
+
+  it("insert in bulk", function(done) {
+    // http://localhost/cryptomedic/api/v1.0/sync?cp=
+    jQuery.getJSON(rootMock + "/mock_sync.json").done(function(json) {
+      db.clear()
+        .then(db.bulkUpdate.bind(db, json._offline.data))
+        .then(checkFolder.bind(db, 7, 2001, 4), function() { console.error("euh"); })
+        .then(checkFolder.bind(db, 3, 2014, 103))
+        .then(checkFolder.bind(db, 4, 2014, 104))
+        .then(checkFolder.bind(db, 1, 2000, 1))
+        .then(checkFolder.bind(db, 6, 2001, 1))
+        .then(checkFolder.bind(db, 5, 2014, 105))
+        .then(checkFolder.bind(db, 2, 2014, 107))
+        .then(done);
+    });
+  });
 
 });
