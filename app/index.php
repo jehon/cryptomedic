@@ -19,6 +19,11 @@
     <link href="static/img/favicon.ico" type="image/x-icon" rel="icon" />
     <link href="static/img/favicon.ico" type="image/x-icon" rel="shortcut icon" />
   <?php
+    if (array_key_exists("visibleLogs", $_REQUEST)) {
+      ?>
+        <script src="../tests/50_end2end/visibleLogs.js"></script>
+      <?php
+    }
     // jquery
     (new Script("bower_components/jquery/dist/jquery.min.js"))->dependFile()->toPrint();
     (new Script("bower_components/jquery-ui/jquery-ui.min.js"))->dependFile()->toPrint();
@@ -202,5 +207,6 @@
         </div>
       </nav>
     </div>
+    <div id='visibleLogs'></div>
   </body>
 </html>
