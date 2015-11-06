@@ -23,7 +23,6 @@ module.exports = (function() {
         }
       } catch (ex) {}
 
-      // client.url(client.launch_url + '/cryptomedic/app/?online=1')
       client.init()
         .watchLog(true)
         .waitForElementVisible('body')
@@ -48,7 +47,7 @@ module.exports = (function() {
         throw new Error("Cryptomedic: You should be authenticated to use report function");
       }
       client
-        .waitForElementVisible("img#sync-ok")
+        .waitForElementVisible("img#sync-ok", 20000)
       return client;
     };
 
