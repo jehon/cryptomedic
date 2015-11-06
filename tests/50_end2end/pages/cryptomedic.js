@@ -23,7 +23,7 @@ module.exports = (function() {
         }
       } catch (ex) {}
 
-      client.url(client.launch_url + '/cryptomedic/app/')
+      client.url(client.launch_url + '/cryptomedic/app/?online=1')
         .watchLog(true)
         .waitForElementVisible('body')
         .assert.title('Cryptomedic')
