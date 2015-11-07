@@ -14,7 +14,7 @@ npm install
 echo -e "\e[1m\e[45mComposer install\e[0m"
 composer install
 
-echo -e "\e[1m\e[45mProtractor webdriver install\e[0m"
-node node_modules/protractor/bin/webdriver-manager update
+#echo -e "\e[1m\e[45mProtractor webdriver install\e[0m"
+#node node_modules/protractor/bin/webdriver-manager update
 
 echo -e "\e[1m\e[45mTerminated ok.\e[0m"
