@@ -331,6 +331,7 @@ mainApp.controller('ctrl', [ '$scope', '$location', 'service_backend', function(
   };
 
   $scope.sync = false;
+  $scope.connected = false;
 
   $scope.busy = [];
   $scope.busy.messages = [ ];
@@ -395,14 +396,22 @@ mainApp.controller('ctrl', [ '$scope', '$location', 'service_backend', function(
   };
 
   myEvents.on('backend_progress', function(data) {
-    console.log(data);
     $scope.sync = data;
+    $scope.connected = true;
     $scope.safeApply();
   }, false);
 
-  myEvents.on('backend_unauthorized', function(data) {
-    console.info("ctrl: unauthorized");
-    $scope.logged = false;
+  myEvents.on('disconnected', function(msg) {
+    if (msg == 'Unauthorized') {
+      $scope.logged = false;
+    }
+    $scope.connected = false;
+    $scope.safeApply();
+  });
+
+  myEvents.on('connected', function(msg) {
+    $scope.connected = true;
+    $scope.safeApply();
   });
 
   $scope.doLogin = function() {

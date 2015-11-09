@@ -171,6 +171,9 @@ function routeSync() {
       }
       return storeData(result._offline);
     })
+    .catch(function(msg) {
+      mySendEvent("disconnected", msg);
+    })
     .then(reprogram, reprogram);
 }
 
@@ -180,23 +183,23 @@ onmessage = function(message) {
   var data = message.data.data;
 
   switch(name) {
-  case "init":
-    return routeSync();
-  case "storeData":
-    return routeStoreData(data);
-  case "sync":
-    return routeSync();
-  case "resync":
-    db.updateCheckpoint(false);
-    return routeSync();
-  default:
-    return console.error("unkown message: " + name, data);
+    case "init":
+      return routeSync();
+    case "storeData":
+      return routeStoreData(data);
+    case "sync":
+      return routeSync();
+    case "resync":
+      db.updateCheckpoint(false);
+      return routeSync();
+    default:
+      return console.error("unkown message: " + name, data);
   }
 }
 
 var catchAllCron = setInterval(function() {
-    if (!syncTimer && !syncRunning) {
-  console.info("Worker: catchAll reprogram");
-  reprogram();
-    }
+  if (!syncTimer && !syncRunning) {
+    console.info("Worker: catchAll reprogram");
+    reprogram();
+  }
 }, 10 * 1000);

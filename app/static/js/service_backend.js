@@ -27,6 +27,10 @@
  *      - ops are send directly and not queued
  */
 
+function mySendEvent(name, data) {
+    myEvents.trigger("disconnected");
+}
+
 /* Initialize the computer id */
 if (!window.localStorage.cryptomedicComputerId) {
     console.log("generate cryptomedic_computer_id");
@@ -49,6 +53,15 @@ function service_my_backend_fn() {
     console.error("@service: Error in worker: ", e);
   };
 
+  function onSuccess(data) {
+    myEvents.trigger("connected");
+    return data;
+  }
+
+  function onFailure(msg) {
+    myEvents.trigger("disconnected", msg);
+  }
+
   worker.onmessage = function(e) {
     var name = e.data.name;
     var data = e.data.data;
@@ -58,16 +71,23 @@ function service_my_backend_fn() {
         // To be compatible with old version
         myEvents.trigger("backend_cache_progress", data);
         break;
-      }
-        // Propagate event
-      myEvents.trigger("backend_" + name, data);
-    };
-
-    function mySendAction(name, data) {
-        worker.postMessage({ name: name, data: data });
     }
 
-    mySendAction("init", {});
+    // Propagate event
+    myEvents.trigger("backend_" + name, data);
+
+    if (name == "disconnected") {
+      onFailure(data);
+    } else {
+      onSuccess();
+    }
+  };
+
+  function mySendAction(name, data) {
+    worker.postMessage({ name: name, data: data });
+  }
+
+  mySendAction("init", {});
 
   return {
     /* Authentification */
@@ -78,8 +98,10 @@ function service_my_backend_fn() {
                 'password': password,
                 'appVersion': cryptomedic.version,
                 'computerId': window.localStorage.cryptomedicComputerId
-            })
-            .then(this.storeData);
+          })
+          .then(this.storeData)
+          .this(mySendAction.bind(this, "init"))
+          .then(onSuccess, onFailure);
     },
     'checkLogin': function() {
         return myFetch(rest + "/auth/settings", null,
@@ -87,12 +109,14 @@ function service_my_backend_fn() {
                 'appVersion': cryptomedic.version,
                 'computerId': window.localStorage.cryptomedicComputerId
             }
-        )
-        .then(this.storeData)
+          )
+          .then(this.storeData)
+          .then(onSuccess, onFailure);
     },
     'logout': function() {
         // TODO: clean up the cache --> cache managed in other object???
-        return myFetch(rest + "/auth/logout");
+        return myFetch(rest + "/auth/logout")
+          .then(onSuccess, onFailure);
     },
 
     // Go to the worker
@@ -105,9 +129,9 @@ function service_my_backend_fn() {
     // Temp function
     'storeData': function(json) {
         if (json._offline) {
-        var offdata = jQuery.extend(true, {}, json._offline);
-        mySendAction("storeData", offdata);
-        delete json._offline;
+          var offdata = jQuery.extend(true, {}, json._offline);
+          mySendAction("storeData", offdata);
+          delete json._offline;
         }
         return json;
     },
@@ -130,7 +154,8 @@ function service_my_backend_fn() {
     // Go to the rest server
     'getReport': function(reportName, data, timing) {
         return myFetch(rest + "/reports/" + reportName + (timing ? "/" + timing : ""), null, data)
-            .then(this.storeData);
+            .then(this.storeData)
+            .then(onSuccess, onFailure);
         },
     };
 };

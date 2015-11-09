@@ -10,44 +10,44 @@
  *  - cache: The cache mode you want to use for the request: default, no-store, reload, no-cache, force-cache, or only-if-cached.
  */
 function myFetch(url, init, data) {
-    init = init || {};
-    if (!init.method) {
-        init.method = "GET";
-    }
-    init.credentials = "include";
+  init = init || {};
+  if (!init.method) {
+      init.method = "GET";
+  }
+  init.credentials = "include";
 
-    if (data) {
-        if (init.method == "GET") {
-	    	url = url + "?";
-	    	for(var a in data) {
-	    	    url = url + encodeURIComponent(a) + "=" + encodeURIComponent(data[a]) + "&";
-	    	}
-	    } else {
-		var fd = new FormData();
-		for(var a in data) {
-		    fd.append(a, data[a]);
-		}
-		init.body = fd;
-	    }
+  if (data) {
+    if (init.method == "GET") {
+      url = url + "?";
+      for(var a in data) {
+        url = url + encodeURIComponent(a) + "=" + encodeURIComponent(data[a]) + "&";
+      }
+    } else {
+      var fd = new FormData();
+      for(var a in data) {
+        fd.append(a, data[a]);
+      }
+      init.body = fd;
     }
+  }
 
-    var req = new Request(url, init);
-    return fetch(req).then(function(response) {
-        // Response: ok, status, statusText
-        if (!response.ok) {
-    	switch(response.status) {
-    	case 401: // unauthorized
-    	    mySendEvent("backend_unauthorized");
-    	    break;
-    	case 403: // forbidden
-    	    mySendEvent("backend_forbidden");
-    	    break;
-    	case 500: // internal server error
-    	    mySendEvent("backend_internal_server_error");
-    	    break;
-    	}
-    	return null;
-        }
-        return response.json();
-    });
+  var req = new Request(url, init);
+  return fetch(req).then(function(response) {
+    // Response: ok, status, statusText
+    if (!response.ok) {
+      switch(response.status) {
+        case 401: // unauthorized
+          throw "Unauthorized";
+          break;
+        case 403: // forbidden
+          throw "Forbidden";
+          break;
+        case 500: // internal server error
+          throw "Internal Server Error";
+          break;
+      }
+      return null;
+    }
+    return response.json();
+  });
 }
