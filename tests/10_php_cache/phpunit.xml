@@ -29,8 +29,8 @@
     <server name='HTTP_HOST' value='http://localhost' />
 	</php>
 	<logging>
-		<log type="coverage-clover" target="../../tmp/cache/coverage.xml" />
-		<log type="coverage-html" target="../../tmp/cache/coverage/" />
- 		<log type="junit" target="../../tmp/cache/phpunit.xml" logIncompleteSkipped="false" />
+		<log type="coverage-clover" target="../../tmp/10_php_cache/coverage.xml" />
+		<log type="coverage-html" target="../../tmp/10_php_cache/coverage/" />
+ 		<log type="junit" target="../../tmp/10_php_cache/phpunit.xml" logIncompleteSkipped="false" />
 	</logging>
 </phpunit>
