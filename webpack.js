@@ -6,6 +6,8 @@ var glob = require('glob');
 
 module.exports = {
   entry: [
+      './app/static/js/bugreporting.js',
+      './app/static/js/html2canvas.js',
       './node_modules/angular/angular.min.js',
       './node_modules/angular-route/angular-route.min.js',
       './node_modules/excellentexport/excellentexport.min.js',
