@@ -100,7 +100,7 @@ function service_my_backend_fn() {
                 'computerId': window.localStorage.cryptomedicComputerId
           })
           .then(this.storeData)
-          .this(mySendAction.bind(this, "init"))
+          .then(mySendAction.bind(this, "init"))
           .then(onSuccess, onFailure);
     },
     'checkLogin': function() {
