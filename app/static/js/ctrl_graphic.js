@@ -1,6 +1,6 @@
 "use strict";
 
-mainApp.controller('ctrl_graphic', [ '$scope', '$element', 'service_backend', function($scope, $element, service_backend) {
+mainApp.controller('ctrl_graphic', [ '$scope', '$element', function($scope, $element) {
     // This controller is intended for ONE graphic only
     var x, y;
     var stats;
@@ -31,7 +31,7 @@ mainApp.controller('ctrl_graphic', [ '$scope', '$element', 'service_backend', fu
     var imgDimension = function(what) {
 	return amd_stats.dimensions[x + "_" + y + "_" + $scope.folder.getMainFile().sexStr()][what];
     }
-	
+
     $scope.getValidity = function($index) {
 	if (x == null) return "?";
 	var vx = $scope.getValue($index, x);

@@ -2,11 +2,11 @@
 
 // https://developer.mozilla.org/en-US/docs/Web/HTML/Using_the_application_cache
 
-mainApp.controller('ctrl_offline', [ '$scope', 'service_backend', function($scope, service_backend) {
+mainApp.controller('ctrl_offline', [ '$scope', function($scope) {
     $scope.info_available = false;
     $scope.offline = "";
     $scope.refreshAvailable = false;
-		
+
     window.applicationCache.addEventListener("progress", function(progress) {
 	if (progress.total) {
 	    console.log(progress.loaded + "/" + progress.total);
@@ -25,13 +25,13 @@ mainApp.controller('ctrl_offline', [ '$scope', 'service_backend', function($scop
 	$scope.info_available = false;
 	$scope.safeApply();
     });
-	
+
     window.applicationCache.addEventListener("error", function(event) {
 	console.error("Sorry, you have an error in your offline application.");
 	$scope.info_available = false;
 	$scope.safeApply();
     });
-    
+
     $scope.applicationRefresh = function() {
 	console.log("let's go !");
 	window.location.reload();
@@ -44,7 +44,7 @@ mainApp.controller('ctrl_offline', [ '$scope', 'service_backend', function($scop
         }
     }
 
-/*    
+/*
     var cacheStatusValues = [];
     cacheStatusValues[0] = 'uncached';
     cacheStatusValues[1] = 'idle';

@@ -79,90 +79,6 @@ function ApplicationException(msg) {
 inherit(Error, ApplicationException);
 ApplicationException.prototype.getMessage = function() { return this.message; };
 
-function date2CanonicString(d, dateOnly) {
-  // d.setMilliseconds(0);
-  if (d == null) return "0000-00-00 00:00:00 GMT+0000";
-
-  var ts = - (new Date()).getTimezoneOffset()/60 * 100;
-
-  var dateStr = d.getFullYear() +
-      "-" +
-      ("00" + (d.getMonth() + 1)).substr(-2) +
-      "-" +
-      ("00" + (d.getDate())).substr(-2);
-
-  if (dateOnly) return dateStr;
-
-  if (((((d.getHours() + (ts / 100)) % 24) == 0) || (d.getHours() == 0))
-      && (d.getMinutes() == 0) && (d.getSeconds() == 0)) {
-    return dateStr;
-  }
-
-  return dateStr + " " +
-      ("00" + d.getHours()).substr(-2) +
-      ":" +
-      ("00" + d.getMinutes()).substr(-2) +
-      ":" +
-      ("00" + d.getSeconds()).substr(-2) +
-      " GMT" + (ts < 0 ? "-" : "+") +
-      ("0000" + Math.abs(ts)).substr(-4)
-}
-
-function objectify(what) {
-  if (what === null) return what;
-  switch(typeof(what)) {
-    case "undefined": return null;
-    case "string":
-      if (what === date2CanonicString(null)) {
-        return null;
-      }
-      if (what == "0000-00-00") {
-        return null;
-      }
-      if (what.match("[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2} GMT[+-][0-9]{4}") == what) {
-        if (what == "0000-00-00 00:00:00 GMT+0000") return null;
-          return new Date(what.substr(0, 4), what.substr(5, 2) - 1, what.substr(8, 2),
-              what.substr(11, 2), what.substr(14, 2), what.substr(17, 2));
-      };
-      if (what.match("[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}") == what) {
-        if (what == "0000-00-00 00:00:00") return null;
-          return new Date(what.substr(0, 4), what.substr(5, 2) - 1, what.substr(8, 2),
-              what.substr(11, 2), what.substr(14, 2), what.substr(17, 2));
-      };
-      if (what.match("[0-9]+") == what) {
-        return parseInt(what);
-      }
-      if (what.match("[0-9]+.[0-9]+") == what) {
-        return parseFloat(what);
-      }
-      return what;
-    case "object":
-      angular.forEach(what, function(val, i) {
-        what[i] = objectify(what[i]);
-      });
-      if (typeof(what['_type']) != "undefined") {
-        what = new application.models[what['_type']](what);
-      }
-      return what;
-    default:
-      return what;
-  }
-}
-
-function stringify(what) {
-  if (what === null) return what;
-  if (what === "") return null;
-  if (typeof(what) == "object") {
-    if (what instanceof Date) {
-      return date2CanonicString(what);
-    }
-    angular.forEach(what, function (v, k) {
-      what[k] = stringify(what[k]);
-    });
-  }
-  return what;
-}
-
 var mainApp = angular.module('app_main', [ 'ngRoute' ])
 .config([ '$compileProvider', function( $compileProvider ) {
   $compileProvider.aHrefSanitizationWhitelist(/^\s*((https?|ftp|mailto|chrome-extension):|data:text,)/);
@@ -308,7 +224,7 @@ var mainApp = angular.module('app_main', [ 'ngRoute' ])
   }
 }]);
 
-mainApp.controller('ctrl', [ '$scope', '$location', 'service_backend', function($scope, $location, service_backend) {
+mainApp.controller('ctrl', [ '$scope', '$location', function($scope, $location) {
   $scope.cryptomedic = cryptomedic;
   $scope.application = application;
   $scope.server = server;
@@ -389,9 +305,9 @@ mainApp.controller('ctrl', [ '$scope', '$location', 'service_backend', function(
   $scope.username = "";
   $scope.password = "";
   $scope.hasPermission = function(transaction) {
-    if (typeof(server) == "undefined") return false;
-    if (typeof(server.settings) == "undefined") return false;
-    if (typeof(server.settings.authorized) == "undefined") return false;
+    if (typeof(server) == "undefined" || !server) return false;
+    if (typeof(server.settings) == "undefined" || !server.settings) return false;
+    if (typeof(server.settings.authorized) == "undefined" || !server.settings.authorized) return false;
     return (server.settings.authorized.indexOf(transaction) >= 0);
   };
 
@@ -402,7 +318,7 @@ mainApp.controller('ctrl', [ '$scope', '$location', 'service_backend', function(
   }, false);
 
   myEvents.on('disconnected', function(msg) {
-    if (msg == 'Unauthorized') {
+    if (msg == 401) {
       $scope.logged = false;
     }
     $scope.connected = false;
@@ -427,7 +343,7 @@ mainApp.controller('ctrl', [ '$scope', '$location', 'service_backend', function(
     }
     $scope.loginError = false;
     var busyEnd = $scope.doBusy("Checking your login/password with the online server", true);
-    service_my_backend.login(this.username, this.password)
+    service_backend.login(this.username, this.password)
       .then(function(data) {
         server.settings = data;
         $scope.loginError = false;
@@ -449,7 +365,7 @@ mainApp.controller('ctrl', [ '$scope', '$location', 'service_backend', function(
   $scope.doCheckLogin = function() {
     $scope.loginError = false;
     var busyEnd = $scope.doBusy("Checking your login/password with the online server", true);
-    service_my_backend.checkLogin()
+    service_backend.checkLogin()
       .then(function(data) {
         server.settings = data;
         $scope.logged = true;
@@ -463,7 +379,7 @@ mainApp.controller('ctrl', [ '$scope', '$location', 'service_backend', function(
 
   $scope.doLogout = function() {
     var busyEnd = $scope.doBusy("Disconnecting from the server", true);
-    service_my_backend.logout()
+    service_backend.logout()
     .then(function(data) {
       server.settings = null;
       $scope.logged = false;

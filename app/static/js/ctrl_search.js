@@ -1,9 +1,9 @@
 "use strict";
 
-mainApp.controller('ctrl_search', [ "$scope", "service_backend", function($scope, service_backend) {
+mainApp.controller('ctrl_search', [ "$scope", function($scope) {
 	if (typeof($scope.params) == 'undefined')
 		$scope.params = {};
-	
+
 	if (typeof($scope.listing) == 'undefined')
 		$scope.listing = [];
 
@@ -16,15 +16,14 @@ mainApp.controller('ctrl_search', [ "$scope", "service_backend", function($scope
 		var busyEnd = $scope.doBusy("Searching for matching patients");
 
 		service_backend.searchForPatients($scope.params)
-			.done(function(data) {
-				$scope.listing = data;
-				$scope.page();
-				$scope.safeApply();
-			})
-			.fail(function(data) {
-				console.error(data);
-			}).always(function() {
-				busyEnd();
-			});
+		.then(function(data) {
+			$scope.listing = data;
+			$scope.page();
+			$scope.safeApply();
+		}, function(data) {
+			console.error(data);
+		}).myFinallyDone(function() {
+			busyEnd();
+		});
 	}
 }]);

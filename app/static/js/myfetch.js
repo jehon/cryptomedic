@@ -1,4 +1,3 @@
-
 /**
  * Launch a fetch request
  *
@@ -37,13 +36,16 @@ function myFetch(url, init, data) {
     if (!response.ok) {
       switch(response.status) {
         case 401: // unauthorized
-          throw "Unauthorized";
+          return Promise.reject(401);
           break;
         case 403: // forbidden
-          throw "Forbidden";
+          return Promise.reject(403);
+          break;
+        case 404: // not found
+          return Promise.reject(404);
           break;
         case 500: // internal server error
-          throw "Internal Server Error";
+          return Promise.reject(500);
           break;
       }
       return null;

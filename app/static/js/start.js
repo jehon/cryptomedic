@@ -16,4 +16,4 @@ if (!Promise || !indexedDB || !sessionStorage) {
   window.location.href = "static/upgrade.html";
 }
 
-var service_my_backend = service_my_backend_fn();
+var service_backend = service_backend_fn();

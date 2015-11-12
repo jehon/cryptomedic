@@ -1,6 +1,6 @@
 "use strict";
 
-mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_backend', '$routeParams' , function($scope, $location, service_backend, $routeParams) {
+mainApp.controller('ctrl_folder', [ '$scope', '$location', '$routeParams' , function($scope, $location, $routeParams) {
   /*
    * '/folder/:patient_id/:page?/:subtype?/:subid?/:mode?'
    *
@@ -40,7 +40,7 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_backend', '$
     //   Get data from the server
     //----------------------
 
-    service_my_backend.getFolder($scope.patient_id).then(function(data) {
+    service_backend.getFolder($scope.patient_id).then(function(data) {
       $scope.folder = objectify(data);
 
       if ($scope.page == 'file') {
@@ -78,7 +78,7 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_backend', '$
     });
 
     function askFolder() {
-      service_my_backend.getFolder($scope.patient_id);
+      service_backend.getFolder($scope.patient_id);
     }
     askFolder();
 
@@ -157,141 +157,130 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', 'service_backend', '$
     };
     $scope.$on("revalidate", $scope.actionValidate);
 
-    $scope.actionCancel = function() {
-  // By rerouting, the controller is initialized back
-  if ($scope.subid) {
+  $scope.actionCancel = function() {
+    // By rerouting, the controller is initialized back
+    if ($scope.subid) {
       $scope.go("/folder/" + $scope.patient_id + "/file/" + $scope.subtype + "/" + $scope.subid);
-  } else {
+    } else {
       $scope.go("/folder/" + $scope.patient_id);
-  }
-    };
+    }
+  };
 
-    $scope.actionSave = function() {
-  if (!$scope.actionValidate()) {
-      alert("You have errors in your data. Please correct them and try again");
-      return ;
-  }
-  $scope.folder = false;
-  $scope.safeApply();
-  service_backend.saveFile(cachedCurrentFile, $scope.patient_id)
-      .done(function(data) {
-    // The data is refreshed by navigating away...
-    $scope.$emit("message", { "level": "success", "text": "The " + $scope.subtype + " has been saved."});
-    $scope.go("/folder/" + $scope.patient_id + "/file/" + $scope.subtype + "/" + $scope.subid);
+  $scope.actionSave = function() {
+    if (!$scope.actionValidate()) {
+        alert("You have errors in your data. Please correct them and try again");
+        return ;
+    }
+    $scope.folder = false;
     $scope.safeApply();
+    service_backend.saveFile(cachedCurrentFile, $scope.patient_id)
+      .then(function(data) {
+        // The data is refreshed by navigating away...
+        $scope.$emit("message", { "level": "success", "text": "The " + $scope.subtype + " has been saved."});
+        $scope.go("/folder/" + $scope.patient_id + "/file/" + $scope.subtype + "/" + $scope.subid);
+        $scope.safeApply();
       });
+  }
+
+  $scope.actionUnlock = function() {
+    $scope.folder = false;
+    $scope.safeApply();
+    service_backend.unlockFile(cachedCurrentFile, $scope.patient_id)
+    .then(function(data) {
+      $scope.$emit("message", { "level": "success", "text": "The " + $scope.subtype + " #" + $scope.subid + " has been unlocked."});
+      // Let's refresh the data
+      $scope.folder = data;
+      $scope.go("/folder/" + $scope.patient_id + "/file/" + $scope.subtype + "/" + $scope.subid + "/edit");
+      $scope.safeApply();
+    });
+  }
+
+  $scope.actionCreate = function() {
+    // Save transversal data for further use later...
+    if (cachedCurrentFile.Date) {
+        service_session_storage().set("date", cachedCurrentFile.Date);
+    }
+    if (cachedCurrentFile.ExaminerName) {
+        service_session_storage().set("examinerName", cachedCurrentFile.ExaminerName);
+    }
+    if (cachedCurrentFile.Center) {
+        service_session_storage().set("center", cachedCurrentFile.Center);
     }
 
-    $scope.actionUnlock = function() {
-  $scope.folder = false;
-  $scope.safeApply();
-  service_backend.unlockFile(cachedCurrentFile, $scope.patient_id)
-      .done(function(data) {
-    $scope.$emit("message", { "level": "success", "text": "The " + $scope.subtype + " #" + $scope.subid + " has been unlocked."});
-    // Let's refresh the data
-    $scope.folder = data;
-    $scope.go("/folder/" + $scope.patient_id + "/file/" + $scope.subtype + "/" + $scope.subid + "/edit");
-    $scope.safeApply();
-//      }).always(function() {
-//    busyEnd();
-      });
+    if (!$scope.actionValidate()) {
+        alert("You have errors in your data. Please correct them and try again");
+        return ;
     }
-
-    $scope.actionCreate = function() {
-  // Save transversal data for further use later...
-  if (cachedCurrentFile.Date) {
-      service_session_storage().set("date", cachedCurrentFile.Date);
-  }
-  if (cachedCurrentFile.ExaminerName) {
-      service_session_storage().set("examinerName", cachedCurrentFile.ExaminerName);
-  }
-  if (cachedCurrentFile.Center) {
-      service_session_storage().set("center", cachedCurrentFile.Center);
+    service_backend.createFile(cachedCurrentFile, $scope.patient_id)
+    .then(function(data) {
+      $scope.$emit("message", { "level": "success", "text": "The " + cachedCurrentFile._type + " has been created."});
+      // The data is refreshed by navigating away...
+      $scope.go("/folder/" + $scope.patient_id + "/file/" + $scope.subtype + "/" + data.newKey);
+      $scope.safeApply();
+    });
   }
 
-  if (!$scope.actionValidate()) {
-      alert("You have errors in your data. Please correct them and try again");
-      return ;
-  }
-  service_backend.createFile(cachedCurrentFile, $scope.patient_id)
-      .done(function(data) {
-    $scope.$emit("message", { "level": "success", "text": "The " + cachedCurrentFile._type + " has been created."});
-    // The data is refreshed by navigating away...
-    $scope.go("/folder/" + $scope.patient_id + "/file/" + $scope.subtype + "/" + data.newKey);
-    $scope.safeApply();
-//      }).always(function() {
-//    busyEnd();
-      });
+  $scope.actionDelete = function() {
+    if (!confirm("Are you sure you want to delete this file?")) {
+        return;
     }
-
-    $scope.actionDelete = function() {
-  if (!confirm("Are you sure you want to delete this file?")) {
-      return;
+    $scope.folder = false;
+    $scope.safeApply();
+    service_backend.deleteFile($scope.currentFile(), $scope.patient_id)
+    .then(function(data) {
+      $scope.$emit("message", { "level": "success", "text":  "The " + $scope.currentFile()._type +  " of " + $scope.currentFile().Date + " has been deleted"});
+      $scope.folder = data;
+      $scope.go("/folder/" + $scope.patient_id);
+      $scope.safeApply();
+    });
   }
 
-//  var busyEnd = $scope.doBusy("Deleting the file on the server");
-  $scope.folder = false;
-  $scope.safeApply();
-  service_backend.deleteFile($scope.currentFile(), $scope.patient_id)
-      .done(function(data) {
-    $scope.$emit("message", { "level": "success", "text":  "The " + $scope.currentFile()._type +  " of " + $scope.currentFile().Date + " has been deleted"});
-    $scope.folder = data;
-    $scope.go("/folder/" + $scope.patient_id);
-    $scope.safeApply();
-//    }).always(function() {
-//        busyEnd();
-      });
+  $scope.actionCreatePatient = function() {
+    if (!$scope.actionValidate()) {
+        alert("You have errors in your data. Please correct them and try again");
+        return ;
     }
-
-    // TODO: check
-    $scope.actionCreatePatient = function() {
-  if (!$scope.actionValidate()) {
-      alert("You have errors in your data. Please correct them and try again");
-      return ;
+    $scope.folder = false;
+    $scope.currentFile()._type = "Patient";
+    service_backend.createFile($scope.currentFile(), $scope.patient_id)
+    .then(function(data) {
+      $scope.$emit("message", { "level": "success", "text":  "The patient has been created."});
+      $scope.folder = data;
+      $scope.go("/folder/" + data.patient_id);
+      $scope.safeApply();
+    });
   }
-  $scope.folder = false;
-  $scope.currentFile()._type = "Patient";
-  service_backend.createFile($scope.currentFile(), $scope.patient_id)
-      .done(function(data) {
-    $scope.$emit("message", { "level": "success", "text":  "The patient has been created."});
-    $scope.folder = data;
-    $scope.go("/folder/" + data.patient_id);
-    $scope.safeApply();
-//      }).always(function() {
-//    busyEnd();
-      });
-    }
 
-    $scope.actionSavePatient = function() {
-  if (!$scope.actionValidate()) {
-      alert("You have errors in your data. Please correct them and try again");
-      return ;
-  }
-  $scope.folder = false;
-  $scope.safeApply();
-  service_backend.saveFile(cachedCurrentFile, $scope.patient_id)
-      .done(function(data) {
-    // The data is refreshed by navigating away...
-    $scope.$emit("message", { "level": "success", "text": "The patient has been saved."});
-    $scope.go("/folder/" + $scope.patient_id);
-    $scope.folder = data;
-    $scope.safeApply();
-      });
+  $scope.actionSavePatient = function() {
+    if (!$scope.actionValidate()) {
+        alert("You have errors in your data. Please correct them and try again");
+        return ;
     }
+    $scope.folder = false;
+    $scope.safeApply();
+    service_backend.saveFile(cachedCurrentFile, $scope.patient_id)
+    .then(function(data) {
+      // The data is refreshed by navigating away...
+      $scope.$emit("message", { "level": "success", "text": "The patient has been saved."});
+      $scope.go("/folder/" + $scope.patient_id);
+      $scope.folder = data;
+      $scope.safeApply();
+    });
+  }
 
-    $scope.actionDeletePatient = function() {
-  if (!confirm("Are you sure you want to delete this patient?")) {
-      return;
-  }
-  $scope.folder = false;
-  $scope.safeApply();
-  service_backend.deleteFile($scope.currentFile(), $scope.patient_id)
-      .done(function(data) {
-    $scope.$emit("message", { "level": "success", "text":    "The patient " + $scope.currentFile().entryyear + "-" + $scope.currentFile().entryorder + " has been deleted"});
-        $scope.go("/home");
-    $scope.safeApply();
-      });
+  $scope.actionDeletePatient = function() {
+    if (!confirm("Are you sure you want to delete this patient?")) {
+        return;
     }
+    $scope.folder = false;
+    $scope.safeApply();
+    service_backend.deleteFile($scope.currentFile(), $scope.patient_id)
+    .then(function(data) {
+      $scope.$emit("message", { "level": "success", "text":    "The patient " + $scope.currentFile().entryyear + "-" + $scope.currentFile().entryorder + " has been deleted"});
+      $scope.go("/home");
+      $scope.safeApply();
+    });
+  }
 
 //    if ($scope.mode == "edit" || $scope.mode == "add") {
 //  jQuery(".modeRead").removeClass('modeRead').addClass('modeWrite');

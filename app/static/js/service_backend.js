@@ -26,9 +26,88 @@
  *      - sync is running
  *      - ops are send directly and not queued
  */
+function date2CanonicString(d, dateOnly) {
+  // d.setMilliseconds(0);
+  if (d == null) return "0000-00-00 00:00:00 GMT+0000";
 
-function mySendEvent(name, data) {
-    myEvents.trigger("disconnected");
+  var ts = - (new Date()).getTimezoneOffset()/60 * 100;
+
+  var dateStr = d.getFullYear() +
+      "-" +
+      ("00" + (d.getMonth() + 1)).substr(-2) +
+      "-" +
+      ("00" + (d.getDate())).substr(-2);
+
+  if (dateOnly) return dateStr;
+
+  if (((((d.getHours() + (ts / 100)) % 24) == 0) || (d.getHours() == 0))
+      && (d.getMinutes() == 0) && (d.getSeconds() == 0)) {
+    return dateStr;
+  }
+
+  return dateStr + " " +
+      ("00" + d.getHours()).substr(-2) +
+      ":" +
+      ("00" + d.getMinutes()).substr(-2) +
+      ":" +
+      ("00" + d.getSeconds()).substr(-2) +
+      " GMT" + (ts < 0 ? "-" : "+") +
+      ("0000" + Math.abs(ts)).substr(-4)
+}
+
+function stringify(what) {
+  if (what === null) return what;
+  if (what === "") return null;
+  if (typeof(what) == "object") {
+    if (what instanceof Date) {
+      return date2CanonicString(what);
+    }
+    angular.forEach(what, function (v, k) {
+      what[k] = stringify(what[k]);
+    });
+  }
+  return what;
+}
+
+function objectify(what) {
+  if (what === null) return what;
+  switch(typeof(what)) {
+    case "undefined": return null;
+    case "string":
+      if (what === date2CanonicString(null)) {
+        return null;
+      }
+      if (what == "0000-00-00") {
+        return null;
+      }
+      if (what.match("[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2} GMT[+-][0-9]{4}") == what) {
+        if (what == "0000-00-00 00:00:00 GMT+0000") return null;
+          return new Date(what.substr(0, 4), what.substr(5, 2) - 1, what.substr(8, 2),
+              what.substr(11, 2), what.substr(14, 2), what.substr(17, 2));
+      };
+      if (what.match("[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}") == what) {
+        if (what == "0000-00-00 00:00:00") return null;
+          return new Date(what.substr(0, 4), what.substr(5, 2) - 1, what.substr(8, 2),
+              what.substr(11, 2), what.substr(14, 2), what.substr(17, 2));
+      };
+      if (what.match("[0-9]+") == what) {
+        return parseInt(what);
+      }
+      if (what.match("[0-9]+.[0-9]+") == what) {
+        return parseFloat(what);
+      }
+      return what;
+    case "object":
+      angular.forEach(what, function(val, i) {
+        what[i] = objectify(what[i]);
+      });
+      if (typeof(what['_type']) != "undefined") {
+        what = new application.models[what['_type']](what);
+      }
+      return what;
+    default:
+      return what;
+  }
 }
 
 /* Initialize the computer id */
@@ -42,14 +121,14 @@ if (!window.localStorage.cryptomedicComputerId) {
     window.localStorage.cryptomedicComputerId = result;
 }
 
-/* service_my_backend */
-function service_my_backend_fn() {
+/* service_backend */
+function service_backend_fn() {
   var rest = "/cryptomedic/api/v1.0";
 
   var db = build_db(true);
 
   var worker = new Worker("static/worker/worker.js");
-    worker.onerror = function(e) {
+  worker.onerror = function(e) {
     console.error("@service: Error in worker: ", e);
   };
 
@@ -65,13 +144,6 @@ function service_my_backend_fn() {
   worker.onmessage = function(e) {
     var name = e.data.name;
     var data = e.data.data;
-    switch(name) {
-      case "progress":
-        // localStorage.cryptomedicLastSync = data.checkpoint;
-        // To be compatible with old version
-        myEvents.trigger("backend_cache_progress", data);
-        break;
-    }
 
     // Propagate event
     myEvents.trigger("backend_" + name, data);
@@ -92,58 +164,61 @@ function service_my_backend_fn() {
   return {
     /* Authentification */
     'login': function(username, password) {
-        return myFetch(rest + "/auth/mylogin", { method: "POST" },
-            {
-                'username': username,
-                'password': password,
-                'appVersion': cryptomedic.version,
-                'computerId': window.localStorage.cryptomedicComputerId
-          })
-          .then(this.storeData)
-          .then(mySendAction.bind(this, "init"))
-          .then(onSuccess, onFailure);
+      return myFetch(rest + "/auth/mylogin", { method: "POST" },
+          {
+              'username': username,
+              'password': password,
+              'appVersion': cryptomedic.version,
+              'computerId': window.localStorage.cryptomedicComputerId
+        })
+        .then(this.storeData)
+        .then(mySendAction.bind(this, "init"))
+        .then(onSuccess, onFailure);
     },
     'checkLogin': function() {
-        return myFetch(rest + "/auth/settings", null,
-            {
-                'appVersion': cryptomedic.version,
-                'computerId': window.localStorage.cryptomedicComputerId
-            }
-          )
-          .then(this.storeData)
-          .then(onSuccess, onFailure);
+      return myFetch(rest + "/auth/settings", null,
+          {
+              'appVersion': cryptomedic.version,
+              'computerId': window.localStorage.cryptomedicComputerId
+          }
+        )
+        .then(this.storeData)
+        .then(onSuccess, onFailure);
     },
     'logout': function() {
-        // TODO: clean up the cache --> cache managed in other object???
-        return myFetch(rest + "/auth/logout")
-          .then(onSuccess, onFailure);
+      // TODO: clean up the cache --> cache managed in other object???
+      return myFetch(rest + "/auth/logout")
+        .then(onSuccess, onFailure);
     },
 
     // Go to the worker
     'sync': function() {
-        mySendAction("sync");
+      mySendAction("sync");
     },
     'resync': function() {
-        mySendAction("resync");
+      mySendAction("resync");
     },
     // Temp function
     'storeData': function(json) {
-        if (json._offline) {
-          var offdata = jQuery.extend(true, {}, json._offline);
-          mySendAction("storeData", offdata);
-          delete json._offline;
-        }
-        return json;
+      if (json._offline) {
+        var offdata = jQuery.extend(true, {}, json._offline);
+        mySendAction("storeData", offdata);
+        delete json._offline;
+      }
+      return json;
     },
 
     // Go to the database
     'getFolder': function(id) {
-        // TODO: if not final then go to the server anyway...
-        return db.getFolder(id);
+      // TODO: if not final then go to the server anyway...
+      return db.getFolder(id);
     },
+
     'getByReference': function(year, order) {
-        return db.getByReference(year, order);
+      // TODO: if not final then go to the server anyway...
+      return db.getByReference(year, order);
     },
+
     'clear': function() {
       return db.clear()
         .then(function() {
@@ -152,117 +227,71 @@ function service_my_backend_fn() {
     },
 
     // Go to the rest server
-    'getReport': function(reportName, data, timing) {
-        return myFetch(rest + "/reports/" + reportName + (timing ? "/" + timing : ""), null, data)
-            .then(this.storeData)
-            .then(onSuccess, onFailure);
-        },
-    };
-};
-
-/******* OLD INTERFACE **********/
-/******* OLD INTERFACE **********/
-/******* OLD INTERFACE **********/
-/******* OLD INTERFACE **********/
-/******* OLD INTERFACE **********/
-
-// TODO: use the new "queue" system
-mainApp.factory('service_backend', [ '$http', function($http) {
-    var rest = "/cryptomedic/api/v1.0";
-
-    // Transform the $http request into a promise
-    function treatHttp(request) {
-        var def = jQuery.Deferred();
-        request.success(function(data, status, headers, config) {
-            def.resolve(data);
-        }).error(function(data, status, headers, config) {
-            def.reject(data);
-        });
-        return def;
-    }
-
-    // TODO: migrate all these services to the new infrastructure
-    return {
-    /*******************************
-     * Data oriented services
-     */
-    // READONLY -> when sync is done, this is to be managed on the idb !!!
-    'searchForPatients': function(params) {
-        return treatHttp($http.get(rest + "/folder", { 'params': params })).then(function(data) {
-        var list = [];
-        for(var i in data) {
-            list.push(new application.models.Patient(data[i]));
-        }
-        return list;
-        });
-    },
     'checkReference': function(year, order) {
-        return treatHttp($http.get(rest + "/reference/" + year + "/" + order)).then(function(data) {
-            if ((typeof(data._type) != 'undefined') && (data._type == 'Folder')) {
-                return data['id'];
-            } else {
-                return false;
-            }
-        });
+      return myFetch(rest + "/reference/" + year + "/" + order)
+        .then(function(data) {
+          if ((typeof(data._type) != 'undefined') && (data._type == 'Folder')) {
+              return data['id'];
+          } else {
+              return false;
+          }
+        })
+        .then(onSuccess, onFailure);
+    },
+
+    'getReport': function(reportName, data, timing) {
+      return myFetch(rest + "/reports/" + reportName + (timing ? "/" + timing : ""), null, data)
+        .then(this.storeData)
+        .then(onSuccess, onFailure);
+    },
+
+    'searchForPatients': function(params) {
+      return myFetch(rest + "/folder", null, params)
+        .then(function(data) {
+          var list = [];
+          for(var i in data) {
+              list.push(new application.models.Patient(data[i]));
+          }
+          return list;
+        })
+        .then(objectify)
+        .then(onSuccess, onFailure);
     },
 
     // READWRITE
     'createReference': function(year, order) {
-        return treatHttp($http.post(rest + "/reference",
+      return myFetch(rest + "/reference", null,
+        // return treatHttp($http.post(rest + "/reference",
         {
             'entryyear': year,
             'entryorder': order
-        }));
+        })
+        .then(objectify)
+        .then(onSuccess, onFailure);
     },
+
     'createFile': function(data, folderId) {
-        return treatHttp($http.post(rest + "/fiche/" + data['_type'], data));
+      return myFetch(rest + "/fiche/" + data['_type'], { method: 'POST' }, data)
+        .then(objectify)
+        .then(onSuccess, onFailure);
     },
+
     'saveFile': function(data, folderId) {
-        return treatHttp($http.put(rest + "/fiche/" + data['_type'] + "/" + data['id'], data));
+      return myFetch(rest + "/fiche/" + data['_type'] + "/" + data['id'], { method: 'PUT' }, data)
+        .then(objectify)
+        .then(onSuccess, onFailure);
     },
+
     'deleteFile': function(data, folderId) {
-        return treatHttp($http['delete'](rest + "/fiche/" + data['_type'] + "/" + data['id']));
+      return myFetch(rest + "/fiche/" + data['_type'] + "/" + data['id'], { method: "DELETE" })
+        .then(objectify)
+        .then(onSuccess, onFailure);
     },
+
     'unlockFile': function(data, folderId) {
-        return treatHttp($http.get(rest + "/unfreeze/" + data['_type'] + "/" + data['id']));
-    }
-    };
-}]);
-
-// https://docs.angularjs.org/api/ng/service/$http
-// http://www.webdeveasy.com/interceptors-in-angularjs-and-useful-examples/
-mainApp.factory('sessionInjector', [ '$q', '$rootScope', function($q, $rootScope) {
-    return {
-        'request': function(config) {
-            if (config.data) {
-                config.data = stringify(config.data);
-            }
-            //config.headers['X-OFFLINE-CP'] = localStorage.cryptomedicLastSync;
-            return config;
-        },
-        'response': function(response) {
-            // Take away the "offline" data with the new service
-            // if (typeof(response.data) == "object") {
-            //     // This will strip out the offline data;
-            //     var d = service_my_backend.storeData(response.data);
-            //     response.data = d;
-            // }
-            response.data = objectify(response.data)
-            return response;
-        },
-        'responseError': function(rejection) {
-            switch(rejection.status) {
-                case 401: // Unauthorized
-                    $rootScope.$broadcast("backend_logged_out");
-                    break;
-                default:
-                console.warn(rejection);
-            }
-            return $q.reject(rejection);
-        },
-    };
-}]);
-
-mainApp.config(['$httpProvider', function($httpProvider) {
-    $httpProvider.interceptors.push('sessionInjector');
-}]);
+      return myFetch(rest + "/unfreeze/" + data['_type'] + "/" + data['id'])
+        .then(objectify)
+        .then(onSuccess, onFailure);
+    },
+  };
+};

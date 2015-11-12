@@ -1,11 +1,11 @@
 "use strict";
 
-mainApp.controller('ctrl_picture', [ '$scope', 'service_backend', function($scope, service_backend) {
+mainApp.controller('ctrl_picture', [ '$scope', function($scope) {
     $scope.getFileSrc = function() {
 	if ($scope.currentFile().file) return "/uploadedPictures/" + $scope.currentFile().file;
 	return "static/img/file_not_defined.png";
     }
-    
+
     function checkSize() {
 	jQuery('#PictureFilecontent')[0].addCustomValidation(function() {
 	    var s = jQuery(':input[type=file]').get(0).files[0].size;
@@ -18,7 +18,7 @@ mainApp.controller('ctrl_picture', [ '$scope', 'service_backend', function($scop
 	});
 	jQuery("#maxUploadSizeMb").html(cryptomedic.settings.maxUploadSizeMb);
     }
-    
+
 //    $scope.getURLUploadIFrame = function() {
 //	return "/rest/upload/pictures/" + $scope.currentFile().id + ".html";
 //    }
@@ -43,7 +43,7 @@ mainApp.controller('ctrl_picture', [ '$scope', 'service_backend', function($scop
 //		    url: "?",
 //		    data: formData,
 //		    type: 'POST',
-//		    processData: false, 
+//		    processData: false,
 //		    contentType: false
 //		});
 }]);

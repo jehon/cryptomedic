@@ -1,6 +1,6 @@
  "use strict";
 
-mainApp.controller('ctrl_reports', [ '$scope', '$routeParams', 'service_backend', '$sce', function($scope, $routeParams, service_backend, $sce) {
+mainApp.controller('ctrl_reports', [ '$scope', '$routeParams', '$sce', function($scope, $routeParams, $sce) {
 	var report = $routeParams['report'];
 	$scope.values = service_session_storage().getAll();
 	angular.forEach($scope.values, function(v, k) {
@@ -9,10 +9,10 @@ mainApp.controller('ctrl_reports', [ '$scope', '$routeParams', 'service_backend'
 	if (!$scope.values['period']) {
 	    $scope.values['period'] = 'month';
 	}
-	
+
 	var templateReportBase = cryptomedic.templateRoot + "/reports/";
 	$scope.reports = {
-		'dailyActivity': { 
+		'dailyActivity': {
 		    name: 'Daily Report',
 		    description: "If you want to know your daily activity, choose this report.<br>"
 			+ "Options: the day, and optionnaly the examiner and the center.<br>",
@@ -49,7 +49,7 @@ mainApp.controller('ctrl_reports', [ '$scope', '$routeParams', 'service_backend'
 		    templateUrl: templateReportBase + "surgery.html"
 		}
 	}
-	
+
 	for(var k in $scope.reports) {
 	    // Make the content "trustable" to be shown as html
 	    $scope.reports[k].description = $sce.trustAsHtml($scope.reports[k].description);
@@ -77,7 +77,7 @@ mainApp.controller('ctrl_reports', [ '$scope', '$routeParams', 'service_backend'
 		return;
 	    }
 	    $scope.result = null;
-	    
+
 //	    if ($scope.values.day) {
 //		$scope.values.day = new Date($scope.values.day);
 //		$scope.values.day.setUTCHours(0, 0, 0, 0);
@@ -91,8 +91,8 @@ mainApp.controller('ctrl_reports', [ '$scope', '$routeParams', 'service_backend'
 	    if (typeof($scope.reports[report].dataGenerator) != 'undefined') {
 		dataGenerator = $scope.reports[report].dataGenerator;
 	    }
-	    service_my_backend.getReport(dataGenerator, 
-		    	$scope.values, 
+	    service_backend.getReport(dataGenerator,
+		    	$scope.values,
 		    	($scope.isParam('period') ? $scope.values.period : null)
 		    )
 		    .then(function(data) {
@@ -102,7 +102,7 @@ mainApp.controller('ctrl_reports', [ '$scope', '$routeParams', 'service_backend'
 	}
 
 	$scope.refresh();
-	
+
 	$scope.age = function(year) {
 	    if (year) {
 		return (new Date()).getFullYear() - year;
