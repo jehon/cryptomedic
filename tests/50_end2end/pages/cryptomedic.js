@@ -47,7 +47,7 @@ module.exports = (function() {
         throw new Error("Cryptomedic: You should be authenticated to use report function");
       }
       client
-        .waitForElementVisible("img#sync-ok", 20000)
+        .waitForElementVisible("img#sync-ok")
       return client;
     };
 
