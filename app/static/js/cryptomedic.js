@@ -1,12 +1,10 @@
 "use strict";
 
-if (typeof(cryptomedic) == "undefined") {
-    var cryptomedic = {
-        settings: {}
-    };
-}
-
+var cryptomedic = {};
+cryptomedic.version = '<?php echo getVersion(); ?>';
 cryptomedic.templateRoot = "/cryptomedic/cache/templates/";
+cryptomedic.settings = {};
+cryptomedic.settings.offlineCache = false;
 
 mainApp.config([ '$routeProvider', function($routeProvider) {
     $routeProvider
@@ -25,8 +23,6 @@ mainApp.config([ '$routeProvider', function($routeProvider) {
     }).otherwise({ 'redirectTo': '/home'});
 }]);
 
-cryptomedic.settings = {};
-cryptomedic.settings.offlineCache = false;
 
 cryptomedic.math = {
 	evaluatePoly: function (line, x) {

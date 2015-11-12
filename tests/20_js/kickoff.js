@@ -1,9 +1,4 @@
 
-// application = {};
-// application.models = {};
-cryptomedic = {};
-cryptomedic.settings = {};
-
 var rootMock = "/base/tests/20_js/mocks";
 
 /** Apply a list of modifications

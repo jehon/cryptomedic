@@ -25,24 +25,9 @@
     (new Script("bower_components/jquery-ui/themes/ui-lightness/jquery-ui.min.css"))->dependFile()->toPrint();
 
     if (array_key_exists("visibleLogs", $_REQUEST)) {
-      ?>
-        <script src="../tests/50_end2end/visibleLogs.js"></script>
-      <?php
+      (new Script("../tests/50_end2end/visibleLogs.js"))->dependFile()->toPrint();
     }
-  ?>
-    <script type="text/javascript">
-      // REQUIRED CAPACITIES
-      if (!Promise || !indexedDB || !sessionStorage) {
-          window.location.href = "static/upgrade.html";
-      }
-      // support for class: class C {}; return typeof C === " function";
 
-      // CONFIGURE LATER LIBRARIES
-      var cryptomedic = {};
-      cryptomedic.version = '<?php echo getVersion(); ?>';
-      cryptomedic.settings = {};
-    </script>
-  <?php
     // Custom bug reporting script:
     (new Script("static/js/bugreporting.js"))->dependFile()->toPrint();
     (new Script("static/js/html2canvas.js"))->dependFile()->toPrint();
@@ -64,22 +49,22 @@
 
     // personnal
     (new Script("static/js/application.js"))->dependFile()->toPrint();
+
     (new Script("static/js/database.js"))->dependFile()->toPrint();
     (new Script("static/js/myfetch.js"))->dependFile()->toPrint();
+    (new AllScripts("static/js/service_*.js"))->dependFile()->toPrint();
+
     (new Script("static/js/cryptomedic.js"))->dependFile()->toPrint();
     (new Script("static/js/amd_stats_datas.js"))->dependFile()->toPrint();
     (new Script("static/js/exceptions.js"))->dependFile()->toPrint();
 
     (new AllScripts("static/js/model_*.js"))->dependFile()->toPrint();
-    (new AllScripts("static/js/service_*.js"))->dependFile()->toPrint();
     (new AllScripts("static/js/ctrl_*.js"))->dependFile()->toPrint();
 
     (new AllScripts("static/css/*.css"))->css()->dependFile()->toPrint();
 
+    (new AllScripts("static/js/start.js"))->dependFile()->toPrint();
     ?>
-    <script>
-          service_my_backend = service_my_backend_fn();
-    </script>
   </head>
   <body ng-app="app_main" ng-controller="ctrl" id="ng-app" >
     <!--  Navigation bar -->
