@@ -17,14 +17,14 @@ exports.assertion = (function() {
 	    row = "=";
 	    selector = "=";
 	}
-	
+
 	function parseParam(param, ref) {
-            	if (typeof(param) != 'string') return param;
-        	if (param === "last") {
-        	    return "last";
-        	}
-            	if (param === "=") { 
-        	    return ref; 
+   	if (typeof(param) != 'string') return param;
+     	if (param === "last") {
+   	    return "last";
+     	}
+   	if (param === "=") {
+        	    return ref;
         	}
         	if (param[0] === "+" || param[0] === "-") {
         	    return ref + parseInt(param);
@@ -39,7 +39,7 @@ exports.assertion = (function() {
         storedRow = row;
         storedColumn = column;
         storedSelector = selector;
-        
+
         var MSG = util.format('Testing if table <%s>@row=%s&col=%s contains text: "%s".', selector, row, column, expectedText);
         /**
           * The message which will be used in the test output and
@@ -47,7 +47,7 @@ exports.assertion = (function() {
           * @type {string}
           */
         this.message = msg || MSG;
-      
+
         /**
           * A value to perform the assertion on. If a function is
           * defined, its result will be used.
@@ -56,7 +56,7 @@ exports.assertion = (function() {
         this.expected = function() {
     	return expectedText;
         };
-        
+
         /**
          * The method which performs the actual assertion. It is
          * called with the result of the value method as the argument.
@@ -68,15 +68,15 @@ exports.assertion = (function() {
         	}
         	return value;
             };
-        
+
             this.fail = function(value) {
         	var failed = result === false || result && result.status === -1;
         	if (failed) {
-        	    this.message = this.message + util.format(": Found <%s>", value);  
+        	    this.message = this.message + util.format(": Found <%s>", value);
         	}
         	return failed;
         }
-      
+
         /**
          * The method which returns the value to be used on the
          * assertion. It is called with the result of the command's
@@ -86,13 +86,13 @@ exports.assertion = (function() {
         this.value = function(result) {
     		return result.value;
         };
-    
+
         /**
          * Performs a protocol command/action and its result is
          * passed to the value method via the callback argument.
          * @type {function}
          */
-        this.command = function(callback) {
+    this.command = function(callback) {
             var sel = selector;
             if (row === "last") {
         	sel += " tr:last-child";
