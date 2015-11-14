@@ -99,5 +99,12 @@ module.exports = (function() {
 
       return client;
     }
+
+    this.selectFile = function(type, id) {
+      client
+        .myClick("#folder_menu_" + type + "_" + id)
+        .waitForElementVisible("#folder_menu_" + type + "_" + id)
+      return client;
+    }
   };
 })();
