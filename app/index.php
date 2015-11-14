@@ -105,7 +105,7 @@
           <ul class="nav navbar-nav navbar-right">
             <li><p class="navbar-text" id='login_loggedusername' ng-if='server.settings.username'>{{server.settings.username}}</p></li>
             <li><p class="navbar-text" id='appCache_mode'><?php echo $mode; ?></p></li>
-            <li><a href="#/home" class="navbar-link">
+            <li><a id='menu_home' href="#/home" class="navbar-link">
               <img src="static/img/home.gif" height="20px"/>
               Home
             </a></li>
