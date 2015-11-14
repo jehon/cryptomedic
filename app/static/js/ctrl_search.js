@@ -26,4 +26,10 @@ mainApp.controller('ctrl_search', [ "$scope", function($scope) {
 			busyEnd();
 		});
 	}
+
+	$scope.reset = function() {
+		$scope.params = {};
+		$scope.listing = [];
+		$scope.safeApply();
+	}
 }]);
