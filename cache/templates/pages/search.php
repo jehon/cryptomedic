@@ -37,7 +37,7 @@
 	</div>
    	<p class="text-center">
 		<span id='button_submit' class="btn btn-primary" ng-click="submit()">Submit</span>
-		<span id='button_submit' class="btn btn-warning" ng-click="reset()">Reset</span>
+		<span id='button_reset' class="btn btn-warning" ng-click="reset()">Reset</span>
 	</p>
 </div>
 <h1>Results</h1>

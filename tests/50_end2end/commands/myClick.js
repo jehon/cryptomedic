@@ -26,6 +26,6 @@ exports.command = function(selector, callback) {
           }
         }
   );
-  this.pause(500);
+  this.pause(250);
   return this; // allows the command to be chained.
 };
