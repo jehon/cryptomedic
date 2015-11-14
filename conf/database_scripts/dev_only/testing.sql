@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Oct 15, 2015 at 10:55 AM
--- Server version: 5.6.25-0ubuntu0.15.04.1
--- PHP Version: 5.6.4-4ubuntu6.3
+-- Generation Time: Nov 14, 2015 at 11:07 AM
+-- Server version: 5.6.27-0ubuntu0.15.04.1
+-- PHP Version: 5.6.4-4ubuntu6.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -318,7 +318,7 @@ CREATE TABLE IF NOT EXISTS `nonricket_consults` (
 --
 
 INSERT INTO `nonricket_consults` (`id`, `created_at`, `updated_at`, `lastuser`, `patient_id`, `Date`, `ExaminerName`, `Center`, `Weightkg`, `Heightcm`, `Brachialcircumferencecm`, `Side`, `Jointsorbonesaffected`, `Deformity`, `Articulationmobility`, `Musclestrength`, `Pain`, `Walk`, `XRay`, `Surgery66`, `Comments`, `TreatmentEvaluation`, `TreatmentFinished`, `Nextappointment`, `NextCenter`) VALUES
-(1, '0000-00-00 00:00:00', '2015-02-19 13:52:16', 'Thierry', 1, '2007-09-21', 'Ershad', NULL, 0, 0, 0, NULL, 'PBVE', '', '', '', 'No', NULL, '', 'Postero-medial release', '', NULL, NULL, '2015-04-28', NULL);
+(1, '0000-00-00 00:00:00', '2015-02-19 13:52:16', 'Thierry', 1, '2007-09-21', 'Ershad', NULL, 29, 134, 0, NULL, 'PBVE', '', '', '', 'No', NULL, '', 'Postero-medial release', '', NULL, NULL, '2015-04-28', NULL);
 
 -- --------------------------------------------------------
 
@@ -644,7 +644,14 @@ CREATE TABLE IF NOT EXISTS `sync_computers` (
   `last_sync` varchar(100) DEFAULT NULL,
   `last_sync_final` tinyint(1) NOT NULL DEFAULT '0',
   `queue_size` int(16) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `sync_computers`
+--
+
+INSERT INTO `sync_computers` (`id`, `created_at`, `updated_at`, `lastuser`, `user_list`, `computer_id`, `useragent`, `cryptomedic_version`, `last_sync`, `last_sync_final`, `queue_size`) VALUES
+(13, '2015-11-14 10:02:57', '2015-11-14 10:07:03', NULL, ',jehon', 'KQeZXEAiklSUaMMY3loUxPPVRrQdZaEA', 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:41.0) Gecko/20100101 Firefox/41.0', '<?php echo getVersion(); ?>', '2015-10-15 04:29:50|2', 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -688,7 +695,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 
 INSERT INTO `users` (`id`, `username`, `name`, `password`, `old_password`, `email`, `notes`, `group`, `created_at`, `updated_at`, `lastuser`, `last_login`, `remember_token`) VALUES
 (1, 'thierry', 'Thierry Craviari', '$2y$10$1XkouAzPDXGY43uAM4IhR.5CJbKym6xTsiqxgoCW0rbvdMNdJCsx2', NULL, 'thierry.craviari@gmail.com', '', 'manager', '2011-10-18 04:24:37', '2015-08-24 11:16:20', 'thierry', '2015-08-24 11:16:20', ''),
-(2, 'jehon', 'Jean Honlet', '$2y$10$Lg5g2xFUTCDdBtNWljWix.NSYBxDY2z3fyl95UKWJoahK8d5/g0Oi', NULL, 'marielineet.jean@gmail.com', '', 'admin', '2011-10-18 04:24:37', '2015-10-15 05:16:26', 'jehon', '2015-10-15 05:16:26', ''),
+(2, 'jehon', 'Jean Honlet', '$2y$10$Lg5g2xFUTCDdBtNWljWix.NSYBxDY2z3fyl95UKWJoahK8d5/g0Oi', NULL, 'marielineet.jean@gmail.com', '', 'admin', '2011-10-18 04:24:37', '2015-11-14 10:07:02', 'jehon', '2015-11-14 10:07:02', ''),
 (3, 'murshed', 'Morshedul Alam', '$2y$10$dtk/wdKH2cIPn3/aPUtG5.5Xorqhg8FyblvmbS0a13mIIjZwZgFoW', NULL, 'bgdcox1@yahoo.com', '', 'cdc', '2011-10-18 04:24:37', '2015-08-23 07:43:19', 'murshed', '2015-08-23 07:43:19', ''),
 (4, 'readonly', 'readonly', '53cea9a9492b3397c1f2cb91fec685fc63d232ed', '83998c0388c12fe57c1e75d4c50c904fe774a8ec', NULL, NULL, 'readonly', '2011-10-18 04:24:37', '2015-08-18 20:17:41', NULL, '2015-06-17 16:28:08', '');
 
@@ -858,7 +865,7 @@ MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT for table `sync_computers`
 --
 ALTER TABLE `sync_computers`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=13;
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=14;
 --
 -- AUTO_INCREMENT for table `sync_keys`
 --
