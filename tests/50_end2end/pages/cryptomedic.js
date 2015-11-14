@@ -84,6 +84,7 @@ module.exports = (function() {
       }
       this.sync();
       client
+        .myClick("#menu_home")
         .waitForElementVisible('input[ng-model="entryyear"]')
         .clearValue('input[ng-model="entryyear"]')
         .setValue('input[ng-model="entryyear"]', entryyear)
