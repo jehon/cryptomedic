@@ -1,4 +1,4 @@
-<?php 
+<?php
 	t::setDefaultOption("baseExpression", "params.");
 	t::setDefaultOption("forceAllowNull");
 	t::setDefaultOption("writeOnly");
@@ -37,6 +37,7 @@
 	</div>
    	<p class="text-center">
 		<span id='button_submit' class="btn btn-primary" ng-click="submit()">Submit</span>
+		<span id='button_submit' class="btn btn-warning" ng-click="reset()">Reset</span>
 	</p>
 </div>
 <h1>Results</h1>
@@ -70,9 +71,7 @@
 	    			</a>
 	    		</td>
 	    		<td>
-	    			<?php (new t("Patient.entryyear"))->read()->p(); ?>
-	    			-
-	    			<?php (new t("Patient.entryorder"))->read()->p(); ?>
+	    			<?php (new t("Patient.entryyear"))->read()->p(); ?>-<?php (new t("Patient.entryorder"))->read()->p(); ?>
 	    		</td>
 	    		<td><?php (new t("Patient.Firstname"))->read()->p(); ?></td>
 	    		<td><?php (new t("Patient.Lastname"))->read()->p(); ?></td>

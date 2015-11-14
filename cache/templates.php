@@ -247,8 +247,8 @@ if (!class_exists("t")) {
 	                    $this->res .= "<span id='{$this->jsId}'>{{ {$this->fieldGetKey()} | date:'{static::DATETIMEFORMAT}' }}</span>";
 	                    break;
 	            case static::TYPE_BOOLEAN:
-	                $this->res .= "<span id='{$this->jsId}' ng-show='{$this->fieldGetKey()}'><img src='static/img/boolean-true.gif'></span>"
-	                        . "<span id='{$this->jsId}' ng-hide='{$this->fieldGetKey()}'><img src='static/img/boolean-false.gif'></span>";
+	                $this->res .= "<span id='{$this->jsId}_ok' ng-show='{$this->fieldGetKey()}'><img src='static/img/boolean-true.gif'></span>"
+	                        . "<span id='{$this->jsId}_ko' ng-hide='{$this->fieldGetKey()}'><img src='static/img/boolean-false.gif'></span>";
 	                break;
 	            case static::TYPE_LIST:
 	                $this->res .= "<span id='{$this->jsId}'>{{ {$this->fieldGetKey()} }}</span>";
@@ -329,7 +329,7 @@ if (!class_exists("t")) {
 	                $this->res .= "<span id='{$this->jsId}'>{{ {$this->fieldGetKey()} | date:'{static::DATETIMEFORMAT}' }}</span>";
 	                break;
 	            case static::TYPE_BOOLEAN:
-	                $this->res .= "<input type='checkbox' ng-model='{$this->fieldGetKey()}' ng-true-value='1' ng-false-value='0' />";
+	                $this->res .= "<input id='{$this->jsId}' type='checkbox' ng-model='{$this->fieldGetKey()}' ng-true-value='1' ng-false-value='0' />";
 	                break;
 	            case static::TYPE_INTEGER:
 	                $this->res .= "<input type='number' $inline />";
