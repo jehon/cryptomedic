@@ -32,7 +32,7 @@ class References {
     static function buildValueList($list) {
     	return array_combine($list, $list);
     }
-    
+
     static function sortNatural($array) {
     	$narray = $array;
     	natsort($narray);
@@ -58,7 +58,7 @@ References::$lists["Unions"] = References::buildValueList(
 			"Dhalghat", "Kalarmarchara", "Chakaria purashova", "Khutakhali", "Dulahazara", "Fashiakhali",
 			"Shaharbil", "Pashchimbara Veula", "Badarkhali", "Dhemoshia", "Konakhaly", "Veulaminikchar",
 			"Purbabara Veula", "Bomobil chari", "Manikpur", "Shurazpur", "Kakara", "Kayerbil", "Baraitaly",
-			"Harbang", "Chiringa" ]), 
+			"Harbang", "Chiringa" ]),
 		[ "~ Other ~" ])
 	);
 
@@ -72,12 +72,11 @@ References::$lists["WalkingCapacities"] = References::buildValueList(["Level 1",
 References::$lists["LegAnalysis"] = References::buildValueList(["Valgus", "Varus"]);
 References::$lists["Side"] = References::buildValueList(["Right", "Left", "Bi"]);
 References::$lists["examiner"] = References::buildValueList([
-	"Ershad", "Rezaul", "Ricta", "Shetou", "Murshed", "Rina", // physio
+	"Ershad", "Rezaul", "Shetou", "Murshed", "Rina", "Ferdawsi", // physio
 	"Debashish", "Hassan 1", "Hassan 2", "Liton", // orthesis
-	"Shudir", "Rokeya", "Prytosh", "Kobir", "Nur Alam", "Zia", // Field monitors
+	"Rokeya", "Prytosh", "Kobir", "Nur Alam", "Zia", // Field monitors
 	"Taslim", "Monir", "AMD doctor" // Doctors
 ]);
-
 
 References::$lists["SocialLevel"] = References::buildValueList(array( 0, 1, 2, 3, 4 ));
 References::$lists["Pirani"] = References::buildValueList(array(0, 0.5, 1));
