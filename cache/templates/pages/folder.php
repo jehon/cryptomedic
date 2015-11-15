@@ -58,12 +58,12 @@
 					</div>
 					<div class="col-sm-4 text-center" ng-if="(!page)" >
 						<span ng-if="(mode == 'read')">
-				 			<span ng-if='hasPermission("folder.edit")' class="btn btn-default" ng-click="go('/folder/' + patient_id + '/edit')">Edit</span>
+				 			<span id='patient_edit' ng-if='hasPermission("folder.edit")' class="btn btn-default" ng-click="go('/folder/' + patient_id + '/edit')">Edit</span>
 						</span>
 						<span ng-if="(mode == 'edit')">
-							<span ng-if='hasPermission("folder.edit")' class="btn btn-default" ng-click="actionSavePatient()">Save</span>
-							<span ng-if='hasPermission("folder.delete") && (folder.getSubFiles().length == 0)' class="btn btn-default" ng-click="actionDeletePatient()">Delete</span>
-				 			<span class="btn btn-default" ng-click="actionCancel()">Cancel</span>
+							<span id='patient_save'   ng-if='hasPermission("folder.edit")' class="btn btn-default" ng-click="actionSavePatient()">Save</span>
+							<span id='patient_delete' ng-if='hasPermission("folder.delete") && (folder.getSubFiles().length == 0)' class="btn btn-default" ng-click="actionDeletePatient()">Delete</span>
+				 			<span id='patient_cancel' class="btn btn-default" ng-click="actionCancel()">Cancel</span>
 						</span>
 						<!--  Modify patient route -->
 					</div>
