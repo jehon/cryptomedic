@@ -472,6 +472,7 @@ if (substr($generator['target'], -5) != ".html") {
 }
 
 $template = str_replace(".html", ".php", $generator['target']);
+$template = str_replace("//", "/", $template);
 
 if (substr($template, 0, 16) == "templates/writes") {
 	$template = "templates/fiches" . substr($template, 16);
