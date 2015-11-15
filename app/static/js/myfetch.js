@@ -16,19 +16,32 @@ function myFetch(url, init, data) {
   init.credentials = "include";
 
   if (data) {
-    if (init.method == "GET") {
-      url = url + "?";
-      for(var a in data) {
-        url = url + encodeURIComponent(a) + "=" + encodeURIComponent(data[a]) + "&";
-      }
-    } else {
+    if (init.method == "POST") {
       var fd = new FormData();
       for(var a in data) {
         fd.append(a, data[a]);
       }
       init.body = fd;
+    } else if (init.method == "PUT") {
+      if (!init.headers) {
+        init.headers = {};
+      }
+      // Thanks to: http://blog.gospodarets.com/fetch_in_action/
+      init.headers["Content-type"] = "application/x-www-form-urlencoded; charset=UTF-8";
+      var serialize = function (data) {
+        return Object.keys(data).map(function (keyName) {
+          return encodeURIComponent(keyName) + '=' + encodeURIComponent(data[keyName])
+        }).join('&');
+      }
+      init.body = serialize(data);
+    } else {
+      url = url + "?";
+      for(var a in data) {
+        url = url + encodeURIComponent(a) + "=" + encodeURIComponent(data[a]) + "&";
+      }
     }
   }
+console.log(init);
 
   var req = new Request(url, init);
   return fetch(req).then(function(response) {
