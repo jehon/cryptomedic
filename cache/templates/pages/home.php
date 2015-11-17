@@ -12,7 +12,7 @@
 						</li>
 					</ul>
 				</div>
-		
+
 				<br>
 				<label>Entry Year</label>
 		       	<input ng-model="entryyear" ng-change="resetSearched()" type="number" class="form-control" placeholder="Entry year" required autofocus>
@@ -28,10 +28,10 @@
 			</fieldset>
 			<fieldset ng-if="searched">
 				<legend>Results</legend>
-				The patient does <b>not</b> exist. 
+				The patient does <b>not</b> exist.
 		 		Do you want to <b>create</b> it?<br>
 				<br>
-				<button ng-click="createReference()" class="btn btn-primary" >
+				<button id="button_create_reference" ng-click="createReference()" class="btn btn-primary" >
 					<img src="static/img/go.gif" alt="[go]"> Create the patient
 				</button>
 			</fieldset>
@@ -46,5 +46,5 @@
 				<span class='btn btn-warning' ng-click="generateReference()">Generate a reference for me</span>
 			</fieldset>
 		</div>
-	</div>	
+	</div>
 </div>
