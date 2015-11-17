@@ -16,6 +16,8 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', '$routeParams' , func
    *
    */
 
+  console.log("ctrl_folder reloaded");
+
   $scope.patient_id = $routeParams['patient_id'];
   $scope.page = $routeParams['page'];
   $scope.subtype = $routeParams['subtype'];
@@ -80,37 +82,41 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', '$routeParams' , func
     function askFolder() {
       service_backend.getFolder($scope.patient_id);
     }
-    askFolder();
+    // TODO: is it ok?
+    // if (!$scope.folder) {
+    //   console.log("ask folder");
+      askFolder();
+    // }
 
-    // ------------------------
-    //  Display helpers
-    // ------------------------
-    $scope.getTemplateName = function() {
-  if (!$scope.folder) {
-      return "waiting.html";
-  }
-  if (!$scope.page) {
-      return ($scope.mode == 'read' ? "fiches" : "writes") + "/patient.html";
-  }
-
-  if ($scope.page == 'file') {
-      return ($scope.mode == 'read' ? "fiches" : "writes") + "/" + $scope.subtype.toLowerCase() + ".html";
-  }
-
-  return "folder_pages/" + $scope.page + ".html";
-    };
-
-    $scope.currentFile = function() {
-  return cachedCurrentFile;
-    };
-
-    $scope.getPathTo = function(mode, index) {
-  var f = cachedCurrentFile;
-  if (index) {
-      f = folder.getSubFile(index);
-  }
-  return "/folder/" + f.patient_id + "/fiche/" + f._type + "/" + f.id + (mode ? "/" + mode : "");
+  // ------------------------
+  //  Display helpers
+  // ------------------------
+  $scope.getTemplateName = function() {
+    if (!$scope.folder) {
+        return "waiting.html";
     }
+    if (!$scope.page) {
+        return ($scope.mode == 'read' ? "fiches" : "writes") + "/patient.html";
+    }
+
+    if ($scope.page == 'file') {
+        return ($scope.mode == 'read' ? "fiches" : "writes") + "/" + $scope.subtype.toLowerCase() + ".html";
+    }
+
+    return "folder_pages/" + $scope.page + ".html";
+    };
+
+  $scope.currentFile = function() {
+    return cachedCurrentFile;
+  };
+
+  $scope.getPathTo = function(mode, index) {
+    var f = cachedCurrentFile;
+    if (index) {
+        f = folder.getSubFile(index);
+    }
+    return "/folder/" + f.patient_id + "/fiche/" + f._type + "/" + f.id + (mode ? "/" + mode : "");
+  }
 
     //----------------------
     //   Actions
@@ -178,6 +184,7 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', '$routeParams' , func
         // The data is refreshed by navigating away...
         $scope.$emit("message", { "level": "success", "text": "The " + $scope.subtype + " has been saved."});
         $scope.go("/folder/" + $scope.patient_id + "/file/" + $scope.subtype + "/" + $scope.subid);
+        $scope.folder = data;
         $scope.safeApply();
       });
   }
@@ -263,8 +270,6 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', '$routeParams' , func
       // The data is refreshed by navigating away...
       $scope.$emit("message", { "level": "success", "text": "The patient has been saved."});
       $scope.go("/folder/" + $scope.patient_id);
-      $scope.folder = data;
-      $scope.safeApply();
     });
   }
 

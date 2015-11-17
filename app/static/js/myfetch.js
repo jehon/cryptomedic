@@ -41,7 +41,6 @@ function myFetch(url, init, data) {
       }
     }
   }
-console.log(init);
 
   var req = new Request(url, init);
   return fetch(req).then(function(response) {

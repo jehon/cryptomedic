@@ -239,10 +239,7 @@ mainApp.controller('ctrl', [ '$scope', '$location', function($scope, $location) 
     }
   };
 
-  $scope.go = function(path, replaceInHistory) {
-    if ((typeof(replaceInHistory) !== "undefined") && replaceInHistory) {
-        $location.replace();
-    }
+  $scope.go = function(path) {
     $location.path( path );
   };
 
