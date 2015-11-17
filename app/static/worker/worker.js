@@ -185,8 +185,8 @@ onmessage = function(message) {
   switch(name) {
     case "init":
       return routeSync();
-    case "storeData":
-      return routeStoreData(data);
+    case "storeOne":
+      return routeStoreOne(data);
     case "sync":
       return routeSync();
     case "resync":

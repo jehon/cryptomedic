@@ -65,7 +65,7 @@ class ModelController extends Controller {
 
 	// PUT / PATCH
 	public function update($model, $id) {
-		$attributes = Input::except('_type', 'patient_id');
+ 		$attributes = Input::except('_type', 'patient_id');
 
 		$m = $this->getModel($model);
 		$obj = $this->getModelObject($model, $id);

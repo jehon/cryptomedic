@@ -278,12 +278,20 @@ function service_backend_fn() {
 
     'saveFile': function(data, folderId) {
       return myFetch(rest + "/fiche/" + data['_type'] + "/" + data['id'], { method: 'PUT' }, data)
+        .then(function(updated) {
+          return db.storeRecord({ record: updated })
+            .then(function() { console.log("there", updated); return updated; });
+        })
         .then(objectify)
         .then(onSuccess, onFailure);
     },
 
     'deleteFile': function(data, folderId) {
       return myFetch(rest + "/fiche/" + data['_type'] + "/" + data['id'], { method: "DELETE" })
+        .then(function(updated) {
+          return db.storeRecord({ record: updated })
+            .then(function() { console.log("there", updated); return updated; });
+        })
         .then(objectify)
         .then(onSuccess, onFailure);
     },
