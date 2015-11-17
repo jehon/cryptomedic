@@ -16,8 +16,6 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', '$routeParams' , func
    *
    */
 
-  console.log("ctrl_folder reloaded");
-
   $scope.patient_id = $routeParams['patient_id'];
   $scope.page = $routeParams['page'];
   $scope.subtype = $routeParams['subtype'];
