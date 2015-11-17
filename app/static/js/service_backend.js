@@ -132,6 +132,11 @@ function service_backend_fn() {
     console.error("@service: Error in worker: ", e);
   };
 
+  function saveResult(updated) {
+    return db.storeRecord({ record: updated })
+      .then(function() { return updated; });
+  }
+
   function onSuccess(data) {
     myEvents.trigger("connected");
     return data;
@@ -260,44 +265,41 @@ function service_backend_fn() {
 
     // READWRITE
     'createReference': function(year, order) {
-      return myFetch(rest + "/reference", null,
+      return myFetch(rest + '/reference', { method: 'POST'},
         // return treatHttp($http.post(rest + "/reference",
         {
             'entryyear': year,
             'entryorder': order
         })
+        .then(saveResult)
         .then(objectify)
         .then(onSuccess, onFailure);
     },
 
     'createFile': function(data, folderId) {
       return myFetch(rest + "/fiche/" + data['_type'], { method: 'POST' }, data)
+        .then(saveResult)
         .then(objectify)
         .then(onSuccess, onFailure);
     },
 
     'saveFile': function(data, folderId) {
       return myFetch(rest + "/fiche/" + data['_type'] + "/" + data['id'], { method: 'PUT' }, data)
-        .then(function(updated) {
-          return db.storeRecord({ record: updated })
-            .then(function() { console.log("there", updated); return updated; });
-        })
+        .then(saveResult)
         .then(objectify)
         .then(onSuccess, onFailure);
     },
 
     'deleteFile': function(data, folderId) {
       return myFetch(rest + "/fiche/" + data['_type'] + "/" + data['id'], { method: "DELETE" })
-        .then(function(updated) {
-          return db.storeRecord({ record: updated })
-            .then(function() { console.log("there", updated); return updated; });
-        })
+        .then(saveResult)
         .then(objectify)
         .then(onSuccess, onFailure);
     },
 
     'unlockFile': function(data, folderId) {
       return myFetch(rest + "/unfreeze/" + data['_type'] + "/" + data['id'])
+        .then(saveResult)
         .then(objectify)
         .then(onSuccess, onFailure);
     },
