@@ -4,10 +4,10 @@
 <div class='container-fluid modeRead'>
 	<div class='row'>
 		<div id='folder_menu' ng-if="patient_id >= 0" class="col-sm-2" class="btn-group btn-group-justified btn-group-vertical">
-			<a ng-if='hasPermission("folder.edit")' ng-class="{ 'btn-warning': page == 'addfile'}" ng-href="#/folder/{{patient_id}}/addfile" class="btn btn-default" style="width: 100%">Add</a>
+			<a id='button_add' ng-if='hasPermission("folder.edit")' ng-class="{ 'btn-warning': page == 'addfile'}" ng-href="#/folder/{{patient_id}}/addfile" class="btn btn-default" style="width: 100%">Add</a>
 			<a ng-class="{ 'btn-warning': page == 'summary'}" ng-href="#/folder/{{patient_id}}/summary" class="btn btn-default" style="width: 100%">Summary</a>
 			<a ng-class="{ 'btn-warning': page == 'graphics'}" ng-href="#/folder/{{patient_id}}/graphics" class="btn btn-default" style="width: 100%">Graphics</a>
-			<a ng-class="{ 'btn-warning': !page}" ng-href="#/folder/{{patient_id}}" class="btn btn-default" style="width: 100%">Patient</a>
+			<a id='button_patient' ng-class="{ 'btn-warning': !page}" ng-href="#/folder/{{patient_id}}" class="btn btn-default" style="width: 100%">Patient</a>
 			<span ng-repeat="f in folder.getSubFiles()">
 				<a id='folder_menu_{{f._type}}_{{f.id}}' href="#/folder/{{patient_id}}/file/{{f._type}}/{{f.id}}"
 						class="btn btn-default left-menu-button"
@@ -31,7 +31,7 @@
 					<div class="col-sm-4 text-center" ng-if="(page == 'file')" >
 						<span ng-if="(mode == 'add')" >
 							<!--  Add file route -->
-							<span ng-if='hasPermission("folder.edit")' class="btn btn-default" ng-click="actionCreate()">Create/Save</span>
+							<span id='button_save' ng-if='hasPermission("folder.edit")' class="btn btn-default" ng-click="actionCreate()">Create/Save</span>
 				 			<span class="btn btn-default" ng-click="actionCancel()">Cancel</span>
 						</span>
 						<span ng-if="(mode == 'read')">
