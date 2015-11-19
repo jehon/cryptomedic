@@ -10,6 +10,7 @@ module.exports = {
       .assert.containsText("#Patient_District", "Chittagong")
       .assert.visible("#Patient_pathology_Clubfoot_ok")
       .assert.visible("#Patient_pathology_Ricket_ko")
+      .assert.elementNotPresent("#button_edit")
 
       // Nonrickect Consult
       .page.cryptomedic().selectFile("NonricketConsult", 1)
@@ -26,6 +27,7 @@ module.exports = {
       // TODO: .assert.containsText("#ds_wh", "0.00 ds")
       .assert.containsText("#bmi", "16.15")
       .assert.containsText("#ds_bmi", "0.0 ds")
+      .assert.elementNotPresent("#button_edit")
 
       .page.cryptomedic().selectFile("Picture", 2)
       .assert.containsText("#Picture_Date", "2014-11-04")
@@ -33,8 +35,10 @@ module.exports = {
       .assert.containsText("#Picture_file", "10_2014-11-06_15-32-45.JPG")
       .assert.containsText("#Patient_entryyear", "2000")
       .assert.containsText("#Patient_entryorder", "1")
+      .assert.elementNotPresent("#button_edit")
 
       .page.cryptomedic().selectFile("Bill", 1)
+      .assert.elementNotPresent("#button_edit")
       // TODO: check bill
 
       .page.cryptomedic().goPatient(2014, 105)
@@ -46,10 +50,12 @@ module.exports = {
       .assert.containsText("#ageAtConsultationTime", "2 years old at consultation time")
       .assert.containsText("#ClubFoot_Treatment", "DB splint")
       // TODO: adapt the data and check them
+      .assert.elementNotPresent("#button_edit")
 
       .page.cryptomedic().goPatient(2001, 1)
       .page.cryptomedic().selectFile("RicketConsult", 3)
       // TODO: adapt the data and check them
+      .assert.elementNotPresent("#button_edit")
 
       .end();
   },
