@@ -1,0 +1,7 @@
+languages:
+- php: true
+- javascript: true
+
+exclude_paths:
+- app/bower_components/**
+- node_modules/**
