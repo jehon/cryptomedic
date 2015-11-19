@@ -1,0 +1,7 @@
+todo.txt
+
+end 2 end tests:
+- TODO: generate reference
+- TODO: summary of a file
+- TODO: bills (extended testing)
+- TODO: rights management
