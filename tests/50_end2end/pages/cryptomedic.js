@@ -24,7 +24,6 @@ module.exports = (function() {
       } catch (ex) {}
 
       client.init()
-        .watchLog(true)
         .waitForElementVisible('body')
         .assert.title('Cryptomedic')
         .setValue("#login_username", login)
