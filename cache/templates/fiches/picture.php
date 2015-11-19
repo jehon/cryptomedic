@@ -1,4 +1,4 @@
-<?php 
+<?php
 	t::setDefaultOption("baseExpression", "currentFile().");
 ?>
 <span ng-controller="ctrl_picture">
@@ -20,7 +20,7 @@
 					<?php (new t("Picture.comment"))->tr()->p(); ?>
 					<?php (new t("Picture.OriginalName"))->readOnly()->tr("Original name")->p(); ?>
 					<?php (new t("Picture.file"))->readOnly()->tr("File")->p(); ?>
-					<tr class='notModeRead' 
+					<tr class='notModeRead'
 							ng-if="!currentFile().file && hasPermission('folder.edit')"
 							ng-class="{ error: errors.pictureRequired }"
 						>
@@ -43,7 +43,7 @@
 	<div style='text-align: center' class="row">
 		<div class="col-lg-offset-1 col-lg-10">
 			<div ng-if="currentFile().file">
-				<img style="width:100%; max-width: 600px" ng-src="{{getFileSrc()}}" alt="Sorry, image not found on the server." >
+				<img id='img_file' style="width:100%; max-width: 600px" ng-src="{{getFileSrc()}}" alt="Sorry, image not found on the server." >
 			</div>
 			<div class='notModeRead text-center' ng-if="!currentFile().file && hasPermission('folder.edit')">
 				<canvas id='preview'></canvas>

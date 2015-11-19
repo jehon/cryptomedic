@@ -8,13 +8,15 @@
 			<a ng-class="{ 'btn-warning': page == 'summary'}" ng-href="#/folder/{{patient_id}}/summary" class="btn btn-default" style="width: 100%">Summary</a>
 			<a ng-class="{ 'btn-warning': page == 'graphics'}" ng-href="#/folder/{{patient_id}}/graphics" class="btn btn-default" style="width: 100%">Graphics</a>
 			<a id='button_patient' ng-class="{ 'btn-warning': !page}" ng-href="#/folder/{{patient_id}}" class="btn btn-default" style="width: 100%">Patient</a>
-			<span ng-repeat="f in folder.getSubFiles()">
-				<a id='folder_menu_{{f._type}}_{{f.id}}' href="#/folder/{{patient_id}}/file/{{f._type}}/{{f.id}}"
-						class="btn btn-default left-menu-button"
-						ng-class="{ 'btn-warning': page + subtype + subid == 'file' + f._type + f.id }"
-						>
-					{{f._type}}<span ng-if="f.Date"><br>[{{f.Date }}]</span>
-				</a>
+			<span id='folder_files'>
+				<span ng-repeat="f in folder.getSubFiles()" class='folder_file'>
+					<a id='folder_menu_{{f._type}}_{{f.id}}' href="#/folder/{{patient_id}}/file/{{f._type}}/{{f.id}}"
+							class="btn btn-default left-menu-button"
+							ng-class="{ 'btn-warning': page + subtype + subid == 'file' + f._type + f.id }"
+							>
+						{{f._type}}<span ng-if="f.Date"><br>[{{f.Date }}]</span>
+					</a>
+				</span>
 			</span>
 		</div>
 		<div class="col-sm-10">
@@ -46,12 +48,12 @@
 								</span>
 							</span>
 							<span ng-if="!currentFile().isLocked()" >
-					 			<span ng-if='hasPermission("folder.edit")' class="btn btn-default" ng-click="go('/folder/' + patient_id + '/file/' + subtype + '/' + subid + '/edit')">Edit</span>
+					 			<span id='button_edit' ng-if='hasPermission("folder.edit")' class="btn btn-default" ng-click="go('/folder/' + patient_id + '/file/' + subtype + '/' + subid + '/edit')">Edit</span>
 					 		</span>
 						</span>
 						<span ng-if="(mode == 'edit')">
 							<!--  Modify file route -->
-							<span ng-if='hasPermission("folder.delete")' class="btn btn-default" ng-click="actionDelete()">Delete</span>
+							<span id='button_delete' ng-if='hasPermission("folder.delete")' class="btn btn-default" ng-click="actionDelete()">Delete</span>
 							<span ng-if='hasPermission("folder.edit")' class="btn btn-default" ng-click="actionSave()">Save</span>
 				 			<span class="btn btn-default" ng-click="actionCancel()">Cancel</span>
 					 	</span>
