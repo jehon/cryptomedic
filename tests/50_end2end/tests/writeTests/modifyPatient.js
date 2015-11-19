@@ -6,6 +6,34 @@ module.exports = {
   'modifyPatient': function(client) {
     var r = Math.floor(Math.random() * 100);
 
+    var ricket_consult = {
+      "#Date": "2003-01-01",
+      "#Weightkg": "13"
+    }
+
+    var picture = {
+      "#Picture_Date": "2003-01-02"
+    }
+
+    var nonricket_consult = {
+      "#Date": "2003-02-01",
+      "#Weightkg": "13"
+    }
+
+    var clubfoot = {
+      "#Date": "2003-04-01",
+      "#Weightkg": "13"
+    }
+
+    var surgery = {
+      "#Surgery_Date": "2003-05-01",
+      "#Surgery_ReportDiagnostic": "diagnostique"
+    }
+
+    var bill = {
+      "#Bill_Date": "2003-06-01"
+    }
+
     client
       .page.cryptomedic().authenticate("murshed")
 
@@ -36,30 +64,79 @@ module.exports = {
       // Add a ricket consultation
       .myClick("#button_add")
       .myClick("#add_ricket_consult")
-      .clearValue("#Weightkg")
-      .setValue("#Weightkg", "13")
-      .clearValue("#Date")
-      .setValue("#Date", "2003-01-01")
-      .myClick("#button_save")
+      .myFillInForm('#fileForm', ricket_consult, '#button_save')
+      .myCheckForm('#fileForm', ricket_consult)
 
       // Add a non-ricket consultation
       .myClick("#button_add")
       .myClick("#add_nonricket_consult")
+      .myFillInForm('#fileForm', nonricket_consult, '#button_save')
+      .myCheckForm('#fileForm', nonricket_consult)
 
-      // Add a picture
+      // Add a picture -> TODO: add a picture image
       .myClick("#button_add")
       .myClick("#add_picture")
+      .setValue('#file', __dirname + '/../../ressources/upload.jpg')
+      .myFillInForm('#fileForm', picture, '#button_save')
+      .myCheckForm('#fileForm', picture)
+      .assert.visible('#img_file')
 
       // Add a clubfoot
       .myClick("#button_add")
       .myClick("#add_clubfoot")
+      .myFillInForm('#fileForm', clubfoot, '#button_save')
+      .myCheckForm('#fileForm', clubfoot)
+
+      // Add a surgery
+      .myClick("#button_add")
+      .myClick("#add_surgery")
+      .myFillInForm('#fileForm', surgery, '#button_save')
+      .myCheckForm('#fileForm', surgery)
 
       // Add a bill
       .myClick("#button_add")
       .myClick("#add_bill")
+      .myFillInForm('#fileForm', bill, '#button_save')
+      .myCheckForm('#fileForm', bill)
 
       // Delete all sub-files
 
+      // Not delete
+      .myClick("#folder_files .folder_file:nth-child(1) .btn")
+      .myClick("#button_edit")
+      .myClick("#button_delete")
+      .dismissAlert()
+
+      // Delete
+      .myClick("#folder_files .folder_file:nth-child(6) .btn")
+      .myClick("#button_edit")
+      .myClick("#button_delete")
+      .acceptAlert()
+
+      .myClick("#folder_files .folder_file:nth-child(5) .btn")
+      .myClick("#button_edit")
+      .myClick("#button_delete")
+      .acceptAlert()
+
+      .myClick("#folder_files .folder_file:nth-child(4) .btn")
+      .myClick("#button_edit")
+      .myClick("#button_delete")
+      .acceptAlert()
+
+      .myClick("#folder_files .folder_file:nth-child(3) .btn")
+      .myClick("#button_edit")
+      .myClick("#button_delete")
+      .acceptAlert()
+
+      .myClick("#folder_files .folder_file:nth-child(2) .btn")
+      .myClick("#button_edit")
+      .myClick("#button_delete")
+      .acceptAlert()
+
+      .myClick("#folder_files .folder_file:nth-child(1) .btn")
+      .myClick("#button_edit")
+      .myClick("#button_delete")
+      .acceptAlert()
 
       // Edit and cancel
       .myClick("#button_patient")
