@@ -1,7 +1,8 @@
 todo.txt
 
 end 2 end tests:
-- TODO: generate reference
-- TODO: summary of a file
-- TODO: bills (extended testing)
-- TODO: rights management
+- TODO: test generate reference
+- TODO: test update a file
+- TODO: test bills (extended testing)
+- TODO: test unlocking files
+- TODO: extend readPatient2000
