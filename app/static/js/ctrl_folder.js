@@ -247,11 +247,11 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', '$routeParams' , func
     }
     $scope.folder = false;
     $scope.currentFile()._type = "Patient";
-    service_backend.createFile($scope.currentFile(), $scope.patient_id)
+    service_backend.createFile($scope.currentFile())
     .then(function(data) {
       $scope.$emit("message", { "level": "success", "text":  "The patient has been created."});
       $scope.folder = data;
-      $scope.go("/folder/" + data.patient_id);
+      $scope.go("/folder/" + data.id);
       $scope.safeApply();
     });
   }

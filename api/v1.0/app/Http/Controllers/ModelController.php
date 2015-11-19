@@ -7,7 +7,6 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Input;
 
-#require_once(__DIR__ . "/../../../../php/references.php");
 use \References;
 
 // TODO: protect frozen files
@@ -30,14 +29,21 @@ class ModelController extends Controller {
 		$m = $this->getModel($model);
 		if ($model == "Patient") {
 			// In case we create a patient, things are a bit more complicated!!!
+			// We do this only when we need to generate a reference
+			// otherwise, we go to FolderController@reference (other route)
 
-			//TODO(0): check this
-			$id = DB::insertGetId("INSERT INTO patients(entryyear, entryorder)
+			// Generate a reference:
+			$res = DB::insert("INSERT INTO patients(entryyear, entryorder)
 					 VALUE(?, coalesce(
 							greatest(10000,
 								(select i from (select (max(entryorder) + 1) as i from patients where entryyear = ? and entryorder BETWEEN 10000 AND 19999) as j )
 							),
-					10000))", [ Request::input("entryyear"), Request::input("entryyear") ]);
+					10000))", [ Request::input("entryyear"), Request::input("entryyear") ])
+			|| abort(500, "Problem inserting and creating reference");
+
+			$id = DB::select("SELECT last_insert_id() as id");// " as id FROM patients");
+			$id = $id[0]->id;
+
 			if (!$id) {
 				abort(500, "Could not create the patient");
 			}

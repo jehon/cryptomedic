@@ -215,8 +215,14 @@ function service_backend_fn() {
 
     // Go to the database
     'getFolder': function(id) {
-      // TODO: if not final then go to the server anyway...
-      return db.getFolder(id);
+      if (id == -1) {
+        return Promise.resolve(new application.models.Folder({
+          mainFile: new application.models.Patient()
+        }));
+      } else {
+        // TODO: if not final then go to the server anyway...
+        return db.getFolder(id);
+      }
     },
 
     'getByReference': function(year, order) {
@@ -276,14 +282,14 @@ function service_backend_fn() {
         .then(onSuccess, onFailure);
     },
 
-    'createFile': function(data, folderId) {
+    'createFile': function(data) {
       return myFetch(rest + "/fiche/" + data['_type'], { method: 'POST' }, data)
         .then(saveResult)
         .then(objectify)
         .then(onSuccess, onFailure);
     },
 
-    'saveFile': function(data, folderId) {
+    'saveFile': function(data) {
       return myFetch(rest + "/fiche/" + data['_type'] + "/" + data['id'], { method: 'PUT' }, data)
         .then(saveResult)
         .then(objectify)
