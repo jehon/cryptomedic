@@ -1,6 +1,6 @@
 exports.command = function(selector, callback) {
   var self = this, fs = require('fs');
-  this.waitForElementVisible(selector, 1000);
+  this.waitForElementVisible(selector);
   this.execute(function(selector) {
           // execute application specific code
           if (typeof(document.querySelector(selector).click) == "function") {
@@ -26,6 +26,6 @@ exports.command = function(selector, callback) {
           }
         }
   );
-  this.pause(250);
-  return this; // allows the command to be chained.
+  this.pause(100);
+  return this;
 };

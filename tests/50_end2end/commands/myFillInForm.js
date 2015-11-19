@@ -1,6 +1,6 @@
 exports.command = function(selector, fields, button) {
   var self = this;
-  this.waitForElementVisible(selector, 1000);
+  this.waitForElementVisible(selector);
   for(f in fields) {
     this
       .assert.visible(f);
