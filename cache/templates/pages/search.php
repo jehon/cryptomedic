@@ -47,7 +47,7 @@
 	t::setDefaultOption("readOnly");
 ?>
 <div>
-	<div ng-if="listing.length == 0">No results</div>
+	<div id='search_no_results' ng-if="listing.length == 0">No results</div>
 	<div ng-if="listing.length > 0">
         <div style='text-align: center; color: red'>Only the first 100 results are shown</div>
 	    <table id='search_results' class='table table-hover table-bordered tablesorter' pagesize="10">

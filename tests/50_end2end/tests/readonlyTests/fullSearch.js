@@ -2,6 +2,7 @@
 function testSearch(client, search, resultList) {
   client
     .myClick("#button_reset")
+    .waitForElementPresent("#search_no_results")
     // .page.cryptomedic().authenticate("readonly")
     // .myClick("#menu_search")
     .myFillInForm(".searchFields", search, "#button_submit")
