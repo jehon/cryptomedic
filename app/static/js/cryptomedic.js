@@ -1,7 +1,6 @@
 "use strict";
 
 var cryptomedic = {};
-cryptomedic.version = '<?php echo getVersion(); ?>';
 cryptomedic.templateRoot = "/cryptomedic/cache/templates/";
 cryptomedic.settings = {};
 cryptomedic.settings.offlineCache = false;
