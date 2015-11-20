@@ -7,7 +7,7 @@
 
 !.gitkeep
 
-node_modules/
+# node_modules/
 **/logs
 **/tmp
 
