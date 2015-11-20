@@ -7,8 +7,7 @@
 	ExpiresDefault 	  A0
 </IfModule>
 
-RedirectMatch		404				vendor
-
+RewriteEngine On
 
 ########### REDIRECT TO INDEX IF DOES NOT EXISTS ##########
 #RewriteCond         %{REQUEST_URI}      !^/api/
@@ -17,6 +16,4 @@ RedirectMatch		404				vendor
 #RewriteCond         %{DOCUMENT_ROOT}/%{REQUEST_URI} !-f
 #RewriteRule         /.*                 /opt/biobank/frontend/build/index.html  [L]
 
-########### BACKEND BY VERSIONS ###########################
-RewriteRule         ^api/v([0-9]+\.[0-9]+)(/.*)/$     api/v$1$2
-RewriteRule         ^api/v([0-9]+\.[0-9]+)            api/v$1/public/index.php
+RedirectMatch    404       vendor
