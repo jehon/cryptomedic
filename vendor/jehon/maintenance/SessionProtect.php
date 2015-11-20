@@ -1,6 +1,8 @@
 <?php
 namespace Jehon\Maintenance;
 
+require_once(__DIR__ . "/lib/getParameter.php");
+
 class SessionProtect {
 	protected $code;
 	protected $source = "";
