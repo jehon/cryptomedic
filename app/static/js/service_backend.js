@@ -223,15 +223,23 @@ function service_backend_fn() {
         // If not final then go to the server anyway...
         return db.getFolder(id).catch(function(error) {
           console.log("Getting the folder live: #" + id);
-          return myFetch(rest + "/folder/" + id);
+          return myFetch(rest + "/folder/" + id)
+            .then(function(data) {
+              db.storeRecord({record: data});
+            });
         });
       }
     },
 
-    'getByReference': function(year, order) {
-      // TODO: if not final then go to the server anyway...
-      return db.getByReference(year, order);
-    },
+    // TODO: this seem unused!!!
+    // 'getByReference': function(year, order) {
+    //   return db.getByReference(year, order)
+    //     .catch(function(error) {
+    //       // If not final then go to the server anyway...
+    //       console.log("Getting the reference live: #" + id);
+    //       return myFetch(rest + "/reference/" + year + "/" + order);
+    //     });
+    // },
 
     'clear': function() {
       return db.clear()
