@@ -2,7 +2,7 @@
 
 require_once("RouteReferenceTestCase.php");
 
-class ReportDailyActivityTest extends RouteReferenceTestCase {
+class ReportActivityDailyTest extends RouteReferenceTestCase {
 	static public $nday = "2014-05-20";
 	static public $nmonth = "2014-05";
 
