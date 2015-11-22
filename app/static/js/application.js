@@ -158,8 +158,8 @@ var mainApp = angular.module('app_main', [ 'ngRoute' ])
     compile: function(cElement, cAttrs, cTransclude) {
       console.log("compiling preview");
       return function($scope, $element, $attrs, ctrl, $transclude) {
-        var canvas = document.getElementById($attrs.preview);
-        var transcludeScope = $scope.$parent.$new();
+        // var canvas = document.getElementById($attrs.preview);
+        // var transcludeScope = $scope.$parent.$new();
 
         $element[0].onchange = function() {
           var busy = $scope.doBusy("Reducing the picture");

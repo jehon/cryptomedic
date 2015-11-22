@@ -3,7 +3,7 @@
 mainApp.controller('ctrl_graphic', [ '$scope', '$element', function($scope, $element) {
     // This controller is intended for ONE graphic only
     var x, y;
-    var stats;
+    // var stats;
 
     $scope.getVariableX = function() { return x; };
     $scope.getVariableY = function() { return y; };
