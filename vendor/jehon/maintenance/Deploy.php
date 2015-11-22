@@ -190,34 +190,55 @@ class Deploy {
 				$tags["latest"] = array ();
 				$tags["latest"]["zipball_url"] = "https://api.github.com/repos/" . $owner . "/" . $project . "/zipball/master";
 				$tags["latest"]["name"] = "latest";
+				flush();
 			?>
 
 			<h3>Zip file URI<h3>
 			<?php
 				$githubUri = $tags[$version]['zipball_url'];
 				echo $githubUri;
+				flush();
 			?>
 
 			<h3>Getting Zip file</h3>
 			<?php echo self::getZip($zip, $githubUri); ?>
 
 			<h3>Unzip the file</h3>
-			<?php echo self::extractZip($zip, $tempUnzipped); ?>
+			<?php
+				echo self::extractZip($zip, $tempUnzipped);
+				flush();
+			?>
 
 			<h3>Removing old backup</h3>
-			<?php echo self::deleteFileOrFolder ( $backup ); ?>
+			<?php
+				echo self::deleteFileOrFolder ( $backup );
+				flush();
+			?>
 
 			<h3>Archive old directory</h3>
-			<?php if (file_exists ( $targetDir )) { echo self::replaceDirectory ( $targetDir, $backup ); } ?>
+			<?php
+				if (file_exists ( $targetDir )) {
+					echo self::replaceDirectory ( $targetDir, $backup );
+				}
+				flush();
+			?>
 
 			<h3>Replace directory (real install)</h3>
-			<?php echo self::replaceDirectory ( $tempUnzipped, $targetDir); ?>
+			<?php
+				echo self::replaceDirectory ( $tempUnzipped, $targetDir);
+				flush();
+			?>
 
 			<h3>Remove zip file</h3>
 			<?php echo self::deleteFileOrFolder ( $zip ); ?>
 
 			<h3>Run custom script</h3>
-			<?php if (function_exists("custom_upgrade")) { echo custom_upgrade(); } ?>
+			<?php
+				if (function_exists("custom_upgrade")) {
+					echo custom_upgrade();
+				}
+				flush();
+			?>
 
 			<h3>Act the version</h3>
 			<pre><?php

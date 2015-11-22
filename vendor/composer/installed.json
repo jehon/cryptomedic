@@ -911,17 +911,17 @@
     },
     {
         "name": "phpunit/phpunit",
-        "version": "4.8.16",
-        "version_normalized": "4.8.16.0",
+        "version": "4.8.18",
+        "version_normalized": "4.8.18.0",
         "source": {
             "type": "git",
             "url": "https://github.com/sebastianbergmann/phpunit.git",
-            "reference": "625f8c345606ed0f3a141dfb88f4116f0e22978e"
+            "reference": "fa33d4ad96481b91df343d83e8c8aabed6b1dfd3"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/625f8c345606ed0f3a141dfb88f4116f0e22978e",
-            "reference": "625f8c345606ed0f3a141dfb88f4116f0e22978e",
+            "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/fa33d4ad96481b91df343d83e8c8aabed6b1dfd3",
+            "reference": "fa33d4ad96481b91df343d83e8c8aabed6b1dfd3",
             "shasum": ""
         },
         "require": {
@@ -948,7 +948,7 @@
         "suggest": {
             "phpunit/php-invoker": "~1.1"
         },
-        "time": "2015-10-23 06:48:33",
+        "time": "2015-11-11 11:32:49",
         "bin": [
             "phpunit"
         ],
@@ -990,18 +990,18 @@
         "source": {
             "type": "git",
             "url": "https://github.com/jehon/maintenance.git",
-            "reference": "ce27352fac30e4fd5851b3a0f5f27222891aab51"
+            "reference": "7c5f58a7769af31fc3f37405bef706af5a054369"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/jehon/maintenance/zipball/ce27352fac30e4fd5851b3a0f5f27222891aab51",
-            "reference": "ce27352fac30e4fd5851b3a0f5f27222891aab51",
+            "url": "https://api.github.com/repos/jehon/maintenance/zipball/7c5f58a7769af31fc3f37405bef706af5a054369",
+            "reference": "7c5f58a7769af31fc3f37405bef706af5a054369",
             "shasum": ""
         },
         "require-dev": {
             "phpunit/phpunit": "4.8.*"
         },
-        "time": "2015-10-29 16:20:02",
+        "time": "2015-11-21 18:28:56",
         "type": "library",
         "installation-source": "source",
         "autoload": {

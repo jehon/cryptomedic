@@ -109,7 +109,7 @@ EMAIL
 		}
 		?>
 			<a href='?'>View index</a>
-			<a href='?fix=1&id=<?php echo getParameter("id") ?>'>Fix it</a>
+			<a href='?fix=1&id=<?php echo \Jehon\Maintenance\Lib\getParameter("id") ?>'>Fix it</a>
 			<table>
 				<cols>
 					<col width='200px'/>
@@ -195,7 +195,7 @@ EMAIL
 	 	if (\Jehon\Maintenance\Lib\getParameter("id", -1) < 0) {
 	 		$this->viewList();
 	 	} else {
-	 		$id = getParameter("id");
+	 		$id = \Jehon\Maintenance\Lib\getParameter("id");
 			// Delete it?
 	 		if (\Jehon\Maintenance\Lib\getParameter("fix", false)) {
 				$this->fixIt($id);
