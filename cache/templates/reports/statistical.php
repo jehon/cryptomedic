@@ -2,6 +2,7 @@
 	namespace App;
 
 	require_once(__DIR__ . "/../../../api/v1.0/app/Bill.php");
+	require_once(__DIR__ . "/../../../php/core.php");
 
 	use \App\Bill;
 	use \References;
@@ -47,7 +48,7 @@
 		<tr><td colspan="2" class="subheader">Where</td></tr>
 <?php
 	foreach(References::$lists['Centers'] as $i) {
-		echo "<tr><td>@ $i</td><td>{{result.summary.centers." . myCleanValue($i) . "}}</td></tr>";
+		echo "<tr><td>@ $i</td><td>{{result.summary.centers." . \myCleanValue($i) . "}}</td></tr>";
 	}
 ?>
 		<tr><td>center unspecified</td><td>{{result.summary.centers.unspecified}}</td></tr>

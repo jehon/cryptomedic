@@ -1,6 +1,6 @@
 <?php namespace App\Http\Controllers;
 
-require_once(__DIR__ . "/../../../../php/core.php");
+require_once(__DIR__ . "/../../../../../php/core.php");
 #require_once(__DIR__ . "/../../../../php/references.php");
 
 use App\Http\Controllers\Controller;
