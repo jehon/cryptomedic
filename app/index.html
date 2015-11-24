@@ -1,16 +1,6 @@
-<?php
-  require_once(__DIR__ . "/../php/allscripts.php");
-  require_once(__DIR__ . "/../php/core.php");
-  Script::$rootPath = __DIR__;
-?><!DOCTYPE html>
-<html <?php
-  if (array_key_exists("online", $_REQUEST)) {
-    $mode = "online";
-  } else {
-    $mode = "appcache";
-// TODO: echo "manifest='../cache/manifest.manifest'";
-  }
-?> >
+<!DOCTYPE html>
+<!-- TODO: echo "manifest='../cache/manifest.manifest'" -->
+<html>
   <head>
     <title>Cryptomedic</title>
     <meta charset='utf-8'>
@@ -18,56 +8,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="static/img/favicon.ico" type="image/x-icon" rel="icon" />
     <link href="static/img/favicon.ico" type="image/x-icon" rel="shortcut icon" />
-    <?php
-      // jquery
-      (new Script("bower_components/jquery/dist/jquery.min.js"))->dependFile()->toPrint();
-      (new Script("bower_components/jquery-ui/jquery-ui.min.js"))->dependFile()->toPrint();
-      (new Script("bower_components/jquery-ui/themes/ui-lightness/jquery-ui.min.css"))->dependFile()->toPrint();
+    <link type='text/css' rel='stylesheet' href='bower_components/jquery-ui/themes/ui-lightness/jquery-ui.min.css'/>
+    <link type='text/css' rel='stylesheet' href='bower_components/bootstrap/dist/css/bootstrap.min.css'/>
+    <link type='text/css' rel='stylesheet' href='static/css/application.css'/>
 
-      if (array_key_exists("visibleLogs", $_REQUEST)) {
-        (new Script("../tests/50_end2end/visibleLogs.js"))->dependFile()->toPrint();
-      }
+    <script type='text/javascript' src='bower_components/jquery/dist/jquery.min.js'></script>
+    <script type='text/javascript' src='bower_components/jquery-ui/jquery-ui.min.js'></script>
+    <script type='text/javascript' src='static/js/bugreporting.js'></script>
+    <script type='text/javascript' src='static/js/html2canvas.js'></script>
+    <script type='text/javascript' src='bower_components/bootstrap/dist/js/bootstrap.min.js'></script>
+    <script type='text/javascript' src='bower_components/angular/angular.min.js'></script>
+    <script type='text/javascript' src='bower_components/angular-route/angular-route.min.js'></script>
+    <script type='text/javascript' src='bower_components/excellentexport/excellentexport.min.js'></script>
+    <script type='text/javascript' src='bower_components/dexie/dist/latest/Dexie.min.js'></script>
+    <script type='text/javascript' src='bower_components/fetch/fetch.js'></script>
+    <script type='text/javascript' src='static/js/application.js'></script>
+    <script type='text/javascript' src='static/js/database.js'></script>
+    <script type='text/javascript' src='static/js/myfetch.js'></script>
+    <script type='text/javascript' src='static/js/service_backend.js'></script>
+    <script type='text/javascript' src='static/js/service_session_storage.js'></script>
+    <script type='text/javascript' src='static/js/cryptomedic.js'></script>
+    <script type='text/javascript' src='static/js/amd_stats_datas.js'></script>
+    <script type='text/javascript' src='static/js/exceptions.js'></script>
+    <script type='text/javascript' src='static/js/model_abstract.js'></script>
+    <script type='text/javascript' src='static/js/model_data.js'></script>
+    <script type='text/javascript' src='static/js/model_file.js'></script>
+    <script type='text/javascript' src='static/js/model_file_bill.js'></script>
+    <script type='text/javascript' src='static/js/model_file_clubfoot.js'></script>
+    <script type='text/javascript' src='static/js/model_file_nonricketconsult.js'></script>
+    <script type='text/javascript' src='static/js/model_file_picture.js'></script>
+    <script type='text/javascript' src='static/js/model_file_ricketconsult.js'></script>
+    <script type='text/javascript' src='static/js/model_file_surgery.js'></script>
+    <script type='text/javascript' src='static/js/model_folder.js'></script>
+    <script type='text/javascript' src='static/js/model_patient.js'></script>
+    <script type='text/javascript' src='static/js/ctrl_allgraphics.js'></script>
+    <script type='text/javascript' src='static/js/ctrl_file_bill.js'></script>
+    <script type='text/javascript' src='static/js/ctrl_folder.js'></script>
+    <script type='text/javascript' src='static/js/ctrl_graphic.js'></script>
+    <script type='text/javascript' src='static/js/ctrl_home.js'></script>
+    <script type='text/javascript' src='static/js/ctrl_offline.js'></script>
+    <script type='text/javascript' src='static/js/ctrl_picture.js'></script>
+    <script type='text/javascript' src='static/js/ctrl_reports.js'></script>
+    <script type='text/javascript' src='static/js/ctrl_search.js'></script>
+    <script type='text/javascript' src='static/js/start.js'></script>
 
-      // Custom bug reporting script:
-      (new Script("static/js/bugreporting.js"))->dependFile()->toPrint();
-      (new Script("static/js/html2canvas.js"))->dependFile()->toPrint();
-
-      // bootstrap
-      (new Script("bower_components/bootstrap/dist/js/bootstrap.min.js"))->dependFile()->toPrint();
-      (new Script("bower_components/bootstrap/dist/css/bootstrap.min.css"))->dependFile()->toPrint();
-
-      // angular
-      (new Script("bower_components/angular/angular.min.js"))->dependFile()->toPrint();
-      (new Script("bower_components/angular-route/angular-route.min.js"))->dependFile()->toPrint();
-
-      // Other
-      (new Script("bower_components/excellentexport/excellentexport.min.js"))->dependFile()->toPrint();
-      (new Script("bower_components/dexie/dist/latest/Dexie.min.js"))->dependFile()->toPrint();
-
-      // Polyfill
-      (new Script("bower_components/fetch/fetch.js"))->dependFile()->toPrint();
-
-      // personnal
-      (new Script("static/js/application.js"))->dependFile()->toPrint();
-
-      (new Script("static/js/database.js"))->dependFile()->toPrint();
-      (new Script("static/js/myfetch.js"))->dependFile()->toPrint();
-      (new AllScripts("static/js/service_*.js"))->dependFile()->toPrint();
-
-      (new Script("static/js/cryptomedic.js"))->dependFile()->toPrint();
-      (new Script("static/js/amd_stats_datas.js"))->dependFile()->toPrint();
-      (new Script("static/js/exceptions.js"))->dependFile()->toPrint();
-
-      (new AllScripts("static/js/model_*.js"))->dependFile()->toPrint();
-      (new AllScripts("static/js/ctrl_*.js"))->dependFile()->toPrint();
-
-      (new AllScripts("static/css/*.css"))->css()->dependFile()->toPrint();
-
-      (new AllScripts("static/js/start.js"))->dependFile()->toPrint();
-    ?>
-    <script type='text/javascript'>
-      cryptomedic.version = '<?php echo getVersion(); ?>';
-    </script>
+    <script type='text/javascript' src='build/bundle.js'></script>
   </head>
   <body ng-app="app_main" ng-controller="ctrl" id="ng-app" >
     <!--  Navigation bar -->
