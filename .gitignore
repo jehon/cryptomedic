@@ -21,3 +21,4 @@ phantomjsdriver.log
 
 composer.lock
 vendor/**/.git
+node_modules
