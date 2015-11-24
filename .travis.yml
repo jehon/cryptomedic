@@ -15,16 +15,12 @@ before_script:
   - mysql -e "create database IF NOT EXISTS amd_chakaria;" -uroot
   - mysql -e "GRANT ALL ON *.* TO amd_chakaria@localhost" -uroot
   - mysql -e "SET GLOBAL time_zone = '+00:00'" -uroot
-#  - bin/prj-install.sh
+  - bin/prj-install.sh
 
-#  - npm start > /dev/null &
-#  - npm run update-webdriver
   - sleep 3 # give xvfb server time to start
 
 script:
   - bin/prj-test.sh
-#  - node_modules/.bin/karma start test/karma.conf.js --no-auto-watch --single-run --reporters=dots --browsers=Firefox
-#  - node_modules/.bin/protractor test/protractor-conf.js --browser=firefox
 
 after_failure:
 #  - cat rest/storage/log/*
