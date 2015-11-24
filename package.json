@@ -14,6 +14,9 @@
     "excellentexport": "git://github.com/jehon/excellentexport",
     "jquery": "latest",
     "jquery-ui": "latest",
+    "react": "^0.14.3",
+    "react-redux": "^4.0.0",
+    "redux": "^3.0.4",
     "whatwg-fetch": "^0.10.1"
   },
   "devDependencies": {
@@ -28,6 +31,7 @@
     "eslint-plugin-react": "latest",
     "file-loader": "latest",
     "glob": "latest",
+    "html-webpack-plugin": "^1.6.2",
     "karma": "latest",
     "karma-chrome-launcher": "latest",
     "karma-coverage": "latest",
@@ -37,14 +41,16 @@
     "karma-junit-reporter": "latest",
     "nightwatch": "latest",
     "nightwatch-html-reporter": "latest",
+    "redux-devtools": "^2.1.5",
+    "script-loader": "^0.6.1",
     "selenium-server": "latest",
     "webpack": "~1",
     "webpack-dev-server": "^1"
   },
   "scripts": {
-    "build:dev": "NODE_ENV='developpement' webpack --config webpack.dev.js -p",
-    "build:dev:fast": "NODE_ENV='developpement' webpack --config webpack.dev.js",
-    "build:prod": "NODE_ENV='production'    webpack --config webpack.js -p",
+    "build:dev": "webpack --config webpack.dev.js -p",
+    "build:dev:fast": "webpack --config webpack.dev.js",
+    "build:prod": "webpack --config webpack.js -p",
     "dev-server": "node server.js",
     "postinstall": "bower install",
     "postupdate": "bower update"
