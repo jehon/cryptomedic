@@ -9,10 +9,6 @@
 	use \t;
 	use \myCleanValue;
 
-//	function clean($c) {
-//		// Must be in-line with ReportController@clean
-//		return str_replace(["'", " ", "\""], "", $c);
-//	}
 ?>
 <table class="reporting ng-scope">
 	<tbody>
