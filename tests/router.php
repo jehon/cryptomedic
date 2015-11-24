@@ -21,14 +21,17 @@ if (substr($uri, 0, 7) == "/cache/") {
   return true;
 }
 
-if ((substr($uri, 0, 14) == "/app/index.php") || ($uri == "/app/")) {
-  require __DIR__ . "/../app/index.php";
-  return true;
-}
+// if ((substr($uri, 0, 14) == "/app/index.php") || ($uri == "/app/")) {
+//   require __DIR__ . "/../app/index.php";
+//   return true;
+// }
 
 $file = __DIR__ . "/../" . $uri;
 if (file_exists($file)) {
   switch(pathinfo($file, PATHINFO_EXTENSION)) {
+    case 'html':
+      header("Content-type: text/html");
+      break;
     case 'css':
       header("Content-type: text/css");
       break;
