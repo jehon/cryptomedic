@@ -2,6 +2,7 @@
 
 define("ROOT", __DIR__ . "/../../cache/");
 
+require __DIR__ . "/../../php/myfiles.php";
 
 class CacheTest extends PHPUnit_Framework_TestCase
 {
