@@ -4,13 +4,13 @@
 		header("Expires: Wed, 11 Jan 1984 00:00:00 GMT");
 		header("Pragma: public");
 	}
-	
+
 	define("TS_FORMAT", "Y-m-d H:i:s");
 ?>
 CACHE MANIFEST
 
 <?php
-	
+
 	// By default, consider manifest mtime as a minimum
 	// This will be updated in addTs();
 	$lastModif = filemtime(__FILE__);
@@ -21,7 +21,7 @@ CACHE MANIFEST
 	function addLine($f) {
 		echo $f . "\n";
 	}
-	
+
 	function addOne($f) {
 		$f = str_replace("\\", "/", $f);
 		if ($f[0] == "/") {
@@ -30,7 +30,7 @@ CACHE MANIFEST
 			addLine("/cryptomedic/app/$f");
 		}
 	}
-		
+
 	function addTs($ts, $header = "") {
 		// Update the global Last-modified time
 		if (!is_numeric($ts)) {
@@ -42,20 +42,20 @@ CACHE MANIFEST
 			$lastModif = $ts;
 		}
 	}
-		
+
 	function addFileTs($f) {
 		if (!file_exists($f)) {
 			return addLine("# $f: does not exists");
 		}
 		return addTs(filemtime($f), $f);
 	}
-	
-	addLine("# cryptomedic version: " . getVersion());
+
+	// addLine("# cryptomedic version: " . getVersion());
 	addLine("");
-	
+
 	addLine("CACHE:");
 	addLine("");
-	
+
 	addLine("# Manually added elements");
 	addFileTs("../app/index.php");
 	addOne("/cryptomedic/app/");
@@ -63,19 +63,19 @@ CACHE MANIFEST
 	addOne("/cryptomedic/");
 	addFileTs("../../cryptomedic.version");
 	addLine("");
-	
+
 	addLine("# Include dependant php scripts");
 	addLine("");
 	foreach(MyFiles::glob("../php/*") as $f) {
 		addFileTs($f);
 	}
 	addLine("");
-	
+
 	// Use the index for import
-	ob_start();	
-	require("../app/index.php"); 
-	ob_end_clean();
-	
+	// ob_start();
+	// require("../app/index.php");
+	// ob_end_clean();
+
 	addLine("# Scripts auto-import");
 	addLine("");
 	foreach(Script::$scriptsList as $s) {
@@ -92,7 +92,7 @@ CACHE MANIFEST
 		addOne($f);
 	}
 	addLine("");
-		
+
 	addLine("# cache");
 	addLine("");
 	foreach(MyFiles::glob("../cache/*", true) as $f) {
@@ -105,9 +105,9 @@ CACHE MANIFEST
 NETWORK:
 # online content (no cache)
 *
-<?php 
-	
+<?php
+
 	addLine("");
 	addLine("# manifest last modif detected (second): " . $lastModif);
 	addLine("# manifest last modif detected (time): " . date('D, d M Y H:i:s T', $lastModif));
-	
+

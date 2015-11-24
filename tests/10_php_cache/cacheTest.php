@@ -2,6 +2,7 @@
 
 define("ROOT", __DIR__ . "/../../cache/");
 
+
 class CacheTest extends PHPUnit_Framework_TestCase
 {
 	protected function _testOneCachedFile($target) {
@@ -25,14 +26,14 @@ class CacheTest extends PHPUnit_Framework_TestCase
 	/**
 	 * @   runInSeparateProcess
 	 */
-	public function testManifest()
-	{
-		$content = $this->_testOneCachedFile("manifest.manifest");
-		$this->assertNotEmpty($content);
-		$this->assertStringStartsWith("CACHE MANIFEST", $content);
-		$this->assertContains("NETWORK:", $content);
-		$this->assertContains("CACHE:", $content);
-	}
+	// public function testManifest()
+	// {
+	// 	$content = $this->_testOneCachedFile("manifest.manifest");
+	// 	$this->assertNotEmpty($content);
+	// 	$this->assertStringStartsWith("CACHE MANIFEST", $content);
+	// 	$this->assertContains("NETWORK:", $content);
+	// 	$this->assertContains("CACHE:", $content);
+	// }
 
 	public function testTemplates() {
 		$cwd = getcwd();
