@@ -173,7 +173,7 @@ function service_backend_fn() {
           {
               'username': username,
               'password': password,
-              'appVersion': cryptomedic.version,
+              // 'appVersion': cryptomedic.version,
               'computerId': window.localStorage.cryptomedicComputerId
         })
         .then(this.storeData)
@@ -183,7 +183,7 @@ function service_backend_fn() {
     'checkLogin': function() {
       return myFetch(rest + "/auth/settings", null,
           {
-              'appVersion': cryptomedic.version,
+              // 'appVersion': cryptomedic.version,
               'computerId': window.localStorage.cryptomedicComputerId
           }
         )

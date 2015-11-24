@@ -651,7 +651,7 @@ CREATE TABLE IF NOT EXISTS `sync_computers` (
 --
 
 INSERT INTO `sync_computers` (`id`, `created_at`, `updated_at`, `lastuser`, `user_list`, `computer_id`, `useragent`, `cryptomedic_version`, `last_sync`, `last_sync_final`, `queue_size`) VALUES
-(13, '2015-11-14 10:02:57', '2015-11-14 10:07:03', NULL, ',jehon', 'KQeZXEAiklSUaMMY3loUxPPVRrQdZaEA', 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:41.0) Gecko/20100101 Firefox/41.0', '<?php echo getVersion(); ?>', '2015-10-15 04:29:50|2', 1, NULL);
+(13, '2015-11-14 10:02:57', '2015-11-14 10:07:03', NULL, ',jehon', 'KQeZXEAiklSUaMMY3loUxPPVRrQdZaEA', 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:41.0) Gecko/20100101 Firefox/41.0', 'version', '2015-10-15 04:29:50|2', 1, NULL);
 
 -- --------------------------------------------------------
 
