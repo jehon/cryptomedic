@@ -1,9 +1,9 @@
-<?php 
+<?php
 /**
  * Bill model.
- * 
+ *
  * With a summary...
- * 
+ *
  * @package test
  * @author jehon
  */
@@ -14,9 +14,9 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * This is the Bill model, encapsulating various function used around the "Bill" concept
- * 
+ *
  * This is a summary? I think so...
- * 
+ *
  * @author jehon
  *
  */
@@ -26,13 +26,13 @@ class Bill extends CryptomedicModel {
 	const CAT_OTHER = "other";
 	const CAT_WORKSHOP = "workshop";
 	const CAT_SURGICAL = "surgical";
-	
+
 	public static $categories = [ self::CAT_CONSULT, self::CAT_MEDECINE, self::CAT_OTHER, self::CAT_WORKSHOP, self::CAT_SURGICAL ];
-	public static $translations = [ ];	
-	
+	public static $translations = [ ];
+
 	/**
 	 * A function testing field appartenance
-	 * 
+	 *
 	 * @param unknown $field
 	 * @param unknown $filter
 	 * @return boolean
@@ -43,7 +43,7 @@ class Bill extends CryptomedicModel {
 		}
 		return false;
 	}
-	
+
 	public static function getFieldsList($filter, $fieldList = null) {
 		$res = array();
 		if ($fieldList == null) {
@@ -51,13 +51,20 @@ class Bill extends CryptomedicModel {
 		}
 		foreach($fieldList as $v) {
 			if (static::is($v, $filter)) {
-				$res[] = $v;								
+				$res[] = $v;
 			}
 		}
-		sort($res, SORT_NATURAL | SORT_FLAG_CASE);
+		sort($res, SORT_NATURAL); //  | SORT_FLAG_CASE
+		foreach($res as $k => $v) {
+			if (preg_match("/_other_/i", $v)) {
+				// var_dump($v);
+				unset($res[$k]);
+				$res[] = $v;
+			}
+		}
 		return $res;
 	}
-	
+
 	public static function getSQLFieldsSum($filter) {
 		$list = "( 0 ";
 		foreach(static::getTableColumnsList() as $v) {
@@ -68,7 +75,7 @@ class Bill extends CryptomedicModel {
 		$list .= ")";
 		return $list;
 	}
-	
+
 	public static function getSQLDiagno() {
 		return "TRIM(CONCAT(" .
 				"IF(patients.pathology_Ricket, 'R ', '')" .
@@ -88,7 +95,7 @@ class Bill extends CryptomedicModel {
 				"IF(patients.pathology_Other, 'Oth', '')" .
 				"))";
 	}
-	
+
 	public static function getSQLAct() {
 		return "TRIM(CONCAT(" .
 				"IF(bills.consult_CDC_consultation_physio, 'CsP ', '')" .
@@ -119,5 +126,5 @@ class Bill extends CryptomedicModel {
 				", " .
 				"IF(bills.other_Other_consultation_care, 'Other ', '')" .
 				"))";
-	}	
+	}
 }
