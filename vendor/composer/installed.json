@@ -102,54 +102,6 @@
         ]
     },
     {
-        "name": "symfony/yaml",
-        "version": "v2.7.6",
-        "version_normalized": "2.7.6.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/symfony/yaml.git",
-            "reference": "eca9019c88fbe250164affd107bc8057771f3f4d"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/symfony/yaml/zipball/eca9019c88fbe250164affd107bc8057771f3f4d",
-            "reference": "eca9019c88fbe250164affd107bc8057771f3f4d",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.3.9"
-        },
-        "time": "2015-10-11 09:39:48",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "2.7-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Symfony\\Component\\Yaml\\": ""
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Fabien Potencier",
-                "email": "fabien@symfony.com"
-            },
-            {
-                "name": "Symfony Community",
-                "homepage": "https://symfony.com/contributors"
-            }
-        ],
-        "description": "Symfony Yaml Component",
-        "homepage": "https://symfony.com"
-    },
-    {
         "name": "sebastian/version",
         "version": "1.0.6",
         "version_normalized": "1.0.6.0",
@@ -984,24 +936,75 @@
         ]
     },
     {
+        "name": "symfony/yaml",
+        "version": "v2.7.7",
+        "version_normalized": "2.7.7.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/symfony/yaml.git",
+            "reference": "4cfcd7a9fceba662b3c036b7d9a91f6197af046c"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/symfony/yaml/zipball/4cfcd7a9fceba662b3c036b7d9a91f6197af046c",
+            "reference": "4cfcd7a9fceba662b3c036b7d9a91f6197af046c",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.9"
+        },
+        "time": "2015-11-18 13:41:01",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "2.7-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Symfony\\Component\\Yaml\\": ""
+            },
+            "exclude-from-classmap": [
+                "/Tests/"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Fabien Potencier",
+                "email": "fabien@symfony.com"
+            },
+            {
+                "name": "Symfony Community",
+                "homepage": "https://symfony.com/contributors"
+            }
+        ],
+        "description": "Symfony Yaml Component",
+        "homepage": "https://symfony.com"
+    },
+    {
         "name": "jehon/maintenance",
         "version": "dev-master",
         "version_normalized": "9999999-dev",
         "source": {
             "type": "git",
             "url": "https://github.com/jehon/maintenance.git",
-            "reference": "7c5f58a7769af31fc3f37405bef706af5a054369"
+            "reference": "39aab40886ce1b6a8ee535694ddfd1c0797ec88c"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/jehon/maintenance/zipball/7c5f58a7769af31fc3f37405bef706af5a054369",
-            "reference": "7c5f58a7769af31fc3f37405bef706af5a054369",
+            "url": "https://api.github.com/repos/jehon/maintenance/zipball/39aab40886ce1b6a8ee535694ddfd1c0797ec88c",
+            "reference": "39aab40886ce1b6a8ee535694ddfd1c0797ec88c",
             "shasum": ""
         },
         "require-dev": {
             "phpunit/phpunit": "4.8.*"
         },
-        "time": "2015-11-21 18:28:56",
+        "time": "2015-11-24 21:11:34",
         "type": "library",
         "installation-source": "source",
         "autoload": {

@@ -193,66 +193,63 @@ class Deploy {
 				flush();
 			?>
 
-			<h3>Zip file URI<h3>
+			<h3>Zip file URI</h3>
 			<?php
 				$githubUri = $tags[$version]['zipball_url'];
 				echo $githubUri;
-				flush();
 			?>
 
 			<h3>Getting Zip file</h3>
-			<?php echo self::getZip($zip, $githubUri); ?>
+			<?php
+				Lib\stepByStep(function() use ($zip, $githubUri) { echo self::getZip($zip, $githubUri); });
+			?>
 
 			<h3>Unzip the file</h3>
 			<?php
-				echo self::extractZip($zip, $tempUnzipped);
-				flush();
+				Lib\stepByStep(function() use ($zip, $tempUnzipped) { echo self::extractZip($zip, $tempUnzipped); });
 			?>
 
-			<h3>Removing old backup</h3>
-			<?php
-				echo self::deleteFileOrFolder ( $backup );
-				flush();
+			<h3>Removing old backup</h3><?php
+				Lib\stepByStep(function() use ($backup) { echo self::deleteFileOrFolder($backup); });
 			?>
 
 			<h3>Archive old directory</h3>
 			<?php
-				if (file_exists ( $targetDir )) {
-					echo self::replaceDirectory ( $targetDir, $backup );
-				}
-				flush();
+				Lib\stepByStep(function() use ($targetDir, $backup) { echo (file_exists($targetDir) ? self::replaceDirectory($targetDir, $backup) : ""); });
 			?>
 
 			<h3>Replace directory (real install)</h3>
 			<?php
-				echo self::replaceDirectory ( $tempUnzipped, $targetDir);
-				flush();
+				Lib\stepByStep(function() use ($tempUnzipped, $targetDir) { echo self::replaceDirectory($tempUnzipped, $targetDir); });
 			?>
 
 			<h3>Remove zip file</h3>
-			<?php echo self::deleteFileOrFolder ( $zip ); ?>
+			<?php
+				Lib\stepByStep(function() use ($zip) { echo self::deleteFileOrFolder($zip); });
+	 		?>
 
 			<h3>Run custom script</h3>
 			<?php
-				if (function_exists("custom_upgrade")) {
-					echo custom_upgrade();
-				}
-				flush();
+				// Lib\stepByStep(function() { if (function_exists("custom_upgrade")) { echo \custom_upgrade(); } });
 			?>
 
 			<h3>Act the version</h3>
-			<pre><?php
-				$fversion = $version;
-				if ($version == "latest") {
-					$fversion = date ( "c" );
-				}
-				if (! file_put_contents ( $versionFile, $fversion )) {
-					throw new Exception ( "Creating version file error" );
-				}
+			<?php
+				Lib\stepByStep(function() use ($version, $versionFile, $historyFile) {
+					echo "<pre>";
+					$fversion = $version;
+					if ($version == "latest") {
+						$fversion = date ( "c" );
+					}
+					if (! file_put_contents ( $versionFile, $fversion )) {
+						throw new Exception ( "Creating version file error" );
+					}
 
-				file_put_contents ( $historyFile, date ( "c" ) . ": " . $version . "\n", FILE_APPEND | LOCK_EX );
-				echo "ok";
-			?></pre>
+					file_put_contents ( $historyFile, date ( "c" ) . ": " . $version . "\n", FILE_APPEND | LOCK_EX );
+					echo "</pre>";
+					echo "ok";
+				});
+			?>
 
 			<h3>Send Email</h3>
 			<pre><?php
