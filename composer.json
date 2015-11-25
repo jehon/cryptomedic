@@ -10,6 +10,8 @@
 
 	"require": {
 		"jehon/maintenance": "master-dev"
+		"jehon/maintenance": "master-dev",
+		"knplabs/github-api": "^1.5"
 	},
  	"require-dev": {
 		"phpunit/phpunit": "~4"
