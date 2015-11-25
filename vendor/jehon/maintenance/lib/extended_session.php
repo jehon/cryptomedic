@@ -30,3 +30,7 @@ function stepByStep($stepFn, $sameStep = false) {
 
   return false;
 }
+
+function stepFollow($stepFn) {
+  return stepByStep($stepFn, true);
+}
