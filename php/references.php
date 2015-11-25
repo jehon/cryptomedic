@@ -7,6 +7,7 @@ class References {
             "NonricketConsult" => "nonricket_consults",
             "Patient" => "patients",
             "Picture" => "pictures",
+            "Appointment" => "appointments",
             "RicketConsult" => "ricket_consults",
             "Surgery" => "surgeries",
         );

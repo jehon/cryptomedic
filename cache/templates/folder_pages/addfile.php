@@ -19,3 +19,6 @@ Here, you can add a new file to the patient: bill, consult, ...<br/>
 <a id='add_surgery' ng-href="#/folder/{{patient_id}}/file/Surgery" class="btn btn-default">
 	Add a surgery
 </a><br>
+<a id='add_appointment' ng-href="#/folder/{{patient_id}}/file/Appointment" class="btn btn-default">
+  Add a (next) appointment
+</a><br>
