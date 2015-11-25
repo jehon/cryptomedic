@@ -3,6 +3,3 @@ ExpiresByType text/cache-manifest "access plus 0 seconds"
 RewriteRule ^$ index.html
 
 RewriteRule index.php index.html
-
-# Temp redirect:
-RewriteRule manifest.php manifest.manifest
