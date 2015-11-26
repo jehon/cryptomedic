@@ -129,7 +129,7 @@ function reprogram() {
   }
   // reprogram the timer...
   syncRunning = false;
-  syncTimer = setTimeout(routeSync, (syncWasFinal ? (60 * 1000) : 500));
+  syncTimer = setTimeout(routeSync, (syncWasFinal ? (5* 60 * 1000) : 1000));
   return Promise.resolve();
 }
 
