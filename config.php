@@ -64,3 +64,7 @@ $myconfig['database']['patches'][] = __DIR__ . "/conf/database_scripts";
 if ($localhost || $cli) {
 	$myconfig['database']['patches'][] = __DIR__ . "/conf/database_scripts/dev_only";
 }
+
+$myconfig['github'] = [
+	"token" => getGlobalConfig('github.token')
+];
