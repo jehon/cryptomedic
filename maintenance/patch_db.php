@@ -3,15 +3,17 @@
 require_once(__DIR__ . "/../vendor/autoload.php");
 require_once(__DIR__ . "/../vendor/jehon/maintenance/lib/is_served_locally.php");
 
-require(__DIR__ . "/../config.php");
+require_once(__DIR__ . "/../config.php");
 
 \Jehon\Maintenance\TryCatch::run();
 \Jehon\Maintenance\SessionProtect::run(getGlobalConfig("maintenance.code"), getGlobalConfig("maintenance.token"));
 
+global $myconfig;
+
 $db = new \Jehon\Maintenance\Database(
-		$myconfig['database']['database'], 
-		$myconfig['database']['username'], 
-		$myconfig['database']['password'], 
+		$myconfig['database']['database'],
+		$myconfig['database']['username'],
+		$myconfig['database']['password'],
 		$myconfig['database']['options']
 	);
 
