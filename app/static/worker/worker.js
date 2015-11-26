@@ -159,21 +159,21 @@ function routeSync() {
     .then(function() {
       return db.getSetting("checkpoint")
     })
-    .then(function(cp) {
-      return myFetch(rest + "/sync", {}, {
-        cp: cp
-      });
-    })
-    .then(function(result) {
-      if (result == null) {
-        console.warn("unauthenticated?");
-        return;
-      }
-      return storeData(result._offline);
-    })
-    .catch(function(msg) {
-      mySendEvent("disconnected", msg);
-    })
+    // .then(function(cp) {
+      // return myFetch(rest + "/sync", {}, {
+      //   cp: cp
+      // });
+    // })
+    // .then(function(result) {
+    //   if (result == null) {
+    //     console.warn("unauthenticated?");
+    //     return;
+    //   }
+    //   return storeData(result._offline);
+    // })
+    // .catch(function(msg) {
+    //   mySendEvent("disconnected", msg);
+    // })
     .then(reprogram, reprogram);
 }
 

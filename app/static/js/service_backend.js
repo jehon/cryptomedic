@@ -221,13 +221,13 @@ function service_backend_fn() {
         }));
       } else {
         // If not final then go to the server anyway...
-        return db.getFolder(id).catch(function(error) {
-          console.log("Getting the folder live: #" + id);
+        // return db.getFolder(id).catch(function(error) {
+        //   console.log("Getting the folder live: #" + id);
           return myFetch(rest + "/folder/" + id)
             .then(function(data) {
               db.storeRecord({record: data});
             });
-        });
+        // });
       }
     },
 
