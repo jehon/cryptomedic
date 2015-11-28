@@ -38,6 +38,8 @@ function getGlobalConfig($key) {
 			return "travis";
 		case 'databasePassword':
 			return "";
+		case 'github.token':
+			return "";
 		case 'maintenance.token':
 		case 'maintenance.code':
 			if ($cli) {
