@@ -225,7 +225,8 @@ function service_backend_fn() {
         //   console.log("Getting the folder live: #" + id);
           return myFetch(rest + "/folder/" + id)
             .then(function(data) {
-              db.storeRecord({record: data});
+              return db.storeRecord({record: data})
+                .then(function() { return data; });
             });
         // });
       }
