@@ -18,6 +18,7 @@ global $cli;
 $cli = $_SERVER && !array_key_exists('HTTP_HOST', $_SERVER);
 
 function getGlobalConfig($key) {
+	global $cli;
 	if (function_exists("getSecret")) {
 		$res = getSecret($key, false);
 		if ($res !== null) {
