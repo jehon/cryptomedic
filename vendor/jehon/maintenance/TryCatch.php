@@ -2,8 +2,13 @@
 namespace Jehon\Maintenance;
 
 class TryCatch {
+  static $activated = false;
+
   static public function run() {
-    register_shutdown_function('Jehon\Maintenance\TryCatch::shutdown');
+    if (!self::$activated) {
+      register_shutdown_function('Jehon\Maintenance\TryCatch::shutdown');
+    }
+    self::$activated = true;
   }
 
   static public function shutdown() {

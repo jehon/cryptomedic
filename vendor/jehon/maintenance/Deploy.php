@@ -256,18 +256,5 @@ class Deploy {
         //          );
       ?></pre>
     <?php
-    if (file_exists ( $historyFile )) {
-      echo "<h3>History</h3>";
-      echo "<pre>";
-      $history = file_get_contents ( $historyFile );
-      $history = explode ( "\n", $history );
-      $history = array_reverse ( $history );
-      foreach ( $history as $l ) {
-        echo $l . "\n";
-      }
-      echo "</pre><br>";
-    } else {
-      echo "<h3>No history file found</h3>";
-    }
   }
 }
