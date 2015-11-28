@@ -72,6 +72,9 @@ else
     mkdir -p "$PRJ_DIR/tmp"
   fi
 
+  echo -e "\e[0;45mReset the database\e[0m"
+  "$PRJ_DIR/bin/prj-rebuild-db.sh"
+
   for V in "$PRJ_DIR"/api/* ; do
     N=`basename "$V"`
     cd "$V" && test_dir "version api/$N"
