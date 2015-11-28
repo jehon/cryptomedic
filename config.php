@@ -43,6 +43,9 @@ function getGlobalConfig($key) {
 				return "ok";
 			}
 	}
+	if ($cli) {
+		return "";
+	}
 	throw new Exception("GlobalConfig not configured: $key");
 }
 
