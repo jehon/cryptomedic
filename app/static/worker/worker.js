@@ -197,9 +197,9 @@ onmessage = function(message) {
   }
 }
 
-var catchAllCron = setInterval(function() {
-  if (!syncTimer && !syncRunning) {
-    console.info("Worker: catchAll reprogram");
-    reprogram();
-  }
-}, 10 * 1000);
+// var catchAllCron = setInterval(function() {
+//   if (!syncTimer && !syncRunning) {
+//     console.info("Worker: catchAll reprogram");
+//     reprogram();
+//   }
+// }, 3600 * 1000);
