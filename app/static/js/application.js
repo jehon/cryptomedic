@@ -327,38 +327,6 @@ mainApp.controller('ctrl', [ '$scope', '$location', function($scope, $location) 
     $scope.safeApply();
   });
 
-  $scope.doLogin = function() {
-    $scope.username = jQuery("#login_username").val();
-    $scope.password = jQuery("#login_password").val();
-    if ($scope.username == "") {
-        alert("No username detected");
-        return;
-    }
-    if ($scope.password == "") {
-        alert("No password detected");
-        return;
-    }
-    $scope.loginError = false;
-    var busyEnd = $scope.doBusy("Checking your login/password with the online server", true);
-    service_backend.login(this.username, this.password)
-      .then(function(data) {
-        server.settings = data;
-        $scope.loginError = false;
-        $scope.logged = true;
-        // if (typeof(server) == "undefined" || !server.settings || !server.settings.username) {
-        console.log("Reloading the page");
-        window.location.reload();
-        // }
-        $scope.safeApply();
-      })
-      .catch(function(data) {
-        $scope.loginError = true;
-      })
-      .myFinallyDone(function() {
-        busyEnd();
-      });
-  };
-
   $scope.doCheckLogin = function() {
     $scope.loginError = false;
     var busyEnd = $scope.doBusy("Checking your login/password with the online server", true);
@@ -367,23 +335,12 @@ mainApp.controller('ctrl', [ '$scope', '$location', function($scope, $location) 
         server.settings = data;
         $scope.logged = true;
         $scope.$broadcast("message", { "level": "info", "text": "Welcome " +  data.name + "!"});
+        $scope.go('#');
         $scope.safeApply();
       })
       .myFinallyDone(function() {
         busyEnd();
       });
-  };
-
-  $scope.doLogout = function() {
-    var busyEnd = $scope.doBusy("Disconnecting from the server", true);
-    service_backend.logout()
-    .then(function(data) {
-      server.settings = null;
-      $scope.logged = false;
-    })
-    .myFinallyDone(function(data) {
-      busyEnd();
-    });
   };
 
   // Events from the service_*
