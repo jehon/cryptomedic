@@ -467,6 +467,11 @@ if (array_key_exists("_unused", $_REQUEST) && $_REQUEST['_unused']) {
  	register_shutdown_function("T::showUnused");
 }
 
+if (file_exists(__DIR__ . "/" . $generator['target'])) {
+	// File exists? let's serve it directly...
+	return include(__DIR__ . "/" . $generator['target']);
+}
+
 if (substr($generator['target'], -5) != ".html") {
 	throw new Exception("Invalid extension for " . $generator['target']);
 }
