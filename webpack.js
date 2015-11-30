@@ -54,7 +54,8 @@ module.exports = {
   },
   output: {
     path: path.join(__dirname, 'app/build/'),
-    filename: 'bundle-[hash].js',
+    filename: 'bundle.js',
+    // filename: 'bundle-[hash].js',
     // chunkFilename: "[id].[hash].bundle.js"
   },
   module: {
