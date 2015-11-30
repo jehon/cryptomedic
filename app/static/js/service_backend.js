@@ -162,6 +162,7 @@ function service_backend_fn() {
 
   function mySendAction(name, data) {
     worker.postMessage({ name: name, data: data });
+    return data;
   }
 
   mySendAction("init", {});
