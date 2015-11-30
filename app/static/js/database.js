@@ -9,10 +9,10 @@ function plog(p) {
     });
 }
 
-Dexie.Promise.on("error", function(e) {
-  console.error("Error in Dexie: ", e);
-  throw e;
-});
+// Dexie.Promise.on("error", function(e) {
+//   console.error("Error in Dexie: ", e);
+//   throw e;
+// });
 
 /**
  * Build up the db_patients service
