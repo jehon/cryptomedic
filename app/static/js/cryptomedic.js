@@ -10,6 +10,9 @@ mainApp.config([ '$routeProvider', function($routeProvider) {
     .when('/home', {
         templateUrl: cryptomedic.templateRoot + '/pages/home.html',
         controller: 'ctrl_home'
+    }).when('/login', {
+        templateUrl: cryptomedic.templateRoot + '/pages/login.html',
+        controller: 'ctrl_login',
     }).when('/folder/:patient_id/:page?/:subtype?/:subid?/:mode?', {
         templateUrl: cryptomedic.templateRoot + '/pages/folder.html',
         controller: 'ctrl_folder',
