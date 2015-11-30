@@ -26,6 +26,7 @@ module.exports = (function() {
       client.init()
         .waitForElementVisible('body')
         .assert.title('Cryptomedic')
+        .waitForElementVisible("#login_password")
         .setValue("#login_username", login)
         .setValue("#login_password", password)
         .pause(100)
