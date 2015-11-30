@@ -15,9 +15,11 @@ exports.command = function(selector, fields, button) {
         .setValue(f, fields[f]);
     }
   }
-  this
-    .pause(100)
-    .myClick(button);
+  if (button) {
+    this
+      .pause(100)
+      .myClick(button);
+  }
 
   return this; // allows the command to be chained.
 };
