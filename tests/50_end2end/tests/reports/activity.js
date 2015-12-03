@@ -4,7 +4,8 @@ module.exports = {
     client
     	.page.cryptomedic().authenticate("readonly")
     	.page.cryptomedic().report("monthlyActivity", { "month": "2014-05" })
-      	.assert.myAssertCell("#report_table table", 1, 2, "2014-05")
+        .assert.myAssertCell("#report_table table", 1, 1, "1")
+      	.assert.myAssertCell("#report_table table", 3, 2, "2014-05")
         .assert.myAssertCell("Ershad")
         .assert.myAssertCell("Ramu")
         .assert.myAssertCell("2014-103")
