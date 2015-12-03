@@ -38,7 +38,9 @@ Response::macro('folder', function($id, $addData = array()) {
  * For anybody
  */
 
-Route::group([ 'prefix' => '/cryptomedic/api/' . basename(dirname(dirname(__DIR__))) ], function() {
+$flavor = explode('/', $_SERVER['REQUEST_URI'])[1];
+
+Route::group([ 'prefix' => '/' . $flavor . '/api/' . basename(dirname(dirname(__DIR__))) ], function() {
 
 	Route::controllers([
 		'auth' => 'Auth\AuthController',

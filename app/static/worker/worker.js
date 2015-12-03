@@ -46,7 +46,7 @@ var db = build_db();
 /**
  * URL of the server
  */
-var rest = "/cryptomedic/api/v1.0";
+var rest = false;
 
 /**
  * Timer of the next sync
@@ -184,6 +184,7 @@ onmessage = function(message) {
 
   switch(name) {
     case "init":
+      rest = data.restUrl;
       return routeSync();
     case "storeOne":
       return routeStoreOne(data);

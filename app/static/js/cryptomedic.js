@@ -1,7 +1,11 @@
 "use strict";
 
 var cryptomedic = {};
-cryptomedic.templateRoot = "/cryptomedic/cache/templates/";
+{
+    var path = location.pathname.split("/");
+    cryptomedic.flavor = "/" + path[1];
+}
+cryptomedic.templateRoot = cryptomedic.flavor + "/cache/templates/";
 cryptomedic.settings = {};
 cryptomedic.settings.offlineCache = false;
 

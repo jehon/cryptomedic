@@ -123,7 +123,7 @@ if (!window.localStorage.cryptomedicComputerId) {
 
 /* service_backend */
 function service_backend_fn() {
-  var rest = "/cryptomedic/api/v1.0";
+  var rest = cryptomedic.flavor + "/api/v1.0";
 
   var db = build_db(true);
 
@@ -165,7 +165,7 @@ function service_backend_fn() {
     return data;
   }
 
-  mySendAction("init", {});
+  mySendAction("init", { restUrl: rest });
 
   return {
     /* Authentification */
