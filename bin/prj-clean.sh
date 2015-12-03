@@ -23,8 +23,6 @@ for V in "$PRJ_DIR"/api/* ; do
   find "$V/tmp/" -mindepth 1 -not -name ".gitignore" -not -name ".gitkeep" -delete
 done
 
-exit 0
-
 echo -e "\e[0;45mReset the database\e[0m"
 "$PRJ_DIR/bin/prj-rebuild-db.sh"
 
