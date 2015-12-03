@@ -54,6 +54,18 @@ mainApp.controller('ctrl_reports', [ '$scope', '$routeParams', '$sce', function(
 	    // Make the content "trustable" to be shown as html
 	    $scope.reports[k].description = $sce.trustAsHtml($scope.reports[k].description);
 	}
+
+	$scope.reportName = function() {
+    if (!$scope.reports[report]) return false;
+		var r = $scope.reports[report]
+		var rname = r.name;
+		for(p in r.params) {
+			if ($scope.values[r.params[p]]) {
+				rname = rname + " - " + $scope.values[r.params[p]];
+			}
+		}
+		return rname;
+	}
 	$scope.getReport = function() {
 		if (report) {
 			return $scope.reports[report];
@@ -62,9 +74,9 @@ mainApp.controller('ctrl_reports', [ '$scope', '$routeParams', '$sce', function(
 	}
 
 	$scope.isParam = function(name) {
-	    if (!$scope.reports[report]) return false;
+	  if (!$scope.reports[report]) return false;
 
-	    if (($scope.reports[report]['params'].indexOf('period') > -1)) {
+	  if (($scope.reports[report]['params'].indexOf('period') > -1)) {
 		if (name == $scope.values['period']) {
 		    return true;
 		}

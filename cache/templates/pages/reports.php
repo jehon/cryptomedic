@@ -12,10 +12,10 @@
 			        	<label class="col-sm-2 control-label">Examiner</label>
 			        	<div class="col-sm-10">
 			                <select name='examiner' ng-model='values.examiner' class="form-control">
-			                <?php 
-			                	echo "<option value='' >* Anybody *</option>"; 
-			                	foreach(References::$lists['examiner'] as $k => $v) 
-			                        echo "<option value=\"". htmlentities($v). "\" >$v</option>"; 
+			                <?php
+			                	echo "<option value='' >* Anybody *</option>";
+			                	foreach(References::$lists['examiner'] as $k => $v)
+			                        echo "<option value=\"". htmlentities($v). "\" >$v</option>";
 							?>
 			                </select>
 			        	</div>
@@ -24,10 +24,10 @@
 				        <label class="col-sm-2 control-label">Where ?</label>
 			        	<div class="col-sm-10">
 			                <select name='center' ng-model='values.center' class="form-control">
-			                <?php 
-			                	echo "<option value='' >* Any place *</option>"; 
-			                	foreach(References::$lists['Centers'] as $k => $v) 
-			                        echo "<option value=\"". htmlentities($v). "\"' >$v</option>"; 
+			                <?php
+			                	echo "<option value='' >* Any place *</option>";
+			                	foreach(References::$lists['Centers'] as $k => $v)
+			                        echo "<option value=\"". htmlentities($v). "\"' >$v</option>";
 							?>
 			                </select>
 			            </div>
@@ -78,9 +78,9 @@
     	</div>
     <div ng-if="result">
     	<div class='text-right'>
-		    <a class='btn' style='background-color: green; color: white' 
-		    		download="somedata.xls" 
-		    		href="#"  
+		    <a class='btn' style='background-color: green; color: white'
+		    		download="{{reportName()}}.xls"
+		    		href="#"
 		    		onclick="return ExcellentExport.excel(this, jQuery('#report_table table')[0], 'cryptomedic');">
 		    	Export current table in XLS</a>
     	</div>
