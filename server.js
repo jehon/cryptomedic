@@ -1,6 +1,6 @@
 var webpack = require('webpack');
 var WebpackDevServer = require('webpack-dev-server');
-var config = require('./webpack.development.config');
+var config = require('./webpack.dev.js');
 
 new WebpackDevServer(webpack(config), {
   publicPath: config.output.publicPath,
@@ -14,7 +14,15 @@ new WebpackDevServer(webpack(config), {
     poll: 1000
   },
   proxy: {
-    '/api/*': {
+    '/cryptomedic/api/*': {
+      target: 'http://localhost',
+      secure: false,
+    },
+    '/cryptomedic/app/*': {
+      target: 'http://localhost',
+      secure: false,
+    },
+    '/cryptomedic/cache/*': {
       target: 'http://localhost',
       secure: false,
     }
