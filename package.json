@@ -57,7 +57,6 @@
   },
   "x": {
     "excellentexport": "git://github.com/jmaister/excellentexport",
-    "bower": "latest",
     "x": "x"
   }
 }
