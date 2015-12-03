@@ -38,7 +38,11 @@ Response::macro('folder', function($id, $addData = array()) {
  * For anybody
  */
 
-$flavor = explode('/', $_SERVER['REQUEST_URI'])[1];
+if (array_key_exists('REQUEST_URI', $_SERVER)) {
+	$flavor = explode('/', $_SERVER['REQUEST_URI'])[1];
+} else {
+	$flavor = "cryptomedic";
+}
 
 Route::group([ 'prefix' => '/' . $flavor . '/api/' . basename(dirname(dirname(__DIR__))) ], function() {
 
