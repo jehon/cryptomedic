@@ -47,9 +47,12 @@ class ReportActivityController extends ReportController {
 	        WHERE (1 = 1)
 				AND " . $this->getReportParamFilter("when", "bills.Date") . "
 				AND " . $this->getReportParamFilter("center", "bills.Center") . "
-				AND " . $this->getReportParamFilter("examiner", "bills.ExaminerName") . "
-			ORDER BY bills.Date ASC, patients.entryyear ASC, patients.entryorder ASC, bills.id ASC
-			", $this->sqlBindParams + [ "whenFrom12" => $this->internalWhenFrom ]
+				AND " . $this->getReportParamFilter("examiner", "bills.ExaminerName")
+				// . "
+				// ORDER BY GREATEST(bills.created_at, bills.updated_at)
+			// "
+			// ORDER BY bills.Date ASC, patients.entryyear ASC, patients.entryorder ASC, bills.id ASC
+			, $this->sqlBindParams + [ "whenFrom12" => $this->internalWhenFrom ]
 		);
 //				exists(select * from bills as b2 where b2.patient_id = bills.patient_id and b2.Date < :whenFrom12) as mOLD
 
