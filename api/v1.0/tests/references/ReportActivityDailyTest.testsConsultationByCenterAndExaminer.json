@@ -32,7 +32,7 @@
             "total_real": 500,
             "total_asked": 200,
             "total_paid": 300,
-            "oldPatient": 1
+            "oldPatient": 0
         }
     ],
     "totals": {
@@ -59,6 +59,6 @@
         "total_real": 500,
         "total_asked": 200,
         "total_paid": 300,
-        "oldPatient": 1
+        "oldPatient": 0
     }
 }
