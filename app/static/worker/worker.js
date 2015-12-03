@@ -129,7 +129,9 @@ function reprogram() {
   }
   // reprogram the timer...
   syncRunning = false;
+  // TODO: enable faster sync if not finished
   // syncTimer = setTimeout(routeSync, (syncWasFinal ? (3600 * 1000) : 1000));
+  syncTimer = setTimeout(routeSync, 3600 * 1000);
   return Promise.resolve();
 }
 
@@ -199,10 +201,3 @@ onmessage = function(message) {
       return console.error("unkown message: " + name, data);
   }
 }
-
-// var catchAllCron = setInterval(function() {
-//   if (!syncTimer && !syncRunning) {
-//     console.info("Worker: catchAll reprogram");
-//     reprogram();
-//   }
-// }, 3600 * 1000);
