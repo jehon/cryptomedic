@@ -1,6 +1,8 @@
 "use strict";
 
 mainApp.controller('ctrl_login', [ "$scope", function($scope) {
+  cryptomedic.settings = {};
+
   $scope.doLogin = function() {
     $scope.username = jQuery("#login_username").val();
     $scope.password = jQuery("#login_password").val();
