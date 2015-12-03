@@ -14,3 +14,10 @@ export function failure(httpStatusCode) {
     payload: httpStatusCode
   };
 }
+
+export function disconnected() {
+  return {
+    type: catalog.CONNECTION_DISCONNECTED,
+    payload: 0
+  };
+}
