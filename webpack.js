@@ -8,6 +8,10 @@ var scriptLoader = require('script-loader');
 
 // https://github.com/petehunt/webpack-howto
 
+// Global variables
+// https://webpack.github.io/docs/library-and-externals.html
+// https://webpack.github.io/docs/shimming-modules.html
+
 module.exports = {
   entry: [
       './app/main.js',

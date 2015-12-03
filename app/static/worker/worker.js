@@ -184,7 +184,6 @@ onmessage = function(message) {
 
   switch(name) {
     case "init":
-      console.log("init", data);
       if (data.restUrl) {
         rest = data.restUrl;
       }
