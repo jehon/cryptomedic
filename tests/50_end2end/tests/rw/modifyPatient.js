@@ -74,11 +74,11 @@ module.exports = {
       .myCheckForm('#fileForm', nonricket_consult)
 
       // Add a picture -> TODO: add a picture image
-      .myClick("#button_add")
-      .myClick("#add_picture")
-      .waitForElementVisible('#file')
-      .setValue('#file', __dirname + '/../../ressources/upload.jpg')
-      .myFillInForm('#fileForm', picture, '#button_save')
+      // .myClick("#button_add")
+      // .myClick("#add_picture")
+      // .waitForElementVisible('#file')
+      // .setValue('#file', __dirname + '/../../ressources/upload.jpg')
+      // .myFillInForm('#fileForm', picture, '#button_save')
       // TODO: picture test does not work
       // .myCheckForm('#fileForm', picture)
       // .assert.visible('#img_file')
@@ -109,11 +109,11 @@ module.exports = {
       .myClick("#button_delete")
       .dismissAlert()
 
-      // Delete
-      .myClick("#folder_files .folder_file:nth-child(6) .btn")
-      .myClick("#button_edit")
-      .myClick("#button_delete")
-      .acceptAlert()
+      // // Delete
+      // .myClick("#folder_files .folder_file:nth-child(6) .btn")
+      // .myClick("#button_edit")
+      // .myClick("#button_delete")
+      // .acceptAlert()
 
       .myClick("#folder_files .folder_file:nth-child(5) .btn")
       .myClick("#button_edit")
