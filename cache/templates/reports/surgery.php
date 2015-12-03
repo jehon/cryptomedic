@@ -58,7 +58,7 @@
                 <th>Age</th>
                 <th>M/F</th>
                 <th>Old/New</th>
-                
+
                 <th class='b_left'>Tk income</th>
                 <th>Nb pers</th>
                 <th>Tk per pers</th>
@@ -70,7 +70,7 @@
                 <th class='b_left'>Last seen</th>
                 <th>Result</th>
                 <th>Done?</th>
-                
+
                 <th class='b_left'>Consult</th>
                 <th>Medicine</th>
                 <th>Surgical</th>
@@ -78,7 +78,7 @@
                 <th>Others</th>
                 <th>Full</th>
                 <th>Asked</th>
-                <th>Payed</th>
+                <th>Paid</th>
             </tr>
         </thead>
         <tbody  class='b_all'>
@@ -117,11 +117,11 @@
                             <td class='b_left'>{{l.diagno}}</td>
                             <td>{{l.act}}</td>
                             <td>{{l.treatment}}</td>
-                            
+
                             <td class='b_left'>{{l.last_seen}}</td>
                             <td>{{l.last_treat_result}}</td>
                             <td>{{l.last_treat_ended}}</td>
-                            
+
                             <td class='b_left'>{{l.price_consult}}</td>
                             <td>{{l.price_medecine}}</td>
                             <td>{{l.price_surgical}}</td>
@@ -166,7 +166,7 @@
 			</tr>
         </tbody>
     </table>
-               	
+
     <h1>Legend</h1>
     <div class='row'>
 		<div class='col-md-3'>
