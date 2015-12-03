@@ -184,7 +184,10 @@ onmessage = function(message) {
 
   switch(name) {
     case "init":
-      rest = data.restUrl;
+      console.log("init", data);
+      if (data.restUrl) {
+        rest = data.restUrl;
+      }
       return routeSync();
     case "storeOne":
       return routeStoreOne(data);
