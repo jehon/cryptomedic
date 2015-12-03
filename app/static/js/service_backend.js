@@ -154,6 +154,10 @@ function service_backend_fn() {
     myEvents.trigger("backend_" + name, data);
 
     if (name == "disconnected") {
+      if (data == 401) {
+        server.settings = {};
+        location.hash = "#/login";
+      }
       onFailure(data);
     } else {
       onSuccess();
