@@ -19,7 +19,7 @@
 		<env name="CACHE_DRIVER" value="array" />
 		<env name="SESSION_DRIVER" value="array" />
 		<env name="QUEUE_DRIVER" value="sync" />
-        <server name='HTTP_HOST' value='http://localhost' />
+    <server name='HTTP_HOST' value='http://localhost' />
 	</php>
 	<logging>
 <!--

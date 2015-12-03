@@ -7,7 +7,6 @@ var cryptomedic = {};
 }
 cryptomedic.templateRoot = cryptomedic.flavor + "/cache/templates/";
 cryptomedic.settings = {};
-cryptomedic.settings.offlineCache = false;
 
 mainApp.config([ '$routeProvider', function($routeProvider) {
     $routeProvider
