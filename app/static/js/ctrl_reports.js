@@ -66,6 +66,7 @@ mainApp.controller('ctrl_reports', [ '$scope', '$routeParams', '$sce', function(
 		}
 		return rname;
 	}
+
 	$scope.getReport = function() {
 		if (report) {
 			return $scope.reports[report];
@@ -85,40 +86,41 @@ mainApp.controller('ctrl_reports', [ '$scope', '$routeParams', '$sce', function(
 	}
 
 	$scope.refresh = function() {
-	    if (!report) {
-		return;
-	    }
-	    $scope.result = null;
+    if (!report) {
+			return;
+	  }
+	  $scope.result = null;
 
-//	    if ($scope.values.day) {
-//		$scope.values.day = new Date($scope.values.day);
-//		$scope.values.day.setUTCHours(0, 0, 0, 0);
-//	    }
+	  angular.forEach($scope.reports[report].params, function(v) {
+			service_session_storage().set(v, $scope.values[v]);
+	  });
 
-	    angular.forEach($scope.reports[report].params, function(v) {
-		service_session_storage().set(v, $scope.values[v]);
-	    });
-
-	    var dataGenerator = report;
-	    if (typeof($scope.reports[report].dataGenerator) != 'undefined') {
-		dataGenerator = $scope.reports[report].dataGenerator;
-	    }
-	    service_backend.getReport(dataGenerator,
-		    	$scope.values,
-		    	($scope.isParam('period') ? $scope.values.period : null)
-		    )
-		    .then(function(data) {
-			$scope.result = data;
-			$scope.safeApply();
-		    });
+	  var dataGenerator = report;
+	  if (typeof($scope.reports[report].dataGenerator) != 'undefined') {
+			dataGenerator = $scope.reports[report].dataGenerator;
+	  }
+	  service_backend.getReport(dataGenerator,
+			 	$scope.values,
+		   	($scope.isParam('period') ? $scope.values.period : null)
+		 	)
+		  .then(function(data) {
+				$scope.result = data;
+				$scope.safeApply();
+		  });
 	}
 
 	$scope.refresh();
 
 	$scope.age = function(year) {
-	    if (year) {
-		return (new Date()).getFullYear() - year;
-	    }
-	    return "-";
+    if (year) {
+			return (new Date()).getFullYear() - year;
+	  }
+	  return "-";
+	}
+
+	$scope.generate = function() {
+		jQuery('.online').remove();
+		ExcellentExport.excel(jQuery('#download_link')[0], jQuery('#report_table table')[0], 'cryptomedic');
+		// TODO: reenable links after export...
 	}
 }]);
