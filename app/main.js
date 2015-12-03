@@ -1,18 +1,21 @@
 'use strict';
 
 import store from 'store';
-import * as connection from 'actions/connection';
+// import * as connection from 'actions/connection';
 
-store.dispatch({ type: 'INCREMENT' });
-store.dispatch({ type: 'INCREMENT' });
-store.dispatch({ type: 'DECREMENT' });
+const catalog = {
+  CONNECTION_SUCCESS:       'CONNECTION_SUCCESS',
+  CONNECTION_FAILED:        'CONNECTION_FAILED',
+  CONNECTION_DISCONNECTED:  'CONNECTION_DISCONNECTED',
+}
 
 let appState = {
   store: store,
   actions: {
     connection: {
-      success: () => store.dispatch(connection.success()),
-      failure: (httpErrorCode) => store.dispatch(connection.failure(httpErrorCode))
+      success:      function() { store.dispatch({ type: catalog.CONNECTION_SUCCESS, payload: null })},
+      failure:      function(httpErrorCode) { store.dispatch({ type: catalog.CONNECTION_FAILED, payload: httpErrorCode })},
+      disconnected: function() { store.dispatch({ type: catalog.CONNECTION_DISCONNECTED, payload: null })},
     }
   }
 }
