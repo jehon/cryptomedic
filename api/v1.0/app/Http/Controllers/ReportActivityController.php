@@ -40,7 +40,7 @@ class ReportActivityController extends ReportController {
 	            bills.total_real as total_real,
 	            bills.total_asked as total_asked,
 	            bills.total_paid as total_paid,
-				exists(select * from bills as b2 where b2.patient_id = bills.patient_id and b2.Date < :whenFrom12) as oldPatient
+				exists(select * from bills as b2 where b2.patient_id = bills.patient_id and b2.Date < bills.Date) as oldPatient
 			FROM bills
 	        JOIN patients ON bills.patient_id = patients.id
 	        JOIN prices ON bills.price_id = prices.id
@@ -49,10 +49,10 @@ class ReportActivityController extends ReportController {
 				AND " . $this->getReportParamFilter("center", "bills.Center") . "
 				AND " . $this->getReportParamFilter("examiner", "bills.ExaminerName")
 				// . "
-				// ORDER BY GREATEST(bills.created_at, bills.updated_at)
+				// ORDER BY bills.id
 			// "
 			// ORDER BY bills.Date ASC, patients.entryyear ASC, patients.entryorder ASC, bills.id ASC
-			, $this->sqlBindParams + [ "whenFrom12" => $this->internalWhenFrom ]
+			, $this->sqlBindParams
 		);
 //				exists(select * from bills as b2 where b2.patient_id = bills.patient_id and b2.Date < :whenFrom12) as mOLD
 
