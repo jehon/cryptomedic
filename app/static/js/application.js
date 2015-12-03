@@ -335,7 +335,9 @@ mainApp.controller('ctrl', [ '$scope', '$location', function($scope, $location) 
         server.settings = data;
         $scope.logged = true;
         $scope.$broadcast("message", { "level": "info", "text": "Welcome " +  data.name + "!"});
-        $scope.go('#');
+        if (location.hash == '#/login') {
+          $scope.go('#');
+        }
         $scope.safeApply();
       })
       .myFinallyDone(function() {
