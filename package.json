@@ -51,6 +51,7 @@
     "build:dev": "webpack --config webpack.dev.js -p",
     "build:dev:fast": "webpack --config webpack.dev.js",
     "build:prod": "webpack --config webpack.js -p",
+    "build:prod:fast": "webpack --config webpack.js",
     "dev-server": "node server.js",
     "postinstall": "bower install",
     "postupdate": "bower update"
