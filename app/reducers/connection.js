@@ -1,27 +1,30 @@
+'use strict';
 
-import catalog from 'main'
+import { actionList } from 'main';
 
-export default function(state = {
-    connected: false,
-    authenticated: false
-  }, action) {
+export default function(state, action) {
+  if (!state) {
+    state = {
+      connected: false,
+      authenticated: false
+    };
+  }
   switch (action.type) {
-    case catalog.CONNECTION_SUCCESS:
+    case actionList().CONNECTION_SUCCESS:
       return {
         connected: true,
         authenticated: true
       };
-    case catalog.CONNECTION_FAILED:
+    case actionList().CONNECTION_FAILED:
       return {
-        // connected: Math.max(1, action.payload),
-        connected: 1234,
+        connected: Math.max(1, action.payload),
         authenticated: state.authenticated
-      }
-    case catalog.CONNECTION_DISCONNECTED:
+      };
+    case actionList().CONNECTION_DISCONNECTED:
       return {
         connected: true,
         authenticated: true
-      }
+      };
     default:
       return state;
   }

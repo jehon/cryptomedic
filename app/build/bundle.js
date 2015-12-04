@@ -1,1 +1,911 @@
-var bundle=function(e){function t(r){if(n[r])return n[r].exports;var u=n[r]={exports:{},id:r,loaded:!1};return e[r].call(u.exports,u,u.exports,t),u.loaded=!0,u.exports}var n={};return t.m=e,t.c=n,t.p="",t(0)}([function(e,t,n){n(10),e.exports=n(2)},function(e,t){"use strict";t["default"]=function(e){return e&&e.__esModule?e:{"default":e}},t.__esModule=!0},function(e,t,n){"use strict";var r=n(1)["default"];Object.defineProperty(t,"__esModule",{value:!0});var u=n(9),o=r(u),i={CONNECTION_SUCCESS:"CONNECTION_SUCCESS",CONNECTION_FAILED:"CONNECTION_FAILED",CONNECTION_DISCONNECTED:"CONNECTION_DISCONNECTED"},a={store:o["default"],actions:{connection:{success:function(){o["default"].dispatch({type:i.CONNECTION_SUCCESS,payload:null})},failure:function(e){o["default"].dispatch({type:i.CONNECTION_FAILED,payload:e})},disconnected:function(){o["default"].dispatch({type:i.CONNECTION_DISCONNECTED,payload:null})}}}};t["default"]=a,e.exports=t["default"]},function(e,t,n){"use strict";var r=n(1)["default"];Object.defineProperty(t,"__esModule",{value:!0});var u=n(2),o=r(u);t["default"]=function(e,t){switch(void 0===e&&(e={connected:!1,authenticated:!1}),t.type){case o["default"].CONNECTION_SUCCESS:return{connected:!0,authenticated:!0};case o["default"].CONNECTION_FAILED:return{connected:1234,authenticated:e.authenticated};case o["default"].CONNECTION_DISCONNECTED:return{connected:!0,authenticated:!0};default:return e}},e.exports=t["default"]},function(e,t,n){"use strict";function r(e){return e&&e.__esModule?e:{"default":e}}function u(e,t){function n(){return s}function r(e){f.push(e);var t=!0;return function(){if(t){t=!1;var n=f.indexOf(e);f.splice(n,1)}}}function u(e){if(!i["default"](e))throw new Error("Actions must be plain objects. Use custom middleware for async actions.");if("undefined"==typeof e.type)throw new Error('Actions may not have an undefined "type" property. Have you misspelled a constant?');if(d)throw new Error("Reducers may not dispatch actions.");try{d=!0,s=c(s,e)}finally{d=!1}return f.slice().forEach(function(e){return e()}),e}function o(e){c=e,u({type:a.INIT})}if("function"!=typeof e)throw new Error("Expected the reducer to be a function.");var c=e,s=t,f=[],d=!1;return u({type:a.INIT}),{dispatch:u,subscribe:r,getState:n,replaceReducer:o}}t.__esModule=!0,t["default"]=u;var o=n(6),i=r(o),a={INIT:"@@redux/INIT"};t.ActionTypes=a},function(e,t){"use strict";function n(){for(var e=arguments.length,t=Array(e),n=0;e>n;n++)t[n]=arguments[n];return function(e){return t.reduceRight(function(e,t){return t(e)},e)}}t.__esModule=!0,t["default"]=n,e.exports=t["default"]},function(e,t){"use strict";function n(e){if(!e||"object"!=typeof e)return!1;var t="function"==typeof e.constructor?Object.getPrototypeOf(e):Object.prototype;if(null===t)return!0;var n=t.constructor;return"function"==typeof n&&n instanceof n&&r(n)===r(Object)}t.__esModule=!0,t["default"]=n;var r=function(e){return Function.prototype.toString.call(e)};e.exports=t["default"]},function(e,t){"use strict";function n(e,t){return Object.keys(e).reduce(function(n,r){return n[r]=t(e[r],r),n},{})}t.__esModule=!0,t["default"]=n,e.exports=t["default"]},function(e,t){"use strict";function n(e,t){switch(void 0===e&&(e=0),t.type){case"INCREMENT":return e+1;case"DECREMENT":return e-1;default:return e}}Object.defineProperty(t,"__esModule",{value:!0}),t["default"]=n,e.exports=t["default"]},function(e,t,n){"use strict";var r=n(1)["default"];Object.defineProperty(t,"__esModule",{value:!0});var u=n(11),o=n(3),i=r(o),a=n(8),c=r(a);n(3);var s=(0,u.createStore)((0,u.combineReducers)({connection:i["default"],counter:c["default"]}));s.subscribe(function(){return console.log("state update",s.getState())}),t["default"]=s,e.exports=t["default"]},function(e,t,n){e.exports=n.p+"css/application.css"},function(e,t,n){"use strict";function r(e){return e&&e.__esModule?e:{"default":e}}t.__esModule=!0;var u=n(4),o=r(u),i=n(14),a=r(i),c=n(13),s=r(c),f=n(12),d=r(f),l=n(5),p=r(l);t.createStore=o["default"],t.combineReducers=a["default"],t.bindActionCreators=s["default"],t.applyMiddleware=d["default"],t.compose=p["default"]},function(e,t,n){"use strict";function r(e){return e&&e.__esModule?e:{"default":e}}function u(){for(var e=arguments.length,t=Array(e),n=0;e>n;n++)t[n]=arguments[n];return function(e){return function(n,r){var u=e(n,r),i=u.dispatch,c=[],s={getState:u.getState,dispatch:function(e){return i(e)}};return c=t.map(function(e){return e(s)}),i=a["default"].apply(void 0,c)(u.dispatch),o({},u,{dispatch:i})}}}t.__esModule=!0;var o=Object.assign||function(e){for(var t=1;t<arguments.length;t++){var n=arguments[t];for(var r in n)Object.prototype.hasOwnProperty.call(n,r)&&(e[r]=n[r])}return e};t["default"]=u;var i=n(5),a=r(i);e.exports=t["default"]},function(e,t,n){"use strict";function r(e){return e&&e.__esModule?e:{"default":e}}function u(e,t){return function(){return t(e.apply(void 0,arguments))}}function o(e,t){if("function"==typeof e)return u(e,t);if("object"!=typeof e||null===e||void 0===e)throw new Error("bindActionCreators expected an object or a function, instead received "+(null===e?"null":typeof e)+'. Did you write "import ActionCreators from" instead of "import * as ActionCreators from"?');return a["default"](e,function(e){return u(e,t)})}t.__esModule=!0,t["default"]=o;var i=n(7),a=r(i);e.exports=t["default"]},function(e,t,n){(function(r){"use strict";function u(e){return e&&e.__esModule?e:{"default":e}}function o(e,t){var n=t&&t.type,r=n&&'"'+n.toString()+'"'||"an action";return'Reducer "'+e+'" returned undefined handling '+r+". To ignore an action, you must explicitly return the previous state."}function i(e,t,n){var r=Object.keys(t),u=n&&n.type===s.ActionTypes.INIT?"initialState argument passed to createStore":"previous state received by the reducer";if(0===r.length)return"Store does not have a valid reducer. Make sure the argument passed to combineReducers is an object whose values are reducers.";if(!d["default"](e))return"The "+u+' has unexpected type of "'+{}.toString.call(e).match(/\s([a-z|A-Z]+)/)[1]+'". Expected argument to be an object with the following '+('keys: "'+r.join('", "')+'"');var o=Object.keys(e).filter(function(e){return r.indexOf(e)<0});return o.length>0?"Unexpected "+(o.length>1?"keys":"key")+" "+('"'+o.join('", "')+'" found in '+u+". ")+"Expected to find one of the known reducer keys instead: "+('"'+r.join('", "')+'". Unexpected keys will be ignored.'):void 0}function a(e){Object.keys(e).forEach(function(t){var n=e[t],r=n(void 0,{type:s.ActionTypes.INIT});if("undefined"==typeof r)throw new Error('Reducer "'+t+'" returned undefined during initialization. If the state passed to the reducer is undefined, you must explicitly return the initial state. The initial state may not be undefined.');var u="@@redux/PROBE_UNKNOWN_ACTION_"+Math.random().toString(36).substring(7).split("").join(".");if("undefined"==typeof n(void 0,{type:u}))throw new Error('Reducer "'+t+'" returned undefined when probed with a random type. '+("Don't try to handle "+s.ActionTypes.INIT+' or other actions in "redux/*" ')+"namespace. They are considered private. Instead, you must return the current state for any unknown actions, unless it is undefined, in which case you must return the initial state, regardless of the action type. The initial state may not be undefined.")})}function c(e){var t,n=h["default"](e,function(e){return"function"==typeof e});try{a(n)}catch(u){t=u}var c=p["default"](n,function(){return void 0});return function(e,u){if(void 0===e&&(e=c),t)throw t;var a=!1,s=p["default"](n,function(t,n){var r=e[n],i=t(r,u);if("undefined"==typeof i){var c=o(n,u);throw new Error(c)}return a=a||i!==r,i});if("production"!==r.env.NODE_ENV){var f=i(e,s,u);f&&console.error(f)}return a?s:e}}t.__esModule=!0,t["default"]=c;var s=n(4),f=n(6),d=u(f),l=n(7),p=u(l),y=n(15),h=u(y);e.exports=t["default"]}).call(t,n(16))},function(e,t){"use strict";function n(e,t){return Object.keys(e).reduce(function(n,r){return t(e[r])&&(n[r]=e[r]),n},{})}t.__esModule=!0,t["default"]=n,e.exports=t["default"]},function(e,t){function n(){s=!1,i.length?c=i.concat(c):f=-1,c.length&&r()}function r(){if(!s){var e=setTimeout(n);s=!0;for(var t=c.length;t;){for(i=c,c=[];++f<t;)i&&i[f].run();f=-1,t=c.length}i=null,s=!1,clearTimeout(e)}}function u(e,t){this.fun=e,this.array=t}function o(){}var i,a=e.exports={},c=[],s=!1,f=-1;a.nextTick=function(e){var t=new Array(arguments.length-1);if(arguments.length>1)for(var n=1;n<arguments.length;n++)t[n-1]=arguments[n];c.push(new u(e,t)),1!==c.length||s||setTimeout(r,0)},u.prototype.run=function(){this.fun.apply(null,this.array)},a.title="browser",a.browser=!0,a.env={},a.argv=[],a.version="",a.versions={},a.on=o,a.addListener=o,a.once=o,a.off=o,a.removeListener=o,a.removeAllListeners=o,a.emit=o,a.binding=function(e){throw new Error("process.binding is not supported")},a.cwd=function(){return"/"},a.chdir=function(e){throw new Error("process.chdir is not supported")},a.umask=function(){return 0}}]);
+var bundle =
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId])
+/******/ 			return installedModules[moduleId].exports;
+
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			exports: {},
+/******/ 			id: moduleId,
+/******/ 			loaded: false
+/******/ 		};
+
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+
+/******/ 		// Flag the module as loaded
+/******/ 		module.loaded = true;
+
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+
+
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(0);
+/******/ })
+/************************************************************************/
+/******/ ([
+/* 0 */
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(1);
+	module.exports = __webpack_require__(2);
+
+
+/***/ },
+/* 1 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "css/application.css"
+
+/***/ },
+/* 2 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _interopRequireDefault = __webpack_require__(3)['default'];
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	exports.actionList = actionList;
+
+	var _store = __webpack_require__(4);
+
+	var _store2 = _interopRequireDefault(_store);
+
+	function actionList() {
+	  return {
+	    CONNECTION_SUCCESS: 'CONNECTION_SUCCESS',
+	    CONNECTION_FAILED: 'CONNECTION_FAILED',
+	    CONNECTION_DISCONNECTED: 'CONNECTION_DISCONNECTED'
+	  };
+	}
+
+	;
+
+	function d(type, payload) {
+	  return _store2['default'].dispatch.bind(null, { type: type, payload: payload });
+	}
+
+	var appState = {
+	  store: _store2['default'],
+	  actions: {
+	    // success:      function()              { store.dispatch({ type: c.CONNECTION_SUCCESS,       payload: null })},
+	    connection: {
+	      // success:      d(c.CONNECTION_SUCCESS, null),
+	      failure: function failure(httpErrorCode) {
+	        _store2['default'].dispatch({ type: actionList().CONNECTION_FAILED, payload: httpErrorCode });
+	      },
+	      disconnected: function disconnected() {
+	        _store2['default'].dispatch({ type: actionList().CONNECTION_DISCONNECTED, payload: {} });
+	      }
+	    }
+	  }
+	};
+
+	exports['default'] = appState;
+	//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi92YXIvd3d3L2NyeXB0b21lZGljL2FwcC9tYWluLmpzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBLFlBQVksQ0FBQzs7Ozs7Ozs7O3FCQUVLLE9BQU87Ozs7QUFFbEIsU0FBUyxVQUFVLEdBQUc7QUFDM0IsU0FBTztBQUNMLHNCQUFrQixFQUFRLG9CQUFvQjtBQUM5QyxxQkFBaUIsRUFBUyxtQkFBbUI7QUFDN0MsMkJBQXVCLEVBQUcseUJBQXlCO0dBQ3BELENBQUM7Q0FDSDs7QUFBQSxDQUFDOztBQUVGLFNBQVMsQ0FBQyxDQUFDLElBQUksRUFBRSxPQUFPLEVBQUU7QUFDeEIsU0FBTyxtQkFBTSxRQUFRLENBQUMsSUFBSSxDQUFDLElBQUksRUFBRSxFQUFFLElBQUksRUFBRSxJQUFJLEVBQUUsT0FBTyxFQUFFLE9BQU8sRUFBRSxDQUFDLENBQUM7Q0FDcEU7O0FBRUQsSUFBSSxRQUFRLEdBQUc7QUFDYixPQUFLLG9CQUFPO0FBQ1osU0FBTyxFQUFFOztBQUVQLGNBQVUsRUFBRTs7QUFFVixhQUFPLEVBQU8saUJBQVMsYUFBYSxFQUFFO0FBQUUsMkJBQU0sUUFBUSxDQUFDLEVBQUUsSUFBSSxFQUFFLFVBQVUsRUFBRSxDQUFDLGlCQUFpQixFQUFTLE9BQU8sRUFBRSxhQUFhLEVBQUUsQ0FBQyxDQUFBO09BQUM7QUFDaEksa0JBQVksRUFBRSx3QkFBd0I7QUFBRSwyQkFBTSxRQUFRLENBQUMsRUFBRSxJQUFJLEVBQUUsVUFBVSxFQUFFLENBQUMsdUJBQXVCLEVBQUcsT0FBTyxFQUFFLEVBQUUsRUFBRSxDQUFDLENBQUE7T0FBQztLQUN0SDtHQUNGO0NBQ0YsQ0FBQTs7cUJBRWMsUUFBUSIsImZpbGUiOiIvdmFyL3d3dy9jcnlwdG9tZWRpYy9hcHAvbWFpbi5qcyIsInNvdXJjZXNDb250ZW50IjpbIid1c2Ugc3RyaWN0JztcblxuaW1wb3J0IHN0b3JlIGZyb20gJ3N0b3JlJztcblxuZXhwb3J0IGZ1bmN0aW9uIGFjdGlvbkxpc3QoKSB7XG4gIHJldHVybiB7XG4gICAgQ09OTkVDVElPTl9TVUNDRVNTOiAgICAgICAnQ09OTkVDVElPTl9TVUNDRVNTJyxcbiAgICBDT05ORUNUSU9OX0ZBSUxFRDogICAgICAgICdDT05ORUNUSU9OX0ZBSUxFRCcsXG4gICAgQ09OTkVDVElPTl9ESVNDT05ORUNURUQ6ICAnQ09OTkVDVElPTl9ESVNDT05ORUNURUQnXG4gIH07XG59O1xuXG5mdW5jdGlvbiBkKHR5cGUsIHBheWxvYWQpIHtcbiAgcmV0dXJuIHN0b3JlLmRpc3BhdGNoLmJpbmQobnVsbCwgeyB0eXBlOiB0eXBlLCBwYXlsb2FkOiBwYXlsb2FkIH0pO1xufVxuXG5sZXQgYXBwU3RhdGUgPSB7XG4gIHN0b3JlOiBzdG9yZSxcbiAgYWN0aW9uczoge1xuICAgICAgLy8gc3VjY2VzczogICAgICBmdW5jdGlvbigpICAgICAgICAgICAgICB7IHN0b3JlLmRpc3BhdGNoKHsgdHlwZTogYy5DT05ORUNUSU9OX1NVQ0NFU1MsICAgICAgIHBheWxvYWQ6IG51bGwgfSl9LFxuICAgIGNvbm5lY3Rpb246IHtcbiAgICAgIC8vIHN1Y2Nlc3M6ICAgICAgZChjLkNPTk5FQ1RJT05fU1VDQ0VTUywgbnVsbCksXG4gICAgICBmYWlsdXJlOiAgICAgIGZ1bmN0aW9uKGh0dHBFcnJvckNvZGUpIHsgc3RvcmUuZGlzcGF0Y2goeyB0eXBlOiBhY3Rpb25MaXN0KCkuQ09OTkVDVElPTl9GQUlMRUQsICAgICAgICBwYXlsb2FkOiBodHRwRXJyb3JDb2RlIH0pfSxcbiAgICAgIGRpc2Nvbm5lY3RlZDogZnVuY3Rpb24oKSAgICAgICAgICAgICAgeyBzdG9yZS5kaXNwYXRjaCh7IHR5cGU6IGFjdGlvbkxpc3QoKS5DT05ORUNUSU9OX0RJU0NPTk5FQ1RFRCwgIHBheWxvYWQ6IHt9IH0pfSxcbiAgICB9XG4gIH1cbn1cblxuZXhwb3J0IGRlZmF1bHQgYXBwU3RhdGU7XG4iXX0=
+
+/***/ },
+/* 3 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	exports["default"] = function (obj) {
+	  return obj && obj.__esModule ? obj : {
+	    "default": obj
+	  };
+	};
+
+	exports.__esModule = true;
+
+/***/ },
+/* 4 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _interopRequireDefault = __webpack_require__(3)['default'];
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+
+	var _redux = __webpack_require__(5);
+
+	var _reducersConnection = __webpack_require__(15);
+
+	var _reducersConnection2 = _interopRequireDefault(_reducersConnection);
+
+	var _reducersCounter = __webpack_require__(16);
+
+	var _reducersCounter2 = _interopRequireDefault(_reducersCounter);
+
+	__webpack_require__(15);
+
+	var store = (0, _redux.createStore)((0, _redux.combineReducers)({
+	  connection: _reducersConnection2['default'],
+	  counter: _reducersCounter2['default']
+	}));
+
+	store.subscribe(function () {
+	  return console.log("state update", store.getState());
+	});
+
+	exports['default'] = store;
+	module.exports = exports['default'];
+	//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi92YXIvd3d3L2NyeXB0b21lZGljL2FwcC9zdG9yZS5qcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSxZQUFZLENBQUM7Ozs7Ozs7O3FCQUVlLE9BQU87O2tDQUdaLHFCQUFxQjs7OzsrQkFDeEIsa0JBQWtCOzs7O1FBRS9CLHFCQUFxQjs7QUFFNUIsSUFBSSxLQUFLLEdBQUcsd0JBQVksNEJBQWdCO0FBQ3RDLFlBQVUsaUNBQUE7QUFDVixTQUFPLDhCQUFBO0NBQ1IsQ0FBQyxDQUFDLENBQUM7O0FBRUosS0FBSyxDQUFDLFNBQVMsQ0FBQztTQUNkLE9BQU8sQ0FBQyxHQUFHLENBQUMsY0FBYyxFQUFFLEtBQUssQ0FBQyxRQUFRLEVBQUUsQ0FBQztDQUFBLENBQzlDLENBQUM7O3FCQUVhLEtBQUsiLCJmaWxlIjoiL3Zhci93d3cvY3J5cHRvbWVkaWMvYXBwL3N0b3JlLmpzIiwic291cmNlc0NvbnRlbnQiOlsiJ3VzZSBzdHJpY3QnO1xuXG5pbXBvcnQgeyBjcmVhdGVTdG9yZSB9IGZyb20gJ3JlZHV4JztcbmltcG9ydCB7IGNvbWJpbmVSZWR1Y2VycyB9IGZyb20gJ3JlZHV4JztcblxuaW1wb3J0IGNvbm5lY3Rpb24gZnJvbSAncmVkdWNlcnMvY29ubmVjdGlvbic7XG5pbXBvcnQgY291bnRlciBmcm9tICdyZWR1Y2Vycy9jb3VudGVyJztcblxuaW1wb3J0ICdyZWR1Y2Vycy9jb25uZWN0aW9uJztcblxubGV0IHN0b3JlID0gY3JlYXRlU3RvcmUoY29tYmluZVJlZHVjZXJzKHtcbiAgY29ubmVjdGlvbixcbiAgY291bnRlclxufSkpO1xuXG5zdG9yZS5zdWJzY3JpYmUoKCkgPT5cbiAgY29uc29sZS5sb2coXCJzdGF0ZSB1cGRhdGVcIiwgc3RvcmUuZ2V0U3RhdGUoKSlcbik7XG5cbmV4cG9ydCBkZWZhdWx0IHN0b3JlO1xuIl19
+
+/***/ },
+/* 5 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	exports.__esModule = true;
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	var _createStore = __webpack_require__(6);
+
+	var _createStore2 = _interopRequireDefault(_createStore);
+
+	var _utilsCombineReducers = __webpack_require__(8);
+
+	var _utilsCombineReducers2 = _interopRequireDefault(_utilsCombineReducers);
+
+	var _utilsBindActionCreators = __webpack_require__(12);
+
+	var _utilsBindActionCreators2 = _interopRequireDefault(_utilsBindActionCreators);
+
+	var _utilsApplyMiddleware = __webpack_require__(13);
+
+	var _utilsApplyMiddleware2 = _interopRequireDefault(_utilsApplyMiddleware);
+
+	var _utilsCompose = __webpack_require__(14);
+
+	var _utilsCompose2 = _interopRequireDefault(_utilsCompose);
+
+	exports.createStore = _createStore2['default'];
+	exports.combineReducers = _utilsCombineReducers2['default'];
+	exports.bindActionCreators = _utilsBindActionCreators2['default'];
+	exports.applyMiddleware = _utilsApplyMiddleware2['default'];
+	exports.compose = _utilsCompose2['default'];
+
+/***/ },
+/* 6 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	exports.__esModule = true;
+	exports['default'] = createStore;
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	var _utilsIsPlainObject = __webpack_require__(7);
+
+	var _utilsIsPlainObject2 = _interopRequireDefault(_utilsIsPlainObject);
+
+	/**
+	 * These are private action types reserved by Redux.
+	 * For any unknown actions, you must return the current state.
+	 * If the current state is undefined, you must return the initial state.
+	 * Do not reference these action types directly in your code.
+	 */
+	var ActionTypes = {
+	  INIT: '@@redux/INIT'
+	};
+
+	exports.ActionTypes = ActionTypes;
+	/**
+	 * Creates a Redux store that holds the state tree.
+	 * The only way to change the data in the store is to call `dispatch()` on it.
+	 *
+	 * There should only be a single store in your app. To specify how different
+	 * parts of the state tree respond to actions, you may combine several reducers
+	 * into a single reducer function by using `combineReducers`.
+	 *
+	 * @param {Function} reducer A function that returns the next state tree, given
+	 * the current state tree and the action to handle.
+	 *
+	 * @param {any} [initialState] The initial state. You may optionally specify it
+	 * to hydrate the state from the server in universal apps, or to restore a
+	 * previously serialized user session.
+	 * If you use `combineReducers` to produce the root reducer function, this must be
+	 * an object with the same shape as `combineReducers` keys.
+	 *
+	 * @returns {Store} A Redux store that lets you read the state, dispatch actions
+	 * and subscribe to changes.
+	 */
+
+	function createStore(reducer, initialState) {
+	  if (typeof reducer !== 'function') {
+	    throw new Error('Expected the reducer to be a function.');
+	  }
+
+	  var currentReducer = reducer;
+	  var currentState = initialState;
+	  var listeners = [];
+	  var isDispatching = false;
+
+	  /**
+	   * Reads the state tree managed by the store.
+	   *
+	   * @returns {any} The current state tree of your application.
+	   */
+	  function getState() {
+	    return currentState;
+	  }
+
+	  /**
+	   * Adds a change listener. It will be called any time an action is dispatched,
+	   * and some part of the state tree may potentially have changed. You may then
+	   * call `getState()` to read the current state tree inside the callback.
+	   *
+	   * @param {Function} listener A callback to be invoked on every dispatch.
+	   * @returns {Function} A function to remove this change listener.
+	   */
+	  function subscribe(listener) {
+	    listeners.push(listener);
+	    var isSubscribed = true;
+
+	    return function unsubscribe() {
+	      if (!isSubscribed) {
+	        return;
+	      }
+
+	      isSubscribed = false;
+	      var index = listeners.indexOf(listener);
+	      listeners.splice(index, 1);
+	    };
+	  }
+
+	  /**
+	   * Dispatches an action. It is the only way to trigger a state change.
+	   *
+	   * The `reducer` function, used to create the store, will be called with the
+	   * current state tree and the given `action`. Its return value will
+	   * be considered the **next** state of the tree, and the change listeners
+	   * will be notified.
+	   *
+	   * The base implementation only supports plain object actions. If you want to
+	   * dispatch a Promise, an Observable, a thunk, or something else, you need to
+	   * wrap your store creating function into the corresponding middleware. For
+	   * example, see the documentation for the `redux-thunk` package. Even the
+	   * middleware will eventually dispatch plain object actions using this method.
+	   *
+	   * @param {Object} action A plain object representing “what changed”. It is
+	   * a good idea to keep actions serializable so you can record and replay user
+	   * sessions, or use the time travelling `redux-devtools`. An action must have
+	   * a `type` property which may not be `undefined`. It is a good idea to use
+	   * string constants for action types.
+	   *
+	   * @returns {Object} For convenience, the same action object you dispatched.
+	   *
+	   * Note that, if you use a custom middleware, it may wrap `dispatch()` to
+	   * return something else (for example, a Promise you can await).
+	   */
+	  function dispatch(action) {
+	    if (!_utilsIsPlainObject2['default'](action)) {
+	      throw new Error('Actions must be plain objects. ' + 'Use custom middleware for async actions.');
+	    }
+
+	    if (typeof action.type === 'undefined') {
+	      throw new Error('Actions may not have an undefined "type" property. ' + 'Have you misspelled a constant?');
+	    }
+
+	    if (isDispatching) {
+	      throw new Error('Reducers may not dispatch actions.');
+	    }
+
+	    try {
+	      isDispatching = true;
+	      currentState = currentReducer(currentState, action);
+	    } finally {
+	      isDispatching = false;
+	    }
+
+	    listeners.slice().forEach(function (listener) {
+	      return listener();
+	    });
+	    return action;
+	  }
+
+	  /**
+	   * Replaces the reducer currently used by the store to calculate the state.
+	   *
+	   * You might need this if your app implements code splitting and you want to
+	   * load some of the reducers dynamically. You might also need this if you
+	   * implement a hot reloading mechanism for Redux.
+	   *
+	   * @param {Function} nextReducer The reducer for the store to use instead.
+	   * @returns {void}
+	   */
+	  function replaceReducer(nextReducer) {
+	    currentReducer = nextReducer;
+	    dispatch({ type: ActionTypes.INIT });
+	  }
+
+	  // When a store is created, an "INIT" action is dispatched so that every
+	  // reducer returns their initial state. This effectively populates
+	  // the initial state tree.
+	  dispatch({ type: ActionTypes.INIT });
+
+	  return {
+	    dispatch: dispatch,
+	    subscribe: subscribe,
+	    getState: getState,
+	    replaceReducer: replaceReducer
+	  };
+	}
+
+/***/ },
+/* 7 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	exports.__esModule = true;
+	exports['default'] = isPlainObject;
+	var fnToString = function fnToString(fn) {
+	  return Function.prototype.toString.call(fn);
+	};
+
+	/**
+	 * @param {any} obj The object to inspect.
+	 * @returns {boolean} True if the argument appears to be a plain object.
+	 */
+
+	function isPlainObject(obj) {
+	  if (!obj || typeof obj !== 'object') {
+	    return false;
+	  }
+
+	  var proto = typeof obj.constructor === 'function' ? Object.getPrototypeOf(obj) : Object.prototype;
+
+	  if (proto === null) {
+	    return true;
+	  }
+
+	  var constructor = proto.constructor;
+
+	  return typeof constructor === 'function' && constructor instanceof constructor && fnToString(constructor) === fnToString(Object);
+	}
+
+	module.exports = exports['default'];
+
+/***/ },
+/* 8 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
+
+	exports.__esModule = true;
+	exports['default'] = combineReducers;
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	var _createStore = __webpack_require__(6);
+
+	var _utilsIsPlainObject = __webpack_require__(7);
+
+	var _utilsIsPlainObject2 = _interopRequireDefault(_utilsIsPlainObject);
+
+	var _utilsMapValues = __webpack_require__(10);
+
+	var _utilsMapValues2 = _interopRequireDefault(_utilsMapValues);
+
+	var _utilsPick = __webpack_require__(11);
+
+	var _utilsPick2 = _interopRequireDefault(_utilsPick);
+
+	/* eslint-disable no-console */
+
+	function getUndefinedStateErrorMessage(key, action) {
+	  var actionType = action && action.type;
+	  var actionName = actionType && '"' + actionType.toString() + '"' || 'an action';
+
+	  return 'Reducer "' + key + '" returned undefined handling ' + actionName + '. ' + 'To ignore an action, you must explicitly return the previous state.';
+	}
+
+	function getUnexpectedStateKeyWarningMessage(inputState, outputState, action) {
+	  var reducerKeys = Object.keys(outputState);
+	  var argumentName = action && action.type === _createStore.ActionTypes.INIT ? 'initialState argument passed to createStore' : 'previous state received by the reducer';
+
+	  if (reducerKeys.length === 0) {
+	    return 'Store does not have a valid reducer. Make sure the argument passed ' + 'to combineReducers is an object whose values are reducers.';
+	  }
+
+	  if (!_utilsIsPlainObject2['default'](inputState)) {
+	    return 'The ' + argumentName + ' has unexpected type of "' + ({}).toString.call(inputState).match(/\s([a-z|A-Z]+)/)[1] + '". Expected argument to be an object with the following ' + ('keys: "' + reducerKeys.join('", "') + '"');
+	  }
+
+	  var unexpectedKeys = Object.keys(inputState).filter(function (key) {
+	    return reducerKeys.indexOf(key) < 0;
+	  });
+
+	  if (unexpectedKeys.length > 0) {
+	    return 'Unexpected ' + (unexpectedKeys.length > 1 ? 'keys' : 'key') + ' ' + ('"' + unexpectedKeys.join('", "') + '" found in ' + argumentName + '. ') + 'Expected to find one of the known reducer keys instead: ' + ('"' + reducerKeys.join('", "') + '". Unexpected keys will be ignored.');
+	  }
+	}
+
+	function assertReducerSanity(reducers) {
+	  Object.keys(reducers).forEach(function (key) {
+	    var reducer = reducers[key];
+	    var initialState = reducer(undefined, { type: _createStore.ActionTypes.INIT });
+
+	    if (typeof initialState === 'undefined') {
+	      throw new Error('Reducer "' + key + '" returned undefined during initialization. ' + 'If the state passed to the reducer is undefined, you must ' + 'explicitly return the initial state. The initial state may ' + 'not be undefined.');
+	    }
+
+	    var type = '@@redux/PROBE_UNKNOWN_ACTION_' + Math.random().toString(36).substring(7).split('').join('.');
+	    if (typeof reducer(undefined, { type: type }) === 'undefined') {
+	      throw new Error('Reducer "' + key + '" returned undefined when probed with a random type. ' + ('Don\'t try to handle ' + _createStore.ActionTypes.INIT + ' or other actions in "redux/*" ') + 'namespace. They are considered private. Instead, you must return the ' + 'current state for any unknown actions, unless it is undefined, ' + 'in which case you must return the initial state, regardless of the ' + 'action type. The initial state may not be undefined.');
+	    }
+	  });
+	}
+
+	/**
+	 * Turns an object whose values are different reducer functions, into a single
+	 * reducer function. It will call every child reducer, and gather their results
+	 * into a single state object, whose keys correspond to the keys of the passed
+	 * reducer functions.
+	 *
+	 * @param {Object} reducers An object whose values correspond to different
+	 * reducer functions that need to be combined into one. One handy way to obtain
+	 * it is to use ES6 `import * as reducers` syntax. The reducers may never return
+	 * undefined for any action. Instead, they should return their initial state
+	 * if the state passed to them was undefined, and the current state for any
+	 * unrecognized action.
+	 *
+	 * @returns {Function} A reducer function that invokes every reducer inside the
+	 * passed object, and builds a state object with the same shape.
+	 */
+
+	function combineReducers(reducers) {
+	  var finalReducers = _utilsPick2['default'](reducers, function (val) {
+	    return typeof val === 'function';
+	  });
+	  var sanityError;
+
+	  try {
+	    assertReducerSanity(finalReducers);
+	  } catch (e) {
+	    sanityError = e;
+	  }
+
+	  var defaultState = _utilsMapValues2['default'](finalReducers, function () {
+	    return undefined;
+	  });
+
+	  return function combination(state, action) {
+	    if (state === undefined) state = defaultState;
+
+	    if (sanityError) {
+	      throw sanityError;
+	    }
+
+	    var hasChanged = false;
+	    var finalState = _utilsMapValues2['default'](finalReducers, function (reducer, key) {
+	      var previousStateForKey = state[key];
+	      var nextStateForKey = reducer(previousStateForKey, action);
+	      if (typeof nextStateForKey === 'undefined') {
+	        var errorMessage = getUndefinedStateErrorMessage(key, action);
+	        throw new Error(errorMessage);
+	      }
+	      hasChanged = hasChanged || nextStateForKey !== previousStateForKey;
+	      return nextStateForKey;
+	    });
+
+	    if (process.env.NODE_ENV !== 'production') {
+	      var warningMessage = getUnexpectedStateKeyWarningMessage(state, finalState, action);
+	      if (warningMessage) {
+	        console.error(warningMessage);
+	      }
+	    }
+
+	    return hasChanged ? finalState : state;
+	  };
+	}
+
+	module.exports = exports['default'];
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9)))
+
+/***/ },
+/* 9 */
+/***/ function(module, exports) {
+
+	// shim for using process in browser
+
+	var process = module.exports = {};
+	var queue = [];
+	var draining = false;
+	var currentQueue;
+	var queueIndex = -1;
+
+	function cleanUpNextTick() {
+	    draining = false;
+	    if (currentQueue.length) {
+	        queue = currentQueue.concat(queue);
+	    } else {
+	        queueIndex = -1;
+	    }
+	    if (queue.length) {
+	        drainQueue();
+	    }
+	}
+
+	function drainQueue() {
+	    if (draining) {
+	        return;
+	    }
+	    var timeout = setTimeout(cleanUpNextTick);
+	    draining = true;
+
+	    var len = queue.length;
+	    while(len) {
+	        currentQueue = queue;
+	        queue = [];
+	        while (++queueIndex < len) {
+	            if (currentQueue) {
+	                currentQueue[queueIndex].run();
+	            }
+	        }
+	        queueIndex = -1;
+	        len = queue.length;
+	    }
+	    currentQueue = null;
+	    draining = false;
+	    clearTimeout(timeout);
+	}
+
+	process.nextTick = function (fun) {
+	    var args = new Array(arguments.length - 1);
+	    if (arguments.length > 1) {
+	        for (var i = 1; i < arguments.length; i++) {
+	            args[i - 1] = arguments[i];
+	        }
+	    }
+	    queue.push(new Item(fun, args));
+	    if (queue.length === 1 && !draining) {
+	        setTimeout(drainQueue, 0);
+	    }
+	};
+
+	// v8 likes predictible objects
+	function Item(fun, array) {
+	    this.fun = fun;
+	    this.array = array;
+	}
+	Item.prototype.run = function () {
+	    this.fun.apply(null, this.array);
+	};
+	process.title = 'browser';
+	process.browser = true;
+	process.env = {};
+	process.argv = [];
+	process.version = ''; // empty string to avoid regexp issues
+	process.versions = {};
+
+	function noop() {}
+
+	process.on = noop;
+	process.addListener = noop;
+	process.once = noop;
+	process.off = noop;
+	process.removeListener = noop;
+	process.removeAllListeners = noop;
+	process.emit = noop;
+
+	process.binding = function (name) {
+	    throw new Error('process.binding is not supported');
+	};
+
+	process.cwd = function () { return '/' };
+	process.chdir = function (dir) {
+	    throw new Error('process.chdir is not supported');
+	};
+	process.umask = function() { return 0; };
+
+
+/***/ },
+/* 10 */
+/***/ function(module, exports) {
+
+	/**
+	 * Applies a function to every key-value pair inside an object.
+	 *
+	 * @param {Object} obj The source object.
+	 * @param {Function} fn The mapper function that receives the value and the key.
+	 * @returns {Object} A new object that contains the mapped values for the keys.
+	 */
+	"use strict";
+
+	exports.__esModule = true;
+	exports["default"] = mapValues;
+
+	function mapValues(obj, fn) {
+	  return Object.keys(obj).reduce(function (result, key) {
+	    result[key] = fn(obj[key], key);
+	    return result;
+	  }, {});
+	}
+
+	module.exports = exports["default"];
+
+/***/ },
+/* 11 */
+/***/ function(module, exports) {
+
+	/**
+	 * Picks key-value pairs from an object where values satisfy a predicate.
+	 *
+	 * @param {Object} obj The object to pick from.
+	 * @param {Function} fn The predicate the values must satisfy to be copied.
+	 * @returns {Object} The object with the values that satisfied the predicate.
+	 */
+	"use strict";
+
+	exports.__esModule = true;
+	exports["default"] = pick;
+
+	function pick(obj, fn) {
+	  return Object.keys(obj).reduce(function (result, key) {
+	    if (fn(obj[key])) {
+	      result[key] = obj[key];
+	    }
+	    return result;
+	  }, {});
+	}
+
+	module.exports = exports["default"];
+
+/***/ },
+/* 12 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	exports.__esModule = true;
+	exports['default'] = bindActionCreators;
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	var _utilsMapValues = __webpack_require__(10);
+
+	var _utilsMapValues2 = _interopRequireDefault(_utilsMapValues);
+
+	function bindActionCreator(actionCreator, dispatch) {
+	  return function () {
+	    return dispatch(actionCreator.apply(undefined, arguments));
+	  };
+	}
+
+	/**
+	 * Turns an object whose values are action creators, into an object with the
+	 * same keys, but with every function wrapped into a `dispatch` call so they
+	 * may be invoked directly. This is just a convenience method, as you can call
+	 * `store.dispatch(MyActionCreators.doSomething())` yourself just fine.
+	 *
+	 * For convenience, you can also pass a single function as the first argument,
+	 * and get a function in return.
+	 *
+	 * @param {Function|Object} actionCreators An object whose values are action
+	 * creator functions. One handy way to obtain it is to use ES6 `import * as`
+	 * syntax. You may also pass a single function.
+	 *
+	 * @param {Function} dispatch The `dispatch` function available on your Redux
+	 * store.
+	 *
+	 * @returns {Function|Object} The object mimicking the original object, but with
+	 * every action creator wrapped into the `dispatch` call. If you passed a
+	 * function as `actionCreators`, the return value will also be a single
+	 * function.
+	 */
+
+	function bindActionCreators(actionCreators, dispatch) {
+	  if (typeof actionCreators === 'function') {
+	    return bindActionCreator(actionCreators, dispatch);
+	  }
+
+	  if (typeof actionCreators !== 'object' || actionCreators === null || actionCreators === undefined) {
+	    // eslint-disable-line no-eq-null
+	    throw new Error('bindActionCreators expected an object or a function, instead received ' + (actionCreators === null ? 'null' : typeof actionCreators) + '. ' + 'Did you write "import ActionCreators from" instead of "import * as ActionCreators from"?');
+	  }
+
+	  return _utilsMapValues2['default'](actionCreators, function (actionCreator) {
+	    return bindActionCreator(actionCreator, dispatch);
+	  });
+	}
+
+	module.exports = exports['default'];
+
+/***/ },
+/* 13 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	exports.__esModule = true;
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	exports['default'] = applyMiddleware;
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	var _compose = __webpack_require__(14);
+
+	var _compose2 = _interopRequireDefault(_compose);
+
+	/**
+	 * Creates a store enhancer that applies middleware to the dispatch method
+	 * of the Redux store. This is handy for a variety of tasks, such as expressing
+	 * asynchronous actions in a concise manner, or logging every action payload.
+	 *
+	 * See `redux-thunk` package as an example of the Redux middleware.
+	 *
+	 * Because middleware is potentially asynchronous, this should be the first
+	 * store enhancer in the composition chain.
+	 *
+	 * Note that each middleware will be given the `dispatch` and `getState` functions
+	 * as named arguments.
+	 *
+	 * @param {...Function} middlewares The middleware chain to be applied.
+	 * @returns {Function} A store enhancer applying the middleware.
+	 */
+
+	function applyMiddleware() {
+	  for (var _len = arguments.length, middlewares = Array(_len), _key = 0; _key < _len; _key++) {
+	    middlewares[_key] = arguments[_key];
+	  }
+
+	  return function (next) {
+	    return function (reducer, initialState) {
+	      var store = next(reducer, initialState);
+	      var _dispatch = store.dispatch;
+	      var chain = [];
+
+	      var middlewareAPI = {
+	        getState: store.getState,
+	        dispatch: function dispatch(action) {
+	          return _dispatch(action);
+	        }
+	      };
+	      chain = middlewares.map(function (middleware) {
+	        return middleware(middlewareAPI);
+	      });
+	      _dispatch = _compose2['default'].apply(undefined, chain)(store.dispatch);
+
+	      return _extends({}, store, {
+	        dispatch: _dispatch
+	      });
+	    };
+	  };
+	}
+
+	module.exports = exports['default'];
+
+/***/ },
+/* 14 */
+/***/ function(module, exports) {
+
+	/**
+	 * Composes single-argument functions from right to left.
+	 *
+	 * @param {...Function} funcs The functions to compose.
+	 * @returns {Function} A function obtained by composing functions from right to
+	 * left. For example, compose(f, g, h) is identical to arg => f(g(h(arg))).
+	 */
+	"use strict";
+
+	exports.__esModule = true;
+	exports["default"] = compose;
+
+	function compose() {
+	  for (var _len = arguments.length, funcs = Array(_len), _key = 0; _key < _len; _key++) {
+	    funcs[_key] = arguments[_key];
+	  }
+
+	  return function (arg) {
+	    return funcs.reduceRight(function (composed, f) {
+	      return f(composed);
+	    }, arg);
+	  };
+	}
+
+	module.exports = exports["default"];
+
+/***/ },
+/* 15 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+
+	var _main = __webpack_require__(2);
+
+	exports['default'] = function (state, action) {
+	  if (!state) {
+	    state = {
+	      connected: false,
+	      authenticated: false
+	    };
+	  }
+	  switch (action.type) {
+	    case (0, _main.actionList)().CONNECTION_SUCCESS:
+	      return {
+	        connected: true,
+	        authenticated: true
+	      };
+	    case (0, _main.actionList)().CONNECTION_FAILED:
+	      return {
+	        connected: Math.max(1, action.payload),
+	        authenticated: state.authenticated
+	      };
+	    case (0, _main.actionList)().CONNECTION_DISCONNECTED:
+	      return {
+	        connected: true,
+	        authenticated: true
+	      };
+	    default:
+	      return state;
+	  }
+	};
+
+	module.exports = exports['default'];
+	//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi92YXIvd3d3L2NyeXB0b21lZGljL2FwcC9yZWR1Y2Vycy9jb25uZWN0aW9uLmpzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBLFlBQVksQ0FBQzs7Ozs7O29CQUVjLE1BQU07O3FCQUVsQixVQUFTLEtBQUssRUFBRSxNQUFNLEVBQUU7QUFDckMsTUFBSSxDQUFDLEtBQUssRUFBRTtBQUNWLFNBQUssR0FBRztBQUNOLGVBQVMsRUFBRSxLQUFLO0FBQ2hCLG1CQUFhLEVBQUUsS0FBSztLQUNyQixDQUFDO0dBQ0g7QUFDRCxVQUFRLE1BQU0sQ0FBQyxJQUFJO0FBQ2pCLFNBQUssdUJBQVksQ0FBQyxrQkFBa0I7QUFDbEMsYUFBTztBQUNMLGlCQUFTLEVBQUUsSUFBSTtBQUNmLHFCQUFhLEVBQUUsSUFBSTtPQUNwQixDQUFDO0FBQUEsQUFDSixTQUFLLHVCQUFZLENBQUMsaUJBQWlCO0FBQ2pDLGFBQU87QUFDTCxpQkFBUyxFQUFFLElBQUksQ0FBQyxHQUFHLENBQUMsQ0FBQyxFQUFFLE1BQU0sQ0FBQyxPQUFPLENBQUM7QUFDdEMscUJBQWEsRUFBRSxLQUFLLENBQUMsYUFBYTtPQUNuQyxDQUFDO0FBQUEsQUFDSixTQUFLLHVCQUFZLENBQUMsdUJBQXVCO0FBQ3ZDLGFBQU87QUFDTCxpQkFBUyxFQUFFLElBQUk7QUFDZixxQkFBYSxFQUFFLElBQUk7T0FDcEIsQ0FBQztBQUFBLEFBQ0o7QUFDRSxhQUFPLEtBQUssQ0FBQztBQUFBLEdBQ2hCO0NBQ0YiLCJmaWxlIjoiL3Zhci93d3cvY3J5cHRvbWVkaWMvYXBwL3JlZHVjZXJzL2Nvbm5lY3Rpb24uanMiLCJzb3VyY2VzQ29udGVudCI6WyIndXNlIHN0cmljdCc7XG5cbmltcG9ydCB7IGFjdGlvbkxpc3QgfSBmcm9tICdtYWluJztcblxuZXhwb3J0IGRlZmF1bHQgZnVuY3Rpb24oc3RhdGUsIGFjdGlvbikge1xuICBpZiAoIXN0YXRlKSB7XG4gICAgc3RhdGUgPSB7XG4gICAgICBjb25uZWN0ZWQ6IGZhbHNlLFxuICAgICAgYXV0aGVudGljYXRlZDogZmFsc2VcbiAgICB9O1xuICB9XG4gIHN3aXRjaCAoYWN0aW9uLnR5cGUpIHtcbiAgICBjYXNlIGFjdGlvbkxpc3QoKS5DT05ORUNUSU9OX1NVQ0NFU1M6XG4gICAgICByZXR1cm4ge1xuICAgICAgICBjb25uZWN0ZWQ6IHRydWUsXG4gICAgICAgIGF1dGhlbnRpY2F0ZWQ6IHRydWVcbiAgICAgIH07XG4gICAgY2FzZSBhY3Rpb25MaXN0KCkuQ09OTkVDVElPTl9GQUlMRUQ6XG4gICAgICByZXR1cm4ge1xuICAgICAgICBjb25uZWN0ZWQ6IE1hdGgubWF4KDEsIGFjdGlvbi5wYXlsb2FkKSxcbiAgICAgICAgYXV0aGVudGljYXRlZDogc3RhdGUuYXV0aGVudGljYXRlZFxuICAgICAgfTtcbiAgICBjYXNlIGFjdGlvbkxpc3QoKS5DT05ORUNUSU9OX0RJU0NPTk5FQ1RFRDpcbiAgICAgIHJldHVybiB7XG4gICAgICAgIGNvbm5lY3RlZDogdHJ1ZSxcbiAgICAgICAgYXV0aGVudGljYXRlZDogdHJ1ZVxuICAgICAgfTtcbiAgICBkZWZhdWx0OlxuICAgICAgcmV0dXJuIHN0YXRlO1xuICB9XG59XG4iXX0=
+
+/***/ },
+/* 16 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+
+	function counter(state, action) {
+	  if (state === undefined) state = 0;
+
+	  switch (action.type) {
+	    case 'INCREMENT':
+	      return state + 1;
+	    case 'DECREMENT':
+	      return state - 1;
+	    default:
+	      return state;
+	  }
+	}
+
+	exports['default'] = counter;
+	module.exports = exports['default'];
+	//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi92YXIvd3d3L2NyeXB0b21lZGljL2FwcC9yZWR1Y2Vycy9jb3VudGVyLmpzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7Ozs7OztBQUNBLFNBQVMsT0FBTyxDQUFDLEtBQUssRUFBTSxNQUFNLEVBQUU7TUFBbkIsS0FBSyxnQkFBTCxLQUFLLEdBQUcsQ0FBQzs7QUFDeEIsVUFBUSxNQUFNLENBQUMsSUFBSTtBQUNuQixTQUFLLFdBQVc7QUFDZCxhQUFPLEtBQUssR0FBRyxDQUFDLENBQUM7QUFBQSxBQUNuQixTQUFLLFdBQVc7QUFDZCxhQUFPLEtBQUssR0FBRyxDQUFDLENBQUM7QUFBQSxBQUNuQjtBQUNFLGFBQU8sS0FBSyxDQUFDO0FBQUEsR0FDZDtDQUNGOztxQkFFYyxPQUFPIiwiZmlsZSI6Ii92YXIvd3d3L2NyeXB0b21lZGljL2FwcC9yZWR1Y2Vycy9jb3VudGVyLmpzIiwic291cmNlc0NvbnRlbnQiOlsiXG5mdW5jdGlvbiBjb3VudGVyKHN0YXRlID0gMCwgYWN0aW9uKSB7XG4gIHN3aXRjaCAoYWN0aW9uLnR5cGUpIHtcbiAgY2FzZSAnSU5DUkVNRU5UJzpcbiAgICByZXR1cm4gc3RhdGUgKyAxO1xuICBjYXNlICdERUNSRU1FTlQnOlxuICAgIHJldHVybiBzdGF0ZSAtIDE7XG4gIGRlZmF1bHQ6XG4gICAgcmV0dXJuIHN0YXRlO1xuICB9XG59XG5cbmV4cG9ydCBkZWZhdWx0IGNvdW50ZXI7XG4iXX0=
+
+/***/ }
+/******/ ]);
