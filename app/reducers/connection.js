@@ -1,6 +1,8 @@
 'use strict';
 
-import { actionList } from 'main';
+import { transitions } from 'main';
+
+console.warn(transitions);
 
 export default function(state, action) {
   if (!state) {
@@ -10,20 +12,20 @@ export default function(state, action) {
     };
   }
   switch (action.type) {
-    case actionList().CONNECTION_SUCCESS:
+    case transitions.CONNECTION_SUCCESS:
       return {
         connected: true,
         authenticated: true
       };
-    case actionList().CONNECTION_FAILED:
+    case transitions.CONNECTION_EXPIRED:
+      return {
+        connected: true,
+        authenticated: false
+      };
+    case transitions.CONNECTION_FAILED:
       return {
         connected: Math.max(1, action.payload),
         authenticated: state.authenticated
-      };
-    case actionList().CONNECTION_DISCONNECTED:
-      return {
-        connected: false,
-        authenticated: false
       };
     default:
       return state;

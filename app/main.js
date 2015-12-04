@@ -2,16 +2,13 @@
 
 import store from 'store';
 
-export function actionList() {
-  return {
-    CONNECTION_SUCCESS:       'CONNECTION_SUCCESS',
-    CONNECTION_FAILED:        'CONNECTION_FAILED',
-    CONNECTION_DISCONNECTED:  'CONNECTION_DISCONNECTED'
-  };
-};
+let list = {};
 
-function d(type, payload) {
-  return store.dispatch.bind(null, { type: type, payload: payload });
+function d(type) {
+  list[type] = type;
+  return function(payload) {
+    return store.dispatch({ type: type, payload: payload });
+  }
 }
 
 let appState = {
@@ -19,11 +16,18 @@ let appState = {
   actions: {
       // success:      function()              { store.dispatch({ type: c.CONNECTION_SUCCESS,       payload: null })},
     connection: {
-      // success:      d(c.CONNECTION_SUCCESS, null),
-      failure:      function(httpErrorCode) { store.dispatch({ type: actionList().CONNECTION_FAILED,        payload: httpErrorCode })},
-      disconnected: function()              { store.dispatch({ type: actionList().CONNECTION_DISCONNECTED,  payload: {} })},
-    }
+      success:      d('CONNECTION_SUCCESS'),
+      failure:      d('CONNECTION_FAILED'),
+      expired:      d('CONNECTION_EXPIRED'),
+      // function(httpErrorCode) { store.dispatch({ type: actionList().CONNECTION_FAILED,        payload: httpErrorCode })},
+      // disconnected: function()              { store.dispatch({ type: actionList().CONNECTION_DISCONNECTED,  payload: {} })},
+    },
   }
-}
+};
+
+appState.transitions = list;
+
+// export var transitions = list;
+export function transitions() { return list; }
 
 export default appState;
