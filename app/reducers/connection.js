@@ -22,8 +22,8 @@ export default function(state, action) {
       };
     case actionList().CONNECTION_DISCONNECTED:
       return {
-        connected: true,
-        authenticated: true
+        connected: false,
+        authenticated: false
       };
     default:
       return state;
