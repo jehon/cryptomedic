@@ -158,7 +158,7 @@ class Deploy {
 
     $root         = dirname($targetDir);
     $zip          = $targetDir . ".zip";
-    $tempUnzipped = $zip . "-extracted";
+    $tempUnzipped = $zip . "-test";
     $version      = "latest";
     $versionFile  = $targetDir . ".version";
     $historyFile  = $targetDir . ".history";
