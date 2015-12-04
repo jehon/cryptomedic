@@ -2,6 +2,12 @@
 
 set -e
 
+if [ -n "$GITHUB_OAUTH_TOKEN" ]; then
+  echo "setting composer oauth"
+  composer config github-oauth.github.com "${GITHUB_OAUTH_TOKEN}"
+  echo "result: $?"
+fi
+
 PRJ_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 PRJ_DIR=$(dirname "$PRJ_DIR")
 echo "Project directory is $PRJ_DIR"
