@@ -601,7 +601,7 @@ CREATE TABLE IF NOT EXISTS `settings` (
 --
 
 INSERT INTO `settings` (`id`, `created_at`, `updated_at`, `value`) VALUES
-('structure_version', '0000-00-00 00:00:00', '2015-10-15 08:55:01', '1000');
+('structure_version', '0000-00-00 00:00:00', '2015-10-15 08:55:01', '49');
 
 -- --------------------------------------------------------
 
