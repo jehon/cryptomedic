@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Request;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use App\Http\Controllers\PriceController;
 
+use \References;
+
 class AuthController extends Controller {
 
 	/*
