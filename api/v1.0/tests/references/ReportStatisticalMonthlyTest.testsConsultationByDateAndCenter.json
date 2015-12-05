@@ -61,12 +61,12 @@
         },
         "centers": {
             "Chakaria": 0,
-            "Moeshkali": 0,
+            "CoxsBazar": 0,
             "Ukhia": 0,
             "Ramu": 0,
-            "CoxsBazar": 0,
-            "Otherplace": 0,
+            "Moeshkali": 0,
             "CMOSH": 0,
+            "Otherplace": 0,
             "unspecified": 0
         },
         "surgical_Burn_release": 0,
