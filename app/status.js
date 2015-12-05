@@ -1,6 +1,6 @@
 'use strict';
 
-import 'status/transitions';
+import 'reducers/transitions';
 
 import store from 'status/store';
 
