@@ -78,13 +78,14 @@ References::$lists["Unions"] = References::buildValueList(
 
 References::$lists["Sex"] = References::buildValueList([ "Male", "Female" ]);
 References::$lists["Centers"] = References::buildValueList([
-  References::withCode("Chakaria",      "CDC"),
-  References::withCode("Cox's Bazar",   "CB"),
-  References::withCode("Ukhia",         "UK"),
-  References::withCode("Ramu",          "RA"),
-  References::withCode("Moeshkali",     "MO"),
-  References::withCode("CMOSH",         false),
-  References::withCode("Other place",   "OF")
+  References::withCode("Chakaria Disability Center" , "CDC") ,
+  References::withCode("Cox's Bazar"                , "CB")  ,
+  References::withCode("Ukhia"                      , "UK")  ,
+  References::withCode("Ramu"                       , "RA")  ,
+  References::withCode("Moeshkali"                  , "MO")  ,
+  References::withCode("Lohagara"                   , "LO")  ,
+  References::withCode("CMOSH"                      , false) ,
+  References::withCode("Other Field"                , "OF")
 ]);
 References::$lists["Surgery"] = References::buildValueList(["~ Other ~", "Need to see surgeon", "Epiphysiodesis", "Osteotomy", "Little Burn release", "Big burn release", "Achileus lengthening", "Postero-medial release", "Pin removal"]);
 References::$lists["Device"] = References::buildValueList(["BHKAFO for night", "BHKAFO", "UHKAFO for night", "UHKAFO", "U.K.A.F.O", "BAFO for night", "BAFO", "orthoshoes with bar", "orthoshoes without bar", "Compensation Sole", "Arch support", "Supinator Corner", "wirst splint", "Hand Splint", "finger splint (ext/flex)", "Walker with wheel", "Walker without wheel", "Crutch(a pair)", "Wheel Chair", "CP standing table", "cervical collar", "Abdominal Corset belt", "Repairing", "others ortho device"]);
@@ -108,16 +109,16 @@ References::$lists["examiner"] = References::buildValueList([
   References::withCode("Liton",      "Lit"),
 
   // Field monitors
-  References::withCode("Prietush",   "Pri"), // TODO: update   Prytosh
+  References::withCode("Prietush",   "Pri"),
   References::withCode("Rokeya",     "Ruk"),
   References::withCode("Nur Alam",   "Nur"),
   References::withCode("Shuhal",     "Shu"),
   References::withCode("Zia",        "Zia"),
 
   // Doctors
-  References::withCode("Dr Monir",   "Mon"), // TODO: update Monir
-  References::withCode("Dr Taslim",  "Tas"), // TODO: update Taslim
-  References::withCode("AMD doctor", "AMD"), // ???
+  References::withCode("Dr Monir",   "Mon"),
+  References::withCode("Dr Taslim",  "Tas"),
+  References::withCode("AMD doctor", "AMD"),
 ]);
 // Not present anymore
 References::withCode("Ricta",      "Ric");
