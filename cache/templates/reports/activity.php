@@ -85,7 +85,7 @@
         </td>
         <td>{{l.Date}}</td>
         <td>{{l.ExaminerName}}</td>
-        <td>{{l.Center}}</td>
+        <td>{{coded(l.Center)}}</td>
         <td>{{l.patient_reference}}</td>
 
         <td class='b_left'>{{l.patient_name}}</td>

@@ -375,6 +375,14 @@ mainApp.controller('ctrl', [ '$scope', '$location', function($scope, $location) 
   });
 
   $scope.doCheckLogin();
+
+  $scope.coded = function(val) {
+    // console.log(val, server.settings.codes[val]);
+    if (server.settings.codes[val]) {
+      return val + ' (' + server.settings.codes[val] + ')';
+    }
+    return val;
+  }
 }]);
 
 server.setSettings = function(data) {
