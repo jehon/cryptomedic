@@ -6,7 +6,7 @@
 <h1><img src='static/img/patientsSearch.gif'>Search for a patient</h1>
 <div class='searchFields'>
 	<div class="row">
-		<div class="col-lg-6">
+		<div class="col-md-6">
 			<fieldset>
 				<legend>Patient Criteria</legend>
 				<table>
@@ -19,7 +19,7 @@
 				</table>
 			</fieldset>
 		</div>
-		<div class="col-lg-6">
+		<div class="col-md-6">
 			<fieldset>
 				<legend>Pathology Criteria</legend>
 				<table>

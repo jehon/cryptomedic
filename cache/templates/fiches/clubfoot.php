@@ -1,11 +1,11 @@
-<?php 
+<?php
 	// Example: 90658
 	t::setDefaultOption("baseExpression", "currentFile().");
 	t::setDefaultOption("model", "ClubFoot");
 ?>
 <div class='container-fluid'>
 	<div class='row'>
-		<div class="col-lg-6">
+		<div class="col-md-6">
 			<?php require("partials/consult-introduction.php"); ?>
 			<FieldSet>
 				<legend>Club Foot Pirani Score</legend>
@@ -34,7 +34,7 @@
 						<td>Total</td>
 						<td>{{currentFile().getPiraniRight()}}</td>
 						<td>{{currentFile().getPiraniLeft()}}</td>
-					</tr>				
+					</tr>
 				</table>
 			</FieldSet>
 			<FieldSet>
@@ -65,7 +65,7 @@
 				</table>
 			</FieldSet>
 		</div>
-		<div class="col-lg-6">
+		<div class="col-md-6">
 			<?php require("partials/patient-related.php"); ?>
 			<FieldSet>
 				<legend>Conclusion</legend>

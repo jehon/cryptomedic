@@ -5,7 +5,7 @@
 ?>
 <div class='container-fluid'>
 	<div class='row'>
-		<div class="col-lg-6">
+		<div class="col-md-6">
 			<?php require("partials/consult-introduction.php"); ?>
 		 	<br>
 			<fieldset>
@@ -39,7 +39,7 @@
 				</table>
 			</fieldset>
 		</div>
-		<div class="col-lg-6">
+		<div class="col-md-6">
 			<?php require("partials/patient-related.php"); ?>
 			<fieldset>
 				<legend>Conclusion</legend>

@@ -1,9 +1,9 @@
-<?php 
+<?php
 	t::setDefaultOption("baseExpression", "folder.getMainFile().");
 ?>
 <div class='container-fluid'>
 	<div class='row'>
-		<div class="col-lg-6">
+		<div class="col-md-6">
 	        <fieldset>
 				<legend>General data</legend>
 				<table>
@@ -21,7 +21,7 @@
 							</div>
 						</td>
 					</tr>
-					
+
 					<?php (new t("Patient.Firstname"))->tr("First Name")->p(); ?>
 					<?php (new t("Patient.Lastname"))->tr("Last Name")->p(); ?>
 					<?php (new t("Patient.Sex"))->tr()->p(); ?>
@@ -38,7 +38,7 @@
 				</table>
 			</fieldset>
 	 	</div>
-		<div class="col-lg-6">
+		<div class="col-md-6">
 <!-- 			<fieldset id='PatientPathology' ng-class='{ errors.noPathology: jserror }'> -->
 			<fieldset id='PatientPathology' ng-class='{ jserror: errors.noPathology }'>
 			<legend>Pathology</legend>

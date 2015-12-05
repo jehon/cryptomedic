@@ -1,9 +1,9 @@
-<?php 
+<?php
 	t::setDefaultOption("baseExpression", "currentFile().");
 ?>
 <div class='container-fluid'>
 	<div class='row'>
-		<div class="col-lg-6">
+		<div class="col-md-6">
 			<fieldSet>
 				<legend>Surgical Report</legend>
 				<table>
@@ -22,7 +22,7 @@
 				</table>
 			</fieldSet>
 		</div>
-		<div class="col-lg-6">
+		<div class="col-md-6">
 			<?php require("partials/patient-related.php"); ?>
 		</div>
 	</div>

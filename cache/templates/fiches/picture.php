@@ -12,7 +12,7 @@
 		Then you can save the file to the server with the "create/save" button.<br>
 	</div>
 	<div class="row">
-		<div class="col-lg-6">
+		<div class="col-md-6">
 			<FieldSet>
 				<Legend>Picture informations</label></Legend>
 				<table>
@@ -35,7 +35,7 @@
 				</table>
 			</FieldSet>
 		</div>
-		<div class="col-lg-6">
+		<div class="col-md-6">
 			<?php require("partials/patient-related.php"); ?>
 		</div>
 	</div>

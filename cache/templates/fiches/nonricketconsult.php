@@ -1,11 +1,11 @@
-<?php 
+<?php
 	t::setDefaultOption("baseExpression", "currentFile().");
 	t::setDefaultOption("model", "NonricketConsult");
 	// Example: 71154
 ?>
 <div class='container-fluid'>
 	<div class='row'>
-		<div class="col-lg-6">
+		<div class="col-md-6">
 			<?php require("partials/consult-introduction.php"); ?>
 			<fieldset>
 				<legend>Orthopedic Data</legend>
@@ -21,7 +21,7 @@
 				</table>
 			</fieldset>
 		</div>
-		<div class="col-lg-6">
+		<div class="col-md-6">
 			<?php require("partials/patient-related.php"); ?>
 			<fieldset>
 				<legend>Conclusion</legend>
@@ -33,7 +33,7 @@
 					<?php // (new t("NonricketConsult.NextCenter"))->tr()->p(); ?>
 					<?php require("partials/consult-conclusion.php"); ?>
 				</table>
-			</fieldset>		
+			</fieldset>
 		</div>
 	</div>
 </div>

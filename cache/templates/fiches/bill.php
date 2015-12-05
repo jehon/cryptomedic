@@ -45,7 +45,7 @@
 		</div>
 	</div>
 	<div class='row'>
-		<div class="col-lg-6" ng-controller="ctrl_file_bill">
+		<div class="col-md-6" ng-controller="ctrl_file_bill">
 			<FieldSet>
 				<legend>General data</legend>
 				<table>
@@ -81,7 +81,7 @@
 				}
 			?>
 		</div>
-		<div class="col-lg-6">
+		<div class="col-md-6">
 			<?php require('partials/patient-related.php');?>
 			<fieldset>
 				<legend>Social Data</legend>
