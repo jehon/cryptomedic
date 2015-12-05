@@ -98,48 +98,48 @@ var mainApp = angular.module('app_main', [ 'ngRoute' ])
 .directive('catchIt', [ "$compile", function($compile) {
     // http://tutorials.jenkov.com/angularjs/custom-directives.html#compile-and-link
     // http://stackoverflow.com/a/15298620
-    return {
-  restrict: 'A',
-  transclude: true,
-  scope: {
-      'tryit': '&', // executed in parent scope
-  },
-  template: "<span ng-if='error' class='catchedError'>{{errorMsg}}</span><span ng-if='!error' ng-transclude></span>",
-  link:
-    function($scope, $element, $attrs, ctrl, $transclude) {
-      function testIt() {
-        try {
-          $scope.error = false;
-          $scope.result = "";
-          $scope.errorMSg = "";
-          $scope.result = $scope.tryit();
-        } catch (e) {
-          $scope.error = true;
-          if (e instanceof ApplicationException) {
-            $scope.errorMsg = e.getMessage();
-          } else {
-            $scope.errorMsg = "Uncatchable error";
-            console.warn(e);
-            throw e;
+  return {
+    restrict: 'A',
+    transclude: true,
+    scope: {
+        'tryit': '&', // executed in parent scope
+    },
+    template: "<span ng-if='error' class='catchedError'>{{errorMsg}}</span><span ng-if='!error' ng-transclude></span>",
+    link:
+      function($scope, $element, $attrs, ctrl, $transclude) {
+        function testIt() {
+          try {
+            $scope.error = false;
+            $scope.result = "";
+            $scope.errorMSg = "";
+            $scope.result = $scope.tryit();
+          } catch (e) {
+            $scope.error = true;
+            if (e instanceof ApplicationException) {
+              $scope.errorMsg = e.getMessage();
+            } else {
+              $scope.errorMsg = "Uncatchable error";
+              console.warn(e);
+              throw e;
+            }
           }
         }
-      }
-      $scope.$watch(function() {
-        try  {
-          return $scope.tryit();
-        } catch (e) {
-          return e.toString();
-        }
-      }, function() {
+        $scope.$watch(function() {
+          try  {
+            return $scope.tryit();
+          } catch (e) {
+            return e.toString();
+          }
+        }, function() {
+          testIt();
+        });
         testIt();
-      });
-      testIt();
 
-      // Destroy of the element
-      $element.on('$destroy', function() {
-          $scope.$destroy();
-      });
-    } // end of link function
+        // Destroy of the element
+        $element.on('$destroy', function() {
+            $scope.$destroy();
+        });
+      } // end of link function
   };
 }])
 .directive('mycalendar', function() {
@@ -154,10 +154,20 @@ var mainApp = angular.module('app_main', [ 'ngRoute' ])
 .directive('codage', function() {
  return {
     restrict: 'E',
+    transclude: true,
     scope: {
       value: '=value'
     },
-    template: 'codage here: {{value}} {{coded(value)}}'
+    template: '<span data-toggle="tooltip" data-placement="bottom" title="{{value}}">{{coded}}</span>',
+    link: function($scope, element, attrs) {
+      if (server.settings.codes[$scope.value]) {
+        $scope.isCoded = true;
+        $scope.coded = server.settings.codes[$scope.value];
+      } else {
+        $scope.isCoded = false;
+        $scope.coded = $scope.value;
+      }
+    }
   };
 })
 .directive('preview', [ "$compile", function($compile) {
@@ -383,13 +393,6 @@ mainApp.controller('ctrl', [ '$scope', '$location', '$sce', function($scope, $lo
   });
 
   $scope.doCheckLogin();
-
-  $scope.coded = function(val) {
-    if (server.settings.codes[val]) {
-      return $sce.trustAsHtml("<span tooltip='" + val + "'>" + server.settings.codes[val] + "</span>");
-    }
-    return val;
-  }
 }]);
 
 server.setSettings = function(data) {
