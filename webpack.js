@@ -14,12 +14,12 @@ var scriptLoader = require('script-loader');
 
 module.exports = {
   entry: []
-    .concat(glob.sync('./app/static/css/*.css'))
+    // .concat(glob.sync('./app/static/css/*.css'))
     // .concat(glob.sync('./app/static/js/model_*.js'))
     // .concat(glob.sync('./app/static/js/service_*.js'))
     // .concat(glob.sync('./app/static/js/ctrl_*.js'))
     .concat([
-      './app/main.js',
+      './app/status.js',
       // './app/static/js/bugreporting.js',
       // './app/static/js/html2canvas.js',
       // './node_modules/angular/angular.min.js',
@@ -80,8 +80,9 @@ module.exports = {
         ]
       },
       {
+        // https://webpack.github.io/docs/stylesheets.html
         test: /\.css$/,
-        loader: 'file-loader?name=css/[name].[ext]'
+        loader: 'style-loader!css-loader'
       },
       // {
       //   test: /node_modules\/.*\.js$/,

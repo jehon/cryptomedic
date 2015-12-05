@@ -1,9 +1,8 @@
+'use strict';
 
-import * as appState from 'main';
+import transitions from 'status/transitions';
 
-console.log(appState);
-// console.log(appState.actions);
-// console.log(transitions());
+console.log(transitions);
 
 export default function(state, action) {
   if (!state) {
@@ -13,17 +12,17 @@ export default function(state, action) {
     };
   }
   switch (action.type) {
-    // case transitions.CONNECTION_SUCCESS:
+    // case status.transitions.CONNECTION_SUCCESS:
     //   return {
     //     connected: true,
     //     authenticated: true
     //   };
-    // case transitions.CONNECTION_EXPIRED:
+    // case status.transitions.CONNECTION_EXPIRED:
     //   return {
     //     connected: true,
     //     authenticated: false
     //   };
-    // case transitions.CONNECTION_FAILED:
+    // case status.transitions.CONNECTION_FAILED:
     //   return {
     //     connected: Math.max(1, action.payload),
     //     authenticated: state.authenticated

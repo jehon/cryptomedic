@@ -1,10 +1,3 @@
-/* div[ng-cloak], div.ng-cloak {
-  background-color: red;
-  width: 100px;
-  height: 100px;
-  display: block;
-}
- */
 /*
  * Globals
  */
@@ -23,7 +16,7 @@
 }
 
 .debug_infos {
-  font-size: xx-small; 
+  font-size: xx-small;
   font-style: italic;
   color: lightgray;
   text-align: right;
@@ -50,7 +43,7 @@ html, body {
   height: 100%;
 }
 
-body > div.container {
+body > .container {
  	padding-bottom: 60px;
 }
 
@@ -111,7 +104,7 @@ table.reporting > tbody > tr:nth-child(odd) {
   background-color: lightgray;
 }
 
-table.reporting > tbody > tr > td.subheader {
+table.reporting > tbody > tr > .subheader {
   background-color: gray;
   padding: 5px;
   padding-top: 10px;
@@ -177,9 +170,9 @@ table.reporting > tbody > tr > td.b_all {
 fieldset {
   border-radius: 10px;
   padding: 10px;
-  border-style:solid; 
-  border-width:2px; 
-  border-color:#002060; 
+  border-style:solid;
+  border-width:2px;
+  border-color:#002060;
 }
 
 fieldset > legend {
@@ -188,11 +181,11 @@ fieldset > legend {
   padding-left: 10px;
   padding-right: 10px;
   width: auto;
-  margin-bottom: 0px;
+  margin-bottom: 0;
 }
 
 fieldset > legend > label {
-  padding: 0px;
+  padding: 0;
 }
 
 fieldset > table {
@@ -220,11 +213,11 @@ fieldset > table > tbody > tr > td:nth-of-type(3), fieldset > table > thead > tr
 /********************************************
  * Input
  */
-input.ng-required {
+.ng-required {
   border: 1px solid blue;
 }
 
-input.ng-invalid, .error {
+.ng-invalid, .error {
   border: 3px solid red;
 }
 
@@ -233,7 +226,7 @@ input[type=date] {
   line-height: normal !important;  /* Workaround bootstrap */
 }
 
-input[type=checkbox].form-control {
+input.form-control[type=checkbox] {
   width: auto;
 }
 
@@ -243,7 +236,7 @@ input[type=checkbox].form-control {
   	background-image: url('img/error.png');
 	background-repeat: no-repeat;
 	background-size: 20px;
-	padding-left: 25px; 
+	padding-left: 25px;
 }
 
 .ui-datepicker-month, .ui-datepicker-year {
@@ -258,15 +251,15 @@ button img {
 }
 
 .left-menu-button {
-  width: 100%; 
+  width: 100%;
   white-space: normal;
   line-height: 1;
 }
 
 .navbar img {
 	height: 		25px;
-	padding-right:  10px;	
-} 
+	padding-right:  10px;
+}
 
 /********************************************
  *  Marks and graphics
@@ -281,12 +274,12 @@ button img {
   position: absolute;
   margin: 0;
   padding: 0;
-  border: 0;  
+  border: 0;
   margin-top: -10px;
 }
 
 .mark span {
-  margin-left: -50%;       
+  margin-left: -50%;
 }
 
 .mark.hovered > span {
@@ -300,7 +293,7 @@ tr.hovered {
 }
 
 /********************************************
- *  Overlays 
+ *  Overlays
  */
 .site-wrapper {
 	display: table;
@@ -309,8 +302,8 @@ tr.hovered {
 	min-height: 100%;
 	position: absolute;
 	text-align: center;
-  	background: rgba(3, 3, 3, 0.6);
-/* 	background-color: #333; */
+  background: #030303; /* fallback */
+  background: rgba(3, 3, 3, 0.6);
 	color: #fff;
 	z-index: 500;
 }
@@ -318,7 +311,7 @@ tr.hovered {
 .site-wrapper-inner {
 	display: table-cell;
 	vertical-align: top;
-	background-color: #333;  
+	background-color: #333;
 /*  	background: rgba(3, 3, 3, 1); */
 }
 
@@ -346,49 +339,11 @@ table.summary table > tbody > tr > td:nth-of-type(1) { /*Setting the width of co
  */
 table.datalegend {
     font-size: 9px;
-    padding: 0px;
+    padding: 0;
     width: 100%;
 }
 
 table.datalegend > thead > tr> th {
     font-size: 9px;
     padding: 2px;
-}
-
-/********************************************
-/******************************************** OLD
-/********************************************/
-
-/*
- * Affix and center
- */
-
-@media (min-width: 768px) {
-  /* Pull out the header and footer */
-  .masthead {
-    position: fixed;
-    top: 0;
-  }
-  .mastfoot {
-    position: fixed;
-    bottom: 0;
-  }
-  /* Start the vertical centering */
-  .site-wrapper-inner {
-    vertical-align: middle;
-  }
-  /* Handle the widths */
-  .masthead,
-  .mastfoot,
-  .cover-container {
-    width: 100%; /* Must be percentage or pixels for horizontal alignment */
-  }
-}
-
-@media (min-width: 992px) {
-  .masthead,
-  .mastfoot,
-  .cover-container {
-    width: 700px;
-  }
 }
