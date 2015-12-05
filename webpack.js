@@ -14,7 +14,7 @@ var scriptLoader = require('script-loader');
 
 module.exports = {
   entry: []
-    // .concat(glob.sync('./app/static/css/*.css'))
+    .concat(glob.sync('./app/static/css/*.css'))
     // .concat(glob.sync('./app/static/js/model_*.js'))
     // .concat(glob.sync('./app/static/js/service_*.js'))
     // .concat(glob.sync('./app/static/js/ctrl_*.js'))
@@ -84,16 +84,12 @@ module.exports = {
         test: /\.css$/,
         loader: 'style-loader!css-loader'
       },
-      // {
-      //   test: /node_modules\/.*\.js$/,
-      //   include: [
-      //       path.resolve(__dirname,'node_modules/bootstrap/dist/js/'),
-      //       path.resolve(__dirname,'node_modules/jquery/dist/')
-      //   ],
-      //   loader: 'file-loader?name=javascripts/[name].[ext]'
-      // },
       {
-        test: /\.woff($|\?)|\.woff2($|\?)|\.ttf($|\?)|\.eot($|\?)|\.svg($|\?)/,
+        test: /\.svg($|\?)|\.gif$|.png$/,
+        loader: 'file-loader?name=img/[name].[ext]'
+      },
+      {
+        test: /\.woff($|\?)|\.woff2($|\?)|\.ttf($|\?)|\.eot($|\?)/,
         loader: 'file-loader?name=fonts/[name].[ext]'
       }
     ]
