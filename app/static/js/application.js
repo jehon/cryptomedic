@@ -151,12 +151,20 @@ var mainApp = angular.module('app_main', [ 'ngRoute' ])
     });
   }
 })
+.directive('codage', function() {
+ return {
+    restrict: 'E',
+    scope: {
+      value: '=value'
+    },
+    template: 'codage here: {{value}} {{coded(value)}}'
+  };
+})
 .directive('preview', [ "$compile", function($compile) {
   return {
     restrict: 'A',
     // http://tutorials.jenkov.com/angularjs/custom-directives.html#compile-and-link
     compile: function(cElement, cAttrs, cTransclude) {
-      console.log("compiling preview");
       return function($scope, $element, $attrs, ctrl, $transclude) {
         // var canvas = document.getElementById($attrs.preview);
         // var transcludeScope = $scope.$parent.$new();
@@ -224,7 +232,7 @@ var mainApp = angular.module('app_main', [ 'ngRoute' ])
   }
 }]);
 
-mainApp.controller('ctrl', [ '$scope', '$location', function($scope, $location) {
+mainApp.controller('ctrl', [ '$scope', '$location', '$sce', function($scope, $location, $sce) {
   $scope.cryptomedic = cryptomedic;
   $scope.application = application;
   $scope.server = server;
@@ -377,9 +385,8 @@ mainApp.controller('ctrl', [ '$scope', '$location', function($scope, $location) 
   $scope.doCheckLogin();
 
   $scope.coded = function(val) {
-    // console.log(val, server.settings.codes[val]);
     if (server.settings.codes[val]) {
-      return val + ' (' + server.settings.codes[val] + ')';
+      return $sce.trustAsHtml("<span tooltip='" + val + "'>" + server.settings.codes[val] + "</span>");
     }
     return val;
   }
