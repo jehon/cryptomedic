@@ -4,13 +4,11 @@ import { createStore } from 'redux';
 import { combineReducers } from 'redux';
 
 import connection from 'reducers/connection';
-import counter from 'reducers/counter';
 
 import 'reducers/connection';
 
 let store = createStore(combineReducers({
-  connection,
-  counter
+  connection
 }));
 
 store.subscribe(() =>
