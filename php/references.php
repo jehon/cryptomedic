@@ -53,6 +53,8 @@ class References {
 /***********************/
 /**** Common lists ****/
 /***********************/
+References::$lists["Districts"] = References::buildValueList([ "Chittagong", "Cox's Bazar", "Bandarban", "~ Other ~" ]);
+
 References::$lists["Upazilla"] = References::buildValueList(
   array_merge(
     References::sortNatural([ "Chakaria", "Cox's Bazar Shadar", "Chandanish", "Patia", "Shatkania", "Lohagora", "Teknaf", "Ukhia", "Ramo", "Pekua", "Kutubdia", "Moheshkhali" ]),
@@ -74,7 +76,6 @@ References::$lists["Unions"] = References::buildValueList(
     [ "~ Other ~" ])
   );
 
-References::$lists["Districts"] = References::buildValueList([ "Chittagong", "Cox's Bazar", "~ Other ~" ]);
 References::$lists["Sex"] = References::buildValueList([ "Male", "Female" ]);
 References::$lists["Centers"] = References::buildValueList([
   References::withCode("Chakaria",      "CDC"),
@@ -97,31 +98,32 @@ References::$lists["examiner"] = References::buildValueList([
   References::withCode("Murshed",    "Mur"),
   References::withCode("Shetou",     "She"),
   References::withCode("Rezaul",     "Res"),
-  References::withCode("Rina",       ""), // ???
-  References::withCode("Ferdawsi",   ""), // ???
+  References::withCode("Ferdawsi",   "Fer"),
 
   // orthesis
   References::withCode("Hassan 1",   "Has 1"),
   References::withCode("Hassan 2",   "Has 2"),
   References::withCode("Debashish",  "Deb"),
+  References::withCode("Rina",       "Rin"),
   References::withCode("Liton",      "Lit"),
-  References::withCode("Monir",      ""),     //???
 
   // Field monitors
-  References::withCode("Prytosh",    "Pri"), // ??? Prietush
-  References::withCode("Kobir",      "Kob"),
-  References::withCode("Rokeya",     "Ruk"), // ??? Rukea
+  References::withCode("Prietush",   "Pri"), // TODO: update   Prytosh
+  References::withCode("Rokeya",     "Ruk"),
   References::withCode("Nur Alam",   "Nur"),
-  References::withCode("Zia",        ""), // ???
+  References::withCode("Shuhal",     "Shu"),
+  References::withCode("Zia",        "Zia"),
 
   // Doctors
-  References::withCode("Taslim",     "Tas"),
-  References::withCode("AMD doctor", "AMD") // ???
+  References::withCode("Dr Monir",   "Mon"), // TODO: update Monir
+  References::withCode("Dr Taslim",  "Tas"), // TODO: update Taslim
+  References::withCode("AMD doctor", "AMD"), // ???
 ]);
 // Not present anymore
-References::withCode("Ricta", "Ric");
-References::withCode("Asma", "Asm");
-References::withCode("Shudir", "Shu");
+References::withCode("Ricta",      "Ric");
+References::withCode("Asma",       "Asm");
+References::withCode("Shudir",     "Shu");
+References::withCode("Kobir",      "Kob");
 
 References::$lists["SocialLevel"] = References::buildValueList(array( 0, 1, 2, 3, 4 ));
 References::$lists["Pirani"] = References::buildValueList(array(0, 0.5, 1));
@@ -199,3 +201,4 @@ References::withCode("Congenital"      , "Con");
 References::withCode("Adult Physio"    , "AP");
 References::withCode("Normal Patient"  , "NP");
 References::withCode("Other"           , "Oth");
+
