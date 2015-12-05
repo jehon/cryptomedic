@@ -85,7 +85,6 @@
         </td>
         <td>{{l.Date}}</td>
         <td>{{l.ExaminerName}}</td>
-        <td><div ng-bind-html="coded(l.Center)"></div></td>
         <td><codage value="l.Center"/></td>
         <td>{{l.patient_reference}}</td>
 
