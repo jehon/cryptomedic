@@ -54,6 +54,8 @@ class AuthController extends Controller {
 			$data['prices'][$v->id] = $v;
 		}
 
+		$data['codes'] = References::$codes;
+
 		$data ['authorized'] = array();
 		switch($data['group']) {
 			case "readonly":

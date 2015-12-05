@@ -45,7 +45,6 @@ if (array_key_exists('REQUEST_URI', $_SERVER)) {
 }
 
 Route::group([ 'prefix' => '/' . $flavor . '/api/' . basename(dirname(dirname(__DIR__))) ], function() {
-
 	Route::controllers([
 		'auth' => 'Auth\AuthController',
 		'password' => 'Auth\PasswordController',
@@ -101,7 +100,4 @@ Route::group([ 'prefix' => '/' . $flavor . '/api/' . basename(dirname(dirname(__
 		});
 
 	});
-
-	// TODO MIGRATION: users (admin mode)
-
 });
