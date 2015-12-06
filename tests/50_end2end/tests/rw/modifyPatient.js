@@ -56,7 +56,7 @@ module.exports = {
 
       // Add ricket to pass the validation
       .click("#Patient_pathology_Ricket")
-      .myClick("#patient_save")
+      .myClick("#topsubmenu #patient_save")
       .waitForElementPresent("#Patient_Firstname")
       .assert.containsText("#Patient_Firstname", "rezaul" + r)
       .assert.visible("#Patient_pathology_Ricket_ok")
@@ -64,13 +64,13 @@ module.exports = {
       // Add a ricket consultation
       .myClick("#button_add")
       .myClick("#add_ricket_consult")
-      .myFillInForm('#fileForm', ricket_consult, '#button_save')
+      .myFillInForm('#fileForm', ricket_consult, '#topsubmenu #button_save')
       .myCheckForm('#fileForm', ricket_consult)
 
       // Add a non-ricket consultation
       .myClick("#button_add")
       .myClick("#add_nonricket_consult")
-      .myFillInForm('#fileForm', nonricket_consult, '#button_save')
+      .myFillInForm('#fileForm', nonricket_consult, '#topsubmenu #button_save')
       .myCheckForm('#fileForm', nonricket_consult)
 
       // Add a picture -> TODO: add a picture image
@@ -86,74 +86,74 @@ module.exports = {
       // Add a clubfoot
       .myClick("#button_add")
       .myClick("#add_clubfoot")
-      .myFillInForm('#fileForm', clubfoot, '#button_save')
+      .myFillInForm('#fileForm', clubfoot, '#topsubmenu #button_save')
       .myCheckForm('#fileForm', clubfoot)
 
       // Add a surgery
       .myClick("#button_add")
       .myClick("#add_surgery")
-      .myFillInForm('#fileForm', surgery, '#button_save')
+      .myFillInForm('#fileForm', surgery, '#topsubmenu #button_save')
       .myCheckForm('#fileForm', surgery)
 
       // Add a bill
       .myClick("#button_add")
       .myClick("#add_bill")
-      .myFillInForm('#fileForm', bill, '#button_save')
+      .myFillInForm('#fileForm', bill, '#topsubmenu #button_save')
       .myCheckForm('#fileForm', bill)
 
       // Delete all sub-files
 
       // Not delete
       .myClick("#folder_files .folder_file:nth-child(1) .btn")
-      .myClick("#button_edit")
-      .myClick("#button_delete")
+      .myClick("#topsubmenu #button_edit")
+      .myClick("#topsubmenu #button_delete")
       .dismissAlert()
 
       // // Delete
       // .myClick("#folder_files .folder_file:nth-child(6) .btn")
-      // .myClick("#button_edit")
-      // .myClick("#button_delete")
+      // .myClick("#topsubmenu #button_edit")
+      // .myClick("#topsubmenu #button_delete")
       // .acceptAlert()
 
       .myClick("#folder_files .folder_file:nth-child(5) .btn")
-      .myClick("#button_edit")
-      .myClick("#button_delete")
+      .myClick("#topsubmenu #button_edit")
+      .myClick("#topsubmenu #button_delete")
       .acceptAlert()
 
       .myClick("#folder_files .folder_file:nth-child(4) .btn")
-      .myClick("#button_edit")
-      .myClick("#button_delete")
+      .myClick("#topsubmenu #button_edit")
+      .myClick("#topsubmenu #button_delete")
       .acceptAlert()
 
       .myClick("#folder_files .folder_file:nth-child(3) .btn")
-      .myClick("#button_edit")
-      .myClick("#button_delete")
+      .myClick("#topsubmenu #button_edit")
+      .myClick("#topsubmenu #button_delete")
       .acceptAlert()
 
       .myClick("#folder_files .folder_file:nth-child(2) .btn")
-      .myClick("#button_edit")
-      .myClick("#button_delete")
+      .myClick("#topsubmenu #button_edit")
+      .myClick("#topsubmenu #button_delete")
       .acceptAlert()
 
       .myClick("#folder_files .folder_file:nth-child(1) .btn")
-      .myClick("#button_edit")
-      .myClick("#button_delete")
+      .myClick("#topsubmenu #button_edit")
+      .myClick("#topsubmenu #button_delete")
       .acceptAlert()
 
       // Edit and cancel
       .myClick("#button_patient")
-      .myClick("#patient_edit")
+      .myClick("#topsubmenu #patient_edit")
       .waitForElementPresent("#Patient_Firstname")
       .assert.value("#Patient_Firstname", "rezaul" + r)
       .click("#Patient_pathology_Ricket")
       .setValue("#Patient_Firstname", "rezaul")
-      .myClick("#patient_cancel")
+      .myClick("#topsubmenu #patient_cancel")
       .waitForElementPresent("#Patient_Firstname")
       .assert.containsText("#Patient_Firstname", "rezaul")
 
       // Delete the file
-      .myClick("#patient_edit")
-      .myClick("#patient_delete")
+      .myClick("#topsubmenu #patient_edit")
+      .myClick("#topsubmenu #patient_delete")
       .acceptAlert()
 
       .end();

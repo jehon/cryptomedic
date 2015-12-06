@@ -82,7 +82,7 @@
             #<span id='folder_id'>{{folder.getMainFile().id}}</span> @{{page}}
             -> {{currentFile()._type}} #<span id='file_id'>{{currentFile().id}}</span>
           </div>
-          <div class='col-sm-4 text-center'>
+          <div class='col-sm-4 text-center' id='topsubmenu'>
             <?php submenu(); ?>
           </div>
         </div>
@@ -92,7 +92,7 @@
         <span ng-include="cryptomedic.templateRoot + '/' + getTemplateName()">
           debug: Content {{getTemplateName()}}
         </span>
-        <div class="submenu" style='margin-top: 10px'>
+        <div class="submenu" id='bottomsubmenu' style='margin-top: 10px'>
           <div class='text-center'>
             <?php submenu(); ?>
           </div>
