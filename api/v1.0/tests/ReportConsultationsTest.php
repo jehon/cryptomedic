@@ -42,7 +42,7 @@ class ReportConsultationsTest extends RouteReferenceTestCase {
 	}
 
 	public function testsConsultationByDayAndCenter() {
-		$this->setParams([ "day" => self::$nday, "center" => "Chakaria" ]);
+		$this->setParams([ "day" => self::$nday, "center" => "Chakaria Disability Center" ]);
 		$this->myAssertUnauthorized();
 
 		$this->myAssertResponseForReference("readonly");
@@ -54,7 +54,7 @@ class ReportConsultationsTest extends RouteReferenceTestCase {
 		$this->assertEquals(count($json->list), 1);
 		foreach($json->list as $k => $v) {
 			$this->assertEquals($v->c_nextAppointment, self::$nday);
-			$this->assertEquals($v->c_Center, "Chakaria");
+			$this->assertEquals($v->c_Center, "Chakaria Disability Center");
 		}
 	}
 }

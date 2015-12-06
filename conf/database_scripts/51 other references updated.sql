@@ -1,3 +1,13 @@
+ALTER TABLE `bills`              CHANGE `Center`     `Center`     VARCHAR(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+ALTER TABLE `club_foots`         CHANGE `Center`     `Center`     VARCHAR(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+ALTER TABLE `nonricket_consults` CHANGE `Center`     `Center` VARCHAR(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+ALTER TABLE `ricket_consults`    CHANGE `Center`     `Center` VARCHAR(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+
+ALTER TABLE `appointments`       CHANGE `NextCenter` `NextCenter` VARCHAR(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+ALTER TABLE `club_foots`         CHANGE `NextCenter` `NextCenter` VARCHAR(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+ALTER TABLE `nonricket_consults` CHANGE `NextCenter` `NextCenter` VARCHAR(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+ALTER TABLE `ricket_consults`    CHANGE `NextCenter` `NextCenter` VARCHAR(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+
 
 UPDATE bills              SET Center = 'Chakaria Disability Center' WHERE Center = 'Chakaria';
 UPDATE club_foots         SET Center = 'Chakaria Disability Center' WHERE Center = 'Chakaria';

@@ -43,7 +43,7 @@ class ReportStatisticalMonthlyTest extends RouteReferenceTestCase {
   }
 
   public function testsConsultationByDateAndCenter() {
-    $this->setParams([ "month" => self::$nmonth, "center" => "Chakaria" ]);
+    $this->setParams([ "month" => self::$nmonth, "center" => "Chakaria Disability Center" ]);
     $this->myAssertUnauthorized();
 
     $this->myAssertResponseForReference("readonly");

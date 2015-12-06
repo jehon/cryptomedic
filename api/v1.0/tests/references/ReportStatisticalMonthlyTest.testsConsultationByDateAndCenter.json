@@ -3,7 +3,7 @@
         "month": "2014-05",
         "when": "2014-05",
         "examiner": null,
-        "center": "Chakaria"
+        "center": "Chakaria Disability Center"
     },
     "summary": {
         "pathologies": {
@@ -60,13 +60,14 @@
             "total": 0
         },
         "centers": {
-            "Chakaria": 0,
+            "ChakariaDisabilityCenter": 0,
             "CoxsBazar": 0,
             "Ukhia": 0,
             "Ramu": 0,
             "Moeshkali": 0,
+            "Lohagara": 0,
             "CMOSH": 0,
-            "Otherplace": 0,
+            "OtherField": 0,
             "unspecified": 0
         },
         "surgical_Burn_release": 0,
