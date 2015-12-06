@@ -14,7 +14,7 @@ function d(type) {
 export default function() {
   return {
     store: store,
-    actions: actions,
+    // actions: actions,
     transitions: transitions
   };
 }

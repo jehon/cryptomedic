@@ -2,8 +2,6 @@
 
 import transitions from 'reducers/transitions';
 
-console.log(transitions);
-
 export default function(state, action) {
   if (!state) {
     state = {
@@ -11,12 +9,13 @@ export default function(state, action) {
       authenticated: false
     };
   }
+  // Call to function not very clean
   transitions._define(action.type, state, 'CONNECTION_SUCCESS', function() {
     return {
       connected: true,
       authenticated: true
     };
-  })
+  });
   // if (action.type == transitions.CONNECTION_EXPIRED) {
   //   return {
   //     connected: true,
