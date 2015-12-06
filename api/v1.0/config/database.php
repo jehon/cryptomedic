@@ -56,7 +56,12 @@ return [
 			'prefix'    => '',
 			'strict'    => false,
 			'options' => [
-        PDO::MYSQL_ATTR_INIT_COMMAND => 'SET time_zone = \'+00:00\';'
+        PDO::MYSQL_ATTR_INIT_COMMAND => 'SET time_zone = \'+00:00\';',
+        // FIXME: this horrible workaround for prepared statement bug of Mysql
+        // http://php.net/manual/en/pdo.setattribute.php
+        // http://stackoverflow.com/questions/10113562/pdo-mysql-use-pdoattr-emulate-prepares-or-not
+        // @see General error: 1615 Prepared statement needs to be re-prepared
+        PDO::ATTR_EMULATE_PREPARES => true
     	]
 		],
 	],
