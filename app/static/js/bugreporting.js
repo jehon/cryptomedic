@@ -19,8 +19,11 @@ window.bug_reporting = (function (initial) {
 		<tr><td>Username</td><td><input name="username" size=100></td></tr> \
 		<tr><td>Email address</td><td><input name="email" size=100></td></tr> \
 		<tr><td>Description of the problem</td><td><textarea name="description" cols=100></textarea></td></tr> \
-		<tr><td><button type="submit">Submit</button></td></tr> \
-		<h3>Technical informations</h3> \
+		<tr><td></td></tr> \
+        <tr><td><button type="submit">Submit your bug report to Jean</button></td></tr> \
+        <tr><td><a href="javascript:location.reload()">Close this page and go back to cryptomedic. Your bug report will NOT be submitted!</a></td></tr> \
+        <tr><td></td></tr> \
+		<tr><td><h3>Technical informations</h3></td></tr> \
 		<tr><td>URL</td><td><input name="url" size=100 readonly="readonly"></td></tr> \
 		<tr><td>User Agent</td><td><input name="browser_useragent" size=100 readonly="readonly"></td></tr> \
 		<tr><td>Browser internal State</td><td><textarea name="browser_state" cols=100 readonly="readonly"></textarea></td></tr> \
@@ -29,7 +32,7 @@ window.bug_reporting = (function (initial) {
 		<input type="hidden" name="screenshot" length="65535"> \
 	</form><br><br> \
 	';
-    
+
     bug_reporting = function() {
         // generate the result
         html2canvas(document.body).then(function(canvas) {
@@ -48,7 +51,7 @@ window.bug_reporting = (function (initial) {
             jQuery("[name=screenshot]").val(durl);
         });
     }
-    
+
     // @See https://developer.mozilla.org/en-US/docs/Web/API/GlobalEventHandlers/onerror
     var gOldOnError = window.onerror;
     //Override previous handler.
@@ -57,30 +60,30 @@ window.bug_reporting = (function (initial) {
     	// Call previous handler.
     	return gOldOnError(errorMsg, url, lineNumber);
         }
-        
+
         // Just let default handler run.
         return false;
     }
-    
+
     var allConsole = [];
 
     // Capture the console
-    if (window.location.host != 'localhost') { 
+    if (window.location.host != 'localhost') {
         // http://stackoverflow.com/a/9278067/1954789
         var consoleLog = window.console.log;
         window.console.log = function() {
-    	allConsole.push({ 
+    	allConsole.push({
     	    'level': 'log',
     	    'timestamp': (new Date()).toISOString(),
     	    'details': arguments });
     	return consoleLog.apply(window.console, arguments);
         }
-        
+
         var consoleInfo = window.console.info;
         window.console.info = function() {
     	return consoleInfo.apply(window.console, arguments);
         }
-    
+
         var consoleError = window.console.error;
         window.console.error = function() {
     	return consoleError.apply(window.console, arguments);
