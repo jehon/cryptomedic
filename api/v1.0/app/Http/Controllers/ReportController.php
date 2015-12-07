@@ -160,9 +160,4 @@ class ReportController extends Controller {
 		}
 		return $loc = $val;
 	}
-
-//	static public function clean($c) {
-//		// Must be in line with statistical.php template @clean()
-//		return str_replace(["'", " ", "\""], "", $c);
-//	}
 }
