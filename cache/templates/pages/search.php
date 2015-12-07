@@ -12,7 +12,7 @@
 				<table>
 					<?php (new t("Patient.entryyear"))->tr("Entry Year")->p(); ?>
 					<?php (new t("Patient.entryorder"))->tr("Entry Order")->p(); ?>
-					<?php (new t("Patient.Lastname"))->tr("Firtname or Lastname")->p(); ?>
+					<?php (new t("Patient.Name"))->tr("Name")->p(); ?>
 					<?php (new t("Patient.Sex"))->tr()->p(); ?>
 					<?php (new t("Patient.Yearofbirth"))->tr("Year of birth")->p(); ?>
 					<?php (new t("Patient.Telephone"))->tr()->p(); ?>
@@ -55,8 +55,7 @@
 	    		<tr>
 	    			<th></th>
 					<th>Entry Year - Entry order</th>
-					<th>Firstname</th>
-					<th>Lastname</th>
+					<th>Name</th>
 					<th>Sex</th>
 					<th>Year of Birth</th>
 					<th>Telephone</th>
@@ -73,8 +72,7 @@
 	    		<td>
 	    			<?php (new t("Patient.entryyear"))->read()->p(); ?>-<?php (new t("Patient.entryorder"))->read()->p(); ?>
 	    		</td>
-	    		<td><?php (new t("Patient.Firstname"))->read()->p(); ?></td>
-	    		<td><?php (new t("Patient.Lastname"))->read()->p(); ?></td>
+	    		<td><?php (new t("Patient.Name"))->read()->p(); ?></td>
 	    		<td><?php (new t("Patient.Sex"))->read()->p(); ?></td>
 	    		<td><?php (new t("Patient.Yearofbirth"))->read()->p(); ?></td>
 	    		<td><?php (new t("Patient.Telephone"))->read()->p(); ?></td>

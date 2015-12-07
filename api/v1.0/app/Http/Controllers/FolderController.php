@@ -68,30 +68,27 @@ class FolderController extends Controller {
 		$req = DB::table('patients');
 
 		if (Request::input("entryyear", false)) {
-			$req->where('entryyear', '=', Request::input("entryyear", false));
+			$req->where('entryyear', '=', Request::input("entryyear"));
 		}
 
 		if (Request::input("entryorder", false)) {
-			$req->where('entryorder', '=', Request::input("entryorder", false));
+			$req->where('entryorder', '=', Request::input("entryorder"));
 		}
 
-		if (Request::input("Lastname", false)) {
-			$req->where(function($req) {
-				$req->where("Firstname", 'like', '%' . str_replace("j", "z", Request::input("Lastname", false)) .'%')
-					->orWhere("Lastname", 'like', '%' . str_replace("j", "z", Request::input("Lastname", false)) . '%');
-			});
+		if (Request::input("Name", false)) {
+			$req->where("Name", 'like', '%' . str_replace("j", "z", Request::input("Name")) .'%');
 		}
 
 		if (Request::input("Sex", false)) {
-			$req->where('Sex', '=', Request::input("Sex", false));
+			$req->where('Sex', '=', Request::input("Sex"));
 		}
 
 		if (Request::input("Yearofbirth", false)) {
-			$req->where('Yearofbirth', '=', Request::input("Yearofbirth", false));
+			$req->where('Yearofbirth', '=', Request::input("Yearofbirth"));
 		}
 
 		if (Request::input("Telephone", false)) {
-			$req->where('Telephone', 'like', '%' . Request::input("Telephone", false) . '%');
+			$req->where('Telephone', 'like', '%' . Request::input("Telephone") . '%');
 		}
 
 		if (Request::input("pathology_Ricket", false)) {

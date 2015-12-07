@@ -18,7 +18,7 @@ class ReportSurgicalController extends ReportController {
 				patients.id as pid,
 				bills.Date as Date,
 				CONCAT(patients.entryyear, '-', patients.entryorder) as patient_reference,
-				CONCAT(patients.FirstName, ' ', patients.LastName) as patient_name,
+				patients.Name as patient_name,
 				patients.yearofbirth,
 				patients.Sex,
 				bills.sl_familySalary,

@@ -23,7 +23,7 @@ class ReportActivityController extends ReportController {
 				bills.ExaminerName as ExaminerName,
 				bills.Center as Center,
 				CONCAT(patients.entryyear, '-', patients.entryorder) as patient_reference,
-				CONCAT(patients.FirstName, ' ', patients.LastName) as patient_name,
+				patients.Name as patient_name,
 				patients.yearofbirth,
 				patients.Sex,
 				bills.sl_familySalary,

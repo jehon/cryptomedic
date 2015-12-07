@@ -26,11 +26,11 @@ module.exports = {
     testSearch(client, { "#Patient_entryyear": "2000" }, [ "2000-1" ]);
     testSearch(client, { "#Patient_entryyear": "2001" }, [ "2001-1", "2001-4" ]);
     testSearch(client, { "#Patient_entryorder": "104" }, [ "2014-104" ]);
-    testSearch(client, { "#Patient_Lastname": "OSMAN" }, [ "2014-103" ]);
-    testSearch(client, { "#Patient_Lastname": "osman" }, [ "2014-103" ])
+    testSearch(client, { "#Patient_Name": "OSMAN" }, [ "2014-103" ]);
+    testSearch(client, { "#Patient_Name": "osman" }, [ "2014-103" ])
     testSearch(client, { "#Patient_Yearofbirth": 2002 }, [ "2014-107" ])
-    testSearch(client, { "#Patient_Lastname": "Islam" }, [ "2000-1" ])
-    testSearch(client, { "#Patient_Lastname": "OSM" }, [ "2014-103" ])
+    testSearch(client, { "#Patient_Name": "Islam" }, [ "2000-1" ])
+    testSearch(client, { "#Patient_Name": "OSM" }, [ "2014-103" ])
     testSearch(client, { "#Patient_Telephone": "1813247984" }, [ "2014-105" ])
     testSearch(client, { "#Patient_pathology_Clubfoot": true }, [ "2014-107", "2014-103", "2014-104", "2014-105", "2000-1" ])
 

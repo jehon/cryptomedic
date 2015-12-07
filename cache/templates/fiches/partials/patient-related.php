@@ -1,4 +1,4 @@
-<?php 
+<?php
 	// Since this page should be included, do not use the default options
 	$opt = [ "readOnly" => true, 'baseExpression' => "folder.getMainFile()." ];
 ?>
@@ -23,10 +23,9 @@
 				<?php (new t("Patient.entryorder", $opt))->value()->p(); ?>
 				</td>
 			</tr>
-			<?php (new t("Patient.Firstname", $opt))->tr()->p(); ?>
-			<?php (new t("Patient.Lastname", $opt))->tr()->p(); ?>
+			<?php (new t("Patient.Name", $opt))->tr()->p(); ?>
 			<?php (new t("Patient.Yearofbirth", $opt))->tr("Year of birth")->p(); ?>
 			<?php (new t("Patient.Sex", $opt))->tr("Sex")->p(); ?>
-		</tbody>						
-	</table>						
+		</tbody>
+	</table>
 </fieldset>

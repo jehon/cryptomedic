@@ -22,8 +22,7 @@
 						</td>
 					</tr>
 
-					<?php (new t("Patient.Firstname"))->tr("First Name")->p(); ?>
-					<?php (new t("Patient.Lastname"))->tr("Last Name")->p(); ?>
+					<?php (new t("Patient.Name"))->tr("Name")->p(); ?>
 					<?php (new t("Patient.Sex"))->tr()->p(); ?>
 					<?php (new t("Patient.Yearofbirth",  [ "min" => 900, "max" => 2100]))->tr("Year of birth")->p(); ?></td>
 					<tr class='notModeWrite'>

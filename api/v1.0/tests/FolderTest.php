@@ -25,7 +25,7 @@ class FolderTest extends RouteReferenceTestCase {
 	}
 
 	public function testSearchAllowed() {
-		$this->setUrl("folder?Lastname=md&entryyear=2009&pathology_Ricket=1&Telephone=1");
+		$this->setUrl("folder?Name=md&entryyear=2009&pathology_Ricket=1&Telephone=1");
 		$this->myAssertResponseForReference("readonly");
 		$this->myAssertResponseForReference("cdc");
 		$this->myAssertResponseForReference("manager");
@@ -48,21 +48,19 @@ class FolderTest extends RouteReferenceTestCase {
 		}
 	}
 
-	public function testSearchLastName() {
-		$this->setUrl("folder?Lastname=md");
+	public function testSearchName() {
+		$this->setUrl("folder?Name=md");
 		$json = $this->myAssertJSON("readonly");
 		foreach($json as $k => $v) {
-			$this->assertTrue((stripos($v->Lastname, 'md') !== false) || (stripos($v->Firstname, 'md') !== false),
-					"Name " . $v->Lastname . " - " . $v->Firstname . " does not match criteria");
+			$this->assertTrue(stripos($v->Name, 'md') !== false, "Name " . $v->Name . " does not match criteria");
 		}
 	}
 
-	public function testSearchLastNameWithJ() {
-		$this->setUrl("folder?Lastname=j");
+	public function testSearchNameWithJ() {
+		$this->setUrl("folder?Name=j");
 		$json = $this->myAssertJSON("readonly");
 		foreach($json as $k => $v) {
-			$this->assertTrue((stripos($v->Lastname, 'z') !== false) || (stripos($v->Firstname, 'z') !== false),
-					"Name " . $v->Lastname . " - " . $v->Firstname . " does not match criteria");
+			$this->assertTrue(stripos($v->Name, 'j') !== false || stripos($v->Name, 'z') !== false, "Name " . $v->Name . " does not match criteria");
 		}
 	}
 

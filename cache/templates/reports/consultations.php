@@ -17,7 +17,7 @@
           <td>{{c.c_type}}</td>
           <td>{{c.c_Center}}</td>
           <td><a ng-href='#/folder/{{c.patient_id}}'>{{c.entryyear}}-{{c.entryorder}}</a></td>
-          <td>{{c.Firstname}} {{c.Lastname}}</td>
+          <td>{{c.Name}}</td>
           <td>{{c.Telephone}}</td>
           <td>{{c.c_Date | date }}</td>
         </tr>

@@ -47,8 +47,8 @@ module.exports = {
       .myClick('#button_create_reference')
 
       // Edit and save
-      .waitForElementPresent("#Patient_Firstname")
-      .setValue("#Patient_Firstname", "rezaul" + r)
+      .waitForElementPresent("#Patient_Name")
+      .setValue("#Patient_Name", "rezaul" + r)
 
       // Validation fail
       .acceptAlert()
@@ -57,8 +57,8 @@ module.exports = {
       // Add ricket to pass the validation
       .click("#Patient_pathology_Ricket")
       .myClick("#topsubmenu #patient_save")
-      .waitForElementPresent("#Patient_Firstname")
-      .assert.containsText("#Patient_Firstname", "rezaul" + r)
+      .waitForElementPresent("#Patient_Name")
+      .assert.containsText("#Patient_Name", "rezaul" + r)
       .assert.visible("#Patient_pathology_Ricket_ok")
 
       // Add a ricket consultation
@@ -143,13 +143,13 @@ module.exports = {
       // Edit and cancel
       .myClick("#button_patient")
       .myClick("#topsubmenu #patient_edit")
-      .waitForElementPresent("#Patient_Firstname")
-      .assert.value("#Patient_Firstname", "rezaul" + r)
+      .waitForElementPresent("#Patient_Name")
+      .assert.value("#Patient_Name", "rezaul" + r)
       .click("#Patient_pathology_Ricket")
-      .setValue("#Patient_Firstname", "rezaul")
+      .setValue("#Patient_Name", "rezaul")
       .myClick("#topsubmenu #patient_cancel")
-      .waitForElementPresent("#Patient_Firstname")
-      .assert.containsText("#Patient_Firstname", "rezaul")
+      .waitForElementPresent("#Patient_Name")
+      .assert.containsText("#Patient_Name", "rezaul" + r)
 
       // Delete the file
       .myClick("#topsubmenu #patient_edit")
