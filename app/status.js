@@ -1,6 +1,6 @@
 'use strict';
 
-import 'reducers/transitions';
+import catalog from 'reducers/catalog';
 
 import store from 'status/store';
 
@@ -15,6 +15,6 @@ export default function() {
   return {
     store: store,
     // actions: actions,
-    transitions: transitions
+    catalog: catalog
   };
 }

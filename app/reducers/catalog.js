@@ -1,5 +1,5 @@
 
-let transitions = {
+let catalog = {
   _define: function(actionType, constant, fn) {
     this[constant] = constant;
     if (actionType == constant) {
@@ -8,4 +8,4 @@ let transitions = {
   }
 };
 
-export default transitions;
+export default catalog;
