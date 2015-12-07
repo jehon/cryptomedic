@@ -145,7 +145,12 @@ EMAIL
 				</tr>
 				<tr>
 					<td>Browser User-Agent</td>
-					<td><?php echo $bug['browser_useragent']; ?></td>
+					<td><?php
+						echo $bug['browser_useragent'];
+						echo '<pre>';
+						var_dump(get_browser($bug['browser_useragent']));
+						echo '</pre>';
+					?></td>
 				</tr>
 				<tr>
 					<td>Browser Console</td>
