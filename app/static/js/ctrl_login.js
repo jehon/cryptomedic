@@ -38,7 +38,7 @@ mainApp.controller('ctrl_login', [ "$scope", function($scope) {
     var busyEnd = $scope.doBusy("Disconnecting from the remote server", true);
     service_backend.logout()
     .then(function(data) {
-      server.settings = null;
+      server.settings = false;
       $scope.go("/login");
       $scope.logged = false;
     })

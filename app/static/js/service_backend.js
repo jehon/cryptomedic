@@ -155,7 +155,7 @@ function service_backend_fn() {
 
     if (name == "disconnected") {
       if (data == 401) {
-        server.settings = {};
+        server.settings = false;
         location.hash = "#/login";
       }
       onFailure(data);
