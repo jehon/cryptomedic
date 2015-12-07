@@ -23,7 +23,7 @@ application.models.File = application.models.Data.extend({
 		}
 	},
 	'setPatient': function(patient) {
-		this.getPatient = function() { return patient; }; 
+		this.getPatient = function() { return patient; };
 	},
 	'ageAtConsultTime': function() {
 		if (!this.isNotZero('Date')) throw new DataMissingException("Date");
@@ -83,7 +83,7 @@ application.models.File = application.models.Data.extend({
 	'isLocked': function () {
 		if (!this.updated_at) return false;
 		var dlock = new Date(this.updated_at);
-		dlock.setDate(dlock.getDate() + 5);
+		dlock.setDate(dlock.getDate() + 35);
 		return (dlock < new Date());
 	},
 });
