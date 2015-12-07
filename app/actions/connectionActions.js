@@ -8,10 +8,10 @@ export default {
   },
 
   failed: function(httpErrorCode) {
-    dispatch(catalog.FAILED, httpErrorCode)
+    dispatch(catalog.CONNECTION_FAILED, httpErrorCode)
   },
 
-  disconnected: function() {
-    dispatch(catalog.DISCONNECTED)
+  expired: function() {
+    dispatch(catalog.CONNECTION_EXPIRED)
   },
 };
