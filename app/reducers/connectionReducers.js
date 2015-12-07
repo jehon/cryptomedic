@@ -1,6 +1,9 @@
-'use strict';
 
 import catalog from 'reducers/catalog';
+
+catalog._define('CONNECTION_SUCCESS');
+catalog._define('CONNECTION_EXPIRED');
+catalog._define('CONNECTION_FAILED');
 
 export default function(state, action) {
   if (!state) {
@@ -9,27 +12,26 @@ export default function(state, action) {
       authenticated: false
     };
   }
-  // Call to function not very clean
-  catalog._define(action.type, 'CONNECTION_SUCCESS', function() {
+  if (action.type == catalog.CONNECTION_SUCCESS) {
     return {
       connected: true,
       authenticated: true
     };
-  });
+  };
 
-  catalog._define(action.type, 'CONNECTION_EXPIRED', function() {
+  if (action.type == catalog.CONNECTION_EXPIRED) {
     return {
       connected: true,
       authenticated: false
     };
-  });
+  };
 
-  catalog._define(action.type, 'CONNECTION_FAILED', function() {
+  if (action.type == catalog.CONNECTION_FAILED) {
     return {
       connected: Math.max(1, action.payload),
       authenticated: state.authenticated
     };
-  });
+  };
 
   return state;
 }

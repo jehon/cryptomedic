@@ -1,11 +1,10 @@
 'use strict';
 
 import catalog from 'reducers/catalog';
-
-import store from 'status/store';
+import store from 'reducers/store';
+import connection from 'actions/connectionActions';
 
 function d(type) {
-  transitions[type] = type;
   return function(payload) {
     return store.dispatch({ type: type, payload: payload });
   }
@@ -14,7 +13,9 @@ function d(type) {
 export default function() {
   return {
     store: store,
-    // actions: actions,
+    actions: {
+      connection
+    },
     catalog: catalog
   };
 }
