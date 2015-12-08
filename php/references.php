@@ -83,7 +83,7 @@ References::$lists["Centers"] = References::buildValueList([
   References::withCode("Ukhia"                      , "UK")  ,
   References::withCode("Ramu"                       , "RA")  ,
   References::withCode("Moeshkali"                  , "MO")  ,
-  References::withCode("Lohagara"                   , "LO")  ,
+  References::withCode("Lohagara"                   , "LOH")  ,
   References::withCode("CMOSH"                      , false) ,
   References::withCode("Other Field"                , "OF")
 ]);
