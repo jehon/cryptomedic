@@ -4,7 +4,6 @@
     <table class='table table-hover table-bordered tablesorter' pagesize="10">
       <thead>
         <tr>
-          <th>Type</th>
           <th>Center</th>
           <th>Patient</th>
           <th>Name</th>
@@ -14,7 +13,6 @@
       </thead>
       <tbody>
         <tr ng-repeat="c in result.list">
-          <td>{{c.c_type}}</td>
           <td>{{c.c_Center}}</td>
           <td><a ng-href='#/folder/{{c.patient_id}}'>{{c.entryyear}}-{{c.entryorder}}</a></td>
           <td>{{c.Name}}</td>
