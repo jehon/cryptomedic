@@ -48,23 +48,28 @@ function myFetch(url, init, data) {
     if (!response.ok) {
       switch(response.status) {
         case 401: // unauthorized
-
+          appState().actions.connection.expired();
           server.settings = false;
           location.hash = '#/login';
           return Promise.reject(401);
           break;
         case 403: // forbidden
+          appState().actions.connection.failed();
           return Promise.reject(403);
           break;
         case 404: // not found
+          appState().actions.connection.serverError();
           return Promise.reject(404);
           break;
         case 500: // internal server error
+          appState().actions.connection.serverError();
           return Promise.reject(500);
           break;
       }
+      appState().actions.connection.serverError();
       return null;
     }
+    appState().actions.connection.success();
     return response.json();
   });
 }
