@@ -5,7 +5,7 @@
     },
     "list": [
         {
-            "c_type": "ricket",
+            "c_type": "appointment",
             "c_id": 1,
             "c_Date": "2003-05-11",
             "c_Center": "Chakaria Disability Center",

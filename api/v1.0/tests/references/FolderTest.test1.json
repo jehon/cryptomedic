@@ -29,6 +29,18 @@
     },
     "subFiles": [
         {
+            "id": 2,
+            "created_at": "0000-00-00 00:00:00",
+            "updated_at": "2015-02-19 13:52:16",
+            "lastuser": "Thierry",
+            "patient_id": 1,
+            "Date": "2007-09-21",
+            "ExaminerName": "Ershad",
+            "Nextappointment": "2015-04-28",
+            "NextCenter": null,
+            "_type": "Appointment"
+        },
+        {
             "id": 1,
             "created_at": "2011-06-10 14:46:57",
             "updated_at": "2014-12-29 19:57:33",
@@ -153,8 +165,6 @@
             "Comments": "",
             "TreatmentEvaluation": null,
             "TreatmentFinished": null,
-            "Nextappointment": "2015-04-28",
-            "NextCenter": null,
             "_type": "NonricketConsult"
         },
         {

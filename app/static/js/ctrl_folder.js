@@ -285,6 +285,22 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', '$routeParams' , func
     });
   }
 
+  $scope.nextAppointment = function() {
+    var today = date2CanonicString(new Date(), true);
+    var next = false;
+    angular.forEach($scope.folder.subFiles, function(v, k) {
+      if (v._type == 'Appointment') {
+        console.log(v);
+        if (v.Nextappointment > today) {
+          if (!next || v.Nextappointment < next) {
+            next = v.Nextappointment;
+          }
+        }
+      }
+    });
+    return next;
+  }
+
 //    if ($scope.mode == "edit" || $scope.mode == "add") {
 //  jQuery(".modeRead").removeClass('modeRead').addClass('modeWrite');
 //    }

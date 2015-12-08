@@ -25,12 +25,12 @@ class ReportConsultationsController extends ReportController {
 		$sql = "SELECT cc.*, patients.*
 		FROM "
 				. "(("
-						. $this->consultations_getSqlConsult("ricket", "ricket_consults")
-						. 	") UNION ("
-						. $this->consultations_getSqlConsult("clubfoot", "club_foots")
-						. 	") UNION ("
-						. $this->consultations_getSqlConsult("non-ricket", "nonricket_consults")
-						. 	") UNION ("
+						// . $this->consultations_getSqlConsult("ricket", "ricket_consults")
+						// . 	") UNION ("
+						// . $this->consultations_getSqlConsult("clubfoot", "club_foots")
+						// . 	") UNION ("
+						// . $this->consultations_getSqlConsult("non-ricket", "nonricket_consults")
+						// . 	") UNION ("
 						. $this->consultations_getSqlConsult("appointment", "appointments")
 				.")) AS cc "
 				. " JOIN patients ON (cc.patient_id = patients.id) ";

@@ -26,6 +26,22 @@
 			<?php (new t("Patient.Name", $opt))->tr()->p(); ?>
 			<?php (new t("Patient.Yearofbirth", $opt))->tr("Year of birth")->p(); ?>
 			<?php (new t("Patient.Sex", $opt))->tr("Sex")->p(); ?>
+
+      <tr>
+        <td colspan=2 class='notModeWrite text-center'>
+        	<span ng-if="nextAppointment()">
+        		<div class='alert alert-info'>
+	        		Next appointment: {{nextAppointment()}}
+	        	</div>
+        	</span>
+        	<span ng-if="!nextAppointment()">
+        		<div class='alert alert-danger'>
+        			No next appointment planned.
+	          	<a class='btn btn-default' ng-href="#/folder/{{patient_id}}/file/Appointment">Add an appointment</a>
+        		</div>
+        	</span>
+        </td>
+      </tr>
 		</tbody>
 	</table>
 </fieldset>

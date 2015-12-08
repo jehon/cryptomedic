@@ -5,7 +5,7 @@
     },
     "list": [
         {
-            "c_type": "ricket",
+            "c_type": "appointment",
             "c_id": 1,
             "c_Date": "2003-05-11",
             "c_Center": "Chakaria Disability Center",
@@ -36,8 +36,8 @@
             "pathology_Congenital": 0
         },
         {
-            "c_type": "non-ricket",
-            "c_id": 1,
+            "c_type": "appointment",
+            "c_id": 2,
             "c_Date": "2007-09-21",
             "c_Center": null,
             "c_nextAppointment": "2015-04-28",
@@ -67,8 +67,8 @@
             "pathology_Congenital": 0
         },
         {
-            "c_type": "clubfoot",
-            "c_id": 1,
+            "c_type": "appointment",
+            "c_id": 3,
             "c_Date": "2015-01-10",
             "c_Center": "Ukhia",
             "c_nextAppointment": "2015-04-28",

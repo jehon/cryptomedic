@@ -48,6 +48,7 @@ function myFetch(url, init, data) {
     if (!response.ok) {
       switch(response.status) {
         case 401: // unauthorized
+
           server.settings = false;
           location.hash = '#/login';
           return Promise.reject(401);
