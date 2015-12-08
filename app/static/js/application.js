@@ -245,7 +245,7 @@ var mainApp = angular.module('app_main', [ 'ngRoute' ])
 
 mainApp.controller('ctrl', [ '$scope', '$location', '$sce', function($scope, $location, $sce) {
   appState().store.subscribe(function() {
-    $scope.state = bundle().store.getState();
+    $scope.state = appState().store.getState();
   });
 
   $scope.cryptomedic = cryptomedic;

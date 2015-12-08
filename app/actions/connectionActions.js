@@ -14,4 +14,8 @@ export default {
   expired: function() {
     dispatch(catalog.CONNECTION_EXPIRED)
   },
+
+  serverError: function() {
+    dispatch(catalog.CONNECTION_SERVER_ERROR)
+  },
 };
