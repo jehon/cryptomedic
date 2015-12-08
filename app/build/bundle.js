@@ -1,4 +1,4 @@
-var bundle =
+var appState =
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};

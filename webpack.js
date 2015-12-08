@@ -67,8 +67,7 @@ module.exports = {
     // export itself to a global var
     libraryTarget: "var",
     // name of the global var: "Foo"
-    library: "bundle"
-
+    library: "appState"
   },
   module: {
     loaders: [
