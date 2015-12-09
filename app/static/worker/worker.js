@@ -129,8 +129,6 @@ function reprogram() {
   }
   // reprogram the timer...
   syncRunning = false;
-  // TODO: enable faster sync if not finished
-  // syncTimer = setTimeout(routeSync, (syncWasFinal ? (3600 * 1000) : 1000));
   syncTimer = setTimeout(routeSync, 3600 * 1000);
   return Promise.resolve();
 }
@@ -168,13 +166,13 @@ function routeSync() {
     })
     .then(function(result) {
       if (result == null) {
-        console.warn("unauthenticated?");
-        return;
+        console.warn("null result: unauthenticated?");
+        return null;
       }
       return storeData(result._offline);
     })
-    .catch(function(msg) {
-      mySendEvent("disconnected", msg);
+    .catch(function(httpErrorCode) {
+      mySendEvent('error', httpErrorCode);
     })
     .then(reprogram, reprogram);
 }

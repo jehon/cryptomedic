@@ -132,20 +132,6 @@ function service_backend_fn() {
     console.error("@service: Error in worker: ", e);
   };
 
-  function saveResult(updated) {
-    return db.storeRecord({ record: updated })
-      .then(function() { return updated; });
-  }
-
-  function onSuccess(data) {
-    myEvents.trigger("connected");
-    return data;
-  }
-
-  function onFailure(msg) {
-    myEvents.trigger("disconnected", msg);
-  }
-
   worker.onmessage = function(e) {
     var name = e.data.name;
     var data = e.data.data;
@@ -161,10 +147,10 @@ function service_backend_fn() {
       } else {
         appState().actions.connection.serverError();
       }
-      onFailure(data);
+      // onFailure(data);
     } else {
       appState().actions.connection.success();
-      onSuccess();
+      // onSuccess();
     }
   };
 
@@ -175,39 +161,69 @@ function service_backend_fn() {
 
   mySendAction("init", { restUrl: rest });
 
+  function myFrontFetch(url, init, data) {
+    return myFetch(url, init, data).then(
+      function(json) {
+        appState().actions.connection.success();
+        // console.info(json);
+        if (json._offline) {
+          return db.storeRecord({ record: json })
+            .then(function() { return json });
+        } else {
+          return json;
+        }
+      }, function(httpErrorCode) {
+        switch(httpErrorCode) {
+          case 401: // unauthorized
+            appState().actions.connection.expired();
+            server.settings = false;
+            location.hash = '#/login';
+            break;
+          case 403: // forbidden
+            appState().actions.connection.failed();
+            break;
+          case 404: // not found
+            appState().actions.connection.serverError();
+            break;
+          case 500: // internal server error
+            appState().actions.connection.serverError();
+            break;
+          default:
+            appState().actions.connection.serverError();
+            break;
+        }
+        return Promise.reject(httpErrorCode);
+      }
+    );
+  }
+
   return {
     /* Authentification */
     'login': function(username, password) {
-      return myFetch(rest + "/auth/mylogin", { method: "POST" },
+      return myFrontFetch(rest + "/auth/mylogin", { method: "POST" },
           {
               'username': username,
               'password': password,
               // 'appVersion': cryptomedic.version,
               'computerId': window.localStorage.cryptomedicComputerId
         })
-        .then(this.storeData)
-        .then(mySendAction.bind(this, "init"))
-        .then(onSuccess, onFailure);
+        .then(mySendAction.bind(this, "init"));
     },
     'checkLogin': function() {
-      return myFetch(rest + "/auth/settings", null,
+      return myFrontFetch(rest + "/auth/settings", null,
           {
               // 'appVersion': cryptomedic.version,
               'computerId': window.localStorage.cryptomedicComputerId
           }
-        )
-        // .then(function(data) { console.log("there", data); return data; })
-        .then(this.storeData)
-        .then(onSuccess, onFailure);
+        );
     },
     'logout': function() {
       // TODO: clean up the cache --> cache managed in other object???
-      return myFetch(rest + "/auth/logout")
+      return myFrontFetch(rest + "/auth/logout")
         .then(function(data) {
           appState().actions.connection.expired();
           return data;
-        })
-        .then(onSuccess, onFailure);
+        });
     },
 
     // Go to the worker
@@ -237,11 +253,7 @@ function service_backend_fn() {
         // If not final then go to the server anyway...
         // return db.getFolder(id).catch(function(error) {
         //   console.log("Getting the folder live: #" + id);
-        return myFetch(rest + "/folder/" + id)
-          .then(function(data) {
-            return db.storeRecord({record: data})
-              .then(function() { return data; });
-          });
+        return myFrontFetch(rest + "/folder/" + id);
         // });
       }
     },
@@ -255,25 +267,22 @@ function service_backend_fn() {
 
     // Go to the rest server
     'checkReference': function(year, order) {
-      return myFetch(rest + "/reference/" + year + "/" + order)
+      return myFrontFetch(rest + "/reference/" + year + "/" + order)
         .then(function(data) {
           if ((typeof(data._type) != 'undefined') && (data._type == 'Folder')) {
               return data['id'];
           } else {
               return false;
           }
-        })
-        .then(onSuccess, onFailure);
+        });
     },
 
     'getReport': function(reportName, data, timing) {
-      return myFetch(rest + "/reports/" + reportName + (timing ? "/" + timing : ""), null, data)
-        .then(this.storeData)
-        .then(onSuccess, onFailure);
+      return myFrontFetch(rest + "/reports/" + reportName + (timing ? "/" + timing : ""), null, data);
     },
 
     'searchForPatients': function(params) {
-      return myFetch(rest + "/folder", null, params)
+      return myFrontFetch(rest + "/folder", null, params)
         .then(function(data) {
           var list = [];
           for(var i in data) {
@@ -281,49 +290,38 @@ function service_backend_fn() {
           }
           return list;
         })
-        .then(objectify)
-        .then(onSuccess, onFailure);
+        .then(objectify);
     },
 
     // READWRITE
     'createReference': function(year, order) {
-      return myFetch(rest + '/reference', { method: 'POST'},
+      return myFrontFetch(rest + '/reference', { method: 'POST'},
         // return treatHttp($http.post(rest + "/reference",
         {
             'entryyear': year,
             'entryorder': order
         })
-        .then(saveResult)
-        .then(objectify)
-        .then(onSuccess, onFailure);
+        .then(objectify);
     },
 
     'createFile': function(data) {
-      return myFetch(rest + "/fiche/" + data['_type'], { method: 'POST' }, data)
-        .then(saveResult)
-        .then(objectify)
-        .then(onSuccess, onFailure);
+      return myFrontFetch(rest + "/fiche/" + data['_type'], { method: 'POST' }, data)
+        .then(objectify);
     },
 
     'saveFile': function(data) {
-      return myFetch(rest + "/fiche/" + data['_type'] + "/" + data['id'], { method: 'PUT' }, data)
-        .then(saveResult)
-        .then(objectify)
-        .then(onSuccess, onFailure);
+      return myFrontFetch(rest + "/fiche/" + data['_type'] + "/" + data['id'], { method: 'PUT' }, data)
+        .then(objectify);
     },
 
     'deleteFile': function(data, folderId) {
-      return myFetch(rest + "/fiche/" + data['_type'] + "/" + data['id'], { method: "DELETE" })
-        .then(saveResult)
-        .then(objectify)
-        .then(onSuccess, onFailure);
+      return myFrontFetch(rest + "/fiche/" + data['_type'] + "/" + data['id'], { method: "DELETE" })
+        .then(objectify);
     },
 
     'unlockFile': function(data, folderId) {
-      return myFetch(rest + "/unfreeze/" + data['_type'] + "/" + data['id'])
-        .then(saveResult)
-        .then(objectify)
-        .then(onSuccess, onFailure);
+      return myFrontFetch(rest + "/unfreeze/" + data['_type'] + "/" + data['id'])
+        .then(objectify);
     },
   };
 };

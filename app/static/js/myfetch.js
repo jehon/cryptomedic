@@ -46,34 +46,12 @@ function myFetch(url, init, data) {
   return fetch(req).then(function(response) {
     // Response: ok, status, statusText
     if (!response.ok) {
-      switch(response.status) {
-        case 401: // unauthorized
-          appState().actions.connection.expired();
-          server.settings = false;
-          location.hash = '#/login';
-          return Promise.reject(401);
-          break;
-        case 403: // forbidden
-          appState().actions.connection.failed();
-          return Promise.reject(403);
-          break;
-        case 404: // not found
-          appState().actions.connection.serverError();
-          return Promise.reject(404);
-          break;
-        case 500: // internal server error
-          appState().actions.connection.serverError();
-          return Promise.reject(500);
-          break;
-      }
-      appState().actions.connection.serverError();
-      return Promise.reject(-1);
+      return Promise.reject(response.status);
     }
-    return response.json().then(function(json) {
-      // console.log(json);
-      appState().actions.connection.success();
-      // console.log(json);
-      return json;
+
+    return response.json()
+      // .then(function(json) {
+      //   return json;
+      // });
     });
-  });
 }
