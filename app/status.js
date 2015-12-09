@@ -4,6 +4,7 @@ import catalog from 'reducers/catalog';
 import store from 'reducers/store';
 import connection from 'actions/connectionActions';
 import state from 'actions/stateActions';
+import database from 'actions/databaseActions';
 
 function d(type) {
   return function(payload) {
@@ -16,7 +17,8 @@ export default function() {
     store: store,
     actions: {
       connection,
-      state
+      state,
+      database
     },
     catalog: catalog
   };
