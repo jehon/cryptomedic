@@ -259,6 +259,15 @@ mainApp.controller('ctrl', [ '$scope', '$location', '$sce', function($scope, $lo
     console.log("scope appState updated", appState().store.getState());
     $scope.appStateStore = appState().store.getState();
 
+    // ** Manual operations **
+
+    // Are we still busy?
+    if ($scope.appStateStore.state.busy > 0) {
+      jQuery("#busy").modal('show');
+    } else {
+      jQuery("#busy").modal('hide');
+    }
+
     $scope.safeApply();
   });
 
@@ -283,57 +292,14 @@ mainApp.controller('ctrl', [ '$scope', '$location', '$sce', function($scope, $lo
   $scope.sync = false;
   $scope.connected = false;
 
-  $scope.busy = [];
-  $scope.busy.messages = [ ];
-  $scope.busy.done = false;
-  $scope.busy.isVisible = false;
-  $scope.doBusy = function(msg, wait) {
-    // TODO LOW GUI: auto hide the message box after 500ms if anything is pending ?
-    if (typeof(wait) == 'undefined') {
-      wait = false;
-    }
-    var c = $scope.busy.messages.push({ 'message': msg, 'done': false }) - 1;
-    $scope.busy.done = false;
-    if (!$scope.busy.isVisible) {
-      jQuery("#busy").modal('show');
-      $scope.busy.isVisible = true;
-    }
-    $scope.safeApply();
-    function allOk() {
-      var ok = true;
-      for(var m in $scope.busy.messages) {
-        ok = ok && $scope.busy.messages[m].status;
-      }
-      return ok;
-    }
-
-    function endBusy() {
-      if (allOk()) {
-        jQuery("#busy").modal('hide');
-        $scope.busy.done = true;
-        $scope.busy.isVisible = false;
-        $scope.busy.messages = [];
-        // See http://stackoverflow.com/a/11544860
-        jQuery('body').removeClass('modal-open');
-        jQuery(".modal-backdrop").remove();
-      } else {
-        console.warn("end busy with not allOk");
-      }
-    }
-    $scope.endBusy = endBusy;
-
+  $scope.doBusy = function(msg) {
+    appState().actions.state.busy(msg);
     return function() {
-      $scope.busy.messages[c].status = true;
-      $scope.safeApply();
-      // If all messages are ok, then hide it
-      if (allOk()) {
-        $scope.busy.done = true;
-        setTimeout(endBusy, (wait ? 2000 : 1));
-      }
-    };
+      appState().actions.state.ready();
+    }
   };
 
-  $scope.endBusy = function() {};
+  $scope.endBusy = appState().actions.state.ready;
 
   $scope.logged = false;
   $scope.username = "";
