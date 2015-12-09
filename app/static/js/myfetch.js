@@ -67,9 +67,13 @@ function myFetch(url, init, data) {
           break;
       }
       appState().actions.connection.serverError();
-      return null;
+      return Promise.reject(-1);
     }
-    appState().actions.connection.success();
-    return response.json();
+    return response.json().then(function(json) {
+      // console.log(json);
+      appState().actions.connection.success();
+      // console.log(json);
+      return json;
+    });
   });
 }
