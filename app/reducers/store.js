@@ -10,8 +10,4 @@ let store = createStore(combineReducers({
   state
 }));
 
-store.subscribe(function() {
-  console.log("state updated to: ", store.getState())
-});
-
 export default store;
