@@ -155,11 +155,15 @@ function service_backend_fn() {
 
     if (name == "disconnected") {
       if (data == 401) {
+        appState().actions.connection.expired();
         server.settings = false;
         location.hash = "#/login";
+      } else {
+        appState().actions.connection.serverError();
       }
       onFailure(data);
     } else {
+      appState().actions.connection.success();
       onSuccess();
     }
   };
