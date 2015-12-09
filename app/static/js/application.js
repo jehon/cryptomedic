@@ -253,8 +253,13 @@ var mainApp = angular.module('app_main', [ 'ngRoute' ])
 }]);
 
 mainApp.controller('ctrl', [ '$scope', '$location', '$sce', function($scope, $location, $sce) {
+  $scope.appStateStore = appState().store.getState();
+  console.log($scope.appStateStore);
   appState().store.subscribe(function() {
-    $scope.state = appState().store.getState();
+    console.log("scope appState updated", appState().store.getState());
+    $scope.appStateStore = appState().store.getState();
+
+    $scope.safeApply();
   });
 
   $scope.cryptomedic = cryptomedic;
