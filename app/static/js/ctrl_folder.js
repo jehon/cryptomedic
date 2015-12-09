@@ -290,7 +290,6 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', '$routeParams' , func
     var next = false;
     angular.forEach($scope.folder.subFiles, function(v, k) {
       if (v._type == 'Appointment') {
-        console.log(v);
         if (v.Nextappointment > today) {
           if (!next || v.Nextappointment < next) {
             next = v.Nextappointment;
