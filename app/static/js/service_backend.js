@@ -199,6 +199,10 @@ function service_backend_fn() {
     'logout': function() {
       // TODO: clean up the cache --> cache managed in other object???
       return myFetch(rest + "/auth/logout")
+        .then(function(data) {
+          appState().actions.connection.expired();
+          return data;
+        })
         .then(onSuccess, onFailure);
     },
 
