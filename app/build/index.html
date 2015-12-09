@@ -136,8 +136,7 @@
               <h4 class="modal-title">Waiting for: {{appStateStore.state.busy}} tasks on {{appStateStore.state.max}}</h4>
             </div>
             <div class="modal-body">
-              <div>
-                {{appStateStore.state.messages | nl2br}}
+              <div ng-bind-html='appStateStore.state.messages | nl2br'>
               </div>
             </div>
            </div><!-- /.modal-content -->
