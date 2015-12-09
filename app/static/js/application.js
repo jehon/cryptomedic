@@ -95,6 +95,15 @@ var mainApp = angular.module('app_main', [ 'ngRoute' ])
     return "" + (Math.round(text * 100 * Math.pow(10, rnd)) / Math.pow(10, rnd)) + "%";
   };
 })
+.filter('nl2br', [ '$sce', function($sce) {
+  return function(text) {
+    var t = text;
+    while (t.search("\n") >= 0) {
+      t = t.replace("\n", "<br>");
+    }
+    return $sce.trustAsHtml(t);
+  }
+}])
 .directive('catchIt', [ "$compile", function($compile) {
     // http://tutorials.jenkov.com/angularjs/custom-directives.html#compile-and-link
     // http://stackoverflow.com/a/15298620

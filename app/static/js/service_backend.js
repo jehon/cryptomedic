@@ -186,14 +186,13 @@ function service_backend_fn() {
         .then(onSuccess, onFailure);
     },
     'checkLogin': function() {
-      console.log("here we are");
       return myFetch(rest + "/auth/settings", null,
           {
               // 'appVersion': cryptomedic.version,
               'computerId': window.localStorage.cryptomedicComputerId
           }
         )
-        .then(function(data) { console.log("there", data); return data; })
+        // .then(function(data) { console.log("there", data); return data; })
         .then(this.storeData)
         .then(onSuccess, onFailure);
     },
