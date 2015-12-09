@@ -29,20 +29,12 @@ function service_session_storage(onReady) {
     return def;
   }
 
-  // Set default values
-  var now = new Date();
-  var year = now.getFullYear();
-  var month = "0" + (now.getMonth() + 1);
-  month = month.substring(month.length - 2);
-  var day = "0" + now.getDate();
-  day = day.substring(day.length - 2);
-
   get("examiner", "");
   get("center", "");
   get("period", "month");
-  get("day", day);
-  get("month", year + "-" + month);
-  get("year", year);
+  get("day", date2CanonicString(new Date(), true));
+  get("month", date2CanonicString(new Date(), true).substring(0, 7));
+  get("year", date2CanonicString(new Date(), true).substring(0, 4));
 
   return {
     'get': get,

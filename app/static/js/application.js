@@ -4,6 +4,16 @@ var application = {};
 application.models = {};
 var server = {};
 
+function formatDate(date) {
+  date = date || new Date();
+  var year = date.getFullYear();
+  var month = "0" + (date.getMonth() + 1);
+  month = month.substring(month.length - 2);
+  var day = "0" + date.getDate();
+  day = day.substring(day.length - 2);
+  return year + "-" + month + "-" + day;
+}
+
 // Inspired from http://www.2ality.com/2014/10/es6-promises-api.html
 Promise.prototype.myFinallyDone = function (callback) {
   callback = callback || function(data) { return data; };
@@ -253,8 +263,11 @@ var mainApp = angular.module('app_main', [ 'ngRoute' ])
 }]);
 
 mainApp.controller('ctrl', [ '$scope', '$location', '$sce', function($scope, $location, $sce) {
+  // @see http://stackoverflow.com/questions/14319967/angularjs-routing-without-the-hash
+  // @see https://docs.angularjs.org/api/ng/provider/$locationProvider
+  // $locationProvider.html5Mode(true)
+
   $scope.appStateStore = appState().store.getState();
-  console.log($scope.appStateStore);
   appState().store.subscribe(function() {
     console.log("scope appState updated", appState().store.getState());
     $scope.appStateStore = appState().store.getState();
