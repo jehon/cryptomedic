@@ -322,5 +322,14 @@ function service_backend_fn() {
       return myFrontFetch(rest + "/unfreeze/" + data['_type'] + "/" + data['id'])
         .then(objectify);
     },
+
+    'usersList': function() {
+      return myFrontFetch(rest + "/users");
+    },
+
+    'usersPassword': function(id, pwd) {
+      console.log(pwd);
+      return myFrontFetch(rest + "/users/password/" + id, { method: 'POST' }, { password: pwd });
+    }
   };
 };

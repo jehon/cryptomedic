@@ -99,5 +99,9 @@ Route::group([ 'prefix' => '/' . $flavor . '/api/' . basename(dirname(dirname(__
 			Route::get('unfreeze/{model}/{id}', 'ModelController@unfreeze');
 		});
 
+		Route::group(array('middleware' => [ "unFreezeGroup" ]), function() {
+			Route::resource('users', 'UsersController');
+			Route::post('users/password/{id}', 'UsersController@password');
+		});
 	});
 });
