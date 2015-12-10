@@ -8,6 +8,7 @@ function testSearch(client, search, resultList) {
     .myFillInForm(".searchFields", search, "#button_submit")
     .waitForElementPresent("#search_results")
     .assert.myAssertTableCountRows("#search_results", resultList.length)
+    .pause(1000)
     ;
   for(i in resultList) {
     client
