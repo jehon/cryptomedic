@@ -20,6 +20,13 @@
 					<?php (new t("OtherConsult.XRay"))->tr()->p(); ?>
 				</table>
 			</fieldset>
+			<fieldset>
+				<legend>Conclusion</legend>
+				<table>
+					<?php (new t("OtherConsult.Performed"))->tr("Activities Performed by the Patient")->p(); ?>
+					<?php (new t("OtherConsult.NotPerformed"))->tr("Activities NOT Performed by the Patient")->p(); ?>
+				</table>
+			</fieldset>
 		</div>
 		<div class="col-md-6">
 			<?php require("partials/patient-related.php"); ?>
