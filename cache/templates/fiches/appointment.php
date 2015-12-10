@@ -7,7 +7,11 @@
 			<fieldSet>
 				<legend>Next appointment</legend>
 				<table>
-					<?php (new t("Appointment.Date"))->tr("Today's Date")->p(); ?>
+					<tr class='notModeRead'>
+						<td>Today</td>
+						<td>{{today}}</td>
+					</tr>
+					<?php (new t("Appointment.Date"))->tr("Entry date")->p(); ?>
 					<?php (new t("Appointment.Nextappointment"))->tr("Next Appointment")->p(); ?>
 					<?php (new t("Appointment.NextCenter"))->tr("Next Center")->p(); ?>
 					<tr class='notModeRead'>
