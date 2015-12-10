@@ -56,7 +56,7 @@
 					<?php (new t("Patient.pathology_Congenital"))->tr("Congenital (C)")->p(); ?>
 					<?php (new t("Patient.pathology_Adult"))->tr("Patient is adult (A)")->p(); ?>
 					<?php (new t("Patient.pathology_other"))->tr("Other (Oth)")->p(); ?>
-					<?php (new t("Patient.historyofcomplaint"))->tr("History of the complaint")->p(); ?>
+					<?php (new t("Patient.other_comments"))->tr("History of the complaint")->p(); ?>
 				</table>
 			</fieldset>
 	 		<br/>
