@@ -321,7 +321,7 @@
             "Walk": null,
             "Worms": false,
             "Nextappointment": null,
-            "_type": "NonricketConsult"
+            "_type": "OtherConsult"
         },
         {
             "id": 3088,

@@ -4,7 +4,7 @@ class References {
   static $model2db = array(
     "Bill" => "bills",
     "ClubFoot" => "club_foots",
-    "NonricketConsult" => "nonricket_consults",
+    "OtherConsult" => "other_consults",
     "Patient" => "patients",
     "Picture" => "pictures",
     "Appointment" => "appointments",
@@ -168,10 +168,10 @@ References::$model_listing['ClubFoot.RunLeft'] = References::buildValueList(arra
 References::$model_listing['ClubFoot.RunRight'] = References::buildValueList(array(0, 1, 2));
 References::$model_listing['ClubFoot.Treatment'] = References::buildValueList(array("plaster", "tenotomy", "DB splint", "surgery"));
 
-References::$model_listing['NonricketConsult.Pain'] = References::$lists['Pain'];
-References::$model_listing['NonricketConsult.Side'] = References::$lists['Side'];
-References::$model_listing['NonricketConsult.Surgery66'] = References::$lists['Surgery'];
-References::$model_listing['NonricketConsult.Walk'] = References::$lists['WalkingCapacities'];
+References::$model_listing['OtherConsult.Pain'] = References::$lists['Pain'];
+References::$model_listing['OtherConsult.Side'] = References::$lists['Side'];
+References::$model_listing['OtherConsult.Surgery66'] = References::$lists['Surgery'];
+References::$model_listing['OtherConsult.Walk'] = References::$lists['WalkingCapacities'];
 
 References::$model_listing['Patient.District'] = References::$lists['Districts'];
 References::$model_listing['Patient.Sex'] = References::$lists['Sex'];

@@ -10,8 +10,8 @@ Here, you can add a new file to the patient: bill, consult, ...<br/>
 <a id='add_clubfoot' ng-href="#/folder/{{patient_id}}/file/ClubFoot" class="btn btn-default">
 	Add a club foot consultation
 </a><br>
-<a id='add_nonricket_consult' ng-href="#/folder/{{patient_id}}/file/NonricketConsult" class="btn btn-default">
-	Add a non-ricket consultation
+<a id='add_other_consult' ng-href="#/folder/{{patient_id}}/file/OtherConsult" class="btn btn-default">
+	Add a 'other' type of consultation
 </a><br>
 <a id='add_picture' ng-href="#/folder/{{patient_id}}/file/Picture" class="btn btn-default">
 	Add a picture

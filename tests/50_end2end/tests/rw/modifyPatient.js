@@ -15,7 +15,7 @@ module.exports = {
       "#Picture_Date": "2003-01-02"
     }
 
-    var nonricket_consult = {
+    var other_consult = {
       "#Date": "2003-02-01",
       "#Weightkg": "13"
     }
@@ -69,9 +69,9 @@ module.exports = {
 
       // Add a non-ricket consultation
       .myClick("#button_add")
-      .myClick("#add_nonricket_consult")
-      .myFillInForm('#fileForm', nonricket_consult, '#topsubmenu #button_save')
-      .myCheckForm('#fileForm', nonricket_consult)
+      .myClick("#add_other_consult")
+      .myFillInForm('#fileForm', other_consult, '#topsubmenu #button_save')
+      .myCheckForm('#fileForm', other_consult)
 
       // Add a picture -> TODO: add a picture image
       // .myClick("#button_add")

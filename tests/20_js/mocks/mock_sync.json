@@ -894,7 +894,7 @@
               "TreatmentFinished": null,
               "Nextappointment": "2015-04-28",
               "NextCenter": null,
-              "_type": "NonricketConsult"
+              "_type": "OtherConsult"
             },
             {
               "id": "2",

@@ -165,7 +165,7 @@
             "Comments": "",
             "TreatmentEvaluation": null,
             "TreatmentFinished": null,
-            "_type": "NonricketConsult"
+            "_type": "OtherConsult"
         },
         {
             "id": 2,

@@ -6,9 +6,9 @@ CREATE TRIGGER club_foots_deleted AFTER DELETE ON club_foots
 FOR EACH ROW
 INSERT INTO deleted(entity_type, entity_id) VALUE('club_foots', OLD.id);
 
-CREATE TRIGGER nonricket_consults_deleted AFTER DELETE ON nonricket_consults
+CREATE TRIGGER other_consults_deleted AFTER DELETE ON other_consults
 FOR EACH ROW
-INSERT INTO deleted(entity_type, entity_id) VALUE('nonricket_consults', OLD.id);
+INSERT INTO deleted(entity_type, entity_id) VALUE('other_consults', OLD.id);
 
 CREATE TRIGGER orthopedic_devices_deleted AFTER DELETE ON orthopedic_devices
 FOR EACH ROW

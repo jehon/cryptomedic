@@ -12,7 +12,7 @@ module.exports = {
       .assert.elementNotPresent("#button_edit")
 
       // Nonrickect Consult
-      .page.cryptomedic().selectFile("NonricketConsult", 1)
+      .page.cryptomedic().selectFile("OtherConsult", 1)
       .assert.containsText("#Date", "2007-09-21")
       .assert.containsText("#ExaminerName", "Ershad")
 

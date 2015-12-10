@@ -165,7 +165,6 @@ function service_backend_fn() {
     return myFetch(url, init, data).then(
       function(json) {
         appState().actions.connection.success();
-        // console.info(json);
         if (json._offline) {
           return db.storeRecord({ record: json })
             .then(function() { return json });
