@@ -1,5 +1,5 @@
 <?php ?>
-<div ng-if='edit < 0'>
+<div ng-if='!edit'>
   <table class='table table-hover table-bordered tablesorter'>
     <thead>
       <th>id</th>
@@ -18,53 +18,54 @@
         <td>{{u.email}}</td>
         <td>{{u.notes}}</td>
         <td>{{u.group}}</td>
-        <td><span class='btn btn-warning' ng-click='doEdit(u.id)'>edit</span></td>
+        <td><span class='btn btn-warning' ng-click='doEdit($index)'>edit</span></td>
       </tr>
     </tbody>
   </table>
 </div>
 
 <form>
-  <div ng-if='edit >= 0'>
-    <h3>Edit user '{{users[edit].username}}'</h3>
+  <div ng-if='edit'>
+    <h3>Edit user '{{edit.username}}'</h3>
     <table class='table table-hover table-bordered tablesorter'>
       <tr>
+        <td>Id</td>
+        <td>{{edit.id}}</td>
+      </tr>
+      <tr>
         <td>Username</td>
-        <td>{{u.username}}</td>
+        <td>{{edit.username}}</td>
       </tr>
       <tr>
         <td>Name</td>
-        <td></td>
+        <td>{{edit.name}}</td>
       </tr>
       <tr>
         <td>Email</td>
-        <td></td>
+        <td>{{edit.email}}</td>
       </tr>
       <tr>
         <td>Notes</td>
-        <td></td>
+        <td>{{edit.notes}}</td>
       </tr>
     </table>
     <span ng-if='!password'>
       <span class='btn btn-default' ng-click='doCancel()'>cancel</span>
-      <span class='btn btn-info' ng-click='doSave()'>save</span>
+      <!-- <span class='btn btn-info' ng-click='doSave()'>save</span> -->
       <span class='btn btn-warning' ng-click='doShowPassword()'>set password</span>
     </span>
-  </div>
 
-  <div ng-if='password'>
-    <h3>Setting password for user '{{users[edit].username}}'</h3>
-
-    <table class='table table-hover table-bordered tablesorter'>
-      <tr>
-        <td>New password</td>
-        <td>
-          <input id='newcode' ng-model="details.newcode" class="form-control">
-          <!-- placeholder="enter new password here" required autofocus> -->
-        </td>
-      </tr>
-    </table>
-    <span class='btn btn-default' ng-click='doCancel()'>cancel</span>
-    <span class='btn btn-info' ng-click='doSavePassword()'>save</span>
+    <div ng-if='password'>
+      <table class='table table-hover table-bordered tablesorter'>
+        <tr>
+          <td>New password</td>
+          <td>
+            <input id='newcode' ng-model="pwd.newcode" class="form-control" placeholder="enter new password here" required autofocus>
+          </td>
+        </tr>
+      </table>
+      <span class='btn btn-default' ng-click='doCancel()'>cancel</span>
+      <span class='btn btn-info' ng-click='doSavePassword()'>save</span>
+    </div>
   </div>
 </form>

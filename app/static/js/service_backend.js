@@ -328,7 +328,6 @@ function service_backend_fn() {
     },
 
     'usersPassword': function(id, pwd) {
-      console.log(pwd);
       return myFrontFetch(rest + "/users/password/" + id, { method: 'POST' }, { password: pwd });
     }
   };
