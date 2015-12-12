@@ -285,22 +285,21 @@ class Role {
   /*  ASSIGNING ROLES *******************************************/
   /**************************************************************/
 
-
   $readonly = (new Role("readonly"))
     ->givePermission("folder.read")
   	->givePermission("reports.execute")
   	;
 
-  $cdc = (new Role("cdc", $readonly))
+  $cdc      = (new Role("cdc", $readonly))
     ->givePermission("folder.edit")
     ->givePermission("folder.delete")
     ;
 
-  $manager = (new Role("manager", $cdc))
+  $manager  = (new Role("manager", $cdc))
   	->givePermission("folder.unlock")
   	->givePermission("users.manage")
   	;
 
-  $admin = (new Role("admin", $manager))
+  $admin    = (new Role("admin", $manager))
   	;
 }
