@@ -208,6 +208,7 @@ function service_backend_fn() {
         })
         .then(appState().actions.connection.settings)
         .then(mySendAction.bind(this, "init"))
+        .catch()
         ;
     },
     'checkLogin': function() {
@@ -218,7 +219,8 @@ function service_backend_fn() {
           }
         )
         .then(appState().actions.connection.settings)
-        .then(mySendAction.bind(this, "init"));
+        .then(mySendAction.bind(this, "init"))
+        .catch()
         ;
     },
     'logout': function() {
@@ -227,7 +229,9 @@ function service_backend_fn() {
         .then(function(data) {
           appState().actions.connection.expired();
           return data;
-        });
+        })
+        .catch()
+        ;
     },
 
     // Go to the worker
@@ -257,7 +261,9 @@ function service_backend_fn() {
         // If not final then go to the server anyway...
         // return db.getFolder(id).catch(function(error) {
         //   console.log("Getting the folder live: #" + id);
-        return myFrontFetch(rest + "/folder/" + id);
+        return myFrontFetch(rest + "/folder/" + id)
+          .catch()
+          ;
         // });
       }
     },
@@ -266,7 +272,9 @@ function service_backend_fn() {
       return db.clear()
         .then(function() {
           myEvents.trigger("backend_progress", { isfinal: false, data: false });
-        });
+        })
+        .catch()
+        ;
     },
 
     // Go to the rest server
@@ -278,11 +286,15 @@ function service_backend_fn() {
           } else {
               return false;
           }
-        });
+        })
+        .catch()
+        ;
     },
 
     'getReport': function(reportName, data, timing) {
-      return myFrontFetch(rest + "/reports/" + reportName + (timing ? "/" + timing : ""), null, data);
+      return myFrontFetch(rest + "/reports/" + reportName + (timing ? "/" + timing : ""), null, data)
+        .catch()
+        ;
     },
 
     'searchForPatients': function(params) {
@@ -294,7 +306,9 @@ function service_backend_fn() {
           }
           return list;
         })
-        .then(objectify);
+        .then(objectify)
+        .catch()
+        ;
     },
 
     // READWRITE
@@ -305,39 +319,55 @@ function service_backend_fn() {
             'entryyear': year,
             'entryorder': order
         })
-        .then(objectify);
+        .then(objectify)
+        .catch()
+        ;
     },
 
     'createFile': function(data) {
       return myFrontFetch(rest + "/fiche/" + data['_type'], { method: 'POST' }, data)
-        .then(objectify);
+        .then(objectify)
+        .catch()
+        ;
     },
 
     'saveFile': function(data) {
       return myFrontFetch(rest + "/fiche/" + data['_type'] + "/" + data['id'], { method: 'PUT' }, data)
-        .then(objectify);
+        .then(objectify)
+        .catch()
+        ;
     },
 
     'deleteFile': function(data, folderId) {
       return myFrontFetch(rest + "/fiche/" + data['_type'] + "/" + data['id'], { method: "DELETE" })
-        .then(objectify);
+        .then(objectify)
+        .catch()
+        ;
     },
 
     'unlockFile': function(data, folderId) {
       return myFrontFetch(rest + "/unfreeze/" + data['_type'] + "/" + data['id'])
-        .then(objectify);
+        .then(objectify)
+        .catch()
+        ;
     },
 
     'usersList': function() {
-      return myFrontFetch(rest + "/users");
+      return myFrontFetch(rest + "/users")
+        .catch()
+        ;
     },
 
     'userUpdate': function(user) {
-      return myFrontFetch(rest + "/users/" + user.id, { method: 'PUT' }, user);
+      return myFrontFetch(rest + "/users/" + user.id, { method: 'PUT' }, user)
+        .catch()
+        ;
     },
 
     'userPassword': function(id, pwd) {
-      return myFrontFetch(rest + "/users/password/" + id, { method: 'POST' }, { password: pwd });
+      return myFrontFetch(rest + "/users/password/" + id, { method: 'POST' }, { password: pwd })
+        .catch()
+        ;
     }
   };
 };
