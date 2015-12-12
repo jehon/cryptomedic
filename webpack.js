@@ -58,7 +58,7 @@ module.exports = {
     modulesDirectories: ['node_modules', 'app'],
   },
   output: {
-    path: path.join(__dirname, 'app/build/'),
+    path: path.join(__dirname, 'build/'),
     filename: 'bundle.js',
     // filename: 'bundle-[hash].js',
     // chunkFilename: "[id].[hash].bundle.js"
