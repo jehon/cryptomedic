@@ -69,45 +69,48 @@ Route::group([ 'prefix' => '/' . $flavor . '/api/' . basename(dirname(dirname(__
 	 * Authenticated user needed
 	 */
 	Route::group(array('middleware' => 'authenticated'), function() {
-		Route::resource('folder', "FolderController", [ "only" => [ "index", "show" ]]);
+		hasPermission('reports.execute', function() {
+			Route::get('reports/consultations', [
+				"uses" => "ReportConsultationsController@index"
+			]);
 
-		Route::get('reference/{entryyear}/{entryorder}', [
-			"uses" => "FolderController@reference"
-		]);
+			Route::get('reports/dailyActivity', [
+				"uses" => "ReportActivityController@daily"
+			]);
 
-		Route::get('reports/consultations', [
-			"uses" => "ReportConsultationsController@index"
-		]);
+			Route::get('reports/monthlyActivity', [
+					"uses" => "ReportActivityController@monthly"
+			]);
 
-		Route::get('reports/dailyActivity', [
-			"uses" => "ReportActivityController@daily"
-		]);
+			Route::get('reports/statistical/{timing}', [
+				"uses" => "ReportStatisticalController@byTiming"
+			]);
 
-		Route::get('reports/monthlyActivity', [
-				"uses" => "ReportActivityController@monthly"
-		]);
+			Route::get('reports/surgical/{timing}', [
+				"uses" => "ReportSurgicalController@byTiming"
+			]);
+		});
 
-		Route::get('reports/statistical/{timing}', [
-			"uses" => "ReportStatisticalController@byTiming"
-		]);
+		hasPermission('folder.read', function() {
+			Route::resource('folder', "FolderController", [ "only" => [ "index", "show" ]]);
 
-		Route::get('reports/surgical/{timing}', [
-			"uses" => "ReportSurgicalController@byTiming"
-		]);
+			Route::get('reference/{entryyear}/{entryorder}', [
+				"uses" => "FolderController@reference"
+			]);
+		});
 
-		Route::group(array('middleware' => [ "writeGroup" ] ), function() {
+		hasPermission('folder.edit', function() {
 			Route::POST('/fiche/{model}', 'ModelController@store');
 			Route::PUT('/fiche/{model}/{id}', 'ModelController@update');
 			Route::DELETE('/fiche/{model}/{id}', 'ModelController@destroy');
 			Route::POST('/reference', 'FolderController@createfile');
 		});
 
-//  Route::group(['middleware' => 'hasPermission:termsAndConditions.view' ], function() {
-		Route::group(array('middleware' => [ "unFreezeGroup" ]), function() {
+		hasPermission('folder.unlock', function() {
 			Route::get('unfreeze/{model}/{id}', 'ModelController@unfreeze');
 		});
 
-		Route::group(array('middleware' => [ "unFreezeGroup" ]), function() {
+		hasPermission('users.manage', function() {
 			Route::resource('users', 'UsersController');
 			Route::post('users/password/{id}', 'UsersController@password');
 		});

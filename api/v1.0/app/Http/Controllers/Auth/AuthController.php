@@ -32,11 +32,7 @@ class AuthController extends Controller {
 
   static public function hasPermission($header) {
       $user = Auth::user();
-      if ($user) {
-          $profile = $user->getProfile();
-      } else {
-          $profile = "public";
-      }
+      $profile = $user->group;
       if (!array_key_exists($profile, self::$permissions)) {
           abort(500, "invalid profile in hasPermission: $profile");
       }
@@ -112,6 +108,8 @@ class AuthController extends Controller {
 				break;
 
 		}
+
+		$data['authorized2'] = self::$permissions[$data['group']];
 
 		// Update last_login timestamp
 		$user = Auth::user();
@@ -287,167 +285,22 @@ class Role {
   /*  ASSIGNING ROLES *******************************************/
   /**************************************************************/
 
-  /****
-  Public
-        user not authenticated
-      @authentication => authenticated
-      @authentication + t&c valide => guest OR registered OR ... (according to profile)
-  */
-  $public = new Role("public");
 
-  /****
-  Authenticated (based on public)
-      user is authenticated but did not accept the terms and conditions
-      (s)he can do nothing
-      @accept t&c => guest
-  */
-  $authenticated = (new Role("authenticated", $public))
-    // User can view terms and conditions (latest one)
-    ->givePermission("termsAndConditions.view")
+  $readonly = (new Role("readonly"))
+    ->givePermission("folder.read")
+  	->givePermission("reports.execute")
+  	;
+
+  $cdc = (new Role("cdc", $readonly))
+    ->givePermission("folder.edit")
+    ->givePermission("folder.delete")
     ;
 
+  $manager = (new Role("manager", $cdc))
+  	->givePermission("folder.unlock")
+  	->givePermission("users.manage")
+  	;
 
-  /****
-  Guest (based on authenticated)
-      User is ready to use the application.
-      He still need to be accepted by an institution.
-
-      @accepted by institution (admin) => registered OR validator OR bbmanager OR admin
-  */
-  $guest = (new Role("guest", $authenticated))
-    // Has accepted T&C
-    ->givePermission("termsAndConditions.skip") // Frontend only
-
-    // Can list institutions
-    ->givePermission("institutions.list")
-
-    // Can create institution
-    ->givePermission("institutions.create")
-
-    // Can join institution
-    ->givePermission("institutions.join")
-
-    // Can enter its data's
-    ->givePermission("myAccount.edit")
-
-    // View the search options
-    ->givePermission("samples.options")
-
-    // A guest may see only the "summary" of a research on samples
-    ->givePermission("samples.preview")
-    ;
-
-
-
-  /****
-  Registered (based on guest)
-      User is part of an institution/biobank.
-      User can make research and ask for samples
-
-      @accepted by institution as validator (admin) => validator
-      @accepted by biobank as bbmanager (admin) => bbmanager
-      @accepted by admin as admin (admin) => admin
-  */
-  $registered = (new Role("registered", $guest))
-    // View its own institution
-    ->givePermission("myInstitution.view") // Frontend only
-
-    // Search samples
-    ->givePermission("samples.search")
-
-    // Send a request to ge samples to the biobanks
-    ->givePermission("samples.request")
-    ;
-
-
-  /****
-  Academic (based on registered)
-    Same as Registered, but inside a biobank. Rights are equivalents...
-
-  */
-  $academic = (new Role("academic", $registered))
-    ;
-
-
-  /****
-  Validator (based on registered)
-      Manager of an institution.
-      Can manage the users of its institution.
-
-      @accepted by admin as admin (admin) => admin
-  */
-  $validator = (new Role("validator", $registered))
-    // Manage (edit) its own institution
-    ->givePermission("myInstitution.manage")
-
-    // See the list of users of its own institution
-    ->givePermission("myInstitution.usersList") // Used in the backend, in InstitutionModel
-    ;
-
-
-  /****
-  Manager (based on validator)
-      Is responsible of a biobank
-
-      @accepted by admin as admin (admin) => admin
-  */
-  $manager = (new Role("manager", $validator))
-
-    // See the statistics of its own bb
-    ->givePermission("myInstitution.statistics")
-
-    // See the statistics of its own bb
-    ->givePermission("myInstitution.advancedSearch")
-
-    // Upload a file for bbks
-    ->givePermission("myInstitution.uploadFile")
-    ;
-
-
-  /****
-  Admin (based on manager)
-      General admin of the application.
-
-      @accepted by institution as validator (admin) => validator
-      @accepted by biobank as bbmanager (admin) => bbmanager
-  */
   $admin = (new Role("admin", $manager))
-    // Cannot join institution
-    ->givePermission("institutions.join", false)
-
-    // Cannot make an advanced search on its own institution
-    ->givePermission("myInstitution.advancedSearch", false)
-
-    // Allow the institution to be validated (and thus usable)
-    ->givePermission("institutions.validate")
-
-    // Manage (CRUD) all institutions
-    ->givePermission("institutions.manage")
-
-    // View the list of users of an institution
-    ->givePermission("institutions.usersList") // Used in the backend, in InstitutionModel
-
-    // Manage the institutions-biobank
-    ->givePermission("institutions.manageAcronym") // Used in InstitutionsController
-
-    // Can make an advanced search on an institution
-    ->givePermission("institutions.advancedSearch")
-
-    // Can change the terms and conditions
-    ->givePermission("termsAndConditions.manage")
-
-    // See the statistics of bbks
-    ->givePermission("institutions.statistics")
-
-    // Upload a file for bbks
-    ->givePermission("institutions.uploadFile")
-
-    // Can see website statistics
-    ->givePermission("website.statistics")
-
-    // View the security matrix
-    ->givePermission("admin.securityMatrix")
-    ;
+  	;
 }
-
-

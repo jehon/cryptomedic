@@ -17,7 +17,7 @@ class HasPermission
    */
   public function handle($request, Closure $next, $header)
   {
-    if (!BiobankAuthentificationController::hasPermission($header)) {
+    if (!AuthController::hasPermission($header)) {
         return response("Unauthorized '$header'.", 401);
     }
     return $next($request);
