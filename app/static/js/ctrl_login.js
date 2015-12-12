@@ -2,6 +2,7 @@
 
 mainApp.controller('ctrl_login', [ "$scope", function($scope) {
   cryptomedic.settings = {};
+  appState().actions.state.clear();
 
   $scope.doLogin = function() {
     $scope.username = jQuery("#login_username").val();
