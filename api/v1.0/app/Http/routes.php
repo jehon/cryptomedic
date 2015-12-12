@@ -34,6 +34,13 @@ Response::macro('folder', function($id, $addData = array()) {
 	return response()->jsonOrJSONP(array_merge(FolderController::getFolderOrFail($id), $addData));
 });
 
+// Check permissions
+if (!function_exists('hasPermission')) {
+	function hasPermission($permission, $fn) {
+		return Route::group([ 'middleware' => 'hasPermission:' . $permission ], $fn);
+	}
+}
+
 /**
  * For anybody
  */
@@ -95,6 +102,7 @@ Route::group([ 'prefix' => '/' . $flavor . '/api/' . basename(dirname(dirname(__
 			Route::POST('/reference', 'FolderController@createfile');
 		});
 
+//  Route::group(['middleware' => 'hasPermission:termsAndConditions.view' ], function() {
 		Route::group(array('middleware' => [ "unFreezeGroup" ]), function() {
 			Route::get('unfreeze/{model}/{id}', 'ModelController@unfreeze');
 		});
