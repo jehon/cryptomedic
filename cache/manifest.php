@@ -76,17 +76,26 @@ CACHE MANIFEST
 	// require("../app/index.php");
 	// ob_end_clean();
 
-	addLine("# Scripts auto-import");
-	addLine("");
-	foreach(Script::$scriptsList as $s) {
-		addTs($s["ts"]);
-		addOne($s["url"]);
-	}
-	addLine("");
+	// addLine("# Scripts auto-import");
+	// addLine("");
+	// foreach(Script::$scriptsList as $s) {
+	// 	addTs($s["ts"]);
+	// 	addOne($s["url"]);
+	// }
+	// addLine("");
 
 	addLine("# static");
 	addLine("");
 	foreach(MyFiles::glob("../app/static/*", true) as $f) {
+		if (in_array(basename($f), [ ".htaccess" ])) continue;
+		addFileTs($f);
+		addOne($f);
+	}
+	addLine("");
+
+	addLine("# build");
+	addLine("");
+	foreach(MyFiles::glob("../build/*", true) as $f) {
 		if (in_array(basename($f), [ ".htaccess" ])) continue;
 		addFileTs($f);
 		addOne($f);
@@ -98,8 +107,19 @@ CACHE MANIFEST
 	foreach(MyFiles::glob("../cache/*", true) as $f) {
 		if (in_array(basename($f), [ ".htaccess" ])) continue;
 		addFileTs($f);
-// 			addOne($f);
+		addOne($f);
 	}
+
+	addLine("");
+
+	addLine("# cache writes");
+	addLine("");
+	foreach(MyFiles::glob("../cache/templates/fiches/*", true) as $f) {
+		if (in_array(basename($f), [ ".htaccess" ])) continue;
+		addFileTs("../cache/templates/writes/" . basename($f));
+		addOne($f);
+	}
+
 ?>
 
 NETWORK:
