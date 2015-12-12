@@ -7,6 +7,11 @@ export default {
     dispatch(catalog.CONNECTION_SUCCESS)
   },
 
+  settings: function(data) {
+    dispatch(catalog.CONNECTION_SETTINGS, data)
+    return data;
+  },
+
   failed: function(httpErrorCode) {
     dispatch(catalog.CONNECTION_FAILED, httpErrorCode)
   },

@@ -206,7 +206,9 @@ function service_backend_fn() {
               // 'appVersion': cryptomedic.version,
               'computerId': window.localStorage.cryptomedicComputerId
         })
-        .then(mySendAction.bind(this, "init"));
+        .then(appState().actions.connection.settings)
+        .then(mySendAction.bind(this, "init"))
+        ;
     },
     'checkLogin': function() {
       return myFrontFetch(rest + "/auth/settings", null,
@@ -214,7 +216,10 @@ function service_backend_fn() {
               // 'appVersion': cryptomedic.version,
               'computerId': window.localStorage.cryptomedicComputerId
           }
-        );
+        )
+        .then(appState().actions.connection.settings)
+        .then(mySendAction.bind(this, "init"));
+        ;
     },
     'logout': function() {
       // TODO: clean up the cache --> cache managed in other object???
