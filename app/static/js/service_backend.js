@@ -191,7 +191,7 @@ function service_backend_fn() {
             appState().actions.connection.serverError();
             break;
         }
-        return Promise.reject(httpErrorCode);
+        return Promise.reject("myFrontFetch error: " + httpErrorCode);
       }
     );
   }
