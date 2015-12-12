@@ -16,4 +16,11 @@ RewriteEngine On
 #RewriteCond         %{DOCUMENT_ROOT}/%{REQUEST_URI} !-f
 #RewriteRule         /.*                 /opt/biobank/frontend/build/index.html  [L]
 
+
+########### Hybride app and build ##########
+RewriteCond         %{REQUEST_URI}      build/
+RewriteCond         %{DOCUMENT_ROOT}/%{REQUEST_URI} !-d
+RewriteCond         %{DOCUMENT_ROOT}/%{REQUEST_URI} !-f
+RewriteRule         build/(.*)          app/$1  [L]
+
 RedirectMatch    404       vendor
