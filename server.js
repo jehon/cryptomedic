@@ -3,7 +3,8 @@ var WebpackDevServer = require('webpack-dev-server');
 var config = require('./webpack.dev.js');
 
 new WebpackDevServer(webpack(config), {
-  publicPath: config.output.publicPath,
+  // publicPath: config.output.publicPath,
+  publicPath: "/cryptomedic/build",
   hot: true,
   historyApiFallback: true,
   stats: {
