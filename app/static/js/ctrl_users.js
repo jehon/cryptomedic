@@ -30,7 +30,8 @@ mainApp.controller('ctrl_users', [ '$scope', '$location', '$routeParams' , funct
   }
 
   $scope.doSave = function() {
-    console.log("saving user ", $scope.edit);
+    service_backend.userUpdate($scope.edit)
+      .then($scope.doCancel);
   }
 
   $scope.doShowPassword = function() {
@@ -39,7 +40,7 @@ mainApp.controller('ctrl_users', [ '$scope', '$location', '$routeParams' , funct
   }
 
   $scope.doSavePassword = function() {
-    service_backend.usersPassword($scope.edit.id, $scope.pwd.newcode).then(function(data) {
+    service_backend.userPassword($scope.edit.id, $scope.pwd.newcode).then(function(data) {
       $scope.$emit("message", { "level": "success", "text": "The password of user '" + $scope.edit.username + "' has been updated correctly."});
       $scope.users = data;
       $scope.password = false;

@@ -34,24 +34,32 @@
       </tr>
       <tr>
         <td>Username</td>
-        <td>{{edit.username}}</td>
+        <td>
+          <input id='newcode' ng-model="edit.username" class="form-control" placeholder="enter new password here" required autofocus>
+        </td>
       </tr>
       <tr>
         <td>Name</td>
-        <td>{{edit.name}}</td>
+        <td>
+          <input id='newcode' ng-model="edit.name" class="form-control" placeholder="enter new password here" required autofocus>
+        </td>
       </tr>
       <tr>
         <td>Email</td>
-        <td>{{edit.email}}</td>
+        <td>
+          <input id='newcode' ng-model="edit.email" class="form-control" placeholder="enter new password here" required autofocus>
+        </td>
       </tr>
       <tr>
         <td>Notes</td>
-        <td>{{edit.notes}}</td>
+        <td>
+          <input id='newcode' ng-model="edit.notes" class="form-control" placeholder="enter new password here" required autofocus>
+        </td>
       </tr>
     </table>
     <span ng-if='!password'>
       <span class='btn btn-default' ng-click='doCancel()'>cancel</span>
-      <!-- <span class='btn btn-info' ng-click='doSave()'>save</span> -->
+      <span class='btn btn-info' ng-click='doSave()'>save</span>
       <span class='btn btn-warning' ng-click='doShowPassword()'>set password</span>
     </span>
 

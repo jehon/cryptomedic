@@ -327,7 +327,11 @@ function service_backend_fn() {
       return myFrontFetch(rest + "/users");
     },
 
-    'usersPassword': function(id, pwd) {
+    'userUpdate': function(user) {
+      return myFrontFetch(rest + "/users/" + user.id, { method: 'PUT' }, user);
+    },
+
+    'userPassword': function(id, pwd) {
       return myFrontFetch(rest + "/users/password/" + id, { method: 'POST' }, { password: pwd });
     }
   };
