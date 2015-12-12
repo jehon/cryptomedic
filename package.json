@@ -56,7 +56,7 @@
     "build:dev:fast": "webpack --config webpack.dev.js",
     "build:prod": "webpack --config webpack.js -p",
     "build:prod:fast": "webpack --config webpack.js",
-    "dev-server": "node server.js",
+    "dev-server": "node server.js | grep 'built\\|error\\|VALID'",
     "postinstall": "bower install",
     "postupdate": "bower update"
   },
