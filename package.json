@@ -52,9 +52,8 @@
     "webpack-dev-server": "^1"
   },
   "scripts": {
-    "build:dev": "webpack --config webpack.dev.js -p",
-    "build:dev:fast": "webpack --config webpack.dev.js",
-    "build:prod": "webpack --config webpack.js -p",
+    "build:dev":       "webpack --config webpack.dev.js",
+    "build:prod":      "webpack --config webpack.js -p",
     "build:prod:fast": "webpack --config webpack.js",
     "dev-server": "node server.js | grep 'built\\|error\\|VALID'",
     "postinstall": "bower install",

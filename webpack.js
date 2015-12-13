@@ -14,10 +14,11 @@ var scriptLoader = require('script-loader');
 
 module.exports = {
   entry: []
+    .concat([
+      './app/bower_components/jquery-ui/themes/ui-lightness/jquery-ui.min.css',
+      './app/bower_components/bootstrap/dist/css/bootstrap.min.css'
+    ])
     .concat(glob.sync('./app/static/css/*.css'))
-    // .concat(glob.sync('./app/static/js/model_*.js'))
-    // .concat(glob.sync('./app/static/js/service_*.js'))
-    // .concat(glob.sync('./app/static/js/ctrl_*.js'))
     .concat([
       './app/status.js',
       // './app/static/js/bugreporting.js',
@@ -52,6 +53,9 @@ module.exports = {
       // './app/static/js/exceptions.js',
       // './app/static/worker/worker.js',
     ])
+    // .concat(glob.sync('./app/static/js/model_*.js'))
+    // .concat(glob.sync('./app/static/js/service_*.js'))
+    // .concat(glob.sync('./app/static/js/ctrl_*.js'))
     ,
   resolve: {
     extensions: ['', '.js', '.jsx'],
@@ -71,6 +75,12 @@ module.exports = {
   },
   module: {
     loaders: [
+      // {
+      //   test: /app\/static\/js/,
+      //   loaders: [
+      //     'script-loader',
+      //   ]
+      // },
       {
         test: /\.jsx?$/,
         exclude: /(node_modules)/,
