@@ -13,26 +13,28 @@
 
   t::setDefaultOption("baseExpression", "currentFile().");
 
-  function price($item) {
-    $name = explode(".", $item);
-    $name = $name[1];
-    $label = str_replace("_", " ", substr($item, strpos($item, '_') + 1));
-    if (array_key_exists($item, Bill::$translations)) {
-      $label = Bill::$translations[$item];
-    }
+  if (!function_exists("App\price")) {
+    function price($item) {
+      $name = explode(".", $item);
+      $name = $name[1];
+      $label = str_replace("_", " ", substr($item, strpos($item, '_') + 1));
+      if (array_key_exists($item, Bill::$translations)) {
+        $label = Bill::$translations[$item];
+      }
 
-    echo "<tr "
-      . "ng-if=\"currentFile().getPriceFor('$name') > 0\" "
-      . "ng-class='{ notModeRead: !currentFile().$name }'"
-      . ">";
-    echo "<td>$label</td>";
-    echo "<td ng-if=\"currentFile().getPriceFor('$name')<=1\">1x</td>";
-    echo "<td>";
-      (new t($item, [ "inline" => "style='width: 4em' step=1 min=0" ]))->value()->p();
-    echo "</td>";
-    echo "<td ng-if=\"currentFile().getPriceFor('$name')>1\"><div pricefor='$item'>{{currentFile().getPriceFor('$name')}}</div></td>";
-    echo "<td>{{currentFile().getTotalFor('$name')}}</td>";
-    echo "</tr>";
+      echo "<tr "
+        . "ng-if=\"currentFile().getPriceFor('$name') > 0\" "
+        . "ng-class='{ notModeRead: !currentFile().$name }'"
+        . ">";
+      echo "<td>$label</td>";
+      echo "<td ng-if=\"currentFile().getPriceFor('$name')<=1\">1x</td>";
+      echo "<td>";
+        (new t($item, [ "inline" => "style='width: 4em' step=1 min=0" ]))->value()->p();
+      echo "</td>";
+      echo "<td ng-if=\"currentFile().getPriceFor('$name')>1\"><div pricefor='$item'>{{currentFile().getPriceFor('$name')}}</div></td>";
+      echo "<td>{{currentFile().getTotalFor('$name')}}</td>";
+      echo "</tr>";
+    }
   }
 ?>
 <div class='container-fluid'>

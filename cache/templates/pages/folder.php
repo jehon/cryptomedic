@@ -1,57 +1,58 @@
 <?php
   t::setDefaultOption("baseExpression", "getCurrentFile().");
 
-  function submenu() {
-    ?>
-      <div ng-if="(page == 'file')" >
-        <span ng-if="(mode == 'add')" >
-          <!--  Add file route -->
-          <span id='button_save' ng-if='hasPermission("folder.edit")' class="btn btn-default" ng-click="actionCreate()">Create/Save</span>
-          <span class="btn btn-default" ng-click="actionCancel()">Cancel</span>
-        </span>
-        <span ng-if="(mode == 'read')">
-          <!--  View file route -->
-          <span ng-if="currentFile().isLocked()">
-            <img src='static/img/locked.gif' />
-            File is locked.
-            <span ng-if='!hasPermission("folder.unlock")'>You can not edit it anymore.</span>
-            <span ng-if='hasPermission("folder.unlock")' class="btn btn-default" ng-click='actionUnlock()'>
-              <img src='static/img/unlock.gif'>
-              Unlock the file
+  if (!function_exists("submenu")) {
+    function submenu() {
+      ?>
+        <div ng-if="(page == 'file')" >
+          <span ng-if="(mode == 'add')" >
+            <!--  Add file route -->
+            <span id='button_save' ng-if='hasPermission("folder.edit")' class="btn btn-default" ng-click="actionCreate()">Create/Save</span>
+            <span class="btn btn-default" ng-click="actionCancel()">Cancel</span>
+          </span>
+          <span ng-if="(mode == 'read')">
+            <!--  View file route -->
+            <span ng-if="currentFile().isLocked()">
+              <img src='static/img/locked.gif' />
+              File is locked.
+              <span ng-if='!hasPermission("folder.unlock")'>You can not edit it anymore.</span>
+              <span ng-if='hasPermission("folder.unlock")' class="btn btn-default" ng-click='actionUnlock()'>
+                <img src='static/img/unlock.gif'>
+                Unlock the file
+              </span>
+            </span>
+            <span ng-if="!currentFile().isLocked()" >
+              <span id='button_edit' ng-if='hasPermission("folder.edit")' class="btn btn-default" ng-click="go('/folder/' + patient_id + '/file/' + subtype + '/' + subid + '/edit')">Edit</span>
             </span>
           </span>
-          <span ng-if="!currentFile().isLocked()" >
-            <span id='button_edit' ng-if='hasPermission("folder.edit")' class="btn btn-default" ng-click="go('/folder/' + patient_id + '/file/' + subtype + '/' + subid + '/edit')">Edit</span>
+          <span ng-if="(mode == 'edit')">
+            <!--  Modify file route -->
+            <span id='button_delete' ng-if='hasPermission("folder.delete")' class="btn btn-default" ng-click="actionDelete()">Delete</span>
+            <span ng-if='hasPermission("folder.edit")' class="btn btn-default" ng-click="actionSave()">Save</span>
+            <span class="btn btn-default" ng-click="actionCancel()">Cancel</span>
           </span>
-        </span>
-        <span ng-if="(mode == 'edit')">
-          <!--  Modify file route -->
-          <span id='button_delete' ng-if='hasPermission("folder.delete")' class="btn btn-default" ng-click="actionDelete()">Delete</span>
-          <span ng-if='hasPermission("folder.edit")' class="btn btn-default" ng-click="actionSave()">Save</span>
-          <span class="btn btn-default" ng-click="actionCancel()">Cancel</span>
-        </span>
-      </div>
+        </div>
 
-      <div ng-if="(!page)" >
-        <span ng-if="(mode == 'read')">
-          <span id='patient_edit' ng-if='hasPermission("folder.edit")' class="btn btn-default" ng-click="go('/folder/' + patient_id + '/edit')">Edit</span>
-        </span>
-        <span ng-if="(mode == 'edit')">
-          <span id='patient_save'   ng-if='hasPermission("folder.edit")' class="btn btn-default" ng-click="actionSavePatient()">Save</span>
-          <span id='patient_delete' ng-if='hasPermission("folder.delete") && (folder.getSubFiles().length == 0)' class="btn btn-default" ng-click="actionDeletePatient()">Delete</span>
-          <span id='patient_cancel' class="btn btn-default" ng-click="actionCancel()">Cancel</span>
-        </span>
-        <!--  Modify patient route -->
-      </div>
+        <div ng-if="(!page)" >
+          <span ng-if="(mode == 'read')">
+            <span id='patient_edit' ng-if='hasPermission("folder.edit")' class="btn btn-default" ng-click="go('/folder/' + patient_id + '/edit')">Edit</span>
+          </span>
+          <span ng-if="(mode == 'edit')">
+            <span id='patient_save'   ng-if='hasPermission("folder.edit")' class="btn btn-default" ng-click="actionSavePatient()">Save</span>
+            <span id='patient_delete' ng-if='hasPermission("folder.delete") && (folder.getSubFiles().length == 0)' class="btn btn-default" ng-click="actionDeletePatient()">Delete</span>
+            <span id='patient_cancel' class="btn btn-default" ng-click="actionCancel()">Cancel</span>
+          </span>
+          <!--  Modify patient route -->
+        </div>
 
-      <div ng-if="patient_id < 0" class='text-center'>
-        <!--  Add patient route -->
-        <span ng-if='hasPermission("folder.edit")' class="btn btn-default" ng-click="actionCreatePatient()">Create patient</span>
-        <span class="btn btn-default" ng-click="go('/home')">Cancel</span>
-      </div>
-    <?php
+        <div ng-if="patient_id < 0" class='text-center'>
+          <!--  Add patient route -->
+          <span ng-if='hasPermission("folder.edit")' class="btn btn-default" ng-click="actionCreatePatient()">Create patient</span>
+          <span class="btn btn-default" ng-click="go('/home')">Cancel</span>
+        </div>
+      <?php
+    }
   }
-
 ?>
 <div class='container-fluid modeRead'>
   <div class='row'>

@@ -2,7 +2,7 @@
 
 define("ROOT", __DIR__ . "/../../cache/");
 
-require __DIR__ . "/../../php/myfiles.php";
+require_once __DIR__ . "/../../php/myfiles.php";
 
 class CacheTest extends PHPUnit_Framework_TestCase
 {
@@ -24,18 +24,6 @@ class CacheTest extends PHPUnit_Framework_TestCase
 		return $content;
 	}
 
-	/**
-	 * @   runInSeparateProcess
-	 */
-	// public function testManifest()
-	// {
-	// 	$content = $this->_testOneCachedFile("manifest.manifest");
-	// 	$this->assertNotEmpty($content);
-	// 	$this->assertStringStartsWith("CACHE MANIFEST", $content);
-	// 	$this->assertContains("NETWORK:", $content);
-	// 	$this->assertContains("CACHE:", $content);
-	// }
-
 	public function testTemplates() {
 		$cwd = getcwd();
 		chdir(ROOT . "/templates");
@@ -45,4 +33,34 @@ class CacheTest extends PHPUnit_Framework_TestCase
 		}
 		chdir($cwd);
 	}
+
+	/**
+	 * @   runInSeparateProcess
+	 */
+	// public function testManifest() {
+	// 	ob_start();
+	// 	include(__DIR__ . "/../../cache/manifest.php");
+	// 	$content = explode("\n", ob_get_contents());
+	// 	ob_end_clean();
+	// 	foreach($content as $c) {
+	// 		if (!trim($c) || ($c[0] == "#")) {
+	// 			continue;
+	// 		}
+	// 		if (in_array($c, [ "CACHE MANIFEST", "CACHE:", "NETWORK:", "FALLBACK:" ])) {
+	// 			break;
+	// 		}
+	// 		$c = str_replace("/cryptomedic/", "", $c);
+	// 		if (file_exists(__DIR__ . "/../../" . $c)) {
+	// 			continue;
+	// 		}
+	// 		# Test if the template is ok
+	// 		if (preg_match("%^app/../cache/%", $c)) {
+	// 			$cc = str_replace("app/../cache/", "", $c);
+	// 			if ($this->_testOneCachedFile($cc)) {
+	// 				continue;
+	// 			}
+	// 		}
+	// 		echo "?? " . $c . "\n";
+	// 	}
+	// }
 }

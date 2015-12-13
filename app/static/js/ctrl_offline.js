@@ -3,48 +3,48 @@
 // https://developer.mozilla.org/en-US/docs/Web/HTML/Using_the_application_cache
 
 mainApp.controller('ctrl_offline', [ '$scope', function($scope) {
+  $scope.info_available = false;
+  $scope.offline = "";
+  $scope.refreshAvailable = false;
+
+  window.applicationCache.addEventListener("progress", function(progress) {
+    if (progress.total) {
+      console.log(progress.loaded + "/" + progress.total);
+    }
+  });
+
+  window.applicationCache.addEventListener("updateready", function(event) {
+    $scope.info_available = true;
+    $scope.offline = "A new version of the application is available.";
+    $scope.refreshAvailable = true;
+    $scope.safeApply();
+  });
+
+  window.applicationCache.addEventListener("cached", function(progress) {
+    console.info("on cached");
     $scope.info_available = false;
-    $scope.offline = "";
-    $scope.refreshAvailable = false;
+    $scope.safeApply();
+  });
 
-    window.applicationCache.addEventListener("progress", function(progress) {
-	if (progress.total) {
-	    console.log(progress.loaded + "/" + progress.total);
-	}
-    });
+  window.applicationCache.addEventListener("error", function(event) {
+    console.error("Sorry, you have an error in your offline application.");
+    $scope.info_available = false;
+    $scope.safeApply();
+  });
 
-    window.applicationCache.addEventListener("updateready", function(event) {
-        $scope.info_available = true;
-	$scope.offline = "A new version of the application is available.";
-	$scope.refreshAvailable = true;
-	$scope.safeApply();
-    });
+  $scope.applicationRefresh = function() {
+    console.log("let's go !");
+    window.location.reload();
+  }
 
-    window.applicationCache.addEventListener("cached", function(progress) {
-	console.info("on cached");
-	$scope.info_available = false;
-	$scope.safeApply();
-    });
-
-    window.applicationCache.addEventListener("error", function(event) {
-	console.error("Sorry, you have an error in your offline application.");
-	$scope.info_available = false;
-	$scope.safeApply();
-    });
-
-    $scope.applicationRefresh = function() {
-	console.log("let's go !");
-	window.location.reload();
+  if (window.applicationCache) {
+    if (window.applicationCache.status === window.applicationCache.UPDATEREADY) {
+      window.applicationCache.swapCache();
+      console.log('swap cache has been called');
     }
+  }
 
-    if (window.applicationCache) {
-        if (window.applicationCache.status === window.applicationCache.UPDATEREADY) {
-            window.applicationCache.swapCache();
-            console.log('swap cache has been called');
-        }
-    }
-
-/*
+/* * /
     var cacheStatusValues = [];
     cacheStatusValues[0] = 'uncached';
     cacheStatusValues[1] = 'idle';
@@ -75,5 +75,5 @@ mainApp.controller('ctrl_offline', [ '$scope', function($scope) {
         }
         console.warn(message);
     }
-*/
+/* */
 }]);

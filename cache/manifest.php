@@ -6,17 +6,15 @@
 	}
 
 	define("TS_FORMAT", "Y-m-d H:i:s");
-?>
-CACHE MANIFEST
+	chdir(__DIR__);
 
-<?php
 
 	// By default, consider manifest mtime as a minimum
 	// This will be updated in addTs();
 	$lastModif = filemtime(__FILE__);
 
 	// Prevent output from here, since we will generate a header at the end of this file
-	require_once __DIR__ . "/../php/core.php";
+	require_once "../php/core.php";
 
 	function addLine($f) {
 		echo $f . "\n";
@@ -24,11 +22,11 @@ CACHE MANIFEST
 
 	function addOne($f) {
 		$f = str_replace("\\", "/", $f);
-		if ($f[0] == "/") {
-			addLine("$f");
-		} else {
-			addLine("/cryptomedic/app/$f");
+		if ($f[0] != "/") {
+			$f = "/cryptomedic/app/$f";
 		}
+		$f = str_replace("/app/../", "/", $f);
+		addLine("$f");
 	}
 
 	function addTs($ts, $header = "") {
@@ -50,6 +48,7 @@ CACHE MANIFEST
 		return addTs(filemtime($f), $f);
 	}
 
+	addLine("CACHE MANIFEST");
 	// addLine("# cryptomedic version: " . getVersion());
 	addLine("");
 
@@ -57,11 +56,9 @@ CACHE MANIFEST
 	addLine("");
 
 	addLine("# Manually added elements");
-	addFileTs("../app/index.php");
-	addOne("/cryptomedic/app/");
-	addFileTs("../index.html");
 	addOne("/cryptomedic/");
-	addFileTs("../../cryptomedic.version");
+	addOne("/cryptomedic/app/");
+	addOne("/cryptomedic/app/index.html");
 	addLine("");
 
 	addLine("# Include dependant php scripts");
@@ -70,19 +67,6 @@ CACHE MANIFEST
 		addFileTs($f);
 	}
 	addLine("");
-
-	// Use the index for import
-	// ob_start();
-	// require("../app/index.php");
-	// ob_end_clean();
-
-	// addLine("# Scripts auto-import");
-	// addLine("");
-	// foreach(Script::$scriptsList as $s) {
-	// 	addTs($s["ts"]);
-	// 	addOne($s["url"]);
-	// }
-	// addLine("");
 
 	addLine("# static");
 	addLine("");
@@ -105,27 +89,46 @@ CACHE MANIFEST
 	addLine("# cache");
 	addLine("");
 	foreach(MyFiles::glob("../cache/*", true) as $f) {
-		if (in_array(basename($f), [ ".htaccess" ])) continue;
 		addFileTs($f);
-		addOne($f);
 	}
-
 	addLine("");
 
-	addLine("# cache writes");
-	addLine("");
-	foreach(MyFiles::glob("../cache/templates/fiches/*", true) as $f) {
-		if (in_array(basename($f), [ ".htaccess" ])) continue;
-		addFileTs("../cache/templates/writes/" . basename($f));
-		addOne($f);
+	foreach(MyFiles::glob("../cache/templates/fiches/*", false) as $f) {
+		addOne(str_replace(".php", ".html", $f));
+		addOne("../cache/templates/writes/" . str_replace(".php", ".html", basename($f)));
 	}
+	addLine("");
 
-?>
+	foreach(MyFiles::glob("../cache/templates/folder_pages/*", false) as $f) {
+		addOne(str_replace(".php", ".html", $f));
+	}
+	addLine("");
 
-NETWORK:
-# online content (no cache)
-*
-<?php
+	foreach(MyFiles::glob("../cache/templates/pages/*", false) as $f) {
+		addOne(str_replace(".php", ".html", $f));
+	}
+	addLine("");
+
+	foreach(MyFiles::glob("../cache/templates/reports/*", false) as $f) {
+		addOne(str_replace(".php", ".html", $f));
+	}
+	addLine("");
+
+	foreach(MyFiles::glob("../cache/templates/summary/*", false) as $f) {
+		addOne(str_replace(".php", ".html", $f));
+	}
+	addLine("");
+
+	addLine("NETWORK:");
+	addLine("");
+	addLine("# online content (no cache)");
+	addLine("/cryptomedic/api/");
+	addLine("");
+
+	addLine("FALLBACK:");
+	addLine("");
+	addLine("/cryptomedic/app/		/cryptomedic/app/index.html");
+	addLine("");
 
 	addLine("");
 	addLine("# manifest last modif detected (second): " . $lastModif);
