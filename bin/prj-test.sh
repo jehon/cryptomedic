@@ -1,4 +1,6 @@
 #!/bin/bash
+clear
+clear
 
 set -e
 
