@@ -407,7 +407,3 @@ mainApp.controller('ctrl', [ '$scope', '$location', '$sce', function($scope, $lo
 
   $scope.doCheckLogin();
 }]);
-
-server.setSettings = function(data) {
-  server.settings = objectify(data);
-}
