@@ -1,1 +1,1770 @@
-var appState=function(e){function t(r){if(n[r])return n[r].exports;var o=n[r]={exports:{},id:r,loaded:!1};return e[r].call(o.exports,o,o.exports,t),o.loaded=!0,o.exports}var n={};return t.m=e,t.c=n,t.p="",t(0)}([function(e,t,n){n(29),e.exports=n(15)},function(e,t){"use strict";t["default"]=function(e){return e&&e.__esModule?e:{"default":e}},t.__esModule=!0},function(e,t){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var n={_define:function(e){n[e]=e}};t["default"]=n,e.exports=t["default"]},function(e,t,n){"use strict";function r(e,t){a["default"].dispatch({type:e,payload:t})}var o=n(1)["default"];Object.defineProperty(t,"__esModule",{value:!0}),t["default"]=r;var i=n(4),a=o(i);e.exports=t["default"]},function(e,t,n){"use strict";var r=n(1)["default"];Object.defineProperty(t,"__esModule",{value:!0});var o=n(23),i=n(22),a=r(i),d=n(21),u=r(d),f=n(12),l=r(f),s=n(14),c=r(s),p=n(13),g=r(p),h=(0,u["default"])({level:"info",collapsed:!0}),b=(0,o.compose)((0,o.applyMiddleware)(a["default"],h))(o.createStore),y=b((0,o.combineReducers)({connection:l["default"],state:c["default"],database:g["default"]}));t["default"]=y,e.exports=t["default"]},function(e,t,n){"use strict";function r(e){return e&&e.__esModule?e:{"default":e}}function o(e,t){function n(){return f}function r(e){l.push(e);var t=!0;return function(){if(t){t=!1;var n=l.indexOf(e);l.splice(n,1)}}}function o(e){if(!a["default"](e))throw new Error("Actions must be plain objects. Use custom middleware for async actions.");if("undefined"==typeof e.type)throw new Error('Actions may not have an undefined "type" property. Have you misspelled a constant?');if(s)throw new Error("Reducers may not dispatch actions.");try{s=!0,f=u(f,e)}finally{s=!1}return l.slice().forEach(function(e){return e()}),e}function i(e){u=e,o({type:d.INIT})}if("function"!=typeof e)throw new Error("Expected the reducer to be a function.");var u=e,f=t,l=[],s=!1;return o({type:d.INIT}),{dispatch:o,subscribe:r,getState:n,replaceReducer:i}}t.__esModule=!0,t["default"]=o;var i=n(7),a=r(i),d={INIT:"@@redux/INIT"};t.ActionTypes=d},function(e,t){"use strict";function n(){for(var e=arguments.length,t=Array(e),n=0;e>n;n++)t[n]=arguments[n];return function(e){return t.reduceRight(function(e,t){return t(e)},e)}}t.__esModule=!0,t["default"]=n,e.exports=t["default"]},function(e,t){"use strict";function n(e){if(!e||"object"!=typeof e)return!1;var t="function"==typeof e.constructor?Object.getPrototypeOf(e):Object.prototype;if(null===t)return!0;var n=t.constructor;return"function"==typeof n&&n instanceof n&&r(n)===r(Object)}t.__esModule=!0,t["default"]=n;var r=function(e){return Function.prototype.toString.call(e)};e.exports=t["default"]},function(e,t){"use strict";function n(e,t){return Object.keys(e).reduce(function(n,r){return n[r]=t(e[r],r),n},{})}t.__esModule=!0,t["default"]=n,e.exports=t["default"]},function(e,t,n){"use strict";var r=n(1)["default"];Object.defineProperty(t,"__esModule",{value:!0});var o=n(2),i=r(o),a=n(3),d=r(a);t["default"]={success:function(){(0,d["default"])(i["default"].CONNECTION_SUCCESS)},settings:function(e){return(0,d["default"])(i["default"].CONNECTION_SETTINGS,e),e},failed:function(e){(0,d["default"])(i["default"].CONNECTION_FAILED,e)},expired:function(){(0,d["default"])(i["default"].CONNECTION_EXPIRED)},serverError:function(){(0,d["default"])(i["default"].CONNECTION_SERVER_ERROR)}},e.exports=t["default"]},function(e,t,n){"use strict";var r=n(1)["default"];Object.defineProperty(t,"__esModule",{value:!0});var o=n(2),i=r(o),a=n(3),d=r(a);t["default"]={downloading:function(){(0,d["default"])(i["default"].DATABASE_DOWNLOADING)},downloaded:function(){(0,d["default"])(i["default"].DATABASE_DOWNLOADED)},uploading:function(e){(0,d["default"])(i["default"].DATABASE_UPLOADING,e)},uploaded:function(){(0,d["default"])(i["default"].DATABASE_UPLOADED)}},e.exports=t["default"]},function(e,t,n){"use strict";var r=n(1)["default"];Object.defineProperty(t,"__esModule",{value:!0});var o=n(2),i=r(o),a=n(3),d=r(a);t["default"]={busy:function(e){(0,d["default"])(i["default"].STATE_BUSY,e)},ready:function(){(0,d["default"])(i["default"].STATE_READY)},clear:function(){(0,d["default"])(i["default"].STATE_CLEAR)}},e.exports=t["default"]},function(e,t,n){"use strict";var r=n(1)["default"];Object.defineProperty(t,"__esModule",{value:!0});var o=n(2),i=r(o);i["default"]._define("CONNECTION_SUCCESS"),i["default"]._define("CONNECTION_EXPIRED"),i["default"]._define("CONNECTION_FAILED"),i["default"]._define("CONNECTION_SERVER_ERROR"),i["default"]._define("CONNECTION_SETTINGS"),t["default"]=function(e,t){return e||(e={connected:!1,authenticated:!1,serverError:!1,settings:!1}),t.type==i["default"].CONNECTION_SUCCESS||t.type==i["default"].CONNECTION_SETTINGS?{connected:!0,authenticated:!0,serverError:!1,settings:t.type==i["default"].CONNECTION_SETTINGS?t.payload:e.settings}:t.type==i["default"].CONNECTION_EXPIRED?{connected:!0,authenticated:!1,serverError:!1,settings:!1}:t.type==i["default"].CONNECTION_FAILED||t.type==i["default"].CONNECTION_SERVER_ERROR?{connected:Math.max(1,t.payload),authenticated:e.authenticated,serverError:t.type==i["default"].CONNECTION_SERVER_ERROR?t.payload:!1,settings:e.settings}:e},e.exports=t["default"]},function(e,t,n){"use strict";var r=n(1)["default"];Object.defineProperty(t,"__esModule",{value:!0});var o=n(2),i=r(o);i["default"]._define("DATABASE_DOWNLOADING"),i["default"]._define("DATABASE_DOWNLOADED"),i["default"]._define("DATABASE_UPLOADING"),i["default"]._define("DATABASE_UPLOADED"),t["default"]=function(e,t){return e||(e={downloading:!0,uploading:0}),t.type==i["default"].DATABASE_DOWNLOADING?{downloading:!0,uploading:e.uploading}:t.type==i["default"].DATABASE_DOWNLOADED?{downloading:!1,uploading:e.uploading}:t.type==i["default"].DATABASE_UPLAODING?{downloading:e.downloading,uploading:t.payload}:t.type==i["default"].DATABASE_UPLAODED?{downloading:e.downloading,uploading:0}:e},e.exports=t["default"]},function(e,t,n){"use strict";var r=n(1)["default"];Object.defineProperty(t,"__esModule",{value:!0});var o=n(2),i=r(o);i["default"]._define("STATE_BUSY"),i["default"]._define("STATE_READY"),i["default"]._define("STATE_CLEAR"),t["default"]=function(e,t){return e&&t.type!=i["default"].STATE_CLEAR||(e={busy:0,messages:"",max:0}),t.type==i["default"].STATE_BUSY?{busy:e.busy+1,messages:(e.messages+"<br>"+t.payload).trim(),max:e.max+1}:t.type==i["default"].STATE_READY?e.busy<=1?{busy:0,messages:"",max:0}:{busy:e.busy-1,messages:e.messages,max:e.max}:e},e.exports=t["default"]},function(e,t,n){"use strict";var r=n(1)["default"];Object.defineProperty(t,"__esModule",{value:!0});var o=n(2),i=r(o),a=n(4),d=r(a),u=n(9),f=r(u),l=n(11),s=r(l),c=n(10),p=r(c);t["default"]=function(){return{store:d["default"],actions:{connection:f["default"],state:s["default"],database:p["default"]},catalog:i["default"]}},e.exports=t["default"]},function(e,t,n){t=e.exports=n(17)(),t.push([e.id,"::-webkit-calendar-picker-indicator{color:red;background-image:url("+n(18)+")}.debug{border-left:15px solid #ff0;border-right:15px solid #ff0;border-color:#ff0}.debug_infos{font-size:xx-small;font-style:italic;color:#d3d3d3;text-align:right}.toberemoved{background-color:red}.loading{text-align:center}.loading:before{content:url("+n(20)+")}body,html{height:100%}body>div.container{padding-bottom:60px}.submenu{background-color:#d3d3d3}h1>img{height:35px;margin-right:20px}table.reporting>thead{border:2px solid #000;color:#fff}table.reporting>thead>tr>th{background-color:gray}table.reporting>thead>tr>th.b_right{border-right:1px solid #fff}table.reporting>thead>tr>th.b_left{border-left:1px solid #fff}table.reporting>thead>tr>th.b_bottom{border-bottom:1px solid #fff}table.reporting>thead>tr>th.b_top{border-top:1px solid #fff}table.reporting>thead>tr>th.b_all{border:1px solid #fff}table.reporting>tbody>tr>td,table.reporting>thead>tr>th{text-align:center}table.reporting>tbody{border:2px solid #000}table.reporting>tbody>tr>td:nth-child(1){text-align:left}table.reporting>tbody>tr:nth-child(odd){background-color:#d3d3d3}table.reporting>tbody>tr>td.subheader{background-color:gray;padding:5px;padding-top:10px;text-align:center;font-weight:700}table.reporting>tbody>tr>td.b_right{border-right:1px solid gray}table.reporting>tbody>tr>td.b_left{border-left:1px solid gray}table.reporting>tbody>tr>td.b_bottom{border-bottom:1px solid gray}table.reporting>tbody>tr>td.b_top{border-top:1px solid gray}table.reporting>tbody>tr>td.b_all{border:1px solid gray}.related .emptyValue,.summary .emptyValue{display:none}.modeRead .emptyValue{color:#d3d3d3;font-size:smaller;background-color:#fff}.modeRead .notModeRead,.modeWrite .notModeWrite{display:none}.catchedError{color:#b40000}.emptyValue .catchedError{color:#d3d3d3}fieldset{border-radius:10px;padding:10px;border:2px solid #002060}fieldset>legend{font-size:120%;color:#004a94;padding-left:10px;padding-right:10px;width:auto;margin-bottom:0}fieldset>legend>label{padding:0}fieldset>table{width:100%}fieldset>table>thead{font-style:italic}fieldset>table>tbody>tr:nth-child(odd){background-color:#e6e6e6}fieldset>table>tbody>tr>td:nth-of-type(1){width:120px;font-weight:700}fieldset>table>tbody>tr>td:nth-of-type(3),fieldset>table>thead>tr>th:nth-of-type(3){border-left:1px solid blue;padding-left:5px}input.ng-required{border:1px solid blue}.error,input.ng-invalid{border:3px solid red}input[type=date]{line-height:normal!important}input[type=checkbox].form-control{width:auto}.jserror{color:red;min-height:20px;background-image:url("+n(19)+");background-repeat:no-repeat;background-size:20px;padding-left:25px}.ui-datepicker-month,.ui-datepicker-year{color:#000}button img{height:17px}.left-menu-button{width:100%;white-space:normal;line-height:1}.navbar img{height:25px;padding-right:10px}.markContainer{position:relative}.mark{color:red;position:absolute;margin:0;padding:0;border:0;margin-top:-10px}.mark span{margin-left:-50%}.mark.hovered>span{background-color:red;color:#fff;z-index:100}tr.hovered{background-color:gray}.site-wrapper{display:table;width:100%;height:100%;min-height:100%;position:absolute;text-align:center;background:rgba(3,3,3,.6);color:#fff;z-index:500}.site-wrapper-inner{display:table-cell;vertical-align:top;background-color:#333}.cover-container{margin-right:auto;margin-left:auto}.inner{padding:30px}table.summary table>tbody>tr>td:nth-of-type(1){width:120px;font-weight:700;padding-right:10px}table.datalegend{font-size:9px;padding:0;width:100%}table.datalegend>thead>tr>th{font-size:9px;padding:2px}@media (min-width:768px){.masthead{position:fixed;top:0}.mastfoot{position:fixed;bottom:0}.site-wrapper-inner{vertical-align:middle}.cover-container,.mastfoot,.masthead{width:100%}}@media (min-width:992px){.cover-container,.mastfoot,.masthead{width:700px}}",""])},function(e,t){e.exports=function(){var e=[];return e.toString=function(){for(var e=[],t=0;t<this.length;t++){var n=this[t];n[2]?e.push("@media "+n[2]+"{"+n[1]+"}"):e.push(n[1])}return e.join("")},e.i=function(t,n){"string"==typeof t&&(t=[[null,t,""]]);for(var r={},o=0;o<this.length;o++){var i=this[o][0];"number"==typeof i&&(r[i]=!0)}for(o=0;o<t.length;o++){var a=t[o];"number"==typeof a[0]&&r[a[0]]||(n&&!a[2]?a[2]=n:n&&(a[2]="("+a[2]+") and ("+n+")"),e.push(a))}},e}},function(e,t,n){e.exports=n.p+"img/cal.gif"},function(e,t,n){e.exports=n.p+"img/error.png"},function(e,t,n){e.exports=n.p+"img/waiting.gif"},function(e,t){"use strict";function n(){var e=arguments.length<=0||void 0===arguments[0]?{}:arguments[0];return function(t){var n=t.getState;return function(t){return function(r){var o=e.level,d=void 0===o?"log":o,u=e.logger,f=void 0===u?window.console:u,l=e.collapsed,s=e.predicate,c=e.duration,p=void 0===c?!1:c,g=e.timestamp,h=void 0===g?!0:g,b=e.transformer,y=e.stateTransformer,v=void 0===y?function(e){return e}:y,m=e.actionTransformer,x=void 0===m?function(e){return e}:m,_=e.colors,E=void 0===_?{title:function(){return"#000000"},prevState:function(){return"#9E9E9E"},action:function(){return"#03A9F4"},nextState:function(){return"#4CAF50"}}:_;if("undefined"==typeof f)return t(r);if("function"==typeof s&&!s(n,r))return t(r);b&&console.error("Option 'transformer' is deprecated, use stateTransformer instead");var O=a.now(),A=v(n()),w=x(r),N=t(r),T=a.now()-O,S=v(n()),C=new Date,R="function"==typeof l?l(n,r):l,I=i(C),D=E.title?"color: "+E.title(w)+";":null,M="action "+w.type+(h?I:"")+(p?" in "+T.toFixed(2)+" ms":"");try{R?E.title?f.groupCollapsed("%c "+M,D):f.groupCollapsed(M):E.title?f.group("%c "+M,D):f.group(M)}catch(k){f.log(M)}E.prevState?f[d]("%c prev state","color: "+E.prevState(A)+"; font-weight: bold",A):f[d]("prev state",A),E.action?f[d]("%c action","color: "+E.action(w)+"; font-weight: bold",w):f[d]("action",w),E.nextState?f[d]("%c next state","color: "+E.nextState(S)+"; font-weight: bold",S):f[d]("next state",S);try{f.groupEnd()}catch(k){f.log("—— log end ——")}return N}}}}Object.defineProperty(t,"__esModule",{value:!0});var r=function(e,t){return new Array(t+1).join(e)},o=function(e,t){return r("0",t-e.toString().length)+e},i=function(e){return" @ "+o(e.getHours(),2)+":"+o(e.getMinutes(),2)+":"+o(e.getSeconds(),2)+"."+o(e.getMilliseconds(),3)},a="undefined"!=typeof performance&&"function"==typeof performance.now?performance:Date;t["default"]=n,e.exports=t["default"]},function(e,t){"use strict";function n(e){var t=e.dispatch,n=e.getState;return function(e){return function(r){return"function"==typeof r?r(t,n):e(r)}}}t.__esModule=!0,t["default"]=n,e.exports=t["default"]},function(e,t,n){"use strict";function r(e){return e&&e.__esModule?e:{"default":e}}t.__esModule=!0;var o=n(5),i=r(o),a=n(26),d=r(a),u=n(25),f=r(u),l=n(24),s=r(l),c=n(6),p=r(c);t.createStore=i["default"],t.combineReducers=d["default"],t.bindActionCreators=f["default"],t.applyMiddleware=s["default"],t.compose=p["default"]},function(e,t,n){"use strict";function r(e){return e&&e.__esModule?e:{"default":e}}function o(){for(var e=arguments.length,t=Array(e),n=0;e>n;n++)t[n]=arguments[n];return function(e){return function(n,r){var o=e(n,r),a=o.dispatch,u=[],f={getState:o.getState,dispatch:function(e){return a(e)}};return u=t.map(function(e){return e(f)}),a=d["default"].apply(void 0,u)(o.dispatch),i({},o,{dispatch:a})}}}t.__esModule=!0;var i=Object.assign||function(e){for(var t=1;t<arguments.length;t++){var n=arguments[t];for(var r in n)Object.prototype.hasOwnProperty.call(n,r)&&(e[r]=n[r])}return e};t["default"]=o;var a=n(6),d=r(a);e.exports=t["default"]},function(e,t,n){"use strict";function r(e){return e&&e.__esModule?e:{"default":e}}function o(e,t){return function(){return t(e.apply(void 0,arguments))}}function i(e,t){if("function"==typeof e)return o(e,t);if("object"!=typeof e||null===e||void 0===e)throw new Error("bindActionCreators expected an object or a function, instead received "+(null===e?"null":typeof e)+'. Did you write "import ActionCreators from" instead of "import * as ActionCreators from"?');return d["default"](e,function(e){return o(e,t)})}t.__esModule=!0,t["default"]=i;var a=n(8),d=r(a);e.exports=t["default"]},function(e,t,n){(function(r){"use strict";function o(e){return e&&e.__esModule?e:{"default":e}}function i(e,t){var n=t&&t.type,r=n&&'"'+n.toString()+'"'||"an action";return'Reducer "'+e+'" returned undefined handling '+r+". To ignore an action, you must explicitly return the previous state."}function a(e,t,n){var r=Object.keys(t),o=n&&n.type===f.ActionTypes.INIT?"initialState argument passed to createStore":"previous state received by the reducer";if(0===r.length)return"Store does not have a valid reducer. Make sure the argument passed to combineReducers is an object whose values are reducers.";if(!s["default"](e))return"The "+o+' has unexpected type of "'+{}.toString.call(e).match(/\s([a-z|A-Z]+)/)[1]+'". Expected argument to be an object with the following '+('keys: "'+r.join('", "')+'"');var i=Object.keys(e).filter(function(e){return r.indexOf(e)<0});return i.length>0?"Unexpected "+(i.length>1?"keys":"key")+" "+('"'+i.join('", "')+'" found in '+o+". ")+"Expected to find one of the known reducer keys instead: "+('"'+r.join('", "')+'". Unexpected keys will be ignored.'):void 0}function d(e){Object.keys(e).forEach(function(t){var n=e[t],r=n(void 0,{type:f.ActionTypes.INIT});if("undefined"==typeof r)throw new Error('Reducer "'+t+'" returned undefined during initialization. If the state passed to the reducer is undefined, you must explicitly return the initial state. The initial state may not be undefined.');var o="@@redux/PROBE_UNKNOWN_ACTION_"+Math.random().toString(36).substring(7).split("").join(".");if("undefined"==typeof n(void 0,{type:o}))throw new Error('Reducer "'+t+'" returned undefined when probed with a random type. '+("Don't try to handle "+f.ActionTypes.INIT+' or other actions in "redux/*" ')+"namespace. They are considered private. Instead, you must return the current state for any unknown actions, unless it is undefined, in which case you must return the initial state, regardless of the action type. The initial state may not be undefined.")})}function u(e){var t,n=h["default"](e,function(e){return"function"==typeof e});try{d(n)}catch(o){t=o}var u=p["default"](n,function(){});return function(e,o){if(void 0===e&&(e=u),t)throw t;var d=!1,f=p["default"](n,function(t,n){var r=e[n],a=t(r,o);if("undefined"==typeof a){var u=i(n,o);throw new Error(u)}return d=d||a!==r,a});if("production"!==r.env.NODE_ENV){var l=a(e,f,o);l&&console.error(l)}return d?f:e}}t.__esModule=!0,t["default"]=u;var f=n(5),l=n(7),s=o(l),c=n(8),p=o(c),g=n(27),h=o(g);e.exports=t["default"]}).call(t,n(30))},function(e,t){"use strict";function n(e,t){return Object.keys(e).reduce(function(n,r){return t(e[r])&&(n[r]=e[r]),n},{})}t.__esModule=!0,t["default"]=n,e.exports=t["default"]},function(e,t,n){function r(e,t){for(var n=0;n<e.length;n++){var r=e[n],o=p[r.id];if(o){o.refs++;for(var i=0;i<o.parts.length;i++)o.parts[i](r.parts[i]);for(;i<r.parts.length;i++)o.parts.push(f(r.parts[i],t))}else{for(var a=[],i=0;i<r.parts.length;i++)a.push(f(r.parts[i],t));p[r.id]={id:r.id,refs:1,parts:a}}}}function o(e){for(var t=[],n={},r=0;r<e.length;r++){var o=e[r],i=o[0],a=o[1],d=o[2],u=o[3],f={css:a,media:d,sourceMap:u};n[i]?n[i].parts.push(f):t.push(n[i]={id:i,parts:[f]})}return t}function i(e,t){var n=b(),r=m[m.length-1];if("top"===e.insertAt)r?r.nextSibling?n.insertBefore(t,r.nextSibling):n.appendChild(t):n.insertBefore(t,n.firstChild),m.push(t);else{if("bottom"!==e.insertAt)throw new Error("Invalid value for parameter 'insertAt'. Must be 'top' or 'bottom'.");n.appendChild(t)}}function a(e){e.parentNode.removeChild(e);var t=m.indexOf(e);t>=0&&m.splice(t,1)}function d(e){var t=document.createElement("style");return t.type="text/css",i(e,t),t}function u(e){var t=document.createElement("link");return t.rel="stylesheet",i(e,t),t}function f(e,t){var n,r,o;if(t.singleton){var i=v++;n=y||(y=d(t)),r=l.bind(null,n,i,!1),o=l.bind(null,n,i,!0)}else e.sourceMap&&"function"==typeof URL&&"function"==typeof URL.createObjectURL&&"function"==typeof URL.revokeObjectURL&&"function"==typeof Blob&&"function"==typeof btoa?(n=u(t),r=c.bind(null,n),o=function(){a(n),n.href&&URL.revokeObjectURL(n.href)}):(n=d(t),r=s.bind(null,n),o=function(){a(n)});return r(e),function(t){if(t){if(t.css===e.css&&t.media===e.media&&t.sourceMap===e.sourceMap)return;r(e=t)}else o()}}function l(e,t,n,r){var o=n?"":r.css;if(e.styleSheet)e.styleSheet.cssText=x(t,o);else{var i=document.createTextNode(o),a=e.childNodes;a[t]&&e.removeChild(a[t]),a.length?e.insertBefore(i,a[t]):e.appendChild(i)}}function s(e,t){var n=t.css,r=t.media;t.sourceMap;if(r&&e.setAttribute("media",r),e.styleSheet)e.styleSheet.cssText=n;else{for(;e.firstChild;)e.removeChild(e.firstChild);e.appendChild(document.createTextNode(n))}}function c(e,t){var n=t.css,r=(t.media,t.sourceMap);r&&(n+="\n/*# sourceMappingURL=data:application/json;base64,"+btoa(unescape(encodeURIComponent(JSON.stringify(r))))+" */");var o=new Blob([n],{type:"text/css"}),i=e.href;e.href=URL.createObjectURL(o),i&&URL.revokeObjectURL(i)}var p={},g=function(e){var t;return function(){return"undefined"==typeof t&&(t=e.apply(this,arguments)),t}},h=g(function(){return/msie [6-9]\b/.test(window.navigator.userAgent.toLowerCase())}),b=g(function(){return document.head||document.getElementsByTagName("head")[0]}),y=null,v=0,m=[];e.exports=function(e,t){t=t||{},"undefined"==typeof t.singleton&&(t.singleton=h()),"undefined"==typeof t.insertAt&&(t.insertAt="bottom");var n=o(e);return r(n,t),function(e){for(var i=[],a=0;a<n.length;a++){var d=n[a],u=p[d.id];u.refs--,i.push(u)}if(e){var f=o(e);r(f,t)}for(var a=0;a<i.length;a++){var u=i[a];if(0===u.refs){for(var l=0;l<u.parts.length;l++)u.parts[l]();delete p[u.id]}}}};var x=function(){var e=[];return function(t,n){return e[t]=n,e.filter(Boolean).join("\n")}}()},function(e,t,n){var r=n(16);"string"==typeof r&&(r=[[e.id,r,""]]);n(28)(r,{});r.locals&&(e.exports=r.locals)},function(e,t){function n(){f=!1,a.length?u=a.concat(u):l=-1,u.length&&r()}function r(){if(!f){var e=setTimeout(n);f=!0;for(var t=u.length;t;){for(a=u,u=[];++l<t;)a&&a[l].run();l=-1,t=u.length}a=null,f=!1,clearTimeout(e)}}function o(e,t){this.fun=e,this.array=t}function i(){}var a,d=e.exports={},u=[],f=!1,l=-1;d.nextTick=function(e){var t=new Array(arguments.length-1);if(arguments.length>1)for(var n=1;n<arguments.length;n++)t[n-1]=arguments[n];u.push(new o(e,t)),1!==u.length||f||setTimeout(r,0)},o.prototype.run=function(){this.fun.apply(null,this.array)},d.title="browser",d.browser=!0,d.env={},d.argv=[],d.version="",d.versions={},d.on=i,d.addListener=i,d.once=i,d.off=i,d.removeListener=i,d.removeAllListeners=i,d.emit=i,d.binding=function(e){throw new Error("process.binding is not supported")},d.cwd=function(){return"/"},d.chdir=function(e){throw new Error("process.chdir is not supported")},d.umask=function(){return 0}}]);
+var appState =
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId])
+/******/ 			return installedModules[moduleId].exports;
+
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			exports: {},
+/******/ 			id: moduleId,
+/******/ 			loaded: false
+/******/ 		};
+
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+
+/******/ 		// Flag the module as loaded
+/******/ 		module.loaded = true;
+
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+
+
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(0);
+/******/ })
+/************************************************************************/
+/******/ ([
+/* 0 */
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(1);
+	module.exports = __webpack_require__(8);
+
+
+/***/ },
+/* 1 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(2);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(7)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./application.css", function() {
+				var newContent = require("!!./../../../node_modules/css-loader/index.js!./application.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 2 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(3)();
+	// imports
+
+
+	// module
+	exports.push([module.id, "/* div[ng-cloak], div.ng-cloak {\r\n  background-color: red;\r\n  width: 100px;\r\n  height: 100px;\r\n  display: block;\r\n}\r\n */\r\n/*\r\n * Globals\r\n */\r\n\r\n::-webkit-calendar-picker-indicator {\r\n  color: red;\r\n  background-image: url(" + __webpack_require__(4) + ");\r\n}\r\n\r\n.debug {\r\n\t/* color: white; */\r\n\t/* background-color: yellow; */\r\n\tborder-left: solid 15px yellow;\r\n\tborder-right: solid 15px yellow;\r\n \tborder-color: yellow;\r\n}\r\n\r\n.debug_infos {\r\n  font-size: xx-small; \r\n  font-style: italic;\r\n  color: lightgray;\r\n  text-align: right;\r\n}\r\n\r\n\r\n.toberemoved {\r\n  background-color: red;\r\n}\r\n\r\n.loading {\r\n\ttext-align: center;\r\n}\r\n\r\n.loading:before {\r\n\tcontent: url(" + __webpack_require__(5) + ");\r\n}\r\n\r\n/*\r\n * Base structure\r\n */\r\n\r\nhtml, body {\r\n  height: 100%;\r\n}\r\n\r\nbody > div.container {\r\n \tpadding-bottom: 60px;\r\n}\r\n\r\n.submenu {\r\n  background-color: lightgray;\r\n}\r\n\r\nh1 > img {\r\n  height: 35px;\r\n  margin-right: 20px;\r\n}\r\n/********************************************\r\n * Reports\r\n */\r\n\r\ntable.reporting > thead {\r\n  border: black 2px solid;\r\n  color: white;\r\n}\r\n\r\ntable.reporting > thead > tr > th {\r\n  background-color: gray;\r\n}\r\n\r\ntable.reporting > thead > tr > th.b_right {\r\n    border-right: white 1px solid;\r\n}\r\n\r\ntable.reporting > thead > tr > th.b_left {\r\n    border-left: white 1px solid;\r\n}\r\n\r\ntable.reporting > thead > tr > th.b_bottom {\r\n    border-bottom: white 1px solid;\r\n}\r\n\r\ntable.reporting > thead > tr > th.b_top {\r\n    border-top: white 1px solid;\r\n}\r\n\r\ntable.reporting > thead > tr > th.b_all {\r\n    border: white 1px solid;\r\n}\r\n\r\ntable.reporting > tbody > tr > td, table.reporting > thead > tr > th {\r\n   text-align: center;\r\n}\r\n\r\ntable.reporting > tbody {\r\n  border: black 2px solid;\r\n}\r\n\r\ntable.reporting > tbody > tr > td:nth-child(1) {\r\n  text-align: left;\r\n}\r\n\r\ntable.reporting > tbody > tr:nth-child(odd) {\r\n  background-color: lightgray;\r\n}\r\n\r\ntable.reporting > tbody > tr > td.subheader {\r\n  background-color: gray;\r\n  padding: 5px;\r\n  padding-top: 10px;\r\n  text-align: center;\r\n  font-weight: bold;\r\n}\r\n\r\ntable.reporting > tbody > tr > td.b_right {\r\n    border-right: gray 1px solid;\r\n}\r\n\r\ntable.reporting > tbody > tr > td.b_left {\r\n    border-left: gray 1px solid;\r\n}\r\n\r\ntable.reporting > tbody > tr > td.b_bottom {\r\n    border-bottom: gray 1px solid;\r\n}\r\n\r\ntable.reporting > tbody > tr > td.b_top {\r\n    border-top: gray 1px solid;\r\n}\r\n\r\ntable.reporting > tbody > tr > td.b_all {\r\n    border: gray 1px solid;\r\n}\r\n\r\n/********************************************\r\n * Data display (modes, emtpyValues)\r\n */\r\n.summary .emptyValue {\r\n  display: none;\r\n}\r\n\r\n.related .emptyValue {\r\n  display: none;\r\n}\r\n\r\n.modeRead .emptyValue {\r\n  color: lightgray;\r\n  font-size: smaller;\r\n  background-color: white;\r\n}\r\n\r\n.modeRead .notModeRead {\r\n  display: none;\r\n}\r\n\r\n.modeWrite .notModeWrite {\r\n  display: none;\r\n}\r\n\r\n.catchedError {\r\n  color: rgb(180,0,0);\r\n}\r\n\r\n.emptyValue .catchedError {\r\n  color: lightgray;\r\n}\r\n/**********************************************\r\n * Fieldsets (databoxes)\r\n */\r\nfieldset {\r\n  border-radius: 10px;\r\n  padding: 10px;\r\n  border-style:solid; \r\n  border-width:2px; \r\n  border-color:#002060; \r\n}\r\n\r\nfieldset > legend {\r\n  font-size: 120%;\r\n  color: #004A94;\r\n  padding-left: 10px;\r\n  padding-right: 10px;\r\n  width: auto;\r\n  margin-bottom: 0px;\r\n}\r\n\r\nfieldset > legend > label {\r\n  padding: 0px;\r\n}\r\n\r\nfieldset > table {\r\n  width: 100%;\r\n}\r\n\r\nfieldset > table > thead {\r\n  font-style: italic;\r\n}\r\n\r\nfieldset > table > tbody > tr:nth-child(odd) {\r\n  background-color: rgb(230, 230, 230);\r\n}\r\n\r\nfieldset > table > tbody > tr > td:nth-of-type(1) { /*Setting the width of column 1.*/\r\n  width: 120px;\r\n  font-weight: 700;\r\n}\r\n\r\nfieldset > table > tbody > tr > td:nth-of-type(3), fieldset > table > thead > tr > th:nth-of-type(3) { /*Setting the width of column 1.*/\r\n\tborder-left: solid blue 1px;\r\n\tpadding-left: 5px;\r\n}\r\n\r\n/********************************************\r\n * Input\r\n */\r\ninput.ng-required {\r\n  border: 1px solid blue;\r\n}\r\n\r\ninput.ng-invalid, .error {\r\n  border: 3px solid red;\r\n}\r\n\r\ninput[type=date] {\r\n  /*line-height: inherit !important; */\r\n  line-height: normal !important;  /* Workaround bootstrap */\r\n}\r\n\r\ninput[type=checkbox].form-control {\r\n  width: auto;\r\n}\r\n\r\n.jserror {\r\n  \tcolor: red;\r\n  \tmin-height: 20px;\r\n  \tbackground-image: url(" + __webpack_require__(6) + ");\r\n\tbackground-repeat: no-repeat;\r\n\tbackground-size: 20px;\r\n\tpadding-left: 25px; \r\n}\r\n\r\n.ui-datepicker-month, .ui-datepicker-year {\r\n\tcolor: black;\r\n}\r\n\r\n/********************************************\r\n * Menu / buttons\r\n */\r\nbutton img {\r\n\theight: 17px;\r\n}\r\n\r\n.left-menu-button {\r\n  width: 100%; \r\n  white-space: normal;\r\n  line-height: 1;\r\n}\r\n\r\n.navbar img {\r\n\theight: \t\t25px;\r\n\tpadding-right:  10px;\t\r\n} \r\n\r\n/********************************************\r\n *  Marks and graphics\r\n */\r\n.markContainer {\r\n  /* position: absolute -> relative to the first non-static element -> relative to 0,0 = pseudo-static */\r\n  position: relative;\r\n}\r\n\r\n.mark {\r\n  color: red;\r\n  position: absolute;\r\n  margin: 0;\r\n  padding: 0;\r\n  border: 0;  \r\n  margin-top: -10px;\r\n}\r\n\r\n.mark span {\r\n  margin-left: -50%;       \r\n}\r\n\r\n.mark.hovered > span {\r\n  background-color: red;\r\n  color: white;\r\n  z-index: 100;\r\n}\r\n\r\ntr.hovered {\r\n  background-color: gray;\r\n}\r\n\r\n/********************************************\r\n *  Overlays \r\n */\r\n.site-wrapper {\r\n\tdisplay: table;\r\n\twidth: 100%;\r\n\theight: 100%; /* For at least Firefox */\r\n\tmin-height: 100%;\r\n\tposition: absolute;\r\n\ttext-align: center;\r\n  \tbackground: rgba(3, 3, 3, 0.6);\r\n/* \tbackground-color: #333; */\r\n\tcolor: #fff;\r\n\tz-index: 500;\r\n}\r\n\r\n.site-wrapper-inner {\r\n\tdisplay: table-cell;\r\n\tvertical-align: top;\r\n\tbackground-color: #333;  \r\n/*  \tbackground: rgba(3, 3, 3, 1); */\r\n}\r\n\r\n.cover-container {\r\n  margin-right: auto;\r\n  margin-left: auto;\r\n}\r\n\r\n/* Padding for spacing */\r\n.inner {\r\n  padding: 30px;\r\n}\r\n\r\n/**********************************************\r\n * Summary\r\n */\r\ntable.summary table > tbody > tr > td:nth-of-type(1) { /*Setting the width of column 1.*/\r\n  width: 120px;\r\n  font-weight: 700;\r\n  padding-right: 10px;\r\n}\r\n\r\n/*******************************************\r\n/* Data Legend\r\n */\r\ntable.datalegend {\r\n    font-size: 9px;\r\n    padding: 0px;\r\n    width: 100%;\r\n}\r\n\r\ntable.datalegend > thead > tr> th {\r\n    font-size: 9px;\r\n    padding: 2px;\r\n}\r\n\r\n/********************************************\r\n/******************************************** OLD\r\n/********************************************/\r\n\r\n/*\r\n * Affix and center\r\n */\r\n\r\n@media (min-width: 768px) {\r\n  /* Pull out the header and footer */\r\n  .masthead {\r\n    position: fixed;\r\n    top: 0;\r\n  }\r\n  .mastfoot {\r\n    position: fixed;\r\n    bottom: 0;\r\n  }\r\n  /* Start the vertical centering */\r\n  .site-wrapper-inner {\r\n    vertical-align: middle;\r\n  }\r\n  /* Handle the widths */\r\n  .masthead,\r\n  .mastfoot,\r\n  .cover-container {\r\n    width: 100%; /* Must be percentage or pixels for horizontal alignment */\r\n  }\r\n}\r\n\r\n@media (min-width: 992px) {\r\n  .masthead,\r\n  .mastfoot,\r\n  .cover-container {\r\n    width: 700px;\r\n  }\r\n}\r\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 3 */
+/***/ function(module, exports) {
+
+	/*
+		MIT License http://www.opensource.org/licenses/mit-license.php
+		Author Tobias Koppers @sokra
+	*/
+	// css base code, injected by the css-loader
+	module.exports = function() {
+		var list = [];
+
+		// return the list of modules as css string
+		list.toString = function toString() {
+			var result = [];
+			for(var i = 0; i < this.length; i++) {
+				var item = this[i];
+				if(item[2]) {
+					result.push("@media " + item[2] + "{" + item[1] + "}");
+				} else {
+					result.push(item[1]);
+				}
+			}
+			return result.join("");
+		};
+
+		// import a list of modules into the list
+		list.i = function(modules, mediaQuery) {
+			if(typeof modules === "string")
+				modules = [[null, modules, ""]];
+			var alreadyImportedModules = {};
+			for(var i = 0; i < this.length; i++) {
+				var id = this[i][0];
+				if(typeof id === "number")
+					alreadyImportedModules[id] = true;
+			}
+			for(i = 0; i < modules.length; i++) {
+				var item = modules[i];
+				// skip already imported module
+				// this implementation is not 100% perfect for weird media query combinations
+				//  when a module is imported multiple times with different media queries.
+				//  I hope this will never occur (Hey this way we have smaller bundles)
+				if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
+					if(mediaQuery && !item[2]) {
+						item[2] = mediaQuery;
+					} else if(mediaQuery) {
+						item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
+					}
+					list.push(item);
+				}
+			}
+		};
+		return list;
+	};
+
+
+/***/ },
+/* 4 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "img/cal.gif";
+
+/***/ },
+/* 5 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "img/waiting.gif";
+
+/***/ },
+/* 6 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "img/error.png";
+
+/***/ },
+/* 7 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/*
+		MIT License http://www.opensource.org/licenses/mit-license.php
+		Author Tobias Koppers @sokra
+	*/
+	var stylesInDom = {},
+		memoize = function(fn) {
+			var memo;
+			return function () {
+				if (typeof memo === "undefined") memo = fn.apply(this, arguments);
+				return memo;
+			};
+		},
+		isOldIE = memoize(function() {
+			return /msie [6-9]\b/.test(window.navigator.userAgent.toLowerCase());
+		}),
+		getHeadElement = memoize(function () {
+			return document.head || document.getElementsByTagName("head")[0];
+		}),
+		singletonElement = null,
+		singletonCounter = 0,
+		styleElementsInsertedAtTop = [];
+
+	module.exports = function(list, options) {
+		if(false) {
+			if(typeof document !== "object") throw new Error("The style-loader cannot be used in a non-browser environment");
+		}
+
+		options = options || {};
+		// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
+		// tags it will allow on a page
+		if (typeof options.singleton === "undefined") options.singleton = isOldIE();
+
+		// By default, add <style> tags to the bottom of <head>.
+		if (typeof options.insertAt === "undefined") options.insertAt = "bottom";
+
+		var styles = listToStyles(list);
+		addStylesToDom(styles, options);
+
+		return function update(newList) {
+			var mayRemove = [];
+			for(var i = 0; i < styles.length; i++) {
+				var item = styles[i];
+				var domStyle = stylesInDom[item.id];
+				domStyle.refs--;
+				mayRemove.push(domStyle);
+			}
+			if(newList) {
+				var newStyles = listToStyles(newList);
+				addStylesToDom(newStyles, options);
+			}
+			for(var i = 0; i < mayRemove.length; i++) {
+				var domStyle = mayRemove[i];
+				if(domStyle.refs === 0) {
+					for(var j = 0; j < domStyle.parts.length; j++)
+						domStyle.parts[j]();
+					delete stylesInDom[domStyle.id];
+				}
+			}
+		};
+	}
+
+	function addStylesToDom(styles, options) {
+		for(var i = 0; i < styles.length; i++) {
+			var item = styles[i];
+			var domStyle = stylesInDom[item.id];
+			if(domStyle) {
+				domStyle.refs++;
+				for(var j = 0; j < domStyle.parts.length; j++) {
+					domStyle.parts[j](item.parts[j]);
+				}
+				for(; j < item.parts.length; j++) {
+					domStyle.parts.push(addStyle(item.parts[j], options));
+				}
+			} else {
+				var parts = [];
+				for(var j = 0; j < item.parts.length; j++) {
+					parts.push(addStyle(item.parts[j], options));
+				}
+				stylesInDom[item.id] = {id: item.id, refs: 1, parts: parts};
+			}
+		}
+	}
+
+	function listToStyles(list) {
+		var styles = [];
+		var newStyles = {};
+		for(var i = 0; i < list.length; i++) {
+			var item = list[i];
+			var id = item[0];
+			var css = item[1];
+			var media = item[2];
+			var sourceMap = item[3];
+			var part = {css: css, media: media, sourceMap: sourceMap};
+			if(!newStyles[id])
+				styles.push(newStyles[id] = {id: id, parts: [part]});
+			else
+				newStyles[id].parts.push(part);
+		}
+		return styles;
+	}
+
+	function insertStyleElement(options, styleElement) {
+		var head = getHeadElement();
+		var lastStyleElementInsertedAtTop = styleElementsInsertedAtTop[styleElementsInsertedAtTop.length - 1];
+		if (options.insertAt === "top") {
+			if(!lastStyleElementInsertedAtTop) {
+				head.insertBefore(styleElement, head.firstChild);
+			} else if(lastStyleElementInsertedAtTop.nextSibling) {
+				head.insertBefore(styleElement, lastStyleElementInsertedAtTop.nextSibling);
+			} else {
+				head.appendChild(styleElement);
+			}
+			styleElementsInsertedAtTop.push(styleElement);
+		} else if (options.insertAt === "bottom") {
+			head.appendChild(styleElement);
+		} else {
+			throw new Error("Invalid value for parameter 'insertAt'. Must be 'top' or 'bottom'.");
+		}
+	}
+
+	function removeStyleElement(styleElement) {
+		styleElement.parentNode.removeChild(styleElement);
+		var idx = styleElementsInsertedAtTop.indexOf(styleElement);
+		if(idx >= 0) {
+			styleElementsInsertedAtTop.splice(idx, 1);
+		}
+	}
+
+	function createStyleElement(options) {
+		var styleElement = document.createElement("style");
+		styleElement.type = "text/css";
+		insertStyleElement(options, styleElement);
+		return styleElement;
+	}
+
+	function createLinkElement(options) {
+		var linkElement = document.createElement("link");
+		linkElement.rel = "stylesheet";
+		insertStyleElement(options, linkElement);
+		return linkElement;
+	}
+
+	function addStyle(obj, options) {
+		var styleElement, update, remove;
+
+		if (options.singleton) {
+			var styleIndex = singletonCounter++;
+			styleElement = singletonElement || (singletonElement = createStyleElement(options));
+			update = applyToSingletonTag.bind(null, styleElement, styleIndex, false);
+			remove = applyToSingletonTag.bind(null, styleElement, styleIndex, true);
+		} else if(obj.sourceMap &&
+			typeof URL === "function" &&
+			typeof URL.createObjectURL === "function" &&
+			typeof URL.revokeObjectURL === "function" &&
+			typeof Blob === "function" &&
+			typeof btoa === "function") {
+			styleElement = createLinkElement(options);
+			update = updateLink.bind(null, styleElement);
+			remove = function() {
+				removeStyleElement(styleElement);
+				if(styleElement.href)
+					URL.revokeObjectURL(styleElement.href);
+			};
+		} else {
+			styleElement = createStyleElement(options);
+			update = applyToTag.bind(null, styleElement);
+			remove = function() {
+				removeStyleElement(styleElement);
+			};
+		}
+
+		update(obj);
+
+		return function updateStyle(newObj) {
+			if(newObj) {
+				if(newObj.css === obj.css && newObj.media === obj.media && newObj.sourceMap === obj.sourceMap)
+					return;
+				update(obj = newObj);
+			} else {
+				remove();
+			}
+		};
+	}
+
+	var replaceText = (function () {
+		var textStore = [];
+
+		return function (index, replacement) {
+			textStore[index] = replacement;
+			return textStore.filter(Boolean).join('\n');
+		};
+	})();
+
+	function applyToSingletonTag(styleElement, index, remove, obj) {
+		var css = remove ? "" : obj.css;
+
+		if (styleElement.styleSheet) {
+			styleElement.styleSheet.cssText = replaceText(index, css);
+		} else {
+			var cssNode = document.createTextNode(css);
+			var childNodes = styleElement.childNodes;
+			if (childNodes[index]) styleElement.removeChild(childNodes[index]);
+			if (childNodes.length) {
+				styleElement.insertBefore(cssNode, childNodes[index]);
+			} else {
+				styleElement.appendChild(cssNode);
+			}
+		}
+	}
+
+	function applyToTag(styleElement, obj) {
+		var css = obj.css;
+		var media = obj.media;
+		var sourceMap = obj.sourceMap;
+
+		if(media) {
+			styleElement.setAttribute("media", media)
+		}
+
+		if(styleElement.styleSheet) {
+			styleElement.styleSheet.cssText = css;
+		} else {
+			while(styleElement.firstChild) {
+				styleElement.removeChild(styleElement.firstChild);
+			}
+			styleElement.appendChild(document.createTextNode(css));
+		}
+	}
+
+	function updateLink(linkElement, obj) {
+		var css = obj.css;
+		var media = obj.media;
+		var sourceMap = obj.sourceMap;
+
+		if(sourceMap) {
+			// http://stackoverflow.com/a/26603875
+			css += "\n/*# sourceMappingURL=data:application/json;base64," + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + " */";
+		}
+
+		var blob = new Blob([css], { type: "text/css" });
+
+		var oldSrc = linkElement.href;
+
+		linkElement.href = URL.createObjectURL(blob);
+
+		if(oldSrc)
+			URL.revokeObjectURL(oldSrc);
+	}
+
+
+/***/ },
+/* 8 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _interopRequireDefault = __webpack_require__(9)['default'];
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+
+	var _reducersCatalog = __webpack_require__(10);
+
+	var _reducersCatalog2 = _interopRequireDefault(_reducersCatalog);
+
+	var _reducersStore = __webpack_require__(11);
+
+	var _reducersStore2 = _interopRequireDefault(_reducersStore);
+
+	var _actionsConnectionActions = __webpack_require__(27);
+
+	var _actionsConnectionActions2 = _interopRequireDefault(_actionsConnectionActions);
+
+	var _actionsStateActions = __webpack_require__(29);
+
+	var _actionsStateActions2 = _interopRequireDefault(_actionsStateActions);
+
+	var _actionsDatabaseActions = __webpack_require__(30);
+
+	var _actionsDatabaseActions2 = _interopRequireDefault(_actionsDatabaseActions);
+
+	function d(type) {
+	  return function (payload) {
+	    return _reducersStore2['default'].dispatch({ type: type, payload: payload });
+	  };
+	}
+
+	exports['default'] = function () {
+	  return {
+	    store: _reducersStore2['default'],
+	    actions: {
+	      connection: _actionsConnectionActions2['default'],
+	      state: _actionsStateActions2['default'],
+	      database: _actionsDatabaseActions2['default']
+	    },
+	    catalog: _reducersCatalog2['default']
+	  };
+	};
+
+	module.exports = exports['default'];
+	//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi92YXIvd3d3L2NyeXB0b21lZGljL2FwcC9zdGF0dXMuanMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsWUFBWSxDQUFDOzs7Ozs7OzsrQkFFTyxrQkFBa0I7Ozs7NkJBQ3BCLGdCQUFnQjs7Ozt3Q0FDWCwyQkFBMkI7Ozs7bUNBQ2hDLHNCQUFzQjs7OztzQ0FDbkIseUJBQXlCOzs7O0FBRTlDLFNBQVMsQ0FBQyxDQUFDLElBQUksRUFBRTtBQUNmLFNBQU8sVUFBUyxPQUFPLEVBQUU7QUFDdkIsV0FBTywyQkFBTSxRQUFRLENBQUMsRUFBRSxJQUFJLEVBQUUsSUFBSSxFQUFFLE9BQU8sRUFBRSxPQUFPLEVBQUUsQ0FBQyxDQUFDO0dBQ3pELENBQUE7Q0FDRjs7cUJBRWMsWUFBVztBQUN4QixTQUFPO0FBQ0wsU0FBSyw0QkFBTztBQUNaLFdBQU8sRUFBRTtBQUNQLGdCQUFVLHVDQUFBO0FBQ1YsV0FBSyxrQ0FBQTtBQUNMLGNBQVEscUNBQUE7S0FDVDtBQUNELFdBQU8sOEJBQVM7R0FDakIsQ0FBQztDQUNIIiwiZmlsZSI6Ii92YXIvd3d3L2NyeXB0b21lZGljL2FwcC9zdGF0dXMuanMiLCJzb3VyY2VzQ29udGVudCI6WyIndXNlIHN0cmljdCc7XG5cbmltcG9ydCBjYXRhbG9nIGZyb20gJ3JlZHVjZXJzL2NhdGFsb2cnO1xuaW1wb3J0IHN0b3JlIGZyb20gJ3JlZHVjZXJzL3N0b3JlJztcbmltcG9ydCBjb25uZWN0aW9uIGZyb20gJ2FjdGlvbnMvY29ubmVjdGlvbkFjdGlvbnMnO1xuaW1wb3J0IHN0YXRlIGZyb20gJ2FjdGlvbnMvc3RhdGVBY3Rpb25zJztcbmltcG9ydCBkYXRhYmFzZSBmcm9tICdhY3Rpb25zL2RhdGFiYXNlQWN0aW9ucyc7XG5cbmZ1bmN0aW9uIGQodHlwZSkge1xuICByZXR1cm4gZnVuY3Rpb24ocGF5bG9hZCkge1xuICAgIHJldHVybiBzdG9yZS5kaXNwYXRjaCh7IHR5cGU6IHR5cGUsIHBheWxvYWQ6IHBheWxvYWQgfSk7XG4gIH1cbn1cblxuZXhwb3J0IGRlZmF1bHQgZnVuY3Rpb24oKSB7XG4gIHJldHVybiB7XG4gICAgc3RvcmU6IHN0b3JlLFxuICAgIGFjdGlvbnM6IHtcbiAgICAgIGNvbm5lY3Rpb24sXG4gICAgICBzdGF0ZSxcbiAgICAgIGRhdGFiYXNlXG4gICAgfSxcbiAgICBjYXRhbG9nOiBjYXRhbG9nXG4gIH07XG59XG4iXX0=
+
+/***/ },
+/* 9 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	exports["default"] = function (obj) {
+	  return obj && obj.__esModule ? obj : {
+	    "default": obj
+	  };
+	};
+
+	exports.__esModule = true;
+
+/***/ },
+/* 10 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var catalog = {
+	  _define: function _define(constant) {
+	    catalog[constant] = constant;
+	  }
+	};
+
+	exports["default"] = catalog;
+	module.exports = exports["default"];
+	//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi92YXIvd3d3L2NyeXB0b21lZGljL2FwcC9yZWR1Y2Vycy9jYXRhbG9nLmpzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7Ozs7OztBQUNBLElBQUksT0FBTyxHQUFHO0FBQ1osU0FBTyxFQUFFLGlCQUFTLFFBQVEsRUFBRTtBQUMxQixXQUFPLENBQUMsUUFBUSxDQUFDLEdBQUcsUUFBUSxDQUFDO0dBQzlCO0NBQ0YsQ0FBQzs7cUJBRWEsT0FBTyIsImZpbGUiOiIvdmFyL3d3dy9jcnlwdG9tZWRpYy9hcHAvcmVkdWNlcnMvY2F0YWxvZy5qcyIsInNvdXJjZXNDb250ZW50IjpbIlxubGV0IGNhdGFsb2cgPSB7XG4gIF9kZWZpbmU6IGZ1bmN0aW9uKGNvbnN0YW50KSB7XG4gICAgY2F0YWxvZ1tjb25zdGFudF0gPSBjb25zdGFudDtcbiAgfVxufTtcblxuZXhwb3J0IGRlZmF1bHQgY2F0YWxvZztcbiJdfQ==
+
+/***/ },
+/* 11 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _interopRequireDefault = __webpack_require__(9)['default'];
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+
+	var _redux = __webpack_require__(12);
+
+	var _reduxThunk = __webpack_require__(22);
+
+	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
+
+	var _reduxLogger = __webpack_require__(23);
+
+	var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
+
+	// import { persistStore, autoRehydrate } from 'redux-persist';
+	// import { devTools, persistState } from 'redux-devtools';
+	// import { DevTools, DebugPanel, LogMonitor } from 'redux-devtools/lib/react';
+
+	var _reducersConnectionReducers = __webpack_require__(24);
+
+	var _reducersConnectionReducers2 = _interopRequireDefault(_reducersConnectionReducers);
+
+	var _reducersStateReducers = __webpack_require__(25);
+
+	var _reducersStateReducers2 = _interopRequireDefault(_reducersStateReducers);
+
+	var _reducersDatabaseReducers = __webpack_require__(26);
+
+	var _reducersDatabaseReducers2 = _interopRequireDefault(_reducersDatabaseReducers);
+
+	var loggerMiddleware = (0, _reduxLogger2['default'])({
+	  level: 'info',
+	  collapsed: true
+	});
+
+	var finalCreateStore = (0, _redux.compose)(
+	//enables middleware:
+	(0, _redux.applyMiddleware)(_reduxThunk2['default'], loggerMiddleware))(
+	// Provides support for DevTools:
+	// devTools(),
+	// Lets you write ?debug_session=<name> in address bar to persist sessions
+	// persistState(window.location.href.match(/[?&]debug_session=([^&]+)\b/))
+	_redux.createStore);
+
+	// function configureStore(initialState) {
+	//   const store = autoRehydrate()(finalCreateStore)(
+	//       combineReducers({
+	//         connection,
+	//         state,
+	//         database
+	//       })
+	//     );
+	//   if (module.hot) {
+	//     // Enable Webpack hot module replacement for reducers
+	//     module.hot.accept('../reducers', () => {
+	//       const nextRootReducer = require('../reducers');
+	//       store.replaceReducer(nextRootReducer);
+	//     });
+	//   }
+	//   return store;
+	// }
+	// const store = configureStore();
+
+	// persistStore(store, {whitelist: []}, () => {
+	//   store.dispatch(customRehydrate());
+	// });
+
+	var store = finalCreateStore((0, _redux.combineReducers)({
+	  connection: _reducersConnectionReducers2['default'],
+	  state: _reducersStateReducers2['default'],
+	  database: _reducersDatabaseReducers2['default']
+	}));
+
+	exports['default'] = store;
+	module.exports = exports['default'];
+	//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi92YXIvd3d3L2NyeXB0b21lZGljL2FwcC9yZWR1Y2Vycy9zdG9yZS5qcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7Ozs7OztxQkFDdUUsT0FBTzs7MEJBQ2xELGFBQWE7Ozs7MkJBQ2hCLGNBQWM7Ozs7Ozs7OzBDQUtoQiw2QkFBNkI7Ozs7cUNBQ2xDLHdCQUF3Qjs7Ozt3Q0FDckIsMkJBQTJCOzs7O0FBR2hELElBQU0sZ0JBQWdCLEdBQUcsOEJBQWE7QUFDcEMsT0FBSyxFQUFFLE1BQU07QUFDYixXQUFTLEVBQUUsSUFBSTtDQUNoQixDQUFDLENBQUM7O0FBRUgsSUFBSSxnQkFBZ0IsR0FBRzs7QUFFckIscURBRUUsZ0JBQWdCLENBQ2pCLENBTUY7Ozs7O21CQUNZLENBQUM7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7QUEwQmQsSUFBSSxLQUFLLEdBQUcsZ0JBQWdCLENBQUMsNEJBQWdCO0FBQzNDLFlBQVUseUNBQUE7QUFDVixPQUFLLG9DQUFBO0FBQ0wsVUFBUSx1Q0FBQTtDQUNULENBQUMsQ0FBQyxDQUFDOztxQkFFVyxLQUFLIiwiZmlsZSI6Ii92YXIvd3d3L2NyeXB0b21lZGljL2FwcC9yZWR1Y2Vycy9zdG9yZS5qcyIsInNvdXJjZXNDb250ZW50IjpbIlxuaW1wb3J0IHsgY29tYmluZVJlZHVjZXJzLCBjb21wb3NlLCBjcmVhdGVTdG9yZSwgYXBwbHlNaWRkbGV3YXJlIH0gZnJvbSAncmVkdXgnO1xuaW1wb3J0IHRodW5rTWlkZGxld2FyZSBmcm9tICdyZWR1eC10aHVuayc7XG5pbXBvcnQgY3JlYXRlTG9nZ2VyIGZyb20gJ3JlZHV4LWxvZ2dlcic7XG4vLyBpbXBvcnQgeyBwZXJzaXN0U3RvcmUsIGF1dG9SZWh5ZHJhdGUgfSBmcm9tICdyZWR1eC1wZXJzaXN0Jztcbi8vIGltcG9ydCB7IGRldlRvb2xzLCBwZXJzaXN0U3RhdGUgfSBmcm9tICdyZWR1eC1kZXZ0b29scyc7XG4vLyBpbXBvcnQgeyBEZXZUb29scywgRGVidWdQYW5lbCwgTG9nTW9uaXRvciB9IGZyb20gJ3JlZHV4LWRldnRvb2xzL2xpYi9yZWFjdCc7XG5cbmltcG9ydCBjb25uZWN0aW9uIGZyb20gJ3JlZHVjZXJzL2Nvbm5lY3Rpb25SZWR1Y2Vycyc7XG5pbXBvcnQgc3RhdGUgZnJvbSAncmVkdWNlcnMvc3RhdGVSZWR1Y2Vycyc7XG5pbXBvcnQgZGF0YWJhc2UgZnJvbSAncmVkdWNlcnMvZGF0YWJhc2VSZWR1Y2Vycyc7XG5cblxuY29uc3QgbG9nZ2VyTWlkZGxld2FyZSA9IGNyZWF0ZUxvZ2dlcih7XG4gIGxldmVsOiAnaW5mbycsXG4gIGNvbGxhcHNlZDogdHJ1ZSxcbn0pO1xuXG5sZXQgZmluYWxDcmVhdGVTdG9yZSA9IGNvbXBvc2UoXG4gIC8vZW5hYmxlcyBtaWRkbGV3YXJlOlxuICBhcHBseU1pZGRsZXdhcmUoXG4gICAgdGh1bmtNaWRkbGV3YXJlLFxuICAgIGxvZ2dlck1pZGRsZXdhcmVcbiAgKVxuICAsXG4gIC8vIFByb3ZpZGVzIHN1cHBvcnQgZm9yIERldlRvb2xzOlxuICAvLyBkZXZUb29scygpLFxuICAvLyBMZXRzIHlvdSB3cml0ZSA/ZGVidWdfc2Vzc2lvbj08bmFtZT4gaW4gYWRkcmVzcyBiYXIgdG8gcGVyc2lzdCBzZXNzaW9uc1xuICAvLyBwZXJzaXN0U3RhdGUod2luZG93LmxvY2F0aW9uLmhyZWYubWF0Y2goL1s/Jl1kZWJ1Z19zZXNzaW9uPShbXiZdKylcXGIvKSlcbilcbihjcmVhdGVTdG9yZSk7XG5cbi8vIGZ1bmN0aW9uIGNvbmZpZ3VyZVN0b3JlKGluaXRpYWxTdGF0ZSkge1xuLy8gICBjb25zdCBzdG9yZSA9IGF1dG9SZWh5ZHJhdGUoKShmaW5hbENyZWF0ZVN0b3JlKShcbi8vICAgICAgIGNvbWJpbmVSZWR1Y2Vycyh7XG4vLyAgICAgICAgIGNvbm5lY3Rpb24sXG4vLyAgICAgICAgIHN0YXRlLFxuLy8gICAgICAgICBkYXRhYmFzZVxuLy8gICAgICAgfSlcbi8vICAgICApO1xuLy8gICBpZiAobW9kdWxlLmhvdCkge1xuLy8gICAgIC8vIEVuYWJsZSBXZWJwYWNrIGhvdCBtb2R1bGUgcmVwbGFjZW1lbnQgZm9yIHJlZHVjZXJzXG4vLyAgICAgbW9kdWxlLmhvdC5hY2NlcHQoJy4uL3JlZHVjZXJzJywgKCkgPT4ge1xuLy8gICAgICAgY29uc3QgbmV4dFJvb3RSZWR1Y2VyID0gcmVxdWlyZSgnLi4vcmVkdWNlcnMnKTtcbi8vICAgICAgIHN0b3JlLnJlcGxhY2VSZWR1Y2VyKG5leHRSb290UmVkdWNlcik7XG4vLyAgICAgfSk7XG4vLyAgIH1cbi8vICAgcmV0dXJuIHN0b3JlO1xuLy8gfVxuLy8gY29uc3Qgc3RvcmUgPSBjb25maWd1cmVTdG9yZSgpO1xuXG4vLyBwZXJzaXN0U3RvcmUoc3RvcmUsIHt3aGl0ZWxpc3Q6IFtdfSwgKCkgPT4ge1xuLy8gICBzdG9yZS5kaXNwYXRjaChjdXN0b21SZWh5ZHJhdGUoKSk7XG4vLyB9KTtcblxuXG5sZXQgc3RvcmUgPSBmaW5hbENyZWF0ZVN0b3JlKGNvbWJpbmVSZWR1Y2Vycyh7XG4gIGNvbm5lY3Rpb24sXG4gIHN0YXRlLFxuICBkYXRhYmFzZVxufSkpO1xuXG5leHBvcnQgZGVmYXVsdCBzdG9yZTtcbiJdfQ==
+
+/***/ },
+/* 12 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	exports.__esModule = true;
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	var _createStore = __webpack_require__(13);
+
+	var _createStore2 = _interopRequireDefault(_createStore);
+
+	var _utilsCombineReducers = __webpack_require__(15);
+
+	var _utilsCombineReducers2 = _interopRequireDefault(_utilsCombineReducers);
+
+	var _utilsBindActionCreators = __webpack_require__(19);
+
+	var _utilsBindActionCreators2 = _interopRequireDefault(_utilsBindActionCreators);
+
+	var _utilsApplyMiddleware = __webpack_require__(20);
+
+	var _utilsApplyMiddleware2 = _interopRequireDefault(_utilsApplyMiddleware);
+
+	var _utilsCompose = __webpack_require__(21);
+
+	var _utilsCompose2 = _interopRequireDefault(_utilsCompose);
+
+	exports.createStore = _createStore2['default'];
+	exports.combineReducers = _utilsCombineReducers2['default'];
+	exports.bindActionCreators = _utilsBindActionCreators2['default'];
+	exports.applyMiddleware = _utilsApplyMiddleware2['default'];
+	exports.compose = _utilsCompose2['default'];
+
+/***/ },
+/* 13 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	exports.__esModule = true;
+	exports['default'] = createStore;
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	var _utilsIsPlainObject = __webpack_require__(14);
+
+	var _utilsIsPlainObject2 = _interopRequireDefault(_utilsIsPlainObject);
+
+	/**
+	 * These are private action types reserved by Redux.
+	 * For any unknown actions, you must return the current state.
+	 * If the current state is undefined, you must return the initial state.
+	 * Do not reference these action types directly in your code.
+	 */
+	var ActionTypes = {
+	  INIT: '@@redux/INIT'
+	};
+
+	exports.ActionTypes = ActionTypes;
+	/**
+	 * Creates a Redux store that holds the state tree.
+	 * The only way to change the data in the store is to call `dispatch()` on it.
+	 *
+	 * There should only be a single store in your app. To specify how different
+	 * parts of the state tree respond to actions, you may combine several reducers
+	 * into a single reducer function by using `combineReducers`.
+	 *
+	 * @param {Function} reducer A function that returns the next state tree, given
+	 * the current state tree and the action to handle.
+	 *
+	 * @param {any} [initialState] The initial state. You may optionally specify it
+	 * to hydrate the state from the server in universal apps, or to restore a
+	 * previously serialized user session.
+	 * If you use `combineReducers` to produce the root reducer function, this must be
+	 * an object with the same shape as `combineReducers` keys.
+	 *
+	 * @returns {Store} A Redux store that lets you read the state, dispatch actions
+	 * and subscribe to changes.
+	 */
+
+	function createStore(reducer, initialState) {
+	  if (typeof reducer !== 'function') {
+	    throw new Error('Expected the reducer to be a function.');
+	  }
+
+	  var currentReducer = reducer;
+	  var currentState = initialState;
+	  var listeners = [];
+	  var isDispatching = false;
+
+	  /**
+	   * Reads the state tree managed by the store.
+	   *
+	   * @returns {any} The current state tree of your application.
+	   */
+	  function getState() {
+	    return currentState;
+	  }
+
+	  /**
+	   * Adds a change listener. It will be called any time an action is dispatched,
+	   * and some part of the state tree may potentially have changed. You may then
+	   * call `getState()` to read the current state tree inside the callback.
+	   *
+	   * @param {Function} listener A callback to be invoked on every dispatch.
+	   * @returns {Function} A function to remove this change listener.
+	   */
+	  function subscribe(listener) {
+	    listeners.push(listener);
+	    var isSubscribed = true;
+
+	    return function unsubscribe() {
+	      if (!isSubscribed) {
+	        return;
+	      }
+
+	      isSubscribed = false;
+	      var index = listeners.indexOf(listener);
+	      listeners.splice(index, 1);
+	    };
+	  }
+
+	  /**
+	   * Dispatches an action. It is the only way to trigger a state change.
+	   *
+	   * The `reducer` function, used to create the store, will be called with the
+	   * current state tree and the given `action`. Its return value will
+	   * be considered the **next** state of the tree, and the change listeners
+	   * will be notified.
+	   *
+	   * The base implementation only supports plain object actions. If you want to
+	   * dispatch a Promise, an Observable, a thunk, or something else, you need to
+	   * wrap your store creating function into the corresponding middleware. For
+	   * example, see the documentation for the `redux-thunk` package. Even the
+	   * middleware will eventually dispatch plain object actions using this method.
+	   *
+	   * @param {Object} action A plain object representing “what changed”. It is
+	   * a good idea to keep actions serializable so you can record and replay user
+	   * sessions, or use the time travelling `redux-devtools`. An action must have
+	   * a `type` property which may not be `undefined`. It is a good idea to use
+	   * string constants for action types.
+	   *
+	   * @returns {Object} For convenience, the same action object you dispatched.
+	   *
+	   * Note that, if you use a custom middleware, it may wrap `dispatch()` to
+	   * return something else (for example, a Promise you can await).
+	   */
+	  function dispatch(action) {
+	    if (!_utilsIsPlainObject2['default'](action)) {
+	      throw new Error('Actions must be plain objects. ' + 'Use custom middleware for async actions.');
+	    }
+
+	    if (typeof action.type === 'undefined') {
+	      throw new Error('Actions may not have an undefined "type" property. ' + 'Have you misspelled a constant?');
+	    }
+
+	    if (isDispatching) {
+	      throw new Error('Reducers may not dispatch actions.');
+	    }
+
+	    try {
+	      isDispatching = true;
+	      currentState = currentReducer(currentState, action);
+	    } finally {
+	      isDispatching = false;
+	    }
+
+	    listeners.slice().forEach(function (listener) {
+	      return listener();
+	    });
+	    return action;
+	  }
+
+	  /**
+	   * Replaces the reducer currently used by the store to calculate the state.
+	   *
+	   * You might need this if your app implements code splitting and you want to
+	   * load some of the reducers dynamically. You might also need this if you
+	   * implement a hot reloading mechanism for Redux.
+	   *
+	   * @param {Function} nextReducer The reducer for the store to use instead.
+	   * @returns {void}
+	   */
+	  function replaceReducer(nextReducer) {
+	    currentReducer = nextReducer;
+	    dispatch({ type: ActionTypes.INIT });
+	  }
+
+	  // When a store is created, an "INIT" action is dispatched so that every
+	  // reducer returns their initial state. This effectively populates
+	  // the initial state tree.
+	  dispatch({ type: ActionTypes.INIT });
+
+	  return {
+	    dispatch: dispatch,
+	    subscribe: subscribe,
+	    getState: getState,
+	    replaceReducer: replaceReducer
+	  };
+	}
+
+/***/ },
+/* 14 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	exports.__esModule = true;
+	exports['default'] = isPlainObject;
+	var fnToString = function fnToString(fn) {
+	  return Function.prototype.toString.call(fn);
+	};
+
+	/**
+	 * @param {any} obj The object to inspect.
+	 * @returns {boolean} True if the argument appears to be a plain object.
+	 */
+
+	function isPlainObject(obj) {
+	  if (!obj || typeof obj !== 'object') {
+	    return false;
+	  }
+
+	  var proto = typeof obj.constructor === 'function' ? Object.getPrototypeOf(obj) : Object.prototype;
+
+	  if (proto === null) {
+	    return true;
+	  }
+
+	  var constructor = proto.constructor;
+
+	  return typeof constructor === 'function' && constructor instanceof constructor && fnToString(constructor) === fnToString(Object);
+	}
+
+	module.exports = exports['default'];
+
+/***/ },
+/* 15 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
+
+	exports.__esModule = true;
+	exports['default'] = combineReducers;
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	var _createStore = __webpack_require__(13);
+
+	var _utilsIsPlainObject = __webpack_require__(14);
+
+	var _utilsIsPlainObject2 = _interopRequireDefault(_utilsIsPlainObject);
+
+	var _utilsMapValues = __webpack_require__(17);
+
+	var _utilsMapValues2 = _interopRequireDefault(_utilsMapValues);
+
+	var _utilsPick = __webpack_require__(18);
+
+	var _utilsPick2 = _interopRequireDefault(_utilsPick);
+
+	/* eslint-disable no-console */
+
+	function getUndefinedStateErrorMessage(key, action) {
+	  var actionType = action && action.type;
+	  var actionName = actionType && '"' + actionType.toString() + '"' || 'an action';
+
+	  return 'Reducer "' + key + '" returned undefined handling ' + actionName + '. ' + 'To ignore an action, you must explicitly return the previous state.';
+	}
+
+	function getUnexpectedStateKeyWarningMessage(inputState, outputState, action) {
+	  var reducerKeys = Object.keys(outputState);
+	  var argumentName = action && action.type === _createStore.ActionTypes.INIT ? 'initialState argument passed to createStore' : 'previous state received by the reducer';
+
+	  if (reducerKeys.length === 0) {
+	    return 'Store does not have a valid reducer. Make sure the argument passed ' + 'to combineReducers is an object whose values are reducers.';
+	  }
+
+	  if (!_utilsIsPlainObject2['default'](inputState)) {
+	    return 'The ' + argumentName + ' has unexpected type of "' + ({}).toString.call(inputState).match(/\s([a-z|A-Z]+)/)[1] + '". Expected argument to be an object with the following ' + ('keys: "' + reducerKeys.join('", "') + '"');
+	  }
+
+	  var unexpectedKeys = Object.keys(inputState).filter(function (key) {
+	    return reducerKeys.indexOf(key) < 0;
+	  });
+
+	  if (unexpectedKeys.length > 0) {
+	    return 'Unexpected ' + (unexpectedKeys.length > 1 ? 'keys' : 'key') + ' ' + ('"' + unexpectedKeys.join('", "') + '" found in ' + argumentName + '. ') + 'Expected to find one of the known reducer keys instead: ' + ('"' + reducerKeys.join('", "') + '". Unexpected keys will be ignored.');
+	  }
+	}
+
+	function assertReducerSanity(reducers) {
+	  Object.keys(reducers).forEach(function (key) {
+	    var reducer = reducers[key];
+	    var initialState = reducer(undefined, { type: _createStore.ActionTypes.INIT });
+
+	    if (typeof initialState === 'undefined') {
+	      throw new Error('Reducer "' + key + '" returned undefined during initialization. ' + 'If the state passed to the reducer is undefined, you must ' + 'explicitly return the initial state. The initial state may ' + 'not be undefined.');
+	    }
+
+	    var type = '@@redux/PROBE_UNKNOWN_ACTION_' + Math.random().toString(36).substring(7).split('').join('.');
+	    if (typeof reducer(undefined, { type: type }) === 'undefined') {
+	      throw new Error('Reducer "' + key + '" returned undefined when probed with a random type. ' + ('Don\'t try to handle ' + _createStore.ActionTypes.INIT + ' or other actions in "redux/*" ') + 'namespace. They are considered private. Instead, you must return the ' + 'current state for any unknown actions, unless it is undefined, ' + 'in which case you must return the initial state, regardless of the ' + 'action type. The initial state may not be undefined.');
+	    }
+	  });
+	}
+
+	/**
+	 * Turns an object whose values are different reducer functions, into a single
+	 * reducer function. It will call every child reducer, and gather their results
+	 * into a single state object, whose keys correspond to the keys of the passed
+	 * reducer functions.
+	 *
+	 * @param {Object} reducers An object whose values correspond to different
+	 * reducer functions that need to be combined into one. One handy way to obtain
+	 * it is to use ES6 `import * as reducers` syntax. The reducers may never return
+	 * undefined for any action. Instead, they should return their initial state
+	 * if the state passed to them was undefined, and the current state for any
+	 * unrecognized action.
+	 *
+	 * @returns {Function} A reducer function that invokes every reducer inside the
+	 * passed object, and builds a state object with the same shape.
+	 */
+
+	function combineReducers(reducers) {
+	  var finalReducers = _utilsPick2['default'](reducers, function (val) {
+	    return typeof val === 'function';
+	  });
+	  var sanityError;
+
+	  try {
+	    assertReducerSanity(finalReducers);
+	  } catch (e) {
+	    sanityError = e;
+	  }
+
+	  var defaultState = _utilsMapValues2['default'](finalReducers, function () {
+	    return undefined;
+	  });
+
+	  return function combination(state, action) {
+	    if (state === undefined) state = defaultState;
+
+	    if (sanityError) {
+	      throw sanityError;
+	    }
+
+	    var hasChanged = false;
+	    var finalState = _utilsMapValues2['default'](finalReducers, function (reducer, key) {
+	      var previousStateForKey = state[key];
+	      var nextStateForKey = reducer(previousStateForKey, action);
+	      if (typeof nextStateForKey === 'undefined') {
+	        var errorMessage = getUndefinedStateErrorMessage(key, action);
+	        throw new Error(errorMessage);
+	      }
+	      hasChanged = hasChanged || nextStateForKey !== previousStateForKey;
+	      return nextStateForKey;
+	    });
+
+	    if (process.env.NODE_ENV !== 'production') {
+	      var warningMessage = getUnexpectedStateKeyWarningMessage(state, finalState, action);
+	      if (warningMessage) {
+	        console.error(warningMessage);
+	      }
+	    }
+
+	    return hasChanged ? finalState : state;
+	  };
+	}
+
+	module.exports = exports['default'];
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(16)))
+
+/***/ },
+/* 16 */
+/***/ function(module, exports) {
+
+	// shim for using process in browser
+
+	var process = module.exports = {};
+	var queue = [];
+	var draining = false;
+	var currentQueue;
+	var queueIndex = -1;
+
+	function cleanUpNextTick() {
+	    draining = false;
+	    if (currentQueue.length) {
+	        queue = currentQueue.concat(queue);
+	    } else {
+	        queueIndex = -1;
+	    }
+	    if (queue.length) {
+	        drainQueue();
+	    }
+	}
+
+	function drainQueue() {
+	    if (draining) {
+	        return;
+	    }
+	    var timeout = setTimeout(cleanUpNextTick);
+	    draining = true;
+
+	    var len = queue.length;
+	    while(len) {
+	        currentQueue = queue;
+	        queue = [];
+	        while (++queueIndex < len) {
+	            if (currentQueue) {
+	                currentQueue[queueIndex].run();
+	            }
+	        }
+	        queueIndex = -1;
+	        len = queue.length;
+	    }
+	    currentQueue = null;
+	    draining = false;
+	    clearTimeout(timeout);
+	}
+
+	process.nextTick = function (fun) {
+	    var args = new Array(arguments.length - 1);
+	    if (arguments.length > 1) {
+	        for (var i = 1; i < arguments.length; i++) {
+	            args[i - 1] = arguments[i];
+	        }
+	    }
+	    queue.push(new Item(fun, args));
+	    if (queue.length === 1 && !draining) {
+	        setTimeout(drainQueue, 0);
+	    }
+	};
+
+	// v8 likes predictible objects
+	function Item(fun, array) {
+	    this.fun = fun;
+	    this.array = array;
+	}
+	Item.prototype.run = function () {
+	    this.fun.apply(null, this.array);
+	};
+	process.title = 'browser';
+	process.browser = true;
+	process.env = {};
+	process.argv = [];
+	process.version = ''; // empty string to avoid regexp issues
+	process.versions = {};
+
+	function noop() {}
+
+	process.on = noop;
+	process.addListener = noop;
+	process.once = noop;
+	process.off = noop;
+	process.removeListener = noop;
+	process.removeAllListeners = noop;
+	process.emit = noop;
+
+	process.binding = function (name) {
+	    throw new Error('process.binding is not supported');
+	};
+
+	process.cwd = function () { return '/' };
+	process.chdir = function (dir) {
+	    throw new Error('process.chdir is not supported');
+	};
+	process.umask = function() { return 0; };
+
+
+/***/ },
+/* 17 */
+/***/ function(module, exports) {
+
+	/**
+	 * Applies a function to every key-value pair inside an object.
+	 *
+	 * @param {Object} obj The source object.
+	 * @param {Function} fn The mapper function that receives the value and the key.
+	 * @returns {Object} A new object that contains the mapped values for the keys.
+	 */
+	"use strict";
+
+	exports.__esModule = true;
+	exports["default"] = mapValues;
+
+	function mapValues(obj, fn) {
+	  return Object.keys(obj).reduce(function (result, key) {
+	    result[key] = fn(obj[key], key);
+	    return result;
+	  }, {});
+	}
+
+	module.exports = exports["default"];
+
+/***/ },
+/* 18 */
+/***/ function(module, exports) {
+
+	/**
+	 * Picks key-value pairs from an object where values satisfy a predicate.
+	 *
+	 * @param {Object} obj The object to pick from.
+	 * @param {Function} fn The predicate the values must satisfy to be copied.
+	 * @returns {Object} The object with the values that satisfied the predicate.
+	 */
+	"use strict";
+
+	exports.__esModule = true;
+	exports["default"] = pick;
+
+	function pick(obj, fn) {
+	  return Object.keys(obj).reduce(function (result, key) {
+	    if (fn(obj[key])) {
+	      result[key] = obj[key];
+	    }
+	    return result;
+	  }, {});
+	}
+
+	module.exports = exports["default"];
+
+/***/ },
+/* 19 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	exports.__esModule = true;
+	exports['default'] = bindActionCreators;
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	var _utilsMapValues = __webpack_require__(17);
+
+	var _utilsMapValues2 = _interopRequireDefault(_utilsMapValues);
+
+	function bindActionCreator(actionCreator, dispatch) {
+	  return function () {
+	    return dispatch(actionCreator.apply(undefined, arguments));
+	  };
+	}
+
+	/**
+	 * Turns an object whose values are action creators, into an object with the
+	 * same keys, but with every function wrapped into a `dispatch` call so they
+	 * may be invoked directly. This is just a convenience method, as you can call
+	 * `store.dispatch(MyActionCreators.doSomething())` yourself just fine.
+	 *
+	 * For convenience, you can also pass a single function as the first argument,
+	 * and get a function in return.
+	 *
+	 * @param {Function|Object} actionCreators An object whose values are action
+	 * creator functions. One handy way to obtain it is to use ES6 `import * as`
+	 * syntax. You may also pass a single function.
+	 *
+	 * @param {Function} dispatch The `dispatch` function available on your Redux
+	 * store.
+	 *
+	 * @returns {Function|Object} The object mimicking the original object, but with
+	 * every action creator wrapped into the `dispatch` call. If you passed a
+	 * function as `actionCreators`, the return value will also be a single
+	 * function.
+	 */
+
+	function bindActionCreators(actionCreators, dispatch) {
+	  if (typeof actionCreators === 'function') {
+	    return bindActionCreator(actionCreators, dispatch);
+	  }
+
+	  if (typeof actionCreators !== 'object' || actionCreators === null || actionCreators === undefined) {
+	    // eslint-disable-line no-eq-null
+	    throw new Error('bindActionCreators expected an object or a function, instead received ' + (actionCreators === null ? 'null' : typeof actionCreators) + '. ' + 'Did you write "import ActionCreators from" instead of "import * as ActionCreators from"?');
+	  }
+
+	  return _utilsMapValues2['default'](actionCreators, function (actionCreator) {
+	    return bindActionCreator(actionCreator, dispatch);
+	  });
+	}
+
+	module.exports = exports['default'];
+
+/***/ },
+/* 20 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	exports.__esModule = true;
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	exports['default'] = applyMiddleware;
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	var _compose = __webpack_require__(21);
+
+	var _compose2 = _interopRequireDefault(_compose);
+
+	/**
+	 * Creates a store enhancer that applies middleware to the dispatch method
+	 * of the Redux store. This is handy for a variety of tasks, such as expressing
+	 * asynchronous actions in a concise manner, or logging every action payload.
+	 *
+	 * See `redux-thunk` package as an example of the Redux middleware.
+	 *
+	 * Because middleware is potentially asynchronous, this should be the first
+	 * store enhancer in the composition chain.
+	 *
+	 * Note that each middleware will be given the `dispatch` and `getState` functions
+	 * as named arguments.
+	 *
+	 * @param {...Function} middlewares The middleware chain to be applied.
+	 * @returns {Function} A store enhancer applying the middleware.
+	 */
+
+	function applyMiddleware() {
+	  for (var _len = arguments.length, middlewares = Array(_len), _key = 0; _key < _len; _key++) {
+	    middlewares[_key] = arguments[_key];
+	  }
+
+	  return function (next) {
+	    return function (reducer, initialState) {
+	      var store = next(reducer, initialState);
+	      var _dispatch = store.dispatch;
+	      var chain = [];
+
+	      var middlewareAPI = {
+	        getState: store.getState,
+	        dispatch: function dispatch(action) {
+	          return _dispatch(action);
+	        }
+	      };
+	      chain = middlewares.map(function (middleware) {
+	        return middleware(middlewareAPI);
+	      });
+	      _dispatch = _compose2['default'].apply(undefined, chain)(store.dispatch);
+
+	      return _extends({}, store, {
+	        dispatch: _dispatch
+	      });
+	    };
+	  };
+	}
+
+	module.exports = exports['default'];
+
+/***/ },
+/* 21 */
+/***/ function(module, exports) {
+
+	/**
+	 * Composes single-argument functions from right to left.
+	 *
+	 * @param {...Function} funcs The functions to compose.
+	 * @returns {Function} A function obtained by composing functions from right to
+	 * left. For example, compose(f, g, h) is identical to arg => f(g(h(arg))).
+	 */
+	"use strict";
+
+	exports.__esModule = true;
+	exports["default"] = compose;
+
+	function compose() {
+	  for (var _len = arguments.length, funcs = Array(_len), _key = 0; _key < _len; _key++) {
+	    funcs[_key] = arguments[_key];
+	  }
+
+	  return function (arg) {
+	    return funcs.reduceRight(function (composed, f) {
+	      return f(composed);
+	    }, arg);
+	  };
+	}
+
+	module.exports = exports["default"];
+
+/***/ },
+/* 22 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	exports.__esModule = true;
+	exports['default'] = thunkMiddleware;
+
+	function thunkMiddleware(_ref) {
+	  var dispatch = _ref.dispatch;
+	  var getState = _ref.getState;
+
+	  return function (next) {
+	    return function (action) {
+	      return typeof action === 'function' ? action(dispatch, getState) : next(action);
+	    };
+	  };
+	}
+
+	module.exports = exports['default'];
+
+/***/ },
+/* 23 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var repeat = function repeat(str, times) {
+	  return new Array(times + 1).join(str);
+	};
+	var pad = function pad(num, maxLength) {
+	  return repeat("0", maxLength - num.toString().length) + num;
+	};
+	var formatTime = function formatTime(time) {
+	  return " @ " + pad(time.getHours(), 2) + ":" + pad(time.getMinutes(), 2) + ":" + pad(time.getSeconds(), 2) + "." + pad(time.getMilliseconds(), 3);
+	};
+
+	// Use the new performance api to get better precision if available
+	var timer = typeof performance !== "undefined" && typeof performance.now === "function" ? performance : Date;
+
+	/**
+	 * Creates logger with followed options
+	 *
+	 * @namespace
+	 * @property {object} options - options for logger
+	 * @property {string} options.level - console[level]
+	 * @property {bool} options.duration - print duration of each action?
+	 * @property {bool} options.timestamp - print timestamp with each action?
+	 * @property {object} options.colors - custom colors
+	 * @property {object} options.logger - implementation of the `console` API
+	 * @property {boolean} options.collapsed - is group collapsed?
+	 * @property {boolean} options.predicate - condition which resolves logger behavior
+	 * @property {function} options.stateTransformer - transform state before print
+	 * @property {function} options.actionTransformer - transform action before print
+	 */
+
+	function createLogger() {
+	  var options = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+
+	  return function (_ref) {
+	    var getState = _ref.getState;
+	    return function (next) {
+	      return function (action) {
+	        var _options$level = options.level;
+	        var level = _options$level === undefined ? "log" : _options$level;
+	        var _options$logger = options.logger;
+	        var logger = _options$logger === undefined ? window.console : _options$logger;
+	        var collapsed = options.collapsed;
+	        var predicate = options.predicate;
+	        var _options$duration = options.duration;
+	        var duration = _options$duration === undefined ? false : _options$duration;
+	        var _options$timestamp = options.timestamp;
+	        var timestamp = _options$timestamp === undefined ? true : _options$timestamp;
+	        var transformer = options.transformer;
+	        var _options$stateTransfo = options.stateTransformer;
+	        var // deprecated
+	        stateTransformer = _options$stateTransfo === undefined ? function (state) {
+	          return state;
+	        } : _options$stateTransfo;
+	        var _options$actionTransf = options.actionTransformer;
+	        var actionTransformer = _options$actionTransf === undefined ? function (actn) {
+	          return actn;
+	        } : _options$actionTransf;
+	        var _options$colors = options.colors;
+	        var colors = _options$colors === undefined ? {
+	          title: function title() {
+	            return "#000000";
+	          },
+	          prevState: function prevState() {
+	            return "#9E9E9E";
+	          },
+	          action: function action() {
+	            return "#03A9F4";
+	          },
+	          nextState: function nextState() {
+	            return "#4CAF50";
+	          }
+	        } : _options$colors;
+
+	        // exit if console undefined
+
+	        if (typeof logger === "undefined") {
+	          return next(action);
+	        }
+
+	        // exit early if predicate function returns false
+	        if (typeof predicate === "function" && !predicate(getState, action)) {
+	          return next(action);
+	        }
+
+	        if (transformer) {
+	          console.error("Option 'transformer' is deprecated, use stateTransformer instead");
+	        }
+
+	        var started = timer.now();
+	        var prevState = stateTransformer(getState());
+
+	        var formattedAction = actionTransformer(action);
+	        var returnedValue = next(action);
+
+	        var took = timer.now() - started;
+	        var nextState = stateTransformer(getState());
+
+	        // message
+	        var time = new Date();
+	        var isCollapsed = typeof collapsed === "function" ? collapsed(getState, action) : collapsed;
+
+	        var formattedTime = formatTime(time);
+	        var titleCSS = colors.title ? "color: " + colors.title(formattedAction) + ";" : null;
+	        var title = "action " + formattedAction.type + (timestamp ? formattedTime : "") + (duration ? " in " + took.toFixed(2) + " ms" : "");
+
+	        // render
+	        try {
+	          if (isCollapsed) {
+	            if (colors.title) logger.groupCollapsed("%c " + title, titleCSS);else logger.groupCollapsed(title);
+	          } else {
+	            if (colors.title) logger.group("%c " + title, titleCSS);else logger.group(title);
+	          }
+	        } catch (e) {
+	          logger.log(title);
+	        }
+
+	        if (colors.prevState) logger[level]("%c prev state", "color: " + colors.prevState(prevState) + "; font-weight: bold", prevState);else logger[level]("prev state", prevState);
+
+	        if (colors.action) logger[level]("%c action", "color: " + colors.action(formattedAction) + "; font-weight: bold", formattedAction);else logger[level]("action", formattedAction);
+
+	        if (colors.nextState) logger[level]("%c next state", "color: " + colors.nextState(nextState) + "; font-weight: bold", nextState);else logger[level]("next state", nextState);
+
+	        try {
+	          logger.groupEnd();
+	        } catch (e) {
+	          logger.log("—— log end ——");
+	        }
+
+	        return returnedValue;
+	      };
+	    };
+	  };
+	}
+
+	exports.default = createLogger;
+	module.exports = exports['default'];
+
+/***/ },
+/* 24 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _interopRequireDefault = __webpack_require__(9)['default'];
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+
+	var _reducersCatalog = __webpack_require__(10);
+
+	var _reducersCatalog2 = _interopRequireDefault(_reducersCatalog);
+
+	_reducersCatalog2['default']._define('CONNECTION_SUCCESS');
+	_reducersCatalog2['default']._define('CONNECTION_EXPIRED');
+	_reducersCatalog2['default']._define('CONNECTION_FAILED');
+	_reducersCatalog2['default']._define('CONNECTION_SERVER_ERROR');
+	_reducersCatalog2['default']._define('CONNECTION_SETTINGS');
+
+	exports['default'] = function (state, action) {
+	  if (!state) {
+	    state = {
+	      connected: false,
+	      authenticated: false,
+	      serverError: false,
+	      settings: false
+	    };
+	  }
+	  if (action.type == _reducersCatalog2['default'].CONNECTION_SUCCESS || action.type == _reducersCatalog2['default'].CONNECTION_SETTINGS) {
+	    return {
+	      connected: true,
+	      authenticated: true,
+	      serverError: false,
+	      settings: action.type == _reducersCatalog2['default'].CONNECTION_SETTINGS ? action.payload : state.settings
+	    };
+	  };
+
+	  if (action.type == _reducersCatalog2['default'].CONNECTION_EXPIRED) {
+	    return {
+	      connected: true,
+	      authenticated: false,
+	      serverError: false,
+	      settings: false
+	    };
+	  };
+
+	  if (action.type == _reducersCatalog2['default'].CONNECTION_FAILED || action.type == _reducersCatalog2['default'].CONNECTION_SERVER_ERROR) {
+	    return {
+	      connected: Math.max(1, action.payload),
+	      authenticated: state.authenticated,
+	      serverError: action.type == _reducersCatalog2['default'].CONNECTION_SERVER_ERROR ? action.payload : false,
+	      settings: state.settings
+	    };
+	  };
+
+	  return state;
+	};
+
+	module.exports = exports['default'];
+	//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi92YXIvd3d3L2NyeXB0b21lZGljL2FwcC9yZWR1Y2Vycy9jb25uZWN0aW9uUmVkdWNlcnMuanMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7K0JBQ29CLGtCQUFrQjs7OztBQUV0Qyw2QkFBUSxPQUFPLENBQUMsb0JBQW9CLENBQUMsQ0FBQztBQUN0Qyw2QkFBUSxPQUFPLENBQUMsb0JBQW9CLENBQUMsQ0FBQztBQUN0Qyw2QkFBUSxPQUFPLENBQUMsbUJBQW1CLENBQUMsQ0FBQztBQUNyQyw2QkFBUSxPQUFPLENBQUMseUJBQXlCLENBQUMsQ0FBQztBQUMzQyw2QkFBUSxPQUFPLENBQUMscUJBQXFCLENBQUMsQ0FBQzs7cUJBRXhCLFVBQVMsS0FBSyxFQUFFLE1BQU0sRUFBRTtBQUNyQyxNQUFJLENBQUMsS0FBSyxFQUFFO0FBQ1YsU0FBSyxHQUFHO0FBQ04sZUFBUyxFQUFFLEtBQUs7QUFDaEIsbUJBQWEsRUFBRSxLQUFLO0FBQ3BCLGlCQUFXLEVBQUUsS0FBSztBQUNsQixjQUFRLEVBQUUsS0FBSztLQUNoQixDQUFDO0dBQ0g7QUFDRCxNQUFJLEFBQUMsTUFBTSxDQUFDLElBQUksSUFBSSw2QkFBUSxrQkFBa0IsSUFDdEMsTUFBTSxDQUFDLElBQUksSUFBSSw2QkFBUSxtQkFBbUIsQUFBQyxFQUFFO0FBQ25ELFdBQU87QUFDTCxlQUFTLEVBQUUsSUFBSTtBQUNmLG1CQUFhLEVBQUUsSUFBSTtBQUNuQixpQkFBVyxFQUFFLEtBQUs7QUFDbEIsY0FBUSxFQUFHLE1BQU0sQ0FBQyxJQUFJLElBQUksNkJBQVEsbUJBQW1CLEdBQUcsTUFBTSxDQUFDLE9BQU8sR0FBRyxLQUFLLENBQUMsUUFBUSxBQUFDO0tBQ3pGLENBQUM7R0FDSCxDQUFDOztBQUVGLE1BQUksTUFBTSxDQUFDLElBQUksSUFBSSw2QkFBUSxrQkFBa0IsRUFBRTtBQUM3QyxXQUFPO0FBQ0wsZUFBUyxFQUFFLElBQUk7QUFDZixtQkFBYSxFQUFFLEtBQUs7QUFDcEIsaUJBQVcsRUFBRSxLQUFLO0FBQ2xCLGNBQVEsRUFBRSxLQUFLO0tBQ2hCLENBQUM7R0FDSCxDQUFDOztBQUVGLE1BQUksQUFBQyxNQUFNLENBQUMsSUFBSSxJQUFJLDZCQUFRLGlCQUFpQixJQUNyQyxNQUFNLENBQUMsSUFBSSxJQUFJLDZCQUFRLHVCQUF1QixBQUFDLEVBQUU7QUFDdkQsV0FBTztBQUNMLGVBQVMsRUFBRSxJQUFJLENBQUMsR0FBRyxDQUFDLENBQUMsRUFBRSxNQUFNLENBQUMsT0FBTyxDQUFDO0FBQ3RDLG1CQUFhLEVBQUUsS0FBSyxDQUFDLGFBQWE7QUFDbEMsaUJBQVcsRUFBRyxNQUFNLENBQUMsSUFBSSxJQUFJLDZCQUFRLHVCQUF1QixHQUFHLE1BQU0sQ0FBQyxPQUFPLEdBQUcsS0FBSyxBQUFDO0FBQ3RGLGNBQVEsRUFBRSxLQUFLLENBQUMsUUFBUTtLQUN6QixDQUFDO0dBQ0gsQ0FBQzs7QUFFRixTQUFPLEtBQUssQ0FBQztDQUNkIiwiZmlsZSI6Ii92YXIvd3d3L2NyeXB0b21lZGljL2FwcC9yZWR1Y2Vycy9jb25uZWN0aW9uUmVkdWNlcnMuanMiLCJzb3VyY2VzQ29udGVudCI6WyJcbmltcG9ydCBjYXRhbG9nIGZyb20gJ3JlZHVjZXJzL2NhdGFsb2cnO1xuXG5jYXRhbG9nLl9kZWZpbmUoJ0NPTk5FQ1RJT05fU1VDQ0VTUycpO1xuY2F0YWxvZy5fZGVmaW5lKCdDT05ORUNUSU9OX0VYUElSRUQnKTtcbmNhdGFsb2cuX2RlZmluZSgnQ09OTkVDVElPTl9GQUlMRUQnKTtcbmNhdGFsb2cuX2RlZmluZSgnQ09OTkVDVElPTl9TRVJWRVJfRVJST1InKTtcbmNhdGFsb2cuX2RlZmluZSgnQ09OTkVDVElPTl9TRVRUSU5HUycpO1xuXG5leHBvcnQgZGVmYXVsdCBmdW5jdGlvbihzdGF0ZSwgYWN0aW9uKSB7XG4gIGlmICghc3RhdGUpIHtcbiAgICBzdGF0ZSA9IHtcbiAgICAgIGNvbm5lY3RlZDogZmFsc2UsXG4gICAgICBhdXRoZW50aWNhdGVkOiBmYWxzZSxcbiAgICAgIHNlcnZlckVycm9yOiBmYWxzZSxcbiAgICAgIHNldHRpbmdzOiBmYWxzZVxuICAgIH07XG4gIH1cbiAgaWYgKChhY3Rpb24udHlwZSA9PSBjYXRhbG9nLkNPTk5FQ1RJT05fU1VDQ0VTUylcbiAgICAgIHx8IChhY3Rpb24udHlwZSA9PSBjYXRhbG9nLkNPTk5FQ1RJT05fU0VUVElOR1MpKSB7XG4gICAgcmV0dXJuIHtcbiAgICAgIGNvbm5lY3RlZDogdHJ1ZSxcbiAgICAgIGF1dGhlbnRpY2F0ZWQ6IHRydWUsXG4gICAgICBzZXJ2ZXJFcnJvcjogZmFsc2UsXG4gICAgICBzZXR0aW5nczogKGFjdGlvbi50eXBlID09IGNhdGFsb2cuQ09OTkVDVElPTl9TRVRUSU5HUyA/IGFjdGlvbi5wYXlsb2FkIDogc3RhdGUuc2V0dGluZ3MpXG4gICAgfTtcbiAgfTtcblxuICBpZiAoYWN0aW9uLnR5cGUgPT0gY2F0YWxvZy5DT05ORUNUSU9OX0VYUElSRUQpIHtcbiAgICByZXR1cm4ge1xuICAgICAgY29ubmVjdGVkOiB0cnVlLFxuICAgICAgYXV0aGVudGljYXRlZDogZmFsc2UsXG4gICAgICBzZXJ2ZXJFcnJvcjogZmFsc2UsXG4gICAgICBzZXR0aW5nczogZmFsc2VcbiAgICB9O1xuICB9O1xuXG4gIGlmICgoYWN0aW9uLnR5cGUgPT0gY2F0YWxvZy5DT05ORUNUSU9OX0ZBSUxFRClcbiAgICAgIHx8IChhY3Rpb24udHlwZSA9PSBjYXRhbG9nLkNPTk5FQ1RJT05fU0VSVkVSX0VSUk9SKSkge1xuICAgIHJldHVybiB7XG4gICAgICBjb25uZWN0ZWQ6IE1hdGgubWF4KDEsIGFjdGlvbi5wYXlsb2FkKSxcbiAgICAgIGF1dGhlbnRpY2F0ZWQ6IHN0YXRlLmF1dGhlbnRpY2F0ZWQsXG4gICAgICBzZXJ2ZXJFcnJvcjogKGFjdGlvbi50eXBlID09IGNhdGFsb2cuQ09OTkVDVElPTl9TRVJWRVJfRVJST1IgPyBhY3Rpb24ucGF5bG9hZCA6IGZhbHNlKSxcbiAgICAgIHNldHRpbmdzOiBzdGF0ZS5zZXR0aW5nc1xuICAgIH07XG4gIH07XG5cbiAgcmV0dXJuIHN0YXRlO1xufVxuIl19
+
+/***/ },
+/* 25 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _interopRequireDefault = __webpack_require__(9)['default'];
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+
+	var _reducersCatalog = __webpack_require__(10);
+
+	var _reducersCatalog2 = _interopRequireDefault(_reducersCatalog);
+
+	_reducersCatalog2['default']._define('STATE_BUSY');
+	_reducersCatalog2['default']._define('STATE_READY');
+	_reducersCatalog2['default']._define('STATE_CLEAR');
+
+	exports['default'] = function (state, action) {
+	  if (!state || action.type == _reducersCatalog2['default'].STATE_CLEAR) {
+	    state = {
+	      busy: 0,
+	      messages: "",
+	      max: 0
+	    };
+	  }
+	  if (action.type == _reducersCatalog2['default'].STATE_BUSY) {
+	    return {
+	      busy: state.busy + 1,
+	      messages: (state.messages + "<br>" + action.payload).trim(),
+	      max: state.max + 1
+	    };
+	  };
+
+	  if (action.type == _reducersCatalog2['default'].STATE_READY) {
+	    if (state.busy <= 1) {
+	      return {
+	        busy: 0,
+	        messages: "",
+	        max: 0
+	      };
+	    }
+	    return {
+	      busy: state.busy - 1,
+	      messages: state.messages,
+	      max: state.max
+	    };
+	  };
+
+	  return state;
+	};
+
+	module.exports = exports['default'];
+	//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi92YXIvd3d3L2NyeXB0b21lZGljL2FwcC9yZWR1Y2Vycy9zdGF0ZVJlZHVjZXJzLmpzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7Ozs7Ozs7OytCQUNvQixrQkFBa0I7Ozs7QUFFdEMsNkJBQVEsT0FBTyxDQUFDLFlBQVksQ0FBQyxDQUFDO0FBQzlCLDZCQUFRLE9BQU8sQ0FBQyxhQUFhLENBQUMsQ0FBQztBQUMvQiw2QkFBUSxPQUFPLENBQUMsYUFBYSxDQUFDLENBQUM7O3FCQUVoQixVQUFTLEtBQUssRUFBRSxNQUFNLEVBQUU7QUFDckMsTUFBSSxDQUFDLEtBQUssSUFBSSxNQUFNLENBQUMsSUFBSSxJQUFJLDZCQUFRLFdBQVcsRUFBRTtBQUNoRCxTQUFLLEdBQUc7QUFDTixVQUFJLEVBQUUsQ0FBQztBQUNQLGNBQVEsRUFBRSxFQUFFO0FBQ1osU0FBRyxFQUFFLENBQUM7S0FDUCxDQUFDO0dBQ0g7QUFDRCxNQUFJLE1BQU0sQ0FBQyxJQUFJLElBQUksNkJBQVEsVUFBVSxFQUFFO0FBQ3JDLFdBQU87QUFDTCxVQUFJLEVBQUUsS0FBSyxDQUFDLElBQUksR0FBRyxDQUFDO0FBQ3BCLGNBQVEsRUFBRSxDQUFDLEtBQUssQ0FBQyxRQUFRLEdBQUcsTUFBTSxHQUFHLE1BQU0sQ0FBQyxPQUFPLENBQUEsQ0FBRSxJQUFJLEVBQUU7QUFDM0QsU0FBRyxFQUFFLEtBQUssQ0FBQyxHQUFHLEdBQUcsQ0FBQztLQUNuQixDQUFDO0dBQ0gsQ0FBQzs7QUFFRixNQUFJLE1BQU0sQ0FBQyxJQUFJLElBQUksNkJBQVEsV0FBVyxFQUFFO0FBQ3RDLFFBQUksS0FBSyxDQUFDLElBQUksSUFBSSxDQUFDLEVBQUU7QUFDbkIsYUFBTztBQUNMLFlBQUksRUFBRSxDQUFDO0FBQ1AsZ0JBQVEsRUFBRSxFQUFFO0FBQ1osV0FBRyxFQUFFLENBQUM7T0FDUCxDQUFBO0tBQ0Y7QUFDRCxXQUFPO0FBQ0wsVUFBSSxFQUFFLEtBQUssQ0FBQyxJQUFJLEdBQUcsQ0FBQztBQUNwQixjQUFRLEVBQUUsS0FBSyxDQUFDLFFBQVE7QUFDeEIsU0FBRyxFQUFFLEtBQUssQ0FBQyxHQUFHO0tBQ2YsQ0FBQztHQUNILENBQUM7O0FBRUYsU0FBTyxLQUFLLENBQUM7Q0FDZCIsImZpbGUiOiIvdmFyL3d3dy9jcnlwdG9tZWRpYy9hcHAvcmVkdWNlcnMvc3RhdGVSZWR1Y2Vycy5qcyIsInNvdXJjZXNDb250ZW50IjpbIlxuaW1wb3J0IGNhdGFsb2cgZnJvbSAncmVkdWNlcnMvY2F0YWxvZyc7XG5cbmNhdGFsb2cuX2RlZmluZSgnU1RBVEVfQlVTWScpO1xuY2F0YWxvZy5fZGVmaW5lKCdTVEFURV9SRUFEWScpO1xuY2F0YWxvZy5fZGVmaW5lKCdTVEFURV9DTEVBUicpO1xuXG5leHBvcnQgZGVmYXVsdCBmdW5jdGlvbihzdGF0ZSwgYWN0aW9uKSB7XG4gIGlmICghc3RhdGUgfHwgYWN0aW9uLnR5cGUgPT0gY2F0YWxvZy5TVEFURV9DTEVBUikge1xuICAgIHN0YXRlID0ge1xuICAgICAgYnVzeTogMCxcbiAgICAgIG1lc3NhZ2VzOiBcIlwiLFxuICAgICAgbWF4OiAwXG4gICAgfTtcbiAgfVxuICBpZiAoYWN0aW9uLnR5cGUgPT0gY2F0YWxvZy5TVEFURV9CVVNZKSB7XG4gICAgcmV0dXJuIHtcbiAgICAgIGJ1c3k6IHN0YXRlLmJ1c3kgKyAxLFxuICAgICAgbWVzc2FnZXM6IChzdGF0ZS5tZXNzYWdlcyArIFwiPGJyPlwiICsgYWN0aW9uLnBheWxvYWQpLnRyaW0oKSxcbiAgICAgIG1heDogc3RhdGUubWF4ICsgMVxuICAgIH07XG4gIH07XG5cbiAgaWYgKGFjdGlvbi50eXBlID09IGNhdGFsb2cuU1RBVEVfUkVBRFkpIHtcbiAgICBpZiAoc3RhdGUuYnVzeSA8PSAxKSB7XG4gICAgICByZXR1cm4ge1xuICAgICAgICBidXN5OiAwLFxuICAgICAgICBtZXNzYWdlczogXCJcIixcbiAgICAgICAgbWF4OiAwXG4gICAgICB9XG4gICAgfVxuICAgIHJldHVybiB7XG4gICAgICBidXN5OiBzdGF0ZS5idXN5IC0gMSxcbiAgICAgIG1lc3NhZ2VzOiBzdGF0ZS5tZXNzYWdlcyxcbiAgICAgIG1heDogc3RhdGUubWF4XG4gICAgfTtcbiAgfTtcblxuICByZXR1cm4gc3RhdGU7XG59XG4iXX0=
+
+/***/ },
+/* 26 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _interopRequireDefault = __webpack_require__(9)['default'];
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+
+	var _reducersCatalog = __webpack_require__(10);
+
+	var _reducersCatalog2 = _interopRequireDefault(_reducersCatalog);
+
+	_reducersCatalog2['default']._define('DATABASE_DOWNLOADING');
+	_reducersCatalog2['default']._define('DATABASE_DOWNLOADED');
+	_reducersCatalog2['default']._define('DATABASE_UPLOADING');
+	_reducersCatalog2['default']._define('DATABASE_UPLOADED');
+
+	exports['default'] = function (state, action) {
+	  if (!state) {
+	    state = {
+	      downloading: true,
+	      uploading: 0
+	    };
+	  }
+	  if (action.type == _reducersCatalog2['default'].DATABASE_DOWNLOADING) {
+	    return {
+	      downloading: true,
+	      uploading: state.uploading
+	    };
+	  };
+
+	  if (action.type == _reducersCatalog2['default'].DATABASE_DOWNLOADED) {
+	    return {
+	      downloading: false,
+	      uploading: state.uploading
+	    };
+	  };
+
+	  if (action.type == _reducersCatalog2['default'].DATABASE_UPLAODING) {
+	    return {
+	      downloading: state.downloading,
+	      uploading: action.payload
+	    };
+	  };
+
+	  if (action.type == _reducersCatalog2['default'].DATABASE_UPLAODED) {
+	    return {
+	      downloading: state.downloading,
+	      uploading: 0
+	    };
+	  };
+
+	  return state;
+	};
+
+	module.exports = exports['default'];
+	//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi92YXIvd3d3L2NyeXB0b21lZGljL2FwcC9yZWR1Y2Vycy9kYXRhYmFzZVJlZHVjZXJzLmpzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7Ozs7Ozs7OytCQUNvQixrQkFBa0I7Ozs7QUFFdEMsNkJBQVEsT0FBTyxDQUFDLHNCQUFzQixDQUFDLENBQUM7QUFDeEMsNkJBQVEsT0FBTyxDQUFDLHFCQUFxQixDQUFDLENBQUM7QUFDdkMsNkJBQVEsT0FBTyxDQUFDLG9CQUFvQixDQUFDLENBQUM7QUFDdEMsNkJBQVEsT0FBTyxDQUFDLG1CQUFtQixDQUFDLENBQUM7O3FCQUV0QixVQUFTLEtBQUssRUFBRSxNQUFNLEVBQUU7QUFDckMsTUFBSSxDQUFDLEtBQUssRUFBRTtBQUNWLFNBQUssR0FBRztBQUNOLGlCQUFXLEVBQUUsSUFBSTtBQUNqQixlQUFTLEVBQUUsQ0FBQztLQUNiLENBQUM7R0FDSDtBQUNELE1BQUksTUFBTSxDQUFDLElBQUksSUFBSSw2QkFBUSxvQkFBb0IsRUFBRTtBQUMvQyxXQUFPO0FBQ0wsaUJBQVcsRUFBRSxJQUFJO0FBQ2pCLGVBQVMsRUFBRSxLQUFLLENBQUMsU0FBUztLQUMzQixDQUFDO0dBQ0gsQ0FBQzs7QUFFRixNQUFJLE1BQU0sQ0FBQyxJQUFJLElBQUksNkJBQVEsbUJBQW1CLEVBQUU7QUFDOUMsV0FBTztBQUNMLGlCQUFXLEVBQUUsS0FBSztBQUNsQixlQUFTLEVBQUUsS0FBSyxDQUFDLFNBQVM7S0FDM0IsQ0FBQztHQUNILENBQUM7O0FBRUYsTUFBSSxNQUFNLENBQUMsSUFBSSxJQUFJLDZCQUFRLGtCQUFrQixFQUFFO0FBQzdDLFdBQU87QUFDTCxpQkFBVyxFQUFFLEtBQUssQ0FBQyxXQUFXO0FBQzlCLGVBQVMsRUFBRSxNQUFNLENBQUMsT0FBTztLQUMxQixDQUFDO0dBQ0gsQ0FBQzs7QUFFRixNQUFJLE1BQU0sQ0FBQyxJQUFJLElBQUksNkJBQVEsaUJBQWlCLEVBQUU7QUFDNUMsV0FBTztBQUNMLGlCQUFXLEVBQUUsS0FBSyxDQUFDLFdBQVc7QUFDOUIsZUFBUyxFQUFFLENBQUM7S0FDYixDQUFDO0dBQ0gsQ0FBQzs7QUFFRixTQUFPLEtBQUssQ0FBQztDQUNkIiwiZmlsZSI6Ii92YXIvd3d3L2NyeXB0b21lZGljL2FwcC9yZWR1Y2Vycy9kYXRhYmFzZVJlZHVjZXJzLmpzIiwic291cmNlc0NvbnRlbnQiOlsiXG5pbXBvcnQgY2F0YWxvZyBmcm9tICdyZWR1Y2Vycy9jYXRhbG9nJztcblxuY2F0YWxvZy5fZGVmaW5lKCdEQVRBQkFTRV9ET1dOTE9BRElORycpO1xuY2F0YWxvZy5fZGVmaW5lKCdEQVRBQkFTRV9ET1dOTE9BREVEJyk7XG5jYXRhbG9nLl9kZWZpbmUoJ0RBVEFCQVNFX1VQTE9BRElORycpO1xuY2F0YWxvZy5fZGVmaW5lKCdEQVRBQkFTRV9VUExPQURFRCcpO1xuXG5leHBvcnQgZGVmYXVsdCBmdW5jdGlvbihzdGF0ZSwgYWN0aW9uKSB7XG4gIGlmICghc3RhdGUpIHtcbiAgICBzdGF0ZSA9IHtcbiAgICAgIGRvd25sb2FkaW5nOiB0cnVlLFxuICAgICAgdXBsb2FkaW5nOiAwXG4gICAgfTtcbiAgfVxuICBpZiAoYWN0aW9uLnR5cGUgPT0gY2F0YWxvZy5EQVRBQkFTRV9ET1dOTE9BRElORykge1xuICAgIHJldHVybiB7XG4gICAgICBkb3dubG9hZGluZzogdHJ1ZSxcbiAgICAgIHVwbG9hZGluZzogc3RhdGUudXBsb2FkaW5nXG4gICAgfTtcbiAgfTtcblxuICBpZiAoYWN0aW9uLnR5cGUgPT0gY2F0YWxvZy5EQVRBQkFTRV9ET1dOTE9BREVEKSB7XG4gICAgcmV0dXJuIHtcbiAgICAgIGRvd25sb2FkaW5nOiBmYWxzZSxcbiAgICAgIHVwbG9hZGluZzogc3RhdGUudXBsb2FkaW5nXG4gICAgfTtcbiAgfTtcblxuICBpZiAoYWN0aW9uLnR5cGUgPT0gY2F0YWxvZy5EQVRBQkFTRV9VUExBT0RJTkcpIHtcbiAgICByZXR1cm4ge1xuICAgICAgZG93bmxvYWRpbmc6IHN0YXRlLmRvd25sb2FkaW5nLFxuICAgICAgdXBsb2FkaW5nOiBhY3Rpb24ucGF5bG9hZFxuICAgIH07XG4gIH07XG5cbiAgaWYgKGFjdGlvbi50eXBlID09IGNhdGFsb2cuREFUQUJBU0VfVVBMQU9ERUQpIHtcbiAgICByZXR1cm4ge1xuICAgICAgZG93bmxvYWRpbmc6IHN0YXRlLmRvd25sb2FkaW5nLFxuICAgICAgdXBsb2FkaW5nOiAwXG4gICAgfTtcbiAgfTtcblxuICByZXR1cm4gc3RhdGU7XG59XG4iXX0=
+
+/***/ },
+/* 27 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _interopRequireDefault = __webpack_require__(9)['default'];
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+
+	var _reducersCatalog = __webpack_require__(10);
+
+	var _reducersCatalog2 = _interopRequireDefault(_reducersCatalog);
+
+	var _actionsDispatch = __webpack_require__(28);
+
+	var _actionsDispatch2 = _interopRequireDefault(_actionsDispatch);
+
+	exports['default'] = {
+	  success: function success() {
+	    (0, _actionsDispatch2['default'])(_reducersCatalog2['default'].CONNECTION_SUCCESS);
+	  },
+
+	  settings: function settings(data) {
+	    (0, _actionsDispatch2['default'])(_reducersCatalog2['default'].CONNECTION_SETTINGS, data);
+	    return data;
+	  },
+
+	  failed: function failed(httpErrorCode) {
+	    (0, _actionsDispatch2['default'])(_reducersCatalog2['default'].CONNECTION_FAILED, httpErrorCode);
+	  },
+
+	  expired: function expired() {
+	    (0, _actionsDispatch2['default'])(_reducersCatalog2['default'].CONNECTION_EXPIRED);
+	  },
+
+	  serverError: function serverError() {
+	    (0, _actionsDispatch2['default'])(_reducersCatalog2['default'].CONNECTION_SERVER_ERROR);
+	  }
+	};
+	module.exports = exports['default'];
+	//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi92YXIvd3d3L2NyeXB0b21lZGljL2FwcC9hY3Rpb25zL2Nvbm5lY3Rpb25BY3Rpb25zLmpzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7Ozs7Ozs7OytCQUNvQixrQkFBa0I7Ozs7K0JBQ2pCLGtCQUFrQjs7OztxQkFFeEI7QUFDYixTQUFPLEVBQUUsbUJBQVc7QUFDbEIsc0NBQVMsNkJBQVEsa0JBQWtCLENBQUMsQ0FBQTtHQUNyQzs7QUFFRCxVQUFRLEVBQUUsa0JBQVMsSUFBSSxFQUFFO0FBQ3ZCLHNDQUFTLDZCQUFRLG1CQUFtQixFQUFFLElBQUksQ0FBQyxDQUFBO0FBQzNDLFdBQU8sSUFBSSxDQUFDO0dBQ2I7O0FBRUQsUUFBTSxFQUFFLGdCQUFTLGFBQWEsRUFBRTtBQUM5QixzQ0FBUyw2QkFBUSxpQkFBaUIsRUFBRSxhQUFhLENBQUMsQ0FBQTtHQUNuRDs7QUFFRCxTQUFPLEVBQUUsbUJBQVc7QUFDbEIsc0NBQVMsNkJBQVEsa0JBQWtCLENBQUMsQ0FBQTtHQUNyQzs7QUFFRCxhQUFXLEVBQUUsdUJBQVc7QUFDdEIsc0NBQVMsNkJBQVEsdUJBQXVCLENBQUMsQ0FBQTtHQUMxQztDQUNGIiwiZmlsZSI6Ii92YXIvd3d3L2NyeXB0b21lZGljL2FwcC9hY3Rpb25zL2Nvbm5lY3Rpb25BY3Rpb25zLmpzIiwic291cmNlc0NvbnRlbnQiOlsiXG5pbXBvcnQgY2F0YWxvZyBmcm9tICdyZWR1Y2Vycy9jYXRhbG9nJztcbmltcG9ydCBkaXNwYXRjaCBmcm9tICdhY3Rpb25zL2Rpc3BhdGNoJztcblxuZXhwb3J0IGRlZmF1bHQge1xuICBzdWNjZXNzOiBmdW5jdGlvbigpIHtcbiAgICBkaXNwYXRjaChjYXRhbG9nLkNPTk5FQ1RJT05fU1VDQ0VTUylcbiAgfSxcblxuICBzZXR0aW5nczogZnVuY3Rpb24oZGF0YSkge1xuICAgIGRpc3BhdGNoKGNhdGFsb2cuQ09OTkVDVElPTl9TRVRUSU5HUywgZGF0YSlcbiAgICByZXR1cm4gZGF0YTtcbiAgfSxcblxuICBmYWlsZWQ6IGZ1bmN0aW9uKGh0dHBFcnJvckNvZGUpIHtcbiAgICBkaXNwYXRjaChjYXRhbG9nLkNPTk5FQ1RJT05fRkFJTEVELCBodHRwRXJyb3JDb2RlKVxuICB9LFxuXG4gIGV4cGlyZWQ6IGZ1bmN0aW9uKCkge1xuICAgIGRpc3BhdGNoKGNhdGFsb2cuQ09OTkVDVElPTl9FWFBJUkVEKVxuICB9LFxuXG4gIHNlcnZlckVycm9yOiBmdW5jdGlvbigpIHtcbiAgICBkaXNwYXRjaChjYXRhbG9nLkNPTk5FQ1RJT05fU0VSVkVSX0VSUk9SKVxuICB9LFxufTtcbiJdfQ==
+
+/***/ },
+/* 28 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _interopRequireDefault = __webpack_require__(9)['default'];
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	exports['default'] = dispatch;
+
+	var _reducersStore = __webpack_require__(11);
+
+	var _reducersStore2 = _interopRequireDefault(_reducersStore);
+
+	function dispatch(type, payload) {
+	  _reducersStore2['default'].dispatch({ type: type, payload: payload });
+	}
+
+	module.exports = exports['default'];
+	//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi92YXIvd3d3L2NyeXB0b21lZGljL2FwcC9hY3Rpb25zL2Rpc3BhdGNoLmpzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7Ozs7Ozs7cUJBR3dCLFFBQVE7OzZCQUZkLGdCQUFnQjs7OztBQUVuQixTQUFTLFFBQVEsQ0FBQyxJQUFJLEVBQUUsT0FBTyxFQUFFO0FBQzlDLDZCQUFNLFFBQVEsQ0FBQyxFQUFFLElBQUksRUFBRSxJQUFJLEVBQUUsT0FBTyxFQUFFLE9BQU8sRUFBRSxDQUFDLENBQUM7Q0FDbEQiLCJmaWxlIjoiL3Zhci93d3cvY3J5cHRvbWVkaWMvYXBwL2FjdGlvbnMvZGlzcGF0Y2guanMiLCJzb3VyY2VzQ29udGVudCI6WyJcbmltcG9ydCBzdG9yZSBmcm9tICdyZWR1Y2Vycy9zdG9yZSc7XG5cbmV4cG9ydCBkZWZhdWx0IGZ1bmN0aW9uIGRpc3BhdGNoKHR5cGUsIHBheWxvYWQpIHtcbiAgc3RvcmUuZGlzcGF0Y2goeyB0eXBlOiB0eXBlLCBwYXlsb2FkOiBwYXlsb2FkIH0pO1xufVxuIl19
+
+/***/ },
+/* 29 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _interopRequireDefault = __webpack_require__(9)['default'];
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+
+	var _reducersCatalog = __webpack_require__(10);
+
+	var _reducersCatalog2 = _interopRequireDefault(_reducersCatalog);
+
+	var _actionsDispatch = __webpack_require__(28);
+
+	var _actionsDispatch2 = _interopRequireDefault(_actionsDispatch);
+
+	exports['default'] = {
+	  busy: function busy(msg) {
+	    (0, _actionsDispatch2['default'])(_reducersCatalog2['default'].STATE_BUSY, msg);
+	  },
+
+	  ready: function ready() {
+	    (0, _actionsDispatch2['default'])(_reducersCatalog2['default'].STATE_READY);
+	  },
+
+	  clear: function clear() {
+	    (0, _actionsDispatch2['default'])(_reducersCatalog2['default'].STATE_CLEAR);
+	  }
+	};
+	module.exports = exports['default'];
+	//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi92YXIvd3d3L2NyeXB0b21lZGljL2FwcC9hY3Rpb25zL3N0YXRlQWN0aW9ucy5qcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7Ozs7OzsrQkFDb0Isa0JBQWtCOzs7OytCQUNqQixrQkFBa0I7Ozs7cUJBRXhCO0FBQ2IsTUFBSSxFQUFFLGNBQVMsR0FBRyxFQUFFO0FBQ2xCLHNDQUFTLDZCQUFRLFVBQVUsRUFBRSxHQUFHLENBQUMsQ0FBQTtHQUNsQzs7QUFFRCxPQUFLLEVBQUUsaUJBQVc7QUFDaEIsc0NBQVMsNkJBQVEsV0FBVyxDQUFDLENBQUE7R0FDOUI7O0FBRUQsT0FBSyxFQUFFLGlCQUFXO0FBQ2hCLHNDQUFTLDZCQUFRLFdBQVcsQ0FBQyxDQUFBO0dBQzlCO0NBQ0YiLCJmaWxlIjoiL3Zhci93d3cvY3J5cHRvbWVkaWMvYXBwL2FjdGlvbnMvc3RhdGVBY3Rpb25zLmpzIiwic291cmNlc0NvbnRlbnQiOlsiXG5pbXBvcnQgY2F0YWxvZyBmcm9tICdyZWR1Y2Vycy9jYXRhbG9nJztcbmltcG9ydCBkaXNwYXRjaCBmcm9tICdhY3Rpb25zL2Rpc3BhdGNoJztcblxuZXhwb3J0IGRlZmF1bHQge1xuICBidXN5OiBmdW5jdGlvbihtc2cpIHtcbiAgICBkaXNwYXRjaChjYXRhbG9nLlNUQVRFX0JVU1ksIG1zZylcbiAgfSxcblxuICByZWFkeTogZnVuY3Rpb24oKSB7XG4gICAgZGlzcGF0Y2goY2F0YWxvZy5TVEFURV9SRUFEWSlcbiAgfSxcblxuICBjbGVhcjogZnVuY3Rpb24oKSB7XG4gICAgZGlzcGF0Y2goY2F0YWxvZy5TVEFURV9DTEVBUilcbiAgfVxufTtcbiJdfQ==
+
+/***/ },
+/* 30 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _interopRequireDefault = __webpack_require__(9)['default'];
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+
+	var _reducersCatalog = __webpack_require__(10);
+
+	var _reducersCatalog2 = _interopRequireDefault(_reducersCatalog);
+
+	var _actionsDispatch = __webpack_require__(28);
+
+	var _actionsDispatch2 = _interopRequireDefault(_actionsDispatch);
+
+	exports['default'] = {
+	  downloading: function downloading() {
+	    (0, _actionsDispatch2['default'])(_reducersCatalog2['default'].DATABASE_DOWNLOADING);
+	  },
+
+	  downloaded: function downloaded() {
+	    (0, _actionsDispatch2['default'])(_reducersCatalog2['default'].DATABASE_DOWNLOADED);
+	  },
+
+	  uploading: function uploading(remaining) {
+	    (0, _actionsDispatch2['default'])(_reducersCatalog2['default'].DATABASE_UPLOADING, remaining);
+	  },
+
+	  uploaded: function uploaded() {
+	    (0, _actionsDispatch2['default'])(_reducersCatalog2['default'].DATABASE_UPLOADED);
+	  }
+
+	};
+	module.exports = exports['default'];
+	//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi92YXIvd3d3L2NyeXB0b21lZGljL2FwcC9hY3Rpb25zL2RhdGFiYXNlQWN0aW9ucy5qcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7Ozs7OzsrQkFDb0Isa0JBQWtCOzs7OytCQUNqQixrQkFBa0I7Ozs7cUJBRXhCO0FBQ2IsYUFBVyxFQUFFLHVCQUFXO0FBQ3RCLHNDQUFTLDZCQUFRLG9CQUFvQixDQUFDLENBQUE7R0FDdkM7O0FBRUQsWUFBVSxFQUFFLHNCQUFXO0FBQ3JCLHNDQUFTLDZCQUFRLG1CQUFtQixDQUFDLENBQUE7R0FDdEM7O0FBRUQsV0FBUyxFQUFFLG1CQUFTLFNBQVMsRUFBRTtBQUM3QixzQ0FBUyw2QkFBUSxrQkFBa0IsRUFBRSxTQUFTLENBQUMsQ0FBQTtHQUNoRDs7QUFFRCxVQUFRLEVBQUUsb0JBQVc7QUFDbkIsc0NBQVMsNkJBQVEsaUJBQWlCLENBQUMsQ0FBQTtHQUNwQzs7Q0FFRiIsImZpbGUiOiIvdmFyL3d3dy9jcnlwdG9tZWRpYy9hcHAvYWN0aW9ucy9kYXRhYmFzZUFjdGlvbnMuanMiLCJzb3VyY2VzQ29udGVudCI6WyJcbmltcG9ydCBjYXRhbG9nIGZyb20gJ3JlZHVjZXJzL2NhdGFsb2cnO1xuaW1wb3J0IGRpc3BhdGNoIGZyb20gJ2FjdGlvbnMvZGlzcGF0Y2gnO1xuXG5leHBvcnQgZGVmYXVsdCB7XG4gIGRvd25sb2FkaW5nOiBmdW5jdGlvbigpIHtcbiAgICBkaXNwYXRjaChjYXRhbG9nLkRBVEFCQVNFX0RPV05MT0FESU5HKVxuICB9LFxuXG4gIGRvd25sb2FkZWQ6IGZ1bmN0aW9uKCkge1xuICAgIGRpc3BhdGNoKGNhdGFsb2cuREFUQUJBU0VfRE9XTkxPQURFRClcbiAgfSxcblxuICB1cGxvYWRpbmc6IGZ1bmN0aW9uKHJlbWFpbmluZykge1xuICAgIGRpc3BhdGNoKGNhdGFsb2cuREFUQUJBU0VfVVBMT0FESU5HLCByZW1haW5pbmcpXG4gIH0sXG5cbiAgdXBsb2FkZWQ6IGZ1bmN0aW9uKCkge1xuICAgIGRpc3BhdGNoKGNhdGFsb2cuREFUQUJBU0VfVVBMT0FERUQpXG4gIH0sXG5cbn07XG4iXX0=
+
+/***/ }
+/******/ ]);
