@@ -139,6 +139,9 @@
             "surgical_percutaneous_achil_tenotomy_bi_cdc": 0,
             "surgical_PMR_club_club_foot_bi": 0,
             "surgical_burn_little_release": 0,
+            "other_Other_plaster": 0,
+            "other_Other_dressing": 0,
+            "consult_ClubFoot_Follow_up": 0,
             "_type": "Bill"
         },
         {

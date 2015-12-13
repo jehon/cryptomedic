@@ -136,6 +136,7 @@
         "consult_CDC_consultation_Bengali_Doctor": 0,
         "consult_CDC_consultation_Doctor": 0,
         "consult_CDC_consultation_physio": 0,
+        "consult_ClubFoot_Follow_up": 0,
         "consult_field_visit": 0,
         "consult_give_appointment": 0,
         "consult_home_visit": 0,
@@ -153,6 +154,8 @@
         "other_physiotherapy_adult": 0,
         "other_physiotherapy_child": 0,
         "other_Other_consultation_care": 0,
+        "other_Other_dressing": 0,
+        "other_Other_plaster": 0,
         "financials": {
             "surgery": {
                 "real": null,
