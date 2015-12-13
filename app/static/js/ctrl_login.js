@@ -3,21 +3,20 @@
 mainApp.controller('ctrl_login', [ "$scope", function($scope) {
   cryptomedic.settings = {};
   appState().actions.state.clear();
+  $scope.details = {};
 
   $scope.doLogin = function() {
-    $scope.username = jQuery("#login_username").val();
-    $scope.password = jQuery("#login_password").val();
-    if ($scope.username == "") {
+    if ($scope.details.username == "") {
         alert("No username detected");
         return;
     }
-    if ($scope.password == "") {
+    if ($scope.details.password == "") {
         alert("No password detected");
         return;
     }
     $scope.loginError = false;
     var busyEnd = $scope.doBusy("Checking your login/password with the online server", true);
-    service_backend.login(this.username, this.password)
+    service_backend.login(this.details.username, this.details.password)
       .then(function(data) {
         server.settings = data;
         $scope.loginError = false;

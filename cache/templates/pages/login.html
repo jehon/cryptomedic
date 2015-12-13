@@ -4,9 +4,9 @@
     <form class="form-signing" role="form">
         <h2 class="form-signin-heading">Please sign in</h2>
         <label for="username">Username</label>
-          <input id="login_username" ng-model="username" class="form-control" placeholder="Username" required autofocus>
+          <input id="login_username" ng-model="details.username" class="form-control" placeholder="Username" required autofocus>
         <label for="password">Password</label>
-          <input id="login_password" ng-model="password" class="form-control" placeholder="Password" required type="password">
+          <input id="login_password" ng-model="details.password" class="form-control" placeholder="Password" required type="password">
       <br />
       <div ng-if="loginError">
           <div id='login_error' class="alert alert-danger">
