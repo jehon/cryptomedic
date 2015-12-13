@@ -191,6 +191,20 @@ var mainApp = angular.module('app_main', [ 'ngRoute' ])
     }
   };
 })
+// .directive('myGo', function() {
+//   return {
+//     restrict: 'E',
+//     transclude: true,
+//     scope: true,
+//     template: function(elem, attrs) {
+//       return '<a class="btn btn-default" href="' + cryptomedic.flavor + '/app/' + attrs.to + '" id="' + attrs.bid + '">' +
+//                 '<ng-transclude>' +
+//                   '<b style="color: red;">Button</b>' +
+//                 '</ng-transclude>' +
+//               '</a>'
+//       }
+//     };
+// })
 .directive('preview', [ "$compile", function($compile) {
   return {
     restrict: 'A',
