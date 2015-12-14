@@ -89,6 +89,7 @@ class AuthController extends Controller {
 		}
 
 		$data['codes'] = References::$codes;
+    $data['associations'] = References::$associations;
 
 		$data ['authorized'] = array();
 		switch($data['group']) {
