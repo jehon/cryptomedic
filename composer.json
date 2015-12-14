@@ -4,7 +4,8 @@
 	"repositories": [
         {
         	"type": "vcs",
-            	"url": "https://www.github.com/jehon/maintenance"
+         	"url": "https://www.github.com/jehon/maintenance",
+          "no-api": true
     	}
     ],
 

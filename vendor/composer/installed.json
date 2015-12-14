@@ -1214,7 +1214,7 @@
         "version_normalized": "9999999-dev",
         "source": {
             "type": "git",
-            "url": "https://github.com/jehon/maintenance.git",
+            "url": "https://www.github.com/jehon/maintenance",
             "reference": "540dc2e88faf211288c3e67701878ed1af4e012b"
         },
         "dist": {

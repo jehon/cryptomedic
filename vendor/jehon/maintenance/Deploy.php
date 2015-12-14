@@ -15,15 +15,17 @@ use \ZipArchive;
 use Jehon\Maintenance\Lib;
 
 class Deploy {
+  protected static $github_token;
+
   public static function run($targetDir, $owner, $project, $token = false) {
-    $d = new Deploy($token);
+    self::$github_token = $token;
+    $d = new Deploy();
     $d->runOne($targetDir, $owner, $project);
   }
 
-  public function __construct($token) {
+  public function __construct() {
     // Set a user agent for file_get_contents()
     ini_set ( 'user_agent', 'Mozilla/4.0 (compatible; MSIE 6.0)' );
-    $this->token = $token;
   }
 
   /**
@@ -41,8 +43,8 @@ class Deploy {
       }
 
       file_put_contents($tzip, \Jehon\Maintenance\Lib\getByCurl($uri, false,
-        ($this->token ?
-          [ CURLOPT_HTTPHEADER => [ 'User-Agent:Mozilla/5.0', "Authorization: token " . $this->token ] ]
+        (self::$github_token ?
+          [ CURLOPT_HTTPHEADER => [ 'User-Agent:Mozilla/5.0', "Authorization: token " . self::$github_token ] ]
         :
           [ CURLOPT_HTTPHEADER => [ 'User-Agent:Mozilla/5.0' ] ]
         )));
@@ -186,7 +188,15 @@ class Deploy {
       <h3>Rates curl authorized</h3>
       <?php
         Lib\stepByStep(function() {
-          $rates = json_decode(Lib\getByCurl("https://api.github.com/rate_limit"), true);
+          $rates = json_decode(Lib\getByCurl("https://api.github.com/rate_limit", false,
+              (self::$github_token ?
+                [ CURLOPT_HTTPHEADER => [ 'User-Agent:jehon/maintenance', "Authorization: token " . self::$github_token ] ]
+              :
+                [ CURLOPT_HTTPHEADER => [ 'User-Agent:jehon/maintenance' ] ]
+              )
+            ),
+            true
+          );
           $rates['resources']['core']['reset2'] = (new DateTime())->setTimestamp($rates['resources']['core']['reset'])->format('Y-m-d H:i:s');
           var_dump($rates['resources']['core']);
         });

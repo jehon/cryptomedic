@@ -52,13 +52,16 @@ function getByCurl($url, $post_data = null, $options = array()) {
 	}
 
 	foreach($options as $k => $v) {
-		if (is_array($v)) {
-			foreach($v as $d) {
-				curl_setopt($ch, $k, $d);
-			}
-		} else {
-			curl_setopt($ch, $k, $v);
-		}
+		var_dump("options");
+		var_dump($k);
+		var_dump($v);
+		// if (is_array($v)) {
+			// foreach($v as $d) {
+				// curl_setopt($ch, $k, $d);
+			// }
+		// } else {
+		curl_setopt($ch, $k, $v);
+		// }
 	}
 
 	$redirects = 5;
