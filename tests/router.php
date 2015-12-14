@@ -21,10 +21,11 @@ if (substr($uri, 0, 7) == "/cache/") {
   return true;
 }
 
-// if ((substr($uri, 0, 14) == "/app/index.php") || ($uri == "/app/")) {
-//   require __DIR__ . "/../app/index.php";
-//   return true;
-// }
+if (substr($uri, 0, 7) == "/build/") {
+  if (!file_exists(__DIR__ . "/../" . $uri)) {
+    $uri = str_replace("/build/", "/app/", $uri);
+  }
+}
 
 $file = __DIR__ . "/../" . $uri;
 if (file_exists($file)) {
