@@ -52,15 +52,15 @@
     "webpack-dev-server": "^1"
   },
   "scripts": {
-    "build:dev":       "webpack --config webpack.dev.js",
     "build:prod":      "webpack --config webpack.js -p",
-    "build:prod:fast": "webpack --config webpack.js",
     "dev-server": "node server.js | grep 'built\\|error\\|VALID'",
     "postinstall": "bower install",
     "postupdate": "bower update"
   },
   "x": {
     "excellentexport": "git://github.com/jmaister/excellentexport",
+    "build:dev":       "webpack --config webpack.dev.js",
+    "build:prod:fast": "webpack --config webpack.js",
     "x": "x"
   }
 }

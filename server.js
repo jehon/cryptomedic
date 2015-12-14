@@ -26,6 +26,14 @@ new WebpackDevServer(webpack(config), {
     '/cryptomedic/cache/*': {
       target: 'http://localhost',
       secure: false,
+    },
+    '/cryptomedic/build/bower_components/*': {
+      target: 'http://localhost',
+      secure: false,
+    },
+    '/cryptomedic/build/static/*': {
+      target: 'http://localhost',
+      secure: false,
     }
   }
 }).listen(8080, '0.0.0.0', function (err) {
