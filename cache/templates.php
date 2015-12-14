@@ -232,7 +232,7 @@ if (!class_exists("t")) {
 			return false;
 		}
 
-	    function read() {
+	  function read() {
 	        if (!$this->linked2DB) {
 	            $this->res .= "<span id='{$this->jsId}' class='error'>Read: key is not in the database: '{$this->key}'</span>";
 	            return $this;

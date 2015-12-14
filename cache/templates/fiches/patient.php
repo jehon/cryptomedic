@@ -37,8 +37,28 @@
 						<td><span catch-it ng-model="folder" tryit="cryptomedic.age(currentFile().Yearofbirth)">{{cryptomedic.age(currentFile().Yearofbirth)}} years old</span></td>
 					</tr>
 					<?php (new t("Patient.District", [ "list" => References::$lists['Districts']]))->tr()->p(); ?>
-					<?php (new t("Patient.Upazilla", [ "list" => References::$lists['Upazilla']]))->tr()->p(); ?>
-					<?php (new t("Patient.Union_", [ "list" => References::$lists['Unions']]))->tr("Union")->p(); ?>
+					<tr>
+						<td>Upazilla</td>
+						<td>
+							<span class='notModeRead'>
+								<select ng-model='folder.getMainFile().Upazilla' ng-options='option for option in listUpazillas(folder.getMainFile().District)'></select>
+							</span>
+							<span class='notModeWrite'>
+								<?php (new t("Patient.Upazilla"))->read()->p(); ?>
+							</span>
+						</td>
+					</tr>
+					<tr>
+						<td>Union</td>
+						<td>
+							<span class='notModeRead'>
+								<select ng-model='folder.getMainFile().Union_' ng-options='option for option in listUnions(folder.getMainFile().Upazilla)'></select>
+							</span>
+							<span class='notModeWrite'>
+								<?php (new t("Patient.Union_"))->read()->p(); ?>
+							</span>
+						</td>
+					</tr>
 					<?php (new t("Patient.Telephone"))->tr()->p(); ?>
 					<?php (new t("Patient.AddressNotes"))->tr("Adress Notes")->p(); ?>
 				</table>
