@@ -16,8 +16,8 @@ function getByCurl($url, $post_data = null, $options = array()) {
 	global $server;
 	$ch = curl_init($url);
 
-	// Add mozilla (github need that?)
-	curl_setopt($ch, CURLOPT_HTTPHEADER, array('User-Agent:Mozilla/5.0'));
+	// // Add mozilla (github need that?)
+	// curl_setopt($ch, CURLOPT_HTTPHEADER, array(''));
 
 	// Do not verify the peer
 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
@@ -42,7 +42,7 @@ function getByCurl($url, $post_data = null, $options = array()) {
 	// 	}
 
 	if ($post_data) {
-		curl_setopt($ch,CURLOPT_POST, count($post_data));
+		curl_setopt($ch, CURLOPT_POST, count($post_data));
 		$fields_string = "";
 		foreach($post_data as $key => $value) {
 			$fields_string .= $key . '=' . $value . '&';

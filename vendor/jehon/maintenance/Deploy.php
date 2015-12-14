@@ -15,14 +15,15 @@ use \ZipArchive;
 use Jehon\Maintenance\Lib;
 
 class Deploy {
-  public static function run($targetDir, $owner, $project) {
-    $d = new Deploy();
+  public static function run($targetDir, $owner, $project, $token = false) {
+    $d = new Deploy($token);
     $d->runOne($targetDir, $owner, $project);
   }
 
-  public function __construct() {
+  public function __construct($token) {
     // Set a user agent for file_get_contents()
     ini_set ( 'user_agent', 'Mozilla/4.0 (compatible; MSIE 6.0)' );
+    $this->token = $token;
   }
 
   /**
@@ -39,7 +40,12 @@ class Deploy {
         throw new Exception('! Cannot open file for writing: ' . $tzip);
       }
 
-      file_put_contents($tzip, \Jehon\Maintenance\Lib\getByCurl($uri));
+      file_put_contents($tzip, \Jehon\Maintenance\Lib\getByCurl($uri, false,
+        ($this->token ?
+          [ CURLOPT_HTTPHEADER => [ 'User-Agent:Mozilla/5.0', "Authorization: token " . $this->token ] ]
+        :
+          [ CURLOPT_HTTPHEADER => [ 'User-Agent:Mozilla/5.0' ] ]
+        )));
       fclose($fp);
 
       if (filesize($tzip) < 10) {
@@ -158,7 +164,7 @@ class Deploy {
 
     $root         = dirname($targetDir);
     $zip          = $targetDir . ".zip";
-    $tempUnzipped = $zip . "-test";
+    $tempUnzipped = $targetDir . "-test";
     $version      = "latest";
     $versionFile  = $targetDir . ".version";
     $historyFile  = $targetDir . ".history";
