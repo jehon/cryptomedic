@@ -74,6 +74,9 @@ else
     mkdir -p "$PRJ_DIR/tmp"
   fi
 
+  echo -e "\e[0;45mRebuild for production\e[0m"
+  npm run build:prod
+
   echo -e "\e[0;45mReset the database\e[0m"
   "$PRJ_DIR/bin/prj-rebuild-db.sh"
 
