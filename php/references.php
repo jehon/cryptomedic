@@ -159,6 +159,7 @@ References::$lists["Unions"] = References::buildValueList(
 References::$lists["Sex"] = References::buildValueList([ "Male", "Female" ]);
 References::$lists["Centers"] = References::buildValueList([
   References::withCode("Chakaria Disability Center" , "CDC"),
+  References::withCode("Chakaria Device Center"     , "CDev"),
   References::withCode("Cox's Bazar"                , "CB"),
   References::withCode("Ukhia"                      , "UK"),
   References::withCode("Ramu"                       , "RA"),
