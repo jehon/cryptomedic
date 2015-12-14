@@ -9,12 +9,12 @@ describe("Cryptomedic.js", function() {
 		poly.medium.push([2, 4]);
 		poly.medium.push([5, 10]);
 		poly.medium.push([10, 20]);
-	
+
 		poly.min.push([0, 0]);
 		poly.min.push([10, 15]);
 		poly.max.push([0, 2]);
 		poly.max.push([10, 30]);
-		
+
 		it("evaluatePoly correctly", function() {
 			expect(cryptomedic.math.evaluatePoly(poly.medium, -1)).toBeNaN();
 			expect(cryptomedic.math.evaluatePoly(poly.medium, 11)).toBeNaN();
@@ -26,7 +26,7 @@ describe("Cryptomedic.js", function() {
 			expect(cryptomedic.math.evaluatePoly(poly.medium, 7.5)).toBe(15);
 			expect(cryptomedic.math.evaluatePoly(poly.medium, 1.1)).toBe(2.2);
 		});
-		
+
 		it("calculate standard deviations", function() {
 			expect(cryptomedic.math.stdDeviation(poly, 0, 1)).toBe(0);
 			expect(cryptomedic.math.stdDeviation(poly, 0, 0)).toBe(-cryptomedic.math.sigma);
@@ -45,7 +45,7 @@ describe("Cryptomedic.js", function() {
 			expect(objectify(date2CanonicString(d))).toEqual(d);
 		});
 	});
-	
+
 	describe("objectify", function() {
 		var d = new Date();
 		d.setMilliseconds(0);
@@ -87,6 +87,38 @@ describe("Cryptomedic.js", function() {
 			expect(stringify({ a: d })).toEqual({ a: sd });
 			expect(stringify([ d ])).toEqual([ sd ]);
 			expect(stringify({ a: [ d ]})).toEqual({ a: [ sd ]});
+		});
+	});
+
+	describe("age", function() {
+		var now = new Date(2010, 6, 1);
+		var now2 = new Date(2015, 6, 1);
+		it("should handle yearOfBirth of string/7 vs. string/7", function() {
+			expect(cryptomedic.age("2000-05", "2010-06")).toBe("10y0m");
+		});
+		it("should handle yearOfBirth of string/7 vs. date", function() {
+			expect(cryptomedic.age("2000-05", now)).toBe("10y0m");
+		});
+		it("should handle yearOfBirth of string/4 vs. string/7", function() {
+			expect(cryptomedic.age("2000", "2010-06")).toBe("10y6m");
+		});
+		it("should handle yearOfBirth of string/4 vs. date", function() {
+			expect(cryptomedic.age("2000", now)).toBe("10y6m");
+		});
+		it("should handle yearOfBirth of number vs. date", function() {
+			expect(cryptomedic.age(2000, now)).toBe("10y6m");
+		});
+		it("should handle yearOfBirth of string/4 vs. same", function() {
+			expect(cryptomedic.age("2000", "2000")).toBe("-1y11m");
+		});
+		it("should handle yearOfBirth of date vs. date", function() {
+			expect(cryptomedic.age(now, now2)).toBe("4y11m");
+		});
+		it("should handle yearOfBirth of 1998 vs. date", function() {
+			expect(cryptomedic.age("1998", now2)).toBe("17y5m");
+		});
+		it("should handle yearOfBirth of 1998 vs. date", function() {
+			expect(cryptomedic.age(1998, now2)).toBe("17y5m");
 		});
 	});
 });

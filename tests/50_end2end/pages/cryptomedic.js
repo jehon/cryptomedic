@@ -31,8 +31,6 @@ module.exports = (function() {
         .setValue("#login_password", password)
         .pause(100)
         .myClick("button#login_go")
-        // .waitForElementVisible("#busy")
-        // .waitForElementNotVisible("#busy")
         .waitForElementPresent("#login_loggedusername")
         .assert.containsText("#login_loggedusername", login)
         .assert.title('Cryptomedic')
