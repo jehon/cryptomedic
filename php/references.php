@@ -62,6 +62,20 @@ class References {
 /***********************/
 /**** Common lists ****/
 /***********************/
+References::$lists['Pathologies'] = References::buildValueList([
+  References::withCode("Ricket"          , "Ric"),
+  References::withCode("ClubFoot"        , "CF"),
+  References::withCode("Polio"           , "Po"),
+  References::withCode("Burn retraction" , "BR"),
+  References::withCode("Cerebral Palsy"  , "CP"),
+  References::withCode("Fracture"        , "Fra"),
+  References::withCode("Infection"       , "Inf"),
+  References::withCode("Congenital"      , "Con"),
+  References::withCode("Adult Physio"    , "AP"),
+  References::withCode("Normal Patient"  , "NP"),
+  References::withCode("Other"           , "Oth")
+]);
+
 References::$lists["Districts"] = References::buildValueList([ "Chittagong", "Cox's Bazar", "Bandarban", "~ Other ~" ]);
 
 References::$lists["Upazilla"] = References::buildValueList(
@@ -254,6 +268,7 @@ References::$model_listing['OtherConsult.Side'] = References::$lists['Side'];
 References::$model_listing['OtherConsult.Surgery66'] = References::$lists['Surgery'];
 References::$model_listing['OtherConsult.Walk'] = References::$lists['WalkingCapacities'];
 
+References::$model_listing['Patient.Pathology'] = References::$lists['Pathologies'];
 References::$model_listing['Patient.District'] = References::$lists['Districts'];
 References::$model_listing['Patient.Sex'] = References::$lists['Sex'];
 References::$model_listing['Patient.Union_'] = References::$lists['Unions'];
@@ -272,15 +287,3 @@ References::$model_listing['RicketConsult.Wristenlargement'] = References::$list
 /*********************/
 /**** Other codes ****/
 /*********************/
-References::withCode("Ricket"          , "Ric");
-References::withCode("ClubFoot"        , "CF");
-References::withCode("Polio"           , "Po");
-References::withCode("Burn retraction" , "BR");
-References::withCode("Cerebral Palsy"  , "CP");
-References::withCode("Fracture"        , "Fra");
-References::withCode("Infection"       , "Inf");
-References::withCode("Congenital"      , "Con");
-References::withCode("Adult Physio"    , "AP");
-References::withCode("Normal Patient"  , "NP");
-References::withCode("Other"           , "Oth");
-
