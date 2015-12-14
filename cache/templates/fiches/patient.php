@@ -25,6 +25,13 @@
 					<?php (new t("Patient.Name"))->tr("Name")->p(); ?>
 					<?php (new t("Patient.Sex"))->tr()->p(); ?>
 					<?php (new t("Patient.Yearofbirth",  [ "min" => 1900, "max" => 2100]))->tr("Year of birth")->p(); ?></td>
+					<tr class='notModeRead'>
+						<td>Calculate year of birth</td>
+						<td>
+							<input ng-model='age.years' type='number' min='0' max='100'> years<br>
+							<input ng-model='age.months' type='number' min='-1' max='12'> months
+						</td>
+					</tr>
 					<tr class='notModeWrite'>
 						<td>Age (today)</td>
 						<td><span catch-it ng-model="folder" tryit="cryptomedic.age(currentFile().Yearofbirth)">{{cryptomedic.age(currentFile().Yearofbirth)}} years old</span></td>

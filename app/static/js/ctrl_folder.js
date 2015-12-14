@@ -22,6 +22,8 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', '$routeParams' , func
   $scope.subid = $routeParams['subid'];
   $scope.mode = ($routeParams['mode'] ? $routeParams['mode'] : "read");
 
+  $scope.age = {};
+
   if ($scope.page == 'edit') {
     // Map page to the mode (see ~>) in case of patient (short url, but wrong parameters)
     $scope.mode = $scope.page;
@@ -32,7 +34,6 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', '$routeParams' , func
   var cachedCurrentFile = null;
   if ($scope.page == 'file' && !$scope.subid) {
     // Adding a file
-    console.log("adding a file");
     $scope.mode = 'add';
   }
 
@@ -64,6 +65,13 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', '$routeParams' , func
       jQuery(".modeWrite").removeClass('modeWrite').addClass('modeRead');
     }
 
+    if (cachedCurrentFile.Yearofbirth) {
+      var age = cryptomedic.age(cachedCurrentFile.Yearofbirth);
+      var r = RegExp("([0-9]+) ?y(ears)? ?([0-9]+) ?m(onths)?").exec(age);
+      // console.log(r);
+      $scope.age.years = parseInt(r[1]);
+      $scope.age.months = parseInt(r[3]);
+    }
 
     $scope.safeApply();
     $scope.$broadcast("refresh");
@@ -301,5 +309,29 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', '$routeParams' , func
     });
     return next;
   }
+
+  function updateYearOfBirth() {
+    if ($scope.folder) {
+      var d = new Date();
+      var d2 = new Date(d.getFullYear() - $scope.age.years, d.getMonth() - $scope.age.months, 10);
+      $scope.folder.getMainFile().Yearofbirth  = date2CanonicString(d2).substring(0, 7);
+    }
+  }
+
+  $scope.$watch("age.years", function() {
+    updateYearOfBirth();
+  });
+
+  $scope.$watch("age.months", function() {
+    while ($scope.age.months >= 12) {
+      $scope.age.months -= 12;
+      $scope.age.years++;
+    }
+    while ($scope.age.months < 0) {
+      $scope.age.months += 12;
+      $scope.age.years--;
+    }
+    updateYearOfBirth();
+  });
 
 }]);
