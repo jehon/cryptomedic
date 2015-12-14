@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<!-- TODO: echo "manifest='../cache/manifest.manifest'" -->
-<html>
+<!-- TODO: manifest -->
+<html disabled-manifest='../cache/manifest.manifest'>
   <head>
     <title>Cryptomedic</title>
     <meta charset='utf-8'>
@@ -10,7 +10,7 @@
     <link href="static/img/favicon.ico" type="image/x-icon" rel="shortcut icon" />
 
     <!-- imported into var 'appState' -->
-    <script type='text/javascript' src='bundle.js'></script>
+    <!-- <script type='text/javascript' src='bundle.js'></script> -->
 
     <!-- <link type='text/css' rel='stylesheet' href='bower_components/jquery-ui/themes/ui-lightness/jquery-ui.min.css'/> -->
     <!-- <link type='text/css' rel='stylesheet' href='bower_components/bootstrap/dist/css/bootstrap.min.css'/> -->
@@ -157,7 +157,7 @@
         <div ng-view></div>
       </div>
     </div>
-<!--     <div ng-controller='ctrl_offline'>
+    <div ng-controller='ctrl_offline'>
       <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation" ng-if="info_available">
         <div class="container-fluid">
           <p ng-if="offline" class="navbar-text"><img src='static/img/sync.png'>{{offline}}</p>
@@ -165,6 +165,5 @@
         </div>
       </nav>
     </div>
- -->
   <script src="bundle.js"></script></body>
 </html>
