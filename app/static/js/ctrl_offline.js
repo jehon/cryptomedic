@@ -2,6 +2,10 @@
 
 // https://developer.mozilla.org/en-US/docs/Web/HTML/Using_the_application_cache
 
+// Firefox: about:cache
+//    Tools -> Options -> Advanced -> Network -> Offline data
+// Chrome:  chrome://appcache-internals/
+
 mainApp.controller('ctrl_offline', [ '$scope', function($scope) {
   $scope.info_available = false;
   $scope.offline = "";
@@ -44,7 +48,7 @@ mainApp.controller('ctrl_offline', [ '$scope', function($scope) {
     }
   }
 
-/* * /
+/*  */
     var cacheStatusValues = [];
     cacheStatusValues[0] = 'uncached';
     cacheStatusValues[1] = 'idle';
