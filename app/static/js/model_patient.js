@@ -1,13 +1,6 @@
 "use strict";
 
 application.models.Patient = application.models.Data.extend({
-	'actualAge': function(date) {
-		date = date || new Date();
-		if ((typeof(this.Yearofbirth) != "number") 
-				|| ((typeof(this.Yearofbirth) == "number") && (this.Yearofbirth <= 1900)))
-			throw new DataMissingException("Yearofbirth");
-		return (date.getUTCFullYear() - this.Yearofbirth);
-	},
 	'sexStr': function() {
 	    	if (!this.isNotZero('Sex')) return null;
 	    	if (this.Sex == "Male") return "m";
