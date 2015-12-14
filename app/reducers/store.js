@@ -10,17 +10,20 @@ import connection from 'reducers/connectionReducers';
 import state from 'reducers/stateReducers';
 import database from 'reducers/databaseReducers';
 
-
 const loggerMiddleware = createLogger({
   level: 'info',
   collapsed: true,
 });
 
+if (typeof(window.__karma__) == 'undefined') {
+  // disable logger?
+}
+
 let finalCreateStore = compose(
   //enables middleware:
   applyMiddleware(
     thunkMiddleware,
-    loggerMiddleware
+    // loggerMiddleware
   )
   ,
   // Provides support for DevTools:
