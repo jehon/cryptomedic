@@ -7,8 +7,7 @@ module.exports = {
       .assert.containsText("#Patient_Name", "rezaul islam")
       .assert.containsText("#Patient_Sex", "Male")
       .assert.containsText("#Patient_District", "Chittagong")
-      .assert.visible("#Patient_pathology_Clubfoot_ok")
-      .assert.visible("#Patient_pathology_Ricket_ko")
+      .assert.containsText("#Patient_Pathology", "ClubFoot")
       .assert.elementNotPresent("#button_edit")
 
       // Nonrickect Consult
