@@ -91,32 +91,8 @@ class FolderController extends Controller {
 			$req->where('Telephone', 'like', '%' . Request::input("Telephone") . '%');
 		}
 
-		if (Request::input("pathology_Ricket", false)) {
-			$req->where('pathology_Ricket', '=', '1');
-		}
-
-		if (Request::input("pathology_Clubfoot", false)) {
-			$req->where('pathology_Clubfoot', '=', '1');
-		}
-
-		if (Request::input("pathology_Burn", false)) {
-			$req->where('pathology_Burn', '=', '1');
-		}
-
-		if (Request::input("pathology_Polio", false)) {
-			$req->where('pathology_Polio', '=', '1');
-		}
-
-		if (Request::input("pathology_CP", false)) {
-			$req->where('pathology_CP', '=', '1');
-		}
-
-		if (Request::input("pathology_Congenital", false)) {
-			$req->where('pathology_Congenital', '=', '1');
-		}
-
-		if (Request::input("pathology_Adult", false)) {
-			$req->where('pathology_Adult', '=', '1');
+		if (Request::input("Pathology", false)) {
+			$req->where('Pathology', '=', Request::input("Pathology"));
 		}
 
 		$req->orderBy('entryyear', 'DESC')->take(100);

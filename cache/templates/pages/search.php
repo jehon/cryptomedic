@@ -6,6 +6,8 @@
 <h1><img src='static/img/patientsSearch.gif'>Search for a patient</h1>
 <div class='searchFields'>
 	<div class="row">
+		<div class="col-md-3">
+		</div>
 		<div class="col-md-6">
 			<fieldset>
 				<legend>Patient Criteria</legend>
@@ -16,22 +18,8 @@
 					<?php (new t("Patient.Sex"))->tr()->p(); ?>
 					<?php (new t("Patient.Yearofbirth"))->tr("Year of birth")->p(); ?>
 					<?php (new t("Patient.Telephone"))->tr()->p(); ?>
+		 			<?php (new t("Patient.Pathology"))->tr("Main Pathology")->p(); ?>
 				</table>
-			</fieldset>
-		</div>
-		<div class="col-md-6">
-			<fieldset>
-				<legend>Pathology Criteria</legend>
-				<table>
-		 			<?php (new t("Patient.pathology_Ricket"))->tr("Ricket [R]")->p(); ?>
-					<?php (new t("Patient.pathology_Clubfoot"))->tr("Club Foot [CF]")->p(); ?>
-					<?php (new t("Patient.pathology_Burn"))->tr("Burn [B]")->p(); ?>
-					<?php (new t("Patient.pathology_Polio"))->tr("Polio [P]")->p(); ?>
-					<?php (new t("Patient.pathology_CP"))->tr("CP [CP]")->p(); ?>
-					<?php (new t("Patient.pathology_Congenital"))->tr("Congenital [C]")->p(); ?>
-					<?php (new t("Patient.pathology_Adult"))->tr("Adult [A]")->p(); ?>
-					<?php //(new t("Patient.pathology_other"))->tr()->p(); ?>
-		 		</table>
 			</fieldset>
 		</div>
 	</div>
@@ -76,15 +64,7 @@
 	    		<td><?php (new t("Patient.Sex"))->read()->p(); ?></td>
 	    		<td><?php (new t("Patient.Yearofbirth"))->read()->p(); ?></td>
 	    		<td><?php (new t("Patient.Telephone"))->read()->p(); ?></td>
-	    		<td>
-	    			<span ng-if="patient.pathology_Ricket">[R]</span>
-	    			<span ng-if="patient.pathology_Clubfoot">[CF]</span>
-	    			<span ng-if="patient.pathology_Burn">[B]</span>
-	    			<span ng-if="patient.pathology_Polio">[P]</span>
-	    			<span ng-if="patient.pathology_CP">[CP]</span>
-	    			<span ng-if="patient.pathology_Congenital">[C]</span>
-	    			<span ng-if="patient.pathology_Adult">[A]</span>
-	    		</td>
+	    		<td><?php (new t("Patient.Pathology"))->read()->p(); ?></td>
 	    	</tr>
 		</table>
     </div>
