@@ -98,7 +98,6 @@
         <div class="collapse navbar-collapse" id="menuMain">
           <ul class="nav navbar-nav navbar-right">
             <li><p class="navbar-text" id='login_loggedusername'>{{server.settings.username}}</p></li>
-            <li><p class="navbar-text" id='appCache_mode'><?php echo $mode; ?></p></li>
             <li><a id='menu_home' href="#/home" class="navbar-link">
               <img src="static/img/home.gif" height="20px"/>
               Home
@@ -118,7 +117,7 @@
             <li><a id='bug_reporting' href="javascript:bug_reporting()" class="navbar-link">
               <img src="static/img/bug.jpeg"/>
               Bug
-              </a></li>
+            </a></li>
             <li ng-controller='ctrl_login'>
               <button id='logout' type="button" class="btn btn-default navbar-btn" ng-click="doLogout()" >
                 <img src="static/img/logout.gif"/>

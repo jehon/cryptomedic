@@ -191,20 +191,99 @@ var mainApp = angular.module('app_main', [ 'ngRoute' ])
     }
   };
 })
-// .directive('myGo', function() {
+// .directive('hasPermission', [ '$animate', function($animate) {
 //   return {
-//     restrict: 'E',
-//     transclude: true,
-//     scope: true,
-//     template: function(elem, attrs) {
-//       return '<a class="btn btn-default" href="' + cryptomedic.flavor + '/app/' + attrs.to + '" id="' + attrs.bid + '">' +
-//                 '<ng-transclude>' +
-//                   '<b style="color: red;">Button</b>' +
-//                 '</ng-transclude>' +
-//               '</a>'
-//       }
-//     };
-// })
+//     multiElement: true,
+//     transclude: 'element',
+//     priority: 600,
+//     terminal: true,
+//     restrict: 'A',
+//     $$tlb: true,
+//     link: function($scope, $element, $attr, ctrl, $transclude) {
+//         var block, childScope, previousElements;
+//         $scope.$watch($attr.hasPermission, function ngIfWatchAction(value) {
+//           if (value) {
+//             if (!childScope) {
+//               $transclude(function(clone, newScope) {
+//                 childScope = newScope;
+//                 clone[clone.length++] = document.createComment(' end hasPermission: ' + $attr.hasPermission + ' ');
+//                 // Note: We only need the first/last node of the cloned nodes.
+//                 // However, we need to keep the reference to the jqlite wrapper as it might be changed later
+//                 // by a directive with templateUrl when its template arrives.
+//                 block = {
+//                   clone: clone
+//                 };
+//                 $animate.enter(clone, $element.parent(), $element);
+//               });
+//             }
+//           } else {
+//             if (previousElements) {
+//               previousElements.remove();
+//               previousElements = null;
+//             }
+//             if (childScope) {
+//               childScope.$destroy();
+//               childScope = null;
+//             }
+//             if (block) {
+//               previousElements = getBlockNodes(block.clone);
+//               $animate.leave(previousElements).then(function() {
+//                 previousElements = null;
+//               });
+//               block = null;
+//             }
+//           }
+//         });
+//     }
+//   };
+// }]);
+// .directive('hide', ['$animate', function($animate) {
+//   return {
+//     restrict: 'A',
+//     multiElement: true,
+//     link: function(scope, element, attr) {
+//       scope.$watch(attr.ngHide, function ngHideWatchAction(value) {
+//         // The comment inside of the ngShowDirective explains why we add and
+//         // remove a temporary class for the show/hide animation
+//         $animate[value ? 'addClass' : 'removeClass'](element,NG_HIDE_CLASS, {
+//           tempClasses: NG_HIDE_IN_PROGRESS_CLASS
+//         });
+//       });
+//     }
+//   };
+// }]);
+
+.directive('myGo', function() {
+  return {
+    restrict: 'E',
+    transclude: true,
+    // scope: true,
+    replace: true,
+    template: function(elem, attrs) {
+      // function templateFunction() {
+        if (attrs.haspermission) {
+          if (!appState().store.getState()
+              || !appState().store.getState().connection.settings
+              || !appState().store.getState().connection.settings.authorized2[attrs.haspermission]
+              ) {
+            console.log(appState().store.getState());
+            return '<span haspermission-failed="' + attrs.haspermission + '"></span>';
+          }
+        }
+        return '<a class="btn btn-default" href="' + cryptomedic.flavor + '/app/' + attrs.to + '"'
+              + (attrs.id ? ' id="' + attrs.id + '"' : '')
+              + (attrs.class ? ' class="' + attrs.class + '"' : '')
+              + '>'
+              +   '<ng-transclude>'
+              +      '<b style="color: red;">Button</b>'
+              +    '</ng-transclude>'
+              +  '</a>'
+        // }
+        // return templateFunction();
+        // scope.$watch('attr.haspermission', templateFunction);
+      }
+    };
+})
 .directive('preview', [ "$compile", function($compile) {
   return {
     restrict: 'A',
@@ -333,10 +412,18 @@ mainApp.controller('ctrl', [ '$scope', '$location', '$sce', function($scope, $lo
   $scope.username = "";
   $scope.password = "";
   $scope.hasPermission = function(transaction) {
-    if (typeof(server) == "undefined" || !server) return false;
-    if (typeof(server.settings) == "undefined" || !server.settings) return false;
-    if (typeof(server.settings.authorized) == "undefined" || !server.settings.authorized) return false;
-    return (server.settings.authorized.indexOf(transaction) >= 0);
+    console.log($scope.appStateStore);
+    if (!$scope.appStateStore.connection.settings) {
+      return false;
+    }
+    if (!$scope.appStateStore.connection.settings.authorized2[transaction]) {
+      return false;
+    }
+    return true;
+    // if (typeof(server) == "undefined" || !server) return false;
+    // if (typeof(server.settings) == "undefined" || !server.settings) return false;
+    // if (typeof(server.settings.authorized) == "undefined" || !server.settings.authorized) return false;
+    // return (server.settings.authorized.indexOf(transaction) >= 0);
   };
 
   myEvents.on('backend_progress', function(data) {
