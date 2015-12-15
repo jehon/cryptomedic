@@ -32,12 +32,27 @@
                 "new": 0,
                 "old": 0
             },
+            "fracture": {
+                "total": 0,
+                "new": 0,
+                "old": 0
+            },
+            "infection": {
+                "total": 0,
+                "new": 0,
+                "old": 0
+            },
             "congenital": {
                 "total": 0,
                 "new": 0,
                 "old": 0
             },
             "adult": {
+                "total": 0,
+                "new": 0,
+                "old": 0
+            },
+            "normal": {
                 "total": 0,
                 "new": 0,
                 "old": 0
