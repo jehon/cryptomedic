@@ -118,6 +118,10 @@
               <img src="static/img/bug.jpeg"/>
               Bug
             </a></li>
+            <li><a id='menu_users'  href='#/users' ng-if="hasPermission('users.manage')">
+              <img src="static/img/users.png" height="20px"/>
+              Users
+            </a></li>
             <li ng-controller='ctrl_login'>
               <button id='logout' type="button" class="btn btn-default navbar-btn" ng-click="doLogout()" >
                 <img src="static/img/logout.gif"/>
