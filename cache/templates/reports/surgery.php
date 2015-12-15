@@ -114,7 +114,7 @@
                             	</span>
                             <td>{{l.Sociallevel}}</td>
 
-                            <td class='b_left'>{{l.diagno}}</td>
+                            <td class='b_left'><codage value="l.Pathology"/></td>
                             <td>{{l.act}}</td>
                             <td>{{l.treatment}}</td>
 
