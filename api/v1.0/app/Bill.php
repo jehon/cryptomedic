@@ -76,26 +76,6 @@ class Bill extends CryptomedicModel {
 		return $list;
 	}
 
-	public static function getSQLDiagno() {
-		return "TRIM(CONCAT(" .
-				"IF(patients.pathology_Ricket, 'R ', '')" .
-				", " .
-				"IF(patients.pathology_ClubFoot, 'CF ', '')" .
-				", " .
-				"IF(patients.pathology_CP, 'CP ', '')" .
-				", " .
-				"IF(patients.pathology_Polio, 'P ', '')" .
-				", " .
-				"IF(patients.pathology_Burn, 'B ', '')" .
-				", " .
-				"IF(patients.pathology_Congenital, 'C ', '')" .
-				", " .
-				"IF(patients.pathology_Adult, 'A ', '')" .
-				", " .
-				"IF(patients.pathology_Other, 'Oth', '')" .
-				"))";
-	}
-
 	public static function getSQLAct() {
 		return "TRIM(CONCAT(" .
 				"IF(bills.consult_CDC_consultation_physio, 'CsP ', '')" .

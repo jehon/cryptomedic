@@ -26,8 +26,11 @@
 		<tr><td>Polio</td><td>{{result.summary.pathologies.polio.total}}</td></tr>
 		<tr><td>Burn</td><td>{{result.summary.pathologies.burn.total}}</td></tr>
 		<tr><td>CP</td><td>{{result.summary.pathologies.cp.total}}</td></tr>
+		<tr><td>Fracture</td><td>{{result.summary.pathologies.fracture.total}}</td></tr>
+		<tr><td>Infection</td><td>{{result.summary.pathologies.infection.total}}</td></tr>
 		<tr><td>Congenital</td><td>{{result.summary.pathologies.congenital.total}}</td></tr>
 		<tr><td>Adult</td><td>{{result.summary.pathologies.adult.total}}</td></tr>
+		<tr><td>Normal</td><td>{{result.summary.pathologies.normal.total}}</td></tr>
 		<tr><td>Other</td><td>{{result.summary.pathologies.other.total}}</td></tr>
 		<tr><td>All consultations</td><td>{{result.summary.pathologies.total}}</td></tr>
 
@@ -35,49 +38,49 @@
 		<tr><td>Family income (mean)</td><td>{{result.summary.sociallevel.familyincome | number:1}}</td></tr>
 		<tr><td>Nb household mb (mean)</td><td>{{result.summary.sociallevel.nbhousehold | number:1}}</td></tr>
 		<tr><td>ratio (mean)</td><td>{{result.summary.sociallevel.familyincome / result.summary.sociallevel.nbhousehold | number:2}}</td></tr>
-<?php
-	foreach(References::$lists['SocialLevel'] as $i) {
- 		echo "<tr><td>Social Level $i</td><td>{{result.summary.sociallevel[$i]}}</td></tr>";
-	}
-?>
+		<?php
+			foreach(References::$lists['SocialLevel'] as $i) {
+		 		echo "<tr><td>Social Level $i</td><td>{{result.summary.sociallevel[$i]}}</td></tr>";
+			}
+		?>
 		<tr><td>All social level together</td><td>{{result.summary.sociallevel.total}}</td></tr>
 		<tr><td colspan="2" class="subheader">Where</td></tr>
-<?php
-	foreach(References::$lists['Centers'] as $i) {
-		echo "<tr><td>@ $i</td><td>{{result.summary.centers." . \myCleanValue($i) . "}}</td></tr>";
-	}
-?>
+		<?php
+			foreach(References::$lists['Centers'] as $i) {
+				echo "<tr><td>@ $i</td><td>{{result.summary.centers." . \myCleanValue($i) . "}}</td></tr>";
+			}
+		?>
 		<tr><td>center unspecified</td><td>{{result.summary.centers.unspecified}}</td></tr>
 		<tr><td colspan="2" class="subheader">Surgical activity</td></tr>
-<?php
-	foreach(Bill::getFieldsList(Bill::CAT_SURGICAL, t::getColumnsOfTable('bills')) as $i) {
- 		echo "<tr><td>$i</td><td>{{result.summary.$i}}</td></tr>";
-	}
-?>
+		<?php
+			foreach(Bill::getFieldsList(Bill::CAT_SURGICAL, t::getColumnsOfTable('bills')) as $i) {
+		 		echo "<tr><td>$i</td><td>{{result.summary.$i}}</td></tr>";
+			}
+		?>
 		<tr><td colspan="2" class="subheader">Medical Activity</td></tr>
-<?php
-	foreach(Bill::getFieldsList(Bill::CAT_MEDECINE, t::getColumnsOfTable('bills')) as $i) {
- 		echo "<tr><td>$i</td><td>{{result.summary.$i}}</td></tr>";
-	}
-?>
+		<?php
+			foreach(Bill::getFieldsList(Bill::CAT_MEDECINE, t::getColumnsOfTable('bills')) as $i) {
+		 		echo "<tr><td>$i</td><td>{{result.summary.$i}}</td></tr>";
+			}
+		?>
 		<tr><td colspan="2" class="subheader">Workshop Activity</td></tr>
-<?php
-	foreach(Bill::getFieldsList(Bill::CAT_WORKSHOP, t::getColumnsOfTable('bills')) as $i) {
- 		echo "<tr><td>$i</td><td>{{result.summary.$i}}</td></tr>";
-	}
-?>
+		<?php
+			foreach(Bill::getFieldsList(Bill::CAT_WORKSHOP, t::getColumnsOfTable('bills')) as $i) {
+		 		echo "<tr><td>$i</td><td>{{result.summary.$i}}</td></tr>";
+			}
+		?>
 		<tr><td colspan="2" class="subheader">Consult Activity</td></tr>
-<?php
-	foreach(Bill::getFieldsList(Bill::CAT_CONSULT, t::getColumnsOfTable('bills')) as $i) {
- 		echo "<tr><td>$i</td><td>{{result.summary.$i}}</td></tr>";
-	}
-?>
+		<?php
+			foreach(Bill::getFieldsList(Bill::CAT_CONSULT, t::getColumnsOfTable('bills')) as $i) {
+		 		echo "<tr><td>$i</td><td>{{result.summary.$i}}</td></tr>";
+			}
+		?>
 		<tr><td colspan="2" class="subheader">Other activity</td></tr>
-<?php
-	foreach(Bill::getFieldsList(Bill::CAT_OTHER, t::getColumnsOfTable('bills')) as $i) {
- 		echo "<tr><td>$i</td><td>{{result.summary.$i}}</td></tr>";
-	}
-?>
+		<?php
+			foreach(Bill::getFieldsList(Bill::CAT_OTHER, t::getColumnsOfTable('bills')) as $i) {
+		 		echo "<tr><td>$i</td><td>{{result.summary.$i}}</td></tr>";
+			}
+		?>
 		<tr><td colspan="2" class="subheader">Financials</td></tr>
 		<tr><td colspan="2" class="subheader">Surgery</td></tr>
 		<tr><td>total_real</td><td>{{result.summary.financials.surgery.real}}</td></tr>

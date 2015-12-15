@@ -97,58 +97,26 @@ class FolderTest extends RouteReferenceTestCase {
 	}
 
 	public function testSearchRicket() {
-		$this->setUrl("folder?pathology_Ricket=1");
+		$this->setUrl("folder?Pathology=Ricket");
 		$json = $this->myAssertJSON("readonly");
 		foreach($json as $k => $v) {
-			$this->assertEquals(1, $v->pathology_Ricket);
+			$this->assertEquals("Ricket", $v->Pathology);
 		}
 	}
 
 	public function testSearchClubFoot() {
-		$this->setUrl("folder?pathology_Clubfoot=1");
+		$this->setUrl("folder?Pathology=ClubFoot");
 		$json = $this->myAssertJSON("readonly");
 		foreach($json as $k => $v) {
-			$this->assertEquals(1, $v->pathology_Clubfoot);
+			$this->assertEquals("ClubFoot", $v->Pathology);
 		}
 	}
 
-	public function testSearchBurn() {
-		$this->setUrl("folder?pathology_Burn=1");
+	public function testSearchOther() {
+		$this->setUrl("folder?Pathology=Other");
 		$json = $this->myAssertJSON("readonly");
 		foreach($json as $k => $v) {
-			$this->assertEquals(1, $v->pathology_Burn);
-		}
-	}
-
-	public function testSearchPolio() {
-		$this->setUrl("folder?pathology_Polio=1");
-		$json = $this->myAssertJSON("readonly");
-		foreach($json as $k => $v) {
-			$this->assertEquals(1, $v->pathology_Polio);
-		}
-	}
-
-	public function testSearchCP() {
-		$this->setUrl("folder?pathology_CP=1");
-		$json = $this->myAssertJSON("readonly");
-		foreach($json as $k => $v) {
-			$this->assertEquals(1, $v->pathology_CP);
-		}
-	}
-
-	public function testSearchCongenital() {
-		$this->setUrl("folder?pathology_Congenital=1");
-		$json = $this->myAssertJSON("readonly");
-		foreach($json as $k => $v) {
-			$this->assertEquals(1, $v->pathology_Congenital);
-		}
-	}
-
-	public function testSearchAdult() {
-		$this->setUrl("folder?pathology_Adult=1");
-		$json = $this->myAssertJSON("readonly");
-		foreach($json as $k => $v) {
-			$this->assertEquals(1, $v->pathology_Adult);
+			$this->assertEquals("Other", $v->Pathology);
 		}
 	}
 }

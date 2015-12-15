@@ -63,7 +63,7 @@
           <th>Tk per pers</th>
           <th>SL</th>
 
-          <th class='b_left'>Diagno</th>
+          <th class='b_left'>Patho</th>
           <th>Act</th>
           <th>Trt</th>
 
@@ -110,7 +110,7 @@
           </span>
         <td>{{l.Sociallevel}}</td>
 
-        <td class='b_left'>{{l.diagno}}</td>
+        <td class='b_left'><codage value="l.Pathology"/></td>
         <td>{{l.act}}</td>
         <td>{{l.treatment}}</td>
 

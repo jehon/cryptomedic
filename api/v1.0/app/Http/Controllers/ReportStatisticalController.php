@@ -14,14 +14,18 @@ class ReportStatisticalController extends ReportController {
 	protected $filter = "(1=1)";
 
 	protected function billsByPathology($header, $pathology) {
+		$thisfilter = "(patients.Pathology = '$pathology')";
+		if (!$pathology) {
+			$thisfilter = "(patients.Pathology is NULL or patients.Pathology = 'Other')";
+		}
 		$newPatients = " (patients.entryyear >= YEAR(bills.Date)) AND (ADDDATE(patients.created_at, INTERVAL 1 MONTH) >= bills.Date) ";
 		$sql = "SELECT count(*) as res FROM bills JOIN patients ON (bills.patient_id = patients.id)"
-				. " WHERE {$this->filter} AND patients.$pathology > 0";
+				. " WHERE {$this->filter} AND $thisfilter";
 		$all = $this->getOneBySQL($sql);
 		$this->resultPathSet($header . ".total", $all);
 
 		$sql = "SELECT count(*) as res FROM bills JOIN patients ON (bills.patient_id = patients.id)"
-				. " WHERE {$this->filter} AND patients.$pathology > 0 AND $newPatients";
+				. " WHERE {$this->filter} AND $thisfilter AND $newPatients";
 		$newone = $this->getOneBySQL($sql);
 		$this->resultPathSet($header . ".new", $newone);
 		$this->resultPathSet($header . ".old", $all - $newone);
@@ -66,14 +70,17 @@ class ReportStatisticalController extends ReportController {
 			. ")";
 
 		// By pathology
-		$this->billsByPathology("summary.pathologies.rickets", "pathology_Ricket");
-		$this->billsByPathology("summary.pathologies.clubfoots", "pathology_Clubfoot");
-		$this->billsByPathology("summary.pathologies.polio", "pathology_Polio");
-		$this->billsByPathology("summary.pathologies.burn", "pathology_Burn");
-		$this->billsByPathology("summary.pathologies.cp", "pathology_CP");
-		$this->billsByPathology("summary.pathologies.congenital", "pathology_Congenital");
-		$this->billsByPathology("summary.pathologies.adult", "pathology_Adult");
-		$this->billsByPathology("summary.pathologies.other", "pathology_other");
+		$this->billsByPathology("summary.pathologies.rickets", "Ricket");
+		$this->billsByPathology("summary.pathologies.clubfoots", "ClubFoot");
+		$this->billsByPathology("summary.pathologies.polio", "Polio");
+		$this->billsByPathology("summary.pathologies.burn", "Burn retraction");
+		$this->billsByPathology("summary.pathologies.cp", "Cerebral Palsy");
+		$this->billsByPathology("summary.pathologies.fracture", "Fracture");
+		$this->billsByPathology("summary.pathologies.infection", "Infection");
+		$this->billsByPathology("summary.pathologies.congenital", "Congenital");
+		$this->billsByPathology("summary.pathologies.adult", "Adult Physio");
+		$this->billsByPathology("summary.pathologies.normal", "Normal Patient");
+		$this->billsByPathology("summary.pathologies.other", false);
 		$this->resultPathSet("summary.pathologies.total", $this->getOneBySQL("SELECT count(*) as res FROM bills WHERE {$this->filter} "));
 
 		// Social levels
