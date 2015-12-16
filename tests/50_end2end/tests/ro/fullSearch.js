@@ -33,7 +33,7 @@ module.exports = {
     testSearch(client, { "#Patient_Name": "Islam" }, [ "2000-1" ])
     testSearch(client, { "#Patient_Name": "OSM" }, [ "2014-103" ])
     testSearch(client, { "#Patient_Telephone": "1813247984" }, [ "2014-105" ])
-    testSearch(client, { "#Patient_pathology_Clubfoot": true }, [ "2014-107", "2014-103", "2014-104", "2014-105", "2000-1" ])
+    testSearch(client, { "select#Patient_Pathology": 2 }, [ "2014-107", "2014-103", "2014-104", "2014-105", "2000-1" ])
 
     // TODO: search by sex
   }

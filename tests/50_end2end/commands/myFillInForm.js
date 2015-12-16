@@ -9,12 +9,25 @@ exports.command = function(selector, fields, button) {
         click(f);
     } if (fields[f] === false) {
 
+    } if (f.substring(0, 6) == "select") {
+      console.log(this.Keys);
+      this
+        .click(f);
+      for (var i = 0; i < fields[f]; i++) {
+        this
+          .keys(this.Keys.ARROW_DOWN);
+      }
+      this
+        .keys(this.Keys.ENTER)
+        .keys(this.Keys.TAB)
+        ;
     } else {
       this
         .clearValue(f)
         .setValue(f, fields[f]);
     }
   }
+  // this.pause(1000);
   if (button) {
     this
       .pause(100)
