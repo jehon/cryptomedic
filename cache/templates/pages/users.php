@@ -22,6 +22,7 @@
       </tr>
     </tbody>
   </table>
+  <span class='btn btn-info' ng-click='doAdd()'>Add a new user</span>
 </div>
 
 <form name='user_edit_form'>
@@ -61,6 +62,7 @@
       <span class='btn btn-default' ng-click='doCancel()'>cancel</span>
       <span ng-disabled="user_edit_form.$invalid" class='btn btn-info' ng-click='doSave()'>save</span>
       <span class='btn btn-warning' ng-click='doShowPassword()'>set password</span>
+      <span class='btn btn-danger' ng-click='doDelete()'>!!Delete the user!!</span>
     </span>
 
     <div ng-if='password'>

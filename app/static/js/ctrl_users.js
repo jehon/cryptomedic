@@ -34,6 +34,16 @@ mainApp.controller('ctrl_users', [ '$scope', '$location', '$routeParams' , funct
       .then($scope.doCancel);
   }
 
+  $scope.doAdd = function() {
+    // TODO
+  }
+
+  $scope.doDelete = function() {
+    if (alert("Are you sure you want to delete user '" + $scope.edit.name + "'?")) {
+      // TODO
+    }
+  }
+
   $scope.doShowPassword = function() {
     $scope.password = true;
     $scope.pwd.newcode = '';
