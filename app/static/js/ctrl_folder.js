@@ -126,50 +126,50 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', '$routeParams' , func
     return "/folder/" + f.patient_id + "/fiche/" + f._type + "/" + f.id + (mode ? "/" + mode : "");
   }
 
-    //----------------------
-    //   Actions
-    //----------------------
-    $scope.errors = {};
-    $scope.actionValidate = function() {
+  //----------------------
+  //   Actions
+  //----------------------
+  $scope.errors = {};
+  $scope.actionValidate = function() {
   // TODO: jserror should have an icon before (danger)
   // TODO: hide action button if form is not ok
-  $scope.valide = true;
+    $scope.valide = true;
 
-  jQuery("input[type=number][required]").each(function() {
-      if (jQuery(this).val() == "") {
-    jQuery(this).val(0);
-      }
-  });
-
-      if (!jQuery("#fileForm")[0].checkValidity()) {
-          console.log("Form invalid");
-          jQuery("#fileFormSubmit").click();
-          $scope.valide = false;
-      }
-
-      $scope.errors = $scope.currentFile().validate();
-
-      jQuery("input[mycalendar]:visible").each(function(){
-          var date = jQuery(this).val();
-          if ((date == "") && !jQuery(this).is("[required]")) {
-          return;
-          }
-          var ok = ((new Date(date) !== "Invalid Date" && !isNaN(new Date(date))))
-          if (!ok) {
-          var uuid = jQuery(this).attr('uuid');
-          $scope.errors['date_' + uuid] = true;
-          $scope.valide = false;
-          }
-        });
-
-        if (!jQuery.isEmptyObject($scope.errors)) {
-            $scope.valide = false;
+    jQuery("input[type=number][required]").each(function() {
+        if (jQuery(this).val() == "") {
+      jQuery(this).val(0);
         }
+    });
 
-      console.log("validation", $scope.errors);
-      return $scope.valide;
-    };
-    $scope.$on("revalidate", $scope.actionValidate);
+    if (!jQuery("#fileForm")[0].checkValidity()) {
+        console.log("Form invalid");
+        jQuery("#fileFormSubmit").click();
+        $scope.valide = false;
+    }
+
+    $scope.errors = $scope.currentFile().validate();
+
+    jQuery("input[mycalendar]:visible").each(function(){
+      var date = jQuery(this).val();
+      if ((date == "") && !jQuery(this).is("[required]")) {
+        return;
+      }
+      var ok = ((new Date(date) !== "Invalid Date" && !isNaN(new Date(date))))
+      if (!ok) {
+        var uuid = jQuery(this).attr('uuid');
+        $scope.errors['date_' + uuid] = true;
+        $scope.valide = false;
+        }
+      });
+
+    if (!jQuery.isEmptyObject($scope.errors)) {
+      $scope.valide = false;
+    }
+
+    console.log("validation", $scope.errors);
+    return $scope.valide;
+  };
+  $scope.$on("revalidate", $scope.actionValidate);
 
   $scope.actionCancel = function() {
     // By rerouting, the controller is initialized back
@@ -182,8 +182,8 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', '$routeParams' , func
 
   $scope.actionSave = function() {
     if (!$scope.actionValidate()) {
-        alert("You have errors in your data. Please correct them and try again");
-        return ;
+      alert("You have errors in your data. Please correct them and try again");
+      return ;
     }
     $scope.folder = false;
     $scope.safeApply();
@@ -213,18 +213,18 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', '$routeParams' , func
   $scope.actionCreate = function() {
     // Save transversal data for further use later...
     if (cachedCurrentFile.Date) {
-        service_session_storage().set("date", cachedCurrentFile.Date);
+      service_session_storage().set("date", cachedCurrentFile.Date);
     }
     if (cachedCurrentFile.ExaminerName) {
-        service_session_storage().set("examinerName", cachedCurrentFile.ExaminerName);
+      service_session_storage().set("examinerName", cachedCurrentFile.ExaminerName);
     }
     if (cachedCurrentFile.Center) {
-        service_session_storage().set("center", cachedCurrentFile.Center);
+      service_session_storage().set("center", cachedCurrentFile.Center);
     }
 
     if (!$scope.actionValidate()) {
-        alert("You have errors in your data. Please correct them and try again");
-        return ;
+      alert("You have errors in your data. Please correct them and try again");
+      return ;
     }
     service_backend.createFile(cachedCurrentFile, $scope.patient_id)
     .then(function(data) {
@@ -237,7 +237,7 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', '$routeParams' , func
 
   $scope.actionDelete = function() {
     if (!confirm("Are you sure you want to delete this file?")) {
-        return;
+      return;
     }
     $scope.folder = false;
     $scope.safeApply();
@@ -252,8 +252,8 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', '$routeParams' , func
 
   $scope.actionCreatePatient = function() {
     if (!$scope.actionValidate()) {
-        alert("You have errors in your data. Please correct them and try again");
-        return ;
+      alert("You have errors in your data. Please correct them and try again");
+      return ;
     }
     $scope.folder = false;
     $scope.currentFile()._type = "Patient";
@@ -268,8 +268,8 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', '$routeParams' , func
 
   $scope.actionSavePatient = function() {
     if (!$scope.actionValidate()) {
-        alert("You have errors in your data. Please correct them and try again");
-        return ;
+      alert("You have errors in your data. Please correct them and try again");
+      return ;
     }
     $scope.folder = false;
     $scope.safeApply();
