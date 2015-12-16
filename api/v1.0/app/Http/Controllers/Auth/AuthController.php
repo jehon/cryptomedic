@@ -90,27 +90,7 @@ class AuthController extends Controller {
 
 		$data['codes'] = References::$codes;
     $data['associations'] = References::$associations;
-
-		$data ['authorized'] = array();
-		switch($data['group']) {
-			case "readonly":
-			case "backup":
-			case "technical":
-				break;
-			case "admin":
-			case "manager":
-				$data['authorized'][] = "folder.edit";
-				$data['authorized'][] = "folder.delete";
-				$data['authorized'][] = "folder.unlock";
-				break;
-			case "cdc":
-				$data['authorized'][] = "folder.edit";
-				$data['authorized'][] = "folder.delete";
-				break;
-
-		}
-
-		$data['authorized2'] = self::$permissions[$data['group']];
+		$data['authorized'] = self::$permissions[$data['group']];
 
 		// Update last_login timestamp
 		$user = Auth::user();
@@ -240,25 +220,6 @@ class AuthController extends Controller {
   }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

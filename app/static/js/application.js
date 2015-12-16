@@ -416,14 +416,10 @@ mainApp.controller('ctrl', [ '$scope', '$location', '$sce', function($scope, $lo
     if (!$scope.appStateStore.connection.settings) {
       return false;
     }
-    if (!$scope.appStateStore.connection.settings.authorized2[transaction]) {
+    if (!$scope.appStateStore.connection.settings.authorized[transaction]) {
       return false;
     }
-    return true;
-    // if (typeof(server) == "undefined" || !server) return false;
-    // if (typeof(server.settings) == "undefined" || !server.settings) return false;
-    // if (typeof(server.settings.authorized) == "undefined" || !server.settings.authorized) return false;
-    // return (server.settings.authorized.indexOf(transaction) >= 0);
+    return $scope.appStateStore.connection.settings.authorized[transaction];
   };
 
   myEvents.on('backend_progress', function(data) {
