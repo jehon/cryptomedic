@@ -55,11 +55,11 @@ module.exports = {
       .assert.visible("#patient_save")
 
       // Add ricket to pass the validation
-      .click("#Patient_pathology_Ricket")
+      .mySelect("#Patient_Pathology", 1)
       .myClick("#topsubmenu #patient_save")
       .waitForElementPresent("#Patient_Name")
       .assert.containsText("#Patient_Name", "rezaul" + r)
-      .assert.visible("#Patient_pathology_Ricket_ok")
+      .assert.containsText("#Patient_Pathology", "Ricket")
 
       // Add a ricket consultation
       .myClick("#button_add")
@@ -145,7 +145,7 @@ module.exports = {
       .myClick("#topsubmenu #patient_edit")
       .waitForElementPresent("#Patient_Name")
       .assert.value("#Patient_Name", "rezaul" + r)
-      .click("#Patient_pathology_Ricket")
+      .mySelect("#Patient_Pathology", 2)
       .setValue("#Patient_Name", "rezaul")
       .myClick("#topsubmenu #patient_cancel")
       .waitForElementPresent("#Patient_Name")
