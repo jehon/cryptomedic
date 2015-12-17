@@ -655,30 +655,6 @@ CREATE TABLE IF NOT EXISTS `sync_computers` (
 --
 
 INSERT INTO `sync_computers` (`id`, `created_at`, `updated_at`, `lastuser`, `user_list`, `computer_id`, `useragent`, `cryptomedic_version`, `last_sync`, `last_sync_final`, `queue_size`) VALUES
-(13, '2015-11-14 10:02:57', '2015-12-03 17:37:46', NULL, ',jehon', 'KQeZXEAiklSUaMMY3loUxPPVRrQdZaEA', 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:42.0) Gecko/20100101 Firefox/42.0', '', '2015-12-03 17:35:47|10', 1, NULL),
-(14, '2015-12-03 17:21:22', '2015-12-03 17:21:23', NULL, ',readonly', '8k8Nca1zZvW8Ddkkue4lKaFCyOfOQCft', 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:42.0) Gecko/20100101 Firefox/42.0', '', '2015-10-15 04:29:50|2', 1, NULL),
-(15, '2015-12-03 17:21:28', '2015-12-03 17:21:28', NULL, ',readonly', 'LSchheqRuaB1xqEGIjQvIHuY4TCf712v', 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:42.0) Gecko/20100101 Firefox/42.0', '', '2015-10-15 04:29:50|2', 1, NULL),
-(16, '2015-12-03 17:21:35', '2015-12-03 17:21:35', NULL, ',readonly', '1WVtF42uOfSFJe3MqV3ILbbv8ALT7vs2', 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:42.0) Gecko/20100101 Firefox/42.0', '', '2015-10-15 04:29:50|2', 1, NULL),
-(17, '2015-12-03 17:21:42', '2015-12-03 17:21:43', NULL, ',readonly', 'rpC7eJlSbDjwdajNPCTZhBVJ44vgp7rK', 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:42.0) Gecko/20100101 Firefox/42.0', '', '2015-10-15 04:29:50|2', 1, NULL),
-(18, '2015-12-03 17:21:49', '2015-12-03 17:21:49', NULL, ',readonly', 'f2mryRVumxS65mqKFdDYX2aHj6HaYboZ', 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:42.0) Gecko/20100101 Firefox/42.0', '', '2015-10-15 04:29:50|2', 1, NULL),
-(19, '2015-12-03 17:22:01', '2015-12-03 17:22:01', NULL, ',readonly', 'F9OBvDF3mIgO0yOSKCnlD8x0Sw4i6umj', 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:42.0) Gecko/20100101 Firefox/42.0', '', '2015-10-15 04:29:50|2', 1, NULL),
-(20, '2015-12-03 17:22:14', '2015-12-03 17:22:14', NULL, ',readonly', 'dkump4JjlJRlglAxSegc3ooyF30xVGwY', 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:42.0) Gecko/20100101 Firefox/42.0', '', '2015-10-15 04:29:50|2', 1, NULL),
-(21, '2015-12-03 17:22:26', '2015-12-03 17:22:26', NULL, ',murshed', 'ZtUHGPqJcqKCgylrGES3LrojujRfCbj8', 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:42.0) Gecko/20100101 Firefox/42.0', '', '2015-10-15 04:29:50|2', 1, NULL),
-(22, '2015-12-03 17:29:02', '2015-12-03 17:29:02', NULL, ',readonly', 'LDNDccj5UDysXDvEDiNovfD3yQ7n9Rph', 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:42.0) Gecko/20100101 Firefox/42.0', '', '2015-12-03 17:22:47|8', 1, NULL),
-(23, '2015-12-03 17:29:08', '2015-12-03 17:29:08', NULL, ',readonly', 'nL9dH6y983PkTIBDPd65RC6StBLzh4ov', 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:42.0) Gecko/20100101 Firefox/42.0', '', '2015-12-03 17:22:47|8', 1, NULL),
-(24, '2015-12-03 17:29:15', '2015-12-03 17:29:15', NULL, ',readonly', 'l1KFVDwPjuyOm4iiWXd1tHfXeAmhAacz', 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:42.0) Gecko/20100101 Firefox/42.0', '', '2015-12-03 17:22:47|8', 1, NULL),
-(25, '2015-12-03 17:29:22', '2015-12-03 17:29:22', NULL, ',readonly', 'G7Lrxh98pmNHmYKQb3koUkqzuAOUguNa', 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:42.0) Gecko/20100101 Firefox/42.0', '', '2015-12-03 17:22:47|8', 1, NULL),
-(26, '2015-12-03 17:29:29', '2015-12-03 17:29:29', NULL, ',readonly', '1PJFgUhu8V5tTZycu51BXxQYjWu7ufG0', 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:42.0) Gecko/20100101 Firefox/42.0', '', '2015-12-03 17:22:47|8', 1, NULL),
-(27, '2015-12-03 17:29:42', '2015-12-03 17:29:42', NULL, ',readonly', 'LGi16mfdMWdt3N7FgwhjzVnGNSbCmjsR', 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:42.0) Gecko/20100101 Firefox/42.0', '', '2015-12-03 17:22:47|8', 1, NULL),
-(28, '2015-12-03 17:29:57', '2015-12-03 17:29:57', NULL, ',readonly', '7JyasSnV80ceO3wUbsFtCk5dJIJG9sxU', 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:42.0) Gecko/20100101 Firefox/42.0', '', '2015-12-03 17:22:47|8', 1, NULL),
-(29, '2015-12-03 17:30:09', '2015-12-03 17:30:09', NULL, ',murshed', 'fvsZzbqOqMwEV3JYhkoYefetUfCRFdmD', 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:42.0) Gecko/20100101 Firefox/42.0', '', '2015-12-03 17:22:47|8', 1, NULL),
-(30, '2015-12-03 17:34:23', '2015-12-03 17:34:23', NULL, ',readonly', 'HB1myaxOmjbqzHBYmDFxc3MG0NOLz8jq', 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:42.0) Gecko/20100101 Firefox/42.0', '', '2015-12-03 17:30:29|9', 1, NULL),
-(31, '2015-12-03 17:34:28', '2015-12-03 17:34:28', NULL, ',readonly', 'fXeu4R7ZRGO7DfEl6X92Rrwy5jj9oM4e', 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:42.0) Gecko/20100101 Firefox/42.0', '', '2015-12-03 17:30:29|9', 1, NULL),
-(32, '2015-12-03 17:34:36', '2015-12-03 17:34:36', NULL, ',readonly', 'P4LQtcsiIxkmhSkSKfQsYz9ovKriWRjq', 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:42.0) Gecko/20100101 Firefox/42.0', '', '2015-12-03 17:30:29|9', 1, NULL),
-(33, '2015-12-03 17:34:43', '2015-12-03 17:34:43', NULL, ',readonly', 'xfGQB8da63OC2hbSYMgDI32dp4B2zRj6', 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:42.0) Gecko/20100101 Firefox/42.0', '', '2015-12-03 17:30:29|9', 1, NULL),
-(34, '2015-12-03 17:34:49', '2015-12-03 17:34:50', NULL, ',readonly', 'RmHBDhM1dKmdZEIcDLb8lvqw9BnEYVJ4', 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:42.0) Gecko/20100101 Firefox/42.0', '', '2015-12-03 17:30:29|9', 1, NULL),
-(35, '2015-12-03 17:35:02', '2015-12-03 17:35:02', NULL, ',readonly', 'TeBHndYlSVin0T1iQnM9qI4xYxFubMvG', 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:42.0) Gecko/20100101 Firefox/42.0', '', '2015-12-03 17:30:29|9', 1, NULL),
-(36, '2015-12-03 17:35:16', '2015-12-03 17:35:16', NULL, ',readonly', '1YKP5nzCnXP4QYoFmobR2VEyiuO1pceM', 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:42.0) Gecko/20100101 Firefox/42.0', '', '2015-12-03 17:30:29|9', 1, NULL),
 (37, '2015-12-03 17:35:27', '2015-12-03 17:35:27', NULL, ',murshed', 'XLFhr6vyXtb9yqwj9N8WIFXJrpH2M3de', 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:42.0) Gecko/20100101 Firefox/42.0', '', '2015-12-03 17:30:29|9', 1, NULL);
 
 -- --------------------------------------------------------
@@ -722,10 +698,10 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `name`, `password`, `old_password`, `email`, `notes`, `group`, `created_at`, `updated_at`, `lastuser`, `last_login`, `remember_token`) VALUES
-(1, 'thierry', 'Thierry Craviari', '$2y$10$1XkouAzPDXGY43uAM4IhR.5CJbKym6xTsiqxgoCW0rbvdMNdJCsx2', NULL, 'thierry.craviari@gmail.com', '', 'manager', '2011-10-18 04:24:37', '2015-08-24 11:16:20', 'thierry', '2015-08-24 11:16:20', ''),
-(2, 'jehon', 'Jean Honlet', '$2y$10$Lg5g2xFUTCDdBtNWljWix.NSYBxDY2z3fyl95UKWJoahK8d5/g0Oi', NULL, 'marielineet.jean@gmail.com', '', 'admin', '2011-10-18 04:24:37', '2015-12-03 17:37:36', 'jehon', '2015-12-03 17:37:36', ''),
-(3, 'murshed', 'Morshedul Alam', '$2y$10$dtk/wdKH2cIPn3/aPUtG5.5Xorqhg8FyblvmbS0a13mIIjZwZgFoW', NULL, 'bgdcox1@yahoo.com', '', 'cdc', '2011-10-18 04:24:37', '2015-12-03 17:35:27', 'murshed', '2015-12-03 17:35:27', ''),
-(4, 'readonly', 'readonly', '53cea9a9492b3397c1f2cb91fec685fc63d232ed', '83998c0388c12fe57c1e75d4c50c904fe774a8ec', NULL, NULL, 'readonly', '2011-10-18 04:24:37', '2015-12-03 17:35:16', 'readonly', '2015-12-03 17:35:16', '');
+(101, 'thierry', 'Thierry Craviari', '$2y$10$1XkouAzPDXGY43uAM4IhR.5CJbKym6xTsiqxgoCW0rbvdMNdJCsx2', NULL, 'thierry.craviari@gmail.com', '', 'manager', '2011-10-18 04:24:37', '2015-08-24 11:16:20', 'thierry', '2015-08-24 11:16:20', ''),
+(102, 'jehon', 'Jean Honlet', '$2y$10$Lg5g2xFUTCDdBtNWljWix.NSYBxDY2z3fyl95UKWJoahK8d5/g0Oi', NULL, 'marielineet.jean@gmail.com', '', 'admin', '2011-10-18 04:24:37', '2015-12-03 17:37:36', 'jehon', '2015-12-03 17:37:36', ''),
+(103, 'murshed', 'Morshedul Alam', '$2y$10$dtk/wdKH2cIPn3/aPUtG5.5Xorqhg8FyblvmbS0a13mIIjZwZgFoW', NULL, 'bgdcox1@yahoo.com', '', 'cdc', '2011-10-18 04:24:37', '2015-12-03 17:35:27', 'murshed', '2015-12-03 17:35:27', ''),
+(104, 'readonly', 'readonly', '53cea9a9492b3397c1f2cb91fec685fc63d232ed', '83998c0388c12fe57c1e75d4c50c904fe774a8ec', NULL, NULL, 'readonly', '2011-10-18 04:24:37', '2015-12-03 17:35:16', 'readonly', '2015-12-03 17:35:16', '');
 
 -- --------------------------------------------------------
 
