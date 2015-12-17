@@ -118,7 +118,6 @@ References::$lists["Unions"] = References::buildValueList(
       References::associate("Rajakhali"         , "upazilla.Pekua"),
       References::associate("Ujantia"           , "upazilla.Pekua"),
 
-
       References::associate("Halodia Palang"    , "upazilla.Ukhia"),
       References::associate("Ratna Palang"      , "upazilla.Ukhia"),
       References::associate("Raja Palang"       , "upazilla.Ukhia"),
@@ -137,7 +136,6 @@ References::$lists["Unions"] = References::buildValueList(
       References::associate("Eidgar"            , "upazilla.Ramu"),
       References::associate("Khonia Palang"     , "upazilla.Ramu"),
 
-
       References::associate("Varoakhali"        , "upazilla.Cox's Bazar Sadar"),
       References::associate("Chafuldhandi"      , "upazilla.Cox's Bazar Sadar"),
       References::associate("Eidgha"            , "upazilla.Cox's Bazar Sadar"),
@@ -150,8 +148,6 @@ References::$lists["Unions"] = References::buildValueList(
       References::associate("Pukkhali"          , "upazilla.Cox's Bazar Sadar"),
       References::associate("Cos'x Bazar Sadar" , "upazilla.Cox's Bazar Sadar"),
       References::associate("Islampur"          , "upazilla.Cox's Bazar Sadar"),
-
-
 
       References::associate("Dhalghat"          , "upazilla.Moheshkhali"),
       References::associate("Kalamar Chara"     , "upazilla.Moheshkhali"),

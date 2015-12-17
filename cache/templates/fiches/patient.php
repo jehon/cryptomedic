@@ -65,26 +65,10 @@
 			</fieldset>
 	 	</div>
 		<div class="col-md-6">
-<!-- 			<fieldset id='PatientPathology' ng-class='{ errors.noPathology: jserror }'> -->
 			<fieldset id='PatientPathology' ng-class='{ jserror: errors.noPathology }'>
 			<legend>Pathology</legend>
 				<table>
 					<?php (new t("Patient.Pathology"))->tr("Main pathology")->p(); ?>
-<!-- 					<tr>
-						<td></td>
-						<td ng-if="errors.noPathology" class='jserror'>
-							Please select at least one pathology
-						</td>
-					</tr>
- -->
- 					<?php //(new t("Patient.pathology_Ricket"))->tr("Ricket (R)")->p(); ?>
-					<?php //(new t("Patient.pathology_Clubfoot"))->tr("Club foot (CF)")->p(); ?>
-					<?php //(new t("Patient.pathology_Polio"))->tr("Polio (P)")->p(); ?>
-					<?php //(new t("Patient.pathology_Burn"))->tr("Burn (B)")->p(); ?>
-					<?php //(new t("Patient.pathology_CP"))->tr("CP")->p(); ?>
-					<?php //(new t("Patient.pathology_Congenital"))->tr("Congenital (C)")->p(); ?>
-					<?php //(new t("Patient.pathology_Adult"))->tr("Patient is adult (A)")->p(); ?>
-					<?php //(new t("Patient.pathology_other"))->tr("Other (Oth)")->p(); ?>
 					<?php (new t("Patient.other_comments"))->tr("Other comments")->p(); ?>
 				</table>
 			</fieldset>
