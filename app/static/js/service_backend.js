@@ -358,6 +358,12 @@ function service_backend_fn() {
         ;
     },
 
+    'userAdd': function(user) {
+      return myFrontFetch(rest + "/users" , { method: 'POST' }, user)
+        .catch()
+        ;
+    },
+
     'userUpdate': function(user) {
       return myFrontFetch(rest + "/users/" + user.id, { method: 'PUT' }, user)
         .catch()
