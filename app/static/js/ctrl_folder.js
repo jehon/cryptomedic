@@ -362,13 +362,7 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', '$routeParams' , func
   $scope.listUnions = function(upazilla) {
     var list = [ ];
     if ($scope.appStateStore.connection) {
-      console.log("here:",
-          upazilla,
-          $scope.appStateStore.connection.settings.associations['upazilla.' + upazilla],
-          $scope.appStateStore.connection.settings.associations);
-
       if ($scope.appStateStore.connection.settings.associations['upazilla.' + upazilla]) {
-        console.log("there");
         list = list.concat($scope.appStateStore.connection.settings.associations['upazilla.' + upazilla]);
       }
     }
