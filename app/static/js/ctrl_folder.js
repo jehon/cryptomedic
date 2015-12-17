@@ -185,6 +185,7 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', '$routeParams' , func
       alert("You have errors in your data. Please correct them and try again");
       return ;
     }
+    appState().actions.state.busy("Saving file on the server");
     $scope.folder = false;
     $scope.safeApply();
     service_backend.saveFile(cachedCurrentFile, $scope.patient_id)
@@ -193,11 +194,13 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', '$routeParams' , func
         $scope.$emit("message", { "level": "success", "text": "The " + $scope.subtype + " has been saved."});
         $scope.go("/folder/" + $scope.patient_id + "/file/" + $scope.subtype + "/" + $scope.subid);
         $scope.folder = data;
+        appState().actions.state.ready();
         $scope.safeApply();
       });
   }
 
   $scope.actionUnlock = function() {
+    appState().actions.state.busy("Unlocking files on the server");
     $scope.folder = false;
     $scope.safeApply();
     service_backend.unlockFile(cachedCurrentFile, $scope.patient_id)
@@ -206,12 +209,18 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', '$routeParams' , func
       // Let's refresh the data
       $scope.folder = data;
       $scope.go("/folder/" + $scope.patient_id + "/file/" + $scope.subtype + "/" + $scope.subid + "/edit");
+      appState().actions.state.ready();
       $scope.safeApply();
     });
   }
 
   $scope.actionCreate = function() {
     // Save transversal data for further use later...
+    if (!$scope.actionValidate()) {
+      alert("You have errors in your data. Please correct them and try again");
+      return ;
+    }
+    appState().actions.state.busy("Creating files on the server");
     if (cachedCurrentFile.Date) {
       service_session_storage().set("date", cachedCurrentFile.Date);
     }
@@ -222,15 +231,12 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', '$routeParams' , func
       service_session_storage().set("center", cachedCurrentFile.Center);
     }
 
-    if (!$scope.actionValidate()) {
-      alert("You have errors in your data. Please correct them and try again");
-      return ;
-    }
     service_backend.createFile(cachedCurrentFile, $scope.patient_id)
     .then(function(data) {
       $scope.$emit("message", { "level": "success", "text": "The " + cachedCurrentFile._type + " has been created."});
       // The data is refreshed by navigating away...
       $scope.go("/folder/" + $scope.patient_id + "/file/" + $scope.subtype + "/" + data.newKey);
+      appState().actions.state.ready();
       $scope.safeApply();
     });
   }
@@ -239,6 +245,7 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', '$routeParams' , func
     if (!confirm("Are you sure you want to delete this file?")) {
       return;
     }
+    appState().actions.state.busy("Deleting file on the server");
     $scope.folder = false;
     $scope.safeApply();
     service_backend.deleteFile($scope.currentFile(), $scope.patient_id)
@@ -246,6 +253,7 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', '$routeParams' , func
       $scope.$emit("message", { "level": "success", "text":  "The " + $scope.currentFile()._type +  " of " + $scope.currentFile().Date + " has been deleted"});
       $scope.folder = data;
       $scope.go("/folder/" + $scope.patient_id);
+      appState().actions.state.ready();
       $scope.safeApply();
     });
   }
@@ -255,6 +263,7 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', '$routeParams' , func
       alert("You have errors in your data. Please correct them and try again");
       return ;
     }
+    appState().actions.state.busy("Creating the patient on the server");
     $scope.folder = false;
     $scope.currentFile()._type = "Patient";
     service_backend.createFile($scope.currentFile())
@@ -262,6 +271,7 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', '$routeParams' , func
       $scope.$emit("message", { "level": "success", "text":  "The patient has been created."});
       $scope.folder = data;
       $scope.go("/folder/" + data.id);
+      appState().actions.state.ready();
       $scope.safeApply();
     });
   }
@@ -272,11 +282,13 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', '$routeParams' , func
       return ;
     }
     $scope.folder = false;
+    appState().actions.state.busy("Saving files on the server");
     $scope.safeApply();
     service_backend.saveFile(cachedCurrentFile, $scope.patient_id)
     .then(function(data) {
       // The data is refreshed by navigating away...
       $scope.$emit("message", { "level": "success", "text": "The patient has been saved."});
+      appState().actions.state.ready();
       $scope.go("/folder/" + $scope.patient_id);
     });
   }
@@ -286,11 +298,13 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', '$routeParams' , func
         return;
     }
     $scope.folder = false;
+    appState().actions.state.busy("Deleting patient on the server");
     $scope.safeApply();
     service_backend.deleteFile($scope.currentFile(), $scope.patient_id)
     .then(function(data) {
       $scope.$emit("message", { "level": "success", "text":    "The patient " + $scope.currentFile().entryyear + "-" + $scope.currentFile().entryorder + " has been deleted"});
       $scope.go("/home");
+      appState().actions.state.ready();
       $scope.safeApply();
     });
   }
@@ -335,7 +349,7 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', '$routeParams' , func
   });
 
   $scope.listUpazillas = function(district) {
-    var list = [ "" ];
+    var list = [ ];
     if ($scope.appStateStore.connection) {
       if ($scope.appStateStore.connection.settings.associations['district.' + district]) {
         list = list.concat($scope.appStateStore.connection.settings.associations['district.' + district]);
@@ -346,9 +360,15 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', '$routeParams' , func
   }
 
   $scope.listUnions = function(upazilla) {
-    var list = [ "" ];
+    var list = [ ];
     if ($scope.appStateStore.connection) {
+      console.log("here:",
+          upazilla,
+          $scope.appStateStore.connection.settings.associations['upazilla.' + upazilla],
+          $scope.appStateStore.connection.settings.associations);
+
       if ($scope.appStateStore.connection.settings.associations['upazilla.' + upazilla]) {
+        console.log("there");
         list = list.concat($scope.appStateStore.connection.settings.associations['upazilla.' + upazilla]);
       }
     }
