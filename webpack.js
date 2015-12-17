@@ -63,9 +63,9 @@ module.exports = {
   },
   output: {
     path: path.join(__dirname, 'build/'),
-    filename: 'bundle.js',
-    // filename: 'bundle-[hash].js',
-    // chunkFilename: "[id].[hash].bundle.js"
+    // filename: 'bundle.js',
+    filename: 'bundle-[hash].js',
+    chunkFilename: "[id].[hash].bundle.js",
 
     // @see https://webpack.github.io/docs/library-and-externals.html
     // export itself to a global var
