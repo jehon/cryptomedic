@@ -364,6 +364,12 @@ function service_backend_fn() {
         ;
     },
 
+    'userDelete': function(id) {
+      return myFrontFetch(rest + "/users/" + id, { method: 'DELETE' })
+        .catch()
+        ;
+    },
+
     'userUpdate': function(user) {
       return myFrontFetch(rest + "/users/" + user.id, { method: 'PUT' }, user)
         .catch()
