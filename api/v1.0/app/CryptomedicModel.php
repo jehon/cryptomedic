@@ -21,8 +21,8 @@ class CryptomedicModel extends Model {
 
 	static public function filterData($data) {
 		$columns = static::getTableColumnsList();
-		unset($data['created']);
-		unset($data['modified']);
+		// unset($data['created']);
+		// unset($data['modified']);
 		unset($data['created_at']);
 		unset($data['updated_at']);
 		unset($data['id']);
@@ -100,4 +100,3 @@ class CryptomedicModel extends Model {
 // 		return true;
 // 	}
 }
-

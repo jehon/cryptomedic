@@ -18,12 +18,12 @@ class UsersController extends Controller {
 
 	// POST = create
 	public function store() {
-		$data = Input::except('_type');
-		$newObj = User::create($data);
+		$attributes = Input::except('_type');
+		$newObj = User::create($attributes);
 		if (!$newObj->id) {
 			abort(500, "Could not create the file");
 		}
-		return response()->jsonOrJSONP($newObj);
+		return $this->index();
 	}
 
 	// PUT / PATCH
@@ -41,9 +41,8 @@ class UsersController extends Controller {
 				$obj->{$k} = $v;
 			}
 		}
-
 		$obj->save();
-		return response()->jsonOrJSONP(User::FindOrFail($id));
+		return $this->index();
 	}
 
 	// DELETE
@@ -55,7 +54,8 @@ class UsersController extends Controller {
 		if(!$obj->delete()) {
 			abort(404, "Could not delete $model@$id");
 		}
-		return response()->jsonOrJSONP(array());
+		// return response()->jsonOrJSONP(array());
+		return $this->index();
 	}
 
 	// Update password
@@ -67,6 +67,6 @@ class UsersController extends Controller {
 		}
 		$user->password = Hash::make($pwd);
 		$user->save();
-		return self::index();
+		return $this->index();
 	}
 }
