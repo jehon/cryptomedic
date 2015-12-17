@@ -363,7 +363,7 @@ mainApp.controller('ctrl', [ '$scope', '$location', '$sce', function($scope, $lo
 
   $scope.appStateStore = appState().store.getState();
   appState().store.subscribe(function() {
-    console.log("scope appState updated", appState().store.getState());
+    // console.log("scope appState updated", appState().store.getState());
     $scope.appStateStore = appState().store.getState();
 
     // ** Manual operations **
@@ -412,7 +412,6 @@ mainApp.controller('ctrl', [ '$scope', '$location', '$sce', function($scope, $lo
   $scope.username = "";
   $scope.password = "";
   $scope.hasPermission = function(transaction) {
-    console.log($scope.appStateStore);
     if (!$scope.appStateStore.connection.settings) {
       return false;
     }

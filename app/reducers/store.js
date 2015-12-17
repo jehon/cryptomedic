@@ -9,6 +9,7 @@ import createLogger from 'redux-logger';
 import connection from 'reducers/connectionReducers';
 import state from 'reducers/stateReducers';
 import database from 'reducers/databaseReducers';
+import log from 'reducers/logReducers';
 
 const loggerMiddleware = createLogger({
   level: 'info',
@@ -60,7 +61,8 @@ let finalCreateStore = compose(
 let store = finalCreateStore(combineReducers({
   connection,
   state,
-  database
+  database,
+  log
 }));
 
 export default store;
