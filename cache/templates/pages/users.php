@@ -25,7 +25,8 @@
       </tr>
     </tbody>
   </table>
-  <span class='btn btn-info' ng-click='doAdd()'>Add a new user</span>
+  <span class='btn btn-default' ng-click='doAdd()'>Add a new user</span>
+  <a class='btn btn-default' ng-href='mailto:{{emailAll()}}'>Email everybody</a>
 </div>
 
 <form name='user_edit_form'>

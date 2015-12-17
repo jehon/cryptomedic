@@ -15,6 +15,17 @@ mainApp.controller('ctrl_users', [ '$scope', '$location', '$routeParams' , funct
       });
   }
 
+  $scope.emailAll = function() {
+    console.log("here");
+    var res = "";
+    for(i in $scope.users) {
+      if ($scope.users[i].email) {
+        res += $scope.users[i].name + '<' + $scope.users[i].email + ">,"
+      }
+    }
+    return res;
+  }
+
   $scope.doAdd = function() {
     $scope.edit = {
       'id' : -1
