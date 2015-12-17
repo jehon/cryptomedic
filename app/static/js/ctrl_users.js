@@ -1,5 +1,7 @@
 "use strict";
 
+// TODO: manage change in groups
+
 mainApp.controller('ctrl_users', [ '$scope', '$location', '$routeParams' , function($scope, $location, $routeParams) {
   $scope.users = {};
   $scope.edit = false;
