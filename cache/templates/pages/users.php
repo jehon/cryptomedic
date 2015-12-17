@@ -1,5 +1,5 @@
 <?php ?>
-<div ng-if='!edit'>
+<div ng-if='!edit && !password'>
   <table class='table table-hover table-bordered tablesorter'>
     <thead>
       <th>id</th>
@@ -18,7 +18,10 @@
         <td>{{u.email}}</td>
         <td>{{u.notes}}</td>
         <td>{{u.group}}</td>
-        <td><span class='btn btn-warning' ng-click='doEdit($index)'>edit</span></td>
+        <td>
+          <span class='btn btn-default' ng-click='doEdit($index)'>edit</span>
+          <span class='btn btn-default' ng-click='doShowPassword($index)'>Change password</span>
+        </td>
       </tr>
     </tbody>
   </table>
@@ -27,7 +30,8 @@
 
 <form name='user_edit_form'>
   <div ng-if='edit'>
-    <h3>Edit user '{{edit.username}}'</h3>
+    <h3 ng-if='edit.id >= 0'>Edit user '{{edit.username}}'</h3>
+    <h3 ng-if='edit.id < 0'>Creatint user</h3>
     <span ng-if='!password'>
       <table class='table table-hover table-bordered tablesorter'>
         <tr>
@@ -60,22 +64,21 @@
         </tr>
       </table>
       <span class='btn btn-default' ng-click='doCancel()'>cancel</span>
-      <span ng-disabled="user_edit_form.$invalid" class='btn btn-info' ng-click='doSave()'>save</span>
-      <span class='btn btn-warning' ng-click='doShowPassword()'>set password</span>
+      <span ng-disabled="user_edit_form.$invalid" class='btn btn-info' ng-click='doSave()'>create/save</span>
       <span class='btn btn-danger' ng-click='doDelete()'>!!Delete the user!!</span>
     </span>
+  </div>
 
-    <div ng-if='password'>
-      <table class='table table-hover table-bordered tablesorter'>
-        <tr>
-          <td>New password for {{edit.name}}</td>
-          <td>
-            <input id='newcode' ng-model="pwd.newcode" class="form-control" placeholder="enter new password here" required autofocus>
-          </td>
-        </tr>
-      </table>
-      <span class='btn btn-default' ng-click='doCancel()'>cancel</span>
-      <span class='btn btn-info' ng-click='doSavePassword()'>save</span>
-    </div>
+  <div ng-if='password'>
+    <table class='table table-hover table-bordered tablesorter'>
+      <tr>
+        <td>New password for {{password.name}}</td>
+        <td>
+          <input id='newcode' ng-model="password.newcode" class="form-control" placeholder="enter new password here" required autofocus>
+        </td>
+      </tr>
+    </table>
+    <span class='btn btn-default' ng-click='doCancel()'>cancel</span>
+    <span class='btn btn-info' ng-click='doSavePassword()'>Set password</span>
   </div>
 </form>
