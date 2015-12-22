@@ -38,17 +38,29 @@ window.bug_reporting = (function (initial) {
         html2canvas(document.body).then(function(canvas) {
             var durl = canvas.toDataURL();
             //document.body.appendChild(canvas);
-            jQuery("body").html(txt);
+            // jQuery("body").html(txt);
+            document.getElementsByTagName('body')[0].innerHTML = txt;
             // Username
-            jQuery("[name=username]").val(server.settings.username);
+            // jQuery("[name=username]").val(server.settings.username);
+            document.getElementsByName('username')[0].value = server.settings.username;
             // User email
-            jQuery("[name=email]").val("");
+            // jQuery("[name=email]").val("");
+            document.getElementsByName('email')[0].value = "";
             // Browser custom state
-            jQuery("[name=browser_state]").val(JSON.stringify({ 'cryptomedic': cryptomedic, 'server': server }));
-            jQuery("[name=url]").val(window.location);
-            jQuery("[name=browser_useragent]").val(navigator.userAgent);
-            jQuery("[name=browser_console]").val(JSON.stringify(allConsole));
-            jQuery("[name=screenshot]").val(durl);
+            // jQuery("[name=browser_state]").val(JSON.stringify({ 'cryptomedic': cryptomedic, 'server': server }));
+            document.getElementsByName('browser_state')[0].value = JSON.stringify({ 'cryptomedic': cryptomedic, 'server': server });
+
+            // jQuery("[name=url]").val(window.location);
+            document.getElementsByName('url')[0].value = window.location;
+
+            // jQuery("[name=browser_useragent]").val(navigator.userAgent);
+            document.getElementsByName('browser_useragent')[0].value = navigator.userAgent;
+
+            // jQuery("[name=browser_console]").val(JSON.stringify(allConsole));
+            document.getElementsByName('browser_console')[0].value = JSON.stringify(allConsole);
+
+            // jQuery("[name=screenshot]").val(durl);
+            document.getElementsByName('screenshot')[0].value = durl;
         });
     }
 
