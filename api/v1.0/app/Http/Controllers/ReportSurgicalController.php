@@ -36,17 +36,31 @@ class ReportSurgicalController extends ReportController {
 	            bills.total_asked as total_asked,
 	            bills.total_paid as total_paid,
 				exists(select * from bills as b2 where b2.patient_id = bills.patient_id and b2.Date < :whenFrom12) as oldPatient,
-				(select b2.Date                	     from bills as b2 where b2.patient_id = bills.patient_id ORDER BY b2.Date DESC LIMIT 1) as last_seen,
-				(select consults.TreatmentEvaluation from consults where consults.patient_id = bills.patient_id ORDER BY consults.Date DESC LIMIT 1) as last_treat_result,
-				(select consults.TreatmentFinished   from consults where consults.patient_id = bills.patient_id ORDER BY consults.Date DESC LIMIT 1) as last_treat_ended
+				TConsults.Date AS last_seen,
+				TConsults.TreatmentEvaluation AS last_treat_result,
+				TConsults.TreatmentFinished AS last_treat_finished
 			FROM bills
-	            JOIN patients ON bills.patient_id = patients.id
-	            JOIN prices ON bills.price_id = prices.id
-	        WHERE (1 = 1)
+          JOIN patients ON bills.patient_id = patients.id
+          JOIN prices ON bills.price_id = prices.id
+					JOIN (
+						(
+							(SELECT id, patient_id, Date, TreatmentEvaluation, TreatmentFinished FROM ricket_consults)
+							UNION
+							(SELECT id, patient_id, Date, TreatmentEvaluation, TreatmentFinished FROM club_foots)
+							UNION
+							(SELECT id, patient_id, Date, TreatmentEvaluation, TreatmentFinished FROM other_consults)
+						) ORDER BY Date DESC LIMIT 1
+					) AS TConsults ON (TConsults.patient_id = patients.id)
+      WHERE (1 = 1)
 				AND " . $this->getReportParamFilter("when", "bills.Date") . "
 				AND " . Bill::getSQLFieldsSum(Bill::CAT_SURGICAL) . " > 0
-			ORDER BY bills.Date ASC, patients.entryyear ASC, patients.entryorder ASC, bills.id ASC
-			", $this->sqlBindParams + [ "whenFrom12" => $this->internalWhenFrom ]
+		  ORDER BY bills.id",
+			// ORDER BY bills.Date ASC, patients.entryyear ASC, patients.entryorder ASC, bills.id ASC
+			$this->sqlBindParams + [ "whenFrom12" => $this->internalWhenFrom ]
+
+				// (select consults.TreatmentEvaluation from consults where consults.patient_id = bills.patient_id ORDER BY consults.Date DESC LIMIT 1) as last_treat_result,
+				// (select consults.TreatmentFinished   from consults where consults.patient_id = bills.patient_id ORDER BY consults.Date DESC LIMIT 1) as last_treat_ended
+
 		);
 
 		$this->result['totals'] = array();
