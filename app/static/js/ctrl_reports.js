@@ -111,14 +111,7 @@ mainApp.controller('ctrl_reports', [ '$scope', '$routeParams', '$sce', function(
 
 	$scope.refresh();
 
-	$scope.age = function(year) {
-    if (year) {
-			return (new Date()).getFullYear() - year;
-	  }
-	  return "-";
-	}
-
-	$scope.generate = function() {
+  $scope.generate = function() {
 		jQuery('.online').remove();
 		ExcellentExport.excel(document.getElementById("download_link"),
 			document.getElementById("report_table").getElementsByTagName("table")[0],
