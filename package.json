@@ -11,7 +11,7 @@
     "angular-route": "1.4.x",
     "bootstrap": "latest",
     "dexie": "latest",
-    "excellentexport": "git://github.com/jehon/excellentexport",
+    "excellentexport": "git://github.com/jmaister/excellentexport",
     "jquery": "latest",
     "jquery-ui": "latest",
     "react": "^0.14.3",
