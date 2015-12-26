@@ -134,9 +134,9 @@
     </nav>
     <div class='container-fluid'>
       <!--  Pending screen -->
-      <!-- Modal -->
-      <div class="modal fade" id="busy" data-keyboard="false">
-        <div class="modal-dialog">
+      <!-- Modal fade-->
+      <div class="modal " id="busy" role="dialog" aria-labelledby="myModalLabel" aria-describedby="Activity" data-keyboard="false">
+        <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
               <h4 class="modal-title">Waiting for: {{appStateStore.state.busy}} tasks on {{appStateStore.state.max}}</h4>

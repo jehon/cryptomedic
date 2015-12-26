@@ -74,6 +74,7 @@ class AuthController extends Controller {
 	// }
 
 	public function getSettings() {
+    // sleep(3);
 		if (!Auth::user()) {
 			abort(401);
 		}
