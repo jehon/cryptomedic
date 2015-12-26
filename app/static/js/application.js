@@ -468,7 +468,17 @@ mainApp.controller('ctrl', [ '$scope', '$location', '$sce', function($scope, $lo
   $scope.messages = [];
   var interval = 0;
   $scope.$on("message", function(event, data) {
-    data = jQuery.extend({}, { level: "success", text: "Error!", seconds: 8 }, data);
+    // data = Object.assign({}, );
+    if (!data.level) {
+      data.level = "success";
+    }
+    if (!data.text) {
+      data.text = "Error!";
+    }
+    if (!data.seconds) {
+      data.seconds = 8;
+    }
+    // data = jQuery.extend({}, { level: "success", text: "Error!", seconds: 8 }, data);
     var t = new Date();
     data.timeout = t.setSeconds(t.getSeconds() + data.seconds);
     $scope.messages.push(data);
