@@ -120,7 +120,10 @@ mainApp.controller('ctrl_reports', [ '$scope', '$routeParams', '$sce', function(
 
 	$scope.generate = function() {
 		jQuery('.online').remove();
-		ExcellentExport.excel(jQuery('#download_link')[0], jQuery('#report_table table')[0], 'cryptomedic');
+		ExcellentExport.excel(document.getElementById("download_link"),
+			document.getElementById("report_table").getElementsByTagName("table")[0],
+			'cryptomedic');
+		// ExcellentExport.excel(jQuery('#download_link')[0], jQuery('#report_table table')[0], 'cryptomedic');
 		// TODO: reenable links after export...
 	}
 }]);
