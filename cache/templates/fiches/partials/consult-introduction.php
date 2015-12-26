@@ -6,7 +6,7 @@
 		<?php (new t("Center"))->tr("Center")->p(); ?>
 		<tr class='notModeWrite'>
 			<td>Age during consultation</td>
-			<td><span id='ageAtConsultationTime' catch-it ng-model="folder" tryit="currentFile().ageAtConsultTime()">{{currentFile().ageAtConsultTime() | number:0 }} years old at consultation time</span></td>
+			<td>{{cryptomedic.calculateAgeFromBirth(folder.getMainFile().Yearofbirth, currentFile().Date)}} old at consultation time</td>
 		</tr>
 	</table>
 </fieldset>
