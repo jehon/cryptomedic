@@ -30,6 +30,7 @@
     "bower": "latest",
     "chromedriver": "latest",
     "css-loader": "^0.23.0",
+    "es6-promise": "^3.0.2",
     "eslint": "latest",
     "eslint-plugin-react": "latest",
     "file-loader": "latest",
@@ -61,7 +62,7 @@
   },
   "x": {
     "excellentexport": "git://github.com/jmaister/excellentexport",
-    "build:dev":       "webpack --config webpack.dev.js",
+    "build:dev": "webpack --config webpack.dev.js",
     "build:prod:fast": "webpack --config webpack.js",
     "x": "x"
   }
