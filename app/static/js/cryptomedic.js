@@ -70,36 +70,45 @@ cryptomedic.math = {
     sigma: 1.64485
 };
 
-cryptomedic.age = function(birth, reference) {
+cryptomedic.calculateAgeFromBirth = function(birth, reference) {
   reference = reference || new Date();
   if (typeof(reference) == 'number') {
     reference = "" + reference;
   }
   if (typeof(reference) == 'string') {
     if (reference.length < 4) {
-      throw new Exception("Invalid reference");
+        return "?";
+      // throw new Exception("Invalid reference");
     }
     var ry = parseInt(reference.substring(0, 4));
     var rm = parseInt(reference.substring(5, 7));
-    if (!rm) {
-      rm = 0;
+    if (isNaN(rm)) {
+      rm = 1; // emulate january
     }
-    reference = new Date(ry, rm, 1);
+    reference = new Date(ry, rm - 1, 1);
   }
   if (typeof(birth) == 'number') {
     birth = "" + birth;
   }
   if (typeof(birth) == 'string') {
     if (birth.length < 4) {
-      throw new Exception("Invalid birth");
+      return "?";
+      // throw new Exception("Invalid birth");
     }
     var by = parseInt(birth.substring(0, 4));
     var bm = parseInt(birth.substring(5, 7));
-    if (!bm) {
-      bm = 0;
+    if (isNaN(bm)) {
+      bm = 1; // emulate january
     }
-    birth = new Date(by, bm, 1);
+    birth = new Date(by, bm - 1 -1, 30);
   }
   var days = new Date(0, 0, 0, 0, 0, 0, reference - birth);
+  // console.log(arguments[0], arguments[1], reference, birth, days);
   return (days.getFullYear() - 1900) + "y" + days.getMonth() + "m";
 };
+
+cryptomedic.calculateBirthFromAge = function(years, months, reference) {
+  reference = reference || new Date();
+  var d2 = new Date(reference.getFullYear() - years, reference.getMonth() - months, 10);
+  return date2CanonicString(d2).substring(0, 7);
+}

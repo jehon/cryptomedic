@@ -66,7 +66,7 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', '$routeParams' , func
     }
 
     if (cachedCurrentFile.Yearofbirth) {
-      var age = cryptomedic.age(cachedCurrentFile.Yearofbirth);
+      var age = cryptomedic.calculateAgeFromBirth(cachedCurrentFile.Yearofbirth);
       var r = RegExp("([0-9]+) ?y(ears)? ?([0-9]+) ?m(onths)?").exec(age);
       // console.log(r);
       $scope.age.years = parseInt(r[1]);
