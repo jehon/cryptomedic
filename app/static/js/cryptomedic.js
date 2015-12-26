@@ -103,7 +103,6 @@ cryptomedic.calculateAgeFromBirth = function(birth, reference) {
     birth = new Date(by, bm - 1 -1, 30);
   }
   var days = new Date(0, 0, 0, 0, 0, 0, reference - birth);
-  // console.log(arguments[0], arguments[1], reference, birth, days);
   return (days.getFullYear() - 1900) + "y" + days.getMonth() + "m";
 };
 
