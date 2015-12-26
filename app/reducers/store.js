@@ -1,7 +1,7 @@
 
 import { combineReducers, compose, createStore, applyMiddleware } from 'redux';
-import thunkMiddleware from 'redux-thunk';
-import createLogger from 'redux-logger';
+// import thunkMiddleware from 'redux-thunk';
+// import createLogger from 'redux-logger';
 // import { persistStore, autoRehydrate } from 'redux-persist';
 // import { devTools, persistState } from 'redux-devtools';
 // import { DevTools, DebugPanel, LogMonitor } from 'redux-devtools/lib/react';
@@ -11,10 +11,10 @@ import state from 'reducers/stateReducers';
 import database from 'reducers/databaseReducers';
 import log from 'reducers/logReducers';
 
-const loggerMiddleware = createLogger({
-  level: 'info',
-  collapsed: true,
-});
+// const loggerMiddleware = createLogger({
+//   level: 'info',
+//   collapsed: true,
+// });
 
 if (typeof(window.__karma__) == 'undefined') {
   // disable logger?
@@ -23,7 +23,7 @@ if (typeof(window.__karma__) == 'undefined') {
 let finalCreateStore = compose(
   //enables middleware:
   applyMiddleware(
-    thunkMiddleware,
+    // thunkMiddleware,
     // loggerMiddleware
   )
   ,
