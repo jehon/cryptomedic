@@ -6,7 +6,7 @@
 		<?php (new t("Center"))->tr("Center")->p(); ?>
 		<tr class='notModeWrite'>
 			<td>Age during consultation</td>
-			<td>{{cryptomedic.calculateAgeFromBirth(folder.getMainFile().Yearofbirth, currentFile().Date)}} old at consultation time</td>
+			<td>{{cryptomedic.BirthDate2Age(folder.getMainFile().Yearofbirth, { reference: currentFile().Date } )}} old at consultation time</td>
 		</tr>
 	</table>
 </fieldset>

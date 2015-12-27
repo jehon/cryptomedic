@@ -70,29 +70,33 @@ cryptomedic.math = {
     sigma: 1.64485
 };
 
-cryptomedic.calculateAgeFromBirth = function(birth, reference) {
-  reference = reference || new Date();
-  if (typeof(reference) == 'number') {
-    reference = "" + reference;
+cryptomedic.BirthDate2Age = function(birth, options) {
+  options = Object.assign({}, {
+    reference: new Date(),
+    objectResult: false
+  }, options);
+  // reference = reference || new Date();
+  if (typeof(options.reference) == 'number') {
+    options.reference = "" + options.reference;
   }
-  if (typeof(reference) == 'string') {
-    if (reference.length < 4) {
-        return "?";
+  if (typeof(options.reference) == 'string') {
+    if (options.reference.length < 4) {
+      return options.objectResult ? null : "?";
       // throw new Exception("Invalid reference");
     }
-    var ry = parseInt(reference.substring(0, 4));
-    var rm = parseInt(reference.substring(5, 7));
+    var ry = parseInt(options.reference.substring(0, 4));
+    var rm = parseInt(options.reference.substring(5, 7));
     if (isNaN(rm)) {
       rm = 1; // emulate january
     }
-    reference = new Date(ry, rm - 1, 1);
+    options.reference = new Date(ry, rm - 1, 1);
   }
   if (typeof(birth) == 'number') {
     birth = "" + birth;
   }
   if (typeof(birth) == 'string') {
     if (birth.length < 4) {
-      return "?";
+      return options.objectResult ? null : "?";
       // throw new Exception("Invalid birth");
     }
     var by = parseInt(birth.substring(0, 4));
@@ -102,11 +106,15 @@ cryptomedic.calculateAgeFromBirth = function(birth, reference) {
     }
     birth = new Date(by, bm - 1 -1, 30);
   }
-  var days = new Date(0, 0, 0, 0, 0, 0, reference - birth);
-  return (days.getFullYear() - 1900) + "y" + days.getMonth() + "m";
+  var days = new Date(0, 0, 0, 0, 0, 0, options.reference - birth);
+  var res = { years: days.getFullYear() - 1900, months: days.getMonth()}
+  if (options.objectResult) {
+    return res;
+  }
+  return res.years + "y" + res.months + "m";
 };
 
-cryptomedic.calculateBirthFromAge = function(years, months, reference) {
+cryptomedic.age2BirthDate = function(years, months, reference) {
   reference = reference || new Date();
   var d2 = new Date(reference.getFullYear() - years, reference.getMonth() - months, 10);
   return date2CanonicString(d2).substring(0, 7);

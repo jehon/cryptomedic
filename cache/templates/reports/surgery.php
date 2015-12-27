@@ -94,7 +94,7 @@
         <td>{{l.patient_reference}}</td>
 
         <td class='b_left'>{{l.patient_name}}</td>
-        <td>{{cryptomedic.calculateAgeFromBirth(l.yearofbirth)}}</td>
+        <td>{{cryptomedic.BirthDate2Age(l.yearofbirth)}}</td>
         <td>{{l.Sex}}</td>
         <td>
 					<span ng-if="l.oldPatient == 1">Old</span>
