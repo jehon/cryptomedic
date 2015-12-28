@@ -132,10 +132,22 @@ describe("Cryptomedic.js", function() {
 		it("should handle yearOfBirth of date vs. date", function() {
 			expect(cryptomedic.BirthDate2Age(now, { reference: now2 })).toBe("4y11m");
 		});
+		it("should handle yearOfBirth of date vs. date (format object)", function() {
+			expect(cryptomedic.BirthDate2Age(now, { reference: now2, format: 'object' })).toEqual({ years: 4, months: 11 });
+		});
+		it("should handle yearOfBirth of date vs. date (format number)", function() {
+			expect(cryptomedic.BirthDate2Age(now, { reference: now2, format: 'number' })).toEqual(4 + 11/12);
+		});
 
 		// Invalid
 		it("should handle yearOfBirth invalid", function() {
 			expect(cryptomedic.BirthDate2Age("199", { reference: now2 })).toBe("?");
+		});
+		it("should handle yearOfBirth invalid (format object)", function() {
+			expect(cryptomedic.BirthDate2Age("199", { reference: now2, format: 'object' })).toBe(null);
+		});
+		it("should handle yearOfBirth invalid (format object)", function() {
+			expect(cryptomedic.BirthDate2Age("199", { reference: now2, format: 'number' })).toBe(null);
 		});
 	});
 
