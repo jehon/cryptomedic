@@ -33,7 +33,7 @@ application.models.File = application.models.Data.extend({
 	'ds_height': function() {
 		var sex = this.getPatient().sexStr();
 		if (!sex) throw new DataMissingException("sex");
-		var age = this.ageAtConsultTime();
+		var age = this.ageAtConsultTime(true);
 		if (typeof(age) != "number") throw new DataMissingException("Age");
 		if (!this.isNotZero("Heightcm")) throw new DataMissingException("Height");
 
@@ -42,7 +42,7 @@ application.models.File = application.models.Data.extend({
 	'ds_weight': function() {
 		var sex = this.getPatient().sexStr();
 		if (!sex) throw new DataMissingException("sex");
-		var age = this.ageAtConsultTime();
+		var age = this.ageAtConsultTime(true);
 		if (typeof(age) != "number") throw new DataMissingException("Age");
 		if (!this.isNotZero("Weightkg")) throw new DataMissingException("Weight");
 
@@ -71,7 +71,7 @@ application.models.File = application.models.Data.extend({
 	'ds_bmi': function() {
 		var sex = this.getPatient().sexStr();
 		if (!sex) throw new DataMissingException("sex");
-		var age = this.ageAtConsultTime();
+		var age = this.ageAtConsultTime(true);
 		if (typeof(age) != "number") throw new DataMissingException("Age");
 
 		return cryptomedic.math.stdDeviation(amd_stats[sex]['bmi'], age, this.bmi());
