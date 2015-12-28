@@ -46,7 +46,7 @@ function build_db(withVersions) {
   db.version(5).upgrade(function(trans) {
     trans.patients.toCollection().modify(function(p) {
     if (typeof(p.id) == "number") {
-        console.log("deleting", p.id);
+        // console.log("deleting", p.id);
         delete this.value;
     }
       p.id = "" + p.id;

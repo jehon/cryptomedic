@@ -38,8 +38,8 @@ new WebpackDevServer(webpack(config), {
   }
 }).listen(8080, '0.0.0.0', function (err) {
   if (err) {
-    console.log(err);
+    console.error(err);
   }
 
-  console.log('Listening at 0.0.0.0:8080');
+  console.info('Listening at 0.0.0.0:8080');
 });

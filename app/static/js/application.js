@@ -266,7 +266,6 @@ var mainApp = angular.module('app_main', [ 'ngRoute' ])
               || !appState().store.getState().connection.settings
               || !appState().store.getState().connection.settings.authorized2[attrs.haspermission]
               ) {
-            console.log(appState().store.getState());
             return '<span haspermission-failed="' + attrs.haspermission + '"></span>';
           }
         }
@@ -312,7 +311,7 @@ var mainApp = angular.module('app_main', [ 'ngRoute' ])
           };
 
           reader.onload = function(e) {
-            console.log("reader loaded");
+            // console.log("reader loaded");
             img.src = e.target.result;
 
             //var canvas = document.createElement("canvas");
@@ -463,7 +462,7 @@ mainApp.controller('ctrl', [ '$scope', '$location', '$sce', function($scope, $lo
   //   $scope.logged = false;
   // });
 
-  $scope.$on("$routeChangeError", function() { console.log("error in routes"); console.log(arguments); });
+  $scope.$on("$routeChangeError", function() { console.error("error in routes", arguments); });
 
   $scope.messages = [];
   var interval = 0;

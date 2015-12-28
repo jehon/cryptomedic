@@ -18,7 +18,6 @@ mainApp.controller('ctrl_users', [ '$scope', '$location', '$routeParams' , funct
   }
 
   $scope.emailAll = function() {
-    console.log("here");
     var res = "";
     for(i in $scope.users) {
       if ($scope.users[i].email) {

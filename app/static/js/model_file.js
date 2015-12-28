@@ -25,17 +25,10 @@ application.models.File = application.models.Data.extend({
 	'setPatient': function(patient) {
 		this.getPatient = function() { return patient; };
 	},
-	'ageAtConsultTime': function() {
-		var age = cryptomedic.BirthDate2Age(this.getPatient().Yearofbirth, { reference: this.Date });
-		if (age == "?") throw new DataMissingException("Date");
+	'ageAtConsultTime': function(structured) {
+		var age = cryptomedic.BirthDate2Age(this.getPatient().Yearofbirth, { reference: this.Date, format: (structured ? 'number' : false) });
+		// if (age == "?") throw new DataMissingException("Date");
 		return age;
-	// 	if (!this.isNotZero('Date')) throw new DataMissingException("Date");
-	// 	// if (this.Date.substr(0, 10) == "0000-00-00") throw new DataMissingException("Date");
-	// 	if (this.getPatient() == null) throw new DataMissingException("Patient");
-	// 	if (!this.getPatient().isNotZero('Yearofbirth')) throw new DataMissingException("Year of Birth");
-
-	// 	return this.Date.substr(0, 4) - this.getPatient().Yearofbirth;
-	// 	// return (this.Date.getFullYear() - this.getPatient().Yearofbirth);
 	},
 	'ds_height': function() {
 		var sex = this.getPatient().sexStr();
