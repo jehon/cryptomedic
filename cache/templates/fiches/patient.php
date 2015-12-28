@@ -43,7 +43,7 @@
 					</tr>
 					<tr class='notModeWrite'>
 						<td>Age (today)</td>
-						<td>{{cryptomedic.calculateAgeFromBirth(currentFile().Yearofbirth)}} old</td>
+						<td>{{cryptomedic.BirthDate2Age(currentFile().Yearofbirth)}} old</td>
 					</tr>
 					<?php (new t("Patient.District", [ "list" => References::$lists['Districts']]))->tr()->p(); ?>
 					<tr>
