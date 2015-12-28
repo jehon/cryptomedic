@@ -16,7 +16,7 @@ module.exports = (function() {
       try {
         var liveData = require("./../../../secrets.json");
         if (client.globals && client.globals.live && liveData.cryptomedic && liveData.cryptomedic.passwords && liveData.cryptomedic.passwords[login]) {
-          console.log("using secret password for user " + login);
+          console.info("using secret password for user " + login);
           password = liveData.cryptomedic.passwords[login];
         } else {
           throw new Error("Authenticate did not found secret passord for " + login);

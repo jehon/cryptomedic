@@ -166,7 +166,7 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', '$routeParams' , func
       $scope.valide = false;
     }
 
-    console.log("validation", $scope.errors);
+    // console.log("validation", $scope.errors);
     return $scope.valide;
   };
   $scope.$on("revalidate", $scope.actionValidate);
