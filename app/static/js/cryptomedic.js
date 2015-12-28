@@ -73,7 +73,7 @@ cryptomedic.math = {
 cryptomedic.BirthDate2Age = function(birth, options) {
   options = Object.assign({}, {
     reference: new Date(),
-    objectResult: false
+    format: false
   }, options);
   // reference = reference || new Date();
   if (typeof(options.reference) == 'number') {
@@ -81,7 +81,7 @@ cryptomedic.BirthDate2Age = function(birth, options) {
   }
   if (typeof(options.reference) == 'string') {
     if (options.reference.length < 4) {
-      return options.objectResult ? null : "?";
+      return options.format ? null : "?";
       // throw new Exception("Invalid reference");
     }
     var ry = parseInt(options.reference.substring(0, 4));
@@ -96,7 +96,7 @@ cryptomedic.BirthDate2Age = function(birth, options) {
   }
   if (typeof(birth) == 'string') {
     if (birth.length < 4) {
-      return options.objectResult ? null : "?";
+      return options.format ? null : "?";
       // throw new Exception("Invalid birth");
     }
     var by = parseInt(birth.substring(0, 4));
@@ -108,8 +108,11 @@ cryptomedic.BirthDate2Age = function(birth, options) {
   }
   var days = new Date(0, 0, 0, 0, 0, 0, options.reference - birth);
   var res = { years: days.getFullYear() - 1900, months: days.getMonth()}
-  if (options.objectResult) {
+  if (options.format == "object") {
     return res;
+  }
+  if (options.format == "number") {
+    return res.years + (res.months / 12);
   }
   return res.years + "y" + res.months + "m";
 };
