@@ -25,15 +25,16 @@ application.models.File = application.models.Data.extend({
 	'setPatient': function(patient) {
 		this.getPatient = function() { return patient; };
 	},
-	'ageAtConsultTime': function(structured) {
-		var age = cryptomedic.BirthDate2Age(this.getPatient().Yearofbirth, { reference: this.Date, format: (structured ? 'number' : false) });
+	// For graphic, by default it expect number -> textual render it in text only on demand
+	'ageAtConsultTime': function(textual) {
+		var age = cryptomedic.BirthDate2Age(this.getPatient().Yearofbirth, { reference: this.Date, format: (textual ? false : 'number') });
 		// if (age == "?") throw new DataMissingException("Date");
 		return age;
 	},
 	'ds_height': function() {
 		var sex = this.getPatient().sexStr();
 		if (!sex) throw new DataMissingException("sex");
-		var age = this.ageAtConsultTime(true);
+		var age = this.ageAtConsultTime();
 		if (typeof(age) != "number") throw new DataMissingException("Age");
 		if (!this.isNotZero("Heightcm")) throw new DataMissingException("Height");
 
@@ -42,7 +43,7 @@ application.models.File = application.models.Data.extend({
 	'ds_weight': function() {
 		var sex = this.getPatient().sexStr();
 		if (!sex) throw new DataMissingException("sex");
-		var age = this.ageAtConsultTime(true);
+		var age = this.ageAtConsultTime();
 		if (typeof(age) != "number") throw new DataMissingException("Age");
 		if (!this.isNotZero("Weightkg")) throw new DataMissingException("Weight");
 
@@ -71,7 +72,7 @@ application.models.File = application.models.Data.extend({
 	'ds_bmi': function() {
 		var sex = this.getPatient().sexStr();
 		if (!sex) throw new DataMissingException("sex");
-		var age = this.ageAtConsultTime(true);
+		var age = this.ageAtConsultTime();
 		if (typeof(age) != "number") throw new DataMissingException("Age");
 
 		return cryptomedic.math.stdDeviation(amd_stats[sex]['bmi'], age, this.bmi());
