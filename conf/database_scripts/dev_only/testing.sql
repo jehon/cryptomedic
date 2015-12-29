@@ -342,7 +342,7 @@ CREATE TABLE IF NOT EXISTS `nonricket_consults` (
 --
 
 INSERT INTO `nonricket_consults` (`id`, `created_at`, `updated_at`, `lastuser`, `patient_id`, `Date`, `ExaminerName`, `Center`, `Weightkg`, `Heightcm`, `Brachialcircumferencecm`, `Side`, `Jointsorbonesaffected`, `Deformity`, `Articulationmobility`, `Musclestrength`, `Pain`, `Walk`, `XRay`, `Surgery66`, `Comments`, `TreatmentEvaluation`, `TreatmentFinished`, `Nextappointment`, `NextCenter`) VALUES
-(1, '0000-00-00 00:00:00', '2015-02-19 13:52:16', 'Thierry', 1, '2007-09-21', 'Ershad', NULL, 29, 134, 0, NULL, 'PBVE', '', '', '', 'No', NULL, '', 'Postero-medial release', '', NULL, NULL, '2015-04-28', NULL);
+(1, '0000-00-00 00:00:00', '2015-02-19 13:52:16', 'Thierry', 1, '2007-01-10', 'Ershad', NULL, 29, 134, 0, NULL, 'PBVE', '', '', '', 'No', NULL, '', 'Postero-medial release', '', NULL, NULL, '2015-04-28', NULL);
 
 -- --------------------------------------------------------
 
