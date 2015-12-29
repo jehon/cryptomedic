@@ -12,7 +12,7 @@ module.exports = {
 
       // Nonrickect Consult
       .page.cryptomedic().selectFile("OtherConsult", 1)
-      .assert.containsText("#Date", "2007-09-21")
+      .assert.containsText("#Date", "2007-01-10")
       .assert.containsText("#ExaminerName", "Ershad")
 
       .assert.containsText("#Patient_entryyear", "2000")
@@ -45,7 +45,9 @@ module.exports = {
       .assert.containsText("#Patient_Telephone", "1813247984")
 
       .page.cryptomedic().selectFile("ClubFoot", 1)
-      .assert.containsText("#ageAtConsultationTime", "2 years old at consultation time")
+      // .waitForElementVisible("#ageAtConsultationTime")
+      // .waitForText("#ageAtConsultationTime", function(text) { return text.substr(0, 4) == "2y0m"; })
+      .assert.containsText("#ageAtConsultationTime", "2y0m")
       .assert.containsText("#ClubFoot_Treatment", "DB splint")
       // TODO: adapt the data and check them
       .assert.elementNotPresent("#button_edit")
