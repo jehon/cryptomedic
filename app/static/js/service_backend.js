@@ -55,6 +55,23 @@ function date2CanonicString(d, dateOnly) {
       ("0000" + Math.abs(ts)).substr(-4)
 }
 
+function nullify(what) {
+  if (what === null) return what;
+  switch(typeof(what)) {
+    case "string":
+      if (what == "?") return null;
+      if (what == "null") return null;
+      if (what == "undefined") return null;
+      return what;
+    case "object":
+      angular.forEach(what, function(val, i) {
+        what[i] = nullify(what[i]);
+      });
+      return what;
+  }
+  return what;
+}
+
 function stringify(what) {
   if (what === null) return what;
   if (what === "") return null;
@@ -292,7 +309,7 @@ function service_backend_fn() {
     },
 
     'getReport': function(reportName, data, timing) {
-      return myFrontFetch(rest + "/reports/" + reportName + (timing ? "/" + timing : ""), null, data)
+      return myFrontFetch(rest + "/reports/" + reportName + (timing ? "/" + timing : ""), null, nullify(data))
         .catch()
         ;
     },
@@ -325,14 +342,14 @@ function service_backend_fn() {
     },
 
     'createFile': function(data) {
-      return myFrontFetch(rest + "/fiche/" + data['_type'], { method: 'POST' }, data)
+      return myFrontFetch(rest + "/fiche/" + data['_type'], { method: 'POST' }, nullify(data))
         .then(objectify)
         .catch()
         ;
     },
 
     'saveFile': function(data) {
-      return myFrontFetch(rest + "/fiche/" + data['_type'] + "/" + data['id'], { method: 'PUT' }, data)
+      return myFrontFetch(rest + "/fiche/" + data['_type'] + "/" + data['id'], { method: 'PUT' }, nullify(data))
         .then(objectify)
         .catch()
         ;
