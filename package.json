@@ -43,6 +43,7 @@
     "karma-html-reporter": "latest",
     "karma-jasmine": "latest",
     "karma-junit-reporter": "latest",
+    "ng-cache-loader": "0.0.15",
     "nightwatch": "latest",
     "nightwatch-html-reporter": "latest",
     "redux-devtools": "^2.1.5",

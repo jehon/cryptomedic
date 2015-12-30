@@ -13,6 +13,7 @@ var scriptLoader = require('script-loader');
 // Global variables
 // https://webpack.github.io/docs/library-and-externals.html
 // https://webpack.github.io/docs/shimming-modules.html
+// https://github.com/webpack/expose-loader
 
 module.exports = {
   entry: []
@@ -70,9 +71,7 @@ module.exports = {
     chunkFilename: "[id].[hash].bundle.js",
 
     // @see https://webpack.github.io/docs/library-and-externals.html
-    // export itself to a global var
     libraryTarget: "var",
-    // name of the global var: "Foo"
     library: "appState"
   },
   module: {
