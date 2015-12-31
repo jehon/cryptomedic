@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use App\Http\Controllers\PriceController;
+use Route;
 
 use \References;
 
@@ -228,10 +229,10 @@ class Role {
   protected $b;
   protected $name;
 
-  function __construct($name, Role $base = null) {
+  function __construct($name, $base = null) {
     $this->name = $name;
     if ($base !== null) {
-        AuthController::_createRole($name, $base->name);
+        AuthController::_createRole($name, $base);
     } else {
         AuthController::_createRole($name);
     }
@@ -248,21 +249,28 @@ class Role {
   /*  ASSIGNING ROLES *******************************************/
   /**************************************************************/
 
-  $readonly = (new Role("readonly"))
+  (new Role("readonly"))
     ->givePermission("folder.read")
   	->givePermission("reports.execute")
   	;
 
-  $cdc      = (new Role("cdc", $readonly))
+  (new Role("cdc", "readonly"))
     ->givePermission("folder.edit")
     ->givePermission("folder.delete")
     ;
 
-  $manager  = (new Role("manager", $cdc))
+  (new Role("physio", "cdc"))
+    ;
+
+  (new Role("orthesist", "cdc"))
+    ;
+
+  (new Role("manager", "cdc"))
   	->givePermission("folder.unlock")
   	->givePermission("users.manage")
   	;
 
-  $admin    = (new Role("admin", $manager))
+  (new Role("admin", "manager"))
+    ->givePermission("admin.securityMatrix")
   	;
 }
