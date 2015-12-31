@@ -348,7 +348,7 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', '$routeParams' , func
     updateYearOfBirth();
   });
 
-  $scope.listUpazillas = function(district) {
+  $scope.listUpazillas = function(district, current) {
     var list = [ "?" ];
     if ($scope.appStateStore.connection) {
       if ($scope.appStateStore.connection.settings.associations['district.' + district]) {
@@ -356,10 +356,13 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', '$routeParams' , func
       }
     }
     list = list.concat($scope.appStateStore.connection.settings.associations['district.other']);
+    if (list.indexOf(current) < 0) {
+      list = [ current ].concat(list);
+    }
     return list;
   }
 
-  $scope.listUnions = function(upazilla) {
+  $scope.listUnions = function(upazilla, current) {
     var list = [ "?" ];
     if ($scope.appStateStore.connection) {
       if ($scope.appStateStore.connection.settings.associations['upazilla.' + upazilla]) {
@@ -367,6 +370,9 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', '$routeParams' , func
       }
     }
     list = list.concat($scope.appStateStore.connection.settings.associations['upazilla.other']);
+    if (list.indexOf(current) < 0) {
+      list = [ current ].concat(list);
+    }
     return list;
   }
 }]);
