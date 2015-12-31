@@ -349,7 +349,7 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', '$routeParams' , func
   });
 
   $scope.listUpazillas = function(district) {
-    var list = [ ];
+    var list = [ "?" ];
     if ($scope.appStateStore.connection) {
       if ($scope.appStateStore.connection.settings.associations['district.' + district]) {
         list = list.concat($scope.appStateStore.connection.settings.associations['district.' + district]);
@@ -360,7 +360,7 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', '$routeParams' , func
   }
 
   $scope.listUnions = function(upazilla) {
-    var list = [ ];
+    var list = [ "?" ];
     if ($scope.appStateStore.connection) {
       if ($scope.appStateStore.connection.settings.associations['upazilla.' + upazilla]) {
         list = list.concat($scope.appStateStore.connection.settings.associations['upazilla.' + upazilla]);
