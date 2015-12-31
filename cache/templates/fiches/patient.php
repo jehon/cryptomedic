@@ -50,7 +50,7 @@
 						<td>Upazilla</td>
 						<td>
 							<span class='notModeRead'>
-								<select ng-model='folder.getMainFile().Upazilla' ng-options='option for option in listUpazillas(folder.getMainFile().District)'></select>
+								<select ng-model='folder.getMainFile().Upazilla' null-to-interrogation ng-options='option for option in listUpazillas(folder.getMainFile().District, folder.getMainFile().Upazilla)'></select>
 							</span>
 							<span class='notModeWrite'>
 								<?php (new t("Patient.Upazilla"))->read()->p(); ?>
@@ -61,7 +61,7 @@
 						<td>Union</td>
 						<td>
 							<span class='notModeRead'>
-								<select ng-model='folder.getMainFile().Union_' ng-options='option for option in listUnions(folder.getMainFile().Upazilla)'></select>
+								<select ng-model='folder.getMainFile().Union_' null-to-interrogation ng-options='option for option in listUnions(folder.getMainFile().Upazilla, folder.getMainFile().Union_)'></select>
 							</span>
 							<span class='notModeWrite'>
 								<?php (new t("Patient.Union_"))->read()->p(); ?>

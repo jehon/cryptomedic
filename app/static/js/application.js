@@ -353,7 +353,26 @@ var mainApp = angular.module('app_main', [ 'ngRoute' ])
       };
     }
   }
-}]);
+}])
+.directive('nullToInterrogation', function() {
+  // https://docs.angularjs.org/api/ng/directive/select
+  // usage: <select ng-model="model.id" null-to-interrogation>
+  return {
+    require: 'ngModel',
+    link: function(scope, element, attrs, ngModel) {
+      ngModel.$parsers.push(function(val) {
+        // From option to model
+        if (val == '?') return null;
+        return val;
+      });
+      ngModel.$formatters.push(function(val) {
+        // From model to option
+        if (val == null) return '?';
+        return val;
+      });
+    }
+  };
+});
 
 mainApp.controller('ctrl', [ '$scope', '$location', '$sce', function($scope, $location, $sce) {
   // @see http://stackoverflow.com/questions/14319967/angularjs-routing-without-the-hash
