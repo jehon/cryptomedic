@@ -140,27 +140,6 @@ class AuthController extends Controller {
 		if (Auth::attempt($credentials))
 		{
 			return $this->getSettings();
-		} else {
-			/* Attemp old school */
-			$res = DB::select('SELECT users.username as login, users.group as `group`, users.id as id FROM users '
-    			. ' WHERE username = :username and old_password = SHA1(concat("' .  getGlobalConfig('authenticateSalt') . '", :password))',
-				$credentials);
-			if (count($res) == 1) {
-				$user = array_pop($res);
-				$user = User::find($user->id);
-
-				// Login the user
-				// Must be first, since $user->update() will require an auth user to update "last_user"
-				Auth::login($user);
-
-				// Update the password
-				$user->password = bcrypt($credentials['password']);
-				$user->old_password = null;
-				$res = $user->update();
-
-				// Return dynamic data
-				return $this->getSettings();
-			}
 		}
 		return abort(406, "Invalid credentials");
 	}
