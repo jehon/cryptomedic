@@ -56,16 +56,21 @@ function date2CanonicString(d, dateOnly) {
 }
 
 function nullify(what) {
-  if (what === null) return what;
   switch(typeof(what)) {
     case "string":
-      if (what == "?") return null;
-      if (what == "null") return null;
-      if (what == "undefined") return null;
+      if (what === "?") {
+        return null;
+      }
+      if (what === "null") {
+        return null;
+      }
+      if (what === "undefined") {
+        return null;
+      }
       return what;
     case "object":
       angular.forEach(what, function(val, i) {
-        what[i] = nullify(what[i]);
+        what[i] = nullify(val);
       });
       return what;
   }
