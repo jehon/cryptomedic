@@ -114,5 +114,9 @@ Route::group([ 'prefix' => '/' . $flavor . '/api/' . basename(dirname(dirname(__
 			Route::resource('users', 'UsersController');
 			Route::post('users/password/{id}', 'UsersController@password');
 		});
+
+		hasPermission('admin.securityMatrix', function() {
+      Route::get('admin/securityMatrix', 'Auth\AuthController@matrix');
+    });
 	});
 });
