@@ -54,7 +54,7 @@
           <th>Record n#</th>
 
           <th class='b_left'>Patient name</th>
-          <th>Age</th>
+          <th>Age (*)</th>
           <th>M/F</th>
           <th>Old/New</th>
 
@@ -89,7 +89,7 @@
         <td>{{l.patient_reference}}</td>
 
         <td class='b_left'>{{l.patient_name}}</td>
-        <td>{{cryptomedic.BirthDate2Age(l.yearofbirth)}}</td>
+        <td>{{cryptomedic.BirthDate2Age(l.yearofbirth, { reference: l.Date})}}</td>
         <td>{{l.Sex}}</td>
         <td>
           <span ng-if="l.oldPatient == 1">Old</span>
@@ -173,6 +173,8 @@
     </dl>
     </div>
       <div class='col-md-3'>
+        <h3>Age</h3>
+        Age shown here is the age at the time of the consultation.
         <h3>Medecine</h3>
         <dl class='dl-horizontal'>
           <dt>R</dt>
