@@ -96,7 +96,7 @@ module.exports = {
         test: /\.php$/,
         loaders: [
           // 'ng-cache?-removeEmptyAttributes&prefix=cryptomedic:../cache/**',
-          'ng-cache?prefix=' + __dirname + ':/' + path.basename(__dirname) + '/cache/**',
+          'ng-cache?-removeEmptyAttributes&prefix=' + __dirname + ':/' + path.basename(__dirname) + '/cache/**',
           // 'html-minify',
           'php-loader'
         ]
