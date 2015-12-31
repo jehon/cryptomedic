@@ -133,7 +133,7 @@ class SyncTest extends RouteReferenceTestCase {
   }
 
   public function testALotOfTimes() {
-    for($i = 0; $i < 100; $i++)
+    for($i = 0; $i < 20; $i++)
       $this->_createSyncAndDelete($i);
   }
 }
