@@ -63,7 +63,7 @@ module.exports = {
     ,
   resolve: {
     extensions: ['', '.js', '.jsx'],
-    modulesDirectories: ['node_modules', 'app'],
+    modulesDirectories: [ 'node_modules', 'app' ],
   },
   output: {
     path: path.join(__dirname, 'build/'),
@@ -88,6 +88,14 @@ module.exports = {
         exclude: /(node_modules)/,
         loaders: [
           'babel-loader?sourceMaps=inline&optional=runtime',
+        ]
+      },
+      {
+        test: /\.php$/,
+        loaders: [
+          'ng-cache?-removeEmptyAttributes&prefix=cryptomedic:../cache/**',
+          // 'html-minify',
+          'php-loader'
         ]
       },
       {
