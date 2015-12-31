@@ -20,7 +20,6 @@ module.exports = function(config) {
               'tests/20_js/kickoff.js',
               'build/bundle-*.js',
               'app/bower_components/jquery/dist/jquery.min.js',
-              // 'app/bower_components/angular/angular.js',
               'app/bower_components/angular-route/angular-route.js',
               'app/bower_components/angular-mocks/angular-mocks.js',
               'app/bower_components/dexie/dist/latest/Dexie.min.js',
