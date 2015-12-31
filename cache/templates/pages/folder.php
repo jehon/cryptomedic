@@ -90,7 +90,7 @@
       </div>
       <form id="fileForm">
         <button id="fileFormSubmit" type='submit' style="display: none">For html5 validation through javascript</button>
-        <span ng-include="cryptomedic.templateRoot + '/' + getTemplateName()">
+        <span ng-include="cryptomedic.templateRoot + getTemplateName()">
           debug: Content {{getTemplateName()}}
         </span>
         <div class="submenu" id='bottomsubmenu' style='margin-top: 10px'>
