@@ -23,10 +23,9 @@ module.exports = {
     ])
     .concat(glob.sync('./app/static/css/*.css'))
     .concat([
-      './app/status.js',
       // './app/static/js/bugreporting.js',
       // './app/static/js/html2canvas.js',
-      // './node_modules/angular/angular.min.js',
+      './node_modules/angular/angular.min.js',
       // './node_modules/angular-route/angular-route.min.js',
       // './node_modules/excellentexport/excellentexport.min.js',
       // './node_modules/dexie/dist/latest/Dexie.min.js',
@@ -59,6 +58,8 @@ module.exports = {
     // .concat(glob.sync('./app/static/js/model_*.js'))
     // .concat(glob.sync('./app/static/js/service_*.js'))
     // .concat(glob.sync('./app/static/js/ctrl_*.js'))
+    // Last one, since it will define what is exported:
+    .concat([ './app/status.js' ])
     ,
   resolve: {
     extensions: ['', '.js', '.jsx'],
@@ -96,11 +97,15 @@ module.exports = {
       },
       {
         test: /\.svg($|\?)|\.gif$|.png$/,
-        loader: 'file-loader?name=img/[name].[ext]'
+        loaders: [
+          'file-loader?name=img/[name].[ext]'
+        ]
       },
       {
         test: /\.woff($|\?)|\.woff2($|\?)|\.ttf($|\?)|\.eot($|\?)/,
-        loader: 'file-loader?name=fonts/[name].[ext]'
+        loaders: [
+          'file-loader?name=fonts/[name].[ext]'
+        ]
       }
     ]
   },
@@ -108,6 +113,9 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: 'app/index.html', // Load a custom template
       inject: false // Inject all scripts into the body
+    }),
+    new webpack.ProvidePlugin({
+      'angular': 'angular',
     })
   ]
 };
