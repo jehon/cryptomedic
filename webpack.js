@@ -58,6 +58,8 @@ module.exports = {
     // .concat(glob.sync('./app/static/js/model_*.js'))
     // .concat(glob.sync('./app/static/js/service_*.js'))
     // .concat(glob.sync('./app/static/js/ctrl_*.js'))
+    .concat([ './cache/templates/waiting.php' ])
+
     // Last one, since it will define what is exported:
     .concat([ './app/status.js' ])
     ,
@@ -93,7 +95,8 @@ module.exports = {
       {
         test: /\.php$/,
         loaders: [
-          'ng-cache?-removeEmptyAttributes&prefix=cryptomedic:../cache/**',
+          // 'ng-cache?-removeEmptyAttributes&prefix=cryptomedic:../cache/**',
+          'ng-cache?prefix=' + __dirname + ':/' + path.basename(__dirname) + '/cache/**',
           // 'html-minify',
           'php-loader'
         ]

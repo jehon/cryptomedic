@@ -101,7 +101,7 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', '$routeParams' , func
   // ------------------------
   $scope.getTemplateName = function() {
     if (!$scope.folder) {
-        return "waiting.html";
+        return "waiting.php";
     }
     if (!$scope.page) {
         return ($scope.mode == 'read' ? "fiches" : "writes") + "/patient.html";
