@@ -13,6 +13,18 @@ use \References;
 class ModelController extends Controller {
 	// @see http://laravel.com/docs/5.0/controllers
 
+	public static function cannonize($data) {
+		if (is_array($data)) {
+			foreach($data as $k => $v) {
+				$data[$k] = self::cannonize($v);
+			}
+		}
+		if ($data === "null") {
+			return null;
+		}
+		return $data;
+	}
+
 	protected function getModel($model) {
 		$model = "\\App\\" . \References::db2model($model);
 		return $model;
@@ -26,6 +38,7 @@ class ModelController extends Controller {
 	// POST = create
 	public function store($model) {
 		$data = Input::except('_type');
+		$data = self::cannonize($data);
 		$m = $this->getModel($model);
 		if ($model == "Patient") {
 			// In case we create a patient, things are a bit more complicated!!!
@@ -71,11 +84,12 @@ class ModelController extends Controller {
 
 	// PUT / PATCH
 	public function update($model, $id) {
- 		$attributes = Input::except('_type', 'patient_id');
+ 		$data = Input::except('_type', 'patient_id');
+		$data = self::cannonize($data);
 
 		$m = $this->getModel($model);
 		$obj = $this->getModelObject($model, $id);
-		foreach($attributes as $k => $v) {
+		foreach($data as $k => $v) {
 			// Skip system fields
 			if (in_array($k, [ $obj->getUpdatedAtColumn(), $obj->getCreatedAtColumn(), "modified", "created" ])) {
 				continue;
