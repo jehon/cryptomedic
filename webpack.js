@@ -107,7 +107,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: 'app/index.html', // Load a custom template
-      inject: 'body' // Inject all scripts into the body
+      inject: false // Inject all scripts into the body
     })
   ]
 };
