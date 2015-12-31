@@ -52,10 +52,13 @@ if (array_key_exists('REQUEST_URI', $_SERVER)) {
 }
 
 Route::group([ 'prefix' => '/' . $flavor . '/api/' . basename(dirname(dirname(__DIR__))) ], function() {
-	Route::controllers([
-		'auth' => 'Auth\AuthController',
-		'password' => 'Auth\PasswordController',
-	]);
+	// Route::controllers([
+		// 'auth' => 'Auth\AuthController',
+		// 'password' => 'Auth\PasswordController',
+	// ]);
+
+	Route::post('/auth/mylogin', "Auth\AuthController@postMylogin");
+	Route::get('/auth/logout', "Auth\AuthController@getLogout");
 
 	/**
 	 * Computer based authenticated routes
@@ -69,6 +72,8 @@ Route::group([ 'prefix' => '/' . $flavor . '/api/' . basename(dirname(dirname(__
 	 * Authenticated user needed
 	 */
 	Route::group(array('middleware' => 'authenticated'), function() {
+		Route::get('/auth/settings', "Auth\AuthController@getSettings");
+
 		hasPermission('reports.execute', function() {
 			Route::get('reports/consultations', [
 				"uses" => "ReportConsultationsController@index"
