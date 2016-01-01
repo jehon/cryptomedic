@@ -455,6 +455,21 @@ class t {
   }
 }
 
+/** Initialize the whole bunch **/
+
+global $generator;
+$generator = array();
+
+require_once(dirname(__DIR__) . DIRECTORY_SEPARATOR . "config.php");
+
+$generator['database'] = array(
+    'pdo_host' => 'localhost',
+    'pdo_schema' => getGlobalConfig("databaseName"),
+    'pdo_username' => getGlobalConfig("databaseUsername"),
+    'pdo_password' => getGlobalConfig("databasePassword"),
+    'init' => "SET CHARACTER SET 'utf8'",
+);
+
 t::initialize();
 
 if (array_key_exists("_unused", $_REQUEST) && $_REQUEST['_unused']) {
