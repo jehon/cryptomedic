@@ -77,16 +77,6 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', '$routeParams' , func
     $scope.$broadcast("refresh");
   });
 
-  /**
-   * When the data is updated, and the sync receive something...
-   */
-  myEvents.on("folderUpdate", function(data) {
-    if (data.id == $scope.patient_id) {
-      // TODO: detect if already stored and show warning in this case
-      console.error("TODO: how to react to folderUpdate ?");
-    }
-  });
-
   function askFolder() {
     service_backend.getFolder($scope.patient_id);
   }
