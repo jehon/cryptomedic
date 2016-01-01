@@ -1,4 +1,7 @@
-<?php ?><h1>List of all templates</h1>
+<?php
+	require_once(__DIR__ . "/../t.php");
+?>
+<h1>List of all templates</h1>
 <?php
 if (!isset($_SERVER['HTTP_HOST']) || strcasecmp(substr($_SERVER['HTTP_HOST'], 0, 9), "localhost") >= 0) {
 	function testOne($f) {
@@ -9,7 +12,8 @@ if (!isset($_SERVER['HTTP_HOST']) || strcasecmp(substr($_SERVER['HTTP_HOST'], 0,
 			}
 			return $res;
 		}
-		$l = "../" . str_replace(".php", ".html", substr($f, 2));
+		// $l = "../" . str_replace(".php", ".html", substr($f, 2));
+		$l = substr($f, 2);
 		if (isset($_SERVER['HTTP_HOST'])) {
 			echo "<a href='$l'>";
 		}
