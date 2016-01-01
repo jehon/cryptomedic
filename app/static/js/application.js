@@ -22,34 +22,6 @@ Promise.prototype.myFinallyDone = function (callback) {
     .catch(function(reason) { console.error(reason); });
 };
 
-window.myEvents = function() {
-  return {
-   /**
-    * Trigger a custom event
-    *
-    * @param name: name of the event to be triggered
-    * @param params: additionnal cusom parameters
-    *
-    */
-    'trigger': function(name, params) {
-      params = params || {};
-      document.dispatchEvent(new CustomEvent(name, { 'detail' : params }));
-    },
-  /**
-   * Listen to a specific event
-   *
-   * @param string name: name of the event
-   * @param function callback: callback will be called fn(params);
-   *
-   */
-    'on': function(name, callback) {
-      document.addEventListener(name, function (e) {
-      callback(e.detail);
-      });
-    }
-  }
-}();
-
 function inherit(parent, constructor) {
   // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/create
 
@@ -439,24 +411,11 @@ mainApp.controller('ctrl', [ '$scope', '$location', '$sce', function($scope, $lo
     return $scope.appStateStore.connection.settings.authorized[transaction];
   };
 
-  myEvents.on('backend_progress', function(data) {
-    $scope.sync = data;
-    $scope.connected = true;
-    $scope.safeApply();
-  }, false);
-
-  myEvents.on('disconnected', function(msg) {
-    if (msg == 401) {
-      $scope.logged = false;
-    }
-    $scope.connected = false;
-    $scope.safeApply();
-  });
-
-  myEvents.on('connected', function(msg) {
-    $scope.connected = true;
-    $scope.safeApply();
-  });
+  // myEvents.on('backend_progress', function(data) {
+  //   $scope.sync = data;
+  //   $scope.connected = true;
+  //   $scope.safeApply();
+  // }, false);
 
   $scope.doCheckLogin = function() {
     $scope.loginError = false;
@@ -475,11 +434,6 @@ mainApp.controller('ctrl', [ '$scope', '$location', '$sce', function($scope, $lo
         busyEnd();
       });
   };
-
-  // Events from the service_*
-  // $scope.$on("backend_logged_out", function(msg) {
-  //   $scope.logged = false;
-  // });
 
   $scope.$on("$routeChangeError", function() { console.error("error in routes", arguments); });
 

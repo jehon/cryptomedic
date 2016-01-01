@@ -159,21 +159,43 @@ function service_backend_fn() {
     var data = e.data.data;
 
     // Propagate event
-    myEvents.trigger("backend_" + name, data);
+    // myEvents.trigger("backend_" + name, data);
 
-    if (name == "disconnected") {
-      if (data == 401) {
-        appState().actions.connection.expired();
-        server.settings = false;
-        location.hash = "#/login";
-      } else {
-        appState().actions.connection.serverError();
-      }
-      // onFailure(data);
-    } else {
-      appState().actions.connection.success();
-      // onSuccess();
+    switch(name) {
+      case 'disconnected':
+        if (data == 401) {
+          appState().actions.connection.expired();
+          server.settings = false;
+          location.hash = "#/login";
+        } else {
+          appState().actions.connection.serverError();
+        }
+        break;
+      case 'progress':
+        if (data.isfinal) {
+          appState().actions.database.downloaded();
+        } else {
+          appState().actions.database.downloading();
+        }
+        appState().actions.connection.success();
+        break;
+      default:
+        appState().actions.connection.success();
+        break;
     }
+    // if (name == "disconnected") {
+    //   if (data == 401) {
+    //     appState().actions.connection.expired();
+    //     server.settings = false;
+    //     location.hash = "#/login";
+    //   } else {
+    //     appState().actions.connection.serverError();
+    //   }
+    //   // onFailure(data);
+    // } else {
+    //   appState().actions.connection.success();
+    //   // onSuccess();
+    // }
   };
 
   function mySendAction(name, data) {
@@ -293,7 +315,7 @@ function service_backend_fn() {
     'clear': function() {
       return db.clear()
         .then(function() {
-          myEvents.trigger("backend_progress", { isfinal: false, data: false });
+          appState().actions.database.downloading();
         })
         .catch()
         ;
