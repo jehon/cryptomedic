@@ -1,4 +1,6 @@
 <?php
+  require_once(__DIR__ . "/../../t.php");
+
 	t::setDefaultOption("baseExpression", "folder.getMainFile().");
 ?>
 <div class='container-fluid'>

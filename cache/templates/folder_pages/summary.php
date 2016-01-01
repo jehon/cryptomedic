@@ -1,4 +1,6 @@
-<?php ?><table class='summary table table-striped'>
+<?php
+  require_once(__DIR__ . "/../../t.php");
+?><table class='summary table table-striped'>
 	<thead>
 		<tr>
 			<th></th>

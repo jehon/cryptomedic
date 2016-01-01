@@ -1,4 +1,6 @@
-<?php ?>
+<?php
+  require_once(__DIR__ . "/../../t.php");
+?>
 <div ng-if='!edit && !password'>
   <table class='table table-hover table-bordered tablesorter'>
     <thead>

@@ -1,4 +1,6 @@
 <?php
+  require_once(__DIR__ . "/../../t.php");
+
 	t::setDefaultOption("baseExpression", "currentFile().");
 	t::setDefaultOption("model", "OtherConsult");
 	// Example: 71154

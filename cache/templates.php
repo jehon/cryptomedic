@@ -59,11 +59,6 @@ if (!class_exists("t")) {
 	        static::$defaultOptions[$key] = $val;
 	    }
 
-// 	    static function setDefaultOptions(array $defaultOptions) {
-// 	        foreach($defaultOptions as $key => $val)
-// 	            static::setDefaultOption($key, $val);
-// 	    }
-
 	    static function UUID()  {
 	        static::$uuid++;
 	        return static::$uuid;

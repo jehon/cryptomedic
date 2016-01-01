@@ -1,4 +1,6 @@
 <?php
+  require_once(__DIR__ . "/../../t.php");
+
 	t::setDefaultOption("baseExpression", "currentFile().");
 ?>
 <div class='container-fluid' ng-controller='ctrl_file_appointment'>

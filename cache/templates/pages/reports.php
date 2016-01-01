@@ -1,4 +1,6 @@
-<?php ?>
+<?php
+  require_once(__DIR__ . "/../../t.php");
+  ?>
   <div ng-if="getReport()" class='container-fluid'>
   <div class='row'>
     <div class='col-sm-6'>

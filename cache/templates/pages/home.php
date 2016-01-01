@@ -1,4 +1,6 @@
-<?php ?><div class='container-fluid'>
+<?php
+  require_once(__DIR__ . "/../../t.php");
+?><div class='container-fluid'>
 	<h1 class='text-center'><img src='static/img/home.gif'>Home</h1>
 	<div class='row'>
 		<div class='col-sm-6'>

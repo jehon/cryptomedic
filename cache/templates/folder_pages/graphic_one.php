@@ -1,4 +1,6 @@
-<?php ?><fieldset>
+<?php
+  require_once(__DIR__ . "/../../t.php");
+ ?><fieldset>
 	<legend>{{getVariableY()}} / {{getVariableX()}}</legend>
 	<div class='markContainer'>
 		<img ng-src="static/img/stats_{{getImageName()}}.jpg" width='100%'>
