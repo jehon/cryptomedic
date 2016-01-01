@@ -1,4 +1,6 @@
-<?php ?><h1>Add a file</h1>
+<?php
+  require_once(__DIR__ . "/../../t.php");
+?><h1>Add a file</h1>
 Here, you can add a new file to the patient: bill, consult, ...<br/>
 
 <a id='add_bill' ng-href="#/folder/{{patient_id}}/file/Bill" class="btn btn-default">

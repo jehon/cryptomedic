@@ -1,4 +1,6 @@
-<?php ?><div id='headerContainer' class='headerContainer'></div>
+<?php
+  require_once(__DIR__ . "/../../t.php");
+?><div id='headerContainer' class='headerContainer'></div>
 <div class='container-fluid' align='center' ng-controller="ctrl_allGraphics">
     <div class='row'>
         <div class="col-lg-6">

@@ -5,6 +5,8 @@
   // Example: 97573 (2014 = price 2)
   // Hack: 10010
   namespace App;
+
+  require_once(__DIR__ . "/../../t.php");
   require_once(__DIR__ . "/../../../api/v1.0/app/Bill.php");
 
   use \App\Bill;

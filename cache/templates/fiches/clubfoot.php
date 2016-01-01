@@ -1,4 +1,6 @@
 <?php
+  require_once(__DIR__ . "/../../t.php");
+
 	// Example: 90658
 	t::setDefaultOption("baseExpression", "currentFile().");
 	t::setDefaultOption("model", "ClubFoot");
