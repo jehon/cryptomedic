@@ -17,13 +17,13 @@ mainApp.config([ '$routeProvider', function($routeProvider) {
         templateUrl: cryptomedic.templateRoot + '/pages/login.html',
         controller: 'ctrl_login',
     }).when('/folder/:patient_id/:page?/:subtype?/:subid?/:mode?', {
-        templateUrl: cryptomedic.templateRoot + '/pages/folder.html',
+        templateUrl: cryptomedic.templateRoot + '/pages/folder.php',
         controller: 'ctrl_folder',
     }).when('/search', {
-        templateUrl: cryptomedic.templateRoot + '/pages/search.html',
+        templateUrl: cryptomedic.templateRoot + '/pages/search.php',
         controller: 'ctrl_search',
     }).when('/reports/:report?', {
-        templateUrl: cryptomedic.templateRoot + '/pages/reports.html',
+        templateUrl: cryptomedic.templateRoot + '/pages/reports.php',
         controller: 'ctrl_reports',
     }).when('/users', {
         templateUrl: cryptomedic.templateRoot + '/pages/users.html',
