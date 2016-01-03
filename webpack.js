@@ -23,8 +23,10 @@ module.exports = {
     ])
     .concat(glob.sync('./app/static/css/*.css'))
     .concat([
-      // './app/static/js/bugreporting.js',
+      'script!./node_modules/jquery/dist/jquery.js',
+      // 'script!./app/static/js/bugreporting.js',
       // './app/static/js/html2canvas.js',
+      './node_modules/jquery-ui/jquery-ui.js',
       './node_modules/angular/angular.min.js',
       './node_modules/angular-route/angular-route.min.js',
       // './node_modules/excellentexport/excellentexport.min.js',
@@ -32,8 +34,6 @@ module.exports = {
       // './node_modules/whatwg-fetch/fetch.js',
       // './node_modules/bootstrap/dist/css/bootstrap.min.css',
       // './node_modules/bootstrap/dist/js/bootstrap.min.js',
-      // './node_modules/jquery/dist/jquery.min.js',
-      // './node_modules/jquery-ui/jquery-ui.js',
       // './node_modules/jquery-ui/themes/ui-lightness/jquery-ui.min.css',
 
       // './app/bower_components/jquery/dist/jquery.min.js',
@@ -126,6 +126,9 @@ module.exports = {
     }),
     new webpack.ProvidePlugin({
       'angular': 'angular',
+      'jQuery': 'jquery',
+      'jquery': 'jQuery',
+      '$': 'jquery'
     })
   ]
 };
