@@ -16,7 +16,6 @@ if (substr($uri, 0, 6) == "/api/v") {
 }
 
 if (substr($uri, 0, 7) == "/cache/") {
-  // $_REQUEST['target'] = preg_replace("%/cache/%", "", $uri);
   require __DIR__ . "/../" . $uri;
   return true;
 }
