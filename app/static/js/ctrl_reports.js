@@ -17,14 +17,14 @@ mainApp.controller('ctrl_reports', [ '$scope', '$routeParams', '$sce', function(
 		    description: "If you want to know your daily activity, choose this report.<br>"
 			+ "Options: the day, and optionnaly the examiner and the center.<br>",
 		    params: [ "center", "day", "examiner" ],
-		    templateUrl: templateReportBase + "activity.html"
+		    templateUrl: templateReportBase + "activity.php"
 		},
 		'monthlyActivity': {
 		    name: 'Monthly Report',
 		    description: "If you want to know your activity on a month, choose this report<br>"
 			+ "Options: the month, and optionnaly the examiner and the center.<br>",
 		    params: [ "center", "examiner", "month" ],
-		    templateUrl: templateReportBase + "activity.html"
+		    templateUrl: templateReportBase + "activity.php"
 		},
 		'consultations': {
 		    name: 'Consultations planned',
@@ -32,21 +32,21 @@ mainApp.controller('ctrl_reports', [ '$scope', '$routeParams', '$sce', function(
 			+ "See also the button in the menu<br>"
 			+ "Options: the day and the center.",
 		    params: [ "day", "center" ],
-		    templateUrl: templateReportBase + "consultations.html"
+		    templateUrl: templateReportBase + "consultations.php"
 		},
 		'statistical': {
 		    name: 'Statistical Report',
 		    description: "If you want to know the activity of the SARPV CDC on a period, choose this report",
 		    params: [ "period", "center", "examiner" ],
 		    dataGenerator: "statistical",
-		    templateUrl: templateReportBase + "statistical.html"
+		    templateUrl: templateReportBase + "statistical.php"
 		},
 		'surgical': {
 		    name: 'Surgical Report',
 		    description: "Follow up of the surgical activity of the period",
 		    params: [ "period" ],
 		    dataGenerator: 'surgical',
-		    templateUrl: templateReportBase + "surgery.html"
+		    templateUrl: templateReportBase + "surgery.php"
 		}
 	}
 

@@ -1,6 +1,4 @@
-<?php
-  require_once(__DIR__ . "/../../t.php");
-?><table class='summary table table-striped'>
+<table class='summary table table-striped'>
 	<thead>
 		<tr>
 			<th></th>
@@ -17,7 +15,7 @@
 			</a>
 		</td>
 		<td></td>
-		<td ng-include="cryptomedic.templateRoot + '/summary/patient.html'"></td>
+		<td ng-include="cryptomedic.templateRoot + '/summary/patient.php'"></td>
 	</tr>
 	<tr ng-repeat="f in folder.getSubFiles()">
 		<td>#{{$index}}</td>
@@ -27,6 +25,6 @@
 			</a>
 		</td>
 		<td>{{f.Date | date:'longDate' }}</td>
-		<td><span ng-include="cryptomedic.templateRoot + '/summary/'+f._type.toLowerCase()+'.html'"></span></td>
+		<td><span ng-include="cryptomedic.templateRoot + '/summary/'+f._type.toLowerCase()+'.php'"></span></td>
 	</tr>
 </table>

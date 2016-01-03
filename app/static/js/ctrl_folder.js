@@ -94,11 +94,11 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', '$routeParams' , func
         return "waiting.php";
     }
     if (!$scope.page) {
-        return ($scope.mode == 'read' ? "fiches" : "writes") + "/patient.html";
+        return ($scope.mode == 'read' ? "fiches" : "writes") + "/patient.php";
     }
 
     if ($scope.page == 'file') {
-        return ($scope.mode == 'read' ? "fiches" : "writes") + "/" + $scope.subtype.toLowerCase() + ".html";
+        return ($scope.mode == 'read' ? "fiches" : "writes") + "/" + $scope.subtype.toLowerCase() + ".php";
     }
 
     return "folder_pages/" + $scope.page + ".html";
