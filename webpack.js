@@ -26,7 +26,7 @@ module.exports = {
       // './app/static/js/bugreporting.js',
       // './app/static/js/html2canvas.js',
       './node_modules/angular/angular.min.js',
-      // './node_modules/angular-route/angular-route.min.js',
+      './node_modules/angular-route/angular-route.min.js',
       // './node_modules/excellentexport/excellentexport.min.js',
       // './node_modules/dexie/dist/latest/Dexie.min.js',
       // './node_modules/whatwg-fetch/fetch.js',
