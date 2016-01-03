@@ -81,9 +81,6 @@ class SyncTest extends RouteReferenceTestCase {
     $this->assertTrue($this->_hasPatient(3));
 
     $offline = $this->getNext(1);
-    $this->assertTrue($this->_hasPatient(4));
-
-    $offline = $this->getNext(1);
     $this->assertTrue($this->_hasPatient(1));
 
     $offline = $this->getNext(1);
@@ -97,6 +94,9 @@ class SyncTest extends RouteReferenceTestCase {
 
     $offline = $this->getNext(1);
     $this->assertTrue($this->_hasPatient(2));
+
+    $offline = $this->getNext(1);
+    $this->assertTrue($this->_hasPatient(4));
 
     // $this->_isFinal();
 
