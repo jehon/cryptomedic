@@ -1,4 +1,0 @@
-
-#RewriteEngine on
-
-#RewriteRule 	^(.*)$ 				generator.php?target=$1 [L,qsappend]
