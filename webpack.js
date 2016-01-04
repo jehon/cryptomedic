@@ -24,18 +24,18 @@ module.exports = {
     .concat(glob.sync('./app/static/css/*.css'))
     .concat([
       'script!./node_modules/jquery/dist/jquery.js',
-      // 'script!./app/static/js/bugreporting.js',
-      // './app/static/js/html2canvas.js',
       './node_modules/jquery-ui/jquery-ui.js',
       './node_modules/angular/angular.min.js',
       './node_modules/angular-route/angular-route.min.js',
+      './node_modules/whatwg-fetch/fetch.js',
       // './node_modules/excellentexport/excellentexport.min.js',
       // './node_modules/dexie/dist/latest/Dexie.min.js',
-      // './node_modules/whatwg-fetch/fetch.js',
       // './node_modules/bootstrap/dist/css/bootstrap.min.css',
       // './node_modules/bootstrap/dist/js/bootstrap.min.js',
       // './node_modules/jquery-ui/themes/ui-lightness/jquery-ui.min.css',
 
+      // './app/static/js/bugreporting.js',
+      // './app/static/js/html2canvas.js',
       // './app/bower_components/jquery/dist/jquery.min.js',
       // './app/bower_components/jquery-ui/jquery-ui.min.js',
       // './app/bower_components/jquery-ui/themes/ui-lightness/jquery-ui.min.css',

@@ -17,8 +17,8 @@
     "react": "^0.14.3",
     "react-redux": "^4.0.0",
     "redux": "^3.0.4",
-    "redux-thunk": "latest",
     "redux-logger": "latest",
+    "redux-thunk": "latest",
     "whatwg-fetch": "^0.10.1"
   },
   "devDependencies": {
