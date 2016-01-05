@@ -86,7 +86,7 @@
       ?>
     </div>
     <div class="col-md-6">
-      <?php require('partials/patient-related.php');?>
+      <?php require(__DIR__ . "/../../helpers/patient-related.php");?>
       <fieldset>
         <legend>Social Data</legend>
         <table>
