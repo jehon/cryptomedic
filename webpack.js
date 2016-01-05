@@ -23,8 +23,11 @@ var scriptLoader = require('script-loader');
 module.exports = {
   entry: []
     .concat([
-      './app/bower_components/jquery-ui/themes/ui-lightness/jquery-ui.min.css',
-      './app/bower_components/bootstrap/dist/css/bootstrap.min.css'
+      //'./app/bower_components/jquery-ui/themes/ui-lightness/jquery-ui.min.css',
+      //'./app/bower_components/bootstrap/dist/css/bootstrap.min.css'
+      './node_modules/bootstrap/dist/css/bootstrap.css',
+      './node_modules/jquery-ui/themes/ui-lightness/jquery-ui.css'
+
     ])
     .concat(glob.sync('./app/static/css/*.css'))
     .concat([
