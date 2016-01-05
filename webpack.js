@@ -7,6 +7,7 @@ var webpack = require('webpack');
 var glob = require('glob');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var scriptLoader = require('script-loader');
+var recursiveReadSync = require('recursive-readdir-sync');
 
 // https://github.com/petehunt/webpack-howto
 
@@ -20,7 +21,7 @@ var scriptLoader = require('script-loader');
 
 // test: jQuery("#busy").modal("show"); jQuery("#busy").datepicker()
 
-module.exports = {
+var config = {
   entry: []
     .concat([
       //'./app/bower_components/jquery-ui/themes/ui-lightness/jquery-ui.min.css',
@@ -65,7 +66,7 @@ module.exports = {
     // .concat(glob.sync('./app/static/js/model_*.js'))
     // .concat(glob.sync('./app/static/js/service_*.js'))
     // .concat(glob.sync('./app/static/js/ctrl_*.js'))
-    .concat([ './cache/templates/waiting.php' ])
+    // .concat([ './cache/templates/waiting.php' ])
 
     // Last one, since it will define what is exported:
     .concat([ './app/status.js' ])
@@ -139,3 +140,12 @@ module.exports = {
     })
   ]
 };
+
+var templates = recursiveReadSync('./cache/templates');
+for(var i in templates) {
+  templates[i] = "./" + templates[i];
+}
+config.entry = config.entry.concat(templates);
+config.entry = config.entry.concat([ './app/status.js' ]);
+
+module.exports = config;
