@@ -18,11 +18,8 @@ module.exports = function(config) {
 
     files : [
               'tests/20_js/kickoff.js',
+              // Work only if one bundle is present:
               'build/bundle-*.js',
-              // 'app/bower_components/jquery/dist/jquery.min.js',
-              // 'app/bower_components/angular-route/angular-route.js',
-              // 'app/bower_components/angular-mocks/angular-mocks.js',
-              // 'app/bower_components/dexie/dist/latest/Dexie.min.js',
               'app/static/js/application.js',
               'app/static/js/database.js',
               'app/static/js/myfetch.js',
