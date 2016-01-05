@@ -24,3 +24,6 @@ RewriteCond         %{DOCUMENT_ROOT}/%{REQUEST_URI} !-f
 RewriteRule         build/(.*)          app/$1  [L]
 
 RedirectMatch    404       vendor
+
+# Since node_modules are not available on production, let's forbid their use here too...
+RedirectMatch    404       node_modules
