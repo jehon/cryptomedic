@@ -59,7 +59,7 @@ mainApp.controller('ctrl_reports', [ '$scope', '$routeParams', '$sce', function(
     if (!$scope.reports[report]) return false;
 		var r = $scope.reports[report]
 		var rname = r.name;
-		for(p in r.params) {
+		for(var p in r.params) {
 			if ($scope.values[r.params[p]]) {
 				rname = rname + " - " + $scope.values[r.params[p]];
 			}
