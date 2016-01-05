@@ -8,7 +8,7 @@
 <div class='container-fluid'>
 	<div class='row'>
 		<div class="col-md-6">
-			<?php require("partials/consult-introduction.php"); ?>
+			<?php require(__DIR__ . "/../../helpers/consult-introduction.php"); ?>
 		 	<br>
 			<fieldset>
 				<legend>RicketsData</legend>
@@ -42,7 +42,7 @@
 			</fieldset>
 		</div>
 		<div class="col-md-6">
-			<?php require("partials/patient-related.php"); ?>
+			<?php require(__DIR__ . "/../../helpers/patient-related.php"); ?>
 			<fieldset>
 				<legend>Conclusion</legend>
 				<table>
@@ -56,7 +56,7 @@
 					<?php //(new t("RicketConsult.Commentary"))->tr()->p(); ?>
 					<?php //(new t("RicketConsult.Nextappointment"))->tr()->p(); ?>
 					<?php //(new t("RicketConsult.NextCenter"))->tr()->p(); ?>
-					<?php require("partials/consult-conclusion.php"); ?>
+					<?php require(__DIR__ . "/../../helpers/consult-conclusion.php"); ?>
 				</table>
 			</fieldset>
 		</div>

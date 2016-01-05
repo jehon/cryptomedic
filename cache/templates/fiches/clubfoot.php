@@ -8,7 +8,7 @@
 <div class='container-fluid'>
 	<div class='row'>
 		<div class="col-md-6">
-			<?php require("partials/consult-introduction.php"); ?>
+			<?php require(__DIR__ . "/../../helpers/consult-introduction.php"); ?>
 			<FieldSet>
 				<legend>Club Foot Pirani Score</legend>
 				<table>
@@ -68,12 +68,12 @@
 			</FieldSet>
 		</div>
 		<div class="col-md-6">
-			<?php require("partials/patient-related.php"); ?>
+			<?php require(__DIR__ . "/../../helpers/patient-related.php"); ?>
 			<FieldSet>
 				<legend>Conclusion</legend>
 				<table>
 					<?php (new t("ClubFoot.Treatment"))->tr()->p(); ?>
-					<?php require("partials/consult-conclusion.php"); ?>
+					<?php require(__DIR__ . "/../../helpers/consult-conclusion.php"); ?>
 				</table>
 			</FieldSet>
 		</div>
