@@ -15,6 +15,11 @@ var scriptLoader = require('script-loader');
 // https://webpack.github.io/docs/shimming-modules.html
 // https://github.com/webpack/expose-loader
 
+// @see https://github.com/webpack/webpack-with-common-libs/blob/master/webpack.config.js
+// @see http://mts.io/2015/04/08/webpack-shims-polyfills/
+
+// test: jQuery("#busy").modal("show"); jQuery("#busy").datepicker()
+
 module.exports = {
   entry: []
     .concat([
@@ -23,16 +28,15 @@ module.exports = {
     ])
     .concat(glob.sync('./app/static/css/*.css'))
     .concat([
-      'script!./node_modules/jquery/dist/jquery.js',
-      './node_modules/jquery-ui/jquery-ui.js',
-      './node_modules/angular/angular.min.js',
+      'expose?jQuery!./node_modules/jquery/dist/jquery.js',
+      './node_modules/jquery-ui/datepicker.js',
+      './node_modules/angular/angular.js',
       './node_modules/angular-route/angular-route.min.js',
       './node_modules/whatwg-fetch/fetch.js',
-      // './node_modules/excellentexport/excellentexport.min.js',
-      // './node_modules/dexie/dist/latest/Dexie.min.js',
-      // './node_modules/bootstrap/dist/css/bootstrap.min.css',
-      // './node_modules/bootstrap/dist/js/bootstrap.min.js',
-      // './node_modules/jquery-ui/themes/ui-lightness/jquery-ui.min.css',
+
+      'script!./node_modules/excellentexport/excellentexport.min.js',
+      'script!./node_modules/dexie/dist/latest/Dexie.min.js',
+      './node_modules/bootstrap/dist/js/bootstrap.min.js',
 
       // './app/static/js/bugreporting.js',
       // './app/static/js/html2canvas.js',
@@ -66,6 +70,9 @@ module.exports = {
   resolve: {
     extensions: ['', '.js', '.jsx'],
     modulesDirectories: [ 'node_modules', 'app' ],
+    alias: {
+      'jquery': 'jquery'
+    }
   },
   output: {
     path: path.join(__dirname, 'build/'),
@@ -126,9 +133,6 @@ module.exports = {
     }),
     new webpack.ProvidePlugin({
       'angular': 'angular',
-      'jQuery': 'jquery',
-      'jquery': 'jQuery',
-      '$': 'jquery'
     })
   ]
 };
