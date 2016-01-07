@@ -30,7 +30,7 @@
                 <?php
                   echo "<option value='' >* Any place *</option>";
                   foreach(References::$lists['Centers'] as $k => $v)
-                    echo "<option value=\"". htmlentities($v). "\"' >$v</option>";
+                    echo "<option value=\"". htmlentities($v). "\" >$v</option>";
                 ?>
               </select>
             </div>
