@@ -1,10 +1,14 @@
 <IfModule mod_expires.c>
 	ExpiresActive 	  On
-	ExpiresByType	    img/*			              "access plus 1 week"
+	ExpiresByType	    img/*			              "access plus 1 month"
+  ExpiresByType     image/*                 "access plus 1 month"
 	ExpiresByType	    css/*			              "access plus 1 week"
-	ExpiresByType     js/*			              "access plus 1 week"
+	#ExpiresByType     js/*			              "access plus 1 week"
 	ExpiresByType     text/cache-manifest			A0
-	ExpiresDefault 	  A0
+  <FilesMatch "bundle.*\.js">
+    ExpiresDefault  "access plus 1 month"
+  </FilesMatch>
+  ExpiresDefault    A0
 </IfModule>
 
 RewriteEngine On
