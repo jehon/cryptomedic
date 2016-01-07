@@ -7,6 +7,6 @@
   "private": true,
   "dependencies": {
     "dexie": "latest",
-    "fetch": "latest",
+    "fetch": "latest"
   }
 }
