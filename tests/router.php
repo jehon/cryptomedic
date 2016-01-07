@@ -20,7 +20,14 @@ function report($msg = true) {
   die();
 }
 
+
 if (substr($uri, 0, strlen("/cryptomedic")) != "/cryptomedic") {
+  // Special files out of the path
+  if ($uri == "/favicon.ico") {
+    readfile(__DIR__ . "/../favicon.ico");
+    return report();
+  }
+
   return report("cryptomedic path not found");
 }
 $uri = preg_replace("%/cryptomedic/%", "/", $uri);
@@ -61,7 +68,6 @@ if (file_exists($file)) {
     default:
       header("Content-type: " . finfo_file(finfo_open(FILEINFO_MIME_TYPE), $file));
   }
-
   readfile($file);
   return report();
 }
