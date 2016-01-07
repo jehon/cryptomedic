@@ -66,7 +66,6 @@ var config = {
     // .concat(glob.sync('./app/static/js/model_*.js'))
     // .concat(glob.sync('./app/static/js/service_*.js'))
     // .concat(glob.sync('./app/static/js/ctrl_*.js'))
-    // .concat([ './cache/templates/waiting.php' ])
 
     // Last one, since it will define what is exported:
     .concat([ './app/status.js' ])
@@ -90,12 +89,6 @@ var config = {
   },
   module: {
     loaders: [
-      // {
-      //   test: /app\/static\/js/,
-      //   loaders: [
-      //     'script-loader',
-      //   ]
-      // },
       {
         test: /\.jsx?$/,
         exclude: /(node_modules)/,
@@ -104,9 +97,17 @@ var config = {
         ]
       },
       {
+        test: /\.html$/,
+        loaders: [
+          'ng-cache?-removeEmptyAttributes&prefix=' + path.dirname(__dirname) + ':/**',
+        ]
+      },
+      {
         test: /\.php$/,
         loaders: [
-          'ng-cache?-removeEmptyAttributes&prefix=' + __dirname + ':/' + path.basename(__dirname) + '/cache/**',
+        //module=app_main&
+          'ng-cache?-removeEmptyAttributes&prefix=' + path.dirname(__dirname) + ':/**',
+          // 'ng-cache?module=app_main-removeEmptyAttributes&prefix=' + __dirname + ':/' + path.basename(__dirname) + '/cache/**',
           // 'html-minify',
           'php-loader'
         ]
