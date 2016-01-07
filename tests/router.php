@@ -3,14 +3,20 @@ global $uri;
 $uri = $_SERVER["REQUEST_URI"];
 $uri = parse_url($uri, PHP_URL_PATH);
 
-function report($msg = true) {
+function mylog($msg) {
   global $uri;
-  if ($msg === true) {
-    die();
-  }
   file_put_contents(__DIR__ . "/../tmp/router.log",
       $uri . ": " . $msg . "\n",
       FILE_APPEND);
+}
+
+function report($msg = true) {
+  global $uri;
+  if ($msg === true) {
+    // mylog("ok");
+    die();
+  }
+  mylog($msg);
   die();
 }
 
@@ -34,8 +40,8 @@ if (substr($uri, 0, 6) == "/api/v") {
 
 // Up to now, we can include app files in the build workspace
 if (substr($uri, 0, 7) == "/build/") {
-  if (!file_exists(__DIR__ . "/../" . $uri)) {
-    echo "Build -> App: $uri";
+  if (!file_exists(__DIR__ . "/.." . $uri)) {
+    mylog("Build -> App: $uri");
     $uri = str_replace("/build/", "/app/", $uri);
   }
 }
