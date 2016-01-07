@@ -35,6 +35,7 @@ if (substr($uri, 0, 6) == "/api/v") {
 // Up to now, we can include app files in the build workspace
 if (substr($uri, 0, 7) == "/build/") {
   if (!file_exists(__DIR__ . "/../" . $uri)) {
+    echo "Build -> App: $uri";
     $uri = str_replace("/build/", "/app/", $uri);
   }
 }
