@@ -93,6 +93,11 @@ else
       cd "$T" && test_dir "$TITLE"
     fi
   done
+
+  if [ -e "tmp/router.log" ]; then
+    echo -e "\e[0;45mRouter.log\e[0m"
+    cat tmp/router.log
+  fi
 fi
 
 echo -e "\e[1m\e[45mTerminated ok.\e[0m"
