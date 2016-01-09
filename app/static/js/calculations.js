@@ -124,7 +124,7 @@ var calculations = {
         throw new DataMissingException("Weight");
       }
 
-      return cryptomedic.math.stdDeviation(amd_stats[sex]['Weightkg'], age, this.Weightkg);
+      return calculations.math.stdDeviation(amd_stats[sex]['Weightkg'], age, this.Weightkg);
     }
   }
 }

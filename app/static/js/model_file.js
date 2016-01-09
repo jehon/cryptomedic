@@ -38,7 +38,7 @@ application.models.File = application.models.Data.extend({
 		if (typeof(age) != "number") throw new DataMissingException("Age");
 		if (!this.isNotZero("Heightcm")) throw new DataMissingException("Height");
 
-		return cryptomedic.math.stdDeviation(amd_stats[sex]['Heightcm'], age, this.Heightcm);
+		return calculations.math.stdDeviation(amd_stats[sex]['Heightcm'], age, this.Heightcm);
 	},
 	'ds_weight': function() {
 		var sex = this.getPatient().sexStr();
@@ -47,7 +47,7 @@ application.models.File = application.models.Data.extend({
 		if (typeof(age) != "number") throw new DataMissingException("Age");
 		if (!this.isNotZero("Weightkg")) throw new DataMissingException("Weight");
 
-		return cryptomedic.math.stdDeviation(amd_stats[sex]['Weightkg'], age, this.Weightkg);
+		return calculations.math.stdDeviation(amd_stats[sex]['Weightkg'], age, this.Weightkg);
 	},
 	'wh': function() {
 		if (!this.isNotZero("Heightcm")) throw new DataMissingException("Height");
@@ -61,7 +61,7 @@ application.models.File = application.models.Data.extend({
 		if (!this.isNotZero("Heightcm")) throw new DataMissingException("Height");
 		if (!this.isNotZero("Weightkg")) throw new DataMissingException("Weight");
 
-		return cryptomedic.math.stdDeviation(amd_stats[sex]['wh'], this.Heightcm, this.Weightkg);
+		return calculations.math.stdDeviation(amd_stats[sex]['wh'], this.Heightcm, this.Weightkg);
 	},
 	'bmi': function(height, weight) {
 		if (!this.isNotZero("Heightcm")) throw new DataMissingException("Height");
@@ -75,7 +75,7 @@ application.models.File = application.models.Data.extend({
 		var age = this.ageAtConsultTime();
 		if (typeof(age) != "number") throw new DataMissingException("Age");
 
-		return cryptomedic.math.stdDeviation(amd_stats[sex]['bmi'], age, this.bmi());
+		return calculations.math.stdDeviation(amd_stats[sex]['bmi'], age, this.bmi());
 	},
 	'isLocked': function () {
 		if (!this.updated_at) return false;
