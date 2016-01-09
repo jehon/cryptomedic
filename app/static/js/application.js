@@ -352,6 +352,13 @@ mainApp.controller('ctrl', [ '$scope', '$location', '$sce', function($scope, $lo
   // @see https://docs.angularjs.org/api/ng/provider/$locationProvider
   // $locationProvider.html5Mode(true)
 
+  // Global variables intorduced into the scope:
+  $scope.cryptomedic  = cryptomedic;
+  $scope.application  = application;
+  $scope.server       = server;
+  $scope.calculations = calculations;
+
+
   $scope.appStateStore = appState().store.getState();
   appState().store.subscribe(function() {
     // console.log("scope appState updated", appState().store.getState());
@@ -368,10 +375,6 @@ mainApp.controller('ctrl', [ '$scope', '$location', '$sce', function($scope, $lo
 
     $scope.safeApply();
   });
-
-  $scope.cryptomedic = cryptomedic;
-  $scope.application = application;
-  $scope.server = server;
 
   $scope.safeApply = function (fn) {
     if (this.$root && (this.$root.$$phase == '$apply' || this.$root.$$phase == '$digest')) {
