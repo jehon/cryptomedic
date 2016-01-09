@@ -21,6 +21,7 @@ module.exports = function(config) {
               // Work only if one bundle is present:
               'build/bundle-*.js',
               'app/static/js/application.js',
+              'app/static/js/calculations.js',
               'app/static/js/database.js',
               'app/static/js/myfetch.js',
               'app/static/js/service*.js',
