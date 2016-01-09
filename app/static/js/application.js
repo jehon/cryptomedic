@@ -475,3 +475,8 @@ mainApp.controller('ctrl', [ '$scope', '$location', '$sce', function($scope, $lo
 
   $scope.doCheckLogin();
 }]);
+function DataMissingException(data) {
+    this.message = "Missing "  + (data || "some data");
+    this.data = data;
+}
+DataMissingException.prototype = new ApplicationException();
