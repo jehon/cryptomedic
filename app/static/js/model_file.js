@@ -32,7 +32,7 @@ application.models.File = application.models.Data.extend({
 		return age;
 	},
 	'ds_height': function() {
-		var sex = this.getPatient().sexStr();
+		var sex = calculations.sexStr(this.getPatient());
 		if (!sex) throw new DataMissingException("sex");
 		var age = this.ageAtConsultTime();
 		if (typeof(age) != "number") throw new DataMissingException("Age");
@@ -41,7 +41,7 @@ application.models.File = application.models.Data.extend({
 		return calculations.math.stdDeviation(amd_stats[sex]['Heightcm'], age, this.Heightcm);
 	},
 	'ds_weight': function() {
-		var sex = this.getPatient().sexStr();
+		var sex = calculations.sexStr(this.getPatient());
 		if (!sex) throw new DataMissingException("sex");
 		var age = this.ageAtConsultTime();
 		if (typeof(age) != "number") throw new DataMissingException("Age");
@@ -56,7 +56,7 @@ application.models.File = application.models.Data.extend({
 		return this.Weightkg/this.Heightcm;
 	},
 	'ds_weight_height': function() {
-		var sex = this.getPatient().sexStr();
+		var sex = calculations.sexStr(this.getPatient());
 		if (!sex) throw new DataMissingException("sex");
 		if (!this.isNotZero("Heightcm")) throw new DataMissingException("Height");
 		if (!this.isNotZero("Weightkg")) throw new DataMissingException("Weight");
@@ -70,7 +70,7 @@ application.models.File = application.models.Data.extend({
 		return 10000 * this.Weightkg / (this.Heightcm * this.Heightcm);
 	},
 	'ds_bmi': function() {
-		var sex = this.getPatient().sexStr();
+		var sex = calculations.sexStr(this.getPatient());
 		if (!sex) throw new DataMissingException("sex");
 		var age = this.ageAtConsultTime();
 		if (typeof(age) != "number") throw new DataMissingException("Age");
