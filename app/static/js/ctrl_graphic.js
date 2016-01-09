@@ -47,11 +47,13 @@ mainApp.controller('ctrl_graphic', [ '$scope', '$element', function($scope, $ele
   }
 
   $scope.getValue = function($index, field) {
-    if (typeof($scope.folder.getSubFile($index)[field]) == 'undefined') return "undefined";
-    if ($scope.folder.getSubFile($index)[field] == null) return "#NA";
-    if (typeof($scope.folder.getSubFile($index)[field]) == "function") {
+    if (field == 'ageAtConsultTime' || typeof($scope.folder.getSubFile($index)[field]) == "function") {
       try {
-        return $scope.folder.getSubFile($index)[field]();
+        if (field == 'ageAtConsultTime') {
+          return calculations.age.atConsultTime($scope.folder.getSubFile($index), $scope.folder.getMainFile());
+        } else {
+          return $scope.folder.getSubFile($index)[field]();
+        }
       } catch(e) {
         if (e instanceof DataMissingException) {
           return "#Error";
@@ -59,6 +61,8 @@ mainApp.controller('ctrl_graphic', [ '$scope', '$element', function($scope, $ele
         throw e;
       }
     }
+    if (typeof($scope.folder.getSubFile($index)[field]) == 'undefined') return "undefined";
+    if ($scope.folder.getSubFile($index)[field] == null) return "#NA";
     return $scope.folder.getSubFile($index)[field];
   }
 

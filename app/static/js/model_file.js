@@ -27,7 +27,7 @@ application.models.File = application.models.Data.extend({
 	},
 	// For graphic, by default it expect number -> textual render it in text only on demand
 	'ageAtConsultTime': function(textual) {
-		var age = cryptomedic.BirthDate2Age(this.getPatient().Yearofbirth, { reference: this.Date, format: (textual ? false : 'number') });
+		var age = calculations.age.fromBirthDate(this.getPatient().Yearofbirth, { reference: this.Date, format: (textual ? false : 'number') });
 		// if (age == "?") throw new DataMissingException("Date");
 		return age;
 	},
