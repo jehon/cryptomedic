@@ -98,33 +98,121 @@ var calculations = {
     }
   },
 
-  stats: {
-    isSet: function(field) {
-      if (typeof(this[field]) == "undefined") return false;
-      if (this[field] == null) return false;
-      return true;
-    },
+  field: function(object, field) {
+    return {
+      isSet: function() {
+        if (typeof(object[field]) == "undefined") {
+          return false;
+        }
+        if (object[field] == null) {
+          return false;
+        }
+        return true;
+      },
 
-    isNotZero: function(field) {
-      if (!this.isSet(field)) return false;
-      if (this[field] === 0) return false;
-      return true;
-    },
+      isNotZero: function() {
+        if (!this.isSet()) {
+          return false;
+        }
+        if (object[field] === 0) {
+          return false;
+        }
+        return true;
+      }
+    };
+  },
 
-    ds_weight: function(file, patient) {
-      var sex = patient.sexStr();
-      if (!sex) {
-        throw new DataMissingException("sex");
+  file: function(file) {
+    return {
+      field: this.field.bind(null, file),
+      isLocked: function () {
+        if (!file.updated_at) {
+          return false;
+        }
+        var dlock = new Date(file.updated_at);
+        dlock.setDate(dlock.getDate() + 35);
+        return (dlock < new Date());
       }
-      var age = calculations.ageAtConsultTime(file, patient);
-      if (typeof(age) != "number") {
-        throw new DataMissingException("Age");
-      }
-      if (!this.isNotZero("Weightkg")) {
-        throw new DataMissingException("Weight");
-      }
+    };
+  },
 
-      return calculations.math.stdDeviation(amd_stats[sex]['Weightkg'], age, this.Weightkg);
-    }
+  consultation: function(consult, patient) {
+    // consultation is also a file
+    return Object.assign({}, this.file(consult),
+    {
+     ds_height: function() {
+        var sex = this.getPatient().sexStr();
+        if (!sex) {
+          throw new DataMissingException("sex");
+        }
+        var age = this.ageAtConsultTime();
+        if (typeof(age) != "number") {
+          throw new DataMissingException("Age");
+        }
+        if (!this.isNotZero("Heightcm")) {
+          throw new DataMissingException("Height");
+        }
+        return calculations.math.stdDeviation(amd_stats[sex]['Heightcm'], age, this.Heightcm);
+      },
+      ds_weight: function(file, patient) {
+        var sex = patient.sexStr();
+        if (!sex) {
+          throw new DataMissingException("sex");
+        }
+        var age = calculations.ageAtConsultTime(file, patient);
+        if (typeof(age) != "number") {
+          throw new DataMissingException("Age");
+        }
+        if (!this.isNotZero("Weightkg")) {
+          throw new DataMissingException("Weight");
+        }
+
+        return calculations.math.stdDeviation(amd_stats[sex]['Weightkg'], age, this.Weightkg);
+      },
+      'wh': function() {
+        if (!this.isNotZero("Heightcm")) {
+          throw new DataMissingException("Height");
+        }
+        if (!this.isNotZero("Weightkg")) {
+          throw new DataMissingException("Weight");
+        }
+
+        return this.Weightkg/this.Heightcm;
+      },
+      'ds_weight_height': function() {
+        var sex = this.getPatient().sexStr();
+        if (!sex) throw new DataMissingException("sex");
+        if (!this.isNotZero("Heightcm")) {
+          throw new DataMissingException("Height");
+        }
+        if (!this.isNotZero("Weightkg")) {
+          throw new DataMissingException("Weight");
+        }
+
+        return calculations.math.stdDeviation(amd_stats[sex]['wh'], this.Heightcm, this.Weightkg);
+      },
+      'bmi': function(height, weight) {
+        if (!this.isNotZero("Heightcm")) {
+          throw new DataMissingException("Height");
+        }
+        if (!this.isNotZero("Weightkg")) {
+          throw new DataMissingException("Weight");
+        }
+
+        return 10000 * this.Weightkg / (this.Heightcm * this.Heightcm);
+      },
+      'ds_bmi': function() {
+        var sex = this.getPatient().sexStr();
+        if (!sex) {
+          throw new DataMissingException("sex");
+        }
+        var age = this.ageAtConsultTime();
+        if (typeof(age) != "number") {
+          throw new DataMissingException("Age");
+        }
+
+        return calculations.math.stdDeviation(amd_stats[sex]['bmi'], age, this.bmi());
+      },
+    });
   }
 }
