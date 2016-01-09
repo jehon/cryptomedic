@@ -1,7 +1,7 @@
 "use strict";
 
 
-describe("Cryptomedic.object.js", function() {
+describe("calculations.object.js", function() {
   it("test field() methods", function() {
     var obj = {
       a: 1,

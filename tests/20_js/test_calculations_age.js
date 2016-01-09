@@ -1,7 +1,7 @@
 "use strict";
 
 
-describe("Cryptomedic.age", function() {
+describe("calculations.age", function() {
 	var now = new Date(2010, 6, 1);
 	describe("BirthDate2Age", function() {
 		var now2 = new Date(2015, 6, 1);
