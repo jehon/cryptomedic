@@ -2,7 +2,7 @@
 
 
 describe("Cryptomedic.object.js", function() {
-  it("test fields", function() {
+  it("test field() methods", function() {
     var obj = {
       a: 1,
       b: null
@@ -16,7 +16,7 @@ describe("Cryptomedic.object.js", function() {
     expect(calculations.file(obj).field('c').isNotZero(), false);
   });
 
-  it("test lockec", function() {
+  it("test locked", function() {
     // no update?
     expect(calculations.file({}).isLocked(), false);
     // Very old file
