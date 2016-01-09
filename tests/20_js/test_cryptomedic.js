@@ -16,22 +16,22 @@ describe("Cryptomedic.js", function() {
 		poly.max.push([10, 30]);
 
 		it("evaluatePoly correctly", function() {
-			expect(cryptomedic.math.evaluatePoly(poly.medium, -1)).toBeNaN();
-			expect(cryptomedic.math.evaluatePoly(poly.medium, 11)).toBeNaN();
-			expect(cryptomedic.math.evaluatePoly(poly.medium, 0)).toBe(1);
-			expect(cryptomedic.math.evaluatePoly(poly.medium, 1)).toBe(2);
-			expect(cryptomedic.math.evaluatePoly(poly.medium, 5)).toBe(10);
-			expect(cryptomedic.math.evaluatePoly(poly.medium, 10)).toBe(20);
-			expect(cryptomedic.math.evaluatePoly(poly.medium, 1.5)).toBe(3);
-			expect(cryptomedic.math.evaluatePoly(poly.medium, 7.5)).toBe(15);
-			expect(cryptomedic.math.evaluatePoly(poly.medium, 1.1)).toBe(2.2);
+			expect(calculations.math.evaluatePoly(poly.medium, -1)).toBeNaN();
+			expect(calculations.math.evaluatePoly(poly.medium, 11)).toBeNaN();
+			expect(calculations.math.evaluatePoly(poly.medium, 0)).toBe(1);
+			expect(calculations.math.evaluatePoly(poly.medium, 1)).toBe(2);
+			expect(calculations.math.evaluatePoly(poly.medium, 5)).toBe(10);
+			expect(calculations.math.evaluatePoly(poly.medium, 10)).toBe(20);
+			expect(calculations.math.evaluatePoly(poly.medium, 1.5)).toBe(3);
+			expect(calculations.math.evaluatePoly(poly.medium, 7.5)).toBe(15);
+			expect(calculations.math.evaluatePoly(poly.medium, 1.1)).toBe(2.2);
 		});
 
 		it("calculate standard deviations", function() {
-			expect(cryptomedic.math.stdDeviation(poly, 0, 1)).toBe(0);
-			expect(cryptomedic.math.stdDeviation(poly, 0, 0)).toBe(-cryptomedic.math.sigma);
-			expect(cryptomedic.math.stdDeviation(poly, 0, 2)).toBe(cryptomedic.math.sigma);
-			expect(cryptomedic.math.stdDeviation(poly, -1, 2)).toBe("#Out of bound#");
+			expect(calculations.math.stdDeviation(poly, 0, 1)).toBe(0);
+			expect(calculations.math.stdDeviation(poly, 0, 0)).toBe(-calculations.math.sigma);
+			expect(calculations.math.stdDeviation(poly, 0, 2)).toBe(calculations.math.sigma);
+			expect(calculations.math.stdDeviation(poly, -1, 2)).toBe("#Out of bound#");
 		});
 	});
 
