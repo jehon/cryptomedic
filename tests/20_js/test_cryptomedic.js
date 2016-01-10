@@ -57,15 +57,6 @@ describe("Cryptomedic.js", function() {
 		});
 	});
 
-	// describe("sexStr", function() {
-	it("should return sexStr correclty", function() {
-		expect(calculations.sexStr({ Sex: null }), null);
-		expect(calculations.sexStr({ Sex: 'Male' }), 'm');
-		expect(calculations.sexStr({ Sex: 'Female' }), 'f');
-		expect(calculations.sexStr({ Sex: 'X' }), null);
-	});
-	// });
-
 	describe("nullify", function() {
 		it("should handle null", function() {
 			expect(nullify(null)).toBe(null);
