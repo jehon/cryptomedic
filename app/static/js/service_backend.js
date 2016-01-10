@@ -306,6 +306,9 @@ function service_backend_fn() {
         // return db.getFolder(id).catch(function(error) {
         //   console.log("Getting the folder live: #" + id);
         return myFrontFetch(rest + "/folder/" + id)
+          .then(function(data) {
+            return objectify(data);
+          })
           .catch()
           ;
         // });
