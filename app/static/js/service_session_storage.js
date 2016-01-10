@@ -17,7 +17,6 @@ function service_session_storage(onReady) {
       if (it === "null") {
         values[key] = null;
       } else {
-  //    values[key] = objectify(it);
         values[key] = it;
       }
       if (typeof(def) != types[key]) {

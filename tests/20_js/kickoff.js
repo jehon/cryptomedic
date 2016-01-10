@@ -45,3 +45,13 @@ describe("BuildRecord", function() {
     expect(obj.d.d1).toBe(3);
   });
 });
+
+function loadFrom(url) {
+  var t = this;
+  return jQuery.getJSON(url).done(function(data) {
+    console.log(data);
+    data = objectify(data);
+    console.log(data);
+    return data;
+  });
+}

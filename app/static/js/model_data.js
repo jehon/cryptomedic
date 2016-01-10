@@ -11,12 +11,6 @@ application.models.Data = Class.extend({
 			}
 		}
 	},
-	loadFrom: function(url, cb) {
-		var t = this;
-		return jQuery.getJSON(url).done(function(data) {
-			t.load(objectify(data));
-		});
-	},
 	setPatient: function(_patient) {
 		patient = _patient;
 	},
