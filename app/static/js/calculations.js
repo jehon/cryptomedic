@@ -98,133 +98,134 @@ var calculations = {
     }
   },
 
-  file: function(object) {
-    return {
-      field: function(field) {
-        return {
-          isSet: function() {
-            if (typeof(object[field]) == "undefined") {
-              return false;
-            }
-            if (object[field] == null) {
-              return false;
-            }
-            return true;
-          },
+  // file: function(object) {
+  //   return {
+  //     field: function(field) {
+  //       return {
+  //         isSet: function() {
+  //           if (typeof(object[field]) == "undefined") {
+  //             return false;
+  //           }
+  //           if (object[field] == null) {
+  //             return false;
+  //           }
+  //           return true;
+  //         },
 
-          isNotZero: function() {
-            if (!this.isSet()) {
-              return false;
-            }
-            if (object[field] === 0) {
-              return false;
-            }
-            return true;
-          }
-        }
-      },
-      isLocked: function () {
-        if (!object.updated_at) {
-          return false;
-        }
-        // TODO: if type is ... -> no locking at all
-        var dlock = new Date(object.updated_at);
-        dlock.setDate(dlock.getDate() + 35);
-        return (dlock < new Date());
-      }
-    };
-  },
+  //         isNotZero: function() {
+  //           if (!this.isSet()) {
+  //             return false;
+  //           }
+  //           if (object[field] === 0) {
+  //             return false;
+  //           }
+  //           return true;
+  //         }
+  //       }
+  //     },
+  //     isLocked: function () {
+  //       if (!object.updated_at) {
+  //         return false;
+  //       }
+  //       // TODO: if type is ... -> no locking at all
+  //       var dlock = new Date(object.updated_at);
+  //       dlock.setDate(dlock.getDate() + 35);
+  //       return (dlock < new Date());
+  //     }
+  //   };
+  // },
 
-  consultation: function(consult, patient) {
-    // consultation is also a file
-    return Object.assign({}, this.file(consult),
-    {
-      ds_height: function() {
-        var sex = calculations.sexStr(patient);
-        if (!sex) {
-          throw new DataMissingException("sex");
-        }
-        var age = this.ageAtConsultTime();
-        if (typeof(age) != "number") {
-          throw new DataMissingException("Age");
-        }
-        if (!this.isNotZero("Heightcm")) {
-          throw new DataMissingException("Height");
-        }
-        return calculations.math.stdDeviation(amd_stats[sex]['Heightcm'], age, this.Heightcm);
-      },
-      ds_weight: function(file, patient) {
-        var sex = calculations.sexStr(patient);
-        if (!sex) {
-          throw new DataMissingException("sex");
-        }
-        var age = calculations.ageAtConsultTime(file, patient);
-        if (typeof(age) != "number") {
-          throw new DataMissingException("Age");
-        }
-        if (!this.isNotZero("Weightkg")) {
-          throw new DataMissingException("Weight");
-        }
+  // // TO BE TESTED !!!
+  // consultation: function(consult, patient) {
+  //   // consultation is also a file
+  //   return Object.assign({}, this.file(consult),
+  //   {
+  //     ds_height: function() {
+  //       var sex = patient.sexstr();
+  //       if (!sex) {
+  //         throw new DataMissingException("sex");
+  //       }
+  //       var age = this.ageAtConsultTime();
+  //       if (typeof(age) != "number") {
+  //         throw new DataMissingException("Age");
+  //       }
+  //       if (!this.isNotZero("Heightcm")) {
+  //         throw new DataMissingException("Height");
+  //       }
+  //       return calculations.math.stdDeviation(amd_stats[sex]['Heightcm'], age, this.Heightcm);
+  //     },
+  //     ds_weight: function(file, patient) {
+  //       var sex = patient.sexstr();
+  //       if (!sex) {
+  //         throw new DataMissingException("sex");
+  //       }
+  //       var age = calculations.ageAtConsultTime(file, patient);
+  //       if (typeof(age) != "number") {
+  //         throw new DataMissingException("Age");
+  //       }
+  //       if (!this.isNotZero("Weightkg")) {
+  //         throw new DataMissingException("Weight");
+  //       }
 
-        return calculations.math.stdDeviation(amd_stats[sex]['Weightkg'], age, this.Weightkg);
-      },
-      'wh': function() {
-        if (!this.isNotZero("Heightcm")) {
-          throw new DataMissingException("Height");
-        }
-        if (!this.isNotZero("Weightkg")) {
-          throw new DataMissingException("Weight");
-        }
+  //       return calculations.math.stdDeviation(amd_stats[sex]['Weightkg'], age, this.Weightkg);
+  //     },
+  //     'wh': function() {
+  //       if (!this.isNotZero("Heightcm")) {
+  //         throw new DataMissingException("Height");
+  //       }
+  //       if (!this.isNotZero("Weightkg")) {
+  //         throw new DataMissingException("Weight");
+  //       }
 
-        return this.Weightkg/this.Heightcm;
-      },
-      'ds_weight_height': function() {
-        var sex = calculations.sexStr(patient);
-        if (!sex) throw new DataMissingException("sex");
-        if (!this.isNotZero("Heightcm")) {
-          throw new DataMissingException("Height");
-        }
-        if (!this.isNotZero("Weightkg")) {
-          throw new DataMissingException("Weight");
-        }
+  //       return this.Weightkg/this.Heightcm;
+  //     },
+  //     'ds_weight_height': function() {
+  //       var sex = patient.sexstr();
+  //       if (!sex) throw new DataMissingException("sex");
+  //       if (!this.isNotZero("Heightcm")) {
+  //         throw new DataMissingException("Height");
+  //       }
+  //       if (!this.isNotZero("Weightkg")) {
+  //         throw new DataMissingException("Weight");
+  //       }
 
-        return calculations.math.stdDeviation(amd_stats[sex]['wh'], this.Heightcm, this.Weightkg);
-      },
-      'bmi': function(height, weight) {
-        if (!this.isNotZero("Heightcm")) {
-          throw new DataMissingException("Height");
-        }
-        if (!this.isNotZero("Weightkg")) {
-          throw new DataMissingException("Weight");
-        }
+  //       return calculations.math.stdDeviation(amd_stats[sex]['wh'], this.Heightcm, this.Weightkg);
+  //     },
+  //     'bmi': function(height, weight) {
+  //       if (!this.isNotZero("Heightcm")) {
+  //         throw new DataMissingException("Height");
+  //       }
+  //       if (!this.isNotZero("Weightkg")) {
+  //         throw new DataMissingException("Weight");
+  //       }
 
-        return 10000 * this.Weightkg / (this.Heightcm * this.Heightcm);
-      },
-      'ds_bmi': function() {
-        var sex = calculations.sexStr(patient);
-        if (!sex) {
-          throw new DataMissingException("sex");
-        }
-        var age = this.ageAtConsultTime();
-        if (typeof(age) != "number") {
-          throw new DataMissingException("Age");
-        }
+  //       return 10000 * this.Weightkg / (this.Heightcm * this.Heightcm);
+  //     },
+  //     'ds_bmi': function() {
+  //       var sex = patient.sexstr();
+  //       if (!sex) {
+  //         throw new DataMissingException("sex");
+  //       }
+  //       var age = this.ageAtConsultTime();
+  //       if (typeof(age) != "number") {
+  //         throw new DataMissingException("Age");
+  //       }
 
-        return calculations.math.stdDeviation(amd_stats[sex]['bmi'], age, this.bmi());
-      },
-    });
-  },
+  //       return calculations.math.stdDeviation(amd_stats[sex]['bmi'], age, this.bmi());
+  //     },
+  //   });
+  // },
 
-  sexStr: function(patient) {
-    if (!calculations.file(patient).field('Sex').isNotZero()) {
-      return null;
-    }
-    if (patient.Sex == "Male") {
-      return "m";
-    }
-    if (patient.Sex == "Female") {
-      return "f";
-    }
-    return null;
-  }
+  // sexStr: function(patient) {
+  //   if (!calculations.file(patient).field('Sex').isNotZero()) {
+  //     return null;
+  //   }
+  //   if (patient.Sex == "Male") {
+  //     return "m";
+  //   }
+  //   if (patient.Sex == "Female") {
+  //     return "f";
+  //   }
+  //   return null;
+  // }
 }
