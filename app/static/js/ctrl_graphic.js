@@ -10,7 +10,7 @@ mainApp.controller('ctrl_graphic', [ '$scope', '$element', function($scope, $ele
 
   $scope.getImageName = function() {
     if (x == null) return "";
-    if (typeof(calculations.sexStr($scope.folder.getMainFile())) == "undefined") return "";
+    if (typeof($scope.folder.getMainFile().sexStr) == "undefined") return "";
     var name = "";
     if (x == "ageAtConsultTime") {
       if (y == "Heightcm") name += "height";
@@ -19,7 +19,7 @@ mainApp.controller('ctrl_graphic', [ '$scope', '$element', function($scope, $ele
     } else {
      name += "wh";
     }
-    name += "-" + calculations.sexStr($scope.folder.getMainFile());
+    name += "-" + $scope.folder.getMainFile().sexStr();
     return name;
   }
 
@@ -29,7 +29,7 @@ mainApp.controller('ctrl_graphic', [ '$scope', '$element', function($scope, $ele
   }
 
   var imgDimension = function(what) {
-    return amd_stats.dimensions[x + "_" + y + "_" + calculations.sexStr($scope.folder.getMainFile())][what];
+    return amd_stats.dimensions[x + "_" + y + "_" + $scope.folder.getMainFile().sexStr()][what];
   }
 
   $scope.getValidity = function($index) {
