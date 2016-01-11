@@ -193,7 +193,7 @@ mainApp.controller("ctrl_folder", [ "$scope", "$location", "$routeParams" , func
     appState().actions.state.busy("Unlocking files on the server");
     $scope.folder = false;
     $scope.safeApply();
-    service_backend.unlockFile(cachedCurrentFile, $scope.patient_id)
+    service_backend.unlockFile(cachedCurrentFile)
     .then(function(data) {
       $scope.$emit("message", { "level": "success", "text": "The " + $scope.subtype + " #" + $scope.subid + " has been unlocked."});
       // Let's refresh the data
@@ -238,7 +238,7 @@ mainApp.controller("ctrl_folder", [ "$scope", "$location", "$routeParams" , func
     appState().actions.state.busy("Deleting file on the server");
     $scope.folder = false;
     $scope.safeApply();
-    service_backend.deleteFile($scope.currentFile(), $scope.patient_id)
+    service_backend.deleteFile($scope.currentFile())
     .then(function(data) {
       $scope.$emit("message", { "level": "success", "text":  "The " + $scope.currentFile()._type +  " of " + $scope.currentFile().Date + " has been deleted"});
       $scope.folder = data;
@@ -290,7 +290,7 @@ mainApp.controller("ctrl_folder", [ "$scope", "$location", "$routeParams" , func
     $scope.folder = false;
     appState().actions.state.busy("Deleting patient on the server");
     $scope.safeApply();
-    service_backend.deleteFile($scope.currentFile(), $scope.patient_id)
+    service_backend.deleteFile($scope.currentFile())
     .then(function(data) {
       $scope.$emit("message", { "level": "success", "text":    "The patient " + $scope.currentFile().entryyear + "-" + $scope.currentFile().entryorder + " has been deleted"});
       $scope.go("/home");

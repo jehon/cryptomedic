@@ -385,14 +385,14 @@ function service_backend_fn() {
         ;
     },
 
-    "deleteFile": function(data, folderId) {
+    "deleteFile": function(data) {
       return myFrontFetch(rest + "/fiche/" + data["_type"] + "/" + data["id"], { method: "DELETE" })
         .then(objectify)
         .catch()
         ;
     },
 
-    "unlockFile": function(data, folderId) {
+    "unlockFile": function(data) {
       return myFrontFetch(rest + "/unfreeze/" + data["_type"] + "/" + data["id"])
         .then(objectify)
         .catch()
