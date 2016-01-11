@@ -1,4 +1,7 @@
 {
+  "ecmaFeatures": {
+    "modules": true
+  },
   "rules": {
     "indent": [
         2,
@@ -35,6 +38,8 @@
     "mainApp": true,
     "DataMissingException": true,
     "service_backend": true,
+    "calculations": true,
+    "service_session_storage": true,
 
     // libs
     "angular": true,
