@@ -1,2 +1,5 @@
 vendor/**
-**/bower/**
+**/bower_components/**
+**/tmp/**
+**/documentation/**
+**/build/**
