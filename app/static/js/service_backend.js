@@ -91,47 +91,6 @@ function stringify(what) {
   return what;
 }
 
-function objectify(what) {
-  if (what === null) return what;
-  switch(typeof(what)) {
-    case "undefined": return null;
-    case "string":
-      if (what === date2CanonicString(null)) {
-        return null;
-      }
-      if (what == "0000-00-00") {
-        return null;
-      }
-      if (what.match("[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2} GMT[+-][0-9]{4}") == what) {
-        if (what == "0000-00-00 00:00:00 GMT+0000") return null;
-          return new Date(what.substr(0, 4), what.substr(5, 2) - 1, what.substr(8, 2),
-              what.substr(11, 2), what.substr(14, 2), what.substr(17, 2));
-      };
-      if (what.match("[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}") == what) {
-        if (what == "0000-00-00 00:00:00") return null;
-          return new Date(what.substr(0, 4), what.substr(5, 2) - 1, what.substr(8, 2),
-              what.substr(11, 2), what.substr(14, 2), what.substr(17, 2));
-      };
-      if (what.match("[0-9]+") == what) {
-        return parseInt(what);
-      }
-      if (what.match("[0-9]+.[0-9]+") == what) {
-        return parseFloat(what);
-      }
-      return what;
-    case "object":
-      angular.forEach(what, function(val, i) {
-        what[i] = objectify(what[i]);
-      });
-      if (typeof(what['_type']) != "undefined") {
-        what = new application.models[what['_type']](what);
-      }
-      return what;
-    default:
-      return what;
-  }
-}
-
 /* Initialize the computer id */
 if (!window.localStorage.cryptomedicComputerId) {
   var mask = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -305,9 +264,7 @@ function service_backend_fn() {
         // return db.getFolder(id).catch(function(error) {
         //   console.log("Getting the folder live: #" + id);
         return myFrontFetch(rest + "/folder/" + id)
-          .then(function(data) {
-            return objectify(data);
-          })
+          .then(appState().helpers.objectify)
           .catch()
           ;
         // });
@@ -352,7 +309,7 @@ function service_backend_fn() {
           }
           return list;
         })
-        .then(objectify)
+        .then(appState().helpers.objectify)
         .catch()
         ;
     },
@@ -365,35 +322,35 @@ function service_backend_fn() {
           "entryyear": year,
           "entryorder": order
         })
-        .then(objectify)
+        .then(appState().helpers.objectify)
         .catch()
         ;
     },
 
     "createFile": function(data) {
       return myFrontFetch(rest + "/fiche/" + data["_type"], { method: "POST" }, nullify(data))
-        .then(objectify)
+        .then(appState().helpers.objectify)
         .catch()
         ;
     },
 
     "saveFile": function(data) {
       return myFrontFetch(rest + "/fiche/" + data["_type"] + "/" + data["id"], { method: "PUT" }, nullify(data))
-        .then(objectify)
+        .then(appState().helpers.objectify)
         .catch()
         ;
     },
 
     "deleteFile": function(data) {
       return myFrontFetch(rest + "/fiche/" + data["_type"] + "/" + data["id"], { method: "DELETE" })
-        .then(objectify)
+        .then(appState().helpers.objectify)
         .catch()
         ;
     },
 
     "unlockFile": function(data) {
       return myFrontFetch(rest + "/unfreeze/" + data["_type"] + "/" + data["id"])
-        .then(objectify)
+        .then(appState().helpers.objectify)
         .catch()
         ;
     },
