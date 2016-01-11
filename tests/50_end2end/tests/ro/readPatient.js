@@ -1,5 +1,5 @@
 module.exports = {
-  'readPatient2000': function(client) {
+  "readPatient2000": function(client) {
     client
       .page.cryptomedic().authenticate("readonly")
       .page.cryptomedic().goPatient(2000, 1)
@@ -59,4 +59,4 @@ module.exports = {
 
       .end();
   },
-}
+};

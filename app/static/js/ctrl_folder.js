@@ -1,6 +1,6 @@
 "use strict";
 
-mainApp.controller('ctrl_folder', [ '$scope', '$location', '$routeParams' , function($scope, $location, $routeParams) {
+mainApp.controller("ctrl_folder", [ "$scope", "$location", "$routeParams" , function($scope, $location, $routeParams) {
   /*
    * '/folder/:patient_id/:page?/:subtype?/:subid?/:mode?'
    *
@@ -16,15 +16,15 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', '$routeParams' , func
    *
    */
 
-  $scope.patient_id = $routeParams['patient_id'];
-  $scope.page = $routeParams['page'];
-  $scope.subtype = $routeParams['subtype'];
-  $scope.subid = $routeParams['subid'];
-  $scope.mode = ($routeParams['mode'] ? $routeParams['mode'] : "read");
+  $scope.patient_id = $routeParams["patient_id"];
+  $scope.page = $routeParams["page"];
+  $scope.subtype = $routeParams["subtype"];
+  $scope.subid = $routeParams["subid"];
+  $scope.mode = ($routeParams["mode"] ? $routeParams["mode"] : "read");
 
   $scope.age = {};
 
-  if ($scope.page == 'edit') {
+  if ($scope.page == "edit") {
     // Map page to the mode (see ~>) in case of patient (short url, but wrong parameters)
     $scope.mode = $scope.page;
     $scope.page = false;
@@ -32,9 +32,9 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', '$routeParams' , func
 
   $scope.folder = false;
   var cachedCurrentFile = null;
-  if ($scope.page == 'file' && !$scope.subid) {
+  if ($scope.page == "file" && !$scope.subid) {
     // Adding a file
-    $scope.mode = 'add';
+    $scope.mode = "add";
   }
 
   //----------------------
@@ -44,7 +44,7 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', '$routeParams' , func
   service_backend.getFolder($scope.patient_id).then(function(data) {
     $scope.folder = data; //objectify(data);
 
-    if ($scope.page == 'file') {
+    if ($scope.page == "file") {
       if ($scope.mode == "add") {
         cachedCurrentFile = new application.models[$scope.subtype](null, $scope.folder);
         cachedCurrentFile.patient_id = $scope.patient_id;
@@ -52,7 +52,7 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', '$routeParams' , func
         for(var i in $scope.folder.getSubFiles()) {
           if (($scope.folder.getSubFile(i)._type == $scope.subtype)
               && ($scope.folder.getSubFile(i).id == $scope.subid)) {
-              cachedCurrentFile = $scope.folder.getSubFile(i);
+            cachedCurrentFile = $scope.folder.getSubFile(i);
           }
         }
       }
@@ -60,9 +60,9 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', '$routeParams' , func
       cachedCurrentFile = $scope.folder.getMainFile();
     }
     if ($scope.mode == "edit" || $scope.mode == "add") {
-      jQuery(".modeRead").removeClass('modeRead').addClass('modeWrite');
+      jQuery(".modeRead").removeClass("modeRead").addClass("modeWrite");
     } else {
-      jQuery(".modeWrite").removeClass('modeWrite').addClass('modeRead');
+      jQuery(".modeWrite").removeClass("modeWrite").addClass("modeRead");
     }
 
     if (cachedCurrentFile.Yearofbirth) {
@@ -83,7 +83,7 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', '$routeParams' , func
   // TODO: is it ok?
   // if (!$scope.folder) {
   //   console.log("ask folder");
-    askFolder();
+  askFolder();
   // }
 
   // ------------------------
@@ -91,18 +91,18 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', '$routeParams' , func
   // ------------------------
   $scope.getTemplateName = function() {
     if (!$scope.folder) {
-        return "waiting.php";
+      return "waiting.php";
     }
     if (!$scope.page) {
-        return ($scope.mode == 'read' ? "fiches" : "writes") + "/patient.php";
+      return ($scope.mode == "read" ? "fiches" : "writes") + "/patient.php";
     }
 
-    if ($scope.page == 'file') {
-        return ($scope.mode == 'read' ? "fiches" : "writes") + "/" + $scope.subtype.toLowerCase() + ".php";
+    if ($scope.page == "file") {
+      return ($scope.mode == "read" ? "fiches" : "writes") + "/" + $scope.subtype.toLowerCase() + ".php";
     }
 
     return "folder_pages/" + $scope.page + ".html";
-    };
+  };
 
   $scope.currentFile = function() {
     return cachedCurrentFile;
@@ -111,10 +111,10 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', '$routeParams' , func
   $scope.getPathTo = function(mode, index) {
     var f = cachedCurrentFile;
     if (index) {
-        f = folder.getSubFile(index);
+      f = folder.getSubFile(index);
     }
     return "/folder/" + f.patient_id + "/fiche/" + f._type + "/" + f.id + (mode ? "/" + mode : "");
-  }
+  };
 
   //----------------------
   //   Actions
@@ -126,15 +126,15 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', '$routeParams' , func
     $scope.valide = true;
 
     jQuery("input[type=number][required]").each(function() {
-        if (jQuery(this).val() == "") {
-      jQuery(this).val(0);
+      if (jQuery(this).val() == "") {
+          jQuery(this).val(0);
         }
     });
 
     if (!jQuery("#fileForm")[0].checkValidity()) {
-        console.log("Form invalid");
-        jQuery("#fileFormSubmit").click();
-        $scope.valide = false;
+      console.log("Form invalid");
+      jQuery("#fileFormSubmit").click();
+      $scope.valide = false;
     }
 
     $scope.errors = $scope.currentFile().validate();
@@ -144,13 +144,13 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', '$routeParams' , func
       if ((date == "") && !jQuery(this).is("[required]")) {
         return;
       }
-      var ok = ((new Date(date) !== "Invalid Date" && !isNaN(new Date(date))))
+      var ok = ((new Date(date) !== "Invalid Date" && !isNaN(new Date(date))));
       if (!ok) {
-        var uuid = jQuery(this).attr('uuid');
-        $scope.errors['date_' + uuid] = true;
+        var uuid = jQuery(this).attr("uuid");
+        $scope.errors["date_" + uuid] = true;
         $scope.valide = false;
-        }
-      });
+      }
+    });
 
     if (!jQuery.isEmptyObject($scope.errors)) {
       $scope.valide = false;
@@ -187,7 +187,7 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', '$routeParams' , func
         appState().actions.state.ready();
         $scope.safeApply();
       });
-  }
+  };
 
   $scope.actionUnlock = function() {
     appState().actions.state.busy("Unlocking files on the server");
@@ -202,7 +202,7 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', '$routeParams' , func
       appState().actions.state.ready();
       $scope.safeApply();
     });
-  }
+  };
 
   $scope.actionCreate = function() {
     // Save transversal data for further use later...
@@ -229,7 +229,7 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', '$routeParams' , func
       appState().actions.state.ready();
       $scope.safeApply();
     });
-  }
+  };
 
   $scope.actionDelete = function() {
     if (!confirm("Are you sure you want to delete this file?")) {
@@ -246,7 +246,7 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', '$routeParams' , func
       appState().actions.state.ready();
       $scope.safeApply();
     });
-  }
+  };
 
   $scope.actionCreatePatient = function() {
     if (!$scope.actionValidate()) {
@@ -264,7 +264,7 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', '$routeParams' , func
       appState().actions.state.ready();
       $scope.safeApply();
     });
-  }
+  };
 
   $scope.actionSavePatient = function() {
     if (!$scope.actionValidate()) {
@@ -281,11 +281,11 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', '$routeParams' , func
       appState().actions.state.ready();
       $scope.go("/folder/" + $scope.patient_id);
     });
-  }
+  };
 
   $scope.actionDeletePatient = function() {
     if (!confirm("Are you sure you want to delete this patient?")) {
-        return;
+      return;
     }
     $scope.folder = false;
     appState().actions.state.busy("Deleting patient on the server");
@@ -297,13 +297,13 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', '$routeParams' , func
       appState().actions.state.ready();
       $scope.safeApply();
     });
-  }
+  };
 
   $scope.nextAppointment = function() {
     var today = date2CanonicString(new Date(), true);
     var next = false;
     angular.forEach($scope.folder.subFiles, function(v, k) {
-      if (v._type == 'Appointment') {
+      if (v._type == "Appointment") {
         if (v.Nextappointment > today) {
           if (!next || v.Nextappointment < next) {
             next = v.Nextappointment;
@@ -312,7 +312,7 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', '$routeParams' , func
       }
     });
     return next;
-  }
+  };
 
   function updateYearOfBirth() {
     if ($scope.folder) {
@@ -341,28 +341,28 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', '$routeParams' , func
   $scope.listUpazillas = function(district, current) {
     var list = [ "?" ];
     if ($scope.appStateStore.connection && $scope.appStateStore.connection.settings) {
-      if ($scope.appStateStore.connection.settings.associations['district.' + district]) {
-        list = list.concat($scope.appStateStore.connection.settings.associations['district.' + district]);
+      if ($scope.appStateStore.connection.settings.associations["district." + district]) {
+        list = list.concat($scope.appStateStore.connection.settings.associations["district." + district]);
       }
     }
-    list = list.concat($scope.appStateStore.connection.settings.associations['district.other']);
+    list = list.concat($scope.appStateStore.connection.settings.associations["district.other"]);
     if (list.indexOf(current) < 0) {
       list = [ current ].concat(list);
     }
     return list;
-  }
+  };
 
   $scope.listUnions = function(upazilla, current) {
     var list = [ "?" ];
     if ($scope.appStateStore.connection && $scope.appStateStore.connection.settings) {
-      if ($scope.appStateStore.connection.settings.associations['upazilla.' + upazilla]) {
-        list = list.concat($scope.appStateStore.connection.settings.associations['upazilla.' + upazilla]);
+      if ($scope.appStateStore.connection.settings.associations["upazilla." + upazilla]) {
+        list = list.concat($scope.appStateStore.connection.settings.associations["upazilla." + upazilla]);
       }
     }
-    list = list.concat($scope.appStateStore.connection.settings.associations['upazilla.other']);
+    list = list.concat($scope.appStateStore.connection.settings.associations["upazilla.other"]);
     if (list.indexOf(current) < 0) {
       list = [ current ].concat(list);
     }
     return list;
-  }
+  };
 }]);

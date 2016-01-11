@@ -70,7 +70,7 @@ var syncWasFinal = false;
  * @param data data associated with it
  */
 function mySendEvent(name, data) {
-    postMessage({ name: name, data: data });
+  postMessage({ name: name, data: data });
 }
 
 /**
@@ -157,7 +157,7 @@ function routeStoreData(offdata) {
 function routeSync() {
   running()
     .then(function() {
-      return db.getSetting("checkpoint")
+      return db.getSetting("checkpoint");
     })
     .then(function(cp) {
       return myFetch(rest + "/sync", {}, {
@@ -172,7 +172,7 @@ function routeSync() {
       return storeData(result._offline);
     })
     .catch(function(httpErrorCode) {
-      mySendEvent('error', httpErrorCode);
+      mySendEvent("error", httpErrorCode);
     })
     .then(reprogram, reprogram);
 }
@@ -198,4 +198,4 @@ onmessage = function(message) {
     default:
       return console.error("unkown message: " + name, data);
   }
-}
+};

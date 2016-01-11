@@ -134,13 +134,13 @@ function objectify(what) {
 
 /* Initialize the computer id */
 if (!window.localStorage.cryptomedicComputerId) {
-    console.log("generate cryptomedic_computer_id");
-    var mask = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-    var result = "";
-    for (var i = 0; i < 32; i++) {
-        result += mask[Math.floor(Math.random() * mask.length)];
+  console.log("generate cryptomedic_computer_id");
+  var mask = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  var result = "";
+  for (var i = 0; i < 32; i++) {
+      result += mask[Math.floor(Math.random() * mask.length)];
     }
-    window.localStorage.cryptomedicComputerId = result;
+  window.localStorage.cryptomedicComputerId = result;
 }
 
 /* service_backend */
@@ -162,7 +162,7 @@ function service_backend_fn() {
     // myEvents.trigger("backend_" + name, data);
 
     switch(name) {
-      case 'disconnected':
+      case "disconnected":
         if (data == 401) {
           appState().actions.connection.expired();
           server.settings = false;
@@ -171,7 +171,7 @@ function service_backend_fn() {
           appState().actions.connection.serverError();
         }
         break;
-      case 'progress':
+      case "progress":
         if (data.isfinal) {
           appState().actions.database.downloaded();
         } else {
@@ -211,16 +211,16 @@ function service_backend_fn() {
         appState().actions.connection.success();
         if (json._offline) {
           return db.storeRecord({ record: json })
-            .then(function() { return json });
+            .then(function() { return json; });
         } else {
           return json;
         }
       }, function(httpErrorCode) {
-        switch(httpErrorCode) {
+      switch(httpErrorCode) {
           case 401: // unauthorized
             appState().actions.connection.expired();
             server.settings = false;
-            location.hash = '#/login';
+            location.hash = "#/login";
             break;
           case 403: // forbidden
             appState().actions.connection.failed();
@@ -235,39 +235,39 @@ function service_backend_fn() {
             appState().actions.connection.serverError();
             break;
         }
-        return Promise.reject("myFrontFetch error: " + httpErrorCode);
-      }
+      return Promise.reject("myFrontFetch error: " + httpErrorCode);
+    }
     );
   }
 
   return {
     /* Authentification */
-    'login': function(username, password) {
+    "login": function(username, password) {
       return myFrontFetch(rest + "/auth/mylogin", { method: "POST" },
-          {
-              'username': username,
-              'password': password,
+        {
+          "username": username,
+          "password": password,
               // 'appVersion': cryptomedic.version,
-              'computerId': window.localStorage.cryptomedicComputerId
+          "computerId": window.localStorage.cryptomedicComputerId
         })
         .then(appState().actions.connection.settings)
         .then(mySendAction.bind(this, "init"))
         .catch()
         ;
     },
-    'checkLogin': function() {
+    "checkLogin": function() {
       return myFrontFetch(rest + "/auth/settings", null,
-          {
+        {
               // 'appVersion': cryptomedic.version,
-              'computerId': window.localStorage.cryptomedicComputerId
-          }
+          "computerId": window.localStorage.cryptomedicComputerId
+        }
         )
         .then(appState().actions.connection.settings)
         .then(mySendAction.bind(this, "init"))
         .catch()
         ;
     },
-    'logout': function() {
+    "logout": function() {
       // TODO: clean up the cache --> cache managed in other object???
       return myFrontFetch(rest + "/auth/logout")
         .then(function(data) {
@@ -279,14 +279,14 @@ function service_backend_fn() {
     },
 
     // Go to the worker
-    'sync': function() {
+    "sync": function() {
       mySendAction("sync");
     },
-    'resync': function() {
+    "resync": function() {
       mySendAction("resync");
     },
     // Temp function
-    'storeData': function(json) {
+    "storeData": function(json) {
       if (json._offline) {
         var offdata = jQuery.extend(true, {}, json._offline);
         mySendAction("storeData", offdata);
@@ -296,7 +296,7 @@ function service_backend_fn() {
     },
 
     // Go to the database
-    'getFolder': function(id) {
+    "getFolder": function(id) {
       if (id == -1) {
         return Promise.resolve(new application.models.Folder({
           mainFile: new application.models.Patient()
@@ -315,7 +315,7 @@ function service_backend_fn() {
       }
     },
 
-    'clear': function() {
+    "clear": function() {
       return db.clear()
         .then(function() {
           appState().actions.database.downloading();
@@ -325,31 +325,31 @@ function service_backend_fn() {
     },
 
     // Go to the rest server
-    'checkReference': function(year, order) {
+    "checkReference": function(year, order) {
       return myFrontFetch(rest + "/reference/" + year + "/" + order)
         .then(function(data) {
-          if ((typeof(data._type) != 'undefined') && (data._type == 'Folder')) {
-              return data['id'];
+          if ((typeof(data._type) != "undefined") && (data._type == "Folder")) {
+            return data["id"];
           } else {
-              return false;
+            return false;
           }
         })
         .catch()
         ;
     },
 
-    'getReport': function(reportName, data, timing) {
+    "getReport": function(reportName, data, timing) {
       return myFrontFetch(rest + "/reports/" + reportName + (timing ? "/" + timing : ""), null, nullify(data))
         .catch()
         ;
     },
 
-    'searchForPatients': function(params) {
+    "searchForPatients": function(params) {
       return myFrontFetch(rest + "/folder", null, params)
         .then(function(data) {
           var list = [];
           for(var i in data) {
-              list.push(new application.models.Patient(data[i]));
+            list.push(new application.models.Patient(data[i]));
           }
           return list;
         })
@@ -359,74 +359,74 @@ function service_backend_fn() {
     },
 
     // READWRITE
-    'createReference': function(year, order) {
-      return myFrontFetch(rest + '/reference', { method: 'POST'},
+    "createReference": function(year, order) {
+      return myFrontFetch(rest + "/reference", { method: "POST"},
         // return treatHttp($http.post(rest + "/reference",
         {
-            'entryyear': year,
-            'entryorder': order
+          "entryyear": year,
+          "entryorder": order
         })
         .then(objectify)
         .catch()
         ;
     },
 
-    'createFile': function(data) {
-      return myFrontFetch(rest + "/fiche/" + data['_type'], { method: 'POST' }, nullify(data))
+    "createFile": function(data) {
+      return myFrontFetch(rest + "/fiche/" + data["_type"], { method: "POST" }, nullify(data))
         .then(objectify)
         .catch()
         ;
     },
 
-    'saveFile': function(data) {
-      return myFrontFetch(rest + "/fiche/" + data['_type'] + "/" + data['id'], { method: 'PUT' }, nullify(data))
+    "saveFile": function(data) {
+      return myFrontFetch(rest + "/fiche/" + data["_type"] + "/" + data["id"], { method: "PUT" }, nullify(data))
         .then(objectify)
         .catch()
         ;
     },
 
-    'deleteFile': function(data, folderId) {
-      return myFrontFetch(rest + "/fiche/" + data['_type'] + "/" + data['id'], { method: "DELETE" })
+    "deleteFile": function(data, folderId) {
+      return myFrontFetch(rest + "/fiche/" + data["_type"] + "/" + data["id"], { method: "DELETE" })
         .then(objectify)
         .catch()
         ;
     },
 
-    'unlockFile': function(data, folderId) {
-      return myFrontFetch(rest + "/unfreeze/" + data['_type'] + "/" + data['id'])
+    "unlockFile": function(data, folderId) {
+      return myFrontFetch(rest + "/unfreeze/" + data["_type"] + "/" + data["id"])
         .then(objectify)
         .catch()
         ;
     },
 
-    'usersList': function() {
+    "usersList": function() {
       return myFrontFetch(rest + "/users")
         .catch()
         ;
     },
 
-    'userAdd': function(user) {
-      return myFrontFetch(rest + "/users" , { method: 'POST' }, user)
+    "userAdd": function(user) {
+      return myFrontFetch(rest + "/users" , { method: "POST" }, user)
         .catch()
         ;
     },
 
-    'userDelete': function(id) {
-      return myFrontFetch(rest + "/users/" + id, { method: 'DELETE' })
+    "userDelete": function(id) {
+      return myFrontFetch(rest + "/users/" + id, { method: "DELETE" })
         .catch()
         ;
     },
 
-    'userUpdate': function(user) {
-      return myFrontFetch(rest + "/users/" + user.id, { method: 'PUT' }, user)
+    "userUpdate": function(user) {
+      return myFrontFetch(rest + "/users/" + user.id, { method: "PUT" }, user)
         .catch()
         ;
     },
 
-    'userPassword': function(id, pwd) {
-      return myFrontFetch(rest + "/users/password/" + id, { method: 'POST' }, { password: pwd })
+    "userPassword": function(id, pwd) {
+      return myFrontFetch(rest + "/users/password/" + id, { method: "POST" }, { password: pwd })
         .catch()
         ;
     }
   };
-};
+}

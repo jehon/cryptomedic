@@ -1,9 +1,9 @@
 module.exports = {
-  'authenticate_multiple': function(client) {
+  "authenticate_multiple": function(client) {
     client
       .page.cryptomedic().authenticate("readonly")
-      .myClick('#logout')
+      .myClick("#logout")
       .page.cryptomedic().authenticate("readonly")
       .end();
   },
-}
+};

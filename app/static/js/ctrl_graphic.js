@@ -1,6 +1,6 @@
 "use strict";
 
-mainApp.controller('ctrl_graphic', [ '$scope', '$element', function($scope, $element) {
+mainApp.controller("ctrl_graphic", [ "$scope", "$element", function($scope, $element) {
   // This controller is intended for ONE graphic only
   var x, y;
   // var stats;
@@ -17,20 +17,20 @@ mainApp.controller('ctrl_graphic', [ '$scope', '$element', function($scope, $ele
       if (y == "Weightkg") name += "weight";
       if (y == "bmi") name += "bmi";
     } else {
-     name += "wh";
+      name += "wh";
     }
     name += "-" + $scope.folder.getMainFile().sexStr();
     return name;
-  }
+  };
 
   $scope.axis = function(x_, y_) {
     x = x_;
     y = y_;
-  }
+  };
 
   var imgDimension = function(what) {
     return amd_stats.dimensions[x + "_" + y + "_" + $scope.folder.getMainFile().sexStr()][what];
-  }
+  };
 
   $scope.getValidity = function($index) {
     if (x == null) return "?";
@@ -44,12 +44,12 @@ mainApp.controller('ctrl_graphic', [ '$scope', '$element', function($scope, $ele
     if (vy > imgDimension("vtop")) return y + " to high";
 
     return "v";
-  }
+  };
 
   $scope.getValue = function($index, field) {
-    if (field == 'ageAtConsultTime' || typeof($scope.folder.getSubFile($index)[field]) == "function") {
+    if (field == "ageAtConsultTime" || typeof($scope.folder.getSubFile($index)[field]) == "function") {
       try {
-        if (field == 'ageAtConsultTime') {
+        if (field == "ageAtConsultTime") {
           return calculations.age.atConsultTime($scope.folder.getSubFile($index), $scope.folder.getMainFile());
         } else {
           return $scope.folder.getSubFile($index)[field]();
@@ -61,10 +61,10 @@ mainApp.controller('ctrl_graphic', [ '$scope', '$element', function($scope, $ele
         throw e;
       }
     }
-    if (typeof($scope.folder.getSubFile($index)[field]) == 'undefined') return "undefined";
+    if (typeof($scope.folder.getSubFile($index)[field]) == "undefined") return "undefined";
     if ($scope.folder.getSubFile($index)[field] == null) return "#NA";
     return $scope.folder.getSubFile($index)[field];
-  }
+  };
 
   $scope.getAbscisse = function($index) {
     if (!$scope.getValidity($index)) return 0;
@@ -72,7 +72,7 @@ mainApp.controller('ctrl_graphic', [ '$scope', '$element', function($scope, $ele
     var v = $scope.getValue($index, x);
     var p = (v - imgDimension("vleft")) / (imgDimension("vright") - imgDimension("vleft"));
     return (p * (imgDimension("right") - imgDimension("left")) + imgDimension("left")) * 100;
-  }
+  };
 
   $scope.getOrdonnee = function($index) {
     if (!$scope.getValidity($index)) return 0;
@@ -80,11 +80,11 @@ mainApp.controller('ctrl_graphic', [ '$scope', '$element', function($scope, $ele
     var v = $scope.getValue($index, y);
     var p = (v - imgDimension("vbottom")) / (imgDimension("vtop") - imgDimension("vbottom"));
     return (p* (imgDimension("top") - imgDimension("bottom")) + imgDimension("bottom")) * 100;
-  }
+  };
 
   $scope.hover = function($index) {
     $scope.$emit("hovered", $index);
-  }
+  };
 
   $scope.$on("refresh", function() {
     $scope.$apply();

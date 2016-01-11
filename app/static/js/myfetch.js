@@ -11,7 +11,7 @@
 function myFetch(url, init, data) {
   init = init || {};
   if (!init.method) {
-      init.method = "GET";
+    init.method = "GET";
   }
   init.credentials = "include";
 
@@ -30,9 +30,9 @@ function myFetch(url, init, data) {
       init.headers["Content-type"] = "application/x-www-form-urlencoded; charset=UTF-8";
       var serialize = function (data) {
         return Object.keys(data).map(function (keyName) {
-          return encodeURIComponent(keyName) + '=' + encodeURIComponent(data[keyName])
-        }).join('&');
-      }
+          return encodeURIComponent(keyName) + "=" + encodeURIComponent(data[keyName]);
+        }).join("&");
+      };
       init.body = serialize(data);
     } else {
       url = url + "?";
@@ -49,9 +49,9 @@ function myFetch(url, init, data) {
       return Promise.reject(response.status);
     }
 
-    return response.json()
+    return response.json();
       // .then(function(json) {
       //   return json;
       // });
-    });
+  });
 }

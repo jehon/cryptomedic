@@ -5,7 +5,7 @@ function service_session_storage(onReady) {
   var defaults = {};
   var types = {};
 
-  if (typeof(onReady) == 'function') {
+  if (typeof(onReady) == "function") {
     onReady();
   }
 
@@ -36,8 +36,8 @@ function service_session_storage(onReady) {
   get("year", date2CanonicString(new Date(), true).substring(0, 4));
 
   return {
-    'get': get,
-    'getAll': function() {
+    "get": get,
+    "getAll": function() {
       var res = {};
       var t = this;
       angular.forEach(values, function(v, k) {
@@ -49,9 +49,9 @@ function service_session_storage(onReady) {
       });
       return res;
     },
-    'set': function(key, newVal) {
+    "set": function(key, newVal) {
       var val = newVal;
-      if (val === null || typeof(val) == 'undefined') {
+      if (val === null || typeof(val) == "undefined") {
         val = "";
       }
       values[key] = val;
@@ -60,11 +60,11 @@ function service_session_storage(onReady) {
         sessionStorage.setItem(key, val);
       }
     },
-    'clear': function() {
+    "clear": function() {
       values = {};
       if (sessionStorage) {
         sessionStorage.clear();
       }
     }
-  }
+  };
 }

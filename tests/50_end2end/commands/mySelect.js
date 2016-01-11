@@ -11,4 +11,4 @@ exports.command = function(selector, optionNumber) {
     .keys(this.Keys.ENTER)
     .keys(this.Keys.TAB)
     ;
-}
+};

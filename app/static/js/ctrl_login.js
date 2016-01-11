@@ -1,18 +1,18 @@
 "use strict";
 
-mainApp.controller('ctrl_login', [ "$scope", function($scope) {
+mainApp.controller("ctrl_login", [ "$scope", function($scope) {
   cryptomedic.settings = {};
   appState().actions.state.clear();
   $scope.details = {};
 
   $scope.doLogin = function() {
     if ($scope.details.username == "") {
-        alert("No username detected");
-        return;
+      alert("No username detected");
+      return;
     }
     if ($scope.details.password == "") {
-        alert("No password detected");
-        return;
+      alert("No password detected");
+      return;
     }
     $scope.loginError = false;
     var busyEnd = $scope.doBusy("Checking your login/password with the online server", true);

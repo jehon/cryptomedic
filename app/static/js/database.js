@@ -24,15 +24,15 @@ function build_db(withVersions) {
   var db = new Dexie("cryptomedic");
 
   db.version(1).stores({
-    patients: '++id'
+    patients: "++id"
   });
 
   db.version(2).stores({
-    patients: '++id,[mainFile.entryyear+mainFile.entryorder]'
+    patients: "++id,[mainFile.entryyear+mainFile.entryorder]"
   });
 
   db.version(3).stores({
-    patients: '++id'
+    patients: "++id"
   });
 
   db.version(4).stores({
@@ -40,22 +40,22 @@ function build_db(withVersions) {
     // db.relations.where('[userId1+userId2]').equals([2,3]).or('[userId1+userId2]').equals([3,2])
     // - will give you all the relations that user 1 has to user 2 or user 2
     // has to user 1.
-    patients: '++id,[mainFile.entryyear+mainFile.entryorder]'
+    patients: "++id,[mainFile.entryyear+mainFile.entryorder]"
   });
 
   db.version(5).upgrade(function(trans) {
     trans.patients.toCollection().modify(function(p) {
-    if (typeof(p.id) == "number") {
+      if (typeof(p.id) == "number") {
         // console.log("deleting", p.id);
-        delete this.value;
+      delete this.value;
     }
       p.id = "" + p.id;
     });
   });
 
   db.version(6).stores({
-    patients: '++id,[mainFile.entryyear+mainFile.entryorder]',
-    settings: 'key'
+    patients: "++id,[mainFile.entryyear+mainFile.entryorder]",
+    settings: "key"
   });
 
   db.open();
@@ -66,11 +66,11 @@ function build_db(withVersions) {
    */
   function getFolder(id) {
     return db.patients.get("" + id).then(function(data) {
-     if (data) {
-        return applyModificationsOn(data);
-      } else {
-        throw "I say, this patient is not found #" + id;
-      }
+      if (data) {
+       return applyModificationsOn(data);
+     } else {
+       throw "I say, this patient is not found #" + id;
+     }
     });
   }
 
@@ -105,25 +105,25 @@ function build_db(withVersions) {
         } else {
           return val;
         }
-      })
+      });
     }
   }
 
   function storeRecord(record) {
     var req;
     var data;
-    if (record['_deleted']) {
-      req = db.patients.delete("" + record['id']);
-      data = "" + record['id'];
+    if (record["_deleted"]) {
+      req = db.patients.delete("" + record["id"]);
+      data = "" + record["id"];
     } else {
-      record['record']['id'] += "";
-      record['record']['mainFile']['entryyear'] += "";
-      record['record']['mainFile']['entryorder'] += "";
-      req = db.patients.put(record['record']);
-      data = record['record'];
+      record["record"]["id"] += "";
+      record["record"]["mainFile"]["entryyear"] += "";
+      record["record"]["mainFile"]["entryorder"] += "";
+      req = db.patients.put(record["record"]);
+      data = record["record"];
     }
     req.then(function(data) {
-      return updateCheckpoint(record['checkpoint']);
+      return updateCheckpoint(record["checkpoint"]);
     });
     // Fix the value in the "thenable" chain
     return req.then(function() {
@@ -155,24 +155,24 @@ function build_db(withVersions) {
               }, function (e) {
                 ireject(e);
               });
-            });
-          }
+          });
+        }
         )(key)
       );
     }
     return prevPromise;
-  };
+  }
 
   // ------------------ System functions ------------------------------
   function getSetting(key, def) {
-  return db.settings.get("" + key).then(function(data) {
-      if (data) {
+    return db.settings.get("" + key).then(function(data) {
+    if (data) {
         return data.value;
       } else {
         def = def || false;
         return def;
       }
-    });
+  });
   }
 
   function setSetting(key, value) {
@@ -180,7 +180,7 @@ function build_db(withVersions) {
       .then(function(data) {
         // Prefer to return the value than the key
         return value;
-    });
+      });
   }
 
   function clear() {
@@ -194,15 +194,15 @@ function build_db(withVersions) {
   }
 
   return {
-    'getFolder': getFolder,
-    'getByReference': getByReference,
-    'storeRecord': storeRecord,
-    'bulkUpdate': bulkUpdate,
+    "getFolder": getFolder,
+    "getByReference": getByReference,
+    "storeRecord": storeRecord,
+    "bulkUpdate": bulkUpdate,
 
-    'updateCheckpoint': updateCheckpoint,
-    'getSetting': getSetting,
-    'setSetting': setSetting,
-    'clear': clear,
-    'version': version,
+    "updateCheckpoint": updateCheckpoint,
+    "getSetting": getSetting,
+    "setSetting": setSetting,
+    "clear": clear,
+    "version": version,
   };
-};
+}

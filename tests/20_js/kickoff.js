@@ -12,7 +12,7 @@ function buildRecord(def, data) {
     var d = def;
     var li = ind.pop();
     for (i in ind) {
-      if (typeof(d[ind[i]]) == 'undefined') {
+      if (typeof(d[ind[i]]) == "undefined") {
         d[ind[i]] = {};
       }
       d = d[ind[i]];
@@ -26,10 +26,10 @@ describe("BuildRecord", function() {
   it("should update default values with modifiers", function() {
     var ref = { a: 1, b: 2, c: { c1: 1 }, d: { d1: 2 }};
     var obj = buildRecord(ref,
-        {
-          a: 2,
-          'd.d1': 3
-        }
+      {
+        a: 2,
+        "d.d1": 3
+      }
       );
 
     // Ref object is kept intact

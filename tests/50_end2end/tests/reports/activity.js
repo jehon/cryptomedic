@@ -1,7 +1,7 @@
 module.exports = {
-	'tags': [ 'readonly', 'reports' ],
-	'reportMonthlyActivity': function(client) {
-    client
+	  "tags": [ "readonly", "reports" ],
+	  "reportMonthlyActivity": function(client) {
+  client
     	.page.cryptomedic().authenticate("readonly")
     	.page.cryptomedic().report("monthlyActivity", { "month": "2014-05" })
         .assert.myAssertCell("#report_table table", 1, 1, "1")
@@ -31,16 +31,16 @@ module.exports = {
 
         // New / Old patient in same month
         .assert.myAssertCell("#report_table table", 4, 5, "2014-107")
-        .assert.myAssertCell("#report_table table", '=', '+4', "New")
-        .assert.myAssertCell("#report_table table", '+1', 5, "2014-107")
-        .assert.myAssertCell("#report_table table", '=', '+4', "Old")
+        .assert.myAssertCell("#report_table table", "=", "+4", "New")
+        .assert.myAssertCell("#report_table table", "+1", 5, "2014-107")
+        .assert.myAssertCell("#report_table table", "=", "+4", "Old")
 
       	.assert.myAssertCell("=", "last", 17, "400")
       	.assert.myAssertCell("=", "last", "last", "300")
       	.end();
-  },
+},
 
-  'reportDailyActivity': function(client) {
+  "reportDailyActivity": function(client) {
     client
     	.page.cryptomedic().authenticate("readonly")
     	.page.cryptomedic().report("dailyActivity", { "day": "2014-05-20" })
