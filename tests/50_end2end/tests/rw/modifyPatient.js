@@ -3,48 +3,48 @@ module.exports = {
 
   // },
 
-  'modifyPatient': function(client) {
+  "modifyPatient": function(client) {
     var r = Math.floor(Math.random() * 100);
 
     var ricket_consult = {
       "#Date": "2003-01-01",
       "#Weightkg": "13"
-    }
+    };
 
     var picture = {
       "#Picture_Date": "2003-01-02"
-    }
+    };
 
     var other_consult = {
       "#Date": "2003-02-01",
       "#Weightkg": "13"
-    }
+    };
 
     var clubfoot = {
       "#Date": "2003-04-01",
       "#Weightkg": "13"
-    }
+    };
 
     var surgery = {
       "#Surgery_Date": "2003-05-01",
       "#Surgery_ReportDiagnostic": "diagnostique"
-    }
+    };
 
     var bill = {
       "#Bill_Date": "2003-06-01"
-    }
+    };
 
     client
       .page.cryptomedic().authenticate("murshed")
 
       .myClick("#menu_home")
-      .waitForElementVisible('input[ng-model="entryyear"]')
-      .clearValue('input[ng-model="entryyear"]')
-      .setValue('input[ng-model="entryyear"]', 2015)
-      .clearValue('input[ng-model="entryorder"]')
-      .setValue('input[ng-model="entryorder"]', 1)
-      .myClick('[ng-click="checkReference()"]')
-      .myClick('#button_create_reference')
+      .waitForElementVisible("input[ng-model=\"entryyear\"]")
+      .clearValue("input[ng-model=\"entryyear\"]")
+      .setValue("input[ng-model=\"entryyear\"]", 2015)
+      .clearValue("input[ng-model=\"entryorder\"]")
+      .setValue("input[ng-model=\"entryorder\"]", 1)
+      .myClick("[ng-click=\"checkReference()\"]")
+      .myClick("#button_create_reference")
 
       // Edit and save
       .waitForElementPresent("#Patient_Name")
@@ -64,14 +64,14 @@ module.exports = {
       // Add a ricket consultation
       .myClick("#button_add")
       .myClick("#add_ricket_consult")
-      .myFillInForm('#fileForm', ricket_consult, '#topsubmenu #button_save')
-      .myCheckForm('#fileForm', ricket_consult)
+      .myFillInForm("#fileForm", ricket_consult, "#topsubmenu #button_save")
+      .myCheckForm("#fileForm", ricket_consult)
 
       // Add a non-ricket consultation
       .myClick("#button_add")
       .myClick("#add_other_consult")
-      .myFillInForm('#fileForm', other_consult, '#topsubmenu #button_save')
-      .myCheckForm('#fileForm', other_consult)
+      .myFillInForm("#fileForm", other_consult, "#topsubmenu #button_save")
+      .myCheckForm("#fileForm", other_consult)
 
       // Add a picture -> TODO: add a picture image
       // .myClick("#button_add")
@@ -86,20 +86,20 @@ module.exports = {
       // Add a clubfoot
       .myClick("#button_add")
       .myClick("#add_clubfoot")
-      .myFillInForm('#fileForm', clubfoot, '#topsubmenu #button_save')
-      .myCheckForm('#fileForm', clubfoot)
+      .myFillInForm("#fileForm", clubfoot, "#topsubmenu #button_save")
+      .myCheckForm("#fileForm", clubfoot)
 
       // Add a surgery
       .myClick("#button_add")
       .myClick("#add_surgery")
-      .myFillInForm('#fileForm', surgery, '#topsubmenu #button_save')
-      .myCheckForm('#fileForm', surgery)
+      .myFillInForm("#fileForm", surgery, "#topsubmenu #button_save")
+      .myCheckForm("#fileForm", surgery)
 
       // Add a bill
       .myClick("#button_add")
       .myClick("#add_bill")
-      .myFillInForm('#fileForm', bill, '#topsubmenu #button_save')
-      .myCheckForm('#fileForm', bill)
+      .myFillInForm("#fileForm", bill, "#topsubmenu #button_save")
+      .myCheckForm("#fileForm", bill)
 
       // Delete all sub-files
 
@@ -158,4 +158,4 @@ module.exports = {
 
       .end();
   },
-}
+};

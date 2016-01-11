@@ -1,8 +1,8 @@
-'use strict';
+"use strict";
 
-var path = require('path');
-var webpack = require('webpack');
-var base_config = require('./webpack.js');
+var path = require("path");
+var webpack = require("webpack");
+var base_config = require("./webpack.js");
 
 // base_config.entry.push('webpack-dev-server/client?/');
 // base_config.entry.push('webpack/hot/only-dev-server');

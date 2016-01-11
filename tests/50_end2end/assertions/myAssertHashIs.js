@@ -1,10 +1,10 @@
 // http://nightwatchjs.org/guide#writing-custom-commands
 // https://github.com/beatfactor/nightwatch/blob/master/lib/api/assertions/containsText.js
-var util = require('util');
-var url = require('url');
+var util = require("util");
+var url = require("url");
 
 exports.assertion = function(expected, msg) {
-    var MSG = util.format('Testing if url hash is %s.', expected);
+  var MSG = util.format("Testing if url hash is %s.", expected);
   /**
    * The message which will be used in the test output and
    * inside the XML reports
@@ -18,7 +18,7 @@ exports.assertion = function(expected, msg) {
    * @type {function|*}
    */
   this.expected = function() {
-      return expected;
+    return expected;
   };
     
   /**
@@ -27,16 +27,16 @@ exports.assertion = function(expected, msg) {
    * @type {function}
    */
   this.pass = function(value) {
-      return value == expected;
+    return value == expected;
   };
 
   this.fail = function(value) {
-      var failed = result === false || result && result.status === -1;
-      if (failed) {
+    var failed = result === false || result && result.status === -1;
+    if (failed) {
         this.message = this.message + util.format(": Found <%s>", value);  
       }
-      return failed;
-  }
+    return failed;
+  };
   
   /**
    * The method which returns the value to be used on the
@@ -45,8 +45,8 @@ exports.assertion = function(expected, msg) {
    * @type {function}
    */
   this.value = function(result) {
-      var parsed = url.parse(result.value);
-      return parsed.hash;
+    var parsed = url.parse(result.value);
+    return parsed.hash;
   };
 
   /**
@@ -55,7 +55,7 @@ exports.assertion = function(expected, msg) {
    * @type {function}
    */
   this.command = function(callback) {
-      return this.api.url(callback);
+    return this.api.url(callback);
   };
 
 };

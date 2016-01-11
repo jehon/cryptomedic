@@ -1,6 +1,6 @@
 module.exports = {
-  'viewAllSyncedPatients': function(client) {
-      client
+  "viewAllSyncedPatients": function(client) {
+    client
         .page.cryptomedic().authenticate("readonly")
         .page.cryptomedic().goPatient(2000, 1)
         .page.cryptomedic().goPatient(2014, 107)

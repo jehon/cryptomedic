@@ -26,7 +26,7 @@ describe("DB/Patients", function() {
       })
       .then(db.getFolder.bind(db, 123))
       .then(function(data) {
-        expect(data.id).toBe("123")
+        expect(data.id).toBe("123");
         done();
       });
   });
@@ -50,11 +50,11 @@ describe("DB/Patients", function() {
   it("should store and get patient by reference", function(done) {
     db.storeRecord(buildRecord(def))
       .then(function(data) {
-        expect(data.id).toBe("123")
+        expect(data.id).toBe("123");
       })
       .then(db.getByReference.bind(db, 2001, 2323))
       .then(function(data) {
-        expect(data.id).toBe("123")
+        expect(data.id).toBe("123");
         done();
       });
   });

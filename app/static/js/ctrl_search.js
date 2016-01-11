@@ -1,35 +1,35 @@
 "use strict";
 
-mainApp.controller('ctrl_search', [ "$scope", function($scope) {
-	if (typeof($scope.params) == 'undefined')
-		$scope.params = {};
+mainApp.controller("ctrl_search", [ "$scope", function($scope) {
+	  if (typeof($scope.params) == "undefined")
+		  $scope.params = {};
 
-	if (typeof($scope.listing) == 'undefined')
-		$scope.listing = [];
+	  if (typeof($scope.listing) == "undefined")
+		  $scope.listing = [];
 
-	$scope.page = function() {
+	  $scope.page = function() {
 		// TODO GUI: render the results in pages of 20 ?
-		$scope.currentPage = $scope.listing;
-	}
+		  $scope.currentPage = $scope.listing;
+	};
 
-	$scope.submit = function() {
-		var busyEnd = $scope.doBusy("Searching for matching patients");
+	  $scope.submit = function() {
+		  var busyEnd = $scope.doBusy("Searching for matching patients");
 
-		service_backend.searchForPatients($scope.params)
+		  service_backend.searchForPatients($scope.params)
 		.then(function(data) {
-			$scope.listing = data;
-			$scope.page();
-			$scope.safeApply();
+			  $scope.listing = data;
+			  $scope.page();
+			  $scope.safeApply();
 		}, function(data) {
-			console.error(data);
+			  console.error(data);
 		}).myFinallyDone(function() {
-			busyEnd();
+			  busyEnd();
 		});
-	}
+	};
 
-	$scope.reset = function() {
-		$scope.params = {};
-		$scope.listing = [];
-		$scope.safeApply();
-	}
+	  $scope.reset = function() {
+		  $scope.params = {};
+		  $scope.listing = [];
+		  $scope.safeApply();
+	};
 }]);

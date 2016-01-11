@@ -1,9 +1,9 @@
 // http://nightwatchjs.org/guide#writing-custom-commands
 // https://github.com/beatfactor/nightwatch/blob/master/lib/api/assertions/containsText.js
-var util = require('util');
+var util = require("util");
 
 exports.assertion = function(selector, expected, msg) {
-    var MSG = util.format('Testing if table <%s> contains %s rows.', selector, expected);
+  var MSG = util.format("Testing if table <%s> contains %s rows.", selector, expected);
   /**
    * The message which will be used in the test output and
    * inside the XML reports
@@ -17,7 +17,7 @@ exports.assertion = function(selector, expected, msg) {
    * @type {function|*}
    */
   this.expected = function() {
-      return expected;
+    return expected;
   };
     
   /**
@@ -26,16 +26,16 @@ exports.assertion = function(selector, expected, msg) {
    * @type {function}
    */
   this.pass = function(value) {
-      return value == expected;
+    return value == expected;
   };
 
   this.fail = function(value) {
-      var failed = result === false || result && result.status === -1;
-      if (failed) {
+    var failed = result === false || result && result.status === -1;
+    if (failed) {
         this.message = this.message + util.format(": Found <%s>", value);  
       }
-      return failed;
-  }
+    return failed;
+  };
   
   /**
    * The method which returns the value to be used on the
@@ -44,7 +44,7 @@ exports.assertion = function(selector, expected, msg) {
    * @type {function}
    */
   this.value = function(result) {
-      return result.value.length;
+    return result.value.length;
   };
 
   /**
@@ -53,8 +53,8 @@ exports.assertion = function(selector, expected, msg) {
    * @type {function}
    */
   this.command = function(callback) {
-      var el = this.api.elements(this.client.locateStrategy, selector + " > tbody > tr", callback);
-      return el;
+    var el = this.api.elements(this.client.locateStrategy, selector + " > tbody > tr", callback);
+    return el;
   };
 
 };

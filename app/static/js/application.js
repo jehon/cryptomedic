@@ -30,13 +30,13 @@ function inherit(parent, constructor) {
 
   // shim for older browsers:
   var ObjectCreateShim;
-  if (typeof Object.create == 'function') {
+  if (typeof Object.create == "function") {
     ObjectCreateShim = Object.create;
   } else {
     ObjectCreateShim = function(proto) {
-          function ctor() { }
-          ctor.prototype = proto;
-          return new ctor();
+      function ctor() { }
+      ctor.prototype = proto;
+      return new ctor();
     };
   }
 
@@ -61,39 +61,39 @@ function ApplicationException(msg) {
 inherit(Error, ApplicationException);
 ApplicationException.prototype.getMessage = function() { return this.message; };
 
-var mainApp = angular.module('app_main', [ 'ngRoute' ])
-.config([ '$compileProvider', function( $compileProvider ) {
+var mainApp = angular.module("app_main", [ "ngRoute" ])
+.config([ "$compileProvider", function( $compileProvider ) {
   $compileProvider.aHrefSanitizationWhitelist(/^\s*((https?|ftp|mailto|chrome-extension):|data:text,)/);
   $compileProvider.imgSrcSanitizationWhitelist($compileProvider.aHrefSanitizationWhitelist());
 }])
-.filter('mypercentage', function() {
+.filter("mypercentage", function() {
   return function(text, rnd) {
-    text = text || '';
+    text = text || "";
     rnd = rnd || 2;
-    if (typeof(text) != 'number') {
+    if (typeof(text) != "number") {
       if (parseFloat(text) != text) return text;
       text = parseFloat(text);
     }
     return "" + (Math.round(text * 100 * Math.pow(10, rnd)) / Math.pow(10, rnd)) + "%";
   };
 })
-.filter('nl2br', [ '$sce', function($sce) {
+.filter("nl2br", [ "$sce", function($sce) {
   return function(text) {
     var t = text;
     while (t.search("\n") >= 0) {
       t = t.replace("\n", "<br>");
     }
     return $sce.trustAsHtml(t);
-  }
+  };
 }])
-.directive('catchIt', [ "$compile", function($compile) {
+.directive("catchIt", [ "$compile", function($compile) {
     // http://tutorials.jenkov.com/angularjs/custom-directives.html#compile-and-link
     // http://stackoverflow.com/a/15298620
   return {
-    restrict: 'A',
+    restrict: "A",
     transclude: true,
     scope: {
-        'tryit': '&', // executed in parent scope
+      "tryit": "&", // executed in parent scope
     },
     template: "<span ng-if='error' class='catchedError'>{{errorMsg}}</span><span ng-if='!error' ng-transclude></span>",
     link:
@@ -127,13 +127,13 @@ var mainApp = angular.module('app_main', [ 'ngRoute' ])
         testIt();
 
         // Destroy of the element
-        $element.on('$destroy', function() {
-            $scope.$destroy();
+        $element.on("$destroy", function() {
+          $scope.$destroy();
         });
       } // end of link function
   };
 }])
-.directive('mycalendar', function() {
+.directive("mycalendar", function() {
   return function (scope, elem, attrs) {
     jQuery(elem).datepicker({
       dateFormat: "yy-mm-dd",
@@ -142,18 +142,18 @@ var mainApp = angular.module('app_main', [ 'ngRoute' ])
       yearRange: "1980:+2",
       monthNamesShort: [ "1 Jan", "2 Feb", "3 Mar", "4 Apr", "5 May", "6 Jun", "7 Jul", "8 Aug", "9 Sep", "10 Oct", "11 Nov", "12 Dec" ]
     });
-  }
+  };
 })
-.directive('codage', function() {
- return {
-    restrict: 'E',
-    transclude: true,
-    scope: {
-      value: '=value'
+.directive("codage", function() {
+  return {
+   restrict: "E",
+   transclude: true,
+   scope: {
+      value: "=value"
     },
     // template: '<span data-toggle="tooltip" data-placement="bottom" title="{{value}}">{{coded}}</span>',
-    template: '{{coded}}<span class="online" data-toggle="tooltip" data-placement="bottom" title="{{value}}">*</span>',
-    link: function($scope, element, attrs) {
+   template: "{{coded}}<span class=\"online\" data-toggle=\"tooltip\" data-placement=\"bottom\" title=\"{{value}}\">*</span>",
+   link: function($scope, element, attrs) {
       if (server && server.settings && server.settings.codes[$scope.value]) {
         $scope.isCoded = true;
         $scope.coded = server.settings.codes[$scope.value];
@@ -162,7 +162,7 @@ var mainApp = angular.module('app_main', [ 'ngRoute' ])
         $scope.coded = $scope.value;
       }
     }
-  };
+ };
 })
 // .directive('hasPermission', [ '$animate', function($animate) {
 //   return {
@@ -226,39 +226,39 @@ var mainApp = angular.module('app_main', [ 'ngRoute' ])
 //   };
 // }]);
 
-.directive('myGo', function() {
+.directive("myGo", function() {
   return {
-    restrict: 'E',
+    restrict: "E",
     transclude: true,
     // scope: true,
     replace: true,
     template: function(elem, attrs) {
       // function templateFunction() {
-        if (attrs.haspermission) {
+      if (attrs.haspermission) {
           if (!appState().store.getState()
               || !appState().store.getState().connection.settings
               || !appState().store.getState().connection.settings.authorized2[attrs.haspermission]
               ) {
-            return '<span haspermission-failed="' + attrs.haspermission + '"></span>';
+            return "<span haspermission-failed=\"" + attrs.haspermission + "\"></span>";
           }
         }
-        return '<a class="btn btn-default" href="' + cryptomedic.flavor + '/app/' + attrs.to + '"'
-              + (attrs.id ? ' id="' + attrs.id + '"' : '')
-              + (attrs.class ? ' class="' + attrs.class + '"' : '')
-              + '>'
-              +   '<ng-transclude>'
-              +      '<b style="color: red;">Button</b>'
-              +    '</ng-transclude>'
-              +  '</a>'
+      return "<a class=\"btn btn-default\" href=\"" + cryptomedic.flavor + "/app/" + attrs.to + "\""
+              + (attrs.id ? " id=\"" + attrs.id + "\"" : "")
+              + (attrs.class ? " class=\"" + attrs.class + "\"" : "")
+              + ">"
+              +   "<ng-transclude>"
+              +      "<b style=\"color: red;\">Button</b>"
+              +    "</ng-transclude>"
+              +  "</a>";
         // }
         // return templateFunction();
         // scope.$watch('attr.haspermission', templateFunction);
-      }
-    };
+    }
+  };
 })
-.directive('preview', [ "$compile", function($compile) {
+.directive("preview", [ "$compile", function($compile) {
   return {
-    restrict: 'A',
+    restrict: "A",
     // http://tutorials.jenkov.com/angularjs/custom-directives.html#compile-and-link
     compile: function(cElement, cAttrs, cTransclude) {
       return function($scope, $element, $attrs, ctrl, $transclude) {
@@ -312,7 +312,7 @@ var mainApp = angular.module('app_main', [ 'ngRoute' ])
 
               // Add the image to the canvas
               ctx.drawImage(img, 0, 0, w, h);
-              canvas.style.display = 'block';
+              canvas.style.display = "block";
 
               var dataURI = canvas.toDataURL("image/jpeg");
               $scope.currentFile().fileContent = dataURI;
@@ -322,32 +322,32 @@ var mainApp = angular.module('app_main', [ 'ngRoute' ])
             };
           };
           reader.readAsDataURL(file);
-        }
+        };
       };
     }
-  }
+  };
 }])
-.directive('nullToInterrogation', function() {
+.directive("nullToInterrogation", function() {
   // https://docs.angularjs.org/api/ng/directive/select
   // usage: <select ng-model="model.id" null-to-interrogation>
   return {
-    require: 'ngModel',
+    require: "ngModel",
     link: function(scope, element, attrs, ngModel) {
       ngModel.$parsers.push(function(val) {
         // From option to model
-        if (val == '?') return null;
+        if (val == "?") return null;
         return val;
       });
       ngModel.$formatters.push(function(val) {
         // From model to option
-        if (val == null) return '?';
+        if (val == null) return "?";
         return val;
       });
     }
   };
 });
 
-mainApp.controller('ctrl', [ '$scope', '$location', '$sce', function($scope, $location, $sce) {
+mainApp.controller("ctrl", [ "$scope", "$location", "$sce", function($scope, $location, $sce) {
   // @see http://stackoverflow.com/questions/14319967/angularjs-routing-without-the-hash
   // @see https://docs.angularjs.org/api/ng/provider/$locationProvider
   // $locationProvider.html5Mode(true)
@@ -368,17 +368,17 @@ mainApp.controller('ctrl', [ '$scope', '$location', '$sce', function($scope, $lo
 
     // Are we still busy?
     if ($scope.appStateStore.state.busy > 0) {
-      jQuery("#busy").modal('show');
+      jQuery("#busy").modal("show");
     } else {
-      jQuery("#busy").modal('hide');
+      jQuery("#busy").modal("hide");
     }
 
     $scope.safeApply();
   });
 
   $scope.safeApply = function (fn) {
-    if (this.$root && (this.$root.$$phase == '$apply' || this.$root.$$phase == '$digest')) {
-      if (fn && (typeof(fn) === 'function')) {
+    if (this.$root && (this.$root.$$phase == "$apply" || this.$root.$$phase == "$digest")) {
+      if (fn && (typeof(fn) === "function")) {
         fn();
       }
     } else {
@@ -397,7 +397,7 @@ mainApp.controller('ctrl', [ '$scope', '$location', '$sce', function($scope, $lo
     appState().actions.state.busy(msg);
     return function() {
       appState().actions.state.ready();
-    }
+    };
   };
 
   $scope.endBusy = appState().actions.state.ready;
@@ -429,8 +429,8 @@ mainApp.controller('ctrl', [ '$scope', '$location', '$sce', function($scope, $lo
         server.settings = data;
         $scope.logged = true;
         $scope.$broadcast("message", { "level": "info", "text": "Welcome " +  data.name + "!"});
-        if (location.hash == '#/login') {
-          $scope.go('#');
+        if (location.hash == "#/login") {
+          $scope.go("#");
         }
         $scope.safeApply();
       })
@@ -480,37 +480,37 @@ mainApp.controller('ctrl', [ '$scope', '$location', '$sce', function($scope, $lo
 
 var cryptomedic = {};
 {
-    var path = location.pathname.split("/");
-    cryptomedic.flavor = "/" + path[1];
+  var path = location.pathname.split("/");
+  cryptomedic.flavor = "/" + path[1];
 }
 cryptomedic.templateRoot = cryptomedic.flavor + "/cache/templates";
 cryptomedic.settings = {};
 
-mainApp.config([ '$routeProvider', function($routeProvider) {
-    $routeProvider
-    .when('/home', {
-        templateUrl: cryptomedic.templateRoot + '/pages/home.html',
-        controller: 'ctrl_home'
-    }).when('/login', {
-        templateUrl: cryptomedic.templateRoot + '/pages/login.html',
-        controller: 'ctrl_login',
-    }).when('/folder/:patient_id/:page?/:subtype?/:subid?/:mode?', {
-        templateUrl: cryptomedic.templateRoot + '/pages/folder.php',
-        controller: 'ctrl_folder',
-    }).when('/search', {
-        templateUrl: cryptomedic.templateRoot + '/pages/search.php',
-        controller: 'ctrl_search',
-    }).when('/reports/:report?', {
-        templateUrl: cryptomedic.templateRoot + '/pages/reports.php',
-        controller: 'ctrl_reports',
-    }).when('/users', {
-        templateUrl: cryptomedic.templateRoot + '/pages/users.html',
-        controller: 'ctrl_users',
-    }).otherwise({ 'redirectTo': '/home'});
+mainApp.config([ "$routeProvider", function($routeProvider) {
+  $routeProvider
+    .when("/home", {
+      templateUrl: cryptomedic.templateRoot + "/pages/home.html",
+      controller: "ctrl_home"
+    }).when("/login", {
+      templateUrl: cryptomedic.templateRoot + "/pages/login.html",
+      controller: "ctrl_login",
+    }).when("/folder/:patient_id/:page?/:subtype?/:subid?/:mode?", {
+      templateUrl: cryptomedic.templateRoot + "/pages/folder.php",
+      controller: "ctrl_folder",
+    }).when("/search", {
+      templateUrl: cryptomedic.templateRoot + "/pages/search.php",
+      controller: "ctrl_search",
+    }).when("/reports/:report?", {
+      templateUrl: cryptomedic.templateRoot + "/pages/reports.php",
+      controller: "ctrl_reports",
+    }).when("/users", {
+      templateUrl: cryptomedic.templateRoot + "/pages/users.html",
+      controller: "ctrl_users",
+    }).otherwise({ "redirectTo": "/home"});
 }]);
 
 function DataMissingException(data) {
-    this.message = "Missing "  + (data || "some data");
-    this.data = data;
+  this.message = "Missing "  + (data || "some data");
+  this.data = data;
 }
 DataMissingException.prototype = new ApplicationException();

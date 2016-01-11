@@ -9,7 +9,7 @@ module.exports = (function() {
     // object in order to be able to be queued
     this.authenticate = function(login) {
       if (!login) {
-          throw new Error("Cryptomedic: Authenticate expect parameter 1 to be the login");
+        throw new Error("Cryptomedic: Authenticate expect parameter 1 to be the login");
       }
 
       var password = "this will not be read by the server in tests";
@@ -24,8 +24,8 @@ module.exports = (function() {
       } catch (ex) {}
 
       client.init()
-        .waitForElementVisible('body')
-        .assert.title('Cryptomedic')
+        .waitForElementVisible("body")
+        .assert.title("Cryptomedic")
         .waitForElementVisible("#login_password")
         .setValue("#login_username", login)
         .setValue("#login_password", password)
@@ -33,7 +33,7 @@ module.exports = (function() {
         .myClick("button#login_go")
         .waitForElementPresent("#login_loggedusername")
         .assert.containsText("#login_loggedusername", login)
-        .assert.title('Cryptomedic')
+        .assert.title("Cryptomedic")
         .pause(1000)
         ;
       authenticated = true;
@@ -45,7 +45,7 @@ module.exports = (function() {
         throw new Error("Cryptomedic: You should be authenticated to use report function");
       }
       client
-        .waitForElementVisible("img#sync-ok")
+        .waitForElementVisible("img#sync-ok");
       return client;
     };
 
@@ -78,32 +78,32 @@ module.exports = (function() {
 
     this.goPatient = function(entryyear, entryorder) {
       if (!authenticated) {
-          throw new Error("Cryptomedic: You should be authenticated to use report function");
+        throw new Error("Cryptomedic: You should be authenticated to use report function");
       }
       this.sync();
       client
         .myClick("#menu_home")
-        .waitForElementVisible('input[ng-model="entryyear"]')
-        .clearValue('input[ng-model="entryyear"]')
-        .setValue('input[ng-model="entryyear"]', entryyear)
-        .clearValue('input[ng-model="entryorder"]')
-        .setValue('input[ng-model="entryorder"]', entryorder)
-        .waitForElementVisible('[ng-click="checkReference()"]')
-        .myClick('[ng-click="checkReference()"]')
-        .waitForElementVisible('#Patient_entryyear')
+        .waitForElementVisible("input[ng-model=\"entryyear\"]")
+        .clearValue("input[ng-model=\"entryyear\"]")
+        .setValue("input[ng-model=\"entryyear\"]", entryyear)
+        .clearValue("input[ng-model=\"entryorder\"]")
+        .setValue("input[ng-model=\"entryorder\"]", entryorder)
+        .waitForElementVisible("[ng-click=\"checkReference()\"]")
+        .myClick("[ng-click=\"checkReference()\"]")
+        .waitForElementVisible("#Patient_entryyear")
         .assert.containsText("#Patient_entryyear", entryyear)
-        .waitForElementVisible('#Patient_entryorder')
+        .waitForElementVisible("#Patient_entryorder")
         .assert.containsText("#Patient_entryorder", entryorder)
         ;
 
       return client;
-    }
+    };
 
     this.selectFile = function(type, id) {
       client
         .myClick("#folder_menu_" + type + "_" + id)
-        .waitForElementVisible("#folder_menu_" + type + "_" + id)
+        .waitForElementVisible("#folder_menu_" + type + "_" + id);
       return client;
-    }
+    };
   };
 })();

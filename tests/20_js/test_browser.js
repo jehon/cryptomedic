@@ -1,11 +1,11 @@
 "use strict";
 
 describe("The browser", function() {
-	it("should parse date correctly", function() {
-		var d = new Date("2001-02-04T00:00:00Z");
-		expect(d.getUTCDate()).toBe(4);
-		expect(d.getUTCMonth() + 1).toBe(2);
-		expect(d.getUTCFullYear()).toBe(2001);
+	  it("should parse date correctly", function() {
+		  var d = new Date("2001-02-04T00:00:00Z");
+		  expect(d.getUTCDate()).toBe(4);
+		  expect(d.getUTCMonth() + 1).toBe(2);
+		  expect(d.getUTCFullYear()).toBe(2001);
 	});
 
 	// it("should parse timestamp with GMT+0000 correctly", function() {
@@ -32,8 +32,8 @@ describe("The browser", function() {
 	// 	expect(d.getUTCHours()).toBe(11);
 	// });
 
-	it('have a correct DataMissingException', function() {
-		expect((new DataMissingException())instanceof Error).toBeTruthy();
-		expect((new DataMissingException())instanceof DataMissingException).toBeTruthy();
+	  it("have a correct DataMissingException", function() {
+		  expect((new DataMissingException())instanceof Error).toBeTruthy();
+		  expect((new DataMissingException())instanceof DataMissingException).toBeTruthy();
 	});
 });
