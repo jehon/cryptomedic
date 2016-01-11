@@ -52,7 +52,7 @@ function date2CanonicString(d, dateOnly) {
       ":" +
       ("00" + d.getSeconds()).substr(-2) +
       " GMT" + (ts < 0 ? "-" : "+") +
-      ("0000" + Math.abs(ts)).substr(-4)
+      ("0000" + Math.abs(ts)).substr(-4);
 }
 
 function nullify(what) {
