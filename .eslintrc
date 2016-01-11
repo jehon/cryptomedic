@@ -16,7 +16,10 @@
     "semi": [
         2,
         "always"
-    ]
+    ],
+    "no-console": [ 0 ],
+    "no-undef": [ 1 ],
+    "no-unused-vars": [ 1 ]
   },
   "env": {
     "es6": true,
@@ -24,11 +27,23 @@
     "browser": true
   },
   "globals": {
-    "angular": true,
+    // personnal
+    "application": true,
     "cryptomedic": true,
     "server": true,
     "appState": true,
-    "mainApp": true
+    "mainApp": true,
+    "DataMissingException": true,
+    "service_backend": true,
+
+    // libs
+    "angular": true,
+    "jQuery": true,
+
+    // Jasmine
+    "describe": true,
+    "it": true,
+    "expect": true
   },
   "extends": "eslint:recommended"
 }
