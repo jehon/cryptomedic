@@ -5,6 +5,7 @@ import store from 'reducers/store';
 import connection from 'actions/connectionActions';
 import state from 'actions/stateActions';
 import database from 'actions/databaseActions';
+import objectify from 'helpers/objectify';
 
 function d(type) {
   return function(payload) {
@@ -20,6 +21,9 @@ export default function() {
       state,
       database
     },
-    catalog: catalog
+    catalog: catalog,
+    helpers: {
+      objectify
+    }
   };
 }
