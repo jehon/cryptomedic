@@ -1,7 +1,6 @@
 "use strict";
 
 var application = {};
-application.models = {};
 var server = {};
 
 function formatDate(date) {

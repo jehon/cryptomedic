@@ -25,7 +25,6 @@ module.exports = function(config) {
       "app/static/js/database.js",
       "app/static/js/myfetch.js",
       "app/static/js/service*.js",
-      "app/static/js/model*.js",
       "tests/20_js/**/*.js",
               { pattern : "tests/20_js/mocks/*.json", watched : true, served : true, included : false }
     ],
