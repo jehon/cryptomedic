@@ -134,12 +134,11 @@ function objectify(what) {
 
 /* Initialize the computer id */
 if (!window.localStorage.cryptomedicComputerId) {
-  console.log("generate cryptomedic_computer_id");
   var mask = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
   var result = "";
   for (var i = 0; i < 32; i++) {
-      result += mask[Math.floor(Math.random() * mask.length)];
-    }
+    result += mask[Math.floor(Math.random() * mask.length)];
+  }
   window.localStorage.cryptomedicComputerId = result;
 }
 
@@ -217,24 +216,24 @@ function service_backend_fn() {
         }
       }, function(httpErrorCode) {
       switch(httpErrorCode) {
-          case 401: // unauthorized
-            appState().actions.connection.expired();
-            server.settings = false;
-            location.hash = "#/login";
-            break;
-          case 403: // forbidden
-            appState().actions.connection.failed();
-            break;
-          case 404: // not found
-            appState().actions.connection.serverError();
-            break;
-          case 500: // internal server error
-            appState().actions.connection.serverError();
-            break;
-          default:
-            appState().actions.connection.serverError();
-            break;
-        }
+        case 401: // unauthorized
+          appState().actions.connection.expired();
+          server.settings = false;
+          location.hash = "#/login";
+          break;
+        case 403: // forbidden
+          appState().actions.connection.failed();
+          break;
+        case 404: // not found
+          appState().actions.connection.serverError();
+          break;
+        case 500: // internal server error
+          appState().actions.connection.serverError();
+          break;
+        default:
+          appState().actions.connection.serverError();
+          break;
+      }
       return Promise.reject("myFrontFetch error: " + httpErrorCode);
     }
     );
