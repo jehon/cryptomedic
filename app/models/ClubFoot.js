@@ -2,6 +2,17 @@
 
 import File from "models/File";
 
+function f(val) {
+  if (val == null) {
+    throw new Error("Null value", val);
+  }
+  if (typeof(val) == "string") {
+    return parseFloat(val);
+  }
+  return val;
+}
+
+
 export default class ClubFoot extends File {
   constructor(data, folder = null) {
     super(data, folder);
@@ -10,27 +21,31 @@ export default class ClubFoot extends File {
     }
   }
 
-  f(val) {
-    if (val == null) return 0;
-    if (typeof(val) == "string") return parseFloat(val);
-    return val;
-  }
-
   getPiraniLeft() {
-    return this.f(this.CurvedLateralBorderLeft)
-      + this.f(this.MedialCreaseLeft)
-      + this.f(this.TalarHeadCoverageLeft)
-      + this.f(this.PosteriorCreaseLeft)
-      + this.f(this.RigidEquinusLeft)
-      + this.f(this.EmptyHeelLeft);
+    // TODO: try-catch it in gui
+    try {
+      return f(this.CurvedLateralBorderLeft)
+        + f(this.MedialCreaseLeft)
+        + f(this.TalarHeadCoverageLeft)
+        + f(this.PosteriorCreaseLeft)
+        + f(this.RigidEquinusLeft)
+        + f(this.EmptyHeelLeft);
+    } catch (e) {
+      return "undefined";
+    }
   }
 
   getPiraniRight() {
-    return this.f(this.CurvedLateralBorderRight)
-      + this.f(this.MedialCreaseRight)
-      + this.f(this.TalarHeadCoverageRight)
-      + this.f(this.PosteriorCreaseRight)
-      + this.f(this.RigidEquinusRight)
-      + this.f(this.EmptyHeelRight);
+    // TODO: try-catch it in gui
+    try {
+      return f(this.CurvedLateralBorderRight)
+        + f(this.MedialCreaseRight)
+        + f(this.TalarHeadCoverageRight)
+        + f(this.PosteriorCreaseRight)
+        + f(this.RigidEquinusRight)
+        + f(this.EmptyHeelRight);
+    } catch (e) {
+      return "undefined";
+    }
   }
 }
