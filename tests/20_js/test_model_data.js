@@ -65,7 +65,7 @@ describe("Data", function() {
     expect(data.isSet("data2")).toBeFalsy();
     expect(data.isNotZero("data2")).toBeFalsy();
 
-    data.load({ "data1": null });
+    data.data1 = null;
     expect(data.data1).toBe(null);
     expect(data.isSet("data1")).toBeFalsy();
     expect(data.isNotZero("data1")).toBeFalsy();
