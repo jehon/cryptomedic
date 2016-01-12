@@ -7,10 +7,6 @@ describe("Data", function() {
       // expect(data.constructor.name).toBe("Data");
       expect(data instanceof appState().helpers.create("Data").constructor).toBeTruthy();
     });
-
-    it("should have a load function", function() {
-      expect(typeof(data.load)).toBe("function");
-    });
   });
 
   describe("with data loading at construction time", function() {
@@ -29,21 +25,6 @@ describe("Data", function() {
     });
   });
 
-  describe("with data loading by function", function() {
-    var data = new appState().helpers.create("Data");
-    data.load({
-      data1: "data1",
-      dataArray: [ 1, 2, 3]
-    });
-    it("should contain all datas", function() {
-      expect(data.data1).toBe("data1");
-      expect(data.dataArray).toContain(1);
-      expect(data.dataArray).toContain(2);
-      expect(data.dataArray).toContain(3);
-      expect(data.dataArray).not.toContain(4);
-      expect(data.anything).toBeUndefined();
-    });
-  });
 
   describe("with data loaded remotely", function() {
     it("should load correctly load_test.json and store it", function(done) {
