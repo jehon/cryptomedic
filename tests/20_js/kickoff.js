@@ -1,5 +1,4 @@
 
-var rootMock = "/base/tests/20_js/mocks";
 
 /** Apply a list of modifications
  *    def: default object
@@ -46,8 +45,9 @@ describe("BuildRecord", function() {
   });
 });
 
-function loadFrom(url, type) {
-  return myFetch(url)
+function loadMock(mock, type) {
+  var rootMock = "/base/tests/20_js/mocks/";
+  return myFetch(rootMock + mock)
     .then(function(data) {
       if (type) {
         data = appState().helpers.create(type, appState().helpers.objectify(data));

@@ -212,7 +212,6 @@ function service_backend_fn() {
     // Go to the database
     "getFolder": function(id) {
       if (id == -1) {
-        // return Promise.resolve(new application.models.Folder({
         return Promise.resolve(appState().helpers.create("Folder"));
       } else {
         // If not final then go to the server anyway...

@@ -9,16 +9,27 @@ export default class Folder extends Data {
     super(data);
     this.mainFile = (this.mainFile ? new Patient(this.mainFile) : new Patient());
     this.subFiles = this.subFiles || [];
+    this.id = this.id || -1;
     for(var i = 0; i < this.subFiles.length; i++) {
-      this.subFiles[i] = create(this.subFiles[i]["_type"], this.subFiles[i], this.getMainFile());
+      this.subFiles[i] = create(this.subFiles[i]["_type"], this.subFiles[i], this);
       //, this.getMainFile().constructor.name, create("Folder").constructor.name);
-      this.subFiles[i].setPatient(this.getMainFile());
+      this.subFiles[i].linkPatient(this.getMainFile());
     }
     this.subFiles.sort(this.ordering);
   }
 
   getId() {
-    return this.id;
+    if (this.isSet("id")) {
+      return this.id;
+    }
+    return -1;
+  }
+
+  getMainFile() {
+    if (this.isSet("mainFile")) {
+      return this.mainFile;
+    }
+    return new Patient();
   }
 
   getSubFiles() {
@@ -28,10 +39,6 @@ export default class Folder extends Data {
   getSubFile(i) {
     if (i >= this.subFiles.length) return null;
     return this.subFiles[i];
-  }
-
-  getMainFile() {
-    return this.mainFile;
   }
 
   static ordering(o1, o2) {

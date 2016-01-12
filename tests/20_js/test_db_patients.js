@@ -72,7 +72,7 @@ describe("DB/Patients", function() {
 
   it("should be able to store any patient", function(done) {
     // http://localhost/cryptomedic/api/v1.0/sync?cp=
-    jQuery.getJSON(rootMock + "/mock_sync.json").done(function(json) {
+    loadMock("mock_sync.json").then(function(json) {
       var p = db.clear();
       for(var i in json._offline.data) {
         p = p.then(db.storeRecord.bind(db, json._offline.data[i]));
@@ -92,7 +92,7 @@ describe("DB/Patients", function() {
 
   it("insert in bulk", function(done) {
     // http://localhost/cryptomedic/api/v1.0/sync?cp=
-    jQuery.getJSON(rootMock + "/mock_sync.json").done(function(json) {
+    loadMock("mock_sync.json").then(function(json) {
       db.clear()
         .then(db.bulkUpdate.bind(db, json._offline.data))
         .then(checkFolder.bind(db, 7, 2001, 4), function() { console.error("euh"); })

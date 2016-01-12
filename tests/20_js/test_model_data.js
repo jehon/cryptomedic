@@ -29,7 +29,7 @@ describe("Data", function() {
   describe("with data loaded remotely", function() {
     it("should load correctly load_test.json and store it", function(done) {
       // var data = new appState().helpers.create("Data")();
-      loadFrom(rootMock + "/mock_load_test.json").then(function(data) {
+      loadMock("mock_load_test.json").then(function(data) {
         expect(data.data1).toBe("data1");
         expect(data.dataArray).toContain(1);
         expect(data.dataArray).toContain(2);
@@ -44,7 +44,7 @@ describe("Data", function() {
   describe("with data loaded remotely tested through myAsyncTest", function() {
     // var data = new appState().helpers.create("Data")();
     it("should load correctly load_test.json and store it", function(done) {
-      loadFrom(rootMock + "/mock_load_test.json").then(function(data) {
+      loadMock("mock_load_test.json").then(function(data) {
         expect(data.data1).toBe("data1");
         expect(data.dataArray).toContain(1);
         expect(data.dataArray).toContain(2);

@@ -6,7 +6,7 @@ function objectify(what) {
   switch(typeof(what)) {
     case "undefined": return null;
     case "string":
-      if (what === date2CanonicString(null)) {
+      if (what == date2CanonicString(null)) {
         return null;
       }
       if (what == "0000-00-00") {

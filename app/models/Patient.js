@@ -16,10 +16,13 @@ export default class Patient extends Data {
     return null;
   }
 
-  actualAge() {
-    var birth = this.ageOfBirth;
+  actualAge(reference) {
+    if (!this.isSet("Yearofbirth")) {
+      return null;
+    }
+    var birth = this.Yearofbirth;
     var options = Object.assign({}, {
-      "reference": new Date(),
+      "reference": reference || new Date(),
       "format": false
     }, options);
     // reference = reference || new Date();
