@@ -7,11 +7,11 @@ var rootMock = "/base/tests/20_js/mocks";
  */
 function buildRecord(def, data) {
   def = JSON.parse(JSON.stringify(def));
-  for(a in data) {
+  for(var a in data) {
     var ind = a.split(".");
     var d = def;
     var li = ind.pop();
-    for (i in ind) {
+    for (var i in ind) {
       if (typeof(d[ind[i]]) == "undefined") {
         d[ind[i]] = {};
       }
@@ -46,8 +46,11 @@ describe("BuildRecord", function() {
   });
 });
 
-function loadFrom(url) {
+function loadFrom(url, type) {
   return jQuery.getJSON(url).done(function(data) {
-    return appState().helpers.objectify(data);
+    if (type) {
+      data = appState().helpers.create(type, appState().helpers.objectify(data));
+    }
+    return data;
   });
 }

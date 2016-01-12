@@ -26,7 +26,9 @@ export default class File extends Data{
 
   setPatient(patient) {
     // Encapsulate into function, so that it is not persisted
-    this.getPatient = function() { return patient; };
+    this.getPatient = function() {
+      return patient;
+    };
   }
 
   // For graphic, by default it expect number -> textual render it in text only on demand

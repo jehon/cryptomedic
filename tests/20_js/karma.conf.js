@@ -5,13 +5,13 @@ module.exports = function(config) {
       "karma-firefox-launcher",
       "karma-jasmine",
       "karma-junit-reporter",
-      "karma-coverage",
-                // 'karma-html-reporter'
+      "karma-coverage"
+      // 'karma-html-reporter'
     ],
     reporters : [
       "progress",
-      "coverage",
-                  // 'html'
+      "coverage"
+      // 'html'
     ],
 
     basePath : "../../",
