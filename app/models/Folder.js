@@ -7,12 +7,11 @@ import create    from "helpers/create";
 export default class Folder extends Data {
   constructor(data) {
     super(data);
-
-    // this.mainFile = this.mainFile || new Patient();
     this.mainFile = (this.mainFile ? new Patient(this.mainFile) : new Patient());
     this.subFiles = this.subFiles || [];
     for(var i = 0; i < this.subFiles.length; i++) {
       this.subFiles[i] = create(this.subFiles[i]["_type"], this.subFiles[i], this.getMainFile());
+      //, this.getMainFile().constructor.name, create("Folder").constructor.name);
       this.subFiles[i].setPatient(this.getMainFile());
     }
     this.subFiles.sort(this.ordering);

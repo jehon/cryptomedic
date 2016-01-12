@@ -8,6 +8,7 @@ import database from "actions/databaseActions";
 
 import objectify from "helpers/objectify";
 import create from "helpers/create";
+import date2CanonicString from "helpers/date2CanonicString";
 
 function d(type) {
   return function(payload) {
@@ -26,7 +27,8 @@ export default function() {
     catalog: catalog,
     helpers: {
       objectify,
-      create
+      create,
+      date2CanonicString
     }
   };
 }

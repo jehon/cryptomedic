@@ -31,9 +31,9 @@ function service_session_storage(onReady) {
   get("examiner", "");
   get("center", "");
   get("period", "month");
-  get("day", date2CanonicString(new Date(), true));
-  get("month", date2CanonicString(new Date(), true).substring(0, 7));
-  get("year", date2CanonicString(new Date(), true).substring(0, 4));
+  get("day", appState().helpers.date2CanonicString(new Date(), true));
+  get("month", appState().helpers.date2CanonicString(new Date(), true).substring(0, 7));
+  get("year", appState().helpers.date2CanonicString(new Date(), true).substring(0, 4));
 
   return {
     "get": get,

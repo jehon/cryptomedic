@@ -1,6 +1,7 @@
 "use strict";
 
 import Data from "models/Data";
+import date2CanonicString from "helpers/date2CanonicString";
 
 export default class File extends Data{
   constructor(data, folder = null) {
@@ -52,7 +53,6 @@ export default class File extends Data{
     }
     return calculations.math.stdDeviation(amd_stats[sex]["Heightcm"], age, this.Heightcm);
   }
-
 
   ds_weight() {
     var sex = this.getPatient().sexStr();

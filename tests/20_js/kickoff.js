@@ -47,10 +47,11 @@ describe("BuildRecord", function() {
 });
 
 function loadFrom(url, type) {
-  return jQuery.getJSON(url).done(function(data) {
-    if (type) {
-      data = appState().helpers.create(type, appState().helpers.objectify(data));
-    }
-    return data;
-  });
+  return myFetch(url)
+    .then(function(data) {
+      if (type) {
+        data = appState().helpers.create(type, appState().helpers.objectify(data));
+      }
+      return data;
+    });
 }

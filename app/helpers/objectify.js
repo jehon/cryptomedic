@@ -1,4 +1,6 @@
 
+import date2CanonicString from "helpers/date2CanonicString";
+
 function objectify(what) {
   if (what === null) return what;
   switch(typeof(what)) {
