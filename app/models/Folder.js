@@ -2,12 +2,17 @@
 
 import Data      from "models/Data";
 import Patient   from "models/Patient";
+import create    from "helpers/create";
 
 export default class Folder extends Data {
-  setPatients() {
-    this.mainFile = this.mainFile || new Patient();
+  constructor(data) {
+    super(data);
+
+    // this.mainFile = this.mainFile || new Patient();
+    this.mainfile = (this.mainFile ? new Patient(this.mainFile) : new Patient());
     this.subFiles = this.subFiles || [];
     for(var i = 0; i < this.subFiles.length; i++) {
+      this.subFiles[i] = create(this.subFiles[i]["_type"], this.subFiles[i], this.getMainFile());
       this.subFiles[i].setPatient(this.getMainFile());
     }
     this.subFiles.sort(this.ordering);
