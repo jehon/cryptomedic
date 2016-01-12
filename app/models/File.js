@@ -8,7 +8,7 @@ export default class File extends Data{
     if (data == null) {
       var c = service_session_storage();
       this.ExaminerName = c.get("examinerName", "");
-      this.Center = c.get("center", "Chakaria");
+      this.Center = c.get("center", "Chakaria Disability Center");
       this.Date = c.get("date", null);
       if (this.Date == null) {
         this.Date = date2CanonicString(new Date(), true);
