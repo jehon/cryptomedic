@@ -1,5 +1,6 @@
 
 import Data          from "models/Data";
+import File          from "models/File";
 
 import Folder        from "models/Folder";
 import Patient       from "models/Patient";
@@ -14,6 +15,7 @@ import Surgery       from "models/Surgery";
 
 var models = {
   Data,
+  File,
   Folder,
   Patient,
   Appointment,
@@ -26,5 +28,9 @@ var models = {
 };
 
 export default function create(type, data, folder) {
+  if (!models.hasOwnProperty(type)) {
+    console.error((new Error()).stack);
+    throw new Error("Create impossible for type '" + type + "'");
+  }
   return new models[type](data, folder);
 }
