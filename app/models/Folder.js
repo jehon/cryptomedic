@@ -1,22 +1,13 @@
 "use strict";
 
-import Data    from 'models/Data';
-import Patient from 'models/Patient';
+import Data      from "models/Data";
+import Patient   from "models/Patient";
 
 export default class Folder extends Data {
   load(data) {
     this._super(data);
     this.setPatients();
   }
-  // loadFrom: function(url) {
-    // var def = jQuery.Deferred();
-    // var t = this;
-    // this._super(url).done(function() {
-    //  t.setPatients();
-    //  def.resolve();
-    // });
-    // return def;
-  // },
   setPatients() {
     this.mainFile = this.mainFile || new Patient();
     this.subFiles = this.subFiles || [];

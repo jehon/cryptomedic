@@ -48,9 +48,6 @@ describe("BuildRecord", function() {
 
 function loadFrom(url) {
   return jQuery.getJSON(url).done(function(data) {
-    console.log(data);
-    data = appState().helpers.objectify(data);
-    console.log(data);
-    return data;
+    return appState().helpers.objectify(data);
   });
 }
