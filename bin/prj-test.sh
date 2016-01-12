@@ -1,6 +1,4 @@
 #!/bin/bash
-clear
-clear
 
 set -e
 
@@ -67,6 +65,8 @@ if [ "$1" ]; then
   shift
   cd "$PRJ_DIR/$D" && test_dir "Override $D" "$@"
 else
+  clear
+  clear
   echo -e "\e[0;45mCleaning old tests\e[0m"
   if [ -d "$PRJ_DIR/tmp" ]; then
     find "$PRJ_DIR/tmp/" -mindepth 1 -delete;
