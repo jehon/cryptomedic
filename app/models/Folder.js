@@ -4,10 +4,6 @@ import Data      from "models/Data";
 import Patient   from "models/Patient";
 
 export default class Folder extends Data {
-  load(data) {
-    this._super(data);
-    this.setPatients();
-  }
   setPatients() {
     this.mainFile = this.mainFile || new Patient();
     this.subFiles = this.subFiles || [];

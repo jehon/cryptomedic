@@ -3,12 +3,6 @@
 class Data {
   constructor(data) {
     if (data) {
-      this.load(data);
-    }
-  }
-
-  load(data) {
-    if ((typeof(data) != undefined) && (data != null)) {
       for(var i in data) {
         this[i] = data[i];
       }
