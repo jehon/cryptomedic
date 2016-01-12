@@ -116,9 +116,6 @@ function service_backend_fn() {
     var name = e.data.name;
     var data = e.data.data;
 
-    // Propagate event
-    // myEvents.trigger("backend_" + name, data);
-
     switch(name) {
       case "disconnected":
         if (data == 401) {
@@ -141,19 +138,6 @@ function service_backend_fn() {
         appState().actions.connection.success();
         break;
     }
-    // if (name == "disconnected") {
-    //   if (data == 401) {
-    //     appState().actions.connection.expired();
-    //     server.settings = false;
-    //     location.hash = "#/login";
-    //   } else {
-    //     appState().actions.connection.serverError();
-    //   }
-    //   // onFailure(data);
-    // } else {
-    //   appState().actions.connection.success();
-    //   // onSuccess();
-    // }
   };
 
   function mySendAction(name, data) {
@@ -256,9 +240,8 @@ function service_backend_fn() {
     // Go to the database
     "getFolder": function(id) {
       if (id == -1) {
-        return Promise.resolve(new application.models.Folder({
-          mainFile: new application.models.Patient()
-        }));
+        // return Promise.resolve(new application.models.Folder({
+        return Promise.resolve(appState().helpers.create("Folder"));
       } else {
         // If not final then go to the server anyway...
         // return db.getFolder(id).catch(function(error) {

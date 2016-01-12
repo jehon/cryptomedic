@@ -1,29 +1,6 @@
 
 import create from "helpers/create";
 
-// import Folder        from "models/Folder";
-// import Patient       from "models/Patient";
-
-// import Appointment   from "models/Appointment";
-// import Bill          from "models/Bill";
-// import ClubFoot      from "models/ClubFoot";
-// import OtherConsult  from "models/OtherConsult";
-// import Picture       from "models/Picture";
-// import RicketConsult from "models/RicketConsult";
-// import Surgery       from "models/Surgery";
-
-// var models = {
-//   Folder,
-//   Patient,
-//   Appointment,
-//   Bill,
-//   ClubFoot,
-//   OtherConsult,
-//   Picture,
-//   RicketConsult,
-//   Surgery
-// };
-
 function objectify(what) {
   if (what === null) return what;
   switch(typeof(what)) {
@@ -54,13 +31,10 @@ function objectify(what) {
       return what;
     case "object":
       for(var i in what) {
-      // angular.forEach(what, function(val, i) {
         what[i] = objectify(what[i]);
       }
       if (typeof(what["_type"]) != "undefined") {
         what = create(what["_type"], what);
-        // what = new models[what["_type"]](what);
-      }
       return what;
     default:
       return what;

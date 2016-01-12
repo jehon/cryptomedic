@@ -42,7 +42,7 @@ mainApp.controller("ctrl_folder", [ "$scope", "$location", "$routeParams" , func
   //----------------------
 
   service_backend.getFolder($scope.patient_id).then(function(data) {
-    $scope.folder = data; //objectify(data);
+    $scope.folder = data;
 
     if ($scope.page == "file") {
       if ($scope.mode == "add") {

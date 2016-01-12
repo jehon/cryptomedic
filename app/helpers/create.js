@@ -25,6 +25,6 @@ var models = {
   Surgery
 };
 
-export default function create(type, data) {
-  return new models[type](data);
+export default function create(type, data, folder) {
+  return new models[type](data, folder);
 }

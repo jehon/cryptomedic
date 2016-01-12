@@ -93,13 +93,13 @@ var config = {
         test: /\.jsx?$/,
         exclude: /(node_modules)/,
         loaders: [
-          "babel-loader?sourceMaps=inline&optional=runtime",
+          "babel-loader?sourceMaps=inline&optional=runtime"
         ]
       },
       {
         test: /\.html$/,
         loaders: [
-          "ng-cache?-removeEmptyAttributes&prefix=" + path.dirname(__dirname) + ":/**",
+          "ng-cache?-removeEmptyAttributes&prefix=" + path.dirname(__dirname) + ":/**"
         ]
       },
       {
@@ -137,7 +137,7 @@ var config = {
       inject: false // Inject all scripts into the body
     }),
     new webpack.ProvidePlugin({
-      "angular": "angular",
+      "angular": "angular"
     })
   ]
 };
