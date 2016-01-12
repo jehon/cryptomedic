@@ -17,4 +17,8 @@ export default class Appointment extends File {
       this._type = "Appointment";
     }
   }
+
+  isLocked() {
+    return false;
+  }
 }
