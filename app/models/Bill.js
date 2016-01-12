@@ -178,7 +178,7 @@ export default class Bill extends File {
       }
     });
     if (this.price_id < 0) {
-      throw new Exception("Price Id not set");
+      throw new Error("Price Id not set");
     }
     this.calculate_total_real();
   }
