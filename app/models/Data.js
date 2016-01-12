@@ -9,10 +9,6 @@ class Data {
     }
   }
 
-  setPatient(_patient) {
-    this.patient = _patient;
-  }
-
   isSet(field) {
     if (typeof(this[field]) == "undefined") {
       return false;
