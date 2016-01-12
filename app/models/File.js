@@ -14,18 +14,16 @@ export default class File extends Data{
       if (this.Date == null) {
         this.Date = date2CanonicString(new Date(), true);
       }
-      if (folder) {
-        this.patient_id = folder.getMainFile().id;
-      }
     }
-    if (folder && folder.getMainFile) {
-      this.setPatient(folder.getMainFile());
+    if (folder) {
+      this.patient_id = folder.getId();
+      this.linkPatient(folder.getMainFile());
     } else {
-      this.setPatient(null);
+      this.linkPatient(null);
     }
   }
 
-  setPatient(patient) {
+  linkPatient(patient) {
     // Encapsulate into function, so that it is not persisted
     this.getPatient = function() {
       return patient;
@@ -34,6 +32,9 @@ export default class File extends Data{
 
   // For graphic, by default it expect number -> textual render it in text only on demand
   ageAtConsultTime(textual) {
+    if (!this.isSet("Date")) {
+      throw new DataMissingException("Date");
+    }
     var age = calculations.age.fromBirthDate(this.getPatient().Yearofbirth, { reference: this.Date, format: (textual ? false : "number") });
     // if (age == "?") throw new DataMissingException("Date");
     return age;
