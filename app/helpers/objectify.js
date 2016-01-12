@@ -31,10 +31,6 @@ function objectify(what) {
       for(var i in what) {
         what[i] = objectify(what[i]);
       }
-      // TODO: this should not be recursive ==> handled by new Folder()
-      // if (typeof(what["_type"]) != "undefined") {
-      //   what = create(what["_type"], what);
-      // }
       return what;
     default:
       return what;

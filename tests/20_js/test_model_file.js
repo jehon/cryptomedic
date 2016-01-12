@@ -5,13 +5,13 @@ describe("File", function() {
   var clubFoot_695 = 5;
 
   describe("with mock_patient_10.json", function() {
-    var folder = appState().create("Folder");
+    var folder = appState().helpers.create("Folder");
     it("should have correct properties", function(done) {
     // Go through the rest_service !!!
-      loadFrom("/base/tests/js/mocks/mock_patient_10.json").done(function(data) {
-        expect(folder instanceof appState().create("Folder").constructor).toBeTruthy();
+      loadFrom(rootMock + "/mock_patient_10.json", "Folder").done(function(data) {
+        expect(folder instanceof appState().helpers.create("Folder").constructor).toBeTruthy();
 
-        expect(folder.getMainFile() instanceof appState().create("Patient").constructor).toBeTruthy();
+        expect(folder.getMainFile() instanceof appState().helpers.create("Patient").constructor).toBeTruthy();
         expect(folder.getMainFile().Sex).toBe(207);
         expect(folder.getMainFile().Yearofbirth).toBe(1998);
         expect(folder.getMainFile().actualAge(new Date("2014-01-01"))).toBe(16);
@@ -20,18 +20,18 @@ describe("File", function() {
 
         var i;
         i = ricketConsult_8819;
-        expect(folder.getSubFile(i) instanceof appState().create("File").constructor).toBeTruthy();
-        expect(folder.getSubFile(i) instanceof appState().create("RicketConsult").constructor).toBeTruthy();
+        expect(folder.getSubFile(i) instanceof appState().helpers.create("File").constructor).toBeTruthy();
+        expect(folder.getSubFile(i) instanceof appState().helpers.create("RicketConsult").constructor).toBeTruthy();
         expect(folder.getSubFile(i).id).toBe(8819);
-        expect(folder.getSubFile(i).getPatient() instanceof appState().create("Patient").constructor).toBeTruthy();
+        expect(folder.getSubFile(i).getPatient() instanceof appState().helpers.create("Patient").constructor).toBeTruthy();
         expect(folder.getSubFile(i).Date).toEqual(new Date(2014, 5, 4));
         expect(folder.getSubFile(i).ageAtConsultTime()).toBe(16);
 
         i = clubFoot_695;
-        expect(folder.getSubFile(i) instanceof appState().create("File").constructor).toBeTruthy();
-        expect(folder.getSubFile(i) instanceof appState().create("ClubFoot").constructor).toBeTruthy();
+        expect(folder.getSubFile(i) instanceof appState().helpers.create("File").constructor).toBeTruthy();
+        expect(folder.getSubFile(i) instanceof appState().helpers.create("ClubFoot").constructor).toBeTruthy();
         expect(folder.getSubFile(i).id).toBe(695);
-        expect(folder.getSubFile(i).getPatient() instanceof appState().create("Patient").constructor).toBeTruthy();
+        expect(folder.getSubFile(i).getPatient() instanceof appState().helpers.create("Patient").constructor).toBeTruthy();
         expect(folder.getSubFile(i).Date).toEqual(new Date(2014, 3, 17));
         expect(folder.getSubFile(i).ageAtConsultTime()).toBe(16);
 
@@ -41,7 +41,7 @@ describe("File", function() {
     describe("with empty object", function() {
       it("should throw error everytime", function(done) {
         var i = ricketConsult_8819;
-        var o = new application.models.File({}, appState().create("Patient"));
+        var o = new application.models.File({}, appState().helpers.create("Patient"));
 
         expect(function() { o.ageAtConsultTime(); }).toThrow(new DataMissingException("Date"));
         expect(function() { o.bmi(); }).toThrow(new DataMissingException("Height"));
@@ -58,7 +58,7 @@ describe("File", function() {
     describe("with patient with sex", function() {
       it("should throw error everytime", function(done) {
         var i = ricketConsult_8819;
-        var o = appState().create("File", {}, appState().create("Patient", { "Sex": 207 }));
+        var o = appState().helpers.create("File", {}, appState().helpers.create("Patient", { "Sex": 207 }));
 
         expect(function() { o.ageAtConsultTime(); }).toThrow(new DataMissingException("Date"));
         expect(function() { o.bmi(); }).toThrow(new DataMissingException("Height"));

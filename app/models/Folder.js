@@ -9,7 +9,7 @@ export default class Folder extends Data {
     super(data);
 
     // this.mainFile = this.mainFile || new Patient();
-    this.mainfile = (this.mainFile ? new Patient(this.mainFile) : new Patient());
+    this.mainFile = (this.mainFile ? new Patient(this.mainFile) : new Patient());
     this.subFiles = this.subFiles || [];
     for(var i = 0; i < this.subFiles.length; i++) {
       this.subFiles[i] = create(this.subFiles[i]["_type"], this.subFiles[i], this.getMainFile());
