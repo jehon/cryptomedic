@@ -16,8 +16,10 @@ import Surgery       from "models/Surgery";
 var models = {
   Data,
   File,
+
   Folder,
   Patient,
+
   Appointment,
   Bill,
   ClubFoot,
@@ -32,5 +34,7 @@ export default function create(type, data, folder) {
     console.error((new Error()).stack);
     throw new Error("Create impossible for type '" + type + "'");
   }
-  return new models[type](data, folder);
+  var d = new models[type](data, folder);
+  // console.info("create function with " + type, d.constructor.name, d);
+  return d;
 }

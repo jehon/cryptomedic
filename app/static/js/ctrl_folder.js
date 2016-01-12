@@ -301,7 +301,7 @@ mainApp.controller("ctrl_folder", [ "$scope", "$location", "$routeParams" , func
   };
 
   $scope.nextAppointment = function() {
-    var today = date2CanonicString(new Date(), true);
+    var today = appState().helpers.date2CanonicString(new Date(), true);
     var next = false;
     angular.forEach($scope.folder.subFiles, function(v, k) {
       if (v._type == "Appointment") {
@@ -319,7 +319,7 @@ mainApp.controller("ctrl_folder", [ "$scope", "$location", "$routeParams" , func
     if ($scope.folder) {
       var d = new Date();
       var d2 = new Date(d.getFullYear() - $scope.age.years, d.getMonth() - $scope.age.months, 10);
-      $scope.folder.getMainFile().Yearofbirth  = date2CanonicString(d2).substring(0, 7);
+      $scope.folder.getMainFile().Yearofbirth  = appState().helpers.date2CanonicString(d2).substring(0, 7);
     }
   }
 

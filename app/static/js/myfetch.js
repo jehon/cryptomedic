@@ -36,8 +36,8 @@ function myFetch(url, init, data) {
       init.body = serialize(data);
     } else {
       url = url + "?";
-      for(var a in data) {
-        url = url + encodeURIComponent(a) + "=" + encodeURIComponent(data[a]) + "&";
+      for(var d in data) {
+        url = url + encodeURIComponent(d) + "=" + encodeURIComponent(data[d]) + "&";
       }
     }
   }

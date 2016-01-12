@@ -3,19 +3,19 @@
 describe("Cryptomedic.js", function() {
   describe("date2CanonicString", function() {
     it("should return 0000-00-00 00:00:00 GMT+0000 for null", function() {
-      expect(date2CanonicString(null)).toEqual("0000-00-00 00:00:00 GMT+0000");
+      expect(appState().helpers.date2CanonicString(null)).toEqual("0000-00-00 00:00:00 GMT+0000");
     });
     it("should return information that could be understood through appState().helpers.objectify", function() {
       var d = new Date();
       d.setMilliseconds(0);
-      expect(appState().helpers.objectify(date2CanonicString(d))).toEqual(d);
+      expect(appState().helpers.objectify(appState().helpers.date2CanonicString(d))).toEqual(d);
     });
   });
 
   describe("appState().helpers.objectify", function() {
     var d = new Date();
     d.setMilliseconds(0);
-    var sd = date2CanonicString(d);
+    var sd = appState().helpers.date2CanonicString(d);
     it("should do nothing with simple types", function() {
       expect(appState().helpers.objectify()).toBe(null);
       expect(appState().helpers.objectify(null)).toBe(null);
@@ -26,7 +26,7 @@ describe("Cryptomedic.js", function() {
     it("should parse " + sd + " correctly", function() {
       expect(appState().helpers.objectify(sd)).toEqual(d);
     });
-    it("should parse " + date2CanonicString(null) + " correctly", function() {
+    it("should parse " + appState().helpers.date2CanonicString(null) + " correctly", function() {
       expect(appState().helpers.objectify("0000-00-00 00:00:00 GMT+0000")).toEqual(null);
     });
     it("should parse recursively arrays and objects", function() {
@@ -39,7 +39,7 @@ describe("Cryptomedic.js", function() {
   describe("stringify", function() {
     var d = new Date();
     d.setMilliseconds(0);
-    var sd = date2CanonicString(d);
+    var sd = appState().helpers.date2CanonicString(d);
     it("should do nothing with simple types", function() {
       expect(stringify(null)).toBe(null);
       expect(stringify(null)).toBe(null);
