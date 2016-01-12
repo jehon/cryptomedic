@@ -248,6 +248,7 @@ function service_backend_fn() {
         //   console.log("Getting the folder live: #" + id);
         return myFrontFetch(rest + "/folder/" + id)
           .then(appState().helpers.objectify)
+          .then(function(data) { return appState().helpers.create("Folder", data); })
           .catch()
           ;
         // });
@@ -288,11 +289,17 @@ function service_backend_fn() {
         .then(function(data) {
           var list = [];
           for(var i in data) {
-            list.push(new application.models.Patient(data[i]));
+            list.push(appState().helpers.create("Patient", data[i]));
           }
           return list;
         })
         .then(appState().helpers.objectify)
+        .then(function(data) {
+          for(var i in data) {
+            data[i] = appState().helpers.create("Patient", data[i]);
+          }
+          return data;
+        })
         .catch()
         ;
     },
@@ -306,6 +313,7 @@ function service_backend_fn() {
           "entryorder": order
         })
         .then(appState().helpers.objectify)
+        .then(function(data) { return appState().helpers.create("Folder", data); })
         .catch()
         ;
     },
@@ -313,6 +321,7 @@ function service_backend_fn() {
     "createFile": function(data) {
       return myFrontFetch(rest + "/fiche/" + data["_type"], { method: "POST" }, nullify(data))
         .then(appState().helpers.objectify)
+        .then(function(data) { return appState().helpers.create("Folder", data); })
         .catch()
         ;
     },
@@ -320,6 +329,7 @@ function service_backend_fn() {
     "saveFile": function(data) {
       return myFrontFetch(rest + "/fiche/" + data["_type"] + "/" + data["id"], { method: "PUT" }, nullify(data))
         .then(appState().helpers.objectify)
+        .then(function(data) { return appState().helpers.create("Folder", data); })
         .catch()
         ;
     },
@@ -327,6 +337,7 @@ function service_backend_fn() {
     "deleteFile": function(data) {
       return myFrontFetch(rest + "/fiche/" + data["_type"] + "/" + data["id"], { method: "DELETE" })
         .then(appState().helpers.objectify)
+        .then(function(data) { return appState().helpers.create("Folder", data); })
         .catch()
         ;
     },
@@ -334,6 +345,7 @@ function service_backend_fn() {
     "unlockFile": function(data) {
       return myFrontFetch(rest + "/unfreeze/" + data["_type"] + "/" + data["id"])
         .then(appState().helpers.objectify)
+        .then(function(data) { return appState().helpers.create("Folder", data); })
         .catch()
         ;
     },
