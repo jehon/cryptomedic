@@ -45,6 +45,10 @@ class Data {
     }
     return res;
   }
+
+  isLocked() {
+    return false;
+  }
 }
 
 export default Data;
