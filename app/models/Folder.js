@@ -3,6 +3,7 @@
 import Data      from "models/Data";
 import Patient   from "models/Patient";
 import create    from "helpers/create";
+import amd_stats from "helpers/amd_stats_datas";
 
 export default class Folder extends Data {
   constructor(data) {
@@ -39,6 +40,10 @@ export default class Folder extends Data {
   getSubFile(i) {
     if (i >= this.subFiles.length) return null;
     return this.subFiles[i];
+  }
+
+  graphic_dimensions(axis_x, axis_y) {
+    return amd_stats.dimensions[axis_x + "_" + axis_y + "_" + this.getMainFile().sexStr()];
   }
 
   static ordering(o1, o2) {
