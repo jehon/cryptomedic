@@ -59,8 +59,6 @@ var config = {
       // './app/static/js/database.js',
       // './app/static/js/myfetch.js',
       // './app/static/js/cryptomedic.js',
-      // './app/static/js/amd_stats_datas.js',
-      // './app/static/js/exceptions.js',
       // './app/static/worker/worker.js',
     ])
     // .concat(glob.sync('./app/static/js/model_*.js'))

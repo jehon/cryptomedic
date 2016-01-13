@@ -2,6 +2,7 @@
 
 import Data from "models/Data";
 import date2CanonicString from "helpers/date2CanonicString";
+import amd_stats from "helpers/amd_stats_datas";
 
 export default class File extends Data{
   constructor(data, folder = null) {

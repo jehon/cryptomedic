@@ -183,43 +183,43 @@ export default class Bill extends File {
     this.calculate_total_real();
   }
 
-  tagIt() {
-    if (pi < 0) {
-      angular.forEach(server.settings.prices[pi], function(v, i) {
-        var tag = "[pricefor=" + i + "]";
-        if (v > 0) {
-          jQuery(tag).html(v);
-          jQuery(tag).parentsUntil("tbody").find("input").attr("disabled", false);
-        } else {
-          jQuery(tag).html("not available");
-          jQuery(tag).parentsUntil("tbody").find("input").attr("disabled", true).val(0);
-        }
-      });
-    }
-  }
+  // tagIt() {
+  //   if (pi < 0) {
+  //     angular.forEach(server.settings.prices[pi], function(v, i) {
+  //       var tag = "[pricefor=" + i + "]";
+  //       if (v > 0) {
+  //         jQuery(tag).html(v);
+  //         jQuery(tag).parentsUntil("tbody").find("input").attr("disabled", false);
+  //       } else {
+  //         jQuery(tag).html("not available");
+  //         jQuery(tag).parentsUntil("tbody").find("input").attr("disabled", true).val(0);
+  //       }
+  //     });
+  //   }
+  // }
 
-  calculateIt() {
-    if (!!server.settings) return 0;
-    var pi = jQuery("[name=\"data[price_id]\"]").val();
-    var total = 0;
-    _(jQuery("input:enabled[type=number]")).each(function(v, i) {
-      var n = jQuery(v).attr("name").replace("data[", "").replace("]", "");
-      var p = server.settings.prices[pi][n];
-      if ((typeof(p) != "undefined") && (p > 0)) {
-        total += p * jQuery(v).val();
-      }
-    });
-    jQuery("#total_real").html(total);
-    var total_social = total;
-    var sl = jQuery("[name=\"data[Sociallevel]\"]:checked").val();
-    if ((typeof(sl) != undefined) && (sl >= "")) {
-      var psl = server.settings.prices[pi]["socialLevelPercentage_" + sl];
-      if ((typeof(psl) != "undefined") && (psl >= 0)) {
-        total_social = total * psl;
-      }
-    }
-    jQuery("#total_asked").html(total_social);
-  }
+  // calculateIt() {
+  //   if (!!server.settings) return 0;
+  //   var pi = jQuery("[name=\"data[price_id]\"]").val();
+  //   var total = 0;
+  //   _(jQuery("input:enabled[type=number]")).each(function(v, i) {
+  //     var n = jQuery(v).attr("name").replace("data[", "").replace("]", "");
+  //     var p = server.settings.prices[pi][n];
+  //     if ((typeof(p) != "undefined") && (p > 0)) {
+  //       total += p * jQuery(v).val();
+  //     }
+  //   });
+  //   jQuery("#total_real").html(total);
+  //   var total_social = total;
+  //   var sl = jQuery("[name=\"data[Sociallevel]\"]:checked").val();
+  //   if ((typeof(sl) != undefined) && (sl >= "")) {
+  //     var psl = server.settings.prices[pi]["socialLevelPercentage_" + sl];
+  //     if ((typeof(psl) != "undefined") && (psl >= 0)) {
+  //       total_social = total * psl;
+  //     }
+  //   }
+  //   jQuery("#total_asked").html(total_social);
+  // }
 
   validate(res) {
     /* Business rules (price > 4):
