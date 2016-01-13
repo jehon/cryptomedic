@@ -29,7 +29,8 @@ mainApp.controller("ctrl_graphic", [ "$scope", "$element", function($scope, $ele
   };
 
   var imgDimension = function(what) {
-    return amd_stats.dimensions[x + "_" + y + "_" + $scope.folder.getMainFile().sexStr()][what];
+    return $scope.folder.graphic_dimensions(x, y)[what];
+    // return amd_stats.dimensions[x + "_" + y + "_" + $scope.folder.getMainFile().sexStr()][what];
   };
 
   $scope.getValidity = function($index) {
