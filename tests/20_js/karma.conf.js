@@ -18,7 +18,7 @@ module.exports = function(config) {
 
     files : [
       "tests/20_js/kickoff.js",
-              // Work only if one bundle is present:
+      // Work only if one bundle is present:
       "build/bundle-*.js",
       "app/static/js/application.js",
       "app/static/js/calculations.js",
@@ -26,7 +26,7 @@ module.exports = function(config) {
       "app/static/js/myfetch.js",
       "app/static/js/service*.js",
       "tests/20_js/**/*.js",
-              { pattern : "tests/20_js/mocks/*.json", watched : true, served : true, included : false }
+      { pattern : "tests/20_js/mocks/*.json", watched : true, served : true, included : false }
     ],
 
     autoWatch : true,
