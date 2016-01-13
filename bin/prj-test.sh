@@ -49,7 +49,12 @@ test_dir() {
 
   if [ -r karma.conf.js ]; then
     echo -e "\e[0;45m[\e[1;45m$N/karma\e[0;45m] Testing $L\e[0m"
-    ../../node_modules/.bin/karma start --single-run "$@"
+    ARGS=""
+    # http://bahmutov.calepin.co/debugging-karma-unit-tests.html
+    if [ "$DEBUG" ]; then
+      ARGS="--single-run=false --debug"
+    fi
+    ../../node_modules/.bin/karma start --single-run $ARGS "$@"
   fi
 }
 
@@ -57,6 +62,10 @@ test_dir() {
 if [ "$FRONT" = "" ]; then
   # If FRONT is not set, then do that is the background
   export DISPLAY=:99.0
+fi
+
+if [ "$DEBUG" != "" ]; then
+  echo "\e[0;45mRunning in debug mode\e[0m"
 fi
 
 if [ "$1" ]; then
