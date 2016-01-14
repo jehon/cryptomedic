@@ -255,7 +255,7 @@ mainApp.controller("ctrl_folder", [ "$scope", "$location", "$routeParams" , func
     }
     appState().actions.state.busy("Creating the patient on the server");
     $scope.folder = false;
-    $scope.currentFile().getModel() = "Patient";
+    // $scope.currentFile().getModel() = "Patient";
     service_backend.createFile($scope.currentFile())
     .then(function(data) {
       $scope.$emit("message", { "level": "success", "text":  "The patient has been created."});

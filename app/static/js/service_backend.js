@@ -239,7 +239,8 @@ function service_backend_fn() {
     "checkReference": function(year, order) {
       return myFrontFetch(rest + "/reference/" + year + "/" + order)
         .then(function(data) {
-          if ((data.getModel() != "undefined") && (data.getModel() == "Folder")) {
+          if (data && data.id) {
+          // if ((data.getModel() != "undefined") && (data.getModel() == "Folder")) {
             return data["id"];
           } else {
             return false;

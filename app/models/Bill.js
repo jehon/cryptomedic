@@ -234,7 +234,7 @@ export default class Bill extends File {
     - il faut pourvoir coder home visit ou give appointment mais pas les 2
     - il faut pourvoir coder consultation physio ou doctor mais pas les 2
     */
-    res = this._super(res);
+    res = super.validate(res);
 
     if (this.price_id >= 2) {
       if ((this.consult_home_visit > 0) && (this.consult_give_appointment > 0)) {

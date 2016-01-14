@@ -16,8 +16,7 @@ export default class Folder extends Data {
     this.subFiles = this.subFiles || [];
     this.id = this.id || -1;
     for(var i = 0; i < this.subFiles.length; i++) {
-      this.subFiles[i] = create(this.subFiles[i].getModel(), this.subFiles[i], this);
-      //, this.getMainFile().constructor.name, create("Folder").constructor.name);
+      this.subFiles[i] = create(this.subFiles[i]._type, this.subFiles[i], this);
       this.subFiles[i].linkPatient(this.getMainFile());
     }
     this.subFiles.sort(this.ordering);
