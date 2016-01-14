@@ -38,12 +38,12 @@ module.exports = {
       .page.cryptomedic().authenticate("murshed")
 
       .myClick("#menu_home")
-      .waitForElementVisible("input[ng-model=\"entryyear\"]")
-      .clearValue("input[ng-model=\"entryyear\"]")
-      .setValue("input[ng-model=\"entryyear\"]", 2015)
-      .clearValue("input[ng-model=\"entryorder\"]")
-      .setValue("input[ng-model=\"entryorder\"]", 1)
-      .myClick("[ng-click=\"checkReference()\"]")
+      .waitForElementVisible("input[ng-model='entryyear']")
+      .clearValue("input[ng-model='entryyear']")
+      .setValue("input[ng-model='entryyear']", 2015)
+      .clearValue("input[ng-model='entryorder']")
+      .setValue("input[ng-model='entryorder']", 1)
+      .myClick("[ng-click='checkReference()']")
       .myClick("#button_create_reference")
 
       // Edit and save
@@ -157,5 +157,5 @@ module.exports = {
       .acceptAlert()
 
       .end();
-  },
+  }
 };

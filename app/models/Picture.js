@@ -12,7 +12,7 @@ export default class Picture extends File {
   // }
 
   validate(res) {
-    res = this._super(res);
+    res = super.validate(res);
     if (!this.fileContent && !this.file) {
       res.pictureRequired = true;
     }
