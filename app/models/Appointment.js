@@ -3,6 +3,10 @@
 import File from "models/File";
 
 export default class Appointment extends File {
+  getModel() {
+    return "Appointment";
+  }
+
   constructor(data, folder = null) {
     super(data, folder);
     if (!data) {
@@ -14,11 +18,11 @@ export default class Appointment extends File {
       day = day.substring(day.length - 2);
 
       this.Date = year + "-" + month + "-" + day;
-      this._type = "Appointment";
     }
   }
 
   isLocked() {
     return false;
   }
+
 }

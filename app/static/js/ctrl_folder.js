@@ -46,11 +46,11 @@ mainApp.controller("ctrl_folder", [ "$scope", "$location", "$routeParams" , func
 
     if ($scope.page == "file") {
       if ($scope.mode == "add") {
-        cachedCurrentFile = appState().helpers.create($scope.subtype, null, $scope.folder);
+        cachedCurrentFile = appState().helpers.create($scope.subtype, {}, $scope.folder);
         cachedCurrentFile.patient_id = $scope.patient_id;
       } else {
         for(var i in $scope.folder.getSubFiles()) {
-          if (($scope.folder.getSubFile(i)._type == $scope.subtype)
+          if (($scope.folder.getSubFile(i).getModel() == $scope.subtype)
               && ($scope.folder.getSubFile(i).id == $scope.subid)) {
             cachedCurrentFile = $scope.folder.getSubFile(i);
           }
@@ -111,9 +111,9 @@ mainApp.controller("ctrl_folder", [ "$scope", "$location", "$routeParams" , func
   $scope.getPathTo = function(mode, index) {
     var f = cachedCurrentFile;
     if (index) {
-      f = folder.getSubFile(index);
+      f = $scope.folder.getSubFile(index);
     }
-    return "/folder/" + f.patient_id + "/fiche/" + f._type + "/" + f.id + (mode ? "/" + mode : "");
+    return "/folder/" + f.patient_id + "/fiche/" + f.getModel() + "/" + f.id + (mode ? "/" + mode : "");
   };
 
   //----------------------
@@ -127,8 +127,8 @@ mainApp.controller("ctrl_folder", [ "$scope", "$location", "$routeParams" , func
 
     jQuery("input[type=number][required]").each(function() {
       if (jQuery(this).val() == "") {
-          jQuery(this).val(0);
-        }
+        jQuery(this).val(0);
+      }
     });
 
     if (!jQuery("#fileForm")[0].checkValidity()) {
@@ -221,9 +221,9 @@ mainApp.controller("ctrl_folder", [ "$scope", "$location", "$routeParams" , func
       service_session_storage().set("center", cachedCurrentFile.Center);
     }
 
-    service_backend.createFile(cachedCurrentFile, $scope.patient_id)
+    service_backend.createFile(cachedCurrentFile)
     .then(function(data) {
-      $scope.$emit("message", { "level": "success", "text": "The " + cachedCurrentFile._type + " has been created."});
+      $scope.$emit("message", { "level": "success", "text": "The " + cachedCurrentFile.getModel() + " has been created."});
       // The data is refreshed by navigating away...
       $scope.go("/folder/" + $scope.patient_id + "/file/" + $scope.subtype + "/" + data.newKey);
       appState().actions.state.ready();
@@ -240,7 +240,7 @@ mainApp.controller("ctrl_folder", [ "$scope", "$location", "$routeParams" , func
     $scope.safeApply();
     service_backend.deleteFile($scope.currentFile())
     .then(function(data) {
-      $scope.$emit("message", { "level": "success", "text":  "The " + $scope.currentFile()._type +  " of " + $scope.currentFile().Date + " has been deleted"});
+      $scope.$emit("message", { "level": "success", "text":  "The " + $scope.currentFile().getModel() +  " of " + $scope.currentFile().Date + " has been deleted"});
       $scope.folder = data;
       $scope.go("/folder/" + $scope.patient_id);
       appState().actions.state.ready();
@@ -255,7 +255,7 @@ mainApp.controller("ctrl_folder", [ "$scope", "$location", "$routeParams" , func
     }
     appState().actions.state.busy("Creating the patient on the server");
     $scope.folder = false;
-    $scope.currentFile()._type = "Patient";
+    $scope.currentFile().getModel() = "Patient";
     service_backend.createFile($scope.currentFile())
     .then(function(data) {
       $scope.$emit("message", { "level": "success", "text":  "The patient has been created."});
@@ -303,7 +303,7 @@ mainApp.controller("ctrl_folder", [ "$scope", "$location", "$routeParams" , func
     var today = appState().helpers.date2CanonicString(new Date(), true);
     var next = false;
     angular.forEach($scope.folder.subFiles, function(v, k) {
-      if (v._type == "Appointment") {
+      if (v.getModel() == "Appointment") {
         if (v.Nextappointment > today) {
           if (!next || v.Nextappointment < next) {
             next = v.Nextappointment;
