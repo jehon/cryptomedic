@@ -239,7 +239,7 @@ function service_backend_fn() {
     "checkReference": function(year, order) {
       return myFrontFetch(rest + "/reference/" + year + "/" + order)
         .then(function(data) {
-          if ((typeof(data._type) != "undefined") && (data._type == "Folder")) {
+          if ((data.getModel() != "undefined") && (data.getModel() == "Folder")) {
             return data["id"];
           } else {
             return false;
@@ -290,7 +290,7 @@ function service_backend_fn() {
     },
 
     "createFile": function(data) {
-      return myFrontFetch(rest + "/fiche/" + data["_type"], { method: "POST" }, nullify(data))
+      return myFrontFetch(rest + "/fiche/" + data.getModel(), { method: "POST" }, nullify(data))
         .then(appState().helpers.objectify)
         .then(function(data) { return appState().helpers.create("Folder", data); })
         .catch()
@@ -298,7 +298,7 @@ function service_backend_fn() {
     },
 
     "saveFile": function(data) {
-      return myFrontFetch(rest + "/fiche/" + data["_type"] + "/" + data["id"], { method: "PUT" }, nullify(data))
+      return myFrontFetch(rest + "/fiche/" + data.getModel() + "/" + data["id"], { method: "PUT" }, nullify(data))
         .then(appState().helpers.objectify)
         .then(function(data) { return appState().helpers.create("Folder", data); })
         .catch()
@@ -306,7 +306,7 @@ function service_backend_fn() {
     },
 
     "deleteFile": function(data) {
-      return myFrontFetch(rest + "/fiche/" + data["_type"] + "/" + data["id"], { method: "DELETE" })
+      return myFrontFetch(rest + "/fiche/" + data.getModel() + "/" + data["id"], { method: "DELETE" })
         .then(appState().helpers.objectify)
         .then(function(data) { return appState().helpers.create("Folder", data); })
         .catch()
@@ -314,7 +314,7 @@ function service_backend_fn() {
     },
 
     "unlockFile": function(data) {
-      return myFrontFetch(rest + "/unfreeze/" + data["_type"] + "/" + data["id"])
+      return myFrontFetch(rest + "/unfreeze/" + data.getModel() + "/" + data["id"])
         .then(appState().helpers.objectify)
         .then(function(data) { return appState().helpers.create("Folder", data); })
         .catch()

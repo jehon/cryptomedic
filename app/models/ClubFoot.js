@@ -14,12 +14,13 @@ function f(val) {
 
 
 export default class ClubFoot extends File {
-  constructor(data, folder = null) {
-    super(data, folder);
-    if (!data) {
-      this._type = "ClubFoot";
-    }
+  getModel() {
+    return "ClubFoot";
   }
+
+  // constructor(data, folder = null) {
+  //   super(data, folder);
+  // }
 
   getPiraniLeft() {
     // TODO: try-catch it in gui

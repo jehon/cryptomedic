@@ -3,6 +3,10 @@
 import Data from "models/Data";
 
 export default class Patient extends Data {
+  getModel() {
+    return "Patient";
+  }
+
   sexStr() {
     if (!this.isNotZero("Sex")) {
       return null;

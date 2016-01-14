@@ -5,14 +5,20 @@ import File from "models/File";
 // TODO: there seems to have a race condition around here...
 
 export default class Bill extends File {
+  getModel() {
+    return "Bill";
+  }
+
   constructor(data, folder = null) {
     super(data, folder);
     if (!data) {
       // Initialize social level from last bill (if any)
       var last_bill = null;
       if (folder) {
-        angular.forEach(folder.subFiles, function(v, k) {
-          if (v._type == "Bill") {
+        // angular.forEach(folder.subFiles, function(v, k) {
+        for(var k in folder.subFiles) {
+          var v = folder.subFiles[k];
+          if (v.getModel() == "Bill") {
             if (!last_bill) {
               last_bill = v;
             } else {
@@ -21,13 +27,12 @@ export default class Bill extends File {
               }
             }
           }
-        });
+        }
         if (last_bill) {
           this.sl_familySalary = last_bill.sl_familySalary;
           this.sl_numberOfHouseholdMembers = last_bill.sl_numberOfHouseholdMembers;
         }
       }
-      this._type = "Bill";
     }
   }
 
@@ -105,7 +110,8 @@ export default class Bill extends File {
     }
     var price = server.settings.prices[this.price_id];
     var total = 0;
-    angular.forEach(price, function(p, i) {
+    // angular.forEach(price, function(p, i) {
+    for(var i in price) {
       if (i[0] == "_") return;
       if (i == "id") return;
       if (i == "created_at") return;
@@ -121,11 +127,11 @@ export default class Bill extends File {
       if (i == "socialLevelPercentage_2") return;
       if (i == "socialLevelPercentage_3") return;
       if (i == "socialLevelPercentage_4") return;
-      if (p < 0) return;
+      if (price[i] < 0) return;
       if (typeof(this[i]) == "undefined") return;
       if (this[i] <= 0) return;
       total += price[i] * this[i];
-    }, this);
+    }//, this);
     this.total_real = total;
     this.total_asked = this.total_real * this.calculate_percentage_asked();
     return this.total_real;
@@ -170,13 +176,15 @@ export default class Bill extends File {
     this.price_id = -1;
     var t = this;
     var dref = this.Date;
-    angular.forEach(server.settings.prices, function(p, i) {
+    // angular.forEach(server.settings.prices, function(p, i) {
       // console.log(p);
+    for(var i in server.settings.prices) {
+      var p = server.settings.prices[i];
       if (((p["datefrom"] == null) || (p["datefrom"] <= dref))
         && ((p["dateto"] == null) || (p["dateto"] > dref))) {
         t.price_id = i;
       }
-    });
+    }
     if (this.price_id < 0) {
       throw new Error("Price Id not set");
     }

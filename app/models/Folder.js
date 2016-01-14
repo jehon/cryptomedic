@@ -6,13 +6,17 @@ import create    from "helpers/create";
 import amd_stats from "helpers/amd_stats_datas";
 
 export default class Folder extends Data {
+  getModel() {
+    return "Folder";
+  }
+
   constructor(data) {
     super(data);
     this.mainFile = (this.mainFile ? new Patient(this.mainFile) : new Patient());
     this.subFiles = this.subFiles || [];
     this.id = this.id || -1;
     for(var i = 0; i < this.subFiles.length; i++) {
-      this.subFiles[i] = create(this.subFiles[i]["_type"], this.subFiles[i], this);
+      this.subFiles[i] = create(this.subFiles[i].getModel(), this.subFiles[i], this);
       //, this.getMainFile().constructor.name, create("Folder").constructor.name);
       this.subFiles[i].linkPatient(this.getMainFile());
     }
@@ -64,10 +68,10 @@ export default class Folder extends Data {
     }
 
     // What to do if one 'type' is missing
-    if (typeof(o1["_type"]) == "undefined") {
-      if (typeof(o2["_type"]) != "undefined") return o1First;
+    if (typeof(o1.getModel()) == "undefined") {
+      if (typeof(o2.getModel()) != "undefined") return o1First;
     } else {
-      if (typeof(o2["_type"]) == "undefined") return o2First;
+      if (typeof(o2.getModel()) == "undefined") return o2First;
     }
 
     // What to do if one 'Date' is missing
@@ -84,9 +88,9 @@ export default class Folder extends Data {
     }
 
     // Both 'type' are present
-    if (typeof(o1["_type"]) != "undefined" && typeof(o2["_type"]) != "undefined") {
-      if (o1["_type"] < o2["_type"]) return o1First;
-      if (o1["_type"] > o2["_type"]) return o2First;
+    if (typeof(o1.getModel()) != "undefined" && typeof(o2.getModel()) != "undefined") {
+      if (o1.getModel() < o2.getModel()) return o1First;
+      if (o1.getModel() > o2.getModel()) return o2First;
     }
 
     // Both 'id' are present

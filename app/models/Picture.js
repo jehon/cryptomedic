@@ -3,12 +3,13 @@
 import File from "models/File";
 
 export default class Picture extends File {
-  constructor(data, folder) {
-    super(data, folder);
-    if (!data) {
-      this._type = "Picture";
-    }
+  getModel() {
+    return "Picture";
   }
+
+  // constructor(data, folder) {
+  //   super(data, folder);
+  // }
 
   validate(res) {
     res = this._super(res);
