@@ -31,3 +31,6 @@ RedirectMatch    404       vendor
 
 # Since node_modules are not available on production, let's forbid their use here too...
 RedirectMatch    404       node_modules
+
+# DEV_ONLY: For taking some advance, and check that the cache is working:
+RedirectMatch    404       cache

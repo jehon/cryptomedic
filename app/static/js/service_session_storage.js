@@ -2,7 +2,6 @@
 
 function service_session_storage(onReady) {
   var values = {};
-  var defaults = {};
   var types = {};
 
   if (typeof(onReady) == "function") {
@@ -40,13 +39,13 @@ function service_session_storage(onReady) {
     "getAll": function() {
       var res = {};
       var t = this;
-      angular.forEach(values, function(v, k) {
+      for(var k in values) {
         if (typeof(t.get(k)) == "undefined") {
           res[k] = null;
         } else {
           res[k] = t.get(k);
         }
-      });
+      }
       return res;
     },
     "set": function(key, newVal) {

@@ -302,7 +302,8 @@ mainApp.controller("ctrl_folder", [ "$scope", "$location", "$routeParams" , func
   $scope.nextAppointment = function() {
     var today = appState().helpers.date2CanonicString(new Date(), true);
     var next = false;
-    angular.forEach($scope.folder.subFiles, function(v, k) {
+    for(var k in $scope.folder.subFiles) {
+      var v = $scope.folder.subFiles[k];
       if (v.getModel() == "Appointment") {
         if (v.Nextappointment > today) {
           if (!next || v.Nextappointment < next) {
@@ -310,7 +311,7 @@ mainApp.controller("ctrl_folder", [ "$scope", "$location", "$routeParams" , func
           }
         }
       }
-    });
+    }
     return next;
   };
 

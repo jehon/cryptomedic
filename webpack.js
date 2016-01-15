@@ -57,7 +57,6 @@ var config = {
 
       // './app/static/js/application.js',
       // './app/static/js/database.js',
-      // './app/static/js/myfetch.js',
       // './app/static/js/cryptomedic.js',
       // './app/static/worker/worker.js',
     ])
