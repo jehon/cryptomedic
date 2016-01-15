@@ -1,6 +1,6 @@
 
-import { createStore } from 'redux';
-import counter from 'actions/counter';
+import { createStore } from "redux";
+import counter from "actions/counter";
 
 let store = createStore(counter);
 

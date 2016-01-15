@@ -41,9 +41,10 @@ function nullify(what) {
       }
       return what;
     case "object":
-      angular.forEach(what, function(val, i) {
-        what[i] = nullify(val);
-      });
+      for(var k in what) {
+        what[k] = nullify(what[k]);
+      }
+      // });
       return what;
   }
   return what;
@@ -56,9 +57,9 @@ function stringify(what) {
     if (what instanceof Date) {
       return appState().helpers.date2CanonicString(what);
     }
-    angular.forEach(what, function (v, k) {
+    for(var k in what) {
       what[k] = stringify(what[k]);
-    });
+    }
   }
   return what;
 }

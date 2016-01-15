@@ -42,7 +42,6 @@
     "service_session_storage": true,
 
     // libs
-    "angular": true,
     "jQuery": true,
 
     // Jasmine

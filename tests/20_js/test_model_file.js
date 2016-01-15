@@ -16,7 +16,7 @@ describe("File", function() {
         expect(folder.getMainFile().Yearofbirth).toBe(1998);
         expect(folder.getMainFile().actualAge(new Date("2014-01-01"))).toBe("16y0m");
 
-        angular.forEach(folder.getSubFiles(), function(val, i) { console.log(i + ": " + val.getModel() + "#" + val.id); });
+        for(var ii in folder.getSubFiles()) { console.log(ii + ": " + folder.getSubFiles()[ii].getModel() + "#" + folder.getSubFiles()[ii].id); }
 
         var i;
         i = ricketConsult_8819;
