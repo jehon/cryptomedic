@@ -296,7 +296,7 @@ var mainApp = angular.module("app_main", [ "ngRoute" ])
               var w = img.naturalWidth;
 
               // Resize the image
-              var MAX_SIZE = 200*1024;
+              var MAX_SIZE = 300*1024;
               if (h * w > MAX_SIZE) {
                 schrink = Math.sqrt(h * w / MAX_SIZE);
                 w = w / schrink;
