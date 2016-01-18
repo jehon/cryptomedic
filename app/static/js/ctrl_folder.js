@@ -46,7 +46,7 @@ mainApp.controller("ctrl_folder", [ "$scope", "$location", "$routeParams" , func
 
     if ($scope.page == "file") {
       if ($scope.mode == "add") {
-        cachedCurrentFile = appState().helpers.create($scope.subtype, {}, $scope.folder);
+        cachedCurrentFile = appState().helpers.create($scope.subtype, null, $scope.folder);
         cachedCurrentFile.patient_id = $scope.patient_id;
       } else {
         for(var i in $scope.folder.getSubFiles()) {
