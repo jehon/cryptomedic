@@ -19,7 +19,8 @@ export default class Folder extends Data {
       this.subFiles[i] = create(this.subFiles[i]._type, this.subFiles[i], this);
       this.subFiles[i].linkPatient(this.getMainFile());
     }
-    this.subFiles.sort(this.ordering);
+    console.log("sorting");
+    this.subFiles.sort(Folder.ordering);
   }
 
   getId() {
@@ -56,12 +57,12 @@ export default class Folder extends Data {
     // Return -1 if o1 < o2 (o1 - o2) (o1 est avant o2)
 
     // What to do if one 'id' is missing
-    if (typeof(o1["id"]) == "undefined") {
-      if (typeof(o2["id"]) != "undefined") {
+    if (typeof(o1.id) == "undefined") {
+      if (typeof(o2.id) != "undefined") {
         return o1First;
       }
     } else {
-      if (typeof(o2["id"]) == "undefined") {
+      if (typeof(o2.id) == "undefined") {
         return o2First;
       }
     }
@@ -74,16 +75,16 @@ export default class Folder extends Data {
     }
 
     // What to do if one 'Date' is missing
-    if (typeof(o1["Date"]) == "undefined") {
-      if (typeof(o2["Date"]) != "undefined") return o1First;
+    if (typeof(o1.Date) == "undefined") {
+      if (typeof(o2.Date) != "undefined") return o1First;
     } else {
-      if (typeof(o2["Date"]) == "undefined") return o2First;
+      if (typeof(o2.Date) == "undefined") return o2First;
     }
 
     // Both 'date' are present
-    if (typeof(o1["Date"]) != "undefined" && typeof(o2["Date"]) != "undefined") {
-      if (o1["Date"] < o2["Date"]) return o2First;
-      if (o1["Date"] > o2["Date"]) return o1First;
+    if (typeof(o1.Date) != "undefined" && typeof(o2.Date) != "undefined") {
+      if (o1.Date < o2.Date) return o2First;
+      if (o1.Date > o2.Date) return o1First;
     }
 
     // Both 'type' are present
@@ -93,9 +94,9 @@ export default class Folder extends Data {
     }
 
     // Both 'id' are present
-    if (typeof(o1["id"]) != "undefined" && typeof(o2["id"]) != "undefined") {
-      if (o1["id"] > o2["id"]) return o1First;
-      if (o1["id"] < o2["id"]) return o2First;
+    if (typeof(o1.id) != "undefined" && typeof(o2id) != "undefined") {
+      if (o1.id > o2.id) return o1First;
+      if (o1.id < o2.id) return o2First;
     }
     return 0;
   }
