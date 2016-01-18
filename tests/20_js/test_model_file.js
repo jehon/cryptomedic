@@ -1,13 +1,12 @@
 "use strict";
 
 describe("File", function() {
-  var ricketConsult_8819 = 5;
-  var clubFoot_695 = 2;
+  var ricketConsult_8819 = 6;
+  var clubFoot_695 = 4;
 
   describe("with mock_patient_10.json", function() {
-    var folder = appState().helpers.create("Folder");
     it("should have correct properties", function(done) {
-    // Go through the rest_service !!!
+      // Go through the rest_service !!!
       loadMock("mock_patient_10.json", "Folder").then(function(folder) {
         expect(folder instanceof appState().helpers.create("Folder").constructor).toBeTruthy();
 

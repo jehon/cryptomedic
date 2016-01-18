@@ -19,7 +19,6 @@ export default class Folder extends Data {
       this.subFiles[i] = create(this.subFiles[i]._type, this.subFiles[i], this);
       this.subFiles[i].linkPatient(this.getMainFile());
     }
-    console.log("sorting");
     this.subFiles.sort(Folder.ordering);
   }
 
