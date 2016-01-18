@@ -80,24 +80,24 @@ export default class Bill extends File {
     var price = server.settings.prices[this.price_id];
     var total = 0;
     for(var i in price) {
-      if (i[0] == "_") return;
-      if (i == "id") return;
-      if (i == "created_at") return;
-      if (i == "updated_at") return;
-      if (i == "lastuser") return;
-      if (i == "datefrom") return;
-      if (i == "dateto") return;
-      if (i == "controller") return;
-      if (i == "locked") return;
-      if (i == "dlocked") return;
-      if (i == "socialLevelPercentage_0") return;
-      if (i == "socialLevelPercentage_1") return;
-      if (i == "socialLevelPercentage_2") return;
-      if (i == "socialLevelPercentage_3") return;
-      if (i == "socialLevelPercentage_4") return;
-      if (price[i] < 0) return;
-      if (typeof(this[i]) == "undefined") return;
-      if (this[i] <= 0) return;
+      if (i[0] == "_") { continue; }
+      if (i == "id") { continue; }
+      if (i == "created_at") { continue; }
+      if (i == "updated_at") { continue; }
+      if (i == "lastuser") { continue; }
+      if (i == "datefrom") { continue; }
+      if (i == "dateto") { continue; }
+      if (i == "controller") { continue; }
+      if (i == "locked") { continue; }
+      if (i == "dlocked") { continue; }
+      if (i == "socialLevelPercentage_0") { continue; }
+      if (i == "socialLevelPercentage_1") { continue; }
+      if (i == "socialLevelPercentage_2") { continue; }
+      if (i == "socialLevelPercentage_3") { continue; }
+      if (i == "socialLevelPercentage_4") { continue; }
+      if (price[i] < 0) { continue; }
+      if (typeof(this[i]) == "undefined") { continue; }
+      if (this[i] <= 0) { continue; }
       total += price[i] * this[i];
     }//, this);
     this.total_real = total;
