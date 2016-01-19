@@ -65,6 +65,16 @@ class Bill extends CryptomedicModel {
 		return $res;
 	}
 
+	public static function getActivityFilter($filter, $fieldList = null) {
+		if (!$filter) {
+			return "(1 = 1)";
+		}
+		$list = self::getFieldsList($filter, $fieldList);
+		return "((bills."
+			. implode($list, " > 0) OR (bills.")
+			. " > 0 ))";
+	}
+
 	public static function getSQLFieldsSum($filter) {
 		$list = "( 0 ";
 		foreach(static::getTableColumnsList() as $v) {
