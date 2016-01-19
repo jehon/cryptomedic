@@ -10,7 +10,7 @@ class ReportConsultationsTest extends RouteReferenceTestCase {
 		$this->setUrl("reports/consultations");
 	}
 
-	public function testsConsultation() {
+	public function test() {
 		$this->setParams([ "day" => self::$nday, "center" => "" ]);
 		$this->myAssertUnauthorized();
 
@@ -25,7 +25,7 @@ class ReportConsultationsTest extends RouteReferenceTestCase {
 		$this->assertEquals(count($json->list), 3);
 	}
 
-	public function testsConsultationByDay() {
+	public function testByDay() {
 		$this->setParams([ "day" => self::$nday, "center" => "" ]);
 		$this->myAssertUnauthorized();
 
@@ -41,7 +41,7 @@ class ReportConsultationsTest extends RouteReferenceTestCase {
 		}
 	}
 
-	public function testsConsultationByDayAndCenter() {
+	public function testByDayAndCenter() {
 		$this->setParams([ "day" => self::$nday, "center" => "Chakaria Disability Center" ]);
 		$this->myAssertUnauthorized();
 
