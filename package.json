@@ -64,8 +64,8 @@
     "build": "webpack --config webpack.js -p",
     "builddev": "webpack --config webpack.js -d",
     "dev-server": "node server.js | grep 'built\\|error\\|VALID'",
-    "postinstall": "bower install",
-    "postupdate": "bower update"
+    "postinstall": "bower install; node ./bin/setselenium.js",
+    "postupdate": "bower update; node ./bin/setselenium.js"
   },
   "x": {
     "html-minify-loader": "1.0.0",
