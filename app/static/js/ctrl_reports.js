@@ -17,15 +17,15 @@ mainApp.controller("ctrl_reports", [ "$scope", "$routeParams", "$sce", function(
     "dailyActivity": {
       name: "Daily Report",
       description: "If you want to know your daily activity, choose this report.<br>"
-        + "Options: the day, and optionnaly the examiner and the center.<br>",
-      params: [ "center", "day", "examiner" ],
+        + "Options: the day, and optionnaly the examiner, the center and type of activity (workshop / consult / surgical / ...).<br>",
+      params: [ "center", "day", "examiner", "activity" ],
       templateUrl: templateReportBase + "activity.php"
     },
     "monthlyActivity": {
       name: "Monthly Report",
       description: "If you want to know your activity on a month, choose this report<br>"
-        + "Options: the month, and optionnaly the examiner and the center.<br>",
-      params: [ "center", "examiner", "month" ],
+        + "Options: the day, and optionnaly the examiner, the center and type of activity (workshop / consult / surgical / ...).<br>",
+      params: [ "center", "examiner", "month", "activity" ],
       templateUrl: templateReportBase + "activity.php"
     },
     "consultations": {

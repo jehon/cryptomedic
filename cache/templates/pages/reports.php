@@ -1,7 +1,7 @@
 <?php
   require_once(__DIR__ . "/../../t.php");
   ?>
-  <div ng-if="getReport()" class='container-fluid'>
+<div ng-if="getReport()" class='container-fluid'>
   <div class='row'>
     <div class='col-sm-6'>
       <h1>{{getReport().name}}</h1>
@@ -61,6 +61,17 @@
             <label class="col-sm-2 control-label">Year (yyyy)</label>
             <div class="col-sm-10">
               <input name='year' ng-model='values.year' class="form-control">
+            </div>
+          </div>
+          <div ng-if="isParam('activity')" class="form-group">
+            <label class="col-sm-2 control-label">Activity</label>
+            <div class="col-sm-10">
+              <select ng-model="values.activity">
+                <option value=''>any</option>
+                <option value='consult'>consult</option>
+                <option value='workshop'>workshop</option>
+                <option value='surgical'>surgical</option>
+              </select>
             </div>
           </div>
           <div class="form-group">
