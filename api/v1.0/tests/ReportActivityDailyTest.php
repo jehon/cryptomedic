@@ -66,13 +66,12 @@ class ReportActivityDailyTest extends RouteReferenceTestCase {
  	}
 
  	public function testByActivity() {
- 		$this->setParams(array( 'day' => self::$nday, 'month' => self::$nmonth, 'activity' => "surgical"));
+ 		$this->setParams(array( 'day' => "2014-01-25", 'month' => "2014-01", 'activity' => "surgical", "center" => "", "examiner" => ""));
  		$this->myAssertResponseForReference("manager");
  		$json = $this->myAssertJSON("manager");
- 		var_dump($this->json);
- 		$this->thisAssertResponse($json, [ 1 ]);
+ 		$this->thisAssertResponse($json, [ 1, 1 ]);
  		foreach($json->list as $k => $v) {
-			$this->assertGreater(0, $v->Center);
+			$this->assertGreaterThan(0, $v->price_surgical);
  		}
  	}
 }
