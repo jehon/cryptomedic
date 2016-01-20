@@ -9,6 +9,9 @@ class SessionProtect {
 	protected $once = false;
 
 	static public function run($code, $token = false) {
+		if (php_sapi_name() == "cli") {
+			return;
+		}
 		$session = new SessionProtect($code, $token);
 		$session->protect();
 		$session->showHeader();
