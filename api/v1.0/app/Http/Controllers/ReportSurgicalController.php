@@ -17,6 +17,7 @@ class ReportSurgicalController extends ReportController {
         bills.id as bid,
         patients.id as pid,
         bills.Date as Date,
+
         bills.Center as Center,
         CONCAT(patients.entryyear, '-', patients.entryorder) as patient_reference,
         patients.Name as patient_name,
@@ -37,24 +38,18 @@ class ReportSurgicalController extends ReportController {
               bills.total_asked as total_asked,
               bills.total_paid as total_paid,
         exists(select * from bills as b2 where b2.patient_id = bills.patient_id and b2.Date < :whenFrom12) as oldPatient,
-        TConsults.Date AS last_seen,
-        TConsults.TreatmentEvaluation AS last_treat_result,
-        TConsults.TreatmentFinished AS last_treat_finished
+        consults.Date AS last_seen,
+        consults.TreatmentEvaluation AS last_treat_result,
+        consults.TreatmentFinished AS last_treat_finished
       FROM bills
           JOIN patients ON bills.patient_id = patients.id
           JOIN prices ON bills.price_id = prices.id
-          LEFT OUTER JOIN (
-            (
-              (SELECT id, patient_id, Date, TreatmentEvaluation, TreatmentFinished FROM ricket_consults)
-              UNION
-              (SELECT id, patient_id, Date, TreatmentEvaluation, TreatmentFinished FROM club_foots)
-              UNION
-              (SELECT id, patient_id, Date, TreatmentEvaluation, TreatmentFinished FROM other_consults)
-            ) ORDER BY Date DESC LIMIT 1
-          ) AS TConsults ON (TConsults.patient_id = patients.id)
+          LEFT OUTER JOIN consults ON (patients.id = consults.patient_id)
+          LEFT OUTER JOIN consults AS consults2 ON (patients.id = consults2.patient_id AND consults2.Date > consults.Date)
       WHERE (1 = 1)
         AND " . $this->getReportParamFilter("when", "bills.Date") . "
-        AND " . Bill::getSQLFieldsSum(Bill::CAT_SURGICAL) . " > 0
+        AND " . Bill::getActivityFilter("surgical") . "
+        AND consults2.Date IS NULL
       ORDER BY bills.id",
       $this->sqlBindParams + [ "whenFrom12" => $this->internalWhenFrom ]
     );
