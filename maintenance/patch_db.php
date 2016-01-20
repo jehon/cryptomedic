@@ -21,12 +21,13 @@ echo "<pre>";
 
 if (\Jehon\Maintenance\Lib\isServedLocally()) {
 	$db->runOne(__DIR__ . "/../conf/database_scripts/dev_only/reset.sql");
-	$db->runOne("/home/jehon/amd_chakaria.sql");
+  $db->runOne(__DIR__ . "/../conf/database_scripts/dev_only/testing.sql");
+	// $db->runOne("/home/jehon/amd_chakaria.sql");
 }
 
 $db->runOne(__DIR__ . "/../conf/database_scripts");
+$db->runOne(__DIR__ . "/../conf/database_scripts/always.sql");
 
 if (\Jehon\Maintenance\Lib\isServedLocally()) {
 	$db->runOne(__DIR__ . "/../conf/database_scripts/dev_only");
 }
-

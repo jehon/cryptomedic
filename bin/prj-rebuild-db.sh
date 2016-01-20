@@ -1,4 +1,8 @@
 
+php maintenance/patch_db.php
+
+exit 0
+
 php <<-PHP
   <?php
 
