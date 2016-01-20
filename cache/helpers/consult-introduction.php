@@ -45,4 +45,3 @@
 		</tr>
 	</table>
 </fieldset>
-<!-- TODOJH: examiner name = list -->
