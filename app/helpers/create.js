@@ -35,6 +35,6 @@ export default function create(type, data, folder) {
     throw new Error("Create impossible for type '" + type + "'");
   }
   var d = new models[type](data, folder);
-  console.info("create function with " + type, d.constructor.name, d);
+  // console.info("create function with " + type, d.constructor.name, d);
   return d;
 }
