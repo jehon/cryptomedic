@@ -1,4 +1,6 @@
 
+# Create the consult view
+
 CREATE OR REPLACE
   SQL SECURITY INVOKER
   VIEW consults
