@@ -2,19 +2,13 @@
 
 import catalog from "reducers/catalog";
 import store from "reducers/store";
-import connection from "actions/connectionActions";
-import state from "actions/stateActions";
-import database from "actions/databaseActions";
+import * as connection from "actions/connectionActions";
+import * as state from "actions/stateActions";
+import * as database from "actions/databaseActions";
 
 import objectify from "helpers/objectify";
 import create from "helpers/create";
 import date2CanonicString from "helpers/date2CanonicString";
-
-function d(type) {
-  return function(payload) {
-    return store.dispatch({ type: type, payload: payload });
-  };
-}
 
 export default function() {
   return {

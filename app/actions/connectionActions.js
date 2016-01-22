@@ -1,26 +1,24 @@
 
-import catalog from 'reducers/catalog';
-import dispatch from 'actions/dispatch';
+import catalog from "reducers/catalog";
+import dispatch from "actions/dispatch";
 
-export default {
-  success: function() {
-    dispatch(catalog.CONNECTION_SUCCESS)
-  },
+export function success() {
+  dispatch(catalog.CONNECTION_SUCCESS);
+}
 
-  settings: function(data) {
-    dispatch(catalog.CONNECTION_SETTINGS, data)
-    return data;
-  },
+export function settings(data) {
+  dispatch(catalog.CONNECTION_SETTINGS, data);
+  return data;
+}
 
-  failed: function(httpErrorCode) {
-    dispatch(catalog.CONNECTION_FAILED, httpErrorCode)
-  },
+export function failed(httpErrorCode) {
+  dispatch(catalog.CONNECTION_FAILED, httpErrorCode);
+}
 
-  expired: function() {
-    dispatch(catalog.CONNECTION_EXPIRED)
-  },
+export function expired() {
+  dispatch(catalog.CONNECTION_EXPIRED);
+}
 
-  serverError: function() {
-    dispatch(catalog.CONNECTION_SERVER_ERROR)
-  },
-};
+export function serverError() {
+  dispatch(catalog.CONNECTION_SERVER_ERROR);
+}

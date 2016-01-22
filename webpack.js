@@ -44,23 +44,12 @@ var config = {
 
       // './app/static/js/bugreporting.js',
       // './app/static/js/html2canvas.js',
-      // './app/bower_components/jquery/dist/jquery.min.js',
-      // './app/bower_components/jquery-ui/jquery-ui.min.js',
-      // './app/bower_components/jquery-ui/themes/ui-lightness/jquery-ui.min.css',
-      // './app/bower_components/bootstrap/dist/js/bootstrap.min.js',
-      // './app/bower_components/bootstrap/dist/css/bootstrap.min.css',
-      // './app/bower_components/angular/angular.min.js',
-      // './app/bower_components/angular-route/angular-route.min.js',
-      // './app/bower_components/fetch/fetch.js',
-      // './app/bower_components/dexie/dist/latest/Dexie.min.js',
-      // './app/bower_components/excellentexport/excellentexport.min.js',
 
       // './app/static/js/application.js',
       // './app/static/js/database.js',
       // './app/static/js/cryptomedic.js',
       // './app/static/worker/worker.js',
     ])
-    // .concat(glob.sync('./app/static/js/model_*.js'))
     // .concat(glob.sync('./app/static/js/service_*.js'))
     // .concat(glob.sync('./app/static/js/ctrl_*.js'))
 
