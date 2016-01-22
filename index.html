@@ -60,6 +60,8 @@
 
     <script type='text/javascript'>
       function installMe(flavor) {
+        // TODO: https://developer.mozilla.org/en-US/docs/Web/API/DOMApplication
+
         // This URL must be a full url.
         var manifestUrl = location.protocol + '//' + location.host + (location.port ? ':' + location.port : '')
           + location.pathname.match(/.*\//)[0]
