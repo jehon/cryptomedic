@@ -53,6 +53,7 @@ create(__dirname + '/../', manifest);
 create(__dirname + '/../tmp/', Object.assign({},
   manifest,
   {
-    package_path: 'http://localhost/cryptomedic/tmp/package.zip'
+    name           : 'DEV VERSION - ' + manifest.name + ' - DEV VERSION',
+    package_path   : 'http://localhost/cryptomedic/tmp/package.zip'
   })
 );
