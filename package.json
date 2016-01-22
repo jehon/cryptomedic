@@ -33,6 +33,7 @@
     "bower": "latest",
     "chromedriver": "latest",
     "css-loader": "^0.23.0",
+    "es6-object-assign": "^1.0.1",
     "es6-promise": "^3.0.2",
     "eslint": "latest",
     "eslint-plugin-react": "latest",
