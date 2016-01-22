@@ -24,7 +24,7 @@ export default function(state, action) {
       serverError: false,
       settings: (action.type == catalog.CONNECTION_SETTINGS ? action.payload : state.settings)
     };
-  };
+  }
 
   if (action.type == catalog.CONNECTION_EXPIRED) {
     return {
@@ -33,7 +33,7 @@ export default function(state, action) {
       serverError: false,
       settings: false
     };
-  };
+  }
 
   if ((action.type == catalog.CONNECTION_FAILED)
       || (action.type == catalog.CONNECTION_SERVER_ERROR)) {
@@ -43,7 +43,7 @@ export default function(state, action) {
       serverError: (action.type == catalog.CONNECTION_SERVER_ERROR ? action.payload : false),
       settings: state.settings
     };
-  };
+  }
 
   return state;
 }

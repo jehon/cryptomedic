@@ -47,8 +47,8 @@ function build_db(withVersions) {
     trans.patients.toCollection().modify(function(p) {
       if (typeof(p.id) == "number") {
         // console.log("deleting", p.id);
-      delete this.value;
-    }
+        delete this.value;
+      }
       p.id = "" + p.id;
     });
   });
@@ -67,10 +67,10 @@ function build_db(withVersions) {
   function getFolder(id) {
     return db.patients.get("" + id).then(function(data) {
       if (data) {
-       return applyModificationsOn(data);
-     } else {
-       throw "I say, this patient is not found #" + id;
-     }
+        return applyModificationsOn(data);
+      } else {
+        throw "I say, this patient is not found #" + id;
+      }
     });
   }
 
@@ -166,13 +166,13 @@ function build_db(withVersions) {
   // ------------------ System functions ------------------------------
   function getSetting(key, def) {
     return db.settings.get("" + key).then(function(data) {
-    if (data) {
+      if (data) {
         return data.value;
       } else {
         def = def || false;
         return def;
       }
-  });
+    });
   }
 
   function setSetting(key, value) {
