@@ -1,58 +1,98 @@
-<html manifest="app/manifest.php">
-<head>
-	<style>
-		table {
-			border-collapse: collapse;
-		}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Cryptomedic</title>
+    <meta charset="UTF-8">
+    <style type="text/css">
+      table {
+        border-collapse: collapse;
+      }
 
-		th, td {
-			border: 1px solid black;
-		}
-	</style>
-</head>
-<body>
-	<h1><img src="app/static/img/boolean-true.gif" alt="ok">Informations about cryptomedic</h1>
-	Dear sir,<br>
-	<br>
-	We have made this page, to inform you about changes in the application, when they occur.<br>
-	<br>
-	<h3>Access the application</h3>
-	<table>
-		<tr>
-			<th>When ?</th><th>Access there</th>
-		</tr>
-		<tr>
-			<td>
-				<img src="app/static/img/bangladesh.svg" alt="Bangladesh flag" height='20px'>
-				Application optimized for Bangladesh. Please use this version most of the time.
-			</td>
-			<td>
-				<a href='build/'>
-					<img src="app/static/img/go.gif">
-					Normal access to the application
-				</a>
-			</td>
-		</tr>
-<!-- 		<tr>
-			<td>
-				If you have problems with the link above,
-				or if you are told to do so by someone from France (Thierry, Freddy, ...),
-			</td>
-			<td>
-				<a href='build/?online=1'>
-					<img src="app/static/img/go.gif">
-					In case of problems.
-				</a>
-			</td>
-		</tr>
- -->
- 	</table>
-	<br>
-	If you have any suggestion, or if you want to contact me for any reasons, please do so here: <a href='mailto:marielineet.jean+cryptomedic@gmail.com'>marielineet.jean+cryptomedic@gmail.com</a>. Don't hesitate, I am there for you !
-	<br>
-	<br>
-	<br>
-	Have a good day<br>
-	The cryptomedic team<br>
-</body>
+      th, td {
+        border: 1px solid black;
+      }
+    </style>
+  </head>
+  <body>
+    <h1><img src="app/static/img/boolean-true.gif" alt="ok">Informations about cryptomedic</h1>
+    Dear sir,<br>
+    <br>
+    We have made this page, to inform you about changes in the application, when they occur.<br>
+    <br>
+    <h3>Access the application</h3>
+    <table>
+      <tr>
+        <th>When ?</th><th>Access there</th>
+      </tr>
+      <tr>
+        <td>
+          <img src="app/static/img/bangladesh.svg" alt="Bangladesh flag" height='20px'>
+          Application optimized for Bangladesh. Please use this version most of the time.
+        </td>
+        <td>
+          <a href='build/'>
+            <img src="app/static/img/go.gif">
+            Normal access to the application
+          </a>
+        </td>
+      </tr>
+  <!--    <tr>
+        <td>
+          If you have problems with the link above,
+          or if you are told to do so by someone from France (Thierry, Freddy, ...),
+        </td>
+        <td>
+          <a href='build/?online=1'>
+            <img src="app/static/img/go.gif">
+            In case of problems.
+          </a>
+        </td>
+      </tr>
+   -->
+    </table>
+    <br>
+    If you have any suggestion, or if you want to contact me for any reasons, please do so here: <a href='mailto:marielineet.jean+cryptomedic@gmail.com'>marielineet.jean+cryptomedic@gmail.com</a>. Don't hesitate, I am there for you !
+    <br>
+    <br>
+    <br>
+    Have a good day<br>
+    The cryptomedic team<br>
+
+    <script type='text/javascript'>
+      function installMe(flavor) {
+        // This URL must be a full url.
+        var manifestUrl = location.protocol + '//' + location.host + (location.port ? ':' + location.port : '')
+          + location.pathname.match(/.*\//)[0]
+          + flavor
+          + "manifest.webapp";
+        console.log(manifestUrl);
+
+        var request = window.navigator.mozApps.checkInstalled(manifestUrl);
+        request.onerror = function(e) {
+          alert("Error calling checkInstalled: " + request.error.name);
+        };
+        request.onsuccess = function(e) {
+          if (request.result) {
+            console.log("App is installed!");
+            console.log(request.result);
+            console.log(request.result.origin);
+          }
+          else {
+            console.log("App is not installed!");
+            var req = navigator.mozApps.installPackage(manifestUrl);
+            req.onsuccess = function() {
+              alert(this.result.origin);
+              console.log(this.result);
+              console.info(this.result.origin);
+              window.location = this.result.origin;
+            };
+            req.onerror = function() {
+              alert(this.error.name);
+            };
+          }
+        };
+
+      }
+    </script>
+  </body>
 </html>
