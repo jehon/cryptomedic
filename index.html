@@ -3,7 +3,7 @@
   <head>
     <title>Cryptomedic</title>
     <meta charset="UTF-8">
-    <style type="text/css">
+    <style type='text/css'>
       table {
         border-collapse: collapse;
       }
@@ -20,7 +20,7 @@
     We have made this page, to inform you about changes in the application, when they occur.<br>
     <br>
     <h3>Access the application</h3>
-    <table>
+    <table summary='Different access to the application'>
       <tr>
         <th>When ?</th><th>Access there</th>
       </tr>
@@ -74,10 +74,19 @@
           alert("Error calling checkInstalled: " + request.error.name);
         };
         request.onsuccess = function(e) {
-          if (request.result) {
+          var app = e.target.result;
+          if (app) {
             console.log("App is installed!");
-            console.log(request.result);
-            console.log(request.result.origin);
+            console.log(app.origin);
+            app.launch();
+
+            // var req_up = app.checkForUpdate();
+            // req_up.onsuccess = function() {
+            //   console.log(this.result);
+            // }
+            // req_up.onerror = function() {
+            //   alert(this.error.name);
+            // };
           }
           else {
             console.log("App is not installed!");

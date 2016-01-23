@@ -22,24 +22,24 @@
     Questions:
     - how to log in a user? = subscribe on this computer OR check the password in the local database
     - how to log out a user? = forget from this computer
-    - what happen if the computer key is "forgotten" ? (ex: erased from server) -> reset it ?
+    - what happen if the computer key is 'forgotten' ? (ex: erased from server) -> reset it ?
 
     Signing Queue principle
     - when connecting, a key is generated
-    - all changes are stored locally, in a "queue"
+    - all changes are stored locally, in a 'queue'
       - the queue is signed with a key received from the server
       - test it with simple changes (save-and-queue and unlock-and-queue?)
       - a gui element show the queue status
     - when displaying data, the pending data is shown on screen
     - when a connection is made, queue is sent to the server
       - optimistic locking is used
-      - positive feedback is received through the "sync" mechanism
+      - positive feedback is received through the 'sync' mechanism
  */
 
-importScripts("../../bower_components/fetch/fetch.js");
-importScripts("../../bower_components/dexie/dist/latest/Dexie.min.js");
-importScripts("../js/database.js");
-importScripts("../js/myfetch.js");
+importScripts('../../bower_components/fetch/fetch.js');
+importScripts('../../bower_components/dexie/dist/latest/Dexie.min.js');
+importScripts('../js/database.js');
+importScripts('../js/myfetch.js');
 
 var db = build_db();
 
@@ -52,16 +52,6 @@ var rest = false;
  * Timer of the next sync
  */
 var syncTimer = null;
-
-/**
- * SyncLock track if a sync is already running
- */
-var syncLock = false;
-
-/**
- *  See if the last sync was final or not
- */
-var syncWasFinal = false;
 
 /**
  * Reply to a call
@@ -82,39 +72,38 @@ function storeData(offdata) {
   var promise = Promise.resolve();
   if (offdata.reset) {
     promise = promise.then(function() {
-      console.info("Worker: resetting the database patients");
+      console.info('Worker: resetting the database patients');
       return db.clear().then(function() {
-        db.updateCheckpoint("");
+        db.updateCheckpoint('');
       });
     });
   }
-  syncWasFinal = offdata.isfinal;
   if (offdata.data) {
     promise = promise.then(function() {
       return db.bulkUpdate(offdata.data, function(data) {
-        mySendEvent("folder", data);
+        mySendEvent('folder', data);
       }).then(function() {
         // relaunch the sync upto completion
         if (offdata.isfinal) {
-          mySendEvent("progress", {
+          mySendEvent('progress', {
             isfinal:      true
           });
         } else {
-          mySendEvent("progress", {
-            // "checkpoint":  offdata.checkpoint,
-            "isfinal":    false,
-            "remaining":  parseInt(offdata.remaining),
-            "done":       parseInt(offdata.data.length)
+          mySendEvent('progress', {
+            // 'checkpoint':  offdata.checkpoint,
+            'isfinal':    false,
+            'remaining':  parseInt(offdata.remaining),
+            'done':       parseInt(offdata.data.length)
           });
         }
       }, function(e) {
         // Catch error and display it
-        console.error("Error in bulk insert", e);
+        console.error('Error in bulk insert', e);
         throw e;
       });
     });
   } else {
-    mySendEvent("progress", {
+    mySendEvent('progress', {
       isfinal: true
     });
   }
@@ -143,12 +132,6 @@ function running() {
   return Promise.resolve();
 }
 
-function routeStoreData(offdata) {
-  running()
-    .then(function() { storeData(offdata); })
-    .then(reprogram, reprogram);
-}
-
 /*
  *
  * Routing functions
@@ -157,22 +140,22 @@ function routeStoreData(offdata) {
 function routeSync() {
   running()
     .then(function() {
-      return db.getSetting("checkpoint");
+      return db.getSetting('checkpoint');
     })
     .then(function(cp) {
-      return myFetch(rest + "/sync", {}, {
+      return myFetch(rest + '/sync', {}, {
         cp: cp
       });
     })
     .then(function(result) {
       if (result == null) {
-        console.warn("null result: unauthenticated?");
+        console.warn('null result: unauthenticated?');
         return null;
       }
       return storeData(result._offline);
     })
     .catch(function(httpErrorCode) {
-      mySendEvent("error", httpErrorCode);
+      mySendEvent('error', httpErrorCode);
     })
     .then(reprogram, reprogram);
 }
@@ -183,19 +166,17 @@ onmessage = function(message) {
   var data = message.data.data;
 
   switch(name) {
-    case "init":
+    case 'init':
       if (data.restUrl) {
         rest = data.restUrl;
       }
       return routeSync();
-    case "storeOne":
-      return routeStoreOne(data);
-    case "sync":
+    case 'sync':
       return routeSync();
-    case "resync":
+    case 'resync':
       db.updateCheckpoint(false);
       return routeSync();
     default:
-      return console.error("unkown message: " + name, data);
+      return console.error('unkown message: ' + name, data);
   }
 };
