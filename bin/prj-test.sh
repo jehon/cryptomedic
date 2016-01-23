@@ -103,7 +103,7 @@ else
     fi
   done
 
-  if [ -e "tmp/router.log" ]; then
+  if [ -r "tmp/router.log" ]; then
     echo -e "\e[0;45mRouter.log\e[0m"
     cat tmp/router.log | sort | uniq
   fi
