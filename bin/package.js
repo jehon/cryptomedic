@@ -5,6 +5,7 @@
 // https://www.npmjs.com/package/jszip
 
 var fs = require('fs');
+var fse = require('fs-extra');
 var archiver = require('archiver');
 require('es6-object-assign').polyfill();
 
@@ -35,6 +36,9 @@ function create(path, manifest) {
   fs.writeFileSync(path + 'manifest.webapp', JSON.stringify(minimanifest));
 }
 
+// Add the not integrated sources
+fse.copySync(__dirname + '/../app/static/', __dirname + '/../build/static');
+fse.copySync(__dirname + '/../app/bower_components/', __dirname + '/../build/bower_components/');
 
 // Default manifest
 var manifest = {
