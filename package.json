@@ -40,6 +40,7 @@
     "eslint-plugin-react": "latest",
     "expose-loader": "^0.7.1",
     "file-loader": "latest",
+    "fs-extra": "^0.26.4",
     "glob": "latest",
     "html-webpack-plugin": "^1.6.2",
     "karma": "latest",
@@ -64,8 +65,8 @@
     "webpack-dev-server": "^1"
   },
   "scripts": {
-    "build": "webpack --config webpack.js -p; node bin/package.js",
-    "builddev": "webpack --config webpack.js -d; node bin/package.js",
+    "build": "webpack --config webpack.js -p ; node bin/package.js",
+    "builddev": "webpack --config webpack.js -d ; node bin/package.js",
     "dev-server": "node server.js | grep 'built\\|error\\|VALID'",
     "postinstall": "bower install; node ./bin/setselenium.js",
     "postupdate": "bower update; node ./bin/setselenium.js"

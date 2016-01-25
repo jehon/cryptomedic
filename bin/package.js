@@ -10,6 +10,10 @@ require('es6-object-assign').polyfill();
 
 
 function create(path, manifest) {
+  /**
+   * Function to create a package based on 'build' directory and a given @param manifest
+   * into @param path
+   */
   var archive = archiver.create('zip', {});
   var output = fs.createWriteStream(path +  'package.zip');
 
@@ -18,7 +22,7 @@ function create(path, manifest) {
   });
 
   archive.pipe(output);
-  archive.directory(__dirname + '/../build/', '/build/');
+  archive.directory(__dirname + '/../build/', '/');
 
   archive.append(JSON.stringify(manifest), { name: 'manifest.webapp'});
   archive.finalize();
@@ -32,15 +36,16 @@ function create(path, manifest) {
 }
 
 
+// Default manifest
 var manifest = {
   name           : 'Cryptomedic',
   description    : 'Cryptomedic patient management',
-  launch_path    : '/build/index.html',
+  launch_path    : '/index.html',
   icons          : {
     '512'        : '/icon-512.png',
     '128'        : '/icon-128.png'
   },
-  package_path   : 'http://www.cryptomedic.org/cryptomedic/package.zip',
+  package_path   : 'http://www.cryptomedic.org/cryptomedic/build/package.zip',
   developer      : {
     name         : 'Jean Honlet',
     url          : 'https://github.com/jehon/'
@@ -49,7 +54,7 @@ var manifest = {
   chrome         : { 'navigation'                    : true }
 };
 
-create(__dirname + '/../', manifest);
+create(__dirname + '/../build/', manifest);
 create(__dirname + '/../tmp/', Object.assign({},
   manifest,
   {
