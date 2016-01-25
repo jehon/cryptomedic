@@ -59,7 +59,6 @@ var manifest = {
 };
 
 // Make the two instances
-create(__dirname + '/../build/', manifest);
 create(__dirname + '/../tmp/', Object.assign({},
   manifest,
   {
@@ -67,3 +66,6 @@ create(__dirname + '/../tmp/', Object.assign({},
     package_path   : 'http://localhost/cryptomedic/tmp/package.zip'
   })
 );
+// Make the "build" instance. Since it it stored in "build", it has to
+// be created after the tmp one...
+create(__dirname + '/../build/', manifest);
