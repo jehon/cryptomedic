@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 // Test cryptographic:
 // Documentation: https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto
@@ -29,18 +29,18 @@
 
 function nullify(what) {
   switch(typeof(what)) {
-    case "string":
-      if (what === "?") {
+    case 'string':
+      if (what === '?') {
         return null;
       }
-      if (what === "null") {
+      if (what === 'null') {
         return null;
       }
-      if (what === "undefined") {
+      if (what === 'undefined') {
         return null;
       }
       return what;
-    case "object":
+    case 'object':
       for(var k in what) {
         what[k] = nullify(what[k]);
       }
@@ -52,8 +52,8 @@ function nullify(what) {
 
 function stringify(what) {
   if (what === null) return what;
-  if (what === "") return null;
-  if (typeof(what) == "object") {
+  if (what === '') return null;
+  if (typeof(what) == 'object') {
     if (what instanceof Date) {
       return appState().helpers.date2CanonicString(what);
     }
@@ -66,8 +66,8 @@ function stringify(what) {
 
 /* Initialize the computer id */
 if (!window.localStorage.cryptomedicComputerId) {
-  var mask = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-  var result = "";
+  var mask = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  var result = '';
   for (var i = 0; i < 32; i++) {
     result += mask[Math.floor(Math.random() * mask.length)];
   }
@@ -76,13 +76,13 @@ if (!window.localStorage.cryptomedicComputerId) {
 
 /* service_backend */
 function service_backend_fn() {
-  var rest = cryptomedic.flavor + "/api/v1.0";
+  var rest = cryptomedic.flavor + '/api/v1.0';
 
   var db = build_db(true);
 
-  var worker = new Worker("static/worker/worker.js");
+  var worker = new Worker('static/worker/worker.js');
   worker.onerror = function(e) {
-    console.error("@service: Error in worker: ", e);
+    console.error('@service: Error in worker: ', e);
   };
 
   worker.onmessage = function(e) {
@@ -90,16 +90,16 @@ function service_backend_fn() {
     var data = e.data.data;
 
     switch(name) {
-      case "disconnected":
+      case 'disconnected':
         if (data == 401) {
           appState().actions.connection.expired();
           server.settings = false;
-          location.hash = "#/login";
+          location.hash = '#/login';
         } else {
           appState().actions.connection.serverError();
         }
         break;
-      case "progress":
+      case 'progress':
         if (data.isfinal) {
           appState().actions.database.downloaded();
         } else {
@@ -118,7 +118,7 @@ function service_backend_fn() {
     return data;
   }
 
-  mySendAction("init", { restUrl: rest });
+  mySendAction('init', { restUrl: rest });
 
   function myFrontFetch(url, init, data) {
     return myFetch(url, init, data).then(
@@ -135,7 +135,7 @@ function service_backend_fn() {
         case 401: // unauthorized
           appState().actions.connection.expired();
           server.settings = false;
-          location.hash = "#/login";
+          location.hash = '#/login';
           break;
         case 403: // forbidden
           appState().actions.connection.failed();
@@ -150,41 +150,41 @@ function service_backend_fn() {
           appState().actions.connection.serverError();
           break;
       }
-      return Promise.reject("myFrontFetch error: " + httpErrorCode);
+      return Promise.reject('myFrontFetch error: ' + httpErrorCode);
     }
     );
   }
 
   return {
     /* Authentification */
-    "login": function(username, password) {
-      return myFrontFetch(rest + "/auth/mylogin", { method: "POST" },
+    'login': function(username, password) {
+      return myFrontFetch(rest + '/auth/mylogin', { method: 'POST' },
         {
-          "username": username,
-          "password": password,
+          'username': username,
+          'password': password,
               // 'appVersion': cryptomedic.version,
-          "computerId": window.localStorage.cryptomedicComputerId
+          'computerId': window.localStorage.cryptomedicComputerId
         })
         .then(appState().actions.connection.settings)
-        .then(mySendAction.bind(this, "init"))
+        .then(mySendAction.bind(this, 'init'))
         .catch()
         ;
     },
-    "checkLogin": function() {
-      return myFrontFetch(rest + "/auth/settings", null,
+    'checkLogin': function() {
+      return myFrontFetch(rest + '/auth/settings', null,
         {
               // 'appVersion': cryptomedic.version,
-          "computerId": window.localStorage.cryptomedicComputerId
+          'computerId': window.localStorage.cryptomedicComputerId
         }
         )
         .then(appState().actions.connection.settings)
-        .then(mySendAction.bind(this, "init"))
+        .then(mySendAction.bind(this, 'init'))
         .catch()
         ;
     },
-    "logout": function() {
+    'logout': function() {
       // TODO: clean up the cache --> cache managed in other object???
-      return myFrontFetch(rest + "/auth/logout")
+      return myFrontFetch(rest + '/auth/logout')
         .then(function(data) {
           appState().actions.connection.expired();
           return data;
@@ -194,40 +194,40 @@ function service_backend_fn() {
     },
 
     // Go to the worker
-    "sync": function() {
-      mySendAction("sync");
+    'sync': function() {
+      mySendAction('sync');
     },
-    "resync": function() {
-      mySendAction("resync");
+    'resync': function() {
+      mySendAction('resync');
     },
     // Temp function
-    "storeData": function(json) {
+    'storeData': function(json) {
       if (json._offline) {
         var offdata = jQuery.extend(true, {}, json._offline);
-        mySendAction("storeData", offdata);
+        mySendAction('storeData', offdata);
         delete json._offline;
       }
       return json;
     },
 
     // Go to the database
-    "getFolder": function(id) {
+    'getFolder': function(id) {
       if (id == -1) {
-        return Promise.resolve(appState().helpers.create("Folder"));
+        return Promise.resolve(appState().helpers.create('Folder'));
       } else {
         // If not final then go to the server anyway...
         // return db.getFolder(id).catch(function(error) {
-        //   console.log("Getting the folder live: #" + id);
-        return myFrontFetch(rest + "/folder/" + id)
+        //   console.log('Getting the folder live: #' + id);
+        return myFrontFetch(rest + '/folder/' + id)
           .then(appState().helpers.objectify)
-          .then(function(data) { return appState().helpers.create("Folder", data); })
+          .then(function(data) { return appState().helpers.create('Folder', data); })
           .catch()
           ;
         // });
       }
     },
 
-    "clear": function() {
+    'clear': function() {
       return db.clear()
         .then(function() {
           appState().actions.database.downloading();
@@ -237,12 +237,12 @@ function service_backend_fn() {
     },
 
     // Go to the rest server
-    "checkReference": function(year, order) {
-      return myFrontFetch(rest + "/reference/" + year + "/" + order)
+    'checkReference': function(year, order) {
+      return myFrontFetch(rest + '/reference/' + year + '/' + order)
         .then(function(data) {
           if (data && data.id) {
-          // if ((data.getModel() != "undefined") && (data.getModel() == "Folder")) {
-            return data["id"];
+          // if ((data.getModel() != 'undefined') && (data.getModel() == 'Folder')) {
+            return data['id'];
           } else {
             return false;
           }
@@ -251,25 +251,25 @@ function service_backend_fn() {
         ;
     },
 
-    "getReport": function(reportName, data, timing) {
-      return myFrontFetch(rest + "/reports/" + reportName + (timing ? "/" + timing : ""), null, nullify(data))
+    'getReport': function(reportName, data, timing) {
+      return myFrontFetch(rest + '/reports/' + reportName + (timing ? '/' + timing : ''), null, nullify(data))
         .catch()
         ;
     },
 
-    "searchForPatients": function(params) {
-      return myFrontFetch(rest + "/folder", null, params)
+    'searchForPatients': function(params) {
+      return myFrontFetch(rest + '/folder', null, params)
         .then(function(data) {
           var list = [];
           for(var i in data) {
-            list.push(appState().helpers.create("Patient", data[i]));
+            list.push(appState().helpers.create('Patient', data[i]));
           }
           return list;
         })
         .then(appState().helpers.objectify)
         .then(function(data) {
           for(var i in data) {
-            data[i] = appState().helpers.create("Patient", data[i]);
+            data[i] = appState().helpers.create('Patient', data[i]);
           }
           return data;
         })
@@ -278,77 +278,77 @@ function service_backend_fn() {
     },
 
     // READWRITE
-    "createReference": function(year, order) {
-      return myFrontFetch(rest + "/reference", { method: "POST"},
-        // return treatHttp($http.post(rest + "/reference",
+    'createReference': function(year, order) {
+      return myFrontFetch(rest + '/reference', { method: 'POST'},
+        // return treatHttp($http.post(rest + '/reference',
         {
-          "entryyear": year,
-          "entryorder": order
+          'entryyear': year,
+          'entryorder': order
         })
         .then(appState().helpers.objectify)
-        .then(function(data) { return appState().helpers.create("Folder", data); })
+        .then(function(data) { return appState().helpers.create('Folder', data); })
         .catch()
         ;
     },
 
-    "createFile": function(data) {
-      return myFrontFetch(rest + "/fiche/" + data.getModel(), { method: "POST" }, nullify(data))
+    'createFile': function(data) {
+      return myFrontFetch(rest + '/fiche/' + data.getModel(), { method: 'POST' }, nullify(data))
         .then(appState().helpers.objectify)
-        .then(function(data) { return appState().helpers.create("Folder", data); })
+        .then(function(data) { return appState().helpers.create('Folder', data); })
         .catch()
         ;
     },
 
-    "saveFile": function(data) {
-      return myFrontFetch(rest + "/fiche/" + data.getModel() + "/" + data["id"], { method: "PUT" }, nullify(data))
+    'saveFile': function(data) {
+      return myFrontFetch(rest + '/fiche/' + data.getModel() + '/' + data['id'], { method: 'PUT' }, nullify(data))
         .then(appState().helpers.objectify)
-        .then(function(data) { return appState().helpers.create("Folder", data); })
+        .then(function(data) { return appState().helpers.create('Folder', data); })
         .catch()
         ;
     },
 
-    "deleteFile": function(data) {
-      return myFrontFetch(rest + "/fiche/" + data.getModel() + "/" + data["id"], { method: "DELETE" })
+    'deleteFile': function(data) {
+      return myFrontFetch(rest + '/fiche/' + data.getModel() + '/' + data['id'], { method: 'DELETE' })
         .then(appState().helpers.objectify)
-        .then(function(data) { return appState().helpers.create("Folder", data); })
+        .then(function(data) { return appState().helpers.create('Folder', data); })
         .catch()
         ;
     },
 
-    "unlockFile": function(data) {
-      return myFrontFetch(rest + "/unfreeze/" + data.getModel() + "/" + data["id"])
+    'unlockFile': function(data) {
+      return myFrontFetch(rest + '/unfreeze/' + data.getModel() + '/' + data['id'])
         .then(appState().helpers.objectify)
-        .then(function(data) { return appState().helpers.create("Folder", data); })
+        .then(function(data) { return appState().helpers.create('Folder', data); })
         .catch()
         ;
     },
 
-    "usersList": function() {
-      return myFrontFetch(rest + "/users")
+    'usersList': function() {
+      return myFrontFetch(rest + '/users')
         .catch()
         ;
     },
 
-    "userAdd": function(user) {
-      return myFrontFetch(rest + "/users" , { method: "POST" }, user)
+    'userAdd': function(user) {
+      return myFrontFetch(rest + '/users' , { method: 'POST' }, user)
         .catch()
         ;
     },
 
-    "userDelete": function(id) {
-      return myFrontFetch(rest + "/users/" + id, { method: "DELETE" })
+    'userDelete': function(id) {
+      return myFrontFetch(rest + '/users/' + id, { method: 'DELETE' })
         .catch()
         ;
     },
 
-    "userUpdate": function(user) {
-      return myFrontFetch(rest + "/users/" + user.id, { method: "PUT" }, user)
+    'userUpdate': function(user) {
+      return myFrontFetch(rest + '/users/' + user.id, { method: 'PUT' }, user)
         .catch()
         ;
     },
 
-    "userPassword": function(id, pwd) {
-      return myFrontFetch(rest + "/users/password/" + id, { method: "POST" }, { password: pwd })
+    'userPassword': function(id, pwd) {
+      return myFrontFetch(rest + '/users/password/' + id, { method: 'POST' }, { password: pwd })
         .catch()
         ;
     }
