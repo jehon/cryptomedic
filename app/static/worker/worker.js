@@ -36,7 +36,6 @@
       - positive feedback is received through the 'sync' mechanism
  */
 
-importScripts('../../bower_components/fetch/fetch.js');
 importScripts('../../bower_components/dexie/dist/latest/Dexie.min.js');
 importScripts('../js/database.js');
 importScripts('../js/myfetch.js');
