@@ -8,6 +8,10 @@ var glob = require('glob');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var scriptLoader = require('script-loader');
 var recursiveReadSync = require('recursive-readdir-sync');
+var fse = require('fs-extra');
+
+// Always restart from a blank page
+fse.emptyDirSync(__dirname + '/build/');
 
 // https://github.com/petehunt/webpack-howto
 
