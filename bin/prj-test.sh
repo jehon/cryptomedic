@@ -103,9 +103,9 @@ else
     fi
   done
 
-  if [ -r "tmp/router.log" ]; then
+  if [ -r "$PRJ_dIR/tmp/router.log" ]; then
     echo -e "\e[0;45mRouter.log\e[0m"
-    cat tmp/router.log | sort | uniq
+    cat "$PRJ_dIR/tmp/router.log" | sort | uniq
   fi
 fi
 
