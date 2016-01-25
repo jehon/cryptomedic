@@ -6,7 +6,6 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "dexie": "latest",
-    "fetch": "latest"
+    "dexie": "latest"
   }
 }
