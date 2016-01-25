@@ -9,23 +9,21 @@ var fse = require('fs-extra');
 var archiver = require('archiver');
 require('es6-object-assign').polyfill();
 
-
 function create(path, manifest) {
   /**
    * Function to create a package based on 'build' directory and a given @param manifest
    * into @param path
    */
   var archive = archiver.create('zip', {});
-  var output = fs.createWriteStream(path +  'package.zip');
 
   archive.on('error', function(err){
     throw err;
   });
 
-  archive.pipe(output);
   archive.directory(__dirname + '/../build/', '/');
+  archive.pipe(fs.createWriteStream(path +  'package.zip'));
 
-  archive.append(JSON.stringify(manifest), { name: 'manifest.webapp'});
+  archive.append(JSON.stringify(manifest), { name: 'manifest.webapp' });
   archive.finalize();
 
   var minimanifest = {
@@ -55,9 +53,12 @@ var manifest = {
     url          : 'https://github.com/jehon/'
   },
   default_locale : 'en',
-  chrome         : { 'navigation'                    : true }
+  chrome         : {
+    navigation   : true
+  }
 };
 
+// Make the two instances
 create(__dirname + '/../build/', manifest);
 create(__dirname + '/../tmp/', Object.assign({},
   manifest,
