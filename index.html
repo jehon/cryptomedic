@@ -45,52 +45,69 @@
     Have a good day<br>
     The cryptomedic team<br>
 
+    <!-- <div id='install'>install the application</div> -->
+
     <script type='text/javascript'>
-      function installMe(flavor) {
-        // TODO: https://developer.mozilla.org/en-US/docs/Web/API/DOMApplication
+      // if (navigator.mozApps) {
+      //   function manifest() {
+      //     return location.protocol + '//' + location.host + (location.port ? ':' + location.port : '')
+      //       + location.pathname.match(/.*\//)[0]
+      //       + "/manifest-dev.webapp";
+      //   }
 
-        // This URL must be a full url.
-        var manifestUrl = location.protocol + '//' + location.host + (location.port ? ':' + location.port : '')
-          + location.pathname.match(/.*\//)[0]
-          + flavor
-          + "manifest.webapp";
-        console.log(manifestUrl);
+      //   function request(title, req) {
+      //     return new Promise(function(iresolve, ireject) {
+      //       req.onerror = function(error) {
+      //         console.error(title + ": error", error);
+      //         console.error(title + ": error", error.name);
+      //         ireject(error);
+      //       }
+      //       req.onsuccess = function(data) {
+      //         // console.log(title + ": success result:", req.result);
+      //         console.info(title + ": ok - ", data.target.result);
+      //         // console.log(title + ": success this:", this);
+      //         iresolve(data.target.result);
+      //       }
+      //     });
+      //   }
 
-        var request = window.navigator.mozApps.checkInstalled(manifestUrl);
-        request.onerror = function(e) {
-          alert("Error calling checkInstalled: " + request.error.name);
-        };
-        request.onsuccess = function(e) {
-          var app = e.target.result;
-          if (app) {
-            console.log("App is installed!");
-            console.log(app.origin);
-            app.launch();
+      //   request("getSelf", navigator.mozApps.getSelf())
+      //     .then(function(data) {
+      //       if (data) {
+      //         console.log("getSelf: already installed");
+      //       } else {
+      //         console.log("getSelf: not installed");
+      //       }
+      //     });
 
-            // var req_up = app.checkForUpdate();
-            // req_up.onsuccess = function() {
-            //   console.log(this.result);
-            // }
-            // req_up.onerror = function() {
-            //   alert(this.error.name);
-            // };
-          }
-          else {
-            console.log("App is not installed!");
-            var req = navigator.mozApps.installPackage(manifestUrl);
-            req.onsuccess = function() {
-              alert(this.result.origin);
-              console.log(this.result);
-              console.info(this.result.origin);
-              window.location = this.result.origin;
-            };
-            req.onerror = function() {
-              alert(this.error.name);
-            };
-          }
-        };
+      //   // https://developer.mozilla.org/en-US/docs/Web/API/DOMApplicationsRegistry/getInstalled
+      //   var myapps;
+      //   request("getInstalled", window.navigator.mozApps.getInstalled()).then(function(data) {
+      //     console.log("Success, number of apps: " + data.length);
+      //     myapps = data;
+      //   });
 
-      }
+
+      //   function removeThis(app) {
+      //     request("removeThis", navigator.mozApps.mgmt.uninstall(app)).then(function(data) {
+      //       console.log("removed");
+      //     })
+      //   }
+
+
+      //   function installMe() {
+      //     request("installMe", navigator.mozApps.installPackage(manifest())).then(function(data) {
+      //       console.log("install ok to", data.origin, data);
+      //     });
+      //   }
+
+      //   function updateMe(app) {
+      //     request(app.checkForUpdate()).then(function(data) {
+      //       console.log("updateMe success");
+      //       console.log(req.result);
+      //     });
+      //   }
+      // }
     </script>
   </body>
 </html>
