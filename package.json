@@ -53,6 +53,7 @@
     "ng-cache-loader": "0.0.15",
     "nightwatch": "latest",
     "nightwatch-html-reporter": "latest",
+    "offline-plugin": "^2.0.2",
     "php-loader": "latest",
     "recursive-readdir-sync": "^1.0.6",
     "redux-devtools": "^2.1.5",
@@ -65,8 +66,8 @@
     "webpack-dev-server": "^1"
   },
   "scripts": {
-    "build": "webpack --config webpack.js -p ; node bin/package.js",
-    "builddev": "webpack --config webpack.js -d ; node bin/package.js",
+    "build": "webpack --config webpack.js -p; node bin/package.js",
+    "builddev": "webpack --config webpack.js -d; node bin/package.js",
     "dev-server": "node server.js | grep 'built\\|error\\|VALID'",
     "postinstall": "bower install; node ./bin/setselenium.js",
     "postupdate": "bower update; node ./bin/setselenium.js"
