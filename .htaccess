@@ -13,19 +13,14 @@
 
 RewriteEngine On
 
-########### REDIRECT TO INDEX IF DOES NOT EXISTS ##########
-#RewriteCond         %{REQUEST_URI}      !^/api/
-#RewriteCond         %{REQUEST_URI}      !^/phpmyadmin
-#RewriteCond         %{DOCUMENT_ROOT}/%{REQUEST_URI} !-d
-#RewriteCond         %{DOCUMENT_ROOT}/%{REQUEST_URI} !-f
-#RewriteRule         /.*                 /opt/biobank/frontend/build/index.html  [L]
-
+########### Map offline to build ###########
+RewriteRule         offline/(.*)        build/$1
 
 ########### Hybride app and build ##########
-RewriteCond         %{REQUEST_URI}      build/
-RewriteCond         %{DOCUMENT_ROOT}/%{REQUEST_URI} !-d
-RewriteCond         %{DOCUMENT_ROOT}/%{REQUEST_URI} !-f
-RewriteRule         build/(.*)          app/$1  [L]
+#RewriteCond         %{REQUEST_URI}      build/
+#RewriteCond         %{DOCUMENT_ROOT}/%{REQUEST_URI} !-d
+#RewriteCond         %{DOCUMENT_ROOT}/%{REQUEST_URI} !-f
+#RewriteRule         build/(.*)          app/$1  [L]
 
 RedirectMatch    404       vendor
 
