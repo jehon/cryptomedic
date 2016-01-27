@@ -1,5 +1,7 @@
 'use strict';
 
+// offline-plugin
+
 require('es6-promise').polyfill();
 
 var path = require('path');
@@ -9,9 +11,16 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 var scriptLoader = require('script-loader');
 var recursiveReadSync = require('recursive-readdir-sync');
 var fse = require('fs-extra');
+var OfflinePlugin = require('offline-plugin');
 
 // Always restart from a blank page
 fse.emptyDirSync(__dirname + '/build/');
+
+// Add files not managed by webpack
+fse.copySync(__dirname + '/app/static/', __dirname + '/build/static');
+fse.copySync(__dirname + '/app/bower_components/', __dirname + '/build/bower_components/');
+console.log(glob.sync(__dirname + '/build/static/**/*'));
+
 
 // https://github.com/petehunt/webpack-howto
 
@@ -121,6 +130,18 @@ var config = {
     }),
     new webpack.ProvidePlugin({
       'angular': 'angular'
+    }),
+    new OfflinePlugin({
+      caches: 'all', // -> { main: [], additionnal: [], optional: []}
+      // scope: '/cryptomedic/offline/',
+      relativePaths: true,
+      // updateStragegy: 'all', // -> changed
+      externals: [],
+      excludes: [ '/cryptomedic/api/*' ],
+      ServiceWorker: {
+        output: 'sw-offline.js'
+      },
+      AppCache: false
     })
   ]
 };
