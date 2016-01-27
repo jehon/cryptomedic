@@ -66,8 +66,8 @@
     "webpack-dev-server": "^1"
   },
   "scripts": {
-    "build": "webpack --config webpack.js -p; node bin/package.js",
-    "builddev": "webpack --config webpack.js -d; node bin/package.js",
+    "build": "webpack --config webpack.js -p",
+    "builddev": "webpack --config webpack.js -d",
     "dev-server": "node server.js | grep 'built\\|error\\|VALID'",
     "postinstall": "bower install; node ./bin/setselenium.js",
     "postupdate": "bower update; node ./bin/setselenium.js"
