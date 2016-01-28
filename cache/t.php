@@ -46,6 +46,7 @@ class t {
           $generator['database']['pdo_username'],
           $generator['database']['pdo_password']);
       static::$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+      register_shutdown_function("T::footer");
     } catch (PDOException $e) {
       throw new Exception($e->getMessage()); // @codeCoverageIgnore
     }
@@ -75,6 +76,11 @@ class t {
 
   static function getColumnsOfTable($sqlTable) {
     return array_keys(static::cacheSqlStructureFor($sqlTable));
+  }
+
+  static function footer() {
+    $date = new DateTime();
+    echo "<span class='debug_infos'>" . $date->format('Y-m-d H:i:s') . "<span>";
   }
 
   var $key;
