@@ -19,8 +19,9 @@ fse.emptyDirSync(__dirname + '/build/');
 // Add files not managed by webpack
 fse.copySync(__dirname + '/app/static/', __dirname + '/build/static');
 fse.copySync(__dirname + '/app/bower_components/', __dirname + '/build/bower_components/');
-console.log(glob.sync(__dirname + '/build/static/**/*'));
-
+var unmanaged = []
+        .concat(glob('static/**', { sync: true, cwd: __dirname + '/build/' }))
+        .concat(glob('bower_components/**/*.js', { sync: true, cwd: __dirname + '/build/' }));
 
 // https://github.com/petehunt/webpack-howto
 
@@ -33,6 +34,7 @@ console.log(glob.sync(__dirname + '/build/static/**/*'));
 // @see http://mts.io/2015/04/08/webpack-shims-polyfills/
 
 // test: jQuery('#busy').modal('show'); jQuery('#busy').datepicker()
+
 
 var config = {
   entry: [ ]
@@ -132,11 +134,15 @@ var config = {
       'angular': 'angular'
     }),
     new OfflinePlugin({
-      caches: 'all', // -> { main: [], additionnal: [], optional: []}
-      // scope: '/cryptomedic/offline/',
-      relativePaths: true,
+      caches: {
+        main: [].concat(unmanaged).concat([ ':rest:' ]),
+        additionnal: [],
+        optonal: []
+      },
+      scope: '/cryptomedic/offline/',
+      // relativePaths: true,
       // updateStragegy: 'all', // -> changed
-      externals: [],
+      externals: unmanaged,
       excludes: [ '/cryptomedic/api/*' ],
       ServiceWorker: {
         output: 'sw-offline.js'
