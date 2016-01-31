@@ -35,7 +35,7 @@ class ReportController extends Controller {
 		$year = substr($when, 0, 4);
 
 		$this->internalWhenFrom = "{$year}-01-01";
-		$this->internalWhenTo = date("Y-m-d", mktime(0, 0, 0, 1, 0, $year + 1));
+		$this->internalWhenTo = date("Y-m-d", mktime(0, 0, -1, 1, 1, $year + 1));
 		return $this->index($this->getReportParams('year', (new \DateTime())->format("Y") ));
 	}
 
@@ -48,7 +48,7 @@ class ReportController extends Controller {
 		$month = substr($when, 5, 2);
 
 		$this->internalWhenFrom = "{$year}-{$month}-01";
-		$this->internalWhenTo = date("Y-m-d", mktime(0, 0, 0, $month + 1, 0, $year));
+		$this->internalWhenTo = date("Y-m-d", mktime(0, 0, -1, $month + 1, 1, $year));
 		return $this->index($when);
 	}
 
@@ -63,7 +63,7 @@ class ReportController extends Controller {
 		$day = substr($when, 8, 2);
 
 		$this->internalWhenFrom = "{$year}-{$month}-{$day}";
-		$this->internalWhenTo = date("Y-m-d", mktime(0, 0, 0, $month, $day + 1, $year));
+		$this->internalWhenTo = date("Y-m-d", mktime(0, 0, -1, $month, $day + 1, $year));
 		return $this->index($when);
 	}
 
@@ -118,6 +118,7 @@ class ReportController extends Controller {
 			$this->sqlBindParams[$sqlParam."From"] = $this->internalWhenFrom;
 			$this->sqlBindParams[$sqlParam."To"] = $this->internalWhenTo;
 			return "($fieldName BETWEEN :{$sqlParam}From AND :{$sqlParam}To)";
+			// return "(:{$sqlParam}From <= $fieldName) AND ($fieldName < :{$sqlParam}To)";
 		}
 
 		$param = $this->getReportParams($paramName, "");
