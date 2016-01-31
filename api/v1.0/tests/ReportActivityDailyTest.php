@@ -31,14 +31,14 @@ class ReportActivityDailyTest extends RouteReferenceTestCase {
 		$this->myAssertResponseForReference("admin");
 
 		$json = $this->myAssertJSON("admin");
-		$this->thisAssertResponse($json, [ 3, 5 ]);
+		$this->thisAssertResponse($json, [ 2, 5 ]);
 	}
 
  	public function testByCenter() {
 		$this->setParams(array( 'day' => self::$nday, 'month' => self::$nmonth, 'center' => 'Chakaria Disability Center', 'examiner' => ''));
  		$this->myAssertResponseForReference("manager");
 		$json = $this->myAssertJSON("manager");
-		$this->thisAssertResponse($json, [ 2, 3 ]);
+		$this->thisAssertResponse($json, [ 1, 3 ]);
 		foreach($json->list as $k => $v) {
 			$this->assertEquals("Chakaria Disability Center", $v->Center);
 		}
