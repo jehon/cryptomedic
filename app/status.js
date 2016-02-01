@@ -21,8 +21,6 @@ export default function() {
   return {
     store: store,
     dispatch: dispatch,
-    actions: {
-    },
     catalog: catalog,
     helpers: {
       objectify,
