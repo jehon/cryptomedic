@@ -1,6 +1,6 @@
 'use strict';
 
-import catalog from 'reducers/catalog';
+import dispatch from 'reducers/dispatch';
 import store from 'reducers/store';
 import * as connection from 'actions/connectionActions';
 import * as state from 'actions/stateActions';
@@ -22,12 +22,12 @@ if (location.pathname.split('/')[2] == 'offline') {
 export default function() {
   return {
     store: store,
+    dispatch: dispatch,
     actions: {
       connection,
       state,
       database
     },
-    catalog: catalog,
     helpers: {
       objectify,
       create,
