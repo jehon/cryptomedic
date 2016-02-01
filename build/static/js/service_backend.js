@@ -92,23 +92,23 @@ function service_backend_fn() {
     switch(name) {
       case 'disconnected':
         if (data == 401) {
-          appState().actions.connection.expired();
+          appState().dispatch(appState().catalog.CONNECTION_EXPIRED);
           server.settings = false;
           location.hash = '#/login';
         } else {
-          appState().actions.connection.serverError();
+          appState().dispatch(appState().catalog.CONNECTION_SERVER_ERROR);
         }
         break;
       case 'progress':
         if (data.isfinal) {
-          appState().actions.database.downloaded();
+          appState().dispatch(appState().catalog.DATABASE_DOWNLOADED);
         } else {
-          appState().actions.database.downloading();
+          appState().dispatch(appState().catalog.DATABASE_DOWNLOADING);
         }
-        appState().actions.connection.success();
+        appState().dispatch(appState().catalog.CONNECTION_SUCCESS);
         break;
       default:
-        appState().actions.connection.success();
+        appState().dispatch(appState().catalog.CONNECTION_SUCCESS);
         break;
     }
   };
@@ -123,7 +123,7 @@ function service_backend_fn() {
   function myFrontFetch(url, init, data) {
     return myFetch(url, init, data).then(
       function(json) {
-        appState().actions.connection.success();
+        appState().dispatch(appState().catalog.CONNECTION_SUCCESS);
         if (json._offline) {
           return db.storeRecord({ record: json })
             .then(function() { return json; });
@@ -133,21 +133,21 @@ function service_backend_fn() {
       }, function(httpErrorCode) {
       switch(httpErrorCode) {
         case 401: // unauthorized
-          appState().actions.connection.expired();
+          appState().dispatch(appState().catalog.CONNECTION_EXPIRED);
           server.settings = false;
           location.hash = '#/login';
           break;
         case 403: // forbidden
-          appState().actions.connection.failed();
+          appState().dispatch(appState().catalog.CONNECTION_FAILED);
           break;
         case 404: // not found
-          appState().actions.connection.serverError();
+          appState().dispatch(appState().catalog.CONNECTION_SERVER_ERROR);
           break;
         case 500: // internal server error
-          appState().actions.connection.serverError();
+          appState().dispatch(appState().catalog.CONNECTION_SERVER_ERROR);
           break;
         default:
-          appState().actions.connection.serverError();
+          appState().dispatch(appState().catalog.CONNECTION_SERVER_ERROR);
           break;
       }
       return Promise.reject('myFrontFetch error: ' + httpErrorCode);
@@ -165,7 +165,7 @@ function service_backend_fn() {
               // 'appVersion': cryptomedic.version,
           'computerId': window.localStorage.cryptomedicComputerId
         })
-        .then(appState().actions.connection.settings)
+        .then(appState().dispatch.bind(this, appState().catalog.CONNECTION_SETTINGS))
         .then(mySendAction.bind(this, 'init'))
         .catch()
         ;
@@ -177,7 +177,7 @@ function service_backend_fn() {
           'computerId': window.localStorage.cryptomedicComputerId
         }
         )
-        .then(appState().actions.connection.settings)
+        .then(appState().dispatch.bind(this, appState().catalog.CONNECTION_SETTINGS))
         .then(mySendAction.bind(this, 'init'))
         .catch()
         ;
@@ -186,7 +186,7 @@ function service_backend_fn() {
       // TODO: clean up the cache --> cache managed in other object???
       return myFrontFetch(rest + '/auth/logout')
         .then(function(data) {
-          appState().actions.connection.expired();
+          appState().dispatch(appState().catalog.CONNECTION_EXPIRED);
           return data;
         })
         .catch()
@@ -230,7 +230,7 @@ function service_backend_fn() {
     'clear': function() {
       return db.clear()
         .then(function() {
-          appState().actions.database.downloading();
+          appState().dispatch(appState().catalog.DATABASE_DOWNLOADING);
         })
         .catch()
         ;

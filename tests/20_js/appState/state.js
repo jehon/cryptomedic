@@ -5,35 +5,35 @@ describe('appState', function() {
     expect(appState().store.getState().state.max).toBe(0);
     expect(appState().store.getState().state.messages).toBe('');
 
-    appState().actions.state.busy('test');
+    appState().dispatch(appState().catalog.STATE_BUSY, 'test');
     expect(appState().store.getState().state.busy).toBe(1);
     expect(appState().store.getState().state.max).toBe(1);
 
-    appState().actions.state.busy('test');
+    appState().dispatch(appState().catalog.STATE_BUSY, 'test');
     expect(appState().store.getState().state.busy).toBe(2);
     expect(appState().store.getState().state.max).toBe(2);
 
-    appState().actions.state.busy('test');
+    appState().dispatch(appState().catalog.STATE_BUSY, 'test');
     expect(appState().store.getState().state.busy).toBe(3);
     expect(appState().store.getState().state.max).toBe(3);
 
-    appState().actions.state.ready();
+    appState().dispatch(appState().catalog.STATE_READY);
     expect(appState().store.getState().state.busy).toBe(2);
     expect(appState().store.getState().state.max).toBe(3);
 
-    appState().actions.state.ready();
+    appState().dispatch(appState().catalog.STATE_READY);
     expect(appState().store.getState().state.busy).toBe(1);
     expect(appState().store.getState().state.max).toBe(3);
 
-    appState().actions.state.busy('test');
+    appState().dispatch(appState().catalog.STATE_BUSY, 'test');
     expect(appState().store.getState().state.busy).toBe(2);
     expect(appState().store.getState().state.max).toBe(4);
 
-    appState().actions.state.ready();
+    appState().dispatch(appState().catalog.STATE_READY);
     expect(appState().store.getState().state.busy).toBe(1);
     expect(appState().store.getState().state.max).toBe(4);
 
-    appState().actions.state.ready();
+    appState().dispatch(appState().catalog.STATE_READY);
     expect(appState().store.getState().state.busy).toBe(0);
     expect(appState().store.getState().state.max).toBe(0);
     expect(appState().store.getState().state.messages).toBe('');
@@ -44,11 +44,11 @@ describe('appState', function() {
     expect(appState().store.getState().state.max).toBe(0);
     expect(appState().store.getState().state.messages).toBe('');
 
-    appState().actions.state.busy('test');
+    appState().dispatch(appState().catalog.STATE_BUSY, 'test');
     expect(appState().store.getState().state.busy).toBe(1);
     expect(appState().store.getState().state.max).toBe(1);
 
-    appState().actions.state.clear();
+    appState().dispatch(appState().catalog.STATE_CLEAR);
     expect(appState().store.getState().state.busy).toBe(0);
     expect(appState().store.getState().state.max).toBe(0);
     expect(appState().store.getState().state.messages).toBe('');

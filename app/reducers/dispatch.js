@@ -8,4 +8,5 @@ export default function dispatch(type, payload) {
   } else {
     store.dispatch({ type: type, payload: payload });
   }
+  return payload;
 }

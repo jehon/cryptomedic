@@ -1,27 +1,27 @@
-"use strict";
+'use strict';
 
 // TODO: manage change in groups
 
-mainApp.controller("ctrl_users", [ "$scope", "$location", "$routeParams" , function($scope, $location, $routeParams) {
+mainApp.controller('ctrl_users', [ '$scope', '$location', '$routeParams' , function($scope, $location, $routeParams) {
   $scope.users = {};
   $scope.edit = false;
   $scope.password = false;
 
   $scope.refresh = function() {
-    appState().actions.state.busy("Getting user list from the server");
+    appState().dispatch(appState().catalog.STATE_BUSY, 'Getting user list from the server');
     service_backend.usersList()
       .then(function(data) {
         $scope.users = data;
-        appState().actions.state.ready();
+        appState().dispatch(appState().catalog.STATE_READY);
         $scope.safeApply();
       });
   };
 
   $scope.emailAll = function() {
-    var res = "";
+    var res = '';
     for(i in $scope.users) {
       if ($scope.users[i].email) {
-        res += $scope.users[i].name + "<" + $scope.users[i].email + ">,";
+        res += $scope.users[i].name + '<' + $scope.users[i].email + '>,';
       }
     }
     return res;
@@ -29,7 +29,7 @@ mainApp.controller("ctrl_users", [ "$scope", "$location", "$routeParams" , funct
 
   $scope.doAdd = function() {
     $scope.edit = {
-      "id" : -1
+      'id' : -1
     };
   };
 
@@ -50,14 +50,14 @@ mainApp.controller("ctrl_users", [ "$scope", "$location", "$routeParams" , funct
       service_backend.userUpdate($scope.edit)
         .then(function(data) {
           $scope.list = data;
-          $scope.$emit("message", { "level": "success", "text": "The user '" + $scope.edit.username + "' has been saved successfully."});
+          $scope.$emit('message', { 'level': 'success', 'text': 'The user '' + $scope.edit.username + '' has been saved successfully.'});
           $scope.doCancel();
         });
     } else {
       service_backend.userAdd($scope.edit)
         .then(function(data) {
           $scope.list = data;
-          $scope.$emit("message", { "level": "success", "text": "The user '" + $scope.edit.username + "' has been created successfully."});
+          $scope.$emit('message', { 'level': 'success', 'text': 'The user '' + $scope.edit.username + '' has been created successfully.'});
           // $scope.doShowPassword();
           $scope.doCancel();
         });
@@ -65,9 +65,9 @@ mainApp.controller("ctrl_users", [ "$scope", "$location", "$routeParams" , funct
   };
 
   $scope.doDelete = function() {
-    if (confirm("Are you sure you want to delete user '" + $scope.edit.name + "'?")) {
+    if (confirm('Are you sure you want to delete user '' + $scope.edit.name + ''?')) {
       service_backend.userDelete($scope.edit.id).then(function(data) {
-        $scope.$emit("message", { "level": "success", "text": "The user '" + $scope.edit.username + "' has been deleted successfully."});
+        $scope.$emit('message', { 'level': 'success', 'text': 'The user '' + $scope.edit.username + '' has been deleted successfully.'});
         $scope.users = data;
         $scope.doCancel();
       });
@@ -82,7 +82,7 @@ mainApp.controller("ctrl_users", [ "$scope", "$location", "$routeParams" , funct
 
   $scope.doSavePassword = function() {
     service_backend.userPassword($scope.password.id, $scope.password.newcode).then(function(data) {
-      $scope.$emit("message", { "level": "success", "text": "The password of user '" + $scope.password.username + "' has been updated successfully."});
+      $scope.$emit('message', { 'level': 'success', 'text': 'The password of user '' + $scope.password.username + '' has been updated successfully.'});
       $scope.doCancel();
       // $scope.safeApply();
     });

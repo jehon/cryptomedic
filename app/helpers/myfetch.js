@@ -12,33 +12,33 @@
 export function myFetch(url, init, data) {
   init = init || {};
   if (!init.method) {
-    init.method = "GET";
+    init.method = 'GET';
   }
-  init.credentials = "include";
+  init.credentials = 'include';
 
   if (data) {
-    if (init.method == "POST") {
+    if (init.method == 'POST') {
       var fd = new FormData();
       for(var a in data) {
         fd.append(a, data[a]);
       }
       init.body = fd;
-    } else if (init.method == "PUT") {
+    } else if (init.method == 'PUT') {
       if (!init.headers) {
         init.headers = {};
       }
       // Thanks to: http://blog.gospodarets.com/fetch_in_action/
-      init.headers["Content-type"] = "application/x-www-form-urlencoded; charset=UTF-8";
+      init.headers['Content-type'] = 'application/x-www-form-urlencoded; charset=UTF-8';
       var serialize = function (data) {
         return Object.keys(data).map(function (keyName) {
-          return encodeURIComponent(keyName) + "=" + encodeURIComponent(data[keyName]);
-        }).join("&");
+          return encodeURIComponent(keyName) + '=' + encodeURIComponent(data[keyName]);
+        }).join('&');
       };
       init.body = serialize(data);
     } else {
-      url = url + "?";
+      url = url + '?';
       for(var d in data) {
-        url = url + encodeURIComponent(d) + "=" + encodeURIComponent(data[d]) + "&";
+        url = url + encodeURIComponent(d) + '=' + encodeURIComponent(data[d]) + '&';
       }
     }
   }
@@ -60,7 +60,7 @@ export function myFetch(url, init, data) {
 export function myFrontFetch(url, init, data) {
   return myFetch(url, init, data).then(
     function(json) {
-      appState().actions.connection.success();
+      appState().dispatch(appState().catalog.CONNECTION_SUCCESS);
       if (json._offline) {
         return db.storeRecord({ record: json })
           .then(function() { return json; });
@@ -70,24 +70,24 @@ export function myFrontFetch(url, init, data) {
     }, function(httpErrorCode) {
     switch(httpErrorCode) {
       case 401: // unauthorized
-        appState().actions.connection.expired();
+        appState().dispatch(appState().catalog.CONNECTION_EXPIRED);
         server.settings = false;
-        location.hash = "#/login";
+        location.hash = '#/login';
         break;
       case 403: // forbidden
-        appState().actions.connection.failed();
+        appState().dispatch(appState().catalog.CONNECTION_FAILED);
         break;
       case 404: // not found
-        appState().actions.connection.serverError();
+        appState().dispatch(appState().catalog.CONNECTION_SERVER_ERROR);
         break;
       case 500: // internal server error
-        appState().actions.connection.serverError();
+        appState().dispatch(appState().catalog.CONNECTION_SERVER_ERROR);
         break;
       default:
-        appState().actions.connection.serverError();
+        appState().dispatch(appState().catalog.CONNECTION_SERVER_ERROR);
         break;
     }
-    return Promise.reject("myFrontFetch error: " + httpErrorCode);
+    return Promise.reject('myFrontFetch error: ' + httpErrorCode);
   }
   );
 }
