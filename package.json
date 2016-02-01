@@ -1,7 +1,7 @@
 {
   "name": "CryptomedicApp",
   "private": true,
-  "version": "4.11.4",
+  "version": "4.11.5",
   "description": "Cryptomedic application for all plateforms",
   "repository": "https://github.com/jehon/CryptomedicApp",
   "license": "MIT",
