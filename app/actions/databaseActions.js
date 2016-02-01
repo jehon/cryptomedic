@@ -1,6 +1,6 @@
 
-import catalog from "reducers/catalog";
-import dispatch from "actions/dispatch";
+import catalog from 'reducers/catalog';
+import dispatch from 'reducers/dispatch';
 
 export function downloading() {
   dispatch(catalog.DATABASE_DOWNLOADING);

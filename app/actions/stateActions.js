@@ -1,6 +1,6 @@
 
-import catalog from "reducers/catalog";
-import dispatch from "actions/dispatch";
+import catalog from 'reducers/catalog';
+import dispatch from 'reducers/dispatch';
 
 export function busy(msg) {
   dispatch(catalog.STATE_BUSY, msg);
