@@ -1,6 +1,6 @@
-"use strict";
+'use strict';
 
-mainApp.controller("ctrl_folder", [ "$scope", "$location", "$routeParams" , function($scope, $location, $routeParams) {
+mainApp.controller('ctrl_folder', [ '$scope', '$location', '$routeParams' , function($scope, $location, $routeParams) {
   /*
    * '/folder/:patient_id/:page?/:subtype?/:subid?/:mode?'
    *
@@ -16,15 +16,15 @@ mainApp.controller("ctrl_folder", [ "$scope", "$location", "$routeParams" , func
    *
    */
 
-  $scope.patient_id = $routeParams["patient_id"];
-  $scope.page = $routeParams["page"];
-  $scope.subtype = $routeParams["subtype"];
-  $scope.subid = $routeParams["subid"];
-  $scope.mode = ($routeParams["mode"] ? $routeParams["mode"] : "read");
+  $scope.patient_id = $routeParams['patient_id'];
+  $scope.page = $routeParams['page'];
+  $scope.subtype = $routeParams['subtype'];
+  $scope.subid = $routeParams['subid'];
+  $scope.mode = ($routeParams['mode'] ? $routeParams['mode'] : 'read');
 
   $scope.age = {};
 
-  if ($scope.page == "edit") {
+  if ($scope.page == 'edit') {
     // Map page to the mode (see ~>) in case of patient (short url, but wrong parameters)
     $scope.mode = $scope.page;
     $scope.page = false;
@@ -32,9 +32,9 @@ mainApp.controller("ctrl_folder", [ "$scope", "$location", "$routeParams" , func
 
   $scope.folder = false;
   var cachedCurrentFile = null;
-  if ($scope.page == "file" && !$scope.subid) {
+  if ($scope.page == 'file' && !$scope.subid) {
     // Adding a file
-    $scope.mode = "add";
+    $scope.mode = 'add';
   }
 
   //----------------------
@@ -44,8 +44,8 @@ mainApp.controller("ctrl_folder", [ "$scope", "$location", "$routeParams" , func
   service_backend.getFolder($scope.patient_id).then(function(data) {
     $scope.folder = data;
 
-    if ($scope.page == "file") {
-      if ($scope.mode == "add") {
+    if ($scope.page == 'file') {
+      if ($scope.mode == 'add') {
         cachedCurrentFile = appState().helpers.create($scope.subtype, null, $scope.folder);
         cachedCurrentFile.patient_id = $scope.patient_id;
       } else {
@@ -59,22 +59,22 @@ mainApp.controller("ctrl_folder", [ "$scope", "$location", "$routeParams" , func
     } else {
       cachedCurrentFile = $scope.folder.getMainFile();
     }
-    if ($scope.mode == "edit" || $scope.mode == "add") {
-      jQuery(".modeRead").removeClass("modeRead").addClass("modeWrite");
+    if ($scope.mode == 'edit' || $scope.mode == 'add') {
+      jQuery('.modeRead').removeClass('modeRead').addClass('modeWrite');
     } else {
-      jQuery(".modeWrite").removeClass("modeWrite").addClass("modeRead");
+      jQuery('.modeWrite').removeClass('modeWrite').addClass('modeRead');
     }
 
     if (cachedCurrentFile.Yearofbirth) {
       var age = calculations.age.fromBirthDate(cachedCurrentFile.Yearofbirth);
-      var r = RegExp("([0-9]+) ?y(ears)? ?([0-9]+) ?m(onths)?").exec(age);
+      var r = RegExp('([0-9]+) ?y(ears)? ?([0-9]+) ?m(onths)?').exec(age);
       // console.log(r);
       $scope.age.years = parseInt(r[1]);
       $scope.age.months = parseInt(r[3]);
     }
 
     $scope.safeApply();
-    $scope.$broadcast("refresh");
+    $scope.$broadcast('refresh');
   });
 
   function askFolder() {
@@ -82,7 +82,7 @@ mainApp.controller("ctrl_folder", [ "$scope", "$location", "$routeParams" , func
   }
   // TODO: is it ok?
   // if (!$scope.folder) {
-  //   console.log("ask folder");
+  //   console.log('ask folder');
   askFolder();
   // }
 
@@ -91,17 +91,17 @@ mainApp.controller("ctrl_folder", [ "$scope", "$location", "$routeParams" , func
   // ------------------------
   $scope.getTemplateName = function() {
     if (!$scope.folder) {
-      return "waiting.php";
+      return 'waiting.php';
     }
     if (!$scope.page) {
-      return ($scope.mode == "read" ? "fiches" : "writes") + "/patient.php";
+      return ($scope.mode == 'read' ? 'fiches' : 'writes') + '/patient.php';
     }
 
-    if ($scope.page == "file") {
-      return ($scope.mode == "read" ? "fiches" : "writes") + "/" + $scope.subtype.toLowerCase() + ".php";
+    if ($scope.page == 'file') {
+      return ($scope.mode == 'read' ? 'fiches' : 'writes') + '/' + $scope.subtype.toLowerCase() + '.php';
     }
 
-    return "folder_pages/" + $scope.page + ".html";
+    return 'folder_pages/' + $scope.page + '.html';
   };
 
   $scope.currentFile = function() {
@@ -113,7 +113,7 @@ mainApp.controller("ctrl_folder", [ "$scope", "$location", "$routeParams" , func
     if (index) {
       f = $scope.folder.getSubFile(index);
     }
-    return "/folder/" + f.patient_id + "/fiche/" + f.getModel() + "/" + f.id + (mode ? "/" + mode : "");
+    return '/folder/' + f.patient_id + '/fiche/' + f.getModel() + '/' + f.id + (mode ? '/' + mode : '');
   };
 
   //----------------------
@@ -125,29 +125,29 @@ mainApp.controller("ctrl_folder", [ "$scope", "$location", "$routeParams" , func
   // TODO: hide action button if form is not ok
     $scope.valide = true;
 
-    jQuery("input[type=number][required]").each(function() {
-      if (jQuery(this).val() == "") {
+    jQuery('input[type=number][required]').each(function() {
+      if (jQuery(this).val() == '') {
         jQuery(this).val(0);
       }
     });
 
-    if (!jQuery("#fileForm")[0].checkValidity()) {
-      console.log("Form invalid");
-      jQuery("#fileFormSubmit").click();
+    if (!jQuery('#fileForm')[0].checkValidity()) {
+      console.log('Form invalid');
+      jQuery('#fileFormSubmit').click();
       $scope.valide = false;
     }
 
     $scope.errors = $scope.currentFile().validate();
 
-    jQuery("input[mycalendar]:visible").each(function(){
+    jQuery('input[mycalendar]:visible').each(function(){
       var date = jQuery(this).val();
-      if ((date == "") && !jQuery(this).is("[required]")) {
+      if ((date == '') && !jQuery(this).is('[required]')) {
         return;
       }
-      var ok = ((new Date(date) !== "Invalid Date" && !isNaN(new Date(date))));
+      var ok = ((new Date(date) !== 'Invalid Date' && !isNaN(new Date(date))));
       if (!ok) {
-        var uuid = jQuery(this).attr("uuid");
-        $scope.errors["date_" + uuid] = true;
+        var uuid = jQuery(this).attr('uuid');
+        $scope.errors['date_' + uuid] = true;
         $scope.valide = false;
       }
     });
@@ -156,50 +156,50 @@ mainApp.controller("ctrl_folder", [ "$scope", "$location", "$routeParams" , func
       $scope.valide = false;
     }
 
-    // console.log("validation", $scope.errors);
+    // console.log('validation', $scope.errors);
     return $scope.valide;
   };
-  $scope.$on("revalidate", $scope.actionValidate);
+  $scope.$on('revalidate', $scope.actionValidate);
 
   $scope.actionCancel = function() {
     // By rerouting, the controller is initialized back
     if ($scope.subid) {
-      $scope.go("/folder/" + $scope.patient_id + "/file/" + $scope.subtype + "/" + $scope.subid);
+      $scope.go('/folder/' + $scope.patient_id + '/file/' + $scope.subtype + '/' + $scope.subid);
     } else {
-      $scope.go("/folder/" + $scope.patient_id);
+      $scope.go('/folder/' + $scope.patient_id);
     }
   };
 
   $scope.actionSave = function() {
     if (!$scope.actionValidate()) {
-      alert("You have errors in your data. Please correct them and try again");
+      alert('You have errors in your data. Please correct them and try again');
       return ;
     }
-    appState().actions.state.busy("Saving file on the server");
+    appState().dispatch(appState().catalog.STATE_BUSY, 'Saving file on the server');
     $scope.folder = false;
     $scope.safeApply();
     service_backend.saveFile(cachedCurrentFile, $scope.patient_id)
       .then(function(data) {
         // The data is refreshed by navigating away...
-        $scope.$emit("message", { "level": "success", "text": "The " + $scope.subtype + " has been saved."});
-        $scope.go("/folder/" + $scope.patient_id + "/file/" + $scope.subtype + "/" + $scope.subid);
+        $scope.$emit('message', { 'level': 'success', 'text': 'The ' + $scope.subtype + ' has been saved.'});
+        $scope.go('/folder/' + $scope.patient_id + '/file/' + $scope.subtype + '/' + $scope.subid);
         $scope.folder = data;
-        appState().actions.state.ready();
+        appState().dispatch(appState().catalog.STATE_READY);
         $scope.safeApply();
       });
   };
 
   $scope.actionUnlock = function() {
-    appState().actions.state.busy("Unlocking files on the server");
+    appState().dispatch(appState().catalog.STATE_BUSY, 'Unlocking files on the server');
     $scope.folder = false;
     $scope.safeApply();
     service_backend.unlockFile(cachedCurrentFile)
     .then(function(data) {
-      $scope.$emit("message", { "level": "success", "text": "The " + $scope.subtype + " #" + $scope.subid + " has been unlocked."});
+      $scope.$emit('message', { 'level': 'success', 'text': 'The ' + $scope.subtype + ' #' + $scope.subid + ' has been unlocked.'});
       // Let's refresh the data
       $scope.folder = data;
-      $scope.go("/folder/" + $scope.patient_id + "/file/" + $scope.subtype + "/" + $scope.subid + "/edit");
-      appState().actions.state.ready();
+      $scope.go('/folder/' + $scope.patient_id + '/file/' + $scope.subtype + '/' + $scope.subid + '/edit');
+      appState().dispatch(appState().catalog.STATE_READY);
       $scope.safeApply();
     });
   };
@@ -207,94 +207,94 @@ mainApp.controller("ctrl_folder", [ "$scope", "$location", "$routeParams" , func
   $scope.actionCreate = function() {
     // Save transversal data for further use later...
     if (!$scope.actionValidate()) {
-      alert("You have errors in your data. Please correct them and try again");
+      alert('You have errors in your data. Please correct them and try again');
       return ;
     }
-    appState().actions.state.busy("Creating files on the server");
+    appState().dispatch(appState().catalog.STATE_BUSY, 'Creating files on the server');
     if (cachedCurrentFile.Date) {
-      service_session_storage().set("date", cachedCurrentFile.Date);
+      service_session_storage().set('date', cachedCurrentFile.Date);
     }
     if (cachedCurrentFile.ExaminerName) {
-      service_session_storage().set("examinerName", cachedCurrentFile.ExaminerName);
+      service_session_storage().set('examinerName', cachedCurrentFile.ExaminerName);
     }
     if (cachedCurrentFile.Center) {
-      service_session_storage().set("center", cachedCurrentFile.Center);
+      service_session_storage().set('center', cachedCurrentFile.Center);
     }
 
     service_backend.createFile(cachedCurrentFile)
     .then(function(data) {
-      $scope.$emit("message", { "level": "success", "text": "The " + cachedCurrentFile.getModel() + " has been created."});
+      $scope.$emit('message', { 'level': 'success', 'text': 'The ' + cachedCurrentFile.getModel() + ' has been created.'});
       // The data is refreshed by navigating away...
-      $scope.go("/folder/" + $scope.patient_id + "/file/" + $scope.subtype + "/" + data.newKey);
-      appState().actions.state.ready();
+      $scope.go('/folder/' + $scope.patient_id + '/file/' + $scope.subtype + '/' + data.newKey);
+      appState().dispatch(appState().catalog.STATE_READY);
       $scope.safeApply();
     });
   };
 
   $scope.actionDelete = function() {
-    if (!confirm("Are you sure you want to delete this file?")) {
+    if (!confirm('Are you sure you want to delete this file?')) {
       return;
     }
-    appState().actions.state.busy("Deleting file on the server");
+    appState().dispatch(appState().catalog.STATE_BUSY, 'Deleting file on the server');
     $scope.folder = false;
     $scope.safeApply();
     service_backend.deleteFile($scope.currentFile())
     .then(function(data) {
-      $scope.$emit("message", { "level": "success", "text":  "The " + $scope.currentFile().getModel() +  " of " + $scope.currentFile().Date + " has been deleted"});
+      $scope.$emit('message', { 'level': 'success', 'text':  'The ' + $scope.currentFile().getModel() +  ' of ' + $scope.currentFile().Date + ' has been deleted'});
       $scope.folder = data;
-      $scope.go("/folder/" + $scope.patient_id);
-      appState().actions.state.ready();
+      $scope.go('/folder/' + $scope.patient_id);
+      appState().dispatch(appState().catalog.STATE_READY);
       $scope.safeApply();
     });
   };
 
   $scope.actionCreatePatient = function() {
     if (!$scope.actionValidate()) {
-      alert("You have errors in your data. Please correct them and try again");
+      alert('You have errors in your data. Please correct them and try again');
       return ;
     }
-    appState().actions.state.busy("Creating the patient on the server");
+    appState().dispatch(appState().catalog.STATE_BUSY, 'Creating the patient on the server');
     $scope.folder = false;
-    // $scope.currentFile().getModel() = "Patient";
+    // $scope.currentFile().getModel() = 'Patient';
     service_backend.createFile($scope.currentFile())
     .then(function(data) {
-      $scope.$emit("message", { "level": "success", "text":  "The patient has been created."});
+      $scope.$emit('message', { 'level': 'success', 'text':  'The patient has been created.'});
       $scope.folder = data;
-      $scope.go("/folder/" + data.id);
-      appState().actions.state.ready();
+      $scope.go('/folder/' + data.id);
+      appState().dispatch(appState().catalog.STATE_READY);
       $scope.safeApply();
     });
   };
 
   $scope.actionSavePatient = function() {
     if (!$scope.actionValidate()) {
-      alert("You have errors in your data. Please correct them and try again");
+      alert('You have errors in your data. Please correct them and try again');
       return ;
     }
     $scope.folder = false;
-    appState().actions.state.busy("Saving files on the server");
+    appState().dispatch(appState().catalog.STATE_BUSY, 'Saving files on the server');
     $scope.safeApply();
     service_backend.saveFile(cachedCurrentFile, $scope.patient_id)
     .then(function(data) {
       // The data is refreshed by navigating away...
-      $scope.$emit("message", { "level": "success", "text": "The patient has been saved."});
-      appState().actions.state.ready();
-      $scope.go("/folder/" + $scope.patient_id);
+      $scope.$emit('message', { 'level': 'success', 'text': 'The patient has been saved.'});
+      appState().dispatch(appState().catalog.STATE_READY);
+      $scope.go('/folder/' + $scope.patient_id);
     });
   };
 
   $scope.actionDeletePatient = function() {
-    if (!confirm("Are you sure you want to delete this patient?")) {
+    if (!confirm('Are you sure you want to delete this patient?')) {
       return;
     }
     $scope.folder = false;
-    appState().actions.state.busy("Deleting patient on the server");
+    appState().dispatch(appState().catalog.STATE_BUSY, 'Deleting patient on the server');
     $scope.safeApply();
     service_backend.deleteFile($scope.currentFile())
     .then(function(data) {
-      $scope.$emit("message", { "level": "success", "text":    "The patient " + $scope.currentFile().entryyear + "-" + $scope.currentFile().entryorder + " has been deleted"});
-      $scope.go("/home");
-      appState().actions.state.ready();
+      $scope.$emit('message', { 'level': 'success', 'text':    'The patient ' + $scope.currentFile().entryyear + '-' + $scope.currentFile().entryorder + ' has been deleted'});
+      $scope.go('/home');
+      appState().dispatch(appState().catalog.STATE_READY);
       $scope.safeApply();
     });
   };
@@ -304,7 +304,7 @@ mainApp.controller("ctrl_folder", [ "$scope", "$location", "$routeParams" , func
     var next = false;
     for(var k in $scope.folder.subFiles) {
       var v = $scope.folder.subFiles[k];
-      if (v.getModel() == "Appointment") {
+      if (v.getModel() == 'Appointment') {
         if (v.Nextappointment > today) {
           if (!next || v.Nextappointment < next) {
             next = v.Nextappointment;
@@ -323,11 +323,11 @@ mainApp.controller("ctrl_folder", [ "$scope", "$location", "$routeParams" , func
     }
   }
 
-  $scope.$watch("age.years", function() {
+  $scope.$watch('age.years', function() {
     updateYearOfBirth();
   });
 
-  $scope.$watch("age.months", function() {
+  $scope.$watch('age.months', function() {
     while ($scope.age.months >= 12) {
       $scope.age.months -= 12;
       $scope.age.years++;
@@ -340,13 +340,13 @@ mainApp.controller("ctrl_folder", [ "$scope", "$location", "$routeParams" , func
   });
 
   $scope.listUpazillas = function(district, current) {
-    var list = [ "?" ];
+    var list = [ '?' ];
     if ($scope.appStateStore.connection && $scope.appStateStore.connection.settings) {
-      if ($scope.appStateStore.connection.settings.associations["district." + district]) {
-        list = list.concat($scope.appStateStore.connection.settings.associations["district." + district]);
+      if ($scope.appStateStore.connection.settings.associations['district.' + district]) {
+        list = list.concat($scope.appStateStore.connection.settings.associations['district.' + district]);
       }
     }
-    list = list.concat($scope.appStateStore.connection.settings.associations["district.other"]);
+    list = list.concat($scope.appStateStore.connection.settings.associations['district.other']);
     if (list.indexOf(current) < 0) {
       list = [ current ].concat(list);
     }
@@ -354,13 +354,13 @@ mainApp.controller("ctrl_folder", [ "$scope", "$location", "$routeParams" , func
   };
 
   $scope.listUnions = function(upazilla, current) {
-    var list = [ "?" ];
+    var list = [ '?' ];
     if ($scope.appStateStore.connection && $scope.appStateStore.connection.settings) {
-      if ($scope.appStateStore.connection.settings.associations["upazilla." + upazilla]) {
-        list = list.concat($scope.appStateStore.connection.settings.associations["upazilla." + upazilla]);
+      if ($scope.appStateStore.connection.settings.associations['upazilla.' + upazilla]) {
+        list = list.concat($scope.appStateStore.connection.settings.associations['upazilla.' + upazilla]);
       }
     }
-    list = list.concat($scope.appStateStore.connection.settings.associations["upazilla.other"]);
+    list = list.concat($scope.appStateStore.connection.settings.associations['upazilla.other']);
     if (list.indexOf(current) < 0) {
       list = [ current ].concat(list);
     }

@@ -1,10 +1,8 @@
 'use strict';
 
+import catalog from 'reducers/catalog';
 import dispatch from 'reducers/dispatch';
 import store from 'reducers/store';
-import * as connection from 'actions/connectionActions';
-import * as state from 'actions/stateActions';
-import * as database from 'actions/databaseActions';
 
 import objectify from 'helpers/objectify';
 import create from 'helpers/create';
@@ -24,10 +22,8 @@ export default function() {
     store: store,
     dispatch: dispatch,
     actions: {
-      connection,
-      state,
-      database
     },
+    catalog: catalog,
     helpers: {
       objectify,
       create,

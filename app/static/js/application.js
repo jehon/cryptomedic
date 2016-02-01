@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 var application = {};
 var server = {};
@@ -6,11 +6,11 @@ var server = {};
 function formatDate(date) {
   date = date || new Date();
   var year = date.getFullYear();
-  var month = "0" + (date.getMonth() + 1);
+  var month = '0' + (date.getMonth() + 1);
   month = month.substring(month.length - 2);
-  var day = "0" + date.getDate();
+  var day = '0' + date.getDate();
   day = day.substring(day.length - 2);
-  return year + "-" + month + "-" + day;
+  return year + '-' + month + '-' + day;
 }
 
 // Inspired from http://www.2ality.com/2014/10/es6-promises-api.html
@@ -24,12 +24,12 @@ Promise.prototype.myFinallyDone = function (callback) {
 function inherit(parent, constructor) {
   // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/create
 
-  if (typeof(constructor) == "undefined")
+  if (typeof(constructor) == 'undefined')
     constructor = function() {};
 
   // shim for older browsers:
   var ObjectCreateShim;
-  if (typeof Object.create == "function") {
+  if (typeof Object.create == 'function') {
     ObjectCreateShim = Object.create;
   } else {
     ObjectCreateShim = function(proto) {
@@ -40,13 +40,13 @@ function inherit(parent, constructor) {
   }
 
   // Create a Student.prototype object that inherits from Person.prototype.
-  // Note: A common error here is to use "new Person()" to create the Student.prototype.
+  // Note: A common error here is to use 'new Person()' to create the Student.prototype.
   // That's incorrect for several reasons, not least that we don't have anything to
-  // give Person for the "firstName" argument. The correct place to call Person is
+  // give Person for the 'firstName' argument. The correct place to call Person is
   // above, where we call it from Student.
   constructor.prototype = ObjectCreateShim(parent.prototype);
 
-  // Set the "constructor" property to refer to Student
+  // Set the 'constructor' property to refer to Student
   constructor.prototype.constructor = constructor;
 
   // Add a custom parent field to refer to the inherited parent
@@ -60,55 +60,55 @@ function ApplicationException(msg) {
 inherit(Error, ApplicationException);
 ApplicationException.prototype.getMessage = function() { return this.message; };
 
-var mainApp = angular.module("app_main", [ "ngRoute" ])
-.config([ "$compileProvider", function( $compileProvider ) {
+var mainApp = angular.module('app_main', [ 'ngRoute' ])
+.config([ '$compileProvider', function( $compileProvider ) {
   $compileProvider.aHrefSanitizationWhitelist(/^\s*((https?|ftp|mailto|chrome-extension):|data:text,)/);
   $compileProvider.imgSrcSanitizationWhitelist($compileProvider.aHrefSanitizationWhitelist());
 }])
-.filter("mypercentage", function() {
+.filter('mypercentage', function() {
   return function(text, rnd) {
-    text = text || "";
+    text = text || '';
     rnd = rnd || 2;
-    if (typeof(text) != "number") {
+    if (typeof(text) != 'number') {
       if (parseFloat(text) != text) return text;
       text = parseFloat(text);
     }
-    return "" + (Math.round(text * 100 * Math.pow(10, rnd)) / Math.pow(10, rnd)) + "%";
+    return '' + (Math.round(text * 100 * Math.pow(10, rnd)) / Math.pow(10, rnd)) + '%';
   };
 })
-.filter("nl2br", [ "$sce", function($sce) {
+.filter('nl2br', [ '$sce', function($sce) {
   return function(text) {
     var t = text;
-    while (t.search("\n") >= 0) {
-      t = t.replace("\n", "<br>");
+    while (t.search('\n') >= 0) {
+      t = t.replace('\n', '<br>');
     }
     return $sce.trustAsHtml(t);
   };
 }])
-.directive("catchIt", [ "$compile", function($compile) {
+.directive('catchIt', [ '$compile', function($compile) {
     // http://tutorials.jenkov.com/angularjs/custom-directives.html#compile-and-link
     // http://stackoverflow.com/a/15298620
   return {
-    restrict: "A",
+    restrict: 'A',
     transclude: true,
     scope: {
-      "tryit": "&", // executed in parent scope
+      'tryit': '&', // executed in parent scope
     },
-    template: "<span ng-if='error' class='catchedError'>{{errorMsg}}</span><span ng-if='!error' ng-transclude></span>",
+    template: '<span ng-if="error" class="catchedError">{{errorMsg}}</span><span ng-if="!error" ng-transclude></span>',
     link:
       function($scope, $element, $attrs, ctrl, $transclude) {
         function testIt() {
           try {
             $scope.error = false;
-            $scope.result = "";
-            $scope.errorMSg = "";
+            $scope.result = '';
+            $scope.errorMSg = '';
             $scope.result = $scope.tryit();
           } catch (e) {
             $scope.error = true;
             if (e instanceof ApplicationException) {
               $scope.errorMsg = e.getMessage();
             } else {
-              $scope.errorMsg = "Uncatchable error";
+              $scope.errorMsg = 'Uncatchable error';
               console.warn(e);
               throw e;
             }
@@ -126,33 +126,33 @@ var mainApp = angular.module("app_main", [ "ngRoute" ])
         testIt();
 
         // Destroy of the element
-        $element.on("$destroy", function() {
+        $element.on('$destroy', function() {
           $scope.$destroy();
         });
       } // end of link function
   };
 }])
-.directive("mycalendar", function() {
+.directive('mycalendar', function() {
   return function (scope, elem, attrs) {
     jQuery(elem).datepicker({
-      dateFormat: "yy-mm-dd",
+      dateFormat: 'yy-mm-dd',
       changeMonth: true,
       changeYear: true,
-      yearRange: "1980:+2",
-      monthNamesShort: [ "1 Jan", "2 Feb", "3 Mar", "4 Apr", "5 May", "6 Jun", "7 Jul", "8 Aug", "9 Sep", "10 Oct", "11 Nov", "12 Dec" ]
+      yearRange: '1980:+2',
+      monthNamesShort: [ '1 Jan', '2 Feb', '3 Mar', '4 Apr', '5 May', '6 Jun', '7 Jul', '8 Aug', '9 Sep', '10 Oct', '11 Nov', '12 Dec' ]
     });
   };
 })
-.directive("codage", function() {
+.directive('codage', function() {
   return {
-   restrict: "E",
-   transclude: true,
-   scope: {
-      value: "=value"
+    restrict: 'E',
+    transclude: true,
+    scope: {
+      value: '=value'
     },
-    // template: '<span data-toggle="tooltip" data-placement="bottom" title="{{value}}">{{coded}}</span>',
-   template: "{{coded}}<span class=\"online\" data-toggle=\"tooltip\" data-placement=\"bottom\" title=\"{{value}}\">*</span>",
-   link: function($scope, element, attrs) {
+    // template: '<span data-toggle='tooltip' data-placement='bottom' title='{{value}}'>{{coded}}</span>',
+    template: '{{coded}}<span class=\'online\' data-toggle=\'tooltip\' data-placement=\'bottom\' title=\'{{value}}\'>*</span>',
+    link: function($scope, element, attrs) {
       if (server && server.settings && server.settings.codes[$scope.value]) {
         $scope.isCoded = true;
         $scope.coded = server.settings.codes[$scope.value];
@@ -161,7 +161,7 @@ var mainApp = angular.module("app_main", [ "ngRoute" ])
         $scope.coded = $scope.value;
       }
     }
- };
+  };
 })
 // .directive('hasPermission', [ '$animate', function($animate) {
 //   return {
@@ -225,39 +225,39 @@ var mainApp = angular.module("app_main", [ "ngRoute" ])
 //   };
 // }]);
 
-.directive("myGo", function() {
+.directive('myGo', function() {
   return {
-    restrict: "E",
+    restrict: 'E',
     transclude: true,
     // scope: true,
     replace: true,
     template: function(elem, attrs) {
       // function templateFunction() {
       if (attrs.haspermission) {
-          if (!appState().store.getState()
+        if (!appState().store.getState()
               || !appState().store.getState().connection.settings
               || !appState().store.getState().connection.settings.authorized2[attrs.haspermission]
               ) {
-            return "<span haspermission-failed=\"" + attrs.haspermission + "\"></span>";
-          }
+          return '<span haspermission-failed=\'' + attrs.haspermission + '\'></span>';
         }
-      return "<a class=\"btn btn-default\" href=\"" + cryptomedic.flavor + "/app/" + attrs.to + "\""
-              + (attrs.id ? " id=\"" + attrs.id + "\"" : "")
-              + (attrs.class ? " class=\"" + attrs.class + "\"" : "")
-              + ">"
-              +   "<ng-transclude>"
-              +      "<b style=\"color: red;\">Button</b>"
-              +    "</ng-transclude>"
-              +  "</a>";
+      }
+      return '<a class=\'btn btn-default\' href=\'' + cryptomedic.flavor + '/app/' + attrs.to + '\''
+              + (attrs.id ? ' id=\'' + attrs.id + '\'' : '')
+              + (attrs.class ? ' class=\'' + attrs.class + '\'' : '')
+              + '>'
+              +   '<ng-transclude>'
+              +      '<b style=\'color: red;\'>Button</b>'
+              +    '</ng-transclude>'
+              +  '</a>';
         // }
         // return templateFunction();
         // scope.$watch('attr.haspermission', templateFunction);
     }
   };
 })
-.directive("preview", [ "$compile", function($compile) {
+.directive('preview', [ '$compile', function($compile) {
   return {
-    restrict: "A",
+    restrict: 'A',
     // http://tutorials.jenkov.com/angularjs/custom-directives.html#compile-and-link
     compile: function(cElement, cAttrs, cTransclude) {
       return function($scope, $element, $attrs, ctrl, $transclude) {
@@ -265,17 +265,17 @@ var mainApp = angular.module("app_main", [ "ngRoute" ])
         // var transcludeScope = $scope.$parent.$new();
 
         $element[0].onchange = function() {
-          var busy = $scope.doBusy("Reducing the picture");
+          var busy = $scope.doBusy('Reducing the picture');
 
           // http://hacks.mozilla.org/2011/01/how-to-develop-a-html5-image-uploader/
           var file = $element[0].files[0];
           if (!file.type.match(/image.*/)) {
-            console.error("Not a picture?");
-            alert("Are you sure it is a picture? If it is a picture, please send it by email to marielineet.jean@gmail.com to debug the application. Thank you");
+            console.error('Not a picture?');
+            alert('Are you sure it is a picture? If it is a picture, please send it by email to marielineet.jean@gmail.com to debug the application. Thank you');
             busy();
           }
 
-          var img = document.createElement("img");
+          var img = document.createElement('img');
           var reader = new FileReader();
           reader.onerror = function(e) {
             console.error(e);
@@ -283,13 +283,13 @@ var mainApp = angular.module("app_main", [ "ngRoute" ])
           };
 
           reader.onload = function(e) {
-            // console.log("reader loaded");
+            // console.log('reader loaded');
             img.src = e.target.result;
 
-            //var canvas = document.createElement("canvas");
+            //var canvas = document.createElement('canvas');
             img.onload = function() {
-              var canvas = document.getElementById("preview");
-              var ctx = canvas.getContext("2d");
+              var canvas = document.getElementById('preview');
+              var ctx = canvas.getContext('2d');
 
               var schrink = 1;
               var h = img.naturalHeight;
@@ -311,12 +311,12 @@ var mainApp = angular.module("app_main", [ "ngRoute" ])
 
               // Add the image to the canvas
               ctx.drawImage(img, 0, 0, w, h);
-              canvas.style.display = "block";
+              canvas.style.display = 'block';
 
-              var dataURI = canvas.toDataURL("image/jpeg");
+              var dataURI = canvas.toDataURL('image/jpeg');
               $scope.currentFile().fileContent = dataURI;
               $scope.currentFile().OriginalName = file.name;
-              $scope.$emit("revalidate");
+              $scope.$emit('revalidate');
               busy();
             };
           };
@@ -326,27 +326,27 @@ var mainApp = angular.module("app_main", [ "ngRoute" ])
     }
   };
 }])
-.directive("nullToInterrogation", function() {
+.directive('nullToInterrogation', function() {
   // https://docs.angularjs.org/api/ng/directive/select
-  // usage: <select ng-model="model.id" null-to-interrogation>
+  // usage: <select ng-model='model.id' null-to-interrogation>
   return {
-    require: "ngModel",
+    require: 'ngModel',
     link: function(scope, element, attrs, ngModel) {
       ngModel.$parsers.push(function(val) {
         // From option to model
-        if (val == "?") return null;
+        if (val == '?') return null;
         return val;
       });
       ngModel.$formatters.push(function(val) {
         // From model to option
-        if (val == null) return "?";
+        if (val == null) return '?';
         return val;
       });
     }
   };
 });
 
-mainApp.controller("ctrl", [ "$scope", "$location", "$sce", function($scope, $location, $sce) {
+mainApp.controller('ctrl', [ '$scope', '$location', '$sce', function($scope, $location, $sce) {
   // @see http://stackoverflow.com/questions/14319967/angularjs-routing-without-the-hash
   // @see https://docs.angularjs.org/api/ng/provider/$locationProvider
   // $locationProvider.html5Mode(true)
@@ -360,24 +360,24 @@ mainApp.controller("ctrl", [ "$scope", "$location", "$sce", function($scope, $lo
 
   $scope.appStateStore = appState().store.getState();
   appState().store.subscribe(function() {
-    // console.log("scope appState updated", appState().store.getState());
+    // console.log('scope appState updated', appState().store.getState());
     $scope.appStateStore = appState().store.getState();
 
     // ** Manual operations **
 
     // Are we still busy?
     if ($scope.appStateStore.state.busy > 0) {
-      jQuery("#busy").modal("show");
+      jQuery('#busy').modal('show');
     } else {
-      jQuery("#busy").modal("hide");
+      jQuery('#busy').modal('hide');
     }
 
     $scope.safeApply();
   });
 
   $scope.safeApply = function (fn) {
-    if (this.$root && (this.$root.$$phase == "$apply" || this.$root.$$phase == "$digest")) {
-      if (fn && (typeof(fn) === "function")) {
+    if (this.$root && (this.$root.$$phase == '$apply' || this.$root.$$phase == '$digest')) {
+      if (fn && (typeof(fn) === 'function')) {
         fn();
       }
     } else {
@@ -393,17 +393,17 @@ mainApp.controller("ctrl", [ "$scope", "$location", "$sce", function($scope, $lo
   $scope.connected = false;
 
   $scope.doBusy = function(msg) {
-    appState().actions.state.busy(msg);
+    appState().dispatch(appState().catalog.STATE_BUSY, msg);
     return function() {
-      appState().actions.state.ready();
+      appState().dispatch(appState().catalog.STATE_READY);
     };
   };
 
-  $scope.endBusy = appState().actions.state.ready;
+  $scope.endBusy = appState().dispatch.bind(this, appState().catalog.STATE_BUSY);
 
   $scope.logged = false;
-  $scope.username = "";
-  $scope.password = "";
+  $scope.username = '';
+  $scope.password = '';
   $scope.hasPermission = function(transaction) {
     if (!$scope.appStateStore.connection.settings) {
       return false;
@@ -422,14 +422,14 @@ mainApp.controller("ctrl", [ "$scope", "$location", "$sce", function($scope, $lo
 
   $scope.doCheckLogin = function() {
     $scope.loginError = false;
-    var busyEnd = $scope.doBusy("Checking your login/password with the online server", true);
+    var busyEnd = $scope.doBusy('Checking your login/password with the online server', true);
     service_backend.checkLogin()
       .then(function(data) {
         server.settings = data;
         $scope.logged = true;
-        $scope.$broadcast("message", { "level": "info", "text": "Welcome " +  data.name + "!"});
-        if (location.hash == "#/login") {
-          $scope.go("#");
+        $scope.$broadcast('message', { 'level': 'info', 'text': 'Welcome ' +  data.name + '!'});
+        if (location.hash == '#/login') {
+          $scope.go('#');
         }
         $scope.safeApply();
       })
@@ -438,22 +438,22 @@ mainApp.controller("ctrl", [ "$scope", "$location", "$sce", function($scope, $lo
       });
   };
 
-  $scope.$on("$routeChangeError", function() { console.error("error in routes", arguments); });
+  $scope.$on('$routeChangeError', function() { console.error('error in routes', arguments); });
 
   $scope.messages = [];
   var interval = 0;
-  $scope.$on("message", function(event, data) {
+  $scope.$on('message', function(event, data) {
     // data = Object.assign({}, );
     if (!data.level) {
-      data.level = "success";
+      data.level = 'success';
     }
     if (!data.text) {
-      data.text = "Error!";
+      data.text = 'Error!';
     }
     if (!data.seconds) {
       data.seconds = 8;
     }
-    // data = jQuery.extend({}, { level: "success", text: "Error!", seconds: 8 }, data);
+    // data = jQuery.extend({}, { level: 'success', text: 'Error!', seconds: 8 }, data);
     var t = new Date();
     data.timeout = t.setSeconds(t.getSeconds() + data.seconds);
     $scope.messages.push(data);
@@ -479,37 +479,37 @@ mainApp.controller("ctrl", [ "$scope", "$location", "$sce", function($scope, $lo
 
 var cryptomedic = {};
 {
-  var path = location.pathname.split("/");
-  cryptomedic.flavor = "/" + path[1];
+  var path = location.pathname.split('/');
+  cryptomedic.flavor = '/' + path[1];
 }
-cryptomedic.templateRoot = cryptomedic.flavor + "/cache/templates";
+cryptomedic.templateRoot = cryptomedic.flavor + '/cache/templates';
 cryptomedic.settings = {};
 
-mainApp.config([ "$routeProvider", function($routeProvider) {
+mainApp.config([ '$routeProvider', function($routeProvider) {
   $routeProvider
-    .when("/home", {
-      templateUrl: cryptomedic.templateRoot + "/pages/home.html",
-      controller: "ctrl_home"
-    }).when("/login", {
-      templateUrl: cryptomedic.templateRoot + "/pages/login.html",
-      controller: "ctrl_login",
-    }).when("/folder/:patient_id/:page?/:subtype?/:subid?/:mode?", {
-      templateUrl: cryptomedic.templateRoot + "/pages/folder.php",
-      controller: "ctrl_folder",
-    }).when("/search", {
-      templateUrl: cryptomedic.templateRoot + "/pages/search.php",
-      controller: "ctrl_search",
-    }).when("/reports/:report?", {
-      templateUrl: cryptomedic.templateRoot + "/pages/reports.php",
-      controller: "ctrl_reports",
-    }).when("/users", {
-      templateUrl: cryptomedic.templateRoot + "/pages/users.html",
-      controller: "ctrl_users",
-    }).otherwise({ "redirectTo": "/home"});
+    .when('/home', {
+      templateUrl: cryptomedic.templateRoot + '/pages/home.html',
+      controller: 'ctrl_home'
+    }).when('/login', {
+      templateUrl: cryptomedic.templateRoot + '/pages/login.html',
+      controller: 'ctrl_login',
+    }).when('/folder/:patient_id/:page?/:subtype?/:subid?/:mode?', {
+      templateUrl: cryptomedic.templateRoot + '/pages/folder.php',
+      controller: 'ctrl_folder',
+    }).when('/search', {
+      templateUrl: cryptomedic.templateRoot + '/pages/search.php',
+      controller: 'ctrl_search',
+    }).when('/reports/:report?', {
+      templateUrl: cryptomedic.templateRoot + '/pages/reports.php',
+      controller: 'ctrl_reports',
+    }).when('/users', {
+      templateUrl: cryptomedic.templateRoot + '/pages/users.html',
+      controller: 'ctrl_users',
+    }).otherwise({ 'redirectTo': '/home'});
 }]);
 
 function DataMissingException(data) {
-  this.message = "Missing "  + (data || "some data");
+  this.message = 'Missing '  + (data || 'some data');
   this.data = data;
 }
 DataMissingException.prototype = new ApplicationException();
