@@ -30,6 +30,11 @@
           <h1 class="page-header">Cryptomedic</h1>
           <div>
             <h3>Online mode</h3>
+            <div>
+              This mode is the normal mode to access the application. It should be used when other mode are not visible, and when problem arise in other modes.
+              <br>
+              By default, it should be used in France.
+            </div>
             <a class='btn btn-default' href='build/'>
               <span class='flag'>
                 <img src="app/static/img/go.gif" alt='application'>
@@ -37,8 +42,12 @@
               Access to the traditional application
             </a>
           </div>
-          <div id='application_mode' style='display: none'>
+          <div id='mode_application' style='display: none'>
             <h3>Application mode</h3>
+            <div>
+            To have this mode enabled, you need a recent browser (Firefox >= 44 - this browser has been released on january 25). Please update your
+            Firefox browser.
+            </div>
             <a class='btn btn-default' href='offline/'>
               <span class='flag'>
                 <img src="app/static/img/bangladesh.svg" alt="Bangladesh flag">
@@ -52,7 +61,8 @@
               <a class='btn btn-default' href='mailto:marielineet.jean+cryptomedic@gmail.com'>
                 <span class='glyphicon glyphicon-envelope'></span>
                 marielineet.jean+cryptomedic@gmail.com
-              </a>.
+              </a>
+            <br>
             Don't hesitate, I am there for you !
             <br>
             <br>
@@ -64,7 +74,15 @@
       </div>
     </div>
     <script type='text/javascript'>
+    function show(id) {
+      console.log("Supported: ", id);
+      div = document.getElementById(id);
+      div.style.display = '';
+    };
 
+    if (ServiceWorker) {
+      show("mode_application");
+    }
     </script>
   </body>
 </html>
