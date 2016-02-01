@@ -1,7 +1,7 @@
 language: php
 
-addons:
-  firefox: "40"
+#addons:
+#firefox: "40"
 
 # To go on the new infrastructure
 # @see http://docs.travis-ci.com/user/migrating-from-legacy/?utm_source=legacy-notice&utm_medium=banner&utm_campaign=legacy-upgrade
