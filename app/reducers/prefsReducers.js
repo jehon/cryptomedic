@@ -8,7 +8,7 @@ export default function(state, action) {
   if (!state) {
     state = {
       examiner : '',
-      center   : '',
+      center   : 'Chakaria Disability Center',
       period   : 'month',
       day      : date2CanonicString(new Date(), true),
       month    : date2CanonicString(new Date(), true).substring(0, 7),
