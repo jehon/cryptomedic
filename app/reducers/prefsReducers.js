@@ -10,6 +10,7 @@ export default function(state, action) {
       examiner : '',
       center   : 'Chakaria Disability Center',
       period   : 'month',
+      date     : date2CanonicString(new Date(), true),
       day      : date2CanonicString(new Date(), true),
       month    : date2CanonicString(new Date(), true).substring(0, 7),
       year     : date2CanonicString(new Date(), true).substring(0, 4)
