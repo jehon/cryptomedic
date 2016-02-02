@@ -123,5 +123,9 @@ Route::group([ 'prefix' => '/' . $flavor . '/api/' . basename(dirname(dirname(__
 		hasPermission('admin.securityMatrix', function() {
       Route::get('admin/securityMatrix', 'Auth\AuthController@matrix');
     });
+
+		hasPermission('admin.computers', function() {
+      Route::get('admin/computers', 'ReportComputersController@index');
+    });
 	});
 });

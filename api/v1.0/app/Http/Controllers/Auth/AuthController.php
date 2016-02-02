@@ -251,5 +251,6 @@ class Role {
 
   (new Role("admin", "manager"))
     ->givePermission("admin.securityMatrix")
+    ->givePermission("admin.computers")
   	;
 }
