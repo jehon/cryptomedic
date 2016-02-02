@@ -1,12 +1,12 @@
-"use strict";
+'use strict';
 
-import File from "models/File";
+import File from 'models/File';
 
 // TODO: there seems to have a race condition around here...
 
 export default class Bill extends File {
   getModel() {
-    return "Bill";
+    return 'Bill';
   }
 
   constructor(data, folder = null) {
@@ -17,7 +17,7 @@ export default class Bill extends File {
       if (folder) {
         for(var k in folder.subFiles) {
           var v = folder.subFiles[k];
-          if (v.getModel() == "Bill") {
+          if (v.getModel() == 'Bill') {
             if (!last_bill) {
               last_bill = v;
             } else {
@@ -45,8 +45,8 @@ export default class Bill extends File {
     Level 4 is when the familial ration is 3000< FR
    */
     this.Sociallevel = 4;
-    if (!this.isNotZero("sl_numberOfHouseholdMembers")) {
-      throw new DataMissingException("sl_numberOfHouseholdMembers");
+    if (!this.isNotZero('sl_numberOfHouseholdMembers')) {
+      throw new DataMissingException('sl_numberOfHouseholdMembers');
     }
 
     var rs = Math.ceil(this.sl_familySalary / this.sl_numberOfHouseholdMembers);
@@ -80,23 +80,23 @@ export default class Bill extends File {
     var price = server.settings.prices[this.price_id];
     var total = 0;
     for(var i in price) {
-      if (i[0] == "_") { continue; }
-      if (i == "id") { continue; }
-      if (i == "created_at") { continue; }
-      if (i == "updated_at") { continue; }
-      if (i == "lastuser") { continue; }
-      if (i == "datefrom") { continue; }
-      if (i == "dateto") { continue; }
-      if (i == "controller") { continue; }
-      if (i == "locked") { continue; }
-      if (i == "dlocked") { continue; }
-      if (i == "socialLevelPercentage_0") { continue; }
-      if (i == "socialLevelPercentage_1") { continue; }
-      if (i == "socialLevelPercentage_2") { continue; }
-      if (i == "socialLevelPercentage_3") { continue; }
-      if (i == "socialLevelPercentage_4") { continue; }
+      if (i[0] == '_') { continue; }
+      if (i == 'id') { continue; }
+      if (i == 'created_at') { continue; }
+      if (i == 'updated_at') { continue; }
+      if (i == 'lastuser') { continue; }
+      if (i == 'datefrom') { continue; }
+      if (i == 'dateto') { continue; }
+      if (i == 'controller') { continue; }
+      if (i == 'locked') { continue; }
+      if (i == 'dlocked') { continue; }
+      if (i == 'socialLevelPercentage_0') { continue; }
+      if (i == 'socialLevelPercentage_1') { continue; }
+      if (i == 'socialLevelPercentage_2') { continue; }
+      if (i == 'socialLevelPercentage_3') { continue; }
+      if (i == 'socialLevelPercentage_4') { continue; }
       if (price[i] < 0) { continue; }
-      if (typeof(this[i]) == "undefined") { continue; }
+      if (typeof(this[i]) == 'undefined') { continue; }
       if (this[i] <= 0) { continue; }
       total += price[i] * this[i];
     }//, this);
@@ -107,26 +107,26 @@ export default class Bill extends File {
 
   calculate_percentage_asked() {
     if (!this.price_id || !server.settings) {
-      //console.warn("calculate_percentage_asked(): no price id");
+      //console.warn('calculate_percentage_asked(): no price id');
       return 1;
     }
-    var sl = this["Sociallevel"];
+    var sl = this['Sociallevel'];
     if (sl == null) {
-      //console.warn("calculate_percentage_asked(): no social level");
+      //console.warn('calculate_percentage_asked(): no social level');
       return 1;
     }
     var price = server.settings.prices[this.price_id];
-    if (typeof(price["socialLevelPercentage_" + sl]) == "undefined") {
-      //console.warn("calculate_percentage_asked(): no social level in price for sl " + sl);
+    if (typeof(price['socialLevelPercentage_' + sl]) == 'undefined') {
+      //console.warn('calculate_percentage_asked(): no social level in price for sl ' + sl);
       return 1;
     }
-    var perc = price["socialLevelPercentage_" + sl];
+    var perc = price['socialLevelPercentage_' + sl];
     return perc;
   }
 
   getPriceFor(key) {
     if (!this.price_id || !server.settings) return 0;
-    if (typeof(server.settings.prices[this.price_id]) == "undefined") return 0;
+    if (typeof(server.settings.prices[this.price_id]) == 'undefined') return 0;
     return server.settings.prices[this.price_id][key];
   }
 
@@ -137,7 +137,7 @@ export default class Bill extends File {
   }
 
   calculatePriceId() {
-    if (typeof(this.Date) == "undefined" || !server.settings) {
+    if (typeof(this.Date) == 'undefined' || !server.settings) {
       this.price_id = 1;
       return 0;
     }
@@ -146,13 +146,13 @@ export default class Bill extends File {
     var dref = this.Date;
     for(var i in server.settings.prices) {
       var p = server.settings.prices[i];
-      if (((p["datefrom"] == null) || (p["datefrom"] <= dref))
-        && ((p["dateto"] == null) || (p["dateto"] > dref))) {
+      if (((p['datefrom'] == null) || (p['datefrom'] <= dref))
+        && ((p['dateto'] == null) || (p['dateto'] > dref))) {
         t.price_id = i;
       }
     }
     if (this.price_id < 0) {
-      throw new Error("Price Id not set");
+      throw new Error('Price Id not set');
     }
     this.calculate_total_real();
   }
