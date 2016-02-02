@@ -40,7 +40,6 @@
     "DataMissingException": true,
     "service_backend": true,
     "calculations": true,
-    "service_session_storage": true,
 
     // libs
     "jQuery": true,

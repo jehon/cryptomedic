@@ -1,11 +1,11 @@
 'use strict';
 
-import catalog from 'reducers/catalog';
-import dispatch from 'reducers/dispatch';
-import store from 'reducers/store';
+import catalog            from 'reducers/catalog';
+import dispatch           from 'reducers/dispatch';
+import store              from 'reducers/store';
 
-import objectify from 'helpers/objectify';
-import create from 'helpers/create';
+import objectify          from 'helpers/objectify';
+import create             from 'helpers/create';
 import date2CanonicString from 'helpers/date2CanonicString';
 
 var offline = require('offline-plugin/runtime');
