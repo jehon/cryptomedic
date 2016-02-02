@@ -32,7 +32,6 @@
     <script type='text/javascript' src='static/js/ctrl_folder.js'></script>
     <script type='text/javascript' src='static/js/ctrl_graphic.js'></script>
     <script type='text/javascript' src='static/js/ctrl_home.js'></script>
-    <script type='text/javascript' src='static/js/ctrl_offline.js'></script>
     <script type='text/javascript' src='static/js/ctrl_picture.js'></script>
     <script type='text/javascript' src='static/js/ctrl_reports.js'></script>
     <script type='text/javascript' src='static/js/ctrl_search.js'></script>
@@ -139,14 +138,6 @@
         </span>
         <div ng-view></div>
       </div>
-    </div>
-    <div ng-controller='ctrl_offline'>
-      <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation" ng-if="info_available">
-        <div class="container-fluid">
-          <p ng-if="offline" class="navbar-text"><img src='static/img/sync.png'>{{offline}}</p>
-          <button ng-if="refreshAvailable" type="button" class="btn btn-default navbar-btn" ng-click="applicationRefresh()">Refresh the application</button>
-        </div>
-      </nav>
     </div>
   </body>
 </html>
