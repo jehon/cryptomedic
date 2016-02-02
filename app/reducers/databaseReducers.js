@@ -18,28 +18,28 @@ export default function(state, action) {
       downloading: true,
       uploading: state.uploading
     };
-  };
+  }
 
   if (action.type == catalog.DATABASE_DOWNLOADED) {
     return {
       downloading: false,
       uploading: state.uploading
     };
-  };
+  }
 
   if (action.type == catalog.DATABASE_UPLAODING) {
     return {
       downloading: state.downloading,
       uploading: action.payload
     };
-  };
+  }
 
   if (action.type == catalog.DATABASE_UPLAODED) {
     return {
       downloading: state.downloading,
       uploading: 0
     };
-  };
+  }
 
   return state;
 }

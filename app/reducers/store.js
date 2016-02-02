@@ -1,14 +1,15 @@
 
 import { combineReducers, compose, createStore, applyMiddleware } from 'redux';
-// import thunkMiddleware from 'redux-thunk';
-// import createLogger from 'redux-logger';
-// import { devTools, persistState } from 'redux-devtools';
-// import { DevTools, DebugPanel, LogMonitor } from 'redux-devtools/lib/react';
+// import thunkMiddleware                                         from 'redux-thunk';
+// import createLogger                                            from 'redux-logger';
+// import { devTools, persistState }                              from 'redux-devtools';
+// import { DevTools, DebugPanel, LogMonitor }                    from 'redux-devtools/lib/react';
 
-import connection from 'reducers/connectionReducers';
-import state from 'reducers/stateReducers';
-import database from 'reducers/databaseReducers';
-import log from 'reducers/logReducers';
+import prefs                                                      from 'reducers/prefsReducers';
+import connection                                                 from 'reducers/connectionReducers';
+import state                                                      from 'reducers/stateReducers';
+import database                                                   from 'reducers/databaseReducers';
+import log                                                        from 'reducers/logReducers';
 
 // Manage persistence
 // import { persistStore, autoRehydrate } from 'redux-persist';
@@ -56,12 +57,15 @@ let finalCreateStore = compose(
 
 
 
-let store = finalCreateStore(combineReducers({
-  connection,
-  state,
-  database,
-  log
-}));
+let store = finalCreateStore(
+  combineReducers({
+    prefs,
+    connection,
+    state,
+    database,
+    log
+  })
+);
 
 // persistStore(store, { whitelist: [ "prefs" ] }, () => {
 //   store.dispatch(customRehydrate());
