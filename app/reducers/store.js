@@ -1,5 +1,6 @@
 
 import { combineReducers, compose, createStore, applyMiddleware } from 'redux';
+import { persistStore, autoRehydrate }                            from 'redux-persist';
 // import thunkMiddleware                                         from 'redux-thunk';
 // import createLogger                                            from 'redux-logger';
 // import { devTools, persistState }                              from 'redux-devtools';
@@ -12,7 +13,6 @@ import database                                                   from 'reducers
 import log                                                        from 'reducers/logReducers';
 
 // Manage persistence
-// import { persistStore, autoRehydrate } from 'redux-persist';
 
 // const loggerMiddleware = createLogger({
 //   level: 'info',
@@ -67,8 +67,9 @@ let store = finalCreateStore(
   })
 );
 
-// persistStore(store, { whitelist: [ "prefs" ] }, () => {
-//   store.dispatch(customRehydrate());
-// });
+persistStore(store, { whitelist: [ "prefs" ] }, () => {
+  // Re-enable the store:
+  // store.dispatch(customRehydrate());
+});
 
 export default store;
