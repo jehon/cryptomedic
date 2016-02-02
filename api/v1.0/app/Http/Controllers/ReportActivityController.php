@@ -48,7 +48,7 @@ class ReportActivityController extends ReportController {
         AND " . $this->getReportParamFilter("center", "bills.Center") . "
         AND " . $this->getReportParamFilter("examiner", "bills.ExaminerName") . "
         AND " . Bill::getActivityFilter($this->getReportParams("activity", "")) . "
-      ORDER BY bills.id "
+      ORDER BY bills.id ASC "
       , $this->sqlBindParams
     );
 
