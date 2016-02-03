@@ -7,7 +7,7 @@ export default class File extends Data{
   constructor(data, folder = null) {
     super(data);
     if (data == null) {
-      var c = appState().store.getState().prefs;
+      var c = appState().store.getState().prefs.files;
       this.ExaminerName = c.examinerName;
       this.Center       = c.center;
       this.Date         = c.date;
