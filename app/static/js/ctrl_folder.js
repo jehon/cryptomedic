@@ -212,13 +212,13 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', '$routeParams' , func
     }
     appState().dispatch(appState().catalog.STATE_BUSY, 'Creating files on the server');
     if (cachedCurrentFile.Date) {
-      appState().dispatch(appState().catalog.PREFS_SET, { 'date': cachedCurrentFile.Date });
+      appState().dispatch(appState().catalog.PREFS_FILES, { 'date': cachedCurrentFile.Date });
     }
     if (cachedCurrentFile.ExaminerName) {
-      appState().dispatch(appState().catalog.PREFS_SET, { 'examinerName': cachedCurrentFile.ExaminerName });
+      appState().dispatch(appState().catalog.PREFS_FILES, { 'examinerName': cachedCurrentFile.ExaminerName });
     }
     if (cachedCurrentFile.Center) {
-      appState().dispatch(appState().catalog.PREFS_SET, { 'center': cachedCurrentFile.Center });
+      appState().dispatch(appState().catalog.PREFS_FILES, { 'center': cachedCurrentFile.Center });
     }
 
     service_backend.createFile(cachedCurrentFile)

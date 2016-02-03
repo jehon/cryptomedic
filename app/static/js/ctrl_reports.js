@@ -2,7 +2,7 @@
 
 mainApp.controller('ctrl_reports', [ '$scope', '$routeParams', '$sce', function($scope, $routeParams, $sce) {
   var report = $routeParams['report'];
-  $scope.values = appState().store.getState().prefs;
+  $scope.values = appState().store.getState().prefs.reports;
   for(var k in $scope.values) {
     if ($scope.values[k] === null) {
       $scope.values[k] = '';
@@ -98,7 +98,7 @@ mainApp.controller('ctrl_reports', [ '$scope', '$routeParams', '$sce', function(
       var v = $scope.reports[report].params[p];
       prefs[v] = $scope.values[v];
     }
-    appState().dispatch(appState().catalog.PREFS_SET, prefs);
+    appState().dispatch(appState().catalog.PREFS_REPORTS, prefs);
 
     var dataGenerator = report;
     if (typeof($scope.reports[report].dataGenerator) != 'undefined') {
