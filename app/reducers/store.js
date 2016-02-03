@@ -23,18 +23,18 @@ if (typeof(window.__karma__) == 'undefined') {
   // disable logger?
 }
 
-let finalCreateStore = compose(
+// let finalCreateStore = (autoRehydrate)compose(
   //enables middleware:
-  applyMiddleware(
+  // applyMiddleware(
     // thunkMiddleware,
     // loggerMiddleware
-  )
-  ,
+  // )
+  // ,
   // Provides support for DevTools:
   // devTools(),
   // Lets you write ?debug_session=<name> in address bar to persist sessions
   // persistState(window.location.href.match(/[?&]debug_session=([^&]+)\b/))
-)(createStore);
+// )(createStore);
 
 // function configureStore(initialState) {
 //   const store = autoRehydrate()(finalCreateStore)(
@@ -57,19 +57,15 @@ let finalCreateStore = compose(
 
 
 
-let store = finalCreateStore(
-  combineReducers({
+let store = autoRehydrate()(createStore)
+  (combineReducers({
     prefs,
     connection,
     state,
     database,
     log
-  })
-);
+  }));
 
-persistStore(store, { whitelist: [ "prefs" ] }, () => {
-  // Re-enable the store:
-  // store.dispatch(customRehydrate());
-});
+persistStore(store, { whitelist: [ 'prefs' ] });
 
 export default store;
