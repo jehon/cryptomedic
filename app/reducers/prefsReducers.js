@@ -3,6 +3,7 @@ import catalog            from 'reducers/catalog';
 import date2CanonicString from 'helpers/date2CanonicString';
 
 catalog._define('PREFS_CLEAR');
+catalog._define('PREFS_REHYDRATE');
 catalog._define('PREFS_FILES');
 catalog._define('PREFS_REPORTS');
 
@@ -25,6 +26,11 @@ export default function(state, action) {
     };
   }
 
+  if (action.type == catalog.PREFS_REHYDRATE) {
+    console.log('here we are in rehydrate prefs', action.payload);
+    return action.payload;
+  }
+
   function setPrefs(part, data) {
     for(var key in action.payload) {
       if (!state[part].hasOwnProperty(key)) {
@@ -33,7 +39,13 @@ export default function(state, action) {
     }
     var res = {};
     res[part] = data;
-    return Object.assign({}, state, res);
+
+    var newState = Object.assign({}, state, res);
+
+    // Store the pref state
+    sessionStorage.cryptomedicPrefs = JSON.stringify(newState);
+
+    return newState;
   }
 
   if (action.type == catalog.PREFS_FILES) {
