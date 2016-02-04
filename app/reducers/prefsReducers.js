@@ -11,11 +11,12 @@ export default function(state, action) {
     state = {
       files : {
         examiner : '',
-        center   : 'Chakaria Disability Center', // --> but not for reports
+        center   : 'Chakaria Disability Center',
         date     : date2CanonicString(new Date(), true),
       },
       reports  : {
         center   : '',
+        examiner : '',
         period   : 'month',
         day      : date2CanonicString(new Date(), true),
         month    : date2CanonicString(new Date(), true).substring(0, 7),
