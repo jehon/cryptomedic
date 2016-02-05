@@ -18,8 +18,8 @@ module.exports = (function() {
         if (client.globals && client.globals.live && liveData.cryptomedic && liveData.cryptomedic.passwords && liveData.cryptomedic.passwords[login]) {
           console.info('using secret password for user ' + login);
           password = liveData.cryptomedic.passwords[login];
-        } else {
-          throw new Error('Authenticate did not found secret passord for ' + login);
+        // } else {
+        //   throw new Error('Authenticate did not found secret passord for ' + login);
         }
       } catch (ex) {}
 
