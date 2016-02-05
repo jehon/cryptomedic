@@ -1,13 +1,13 @@
-"use strict";
+'use strict';
 
-import Data      from "models/Data";
-import Patient   from "models/Patient";
-import create    from "helpers/create";
-import amd_stats from "helpers/amd_stats_datas";
+import Data      from 'models/Data';
+import Patient   from 'models/Patient';
+import create    from 'helpers/create';
+import amd_stats from 'helpers/amd_stats_datas';
 
 export default class Folder extends Data {
   getModel() {
-    return "Folder";
+    return 'Folder';
   }
 
   constructor(data) {
@@ -23,14 +23,14 @@ export default class Folder extends Data {
   }
 
   getId() {
-    if (this.isSet("id")) {
+    if (this.isSet('id')) {
       return this.id;
     }
     return -1;
   }
 
   getMainFile() {
-    if (this.isSet("mainFile")) {
+    if (this.isSet('mainFile')) {
       return this.mainFile;
     }
     return new Patient();
@@ -46,7 +46,7 @@ export default class Folder extends Data {
   }
 
   graphic_dimensions(axis_x, axis_y) {
-    return amd_stats.dimensions[axis_x + "_" + axis_y + "_" + this.getMainFile().sexStr()];
+    return amd_stats.dimensions[axis_x + '_' + axis_y + '_' + this.getMainFile().sexStr()];
   }
 
   static ordering(o1, o2) {
@@ -56,44 +56,44 @@ export default class Folder extends Data {
     // Return -1 if o1 < o2 (o1 - o2) (o1 est avant o2)
 
     // What to do if one 'id' is missing
-    if (typeof(o1.id) == "undefined") {
-      if (typeof(o2.id) != "undefined") {
+    if (typeof(o1.id) == 'undefined') {
+      if (typeof(o2.id) != 'undefined') {
         return o1First;
       }
     } else {
-      if (typeof(o2.id) == "undefined") {
+      if (typeof(o2.id) == 'undefined') {
         return o2First;
       }
     }
 
     // What to do if one 'type' is missing
-    if (typeof(o1.getModel()) == "undefined") {
-      if (typeof(o2.getModel()) != "undefined") return o1First;
+    if (typeof(o1.getModel()) == 'undefined') {
+      if (typeof(o2.getModel()) != 'undefined') return o1First;
     } else {
-      if (typeof(o2.getModel()) == "undefined") return o2First;
+      if (typeof(o2.getModel()) == 'undefined') return o2First;
     }
 
     // What to do if one 'Date' is missing
-    if (typeof(o1.Date) == "undefined") {
-      if (typeof(o2.Date) != "undefined") return o1First;
+    if (typeof(o1.Date) == 'undefined') {
+      if (typeof(o2.Date) != 'undefined') return o1First;
     } else {
-      if (typeof(o2.Date) == "undefined") return o2First;
+      if (typeof(o2.Date) == 'undefined') return o2First;
     }
 
     // Both 'date' are present
-    if (typeof(o1.Date) != "undefined" && typeof(o2.Date) != "undefined") {
+    if (typeof(o1.Date) != 'undefined' && typeof(o2.Date) != 'undefined') {
       if (o1.Date < o2.Date) return o2First;
       if (o1.Date > o2.Date) return o1First;
     }
 
     // Both 'type' are present
-    if (typeof(o1.getModel()) != "undefined" && typeof(o2.getModel()) != "undefined") {
+    if (typeof(o1.getModel()) != 'undefined' && typeof(o2.getModel()) != 'undefined') {
       if (o1.getModel() < o2.getModel()) return o1First;
       if (o1.getModel() > o2.getModel()) return o2First;
     }
 
     // Both 'id' are present
-    if (typeof(o1.id) != "undefined" && typeof(o2id) != "undefined") {
+    if (typeof(o1.id) != 'undefined' && typeof(o2id) != 'undefined') {
       if (o1.id > o2.id) return o1First;
       if (o1.id < o2.id) return o2First;
     }
