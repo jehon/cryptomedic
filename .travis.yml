@@ -1,5 +1,7 @@
 language: php
 
+node_js: "0.12"
+
 #addons:
 #firefox: "40"
 
@@ -26,5 +28,3 @@ after_failure:
   - find tmp/ -name "*.png"  -exec "bin/travis-upload.sh" "{}" ";"
   - find tmp/ -name "*.json" -exec "bin/travis-upload.sh" "{}" ";"
 
-node_js:
-  "0.12"
