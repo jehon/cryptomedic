@@ -5,7 +5,7 @@ module.exports = {
       .page.cryptomedic().authenticate('readonly')
       .page.cryptomedic().report('monthlyActivity', { 'month': '2014-05' })
         .assert.myAssertCell('#report_table table', 1, 1, '1')
-        .assert.myAssertCell('#report_table table', 3, 2, '2014-05')
+        .assert.myAssertCell('#report_table table', 1, 2, '2014-05')
         .assert.myAssertCell('Ershad')
         .assert.myAssertCell('RA') // Ramu (codage)
         .assert.myAssertCell('2014-103')
@@ -30,7 +30,7 @@ module.exports = {
         .assert.myAssertCell('0')
 
         // New / Old patient in same month
-        .assert.myAssertCell('#report_table table', 4, 5, '2014-107')
+        .assert.myAssertCell('#report_table table', 2, 5, '2014-107')
         .assert.myAssertCell('#report_table table', '=', '+4', 'New')
         .assert.myAssertCell('#report_table table', '+1', 5, '2014-107')
         .assert.myAssertCell('#report_table table', '=', '+4', 'Old')
