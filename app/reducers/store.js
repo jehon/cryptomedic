@@ -1,5 +1,5 @@
 
-import { combineReducers, compose, createStore } from 'redux';
+import { combineReducers, createStore } from 'redux';
 // import thunkMiddleware                                         from 'redux-thunk';
 // import { DevTools, DebugPanel, LogMonitor }                    from 'redux-devtools/lib/react';
 
@@ -9,18 +9,12 @@ import stateReducers                                              from 'reducers
 import database                                                   from 'reducers/databaseReducers';
 import catalog                                                    from 'reducers/catalog';
 
-  // disable logger?
-function transition_log(state, action) {
-  if (typeof(window.__karma__) == 'undefined') {
-    console.log('Action: ', action.type, ' with ', action.payload);
-  }
-  return state;
-}
-
 let store = createStore(
   function(state, action) {
     // Log
-    state = transition_log(state, action);
+    if (typeof(window.__karma__) == 'undefined') {
+      console.log('Action: ', action.type, ' with ', action.payload);
+    }
 
     // Work the state
     state = combineReducers({
