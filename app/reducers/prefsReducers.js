@@ -19,6 +19,7 @@ export default function(state, action) {
         center   : '',
         examiner : '',
         period   : 'month',
+        activity : '',
         day      : date2CanonicString(new Date(), true),
         month    : date2CanonicString(new Date(), true).substring(0, 7),
         year     : date2CanonicString(new Date(), true).substring(0, 4)
