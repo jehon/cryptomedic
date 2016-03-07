@@ -8,6 +8,8 @@ import objectify          from 'helpers/objectify';
 import create             from 'helpers/create';
 import date2CanonicString from 'helpers/date2CanonicString';
 
+import selectFile         from 'actions/selectFile';
+
 var offline = require('offline-plugin/runtime');
 if (location.pathname.split('/')[2] == 'offline') {
   console.log('SW-OFFLINE: Detecting offline mode, activating plugin');
@@ -26,6 +28,9 @@ export default function() {
       objectify,
       create,
       date2CanonicString
+    },
+    action: {
+      selectFile
     }
   };
 }
