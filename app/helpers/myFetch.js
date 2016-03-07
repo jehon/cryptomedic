@@ -9,12 +9,16 @@
  *  - mode: The mode you want to use for the request, e.g., cors, no-cors, or same-origin.
  *  - cache: The cache mode you want to use for the request: default, no-store, reload, no-cache, force-cache, or only-if-cached.
  */
-export function myFetch(url, init, data) {
+export default function myFetch(url, init, data) {
   init = init || {};
   if (!init.method) {
     init.method = 'GET';
   }
   init.credentials = 'include';
+
+  if (url[0] != '/') {
+    url = '/' + location.pathname.split('/')[1] + '/api/v1.0/' + url;
+  }
 
   if (data) {
     if (init.method == 'POST') {
@@ -51,9 +55,6 @@ export function myFetch(url, init, data) {
     }
 
     return response.json();
-      // .then(function(json) {
-      //   return json;
-      // });
   });
 }
 
@@ -71,7 +72,6 @@ export function myFrontFetch(url, init, data) {
     switch(httpErrorCode) {
       case 401: // unauthorized
         appState().dispatch(appState().catalog.CONNECTION_EXPIRED);
-        server.settings = false;
         location.hash = '#/login';
         break;
       case 403: // forbidden
