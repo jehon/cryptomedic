@@ -7,6 +7,7 @@ import prefs                                                      from 'reducers
 import connection                                                 from 'reducers/connectionReducers';
 import stateReducers                                              from 'reducers/stateReducers';
 import database                                                   from 'reducers/databaseReducers';
+import gui                                                        from 'reducers/guiReducers';
 import catalog                                                    from 'reducers/catalog';
 
 let store = createStore(
@@ -22,6 +23,7 @@ let store = createStore(
       connection,
       state: stateReducers,
       database,
+      gui
     })(state, action);
     return state;
   }
