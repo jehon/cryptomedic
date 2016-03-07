@@ -36,12 +36,7 @@ test_dir() {
     PHPSERV=$!
     cd - > /dev/null
     echo -e "\e[0;45m[\e[1;45m$N/nightwatch\e[0;45m] Starting Test\e[0m"
-    if [ "$FRONT" ]; then
-      node $PRJ_DIR/node_modules/.bin/nightwatch "$@"
-    else
-      node $PRJ_DIR/node_modules/.bin/nightwatch -e default "$@"
-      # node $PRJ_DIR/node_modules/.bin/nightwatch -e default,chrome "$@"
-    fi
+    node $PRJ_DIR/node_modules/.bin/nightwatch -e default "$@"
 
     echo -e "\e[0;45m[\e[1;45m$N/nightwatch\e[0;45m] Stoping server @$PHPSERV\e[0m"
     kill -s SIGINT $PHPSERV
@@ -58,11 +53,6 @@ test_dir() {
   fi
 }
 
-
-if [ "$FRONT" = "" ]; then
-  # If FRONT is not set, then do that is the background
-  export DISPLAY=:99.0
-fi
 
 if [ "$DEBUG" != "" ]; then
   echo "\e[0;45mRunning in debug mode\e[0m"
