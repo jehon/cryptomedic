@@ -1,4 +1,4 @@
-"use strict";
+import { loadMock } from 'helpers';
 
 describe("Data", function() {
   describe("with empty loader", function() {
