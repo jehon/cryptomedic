@@ -3,5 +3,4 @@ languages:
 - javascript: true
 
 exclude_paths:
-- app/bower_components/**
 - node_modules/**
