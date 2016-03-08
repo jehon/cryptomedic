@@ -70,9 +70,9 @@ if [ ! -x /usr/local/bin/composer.phar ]; then
 fi
 
 # Put various configs file in place
-ln --symbolic --force $PRJ_DIR/conf/config-dev.php /var/www/config.php
-ln --symbolic --force $PRJ_DIR/conf/phpmyadmin.site.conf /etc/apache2/sites-enabled/phpmyadmin.conf
-ln --symbolic --force $PRJ_DIR/conf/apache-custom.conf /etc/apache2/conf-enabled/apache-custom.conf
+cp --force $PRJ_DIR/conf/config-dev.php /var/www/config.php
+cp --force $PRJ_DIR/conf/phpmyadmin.site.conf /etc/apache2/sites-enabled/phpmyadmin.conf
+cp --force $PRJ_DIR/conf/apache-custom.conf /etc/apache2/conf-enabled/apache-custom.conf
 cp --force $PRJ_DIR/conf/phpmyadmin.inc.php /etc/phpmyadmin/conf.d/phpmyadmin.inc.php
 
 $SCRIPT_DIR/prj-install.sh
