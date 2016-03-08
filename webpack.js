@@ -46,22 +46,13 @@ var config = {
       './node_modules/jquery-ui/datepicker.js',
       './node_modules/angular/angular.js',
       './node_modules/angular-route/angular-route.min.js',
-      // './node_modules/whatwg-fetch/fetch.js',
       './node_modules/html2canvas/dist/html2canvas.js',
 
       'script!./node_modules/excellentexport/excellentexport.min.js',
-      //'script!./node_modules/dexie/dist/latest/Dexie.min.js',
       './node_modules/bootstrap/dist/js/bootstrap.min.js',
 
       'script!./app/static/js/bugreporting.js',
-
-      // 'script!./app/static/js/application.js',
-      // 'script!./app/static/js/database.js',
-      // 'script!./app/static/js/cryptomedic.js',
     ])
-    // .concat(glob.sync('script!./app/static/js/service_*.js'))
-    // .concat(glob.sync('script!./app/static/js/ctrl_*.js'))
-
     // Last one, since it will define what is exported:
     .concat([ './app/status.js' ])
     ,
