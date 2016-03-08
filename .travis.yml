@@ -3,7 +3,7 @@ language: php
 node_js: "0.12"
 
 #addons:
-#firefox: "40"
+firefox: "40"
 
 # To go on the new infrastructure
 # @see http://docs.travis-ci.com/user/migrating-from-legacy/?utm_source=legacy-notice&utm_medium=banner&utm_campaign=legacy-upgrade
@@ -18,6 +18,8 @@ before_script:
   - mysql -e "SET GLOBAL time_zone = '+00:00'" -uroot
   - bin/prj-install.sh
 
+  # Test if xvfb-run is installed...
+  - type xvfb-run
   - sleep 3 # give xvfb server time to start
 
 script:
