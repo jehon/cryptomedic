@@ -13,15 +13,15 @@ module.exports = (function() {
       }
 
       var password = 'this will not be read by the server in tests';
-      try {
-        var liveData = require('./../../../secrets.json');
-        if (client.globals && client.globals.live && liveData.cryptomedic && liveData.cryptomedic.passwords && liveData.cryptomedic.passwords[login]) {
-          console.info('using secret password for user ' + login);
-          password = liveData.cryptomedic.passwords[login];
-        // } else {
-        //   throw new Error('Authenticate did not found secret passord for ' + login);
-        }
-      } catch (ex) {}
+      // try {
+      //   var liveData = require('./../../../secrets.json');
+      //   if (client.globals && client.globals.live && liveData.cryptomedic && liveData.cryptomedic.passwords && liveData.cryptomedic.passwords[login]) {
+      //     console.info('using secret password for user ' + login);
+      //     password = liveData.cryptomedic.passwords[login];
+      //   // } else {
+      //   //   throw new Error('Authenticate did not found secret passord for ' + login);
+      //   }
+      // } catch (ex) {}
 
       client.init()
         .waitForElementVisible('body')
@@ -31,6 +31,7 @@ module.exports = (function() {
         .setValue('#login_password', password)
         .pause(100)
         .myClick('button#login_go')
+        .pause(100)
         .waitForElementPresent('#login_loggedusername')
         .assert.containsText('#login_loggedusername', login)
         .assert.title('Cryptomedic')
