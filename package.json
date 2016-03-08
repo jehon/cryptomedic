@@ -23,7 +23,8 @@
     "redux-logger": "latest",
     "redux-persist": "latest",
     "redux-thunk": "latest",
-    "whatwg-fetch": "^0.10.1"
+    "whatwg-fetch": "^0.10.1",
+    "worker-loader": "^0.7.0"
   },
   "devDependencies": {
     "archiver": "latest",

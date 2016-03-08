@@ -3,6 +3,16 @@
 var application = {};
 var server = {};
 
+function plog(p) {
+  return p
+    .then(function(data) {
+      console.log(data);
+    }, function(error) {
+      console.error(error);
+      throw error;
+    });
+}
+
 function formatDate(date) {
   date = date || new Date();
   var year = date.getFullYear();

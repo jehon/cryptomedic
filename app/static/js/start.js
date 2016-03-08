@@ -16,4 +16,4 @@ if (!Promise || !indexedDB || !sessionStorage || !fetch) {
   window.location.href = 'static/upgrade.html';
 }
 
-var service_backend = service_backend_fn();
+var service_backend = appState().helpers.service_backend_fn();
