@@ -10,6 +10,7 @@ import date2CanonicString   from 'helpers/date2CanonicString';
 import database             from 'helpers/database';
 import myFetch              from 'helpers/myFetch';
 import service_backend_fn   from 'helpers/service_backend';
+import { nullify }          from 'helpers/service_backend';
 
 import selectFile         from 'actions/selectFile';
 
@@ -36,7 +37,8 @@ export default function() {
       date2CanonicString,
       database,
       service_backend_fn,
-      myFetch
+      myFetch,
+      nullify
     }
   };
 }

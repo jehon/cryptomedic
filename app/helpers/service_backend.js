@@ -27,7 +27,7 @@
  *      - ops are send directly and not queued
  */
 
-function nullify(what) {
+export function nullify(what) {
   switch(typeof(what)) {
     case 'string':
       if (what === '?') {

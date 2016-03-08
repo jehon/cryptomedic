@@ -13,8 +13,6 @@ var fse = require('fs-extra');
 
 // Add the not integrated sources
 fse.copySync(__dirname + '/../app/static/', __dirname + '/../build/static');
-fse.copySync(__dirname + '/../app/bower_components/', __dirname + '/../build/bower_components/');
-
 
 // All this is not necessary !!!
 

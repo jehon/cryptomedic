@@ -18,11 +18,9 @@ fse.emptyDirSync(__dirname + '/build/');
 
 // Add files not managed by webpack
 fse.copySync(__dirname + '/app/static/', __dirname + '/build/static');
-fse.copySync(__dirname + '/app/bower_components/', __dirname + '/build/bower_components/');
 var unmanaged = []
         .concat(glob('static/**', { sync: true, cwd: __dirname + '/build/' }))
-        .concat(glob('bower_components/**/*.js', { sync: true, cwd: __dirname + '/build/' }));
-
+        ;
 // https://github.com/petehunt/webpack-howto
 
 // Global variables

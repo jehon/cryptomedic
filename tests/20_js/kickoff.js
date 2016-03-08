@@ -47,6 +47,7 @@ describe("BuildRecord", function() {
 
 function loadMock(mock, type) {
   var rootMock = "/base/tests/20_js/mocks/";
+  var myFetch = appState().helpers.myFetch;
   return myFetch(rootMock + mock)
     .then(function(data) {
       if (type) {
