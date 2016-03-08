@@ -36,7 +36,7 @@ fi
 
 # Install various packages
 # --force-yes
-DEBIAN_FRONTEND=noninteractive apt-get install --yes apache2 \
+DEBIAN_FRONTEND=noninteractive apt-get install --yes --force-yes apache2 \
   build-essential \
   multitail       \
   mysql-client    \
