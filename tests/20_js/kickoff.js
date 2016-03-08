@@ -7,11 +7,11 @@
 function buildRecord(def, data) {
   def = JSON.parse(JSON.stringify(def));
   for(var a in data) {
-    var ind = a.split(".");
+    var ind = a.split('.');
     var d = def;
     var li = ind.pop();
     for (var i in ind) {
-      if (typeof(d[ind[i]]) == "undefined") {
+      if (typeof(d[ind[i]]) == 'undefined') {
         d[ind[i]] = {};
       }
       d = d[ind[i]];
@@ -21,13 +21,13 @@ function buildRecord(def, data) {
   return def;
 }
 
-describe("BuildRecord", function() {
-  it("should update default values with modifiers", function() {
+describe('BuildRecord', function() {
+  it('should update default values with modifiers', function() {
     var ref = { a: 1, b: 2, c: { c1: 1 }, d: { d1: 2 }};
     var obj = buildRecord(ref,
       {
         a: 2,
-        "d.d1": 3
+        'd.d1': 3
       }
       );
 
@@ -46,7 +46,7 @@ describe("BuildRecord", function() {
 });
 
 function loadMock(mock, type) {
-  var rootMock = "/base/tests/20_js/mocks/";
+  var rootMock = '/base/tests/20_js/mocks/';
   var myFetch = appState().helpers.myFetch;
   return myFetch(rootMock + mock)
     .then(function(data) {

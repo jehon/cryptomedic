@@ -106,5 +106,4 @@ describe('DB/Patients', function() {
         .then(done);
     });
   });
-
 });
