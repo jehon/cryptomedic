@@ -1,0 +1,7 @@
+www/build
+.vagrant
+.~lock.*
+vendor
+node_modules
+composer.lock
+**/tmp/
