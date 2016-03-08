@@ -8,7 +8,7 @@ var calculations = {
       }
       for(i = 0; i< line.length; i++) {
         if (x <= line[i][0])
-            break;
+          break;
       }
 
       // i = the next indice (line[i-1] < x <= line[i])
@@ -22,14 +22,14 @@ var calculations = {
     },
     stdDeviation: function(line, x, y) {
       var avg = this.evaluatePoly(line.medium, x);
-      if (isNaN(avg)) return "#Out of bound#";
+      if (isNaN(avg)) return '#Out of bound#';
       if (y == avg) return 0;
 
       var ref;
       if (y < avg) ref = this.evaluatePoly(line.min, x);
         else ref = this.evaluatePoly(line.max, x);
         /* istanbul skip next */
-      if (isNaN(ref)) return "#Out of bound#";
+      if (isNaN(ref)) return '#Out of bound#';
 
       var dev = Math.abs((avg - ref) / this.sigma);
       return (y - avg) / dev;
@@ -45,13 +45,13 @@ var calculations = {
         format: false
       }, options);
       // reference = reference || new Date();
-      if (typeof(options.reference) == "number") {
-        options.reference = "" + options.reference;
+      if (typeof(options.reference) == 'number') {
+        options.reference = '' + options.reference;
       }
-      if (typeof(options.reference) == "string") {
+      if (typeof(options.reference) == 'string') {
         if (options.reference.length < 4) {
-          return options.format ? null : "?";
-          // throw new Exception("Invalid reference");
+          return options.format ? null : '?';
+          // throw new Exception('Invalid reference');
         }
         var ry = parseInt(options.reference.substring(0, 4));
         var rm = parseInt(options.reference.substring(5, 7));
@@ -60,13 +60,13 @@ var calculations = {
         }
         options.reference = new Date(ry, rm - 1, 1);
       }
-      if (typeof(birth) == "number") {
-        birth = "" + birth;
+      if (typeof(birth) == 'number') {
+        birth = '' + birth;
       }
-      if (typeof(birth) == "string") {
+      if (typeof(birth) == 'string') {
         if (birth.length < 4) {
-          return options.format ? null : "?";
-          // throw new Exception("Invalid birth");
+          return options.format ? null : '?';
+          // throw new Exception('Invalid birth');
         }
         var by = parseInt(birth.substring(0, 4));
         var bm = parseInt(birth.substring(5, 7));
@@ -77,13 +77,13 @@ var calculations = {
       }
       var days = new Date(0, 0, 0, 0, 0, 0, options.reference - birth);
       var res = { years: days.getFullYear() - 1900, months: days.getMonth()};
-      if (options.format == "object") {
+      if (options.format == 'object') {
         return res;
       }
-      if (options.format == "number") {
+      if (options.format == 'number') {
         return res.years + (res.months / 12);
       }
-      return res.years + "y" + res.months + "m";
+      return res.years + 'y' + res.months + 'm';
     },
 
     toBirthDate: function(years, months, reference) {
@@ -93,7 +93,7 @@ var calculations = {
     },
 
     atConsultTime: function(file, patient, format) {
-      format = format || "number";
+      format = format || 'number';
       return this.fromBirthDate(patient.Yearofbirth, { reference: file.Date, format: format });
     }
   }
