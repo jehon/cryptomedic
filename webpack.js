@@ -52,7 +52,7 @@ var config = {
       './node_modules/html2canvas/dist/html2canvas.js',
 
       'script!./node_modules/excellentexport/excellentexport.min.js',
-      'script!./node_modules/dexie/dist/latest/Dexie.min.js',
+      //'script!./node_modules/dexie/dist/latest/Dexie.min.js',
       './node_modules/bootstrap/dist/js/bootstrap.min.js',
 
       'script!./app/static/js/bugreporting.js',
