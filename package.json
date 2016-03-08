@@ -51,6 +51,7 @@
     "karma-html-reporter": "latest",
     "karma-jasmine": "latest",
     "karma-junit-reporter": "latest",
+    "karma-webpack": "^1.7.0",
     "ng-cache-loader": "0.0.15",
     "nightwatch": "latest",
     "nightwatch-html-reporter": "latest",

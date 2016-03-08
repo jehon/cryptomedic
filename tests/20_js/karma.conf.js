@@ -5,7 +5,8 @@ module.exports = function(config) {
       'karma-firefox-launcher',
       'karma-jasmine',
       'karma-junit-reporter',
-      'karma-coverage'
+      'karma-coverage',
+      'karma-webpack'
       // 'karma-html-reporter'
     ],
     reporters : [
@@ -17,15 +18,12 @@ module.exports = function(config) {
     basePath : '../../',
 
     files : [
-      'tests/20_js/kickoff.js',
       // Work only if one bundle is present:
       'build/bundle-*.js',
       'app/static/js/application.js',
       'app/static/js/calculations.js',
-      'app/static/js/database.js',
-      // 'app/static/js/myfetch.js',
-      'app/static/js/service*.js',
-      'tests/20_js/**/*.js',
+      // 'tests/20_js/**/*.js',
+      'tests/20_js/**/test_*.js',
       { pattern : 'tests/20_js/mocks/*.json', watched : true, served : true, included : false }
     ],
 
@@ -33,8 +31,7 @@ module.exports = function(config) {
 
     frameworks : [ 'jasmine' ],
 
-//    browsers: [ 'Chrome', 'Firefox' ],
-    browsers: [ 'Firefox' ],
+    browsers: [ ], // See later
 
     customLaunchers: {
       // http://stackoverflow.com/questions/19255976/how-to-make-travis-execute-angular-tests-on-chrome-please-set-env-variable-chr
@@ -50,7 +47,36 @@ module.exports = function(config) {
     },
 
     preprocessors: {
-      'app/js/*.js': [ 'coverage' ]
+      // 'app/js/*.js': [ 'coverage' ],
+      // http://www.syntaxsuccess.com/viewarticle/writing-jasmine-unit-tests-in-es6
+      'tests/**/test_*.js': [ 'webpack' ]
+    },
+
+
+    webpack: {
+      module: {
+        loaders: [
+          { test: /\.js/, exclude: /node_modules/, loader: 'babel', query: { cacheDirectory: true }}
+        ]
+      },
+      watch: true,
+
+      resolve: {
+        extensions: [ '', '.js', '.jsx'],
+        modulesDirectories: [ '../../node_modules/', '../../app/', './' ],
+        alias: {
+          'jquery': 'jquery'
+        }
+      }
+
+    },
+
+    webpackServer: {
+      noInfo: true
+    },
+
+    webpackMiddleware: {
+      noInfo: true
     },
 
     coverageReporter: {

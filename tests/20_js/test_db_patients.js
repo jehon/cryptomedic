@@ -1,4 +1,4 @@
-'use strict';
+import { buildRecord, loadMock } from 'helpers';
 
 describe('DB/Patients', function() {
   var build_db = appState().helpers.database;

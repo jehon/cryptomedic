@@ -1,4 +1,4 @@
-"use strict";
+import { loadMock } from 'helpers';
 
 describe("File", function() {
   var ricketConsult_8819 = 6;

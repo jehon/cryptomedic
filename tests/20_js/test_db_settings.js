@@ -1,8 +1,8 @@
-'use strict';
+import database from 'helpers/database';
 
 describe('DB/Settings', function() {
-  var build_db = appState().helpers.database;
-  var db = build_db(true);
+  // var build_db = appState().helpers.database;
+  var db = database(true);
   it('should get/set settings', function(done) {
     var v = Math.random() * 1000;
     db.setSetting('test', v)
