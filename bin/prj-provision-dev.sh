@@ -69,11 +69,14 @@ if [ ! -x /usr/local/bin/composer.phar ]; then
   curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin
 fi
 
-# Put various configs file in place
-cp --force $PRJ_DIR/conf/config-dev.php /var/www/config.php
+# Put various configs file in place (cp because needed before vagrant mount)
 cp --force $PRJ_DIR/conf/phpmyadmin.site.conf /etc/apache2/sites-enabled/phpmyadmin.conf
 cp --force $PRJ_DIR/conf/apache-custom.conf /etc/apache2/conf-enabled/apache-custom.conf
 cp --force $PRJ_DIR/conf/phpmyadmin.inc.php /etc/phpmyadmin/conf.d/phpmyadmin.inc.php
+
+# This file is not necessary on vagrant boot
+ln -s --force $PRJ_DIR/conf/config-dev.php /var/www/config.php
+
 
 $SCRIPT_DIR/prj-install.sh
 $SCRIPT_DIR/prj-db-reset.php
