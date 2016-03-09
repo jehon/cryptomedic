@@ -16,7 +16,7 @@ Vagrant.configure(2) do |config|
   end
 
   if Vagrant.has_plugin?("vagrant-proxyconf")
-    puts "find proxyconf plugin ! [" + ENV["http_proxy"] + "]/[" + ENV["https_proxy"] + "]"
+    # puts "find proxyconf plugin !"
     if ENV["http_proxy"]
       #puts "http_proxy: " + ENV["http_proxy"]
       config.proxy.http     = ENV["http_proxy"]
