@@ -1,6 +1,7 @@
 {
   "ecmaFeatures": {
-    "modules": true
+    "modules": true,
+    "jsx": true
   },
   "rules": {
     "indent": [
@@ -23,7 +24,7 @@
     "no-console": [ 0 ],
     "no-undef": [ 1 ],
     "no-unused-vars": [ 1 ],
-    "comma-dangle": [ 0 ]
+    "comma-dangle": [ 0 ],
   },
   "env": {
     "es6": true,
@@ -31,16 +32,6 @@
     "browser": true
   },
   "globals": {
-    // personnal
-    "application": true,
-    "cryptomedic": true,
-    "server": true,
-    "appState": true,
-    "mainApp": true,
-    "DataMissingException": true,
-    "service_backend": true,
-    "calculations": true,
-
     // libs
     "jQuery": true,
 

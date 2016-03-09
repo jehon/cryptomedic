@@ -4,14 +4,14 @@ node_modules
 vendor/**/.git
 output/
 
-www/build
-**/unused
+/www/build
+**/unused/
 **/tmp/
-**/logs
+**/logs/
 
 .~lock.*
 composer.lock
-/npm-debug.log
+npm-debug.log
 phantomjsdriver.log
 commit.msg
 
