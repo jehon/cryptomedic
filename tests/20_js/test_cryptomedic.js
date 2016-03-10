@@ -1,38 +1,40 @@
 'use strict';
 
+import objectify from 'helpers/objectify';
+
 describe('Cryptomedic.js', function() {
   describe('date2CanonicString', function() {
     it('should return 0000-00-00 00:00:00 GMT+0000 for null', function() {
       expect(appState().helpers.date2CanonicString(null)).toEqual('0000-00-00 00:00:00 GMT+0000');
     });
-    it('should return information that could be understood through appState().helpers.objectify', function() {
+    it('should return information that could be understood through objectify', function() {
       var d = new Date();
       d.setMilliseconds(0);
-      expect(appState().helpers.objectify(appState().helpers.date2CanonicString(d))).toEqual(d);
+      expect(objectify(appState().helpers.date2CanonicString(d))).toEqual(d);
     });
   });
 
-  describe('appState().helpers.objectify', function() {
+  describe('objectify', function() {
     var d = new Date();
     d.setMilliseconds(0);
     var sd = appState().helpers.date2CanonicString(d);
     it('should do nothing with simple types', function() {
-      expect(appState().helpers.objectify()).toBe(null);
-      expect(appState().helpers.objectify(null)).toBe(null);
-      expect(appState().helpers.objectify(123)).toBe(123);
-      expect(appState().helpers.objectify('azer')).toBe('azer');
-      expect(appState().helpers.objectify(d)).toBe(d);
+      expect(objectify()).toBe(null);
+      expect(objectify(null)).toBe(null);
+      expect(objectify(123)).toBe(123);
+      expect(objectify('azer')).toBe('azer');
+      expect(objectify(d)).toBe(d);
     });
     it('should parse ' + sd + ' correctly', function() {
-      expect(appState().helpers.objectify(sd)).toEqual(d);
+      expect(objectify(sd)).toEqual(d);
     });
     it('should parse ' + appState().helpers.date2CanonicString(null) + ' correctly', function() {
-      expect(appState().helpers.objectify('0000-00-00 00:00:00 GMT+0000')).toEqual(null);
+      expect(objectify('0000-00-00 00:00:00 GMT+0000')).toEqual(null);
     });
     it('should parse recursively arrays and objects', function() {
-      expect(appState().helpers.objectify({ a: sd })).toEqual({ a: d });
-      expect(appState().helpers.objectify([ sd ])).toEqual([ d ]);
-      expect(appState().helpers.objectify({ a: [ sd ]})).toEqual({ a: [ d ]});
+      expect(objectify({ a: sd })).toEqual({ a: d });
+      expect(objectify([ sd ])).toEqual([ d ]);
+      expect(objectify({ a: [ sd ]})).toEqual({ a: [ d ]});
     });
   });
 
