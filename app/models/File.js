@@ -2,12 +2,13 @@
 
 import Data from 'models/Data';
 import amd_stats from 'helpers/amd_stats_datas';
+import store              from 'reducers/store';
 
 export default class File extends Data{
   constructor(data, folder = null) {
     super(data);
     if (data == null) {
-      var c = appState().store.getState().prefs.files;
+      var c = store.getState().prefs.files;
       this.ExaminerName = c.examinerName;
       this.Center       = c.center;
       this.Date         = c.date;
