@@ -1,5 +1,5 @@
 
-import { buildRecord } from './helpers';
+import { buildRecord } from 'helpers';
 
 describe('BuildRecord', function() {
   it('should update default values with modifiers', function() {
