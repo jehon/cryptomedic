@@ -4,7 +4,7 @@ import catalog            from 'reducers/catalog';
 import dispatch           from 'reducers/dispatch';
 import store              from 'reducers/store';
 
-import objectify            from 'helpers/objectify';
+// import objectify            from 'helpers/objectify';
 import create               from 'helpers/create';
 import date2CanonicString   from 'helpers/date2CanonicString';
 import database             from 'helpers/database';
@@ -32,7 +32,7 @@ export default function() {
       selectFile
     },
     helpers: {
-      objectify,
+      // objectify,
       create,
       date2CanonicString,
       database,

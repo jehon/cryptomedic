@@ -1,3 +1,4 @@
+import objectify from 'helpers/objectify';
 
 export function loadMock(mock, type) {
   var rootMock = '/base/tests/20_js/mocks/';
@@ -5,7 +6,7 @@ export function loadMock(mock, type) {
   return myFetch(rootMock + mock)
     .then(function(data) {
       if (type) {
-        data = appState().helpers.create(type, appState().helpers.objectify(data));
+        data = appState().helpers.create(type, objectify(data));
       }
       return data;
     });
