@@ -2,6 +2,9 @@
 import objectify from 'helpers/objectify';
 import database from 'helpers/database';
 import myFetch from 'helpers/myFetch';
+import create from 'helpers/create';
+import catalog from 'reducers/catalog';
+import dispatch from 'reducers/dispatch';
 
 // Test cryptographic:
 // Documentation: https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto
@@ -101,23 +104,22 @@ export default function service_backend() {
     switch(name) {
       case 'disconnected':
         if (data == 401) {
-          appState().dispatch(appState().catalog.CONNECTION_EXPIRED);
-          server.settings = false;
+          dispatch(catalog.CONNECTION_EXPIRED);
           location.hash = '#/login';
         } else {
-          appState().dispatch(appState().catalog.CONNECTION_SERVER_ERROR);
+          dispatch(catalog.CONNECTION_SERVER_ERROR);
         }
         break;
       case 'progress':
         if (data.isfinal) {
-          appState().dispatch(appState().catalog.DATABASE_DOWNLOADED);
+          dispatch(catalog.DATABASE_DOWNLOADED);
         } else {
-          appState().dispatch(appState().catalog.DATABASE_DOWNLOADING);
+          dispatch(catalog.DATABASE_DOWNLOADING);
         }
-        appState().dispatch(appState().catalog.CONNECTION_SUCCESS);
+        dispatch(catalog.CONNECTION_SUCCESS);
         break;
       default:
-        appState().dispatch(appState().catalog.CONNECTION_SUCCESS);
+        dispatch(catalog.CONNECTION_SUCCESS);
         break;
     }
   };
@@ -132,7 +134,7 @@ export default function service_backend() {
   function myFrontFetch(url, init, data) {
     return myFetch(url, init, data).then(
       function(json) {
-        appState().dispatch(appState().catalog.CONNECTION_SUCCESS);
+        dispatch(catalog.CONNECTION_SUCCESS);
         if (json._offline) {
           return db.storeRecord({ record: json })
             .then(function() { return json; });
@@ -142,21 +144,20 @@ export default function service_backend() {
       }, function(httpErrorCode) {
       switch(httpErrorCode) {
         case 401: // unauthorized
-          appState().dispatch(appState().catalog.CONNECTION_EXPIRED);
-          server.settings = false;
+          dispatch(catalog.CONNECTION_EXPIRED);
           location.hash = '#/login';
           break;
         case 403: // forbidden
-          appState().dispatch(appState().catalog.CONNECTION_FAILED);
+          dispatch(catalog.CONNECTION_FAILED);
           break;
         case 404: // not found
-          appState().dispatch(appState().catalog.CONNECTION_SERVER_ERROR);
+          dispatch(catalog.CONNECTION_SERVER_ERROR);
           break;
         case 500: // internal server error
-          appState().dispatch(appState().catalog.CONNECTION_SERVER_ERROR);
+          dispatch(catalog.CONNECTION_SERVER_ERROR);
           break;
         default:
-          appState().dispatch(appState().catalog.CONNECTION_SERVER_ERROR);
+          dispatch(catalog.CONNECTION_SERVER_ERROR);
           break;
       }
       return Promise.reject('myFrontFetch error: ' + httpErrorCode);
@@ -174,7 +175,7 @@ export default function service_backend() {
               // 'appVersion': cryptomedic.version,
           'computerId': window.localStorage.cryptomedicComputerId
         })
-        .then(appState().dispatch.bind(this, appState().catalog.CONNECTION_SETTINGS))
+        .then(dispatch.bind(this, catalog.CONNECTION_SETTINGS))
         .then(mySendAction.bind(this, 'init'))
         .catch()
         ;
@@ -186,7 +187,7 @@ export default function service_backend() {
           'computerId': window.localStorage.cryptomedicComputerId
         }
         )
-        .then(appState().dispatch.bind(this, appState().catalog.CONNECTION_SETTINGS))
+        .then(dispatch.bind(this, catalog.CONNECTION_SETTINGS))
         .then(mySendAction.bind(this, 'init'))
         .catch()
         ;
@@ -195,7 +196,7 @@ export default function service_backend() {
       // TODO: clean up the cache --> cache managed in other object???
       return myFrontFetch(rest + '/auth/logout')
         .then(function(data) {
-          appState().dispatch(appState().catalog.CONNECTION_EXPIRED);
+          dispatch(catalog.CONNECTION_EXPIRED);
           return data;
         })
         .catch()
@@ -222,14 +223,14 @@ export default function service_backend() {
     // Go to the database
     'getFolder': function(id) {
       if (id == -1) {
-        return Promise.resolve(appState().helpers.create('Folder'));
+        return Promise.resolve(create('Folder'));
       } else {
         // If not final then go to the server anyway...
         // return db.getFolder(id).catch(function(error) {
         //   console.log('Getting the folder live: #' + id);
         return myFrontFetch(rest + '/folder/' + id)
           .then(objectify)
-          .then(function(data) { return appState().helpers.create('Folder', data); })
+          .then(function(data) { return create('Folder', data); })
           .catch()
           ;
         // });
@@ -239,7 +240,7 @@ export default function service_backend() {
     'clear': function() {
       return db.clear()
         .then(function() {
-          appState().dispatch(appState().catalog.DATABASE_DOWNLOADING);
+          dispatch(catalog.DATABASE_DOWNLOADING);
         })
         .catch()
         ;
@@ -271,14 +272,14 @@ export default function service_backend() {
         .then(function(data) {
           var list = [];
           for(var i in data) {
-            list.push(appState().helpers.create('Patient', data[i]));
+            list.push(create('Patient', data[i]));
           }
           return list;
         })
         .then(objectify)
         .then(function(data) {
           for(var i in data) {
-            data[i] = appState().helpers.create('Patient', data[i]);
+            data[i] = create('Patient', data[i]);
           }
           return data;
         })
@@ -295,7 +296,7 @@ export default function service_backend() {
           'entryorder': order
         })
         .then(objectify)
-        .then(function(data) { return appState().helpers.create('Folder', data); })
+        .then(function(data) { return create('Folder', data); })
         .catch()
         ;
     },
@@ -303,7 +304,7 @@ export default function service_backend() {
     'createFile': function(data) {
       return myFrontFetch(rest + '/fiche/' + data.getModel(), { method: 'POST' }, nullify(data))
         .then(objectify)
-        .then(function(data) { return appState().helpers.create('Folder', data); })
+        .then(function(data) { return create('Folder', data); })
         .catch()
         ;
     },
@@ -311,7 +312,7 @@ export default function service_backend() {
     'saveFile': function(data) {
       return myFrontFetch(rest + '/fiche/' + data.getModel() + '/' + data['id'], { method: 'PUT' }, nullify(data))
         .then(objectify)
-        .then(function(data) { return appState().helpers.create('Folder', data); })
+        .then(function(data) { return create('Folder', data); })
         .catch()
         ;
     },
@@ -319,7 +320,7 @@ export default function service_backend() {
     'deleteFile': function(data) {
       return myFrontFetch(rest + '/fiche/' + data.getModel() + '/' + data['id'], { method: 'DELETE' })
         .then(objectify)
-        .then(function(data) { return appState().helpers.create('Folder', data); })
+        .then(function(data) { return create('Folder', data); })
         .catch()
         ;
     },
@@ -327,7 +328,7 @@ export default function service_backend() {
     'unlockFile': function(data) {
       return myFrontFetch(rest + '/unfreeze/' + data.getModel() + '/' + data['id'])
         .then(objectify)
-        .then(function(data) { return appState().helpers.create('Folder', data); })
+        .then(function(data) { return create('Folder', data); })
         .catch()
         ;
     },
