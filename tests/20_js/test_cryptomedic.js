@@ -1,23 +1,25 @@
 'use strict';
 
-import objectify from 'helpers/objectify';
+import objectify          from 'helpers/objectify';
+import { nullify }        from 'helpers/service_backend';
+import date2CanonicString from 'helpers/date2CanonicString';
 
 describe('Cryptomedic.js', function() {
   describe('date2CanonicString', function() {
     it('should return 0000-00-00 00:00:00 GMT+0000 for null', function() {
-      expect(appState().helpers.date2CanonicString(null)).toEqual('0000-00-00 00:00:00 GMT+0000');
+      expect(date2CanonicString(null)).toEqual('0000-00-00 00:00:00 GMT+0000');
     });
     it('should return information that could be understood through objectify', function() {
       var d = new Date();
       d.setMilliseconds(0);
-      expect(objectify(appState().helpers.date2CanonicString(d))).toEqual(d);
+      expect(objectify(date2CanonicString(d))).toEqual(d);
     });
   });
 
   describe('objectify', function() {
     var d = new Date();
     d.setMilliseconds(0);
-    var sd = appState().helpers.date2CanonicString(d);
+    var sd = date2CanonicString(d);
     it('should do nothing with simple types', function() {
       expect(objectify()).toBe(null);
       expect(objectify(null)).toBe(null);
@@ -28,7 +30,7 @@ describe('Cryptomedic.js', function() {
     it('should parse ' + sd + ' correctly', function() {
       expect(objectify(sd)).toEqual(d);
     });
-    it('should parse ' + appState().helpers.date2CanonicString(null) + ' correctly', function() {
+    it('should parse ' + date2CanonicString(null) + ' correctly', function() {
       expect(objectify('0000-00-00 00:00:00 GMT+0000')).toEqual(null);
     });
     it('should parse recursively arrays and objects', function() {
@@ -41,7 +43,7 @@ describe('Cryptomedic.js', function() {
   // describe('stringify', function() {
   //   var d = new Date();
   //   d.setMilliseconds(0);
-  //   var sd = appState().helpers.date2CanonicString(d);
+  //   var sd = date2CanonicString(d);
   //   it('should do nothing with simple types', function() {
   //     expect(stringify(null)).toBe(null);
   //     expect(stringify(null)).toBe(null);
@@ -59,7 +61,6 @@ describe('Cryptomedic.js', function() {
   // });
 
   describe('nullify', function() {
-    var nullify = appState().helpers.nullify;
     it('should handle null', function() {
       expect(nullify(null)).toBe(null);
     });

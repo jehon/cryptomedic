@@ -1,8 +1,7 @@
-'use strict';
 
+import { nullify }        from 'helpers/service_backend';
 
 describe('service_backend', function() {
-  var nullify = appState().helpers.nullify;
   describe('nullify', function() {
     it('should handle null', function() {
       expect(nullify(null)).toBe(null);
