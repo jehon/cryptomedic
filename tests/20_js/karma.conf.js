@@ -63,7 +63,7 @@ module.exports = function(config) {
 
       resolve: {
         extensions: [ '', '.js', '.jsx'],
-        modulesDirectories: [ '../../node_modules/', '../../app/', './' ],
+        modulesDirectories: [ __dirname + '/../../node_modules/', __dirname + '/../../app/', './' ],
         alias: {
           'jquery': 'jquery'
         }
