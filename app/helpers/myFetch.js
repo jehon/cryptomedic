@@ -1,5 +1,6 @@
 
-import catalog from 'reducers/catalog';
+// import catalog  from 'reducers/catalog';
+// import dispatch from 'reducers/dispatch';
 
 /**
  * Launch a fetch request
@@ -60,36 +61,36 @@ export default function myFetch(url, init, data) {
   });
 }
 
-export function myFrontFetch(url, init, data) {
-  return myFetch(url, init, data).then(
-    function(json) {
-      appState().dispatch(appState().catalog.CONNECTION_SUCCESS);
-      if (json._offline) {
-        return db.storeRecord({ record: json })
-          .then(function() { return json; });
-      } else {
-        return json;
-      }
-    }, function(httpErrorCode) {
-    switch(httpErrorCode) {
-      case 401: // unauthorized
-        appState().dispatch(appState().catalog.CONNECTION_EXPIRED);
-        location.hash = '#/login';
-        break;
-      case 403: // forbidden
-        appState().dispatch(appState().catalog.CONNECTION_FAILED);
-        break;
-      case 404: // not found
-        appState().dispatch(appState().catalog.CONNECTION_SERVER_ERROR);
-        break;
-      case 500: // internal server error
-        appState().dispatch(appState().catalog.CONNECTION_SERVER_ERROR);
-        break;
-      default:
-        appState().dispatch(appState().catalog.CONNECTION_SERVER_ERROR);
-        break;
-    }
-    return Promise.reject('myFrontFetch error: ' + httpErrorCode);
-  }
-  );
-}
+// export function myFrontFetch(url, init, data) {
+//   return myFetch(url, init, data).then(
+//     function(json) {
+//       dispatch(catalog.CONNECTION_SUCCESS);
+//       if (json._offline) {
+//         return db.storeRecord({ record: json })
+//           .then(function() { return json; });
+//       } else {
+//         return json;
+//       }
+//     }, function(httpErrorCode) {
+//     switch(httpErrorCode) {
+//       case 401: // unauthorized
+//         dispatch(catalog.CONNECTION_EXPIRED);
+//         location.hash = '#/login';
+//         break;
+//       case 403: // forbidden
+//         dispatch(catalog.CONNECTION_FAILED);
+//         break;
+//       case 404: // not found
+//         dispatch(catalog.CONNECTION_SERVER_ERROR);
+//         break;
+//       case 500: // internal server error
+//         dispatch(catalog.CONNECTION_SERVER_ERROR);
+//         break;
+//       default:
+//         dispatch(catalog.CONNECTION_SERVER_ERROR);
+//         break;
+//     }
+//     return Promise.reject('myFrontFetch error: ' + httpErrorCode);
+//   }
+//   );
+// }
