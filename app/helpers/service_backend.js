@@ -1,4 +1,7 @@
-'use strict';
+
+import objectify from 'helpers/objectify';
+import database from 'helpers/database';
+import myFetch from 'helpers/myFetch';
 
 // Test cryptographic:
 // Documentation: https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto
@@ -55,7 +58,7 @@ export function nullify(what) {
 //   if (what === '') return null;
 //   if (typeof(what) == 'object') {
 //     if (what instanceof Date) {
-//       return appState().helpers.date2CanonicString(what);
+//       return date2CanonicString(what);
 //     }
 //     for(var k in what) {
 //       what[k] = stringify(what[k]);
@@ -79,7 +82,7 @@ export default function service_backend() {
   var rest = cryptomedic.flavor + '/api/v1.0';
 
   // var db = build_db(true);
-  var db = appState().helpers.database(true);
+  var db = database(true);
 
   // // https://github.com/webpack/worker-loader
   var MyWorker = require('worker!../worker/worker.js');
@@ -127,7 +130,7 @@ export default function service_backend() {
   mySendAction('init', { restUrl: rest });
 
   function myFrontFetch(url, init, data) {
-    return appState().helpers.myFetch(url, init, data).then(
+    return myFetch(url, init, data).then(
       function(json) {
         appState().dispatch(appState().catalog.CONNECTION_SUCCESS);
         if (json._offline) {
@@ -225,7 +228,7 @@ export default function service_backend() {
         // return db.getFolder(id).catch(function(error) {
         //   console.log('Getting the folder live: #' + id);
         return myFrontFetch(rest + '/folder/' + id)
-          .then(appState().helpers.objectify)
+          .then(objectify)
           .then(function(data) { return appState().helpers.create('Folder', data); })
           .catch()
           ;
@@ -272,7 +275,7 @@ export default function service_backend() {
           }
           return list;
         })
-        .then(appState().helpers.objectify)
+        .then(objectify)
         .then(function(data) {
           for(var i in data) {
             data[i] = appState().helpers.create('Patient', data[i]);
@@ -291,7 +294,7 @@ export default function service_backend() {
           'entryyear': year,
           'entryorder': order
         })
-        .then(appState().helpers.objectify)
+        .then(objectify)
         .then(function(data) { return appState().helpers.create('Folder', data); })
         .catch()
         ;
@@ -299,7 +302,7 @@ export default function service_backend() {
 
     'createFile': function(data) {
       return myFrontFetch(rest + '/fiche/' + data.getModel(), { method: 'POST' }, nullify(data))
-        .then(appState().helpers.objectify)
+        .then(objectify)
         .then(function(data) { return appState().helpers.create('Folder', data); })
         .catch()
         ;
@@ -307,7 +310,7 @@ export default function service_backend() {
 
     'saveFile': function(data) {
       return myFrontFetch(rest + '/fiche/' + data.getModel() + '/' + data['id'], { method: 'PUT' }, nullify(data))
-        .then(appState().helpers.objectify)
+        .then(objectify)
         .then(function(data) { return appState().helpers.create('Folder', data); })
         .catch()
         ;
@@ -315,7 +318,7 @@ export default function service_backend() {
 
     'deleteFile': function(data) {
       return myFrontFetch(rest + '/fiche/' + data.getModel() + '/' + data['id'], { method: 'DELETE' })
-        .then(appState().helpers.objectify)
+        .then(objectify)
         .then(function(data) { return appState().helpers.create('Folder', data); })
         .catch()
         ;
@@ -323,7 +326,7 @@ export default function service_backend() {
 
     'unlockFile': function(data) {
       return myFrontFetch(rest + '/unfreeze/' + data.getModel() + '/' + data['id'])
-        .then(appState().helpers.objectify)
+        .then(objectify)
         .then(function(data) { return appState().helpers.create('Folder', data); })
         .catch()
         ;
