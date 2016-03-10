@@ -1,4 +1,6 @@
 
+import catalog from 'reducers/catalog';
+
 /**
  * Launch a fetch request
  *

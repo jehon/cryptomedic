@@ -382,6 +382,8 @@ mainApp.controller('ctrl', [ '$scope', '$location', '$sce', function($scope, $lo
       jQuery('#busy').modal('hide');
     }
 
+    server.settings = $scope.appStateStore.connection.settings;
+
     $scope.safeApply();
   });
 
