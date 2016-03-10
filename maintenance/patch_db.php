@@ -20,14 +20,14 @@ $db = new \Jehon\Maintenance\Database(
 echo "<pre>";
 
 if (\Jehon\Maintenance\Lib\isServedLocally()) {
-	$db->runOne(__DIR__ . "/../conf/database_scripts/dev_only/reset.sql");
-  $db->runOne(__DIR__ . "/../conf/database_scripts/dev_only/testing.sql");
+	$db->runOne(__DIR__ . "/../conf/database/dev/reset.sql");
+  $db->runOne(__DIR__ . "/../conf/database/dev/testing.sql");
 	// $db->runOne("/home/jehon/amd_chakaria.sql");
 }
 
-$db->runOne(__DIR__ . "/../conf/database_scripts");
-$db->runOne(__DIR__ . "/../conf/database_scripts/always.sql");
+$db->runOne(__DIR__ . "/../conf/database");
+$db->runOne(__DIR__ . "/../conf/database/always.sql");
 
 if (\Jehon\Maintenance\Lib\isServedLocally()) {
-	$db->runOne(__DIR__ . "/../conf/database_scripts/dev_only");
+	$db->runOne(__DIR__ . "/../conf/database/dev");
 }
