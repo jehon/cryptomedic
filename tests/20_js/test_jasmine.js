@@ -1,4 +1,3 @@
-'use strict';
 
 describe('Jasmine', function() {
   it('should work as \'expect\'', function() {
