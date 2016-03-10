@@ -42,11 +42,6 @@ import myFetch   from 'helpers/myFetch';
 var db = database();
 
 /**
- * URL of the server
- */
-var rest = false;
-
-/**
  * Timer of the next sync
  */
 var syncTimer = null;
@@ -141,7 +136,7 @@ function routeSync() {
       return db.getSetting('checkpoint');
     })
     .then(function(cp) {
-      return myFetch(rest + '/sync', {}, {
+      return myFetch('sync', {}, {
         cp: cp
       });
     })
@@ -165,9 +160,6 @@ onmessage = function(message) {
 
   switch(name) {
     case 'init':
-      if (data.restUrl) {
-        rest = data.restUrl;
-      }
       return routeSync();
     case 'sync':
       return routeSync();
