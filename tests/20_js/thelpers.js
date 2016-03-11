@@ -1,9 +1,11 @@
 
 import objectify from 'helpers/objectify';
+import myFetch   from 'helpers/myFetch';
+// import create    from 'helpers/create';
 
 export function loadMock(mock, type) {
   var rootMock = '/base/tests/20_js/mocks/';
-  var myFetch = appState().helpers.myFetch;
+  var myFetch = myFetch;
   return myFetch(rootMock + mock)
     .then(function(data) {
       if (type) {
