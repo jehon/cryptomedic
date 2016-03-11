@@ -108,7 +108,7 @@ var mainApp = angular.module('app_main', [ 'ngRoute' ])
             $scope.result = $scope.tryit();
           } catch (e) {
             $scope.error = true;
-            if (e instanceof ApplicationException) {
+            if (e instanceof appState().helpers.ApplicationException) {
               $scope.errorMsg = e.getMessage();
             } else {
               $scope.errorMsg = 'Uncatchable error';
