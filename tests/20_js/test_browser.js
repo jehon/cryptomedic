@@ -1,4 +1,5 @@
-'use strict';
+
+import { DataMissingException } from 'helpers/exceptions';
 
 describe('The browser', function() {
   it('should parse date correctly', function() {

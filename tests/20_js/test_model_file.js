@@ -1,4 +1,5 @@
 import { loadMock } from 'helpers';
+import { DataMissingException } from 'helpers/exceptions';
 // import create       from 'helpers/create';
 
 describe('File', function() {

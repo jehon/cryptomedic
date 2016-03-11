@@ -3,6 +3,7 @@
 import Data from 'models/Data';
 import amd_stats from 'helpers/amd_stats_datas';
 import store              from 'reducers/store';
+import { DataMissingException } from 'helpers/exceptions';
 
 export default class File extends Data{
   constructor(data, folder = null) {
