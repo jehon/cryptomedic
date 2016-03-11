@@ -31,44 +31,37 @@ Promise.prototype.myFinallyDone = function (callback) {
     .catch(function(reason) { console.error(reason); });
 };
 
-function inherit(parent, constructor) {
-  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/create
+// function inherit(parent, constructor) {
+//   // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/create
 
-  if (typeof(constructor) == 'undefined')
-    constructor = function() {};
+//   if (typeof(constructor) == 'undefined')
+//     constructor = function() {};
 
-  // shim for older browsers:
-  var ObjectCreateShim;
-  if (typeof Object.create == 'function') {
-    ObjectCreateShim = Object.create;
-  } else {
-    ObjectCreateShim = function(proto) {
-      function ctor() { }
-      ctor.prototype = proto;
-      return new ctor();
-    };
-  }
+//   // shim for older browsers:
+//   var ObjectCreateShim;
+//   if (typeof Object.create == 'function') {
+//     ObjectCreateShim = Object.create;
+//   } else {
+//     ObjectCreateShim = function(proto) {
+//       function ctor() { }
+//       ctor.prototype = proto;
+//       return new ctor();
+//     };
+//   }
 
   // Create a Student.prototype object that inherits from Person.prototype.
   // Note: A common error here is to use 'new Person()' to create the Student.prototype.
   // That's incorrect for several reasons, not least that we don't have anything to
   // give Person for the 'firstName' argument. The correct place to call Person is
   // above, where we call it from Student.
-  constructor.prototype = ObjectCreateShim(parent.prototype);
+//   constructor.prototype = ObjectCreateShim(parent.prototype);
 
-  // Set the 'constructor' property to refer to Student
-  constructor.prototype.constructor = constructor;
+//   // Set the 'constructor' property to refer to Student
+//   constructor.prototype.constructor = constructor;
 
-  // Add a custom parent field to refer to the inherited parent
-  constructor.prototype._parent = parent.prototype;
-}
-
-function ApplicationException(msg) {
-  this.message = msg;
-}
-
-inherit(Error, ApplicationException);
-ApplicationException.prototype.getMessage = function() { return this.message; };
+//   // Add a custom parent field to refer to the inherited parent
+//   constructor.prototype._parent = parent.prototype;
+// }
 
 var mainApp = angular.module('app_main', [ 'ngRoute' ])
 .config([ '$compileProvider', function( $compileProvider ) {
