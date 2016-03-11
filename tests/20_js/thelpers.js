@@ -1,3 +1,4 @@
+
 import objectify from 'helpers/objectify';
 
 export function loadMock(mock, type) {
