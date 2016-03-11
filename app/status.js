@@ -13,6 +13,7 @@ import service_backend_fn   from 'helpers/service_backend';
 // import { nullify }          from 'helpers/service_backend';
 
 import selectFile         from 'actions/selectFile';
+import { DataMissingException } from 'helpers/exceptions';
 
 var offline = require('offline-plugin/runtime');
 if (location.pathname.split('/')[2] == 'offline') {
@@ -37,7 +38,8 @@ export default function() {
       date2CanonicString,
       database,
       service_backend_fn,
-      myFetch
+      myFetch,
+      DataMissingException
       // nullify
     }
   };

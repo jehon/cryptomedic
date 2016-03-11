@@ -55,7 +55,7 @@ mainApp.controller('ctrl_graphic', [ '$scope', function($scope) {
           return $scope.folder.getSubFile($index)[field]();
         }
       } catch(e) {
-        if (e instanceof DataMissingException) {
+        if (e instanceof appState().helpers.DataMissingException) {
           return '#Error';
         }
         throw e;

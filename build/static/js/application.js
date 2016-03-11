@@ -519,9 +519,3 @@ mainApp.config([ '$routeProvider', function($routeProvider) {
       controller: 'ctrl_users',
     }).otherwise({ 'redirectTo': '/home'});
 }]);
-
-function DataMissingException(data) {
-  this.message = 'Missing '  + (data || 'some data');
-  this.data = data;
-}
-DataMissingException.prototype = new ApplicationException();
