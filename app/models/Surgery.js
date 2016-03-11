@@ -1,10 +1,10 @@
-"use strict";
+'use strict';
 
-import File from "models/File";
+import File from 'models/File';
 
 export default class Surgery extends File {
   getModel() {
-    return "Surgery";
+    return 'Surgery';
   }
 
   // constructor(data, folder) {
