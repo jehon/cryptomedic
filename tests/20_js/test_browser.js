@@ -1,6 +1,4 @@
 
-import { DataMissingException } from 'helpers/exceptions';
-
 describe('The browser', function() {
   it('should parse date correctly', function() {
     var d = new Date('2001-02-04T00:00:00Z');
@@ -32,9 +30,4 @@ describe('The browser', function() {
   //  expect(d.getUTCFullYear()).toBe(2001);
   //  expect(d.getUTCHours()).toBe(11);
   // });
-
-  it('have a correct DataMissingException', function() {
-    expect((new DataMissingException())instanceof Error).toBeTruthy();
-    expect((new DataMissingException())instanceof DataMissingException).toBeTruthy();
-  });
 });
