@@ -1,8 +1,8 @@
-"use strict";
+'use strict';
 
 
-describe("calculations.math", function() {
-  var poly = { "min": [], "medium": [], "max": []};
+describe('calculations.math', function() {
+  var poly = { 'min': [], 'medium': [], 'max': []};
   poly.medium.push([0, 1]);
   poly.medium.push([1, 2]);
   poly.medium.push([2, 4]);
@@ -14,7 +14,7 @@ describe("calculations.math", function() {
   poly.max.push([0, 2]);
   poly.max.push([10, 30]);
 
-  it("evaluatePoly correctly", function() {
+  it('evaluatePoly correctly', function() {
     expect(calculations.math.evaluatePoly(poly.medium, -1)).toBeNaN();
     expect(calculations.math.evaluatePoly(poly.medium, 11)).toBeNaN();
     expect(calculations.math.evaluatePoly(poly.medium, 0)).toBe(1);
@@ -26,10 +26,10 @@ describe("calculations.math", function() {
     expect(calculations.math.evaluatePoly(poly.medium, 1.1)).toBe(2.2);
   });
 
-  it("calculate standard deviations", function() {
+  it('calculate standard deviations', function() {
     expect(calculations.math.stdDeviation(poly, 0, 1)).toBe(0);
     expect(calculations.math.stdDeviation(poly, 0, 0)).toBe(-calculations.math.sigma);
     expect(calculations.math.stdDeviation(poly, 0, 2)).toBe(calculations.math.sigma);
-    expect(calculations.math.stdDeviation(poly, -1, 2)).toBe("#Out of bound#");
+    expect(calculations.math.stdDeviation(poly, -1, 2)).toBe('#Out of bound#');
   });
 });

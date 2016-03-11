@@ -1,6 +1,6 @@
 import { loadMock } from 'thelpers';
 import { DataMissingException } from 'helpers/exceptions';
-// import create       from 'helpers/create';
+import create       from 'helpers/create';
 
 describe('File', function() {
   var ricketConsult_8819 = 6;
@@ -10,9 +10,9 @@ describe('File', function() {
     it('should have correct properties', function(done) {
       // Go through the rest_service !!!
       loadMock('mock_patient_10.json', 'Folder').then(function(folder) {
-        expect(folder instanceof appState().helpers.create('Folder').constructor).toBeTruthy('Object is not a Folder');
+        expect(folder instanceof create('Folder').constructor).toBeTruthy('Object is not a Folder');
 
-        expect(folder.getMainFile() instanceof appState().helpers.create('Patient').constructor).toBeTruthy('Object is not a patient');
+        expect(folder.getMainFile() instanceof create('Patient').constructor).toBeTruthy('Object is not a patient');
         expect(folder.getMainFile().Sex).toBe('Male');
         expect(folder.getMainFile().Yearofbirth).toBe(1998);
         expect(folder.getMainFile().actualAge(new Date('2014-01-01'))).toBe('16y0m');
@@ -21,18 +21,18 @@ describe('File', function() {
 
         var i;
         i = ricketConsult_8819;
-        expect(folder.getSubFile(i) instanceof appState().helpers.create('File').constructor).toBeTruthy();
-        expect(folder.getSubFile(i) instanceof appState().helpers.create('RicketConsult').constructor).toBeTruthy();
+        expect(folder.getSubFile(i) instanceof create('File').constructor).toBeTruthy();
+        expect(folder.getSubFile(i) instanceof create('RicketConsult').constructor).toBeTruthy();
         expect(folder.getSubFile(i).id).toBe(8819);
-        expect(folder.getSubFile(i).getPatient() instanceof appState().helpers.create('Patient').constructor).toBeTruthy();
+        expect(folder.getSubFile(i).getPatient() instanceof create('Patient').constructor).toBeTruthy();
         expect(folder.getSubFile(i).Date).toEqual('2014-01-04');
         expect(folder.getSubFile(i).ageAtConsultTime(true)).toBe('16y0m');
 
         i = clubFoot_695;
-        expect(folder.getSubFile(i) instanceof appState().helpers.create('File').constructor).toBeTruthy();
-        expect(folder.getSubFile(i) instanceof appState().helpers.create('ClubFoot').constructor).toBeTruthy();
+        expect(folder.getSubFile(i) instanceof create('File').constructor).toBeTruthy();
+        expect(folder.getSubFile(i) instanceof create('ClubFoot').constructor).toBeTruthy();
         expect(folder.getSubFile(i).id).toBe(695);
-        expect(folder.getSubFile(i).getPatient() instanceof appState().helpers.create('Patient').constructor).toBeTruthy();
+        expect(folder.getSubFile(i).getPatient() instanceof create('Patient').constructor).toBeTruthy();
         expect(folder.getSubFile(i).Date).toEqual('2014-04-17');
         expect(folder.getSubFile(i).ageAtConsultTime()).toBe(16.25);
 
@@ -66,9 +66,9 @@ describe('File', function() {
 
   describe('with patient with sex', function() {
     it('should throw error everytime', function(done) {
-      var folder = appState().helpers.create('Folder');
-      folder.mainFile = appState().helpers.create('Patient', { 'Sex': 'Male' });
-      var o = appState().helpers.create('File', {}, folder);
+      var folder = create('Folder');
+      folder.mainFile = create('Patient', { 'Sex': 'Male' });
+      var o = create('File', {}, folder);
 
       expect(function() { o.ageAtConsultTime(); }).toThrow(new DataMissingException('Date'));
       expect(function() { o.bmi(); }).toThrow(new DataMissingException('Height'));
@@ -84,7 +84,7 @@ describe('File', function() {
 
   // describe('with empty object', function() {
   //   it('should throw error everytime', function(done) {
-  //     var o = appState().helpers.create('File', {}, appState().helpers.create('Folder'));
+  //     var o = create('File', {}, create('Folder'));
 
   //     console.log('get patient:', this.getPatient());
 
