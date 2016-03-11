@@ -1,10 +1,10 @@
-"use strict";
+'use strict';
 
-import File from "models/File";
+import File from 'models/File';
 
 export default class Appointment extends File {
   getModel() {
-    return "Appointment";
+    return 'Appointment';
   }
 
   constructor(data, folder = null) {
@@ -12,12 +12,12 @@ export default class Appointment extends File {
     if (!data) {
       var now = new Date();
       var year = now.getFullYear();
-      var month = "0" + (now.getMonth() + 1);
+      var month = '0' + (now.getMonth() + 1);
       month = month.substring(month.length - 2);
-      var day = "0" + now.getDate();
+      var day = '0' + now.getDate();
       day = day.substring(day.length - 2);
 
-      this.Date = year + "-" + month + "-" + day;
+      this.Date = year + '-' + month + '-' + day;
     }
   }
 
