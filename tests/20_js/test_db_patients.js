@@ -1,8 +1,8 @@
 import { buildRecord, loadMock } from 'thelpers';
+import database from 'helpers/database';
 
 describe('DB/Patients', function() {
-  var build_db = appState().helpers.database;
-  var db = build_db(true);
+  var db = database(true);
   var def = { record: { id: 123, test: true, mainFile: { entryyear: 2001, entryorder: 2323 }}};
   var def_deleted = { id: 456, _deleted: true };
 
