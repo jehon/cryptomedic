@@ -1,22 +1,23 @@
 import { loadMock } from 'thelpers';
+import create from 'helpers/create';
 
-describe("Data", function() {
-  describe("with empty loader", function() {
-    var data = appState().helpers.create("Data");
-    it("should have inheritance ok", function() {
-      // expect(data.constructor.name).toBe("Data");
-      expect(data instanceof appState().helpers.create("Data").constructor).toBeTruthy();
+describe('Data', function() {
+  describe('with empty loader', function() {
+    var data = create('Data');
+    it('should have inheritance ok', function() {
+      // expect(data.constructor.name).toBe('Data');
+      expect(data instanceof create('Data').constructor).toBeTruthy();
     });
   });
 
-  describe("with data loading at construction time", function() {
-    var data = new appState().helpers.create("Data", {
-      data1: "data1",
+  describe('with data loading at construction time', function() {
+    var data = new create('Data', {
+      data1: 'data1',
       dataArray: [ 1, 2, 3]
     });
 
-    it("should contain all datas", function() {
-      expect(data.data1).toBe("data1");
+    it('should contain all datas', function() {
+      expect(data.data1).toBe('data1');
       expect(data.dataArray).toContain(1);
       expect(data.dataArray).toContain(2);
       expect(data.dataArray).toContain(3);
@@ -26,11 +27,11 @@ describe("Data", function() {
   });
 
 
-  describe("with data loaded remotely", function() {
-    it("should load correctly load_test.json and store it", function(done) {
-      // var data = new appState().helpers.create("Data")();
-      loadMock("mock_load_test.json").then(function(data) {
-        expect(data.data1).toBe("data1");
+  describe('with data loaded remotely', function() {
+    it('should load correctly load_test.json and store it', function(done) {
+      // var data = new create('Data')();
+      loadMock('mock_load_test.json').then(function(data) {
+        expect(data.data1).toBe('data1');
         expect(data.dataArray).toContain(1);
         expect(data.dataArray).toContain(2);
         expect(data.dataArray).toContain(3);
@@ -41,11 +42,11 @@ describe("Data", function() {
     });
   });
 
-  describe("with data loaded remotely tested through myAsyncTest", function() {
-    // var data = new appState().helpers.create("Data")();
-    it("should load correctly load_test.json and store it", function(done) {
-      loadMock("mock_load_test.json").then(function(data) {
-        expect(data.data1).toBe("data1");
+  describe('with data loaded remotely tested through myAsyncTest', function() {
+    // var data = new create('Data')();
+    it('should load correctly load_test.json and store it', function(done) {
+      loadMock('mock_load_test.json').then(function(data) {
+        expect(data.data1).toBe('data1');
         expect(data.dataArray).toContain(1);
         expect(data.dataArray).toContain(2);
         expect(data.dataArray).toContain(3);
@@ -56,37 +57,37 @@ describe("Data", function() {
     });
   });
 
-  it("would interpret notSet correctly", function() {
-    var data = new appState().helpers.create("Data");
+  it('would interpret notSet correctly', function() {
+    var data = new create('Data');
     expect(data.data1).toBeUndefined();
-    expect(data.isSet("data1")).toBeFalsy();
-    expect(data.isNotZero("data1")).toBeFalsy();
+    expect(data.isSet('data1')).toBeFalsy();
+    expect(data.isNotZero('data1')).toBeFalsy();
     expect(data.data2).toBeUndefined();
-    expect(data.isSet("data2")).toBeFalsy();
-    expect(data.isNotZero("data2")).toBeFalsy();
+    expect(data.isSet('data2')).toBeFalsy();
+    expect(data.isNotZero('data2')).toBeFalsy();
 
     data.data1 = null;
     expect(data.data1).toBe(null);
-    expect(data.isSet("data1")).toBeFalsy();
-    expect(data.isNotZero("data1")).toBeFalsy();
+    expect(data.isSet('data1')).toBeFalsy();
+    expect(data.isNotZero('data1')).toBeFalsy();
     expect(data.data2).toBeUndefined();
-    expect(data.isSet("data2")).toBeFalsy();
-    expect(data.isNotZero("data2")).toBeFalsy();
+    expect(data.isSet('data2')).toBeFalsy();
+    expect(data.isNotZero('data2')).toBeFalsy();
 
     data.data2 = 0;
     expect(data.data1).toBe(null);
-    expect(data.isSet("data1")).toBeFalsy();
-    expect(data.isNotZero("data1")).toBeFalsy();
+    expect(data.isSet('data1')).toBeFalsy();
+    expect(data.isNotZero('data1')).toBeFalsy();
     expect(data.data2).toBe(0);
-    expect(data.isSet("data2")).toBeTruthy();
-    expect(data.isNotZero("data2")).toBeFalsy();
+    expect(data.isSet('data2')).toBeTruthy();
+    expect(data.isNotZero('data2')).toBeFalsy();
 
     data.data1 = 123;
     expect(data.data1).toBe(123);
-    expect(data.isSet("data1")).toBeTruthy();
-    expect(data.isNotZero("data1")).toBeTruthy();
+    expect(data.isSet('data1')).toBeTruthy();
+    expect(data.isNotZero('data1')).toBeTruthy();
     expect(data.data2).toBe(0);
-    expect(data.isSet("data2")).toBeTruthy();
-    expect(data.isNotZero("data2")).toBeFalsy();
+    expect(data.isSet('data2')).toBeTruthy();
+    expect(data.isNotZero('data2')).toBeFalsy();
   });
 });
