@@ -14,6 +14,7 @@ import service_backend_fn   from 'helpers/service_backend';
 
 import selectFile         from 'actions/selectFile';
 import { DataMissingException } from 'helpers/exceptions';
+import { ApplicationException } from 'helpers/exceptions';
 
 var offline = require('offline-plugin/runtime');
 if (location.pathname.split('/')[2] == 'offline') {
@@ -39,7 +40,8 @@ export default function() {
       // database,
       service_backend_fn,
       myFetch,
-      DataMissingException
+      DataMissingException,
+      ApplicationException
       // nullify
     },
   };
