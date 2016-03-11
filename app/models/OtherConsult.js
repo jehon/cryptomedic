@@ -1,10 +1,10 @@
-"use strict";
+'use strict';
 
-import File from "models/File";
+import File from 'models/File';
 
 export default class OtherConsult extends File {
   getModel() {
-    return "OtherConsult";
+    return 'OtherConsult';
   }
 
   // constructor(data, folder) {

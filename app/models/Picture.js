@@ -1,10 +1,10 @@
-"use strict";
+'use strict';
 
-import File from "models/File";
+import File from 'models/File';
 
 export default class Picture extends File {
   getModel() {
-    return "Picture";
+    return 'Picture';
   }
 
   // constructor(data, folder) {

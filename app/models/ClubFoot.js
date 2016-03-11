@@ -1,12 +1,12 @@
-"use strict";
+'use strict';
 
-import File from "models/File";
+import File from 'models/File';
 
 function f(val) {
   if (val == null) {
-    throw new Error("Null value", val);
+    throw new Error('Null value', val);
   }
-  if (typeof(val) == "string") {
+  if (typeof(val) == 'string') {
     return parseFloat(val);
   }
   return val;
@@ -15,7 +15,7 @@ function f(val) {
 
 export default class ClubFoot extends File {
   getModel() {
-    return "ClubFoot";
+    return 'ClubFoot';
   }
 
   // constructor(data, folder = null) {
@@ -32,7 +32,7 @@ export default class ClubFoot extends File {
         + f(this.RigidEquinusLeft)
         + f(this.EmptyHeelLeft);
     } catch (e) {
-      return "undefined";
+      return 'undefined';
     }
   }
 
@@ -46,7 +46,7 @@ export default class ClubFoot extends File {
         + f(this.RigidEquinusRight)
         + f(this.EmptyHeelRight);
     } catch (e) {
-      return "undefined";
+      return 'undefined';
     }
   }
 }
