@@ -1,4 +1,4 @@
-import { buildRecord, loadMock } from 'helpers';
+import { buildRecord, loadMock } from 'thelpers';
 
 describe('DB/Patients', function() {
   var build_db = appState().helpers.database;

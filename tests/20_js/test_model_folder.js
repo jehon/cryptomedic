@@ -1,4 +1,4 @@
-import { loadMock } from 'helpers';
+import { loadMock } from 'thelpers';
 
 describe('Folder', function() {
   describe('with empty loader', function() {

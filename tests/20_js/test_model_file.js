@@ -1,4 +1,4 @@
-import { loadMock } from 'helpers';
+import { loadMock } from 'thelpers';
 import { DataMissingException } from 'helpers/exceptions';
 // import create       from 'helpers/create';
 
