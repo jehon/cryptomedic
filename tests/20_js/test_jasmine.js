@@ -1,4 +1,6 @@
 
+import { DataMissingException } from 'helpers/exceptions';
+
 describe('Jasmine', function() {
   it('should work as \'expect\'', function() {
     var a = true;

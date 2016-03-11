@@ -63,6 +63,7 @@ describe('DB/Patients', function() {
   it('should fallback if reference does not exists', function(done) {
     db.getByReference(2999, 9999)
       .then(function(data) {
+        // Unexpected!!!
         expect(true).toBe(false);
         done();
       }, function(data) {
