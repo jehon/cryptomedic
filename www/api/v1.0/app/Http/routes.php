@@ -45,13 +45,7 @@ if (!function_exists('hasPermission')) {
  * For anybody
  */
 
-if (array_key_exists('REQUEST_URI', $_SERVER)) {
-	$flavor = explode('/', $_SERVER['REQUEST_URI'])[1];
-} else {
-	$flavor = "cryptomedic";
-}
-
-Route::group([ 'prefix' => '/' . $flavor . '/api/' . basename(dirname(dirname(__DIR__))) ], function() {
+Route::group([ 'prefix' => '/api/' . basename(dirname(dirname(__DIR__))) ], function() {
 	// Route::controllers([
 		// 'auth' => 'Auth\AuthController',
 		// 'password' => 'Auth\PasswordController',
