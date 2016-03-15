@@ -1,9 +1,13 @@
+#!/bin/bash
+
+SCRIPT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+PRJ_DIR=$(dirname "$SCRIPT_DIR")
 
 if [ "$1" = "help" ]; then
   cat <<-EOL
     This script show the logs of the application:
     - apache logs
-    - laravel logs
+    - emails.txt (dump of emails sent in the prj-fake-email-server)
 EOL
   exit 0
 fi
