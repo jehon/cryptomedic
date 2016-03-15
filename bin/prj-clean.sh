@@ -1,10 +1,19 @@
 #!/bin/bash
 
-set -e
-
 PRJ_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 PRJ_DIR=$(dirname "$PRJ_DIR")
-echo "Project directory is $PRJ_DIR"
+
+if [ "$1" = "help" ]; then
+  cat <<-EOL
+  This script remove temporary scripts from all around:
+  - tmp
+  - build dir (in www/build)
+  - tmp in Laravel api (in /api/vxxx/storage and /api/vxxx/tmp)
+EOL
+  exit 0
+fi
+
+set -e
 
 cd "$PRJ_DIR"
 

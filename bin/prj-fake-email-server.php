@@ -5,3 +5,4 @@
 #  $filename = tempnam('/tmp/mail', $matches[1] . '.');
   $filename = "/tmp/emails.txt";
   file_put_contents($filename, $input, FILE_APPEND);
+
