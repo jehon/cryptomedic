@@ -73,7 +73,7 @@ if [ ! -r /usr/sbin/sendmail.bak ]; then
     mv /usr/sbin/sendmail /usr/sbin/sendmail.bak
   fi
 fi
-sed -i -e "s:;sendmail_path =:sendmail_path = \"$SCRIPT_DIR/prj-fake-email-server\":g" /etc/php5/apache2/php.ini
+sed -i -e "s:;sendmail_path =:sendmail_path = \"$SCRIPT_DIR/prj-fake-sendmail.sh\":g" /etc/php5/apache2/php.ini
 
 
 $SCRIPT_DIR/prj-install-dependancies.sh
