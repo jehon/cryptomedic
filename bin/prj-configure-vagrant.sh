@@ -69,7 +69,7 @@ ln -s --force $PRJ_DIR/conf/config-dev.php /var/www/config.php
 
 # Hook the fake sendmail
 if [ ! -r /usr/sbin/sendmail.bak ]; then
-  if [ -r /usr/sbin/sendmail ];
+  if [ -r /usr/sbin/sendmail ]; then
     mv /usr/sbin/sendmail /usr/sbin/sendmail.bak
   fi
 fi
