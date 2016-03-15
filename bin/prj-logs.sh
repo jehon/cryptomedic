@@ -7,7 +7,7 @@ if [ "$1" = "help" ]; then
   cat <<-EOL
     This script show the logs of the application:
     - apache logs
-    - emails.txt (dump of emails sent in the prj-fake-email-server)
+    - emails.txt (dump of emails sent in the prj-fake-sendmail.sh)
 EOL
   exit 0
 fi
