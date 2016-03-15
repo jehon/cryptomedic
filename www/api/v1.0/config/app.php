@@ -1,6 +1,6 @@
 <?php
 
-require_once(__DIR__ . "/../../../config.php");
+global $myconfig;
 
 return [
 
@@ -15,7 +15,7 @@ return [
 	|
 	*/
 
-	'debug' => env('APP_DEBUG', getGlobalConfig("debug")),
+	'debug' => env('APP_DEBUG', $myconfig["debug"]),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -80,7 +80,7 @@ return [
 	|
 	*/
 
-	'key' => env('APP_KEY', getGlobalConfig('laravelRandomString')),
+	'key' => env('APP_KEY', $myconfig['random32']),
 
 	'cipher' => MCRYPT_RIJNDAEL_128,
 

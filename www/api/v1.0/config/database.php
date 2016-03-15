@@ -1,5 +1,7 @@
 <?php
 
+global $myconfig;
+
 return [
 
 	/*
@@ -47,10 +49,10 @@ return [
 	'connections' => [
 		'mysql' => [
 			'driver'    => 'mysql',
-			'host'      => 'localhost',
-			'database'  => getGlobalConfig("databaseName"),
-			'username'  => getGlobalConfig("databaseUsername"),
-			'password'  => getGlobalConfig("databasePassword"),
+			'host'      => $myconfig["database"]["host"],
+			'database'  => $myconfig["database"]["schema"],
+			'username'  => $myconfig["database"]["username"],
+			'password'  => $myconfig["database"]["password"],
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',

@@ -1,5 +1,11 @@
 <?php
-  require_once(__DIR__ . "/../../../config.php");
+
+/* JHO CONFIG */
+global $myconfig;
+require_once(__DIR__ . "/../../../../config.php");
+date_default_timezone_set("GMT");
+/* JHO CONFIG */
+
 /**
  * Laravel - A PHP Framework For Web Artisans
  *

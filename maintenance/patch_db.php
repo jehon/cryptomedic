@@ -6,7 +6,7 @@ require_once(__DIR__ . "/../vendor/jehon/maintenance/lib/is_served_locally.php")
 require_once(__DIR__ . "/../config.php");
 
 \Jehon\Maintenance\TryCatch::run();
-\Jehon\Maintenance\SessionProtect::run(getGlobalConfig("maintenance.code"), getGlobalConfig("maintenance.token"));
+\Jehon\Maintenance\SessionProtect::run($myconfig["maintenance"]["code"], $myconfig["maintenance"]["token"]);
 
 global $myconfig;
 
@@ -14,7 +14,7 @@ $db = new \Jehon\Maintenance\Database(
 		$myconfig['database']['database'],
 		$myconfig['database']['username'],
 		$myconfig['database']['password'],
-		$myconfig['database']['options']
+		[ PDO::MYSQL_ATTR_INIT_COMMAND  => "SET CHARACTER SET 'utf8'" ]
 	);
 
 echo "<pre>";

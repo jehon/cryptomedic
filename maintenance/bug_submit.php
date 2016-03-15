@@ -10,7 +10,7 @@
 			$myconfig['database']['database'],
 			$myconfig['database']['username'],
 			$myconfig['database']['password'],
-			$myconfig['database']['options']
+			[ PDO::MYSQL_ATTR_INIT_COMMAND  => "SET CHARACTER SET 'utf8'" ]
 	);
 
 	\Jehon\Maintenance\BugReporting::record($db, "http://www.cryptomedic.org/cryptomedic/maintenance/bug_view.php");

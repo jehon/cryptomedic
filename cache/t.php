@@ -469,11 +469,11 @@ $generator = array();
 require_once(dirname(__DIR__) . DIRECTORY_SEPARATOR . "config.php");
 
 $generator['database'] = array(
-    'pdo_host' => 'localhost',
-    'pdo_schema' => getGlobalConfig("databaseName"),
-    'pdo_username' => getGlobalConfig("databaseUsername"),
-    'pdo_password' => getGlobalConfig("databasePassword"),
-    'init' => "SET CHARACTER SET 'utf8'",
+    'pdo_host'     => $myconfig["database"]["host"],
+    'pdo_schema'   => $myconfig["database"]["schema"],
+    'pdo_username' => $myconfig["database"]["username"],
+    'pdo_password' => $myconfig["database"]["password"],
+    'init'         => "SET CHARACTER SET 'utf8'",
 );
 
 t::initialize();
