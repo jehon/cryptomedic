@@ -31,15 +31,7 @@ module.exports = function(config) {
 
     frameworks : [ 'jasmine' ],
 
-    browsers: [ ], // See later
-
-    customLaunchers: {
-      // http://stackoverflow.com/questions/19255976/how-to-make-travis-execute-angular-tests-on-chrome-please-set-env-variable-chr
-      Chrome_travis_ci: {
-        base: 'Chrome',
-        flags: ['--no-sandbox']
-      }
-    },
+    browsers: [ 'Firefox', 'Chrome' ], // See later
 
     junitReporter : {
       outputFile : 'tmp/js/unit.xml',
@@ -89,13 +81,6 @@ module.exports = function(config) {
     //   templatePath: '../tmp/jasmine_template.html'
     // }
   };
-
-  if(process.env.TRAVIS){
-    // configuration.browsers = [ 'Firefox', 'Chrome_travis_ci' ];
-    configuration.browsers = [ 'Firefox' ];
-  } else {
-    configuration.browsers = [ 'Firefox', 'Chrome' ];
-  }
 
   config.set(configuration);
 };

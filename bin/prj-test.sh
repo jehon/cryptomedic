@@ -7,10 +7,6 @@ PRJ_DIR=$(dirname "$PRJ_DIR")
 echo "Project directory is $PRJ_DIR"
 PHPUNIT="$PRJ_DIR/vendor/bin/phpunit"
 
-if [ "$TRAVIS" ]; then
-  PHPUNIT=phpunit
-fi
-
 cd "$PRJ_DIR"
 
 test_dir() {
