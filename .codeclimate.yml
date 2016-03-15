@@ -1,6 +1,0 @@
-languages:
-- php: true
-- javascript: true
-
-exclude_paths:
-- node_modules/**
