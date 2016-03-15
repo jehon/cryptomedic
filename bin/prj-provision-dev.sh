@@ -79,7 +79,7 @@ cp --force $PRJ_DIR/conf/phpmyadmin.inc.php   /etc/phpmyadmin/conf.d/phpmyadmin.
 # This file is not necessary on vagrant boot
 ln -s --force $PRJ_DIR/conf/config-dev.php /var/www/config.php
 
-$SCRIPT_DIR/prj-install.sh
+$SCRIPT_DIR/prj-install-dependancies.sh.sh
 $SCRIPT_DIR/prj-db-reset.php
 
 # Run project custom files
