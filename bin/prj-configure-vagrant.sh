@@ -74,7 +74,7 @@ fi
 sed -i -e "s:;sendmail_path =:sendmail_path = \"$SCRIPT_DIR/prj-fake-email-server\":g" /etc/php5/apache2/php.ini
 
 
-$SCRIPT_DIR/prj-install-dependancies.sh.sh
+$SCRIPT_DIR/prj-install-dependancies.sh
 $SCRIPT_DIR/prj-db-reset.php
 
 # Run project custom files
