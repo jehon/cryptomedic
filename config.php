@@ -62,15 +62,6 @@ $myconfig['database'] = array(
 		'patches' => array()
 );
 
-// if ($localhost || $cli) {
-// 	$myconfig['database']['patches'][] = __DIR__ . "/conf/database/dev/reset.sql";
-// 	$myconfig['database']['patches'][] = "/home/jehon/amd_chakaria.sql";
-// }
-// $myconfig['database']['patches'][] = __DIR__ . "/conf/database";
-// if ($localhost || $cli) {
-// 	$myconfig['database']['patches'][] = __DIR__ . "/conf/database/dev";
-// }
-
 $myconfig['github'] = [
 	"token" => getGlobalConfig('github.token')
 ];
