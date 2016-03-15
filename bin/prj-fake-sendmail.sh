@@ -13,14 +13,18 @@ fi
 #prefix="/var/mail/sendmail"
 date=`date \+\%Y\%m\%d\%H\%M\%N`
 
-name="/tmp/emails.txt"
+FILENAME="/tmp/emails.txt"
 
-echo "********************** $date [`whoami`] *************************" >> $name
+{
+  echo "********************** $date [`whoami`] *************************"
+  echo "********************** $0 $*"
+  cat -
 
-while read line; do
-  echo $line >> $name
-done
-echo "******************************************************" >> $name
+#while read line; do
+#  echo $line >> $name
+#done
+  echo "******************************************************"
+} >> $FILENAME
 
-chmod 777 $name
+chmod 666 $FILENAME
 /bin/true
