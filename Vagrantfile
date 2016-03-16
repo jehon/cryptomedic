@@ -33,9 +33,9 @@ Vagrant.configure(2) do |config|
   #config.vm.define "customname" do |customname|
   #end
 
-  config.vm.network "forwarded_port", guest:    80, host: 10080
-  config.vm.network "forwarded_port", guest:   443, host: 10443
-  config.vm.network "forwarded_port", guest: 10000, host: 10000 # phpmyadmin
+  config.vm.network "forwarded_port", auto_correct: true, guest:    80, host: 10080
+  config.vm.network "forwarded_port", auto_correct: true, guest:   443, host: 10443
+  config.vm.network "forwarded_port", auto_correct: true, guest: 10000, host: 10000 # phpmyadmin
 
   config.vm.synced_folder "./www", "/var/www/html", owner: "www-data", group: "www-data"
 
