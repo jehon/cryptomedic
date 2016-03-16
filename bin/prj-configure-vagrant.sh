@@ -66,6 +66,7 @@ cp --force $PRJ_DIR/conf/phpmyadmin.inc.php   /etc/phpmyadmin/conf.d/phpmyadmin.
 
 # This file is not necessary on vagrant boot
 ln -s --force $PRJ_DIR/conf/config-dev.php /var/www/config.php
+chmod a+r /var/www/config.php
 
 # Hook the fake sendmail
 if [ ! -r /usr/sbin/sendmail.bak ]; then
