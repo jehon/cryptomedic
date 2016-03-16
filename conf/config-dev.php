@@ -13,6 +13,8 @@ $myconfig = [
   'maintenance' => [
     'code'     => '',
     'token'    => ''
-  ]
+  ],
+  'debug'      => true,
+  'random32'   => 'ABCDABCDABCDABCDABCDABCDABCDABCD',
 ];
 
