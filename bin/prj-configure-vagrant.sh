@@ -49,10 +49,16 @@ DEBIAN_FRONTEND=noninteractive apt-get install --yes --force-yes apache2 \
   git
 # end
 
+# Install nodejs 5.*
+curl -sL https://deb.nodesource.com/setup_5.x | bash -
+apt-get install -y nodejs
 
 echo "Install terminated"
 
-# Manage user rights
+# Enable php5-mcrypt
+php5enmod mcrypt
+
+# Manage user erights
 usermod -a -G adm vagrant
 
 # Enable SSL
