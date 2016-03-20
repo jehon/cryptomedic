@@ -1,13 +1,12 @@
 <?php namespace App\Http\Controllers;
 
 use App\Patient;
+use App\References;
 use App\Http\Controllers\Controller;
 use DB;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Request;
-
-use \References;
 
 class FolderController extends Controller {
 	// @see http://laravel.com/docs/5.0/controllers
