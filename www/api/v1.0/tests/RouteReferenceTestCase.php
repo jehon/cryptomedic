@@ -19,7 +19,7 @@ class RouteReferenceTestCase extends TestCase {
 	}
 
 	protected function setUrl($url, $params = array()) {
-		$this->url = "/cryptomedic/api/" . basename(dirname(dirname(__FILE__))). "/" . $url;
+		$this->url = "/api/" . basename(dirname(dirname(__FILE__))). "/" . $url;
 		$this->params = $params;
 	}
 
