@@ -38,6 +38,7 @@ Vagrant.configure(2) do |config|
   config.vm.network "forwarded_port", auto_correct: true, guest: 10000, host: 10000 # phpmyadmin
 
   config.vm.synced_folder "./www", "/var/www/html", owner: "www-data", group: "www-data"
+  config.vm.synced_folder ".", "/vagrant", owner: "vagrant", group: "www-data"
 
   config.vm.provision "shell", inline:
     "chmod +x /vagrant/bin/prj-configure-vagrant.sh && /vagrant/bin/prj-configure-vagrant.sh"
