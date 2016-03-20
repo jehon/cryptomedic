@@ -1,5 +1,11 @@
 <?php
 
+/* JHO CONFIG */
+global $myconfig;
+require_once(dirname(dirname(dirname(dirname(__DIR__)))) . "/config.php");
+date_default_timezone_set("GMT");
+/* JHO CONFIG */
+
 define('LARAVEL_START', microtime(true));
 
 /*
