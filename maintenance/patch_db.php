@@ -4,14 +4,13 @@ require_once(__DIR__ . "/../vendor/autoload.php");
 require_once(__DIR__ . "/../vendor/jehon/maintenance/lib/is_served_locally.php");
 
 require_once(__DIR__ . "/../config.php");
+global $myconfig;
 
 \Jehon\Maintenance\TryCatch::run();
 \Jehon\Maintenance\SessionProtect::run($myconfig["maintenance"]["code"], $myconfig["maintenance"]["token"]);
 
-global $myconfig;
-
 $db = new \Jehon\Maintenance\Database(
-		$myconfig['database']['database'],
+    "mysql:host=" . $myconfig['database']['host'] . ";dbname=" . $myconfig['database']['schema'],
 		$myconfig['database']['username'],
 		$myconfig['database']['password'],
 		[ PDO::MYSQL_ATTR_INIT_COMMAND  => "SET CHARACTER SET 'utf8'" ]
