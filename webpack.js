@@ -64,7 +64,7 @@ var config = {
     }
   },
   output: {
-    path: path.join(__dirname, 'build/'),
+    path: path.join(__dirname, 'www/build/'),
     // filename: 'bundle.js',
     filename: 'bundle-[hash].js',
     chunkFilename: '[id].[hash].bundle.js',
