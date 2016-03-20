@@ -20,40 +20,42 @@ SCRIPT_DIR=$SCRIPT_DIR
 PROFILE
 chmod 777 /etc/profile.d/vagrant-append-project.sh
 
-# Manage packages
-if test "`find /root/last_apt_get_update -mtime -1 2>/dev/null`"; then
-  echo "Last apt-get update less than 1 day ago. Skipping it." >&2
-  echo "To re-enable it:" >&2
-  echo "rm /root/last_apt_get_update" >&2
-else
-  apt-get -y update
-  touch /root/last_apt_get_update
+if ([ "$1" == "" ] || [ "$1" = "install" ]); then
+  # Manage packages
+  if test "`find /root/last_apt_get_update -mtime -1 2>/dev/null`"; then
+    echo "Last apt-get update less than 1 day ago. Skipping it." >&2
+    echo "To re-enable it:" >&2
+    echo "rm /root/last_apt_get_update" >&2
+  else
+    apt-get -y update
+    touch /root/last_apt_get_update
+  fi
+
+  # Configure mysql-server package to not ask for password
+  #debconf-set-selections <<< 'mysql-server mysql-server/root_password password empty'
+  #debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password empty'
+
+  # Install various packages
+  # --force-yes
+  DEBIAN_FRONTEND=noninteractive apt-get install --yes --force-yes apache2 \
+    build-essential \
+    multitail       \
+    mysql-client    \
+    crudini         \
+    mysql-server    \
+    nodejs          \
+    curl            \
+    libapache2-mod-php5 php5-cli php5-mysql php5-mcrypt php5-curl \
+    phpmyadmin      \
+    git
+  # end
+
+  # Install nodejs 5.*
+  curl -sL https://deb.nodesource.com/setup_5.x | bash -
+  apt-get install -y nodejs
+
+  echo "Install terminated"
 fi
-
-# Configure mysql-server package to not ask for password
-#debconf-set-selections <<< 'mysql-server mysql-server/root_password password empty'
-#debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password empty'
-
-# Install various packages
-# --force-yes
-DEBIAN_FRONTEND=noninteractive apt-get install --yes --force-yes apache2 \
-  build-essential \
-  multitail       \
-  mysql-client    \
-  crudini         \
-  mysql-server    \
-  nodejs npm nodejs-legacy \
-  curl            \
-  libapache2-mod-php5 php5-cli php5-mysql php5-mcrypt php5-curl \
-  phpmyadmin      \
-  git
-# end
-
-# Install nodejs 5.*
-curl -sL https://deb.nodesource.com/setup_5.x | bash -
-apt-get install -y nodejs
-
-echo "Install terminated"
 
 # Enable php5-mcrypt
 php5enmod mcrypt
@@ -83,8 +85,10 @@ fi
 sed -i -e "s:;sendmail_path =:sendmail_path = \"$SCRIPT_DIR/prj-fake-sendmail.sh\":g" /etc/php5/apache2/php.ini
 
 
-$SCRIPT_DIR/prj-install-dependancies.sh
-$SCRIPT_DIR/prj-db-reset.php
+if ([ "$1" == "" ] || [ "$1" = "install" ]); then
+  $SCRIPT_DIR/prj-install-dependancies.sh
+  $SCRIPT_DIR/prj-db-reset.php
+fi
 
 # Run project custom files
 if [ -x $SCRIPT_DIR/prj-configure-vagrant-custom.sh ]; then
