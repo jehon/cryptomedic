@@ -31,10 +31,6 @@ if ([ "$1" == "" ] || [ "$1" = "install" ]); then
     touch /root/last_apt_get_update
   fi
 
-  # Configure mysql-server package to not ask for password
-  #debconf-set-selections <<< 'mysql-server mysql-server/root_password password empty'
-  #debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password empty'
-
   # Install various packages
   # --force-yes
   DEBIAN_FRONTEND=noninteractive apt-get install --yes --force-yes apache2 \
@@ -43,7 +39,6 @@ if ([ "$1" == "" ] || [ "$1" = "install" ]); then
     mysql-client    \
     crudini         \
     mysql-server    \
-    nodejs          \
     curl            \
     libapache2-mod-php5 php5-cli php5-mysql php5-mcrypt php5-curl \
     phpmyadmin      \
