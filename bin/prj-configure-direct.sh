@@ -18,6 +18,12 @@ echo "** Install new config.php"
 sudo ln $PRJ_DIR/conf/config-dev.php /var/www/config.php
 sudo chmod a+r /var/www/config.php
 
+if [ -r "$PRJ_DIR/conf/config-custom.php" ]; then
+  echo "** Install new config-custom.php"
+  sudo ln $PRJ_DIR/conf/config-custom.php /var/www/config-custom.php
+  sudo chmod a+r /var/www/config-custom.php
+fi
+
 $SCRIPT_DIR/prj-db-reset.php
 
 # Run project custom files

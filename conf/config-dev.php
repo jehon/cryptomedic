@@ -18,3 +18,7 @@ $myconfig = [
   'random32'   => 'ABCDABCDABCDABCDABCDABCDABCDABCD',
 ];
 
+if (file_exists(__DIR__ . 'config-custom.php')) {
+  require_once(__DIR__ . 'config-custom.php');
+}
+
