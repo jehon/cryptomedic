@@ -42,6 +42,8 @@ if ([ "$1" == "" ] || [ "$1" = "install" ]); then
     curl            \
     libapache2-mod-php5 php5-cli php5-mysql php5-mcrypt php5-curl \
     phpmyadmin      \
+    xvfb            \
+    firefox         \
     git
   # end
 
