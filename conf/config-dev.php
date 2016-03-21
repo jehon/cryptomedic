@@ -15,7 +15,7 @@ $myconfig = [
     'token'    => ''
   ],
   'debug'      => true,
-  'random32'   => 'ABCDABCDABCDABCDABCDABCDABCDABCD',
+  'random32'   => 'random script with 32 characters',
 ];
 
 if (file_exists(__DIR__ . 'config-custom.php')) {
