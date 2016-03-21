@@ -13,6 +13,10 @@ use Illuminate\Support\Facades\Auth;
 class CryptomedicModel extends Model {
 	protected $guarded = array('id');
 
+  static public function myCleanValue($c) {
+    return str_replace(["'", " ", "\""], "", $c);
+  }
+
 	static public function getTableColumnsList() {
 		// @see http://stackoverflow.com/a/19953826/1954789
 		return \Schema::getColumnListing(with(new static)->getTable());
