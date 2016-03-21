@@ -14,12 +14,12 @@ var fse = require('fs-extra');
 var OfflinePlugin = require('offline-plugin');
 
 // Always restart from a blank page
-fse.emptyDirSync(__dirname + '/build/');
+fse.emptyDirSync(__dirname + '/www/build/');
 
 // Add files not managed by webpack
-fse.copySync(__dirname + '/app/static/', __dirname + '/build/static');
+fse.copySync(__dirname + '/app/static/', __dirname + '/www/build/static');
 var unmanaged = []
-        .concat(glob('static/**', { sync: true, cwd: __dirname + '/build/' }))
+        .concat(glob('static/**', { sync: true, cwd: __dirname + '/www/build/' }))
         ;
 // https://github.com/petehunt/webpack-howto
 
@@ -141,11 +141,12 @@ var config = {
   ]
 };
 
-var templates = recursiveReadSync('./cache/templates');
-for(var i in templates) {
-  templates[i] = './' + templates[i];
-}
-config.entry = config.entry.concat(templates);
+// TODO: re-enable templates
+// var templates = recursiveReadSync('./www/templates/templates');
+// for(var i in templates) {
+//   templates[i] = './' + templates[i];
+// }
+// config.entry = config.entry.concat(templates);
 config.entry = config.entry.concat([ './app/status.js' ]);
 
 module.exports = config;
