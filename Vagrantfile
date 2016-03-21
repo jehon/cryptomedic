@@ -30,9 +30,6 @@ Vagrant.configure(2) do |config|
     end
   end
 
-  #config.vm.define "customname" do |customname|
-  #end
-
   config.vm.network "forwarded_port", auto_correct: true, guest:    80, host: 10080
   config.vm.network "forwarded_port", auto_correct: true, guest:   443, host: 10443
   config.vm.network "forwarded_port", auto_correct: true, guest: 10000, host: 10000 # phpmyadmin
