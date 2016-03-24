@@ -19,9 +19,9 @@ module.exports = function(config) {
 
     files : [
       // Work only if one bundle is present:
-      'build/bundle-*.js',
-      'app/static/js/application.js',
-      'app/static/js/calculations.js',
+      'www/build/bundle-*.js',
+      'www/build/static/js/application.js',
+      'www/build/static/js/calculations.js',
       // 'tests/20_js/**/*.js',
       'tests/20_js/**/test_*.js',
       { pattern : 'tests/20_js/mocks/*.json', watched : true, served : true, included : false }
