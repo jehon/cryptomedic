@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
+use App\References;
+
 // See https://github.com/laravel/framework/issues/5276
 
 // TODO: restrict operations to unlocked files
@@ -53,7 +55,7 @@ class CryptomedicModel extends Model {
 		if (preg_match('@\\\\([\w]+)$@', $classname, $matches)) {
 			$classname = $matches[1];
 		}
-		$dbname = \References::model2db($classname);
+		$dbname = References::model2db($classname);
 		$id = $this->id;
 		$deleted = new Deleted;
 		$deleted->entity_type = $dbname;
