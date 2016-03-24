@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Request;
 use App\Bill;
 
 #require_once(__DIR__ . "/../../../../php/references.php");
-use \References;
+use App\References;
 
 class ReportComputersController extends ReportController {
   public function index() {

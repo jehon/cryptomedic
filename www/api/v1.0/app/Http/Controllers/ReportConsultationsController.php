@@ -8,7 +8,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Request;
 
 #require_once(__DIR__ . "/../../../../php/references.php");
-use \References;
+use App\References;
 
 class ReportConsultationsController extends ReportController {
   /* Consultations */

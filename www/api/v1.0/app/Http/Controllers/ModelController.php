@@ -7,7 +7,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Input;
 
-use \References;
+use App\References;
 
 // TODO: protect frozen files
 class ModelController extends Controller {
@@ -26,7 +26,7 @@ class ModelController extends Controller {
 	}
 
 	protected function getModel($model) {
-		$model = "\\App\\" . \References::db2model($model);
+		$model = "\\App\\" . References::db2model($model);
 		return $model;
 	}
 

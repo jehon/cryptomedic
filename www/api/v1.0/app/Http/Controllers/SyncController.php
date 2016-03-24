@@ -4,13 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Patient;
 use App\SyncComputer;
+use App\References;
 use App\Http\Controllers\Controller;
+
 use DB;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Request;
-
-use \References;
 
 define("sync_packet_size", 100);
 

@@ -1,14 +1,14 @@
-<?php namespace App\Http\Controllers;
+<?php
 
-require_once(__DIR__ . "/../../../../../php/core.php");
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use DB;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Request;
 use App\Bill;
-use \myCleanValue;
-use \References;
+use App\CryptomedicModel;
+use App\References;
 
 class ReportStatisticalController extends ReportController {
 	protected $filter = "(1=1)";
@@ -111,7 +111,7 @@ class ReportStatisticalController extends ReportController {
 			$res2[$line->Center] = $line->count;
 		}
 		foreach($centers as $c) {
-			$this->resultPathSet("summary.centers." . myCleanValue($c), array_key_exists($c, $res2) ? $res2[$c] : 0);
+			$this->resultPathSet("summary.centers." . CryptomedicModel::myCleanValue($c), array_key_exists($c, $res2) ? $res2[$c] : 0);
 		}
 		$this->resultPathSet("summary.centers.unspecified", array_key_exists('', $res2) ? $res2[''] : 0);
 

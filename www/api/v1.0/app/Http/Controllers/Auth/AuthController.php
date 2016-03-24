@@ -12,7 +12,7 @@ use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use App\Http\Controllers\PriceController;
 use Route;
 
-use \References;
+use App\References;
 
 class AuthController extends Controller {
 

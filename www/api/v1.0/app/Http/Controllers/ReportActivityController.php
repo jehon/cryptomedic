@@ -6,7 +6,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Request;
 use App\Bill;
 
-use \References;
+use App\References;
 
 class ReportActivityController extends ReportController {
   public function index($when) {
