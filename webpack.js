@@ -147,6 +147,11 @@ var config = {
 //   templates[i] = './' + templates[i];
 // }
 // config.entry = config.entry.concat(templates);
+var templates = recursiveReadSync('./www/templates/templates');
+for(var i in templates) {
+  templates[i] = './' + templates[i];
+}
+config.entry = config.entry.concat(templates);
 config.entry = config.entry.concat([ './app/status.js' ]);
 
 module.exports = config;
