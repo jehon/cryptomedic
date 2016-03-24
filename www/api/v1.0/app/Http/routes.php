@@ -54,6 +54,8 @@ Route::group([ 'prefix' => '/api/' . basename(dirname(dirname(__DIR__))) ], func
 	Route::post('/auth/mylogin', "Auth\AuthController@postMylogin");
 	Route::get('/auth/logout', "Auth\AuthController@getLogout");
 
+	Route::get('/templates/{category?}/{name?}', "TemplatesController@render");
+
 	/**
 	 * Computer based authenticated routes
 	 */
