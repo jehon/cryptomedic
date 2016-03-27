@@ -69,6 +69,11 @@ cp --force $PRJ_DIR/conf/apache-custom.conf   /etc/apache2/conf-enabled/apache-c
 cp --force $PRJ_DIR/conf/phpmyadmin.site.conf /etc/apache2/sites-enabled/phpmyadmin.conf
 cp --force $PRJ_DIR/conf/phpmyadmin.inc.php   /etc/phpmyadmin/conf.d/phpmyadmin.inc.php
 
+# Enable xvfb
+cp --force $PRJ_DIR/conf/xvfb.service         /etc/systemd/system/xvfb.service
+systemctl enable /etc/systemd/system/xvfb.service
+service xvfb start
+
 # This file is not necessary on vagrant boot
 ln -s --force $PRJ_DIR/conf/config-dev.php /var/www/config.php
 chmod a+r /var/www/config.php
