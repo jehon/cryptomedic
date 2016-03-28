@@ -1,6 +1,4 @@
 <?php
-  require_once(__DIR__ . "/../../t.php");
-
   t::setDefaultOption("baseExpression", "getCurrentFile().");
 
   if (!function_exists("submenu")) {

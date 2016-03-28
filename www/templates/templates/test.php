@@ -1,6 +1,4 @@
-<?php
-	require_once(__DIR__ . "/../t.php");
-?>
+<?php ?>
 <h1>List of all templates</h1>
 <?php
 if (!isset($_SERVER['HTTP_HOST']) || strcasecmp(substr($_SERVER['HTTP_HOST'], 0, 9), "localhost") >= 0) {
