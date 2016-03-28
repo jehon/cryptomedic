@@ -1,6 +1,4 @@
-<?php
-  require_once(__DIR__ . "/../../t.php");
-?><div>
+<div>
   <div ng-if="result.list.length == 0">No results</div>
   <div ng-if="result.list.length > 0">
     <table class='table table-hover table-bordered tablesorter' pagesize="10">

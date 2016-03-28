@@ -1,6 +1,4 @@
 <?php
-  require_once(__DIR__ . "/../../t.php");
-
 	use App\References;
 
 	t::setDefaultOption("baseExpression", "folder.getMainFile().");

@@ -1,8 +1,5 @@
 <?php
-  require_once(__DIR__ . "/../../t.php");
-
   use App\References;
-
 ?>
 <div ng-if="getReport()" class='container-fluid'>
   <div class='row'>

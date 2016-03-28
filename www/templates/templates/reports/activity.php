@@ -1,6 +1,4 @@
-<?php
-  require_once(__DIR__ . "/../../t.php");
-?><div myready>
+<div myready>
   <table class='reporting'>
     <thead>
       <tr>

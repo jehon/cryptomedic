@@ -1,11 +1,6 @@
 <?php
-	namespace App;
-  require_once(__DIR__ . "/../../t.php");
-	require_once(__DIR__ . "/../../../www/api/v1.0/app/Bill.php");
-
 	use App\Bill;
 	use App\References;
-	use \t;
 
 	t::setDefaultOption("baseExpression", "folder.getSubFile(\$index).");
 	t::setDefaultOption("readOnly");

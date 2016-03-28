@@ -21,6 +21,7 @@ fse.copySync(__dirname + '/app/static/', __dirname + '/www/build/static');
 var unmanaged = []
         .concat(glob('static/**', { sync: true, cwd: __dirname + '/www/build/' }))
         ;
+
 // https://github.com/petehunt/webpack-howto
 
 // Global variables
@@ -85,15 +86,25 @@ var config = {
       {
         test: /\.html$/,
         loaders: [
-          'ng-cache?-removeEmptyAttributes&prefix=' + path.dirname(__dirname) + ':/**'
+          'ng-cache?-removeEmptyAttributes&prefix=templates:/**/api/v1.0/templates/*',
+          // 'ng-cache?-removeEmptyAttributes&prefix=' + path.dirname(__dirname) + ':/**'
         ]
       },
+      // {
+      //   test: /\.php$/,
+      //   loaders: [
+      //     'ng-cache?-removeEmptyAttributes&prefix=' + path.dirname(__dirname) + ':/**',
+      //     // 'html-minify',
+      //     'php-loader'
+      //   ]
+      // },
       {
         test: /\.php$/,
         loaders: [
-          'ng-cache?-removeEmptyAttributes&prefix=' + path.dirname(__dirname) + ':/**',
+          // /templates/templates/reports/surgery.php
+          'ng-cache?-removeEmptyAttributes&prefix=templates:/**/api/v1.0/templates/*',
           // 'html-minify',
-          'php-loader'
+          'php-loader?' + JSON.stringify({ proxy: __dirname + '/tests/router.php' })
         ]
       },
       {
@@ -141,16 +152,12 @@ var config = {
   ]
 };
 
-// TODO: re-enable templates
-// var templates = recursiveReadSync('./www/templates/templates');
+var templates = recursiveReadSync(__dirname + '/www/templates/templates');
 // for(var i in templates) {
-//   templates[i] = './' + templates[i];
+//   // source: www/templates/templates/fiches/patient.php
+//   // target: /api/v1.0/templates/fiches/patient
+//   templates[i] = templates[i].replace('www/templates/', '/api/v1.0/');
 // }
-// config.entry = config.entry.concat(templates);
-var templates = recursiveReadSync('./www/templates/templates');
-for(var i in templates) {
-  templates[i] = './' + templates[i];
-}
 config.entry = config.entry.concat(templates);
 config.entry = config.entry.concat([ './app/status.js' ]);
 

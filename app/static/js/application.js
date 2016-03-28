@@ -487,7 +487,7 @@ var cryptomedic = {};
   var path = location.pathname.split('/');
   cryptomedic.flavor = '/' + path[1];
 }
-cryptomedic.templateRoot = cryptomedic.flavor + '/cache/templates';
+cryptomedic.templateRoot = '/api/v1.0/templates';
 cryptomedic.settings = {};
 
 mainApp.config([ '$routeProvider', function($routeProvider) {
