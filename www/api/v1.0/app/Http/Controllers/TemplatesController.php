@@ -18,7 +18,8 @@ class TemplatesController extends Controller {
     // if     return (substr($haystack, -$length) === $needle);
     \t::setPDO(\DB::connection()->getPdo());
     $file = constant('TEMPLATE_ROOT') . '/' . $category . ($name ? '/' . $name : '');
-    if (substr($name, -strlen('.php')) != '.php') {
+    if (substr($file, -strlen('.php'), strlen('.php')) != '.php') {
+      // How to know wich extension to use??? --> always php?
       $file .=  ".php";
     }
     if (!file_exists($file)) {
