@@ -14,9 +14,12 @@ chmod +x $SCRIPT_DIR
 # Add the prj-build path into the server path
 cat <<PROFILE > /etc/profile.d/vagrant-append-project.sh
 #!/bin/bash
-PATH=$PATH:$SCRIPT_DIR
-PRJ_DIR=$PRJ_DIR
-SCRIPT_DIR=$SCRIPT_DIR
+# Export will make this inheritable
+export PATH=$PATH:$SCRIPT_DIR
+export DISPLAY=":99.0"
+
+export PRJ_DIR=$PRJ_DIR
+export SCRIPT_DIR=$SCRIPT_DIR
 PROFILE
 chmod 777 /etc/profile.d/vagrant-append-project.sh
 
@@ -68,11 +71,11 @@ a2ensite default-ssl
 cp --force $PRJ_DIR/conf/apache-custom.conf   /etc/apache2/conf-enabled/apache-custom.conf
 cp --force $PRJ_DIR/conf/phpmyadmin.site.conf /etc/apache2/sites-enabled/phpmyadmin.conf
 cp --force $PRJ_DIR/conf/phpmyadmin.inc.php   /etc/phpmyadmin/conf.d/phpmyadmin.inc.php
+cp --force $PRJ_DIR/conf/xvfb                 /etc/init.d/xvfb
 
 # Enable xvfb
-cp --force $PRJ_DIR/conf/xvfb.service         /etc/systemd/system/xvfb.service
-systemctl enable /etc/systemd/system/xvfb.service
-service xvfb start
+chmod +x /etc/init.d/xvfb
+update-rc.d xvfb defaults
 
 # This file is not necessary on vagrant boot
 ln -s --force $PRJ_DIR/conf/config-dev.php /var/www/config.php
