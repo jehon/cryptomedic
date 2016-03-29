@@ -76,6 +76,7 @@ cp --force $PRJ_DIR/conf/xvfb                 /etc/init.d/xvfb
 # Enable xvfb
 chmod +x /etc/init.d/xvfb
 update-rc.d xvfb defaults
+/etc/init.d/xvfb restart
 
 # This file is not necessary on vagrant boot
 ln -s --force $PRJ_DIR/conf/config-dev.php /var/www/config.php
