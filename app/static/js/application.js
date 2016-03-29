@@ -3,6 +3,11 @@
 var application = {};
 var server = {};
 
+function template(...names) {
+  console.log('requesting template: ' + names.join('_'));
+  return '/api/v1.0/templates/' + names.join('_') + '.php';
+}
+
 function plog(p) {
   return p
     .then(function(data) {
@@ -359,6 +364,7 @@ mainApp.controller('ctrl', [ '$scope', '$location', '$sce', function($scope, $lo
   $scope.application  = application;
   $scope.server       = server;
   $scope.calculations = calculations;
+  $scope.template     = template;
 
 
   $scope.appStateStore = appState().store.getState();
@@ -487,28 +493,27 @@ var cryptomedic = {};
   var path = location.pathname.split('/');
   cryptomedic.flavor = '/' + path[1];
 }
-cryptomedic.templateRoot = '/api/v1.0/templates';
 cryptomedic.settings = {};
 
 mainApp.config([ '$routeProvider', function($routeProvider) {
   $routeProvider
     .when('/home', {
-      templateUrl: cryptomedic.templateRoot + '/pages/home.html',
+      templateUrl: template('page', 'home'),
       controller: 'ctrl_home'
     }).when('/login', {
-      templateUrl: cryptomedic.templateRoot + '/pages/login.html',
+      templateUrl: template('page', 'login'),
       controller: 'ctrl_login',
     }).when('/folder/:patient_id/:page?/:subtype?/:subid?/:mode?', {
-      templateUrl: cryptomedic.templateRoot + '/pages/folder.php',
+      templateUrl: template('folder'),
       controller: 'ctrl_folder',
     }).when('/search', {
-      templateUrl: cryptomedic.templateRoot + '/pages/search.php',
+      templateUrl: template('page', 'search'),
       controller: 'ctrl_search',
     }).when('/reports/:report?', {
-      templateUrl: cryptomedic.templateRoot + '/pages/reports.php',
+      templateUrl: template('reports'),
       controller: 'ctrl_reports',
     }).when('/users', {
-      templateUrl: cryptomedic.templateRoot + '/pages/users.html',
+      templateUrl: template('page', 'users'),
       controller: 'ctrl_users',
     }).otherwise({ 'redirectTo': '/home'});
 }]);

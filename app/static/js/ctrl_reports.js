@@ -12,21 +12,20 @@ mainApp.controller('ctrl_reports', [ '$scope', '$routeParams', '$sce', function(
     $scope.values['period'] = 'month';
   }
 
-  var templateReportBase = cryptomedic.templateRoot + '/reports/';
   $scope.reports = {
     'dailyActivity': {
       name: 'Daily Report',
       description: 'If you want to know your daily activity, choose this report.<br>'
         + 'Options: the day, and optionnaly the examiner, the center and type of activity (workshop / consult / surgical / ...).<br>',
       params: [ 'center', 'day', 'examiner', 'activity' ],
-      templateUrl: templateReportBase + 'activity.php'
+      templateUrl: template('report', 'activity')
     },
     'monthlyActivity': {
       name: 'Monthly Report',
       description: 'If you want to know your activity on a month, choose this report<br>'
         + 'Options: the day, and optionnaly the examiner, the center and type of activity (workshop / consult / surgical / ...).<br>',
       params: [ 'center', 'examiner', 'month', 'activity' ],
-      templateUrl: templateReportBase + 'activity.php'
+      templateUrl: template('report', 'activity')
     },
     'consultations': {
       name: 'Consultations planned',
@@ -34,21 +33,21 @@ mainApp.controller('ctrl_reports', [ '$scope', '$routeParams', '$sce', function(
         + 'See also the button in the menu<br>'
         + 'Options: the day and the center.',
       params: [ 'day', 'center' ],
-      templateUrl: templateReportBase + 'consultations.php'
+      templateUrl: template('report', 'consultations')
     },
     'statistical': {
       name: 'Statistical Report',
       description: 'If you want to know the activity of the SARPV CDC on a period, choose this report',
       params: [ 'period', 'center', 'examiner' ],
       dataGenerator: 'statistical',
-      templateUrl: templateReportBase + 'statistical.php'
+      templateUrl: template('report', 'statistical')
     },
     'surgical': {
       name: 'Surgical Report',
       description: 'Follow up of the surgical activity of the period',
       params: [ 'period' ],
       dataGenerator: 'surgical',
-      templateUrl: templateReportBase + 'surgery.php'
+      templateUrl: template('report', 'surgery')
     }
   };
 
