@@ -20,7 +20,7 @@ export default function myFetch(url, init, data) {
   init.credentials = 'include';
 
   if (url[0] != '/') {
-    url = '/' + location.pathname.split('/')[1] + '/api/v1.0/' + url;
+    url = '/api/v1.0/' + url;
   }
 
   if (data) {

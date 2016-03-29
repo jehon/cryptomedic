@@ -89,19 +89,19 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', '$routeParams' , func
   // ------------------------
   //  Display helpers
   // ------------------------
-  $scope.getTemplateName = function() {
+  $scope.getTemplateForMe = function() {
     if (!$scope.folder) {
-      return 'waiting.php';
+      return template('waiting');
     }
     if (!$scope.page) {
-      return ($scope.mode == 'read' ? 'fiches' : 'writes') + '/patient.php';
+      return template('patient', ($scope.mode == 'read' ? 'fiche' : 'write'));
     }
 
     if ($scope.page == 'file') {
-      return ($scope.mode == 'read' ? 'fiches' : 'writes') + '/' + $scope.subtype.toLowerCase() + '.php';
+      return template($scope.subtype.toLowerCase(), ($scope.mode == 'read' ? 'fiche' : 'write'));
     }
 
-    return 'folder_pages/' + $scope.page + '.html';
+    return template('folder', $scope.page);
   };
 
   $scope.currentFile = function() {

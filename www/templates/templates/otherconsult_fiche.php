@@ -6,7 +6,7 @@
 <div class='container-fluid'>
 	<div class='row'>
 		<div class="col-md-6">
-			<?php require(__DIR__ . "/../../helpers/consult-introduction.php"); ?>
+			<?php require(__DIR__ . "/../helpers/consult-introduction.php"); ?>
 			<fieldset>
 				<legend>Orthopedic Data</legend>
 				<table>
@@ -29,7 +29,7 @@
 			</fieldset>
 		</div>
 		<div class="col-md-6">
-			<?php require(__DIR__ . "/../../helpers/patient-related.php"); ?>
+			<?php require(__DIR__ . "/../helpers/patient-related.php"); ?>
 			<fieldset>
 				<legend>Conclusion</legend>
 				<table>
@@ -38,7 +38,7 @@
 
 					<?php // (new t("OtherConsult.Nextappointment"))->tr()->p(); ?>
 					<?php // (new t("OtherConsult.NextCenter"))->tr()->p(); ?>
-					<?php require(__DIR__ . "/../../helpers/consult-conclusion.php"); ?>
+					<?php require(__DIR__ . "/../helpers/consult-conclusion.php"); ?>
 				</table>
 			</fieldset>
 		</div>

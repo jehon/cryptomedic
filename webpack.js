@@ -86,23 +86,14 @@ var config = {
       {
         test: /\.html$/,
         loaders: [
-          'ng-cache?-removeEmptyAttributes&prefix=templates:/**/api/v1.0/templates/*',
-          // 'ng-cache?-removeEmptyAttributes&prefix=' + path.dirname(__dirname) + ':/**'
+          'ng-cache?-removeEmptyAttributes&prefix=templates:/**/api/v1.0/templates/',
         ]
       },
-      // {
-      //   test: /\.php$/,
-      //   loaders: [
-      //     'ng-cache?-removeEmptyAttributes&prefix=' + path.dirname(__dirname) + ':/**',
-      //     // 'html-minify',
-      //     'php-loader'
-      //   ]
-      // },
       {
         test: /\.php$/,
         loaders: [
           // /templates/templates/reports/surgery.php
-          'ng-cache?-removeEmptyAttributes&prefix=templates:/**/api/v1.0/templates/*',
+          'ng-cache?-removeEmptyAttributes&prefix=templates:/**/api/v1.0/templates/',
           // 'html-minify',
           'php-loader?' + JSON.stringify({ proxy: __dirname + '/tests/router.php' })
         ]
@@ -139,11 +130,11 @@ var config = {
         additionnal: [],
         optonal: []
       },
-      scope: '/cryptomedic/offline/',
+      scope: '/offline/',
       // relativePaths: true,
       // updateStragegy: 'all', // -> changed
       externals: unmanaged,
-      excludes: [ '/cryptomedic/api/*' ],
+      excludes: [ '/api/*' ],
       ServiceWorker: {
         output: 'sw-offline.js'
       },
