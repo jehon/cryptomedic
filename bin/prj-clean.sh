@@ -22,7 +22,7 @@ if [ -d "$PRJ_DIR/tmp" ]; then
   find "$PRJ_DIR/tmp/" -mindepth 1 -not -name ".gitignore" -not -name ".gitkeep" -delete;
 fi
 
-if [ -d "$PRJ_DIR/www/build"]; then
+if [ -d "$PRJ_DIR/www/build" ]; then
   echo -e "\e[0;45mRemoving build (webpack)\e[0m"
   find "$PRJ_DIR/www/build" -mindepth 1 -not -name ".gitignore" -not -name ".gitkeep" -delete;
 fi
