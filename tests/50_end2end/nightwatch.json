@@ -18,7 +18,7 @@
   },
   "test_settings" : {
     "default" : {
-      "launch_url" : "http://localhost:1234/cryptomedic/build/index.html?online=1",
+      "launch_url" : "http://localhost:10080/build/index.html",
       "selenium_port"  : 4444,
       "selenium_host"  : "127.0.0.1",
       "silent": true,
