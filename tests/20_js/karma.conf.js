@@ -31,7 +31,7 @@ module.exports = function(config) {
 
     frameworks : [ 'jasmine' ],
 
-    browsers: [ 'Firefox', 'Chrome' ], // See later
+    browsers: [ 'Firefox' ], // See later
 
     junitReporter : {
       outputFile : 'tmp/js/unit.xml',
@@ -81,6 +81,15 @@ module.exports = function(config) {
     //   templatePath: '../tmp/jasmine_template.html'
     // }
   };
+
+  var which = require('which');
+  which('chrome', function(err, result) {
+    console.log(result);   // prints '/bin/ls' on mac
+    if (result) {
+      configuration.browsers.push('Chrome');
+    }
+  });
+
 
   config.set(configuration);
 };
