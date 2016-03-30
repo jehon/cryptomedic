@@ -15,6 +15,7 @@ $myconfig = [
     'token'    => ''
   ],
   'debug'      => true,
+  'developpement_environnement' => true,
   'random32'   => 'random script with 32 characters',
 ];
 
