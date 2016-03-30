@@ -38,16 +38,16 @@ if ([ "$1" == "" ] || [ "$1" = "install" ]); then
   # --force-yes
   DEBIAN_FRONTEND=noninteractive apt-get install --yes --force-yes apache2 \
     build-essential \
-    multitail       \
-    mysql-client    \
-    crudini         \
-    mysql-server    \
-    curl            \
     libapache2-mod-php5 php5-cli php5-mysql php5-mcrypt php5-curl \
+    mysql-server mysql-client  \
     phpmyadmin      \
+    multitail       \
+    crudini         \
+    curl            \
     xvfb            \
     firefox         \
-    git
+    git             \
+    default-jre     \
   # end
 
   # Install nodejs 5.*
