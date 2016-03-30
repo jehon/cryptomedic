@@ -38,16 +38,16 @@ if ([ "$1" == "" ] || [ "$1" = "install" ]); then
   # --force-yes
   DEBIAN_FRONTEND=noninteractive apt-get install --yes --force-yes apache2 \
     build-essential \
-    multitail       \
-    mysql-client    \
-    crudini         \
-    mysql-server    \
-    curl            \
     libapache2-mod-php5 php5-cli php5-mysql php5-mcrypt php5-curl \
+    mysql-server mysql-client  \
     phpmyadmin      \
+    multitail       \
+    crudini         \
+    curl            \
     xvfb            \
     firefox         \
-    git
+    git             \
+    default-jre     \
   # end
 
   # Install nodejs 5.*
@@ -76,6 +76,7 @@ cp --force $PRJ_DIR/conf/xvfb                 /etc/init.d/xvfb
 # Enable xvfb
 chmod +x /etc/init.d/xvfb
 update-rc.d xvfb defaults
+/etc/init.d/xvfb restart
 
 # This file is not necessary on vagrant boot
 ln -s --force $PRJ_DIR/conf/config-dev.php /var/www/config.php
