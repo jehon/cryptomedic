@@ -37,9 +37,6 @@ if [ -d "$PRJ_DIR/api/" ]; then
     N=`basename "$V"`
     find "$V/tmp/" -mindepth 1 -not -name ".gitignore" -not -name ".gitkeep" -delete
   done
-done
-
-echo -e "\e[0;45mReset the database\e[0m"
-"$PRJ_DIR/bin/prj-rebuild-db.sh"
+fi
 
 echo -e "\e[1m\e[45mTerminated ok.\e[0m"
