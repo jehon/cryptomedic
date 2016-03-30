@@ -1,7 +1,5 @@
 <?php
 
-require_once("core.php");
-
 class MyFiles {
 	static $excludes = [ ".htaccess " ];
 
