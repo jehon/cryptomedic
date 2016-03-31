@@ -13,4 +13,4 @@ TESTING="$PRJ_DIR"/conf/database/dev/testing.sql
 
 if mysqlshow --user=root "$DB" 2>/dev/null ; then
   mysqldump -u root "$DB" > "$TESTING"
-else
+fi
