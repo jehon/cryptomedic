@@ -16,18 +16,16 @@ fi
 
 cd "$PRJ_DIR"
 
+if [ -r "$PRJ_DIR"/prj-install-dependancies-custom.sh ]; then
+  "$PRJ_DIR"/prj-install-dependancies-custom.sh
+fi
+
 if [ -e package.json ]; then
   echo -e "\e[1m\e[45mNPM install\e[0m"
   npm install
 fi
 
 if [ -e composer.json ]; then
-  # Get composer
-  if [ ! -x /usr/local/bin/composer.phar ]; then
-    echo -e "\e[1m\e[45mGetting the composer\e[0m"
-    curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin
-  fi
-
   # Configure the OAUTH
   if [ -n "$GITHUB_OAUTH_TOKEN" ]; then
     echo -e "\e[1m\e[45mSetting the OAUTH token\e[0m"
