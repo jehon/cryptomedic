@@ -8,6 +8,10 @@ echo "PRJ:    $PRJ_DIR"
 # Stop on error
 set -e
 
+# Run the base configuration
+chmod +x "$SCRIPT_DIR"/*
+"$SCRIPT_DIR"/prj-base-configure.sh "$@"
+
 echo "** Remove previous /var/www/html **"
 sudo umount /var/www/html       || true
 
@@ -23,8 +27,6 @@ if [ -r "$PRJ_DIR/conf/config-custom.php" ]; then
   sudo ln $PRJ_DIR/conf/config-custom.php /var/www/config-custom.php
   sudo chmod a+r /var/www/config-custom.php
 fi
-
-$SCRIPT_DIR/prj-db-reset.php
 
 # Run project custom files
 if [ -x $SCRIPT_DIR/prj-configure-vagrant-custom.sh ]; then

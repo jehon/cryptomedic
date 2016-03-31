@@ -8,9 +8,6 @@ echo "PRJ:    $PRJ_DIR"
 # Stop on error
 set -e
 
-# Fix permissions on the various files
-chmod +x $SCRIPT_DIR
-
 # Add the prj-build path into the server path
 cat <<PROFILE > /etc/profile.d/vagrant-append-project.sh
 #!/bin/bash
@@ -34,20 +31,13 @@ if ([ "$1" == "" ] || [ "$1" = "install" ]); then
     touch /root/last_apt_get_update
   fi
 
-  # Install various packages
-  # --force-yes
+  # Developpement packages
   DEBIAN_FRONTEND=noninteractive apt-get install --yes --force-yes apache2 \
-    build-essential \
-    libapache2-mod-php5 php5-cli php5-mysql php5-mcrypt php5-curl \
-    mysql-server mysql-client  \
-    phpmyadmin      \
-    multitail       \
-    crudini         \
-    curl            \
-    xvfb            \
     firefox         \
-    git             \
+    xvfb            \
+    phpmyadmin      \
     default-jre     \
+    mysql-client    \
   # end
 
   # Install nodejs 5.*
@@ -57,15 +47,15 @@ if ([ "$1" == "" ] || [ "$1" = "install" ]); then
   echo "Install terminated"
 fi
 
-# Enable php5-mcrypt
-php5enmod mcrypt
+# Run the base configuration
+chmod +x "$SCRIPT_DIR"/*
+"$SCRIPT_DIR"/prj-base-configure.sh "$@"
+
+# This file is not necessary on vagrant boot
+ln -s --force $PRJ_DIR/conf/config-dev.php /var/www/config.php
 
 # Manage user erights
 usermod -a -G adm vagrant
-
-# Enable SSL
-a2enmod  rewrite ssl
-a2ensite default-ssl
 
 # Put various configs file in place (cp because needed before vagrant mount)
 cp --force $PRJ_DIR/conf/apache-custom.conf   /etc/apache2/conf-enabled/apache-custom.conf
@@ -77,10 +67,6 @@ cp --force $PRJ_DIR/conf/xvfb                 /etc/init.d/xvfb
 chmod +x /etc/init.d/xvfb
 update-rc.d xvfb defaults
 /etc/init.d/xvfb restart
-
-# This file is not necessary on vagrant boot
-ln -s --force $PRJ_DIR/conf/config-dev.php /var/www/config.php
-chmod a+r /var/www/config.php
 
 # Hook the fake sendmail
 if [ ! -r /usr/sbin/sendmail.bak ]; then
@@ -97,8 +83,8 @@ if ([ "$1" == "" ] || [ "$1" = "install" ]); then
 fi
 
 # Run project custom files
-if [ -x $SCRIPT_DIR/prj-configure-vagrant-custom.sh ]; then
-  $SCRIPT_DIR/prj-configure-vagrant-custom.sh
+if [ -x $SCRIPT_DIR/prj-vagrant-configure-custom.sh ]; then
+  $SCRIPT_DIR/prj-vagrant-configure-custom.sh
 fi
 
 # Restart necessary services
