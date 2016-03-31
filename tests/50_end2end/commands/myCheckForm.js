@@ -1,13 +1,13 @@
 exports.command = function(selector, fields) {
-  var self = this;
+  // var self = this;
   this.waitForElementVisible(selector);
-  for(f in fields) {
+  for(var f in fields) {
     if (fields[f] === true) {
       this
-        .assert.visible(f + "_ok");
+        .assert.visible(f + '_ok');
     } if (fields[f] === false) {
       this
-        .assert.visible(f + "_ko");
+        .assert.visible(f + '_ko');
     } else {
       this
         .assert.visible(f)

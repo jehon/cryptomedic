@@ -1,9 +1,9 @@
 // http://nightwatchjs.org/guide#writing-custom-commands
 // https://github.com/beatfactor/nightwatch/blob/master/lib/api/assertions/containsText.js
-var util = require("util");
+var util = require('util');
 
 exports.assertion = function(selector, row, expectedText, msg) {
-  var MSG = util.format("Testing if table <%s>@row=<%s> contains text: \"%s\".", selector, row, expectedText);
+  var MSG = util.format('Testing if table <%s>@row=<%s> contains text: \'%s\'.', selector, row, expectedText);
   /**
    * The message which will be used in the test output and
    * inside the XML reports
@@ -32,8 +32,8 @@ exports.assertion = function(selector, row, expectedText, msg) {
   this.fail = function(value) {
     var failed = result === false || result && result.status === -1;
     if (failed) {
-        this.message = this.message + util.format(": Found <%s>", value);
-      }
+      this.message = this.message + util.format(': Found <%s>', value);
+    }
     return failed;
   };
 
