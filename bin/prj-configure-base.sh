@@ -40,3 +40,8 @@ php5enmod mcrypt || true
 # Enable SSL
 a2enmod  rewrite ssl || true
 a2ensite default-ssl || true
+
+# Run project custom files
+if [ -x $SCRIPT_DIR/prj-configure-base-custom.sh ]; then
+  $SCRIPT_DIR/prj-configure-base-custom.sh
+fi
