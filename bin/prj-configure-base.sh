@@ -27,8 +27,6 @@ if [ "$1" != "offline" ]; then
     curl            \
     git             \
   # end
-
-  # Get composer
 fi
 
 if [ "$1" != "offline" ] && [ -e "$PRJ_DIR"/composer.json ] && [ ! -x /usr/local/bin/composer.phar ]; then
