@@ -31,30 +31,13 @@ if ([ "$1" == "" ] || [ "$1" = "install" ]); then
     touch /root/last_apt_get_update
   fi
 
-  # Developpement packages
-  DEBIAN_FRONTEND=noninteractive apt-get install --yes --force-yes apache2 \
-    firefox         \
-    xvfb            \
-    phpmyadmin      \
-    default-jre     \
-    mysql-client    \
-  # end
-
-  # Install nodejs 5.*
-  curl -sL https://deb.nodesource.com/setup_5.x | bash -
-  apt-get install -y nodejs
-
   echo "Install terminated"
 fi
 
-# Run the base configuration
-chmod +x "$SCRIPT_DIR"/*
-"$SCRIPT_DIR"/prj-base-configure.sh "$@"
+# Run the dev configuration
+"$SCRIPT_DIR"/prj-configure-dev.sh "$@"
 
-# This file is not necessary on vagrant boot
-ln -s --force $PRJ_DIR/conf/config-dev.php /var/www/config.php
-
-# Manage user erights
+# Manage user rights
 usermod -a -G adm vagrant
 
 # Put various configs file in place (cp because needed before vagrant mount)
@@ -75,17 +58,3 @@ if [ ! -r /usr/sbin/sendmail.bak ]; then
   fi
 fi
 sed -i -e "s:;sendmail_path =:sendmail_path = \"$SCRIPT_DIR/prj-fake-sendmail.sh\":g" /etc/php5/apache2/php.ini
-
-
-if ([ "$1" == "" ] || [ "$1" = "install" ]); then
-  $SCRIPT_DIR/prj-install-dependancies.sh
-  $SCRIPT_DIR/prj-db-reset.php
-fi
-
-# Run project custom files
-if [ -x $SCRIPT_DIR/prj-vagrant-configure-custom.sh ]; then
-  $SCRIPT_DIR/prj-vagrant-configure-custom.sh
-fi
-
-# Restart necessary services
-/etc/init.d/apache2 restart
