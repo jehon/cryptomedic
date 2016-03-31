@@ -2,14 +2,12 @@
 
 SCRIPT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 PRJ_DIR=$(dirname "$SCRIPT_DIR")
-echo "SCRIPT: $SCRIPT_DIR"
-echo "PRJ:    $PRJ_DIR"
 
 # Stop on error
 set -e
 
 # Fix permissions on the various files
-chmod +x $SCRIPT_DIR
+chmod +x "$SCRIPT_DIR"/*
 
 # Create /var/www
 mkdir -p /var/www/html
@@ -18,7 +16,7 @@ chmod a+x /var/www /var/www/html
 touch /var/www/config.php
 chmod a+r /var/www/config.php
 
-if ([ "$1" == "" ] || [ "$1" = "install" ]); then
+if [ "$1" != "offline" ]; then
   # Install various packages
   DEBIAN_FRONTEND=noninteractive apt-get install --yes --force-yes apache2 \
     build-essential \
@@ -29,6 +27,13 @@ if ([ "$1" == "" ] || [ "$1" = "install" ]); then
     curl            \
     git             \
   # end
+
+  # Get composer
+fi
+
+if [ "$1" != "offline" ] && [ -e "$PRJ_DIR"/composer.json ] && [ ! -x /usr/local/bin/composer.phar ]; then
+  echo -e "\e[1m\e[45mGetting the composer\e[0m"
+  curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin
 fi
 
 # Enable php5-mcrypt
