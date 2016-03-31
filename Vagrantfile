@@ -39,5 +39,5 @@ Vagrant.configure(2) do |config|
   config.vm.synced_folder ".", "/vagrant", owner: "vagrant", group: "www-data"
 
   config.vm.provision "shell", inline:
-    "chmod +x /vagrant/bin/prj-configure-vagrant.sh && /vagrant/bin/prj-configure-vagrant.sh"
+    "chmod +x /vagrant/bin/prj-vagrant-configure.sh && /vagrant/bin/prj-vagrant-configure.sh"
 end
