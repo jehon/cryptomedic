@@ -16,6 +16,10 @@ fi
 
 cd "$PRJ_DIR"
 
+if [ -r "$PRJ_DIR"/prj-install-dependancies-custom.sh ]; then
+  "$PRJ_DIR"/prj-install-dependancies-custom.sh
+fi
+
 if [ -e package.json ]; then
   echo -e "\e[1m\e[45mNPM install\e[0m"
   npm install
