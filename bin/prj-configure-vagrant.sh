@@ -17,6 +17,8 @@ export DISPLAY=":99.0"
 
 export PRJ_DIR=$PRJ_DIR
 export SCRIPT_DIR=$SCRIPT_DIR
+
+cd /vagrant
 PROFILE
 chmod 777 /etc/profile.d/vagrant-append-project.sh
 
@@ -58,3 +60,16 @@ if [ ! -r /usr/sbin/sendmail.bak ]; then
   fi
 fi
 sed -i -e "s:;sendmail_path =:sendmail_path = \"$SCRIPT_DIR/prj-fake-sendmail.sh\":g" /etc/php5/apache2/php.ini
+
+# Add some swap
+# See @https://jeqo.github.io/blog/devops/vagrant-quickstart/
+grep -q "swapfile" /etc/fstab
+if [ $? -ne 0 ]; then
+  echo 'swapfile not found. Adding swapfile.'
+  #dd if=/dev/zero of=/swapfile bs=1024 count=524288
+  fallocate -l 1GiB /swapfile
+  chmod 600 /swapfile
+  mkswap /swapfile
+  swapon /swapfile
+  echo '/swapfile none swap defaults 0 0' >> /etc/fstab
+fi
