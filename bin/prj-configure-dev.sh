@@ -50,3 +50,5 @@ fi
 
 # echo "** Install current /var/www/html **"
 # sudo mount -o bind "$PRJ_DIR/www/" /var/www/html
+
+true
