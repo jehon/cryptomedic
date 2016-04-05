@@ -22,3 +22,5 @@ mount /var/www/html
 if [ -x $SCRIPT_DIR/prj-configure-live-custom.sh ]; then
   $SCRIPT_DIR/prj-configure-live-custom.sh
 fi
+
+true

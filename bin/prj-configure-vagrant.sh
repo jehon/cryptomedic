@@ -46,9 +46,9 @@ usermod -a -G adm vagrant
 cp --force $PRJ_DIR/conf/apache-custom.conf   /etc/apache2/conf-enabled/apache-custom.conf
 cp --force $PRJ_DIR/conf/phpmyadmin.site.conf /etc/apache2/sites-enabled/phpmyadmin.conf
 cp --force $PRJ_DIR/conf/phpmyadmin.inc.php   /etc/phpmyadmin/conf.d/phpmyadmin.inc.php
-cp --force $PRJ_DIR/conf/xvfb                 /etc/init.d/xvfb
 
 # Enable xvfb
+cp --force $PRJ_DIR/conf/xvfb                 /etc/init.d/xvfb
 chmod +x /etc/init.d/xvfb
 update-rc.d xvfb defaults
 /etc/init.d/xvfb restart
@@ -60,6 +60,8 @@ if [ ! -r /usr/sbin/sendmail.bak ]; then
   fi
 fi
 sed -i -e "s:;sendmail_path =:sendmail_path = \"$SCRIPT_DIR/prj-fake-sendmail.sh\":g" /etc/php5/apache2/php.ini
+touch /tmp/emails.txt
+chmod a+rwx /tmp/emails.txt
 
 # Add some swap
 # See @https://jeqo.github.io/blog/devops/vagrant-quickstart/
@@ -73,3 +75,5 @@ if [ $? -ne 0 ]; then
   swapon /swapfile
   echo '/swapfile none swap defaults 0 0' > /etc/fstab.d/swapfile
 fi
+
+true
