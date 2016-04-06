@@ -43,7 +43,7 @@ fi
 usermod -a -G adm vagrant
 
 # Put various configs file in place (cp because needed before vagrant mount)
-cp --force $PRJ_DIR/conf/apache-custom.conf   /etc/apache2/conf-enabled/apache-custom.conf
+cp --force $PRJ_DIR/conf/apache-custom.conf   /etc/apache2/sites-enabled/apache-custom.conf
 cp --force $PRJ_DIR/conf/phpmyadmin.site.conf /etc/apache2/sites-enabled/phpmyadmin.conf
 cp --force $PRJ_DIR/conf/phpmyadmin.inc.php   /etc/phpmyadmin/conf.d/phpmyadmin.inc.php
 
@@ -74,6 +74,11 @@ if [ -z "$T" ]; then
   mkswap /swapfile
   swapon /swapfile
   echo '/swapfile none swap defaults 0 0' > /etc/fstab.d/swapfile
+fi
+
+# Run project custom files
+if [ -x $SCRIPT_DIR/prj-configure-live-custom.sh ]; then
+  $SCRIPT_DIR/prj-configure-vagrant-custom.sh
 fi
 
 true
