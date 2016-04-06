@@ -77,7 +77,7 @@ if [ -z "$T" ]; then
 fi
 
 # Run project custom files
-if [ -x $SCRIPT_DIR/prj-configure-live-custom.sh ]; then
+if [ -x $SCRIPT_DIR/prj-configure-vagrant-custom.sh ]; then
   $SCRIPT_DIR/prj-configure-vagrant-custom.sh
 fi
 
