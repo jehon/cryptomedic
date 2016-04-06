@@ -45,10 +45,4 @@ fi
 # Restart necessary services
 /etc/init.d/apache2 restart
 
-# echo "** Remove previous /var/www/html **"
-# sudo umount /var/www/html       || true
-
-# echo "** Install current /var/www/html **"
-# sudo mount -o bind "$PRJ_DIR/www/" /var/www/html
-
 true
