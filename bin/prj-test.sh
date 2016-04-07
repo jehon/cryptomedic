@@ -59,8 +59,8 @@ testEnd2End() {
 }
 
 test_dir() {
-  if [ -r nightwatch.js ]; then
     return testEnd2End "$@"
+  if [ -r nightwatch.json ]; then
   fi
 
   if [ -r karma.conf.js ]; then
