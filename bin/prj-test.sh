@@ -1,47 +1,81 @@
 #!/bin/bash
 
-set -e
-
 PRJ_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 PRJ_DIR=$(dirname "$PRJ_DIR")
-PHPUNIT="$PRJ_DIR/vendor/bin/phpunit"
-
 cd "$PRJ_DIR"
 
-test_dir() {
-  # $1 = the name of the test
+if [ "$1" = "help" ]; then
+  cat <<-EOL
+  Test the application
+  The tests that need gui will be run with xvfb-run unless DEBUG is set
 
+  The script will look in each folder in tests/, and for each of theses, look for
+  phpunit.xml, karma.conf.js, nightwatch.js (see testDir())
+EOL
+  exit 0
+fi
+
+set -e
+
+XVFB="xvfb-run --auto-servernum --server-args='-screen 0 1024x768x24 -ac +extension GLX +render -noreset'"
+
+testPHPUnit() {
   N=`pwd`
   N=`basename "$N"`
   L="$1"
   shift
-  if [ -r phpunit.xml ]; then
-    echo -e "\e[0;45m[\e[1;45m$N/phpunit\e[0;45m] Testing $L\e[0m"
-    $PHPUNIT \
-        --coverage-html   "$PRJ_DIR/tmp/$N" \
-        --coverage-xml    "$PRJ_DIR/tmp/$N" \
-        "$@"
-  fi
 
-  if [ -r nightwatch.json ]; then
-    echo -e "\e[0;45m[\e[1;45m$N/nightwatch\e[0;45m] Testing $L\e[0m"
-    node $PRJ_DIR/node_modules/.bin/nightwatch -e default "$@"
+  echo -e "\e[0;45m[\e[1;45m$N/phpunit\e[0;45m] Testing $L\e[0m"
+  $PRJ_DIR/vendor/bin/phpunit \
+      --coverage-html   "$PRJ_DIR/tmp/$N" \
+      --coverage-xml    "$PRJ_DIR/tmp/$N" \
+      "$@"
+}
+
+testJSUnit() {
+  N=`pwd`
+  N=`basename "$N"`
+  L="$1"
+  shift
+
+  echo -e "\e[0;45m[\e[1;45m$N/karma\e[0;45m] Testing $L\e[0m"
+  ARGS=""
+  # http://bahmutov.calepin.co/debugging-karma-unit-tests.html
+  if [ "$DEBUG" ]; then
+    ARGS="--single-run=false --debug"
+  fi
+  $XVFB ../../node_modules/.bin/karma start --single-run $ARGS "$@"
+
+}
+
+testEnd2End() {
+  N=`pwd`
+  N=`basename "$N"`
+  L="$1"
+  shift
+
+  echo -e "\e[0;45m[\e[1;45m$N/nightwatch\e[0;45m] Testing $L\e[0m"
+  $XVFB node $PRJ_DIR/node_modules/.bin/nightwatch -e default "$@"
+}
+
+test_dir() {
+  if [ -r nightwatch.js ]; then
+    return testEnd2End "$@"
   fi
 
   if [ -r karma.conf.js ]; then
-    echo -e "\e[0;45m[\e[1;45m$N/karma\e[0;45m] Testing $L\e[0m"
-    ARGS=""
-    # http://bahmutov.calepin.co/debugging-karma-unit-tests.html
-    if [ "$DEBUG" ]; then
-      ARGS="--single-run=false --debug"
-    fi
-    ../../node_modules/.bin/karma start --single-run $ARGS "$@"
+    return testJSUnit "$@"
+  fi
+
+  if [ -r phpunit.xml ]; then
+    return testPHPUnit "$@"
   fi
 }
 
 
 if [ "$DEBUG" != "" ]; then
-  echo "\e[0;45mRunning in debug mode\e[0m"
+  echo "\e[0;45mRunning in debug mode - not using xvfb-run anymore\e[0m"
+  XVFB=""
 fi
 
 if [ "$1" ]; then
@@ -50,24 +84,23 @@ if [ "$1" ]; then
   shift
   cd "$PRJ_DIR/$D" && test_dir "Override $D" "$@"
 else
-  clear
-  clear
   echo -e "\e[0;45mCleaning old tests\e[0m"
   if [ -d "$PRJ_DIR/tmp" ]; then
-    find "$PRJ_DIR/tmp/" -mindepth 1 -delete;
+    find "$PRJ_DIR/tmp/" -mindepth 1 -delete
   else
     mkdir -p "$PRJ_DIR/tmp"
   fi
 
   echo -e "\e[0;45mReset the database\e[0m"
-  "$PRJ_DIR/bin/prj-db-reset.php"
+  "$PRJ_DIR/bin/prj-rebuild-db.sh"
 
   echo -e "\e[0;45mRebuild for production\e[0m"
+  find "$PRJ_DIR/build/" -mindepth 1 -delete
   npm run build
 
   for V in "$PRJ_DIR"/www/api/* ; do
     N=`basename "$V"`
-    cd "$V" && test_dir "version www/api/$N"
+    cd "$V" && test_dir "version api/$N"
   done
 
   for T in "$PRJ_DIR"/tests/* ; do

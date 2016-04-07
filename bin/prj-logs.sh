@@ -12,10 +12,12 @@ EOL
   exit 0
 fi
 
-touch /tmp/emails.txt
+touch /tmp/emails.txt || true
 touch /var/log/apache2/error.log || true
 touch /var/log/apache2/access.log || true
 touch /var/log/apache2/other_vhosts_access.log || true
+
+chmod a+rwx /tmp/email.txt || true
 
 multitail --mark-interval 60 \
   -c  -ci red    --label "[hter]"   -i /var/log/apache2/error.log \
