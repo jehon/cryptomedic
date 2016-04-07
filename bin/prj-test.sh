@@ -59,16 +59,16 @@ testEnd2End() {
 }
 
 test_dir() {
-    return testEnd2End "$@"
   if [ -r nightwatch.json ]; then
+    testEnd2End "$@"
   fi
 
   if [ -r karma.conf.js ]; then
-    return testJSUnit "$@"
+    testJSUnit "$@"
   fi
 
   if [ -r phpunit.xml ]; then
-    return testPHPUnit "$@"
+    testPHPUnit "$@"
   fi
 }
 
