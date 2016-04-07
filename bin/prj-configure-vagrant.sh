@@ -50,10 +50,6 @@ cp --force $PRJ_DIR/conf/phpmyadmin.site.conf /etc/apache2/sites-enabled/phpmyad
 cp --force $PRJ_DIR/conf/phpmyadmin.inc.php   /etc/phpmyadmin/conf.d/phpmyadmin.inc.php
 
 # Enable xvfb
-cp --force $PRJ_DIR/conf/xvfb                 /etc/init.d/xvfb
-chmod +x /etc/init.d/xvfb
-update-rc.d xvfb defaults
-/etc/init.d/xvfb restart
 
 # Hook the fake sendmail
 if [ ! -r /usr/sbin/sendmail.bak ]; then
