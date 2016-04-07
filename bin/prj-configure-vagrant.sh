@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# *** Depend on DEV ***
+
 SCRIPT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 PRJ_DIR=$(dirname "$SCRIPT_DIR")
 echo "SCRIPT: $SCRIPT_DIR"
@@ -43,15 +45,11 @@ fi
 usermod -a -G adm vagrant
 
 # Put various configs file in place (cp because needed before vagrant mount)
-cp --force $PRJ_DIR/conf/apache-custom.conf   /etc/apache2/conf-enabled/apache-custom.conf
+cp --force $PRJ_DIR/conf/apache-custom.conf   /etc/apache2/sites-enabled/apache-custom.conf
 cp --force $PRJ_DIR/conf/phpmyadmin.site.conf /etc/apache2/sites-enabled/phpmyadmin.conf
 cp --force $PRJ_DIR/conf/phpmyadmin.inc.php   /etc/phpmyadmin/conf.d/phpmyadmin.inc.php
-cp --force $PRJ_DIR/conf/xvfb                 /etc/init.d/xvfb
 
 # Enable xvfb
-chmod +x /etc/init.d/xvfb
-update-rc.d xvfb defaults
-/etc/init.d/xvfb restart
 
 # Hook the fake sendmail
 if [ ! -r /usr/sbin/sendmail.bak ]; then
@@ -60,11 +58,13 @@ if [ ! -r /usr/sbin/sendmail.bak ]; then
   fi
 fi
 sed -i -e "s:;sendmail_path =:sendmail_path = \"$SCRIPT_DIR/prj-fake-sendmail.sh\":g" /etc/php5/apache2/php.ini
+touch /tmp/emails.txt
+chmod a+rwx /tmp/emails.txt
 
 # Add some swap
 # See @https://jeqo.github.io/blog/devops/vagrant-quickstart/
-grep -q "swapfile" /etc/fstab
-if [ $? -ne 0 ]; then
+T=`cat /etc/fstab | (grep -q "swapfile" || true)`
+if [ -z "$T" ]; then
   echo 'swapfile not found. Adding swapfile.'
   #dd if=/dev/zero of=/swapfile bs=1024 count=524288
   fallocate -l 1GiB /swapfile
@@ -73,3 +73,12 @@ if [ $? -ne 0 ]; then
   swapon /swapfile
   echo '/swapfile none swap defaults 0 0' > /etc/fstab.d/swapfile
 fi
+
+# Run project custom files
+if [ -x $SCRIPT_DIR/prj-configure-vagrant-custom.sh ]; then
+  $SCRIPT_DIR/prj-configure-vagrant-custom.sh
+fi
+
+/etc/init.d/apache2 restart
+
+true

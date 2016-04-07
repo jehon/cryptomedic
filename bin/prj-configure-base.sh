@@ -45,3 +45,5 @@ a2ensite default-ssl || true
 if [ -x $SCRIPT_DIR/prj-configure-base-custom.sh ]; then
   $SCRIPT_DIR/prj-configure-base-custom.sh
 fi
+
+true
