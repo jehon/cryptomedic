@@ -92,7 +92,7 @@ else
   fi
 
   echo -e "\e[0;45mReset the database\e[0m"
-  "$PRJ_DIR/bin/prj-rebuild-db.sh"
+  "$PRJ_DIR/bin/prj-db-reset.sh"
 
   echo -e "\e[0;45mRebuild for production\e[0m"
   find "$PRJ_DIR/build/" -mindepth 1 -delete
@@ -100,7 +100,7 @@ else
 
   for V in "$PRJ_DIR"/www/api/* ; do
     N=`basename "$V"`
-    cd "$V" && test_dir "version api/$N"
+    cd "$V" && test_dir "version www/api/$N"
   done
 
   for T in "$PRJ_DIR"/tests/* ; do
