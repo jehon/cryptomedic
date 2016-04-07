@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# *** Depend on DEV ***
+
 SCRIPT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 PRJ_DIR=$(dirname "$SCRIPT_DIR")
 echo "SCRIPT: $SCRIPT_DIR"
@@ -80,5 +82,7 @@ fi
 if [ -x $SCRIPT_DIR/prj-configure-vagrant-custom.sh ]; then
   $SCRIPT_DIR/prj-configure-vagrant-custom.sh
 fi
+
+/etc/init.d/apache2 restart
 
 true

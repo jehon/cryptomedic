@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# *** DEPEND ON BASE ****
+
 SCRIPT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 PRJ_DIR=$(dirname "$SCRIPT_DIR")
 
@@ -24,7 +26,7 @@ if ([ "$1" == "" ] || [ "$1" = "install" ]); then
 fi
 
 # Run the base configuration
-"$SCRIPT_DIR"/prj-configure-live.sh "$@"
+"$SCRIPT_DIR"/prj-configure-base.sh "$@"
 
 # This file is not necessary on vagrant boot
 echo "** Install new config.php"
