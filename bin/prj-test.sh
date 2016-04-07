@@ -59,16 +59,16 @@ testEnd2End() {
 }
 
 test_dir() {
-  if [ -r nightwatch.js ]; then
-    return testEnd2End "$@"
+  if [ -r nightwatch.json ]; then
+    testEnd2End "$@"
   fi
 
   if [ -r karma.conf.js ]; then
-    return testJSUnit "$@"
+    testJSUnit "$@"
   fi
 
   if [ -r phpunit.xml ]; then
-    return testPHPUnit "$@"
+    testPHPUnit "$@"
   fi
 }
 
@@ -95,7 +95,7 @@ else
   "$PRJ_DIR/bin/prj-db-reset.php"
 
   echo -e "\e[0;45mRebuild for production\e[0m"
-  find "$PRJ_DIR/build/" -mindepth 1 -delete
+  find "$PRJ_DIR/www/build/" -mindepth 1 -delete
   npm run build
 
   for V in "$PRJ_DIR"/www/api/* ; do
