@@ -17,7 +17,18 @@ fi
 
 set -e
 
-XVFB="xvfb-run --auto-servernum --server-args='-screen 0 1024x768x24 -ac +extension GLX +render -noreset'"
+export XVFB_ARGS="--auto-servernum --server-args=-screen=1024x768x24 -ac +extension GLX +render -noreset"
+XVFB='xvfb-run'
+#--auto-servernum --server-args="-screen=1024x768x24 -ac +extension GLX +render -noreset" '
+# --server-args='-screen 0 1024x768x24 -ac +extension GLX +render -noreset'"
+
+mxvfb() {
+  if [ "$DEBUG" != "" ]; then
+    xvfb-run --auto-servernum --server-args='-screen 0 1024x768x24 -ac +extension GLX +render -noreset' "$@"
+  else
+    "$@"
+  fi
+}
 
 testPHPUnit() {
   N=`pwd`
@@ -44,7 +55,7 @@ testJSUnit() {
   if [ "$DEBUG" ]; then
     ARGS="--single-run=false --debug"
   fi
-  $XVFB ../../node_modules/.bin/karma start --single-run $ARGS "$@"
+  mxvfb ../../node_modules/.bin/karma start --single-run $ARGS "$@"
 
 }
 
@@ -55,7 +66,7 @@ testEnd2End() {
   shift
 
   echo -e "\e[0;45m[\e[1;45m$N/nightwatch\e[0;45m] Testing $L\e[0m"
-  $XVFB node $PRJ_DIR/node_modules/.bin/nightwatch -e default "$@"
+  mxvfb node "$PRJ_DIR/node_modules/.bin/nightwatch" -e default "$@"
 }
 
 test_dir() {
@@ -75,7 +86,6 @@ test_dir() {
 
 if [ "$DEBUG" != "" ]; then
   echo "\e[0;45mRunning in debug mode - not using xvfb-run anymore\e[0m"
-  XVFB=""
 fi
 
 if [ "$1" ]; then
