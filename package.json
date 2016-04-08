@@ -44,6 +44,7 @@
     "fs-extra": "^0.26.4",
     "glob": "latest",
     "html-webpack-plugin": "^1.6.2",
+    "jasmine-core": "^2.4.1",
     "karma": "latest",
     "karma-chrome-launcher": "latest",
     "karma-coverage": "latest",
