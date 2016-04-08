@@ -63,8 +63,7 @@ chmod a+rwx /tmp/emails.txt
 
 # Add some swap
 # See @https://jeqo.github.io/blog/devops/vagrant-quickstart/
-T=`cat /etc/fstab | (grep -q "swapfile" || true)`
-if [ -z "$T" ]; then
+if [ ! -r "/etc/fstab/swapfile" ]; then
   echo 'swapfile not found. Adding swapfile.'
   #dd if=/dev/zero of=/swapfile bs=1024 count=524288
   fallocate -l 1GiB /swapfile
