@@ -23,7 +23,11 @@ XVFB='xvfb-run'
 # --server-args='-screen 0 1024x768x24 -ac +extension GLX +render -noreset'"
 
 mxvfb() {
-  xvfb-run --auto-servernum --server-args='-screen 0 1024x768x24 -ac +extension GLX +render -noreset' "$@"
+  if [ "$DEBUG" != "" ]; then
+    xvfb-run --auto-servernum --server-args='-screen 0 1024x768x24 -ac +extension GLX +render -noreset' "$@"
+  else
+    "$@"
+  fi
 }
 
 testPHPUnit() {
@@ -82,7 +86,6 @@ test_dir() {
 
 if [ "$DEBUG" != "" ]; then
   echo "\e[0;45mRunning in debug mode - not using xvfb-run anymore\e[0m"
-  XVFB=""
 fi
 
 if [ "$1" ]; then
