@@ -131,8 +131,8 @@ var config = {
         optonal: []
       },
       scope: '/offline/',
-      // relativePaths: true,
-      // updateStragegy: 'all', // -> changed
+      // // relativePaths: true,
+      // // updateStragegy: 'all', // -> changed
       externals: unmanaged,
       excludes: [ '/api/*' ],
       ServiceWorker: {
@@ -144,11 +144,7 @@ var config = {
 };
 
 var templates = recursiveReadSync(__dirname + '/www/templates/templates');
-// for(var i in templates) {
-//   // source: www/templates/templates/fiches/patient.php
-//   // target: /api/v1.0/templates/fiches/patient
-//   templates[i] = templates[i].replace('www/templates/', '/api/v1.0/');
-// }
+
 config.entry = config.entry.concat(templates);
 config.entry = config.entry.concat([ './app/status.js' ]);
 
