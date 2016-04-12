@@ -24,6 +24,12 @@ cd /vagrant
 PROFILE
 chmod 777 /etc/profile.d/vagrant-append-project.sh
 
+INDEX_CREATED=""
+if [ ! -r "/var/www/html/index.cgi" ]; then
+  touch /var/www/html/index.cgi
+  INDEX_CREATED=/var/www/html/index.cgi
+fi
+
 if ([ "$1" == "" ] || [ "$1" = "install" ]); then
   # Manage packages
   if test "`find /root/last_apt_get_update -mtime -1 2>/dev/null`"; then
@@ -36,6 +42,11 @@ if ([ "$1" == "" ] || [ "$1" = "install" ]); then
   fi
 
   echo "Install terminated"
+fi
+
+if [ "$INDEX_CREATED" != "" ]; then
+  echo "Removing place holder index.cgi"
+  rm "$INDEX_CREATED"
 fi
 
 # Run the dev configuration
