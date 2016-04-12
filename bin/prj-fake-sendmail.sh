@@ -26,5 +26,5 @@ FILENAME="/tmp/emails.txt"
   echo "******************************************************"
 } >> $FILENAME
 
-chmod 666 $FILENAME >&2 || true
+chmod 666 $FILENAME 2>&1 || true
 /bin/true
