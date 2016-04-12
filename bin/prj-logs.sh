@@ -22,6 +22,7 @@ chmod a+rwx /tmp/email.txt || true
 multitail --mark-interval 60 \
   -c  -ci red    --label "[hter]"   -i /var/log/apache2/error.log \
   -c  -cS apache --label "[http]"   -I /var/log/apache2/access.log \
-  -c  -cS apache --label "[ssl ]"   -I /var/log/apache2/other_vhosts_access.log \
   -d  -ci cyan   --label "[@   ]"   -I /tmp/emails.txt \
   "$@"
+
+#  -c  -cS apache --label "[ssl ]"   -I /var/log/apache2/other_vhosts_access.log \
