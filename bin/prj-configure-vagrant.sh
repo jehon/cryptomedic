@@ -72,6 +72,10 @@ sed -i -e "s:;sendmail_path =:sendmail_path = \"$SCRIPT_DIR/prj-fake-sendmail.sh
 touch /tmp/emails.txt
 chmod a+rwx /tmp/emails.txt
 
+sed -i -e "s:;error_log = php_errors.log:error_log = /tmp/php_errors.log:g" /etc/php5/apache2/php.ini
+touch /tmp/php_errors.log
+chmod a+rwx /tmp/php_errors.log
+
 # Add some swap
 # See @https://jeqo.github.io/blog/devops/vagrant-quickstart/
 if [ ! -r "/etc/fstab/swapfile" ]; then
