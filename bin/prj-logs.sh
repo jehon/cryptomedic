@@ -23,6 +23,7 @@ multitail --mark-interval 60 \
   -c  -ci red    --label "[hter]"   -i /var/log/apache2/error.log \
   -c  -cS apache --label "[http]"   -I /var/log/apache2/access.log \
   -d  -ci cyan   --label "[@   ]"   -I /tmp/emails.txt \
+  -d  -ci yellow --label "[php ]"   -I /tmp/php_errors.log \
   "$@"
 
 #  -c  -cS apache --label "[ssl ]"   -I /var/log/apache2/other_vhosts_access.log \
