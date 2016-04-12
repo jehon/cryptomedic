@@ -12,19 +12,14 @@
     "bootstrap": "latest",
     "dexie": "latest",
     "excellentexport": "git://github.com/jmaister/excellentexport",
-    "exports-loader": "^0.6.2",
     "html2canvas": "^0.5.0-beta3",
-    "imports-loader": "^0.6.5",
     "jquery": "latest",
     "jquery-ui": "latest",
     "react": "^0.14.3",
     "react-redux": "^4.0.0",
     "redux": "^3.0.4",
     "redux-logger": "latest",
-    "redux-persist": "latest",
-    "redux-thunk": "latest",
-    "whatwg-fetch": "^0.10.1",
-    "worker-loader": "^0.7.0"
+    "redux-persist": "latest"
   },
   "devDependencies": {
     "archiver": "latest",
@@ -39,11 +34,13 @@
     "es6-promise": "^3.0.2",
     "eslint": "latest",
     "eslint-plugin-react": "latest",
+    "exports-loader": "^0.6.2",
     "expose-loader": "^0.7.1",
     "file-loader": "latest",
     "fs-extra": "^0.26.4",
     "glob": "latest",
     "html-webpack-plugin": "^1.6.2",
+    "imports-loader": "^0.6.5",
     "jasmine-core": "^2.4.1",
     "karma": "latest",
     "karma-chrome-launcher": "latest",
@@ -65,8 +62,10 @@
     "style-loader": "^0.13.0",
     "svgo": "^0.6.1",
     "svgo-loader": "^1.1.0",
+    "whatwg-fetch": "^0.10.1",
     "webpack": "~1",
-    "webpack-dev-server": "^1"
+    "webpack-dev-server": "^1",
+    "worker-loader": "^0.7.0"
   },
   "scripts": {
     "build": "webpack --config webpack.js -p",
