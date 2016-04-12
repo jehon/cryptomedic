@@ -17,7 +17,7 @@ import { DataMissingException } from 'helpers/exceptions';
 import { ApplicationException } from 'helpers/exceptions';
 
 var offline = require('offline-plugin/runtime');
-if (location.pathname.split('/')[2] == 'offline') {
+if (location.pathname.split('/')[1] == 'offline') {
   console.log('SW-OFFLINE: Detecting offline mode, activating plugin');
   offline.install(null,
     function(data) { console.log('SW-OFFLINE: activated', data); },
