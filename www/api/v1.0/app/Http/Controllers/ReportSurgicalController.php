@@ -50,7 +50,7 @@ class ReportSurgicalController extends ReportController {
         AND " . $this->getReportParamFilter("when", "bills.Date") . "
         AND " . Bill::getActivityFilter("surgical") . "
         AND consults2.Date IS NULL
-      ORDER BY bills.id",
+      ORDER BY bills.Date, bills.id",
       $this->sqlBindParams + [ "whenFrom12" => $this->internalWhenFrom ]
     );
 
