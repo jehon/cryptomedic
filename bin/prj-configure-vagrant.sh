@@ -56,6 +56,7 @@ fi
 usermod -a -G adm vagrant
 
 # Put various configs file in place (cp because needed before vagrant mount)
+cp --force $PRJ_DIR/conf/apache-config.conf         /etc/apache2/conf-enabled/apache-config.conf
 cp --force $PRJ_DIR/conf/apache-server-10080.conf   /etc/apache2/sites-enabled/apache-server-10080.conf
 cp --force $PRJ_DIR/conf/phpmyadmin.site.conf       /etc/apache2/sites-enabled/phpmyadmin.conf
 cp --force $PRJ_DIR/conf/phpmyadmin.inc.php         /etc/phpmyadmin/conf.d/phpmyadmin.inc.php
