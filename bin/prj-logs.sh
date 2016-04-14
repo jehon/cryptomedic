@@ -16,8 +16,9 @@ touch /tmp/emails.txt || true
 touch /var/log/apache2/error.log || true
 touch /var/log/apache2/access.log || true
 touch /var/log/apache2/other_vhosts_access.log || true
+touch /tmp/php_errors.log || true
 
-chmod a+rwx /tmp/email.txt || true
+chmod a+rw /tmp/email.txt /tmp/php_errors.log || true
 
 multitail --mark-interval 60 \
   -c  -ci red    --label "[hter]"   -i /var/log/apache2/error.log \
