@@ -80,7 +80,7 @@ return [
 	|
 	*/
 
-	'key' => env('APP_KEY', $myconfig['random32']),
+	'key' => env('APP_KEY', substr($myconfig['random'], 0, 32)),
 
 	'cipher' => MCRYPT_RIJNDAEL_128,
 
