@@ -4,19 +4,19 @@ global $myconfig;
 
 $myconfig = [
   'database' => [
-    'host'     => 'localhost',
-    'schema'   => 'mydb',
-    'username' => 'myuser',
-    'password' => 'empty',
-    'rootpwd'  => ''
+    'host'       => 'localhost',
+    'schema'     => 'mydb',
+    'username'   => 'myuser',
+    'password'   => 'empty',
+    'rootpwd'    => ''
   ],
-  'maintenance' => [
-    'code'     => '',
-    'token'    => ''
+  'security' => [
+    'code'       => 'secure_code',
+    'token'      => 'secure_token'
   ],
-  'debug'      => true,
+  'debug'        => true,
   'developpement_environnement' => true,
-  'random32'   => 'random script with 32 characters',
+  'randomString' => str_pad("random script ", 256, "abcdefghijklmnopqrstuvwxyz"),
 ];
 
 if (file_exists(__DIR__ . 'config-custom.php')) {
