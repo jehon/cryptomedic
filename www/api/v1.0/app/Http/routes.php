@@ -98,6 +98,10 @@ Route::group([ 'prefix' => '/api/' . basename(dirname(dirname(__DIR__))) ], func
 			Route::get('reference/{entryyear}/{entryorder}', [
 				"uses" => "FolderController@reference"
 			]);
+
+			Route::get('picture/{id}', [
+				"uses" => "PictureController@getFile"
+			]);
 		});
 
 		hasPermission('folder.edit', function() {
