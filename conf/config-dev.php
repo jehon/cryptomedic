@@ -17,6 +17,9 @@ $myconfig = [
   'debug'        => true,
   'developpement_environnement' => true,
   'randomString' => str_pad("random script ", 256, "abcdefghijklmnopqrstuvwxyz"),
+  'folders' => [
+    'live'       => __DIR__ . "/live/"
+  ]
 ];
 
 if (file_exists(__DIR__ . 'config-custom.php')) {
