@@ -61,6 +61,9 @@ cp --force $PRJ_DIR/conf/apache-server-10080.conf   /etc/apache2/sites-enabled/a
 cp --force $PRJ_DIR/conf/phpmyadmin.site.conf       /etc/apache2/sites-enabled/phpmyadmin.conf
 cp --force $PRJ_DIR/conf/phpmyadmin.inc.php         /etc/phpmyadmin/conf.d/phpmyadmin.inc.php
 
+# Configure phpmyadmin
+cat /usr/share/doc/phpmyadmin/examples/create_tables.sql.gz | gunzip | sudo mysql
+
 # Enable xvfb
 
 # Hook the fake sendmail
@@ -93,6 +96,10 @@ fi
 if [ -x $SCRIPT_DIR/prj-configure-vagrant-custom.sh ]; then
   $SCRIPT_DIR/prj-configure-vagrant-custom.sh
 fi
+
+# Create live folder
+mkdir -p /var/www/live
+chown -R www-data /var/www/live
 
 /etc/init.d/apache2 restart
 
