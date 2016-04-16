@@ -18,4 +18,12 @@ export default class Picture extends File {
     }
     return res;
   }
+
+  getPictureUrl() {
+    return '/api/v1.0/picture/' + this.id;
+  }
+
+  getThumbnailUrl() {
+    return '/api/v1.0/picture/' + this.id;
+  }
 }
