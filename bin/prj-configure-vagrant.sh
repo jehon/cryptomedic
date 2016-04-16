@@ -97,6 +97,10 @@ if [ -x $SCRIPT_DIR/prj-configure-vagrant-custom.sh ]; then
   $SCRIPT_DIR/prj-configure-vagrant-custom.sh
 fi
 
+# Create live folder
+mkdir -p /var/www/live
+chown -R www-data /var/www/live
+
 /etc/init.d/apache2 restart
 
 true
