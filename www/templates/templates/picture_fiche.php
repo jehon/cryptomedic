@@ -1,7 +1,6 @@
 <?php
 	t::setDefaultOption("baseExpression", "currentFile().");
 ?>
-<span ng-controller="ctrl_picture">
 <div ng-if="!currentFile().file" class="notModeRead alert alert-success" role="alert">
 	The uploading of the file is changed. Now, please select the file to upload at the first step.<br>
 	The picture will be reduced automatically (to enhance upload speed), and you will see the result below.<br>
@@ -50,5 +49,4 @@
 <!-- 				<iframe ng-src="{{getURLUploadIFrame()}}" width='100%' height='300px'></iframe> -->
 <!-- 			</div> -->
 	</div>
-</span>
 </div>
