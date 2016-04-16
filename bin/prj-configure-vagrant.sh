@@ -61,6 +61,9 @@ cp --force $PRJ_DIR/conf/apache-server-10080.conf   /etc/apache2/sites-enabled/a
 cp --force $PRJ_DIR/conf/phpmyadmin.site.conf       /etc/apache2/sites-enabled/phpmyadmin.conf
 cp --force $PRJ_DIR/conf/phpmyadmin.inc.php         /etc/phpmyadmin/conf.d/phpmyadmin.inc.php
 
+# Configure phpmyadmin
+cat /usr/share/doc/phpmyadmin/examples/create_tables.sql.gz | gunzip | sudo mysql
+
 # Enable xvfb
 
 # Hook the fake sendmail
