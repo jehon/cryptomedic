@@ -25,7 +25,8 @@ class Picture extends CryptomedicModel {
 	const DATA_PREFIX = "data:image/";
 
 	public function getPhysicalPath() {
-    return dirname(dirname(dirname(dirname(__DIR__)))) . DIRECTORY_SEPARATOR . "uploadedPictures"
+		global $myconfig;
+    return $myconfig['folders']['live'] . DIRECTORY_SEPARATOR . "uploadedPictures"
 				. DIRECTORY_SEPARATOR . $this->file;
 	}
 
