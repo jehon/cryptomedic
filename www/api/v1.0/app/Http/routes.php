@@ -102,6 +102,9 @@ Route::group([ 'prefix' => '/api/' . basename(dirname(dirname(__DIR__))) ], func
 			Route::get('picture/{id}', [
 				"uses" => "PictureController@getFile"
 			]);
+			Route::get('picture/{id}/thumbnail', [
+				"uses" => "PictureController@getThumbnail"
+			]);
 		});
 
 		hasPermission('folder.edit', function() {

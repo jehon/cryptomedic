@@ -24,6 +24,6 @@ export default class Picture extends File {
   }
 
   getThumbnailUrl() {
-    return '/api/v1.0/picture/' + this.id;
+    return '/api/v1.0/picture/' + this.id + '/thumbnail';
   }
 }
