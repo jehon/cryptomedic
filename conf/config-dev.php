@@ -18,7 +18,9 @@ $myconfig = [
   'developpement_environnement' => true,
   'randomString' => str_pad("random script ", 256, "abcdefghijklmnopqrstuvwxyz"),
   'folders' => [
-    'live'       => __DIR__ . "/live/"
+    'root'       => "/var/www/html",
+    'live'       => "/var/www/live/",
+    'cache'      => "/var/www/live/cache"
   ]
 ];
 
