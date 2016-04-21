@@ -1,5 +1,5 @@
 <div class='container-fluid'>
-	<h1 class='text-center'><img src='static/img/home.gif'>Home</h1>
+	<h1 class='text-center'><img src='/static/img/home.gif'>Home</h1>
 	<div class='row'>
 		<div class='col-sm-6'>
 			<fieldset id='add'>
@@ -32,7 +32,7 @@
 		 		Do you want to <b>create</b> it?<br>
 				<br>
 				<button id="button_create_reference" ng-click="createReference()" class="btn btn-primary" >
-					<img src="static/img/go.gif" alt="[go]"> Create the patient
+					<img src="/static/img/go.gif" alt="[go]"> Create the patient
 				</button>
 			</fieldset>
 		</div>
