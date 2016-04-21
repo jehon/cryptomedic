@@ -45,7 +45,9 @@ var db = database();
  * Timer of the next sync
  */
 var syncTimer = null;
+var syncRunning = false;
 
+var syncWasFinal = false;
 /**
  * Reply to a call
  *
@@ -78,10 +80,12 @@ function storeData(offdata) {
       }).then(function() {
         // relaunch the sync upto completion
         if (offdata.isfinal) {
+          syncWasFinal = true;
           mySendEvent('progress', {
             isfinal:      true
           });
         } else {
+          syncWasFinal = false;
           mySendEvent('progress', {
             // 'checkpoint':  offdata.checkpoint,
             'isfinal':    false,
@@ -96,6 +100,7 @@ function storeData(offdata) {
       });
     });
   } else {
+    syncWasFinal = true;
     mySendEvent('progress', {
       isfinal: true
     });
@@ -103,20 +108,23 @@ function storeData(offdata) {
   return promise;
 }
 
-var syncRunning = false;
-function reprogram() {
+function reprogram(success) {
   if (syncTimer) {
     // Cancel currently running timer
     clearTimeout(syncTimer);
   }
   // reprogram the timer...
   syncRunning = false;
-  syncTimer = setTimeout(routeSync, 3600 * 1000);
+  if (success && !syncWasFinal) {
+    syncTimer = setTimeout(routeSync,  1 * 60 * 1000);
+  } else {
+    syncTimer = setTimeout(routeSync, 60 * 60 * 1000);
+  }
   return Promise.resolve();
 }
 
 function running() {
-    // Cancel currently running timer
+  // Cancel currently running timer
   if (syncTimer) {
     clearTimeout(syncTimer);
     syncTimer = false;
@@ -140,17 +148,19 @@ function routeSync() {
         cp: cp
       });
     })
+    .catch(function(httpErrorCode) {
+      mySendEvent('error', httpErrorCode);
+      throw new Error();
+    })
     .then(function(result) {
       if (result == null) {
-        console.warn('null result: unauthenticated?');
-        return null;
+        console.warn('null result in worker');
+        throw new Error();
+        // return null;
       }
       return storeData(result._offline);
     })
-    .catch(function(httpErrorCode) {
-      mySendEvent('error', httpErrorCode);
-    })
-    .then(reprogram, reprogram);
+    .then(reprogram.bind(null, true), reprogram.bind(null, true));
 }
 
 // Worker
