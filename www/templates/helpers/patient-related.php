@@ -8,10 +8,10 @@
 		<tbody>
 			<tr>
 				<td rowspan='100' align='left' width='100px'>
-					<img src="static/img/patient.gif">
+					<img src="/static/img/patient.gif">
 					<br/>
 					<a class='textbutton' href="#/folder/{{folder.getId()}}">
-						<img src="static/img/go.gif">
+						<img src="/static/img/go.gif">
 						view
 					</a>
 				</td>
@@ -39,7 +39,7 @@
 		<tbody>
 			<tr>
 				<td rowspan='100' align='left' width='100px'>
-					<img src="static/img/consultOfDay.gif" width='75px'>
+					<img src="/static/img/consultOfDay.gif" width='75px'>
 				</td>
         <td class='text-center'>
         	<div ng-if="nextAppointment()" class='alert alert-info' style='margin-bottom: 0px'>

@@ -1,7 +1,7 @@
 <fieldset>
 	<legend>{{getVariableY()}} / {{getVariableX()}}</legend>
 	<div class='markContainer'>
-		<img ng-src="static/img/stats_{{getImageName()}}.jpg" width='100%'>
+		<img ng-src="/static/img/stats_{{getImageName()}}.jpg" width='100%'>
 		    <span ng-repeat="f in folder.getSubFiles()"
 		        ng-if="getValidity($index) == 'v'"
 		        ng-mouseover="hover($index)"
