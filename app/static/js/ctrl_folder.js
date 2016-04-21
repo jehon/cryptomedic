@@ -341,12 +341,13 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', '$routeParams' , func
 
   $scope.listUpazillas = function(district, current) {
     var list = [ '?' ];
-    if ($scope.appStateStore.connection && $scope.appStateStore.connection.settings) {
+    if ($scope.appStateStore.connection
+          && $scope.appStateStore.connection.settings) {
       if ($scope.appStateStore.connection.settings.associations['district.' + district]) {
         list = list.concat($scope.appStateStore.connection.settings.associations['district.' + district]);
       }
+      list = list.concat($scope.appStateStore.connection.settings.associations['district.other']);
     }
-    list = list.concat($scope.appStateStore.connection.settings.associations['district.other']);
     if (list.indexOf(current) < 0) {
       list = [ current ].concat(list);
     }
@@ -359,8 +360,8 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', '$routeParams' , func
       if ($scope.appStateStore.connection.settings.associations['upazilla.' + upazilla]) {
         list = list.concat($scope.appStateStore.connection.settings.associations['upazilla.' + upazilla]);
       }
+      list = list.concat($scope.appStateStore.connection.settings.associations['upazilla.other']);
     }
-    list = list.concat($scope.appStateStore.connection.settings.associations['upazilla.other']);
     if (list.indexOf(current) < 0) {
       list = [ current ].concat(list);
     }
