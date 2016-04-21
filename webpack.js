@@ -17,9 +17,9 @@ var OfflinePlugin = require('offline-plugin');
 fse.emptyDirSync(__dirname + '/www/build/');
 
 // Add files not managed by webpack
-fse.copySync(__dirname + '/app/static/', __dirname + '/www/build/static');
+//fse.copySync(__dirname + '/app/static/', __dirname + '/www/build/static');
 var unmanaged = []
-        .concat(glob('static/**', { sync: true, cwd: __dirname + '/www/build/' }))
+        .concat(glob('static/**', { sync: true, cwd: __dirname + '/www/' }))
         ;
 
 // https://github.com/petehunt/webpack-howto
@@ -52,7 +52,7 @@ var config = {
       'script!./node_modules/excellentexport/excellentexport.min.js',
       './node_modules/bootstrap/dist/js/bootstrap.min.js',
 
-      'script!./app/static/js/bugreporting.js',
+      // 'script!./app/static/js/bugreporting.js',
     ])
     // Last one, since it will define what is exported:
     .concat([ './app/status.js' ])

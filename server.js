@@ -4,7 +4,7 @@ var config = require('./webpack.dev.js');
 
 new WebpackDevServer(webpack(config), {
   // publicPath: config.output.publicPath,
-  publicPath: '/cryptomedic/build',
+  publicPath: '/build',
   hot: true,
   historyApiFallback: true,
   stats: {
@@ -15,7 +15,11 @@ new WebpackDevServer(webpack(config), {
     poll: 1000
   },
   proxy: {
-    '/cryptomedic/api/*': {
+    '/api/*': {
+      target: 'http://localhost',
+      secure: false,
+    },
+    '/static/': {
       target: 'http://localhost',
       secure: false,
     },
