@@ -1,6 +1,7 @@
 
-// import catalog  from 'reducers/catalog';
-// import dispatch from 'reducers/dispatch';
+import catalog  from 'reducers/catalog';
+import dispatch from 'reducers/dispatch';
+import database from 'helpers/database';
 
 /**
  * Launch a fetch request
@@ -12,7 +13,7 @@
  *  - mode: The mode you want to use for the request, e.g., cors, no-cors, or same-origin.
  *  - cache: The cache mode you want to use for the request: default, no-store, reload, no-cache, force-cache, or only-if-cached.
  */
-export default function myFetch(url, init, data) {
+export function myFetch(url, init, data) {
   init = init || {};
   if (!init.method) {
     init.method = 'GET';
@@ -54,6 +55,7 @@ export default function myFetch(url, init, data) {
   return fetch(req).then(function(response) {
     // Response: ok, status, statusText
     if (!response.ok) {
+      console.error('Request send it is not ok', response);
       return Promise.reject(response.status);
     }
 
@@ -61,36 +63,37 @@ export default function myFetch(url, init, data) {
   });
 }
 
-// export function myFrontFetch(url, init, data) {
-//   return myFetch(url, init, data).then(
-//     function(json) {
-//       dispatch(catalog.CONNECTION_SUCCESS);
-//       if (json._offline) {
-//         return db.storeRecord({ record: json })
-//           .then(function() { return json; });
-//       } else {
-//         return json;
-//       }
-//     }, function(httpErrorCode) {
-//     switch(httpErrorCode) {
-//       case 401: // unauthorized
-//         dispatch(catalog.CONNECTION_EXPIRED);
-//         location.hash = '#/login';
-//         break;
-//       case 403: // forbidden
-//         dispatch(catalog.CONNECTION_FAILED);
-//         break;
-//       case 404: // not found
-//         dispatch(catalog.CONNECTION_SERVER_ERROR);
-//         break;
-//       case 500: // internal server error
-//         dispatch(catalog.CONNECTION_SERVER_ERROR);
-//         break;
-//       default:
-//         dispatch(catalog.CONNECTION_SERVER_ERROR);
-//         break;
-//     }
-//     return Promise.reject('myFrontFetch error: ' + httpErrorCode);
-//   }
-//   );
-// }
+export function myFrontFetch(url, init, data) {
+  return myFetch(url, init, data).then(
+    function(json) {
+      dispatch(catalog.CONNECTION_SUCCESS);
+      // if (json._offline) {
+      //   return database.storeRecord({ record: json })
+      //     .then(function() { return json; });
+      // } else {
+        return json;
+      // }
+    }, function(httpErrorCode) {
+    console.log('httperrorcode', httpErrorCode);
+    switch(httpErrorCode) {
+      case 401: // unauthorized
+        dispatch(catalog.CONNECTION_EXPIRED);
+        location.hash = '#/login';
+        break;
+      case 403: // forbidden
+        dispatch(catalog.CONNECTION_FAILED);
+        break;
+      case 404: // not found
+        dispatch(catalog.CONNECTION_NOT_FOUND);
+        break;
+      case 500: // internal server error
+        dispatch(catalog.CONNECTION_SERVER_ERROR);
+        break;
+      default:
+        dispatch(catalog.CONNECTION_SERVER_ERROR);
+        break;
+    }
+    return Promise.reject('myFrontFetch error: ' + httpErrorCode);
+  }
+  );
+}
