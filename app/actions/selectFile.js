@@ -1,9 +1,8 @@
 
-import myFetch from 'helpers/myFetch';
-import objectify from 'helpers/objectify';
-import create from 'helpers/create';
-import dispatch from 'reducers/dispatch';
-import catalog from 'reducers/catalog';
+import objectify        from 'helpers/objectify';
+import create           from 'helpers/create';
+import dispatch         from 'reducers/dispatch';
+import catalog          from 'reducers/catalog';
 
 export default function selectFile(id, type = 'folder') {
   // If not final then go to the server anyway...

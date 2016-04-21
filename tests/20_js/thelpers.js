@@ -1,7 +1,7 @@
 
-import objectify from 'helpers/objectify';
-import myFetch   from 'helpers/myFetch';
-import create    from 'helpers/create';
+import objectify   from 'helpers/objectify';
+import { myFetch } from 'helpers/myFetch';
+import create      from 'helpers/create';
 
 export function loadMock(mock, type) {
   var rootMock = '/base/tests/20_js/mocks/';

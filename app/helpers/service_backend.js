@@ -1,10 +1,10 @@
 
-import objectify from 'helpers/objectify';
-import database  from 'helpers/database';
-import myFetch   from 'helpers/myFetch';
-import create    from 'helpers/create';
-import catalog   from 'reducers/catalog';
-import dispatch  from 'reducers/dispatch';
+import objectify   from 'helpers/objectify';
+import database    from 'helpers/database';
+import { myFetch } from 'helpers/myFetch';
+import create      from 'helpers/create';
+import catalog     from 'reducers/catalog';
+import dispatch    from 'reducers/dispatch';
 
 // Test cryptographic:
 // Documentation: https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto
@@ -90,7 +90,6 @@ export default function service_backend() {
   var worker = new MyWorker();
   //worker.postMessage({a: 1});
 
-  // var worker = new Worker('static/worker/worker.js');
   worker.onerror = function(e) {
     console.error('@service: Error in worker: ', e);
   };
@@ -219,21 +218,21 @@ export default function service_backend() {
     },
 
     // Go to the database
-    'getFolder': function(id) {
-      if (id == -1) {
-        return Promise.resolve(create('Folder'));
-      } else {
-        // If not final then go to the server anyway...
-        // return db.getFolder(id).catch(function(error) {
-        //   console.log('Getting the folder live: #' + id);
-        return myFrontFetch('folder/' + id)
-          .then(objectify)
-          .then(function(data) { return create('Folder', data); })
-          .catch()
-          ;
-        // });
-      }
-    },
+    // 'getFolder': function(id) {
+    //   if (id == -1) {
+    //     return Promise.resolve(create('Folder'));
+    //   } else {
+    //     // If not final then go to the server anyway...
+    //     // return db.getFolder(id).catch(function(error) {
+    //     //   console.log('Getting the folder live: #' + id);
+    //     return myFrontFetch('folder/' + id)
+    //       .then(objectify)
+    //       .then(function(data) { return create('Folder', data); })
+    //       .catch()
+    //       ;
+    //     // });
+    //   }
+    // },
 
     'clear': function() {
       return db.clear()

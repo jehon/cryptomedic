@@ -8,7 +8,7 @@ import store              from 'reducers/store';
 import create               from 'helpers/create';
 import date2CanonicString   from 'helpers/date2CanonicString';
 // import database             from 'helpers/database';
-import myFetch              from 'helpers/myFetch';
+import { myFetch }          from 'helpers/myFetch';
 import service_backend_fn   from 'helpers/service_backend';
 // import { nullify }          from 'helpers/service_backend';
 
