@@ -26,8 +26,11 @@ var calculations = {
       if (y == avg) return 0;
 
       var ref;
-      if (y < avg) ref = this.evaluatePoly(line.min, x);
-        else ref = this.evaluatePoly(line.max, x);
+      if (y < avg) {
+        ref = this.evaluatePoly(line.min, x);
+      } else {
+        ref = this.evaluatePoly(line.max, x);
+      }
         /* istanbul skip next */
       if (isNaN(ref)) return '#Out of bound#';
 

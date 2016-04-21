@@ -1,6 +1,6 @@
-"use strict";
+'use strict';
 
-mainApp.controller("ctrl_file_appointment", [ "$scope", function($scope) {
+mainApp.controller('ctrl_file_appointment', [ '$scope', function($scope) {
   $scope.today = appState().helpers.date2CanonicString(new Date(), true);
 
   $scope.nextMonth = function(months) {
