@@ -4,6 +4,7 @@ import catalog from 'reducers/catalog';
 catalog._define('CONNECTION_SUCCESS');
 catalog._define('CONNECTION_EXPIRED');
 catalog._define('CONNECTION_FAILED');
+catalog._define('CONNECTION_NOT_FOUND');
 catalog._define('CONNECTION_SERVER_ERROR');
 catalog._define('CONNECTION_SETTINGS');
 
@@ -36,11 +37,12 @@ export default function(state, action) {
   }
 
   if ((action.type == catalog.CONNECTION_FAILED)
-      || (action.type == catalog.CONNECTION_SERVER_ERROR)) {
+      || (action.type == catalog.CONNECTION_SERVER_ERROR)
+      || (action.type == catalog.CONNECTION_NOT_FOUND)) {
     return {
       connected: Math.max(1, action.payload),
       authenticated: state.authenticated,
-      serverError: (action.type == catalog.CONNECTION_SERVER_ERROR ? action.payload : false),
+      serverError: (action.type == catalog.CONNECTION_FAILED ? false : action.payload),
       settings: state.settings
     };
   }
