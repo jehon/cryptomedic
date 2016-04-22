@@ -1,6 +1,6 @@
 
 import objectify   from 'helpers/objectify';
-import { myFetch } from 'helpers/myFetch';
+import myFetch     from 'helpers/myFetch';
 import create      from 'helpers/create';
 
 export function loadMock(mock, type) {

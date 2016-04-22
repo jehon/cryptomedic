@@ -1,7 +1,7 @@
 
 import objectify   from 'helpers/objectify';
 import database    from 'helpers/database';
-import { myFetch } from 'helpers/myFetch';
+import myFetch     from 'helpers/myFetch';
 import create      from 'helpers/create';
 import catalog     from 'reducers/catalog';
 import dispatch    from 'reducers/dispatch';
