@@ -16,7 +16,7 @@ export default function selectFile(id, type = 'folder') {
       return create('Folder', data);
     })
     .then(function(data) {
-      dispatch(catalog.GUI_SET_SELECT_FILE, data);
+      dispatch(catalog.FOLDER_SELECT, data);
       return data;
     })
     .catch()
