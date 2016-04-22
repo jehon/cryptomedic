@@ -37,7 +37,7 @@
  */
 
 import database    from 'helpers/database';
-import { myFetch } from 'helpers/myFetch';
+import myFetch     from 'helpers/myFetch';
 
 var db = database();
 
