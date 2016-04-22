@@ -16,11 +16,11 @@ new WebpackDevServer(webpack(config), {
   },
   proxy: {
     '/api/*': {
-      target: 'http://localhost',
+      target: 'http://localhost:10080/',
       secure: false,
     },
-    '/static/': {
-      target: 'http://localhost',
+    '/static/*': {
+      target: 'http://localhost:10080/',
       secure: false,
     },
   }
