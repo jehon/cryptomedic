@@ -1,16 +1,28 @@
 
-var worker = new (require('worker!../worker/worker.js'))();
-// var worker = new MyWorker();
+var worker = false;
 
-worker.onerror = function(e) {
-  console.error('@service: Error in worker: ', e);
-};
+let listeners = [];
+
+function onmessage(e) {
+  for(var i = 0; i < listeners.length; i++) {
+    listeners[i](e.data.name, e.data.data);
+  }
+}
 
 export default class MyWorker {
   constructor(callback) {
-    worker.onmessage = function(e) {
-      callback(e.data.name, e.data.data);
-    };
+    if (!worker) {
+      worker = new (require('worker!../worker/worker.js'))();
+      // var worker = new MyWorker();
+
+      worker.onerror = function(e) {
+        console.error('@service: Error in worker: ', e);
+      };
+      worker.onmessage = onmessage;
+    }
+
+    this.listener = callback;
+    listeners.push(callback);
   }
 
   post(name, data) {
