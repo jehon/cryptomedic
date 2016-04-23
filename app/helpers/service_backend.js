@@ -5,6 +5,7 @@ import myFetch     from 'helpers/myFetch';
 import create      from 'helpers/create';
 import catalog     from 'reducers/catalog';
 import dispatch    from 'reducers/dispatch';
+import MyWorker    from 'helpers/myworker';
 
 // Test cryptographic:
 // Documentation: https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto
@@ -86,17 +87,17 @@ export default function service_backend() {
   var db = database(true);
 
   // // https://github.com/webpack/worker-loader
-  var MyWorker = require('worker!../worker/worker.js');
-  var worker = new MyWorker();
-  //worker.postMessage({a: 1});
+  // var MyWorker = require('worker!../worker/worker.js');
+  // var worker = new MyWorker();
+  // //worker.postMessage({a: 1});
 
-  worker.onerror = function(e) {
-    console.error('@service: Error in worker: ', e);
-  };
-
-  worker.onmessage = function(e) {
-    var name = e.data.name;
-    var data = e.data.data;
+  // worker.onerror = function(e) {
+  //   console.error('@service: Error in worker: ', e);
+  // };
+  var worker = new MyWorker(function(name, data) {
+  // worker.onmessage = function(e) {
+    // var name = e.data.name;
+    // var data = e.data.data;
 
     switch(name) {
       case 'disconnected':
@@ -119,10 +120,11 @@ export default function service_backend() {
         dispatch(catalog.CONNECTION_SUCCESS);
         break;
     }
-  };
+  });
 
   function mySendAction(name, data) {
-    worker.postMessage({ name: name, data: data });
+    // worker.postMessage({ name: name, data: data });
+    worker.post(name, data);
     return data;
   }
 

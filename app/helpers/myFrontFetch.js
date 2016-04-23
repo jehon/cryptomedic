@@ -8,12 +8,15 @@ export default function myFrontFetch(url, init, data) {
   return myFetch(url, init, data).then(
     function(json) {
       dispatch(catalog.CONNECTION_SUCCESS);
-      // if (json._offline) {
+      if (json._offline) {
       //   return database.storeRecord({ record: json })
+      // Store also the received record...
       //     .then(function() { return json; });
-      // } else {
-      return json;
-      // }
+        delete(json._offline);
+        return json;
+      } else {
+        return json;
+      }
     }, function(httpErrorCode) {
     console.log('httperrorcode', httpErrorCode);
     switch(httpErrorCode) {

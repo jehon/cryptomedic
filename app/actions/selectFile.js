@@ -4,8 +4,13 @@ import objectify        from 'helpers/objectify';
 import create           from 'helpers/create';
 import dispatch         from 'reducers/dispatch';
 import catalog          from 'reducers/catalog';
+import store            from 'reducers/store';
 
 export default function selectFile(id, type = 'folder') {
+  // if (id == store.getState().folder.selected_id) {
+  //   return db.getFolder(id);
+  // }
+
   // If not final then go to the server anyway...
   // return db.getFolder(id).catch(function(error) {
   //   console.log('Getting the folder live: #' + id);
@@ -20,6 +25,10 @@ export default function selectFile(id, type = 'folder') {
       dispatch(catalog.FOLDER_SELECT, data);
       return data;
     })
-    .catch()
+    .catch(function(data) {
+      console.log('in error in selectFile');
+      dispatch(catalog.CONNECTION_NOT_FOUND, data);
+      return null;
+    })
     ;
 }
