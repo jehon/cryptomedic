@@ -41,7 +41,6 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', '$routeParams' , func
   //   Get data from the server
   //----------------------
   appState().action.selectFile($scope.patient_id).then(function(data) {
-  // service_backend.getFolder($scope.patient_id).then(function(data) {
     $scope.folder = data;
     if (data) {
       if ($scope.page == 'file') {
