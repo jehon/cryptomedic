@@ -21,8 +21,12 @@ export default class MyWorker {
       worker.onmessage = onmessage;
     }
 
-    this.listener = callback;
-    listeners.push(callback);
+    if (callback) {
+      this.listener = callback;
+      listeners.push(callback);
+    } else {
+      this.listener = false;
+    }
   }
 
   post(name, data) {
