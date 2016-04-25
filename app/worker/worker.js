@@ -45,7 +45,7 @@ var db = new Database();
  * Timer of the next sync
  */
 var syncTimer = null;
-var syncRunning = false;
+let syncRunning = false;
 
 var syncWasFinal = false;
 /**
@@ -75,9 +75,8 @@ function storeData(offdata) {
   }
   if (offdata.data) {
     promise = promise.then(function() {
-      return db.bulkUpdate(offdata.data, function(data) {
-        mySendEvent('folder', data);
-      }).then(function() {
+      return db.bulkUpdate(offdata.data, (data) => mySendEvent('folder', data))
+      .then(function() {
         // relaunch the sync upto completion
         if (offdata.isfinal) {
           syncWasFinal = true;
@@ -161,6 +160,11 @@ function routeSync() {
     .then(() => { reprogram(true); }, () => { reprogram(true); });
 }
 
+function routeStore(data) {
+  running()
+    .then(() => storeData(data));
+}
+
 // Worker
 // eslint-disable-next-line
 onmessage = function(message) {
@@ -170,6 +174,8 @@ onmessage = function(message) {
   switch(name) {
     case 'init':
       return routeSync();
+    case 'store':
+      return routeStore(data);
     case 'sync':
       return routeSync();
     case 'resync':
