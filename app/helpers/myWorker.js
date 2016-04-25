@@ -37,4 +37,8 @@ export default class MyWorker {
     worker.postMessage({ name: name, data: data });
     return data;
   }
+
+  store(data) {
+    return this.post('store', data);
+  }
 }
