@@ -10,10 +10,6 @@
  *  - cache: The cache mode you want to use for the request: default, no-store, reload, no-cache, force-cache, or only-if-cached.
  */
 export default function myFetch({ url='', init={}, data=false }) {
-  console.log(url, init, data);
-  // TODO: destructure the options...
-    // function selectEntries({ start=0, end=-1, step=1 } = {}) {
-
   init = init || {};
   if (!init.method) {
     init.method = 'GET';
