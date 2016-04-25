@@ -101,7 +101,7 @@ export default class Database {
     }
   }
 
-  storeRecord(record) {
+  storeRecord(record, doUpdateCheckpoint = true) {
     var req;
     var data;
     if (record['_deleted']) {
@@ -114,9 +114,9 @@ export default class Database {
       req = db.patients.put(record['record']);
       data = record['record'];
     }
-    req.then(() => {
-      return this.updateCheckpoint(record['checkpoint']);
-    });
+    if (doUpdateCheckpoint) {
+      req.then(() => this.updateCheckpoint(record['checkpoint']));
+    }
     // Fix the value in the 'thenable' chain
     return req.then(() => data);
   }
