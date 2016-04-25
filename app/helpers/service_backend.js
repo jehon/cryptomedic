@@ -5,7 +5,7 @@ import myFetch      from 'helpers/myFetch';
 import create       from 'helpers/create';
 import catalog      from 'reducers/catalog';
 import dispatch     from 'reducers/dispatch';
-import MyWorker     from 'helpers/myworker';
+import MyWorker     from 'helpers/myWorker';
 import myFrontFetch from 'helpers/myFrontFetch';
 
 // Test cryptographic:

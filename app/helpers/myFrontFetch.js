@@ -1,8 +1,8 @@
 
 import catalog  from 'reducers/catalog';
 import dispatch from 'reducers/dispatch';
-// import database from 'helpers/database';
 import myFetch  from 'helpers/myFetch';
+import MyWorker from 'helpers/myWorker';
 
 export default function myFrontFetch({ url: url, init: init, data: data }) {
   return myFetch({ url: url, init: init, data: data })
