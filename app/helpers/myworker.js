@@ -12,13 +12,17 @@ function onmessage(e) {
 export default class MyWorker {
   constructor(callback) {
     if (!worker) {
+      // https://github.com/webpack/worker-loader
       worker = new (require('worker!../worker/worker.js'))();
-      // var worker = new MyWorker();
 
       worker.onerror = function(e) {
         console.error('@service: Error in worker: ', e);
       };
+
       worker.onmessage = onmessage;
+
+      // Initialize the worker
+      this.post('init');
     }
 
     if (callback) {
