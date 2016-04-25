@@ -10,7 +10,8 @@
     ],
 
 	"require": {
-		"jehon/maintenance": "master-dev"
+		"jehon/maintenance": "master-dev",
+		"phpmailer/phpmailer": "^5.2"
 	},
  	"require-dev": {
 		"phpunit/phpunit": "~4"
