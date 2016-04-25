@@ -10,6 +10,7 @@ export default function myFrontFetch({ url: url, init: init, data: data }) {
     (json) => {
       dispatch(catalog.CONNECTION_SUCCESS);
       if (json._offline) {
+        // Send data to the worker...
       //   return database.storeRecord({ record: json })
       // Store also the received record...
       //     .then(function() { return json; });
