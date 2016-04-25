@@ -1,6 +1,6 @@
 
 import objectify   from 'helpers/objectify';
-import database    from 'helpers/database';
+import Database    from 'helpers/database';
 import myFetch     from 'helpers/myFetch';
 import create      from 'helpers/create';
 import catalog     from 'reducers/catalog';
@@ -84,7 +84,7 @@ if (!window.localStorage.cryptomedicComputerId) {
 /* service_backend */
 export default function service_backend() {
   // var db = build_db(true);
-  var db = database(true);
+  var db = new Database(true);
 
   // // https://github.com/webpack/worker-loader
   // var MyWorker = require('worker!../worker/worker.js');

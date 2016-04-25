@@ -1,8 +1,8 @@
 import { buildRecord, loadMock } from 'thelpers';
-import database from 'helpers/database';
+import Database from 'helpers/database';
 
 describe('DB/Patients', function() {
-  var db = database(true);
+  var db = new Database(true);
   var def = { record: { id: 123, test: true, mainFile: { entryyear: 2001, entryorder: 2323 }}};
   var def_deleted = { id: 456, _deleted: true };
 
@@ -16,7 +16,9 @@ describe('DB/Patients', function() {
       .then(function(data) {
         expect(data.id).toBe('' + id);
         return data;
-      });
+      })
+      .catch((e) => { console.error('It failed: ', e); })
+      ;
   }
 
   it('should store patient', function(done) {
@@ -97,7 +99,7 @@ describe('DB/Patients', function() {
     loadMock('mock_sync.json').then(function(json) {
       db.clear()
         .then(db.bulkUpdate.bind(db, json._offline.data))
-        .then(checkFolder.bind(db, 7, 2001, 4), function() { console.error('euh'); })
+        .then(checkFolder.bind(db, 7, 2001, 4))
         .then(checkFolder.bind(db, 3, 2014, 103))
         .then(checkFolder.bind(db, 4, 2014, 104))
         .then(checkFolder.bind(db, 1, 2000, 1))

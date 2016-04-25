@@ -36,10 +36,10 @@
       - positive feedback is received through the 'sync' mechanism
  */
 
-import database    from 'helpers/database';
+import Database    from 'helpers/database';
 import myFetch     from 'helpers/myFetch';
 
-var db = database();
+var db = new Database();
 
 /**
  * Timer of the next sync
