@@ -158,10 +158,11 @@ function routeSync() {
       }
       return storeData(result._offline);
     })
-    .then(reprogram.bind(null, true), reprogram.bind(null, true));
+    .then(() => { reprogram(true); }, () => { reprogram(true); });
 }
 
 // Worker
+// eslint-disable-next-line
 onmessage = function(message) {
   var name = message.data.name;
   var data = message.data.data;
