@@ -5,7 +5,7 @@ import create      from 'helpers/create';
 
 export function loadMock(mock, type) {
   var rootMock = '/base/tests/20_js/mocks/';
-  return myFetch(rootMock + mock)
+  return myFetch({ url: rootMock + mock })
     .then(function(data) {
       if (type) {
         data = create(type, objectify(data));

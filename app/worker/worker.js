@@ -144,9 +144,7 @@ function routeSync() {
       return db.getSetting('checkpoint');
     })
     .then(function(cp) {
-      return myFetch('sync', {}, {
-        cp: cp
-      });
+      return myFetch({ url: 'sync', data: { cp: cp }});
     })
     .catch(function(httpErrorCode) {
       mySendEvent('error', httpErrorCode);
