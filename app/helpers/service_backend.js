@@ -58,20 +58,6 @@ export function nullify(what) {
   return what;
 }
 
-// function stringify(what) {
-//   if (what === null) return what;
-//   if (what === '') return null;
-//   if (typeof(what) == 'object') {
-//     if (what instanceof Date) {
-//       return date2CanonicString(what);
-//     }
-//     for(var k in what) {
-//       what[k] = stringify(what[k]);
-//     }
-//   }
-//   return what;
-// }
-
 /* Initialize the computer id */
 if (!window.localStorage.cryptomedicComputerId) {
   var mask = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -84,17 +70,8 @@ if (!window.localStorage.cryptomedicComputerId) {
 
 /* service_backend */
 export default function service_backend() {
-  // var db = build_db(true);
   var db = new Database(true);
 
-  // // https://github.com/webpack/worker-loader
-  // var MyWorker = require('worker!../worker/worker.js');
-  // var worker = new MyWorker();
-  // //worker.postMessage({a: 1});
-
-  // worker.onerror = function(e) {
-  //   console.error('@service: Error in worker: ', e);
-  // };
   var worker = new MyWorker(function(name, data) {
     switch(name) {
       case 'disconnected':
@@ -124,10 +101,6 @@ export default function service_backend() {
     worker.post(name, data);
     return data;
   }
-
-  // Handled by the MyWorker itself...
-  // mySendAction('init');
-
 
   return {
     /* Authentification */
