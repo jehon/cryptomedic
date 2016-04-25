@@ -4,8 +4,9 @@ import dispatch from 'reducers/dispatch';
 // import database from 'helpers/database';
 import myFetch  from 'helpers/myFetch';
 
-export default function myFrontFetch(url, init, data) {
-  return myFetch(url, init, data).then(
+export default function myFrontFetch({ url: url, init: init, data: data }) {
+  return myFetch({ url: url, init: init, data: data })
+  .then(
     (json) => {
       dispatch(catalog.CONNECTION_SUCCESS);
       if (json._offline) {

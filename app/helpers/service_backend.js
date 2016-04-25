@@ -1,11 +1,12 @@
 
-import objectify   from 'helpers/objectify';
-import Database    from 'helpers/database';
-import myFetch     from 'helpers/myFetch';
-import create      from 'helpers/create';
-import catalog     from 'reducers/catalog';
-import dispatch    from 'reducers/dispatch';
-import MyWorker    from 'helpers/myworker';
+import objectify    from 'helpers/objectify';
+import Database     from 'helpers/database';
+import myFetch      from 'helpers/myFetch';
+import create       from 'helpers/create';
+import catalog      from 'reducers/catalog';
+import dispatch     from 'reducers/dispatch';
+import MyWorker     from 'helpers/myworker';
+import myFrontFetch from 'helpers/myFrontFetch';
 
 // Test cryptographic:
 // Documentation: https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto
@@ -95,10 +96,6 @@ export default function service_backend() {
   //   console.error('@service: Error in worker: ', e);
   // };
   var worker = new MyWorker(function(name, data) {
-  // worker.onmessage = function(e) {
-    // var name = e.data.name;
-    // var data = e.data.data;
-
     switch(name) {
       case 'disconnected':
         if (data == 401) {
@@ -128,64 +125,29 @@ export default function service_backend() {
     return data;
   }
 
-  mySendAction('init');
+  // Handled by the MyWorker itself...
+  // mySendAction('init');
 
-  function myFrontFetch(url, init, data) {
-    return myFetch(url, init, data).then(
-      function(json) {
-        dispatch(catalog.CONNECTION_SUCCESS);
-        if (json._offline) {
-          return db.storeRecord({ record: json })
-            .then(function() { return json; });
-        } else {
-          return json;
-        }
-      }, function(httpErrorCode) {
-      switch(httpErrorCode) {
-        case 401: // unauthorized
-          dispatch(catalog.CONNECTION_EXPIRED);
-          location.hash = '#/login';
-          break;
-        case 403: // forbidden
-          dispatch(catalog.CONNECTION_FAILED);
-          break;
-        case 404: // not found
-          dispatch(catalog.CONNECTION_SERVER_ERROR);
-          break;
-        case 500: // internal server error
-          dispatch(catalog.CONNECTION_SERVER_ERROR);
-          break;
-        default:
-          dispatch(catalog.CONNECTION_SERVER_ERROR);
-          break;
-      }
-      return Promise.reject('myFrontFetch error: ' + httpErrorCode);
-    }
-    );
-  }
 
   return {
     /* Authentification */
     'login': function(username, password) {
-      return myFrontFetch('auth/mylogin', { method: 'POST' },
-        {
-          'username': username,
-          'password': password,
-              // 'appVersion': cryptomedic.version,
-          'computerId': window.localStorage.cryptomedicComputerId
-        })
+      return myFrontFetch({ url: 'auth/mylogin', init: { method: 'POST' }, data: {
+        'username': username,
+        'password': password,
+            // 'appVersion': cryptomedic.version,
+        'computerId': window.localStorage.cryptomedicComputerId
+      }})
         .then(dispatch.bind(this, catalog.CONNECTION_SETTINGS))
         .then(mySendAction.bind(this, 'init'))
         .catch()
         ;
     },
     'checkLogin': function() {
-      return myFrontFetch('auth/settings', null,
-        {
+      return myFrontFetch({ url: 'auth/settings', data: {
               // 'appVersion': cryptomedic.version,
-          'computerId': window.localStorage.cryptomedicComputerId
-        }
-        )
+        'computerId': window.localStorage.cryptomedicComputerId
+      }})
         .then(dispatch.bind(this, catalog.CONNECTION_SETTINGS))
         .then(mySendAction.bind(this, 'init'))
         .catch()
@@ -193,7 +155,7 @@ export default function service_backend() {
     },
     'logout': function() {
       // TODO: clean up the cache --> cache managed in other object???
-      return myFrontFetch('auth/logout')
+      return myFrontFetch({ url: 'auth/logout' })
         .then(function(data) {
           dispatch(catalog.CONNECTION_EXPIRED);
           return data;
@@ -227,7 +189,7 @@ export default function service_backend() {
     //     // If not final then go to the server anyway...
     //     // return db.getFolder(id).catch(function(error) {
     //     //   console.log('Getting the folder live: #' + id);
-    //     return myFrontFetch('folder/' + id)
+    //     return myFrontFetch({ url: 'folder/' + id })
     //       .then(objectify)
     //       .then(function(data) { return create('Folder', data); })
     //       .catch()
@@ -246,7 +208,7 @@ export default function service_backend() {
     },
 
     'checkReference': function(year, order) {
-      return myFrontFetch('reference/' + year + '/' + order)
+      return myFrontFetch({ url: 'reference/' + year + '/' + order })
         .then(function(data) {
           if (data && data.id) {
           // if ((data.getModel() != 'undefined') && (data.getModel() == 'Folder')) {
@@ -260,13 +222,13 @@ export default function service_backend() {
     },
 
     'getReport': function(reportName, data, timing) {
-      return myFrontFetch('reports/' + reportName + (timing ? '/' + timing : ''), null, nullify(data))
+      return myFrontFetch({ url: 'reports/' + reportName + (timing ? '/' + timing : ''), data: nullify(data) })
         .catch()
         ;
     },
 
     'searchForPatients': function(params) {
-      return myFrontFetch('folder', null, params)
+      return myFrontFetch({ url: 'folder', data: params })
         .then(function(data) {
           var list = [];
           for(var i in data) {
@@ -287,12 +249,10 @@ export default function service_backend() {
 
     // READWRITE
     'createReference': function(year, order) {
-      return myFrontFetch('reference', { method: 'POST'},
-        // return treatHttp($http.post('reference',
-        {
-          'entryyear': year,
-          'entryorder': order
-        })
+      return myFrontFetch({ url: 'reference', init: { method: 'POST'}, data: {
+        'entryyear': year,
+        'entryorder': order
+      }})
         .then(objectify)
         .then(function(data) { return create('Folder', data); })
         .catch()
@@ -300,7 +260,7 @@ export default function service_backend() {
     },
 
     'createFile': function(data) {
-      return myFrontFetch('fiche/' + data.getModel(), { method: 'POST' }, nullify(data))
+      return myFrontFetch({ url: 'fiche/' + data.getModel(), init: { method: 'POST' }, data: nullify(data)})
         .then(objectify)
         .then(function(data) { return create('Folder', data); })
         .catch()
@@ -308,7 +268,7 @@ export default function service_backend() {
     },
 
     'saveFile': function(data) {
-      return myFrontFetch('fiche/' + data.getModel() + '/' + data['id'], { method: 'PUT' }, nullify(data))
+      return myFrontFetch({ url: 'fiche/' + data.getModel() + '/' + data['id'], init: { method: 'PUT' }, data: nullify(data) })
         .then(objectify)
         .then(function(data) { return create('Folder', data); })
         .catch()
@@ -316,7 +276,7 @@ export default function service_backend() {
     },
 
     'deleteFile': function(data) {
-      return myFrontFetch('fiche/' + data.getModel() + '/' + data['id'], { method: 'DELETE' })
+      return myFrontFetch({ url: 'fiche/' + data.getModel() + '/' + data['id'], init: { method: 'DELETE' }})
         .then(objectify)
         .then(function(data) { return create('Folder', data); })
         .catch()
@@ -324,7 +284,7 @@ export default function service_backend() {
     },
 
     'unlockFile': function(data) {
-      return myFrontFetch('unfreeze/' + data.getModel() + '/' + data['id'])
+      return myFrontFetch({ url: 'unfreeze/' + data.getModel() + '/' + data['id'] })
         .then(objectify)
         .then(function(data) { return create('Folder', data); })
         .catch()
@@ -332,31 +292,31 @@ export default function service_backend() {
     },
 
     'usersList': function() {
-      return myFrontFetch('users')
+      return myFrontFetch({ url: 'users' })
         .catch()
         ;
     },
 
     'userAdd': function(user) {
-      return myFrontFetch('users' , { method: 'POST' }, user)
+      return myFrontFetch({ url: 'users' , init: { method: 'POST' }, data: user })
         .catch()
         ;
     },
 
     'userDelete': function(id) {
-      return myFrontFetch('users/' + id, { method: 'DELETE' })
+      return myFrontFetch({ url: 'users/' + id, init: { method: 'DELETE' }})
         .catch()
         ;
     },
 
     'userUpdate': function(user) {
-      return myFrontFetch('users/' + user.id, { method: 'PUT' }, user)
+      return myFrontFetch({ url: 'users/' + user.id, init: { method: 'PUT' }, data: user})
         .catch()
         ;
     },
 
     'userPassword': function(id, pwd) {
-      return myFrontFetch('users/password/' + id, { method: 'POST' }, { password: pwd })
+      return myFrontFetch({ url: 'users/password/' + id, init: { method: 'POST' }, data: { password: pwd }})
         .catch()
         ;
     }

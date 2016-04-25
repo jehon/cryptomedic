@@ -14,7 +14,7 @@ export default function selectFile(id, type = 'folder') {
   // If not final then go to the server anyway...
   // return db.getFolder(id).catch(function(error) {
   //   console.log('Getting the folder live: #' + id);
-  return myFrontFetch(type + '/' + id)
+  return myFrontFetch({ url: type + '/' + id })
     .then(objectify)
     .then((data) => { return create('Folder', data); })
     .then((data) => { return dispatch(catalog.FOLDER_SELECT, data); })
