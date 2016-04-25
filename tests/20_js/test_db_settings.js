@@ -1,7 +1,7 @@
-import database from 'helpers/database';
+import Database from 'helpers/database';
 
 describe('DB/Settings', function() {
-  var db = database(true);
+  var db = new Database(true);
   it('should get/set settings', function(done) {
     var v = Math.random() * 1000;
     db.setSetting('test', v)

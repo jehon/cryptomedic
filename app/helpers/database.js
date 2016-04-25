@@ -6,60 +6,60 @@ import Dexie from 'dexie';
 //   throw e;
 // });
 
-/**
- * Build up the db_patients service
- *
- * @param withVersions if true, upgrade the database
- * @returns a db_patients proxy
- */
-export default function build_db() {
-  var db = new Dexie('cryptomedic');
+// Shared database Dexie object...
+let db = false;
 
-  db.version(1).stores({
-    patients: '++id'
-  });
+export default class Database {
+  constructor() {
+    if (!db) {
+      db = new Dexie('cryptomedic');
 
-  db.version(2).stores({
-    patients: '++id,[mainFile.entryyear+mainFile.entryorder]'
-  });
+      db.version(1).stores({
+        patients: '++id'
+      });
 
-  db.version(3).stores({
-    patients: '++id'
-  });
+      db.version(2).stores({
+        patients: '++id,[mainFile.entryyear+mainFile.entryorder]'
+      });
 
-  db.version(4).stores({
-    // @see
-    // db.relations.where('[userId1+userId2]').equals([2,3]).or('[userId1+userId2]').equals([3,2])
-    // - will give you all the relations that user 1 has to user 2 or user 2
-    // has to user 1.
-    patients: '++id,[mainFile.entryyear+mainFile.entryorder]'
-  });
+      db.version(3).stores({
+        patients: '++id'
+      });
 
-  db.version(5).upgrade(function(trans) {
-    trans.patients.toCollection().modify(function(p) {
-      if (typeof(p.id) == 'number') {
-        // console.log('deleting', p.id);
-        delete this.value;
-      }
-      p.id = '' + p.id;
-    });
-  });
+      db.version(4).stores({
+        // @see
+        // db.relations.where('[userId1+userId2]').equals([2,3]).or('[userId1+userId2]').equals([3,2])
+        // - will give you all the relations that user 1 has to user 2 or user 2
+        // has to user 1.
+        patients: '++id,[mainFile.entryyear+mainFile.entryorder]'
+      });
 
-  db.version(6).stores({
-    patients: '++id,[mainFile.entryyear+mainFile.entryorder]',
-    settings: 'key'
-  });
+      db.version(5).upgrade(function(trans) {
+        trans.patients.toCollection().modify((p) => {
+          if (typeof(p.id) == 'number') {
+            delete this.value;
+          }
+          p.id = '' + p.id;
+        });
+      });
 
-  db.open();
+      db.version(6).stores({
+        patients: '++id,[mainFile.entryyear+mainFile.entryorder]',
+        settings: 'key'
+      });
+
+      db.open();
+    }
+  }
 
   // ------------------ Business functions ------------------------------
   /**
    * Get the folder, with all the currently awaiting modifications applied
    */
-  function getFolder(id) {
-    return db.patients.get('' + id).then(function(data) {
+  getFolder(id) {
+    return db.patients.get('' + id).then((data) => {
       if (data) {
-        return applyModificationsOn(data);
+        return this.applyModificationsOn(data);
       } else {
         throw 'I say, this patient is not found #' + id;
       }
@@ -69,31 +69,31 @@ export default function build_db() {
   /**
    * Get the folder by the reference
    */
-  function getByReference(entryyear, entryorder) {
-    return db.patients.where('[mainFile.entryyear+mainFile.entryorder]').equals([''+entryyear, ''+entryorder]).toArray(function(data) {
+  getByReference(entryyear, entryorder) {
+    return db.patients.where('[mainFile.entryyear+mainFile.entryorder]').equals([''+entryyear, ''+entryorder]).toArray((data) => {
       if (data && data.length == 1) {
-        return applyModificationsOn(data[0]);
+        return this.applyModificationsOn(data[0]);
       } else {
         throw 'I say, reference not found #' + entryyear + '.' + entryorder;
       }
     });
   }
 
-  function applyModificationsOn(folder) {
+  applyModificationsOn(folder) {
     return folder;
   }
 
   // ------------------ Enhanced functions ------------------------------
-  function updateCheckpoint(cp) {
+  updateCheckpoint(cp) {
     var key = 'checkpoint';
     if (cp === false) {
-      return setSetting(key, '');
+      return this.setSetting(key, '');
     } else if (cp == '') {
       return Promise.resolve('');
     } else {
-      return getSetting(key, '').then(function(val) {
+      return this.getSetting(key, '').then((val) => {
         if (!val || val < cp) {
-          return setSetting(key, cp);
+          return this.setSetting(key, cp);
         } else {
           return val;
         }
@@ -101,7 +101,7 @@ export default function build_db() {
     }
   }
 
-  function storeRecord(record) {
+  storeRecord(record) {
     var req;
     var data;
     if (record['_deleted']) {
@@ -114,13 +114,11 @@ export default function build_db() {
       req = db.patients.put(record['record']);
       data = record['record'];
     }
-    req.then(function() {
-      return updateCheckpoint(record['checkpoint']);
+    req.then(() => {
+      return this.updateCheckpoint(record['checkpoint']);
     });
     // Fix the value in the 'thenable' chain
-    return req.then(function() {
-      return data;
-    });
+    return req.then(() => data);
   }
 
   /**
@@ -132,13 +130,13 @@ export default function build_db() {
    *                delete it otherwise, store bulk[].record into the store
                Come from (json.)_offline.data
    */
-  function bulkUpdate(bulk, feedback) {
+  bulkUpdate(bulk, feedback) {
     var prevPromise = Promise.resolve(); // initial Promise always resolve
     for (var key in bulk) {
       prevPromise = prevPromise.then(
-        (function(key) {
-          return new Promise(function(iresolve, ireject) {
-            storeRecord(bulk[key])
+        () => {
+          return new Promise((iresolve, ireject) => {
+            this.storeRecord(bulk[key])
               .then(function (data) {
                 if (feedback) {
                   feedback(data);
@@ -149,15 +147,14 @@ export default function build_db() {
               });
           });
         }
-        )(key)
       );
     }
     return prevPromise;
   }
 
   // ------------------ System functions ------------------------------
-  function getSetting(key, def) {
-    return db.settings.get('' + key).then(function(data) {
+  getSetting(key, def) {
+    return db.settings.get('' + key).then((data) => {
       if (data) {
         return data.value;
       } else {
@@ -167,34 +164,22 @@ export default function build_db() {
     });
   }
 
-  function setSetting(key, value) {
+  setSetting(key, value) {
     return db.settings.put({ key: '' + key, value: value})
-      .then(function() {
-        // Prefer to return the value than the key
-        return value;
-      });
+      .then(() => value);
   }
 
-  function clear() {
-    return db.patients.clear().then(function() {
+  clear() {
+    return db.patients.clear().then(() => {
       return db.settings.clear();
     });
   }
 
-  function version() {
+  version() {
     return db.verno;
   }
-
-  return {
-    'getFolder': getFolder,
-    'getByReference': getByReference,
-    'storeRecord': storeRecord,
-    'bulkUpdate': bulkUpdate,
-
-    'updateCheckpoint': updateCheckpoint,
-    'getSetting': getSetting,
-    'setSetting': setSetting,
-    'clear': clear,
-    'version': version,
-  };
 }
+
+// export default function build_db() {
+//   return new database();
+// }
