@@ -17,7 +17,10 @@ describe('DB/Patients', function() {
         expect(data.id).toBe('' + id);
         return data;
       })
-      .catch((e) => { console.error('It failed: ', e); })
+      .catch((e) => {
+        console.error('It failed: ', e);
+        return e;
+      })
       ;
   }
 
