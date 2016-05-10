@@ -19,8 +19,6 @@ set -e
 
 export XVFB_ARGS="--auto-servernum --server-args=-screen=1024x768x24 -ac +extension GLX +render -noreset"
 XVFB='xvfb-run'
-#--auto-servernum --server-args="-screen=1024x768x24 -ac +extension GLX +render -noreset" '
-# --server-args='-screen 0 1024x768x24 -ac +extension GLX +render -noreset'"
 
 mxvfb() {
   if [ "$DEBUG" != "" ]; then
@@ -56,7 +54,6 @@ testJSUnit() {
     ARGS="--single-run=false --debug"
   fi
   mxvfb ../../node_modules/.bin/karma start --single-run $ARGS "$@"
-
 }
 
 testEnd2End() {
