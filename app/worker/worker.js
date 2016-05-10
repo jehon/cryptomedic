@@ -67,8 +67,9 @@ function storeData(offdata) {
   var promise = Promise.resolve();
   if (offdata.reset) {
     promise = promise.then(function() {
-      console.info('Worker: resetting the database patients');
+      console.info('Worker: resetting the database patients', offdata.reset);
       return db.clear().then(function() {
+        syncWasFinal = false;
         db.updateCheckpoint('');
       });
     });
