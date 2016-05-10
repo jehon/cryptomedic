@@ -7,6 +7,7 @@ trait HandlesAuthorization
     /**
      * Create a new access response.
      *
+     * @param  string|null  $message
      * @return \Illuminate\Auth\Access\Response
      */
     protected function allow($message = null)
@@ -20,10 +21,10 @@ trait HandlesAuthorization
      * @param  string  $message
      * @return void
      *
-     * @throws \Illuminate\Auth\Access\UnauthorizedException
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     protected function deny($message = 'This action is unauthorized.')
     {
-        throw new UnauthorizedException($message);
+        throw new AuthorizationException($message);
     }
 }

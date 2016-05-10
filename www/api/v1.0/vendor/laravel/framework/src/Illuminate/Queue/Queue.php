@@ -4,7 +4,6 @@ namespace Illuminate\Queue;
 
 use Closure;
 use DateTime;
-use RuntimeException;
 use Illuminate\Support\Arr;
 use SuperClosure\Serializer;
 use Illuminate\Container\Container;
@@ -45,18 +44,6 @@ abstract class Queue
     public function laterOn($queue, $delay, $job, $data = '')
     {
         return $this->later($delay, $job, $data, $queue);
-    }
-
-    /**
-     * Marshal a push queue request and fire the job.
-     *
-     * @throws \RuntimeException
-     *
-     * @deprecated since version 5.1.
-     */
-    public function marshal()
-    {
-        throw new RuntimeException('Push queues only supported by Iron.');
     }
 
     /**
@@ -121,7 +108,13 @@ abstract class Queue
         }
 
         if (is_array($data)) {
-            array_walk($data, function (&$d) { $d = $this->prepareQueueableEntity($d); });
+            $data = array_map(function ($d) {
+                if (is_array($d)) {
+                    return $this->prepareQueueableEntities($d);
+                }
+
+                return $this->prepareQueueableEntity($d);
+            }, $data);
         }
 
         return $data;
@@ -147,7 +140,7 @@ abstract class Queue
      *
      * @param  \Closure  $job
      * @param  mixed     $data
-     * @return string
+     * @return array
      */
     protected function createClosurePayload($job, $data)
     {

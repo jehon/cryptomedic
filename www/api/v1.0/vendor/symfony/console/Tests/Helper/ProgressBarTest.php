@@ -14,20 +14,12 @@ namespace Symfony\Component\Console\Tests\Helper;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Helper\Helper;
 use Symfony\Component\Console\Output\StreamOutput;
-use Symfony\Component\Console\Tests;
 
+/**
+ * @group time-sensitive
+ */
 class ProgressBarTest extends \PHPUnit_Framework_TestCase
 {
-    protected function setUp()
-    {
-        Tests\with_clock_mock(true);
-    }
-
-    protected function tearDown()
-    {
-        Tests\with_clock_mock(false);
-    }
-
     public function testMultipleStart()
     {
         $bar = new ProgressBar($output = $this->getOutputStream());
@@ -102,6 +94,53 @@ class ProgressBarTest extends \PHPUnit_Framework_TestCase
             $this->generateOutput(' 11/11 [============================] 100%'),
             stream_get_contents($output->getStream())
         );
+    }
+
+    public function testFormat()
+    {
+        $expected =
+            $this->generateOutput('  0/10 [>---------------------------]   0%').
+            $this->generateOutput(' 10/10 [============================] 100%').
+            $this->generateOutput(' 10/10 [============================] 100%')
+        ;
+
+        // max in construct, no format
+        $bar = new ProgressBar($output = $this->getOutputStream(), 10);
+        $bar->start();
+        $bar->advance(10);
+        $bar->finish();
+
+        rewind($output->getStream());
+        $this->assertEquals($expected, stream_get_contents($output->getStream()));
+
+        // max in start, no format
+        $bar = new ProgressBar($output = $this->getOutputStream());
+        $bar->start(10);
+        $bar->advance(10);
+        $bar->finish();
+
+        rewind($output->getStream());
+        $this->assertEquals($expected, stream_get_contents($output->getStream()));
+
+        // max in construct, explicit format before
+        $bar = new ProgressBar($output = $this->getOutputStream(), 10);
+        $bar->setFormat('normal');
+        $bar->start();
+        $bar->advance(10);
+        $bar->finish();
+
+        rewind($output->getStream());
+        $this->assertEquals($expected, stream_get_contents($output->getStream()));
+
+        // max in start, explicit format before
+        $bar = new ProgressBar($output = $this->getOutputStream());
+        $bar->setFormat('normal');
+        $bar->start(10);
+        $bar->advance(10);
+        $bar->finish();
+
+        rewind($output->getStream());
+        $this->assertEquals($expected, stream_get_contents($output->getStream()));
     }
 
     public function testCustomizations()
@@ -194,7 +233,7 @@ class ProgressBarTest extends \PHPUnit_Framework_TestCase
             $this->generateOutput('  0/50 [>---------------------------]   0%').
             $this->generateOutput('  0/50 [>---------------------------]   0%').
             $this->generateOutput('  1/50 [>---------------------------]   2%').
-            $this->generateOutput('  2/50 [=>--------------------------]     '),
+            $this->generateOutput('  2/50 [=>--------------------------]'),
             stream_get_contents($output->getStream())
         );
     }
@@ -257,7 +296,7 @@ class ProgressBarTest extends \PHPUnit_Framework_TestCase
 
     public function testRedrawFrequency()
     {
-        $bar = $this->getMock('Symfony\Component\Console\Helper\ProgressBar', array('display'), array($output = $this->getOutputStream(), 6));
+        $bar = $this->getMock('Symfony\Component\Console\Helper\ProgressBar', array('display'), array($this->getOutputStream(), 6));
         $bar->expects($this->exactly(4))->method('display');
 
         $bar->setRedrawFrequency(2);
@@ -268,12 +307,28 @@ class ProgressBarTest extends \PHPUnit_Framework_TestCase
         $bar->advance(1);
     }
 
+    public function testRedrawFrequencyIsAtLeastOneIfZeroGiven()
+    {
+        $bar = $this->getMock('Symfony\Component\Console\Helper\ProgressBar', array('display'), array($this->getOutputStream()));
+
+        $bar->expects($this->exactly(2))->method('display');
+        $bar->setRedrawFrequency(0);
+        $bar->start();
+        $bar->advance();
+    }
+
+    public function testRedrawFrequencyIsAtLeastOneIfSmallerOneGiven()
+    {
+        $bar = $this->getMock('Symfony\Component\Console\Helper\ProgressBar', array('display'), array($this->getOutputStream()));
+
+        $bar->expects($this->exactly(2))->method('display');
+        $bar->setRedrawFrequency(0.9);
+        $bar->start();
+        $bar->advance();
+    }
+
     public function testMultiByteSupport()
     {
-        if (!function_exists('mb_strlen') || (false === $encoding = mb_detect_encoding('■'))) {
-            $this->markTestSkipped('The mbstring extension is needed for multi-byte support');
-        }
-
         $bar = new ProgressBar($output = $this->getOutputStream());
         $bar->start();
         $bar->setBarCharacter('■');
@@ -298,7 +353,7 @@ class ProgressBarTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(
             $this->generateOutput('  0/50 [>---------------------------]   0%').
             $this->generateOutput(' 25/50 [==============>-------------]  50%').
-            $this->generateOutput('                                          '),
+            $this->generateOutput(''),
             stream_get_contents($output->getStream())
         );
     }
@@ -496,16 +551,13 @@ class ProgressBarTest extends \PHPUnit_Framework_TestCase
         rewind($output->getStream());
         $this->assertEquals(
             $this->generateOutput(">---------------------------\nfoobar").
-            $this->generateOutput("=========>------------------\nfoobar                      ").
-            $this->generateOutput("                            \n                            ").
-            $this->generateOutput("============================\nfoobar                      "),
+            $this->generateOutput("=========>------------------\nfoobar").
+            "\x0D\x1B[2K\x1B[1A\x1B[2K".
+            $this->generateOutput("============================\nfoobar"),
             stream_get_contents($output->getStream())
         );
     }
 
-    /**
-     * @requires extension mbstring
-     */
     public function testAnsiColorsAndEmojis()
     {
         $bar = new ProgressBar($output = $this->getOutputStream(), 15);
@@ -533,17 +585,17 @@ class ProgressBarTest extends \PHPUnit_Framework_TestCase
             $this->generateOutput(
                 " \033[44;37m Starting the demo... fingers crossed  \033[0m\n".
                 '  0/15 '.$progress.str_repeat($empty, 26)."   0%\n".
-                " \xf0\x9f\x8f\x81  1 sec                          \033[44;37m 0 B \033[0m"
+                " \xf0\x9f\x8f\x81  < 1 sec                        \033[44;37m 0 B \033[0m"
             ).
             $this->generateOutput(
                 " \033[44;37m Looks good to me...                   \033[0m\n".
                 '  4/15 '.str_repeat($done, 7).$progress.str_repeat($empty, 19)."  26%\n".
-                " \xf0\x9f\x8f\x81  1 sec                       \033[41;37m 97 KiB \033[0m"
+                " \xf0\x9f\x8f\x81  < 1 sec                     \033[41;37m 97 KiB \033[0m"
             ).
             $this->generateOutput(
                 " \033[44;37m Thanks, bye                           \033[0m\n".
                 ' 15/15 '.str_repeat($done, 28)." 100%\n".
-                " \xf0\x9f\x8f\x81  1 sec                      \033[41;37m 195 KiB \033[0m"
+                " \xf0\x9f\x8f\x81  < 1 sec                    \033[41;37m 195 KiB \033[0m"
             ),
             stream_get_contents($output->getStream())
         );
@@ -607,6 +659,6 @@ class ProgressBarTest extends \PHPUnit_Framework_TestCase
     {
         $count = substr_count($expected, "\n");
 
-        return "\x0D".($count ? sprintf("\033[%dA", $count) : '').$expected;
+        return "\x0D\x1B[2K".($count ? str_repeat("\x1B[1A\x1B[2K", $count) : '').$expected;
     }
 }

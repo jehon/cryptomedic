@@ -145,7 +145,20 @@ abstract class Relation
      */
     public function getRelationCountQuery(Builder $query, Builder $parent)
     {
-        $query->select(new Expression('count(*)'));
+        return $this->getRelationQuery($query, $parent, new Expression('count(*)'));
+    }
+
+    /**
+     * Add the constraints for a relationship query.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  \Illuminate\Database\Eloquent\Builder  $parent
+     * @param  array|mixed $columns
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function getRelationQuery(Builder $query, Builder $parent, $columns = ['*'])
+    {
+        $query->select($columns);
 
         $key = $this->wrap($this->getQualifiedParentKeyName());
 
@@ -335,5 +348,15 @@ abstract class Relation
         }
 
         return $result;
+    }
+
+    /**
+     * Force a clone of the underlying query builder when cloning.
+     *
+     * @return void
+     */
+    public function __clone()
+    {
+        $this->query = clone $this->query;
     }
 }

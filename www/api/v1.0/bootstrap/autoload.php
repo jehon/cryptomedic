@@ -33,11 +33,15 @@ require __DIR__.'/../vendor/autoload.php';
 |
 */
 
-if (file_exists($compiledPath = __DIR__.'/cache/compiled.php'))
-{
-	require $compiledPath;
+$compiledPath = __DIR__.'/cache/compiled.php';
+if (file_exists($compiledPath)) {
+    require $compiledPath;
 }
-elseif (file_exists($compiledPath = __DIR__.'/../storage/framework/compiled.php'))
-{
-	require $compiledPath;
-}
+// if (file_exists($compiledPath = __DIR__.'/cache/compiled.php'))
+// {
+// 	require $compiledPath;
+// }
+// elseif (file_exists($compiledPath = __DIR__.'/../storage/framework/compiled.php'))
+// {
+// 	require $compiledPath;
+// }

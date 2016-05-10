@@ -1004,7 +1004,7 @@ abstract class PHPUnit_Framework_TestCase extends PHPUnit_Framework_Assert imple
         if ($this->prophet !== null) {
             try {
                 $this->prophet->checkPredictions();
-            } catch (Throwable $t) {
+            } catch (Throwable $e) {
                 /* Intentionally left empty */
             } catch (Exception $e) {
                 /* Intentionally left empty */
@@ -2058,10 +2058,14 @@ abstract class PHPUnit_Framework_TestCase extends PHPUnit_Framework_Assert imple
         $backupGlobals = $this->backupGlobals === null || $this->backupGlobals === true;
 
         if ($this->disallowChangesToGlobalState) {
-            $this->compareGlobalStateSnapshots(
-                $this->snapshot,
-                $this->createGlobalStateSnapshot($backupGlobals)
-            );
+            try {
+                $this->compareGlobalStateSnapshots(
+                    $this->snapshot,
+                    $this->createGlobalStateSnapshot($backupGlobals)
+                );
+            } catch (PHPUnit_Framework_RiskyTestError $rte) {
+                // Intentionally left empty
+            }
         }
 
         $restorer = new Restorer;
@@ -2075,6 +2079,10 @@ abstract class PHPUnit_Framework_TestCase extends PHPUnit_Framework_Assert imple
         }
 
         $this->snapshot = null;
+
+        if (isset($rte)) {
+            throw $rte;
+        }
     }
 
     /**
