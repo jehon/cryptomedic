@@ -4,15 +4,15 @@ module.exports = function(config) {
       'karma-chrome-launcher',
       'karma-firefox-launcher',
       'karma-jasmine',
-      'karma-junit-reporter',
+      'karma-webpack',
       'karma-coverage',
-      'karma-webpack'
-      // 'karma-html-reporter'
+      'karma-junit-reporter',
+      'karma-html-reporter'
     ],
     reporters : [
       'progress',
-      'coverage'
-      // 'html'
+      'coverage',
+      'html'
     ],
 
     basePath : '../../',
@@ -22,7 +22,6 @@ module.exports = function(config) {
       'www/build/bundle-*.js',
       'www/static/js/application.js',
       'www/static/js/calculations.js',
-      // 'tests/20_js/**/*.js',
       'tests/20_js/**/test_*.js',
       { pattern : 'tests/20_js/mocks/*.json', watched : true, served : true, included : false }
     ],
@@ -32,11 +31,6 @@ module.exports = function(config) {
     frameworks : [ 'jasmine' ],
 
     browsers: [ 'Firefox' ], // See later
-
-    junitReporter : {
-      outputFile : 'tmp/js/unit.xml',
-      suite : 'unit'
-    },
 
     preprocessors: {
       // 'app/js/*.js': [ 'coverage' ],
@@ -71,20 +65,24 @@ module.exports = function(config) {
       noInfo: true
     },
 
+    junitReporter : {
+      outputFile : __dirname + '/../../tmp/js/unit.xml',
+      suite : 'unit'
+    },
+
     coverageReporter: {
       type : 'html',
-      dir : 'tmp/js/'
-    }
+      dir : __dirname + '/../../tmp/js/coverage/'
+    },
 
     // htmlReporter: {
-    //   outputDir: 'tmp',
-    //   templatePath: '../tmp/jasmine_template.html'
+    //   outputDir: '../../tmp/js/html/',
+    //   // templatePath: '../tmp/jasmine_template.html'
     // }
   };
 
   var which = require('which');
   which('chrome', function(err, result) {
-    console.log(result);   // prints '/bin/ls' on mac
     if (result) {
       configuration.browsers.push('Chrome');
     }
