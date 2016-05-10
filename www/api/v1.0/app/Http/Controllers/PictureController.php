@@ -51,7 +51,7 @@ class PictureController extends Controller {
 		global $myconfig;
 
     // Constants
-    $CACHE_DIR = $myconfig['folders']['cache'];
+    $CACHE_DIR = $myconfig['folders']['live'] . "/cache/";
     if (!is_dir($CACHE_DIR)) {
     	mkdir($CACHE_DIR, 0777, true);
     }
