@@ -3,6 +3,7 @@
 namespace Illuminate\Auth\Passwords;
 
 use Closure;
+use Illuminate\Support\Arr;
 use UnexpectedValueException;
 use Illuminate\Contracts\Auth\UserProvider;
 use Illuminate\Contracts\Mail\Mailer as MailerContract;
@@ -229,7 +230,7 @@ class PasswordBroker implements PasswordBrokerContract
      */
     public function getUser(array $credentials)
     {
-        $credentials = array_except($credentials, ['token']);
+        $credentials = Arr::except($credentials, ['token']);
 
         $user = $this->users->retrieveByCredentials($credentials);
 
@@ -241,11 +242,45 @@ class PasswordBroker implements PasswordBrokerContract
     }
 
     /**
+     * Create a new password reset token for the given user.
+     *
+     * @param  CanResetPasswordContract $user
+     * @return string
+     */
+    public function createToken(CanResetPasswordContract $user)
+    {
+        return $this->tokens->create($user);
+    }
+
+    /**
+     * Delete the given password reset token.
+     *
+     * @param  string  $token
+     * @return void
+     */
+    public function deleteToken($token)
+    {
+        $this->tokens->delete($token);
+    }
+
+    /**
+     * Validate the given password reset token.
+     *
+     * @param  CanResetPasswordContract $user
+     * @param  string $token
+     * @return bool
+     */
+    public function tokenExists(CanResetPasswordContract $user, $token)
+    {
+        return $this->tokens->exists($user, $token);
+    }
+
+    /**
      * Get the password reset token repository implementation.
      *
      * @return \Illuminate\Auth\Passwords\TokenRepositoryInterface
      */
-    protected function getRepository()
+    public function getRepository()
     {
         return $this->tokens;
     }

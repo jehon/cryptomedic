@@ -4,16 +4,14 @@ use App\Http\Controllers\Controller;
 use DB;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Request;
-use App\Bill;
 
-#require_once(__DIR__ . "/../../../../php/references.php");
+use App\Bill;
 use App\References;
 
 class ReportController extends Controller {
 	protected $params = array();
 	protected $result = array();
 
-// 	private $internalWhenFilter = " (1=1) ";
 	protected $internalWhenFrom = "";
 	protected $internalWhenTo = "";
 	protected $sqlBindParams = array();
@@ -69,7 +67,7 @@ class ReportController extends Controller {
 
 	public function __construct() {
 		// Add a specific filter to treat parameters
-		$this->beforeFilter(function() {
+		// $this->beforeFilter(function() {
 			$this->params = Request::all();
 
 			if (array_key_exists('date', $this->params)) {
@@ -96,7 +94,7 @@ class ReportController extends Controller {
 			}
 
 			$this->result['params'] = array();
-		});
+		// });
 	}
 
 	public function getReportParams($name, $default = null) {

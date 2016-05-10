@@ -4,6 +4,7 @@ namespace Illuminate\Foundation\Auth;
 
 use Illuminate\Http\Request;
 use Illuminate\Cache\RateLimiter;
+use Illuminate\Auth\Events\Lockout;
 use Illuminate\Support\Facades\Lang;
 
 trait ThrottlesLogins
@@ -17,7 +18,7 @@ trait ThrottlesLogins
     protected function hasTooManyLoginAttempts(Request $request)
     {
         return app(RateLimiter::class)->tooManyAttempts(
-            $request->input($this->loginUsername()).$request->ip(),
+            $this->getThrottleKey($request),
             $this->maxLoginAttempts(), $this->lockoutTime() / 60
         );
     }
@@ -31,7 +32,7 @@ trait ThrottlesLogins
     protected function incrementLoginAttempts(Request $request)
     {
         app(RateLimiter::class)->hit(
-            $request->input($this->loginUsername()).$request->ip()
+            $this->getThrottleKey($request)
         );
     }
 
@@ -43,11 +44,10 @@ trait ThrottlesLogins
      */
     protected function retriesLeft(Request $request)
     {
-        $attempts = app(RateLimiter::class)->attempts(
-            $request->input($this->loginUsername()).$request->ip()
+        return app(RateLimiter::class)->retriesLeft(
+            $this->getThrottleKey($request),
+            $this->maxLoginAttempts()
         );
-
-        return $this->maxLoginAttempts() - $attempts + 1;
     }
 
     /**
@@ -58,11 +58,9 @@ trait ThrottlesLogins
      */
     protected function sendLockoutResponse(Request $request)
     {
-        $seconds = app(RateLimiter::class)->availableIn(
-            $request->input($this->loginUsername()).$request->ip()
-        );
+        $seconds = $this->secondsRemainingOnLockout($request);
 
-        return redirect($this->loginPath())
+        return redirect()->back()
             ->withInput($request->only($this->loginUsername(), 'remember'))
             ->withErrors([
                 $this->loginUsername() => $this->getLockoutErrorMessage($seconds),
@@ -83,6 +81,19 @@ trait ThrottlesLogins
     }
 
     /**
+     * Get the lockout seconds.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return int
+     */
+    protected function secondsRemainingOnLockout(Request $request)
+    {
+        return app(RateLimiter::class)->availableIn(
+            $this->getThrottleKey($request)
+        );
+    }
+
+    /**
      * Clear the login locks for the given user credentials.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -91,8 +102,19 @@ trait ThrottlesLogins
     protected function clearLoginAttempts(Request $request)
     {
         app(RateLimiter::class)->clear(
-            $request->input($this->loginUsername()).$request->ip()
+            $this->getThrottleKey($request)
         );
+    }
+
+    /**
+     * Get the throttle key for the given request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return string
+     */
+    protected function getThrottleKey(Request $request)
+    {
+        return mb_strtolower($request->input($this->loginUsername())).'|'.$request->ip();
     }
 
     /**
@@ -113,5 +135,16 @@ trait ThrottlesLogins
     protected function lockoutTime()
     {
         return property_exists($this, 'lockoutTime') ? $this->lockoutTime : 60;
+    }
+
+    /**
+     * Fire an event when a lockout occurs.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return void
+     */
+    protected function fireLockoutEvent(Request $request)
+    {
+        event(new Lockout($request));
     }
 }

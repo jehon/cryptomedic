@@ -24,8 +24,6 @@ namespace Symfony\Component\EventDispatcher;
  * @author Fabien Potencier <fabien@symfony.com>
  * @author Jordi Boggiano <j.boggiano@seld.be>
  * @author Jordan Alliot <jordan.alliot@gmail.com>
- *
- * @api
  */
 class EventDispatcher implements EventDispatcherInterface
 {
@@ -40,9 +38,6 @@ class EventDispatcher implements EventDispatcherInterface
         if (null === $event) {
             $event = new Event();
         }
-
-        $event->setDispatcher($this);
-        $event->setName($eventName);
 
         if ($listeners = $this->getListeners($eventName)) {
             $this->doDispatch($listeners, $eventName, $event);
@@ -75,6 +70,22 @@ class EventDispatcher implements EventDispatcherInterface
         }
 
         return array_filter($this->sorted);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getListenerPriority($eventName, $listener)
+    {
+        if (!isset($this->listeners[$eventName])) {
+            return;
+        }
+
+        foreach ($this->listeners[$eventName] as $priority => $listeners) {
+            if (false !== ($key = array_search($listener, $listeners, true))) {
+                return $priority;
+            }
+        }
     }
 
     /**
@@ -157,10 +168,10 @@ class EventDispatcher implements EventDispatcherInterface
     protected function doDispatch($listeners, $eventName, Event $event)
     {
         foreach ($listeners as $listener) {
-            call_user_func($listener, $event, $eventName, $this);
             if ($event->isPropagationStopped()) {
                 break;
             }
+            call_user_func($listener, $event, $eventName, $this);
         }
     }
 
@@ -171,8 +182,6 @@ class EventDispatcher implements EventDispatcherInterface
      */
     private function sortListeners($eventName)
     {
-        $this->sorted[$eventName] = array();
-
         krsort($this->listeners[$eventName]);
         $this->sorted[$eventName] = call_user_func_array('array_merge', $this->listeners[$eventName]);
     }

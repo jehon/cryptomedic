@@ -8,6 +8,13 @@ use Illuminate\Database\Grammar as BaseGrammar;
 class Grammar extends BaseGrammar
 {
     /**
+     * The grammar specific operators.
+     *
+     * @var array
+     */
+    protected $operators = [];
+
+    /**
      * The components that make up a select clause.
      *
      * @var array
@@ -35,11 +42,17 @@ class Grammar extends BaseGrammar
      */
     public function compileSelect(Builder $query)
     {
+        $original = $query->columns;
+
         if (is_null($query->columns)) {
             $query->columns = ['*'];
         }
 
-        return trim($this->concatenate($this->compileComponents($query)));
+        $sql = trim($this->concatenate($this->compileComponents($query)));
+
+        $query->columns = $original;
+
+        return $sql;
     }
 
     /**
@@ -92,7 +105,7 @@ class Grammar extends BaseGrammar
      *
      * @param  \Illuminate\Database\Query\Builder  $query
      * @param  array  $columns
-     * @return string
+     * @return string|null
      */
     protected function compileColumns(Builder $query, $columns)
     {
@@ -134,6 +147,17 @@ class Grammar extends BaseGrammar
         foreach ($joins as $join) {
             $table = $this->wrapTable($join->table);
 
+            $type = $join->type;
+
+            // Cross joins generate a cartesian product between this first table and a joined
+            // table. In case the user didn't specify any "on" clauses on the join we will
+            // append this SQL and jump right back into the next iteration of this loop.
+            if ($type === 'cross' &&  ! $join->clauses) {
+                $sql[] = "cross join $table";
+
+                continue;
+            }
+
             // First we need to build all of the "on" clauses for the join. There may be many
             // of these clauses so we will need to iterate through each one and build them
             // separately, then we'll join them up into a single string when we're done.
@@ -150,8 +174,6 @@ class Grammar extends BaseGrammar
 
             $clauses = implode(' ', $clauses);
 
-            $type = $join->type;
-
             // Once we have everything ready to go, we will just concatenate all the parts to
             // build the final join statement SQL for the query and we can then return the
             // final clause back to the callers as a single, stringified join statement.
@@ -164,11 +186,15 @@ class Grammar extends BaseGrammar
     /**
      * Create a join clause constraint segment.
      *
-     * @param  array   $clause
+     * @param  array  $clause
      * @return string
      */
     protected function compileJoinConstraint(array $clause)
     {
+        if ($clause['nested']) {
+            return $this->compileNestedJoinConstraint($clause);
+        }
+
         $first = $this->wrap($clause['first']);
 
         if ($clause['where']) {
@@ -182,6 +208,27 @@ class Grammar extends BaseGrammar
         }
 
         return "{$clause['boolean']} $first {$clause['operator']} $second";
+    }
+
+    /**
+     * Create a nested join clause constraint segment.
+     *
+     * @param  array  $clause
+     * @return string
+     */
+    protected function compileNestedJoinConstraint(array $clause)
+    {
+        $clauses = [];
+
+        foreach ($clause['join']->clauses as $nestedClause) {
+            $clauses[] = $this->compileJoinConstraint($nestedClause);
+        }
+
+        $clauses[0] = $this->removeLeadingBoolean($clauses[0]);
+
+        $clauses = implode(' ', $clauses);
+
+        return "{$clause['boolean']} ({$clauses})";
     }
 
     /**
@@ -609,7 +656,6 @@ class Grammar extends BaseGrammar
      * Compile an exists statement into SQL.
      *
      * @param \Illuminate\Database\Query\Builder $query
-     *
      * @return string
      */
     public function compileExists(Builder $query)
@@ -797,5 +843,15 @@ class Grammar extends BaseGrammar
     protected function removeLeadingBoolean($value)
     {
         return preg_replace('/and |or /i', '', $value, 1);
+    }
+
+    /**
+     * Get the gramar specific operators.
+     *
+     * @return array
+     */
+    public function getOperators()
+    {
+        return $this->operators;
     }
 }
