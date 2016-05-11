@@ -17,7 +17,7 @@ touch /var/log/apache2/error.log               2>/dev/null || true
 touch /var/log/apache2/access.log              2>/dev/null || true
 touch /var/log/apache2/other_vhosts_access.log 2>/dev/null || true
 touch /tmp/php_errors.log                      2>/dev/null || true
-chmod a+rw /tmp/email.txt /tmp/php_errors.log  2>/dev/null || true
+chmod a+rw /tmp/emails.txt /tmp/php_errors.log 2>/dev/null || true
 
 if [ "$1" = "extended" ]; then
   EXTENDED=-c  -cS apache --label "[http]"   -I /var/log/apache2/access.log
