@@ -11,14 +11,10 @@ export default function myFrontFetch({ url: url, init: init, data: data }) {
       dispatch(catalog.CONNECTION_SUCCESS);
       if (json._offline) {
         // Send data to the worker...
-      //   return database.storeRecord({ record: json })
-      // Store also the received record...
-      //     .then(function() { return json; });
+        (new MyWorker()).store(json._offline);
         delete(json._offline);
-        return json;
-      } else {
-        return json;
       }
+      return json;
     },
     (httpErrorCode) => {
       switch(httpErrorCode) {

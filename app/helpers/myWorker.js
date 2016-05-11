@@ -38,7 +38,15 @@ export default class MyWorker {
     return data;
   }
 
-  store(data) {
+  doStore(data) {
     return this.post('store', data);
+  }
+
+  doSync() {
+    return this.post('sync');
+  }
+
+  doReSync() {
+    return this.post('resync');
   }
 }
