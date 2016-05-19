@@ -3,6 +3,7 @@ module.exports = {
     client
       .page.cryptomedic().authenticate("readonly")
       .myClick("#logout")
+      .waitForElementNotPresent("#logout")
       .page.cryptomedic().authenticate("readonly")
       .end();
   },
