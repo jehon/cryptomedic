@@ -15,6 +15,11 @@ date=`date \+\%Y\%m\%d\%H\%M\%N`
 
 FILENAME="/tmp/emails.txt"
 
+mkdir -p "/tmp/emails"
+chmod a+rwx "/tmp/emails"
+
+FILENAME="/tmp/emails/$date.email"
+
 {
   echo "********************** $date [`whoami`] *************************"
   echo "********************** $0 $*"
