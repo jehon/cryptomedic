@@ -10,8 +10,12 @@
   if (array_key_exists('email', $_REQUEST)) {
     ?>
       <a href='?'>Close</a><br>
+      <pre>
+      <?php
+        readfile($list[$_REQUEST['email']]);
+      ?>
+      </pre>
     <?php
-      readfile($list[$_REQUEST['email']]);
   }
 ?>
   <h2>List of emails</h2>
