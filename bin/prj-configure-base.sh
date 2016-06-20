@@ -31,7 +31,7 @@ fi
 
 if [ "$(ls -A /vagrant/conf/repo)" ]; then
   echo "Installing custom debs"
-  dpkg -i /vagrant/conf/repo/*.debs
+  dpkg -i /vagrant/conf/repo/*.deb
   apt-get install -f
 fi
 
