@@ -20,6 +20,19 @@ export DISPLAY=":99.0"
 export PRJ_DIR=$PRJ_DIR
 export SCRIPT_DIR=$SCRIPT_DIR
 
+# Set the locale
+# http://serverfault.com/questions/362903/how-do-you-set-a-locale-non-interactively-on-debian-ubuntu
+if [ "$LC_ALL" != "" ]; then
+  if locale -a | grep "$LC_ALL" > /dev/null; then
+    echo "Locale $LC_ALL already configured"
+  else
+    echo "Generating locale $LC_ALL"
+    locale-gen "$LC_ALL"
+  fi
+else
+  echo "No locale found in LC_ALL"
+fi
+
 cd /vagrant
 PROFILE
 chmod 777 /etc/profile.d/vagrant-append-project.sh
