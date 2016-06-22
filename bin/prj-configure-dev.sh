@@ -11,6 +11,7 @@ set -e
 if ([ "$1" == "" ] || [ "$1" = "install" ]); then
   # Developpement packages
   DEBIAN_FRONTEND=noninteractive apt-get install --yes --force-yes apache2 \
+    php5-xdebug     \
     firefox         \
     xvfb            \
     phpmyadmin      \
