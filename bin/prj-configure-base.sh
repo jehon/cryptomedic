@@ -29,6 +29,12 @@ if [ "$1" != "offline" ]; then
   # end
 fi
 
+if [ "$(ls -A /vagrant/conf/repo)" ]; then
+  echo "Installing custom debs"
+  dpkg -i /vagrant/conf/repo/*.deb
+  apt-get install -f
+fi
+
 if [ "$1" != "offline" ] && [ -e "$PRJ_DIR"/composer.json ] && [ ! -x /usr/local/bin/composer.phar ]; then
   echo -e "\e[1m\e[45mGetting the composer\e[0m"
   curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin
