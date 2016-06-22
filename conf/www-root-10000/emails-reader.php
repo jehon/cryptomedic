@@ -5,17 +5,18 @@
 <?php
   define('ROOT', '/tmp/emails/');
 
-  $list = $_SESSION['list'];
-
-  if (array_key_exists('email', $_REQUEST)) {
-    ?>
-      <a href='?'>Close</a><br>
-      <pre>
-      <?php
-        readfile($list[$_REQUEST['email']]);
+  if (array_key_exists('list', $_SESSION)) {
+    $list = $_SESSION['list'];
+    if (array_key_exists('email', $_REQUEST)) {
       ?>
-      </pre>
-    <?php
+        <a href='?'>Close</a><br>
+        <pre>
+        <?php
+          readfile($list[$_REQUEST['email']]);
+        ?>
+        </pre>
+      <?php
+    }
   }
 ?>
   <h2>List of emails</h2>
