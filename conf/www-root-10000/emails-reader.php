@@ -1,5 +1,6 @@
 <?php
   session_start();
+  header('Content-Type: text/html; charset=utf-8');
 ?>
 <H1>Virtually sent emails</H1>
 <?php
