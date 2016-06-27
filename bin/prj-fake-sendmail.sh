@@ -22,7 +22,7 @@ FILENAME="/tmp/emails/$date.email"
 
 {
   echo "********************** $date [`whoami`] *************************"
-  echo "********************** $0 $*"
+  echo "* $0 $* "
   cat -
 
 #while read line; do
