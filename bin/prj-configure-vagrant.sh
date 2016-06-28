@@ -77,6 +77,11 @@ cp --force $PRJ_DIR/conf/phpmyadmin.inc.php         /etc/phpmyadmin/conf.d/phpmy
 # Configure phpmyadmin
 cat /usr/share/doc/phpmyadmin/examples/create_tables.sql.gz | gunzip | mysql
 
+cat <<EOF > /etc/php5/apache2/conf.d/99-vagrant.ini
+xdebug.max_nesting_level = 256
+EOF
+
+
 # Enable xvfb
 
 # Hook the fake sendmail
