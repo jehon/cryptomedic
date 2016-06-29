@@ -29,7 +29,7 @@ if [ "$1" != "offline" ]; then
   # end
 fi
 
-if [ "$(ls -A /vagrant/conf/repo)" ]; then
+if [ "$(ls -A /vagrant/conf/repo/*.deb)" ]; then
   echo "Installing custom debs"
   dpkg -i /vagrant/conf/repo/*.deb
   apt-get install -f
