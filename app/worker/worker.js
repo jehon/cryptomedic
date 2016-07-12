@@ -129,6 +129,9 @@ function running() {
     clearTimeout(syncTimer);
     syncTimer = false;
   }
+  if (syncRunning) {
+    throw new Error('Worker: Sync already running');
+  }
   syncRunning = true;
   return Promise.resolve();
 }
