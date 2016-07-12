@@ -1,3 +1,4 @@
+/* eslint-env worker */
 /*
     Phases:
     - show conflicts (on folder update) -> simple reload page?
