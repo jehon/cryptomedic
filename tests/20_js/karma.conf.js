@@ -75,10 +75,10 @@ module.exports = function(config) {
       dir : __dirname + '/../../tmp/js/coverage/'
     },
 
-    // htmlReporter: {
-    //   outputDir: '../../tmp/js/html/',
+    htmlReporter: {
+      outputDir: __dirname + '/../../tmp/js/html/',
     //   // templatePath: '../tmp/jasmine_template.html'
-    // }
+    }
   };
 
   var which = require('which');
