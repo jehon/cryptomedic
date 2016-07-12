@@ -38,13 +38,14 @@ var unmanaged = []
 var config = {
   entry: [ ]
     .concat([
-      './node_modules/bootstrap/dist/css/bootstrap.css',
-      './node_modules/jquery-ui/themes/ui-lightness/jquery-ui.css'
+      './node_modules/bootstrap/less/bootstrap.less',
+      './node_modules/jquery-ui/themes/base/base.css',
+      './node_modules/jquery-ui/themes/base/datepicker.css'
     ])
     .concat(glob.sync('./app/css/*.css'))
     .concat([
       'expose?jQuery!./node_modules/jquery/dist/jquery.js',
-      './node_modules/jquery-ui/datepicker.js',
+      './node_modules/jquery-ui/ui/widgets/datepicker.js',
       './node_modules/angular/angular.js',
       './node_modules/angular-route/angular-route.min.js',
       './node_modules/html2canvas/dist/html2canvas.js',
@@ -100,7 +101,11 @@ var config = {
       },
       {
         test: /\.css$/,
-        loader: 'style-loader!css-loader'
+        loaders: ['style', 'css']
+      },
+      {
+        test: /\.less$/,
+        loaders: ['style', 'css', 'less']
       },
       {
         test: /\.svg($|\?)|\.jp(e)?g|\.gif$|.png$/,
