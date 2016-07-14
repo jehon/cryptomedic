@@ -14,7 +14,7 @@ function goWithUri($uri) {
   require __DIR__ . "/../www/api/v" . constant("PROXY_VERSION") . "/public/index.php";
 }
 
-if ($argc != 2) {
+if ($argc < 2) {
   mylog("???", "Problem: no uri specified");
   die("Problem: no uri specified");
 }
@@ -31,30 +31,4 @@ if (substr($uri, 0, strlen(constant("PROXY_TEMPLATE_ROOT"))) == constant("PROXY_
   return goWithUri($uri);
 }
 
-// Redirect to api
-// if (substr($uri, 0, 6) == "/api/v") {
-//   preg_match("%^/api/(v[^/]*)/%", $uri, $version);
-//   // $version[0] is the matched part, it is too general
-//   return goWithUri($uri);
-// }
-
-// $file = __DIR__ . "/../www" . $uri;
-// if (file_exists($file)) {
-//   switch(pathinfo($file, PATHINFO_EXTENSION)) {
-//     case 'html':
-//       header("Content-type: text/html");
-//       break;
-//     case 'css':
-//       header("Content-type: text/css");
-//       break;
-//     case 'js':
-//       header("Content-type: text/script");
-//       break;
-//     default:
-//       header("Content-type: " . finfo_file(finfo_open(FILEINFO_MIME_TYPE), $file));
-//   }
-//   readfile($file);
-//   return report();
-// }
-
-return report($uri, "$file does not exists");
+return mylog($uri, "$file does not exists");
