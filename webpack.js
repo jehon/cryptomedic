@@ -96,7 +96,15 @@ var config = {
           // /templates/templates/reports/surgery.php
           'ng-cache?-removeEmptyAttributes&prefix=templates:/**/api/v1.0/templates/',
           // 'html-minify',
-          'php-loader?' + JSON.stringify({ proxy: __dirname + '/tests/router.php' })
+          'php-loader?' + JSON.stringify({
+            proxy: __dirname + '/loader.php',
+            //args: [ '--httplive=http://localhost:1080/' ],
+            dependancies: [
+              __dirname + '/www/api/v1.0/app/**/*.php',
+              __dirname + '/www/templates/**/*.php'
+            ],
+            debug: true
+          })
         ]
       },
       {
