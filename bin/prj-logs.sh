@@ -1,8 +1,5 @@
 #!/bin/bash
 
-SCRIPT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
-PRJ_DIR=$(dirname "$SCRIPT_DIR")
-
 if [ "$1" = "help" ]; then
   cat <<-EOL
     This script show the logs of the application:
