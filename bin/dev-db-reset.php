@@ -28,4 +28,4 @@
   }
 
 
-  system(__DIR__ . "/prj-db-upgrade.sh");
+  system(__DIR__ . "/prj-db-upgrade");
