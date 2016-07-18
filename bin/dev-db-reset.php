@@ -24,7 +24,7 @@
     $db->runPrepareSqlStatement("GRANT ALL PRIVILEGES ON " . $myconfig['database']['schema'] . ".* TO '" . $myconfig['database']['username'] . "'@'%' IDENTIFIED BY '" . $myconfig['database']['password'] . "'");
     $db->runPrepareSqlStatement("USE " . $myconfig['database']['schema']);
 
-    $db->runOne(__DIR__ . "/../conf/database/dev/testing.sql");
+    $db->runOne(__DIR__ . "/../conf/database/base.sql");
   }
 
 
