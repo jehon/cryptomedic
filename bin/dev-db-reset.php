@@ -6,7 +6,7 @@
   require_once(__DIR__ . "/../vendor/autoload.php");
   require_once(__DIR__ . "/../vendor/jehon/maintenance/lib/is_served_locally.php");
 
-  require_once("/var/www/config.php");
+  require_once(__DIR__ . "/../config.php");
 
   \Jehon\Maintenance\TryCatch::run();
 
@@ -27,9 +27,5 @@
     $db->runOne(__DIR__ . "/../conf/database/dev/testing.sql");
   }
 
-  $db->runOne(__DIR__ . "/../conf/database");
-  $db->runOne(__DIR__ . "/../conf/database/always.sql");
 
-  if (\Jehon\Maintenance\Lib\isServedLocally()) {
-    $db->runOne(__DIR__ . "/../conf/database/dev");
-  }
+  system(__DIR__ . "/prj-db-upgrade.sh");
