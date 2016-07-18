@@ -1,0 +1,21 @@
+#!/usr/bin/php
+
+<?php
+  require_once(__DIR__ . "/../vendor/autoload.php");
+
+  require_once(__DIR__ . "/../config.php");
+
+  global $myconfig;
+
+  $db = new \Jehon\Maintenance\Database(
+      "mysql:host=" . $myconfig['database']['host'],
+      'root',
+      $myconfig['database']['rootpwd']
+    );
+
+  $db->runOne(__DIR__ . "/../conf/database/versions/");
+  $db->runOne(__DIR__ . "/../conf/database/always/");
+
+  // if (\Jehon\Maintenance\Lib\isServedLocally()) {
+  //   $db->runOne(__DIR__ . "/../conf/database/always-dev/");
+  // }
