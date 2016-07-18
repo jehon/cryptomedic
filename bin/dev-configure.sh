@@ -58,9 +58,9 @@ if ([ "$1" != "offline" ]); then
   fi
 
   # Install project custom debs
-  if [ "$(ls -A /vagrant/conf/repo/*.deb 2>/dev/null)" ]; then
+  if [ "$(ls -A /vagrant/conf/custom-debs/*.deb 2>/dev/null)" ]; then
     echo "Installing custom debs"
-    dpkg -i /vagrant/conf/repo/*.deb
+    dpkg -i /vagrant/conf/custom-debs/*.deb
     apt-get install -f
   fi
 fi
