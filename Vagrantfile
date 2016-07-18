@@ -1,6 +1,6 @@
 # Fix the locale before doing anything...
 # @See https://www.vagrantup.com/docs/vagrantfile/tips.html
-ENV["LC_ALL"] = "en_US.utf8"
+#ENV["LC_ALL"] = "en_US.utf8"
 
 
 # Configure the vagrant proxyconf plugin:
@@ -40,4 +40,7 @@ Vagrant.configure(2) do |config|
 
   config.vm.provision "shell", inline:
     "chmod +x /vagrant/bin/dev-configure.sh && /vagrant/bin/dev-configure.sh"
+
+  config.vm.provision "shell", inline:
+    "locale-gen " + ENV['LC_ALL']
 end
