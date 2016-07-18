@@ -5,20 +5,20 @@ PRJ_DIR=$(dirname "$PRJ_DIR")
 
 if [ "$1" = "help" ]; then
   cat <<-EOL
-  Backup the actual dev database into backups/dev/
+  Backup the actual dev database into backups/[hostname]/
 EOL
   exit 0
 fi
 
 set -e
 
-DB=`php $PRJ_DIR/conf/config-dev.php 'database.schema'`
+DB=`php $PRJ_DIR/config.php 'database.schema'`
 if [ -z "$DB" ]; then
   echo "Missing $DB in config.php"
   exit 1
 fi
 
-ROOT="$PRJ_DIR/backups/dev/"
+ROOT="$PRJ_DIR/backups/`hostname`/"
 mkdir -p "$ROOT"
 
 TS=`/bin/date "+%Y-%m-%d-%H.%M.%S"`
