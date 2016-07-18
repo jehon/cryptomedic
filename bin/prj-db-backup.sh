@@ -12,7 +12,7 @@ fi
 
 set -e
 
-DB=`php $PRJ_DIR/conf/config-dev.php 'database.schema'`
+DB=`php $PRJ_DIR/config.php 'database.schema'`
 if [ -z "$DB" ]; then
   echo "Missing $DB in config.php"
   exit 1
