@@ -7,21 +7,6 @@ PRJ_DIR="/vagrant"
 # Stop on error
 set -e
 
-# Set the host locale
-# http://serverfault.com/questions/362903/how-do-you-set-a-locale-non-interactively-on-debian-ubuntu
-env
-echo "LC_ALL is -$LC_ALL-"
-if [ "$LC_ALL" != "" ]; then
-  if locale -a | grep "$LC_ALL" > /dev/null; then
-    echo "Locale $LC_ALL already configured"
-  else
-    echo "Generating locale $LC_ALL"
-    sudo locale-gen "$LC_ALL"
-  fi
-else
-  echo "No locale found in LC_ALL"
-fi
-
 # Manage user rights
 usermod -a -G adm vagrant
 
@@ -113,7 +98,5 @@ fi
 /etc/init.d/apache2 restart
 
 ## TODO: fake email through smtp server ???
-
-env
 
 true
