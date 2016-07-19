@@ -66,6 +66,7 @@
     "build": "webpack --config webpack.js -p",
     "builddev": "webpack --config webpack.js -d",
     "dev-server": "node server.js | grep 'built\\|error\\|VALID'",
+    "dev-server-log": "node server.js",
     "post-upgrade": "node bin/setselenium.js",
     "post-install": "node bin/setselenium.js"
   }
