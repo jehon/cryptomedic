@@ -1,9 +1,9 @@
 #!/bin/bash
 
-PRJ_DIR="/vagrant"
-
 # Stop on error
 set -e
+
+PRJ_DIR="/vagrant"
 
 DBROOT=`php $PRJ_DIR/config.php 'database.rootpwd'`
 DBNAME=`php $PRJ_DIR/config.php 'database.schema'`
