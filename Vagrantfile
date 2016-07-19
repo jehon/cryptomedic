@@ -29,15 +29,17 @@ Vagrant.configure(2) do |config|
 
   config.vm.network "forwarded_port", auto_correct: true, guest:    80, host: 11080 # Default config
   config.vm.network "forwarded_port", auto_correct: true, guest:   443, host: 11443 # Default https
-#  config.vm.network "forwarded_port", auto_correct: true, guest:  8080, host: 18080 # Dev server
   config.vm.network "forwarded_port", auto_correct: true, guest: 10000, host: 10000 # phpmyadmin
+#  config.vm.network "forwarded_port", auto_correct: true, guest:  8080, host: 18080 # Dev server
 
   config.vm.synced_folder ".", "/vagrant", owner: "vagrant", group: "www-data"
-
-  config.vm.provision "shell", inline:
-    "chmod +x /vagrant/bin/dev-configure.sh && /vagrant/bin/dev-configure.sh"
 
   # http://serverfault.com/questions/362903/how-do-you-set-a-locale-non-interactively-on-debian-ubuntu
   config.vm.provision "shell", inline:
     "locale-gen " + ENV['LC_ALL']
+
+  # Run our dev-configure.sh to configure anything
+  config.vm.provision "shell", inline:
+    "chmod +x /vagrant/bin/dev-configure.sh && /vagrant/bin/dev-configure.sh"
+
 end

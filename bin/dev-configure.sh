@@ -1,7 +1,5 @@
 #!/bin/bash
 
-#SCRIPT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
-# PRJ_DIR=$(dirname "$SCRIPT_DIR")
 PRJ_DIR="/vagrant"
 
 # Stop on error
@@ -12,7 +10,7 @@ usermod -a -G adm vagrant
 
 if ([ "$1" != "offline" ]); then
   apt-get -y update
-  touch /root/last_apt_get_update
+  #touch /root/last_apt_get_update
 
   # Developpement packages
   DEBIAN_FRONTEND=noninteractive apt-get install --yes --force-yes \
@@ -32,7 +30,7 @@ if ([ "$1" != "offline" ]); then
     default-jre     \
   # end
 
-  # Install nodejs 5.* ==> used as of 17/07/2016 (still v0.10.25)
+  # Install nodejs 6.* (still v0.10.25 in Ubuntu repository as of 17/07/2016)
   curl -sL https://deb.nodesource.com/setup_6.x | bash -
   apt-get install -y nodejs
 
@@ -63,7 +61,7 @@ rsync -r -i --omit-dir-times $PRJ_DIR/conf/root/ /
 # Enable php5-mcrypt
 php5enmod mcrypt || true
 
-# Enable SSL
+# Enable apache modules
 a2enmod  rewrite ssl || true
 a2ensite default-ssl || true
 
@@ -80,9 +78,6 @@ if [ ! -r "/swapfile" ]; then
   swapon /swapfile
 fi
 
-# Create live folder
-#mkdir -p /vagrant/live
-
 # Install project dependancies
 if [ "$1" != "offline" ]; then
   su -u vagrant $PRJ_DIR/bin/prj-install-dependancies.sh
@@ -96,7 +91,5 @@ if [ -x $PRJ_DIR/bin/dev-configure-custom.sh ]; then
 fi
 
 /etc/init.d/apache2 restart
-
-## TODO: fake email through smtp server ???
 
 true

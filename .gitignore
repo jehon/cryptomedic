@@ -1,26 +1,28 @@
-/**/node_modules/
-/**/vendor/
-/**/unused/
-/**/tmp/
-/**/logs/
+/live/
+/tmp/
+
 /**/build/
+/**/logs/
+/**/node_modules/
+/**/tmp/
+/**/unused/
+/**/vendor/
 
-*.log
-*.bak
-.vagrant
-.git
-.~lock.*
-composer.lock
 commit.msg
+composer.lock
+.git
+.vagrant
+.~lock.*
+*.bak
+*.log
 
+/.buildpath
+/.externalToolBuilders/
+/.idea
+/.metadata
 /.project
 /.settings
-/.buildpath
 /.DS_Store
-/.idea
-/.externalToolBuilders/
 
 /www/drupal/sites/default/files/
 **/drupal/sites/default/files/
-
-.metadata/
