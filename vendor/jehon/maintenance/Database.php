@@ -10,7 +10,7 @@ use \Exception;
 
 class Database {
 	public $pdo;
-	protected static $debug = false;
+	protected static $_debug = false;
 
 	static public function run($list, $pdoURI, $username, $password, $options =array()) {
 		echo "<pre>";
