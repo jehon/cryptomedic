@@ -1,7 +1,5 @@
 #!/bin/bash
 
-#SCRIPT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
-# PRJ_DIR=$(dirname "$SCRIPT_DIR")
 PRJ_DIR="/vagrant"
 
 # Stop on error
