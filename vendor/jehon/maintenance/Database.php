@@ -10,12 +10,17 @@ use \Exception;
 
 class Database {
 	public $pdo;
+	protected static $debug = false;
 
 	static public function run($list, $pdoURI, $username, $password, $options =array()) {
 		echo "<pre>";
 		$db = new Database($pdoURI, $username, $password, $options);
 		$db->runAll($list);
 		echo "</pre>";
+	}
+
+	static public function debug($flag = true) {
+		self::$_debug = $flag;
 	}
 
 	public function __construct($pdoURI, $username, $password, $options = array()) {
@@ -28,6 +33,10 @@ class Database {
 	}
 
 	public function runPrepareSqlStatement($sql, $data = array()) {
+		if (self::$_debug) {
+			echo "Running prepared statement: $sql [" . implode($data, ",") .  "]<br>";
+		}
+
 		$params = array();
 		foreach($data as $key => $value) {
 			$params[":" . $key] = $value;
@@ -88,6 +97,9 @@ class Database {
 	 * @return boolean success or failure
 	 */
 	public function runFile($filename, $transactionnel = false) {
+		if (self::$_debug) {
+			echo "Running file $filename" . ($transactionnel ? " [transactionnel]" : "") . "<br>";
+		}
 		// Thanks to http://stackoverflow.com/a/2011454/1954789
 		$delimiter = ";";
 		set_time_limit(0);
@@ -140,6 +152,10 @@ class Database {
 	}
 
 	public function runDirectory($fromDir) {
+		if (self::$_debug) {
+			echo "Running directory $fromDir<br>";
+		}
+
 		$version = $this->getVersion();
 		$list = \Jehon\Maintenance\Lib\myglob($fromDir . "/*.sql");
 		natsort($list);
