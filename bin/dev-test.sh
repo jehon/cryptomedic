@@ -1,19 +1,12 @@
 #!/bin/bash
 
-PRJ_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-PRJ_DIR=$(dirname "$PRJ_DIR")
+PRJ_DIR="/vagrant"
 cd "$PRJ_DIR"
 
-if [ "$1" = "help" ]; then
-  cat <<-EOL
-  Test the application
-  The tests that need gui will be run with xvfb-run unless DEBUG is set
-
-  The script will look in each folder in tests/, and for each of theses, look for
-  phpunit.xml, karma.conf.js, nightwatch.js (see testDir())
-EOL
-  exit 0
-fi
+# Test the application
+# The tests that need gui will be run with xvfb-run unless DEBUG is set
+# The script will look in each folder in tests/, and for each of theses, look for
+# phpunit.xml, karma.conf.js, nightwatch.js (see testDir())
 
 set -e
 
