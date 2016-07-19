@@ -23,7 +23,7 @@ mkdir -p "$ROOT"
 
 TS=`/bin/date "+%Y-%m-%d-%H.%M.%S"`
 
-FILENAME="backup-$DB-$TS"
+FILENAME="database-$DB-$TS"
 if [ "$1" != "" ]; then
   FILENAME="$FILENAME-$1"
 fi
