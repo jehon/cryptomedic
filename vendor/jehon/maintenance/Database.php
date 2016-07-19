@@ -65,7 +65,7 @@ class Database {
 			$v = array_pop($v);
 			return $v;
 		} catch (PDOException $e) {
-			echo "!!no version found!!";
+			echo "!!no version found!! " . $e->getMessage();
 			return "";
 		}
 	}
