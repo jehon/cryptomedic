@@ -12,4 +12,4 @@ chmod +x "$PRJ_DIR/bin/"/*
 
 cd $PRJ_DIR
 
-#prj-logs.sh
+#dev-logs.sh

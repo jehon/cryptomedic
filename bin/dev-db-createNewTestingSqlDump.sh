@@ -1,7 +1,9 @@
 #!/bin/bash
 
-PRJ_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-PRJ_DIR=$(dirname "$PRJ_DIR")
+# Stop on error
+set -e
+
+PRJ_DIR="/vagrant"
 
 DB=`php $PRJ_DIR/config.php 'database.schema'`
 if [ -z "$DB" ]; then
