@@ -1,13 +1,12 @@
 #!/bin/bash
 
-PRJ_DIR="/vagrant"
-cd "$PRJ_DIR"
-
 # Test the application
-# The tests that need gui will be run with xvfb-run unless DEBUG is set
+# The tests that need gui will be run with xvfb-run unless FRONT is set
 # The script will look in each folder in tests/, and for each of theses, look for
 # phpunit.xml, karma.conf.js, nightwatch.js (see testDir())
 
+
+# Stop on error
 set -e
 
 export XVFB_ARGS="--auto-servernum --server-args=-screen=1024x768x24 -ac +extension GLX +render -noreset"
