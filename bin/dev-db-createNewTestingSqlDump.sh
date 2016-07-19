@@ -9,8 +9,8 @@ if [ -z "$DB" ]; then
   exit 1
 fi
 
-TESTING="$PRJ_DIR"/conf/database/base.sql
+BASE="$PRJ_DIR"/conf/database/base.sql
 
 if mysqlshow --user=root "$DB" >/dev/null 2>/dev/null ; then
-  mysqldump -u root "$DB" > "$TESTING"
+  mysqldump -u root "$DB" > "$BASE"
 fi

@@ -85,7 +85,7 @@ fi
 
 # Install project dependancies
 if [ "$1" != "offline" ]; then
-  $PRJ_DIR/bin/prj-install-dependancies.sh
+  su -u vagrant $PRJ_DIR/bin/prj-install-dependancies.sh
 fi
 
 $PRJ_DIR/bin/dev-db-reset.php
