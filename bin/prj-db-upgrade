@@ -8,7 +8,7 @@
   global $myconfig;
 
   $db = new \Jehon\Maintenance\Database(
-      "mysql:host=" . $myconfig['database']['host'],
+      "mysql:dbname={$myconfig['database']['schema']};host={$myconfig['database']['host']}",
       'root',
       $myconfig['database']['rootpwd']
     );
