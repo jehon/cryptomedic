@@ -1,9 +1,9 @@
 #!/bin/bash
 
-PRJ_DIR="/vagrant"
-
 # Stop on error
 set -e
+
+PRJ_DIR="/vagrant"
 
 # Manage user rights
 usermod -a -G adm vagrant

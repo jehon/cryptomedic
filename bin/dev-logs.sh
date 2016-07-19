@@ -1,13 +1,8 @@
 #!/bin/bash
 
-if [ "$1" = "help" ]; then
-  cat <<-EOL
-    This script show the logs of the application:
-    - apache logs
-    - emails.txt (dump of emails sent in the prj-fake-sendmail.sh)
-EOL
-  exit 0
-fi
+# This script show the logs of the application:
+# - apache logs
+# - emails.txt (dump of emails sent in the prj-fake-sendmail.sh)
 
 touch /tmp/emails.txt                          2>/dev/null || true
 touch /var/log/apache2/error.log               2>/dev/null || true

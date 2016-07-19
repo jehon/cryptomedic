@@ -1,16 +1,12 @@
 #!/bin/bash
 
+# Backup the actual dev database into backups/[hostname]/
+
+# Stop on error
+set -e
+
 PRJ_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 PRJ_DIR=$(dirname "$PRJ_DIR")
-
-if [ "$1" = "help" ]; then
-  cat <<-EOL
-  Backup the actual dev database into backups/[hostname]/
-EOL
-  exit 0
-fi
-
-set -e
 
 DB=`php $PRJ_DIR/config.php 'database.schema'`
 if [ -z "$DB" ]; then
