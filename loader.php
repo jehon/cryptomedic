@@ -22,8 +22,8 @@ if ($argc < 2) {
 $uri = $argv[$argc - 1];
 $uri = parse_url($uri, PHP_URL_PATH);
 
-// Source: /vagrant/www/templates/templates/writes/ricketconsult.php
-// Target: /api/v1.0/templates/writes/ricketconsult.php
+// Source: /vagrant/www/templates/templates/writes_ricketconsult.php
+// Target: /api/v1.0/templates/writes_ricketconsult.php
 if (substr($uri, 0, strlen(constant("PROXY_TEMPLATE_ROOT"))) == constant("PROXY_TEMPLATE_ROOT")) {
   $uri = str_replace(constant("PROXY_TEMPLATE_ROOT"), "/api/v" . constant("PROXY_VERSION") . "/", $uri);
   goWithUri($uri);
