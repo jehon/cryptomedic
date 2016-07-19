@@ -80,9 +80,6 @@ if [ ! -r "/swapfile" ]; then
   swapon /swapfile
 fi
 
-# Create live folder
-#mkdir -p /vagrant/live
-
 # Install project dependancies
 if [ "$1" != "offline" ]; then
   su -u vagrant $PRJ_DIR/bin/prj-install-dependancies.sh
