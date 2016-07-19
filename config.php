@@ -18,14 +18,23 @@ $myconfig = [
   'developpement_environnement' => true,
   'randomString' => str_pad("random script ", 256, "abcdefghijklmnopqrstuvwxyz"),
   'folders' => [
-    'root'       => "/var/www/html",
-    'live'       => "/var/www/live/",
-    'cache'      => "/var/www/live/cache"
+    # Storage of persistent data (pdf, image, ...)
+    'storage'    => __DIR__ . "/storage/",
+
+    # Storage of temporary files
+    'temporary'  => "/tmp/application/"
   ]
 ];
 
 if (file_exists(__DIR__ . 'config-custom.php')) {
+  # config-custom hold the configuration of the project
   require_once(__DIR__ . 'config-custom.php');
+}
+
+if (file_exists(__DIR__ . 'config-site.php')) {
+  # config-custom hold the configuration of the site
+  # This file will be protected by the prj-go-site.sh
+  require_once(__DIR__ . 'config-site.php');
 }
 
 if (isset($argc)) {
