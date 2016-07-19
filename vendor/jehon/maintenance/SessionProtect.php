@@ -12,6 +12,10 @@ class SessionProtect {
 		if (php_sapi_name() == "cli") {
 			return;
 		}
+		if ($code == false) {
+			die("Not allowed");
+		}
+
 		$session = new SessionProtect($code, $token);
 		$session->protect();
 		$session->showHeader();
