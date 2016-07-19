@@ -30,9 +30,11 @@ if ([ "$1" != "offline" ]); then
     default-jre     \
   # end
 
-  # Install nodejs 6.* (still v0.10.25 in Ubuntu repository as of 17/07/2016)
-  curl -sL https://deb.nodesource.com/setup_6.x | bash -
-  apt-get install -y nodejs
+  if [ ! -x /usr/bin/node ]; then
+    # Install nodejs 6.* (still v0.10.25 in Ubuntu repository as of 17/07/2016)
+    curl -sL https://deb.nodesource.com/setup_6.x | bash -
+    apt-get install -y nodejs
+  fi
 
   # Install composer
   if [ -e "$PRJ_DIR"/composer.json ] && [ ! -x /usr/local/bin/composer.phar ]; then
