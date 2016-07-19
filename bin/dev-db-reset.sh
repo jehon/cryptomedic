@@ -11,7 +11,7 @@ DBUSER=`php $PRJ_DIR/config.php 'database.username'`
 BASE="$PRJ_DIR"/conf/database/base.sql
 
 if [ ! -r "$BASE" ]; then
-  echo "No $BASE base sql script found"
+  echo "No '$BASE' base sql script found"
   exit 1
 fi
 
