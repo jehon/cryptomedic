@@ -5,10 +5,10 @@ PRJ_DIR="/vagrant"
 # Stop on error
 set -e
 
-ROOTPẄ=`php $PRJ_DIR/config.php 'database.rootpwd'`
+DBROOT=`php $PRJ_DIR/config.php 'database.rootpwd'`
 DBNAME=`php $PRJ_DIR/config.php 'database.schema'`
 DBUSER=`php $PRJ_DIR/config.php 'database.username'`
-if [ -z "$ROOTPW" ]; then
+if [ -z "$DBROOT" ]; then
   echo "Missing database.rootpwd in config.php"
   exit 1
 fi
@@ -30,12 +30,12 @@ if [ ! -r "$BASE" ]; then
   exit 1
 fi
 
-cat <<-EOC
+mysql -u root -P "$DBROOT" -t <<-EOC
   DROP SCHEMA IF EXISTS $DBNAME;
   CREATE SCHEMA IF NOT EXISTS $DBNAME;
   GRANT ALL PRIVILEGES ON $DBNAME TO $
-EOC | mysql -u root -P "$ROOTPẄ"
+EOC
 
 
-cat "$PRJ_DIR/../conf/database/base.sql" | mysql -u root -P "$ROOTPẄ"
+cat "$PRJ_DIR/../conf/database/base.sql" | mysql -u root -P "$DBROOT"
 $PRJ_DIR/bin/prj-db-upgrade
