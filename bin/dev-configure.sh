@@ -61,12 +61,13 @@ mv /etc/apache2/envvars2 /etc/apache2/envvars
 rsync -r -i --omit-dir-times $PRJ_DIR/conf/root/ /
 
 # Enable php5-mcrypt
-php5enmod mcrypt || true
+php5enmod mcrypt
 
 # Enable apache modules
-a2enmod  rewrite ssl || true
-a2ensite default-ssl || true
+a2enmod  rewrite ssl
+a2ensite default-ssl
 
+# TODO: is this usefull?
 # Configure phpmyadmin (fix missing preference tables in normal install)
 cat /usr/share/doc/phpmyadmin/examples/create_tables.sql.gz | gunzip | mysql
 
@@ -93,5 +94,3 @@ if [ -x $PRJ_DIR/bin/dev-configure-custom.sh ]; then
 fi
 
 /etc/init.d/apache2 restart
-
-true
