@@ -1,12 +1,12 @@
 
 # Todo
-- dev-configure.sh -> make everything re-entrant
 - prj-go-site.sh   -> MEP script
 - setselenium.js   -> Selenium -> nightwatch.json -> nightwatch.js ??? (does it exists)
 - apache config for fake email and phpmyadmin
 - fake email package
 - dev-test.sh      -> check it again
 - add documentation everywhere
+- dev-configure.sh -> cat /usr/share/doc/phpmyadmin/examples/create_tables.sql.gz | gunzip | mysql ==> usefull???
 
 # A réfléchir:
 - dev-* script ou prj-dev-*
@@ -17,8 +17,6 @@
 - live-for-test (/live-for-test)
 - temp folder (/tmp)
 - config for site
-
-
 
 
 ## TODO: fake email through smtp server ???
