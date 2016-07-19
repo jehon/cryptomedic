@@ -14,7 +14,7 @@ window.bug_reporting = (function () {
   <br>  \
   Can I ask you a bit more informations?<br> \
   <br> \
-  <form action="/cryptomedic/maintenance/bug_submit.php" method="POST"> \
+  <form action="/maintenance/bug_submit.php" method="POST"> \
     <table>\
     <tr><td>Username</td><td><input name="username" size=100></td></tr> \
     <tr><td>Email address</td><td><input name="email" size=100></td></tr> \
