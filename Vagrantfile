@@ -1,7 +1,3 @@
-# Fix the locale before doing anything...
-# @See https://www.vagrantup.com/docs/vagrantfile/tips.html
-#ENV["LC_ALL"] = "en_US.utf8"
-
 
 # Configure the vagrant proxyconf plugin:
 # @See http://digitaldrummerj.me/vagrant-behind-proxy-server/
