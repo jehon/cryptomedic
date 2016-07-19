@@ -15,7 +15,8 @@ if [ ! -r "$BASE" ]; then
   exit 1
 fi
 
-MYSQL="mysql --database=$DBNAME -u root --quick"
+#MYSQL="mysql --database=$DBNAME -u root --quick"
+MYSQL="mysql -u root --quick"
 if [ -z "$DBROOT" ]; then
   PWD=""
 else
@@ -23,15 +24,15 @@ else
 fi
 
 echo "* Resetting the database"
-$MYSQL <<-EOC
+$MYSQL  --database=mysql <<-EOC
   DROP SCHEMA IF EXISTS $DBNAME;
-  CREATE SCHEMA IF NOT EXISTS $DBNAME;
+  CREATE SCHEMA $DBNAME;
   USE $DBNAME;
   GRANT ALL PRIVILEGES ON $DBNAME TO $DBUSER;
 EOC
 
 echo "* Loading $BASE"
-cat "$PRJ_DIR/conf/database/base.sql" | $MYSQL
+cat "$PRJ_DIR/conf/database/base.sql" | $MYSQL  --database=$DBNAME
 
 echo "* Upgrading it"
 $PRJ_DIR/bin/prj-db-upgrade
