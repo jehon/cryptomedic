@@ -107,7 +107,7 @@ else
   fi
 
   myHeader "Reset the database"
-  "$PRJ_DIR/bin/dev-db-reset.php"
+  "$PRJ_DIR/bin/dev-db-reset.sh"
 
   myHeader "Reset the live folder from live-for-test"
   rsync
