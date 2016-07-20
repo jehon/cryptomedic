@@ -27,8 +27,8 @@ Vagrant.configure(2) do |config|
     end
   end
 
-  config.vm.network "forwarded_port", auto_correct: true, guest:    80, host: 11080 # Default config
-  config.vm.network "forwarded_port", auto_correct: true, guest:   443, host: 11443 # Default https
+  config.vm.network "forwarded_port", auto_correct: true, guest:    80, host: 10080 # Default config
+  config.vm.network "forwarded_port", auto_correct: true, guest:   443, host: 10443 # Default https
   config.vm.network "forwarded_port", auto_correct: true, guest: 10000, host: 10000 # phpmyadmin
 #  config.vm.network "forwarded_port", auto_correct: true, guest:  8080, host: 18080 # Dev server
 
