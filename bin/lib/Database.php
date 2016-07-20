@@ -189,7 +189,7 @@ class Database {
 		}
 
 		$version = $this->getVersion();
-		$list = \Jehon\Maintenance\Lib\myglob($fromDir . "/*.sql");
+		$list = myglob($fromDir . "/*.sql");
 		natsort($list);
 
 		foreach($list as $f) {
