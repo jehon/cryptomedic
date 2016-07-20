@@ -9,8 +9,17 @@ PRJ_DIR="/vagrant"
 usermod -a -G adm vagrant
 
 if ([ "$1" != "offline" ]); then
-  apt-get -y update
-  #touch /root/last_apt_get_update
+  if [ ! -r /etc/apt/sources.list.d/nodesource.list ]; then
+    # Install nodejs 6.* (still v0.10.25 in Ubuntu repository as of 17/07/2016)
+    # This will run a "apt-get update"
+    curl -sL https://deb.nodesource.com/setup_6.x | bash -
+  else
+    # The nodesource script will make a "apt-get update", thus we do this only in case
+    # we do not run the above script
+    apt-get -y update
+  fi
+
+  # apt-get -y update
 
   # Developpement packages
   DEBIAN_FRONTEND=noninteractive apt-get install --yes --force-yes \
@@ -28,13 +37,8 @@ if ([ "$1" != "offline" ]); then
     xvfb            \
     firefox         \
     default-jre     \
+    nodejs          \
   # end
-
-  if [ ! -x /usr/bin/node ]; then
-    # Install nodejs 6.* (still v0.10.25 in Ubuntu repository as of 17/07/2016)
-    curl -sL https://deb.nodesource.com/setup_6.x | bash -
-    apt-get install -y nodejs
-  fi
 
   # Install composer
   if [ -e "$PRJ_DIR"/composer.json ] && [ ! -x /usr/local/bin/composer.phar ]; then
@@ -67,8 +71,7 @@ php5enmod mcrypt
 a2enmod  rewrite ssl
 a2ensite default-ssl
 
-# TODO: is this usefull?
-# Configure phpmyadmin (fix missing preference tables in normal install)
+# Configure phpmyadmin (fix missing preference tables in normal install) (still usefull on 2016-07-20)
 cat /usr/share/doc/phpmyadmin/examples/create_tables.sql.gz | gunzip | mysql
 
 # Add some swap (the swap mount is configured by rsync /conf/root/etc/fstab.d/swapfile)
