@@ -1,7 +1,6 @@
 <?php
 namespace Jehon\Maintenance;
 
-// require_once(__DIR__ . "/lib/getParameter.php");
 use \PDO;
 use \PDOException;
 use \Exception;
@@ -43,13 +42,6 @@ function myglob($glob, $recursive = false) {
 class Database {
 	public $pdo;
 	protected static $_debug = false;
-
-	// static public function run($list, $pdoURI, $username, $password, $options =array()) {
-	// 	echo "<pre>";
-	// 	$db = new Database($pdoURI, $username, $password, $options);
-	// 	$db->runAll($list);
-	// 	echo "</pre>";
-	// }
 
 	static public function debug($flag = true) {
 		self::$_debug = $flag;
@@ -160,16 +152,10 @@ class Database {
 				}
 
 				$this->runPrepareSqlStatement($query, array(), "running query $i");
-				// echo ".";
 				if ($i % 50 == 0) {
 					echo "$i\n";
 					flush();
 				}
-
-				// while (ob_get_level() > 0) {
-					// ob_end_flush();
-				// }
-				// flush();
 			}
 
 			if (is_string($query) === true) {
@@ -197,19 +183,14 @@ class Database {
 			if (preg_match("~^(\d+)~", basename($f, ".sql"), $nn)) {
 				if (count($nn) > 1) {
 					$nextVersion = $nn[1];
-				} else {
-					echo "\n  Skipped (invalid version) $f";
-					continue;
+					if (($nextVersion == $version)
+							|| (strnatcmp($version, $nextVersion) > 0)) {
+						echo "\nSkipping $f [$nextVersion]";
+						continue;
+					}
 				}
 			} else {
-				echo "\n  Skipped (no version) $f";
-				continue;
-			}
-
-			if (($nextVersion == $version)
-					|| (strnatcmp($version, $nextVersion) > 0)) {
-				echo "\nSkipping $f [$nextVersion]";
-				continue;
+				$nextVersion = "invalid";
 			}
 
 			echo "\nTreating $f [$nextVersion]: ";
@@ -218,7 +199,10 @@ class Database {
 			if (!$res) {
 				return false;
 			}
-			$this->setVersion($nextVersion);
+
+			if ($nextVersion != "invalid") {
+				$this->setVersion($nextVersion);
+			}
 		}
 	}
 
@@ -231,10 +215,4 @@ class Database {
 		}
 		echo "\n";
 	}
-
-	// public function runAll($list) {
-	// 	foreach($list as $l) {
-	// 		$this->runOne($l);
-	// 	}
-	// }
 }

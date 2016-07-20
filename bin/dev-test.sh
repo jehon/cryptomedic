@@ -1,23 +1,40 @@
 #!/bin/bash
 
-PRJ_DIR="/vagrant"
-cd "$PRJ_DIR"
-
 # Test the application
-# The tests that need gui will be run with xvfb-run unless DEBUG is set
+# The tests that need gui will be run with xvfb-run unless FRONT is set
 # The script will look in each folder in tests/, and for each of theses, look for
 # phpunit.xml, karma.conf.js, nightwatch.js (see testDir())
 
+
+# Stop on error
 set -e
 
-export XVFB_ARGS="--auto-servernum --server-args=-screen=1024x768x24 -ac +extension GLX +render -noreset"
-XVFB='xvfb-run'
+# This script can be called from outside the vagrant to help debug the end2end tests
+# PRJ_DIR is thus relative to current path
+SCRIPT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+PRJ_DIR=$(dirname "$SCRIPT_DIR")
+
+cd "$PRJ_DIR"
+
+myHeader() {
+  echo -ne "\e[0;45m"
+  if [ "$2" != "" ]; then
+    N=`pwd`
+    N=`basename "$N"`
+    echo -ne "[\e[1;45m$N/$1\e[0;45m] "
+    shift
+  fi
+  echo -ne "$1"
+  echo -e "\e[0m"
+}
 
 mxvfb() {
-  if [ "$DEBUG" != "" ]; then
-    "$@"
-  else
+  if [ "$FRONT" = "" ]; then
+    # Run it in xvfb
     xvfb-run --auto-servernum --server-args='-screen 0 1024x768x24 -ac +extension GLX +render -noreset' "$@"
+  else
+    # Run it live if FRONT is specified
+    "$@"
   fi
 }
 
@@ -27,7 +44,7 @@ testPHPUnit() {
   L="$1"
   shift
 
-  echo -e "\e[0;45m[\e[1;45m$N/phpunit\e[0;45m] Testing $L\e[0m"
+  myHeader "phpunit" "Testing $L"
   $PRJ_DIR/vendor/bin/phpunit \
       --coverage-html   "$PRJ_DIR/tmp/$N" \
       --coverage-xml    "$PRJ_DIR/tmp/$N" \
@@ -35,27 +52,24 @@ testPHPUnit() {
 }
 
 testJSUnit() {
-  N=`pwd`
-  N=`basename "$N"`
   L="$1"
   shift
 
-  echo -e "\e[0;45m[\e[1;45m$N/karma\e[0;45m] Testing $L\e[0m"
+  myHeader "karma" "Testing $L"
   ARGS=""
   # http://bahmutov.calepin.co/debugging-karma-unit-tests.html
-  if [ "$DEBUG" ]; then
+  if [ "$FRONT" ]; then
     ARGS="--single-run=false --debug"
   fi
   mxvfb ../../node_modules/.bin/karma start --single-run $ARGS "$@"
+
 }
 
 testEnd2End() {
-  N=`pwd`
-  N=`basename "$N"`
   L="$1"
   shift
 
-  echo -e "\e[0;45m[\e[1;45m$N/nightwatch\e[0;45m] Testing $L\e[0m"
+  myHeader "nightwatch" "Testing $L"
   mxvfb node "$PRJ_DIR/node_modules/.bin/nightwatch" -e default "$@"
 }
 
@@ -73,18 +87,17 @@ test_dir() {
   fi
 }
 
-
-if [ "$DEBUG" != "" ]; then
-  echo "\e[0;45mRunning in debug mode - not using xvfb-run anymore\e[0m"
+if [ "$FRONT" != "" ]; then
+  myHeader "Running in FRONT mode - not using xvfb-run anymore"
 fi
 
 if [ "$1" ]; then
-  echo "Test override to path $1"
+  myHeader "Test override to path $1"
   D="$1"
   shift
   cd "$PRJ_DIR/$D" && test_dir "Override $D" "$@"
 else
-  echo -e "\e[0;45mCleaning old tests\e[0m"
+  myHeader "Cleaning old tests"
   if [ -d "$PRJ_DIR/tmp" ]; then
     find "$PRJ_DIR/tmp/" -mindepth 1 -delete
   else
@@ -94,15 +107,26 @@ else
   myHeader "Reset the database"
   "$PRJ_DIR/bin/dev-db-reset.sh"
 
-  echo -e "\e[0;45mRebuild for production\e[0m"
+  myHeader "Reset the live folder from live-for-test"
+  rsync                      \
+    --times                  \
+    --recursive              \
+    --delete                 \
+    --itemize-changes        \
+    "$PRJ_DIR/live-for-test" \
+    "$PRJ_DIR/live"
+
+  myHeader "Rebuild for production"
   find "$PRJ_DIR/www/build/" -mindepth 1 -delete
   npm run build
 
+  # Test each api/* folder
   for V in "$PRJ_DIR"/www/api/* ; do
     N=`basename "$V"`
     cd "$V" && test_dir "version www/api/$N"
   done
 
+  # Test each tests/* folder
   for T in "$PRJ_DIR"/tests/* ; do
     N=`basename "$T"`
     TITLE="Custom test $N"
@@ -112,4 +136,4 @@ else
   done
 fi
 
-echo -e "\e[1m\e[45mTerminated ok.\e[0m"
+myHeader "Terminated ok"
