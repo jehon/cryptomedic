@@ -11,7 +11,7 @@ function mylog($uri, $msg = "ok") {
 
 function goWithUri($uri) {
   mylog($uri);
-  readfile('http://localhost:10080/' . $uri);
+  readfile('http://localhost/' . $uri);
 }
 
 if ($argc < 2) {
