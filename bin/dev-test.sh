@@ -26,7 +26,6 @@ myHeader() {
   fi
   echo -ne "$1"
   echo -e "\e[0m"
-  # echo -e "\e[0;45m[\e[1;45m$1\e[0;45m] $2\e[0m"
 }
 
 mxvfb() {
@@ -90,7 +89,6 @@ test_dir() {
 
 if [ "$FRONT" != "" ]; then
   myHeader "Running in FRONT mode - not using xvfb-run anymore"
-  # echo "\e[0;45mRunning in FRONT mode - not using xvfb-run anymore\e[0m"
 fi
 
 if [ "$1" ]; then
@@ -110,11 +108,11 @@ else
   "$PRJ_DIR/bin/dev-db-reset.sh"
 
   myHeader "Reset the live folder from live-for-test"
-  rsync
+  rsync                      \
     --times                  \
-    --recurse                \
+    --recursive              \
     --delete                 \
-    --itemize                \
+    --itemize-changes        \
     "$PRJ_DIR/live-for-test" \
     "$PRJ_DIR/live"
 
