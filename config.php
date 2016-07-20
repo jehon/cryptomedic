@@ -26,15 +26,15 @@ $myconfig = [
   ]
 ];
 
-if (file_exists(__DIR__ . 'config-custom.php')) {
+if (file_exists(__DIR__ . '/config-custom.php')) {
   # config-custom hold the configuration of the project
-  require_once(__DIR__ . 'config-custom.php');
+  require(__DIR__ . '/config-custom.php');
 }
 
-if (file_exists(__DIR__ . 'config-site.php')) {
+if (file_exists(__DIR__ . '/config-site.php')) {
   # config-custom hold the configuration of the site
   # This file will be protected by the prj-go-site.sh
-  require_once(__DIR__ . 'config-site.php');
+  require(__DIR__ . '/config-site.php');
 }
 
 if (isset($argc)) {
