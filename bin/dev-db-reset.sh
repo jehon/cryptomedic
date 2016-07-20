@@ -38,3 +38,6 @@ cat "$PRJ_DIR/conf/database/base.sql" | $MYSQL  --database=$DBNAME
 
 echo "* Upgrading it"
 $PRJ_DIR/bin/prj-db-upgrade
+
+echo "* Applying dev hooks"
+$PRJ_DIR/bin/prj-db-upgrade "$PRJ_DIR/conf/database/always-dev/"

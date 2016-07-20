@@ -7,8 +7,9 @@
   $argv = [];
   $argc = 0;
 
-  require_once(__DIR__ . "/../vendor/autoload.php");
+  // require_once(__DIR__ . "/../vendor/autoload.php");
   require_once(__DIR__ . "/../config.php");
+  require_once(__DIR__ . "/lib/Database.php");
 
   global $myconfig;
 
@@ -19,7 +20,6 @@
     );
 
   if (count($myargs) > 1) {
-    var_dump($myargs);
     $db->runOne($myargs[1]);
   } else {
     $db->runOne(__DIR__ . "/../conf/database/versions/");
