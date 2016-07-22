@@ -1,14 +1,11 @@
 'use strict';
 
-// offline-plugin
 
 require('es6-promise').polyfill();
-
 var path = require('path');
 var webpack = require('webpack');
 var glob = require('glob');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
-// var scriptLoader = require('script-loader');
 var recursiveReadSync = require('recursive-readdir-sync');
 var fse = require('fs-extra');
 var OfflinePlugin = require('offline-plugin');
@@ -17,7 +14,6 @@ var OfflinePlugin = require('offline-plugin');
 fse.emptyDirSync(__dirname + '/www/build/');
 
 // Add files not managed by webpack
-//fse.copySync(__dirname + '/app/static/', __dirname + '/www/build/static');
 var unmanaged = []
         .concat(glob('static/**', { sync: true, cwd: __dirname + '/www/' }))
         ;
@@ -31,9 +27,6 @@ var unmanaged = []
 
 // @see https://github.com/webpack/webpack-with-common-libs/blob/master/webpack.config.js
 // @see http://mts.io/2015/04/08/webpack-shims-polyfills/
-
-// test: jQuery('#busy').modal('show'); jQuery('#busy').datepicker()
-
 
 var config = {
   entry: [ ]
