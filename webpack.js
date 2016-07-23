@@ -77,6 +77,7 @@ var config = {
       },
       {
         test: /\.html$/,
+        exclude: /index\.html/,
         loaders: [
           'ng-cache?-removeEmptyAttributes&prefix=templates:/**/api/v1.0/templates/',
         ]
