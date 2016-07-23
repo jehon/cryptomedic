@@ -72,8 +72,8 @@ window.bug_reporting = (function () {
   var allConsole = [];
 
     // Capture the console
-  if (window.location.host != 'localhost') {
-        // http://stackoverflow.com/a/9278067/1954789
+  if (window.location.host.substr(0, 'localhost'.length) != 'localhost') {
+    // http://stackoverflow.com/a/9278067/1954789
     var consoleLog = window.console.log;
     window.console.log = function() {
       allConsole.push({
