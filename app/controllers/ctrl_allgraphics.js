@@ -1,4 +1,4 @@
-'use strict';
+import mainApp         from 'mainApp';
 
 mainApp.controller('ctrl_allGraphics', [ '$scope', function($scope) {
   $scope.hovered = -1;

@@ -1,8 +1,11 @@
-'use strict';
+import mainApp         from 'mainApp';
+import service_backend from 'helpers/service_backend';
+import catalog         from 'reducers/catalog';
+import dispatch        from 'reducers/dispatch';
 
 mainApp.controller('ctrl_login', [ '$scope', function($scope) {
-  cryptomedic.settings = {};
-  appState().dispatch(appState().catalog.DATABASE_DOWNLOADED);
+  // cryptomedic.settings = {};
+  dispatch(catalog.DATABASE_DOWNLOADED);
   $scope.details = {};
 
   $scope.doLogin = function() {

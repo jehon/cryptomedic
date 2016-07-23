@@ -5,35 +5,6 @@
     <meta charset='utf-8'>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- https://github.com/ampedandwired/html-webpack-plugin/blob/master/default_index.html -->
-    <!-- begin CSS files from webpack -->
-    {% for (var css in o.htmlWebpackPlugin.files.css) { %}
-    <link href="{%=o.htmlWebpackPlugin.files.css[css] %}" rel="stylesheet">
-    {% } %}
-    <!-- end   CSS files from webpack -->
-    <!-- begin JS files from webpack -->
-    {% for (var chunk in o.htmlWebpackPlugin.files.chunks) { %}
-    <script src="{%=o.htmlWebpackPlugin.files.chunks[chunk].entry %}"></script>
-    {% } %}
-    <!-- end   JS files from webpack -->
-
-    <script type='text/javascript' src='../static/js/html2canvas.js'></script>
-
-    <script type='text/javascript' src='../static/js/application.js'></script>
-    <script type='text/javascript' src='../static/js/calculations.js'></script>
-    <script type='text/javascript' src='../static/js/ctrl_allgraphics.js'></script>
-    <script type='text/javascript' src='../static/js/ctrl_file_bill.js'></script>
-    <script type='text/javascript' src='../static/js/ctrl_file_appointment.js'></script>
-    <script type='text/javascript' src='../static/js/ctrl_folder.js'></script>
-    <script type='text/javascript' src='../static/js/ctrl_graphic.js'></script>
-    <script type='text/javascript' src='../static/js/ctrl_home.js'></script>
-    <script type='text/javascript' src='../static/js/ctrl_reports.js'></script>
-    <script type='text/javascript' src='../static/js/ctrl_search.js'></script>
-    <script type='text/javascript' src='../static/js/ctrl_login.js'></script>
-    <script type='text/javascript' src='../static/js/ctrl_users.js'></script>
-    <script type='text/javascript' src='../static/js/start.js'></script>
-    <script type='text/javascript' src='../static/js/bugreporting.js'></script>
   </head>
   <body ng-app="app_main" ng-controller="ctrl" id="ng-app" >
     <!--  Navigation bar -->
@@ -135,5 +106,17 @@
         <div ng-view></div>
       </div>
     </div>
+
+    <!-- script here, so they are after the webpack loaded plugin -->
+
+    <script>
+      if (!Promise || !indexedDB || !sessionStorage || !fetch) {
+        window.location.href = '/static/upgrade.html';
+      }
+    </script>
+
+    <script type='text/javascript' src='../static/js/html2canvas.js'></script>
+    <script type='text/javascript' src='../static/js/start.js'></script>
+    <script type='text/javascript' src='../static/js/bugreporting.js'></script>
   </body>
 </html>

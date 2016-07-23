@@ -1,4 +1,6 @@
-'use strict';
+import mainApp                  from 'mainApp';
+import calculations             from 'helpers/calculations';
+import { DataMissingException } from 'helpers/exceptions';
 
 mainApp.controller('ctrl_graphic', [ '$scope', function($scope) {
   // This controller is intended for ONE graphic only
@@ -55,7 +57,7 @@ mainApp.controller('ctrl_graphic', [ '$scope', function($scope) {
           return $scope.folder.getSubFile($index)[field]();
         }
       } catch(e) {
-        if (e instanceof appState().helpers.DataMissingException) {
+        if (e instanceof DataMissingException) {
           return '#Error';
         }
         throw e;
