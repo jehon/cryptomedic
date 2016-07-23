@@ -441,7 +441,7 @@ mainApp.controller('ctrl', [ '$scope', '$location', '$sce', function($scope, $lo
   $scope.doCheckLogin = function() {
     $scope.loginError = false;
     var busyEnd = $scope.doBusy('Checking your login/password with the online server', true);
-    service_backend.checkLogin()
+    service_backend().checkLogin()
       .then(function(data) {
         server.settings = data;
         $scope.logged = true;
