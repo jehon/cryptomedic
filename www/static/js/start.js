@@ -15,5 +15,3 @@ if (!are_cookies_enabled()) {
 if (!Promise || !indexedDB || !sessionStorage || !fetch) {
   window.location.href = '/static/upgrade.html';
 }
-
-var service_backend = appState().helpers.service_backend_fn();

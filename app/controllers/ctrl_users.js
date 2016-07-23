@@ -12,7 +12,7 @@ mainApp.controller('ctrl_users', [ '$scope', function($scope) {
 
   $scope.refresh = function() {
     dispatch(catalog.STATE_BUSY, 'Getting user list from the server');
-    service_backend.usersList()
+    service_backend().usersList()
       .then(function(data) {
         $scope.users = data;
         dispatch(catalog.STATE_READY);
@@ -50,14 +50,14 @@ mainApp.controller('ctrl_users', [ '$scope', function($scope) {
 
   $scope.doSave = function() {
     if ($scope.edit.id >= 0) {
-      service_backend.userUpdate($scope.edit)
+      service_backend().userUpdate($scope.edit)
         .then(function(data) {
           $scope.list = data;
           $scope.$emit('message', { 'level': 'success', 'text': 'The user \'' + $scope.edit.username + '\' has been saved successfully.'});
           $scope.doCancel();
         });
     } else {
-      service_backend.userAdd($scope.edit)
+      service_backend().userAdd($scope.edit)
         .then(function(data) {
           $scope.list = data;
           $scope.$emit('message', { 'level': 'success', 'text': 'The user \'' + $scope.edit.username + '\' has been created successfully.'});
@@ -69,7 +69,7 @@ mainApp.controller('ctrl_users', [ '$scope', function($scope) {
 
   $scope.doDelete = function() {
     if (confirm('Are you sure you want to delete user \'' + $scope.edit.name + '\'?')) {
-      service_backend.userDelete($scope.edit.id).then(function(data) {
+      service_backend().userDelete($scope.edit.id).then(function(data) {
         $scope.$emit('message', { 'level': 'success', 'text': 'The user \'' + $scope.edit.username + '\' has been deleted successfully.'});
         $scope.users = data;
         $scope.doCancel();
@@ -84,7 +84,7 @@ mainApp.controller('ctrl_users', [ '$scope', function($scope) {
   };
 
   $scope.doSavePassword = function() {
-    service_backend.userPassword($scope.password.id, $scope.password.newcode).then(function() {
+    service_backend().userPassword($scope.password.id, $scope.password.newcode).then(function() {
       $scope.$emit('message', { 'level': 'success', 'text': 'The password of user \'' + $scope.password.username + '\' has been updated successfully.'});
       $scope.doCancel();
       // $scope.safeApply();
