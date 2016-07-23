@@ -45,6 +45,7 @@ var config = {
       './node_modules/bootstrap/dist/js/bootstrap.min.js',
 
       // 'script!./app/static/js/bugreporting.js',
+      './app/mainApp.js'
     ])
     // Last one, since it will define what is exported:
     .concat([ './app/status.js' ])
