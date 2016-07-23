@@ -1,4 +1,5 @@
-'use strict';
+import mainApp         from 'mainApp';
+import service_backend from 'helpers/service_backend';
 
 mainApp.controller('ctrl_home', [ '$scope', '$location', function($scope, $location) {
   if (typeof($scope.entryyear) == 'undefined') {

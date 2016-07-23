@@ -1,5 +1,6 @@
+import date2CanonicString   from 'helpers/date2CanonicString';
 
-var calculations = {
+let calculations = {
   math: {
     evaluatePoly: function (line, x) {
       var i = -1;
@@ -92,7 +93,7 @@ var calculations = {
     toBirthDate: function(years, months, reference) {
       reference = reference || new Date();
       var d2 = new Date(reference.getFullYear() - years, reference.getMonth() - months, 10);
-      return appState().helpers.date2CanonicString(d2).substring(0, 7);
+      return date2CanonicString(d2).substring(0, 7);
     },
 
     atConsultTime: function(file, patient, format) {
@@ -102,3 +103,5 @@ var calculations = {
   }
 
 };
+
+export default calculations;

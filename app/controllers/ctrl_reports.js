@@ -1,8 +1,13 @@
-'use strict';
+import mainApp         from 'mainApp';
+import template        from 'helpers/template';
+import service_backend from 'helpers/service_backend';
+import store           from 'reducers/store';
+import catalog         from 'reducers/catalog';
+import dispatch        from 'reducers/dispatch';
 
 mainApp.controller('ctrl_reports', [ '$scope', '$routeParams', '$sce', function($scope, $routeParams, $sce) {
   var report = $routeParams['report'];
-  $scope.values = appState().store.getState().prefs.reports;
+  $scope.values = store.getState().prefs.reports;
   for(var k in $scope.values) {
     if ($scope.values[k] === null) {
       $scope.values[k] = '';
@@ -97,7 +102,7 @@ mainApp.controller('ctrl_reports', [ '$scope', '$routeParams', '$sce', function(
       var v = $scope.reports[report].params[p];
       prefs[v] = $scope.values[v];
     }
-    appState().dispatch(appState().catalog.PREFS_REPORTS, prefs);
+    dispatch(catalog.PREFS_REPORTS, prefs);
 
     var dataGenerator = report;
     if (typeof($scope.reports[report].dataGenerator) != 'undefined') {

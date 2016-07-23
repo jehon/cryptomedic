@@ -15,6 +15,7 @@ import { DataMissingException } from 'helpers/exceptions';
 import { ApplicationException } from 'helpers/exceptions';
 
 let offline = require('offline-plugin/runtime');
+
 if (location.pathname.split('/')[1] == 'offline') {
   console.log('SW-OFFLINE: Detecting offline mode, activating plugin');
   offline.install(null,
@@ -34,7 +35,6 @@ export default function() {
       selectFile
     },
     helpers: {
-      // objectify,
       create,
       date2CanonicString,
       service_backend_fn,
@@ -42,7 +42,6 @@ export default function() {
       db,
       DataMissingException,
       ApplicationException
-      // nullify
     },
   };
 }

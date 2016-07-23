@@ -1,4 +1,12 @@
-'use strict';
+import mainApp              from 'mainApp';
+import service_backend      from 'helpers/service_backend';
+import selectFile           from 'actions/selectFile';
+import create               from 'helpers/create';
+import calculations         from 'helpers/calculations';
+import template             from 'helpers/template';
+import catalog              from 'reducers/catalog';
+import dispatch             from 'reducers/dispatch';
+import date2CanonicString   from 'helpers/date2CanonicString';
 
 mainApp.controller('ctrl_folder', [ '$scope', '$location', '$routeParams' , function($scope, $location, $routeParams) {
   /*

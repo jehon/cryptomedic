@@ -1,40 +1,47 @@
 'use strict';
 
+import angular                  from 'angular';
+import angularRoute             from 'angular-route';
+import { ApplicationException } from 'helpers/exceptions';
+import store                    from 'reducers/store';
+import dispatch                 from 'reducers/dispatch';
+import catalog                  from 'reducers/catalog';
+import calculations             from 'helpers/calculations';
+import service_backend          from 'helpers/service_backend';
+import template                 from 'helpers/template';
+
 var application = {};
 var server = {};
+var path = location.pathname.split('/');
+var flavor = '/' + path[1];
 
-function template(...names) {
-  // console.log('requesting template: ' + names.join('_'));
-  return '/api/v1.0/templates/' + names.join('_') + '.php';
-}
+// function plog(p) {
+//   return p
+//     .then(function(data) {
+//       console.log(data);
+//     }, function(error) {
+//       console.error(error);
+//       throw error;
+//     });
+// }
 
-function plog(p) {
-  return p
-    .then(function(data) {
-      console.log(data);
-    }, function(error) {
-      console.error(error);
-      throw error;
-    });
-}
-
-function formatDate(date) {
-  date = date || new Date();
-  var year = date.getFullYear();
-  var month = '0' + (date.getMonth() + 1);
-  month = month.substring(month.length - 2);
-  var day = '0' + date.getDate();
-  day = day.substring(day.length - 2);
-  return year + '-' + month + '-' + day;
-}
+// function formatDate(date) {
+//   date = date || new Date();
+//   var year = date.getFullYear();
+//   var month = '0' + (date.getMonth() + 1);
+//   month = month.substring(month.length - 2);
+//   var day = '0' + date.getDate();
+//   day = day.substring(day.length - 2);
+//   return year + '-' + month + '-' + day;
+// }
 
 // Inspired from http://www.2ality.com/2014/10/es6-promises-api.html
-Promise.prototype.myFinallyDone = function (callback) {
-  callback = callback || function(data) { return data; };
-  return this
-    .then(callback, callback)
-    .catch(function(reason) { console.error(reason); });
-};
+// Promise.prototype.myFinallyDone = function (callback) {
+//   callback = callback || function(data) { return data; };
+//   return this
+//     .then(callback, callback)
+//     .catch(function(reason) { console.error(reason); });
+// };
 
 // function inherit(parent, constructor) {
 //   // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/create
@@ -113,7 +120,7 @@ var mainApp = angular.module('app_main', [ 'ngRoute' ])
             $scope.result = $scope.tryit();
           } catch (e) {
             $scope.error = true;
-            if (e instanceof appState().helpers.ApplicationException) {
+            if (e instanceof ApplicationException) {
               $scope.errorMsg = e.getMessage();
             } else {
               $scope.errorMsg = 'Uncatchable error';
@@ -242,14 +249,14 @@ var mainApp = angular.module('app_main', [ 'ngRoute' ])
     template: function(elem, attrs) {
       // function templateFunction() {
       if (attrs.haspermission) {
-        if (!appState().store.getState()
-              || !appState().store.getState().connection.settings
-              || !appState().store.getState().connection.settings.authorized2[attrs.haspermission]
+        if (!store.getState()
+              || !store.getState().connection.settings
+              || !store.getState().connection.settings.authorized2[attrs.haspermission]
               ) {
           return '<span haspermission-failed=\'' + attrs.haspermission + '\'></span>';
         }
       }
-      return '<a class=\'btn btn-default\' href=\'' + cryptomedic.flavor + '/app/' + attrs.to + '\''
+      return '<a class=\'btn btn-default\' href=\'' + flavor + '/app/' + attrs.to + '\''
               + (attrs.id ? ' id=\'' + attrs.id + '\'' : '')
               + (attrs.class ? ' class=\'' + attrs.class + '\'' : '')
               + '>'
@@ -360,17 +367,17 @@ mainApp.controller('ctrl', [ '$scope', '$location', '$sce', function($scope, $lo
   // $locationProvider.html5Mode(true)
 
   // Global variables intorduced into the scope:
-  $scope.cryptomedic  = cryptomedic;
+  // $scope.cryptomedic  = cryptomedic;
   $scope.application  = application;
   $scope.server       = server;
   $scope.calculations = calculations;
   $scope.template     = template;
 
 
-  $scope.appStateStore = appState().store.getState();
-  appState().store.subscribe(function() {
-    // console.log('scope appState updated', appState().store.getState());
-    $scope.appStateStore = appState().store.getState();
+  $scope.appStateStore = store.getState();
+  store.subscribe(function() {
+    // console.log('scope appState updated', store.getState());
+    $scope.appStateStore = store.getState();
 
     // ** Manual operations **
 
@@ -404,13 +411,13 @@ mainApp.controller('ctrl', [ '$scope', '$location', '$sce', function($scope, $lo
   $scope.connected = false;
 
   $scope.doBusy = function(msg) {
-    appState().dispatch(appState().catalog.STATE_BUSY, msg);
+    dispatch(catalog.STATE_BUSY, msg);
     return function() {
-      appState().dispatch(appState().catalog.STATE_READY);
+      dispatch(catalog.STATE_READY);
     };
   };
 
-  $scope.endBusy = appState().dispatch.bind(this, appState().catalog.STATE_BUSY);
+  $scope.endBusy = dispatch.bind(this, catalog.STATE_BUSY);
 
   $scope.logged = false;
   $scope.username = '';
@@ -444,9 +451,7 @@ mainApp.controller('ctrl', [ '$scope', '$location', '$sce', function($scope, $lo
         }
         $scope.safeApply();
       })
-      .myFinallyDone(function() {
-        busyEnd();
-      });
+      .then(busyEnd, busyEnd);
   };
 
   $scope.$on('$routeChangeError', function() { console.error('error in routes', arguments); });
@@ -486,15 +491,6 @@ mainApp.controller('ctrl', [ '$scope', '$location', '$sce', function($scope, $lo
   $scope.doCheckLogin();
 }]);
 
-
-
-var cryptomedic = {};
-{
-  var path = location.pathname.split('/');
-  cryptomedic.flavor = '/' + path[1];
-}
-cryptomedic.settings = {};
-
 mainApp.config([ '$routeProvider', function($routeProvider) {
   $routeProvider
     .when('/home', {
@@ -517,3 +513,6 @@ mainApp.config([ '$routeProvider', function($routeProvider) {
       controller: 'ctrl_users',
     }).otherwise({ 'redirectTo': '/home'});
 }]);
+
+
+export default mainApp;

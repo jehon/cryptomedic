@@ -1,4 +1,7 @@
-'use strict';
+import mainApp         from 'mainApp';
+import service_backend from 'helpers/service_backend';
+import catalog         from 'reducers/catalog';
+import dispatch        from 'reducers/dispatch';
 
 // TODO: manage change in groups
 
@@ -8,11 +11,11 @@ mainApp.controller('ctrl_users', [ '$scope', function($scope) {
   $scope.password = false;
 
   $scope.refresh = function() {
-    appState().dispatch(appState().catalog.STATE_BUSY, 'Getting user list from the server');
+    dispatch(catalog.STATE_BUSY, 'Getting user list from the server');
     service_backend.usersList()
       .then(function(data) {
         $scope.users = data;
-        appState().dispatch(appState().catalog.STATE_READY);
+        dispatch(catalog.STATE_READY);
         $scope.safeApply();
       });
   };

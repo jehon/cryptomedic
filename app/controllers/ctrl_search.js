@@ -1,4 +1,5 @@
-'use strict';
+import mainApp         from 'mainApp';
+import service_backend from 'helpers/service_backend';
 
 mainApp.controller('ctrl_search', [ '$scope', function($scope) {
   if (typeof($scope.params) == 'undefined') {

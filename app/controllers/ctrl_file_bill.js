@@ -1,4 +1,4 @@
-'use strict';
+import mainApp                from 'mainApp';
 
 mainApp.controller('ctrl_file_bill', [ '$scope', function($scope) {
   $scope.$watch(function() {
