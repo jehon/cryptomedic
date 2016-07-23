@@ -48,12 +48,12 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', '$routeParams' , func
   //----------------------
   //   Get data from the server
   //----------------------
-  appState().action.selectFile($scope.patient_id).then(function(data) {
+  selectFile($scope.patient_id).then(function(data) {
     $scope.folder = data;
     if (data) {
       if ($scope.page == 'file') {
         if ($scope.mode == 'add') {
-          cachedCurrentFile = appState().helpers.create($scope.subtype, null, $scope.folder);
+          cachedCurrentFile = create($scope.subtype, null, $scope.folder);
           cachedCurrentFile.patient_id = $scope.patient_id;
         } else {
           for(var i in $scope.folder.getSubFiles()) {
@@ -175,7 +175,7 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', '$routeParams' , func
       alert('You have errors in your data. Please correct them and try again');
       return ;
     }
-    appState().dispatch(appState().catalog.STATE_BUSY, 'Saving file on the server');
+    dispatch(catalog.STATE_BUSY, 'Saving file on the server');
     $scope.folder = false;
     $scope.safeApply();
     service_backend.saveFile(cachedCurrentFile, $scope.patient_id)
@@ -184,13 +184,13 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', '$routeParams' , func
         $scope.$emit('message', { 'level': 'success', 'text': 'The ' + $scope.subtype + ' has been saved.'});
         $scope.go('/folder/' + $scope.patient_id + '/file/' + $scope.subtype + '/' + $scope.subid);
         $scope.folder = data;
-        appState().dispatch(appState().catalog.STATE_READY);
+        dispatch(catalog.STATE_READY);
         $scope.safeApply();
       });
   };
 
   $scope.actionUnlock = function() {
-    appState().dispatch(appState().catalog.STATE_BUSY, 'Unlocking files on the server');
+    dispatch(catalog.STATE_BUSY, 'Unlocking files on the server');
     $scope.folder = false;
     $scope.safeApply();
     service_backend.unlockFile(cachedCurrentFile)
@@ -199,7 +199,7 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', '$routeParams' , func
       // Let's refresh the data
       $scope.folder = data;
       $scope.go('/folder/' + $scope.patient_id + '/file/' + $scope.subtype + '/' + $scope.subid + '/edit');
-      appState().dispatch(appState().catalog.STATE_READY);
+      dispatch(catalog.STATE_READY);
       $scope.safeApply();
     });
   };
@@ -210,15 +210,15 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', '$routeParams' , func
       alert('You have errors in your data. Please correct them and try again');
       return ;
     }
-    appState().dispatch(appState().catalog.STATE_BUSY, 'Creating files on the server');
+    dispatch(catalog.STATE_BUSY, 'Creating files on the server');
     if (cachedCurrentFile.Date) {
-      appState().dispatch(appState().catalog.PREFS_FILES, { 'date': cachedCurrentFile.Date });
+      dispatch(catalog.PREFS_FILES, { 'date': cachedCurrentFile.Date });
     }
     if (cachedCurrentFile.ExaminerName) {
-      appState().dispatch(appState().catalog.PREFS_FILES, { 'examinerName': cachedCurrentFile.ExaminerName });
+      dispatch(catalog.PREFS_FILES, { 'examinerName': cachedCurrentFile.ExaminerName });
     }
     if (cachedCurrentFile.Center) {
-      appState().dispatch(appState().catalog.PREFS_FILES, { 'center': cachedCurrentFile.Center });
+      dispatch(catalog.PREFS_FILES, { 'center': cachedCurrentFile.Center });
     }
 
     service_backend.createFile(cachedCurrentFile)
@@ -226,7 +226,7 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', '$routeParams' , func
       $scope.$emit('message', { 'level': 'success', 'text': 'The ' + cachedCurrentFile.getModel() + ' has been created.'});
       // The data is refreshed by navigating away...
       $scope.go('/folder/' + $scope.patient_id + '/file/' + $scope.subtype + '/' + data.newKey);
-      appState().dispatch(appState().catalog.STATE_READY);
+      dispatch(catalog.STATE_READY);
       $scope.safeApply();
     });
   };
@@ -235,7 +235,7 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', '$routeParams' , func
     if (!confirm('Are you sure you want to delete this file?')) {
       return;
     }
-    appState().dispatch(appState().catalog.STATE_BUSY, 'Deleting file on the server');
+    dispatch(catalog.STATE_BUSY, 'Deleting file on the server');
     $scope.folder = false;
     $scope.safeApply();
     service_backend.deleteFile($scope.currentFile())
@@ -243,7 +243,7 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', '$routeParams' , func
       $scope.$emit('message', { 'level': 'success', 'text':  'The ' + $scope.currentFile().getModel() +  ' of ' + $scope.currentFile().Date + ' has been deleted'});
       $scope.folder = data;
       $scope.go('/folder/' + $scope.patient_id);
-      appState().dispatch(appState().catalog.STATE_READY);
+      dispatch(catalog.STATE_READY);
       $scope.safeApply();
     });
   };
@@ -253,7 +253,7 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', '$routeParams' , func
       alert('You have errors in your data. Please correct them and try again');
       return ;
     }
-    appState().dispatch(appState().catalog.STATE_BUSY, 'Creating the patient on the server');
+    dispatch(catalog.STATE_BUSY, 'Creating the patient on the server');
     $scope.folder = false;
     // $scope.currentFile().getModel() = 'Patient';
     service_backend.createFile($scope.currentFile())
@@ -261,7 +261,7 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', '$routeParams' , func
       $scope.$emit('message', { 'level': 'success', 'text':  'The patient has been created.'});
       $scope.folder = data;
       $scope.go('/folder/' + data.id);
-      appState().dispatch(appState().catalog.STATE_READY);
+      dispatch(catalog.STATE_READY);
       $scope.safeApply();
     });
   };
@@ -272,13 +272,13 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', '$routeParams' , func
       return ;
     }
     $scope.folder = false;
-    appState().dispatch(appState().catalog.STATE_BUSY, 'Saving files on the server');
+    dispatch(catalog.STATE_BUSY, 'Saving files on the server');
     $scope.safeApply();
     service_backend.saveFile(cachedCurrentFile, $scope.patient_id)
     .then(function(data) {
       // The data is refreshed by navigating away...
       $scope.$emit('message', { 'level': 'success', 'text': 'The patient has been saved.'});
-      appState().dispatch(appState().catalog.STATE_READY);
+      dispatch(catalog.STATE_READY);
       $scope.go('/folder/' + $scope.patient_id);
     });
   };
@@ -288,19 +288,19 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', '$routeParams' , func
       return;
     }
     $scope.folder = false;
-    appState().dispatch(appState().catalog.STATE_BUSY, 'Deleting patient on the server');
+    dispatch(catalog.STATE_BUSY, 'Deleting patient on the server');
     $scope.safeApply();
     service_backend.deleteFile($scope.currentFile())
     .then(function(data) {
       $scope.$emit('message', { 'level': 'success', 'text':    'The patient ' + $scope.currentFile().entryyear + '-' + $scope.currentFile().entryorder + ' has been deleted'});
       $scope.go('/home');
-      appState().dispatch(appState().catalog.STATE_READY);
+      dispatch(catalog.STATE_READY);
       $scope.safeApply();
     });
   };
 
   $scope.nextAppointment = function() {
-    var today = appState().helpers.date2CanonicString(new Date(), true);
+    var today = date2CanonicString(new Date(), true);
     var next = false;
     for(var k in $scope.folder.subFiles) {
       var v = $scope.folder.subFiles[k];
@@ -319,7 +319,7 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', '$routeParams' , func
     if ($scope.folder) {
       var d = new Date();
       var d2 = new Date(d.getFullYear() - $scope.age.years, d.getMonth() - $scope.age.months, 10);
-      $scope.folder.getMainFile().Yearofbirth  = appState().helpers.date2CanonicString(d2).substring(0, 7);
+      $scope.folder.getMainFile().Yearofbirth  = date2CanonicString(d2).substring(0, 7);
     }
   }
 
