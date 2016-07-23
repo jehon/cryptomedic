@@ -125,10 +125,9 @@ var config = {
   plugins: [
     new HtmlWebpackPlugin({
       template: 'app/index.html', // Load a custom template
-      inject: false // Inject all scripts into the body
-    }),
     new webpack.ProvidePlugin({
       'angular': 'angular'
+      inject: 'head' // Inject all scripts into the body
     }),
     new OfflinePlugin({
       caches: {
