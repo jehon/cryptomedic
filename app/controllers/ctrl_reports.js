@@ -108,7 +108,7 @@ mainApp.controller('ctrl_reports', [ '$scope', '$routeParams', '$sce', function(
     if (typeof($scope.reports[report].dataGenerator) != 'undefined') {
       dataGenerator = $scope.reports[report].dataGenerator;
     }
-    service_backend.getReport(dataGenerator,
+    service_backend().getReport(dataGenerator,
         $scope.values,
         ($scope.isParam('period') ? $scope.values.period : null)
       )

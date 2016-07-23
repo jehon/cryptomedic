@@ -18,7 +18,7 @@ mainApp.controller('ctrl_search', [ '$scope', function($scope) {
   $scope.submit = function() {
     var busyEnd = $scope.doBusy('Searching for matching patients');
 
-    service_backend.searchForPatients($scope.params)
+    service_backend().searchForPatients($scope.params)
     .then(function(data) {
       $scope.listing = data;
       $scope.page();

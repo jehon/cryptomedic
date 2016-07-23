@@ -14,7 +14,7 @@ mainApp.controller('ctrl_home', [ '$scope', '$location', function($scope, $locat
 
   $scope.checkReference = function() {
     var busyEnd = $scope.doBusy('Checking the reference on the server');
-    service_backend.checkReference($scope.entryyear, $scope.entryorder)
+    service_backend().checkReference($scope.entryyear, $scope.entryorder)
     .then(function(data) {
       if (data === false) {
         $scope.searched = true;
@@ -36,7 +36,7 @@ mainApp.controller('ctrl_home', [ '$scope', '$location', function($scope, $locat
 
   $scope.createReference = function() {
     var busyEnd = $scope.doBusy('Creating the reference on the server');
-    service_backend.createReference($scope.entryyear, $scope.entryorder)
+    service_backend().createReference($scope.entryyear, $scope.entryorder)
     .then(function(data) {
       busyEnd();
       // end the busy mode

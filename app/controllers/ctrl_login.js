@@ -19,7 +19,7 @@ mainApp.controller('ctrl_login', [ '$scope', function($scope) {
     }
     $scope.loginError = false;
     var busyEnd = $scope.doBusy('Checking your login/password with the online server', true);
-    service_backend.login(this.details.username, this.details.password)
+    service_backend().login(this.details.username, this.details.password)
       .then(function(data) {
         server.settings = data;
         $scope.loginError = false;
@@ -39,7 +39,7 @@ mainApp.controller('ctrl_login', [ '$scope', function($scope) {
 
   $scope.doLogout = function() {
     var busyEnd = $scope.doBusy('Disconnecting from the remote server', true);
-    service_backend.logout()
+    service_backend().logout()
     .then(function(data) {
       server.settings = false;
       $scope.go('/login');
