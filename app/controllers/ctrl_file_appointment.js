@@ -1,7 +1,6 @@
-import mainApp              from 'mainApp';
 import date2CanonicString   from 'helpers/date2CanonicString';
 
-mainApp.controller('ctrl_file_appointment', [ '$scope', function($scope) {
+function ctrl_file_appointment($scope) {
   $scope.today = date2CanonicString(new Date(), true);
 
   $scope.nextMonth = function(months) {
@@ -10,4 +9,8 @@ mainApp.controller('ctrl_file_appointment', [ '$scope', function($scope) {
 
     $scope.currentFile().Nextappointment = date2CanonicString(nd, true);
   };
-}]);
+}
+
+ctrl_file_appointment.$inject = [ "$scope" ];
+
+export default ctrl_file_appointment;

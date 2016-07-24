@@ -1,9 +1,9 @@
-import mainApp         from 'mainApp';
 import service_backend from 'helpers/service_backend';
 import catalog         from 'reducers/catalog';
 import dispatch        from 'reducers/dispatch';
 
-mainApp.controller('ctrl_login', [ '$scope', function($scope) {
+
+function ctrl_login($scope) {
   // cryptomedic.settings = {};
   dispatch(catalog.DATABASE_DOWNLOADED);
   $scope.details = {};
@@ -50,4 +50,8 @@ mainApp.controller('ctrl_login', [ '$scope', function($scope) {
       busyEnd();
     });
   };
-}]);
+}
+
+ctrl_login.$inject = [ "$scope" ];
+
+export default ctrl_login;

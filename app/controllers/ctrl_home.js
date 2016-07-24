@@ -1,7 +1,6 @@
-import mainApp         from 'mainApp';
 import service_backend from 'helpers/service_backend';
 
-mainApp.controller('ctrl_home', [ '$scope', '$location', function($scope, $location) {
+function ctrl_home($scope, $location) {
   if (typeof($scope.entryyear) == 'undefined') {
     $scope.searched = false;
     $scope.entryyear = (new Date()).getFullYear();
@@ -55,4 +54,8 @@ mainApp.controller('ctrl_home', [ '$scope', '$location', function($scope, $locat
     window.location.hash = '/folder/-1/edit';
     return;
   };
-}]);
+}
+
+ctrl_home.$inject = [ '$scope', '$location' ];
+
+export default ctrl_home;

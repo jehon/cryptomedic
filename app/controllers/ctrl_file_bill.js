@@ -1,6 +1,5 @@
-import mainApp                from 'mainApp';
 
-mainApp.controller('ctrl_file_bill', [ '$scope', function($scope) {
+function ctrl_file_bill($scope) {
   $scope.$watch(function() {
     return server.settings;
   }, function() {
@@ -24,4 +23,8 @@ mainApp.controller('ctrl_file_bill', [ '$scope', function($scope) {
   $scope.$watch('currentFile().sl_familySalary', function() {
     $scope.currentFile().ratioSalary();
   });
-}]);
+}
+
+ctrl_file_bill.$inject = [ "$scope" ];
+
+export default ctrl_file_bill;

@@ -1,11 +1,10 @@
-import mainApp         from 'mainApp';
 import template        from 'helpers/template';
 import service_backend from 'helpers/service_backend';
 import store           from 'reducers/store';
 import catalog         from 'reducers/catalog';
 import dispatch        from 'reducers/dispatch';
 
-mainApp.controller('ctrl_reports', [ '$scope', '$routeParams', '$sce', function($scope, $routeParams, $sce) {
+function ctrl_reports($scope, $routeParams, $sce) {
   var report = $routeParams['report'];
   $scope.values = store.getState().prefs.reports;
   for(var k in $scope.values) {
@@ -126,4 +125,8 @@ mainApp.controller('ctrl_reports', [ '$scope', '$routeParams', '$sce', function(
       document.getElementById('report_table').getElementsByTagName('table')[0],
       'cryptomedic');
   };
-}]);
+}
+
+ctrl_reports.$inject = [ '$scope', '$routeParams', '$sce' ];
+
+export default ctrl_reports;

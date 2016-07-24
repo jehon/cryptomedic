@@ -1,11 +1,10 @@
-import mainApp         from 'mainApp';
 import service_backend from 'helpers/service_backend';
 import catalog         from 'reducers/catalog';
 import dispatch        from 'reducers/dispatch';
 
 // TODO: manage change in groups
 
-mainApp.controller('ctrl_users', [ '$scope', function($scope) {
+function ctrl_users($scope) {
   $scope.users = {};
   $scope.edit = false;
   $scope.password = false;
@@ -93,4 +92,8 @@ mainApp.controller('ctrl_users', [ '$scope', function($scope) {
 
   $scope.doCancel();
   $scope.refresh();
-}]);
+}
+
+ctrl_users.$inject = [ "$scope" ];
+
+export default ctrl_users;
