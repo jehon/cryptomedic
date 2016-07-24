@@ -1,4 +1,3 @@
-import mainApp              from 'mainApp';
 import service_backend      from 'helpers/service_backend';
 import selectFile           from 'actions/selectFile';
 import create               from 'helpers/create';
@@ -8,7 +7,7 @@ import catalog              from 'reducers/catalog';
 import dispatch             from 'reducers/dispatch';
 import date2CanonicString   from 'helpers/date2CanonicString';
 
-mainApp.controller('ctrl_folder', [ '$scope', '$location', '$routeParams' , function($scope, $location, $routeParams) {
+function ctrl_folder($scope, $location, $routeParams) {
   /*
    * '/folder/:patient_id/:page?/:subtype?/:subid?/:mode?'
    *
@@ -367,4 +366,9 @@ mainApp.controller('ctrl_folder', [ '$scope', '$location', '$routeParams' , func
     }
     return list;
   };
-}]);
+}
+
+ctrl_folder.$inject = [ "$scope", '$location', '$routeParams' ];
+
+export default ctrl_folder;
+

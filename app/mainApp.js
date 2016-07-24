@@ -491,6 +491,28 @@ mainApp.controller('ctrl', [ '$scope', '$location', '$sce', function($scope, $lo
   $scope.doCheckLogin();
 }]);
 
+import ctrl_allgraphics      from 'controllers/ctrl_allgraphics';
+import ctrl_file_appointment from 'controllers/ctrl_file_appointment';
+import ctrl_file_bill        from 'controllers/ctrl_file_bill';
+import ctrl_folder           from 'controllers/ctrl_folder';
+import ctrl_graphic          from 'controllers/ctrl_graphic';
+import ctrl_home             from 'controllers/ctrl_home';
+import ctrl_login            from 'controllers/ctrl_login';
+import ctrl_reports          from 'controllers/ctrl_reports';
+import ctrl_search           from 'controllers/ctrl_search';
+import ctrl_users            from 'controllers/ctrl_users';
+
+mainApp.controller('ctrl_allgraphics',      ctrl_allgraphics);
+mainApp.controller('ctrl_file_appointment', ctrl_file_appointment);
+mainApp.controller('ctrl_file_bill',        ctrl_file_bill);
+mainApp.controller('ctrl_folder',           ctrl_folder);
+mainApp.controller('ctrl_graphic',          ctrl_graphic);
+mainApp.controller('ctrl_home',             ctrl_home);
+mainApp.controller('ctrl_login',            ctrl_login);
+mainApp.controller('ctrl_reports',          ctrl_reports);
+mainApp.controller('ctrl_search',           ctrl_search);
+mainApp.controller('ctrl_users',            ctrl_users);
+
 mainApp.config([ '$routeProvider', function($routeProvider) {
   $routeProvider
     .when('/home', {

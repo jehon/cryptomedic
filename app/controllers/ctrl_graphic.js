@@ -1,8 +1,7 @@
-import mainApp                  from 'mainApp';
 import calculations             from 'helpers/calculations';
 import { DataMissingException } from 'helpers/exceptions';
 
-mainApp.controller('ctrl_graphic', [ '$scope', function($scope) {
+function ctrl_graphic($scope) {
   // This controller is intended for ONE graphic only
   var x, y;
   // var stats;
@@ -91,4 +90,8 @@ mainApp.controller('ctrl_graphic', [ '$scope', function($scope) {
   $scope.$on('refresh', function() {
     $scope.$apply();
   });
-}]);
+}
+
+ctrl_graphic.$inject = [ "$scope" ];
+
+export default ctrl_graphic;

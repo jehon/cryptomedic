@@ -1,7 +1,6 @@
-import mainApp         from 'mainApp';
 import service_backend from 'helpers/service_backend';
 
-mainApp.controller('ctrl_search', [ '$scope', function($scope) {
+function ctrl_search($scope) {
   if (typeof($scope.params) == 'undefined') {
     $scope.params = {};
   }
@@ -35,4 +34,8 @@ mainApp.controller('ctrl_search', [ '$scope', function($scope) {
     $scope.listing = [];
     $scope.safeApply();
   };
-}]);
+}
+
+ctrl_search.$inject = [ "$scope" ];
+
+export default ctrl_search;
