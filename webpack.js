@@ -37,13 +37,12 @@ var config = {
     .concat([
       'expose?jQuery!./node_modules/jquery/dist/jquery.js',
       './node_modules/jquery-ui/ui/widgets/datepicker.js',
-      './node_modules/angular/angular.js',
-      './node_modules/angular-route/angular-route.min.js',
+      // 'expose?angular!./node_modules/angular/angular.js',
+      // './node_modules/angular-route/angular-route.min.js',
       './node_modules/html2canvas/dist/html2canvas.js',
 
       'script!./node_modules/excellentexport/excellentexport.min.js',
       './node_modules/bootstrap/dist/js/bootstrap.min.js',
-
       // 'script!./app/static/js/bugreporting.js',
       './app/mainApp.js'
     ])
@@ -65,7 +64,8 @@ var config = {
 
     // @see https://webpack.github.io/docs/library-and-externals.html
     libraryTarget: 'var',
-    library: 'appState'
+    library: 'appState',
+    pathinfo: true // Not in production
   },
   module: {
     loaders: [
@@ -125,10 +125,11 @@ var config = {
   plugins: [
     new HtmlWebpackPlugin({
       template: 'app/index.html', // Load a custom template
-    new webpack.ProvidePlugin({
-      'angular': 'angular'
       inject: 'head' // Inject all scripts into the body
     }),
+    // new webpack.ProvidePlugin({
+    //   'angular': 'angular'
+    // }),
     new OfflinePlugin({
       caches: {
         main: [].concat(unmanaged).concat([ ':rest:' ]),
