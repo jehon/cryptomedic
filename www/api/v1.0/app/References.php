@@ -210,7 +210,6 @@ References::$lists["examiner"] = References::buildValueList([
   References::withCode("Murshed",    "Mur"),
   References::withCode("Shetou",     "She"),
   References::withCode("Rezaul",     "Res"),
-  References::withCode("Ferdawsi",   "Fer"),
 
   // orthesis
   References::withCode("Hassan 1",   "Has 1"),
@@ -231,7 +230,9 @@ References::$lists["examiner"] = References::buildValueList([
   References::withCode("Dr Taslim",  "Tas"),
   References::withCode("AMD doctor", "AMD"),
 ]);
+
 // Not present anymore
+References::withCode("Ferdawsi",   "Fer");
 References::withCode("Ricta",      "Ric");
 References::withCode("Asma",       "Asm");
 References::withCode("Shudir",     "Shu");
