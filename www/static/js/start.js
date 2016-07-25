@@ -15,3 +15,10 @@ if (!are_cookies_enabled()) {
 if (!Promise || !indexedDB || !sessionStorage || !fetch) {
   window.location.href = '/static/upgrade.html';
 }
+
+Promise.prototype.myFinallyDone = function (callback) {
+  callback = callback || function(data) { return data; };
+  return this
+    .then(callback, callback)
+    .catch(function(reason) { console.error(reason); });
+};
