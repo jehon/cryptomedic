@@ -10,6 +10,17 @@ import calculations             from 'helpers/calculations';
 import service_backend          from 'helpers/service_backend';
 import template                 from 'helpers/template';
 
+import ctrl_allgraphics         from 'controllers/ctrl_allgraphics';
+import ctrl_file_appointment    from 'controllers/ctrl_file_appointment';
+import ctrl_file_bill           from 'controllers/ctrl_file_bill';
+import ctrl_folder              from 'controllers/ctrl_folder';
+import ctrl_graphic             from 'controllers/ctrl_graphic';
+import ctrl_home                from 'controllers/ctrl_home';
+import ctrl_login               from 'controllers/ctrl_login';
+import ctrl_reports             from 'controllers/ctrl_reports';
+import ctrl_search              from 'controllers/ctrl_search';
+import ctrl_users               from 'controllers/ctrl_users';
+
 var application = {};
 var server = {};
 var path = location.pathname.split('/');
@@ -43,37 +54,6 @@ var flavor = '/' + path[1];
 //     .catch(function(reason) { console.error(reason); });
 // };
 
-// function inherit(parent, constructor) {
-//   // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/create
-
-//   if (typeof(constructor) == 'undefined')
-//     constructor = function() {};
-
-//   // shim for older browsers:
-//   var ObjectCreateShim;
-//   if (typeof Object.create == 'function') {
-//     ObjectCreateShim = Object.create;
-//   } else {
-//     ObjectCreateShim = function(proto) {
-//       function ctor() { }
-//       ctor.prototype = proto;
-//       return new ctor();
-//     };
-//   }
-
-  // Create a Student.prototype object that inherits from Person.prototype.
-  // Note: A common error here is to use 'new Person()' to create the Student.prototype.
-  // That's incorrect for several reasons, not least that we don't have anything to
-  // give Person for the 'firstName' argument. The correct place to call Person is
-  // above, where we call it from Student.
-//   constructor.prototype = ObjectCreateShim(parent.prototype);
-
-//   // Set the 'constructor' property to refer to Student
-//   constructor.prototype.constructor = constructor;
-
-//   // Add a custom parent field to refer to the inherited parent
-//   constructor.prototype._parent = parent.prototype;
-// }
 
 var mainApp = angular.module('app_main', [ 'ngRoute' ])
 .config([ '$compileProvider', function( $compileProvider ) {
@@ -178,68 +158,6 @@ var mainApp = angular.module('app_main', [ 'ngRoute' ])
     }
   };
 })
-// .directive('hasPermission', [ '$animate', function($animate) {
-//   return {
-//     multiElement: true,
-//     transclude: 'element',
-//     priority: 600,
-//     terminal: true,
-//     restrict: 'A',
-//     $$tlb: true,
-//     link: function($scope, $element, $attr, ctrl, $transclude) {
-//         var block, childScope, previousElements;
-//         $scope.$watch($attr.hasPermission, function ngIfWatchAction(value) {
-//           if (value) {
-//             if (!childScope) {
-//               $transclude(function(clone, newScope) {
-//                 childScope = newScope;
-//                 clone[clone.length++] = document.createComment(' end hasPermission: ' + $attr.hasPermission + ' ');
-//                 // Note: We only need the first/last node of the cloned nodes.
-//                 // However, we need to keep the reference to the jqlite wrapper as it might be changed later
-//                 // by a directive with templateUrl when its template arrives.
-//                 block = {
-//                   clone: clone
-//                 };
-//                 $animate.enter(clone, $element.parent(), $element);
-//               });
-//             }
-//           } else {
-//             if (previousElements) {
-//               previousElements.remove();
-//               previousElements = null;
-//             }
-//             if (childScope) {
-//               childScope.$destroy();
-//               childScope = null;
-//             }
-//             if (block) {
-//               previousElements = getBlockNodes(block.clone);
-//               $animate.leave(previousElements).then(function() {
-//                 previousElements = null;
-//               });
-//               block = null;
-//             }
-//           }
-//         });
-//     }
-//   };
-// }]);
-// .directive('hide', ['$animate', function($animate) {
-//   return {
-//     restrict: 'A',
-//     multiElement: true,
-//     link: function(scope, element, attr) {
-//       scope.$watch(attr.ngHide, function ngHideWatchAction(value) {
-//         // The comment inside of the ngShowDirective explains why we add and
-//         // remove a temporary class for the show/hide animation
-//         $animate[value ? 'addClass' : 'removeClass'](element,NG_HIDE_CLASS, {
-//           tempClasses: NG_HIDE_IN_PROGRESS_CLASS
-//         });
-//       });
-//     }
-//   };
-// }]);
-
 .directive('myGo', function() {
   return {
     restrict: 'E',
@@ -491,17 +409,6 @@ mainApp.controller('ctrl', [ '$scope', '$location', '$sce', function($scope, $lo
   $scope.doCheckLogin();
 }]);
 
-import ctrl_allgraphics      from 'controllers/ctrl_allgraphics';
-import ctrl_file_appointment from 'controllers/ctrl_file_appointment';
-import ctrl_file_bill        from 'controllers/ctrl_file_bill';
-import ctrl_folder           from 'controllers/ctrl_folder';
-import ctrl_graphic          from 'controllers/ctrl_graphic';
-import ctrl_home             from 'controllers/ctrl_home';
-import ctrl_login            from 'controllers/ctrl_login';
-import ctrl_reports          from 'controllers/ctrl_reports';
-import ctrl_search           from 'controllers/ctrl_search';
-import ctrl_users            from 'controllers/ctrl_users';
-
 mainApp.controller('ctrl_allgraphics',      ctrl_allgraphics);
 mainApp.controller('ctrl_file_appointment', ctrl_file_appointment);
 mainApp.controller('ctrl_file_bill',        ctrl_file_bill);
@@ -535,6 +442,5 @@ mainApp.config([ '$routeProvider', function($routeProvider) {
       controller: 'ctrl_users',
     }).otherwise({ 'redirectTo': '/home'});
 }]);
-
 
 export default mainApp;
