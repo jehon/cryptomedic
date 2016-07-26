@@ -11,7 +11,14 @@ function mylog($uri, $msg = "ok") {
 
 function goWithUri($uri) {
   mylog($uri);
-  readfile('http://localhost/' . $uri);
+  // if ($_ENV['USER'] == 'vagrant') {
+  if (substr(__DIR__, 0, strlen('/vagrant')) == '/vagrant') {
+    // We are in the vagrant
+    readfile('http://localhost/' . $uri);
+  } else {
+    // We are on the final host
+    readfile('http://localhost:10080/' . $uri);
+  }
 }
 
 if ($argc < 2) {
