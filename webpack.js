@@ -16,8 +16,6 @@ var unmanaged = []
         .concat(glob('static/**', { sync: true, cwd: __dirname + '/www/' }))
         ;
 
-// https://github.com/petehunt/webpack-howto
-
 // Global variables
 // https://webpack.github.io/docs/library-and-externals.html
 // https://webpack.github.io/docs/shimming-modules.html
@@ -37,8 +35,6 @@ var config = {
     .concat([
       'expose?jQuery!./node_modules/jquery/dist/jquery.js',
       './node_modules/jquery-ui/ui/widgets/datepicker.js',
-      // 'expose?angular!./node_modules/angular/angular.js',
-      // './node_modules/angular-route/angular-route.min.js',
       './node_modules/html2canvas/dist/html2canvas.js',
 
       'script!./node_modules/excellentexport/excellentexport.min.js',

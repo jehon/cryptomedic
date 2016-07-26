@@ -7,7 +7,7 @@ import store                    from 'reducers/store';
 import dispatch                 from 'reducers/dispatch';
 import catalog                  from 'reducers/catalog';
 import calculations             from 'helpers/calculations';
-import service_backend          from 'helpers/service_backend';
+// import service_backend          from 'helpers/service_backend';
 import template                 from 'helpers/template';
 
 import ctrl_allgraphics         from 'controllers/ctrl_allgraphics';
@@ -20,6 +20,8 @@ import ctrl_login               from 'controllers/ctrl_login';
 import ctrl_reports             from 'controllers/ctrl_reports';
 import ctrl_search              from 'controllers/ctrl_search';
 import ctrl_users               from 'controllers/ctrl_users';
+
+import { loginCheck }           from 'actions/authentication';
 
 var application = {};
 var server = {};
@@ -322,7 +324,7 @@ mainApp.controller('ctrl', [ '$scope', '$location', '$sce', function($scope, $lo
   };
 
   $scope.go = function(path) {
-    $location.path( path );
+    $location.path(path);
   };
 
   $scope.sync = false;
@@ -337,7 +339,6 @@ mainApp.controller('ctrl', [ '$scope', '$location', '$sce', function($scope, $lo
 
   $scope.endBusy = dispatch.bind(this, catalog.STATE_BUSY);
 
-  $scope.logged = false;
   $scope.username = '';
   $scope.password = '';
   $scope.hasPermission = function(transaction) {
@@ -357,19 +358,18 @@ mainApp.controller('ctrl', [ '$scope', '$location', '$sce', function($scope, $lo
   // }, false);
 
   $scope.doCheckLogin = function() {
-    $scope.loginError = false;
-    var busyEnd = $scope.doBusy('Checking your login/password with the online server', true);
-    service_backend().checkLogin()
+    // $scope.loginError = false;
+    // var busyEnd = $scope.doBusy('Checking your login/password with the online server', true);
+    // service_backend().checkLogin()
+    loginCheck()
       .then(function(data) {
-        server.settings = data;
-        $scope.logged = true;
+        // server.settings = data;
+        // $scope.logged = true;
         $scope.$broadcast('message', { 'level': 'info', 'text': 'Welcome ' +  data.name + '!'});
-        if (location.hash == '#/login') {
+        if (window.location.hash == '#/login') {
           $scope.go('#');
         }
-        $scope.safeApply();
-      })
-      .then(busyEnd, busyEnd);
+      });
   };
 
   $scope.$on('$routeChangeError', function() { console.error('error in routes', arguments); });

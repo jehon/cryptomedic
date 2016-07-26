@@ -1,12 +1,14 @@
 
 import catalog from 'reducers/catalog';
 
-catalog._define('CONNECTION_SUCCESS');
-catalog._define('CONNECTION_EXPIRED');
+// TODO: check all this usage
+catalog._define('CONNECTION_SUCCESS');      // connection ok
+catalog._define('CONNECTION_EXPIRED');      // Forbidden (need to login again) -> the reducer?? redirect to login
 catalog._define('CONNECTION_FAILED');
 catalog._define('CONNECTION_NOT_FOUND');
-catalog._define('CONNECTION_SERVER_ERROR');
-catalog._define('CONNECTION_SETTINGS');
+catalog._define('CONNECTION_SERVER_ERROR'); // 500
+catalog._define('CONNECTION_SETTINGS');     // Login/loginCheck success, here are my connections settings
+catalog._define('CONNECTION_AUTH_FAILED');  // Login failed
 
 export default function(state, action) {
   if (!state) {
@@ -17,14 +19,17 @@ export default function(state, action) {
       settings: false
     };
   }
-  if ((action.type == catalog.CONNECTION_SUCCESS)
-      || (action.type == catalog.CONNECTION_SETTINGS)) {
+  if (action.type == catalog.CONNECTION_SUCCESS) {
     return {
       connected: true,
       authenticated: true,
       serverError: false,
-      settings: (action.type == catalog.CONNECTION_SETTINGS ? action.payload : state.settings)
+      settings: state.settings
     };
+  }
+
+  if (action.type == catalog.CONNECTION_SETTINGS) {
+    return Object.assign({}, state, { settings: action.payload });
   }
 
   if (action.type == catalog.CONNECTION_EXPIRED) {
@@ -32,6 +37,15 @@ export default function(state, action) {
       connected: true,
       authenticated: false,
       serverError: false,
+      settings: false
+    };
+  }
+
+  if (action.type == catalog.CONNECTION_AUTH_FAILED) {
+    return {
+      connected: true,
+      authenticated: false,
+      serverError: action.payload,
       settings: false
     };
   }

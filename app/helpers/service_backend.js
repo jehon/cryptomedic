@@ -1,7 +1,6 @@
 
 import objectify    from 'helpers/objectify';
 import Database     from 'helpers/database';
-// import myFetch      from 'helpers/myFetch';
 import create       from 'helpers/create';
 import catalog      from 'reducers/catalog';
 import dispatch     from 'reducers/dispatch';
@@ -58,15 +57,15 @@ export function nullify(what) {
   return what;
 }
 
-/* Initialize the computer id */
-if (!localStorage.cryptomedicComputerId) {
-  var mask = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-  var result = '';
-  for (var i = 0; i < 32; i++) {
-    result += mask[Math.floor(Math.random() * mask.length)];
-  }
-  localStorage.cryptomedicComputerId = result;
-}
+// /* Initialize the computer id */
+// if (!localStorage.cryptomedicComputerId) {
+//   var mask = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+//   var result = '';
+//   for (var i = 0; i < 32; i++) {
+//     result += mask[Math.floor(Math.random() * mask.length)];
+//   }
+//   localStorage.cryptomedicComputerId = result;
+// }
 
 /* service_backend */
 export default function service_backend() {
@@ -103,40 +102,6 @@ export default function service_backend() {
   }
 
   return {
-    /* Authentification */
-    'login': function(username, password) {
-      return myFrontFetch({ url: 'auth/mylogin', init: { method: 'POST' }, data: {
-        'username': username,
-        'password': password,
-            // 'appVersion': cryptomedic.version,
-        'computerId': localStorage.cryptomedicComputerId
-      }})
-        .then(dispatch.bind(this, catalog.CONNECTION_SETTINGS))
-        .then(mySendAction.bind(this, 'init'))
-        .catch()
-        ;
-    },
-    'checkLogin': function() {
-      return myFrontFetch({ url: 'auth/settings', data: {
-              // 'appVersion': cryptomedic.version,
-        'computerId': localStorage.cryptomedicComputerId
-      }})
-        .then(dispatch.bind(this, catalog.CONNECTION_SETTINGS))
-        .then(mySendAction.bind(this, 'init'))
-        .catch()
-        ;
-    },
-    'logout': function() {
-      // TODO: clean up the cache --> cache managed in other object???
-      return myFrontFetch({ url: 'auth/logout' })
-        .then(function(data) {
-          dispatch(catalog.CONNECTION_EXPIRED);
-          return data;
-        })
-        .catch()
-        ;
-    },
-
     // Go to the worker
     'sync': function() {
       mySendAction('sync');
