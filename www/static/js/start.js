@@ -1,3 +1,7 @@
+if (!Promise || !indexedDB || !sessionStorage || !fetch) {
+  window.location.href = '/static/upgrade.html';
+}
+
 function are_cookies_enabled() {
   var cookieEnabled = (navigator.cookieEnabled) ? true : false;
 

@@ -112,12 +112,6 @@
 
     <!-- script here, so they are after the webpack loaded plugin -->
 
-    <script>
-      if (!Promise || !indexedDB || !sessionStorage || !fetch) {
-        window.location.href = '/static/upgrade.html';
-      }
-    </script>
-
     <script type='text/javascript' src='../static/js/bugreporting.js'></script>
   </body>
 </html>
