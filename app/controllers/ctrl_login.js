@@ -1,10 +1,10 @@
-import service_backend from 'helpers/service_backend';
 import catalog         from 'reducers/catalog';
 import dispatch        from 'reducers/dispatch';
-
+import { login, logout } from 'actions/authentication';
 
 function ctrl_login($scope) {
-  // cryptomedic.settings = {};
+console.log("ctrl_login called");
+
   dispatch(catalog.DATABASE_DOWNLOADED);
   $scope.details = {};
 
@@ -17,37 +17,26 @@ function ctrl_login($scope) {
       alert('No password detected');
       return;
     }
-    $scope.loginError = false;
-    var busyEnd = $scope.doBusy('Checking your login/password with the online server', true);
-    service_backend().login(this.details.username, this.details.password)
+    // var busyEnd = $scope.doBusy('Checking your login/password with the online server', true);
+    login(this.details.username, this.details.password)
       .then(function(data) {
-        server.settings = data;
-        $scope.loginError = false;
-        $scope.logged = true;
-        // console.log('Reloading the page');
-        // window.location.reload();
         $scope.go('/');
-      })
-      .catch(function(data) {
-        $scope.loginError = true;
-      })
-      .myFinallyDone(function() {
-        $scope.safeApply();
-        busyEnd();
+      // })
+      // .myFinallyDone(function() {
+      //   $scope.safeApply();
       });
   };
 
   $scope.doLogout = function() {
-    var busyEnd = $scope.doBusy('Disconnecting from the remote server', true);
-    service_backend().logout()
+    // var busyEnd = $scope.doBusy('Disconnecting from the remote server', true);
+    logout()
     .then(function(data) {
-      server.settings = false;
       $scope.go('/login');
-      $scope.logged = false;
-    })
-    .myFinallyDone(function(data) {
-      $scope.safeApply();
-      busyEnd();
+      return data;
+    // })
+    // .myFinallyDone(function(data) {
+    //   $scope.safeApply();
+    //   return data;
     });
   };
 }

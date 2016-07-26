@@ -4,7 +4,7 @@ var config = require('./webpack.dev.js');
 
 new WebpackDevServer(webpack(config), {
   // publicPath: config.output.publicPath,
-  publicPath: '/build',
+  publicPath: '/build/',
   hot: true,
   historyApiFallback: true,
   stats: {
@@ -18,7 +18,7 @@ new WebpackDevServer(webpack(config), {
     '/': {
       target: 'http://localhost:10080/',
       secure: false,
-    }
+    },
     '/api/*': {
       target: 'http://localhost:10080/',
       secure: false,
