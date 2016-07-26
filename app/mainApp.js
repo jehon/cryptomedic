@@ -24,7 +24,6 @@ import ctrl_users               from 'controllers/ctrl_users';
 import { loginCheck }           from 'actions/authentication';
 
 var application = {};
-var server = {};
 var path = location.pathname.split('/');
 var flavor = '/' + path[1];
 
@@ -150,9 +149,12 @@ var mainApp = angular.module('app_main', [ 'ngRoute' ])
     // template: '<span data-toggle='tooltip' data-placement='bottom' title='{{value}}'>{{coded}}</span>',
     template: '{{coded}}<span class=\'online\' data-toggle=\'tooltip\' data-placement=\'bottom\' title=\'{{value}}\'>*</span>',
     link: function($scope, element, attrs) {
-      if (server && server.settings && server.settings.codes[$scope.value]) {
+
+      let settings = store.getState().connection.setting;
+
+      if (settings.codes[$scope.value]) {
         $scope.isCoded = true;
-        $scope.coded = server.settings.codes[$scope.value];
+        $scope.coded = settings.codes[$scope.value];
       } else {
         $scope.isCoded = false;
         $scope.coded = $scope.value;
@@ -184,9 +186,6 @@ var mainApp = angular.module('app_main', [ 'ngRoute' ])
               +      '<b style=\'color: red;\'>Button</b>'
               +    '</ng-transclude>'
               +  '</a>';
-        // }
-        // return templateFunction();
-        // scope.$watch('attr.haspermission', templateFunction);
     }
   };
 })
@@ -289,14 +288,13 @@ mainApp.controller('ctrl', [ '$scope', '$location', '$sce', function($scope, $lo
   // Global variables intorduced into the scope:
   // $scope.cryptomedic  = cryptomedic;
   $scope.application  = application;
-  $scope.server       = server;
   $scope.calculations = calculations;
   $scope.template     = template;
 
 
   $scope.appStateStore = store.getState();
   store.subscribe(function() {
-    // console.log('scope appState updated', store.getState());
+    console.log('scope appState updated', store.getState());
     $scope.appStateStore = store.getState();
 
     // ** Manual operations **
@@ -308,7 +306,6 @@ mainApp.controller('ctrl', [ '$scope', '$location', '$sce', function($scope, $lo
       jQuery('#busy').modal('hide');
     }
 
-    server.settings = $scope.appStateStore.connection.settings;
 
     $scope.safeApply();
   });
