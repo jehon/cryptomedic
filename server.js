@@ -2,6 +2,8 @@ var webpack = require('webpack');
 var WebpackDevServer = require('webpack-dev-server');
 var config = require('./webpack.dev.js');
 
+var remoteTarget = config.personnal.remoteTarget; // configured and detected in webpack.js
+
 new WebpackDevServer(webpack(config), {
   // publicPath: config.output.publicPath,
   publicPath: '/build/',
@@ -16,19 +18,19 @@ new WebpackDevServer(webpack(config), {
   },
   proxy: {
     '/': {
-      target: 'http://localhost:10080/',
+      target: remoteTarget,
       secure: false,
     },
     '/api/*': {
-      target: 'http://localhost:10080/',
+      target: remoteTarget,
       secure: false,
     },
     '/static/*': {
-      target: 'http://localhost:10080/',
+      target: remoteTarget,
       secure: false,
     },
     '/maintenance/*': {
-      target: 'http://localhost:10080/',
+      target: remoteTarget,
       secure: false,
     },
   }
@@ -37,5 +39,5 @@ new WebpackDevServer(webpack(config), {
     console.error(err);
   }
 
-  console.info('Listening at 0.0.0.0:8080');
+  console.info('Listening at 0.0.0.0:8080 and forwarding to ' + remoteTarget);
 });
