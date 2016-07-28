@@ -20,7 +20,6 @@ export default function myFrontFetch({ url: url, init: init, data: data }) {
       switch(httpErrorCode) {
         case 401: // unauthorized
           dispatch(catalog.CONNECTION_EXPIRED);
-          location.hash = '#/login';
           break;
         case 403: // forbidden
           dispatch(catalog.CONNECTION_FAILED);
