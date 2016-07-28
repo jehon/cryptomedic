@@ -1,5 +1,9 @@
 <?php
 
+$options = getopt("h:", [ "httplive:" ]);
+
+$remoteTarget = (array_key_exists('httplive', $options) ? $options['httplive'] : 'http://localhost' );
+
 define("PROXY_VERSION", "1.0");
 define("PROXY_TEMPLATE_ROOT", __DIR__ . "/www/templates/");
 
@@ -11,14 +15,7 @@ function mylog($uri, $msg = "ok") {
 
 function goWithUri($uri) {
   mylog($uri);
-  // if ($_ENV['USER'] == 'vagrant') {
-  if (substr(__DIR__, 0, strlen('/vagrant')) == '/vagrant') {
-    // We are in the vagrant
-    readfile('http://localhost/' . $uri);
-  } else {
-    // We are on the final host
-    readfile('http://localhost:10080/' . $uri);
-  }
+  readfile($remoteTarget . '/' . $uri);
 }
 
 if ($argc < 2) {
