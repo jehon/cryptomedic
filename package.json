@@ -61,9 +61,8 @@
   },
   "scripts": {
     "build": "webpack --config webpack.js -p",
-    "builddev": "webpack --config webpack.js -d",
-    "dev-server-quiet": "node server.js | grep 'built\\|error\\|VALID'",
     "dev-server": "node server.js",
+    "dev-server-quiet": "node server.js | grep 'built\\|error\\|VALID'",
     "post-upgrade": "node bin/setselenium.js",
     "post-install": "node bin/setselenium.js"
   },
