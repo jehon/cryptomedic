@@ -1,4 +1,5 @@
 import service_backend from 'helpers/service_backend';
+import goThere         from 'helpers/goThere';
 
 function ctrl_home($scope, $location) {
   if (typeof($scope.entryyear) == 'undefined') {
@@ -22,7 +23,7 @@ function ctrl_home($scope, $location) {
         // end the busy mode
         jQuery('#busy').modal('hide');
         setTimeout(function() {
-          window.location.hash = '/folder/' + data;
+          goThere('/folder/' + data);
         }, 1);
       }
     }, function(data) {
@@ -41,7 +42,7 @@ function ctrl_home($scope, $location) {
       // end the busy mode
       jQuery('#busy').modal('hide');
       setTimeout(function() {
-        window.location.hash = '/folder/' + data.id + '/edit';
+        goThere('/folder/' + data.id + '/edit');
       }, 1);
     }, function(data) {
       console.error(data);
@@ -51,7 +52,7 @@ function ctrl_home($scope, $location) {
     $scope.searched = true;
   };
   $scope.generateReference = function() {
-    window.location.hash = '/folder/-1/edit';
+    goThere('/folder/-1/edit');
     return;
   };
 }

@@ -6,6 +6,7 @@ import catalog      from 'reducers/catalog';
 import dispatch     from 'reducers/dispatch';
 import MyWorker     from 'helpers/myWorker';
 import myFrontFetch from 'helpers/myFrontFetch';
+import goThere      from 'helpers/goThere';
 
 // Test cryptographic:
 // Documentation: https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto
@@ -76,7 +77,7 @@ export default function service_backend() {
       case 'disconnected':
         if (data == 401) {
           dispatch(catalog.CONNECTION_EXPIRED);
-          location.hash = '#/login';
+          goThere('#/login');
         } else {
           dispatch(catalog.CONNECTION_SERVER_ERROR);
         }

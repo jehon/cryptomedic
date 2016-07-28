@@ -6,6 +6,7 @@ import template             from 'helpers/template';
 import catalog              from 'reducers/catalog';
 import dispatch             from 'reducers/dispatch';
 import date2CanonicString   from 'helpers/date2CanonicString';
+import goThere              from 'helpers/goThere';
 
 function ctrl_folder($scope, $location, $routeParams) {
   /*
@@ -163,9 +164,9 @@ function ctrl_folder($scope, $location, $routeParams) {
   $scope.actionCancel = function() {
     // By rerouting, the controller is initialized back
     if ($scope.subid) {
-      $scope.go('/folder/' + $scope.patient_id + '/file/' + $scope.subtype + '/' + $scope.subid);
+      goThere('/folder/' + $scope.patient_id + '/file/' + $scope.subtype + '/' + $scope.subid);
     } else {
-      $scope.go('/folder/' + $scope.patient_id);
+      goThere('/folder/' + $scope.patient_id);
     }
   };
 
@@ -181,7 +182,7 @@ function ctrl_folder($scope, $location, $routeParams) {
       .then(function(data) {
         // The data is refreshed by navigating away...
         $scope.$emit('message', { 'level': 'success', 'text': 'The ' + $scope.subtype + ' has been saved.'});
-        $scope.go('/folder/' + $scope.patient_id + '/file/' + $scope.subtype + '/' + $scope.subid);
+        goThere('/folder/' + $scope.patient_id + '/file/' + $scope.subtype + '/' + $scope.subid);
         $scope.folder = data;
         dispatch(catalog.STATE_READY);
         $scope.safeApply();
@@ -197,7 +198,7 @@ function ctrl_folder($scope, $location, $routeParams) {
       $scope.$emit('message', { 'level': 'success', 'text': 'The ' + $scope.subtype + ' #' + $scope.subid + ' has been unlocked.'});
       // Let's refresh the data
       $scope.folder = data;
-      $scope.go('/folder/' + $scope.patient_id + '/file/' + $scope.subtype + '/' + $scope.subid + '/edit');
+      goThere('/folder/' + $scope.patient_id + '/file/' + $scope.subtype + '/' + $scope.subid + '/edit');
       dispatch(catalog.STATE_READY);
       $scope.safeApply();
     });
@@ -224,7 +225,7 @@ function ctrl_folder($scope, $location, $routeParams) {
     .then(function(data) {
       $scope.$emit('message', { 'level': 'success', 'text': 'The ' + cachedCurrentFile.getModel() + ' has been created.'});
       // The data is refreshed by navigating away...
-      $scope.go('/folder/' + $scope.patient_id + '/file/' + $scope.subtype + '/' + data.newKey);
+      goThere('/folder/' + $scope.patient_id + '/file/' + $scope.subtype + '/' + data.newKey);
       dispatch(catalog.STATE_READY);
       $scope.safeApply();
     });
@@ -241,7 +242,7 @@ function ctrl_folder($scope, $location, $routeParams) {
     .then(function(data) {
       $scope.$emit('message', { 'level': 'success', 'text':  'The ' + $scope.currentFile().getModel() +  ' of ' + $scope.currentFile().Date + ' has been deleted'});
       $scope.folder = data;
-      $scope.go('/folder/' + $scope.patient_id);
+      goThere('/folder/' + $scope.patient_id);
       dispatch(catalog.STATE_READY);
       $scope.safeApply();
     });
@@ -259,7 +260,7 @@ function ctrl_folder($scope, $location, $routeParams) {
     .then(function(data) {
       $scope.$emit('message', { 'level': 'success', 'text':  'The patient has been created.'});
       $scope.folder = data;
-      $scope.go('/folder/' + data.id);
+      goThere('/folder/' + data.id);
       dispatch(catalog.STATE_READY);
       $scope.safeApply();
     });
@@ -278,7 +279,7 @@ function ctrl_folder($scope, $location, $routeParams) {
       // The data is refreshed by navigating away...
       $scope.$emit('message', { 'level': 'success', 'text': 'The patient has been saved.'});
       dispatch(catalog.STATE_READY);
-      $scope.go('/folder/' + $scope.patient_id);
+      goThere('/folder/' + $scope.patient_id);
     });
   };
 
@@ -292,7 +293,7 @@ function ctrl_folder($scope, $location, $routeParams) {
     service_backend().deleteFile($scope.currentFile())
     .then(function(data) {
       $scope.$emit('message', { 'level': 'success', 'text':    'The patient ' + $scope.currentFile().entryyear + '-' + $scope.currentFile().entryorder + ' has been deleted'});
-      $scope.go('/home');
+      goThere();
       dispatch(catalog.STATE_READY);
       $scope.safeApply();
     });
