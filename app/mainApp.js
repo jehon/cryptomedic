@@ -306,6 +306,10 @@ mainApp.controller('ctrl', [ '$scope', '$location', '$sce', function($scope, $lo
       jQuery('#busy').modal('hide');
     }
 
+    if ($scope.appStateStore.connection.connected && !$scope.appStateStore.connection.authenticated) {
+      goThere("#/login");
+      $scope.safeApply();
+    }
 
     $scope.safeApply();
   });
@@ -355,18 +359,7 @@ mainApp.controller('ctrl', [ '$scope', '$location', '$sce', function($scope, $lo
   // }, false);
 
   $scope.doCheckLogin = function() {
-    // $scope.loginError = false;
-    // var busyEnd = $scope.doBusy('Checking your login/password with the online server', true);
-    // service_backend().checkLogin()
-    loginCheck()
-      .then(function(data) {
-        // server.settings = data;
-        // $scope.logged = true;
-        $scope.$broadcast('message', { 'level': 'info', 'text': 'Welcome ' +  data.name + '!'});
-        if (window.location.hash == '#/login') {
-          $scope.go('#');
-        }
-      });
+    loginCheck();
   };
 
   $scope.$on('$routeChangeError', function() { console.error('error in routes', arguments); });
@@ -374,7 +367,6 @@ mainApp.controller('ctrl', [ '$scope', '$location', '$sce', function($scope, $lo
   $scope.messages = [];
   var interval = 0;
   $scope.$on('message', function(event, data) {
-    // data = Object.assign({}, );
     if (!data.level) {
       data.level = 'success';
     }

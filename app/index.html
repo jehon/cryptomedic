@@ -11,7 +11,7 @@
   </head>
   <body ng-app="app_main" ng-controller="ctrl" id="ng-app" >
     <!--  Navigation bar -->
-    <nav class="navbar navbar-default navbar-static-top" role="navigation" ng-if="appStateStore.connection.settings">
+    <nav class="navbar navbar-default navbar-static-top" role="navigation" ng-if="appStateStore.connection.authenticated">
       <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
@@ -30,12 +30,12 @@
                   data-toggle="tooltip" data-placement="bottom" title="Connecting to the server to get status of your browser"
                   >
             </p></li>
-            <li ng-if='appStateStore.connection.connected && appStateStore.database.downloading'><p class="navbar-text">
+            <li ng-if='appStateStore.connection.authenticated && appStateStore.database.downloading'><p class="navbar-text">
                 <img height="20px" id='sync-download' src="../static/img/sync/download.png"
                   data-toggle="tooltip" data-placement="bottom" title="Copying data from the server into your browser"
                   >
             </p></li>
-            <li ng-if='appStateStore.connection.connected && !appStateStore.database.downloading'><p class="navbar-text">
+            <li ng-if='appStateStore.connection.authenticated && !appStateStore.database.downloading'><p class="navbar-text">
                 <img height="20px" id='sync-ok' src="../static/img/sync/ok.png"
                   data-toggle="tooltip" data-placement="bottom" title="Data is up-to-date in your browser"
                   >
