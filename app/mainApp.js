@@ -1,14 +1,14 @@
 'use strict';
 
 import angular                  from 'angular';
-import angularRoute             from 'angular-route';
+import                               'angular-route';
 import { ApplicationException } from 'helpers/exceptions';
 import store                    from 'reducers/store';
 import dispatch                 from 'reducers/dispatch';
 import catalog                  from 'reducers/catalog';
 import calculations             from 'helpers/calculations';
-// import service_backend          from 'helpers/service_backend';
 import template                 from 'helpers/template';
+import goThere                  from 'helpers/goThere';
 
 import ctrl_allgraphics         from 'controllers/ctrl_allgraphics';
 import ctrl_file_appointment    from 'controllers/ctrl_file_appointment';
@@ -27,16 +27,6 @@ var application = {};
 var path = location.pathname.split('/');
 var flavor = '/' + path[1];
 
-// function plog(p) {
-//   return p
-//     .then(function(data) {
-//       console.log(data);
-//     }, function(error) {
-//       console.error(error);
-//       throw error;
-//     });
-// }
-
 // function formatDate(date) {
 //   date = date || new Date();
 //   var year = date.getFullYear();
@@ -46,15 +36,6 @@ var flavor = '/' + path[1];
 //   day = day.substring(day.length - 2);
 //   return year + '-' + month + '-' + day;
 // }
-
-// Inspired from http://www.2ality.com/2014/10/es6-promises-api.html
-// Promise.prototype.myFinallyDone = function (callback) {
-//   callback = callback || function(data) { return data; };
-//   return this
-//     .then(callback, callback)
-//     .catch(function(reason) { console.error(reason); });
-// };
-
 
 var mainApp = angular.module('app_main', [ 'ngRoute' ])
 .config([ '$compileProvider', function( $compileProvider ) {
@@ -325,7 +306,7 @@ mainApp.controller('ctrl', [ '$scope', '$location', '$sce', function($scope, $lo
   };
 
   $scope.go = function(path) {
-    $location.path(path);
+    goThere(path);
   };
 
   $scope.sync = false;
