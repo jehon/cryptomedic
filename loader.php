@@ -2,6 +2,7 @@
 
 $options = getopt("h:", [ "httplive:" ]);
 
+global $remoteTarget;
 $remoteTarget = (array_key_exists('httplive', $options) ? $options['httplive'] : 'http://localhost' );
 
 define("PROXY_VERSION", "1.0");
@@ -14,6 +15,7 @@ function mylog($uri, $msg = "ok") {
 }
 
 function goWithUri($uri) {
+  global $remoteTarget;
   mylog($uri);
   readfile($remoteTarget . '/' . $uri);
 }

@@ -10,7 +10,7 @@ var OfflinePlugin = require('offline-plugin');
 // **** Detect the remote port ****
 var remoteTarget;
 { // **** Detect the remote port ****
-  var port = 10080;
+  var port = 80;
   try {
     var vport = require('child_process').execSync('vagrant port --guest 80', { cwd: __dirname }).toString();
 
