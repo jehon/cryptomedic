@@ -333,12 +333,6 @@ mainApp.controller('ctrl', [ '$scope', '$location', '$sce', function($scope, $lo
     return $scope.appStateStore.connection.settings.authorized[transaction];
   };
 
-  // myEvents.on('backend_progress', function(data) {
-  //   $scope.sync = data;
-  //   $scope.connected = true;
-  //   $scope.safeApply();
-  // }, false);
-
   $scope.doCheckLogin = function() {
     loginCheck();
   };
