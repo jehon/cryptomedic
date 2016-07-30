@@ -1,17 +1,18 @@
 import { loadMock } from 'thelpers';
 import create from 'helpers/create';
+import Data from 'models/Data';
 
 describe('Data', function() {
   describe('with empty loader', function() {
-    var data = create('Data');
+    var data = new Data();
     it('should have inheritance ok', function() {
       // expect(data.constructor.name).toBe('Data');
-      expect(data instanceof create('Data').constructor).toBeTruthy();
+      expect(data instanceof Data).toBeTruthy();
     });
   });
 
   describe('with data loading at construction time', function() {
-    var data = new create('Data', {
+    var data = new Data({
       data1: 'data1',
       dataArray: [ 1, 2, 3]
     });
@@ -28,31 +29,27 @@ describe('Data', function() {
 
 
   describe('with data loaded remotely', function() {
-    it('should load correctly load_test.json and store it', function(done) {
-      // var data = new create('Data')();
-      loadMock('mock_load_test.json').then(function(data) {
+    it('should load correctly load_test and store it', function() {
+      loadMock('mock_load_test').then(function(data) {
         expect(data.data1).toBe('data1');
         expect(data.dataArray).toContain(1);
         expect(data.dataArray).toContain(2);
         expect(data.dataArray).toContain(3);
         expect(data.dataArray).not.toContain(4);
         expect(data.anything).toBeUndefined();
-        done();
       });
     });
   });
 
   describe('with data loaded remotely tested through myAsyncTest', function() {
-    // var data = new create('Data')();
-    it('should load correctly load_test.json and store it', function(done) {
-      loadMock('mock_load_test.json').then(function(data) {
+    it('should load correctly load_test and store it', function() {
+      loadMock('mock_load_test').then(function(data) {
         expect(data.data1).toBe('data1');
         expect(data.dataArray).toContain(1);
         expect(data.dataArray).toContain(2);
         expect(data.dataArray).toContain(3);
         expect(data.dataArray).not.toContain(4);
         expect(data.anything).toBeUndefined();
-        done();
       });
     });
   });

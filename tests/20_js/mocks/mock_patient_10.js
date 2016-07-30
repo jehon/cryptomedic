@@ -1,4 +1,4 @@
-{
+export default {
     "_type": "Folder",
     "id": 10,
     "mainFile": {

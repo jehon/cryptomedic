@@ -1,17 +1,33 @@
 
-import objectify   from 'helpers/objectify';
-import myFetch     from 'helpers/myFetch';
-import create      from 'helpers/create';
+import objectify          from 'helpers/objectify';
+import myFetch            from 'helpers/myFetch';
+import create             from 'helpers/create';
+import mock_load_test     from 'mocks/mock_load_test';
+import mock_patient_10    from 'mocks/mock_patient_10';
+import mock_sync          from 'mocks/mock_sync';
 
-export function loadMock(mock, type) {
-  var rootMock = '/base/tests/20_js/mocks/';
-  return myFetch({ url: rootMock + mock })
-    .then(function(data) {
-      if (type) {
-        data = create(type, objectify(data));
-      }
-      return data;
-    });
+let mocks = {
+  'mock_load_test':  mock_load_test,
+  'mock_patient_10': mock_patient_10,
+  'mock_sync':       mock_sync
+};
+
+export function loadMock(mock, type = false) {
+  let data = Object.assign({}, mocks[mock]);
+  if (type) {
+    data = create(type, data);
+  }
+  return Promise.resolve(data);
+
+    // ));
+  // var rootMock = '/base/tests/20_js/mocks/';
+  // return myFetch({ url: rootMock + mock })
+  //   .then(function(data) {
+  //     if (type) {
+  //       data = create(type, objectify(data));
+  //     }
+  //     return data;
+  //   });
 }
 
 

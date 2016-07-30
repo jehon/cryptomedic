@@ -8,9 +8,9 @@ describe('Jasmine', function() {
     expect(a).toEqual(true);
   });
 
-  // it('prints jasmine version', function() {
-  //  expect(jasmine.version).toMatch('2.4.1');
-  // });
+  it('prints jasmine version', function() {
+    expect(jasmine.version).toMatch('2.4.1');
+  });
 
   it('manage exceptions', function() {
     expect(function() { throw 'test'; }).toThrow();
