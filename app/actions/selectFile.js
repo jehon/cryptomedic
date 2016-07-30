@@ -1,11 +1,11 @@
 
 import myFrontFetch     from 'helpers/myFrontFetch';
 import objectify        from 'helpers/objectify';
-import create           from 'helpers/create';
 import Database         from 'helpers/database';
 import dispatch         from 'reducers/dispatch';
 import catalog          from 'reducers/catalog';
 // import store            from 'reducers/store';
+import Folder           from 'models/Folder';
 
 let db = new Database();
 
@@ -16,7 +16,7 @@ function getLive(id) {
     // Store the received record into the database
     .then((json) => (new Database()).storeRecord({ record: json}, false) )
     .then(objectify)
-    .then((data) => { return create('Folder', data); })
+    .then((data) => { return new Folder(data); })
     .then((data) => { return dispatch(catalog.FOLDER_UPDATE_FROM_SERVER, data); })
     .catch((data) => {
       console.log('in error in selectFile', data);
