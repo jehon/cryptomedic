@@ -9,7 +9,7 @@ describe('BuildRecord', function() {
         a: 2,
         'd.d1': 3
       }
-      );
+    );
 
     // Ref object is kept intact
     expect(ref.a).toBe(1);

@@ -1,4 +1,4 @@
-{
+export default {
   "_offline": {
     "reset": 1,
     "data": [

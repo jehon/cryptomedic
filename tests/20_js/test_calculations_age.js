@@ -1,5 +1,6 @@
 'use strict';
 
+import calculations from 'helpers/calculations';
 
 describe('calculations.age', function() {
   var now = new Date(2010, 6, 1);
