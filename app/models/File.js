@@ -5,7 +5,7 @@ import amd_stats from 'helpers/amd_stats_datas';
 import store              from 'reducers/store';
 import { DataMissingException } from 'helpers/exceptions';
 
-export default class File extends Data{
+export default class File extends Data {
   constructor(data, folder = null) {
     super(data);
     if (data == null) {
