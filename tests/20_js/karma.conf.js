@@ -1,5 +1,11 @@
+'use strict';
+
+let webpack_config = require('../../webpack.js');
+
 module.exports = function(config) {
   var configuration = {
+    basePath : '../../',
+
     plugins : [
       'karma-chrome-launcher',
       'karma-firefox-launcher',
@@ -9,17 +15,17 @@ module.exports = function(config) {
       'karma-junit-reporter',
       'karma-html-reporter'
     ],
+
     reporters : [
       'progress',
       'coverage',
       'html'
     ],
 
-    basePath : '../../',
-
     files : [
       // Work only if one bundle is present:
-      'www/build/bundle-*.js',
+      // 'www/build/bundle-*.js',
+      // 'app/**/*.js',
       'tests/20_js/**/test_*.js',
       // { pattern : 'tests/20_js/mocks/*.json', watched : true, served : true, included : false }
     ],
@@ -33,35 +39,19 @@ module.exports = function(config) {
     preprocessors: {
       // 'app/js/*.js': [ 'coverage' ],
       // http://www.syntaxsuccess.com/viewarticle/writing-jasmine-unit-tests-in-es6
+      // 'app/**/*.js': [ 'webpack' ],
       'tests/**/test_*.js': [ 'webpack' ]
     },
 
+    webpack: webpack_config,
 
-    webpack: {
-      module: {
-        loaders: [
-          { test: /\.js/, exclude: /node_modules/, loader: 'babel', query: { cacheDirectory: true }}
-        ]
-      },
-      watch: true,
+    // webpackServer: {
+    //   noInfo: true
+    // },
 
-      resolve: {
-        extensions: [ '', '.js', '.jsx'],
-        modulesDirectories: [ __dirname + '/../../node_modules/', __dirname + '/../../app/', './' ],
-        // alias: {
-        //   'jquery': 'jquery'
-        // }
-      }
-
-    },
-
-    webpackServer: {
-      noInfo: true
-    },
-
-    webpackMiddleware: {
-      noInfo: true
-    },
+    // webpackMiddleware: {
+    //   noInfo: true
+    // },
 
     junitReporter : {
       outputFile : __dirname + '/../../tmp/js/unit.xml',
@@ -85,7 +75,6 @@ module.exports = function(config) {
       configuration.browsers.push('Chrome');
     }
   });
-
 
   config.set(configuration);
 };
