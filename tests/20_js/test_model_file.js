@@ -1,4 +1,4 @@
-import { loadMock }  from 'thelpers';
+import { loadMock }  from './thelpers';
 import { DataMissingException } from 'helpers/exceptions';
 import File          from 'models/File';
 import Folder        from 'models/Folder';

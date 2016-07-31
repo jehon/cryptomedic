@@ -1,11 +1,6 @@
 
 import Dexie from 'dexie';
 
-// Dexie.Promise.on('error', function(e) {
-//   console.error('Error in Dexie: ', e);
-//   throw e;
-// });
-
 // Shared database Dexie object...
 let db = false;
 
@@ -179,7 +174,3 @@ export default class Database {
     return db.verno;
   }
 }
-
-// export default function build_db() {
-//   return new database();
-// }

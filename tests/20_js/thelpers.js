@@ -1,9 +1,9 @@
 
 import objectify          from 'helpers/objectify';
 import create             from 'helpers/create';
-import mock_load_test     from 'mocks/mock_load_test';
-import mock_patient_10    from 'mocks/mock_patient_10';
-import mock_sync          from 'mocks/mock_sync';
+import mock_load_test     from './mocks/mock_load_test';
+import mock_patient_10    from './mocks/mock_patient_10';
+import mock_sync          from './mocks/mock_sync';
 
 let mocks = {
   'mock_load_test':  mock_load_test,
