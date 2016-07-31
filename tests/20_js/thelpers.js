@@ -17,16 +17,6 @@ export function loadMock(mock, type = false) {
     data = create(type, objectify(data));
   }
   return Promise.resolve(data);
-
-    // ));
-  // var rootMock = '/base/tests/20_js/mocks/';
-  // return myFetch({ url: rootMock + mock })
-  //   .then(function(data) {
-  //     if (type) {
-  //       data = create(type, objectify(data));
-  //     }
-  //     return data;
-  //   });
 }
 
 
