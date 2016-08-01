@@ -38,41 +38,41 @@ var flavor = '/' + path[1];
 // }
 
 var mainApp = angular.module('app_main', [ 'ngRoute' ])
-.config([ '$compileProvider', function( $compileProvider ) {
-  $compileProvider.aHrefSanitizationWhitelist(/^\s*((https?|ftp|mailto|chrome-extension):|data:text,)/);
-  $compileProvider.imgSrcSanitizationWhitelist($compileProvider.aHrefSanitizationWhitelist());
-}])
-.filter('mypercentage', function() {
-  return function(text, rnd) {
-    text = text || '';
-    rnd = rnd || 2;
-    if (typeof(text) != 'number') {
-      if (parseFloat(text) != text) return text;
-      text = parseFloat(text);
-    }
-    return '' + (Math.round(text * 100 * Math.pow(10, rnd)) / Math.pow(10, rnd)) + '%';
-  };
-})
-.filter('nl2br', [ '$sce', function($sce) {
-  return function(text) {
-    var t = text;
-    while (t.search('\n') >= 0) {
-      t = t.replace('\n', '<br>');
-    }
-    return $sce.trustAsHtml(t);
-  };
-}])
-.directive('catchIt', [ '$compile', function($compile) {
+  .config([ '$compileProvider', function( $compileProvider ) {
+    $compileProvider.aHrefSanitizationWhitelist(/^\s*((https?|ftp|mailto|chrome-extension):|data:text,)/);
+    $compileProvider.imgSrcSanitizationWhitelist($compileProvider.aHrefSanitizationWhitelist());
+  }])
+  .filter('mypercentage', function() {
+    return function(text, rnd) {
+      text = text || '';
+      rnd = rnd || 2;
+      if (typeof(text) != 'number') {
+        if (parseFloat(text) != text) return text;
+        text = parseFloat(text);
+      }
+      return '' + (Math.round(text * 100 * Math.pow(10, rnd)) / Math.pow(10, rnd)) + '%';
+    };
+  })
+  .filter('nl2br', [ '$sce', function($sce) {
+    return function(text) {
+      var t = text;
+      while (t.search('\n') >= 0) {
+        t = t.replace('\n', '<br>');
+      }
+      return $sce.trustAsHtml(t);
+    };
+  }])
+  .directive('catchIt', [ '$compile', function($compile) {
     // http://tutorials.jenkov.com/angularjs/custom-directives.html#compile-and-link
     // http://stackoverflow.com/a/15298620
-  return {
-    restrict: 'A',
-    transclude: true,
-    scope: {
-      'tryit': '&', // executed in parent scope
-    },
-    template: '<span ng-if="error" class="catchedError">{{errorMsg}}</span><span ng-if="!error" ng-transclude></span>',
-    link:
+    return {
+      restrict: 'A',
+      transclude: true,
+      scope: {
+        'tryit': '&', // executed in parent scope
+      },
+      template: '<span ng-if="error" class="catchedError">{{errorMsg}}</span><span ng-if="!error" ng-transclude></span>',
+      link:
       function($scope, $element, $attrs, ctrl, $transclude) {
         function testIt() {
           try {
@@ -107,59 +107,59 @@ var mainApp = angular.module('app_main', [ 'ngRoute' ])
           $scope.$destroy();
         });
       } // end of link function
-  };
-}])
-.directive('mycalendar', function() {
-  return function (scope, elem, attrs) {
-    jQuery(elem).datepicker({
-      dateFormat: 'yy-mm-dd',
-      changeMonth: true,
-      changeYear: true,
-      yearRange: '1980:+2',
-      monthNamesShort: [ '1 Jan', '2 Feb', '3 Mar', '4 Apr', '5 May', '6 Jun', '7 Jul', '8 Aug', '9 Sep', '10 Oct', '11 Nov', '12 Dec' ]
-    });
-  };
-})
-.directive('codage', function() {
-  return {
-    restrict: 'E',
-    transclude: true,
-    scope: {
-      value: '=value'
-    },
+    };
+  }])
+  .directive('mycalendar', function() {
+    return function (scope, elem, attrs) {
+      jQuery(elem).datepicker({
+        dateFormat: 'yy-mm-dd',
+        changeMonth: true,
+        changeYear: true,
+        yearRange: '1980:+2',
+        monthNamesShort: [ '1 Jan', '2 Feb', '3 Mar', '4 Apr', '5 May', '6 Jun', '7 Jul', '8 Aug', '9 Sep', '10 Oct', '11 Nov', '12 Dec' ]
+      });
+    };
+  })
+  .directive('codage', function() {
+    return {
+      restrict: 'E',
+      transclude: true,
+      scope: {
+        value: '=value'
+      },
     // template: '<span data-toggle='tooltip' data-placement='bottom' title='{{value}}'>{{coded}}</span>',
-    template: '{{coded}}<span class=\'online\' data-toggle=\'tooltip\' data-placement=\'bottom\' title=\'{{value}}\'>*</span>',
-    link: function($scope, element, attrs) {
+      template: '{{coded}}<span class=\'online\' data-toggle=\'tooltip\' data-placement=\'bottom\' title=\'{{value}}\'>*</span>',
+      link: function($scope, element, attrs) {
 
-      let settings = store.getState().connection.setting;
+        let settings = store.getState().connection.setting;
 
-      if (settings.codes[$scope.value]) {
-        $scope.isCoded = true;
-        $scope.coded = settings.codes[$scope.value];
-      } else {
-        $scope.isCoded = false;
-        $scope.coded = $scope.value;
+        if (settings.codes[$scope.value]) {
+          $scope.isCoded = true;
+          $scope.coded = settings.codes[$scope.value];
+        } else {
+          $scope.isCoded = false;
+          $scope.coded = $scope.value;
+        }
       }
-    }
-  };
-})
-.directive('myGo', function() {
-  return {
-    restrict: 'E',
-    transclude: true,
+    };
+  })
+  .directive('myGo', function() {
+    return {
+      restrict: 'E',
+      transclude: true,
     // scope: true,
-    replace: true,
-    template: function(elem, attrs) {
+      replace: true,
+      template: function(elem, attrs) {
       // function templateFunction() {
-      if (attrs.haspermission) {
-        if (!store.getState()
+        if (attrs.haspermission) {
+          if (!store.getState()
               || !store.getState().connection.settings
               || !store.getState().connection.settings.authorized2[attrs.haspermission]
               ) {
-          return '<span haspermission-failed=\'' + attrs.haspermission + '\'></span>';
+            return '<span haspermission-failed=\'' + attrs.haspermission + '\'></span>';
+          }
         }
-      }
-      return '<a class=\'btn btn-default\' href=\'' + flavor + '/app/' + attrs.to + '\''
+        return '<a class=\'btn btn-default\' href=\'' + flavor + '/app/' + attrs.to + '\''
               + (attrs.id ? ' id=\'' + attrs.id + '\'' : '')
               + (attrs.class ? ' class=\'' + attrs.class + '\'' : '')
               + '>'
@@ -167,99 +167,99 @@ var mainApp = angular.module('app_main', [ 'ngRoute' ])
               +      '<b style=\'color: red;\'>Button</b>'
               +    '</ng-transclude>'
               +  '</a>';
-    }
-  };
-})
-.directive('preview', [ '$compile', function($compile) {
-  return {
-    restrict: 'A',
+      }
+    };
+  })
+  .directive('preview', [ '$compile', function($compile) {
+    return {
+      restrict: 'A',
     // http://tutorials.jenkov.com/angularjs/custom-directives.html#compile-and-link
-    compile: function(cElement, cAttrs, cTransclude) {
-      return function($scope, $element, $attrs, ctrl, $transclude) {
+      compile: function(cElement, cAttrs, cTransclude) {
+        return function($scope, $element, $attrs, ctrl, $transclude) {
         // var canvas = document.getElementById($attrs.preview);
         // var transcludeScope = $scope.$parent.$new();
 
-        $element[0].onchange = function() {
-          var busy = $scope.doBusy('Reducing the picture');
+          $element[0].onchange = function() {
+            var busy = $scope.doBusy('Reducing the picture');
 
           // http://hacks.mozilla.org/2011/01/how-to-develop-a-html5-image-uploader/
-          var file = $element[0].files[0];
-          if (!file.type.match(/image.*/)) {
-            console.error('Not a picture?');
-            alert('Are you sure it is a picture? If it is a picture, please send it by email to marielineet.jean@gmail.com to debug the application. Thank you');
-            busy();
-          }
+            var file = $element[0].files[0];
+            if (!file.type.match(/image.*/)) {
+              console.error('Not a picture?');
+              alert('Are you sure it is a picture? If it is a picture, please send it by email to marielineet.jean@gmail.com to debug the application. Thank you');
+              busy();
+            }
 
-          var img = document.createElement('img');
-          var reader = new FileReader();
-          reader.onerror = function(e) {
-            console.error(e);
-            busy();
-          };
-
-          reader.onload = function(e) {
-            // console.log('reader loaded');
-            img.src = e.target.result;
-
-            //var canvas = document.createElement('canvas');
-            img.onload = function() {
-              var canvas = document.getElementById('preview');
-              var ctx = canvas.getContext('2d');
-
-              var schrink = 1;
-              var h = img.naturalHeight;
-              var w = img.naturalWidth;
-
-              // Resize the image
-              var MAX_SIZE = 300*1024;
-              if (h * w > MAX_SIZE) {
-                schrink = Math.sqrt(h * w / MAX_SIZE);
-                w = w / schrink;
-                h = h / schrink;
-              }
-
-              // Adapt the canvas
-              canvas.width = w;
-              canvas.height = h;
-              canvas.style.width = w;
-              canvas.style.height = h;
-
-              // Add the image to the canvas
-              ctx.drawImage(img, 0, 0, w, h);
-              canvas.style.display = 'block';
-
-              var dataURI = canvas.toDataURL('image/jpeg');
-              $scope.currentFile().fileContent = dataURI;
-              $scope.currentFile().OriginalName = file.name;
-              $scope.$emit('revalidate');
+            var img = document.createElement('img');
+            var reader = new FileReader();
+            reader.onerror = function(e) {
+              console.error(e);
               busy();
             };
+
+            reader.onload = function(e) {
+            // console.log('reader loaded');
+              img.src = e.target.result;
+
+            //var canvas = document.createElement('canvas');
+              img.onload = function() {
+                var canvas = document.getElementById('preview');
+                var ctx = canvas.getContext('2d');
+
+                var schrink = 1;
+                var h = img.naturalHeight;
+                var w = img.naturalWidth;
+
+              // Resize the image
+                var MAX_SIZE = 300*1024;
+                if (h * w > MAX_SIZE) {
+                  schrink = Math.sqrt(h * w / MAX_SIZE);
+                  w = w / schrink;
+                  h = h / schrink;
+                }
+
+              // Adapt the canvas
+                canvas.width = w;
+                canvas.height = h;
+                canvas.style.width = w;
+                canvas.style.height = h;
+
+              // Add the image to the canvas
+                ctx.drawImage(img, 0, 0, w, h);
+                canvas.style.display = 'block';
+
+                var dataURI = canvas.toDataURL('image/jpeg');
+                $scope.currentFile().fileContent = dataURI;
+                $scope.currentFile().OriginalName = file.name;
+                $scope.$emit('revalidate');
+                busy();
+              };
+            };
+            reader.readAsDataURL(file);
           };
-          reader.readAsDataURL(file);
         };
-      };
-    }
-  };
-}])
-.directive('nullToInterrogation', function() {
+      }
+    };
+  }])
+  .directive('nullToInterrogation', function() {
   // https://docs.angularjs.org/api/ng/directive/select
   // usage: <select ng-model='model.id' null-to-interrogation>
-  return {
-    require: 'ngModel',
-    link: function(scope, element, attrs, ngModel) {
-      ngModel.$parsers.push(function(val) {
+    return {
+      require: 'ngModel',
+      link: function(scope, element, attrs, ngModel) {
+        ngModel.$parsers.push(function(val) {
         // From option to model
-        if (val == '?') return null;
-        return val;
-      });
-      ngModel.$formatters.push(function(val) {
+          if (val == '?') return null;
+          return val;
+        });
+        ngModel.$formatters.push(function(val) {
         // From model to option
-        if (val == null) return '?';
-        return val;
-      });
-    }
-  };
-});
+          if (val == null) return '?';
+          return val;
+        });
+      }
+    };
+  });
 
 mainApp.controller('ctrl', [ '$scope', '$location', '$sce', function($scope, $location, $sce) {
   // @see http://stackoverflow.com/questions/14319967/angularjs-routing-without-the-hash

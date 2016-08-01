@@ -21,23 +21,23 @@ export function loginCheck() {
   return myFrontFetch({ url: 'auth/settings', data: {
     'computerId': localStorage.cryptomedicComputerId
   }})
-  .then(dispatch.bind(this, catalog.CONNECTION_SUCCESS))
-  .then(dispatch.bind(this, catalog.CONNECTION_SETTINGS))
-  .then(worker.post.bind(this, 'init'))
-  .then((data) => {
-    if (location.hash == '/login') {
-      goThere();
-    }
-    return data;
-  })
-  .catch(function(error) {
-    dispatch.bind(catalog.CONNECTION_AUTH_FAILED, error);
-    goThere("/login");
-  })
-  .myFinallyDone(function(data) {
-    dispatch(catalog.STATE_READY);
-    return data;
-  });
+    .then(dispatch.bind(this, catalog.CONNECTION_SUCCESS))
+    .then(dispatch.bind(this, catalog.CONNECTION_SETTINGS))
+    .then(worker.post.bind(this, 'init'))
+    .then((data) => {
+      if (location.hash == '/login') {
+        goThere();
+      }
+      return data;
+    })
+    .catch(function(error) {
+      dispatch.bind(catalog.CONNECTION_AUTH_FAILED, error);
+      goThere("/login");
+    })
+    .myFinallyDone(function(data) {
+      dispatch(catalog.STATE_READY);
+      return data;
+    });
 }
 
 export function login(username, password) {
@@ -47,30 +47,30 @@ export function login(username, password) {
     'password': password,
     'computerId': localStorage.cryptomedicComputerId
   }})
-  .then(dispatch.bind(this, catalog.CONNECTION_SUCCESS))
-  .then(dispatch.bind(this, catalog.CONNECTION_SETTINGS))
-  .then(worker.post.bind(this, 'init'))
-  .then((data) => { goThere(); return data; })
-  .catch(function(error) {
-    dispatch.bind(catalog.CONNECTION_AUTH_FAILED, error);
-    goThere("/login");
-  })
-  .myFinallyDone(function(data) {
-    dispatch(catalog.STATE_READY);
-    return data;
-  });
+    .then(dispatch.bind(this, catalog.CONNECTION_SUCCESS))
+    .then(dispatch.bind(this, catalog.CONNECTION_SETTINGS))
+    .then(worker.post.bind(this, 'init'))
+    .then((data) => { goThere(); return data; })
+    .catch(function(error) {
+      dispatch.bind(catalog.CONNECTION_AUTH_FAILED, error);
+      goThere("/login");
+    })
+    .myFinallyDone(function(data) {
+      dispatch(catalog.STATE_READY);
+      return data;
+    });
 }
 
 export function logout() {
   dispatch(catalog.STATE_BUSY, 'Disconnecting from the remote server');
   return myFrontFetch({ url: 'auth/logout' })
-  .then(function(data) {
-    dispatch(catalog.CONNECTION_EXPIRED);
-    goThere("/login");
-    return data;
-  })
-  .myFinallyDone(function(data) {
-    dispatch(catalog.STATE_READY);
-    return data;
-  });
+    .then(function(data) {
+      dispatch(catalog.CONNECTION_EXPIRED);
+      goThere("/login");
+      return data;
+    })
+    .myFinallyDone(function(data) {
+      dispatch(catalog.STATE_READY);
+      return data;
+    });
 }
