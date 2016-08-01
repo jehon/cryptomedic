@@ -12,9 +12,9 @@ import catalog                                                    from 'reducers
 
 let store = createStore(
   function(state, action) {
-    // if (typeof(window.__karma__) == 'undefined') {
-      // console.log('Action: ', action.type, ' with ', action.payload);
-    // }
+    if (typeof(window.__karma__) == 'undefined') {
+      console.log('Action: ', action.type, ' with ', action.payload);
+    }
 
     // Work the state
     state = combineReducers({
