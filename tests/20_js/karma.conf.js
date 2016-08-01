@@ -2,6 +2,8 @@
 /* eslint no-console: off */
 
 let webpack_config = require('../../webpack.js');
+webpack_config.entry = {};
+webpack_config.plugins= [];
 
 module.exports = function(config) {
   var configuration = {
@@ -23,12 +25,10 @@ module.exports = function(config) {
       'html'
     ],
 
+    webpack: webpack_config,
+
     files : [
-      // Work only if one bundle is present:
-      // 'www/build/bundle-*.js',
-      // 'app/**/*.js',
       'tests/20_js/**/test_*.js',
-      // { pattern : 'tests/20_js/mocks/*.json', watched : true, served : true, included : false }
     ],
 
     autoWatch : true,
@@ -38,13 +38,10 @@ module.exports = function(config) {
     browsers: [ 'Firefox' ], // See later
 
     preprocessors: {
-      // 'app/js/*.js': [ 'coverage' ],
+      // 'app/**/*.js': [ 'coverage' ],
       // http://www.syntaxsuccess.com/viewarticle/writing-jasmine-unit-tests-in-es6
-      // 'app/**/*.js': [ 'webpack' ],
       'tests/**/test_*.js': [ 'webpack' ]
     },
-
-    webpack: webpack_config,
 
     junitReporter : {
       outputFile : __dirname + '/../../tmp/js/unit.xml',
