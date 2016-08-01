@@ -47,12 +47,12 @@ export function login(username, password) {
     'password': password,
     'computerId': localStorage.cryptomedicComputerId
   }})
-    .then(dispatch.bind(this, catalog.CONNECTION_SUCCESS))
-    .then(dispatch.bind(this, catalog.CONNECTION_SETTINGS))
-    .then(worker.post.bind(this, 'init'))
+    .then((data) => dispatch(catalog.CONNECTION_SUCCESS, data))
+    .then((data) => dispatch(catalog.CONNECTION_SETTINGS, data))
+    .then((data) => { worker.post('init'); return data; })
     .then((data) => { goThere(); return data; })
     .catch(function(error) {
-      dispatch.bind(catalog.CONNECTION_AUTH_FAILED, error);
+      dispatch(catalog.CONNECTION_AUTH_FAILED, error);
       goThere("/login");
     })
     .myFinallyDone(function(data) {
