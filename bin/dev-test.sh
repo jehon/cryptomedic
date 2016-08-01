@@ -74,7 +74,7 @@ testEnd2End() {
 }
 
 test_dir() {
-  if [ -r nightwatch.json ]; then
+  if [ -r nightwatch.conf.js ]; then
     testEnd2End "$@"
   fi
 
