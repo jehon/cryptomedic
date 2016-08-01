@@ -129,11 +129,10 @@ var mainApp = angular.module('app_main', [ 'ngRoute' ])
       },
     // template: '<span data-toggle='tooltip' data-placement='bottom' title='{{value}}'>{{coded}}</span>',
       template: '{{coded}}<span class=\'online\' data-toggle=\'tooltip\' data-placement=\'bottom\' title=\'{{value}}\'>*</span>',
-      link: function($scope, element, attrs) {
-
+      link: function($scope) {
         let settings = store.getState().connection.setting;
 
-        if (settings.codes[$scope.value]) {
+        if (settings && settings.codes[$scope.value]) {
           $scope.isCoded = true;
           $scope.coded = settings.codes[$scope.value];
         } else {
