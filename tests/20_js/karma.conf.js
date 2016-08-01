@@ -45,14 +45,6 @@ module.exports = function(config) {
 
     webpack: webpack_config,
 
-    // webpackServer: {
-    //   noInfo: true
-    // },
-
-    // webpackMiddleware: {
-    //   noInfo: true
-    // },
-
     junitReporter : {
       outputFile : __dirname + '/../../tmp/js/unit.xml',
       suite : 'unit'

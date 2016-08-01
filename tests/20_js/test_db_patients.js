@@ -1,5 +1,5 @@
-import { buildRecord, loadMock } from 'thelpers';
-import Database from 'helpers/database';
+import { buildRecord, loadMock } from './thelpers';
+import Database                  from 'helpers/database';
 
 describe('DB/Patients', function() {
   var db = new Database(true);
@@ -58,7 +58,7 @@ describe('DB/Patients', function() {
       .then(function(data) {
         expect(data.id).toBe('123');
       })
-      .then(db.getByReference.bind(db, 2001, 2323))
+      .then(() => db.getByReference(2001, 2323))
       .then(function(data) {
         expect(data.id).toBe('123');
         done();
@@ -67,11 +67,11 @@ describe('DB/Patients', function() {
 
   it('should fallback if reference does not exists', function(done) {
     db.getByReference(2999, 9999)
-      .then(function(data) {
+      .then(function() {
         // Unexpected!!!
         expect(true).toBe(false);
         done();
-      }, function(data) {
+      }, function() {
         expect(true).toBe(true);
         done();
       });
@@ -79,19 +79,19 @@ describe('DB/Patients', function() {
 
   it('should be able to store any patient', function(done) {
     // http://localhost/cryptomedic/api/v1.0/sync?cp=
-    loadMock('mock_sync.json').then(function(json) {
+    loadMock('mock_sync').then(function(json) {
       var p = db.clear();
       for(var i in json._offline.data) {
-        p = p.then(db.storeRecord.bind(db, json._offline.data[i]));
+        p = p.then(() => db.storeRecord(json._offline.data[i]));
       }
       p
-        .then(checkFolder.bind(db, 7, 2001, 4))
-        .then(checkFolder.bind(db, 3, 2014, 103))
-        .then(checkFolder.bind(db, 4, 2014, 104))
-        .then(checkFolder.bind(db, 1, 2000, 1))
-        .then(checkFolder.bind(db, 6, 2001, 1))
-        .then(checkFolder.bind(db, 5, 2014, 105))
-        .then(checkFolder.bind(db, 2, 2014, 107))
+        .then(() => checkFolder(7, 2001, 4))
+        .then(() => checkFolder(3, 2014, 103))
+        .then(() => checkFolder(4, 2014, 104))
+        .then(() => checkFolder(1, 2000, 1))
+        .then(() => checkFolder(6, 2001, 1))
+        .then(() => checkFolder(5, 2014, 105))
+        .then(() => checkFolder(2, 2014, 107))
         .then(done);
     });
 
@@ -99,17 +99,17 @@ describe('DB/Patients', function() {
 
   it('insert in bulk', function(done) {
     // http://localhost/cryptomedic/api/v1.0/sync?cp=
-    loadMock('mock_sync.json').then(function(json) {
+    loadMock('mock_sync').then(function(json) {
       db.clear()
-        .then(db.bulkUpdate.bind(db, json._offline.data))
-        .then(checkFolder.bind(db, 7, 2001, 4))
-        .then(checkFolder.bind(db, 3, 2014, 103))
-        .then(checkFolder.bind(db, 4, 2014, 104))
-        .then(checkFolder.bind(db, 1, 2000, 1))
-        .then(checkFolder.bind(db, 6, 2001, 1))
-        .then(checkFolder.bind(db, 5, 2014, 105))
-        .then(checkFolder.bind(db, 2, 2014, 107))
-        .then(done);
+        .then(() => db.bulkUpdate(json._offline.data))
+        .then(() => checkFolder(7, 2001, 4))
+        .then(() => checkFolder(3, 2014, 103))
+        .then(() => checkFolder(4, 2014, 104))
+        .then(() => checkFolder(1, 2000, 1))
+        .then(() => checkFolder(6, 2001, 1))
+        .then(() => checkFolder(5, 2014, 105))
+        .then(() => checkFolder(2, 2014, 107))
+        .then(() => done());
     });
   });
 });
