@@ -18,6 +18,9 @@ $myconfig = [
   'developpement_environnement' => true,
   'randomString' => str_pad("random script ", 256, "abcdefghijklmnopqrstuvwxyz"),
   'folders' => [
+    # A pointer to this folder
+    'root'       => __DIR__,
+
     # Storage of persistent data (pdf, image, ...)
     'storage'    => __DIR__ . "/storage/",
 

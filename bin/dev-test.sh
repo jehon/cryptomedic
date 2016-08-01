@@ -111,13 +111,13 @@ else
   "$PRJ_DIR/bin/dev-db-reset.sh"
 
   myHeader "Reset the live folder from live-for-test"
-  rsync                      \
-    --times                  \
-    --recursive              \
-    --delete                 \
-    --itemize-changes        \
-    "$PRJ_DIR/live-for-test" \
-    "$PRJ_DIR/live"
+  rsync                       \
+    --times                   \
+    --recursive               \
+    --delete                  \
+    --itemize-changes         \
+    "$PRJ_DIR/live-for-test/" \
+    "$PRJ_DIR/live/"
 
   myHeader "Rebuild for production"
   find "$PRJ_DIR/www/build/" -mindepth 1 -delete
