@@ -31,7 +31,7 @@ myHeader() {
 mxvfb() {
   if [ "$FRONT" = "" ]; then
     # Run it in xvfb
-    xvfb-run --auto-servernum --server-args='-screen 0 1024x768x24 -ac +extension GLX +render -noreset' "$@"
+    $PRJ_DIR/bin/prj-xvfb-run.sh "$@"
   else
     # Run it live if FRONT is specified
     "$@"
