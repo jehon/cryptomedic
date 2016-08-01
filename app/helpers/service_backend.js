@@ -1,12 +1,15 @@
 
-import objectify    from 'helpers/objectify';
-import Database     from 'helpers/database';
 import catalog      from 'reducers/catalog';
 import dispatch     from 'reducers/dispatch';
+
+import Folder       from 'models/Folder';
+import Patient      from 'models/Patient';
+
+import objectify    from 'helpers/objectify';
+import Database     from 'helpers/database';
 import MyWorker     from 'helpers/myWorker';
 import myFrontFetch from 'helpers/myFrontFetch';
 import goThere      from 'helpers/goThere';
-import Folder       from 'models/Folder';
 
 // Test cryptographic:
 // Documentation: https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto
