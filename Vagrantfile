@@ -15,6 +15,9 @@ Vagrant.configure(2) do |config|
 #    v.cpus = 2
   end
 
+  # Forward X11 to host (thanks to https://coderwall.com/p/ozhfva/run-graphical-programs-within-vagrantboxes)
+  config.ssh.forward_x11 = true
+
   if Vagrant.has_plugin?("vagrant-proxyconf")
     if ENV["http_proxy"]
       config.proxy.http     = ENV["http_proxy"]
