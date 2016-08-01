@@ -26,7 +26,6 @@ export function loginCheck() {
   .then(worker.post.bind(this, 'init'))
   .then((data) => {
     if (location.hash == '/login') {
-      console.log("goThere");
       goThere();
     }
     return data;
