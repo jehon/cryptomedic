@@ -48,7 +48,7 @@
     "nightwatch": "latest",
     "nightwatch-html-reporter": "latest",
     "offline-plugin": "latest",
-    "phantomjs": "^2.1.7",
+    "phantomjs": "latest",
     "php-loader": "latest",
     "recursive-readdir-sync": "latest",
     "script-loader": "latest",

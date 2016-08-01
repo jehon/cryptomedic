@@ -3,7 +3,9 @@
 
 'use strict';
 
+let remoteTarget = require(__dirname + '/../../bin/lib/vagrantHttpPort');
 let selenium = require('selenium-server');
+console.log("remote target ", remoteTarget);
 console.log("selenium path ", selenium.path);
 
 module.exports = {
@@ -15,62 +17,65 @@ module.exports = {
 
   "selenium" : {
     "start_process" : true,
+    "start_session" : true,
     "server_path": selenium.path,
     // "log_path" : false,
-    // "host" : "127.0.0.1",
-    // "port" : 4444,
+    "host" : "127.0.0.1",
+    "port" : 4444,
     "cli_args" : {
-      "debug": "1"
-    //   "webdriver.chrome.driver": "../../node_modules/chromedriver/lib/chromedriver/chromedriver"
+      "webdriver.chrome.driver": "../../node_modules/chromedriver/lib/chromedriver/chromedriver"
     }
   },
   "test_settings" : {
     "default" : {
-      "launch_url" : "http://localhost/build/index.html",
-      // "selenium_port"  : 4444,
-      // "selenium_host"  : "127.0.0.1",
-      // "silent": true,
-      // "globals": {
-      //   "waitForConditionTimeout": 10000,
-      //   "waitForConditionPoolInterval": 10000
-      // },
-      // "screenshots" : {
-      //   "enabled" : true,
-      //   "on_failure" : true,
-      //   "on_error" : true,
-      //   "path" : "../../tmp/end2end/firefox/"
-      // },
+      "launch_url" : remoteTarget + "/build/index.html",
+      "selenium_port"  : 4444,
+      "selenium_host"  : "127.0.0.1",
+      "silent": false,
+      "globals": {
+        "waitForConditionTimeout": 10000,
+        "waitForConditionPoolInterval": 10000
+      },
+      "screenshots" : {
+        "enabled" : true,
+        "on_failure" : true,
+        "on_error" : true,
+        "path" : "../../tmp/end2end/firefox/"
+      },
       "desiredCapabilities": {
         "browserName": "firefox",
-        // "javascriptEnabled": true,
-        // "acceptSslCerts": true
+        "webdriver.log.driver": "DEBUG",
+        "javascriptEnabled": true,
+        "acceptSslCerts": true
       }
-    // },
-    // "phantomjs" : {
-    //   "screenshots" : {
-    //     "enabled" : true,
-    //     "path" : "../../tmp/end2end/phantomjs/"
-    //   },
-    //   "desiredCapabilities": {
-    //     "browserName": "phantomjs",
-    //     "javascriptEnabled": true,
-    //     "acceptSslCerts": true,
-    //     "phantomjs.binary.path" : "../../node_modules/phantomjs/bin/phantomjs",
-    //     "path": "/var/www/cryptomedic/"
-    //   }
-    // },
-    // "chrome" : {
-    //   "screenshots" : {
-    //     "enabled" : true,
-    //     "path" : "../../tmp/end2end/chrome/"
-    //   },
-    //   "desiredCapabilities": {
-    //     "browserName": "chrome",
-    //     "javascriptEnabled": true,
-    //     "acceptSslCerts": true,
-    //     "args": "no-sandbox",
-    //     "path": "/var/www/cryptomedic/"
-    //   }
+    },
+    "phantomjs" : {
+      "silent": true,
+      "screenshots" : {
+        "enabled" : true,
+        "path" : "../../tmp/end2end/phantomjs/"
+      },
+      "desiredCapabilities": {
+        "browserName": "phantomjs",
+        "javascriptEnabled": true,
+        "acceptSslCerts": true,
+        "phantomjs.binary.path" : "../../node_modules/phantomjs/bin/phantomjs",
+        "path": "/var/www/cryptomedic/"
+      }
+    },
+    "chrome" : {
+      "silent": true,
+      "screenshots" : {
+        "enabled" : true,
+        "path" : "../../tmp/end2end/chrome/"
+      },
+      "desiredCapabilities": {
+        "browserName": "chrome",
+        "javascriptEnabled": true,
+        "acceptSslCerts": true,
+        "args": "no-sandbox",
+        "path": "/var/www/cryptomedic/"
+      }
     }
   }
 };
