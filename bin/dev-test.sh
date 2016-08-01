@@ -97,6 +97,9 @@ if [ "$1" ]; then
   shift
   cd "$PRJ_DIR/$D" && test_dir "Override $D" "$@"
 else
+  myHeader "Cleaning old build"
+  rm -fr "$PRJ_DIR/www/build"
+
   myHeader "Cleaning old tests"
   if [ -d "$PRJ_DIR/tmp" ]; then
     find "$PRJ_DIR/tmp/" -mindepth 1 -delete
@@ -108,13 +111,13 @@ else
   "$PRJ_DIR/bin/dev-db-reset.sh"
 
   myHeader "Reset the live folder from live-for-test"
-  rsync                      \
-    --times                  \
-    --recursive              \
-    --delete                 \
-    --itemize-changes        \
-    "$PRJ_DIR/live-for-test" \
-    "$PRJ_DIR/live"
+  rsync                       \
+    --times                   \
+    --recursive               \
+    --delete                  \
+    --itemize-changes         \
+    "$PRJ_DIR/live-for-test/" \
+    "$PRJ_DIR/live/"
 
   myHeader "Rebuild for production"
   find "$PRJ_DIR/www/build/" -mindepth 1 -delete
