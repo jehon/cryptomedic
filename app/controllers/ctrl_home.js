@@ -15,40 +15,40 @@ function ctrl_home($scope, $location) {
   $scope.checkReference = function() {
     var busyEnd = $scope.doBusy('Checking the reference on the server');
     service_backend().checkReference($scope.entryyear, $scope.entryorder)
-    .then(function(data) {
-      if (data === false) {
-        $scope.searched = true;
-      } else {
-        busyEnd();
+      .then(function(data) {
+        if (data === false) {
+          $scope.searched = true;
+        } else {
+          busyEnd();
         // end the busy mode
-        jQuery('#busy').modal('hide');
-        setTimeout(function() {
-          goThere('/folder/' + data);
-        }, 1);
-      }
-    }, function(data) {
-      console.error(data);
-    }).myFinallyDone(function() {
-      busyEnd();
-    });
+          jQuery('#busy').modal('hide');
+          setTimeout(function() {
+            goThere('/folder/' + data);
+          }, 1);
+        }
+      }, function(data) {
+        console.error(data);
+      }).myFinallyDone(function() {
+        busyEnd();
+      });
     $scope.searched = true;
   };
 
   $scope.createReference = function() {
     var busyEnd = $scope.doBusy('Creating the reference on the server');
     service_backend().createReference($scope.entryyear, $scope.entryorder)
-    .then(function(data) {
-      busyEnd();
+      .then(function(data) {
+        busyEnd();
       // end the busy mode
-      jQuery('#busy').modal('hide');
-      setTimeout(function() {
-        goThere('/folder/' + data.id + '/edit');
-      }, 1);
-    }, function(data) {
-      console.error(data);
-    }).myFinallyDone(function() {
-      busyEnd();
-    });
+        jQuery('#busy').modal('hide');
+        setTimeout(function() {
+          goThere('/folder/' + data.id + '/edit');
+        }, 1);
+      }, function(data) {
+        console.error(data);
+      }).myFinallyDone(function() {
+        busyEnd();
+      });
     $scope.searched = true;
   };
   $scope.generateReference = function() {

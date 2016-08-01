@@ -18,15 +18,15 @@ function ctrl_search($scope) {
     var busyEnd = $scope.doBusy('Searching for matching patients');
 
     service_backend().searchForPatients($scope.params)
-    .then(function(data) {
-      $scope.listing = data;
-      $scope.page();
-      $scope.safeApply();
-    }, function(data) {
-      console.error(data);
-    }).myFinallyDone(function() {
-      busyEnd();
-    });
+      .then(function(data) {
+        $scope.listing = data;
+        $scope.page();
+        $scope.safeApply();
+      }, function(data) {
+        console.error(data);
+      }).myFinallyDone(function() {
+        busyEnd();
+      });
   };
 
   $scope.reset = function() {

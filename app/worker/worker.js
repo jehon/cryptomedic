@@ -78,27 +78,27 @@ function storeData(offdata) {
   if (offdata.data) {
     promise = promise.then(function() {
       return db.bulkUpdate(offdata.data, (data) => mySendEvent('folder', data))
-      .then(function() {
-        // relaunch the sync upto completion
-        if (offdata.isfinal) {
-          syncWasFinal = true;
-          mySendEvent('progress', {
-            isfinal:      true
-          });
-        } else {
-          syncWasFinal = false;
-          mySendEvent('progress', {
-            // 'checkpoint':  offdata.checkpoint,
-            'isfinal':    false,
-            'remaining':  parseInt(offdata.remaining),
-            'done':       parseInt(offdata.data.length)
-          });
-        }
-      }, function(e) {
-        // Catch error and display it
-        console.error('Error in bulk insert', e);
-        throw e;
-      });
+        .then(function() {
+          // relaunch the sync upto completion
+          if (offdata.isfinal) {
+            syncWasFinal = true;
+            mySendEvent('progress', {
+              isfinal:      true
+            });
+          } else {
+            syncWasFinal = false;
+            mySendEvent('progress', {
+              // 'checkpoint':  offdata.checkpoint,
+              'isfinal':    false,
+              'remaining':  parseInt(offdata.remaining),
+              'done':       parseInt(offdata.data.length)
+            });
+          }
+        }, function(e) {
+          // Catch error and display it
+          console.error('Error in bulk insert', e);
+          throw e;
+        });
     });
   } else {
     syncWasFinal = true;

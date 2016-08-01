@@ -33,7 +33,7 @@ export default function selectFile(id, type = 'folder') {
 
   // If not final then go to the server anyway...
   return db.getFolder(id)
-  .then(data => dispatch(catalog.FOLDER_UPDATE_FROM_DB, data))
-  .then(() => getLive(id), () => getLive(id))
+    .then(data => dispatch(catalog.FOLDER_UPDATE_FROM_DB, data))
+    .then(() => getLive(id), () => getLive(id))
   ;
 }

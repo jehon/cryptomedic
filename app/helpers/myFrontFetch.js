@@ -6,7 +6,7 @@ import MyWorker from 'helpers/myWorker';
 
 export default function myFrontFetch({ url: url, init: init, data: data }) {
   return myFetch({ url: url, init: init, data: data })
-  .then(
+    .then(
     (json) => {
       dispatch(catalog.CONNECTION_SUCCESS);
       if (json._offline) {
