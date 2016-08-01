@@ -23,20 +23,10 @@ module.exports = {
     //     2,
     //     "unix"
     // ],
-    // "semi": [
-    //     2,
-    //     "always"
-    // ],
-    "no-console": [ "warn" ],
+    "no-console": [ "off" ], // "warn"
     "no-undef": [ "warn" ],
     "no-unused-vars": [ "warn" ],
-    // "comma-dangle": [ "off" ]
-  // },
   // "globals": {
-  //   // "console": true,
     // "jQuery": true,
-  //   "describe": true,
-  //   "it": true,
-  //   "expect": true
   }
 }
