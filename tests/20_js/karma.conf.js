@@ -1,4 +1,5 @@
-'use strict';
+/* eslint-env node */
+/* eslint no-console: off */
 
 let webpack_config = require('../../webpack.js');
 
