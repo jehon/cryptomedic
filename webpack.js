@@ -6,17 +6,14 @@ var webpack = require('webpack');
 var glob = require('glob');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var recursiveReadSync = require('recursive-readdir-sync');
-var fse = require('fs-extra');
 var OfflinePlugin = require('offline-plugin');
 var remoteTarget = require(__dirname + '/bin/lib/vagrantHttpPort');
 
-// Always restart from a blank page
-// fse.emptyDirSync(__dirname + '/www/build/');
 
 // Add files not managed by webpack
 var unmanaged = []
-        .concat(glob('static/**', { sync: true, cwd: __dirname + '/www/' }))
-        ;
+  .concat(glob('static/**', { sync: true, cwd: __dirname + '/www/' }))
+  ;
 
 // Global variables
 // https://webpack.github.io/docs/library-and-externals.html
@@ -87,7 +84,7 @@ var config = {
       {
         test: /\.php$/,
         loaders: [
-          // /templates/templates/reports/surgery.php
+          // file looks like: /templates/templates/reports/surgery.php
           'ng-cache?-removeEmptyAttributes&prefix=templates:/**/api/v1.0/templates/',
           // 'html-minify',
           'php-loader?' + JSON.stringify({
@@ -139,7 +136,7 @@ var config = {
       },
       scope: '/offline/',
       // // relativePaths: true,
-      // // updateStragegy: 'all', // -> changed
+      // updateStragegy: 'all', // -> changed
       externals: unmanaged,
       excludes: [ '/api/*' ],
       ServiceWorker: {
