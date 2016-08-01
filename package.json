@@ -62,12 +62,9 @@
   "scripts": {
     "build": "webpack --config webpack.js -p",
     "dev-server": "node server.js",
-    "dev-server-quiet": "node server.js | grep 'built\\|error\\|VALID'",
-    "post-upgrade": "node bin/setselenium.js",
-    "post-install": "node bin/setselenium.js"
+    "dev-server-quiet": "node server.js | grep 'built\\|error\\|VALID'"
   },
   "xdev": {
-    "excellentexport": "git://github.com/jmaister/excellentexport",
     "archiver": "latest",
     "es6-promise": "^3.0.2",
     "whatwg-fetch": "^0.10.1",
