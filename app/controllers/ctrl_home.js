@@ -1,7 +1,7 @@
 import service_backend from 'helpers/service_backend';
 import goThere         from 'helpers/goThere';
 
-function ctrl_home($scope, $location) {
+function ctrl_home($scope) {
   if (typeof($scope.entryyear) == 'undefined') {
     $scope.searched = false;
     $scope.entryyear = (new Date()).getFullYear();
@@ -56,7 +56,5 @@ function ctrl_home($scope, $location) {
     return;
   };
 }
-
-ctrl_home.$inject = [ '$scope', '$location' ];
 
 export default ctrl_home;
