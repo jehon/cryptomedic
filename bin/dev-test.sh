@@ -97,6 +97,9 @@ if [ "$1" ]; then
   shift
   cd "$PRJ_DIR/$D" && test_dir "Override $D" "$@"
 else
+  myHeader "Cleaning old build"
+  rm -fr "$PRJ_DIR/www/build"
+
   myHeader "Cleaning old tests"
   if [ -d "$PRJ_DIR/tmp" ]; then
     find "$PRJ_DIR/tmp/" -mindepth 1 -delete
