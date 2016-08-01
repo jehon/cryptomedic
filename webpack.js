@@ -8,27 +8,7 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 var recursiveReadSync = require('recursive-readdir-sync');
 var fse = require('fs-extra');
 var OfflinePlugin = require('offline-plugin');
-
-// **** Detect the remote port ****
-var remoteTarget;
-{ // **** Detect the remote port ****
-  var port = 80;
-  try {
-    var vport = require('child_process').execSync('vagrant port --guest 80', { cwd: __dirname }).toString();
-
-    if (!isNaN(vport)) {
-      port = vport.trim();
-      console.info("Detected vagrant port: -" + port + "-");
-    } else {
-      console.warn("Vagrant didn't send a valid port: ", vport);
-    }
-  } catch (e) {
-    console.warn("Error running vagrant, but continuing ");
-    // console.error(e);
-  }
-  remoteTarget = 'http://localhost:' + port + '/';
-}
-// **** Detect the remote port - END ****
+var remoteTarget = require(__dirname + '/bin/lib/vagrantHttpPort');
 
 // Always restart from a blank page
 // fse.emptyDirSync(__dirname + '/www/build/');
