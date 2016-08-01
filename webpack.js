@@ -31,7 +31,7 @@ var remoteTarget;
 // **** Detect the remote port - END ****
 
 // Always restart from a blank page
-fse.emptyDirSync(__dirname + '/www/build/');
+// fse.emptyDirSync(__dirname + '/www/build/');
 
 // Add files not managed by webpack
 var unmanaged = []
