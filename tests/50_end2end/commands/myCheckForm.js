@@ -5,7 +5,7 @@ exports.command = function(selector, fields) {
     if (fields[f] === true) {
       this
         .assert.visible(f + '_ok');
-    } if (fields[f] === false) {
+    } else if (fields[f] === false) {
       this
         .assert.visible(f + '_ko');
     } else {
