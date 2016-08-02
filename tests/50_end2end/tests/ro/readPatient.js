@@ -46,7 +46,6 @@ module.exports = {
 
       .page.cryptomedic().selectFile("ClubFoot", 1)
       // .waitForElementVisible("#ageAtConsultationTime")
-      // .waitForText("#ageAtConsultationTime", function(text) { return text.substr(0, 4) == "2y0m"; })
       .assert.containsText("#ageAtConsultationTime", "2y0m")
       .assert.containsText("#ClubFoot_Treatment", "DB splint")
       // TODO: adapt the data and check them
