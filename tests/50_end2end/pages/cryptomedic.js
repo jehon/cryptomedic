@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = (function() {
   // Static variables:
   var authenticated = false;
@@ -72,6 +74,7 @@ module.exports = (function() {
         .pause(100)
         .waitForElementVisible('#report_refresh_button')
         .myClick('#report_refresh_button')
+        // .waitForElementVisible('.loading')
         .waitForElementVisible('#report_table')
         .waitForElementVisible('#report_table table');
 
@@ -107,5 +110,36 @@ module.exports = (function() {
         .waitForElementVisible('#folder_menu_' + type + '_' + id);
       return client;
     };
+
+    this.myWaitForElementAndText = function(selector, text) {
+      return client
+        .waitForElementVisible(selector)
+        .waitForText(selector, text);
+    }
+
+    this.tableIterator = function(tableSelector) {
+      // var self = this;
+      var col = 1;
+      var row = 1;
+      return {
+        col: function(i) { col = (i ? i : 1); return this; },
+        row: function(i) { row = (i ? i : 1); return this; },
+        nextCol: function(i) { col = col + (i ? i : 1); return this; },
+        nextRow: function(i) { row = row + (i ? i : 1); return this; },
+        toString: function() {
+          return tableSelector
+            + ' tr:' + (row === 'last' ? 'last-child' : 'nth-child(' + row + ')')
+            + ' td:' + (col === 'last' ? 'last-child' : 'nth-child(' + col + ')');
+        },
+        assert: function(text) {
+          client
+            .waitForElementVisible(tableSelector)
+            .waitForElementVisible(this.toString())
+            .assert.containsText(this.toString(), text)
+            // .waitForText(this.toString(), text);
+          return this;
+        }
+      };
+    }
   };
 })();
