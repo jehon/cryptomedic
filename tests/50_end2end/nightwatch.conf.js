@@ -31,7 +31,7 @@ module.exports = {
       "launch_url" : remoteTarget + "/build/index.html",
       "selenium_port"  : 4444,
       "selenium_host"  : "127.0.0.1",
-      "silent": false,
+      "silent": true,
       "globals": {
         "waitForConditionTimeout": 10000,
         "waitForConditionPoolInterval": 10000
