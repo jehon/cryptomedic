@@ -2,7 +2,8 @@ exports.command = function(selector, callback) {
   var self = this, fs = require('fs');
   this.waitForElementVisible(selector);
   this.execute(function(selector) {
-          // execute application specific code
+    // execute application specific code
+    document.querySelector(selector).focus();
     if (typeof(document.querySelector(selector).click) == 'function') {
       document.querySelector(selector).click();
     } else {

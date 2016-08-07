@@ -69,6 +69,7 @@ module.exports = (function() {
         }
       }
       client
+        .pause(100)
         .waitForElementVisible('#report_refresh_button')
         .myClick('#report_refresh_button')
         .waitForElementVisible('#report_table')
