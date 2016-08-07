@@ -1,5 +1,5 @@
 exports.command = function(selector, callback) {
-  var self = this, fs = require('fs');
+  var self = this;
   this.waitForElementVisible(selector);
   this.execute(function(selector) {
     // execute application specific code

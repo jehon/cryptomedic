@@ -34,12 +34,8 @@ module.exports = {
         // New / Old patient in same month
         .row(2).col(5).assert('2014-107')
         .nextCol(4).assert('New')
-
         .nextRow(1).col(5).assert('2014-107')
         .nextCol(4).assert('Old')
-
-        // .nextCol().assert('=', 'last', 17, '400')
-        // .nextCol().assert('=', 'last', 'last', '300')
 
         .row('last').col(17).assert('400')
         .row('last').col('last').assert('300')
