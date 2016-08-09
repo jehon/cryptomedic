@@ -90,7 +90,7 @@ if [ "$1" != "offline" ]; then
   su vagrant -c $PRJ_DIR/bin/prj-install-dependancies.sh
 fi
 
-$PRJ_DIR/bin/dev-db-reset.sh
+$PRJ_DIR/bin/dev-reset.sh
 
 # Run project custom files
 if [ -x $PRJ_DIR/bin/dev-configure-custom.sh ]; then
