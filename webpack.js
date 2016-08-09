@@ -30,7 +30,9 @@ var config = {
   entry: [ ]
     .concat([
       './node_modules/bootstrap/less/bootstrap.less',
-      './node_modules/jquery-ui/themes/base/base.css',
+      './node_modules/jquery-ui/themes/base/core.css',
+      './node_modules/jquery-ui/themes/base/theme.css',
+      './node_modules/jquery-ui/themes/base/controlgroup.css',
       './node_modules/jquery-ui/themes/base/datepicker.css'
     ])
     .concat(glob.sync('./app/css/*.css'))
