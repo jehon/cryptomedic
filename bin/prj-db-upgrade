@@ -20,8 +20,8 @@
     );
 
   if (count($myargs) > 1) {
-    $db->runOne($myargs[1]);
+    $db->runFileOrDirectory($myargs[1]);
   } else {
-    $db->runOne(__DIR__ . "/../conf/database/versions/");
-    $db->runOne(__DIR__ . "/../conf/database/always/");
+    $db->runDirectory(__DIR__ . "/../conf/database/versions/");
+    $db->runDirectory(__DIR__ . "/../conf/database/always/");
   }
