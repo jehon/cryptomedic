@@ -27,16 +27,6 @@ var application = {};
 var path = location.pathname.split('/');
 var flavor = '/' + path[1];
 
-// function formatDate(date) {
-//   date = date || new Date();
-//   var year = date.getFullYear();
-//   var month = '0' + (date.getMonth() + 1);
-//   month = month.substring(month.length - 2);
-//   var day = '0' + date.getDate();
-//   day = day.substring(day.length - 2);
-//   return year + '-' + month + '-' + day;
-// }
-
 var mainApp = angular.module('app_main', [ 'ngRoute' ])
   .config([ '$compileProvider', function( $compileProvider ) {
     $compileProvider.aHrefSanitizationWhitelist(/^\s*((https?|ftp|mailto|chrome-extension):|data:text,)/);
@@ -62,7 +52,7 @@ var mainApp = angular.module('app_main', [ 'ngRoute' ])
       return $sce.trustAsHtml(t);
     };
   }])
-  .directive('catchIt', [ '$compile', function($compile) {
+  .directive('catchIt', function() {
     // http://tutorials.jenkov.com/angularjs/custom-directives.html#compile-and-link
     // http://stackoverflow.com/a/15298620
     return {
@@ -73,7 +63,7 @@ var mainApp = angular.module('app_main', [ 'ngRoute' ])
       },
       template: '<span ng-if="error" class="catchedError">{{errorMsg}}</span><span ng-if="!error" ng-transclude></span>',
       link:
-      function($scope, $element, $attrs, ctrl, $transclude) {
+      function($scope, $element) {
         function testIt() {
           try {
             $scope.error = false;
@@ -108,9 +98,9 @@ var mainApp = angular.module('app_main', [ 'ngRoute' ])
         });
       } // end of link function
     };
-  }])
+  })
   .directive('mycalendar', function() {
-    return function (scope, elem, attrs) {
+    return function (scope, elem) {
       jQuery(elem).datepicker({
         dateFormat: 'yy-mm-dd',
         changeMonth: true,
@@ -169,12 +159,12 @@ var mainApp = angular.module('app_main', [ 'ngRoute' ])
       }
     };
   })
-  .directive('preview', [ '$compile', function($compile) {
+  .directive('preview', function() {
     return {
       restrict: 'A',
     // http://tutorials.jenkov.com/angularjs/custom-directives.html#compile-and-link
-      compile: function(cElement, cAttrs, cTransclude) {
-        return function($scope, $element, $attrs, ctrl, $transclude) {
+      compile: function() {
+        return function($scope, $element) {
         // var canvas = document.getElementById($attrs.preview);
         // var transcludeScope = $scope.$parent.$new();
 
@@ -239,7 +229,7 @@ var mainApp = angular.module('app_main', [ 'ngRoute' ])
         };
       }
     };
-  }])
+  })
   .directive('nullToInterrogation', function() {
   // https://docs.angularjs.org/api/ng/directive/select
   // usage: <select ng-model='model.id' null-to-interrogation>
@@ -260,13 +250,8 @@ var mainApp = angular.module('app_main', [ 'ngRoute' ])
     };
   });
 
-mainApp.controller('ctrl', [ '$scope', '$location', '$sce', function($scope, $location, $sce) {
-  // @see http://stackoverflow.com/questions/14319967/angularjs-routing-without-the-hash
-  // @see https://docs.angularjs.org/api/ng/provider/$locationProvider
-  // $locationProvider.html5Mode(true)
-
+mainApp.controller('ctrl', [ '$scope', function($scope) {
   // Global variables intorduced into the scope:
-  // $scope.cryptomedic  = cryptomedic;
   $scope.application  = application;
   $scope.calculations = calculations;
   $scope.template     = template;
@@ -357,7 +342,7 @@ mainApp.controller('ctrl', [ '$scope', '$location', '$sce', function($scope, $lo
     if (interval == 0) {
       interval = setInterval(function() {
         var now = new Date();
-        $scope.messages = $scope.messages.filter(function(value, index) {
+        $scope.messages = $scope.messages.filter(function(value) {
           return (value.timeout >= now);
         });
         if ($scope.messages.length == 0) {
