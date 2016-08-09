@@ -97,6 +97,8 @@ if [ -x $PRJ_DIR/bin/dev-configure-custom.sh ]; then
   $PRJ_DIR/bin/dev-configure-custom.sh
 fi
 
-/etc/init.d/apache2 restart
+service restart restart
 
 $PRJ_DIR/bin/dev-reset.sh
+
+service apache2 restart
