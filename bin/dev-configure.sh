@@ -38,6 +38,7 @@ if ([ "$1" != "offline" ]); then
     firefox         \
     default-jre     \
     nodejs          \
+    ssmtp           \
   # end
 
   # Install composer
@@ -97,3 +98,5 @@ if [ -x $PRJ_DIR/bin/dev-configure-custom.sh ]; then
 fi
 
 /etc/init.d/apache2 restart
+
+$PRJ_DIR/bin/dev-reset.sh

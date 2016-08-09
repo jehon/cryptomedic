@@ -41,3 +41,8 @@ $PRJ_DIR/bin/prj-db-upgrade
 
 echo "* Applying dev hooks"
 $PRJ_DIR/bin/prj-db-upgrade "$PRJ_DIR/conf/database/always-dev/"
+
+if [ -x "$PRJ_DIR/dev-reset-custom.sh" ]; then
+  echo "* Running custom script *"
+  "$PRJ_DIR/dev-reset-custom.sh"
+fi

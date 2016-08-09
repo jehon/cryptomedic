@@ -3,7 +3,7 @@
 var remoteTarget;
 var port = 80;
 try {
-  var vport = require('child_process').execSync('vagrant port --guest 80', { cwd: __dirname }).toString();
+  var vport = require('child_process').execSync('vagrant port --guest ' + port, { cwd: __dirname }).toString();
 
   if (!isNaN(vport)) {
     port = vport.trim();
