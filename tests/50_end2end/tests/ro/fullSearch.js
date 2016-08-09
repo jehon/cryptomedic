@@ -11,10 +11,11 @@ function testSearch(client, search, resultList) {
     .pause(1000)
     ;
   for(var i in resultList) {
+    var tsel = "#search_results tr:nth-child(" + (parseInt(i) + 1) + ") td:nth-child(2)";
     client
-      .waitForText("#search_resultstr:nth-child(" + (i + 1) + ") td:nth-child(2)", resultList[i])
+      .waitForElementPresent(tsel)
+      .assert.containsText(tsel, resultList[i])
       ;
-      // .assert.myAssertCell("#search_results", parseInt(i) + 1, 2, resultList[i]);
   }
 
   return client;

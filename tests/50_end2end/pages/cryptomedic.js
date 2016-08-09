@@ -111,12 +111,6 @@ module.exports = (function() {
       return client;
     };
 
-    this.myWaitForElementAndText = function(selector, text) {
-      return client
-        .waitForElementVisible(selector)
-        .waitForText(selector, text);
-    }
-
     this.tableIterator = function(tableSelector) {
       // var self = this;
       var col = 1;
@@ -136,7 +130,6 @@ module.exports = (function() {
             .waitForElementVisible(tableSelector)
             .waitForElementVisible(this.toString())
             .assert.containsText(this.toString(), text)
-            // .waitForText(this.toString(), text);
           return this;
         }
       };
