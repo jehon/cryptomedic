@@ -4,6 +4,12 @@ exports.command = function(selector, fields, button) {
   for(var f in fields) {
     var fsel = selector + " " + f;
     this.waitForElementVisible(fsel);
+
+    // Put focus on element
+    this.execute(function(fsel) {
+      document.querySelector(fsel).blur();
+    }, [ fsel ]);
+
     if (fields[f] === true) {
       this
         .click(f);
@@ -17,10 +23,11 @@ exports.command = function(selector, fields, button) {
         .setValue(fsel, fields[f]);
     }
 
-    this.execute(function(selector) {
-      // execute application specific code
+    // Loose focus on element
+    this.execute(function(fsel) {
       document.querySelector(fsel).blur();
     }, [ fsel ]);
+
   }
   if (button) {
     this

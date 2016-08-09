@@ -1,8 +1,11 @@
+
+// http://stackoverflow.com/a/37785920/1954789
+
 exports.command = function(selector, callback) {
   var self = this;
   this.waitForElementVisible(selector);
+
   this.execute(function(selector) {
-    // execute application specific code
     document.querySelector(selector).focus();
     if (typeof(document.querySelector(selector).click) == 'function') {
       document.querySelector(selector).click();
