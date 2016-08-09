@@ -10,9 +10,11 @@ function testSearch(client, search, resultList) {
     .assert.myAssertTableCountRows("#search_results", resultList.length)
     .pause(1000)
     ;
-  for(i in resultList) {
+  for(var i in resultList) {
     client
-      .assert.myAssertCell("#search_results", parseInt(i) + 1, 2, resultList[i]);
+      .waitForText("#search_resultstr:nth-child(" + (i + 1) + ") td:nth-child(2)", resultList[i])
+      ;
+      // .assert.myAssertCell("#search_results", parseInt(i) + 1, 2, resultList[i]);
   }
 
   return client;

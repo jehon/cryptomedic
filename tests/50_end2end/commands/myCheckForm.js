@@ -2,16 +2,17 @@ exports.command = function(selector, fields) {
   // var self = this;
   this.waitForElementVisible(selector);
   for(var f in fields) {
+    var fsel = selector + " " + f;
     if (fields[f] === true) {
       this
-        .assert.visible(f + '_ok');
+        .assert.visible(fsel + '_ok');
     } else if (fields[f] === false) {
       this
-        .assert.visible(f + '_ko');
+        .assert.visible(fsel + '_ko');
     } else {
       this
-        .assert.visible(f)
-        .assert.containsText(f, fields[f]);
+        .assert.visible(fsel)
+        .assert.containsText(fsel, fields[f]);
     }
   }
   return this; // allows the command to be chained.

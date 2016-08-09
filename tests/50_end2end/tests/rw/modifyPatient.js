@@ -65,6 +65,7 @@ module.exports = {
       .myClick("#button_add")
       .myClick("#add_ricket_consult")
       .myFillInForm("#fileForm", ricket_consult, "#topsubmenu #button_save")
+
       .myCheckForm("#fileForm", ricket_consult)
 
       // Add a non-ricket consultation
