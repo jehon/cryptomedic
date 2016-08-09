@@ -4,7 +4,6 @@
 PRJ_DIR="/vagrant"
 
 export PATH=$PATH:$PRJ_DIR/bin
-#export DISPLAY=":99.0"
 export PRJ_DIR=$PRJ_DIR
 
 # Fix permissions on the various files
