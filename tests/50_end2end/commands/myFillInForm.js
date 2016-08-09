@@ -23,6 +23,12 @@ exports.command = function(selector, fields, button) {
         .setValue(fsel, fields[f]);
     }
 
+    // http://nightwatchjs.org/api#keys
+    // https://www.w3.org/TR/webdriver/#dfn-processing-keystrokes
+
+    // client.Keys.TAB
+    this.keys(this.Keys.TAB);
+
     // Loose focus on element
     this.execute(function(fsel) {
       document.querySelector(fsel).blur();
@@ -34,7 +40,6 @@ exports.command = function(selector, fields, button) {
       .pause(100)
       .myClick(button);
   }
-
 
   return this;
 };
