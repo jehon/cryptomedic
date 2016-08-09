@@ -206,7 +206,7 @@ class Database {
 		}
 	}
 
-	public function runOne($pathOrFile) {
+	public function runFileOrDirectory($pathOrFile) {
 		echo "\n*** $pathOrFile ***\n";
 		if (is_dir($pathOrFile)) {
 			$this->runDirectory($pathOrFile);
