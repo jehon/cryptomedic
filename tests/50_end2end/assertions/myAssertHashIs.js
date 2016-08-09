@@ -11,7 +11,7 @@ exports.assertion = function(expected, msg) {
    * @type {string}
    */
   this.message = msg || MSG;
-  
+
   /**
    * A value to perform the assertion on. If a function is
    * defined, its result will be used.
@@ -20,7 +20,7 @@ exports.assertion = function(expected, msg) {
   this.expected = function() {
     return expected;
   };
-    
+
   /**
    * The method which performs the actual assertion. It is
    * called with the result of the value method as the argument.
@@ -33,11 +33,11 @@ exports.assertion = function(expected, msg) {
   this.fail = function(value) {
     var failed = result === false || result && result.status === -1;
     if (failed) {
-        this.message = this.message + util.format(": Found <%s>", value);  
-      }
+      this.message = this.message + util.format(": Found <%s>", value);
+    }
     return failed;
   };
-  
+
   /**
    * The method which returns the value to be used on the
    * assertion. It is called with the result of the command's
