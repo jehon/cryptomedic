@@ -7,7 +7,7 @@ exports.command = function(selector, fields, button) {
 
     // Put focus on element
     this.execute(function(fsel) {
-      document.querySelector(fsel).blur();
+      document.querySelector(fsel).focus();
     }, [ fsel ]);
 
     if (fields[f] === true) {
