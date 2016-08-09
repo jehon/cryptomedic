@@ -1,16 +1,8 @@
 
-# Doing
-- setselenium.js   -> Selenium -> nightwatch.json -> nightwatch.json.js
-
 # Todo
 - prj-go-site.sh   -> MEP script
 - add documentation everywhere
-- apache config for fake email and phpmyadmin
 - fake email package
-
-# A réfléchir:
-- dev-* script ou prj-dev-*
-- /conf/database/always-dev/ ? -> prj-db-upgrade
 
 # fake email through smtp server ???
 sudo apt-get install g++ ruby-dev
