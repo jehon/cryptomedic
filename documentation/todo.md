@@ -6,6 +6,7 @@
 
 # Next steps
 - Test e2e: test bills (extended testing)
+- Test e2e: test appointment (and that it is shown on other screens too)
 - Test e2e: statistical report
 - Bug: statistical report is not working
 
