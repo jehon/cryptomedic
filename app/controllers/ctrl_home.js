@@ -51,6 +51,7 @@ function ctrl_home($scope) {
       });
     $scope.searched = true;
   };
+
   $scope.generateReference = function() {
     goThere('/folder/-1/edit');
     return;

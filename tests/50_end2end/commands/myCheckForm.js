@@ -1,8 +1,10 @@
 exports.command = function(selector, fields) {
   // var self = this;
+  this.waitForElementNotVisible("#busy");
   this.waitForElementVisible(selector);
   for(var f in fields) {
     var fsel = selector + " " + f;
+    this.waitForElementVisible(fsel);
     if (fields[f] === true) {
       this
         .assert.visible(fsel + '_ok');

@@ -1,14 +1,20 @@
 # Done
-- TODO: test create file
-- TODO: make modifyPatient reantrant
 
-# Urgent tests:
-- TODO: test bills (extended testing)
-- TODO: statistical report
-- TODO: modify use "generate reference"
+# Doing
+- Test e2e: generate reference
 
-# end 2 end tests:
-- TODO: test picture
-- TODO: test update a file
-- TODO: test unlocking files
-- TODO: extend readPatient2000
+# Next steps
+- Test e2e: test bills (extended testing)
+- Test e2e: test picture
+- Test e2e: statistical report
+- Bug: statistical report is not working
+
+- check "examiner name" initialization
+- upload new price
+
+# Later
+## end 2 end tests:
+- Test e2e: test unlocking files
+- Test e2e: extend readPatient2000
+
+- date of birth (precision to day's)
