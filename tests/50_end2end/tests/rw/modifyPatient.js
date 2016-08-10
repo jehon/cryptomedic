@@ -96,11 +96,11 @@ module.exports = {
       .myClick("#topsubmenu #button_delete")
       .dismissAlert()
 
-      // // Delete
-      // .myClick("#folder_files .folder_file:nth-child(6) .btn")
-      // .myClick("#topsubmenu #button_edit")
-      // .myClick("#topsubmenu #button_delete")
-      // .acceptAlert()
+      // Delete
+      .myClick("#folder_files .folder_file:nth-child(6) .btn")
+      .myClick("#topsubmenu #button_edit")
+      .myClick("#topsubmenu #button_delete")
+      .acceptAlert()
 
       .myClick("#folder_files .folder_file:nth-child(5) .btn")
       .myClick("#topsubmenu #button_edit")
