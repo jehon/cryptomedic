@@ -52,7 +52,6 @@ module.exports = {
       .myClick("#button_add")
       .myClick("#add_ricket_consult")
       .myFillInForm("#fileForm", ricket_consult, "#topsubmenu #button_save")
-
       .myCheckForm("#fileForm", ricket_consult)
 
       // Add a non-ricket consultation
@@ -62,14 +61,13 @@ module.exports = {
       .myCheckForm("#fileForm", other_consult)
 
       // Add a picture
-      // .myClick("#button_add")
-      // .myClick("#add_picture")
-      // .waitForElementVisible('#file')
-      // .setValue('#file', __dirname + '/../../ressources/upload.jpg')
-      // .myFillInForm('#fileForm', picture, '#button_save')
-      // TODO: picture test does not work
-      // .myCheckForm('#fileForm', picture)
-      // .assert.visible('#img_file')
+      .myClick("#button_add")
+      .myClick("#add_picture")
+      .waitForElementVisible('#file')
+      .setValue('#file', __dirname + '/../../ressources/upload.jpg')
+      .myFillInForm('#fileForm', picture, '#button_save')
+      .myCheckForm('#fileForm', picture)
+      .assert.visible('#img_file')
 
       // Add a clubfoot
       .myClick("#button_add")
