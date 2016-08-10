@@ -1,8 +1,8 @@
 # Done
 - Test e2e: test picture
+- Test e2e: generate reference
 
 # Doing
-- Test e2e: generate reference
 
 # Next steps
 - Test e2e: test bills (extended testing)
@@ -11,6 +11,8 @@
 
 - check "examiner name" initialization
 - upload new price
+
+- Test e2e: create a auto generated reference
 
 # Later
 ## end 2 end tests:
