@@ -67,16 +67,17 @@ class ModelController extends Controller {
 			$m::findOrFail($id);
 			$res = $this->update("Patient", $id);
 			return response()->folder($id);
-		} else {
-			if (!Input::has('patient_id')) {
-				abort(500, "No identification of patients");
-			}
-			$newObj = $m::create($data);
 		}
+
+		if (!Input::has('patient_id')) {
+			abort(500, "No identification of patients");
+		}
+		$newObj = $m::create($data);
 
 		if (!$newObj->id) {
 			abort(500, "Could not create the file");
 		}
+
 		return response()->folder($data['patient_id'],
 					array('newKey' => $newObj->id)
 				);
