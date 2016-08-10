@@ -1,11 +1,11 @@
 # Done
+- Test e2e: test picture
 
 # Doing
 - Test e2e: generate reference
 
 # Next steps
 - Test e2e: test bills (extended testing)
-- Test e2e: test picture
 - Test e2e: statistical report
 - Bug: statistical report is not working
 
