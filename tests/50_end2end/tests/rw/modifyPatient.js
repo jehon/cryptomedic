@@ -65,7 +65,7 @@ module.exports = {
       .myClick("#add_picture")
       .waitForElementVisible('#file')
       .setValue('#file', __dirname + '/../../ressources/upload.jpg')
-      .myFillInForm('#fileForm', picture, '#button_save')
+      .myFillInForm('#fileForm', picture, '#topsubmenu #button_save')
       .myCheckForm('#fileForm', picture)
       .assert.visible('#img_file')
 
