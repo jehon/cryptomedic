@@ -54,15 +54,13 @@ class ModelController extends Controller {
 					10000))", [ Request::input("entryyear"), Request::input("entryyear") ])
 			|| abort(500, "Problem inserting and creating reference");
 
-			$id = DB::select("SELECT last_insert_id() as id");// " as id FROM patients");
+			// TODO: how does Laravel get last_insert_id cleanly???
+			$id = DB::select("SELECT last_insert_id() as id");
 			$id = $id[0]->id;
 
 			if (!$id) {
 				abort(500, "Could not create the patient");
 			}
-			// TODO: how does Laravel get last_insert_id cleanly???
-			// $id = DB::select("SELECT LAST_INSERT_ID() as id");
-			// $id = $id[0]->id;
 
 			$m::findOrFail($id);
 			$res = $this->update("Patient", $id);
@@ -72,7 +70,9 @@ class ModelController extends Controller {
 		if (!Input::has('patient_id')) {
 			abort(500, "No identification of patients");
 		}
+		// \DB::enableQueryLog();
 		$newObj = $m::create($data);
+		// print_r(\DB::getQueryLog());
 
 		if (!$newObj->id) {
 			abort(500, "Could not create the file");

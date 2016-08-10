@@ -1,4 +1,7 @@
 
+RENAME TABLE club_foots TO club_feet;
+
+
 # Create the consult view
 
 CREATE OR REPLACE
