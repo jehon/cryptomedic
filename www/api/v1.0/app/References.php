@@ -5,7 +5,7 @@ namespace App;
 class References {
   static $model2db = array(
     "Bill"          => "bills",
-    "ClubFoot"      => "club_foots",
+    "ClubFoot"      => "club_feet",
     "OtherConsult"  => "other_consults",
     "Patient"       => "patients",
     "Picture"       => "pictures",

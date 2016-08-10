@@ -18,10 +18,6 @@ export default class ClubFoot extends File {
     return 'ClubFoot';
   }
 
-  // constructor(data, folder = null) {
-  //   super(data, folder);
-  // }
-
   getPiraniLeft() {
     // TODO: try-catch it in gui
     try {

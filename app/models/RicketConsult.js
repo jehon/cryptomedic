@@ -6,8 +6,4 @@ export default class RicketConsult extends File {
   getModel() {
     return 'RicketConsult';
   }
-
-  // constructor(data, folder) {
-  //   super(data, folder);
-  // }
 }
