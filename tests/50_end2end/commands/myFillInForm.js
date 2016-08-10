@@ -1,5 +1,6 @@
 
 exports.command = function(selector, fields, button) {
+  this.waitForElementNotVisible("#busy");
   this.waitForElementVisible(selector);
   for(var f in fields) {
     var fsel = selector + " " + f;
