@@ -45,6 +45,7 @@ module.exports = {
       .clearValue("input[ng-model='entryorder']")
       .setValue("input[ng-model='entryorder']", 4)
       .myClick("[ng-click='checkReference()']")
+
       .waitForElementPresent("#Patient_Name")
       .assert.containsText("#Patient_Name", "mozahar ahamed")
 
