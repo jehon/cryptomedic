@@ -1,8 +1,12 @@
 import service_backend      from 'helpers/service_backend';
+
 import selectFile           from 'actions/selectFile';
+import patientGenerate      from 'actions/patientGenerate';
+
 import create               from 'helpers/create';
 import calculations         from 'helpers/calculations';
 import template             from 'helpers/template';
+
 import catalog              from 'reducers/catalog';
 import dispatch             from 'reducers/dispatch';
 import date2CanonicString   from 'helpers/date2CanonicString';
@@ -48,7 +52,14 @@ function ctrl_folder($scope, $location, $routeParams) {
   //----------------------
   //   Get data from the server
   //----------------------
-  selectFile($scope.patient_id).then(function(data) {
+  let getFileThen;
+  if ($scope.patient_id < 0) {
+    getFileThen = patientGenerate();
+    $scope.mode = 'add';
+  } else {
+    getFileThen = selectFile($scope.patient_id);
+  }
+  getFileThen.then(function(data) {
     $scope.folder = data;
     if (data) {
       if ($scope.page == 'file') {
@@ -83,8 +94,6 @@ function ctrl_folder($scope, $location, $routeParams) {
     $scope.safeApply();
     $scope.$broadcast('refresh');
   });
-
-  // service_backend().getFolder($scope.patient_id);
 
   // ------------------------
   //  Display helpers

@@ -47,7 +47,7 @@
 
         <div ng-if="patient_id < 0" class='text-center'>
           <!--  Add patient route -->
-          <span ng-if='hasPermission("folder.edit")' class="btn btn-default" ng-click="actionCreatePatient()">Create patient</span>
+          <span id='patient_create'ng-if='hasPermission("folder.edit")' class="btn btn-default" ng-click="actionCreatePatient()">Create patient</span>
           <span class="btn btn-default" ng-click="go('/home')">Cancel</span>
         </div>
       <?php
