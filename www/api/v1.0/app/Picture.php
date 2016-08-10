@@ -26,8 +26,11 @@ class Picture extends CryptomedicModel {
 
 	public function getPhysicalPath() {
 		global $myconfig;
-    return $myconfig['folders']['live'] . DIRECTORY_SEPARATOR . "uploadedPictures"
-				. DIRECTORY_SEPARATOR . $this->file;
+		$dir = $myconfig['folders']['storage'] . DIRECTORY_SEPARATOR . "uploadedPictures";
+		if (!is_dir($dir)) {
+	   	mkdir($dir, 0777, true);
+		}
+    return $dir . DIRECTORY_SEPARATOR . $this->file;
 	}
 
 	public static function create(array $attributes = array()) {
