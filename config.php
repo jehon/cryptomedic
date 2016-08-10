@@ -22,7 +22,7 @@ $myconfig = [
     'root'       => __DIR__,
 
     # Storage of persistent data (pdf, image, ...)
-    'storage'    => __DIR__ . "/storage/",
+    'storage'    => __DIR__ . "/live/storage/",
 
     # Storage of temporary files
     'temporary'  => "/tmp/application/"
