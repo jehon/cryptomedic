@@ -37,6 +37,7 @@ module.exports = {
     client
       .page.cryptomedic().authenticate("murshed")
 
+      // Select file
       .myClick("#menu_home")
       .waitForElementVisible("input[ng-model='entryyear']")
       .clearValue("input[ng-model='entryyear']")
@@ -44,20 +45,8 @@ module.exports = {
       .clearValue("input[ng-model='entryorder']")
       .setValue("input[ng-model='entryorder']", 4)
       .myClick("[ng-click='checkReference()']")
-
       .waitForElementPresent("#Patient_Name")
-      // .setValue("#Patient_Name", "rezaul" + r)
-
-      // // Validation fail
-      // .acceptAlert()
-      // .assert.visible("#patient_save")
-
-      // // Add ricket to pass the validation
-      // .mySelect("#Patient_Pathology", 1)
-      // .myClick("#topsubmenu #patient_save")
-      // .waitForElementPresent("#Patient_Name")
-      // .assert.containsText("#Patient_Name", "rezaul" + r)
-      // .assert.containsText("#Patient_Pathology", "Ricket")
+      .assert.containsText("#Patient_Name", "mozahar ahamed")
 
       // Add a ricket consultation
       .myClick("#button_add")
@@ -72,7 +61,7 @@ module.exports = {
       .myFillInForm("#fileForm", other_consult, "#topsubmenu #button_save")
       .myCheckForm("#fileForm", other_consult)
 
-      // Add a picture -> TODO: add a picture image
+      // Add a picture
       // .myClick("#button_add")
       // .myClick("#add_picture")
       // .waitForElementVisible('#file')
@@ -149,11 +138,6 @@ module.exports = {
       .myClick("#topsubmenu #patient_cancel")
       .waitForElementPresent("#Patient_Name")
       .assert.containsText("#Patient_Name", "mozahar ahamed")
-
-      // Delete the file
-      // .myClick("#topsubmenu #patient_edit")
-      // .myClick("#topsubmenu #patient_delete")
-      // .acceptAlert()
 
       .end();
   }
