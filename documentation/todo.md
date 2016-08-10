@@ -1,8 +1,8 @@
 # Done
 - Test e2e: test picture
 - Test e2e: generate reference
+- Test e2e: create a auto generated reference
 
-# Doing
 
 # Next steps
 - Test e2e: test bills (extended testing)
@@ -10,9 +10,8 @@
 - Bug: statistical report is not working
 
 - check "examiner name" initialization
+- check "center" initialization
 - upload new price
-
-- Test e2e: create a auto generated reference
 
 # Later
 ## end 2 end tests:

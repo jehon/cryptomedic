@@ -43,7 +43,7 @@
 					entry order, choose this option.<br>
 				On the next page, the system will ask you what year you want to use.<br>
 				This new system is on time faster than the old one.<br>
-				<span class='btn btn-warning' ng-click="generateReference()">Generate a reference for me</span>
+				<span id='button_generate_reference' class='btn btn-warning' ng-click="generateReference()">Generate a reference for me</span>
 			</fieldset>
 		</div>
 	</div>
