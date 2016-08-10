@@ -4,7 +4,7 @@ module.exports = {
   // },
 
   "modifyPatient": function(client) {
-    var r = Math.floor(Math.random() * 100);
+    // var r = Math.floor(Math.random() * 100);
 
     var ricket_consult = {
       "#Date": "2003-01-01",
@@ -40,26 +40,24 @@ module.exports = {
       .myClick("#menu_home")
       .waitForElementVisible("input[ng-model='entryyear']")
       .clearValue("input[ng-model='entryyear']")
-      .setValue("input[ng-model='entryyear']", 2015)
+      .setValue("input[ng-model='entryyear']", 2001)
       .clearValue("input[ng-model='entryorder']")
-      .setValue("input[ng-model='entryorder']", 1)
+      .setValue("input[ng-model='entryorder']", 4)
       .myClick("[ng-click='checkReference()']")
-      .myClick("#button_create_reference")
 
-      // Edit and save
       .waitForElementPresent("#Patient_Name")
-      .setValue("#Patient_Name", "rezaul" + r)
+      // .setValue("#Patient_Name", "rezaul" + r)
 
-      // Validation fail
-      .acceptAlert()
-      .assert.visible("#patient_save")
+      // // Validation fail
+      // .acceptAlert()
+      // .assert.visible("#patient_save")
 
-      // Add ricket to pass the validation
-      .mySelect("#Patient_Pathology", 1)
-      .myClick("#topsubmenu #patient_save")
-      .waitForElementPresent("#Patient_Name")
-      .assert.containsText("#Patient_Name", "rezaul" + r)
-      .assert.containsText("#Patient_Pathology", "Ricket")
+      // // Add ricket to pass the validation
+      // .mySelect("#Patient_Pathology", 1)
+      // .myClick("#topsubmenu #patient_save")
+      // .waitForElementPresent("#Patient_Name")
+      // .assert.containsText("#Patient_Name", "rezaul" + r)
+      // .assert.containsText("#Patient_Pathology", "Ricket")
 
       // Add a ricket consultation
       .myClick("#button_add")
@@ -145,17 +143,17 @@ module.exports = {
       .myClick("#button_patient")
       .myClick("#topsubmenu #patient_edit")
       .waitForElementPresent("#Patient_Name")
-      .assert.value("#Patient_Name", "rezaul" + r)
+      .assert.value("#Patient_Name", "mozahar ahamed")
       .mySelect("#Patient_Pathology", 2)
       .setValue("#Patient_Name", "rezaul")
       .myClick("#topsubmenu #patient_cancel")
       .waitForElementPresent("#Patient_Name")
-      .assert.containsText("#Patient_Name", "rezaul" + r)
+      .assert.containsText("#Patient_Name", "mozahar ahamed")
 
       // Delete the file
-      .myClick("#topsubmenu #patient_edit")
-      .myClick("#topsubmenu #patient_delete")
-      .acceptAlert()
+      // .myClick("#topsubmenu #patient_edit")
+      // .myClick("#topsubmenu #patient_delete")
+      // .acceptAlert()
 
       .end();
   }
