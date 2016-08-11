@@ -65,3 +65,5 @@ if [ -x "$PRJ_DIR/dev-reset-custom.sh" ]; then
   echo "* Running custom script *"
   "$PRJ_DIR/dev-reset-custom.sh"
 fi
+
+run-parts --regex="^[a-z0-9_.]+$" --report $PRJ_DIR/bin/dev-reset.d
