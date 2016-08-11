@@ -11,36 +11,46 @@ DBUSER=`php $PRJ_DIR/config.php 'database.username'`
 DBPASS=`php $PRJ_DIR/config.php 'database.password'`
 BASE="$PRJ_DIR"/conf/database/base.sql
 
+
+echo "* Cleaning tmp"
+if [ -d "$PRJ_DIR/tmp" ]; then
+  find "$PRJ_DIR/tmp/" -mindepth 1 ! -name '.gitkeep' -delete
+else
+  mkdir -p "$PRJ_DIR/tmp"
+fi
+
 if [ ! -r "$BASE" ]; then
   echo "No '$BASE' base sql script found"
-  exit 1
-fi
-
-#MYSQL="mysql --database=$DBNAME -u root --quick"
-MYSQL="mysql -u root --quick"
-if [ -z "$DBROOT" ]; then
-  PWD=""
 else
-  MYSQL=$MYSQL --password=$DBROOT
-fi
+  #MYSQL="mysql --database=$DBNAME -u root --quick"
+  MYSQL="mysql -u root --quick"
 
-echo "* Resetting the database"
-$MYSQL  --database=mysql <<-EOC
-  DROP SCHEMA IF EXISTS $DBNAME;
-  CREATE SCHEMA $DBNAME;
-  USE $DBNAME;
-  GRANT ALL PRIVILEGES ON $DBNAME   TO $DBUSER IDENTIFIED BY '$DBPASS';
-  GRANT ALL PRIVILEGES ON $DBNAME.* TO $DBUSER IDENTIFIED BY '$DBPASS';
+  if [ -z "$DBROOT" ]; then
+    PWD=""
+  else
+    # Add a password to connect to the database
+    MYSQL=$MYSQL --password=$DBROOT
+  fi
+
+  echo "* Resetting the database $DBNAME"
+  $MYSQL  --database=mysql <<-EOC
+    DROP SCHEMA IF EXISTS $DBNAME;
+    CREATE SCHEMA $DBNAME;
+    USE $DBNAME;
+    GRANT ALL PRIVILEGES ON $DBNAME   TO $DBUSER IDENTIFIED BY '$DBPASS';
+    GRANT ALL PRIVILEGES ON $DBNAME.* TO $DBUSER IDENTIFIED BY '$DBPASS';
 EOC
 
-echo "* Loading $BASE"
-cat "$PRJ_DIR/conf/database/base.sql" | $MYSQL  --database=$DBNAME
+  echo "* Loading $BASE into $DBNAME"
+  cat "$PRJ_DIR/conf/database/base.sql" | $MYSQL  --database=$DBNAME
 
-echo "* Upgrading it"
-$PRJ_DIR/bin/prj-db-upgrade
+  echo "* Upgrading $DBNAME"
+  $PRJ_DIR/bin/prj-db-upgrade
 
-echo "* Applying dev hooks"
-$PRJ_DIR/bin/prj-db-upgrade "$PRJ_DIR/conf/database/always-dev/"
+  echo "* Applying dev hooks to $DBNAME"
+  $PRJ_DIR/bin/prj-db-upgrade "$PRJ_DIR/conf/database/always-dev/"
+fi
+
 
 echo "* Reset the live folder from live-for-test"
 rsync                       \
@@ -50,15 +60,6 @@ rsync                       \
   --itemize-changes         \
   "$PRJ_DIR/live-for-test/" \
   "$PRJ_DIR/live/"
-
-
-echo "* Cleaning old tests"
-if [ -d "$PRJ_DIR/tmp" ]; then
-  find "$PRJ_DIR/tmp/" -mindepth 1 -delete
-else
-  mkdir -p "$PRJ_DIR/tmp"
-fi
-
 
 if [ -x "$PRJ_DIR/dev-reset-custom.sh" ]; then
   echo "* Running custom script *"
