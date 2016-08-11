@@ -86,6 +86,13 @@ class Database {
 		return $res;
 	}
 
+	public function getCurrentDatabase() {
+		$db = $this->runPrepareSqlStatement("SELECT DATABASE();");
+		$db = array_pop($db);
+		$db = array_pop($db);
+		return $db;
+	}
+
 	/**
 	 * Get the version
 	 *
