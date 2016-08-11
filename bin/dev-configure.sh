@@ -90,15 +90,11 @@ if [ "$1" != "offline" ]; then
   su vagrant -c $PRJ_DIR/bin/prj-install-dependancies.sh
 fi
 
+service apache2 restart
+
 $PRJ_DIR/bin/dev-reset.sh
 
 # Run project custom files
 if [ -x $PRJ_DIR/bin/dev-configure-custom.sh ]; then
   $PRJ_DIR/bin/dev-configure-custom.sh
 fi
-
-service restart restart
-
-$PRJ_DIR/bin/dev-reset.sh
-
-service apache2 restart

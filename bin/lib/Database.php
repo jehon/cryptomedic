@@ -86,21 +86,45 @@ class Database {
 		return $res;
 	}
 
+	public function getCurrentDatabase() {
+		$db = $this->runPrepareSqlStatement("SELECT DATABASE();");
+		$db = array_pop($db);
+		$db = array_pop($db);
+		return $db;
+	}
+
 	/**
 	 * Get the version
 	 *
 	 * @return mixed
 	 */
 	public function getVersion() {
-		try {
-			$v = $this->runPrepareSqlStatement("SELECT value FROM settings WHERE id = 'structure_version'");
-			$v = array_pop($v);
-			$v = array_pop($v);
-			return $v;
-		} catch (PDOException $e) {
-			echo "!!no version found!! " . $e->getMessage();
-			return "";
+		$exists = $this->runPrepareSqlStatement(
+			"SELECT table_name FROM information_schema.tables WHERE table_schema = :mydb AND table_name = 'settings';",
+			[ 'mydb' => $this->getCurrentDatabase() ]
+		);
+
+		if (count($exists) < 1) {
+			echo "!!! Creating the settings table !!!\n";
+			$this->runPrepareSqlStatement(
+				"CREATE TABLE IF NOT EXISTS `settings` (
+					  `id` varchar(50) NOT NULL,
+					  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+					  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+					  `value` varchar(50) DEFAULT NULL
+					) ENGINE=InnoDB DEFAULT CHARSET=utf8;"
+			);
 		}
+
+		$v = $this->runPrepareSqlStatement("SELECT value FROM settings WHERE id = 'structure_version'");
+		if (count($v) < 1) {
+			echo "!! Forcing version to 0 !!";
+			$this->runPrepareSqlStatement("INSERT INTO `settings` (id, value) VALUE('structure_Version', 0)");
+			return 0;
+		}
+		$v = array_pop($v);
+		$v = array_pop($v);
+		return $v;
 	}
 
 	/**
@@ -174,7 +198,6 @@ class Database {
 			echo "Running directory $fromDir<br>";
 		}
 
-		$version = $this->getVersion();
 		$list = myglob($fromDir . "/*.sql");
 		natsort($list);
 
@@ -183,8 +206,8 @@ class Database {
 			if (preg_match("~^(\d+)~", basename($f, ".sql"), $nn)) {
 				if (count($nn) > 1) {
 					$nextVersion = $nn[1];
-					if (($nextVersion == $version)
-							|| (strnatcmp($version, $nextVersion) > 0)) {
+					if (($this->getVersion() == $nextVersion)
+							|| (strnatcmp($this->getVersion(), $nextVersion) > 0)) {
 						echo "\nSkipping $f [$nextVersion]";
 						continue;
 					}
@@ -207,12 +230,10 @@ class Database {
 	}
 
 	public function runFileOrDirectory($pathOrFile) {
-		echo "\n*** $pathOrFile ***\n";
 		if (is_dir($pathOrFile)) {
 			$this->runDirectory($pathOrFile);
 		} else {
 			$this->runFile($pathOrFile);
 		}
-		echo "\n";
 	}
 }
