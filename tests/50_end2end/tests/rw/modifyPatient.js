@@ -30,6 +30,11 @@ module.exports = {
       "#Surgery_ReportDiagnostic": "diagnostique"
     };
 
+    var appointment = {
+      "#Appointment_Nextappointment": "2010-01-01",
+      "#Appointment_NextCenter": "Ramu"
+    };
+
     var bill = {
       "#Bill_Date": "2003-06-01"
     };
@@ -67,6 +72,7 @@ module.exports = {
       .waitForElementVisible('#file')
       .setValue('#file', __dirname + '/../../ressources/upload.jpg')
       .myFillInForm('#fileForm', picture, '#topsubmenu #button_save')
+
       .myCheckForm('#fileForm', picture)
       .assert.visible('#img_file')
 
@@ -81,6 +87,11 @@ module.exports = {
       .myClick("#add_surgery")
       .myFillInForm("#fileForm", surgery, "#topsubmenu #button_save")
       .myCheckForm("#fileForm", surgery)
+
+      .myClick("#button_add")
+      .myClick("#add_appointment")
+      .myFillInForm("#fileForm", appointment, "#topsubmenu #button_save")
+      .myCheckForm("#fileForm", appointment)
 
       // Add a bill
       .myClick("#button_add")
