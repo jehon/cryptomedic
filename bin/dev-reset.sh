@@ -42,6 +42,24 @@ $PRJ_DIR/bin/prj-db-upgrade
 echo "* Applying dev hooks"
 $PRJ_DIR/bin/prj-db-upgrade "$PRJ_DIR/conf/database/always-dev/"
 
+echo "* Reset the live folder from live-for-test"
+rsync                       \
+  --times                   \
+  --recursive               \
+  --delete                  \
+  --itemize-changes         \
+  "$PRJ_DIR/live-for-test/" \
+  "$PRJ_DIR/live/"
+
+
+echo "* Cleaning old tests"
+if [ -d "$PRJ_DIR/tmp" ]; then
+  find "$PRJ_DIR/tmp/" -mindepth 1 -delete
+else
+  mkdir -p "$PRJ_DIR/tmp"
+fi
+
+
 if [ -x "$PRJ_DIR/dev-reset-custom.sh" ]; then
   echo "* Running custom script *"
   "$PRJ_DIR/dev-reset-custom.sh"
