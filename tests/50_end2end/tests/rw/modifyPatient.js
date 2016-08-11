@@ -106,38 +106,18 @@ module.exports = {
       .myClick("#topsubmenu #button_edit")
       .myClick("#topsubmenu #button_delete")
       .dismissAlert()
+      ;
 
-      // Delete
-      .myClick("#folder_files .folder_file:nth-child(6) .btn")
-      .myClick("#topsubmenu #button_edit")
-      .myClick("#topsubmenu #button_delete")
-      .acceptAlert()
+    // Delete
+    for(var i = 0; i < 7; i++ ) {
+      client
+        .myClick("#folder_files .folder_file:nth-child(1) .btn")
+        .myClick("#topsubmenu #button_edit")
+        .myClick("#topsubmenu #button_delete")
+        .acceptAlert();
+    }
 
-      .myClick("#folder_files .folder_file:nth-child(5) .btn")
-      .myClick("#topsubmenu #button_edit")
-      .myClick("#topsubmenu #button_delete")
-      .acceptAlert()
-
-      .myClick("#folder_files .folder_file:nth-child(4) .btn")
-      .myClick("#topsubmenu #button_edit")
-      .myClick("#topsubmenu #button_delete")
-      .acceptAlert()
-
-      .myClick("#folder_files .folder_file:nth-child(3) .btn")
-      .myClick("#topsubmenu #button_edit")
-      .myClick("#topsubmenu #button_delete")
-      .acceptAlert()
-
-      .myClick("#folder_files .folder_file:nth-child(2) .btn")
-      .myClick("#topsubmenu #button_edit")
-      .myClick("#topsubmenu #button_delete")
-      .acceptAlert()
-
-      .myClick("#folder_files .folder_file:nth-child(1) .btn")
-      .myClick("#topsubmenu #button_edit")
-      .myClick("#topsubmenu #button_delete")
-      .acceptAlert()
-
+    client
       // Edit and cancel
       .myClick("#button_patient")
       .myClick("#topsubmenu #patient_edit")
