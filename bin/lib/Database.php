@@ -181,7 +181,6 @@ class Database {
 			echo "Running directory $fromDir<br>";
 		}
 
-		$version = $this->getVersion();
 		$list = myglob($fromDir . "/*.sql");
 		natsort($list);
 
@@ -190,8 +189,8 @@ class Database {
 			if (preg_match("~^(\d+)~", basename($f, ".sql"), $nn)) {
 				if (count($nn) > 1) {
 					$nextVersion = $nn[1];
-					if (($nextVersion == $version)
-							|| (strnatcmp($version, $nextVersion) > 0)) {
+					if (($this->getVersion() == $nextVersion)
+							|| (strnatcmp($this->getVersion(), $nextVersion) > 0)) {
 						echo "\nSkipping $f [$nextVersion]";
 						continue;
 					}
