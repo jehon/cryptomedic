@@ -99,15 +99,32 @@ class Database {
 	 * @return mixed
 	 */
 	public function getVersion() {
-		try {
-			$v = $this->runPrepareSqlStatement("SELECT value FROM settings WHERE id = 'structure_version'");
-			$v = array_pop($v);
-			$v = array_pop($v);
-			return $v;
-		} catch (PDOException $e) {
-			echo "!!no version found!! " . $e->getMessage();
-			return "";
+		$exists = $this->runPrepareSqlStatement(
+			"SELECT table_name FROM information_schema.tables WHERE table_schema = :mydb AND table_name = 'settings';",
+			[ 'mydb' => $this->getCurrentDatabase() ]
+		);
+
+		if (count($exists) < 1) {
+			echo "!!! Creating the settings table !!!\n";
+			$this->runPrepareSqlStatement(
+				"CREATE TABLE IF NOT EXISTS `settings` (
+					  `id` varchar(50) NOT NULL,
+					  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+					  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+					  `value` varchar(50) DEFAULT NULL
+					) ENGINE=InnoDB DEFAULT CHARSET=utf8;"
+			);
 		}
+
+		$v = $this->runPrepareSqlStatement("SELECT value FROM settings WHERE id = 'structure_version'");
+		if (count($v) < 1) {
+			echo "!! Forcing version to 0 !!";
+			$this->runPrepareSqlStatement("INSERT INTO `settings` (id, value) VALUE('structure_Version', 0)");
+			return 0;
+		}
+		$v = array_pop($v);
+		$v = array_pop($v);
+		return $v;
 	}
 
 	/**
