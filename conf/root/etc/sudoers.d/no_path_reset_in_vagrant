@@ -1,2 +1,2 @@
 # Defaults !secure_path
-Defaults    secure_path = /sbin:/bin:/usr/sbin:/usr/bin:/vagrant/bin
+Defaults    secure_path = /sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin:/vagrant/bin
