@@ -214,12 +214,10 @@ class Database {
 	}
 
 	public function runFileOrDirectory($pathOrFile) {
-		echo "\n*** $pathOrFile ***\n";
 		if (is_dir($pathOrFile)) {
 			$this->runDirectory($pathOrFile);
 		} else {
 			$this->runFile($pathOrFile);
 		}
-		echo "\n";
 	}
 }
