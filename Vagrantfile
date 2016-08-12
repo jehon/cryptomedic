@@ -8,8 +8,8 @@ end
 
 Vagrant.configure(2) do |config|
   # https://docs.vagrantup.com.
-  config.vm.box           = 'ubuntu/trusty64'
-
+  config.vm.box      = 'ubuntu/trusty64'
+  config.vm.hostname = 'vagrant-' + File.basename(File.dirname(__FILE__))
   config.vm.provider "virtualbox" do |v|
     v.memory = 1024
 #    v.cpus = 2
@@ -38,6 +38,9 @@ Vagrant.configure(2) do |config|
   config.vm.synced_folder ".", "/vagrant", owner: "vagrant", group: "www-data"
 
   # http://serverfault.com/questions/362903/how-do-you-set-a-locale-non-interactively-on-debian-ubuntu
+  config.vm.provision "shell", inline:
+    "hostname"
+
   config.vm.provision "shell", inline:
     "locale-gen " + ENV['LC_ALL']
 
