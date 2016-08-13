@@ -95,8 +95,4 @@ service apache2 restart
 $PRJ_DIR/bin/dev-reset.sh
 
 # Run project custom files
-if [ -x $PRJ_DIR/bin/dev-configure-custom.sh ]; then
-  $PRJ_DIR/bin/dev-configure-custom.sh
-fi
-
 run-parts --regex="^[a-z0-9_.]+$" --report $PRJ_DIR/bin/dev-configure.d
