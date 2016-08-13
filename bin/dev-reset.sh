@@ -60,10 +60,5 @@ rsync                       \
   "$PRJ_DIR/live-for-test/" \
   "$PRJ_DIR/live/"
 
-if [ -x "$PRJ_DIR/dev-reset-custom.sh" ]; then
-  echo "* Running custom script *"
-  "$PRJ_DIR/dev-reset-custom.sh"
-fi
-
+# Run project custom files
 run-parts --regex="^[a-z0-9_.]+$" --report $PRJ_DIR/bin/dev-reset.d
-
