@@ -26,7 +26,6 @@ if ([ "$1" != "offline" ]); then
     build-essential \
     git             \
     multitail       \
-    crudini         \
     curl            \
     mysql-server    \
     mysql-client    \
@@ -36,12 +35,12 @@ if ([ "$1" != "offline" ]); then
     phpmyadmin      \
     xvfb            \
     firefox         \
-    default-jre     \
     nodejs          \
     ssmtp           \
   # end
 
-  # Install composer
+
+  # Install composer (here since it is an install)
   if [ -e "$PRJ_DIR"/composer.json ] && [ ! -x /usr/local/bin/composer.phar ]; then
     echo "** Getting the composer **"
     curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin
