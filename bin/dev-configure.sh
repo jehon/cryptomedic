@@ -33,12 +33,14 @@ if ([ "$1" != "offline" ]); then
     php5-cli php5-mysql php5-mcrypt php5-curl \
     libapache2-mod-php5 php5-xdebug     \
     phpmyadmin      \
+    default-jre     \
     xvfb            \
     firefox         \
     nodejs          \
     ssmtp           \
   # end
 
+#     crudini         \
 
   # Install composer (here since it is an install)
   if [ -e "$PRJ_DIR"/composer.json ] && [ ! -x /usr/local/bin/composer.phar ]; then
