@@ -9,7 +9,6 @@
 /**/vendor/
 
 commit.msg
-composer.lock
 .git
 .vagrant
 .~lock.*
