@@ -40,8 +40,6 @@ if ([ "$1" != "offline" ]); then
     ssmtp           \
   # end
 
-#     crudini         \
-
   # Install composer (here since it is an install)
   if [ -e "$PRJ_DIR"/composer.json ]; then
     echo "** Getting the composer **"
