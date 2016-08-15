@@ -43,9 +43,9 @@ if ([ "$1" != "offline" ]); then
 #     crudini         \
 
   # Install composer (here since it is an install)
-  if [ -e "$PRJ_DIR"/composer.json ] && [ ! -x /usr/local/bin/composer.phar ]; then
+  if [ -e "$PRJ_DIR"/composer.json ]; then
     echo "** Getting the composer **"
-    curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin
+    $PRJ_DIR/bin/lib/install-composer.sh
   fi
 
   # Install project custom debs
