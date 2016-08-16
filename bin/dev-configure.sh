@@ -61,9 +61,6 @@ cat /etc/apache2/envvars \
 echo "export APACHE_RUN_USER=vagrant" >> /etc/apache2/envvars2
 mv /etc/apache2/envvars2 /etc/apache2/envvars
 
-# Put various configs file in place (cp because needed before vagrant mount)
-rsync -r -i --omit-dir-times $PRJ_DIR/conf/root/ /
-
 # Enable php5-mcrypt
 php5enmod mcrypt
 
@@ -85,13 +82,9 @@ if [ ! -r "/swapfile" ]; then
 fi
 
 # Install project dependancies
-if [ "$1" != "offline" ]; then
-  su vagrant -c $PRJ_DIR/bin/prj-install-dependancies.sh
-fi
-
-service apache2 restart
-
-$PRJ_DIR/bin/dev-reset.sh
+su vagrant -c $PRJ_DIR/bin/prj-install-dependancies.sh
 
 # Run project custom files
 run-parts --regex="^[a-z0-9_.]+$" --report $PRJ_DIR/bin/dev-configure.d
+
+$PRJ_DIR/bin/dev-reset.sh
