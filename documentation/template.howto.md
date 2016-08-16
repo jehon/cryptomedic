@@ -23,8 +23,23 @@ This script is used to reset the state of the application in the vagrant:
 ## conf/root
 Script in this place will be copied (by rsync) onto the root directory "/" of the vagrant, by dev-configure.d/01_install_root.sh script
 
+# Database handling
+- dev-reset.sh
+- prj-db-upgrade (need php)
+- prj-db-backup.sh
+- dev-db-createNewTestingSqlDump.sh
 
 # Email handling
 - A fake smtp server run on port 1025
 - The /usr/bin/sendmail command forward to that port
 - Mailhog is used to view these emails live (on vagrant:8080/)
+
+Mailhog allow you to forward your email to any external smtp server. Oniryx internal smtp server is preconfigured.
+
+# Start developping
+- dev-test.sh
+- dev-logs.sh
+- prj-xvfb-run.sh
+
+# Put it in production
+- prj-go-site ??? (not developped at this point)
