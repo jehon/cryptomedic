@@ -5,6 +5,9 @@ set -e
 
 PRJ_DIR="/vagrant"
 
+# Give it to any sub-scripts
+export PRJ_DIR
+
 DBROOT=`php $PRJ_DIR/config.php 'database.rootpwd'`
 DBNAME=`php $PRJ_DIR/config.php 'database.schema'`
 DBUSER=`php $PRJ_DIR/config.php 'database.username'`
