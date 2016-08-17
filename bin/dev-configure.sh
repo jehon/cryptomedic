@@ -69,6 +69,7 @@ php5enmod mcrypt
 
 # Enable apache modules
 a2enmod  rewrite ssl
+a2enmod  proxy_http
 a2ensite default-ssl
 
 # Configure phpmyadmin (fix missing preference tables in normal install) (still usefull on 2016-07-20)
