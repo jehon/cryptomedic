@@ -5,6 +5,9 @@ set -e
 
 PRJ_DIR="/vagrant"
 
+# Give it to any sub-scripts
+export PRJ_DIR
+
 # Manage user rights
 usermod -a -G adm vagrant
 
