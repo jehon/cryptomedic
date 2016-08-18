@@ -1,5 +1,6 @@
 
 function testSearch(client, search, resultList) {
+
   client
     .myClick("#button_reset")
     .waitForElementPresent("#search_no_results")
@@ -7,7 +8,10 @@ function testSearch(client, search, resultList) {
     // .myClick("#menu_search")
     .myFillInForm(".searchFields", search, "#button_submit")
     .waitForElementPresent("#search_results")
-    .assert.myAssertTableCountRows("#search_results", resultList.length)
+    .page.cryptomedic().tableIterator('#search_results', 1, resultList.length).assert()
+    ;
+    // .assert.myAssertTableCountRows("#search_results", resultList.length)
+  client
     .pause(1000)
     ;
   for(var i in resultList) {
