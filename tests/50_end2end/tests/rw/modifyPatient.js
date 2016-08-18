@@ -1,44 +1,46 @@
+
+var nb = 0;
+
+var ricket_consult = {
+  "#Date": "2003-01-01",
+  "#Weightkg": "13"
+};
+
+var picture = {
+  "#Picture_Date": "2003-01-02"
+};
+
+var other_consult = {
+  "#Date": "2003-02-01",
+  "#Weightkg": "13"
+};
+
+var clubfoot = {
+  "#Date": "2003-04-01",
+  "#Weightkg": "13"
+};
+
+var surgery = {
+  "#Surgery_Date": "2003-05-01",
+  "#Surgery_ReportDiagnostic": "diagnostique"
+};
+
+var appointment = {
+  "#Appointment_Nextappointment": "2010-01-01",
+  "#Appointment_NextCenter": "Ramu"
+};
+
+var bill = {
+  "#Bill_Date": "2003-06-01"
+};
+
 module.exports = {
   // 'generateReference'; function(client) {
 
   // },
 
-  "modifyPatient": function(client) {
+  "modify a Patient": function(client) {
     // var r = Math.floor(Math.random() * 100);
-
-    var ricket_consult = {
-      "#Date": "2003-01-01",
-      "#Weightkg": "13"
-    };
-
-    var picture = {
-      "#Picture_Date": "2003-01-02"
-    };
-
-    var other_consult = {
-      "#Date": "2003-02-01",
-      "#Weightkg": "13"
-    };
-
-    var clubfoot = {
-      "#Date": "2003-04-01",
-      "#Weightkg": "13"
-    };
-
-    var surgery = {
-      "#Surgery_Date": "2003-05-01",
-      "#Surgery_ReportDiagnostic": "diagnostique"
-    };
-
-    var appointment = {
-      "#Appointment_Nextappointment": "2010-01-01",
-      "#Appointment_NextCenter": "Ramu"
-    };
-
-    var bill = {
-      "#Bill_Date": "2003-06-01"
-    };
-
     client
       .page.cryptomedic().authenticate("murshed")
 
@@ -53,72 +55,103 @@ module.exports = {
 
       .waitForElementPresent("#Patient_Name")
       .assert.containsText("#Patient_Name", "mozahar ahamed")
+      ;
+  },
 
+  "add_a ricket_consult": function(client) {
+    client
       // Add a ricket consultation
       .myClick("#button_add")
       .myClick("#add_ricket_consult")
-      .myFillInForm("#fileForm", ricket_consult, "#topsubmenu #button_save")
-      .myCheckForm("#fileForm", ricket_consult)
+      .myForm("#fileForm", ricket_consult, "#topsubmenu #button_save", function() { nb++; })
+      ;
+  },
 
+  "add a non-ricket consult": function(client) {
+    client
       // Add a non-ricket consultation
       .myClick("#button_add")
       .myClick("#add_other_consult")
-      .myFillInForm("#fileForm", other_consult, "#topsubmenu #button_save")
-      .myCheckForm("#fileForm", other_consult)
+      .myForm("#fileForm", other_consult, "#topsubmenu #button_save", function() { nb++; })
+      ;
+  },
 
+  "add a picture": function(client) {
+    client
       // Add a picture
       .myClick("#button_add")
       .myClick("#add_picture")
       .waitForElementVisible('#file')
       .setValue('#file', __dirname + '/../../ressources/upload.jpg')
-      .myFillInForm('#fileForm', picture, '#topsubmenu #button_save')
-
-      .myCheckForm('#fileForm', picture)
+      .myForm("#fileForm", picture, "#topsubmenu #button_save", function() { nb++; })
       .assert.visible('#img_file')
+      ;
+  },
 
+  "add a club foot": function(client) {
       // Add a clubfoot
+    client
       .myClick("#button_add")
       .myClick("#add_clubfoot")
-      .myFillInForm("#fileForm", clubfoot, "#topsubmenu #button_save")
-      .myCheckForm("#fileForm", clubfoot)
+      .myForm("#fileForm", clubfoot, "#topsubmenu #button_save", function() { nb++; })
+      ;
+  },
 
+  "add a surgery": function(client) {
+    client
       // Add a surgery
       .myClick("#button_add")
       .myClick("#add_surgery")
-      .myFillInForm("#fileForm", surgery, "#topsubmenu #button_save")
-      .myCheckForm("#fileForm", surgery)
+      .myForm("#fileForm", surgery, "#topsubmenu #button_save", function() { nb++; })
+      ;
+  },
 
+  "add an appointement": function(client) {
+    client
+      // Add a appointment
       .myClick("#button_add")
       .myClick("#add_appointment")
-      .myFillInForm("#fileForm", appointment, "#topsubmenu #button_save")
-      .myCheckForm("#fileForm", appointment)
+      .myForm("#fileForm", appointment, "#topsubmenu #button_save", function() { nb++; })
+      ;
+  },
 
+  "add a bill": function(client) {
+    client
       // Add a bill
       .myClick("#button_add")
       .myClick("#add_bill")
-      .myFillInForm("#fileForm", bill, "#topsubmenu #button_save")
-      .myCheckForm("#fileForm", bill)
+      .myForm("#fileForm", bill, "#topsubmenu #button_save", function() { nb++; })
+      ;
+  },
 
-      // Delete all sub-files
+  // "check the created appointment": function(client) {
+  //   client
+  //     .waitForElementVisible("")
+  //     .assert.containsText("", appointment["#Appointment_Nextappointment"])
+  //     ;
+  // },
 
-      // Not delete
+  "Delete a file but not confirm it": function(client) {
+    client
       .myClick("#folder_files .folder_file:nth-child(1) .btn")
       .myClick("#topsubmenu #button_edit")
       .myClick("#topsubmenu #button_delete")
       .dismissAlert()
       ;
+  },
 
-    // Delete
-    for(var i = 0; i < 7; i++ ) {
+  "Delete all sub-files": function(client) {
+    for(var i = 0; i < nb; i++ ) {
       client
         .myClick("#folder_files .folder_file:nth-child(1) .btn")
         .myClick("#topsubmenu #button_edit")
         .myClick("#topsubmenu #button_delete")
         .acceptAlert();
     }
+  },
 
+  "edit and cancel patient": function(client) {
     client
-      // Edit and cancel
       .myClick("#button_patient")
       .myClick("#topsubmenu #patient_edit")
       .waitForElementPresent("#Patient_Name")
