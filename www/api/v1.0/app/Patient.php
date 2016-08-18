@@ -1,9 +1,9 @@
-<?php 
+<?php
 /**
  * Bill model.
- * 
+ *
  * With a summary...
- * 
+ *
  * @package test
  * @author jehon
  */
@@ -17,10 +17,12 @@ use App\CryptomedicModel;
 
 /**
  * This is the Bill model, encapsulating various function used around the "Bill" concept
- * 
+ *
  * This is a summary? I think so...
- * 
+ *
  * @author jehon
  *
  */
-class Patient extends CryptomedicModel {}
+class Patient extends CryptomedicModel {
+
+}
