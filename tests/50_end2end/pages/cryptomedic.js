@@ -134,6 +134,9 @@ module.exports = (function() {
               .assert.containsText(this.toString(), text);
           }
           return this;
+        },
+        endTable: function() {
+          return client;
         }
       };
     }
