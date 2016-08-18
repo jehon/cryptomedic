@@ -4,14 +4,9 @@ function testSearch(client, search, resultList) {
   client
     .myClick("#button_reset")
     .waitForElementPresent("#search_no_results")
-    // .page.cryptomedic().authenticate("readonly")
-    // .myClick("#menu_search")
-    .myFillInForm(".searchFields", search, "#button_submit")
+    .myFormFillIn(".searchFields", search, "#button_submit")
     .waitForElementPresent("#search_results")
-    .page.cryptomedic().tableIterator('#search_results', 1, resultList.length).assert()
-    ;
-    // .assert.myAssertTableCountRows("#search_results", resultList.length)
-  client
+    .page.cryptomedic().tableIterator('#search_results', 1, resultList.length).assert().endTable()
     .pause(1000)
     ;
   for(var i in resultList) {
