@@ -78,6 +78,10 @@ test_dir() {
     testEnd2End "$@"
   fi
 
+  if [ -r nightwatch.conf.js ]; then
+    testEnd2End "$@"
+  fi
+
   if [ -r karma.conf.js ]; then
     testJSUnit "$@"
   fi
