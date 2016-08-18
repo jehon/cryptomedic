@@ -111,10 +111,10 @@ module.exports = (function() {
       return client;
     };
 
-    this.tableIterator = function(tableSelector) {
+    this.tableIterator = function(tableSelector, row, col) {
       // var self = this;
-      var col = 1;
-      var row = 1;
+      if (!row) { row = 1; }
+      if (!col) { col = 1; }
       return {
         col: function(i) { col = (i ? i : 1); return this; },
         row: function(i) { row = (i ? i : 1); return this; },
@@ -128,8 +128,11 @@ module.exports = (function() {
         assert: function(text) {
           client
             .waitForElementVisible(tableSelector)
-            .waitForElementVisible(this.toString())
-            .assert.containsText(this.toString(), text)
+            .waitForElementVisible(this.toString());
+          if (text) {
+            client
+              .assert.containsText(this.toString(), text);
+          }
           return this;
         }
       };
