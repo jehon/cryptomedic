@@ -1,6 +1,8 @@
 # General
+
+## Notation "vagrant:80"
 We will use the notation vagrant:80 to note the vagrant port "80" forwarded to you host. To view
-wich to which port this is mapped, you can use "vagrant port 80" in your host.
+wich to which port this is mapped, you can use the command "vagrant port 80" in your host.
 
 ## dev vs. prj
 - dev scripts are meant to be run only in the dev (i.e. vagrant) environnement. It can wipe out your database, so please be carefull with these.
@@ -19,6 +21,13 @@ It will call the prj-install-dependancies.sh
 This script is used to reset the state of the application in the vagrant:
 - reset the database (see below)
 - reset the "live" folder
+
+## dev-test.sh
+This script will test the application. I will search through the /tests folder, and for each of the subfolder, if a configuration file is found, it run the tests accordingly:
+- nightwatch.json
+- nightwatch.conf.js
+- karma.conf.js
+- phpunit.xml
 
 ## conf/root
 Script in this place will be copied (by rsync) onto the root directory "/" of the vagrant, by dev-configure.d/01_install_root.sh script
