@@ -1,9 +1,11 @@
 
-// http://stackoverflow.com/a/37785920/1954789
-
 exports.command = function(selector, callback) {
   var self = this;
   this.waitForElementVisible(selector);
+  this.assert.visible(selector);
+  this.myScreenshot("click");
+
+  // http://stackoverflow.com/questions/38102543/when-running-nightwatch-js-test-how-can-i-get-the-name-of-browser-currently-runn
 
   this.execute(function(selector) {
     document.querySelector(selector).focus();
