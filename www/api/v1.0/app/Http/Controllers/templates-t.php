@@ -199,9 +199,9 @@ class t {
     return $this->struct_type;
   }
 
-  function fieldGetList() {
+  // function fieldGetList() {
 
-  }
+  // }
 
   function id($id) {
     $this->jsId = $id;
