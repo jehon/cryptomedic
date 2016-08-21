@@ -203,6 +203,11 @@ class t {
 
   }
 
+  function id($id) {
+    $this->jsId = $id;
+    return $this;
+  }
+
   function displayCode($mode) {
     if (array_key_exists("_meta", $_REQUEST) && $_REQUEST['_meta']) {
       $this->res .= "=" . $mode . $this->key;
