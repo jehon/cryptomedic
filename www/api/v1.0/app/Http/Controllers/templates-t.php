@@ -389,14 +389,6 @@ class t {
     return $this;
   }
 
-  function getText() {
-    return $this->res;
-  }
-
-  function p() {
-    echo $this->res;
-  }
-
   function readOnly() {
     $this->options['readOnly'] = true;
     return $this;
@@ -405,6 +397,18 @@ class t {
   function writeOnly() {
     $this->options['writeOnly'] = true;
     return $this;
+  }
+
+  function getText() {
+    return $this->res;
+  }
+
+  function p() {
+    echo $this->res;
+  }
+
+  function __toString() {
+    return $this->res;
   }
 
   static public function used($sqlTable, $field) {
