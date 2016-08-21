@@ -153,7 +153,7 @@ module.exports = {
       "#salary_ratio": 600,
       "#Bill_Sociallevel": 2,
       "#percentage": "30%",
-      "#total_calculated_asked": (165 * 0.3)
+      "#total_calculated_asked": Math.round(165 * 0.3)
     };
 
     client
