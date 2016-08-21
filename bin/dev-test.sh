@@ -14,8 +14,6 @@ set -e
 SCRIPT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 PRJ_DIR=$(dirname "$SCRIPT_DIR")
 
-cd "$PRJ_DIR"
-
 myHeader() {
   echo -ne "\e[0;45m"
   if [ "$2" != "" ]; then
@@ -31,7 +29,7 @@ myHeader() {
 mxvfb() {
   if [ "$FRONT" = "" ]; then
     # Run it in xvfb
-    xvfb-run --auto-servernum --server-args='-screen 0 1024x768x24 -ac +extension GLX +render -noreset' "$@"
+    $PRJ_DIR/bin/prj-xvfb-run.sh "$@"
   else
     # Run it live if FRONT is specified
     "$@"
@@ -101,6 +99,8 @@ if [ "$1" ]; then
   shift
   cd "$D" && test_dir "Override $D" "$@"
 else
+  cd "$PRJ_DIR"
+
   myHeader "Reset the environnement"
   "$PRJ_DIR/bin/dev-reset.sh"
 
