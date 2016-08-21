@@ -7,12 +7,7 @@ var appointment = {
 };
 
 module.exports = {
-  // 'generateReference'; function(client) {
-
-  // },
-
   "modify a Patient": function(client) {
-    // var r = Math.floor(Math.random() * 100);
     client
       .page.cryptomedic().authenticate("murshed")
 
@@ -32,7 +27,6 @@ module.exports = {
 
   "add_a ricket_consult": function(client) {
     client
-      // Add a ricket consultation
       .myClick("#button_add")
       .myClick("#add_ricket_consult")
       .myForm("#fileForm", {
@@ -45,7 +39,6 @@ module.exports = {
 
   "add a non-ricket consult": function(client) {
     client
-      // Add a non-ricket consultation
       .myClick("#button_add")
       .myClick("#add_other_consult")
       .myForm("#fileForm", {
@@ -62,7 +55,6 @@ module.exports = {
     };
 
     client
-      // Add a picture
       .myClick("#button_add")
       .myClick("#add_picture")
       .waitForElementVisible('#file')
@@ -87,7 +79,6 @@ module.exports = {
 
   "add a surgery": function(client) {
     client
-      // Add a surgery
       .myClick("#button_add")
       .myClick("#add_surgery")
       .myForm("#fileForm", {
@@ -100,7 +91,6 @@ module.exports = {
 
   "add an appointement": function(client) {
     client
-      // Add a appointment
       .myClick("#button_add")
       .myClick("#add_appointment")
       .myForm("#fileForm", appointment, "#topsubmenu #button_save")
@@ -123,7 +113,6 @@ module.exports = {
     };
 
     client
-      // Add a bill
       .myClick("#button_add")
       .myClick("#add_bill")
 
@@ -157,7 +146,6 @@ module.exports = {
     };
 
     client
-      // Add a bill
       .myClick("#button_add")
       .myClick("#add_bill")
 
@@ -191,7 +179,6 @@ module.exports = {
     };
 
     client
-      // Add a bill
       .myClick("#button_add")
       .myClick("#add_bill")
 
