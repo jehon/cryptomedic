@@ -1,15 +1,22 @@
 
 function ctrl_file_bill($scope) {
-  $scope.$watch(function() {
-    return server.settings;
-  }, function() {
-    $scope.currentFile().calculatePriceId();
-    $scope.safeApply();
-  });
+  /*
+    Prices are at
+        $scope.appStateStore.connection.settings.prices
+
+        appState().store.getState().connection.settings.prices
+  */
+
+  // $scope.$watch(function() {
+  //   return server.settings;
+  // }, function() {
+  //   $scope.currentFile().calculatePriceId();
+  //   $scope.safeApply();
+  // });
 
   $scope.$watch('currentFile().Date', function() {
     if ($scope.currentFile() && $scope.currentFile().calculatePriceId) {
-      $scope.currentFile().calculatePriceId();
+      $scope.currentFile().calculatePriceId($scope.appStateStore.connection.settings.prices);
       $scope.safeApply();
     } else {
       $scope.safeApply();
