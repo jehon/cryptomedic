@@ -99,7 +99,7 @@ if [ "$1" ]; then
   myHeader "Test override to path $1"
   D="$1"
   shift
-  cd "$PRJ_DIR/$D" && test_dir "Override $D" "$@"
+  cd "$D" && test_dir "Override $D" "$@"
 else
   myHeader "Reset the environnement"
   "$PRJ_DIR/bin/dev-reset.sh"
