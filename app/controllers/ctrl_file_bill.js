@@ -7,12 +7,12 @@ function ctrl_file_bill($scope) {
         appState().store.getState().connection.settings.prices
   */
 
-  // $scope.$watch(function() {
-  //   return server.settings;
-  // }, function() {
-  //   $scope.currentFile().calculatePriceId();
-  //   $scope.safeApply();
-  // });
+  $scope.$watch(function() {
+    return $scope.appStateStore.connection.settings;
+  }, function() {
+    $scope.currentFile().calculatePriceId();
+    $scope.safeApply();
+  });
 
   $scope.$watch('currentFile().Date', function() {
     if ($scope.currentFile() && $scope.currentFile().calculatePriceId) {
