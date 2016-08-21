@@ -4,6 +4,7 @@
 - Test e2e: check "examiner name" initialization
 - Test e2e: check "center" initialization
 - Bug: statistical report is not working
+- Test that it works in offline mode...
 
 # Later
 - upload new price
