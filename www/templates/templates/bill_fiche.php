@@ -99,16 +99,16 @@
         <table>
           <tr>
             <td>Raw Calculated total</td>
-            <td>{{currentFile().calculate_total_real()}}<?php new t("Bill.total_real"); ?></td>
+            <td id='total_calculated_raw'>{{currentFile().calculate_total_real()}}<?php new t("Bill.total_real"); ?></td>
           </tr>
           <?php (new t("Bill.Sociallevel"))->readOnly()->tr("Social Level")->p(); ?>
                 <tr>
             <td>Percentage of price to be asked</td>
-            <td>{{currentFile().calculate_percentage_asked() | mypercentage:1 }}</td>
+            <td id='percentage'>{{currentFile().calculate_percentage_asked() | mypercentage:1 }}</td>
           </tr>
                 <tr>
             <td>Price to be asked to the patient</td>
-            <td>{{currentFile().total_asked | number:0 }}<?php (new t("Bill.total_asked")); ?></td>
+            <td id='total_calculated_asked'>{{currentFile().total_asked | number:0 }}<?php (new t("Bill.total_asked")); ?></td>
           </tr>
           <?php (new t("Bill.total_paid"))->tr("Paid by the patient")->p(); ?>
         </table>
