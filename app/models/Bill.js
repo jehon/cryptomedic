@@ -74,14 +74,13 @@ export default class Bill extends File {
   }
 
   calculate_total_real() {
-    if (!this.price_id || !store.getState().connection.settings) {
+    if (!this.price) {
       this.total_real = 0;
       this.total_asked = 0;
       return -1;
     }
-    var price = store.getState().connection.settings.prices[this.price_id];
     var total = 0;
-    for(var i in price) {
+    for(var i in this.price) {
       if (i[0] == '_') { continue; }
       if (i == 'id') { continue; }
       if (i == 'created_at') { continue; }
@@ -97,10 +96,10 @@ export default class Bill extends File {
       if (i == 'socialLevelPercentage_2') { continue; }
       if (i == 'socialLevelPercentage_3') { continue; }
       if (i == 'socialLevelPercentage_4') { continue; }
-      if (price[i] < 0) { continue; }
+      if (this.price[i] < 0) { continue; }
       if (typeof(this[i]) == 'undefined') { continue; }
       if (this[i] <= 0) { continue; }
-      total += price[i] * this[i];
+      total += this.price[i] * this[i];
     }//, this);
     this.total_real = total;
     this.total_asked = this.total_real * this.calculate_percentage_asked();
@@ -108,7 +107,7 @@ export default class Bill extends File {
   }
 
   calculate_percentage_asked() {
-    if (!this.price_id || !store.getState().connection.settings) {
+    if (!this.price) {
       //console.warn('calculate_percentage_asked(): no price id');
       return 1;
     }
@@ -117,46 +116,51 @@ export default class Bill extends File {
       //console.warn('calculate_percentage_asked(): no social level');
       return 1;
     }
-    var price = store.getState().connection.settings.prices[this.price_id];
-    if (typeof(price['socialLevelPercentage_' + sl]) == 'undefined') {
+    if (typeof(this.price['socialLevelPercentage_' + sl]) == 'undefined') {
       //console.warn('calculate_percentage_asked(): no social level in price for sl ' + sl);
       return 1;
     }
-    var perc = price['socialLevelPercentage_' + sl];
+    var perc = this.price['socialLevelPercentage_' + sl];
     return perc;
   }
 
   getPriceFor(key) {
-    if (!this.price_id || !store.getState().connection.settings) return 0;
-    if (typeof(store.getState().connection.settings.prices[this.price_id]) == 'undefined') return 0;
-    return store.getState().connection.settings.prices[this.price_id][key];
+    if (!this.price) return 0;
+    if (!this.price[key]) return 0;
+    return this.price[key];
   }
 
   getTotalFor(key) {
-    if (!this.price_id || !store.getState().connection.settings) return 0;
+    if (!this.price) return 0;
+    if (!this.price[key]) return 0;
     if (!this[key]) return 0;
-    return store.getState().connection.settings.prices[this.price_id][key] * this[key];
+    return this.price[key] * this[key];
   }
 
-  calculatePriceId() {
-    if (typeof(this.Date) == 'undefined' || !store.getState().connection.settings) {
+  calculatePriceId(prices) {
+    if (typeof(this.Date) == 'undefined' || !prices) {
       this.price_id = 1;
       return 0;
     }
     this.price_id = -1;
     var t = this;
     var dref = this.Date;
-    for(var i in store.getState().connection.settings.prices) {
-      var p = store.getState().connection.settings.prices[i];
+    for(var i in prices) {
+      var p = prices[i];
       if (((p['datefrom'] == null) || (p['datefrom'] <= dref))
         && ((p['dateto'] == null) || (p['dateto'] > dref))) {
         t.price_id = i;
+        t.price = prices[i];
       }
     }
     if (this.price_id < 0) {
       throw new Error('Price Id not set');
     }
     this.calculate_total_real();
+  }
+
+  getPriceId() {
+    return this.price_id;
   }
 
   validate(res) {
