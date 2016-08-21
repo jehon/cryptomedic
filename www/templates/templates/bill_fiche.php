@@ -91,7 +91,7 @@
             <td>Salary ratio</td>
             <td><span catch-it ng-model="folder" tryit="currentFile().ratioSalary()">{{ currentFile().ratioSalary() | number:0 }}</span></td>
           </tr>
-          <?php (new t("Bill.Sociallevel"))->readOnly()->tr("Calculated Social Level")->p(); ?>
+          <?php (new t("Bill.Sociallevel"))->id("calculated_social_level")->readOnly()->tr("Calculated Social Level")->p(); ?>
         </table>
       </fieldset>
       <fieldSet>
