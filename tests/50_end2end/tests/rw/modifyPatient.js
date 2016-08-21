@@ -1,59 +1,9 @@
 
 var nb = 0;
 
-var ricket_consult = {
-  "#Date": "2003-01-01",
-  "#Weightkg": "13"
-};
-
-var picture = {
-  "#Picture_Date": "2003-01-02"
-};
-
-var other_consult = {
-  "#Date": "2003-02-01",
-  "#Weightkg": "13"
-};
-
-var clubfoot = {
-  "#Date": "2003-04-01",
-  "#Weightkg": "13"
-};
-
-var surgery = {
-  "#Surgery_Date": "2003-05-01",
-  "#Surgery_ReportDiagnostic": "diagnostique"
-};
-
 var appointment = {
   "#Appointment_Nextappointment": "2010-01-01",
   "#Appointment_NextCenter": "Ramu"
-};
-
-var bill = {
-  "#Bill_Date": "2003-06-01",
-  "#Bill_consult_home_visit": 1,
-  "#Bill_other_Other_consultation_care": 15
-};
-
-var billTotal = {
-  "#total_calculated_raw": 165,
-  "#Bill_Sociallevel": 4,
-  "#percentage": "100%",
-  "#total_calculated_asked": 165
-};
-
-var bill2 = {
-  "#Bill_Date": "2003-06-01",
-  "#Bill_consult_home_visit": 1,
-  "#Bill_other_Other_consultation_care": 15
-};
-
-var bill2Total = {
-  "#total_calculated_raw": 165,
-  "#Bill_Sociallevel": 4,
-  "#percentage": "100%",
-  "#total_calculated_asked": 165
 };
 
 module.exports = {
@@ -85,7 +35,10 @@ module.exports = {
       // Add a ricket consultation
       .myClick("#button_add")
       .myClick("#add_ricket_consult")
-      .myForm("#fileForm", ricket_consult, "#topsubmenu #button_save")
+      .myForm("#fileForm", {
+        "#Date": "2003-01-01",
+        "#Weightkg": "13"
+      }, "#topsubmenu #button_save")
       ;
     nb++;
   },
@@ -95,12 +48,19 @@ module.exports = {
       // Add a non-ricket consultation
       .myClick("#button_add")
       .myClick("#add_other_consult")
-      .myForm("#fileForm", other_consult, "#topsubmenu #button_save")
+      .myForm("#fileForm", {
+        "#Date": "2003-02-01",
+        "#Weightkg": "13"
+      }, "#topsubmenu #button_save")
       ;
     nb++;
   },
 
   "add a picture": function(client) {
+    var picture = {
+      "#Picture_Date": "2003-01-02"
+    };
+
     client
       // Add a picture
       .myClick("#button_add")
@@ -114,11 +74,13 @@ module.exports = {
   },
 
   "add a club foot": function(client) {
-      // Add a clubfoot
     client
       .myClick("#button_add")
       .myClick("#add_clubfoot")
-      .myForm("#fileForm", clubfoot, "#topsubmenu #button_save")
+      .myForm("#fileForm", {
+        "#Date": "2003-04-01",
+        "#Weightkg": "13"
+      }, "#topsubmenu #button_save")
       ;
     nb++;
   },
@@ -128,7 +90,10 @@ module.exports = {
       // Add a surgery
       .myClick("#button_add")
       .myClick("#add_surgery")
-      .myForm("#fileForm", surgery, "#topsubmenu #button_save")
+      .myForm("#fileForm", {
+        "#Surgery_Date": "2003-05-01",
+        "#Surgery_ReportDiagnostic": "diagnostique"
+      }, "#topsubmenu #button_save")
       ;
     nb++;
   },
@@ -144,6 +109,53 @@ module.exports = {
   },
 
   "add a bill": function(client) {
+    var bill = {
+      "#Bill_Date": "2003-06-01",
+      "#Bill_consult_home_visit": 1,
+      "#Bill_other_Other_consultation_care": 15
+    };
+
+    var billTotal = {
+      "#total_calculated_raw": 165,
+      "#Bill_Sociallevel": 4,
+      "#percentage": "100%",
+      "#total_calculated_asked": 165
+    };
+
+    client
+      // Add a bill
+      .myClick("#button_add")
+      .myClick("#add_bill")
+
+      .myFormFillIn("#fileForm", bill)
+      .myFormCheck("#fileForm", billTotal)
+      .assert.elementNotPresent("#Bill_other_Other_plaster")
+
+      .myClick("#topsubmenu #button_save")
+      .myFormCheck("#fileForm", bill)
+      .myFormCheck("#fileForm", billTotal)
+      .assert.elementNotPresent("#Bill_other_Other_plaster")
+      ;
+    nb++;
+  },
+
+  "add a bill 2": function(client) {
+    var bill = {
+      "#Bill_Date": "2003-06-01",
+      "#Bill_consult_home_visit": 1,
+      "#Bill_other_Other_consultation_care": 15,
+      "#Bill_sl_familySalary": 3000,
+      "#Bill_sl_numberOfHouseholdMembers": 5
+    };
+
+    var billTotal = {
+      "#total_calculated_raw": 165,
+      "#salary_ratio": 600,
+      "#Bill_Sociallevel": 2,
+      "#percentage": "30%",
+      "#total_calculated_asked": (165 * 0.3)
+    };
+
     client
       // Add a bill
       .myClick("#button_add")
