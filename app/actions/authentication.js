@@ -34,7 +34,7 @@ export function loginCheck() {
       dispatch.bind(catalog.CONNECTION_AUTH_FAILED, error);
       goThere("/login");
     })
-    .myFinallyDone(function(data) {
+    .then(function(data) {
       dispatch(catalog.STATE_READY);
       return data;
     });
