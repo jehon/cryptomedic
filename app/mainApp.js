@@ -187,10 +187,8 @@ var mainApp = angular.module('app_main', [ 'ngRoute' ])
             };
 
             reader.onload = function(e) {
-            // console.log('reader loaded');
               img.src = e.target.result;
 
-            //var canvas = document.createElement('canvas');
               img.onload = function() {
                 var canvas = document.getElementById('preview');
                 var ctx = canvas.getContext('2d');
@@ -199,7 +197,7 @@ var mainApp = angular.module('app_main', [ 'ngRoute' ])
                 var h = img.naturalHeight;
                 var w = img.naturalWidth;
 
-              // Resize the image
+                // Resize the image
                 var MAX_SIZE = 300*1024;
                 if (h * w > MAX_SIZE) {
                   schrink = Math.sqrt(h * w / MAX_SIZE);
@@ -207,13 +205,13 @@ var mainApp = angular.module('app_main', [ 'ngRoute' ])
                   h = h / schrink;
                 }
 
-              // Adapt the canvas
+                // Adapt the canvas
                 canvas.width = w;
                 canvas.height = h;
                 canvas.style.width = w;
                 canvas.style.height = h;
 
-              // Add the image to the canvas
+                // Add the image to the canvas
                 ctx.drawImage(img, 0, 0, w, h);
                 canvas.style.display = 'block';
 
@@ -255,7 +253,6 @@ mainApp.controller('ctrl', [ '$scope', function($scope) {
   $scope.application  = application;
   $scope.calculations = calculations;
   $scope.template     = template;
-
 
   $scope.appStateStore = store.getState();
   store.subscribe(function() {
@@ -335,7 +332,6 @@ mainApp.controller('ctrl', [ '$scope', function($scope) {
     if (!data.seconds) {
       data.seconds = 8;
     }
-    // data = jQuery.extend({}, { level: 'success', text: 'Error!', seconds: 8 }, data);
     var t = new Date();
     data.timeout = t.setSeconds(t.getSeconds() + data.seconds);
     $scope.messages.push(data);

@@ -5,8 +5,6 @@
 
 let remoteTarget = require(__dirname + '/../../bin/lib/vagrantHttpPort');
 let selenium = require('selenium-server');
-// console.log("remote target ", remoteTarget);
-// console.log("selenium path ", selenium.path);
 
 module.exports = {
   "src_folders" : [ "tests" ],
