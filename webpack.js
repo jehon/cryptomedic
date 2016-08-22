@@ -134,7 +134,7 @@ var config = {
       caches: {
         main: [].concat(unmanaged).concat([ ':rest:' ]),
         additionnal: [],
-        optonal: []
+        optional: []
       },
       scope: '/offline/',
       // // relativePaths: true,
