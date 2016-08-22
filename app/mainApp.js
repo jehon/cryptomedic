@@ -350,7 +350,7 @@ mainApp.controller('ctrl', [ '$scope', function($scope) {
     }
   });
 
-  $scope.doCheckLogin();
+  loginCheck();
 }]);
 
 mainApp.controller('ctrl_allgraphics',      ctrl_allgraphics);
