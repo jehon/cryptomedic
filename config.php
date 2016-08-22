@@ -14,8 +14,8 @@ $myconfig = [
     'code'       => 'secure_code',
     'token'      => 'secure_token'
   ],
-  'debug'        => true,
-  'developpement_environnement' => true,
+  'debug'        => false,
+  'developpement_environnement' => false,
   'randomString' => str_pad("random script ", 256, "abcdefghijklmnopqrstuvwxyz"),
   'folders' => [
     # A pointer to this folder
