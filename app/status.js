@@ -13,32 +13,34 @@ import selectFile               from 'actions/selectFile';
 import { DataMissingException } from 'helpers/exceptions';
 import { ApplicationException } from 'helpers/exceptions';
 
-function goOffline() {
-  let offline = require('offline-plugin/runtime');
+import sw                       from 'service-worker-registration';
 
-  // https://github.com/NekR/offline-plugin/blob/master/docs/updates.md
-  offline.install({
-    onInstalled: () => {
-      console.log('[SW] Event:', 'onInstalled');
-    },
-    onUpdating: () => {
-      console.log('[SW] Event:', 'onUpdating');
-    },
-    onUpdateReady: () => {
-      console.log('[SW] Event:', 'onUpdateReady');
-      // Tells to new [SW] to take control immediately
-      offline.applyUpdate();
-    },
-    onUpdated: () => {
-      console.log('[SW] Event:', 'onUpdated');
-      // Reload the webpage to load into the new version
-      window.location.reload();
-    },
-    onUpdateFailed: () => {
-      console.log('[SW] Event:', 'onUpdateFailed');
-    }
-  });
-}
+// function goOffline() {
+//   let offline = require('offline-plugin/runtime');
+
+//   // https://github.com/NekR/offline-plugin/blob/master/docs/updates.md
+//   offline.install({
+//     onInstalled: () => {
+//       console.log('[SW] Event:', 'onInstalled');
+//     },
+//     onUpdating: () => {
+//       console.log('[SW] Event:', 'onUpdating');
+//     },
+//     onUpdateReady: () => {
+//       console.log('[SW] Event:', 'onUpdateReady');
+//       // Tells to new [SW] to take control immediately
+//       offline.applyUpdate();
+//     },
+//     onUpdated: () => {
+//       console.log('[SW] Event:', 'onUpdated');
+//       // Reload the webpage to load into the new version
+//       window.location.reload();
+//     },
+//     onUpdateFailed: () => {
+//       console.log('[SW] Event:', 'onUpdateFailed');
+//     }
+//   });
+// }
 
 // if (location.pathname.split('/')[1] == 'offline') {
 //   console.log('[SW] Detection: offline mode, activating plugin');
@@ -51,7 +53,8 @@ let db = new Database();
 
 export default function() {
   return {
-    offline: goOffline,
+    sw: sw,
+    // offline: goOffline,
     store: store,
     dispatch: dispatch,
     catalog: catalog,
