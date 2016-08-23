@@ -13,20 +13,45 @@ import selectFile               from 'actions/selectFile';
 import { DataMissingException } from 'helpers/exceptions';
 import { ApplicationException } from 'helpers/exceptions';
 
-let offline = require('offline-plugin/runtime');
+function goOffline() {
+  let offline = require('offline-plugin/runtime');
 
-if (location.pathname.split('/')[1] == 'offline') {
-  console.log('SW-OFFLINE: Detecting offline mode, activating plugin');
-  offline.install(null,
-    function(data) { console.log('SW-OFFLINE: activated', data); },
-    function(data) { console.error('SW-OFFLINE: problem', data); }
-  );
+  // https://github.com/NekR/offline-plugin/blob/master/docs/updates.md
+  offline.install({
+    onInstalled: () => {
+      console.log('[SW] Event:', 'onInstalled');
+    },
+    onUpdating: () => {
+      console.log('[SW] Event:', 'onUpdating');
+    },
+    onUpdateReady: () => {
+      console.log('[SW] Event:', 'onUpdateReady');
+      // Tells to new [SW] to take control immediately
+      offline.applyUpdate();
+    },
+    onUpdated: () => {
+      console.log('[SW] Event:', 'onUpdated');
+      // Reload the webpage to load into the new version
+      window.location.reload();
+    },
+    onUpdateFailed: () => {
+      console.log('[SW] Event:', 'onUpdateFailed');
+    }
+  });
 }
+
+// if (location.pathname.split('/')[1] == 'offline') {
+//   console.log('[SW] Detection: offline mode, activating plugin');
+//   goOffline();
+// } else {
+//   console.log('[SW] Detection: online mode');
+// }
 
 let db = new Database();
 
 export default function() {
   return {
+    offline: goOffline,
     store: store,
     dispatch: dispatch,
     catalog: catalog,
