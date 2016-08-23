@@ -1,6 +1,7 @@
 <?php
 
 global $myconfig;
+define("MY_ENVIRONNEMENT_PRODUCTION", "production");
 
 $myconfig = [
   'database' => [
@@ -14,8 +15,7 @@ $myconfig = [
     'code'       => 'secure_code',
     'token'      => 'secure_token'
   ],
-  'debug'        => true,
-  'developpement_environnement' => true,
+  'environnement' => constant('MY_ENVIRONNEMENT_PRODUCTION'),
   'randomString' => str_pad("random script ", 256, "abcdefghijklmnopqrstuvwxyz"),
   'folders' => [
     # A pointer to this folder
