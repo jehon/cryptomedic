@@ -2,18 +2,16 @@
 /* eslint no-console: off */
 
 var path = require('path');
-var webpack = require('webpack');
 var glob = require('glob');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var recursiveReadSync = require('recursive-readdir-sync');
-var OfflinePlugin = require('offline-plugin');
+// var OfflinePlugin = require('offline-plugin');
 var remoteTarget = require(__dirname + '/bin/lib/vagrantHttpPort');
 
-
 // Add files not managed by webpack
-var unmanaged = []
-  .concat(glob('static/**', { sync: true, cwd: __dirname + '/www/' }))
-  ;
+// var unmanaged = []
+//   .concat(glob('static/**', { sync: true, cwd: __dirname + '/www/' }))
+//   ;
 
 // Global variables
 // https://webpack.github.io/docs/library-and-externals.html
@@ -58,14 +56,14 @@ var config = {
   },
   output: {
     path: path.join(__dirname, 'www/build/'),
-    // filename: 'bundle.js',
     filename: 'bundle-[hash].js',
     chunkFilename: '[id].[hash].bundle.js',
+    publicPath: '/build/',
 
     // @see https://webpack.github.io/docs/library-and-externals.html
     libraryTarget: 'var',
     library: 'appState',
-    pathinfo: true // Not in production
+    pathinfo: false // Not in production
   },
   module: {
     loaders: [
@@ -127,25 +125,23 @@ var config = {
       template: 'app/index.html', // Load a custom template
       inject: 'head' // Inject all scripts into the body
     }),
-    // new webpack.ProvidePlugin({
-    //   'angular': 'angular'
-    // }),
-    new OfflinePlugin({
-      caches: {
-        main: [].concat(unmanaged).concat([ ':rest:' ]),
-        additionnal: [],
-        optional: []
-      },
-      scope: '/offline/',
-      // // relativePaths: true,
-      // updateStragegy: 'all', // -> changed
-      externals: unmanaged,
-      excludes: [ '/api/*' ],
-      ServiceWorker: {
-        output: 'sw-offline.js'
-      },
-      AppCache: false
-    })
+    // new OfflinePlugin({
+    //   caches: {
+    //     main: [].concat(unmanaged).concat([ ':rest:' ]),
+    //     additionnal: [],
+    //     optional: []
+    //   },
+    //   // publicPath: '/',
+    //   relativePaths: true,
+    //   // updateStragegy: 'all', // -> changed
+    //   externals: unmanaged,
+    //   excludes: [ '/api/*' ],
+    //   ServiceWorker: {
+    //     events: true, // https://github.com/NekR/offline-plugin/blob/master/docs/updates.md
+    //     output: __dirname + '/www/sw-offline.js'
+    //   },
+    //   AppCache: false
+    // })
   ]
 };
 
