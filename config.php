@@ -1,7 +1,9 @@
 <?php
 
 global $myconfig;
-define("MY_ENVIRONNEMENT_PRODUCTION", "production");
+if (!defined("MY_ENVIRONNEMENT_PRODUCTION")) {
+  define("MY_ENVIRONNEMENT_PRODUCTION", "production");
+}
 
 $myconfig = [
   'database' => [
