@@ -28,7 +28,7 @@ return [
 	|
 	*/
 
-	'debug' => env('APP_DEBUG', $myconfig["debug"]),
+	'debug' => env('APP_DEBUG', $myconfig["environment"] != constant("MY_ENVIRONNEMENT_PRODUCTION")),
 
 	/*
 	|--------------------------------------------------------------------------
