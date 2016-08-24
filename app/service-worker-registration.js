@@ -18,7 +18,7 @@
 
 /* eslint-env browser */
 'use strict';
-export default function sw() {
+export default function activateCache() {
   if ('serviceWorker' in navigator) {
     // Your service-worker.js *must* be located at the top-level directory relative to your site.
     // It won't be able to control pages unless it's located at the same level or higher than them.
@@ -58,3 +58,4 @@ export default function sw() {
     });
   }
 }
+

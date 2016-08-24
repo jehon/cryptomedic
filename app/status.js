@@ -13,8 +13,6 @@ import selectFile               from 'actions/selectFile';
 import { DataMissingException } from 'helpers/exceptions';
 import { ApplicationException } from 'helpers/exceptions';
 
-import sw                       from 'service-worker-registration';
-
 // function goOffline() {
 //   let offline = require('offline-plugin/runtime');
 
@@ -48,13 +46,13 @@ import sw                       from 'service-worker-registration';
 // } else {
 //   console.log('[SW] Detection: online mode');
 // }
+import activateCache            from 'service-worker-registration';
 
 let db = new Database();
 
 export default function() {
   return {
-    sw: sw,
-    // offline: goOffline,
+    activateCache: activateCache,
     store: store,
     dispatch: dispatch,
     catalog: catalog,
