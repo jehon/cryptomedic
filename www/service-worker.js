@@ -30,8 +30,6 @@ var cacheName = 'sw-precache-v2-sw-precache-' + (self.registration ? self.regist
 
 var ignoreUrlParametersMatching = [/^utm_/];
 
-
-
 var addDirectoryIndex = function (originalUrl, index) {
     var url = new URL(originalUrl);
     if (url.pathname.slice(-1) === '/') {
