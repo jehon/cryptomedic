@@ -132,8 +132,8 @@ class AuthController extends Controller {
   public function postMylogin() {
     $credentials = Request::only('username', 'password');
     global $myconfig;
-    if (array_key_exists('developpement_environnement', $myconfig) && $myconfig['developpement_environnement']) {
-    // if (\getenv('BYPASS_AUTHENTICATION')) {
+    if ($myconfig['environment'] != constant('MY_ENVIRONMENT_PRODUCTION')) {
+      error_log("environnemnt bypass authentication for " . $credentials['username']);
       $user = User::where("username", $credentials['username'])->first();
       Auth::login($user);
       return $this->getSettings();
