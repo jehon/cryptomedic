@@ -6,9 +6,8 @@
 
 - Test e2e: check "examiner name" initialization
 - Test e2e: check "center" initialization
-- Test e2e: test unlocking files
 
-- Bug: statistical report is not working
+- Test e2e: test unlocking files
 
 # Later
 - upload new price
