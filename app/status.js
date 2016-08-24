@@ -40,15 +40,15 @@ import { ApplicationException } from 'helpers/exceptions';
 //   });
 // }
 
-// if (location.pathname.split('/')[1] == 'offline') {
-//   console.log('[SW] Detection: offline mode, activating plugin');
-//   goOffline();
-// } else {
-//   console.log('[SW] Detection: online mode');
-// }
 import activateCache            from 'service-worker-registration';
 
 let db = new Database();
+
+if (location.pathname.split('/')[1] != 'online') {
+  console.log('[SW] Detection: offline mode, activating plugin');
+} else {
+  console.log('[SW] Detection: online mode');
+}
 
 export default function() {
   return {
