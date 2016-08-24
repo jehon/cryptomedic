@@ -13,33 +13,6 @@ import selectFile               from 'actions/selectFile';
 import { DataMissingException } from 'helpers/exceptions';
 import { ApplicationException } from 'helpers/exceptions';
 
-// function goOffline() {
-//   let offline = require('offline-plugin/runtime');
-
-//   // https://github.com/NekR/offline-plugin/blob/master/docs/updates.md
-//   offline.install({
-//     onInstalled: () => {
-//       console.log('[SW] Event:', 'onInstalled');
-//     },
-//     onUpdating: () => {
-//       console.log('[SW] Event:', 'onUpdating');
-//     },
-//     onUpdateReady: () => {
-//       console.log('[SW] Event:', 'onUpdateReady');
-//       // Tells to new [SW] to take control immediately
-//       offline.applyUpdate();
-//     },
-//     onUpdated: () => {
-//       console.log('[SW] Event:', 'onUpdated');
-//       // Reload the webpage to load into the new version
-//       window.location.reload();
-//     },
-//     onUpdateFailed: () => {
-//       console.log('[SW] Event:', 'onUpdateFailed');
-//     }
-//   });
-// }
-
 import activateCache            from 'service-worker-registration';
 
 let db = new Database();
