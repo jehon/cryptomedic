@@ -19,6 +19,7 @@ let db = new Database();
 
 if (location.pathname.split('/')[1] != 'online') {
   console.log('[SW] Detection: offline mode, activating plugin');
+  activateCache();
 } else {
   console.log('[SW] Detection: online mode');
 }
