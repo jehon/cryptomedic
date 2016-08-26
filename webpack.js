@@ -5,13 +5,7 @@ var path = require('path');
 var glob = require('glob');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var recursiveReadSync = require('recursive-readdir-sync');
-// var OfflinePlugin = require('offline-plugin');
 var remoteTarget = require(__dirname + '/bin/lib/vagrantHttpPort');
-
-// Add files not managed by webpack
-// var unmanaged = []
-//   .concat(glob('static/**', { sync: true, cwd: __dirname + '/www/' }))
-//   ;
 
 // Global variables
 // https://webpack.github.io/docs/library-and-externals.html
@@ -123,25 +117,8 @@ var config = {
   plugins: [
     new HtmlWebpackPlugin({
       template: 'app/index.html', // Load a custom template
-      inject: 'head' // Inject all scripts into the body
-    }),
-    // new OfflinePlugin({
-    //   caches: {
-    //     main: [].concat(unmanaged).concat([ ':rest:' ]),
-    //     additionnal: [],
-    //     optional: []
-    //   },
-    //   // publicPath: '/',
-    //   relativePaths: true,
-    //   // updateStragegy: 'all', // -> changed
-    //   externals: unmanaged,
-    //   excludes: [ '/api/*' ],
-    //   ServiceWorker: {
-    //     events: true, // https://github.com/NekR/offline-plugin/blob/master/docs/updates.md
-    //     output: __dirname + '/www/sw-offline.js'
-    //   },
-    //   AppCache: false
-    // })
+      inject: 'head' // Inject all scripts into the head
+    })
   ]
 };
 
