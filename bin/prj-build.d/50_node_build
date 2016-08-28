@@ -5,5 +5,5 @@ set -e
 
 if [ -e package.json ]; then
   echo -e "\e[1m\e[45mNPM\e[0m"
-  node run build
+  npm run build
 fi
