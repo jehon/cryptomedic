@@ -23,6 +23,7 @@
     "babel-eslint": "5.*",
     "babel-loader": "5.*",
     "babel-runtime": "5.*",
+    "bower": "^1.7.9",
     "chromedriver": "latest",
     "css-loader": "latest",
     "eslint": "3.*",
@@ -57,6 +58,7 @@
     "svgo": "latest",
     "svgo-loader": "latest",
     "sw-precache": "^4.0.0",
+    "webcomponentsjs": "^1.0.2",
     "webpack": "latest",
     "webpack-dev-server": "latest",
     "worker-loader": "latest"
