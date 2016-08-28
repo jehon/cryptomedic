@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd /vagrant/www && \
+cd $PRJ_DIR/www && \
   node \
     /vagrant/node_modules/.bin/sw-precache \
     --static-file-globs=static/**          \
