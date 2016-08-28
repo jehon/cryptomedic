@@ -65,19 +65,5 @@
     "build": "webpack --config webpack.js -p",
     "dev-server": "node server.js",
     "dev-server-quiet": "node server.js | grep 'built\\|error\\|VALID'"
-  },
-  "xdev": {
-    "archiver": "latest",
-    "es6-promise": "^3.0.2",
-    "whatwg-fetch": "^0.10.1",
-    "redux-devtools": "^2.1.5",
-    "eslint-plugin-react": "latest",
-    "body-parser": "latest",
-    "es6-object-assign": "latest"
-  },
-  "x": {
-    "redux-persist": "latest",
-    "react": "^0.14.3",
-    "react-redux": "^4.0.0"
   }
 }
