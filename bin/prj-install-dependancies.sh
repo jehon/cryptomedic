@@ -12,12 +12,7 @@ set -e
 SCRIPT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 PRJ_DIR=$(dirname "$SCRIPT_DIR")
 
-
 cd "$PRJ_DIR"
-
-if [ -r "$PRJ_DIR"/prj-install-dependancies-custom.sh ]; then
-  "$PRJ_DIR"/prj-install-dependancies-custom.sh
-fi
 
 if [ -e package.json ]; then
   echo -e "\e[1m\e[45mNPM install\e[0m"
@@ -38,4 +33,5 @@ if [ -e composer.json ]; then
   composer.phar install
 fi
 
-echo -e "\e[1m\e[45mTerminated ok.\e[0m"
+# Run project custom files
+run-parts --regex="^[a-z0-9_.\-]+$" --report $PRJ_DIR/bin/prj-install-dependancies.d
