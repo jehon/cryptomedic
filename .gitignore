@@ -4,6 +4,7 @@
 /**/build/
 /**/logs/
 /**/node_modules/
+/**/bower_components/
 /**/tmp/
 /**/unused/
 /**/vendor/
@@ -25,3 +26,4 @@ commit.msg
 
 /www/drupal/sites/default/files/
 **/drupal/sites/default/files/
+
