@@ -1,0 +1,59 @@
+
+<dom-module name="my-dialog">
+  <template>
+    <style>
+      div {
+        color: blue;
+      }
+    </style>
+    <div>
+      Hi! My name is {{myName}}
+    </div>
+  </template>
+
+  <script>
+    // <link rel="import" href="/bower_components/paper-dialog/paper-dialog.html">
+
+    (function() {
+      console.log("hehehehe here we are !!!");
+
+      Polymer({
+        is: 'my-dialog',
+
+        properties: {
+          myName: {
+            type: String
+          }
+        },
+        // ready: function() {
+        //   this.textContent = 'Hi! My name is ' + this.myName;
+        // }
+
+        // listeners: {
+        //   'neon-animation-finish': '_onNeonAnimationFinish'
+        // },
+
+        // _renderOpened: function() {
+        //   this.cancelAnimation();
+        //   this.playAnimation('entry');
+        // },
+
+        // _renderClosed: function() {
+        //   this.cancelAnimation();
+        //   this.playAnimation('exit');
+        // },
+
+        // _onNeonAnimationFinish: function() {
+        //   if (this.opened) {
+        //     this._finishRenderOpened();
+        //   } else {
+        //     this._finishRenderClosed();
+        //   }
+        // }
+
+      });
+
+    })();
+
+  </script>
+</dom-module>
