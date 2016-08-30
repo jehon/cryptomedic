@@ -5,7 +5,6 @@
 # The script will look in each folder in tests/, and for each of theses, look for
 # phpunit.xml, karma.conf.js, nightwatch.js (see testDir())
 
-
 # Stop on error
 set -e
 
@@ -30,10 +29,6 @@ test_dir() {
   # Run project custom files
   run-parts --report $PRJ_DIR/bin/dev-test.d
 }
-
-if [ "$FRONT" != "" ]; then
-  myHeader "Running in FRONT mode - not using xvfb-run anymore"
-fi
 
 if [ "$1" ]; then
   myHeader "Test override to path $1"
