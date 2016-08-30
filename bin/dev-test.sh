@@ -26,15 +26,6 @@ myHeader() {
   echo -e "\e[0m"
 }
 
-mxvfb() {
-  if [ "$FRONT" = "" ]; then
-    # Run it in xvfb
-    $PRJ_DIR/bin/prj-xvfb-run.sh "$@"
-  else
-    # Run it live if FRONT is specified
-    "$@"
-  fi
-}
 test_dir() {
   # Run project custom files
   run-parts --report $PRJ_DIR/bin/dev-test.d
