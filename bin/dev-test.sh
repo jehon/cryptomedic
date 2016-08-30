@@ -5,7 +5,6 @@
 # The script will look in each folder in tests/, and for each of theses, look for
 # phpunit.xml, karma.conf.js, nightwatch.js (see testDir())
 
-
 # Stop on error
 set -e
 
@@ -26,72 +25,10 @@ myHeader() {
   echo -e "\e[0m"
 }
 
-mxvfb() {
-  if [ "$FRONT" = "" ]; then
-    # Run it in xvfb
-    $PRJ_DIR/bin/prj-xvfb-run.sh "$@"
-  else
-    # Run it live if FRONT is specified
-    "$@"
-  fi
-}
-
-testPHPUnit() {
-  N=`pwd`
-  N=`basename "$N"`
-  L="$1"
-  shift
-
-  myHeader "phpunit" "Testing $L"
-  $PRJ_DIR/vendor/bin/phpunit \
-      --coverage-html   "$PRJ_DIR/tmp/$N" \
-      --coverage-xml    "$PRJ_DIR/tmp/$N" \
-      "$@"
-}
-
-testJSUnit() {
-  L="$1"
-  shift
-
-  myHeader "karma" "Testing $L"
-  ARGS=""
-  # http://bahmutov.calepin.co/debugging-karma-unit-tests.html
-  if [ "$FRONT" ]; then
-    ARGS="--single-run=false --debug"
-  fi
-  mxvfb ../../node_modules/.bin/karma start --single-run $ARGS "$@"
-
-}
-
-testEnd2End() {
-  L="$1"
-  shift
-
-  myHeader "nightwatch" "Testing $L"
-  mxvfb node "$PRJ_DIR/node_modules/.bin/nightwatch" -e default "$@"
-}
-
 test_dir() {
-  if [ -r nightwatch.json ]; then
-    testEnd2End "$@"
-  fi
-
-  if [ -r nightwatch.conf.js ]; then
-    testEnd2End "$@"
-  fi
-
-  if [ -r karma.conf.js ]; then
-    testJSUnit "$@"
-  fi
-
-  if [ -r phpunit.xml ]; then
-    testPHPUnit "$@"
-  fi
+  # Run project custom files
+  run-parts --report $PRJ_DIR/bin/dev-test.d
 }
-
-if [ "$FRONT" != "" ]; then
-  myHeader "Running in FRONT mode - not using xvfb-run anymore"
-fi
 
 if [ "$1" ]; then
   myHeader "Test override to path $1"
@@ -107,11 +44,14 @@ else
   myHeader "Build the application"
   "$PRJ_DIR/bin/prj-build.sh"
 
+<<<<<<< HEAD
   if [ -d "$PRJ_DIR/www/build" ]; then
     myHeader "Cleaning old build"
     find "$PRJ_DIR/www/build/" -mindepth 1 -delete
   fi
 
+=======
+>>>>>>> 93ff7bc2eb85485d0ac840feee32d381b520a5cd
   # Test each api/* folder
   for V in "$PRJ_DIR"/www/api/* ; do
     N=`basename "$V"`
