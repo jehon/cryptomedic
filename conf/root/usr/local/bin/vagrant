@@ -5,7 +5,7 @@ cat <<-HELP
   This is a place holder to ease the running of script both inside and outside of the vagrant.
 
   It support the following options:
-  - port $port
+  - port --guest $port
     return $port
 
 HELP
@@ -14,7 +14,12 @@ fi
 
 case "$1" in
   "port")
-    echo "$2"
-    exit 0
+    case "$2" in
+      "--guest")
+        echo "$3"
+        exit 0
+    esac
     ;;
 esac
+
+echo "Command not understood"
