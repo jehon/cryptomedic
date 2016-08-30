@@ -1,6 +1,4 @@
 # Next steps
-- Offline: test that it works in offline mode...
-
 - Test e2e: appointment is shown on other screens too
 - Test e2e: statistical report
 
