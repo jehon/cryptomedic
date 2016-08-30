@@ -35,58 +35,9 @@ mxvfb() {
     "$@"
   fi
 }
-
-testPHPUnit() {
-  N=`pwd`
-  N=`basename "$N"`
-  L="$1"
-  shift
-
-  myHeader "phpunit" "Testing $L"
-  $PRJ_DIR/vendor/bin/phpunit \
-      --coverage-html   "$PRJ_DIR/tmp/$N" \
-      --coverage-xml    "$PRJ_DIR/tmp/$N" \
-      "$@"
-}
-
-testJSUnit() {
-  L="$1"
-  shift
-
-  myHeader "karma" "Testing $L"
-  ARGS=""
-  # http://bahmutov.calepin.co/debugging-karma-unit-tests.html
-  if [ "$FRONT" ]; then
-    ARGS="--single-run=false --debug"
-  fi
-  mxvfb ../../node_modules/.bin/karma start --single-run $ARGS "$@"
-
-}
-
-testEnd2End() {
-  L="$1"
-  shift
-
-  myHeader "nightwatch" "Testing $L"
-  mxvfb node "$PRJ_DIR/node_modules/.bin/nightwatch" -e default "$@"
-}
-
 test_dir() {
-  if [ -r nightwatch.json ]; then
-    testEnd2End "$@"
-  fi
-
-  if [ -r nightwatch.conf.js ]; then
-    testEnd2End "$@"
-  fi
-
-  if [ -r karma.conf.js ]; then
-    testJSUnit "$@"
-  fi
-
-  if [ -r phpunit.xml ]; then
-    testPHPUnit "$@"
-  fi
+  # Run project custom files
+  run-parts --report $PRJ_DIR/bin/dev-test.d
 }
 
 if [ "$FRONT" != "" ]; then
