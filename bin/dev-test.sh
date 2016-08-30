@@ -55,14 +55,8 @@ else
   myHeader "Reset the environnement"
   "$PRJ_DIR/bin/dev-reset.sh"
 
-  if [ -d "$PRJ_DIR/www/build" ]; then
-    myHeader "Cleaning old build"
-    find "$PRJ_DIR/www/build/" -mindepth 1 -delete
-  fi
-
-  myHeader "Rebuild for production"
-  find "$PRJ_DIR/www/build/" -mindepth 1 -delete
-  npm run build
+  myHeader "Build the application"
+  "$PRJ_DIR/bin/prj-build.sh"
 
   # Test each api/* folder
   for V in "$PRJ_DIR"/www/api/* ; do
