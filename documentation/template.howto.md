@@ -22,7 +22,11 @@ This script is used to reset the state of the application in the vagrant:
 - reset the database (see below)
 - reset the "live" folder
 
-## dev-test.sh
+## prj-build.sh (prj-build.d)
+Build up the application.
+This will wipe out the ./www/build folder, which is suppose to hold dynamically builded assets.
+
+## dev-test.sh (dev-test.d)
 This script will test the application. I will search through the /tests folder, and for each of the subfolder, if a configuration file is found, it run the tests accordingly:
 - nightwatch.json
 - nightwatch.conf.js
@@ -31,6 +35,9 @@ This script will test the application. I will search through the /tests folder, 
 
 ## conf/root
 Script in this place will be copied (by rsync) onto the root directory "/" of the vagrant, by dev-configure.d/01_install_root.sh script
+
+## Customize steps
+For each main script, there is a folder with scripts, cutom or not. You can add your scripts there, as soon as they are compatible with run-parts without arguments (ex. [a-zA-Z0-9]+). Take care that extensions are not authorized.
 
 # Database handling
 - dev-reset.sh
