@@ -44,14 +44,6 @@ else
   myHeader "Build the application"
   "$PRJ_DIR/bin/prj-build.sh"
 
-<<<<<<< HEAD
-  if [ -d "$PRJ_DIR/www/build" ]; then
-    myHeader "Cleaning old build"
-    find "$PRJ_DIR/www/build/" -mindepth 1 -delete
-  fi
-
-=======
->>>>>>> 93ff7bc2eb85485d0ac840feee32d381b520a5cd
   # Test each api/* folder
   for V in "$PRJ_DIR"/www/api/* ; do
     N=`basename "$V"`
