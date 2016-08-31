@@ -92,3 +92,5 @@ su vagrant -c $PRJ_DIR/bin/prj-install-dependancies.sh
 run-parts --regex="^[a-z0-9_.\-]+$" --report $PRJ_DIR/bin/dev-configure.d
 
 $PRJ_DIR/bin/dev-reset.sh
+
+$PRJ_DIR/bin/prj-build.sh
