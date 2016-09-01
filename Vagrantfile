@@ -42,4 +42,10 @@ Vagrant.configure(2) do |config|
 
   # Run our dev-configure.sh to configure anything
   config.vm.provision :shell, inline: "chmod +x /vagrant/bin/dev-configure.sh && /vagrant/bin/dev-configure.sh"
+
+  # Run our dev-reset.sh to configure anything
+  config.vm.provision :shell, inline: "chmod +x /vagrant/bin/dev-configure.sh && /vagrant/bin/dev-reset.sh"
+
+  # Run our dev-build.sh to configure anything
+  config.vm.provision :shell, inline: "chmod +x /vagrant/bin/dev-configure.sh && /vagrant/bin/dev-build.sh"
 end
