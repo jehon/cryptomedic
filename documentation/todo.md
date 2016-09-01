@@ -1,7 +1,7 @@
 # Next steps
-- Test e2e: appointment is shown on other screens too
 - Test e2e: statistical report
 
+- Test e2e: appointment is shown on other screens too
 - Test e2e: check "examiner name" initialization
 - Test e2e: check "center" initialization
 
