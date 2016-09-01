@@ -1,0 +1,132 @@
+<link rel="import" href="/bower_components/polymer/polymer.html">
+
+<link rel="import" href="/bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="/bower_components/paper-spinner-lite/paper-spinner-lite.html">
+<link rel="import" href="/bower_components/paper-icon-item/paper-icon-item.html">
+<link rel="import" href="/bower_components/paper-icon/paper-icon.html">
+
+<link rel="import" href="/bower_components/neon-animation/animations/scale-up-animation.html">
+<link rel="import" href="/bower_components/neon-animation/animations/fade-out-animation.html">
+
+<dom-module name="my-busy">
+  <template>
+    <style>
+      div[done] {
+        color: green;
+      }
+      div.done {
+        color: blue;
+      }
+      div.current {
+        color: red;
+      }
+    </style>
+    <paper-dialog
+          modal
+          entry-animation="scale-up-animation"
+          exit-animation="fade-out-animation"
+          position-target="body"
+          >
+      <h2>
+        <paper-spinner-lite></paper-spinner-lite>
+        Waiting for: [[finishedCount]] tasks on [[elements.length]]
+      </h2>
+      <template is="dom-repeat" items="[[elements]]">
+        <paper-icon-item>
+          <iron-icon icon="inbox" item-icon></iron-icon>
+          Inbox
+        </paper-icon-item>
+
+
+
+<!--
+
+<div role="listbox">
+  <paper-icon-item>
+    <iron-icon icon="inbox" item-icon></iron-icon>
+    Inbox
+  </paper-icon-item>
+  <paper-icon-item>
+    <iron-icon icon="star" item-icon></iron-icon>
+    Starred
+  </paper-icon-item>
+  <paper-icon-item>
+    <div class="avatar blue" item-icon></div>
+    Alphonso Engelking
+  </paper-icon-item>
+  <paper-icon-item>
+    <div class="avatar" item-icon></div>
+    Angela Decker
+  </paper-icon-item>
+</div>
+ -->
+
+        <div class='task' class$='{{item.done ? "done" : "current"}}' [[item.done]] >[[item.title]]</div>
+      </template>
+    </paper-dialog>
+  </template>
+
+  <script>
+
+    (function() {
+      Polymer({
+        is: 'my-busy',
+
+        // https://www.polymer-project.org/1.0/docs/devguide/properties
+        properties: {
+          title: {
+            type:               'String',
+            value:              "Busy"
+          },
+          elements: {
+            type:               'Array',
+            readOnly:           true,
+            value:              [ ]
+          },
+        },
+
+        add: function(element) {
+          this.push('elements', { title: element, done: false });
+          this.redraw();
+        },
+
+        done: function(title) {
+          for(var i in this.elements) {
+            if ((!this.elements[i].done) && (this.elements[i].title == title)) {
+                // do it only once...
+                this.elements[i].done = true;
+                this.redraw();
+                return ;
+              }
+            }
+        },
+
+        allDone: function() {
+          this.elements = [];
+          this.redraw();
+        },
+
+        redraw: function() {
+          this.finishedCount = 0;
+          for(var i in this.elements) {
+            if (this.elements[i].done) {
+              this.finishedCount++;
+            }
+          }
+
+          if (this.finishedCount == this.elements.length) {
+            this.elements = [];
+            this.$$('paper-dialog').close();
+          } else {
+            this.$$('paper-dialog').open();
+            this.$$("paper-dialog").fit();
+          }
+        },
+
+        ready: function() {
+          this.redraw();
+        }
+      });
+    })();
+  </script>
+</dom-module>
