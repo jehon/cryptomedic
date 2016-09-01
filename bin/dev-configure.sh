@@ -90,5 +90,3 @@ su vagrant -c $PRJ_DIR/bin/prj-install-dependancies.sh
 
 # Run project custom files
 run-parts --regex="^[a-z0-9_.\-]+$" --report $PRJ_DIR/bin/dev-configure.d
-
-$PRJ_DIR/bin/dev-reset.sh
