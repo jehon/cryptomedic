@@ -40,12 +40,18 @@ Vagrant.configure(2) do |config|
   # http://serverfault.com/questions/362903/how-do-you-set-a-locale-non-interactively-on-debian-ubuntu
   config.vm.provision :shell, inline: "locale-gen " + ENV['LC_ALL']
 
+  # Fix CR/LF
+  config.vm.provision :shell, inline: "find /vagrant/bin/ -type f -exec dos2unix \{\} \;"
+
+  # Fix executable flag
+  config.vm.provision :shell, inline: "find /vagrant/bin/ -type f -exec chmod +x \{\} \;"
+
   # Run our dev-configure.sh to configure anything
-  config.vm.provision :shell, inline: "chmod +x /vagrant/bin/dev-configure.sh && /vagrant/bin/dev-configure.sh"
+  config.vm.provision :shell, inline: "/vagrant/bin/dev-configure.sh"
 
   # Run our dev-reset.sh to configure anything
-  config.vm.provision :shell, inline: "chmod +x /vagrant/bin/dev-configure.sh && /vagrant/bin/dev-reset.sh"
+  config.vm.provision :shell, inline: "/vagrant/bin/dev-reset.sh"
 
-  # Run our dev-build.sh to configure anything
-  config.vm.provision :shell, inline: "chmod +x /vagrant/bin/dev-configure.sh && /vagrant/bin/dev-build.sh"
+  # Run our prj-build.sh to configure anything
+  config.vm.provision :shell, inline: "/vagrant/bin/prj-build.sh"
 end
