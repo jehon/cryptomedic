@@ -27,7 +27,6 @@ var config = {
       './node_modules/jquery-ui/themes/base/controlgroup.css',
       './node_modules/jquery-ui/themes/base/datepicker.css'
     ])
-    .concat(glob.sync('./app/css/*.css'))
     .concat([
       'expose?jQuery!./node_modules/jquery/dist/jquery.js',
       './node_modules/jquery-ui/ui/widgets/datepicker.js',
