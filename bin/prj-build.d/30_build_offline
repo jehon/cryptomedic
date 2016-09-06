@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 cd $PRJ_DIR/www && \
   node \
     /vagrant/node_modules/.bin/sw-precache  \
