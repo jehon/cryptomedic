@@ -43,7 +43,7 @@ Vagrant.configure(2) do |config|
   end
 
   # Run our dev-configure.sh to configure anything
-  config.vm.provision :shell, inline: "dos2unix /vagrant/bin/dev-configure.sh && chmod +x /vagrant/bin/dev-configure.sh && /vagrant/bin/dev-configure.sh"
+  config.vm.provision :shell, inline: "chmod +x /vagrant/bin/dev-configure.sh && /vagrant/bin/dev-configure.sh"
 
   # Run our dev-configure.sh to configure anything
   config.vm.provision :shell, inline: "/vagrant/bin/dev-configure.sh"
