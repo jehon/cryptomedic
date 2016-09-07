@@ -5,6 +5,10 @@ set -e
 
 PRJ_DIR="/vagrant"
 
+# Fix rights for Windows environnement
+find $PRJ_DIR/bin/ -exec chmod +x "{}" ";"
+find $PRJ_DIR/bin/ -exec dos2unix +x "{}" ";"
+
 # Give it to any sub-scripts
 export PRJ_DIR
 
