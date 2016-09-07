@@ -10,5 +10,3 @@ export PRJ_DIR=$PRJ_DIR
 chmod +x "$PRJ_DIR/bin/"/*
 
 cd $PRJ_DIR
-
-#dev-logs.sh
