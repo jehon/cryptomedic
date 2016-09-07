@@ -5,10 +5,6 @@ set -e
 
 PRJ_DIR="/vagrant"
 
-# Fix rights for Windows environnement
-find $PRJ_DIR/bin/ -exec chmod +x "{}" ";"
-find $PRJ_DIR/bin/ -exec dos2unix +x "{}" ";"
-
 # Give it to any sub-scripts
 export PRJ_DIR
 
@@ -45,6 +41,7 @@ if ([ "$1" != "offline" ]); then
     firefox         \
     nodejs          \
     ssmtp           \
+    dos2unix        \
   # end
 
   # Install composer (here since it is an install)
@@ -60,6 +57,10 @@ if ([ "$1" != "offline" ]); then
     apt-get install -f
   fi
 fi
+
+# Fix rights for Windows environnement
+find $PRJ_DIR/bin/ -exec chmod +x "{}" ";"
+find $PRJ_DIR/bin/ -exec dos2unix +x "{}" ";"
 
 # Make the Apache server run as Vagrant user:
 cat /etc/apache2/envvars \
