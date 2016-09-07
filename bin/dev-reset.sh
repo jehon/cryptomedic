@@ -64,4 +64,4 @@ rsync                       \
   "$PRJ_DIR/live/"
 
 # Run project custom files
-run-parts --regex="^[a-z0-9_.\-]+$" --report $PRJ_DIR/bin/dev-reset.d
+run-parts --report $PRJ_DIR/bin/dev-reset.d
