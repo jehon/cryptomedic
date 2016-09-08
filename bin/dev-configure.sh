@@ -41,6 +41,7 @@ if ([ "$1" != "offline" ]); then
     firefox         \
     nodejs          \
     ssmtp           \
+    dos2unix        \
   # end
 
   # Install composer (here since it is an install)
@@ -57,6 +58,10 @@ if ([ "$1" != "offline" ]); then
   fi
 fi
 
+# Fix rights for Windows environnement
+find $PRJ_DIR/bin/ -exec chmod +x "{}" ";"
+find $PRJ_DIR/bin/ -exec dos2unix "{}" ";"
+
 # Make the Apache server run as Vagrant user:
 cat /etc/apache2/envvars \
   | grep -v APACHE_RUN_USER \
@@ -70,7 +75,6 @@ php5enmod mcrypt
 # Enable apache modules
 a2enmod  rewrite ssl
 a2enmod  proxy_http
-a2ensite default-ssl
 
 # Configure phpmyadmin (fix missing preference tables in normal install) (still usefull on 2016-07-20)
 cat /usr/share/doc/phpmyadmin/examples/create_tables.sql.gz | gunzip | mysql
@@ -89,4 +93,4 @@ fi
 su vagrant -c $PRJ_DIR/bin/prj-install-dependancies.sh
 
 # Run project custom files
-run-parts --regex="^[a-z0-9_.\-]+$" --report $PRJ_DIR/bin/dev-configure.d
+run-parts --report $PRJ_DIR/bin/dev-configure.d
