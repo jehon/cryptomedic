@@ -1,3 +1,4 @@
 #!/bin/bash
+set -e
 
-start mailhog
+service mailhog start || true
