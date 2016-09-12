@@ -2,7 +2,7 @@
 /* eslint no-console: off */
 
 var path = require('path');
-var glob = require('glob');
+// var glob = require('glob');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var recursiveReadSync = require('recursive-readdir-sync');
 var remoteTarget = require(__dirname + '/bin/lib/vagrantHttpPort');
@@ -25,9 +25,8 @@ var config = {
       './node_modules/jquery-ui/themes/base/core.css',
       './node_modules/jquery-ui/themes/base/theme.css',
       './node_modules/jquery-ui/themes/base/controlgroup.css',
-      './node_modules/jquery-ui/themes/base/datepicker.css'
-    ])
-    .concat([
+      './node_modules/jquery-ui/themes/base/datepicker.css',
+
       'expose?jQuery!./node_modules/jquery/dist/jquery.js',
       './node_modules/jquery-ui/ui/widgets/datepicker.js',
       './node_modules/html2canvas/dist/html2canvas.js',
