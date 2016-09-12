@@ -34,4 +34,4 @@ if [ -e composer.json ]; then
 fi
 
 # Run project custom files
-run-parts --regex="^[a-z0-9_.\-]+$" --report $PRJ_DIR/bin/prj-build.d
+run-parts --report $PRJ_DIR/bin/prj-install-dependancies.d
