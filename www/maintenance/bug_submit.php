@@ -1,22 +1,32 @@
 <?php
 
-	require_once(__DIR__ . "/../vendor/autoload.php");
+	require_once(__DIR__ . "/../../vendor/autoload.php");
 
-	// require(__DIR__ . "/../config.php");
-  // global $myconfig;
+	function getParameter($name, $default = null) {
+		if (array_key_exists($name, $_REQUEST)) {
+			return $_REQUEST[$name];
+		} else {
+			if ($default === null) {
+				throw new Exception("Could not get key $name");
+			} else {
+				return $default;
+			}
+		}
+	}
 
-	// \Jehon\Maintenance\TryCatch::run();
+	$bug = [];
+	$bug['url']                = getParameter("url");
+	$bug['username']           = getParameter("username");
+	$bug['email']              = getParameter("email");
+	$bug['description']        = getParameter("description");
+	$bug['browser_useragent']  = getParameter("browser_useragent");
+	$bug['browser_state']      = getParameter("browser_state");
+	$bug['browser_console']    = getParameter("browser_console");
+	$bug['screenshot']         = getParameter("screenshot");
 
-	// $db = new \Jehon\Maintenance\Database(
-	//  	"mysql:host=" . $myconfig['database']['host'] . ";dbname=" . $myconfig['database']['schema'],
-	// 	$myconfig['database']['username'],
-	// 	$myconfig['database']['password'],
-	// 	[ PDO::MYSQL_ATTR_INIT_COMMAND  => "SET CHARACTER SET 'utf8'" ]
-	// );
+var_dump($bug);
 
-	// \Jehon\Maintenance\BugReporting::record($db, "http://www.cryptomedic.org/cryptomedic/maintenance/bug_view.php");
-
-	require 'PHPMailerAutoload.php';
+	use \PHPMailer;
 
 	$mail = new PHPMailer();
 
@@ -35,23 +45,63 @@
 	$mail->setFrom('noreply@cryptomedic.org', 'Bug report');
 	$mail->addAddress('marielineetjean+cryptomedic@gmail.com', 'Cryptomedic Maintainer');
 	// $mail->addReplyTo('info@example.com', 'Information');
-	// $mail->addCC('cc@example.com');
+	// $mail->addCC($_REQUEST['email']);
 
 	// $mail->addAttachment('/var/tmp/file.tar.gz');         // Add attachments
 	// $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    // Optional name
 	$mail->isHTML(true);                                  // Set email format to HTML
 
 	$mail->Subject = 'Bug report';
-	$mail->Body    = 'This is the HTML message body <b>in bold!</b>'
-  								// . 'Your <b>HTML</b> with an embedded Image: <img src="cid:my-attach"> Here is an image!'
-  								;
+	$mail->Body    = <<<EOMAIL
+		<table>
+				<cols>
+					<col width='200px'/>
+					<col/>
+				</cols>
+				<tr>
+					<td>URL</td>
+					<td>{$bug['url']}</td>
+				</tr>
+				<tr>
+					<td>Username</td>
+					<td>${bug['username']}</td>
+				</tr>
+				<tr>
+					<td>Email</td>
+					<td>${bug['email']}</td>
+				</tr>
+				<tr>
+					<td>Description</td>
+					<td><pre>${bug['description']}</pre></td>
+				</tr>
+				<tr>
+					<td>Browser User-Agent</td>
+					<td>${bug['browser_useragent']}</td>
+				</tr>
+				<tr>
+					<td>Browser Console</td>
+					<td>
+					</td>
+				</tr>
+				<tr>
+					<td>Screenshot</td>
+					<td>
+				</td>
+				</tr>
+				<tr>
+					<td>Browser State</td>
+					<td>
+					</td>
+				</tr>
+			</table>
+EOMAIL;
 
   // $mail->AddEmbeddedImage("rocks.png", "my-attach", "rocks.png");
   // $mail->AddAttachment('something.zip'); // this is a regular attachment (Not inline)
 
-	// if(!$mail->send()) {
-	//     echo 'Message could not be sent.';
-	//     echo 'Mailer Error: ' . $mail->ErrorInfo;
-	// } else {
-	//     echo 'Message has been sent';
-	// }
+	if(!$mail->send()) {
+	    echo 'Message could not be sent.';
+	    echo 'Mailer Error: ' . $mail->ErrorInfo;
+	} else {
+	    echo 'Message has been sent';
+	}
