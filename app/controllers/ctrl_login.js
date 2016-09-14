@@ -1,7 +1,6 @@
 import catalog         from 'reducers/catalog';
 import dispatch        from 'reducers/dispatch';
 import { login, logout } from 'actions/authentication';
-import goThere         from 'helpers/goThere';
 
 function ctrl_login($scope) {
   dispatch(catalog.DATABASE_DOWNLOADED);
