@@ -7,9 +7,7 @@ module.exports = (function() {
   // Public module:
   return function(client) {
 
-    // Each action is written as a separate method which must return the browser
-    // object in order to be able to be queued
-    this.authenticate = function(login) {
+    this.authenticate_fillIn = function(login) {
       if (!login) {
         throw new Error('Cryptomedic: Authenticate expect parameter 1 to be the login');
       }
@@ -25,7 +23,7 @@ module.exports = (function() {
       //   }
       // } catch (ex) {}
 
-      client.init()
+      return client.init()
         .waitForElementVisible('body')
         .assert.title('Cryptomedic')
         .waitForElementVisible('#login_password')
@@ -33,7 +31,16 @@ module.exports = (function() {
         .setValue('#login_password', password)
         .pause(100)
         .myClick('button#login_go')
-        .pause(100)
+        .pause(100);
+    };
+
+    // Each action is written as a separate method which must return the browser
+    // object in order to be able to be queued
+    this.authenticate = function(login) {
+      this
+        .authenticate_fillIn(login);
+
+      client
         .waitForElementPresent('#login_loggedusername')
         .assert.containsText('#login_loggedusername', login)
         .assert.title('Cryptomedic')
