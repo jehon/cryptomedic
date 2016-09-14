@@ -135,6 +135,9 @@ class AuthController extends Controller {
     if ($myconfig['environment'] != constant('MY_ENVIRONMENT_PRODUCTION')) {
       error_log("environnemnt bypass authentication for " . $credentials['username']);
       $user = User::where("username", $credentials['username'])->first();
+      if (!$user) {
+        return abort(406, "Invalid credentials");
+      }
       Auth::login($user);
       return $this->getSettings();
     }
