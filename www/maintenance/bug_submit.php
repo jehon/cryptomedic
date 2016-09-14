@@ -24,8 +24,6 @@
 	$bug['browser_console']    = getParameter("browser_console");
 	$bug['screenshot']         = getParameter("screenshot");
 
-var_dump($bug);
-
 	use \PHPMailer;
 
 	$mail = new PHPMailer();
@@ -53,6 +51,15 @@ var_dump($bug);
 
 	$mail->Subject = 'Bug report';
 	$mail->Body    = <<<EOMAIL
+	  <style>
+	  	table {
+    		border-collapse: collapse;
+			}
+
+			table, th, td {
+			    border: 1px solid black;
+			}
+	  </style>
 		<table>
 				<cols>
 					<col width='200px'/>
@@ -79,24 +86,27 @@ var_dump($bug);
 					<td>${bug['browser_useragent']}</td>
 				</tr>
 				<tr>
-					<td>Browser Console</td>
-					<td>
-					</td>
-				</tr>
-				<tr>
 					<td>Screenshot</td>
 					<td>
-				</td>
-				</tr>
-				<tr>
-					<td>Browser State</td>
-					<td>
-					</td>
+						<img src='${bug['screenshot']}'>
+  				</td>
 				</tr>
 			</table>
 EOMAIL;
 
-  // $mail->AddEmbeddedImage("rocks.png", "my-attach", "rocks.png");
+	$mail->AddStringAttachment($bug['browser_state'], "browser_state.json");
+	$mail->AddStringAttachment($bug['browser_console'], "browser_console.json");
+
+
+	$img = $_REQUEST['screenshot'];
+	$img = str_replace('data:image/png;base64,', '', $img);
+	$img = str_replace(' ', '+', $img);
+	$fileData = base64_decode($img);
+	$mail->AddStringAttachment($fileData, "screenshot.png");
+
+ 	// $bug['screenshot_raw']     = base64_decode(str_replace(' ', '+', $bug['screenshot']));
+
+  // $mail->AddEmbeddedImage("screenshot.png", "my-attach", "rocks.png");
   // $mail->AddAttachment('something.zip'); // this is a regular attachment (Not inline)
 
 	if(!$mail->send()) {
