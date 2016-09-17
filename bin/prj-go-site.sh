@@ -29,3 +29,5 @@ PRJ_DIR=$(dirname "$SCRIPT_DIR")
 # - what if www folder is named otherwise above?
 # - how to make configuration of this?
 # - have some hooks global, per site? (ex: drupal update.php or drush import)
+# Run project custom files
+run-parts --report $PRJ_DIR/bin/prj-go-site.d
