@@ -56,6 +56,11 @@ if (isset($argc)) {
         throw new Exception("Path not found: " . $path);
       }
     }
-    echo $array;
+    if (is_array($array)) {
+      # If we have an array, then display the various keys
+      echo implode(array_keys($array), "\n"). "\n";
+    } else {
+      echo $array;
+    }
   }
 }
