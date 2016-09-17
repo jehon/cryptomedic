@@ -59,5 +59,11 @@ if (isset($argc)) {
       }
       echo $array;
     }
+    if (is_array($array)) {
+      # If we have an array, then display the various keys
+      echo implode(array_keys($array), "\n"). "\n";
+    } else {
+      echo $array;
+    }
   }
 }
