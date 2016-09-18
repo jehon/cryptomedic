@@ -56,7 +56,6 @@ deployItem() {
       --exclude ".git/"            \
       --exclude "config-site.php"  \
       --exclude "backups/"         \
-      --exclude "conf/"            \
       --exclude "documentation/"   \
       --exclude "live/"            \
       --exclude "live-for-test/"   \
@@ -94,13 +93,6 @@ else
 fi
 
 echo "End result: $?"
-
-# https://yta.testing.oniryx.be/survey/admin/config/development/configuration
-    # --exclude-glob "*.bak"       \
-    # --exclude-glob "*.bak/"      \
-
-#echo "https://yta.testing.oniryx.be/survey/admin/config/development/configuration"
-#echo "https://yta.testing.oniryx.be/survey/admin/config/development/configuration"
 
 # Run project custom files
 run-parts --report $PRJ_DIR/bin/prj-go-site.d
