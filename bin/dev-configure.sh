@@ -51,9 +51,9 @@ if ([ "$1" != "offline" ]); then
   fi
 
   # Install project custom debs
-  if [ "$(ls -A /vagrant/conf/custom-debs/*.deb 2>/dev/null)" ]; then
+  if [ "$(ls -A /vagrant/vagrant/custom-debs/*.deb 2>/dev/null)" ]; then
     echo "Installing custom debs"
-    dpkg -i /vagrant/conf/custom-debs/*.deb
+    dpkg -i /vagrant/vagrant/custom-debs/*.deb
     apt-get install -f
   fi
 fi
@@ -79,7 +79,7 @@ a2enmod  proxy_http
 # Configure phpmyadmin (fix missing preference tables in normal install) (still usefull on 2016-07-20)
 cat /usr/share/doc/phpmyadmin/examples/create_tables.sql.gz | gunzip | mysql
 
-# Add some swap (the swap mount is configured by rsync /conf/root/etc/fstab.d/swapfile)
+# Add some swap (the swap mount is configured by rsync /vagrant/root/etc/fstab.d/swapfile)
 # See @https://jeqo.github.io/blog/devops/vagrant-quickstart/
 if [ ! -r "/swapfile" ]; then
   echo 'swapfile not found. Adding swapfile.'
