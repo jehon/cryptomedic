@@ -6,6 +6,9 @@ set -e
 SCRIPT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 PRJ_DIR=$(dirname "$SCRIPT_DIR")
 
+# Give it to any sub-scripts
+export PRJ_DIR
+
 # protect in the target site:
 # - config-site.php
 # - live
