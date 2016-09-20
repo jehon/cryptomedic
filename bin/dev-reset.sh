@@ -30,7 +30,7 @@ MYSQL="mysql --quick"
 
 if [ ! -z "$DBROOTUSR" ]; then
   # Add a user to connect to the database
-  MYSQL=$MYSQL -u=$DBROOTUSR
+  MYSQL=$MYSQL --user=$DBROOTUSR
 fi
 
 if [ ! -z "$DBROOTPWD" ]; then
