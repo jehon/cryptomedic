@@ -8,9 +8,10 @@ if (!defined("MY_ENVIRONMENT_PRODUCTION")) {
 $myconfig = [
   'database' => [
     'host'       => 'localhost',
-    'schema'     => 'mydb',
+    'schema'     => basename(dirname(__FILE__)),
     'username'   => 'myuser',
     'password'   => 'empty',
+    'rootuser'   => 'root',
     'rootpwd'    => ''
   ],
   'security' => [
