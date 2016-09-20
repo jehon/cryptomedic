@@ -43,6 +43,7 @@ if ([ "$1" != "offline" ]); then
     nodejs          \
     ssmtp           \
     dos2unix        \
+    lftp            \
   # end
 
   # Install composer (here since it is an install)
