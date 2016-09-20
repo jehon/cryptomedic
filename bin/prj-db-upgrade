@@ -15,7 +15,7 @@
 
   $db = new \Jehon\Maintenance\Database(
       "mysql:dbname={$myconfig['database']['schema']};host={$myconfig['database']['host']}",
-      'root',
+      $myconfig['database']['rootuser'],
       $myconfig['database']['rootpwd']
     );
 
