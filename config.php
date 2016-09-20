@@ -11,6 +11,7 @@ $myconfig = [
     'schema'     => basename(dirname(__FILE__)),
     'username'   => 'myuser',
     'password'   => 'empty',
+    'rootuser'   => 'root',
     'rootpwd'    => ''
   ],
   'security' => [
