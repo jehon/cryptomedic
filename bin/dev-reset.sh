@@ -27,15 +27,14 @@ fi
 #MYSQL="mysql --database=$DBNAME -u root --quick"
 MYSQL="mysql --quick"
 
-
 if [ ! -z "$DBROOTUSR" ]; then
   # Add a user to connect to the database
-  MYSQL=$MYSQL --user=$DBROOTUSR
+  MYSQL="$MYSQL --user=$DBROOTUSR"
 fi
 
 if [ ! -z "$DBROOTPWD" ]; then
   # Add a password to connect to the database
-  MYSQL=$MYSQL --password=$DBROOTPWD
+  MYSQL="$MYSQL --password=$DBROOTPWD"
 fi
 
 echo "* Resetting the database $DBNAME"
