@@ -61,8 +61,8 @@ if ([ "$1" != "offline" ]); then
 fi
 
 # Fix rights for Windows environnement
-find $PRJ_DIR/bin/ -exec chmod +x "{}" ";"
-find $PRJ_DIR/bin/ -exec dos2unix "{}" ";"
+find $PRJ_DIR/bin/ -type f -exec chmod +x "{}" ";"
+find $PRJ_DIR/bin/ -type f -exec dos2unix "{}" ";"
 
 # Make the Apache server run as Vagrant user:
 cat /etc/apache2/envvars \
