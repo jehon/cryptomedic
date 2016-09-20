@@ -13,6 +13,9 @@ set -e
 SCRIPT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 PRJ_DIR=$(dirname "$SCRIPT_DIR")
 
+# Give it to any sub-scripts
+export PRJ_DIR
+
 myHeader() {
   echo -ne "\e[0;45m"
   if [ "$2" != "" ]; then

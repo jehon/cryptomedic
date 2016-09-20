@@ -3,7 +3,8 @@
 # Stop on error
 set -e
 
-PRJ_DIR="/vagrant"
+SCRIPT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+PRJ_DIR=$(dirname "$SCRIPT_DIR")
 
 # Give it to any sub-scripts
 export PRJ_DIR
