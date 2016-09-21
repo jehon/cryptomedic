@@ -45,6 +45,8 @@ For each main script, there is a folder with scripts, cutom or not. You can add 
 - prj-db-backup.sh
 - dev-db-createNewTestingSqlDump.sh
 
+By default, the database is named "vagrant" inside the vagrant, and with the project folder name outside of it
+
 # Email handling
 - A fake smtp server run on port 1025
 - The /usr/bin/sendmail command forward to that port
