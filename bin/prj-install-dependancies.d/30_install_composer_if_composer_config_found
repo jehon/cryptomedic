@@ -1,0 +1,9 @@
+#!/bin/bash
+
+set -e
+
+# Install composer (here since it is an install)
+if [ -e "$PRJ_DIR"/composer.json ]; then
+  echo "** Getting the composer **"
+  $PRJ_DIR/bin/lib/install-composer.sh
+fi

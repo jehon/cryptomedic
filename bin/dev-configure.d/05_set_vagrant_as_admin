@@ -1,0 +1,6 @@
+#!/bin/bash
+
+set -e
+
+# Manage user rights
+usermod -a -G adm vagrant
