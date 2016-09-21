@@ -8,7 +8,7 @@ if (!defined("MY_ENVIRONMENT_PRODUCTION")) {
 $myconfig = [
   'database' => [
     'host'       => 'localhost',
-    'schema'     => basename(dirname(__FILE__)),
+    'schema'     => preg_replace("/[^A-Za-z0-9_]/", '_', basename(dirname(__FILE__))),
     'username'   => 'myuser',
     'password'   => 'empty',
     'rootuser'   => 'root',
