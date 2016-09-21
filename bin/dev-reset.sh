@@ -9,8 +9,8 @@ PRJ_DIR=$(dirname "$SCRIPT_DIR")
 # Give it to any sub-scripts
 export PRJ_DIR
 
-DBROOTUSR=`php $PRJ_DIR/config.php 'database.rootuser'`
-DBROOTPWD=`php $PRJ_DIR/config.php 'database.rootpwd'`
+DBROOTUSER=`php $PRJ_DIR/config.php 'database.rootuser'`
+DBROOTPASS=`php $PRJ_DIR/config.php 'database.rootpwd'`
 DBNAME=`php $PRJ_DIR/config.php 'database.schema'`
 DBUSER=`php $PRJ_DIR/config.php 'database.username'`
 DBPASS=`php $PRJ_DIR/config.php 'database.password'`
@@ -27,14 +27,14 @@ fi
 #MYSQL="mysql --database=$DBNAME -u root --quick"
 MYSQL="mysql --quick"
 
-if [ ! -z "$DBROOTUSR" ]; then
+if [ ! -z "$DBROOTUSER" ]; then
   # Add a user to connect to the database
-  MYSQL="$MYSQL --user=$DBROOTUSR"
+  MYSQL="$MYSQL --user=$DBROOTUSER"
 fi
 
-if [ ! -z "$DBROOTPWD" ]; then
+if [ ! -z "$DBROOTPASS" ]; then
   # Add a password to connect to the database
-  MYSQL="$MYSQL --password=$DBROOTPWD"
+  MYSQL="$MYSQL --password=$DBROOTPASS"
 fi
 
 echo "* Resetting the database $DBNAME"
