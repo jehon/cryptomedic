@@ -9,9 +9,6 @@ PRJ_DIR=$(dirname "$SCRIPT_DIR")
 # Give it to any sub-scripts
 export PRJ_DIR
 
-# Manage user rights
-usermod -a -G adm vagrant
-
 if ([ "$1" != "offline" ]); then
   if [ ! -r /etc/apt/sources.list.d/nodesource.list ]; then
     # Install nodejs 6.* (still v0.10.25 in Ubuntu repository as of 17/07/2016)
@@ -80,16 +77,6 @@ a2enmod  proxy_http
 
 # Configure phpmyadmin (fix missing preference tables in normal install) (still usefull on 2016-07-20)
 cat /usr/share/doc/phpmyadmin/examples/create_tables.sql.gz | gunzip | mysql
-
-# Add some swap (the swap mount is configured by rsync /vagrant/root/etc/fstab.d/swapfile)
-# See @https://jeqo.github.io/blog/devops/vagrant-quickstart/
-if [ ! -r "/swapfile" ]; then
-  echo 'swapfile not found. Adding swapfile.'
-  fallocate -l 1GiB /swapfile
-  chmod 600 /swapfile
-  mkswap /swapfile
-  swapon /swapfile
-fi
 
 # Install project dependancies
 su vagrant -c $PRJ_DIR/bin/prj-install-dependancies.sh
