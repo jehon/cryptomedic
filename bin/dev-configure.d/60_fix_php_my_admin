@@ -1,0 +1,6 @@
+#!/bin/bash
+
+set -e
+
+# Configure phpmyadmin (fix missing preference tables in normal install) (still usefull on 2016-07-20)
+cat /usr/share/doc/phpmyadmin/examples/create_tables.sql.gz | gunzip | mysql
