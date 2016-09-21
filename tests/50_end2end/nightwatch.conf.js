@@ -3,7 +3,7 @@
 
 'use strict';
 
-let remoteTarget = require(__dirname + '/../../bin/lib/vagrantHttpPort');
+let remoteTarget = require(__dirname + '/../../bin/lib/vagrantPort');
 let selenium = require('selenium-server');
 
 module.exports = {
