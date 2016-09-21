@@ -3,4 +3,4 @@
 set -e
 
 # Install project dependancies
-su vagrant -c $PRJ_DIR/bin/prj-install-dependancies.sh
+$PRJ_DIR/bin/prj-install-dependancies.sh

@@ -13,8 +13,6 @@ DEBIAN_FRONTEND=noninteractive apt-get install --yes --force-yes \
   mysql-server    \
   mysql-client    \
   apache2 \
-  php-cli php-mysql php-mcrypt php-curl \
-  libapache2-mod-php php-xdebug     \
   phpmyadmin      \
   default-jre     \
   xvfb            \
@@ -24,3 +22,23 @@ DEBIAN_FRONTEND=noninteractive apt-get install --yes --force-yes \
   dos2unix        \
   lftp            \
 # end
+
+if [ "`lsb_release -c -s`" == "trusty" ]; then
+  echo "Trusty detected"
+  DEBIAN_FRONTEND=noninteractive apt-get install --yes --force-yes \
+    php5-cli php5-mysql php5-mcrypt php5-curl \
+    libapache2-mod-php5 php5-xdebug     \
+  # end
+
+cat > /usr/sbin/php5mod <<EOC
+#!/bin/bash
+/usr/sbin/php5enmod "$@"
+EOC
+  chmod +x /usr/sbin/phpenmod
+
+else
+  DEBIAN_FRONTEND=noninteractive apt-get install --yes --force-yes \
+    php-cli php-mysql php-mcrypt php-curl \
+    libapache2-mod-php php-xdebug     \
+  # end
+fi
