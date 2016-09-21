@@ -1,0 +1,6 @@
+#!/bin/bash
+
+set -e
+
+# Install project dependancies
+su vagrant -c $PRJ_DIR/bin/prj-install-dependancies.sh

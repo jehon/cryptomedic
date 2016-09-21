@@ -1,0 +1,26 @@
+#!/bin/bash
+
+set -e
+
+apt-get -y update
+
+# Developpement packages
+DEBIAN_FRONTEND=noninteractive apt-get install --yes --force-yes \
+  build-essential \
+  git             \
+  multitail       \
+  curl            \
+  mysql-server    \
+  mysql-client    \
+  apache2 \
+  php-cli php-mysql php-mcrypt php-curl \
+  libapache2-mod-php php-xdebug     \
+  phpmyadmin      \
+  default-jre     \
+  xvfb            \
+  firefox         \
+  nodejs          \
+  ssmtp           \
+  dos2unix        \
+  lftp            \
+# end
