@@ -2,5 +2,4 @@
 
 set -e
 
-# Enable php5-mcrypt
 phpenmod mcrypt
