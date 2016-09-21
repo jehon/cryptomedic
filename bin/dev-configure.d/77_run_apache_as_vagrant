@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# Stop on error
+set -e
+
+# Make the Apache server run as Vagrant user:
+cat /etc/apache2/envvars \
+  | grep -v APACHE_RUN_USER \
+  > /etc/apache2/envvars2
+echo "export APACHE_RUN_USER=vagrant" >> /etc/apache2/envvars2
+mv /etc/apache2/envvars2 /etc/apache2/envvars
+
