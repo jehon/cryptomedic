@@ -34,8 +34,8 @@ if ([ "$1" != "offline" ]); then
     mysql-server    \
     mysql-client    \
     apache2 \
-    php5-cli php5-mysql php5-mcrypt php5-curl \
-    libapache2-mod-php5 php5-xdebug     \
+    php-cli php-mysql php-mcrypt php-curl \
+    libapache2-mod-php php-xdebug     \
     phpmyadmin      \
     default-jre     \
     xvfb            \
@@ -72,7 +72,7 @@ echo "export APACHE_RUN_USER=vagrant" >> /etc/apache2/envvars2
 mv /etc/apache2/envvars2 /etc/apache2/envvars
 
 # Enable php5-mcrypt
-php5enmod mcrypt
+phpenmod mcrypt
 
 # Enable apache modules
 a2enmod  rewrite ssl
