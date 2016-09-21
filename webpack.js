@@ -5,7 +5,7 @@ var path = require('path');
 // var glob = require('glob');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var recursiveReadSync = require('recursive-readdir-sync');
-var remoteTarget = require(__dirname + '/bin/lib/vagrantHttpPort');
+var remoteTarget = require(__dirname + '/bin/lib/vagrantPort');
 
 // Global variables
 // https://webpack.github.io/docs/library-and-externals.html
