@@ -21,14 +21,14 @@ DEBIAN_FRONTEND=noninteractive apt install --yes \
   ssmtp           \
   dos2unix        \
   lftp            \
-# end
+  # end
 
 if [ "`lsb_release -c -s`" == "trusty" ]; then
   echo "Trusty detected"
   DEBIAN_FRONTEND=noninteractive apt-get install --yes \
     php5-cli php5-mysql php5-mcrypt php5-curl \
     libapache2-mod-php5 php5-xdebug     \
-  # end
+    # end
 
 cat > /usr/sbin/phpenmod <<EOC
 #!/bin/bash
@@ -40,5 +40,5 @@ else
   DEBIAN_FRONTEND=noninteractive apt-get install --yes \
     php-cli php-mysql php-mcrypt php-curl \
     libapache2-mod-php php-xdebug     \
-  # end
+    # end
 fi
