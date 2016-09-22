@@ -98,4 +98,4 @@ fi
 echo "End result: $?"
 
 # Run project custom files
-run-parts --report $PRJ_DIR/bin/prj-go-site.d
+run-parts --exit-on-error --report $PRJ_DIR/bin/prj-go-site.d
