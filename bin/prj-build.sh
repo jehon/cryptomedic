@@ -12,4 +12,4 @@ export PRJ_DIR
 cd "$PRJ_DIR"
 
 # Run project custom files
-run-parts --report $PRJ_DIR/bin/prj-build.d
+run-parts --exit-on-error --report $PRJ_DIR/bin/prj-build.d
