@@ -8,3 +8,4 @@ DBROOTPASS=`php $PRJ_DIR/config.php 'database.rootpwd'`
 mysql --user=root <<EOSQL
   GRANT ALL PRIVILEGES ON *.* TO '$DBROOTUSER' IDENTIFIED BY '$DBROOTPASS' WITH GRANT OPTION;
 EOSQL
+
