@@ -30,7 +30,7 @@ if [ "`lsb_release -c -s`" == "trusty" ]; then
     libapache2-mod-php5 php5-xdebug     \
   # end
 
-cat > /usr/sbin/php5mod <<EOC
+cat > /usr/sbin/phpenmod <<EOC
 #!/bin/bash
 /usr/sbin/php5enmod "$@"
 EOC
