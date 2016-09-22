@@ -2,5 +2,8 @@
 
 set -e
 
+DBROOTUSER=`php $PRJ_DIR/config.php 'database.rootuser'`
+DBROOTPASS=`php $PRJ_DIR/config.php 'database.rootpwd'`
+
 # Configure phpmyadmin (fix missing preference tables in normal install) (still usefull on 2016-07-20)
-cat /usr/share/doc/phpmyadmin/examples/create_tables.sql.gz | gunzip | mysql
+cat /usr/share/doc/phpmyadmin/examples/create_tables.sql.gz | gunzip | mysql --user=$DBROOTUSER --password=$DBROOTPASS
