@@ -5,7 +5,7 @@ set -e
 apt-get -y update
 
 # Developpement packages
-DEBIAN_FRONTEND=noninteractive apt-get install --yes --force-yes \
+DEBIAN_FRONTEND=noninteractive apt install --yes \
   build-essential \
   git             \
   multitail       \
@@ -21,24 +21,24 @@ DEBIAN_FRONTEND=noninteractive apt-get install --yes --force-yes \
   ssmtp           \
   dos2unix        \
   lftp            \
-# end
+  # end
 
 if [ "`lsb_release -c -s`" == "trusty" ]; then
   echo "Trusty detected"
-  DEBIAN_FRONTEND=noninteractive apt-get install --yes --force-yes \
+  DEBIAN_FRONTEND=noninteractive apt-get install --yes \
     php5-cli php5-mysql php5-mcrypt php5-curl \
     libapache2-mod-php5 php5-xdebug     \
-  # end
+    # end
 
-cat > /usr/sbin/php5mod <<EOC
+cat > /usr/sbin/phpenmod <<EOC
 #!/bin/bash
-/usr/sbin/php5enmod "$@"
+/usr/sbin/php5enmod "\$@"
 EOC
   chmod +x /usr/sbin/phpenmod
 
 else
-  DEBIAN_FRONTEND=noninteractive apt-get install --yes --force-yes \
+  DEBIAN_FRONTEND=noninteractive apt-get install --yes \
     php-cli php-mysql php-mcrypt php-curl \
     libapache2-mod-php php-xdebug     \
-  # end
+    # end
 fi

@@ -4,4 +4,4 @@ set -e
 
 # Fix rights for Windows environnement
 find $PRJ_DIR/bin/ -type f -exec chmod +x "{}" ";"
-find $PRJ_DIR/bin/ -type f -exec dos2unix "{}" ";"
+#find $PRJ_DIR/bin/ -type f -exec dos2unix "{}" ";"

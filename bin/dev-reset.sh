@@ -69,4 +69,4 @@ rsync                       \
   "$PRJ_DIR/live/"
 
 # Run project custom files
-run-parts --report $PRJ_DIR/bin/dev-reset.d
+run-parts --exit-on-error --report $PRJ_DIR/bin/dev-reset.d
