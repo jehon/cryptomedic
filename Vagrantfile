@@ -8,11 +8,12 @@
 
 Vagrant.configure(2) do |config|
   # https://docs.vagrantup.com.
-  config.vm.box      = 'ubuntu/trusty64'
+  # https://atlas.hashicorp.com/ubuntu/boxes/xenial64
+  config.vm.box      = 'ubuntu/xenial64'
   config.vm.hostname = 'vagrant-' + File.basename(File.dirname(__FILE__))
   config.vm.provider "virtualbox" do |v|
-    v.memory = 1024
-#    v.cpus = 2
+  #  v.memory = 1024
+  #  v.cpus = 2
   end
 
   # Forward X11 to host (thanks to https://coderwall.com/p/ozhfva/run-graphical-programs-within-vagrantboxes)
@@ -34,8 +35,6 @@ Vagrant.configure(2) do |config|
   config.vm.network "forwarded_port", auto_correct: true, guest:   443, host: 10443 # Default https
   config.vm.network "forwarded_port", auto_correct: true, guest: 10000, host: 10000 # phpmyadmin
   config.vm.network "forwarded_port", auto_correct: true, guest:  8080, host: 18080 # Dev server
-
-  config.vm.synced_folder ".", "/vagrant", owner: "vagrant", group: "www-data"
 
   if ENV["LC_ALL"]
     # http://serverfault.com/questions/362903/how-do-you-set-a-locale-non-interactively-on-debian-ubuntu
