@@ -1,5 +1,16 @@
-# General
+# As a startup
+You can use this template either inside a VM or in your bare metal machine.
 
+## Bare usage
+You should have:
+- a mail-transport-agent (see mailhog through this setup)
+- a phpmyadmin or anything else (to manage the database)
+- connection to the database should be available for vagrant_admin / vagrant_admin_password (configured in config.php, overridable in config-site.php and/or config-custom.php).
+
+## Vagrant (VM)
+Using it in vagrant, this should be more simple since, all this above configuration is done for you.
+
+# General
 ## Notation "vagrant:80"
 We will use the notation vagrant:80 to note the vagrant port "80" forwarded to you host. To view
 wich to which port this is mapped, you can use the command "vagrant port 80" in your host.
@@ -11,6 +22,11 @@ wich to which port this is mapped, you can use the command "vagrant port 80" in 
 # Configuration
 The configuration of the vagrant is based on various scripts in the vagran/bin repertory. 
 The various script can be customized by putting custom scripts in the corresponding ".d" folder.
+
+The main configuration in hold in config.php.
+This configuration could be overriden by:
+- config-site.php: a file for site configuration override. This script is not managed by the prj-install-env.
+- config-custom.php: a file to hold project configurations. This script should be managed by git and will be installed by prj-install-env.
 
 ## dev-configure.sh (dev-configure.d)
 This will setup the vagrant environnement, install dependancies, etc...

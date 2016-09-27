@@ -10,4 +10,4 @@ PRJ_DIR=$(dirname "$SCRIPT_DIR")
 export PRJ_DIR
 
 # Run project custom files
-run-parts --report $PRJ_DIR/bin/dev-configure.d
+run-parts --exit-on-error --report $PRJ_DIR/bin/dev-configure.d
