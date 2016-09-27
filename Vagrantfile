@@ -1,10 +1,10 @@
 
 # Configure the vagrant proxyconf plugin:
 # @See http://digitaldrummerj.me/vagrant-behind-proxy-server/
-if !Vagrant.has_plugin?("vagrant-proxyconf")
-  system('vagrant plugin install vagrant-proxyconf')
-  raise("vagrant-proxyconf installed. Run command again.");
-end
+# if !Vagrant.has_plugin?("vagrant-proxyconf")
+#   system('vagrant plugin install vagrant-proxyconf')
+#   raise("vagrant-proxyconf installed. Run command again.");
+# end
 
 Vagrant.configure(2) do |config|
   # https://docs.vagrantup.com.
@@ -18,17 +18,17 @@ Vagrant.configure(2) do |config|
   # Forward X11 to host (thanks to https://coderwall.com/p/ozhfva/run-graphical-programs-within-vagrantboxes)
   config.ssh.forward_x11 = true
 
-  if Vagrant.has_plugin?("vagrant-proxyconf")
-    if ENV["http_proxy"]
-      config.proxy.http     = ENV["http_proxy"]
-    end
-    if ENV["https_proxy"]
-      config.proxy.https    = ENV["https_proxy"]
-    end
-    if ENV["no_proxy"]
-      config.proxy.no_proxy = ENV["no_proxy"]
-    end
-  end
+  # if Vagrant.has_plugin?("vagrant-proxyconf")
+  #   if ENV["http_proxy"]
+  #     config.proxy.http     = ENV["http_proxy"]
+  #   end
+  #   if ENV["https_proxy"]
+  #     config.proxy.https    = ENV["https_proxy"]
+  #   end
+  #   if ENV["no_proxy"]
+  #     config.proxy.no_proxy = ENV["no_proxy"]
+  #   end
+  # end
 
   config.vm.network "forwarded_port", auto_correct: true, guest:    80, host: 10080 # Default config
   config.vm.network "forwarded_port", auto_correct: true, guest:   443, host: 10443 # Default https
