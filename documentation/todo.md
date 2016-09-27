@@ -1,4 +1,6 @@
 # Next steps
+- on live upload, update the database
+
 - Test e2e: appointment is shown on other screens too
 - Test e2e: check "examiner name" initialization
 - Test e2e: check "center" initialization
