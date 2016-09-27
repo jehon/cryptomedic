@@ -17,10 +17,5 @@ export PRJ_DIR
 
 cd "$PRJ_DIR"
 
-if [ -e composer.json ]; then
-  echo -e "\e[1m\e[45mComposer install\e[0m"
-  composer.phar install
-fi
-
 # Run project custom files
 run-parts --exit-on-error --report $PRJ_DIR/bin/prj-install-dependancies.d
