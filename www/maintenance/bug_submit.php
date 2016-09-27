@@ -85,12 +85,6 @@
 					<td>Browser User-Agent</td>
 					<td>${bug['browser_useragent']}</td>
 				</tr>
-				<tr>
-					<td>Screenshot</td>
-					<td>
-						<img src='${bug['screenshot']}'>
-  				</td>
-				</tr>
 			</table>
 EOMAIL;
 
