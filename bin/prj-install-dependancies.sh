@@ -17,11 +17,6 @@ export PRJ_DIR
 
 cd "$PRJ_DIR"
 
-if [ -e package.json ]; then
-  echo -e "\e[1m\e[45mNPM install\e[0m"
-  npm install
-fi
-
 if [ -e composer.json ]; then
   echo -e "\e[1m\e[45mComposer install\e[0m"
   composer.phar install
