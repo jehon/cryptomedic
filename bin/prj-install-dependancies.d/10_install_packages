@@ -12,12 +12,13 @@ DEBIAN_FRONTEND=noninteractive apt install --yes \
   curl            \
   mysql-server    \
   mysql-client    \
-  apache2 \
+  apache2         \
   phpmyadmin      \
   default-jre     \
   xvfb            \
   firefox         \
   nodejs          \
+  npm             \
   ssmtp           \
   dos2unix        \
   lftp            \
