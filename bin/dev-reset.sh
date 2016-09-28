@@ -59,14 +59,5 @@ $PRJ_DIR/bin/prj-db-upgrade
 echo "* Applying dev hooks to $DBNAME"
 $PRJ_DIR/bin/prj-db-upgrade "$PRJ_DIR/conf/database/always-dev/"
 
-echo "* Reset the live folder from live-for-test"
-rsync                       \
-  --times                   \
-  --recursive               \
-  --delete                  \
-  --itemize-changes         \
-  "$PRJ_DIR/live-for-test/" \
-  "$PRJ_DIR/live/"
-
 # Run project custom files
 run-parts --exit-on-error --report $PRJ_DIR/bin/dev-reset.d
