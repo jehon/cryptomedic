@@ -1,0 +1,5 @@
+#!/bin/bash
+
+set -e
+
+$PRJ_DIR/bin/prj-db-upgrade

@@ -1,0 +1,15 @@
+#!/bin/bash
+
+set -e
+
+DBNAME=`php $PRJ_DIR/config.php 'database.schema'`
+DBUSER=`php $PRJ_DIR/config.php 'database.username'`
+DBPASS=`php $PRJ_DIR/config.php 'database.password'`
+
+$MYSQL  --database=mysql <<-EOC
+  DROP SCHEMA IF EXISTS $DBNAME;
+  CREATE SCHEMA $DBNAME;
+  USE $DBNAME;
+  GRANT ALL PRIVILEGES ON $DBNAME   TO $DBUSER IDENTIFIED BY '$DBPASS';
+  GRANT ALL PRIVILEGES ON $DBNAME.* TO $DBUSER IDENTIFIED BY '$DBPASS';
+EOC
