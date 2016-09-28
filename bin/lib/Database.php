@@ -110,7 +110,7 @@ class Database {
 				"CREATE TABLE IF NOT EXISTS `settings` (
 					  `id` varchar(50) NOT NULL,
 					  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-					  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+					  `updated_at` timestamp NULL DEFAULT NULL,
 					  `value` varchar(50) DEFAULT NULL
 					) ENGINE=InnoDB DEFAULT CHARSET=utf8;"
 			);
@@ -218,7 +218,7 @@ class Database {
 
 			echo "\nTreating $f [$nextVersion]: ";
 			$res = $this->runFile($f, true);
-			echo " = " . $res;
+			echo " = " . $res . "\n";
 			if (!$res) {
 				return false;
 			}
