@@ -26,7 +26,7 @@ fi
 
 # Give it to any sub-scripts
 export PRJ_DIR
-export $MYSQL
+export MYSQL
 
 # Run project custom files
 run-parts --exit-on-error --report $PRJ_DIR/bin/dev-reset.d
