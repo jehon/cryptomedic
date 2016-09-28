@@ -15,7 +15,5 @@ PRJ_DIR=$(dirname "$SCRIPT_DIR")
 # Give it to any sub-scripts
 export PRJ_DIR
 
-cd "$PRJ_DIR"
-
 # Run project custom files
 run-parts --exit-on-error --report $PRJ_DIR/bin/prj-install-dependancies.d
