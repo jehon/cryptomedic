@@ -14,6 +14,7 @@ DEBIAN_FRONTEND=noninteractive apt install --yes \
   mysql-client    \
   apache2         \
   phpmyadmin      \
+  php-zip         \
   default-jre     \
   xvfb            \
   firefox         \
