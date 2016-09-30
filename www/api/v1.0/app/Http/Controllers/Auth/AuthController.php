@@ -8,7 +8,7 @@ use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
-use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+// use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use App\Http\Controllers\PriceController;
 use Route;
 
@@ -27,7 +27,7 @@ class AuthController extends Controller {
   |
   */
 
-  use AuthenticatesAndRegistersUsers;
+  // use AuthenticatesAndRegistersUsers;
 
   static protected $permissions = [];
 
@@ -201,8 +201,6 @@ class AuthController extends Controller {
   }
 
 }
-
-
 
 class Role {
   protected $b;
