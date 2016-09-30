@@ -11,6 +11,7 @@
 
 namespace Symfony\Component\HttpKernel\Profiler;
 
+use Symfony\Component\HttpFoundation\Exception\ConflictingHeadersException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\DataCollector\DataCollectorInterface;
@@ -134,20 +135,21 @@ class Profiler
     /**
      * Finds profiler tokens for the given criteria.
      *
-     * @param string $ip     The IP
-     * @param string $url    The URL
-     * @param string $limit  The maximum number of tokens to return
-     * @param string $method The request method
-     * @param string $start  The start date to search from
-     * @param string $end    The end date to search to
+     * @param string $ip         The IP
+     * @param string $url        The URL
+     * @param string $limit      The maximum number of tokens to return
+     * @param string $method     The request method
+     * @param string $start      The start date to search from
+     * @param string $end        The end date to search to
+     * @param string $statusCode The request status code
      *
      * @return array An array of tokens
      *
      * @see http://php.net/manual/en/datetime.formats.php for the supported date/time formats
      */
-    public function find($ip, $url, $limit, $method, $start, $end)
+    public function find($ip, $url, $limit, $method, $start, $end, $statusCode = null)
     {
-        return $this->storage->find($ip, $url, $limit, $method, $this->getTimestamp($start), $this->getTimestamp($end));
+        return $this->storage->find($ip, $url, $limit, $method, $this->getTimestamp($start), $this->getTimestamp($end), $statusCode);
     }
 
     /**
@@ -168,9 +170,13 @@ class Profiler
         $profile = new Profile(substr(hash('sha256', uniqid(mt_rand(), true)), 0, 6));
         $profile->setTime(time());
         $profile->setUrl($request->getUri());
-        $profile->setIp($request->getClientIp());
         $profile->setMethod($request->getMethod());
         $profile->setStatusCode($response->getStatusCode());
+        try {
+            $profile->setIp($request->getClientIp());
+        } catch (ConflictingHeadersException $e) {
+            $profile->setIp('Unknown');
+        }
 
         $response->headers->set('X-Debug-Token', $profile->getToken());
 

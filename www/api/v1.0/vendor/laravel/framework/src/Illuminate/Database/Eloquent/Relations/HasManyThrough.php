@@ -138,7 +138,7 @@ class HasManyThrough extends Relation
     {
         $table = $this->parent->getTable();
 
-        $this->query->whereIn($table.'.'.$this->firstKey, $this->getKeys($models));
+        $this->query->whereIn($table.'.'.$this->firstKey, $this->getKeys($models, $this->localKey));
     }
 
     /**
@@ -244,7 +244,7 @@ class HasManyThrough extends Relation
             return $model;
         }
 
-        throw new ModelNotFoundException;
+        throw (new ModelNotFoundException)->setModel(get_class($this->parent));
     }
 
     /**

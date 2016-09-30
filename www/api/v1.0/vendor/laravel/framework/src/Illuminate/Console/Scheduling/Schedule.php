@@ -2,6 +2,7 @@
 
 namespace Illuminate\Console\Scheduling;
 
+use Illuminate\Container\Container;
 use Symfony\Component\Process\ProcessUtils;
 use Symfony\Component\Process\PhpExecutableFinder;
 
@@ -37,17 +38,13 @@ class Schedule
      */
     public function command($command, array $parameters = [])
     {
+        if (class_exists($command)) {
+            $command = Container::getInstance()->make($command)->getName();
+        }
+
         $binary = ProcessUtils::escapeArgument((new PhpExecutableFinder)->find(false));
 
-        if (defined('HHVM_VERSION')) {
-            $binary .= ' --php';
-        }
-
-        if (defined('ARTISAN_BINARY')) {
-            $artisan = ProcessUtils::escapeArgument(ARTISAN_BINARY);
-        } else {
-            $artisan = 'artisan';
-        }
+        $artisan = defined('ARTISAN_BINARY') ? ProcessUtils::escapeArgument(ARTISAN_BINARY) : 'artisan';
 
         return $this->exec("{$binary} {$artisan} {$command}", $parameters);
     }

@@ -128,7 +128,7 @@ class ControllerResolverTest extends \PHPUnit_Framework_TestCase
         return array(
             array(1, 'InvalidArgumentException', 'Unable to find controller "1".'),
             array('foo', 'InvalidArgumentException', 'Unable to find controller "foo".'),
-            array('foo::bar', 'InvalidArgumentException', 'Class "foo" does not exist.'),
+            array('oof::bar', 'InvalidArgumentException', 'Class "oof" does not exist.'),
             array('stdClass', 'InvalidArgumentException', 'Unable to find controller "stdClass".'),
             array('Symfony\Component\HttpKernel\Tests\Controller\ControllerTest::staticsAction', 'InvalidArgumentException', 'The controller for URI "/" is not callable. Expected method "staticsAction" on class "Symfony\Component\HttpKernel\Tests\Controller\ControllerTest", did you mean "staticAction"?'),
             array('Symfony\Component\HttpKernel\Tests\Controller\ControllerTest::privateAction', 'InvalidArgumentException', 'The controller for URI "/" is not callable. Method "privateAction" on class "Symfony\Component\HttpKernel\Tests\Controller\ControllerTest" should be public and non-abstract'),
@@ -137,6 +137,9 @@ class ControllerResolverTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * @group legacy
+     */
     public function testGetArguments()
     {
         $resolver = $this->createControllerResolver();
@@ -200,6 +203,7 @@ class ControllerResolverTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @requires PHP 5.6
+     * @group legacy
      */
     public function testGetVariadicArguments()
     {

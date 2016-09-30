@@ -50,42 +50,6 @@ class PostgresGrammar extends Grammar
     }
 
     /**
-     * Compile a "where day" clause.
-     *
-     * @param  \Illuminate\Database\Query\Builder  $query
-     * @param  array  $where
-     * @return string
-     */
-    protected function whereDay(Builder $query, $where)
-    {
-        return $this->dateBasedWhere('day', $query, $where);
-    }
-
-    /**
-     * Compile a "where month" clause.
-     *
-     * @param  \Illuminate\Database\Query\Builder  $query
-     * @param  array  $where
-     * @return string
-     */
-    protected function whereMonth(Builder $query, $where)
-    {
-        return $this->dateBasedWhere('month', $query, $where);
-    }
-
-    /**
-     * Compile a "where year" clause.
-     *
-     * @param  \Illuminate\Database\Query\Builder  $query
-     * @param  array  $where
-     * @return string
-     */
-    protected function whereYear(Builder $query, $where)
-    {
-        return $this->dateBasedWhere('year', $query, $where);
-    }
-
-    /**
      * Compile a date based where clause.
      *
      * @param  string  $type
@@ -209,8 +173,10 @@ class PostgresGrammar extends Grammar
         // all out then implode them. This should give us "where" like syntax after
         // everything has been built and then we will join it to the real wheres.
         foreach ($query->joins as $join) {
-            foreach ($join->clauses as $clause) {
-                $joinWheres[] = $this->compileJoinConstraint($clause);
+            foreach ($join->wheres as $where) {
+                $method = "where{$where['type']}";
+
+                $joinWheres[] = $where['boolean'].' '.$this->$method($query, $where);
             }
         }
 
