@@ -37,7 +37,7 @@ class Bill extends CryptomedicModel {
 	 * @param unknown $filter
 	 * @return boolean
 	 */
-	protected static function is($field, $filter) {
+	protected static function isBillType($field, $filter) {
 		if (strtoupper(substr($field, 0, strlen($filter))) == strtoupper($filter)) {
 			return true;
 		}
@@ -50,7 +50,7 @@ class Bill extends CryptomedicModel {
 			$fieldList = static::getTableColumnsList();
 		}
 		foreach($fieldList as $v) {
-			if (static::is($v, $filter)) {
+			if (static::isBillType($v, $filter)) {
 				$res[] = $v;
 			}
 		}
@@ -78,7 +78,7 @@ class Bill extends CryptomedicModel {
 	public static function getSQLFieldsSum($filter) {
 		$list = "( 0 ";
 		foreach(static::getTableColumnsList() as $v) {
-			if (static::is($v, $filter)) {
+			if (static::isBillType($v, $filter)) {
 				$list .= " + (prices.`$v` * bills.`$v`)";
 			}
 		}
