@@ -1,10 +1,8 @@
 #!/bin/bash
 
 # Export will make this inheritable
-PRJ_DIR="/vagrant"
-
-export PATH=$PATH:$PRJ_DIR/bin:$PRJ_DIR/node_modules/.bin/
-export PRJ_DIR=$PRJ_DIR
+export PRJ_DIR="/vagrant"
+export PATH=$PATH:$PRJ_DIR/bin:$PRJ_DIR/node_modules/.bin/:$PRJ_DIR/vendor/bin/
 
 # Fix permissions on the various files
 chmod +x "$PRJ_DIR/bin/"/*
