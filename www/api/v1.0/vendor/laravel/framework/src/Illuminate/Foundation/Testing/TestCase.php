@@ -4,6 +4,8 @@ namespace Illuminate\Foundation\Testing;
 
 use Mockery;
 use PHPUnit_Framework_TestCase;
+use Illuminate\Support\Facades\Facade;
+use Illuminate\Database\Eloquent\Model;
 
 abstract class TestCase extends PHPUnit_Framework_TestCase
 {
@@ -70,6 +72,10 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
             call_user_func($callback);
         }
 
+        Facade::clearResolvedInstances();
+
+        Model::setEventDispatcher($this->app['events']);
+
         $this->setUpHasRun = true;
     }
 
@@ -94,12 +100,12 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
     {
         $uses = array_flip(class_uses_recursive(static::class));
 
-        if (isset($uses[DatabaseTransactions::class])) {
-            $this->beginDatabaseTransaction();
-        }
-
         if (isset($uses[DatabaseMigrations::class])) {
             $this->runDatabaseMigrations();
+        }
+
+        if (isset($uses[DatabaseTransactions::class])) {
+            $this->beginDatabaseTransaction();
         }
 
         if (isset($uses[WithoutMiddleware::class])) {
@@ -118,10 +124,6 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
      */
     protected function tearDown()
     {
-        if (class_exists('Mockery')) {
-            Mockery::close();
-        }
-
         if ($this->app) {
             foreach ($this->beforeApplicationDestroyedCallbacks as $callback) {
                 call_user_func($callback);
@@ -138,6 +140,10 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
             $this->serverVariables = [];
         }
 
+        if (class_exists('Mockery')) {
+            Mockery::close();
+        }
+
         $this->afterApplicationCreatedCallbacks = [];
         $this->beforeApplicationDestroyedCallbacks = [];
     }
@@ -148,7 +154,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
      * @param  callable  $callback
      * @return void
      */
-    protected function afterApplicationCreated(callable $callback)
+    public function afterApplicationCreated(callable $callback)
     {
         $this->afterApplicationCreatedCallbacks[] = $callback;
 

@@ -121,7 +121,9 @@ class PostgresGrammar extends Grammar
 
         $index = $this->wrap($command->index);
 
-        return "create index {$index} on ".$this->wrapTable($blueprint)." ({$columns})";
+        $algorithm = $command->algorithm ? ' using '.$command->algorithm : '';
+
+        return "create index {$index} on ".$this->wrapTable($blueprint).$algorithm." ({$columns})";
     }
 
     /**
@@ -227,6 +229,26 @@ class PostgresGrammar extends Grammar
     }
 
     /**
+     * Compile the command to enable foreign key constraints.
+     *
+     * @return string
+     */
+    public function compileEnableForeignKeyConstraints()
+    {
+        return 'SET CONSTRAINTS ALL IMMEDIATE;';
+    }
+
+    /**
+     * Compile the command to disable foreign key constraints.
+     *
+     * @return string
+     */
+    public function compileDisableForeignKeyConstraints()
+    {
+        return 'SET CONSTRAINTS ALL DEFERRED;';
+    }
+
+    /**
      * Compile a rename table command.
      *
      * @param  \Illuminate\Database\Schema\Blueprint  $blueprint
@@ -296,7 +318,7 @@ class PostgresGrammar extends Grammar
     }
 
     /**
-     * Create the column definition for a integer type.
+     * Create the column definition for an integer type.
      *
      * @param  \Illuminate\Support\Fluent  $column
      * @return string
@@ -403,7 +425,7 @@ class PostgresGrammar extends Grammar
     protected function typeEnum(Fluent $column)
     {
         $allowed = array_map(function ($a) {
-            return "'".$a."'";
+            return "'{$a}'";
         }, $column->allowed);
 
         return "varchar(255) check (\"{$column->name}\" in (".implode(', ', $allowed).'))';

@@ -57,11 +57,11 @@ class ConnectionFactory
      */
     protected function createSingleConnection(array $config)
     {
-        $pdo = function () use ($config) {
-            return $this->createConnector($config)->connect($config);
-        };
+        $pdo = $this->createPdoResolver($config);
 
-        return $this->createConnection($config['driver'], $pdo, $config['database'], $config['prefix'], $config);
+        return $this->createConnection(
+            $config['driver'], $pdo, $config['database'], $config['prefix'], $config
+        );
     }
 
     /**
@@ -81,13 +81,24 @@ class ConnectionFactory
      * Create a new PDO instance for reading.
      *
      * @param  array  $config
-     * @return \PDO
+     * @return \Closure
      */
     protected function createReadPdo(array $config)
     {
-        $readConfig = $this->getReadConfig($config);
+        return $this->createPdoResolver($this->getReadConfig($config));
+    }
 
-        return $this->createConnector($readConfig)->connect($readConfig);
+    /**
+     * Create a new Closure that resolves to a PDO instance.
+     *
+     * @param  array  $config
+     * @return \Closure
+     */
+    protected function createPdoResolver(array $config)
+    {
+        return function () use ($config) {
+            return $this->createConnector($config)->connect($config);
+        };
     }
 
     /**
@@ -183,13 +194,10 @@ class ConnectionFactory
         switch ($config['driver']) {
             case 'mysql':
                 return new MySqlConnector;
-
             case 'pgsql':
                 return new PostgresConnector;
-
             case 'sqlite':
                 return new SQLiteConnector;
-
             case 'sqlsrv':
                 return new SqlServerConnector;
         }
@@ -218,13 +226,10 @@ class ConnectionFactory
         switch ($driver) {
             case 'mysql':
                 return new MySqlConnection($connection, $database, $prefix, $config);
-
             case 'pgsql':
                 return new PostgresConnection($connection, $database, $prefix, $config);
-
             case 'sqlite':
                 return new SQLiteConnection($connection, $database, $prefix, $config);
-
             case 'sqlsrv':
                 return new SqlServerConnection($connection, $database, $prefix, $config);
         }
