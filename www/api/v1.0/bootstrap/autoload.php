@@ -1,12 +1,12 @@
 <?php
 
+define('LARAVEL_START', microtime(true));
+
 /* JHO CONFIG */
 global $myconfig;
 require_once(dirname(dirname(dirname(__DIR__))) . "/config.php");
 date_default_timezone_set("GMT");
 /* JHO CONFIG */
-
-define('LARAVEL_START', microtime(true));
 
 /*
 |--------------------------------------------------------------------------
@@ -34,14 +34,7 @@ require __DIR__.'/../vendor/autoload.php';
 */
 
 $compiledPath = __DIR__.'/cache/compiled.php';
+
 if (file_exists($compiledPath)) {
     require $compiledPath;
 }
-// if (file_exists($compiledPath = __DIR__.'/cache/compiled.php'))
-// {
-// 	require $compiledPath;
-// }
-// elseif (file_exists($compiledPath = __DIR__.'/../storage/framework/compiled.php'))
-// {
-// 	require $compiledPath;
-// }
