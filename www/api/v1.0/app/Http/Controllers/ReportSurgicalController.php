@@ -11,8 +11,6 @@ use App\References;
 
 class ReportSurgicalController extends ReportController {
   public function index($when) {
-    $this->getReportParams("when", $when);
-
     $this->result['list'] = DB::select("SELECT
         bills.id as bid,
         patients.id as pid,
@@ -53,6 +51,8 @@ class ReportSurgicalController extends ReportController {
       ORDER BY bills.Date, bills.id",
       $this->sqlBindParams + [ "whenFrom12" => $this->internalWhenFrom ]
     );
+
+    $this->getReportParamFilter("when", $when);
 
     $this->result['totals'] = array();
     foreach($this->result['list'] as $e) {
