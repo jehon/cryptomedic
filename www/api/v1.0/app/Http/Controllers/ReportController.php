@@ -114,7 +114,6 @@ class ReportController extends Controller {
       $this->sqlBindParams[$sqlParam."From"] = $this->internalWhenFrom;
       $this->sqlBindParams[$sqlParam."To"] = $this->internalWhenTo;
       return "($fieldName BETWEEN :{$sqlParam}From AND :{$sqlParam}To)";
-      // return "(:{$sqlParam}From <= $fieldName) AND ($fieldName < :{$sqlParam}To)";
     }
 
     $param = $this->getReportParams($paramName, "");
