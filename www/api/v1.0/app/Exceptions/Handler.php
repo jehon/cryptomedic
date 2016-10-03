@@ -68,11 +68,9 @@ class Handler extends ExceptionHandler
         return redirect()->guest('login');
     }
 
-
-
     protected function convertExceptionToResponse(Exception $e)
     {
-        $html = "<pre>"
+        $html = "\n<pre>"
                 . jTraceEx($e)
                 . "</pre>";
 
@@ -107,14 +105,14 @@ function jTraceEx($e, $seen=null) {
             $result[] = sprintf(' ... %d more', count($trace)+1);
             break;
         }
-        $result[] = sprintf(' at %s %s%s%s(%s%s%s)',
-            count($trace) && array_key_exists('class', $trace[0]) && substr($trace[0]['class'], 0, 3) == "App" ? "***" : '   ',
+        $mine = array_key_exists('class', $trace[0]) && substr($trace[0]['class'], 0, 3) == "App";
+        $result[] = sprintf(' at %s %s%s%s(%s)',
+            count($trace) && ($mine ? "***" : '   '),
             count($trace) && array_key_exists('class', $trace[0]) ? str_replace('\\', '.', $trace[0]['class']) : '',
             count($trace) && array_key_exists('class', $trace[0]) && array_key_exists('function', $trace[0]) ? '.' : '',
             count($trace) && array_key_exists('function', $trace[0]) ? str_replace('\\', '.', $trace[0]['function']) : '(main)',
-            $line === null ? $file : basename($file),
-            $line === null ? '' : ':',
-            $line === null ? '' : $line);
+            $line === null ? $file : basename($file) . ':' . $line
+            );
         if (is_array($seen))
             $seen[] = "$file:$line";
         if (!count($trace))
