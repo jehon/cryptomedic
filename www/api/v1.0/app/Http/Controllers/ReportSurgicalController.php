@@ -52,7 +52,7 @@ class ReportSurgicalController extends ReportController {
       $this->sqlBindParams + [ "whenFrom12" => $this->internalWhenFrom ]
     );
 
-    $this->getReportParamFilter("when", $when);
+    $this->getReportParams("when", $when);
 
     $this->result['totals'] = array();
     foreach($this->result['list'] as $e) {
