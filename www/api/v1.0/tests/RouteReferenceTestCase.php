@@ -94,9 +94,6 @@ class RouteReferenceTestCase extends TestCase {
 			/* Assert the difference */
 			if (file_exists($pfile)) {
 				$res = $this->assertStringEqualsFile($pfile, $json);
-// 						"Result is invalid [$file - $pfile] @{$this->url}>" . strlen($json .
-// 								substr($json, 0, 20) .
-// 								(strlen($json > 20 ? "..." : ""))));
 			} else {
 				$this->fail("Reference file not found: $file");
 			}
