@@ -19,15 +19,11 @@ Route::pattern('id', '[0-9]+');
 Response::macro('jsonOrJSONP', function($value)
 {
   // add a callback JSONP parameter if necessary
-  if (Request::has('JSONP')) {
-    $res->setCallback(Request::input('JSONP'));
-  } else {
-    if (Request::header('X-OFFLINE-CP')) {
-      $value['_offline'] = (new SyncController())->_syncData(Request::header('X-OFFLINE-CP'));
-    }
-    // http://stackoverflow.com/questions/23996567/laravel-responsejson-with-numeric-check
-    $res = response()->json($value, 200, [], JSON_NUMERIC_CHECK);
+  if (Request::header('X-OFFLINE-CP')) {
+    $value['_offline'] = (new SyncController())->_syncData(Request::header('X-OFFLINE-CP'));
   }
+  // http://stackoverflow.com/questions/23996567/laravel-responsejson-with-numeric-check
+  $res = response()->json($value, 200, [], JSON_NUMERIC_CHECK);
   return $res;
 });
 
