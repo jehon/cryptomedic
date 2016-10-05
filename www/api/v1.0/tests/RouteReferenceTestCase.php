@@ -44,7 +44,9 @@ class RouteReferenceTestCase extends TestCase {
 	protected function myAssertAuthorized($group = null) {
 		$this->preAuthenticate($group);
 		$response = $this->call('GET', $this->url, $this->params);
-		// var_dump($response->getContent());
+		if ($response->getStatusCode() == 500) {
+			echo $response->getContent();
+		}
 		$this->assertResponseOk();
 		return $response;
 	}
