@@ -30,7 +30,7 @@ class RouteReferenceTestCase extends TestCase {
 	protected function preAuthenticate($group = null) {
 		if ($group === null) return;
 		$user = new User(['name' => 'test', 'group' => $group ]);
-		$this->be($user);
+		$this->actingAs($user);
 	}
 
 	protected function myAssertUnauthorized($group = null) {
