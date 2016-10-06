@@ -1,21 +1,12 @@
 <?php namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use DB;
-use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Request;
 use App\Bill;
-
 use App\References;
 
 class ReportActivityController extends ReportController {
-  public function index($when) {
-    $this->getReportParams("when", $when);
-    $this->getReportParams("examiner", "");
-    $this->getReportParams("center", "");
-    $this->getReportParams("activity", "");
-
-    $this->result['list'] = DB::select("SELECT
+  public function buildData() {
+    $this->result['list'] = $this->runSqlWithNamedParameter("SELECT
         bills.id as bid,
         patients.id as pid,
         bills.Date as Date,
@@ -44,12 +35,11 @@ class ReportActivityController extends ReportController {
           JOIN patients ON bills.patient_id = patients.id
           JOIN prices ON bills.price_id = prices.id
       WHERE (1 = 1)
-        AND " . $this->getReportParamFilter("when", "bills.Date") . "
-        AND " . $this->getReportParamFilter("center", "bills.Center") . "
-        AND " . $this->getReportParamFilter("examiner", "bills.ExaminerName") . "
-        AND " . Bill::getActivityFilter($this->getReportParams("activity", "")) . "
+        AND " . $this->getParamAsSqlFilter("when", "bills.Date") . "
+        AND " . $this->getParamAsSqlFilter("center", "bills.Center") . "
+        AND " . $this->getParamAsSqlFilter("examiner", "bills.ExaminerName") . "
+        AND " . Bill::getActivityFilter($this->getParam("activity", "")) . "
       ORDER BY bills.Date ASC, bills.id ASC "
-      , $this->sqlBindParams
     );
 
     $this->result['totals'] = array();
@@ -61,6 +51,5 @@ class ReportActivityController extends ReportController {
         $this->result['totals'][$k] += $v;
       }
     }
-    return response()->jsonOrJSONP($this->result);
   }
 }
