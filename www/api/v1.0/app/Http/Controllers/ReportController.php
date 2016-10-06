@@ -77,7 +77,6 @@ abstract class ReportController extends Controller {
 
       $this->internalWhenFrom = "{$year}-{$month}-01";
       $this->internalWhenTo = date("Y-m-d", mktime(0, 0, -1, $month + 1, 1, $year));
-      // $this->internalWhenTo = date("Y-m-d", mktime(0, 0, -1, 1, 1, $year));
       $this->result['params']['when'] = $when;
       $this->result['params']['period'] = "monthly";
     }
@@ -128,16 +127,9 @@ abstract class ReportController extends Controller {
     return Request::input($name);
   }
 
-  public function getParamMandatory($name) {
-    $ret = $this->getParam($name, null);
-    if ($ret == null) {
-      abort(406, "Parameter '$name' not found");
-    }
-    return Request::input($name);
-  }
-
   public function getParamAsSqlNamed($name) {
     $sqlParam = str_replace(".", "_", $name) . count($this->sqlBindParams);
+
     $this->result['params'][$name] = $this->sqlBindParams[$sqlParam] = $this->getParam($name);
 
     return ":" . $sqlParam;
