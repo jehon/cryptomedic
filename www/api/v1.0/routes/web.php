@@ -79,7 +79,7 @@ Route::group([ 'prefix' => '/api/' . basename(dirname(__DIR__)) ], function() {
           "uses" => "ReportActivityController@monthly"
       ]);
 
-      Route::get('reports/statistical/{timing}', [
+      Route::get('reports/statistical/{timing?}', [
         "uses" => "ReportStatisticalController@index"
       ]);
 
