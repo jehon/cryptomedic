@@ -139,13 +139,8 @@ abstract class ReportController extends Controller {
     $sqlParam = $name . count($this->sqlBindParams);
 
     if ($name == "when") {
-      // $this->sqlBindParams[$sqlParam."From"] = $this->getParam('when.from');
-      // $this->sqlBindParams[$sqlParam."To"]   = $this->getParam('when.to');
-      // return "($field BETWEEN :{$sqlParam}From AND :{$sqlParam}To)";
       return "($field BETWEEN " . $this->getParamAsSqlNamed("whenFrom") . " AND " . $this->getParamAsSqlNamed("whenTo") . ")";
     }
-
-    $this->sqlBindParams[$sqlParam] = ($mandatory ? $this->getParamMandatory($name) : $this->getParam($name));
 
     if ($mandatory) {
       return "($field = " . $this->getParamAsSqlNamed($name) . ") ";
@@ -164,7 +159,7 @@ abstract class ReportController extends Controller {
    * @param unknown $sql A sql statement returning "res"
    */
   function getOneBySQL($sql) {
-    $res = DB::select($sql, $this->sqlBindParams);
+    $res = $this->runSqlWithNamedParameter($sql);
     $res = array_pop($res);
     return $res->res;
   }
