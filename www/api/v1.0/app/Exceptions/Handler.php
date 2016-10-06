@@ -62,7 +62,7 @@ function jTraceEx($e, $seen=null) {
             $result[] = sprintf(' ... %d more', count($trace)+1);
             break;
         }
-        $mine = array_key_exists('class', $trace[0]) && substr($trace[0]['class'], 0, 3) == "App";
+        $mine = count($trace) && array_key_exists('class', $trace[0]) && (substr($trace[0]['class'], 0, 3) == "App");
         $result[] = sprintf(' at %s %s%s%s(%s)',
             count($trace) && ($mine ? "***" : '   '),
             count($trace) && array_key_exists('class', $trace[0]) ? str_replace('\\', '.', $trace[0]['class']) : '',
