@@ -16,7 +16,7 @@ abstract class ReportController extends Controller {
   protected $internalWhenTo = "";
   protected $sqlBindParams = array();
 
-  public function index($timing) {
+  public function index($timing = "day") {
     // Reset all parameters, since testing will re-use the same object
     $this->params = Request::all();
     $this->sqlBindParams = [];
@@ -34,8 +34,6 @@ abstract class ReportController extends Controller {
       default:
         abort(404, "No correct timing found");
     }
-
-    // Add a specific filter to treat parameters
 
     // TODO: Refaire: param=time + from and to = calculated based on what is not specified in "time" (ex: 2016 -> +"-01-01")
     // demande changement dans controlleur javascript
