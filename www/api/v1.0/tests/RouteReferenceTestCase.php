@@ -36,6 +36,9 @@ class RouteReferenceTestCase extends TestCase {
 	protected function myAssertUnauthorized($group = null) {
 		$this->preAuthenticate($group);
 		$response = $this->call('GET', $this->url, $this->params);
+		if ($response->getStatusCode() == 500) {
+			echo $response->getContent();
+		}
 		// Ajax unauthorized is 401, http unauthorized is 302
 		$this->assertResponseStatus(401);
 		return $response;
