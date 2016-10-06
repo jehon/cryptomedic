@@ -8,126 +8,163 @@ use Illuminate\Support\Facades\Request;
 use App\Bill;
 use App\References;
 
-class ReportController extends Controller {
-  protected $params = array();
-  protected $result = array();
+abstract class ReportController extends Controller {
+  protected $params;
+  protected $result;
 
   protected $internalWhenFrom = "";
   protected $internalWhenTo = "";
   protected $sqlBindParams = array();
 
-  public function byTiming($timing) {
-    switch($timing) {
-      case 'day': return $this->daily();
-      case 'month': return $this->monthly();
-      case 'year': return $this->yearly();
-    }
-    abort(404, "No correct timing found");
-  }
-
-  public function yearly() {
-    $when = $this->getReportParams('year', (new \DateTime())->format("Y"));
-    if (!preg_match("/^[0-9]{4}$/", $when)) {
-      abort(406, "Invalid year");
-    }
-    $year = substr($when, 0, 4);
-
-    $this->internalWhenFrom = "{$year}-01-01";
-    $this->internalWhenTo = date("Y-m-d", mktime(0, 0, -1, 1, 1, $year + 1));
-    return $this->index($this->getReportParams('year', (new \DateTime())->format("Y") ));
-  }
-
-  public function monthly() {
-    $when = $this->getReportParams('month', (new \DateTime())->format("Y-m"));
-    if (!preg_match("/^[0-9]{4}-[0-9]{2}$/", $when)) {
-      abort(406, "Invalid month");
-    }
-    $year = substr($when, 0, 4);
-    $month = substr($when, 5, 2);
-
-    $this->internalWhenFrom = "{$year}-{$month}-01";
-    $this->internalWhenTo = date("Y-m-d", mktime(0, 0, -1, $month + 1, 1, $year));
-    return $this->index($when);
-  }
-
-  public function daily() {
-    $when = $this->getReportParams('day', (new \DateTime())->format("Y-m-d"));
-    $when = substr($when, 0, 10);
-    if (!preg_match("/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/", $when)) {
-      abort(406, "Invalid day: " . $when);
-    }
-    $year = substr($when, 0, 4);
-    $month = substr($when, 5, 2);
-    $day = substr($when, 8, 2);
-
-    $this->internalWhenFrom = "{$year}-{$month}-{$day}";
-    $this->internalWhenTo = date("Y-m-d", mktime(0, 0, -1, $month, $day + 1, $year));
-    return $this->index($when);
-  }
-
-  public function __construct() {
-    // Add a specific filter to treat parameters
+  public function index($timing) {
+    // Reset all parameters, since testing will re-use the same object
     $this->params = Request::all();
-
-    if (array_key_exists('date', $this->params)) {
-      // Special treatment for date
-      if ($this->params['date'] instanceof DateTime) {
-        $this->params['date'] = $this->params['date']->format("Y-m-d");
-      } else {
-        if (strlen($this->params['date']) > 9) {
-          $this->params['date'] = substr($this->params['date'], 0, 10);
-        }
-      }
-    }
-
-    if (array_key_exists('month', $this->params)) {
-      // Special treatment for month
-      if ($this->params['month'] instanceof DateTime) {
-        $this->params['month'] = $this->params['month']->format("Y-m");
-      } else {
-        $this->params['month'] = substr($this->params['month'], 0, 7);
-        if (strlen($this->params['month']) == 6) {
-          $this->params['month'] = substr($this->params['month'], 0, 4) . "-0" . substr($this->params['month'], 5, 1);
-        }
-      }
-    }
+    $this->sqlBindParams = [];
+    $this->result = [];
+    $this->internalWhenFrom = "";
+    $this->internalWhenTo = "";
 
     $this->result['params'] = array();
+
+    switch($timing) {
+      case 'day':
+      case 'month':
+      case 'year':
+        break;
+      default:
+        abort(404, "No correct timing found");
+    }
+
+    // Add a specific filter to treat parameters
+
+    // TODO: Refaire: param=time + from and to = calculated based on what is not specified in "time" (ex: 2016 -> +"-01-01")
+    // demande changement dans controlleur javascript
+
+    if (Request::has('year')) {
+      $when = $this->getParam('year');
+      if ($when instanceof DateTime) {
+        $when = $when->format("Y-m-d");
+      }
+
+      $when = substr($when, 0, 4);
+
+      if (!preg_match("/^[0-9]{4}$/", $when)) {
+        abort(406, "Invalid year: " . $when);
+      }
+
+      $year = $when;
+
+      $this->internalWhenFrom = "{$year}-01-01";
+      $this->internalWhenTo = date("Y-m-d", mktime(0, 0, -1, 1, 1, $year + 1));
+      $this->result['params']['when'] = $when;
+      $this->result['params']['period'] = "yearly";
+    }
+
+    if (Request::has('month')) {
+      $when = $this->getParam('month');
+      if ($when instanceof DateTime) {
+        $when = $when->format("Y-m-d");
+      }
+
+      $when = substr($when, 0, 7);
+
+      if (!preg_match("/^[0-9]{4}-[0-9]{2}$/", $when)) {
+        abort(406, "Invalid month: " . $when);
+      }
+
+      $year = substr($when, 0, 4);
+      $month = substr($when, 5, 2);
+
+      $this->internalWhenFrom = "{$year}-{$month}-01";
+      $this->internalWhenTo = date("Y-m-d", mktime(0, 0, -1, $month + 1, 1, $year));
+      // $this->internalWhenTo = date("Y-m-d", mktime(0, 0, -1, 1, 1, $year));
+      $this->result['params']['when'] = $when;
+      $this->result['params']['period'] = "monthly";
+    }
+
+    if (Request::has('day')) {
+      $when = $this->getParam('day');
+
+      if ($when instanceof DateTime) {
+        $when = $when->format("Y-m-d");
+      }
+
+      $when = substr($when, 0, 10);
+
+      if (!preg_match("/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/", $when)) {
+        abort(406, "Invalid day: " . $when);
+      }
+      $year = substr($when, 0, 4);
+      $month = substr($when, 5, 2);
+      $day = substr($when, 8, 2);
+
+      $this->internalWhenFrom = "{$year}-{$month}-{$day}";
+      $this->internalWhenTo = date("Y-m-d", mktime(0, 0, -1, $month, $day + 1, $year));
+      $this->result['params']['when'] = $when;
+      $this->result['params']['period'] = "daily";
+    }
+
+    $this->buildData();
+
+    return response()->jsonOrJSONP($this->result);
   }
 
-  public function getReportParams($name, $default = null) {
-    $ret = $default;
-    if (array_key_exists($name, $this->params)) {
-      $ret = $this->params[$name];
+  abstract function buildData();
+
+  // *** Helpers *** //
+  public function getParam($name, $default = "") {
+    if ($name == 'whenFrom') {
+      $this->result['params'][$name] = $this->internalWhenFrom;
+      return $this->internalWhenFrom;
     }
-    $this->result['params'][$name] = $ret;
+    if ($name == 'whenTo') {
+      $this->result['params'][$name] = $this->internalWhenTo;
+      return $this->internalWhenTo;
+    }
+    if (!Request::has($name)) {
+      return $default;
+    }
+    $this->result['params'][$name] = Request::input($name);
+    return Request::input($name);
+  }
+
+  public function getParamMandatory($name) {
+    $ret = $this->getParam($name, null);
+    if ($ret == null) {
+      abort(406, "Parameter '$name' not found");
+    }
+    return Request::input($name);
+  }
+
+  public function getParamAsSqlNamed($name) {
+    $sqlParam = str_replace(".", "_", $name) . count($this->sqlBindParams);
+    $this->result['params'][$name] = $this->sqlBindParams[$sqlParam] = $this->getParam($name);
+
+    return ":" . $sqlParam;
+  }
+
+  public function getParamAsSqlFilter($name, $field, $mandatory = false) {
+    $sqlParam = $name . count($this->sqlBindParams);
+
     if ($name == "when") {
-      $this->result['params']['whenFrom'] = $this->internalWhenFrom;
-      $this->result['params']['whenTo'] = $this->internalWhenTo;
-    }
-    return $ret;
-  }
-
-  public function getReportParamFilter($paramName, $fieldName, $mandatory = false) {
-    if ($paramName == "when") {
-      $sqlParam = $paramName . count($this->sqlBindParams);
-      $this->sqlBindParams[$sqlParam."From"] = $this->internalWhenFrom;
-      $this->sqlBindParams[$sqlParam."To"] = $this->internalWhenTo;
-      return "($fieldName BETWEEN :{$sqlParam}From AND :{$sqlParam}To)";
+      // $this->sqlBindParams[$sqlParam."From"] = $this->getParam('when.from');
+      // $this->sqlBindParams[$sqlParam."To"]   = $this->getParam('when.to');
+      // return "($field BETWEEN :{$sqlParam}From AND :{$sqlParam}To)";
+      return "($field BETWEEN " . $this->getParamAsSqlNamed("whenFrom") . " AND " . $this->getParamAsSqlNamed("whenTo") . ")";
     }
 
-    $param = $this->getReportParams($paramName, "");
-    $sqlParam = $paramName . count($this->sqlBindParams);
-    $this->sqlBindParams[$sqlParam] = $this->getReportParams($paramName);
+    $this->sqlBindParams[$sqlParam] = ($mandatory ? $this->getParamMandatory($name) : $this->getParam($name));
 
     if ($mandatory) {
-      if (!$param) {
-        abort(406, "Invalid param '$paramName'");
-      }
-      return "($fieldName = :$sqlParam) ";
+      return "($field = " . $this->getParamAsSqlNamed($name) . ") ";
     } else {
-      return "(FIELD(:$sqlParam, '', $fieldName) > 0) ";
+      return "(FIELD(" . $this->getParamAsSqlNamed($name) . ", '', $field) > 0) ";
     }
+  }
+
+
+  function runSqlWithNamedParameter($sql) {
+    return DB::select($sql, $this->sqlBindParams);
   }
 
   /**
