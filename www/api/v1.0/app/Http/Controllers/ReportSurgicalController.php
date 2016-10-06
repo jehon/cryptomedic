@@ -1,17 +1,17 @@
-<?php namespace App\Http\Controllers;
+<?php
+
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use DB;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Request;
 use App\Bill;
 
-#require_once(__DIR__ . "/../../../../php/references.php");
 use App\References;
 
 class ReportSurgicalController extends ReportController {
-  public function index($when) {
-    $this->result['list'] = DB::select("SELECT
+  public function buildData() {
+    $this->result['list'] = $this->runSqlWithNamedParameter("SELECT
         bills.id as bid,
         patients.id as pid,
         bills.Date as Date,
@@ -35,7 +35,7 @@ class ReportSurgicalController extends ReportController {
               bills.total_real as total_real,
               bills.total_asked as total_asked,
               bills.total_paid as total_paid,
-        exists(select * from bills as b2 where b2.patient_id = bills.patient_id and b2.Date < :whenFrom12) as oldPatient,
+        exists(select * from bills as b2 where b2.patient_id = bills.patient_id and b2.Date < " . $this->getParamAsSqlNamed("whenFrom") . ") as oldPatient,
         consults.Date AS last_seen,
         consults.TreatmentEvaluation AS last_treat_result,
         consults.TreatmentFinished AS last_treat_finished
@@ -45,14 +45,11 @@ class ReportSurgicalController extends ReportController {
           LEFT OUTER JOIN consults ON (patients.id = consults.patient_id)
           LEFT OUTER JOIN consults AS consults2 ON (patients.id = consults2.patient_id AND consults2.Date > consults.Date)
       WHERE (1 = 1)
-        AND " . $this->getReportParamFilter("when", "bills.Date") . "
+        AND " . $this->getParamAsSqlFilter("when", "bills.Date") . "
         AND " . Bill::getActivityFilter("surgical") . "
         AND consults2.Date IS NULL
-      ORDER BY bills.Date, bills.id",
-      $this->sqlBindParams + [ "whenFrom12" => $this->internalWhenFrom ]
+      ORDER BY bills.Date, bills.id"
     );
-
-    $this->getReportParams("when", $when);
 
     $this->result['totals'] = array();
     foreach($this->result['list'] as $e) {
@@ -63,6 +60,5 @@ class ReportSurgicalController extends ReportController {
         $this->result['totals'][$k] += $v;
       }
     }
-    return response()->jsonOrJSONP($this->result);
   }
 }

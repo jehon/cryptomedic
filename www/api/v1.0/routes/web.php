@@ -84,7 +84,7 @@ Route::group([ 'prefix' => '/api/' . basename(dirname(__DIR__)) ], function() {
       ]);
 
       Route::get('reports/surgical/{timing}', [
-        "uses" => "ReportSurgicalController@byTiming"
+        "uses" => "ReportSurgicalController@index"
       ]);
     });
 
