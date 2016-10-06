@@ -2,7 +2,10 @@
     "params": {
         "month": "2014-05",
         "when": "2014-05",
-        "examiner": null,
+        "period": "monthly",
+        "whenFrom": "2014-05-01",
+        "whenTo": "2014-05-31",
+        "examiner": "",
         "center": ""
     },
     "summary": {
@@ -13,9 +16,9 @@
                 "old": 0
             },
             "clubfoots": {
-                "total": 0,
+                "total": 5,
                 "new": 0,
-                "old": 0
+                "old": 5
             },
             "polio": {
                 "total": 0,
@@ -62,25 +65,25 @@
                 "new": 0,
                 "old": 0
             },
-            "total": 0
+            "total": 5
         },
         "sociallevel": {
-            "familyincome": null,
-            "nbhousehold": null,
+            "familyincome": 10800,
+            "nbhousehold": 7.8,
             "0": 0,
             "1": 0,
-            "2": 0,
+            "2": 5,
             "3": 0,
             "4": 0,
-            "total": 0
+            "total": 5
         },
         "centers": {
-            "ChakariaDisabilityCenter": 0,
+            "ChakariaDisabilityCenter": 3,
             "ChakariaDeviceCenter": 0,
             "CoxsBazar": 0,
             "Ukhia": 0,
-            "Ramu": 0,
-            "Moheshkhali": 0,
+            "Ramu": 1,
+            "Moheshkhali": 1,
             "Lohagara": 0,
             "CMOSH": 0,
             "OtherField": 0,
@@ -108,7 +111,7 @@
         "workshop_Abdominal_corset_belt": 0,
         "workshop_Arch_support": 0,
         "workshop_BAFO_night": 0,
-        "workshop_BAFO_walking": 0,
+        "workshop_BAFO_walking": 1,
         "workshop_BHKAFO_Drop_lock_single_axis": 0,
         "workshop_BHKAFO_night": 0,
         "workshop_BHKAFO_walking": 0,
@@ -151,7 +154,7 @@
         "workshop_Other_orthodevice": 0,
         "consult_CDC_consultation_Bengali_Doctor": 0,
         "consult_CDC_consultation_Doctor": 0,
-        "consult_CDC_consultation_physio": 0,
+        "consult_CDC_consultation_physio": 4,
         "consult_ClubFoot_Follow_up": 0,
         "consult_field_visit": 0,
         "consult_give_appointment": 0,
@@ -162,7 +165,7 @@
         "other_make_long_plaster": 0,
         "other_make_short_plaster": 0,
         "other_making_dressing": 0,
-        "other_making_plaster": 0,
+        "other_making_plaster": 2,
         "other_microbus": 0,
         "other_nutritionalAdvice": 0,
         "other_nutritionalSupport": 0,
@@ -184,14 +187,14 @@
                 "paid": null
             },
             "workshop": {
-                "real": null,
-                "asked": null,
-                "paid": null
+                "real": 3000,
+                "asked": 1200,
+                "paid": 0
             },
             "consult": {
-                "real": null,
-                "asked": null,
-                "paid": null
+                "real": 1200,
+                "asked": 480,
+                "paid": 300
             },
             "other": {
                 "real": null,
@@ -199,9 +202,9 @@
                 "paid": null
             },
             "total": {
-                "real": null,
-                "asked": null,
-                "paid": null
+                "real": 4200,
+                "asked": 1680,
+                "paid": 300
             }
         }
     }

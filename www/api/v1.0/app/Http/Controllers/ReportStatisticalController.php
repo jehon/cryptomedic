@@ -46,27 +46,25 @@ class ReportStatisticalController extends ReportController {
 	}
 
 	protected function billStats($header, $stat_filter) {
-		$sql = "SELECT SUM(total_real) AS total_real,
-		SUM(total_asked) as total_asked,
-		SUM(total_paid) as total_paid
-		FROM bills
-		WHERE ({$this->filter}) AND ({$stat_filter})";
-
-		$stats = DB::select($sql, $this->sqlBindParams);
+		$stats = $this->runSqlWithNamedParameter("SELECT SUM(total_real) AS total_real,
+			SUM(total_asked) as total_asked,
+			SUM(total_paid) as total_paid
+			FROM bills
+			WHERE ({$this->filter}) AND ({$stat_filter})"
+			);
 		$stats = array_pop($stats);
 		$this->resultPathSet("$header.real", $stats->total_real);
 		$this->resultPathSet("$header.asked", $stats->total_asked);
 		$this->resultPathSet("$header.paid", $stats->total_paid);
 	}
 
-	public function index($when) {
-		$this->result['params']['when'] = $when;
+  public function buildData() {
 		$this->filter = "("
-			. $this->getReportParamFilter("when", "bills.Date")
+			. $this->getParamAsSqlFilter("when", "bills.Date")
 			. " AND "
-			. $this->getReportParamFilter("examiner", "bills.examinerName")
+			. $this->getParamAsSqlFilter("examiner", "bills.examinerName")
 			. " AND "
-			. $this->getReportParamFilter("center", "bills.center")
+			. $this->getParamAsSqlFilter("center", "bills.center")
 			. ")";
 
 		// By pathology
@@ -84,11 +82,10 @@ class ReportStatisticalController extends ReportController {
 		$this->resultPathSet("summary.pathologies.total", $this->getOneBySQL("SELECT count(*) as res FROM bills WHERE {$this->filter} "));
 
 		// Social levels
-		$res = DB::select("SELECT CAST(SUM(sl_familySalary) / COUNT(*) AS DECIMAL) as income,
+		$res = $this->runSqlWithNamedParameter("SELECT CAST(SUM(sl_familySalary) / COUNT(*) AS DECIMAL) as income,
 				SUM(sl_numberOfHouseholdMembers) / COUNT(*) as nbhous
 				FROM bills
-				WHERE {$this->filter} ",
-				$this->sqlBindParams);
+				WHERE {$this->filter} ");
 		$res = array_pop($res);
 
 		$this->resultPathSet("summary.sociallevel.familyincome", $res->income);
@@ -104,8 +101,7 @@ class ReportStatisticalController extends ReportController {
 
 		// By center
 		$centers = References::$lists['Centers'];
-		$res = DB::select("SELECT Center, Count(*) as `count` FROM bills WHERE {$this->filter} GROUP BY Center",
-			$this->sqlBindParams);
+		$res = $this->runSqlWithNamedParameter("SELECT Center, Count(*) as `count` FROM bills WHERE {$this->filter} GROUP BY Center");
 		$res2 = array();
 		foreach($res as $line) {
 			$res2[$line->Center] = $line->count;
@@ -138,7 +134,5 @@ class ReportStatisticalController extends ReportController {
 		$this->billStats("summary.financials.consult", "NOT($anyMedical OR $anySurgery OR $anyWorkshop) AND $anyConsult");
 		$this->billStats("summary.financials.other", "NOT($anyMedical OR $anySurgery OR $anyWorkshop OR $anyConsult) AND $anyOther");
 		$this->billStats("summary.financials.total", "(1=1)");
-
-		return response()->jsonOrJSONP($this->result);
 	}
 }
