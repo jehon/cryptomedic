@@ -118,11 +118,13 @@ abstract class ReportController extends Controller {
       $this->result['params'][$name] = $this->internalWhenTo;
       return $this->internalWhenTo;
     }
-    if (!Request::has($name)) {
-      return $default;
+    if (Request::has($name)) {
+      $ret = Request::input($name);
+    } else {
+      $ret = $default;
     }
-    $this->result['params'][$name] = Request::input($name);
-    return Request::input($name);
+    $this->result['params'][$name] = $ret;
+    return $ret;
   }
 
   public function getParamAsSqlNamed($name) {
