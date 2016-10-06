@@ -2,10 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use DB;
-use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Request;
 use App\Bill;
 use App\CryptomedicModel;
 use App\References;
