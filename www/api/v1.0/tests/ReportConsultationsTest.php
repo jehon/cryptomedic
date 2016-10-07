@@ -7,7 +7,7 @@ class ReportConsultationsTest extends RouteReferenceTestCase {
 
 	public function setUp($url = null, $params = array()) {
 		parent::setUp();
-		$this->setUrl("reports/consultations");
+		$this->setUrl("reports/consultations/day");
 	}
 
 	public function test() {

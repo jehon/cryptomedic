@@ -67,7 +67,7 @@ Route::group([ 'prefix' => '/api/' . basename(dirname(__DIR__)) ], function() {
     Route::get('/auth/settings', "Auth\AuthController@getSettings");
 
     hasPermission('reports.execute', function() {
-      Route::get('reports/consultations', [
+      Route::get('reports/consultations/{timing?}', [
         "uses" => "ReportConsultationsController@index"
       ]);
 
