@@ -1,6 +1,8 @@
 {
     "params": {
         "day": "2015-04-28",
+        "when": "2015-04-28",
+        "period": "daily",
         "center": "Chakaria Disability Center"
     },
     "list": [
