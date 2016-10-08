@@ -6,8 +6,8 @@ import date2CanonicString from 'helpers/date2CanonicString';
 
 describe('Cryptomedic.js', function() {
   describe('date2CanonicString', function() {
-    it('should return 0000-00-00 00:00:00 GMT+0000 for null', function() {
-      expect(date2CanonicString(null)).toEqual('0000-00-00 00:00:00 GMT+0000');
+    it('should return null for null', function() {
+      expect(date2CanonicString(null)).toEqual(null);
     });
     it('should return information that could be understood through objectify', function() {
       var d = new Date();
@@ -30,8 +30,8 @@ describe('Cryptomedic.js', function() {
     it('should parse ' + sd + ' correctly', function() {
       expect(objectify(sd)).toEqual(d);
     });
-    it('should parse ' + date2CanonicString(null) + ' correctly', function() {
-      expect(objectify('0000-00-00 00:00:00 GMT+0000')).toEqual(null);
+    it('should parse null correctly', function() {
+      expect(objectify(null)).toEqual(null);
     });
     it('should parse recursively arrays and objects', function() {
       expect(objectify({ a: sd })).toEqual({ a: d });
