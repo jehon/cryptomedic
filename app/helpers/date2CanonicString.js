@@ -1,6 +1,6 @@
 
 function date2CanonicString(d, dateOnly) {
-  if (d == null) return '0000-00-00 00:00:00 GMT+0000';
+  if (d == null) return null;
 
   var ts = - (new Date()).getTimezoneOffset()/60 * 100;
 

@@ -9,7 +9,7 @@ function objectify(what) {
       if (what === date2CanonicString(null)) {
         return null;
       }
-      if (what == '0000-00-00') {
+      if (what == '') {
         return null;
       }
       if (what.match('[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2} GMT[+-][0-9]{4}') == what) {

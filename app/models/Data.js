@@ -9,16 +9,14 @@ function objectify(what) {
       if (what == date2CanonicString(null)) {
         return null;
       }
-      if (what == '0000-00-00') {
+      if (what == '') {
         return null;
       }
-      if (what.match('[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2} GMT[+-][0-9]{4}') == what) {
-        if (what == '0000-00-00 00:00:00 GMT+0000') return null;
+      if (what.match('[1-2][0-9]{3}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2} GMT[+-][0-9]{4}') == what) {
         return new Date(what.substr(0, 4), what.substr(5, 2) - 1, what.substr(8, 2),
           what.substr(11, 2), what.substr(14, 2), what.substr(17, 2));
       }
-      if (what.match('[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}') == what) {
-        if (what == '0000-00-00 00:00:00') return null;
+      if (what.match('[1-2][0-9]{3}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}') == what) {
         return new Date(what.substr(0, 4), what.substr(5, 2) - 1, what.substr(8, 2),
           what.substr(11, 2), what.substr(14, 2), what.substr(17, 2));
       }
