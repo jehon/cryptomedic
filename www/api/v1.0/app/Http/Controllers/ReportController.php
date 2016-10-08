@@ -109,6 +109,12 @@ abstract class ReportController extends Controller {
   abstract function buildData();
 
   // *** Helpers *** //
+  // public function requireParam($name) {
+  //   if (!Request::has($name)) {
+  //     abort(406, "Parameter '$name' not found");
+  //   }
+  // }
+
   public function getParam($name, $default = "") {
     if ($name == 'whenFrom') {
       $this->result['params'][$name] = $this->internalWhenFrom;
