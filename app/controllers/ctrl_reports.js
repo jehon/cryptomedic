@@ -17,20 +17,27 @@ function ctrl_reports($scope, $routeParams, $sce) {
   }
 
   $scope.reports = {
-    'dailyActivity': {
-      name: 'Daily Report',
-      description: 'If you want to know your daily activity, choose this report.<br>'
+    'activity': {
+      name: 'Activity (daily/monthly) Report',
+      description: 'If you want to know your activity, choose this report.<br>'
         + 'Options: the day, and optionnaly the examiner, the center and type of activity (workshop / consult / surgical / ...).<br>',
-      params: [ 'center', 'day', 'examiner', 'activity' ],
+      params: [ 'center', 'period', 'examiner', 'activity' ],
       templateUrl: template('report', 'activity')
     },
-    'monthlyActivity': {
-      name: 'Monthly Report',
-      description: 'If you want to know your activity on a month, choose this report<br>'
-        + 'Options: the day, and optionnaly the examiner, the center and type of activity (workshop / consult / surgical / ...).<br>',
-      params: [ 'center', 'examiner', 'month', 'activity' ],
-      templateUrl: template('report', 'activity')
-    },
+    // 'dailyActivity': {
+    //   name: 'Daily Report',
+    //   description: 'If you want to know your daily activity, choose this report.<br>'
+    //     + 'Options: the day, and optionnaly the examiner, the center and type of activity (workshop / consult / surgical / ...).<br>',
+    //   params: [ 'center', 'day', 'examiner', 'activity' ],
+    //   templateUrl: template('report', 'activity')
+    // },
+    // 'monthlyActivity': {
+    //   name: 'Monthly Report',
+    //   description: 'If you want to know your activity on a month, choose this report<br>'
+    //     + 'Options: the day, and optionnaly the examiner, the center and type of activity (workshop / consult / surgical / ...).<br>',
+    //   params: [ 'center', 'examiner', 'month', 'activity' ],
+    //   templateUrl: template('report', 'activity')
+    // },
     'consultations': {
       name: 'Consultations planned',
       description: 'List of consultations planned on a specific day in a specific center.<br>'
