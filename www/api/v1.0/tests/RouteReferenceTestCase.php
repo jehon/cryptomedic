@@ -18,9 +18,9 @@ class RouteReferenceTestCase extends TestCase {
  		$this->setUrl($url, $params);
 	}
 
-	protected function setUrl($url, $params = array()) {
+	protected function setUrl($url, $baseParams = array()) {
 		$this->url = "/api/" . basename(dirname(dirname(__FILE__))). "/" . $url;
-		$this->params = $params;
+		$this->baseParams = $baseParams;
 	}
 
 	protected function setParams($params = array()) {
@@ -35,7 +35,7 @@ class RouteReferenceTestCase extends TestCase {
 
 	protected function myAssertUnauthorized($group = null) {
 		$this->preAuthenticate($group);
-		$response = $this->call('GET', $this->url, $this->params);
+		$response = $this->call('GET', $this->url, $this->baseParams + $this->params);
 		if ($response->getStatusCode() == 500) {
 			echo $response->getContent();
 		}
@@ -46,7 +46,7 @@ class RouteReferenceTestCase extends TestCase {
 
 	protected function myAssertAuthorized($group = null) {
 		$this->preAuthenticate($group);
-		$response = $this->call('GET', $this->url, $this->params);
+		$response = $this->call('GET', $this->url, $this->baseParams + $this->params);
 		if ($response->getStatusCode() == 500) {
 			echo $response->getContent();
 		}

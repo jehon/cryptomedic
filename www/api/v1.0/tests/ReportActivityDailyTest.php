@@ -7,8 +7,8 @@ class ReportActivityDailyTest extends RouteReferenceTestCase {
 	static public $nmonth = "2014-05";
 
 	public function setUp($url = null, $params = array()) {
-		parent::setUp("reports/activity");
-		$this->period = self::DAILY;
+		parent::setUp("reports/activity", array('period' => self::DAILY, 'day' => self::$nday, 'month' => self::$nmonth));
+		$this->type = 0;
 	}
 
 	protected function thisAssertResponse($json, $nbr) {
@@ -20,7 +20,7 @@ class ReportActivityDailyTest extends RouteReferenceTestCase {
 	}
 
 	public function testByDate() {
-		$this->setParams(array('period' => $this->period, 'day' => self::$nday, 'month' => self::$nmonth, 'center' => '', 'examiner' => ''));
+		$this->setParams(array('center' => '', 'examiner' => ''));
 		$this->myAssertUnauthorized();
 
 		$this->myAssertResponseForReference("readonly");
@@ -33,7 +33,7 @@ class ReportActivityDailyTest extends RouteReferenceTestCase {
 	}
 
  	public function testByCenter() {
-		$this->setParams(array('period' => $this->period, 'day' => self::$nday, 'month' => self::$nmonth, 'center' => 'Chakaria Disability Center', 'examiner' => ''));
+		$this->setParams(array('center' => 'Chakaria Disability Center', 'examiner' => ''));
  		$this->myAssertResponseForReference("manager");
 		$json = $this->myAssertJSON("manager");
 		$this->thisAssertResponse($json, [ 1, 3 ]);
@@ -43,7 +43,7 @@ class ReportActivityDailyTest extends RouteReferenceTestCase {
 	}
 
  	public function testByExaminer() {
- 		$this->setParams(array('period' => $this->period, 'day' => self::$nday, 'month' => self::$nmonth, 'center' => '', 'examiner' => 'Ershad'));
+ 		$this->setParams(array('center' => '', 'examiner' => 'Ershad'));
  		$this->myAssertResponseForReference("manager");
  		$json = $this->myAssertJSON("manager");
 		$this->thisAssertResponse($json, [ 2, 3 ]);
@@ -53,7 +53,7 @@ class ReportActivityDailyTest extends RouteReferenceTestCase {
  	}
 
  	public function testByCenterAndExaminer() {
- 		$this->setParams(array('period' => $this->period, 'day' => self::$nday, 'month' => self::$nmonth, 'center' => "Chakaria Disability Center", 'examiner' => 'Ershad'));
+ 		$this->setParams(array('center' => "Chakaria Disability Center", 'examiner' => 'Ershad'));
  		$this->myAssertResponseForReference("manager");
  		$json = $this->myAssertJSON("manager");
  		$this->thisAssertResponse($json, [ 1, 2 ]);
