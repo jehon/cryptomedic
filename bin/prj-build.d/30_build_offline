@@ -4,7 +4,7 @@ set -e
 
 cd $PRJ_DIR/www && \
   node \
-    /vagrant/node_modules/.bin/sw-precache  \
+    $PRJ_DIR/node_modules/.bin/sw-precache  \
     --static-file-globs=static/**           \
     --static-file-globs=build/**            \
     --static-file-globs=bower_components/** \
