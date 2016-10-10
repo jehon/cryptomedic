@@ -7,11 +7,11 @@ class ReportStatisticalMonthlyTest extends RouteReferenceTestCase {
 
   public function setUp($url = null, $params = array()) {
     parent::setUp();
-    $this->setUrl("reports/statistical/month");
+    $this->setUrl("reports/statistical", [ "period" => self::MONTHLY, "month" => self::$nmonth ]);
   }
 
   public function testsConsultation() {
-    $this->setParams([ "month" => self::$nmonth, "center" => "" ]);
+    $this->setParams([ "center" => "" ]);
     $this->myAssertUnauthorized();
 
     $this->myAssertResponseForReference("readonly");
@@ -27,7 +27,7 @@ class ReportStatisticalMonthlyTest extends RouteReferenceTestCase {
   }
 
   public function testsConsultationByDate() {
-    $this->setParams([ "month" => self::$nmonth, "center" => "" ]);
+    $this->setParams([ "center" => "" ]);
     $this->myAssertUnauthorized();
 
     $this->myAssertResponseForReference("readonly");
@@ -43,7 +43,7 @@ class ReportStatisticalMonthlyTest extends RouteReferenceTestCase {
   }
 
   public function testsConsultationByDateAndCenter() {
-    $this->setParams([ "month" => self::$nmonth, "center" => "Chakaria Disability Center" ]);
+    $this->setParams([ "center" => "Chakaria Disability Center" ]);
     $this->myAssertUnauthorized();
 
     $this->myAssertResponseForReference("readonly");
