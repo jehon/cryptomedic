@@ -16,7 +16,7 @@ abstract class ReportController extends Controller {
   protected $internalWhenTo = "";
   protected $sqlBindParams = array();
 
-  public function index($timing = "day") {
+  public function index() {
     // Reset all parameters, since testing will re-use the same object
     $this->params = Request::all();
     $this->sqlBindParams = [];
@@ -26,79 +26,72 @@ abstract class ReportController extends Controller {
 
     $this->result['params'] = array();
 
-    switch($timing) {
-      case 'day':
-      case 'month':
-      case 'year':
-        break;
-      default:
-        abort(404, "No correct timing found");
-    }
-
     // TODO: Refaire: param=time + from and to = calculated based on what is not specified in "time" (ex: 2016 -> +"-01-01")
     // demande changement dans controlleur javascript
 
-    if (Request::has('year')) {
-      $when = $this->getParam('year');
-      if ($when instanceof DateTime) {
-        $when = $when->format("Y-m-d");
+    if (Request::has('period')) {
+      if (($this->getParam('period') == 'year') && Request::has('year')) {
+        $when = $this->getParam('year');
+        if ($when instanceof DateTime) {
+          $when = $when->format("Y-m-d");
+        }
+
+        $when = substr($when, 0, 4);
+
+        if (!preg_match("/^[0-9]{4}$/", $when)) {
+          abort(406, "Invalid year: " . $when);
+        }
+
+        $year = $when;
+
+        $this->internalWhenFrom = "{$year}-01-01";
+        $this->internalWhenTo = date("Y-m-d", mktime(0, 0, -1, 1, 1, $year + 1));
+        $this->result['params']['when'] = $when;
+        $this->result['params']['period'] = "yearly";
       }
 
-      $when = substr($when, 0, 4);
+      if (($this->getParam('period') == 'month') && Request::has('month')) {
+        $when = $this->getParam('month');
+        if ($when instanceof DateTime) {
+          $when = $when->format("Y-m-d");
+        }
 
-      if (!preg_match("/^[0-9]{4}$/", $when)) {
-        abort(406, "Invalid year: " . $when);
+        $when = substr($when, 0, 7);
+
+        if (!preg_match("/^[0-9]{4}-[0-9]{2}$/", $when)) {
+          abort(406, "Invalid month: " . $when);
+        }
+
+        $year = substr($when, 0, 4);
+        $month = substr($when, 5, 2);
+
+        $this->internalWhenFrom = "{$year}-{$month}-01";
+        $this->internalWhenTo = date("Y-m-d", mktime(0, 0, -1, $month + 1, 1, $year));
+        $this->result['params']['when'] = $when;
+        $this->result['params']['period'] = "monthly";
       }
 
-      $year = $when;
+      if (($this->getParam('period') == 'day') && Request::has('day')) {
+        $when = $this->getParam('day');
 
-      $this->internalWhenFrom = "{$year}-01-01";
-      $this->internalWhenTo = date("Y-m-d", mktime(0, 0, -1, 1, 1, $year + 1));
-      $this->result['params']['when'] = $when;
-      $this->result['params']['period'] = "yearly";
-    }
+        if ($when instanceof DateTime) {
+          $when = $when->format("Y-m-d");
+        }
 
-    if (Request::has('month')) {
-      $when = $this->getParam('month');
-      if ($when instanceof DateTime) {
-        $when = $when->format("Y-m-d");
+        $when = substr($when, 0, 10);
+
+        if (!preg_match("/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/", $when)) {
+          abort(406, "Invalid day: " . $when);
+        }
+        $year = substr($when, 0, 4);
+        $month = substr($when, 5, 2);
+        $day = substr($when, 8, 2);
+
+        $this->internalWhenFrom = "{$year}-{$month}-{$day}";
+        $this->internalWhenTo = date("Y-m-d", mktime(0, 0, -1, $month, $day + 1, $year));
+        $this->result['params']['when'] = $when;
+        $this->result['params']['period'] = "daily";
       }
-
-      $when = substr($when, 0, 7);
-
-      if (!preg_match("/^[0-9]{4}-[0-9]{2}$/", $when)) {
-        abort(406, "Invalid month: " . $when);
-      }
-
-      $year = substr($when, 0, 4);
-      $month = substr($when, 5, 2);
-
-      $this->internalWhenFrom = "{$year}-{$month}-01";
-      $this->internalWhenTo = date("Y-m-d", mktime(0, 0, -1, $month + 1, 1, $year));
-      $this->result['params']['when'] = $when;
-      $this->result['params']['period'] = "monthly";
-    }
-
-    if (Request::has('day')) {
-      $when = $this->getParam('day');
-
-      if ($when instanceof DateTime) {
-        $when = $when->format("Y-m-d");
-      }
-
-      $when = substr($when, 0, 10);
-
-      if (!preg_match("/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/", $when)) {
-        abort(406, "Invalid day: " . $when);
-      }
-      $year = substr($when, 0, 4);
-      $month = substr($when, 5, 2);
-      $day = substr($when, 8, 2);
-
-      $this->internalWhenFrom = "{$year}-{$month}-{$day}";
-      $this->internalWhenTo = date("Y-m-d", mktime(0, 0, -1, $month, $day + 1, $year));
-      $this->result['params']['when'] = $when;
-      $this->result['params']['period'] = "daily";
     }
 
     $this->buildData();

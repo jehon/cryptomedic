@@ -6,9 +6,9 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 class RouteReferenceTestCase extends TestCase {
 	use DatabaseTransactions;
 
-	static public $DAILY=0;
-	static public $MONTHLY=1;
-	static public $YEARLY=2;
+	const DAILY   = "day";
+	const MONTHLY = "month";
+	const YEARLY  = "year";
 
 	private $url = "";
 	private $params = array();
