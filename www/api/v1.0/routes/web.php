@@ -67,19 +67,19 @@ Route::group([ 'prefix' => '/api/' . basename(dirname(__DIR__)) ], function() {
     Route::get('/auth/settings', "Auth\AuthController@getSettings");
 
     hasPermission('reports.execute', function() {
-      Route::get('reports/consultations/{timing?}', [
+      Route::get('reports/consultations', [
         "uses" => "ReportConsultationsController@index"
       ]);
 
-      Route::get('reports/activity/{timing?}', [
+      Route::get('reports/activity', [
         "uses" => "ReportActivityController@index"
       ]);
 
-      Route::get('reports/statistical/{timing?}', [
+      Route::get('reports/statistical', [
         "uses" => "ReportStatisticalController@index"
       ]);
 
-      Route::get('reports/surgical/{timing}', [
+      Route::get('reports/surgical', [
         "uses" => "ReportSurgicalController@index"
       ]);
     });
