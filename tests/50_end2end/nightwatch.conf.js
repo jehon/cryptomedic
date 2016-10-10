@@ -6,6 +6,8 @@
 let remoteTarget = require(__dirname + '/../../bin/lib/vagrantPort');
 let selenium = require('selenium-server');
 
+selenium.path = __dirname + "/../../backups/selenium-server-standalone-3.0.0-beta4.jar"
+
 module.exports = {
   "src_folders" : [ "tests" ],
   "output_folder" : "../../tmp/end2end",
@@ -22,6 +24,7 @@ module.exports = {
     "port" : 4444,
     "cli_args" : {
       "webdriver.chrome.driver": "../../node_modules/chromedriver/lib/chromedriver/chromedriver",
+      "webdriver.gecko.driver": require('geckodriver').path
       // "webdriver.gecko.driver": "../../node_modules/chromedriver/lib/"
     }
   },
@@ -43,7 +46,7 @@ module.exports = {
       },
       "desiredCapabilities": {
         "browserName": "firefox",
-        // "marionnette": true,
+        "marionnette": true,
         "webdriver.log.driver": "DEBUG",
         "javascriptEnabled": true,
         "acceptSslCerts": true

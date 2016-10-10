@@ -31,6 +31,7 @@
     "expose-loader": "^0.7.1",
     "file-loader": "latest",
     "fs-extra": "latest",
+    "geckodriver": "^1.1.3",
     "glob": "latest",
     "html-webpack-plugin": "latest",
     "imports-loader": "^0.6.5",
