@@ -61,6 +61,10 @@ return [
 	    'database'  => $myconfig["database"]["schema"],
 	    'username'  => $myconfig["database"]["username"],
 	    'password'  => $myconfig["database"]["password"],
+
+        // http://laravel.io/forum/10-16-2015-set-default-mysql-timezone-on-connect
+        'timezone'  => '+00:00',
+
             'charset' => 'utf8',
             'collation' => 'utf8_unicode_ci',
             'prefix' => '',
