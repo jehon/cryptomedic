@@ -4,7 +4,7 @@ module.exports = {
     var report_table = client.page.cryptomedic().tableIterator('#report_table table');
     client
       .page.cryptomedic().authenticate('readonly')
-      .page.cryptomedic().report('monthlyActivity', { 'month': '2014-05' })
+      .page.cryptomedic().report('activity', { 'month': '2014-05' })
       ;
     report_table.assert('1')
         .nextCol().assert('2014-05')
@@ -48,7 +48,7 @@ module.exports = {
     var report_table = client.page.cryptomedic().tableIterator('#report_table table');
     client
       .page.cryptomedic().authenticate('readonly')
-      .page.cryptomedic().report('dailyActivity', { 'day': '2014-05-20' })
+      .page.cryptomedic().report('activity', { 'day': '2014-05-20' })
       ;
     report_table.assert('1')
         .nextCol().assert('2014-05-20')
