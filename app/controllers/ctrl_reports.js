@@ -30,6 +30,9 @@ function ctrl_reports($scope, $routeParams, $sce) {
         + 'See also the button in the menu<br>'
         + 'Options: the day and the center.',
       params: [ 'day', 'center' ],
+      fixedParams: {
+        period: "day"
+      },
       templateUrl: template('report', 'consultations')
     },
     'statistical': {
@@ -100,6 +103,10 @@ function ctrl_reports($scope, $routeParams, $sce) {
     if (typeof($scope.reports[report].dataGenerator) != 'undefined') {
       dataGenerator = $scope.reports[report].dataGenerator;
     }
+    if ($scope.reports[report].fixedParams) {
+      Object.assign($scope.values, $scope.reports[report].fixedParams);
+    }
+
     service_backend().getReport(dataGenerator,
         $scope.values
       )
