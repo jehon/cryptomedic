@@ -163,8 +163,8 @@ export default function service_backend() {
         ;
     },
 
-    'getReport': function(reportName, data, timing) {
-      return myFrontFetch({ url: 'reports/' + reportName + (timing ? '/' + timing : ''), data: nullify(data) })
+    'getReport': function(reportName, data) {
+      return myFrontFetch({ url: 'reports/' + reportName, data: nullify(data) })
         .catch()
         ;
     },
