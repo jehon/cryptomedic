@@ -12,17 +12,17 @@ abstract class ReportController extends Controller {
   protected $params;
   protected $result;
 
-  protected $internalWhenFrom = "";
-  protected $internalWhenTo = "";
-  protected $sqlBindParams = array();
+  protected $internalWhenFrom;
+  protected $internalWhenTo;
+  protected $sqlBindParams;
 
   public function index() {
     // Reset all parameters, since testing will re-use the same object
     $this->params = Request::all();
     $this->sqlBindParams = [];
     $this->result = [];
-    $this->internalWhenFrom = "";
-    $this->internalWhenTo = "";
+    $this->internalWhenFrom = false;
+    $this->internalWhenTo = false;
 
     $this->result['params'] = array();
 
@@ -92,6 +92,10 @@ abstract class ReportController extends Controller {
         $this->result['params']['when'] = $when;
         $this->result['params']['period'] = "daily";
       }
+    }
+
+    if (!$this->internalWhenFrom) {
+      abort(406, "Invalid: no time zone specifiec");
     }
 
     $this->buildData();
