@@ -115,8 +115,7 @@ function ctrl_reports($scope, $routeParams, $sce) {
       dataGenerator = $scope.reports[report].dataGenerator;
     }
     service_backend().getReport(dataGenerator,
-        $scope.values,
-        ($scope.isParam('period') ? $scope.values.period : null)
+        $scope.values
       )
       .then(function(data) {
         $scope.result = data;
