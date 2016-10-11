@@ -105,6 +105,12 @@ function ctrl_reports($scope, $routeParams, $sce) {
       )
       .then(function(data) {
         $scope.result = data;
+        $scope.error = false;
+        $scope.safeApply();
+      }, function(error) {
+        console.error("here we are in error: ", error);
+        $scope.result = true;
+        $scope.error = error;
         $scope.safeApply();
       });
   };
