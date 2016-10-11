@@ -21,7 +21,7 @@ function ctrl_reports($scope, $routeParams, $sce) {
       name: 'Activity (daily/monthly) Report',
       description: 'If you want to know your activity, choose this report.<br>'
         + 'Options: the day, and optionnaly the examiner, the center and type of activity (workshop / consult / surgical / ...).<br>',
-      params: [ 'center', 'period', 'examiner', 'activity' ],
+      params: [ 'period', 'center', 'examiner', 'activity' ],
       templateUrl: template('report', 'activity')
     },
     'consultations': {
