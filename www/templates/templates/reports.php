@@ -90,7 +90,11 @@
   <div ng-if="!result" class='loading'>
     Loading
   </div>
-  <div ng-if="result">
+  <div ng-if="result && error">
+    Please fill in parameters (at least the day, month or year).<br>
+    {{error}}
+  </div>
+  <div ng-if="result && !error">
     <div class='text-right'>
       <a id='download_link'
           class='btn'
