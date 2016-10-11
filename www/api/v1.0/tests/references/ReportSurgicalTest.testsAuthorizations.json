@@ -1,8 +1,8 @@
 {
     "params": {
+        "period": "month",
         "month": "2014-01",
         "when": "2014-01",
-        "period": "monthly",
         "whenFrom": "2014-01-01",
         "whenTo": "2014-01-31"
     },
