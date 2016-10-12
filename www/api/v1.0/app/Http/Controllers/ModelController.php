@@ -46,12 +46,12 @@ class ModelController extends Controller {
 			// otherwise, we go to FolderController@reference (other route)
 
 			// Generate a reference:
-			$res = DB::insert("INSERT INTO patients(entryyear, entryorder)
+			$res = DB::insert("INSERT INTO patients(entryyear, entryorder, Name)
 					 VALUE(?, coalesce(
 							greatest(10000,
 								(select i from (select (max(entryorder) + 1) as i from patients where entryyear = ? and entryorder BETWEEN 10000 AND 19999) as j )
 							),
-					10000))", [ Request::input("entryyear"), Request::input("entryyear") ])
+					10000), ?)", [ Request::input("entryyear"), Request::input("entryyear"), Request::input("Name") ])
 			|| abort(500, "Problem inserting and creating reference");
 
 			// TODO: how does Laravel get last_insert_id cleanly???
