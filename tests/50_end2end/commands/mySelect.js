@@ -1,12 +1,16 @@
 
-exports.command = function(selector, optionNumber) {
-  var self = this;
+exports.command = function(selector, value) {
+  console.log("My Select: ", selector, value);
   this
-    .click(selector);
-  for (var i = 0; i < optionNumber; i++) {
-    this
-      .keys(this.Keys.ARROW_DOWN);
-  }
+    .click(selector)
+    .pause(10)
+    ;
+
+  this
+    .click("option[value='" + value + "']")
+    .pause(10)
+    ;
+
   this
     .keys(this.Keys.ENTER)
     .keys(this.Keys.TAB)
