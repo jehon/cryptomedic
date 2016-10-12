@@ -15,6 +15,8 @@ module.exports = {
       .myClick("#bottomsubmenu #patient_create")
       .waitForElementNotVisible("#busy")
 
+      .pause(1000)
+
       .assert.containsText("#Patient_entryyear", 1998)
       .assert.containsText("#Patient_Name", "rezaul")
       .assert.containsText("#Patient_entryorder", 1) // Should be above 10000
