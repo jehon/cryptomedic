@@ -60,11 +60,16 @@ module.exports = (function() {
         ;
       for(var k in params) {
         var el = 'input[name=' + k + ']';
-        client
-          .waitForElementVisible(el, '@@ Waiting for parameter ' + k + ' => ' + params[k])
-          .clearValue(el);
-        if (params[k]) {
-          client.setValue(el, params[k]);
+        if (k == "period") {
+          el = 'input[name=' + k + ']';
+          client.myRadio(el, params['period']);
+        } else {
+          client
+            .waitForElementVisible(el, '@@ Waiting for parameter ' + k + ' => ' + params[k])
+            .clearValue(el);
+          if (params[k]) {
+            client.setValue(el, params[k]);
+          }
         }
       }
       client

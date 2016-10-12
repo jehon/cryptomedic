@@ -38,11 +38,9 @@
           <div ng-if="isParam('period')" class="form-group">
             <label class="col-sm-2 control-label">Period</label>
             <div class="col-sm-10">
-              <select ng-model="values.period">
-                <option value='day'>daily</option>
-                <option value='month'>monthly</option>
-                <option value='year'>yearly</option>
-              </select>
+              <input type='radio' ng-model="values.period" name='period' value='day'>Day
+              <input type='radio' ng-model="values.period" name='period' value='month'>Month
+              <input type='radio' ng-model="values.period" name='period' value='year'>Year
             </div>
           </div>
             <div ng-if="isParam('day')" class="form-group">
