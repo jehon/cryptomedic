@@ -32,7 +32,8 @@ class CryptomedicModel extends Model {
 		unset($data['created_at']);
 		unset($data['updated_at']);
 		unset($data['id']);
-		return array_intersect_key($data, array_combine($columns, $columns));
+		$result = array_intersect_key($data, array_combine($columns, $columns));
+		return $result;
 	}
 
 	public static function create(array $attributes = array()) {
