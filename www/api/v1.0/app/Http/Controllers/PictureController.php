@@ -10,6 +10,23 @@ use Illuminate\Support\Facades\Input;
 use App\Picture;
 
 class PictureController extends Controller {
+
+  // List all database pictures that does not exists on the file system
+  public function checkFileSystem() {
+    $list = DB::table('pictures')->get();
+    $res = [];
+    echo "<pre>";
+    foreach($list as $v) {
+      $picture = Picture::findOrFail($v->id);
+      $file = $picture->getPhysicalPath();
+      if (!file_exists($file)) {
+        echo $v->id . ": " . $v->file . "\n";
+      }
+    }
+    echo "</pre>";
+    return "ok";
+  }
+
 	public function _file($id) {
 		$picture = Picture::findOrFail($id);
 		$file = $picture->getPhysicalPath();
