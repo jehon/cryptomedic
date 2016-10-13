@@ -122,5 +122,9 @@ Route::group([ 'prefix' => '/api/' . basename(dirname(__DIR__)) ], function() {
     hasPermission('admin.computers', function() {
       Route::get('admin/computers', 'ReportComputersController@index');
     });
+
+    hasPermission('admin.checkPictures', function() {
+      Route::get('admin/pictures/checkFileSystem', 'PictureController@checkFileSystem');
+    });
   });
 });
