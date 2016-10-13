@@ -41,10 +41,10 @@ class CryptomedicModel extends Model {
 		return parent::create($attributes);
 	}
 
-	public function save(array $options = array()) {
+	public function save(array $attributes = array()) {
 		if ($this->isDirty()) {
 			$this->lastuser = Auth::user()->username;
-			return parent::save($options);
+			return parent::save($attributes);
 		}
 		return true;
 	}
