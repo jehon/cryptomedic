@@ -43,6 +43,7 @@ class CryptomedicModel extends Model {
 	}
 
 	public function save(array $attributes = array()) {
+		$attributes = static::filterData($attributes);
 		if ($this->isDirty()) {
 			$this->lastuser = Auth::user()->username;
 			return parent::save($attributes);
