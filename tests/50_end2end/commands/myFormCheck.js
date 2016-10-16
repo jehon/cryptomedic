@@ -4,6 +4,9 @@ exports.command = function(selector, fields) {
   this.waitForElementVisible(selector);
   for(var f in fields) {
     var fsel = selector + " " + f;
+    if (f.substr(0, 6) == "select") {
+      fsel = selector + " " + f.substr(6);
+    }
     this.waitForElementVisible(fsel);
     if (fields[f] === true) {
       this

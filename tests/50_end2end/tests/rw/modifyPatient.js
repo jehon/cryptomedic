@@ -3,7 +3,7 @@ var nb = 0;
 
 var appointment = {
   "#Appointment_Nextappointment": "2010-01-01",
-  "#Appointment_NextCenter": "Ramu"
+  "select#Appointment_NextCenter": "Ramu"
 };
 
 module.exports = {
