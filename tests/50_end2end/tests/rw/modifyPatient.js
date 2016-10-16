@@ -226,7 +226,7 @@ module.exports = {
       .myClick("#topsubmenu #patient_edit")
       .waitForElementPresent("#Patient_Name")
       .assert.value("#Patient_Name", "mozahar ahamed")
-      .mySelect("#Patient_Pathology", 2)
+      .mySelect("#Patient_Pathology", "ClubFoot")
       .setValue("#Patient_Name", "rezaul")
       .myClick("#topsubmenu #patient_cancel")
       .waitForElementPresent("#Patient_Name")
