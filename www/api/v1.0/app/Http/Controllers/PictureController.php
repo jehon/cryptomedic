@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Input;
 
 use App\Picture;
 
+require_once(__DIR__ . "/../../../../../../bin/lib/Database.php");
+
 class PictureController extends Controller {
 
   // List all database pictures that does not exists on the file system
@@ -16,6 +18,7 @@ class PictureController extends Controller {
     $list = DB::table('pictures')->get();
     $res = [];
     echo "<pre>";
+    echo "Check database records\n";
     foreach($list as $v) {
       $picture = Picture::findOrFail($v->id);
       $file = $picture->getPhysicalPath();
@@ -23,7 +26,17 @@ class PictureController extends Controller {
         echo $v->id . ": " . $v->file . "\n";
       }
     }
+
+    echo "\n";
+    echo "Check files present\n";
+    foreach(\Jehon\Maintenance\myglob(Picture::getPhysicalRoot() . "/*") as $file) {
+      $file = substr($file, strlen(Picture::getPhysicalRoot()));
+      if (!Picture::getPictureĈountByPhysicalPath($file)) {
+        echo "$file\n";
+      }
+    }
     echo "</pre>";
+
     return "ok";
   }
 
