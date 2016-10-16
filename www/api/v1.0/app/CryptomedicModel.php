@@ -33,6 +33,11 @@ class CryptomedicModel extends Model {
 		unset($data['updated_at']);
 		unset($data['id']);
 		$result = array_intersect_key($data, array_combine($columns, $columns));
+		foreach($result as $k => $v) {
+			if ($result[$k] == "" || $result[$k] == "undefined") {
+				unset($result[$k]);
+			}
+		}
 		return $result;
 	}
 
