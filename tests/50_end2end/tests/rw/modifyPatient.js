@@ -222,6 +222,7 @@ module.exports = {
 
   "edit and cancel patient": function(client) {
     client
+      .pause(100)
       .myClick("#button_patient")
       .myClick("#topsubmenu #patient_edit")
       .waitForElementPresent("#Patient_Name")
