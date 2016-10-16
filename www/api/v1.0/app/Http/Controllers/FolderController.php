@@ -121,10 +121,6 @@ class FolderController extends Controller {
 	public function createFile() {
 		$data = Input::except('_type');
 
-		if (!array_key_exists("Name", $data)) {
-			$data['Name'] = "";
-		}
-
 		$newObj = Patient::create($data);
 		if (!$newObj->id) {
 			abort(500, "Could not create the patient");
