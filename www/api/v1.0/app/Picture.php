@@ -24,13 +24,21 @@ use Illuminate\Support\Facades\Input;
 class Picture extends CryptomedicModel {
 	const DATA_PREFIX = "data:image/";
 
-	public function getPhysicalPath() {
+	public static function getPhysicalRoot() {
 		global $myconfig;
-		$dir = $myconfig['folders']['storage'] . DIRECTORY_SEPARATOR . "uploadedPictures";
+		return $myconfig['folders']['storage'] . DIRECTORY_SEPARATOR . "uploadedPictures" . DIRECTORY_SEPARATOR;
+	}
+
+	public static function getPictureĈountByPhysicalPath($file) {
+		return self::where('file', $file)->count();
+	}
+
+	public function getPhysicalPath() {
+		$dir = self::getPhysicalRoot();
 		if (!is_dir($dir)) {
 	   	mkdir($dir, 0777, true);
 		}
-    return $dir . DIRECTORY_SEPARATOR . $this->file;
+    return $dir . $this->file;
 	}
 
 	public static function create(array $attributes = array()) {
@@ -73,6 +81,7 @@ class Picture extends CryptomedicModel {
 			if (!file_put_contents($model->getPhysicalPath(), $contentRaw)) {
 				abort(500, "Storing uploaded file to " . $model->getPhysicalPath());
 			}
+			chmod($model->getPhysicalPath(), 0660);
 			$model->save();
 		}
 		return $model;
