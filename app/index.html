@@ -76,6 +76,10 @@
               <img src="../static/img/users.png" height="20px"/>
               Users
             </a></li>
+            <li><a id='menu_matrix'  href='/api/v1.0/admin/securityMatrix' ng-if="hasPermission('admin.securityMatrix')">
+              <img src="../static/img/matrix.png" height="20px"/>
+              Matrix
+            </a></li>
             <li ng-controller='ctrl_login'>
               <button id='logout' type="button" class="btn btn-default navbar-btn" ng-click="doLogout()" >
                 <img src="../static/img/logout.gif"/>
