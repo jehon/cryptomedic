@@ -16,6 +16,17 @@ class UsersController extends Controller {
 		return response()->jsonOrJSONP($list);
 	}
 
+	public function emails() {
+		// return $this->index();
+
+		$res = "";
+		$list = User::where('email', '>', '')->get();
+		foreach($list as $v) {
+			$res .= $v['name'] . '&lt;' . $v['email'] . '&gt;, ';
+		}
+		return $res;
+	}
+
 	// POST = create
 	public function store() {
 		$attributes = Input::except('_type');

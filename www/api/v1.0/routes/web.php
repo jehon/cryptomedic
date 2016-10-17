@@ -111,6 +111,7 @@ Route::group([ 'prefix' => '/api/' . basename(dirname(__DIR__)) ], function() {
     });
 
     hasPermission('users.manage', function() {
+      Route::get('users/emails', 'UsersController@emails');
       Route::resource('users', 'UsersController');
       Route::post('users/password/{id}', 'UsersController@password');
     });
