@@ -47,6 +47,7 @@ class PictureController extends Controller {
 
   // List all database pictures that does not exists on the file system
   public function checkFileSystem() {
+    $i = 0;
     $list = DB::table('pictures')->get();
     $res = [];
     echo "<pre>";
@@ -55,7 +56,7 @@ class PictureController extends Controller {
       $picture = Picture::findOrFail($v->id);
       $file = $picture->getPhysicalPath();
       if (!file_exists($file)) {
-        echo $v->id . ": " . $v->file . "\n";
+        echo $i++ . ": " . $v->id . " - " . $v->file . "\n";
       }
     }
 
@@ -64,7 +65,7 @@ class PictureController extends Controller {
     foreach(myglob(Picture::getPhysicalRoot() . "/*") as $file) {
       $file = substr($file, strlen(Picture::getPhysicalRoot()));
       if (!Picture::getPictureĈountByPhysicalPath($file)) {
-        echo "$file\n";
+        echo $i++ . ": " . $file . "\n";
       }
     }
     echo "</pre>";
