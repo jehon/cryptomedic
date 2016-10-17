@@ -43,13 +43,12 @@ deployItem() {
 
   remote_root=`   php config.php deployment.$1.packages.$3.remote_root    2>/dev/null || echo "/"`
   local_root=`    php config.php deployment.$1.packages.$3.remote_root    2>/dev/null || echo "$PRJ_DIR"`
-  extra_cmd_line=`php config.php deployment.$1.packages.$3.extra_cmd_line` # 2>/dev/null || echo ""`
+  extra_cmd_line=`php config.php deployment.$1.packages.$3.extra_cmd_line 2>/dev/null || echo ""`
 
   echo "[$1.$3] Remote Root    : $remote_root"
   echo "[$1.$3] Local  Root    : $local_root"
   echo "[$1.$3] Extra Cmd Line : $extra_cmd_line"
 
-      # --parallel=10                \
   lftp <<EOC
     open "$2";
     mirror -R                      \
@@ -66,7 +65,7 @@ deployItem() {
       --exclude "tests"            \
       --exclude "vagrant/"         \
       $etra_cmd_line               \
-      --dry-run                               \
+      --dry-run                    \
       $local_root                  \
       $remote_root
 
