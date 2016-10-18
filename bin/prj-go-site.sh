@@ -33,65 +33,76 @@ export PRJ_DIR
 # - how to make configuration of this?
 # - have some hooks global, per site? (ex: drupal update.php or drush import)
 
-deployItem() {
-  # $1: site
-  # $2: ftp root
-  # $3: package number
+doDeployPackage() {
+  # $1: package number
 
-  echo "[$1.$3] Ftp_root       : $2"
-  echo "[$1.$3] Package        : $3"
+  # globals: conf_site, ftp_host, ftp_user, ftp_pass
 
-  remote_root=`   php config.php deployment.$1.packages.$3.remote_root    2>/dev/null || echo "/"`
-  local_root=`    php config.php deployment.$1.packages.$3.remote_root    2>/dev/null || echo "$PRJ_DIR"`
-  extra_cmd_line=`php config.php deployment.$1.packages.$3.extra_cmd_line 2>/dev/null || echo ""`
+  echo "[$conf_site.$1] ftp_host       : $ftp_host"
+  echo "[$conf_site.$1] ftp_user       : $ftp_user"
+  #echo "[$conf_site.$1] ftp_pass       : $ftp_pass"
 
-  echo "[$1.$3] Remote Root    : $remote_root"
-  echo "[$1.$3] Local  Root    : $local_root"
-  echo "[$1.$3] Extra Cmd Line : $extra_cmd_line"
+  remote_root=`   php config.php deployment.$conf_site.packages.$1.remote_root    2>/dev/null || echo "/"`
+  local_root=`    php config.php deployment.$conf_site.packages.$1.remote_root    2>/dev/null || echo "$PRJ_DIR"`
+  extra_cmd_line=`php config.php deployment.$conf_site.packages.$1.extra_cmd_line 2>/dev/null || echo ""`
+
+  echo "[$conf_site.$1] Remote Root    : $remote_root"
+  echo "[$conf_site.$1] Local  Root    : $local_root"
+  echo "[$conf_site.$1] Extra Cmd Line : $extra_cmd_line"
 
   lftp <<EOC
-    open "$2";
+    open -u "$ftp_user","$ftp_pass" "$ftp_host";
     mirror -R                      \
       --no-perms                   \
       --use-cache                  \
       --delete                     \
-      --exclude ".git/"            \
       --exclude "config-site.php"  \
+      --exclude ".log"             \
+      --exclude ".git/"            \
+      --exclude ".settings/"       \
       --exclude "backups/"         \
+      --exclude "bin/"             \
+      --exclude "conf/database/base.sql" \
       --exclude "documentation/"   \
       --exclude "live/"            \
       --exclude "live-for-test/"   \
+      --exclude "node_modules"     \
       --exclude "tmp/"             \
       --exclude "tests"            \
       --exclude "vagrant/"         \
-      $etra_cmd_line               \
-      --dry-run                    \
+      --verbose                    \
+      $extra_cmd_line              \
       $local_root                  \
       $remote_root
 
 EOC
 
-  echo "[$1.$3] Done"
+  echo "[$conf_site.$1] Done"
 }
 
-deploySite() {
+doDeployToSite() {
   # $1: site
-  ftp_site=`php config.php deployment.$1.ftp_site 2>/dev/null || true`
-  if [[ "$ftp_site" = "" ]]; then
-    echo "Site not found in configuration: $1"
+  conf_site="$1"
+
+  ftp_host=`php config.php deployment.$conf_site.ftp_host 2>/dev/null || true`
+  ftp_user=`php config.php deployment.$conf_site.ftp_user 2>/dev/null || true`
+  ftp_pass=`php config.php deployment.$conf_site.ftp_pass 2>/dev/null || true`
+
+  if [[ "$ftp_host" = "" ]]; then
+    echo "Site not found in configuration: $conf_site"
     exit 255
   fi
-  echo "Deploying to site: $ftp_site"
+  echo "Deploying to site: $ftp_host"
 
-  php config.php deployment.$1.packages | while read L; do
-    deployItem "$1" "$ftp_site" "$L"
+  php config.php deployment.$conf_site.packages | while read L; do
+    doDeployPackage "$L"
   done
 }
 
 if [ "$1" = "" ]; then
-  deploySite "prod"
+  doDeployToSite "prod"
 else
-  deploySite "$1"
+  doDeployToSite "$1"
 fi
 
 echo "End result: $?"
