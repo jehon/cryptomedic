@@ -1,7 +1,9 @@
+<pre>
+
 <?php
 
 require_once(__DIR__ . "/../../config.php");
-require_once(__DIR__ . "/../bin/lib/Database.php");
+require_once(__DIR__ . "/../../bin/lib/Database.php");
 
 global $myconfig;
 
@@ -15,9 +17,12 @@ if ($_REQUEST['pwd'] != $myconfig['security']['admin']) {
 
 $db = new \Jehon\Maintenance\Database(
     "mysql:dbname={$myconfig['database']['schema']};host={$myconfig['database']['host']}",
-    $myconfig['database']['rootuser'],
-    $myconfig['database']['rootpwd']
+    $myconfig['database']['username'],
+    $myconfig['database']['password']
   );
 
-$db->runDirectory(__DIR__ . "/../conf/database/versions/");
-$db->runDirectory(__DIR__ . "/../conf/database/always/");
+echo "Running versions\n";
+$db->runDirectory(__DIR__ . "/../../conf/database/versions/");
+
+echo "Running always\n";
+$db->runDirectory(__DIR__ . "/../../conf/database/always/");
