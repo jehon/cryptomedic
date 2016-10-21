@@ -1,5 +1,4 @@
-activity report => timing must be given!!!
-statistical report => check the values...
+- statistical report => check the values...
 
 # Next steps
 - on live upload, update the database
