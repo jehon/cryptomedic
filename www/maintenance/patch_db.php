@@ -7,11 +7,11 @@ require_once(__DIR__ . "/../../bin/lib/Database.php");
 
 global $myconfig;
 
-if (!$myconfig['security']['admin']) {
+if (!$myconfig['security']['key']) {
   die("No security.admin configured");
 }
 
-if ($_REQUEST['pwd'] != $myconfig['security']['admin']) {
+if ($_REQUEST['pwd'] != $myconfig['security']['key']) {
   die("No correct pwd given");
 }
 
@@ -21,8 +21,8 @@ $db = new \Jehon\Maintenance\Database(
     $myconfig['database']['password']
   );
 
-echo "Running versions\n";
+echo "\n\nRunning versions\n";
 $db->runDirectory(__DIR__ . "/../../conf/database/versions/");
 
-echo "Running always\n";
+echo "\n\nRunning always\n";
 $db->runDirectory(__DIR__ . "/../../conf/database/always/");
