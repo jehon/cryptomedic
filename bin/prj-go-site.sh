@@ -100,12 +100,14 @@ doDeployToSite() {
 }
 
 if [ "$1" = "" ]; then
-  doDeployToSite "prod"
+  SITE="prod"
 else
-  doDeployToSite "$1"
+  SITE="$1"
 fi
 
-echo "End result: $?"
+doDeployToSite "$SITE"
 
 # Run project custom files
-run-parts --exit-on-error --report $PRJ_DIR/bin/prj-go-site.d
+run-parts --exit-on-error --report $PRJ_DIR/bin/prj-go-site.d --arg="$SITE"
+
+echo "End result: $?"
