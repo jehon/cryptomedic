@@ -6,6 +6,10 @@ import goThere      from 'helpers/goThere';
 
 var worker = new MyWorker();
 
+window.cryptomedic = {
+  serverSettings: {}
+};
+
 /* Initialize the computer id */
 if (!localStorage.cryptomedicComputerId) {
   var mask = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -25,6 +29,7 @@ export function loginCheck() {
     .then(dispatch.bind(this, catalog.CONNECTION_SETTINGS))
     .then(worker.post.bind(this, 'init'))
     .then((data) => {
+      window.cryptomedic.serverSettings = data;
       if (location.hash == '/login') {
         goThere();
       }
@@ -50,7 +55,11 @@ export function login(username, password) {
     .then((data) => dispatch(catalog.CONNECTION_SUCCESS, data))
     .then((data) => dispatch(catalog.CONNECTION_SETTINGS, data))
     .then((data) => { worker.post('init'); return data; })
-    .then((data) => { goThere(); return data; })
+    .then((data) => {
+      window.cryptomedic.serverSettings = data;
+      goThere();
+      return data;
+    })
     .catch(function(error) {
       dispatch(catalog.CONNECTION_AUTH_FAILED, error);
       goThere("/login");
@@ -65,6 +74,7 @@ export function logout() {
   dispatch(catalog.STATE_BUSY, 'Disconnecting from the remote server');
   return myFrontFetch({ url: 'auth/logout' })
     .then(function(data) {
+      window.cryptomedic.serverSettings = {};
       dispatch(catalog.CONNECTION_EXPIRED);
       goThere("/login");
       return data;
