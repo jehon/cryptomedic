@@ -85,7 +85,7 @@
         </td>
         <td>{{l.Date}}</td>
         <td>{{l.ExaminerName}}</td>
-        <td><codage value="l.Center"/></td>
+        <td><jh-codage value="{{l.Center}}"></jh-codage></td>
         <td>{{l.patient_reference}}</td>
 
         <td class='b_left'>{{l.patient_name}}</td>
@@ -110,7 +110,7 @@
           </span>
         <td>{{l.Sociallevel}}</td>
 
-        <td class='b_left'><codage value="l.Pathology"/></td>
+        <td class='b_left'><jh-codage value="{{l.Pathology}}"></jh-codage></td>
         <td>{{l.act}}</td>
         <td>{{l.treatment}}</td>
 
