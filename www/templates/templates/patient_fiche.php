@@ -37,7 +37,6 @@
 							</div>
 						</td>
 					</tr>
-					<?php //(new t("Patient.Yearofbirth",  [ "min" => 1900, "max" => 2100]))->tr("Year of birth")->p(); ?></td>
 					<tr class='notModeRead'>
 						<td>Calculate year of birth</td>
 						<td>
