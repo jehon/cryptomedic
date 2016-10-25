@@ -110,28 +110,6 @@ var mainApp = angular.module('app_main', [ 'ngRoute' ])
       });
     };
   })
-  .directive('codage', function() {
-    return {
-      restrict: 'E',
-      transclude: true,
-      scope: {
-        value: '=value'
-      },
-    // template: '<span data-toggle='tooltip' data-placement='bottom' title='{{value}}'>{{coded}}</span>',
-      template: '{{coded}}<span class=\'online\' data-toggle=\'tooltip\' data-placement=\'bottom\' title=\'{{value}}\'>*</span>',
-      link: function($scope) {
-        let settings = store.getState().connection.settings;
-
-        if (settings && settings.codes[$scope.value]) {
-          $scope.isCoded = true;
-          $scope.coded = settings.codes[$scope.value];
-        } else {
-          $scope.isCoded = false;
-          $scope.coded = $scope.value;
-        }
-      }
-    };
-  })
   .directive('myGo', function() {
     return {
       restrict: 'E',

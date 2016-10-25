@@ -1,0 +1,36 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<dom-module name="jh-codage">
+  <template>
+    <span hidden$="[[!getTranslated(value)]]" data-toggle='tooltip' data-placement='bottom' title='[[value]]'>[[getTranslated(value)]]*</span>
+    <span hidden$="[[getTranslated(value)]]">[[value]]</span>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'jh-codage',
+
+      // https://www.polymer-project.org/1.0/docs/devguide/properties
+      properties: {
+        value: {
+          type:               String,
+          value:              ""
+        },
+      },
+
+      getTranslated(value) {
+        let settings = window.cryptomedic.serverSettings;
+        if (!settings || !settings.codes) {
+          return false;
+        }
+
+        if (!settings.codes[value]) {
+          return false;
+        }
+
+        // this.isCoded = true;
+        return settings.codes[value];
+      }
+    });
+  </script>
+</dom-module>
