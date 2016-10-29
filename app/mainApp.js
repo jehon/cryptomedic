@@ -110,33 +110,6 @@ var mainApp = angular.module('app_main', [ 'ngRoute' ])
       });
     };
   })
-  .directive('myGo', function() {
-    return {
-      restrict: 'E',
-      transclude: true,
-    // scope: true,
-      replace: true,
-      template: function(elem, attrs) {
-      // function templateFunction() {
-        if (attrs.haspermission) {
-          if (!store.getState()
-              || !store.getState().connection.settings
-              || !store.getState().connection.settings.authorized2[attrs.haspermission]
-              ) {
-            return '<span haspermission-failed=\'' + attrs.haspermission + '\'></span>';
-          }
-        }
-        return '<a class=\'btn btn-default\' href=\'' + flavor + '/app/' + attrs.to + '\''
-              + (attrs.id ? ' id=\'' + attrs.id + '\'' : '')
-              + (attrs.class ? ' class=\'' + attrs.class + '\'' : '')
-              + '>'
-              +   '<ng-transclude>'
-              +      '<b style=\'color: red;\'>Button</b>'
-              +    '</ng-transclude>'
-              +  '</a>';
-      }
-    };
-  })
   .directive('preview', function() {
     return {
       restrict: 'A',
