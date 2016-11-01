@@ -25,6 +25,10 @@ new WebpackDevServer(webpack(config), {
       target: remoteTarget,
       secure: false,
     },
+    '/bower_components/*': {
+      target: remoteTarget,
+      secure: false,
+    },
     '/static/*': {
       target: remoteTarget,
       secure: false,
