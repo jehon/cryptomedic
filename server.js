@@ -29,11 +29,11 @@ new WebpackDevServer(webpack(config), {
       target: remoteTarget,
       secure: false,
     },
-    '/static/*': {
+    '/maintenance/*': {
       target: remoteTarget,
       secure: false,
     },
-    '/maintenance/*': {
+    '/static/*': {
       target: remoteTarget,
       secure: false,
     },
