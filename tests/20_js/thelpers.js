@@ -1,5 +1,4 @@
 
-import objectify          from 'helpers/objectify';
 import create             from 'helpers/create';
 import mock_load_test     from './mocks/mock_load_test';
 import mock_patient_10    from './mocks/mock_patient_10';
@@ -14,7 +13,7 @@ let mocks = {
 export function loadMock(mock, type = false) {
   let data = Object.assign({}, mocks[mock]);
   if (type) {
-    data = create(type, objectify(data));
+    data = create(type, data);
   }
   return Promise.resolve(data);
 }

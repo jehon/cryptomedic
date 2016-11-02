@@ -1,6 +1,5 @@
 
 import myFrontFetch     from 'helpers/myFrontFetch';
-import objectify        from 'helpers/objectify';
 import Database         from 'helpers/database';
 import dispatch         from 'reducers/dispatch';
 import catalog          from 'reducers/catalog';
@@ -15,7 +14,6 @@ function getLive(id) {
   return myFrontFetch({ url: 'folder/' + id })
     // Store the received record into the database
     .then((json) => (new Database()).storeRecord({ record: json}, false) )
-    .then(objectify)
     .then((data) => { return new Folder(data); })
     .then((data) => { return dispatch(catalog.FOLDER_UPDATE_FROM_SERVER, data); })
     .catch((data) => {
