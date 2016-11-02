@@ -5,7 +5,6 @@ import dispatch     from 'reducers/dispatch';
 import Folder       from 'models/Folder';
 import Patient      from 'models/Patient';
 
-import objectify    from 'helpers/objectify';
 import Database     from 'helpers/database';
 import MyWorker     from 'helpers/myWorker';
 import myFrontFetch from 'helpers/myFrontFetch';
@@ -132,7 +131,6 @@ export default function service_backend() {
     //     // return db.getFolder(id).catch(function(error) {
     //     //   console.log('Getting the folder live: #' + id);
     //     return myFrontFetch({ url: 'folder/' + id })
-    //       .then(objectify)
     //       .then(function(data) { return new Folder(data); })
     //       .catch()
     //       ;
@@ -178,7 +176,6 @@ export default function service_backend() {
           }
           return list;
         })
-        .then(objectify)
         .then(function(data) {
           for(var i in data) {
             data[i] = new Patient(data[i]);
@@ -195,7 +192,6 @@ export default function service_backend() {
         'entryyear': year,
         'entryorder': order
       }})
-        .then(objectify)
         .then(function(data) { return new Folder(data); })
         .catch()
         ;
@@ -203,7 +199,6 @@ export default function service_backend() {
 
     'createFile': function(data) {
       return myFrontFetch({ url: 'fiche/' + data.getModel(), init: { method: 'POST' }, data: nullify(data)})
-        .then(objectify)
         .then(function(data) { return new Folder(data); })
         .catch()
         ;
@@ -211,7 +206,6 @@ export default function service_backend() {
 
     'saveFile': function(data) {
       return myFrontFetch({ url: 'fiche/' + data.getModel() + '/' + data['id'], init: { method: 'PUT' }, data: nullify(data) })
-        .then(objectify)
         .then(function(data) { return new Folder(data); })
         .catch()
         ;
@@ -219,7 +213,6 @@ export default function service_backend() {
 
     'deleteFile': function(data) {
       return myFrontFetch({ url: 'fiche/' + data.getModel() + '/' + data['id'], init: { method: 'DELETE' }})
-        .then(objectify)
         .then(function(data) { return new Folder(data); })
         .catch()
         ;
@@ -227,7 +220,6 @@ export default function service_backend() {
 
     'unlockFile': function(data) {
       return myFrontFetch({ url: 'unfreeze/' + data.getModel() + '/' + data['id'] })
-        .then(objectify)
         .then(function(data) { return new Folder(data); })
         .catch()
         ;
