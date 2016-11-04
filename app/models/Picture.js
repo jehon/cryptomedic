@@ -7,10 +7,6 @@ export default class Picture extends File {
     return 'Picture';
   }
 
-  // constructor(data, folder) {
-  //   super(data, folder);
-  // }
-
   validate(res) {
     res = super.validate(res);
     if (!this.fileContent && !this.file) {

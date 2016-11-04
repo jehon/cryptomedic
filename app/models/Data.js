@@ -1,6 +1,4 @@
 
-import date2CanonicString from 'helpers/date2CanonicString';
-
 class Data {
   constructor(data) {
     if (data) {
