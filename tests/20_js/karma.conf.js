@@ -28,6 +28,7 @@ module.exports = function(config) {
     webpack: webpack_config,
 
     files : [
+      'www/static/**/*.js',
       'tests/20_js/**/test_*.js',
     ],
 
@@ -40,6 +41,7 @@ module.exports = function(config) {
     preprocessors: {
       // 'app/**/*.js': [ 'coverage' ],
       // http://www.syntaxsuccess.com/viewarticle/writing-jasmine-unit-tests-in-es6
+      'www/static/**/*.js': [ 'coverage' ],
       'tests/**/test_*.js': [ 'webpack' ]
     },
 

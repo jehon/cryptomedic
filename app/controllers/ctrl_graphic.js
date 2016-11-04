@@ -1,5 +1,4 @@
 import calculations             from 'helpers/calculations';
-import { DataMissingException } from 'helpers/exceptions';
 
 function ctrl_graphic($scope) {
   // This controller is intended for ONE graphic only

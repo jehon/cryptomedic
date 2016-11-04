@@ -10,8 +10,6 @@ import myFetch                  from 'helpers/myFetch';
 import service_backend_fn       from 'helpers/service_backend';
 
 import selectFile               from 'actions/selectFile';
-import { DataMissingException } from 'helpers/exceptions';
-import { ApplicationException } from 'helpers/exceptions';
 
 import activateCache            from 'service-worker-registration';
 
@@ -38,8 +36,6 @@ export default function() {
       service_backend_fn,
       myFetch,
       db,
-      DataMissingException,
-      ApplicationException
     },
   };
 }
