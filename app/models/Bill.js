@@ -1,7 +1,6 @@
 'use strict';
 
 import File from 'models/File';
-import store from 'reducers/store';
 
 // TODO: there seems to have a race condition around here...
 
