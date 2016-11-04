@@ -2,7 +2,6 @@
 
 import angular                  from 'angular';
 import                               'angular-route';
-import { ApplicationException } from 'helpers/exceptions';
 import store                    from 'reducers/store';
 import dispatch                 from 'reducers/dispatch';
 import catalog                  from 'reducers/catalog';

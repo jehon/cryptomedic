@@ -1,5 +1,5 @@
 
-export class ApplicationException extends Error {
+class ApplicationException extends Error {
   constructor(msg) {
     super(msg);
     this.message = msg;
@@ -10,7 +10,7 @@ export class ApplicationException extends Error {
   }
 }
 
-export class DataMissingException extends ApplicationException {
+class DataMissingException extends ApplicationException {
   constructor(data) {
     super('Missing '  + (data || 'some data'));
     this.data = data;
