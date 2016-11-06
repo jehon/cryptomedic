@@ -9,7 +9,7 @@ import calculations             from 'helpers/calculations';
 import template                 from 'helpers/template';
 import goThere                  from 'helpers/goThere';
 
-import ctrl_allgraphics         from 'controllers/ctrl_allgraphics';
+import ctrl_allGraphics         from 'controllers/ctrl_allgraphics';
 import ctrl_file_appointment    from 'controllers/ctrl_file_appointment';
 import ctrl_file_bill           from 'controllers/ctrl_file_bill';
 import ctrl_folder              from 'controllers/ctrl_folder';
@@ -23,8 +23,6 @@ import ctrl_users               from 'controllers/ctrl_users';
 import { loginCheck }           from 'actions/authentication';
 
 var application = {};
-var path = location.pathname.split('/');
-var flavor = '/' + path[1];
 
 var mainApp = angular.module('app_main', [ 'ngRoute' ])
   .config([ '$compileProvider', function( $compileProvider ) {
@@ -303,7 +301,7 @@ mainApp.controller('ctrl', [ '$scope', function($scope) {
   loginCheck();
 }]);
 
-mainApp.controller('ctrl_allgraphics',      ctrl_allgraphics);
+mainApp.controller('ctrl_allGraphics',      ctrl_allGraphics);
 mainApp.controller('ctrl_file_appointment', ctrl_file_appointment);
 mainApp.controller('ctrl_file_bill',        ctrl_file_bill);
 mainApp.controller('ctrl_folder',           ctrl_folder);
