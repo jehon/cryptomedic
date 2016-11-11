@@ -15,11 +15,15 @@ import activateCache            from 'service-worker-registration';
 
 let db = new Database();
 
-if (location.pathname.split('/')[1] != 'online') {
-  console.log('[SW] Detection: offline mode, activating plugin');
-  activateCache();
+if (location.protocol == 'https:') {
+  if (location.pathname.split('/')[1] != 'online') {
+    console.info('[SW] Detection: offline mode, activating plugin');
+    activateCache();
+  } else {
+    console.info('[SW] Detection: online mode');
+  }
 } else {
-  console.log('[SW] Detection: online mode');
+  console.info('[SW] Detection: https not detcted, online mode');
 }
 
 export default function() {
