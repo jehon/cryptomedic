@@ -36,10 +36,11 @@ class ModelController extends Controller {
 	}
 
 	// POST = create
-	public function store($model) {
+	public function create($model) {
 		$data = Input::except('_type');
 		$data = self::cannonize($data);
 		$m = $this->getModel($model);
+
 		if ($model == "Patient") {
 			// In case we create a patient, things are a bit more complicated!!!
 			// We do this only when we need to generate a reference

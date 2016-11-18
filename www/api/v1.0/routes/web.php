@@ -100,7 +100,7 @@ Route::group([ 'prefix' => '/api/' . basename(dirname(__DIR__)) ], function() {
     });
 
     hasPermission('folder.edit', function() {
-      Route::POST('/fiche/{model}', 'ModelController@store');
+      Route::POST('/fiche/{model}', 'ModelController@create');
       Route::PUT('/fiche/{model}/{id}', 'ModelController@update');
       Route::DELETE('/fiche/{model}/{id}', 'ModelController@destroy');
       Route::POST('/reference', 'FolderController@createfile');
