@@ -33,6 +33,14 @@ class Picture extends CryptomedicModel {
 		return self::where('file', $file)->count();
 	}
 
+
+  public function validate() {
+    if (!$this->patient_id) {
+      abort(400, "No patient_id on the file");
+    }
+    return true;
+  }
+
 	public function getPhysicalPath() {
 		$dir = self::getPhysicalRoot();
 		if (!is_dir($dir)) {

@@ -12,6 +12,7 @@ use App\References;
 // See https://github.com/laravel/framework/issues/5276
 
 // TODO: restrict operations to unlocked files
+// TODO: optimistic locking
 class CryptomedicModel extends Model {
 	protected $guarded = array('id');
 
@@ -22,13 +23,10 @@ class CryptomedicModel extends Model {
 	static public function getTableColumnsList() {
 		// @see http://stackoverflow.com/a/19953826/1954789
 		return \Schema::getColumnListing(with(new static)->getTable());
-// 		return DB::getSchemaBuilder()->getColumnListing($tableName);
 	}
 
 	static public function filterData($data) {
 		$columns = static::getTableColumnsList();
-		// unset($data['created']);
-		// unset($data['modified']);
 		unset($data['created_at']);
 		unset($data['updated_at']);
 		unset($data['id']);
@@ -43,13 +41,19 @@ class CryptomedicModel extends Model {
 
 	public static function create(array $attributes = array()) {
 		$attributes = static::filterData($attributes);
-		// Create will call the "save"
-		return parent::create($attributes);
+		$m = new static($attributes);
+		$m->validate();
+		return $m->save();
+	}
+
+	public function validate() {
+		return true;
 	}
 
 	public function save(array $attributes = array()) {
 		$attributes = static::filterData($attributes);
 		if ($this->isDirty()) {
+			$this->validate();
 			$this->lastuser = Auth::user()->username;
 			return parent::save($attributes);
 		}

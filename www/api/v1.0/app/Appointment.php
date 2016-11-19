@@ -21,5 +21,10 @@ namespace App;
  *
  */
 class Appointment extends CryptomedicModel {
-  // protected $table = 'appointments';
+  public function validate() {
+    if (!$this->patient_id) {
+      abort(400, "No patient_id on the file");
+    }
+    return true;
+  }
 }
