@@ -117,4 +117,11 @@ class Bill extends CryptomedicModel {
 				"IF(bills.other_Other_consultation_care, 'Other ', '')" .
 				"))";
 	}
+
+  public function validate() {
+    if (!$this->patient_id) {
+      abort(400, "No patient_id on the file");
+    }
+    return true;
+  }
 }

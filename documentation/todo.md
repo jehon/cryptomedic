@@ -1,7 +1,6 @@
  
 # Manage payments
 - Move check about patient_id -> model + use it
-  - ModelController
   - CryptomedicModel
 - Add payment model
   - Payment
@@ -16,6 +15,9 @@
   - Worker?
 - Adapt GetFolder to use the new model
   - action/getFolder
+- Optimistic locking
+  - detection -> http 409 (conflict)
+  - handling
 
 # Manage payments
 - View
@@ -42,3 +44,5 @@
 - Test e2e: check "examiner name" initialization
 - Test e2e: check "center" initialization
 - Test e2e: test unlocking files
+
+- write operations offline
