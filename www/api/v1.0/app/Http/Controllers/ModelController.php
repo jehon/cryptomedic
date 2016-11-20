@@ -68,9 +68,6 @@ class ModelController extends Controller {
 			return response()->folder($id);
 		}
 
-		if (!Input::has('patient_id')) {
-			abort(500, "No identification of patients");
-		}
 		// \DB::enableQueryLog();
 		$newObj = $m::create($data);
 		// print_r(\DB::getQueryLog());
