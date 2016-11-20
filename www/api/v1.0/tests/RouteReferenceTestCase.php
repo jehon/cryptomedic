@@ -13,13 +13,17 @@ class RouteReferenceTestCase extends TestCase {
 	private $url = "";
 	private $params = array();
 
+	public static function absoluteUrl($relativeUrl) {
+		return "/api/" . basename(dirname(dirname(__FILE__))). "/" . $relativeUrl;
+	}
+
 	public function setUp($url = null, $params = array()) {
 		parent::setUp();
  		$this->setUrl($url, $params);
 	}
 
 	protected function setUrl($url, $baseParams = array()) {
-		$this->url = "/api/" . basename(dirname(dirname(__FILE__))). "/" . $url;
+		$this->url = self::absoluteUrl($url);
 		$this->baseParams = $baseParams;
 	}
 
