@@ -22,12 +22,12 @@ class References {
   static function model2db($model) {
     if (array_key_exists($model, static::$model2db))
       return static::$model2db[$model];
-    return $model;
+    return false;
   }
 
   static function db2model($dbName) {
     if (array_search($dbName, static::$model2db) === false) {
-      return $dbName;
+      return false;
     } else {
       return array_search($dbName, static::$model2db);
     }
