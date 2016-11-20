@@ -43,7 +43,10 @@ class CryptomedicModel extends Model {
 		$attributes = static::filterData($attributes);
 		$m = new static($attributes);
 		$m->validate();
-		return $m->save();
+		if ($m->save()) {
+			return $m;
+		}
+		abort(500, "Could not create the object");
 	}
 
 	public function validate() {
