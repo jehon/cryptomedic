@@ -23,15 +23,16 @@ class BillTest extends RouteReferenceTestCase {
 		$this->assertResponseStatus(400);
 	}
 
-	// public function testCreateBill() {
-	// 	// Bill#1 is on folder#1
+	public function testCreateBill() {
+		// Bill#1 is on folder#1
 
-	// 	$this->setUrl("bills");
-	// 	$this->preAuthenticate("cdc");
-	// 	$response = $this->call('PUT', $this->url, [
-	// 		patient_id => '1'
-	// 	]);
-	// 	$json = $this->myAssertJson(200);
-	// 	var_dump($json);
-	// }
+		$this->setUrl("bills");
+		$this->preAuthenticate("cdc");
+		$response = $this->call('POST', self::absoluteUrl("fiche/bills/"), [
+			"patient_id" => '1'
+		]);
+		$this->assertResponseStatus(200);
+  	$json = json_decode($response->getContent());
+		var_dump($json);
+	}
 }
