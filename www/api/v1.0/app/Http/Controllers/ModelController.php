@@ -27,6 +27,9 @@ class ModelController extends Controller {
 
 	protected function getModel($model) {
 		$model = "\\App\\" . References::db2model($model);
+		if ($model === false) {
+			abort(400, "No correct model found");
+		}
 		return $model;
 	}
 
