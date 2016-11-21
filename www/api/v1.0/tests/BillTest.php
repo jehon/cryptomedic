@@ -17,7 +17,7 @@ class BillTest extends RouteReferenceTestCase {
 	public function findInArray($json, $type, $id) {
 		$found = false;
 		foreach($json->subFiles as $i => $v) {
-			if (($v->_type == 'Bill')
+			if (($v->_type == $type)
 					&& ($v->id == $id)) {
 				return $i;
 			}
@@ -25,17 +25,13 @@ class BillTest extends RouteReferenceTestCase {
 		return false;
 	}
 
-	public function testCreateBillWithoutPatientId() {
-		// Bill#1 is on folder#1
-
+	public function testCreateWithoutPatientId() {
 		$response = $this->call('POST', self::absoluteUrl("fiche/bills/"), [
 		]);
 		$this->assertResponseStatus(400);
 	}
 
-	public function testCreateBill() {
-		// Bill#1 is on folder#1
-
+	public function testCreate() {
 		// Create it
 		$response = $this->call('POST', self::absoluteUrl("fiche/bills/"), [
 			"patient_id" => '1'
@@ -50,7 +46,7 @@ class BillTest extends RouteReferenceTestCase {
   	$key = $json->newKey;
 
   	$i = $this->findInArray($json, "Bill", $key);
-		$this->assertNotFalse($i, "Found the Bill in result");
+		$this->assertNotFalse($i, "Found in result");
 
 		// Modify it
 		$response = $this->call('PUT', self::absoluteUrl("fiche/bills/" . $key), [
@@ -69,6 +65,6 @@ class BillTest extends RouteReferenceTestCase {
 		$this->assertEquals($json->id, 1);
 
   	$i = $this->findInArray($json, "Bill", $key);
-		$this->assertFalse($i, "Found the Bill in result");
+		$this->assertFalse($i, "Found in result");
 	}
 }
