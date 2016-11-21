@@ -1,11 +1,12 @@
  
 # Manage payments
-- Move check about patient_id -> model + use it
-  - CryptomedicModel
+v- Move check about patient_id -> model + use it
+v  - CryptomedicModel
+  - Test the bill model (for example)
 - Add payment model
   - Payment
   - references?
-- Test this
+  - Test this
 
 # Sync with payments
 - Sync file by file, accross a lot of tables

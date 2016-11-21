@@ -6,6 +6,7 @@ class BillTest extends RouteReferenceTestCase {
 
 	public function setUp($url = null, $params = array()) {
 		parent::setUp("payment/1");
+		$this->preAuthenticate("cdc");
 	}
 
 	public function getFolder1() {
@@ -16,8 +17,6 @@ class BillTest extends RouteReferenceTestCase {
 	public function testCreateBillWithoutPatientId() {
 		// Bill#1 is on folder#1
 
-		$this->setUrl("bills");
-		$this->preAuthenticate("cdc");
 		$response = $this->call('POST', self::absoluteUrl("fiche/bills/"), [
 		]);
 		$this->assertResponseStatus(400);
@@ -26,13 +25,31 @@ class BillTest extends RouteReferenceTestCase {
 	public function testCreateBill() {
 		// Bill#1 is on folder#1
 
-		$this->setUrl("bills");
-		$this->preAuthenticate("cdc");
+		// Create it
 		$response = $this->call('POST', self::absoluteUrl("fiche/bills/"), [
 			"patient_id" => '1'
 		]);
 		$this->assertResponseStatus(200);
   	$json = json_decode($response->getContent());
-		var_dump($json);
+		$this->assertObjectHasAttribute('newKey', $json);
+  	$this->assertNotNull($json->newKey);
+		$this->assertObjectHasAttribute('id', $json);
+		$this->assertEquals($json->id, 1);
+
+  	$key = $json->newKey;
+
+		$found = false;
+		foreach($json->subFiles as $i => $v) {
+			if (($v->_type == 'Bill')
+					&& ($v->id == $key)) {
+				$found = true;
+			}
+		}
+		$this->assertTrue($found, "Found the Bill in result");
+
+
+		// Delete it
+		$response = $this->call('DELETE', self::absoluteUrl("fiche/bills/" . $key));
+		$this->assertResponseStatus(200);
 	}
 }
