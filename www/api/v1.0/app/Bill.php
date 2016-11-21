@@ -10,8 +10,6 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-
 /**
  * This is the Bill model, encapsulating various function used around the "Bill" concept
  *
