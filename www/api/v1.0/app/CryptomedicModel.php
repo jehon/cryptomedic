@@ -53,6 +53,10 @@ class CryptomedicModel extends Model {
 		return true;
 	}
 
+	public function getReadOnlyField() {
+		return [ "patient_id", "bill_id" ];
+	}
+
 	public function save(array $attributes = array()) {
 		$attributes = static::filterData($attributes);
 		if ($this->isDirty()) {

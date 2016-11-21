@@ -54,9 +54,13 @@ class BillTest extends RouteReferenceTestCase {
 
 		// Modify it
 		$response = $this->call('PUT', self::absoluteUrl("fiche/bills/" . $key), [
-			'patient_id' => 1,
 			'ExaminerName' => 'Ershad'
 		]);
+		$this->assertResponseStatus(200);
+  	$json = json_decode($response->getContent());
+		$this->assertEquals($json->id, 1);
+  	$i = $this->findInArray($json, "Bill", $key);
+  	$this->assertEquals("Ershad", $json->subFiles[$i]->ExaminerName);
 
 		// Delete it
 		$response = $this->call('DELETE', self::absoluteUrl("fiche/bills/" . $key));
