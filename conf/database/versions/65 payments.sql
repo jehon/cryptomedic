@@ -7,5 +7,6 @@ CREATE TABLE `payments` (
   `bill_id` int(10) UNSIGNED NOT NULL,
   `Date` date NOT NULL DEFAULT '0000-00-00',
   `ExaminerName` varchar(127) DEFAULT NULL,
-  `Amount` decimal NOT NULL
+  `Amount` decimal NOT NULL,
+  `Notes` Text NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
