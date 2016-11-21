@@ -86,14 +86,15 @@ class ModelController extends Controller {
 
 	// PUT / PATCH
 	public function update($model, $id) {
- 		$data = Input::except('_type', 'patient_id');
-		$data = self::cannonize($data);
-
 		$m = $this->getModel($model);
 		$obj = $this->getModelObject($model, $id);
+
+ 		$data = Input::except([ '_type' ] + $obj->getReadOnlyField());
+		$data = self::cannonize($data);
+
 		foreach($data as $k => $v) {
 			// Skip system fields
-			if (in_array($k, [ $obj->getUpdatedAtColumn(), $obj->getCreatedAtColumn(), "modified", "created" ])) {
+			if (in_array($k, [ $obj->getUpdatedAtColumn(), $obj->getCreatedAtColumn()])) {
 				continue;
 			}
 			// Set existing fields
