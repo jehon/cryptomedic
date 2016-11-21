@@ -26,6 +26,7 @@ class SyncController extends Controller {
     $id = $cpe[1];
 
     $list = References::$model2db + [ "Deleted" => "deleteds" ];
+    unset($list["Payment"]);
     return "SELECT MAX(ts) as ts, "
           . "patient_id, "
           . "IF(MAX(ts) < NOW(), CONCAT(MAX(ts), '|', patient_id), '') as checkpoint"

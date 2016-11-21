@@ -43,7 +43,10 @@ class FolderController extends Controller {
 
 		$master['subFiles'] = array();
 
-		foreach(References::$model2db as $c) {
+		$list = References::$model2db;
+    unset($list["Payment"]);
+
+		foreach($list as $c) {
 			if ($c == "patients") continue;
 
 			$r = DB::select("SELECT * FROM $c WHERE patient_id = :patient_id", array('patient_id' => $id));

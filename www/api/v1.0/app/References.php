@@ -12,6 +12,7 @@ class References {
     "Appointment"   => "appointments",
     "RicketConsult" => "ricket_consults",
     "Surgery"       => "surgeries",
+    "Payment"       => "payments",
   );
 
   static $lists = array();
