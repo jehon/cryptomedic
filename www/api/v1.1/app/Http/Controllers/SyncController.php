@@ -12,7 +12,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Request;
 
-define("sync_packet_size", 100);
+define("sync_packet_size", 150);
 
 class SyncController extends ModelController {
   // @see http://laravel.com/docs/5.0/controllers
