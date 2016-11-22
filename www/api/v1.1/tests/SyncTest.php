@@ -125,30 +125,37 @@ class SyncTest extends RouteReferenceTestCase {
 
   public function _createSyncAndDelete($cnt) {
     // Change patient
+    $offline = self::getNext(1000);
     $res = DB::statement("UPDATE patients SET updated_at = NOW() WHERE id = 1 LIMIT 1");
     $this->assertTrue($res);
-    $offline = self::getNext(10);
-    $this->assertTrue($this->_hasPatient(1), "Update patient #" . $cnt);
+    $offline = self::getNext(1000);
+    $this->assertTrue(count(array_filter($offline->data, function($rec) {
+      return $rec->type == "Patient" && $rec->id = 1;
+    })) > 0);
 
     // Change file
-    $res = DB::statement("UPDATE bills SET updated_at = NOW() WHERE patient_id = 3 LIMIT 1");
+    $res = DB::statement("UPDATE bills SET updated_at = NOW() WHERE id = 3 LIMIT 1");
     $this->assertTrue($res);
-    $offline = self::getNext(10);
-    $this->assertTrue($this->_hasPatient(3), "Update bill #" . $cnt);
+    $offline = self::getNext(1000);
+    $this->assertTrue(count(array_filter($offline->data, function($rec) {
+      return $rec->type == "Bill" && $rec->id = 3;
+    })) > 0);
 
     // Simulating deleting a sub file for a patient
     $res = DB::statement("INSERT INTO deleteds(created_at, patient_id, entity_type, entity_id) VALUES (NOW(), '1010', 'bills', '10'); ");
-    $this->assertTrue($res);
-    $offline = self::getNext(10);
-    $this->assertTrue($this->_hasDeleted(1010), "Delete one #" . $cnt);
+    $offline = self::getNext(1000);
+    $this->assertTrue(count(array_filter($offline->data, function($rec) {
+      return $rec->type == "Deleted" && $rec->id = 1010;
+    })) > 0);
   }
 
   public function testChangesInDatabase() {
     $this->cp = self::$initialCP;
 
     // The sync is final before starting
-    $offline = self::getNext(10);
-    // $this->_isFinal();
+    $offline = self::getNext(1000);
+    $this->assertEquals(0, $offline->remaining);
+
     $this->_createSyncAndDelete("-");
   }
 
