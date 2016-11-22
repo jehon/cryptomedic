@@ -22,9 +22,15 @@ class SyncController extends ModelController {
     $sql = "";
 
     $cpe = explode("|", $cp);
-    $ts = $cpe[0];
-    $type = $cpe[1];
-    $id = $cpe[2];
+    if (count($cpe) == 3) {
+      $ts = $cpe[0];
+      $type = $cpe[1];
+      $id = $cpe[2];
+    } else {
+      $ts = "";
+      $type = "";
+      $id = -1;
+    }
 
     $list = References::$model2db + [ "Deleted" => "deleteds" ];
     return "SELECT ts, id, type, "
@@ -73,7 +79,6 @@ class SyncController extends ModelController {
         // If computer not known (anymore?) from the system, then resync
         $old_cp = "";
       }
-      // TODO: do we store the last old_cp ???
     } else {
       $computer = false;
     }
@@ -81,32 +86,21 @@ class SyncController extends ModelController {
     $offline = [];
 
     if ($old_cp == "" || count(explode("|", $old_cp)) != 3) {
-      $old_cp = "||-1";
+      $old_cp = "";
       $offline['reset'] = 1;
     }
 
     $offline['data'] = $this->_getList($old_cp, $n);
 
-    if (count($offline['data']) < $n) {
-      $offline["isfinal"] = true;
-    } else {
-      $offline["isfinal"] = false;
-    }
-
-    $new_checkpoint = "";
+    $new_checkpoint = $old_cp;
     foreach($offline["data"] as $i => $d) {
       $offline["data"][$i]->data = ("\\App\\" . $d->type)::findOrFail($d->id);
-
-      if (property_exists($d, "checkpoint")) {
-        $new_checkpoint = max($d->checkpoint, $new_checkpoint);
-      }
+      $new_checkpoint = max($d->checkpoint, $new_checkpoint);
     }
+    $offline['new_checkpoint'] = $new_checkpoint;
 
     // Get the remaining count
-    if ($new_checkpoint > "") {
-      $offline['remaining'] = $this->_getCount($new_checkpoint);
-      $offline['new_checkpoint'] = $new_checkpoint;
-    }
+    $offline['remaining'] = $this->_getCount($new_checkpoint);
 
     // Store the information for helping understanding what is happening out there...
     if ($computer) {
