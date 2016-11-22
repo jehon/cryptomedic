@@ -13,7 +13,7 @@ class ExampleTest extends TestCase
      */
     public function testBasicExample()
     {
-        $this->visit('/api/v1.0/')
+        $this->visit('/api/' . basename(dirname(__DIR__)))
              ->see('Laravel');
     }
 }
