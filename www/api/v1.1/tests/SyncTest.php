@@ -18,14 +18,13 @@ class SyncTest extends RouteReferenceTestCase {
     $this->assertEquals(1, $this->offline->isfinal);
   }
 
-  public function _hasPatient($id, $msg = null) {
-    $msg = $msg || "has patient $id";
+  public function assertHas($type, $id) {
     foreach($this->offline->data as $i => $item) {
-      if (property_exists($item, 'record') && ($item->record->id == $id)) {
-        return true;
+      if ($item->type == $type && $item->id == $id) {
+        $this->assertTrue(true, "Sync has $type#$id");
       }
     }
-    return false;
+    $this->assertTrue(false, "Sync has $type#$id");
   }
 
   public function _hasDeleted($id, $msg = null) {
@@ -74,31 +73,52 @@ class SyncTest extends RouteReferenceTestCase {
   }
 
   public function testFlow() {
+    $r = 48;
     $offline = $this->getNext(1);
-    $this->assertTrue($this->_hasPatient(7));
+    $this->assertEquals("Picture", $offline->data[0]->type);
+    $this->assertEquals(1, $offline->data[0]->id);
+    $this->assertEquals($r--, $offline->remaining);
 
     $offline = $this->getNext(1);
-    $this->assertTrue($this->_hasPatient(3));
+    $this->assertEquals("Patient", $offline->data[0]->type);
+    $this->assertEquals(7, $offline->data[0]->id);
+    $this->assertEquals($r--, $offline->remaining);
 
     $offline = $this->getNext(1);
-    $this->assertTrue($this->_hasPatient(1));
+    $this->assertEquals("Picture", $offline->data[0]->type);
+    $this->assertEquals(2, $offline->data[0]->id);
+    $this->assertEquals($r--, $offline->remaining);
 
     $offline = $this->getNext(1);
-    $this->assertTrue($this->_hasPatient(6));
+    $this->assertEquals("Bill", $offline->data[0]->type);
+    $this->assertEquals(1, $offline->data[0]->id);
+    $this->assertEquals($r--, $offline->remaining);
 
     $offline = $this->getNext(1);
-    $this->assertTrue($this->_hasPatient(5));
+    $this->assertEquals("Patient", $offline->data[0]->type);
+    $this->assertEquals(1, $offline->data[0]->id);
+    $this->assertEquals($r--, $offline->remaining);
 
     $offline = $this->getNext(1);
-    $this->assertTrue($this->_hasDeleted(9));
+    $this->assertEquals("Patient", $offline->data[0]->type);
+    $this->assertEquals(2, $offline->data[0]->id);
+    $this->assertEquals($r--, $offline->remaining);
 
     $offline = $this->getNext(1);
-    $this->assertTrue($this->_hasPatient(2));
+    $this->assertEquals("Patient", $offline->data[0]->type);
+    $this->assertEquals(3, $offline->data[0]->id);
+    $this->assertEquals($r--, $offline->remaining);
 
     $offline = $this->getNext(1);
-    $this->assertTrue($this->_hasPatient(4));
+    $this->assertEquals("Patient", $offline->data[0]->type);
+    $this->assertEquals(4, $offline->data[0]->id);
+    $this->assertEquals($r--, $offline->remaining);
 
-    // $this->_isFinal();
+    $offline = $this->getNext($r); // $r-- -> already $r - 1
+    $this->assertEquals(1, $offline->remaining);
+
+    $offline = $this->getNext(1);
+    $this->assertEquals(0, $offline->remaining);
 
     self::$initialCP = $this->cp;
   }
