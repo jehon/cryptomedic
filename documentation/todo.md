@@ -1,13 +1,3 @@
- 
-# Manage payments
-v- Move check about patient_id -> model + use it
-v  - CryptomedicModel
-v  - Test the bill model (for example)
-v- Add payment model
-v  - Payment
-v  - references?
-v  - Test this
-
 # Sync with payments
 - Sync file by file, accross a lot of tables
   - SyncController
@@ -19,6 +9,8 @@ v  - Test this
 - Optimistic locking
   - detection -> http 409 (conflict)
   - handling
+- Use the version 1.1
+- Reactivate the PaymentTest full
 
 # Manage payments
 - View
