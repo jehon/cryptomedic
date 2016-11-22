@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Request;
 
 define("sync_packet_size", 100);
 
-class SyncController extends Controller {
+class SyncController extends ModelController {
   // @see http://laravel.com/docs/5.0/controllers
 
   public function _getUnionSQL($cp) {
@@ -23,31 +23,32 @@ class SyncController extends Controller {
 
     $cpe = explode("|", $cp);
     $ts = $cpe[0];
-    $id = $cpe[1];
+    $type = $cpe[1];
+    $id = $cpe[2];
 
     $list = References::$model2db + [ "Deleted" => "deleteds" ];
-    unset($list["Payment"]);
-    return "SELECT MAX(ts) as ts, "
-          . "patient_id, "
-          . "IF(MAX(ts) < NOW(), CONCAT(MAX(ts), '|', patient_id), '') as checkpoint"
+    return "SELECT ts, id, type, "
+          . "IF(ts < NOW(), CONCAT(ts, '|', type, '|', id), '') as checkpoint"
         . "\n FROM ("
-        . implode(" \n UNION \n ",
+        . implode(" \n UNION ALL \n ",
           array_map(
-              function($t, $m) use ($ts, $id) {
+              function($t, $m) use ($ts, $type, $id) {
                 $patient_id = ($t == "patients" ? "id" : "patient_id");
-                $this->sqlParamsUnion["ts0_{$m}"]    = $this->sqlParamsUnion["ts1_{$m}"]    = $ts;
-                $this->sqlParamsUnion["id1_{$m}"]    = $id;
+                $this->sqlParamsUnion["ts2_{$m}"]    = $this->sqlParamsUnion["ts1_{$m}"]      = $this->sqlParamsUnion["ts0_{$m}"] = $ts;
+                $this->sqlParamsUnion["type2_{$m}"]  = $this->sqlParamsUnion["type1_{$m}"]    = $type;
+                $this->sqlParamsUnion["id2_{$m}"]    = $id;
                 return "("
-                    . "SELECT greatest(created_at, updated_at) AS ts, $patient_id AS patient_id"
+                    . "SELECT greatest(created_at, updated_at) AS ts, id, '$m' as type"
                     . " FROM $t "
                     . " WHERE (greatest(created_at, updated_at) > :ts0_{$m}) "
-                    . "   OR (greatest(created_at, updated_at) = NOW())"
-                    . "   OR ((greatest(created_at, updated_at) = :ts1_{$m}) AND ($patient_id > :id1_{$m}))"
-                    .")";
+                    . "   OR ((greatest(created_at, updated_at) = :ts1_{$m}) AND ('$type' > :type1_{$m}))"
+                    . "   OR ((greatest(created_at, updated_at) = :ts2_{$m}) AND ('$type' = :type2_{$m}) AND (id > :id2_{$m}))"
+                    .") \n";
               }, $list, array_keys($list)
           )
         )
-      . ")\n as p GROUP BY patient_id ";
+      . ")\n as p "
+      ;
   }
 
   // Send back incorrect result...
@@ -59,23 +60,7 @@ class SyncController extends Controller {
 
   public function _getList($cp, $n) {
     $sqlu = $this->_getUnionSQL($cp);
-    // echo $sqlu;
-    // var_dump($this->sqlParamsUnion);
-
-    $res = DB::select($sqlu . "ORDER BY MAX(ts), patient_id LIMIT $n", $this->sqlParamsUnion);
-    //$res = DB::select("SELECT * FROM ($sqlu) as p ORDER BY MAX(ts), patient_id LIMIT $n", $this->sqlParamsUnion);
-    $data = [];
-
-    foreach($res as $i => $r) {
-      $pat = FolderController::getFolder($r->patient_id);
-      if ($pat) {
-        $data[$i]['record'] = $pat;
-      } else {
-        $data[$i] = [ 'id' => $r->patient_id, '_deleted' => true ];
-      }
-      $data[$i]['checkpoint'] = $r->checkpoint;
-    }
-    return $data;
+    return DB::select($sqlu . "ORDER BY ts, type, id LIMIT $n", $this->sqlParamsUnion);
   }
 
   public function _syncData($old_cp) {
@@ -88,14 +73,15 @@ class SyncController extends Controller {
         // If computer not known (anymore?) from the system, then resync
         $old_cp = "";
       }
+      // TODO: do we store the last old_cp ???
     } else {
       $computer = false;
     }
 
     $offline = [];
 
-    if ($old_cp == "" || count(explode("|", $old_cp)) != 2) {
-      $old_cp = "|-1";
+    if ($old_cp == "" || count(explode("|", $old_cp)) != 3) {
+      $old_cp = "||-1";
       $offline['reset'] = 1;
     }
 
@@ -108,15 +94,18 @@ class SyncController extends Controller {
     }
 
     $new_checkpoint = "";
-    foreach($offline["data"] as $d) {
-      if (array_key_exists("checkpoint", $d)) {
-        $new_checkpoint = $d["checkpoint"];
+    foreach($offline["data"] as $i => $d) {
+      $offline["data"][$i]->data = ("\\App\\" . $d->type)::findOrFail($d->id);
+
+      if (property_exists($d, "checkpoint")) {
+        $new_checkpoint = max($d->checkpoint, $new_checkpoint);
       }
     }
 
     // Get the remaining count
     if ($new_checkpoint > "") {
       $offline['remaining'] = $this->_getCount($new_checkpoint);
+      $offline['new_checkpoint'] = $new_checkpoint;
     }
 
     // Store the information for helping understanding what is happening out there...
