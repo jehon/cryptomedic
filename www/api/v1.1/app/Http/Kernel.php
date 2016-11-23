@@ -48,6 +48,7 @@ class Kernel extends HttpKernel
     protected $routeMiddleware = [
 
     'authenticated'   => 'App\Http\Middleware\Authenticated',
+    'syncData'        => 'App\Http\Middleware\SyncData',
     'writeGroup'      => 'App\Http\Middleware\WriteGroup',
     'unFreezeGroup'   => 'App\Http\Middleware\UnFreezeGroup',
     'hasPermission'   => \App\Http\Middleware\HasPermission::class,
@@ -60,6 +61,6 @@ class Kernel extends HttpKernel
 //        'can' => \Illuminate\Auth\Middleware\Authorize::class,
 //        'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
 //        'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
- 
+
   ];
 }

@@ -47,69 +47,19 @@ Route::group([ 'prefix' => '/api/' . basename(dirname(__DIR__)) ], function() {
       return view('welcome');
   });
 
-  Route::post('/auth/mylogin', "Auth\AuthController@postMylogin");
-  Route::get('/auth/logout', "Auth\AuthController@getLogout");
-
-  Route::get('/templates/{category?}/{name?}', "TemplatesController@render");
-
-  /**
-   * Computer based authenticated routes
-   */
-   // TODO: protect with computer authentication instead of user authentication
-  Route::group(array('middleware' => 'authenticated'), function() {
-    Route::any('sync', [ "uses" => "SyncController@sync" ]);
+  Route::group( [ 'middleware' => 'syncData' ], function()
+  {
+    Route::post('/auth/mylogin', "Auth\AuthController@postMylogin");
   });
+  Route::get('/auth/logout', "Auth\AuthController@getLogout");
+  Route::get('/templates/{category?}/{name?}', "TemplatesController@render");
 
   /**
    * Authenticated user needed
    */
-  Route::group(array('middleware' => 'authenticated'), function() {
-    Route::get('/auth/settings', "Auth\AuthController@getSettings");
-
-    hasPermission('reports.execute', function() {
-      Route::get('reports/consultations', [
-        "uses" => "ReportConsultationsController@index"
-      ]);
-
-      Route::get('reports/activity', [
-        "uses" => "ReportActivityController@index"
-      ]);
-
-      Route::get('reports/statistical', [
-        "uses" => "ReportStatisticalController@index"
-      ]);
-
-      Route::get('reports/surgical', [
-        "uses" => "ReportSurgicalController@index"
-      ]);
-    });
-
-    hasPermission('folder.read', function() {
-      Route::resource('folder', "FolderController", [ "only" => [ "index", "show" ]]);
-
-      Route::get('reference/{entryyear}/{entryorder}', [
-        "uses" => "FolderController@reference"
-      ]);
-
-      Route::get('picture/{id}', [
-        "uses" => "PictureController@getFile"
-      ]);
-      Route::get('picture/{id}/thumbnail', [
-        "uses" => "PictureController@getThumbnail"
-      ]);
-    });
-
-    hasPermission('folder.edit', function() {
-      Route::POST('/fiche/{model}', 'ModelController@create');
-      Route::PUT('/fiche/{model}/{id}', 'ModelController@update');
-      Route::DELETE('/fiche/{model}/{id}', 'ModelController@destroy');
-      Route::POST('/reference', 'FolderController@createfile');
-    });
-
-    hasPermission('folder.unlock', function() {
-      Route::get('unfreeze/{model}/{id}', 'ModelController@unfreeze');
-    });
-
+  Route::group(array('middleware' => 'authenticated'), function()
+  {
+    // Do not manage the sync data:
     hasPermission('users.manage', function() {
       Route::get('users/emails', 'UsersController@emails');
       Route::resource('users', 'UsersController');
@@ -126,6 +76,59 @@ Route::group([ 'prefix' => '/api/' . basename(dirname(__DIR__)) ], function() {
 
     hasPermission('admin.checkPictures', function() {
       Route::get('admin/pictures/checkFileSystem', 'PictureController@checkFileSystem');
+    });
+
+    // With the sync data:
+    Route::group( [ 'middleware' => 'syncData' ], function()
+    {
+
+      Route::any('sync', [ "uses" => "SyncController@sync" ]);
+
+      Route::get('/auth/settings', "Auth\AuthController@getSettings");
+
+      hasPermission('reports.execute', function() {
+        Route::get('reports/consultations', [
+          "uses" => "ReportConsultationsController@index"
+        ]);
+
+        Route::get('reports/activity', [
+          "uses" => "ReportActivityController@index"
+        ]);
+
+        Route::get('reports/statistical', [
+          "uses" => "ReportStatisticalController@index"
+        ]);
+
+        Route::get('reports/surgical', [
+          "uses" => "ReportSurgicalController@index"
+        ]);
+      });
+
+      hasPermission('folder.read', function() {
+        Route::resource('folder', "FolderController", [ "only" => [ "index", "show" ]]);
+
+        Route::get('reference/{entryyear}/{entryorder}', [
+          "uses" => "FolderController@reference"
+        ]);
+
+        Route::get('picture/{id}', [
+          "uses" => "PictureController@getFile"
+        ]);
+        Route::get('picture/{id}/thumbnail', [
+          "uses" => "PictureController@getThumbnail"
+        ]);
+      });
+
+      hasPermission('folder.edit', function() {
+        Route::POST('/fiche/{model}', 'ModelController@create');
+        Route::PUT('/fiche/{model}/{id}', 'ModelController@update');
+        Route::DELETE('/fiche/{model}/{id}', 'ModelController@destroy');
+        Route::POST('/reference', 'FolderController@createfile');
+      });
+
+      hasPermission('folder.unlock', function() {
+        Route::get('unfreeze/{model}/{id}', 'ModelController@unfreeze');
+      });
     });
   });
 });
