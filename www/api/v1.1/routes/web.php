@@ -47,19 +47,20 @@ Route::group([ 'prefix' => '/api/' . basename(dirname(__DIR__)) ], function() {
       return view('welcome');
   });
 
+  // Public public
+  Route::get('/templates/{category?}/{name?}', "TemplatesController@render");
+  Route::get('/auth/logout', "Auth\AuthController@getLogout");
+
+  // Public with sync enabled
   Route::group( [ 'middleware' => 'syncData' ], function()
   {
     Route::post('/auth/mylogin', "Auth\AuthController@postMylogin");
   });
-  Route::get('/auth/logout', "Auth\AuthController@getLogout");
-  Route::get('/templates/{category?}/{name?}', "TemplatesController@render");
 
-  /**
-   * Authenticated user needed
-   */
+  // Private
   Route::group(array('middleware' => 'authenticated'), function()
   {
-    // Do not manage the sync data:
+    // Private without sync
     hasPermission('users.manage', function() {
       Route::get('users/emails', 'UsersController@emails');
       Route::resource('users', 'UsersController');
@@ -78,7 +79,7 @@ Route::group([ 'prefix' => '/api/' . basename(dirname(__DIR__)) ], function() {
       Route::get('admin/pictures/checkFileSystem', 'PictureController@checkFileSystem');
     });
 
-    // With the sync data:
+    // Private without sync
     Route::group( [ 'middleware' => 'syncData' ], function()
     {
 
