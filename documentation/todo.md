@@ -1,11 +1,12 @@
-# Sync with payments
-- Sync file by file, accross a lot of tables
-  - SyncController
-  - Worker ???
-- Migrate from old model
-  - Worker?
+# Sync backend with payments
+v- Sync file by file, accross a lot of tables
+v  - SyncController
 - Adapt GetFolder to use the new model
   - action/getFolder
+- Adapt the modification actions to send back the sync informations
+  - ModelController
+
+# Go further
 - Optimistic locking
   - detection -> http 409 (conflict)
   - handling
