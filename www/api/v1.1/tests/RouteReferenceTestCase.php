@@ -62,6 +62,8 @@ class RouteReferenceTestCase extends TestCase {
 		$response = $this->myAssertAuthorized($group);
 		$json = json_decode($response->getContent());
 		$this->assertNotNull($json, "Error parsing json");
+		$this->offline = $json->_offline;
+		unset($json->_offline);
 		return $json;
 	}
 
@@ -80,7 +82,12 @@ class RouteReferenceTestCase extends TestCase {
  		}
  		$pfile = __DIR__  . "/references/" . $file;
 
-	 	$json_obj = json_decode($response->getContent());
+	 	$json_obj = (object) json_decode($response->getContent());
+
+	 	if (property_exists($json_obj, "_offline")) {
+		 	unset($json_obj->_offline);
+	 	}
+
 	 	$json = json_encode($json_obj, JSON_PRETTY_PRINT);
 
  		/* Assert or update the reference */
