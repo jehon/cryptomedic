@@ -25,8 +25,7 @@ class SyncTest extends RouteReferenceTestCase {
 
     $this->assertObjectHasAttribute('data', $offline);
     $this->assertObjectHasAttribute('checkpoint', $offline);
-    if (!$cp) {
-      var_dump($offline);
+    if ($cp == "") {
       $this->assertObjectHasAttribute('reset', $offline);
       $this->assertEquals(1, $offline->reset);
     }
@@ -36,7 +35,7 @@ class SyncTest extends RouteReferenceTestCase {
 
   public function testFlow() {
     $r = 48;
-    $offline = $this->getNext(1);
+    $offline = $this->getNext(1, "");
     $this->assertEquals("Picture", $offline->data[0]->type);
     $this->assertEquals(1, $offline->data[0]->id);
     $this->assertEquals($r--, $offline->remaining);
