@@ -109,7 +109,7 @@ class FolderController extends Controller {
 	}
 
 	public function show($id) {
-		return response()->folder($id);
+		return response()->json($this->getFolderOrFail($id));
 	}
 
 	public function reference($entryyear, $entryorder) {
@@ -118,7 +118,7 @@ class FolderController extends Controller {
 			return response()->json(null);
 		}
 		$r = array_pop($r);
-		return response()->folder($r->id);
+		return $this->show($r->id);
 	}
 
 	public function createFile() {
@@ -128,6 +128,6 @@ class FolderController extends Controller {
 		if (!$newObj->id) {
 			abort(500, "Could not create the patient");
 		}
-		return response()->folder($newObj->id);
+		return $this->show($newObj->id);
 	}
 }
