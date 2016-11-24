@@ -7,34 +7,13 @@ class SyncTest extends RouteReferenceTestCase {
   protected $offline = null;
   static protected $initialCP = "";
 
-  protected function showURL() {
-    echo "\n";
-    echo "http://localhost/cryptomedic/rest/public/sync?cp=" . $this->cp;
-    echo "\n";
+  public function setUp($url = null, $params = array()) {
+    parent::setUp("sync");
   }
 
-  public function _isFinal() {
-    $this->assertObjectHasAttribute('isfinal', $this->offline);
-    $this->assertEquals(1, $this->offline->isfinal);
-  }
-
-  public function assertHas($type, $id) {
-    foreach($this->offline->data as $i => $item) {
-      if ($item->type == $type && $item->id == $id) {
-        $this->assertTrue(true, "Sync has $type#$id");
-      }
-    }
-    $this->assertTrue(false, "Sync has $type#$id");
-  }
-
-  public function _hasDeleted($id, $msg = null) {
-    $msg = $msg || "deletes patient $id";
-    foreach($this->offline->data as $i => $item) {
-      if (property_exists(($item), "_deleted") && ($item->id == $id)) {
-        return true;
-      }
-    }
-    return false;
+  public function testsUnauthenticated() {
+    $this->setUrl("sync", [ "cp" => "" ]);
+    $this->myAssertUnauthorized();
   }
 
   public function getNext($n = 1, $cp = false) {
@@ -44,32 +23,15 @@ class SyncTest extends RouteReferenceTestCase {
     $this->assertObjectHasAttribute('_offline', $json);
     $offline = $json->_offline;
 
-    if (!property_exists($offline, "isfinal") || !$offline->isfinal) {
-      $this->assertObjectHasAttribute('data', $offline);
-    }
+    $this->assertObjectHasAttribute('data', $offline);
     $this->assertObjectHasAttribute('checkpoint', $offline);
-    if (!$this->cp) {
+    if (!$cp) {
+      var_dump($offline);
       $this->assertObjectHasAttribute('reset', $offline);
       $this->assertEquals(1, $offline->reset);
     }
-    if (count($offline->data) > 0) {
-      $newCP = end($offline->data)->checkpoint;
-      if ($newCP) {
-        $this->cp = $newCP;
-      }
-    }
-    // $this->cp = $offline->checkpoint;
     $this->offline = $offline;
     return $offline;
-  }
-
-  public function setUp($url = null, $params = array()) {
-    parent::setUp("sync");
-  }
-
-  public function testsUnauthenticated() {
-    $this->setUrl("sync", [ "cp" => "" ]);
-    $this->myAssertUnauthorized();
   }
 
   public function testFlow() {
