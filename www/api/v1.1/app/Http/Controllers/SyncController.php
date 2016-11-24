@@ -20,11 +20,7 @@ class SyncController extends ModelController
 
   public function getComputerFromSession()
   {
-    $computerId = session()->get('computerId', false);
-    if (!$computerId)
-    {
-      return false;
-    }
+    $computerId = session()->get('computerId', 1);
     $computer = SyncComputer::firstOrNew([ "computer_id" => $computerId ]);
     return $computer;
   }
@@ -101,18 +97,15 @@ class SyncController extends ModelController
     return DB::select($sqlu . "ORDER BY ts, type, id LIMIT $n", $this->sqlParamsUnion);
   }
 
-  public function getOfflineStructuredData($old_cp = false)
+  public function getOfflineStructuredData()
   {
     $n = Request::Input("n", constant("sync_packet_size"));
     $computer = $this->getComputerFromSession();
 
     $offline = [];
 
-    if (!$old_cp && $computer)
-    {
-      // Get it from storage if not given explicitely
-      $old_cp = $computer->last_sync;
-    }
+    // Get it from storage if not given explicitely
+    $old_cp = $computer->last_sync;
 
     if ($old_cp == "" || count(explode("|", $old_cp)) != 3)
     {
@@ -134,12 +127,9 @@ class SyncController extends ModelController
     $offline['remaining'] = $this->_getCount($offline['new_checkpoint']);
 
     // Store the information for helping understanding what is happening out there...
-    if ($computer)
-    {
-      // In unit tests, we don't have a computerId...
-      $computer->last_sync       = $offline['new_checkpoint'];
-      $computer->save();
-    }
+    // In unit tests, we don't have a computerId...
+    $computer->last_sync       = $offline['new_checkpoint'];
+    $computer->save();
 
     return $offline;
   }
@@ -147,7 +137,12 @@ class SyncController extends ModelController
   public function sync()
   {
     $old_cp = Request::input("cp", false);
-    $data = array("_offline" => $this->getOfflineStructuredData($old_cp));
-    return Response($data);
+    if ($old_cp) {
+      $computer = $this->getComputerFromSession();
+      $computer->last_sync = $old_cp;
+      $computer->save();
+    }
+    // $data = array("_offline" => $this->getOfflineStructuredData($old_cp));
+    return response()->json([]);
   }
 }

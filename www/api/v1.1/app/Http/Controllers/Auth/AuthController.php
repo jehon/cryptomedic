@@ -121,7 +121,7 @@ class AuthController extends Controller {
      *      - folderId (for tracking)
      */
 
-    return response()->jsonOrJSONP($data);
+    return response()->json($data);
   }
 
   public function postMylogin() {
@@ -146,7 +146,7 @@ class AuthController extends Controller {
 
   public function getLogout() {
     Auth::logout();
-    return response()->jsonOrJSONP(null);
+    return response()->json(null);
   }
 
   public function matrix() {

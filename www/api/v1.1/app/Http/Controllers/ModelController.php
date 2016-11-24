@@ -115,7 +115,7 @@ class ModelController extends Controller {
 		$m = $this->getModel($model);
 		$obj = $m::find($id);
 		if (!$obj) {
-			return response()->jsonOrJSONP(array());
+			return response()->json(array());
 		}
 		if(!$obj->delete()) {
 			abort(404, "Could not delete $model@$id");
@@ -123,7 +123,7 @@ class ModelController extends Controller {
 
 		// quid if patient has dependancies? -> see Patient model http://laravel.com/docs/5.0/eloquent#model-events
 		if ($model == "Patient") {
-			return response()->jsonOrJSONP(array());
+			return response()->json(array());
 		}
 		return response()->folder($obj->patient_id);
 	}

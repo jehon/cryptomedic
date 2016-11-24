@@ -13,7 +13,7 @@ class UsersController extends Controller {
 
 	public function index() {
 		$list = User::all();
-		return response()->jsonOrJSONP($list);
+		return response()->json($list);
 	}
 
 	public function emails() {
@@ -60,12 +60,12 @@ class UsersController extends Controller {
 	public function destroy($id) {
 		$obj = User::findOrFail($id);
 		if (!$obj) {
-			return response()->jsonOrJSONP(array());
+			return response()->json(array());
 		}
 		if(!$obj->delete()) {
 			abort(404, "Could not delete $model@$id");
 		}
-		// return response()->jsonOrJSONP(array());
+		// return response()->json(array());
 		return $this->index();
 	}
 

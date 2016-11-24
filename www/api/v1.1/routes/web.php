@@ -16,19 +16,8 @@ use App\Http\Controllers\FolderController;
 
 Route::pattern('id', '[0-9]+');
 
-Response::macro('jsonOrJSONP', function($value)
-{
-  // add a callback JSONP parameter if necessary
-  if (Request::header('X-OFFLINE-CP')) {
-    $value['_offline'] = (new SyncController())->_syncData(Request::header('X-OFFLINE-CP'));
-  }
-  // http://stackoverflow.com/questions/23996567/laravel-responsejson-with-numeric-check
-  $res = response()->json($value, 200, [], JSON_NUMERIC_CHECK);
-  return $res;
-});
-
 Response::macro('folder', function($id, $addData = array()) {
-  return response()->jsonOrJSONP(array_merge(FolderController::getFolderOrFail($id), $addData));
+  return response()->json(array_merge(FolderController::getFolderOrFail($id), $addData));
 });
 
 // Check permissions
