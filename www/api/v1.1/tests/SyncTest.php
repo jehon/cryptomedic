@@ -20,12 +20,11 @@ class SyncTest extends RouteReferenceTestCase {
     $this->setUrl("sync", [ "n" => $n ] + ($cp ? [ "cp" => $cp ] : [])); // "cp" => $this->cp,
     $json = $this->myAssertJSON("readonly");
 
-    $this->assertObjectHasAttribute('_offline', $json);
-    $offline = $json->_offline;
+    $offline = $this->offline;
 
     $this->assertObjectHasAttribute('data', $offline);
     $this->assertObjectHasAttribute('checkpoint', $offline);
-    if ($cp == "") {
+    if ($cp === "") {
       $this->assertObjectHasAttribute('reset', $offline);
       $this->assertEquals(1, $offline->reset);
     }
