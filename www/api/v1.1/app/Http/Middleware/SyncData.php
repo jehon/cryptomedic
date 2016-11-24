@@ -22,7 +22,7 @@ class SyncData {
 	{
 		$response = $next($request);
 		if ($response instanceof JsonResponse) {
-			$response->setOption(JSON_NUMERIC_CHECK);
+			$response->setJsonOptions(JSON_NUMERIC_CHECK);
 			if ($response->status() == 200) {
 				$data = $response->getData();
 				$offline = (new SyncController())->getOfflineStructuredData();
