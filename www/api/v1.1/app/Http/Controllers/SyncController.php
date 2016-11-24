@@ -115,20 +115,20 @@ class SyncController extends ModelController
 
     $offline['data'] = [];
 
-    $offline['new_checkpoint'] = $old_cp;
+    $offline['checkpoint'] = $old_cp;
     foreach($this->_getList($old_cp, $n) as $i => $d)
     {
       $offline["data"][$i] = $d;
       $offline["data"][$i]->data = $this->getLineFrom($d->type, $d->id);
-      $offline['new_checkpoint'] = max($d->checkpoint, $offline['new_checkpoint']);
+      $offline['checkpoint'] = max($d->checkpoint, $offline['checkpoint']);
     }
 
     // Get the remaining count
-    $offline['remaining'] = $this->_getCount($offline['new_checkpoint']);
+    $offline['remaining'] = $this->_getCount($offline['checkpoint']);
 
     // Store the information for helping understanding what is happening out there...
     // In unit tests, we don't have a computerId...
-    $computer->last_sync       = $offline['new_checkpoint'];
+    $computer->last_sync       = $offline['checkpoint'];
     $computer->save();
 
     return $offline;
