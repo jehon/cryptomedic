@@ -37,8 +37,8 @@ class SyncTest extends RouteReferenceTestCase {
     return false;
   }
 
-  public function getNext($n = 1) {
-    $this->setUrl("sync", [ "cp" => $this->cp, "n" => $n ]);
+  public function getNext($n = 1, $cp = false) {
+    $this->setUrl("sync", [ "n" => $n ] + ($cp ? [ "cp" => $cp ] : [])); // "cp" => $this->cp,
     $json = $this->myAssertJSON("readonly");
 
     $this->assertObjectHasAttribute('_offline', $json);
@@ -47,7 +47,7 @@ class SyncTest extends RouteReferenceTestCase {
     if (!property_exists($offline, "isfinal") || !$offline->isfinal) {
       $this->assertObjectHasAttribute('data', $offline);
     }
-    // $this->assertObjectHasAttribute('checkpoint', $offline);
+    $this->assertObjectHasAttribute('checkpoint', $offline);
     if (!$this->cp) {
       $this->assertObjectHasAttribute('reset', $offline);
       $this->assertEquals(1, $offline->reset);
