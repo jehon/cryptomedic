@@ -100,7 +100,7 @@ abstract class ReportController extends Controller {
 
     $this->buildData();
 
-    return response()->jsonOrJSONP($this->result);
+    return response()->json($this->result);
   }
 
   abstract function buildData();

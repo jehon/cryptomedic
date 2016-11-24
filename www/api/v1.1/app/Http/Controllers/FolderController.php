@@ -105,7 +105,7 @@ class FolderController extends Controller {
 		foreach($listing as $k => $v) {
 			$listing[$k]->_type = 'Patient';
 		}
-		return response()->jsonOrJSONP($listing);
+		return response()->json($listing);
 	}
 
 	public function show($id) {
@@ -115,7 +115,7 @@ class FolderController extends Controller {
 	public function reference($entryyear, $entryorder) {
 		$r = DB::select("SELECT * FROM patients WHERE entryyear = ? and entryorder = ?", array($entryyear, $entryorder));
 		if (count($r) != 1) {
-			return response()->jsonOrJSONP(null);
+			return response()->json(null);
 		}
 		$r = array_pop($r);
 		return response()->folder($r->id);
