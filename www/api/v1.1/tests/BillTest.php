@@ -14,16 +14,6 @@ class BillTest extends RouteReferenceTestCase {
 		$this->assertResponseOk("cdc");
 	}
 
-	public function findInArray($json, $type, $id) {
-		$found = false;
-		foreach($json->subFiles as $i => $v) {
-			if (($v->_type == $type)
-					&& ($v->id == $id)) {
-				return $i;
-			}
-		}
-		return false;
-	}
 
 	public function testCreateWithoutPatientId() {
 		$response = $this->call('POST', self::absoluteUrl("fiche/bills/"), [
