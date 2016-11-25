@@ -14,7 +14,6 @@ class BillTest extends RouteReferenceTestCase {
 		$this->assertResponseOk("cdc");
 	}
 
-
 	public function testCreateWithoutPatientId() {
 		$response = $this->call('POST', self::absoluteUrl("fiche/bills/"), [
 		]);
@@ -29,14 +28,10 @@ class BillTest extends RouteReferenceTestCase {
 		$this->assertResponseStatus(200);
   	$json = json_decode($response->getContent());
 		$this->assertObjectHasAttribute('newKey', $json);
-  	$this->assertNotNull($json->newKey);
-		$this->assertObjectHasAttribute('id', $json);
-		$this->assertEquals($json->id, 1);
-
   	$key = $json->newKey;
+  	$this->assertNotNull($json->newKey);
 
-  	$i = $this->findInArray($json, "Bill", $key);
-		$this->assertNotFalse($i, "Found in result");
+  	$i = $this->myAssertIsInOfflineData($json, "Bill", $key);
 
 		// Modify it
 		$response = $this->call('PUT', self::absoluteUrl("fiche/bills/" . $key), [
@@ -44,17 +39,14 @@ class BillTest extends RouteReferenceTestCase {
 		]);
 		$this->assertResponseStatus(200);
   	$json = json_decode($response->getContent());
-		$this->assertEquals($json->id, 1);
-  	$i = $this->findInArray($json, "Bill", $key);
-  	$this->assertEquals("Ershad", $json->subFiles[$i]->ExaminerName);
+		$this->assertEquals($key, $json->id);
+  	$i = $this->myAssertIsInOfflineData($json, "Bill", $key);
+  	$this->assertEquals("Ershad", $json->_offline->data[$i]->record->ExaminerName);
 
 		// Delete it
 		$response = $this->call('DELETE', self::absoluteUrl("fiche/bills/" . $key));
 		$this->assertResponseStatus(200);
   	$json = json_decode($response->getContent());
-		$this->assertEquals($json->id, 1);
-
-  	$i = $this->findInArray($json, "Bill", $key);
-		$this->assertFalse($i, "Found in result");
+  	$i = $this->myAssertIsInOfflineData($json, "Deleted", false, [ "entity_type" => "Bill", "entity_id" => $key ]);
 	}
 }
