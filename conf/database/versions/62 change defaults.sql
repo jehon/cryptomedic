@@ -16,6 +16,9 @@ ALTER TABLE `club_feet`
   CHANGE `updated_at` `updated_at` TIMESTAMP NULL,
   CHANGE `Date` `Date` DATE NULL;
 
+ALTER TABLE `deleteds`
+  CHANGE `updated_at` `updated_at` TIMESTAMP NULL;
+
 ALTER TABLE `other_consults`
   CHANGE `updated_at` `updated_at` TIMESTAMP NULL,
   CHANGE `Date` `Date` DATE NULL;
@@ -59,6 +62,10 @@ UPDATE `bills` SET Date = NULL Where Date = '0000-00-00 00:00:00';
 UPDATE `club_feet` SET created_at = '1980-01-01' Where created_at = '0000-00-00 00:00:00';
 UPDATE `club_feet` SET updated_at = NULL Where updated_at = '0000-00-00 00:00:00';
 UPDATE `club_feet` SET Date = NULL Where Date = '0000-00-00 00:00:00';
+
+-- Special case
+UPDATE `deleteds` SET created_at = NOW() Where created_at = '0000-00-00 00:00:00';
+UPDATE `deleteds` SET updated_at = NOW() Where updated_at = '0000-00-00 00:00:00';
 
 UPDATE `other_consults` SET created_at = '1980-01-01' Where created_at = '0000-00-00 00:00:00';
 UPDATE `other_consults` SET updated_at = NULL Where updated_at = '0000-00-00 00:00:00';
