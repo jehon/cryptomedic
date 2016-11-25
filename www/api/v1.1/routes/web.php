@@ -16,9 +16,9 @@ use App\Http\Controllers\FolderController;
 
 Route::pattern('id', '[0-9]+');
 
-Response::macro('folder', function($id, $addData = array()) {
-  return response()->json(array_merge(FolderController::getFolderOrFail($id), $addData));
-});
+// Response::macro('folder', function($id, $addData = array()) {
+//   return response()->json(array_merge(FolderController::getFolderOrFail($id), $addData));
+// });
 
 // Check permissions
 if (!function_exists('hasPermission')) {
