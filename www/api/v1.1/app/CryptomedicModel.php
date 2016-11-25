@@ -73,16 +73,11 @@ class CryptomedicModel extends Model {
 		if (preg_match('@\\\\([\w]+)$@', $classname, $matches)) {
 			$classname = $matches[1];
 		}
-		$dbname = References::model2db($classname);
+		// $dbname = References::model2db($classname);
 		$id = $this->id;
 		$deleted = new Deleted;
-		$deleted->entity_type = $dbname;
+		$deleted->entity_type = $classname;
 		$deleted->entity_id = $id;
-		if ($dbname == "patients") {
-			$deleted->patient_id = $id;
-		} else {
-			$deleted->patient_id = $this->patient_id;
-		}
 		$deleted->save();
 
 		// Let's go delete it...
