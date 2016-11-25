@@ -67,6 +67,38 @@ class RouteReferenceTestCase extends TestCase {
 		return $json;
 	}
 
+	public function myAssertIsInOfflineData($json, $type, $id = false, $data = false) {
+		$found = false;
+		foreach(array_reverse(array_keys($json->_offline->data)) as $i => $v) {
+			$v = $json->_offline->data[$i];
+			if ($v->type != $type) {
+				continue;
+			}
+			if ($id !== false) {
+				if ($v->id != $id) {
+					continue;
+				}
+			}
+
+			if ($data !== false) {
+				$res = true;
+				print_r($v->record);
+				foreach($data as $k => $e) {
+					if ($v->record->{$k} !== $data[$k]) {
+						$res = false;
+					}
+				}
+				if (!$res) {
+					continue;
+				}
+			}
+			$this->assertTrue(true, "The record $type#$id is in the result");
+			return $i;
+		}
+		$this->assertTrue(false, "The record $type#$id is not in the result");
+		return false;
+	}
+
 	protected function myAssertResponseForReference($group = null, $file = null) {
 		/* Calculate the reference file */
 		$response = $this->myAssertAuthorized($group);
