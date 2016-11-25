@@ -1,10 +1,11 @@
 # Sync backend with payments
 v- Sync file by file, accross a lot of tables
 v  - SyncController
+v- Adapt the modification actions to send back the sync informations
+v  - ModelController
 - Adapt GetFolder to use the new model
-  - action/getFolder
-- Adapt the modification actions to send back the sync informations
-  - ModelController
+v  - action/getFolder
+  - FolderController->getFolder: include Payments
 
 # Go further
 - Optimistic locking
