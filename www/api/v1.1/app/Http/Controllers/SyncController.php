@@ -119,7 +119,7 @@ class SyncController extends ModelController
     foreach($this->_getList($old_cp, $n) as $i => $d)
     {
       $offline["data"][$i] = $d;
-      $offline["data"][$i]->data = $this->getLineFrom($d->type, $d->id);
+      $offline["data"][$i]->record = $this->getLineFrom($d->type, $d->id);
       $offline['checkpoint'] = max($d->checkpoint, $offline['checkpoint']);
     }
 
