@@ -68,7 +68,7 @@ class ModelController extends Controller {
 
 			$m::findOrFail($id);
 			$res = $this->update("Patient", $id);
-			return response()->folder($id);
+			return response()->json([ 'newKey' => $id ]);
 		}
 
 		// \DB::enableQueryLog();
@@ -79,9 +79,7 @@ class ModelController extends Controller {
 			abort(500, "Could not create the file");
 		}
 
-		return response()->folder($data['patient_id'],
-					array('newKey' => $newObj->id)
-				);
+		return response()->json([ 'newKey' => $newObj->id ]);
 	}
 
 	// PUT / PATCH
@@ -104,10 +102,7 @@ class ModelController extends Controller {
 		}
 
 		$obj->save();
-		if ($model == "Patient") {
-			return response()->folder($obj->id);
-		}
-		return response()->folder($obj->patient_id);
+		return response()->json([ "id" => $obj->id ]);
 	}
 
 	// DELETE
@@ -122,10 +117,7 @@ class ModelController extends Controller {
 		}
 
 		// quid if patient has dependancies? -> see Patient model http://laravel.com/docs/5.0/eloquent#model-events
-		if ($model == "Patient") {
-			return response()->json(array());
-		}
-		return response()->folder($obj->patient_id);
+		return response()->json(array());
 	}
 
 	// Unfreeze special route
@@ -136,6 +128,6 @@ class ModelController extends Controller {
 		if ($affectedRows > 1) {
 			abort(500, "Affected rows: " . $affectedRows);
 		}
-		return response()->folder($obj->patient_id);
+		return response()->json([ "id" => $id ]);
 	}
 }
