@@ -16,10 +16,6 @@ use App\Http\Controllers\FolderController;
 
 Route::pattern('id', '[0-9]+');
 
-// Response::macro('folder', function($id, $addData = array()) {
-//   return response()->json(array_merge(FolderController::getFolderOrFail($id), $addData));
-// });
-
 // Check permissions
 if (!function_exists('hasPermission')) {
   function hasPermission($permission, $fn) {
@@ -30,7 +26,6 @@ if (!function_exists('hasPermission')) {
 /**
  * For anybody
  */
-
 Route::group([ 'prefix' => '/api/' . basename(dirname(__DIR__)) ], function() {
   Route::get('/', function () {
       return view('welcome');
