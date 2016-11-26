@@ -89,9 +89,9 @@ class SyncTest extends RouteReferenceTestCase {
     $this->myAssertIsInOfflineData($offline, "Bill", 3);
 
     // Simulating deleting a sub file for a patient
-    $res = DB::statement("INSERT INTO deleteds(entity_type, entity_id) VALUES ('Bill', '10')");
+    $res = DB::statement("INSERT INTO deleteds(entity_type, entity_id) VALUES ('Bill', '1010')");
     $offline = self::getNext(1000);
-    $this->myAssertIsInOfflineData($offline, "Deleted", false);//, [ "entity_type" => "Bill", "entity_id" => 1010 ]);
+    $this->myAssertIsInOfflineData($offline, "Deleted", false, [ "entity_type" => "Bill", "entity_id" => 1010 ]);
   }
 
   public function testChangesInDatabase() {
