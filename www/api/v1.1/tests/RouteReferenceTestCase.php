@@ -120,7 +120,7 @@ class RouteReferenceTestCase extends TestCase {
 			if ($data !== false) {
 				$res = true;
 				foreach($data as $k => $e) {
-					if ($v->record->{$k} !== $data[$k]) {
+					if ($v->record->{$k} != $data[$k]) {
 						$res = false;
 					}
 				}
