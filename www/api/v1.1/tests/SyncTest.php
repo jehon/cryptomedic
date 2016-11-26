@@ -16,62 +16,53 @@ class SyncTest extends RouteReferenceTestCase {
     $this->myAssertUnauthorized();
   }
 
-  public function getNext($n = 1, $cp = false) {
-    $this->setUrl("sync", [ "n" => $n ] + ($cp ? [ "cp" => $cp ] : [])); // "cp" => $this->cp,
-    $json = $this->myAssertJSON("readonly");
+  public function getNext($n, $cp = false) {
+    $json = $this->myAssertRunQuery("sync", [
+      "params" => array_merge([ "n" => $n ], ($cp !== false ? [ "cp" => $cp ] : [])),
+      "user" => "readonly"
+    ]);
 
-    $offline = $this->offline;
+    $offline = $json->_offline;
 
-    $this->assertObjectHasAttribute('data', $offline);
-    $this->assertObjectHasAttribute('checkpoint', $offline);
     if ($cp === "") {
       $this->assertObjectHasAttribute('reset', $offline);
       $this->assertEquals(1, $offline->reset);
     }
-    $this->offline = $offline;
     return $offline;
   }
 
   public function testFlow() {
     $r = 48;
-    $offline = $this->getNext(1, "");
-    $this->assertEquals("Picture", $offline->data[0]->type);
-    $this->assertEquals(1, $offline->data[0]->id);
+    $offline = $this->getNext(1, "reset");
+    $this->myAssertIsInOfflineData($offline, "Picture", 1);
     $this->assertEquals($r--, $offline->remaining);
 
     $offline = $this->getNext(1);
-    $this->assertEquals("Patient", $offline->data[0]->type);
-    $this->assertEquals(7, $offline->data[0]->id);
+    $this->myAssertIsInOfflineData($offline, "Patient", 7);
     $this->assertEquals($r--, $offline->remaining);
 
     $offline = $this->getNext(1);
-    $this->assertEquals("Picture", $offline->data[0]->type);
-    $this->assertEquals(2, $offline->data[0]->id);
+    $this->myAssertIsInOfflineData($offline, "Picture", 2);
     $this->assertEquals($r--, $offline->remaining);
 
     $offline = $this->getNext(1);
-    $this->assertEquals("Bill", $offline->data[0]->type);
-    $this->assertEquals(1, $offline->data[0]->id);
+    $this->myAssertIsInOfflineData($offline, "Bill", 1);
     $this->assertEquals($r--, $offline->remaining);
 
     $offline = $this->getNext(1);
-    $this->assertEquals("Patient", $offline->data[0]->type);
-    $this->assertEquals(1, $offline->data[0]->id);
+    $this->myAssertIsInOfflineData($offline, "Patient", 1);
     $this->assertEquals($r--, $offline->remaining);
 
     $offline = $this->getNext(1);
-    $this->assertEquals("Patient", $offline->data[0]->type);
-    $this->assertEquals(2, $offline->data[0]->id);
+    $this->myAssertIsInOfflineData($offline, "Patient", 2);
     $this->assertEquals($r--, $offline->remaining);
 
     $offline = $this->getNext(1);
-    $this->assertEquals("Patient", $offline->data[0]->type);
-    $this->assertEquals(3, $offline->data[0]->id);
+    $this->myAssertIsInOfflineData($offline, "Patient", 3);
     $this->assertEquals($r--, $offline->remaining);
 
     $offline = $this->getNext(1);
-    $this->assertEquals("Patient", $offline->data[0]->type);
-    $this->assertEquals(4, $offline->data[0]->id);
+    $this->myAssertIsInOfflineData($offline, "Patient", 4);
     $this->assertEquals($r--, $offline->remaining);
 
     $offline = $this->getNext($r); // $r-- -> already $r - 1
@@ -88,25 +79,19 @@ class SyncTest extends RouteReferenceTestCase {
     $offline = self::getNext(1000);
     $res = DB::statement("UPDATE patients SET updated_at = NOW() WHERE id = 1 LIMIT 1");
     $this->assertTrue($res);
-    $offline = self::getNext(1000);
-    $this->assertTrue(count(array_filter($offline->data, function($rec) {
-      return $rec->type == "Patient" && $rec->id = 1;
-    })) > 0);
+    $offline  = self::getNext(1000);
+    $this->myAssertIsInOfflineData($offline, "Patient", 1);
 
     // Change file
     $res = DB::statement("UPDATE bills SET updated_at = NOW() WHERE id = 3 LIMIT 1");
     $this->assertTrue($res);
     $offline = self::getNext(1000);
-    $this->assertTrue(count(array_filter($offline->data, function($rec) {
-      return $rec->type == "Bill" && $rec->id = 3;
-    })) > 0);
+    $this->myAssertIsInOfflineData($offline, "Bill", 3);
 
     // Simulating deleting a sub file for a patient
-    $res = DB::statement("INSERT INTO deleteds(created_at, patient_id, entity_type, entity_id) VALUES (NOW(), '1010', 'bills', '10'); ");
+    $res = DB::statement("INSERT INTO deleteds(entity_type, entity_id) VALUES ('Bill', '10')");
     $offline = self::getNext(1000);
-    $this->assertTrue(count(array_filter($offline->data, function($rec) {
-      return $rec->type == "Deleted" && $rec->id = 1010;
-    })) > 0);
+    $this->myAssertIsInOfflineData($offline, "Deleted", false);//, [ "entity_type" => "Bill", "entity_id" => 1010 ]);
   }
 
   public function testChangesInDatabase() {

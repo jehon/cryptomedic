@@ -104,10 +104,10 @@ class RouteReferenceTestCase extends TestCase {
 		return $json;
 	}
 
-	public function myAssertIsInOfflineData($json, $type, $id = false, $data = false) {
+	public function myAssertIsInOfflineData($offline, $type, $id = false, $data = false) {
 		$found = false;
-		foreach(array_reverse(array_keys($json->_offline->data)) as $i => $v) {
-			$v = $json->_offline->data[$i];
+		foreach(array_reverse(array_keys($offline->data)) as $i => $v) {
+			$v = $offline->data[$i];
 			if ($v->type != $type) {
 				continue;
 			}
