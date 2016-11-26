@@ -70,11 +70,11 @@ class SyncController extends ModelController
                 $this->sqlParamsUnion["type2_{$m}"]  = $this->sqlParamsUnion["type1_{$m}"]    = $cpo->type;
                 $this->sqlParamsUnion["id2_{$m}"]    = $cpo->id;
                 return "("
-                    . "SELECT greatest(created_at, updated_at) AS ts, id, '$m' as type"
+                    . "SELECT greatest(created_at, coalesce(updated_at, 0)) AS ts, id, '$m' as type"
                     . " FROM $t "
-                    . " WHERE (greatest(created_at, updated_at) > :ts0_{$m}) "
-                    . "   OR ((greatest(created_at, updated_at) = :ts1_{$m}) AND ('{$cpo->type}' > :type1_{$m}))"
-                    . "   OR ((greatest(created_at, updated_at) = :ts2_{$m}) AND ('{$cpo->type}' = :type2_{$m}) AND (id > :id2_{$m}))"
+                    . " WHERE (greatest(created_at, coalesce(updated_at, 0)) > :ts0_{$m}) "
+                    . "   OR ((greatest(created_at, coalesce(updated_at, 0)) = :ts1_{$m}) AND ('{$cpo->type}' > :type1_{$m}))"
+                    . "   OR ((greatest(created_at, coalesce(updated_at, 0)) = :ts2_{$m}) AND ('{$cpo->type}' = :type2_{$m}) AND (id > :id2_{$m}))"
                     .") \n";
               }, $list, array_keys($list)
           )
@@ -142,7 +142,6 @@ class SyncController extends ModelController
       $computer->last_sync = $old_cp;
       $computer->save();
     }
-    // $data = array("_offline" => $this->getOfflineStructuredData($old_cp));
     return response()->json([]);
   }
 }
