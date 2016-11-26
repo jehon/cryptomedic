@@ -65,7 +65,6 @@ class SyncController extends ModelController
           array_map(
               function($t, $m) use ($cpo)
               {
-                $patient_id = ($t == "patients" ? "id" : "patient_id");
                 $this->sqlParamsUnion["ts2_{$m}"]    = $this->sqlParamsUnion["ts1_{$m}"]      = $this->sqlParamsUnion["ts0_{$m}"] = $cpo->ts;
                 $this->sqlParamsUnion["type2_{$m}"]  = $this->sqlParamsUnion["type1_{$m}"]    = $cpo->type;
                 $this->sqlParamsUnion["id2_{$m}"]    = $cpo->id;
