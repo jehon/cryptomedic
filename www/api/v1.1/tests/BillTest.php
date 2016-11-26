@@ -31,7 +31,7 @@ class BillTest extends RouteReferenceTestCase {
   	$key = $json->newKey;
   	$this->assertNotNull($json->newKey);
 
-  	$i = $this->myAssertIsInOfflineData($json, "Bill", $key);
+  	$i = $this->myAssertIsInOfflineData($json->_offline, "Bill", $key);
 
 		// Modify it
 		$response = $this->call('PUT', self::absoluteUrl("fiche/bills/" . $key), [
@@ -40,13 +40,13 @@ class BillTest extends RouteReferenceTestCase {
 		$this->assertResponseStatus(200);
   	$json = json_decode($response->getContent());
 		$this->assertEquals($key, $json->id);
-  	$i = $this->myAssertIsInOfflineData($json, "Bill", $key);
+  	$i = $this->myAssertIsInOfflineData($json->_offline, "Bill", $key);
   	$this->assertEquals("Ershad", $json->_offline->data[$i]->record->ExaminerName);
 
 		// Delete it
 		$response = $this->call('DELETE', self::absoluteUrl("fiche/bills/" . $key));
 		$this->assertResponseStatus(200);
   	$json = json_decode($response->getContent());
-  	$i = $this->myAssertIsInOfflineData($json, "Deleted", false, [ "entity_type" => "Bill", "entity_id" => $key ]);
+  	$i = $this->myAssertIsInOfflineData($json->_offline, "Deleted", false, [ "entity_type" => "Bill", "entity_id" => $key ]);
 	}
 }
