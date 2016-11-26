@@ -135,10 +135,11 @@ class SyncController extends ModelController
 
   public function sync()
   {
-    $old_cp = Request::input("cp", false);
-    if ($old_cp) {
+    $cp = Request::input("cp", false);
+    if ($cp)
+    {
       $computer = $this->getComputerFromSession();
-      $computer->last_sync = $old_cp;
+      $computer->last_sync = $cp;
       $computer->save();
     }
     return response()->json([]);
