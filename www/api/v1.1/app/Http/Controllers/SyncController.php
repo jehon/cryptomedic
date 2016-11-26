@@ -93,7 +93,7 @@ class SyncController extends ModelController
   public function _getList($cp, $n)
   {
     $sqlu = $this->_getUnionSQL($cp);
-    return DB::select($sqlu . "ORDER BY ts, type, id LIMIT $n", $this->sqlParamsUnion);
+    return DB::select($sqlu . " ORDER BY ts, type, id LIMIT $n", $this->sqlParamsUnion);
   }
 
   public function getOfflineStructuredData()
