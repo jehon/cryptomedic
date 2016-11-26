@@ -2,7 +2,7 @@
 CREATE TABLE `payments` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL,
   `lastuser` varchar(50) DEFAULT NULL,
   `bill_id` int(10) UNSIGNED NOT NULL,
   `Date` date NULL,
