@@ -22,6 +22,43 @@ class RouteReferenceTestCase extends TestCase {
  		$this->setUrl($url, $params);
 	}
 
+	public function myAssertRunQuery($url, $options) {
+		$options = array_merge([
+			"user" => "readonly",
+			"params" => [],
+			"method" => "GET",
+			"json" => true,
+			"expected" => 200
+		], $options);
+
+		if ($options['user']) {
+			$user = new User(['name' => 'test', 'group' => $options['user'] ]);
+			$this->actingAs($user);
+		}
+
+		$response = $this->call($options['method'], self::absoluteUrl($url), $options["params"]);
+		$text = $response->getContent();
+		if ($response->getStatusCode() == 500) {
+			echo $text;
+		}
+		$this->assertEquals($options["expected"], $response->getStatusCode());
+
+		if (!$options['json']) {
+			return $text;
+		}
+
+		$json = json_decode($text);
+		$this->assertNotNull($json, "Error parsing json");
+
+		// Check the offline informations
+		$this->assertNotNull($json->_offline, "No offline informations?");
+		$this->assertNotNull($json->_offline->checkpoint);
+		$this->assertNotNull($json->_offline->remaining);
+		$this->assertNotNull($json->_offline->data);
+
+		return $json;
+	}
+
 	protected function setUrl($url, $baseParams = array()) {
 		$this->url = self::absoluteUrl($url);
 		$this->baseParams = $baseParams;
