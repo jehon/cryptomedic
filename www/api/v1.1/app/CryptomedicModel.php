@@ -57,6 +57,19 @@ class CryptomedicModel extends Model {
 		return [];
 	}
 
+	public function getSyncRecord() {
+    $classname = get_class($this);
+		if ($pos = strrpos($classname, '\\')) {
+			$classname = substr($classname, $pos + 1);
+		}
+
+    $rec = [];
+    $rec["type"]   = $classname;
+    $rec["id"]     = $this->id;
+    $rec["record"] = $this;
+    return $rec;
+	}
+
 	public function getReadOnlyField() {
 		return [ "patient_id", "bill_id" ];
 	}
