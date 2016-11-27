@@ -35,14 +35,15 @@ class Patient extends CryptomedicModel {
     foreach($dependants as $m => $t) {
       $obj = "\\App\\" . $m;
 
-      $r = DB::select("SELECT * FROM $t WHERE patient_id = :patient_id", array('patient_id' => $id));
-      foreach($r as $rv) {
+      // $r = DB::select("SELECT * FROM $t WHERE patient_id = :patient_id", array('patient_id' => $id));
+      $r = $obj::where("patient_id", $this->id)->get();
+      foreach($r as $ri => $rv) {
         $rec = [];
         $rec["type"] = $m;
-        $rec["id"] = $r->id;
-        $rec["record"] = $obj->findOrFail($r->id);
+        $rec["id"] = $rv->id;
+        $rec["record"] = $obj::findOrFail($rv->id);
         $list[] = $rec;
-        $list = array_merge($list, $obj->getDependantList());
+        $list = array_merge($list, $rec["record"]->getDependantList());
       }
     }
 
