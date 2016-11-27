@@ -13,57 +13,10 @@ use Illuminate\Support\Facades\Request;
 class FolderController extends Controller {
 	// @see http://laravel.com/docs/5.0/controllers
 
-	public static function sortFiles($a, $b) {
-		if ($a->_type != $b->_type) {
-			if ($a->_type == 'Patient') {
-				return -1;
-			}
-			if ($b->_type == 'Patient') {
-				return 1;
-			}
-			return strcmp($a->_type, $b->_type);
-		} else {
-			if ($a->id != $b->id) {
-				return strcmp($a->id, $b->id);
-			} else {
-				return 0;
-			}
-		}
-	}
-
 	public static function getFolder($id) {
-		$master = [];
-		$master['_type'] = 'Folder';
-		$master['id'] = $id;
-		$master['mainFile'] = DB::table('patients')->where('id', $id)->first();
-		if (!$master['mainFile']) {
-			return null;
-		}
-		$master['mainFile']->_type = 'Patient';
-
-		$master['subFiles'] = array();
-
-		$list = References::$model2db;
-    unset($list["Payment"]);
-
-		foreach($list as $c) {
-			if ($c == "patients") continue;
-
-			$r = DB::select("SELECT * FROM $c WHERE patient_id = :patient_id", array('patient_id' => $id));
-			foreach($r as $rv) {
-				$rv->_type = References::db2model($c);
-				$master['subFiles'][] = $rv;
-			}
-		}
-		usort($master['subFiles'], "self::sortFiles");
-		return $master;
-	}
-
-	public static function getFolderOrFail($id) {
-		$res = self::getFolder($id);
-		if (!$res) {
-			abort(404);
-		}
+		$patient = Patient::findOrFail($id);
+		$res = array_merge([ $patient->getSyncRecord() ], $patient->getDependantList());
+		// usort($res, "self::sortFiles");
 		return $res;
 	}
 
@@ -109,7 +62,7 @@ class FolderController extends Controller {
 	}
 
 	public function show($id) {
-		return response()->json($this->getFolderOrFail($id));
+		return response()->json($this->getFolder($id));
 	}
 
 	public function reference($entryyear, $entryorder) {
