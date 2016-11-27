@@ -1,11 +1,15 @@
-# Sync backend with payments
-v- Sync file by file, accross a lot of tables
-v  - SyncController
-v- Adapt the modification actions to send back the sync informations
-v  - ModelController
-- Adapt GetFolder to use the new model
-v  - action/getFolder
-  - FolderController->getFolder: include Payments
+# New sync system
+- Treat the _offline record
+- If syncDone, get it locally
+- If !syncDone, get it remote + store + go back to syncDone
+
+# Manage payments
+- include data in tests backend
+- View
+- Add
+- Save
+- Delete
+- Unlock
 
 # Go further
 - Optimistic locking
@@ -13,18 +17,6 @@ v  - action/getFolder
   - handling
 - Use the version 1.1
 - Reactivate the PaymentTest full
-
-# Manage payments
-- View
-- Add
-- Save
-- Delete
-- Unlock
-
-# New sync system
-- If syncDone, get it locally
-- If !syncDone, get it remote + store + go back to syncDone
-- All actions respond with "sync data", and application auto-refresh from database
 
 # Later
 ## Requested
