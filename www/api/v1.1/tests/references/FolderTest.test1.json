@@ -1,39 +1,30 @@
 {
-    "_type": "Folder",
-    "id": 1,
-    "mainFile": {
+    "0": {
+        "type": "Patient",
         "id": 1,
-        "created_at": "2014-10-29 08:04:03",
-        "updated_at": "2014-12-31 12:47:09",
-        "lastuser": "Thierry",
-        "entryyear": 2000,
-        "entryorder": 1,
-        "Name": "rezaul islam",
-        "Sex": "Male",
-        "Yearofbirth": 1998,
-        "AddressNotes": "",
-        "Telephone": "",
-        "District": "Chittagong",
-        "Upazilla": null,
-        "Union_": null,
-        "Pathology": "ClubFoot",
-        "other_comments": "",
-        "_type": "Patient"
-    },
-    "subFiles": [
-        {
-            "id": 2,
-            "created_at": "1980-01-01 00:00:00",
-            "updated_at": "2015-02-19 13:52:16",
+        "record": {
+            "id": 1,
+            "created_at": "2014-10-29 08:04:03",
+            "updated_at": "2014-12-31 12:47:09",
             "lastuser": "Thierry",
-            "patient_id": 1,
-            "Date": "2007-01-10",
-            "ExaminerName": "Ershad",
-            "Nextappointment": "2015-04-28",
-            "NextCenter": null,
-            "_type": "Appointment"
-        },
-        {
+            "entryyear": 2000,
+            "entryorder": 1,
+            "Name": "rezaul islam",
+            "Sex": "Male",
+            "Yearofbirth": 1998,
+            "AddressNotes": "",
+            "Telephone": "",
+            "District": "Chittagong",
+            "Upazilla": null,
+            "Union_": null,
+            "Pathology": "ClubFoot",
+            "other_comments": ""
+        }
+    },
+    "1": {
+        "type": "Bill",
+        "id": 1,
+        "record": {
             "id": 1,
             "created_at": "2011-06-10 14:46:57",
             "updated_at": "2014-12-29 19:57:33",
@@ -134,10 +125,13 @@
             "surgical_burn_little_release": 0,
             "other_Other_plaster": 0,
             "other_Other_dressing": 0,
-            "consult_ClubFoot_Follow_up": 0,
-            "_type": "Bill"
-        },
-        {
+            "consult_ClubFoot_Follow_up": 0
+        }
+    },
+    "2": {
+        "type": "OtherConsult",
+        "id": 1,
+        "record": {
             "id": 1,
             "created_at": "1980-01-01 00:00:00",
             "updated_at": "2015-02-19 13:52:16",
@@ -162,10 +156,13 @@
             "Surgery66": "Postero-medial release",
             "Comments": "",
             "TreatmentEvaluation": null,
-            "TreatmentFinished": null,
-            "_type": "OtherConsult"
-        },
-        {
+            "TreatmentFinished": null
+        }
+    },
+    "3": {
+        "type": "Picture",
+        "id": 2,
+        "record": {
             "id": 2,
             "created_at": "2014-11-06 14:32:45",
             "updated_at": "2014-11-06 14:32:45",
@@ -174,8 +171,22 @@
             "OriginalName": "03.09 a.JPG",
             "file": "10_2014-11-06_15-32-45.JPG",
             "Date": "2014-11-04",
-            "comment": "",
-            "_type": "Picture"
+            "comment": ""
         }
-    ]
+    },
+    "4": {
+        "type": "Appointment",
+        "id": 2,
+        "record": {
+            "id": 2,
+            "created_at": "1980-01-01 00:00:00",
+            "updated_at": "2015-02-19 13:52:16",
+            "lastuser": "Thierry",
+            "patient_id": 1,
+            "Date": "2007-01-10",
+            "ExaminerName": "Ershad",
+            "Nextappointment": "2015-04-28",
+            "NextCenter": null
+        }
+    }
 }
