@@ -122,4 +122,13 @@ class Bill extends CryptomedicModel {
     }
     return true;
   }
+
+	public function getDependantList() {
+		$list = [];
+    $r = \App\Payment::where("bill_id", $this->id)->get();
+    foreach($r as $ri => $rv) {
+      $list = array_merge($list, [ $rv->getSyncRecord() ], $rv->getDependantList());
+    }
+		return [];
+	}
 }
