@@ -53,6 +53,10 @@ class CryptomedicModel extends Model {
 		return true;
 	}
 
+	public function getDependantList() {
+		return [];
+	}
+
 	public function getReadOnlyField() {
 		return [ "patient_id", "bill_id" ];
 	}
