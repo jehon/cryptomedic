@@ -7,8 +7,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <script type='text/javascript' src='/bower_components/webcomponentsjs/webcomponents-lite.js'></script>
+    <script type='text/javascript' src='/bower_components/dexie/dist/dexie.min.js'></script>
+
+    <link rel="import" href="bower_components/granite-alert/granite-alert.html">
+
+    <link rel="import" href="/static/elements/dataService.html">
     <link rel="import" href="/static/elements/codage.html">
     <link rel="import" href="/static/elements/htmlbox.html">
+
+    <link rel="import" href="/static/elements/cryptomedic-file-payment.html">
 
     <script type='text/javascript' src='/bower_components/moment/min/moment.min.js'></script>
 
@@ -21,6 +28,7 @@
   </head>
   <body ng-app="app_main" ng-controller="ctrl" id="ng-app" xxx-fullbleed xxx-unresolved>
     <!--  Navigation bar -->
+    <cryptomedic-data-service id='dataService'></cryptomedic-data-service>
     <nav class="navbar navbar-default navbar-static-top" role="navigation" ng-if="appStateStore.connection.authenticated">
       <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
