@@ -5,7 +5,6 @@ import dispatch     from 'reducers/dispatch';
 import Folder       from 'models/Folder';
 import Patient      from 'models/Patient';
 
-import Database     from 'helpers/database';
 import MyWorker     from 'helpers/myWorker';
 import myFrontFetch from 'helpers/myFrontFetch';
 import goThere      from 'helpers/goThere';

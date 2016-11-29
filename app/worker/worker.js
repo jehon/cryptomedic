@@ -37,8 +37,9 @@
       - positive feedback is received through the 'sync' mechanism
  */
 
-import Database    from 'helpers/database';
 import myFetch     from 'helpers/myFetch';
+importScripts("/static/objects/database.js");
+importScripts("/bower_components/dexie/dist/dexie.min.js");
 
 var db = new Database();
 
