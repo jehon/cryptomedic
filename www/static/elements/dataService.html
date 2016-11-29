@@ -150,9 +150,8 @@
                 return response.json()
                   .then(json => {
                     if (json._offline) {
-                      // TODO: treat the offline record
                       console.warn("offline data: ", json._offline);
-                      delete(json._offline);
+                      return checkOfflineData(json);
                     }
                     return json;
                   });
@@ -201,6 +200,17 @@
       }
     }
 
+    function checkOfflineData(json) {
+      if (!json._offline) {
+        return json;
+      }
+
+
+
+      delete(json._offline);
+      return json;
+    }
+
     function treatAuthenticationResponse(data) {
       if (!window.cryptomedic) {
         window.cryptomedic = {};
@@ -228,15 +238,13 @@
       },
 
       doLoginCheck() {
-
-// TODO: send back a 405, instead of a 401 ???
-
         return (new OneRequest())
           .setData({
             'computerId': localStorage.cryptomedicComputerId
           })
           .get('auth/settings')
           .then(treatAuthenticationResponse)
+          .catch(() => {})
           ;
       },
 
@@ -264,7 +272,25 @@
       },
 
       getFolder(id) {
+        // if (lastPatientSelected && lastPatientSelected.id == id) {
+        //   console.log("reusing old selected patient");
+        //   return Promise.resolve(lastPatientSelected);
+        // }
 
+        // console.log('Getting the folder live: #' + id);
+
+        // return myFrontFetch({ url: 'folder/' + id })
+        //   // Store the received record into the database
+        //   .then((json) => (new Database()).storeRecord({ record: json}, false) )
+        //   .then((data) => { return new Folder(data); })
+        //   .then(folder => { lastPatientSelected = folder; return folder; })
+        //   .then((data) => { return dispatch(catalog.FOLDER_UPDATE_FROM_SERVER, data); })
+        //   .catch((data) => {
+        //     console.log('in error in selectFile', data);
+        //     dispatch(catalog.CONNECTION_NOT_FOUND, data);
+        //     return null;
+        //   })
+        //   ;
       },
 
       createFile(data) {
