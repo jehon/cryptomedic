@@ -5,7 +5,6 @@ import dispatch                 from 'reducers/dispatch';
 import store                    from 'reducers/store';
 
 import date2CanonicString       from 'helpers/date2CanonicString';
-import Database                 from 'helpers/database';
 import myFetch                  from 'helpers/myFetch';
 import service_backend_fn       from 'helpers/service_backend';
 

@@ -1,6 +1,5 @@
 
 import myFrontFetch     from 'helpers/myFrontFetch';
-import Database         from 'helpers/database';
 import dispatch         from 'reducers/dispatch';
 import catalog          from 'reducers/catalog';
 // import store            from 'reducers/store';
