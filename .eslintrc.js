@@ -2,7 +2,7 @@ module.exports = {
   "extends": "eslint:recommended",
   "parserOptions": {
     "ecmaVersion": 6,
-    "sourceType": "module",
+    "sourceType": "browser",
     "ecmaFeatures": {
       "impliedStrict": true
     }
@@ -19,14 +19,8 @@ module.exports = {
         2,
         { "SwitchCase": 1 }
     ],
-    // "linebreak-style": [
-    //     2,
-    //     "unix"
-    // ],
-    "no-console": [ "off" ], // "warn"
+    "no-console": [ "off" ],
     "no-undef": [ "warn" ],
     "no-unused-vars": [ "warn" ],
-  // "globals": {
-    // "jQuery": true,
   }
 }
