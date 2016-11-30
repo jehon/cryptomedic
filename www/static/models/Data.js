@@ -39,5 +39,3 @@ class Data {
     return false;
   }
 }
-
-export default Data;

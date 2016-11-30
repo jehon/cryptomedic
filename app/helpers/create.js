@@ -1,18 +1,4 @@
 
-import Data          from 'models/Data';
-import File          from 'models/File';
-
-import Folder        from 'models/Folder';
-import Patient       from 'models/Patient';
-
-import Appointment   from 'models/Appointment';
-import Bill          from 'models/Bill';
-import ClubFoot      from 'models/ClubFoot';
-import OtherConsult  from 'models/OtherConsult';
-import Picture       from 'models/Picture';
-import RicketConsult from 'models/RicketConsult';
-import Surgery       from 'models/Surgery';
-
 var models = {
   Data,
   File,
@@ -24,6 +10,7 @@ var models = {
   Bill,
   ClubFoot,
   OtherConsult,
+  Payment,
   Picture,
   RicketConsult,
   Surgery

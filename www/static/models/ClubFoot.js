@@ -1,7 +1,5 @@
 'use strict';
 
-import File from 'models/File';
-
 function f(val) {
   if (val == null) {
     throw new Error('Null value', val);
@@ -13,7 +11,7 @@ function f(val) {
 }
 
 
-export default class ClubFoot extends File {
+class ClubFoot extends File {
   getModel() {
     return 'ClubFoot';
   }

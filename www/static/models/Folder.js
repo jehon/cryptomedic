@@ -1,11 +1,9 @@
 'use strict';
 
-import Data      from 'models/Data';
-import Patient   from 'models/Patient';
 import create    from 'helpers/create';
 import amd_stats from 'helpers/amd_stats_datas';
 
-export default class Folder extends Data {
+class Folder extends Data {
   getModel() {
     return 'Folder';
   }

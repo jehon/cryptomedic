@@ -1,8 +1,6 @@
 'use strict';
 
-import File from 'models/File';
-
-export default class Picture extends File {
+class Picture extends File {
   getModel() {
     return 'Picture';
   }

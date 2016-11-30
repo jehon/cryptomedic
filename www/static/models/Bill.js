@@ -1,10 +1,8 @@
 'use strict';
 
-import File from 'models/File';
-
 // TODO: there seems to have a race condition around here...
 
-export default class Bill extends File {
+class Bill extends File {
   getModel() {
     return 'Bill';
   }
