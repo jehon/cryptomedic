@@ -1,6 +1,6 @@
 'use strict';
 
-import store                    from 'reducers/store';
+let store = appState().store;
 
 class File extends Data {
   constructor(data, folder = null) {
