@@ -1,6 +1,5 @@
 
 import catalog            from 'reducers/catalog';
-import date2CanonicString from 'helpers/date2CanonicString';
 
 catalog._define('PREFS_CLEAR');
 catalog._define('PREFS_REHYDRATE');

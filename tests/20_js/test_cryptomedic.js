@@ -1,7 +1,6 @@
 'use strict';
 
 import { nullify }        from 'helpers/service_backend';
-import date2CanonicString from 'helpers/date2CanonicString';
 
 describe('Cryptomedic.js', function() {
   describe('date2CanonicString', function() {

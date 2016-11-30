@@ -1,7 +1,6 @@
 'use strict';
 
 import store                    from 'reducers/store';
-import calculations             from 'helpers/calculations';
 
 class File extends Data {
   constructor(data, folder = null) {

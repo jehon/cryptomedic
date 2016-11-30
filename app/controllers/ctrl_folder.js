@@ -9,7 +9,6 @@ import template             from 'helpers/template';
 
 import catalog              from 'reducers/catalog';
 import dispatch             from 'reducers/dispatch';
-import date2CanonicString   from 'helpers/date2CanonicString';
 import goThere              from 'helpers/goThere';
 
 function ctrl_folder($scope, $location, $routeParams) {

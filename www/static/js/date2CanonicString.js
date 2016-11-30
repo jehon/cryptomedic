@@ -26,5 +26,3 @@ function date2CanonicString(d, dateOnly) {
       ' GMT' + (ts < 0 ? '-' : '+') +
       ('0000' + Math.abs(ts)).substr(-4);
 }
-
-export default date2CanonicString;
