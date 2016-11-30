@@ -5,7 +5,6 @@ import                               'angular-route';
 import store                    from 'reducers/store';
 import dispatch                 from 'reducers/dispatch';
 import catalog                  from 'reducers/catalog';
-import calculations             from 'helpers/calculations';
 import template                 from 'helpers/template';
 import goThere                  from 'helpers/goThere';
 

@@ -1,11 +1,10 @@
 'use strict';
 
-let store = appState().store;
-
 class File extends Data {
   constructor(data, folder = null) {
     super(data);
     if (data == null) {
+      let store = appState().store;
       var c = store.getState().prefs.files;
       this.ExaminerName = c.examinerName;
       this.Center       = c.center;
