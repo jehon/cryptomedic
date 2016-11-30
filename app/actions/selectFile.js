@@ -2,8 +2,6 @@
 import myFrontFetch     from 'helpers/myFrontFetch';
 import dispatch         from 'reducers/dispatch';
 import catalog          from 'reducers/catalog';
-// import store            from 'reducers/store';
-import Folder           from 'models/Folder';
 
 let db = new Database();
 

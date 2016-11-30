@@ -2,9 +2,6 @@
 import catalog      from 'reducers/catalog';
 import dispatch     from 'reducers/dispatch';
 
-import Folder       from 'models/Folder';
-import Patient      from 'models/Patient';
-
 import MyWorker     from 'helpers/myWorker';
 import myFrontFetch from 'helpers/myFrontFetch';
 import goThere      from 'helpers/goThere';

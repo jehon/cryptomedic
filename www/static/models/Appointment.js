@@ -1,8 +1,6 @@
 'use strict';
 
-import File from 'models/File';
-
-export default class Appointment extends File {
+class Appointment extends File {
   getModel() {
     return 'Appointment';
   }

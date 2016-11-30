@@ -1,8 +1,6 @@
 'use strict';
 
-import Data from 'models/Data';
-
-export default class Patient extends Data {
+class Patient extends Data {
   getModel() {
     return 'Patient';
   }
