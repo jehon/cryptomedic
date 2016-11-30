@@ -1,7 +1,5 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 
-
-
 <dom-module name="cryptomedic-data-service">
   <template>
     <paper-dialog id='modal'>
@@ -9,7 +7,6 @@
       {{details}}
     </paper-dialog>
   </template>
-
 
   <script src="../js/oneRequest.js"></script>
   <script>
@@ -23,6 +20,8 @@
       }
       localStorage.cryptomedicComputerId = result;
     }
+
+    db = new Database();
 
     //************************************************************************************/
     //**** Body builders according to method
@@ -204,8 +203,6 @@
       if (!json._offline) {
         return json;
       }
-
-
 
       delete(json._offline);
       return json;
