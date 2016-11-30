@@ -1,36 +1,38 @@
 
-// Shared database Dexie object...
+// Shared database db object...
 
 let Database = (function() {
 
-  let dexie = false;
+  let db = false;
 
   return class Database {
     constructor() {
-      if (!dexie) {
-        dexie = new Dexie('cryptomedic');
+      if (!db) {
+        // https://github.com/dfahlander/db.js/wiki/Version.stores()
 
-        dexie.version(1).stores({
+        db = new Dexie('cryptomedic');
+
+        db.version(1).stores({
           patients: '++id'
         });
 
-        dexie.version(2).stores({
+        db.version(2).stores({
           patients: '++id,[mainFile.entryyear+mainFile.entryorder]'
         });
 
-        dexie.version(3).stores({
+        db.version(3).stores({
           patients: '++id'
         });
 
-        dexie.version(4).stores({
+        db.version(4).stores({
           // @see
-          // dexie.relations.where('[userId1+userId2]').equals([2,3]).or('[userId1+userId2]').equals([3,2])
+          // db.relations.where('[userId1+userId2]').equals([2,3]).or('[userId1+userId2]').equals([3,2])
           // - will give you all the relations that user 1 has to user 2 or user 2
           // has to user 1.
           patients: '++id,[mainFile.entryyear+mainFile.entryorder]'
         });
 
-        dexie.version(5).upgrade(function(trans) {
+        db.version(5).upgrade(function(trans) {
           trans.patients.toCollection().modify((p) => {
             if (typeof(p.id) == 'number') {
               delete this.value;
@@ -39,12 +41,12 @@ let Database = (function() {
           });
         });
 
-        dexie.version(6).stores({
+        db.version(6).stores({
           patients: '++id,[mainFile.entryyear+mainFile.entryorder]',
           settings: 'key'
         });
 
-        dexie.open();
+        db.open();
       }
     }
 
@@ -53,7 +55,7 @@ let Database = (function() {
      * Get the folder, with all the currently awaiting modifications applied
      */
     getFolder(id) {
-      return dexie.patients.get('' + id).then((data) => {
+      return db.patients.get('' + id).then((data) => {
         if (data) {
           return this.applyModificationsOn(data);
         } else {
@@ -66,7 +68,7 @@ let Database = (function() {
      * Get the folder by the reference
      */
     getByReference(entryyear, entryorder) {
-      return dexie.patients.where('[mainFile.entryyear+mainFile.entryorder]').equals([''+entryyear, ''+entryorder]).toArray((data) => {
+      return db.patients.where('[mainFile.entryyear+mainFile.entryorder]').equals([''+entryyear, ''+entryorder]).toArray((data) => {
         if (data && data.length == 1) {
           return this.applyModificationsOn(data[0]);
         } else {
@@ -101,13 +103,13 @@ let Database = (function() {
       var req;
       var data;
       if (record['_deleted']) {
-        req = dexie.patients.delete('' + record['id']);
+        req = db.patients.delete('' + record['id']);
         data = '' + record['id'];
       } else {
         record['record']['id'] += '';
         record['record']['mainFile']['entryyear'] += '';
         record['record']['mainFile']['entryorder'] += '';
-        req = dexie.patients.put(record['record']);
+        req = db.patients.put(record['record']);
         data = record['record'];
       }
       if (doUpdateCheckpoint) {
@@ -126,7 +128,7 @@ let Database = (function() {
      *                delete it otherwise, store bulk[].record into the store
                  Come from (json.)_offline.data
      */
-    bulkUpdate(bulk, feedexieack) {
+    bulkUpdate(bulk, feedback) {
       var prevPromise = Promise.resolve(); // initial Promise always resolve
       for (var key in bulk) {
         prevPromise = prevPromise.then(
@@ -134,8 +136,8 @@ let Database = (function() {
             return new Promise((iresolve, ireject) => {
               this.storeRecord(bulk[key])
                 .then(function (data) {
-                  if (feedexieack) {
-                    feedexieack(data);
+                  if (feedback) {
+                    feedback(data);
                   }
                   iresolve();
                 }, function (e) {
@@ -150,7 +152,7 @@ let Database = (function() {
 
     // ------------------ System functions ------------------------------
     getSetting(key, def) {
-      return dexie.settings.get('' + key).then((data) => {
+      return db.settings.get('' + key).then((data) => {
         if (data) {
           return data.value;
         } else {
@@ -161,18 +163,18 @@ let Database = (function() {
     }
 
     setSetting(key, value) {
-      return dexie.settings.put({ key: '' + key, value: value})
+      return db.settings.put({ key: '' + key, value: value})
         .then(() => value);
     }
 
     clear() {
-      return dexie.patients.clear().then(() => {
-        return dexie.settings.clear();
+      return db.patients.clear().then(() => {
+        return db.settings.clear();
       });
     }
 
     version() {
-      return dexie.verno;
+      return db.verno;
     }
   }
 })();
