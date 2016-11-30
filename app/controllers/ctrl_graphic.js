@@ -1,4 +1,3 @@
-import calculations             from 'helpers/calculations';
 
 function ctrl_graphic($scope) {
   // This controller is intended for ONE graphic only

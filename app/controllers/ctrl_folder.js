@@ -3,8 +3,6 @@ import service_backend      from 'helpers/service_backend';
 import selectFile           from 'actions/selectFile';
 import patientGenerate      from 'actions/patientGenerate';
 
-import create               from 'helpers/create';
-import calculations         from 'helpers/calculations';
 import template             from 'helpers/template';
 
 import catalog              from 'reducers/catalog';
