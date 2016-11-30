@@ -1,6 +1,5 @@
 'use strict';
 
-import amd_stats                from 'helpers/amd_stats_datas';
 import store                    from 'reducers/store';
 import calculations             from 'helpers/calculations';
 

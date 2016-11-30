@@ -1,8 +1,5 @@
 'use strict';
 
-import create    from 'helpers/create';
-import amd_stats from 'helpers/amd_stats_datas';
-
 class Folder extends Data {
   getModel() {
     return 'Folder';
