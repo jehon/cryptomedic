@@ -1,4 +1,3 @@
-import date2CanonicString   from 'helpers/date2CanonicString';
 
 let calculations = {
   math: {
@@ -103,5 +102,3 @@ let calculations = {
   }
 
 };
-
-export default calculations;

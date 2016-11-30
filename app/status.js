@@ -4,7 +4,6 @@ import catalog                  from 'reducers/catalog';
 import dispatch                 from 'reducers/dispatch';
 import store                    from 'reducers/store';
 
-import date2CanonicString       from 'helpers/date2CanonicString';
 import myFetch                  from 'helpers/myFetch';
 import service_backend_fn       from 'helpers/service_backend';
 
@@ -35,7 +34,6 @@ export default function() {
       selectFile
     },
     helpers: {
-      date2CanonicString,
       service_backend_fn,
       myFetch,
       db,

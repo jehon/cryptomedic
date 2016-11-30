@@ -1,4 +1,3 @@
-import date2CanonicString   from 'helpers/date2CanonicString';
 
 function ctrl_file_appointment($scope) {
   $scope.today = date2CanonicString(new Date(), true);
