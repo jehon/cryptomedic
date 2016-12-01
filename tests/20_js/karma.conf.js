@@ -28,6 +28,8 @@ module.exports = function(config) {
     webpack: webpack_config,
 
     files : [
+      'www/bower_components/webcomponentsjs/webcomponents-lite.js',
+      'www/bower_components/dexie/dist/dexie.min.js',
       'www/static/**/*.js',
       'tests/20_js/**/test_*.js',
     ],
@@ -39,7 +41,6 @@ module.exports = function(config) {
     browsers: [ 'Firefox' ], // See later
 
     preprocessors: {
-      // 'app/**/*.js': [ 'coverage' ],
       // http://www.syntaxsuccess.com/viewarticle/writing-jasmine-unit-tests-in-es6
       'www/static/**/*.js': [ 'coverage' ],
       'tests/**/test_*.js': [ 'webpack' ]

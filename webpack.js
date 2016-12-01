@@ -33,11 +33,11 @@ var config = {
 
       'script!./node_modules/excellentexport/excellentexport.min.js',
       './node_modules/bootstrap/dist/js/bootstrap.min.js',
-      // 'script!./app/static/js/bugreporting.js',
       './app/mainApp.js'
     ])
     // Last one, since it will define what is exported:
-    .concat([ './app/status.js' ])
+    // Added at the end of the config file
+    // .concat([ './app/status.js' ])
     ,
   resolve: {
     extensions: ['', '.js', '.jsx'],
@@ -123,6 +123,8 @@ var config = {
 var templates = recursiveReadSync(__dirname + '/www/templates/templates');
 
 config.entry = config.entry.concat(templates);
+
+// Last one, since it will define what is exported:
 config.entry = config.entry.concat([ './app/status.js' ]);
 
 module.exports = config;

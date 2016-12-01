@@ -1,4 +1,3 @@
-import Database from 'helpers/database';
 
 describe('DB/Settings', function() {
   var db = new Database();
