@@ -5,7 +5,7 @@ require_once("RouteReferenceTestCase.php");
 class PaymentTest extends RouteReferenceTestCase {
 
 	public function setUp($url = null, $params = array()) {
-		parent::setUp("payment/1");
+		parent::setUp("Payment/1");
 		$this->preAuthenticate("cdc");
 	}
 
@@ -26,7 +26,7 @@ class PaymentTest extends RouteReferenceTestCase {
 	}
 
 	public function testCreateWithoutPatientId() {
-		$response = $this->call('POST', self::absoluteUrl("fiche/payments/"), [
+		$response = $this->call('POST', self::absoluteUrl("fiche/Payment/"), [
 		]);
 		$this->assertResponseStatus(400);
 	}
