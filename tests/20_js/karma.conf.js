@@ -31,7 +31,7 @@ module.exports = function(config) {
       'www/bower_components/webcomponentsjs/webcomponents-lite.js',
       'www/bower_components/dexie/dist/dexie.min.js',
       'www/static/**/*.js',
-      'tests/20_js/**/test_*.js',
+      'tests/20_js/**/*.js',
     ],
 
     autoWatch : true,
@@ -43,7 +43,7 @@ module.exports = function(config) {
     preprocessors: {
       // http://www.syntaxsuccess.com/viewarticle/writing-jasmine-unit-tests-in-es6
       'www/static/**/*.js': [ 'coverage' ],
-      'tests/**/test_*.js': [ 'webpack' ]
+      // 'tests/**/test_*.js': [ 'webpack' ]
     },
 
     junitReporter : {

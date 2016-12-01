@@ -1,6 +1,4 @@
 
-import { buildRecord } from './thelpers';
-
 describe('BuildRecord', function() {
   it('should update default values with modifiers', function() {
     var ref = { a: 1, b: 2, c: { c1: 1 }, d: { d1: 2 }};
