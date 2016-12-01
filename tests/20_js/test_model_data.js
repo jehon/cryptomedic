@@ -1,6 +1,3 @@
-import { loadMock } from './thelpers';
-// import create       from 'helpers/create';
-// import Data         from 'models/Data';
 
 describe('Data', function() {
   describe('with empty loader', function() {

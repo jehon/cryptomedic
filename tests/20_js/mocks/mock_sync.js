@@ -1,4 +1,4 @@
-export default {
+let mock_sync = {
   "_offline": {
     "reset": 1,
     "data": [

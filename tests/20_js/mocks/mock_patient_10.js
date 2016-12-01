@@ -1,4 +1,4 @@
-export default {
+let mock_patient_10 = {
   "_type": "Folder",
   "id": 10,
   "mainFile": {

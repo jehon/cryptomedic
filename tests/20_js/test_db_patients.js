@@ -1,5 +1,3 @@
-import { buildRecord, loadMock } from './thelpers';
-
 describe('DB/Patients', function() {
   var db = new Database(true);
   var def = { record: { id: 123, test: true, mainFile: { entryyear: 2001, entryorder: 2323 }}};

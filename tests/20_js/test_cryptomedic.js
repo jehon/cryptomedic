@@ -1,7 +1,5 @@
 'use strict';
 
-import { nullify }        from 'helpers/service_backend';
-
 describe('Cryptomedic.js', function() {
   describe('date2CanonicString', function() {
     it('should return null for null', function() {

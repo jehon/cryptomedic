@@ -1,4 +1,3 @@
-import { loadMock }  from './thelpers';
 
 describe('Item', function() {
   var ricketConsult_8819 = 6;

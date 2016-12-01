@@ -1,6 +1,4 @@
 
-import { nullify }        from 'helpers/service_backend';
-
 describe('service_backend', function() {
   describe('nullify', function() {
     it('should handle null', function() {
