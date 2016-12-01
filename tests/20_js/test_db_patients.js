@@ -1,5 +1,4 @@
 import { buildRecord, loadMock } from './thelpers';
-import Database                  from 'helpers/database';
 
 describe('DB/Patients', function() {
   var db = new Database(true);
