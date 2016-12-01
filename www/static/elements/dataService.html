@@ -204,6 +204,8 @@
         return json;
       }
 
+      // Run around the offline data, but after all this, send back the ORIGINAL json for treatment...
+
       delete(json._offline);
       return json;
     }
