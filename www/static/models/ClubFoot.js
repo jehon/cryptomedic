@@ -11,7 +11,7 @@ function f(val) {
 }
 
 
-class ClubFoot extends File {
+class ClubFoot extends Item {
   getModel() {
     return 'ClubFoot';
   }

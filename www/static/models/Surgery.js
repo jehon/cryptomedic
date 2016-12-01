@@ -1,6 +1,6 @@
 'use strict';
 
-class Surgery extends File {
+class Surgery extends Item {
   getModel() {
     return 'Surgery';
   }

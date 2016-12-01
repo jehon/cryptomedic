@@ -1,11 +1,6 @@
 import { loadMock }  from './thelpers';
-import File          from 'models/File';
-import Folder        from 'models/Folder';
-import Patient       from 'models/Patient';
-import ClubFoot      from 'models/ClubFoot';
-import RicketConsult from 'models/RicketConsult';
 
-describe('File', function() {
+describe('Item', function() {
   var ricketConsult_8819 = 6;
   var clubFoot_695 = 4;
 
@@ -25,7 +20,7 @@ describe('File', function() {
         var i;
         i = ricketConsult_8819;
 
-        expect(folder.getSubFile(i)).toEqual(jasmine.any(File));
+        expect(folder.getSubFile(i)).toEqual(jasmine.any(Item));
         expect(folder.getSubFile(i)).toEqual(jasmine.any(RicketConsult));
         expect(folder.getSubFile(i)).toEqual(jasmine.anything({ id: 8819 }));
         expect(folder.getSubFile(i).getPatient()).toEqual(jasmine.any(Patient));
@@ -33,7 +28,7 @@ describe('File', function() {
         expect(folder.getSubFile(i).ageAtConsultTime(true)).toBe('16y0m');
 
         i = clubFoot_695;
-        expect(folder.getSubFile(i)).toEqual(jasmine.any(File));
+        expect(folder.getSubFile(i)).toEqual(jasmine.any(Item));
         expect(folder.getSubFile(i)).toEqual(jasmine.any(ClubFoot));
         expect(folder.getSubFile(i)).toEqual(jasmine.anything({ id: 659 }));
         expect(folder.getSubFile(i).getPatient()).toEqual(jasmine.any(Patient));
@@ -74,7 +69,7 @@ describe('File', function() {
     it('should throw error everytime', function(done) {
       var folder = new Folder();
       folder.mainFile = new Patient({ 'Sex': 'Male' });
-      var o = new File({}, folder);
+      var o = new Item({}, folder);
 
       expect(function() { o.ageAtConsultTime(); }).toThrow(new DataMissingException('Date'));
       expect(function() { o.bmi(); }).toThrow(new DataMissingException('Height'));

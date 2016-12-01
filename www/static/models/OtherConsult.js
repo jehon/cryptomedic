@@ -1,6 +1,6 @@
 'use strict';
 
-class OtherConsult extends File {
+class OtherConsult extends Item {
   getModel() {
     return 'OtherConsult';
   }

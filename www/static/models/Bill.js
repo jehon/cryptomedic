@@ -2,7 +2,7 @@
 
 // TODO: there seems to have a race condition around here...
 
-class Bill extends File {
+class Bill extends Item {
   getModel() {
     return 'Bill';
   }
