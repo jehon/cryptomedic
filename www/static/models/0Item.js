@@ -1,6 +1,6 @@
 'use strict';
 
-class File extends Data {
+class Item extends Data {
   constructor(data, folder = null) {
     super(data);
     if (data == null) {

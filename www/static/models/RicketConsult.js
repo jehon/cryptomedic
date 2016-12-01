@@ -1,6 +1,6 @@
 'use strict';
 
-class RicketConsult extends File {
+class RicketConsult extends Item {
   getModel() {
     return 'RicketConsult';
   }

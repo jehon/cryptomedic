@@ -3,7 +3,7 @@
 function create(type, data, folder) {
   var models = {
     Data,
-    File,
+    Item,
 
     Folder,
     Patient,

@@ -1,6 +1,6 @@
 'use strict';
 
-class Picture extends File {
+class Picture extends Item {
   getModel() {
     return 'Picture';
   }
