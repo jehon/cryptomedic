@@ -184,6 +184,8 @@ function ctrl_folder($scope, $location, $routeParams) {
     dispatch(catalog.STATE_BUSY, 'Saving file on the server');
     $scope.folder = false;
     $scope.safeApply();
+
+    selectFile(-1);
     service_backend().saveFile(cachedCurrentFile, $scope.patient_id)
       .then(function(data) {
         // The data is refreshed by navigating away...
@@ -199,6 +201,8 @@ function ctrl_folder($scope, $location, $routeParams) {
     dispatch(catalog.STATE_BUSY, 'Unlocking files on the server');
     $scope.folder = false;
     $scope.safeApply();
+
+    selectFile(-1);
     service_backend().unlockFile(cachedCurrentFile)
       .then(function(data) {
         $scope.$emit('message', { 'level': 'success', 'text': 'The ' + $scope.subtype + ' #' + $scope.subid + ' has been unlocked.'});
@@ -227,6 +231,7 @@ function ctrl_folder($scope, $location, $routeParams) {
       dispatch(catalog.PREFS_FILES, { 'center': cachedCurrentFile.Center });
     }
 
+    selectFile(-1);
     service_backend().createFile(cachedCurrentFile)
       .then(function(data) {
         $scope.$emit('message', { 'level': 'success', 'text': 'The ' + cachedCurrentFile.getModel() + ' has been created.'});
@@ -244,6 +249,8 @@ function ctrl_folder($scope, $location, $routeParams) {
     dispatch(catalog.STATE_BUSY, 'Deleting file on the server');
     $scope.folder = false;
     $scope.safeApply();
+
+    selectFile(-1);
     service_backend().deleteFile($scope.currentFile())
       .then(function(data) {
         $scope.$emit('message', { 'level': 'success', 'text':  'The ' + $scope.currentFile().getModel() +  ' of ' + $scope.currentFile().Date + ' has been deleted'});
@@ -262,6 +269,8 @@ function ctrl_folder($scope, $location, $routeParams) {
     dispatch(catalog.STATE_BUSY, 'Creating the patient on the server');
     $scope.folder = false;
     // $scope.currentFile().getModel() = 'Patient';
+
+    selectFile(-1);
     service_backend().createFile($scope.currentFile())
       .then(function(data) {
         $scope.$emit('message', { 'level': 'success', 'text':  'The patient has been created.'});
@@ -280,6 +289,8 @@ function ctrl_folder($scope, $location, $routeParams) {
     $scope.folder = false;
     dispatch(catalog.STATE_BUSY, 'Saving files on the server');
     $scope.safeApply();
+
+    selectFile(-1);
     service_backend().saveFile(cachedCurrentFile, $scope.patient_id)
       .then(function(data) {
       // The data is refreshed by navigating away...
@@ -296,6 +307,8 @@ function ctrl_folder($scope, $location, $routeParams) {
     $scope.folder = false;
     dispatch(catalog.STATE_BUSY, 'Deleting patient on the server');
     $scope.safeApply();
+
+    selectFile(-1);
     service_backend().deleteFile($scope.currentFile())
       .then(function(data) {
         $scope.$emit('message', { 'level': 'success', 'text':    'The patient ' + $scope.currentFile().entryyear + '-' + $scope.currentFile().entryorder + ' has been deleted'});
