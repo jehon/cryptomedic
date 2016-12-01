@@ -26,14 +26,14 @@ class BillTest extends RouteReferenceTestCase {
 	}
 
 	public function testCreateWithoutPatientId() {
-		$response = $this->call('POST', self::absoluteUrl("fiche/bills/"), [
+		$response = $this->call('POST', self::absoluteUrl("fiche/Bill/"), [
 		]);
 		$this->assertResponseStatus(400);
 	}
 
 	public function testCreate() {
 		// Create it
-		$response = $this->call('POST', self::absoluteUrl("fiche/bills/"), [
+		$response = $this->call('POST', self::absoluteUrl("fiche/Bill/"), [
 			"patient_id" => '1'
 		]);
 		$this->assertResponseStatus(200);
@@ -49,7 +49,7 @@ class BillTest extends RouteReferenceTestCase {
 		$this->assertNotFalse($i, "Found in result");
 
 		// Modify it
-		$response = $this->call('PUT', self::absoluteUrl("fiche/bills/" . $key), [
+		$response = $this->call('PUT', self::absoluteUrl("fiche/Bill/" . $key), [
 			'ExaminerName' => 'Ershad'
 		]);
 		$this->assertResponseStatus(200);
@@ -59,7 +59,7 @@ class BillTest extends RouteReferenceTestCase {
   	$this->assertEquals("Ershad", $json->subFiles[$i]->ExaminerName);
 
 		// Delete it
-		$response = $this->call('DELETE', self::absoluteUrl("fiche/bills/" . $key));
+		$response = $this->call('DELETE', self::absoluteUrl("fiche/Bill/" . $key));
 		$this->assertResponseStatus(200);
   	$json = json_decode($response->getContent());
 		$this->assertEquals($json->id, 1);

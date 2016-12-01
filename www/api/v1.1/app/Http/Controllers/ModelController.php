@@ -25,16 +25,16 @@ class ModelController extends Controller {
 		return $data;
 	}
 
-	protected function getModel($model) {
-		$model = "\\App\\" . References::db2model($model);
+	protected function getModelClass($model) {
+		$model = "\\App\\" . $model;
 		if ($model === false) {
 			abort(400, "No correct model found");
 		}
 		return $model;
 	}
 
-	protected function getModelObject($model, $id) {
-		$m = $this->getModel($model);
+	protected function getObjectByModelAndId($model, $id) {
+		$m = $this->getModelClass($model);
 		return $m::findOrFail($id);
 	}
 
@@ -42,7 +42,7 @@ class ModelController extends Controller {
 	public function create($model) {
 		$data = Input::except('_type');
 		$data = self::cannonize($data);
-		$m = $this->getModel($model);
+		$m = $this->getModelClass($model);
 
 		if ($model == "Patient") {
 			// In case we create a patient, things are a bit more complicated!!!
@@ -84,8 +84,7 @@ class ModelController extends Controller {
 
 	// PUT / PATCH
 	public function update($model, $id) {
-		$m = $this->getModel($model);
-		$obj = $this->getModelObject($model, $id);
+		$obj = $this->getObjectByModelAndId($model, $id);
 
  		$data = Input::except([ '_type' ] + $obj->getReadOnlyField());
 		$data = self::cannonize($data);
@@ -107,7 +106,7 @@ class ModelController extends Controller {
 
 	// DELETE
 	public function destroy($model, $id) {
-		$m = $this->getModel($model);
+		$m = $this->getModelClass($model);
 		$obj = $m::find($id);
 		if (!$obj) {
 			return response()->json(array());
@@ -122,8 +121,7 @@ class ModelController extends Controller {
 
 	// Unfreeze special route
 	public function unfreeze($model, $id) {
-		$m = $this->getModel($model);
-		$obj = $this->getModelObject($model, $id);
+		$obj = $this->getObjectByModelAndId($model, $id);
 		$affectedRows = $m::where("id", "=", $id)->update([ "updated_at" => new \DateTime() ]);
 		if ($affectedRows > 1) {
 			abort(500, "Affected rows: " . $affectedRows);

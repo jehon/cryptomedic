@@ -26,7 +26,7 @@ class PaymentTest extends RouteReferenceTestCase {
 	}
 
 	public function testCreateWithoutPatientId() {
-		$response = $this->call('POST', self::absoluteUrl("fiche/payments/"), [
+		$response = $this->call('POST', self::absoluteUrl("fiche/Payment/"), [
 		]);
 		$this->assertResponseStatus(400);
 	}
