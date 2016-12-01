@@ -51,14 +51,16 @@ function ctrl_users($scope) {
     if ($scope.edit.id >= 0) {
       service_backend().userUpdate($scope.edit)
         .then(function(data) {
-          $scope.list = data;
+          $scope.users = data;
+          $scope.safeApply();
           $scope.$emit('message', { 'level': 'success', 'text': 'The user \'' + $scope.edit.username + '\' has been saved successfully.'});
           $scope.doCancel();
         });
     } else {
       service_backend().userAdd($scope.edit)
         .then(function(data) {
-          $scope.list = data;
+          $scope.users = data;
+          $scope.safeApply();
           $scope.$emit('message', { 'level': 'success', 'text': 'The user \'' + $scope.edit.username + '\' has been created successfully.'});
           // $scope.doShowPassword();
           $scope.doCancel();
