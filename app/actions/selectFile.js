@@ -38,6 +38,7 @@ export default function selectFile(id) {
 
   if (id == -1) {
     lastPatientSelected = false;
+    dispatch(catalog.FOLDER_CLEAR);
     return Promise.resolve({});
   }
 
