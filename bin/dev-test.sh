@@ -8,6 +8,10 @@
 # Stop on error
 set -e
 
+# Make a pipe fail if any command in it fail
+# Thanks to http://stackoverflow.com/a/19804002/1954789
+set -o pipefail
+
 # This script can be called from outside the vagrant to help debug the end2end tests
 # PRJ_DIR is thus relative to current path
 SCRIPT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
@@ -30,7 +34,7 @@ myHeader() {
 
 test_dir() {
   # Run project custom files
-  run-parts --report $PRJ_DIR/bin/dev-test.d
+  run-parts --report $PRJ_DIR/bin/dev-test.d | sed -e "s#^#[$1] #"
 }
 
 if [ "$1" ]; then
@@ -42,21 +46,21 @@ else
   cd "$PRJ_DIR"
 
   myHeader "Reset the environnement"
-  "$PRJ_DIR/bin/dev-reset.sh"
+  "$PRJ_DIR/bin/dev-reset.sh" | sed -e 's/^/[reset] /'
 
   myHeader "Build the application"
-  "$PRJ_DIR/bin/prj-build.sh"
+  "$PRJ_DIR/bin/prj-build.sh" | sed -e 's/^/[build] /'
 
   # Test each api/* folder
   for V in "$PRJ_DIR"/www/api/* ; do
     N=`basename "$V"`
-    cd "$V" && test_dir "version www/api/$N"
+    cd "$V" && test_dir "version $N"
   done
 
   # Test each tests/* folder
   for T in "$PRJ_DIR"/tests/* ; do
     N=`basename "$T"`
-    TITLE="Custom test $N"
+    TITLE="$N"
     if [ -d "$T" ]; then
       cd "$T" && test_dir "$TITLE"
     fi
