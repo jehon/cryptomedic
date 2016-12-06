@@ -13,8 +13,15 @@ class SyncTest extends SyncableTestCase {
   }
 
   public function testsUnauthenticated() {
-    $this->setUrl("sync", [ "cp" => "" ]);
-    $this->myAssertUnauthorized();
+    $this->syncReset();
+    $json = $this->myRunAssertQuery(
+      (new RequestOptionsBuilder())
+        ->setUrl("sync")
+        ->setUnauthenticated()
+        ->setExpected(401)
+        ->setAsJson(false)
+      );
+    $this->assertEquals("Unauthorized.", $json);
   }
 
   public function getNext($n = false) {
