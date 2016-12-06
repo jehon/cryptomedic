@@ -2,13 +2,17 @@
 
 class RequestOptionsBuilder {
   protected $url;
-  protected $user = "readonly";
+  protected $user = "cdc";
   protected $asJson = true;
   protected $method = "GET";
   protected $params = [];
   protected $expected = 200;
   protected $syncCheckpoint = false;
   protected $syncNbr = false;
+
+  public function clone() {
+    return clone $this;
+  }
 
   public function getOptions() {
     $options = [
@@ -50,7 +54,12 @@ class RequestOptionsBuilder {
     return $this;
   }
 
-  public function setUnauthenticated() {
+  public function asReadOnly() {
+    $this->user = "readonly";
+    return $this;
+  }
+
+  public function asUnauthenticated() {
     $this->user = false;
     return $this;
   }
@@ -59,8 +68,13 @@ class RequestOptionsBuilder {
     return $this->asJson;
   }
 
-  public function setAsJson($asJson) {
+  public function asJson() {
     $this->asJson = $asJson;
+    return $this;
+  }
+
+  public function asText() {
+    $this->asJson = false;
     return $this;
   }
 
@@ -70,7 +84,7 @@ class RequestOptionsBuilder {
 
   public function setMethod($method) {
     $this->method = $method;
-    return this;
+    return $this;
   }
 
 

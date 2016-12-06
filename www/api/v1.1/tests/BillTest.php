@@ -1,32 +1,29 @@
 <?php
 
-require_once("RouteReferenceTestCase.php");
+require_once("SyncableTestCase.php");
 
-class BillTest extends RouteReferenceTestCase {
-
-	public function setUp($url = null, $params = array()) {
-		parent::setUp("payment/1");
-		$this->preAuthenticate("cdc");
-	}
-
-	public function getFolder1() {
-		$this->setUrl("folder/1");
-		$this->assertResponseOk("cdc");
-	}
+class BillTest extends SyncableTestCase {
 
 	public function testCreateWithoutPatientId() {
-		$response = $this->call('POST', self::absoluteUrl("fiche/Bill/"), [
-		]);
-		$this->assertResponseStatus(400);
+    $response = $this->myRunAssertQuery(
+        $this->getNewRequestOptionsBuilder()
+          ->setUrl("fiche/Bill")
+          ->setMethod("POST")
+          ->setExpected(400)
+          ->asText()
+      );
 	}
 
 	public function testCreate() {
 		// Create it
-		$response = $this->call('POST', self::absoluteUrl("fiche/Bill/"), [
-			"patient_id" => '1'
-		]);
-		$this->assertResponseStatus(200);
-  	$json = json_decode($response->getContent());
+    $json = $this->myRunAssertQuery(
+        $this->getNewRequestOptionsBuilder()
+          ->setUrl("fiche/Bill")
+          ->setMethod("POST")
+          ->setParams([ "patient_id" => '1' ])
+      );
+
+
 		$this->assertObjectHasAttribute('newKey', $json);
   	$key = $json->newKey;
   	$this->assertNotNull($json->newKey);
@@ -34,16 +31,25 @@ class BillTest extends RouteReferenceTestCase {
   	$i = $this->myAssertIsInOfflineData($json->_offline, "Bill", $key);
 
 		// Modify it
-		$response = $this->call('PUT', self::absoluteUrl("fiche/Bill/" . $key), [
-			'ExaminerName' => 'Ershad'
-		]);
-		$this->assertResponseStatus(200);
-  	$json = json_decode($response->getContent());
+    $json = $this->myRunAssertQuery(
+        $this->getNewRequestOptionsBuilder()
+          ->setUrl("fiche/Bill/" . $key)
+          ->setMethod("PUT")
+          ->setParams([ 'ExaminerName' => 'Ershad' ])
+      );
+
 		$this->assertEquals($key, $json->id);
+    $this->assertCount(1, $json->_offline->data);
   	$i = $this->myAssertIsInOfflineData($json->_offline, "Bill", $key);
   	$this->assertEquals("Ershad", $json->_offline->data[$i]->record->ExaminerName);
 
 		// Delete it
+    $json = $this->myRunAssertQuery(
+        $this->getNewRequestOptionsBuilder()
+          ->setUrl("fiche/Bill/" . $key)
+          ->setMethod("DELETE")
+      );
+
 		$response = $this->call('DELETE', self::absoluteUrl("fiche/Bill/" . $key));
 		$this->assertResponseStatus(200);
   	$json = json_decode($response->getContent());
