@@ -23,10 +23,10 @@ class BillTest extends SyncableTestCase {
           ->setParams([ "patient_id" => '1' ])
       );
 
-
 		$this->assertObjectHasAttribute('newKey', $json);
+    $this->assertNotNull($json->newKey);
+
   	$key = $json->newKey;
-  	$this->assertNotNull($json->newKey);
 
   	$i = $this->myAssertIsInOfflineData($json->_offline, "Bill", $key);
 
