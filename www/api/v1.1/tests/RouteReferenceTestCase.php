@@ -19,9 +19,13 @@ class RouteReferenceTestCase extends TestCase {
 	  return "/api/" . basename(dirname(dirname(__FILE__))). "/" . $relativeUrl;
 	}
 
+	public function getNewRequestOptionsBuilder() {
+		return new RequestOptionsBuilder();
+	}
+
 	public function myRunAssertQuery(RequestOptionsBuilder $opt = null) {
 		if ($opt == null) {
-			$opt = new RequestOptionsBuilder();
+			$opt = $this->getNewRequestOptionsBuilder();
 		}
 		if ($opt->getUser()) {
 			$this->actingAs(new User(['name' => 'test', 'group' => $opt->getUser() ]));
@@ -34,7 +38,7 @@ class RouteReferenceTestCase extends TestCase {
 		// See https://github.com/laravel/framework/blob/5.3/src/Illuminate/Foundation/Testing/Concerns/MakesHttpRequests.php#L62
 		$response = $this->call($opt->getMethod(), $opt->getAbsoluteUrl(), $opt->getParams(), [], [], $this->transformHeadersToServerVars($opt->getHeaders()));
 
-		$this->assertEquals($opt->getExpected(), $response->getStatusCode());
+		$this->assertResponseStatus($opt->getExpected());
 
 		$text = $response->getContent();
 		if ($response->getStatusCode() == 500) {

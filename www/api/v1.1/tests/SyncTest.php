@@ -15,11 +15,11 @@ class SyncTest extends SyncableTestCase {
   public function testsUnauthenticated() {
     $this->syncReset();
     $json = $this->myRunAssertQuery(
-      (new RequestOptionsBuilder())
+      $this->getNewRequestOptionsBuilder()
         ->setUrl("sync")
-        ->setUnauthenticated()
+        ->asUnauthenticated()
         ->setExpected(401)
-        ->setAsJson(false)
+        ->asText()
       );
     $this->assertEquals("Unauthorized.", $json);
   }

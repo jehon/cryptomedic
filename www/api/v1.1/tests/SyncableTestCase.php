@@ -14,7 +14,7 @@ class SyncableTestCase extends RouteReferenceTestCase {
 
   public function myRunAssertQuery(RequestOptionsBuilder $opt = null) {
     if ($opt == null) {
-      $opt = new RequestOptionsBuilder();
+      $opt = $this->getNewRequestOptionsBuilder();
     }
     $opt->setSyncCheckpoint($this->syncCheckpoint);
     $opt->setSyncNbr($this->syncStep);
@@ -43,7 +43,7 @@ class SyncableTestCase extends RouteReferenceTestCase {
 
   public function sync() {
     $json = $this->myRunAssertQuery(
-      (new RequestOptionsBuilder())
+      $this->getNewRequestOptionsBuilder()
         ->setUrl("sync")
       );
 
