@@ -3,6 +3,8 @@
 use App\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
+require_once("RequestOptionsBuilder.php");
+
 class RouteReferenceTestCase extends TestCase {
 	use DatabaseTransactions;
 
@@ -13,37 +15,30 @@ class RouteReferenceTestCase extends TestCase {
 	private $url = "";
 	private $params = array();
 
-	public static function absoluteUrl($relativeUrl) {
-		return "/api/" . basename(dirname(dirname(__FILE__))). "/" . $relativeUrl;
+	protected static function absoluteUrl($relativeUrl) {
+	  return "/api/" . basename(dirname(dirname(__FILE__))). "/" . $relativeUrl;
 	}
 
-	public function myRunAssertQuery($url, $options) {
-		$options = array_merge([
-			"user" => "readonly",
-			"params" => [],
-			"method" => "GET",
-			"json" => true,
-			"expected" => 200,
-			"headers" => []
-		], $options);
-
-		if ($options['user']) {
-			$user = new User(['name' => 'test', 'group' => $options['user'] ]);
-			$this->actingAs($user);
+	public function myRunAssertQuery(RequestOptionsBuilder $opt = null) {
+		if ($opt == null) {
+			$opt = new RequestOptionsBuilder();
+		}
+		if ($opt->getUser()) {
+			$this->actingAs(new User(['name' => 'test', 'group' => $opt->getUser() ]));
 		}
 
 		// See https://laravel.com/api/5.3/Illuminate/Foundation/Testing/TestCase.html#method_call
 		// See https://github.com/laravel/framework/blob/5.3/src/Illuminate/Foundation/Testing/Concerns/MakesHttpRequests.php#L62
-		$response = $this->call($options['method'], self::absoluteUrl($url), $options["params"], [], [], $this->transformHeadersToServerVars($options['headers']));
+		$response = $this->call($opt->getMethod(), $opt->getAbsoluteUrl(), $opt->getParams(), [], [], $this->transformHeadersToServerVars($opt->getHeaders()));
 
-		$this->assertEquals($options['expected'], $response->getStatusCode());
+		$this->assertEquals($opt->getExpected(), $response->getStatusCode());
 
 		$text = $response->getContent();
 		if ($response->getStatusCode() == 500) {
 			echo $text;
 		}
 
-		if (!$options['json']) {
+		if (!$opt->getAsJson()) {
 			return $text;
 		}
 

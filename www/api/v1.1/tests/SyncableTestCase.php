@@ -11,22 +11,22 @@ class SyncableTestCase extends RouteReferenceTestCase {
     $this->syncReset();
   }
 
-  public function myRunAssertQuery($url, $options) {
-    $json = parent::myRunAssertQuery($url,
-      array_merge($options,
-        [ "headers" =>
-          [
-            "X-SYNC-CHECKPOINT" => $this->syncCheckpoint,
-            "X-SYNC-NBR" => $this->syncStep
-          ]
-        ])
-    );
+  public function myRunAssertQuery(RequestOptionsBuilder $opt = null) {
+    if ($opt == null) {
+      $opt = new RequestOptionsBuilder();
+    }
+    $opt->setSyncCheckpoint($this->syncCheckpoint);
+    $opt->setSyncNbr($this->syncStep);
 
-    // Check the offline informations
-    $this->assertNotNull($json->_offline, "No offline informations?");
-    $this->assertNotNull($json->_offline->checkpoint);
-    $this->assertNotNull($json->_offline->remaining);
-    $this->assertNotNull($json->_offline->data);
+    $json = parent::myRunAssertQuery($opt);
+
+    if ($opt->getAsJson()) {
+      // Check the offline informations
+      $this->assertNotNull($json->_offline, "No offline informations?");
+      $this->assertNotNull($json->_offline->checkpoint);
+      $this->assertNotNull($json->_offline->remaining);
+      $this->assertNotNull($json->_offline->data);
+    }
 
     return $json;
   }
@@ -41,7 +41,10 @@ class SyncableTestCase extends RouteReferenceTestCase {
   }
 
   public function sync() {
-    $json = $this->myRunAssertQuery("sync", [ "user" => "readonly" ]);
+    $json = $this->myRunAssertQuery(
+      (new RequestOptionsBuilder())
+        ->setUrl("sync")
+      );
 
     $offline = $json->_offline;
 
