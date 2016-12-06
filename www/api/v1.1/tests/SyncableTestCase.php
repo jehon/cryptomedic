@@ -9,6 +9,7 @@ class SyncableTestCase extends RouteReferenceTestCase {
   public function setUp($url = null, $params = array()) {
     parent::setUp($url, $params);
     $this->syncReset();
+    $this->syncFlush();
   }
 
   public function myRunAssertQuery(RequestOptionsBuilder $opt = null) {
