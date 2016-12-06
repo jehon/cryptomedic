@@ -59,6 +59,14 @@ class RouteReferenceTestCase extends TestCase {
 		return $json;
 	}
 
+	public function myRunAssertQueryForRoles($opt, $rolesList = [ "readonly", "cdc", "manager", "admin" ]) {
+		$json = null;
+		foreach($rolesList as $r) {
+			$json = $this->myRunAssertQuery($opt->clone()->setRole($r));
+		}
+		return $json;
+	}
+
 	private function myAssertResponseAgainstReference($json, $file) {
 		/* Calculate the reference file */
  		if ($file === null) {

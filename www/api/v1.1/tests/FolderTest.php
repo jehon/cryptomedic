@@ -29,22 +29,7 @@ class FolderTest extends SyncableTestCase {
 	public function test1() {
     $opt = $this->getNewRequestOptionsBuilder()
       ->setUrl("folder/1");
-
-    $json = $this->myRunAssertQuery(
-    		$opt->clone()->setUser("readonly")
-      );
-
-    $json = $this->myRunAssertQuery(
-    		$opt->clone()->setUser("cdc")
-      );
-
-    $json = $this->myRunAssertQuery(
-    		$opt->clone()->setUser("manager")
-      );
-
-    $json = $this->myRunAssertQuery(
-    		$opt->clone()->setUser("admin")
-      );
+    $json = $this->myRunAssertQueryForRoles($opt);
 	}
 
 	public function testSearchAllowed() {
