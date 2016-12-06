@@ -1,8 +1,9 @@
 <?php
 
 require_once("RouteReferenceTestCase.php");
+require_once("SyncableTestCase.php");
 
-class SyncTest extends RouteReferenceTestCase {
+class SyncTest extends SyncableTestCase {
   protected $cp = "";
   protected $offline = null;
   static protected $initialCP = "";
@@ -16,24 +17,18 @@ class SyncTest extends RouteReferenceTestCase {
     $this->myAssertUnauthorized();
   }
 
-  public function getNext($n, $cp = false) {
-    $json = $this->myAssertRunQuery("sync", [
-      "params" => array_merge([ "n" => $n ], ($cp !== false ? [ "cp" => $cp ] : [])),
-      "user" => "readonly"
-    ]);
-
-    $offline = $json->_offline;
-
-    if ($cp === "") {
-      $this->assertObjectHasAttribute('reset', $offline);
-      $this->assertEquals(1, $offline->reset);
+  public function getNext($n = false) {
+    if ($n !== false) {
+      $this->syncStep($n);
     }
-    return $offline;
+    $json = $this->sync();
+    return $json->_offline;
   }
 
   public function testFlow() {
     $r = 48;
-    $offline = $this->getNext(1, "reset");
+    $this->syncReset();
+    $offline = $this->getNext(1);
     $this->myAssertIsInOfflineData($offline, "Picture", 1);
     $this->assertEquals($r--, $offline->remaining);
 
@@ -70,13 +65,11 @@ class SyncTest extends RouteReferenceTestCase {
 
     $offline = $this->getNext(1);
     $this->assertEquals(0, $offline->remaining);
-
-    self::$initialCP = $this->cp;
   }
 
   public function _createSyncAndDelete($cnt) {
     // Change patient
-    $offline = self::getNext(1000);
+    $offline = self::syncFlush();
     $res = DB::statement("UPDATE patients SET updated_at = NOW() WHERE id = 1 LIMIT 1");
     $this->assertTrue($res);
     $offline  = self::getNext(1000);
