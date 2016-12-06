@@ -25,6 +25,9 @@ class RouteReferenceTestCase extends TestCase {
 		}
 		if ($opt->getUser()) {
 			$this->actingAs(new User(['name' => 'test', 'group' => $opt->getUser() ]));
+		} else {
+			// $this->be(null);
+			$this->app['auth']->guard(null)->logout();
 		}
 
 		// See https://laravel.com/api/5.3/Illuminate/Foundation/Testing/TestCase.html#method_call
