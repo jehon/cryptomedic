@@ -2,7 +2,7 @@
 
 class RequestOptionsBuilder {
   protected $url;
-  protected $user = "cdc";
+  protected $role = "cdc";
   protected $asJson = true;
   protected $method = "GET";
   protected $params = [];
@@ -47,22 +47,22 @@ class RequestOptionsBuilder {
   }
 
 
-  public function getUser() {
-    return $this->user;
+  public function getRole() {
+    return $this->role;
   }
 
-  public function setUser($user) {
-    $this->user = $user;
+  public function setRole($role) {
+    $this->role = $role;
     return $this;
   }
 
   public function asReadOnly() {
-    $this->user = "readonly";
+    $this->role = "readonly";
     return $this;
   }
 
   public function asUnauthenticated() {
-    $this->user = false;
+    $this->role = false;
     return $this;
   }
 
