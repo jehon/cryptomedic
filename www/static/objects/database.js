@@ -46,7 +46,40 @@ let Database = (function() {
           settings: 'key'
         });
 
+        db.version(7).stores({
+          patients: '++id,[mainFile.entryyear+mainFile.entryorder]',
+          settings: 'key',
+          Patient:       'id,[entryyear+entryorder]',
+          Appointment:   'id,patient_id,Date,Nextappointment,NextCenter,[Nextappointment+NextCenter]',
+          Bill:          'id,patient_id,Date',
+          ClubFoot:      'id,patient_id,Date',
+          OtherConsult:  'id,patient_id,Date',
+          Payment:       'id,bill_id,   Date',
+          Picture:       'id,patient_id,Date',
+          RicketConsult: 'id,patient_id,Date',
+          Surgery:       'id,patient_id,Date',
+        });
+
+        // db.version(8).upgrade(function(trans) {
+        //   trans.patients.toCollection().modify((p) => {
+
+        //   });
+        // });
+
         db.open();
+      }
+
+      // @See https://github.com/dfahlander/db.js/wiki/Table.mapToClass()
+      if (typeof(Patient) != "undefined") {
+        db.Patient      .mapToClass(Patient);
+        db.Appointment  .mapToClass(Appointment);
+        db.Bill         .mapToClass(Bill);
+        db.ClubFoot     .mapToClass(ClubFoot);
+        db.OtherConsult .mapToClass(OtherConsult);
+        db.Payment      .mapToClass(Payment);
+        db.Picture      .mapToClass(Picture);
+        db.RicketConsult.mapToClass(RicketConsult);
+        db.Surgery      .mapToClass(Surgery);
       }
     }
 
