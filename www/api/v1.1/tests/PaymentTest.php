@@ -1,70 +1,56 @@
 <?php
 
-require_once("RouteReferenceTestCase.php");
+require_once("SyncableTestCase.php");
 
-class PaymentTest extends RouteReferenceTestCase {
-
-	public function setUp($url = null, $params = array()) {
-		parent::setUp("payment/1");
-		$this->preAuthenticate("cdc");
-	}
-
-	public function getFolder1() {
-		$this->setUrl("folder/1");
-		$this->assertResponseOk("cdc");
-	}
-
-	public function findInArray($json, $type, $id) {
-		$found = false;
-		foreach($json->subFiles as $i => $v) {
-			if (($v->_type == $type)
-					&& ($v->id == $id)) {
-				return $i;
-			}
-		}
-		return false;
-	}
+class PaymentTest extends SyncableTestCase {
 
 	public function testCreateWithoutPatientId() {
-		$response = $this->call('POST', self::absoluteUrl("fiche/Payment/"), [
-		]);
-		$this->assertResponseStatus(400);
+    $response = $this->myRunAssertQuery(
+        $this->getNewRequestOptionsBuilder()
+          ->setUrl("fiche/Payment")
+          ->setMethod("POST")
+          ->setExpected(400)
+          ->asText()
+      );
 	}
 
-	// public function testCreate() {
-	// 	// Create it
-	// 	$response = $this->call('POST', self::absoluteUrl("fiche/payments/"), [
-	// 		"bill_id" => '1'
-	// 	]);
-	// 	$this->assertResponseStatus(200);
- //  	$json = json_decode($response->getContent());
-	// 	$this->assertObjectHasAttribute('newKey', $json);
- //  	$this->assertNotNull($json->newKey);
-	// 	$this->assertObjectHasAttribute('id', $json);
-	// 	$this->assertEquals($json->id, 1);
+	public function testCreate() {
+		// Create it
+    $json = $this->myRunAssertQuery(
+        $this->getNewRequestOptionsBuilder()
+          ->setUrl("fiche/Payment")
+          ->setMethod("POST")
+          ->setParams([ "bill_id" => '1' ])
+      );
 
- //  	$key = $json->newKey;
+		$this->assertObjectHasAttribute('newKey', $json);
+  	$this->assertNotNull($json->newKey);
 
- //  	$i = $this->findInArray($json, "Payment", $key);
-	// 	$this->assertNotFalse($i, "Found in result");
+  	$key = $json->newKey;
 
-	// 	// Modify it
-	// 	$response = $this->call('PUT', self::absoluteUrl("fiche/payments/" . $key), [
-	// 		'Amount' => '3'
-	// 	]);
-	// 	$this->assertResponseStatus(200);
- //  	$json = json_decode($response->getContent());
-	// 	$this->assertEquals($json->id, 1);
- //  	$i = $this->findInArray($json, "Payment", $key);
- //  	$this->assertEquals($json->subFiles[$i]->Amount, 3);
+  	$i = $this->myAssertIsInOfflineData($json->_offline, "Payment", $key);
 
-	// 	// Delete it
-	// 	$response = $this->call('DELETE', self::absoluteUrl("fiche/payments/" . $key));
-	// 	$this->assertResponseStatus(200);
- //  	$json = json_decode($response->getContent());
-	// 	$this->assertEquals($json->id, 1);
+		// Modify it
+    $json = $this->myRunAssertQuery(
+        $this->getNewRequestOptionsBuilder()
+          ->setUrl("fiche/Payment/" . $key)
+          ->setMethod("PUT")
+          ->setParams([ 'Amount' => '3' ])
+      );
 
- //  	$i = $this->findInArray($json, "Payment", $key);
-	// 	$this->assertFalse($i, "Found in result");
-	// }
+		$this->assertEquals($key, $json->id);
+    $this->assertCount(1, $json->_offline->data);
+  	$i = $this->myAssertIsInOfflineData($json->_offline, "Payment", $key);
+  	$this->assertEquals("3", $json->_offline->data[$i]->record->Amount);
+
+		// Delete it
+    $json = $this->myRunAssertQuery(
+        $this->getNewRequestOptionsBuilder()
+          ->setUrl("fiche/Payment/" . $key)
+          ->setMethod("DELETE")
+      );
+
+    $this->assertCount(1, $json->_offline->data);
+  	$i = $this->myAssertIsInOfflineData($json->_offline, "Deleted", false, [ "entity_type" => "Payment", "entity_id" => $key ]);
+	}
 }
