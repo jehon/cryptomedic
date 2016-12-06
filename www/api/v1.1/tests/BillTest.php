@@ -50,9 +50,7 @@ class BillTest extends SyncableTestCase {
           ->setMethod("DELETE")
       );
 
-		$response = $this->call('DELETE', self::absoluteUrl("fiche/Bill/" . $key));
-		$this->assertResponseStatus(200);
-  	$json = json_decode($response->getContent());
+    $this->assertCount(1, $json->_offline->data);
   	$i = $this->myAssertIsInOfflineData($json->_offline, "Deleted", false, [ "entity_type" => "Bill", "entity_id" => $key ]);
 	}
 }
