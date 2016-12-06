@@ -9,6 +9,7 @@ class RequestOptionsBuilder {
   protected $expected = 200;
   protected $syncCheckpoint = false;
   protected $syncNbr = false;
+  protected $reference = false;
 
   public function clone() {
     return clone $this;
@@ -30,6 +31,7 @@ class RequestOptionsBuilder {
     }
     return $headers;
   }
+
 
   public function getUrl() {
     return $this->url;
@@ -64,6 +66,7 @@ class RequestOptionsBuilder {
     return $this;
   }
 
+
   public function getAsJson() {
     return $this->asJson;
   }
@@ -77,6 +80,7 @@ class RequestOptionsBuilder {
     $this->asJson = false;
     return $this;
   }
+
 
   public function getMethod() {
     return $this->method;
@@ -122,6 +126,7 @@ class RequestOptionsBuilder {
     return $this;
   }
 
+
   public function getSyncNbr() {
     return $this->syncNbr;
   }
@@ -130,4 +135,15 @@ class RequestOptionsBuilder {
     $this->syncNbr = $syncNbr;
     return $this;
   }
+
+
+  public function getReference() {
+    return $this->reference;
+  }
+
+  public function setReference($reference = null) {
+    $this->reference = $reference;
+    return $this;
+  }
+
 }

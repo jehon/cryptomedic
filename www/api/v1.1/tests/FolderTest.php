@@ -52,6 +52,16 @@ class FolderTest extends SyncableTestCase {
         $this->getNewRequestOptionsBuilder()
           ->setUrl("folder?Name=md&entryyear=2009&pathology_Ricket=1&Telephone=1")
       );
+    $json = $this->myRunAssertQuery(
+        $this->getNewRequestOptionsBuilder()
+          ->setUrl("folder")
+          ->setParams([
+              "Name" => "md",
+              "entryyear" => 2009,
+              "pathology_Ricket" => 1,
+              "Telephone" => 1
+            ])
+      );
 	}
 
 	public function testSearchEntryYear() {

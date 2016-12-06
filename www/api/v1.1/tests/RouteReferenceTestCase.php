@@ -52,8 +52,58 @@ class RouteReferenceTestCase extends TestCase {
 		$json = json_decode($text);
 		$this->assertNotNull($json, "Received JSON is null. Problem parsing response?");
 
+		if ($opt->getReference() !== false) {
+			myAssertResponseAgainstReference($json, $opt->getReference());
+		}
+
 		return $json;
 	}
+
+	private function myAssertResponseAgainstReference($json, $file) {
+		/* Calculate the reference file */
+ 		if ($file === null) {
+			$st = debug_backtrace();
+	 		$stv = array_shift($st);
+	 		$stv = array_shift($st);
+	 		$stv = array_shift($st);
+ 			// $stv['class']
+ 			$file = get_called_class()  . '.' . $stv['function'] . '.json';
+ 		} else {
+ 			$file = $file . ".json";
+ 		}
+ 		$pfile = __DIR__  . "/references/" . $file;
+
+	 	if (property_exists($json, "_offline")) {
+		 	unset($json->_offline);
+	 	}
+
+	 	$jsonPP = json_encode($json, JSON_PRETTY_PRINT);
+
+ 		/* Assert or update the reference */
+		if (getenv("COMMIT") > 0) {
+		 	/* Read it and load $reference */
+	 		if (file_exists($pfile)) {
+	 			$reference = file_get_contents($pfile);
+	 		} else {
+	 			$reference = "";
+	 		}
+
+			/* Commit to the file */
+	 		if (strcmp($reference, $jsonPP) != 0) {
+				file_put_contents($pfile, $jsonPP);
+				echo "[$file updated]";
+			}
+		} else {
+			/* Assert the difference */
+			if (file_exists($pfile)) {
+				$res = $this->assertStringEqualsFile($pfile, $jsonPP);
+			} else {
+				$this->fail("Reference file not found: $file");
+			}
+		}
+		return $json;
+	}
+
 
 	/* Obsolete */
 
