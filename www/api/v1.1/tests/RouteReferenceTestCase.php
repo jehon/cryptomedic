@@ -17,18 +17,14 @@ class RouteReferenceTestCase extends TestCase {
 		return "/api/" . basename(dirname(dirname(__FILE__))). "/" . $relativeUrl;
 	}
 
-	public function setUp($url = null, $params = array()) {
-		parent::setUp();
- 		$this->setUrl($url, $params);
-	}
-
-	public function myAssertRunQuery($url, $options) {
+	public function myRunAssertQuery($url, $options) {
 		$options = array_merge([
 			"user" => "readonly",
 			"params" => [],
 			"method" => "GET",
 			"json" => true,
-			"expected" => 200
+			"expected" => 200,
+			"headers" => []
 		], $options);
 
 		if ($options['user']) {
@@ -36,27 +32,32 @@ class RouteReferenceTestCase extends TestCase {
 			$this->actingAs($user);
 		}
 
-		$response = $this->call($options['method'], self::absoluteUrl($url), $options["params"]);
+		// See https://laravel.com/api/5.3/Illuminate/Foundation/Testing/TestCase.html#method_call
+		// See https://github.com/laravel/framework/blob/5.3/src/Illuminate/Foundation/Testing/Concerns/MakesHttpRequests.php#L62
+		$response = $this->call($options['method'], self::absoluteUrl($url), $options["params"], [], [], $this->transformHeadersToServerVars($options['headers']));
+
+		$this->assertEquals($options['expected'], $response->getStatusCode());
+
 		$text = $response->getContent();
 		if ($response->getStatusCode() == 500) {
 			echo $text;
 		}
-		$this->assertEquals($options["expected"], $response->getStatusCode());
 
 		if (!$options['json']) {
 			return $text;
 		}
 
 		$json = json_decode($text);
-		$this->assertNotNull($json, "Error parsing json");
-
-		// Check the offline informations
-		$this->assertNotNull($json->_offline, "No offline informations?");
-		$this->assertNotNull($json->_offline->checkpoint);
-		$this->assertNotNull($json->_offline->remaining);
-		$this->assertNotNull($json->_offline->data);
+		$this->assertNotNull($json, "Received JSON is null. Problem parsing response?");
 
 		return $json;
+	}
+
+	/* Obsolete */
+
+	public function setUp($url = null, $params = array()) {
+		parent::setUp();
+ 		$this->setUrl($url, $params);
 	}
 
 	protected function setUrl($url, $baseParams = array()) {
@@ -99,40 +100,7 @@ class RouteReferenceTestCase extends TestCase {
 		$response = $this->myAssertAuthorized($group);
 		$json = json_decode($response->getContent());
 		$this->assertNotNull($json, "Error parsing json");
-		$this->offline = $json->_offline;
-		unset($json->_offline);
 		return $json;
-	}
-
-	public function myAssertIsInOfflineData($offline, $type, $id = false, $data = false) {
-		$found = false;
-		foreach(array_reverse(array_keys($offline->data)) as $i => $v) {
-			$v = $offline->data[$i];
-			if ($v->type != $type) {
-				continue;
-			}
-			if ($id !== false) {
-				if ($v->id != $id) {
-					continue;
-				}
-			}
-
-			if ($data !== false) {
-				$res = true;
-				foreach($data as $k => $e) {
-					if ($v->record->{$k} != $data[$k]) {
-						$res = false;
-					}
-				}
-				if (!$res) {
-					continue;
-				}
-			}
-			$this->assertTrue(true, "The record $type#$id is in the result");
-			return $i;
-		}
-		$this->assertTrue(false, "The record $type#$id is not in the result");
-		return false;
 	}
 
 	protected function myAssertResponseForReference($group = null, $file = null) {

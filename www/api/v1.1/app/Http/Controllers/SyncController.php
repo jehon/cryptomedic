@@ -96,26 +96,26 @@ class SyncController extends ModelController
     return DB::select($sqlu . " ORDER BY ts, type, id LIMIT $n", $this->sqlParamsUnion);
   }
 
-  public function getOfflineStructuredData()
+  public function getOfflineStructuredData($checkpoint, $n)
   {
-    $n = Request::Input("n", constant("sync_packet_size"));
     $computer = $this->getComputerFromSession();
 
     $offline = [];
 
     // Get it from storage if not given explicitely
-    $old_cp = $computer->last_sync;
+    // $previous_checkpoint = $computer->last_sync;
+    $previous_checkpoint = $checkpoint;
 
-    if ($old_cp == "" || count(explode("|", $old_cp)) != 3)
+    if ($previous_checkpoint == "" || count(explode("|", $previous_checkpoint)) != 3)
     {
-      $old_cp = "";
+      $previous_checkpoint = "";
       $offline['reset'] = 1;
     }
 
     $offline['data'] = [];
 
-    $offline['checkpoint'] = $old_cp;
-    foreach($this->_getList($old_cp, $n) as $i => $d)
+    $offline['checkpoint'] = $previous_checkpoint;
+    foreach($this->_getList($previous_checkpoint, $n) as $i => $d)
     {
       $offline["data"][$i] = $d;
       $offline["data"][$i]->record = $this->getLineFrom($d->type, $d->id);
@@ -126,7 +126,6 @@ class SyncController extends ModelController
     $offline['remaining'] = $this->_getCount($offline['checkpoint']);
 
     // Store the information for helping understanding what is happening out there...
-    // In unit tests, we don't have a computerId...
     $computer->last_sync       = $offline['checkpoint'];
     $computer->save();
 
@@ -135,13 +134,7 @@ class SyncController extends ModelController
 
   public function sync()
   {
-    $cp = Request::input("cp", false);
-    if ($cp)
-    {
-      $computer = $this->getComputerFromSession();
-      $computer->last_sync = $cp;
-      $computer->save();
-    }
+    // SyncData will do the job for us...
     return response()->json([]);
   }
 }
