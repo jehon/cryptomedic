@@ -32,6 +32,12 @@ class SyncableTestCase extends RouteReferenceTestCase {
     return $json;
   }
 
+  public function myRunAsserQueryWithoutOffline(RequestOptionsBuilder $opt = null) {
+    $json = $this->myRunAssertQuery($opt);
+    unset($json->_offline);
+    return $json;
+  }
+
   public function syncReset() {
     $this->syncCheckpoint = "";
     $this->syncStep = 1;
