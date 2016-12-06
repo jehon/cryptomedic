@@ -21,7 +21,7 @@
       localStorage.cryptomedicComputerId = result;
     }
 
-    db = new Database();
+    let db = new Database();
 
     //************************************************************************************/
     //**** Body builders according to method
@@ -62,11 +62,15 @@
     function executeRawRequest(method, relativeUrl, body, options) {
       options.fullUrl = '/api/v1.1/' + relativeUrl;
 
-      return fetch(new Request(options.fullUrl, {
-        method: method,
-        credentials: 'include',
-        body: body
-      }));
+      return fetch(new Request(options.fullUrl,
+        Object.assign({}, options.fetchOptions,
+          {
+            method: method,
+            credentials: 'include',
+            body: body
+          }
+        )
+      ));
     }
 
     //************************************************************************************/
@@ -81,7 +85,12 @@
 
           onSuccess: (response) => { return response; },
           onError: (error) => { throw error; },
+          fetchOptions: {
+            headers: new Headers()
+          }
         }, options);
+
+        this.options.fetchOptions.headers.append("X-LAST-CHECKPOINT", localStorage.syncCheckpoint);
 
         this.fired = false;
       }
@@ -144,7 +153,6 @@
           // Enrich the objects
           .then(
             response => {
-              console.log(response);
               if (response.ok) {
                 return response.json()
                   .then(json => {
@@ -204,7 +212,14 @@
         return json;
       }
 
+      let offline = json._offline;
+      console.log(offline);
+
       // Run around the offline data, but after all this, send back the ORIGINAL json for treatment...
+      for(let i of offline.data) {
+        let rec = offline.data[i];
+        console.info(i, rec);
+      }
 
       delete(json._offline);
       return json;
