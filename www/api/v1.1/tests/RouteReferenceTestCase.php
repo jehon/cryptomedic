@@ -54,7 +54,7 @@ class RouteReferenceTestCase extends TestCase {
 		$this->assertNotNull($json, "Received JSON is null. Problem parsing response?");
 
 		if ($opt->getReference() !== false) {
-			myAssertResponseAgainstReference($json, $opt->getReference());
+			$this->myAssertResponseAgainstReference($json, $opt->getReference());
 		}
 
 		return $json;
@@ -69,24 +69,32 @@ class RouteReferenceTestCase extends TestCase {
 	}
 
 	private function myAssertResponseAgainstReference($json, $file) {
-		/* Calculate the reference file */
- 		if ($file === null) {
-			$st = debug_backtrace();
-	 		$stv = array_shift($st);
-	 		$stv = array_shift($st);
-	 		$stv = array_shift($st);
- 			// $stv['class']
- 			$file = get_called_class()  . '.' . $stv['function'] . '.json';
- 		} else {
- 			$file = $file . ".json";
- 		}
- 		$pfile = __DIR__  . "/references/" . $file;
 
+		/* Build up the object to be compared againts*/
 	 	if (property_exists($json, "_offline")) {
 		 	unset($json->_offline);
 	 	}
 
 	 	$jsonPP = json_encode($json, JSON_PRETTY_PRINT);
+
+		/* Calculate the reference file */
+ 		if ($file === null) {
+			$st = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
+			while($sti = array_shift($st)) {
+				if ($sti['file'] == __FILE__) {
+					continue;
+				}
+				if (basename($sti['file']) == 'SyncableTestCase.php') {
+					continue;
+				}
+				break;
+			}
+			$sti = array_shift($st); // Go to the previous call, where we have the class.method that is interresting for us
+ 			$file = $sti['class'] . '.' . $sti['function'] . '.json';
+ 		} else {
+ 			$file = $file . ".json";
+ 		}
+ 		$pfile = __DIR__  . "/references/" . $file;
 
  		/* Assert or update the reference */
 		if (getenv("COMMIT") > 0) {

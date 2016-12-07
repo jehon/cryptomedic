@@ -10,7 +10,9 @@ class ReportActivityDailyTest extends RouteReferenceTestCase {
 		parent::setUp($url, $params);
 		$this->opt = $this->getNewRequestOptionsBuilder()
 			->setUrl("reports/activity")
-			->setParams([ 'period' => self::DAILY, 'day' => self::$nday, 'month' => self::$nmonth ]);
+			->setParams([ 'period' => self::DAILY, 'day' => self::$nday, 'month' => self::$nmonth ])
+			->setReference()
+			;
 
 		$this->type = 0;
 	}
