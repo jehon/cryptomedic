@@ -111,6 +111,16 @@ class RequestOptionsBuilder {
     return $this;
   }
 
+  public function addParams($params) {
+    $this->params = array_merge($this->params, $params);
+    return $this;
+  }
+
+  public function addParam($key, $value) {
+    $this->params[$key] = $value;
+    return $this;
+  }
+
 
   public function getsyncCheckpoint() {
     return $this->syncCheckpoint;

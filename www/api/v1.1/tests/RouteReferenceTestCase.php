@@ -27,8 +27,9 @@ class RouteReferenceTestCase extends TestCase {
 		if ($opt == null) {
 			$opt = $this->getNewRequestOptionsBuilder();
 		}
-		if ($opt->getRole()) {
-			$this->actingAs(new User(['name' => 'test', 'group' => $opt->getRole() ]));
+		if ($opt->getRole() !== false) {
+			$user = new User(['name' => 'test', 'group' => $opt->getRole() ]);
+			$this->actingAs($user);
 		} else {
 			// $this->be(null);
 			$this->app['auth']->guard(null)->logout();
