@@ -5,6 +5,8 @@ require_once("RouteReferenceTestCase.php");
 use App\User;
 
 class SyncableTestCase extends RouteReferenceTestCase {
+  private $syncCheckpoint = "";
+  private $syncStep = 1;
 
   public function setUp($url = null, $params = array()) {
     parent::setUp($url, $params);
