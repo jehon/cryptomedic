@@ -7,7 +7,8 @@ class ReportActivityMonthlyTest extends ReportActivityDailyTest {
 
 	public function setUp($url = null, $params = array()) {
 		parent::setUp();
-    $this->baseParams['period'] = self::MONTHLY;
+    $this->opt->addParam('period', self::MONTHLY);
+    // $this->baseParams['period'] = self::MONTHLY;
     $this->type = 1;
 	}
 }

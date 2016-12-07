@@ -90,7 +90,7 @@ class RouteReferenceTestCase extends TestCase {
 				break;
 			}
 			$sti = array_shift($st); // Go to the previous call, where we have the class.method that is interresting for us
- 			$file = $sti['class'] . '.' . $sti['function'] . '.json';
+ 			$file = get_called_class() . '.' . $sti['function'] . '.json';
  		} else {
  			$file = $file . ".json";
  		}
