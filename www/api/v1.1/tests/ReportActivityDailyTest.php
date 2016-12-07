@@ -3,14 +3,14 @@
 require_once("RouteReferenceTestCase.php");
 
 class ReportActivityDailyTest extends RouteReferenceTestCase {
-	static public $nday = "2014-05-20";
-	static public $nmonth = "2014-05";
+	static public $day = "2014-05-20";
+	static public $month = "2014-05";
 
-	public function setUp($url = null, $params = array()) {
-		parent::setUp($url, $params);
+	public function setUp() {
+		parent::setUp();
 		$this->opt = $this->getNewRequestOptionsBuilder()
 			->setUrl("reports/activity")
-			->setParams([ 'period' => self::DAILY, 'day' => self::$nday, 'month' => self::$nmonth ])
+			->setParams([ 'period' => self::DAILY, 'day' => self::$day, 'month' => self::$month ])
 			->setReference()
 			;
 
@@ -31,12 +31,6 @@ class ReportActivityDailyTest extends RouteReferenceTestCase {
 
 		$json = $this->myRunAssertQueryForRoles($opt);
 		$this->thisAssertResponse($json, [ 2, 5 ]);
-
-		$json = $this->myRunAssertQuery($opt
-			->asUnauthenticated()
-			->setExpected(401)
-			->asText()
-		);
 	}
 
  	public function testByCenter() {
@@ -50,7 +44,7 @@ class ReportActivityDailyTest extends RouteReferenceTestCase {
 		}
 		$this->thisAssertResponse($json, [ 1, 3 ]);
 
-		$json = $this->myRunAssertQuery($opt
+		$this->myRunAssertQuery($opt
 			->asUnauthenticated()
 			->setExpected(401)
 			->asText()
@@ -68,11 +62,6 @@ class ReportActivityDailyTest extends RouteReferenceTestCase {
 		}
 		$this->thisAssertResponse($json, [ 2, 3 ]);
 
-		$json = $this->myRunAssertQuery($opt
-			->asUnauthenticated()
-			->setExpected(401)
-			->asText()
-		);
  	}
 
  	public function testByCenterAndExaminer() {
@@ -87,11 +76,5 @@ class ReportActivityDailyTest extends RouteReferenceTestCase {
 			$this->assertEquals("Chakaria Disability Center", $v->Center);
 		}
 		$this->thisAssertResponse($json, [ 1, 2 ]);
-
-		$json = $this->myRunAssertQuery($opt
-			->asUnauthenticated()
-			->setExpected(401)
-			->asText()
-		);
  	}
 }

@@ -3,57 +3,41 @@
 require_once("RouteReferenceTestCase.php");
 
 class ReportConsultationsTest extends RouteReferenceTestCase {
-	static public $nday = "2015-04-28";
+	static public $day = "2015-04-28";
 
-	public function setUp($url = null, $params = array()) {
+	public function setUp() {
 		parent::setUp();
-		$this->setUrl("reports/consultations", [ "period" => self::DAILY, "day" => self::$nday ]);
-	}
-
-	public function test() {
-		$this->setParams([ "center" => "" ]);
-		$this->myAssertUnauthorized();
-
-		$this->myAssertResponseForReference("readonly");
-		$this->myAssertResponseForReference("cdc");
-		$this->myAssertResponseForReference("manager");
-		$this->myAssertResponseForReference("admin");
-
-		$json = $this->myAssertJSON("admin");
-		$this->assertObjectHasAttribute('params', $json);
-		$this->assertObjectHasAttribute('list', $json);
-		$this->assertEquals(count($json->list), 3);
+		$this->opt = $this->getNewRequestOptionsBuilder()
+			->setUrl("reports/consultations")
+			->setParams([ 'period' => self::DAILY, 'day' => self::$day ])
+			->setReference()
+			;
 	}
 
 	public function testByDay() {
-		$this->setParams([ "center" => "" ]);
-		$this->myAssertUnauthorized();
+		$opt = $this->opt->clone()
+			;
+		$json = $this->myRunAssertQueryForRoles($opt);
 
-		$this->myAssertResponseForReference("readonly");
-		$this->myAssertResponseForReference("cdc");
-		$this->myAssertResponseForReference("manager");
-		$this->myAssertResponseForReference("admin");
-
-		$json = $this->myAssertJSON("admin");
+		$this->assertEquals(count($json->list), 3);
+		$this->assertObjectHasAttribute('params', $json);
+		$this->assertObjectHasAttribute('list', $json);
 		$this->assertEquals(count($json->list), 3);
 		foreach($json->list as $k => $v) {
-			$this->assertEquals($v->c_nextAppointment, self::$nday);
+			$this->assertEquals($v->c_nextAppointment, self::$day);
 		}
 	}
 
 	public function testByDayAndCenter() {
-		$this->setParams([ "center" => "Chakaria Disability Center" ]);
-		$this->myAssertUnauthorized();
+		$opt = $this->opt->clone()
+			->addParam("center", "Chakaria Disability Center")
+			;
 
-		$this->myAssertResponseForReference("readonly");
-		$this->myAssertResponseForReference("cdc");
-		$this->myAssertResponseForReference("manager");
-		$this->myAssertResponseForReference("admin");
+		$json = $this->myRunAssertQueryForRoles($opt);
 
-		$json = $this->myAssertJSON("admin");
 		$this->assertEquals(count($json->list), 1);
 		foreach($json->list as $k => $v) {
-			$this->assertEquals($v->c_nextAppointment, self::$nday);
+			$this->assertEquals($v->c_nextAppointment, self::$day);
 			$this->assertEquals($v->c_Center, "Chakaria Disability Center");
 		}
 	}
