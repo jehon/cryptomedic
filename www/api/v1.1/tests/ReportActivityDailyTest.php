@@ -7,7 +7,11 @@ class ReportActivityDailyTest extends RouteReferenceTestCase {
 	static public $nmonth = "2014-05";
 
 	public function setUp($url = null, $params = array()) {
-		parent::setUp("reports/activity", array('period' => self::DAILY, 'day' => self::$nday, 'month' => self::$nmonth));
+		parent::setUp($url, $params);
+		$this->opt = $this->getNewRequestOptionsBuilder()
+			->setUrl("reports/activity")
+			->setParams([ 'period' => self::DAILY, 'day' => self::$nday, 'month' => self::$nmonth ]);
+
 		$this->type = 0;
 	}
 
@@ -20,46 +24,72 @@ class ReportActivityDailyTest extends RouteReferenceTestCase {
 	}
 
 	public function testByDate() {
-		$this->setParams(array('center' => '', 'examiner' => ''));
-		$this->myAssertUnauthorized();
+		$opt = $this->opt->clone()
+			;
 
-		$this->myAssertResponseForReference("readonly");
-		$this->myAssertResponseForReference("cdc");
-		$this->myAssertResponseForReference("manager");
-		$this->myAssertResponseForReference("admin");
-
-		$json = $this->myAssertJSON("admin");
+		$json = $this->myRunAssertQueryForRoles($opt);
 		$this->thisAssertResponse($json, [ 2, 5 ]);
+
+		$json = $this->myRunAssertQuery($opt
+			->asUnauthenticated()
+			->setExpected(401)
+			->asText()
+		);
 	}
 
  	public function testByCenter() {
-		$this->setParams(array('center' => 'Chakaria Disability Center', 'examiner' => ''));
- 		$this->myAssertResponseForReference("manager");
-		$json = $this->myAssertJSON("manager");
-		$this->thisAssertResponse($json, [ 1, 3 ]);
+		$opt = $this->opt->clone()
+			->addParam('center', 'Chakaria Disability Center')
+			;
+
+		$json = $this->myRunAssertQueryForRoles($opt);
 		foreach($json->list as $k => $v) {
 			$this->assertEquals("Chakaria Disability Center", $v->Center);
 		}
+		$this->thisAssertResponse($json, [ 1, 3 ]);
+
+		$json = $this->myRunAssertQuery($opt
+			->asUnauthenticated()
+			->setExpected(401)
+			->asText()
+		);
 	}
 
  	public function testByExaminer() {
- 		$this->setParams(array('center' => '', 'examiner' => 'Ershad'));
- 		$this->myAssertResponseForReference("manager");
- 		$json = $this->myAssertJSON("manager");
-		$this->thisAssertResponse($json, [ 2, 3 ]);
- 		foreach($json->list as $k => $v) {
+		$opt = $this->opt->clone()
+			->addParam('examiner', 'Ershad')
+			;
+
+		$json = $this->myRunAssertQueryForRoles($opt);
+		foreach($json->list as $k => $v) {
  			$this->assertEquals("Ershad", $v->ExaminerName);
- 		}
+		}
+		$this->thisAssertResponse($json, [ 2, 3 ]);
+
+		$json = $this->myRunAssertQuery($opt
+			->asUnauthenticated()
+			->setExpected(401)
+			->asText()
+		);
  	}
 
  	public function testByCenterAndExaminer() {
- 		$this->setParams(array('center' => "Chakaria Disability Center", 'examiner' => 'Ershad'));
- 		$this->myAssertResponseForReference("manager");
- 		$json = $this->myAssertJSON("manager");
- 		$this->thisAssertResponse($json, [ 1, 2 ]);
- 		foreach($json->list as $k => $v) {
+		$opt = $this->opt->clone()
+			->addParam('examiner', 'Ershad')
+			->addParam('center', 'Chakaria Disability Center')
+			;
+
+		$json = $this->myRunAssertQueryForRoles($opt);
+		foreach($json->list as $k => $v) {
  			$this->assertEquals("Ershad", $v->ExaminerName);
 			$this->assertEquals("Chakaria Disability Center", $v->Center);
- 		}
+		}
+		$this->thisAssertResponse($json, [ 1, 2 ]);
+
+		$json = $this->myRunAssertQuery($opt
+			->asUnauthenticated()
+			->setExpected(401)
+			->asText()
+		);
  	}
 }
