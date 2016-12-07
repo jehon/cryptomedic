@@ -8,10 +8,6 @@ class SyncTest extends SyncableTestCase {
   protected $offline = null;
   static protected $initialCP = "";
 
-  public function setUp($url = null, $params = array()) {
-    parent::setUp("sync");
-  }
-
   public function testsUnauthenticated() {
     $this->syncReset();
     $json = $this->myRunAssertQuery(

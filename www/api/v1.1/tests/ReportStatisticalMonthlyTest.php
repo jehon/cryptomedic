@@ -3,39 +3,23 @@
 require_once("RouteReferenceTestCase.php");
 
 class ReportStatisticalMonthlyTest extends RouteReferenceTestCase {
-  static public $nmonth = "2014-05";
+  static public $month = "2014-05";
 
-  public function setUp($url = null, $params = array()) {
+  public function setUp() {
     parent::setUp();
-    $this->setUrl("reports/statistical", [ "period" => self::MONTHLY, "month" => self::$nmonth ]);
+    $this->opt = $this->getNewRequestOptionsBuilder()
+      ->setUrl("reports/statistical")
+      ->setParams([ 'period' => self::MONTHLY, 'month' => self::$month ])
+      ->setReference()
+      ;
   }
 
   public function testsConsultation() {
-    $this->setParams([ "center" => "" ]);
-    $this->myAssertUnauthorized();
+    $opt = $this->opt->clone()
+      ;
 
-    $this->myAssertResponseForReference("readonly");
-    $this->myAssertResponseForReference("cdc");
-    $this->myAssertResponseForReference("manager");
-    $this->myAssertResponseForReference("admin");
+    $json = $this->myRunAssertQueryForRoles($opt);
 
-    $json = $this->myAssertJSON("admin");
-    $this->assertObjectHasAttribute('params', $json);
-    $this->assertObjectHasAttribute('summary', $json);
-
-    // TODO: assert values
-  }
-
-  public function testsConsultationByDate() {
-    $this->setParams([ "center" => "" ]);
-    $this->myAssertUnauthorized();
-
-    $this->myAssertResponseForReference("readonly");
-    $this->myAssertResponseForReference("cdc");
-    $this->myAssertResponseForReference("manager");
-    $this->myAssertResponseForReference("admin");
-
-    $json = $this->myAssertJSON("admin");
     $this->assertObjectHasAttribute('params', $json);
     $this->assertObjectHasAttribute('summary', $json);
 
@@ -43,15 +27,12 @@ class ReportStatisticalMonthlyTest extends RouteReferenceTestCase {
   }
 
   public function testsConsultationByDateAndCenter() {
-    $this->setParams([ "center" => "Chakaria Disability Center" ]);
-    $this->myAssertUnauthorized();
+    $opt = $this->opt->clone()
+      ->addParam("center", "Chakaria Disability Center")
+      ;
 
-    $this->myAssertResponseForReference("readonly");
-    $this->myAssertResponseForReference("cdc");
-    $this->myAssertResponseForReference("manager");
-    $this->myAssertResponseForReference("admin");
+    $json = $this->myRunAssertQueryForRoles($opt);
 
-    $json = $this->myAssertJSON("admin");
     $this->assertObjectHasAttribute('params', $json);
     $this->assertObjectHasAttribute('summary', $json);
 

@@ -8,8 +8,8 @@ class SyncableTestCase extends RouteReferenceTestCase {
   private $syncCheckpoint = "";
   private $syncStep = 1;
 
-  public function setUp($url = null, $params = array()) {
-    parent::setUp($url, $params);
+  public function setUp() {
+    parent::setUp();
     $this->syncReset();
     $this->syncFlush();
   }
@@ -105,14 +105,5 @@ class SyncableTestCase extends RouteReferenceTestCase {
     }
     $this->assertTrue(false, "The record $type#$id is not in the result");
     return false;
-  }
-
-  /* Obsolete */
-
-  protected function myAssertJSON($group = null) {
-    $json = parent::myAssertJSON($group);
-    $this->offline = $json->_offline;
-    unset($json->_offline);
-    return $json;
   }
 }

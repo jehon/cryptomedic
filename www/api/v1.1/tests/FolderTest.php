@@ -4,10 +4,6 @@ require_once("SyncableTestCase.php");
 
 class FolderTest extends SyncableTestCase {
 
-	public function setUp($url = null, $params = array()) {
-		parent::setUp("folder/1");
-	}
-
 	public function testsUnauthenticated() {
     $response = $this->myRunAssertQuery(
         $this->getNewRequestOptionsBuilder()
