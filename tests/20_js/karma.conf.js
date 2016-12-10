@@ -15,6 +15,9 @@ module.exports = function(config) {
       'karma-html-reporter'
     ],
 
+    frameworks : [
+      'jasmine'
+    ],
     reporters : [
       'progress',
       'coverage',
@@ -31,12 +34,9 @@ module.exports = function(config) {
 
     autoWatch : true,
 
-    frameworks : [ 'jasmine' ],
-
     browsers: [ 'Firefox' ], // See later
 
     preprocessors: {
-      // http://www.syntaxsuccess.com/viewarticle/writing-jasmine-unit-tests-in-es6
       'www/static/**/*.js': [ 'coverage' ],
     },
 
