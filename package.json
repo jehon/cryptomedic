@@ -43,7 +43,6 @@
     "karma-html-reporter": "latest",
     "karma-jasmine": "latest",
     "karma-junit-reporter": "latest",
-    "karma-webpack": "latest",
     "less": "latest",
     "less-loader": "latest",
     "ng-cache-loader": "0.*",

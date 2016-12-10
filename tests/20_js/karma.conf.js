@@ -1,9 +1,6 @@
 /* eslint-env node */
 /* eslint no-console: off */
 
-let webpack_config = require('../../webpack.js');
-webpack_config.entry = {};
-webpack_config.plugins= [];
 
 module.exports = function(config) {
   var configuration = {
@@ -13,7 +10,6 @@ module.exports = function(config) {
       'karma-chrome-launcher',
       'karma-firefox-launcher',
       'karma-jasmine',
-      'karma-webpack',
       'karma-coverage',
       'karma-junit-reporter',
       'karma-html-reporter'
@@ -25,7 +21,6 @@ module.exports = function(config) {
       'html'
     ],
 
-    webpack: webpack_config,
 
     files : [
       'www/bower_components/webcomponentsjs/webcomponents-lite.js',
@@ -43,7 +38,6 @@ module.exports = function(config) {
     preprocessors: {
       // http://www.syntaxsuccess.com/viewarticle/writing-jasmine-unit-tests-in-es6
       'www/static/**/*.js': [ 'coverage' ],
-      // 'tests/**/test_*.js': [ 'webpack' ]
     },
 
     junitReporter : {
