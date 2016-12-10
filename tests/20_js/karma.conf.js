@@ -1,7 +1,6 @@
 /* eslint-env node */
 /* eslint no-console: off */
 
-
 module.exports = function(config) {
   var configuration = {
     basePath : '../../',
@@ -18,17 +17,25 @@ module.exports = function(config) {
     frameworks : [
       'jasmine'
     ],
+
     reporters : [
       'progress',
       'coverage',
       'html'
     ],
 
-
     files : [
+      'www/bower_components/platform/platform.js',
       'www/bower_components/webcomponentsjs/webcomponents-lite.js',
+      'www/bower_components/polymer/polymer.html',
       'www/bower_components/dexie/dist/dexie.min.js',
       'www/static/**/*.js',
+      {
+        pattern: "www/**/*.html",
+        included: false,
+        served: true,
+        watched: true
+      },
       'tests/20_js/**/*.js',
     ],
 
