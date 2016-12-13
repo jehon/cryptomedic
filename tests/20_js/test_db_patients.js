@@ -15,7 +15,7 @@ describe('DB/Patients', function() {
         return data;
       })
       .catch((e) => {
-        console.error('It failed: ', e);
+        // console.error('It failed: ', e);
         return e;
       })
       ;
