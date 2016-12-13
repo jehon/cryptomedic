@@ -3,11 +3,13 @@
 
 module.exports = function(config) {
   var configuration = {
-    basePath : '../../',
+    basePath : '../../www/',
 
     plugins : [
       'karma-chrome-launcher',
       'karma-firefox-launcher',
+      // 'karma-phantomjs-launcher',
+      // 'karma-detect-browsers',
       'karma-jasmine',
       'karma-coverage',
       'karma-junit-reporter',
@@ -25,18 +27,15 @@ module.exports = function(config) {
     ],
 
     files : [
-      'www/bower_components/platform/platform.js',
-      'www/bower_components/webcomponentsjs/webcomponents-lite.js',
-      'www/bower_components/polymer/polymer.html',
-      'www/bower_components/dexie/dist/dexie.min.js',
-      'www/static/**/*.js',
-      {
-        pattern: "www/**/*.html",
-        included: false,
-        served: true,
-        watched: true
-      },
-      'tests/20_js/**/*.js',
+      // 'bower_components/platform/platform.js',
+      // 'bower_components/polymer/polymer-mini.html',
+      // 'bower_components/polymer/polymer-micro.html',
+      // 'bower_components/polymer/polymer.html',
+      // 'bower_components/webcomponentsjs/webcomponents-lite.js',
+      'bower_components/dexie/dist/dexie.min.js',
+      'static/**/*.js',
+      // 'static/elements/codage.html',
+      '../tests/20_js/**/*.js',
     ],
 
     autoWatch : true,
@@ -44,7 +43,7 @@ module.exports = function(config) {
     browsers: [ 'Firefox' ], // See later
 
     preprocessors: {
-      'www/static/**/*.js': [ 'coverage' ],
+      'static/**/*.js': [ 'coverage' ],
     },
 
     junitReporter : {
