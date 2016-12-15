@@ -37,23 +37,34 @@ function buildRecord(def, data) {
   return def;
 }
 
-function testWithComponent(element, done, callback) {
-  let div = document.createElement("div");
-  div.innerHTML = "<jh-codage value='original'></jh-codage>";
-  document.body.appendChild(div);
+function testWithComponent(name, tag, testsFn) {
 
-  var interval = setInterval(() => {
-    if (!div.firstChild.$) {
-      console.log("NOT READY");
-      return;
-    }
-    clearInterval(interval);
-    console.log("READY TO DONE");
+  return describe(name, function() {
+    let div;
 
-    callback(div, () => {
-      document.body.removeChild(div);
+    // Build up the element
+    beforeEach((done) => {
+      div = document.createElement("div");
+      div.innerHTML = tag;
+      document.body.appendChild(div);
       done();
     });
-  }, 100);
 
+    // Register removing it afterwards
+    afterEach(() => {
+      document.body.removeChild(div);
+    });
+
+    // Run the tests
+    it("should run", function(done) {
+      let interval = setInterval(() => {
+        if (!div.firstChild || !div.firstChild.$) {
+          return;
+        }
+        clearInterval(interval);
+        testsFn(div.firstChild, done)
+        done();
+      }, 100);
+    });
+  });
 }

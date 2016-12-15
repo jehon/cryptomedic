@@ -41,12 +41,14 @@ module.exports = function(config) {
       'bower_components/dexie/dist/dexie.min.js',
       'static/**/*.js',
       'static/elements/codage.html',
-      '../tests/20_js/**/*.js',
+      '../tests/20_js/mocks/*.js',
+      '../tests/20_js/*.js',
     ],
 
     autoWatch : true,
 
     browsers: [ 'Firefox' ], // See later
+    // 'phantomjs'
 
     preprocessors: {
       'static/**/*.js': [ 'coverage' ],
