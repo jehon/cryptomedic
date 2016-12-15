@@ -90,6 +90,7 @@
           }
         }, options);
 
+        // Append sync status
         this.options.fetchOptions.headers.append("X-LAST-CHECKPOINT", localStorage.syncCheckpoint);
 
         this.fired = false;
@@ -198,7 +199,7 @@
             }
           )
           .catch(error => {
-            console.error(error);
+            console.error("dataService - catched and rethrown error: ", error);
             if (this.onError) {
               return this.onError(error);
             }
@@ -271,6 +272,9 @@
           })
           .post('auth/mylogin')
           .then(treatAuthenticationResponse)
+          .catch((error) => {
+            console.error("doLogin: ", error);
+          })
           ;
       },
 
