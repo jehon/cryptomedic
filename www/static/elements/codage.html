@@ -2,7 +2,7 @@
 
 <dom-module name="jh-codage">
   <template>
-    <span hidden$="[[!getTranslated(value)]]" data-toggle='tooltip' data-placement='bottom' title='[[value]]'>
+    <span id='translating' hidden$="[[!getTranslated(value)]]" data-toggle='tooltip' data-placement='bottom' title='[[value]]'>
       <span id='translated'>[[getTranslated(value)]]</span>*
     </span>
     <span id='original'   hidden$="[[getTranslated(value)]]">[[value]]</span>
@@ -21,8 +21,15 @@
       },
 
       getTranslated(value) {
+        if (!cryptomedic) {
+          return false;
+        }
+        if (!cryptomedic.serverSettings) {
+          return false;
+        }
+
         let settings = cryptomedic.serverSettings;
-        if (!settings || !settings.codes) {
+        if (!settings.codes) {
           return false;
         }
 
@@ -30,7 +37,6 @@
           return false;
         }
 
-        // this.isCoded = true;
         return settings.codes[value];
       }
     });
