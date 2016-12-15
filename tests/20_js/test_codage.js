@@ -7,6 +7,13 @@ describe('test jh-codage', function() {
     div = document.createElement("div");
     div.innerHTML = "<jh-codage value='original'></jh-codage>";
     document.body.appendChild(div);
+    window.cryptomedic = {
+      serverSettings: {
+        codes: {
+          'key': 'value'
+        }
+      }
+    };
   });
 
   afterEach(function() {
