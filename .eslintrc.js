@@ -22,5 +22,9 @@ module.exports = {
     "no-console": [ "off" ],
     "no-undef": [ "warn" ],
     "no-unused-vars": [ "warn" ],
+  },
+  "globals": {
+    "Polymer": true,
+    "cryptomedic": true
   }
 }
