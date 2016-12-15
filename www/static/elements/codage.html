@@ -2,7 +2,9 @@
 
 <dom-module name="jh-codage">
   <template>
-    <span id='translated' hidden$="[[!getTranslated(value)]]" data-toggle='tooltip' data-placement='bottom' title='[[value]]'>[[getTranslated(value)]]*</span>
+    <span hidden$="[[!getTranslated(value)]]" data-toggle='tooltip' data-placement='bottom' title='[[value]]'>
+      <span id='translated'>[[getTranslated(value)]]</span>*
+    </span>
     <span id='original'   hidden$="[[getTranslated(value)]]">[[value]]</span>
   </template>
 

@@ -27,6 +27,10 @@ module.exports = function(config) {
     ],
 
     files : [
+      // 'bower_components/platform/platform.js',
+      // 'bower_components/polymer/polymer-mini.html',
+      // 'bower_components/polymer/polymer-micro.html',
+      // 'bower_components/polymer/polymer.html',
       'bower_components/webcomponentsjs/webcomponents-lite.js',
       {
         pattern: "bower_components/**",
@@ -34,10 +38,6 @@ module.exports = function(config) {
         served: true,
         watched: false
       },
-      // 'bower_components/platform/platform.js',
-      // 'bower_components/polymer/polymer-mini.html',
-      // 'bower_components/polymer/polymer-micro.html',
-      // 'bower_components/polymer/polymer.html',
       'bower_components/dexie/dist/dexie.min.js',
       'static/**/*.js',
       'static/elements/codage.html',
