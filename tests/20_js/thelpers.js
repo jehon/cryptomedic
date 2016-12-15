@@ -1,3 +1,5 @@
+/* exported buildRecord, loadMock, testWithComponent */
+/* global create, mock_load_test, mock_patient_10, mock_sync */
 
 let mocks = {
   'mock_load_test':  mock_load_test,
@@ -33,4 +35,25 @@ function buildRecord(def, data) {
     d[li] = data[a];
   }
   return def;
+}
+
+function testWithComponent(element, done, callback) {
+  let div = document.createElement("div");
+  div.innerHTML = "<jh-codage value='original'></jh-codage>";
+  document.body.appendChild(div);
+
+  var interval = setInterval(() => {
+    if (!div.firstChild.$) {
+      console.log("NOT READY");
+      return;
+    }
+    clearInterval(interval);
+    console.log("READY TO DONE");
+
+    callback(div, () => {
+      document.body.removeChild(div);
+      done();
+    });
+  }, 100);
+
 }

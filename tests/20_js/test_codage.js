@@ -1,12 +1,8 @@
 'use strict';
+/* global testWithComponent */
 
 describe('test jh-codage', function() {
-  let div;
-
-  beforeEach(function() {
-    div = document.createElement("div");
-    div.innerHTML = "<jh-codage value='original'></jh-codage>";
-    document.body.appendChild(div);
+  it("Check component instantiation.", function(done) {
     window.cryptomedic = {
       serverSettings: {
         codes: {
@@ -14,19 +10,12 @@ describe('test jh-codage', function() {
         }
       }
     };
-  });
 
-  afterEach(function() {
-    document.body.removeChild(div);
-  });
-
-  it("Check component instantiation.", function(done) {
-    TestsHelper.execWhenReady(() => {
-      return div.querySelector("jh-codage");
-    }, (el)  => {
-      expect(div.querySelector('jh-codage')).not.toBeNull();
-      expect(div.querySelector('jh-codage').$$('#translated').textContent).toEqual('codage');
-      expect(div.querySelector('jh-codage').$$('#original')  .textContent).toEqual('original');
-    }, done);
+    testWithComponent("<jh-codage value='original'></jh-codage>", done, function(el, done) {
+      expect(el.querySelector('jh-codage')).not.toBeNull();
+      expect(el.querySelector('jh-codage').$$('#translated').textContent).toEqual('codage');
+      expect(el.querySelector('jh-codage').$$('#original')  .textContent).toEqual('original');
+      done();
+    });
   });
 });
