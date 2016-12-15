@@ -10,7 +10,7 @@ describe('test jh-codage', function() {
     window.cryptomedic = {
       serverSettings: {
         codes: {
-          'key': 'value'
+          'original': 'codage'
         }
       }
     };
@@ -24,12 +24,9 @@ describe('test jh-codage', function() {
     TestsHelper.execWhenReady(() => {
       return div.querySelector("jh-codage");
     }, (el)  => {
-      console.log("let's test it", div.querySelector('jh-codage'));
       expect(div.querySelector('jh-codage')).not.toBeNull();
-      console.log("expected 1");
-      // expect(div.querySelector('jh-codage').$$('span#translated').text).toEqual('codage');
-      console.log("expected ok");
-    // expect(div.querySelector('jh-codage span#original')  .text).toEqual('original');
+      expect(div.querySelector('jh-codage').$$('#translated').textContent).toEqual('codage');
+      expect(div.querySelector('jh-codage').$$('#original')  .textContent).toEqual('original');
     }, done);
   });
 });
