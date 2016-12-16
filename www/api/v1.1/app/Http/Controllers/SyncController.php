@@ -118,6 +118,7 @@ class SyncController extends ModelController
     $offline['data'] = [];
 
     $offline['checkpoint'] = $previous_checkpoint;
+    $instantRecords = 0;
     foreach($this->_getList($previous_checkpoint, $n) as $i => $d)
     {
       $offline["data"][$i] = $d;
@@ -130,7 +131,6 @@ class SyncController extends ModelController
     }
 
     // Get the remaining count
-    $offline['remaining'] = $this->_getCount($offline['checkpoint']);
     $offline['remaining'] = max(0, $this->_getCount($offline['checkpoint']) - $instantRecords);
 
     // Store the information for helping understanding what is happening out there...
