@@ -122,11 +122,16 @@ class SyncController extends ModelController
     {
       $offline["data"][$i] = $d;
       $offline["data"][$i]->record = $this->getLineFrom($d->type, $d->id);
-      $offline['checkpoint'] = max($d->checkpoint, $offline['checkpoint']);
+      if ($d->checkpoint == '') {
+        $instantRecords++;
+      } else {
+        $offline['checkpoint'] = max($d->checkpoint, $offline['checkpoint']);
+      }
     }
 
     // Get the remaining count
     $offline['remaining'] = $this->_getCount($offline['checkpoint']);
+    $offline['remaining'] = max(0, $this->_getCount($offline['checkpoint']) - $instantRecords);
 
     // Store the information for helping understanding what is happening out there...
     $computer->last_sync       = $offline['checkpoint'];
