@@ -71,9 +71,12 @@ class SyncController extends ModelController
                 return "("
                     . "SELECT greatest(created_at, coalesce(updated_at, 0)) AS ts, id, '$m' as type"
                     . " FROM $t "
-                    . " WHERE (greatest(created_at, coalesce(updated_at, 0)) > :ts0_{$m}) "
-                    . "   OR ((greatest(created_at, coalesce(updated_at, 0)) = :ts1_{$m}) AND ('{$cpo->type}' > :type1_{$m}))"
-                    . "   OR ((greatest(created_at, coalesce(updated_at, 0)) = :ts2_{$m}) AND ('{$cpo->type}' = :type2_{$m}) AND (id > :id2_{$m}))"
+                    . " WHERE "
+                    . " ( "
+                    . "  (greatest(created_at, coalesce(updated_at, 0)) > :ts0_{$m}) "
+                    . "   OR ( (greatest(created_at, coalesce(updated_at, 0)) = :ts1_{$m}) AND ('${m}' > :type1_{$m}) )"
+                    . "   OR ( (greatest(created_at, coalesce(updated_at, 0)) = :ts2_{$m}) AND ('${m}' = :type2_{$m}) AND (id > :id2_{$m}) )"
+                    . " ) "
                     .") \n";
               }, $list, array_keys($list)
           )
