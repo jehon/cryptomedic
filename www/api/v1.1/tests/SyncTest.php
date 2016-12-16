@@ -76,17 +76,20 @@ class SyncTest extends SyncableTestCase {
     $res = DB::statement("UPDATE patients SET updated_at = NOW() WHERE id = 1 LIMIT 1");
     $this->assertTrue($res);
     $offline  = self::getNext(1000);
+    $this->assertEquals(0, $offline->remaining);
     $this->myAssertIsInOfflineData($offline, "Patient", 1);
 
     // Change file
     $res = DB::statement("UPDATE bills SET updated_at = NOW() WHERE id = 3 LIMIT 1");
     $this->assertTrue($res);
     $offline = self::getNext(1000);
+    $this->assertEquals(0, $offline->remaining);
     $this->myAssertIsInOfflineData($offline, "Bill", 3);
 
     // Simulating deleting a sub file for a patient
     $res = DB::statement("INSERT INTO deleteds(entity_type, entity_id) VALUES ('Bill', '1010')");
     $offline = self::getNext(1000);
+    $this->assertEquals(0, $offline->remaining);
     $this->myAssertIsInOfflineData($offline, "Deleted", false, [ "entity_type" => "Bill", "entity_id" => 1010 ]);
   }
 
