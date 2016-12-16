@@ -91,7 +91,7 @@
         }, options);
 
         // Append sync status
-        this.options.fetchOptions.headers.append("X-LAST-CHECKPOINT", localStorage.syncCheckpoint);
+        this.options.fetchOptions.headers.append("X-SYNC-CHECKPOINT", localStorage.syncCheckpoint);
 
         this.fired = false;
       }
