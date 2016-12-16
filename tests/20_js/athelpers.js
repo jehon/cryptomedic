@@ -38,7 +38,6 @@ function buildRecord(def, data) {
 }
 
 function testWithComponent(name, tag, testsFn) {
-
   return describe(name, function() {
     let div;
 
@@ -56,7 +55,7 @@ function testWithComponent(name, tag, testsFn) {
     });
 
     // Run the tests
-    it("should run", function(done) {
+    it("run the test", function(done) {
       let interval = setInterval(() => {
         if (!div.firstChild || !div.firstChild.$) {
           return;

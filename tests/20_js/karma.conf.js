@@ -27,10 +27,6 @@ module.exports = function(config) {
     ],
 
     files : [
-      // 'bower_components/platform/platform.js',
-      // 'bower_components/polymer/polymer-mini.html',
-      // 'bower_components/polymer/polymer-micro.html',
-      // 'bower_components/polymer/polymer.html',
       'bower_components/webcomponentsjs/webcomponents-lite.js',
       {
         pattern: "bower_components/**",
