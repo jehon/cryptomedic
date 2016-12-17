@@ -48,7 +48,14 @@ class SyncController extends ModelController
 
   public function getLineFrom($type, $id)
   {
-    return ("\\App\\" . $type)::findOrFail($id);
+    $rec = ("\\App\\" . $type)::findOrFail($id);
+    if ($type == "Deleted") {
+      $model = References::db2model($rec['entity_type']);
+      if ($model) {
+        $rec['entity_type'] = $model;
+      }
+    }
+    return $rec;
   }
 
   public function _getUnionSQL($cp)
