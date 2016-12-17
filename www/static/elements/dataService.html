@@ -212,15 +212,43 @@
       }
 
       let offline = json._offline;
-      console.log(offline);
+      delete(json._offline);
 
       // Run around the offline data, but after all this, send back the ORIGINAL json for treatment...
-      for(let i of offline.data) {
-        let rec = offline.data[i];
+      offline.data = offline.data.sort((a, b) => {
+        // -1 => a come first
+        if (a.checkpoint == b.checkpoint) {
+          return 0;
+        }
+        if (!a.checkpoint) {
+          return 1;
+        }
+        if (!b.checkpoint) {
+          return -1;
+        }
+        if (a.checkpoint < b.checkpoint) {
+          return -1
+        }
+        return 1;
+      });
+
+      let finished = Promise.resolve();
+      for(let rec of offline.data) {
+        ((rec) => {
+          // finished is updated to take into account the new record:
+          if (rec.type == "Deleted") {
+            finished = finished.then(() => db.deleteInDB(rec.record.entity_type, rec.record.entity_id));
+          } else {
+            finished = finished.then(() => db.storeInDB(rec['type'], rec.record));
+          }
+          finished = finished.then(() => db.checkpointInDB(rec.checkpoint));
+        })(rec);
       }
 
-      delete(json._offline);
-      return json;
+      // Return final response with original data:
+      return finished.then(() => {
+        return json;
+      });
     }
 
     function treatAuthenticationResponse(data) {
