@@ -102,7 +102,9 @@ let Database = (function() {
     checkpointInDB(checkpoint = false) {
       if (checkpoint) {
         console.log("checkpointInDB: ", checkpoint);
-        localStorage.syncCheckpoint = Math.max(localStorage.syncCheckpoint, checkpoint);
+        if (localStorage.syncCheckpoint < checkpoint) {
+          localStorage.syncCheckpoint = checkpoint;
+        }
       }
       return checkpoint;
     }
