@@ -321,7 +321,7 @@ CREATE TABLE `deleteds` (
 --
 
 INSERT INTO `deleteds` (`id`, `created_at`, `updated_at`, `patient_id`, `entity_type`, `entity_id`) VALUES
-(25, '2015-08-21 12:32:35', '2015-08-21 12:32:35', 9, 'patient', 9);
+(25, '2015-08-21 12:32:35', '2015-08-21 12:32:35', 9, 'patients', 9);
 
 -- --------------------------------------------------------
 
