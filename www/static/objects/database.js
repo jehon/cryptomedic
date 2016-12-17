@@ -83,6 +83,31 @@ let Database = (function() {
       }
     }
 
+    // ------------------ Business functions v2 ------------------------------
+    /**
+     *
+     * Store a record in the correct database
+     *
+     */
+    storeInDB(type, record) {
+      console.log("storeInDB: ", type, record.id);
+      return db[type].put(record);
+    }
+
+    deleteInDB(type, id) {
+      console.log("deleteInDB: ", type, id);
+      return db[type].delete(id);
+    }
+
+    checkpointInDB(checkpoint = false) {
+      if (checkpoint) {
+        console.log("checkpointInDB: ", checkpoint);
+        localStorage.syncCheckpoint = Math.max(localStorage.syncCheckpoint, checkpoint);
+      }
+      return checkpoint;
+    }
+
+
     // ------------------ Business functions ------------------------------
     /**
      * Get the folder, with all the currently awaiting modifications applied
