@@ -303,6 +303,21 @@
           ;
       },
 
+      /*
+       * Simply get the next data
+       *
+       */
+      doSync() {
+        return (new OneRequest())
+          .get('sync')
+          ;
+      },
+
+      doResync() {
+        localStorage.syncCheckpoint = "";
+        return this.doSync();
+      },
+
       doLogout() {
         return (new OneRequest())
           .get('auth/logout')
