@@ -243,6 +243,18 @@
           }
           finished = finished.then(() => db.checkpointInDB(rec.checkpoint));
         })(rec);
+
+        // If remaining, let's ask for them !!!
+        if (offline.remaining) {
+          console.log("remaining: ", offline.remaining);
+          finished = finished.then(() => {
+            console.log("Sync again");
+
+          });
+        } else {
+          console.log("finished");
+        }
+
       }
 
       // Return final response with original data:
