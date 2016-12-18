@@ -66,7 +66,7 @@ class SyncController extends ModelController
     $sql = "";
     $list = References::$model2db + [ "Deleted" => "deleteds" ];
     return "SELECT ts, id, type, "
-          . "IF(ts < NOW(), CONCAT(ts, '|', type, '|', id), '') as checkpoint"
+          . "IF(ts < NOW(), CONCAT(ts, '|', type, '|', LPAD(id, 10, '0')), '') as checkpoint"
         . "\n FROM ("
         . implode(" \n UNION ALL \n ",
           array_map(
