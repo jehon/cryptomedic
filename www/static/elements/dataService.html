@@ -157,7 +157,7 @@
                 return response.json()
                   .then(json => {
                     if (json._offline) {
-                      return checkOfflineData(json);
+                      return json;
                     }
                     return json;
                   });
@@ -206,78 +206,6 @@
       }
     }
 
-    function checkOfflineData(json) {
-      if (!json._offline) {
-        return json;
-      }
-
-      let offline = json._offline;
-      delete(json._offline);
-
-      // Run around the offline data, but after all this, send back the ORIGINAL json for treatment...
-      offline.data = offline.data.sort((a, b) => {
-        // -1 => a come first
-        if (a.checkpoint == b.checkpoint) {
-          return 0;
-        }
-        if (!a.checkpoint) {
-          return 1;
-        }
-        if (!b.checkpoint) {
-          return -1;
-        }
-        if (a.checkpoint < b.checkpoint) {
-          return -1
-        }
-        return 1;
-      });
-
-      let finished = Promise.resolve();
-      for(let rec of offline.data) {
-        ((rec) => {
-          // finished is updated to take into account the new record:
-          if (rec.type == "Deleted") {
-            finished = finished.then(() => db.deleteInDB(rec.record.entity_type, rec.record.entity_id));
-          } else {
-            finished = finished.then(() => db.storeInDB(rec['type'], rec.record));
-          }
-          finished = finished.then(() => db.checkpointInDB(rec.checkpoint));
-        })(rec);
-
-        // If remaining, let's ask for them !!!
-        if (offline.remaining) {
-          console.log("remaining: ", offline.remaining);
-          finished = finished.then(() => {
-            console.log("Sync again");
-
-          });
-        } else {
-          console.log("finished");
-        }
-
-      }
-
-      // Return final response with original data:
-      return finished.then(() => {
-        return json;
-      });
-    }
-
-    function treatAuthenticationResponse(data) {
-      if (!window.cryptomedic) {
-        window.cryptomedic = {};
-      }
-      window.cryptomedic.serverSettings = data;
-
-      // .then(worker.post.bind(this, 'init'))
-
-      if (location.hash == "#/login") {
-        location.hash = "#/home";
-      }
-
-      return data;
-    }
-
     Polymer({
       is: 'cryptomedic-data-service',
 
@@ -289,13 +217,87 @@
         window.dataService = this;
       },
 
+      treatAuthenticationResponse: function(data) {
+        if (!window.cryptomedic) {
+          window.cryptomedic = {};
+        }
+        window.cryptomedic.serverSettings = data;
+
+        // .then(worker.post.bind(this, 'init'))
+
+        if (location.hash == "#/login") {
+          location.hash = "#/home";
+        }
+
+        return data;
+      },
+
+      checkOfflineData: function(json) {
+        if (!json._offline) {
+          return json;
+        }
+
+        let offline = json._offline;
+        delete(json._offline);
+
+        // Run around the offline data, but after all this, send back the ORIGINAL json for treatment...
+        offline.data = offline.data.sort((a, b) => {
+          // -1 => a come first
+          if (a.checkpoint == b.checkpoint) {
+            return 0;
+          }
+          if (!a.checkpoint) {
+            return 1;
+          }
+          if (!b.checkpoint) {
+            return -1;
+          }
+          if (a.checkpoint < b.checkpoint) {
+            return -1
+          }
+          return 1;
+        });
+
+        let finished = Promise.resolve();
+        for(let rec of offline.data) {
+          ((rec) => {
+            // finished is updated to take into account the new record:
+            if (rec.type == "Deleted") {
+              finished = finished.then(() => db.deleteInDB(rec.record.entity_type, rec.record.entity_id));
+            } else {
+              finished = finished.then(() => db.storeInDB(rec['type'], rec.record));
+            }
+            finished = finished.then(() => db.checkpointInDB(rec.checkpoint));
+          })(rec);
+        }
+
+        // If remaining, let's ask for them !!!
+        if (offline.remaining) {
+          console.log("remaining: ", offline.remaining);
+          finished = finished.then(() => {
+            console.log("Sync again");
+
+            // This is not binded to what I hoped...
+            this.doSync();
+          });
+        } else {
+          console.log("finished");
+        }
+
+        // Return final response with original data:
+        return finished.then(() => {
+          return json;
+        });
+      },
+
       doLoginCheck() {
         return (new OneRequest())
           .setData({
             'computerId': localStorage.cryptomedicComputerId
           })
           .get('auth/settings')
-          .then(treatAuthenticationResponse)
+          .then((json) => this.treatAuthenticationResponse(json))
+          .then((json) => this.checkOfflineData(json))
           .catch(() => {})
           ;
       },
@@ -308,7 +310,8 @@
             'computerId': localStorage.cryptomedicComputerId
           })
           .post('auth/mylogin')
-          .then(treatAuthenticationResponse)
+          .then((json) => this.treatAuthenticationResponse(json))
+          .then((json) => this.checkOfflineData(json))
           .catch((error) => {
             console.error("doLogin: ", error);
           })
@@ -322,6 +325,7 @@
       doSync() {
         return (new OneRequest())
           .get('sync')
+          .then((json) => this.checkOfflineData(json))
           ;
       },
 
