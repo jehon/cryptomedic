@@ -35,10 +35,13 @@ module.exports = function(config) {
         watched: false
       },
       'bower_components/dexie/dist/dexie.min.js',
+      'bower_components/karma-read-json/karma-read-json.js',
       'static/**/*.js',
       'static/elements/codage.html',
       '../tests/20_js/mocks/*.js',
       '../tests/20_js/*.js',
+      { pattern: 'api/v1.1/tests/references/*.json', included: false },
+      { pattern: 'json/**/*.json', included: false },
     ],
 
     autoWatch : true,
