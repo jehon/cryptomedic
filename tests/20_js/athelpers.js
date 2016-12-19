@@ -1,5 +1,5 @@
-/* exported buildRecord, loadMock, testWithComponent */
-/* global create, mock_load_test, mock_patient_10, mock_sync */
+/* exported buildRecord, loadMock, testWithComponent, loadReference */
+/* global create, mock_load_test, mock_patient_10, mock_sync, readJSON */
 
 let mocks = {
   'mock_load_test':  mock_load_test,
@@ -66,4 +66,11 @@ function testWithComponent(name, tag, testsFn) {
       }, 100);
     });
   });
+}
+
+function loadReference(name) {
+  // Thanks to http://stackoverflow.com/a/27830579/1954789
+  let valid_respond = readJSON('api/v1.1/tests/references/' + name);
+  expect(valid_respond).not.toBeNull("The reference " + name + " is empty or not found");
+  return valid_respond;
 }
