@@ -42,9 +42,9 @@ doDeployPackage() {
   echo "[$conf_site.$1] ftp_user       : $ftp_user"
   #echo "[$conf_site.$1] ftp_pass       : $ftp_pass"
 
-  remote_root=`   php config.php deployment.$conf_site.packages.$1.remote_root    2>/dev/null || echo "/"`
-  local_root=`    php config.php deployment.$conf_site.packages.$1.remote_root    2>/dev/null || echo "$PRJ_DIR"`
-  extra_cmd_line=`php config.php deployment.$conf_site.packages.$1.extra_cmd_line 2>/dev/null || echo ""`
+  remote_root=`   php ${PRJ_DIR}/config.php deployment.$conf_site.packages.$1.remote_root    2>/dev/null || echo "/"`
+  local_root=`    php ${PRJ_DIR}/config.php) deployment.$conf_site.packages.$1.remote_root    2>/dev/null || echo "$PRJ_DIR"`
+  extra_cmd_line=`php ${PRJ_DIR}/config.php) deployment.$conf_site.packages.$1.extra_cmd_line 2>/dev/null || echo ""`
 
   echo "[$conf_site.$1] Remote Root    : $remote_root"
   echo "[$conf_site.$1] Local  Root    : $local_root"
@@ -70,6 +70,7 @@ doDeployPackage() {
       --exclude "tmp/"             \
       --exclude "tests"            \
       --exclude "vagrant/"         \
+      --exclude "www/api/*/storage" \
       --verbose                    \
       $extra_cmd_line              \
       $local_root                  \
@@ -84,9 +85,9 @@ doDeployToSite() {
   # $1: site
   conf_site="$1"
 
-  ftp_host=`php config.php deployment.$conf_site.ftp_host 2>/dev/null || true`
-  ftp_user=`php config.php deployment.$conf_site.ftp_user 2>/dev/null || true`
-  ftp_pass=`php config.php deployment.$conf_site.ftp_pass 2>/dev/null || true`
+  ftp_host=`php ${PRJ_DIR}/config.php) deployment.$conf_site.ftp_host 2>/dev/null || true`
+  ftp_user=`php ${PRJ_DIR}/config.php) deployment.$conf_site.ftp_user 2>/dev/null || true`
+  ftp_pass=`php ${PRJ_DIR}/config.php) deployment.$conf_site.ftp_pass 2>/dev/null || true`
 
   if [[ "$ftp_host" = "" ]]; then
     echo "Site not found in configuration: $conf_site"
@@ -94,7 +95,7 @@ doDeployToSite() {
   fi
   echo "Deploying to site: $ftp_host"
 
-  php config.php deployment.$conf_site.packages | while read L; do
+  php ${PRJ_DIR}/config.php) deployment.$conf_site.packages | while read L; do
     doDeployPackage "$L"
   done
 }
