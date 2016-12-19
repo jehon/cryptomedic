@@ -1,3 +1,4 @@
+/* global loadReference, DataMissingException */
 
 describe('Jasmine', function() {
   it('should work as \'expect\'', function() {
@@ -21,7 +22,7 @@ describe('Jasmine', function() {
 
   it('load json files', function() {
     // Thanks to http://stackoverflow.com/a/27830579/1954789
-    var valid_respond = readJSON('api/v1.1/tests/references/FolderTest.test1.json');
+    var valid_respond = loadReference("FolderTest.test1.json");
     expect(valid_respond).not.toBeNull();
     expect(valid_respond[0].type).toBe("Patient");
   })
