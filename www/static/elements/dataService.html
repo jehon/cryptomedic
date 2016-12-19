@@ -23,6 +23,10 @@
       localStorage.cryptomedicComputerId = result;
     }
 
+    if (!localStorage.syncCheckpoint) {
+      localStorage.syncCheckpoint = "";
+    }
+
     let db = new Database();
 
     //************************************************************************************/
