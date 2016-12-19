@@ -41,7 +41,7 @@ module.exports = function(config) {
       '../tests/20_js/mocks/*.js',
       '../tests/20_js/*.js',
       { pattern: 'api/v1.1/tests/references/*.json', included: false },
-      { pattern: 'json/**/*.json', included: false },
+      // { pattern: 'json/**/*.json', included: false },
     ],
 
     autoWatch : true,
