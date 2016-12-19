@@ -21,8 +21,7 @@ describe('Jasmine', function() {
   });
 
   it('load json files', function() {
-    // Thanks to http://stackoverflow.com/a/27830579/1954789
-    var valid_respond = loadReference("FolderTest.test1.json");
+    let valid_respond = loadReference("FolderTest.test1.json");
     expect(valid_respond).not.toBeNull();
     expect(valid_respond[0].type).toBe("Patient");
   })
