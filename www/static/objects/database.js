@@ -90,18 +90,18 @@ let Database = (function() {
      *
      */
     storeInDB(type, record) {
-      console.log("storeInDB: ", type, record.id);
+      // console.log("storeInDB: ", type, record.id);
       return db[type].put(record);
     }
 
     deleteInDB(type, id) {
-      console.log("deleteInDB: ", type, id);
+      // console.log("deleteInDB: ", type, id);
       return db[type].delete(id);
     }
 
     checkpointInDB(checkpoint = false) {
       if (checkpoint) {
-        console.log("checkpointInDB: ", checkpoint);
+        // console.log("checkpointInDB: ", checkpoint);
         if (localStorage.syncCheckpoint < checkpoint) {
           localStorage.syncCheckpoint = checkpoint;
         }
