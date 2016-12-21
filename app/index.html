@@ -33,6 +33,7 @@
     <script type='text/javascript' src='../static/models/Surgery.js'></script>
 
     <script type='text/javascript' src='../static/objects/database.js'></script>
+    <script type='text/javascript' src='../static/objects/databaseNew.js'></script>
 
     <link rel="import" href="/static/elements/dataService.html">
     <link rel="import" href="/static/elements/codage.html">
@@ -46,7 +47,7 @@
   </head>
   <body ng-app="app_main" ng-controller="ctrl" id="ng-app" xxx-fullbleed xxx-unresolved>
     <!--  Navigation bar -->
-    <cryptomedic-data-service id='dataService'></cryptomedic-data-service>
+
     <nav class="navbar navbar-default navbar-static-top" role="navigation" ng-if="appStateStore.connection.authenticated">
       <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -82,6 +83,7 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="menuMain">
           <ul class="nav navbar-nav navbar-right">
+            <li><p class="navbar-text"><cryptomedic-data-service id='dataService'></cryptomedic-data-service></p></li>
             <li><p class="navbar-text" id='login_loggedusername'>{{appStateStore.connection.settings.username}}</p></li>
             <li><a id='menu_home' href="#/home" class="navbar-link">
               <img src="../static/img/home.gif" height="20px"/>
