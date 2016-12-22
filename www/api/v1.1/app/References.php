@@ -4,15 +4,15 @@ namespace App;
 
 class References {
   static $model2db = array(
-    "Bill"          => "bills",
-    "ClubFoot"      => "club_feet",
-    "OtherConsult"  => "other_consults",
-    "Patient"       => "patients",
-    "Picture"       => "pictures",
-    "Appointment"   => "appointments",
-    "RicketConsult" => "ricket_consults",
-    "Surgery"       => "surgeries",
-    "Payment"       => "payments",
+    "Bill"             => "bills",
+    "ClubFoot"         => "club_feet",
+    "OtherConsult"     => "other_consults",
+    "Patient"          => "patients",
+    "Picture"          => "pictures",
+    "Appointment"      => "appointments",
+    "RicketConsult"    => "ricket_consults",
+    "Surgery"          => "surgeries",
+    "Payment"          => "payments",
   );
 
   static $lists = array();
