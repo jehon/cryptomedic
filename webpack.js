@@ -22,8 +22,6 @@ var config = {
   entry: [ ]
     .concat([
 
-      './node_modules/jquery-ui/ui/widgets/datepicker.js',
-      './node_modules/html2canvas/dist/html2canvas.js',
 
       'script!./node_modules/excellentexport/excellentexport.min.js',
       './app/mainApp.js'
