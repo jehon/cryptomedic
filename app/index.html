@@ -48,56 +48,39 @@
   <body ng-app="app_main" ng-controller="ctrl" id="ng-app" xxx-fullbleed xxx-unresolved>
     <!--  Navigation bar -->
 
-    <nav class="navbar navbar-default navbar-static-top" role="navigation" ng-if="appStateStore.connection.authenticated">
+    <nav class="navbar navbar-default navbar-static-top" role="navigation">
       <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
+        <div class="navbar-header" style='width: 100%'>
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#menuMain">
             <span class="sr-only">Toggle navigation</span>
           </button>
-          <a class="navbar-brand" href="#">Menu</a>
           <ul class="nav navbar-nav navbar-right">
-            <li ng-if='!appStateStore.connection.connected'><p class="navbar-text">
-                <img height="20px" id='sync-off' src="../static/img/sync/off.png"
-                  data-toggle="tooltip" data-placement="bottom" title="Not connected to the server"
-                  >
+            <li><p class="navbar-text">
+                <cryptomedic-data-service id='dataService'></cryptomedic-data-service>
             </p></li>
-            <li ng-if='appStateStore.connection.connected && !appStateStore.connection.authenticated'><p class="navbar-text">
-                <img height="20px" id='sync-unknown' src="../static/img/sync/unknown.png"
-                  data-toggle="tooltip" data-placement="bottom" title="Connecting to the server to get status of your browser"
-                  >
-            </p></li>
-            <li ng-if='appStateStore.connection.authenticated && appStateStore.database.downloading'><p class="navbar-text">
-                <img height="20px" id='sync-download' src="../static/img/sync/download.png"
-                  data-toggle="tooltip" data-placement="bottom" title="Copying data from the server into your browser"
-                  >
-            </p></li>
-            <li ng-if='appStateStore.connection.authenticated && !appStateStore.database.downloading'><p class="navbar-text">
-                <img height="20px" id='sync-ok' src="../static/img/sync/ok.png"
-                  data-toggle="tooltip" data-placement="bottom" title="Data is up-to-date in your browser"
-                  >
-            </p></li>
-          </ul>
-        </div>
-
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="menuMain">
-          <ul class="nav navbar-nav navbar-right">
-            <li><p class="navbar-text"><cryptomedic-data-service id='dataService'></cryptomedic-data-service></p></li>
             <li><p class="navbar-text" id='login_loggedusername'>{{appStateStore.connection.settings.username}}</p></li>
-            <li><a id='menu_home' href="#/home" class="navbar-link">
+          <!-- </ul> -->
+<!--         </div>
+
+        Collect the nav links, forms, and other content for toggling
+        <div class="collapse navbar-collapse" id="menuMain">
+ -->
+           <!-- <ul class="nav navbar-nav navbar-right"> -->
+            <li><p class="navbar-text" id='login_loggedusername'>{{appStateStore.connection.settings.username}}</p></li>
+            <li><a id='menu_home' href="#/home" class="navbar-link" ng-if="hasPermission('application.open')">
               <img src="../static/img/home.gif" height="20px"/>
               Home
             </a></li>
-            <li><a id='menu_search' href="#/search" class="navbar-link">
+            <li><a id='menu_search' href="#/search" class="navbar-link" ng-if="hasPermission('folder.read')">
               <img src="../static/img/patientsSearch.gif" height="20px"/>
               Search a patient
             </a></li>
-            <li><a id='menu_consults' href="#/reports/consultations" class="navbar-link">
+            <li><a id='menu_consults' href="#/reports/consultations" class="navbar-link" ng-if="hasPermission('planning.execute')">
               <img src="../static/img/consultOfDay.gif" height="20px"/>
               Consults of the day
             </a></li>
-            <li><a id='menu_reports' href="#/reports" class="navbar-link">
+            <li><a id='menu_reports' href="#/reports" class="navbar-link" ng-if="hasPermission('reports.execute')">
               <img src="../static/img/reports.gif" height="20px"/>
               Reports
             </a></li>
