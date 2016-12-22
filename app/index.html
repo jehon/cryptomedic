@@ -72,14 +72,6 @@
                 <cryptomedic-data-service id='dataService'></cryptomedic-data-service>
             </p></li>
             <li><p class="navbar-text" id='login_loggedusername'>{{appStateStore.connection.settings.username}}</p></li>
-          <!-- </ul> -->
-<!--         </div>
-
-        Collect the nav links, forms, and other content for toggling
-        <div class="collapse navbar-collapse" id="menuMain">
- -->
-           <!-- <ul class="nav navbar-nav navbar-right"> -->
-            <li><p class="navbar-text" id='login_loggedusername'>{{appStateStore.connection.settings.username}}</p></li>
             <li><a id='menu_home' href="#/home" class="navbar-link" ng-if="hasPermission('application.open')">
               <img src="../static/img/home.gif" height="20px"/>
               Home
@@ -100,19 +92,26 @@
               <img src="../static/img/bug.jpeg"/>
               Bug
             </a></li>
-            <li><a id='menu_users'  href='#/users' ng-if="hasPermission('users.manage')">
-              <img src="../static/img/users.png" height="20px"/>
-              Users
-            </a></li>
-            <li><a id='menu_matrix'  href='/api/v1.0/admin/securityMatrix' ng-if="hasPermission('admin.securityMatrix')">
-              <img src="../static/img/matrix.png" height="20px"/>
-              Matrix
-            </a></li>
             <li ng-controller='ctrl_login'>
               <button id='logout' type="button" class="btn btn-default navbar-btn" ng-click="doLogout()" >
                 <img src="../static/img/logout.gif"/>
                 Logout
               </button>
+            </li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                More<span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu">
+                <li><a id='menu_users'  href='#/users' ng-if="hasPermission('users.manage')">
+                  <img src="../static/img/users.png" height="20px"/>
+                  Users
+                </a></li>
+                <li><a id='menu_matrix'  href='/api/v1.0/admin/securityMatrix' ng-if="hasPermission('admin.securityMatrix')">
+                  <img src="../static/img/matrix.png" height="20px"/>
+                  Matrix
+                </a></li>
+              </ul>
             </li>
           </ul>
         </div>
