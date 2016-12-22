@@ -280,6 +280,9 @@
 
         // If remaining, let's ask for them !!!
         this.remaining = offline.remaining;
+        if (this.remaining == 0) {
+          this.remaining = false;
+        }
         if (offline.remaining) {
           console.log("remaining: ", offline.remaining);
           finished = finished.then(() => {
