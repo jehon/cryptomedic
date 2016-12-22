@@ -2,10 +2,26 @@
 
 <dom-module name="cryptomedic-data-service">
   <template>
-  Login: [[username]]
-  <span hidden$="[[!remaining]]">[[remaining]]</span>
-  <span hidden$="[[remaining]]">Up to date</span>
-    <!-- <paper-dialog id='modal'> -->
+    <span hidden$=[[!username]]>
+      <!-- login status -->
+      <span>
+        <img id='logout' src="resources/logout.gif"/>
+        <paper-tooltip for='logout'>Logout</paper-tooltip>
+      </span>
+
+      <!-- sync status -->
+      <span hidden$="[[remaining]]">
+        <img id="sync-ok" src='resources/sync-ok.png'>
+        <paper-tooltip>Sync finished, all up-to-date.</paper-tooltip>
+      </span>
+      <span hidden$="[[!remaining]]">
+        <img id="sync-download" src='resources/sync-download.png'>
+        <paper-tooltip for='sync-download'>Downloading items</paper-tooltip>
+        [[remaining]]
+      </span>
+    </span>
+
+     <!-- <paper-dialog id='modal'> -->
       <!-- <h2>Oups... {{message}}</h2> -->
       <!-- {{details}} -->
     <!-- </paper-dialog> -->
@@ -219,6 +235,10 @@
 
       // https://www.polymer-project.org/1.0/docs/devguide/properties
       properties: {
+      },
+
+      ready() {
+        this.remaining = false;
       },
 
       attached() {
