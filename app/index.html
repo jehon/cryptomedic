@@ -15,6 +15,7 @@
     <link rel="stylesheet" type="text/css" href="/bower_components/jquery-ui/themes/base/theme.css">
     <link rel="stylesheet" type="text/css" href="/bower_components/jquery-ui/themes/base/controlgroup.css">
     <link rel="stylesheet" type="text/css" href="/bower_components/jquery-ui/themes/base/datepicker.css">
+
     <!-- - - - - - - - - - - - - -->
     <!-- CSS - custom            -->
     <!-- - - - - - - - - - - - - -->
@@ -29,7 +30,8 @@
     <script type='text/javascript' src='/bower_components/jquery-ui/jquery-ui.min.js'></script>
     <script type='text/javascript' src='/bower_components/jquery-ui/ui/widgets/datepicker.js'></script>
     <script type='text/javascript' src='/bower_components/dexie/dist/dexie.min.js'></script>
-    <script type='text/javascript' src='/bower_components/html2canvas/build/html2canvas.min.js '></script>
+    <script type='text/javascript' src='/bower_components/html2canvas/build/html2canvas.min.js'></script>
+    <script type='text/javascript' src='/bower_components/excellentexport/excellentexport.min.js'></script>
 
     <!-- - - - - - - - - - - - - -->
     <!-- JS - custom             -->
@@ -87,9 +89,6 @@
             <span class="sr-only">Toggle navigation</span>
           </button>
           <ul class="nav navbar-nav navbar-right">
-            <li><p class="navbar-text">
-                <cryptomedic-data-service id='dataService'></cryptomedic-data-service>
-            </p></li>
             <li><p class="navbar-text" id='login_loggedusername'>{{appStateStore.connection.settings.username}}</p></li>
             <li><a id='menu_home' href="#/home" class="navbar-link" ng-if="hasPermission('application.open')">
               <img src="../static/img/home.gif" height="20px"/>
@@ -108,13 +107,16 @@
               Bug
             </a></li>
             <li ng-controller='ctrl_login'>
-              <button id='logout' type="button" class="btn btn-default navbar-btn" ng-click="doLogout()" >
+              <a id='logout' class="navbar-link" ng-click="doLogout()" >
                 <img src="../static/img/logout.gif"/>
                 <paper-tooltip>Logout</paper-tooltip>
-              </button>
+              </a>
             </li>
+            <li><p class="navbar-text">
+                <cryptomedic-data-service id='dataService'></cryptomedic-data-service>
+            </p></li>
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+              <a href="javascript:" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                 More<span class="caret"></span>
               </a>
               <ul class="dropdown-menu">
