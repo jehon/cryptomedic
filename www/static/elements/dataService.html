@@ -267,8 +267,14 @@
           return json;
         }
 
+        let finished = Promise.resolve();
+
         let offline = json._offline;
         delete(json._offline);
+
+        if (offline.reset) {
+          finished = finished.then(() => db.clear());
+        }
 
         // Run around the offline data, but after all this, send back the ORIGINAL json for treatment...
         offline.data = offline.data.sort((a, b) => {
@@ -288,7 +294,6 @@
           return 1;
         });
 
-        let finished = Promise.resolve();
         for(let rec of offline.data) {
           ((rec) => {
             // finished is updated to take into account the new record:

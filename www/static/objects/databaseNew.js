@@ -1,4 +1,5 @@
 /* global Dexie */
+/* global Patient, Appointment, Bill, ClubFoot, OtherConsult, Payment, Picture, RicketConsult, Surgery */
 /* exported DatabaseNew */
 
 // Shared database db object...
@@ -106,6 +107,20 @@ let DatabaseNew = (function() {
         }
       }
       return checkpoint;
+    }
+
+    clear() {
+      return Promise.all([
+        db.Patient.clear(),
+        db.Appointment.clear(),
+        db.Bill.clear(),
+        db.ClubFoot.clear(),
+        db.OtherConsult.clear(),
+        db.Payment.clear(),
+        db.Picture.clear(),
+        db.RicketConsult.clear(),
+        db.Surgery.clear()
+      ]);
     }
 
   }
