@@ -98,3 +98,10 @@ cat $LOG
 # EOC
 
 echo "[$conf_site] Done"
+
+echo "Running parts:"
+
+# Run project custom files
+run-parts --exit-on-error --report $PRJ_DIR/bin/prj-go-site.d --arg="$SITE"
+
+echo "End result: $?"
