@@ -93,7 +93,7 @@ class CryptomedicModel extends Model {
 		// $dbname = References::model2db($classname);
 		$id = $this->id;
 		$deleted = new Deleted();
-		$deleted->created_at = new Date();
+		$deleted->created_at = new \DateTime();
 		$deleted->entity_type = $classname;
 		$deleted->entity_id = $id;
 		$deleted->save();
