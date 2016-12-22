@@ -23,7 +23,7 @@ class SyncData {
 		$checkpoint = $request->header("X-SYNC-CHECKPOINT");
 		$n = $request->header("X-SYNC-NBR");
 		if (!is_numeric($n)) {
-			$n = 150;
+			$n = 1000;
 		}
 
 		$response = $next($request);
