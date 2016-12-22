@@ -21,9 +21,7 @@ var config = {
   },
   entry: [ ]
     .concat([
-
-
-      'script!./node_modules/excellentexport/excellentexport.min.js',
+      // 'script!./node_modules/excellentexport/excellentexport.min.js',
       './app/mainApp.js'
     ])
     // Last one, since it will define what is exported:

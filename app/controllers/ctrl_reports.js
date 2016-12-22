@@ -124,9 +124,11 @@ function ctrl_reports($scope, $routeParams, $sce) {
 
   $scope.refresh();
 
-  $scope.generate = function() {
+  $scope.generate = function($event) {
+    console.log("generate: ", $event, $event.currentTarget);
     jQuery('.online').remove();
-    ExcellentExport.excel(document.getElementById('download_link'),
+    // bug fix here: https://github.com/jmaister/excellentexport/issues/54
+    ExcellentExport.excel($event.currentTarget,
       document.getElementById('report_table').getElementsByTagName('table')[0],
       'cryptomedic');
   };

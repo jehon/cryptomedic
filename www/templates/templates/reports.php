@@ -99,7 +99,7 @@
           style='background-color: green; color: white'
           download="{{reportName()}}.xls"
           href="#"
-          ng-click='generate()'
+          ng-click='generate($event)'
           >
       Export current table in XLS</a>
           <!-- onclick="return jQuery('.online').remove() & ExcellentExport.excel(this, jQuery('#report_table table')[0], 'cryptomedic');"> -->
