@@ -237,8 +237,13 @@
       properties: {
       },
 
+      listeners: {
+        'logout.tap': 'doLogout'
+      },
+
       ready() {
         this.remaining = false;
+        this.username = false;
       },
 
       attached() {
