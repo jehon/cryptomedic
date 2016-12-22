@@ -227,8 +227,10 @@ class Role {
   /**************************************************************/
 
   (new Role("readonly"))
+    ->givePermission("application.open")
     ->givePermission("folder.read")
     ->givePermission("reports.execute")
+    ->givePermission("planning.execute")
     ;
 
   (new Role("cdc", "readonly"))
