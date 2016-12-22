@@ -9,7 +9,6 @@
     "angular": "1.4.x",
     "angular-mocks": "1.4.x",
     "angular-route": "1.4.x",
-    "excellentexport": "git://github.com/jmaister/excellentexport",
     "redux": "^3.0.4",
     "redux-logger": "latest"
   },
