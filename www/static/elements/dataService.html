@@ -3,12 +3,6 @@
 <dom-module name="cryptomedic-data-service">
   <template>
     <span hidden$=[[!username]]>
-      <!-- login status -->
-      <span>
-        <img id='logout' src="resources/logout.gif"/>
-        <paper-tooltip for='logout'>Logout</paper-tooltip>
-      </span>
-
       <!-- sync status -->
       <span hidden$="[[remaining]]">
         <img id="sync-ok" src='resources/sync-ok.png'>
@@ -19,9 +13,15 @@
         <paper-tooltip for='sync-download'>Downloading items</paper-tooltip>
         [[remaining]]
       </span>
-    </span>
 
-     <!-- <paper-dialog id='modal'> -->
+      <!-- login status -->
+      <span>
+        <img id='logout' src="resources/logout.gif"/>
+        <paper-tooltip for='logout'>Logout</paper-tooltip>
+      </span>
+
+    </span>
+    <!-- <paper-dialog id='modal'> -->
       <!-- <h2>Oups... {{message}}</h2> -->
       <!-- {{details}} -->
     <!-- </paper-dialog> -->
