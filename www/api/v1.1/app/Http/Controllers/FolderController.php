@@ -62,7 +62,7 @@ class FolderController extends Controller {
 	}
 
 	public function show($id) {
-		return response()->json($this->getFolder($id));
+		return response()->json([ "folder" => $this->getFolder($id)]);
 	}
 
 	public function reference($entryyear, $entryorder) {
