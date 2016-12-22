@@ -6,14 +6,23 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <!-- - - - - - - - - - - - - -->
+    <!-- CSS - globals           -->
+    <!-- - - - - - - - - - - - - -->
     <link rel="stylesheet" type="text/css" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
     <link rel="stylesheet" type="text/css" href="/bower_components/jquery-ui/themes/base/core.css">
     <link rel="stylesheet" type="text/css" href="/bower_components/jquery-ui/themes/base/theme.css">
     <link rel="stylesheet" type="text/css" href="/bower_components/jquery-ui/themes/base/controlgroup.css">
     <link rel="stylesheet" type="text/css" href="/bower_components/jquery-ui/themes/base/datepicker.css">
+    <!-- - - - - - - - - - - - - -->
+    <!-- CSS - custom            -->
+    <!-- - - - - - - - - - - - - -->
     <link rel="stylesheet" type="text/css" href="../static/css/application.css">
 
+    <!-- - - - - - - - - - - - - -->
+    <!-- JS - globals            -->
+    <!-- - - - - - - - - - - - - -->
     <script type='text/javascript' src='/bower_components/webcomponentsjs/webcomponents-lite.js'></script>
     <script type='text/javascript' src='/bower_components/jquery/dist/jquery.min.js'></script>
     <script type='text/javascript' src='/bower_components/bootstrap/dist/js/bootstrap.min.js'></script>
@@ -22,6 +31,9 @@
     <script type='text/javascript' src='/bower_components/dexie/dist/dexie.min.js'></script>
     <script type='text/javascript' src='/bower_components/html2canvas/build/html2canvas.min.js '></script>
 
+    <!-- - - - - - - - - - - - - -->
+    <!-- JS - custom             -->
+    <!-- - - - - - - - - - - - - -->
     <script type='text/javascript' src='../static/objects/exceptions.js'></script>
 
     <script type='text/javascript' src='../static/js/amd_stats.js'></script>
@@ -48,10 +60,17 @@
     <script type='text/javascript' src='../static/objects/database.js'></script>
     <script type='text/javascript' src='../static/objects/databaseNew.js'></script>
 
+    <!-- - - - - - - - - - - - - -->
+    <!-- Web Elements - globals  -->
+    <!-- - - - - - - - - - - - - -->
+    <link rel="import" href="/bower_components/paper-tooltip/paper-tooltip.html">
+
+    <!-- - - - - - - - - - - - - -->
+    <!-- HTML Element - custom   -->
+    <!-- - - - - - - - - - - - - -->
     <link rel="import" href="/static/elements/dataService.html">
     <link rel="import" href="/static/elements/codage.html">
     <!-- <link rel="import" href="/static/elements/htmlbox.html"> -->
-
     <!-- <link rel="import" href="/static/elements/cryptomedic-file-payment.html"> -->
 
     <script type='text/javascript' src='/bower_components/moment/min/moment.min.js'></script>
@@ -84,10 +103,6 @@
               <img src="../static/img/consultOfDay.gif" height="20px"/>
               Consults of the day
             </a></li>
-            <li><a id='menu_reports' href="#/reports" class="navbar-link" ng-if="hasPermission('reports.execute')">
-              <img src="../static/img/reports.gif" height="20px"/>
-              Reports
-            </a></li>
             <li><a id='bug_reporting' href="javascript:bug_reporting()" class="navbar-link">
               <img src="../static/img/bug.jpeg"/>
               Bug
@@ -95,7 +110,7 @@
             <li ng-controller='ctrl_login'>
               <button id='logout' type="button" class="btn btn-default navbar-btn" ng-click="doLogout()" >
                 <img src="../static/img/logout.gif"/>
-                Logout
+                <paper-tooltip>Logout</paper-tooltip>
               </button>
             </li>
             <li class="dropdown">
@@ -110,6 +125,10 @@
                 <li><a id='menu_matrix'  href='/api/v1.0/admin/securityMatrix' ng-if="hasPermission('admin.securityMatrix')">
                   <img src="../static/img/matrix.png" height="20px"/>
                   Matrix
+                </a></li>
+                <li><a id='menu_reports' href="#/reports" class="navbar-link" ng-if="hasPermission('reports.execute')">
+                  <img src="../static/img/reports.gif" height="20px"/>
+                  Reports
                 </a></li>
               </ul>
             </li>
