@@ -1,5 +1,5 @@
 {
-  "name": "CryptomedicApp",
+  "name": "cryptomedic-app",
   "description": "Cryptomedic application for all plateforms",
   "main": "",
   "license": "MIT",
@@ -14,6 +14,7 @@
     "tests"
   ],
   "dependencies": {
+    "bootstrap": "^3.3",
     "paper-dialog": "^1.1.0",
     "webcomponentsjs": "^0.7.22",
     "platform": "Polymer/platform#^0.4.2",
@@ -21,6 +22,8 @@
     "iron-elements": "PolymerElements/iron-elements#^1.0.10",
     "moment": "momentjs#^2.15.2",
     "dexie": "^1.5.1",
-    "karma-read-json": "^1.1.0"
+    "karma-read-json": "^1.1.0",
+    "jquery": "^3.1.1",
+    "jquery-ui": "^1.12.1"
   }
 }

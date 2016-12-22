@@ -21,18 +21,11 @@ var config = {
   },
   entry: [ ]
     .concat([
-      './node_modules/bootstrap/less/bootstrap.less',
-      './node_modules/jquery-ui/themes/base/core.css',
-      './node_modules/jquery-ui/themes/base/theme.css',
-      './node_modules/jquery-ui/themes/base/controlgroup.css',
-      './node_modules/jquery-ui/themes/base/datepicker.css',
 
-      'expose?jQuery!./node_modules/jquery/dist/jquery.js',
       './node_modules/jquery-ui/ui/widgets/datepicker.js',
       './node_modules/html2canvas/dist/html2canvas.js',
 
       'script!./node_modules/excellentexport/excellentexport.min.js',
-      './node_modules/bootstrap/dist/js/bootstrap.min.js',
       './app/mainApp.js'
     ])
     // Last one, since it will define what is exported:
@@ -42,9 +35,6 @@ var config = {
   resolve: {
     extensions: ['', '.js', '.jsx'],
     modulesDirectories: [ 'node_modules', 'app' ],
-    alias: {
-      'jquery': 'jquery'
-    }
   },
   output: {
     path: path.join(__dirname, 'www/build/'),

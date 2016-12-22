@@ -9,12 +9,8 @@
     "angular": "1.4.x",
     "angular-mocks": "1.4.x",
     "angular-route": "1.4.x",
-    "bootstrap": "3.x",
-    "dexie": "latest",
     "excellentexport": "git://github.com/jmaister/excellentexport",
     "html2canvas": "^0.5.0-beta3",
-    "jquery": "2.x",
-    "jquery-ui": "latest",
     "redux": "^3.0.4",
     "redux-logger": "latest"
   },
