@@ -92,6 +92,17 @@ let DatabaseNew = (function() {
      * Store a record in the correct database
      *
      */
+    triageLine(line) {
+      let finished = Promise.resolve();
+      if (line.type == "Deleted") {
+        finished = finished.then(() => this.deleteInDB(line.record.entity_type, line.record.entity_id));
+      } else {
+        finished = finished.then(() => this.storeInDB(line.type, line.record));
+      }
+      finished = finished.then(() => this.checkpointInDB(line.checkpoint));
+      return finished;
+    }
+
     storeInDB(type, record) {
       return db[type].put(record);
     }

@@ -300,15 +300,8 @@
         });
 
         for(let rec of offline.data) {
-          ((rec) => {
-            // finished is updated to take into account the new record:
-            if (rec.type == "Deleted") {
-              finished = finished.then(() => db.deleteInDB(rec.record.entity_type, rec.record.entity_id));
-            } else {
-              finished = finished.then(() => db.storeInDB(rec['type'], rec.record));
-            }
-            finished = finished.then(() => db.checkpointInDB(rec.checkpoint));
-          })(rec);
+          // Bind to keep the actual value of "rec"
+          finished = finished.then(db.triageLine.bind(db, rec))
         }
 
         // If remaining, let's ask for them !!!
