@@ -2,7 +2,8 @@
 
 <dom-module name="cryptomedic-data-service">
   <template>
-  [[remaining]]
+  Login: [[username]]
+  <span hidden$="[[!remaining]]">[[remaining]]</span>
   <span hidden$="[[remaining]]">Up to date</span>
     <!-- <paper-dialog id='modal'> -->
       <!-- <h2>Oups... {{message}}</h2> -->
@@ -235,6 +236,8 @@
         if (location.hash == "#/login") {
           location.hash = "#/home";
         }
+
+        this.username = data.username;
 
         return data;
       },
