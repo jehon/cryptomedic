@@ -1,1 +1,1 @@
-delete from deleteds WHERE `entity_type` = 'nonricket_consults'
+delete from deleteds WHERE `entity_type` = 'nonricket_consults';
