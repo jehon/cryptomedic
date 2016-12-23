@@ -15,6 +15,28 @@ let Database = (function() {
         db = new Dexie('cryptomedic');
 
         // Structure is managed in DatabaseNew.js
+        // Structure is managed in DatabaseNew.js
+        // Structure is managed in DatabaseNew.js
+        // Structure is managed in DatabaseNew.js
+        // Structure is managed in DatabaseNew.js
+        // Structure is managed in DatabaseNew.js
+        // Structure is managed in DatabaseNew.js
+        // Structure is managed in DatabaseNew.js
+        // Structure is managed in DatabaseNew.js
+        // Structure is managed in DatabaseNew.js
+        db.version(6).stores({
+          patients: '++id,[mainFile.entryyear+mainFile.entryorder]',
+          settings: 'key'
+        });
+        // Structure is managed in DatabaseNew.js
+        // Structure is managed in DatabaseNew.js
+        // Structure is managed in DatabaseNew.js
+        // Structure is managed in DatabaseNew.js
+        // Structure is managed in DatabaseNew.js
+        // Structure is managed in DatabaseNew.js
+        // Structure is managed in DatabaseNew.js
+        // Structure is managed in DatabaseNew.js
+        // Structure is managed in DatabaseNew.js
 
         db.open();
       }

@@ -15,35 +15,10 @@ let DatabaseNew = (function() {
 
         db = new Dexie('cryptomedic');
 
-        db.version(1).stores({
-          patients: '++id'
-        });
+        // Old version history not important here anymore,
+        // so let's skip it
 
-        db.version(2).stores({
-          patients: '++id,[mainFile.entryyear+mainFile.entryorder]'
-        });
-
-        db.version(3).stores({
-          patients: '++id'
-        });
-
-        db.version(4).stores({
-          // @see
-          // db.relations.where('[userId1+userId2]').equals([2,3]).or('[userId1+userId2]').equals([3,2])
-          // - will give you all the relations that user 1 has to user 2 or user 2
-          // has to user 1.
-          patients: '++id,[mainFile.entryyear+mainFile.entryorder]'
-        });
-
-        db.version(5).upgrade(function(trans) {
-          trans.patients.toCollection().modify((p) => {
-            if (typeof(p.id) == 'number') {
-              delete this.value;
-            }
-            p.id = '' + p.id;
-          });
-        });
-
+        // Version 6 = latest from old system, so it is copied in old database.js file
         db.version(6).stores({
           patients: '++id,[mainFile.entryyear+mainFile.entryorder]',
           settings: 'key'
