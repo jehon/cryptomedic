@@ -248,6 +248,8 @@
 
       attached() {
         window.dataService = this;
+        // Let's check the login directly
+        this.doLoginCheck();
       },
 
       treatAuthenticationResponse: function(data) {
