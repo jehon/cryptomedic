@@ -379,6 +379,8 @@
           .then(() => {
             window.cryptomedic.serverSettings = {};
             location.hash = "/login";
+            this.username = false;
+            this.remaining = false;
           })
           ;
       },
