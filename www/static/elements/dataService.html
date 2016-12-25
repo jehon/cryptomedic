@@ -389,25 +389,25 @@
       },
 
       getFolder(id) {
-        // if (lastPatientSelected && lastPatientSelected.id == id) {
-        //   console.log("reusing old selected patient");
-        //   return Promise.resolve(lastPatientSelected);
-        // }
+        let finished = Promise.resolve();
+        // if (this.remaining) {
+        if (true) {
+          // We are not finished, let's get the info from the server
+          finished = finished.then(() => {
+            return (new OneRequest())
+              .get('folder/' + id)
 
-        // console.log('Getting the folder live: #' + id);
+              .then(json => {
+                // Do this after asynchronously
+                background(this.checkOfflineData, json);
+                return json.folder;
+              })
+          });
+        }
 
-        // return myFrontFetch({ url: 'folder/' + id })
-        //   // Store the received record into the database
-        //   .then((json) => (new Database()).storeRecord({ record: json}, false) )
-        //   .then((data) => { return new Folder(data); })
-        //   .then(folder => { lastPatientSelected = folder; return folder; })
-        //   .then((data) => { return dispatch(catalog.FOLDER_UPDATE_FROM_SERVER, data); })
-        //   .catch((data) => {
-        //     console.log('in error in selectFile', data);
-        //     dispatch(catalog.CONNECTION_NOT_FOUND, data);
-        //     return null;
-        //   })
-        //   ;
+        // If no data available, look in the local database
+
+        return finished;
       },
 
       createFile(data) {
