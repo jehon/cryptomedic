@@ -1,7 +1,6 @@
 import myFrontFetch from 'helpers/myFrontFetch';
 import catalog      from 'reducers/catalog';
 import dispatch     from 'reducers/dispatch';
-import MyWorker     from 'helpers/myWorker';
 import goThere      from 'helpers/goThere';
 
 var worker = new MyWorker();

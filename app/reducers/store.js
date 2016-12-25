@@ -21,7 +21,6 @@ let store = createStore(
       connection,
       state: stateReducers,
       database,
-      folder
     })(state, action);
     return state;
   }
