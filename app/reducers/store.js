@@ -7,7 +7,6 @@ import prefs                                                      from 'reducers
 import connection                                                 from 'reducers/connectionReducers';
 import stateReducers                                              from 'reducers/stateReducers';
 import database                                                   from 'reducers/databaseReducers';
-import folder                                                     from 'reducers/folderReducers';
 import catalog                                                    from 'reducers/catalog';
 
 let store = createStore(

@@ -7,8 +7,6 @@ import store                    from 'reducers/store';
 import myFetch                  from 'helpers/myFetch';
 import service_backend_fn       from 'helpers/service_backend';
 
-import selectFile               from 'actions/selectFile';
-
 import activateCache            from 'service-worker-registration';
 
 let db = new Database();
@@ -30,9 +28,6 @@ export default function() {
     store: store,
     dispatch: dispatch,
     catalog: catalog,
-    action: {
-      selectFile
-    },
     helpers: {
       service_backend_fn,
       myFetch,
