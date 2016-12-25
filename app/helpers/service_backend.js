@@ -2,7 +2,6 @@
 import catalog      from 'reducers/catalog';
 import dispatch     from 'reducers/dispatch';
 
-import MyWorker     from 'helpers/myWorker';
 import myFrontFetch from 'helpers/myFrontFetch';
 import goThere      from 'helpers/goThere';
 
@@ -47,33 +46,8 @@ import goThere      from 'helpers/goThere';
 export default function service_backend() {
   var db = new Database(true);
 
-  var worker = new MyWorker(function(name, data) {
-    switch(name) {
-      case 'disconnected':
-        if (data == 401) {
-          dispatch(catalog.CONNECTION_EXPIRED);
-          goThere('#/login');
-        } else {
-          dispatch(catalog.CONNECTION_SERVER_ERROR);
-        }
-        break;
-      case 'progress':
-        if (data.isfinal) {
-          dispatch(catalog.DATABASE_DOWNLOADED);
-        } else {
-          dispatch(catalog.DATABASE_DOWNLOADING);
-        }
-        dispatch(catalog.CONNECTION_SUCCESS);
-        break;
-      default:
-        dispatch(catalog.CONNECTION_SUCCESS);
-        break;
-    }
-  });
-
   function mySendAction(name, data) {
     // worker.postMessage({ name: name, data: data });
-    worker.post(name, data);
     return data;
   }
 

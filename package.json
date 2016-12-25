@@ -54,8 +54,7 @@
     "sw-precache": "^4.0.0",
     "webcomponentsjs": "^1.0.2",
     "webpack": "latest",
-    "webpack-dev-server": "latest",
-    "worker-loader": "latest"
+    "webpack-dev-server": "latest"
   },
   "scripts": {
     "build": "webpack --config webpack.js -p",
