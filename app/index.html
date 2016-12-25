@@ -90,7 +90,6 @@
             <span class="sr-only">Toggle navigation</span>
           </button>
           <ul class="nav navbar-nav navbar-right">
-            <li><p class="navbar-text" id='login_loggedusername'>{{appStateStore.connection.settings.username}}</p></li>
             <li><a id='menu_home' href="#/home" class="navbar-link" ng-if="hasPermission('application.open')">
               <img src="../static/img/home.gif" height="20px"/>
               Home
@@ -107,12 +106,6 @@
               <img src="../static/img/bug.jpeg"/>
               Bug
             </a></li>
-            <li ng-controller='ctrl_login'>
-              <a id='logout' class="navbar-link" ng-click="doLogout()" >
-                <img src="../static/img/logout.gif"/>
-                <paper-tooltip>Logout</paper-tooltip>
-              </a>
-            </li>
             <li><p class="navbar-text">
                 <cryptomedic-data-service id='dataService'></cryptomedic-data-service>
             </p></li>
