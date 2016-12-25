@@ -1,9 +1,10 @@
 /* global Dexie */
-/* exported Database */
+/* global Patient, Appointment, Bill, ClubFoot, OtherConsult, Payment, Picture, RicketConsult, Surgery */
+/* exported DatabaseNew */
 
 // Shared database db object...
 
-let Database = (function() {
+let DatabaseNew = (function() {
 
   let db = false;
 
@@ -14,159 +15,99 @@ let Database = (function() {
 
         db = new Dexie('cryptomedic');
 
-        // Structure is managed in DatabaseNew.js
-        // Structure is managed in DatabaseNew.js
-        // Structure is managed in DatabaseNew.js
-        // Structure is managed in DatabaseNew.js
-        // Structure is managed in DatabaseNew.js
-        // Structure is managed in DatabaseNew.js
-        // Structure is managed in DatabaseNew.js
-        // Structure is managed in DatabaseNew.js
-        // Structure is managed in DatabaseNew.js
-        // Structure is managed in DatabaseNew.js
+        // Old version history not important here anymore,
+        // so let's skip it
+
+        // Version 6 = latest from old system, so it is copied in old database.js file
         db.version(6).stores({
           patients: '++id,[mainFile.entryyear+mainFile.entryorder]',
           settings: 'key'
         });
-        // Structure is managed in DatabaseNew.js
-        // Structure is managed in DatabaseNew.js
-        // Structure is managed in DatabaseNew.js
-        // Structure is managed in DatabaseNew.js
-        // Structure is managed in DatabaseNew.js
-        // Structure is managed in DatabaseNew.js
-        // Structure is managed in DatabaseNew.js
-        // Structure is managed in DatabaseNew.js
-        // Structure is managed in DatabaseNew.js
+
+        db.version(7).stores({
+          patients: '++id,[mainFile.entryyear+mainFile.entryorder]',
+          settings: 'key',
+          Patient:       'id,[entryyear+entryorder]',
+          Appointment:   'id,patient_id,Date,Nextappointment,NextCenter,[Nextappointment+NextCenter]',
+          Bill:          'id,patient_id,Date',
+          ClubFoot:      'id,patient_id,Date',
+          OtherConsult:  'id,patient_id,Date',
+          Payment:       'id,bill_id,   Date',
+          Picture:       'id,patient_id,Date',
+          RicketConsult: 'id,patient_id,Date',
+          Surgery:       'id,patient_id,Date',
+        });
+
+        // db.version(8).upgrade(function(trans) {
+        //   trans.patients.toCollection().modify((p) => {
+
+        //   });
+        // });
 
         db.open();
       }
-    }
 
-    // ------------------ Business functions ------------------------------
-    /**
-     * Get the folder, with all the currently awaiting modifications applied
-     */
-    getFolder(id) {
-      return db.patients.get('' + id).then((data) => {
-        if (data) {
-          return this.applyModificationsOn(data);
-        } else {
-          throw 'I say, this patient is not found #' + id;
-        }
-      });
-    }
-
-    /**
-     * Get the folder by the reference
-     */
-    getByReference(entryyear, entryorder) {
-      return db.patients.where('[mainFile.entryyear+mainFile.entryorder]').equals([''+entryyear, ''+entryorder]).toArray((data) => {
-        if (data && data.length == 1) {
-          return this.applyModificationsOn(data[0]);
-        } else {
-          throw 'I say, reference not found #' + entryyear + '.' + entryorder;
-        }
-      });
-    }
-
-    applyModificationsOn(folder) {
-      return folder;
-    }
-
-    // ------------------ Enhanced functions ------------------------------
-    updateCheckpoint(cp) {
-      var key = 'checkpoint';
-      if (cp === false) {
-        return this.setSetting(key, '');
-      } else if (cp == '') {
-        return Promise.resolve('');
-      } else {
-        return this.getSetting(key, '').then((val) => {
-          if (!val || val < cp) {
-            return this.setSetting(key, cp);
-          } else {
-            return val;
-          }
-        });
+      // @See https://github.com/dfahlander/db.js/wiki/Table.mapToClass()
+      if (typeof(Patient) != "undefined") {
+        db.Patient      .mapToClass(Patient);
+        db.Appointment  .mapToClass(Appointment);
+        db.Bill         .mapToClass(Bill);
+        db.ClubFoot     .mapToClass(ClubFoot);
+        db.OtherConsult .mapToClass(OtherConsult);
+        db.Payment      .mapToClass(Payment);
+        db.Picture      .mapToClass(Picture);
+        db.RicketConsult.mapToClass(RicketConsult);
+        db.Surgery      .mapToClass(Surgery);
       }
     }
 
-    storeRecord(record, doUpdateCheckpoint = true) {
-      var req;
-      var data;
-      if (record['_deleted']) {
-        req = db.patients.delete('' + record['id']);
-        data = '' + record['id'];
-      } else {
-        record['record']['id'] += '';
-        record['record']['mainFile']['entryyear'] += '';
-        record['record']['mainFile']['entryorder'] += '';
-        req = db.patients.put(record['record']);
-        data = record['record'];
-      }
-      if (doUpdateCheckpoint) {
-        req.then(() => this.updateCheckpoint(record['checkpoint']));
-      }
-      // Fix the value in the 'thenable' chain
-      return req.then(() => data);
-    }
-
+    // ------------------ Business functions v2 ------------------------------
     /**
-     * Insert data in bulk, in one transaction (faster than the simple insert)
      *
-     * The checkpoint is automatically inserted into the settings table.
+     * Store a record in the correct database
      *
-     * @param bulk: array of object to be inserted if the bulk[].key = '_deleted',
-     *                delete it otherwise, store bulk[].record into the store
-                 Come from (json.)_offline.data
      */
-    bulkUpdate(bulk, feedback) {
-      var prevPromise = Promise.resolve(); // initial Promise always resolve
-      for (var key in bulk) {
-        prevPromise = prevPromise.then(
-          () => {
-            return new Promise((iresolve, ireject) => {
-              this.storeRecord(bulk[key])
-                .then(function (data) {
-                  if (feedback) {
-                    feedback(data);
-                  }
-                  iresolve();
-                }, function (e) {
-                  ireject(e);
-                });
-            });
-          }
-        );
+    triageLine(line) {
+      let finished = Promise.resolve();
+      if (line.type == "Deleted") {
+        finished = finished.then(() => this.deleteInDB(line.record.entity_type, line.record.entity_id));
+      } else {
+        finished = finished.then(() => this.storeInDB(line.type, line.record));
       }
-      return prevPromise;
+      finished = finished.then(() => this.checkpointInDB(line.checkpoint));
+      return finished;
     }
 
-    // ------------------ System functions ------------------------------
-    getSetting(key, def) {
-      return db.settings.get('' + key).then((data) => {
-        if (data) {
-          return data.value;
-        } else {
-          def = def || false;
-          return def;
+    storeInDB(type, record) {
+      return db[type].put(record);
+    }
+
+    deleteInDB(type, id) {
+      return db[type].delete(id);
+    }
+
+    checkpointInDB(checkpoint = false) {
+      if (checkpoint) {
+        if (localStorage.syncCheckpoint < checkpoint) {
+          localStorage.syncCheckpoint = checkpoint;
         }
-      });
-    }
-
-    setSetting(key, value) {
-      return db.settings.put({ key: '' + key, value: value})
-        .then(() => value);
+      }
+      return checkpoint;
     }
 
     clear() {
-      return db.patients.clear().then(() => {
-        return db.settings.clear();
-      });
+      return Promise.all([
+        db.Patient.clear(),
+        db.Appointment.clear(),
+        db.Bill.clear(),
+        db.ClubFoot.clear(),
+        db.OtherConsult.clear(),
+        db.Payment.clear(),
+        db.Picture.clear(),
+        db.RicketConsult.clear(),
+        db.Surgery.clear()
+      ]);
     }
 
-    version() {
-      return db.verno;
-    }
   }
 })();
