@@ -38,7 +38,7 @@
  */
 
 import myFetch     from 'helpers/myFetch';
-importScripts("/static/objects/database.js");
+importScripts("/static/objects/databaseOld.js");
 importScripts("/bower_components/dexie/dist/dexie.min.js");
 
 var db = new Database();
