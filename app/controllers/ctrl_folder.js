@@ -1,7 +1,5 @@
 import service_backend      from 'helpers/service_backend';
 
-import patientGenerate      from 'actions/patientGenerate';
-
 import template             from 'helpers/template';
 
 import catalog              from 'reducers/catalog';
@@ -50,7 +48,7 @@ function ctrl_folder($scope, $location, $routeParams) {
   //----------------------
   let getFileThen;
   if ($scope.patient_id < 0) {
-    getFileThen = patientGenerate();
+    getFileThen = Promise.resolve(new Folder());
     $scope.mode = 'add';
   } else {
     getFileThen = dataService.getFolder($scope.patient_id);

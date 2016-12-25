@@ -1,6 +1,3 @@
-import catalog         from 'reducers/catalog';
-import dispatch        from 'reducers/dispatch';
-import { login, logout } from 'actions/authentication';
 
 function ctrl_login($scope) {
   dispatch(catalog.DATABASE_DOWNLOADED);
@@ -15,11 +12,11 @@ function ctrl_login($scope) {
       alert('No password detected');
       return;
     }
-    login(this.details.username, this.details.password);
+    dataService.doLogin(this.details.username, this.details.password);
   };
 
   $scope.doLogout = function() {
-    logout();
+    dataService.logout();
   };
 }
 
