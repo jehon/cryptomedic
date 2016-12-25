@@ -19,8 +19,6 @@ import ctrl_reports             from 'controllers/ctrl_reports';
 import ctrl_search              from 'controllers/ctrl_search';
 import ctrl_users               from 'controllers/ctrl_users';
 
-import { loginCheck }           from 'actions/authentication';
-
 var application = {};
 
 var mainApp = angular.module('app_main', [ 'ngRoute' ])
@@ -261,10 +259,6 @@ mainApp.controller('ctrl', [ '$scope', function($scope) {
     return $scope.appStateStore.connection.settings.authorized[transaction];
   };
 
-  $scope.doCheckLogin = function() {
-    loginCheck();
-  };
-
   $scope.$on('$routeChangeError', function() { console.error('error in routes', arguments); });
 
   $scope.messages = [];
@@ -296,8 +290,6 @@ mainApp.controller('ctrl', [ '$scope', function($scope) {
       }, 1000);
     }
   });
-
-  loginCheck();
 }]);
 
 mainApp.controller('ctrl_allGraphics',      ctrl_allGraphics);
@@ -333,5 +325,10 @@ mainApp.config([ '$routeProvider', function($routeProvider) {
       controller: 'ctrl_users',
     }).otherwise({ 'redirectTo': '/home'});
 }]);
+
+
+window.cryptomedic = {
+  serverSettings: {}
+}
 
 export default mainApp;
