@@ -51,6 +51,27 @@ function ctrl_folder($scope, $location, $routeParams) {
     getFileThen = Promise.resolve(new Folder());
     $scope.mode = 'add';
   } else {
+
+// TODO: handle the new folder structure (array of anything)
+// TODO: handle the new folder structure (array of anything)
+// TODO: handle the new folder structure (array of anything)
+// TODO: handle the new folder structure (array of anything)
+// TODO: handle the new folder structure (array of anything)
+// TODO: handle the new folder structure (array of anything)
+// TODO: handle the new folder structure (array of anything)
+// TODO: handle the new folder structure (array of anything)
+// TODO: handle the new folder structure (array of anything)
+// TODO: handle the new folder structure (array of anything)
+// TODO: handle the new folder structure (array of anything)
+// TODO: handle the new folder structure (array of anything)
+// TODO: handle the new folder structure (array of anything)
+// TODO: handle the new folder structure (array of anything)
+// TODO: handle the new folder structure (array of anything)
+// TODO: handle the new folder structure (array of anything)
+// TODO: handle the new folder structure (array of anything)
+// TODO: handle the new folder structure (array of anything)
+// TODO: handle the new folder structure (array of anything)
+
     getFileThen = dataService.getFolder($scope.patient_id);
   }
   getFileThen.then(function(data) {
@@ -58,9 +79,11 @@ function ctrl_folder($scope, $location, $routeParams) {
     if (data) {
       if ($scope.page == 'file') {
         if ($scope.mode == 'add') {
+          // TODO: Adapt
           cachedCurrentFile = create($scope.subtype, null, $scope.folder);
           cachedCurrentFile.patient_id = $scope.patient_id;
         } else {
+          // TODO: Adapt
           for(var i in $scope.folder.getSubFiles()) {
             if (($scope.folder.getSubFile(i).getModel() == $scope.subtype)
                 && ($scope.folder.getSubFile(i).id == $scope.subid)) {
@@ -69,6 +92,7 @@ function ctrl_folder($scope, $location, $routeParams) {
           }
         }
       } else {
+        // TODO: Adapt
         cachedCurrentFile = $scope.folder.getMainFile();
       }
       if ($scope.mode == 'edit' || $scope.mode == 'add') {
