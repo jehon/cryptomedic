@@ -1,6 +1,5 @@
 
 function ctrl_login($scope) {
-  dispatch(catalog.DATABASE_DOWNLOADED);
   $scope.details = {};
 
   $scope.doLogin = function() {
@@ -13,10 +12,6 @@ function ctrl_login($scope) {
       return;
     }
     dataService.doLogin(this.details.username, this.details.password);
-  };
-
-  $scope.doLogout = function() {
-    dataService.logout();
   };
 }
 
