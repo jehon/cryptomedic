@@ -244,10 +244,6 @@ input[type=checkbox].form-control {
 /********************************************
  * Menu / buttons
  */
-button img {
- height: 17px;
-}
-
 .left-menu-button {
  width: 100%;
  white-space: normal;
@@ -255,8 +251,7 @@ button img {
 }
 
 .navbar img {
- height: 15px;
- padding-right: 5px;
+ height: 25px;
 }
 
 /********************************************
