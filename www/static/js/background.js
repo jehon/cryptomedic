@@ -1,5 +1,5 @@
 /* exported background */
 
-function background(fn) {
-  setTimeout(fn, 10);
+function background(fn, ...args) {
+  setTimeout(fn, 10, ...args);
 }
