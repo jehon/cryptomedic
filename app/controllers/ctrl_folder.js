@@ -1,6 +1,5 @@
 import service_backend      from 'helpers/service_backend';
 
-import selectFile           from 'actions/selectFile';
 import patientGenerate      from 'actions/patientGenerate';
 
 import template             from 'helpers/template';
@@ -54,7 +53,7 @@ function ctrl_folder($scope, $location, $routeParams) {
     getFileThen = patientGenerate();
     $scope.mode = 'add';
   } else {
-    getFileThen = selectFile($scope.patient_id);
+    getFileThen = dataService.getFolder($scope.patient_id);
   }
   getFileThen.then(function(data) {
     $scope.folder = data;
@@ -185,7 +184,6 @@ function ctrl_folder($scope, $location, $routeParams) {
     $scope.folder = false;
     $scope.safeApply();
 
-    selectFile(-1);
     service_backend().saveFile(cachedCurrentFile, $scope.patient_id)
       .then(function(data) {
         // The data is refreshed by navigating away...
@@ -202,7 +200,6 @@ function ctrl_folder($scope, $location, $routeParams) {
     $scope.folder = false;
     $scope.safeApply();
 
-    selectFile(-1);
     service_backend().unlockFile(cachedCurrentFile)
       .then(function(data) {
         $scope.$emit('message', { 'level': 'success', 'text': 'The ' + $scope.subtype + ' #' + $scope.subid + ' has been unlocked.'});
@@ -231,7 +228,6 @@ function ctrl_folder($scope, $location, $routeParams) {
       dispatch(catalog.PREFS_FILES, { 'center': cachedCurrentFile.Center });
     }
 
-    selectFile(-1);
     service_backend().createFile(cachedCurrentFile)
       .then(function(data) {
         $scope.$emit('message', { 'level': 'success', 'text': 'The ' + cachedCurrentFile.getModel() + ' has been created.'});
@@ -250,7 +246,6 @@ function ctrl_folder($scope, $location, $routeParams) {
     $scope.folder = false;
     $scope.safeApply();
 
-    selectFile(-1);
     service_backend().deleteFile($scope.currentFile())
       .then(function(data) {
         $scope.$emit('message', { 'level': 'success', 'text':  'The ' + $scope.currentFile().getModel() +  ' of ' + $scope.currentFile().Date + ' has been deleted'});
@@ -270,7 +265,6 @@ function ctrl_folder($scope, $location, $routeParams) {
     $scope.folder = false;
     // $scope.currentFile().getModel() = 'Patient';
 
-    selectFile(-1);
     service_backend().createFile($scope.currentFile())
       .then(function(data) {
         $scope.$emit('message', { 'level': 'success', 'text':  'The patient has been created.'});
@@ -290,7 +284,6 @@ function ctrl_folder($scope, $location, $routeParams) {
     dispatch(catalog.STATE_BUSY, 'Saving files on the server');
     $scope.safeApply();
 
-    selectFile(-1);
     service_backend().saveFile(cachedCurrentFile, $scope.patient_id)
       .then(function(data) {
       // The data is refreshed by navigating away...
@@ -308,7 +301,6 @@ function ctrl_folder($scope, $location, $routeParams) {
     dispatch(catalog.STATE_BUSY, 'Deleting patient on the server');
     $scope.safeApply();
 
-    selectFile(-1);
     service_backend().deleteFile($scope.currentFile())
       .then(function(data) {
         $scope.$emit('message', { 'level': 'success', 'text':    'The patient ' + $scope.currentFile().entryyear + '-' + $scope.currentFile().entryorder + ' has been deleted'});
