@@ -46,6 +46,24 @@
 
     let db = new DatabaseNew();
 
+
+    function sortRecordByTimestamp(a, b) {
+      // -1 => a come first
+      if (a.checkpoint == b.checkpoint) {
+        return 0;
+      }
+      if (!a.checkpoint) {
+        return 1;
+      }
+      if (!b.checkpoint) {
+        return -1;
+      }
+      if (a.checkpoint < b.checkpoint) {
+        return -1
+      }
+      return 1;
+    }
+
     //************************************************************************************/
     //**** Body builders according to method
     function bodyBuilderGet(options) {
@@ -284,22 +302,7 @@
         }
 
         // Run around the offline data, but after all this, send back the ORIGINAL json for treatment...
-        offline.data = offline.data.sort((a, b) => {
-          // -1 => a come first
-          if (a.checkpoint == b.checkpoint) {
-            return 0;
-          }
-          if (!a.checkpoint) {
-            return 1;
-          }
-          if (!b.checkpoint) {
-            return -1;
-          }
-          if (a.checkpoint < b.checkpoint) {
-            return -1
-          }
-          return 1;
-        });
+        offline.data = offline.data.sort(sortRecordByTimestamp);
 
         for(let rec of offline.data) {
           // Bind to keep the actual value of "rec"
