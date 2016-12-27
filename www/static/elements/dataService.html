@@ -441,6 +441,72 @@
         //   .catch()
         //   ;
       },
+      'getReport': function(reportName, data) {
+        // return myFrontFetch({ url: 'reports/' + reportName, data: nullify(data) })
+        //   .catch()
+        //   ;
+      },
+
+      'searchForPatients': function(params) {
+        // return myFrontFetch({ url: 'folder', data: params })
+        //   .then(function(data) {
+        //     var list = [];
+        //     for(var i in data) {
+        //       list.push(new Patient(data[i]));
+        //     }
+        //     return list;
+        //   })
+        //   .then(function(data) {
+        //     for(var i in data) {
+        //       data[i] = new Patient(data[i]);
+        //     }
+        //     return data;
+        //   })
+        //   .catch()
+        //   ;
+      },
+
+      // READWRITE
+      'createReference': function(year, order) {
+        // return myFrontFetch({ url: 'reference', init: { method: 'POST'}, data: {
+        //   'entryyear': year,
+        //   'entryorder': order
+        // }})
+        //   .then(function(data) { return new Folder(data); })
+        //   .catch()
+        //   ;
+      },
+
+      'usersList': function() {
+        // return myFrontFetch({ url: 'users' })
+        //   .catch()
+        //   ;
+      },
+
+      'userAdd': function(user) {
+        // return myFrontFetch({ url: 'users' , init: { method: 'POST' }, data: user })
+        //   .catch()
+        //   ;
+      },
+
+      'userDelete': function(id) {
+        // return myFrontFetch({ url: 'users/' + id, init: { method: 'DELETE' }})
+        //   .catch()
+        //   ;
+      },
+
+      'userUpdate': function(user) {
+        // return myFrontFetch({ url: 'users/' + user.id, init: { method: 'PUT' }, data: user})
+        //   .catch()
+        //   ;
+      },
+
+      'userPassword': function(id, pwd) {
+        // return myFrontFetch({ url: 'users/password/' + id, init: { method: 'POST' }, data: { password: pwd }})
+        //   .catch()
+        //   ;
+      }
+
     })
   })();
   </script>
