@@ -24,6 +24,7 @@ module.exports = {
   },
   "globals": {
     "Polymer": true,
-    "cryptomedic": true
+    "cryptomedic": true,
+    "dataService": true
   }
 }
