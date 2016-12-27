@@ -1,5 +1,3 @@
-import service_backend from 'helpers/service_backend';
-
 function ctrl_search($scope) {
   if (typeof($scope.params) == 'undefined') {
     $scope.params = {};

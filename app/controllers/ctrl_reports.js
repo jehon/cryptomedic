@@ -1,5 +1,4 @@
 import template        from 'helpers/template';
-import service_backend from 'helpers/service_backend';
 import store           from 'reducers/store';
 import catalog         from 'reducers/catalog';
 import dispatch        from 'reducers/dispatch';
