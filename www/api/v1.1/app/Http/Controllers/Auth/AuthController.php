@@ -131,7 +131,7 @@ class AuthController extends Controller {
       error_log("environnemnt bypass authentication for " . $credentials['username']);
       $user = User::where("username", $credentials['username'])->first();
       if (!$user) {
-        return abort(406, "Invalid credentials");
+        return abort(404, "Invalid credentials");
       }
       Auth::login($user);
       return $this->getSettings();
@@ -141,7 +141,7 @@ class AuthController extends Controller {
     {
       return $this->getSettings();
     }
-    return abort(406, "Invalid credentials");
+    return abort(404, "Invalid credentials");
   }
 
   public function getLogout() {

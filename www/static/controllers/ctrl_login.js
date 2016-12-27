@@ -1,6 +1,7 @@
 
 function ctrl_login($scope) {
   $scope.details = {};
+  $scope.loginError = false;
 
   $scope.doLogin = function() {
     if ($scope.details.username == '') {
@@ -11,10 +12,17 @@ function ctrl_login($scope) {
       alert('No password detected');
       return;
     }
-    dataService.doLogin(this.details.username, this.details.password);
+    dataService
+      .doLogin(this.details.username, this.details.password)
+      .then(() => {
+        $scope.loginError = false;
+      })
+      .catch(error => {
+        console.log("Login error: ", error);
+        $scope.loginError = true;
+        $scope.safeApply();
+      })
   };
 }
 
 ctrl_login.$inject = [ "$scope" ];
-
-export default ctrl_login;
