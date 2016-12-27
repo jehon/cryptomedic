@@ -1,4 +1,3 @@
-import service_backend from 'helpers/service_backend';
 import catalog         from 'reducers/catalog';
 import dispatch        from 'reducers/dispatch';
 

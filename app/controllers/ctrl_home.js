@@ -1,4 +1,3 @@
-import service_backend from 'helpers/service_backend';
 import goThere         from 'helpers/goThere';
 
 function ctrl_home($scope) {

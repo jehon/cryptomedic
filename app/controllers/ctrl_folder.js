@@ -1,7 +1,4 @@
-import service_backend      from 'helpers/service_backend';
-
 import template             from 'helpers/template';
-
 import catalog              from 'reducers/catalog';
 import dispatch             from 'reducers/dispatch';
 import goThere              from 'helpers/goThere';

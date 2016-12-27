@@ -5,7 +5,6 @@ import dispatch                 from 'reducers/dispatch';
 import store                    from 'reducers/store';
 
 import myFetch                  from 'helpers/myFetch';
-import service_backend_fn       from 'helpers/service_backend';
 
 import activateCache            from 'service-worker-registration';
 
@@ -29,7 +28,6 @@ export default function() {
     dispatch: dispatch,
     catalog: catalog,
     helpers: {
-      service_backend_fn,
       myFetch,
       db,
     },
