@@ -16,7 +16,7 @@
 
       <!-- login status -->
       <span>
-        [[username]]
+        <span id='login_loggedusername'>[[username]]</span>
         <img id='logout' src="resources/logout.gif"/>
         <paper-tooltip for='logout'>Logout [[username]]</paper-tooltip>
       </span>
@@ -263,12 +263,12 @@
         'logout.tap': 'doLogout'
       },
 
-      ready() {
-        this.remaining = false;
-        this.username = false;
-      },
+      // ready() {
+      // },
 
       attached() {
+        this.remaining = false;
+        this.username = false;
         window.dataService = this;
         // Let's check the login directly
         this.doLoginCheck();
