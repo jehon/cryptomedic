@@ -1,3 +1,5 @@
+/* global Data, Patient, amd_stats, create */
+/* exported Folder */
 'use strict';
 
 class Folder extends Data {
