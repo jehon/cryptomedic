@@ -85,11 +85,11 @@
       <a id='button_patient' ng-class="{ 'btn-warning': !page}" ng-href="#/folder/{{patient_id}}" class="btn btn-default" style="width: 100%">Patient</a>
       <span id='folder_files'>
         <span ng-repeat="f in folder.getSubFiles()" class='folder_file'>
-          <a id='folder_menu_{{f._type}}_{{f.id}}' href="#/folder/{{patient_id}}/file/{{f._type}}/{{f.id}}"
+          <a id='folder_menu_{{f.getModel()}}_{{f.id}}' href="#/folder/{{patient_id}}/file/{{f.getModel()}}/{{f.id}}"
               class="btn btn-default left-menu-button"
-              ng-class="{ 'btn-warning': page + subtype + subid == 'file' + f._type + f.id }"
+              ng-class="{ 'btn-warning': page + subtype + subid == 'file' + f.getModel() + f.id }"
               >
-            {{f._type}}<span ng-if="f.Date"><br>[{{f.Date }}]</span>
+            {{f.getModel()}}<span ng-if="f.Date"><br>[{{f.Date }}]</span>
           </a>
         </span>
       </span>
@@ -101,9 +101,8 @@
             Modified on {{currentFile().updated_at | date:'yyyy-MM-dd HH:mm:ss' }}
             by {{currentFile().lastuser}}
             <br>
-            {{folder.getMainFile()._type}}
-            #<span id='folder_id'>{{folder.getMainFile().id}}</span> @{{page}}
-            -> {{currentFile()._type}} #<span id='file_id'>{{currentFile().id}}</span>
+            Patient #<span id='folder_id'>{{folder.getMainFile().id}}</span> @{{page}}
+            -> {{currentFile().getModel()}} #<span id='file_id'>{{currentFile().id}}</span>
           </div>
           <div class='col-sm-4 text-center' id='topsubmenu'>
             <?php submenu(); ?>
