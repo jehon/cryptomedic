@@ -23,13 +23,11 @@ if (location.protocol == 'https:') {
 
 export default function() {
   return {
-    activateCache: activateCache,
-    store: store,
-    dispatch: dispatch,
-    catalog: catalog,
-    helpers: {
-      myFetch,
-      db,
-    },
+    activateCache,
+    store,
+    dispatch,
+    catalog,
+    myFetch,
+    db,
   };
 }
