@@ -1,0 +1,48 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<dom-module name="jh-authorized">
+  <template>
+    <span id='translating' hidden$="[[!isAuthorized(value, authorizedList)]]">
+      <content></content>
+    </span>
+  </template>
+
+  <script>
+    /* exported setAuthorizedObject */
+
+    function setAuthorizedObject(authorizedObject) {
+      console.log("setAuthorizedObject: ", authorizedObject);
+      let list = (authorizedObject ? authorizedObject.keys() : []);
+      for(let el of document.getElementsByTagName("jh-authorized")) {
+        el.setauthorizedList(list);
+      }
+    }
+
+    Polymer({
+      is: 'jh-authorized',
+
+      // https://www.polymer-project.org/1.0/docs/devguide/properties
+      properties: {
+        value: {
+          type:               String,
+          readonly:           true,
+          value:              "application.open",
+        }
+      },
+
+      setauthorizedList: function(authorizedList) {
+        // Set it in two steps, to enable trigger of update
+        this.authorizedList = null;
+        this.authorizedList = authorizedList;
+      },
+
+      isAuthorized(value, authorizedList) {
+        console.log("isAuthorized: ", value, authorizedList);
+        if (authorizedList == null) {
+          return false;
+        }
+        return authorizedList.indexOf(value) >= 0;
+      }
+    });
+  </script>
+</dom-module>

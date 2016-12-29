@@ -76,6 +76,7 @@
     <!-- - - - - - - - - - - - - -->
     <link rel="import" href="/static/elements/dataService.html">
     <link rel="import" href="/static/elements/codage.html">
+    <link rel="import" href="/static/elements/authorized.html">
     <!-- <link rel="import" href="/static/elements/htmlbox.html"> -->
     <!-- <link rel="import" href="/static/elements/cryptomedic-file-payment.html"> -->
 
@@ -93,10 +94,14 @@
             <span class="sr-only">Toggle navigation</span>
           </button>
           <ul class="nav navbar-nav navbar-right">
-            <li><a id='menu_home' href="#/home" class="navbar-link" ng-if="hasPermission('application.open')">
-              <img src="../static/img/home.gif" height="20px"/>
-              Home
-            </a></li>
+            <li>
+              <a id='menu_home' href="#/home" class="navbar-link">
+                <jh-authorized value="application.open">
+                  <img src="../static/img/home.gif" height="20px"/>
+                  Home
+                </jh-authorized>
+              </a>
+            </li>
             <li><a id='menu_search' href="#/search" class="navbar-link" ng-if="hasPermission('folder.read')">
               <img src="../static/img/patientsSearch.gif" height="20px"/>
               Search a patient
