@@ -281,7 +281,8 @@
         }
         window.cryptomedic.serverSettings = data;
 
-        // .then(worker.post.bind(this, 'init'))
+        /* global setAuthorizedObject */
+        setAuthorizedObject(data.authorized);
 
         if (location.hash == "#/login") {
           location.hash = "#/home";
@@ -380,16 +381,22 @@
         return this.doSync();
       },
 
-      doLogout() {
-        return (new OneRequest())
-          .get('auth/logout')
-          .then(() => {
-            window.cryptomedic.serverSettings = {};
-            location.hash = "/login";
-            this.username = false;
-            this.remaining = false;
-          })
-          ;
+      doLogout(localOnly = false) {
+        console.log("doLogout: ", localOnly);
+        let finished = Promise.resolve();
+        if (!localOnly) {
+          finished = finished.then(() => { return (new OneRequest()).get('auth/logout'); });
+        }
+        finished.then(() => {
+          window.cryptomedic.serverSettings = {};
+          location.hash = "/login";
+          this.username = false;
+          this.remaining = false;
+
+          /* global setAuthorizedObject */
+          setAuthorizedObject();
+        })
+        ;
       },
 
       getFolder(id) {
