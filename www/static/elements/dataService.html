@@ -319,15 +319,13 @@
           this.remaining = false;
         }
         if (offline.remaining) {
-          console.log("remaining: ", offline.remaining);
+          console.log("sync: remaining ", offline.remaining);
           finished = finished.then(() => {
-            console.log("Sync again");
-
             // This is not binded to what I hoped...
             this.doSync();
           });
         } else {
-          console.log("finished");
+          console.log("sync: up-to-date");
         }
 
         // Return final response with original data:
@@ -360,6 +358,7 @@
           .then((json) => this.checkOfflineData(json))
           .catch((error) => {
             console.error("doLogin: ", error);
+            throw error;
           })
           ;
       },
