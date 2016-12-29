@@ -9,6 +9,8 @@ class Folder extends Data {
 
   constructor(data) {
     super(data);
+    // TODO: remove this...
+    // Used in create and in tests:
     this.mainFile = (this.mainFile ? new Patient(this.mainFile) : new Patient());
     this.subFiles = this.subFiles || [];
     this.id = this.id || -1;
@@ -24,6 +26,20 @@ class Folder extends Data {
       return this.id;
     }
     return -1;
+  }
+
+  setMainFile(file) {
+    this.id = file.id;
+    this.mainFile = file;
+  }
+
+  sort() {
+    this.subFiles.sort(Folder.ordering);
+  }
+
+  addSubFile(subFile) {
+    subFile.linkPatient(this.getMainFile());
+    this.subFiles.push(subFile);
   }
 
   getMainFile() {
