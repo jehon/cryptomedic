@@ -41,7 +41,6 @@
       },
 
       isAuthorized(value, authorizedList, inversed) {
-        console.log("isAuthorized: ", value, authorizedList);
         if (inversed) {
           return this.isAuthorized(value, authorizedList, false);
         }
