@@ -43,33 +43,13 @@ function ctrl_folder($scope, $location, $routeParams) {
   //----------------------
   //   Get data from the server
   //----------------------
-  let getFileThen;
+  let getFileThen = waitElement(dataService, 'getFolder');
   if ($scope.patient_id < 0) {
-    getFileThen = Promise.resolve(new Folder());
+    getFileThen = getFileThen.then(() => { return Promise.resolve(new Folder()); });
     $scope.mode = 'add';
   } else {
-
-// TODO: handle the new folder structure (array of anything)
-// TODO: handle the new folder structure (array of anything)
-// TODO: handle the new folder structure (array of anything)
-// TODO: handle the new folder structure (array of anything)
-// TODO: handle the new folder structure (array of anything)
-// TODO: handle the new folder structure (array of anything)
-// TODO: handle the new folder structure (array of anything)
-// TODO: handle the new folder structure (array of anything)
-// TODO: handle the new folder structure (array of anything)
-// TODO: handle the new folder structure (array of anything)
-// TODO: handle the new folder structure (array of anything)
-// TODO: handle the new folder structure (array of anything)
-// TODO: handle the new folder structure (array of anything)
-// TODO: handle the new folder structure (array of anything)
-// TODO: handle the new folder structure (array of anything)
-// TODO: handle the new folder structure (array of anything)
-// TODO: handle the new folder structure (array of anything)
-// TODO: handle the new folder structure (array of anything)
-// TODO: handle the new folder structure (array of anything)
-
-    getFileThen = dataService.getFolder($scope.patient_id);
+    // TODO: when loading the page on folder, the dataService is not already implemented...
+    getFileThen = getFileThen.then(() => dataService.getFolder($scope.patient_id));
   }
   getFileThen.then(function(data) {
     $scope.folder = data;
