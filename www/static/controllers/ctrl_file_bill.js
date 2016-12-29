@@ -33,5 +33,3 @@ function ctrl_file_bill($scope) {
 }
 
 ctrl_file_bill.$inject = [ "$scope" ];
-
-export default ctrl_file_bill;
