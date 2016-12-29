@@ -10,7 +10,6 @@ import goThere                  from 'helpers/goThere';
 
 import ctrl_allGraphics         from 'controllers/ctrl_allgraphics';
 import ctrl_file_appointment    from 'controllers/ctrl_file_appointment';
-import ctrl_file_bill           from 'controllers/ctrl_file_bill';
 import ctrl_folder              from 'controllers/ctrl_folder';
 import ctrl_graphic             from 'controllers/ctrl_graphic';
 import ctrl_home                from 'controllers/ctrl_home';
@@ -197,6 +196,7 @@ mainApp.controller('ctrl', [ '$scope', function($scope) {
   $scope.application  = application;
   $scope.calculations = calculations;
   $scope.template     = template;
+
 
   $scope.appStateStore = store.getState();
   store.subscribe(function() {
