@@ -43,13 +43,14 @@ function ctrl_folder($scope, $location, $routeParams) {
   //----------------------
   //   Get data from the server
   //----------------------
+  // By default, wait for the html element to be ready:
   let getFileThen = waitElement(dataService, 'getFolder');
+
   if ($scope.patient_id < 0) {
     getFileThen = getFileThen.then(() => { return Promise.resolve(new Folder()); });
     $scope.mode = 'add';
   } else {
-    // TODO: when loading the page on folder, the dataService is not already implemented...
-    getFileThen = getFileThen.then(() => dataService.getFolder($scope.patient_id));
+    getFileThen = getFileThen.then(() => { return dataService.getFolder($scope.patient_id) });
   }
   getFileThen.then(function(data) {
     $scope.folder = data;
