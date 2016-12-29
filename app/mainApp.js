@@ -203,20 +203,6 @@ mainApp.controller('ctrl', [ '$scope', function($scope) {
     console.log('scope appState updated', store.getState());
     $scope.appStateStore = store.getState();
 
-    // ** Manual operations **
-
-    // Are we still busy?
-    if ($scope.appStateStore.state.busy > 0) {
-      jQuery('#busy').modal('show');
-    } else {
-      jQuery('#busy').modal('hide');
-    }
-
-    if ($scope.appStateStore.connection.connected && !$scope.appStateStore.connection.authenticated) {
-      goThere("#/login");
-      $scope.safeApply();
-    }
-
     $scope.safeApply();
   });
 
