@@ -10,9 +10,9 @@
   <script>
     /* exported setAuthorizedObject */
 
-    function setAuthorizedObject(authorizedObject) {
-      console.log("setAuthorizedObject: ", authorizedObject);
-      let list = (authorizedObject ? authorizedObject.keys() : []);
+    function setAuthorizedObject(authorizedObject = null) {
+      // console.log("setAuthorizedObject: ", authorizedObject);
+      let list = (authorizedObject ? Object.keys(authorizedObject) : []);
       for(let el of document.getElementsByTagName("jh-authorized")) {
         el.setauthorizedList(list);
       }
@@ -26,8 +26,12 @@
         value: {
           type:               String,
           readonly:           true,
-          value:              "application.open",
-        }
+          value:              "application.open"
+        },
+        // authorizedList: {
+        //   type:               Array,
+        //   value:              []
+        // }
       },
 
       setauthorizedList: function(authorizedList) {
