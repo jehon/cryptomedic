@@ -16,16 +16,22 @@
 				<?php (new t("Picture.OriginalName"))->readOnly()->tr("Original name")->p(); ?>
 				<?php (new t("Picture.file"))->readOnly()->tr("File")->p(); ?>
 				<tr class='notModeRead'
-						ng-if="!currentFile().file && hasPermission('folder.edit')"
+						ng-if="!currentFile().file"
 						ng-class="{ error: errors.pictureRequired }"
 					>
-					<td>Upload a file</td>
 					<td>
-						<input preview='preview' type="file" name="fileContent" id='file'>
-						<div ng-if='errors.pictureRequired'>
-							<div class='jserror'>Error: you need to add the picture before saving the file.</div>
-						</div>
-						</td>
+						<jh-authorized value='folder.edit'>
+							Upload a file
+						</jh-authorized>
+					</td>
+					<td>
+						<jh-authorized value='folder.edit'>
+							<input preview='preview' type="file" name="fileContent" id='file'>
+							<div ng-if='errors.pictureRequired'>
+								<div class='jserror'>Error: you need to add the picture before saving the file.</div>
+							</div>
+						</jh-authorized>
+					</td>
 				</tr>
 			</table>
 		</FieldSet>
@@ -40,13 +46,10 @@
 		<div ng-if="currentFile().file">
 			<img id='img_file' style="width:100%; max-width: 600px" ng-src="{{currentFile().getPictureUrl()}}" alt="Sorry, image not found on the server." >
 		</div>
-		<div class='notModeRead text-center' ng-if="!currentFile().file && hasPermission('folder.edit')">
-			<canvas id='preview'></canvas>
+		<div class='notModeRead text-center' ng-if="!currentFile().file">
+			<jh-authorized value='folder.edit'>
+				<canvas id='preview'></canvas>
+			</jh-authorized>
 		</div>
-<!-- 			<div class='notModeWrite text-center' ng-if="!currentFile().file && hasPermission('folder.edit')"> -->
-<!-- 				You didn't upload a file yet. Please do so!<br> -->
-<!-- 				<br> -->
-<!-- 				<iframe ng-src="{{getURLUploadIFrame()}}" width='100%' height='300px'></iframe> -->
-<!-- 			</div> -->
 	</div>
 </div>

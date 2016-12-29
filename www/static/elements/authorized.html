@@ -2,7 +2,7 @@
 
 <dom-module name="jh-authorized">
   <template>
-    <span id='translating' hidden$="[[!isAuthorized(value, authorizedList)]]">
+    <span id='translating' hidden$="[[!isAuthorized(value, authorizedList, inversed)]]">
       <content></content>
     </span>
   </template>
@@ -28,10 +28,10 @@
           readonly:           true,
           value:              "application.open"
         },
-        // authorizedList: {
-        //   type:               Array,
-        //   value:              []
-        // }
+        inversed: {
+          type:               Boolean,
+          value:              []
+        }
       },
 
       setauthorizedList: function(authorizedList) {
@@ -40,8 +40,11 @@
         this.authorizedList = authorizedList;
       },
 
-      isAuthorized(value, authorizedList) {
+      isAuthorized(value, authorizedList, inversed) {
         console.log("isAuthorized: ", value, authorizedList);
+        if (inversed) {
+          return this.isAuthorized(value, authorizedList, false);
+        }
         if (authorizedList == null) {
           return false;
         }

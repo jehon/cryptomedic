@@ -102,13 +102,17 @@
                 </jh-authorized>
               </a>
             </li>
-            <li><a id='menu_search' href="#/search" class="navbar-link" ng-if="hasPermission('folder.read')">
-              <img src="../static/img/patientsSearch.gif" height="20px"/>
-              Search a patient
+            <li><a id='menu_search' href="#/search" class="navbar-link">
+              <jh-authorized value="folder.read">
+                <img src="../static/img/patientsSearch.gif" height="20px"/>
+                Search a patient
+              </jh-authorized>
             </a></li>
-            <li><a id='menu_consults' href="#/reports/consultations" class="navbar-link" ng-if="hasPermission('planning.execute')">
-              <img src="../static/img/consultOfDay.gif" height="20px"/>
-              Consults of the day
+            <li><a id='menu_consults' href="#/reports/consultations" class="navbar-link">
+              <jh-authorized value="planning.execute">
+                <img src="../static/img/consultOfDay.gif" height="20px"/>
+                Consults of the day
+              </jh-authorized>
             </a></li>
             <li><a id='bug_reporting' href="javascript:bug_reporting()" class="navbar-link">
               <img src="../static/img/bug.jpeg"/>
@@ -122,17 +126,23 @@
                 More<span class="caret"></span>
               </a>
               <ul class="dropdown-menu">
-                <li><a id='menu_users'  href='#/users' ng-if="hasPermission('users.manage')">
-                  <img src="../static/img/users.png" height="20px"/>
-                  Users
+                <li><a id='menu_users'  href='#/users'>
+                  <jh-authorized value="users.manage">
+                    <img src="../static/img/users.png" height="20px"/>
+                    Users
+                  </jh-authorized>
                 </a></li>
-                <li><a id='menu_matrix'  href='/api/v1.0/admin/securityMatrix' ng-if="hasPermission('admin.securityMatrix')">
-                  <img src="../static/img/matrix.png" height="20px"/>
-                  Matrix
+                <li><a id='menu_matrix'  href='/api/v1.0/admin/securityMatrix'>
+                  <jh-authorized value="admin.securityMatrix">
+                    <img src="../static/img/matrix.png" height="20px"/>
+                    Matrix
+                  </jh-authorized>
                 </a></li>
-                <li><a id='menu_reports' href="#/reports" class="navbar-link" ng-if="hasPermission('reports.execute')">
-                  <img src="../static/img/reports.gif" height="20px"/>
-                  Reports
+                <li><a id='menu_reports' href="#/reports" class="navbar-link">
+                  <jh-authorized value="reports.execute">
+                    <img src="../static/img/reports.gif" height="20px"/>
+                    Reports
+                  </jh-authorized>
                 </a></li>
               </ul>
             </li>
