@@ -248,15 +248,6 @@ mainApp.controller('ctrl', [ '$scope', function($scope) {
 
   $scope.username = '';
   $scope.password = '';
-  $scope.hasPermission = function(transaction) {
-    if (!cryptomedic.settings) {
-      return false;
-    }
-    if (!cryptomedic.settings.authorized[transaction]) {
-      return false;
-    }
-    return cryptomedic.settings.authorized[transaction];
-  };
 
   $scope.$on('$routeChangeError', function() { console.error('error in routes', arguments); });
 
