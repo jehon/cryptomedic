@@ -14,7 +14,7 @@
       // console.log("setAuthorizedObject: ", authorizedObject);
       let list = (authorizedObject ? Object.keys(authorizedObject) : []);
       for(let el of document.getElementsByTagName("jh-authorized")) {
-        el.setauthorizedList(list);
+        el.setAuthorizedList(list);
       }
     }
 
@@ -30,11 +30,11 @@
         },
         inversed: {
           type:               Boolean,
-          value:              []
+          readonly:           true
         }
       },
 
-      setauthorizedList: function(authorizedList) {
+      setAuthorizedList: function(authorizedList) {
         // Set it in two steps, to enable trigger of update
         this.authorizedList = null;
         this.authorizedList = authorizedList;
@@ -42,7 +42,8 @@
 
       isAuthorized(value, authorizedList, inversed) {
         if (inversed) {
-          return this.isAuthorized(value, authorizedList, false);
+          console.log("inversed test: ", value);
+          return !this.isAuthorized(value, authorizedList, false);
         }
         if (authorizedList == null) {
           return false;
