@@ -1,5 +1,7 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
+
 <dom-module name="cryptomedic-data-service">
   <template>
     <span hidden$=[[!username]]>
@@ -22,11 +24,10 @@
       </span>
 
     </span>
-    <!-- <paper-dialog id='modal'> -->
-      <!-- <h2>Oups... {{message}}</h2> -->
-      <!-- {{details}} -->
-    <!-- </paper-dialog> -->
-  </template>
+    <paper-dialog id='busy' modal>
+      Waiting for {{waitingMessage}}
+    </paper-dialog>
+   </template>
 
   <script>
   /* global DatabaseNew, background */
