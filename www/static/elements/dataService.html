@@ -127,16 +127,19 @@
     class OneRequest {
       constructor(options = {}) {
         this.options = Object.assign({},  {
-          context: "Undefined",
+          context: null,
           errorMsg: null,
           data: false,
           listOfAcceptableHttpStatusCode: [ ],
+          raw: false,
 
           onSuccess: (response) => { return response; },
           onError: (error) => { throw error; },
           fetchOptions: {
             headers: new Headers()
           }
+
+          _popup: false
         }, options);
 
         // Append sync status
