@@ -446,31 +446,33 @@
       },
 
       createFile(data) {
-        // return myFrontFetch({ url: 'fiche/' + data.getModel(), init: { method: 'POST' }, data: nullify(data)})
-        //   .then(function(data) { return new Folder(data); })
-        //   .catch()
-        //   ;
+        return new OneRequest()
+          .setData(nullify(data))
+          .post('fiche/' + data.getModel())
+          .then(function(data) { return new Folder(data); })
+          ;
       },
 
       saveFile(data) {
-        // return myFrontFetch({ url: 'fiche/' + data.getModel() + '/' + data['id'], init: { method: 'PUT' }, data: nullify(data) })
-        //   .then(function(data) { return new Folder(data); })
-        //   .catch()
-        //   ;
+        return new OneRequest()
+          .setData(nullify(data))
+          .put('fiche/' + data.getModel() + '/' + data['id'])
+          .then(function(data) { return new Folder(data); })
+          ;
       },
 
       deleteFile(data) {
-        // return myFrontFetch({ url: 'fiche/' + data.getModel() + '/' + data['id'], init: { method: 'DELETE' }})
-        //   .then(function(data) { return new Folder(data); })
-        //   .catch()
-        //   ;
+        return new OneRequest()
+          .delete('fiche/' + data.getModel() + '/' + data['id'])
+          .then(function(data) { return new Folder(data); })
+          ;
       },
 
       unlockFile(data) {
-        // return myFrontFetch({ url: 'unfreeze/' + data.getModel() + '/' + data['id'] })
-        //   .then(function(data) { return new Folder(data); })
-        //   .catch()
-        //   ;
+        return new OneRequest()
+          .get('unfreeze/' + data.getModel() + '/' + data['id'])
+          .then(function(data) { return new Folder(data); })
+          ;
       },
 
       'getReport': function(reportName, data) {
