@@ -36,4 +36,3 @@ function ctrl_search($scope) {
 
 ctrl_search.$inject = [ "$scope" ];
 
-export default ctrl_search;
