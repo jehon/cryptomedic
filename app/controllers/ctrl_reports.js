@@ -106,20 +106,17 @@ function ctrl_reports($scope, $routeParams, $sce) {
       Object.assign($scope.values, $scope.reports[report].fixedParams);
     }
 
-    waitElement(dataService, "getReport")
-      .then(() => { dataService.getReport(dataGenerator,
-          $scope.values
-        )
-        .then(function(data) {
-          $scope.result = data;
-          $scope.error = false;
-          $scope.safeApply();
-        }, function(error) {
-          console.error("here we are in error: ", error);
-          $scope.result = true;
-          $scope.error = error;
-          $scope.safeApply();
-        });
+    getDataService()
+      .then(dataService => dataService.getReport(dataGenerator, $scope.values))
+      .then(function(data) {
+        $scope.result = data;
+        $scope.error = false;
+        $scope.safeApply();
+      }, function(error) {
+        console.error("here we are in error: ", error);
+        $scope.result = true;
+        $scope.error = error;
+        $scope.safeApply();
       });
   };
 
