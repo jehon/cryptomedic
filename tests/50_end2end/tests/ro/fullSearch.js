@@ -27,6 +27,7 @@ module.exports = {
       .myClick("#menu_search")
       ;
   },
+
   "byEntryYear": function(client) {
     testSearch(client, { "#Patient_entryyear": "2000" }, [ "2000-1" ]);
   },
