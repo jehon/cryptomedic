@@ -9,7 +9,7 @@ module.exports = {
     client
       .page.cryptomedic().authenticate("readonly")
       .myClick("#logout")
-      .waitForElementNotPresent("#logout")
+      .waitForElementNotVisible("#logout")
       .page.cryptomedic().authenticate("readonly")
       .end();
   },
