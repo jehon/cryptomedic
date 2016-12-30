@@ -1,6 +1,3 @@
-import catalog         from 'reducers/catalog';
-import dispatch        from 'reducers/dispatch';
-
 // TODO: manage change in groups
 
 function ctrl_users($scope) {
@@ -9,11 +6,10 @@ function ctrl_users($scope) {
   $scope.password = false;
 
   $scope.refresh = function() {
-    dispatch(catalog.STATE_BUSY, 'Getting user list from the server');
-    service_backend().usersList()
+    getDataService()
+      .then(dataService => dataService.usersList())
       .then(function(data) {
         $scope.users = data;
-        dispatch(catalog.STATE_READY);
         $scope.safeApply();
       });
   };
@@ -48,7 +44,8 @@ function ctrl_users($scope) {
 
   $scope.doSave = function() {
     if ($scope.edit.id >= 0) {
-      service_backend().userUpdate($scope.edit)
+      getDataService()
+        .then(dataService => dataService.userUpdate($scope.edit))
         .then(function(data) {
           $scope.users = data;
           $scope.safeApply();
@@ -56,7 +53,8 @@ function ctrl_users($scope) {
           $scope.doCancel();
         });
     } else {
-      service_backend().userAdd($scope.edit)
+      getDataService()
+        .then(dataService => dataService.userAdd($scope.edit))
         .then(function(data) {
           $scope.users = data;
           $scope.safeApply();
@@ -69,11 +67,13 @@ function ctrl_users($scope) {
 
   $scope.doDelete = function() {
     if (confirm('Are you sure you want to delete user \'' + $scope.edit.name + '\'?')) {
-      service_backend().userDelete($scope.edit.id).then(function(data) {
-        $scope.$emit('message', { 'level': 'success', 'text': 'The user \'' + $scope.edit.username + '\' has been deleted successfully.'});
-        $scope.users = data;
-        $scope.doCancel();
-      });
+      getDataService()
+        .then(dataService => dataService.userDelete($scope.edit.id))
+        .then(function(data) {
+          $scope.$emit('message', { 'level': 'success', 'text': 'The user \'' + $scope.edit.username + '\' has been deleted successfully.'});
+          $scope.users = data;
+          $scope.doCancel();
+        });
     }
   };
 
@@ -84,11 +84,13 @@ function ctrl_users($scope) {
   };
 
   $scope.doSavePassword = function() {
-    service_backend().userPassword($scope.password.id, $scope.password.newcode).then(function() {
-      $scope.$emit('message', { 'level': 'success', 'text': 'The password of user \'' + $scope.password.username + '\' has been updated successfully.'});
-      $scope.doCancel();
-      // $scope.safeApply();
-    });
+    getDataService()
+      .then(dataService => dataService.userPassword($scope.password.id, $scope.password.newcode))
+      .then(function() {
+        $scope.$emit('message', { 'level': 'success', 'text': 'The password of user \'' + $scope.password.username + '\' has been updated successfully.'});
+        $scope.doCancel();
+        // $scope.safeApply();
+      });
   };
 
   $scope.doCancel();
@@ -96,5 +98,3 @@ function ctrl_users($scope) {
 }
 
 ctrl_users.$inject = [ "$scope" ];
-
-export default ctrl_users;

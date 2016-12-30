@@ -198,6 +198,11 @@
         return this.treat();
       }
 
+      delete(relativeUrl) {
+        this.request =  executeRawRequest('DELETE', relativeUrl, bodyBuilderPut(this.options), this.options);
+        return this.treat();
+      }
+
       treat() {
         return this.request
           // Enrich the objects
@@ -473,11 +478,6 @@
               /* global nullify */
               .setData(nullify(data))
               .get('reports/' + reportName)
-
-
-        // return myFrontFetch({ url: 'reports/' + reportName, data: nullify(data) })
-        //   .catch()
-        //   ;
       },
 
       'searchForPatients': function(params) {
@@ -511,30 +511,40 @@
       },
 
       'usersList': function() {
-        // return myFrontFetch({ url: 'users' })
-        //   .catch()
-        //   ;
+        return new OneRequest()
+          .get('users')
       },
 
       'userAdd': function(user) {
+        return new OneRequest()
+          .setData(user)
+          .post('users')
         // return myFrontFetch({ url: 'users' , init: { method: 'POST' }, data: user })
         //   .catch()
         //   ;
       },
 
       'userDelete': function(id) {
+        return new OneRequest()
+          .delete('/users/' + id)
         // return myFrontFetch({ url: 'users/' + id, init: { method: 'DELETE' }})
         //   .catch()
         //   ;
       },
 
       'userUpdate': function(user) {
+        return new OneRequest()
+          .setData(user)
+          .put('/users/' + user.id)
         // return myFrontFetch({ url: 'users/' + user.id, init: { method: 'PUT' }, data: user})
         //   .catch()
         //   ;
       },
 
       'userPassword': function(id, pwd) {
+        return new OneRequest()
+          .setData({ password: pwd })
+          .post('/users/password/' + id)
         // return myFrontFetch({ url: 'users/password/' + id, init: { method: 'POST' }, data: { password: pwd }})
         //   .catch()
         //   ;
