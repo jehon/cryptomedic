@@ -55,6 +55,7 @@ module.exports = (function() {
       }
       client
         .myClick('#menu_more')
+        .waitForElementVisible('#menu_reports')
         .myClick('#menu_reports')
         .waitForElementVisible('#launch_report_' + reportName)
         .myClick('#launch_report_' + reportName)
