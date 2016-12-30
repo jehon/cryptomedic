@@ -1,21 +1,39 @@
-/* exported waitElement */
+/* exported waitElement, getDataService */
 
 // See polyfill for html imports: http://webcomponents.org/polyfills/html-imports/
 
 function waitElement(element, property) {
   let test = function() {
-    return typeof(element[property]) != "undefined";
+    let el = element;
+    if (typeof(element) == "string") {
+      el = document.getElementsByTagName(element);
+      if (el.length == 0) {
+        return false;
+      }
+      el = el[0];
+    }
+    if (typeof(el[property]) == "undefined") {
+      return false;
+    }
+    return el;
   }
-  if (test()) {
-    return Promise.resolve(element);
+
+  let el  = test();
+  if (el) {
+    return Promise.resolve(el);
   }
 
   return new Promise(function(resolve) {
     let cron = setInterval(function() {
-      if (test()) {
+      let el  = test();
+      if (el) {
         clearInterval(cron);
-        resolve(element);
+        resolve(el);
       }
     }, 100);
   });
+}
+
+function getDataService() {
+  return waitElement("cryptomedic-data-service", "doLogin");
 }
