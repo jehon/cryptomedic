@@ -1,3 +1,4 @@
+/* exported nullify */
 function nullify(what) {
   switch(typeof(what)) {
     case 'string':
