@@ -15,7 +15,6 @@ import ctrl_graphic             from 'controllers/ctrl_graphic';
 import ctrl_home                from 'controllers/ctrl_home';
 import ctrl_reports             from 'controllers/ctrl_reports';
 import ctrl_search              from 'controllers/ctrl_search';
-import ctrl_users               from 'controllers/ctrl_users';
 
 var application = {};
 
