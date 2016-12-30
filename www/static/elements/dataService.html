@@ -480,22 +480,16 @@
       },
 
       'searchForPatients': function(params) {
-        // return myFrontFetch({ url: 'folder', data: params })
-        //   .then(function(data) {
-        //     var list = [];
-        //     for(var i in data) {
-        //       list.push(new Patient(data[i]));
-        //     }
-        //     return list;
-        //   })
-        //   .then(function(data) {
-        //     for(var i in data) {
-        //       data[i] = new Patient(data[i]);
-        //     }
-        //     return data;
-        //   })
-        //   .catch()
-        //   ;
+        return new OneRequest()
+          .setData(params)
+          .get('folder')
+          .then(function(data) {
+            var list = [];
+            for(var i in data) {
+              list.push(new Patient(data[i]));
+            }
+            return list;
+          })
       },
 
       // READWRITE
