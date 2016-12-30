@@ -222,6 +222,7 @@ mainApp.controller('ctrl', [ '$scope', function($scope) {
   $scope.connected = false;
 
   $scope.doBusy = function(msg) {
+    // TODO: remove this...
     dispatch(catalog.STATE_BUSY, msg);
     return function() {
       dispatch(catalog.STATE_READY);
