@@ -227,7 +227,8 @@
               switch(response.status) {
                 case 401: // Not-Authorized - you need to login first
                   location.hash = "#/login";
-                  dataService.doLogout(true);
+                  getDataService()
+                    .then(dataService => dataService.doLogout(true));
                   break;
 
                 case 403: // Forbidden, show a "Not authorized message"
