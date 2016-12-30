@@ -1,4 +1,4 @@
-/* exported waitElement, getDataService */
+/* exported getDataService */
 
 // See polyfill for html imports: http://webcomponents.org/polyfills/html-imports/
 
