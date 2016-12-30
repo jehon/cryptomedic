@@ -13,17 +13,14 @@ function ctrl_search($scope) {
   };
 
   $scope.submit = function() {
-    var busyEnd = $scope.doBusy('Searching for matching patients');
-
-    service_backend().searchForPatients($scope.params)
+    getDataService()
+      .then(dataService => dataService.searchForPatients($scope.params))
       .then(function(data) {
         $scope.listing = data;
         $scope.page();
         $scope.safeApply();
       }, function(data) {
         console.error(data);
-      }).myFinallyDone(function() {
-        busyEnd();
       });
   };
 
@@ -35,4 +32,3 @@ function ctrl_search($scope) {
 }
 
 ctrl_search.$inject = [ "$scope" ];
-
