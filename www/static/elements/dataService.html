@@ -513,35 +513,23 @@
         return new OneRequest()
           .setData(user)
           .post('users')
-        // return myFrontFetch({ url: 'users' , init: { method: 'POST' }, data: user })
-        //   .catch()
-        //   ;
       },
 
       'userDelete': function(id) {
         return new OneRequest()
           .delete('/users/' + id)
-        // return myFrontFetch({ url: 'users/' + id, init: { method: 'DELETE' }})
-        //   .catch()
-        //   ;
       },
 
       'userUpdate': function(user) {
         return new OneRequest()
           .setData(user)
           .put('/users/' + user.id)
-        // return myFrontFetch({ url: 'users/' + user.id, init: { method: 'PUT' }, data: user})
-        //   .catch()
-        //   ;
       },
 
       'userPassword': function(id, pwd) {
         return new OneRequest()
           .setData({ password: pwd })
           .post('/users/password/' + id)
-        // return myFrontFetch({ url: 'users/password/' + id, init: { method: 'POST' }, data: { password: pwd }})
-        //   .catch()
-        //   ;
       }
 
     })
