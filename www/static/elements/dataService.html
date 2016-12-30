@@ -1,6 +1,8 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 
 <link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../../bower_components/iron-collapse/iron-collapse.html">
+<link rel="import" href="../../bower_components/paper-dialog-scrollable/paper-dialog-scrollable.html">
 
 <dom-module name="cryptomedic-data-service">
   <template>
@@ -31,6 +33,20 @@
 
   <script>
   /* global DatabaseNew, background */
+    /* exported NetworkRequest,AcceptableErrorResponse */
+
+    class AcceptableErrorResponse {
+      constructor(message = "") {
+        this.message = message;
+      }
+    }
+
+    class TimeOutResponse {
+      constructor(message = "") {
+        this.message = message;
+      }
+    }
+
   (function() {
     // Build up the cryptomedicComputerId
     if (!localStorage.cryptomedicComputerId) {
@@ -72,8 +88,10 @@
       return 1;
     }
 
+    let NetworkRequest = (function() {
     //************************************************************************************/
     //**** Body builders according to method
+
     function bodyBuilderGet(options) {
       return Object.keys(options.data).map(function (keyName) {
         return encodeURIComponent(keyName) + '=' + encodeURIComponent(options.data[keyName]);
@@ -109,6 +127,7 @@
      *
      */
     function executeRawRequest(method, relativeUrl, body, options) {
+      options.relativeUrl = relativeUrl;
       options.fullUrl = '/api/v1.1/' + relativeUrl;
 
       return fetch(new Request(options.fullUrl,
@@ -122,9 +141,23 @@
       ));
     }
 
+    function safeJSON(response) {
+      return response.text()
+      .then((text) => {
+        if (text.length == 0) {
+          return {};
+        }
+        try {
+          return JSON.parse(text);
+        } catch (e) {
+          return text;
+        }
+      });
+    }
+
     //************************************************************************************/
     // ***** Public API **********
-    class OneRequest {
+    class NetworkRequest {
       constructor(options = {}) {
         this.options = Object.assign({},  {
           context: null,
@@ -148,64 +181,86 @@
         this.fired = false;
       }
 
-      setContext(context) {
-        this.options.context = context;
-        if (!this.options.errorMessage) {
-          this.options.errorMessage = context;
+        asRaw() {
+          this.options.raw = true;
+          return this;
         }
-        return this;
-      }
 
-      setErrorMessage(errorMessage) {
-        this.options.errorMessage = errorMessage;
-        return this;
-      }
+        setContext(context) {
+          this.options.context = context;
+          this.options._popup = true;
+          epc.messageWaitFor(context);
+          if (!this.options.errorMessage) {
+            this.options.errorMessage = context;
+          }
+          return this;
+        }
 
-      setData(data) {
-        this.options.data = data;
-        return this;
-      }
+        setErrorMessage(errorMessage) {
+          this.options.errorMessage = errorMessage;
+          return this;
+        }
 
-      setListOfAcceptableHttpStatusCode(list) {
-        this.options.listOfAcceptableHttpStatusCode = this.options.listOfAcceptableHttpStatusCode.join(list);
-        return this;
-      }
+        setTechnicalErrorMessage(technicalErrorMessage) {
+          this.options.technicalErrorMessage = technicalErrorMessage;
+          return this;
+        }
 
-      addAcceptableHttpStatusCode(code) {
-        this.options.listOfAcceptableHttpStatusCode.push(code);
-        return this;
-      }
+        setData(data) {
+          this.options.data = data;
+          return this;
+        }
 
-      setOnSuccess(onSuccess) {
-        this.options.onSuccess = onSuccess;
-        return this;
-      }
+        setListOfAcceptableHttpStatusCode(list) {
+          this.options.listOfAcceptableHttpStatusCode = this.options.listOfAcceptableHttpStatusCode.join(list);
+          return this;
+        }
 
-      setOnError(onError) {
-        this.options.onError = onError;
-        return this;
-      }
+        addAcceptableHttpStatusCode(code) {
+          this.options.listOfAcceptableHttpStatusCode.push(code);
+          return this;
+        }
 
-      get(relativeUrl) {
-        this.request = executeRawRequest('GET', relativeUrl + '?' + bodyBuilderGet(this.options), null, this.options);
-        return this.treat();
-      }
+        setOnSuccess(onSuccess) {
+          this.options.onSuccess = onSuccess;
+          return this;
+        }
 
-      post(relativeUrl) {
-        this.request =  executeRawRequest('POST', relativeUrl, bodyBuilderPost(this.options), this.options);
-        return this.treat();
-      }
+        setOnError(onError) {
+          this.options.onError = onError;
+          return this;
+        }
 
-      put(relativeUrl) {
-        this.request =  executeRawRequest('PUT', relativeUrl, bodyBuilderPut(this.options), this.options);
-        return this.treat();
-      }
+        setTimeOut(timeOutSecs) {
+          this.options.timeOutSecs = timeOutSecs;
+          return this;
+        }
 
-      delete(relativeUrl) {
-        this.request =  executeRawRequest('DELETE', relativeUrl, bodyBuilderPut(this.options), this.options);
-        return this.treat();
-      }
+        setTimeOutLocal() {
+          return this.setTimeOut(5);
+        }
 
+       doGet(relativeUrl) {
+          this.request = executeRawRequest('GET', relativeUrl + '?' + bodyBuilderGet(this.options), null, this.options);
+          return this.treat();
+        }
+
+        doPost(relativeUrl) {
+          this.request =  executeRawRequest('POST', relativeUrl, bodyBuilderPost(this.options), this.options);
+          return this.treat();
+        }
+
+        doPut(relativeUrl) {
+          this.request =  executeRawRequest('PUT', relativeUrl, bodyBuilderPut(this.options), this.options);
+          return this.treat();
+        }
+
+        doDelete(relativeUrl) {
+          this.request =  executeRawRequest('DELETE', relativeUrl, bodyBuilderPut(this.options), this.options);
+          return this.treat();
+        }
+
+ 
       treat() {
         return this.request
           // Enrich the objects
@@ -223,7 +278,8 @@
 
               if (this.options.listOfAcceptableHttpStatusCode.indexOf(response.status) >= 0) {
                 // We have an unacceptable error
-                return response;
+                console.log("In acceptable response");
+                return new AcceptableErrorResponse(response.status, json);
               }
 
               let message = "Error";
