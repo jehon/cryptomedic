@@ -23,7 +23,6 @@ function ctrl_folder($scope, $location, $routeParams) {
   $scope.page = $routeParams['page'];
   $scope.subtype = $routeParams['subtype'];
   $scope.subid = $routeParams['subid'];
-  $scope.mode = ($routeParams['mode'] ? $routeParams['mode'] : 'read');
 
   $scope.age = {};
 
@@ -180,33 +179,31 @@ function ctrl_folder($scope, $location, $routeParams) {
       alert('You have errors in your data. Please correct them and try again');
       return ;
     }
-    dispatch(catalog.STATE_BUSY, 'Saving file on the server');
     $scope.folder = false;
     $scope.safeApply();
 
-    service_backend().saveFile(cachedCurrentFile, $scope.patient_id)
+    getDataService()
+      .then(dataService => dataService.saveFile(cachedCurrentFile, $scope.patient_id))
       .then(function(data) {
         // The data is refreshed by navigating away...
         $scope.$emit('message', { 'level': 'success', 'text': 'The ' + $scope.subtype + ' has been saved.'});
         goThere('/folder/' + $scope.patient_id + '/file/' + $scope.subtype + '/' + $scope.subid);
         $scope.folder = data;
-        dispatch(catalog.STATE_READY);
         $scope.safeApply();
       });
   };
 
   $scope.actionUnlock = function() {
-    dispatch(catalog.STATE_BUSY, 'Unlocking files on the server');
     $scope.folder = false;
     $scope.safeApply();
 
-    service_backend().unlockFile(cachedCurrentFile)
+    getDataService()
+      .then(dataService => dataService.unlockFile(cachedCurrentFile))
       .then(function(data) {
         $scope.$emit('message', { 'level': 'success', 'text': 'The ' + $scope.subtype + ' #' + $scope.subid + ' has been unlocked.'});
       // Let's refresh the data
         $scope.folder = data;
         goThere('/folder/' + $scope.patient_id + '/file/' + $scope.subtype + '/' + $scope.subid + '/edit');
-        dispatch(catalog.STATE_READY);
         $scope.safeApply();
       });
   };
@@ -217,7 +214,6 @@ function ctrl_folder($scope, $location, $routeParams) {
       alert('You have errors in your data. Please correct them and try again');
       return ;
     }
-    dispatch(catalog.STATE_BUSY, 'Creating files on the server');
     if (cachedCurrentFile.Date) {
       dispatch(catalog.PREFS_FILES, { 'date': cachedCurrentFile.Date });
     }
@@ -228,12 +224,12 @@ function ctrl_folder($scope, $location, $routeParams) {
       dispatch(catalog.PREFS_FILES, { 'center': cachedCurrentFile.Center });
     }
 
-    service_backend().createFile(cachedCurrentFile)
+    getDataService()
+      .then(dataService => dataService.createFile(cachedCurrentFile))
       .then(function(data) {
         $scope.$emit('message', { 'level': 'success', 'text': 'The ' + cachedCurrentFile.getModel() + ' has been created.'});
       // The data is refreshed by navigating away...
         goThere('/folder/' + $scope.patient_id + '/file/' + $scope.subtype + '/' + data.newKey);
-        dispatch(catalog.STATE_READY);
         $scope.safeApply();
       });
   };
@@ -242,16 +238,15 @@ function ctrl_folder($scope, $location, $routeParams) {
     if (!confirm('Are you sure you want to delete this file?')) {
       return;
     }
-    dispatch(catalog.STATE_BUSY, 'Deleting file on the server');
     $scope.folder = false;
     $scope.safeApply();
 
-    service_backend().deleteFile($scope.currentFile())
+    getDataService()
+      .then(dataService => dataService.deleteFile($scope.currentFile()))
       .then(function(data) {
         $scope.$emit('message', { 'level': 'success', 'text':  'The ' + $scope.currentFile().getModel() +  ' of ' + $scope.currentFile().Date + ' has been deleted'});
         $scope.folder = data;
         goThere('/folder/' + $scope.patient_id);
-        dispatch(catalog.STATE_READY);
         $scope.safeApply();
       });
   };
@@ -261,16 +256,15 @@ function ctrl_folder($scope, $location, $routeParams) {
       alert('You have errors in your data. Please correct them and try again');
       return ;
     }
-    dispatch(catalog.STATE_BUSY, 'Creating the patient on the server');
     $scope.folder = false;
     // $scope.currentFile().getModel() = 'Patient';
 
-    service_backend().createFile($scope.currentFile())
+    getDataService()
+      .then(dataService => dataService.createFile($scope.currentFile()))
       .then(function(data) {
         $scope.$emit('message', { 'level': 'success', 'text':  'The patient has been created.'});
         $scope.folder = data;
         goThere('/folder/' + data.id);
-        dispatch(catalog.STATE_READY);
         $scope.safeApply();
       });
   };
@@ -281,14 +275,13 @@ function ctrl_folder($scope, $location, $routeParams) {
       return ;
     }
     $scope.folder = false;
-    dispatch(catalog.STATE_BUSY, 'Saving files on the server');
     $scope.safeApply();
 
-    service_backend().saveFile(cachedCurrentFile, $scope.patient_id)
+    getDataService()
+      .then(dataService => dataService.saveFile(cachedCurrentFile, $scope.patient_id))
       .then(function(data) {
       // The data is refreshed by navigating away...
         $scope.$emit('message', { 'level': 'success', 'text': 'The patient has been saved.'});
-        dispatch(catalog.STATE_READY);
         goThere('/folder/' + $scope.patient_id);
       });
   };
@@ -298,14 +291,13 @@ function ctrl_folder($scope, $location, $routeParams) {
       return;
     }
     $scope.folder = false;
-    dispatch(catalog.STATE_BUSY, 'Deleting patient on the server');
     $scope.safeApply();
 
-    service_backend().deleteFile($scope.currentFile())
+    getDataService()
+      .then(dataService => dataService.deleteFile($scope.currentFile()))
       .then(function(data) {
         $scope.$emit('message', { 'level': 'success', 'text':    'The patient ' + $scope.currentFile().entryyear + '-' + $scope.currentFile().entryorder + ' has been deleted'});
         goThere();
-        dispatch(catalog.STATE_READY);
         $scope.safeApply();
       });
   };
