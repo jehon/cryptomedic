@@ -254,7 +254,7 @@
             }
           )
           .catch(error => {
-            console.error("dataService - catched and rethrown error: ", error);
+            console.error("oneRequest(@dataService) - catched and rethrown error: ", error);
             if (this.onError) {
               return this.onError(error);
             }
