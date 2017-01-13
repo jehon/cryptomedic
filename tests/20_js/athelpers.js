@@ -1,4 +1,4 @@
-/* exported buildRecord, loadMock, testWithComponent, loadReference */
+/* exported buildRecord, loadMock, testWithComponent, loadReference, testComponent */
 /* global create, mock_load_test, mock_patient_10, mock_sync, readJSON */
 
 let mocks = {
@@ -35,6 +35,33 @@ function buildRecord(def, data) {
     d[li] = data[a];
   }
   return def;
+}
+
+function testComponent(html) {
+  // Build up the element
+  let div = document.createElement("div");
+  html.testEnd = () => {
+    // Register removing it afterwards
+    document.body.removeChild(div);
+  };
+  div.innerHTML = html;
+  document.body.appendChild(div);
+
+  return new Promise((resolve, reject) => {
+    let i = 100;
+    let interval = setInterval(() => {
+      i--;
+      if (i <= 0) {
+        clearInterval();
+        reject();
+      }
+      if (!div.firstChild || !div.firstChild.$) {
+        return;
+      }
+      clearInterval(interval);
+      resolve(div.firstChild);
+    }, 100);
+  });
 }
 
 function testWithComponent(name, tag, testsFn) {
