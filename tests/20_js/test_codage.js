@@ -10,16 +10,6 @@ describe('test jh-codage', function() {
     }
   };
 
-  // it("should work with the new system", function(done) {
-  //   testComponent("<jh-codage value='original'></jh-codage>").then(el => {
-  //     expect(el).not.toBeNull();
-  //     expect(el.$$('#original')  .textContent).toEqual('original');
-  //     expect(el.$$('#translating').attributes.hidden).toBeUndefined();
-  //     expect(el.$$('#translated').textContent).toEqual('codage');
-  //     done();
-  //   });
-  // });
-
   it("should translate correctly", function(done) {
     testComponent("<jh-codage value='original'></jh-codage>").then(el => {
       expect(el).not.toBeNull();
@@ -36,6 +26,7 @@ describe('test jh-codage', function() {
       expect(el).not.toBeNull();
       expect(el.$$('#original')  .textContent).toEqual('anything');
       expect(el.$$('#translating').attributes.hidden).not.toBeNull();
+      el.testDone();
       done();
     });
   });

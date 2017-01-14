@@ -40,12 +40,12 @@ function buildRecord(def, data) {
 function testComponent(html) {
   // Build up the element
   let div = document.createElement("div");
-  html.testEnd = () => {
+  div.innerHTML = html;
+  document.body.appendChild(div);
+  div.firstChild.testDone = () => {
     // Register removing it afterwards
     document.body.removeChild(div);
   };
-  div.innerHTML = html;
-  document.body.appendChild(div);
 
   return new Promise((resolve, reject) => {
     let i = 100;
@@ -61,37 +61,6 @@ function testComponent(html) {
       clearInterval(interval);
       resolve(div.firstChild);
     }, 100);
-  });
-}
-
-function testWithComponent(name, tag, testsFn) {
-  return describe(name, function() {
-    let div;
-
-    // Build up the element
-    beforeEach((done) => {
-      div = document.createElement("div");
-      div.innerHTML = tag;
-      document.body.appendChild(div);
-      done();
-    });
-
-    // Register removing it afterwards
-    afterEach(() => {
-      document.body.removeChild(div);
-    });
-
-    // Run the tests
-    it("run the test", function(done) {
-      let interval = setInterval(() => {
-        if (!div.firstChild || !div.firstChild.$) {
-          return;
-        }
-        clearInterval(interval);
-        testsFn(div.firstChild, done)
-        done();
-      }, 100);
-    });
   });
 }
 
