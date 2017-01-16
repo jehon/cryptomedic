@@ -10,553 +10,376 @@
   </template>
 
   <script>
-  (function() {
-    // Build up the cryptomedicComputerId
-    if (!localStorage.cryptomedicComputerId) {
-      var mask = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-      var result = '';
-      for (var i = 0; i < 32; i++) {
-        result += mask[Math.floor(Math.random() * mask.length)];
+    /* global jQuery, DatabaseNew, background */
+    (function() {
+      let userCb = jQuery.Callbacks();
+      userCb.add((data) => {
+        console.log("User callback: ", data);
+      });
+
+      let syncRemaining = false;
+      let syncRemainingCb = jQuery.Callbacks();
+      syncRemainingCb.add((data) => {
+        syncRemaining = data;
+      });
+      syncRemainingCb.add((data) => {
+        console.log("syncRemaining callback: ", data);
+      });
+
+      // Build up the cryptomedicComputerId
+      if (!localStorage.cryptomedicComputerId) {
+        var mask = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        var result = '';
+        for (var i = 0; i < 32; i++) {
+          result += mask[Math.floor(Math.random() * mask.length)];
+        }
+        localStorage.cryptomedicComputerId = result;
       }
-      localStorage.cryptomedicComputerId = result;
-    }
 
-    if (!localStorage.syncCheckpoint) {
-      localStorage.syncCheckpoint = "";
-    }
-
-    let db = new DatabaseNew();
-
-
-
-    window.cryptomedic = {};
-    window.cryptomedic.serverSettings = {};
-
-    //************************************************************************************/
-    //**** Generic helper functions
-    function sortRecordByTimestamp(a, b) {
-      // -1 => a come first
-      if (a.checkpoint == b.checkpoint) {
-        return 0;
+      if (!localStorage.syncCheckpoint) {
+        localStorage.syncCheckpoint = "";
       }
-      if (!a.checkpoint) {
+
+      let db = new DatabaseNew();
+
+      let currentlySyncing = false;
+
+      window.cryptomedic = {};
+      window.cryptomedic.serverSettings = {};
+
+      //************************************************************************************/
+      //**** Generic helper functions
+      function sortRecordByTimestamp(a, b) {
+        // -1 => a come first
+        if (a.checkpoint == b.checkpoint) {
+          return 0;
+        }
+        if (!a.checkpoint) {
+          return 1;
+        }
+        if (!b.checkpoint) {
+          return -1;
+        }
+        if (a.checkpoint < b.checkpoint) {
+          return -1
+        }
         return 1;
       }
-      if (!b.checkpoint) {
-        return -1;
-      }
-      if (a.checkpoint < b.checkpoint) {
-        return -1
-      }
-      return 1;
-    }
 
-    let NetworkRequest = (function() {
-    //************************************************************************************/
-    //**** Body builders according to method
+      Polymer({
+        is: 'cryptomedic-data-service',
 
-    function bodyBuilderGet(options) {
-      return Object.keys(options.data).map(function (keyName) {
-        return encodeURIComponent(keyName) + '=' + encodeURIComponent(options.data[keyName]);
-      }).join('&')
-    }
+        properties: {},
 
-    function bodyBuilderPost(options) {
-      var body = new FormData();
-      for(var a in options.data) {
-        body.append(a, options.data[a]);
-      }
-      return body;
-    }
-
-    function bodyBuilderPut(options) {
-      if (!options.headers) {
-        options.headers = {};
-      }
-      // Thanks to: http://blog.gospodarets.com/fetch_in_action/
-      options.headers['Content-type'] = 'application/x-www-form-urlencoded; charset=UTF-8';
-      return bodyBuilderGet(options);
-    }
-
-    //************************************************************************************/
-    /*
-     * Proxy to new Request(...).fetch
-     *
-     * Use get() and post() preferably.
-     *
-     * @var {Function} executeRawRequest
-     * @see internals.get
-     * @see internals.post
-     *
-     */
-    function executeRawRequest(method, relativeUrl, body, options) {
-      options.relativeUrl = relativeUrl;
-      options.fullUrl = '/api/v1.1/' + relativeUrl;
-
-      return fetch(new Request(options.fullUrl,
-        Object.assign({}, options.fetchOptions,
-          {
-            method: method,
-            credentials: 'include',
-            body: body
+        ready: function() {
+          // Hook in requestToUrl to add the prefix:
+          let r = this.$.network.requestToUrl;
+          this.$.network.requestToUrl = function(url) {
+            return r.call(this, '/api/v1.1/' + url);
           }
-        )
-      ));
-    }
+        },
 
-    function safeJSON(response) {
-      return response.text()
-      .then((text) => {
-        if (text.length == 0) {
-          return {};
-        }
-        try {
-          return JSON.parse(text);
-        } catch (e) {
-          return text;
-        }
-      });
-    }
-
-    //************************************************************************************/
-    // ***** Public API **********
-    class NetworkRequest {
-      constructor(options = {}) {
-        this.options = Object.assign({},  {
-          context: null,
-          errorMsg: null,
-          data: false,
-          listOfAcceptableHttpStatusCode: [ ],
-          raw: false,
-
-          onSuccess: (response) => { return response; },
-          onError: (error) => { throw error; },
-          fetchOptions: {
-            headers: new Headers()
-          }
-
-          _popup: false
-        }, options);
-
-        // Append sync status
-        this.options.fetchOptions.headers.append("X-SYNC-CHECKPOINT", localStorage.syncCheckpoint);
-
-        this.fired = false;
-      }
-
-        asRaw() {
-          this.options.raw = true;
-          return this;
-        }
-
-        setContext(context) {
-          this.options.context = context;
-          this.options._popup = true;
-          epc.messageWaitFor(context);
-          if (!this.options.errorMessage) {
-            this.options.errorMessage = context;
-          }
-          return this;
-        }
-
-        setErrorMessage(errorMessage) {
-          this.options.errorMessage = errorMessage;
-          return this;
-        }
-
-        setTechnicalErrorMessage(technicalErrorMessage) {
-          this.options.technicalErrorMessage = technicalErrorMessage;
-          return this;
-        }
-
-        setData(data) {
-          this.options.data = data;
-          return this;
-        }
-
-        setListOfAcceptableHttpStatusCode(list) {
-          this.options.listOfAcceptableHttpStatusCode = this.options.listOfAcceptableHttpStatusCode.join(list);
-          return this;
-        }
-
-        addAcceptableHttpStatusCode(code) {
-          this.options.listOfAcceptableHttpStatusCode.push(code);
-          return this;
-        }
-
-        setOnSuccess(onSuccess) {
-          this.options.onSuccess = onSuccess;
-          return this;
-        }
-
-        setOnError(onError) {
-          this.options.onError = onError;
-          return this;
-        }
-
-        setTimeOut(timeOutSecs) {
-          this.options.timeOutSecs = timeOutSecs;
-          return this;
-        }
-
-        setTimeOutLocal() {
-          return this.setTimeOut(5);
-        }
-
-       doGet(relativeUrl) {
-          this.request = executeRawRequest('GET', relativeUrl + '?' + bodyBuilderGet(this.options), null, this.options);
-          return this.treat();
-        }
-
-        doPost(relativeUrl) {
-          this.request =  executeRawRequest('POST', relativeUrl, bodyBuilderPost(this.options), this.options);
-          return this.treat();
-        }
-
-        doPut(relativeUrl) {
-          this.request =  executeRawRequest('PUT', relativeUrl, bodyBuilderPut(this.options), this.options);
-          return this.treat();
-        }
-
-        doDelete(relativeUrl) {
-          this.request =  executeRawRequest('DELETE', relativeUrl, bodyBuilderPut(this.options), this.options);
-          return this.treat();
-        }
-
- 
-      treat() {
-        return this.request
-          // Enrich the objects
-          .then(
-            response => {
-              if (response.ok) {
-                return response.json()
-                  .then(json => {
-                    if (json._offline) {
-                      return json;
-                    }
-                    return json;
-                  });
+        start: function() {
+          return this.$.network
+            .reset()
+            .requestWithCredentials("include")
+            .responseAsJson()
+            .onResponseCode(401, () => {
+              window.location = "#login";
+            })
+            .onSuccess(json => {
+              console.log("Success: ", json);
+              // Check offline data
+              if (!json._offline) {
+                return json;
               }
 
-              if (this.options.listOfAcceptableHttpStatusCode.indexOf(response.status) >= 0) {
-                // We have an unacceptable error
-                console.log("In acceptable response");
-                return new AcceptableErrorResponse(response.status, json);
+              let finished = Promise.resolve();
+
+              let offline = json._offline;
+              delete(json._offline);
+
+              if (offline.reset) {
+                finished = finished.then(() => db.clear());
               }
 
-              let message = "Error";
-              switch(response.status) {
-                case 401: // Not-Authorized - you need to login first
-                  location.hash = "#/login";
-                  getDataService()
-                    .then(dataService => dataService.doLogout(true));
-                  break;
+              // Run around the offline data, but after all this, send back the ORIGINAL json for treatment...
+              offline.data = offline.data.sort(sortRecordByTimestamp);
 
-                case 403: // Forbidden, show a "Not authorized message"
-                  message = "Forbidden";
-                  break;
-
-                case 404: // Not found
-                  message = "Not found";
-                  break;
-
-                case 500: // Internal server error - let's show a ugly error box to the developper
-                default:
-                  message = "#" + response.status + ": Internal server error";
-                  console.error("InternalJS.executeRawRequest: ", response);
-                  break;
+              for(let rec of offline.data) {
+                // Bind to keep the actual value of "rec"
+                finished = finished.then(db.triageLine.bind(db, rec))
               }
 
-              throw message;
-            },
-            error   => {
-              console.error("InternalJS.executeRawRequest/catch: ", error);
-              throw "Server unreachable. Please check your network connection.";
-            }
-          )
-          .catch(error => {
-            console.error("oneRequest(@dataService) - catched and rethrown error: ", error);
-            if (this.onError) {
-              return this.onError(error);
-            }
-            throw error;
-          })
-      }
-    }
+              // If remaining, let's ask for them !!!
+              syncRemainingCb.fire(offline.remaining);
+              if (syncRemaining == 0) {
+                syncRemaining = false;
+              }
+              if (offline.remaining) {
+                finished = finished.then(() => {
+                  // This is not binded to what I hoped...
+                  console.log("syncRemaining: TODO - syncing again disabled");
+// TODO: how to continue syncing with or without background???
+                  // this.doSync();
+                });
+              }
 
-    Polymer({
-      is: 'cryptomedic-data-service',
+              // Return final response with original data:
+              return finished.then(() => {
+                return json;
+              });
+            });
+        },
 
-      // https://www.polymer-project.org/1.0/docs/devguide/properties
-      properties: {
-      },
-
-      listeners: {
-        'logout.tap': 'doLogout'
-      },
-
-      // ready() {
-      // },
-
-      attached() {
-        this.remaining = false;
-        this.username = false;
-        // Let's check the login directly
-        this.doLoginCheck();
-      },
-
-      treatAuthenticationResponse: function(data) {
-        if (!window.cryptomedic) {
-          window.cryptomedic = {};
-        }
-        window.cryptomedic.serverSettings = data;
-
-        /* global setAuthorizedObject */
-        setAuthorizedObject(data.authorized);
-
-        if (location.hash == "#/login") {
-          location.hash = "#/home";
-        }
-
-        this.username = data.username;
-
-        return data;
-      },
-
-      checkOfflineData: function(json) {
-        if (!json._offline) {
-          return json;
-        }
-
-        let finished = Promise.resolve();
-
-        let offline = json._offline;
-        delete(json._offline);
-
-        if (offline.reset) {
-          finished = finished.then(() => db.clear());
-        }
-
-        // Run around the offline data, but after all this, send back the ORIGINAL json for treatment...
-        offline.data = offline.data.sort(sortRecordByTimestamp);
-
-        for(let rec of offline.data) {
-          // Bind to keep the actual value of "rec"
-          finished = finished.then(db.triageLine.bind(db, rec))
-        }
-
-        // If remaining, let's ask for them !!!
-        this.remaining = offline.remaining;
-        if (this.remaining == 0) {
-          this.remaining = false;
-        }
-        if (offline.remaining) {
-          console.log("sync: remaining ", offline.remaining);
-          finished = finished.then(() => {
-            // This is not binded to what I hoped...
-            this.doSync();
-          });
-        } else {
-          console.log("sync: up-to-date");
-        }
-
-        // Return final response with original data:
-        return finished.then(() => {
-          return json;
-        });
-      },
-
-      doLoginCheck() {
-        return (new OneRequest())
-          .setData({
-            'computerId': localStorage.cryptomedicComputerId
-          })
-          .get('auth/settings')
-          .then((json) => this.treatAuthenticationResponse(json))
-          .then((json) => this.checkOfflineData(json))
-          .catch(() => {})
-          ;
-      },
-
-      doLogin(username, password) {
-        return (new OneRequest())
-          .setData({
-            'username': username,
-            'password': password,
-            'computerId': localStorage.cryptomedicComputerId
-          })
-          .post('auth/mylogin')
-          .then((json) => this.treatAuthenticationResponse(json))
-          .then((json) => this.checkOfflineData(json))
-          .catch((error) => {
-            console.error("doLogin: ", error);
-            throw error;
-          })
-          ;
-      },
-
-      /*
-       * Simply get the next data
-       *
-       */
-      doSync() {
-        return (new OneRequest())
-          .get('sync')
-          .then((json) => this.checkOfflineData(json))
-          ;
-      },
-
-      doResync() {
-        localStorage.syncCheckpoint = "";
-        return this.doSync();
-      },
-
-      doLogout(localOnly = false) {
-        let finished = Promise.resolve();
-
-        // localOnly could be the "tap" event, we thus check carefully what we receive
-        if (localOnly !== true) {
-          finished = finished.then(() => { return (new OneRequest()).get('auth/logout'); });
-        }
-        finished.then(() => {
-          window.cryptomedic.serverSettings = {};
-          location.hash = "/login";
-          this.username = false;
-          this.remaining = false;
+        treatAuthenticationResponse: function(data) {
+          userCb.fire(data);
+          if (!window.cryptomedic) {
+            window.cryptomedic = {};
+          }
+          window.cryptomedic.serverSettings = data;
 
           /* global setAuthorizedObject */
-          setAuthorizedObject();
-        })
-        ;
-      },
+          setAuthorizedObject(data.authorized);
 
-      getFolder(id) {
-        let finished = Promise.resolve();
-        // if (this.remaining) {
-        if (true) {
-          // We are not finished, let's get the info from the server
-          finished = finished.then(() => {
-            return (new OneRequest())
-              .get('folder/' + id)
+          if (location.hash == "#/login") {
+            location.hash = "#/home";
+          }
 
-              .then(json => {
-                // Do this after asynchronously
-                background(this.checkOfflineData, json);
-                return json.folder;
+          return data;
+        },
+
+        doLoginCheck() {
+          return this.start()
+            .requestWithGet()
+            .requestToUrl('auth/settings')
+            .requestWithData({
+              'computerId': localStorage.cryptomedicComputerId
+            })
+            .onResponseCode(404, () => {
+              return false;
+            })
+            .then(json => this.treatAuthenticationResponse(json))
+            ;
+        },
+
+        doLogin(username, password) {
+          return this.start()
+            .requestWithPost()
+            .requestToUrl('auth/mylogin')
+            .requestWithData({
+              'username': username,
+              'password': password,
+              'computerId': localStorage.cryptomedicComputerId
+            })
+            .then((json) => this.treatAuthenticationResponse(json))
+            .catch((error) => {
+              console.error("doLogin: ", error);
+              throw error;
+            })
+            ;
+        },
+
+        /*
+         * Simply get the next data
+         *
+         */
+        doSync() {
+          // Avoid having two syncing going on in parallel
+          if (currentlySyncing) {
+            console.log("Already syncing, not doing it again");
+          }
+          currentlySyncing = true;
+          return this.start()
+            .requestWithGet()
+            .requestToUrl('sync')
+            .then((json) => { currentlySyncing = false; return json; })
+            ;
+        },
+
+        doResync() {
+          localStorage.syncCheckpoint = "";
+          return this.doSync();
+        },
+
+        doLogout(localOnly = false) {
+          let finished = Promise.resolve();
+
+          // localOnly could be the "tap" event, we thus check carefully what we receive
+          if (localOnly !== true) {
+            finished = finished.then(() => {
+              return this.start()
+                .requestWithGet()
+                .requestToUrl('auth/logout');
+            });
+          }
+// TODO: use callback !!
+          finished.then(() => {
+            window.cryptomedic.serverSettings = {};
+            location.hash = "/login";
+            userCb.fire(null);
+
+            syncRemaining = false;
+
+            /* global setAuthorizedObject */
+            setAuthorizedObject();
+          })
+          ;
+        },
+
+        getFolder(id) {
+          let finished = Promise.resolve();
+          // if (syncRemaining) {
+          if (true) {
+            // We are not finished, let's get the info from the server
+            finished = finished.then(() => {
+              return this.start()
+                .requestWithGet()
+                .requestToUrl('folder/' + id)
+                .then(json => {
+                  // Do this after asynchronously
+                  return json.folder;
+                })
+            });
+          }
+
+          // If no data available, look in the local database
+          finished = finished.then(json => {
+            /* global Folder */
+            let folder = new Folder();
+            for(let line of json) {
+              if (line.type == "Patient") {
+                /* global Patient */
+                folder.setMainFile(new Patient(line.record));
+              } else {
+                folder.addSubFile(create(line.type, line.record));
+              }
+            }
+            folder.sort();
+            return folder;
+          })
+
+          return finished;
+        },
+
+        createFile(data) {
+          return this.start()
+            .requestWithPost()
+            .requestToUrl('fiche/' + data.getModel())
+            .requestWithData(nullify(data))
+            .then(function(data) { return new Folder(data); })
+            ;
+        },
+
+        saveFile(data) {
+          return this.start()
+            .requestWithPut()
+            .requestToUrl('fiche/' + data.getModel() + '/' + data['id'])
+            .requestWithData(nullify(data))
+            .then(function(data) { return new Folder(data); })
+            ;
+        },
+
+        deleteFile(data) {
+          return this.start()
+            .requestWithDelete()
+            .requestToUrl('fiche/' + data.getModel() + '/' + data['id'])
+            .then(function(data) { return new Folder(data); })
+            ;
+        },
+
+        unlockFile(data) {
+          return this.start()
+            .requestWithGet()
+            .requestToUrl('unfreeze/' + data.getModel() + '/' + data['id'])
+            .then(function(data) { return new Folder(data); })
+            ;
+        },
+
+        'getReport': function(reportName, data) {
+          return this.start()
+            .requestWithGet()
+            /* global nullify */
+            .requestWithData(nullify(data))
+            .requestToUrl('reports/' + reportName)
+        },
+
+        'searchForPatients': function(params) {
+          return this.start()
+            .requestWithGet()
+            .requestWithData(params)
+            .requestToUrl('folder')
+            .then(function(data) {
+              var list = [];
+              for(var i in data) {
+                list.push(new Patient(data[i]));
+              }
+              return list;
+            })
+        },
+
+        'checkReference': function(year, order) {
+          return new Promise((resolve, reject) => {
+            this.start()
+              .requestWithGet()
+              .requestToUrl('reference/' + year + '/' + order)
+              .onCode(404, () => {
+                resolve(false);
+              })
+              .then(data => {
+                console.log("checkReference: ", data);
+                resolve(data);
+              })
+              .catch((error) => {
+                reject(error);
+                throw error;
               })
           });
+        },
+
+        'createReference': function(year, order) {
+          return this.start()
+            .requestWithGet()
+            .requestToUrl('reference')
+            .requestWithData({
+              'entryyear': year,
+              'entryorder': order
+            })
+        },
+
+        'usersList': function() {
+          return this.start()
+            .requestWithGet()
+            .requestToUrl('users')
+        },
+
+        'userAdd': function(user) {
+          return this.start()
+            .requestWithPost()
+            .requestToUrl('users')
+            .requestWithData(user)
+        },
+
+        'userDelete': function(id) {
+          return this.start()
+            .requestWithDelete()
+            .requestToUrl('/users/' + id)
+        },
+
+        'userUpdate': function(user) {
+          return this.start()
+            .requestWithPut()
+            .requestToUrl('/users/' + user.id)
+            .requestWithData(user)
+        },
+
+        'userPassword': function(id, pwd) {
+          return this.start()
+            .requestWithPost()
+            .requestWithData({ password: pwd })
+            .requestToUrl('/users/password/' + id)
         }
-
-        // If no data available, look in the local database
-        finished = finished.then(json => {
-          /* global Folder */
-          let folder = new Folder();
-          for(let line of json) {
-            if (line.type == "Patient") {
-              /* global Patient */
-              folder.setMainFile(new Patient(line.record));
-            } else {
-              folder.addSubFile(create(line.type, line.record));
-            }
-          }
-          folder.sort();
-          return folder;
-        })
-
-        return finished;
-      },
-
-      createFile(data) {
-        return new OneRequest()
-          .setData(nullify(data))
-          .post('fiche/' + data.getModel())
-          .then(function(data) { return new Folder(data); })
-          ;
-      },
-
-      saveFile(data) {
-        return new OneRequest()
-          .setData(nullify(data))
-          .put('fiche/' + data.getModel() + '/' + data['id'])
-          .then(function(data) { return new Folder(data); })
-          ;
-      },
-
-      deleteFile(data) {
-        return new OneRequest()
-          .delete('fiche/' + data.getModel() + '/' + data['id'])
-          .then(function(data) { return new Folder(data); })
-          ;
-      },
-
-      unlockFile(data) {
-        return new OneRequest()
-          .get('unfreeze/' + data.getModel() + '/' + data['id'])
-          .then(function(data) { return new Folder(data); })
-          ;
-      },
-
-      'getReport': function(reportName, data) {
-        return new OneRequest()
-              /* global nullify */
-              .setData(nullify(data))
-              .get('reports/' + reportName)
-      },
-
-      'searchForPatients': function(params) {
-        return new OneRequest()
-          .setData(params)
-          .get('folder')
-          .then(function(data) {
-            var list = [];
-            for(var i in data) {
-              list.push(new Patient(data[i]));
-            }
-            return list;
-          })
-      },
-
-      // READWRITE
-      'createReference': function(year, order) {
-        // return myFrontFetch({ url: 'reference', init: { method: 'POST'}, data: {
-        //   'entryyear': year,
-        //   'entryorder': order
-        // }})
-        //   .then(function(data) { return new Folder(data); })
-        //   .catch()
-        //   ;
-      },
-
-      'usersList': function() {
-        return new OneRequest()
-          .get('users')
-      },
-
-      'userAdd': function(user) {
-        return new OneRequest()
-          .setData(user)
-          .post('users')
-      },
-
-      'userDelete': function(id) {
-        return new OneRequest()
-          .delete('/users/' + id)
-      },
-
-      'userUpdate': function(user) {
-        return new OneRequest()
-          .setData(user)
-          .put('/users/' + user.id)
-      },
-
-      'userPassword': function(id, pwd) {
-        return new OneRequest()
-          .setData({ password: pwd })
-          .post('/users/password/' + id)
-      }
-
-    })
-  })();
+      })
+    })();
   </script>
 </dom-module>
