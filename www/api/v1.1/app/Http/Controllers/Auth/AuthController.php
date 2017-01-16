@@ -70,7 +70,6 @@ class AuthController extends Controller {
    */
 
   public function getSettings() {
-    // sleep(3);
     if (!Auth::user()) {
       abort(401);
     }
@@ -127,10 +126,12 @@ class AuthController extends Controller {
   public function postMylogin() {
     $credentials = Request::only('username', 'password');
     global $myconfig;
-    if ($myconfig['environment'] != constant('MY_ENVIRONMENT_PRODUCTION')) {
+    if ($myconfig['environment'] != constant('MY_ENVIRONMENT_PRODUCTION'))
+    {
       error_log("environnemnt bypass authentication for " . $credentials['username']);
       $user = User::where("username", $credentials['username'])->first();
-      if (!$user) {
+      if (!$user)
+      {
         return abort(404, "Invalid credentials");
       }
       Auth::login($user);
