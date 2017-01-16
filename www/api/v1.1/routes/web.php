@@ -63,7 +63,7 @@ Route::group([ 'prefix' => '/api/' . basename(dirname(__DIR__)) ], function() {
       Route::get('admin/pictures/checkFileSystem', 'PictureController@checkFileSystem');
     });
 
-    // Private without sync
+    // Private with sync
     Route::group( [ 'middleware' => 'syncData' ], function()
     {
 
