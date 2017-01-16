@@ -84,9 +84,10 @@
     <!-- - - - - - - - - - - - - -->
     <!-- HTML Element - custom   -->
     <!-- - - - - - - - - - - - - -->
-    <link rel="import" href="/static/elements/dataService.html">
-    <link rel="import" href="/static/elements/codage.html">
     <link rel="import" href="/static/elements/authorized.html">
+    <link rel="import" href="/static/elements/codage.html">
+    <link rel="import" href="/static/elements/dataService.html">
+    <link rel="import" href="/static/elements/loginStatus.html">
     <!-- <link rel="import" href="/static/elements/htmlbox.html"> -->
     <!-- <link rel="import" href="/static/elements/cryptomedic-file-payment.html"> -->
 
@@ -129,7 +130,7 @@
               Bug
             </a></li>
             <li><p class="navbar-text">
-                <cryptomedic-data-service id='dataService'></cryptomedic-data-service>
+                <cryptomedic-login-status></cryptomedic-login-status>
             </p></li>
             <li class="dropdown">
               <a id='menu_more' href="javascript:" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
@@ -186,6 +187,11 @@
           </div>
         </span>
         <div ng-view></div>
+        <cryptomedic-data-service id='dataService'>Data service test</cryptomedic-data-service>
+        <script>
+          window.dataService = document.getElementById("dataService");
+        </script>
+
       </div>
     </div>
 
