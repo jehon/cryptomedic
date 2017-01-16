@@ -6,9 +6,9 @@ function waitElement(element) {
   let test = function() {
     let el = element;
     if (typeof(element) == "string") {
-      el = document.getElementsById(element);
+      el = document.getElementById(element);
     }
-    if (typeof(el) == "undefined") {
+    if (!el) {
       return false;
     }
     if (typeof(el["$"]) == "undefined") {
