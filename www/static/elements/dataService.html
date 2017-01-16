@@ -13,18 +13,19 @@
     /* global jQuery, DatabaseNew, background */
     (function() {
       let userCb = jQuery.Callbacks();
-      userCb.add((data) => {
-        console.log("User callback: ", data);
-      });
+      // userCb.add((data) => {
+      //   console.log("User callback: ", data);
+      // });
 
       let syncRemaining = false;
       let syncRemainingCb = jQuery.Callbacks();
       syncRemainingCb.add((data) => {
+        // Store the information locally at least
         syncRemaining = data;
       });
-      syncRemainingCb.add((data) => {
-        console.log("syncRemaining callback: ", data);
-      });
+      // syncRemainingCb.add((data) => {
+      //   console.log("syncRemaining callback: ", data);
+      // });
 
       // Build up the cryptomedicComputerId
       if (!localStorage.cryptomedicComputerId) {
@@ -135,23 +136,6 @@
             });
         },
 
-        treatAuthenticationResponse: function(data) {
-          userCb.fire(data);
-          if (!window.cryptomedic) {
-            window.cryptomedic = {};
-          }
-          window.cryptomedic.serverSettings = data;
-
-          /* global setAuthorizedObject */
-          setAuthorizedObject(data.authorized);
-
-          if (location.hash == "#/login") {
-            location.hash = "#/home";
-          }
-
-          return data;
-        },
-
         doLoginCheck() {
           return this.start()
             .requestWithGet()
@@ -162,7 +146,7 @@
             .onResponseCode(404, () => {
               return false;
             })
-            .then(json => this.treatAuthenticationResponse(json))
+            .then(userCb.fire)
             ;
         },
 
@@ -175,11 +159,7 @@
               'password': password,
               'computerId': localStorage.cryptomedicComputerId
             })
-            .then((json) => this.treatAuthenticationResponse(json))
-            .catch((error) => {
-              console.error("doLogin: ", error);
-              throw error;
-            })
+            .then(userCb.fire)
             ;
         },
 
@@ -216,16 +196,10 @@
                 .requestToUrl('auth/logout');
             });
           }
-// TODO: use callback !!
           finished.then(() => {
-            window.cryptomedic.serverSettings = {};
-            location.hash = "/login";
             userCb.fire(null);
+            syncRemainingCb.fire(false);
 
-            syncRemaining = false;
-
-            /* global setAuthorizedObject */
-            setAuthorizedObject();
           })
           ;
         },
@@ -264,6 +238,8 @@
 
           return finished;
         },
+
+// Check here:
 
         createFile(data) {
           return this.start()
