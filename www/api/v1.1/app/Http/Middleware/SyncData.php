@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use App\Http\Controllers\SyncController;
+use App\Http\Controllers\Auth\AuthController;
 
 class SyncData {
 	/**
@@ -27,6 +28,10 @@ class SyncData {
 		}
 
 		$response = $next($request);
+
+    if (!AuthController::hasPermission("folder.read")) {
+			return ;
+		}
 
 		if ($response instanceof JsonResponse)
 		{
