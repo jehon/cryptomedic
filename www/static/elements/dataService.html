@@ -204,6 +204,7 @@
           ;
         },
 
+// Check here:
         getFolder(id) {
           let finished = Promise.resolve();
           // if (syncRemaining) {
@@ -240,7 +241,6 @@
         },
 
 // Check here:
-
         createFile(data) {
           return this.start()
             .requestWithPost()
@@ -250,6 +250,7 @@
             ;
         },
 
+// Check here:
         saveFile(data) {
           return this.start()
             .requestWithPut()
@@ -259,6 +260,7 @@
             ;
         },
 
+// Check here:
         deleteFile(data) {
           return this.start()
             .requestWithDelete()
@@ -267,6 +269,7 @@
             ;
         },
 
+// Check here:
         unlockFile(data) {
           return this.start()
             .requestWithGet()
@@ -275,6 +278,7 @@
             ;
         },
 
+// Check here:
         'getReport': function(reportName, data) {
           return this.start()
             .requestWithGet()
@@ -283,6 +287,7 @@
             .requestToUrl('reports/' + reportName)
         },
 
+// Check here:
         'searchForPatients': function(params) {
           return this.start()
             .requestWithGet()
@@ -297,6 +302,7 @@
             })
         },
 
+// Check here:
         'checkReference': function(year, order) {
           return new Promise((resolve, reject) => {
             this.start()
@@ -316,6 +322,7 @@
           });
         },
 
+// Check here:
         'createReference': function(year, order) {
           return this.start()
             .requestWithGet()
@@ -326,12 +333,14 @@
             })
         },
 
+// Check here:
         'usersList': function() {
           return this.start()
             .requestWithGet()
             .requestToUrl('users')
         },
 
+// Check here:
         'userAdd': function(user) {
           return this.start()
             .requestWithPost()
@@ -339,12 +348,14 @@
             .requestWithData(user)
         },
 
+// Check here:
         'userDelete': function(id) {
           return this.start()
             .requestWithDelete()
             .requestToUrl('/users/' + id)
         },
 
+// Check here:
         'userUpdate': function(user) {
           return this.start()
             .requestWithPut()
@@ -352,6 +363,7 @@
             .requestWithData(user)
         },
 
+// Check here:
         'userPassword': function(id, pwd) {
           return this.start()
             .requestWithPost()
