@@ -106,13 +106,16 @@ function ctrl_reports($scope, $routeParams, $sce) {
       Object.assign($scope.values, $scope.reports[report].fixedParams);
     }
 
-    getDataService()
+    console.log("here");
+    getDataService('reportService')
       .then(dataService => dataService.getReport(dataGenerator, $scope.values))
-      .then(function(data) {
+      .then((data) => {
+        console.log("there");
+        console.log("success in report");
         $scope.result = data;
         $scope.error = false;
         $scope.safeApply();
-      }, function(error) {
+      }, (error) => {
         console.error("here we are in error: ", error);
         $scope.result = true;
         $scope.error = error;
