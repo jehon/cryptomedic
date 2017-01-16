@@ -2,23 +2,22 @@
 
 // See polyfill for html imports: http://webcomponents.org/polyfills/html-imports/
 
-function waitElement(element, property) {
+function waitElement(element) {
   let test = function() {
     let el = element;
     if (typeof(element) == "string") {
-      el = document.getElementsByTagName(element);
-      if (el.length == 0) {
-        return false;
-      }
-      el = el[0];
+      el = document.getElementsById(element);
     }
-    if (typeof(el[property]) == "undefined") {
+    if (typeof(el) == "undefined") {
+      return false;
+    }
+    if (typeof(el["$"]) == "undefined") {
       return false;
     }
     return el;
   }
 
-  let el  = test();
+  let el = test();
   if (el) {
     return Promise.resolve(el);
   }
@@ -34,6 +33,6 @@ function waitElement(element, property) {
   });
 }
 
-function getDataService() {
-  return waitElement("cryptomedic-data-service", "doLogin");
+function getDataService(id) {
+  return waitElement(id);
 }
