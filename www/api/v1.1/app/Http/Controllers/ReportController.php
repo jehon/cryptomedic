@@ -95,7 +95,7 @@ abstract class ReportController extends Controller {
     }
 
     if (!$this->internalWhenFrom) {
-      abort(406, "Invalid: no time zone specifiec");
+      abort(406, "Invalid: no time period specifiec");
     }
 
     $this->buildData();
