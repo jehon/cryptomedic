@@ -86,14 +86,11 @@
     Attention! Generating a yearly report may take a very very long time (ex: 5 minutes).
   </div>
   <cryptomedic-data-service id='reportService'>
-    <div ng-if="!result" class='loading'>
-      Loading
-    </div>
-    <div ng-if="result && error">
+    <div ng-if="error" class='alert alert-danger'>
       Please fill in parameters (at least the day, month or year).<br>
       {{error}}
     </div>
-    <div ng-if="result && !error">
+    <div ng-if="!error">
       <div class='text-right'>
         <a id='download_link'
             class='btn'
