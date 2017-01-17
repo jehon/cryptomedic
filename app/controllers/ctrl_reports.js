@@ -106,12 +106,22 @@ function ctrl_reports($scope, $routeParams, $sce) {
       Object.assign($scope.values, $scope.reports[report].fixedParams);
     }
 
-    console.log("here");
+    // Check input data:
+    if ($scope.isParam('period')) {
+      let period = $scope.values['period'];
+      let value = $scope.values[period];
+      if (!value) {
+        $scope.result = true;
+        $scope.error = "Invalid period (" + period + ")";
+        $scope.safeApply();
+        return ;
+      }
+    }
+
+    // Launch the call
     getDataService('reportService')
       .then(dataService => dataService.getReport(dataGenerator, $scope.values))
       .then((data) => {
-        console.log("there");
-        console.log("success in report");
         $scope.result = data;
         $scope.error = false;
         $scope.safeApply();
