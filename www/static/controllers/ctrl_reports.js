@@ -1,9 +1,16 @@
-import catalog         from 'reducers/catalog';
-import dispatch        from 'reducers/dispatch';
+/* global getPref,setPref,date2CanonicString,template,ExcellentExport,jQuery */
 
 function ctrl_reports($scope, $routeParams, $sce) {
   var report = $routeParams['report'];
-  $scope.values = store.getState().prefs.reports;
+  $scope.values = getPref('report', {
+    center   : '',
+    examiner : '',
+    period   : 'month',
+    activity : '',
+    day      : date2CanonicString(new Date(), true),
+    month    : date2CanonicString(new Date(), true).substring(0, 7),
+    year     : date2CanonicString(new Date(), true).substring(0, 4)
+  });
   for(var k in $scope.values) {
     if ($scope.values[k] === null) {
       $scope.values[k] = '';
@@ -12,6 +19,7 @@ function ctrl_reports($scope, $routeParams, $sce) {
   if (!$scope.values['period']) {
     $scope.values['period'] = 'month';
   }
+
 
   $scope.reports = {
     'activity': {
@@ -94,7 +102,7 @@ function ctrl_reports($scope, $routeParams, $sce) {
       var v = $scope.reports[report].params[p];
       prefs[v] = $scope.values[v];
     }
-    dispatch(catalog.PREFS_REPORTS, prefs);
+    setPref('report, prefs');
 
     var dataGenerator = report;
     if (typeof($scope.reports[report].dataGenerator) != 'undefined') {
@@ -145,4 +153,3 @@ function ctrl_reports($scope, $routeParams, $sce) {
 
 ctrl_reports.$inject = [ '$scope', '$routeParams', '$sce' ];
 
-export default ctrl_reports;
