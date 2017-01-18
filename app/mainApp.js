@@ -6,11 +6,7 @@ import store                    from 'reducers/store';
 import dispatch                 from 'reducers/dispatch';
 import catalog                  from 'reducers/catalog';
 
-import ctrl_allGraphics         from 'controllers/ctrl_allgraphics';
-import ctrl_file_appointment    from 'controllers/ctrl_file_appointment';
 import ctrl_folder              from 'controllers/ctrl_folder';
-import ctrl_graphic             from 'controllers/ctrl_graphic';
-import ctrl_home                from 'controllers/ctrl_home';
 
 var application = {};
 

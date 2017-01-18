@@ -57,4 +57,3 @@ function ctrl_home($scope) {
 
 ctrl_home.$inject = [ "$scope" ];
 
-export default ctrl_home;
