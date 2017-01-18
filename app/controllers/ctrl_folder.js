@@ -1,6 +1,5 @@
 import catalog              from 'reducers/catalog';
 import dispatch             from 'reducers/dispatch';
-import goThere              from 'helpers/goThere';
 
 function ctrl_folder($scope, $location, $routeParams) {
   /*

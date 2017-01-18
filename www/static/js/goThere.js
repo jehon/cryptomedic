@@ -1,5 +1,5 @@
 
-export default function goThere(path = '/') {
+function goThere(path = '/') {
   // console.error("Going to " + path);
   if ((!path) || (path == "")) {
     path = "/";

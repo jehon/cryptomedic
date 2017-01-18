@@ -5,7 +5,6 @@ import                               'angular-route';
 import store                    from 'reducers/store';
 import dispatch                 from 'reducers/dispatch';
 import catalog                  from 'reducers/catalog';
-import goThere                  from 'helpers/goThere';
 
 import ctrl_allGraphics         from 'controllers/ctrl_allgraphics';
 import ctrl_file_appointment    from 'controllers/ctrl_file_appointment';
