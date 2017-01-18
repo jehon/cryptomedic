@@ -1,5 +1,3 @@
-import goThere         from 'helpers/goThere';
-
 function ctrl_home($scope) {
   if (typeof($scope.entryyear) == 'undefined') {
     $scope.searched = false;
