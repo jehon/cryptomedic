@@ -308,7 +308,7 @@
             this.start()
               .requestWithGet()
               .requestToUrl('reference/' + year + '/' + order)
-              .onCode(404, () => {
+              .onResponseCode(404, () => {
                 resolve(false);
               })
               .then(data => {
