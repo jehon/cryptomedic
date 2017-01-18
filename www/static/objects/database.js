@@ -1,10 +1,10 @@
 /* global Dexie */
 /* global Patient, Appointment, Bill, ClubFoot, OtherConsult, Payment, Picture, RicketConsult, Surgery */
-/* exported DatabaseNew */
+/* exported Database */
 
 // Shared database db object...
 
-let DatabaseNew = (function() {
+let Database = (function() {
 
   let db = false;
 

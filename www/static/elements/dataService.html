@@ -10,7 +10,7 @@
   </template>
 
   <script>
-    /* global jQuery, DatabaseNew, background */
+    /* global jQuery, Database, background */
     (function() {
       let userCb = jQuery.Callbacks();
       // userCb.add((data) => {
@@ -41,7 +41,7 @@
         localStorage.syncCheckpoint = "";
       }
 
-      let db = new DatabaseNew();
+      let db = new Database();
 
       let currentlySyncing = false;
 
