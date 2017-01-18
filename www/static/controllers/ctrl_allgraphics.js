@@ -7,5 +7,3 @@ function ctrl_allGraphics($scope) {
 }
 
 ctrl_allGraphics.$inject = [ "$scope" ];
-
-export default ctrl_allGraphics;

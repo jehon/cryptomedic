@@ -11,5 +11,3 @@ function ctrl_file_appointment($scope) {
 }
 
 ctrl_file_appointment.$inject = [ "$scope" ];
-
-export default ctrl_file_appointment;

@@ -91,5 +91,3 @@ function ctrl_graphic($scope) {
 }
 
 ctrl_graphic.$inject = [ "$scope" ];
-
-export default ctrl_graphic;
