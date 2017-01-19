@@ -102,7 +102,7 @@ function ctrl_reports($scope, $routeParams, $sce) {
       var v = $scope.reports[report].params[p];
       prefs[v] = $scope.values[v];
     }
-    setPref('report, prefs');
+    setPref('report', prefs);
 
     var dataGenerator = report;
     if (typeof($scope.reports[report].dataGenerator) != 'undefined') {
