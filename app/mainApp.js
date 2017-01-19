@@ -6,8 +6,6 @@ import store                    from 'reducers/store';
 import dispatch                 from 'reducers/dispatch';
 import catalog                  from 'reducers/catalog';
 
-import ctrl_folder              from 'controllers/ctrl_folder';
-
 var application = {};
 
 var mainApp = angular.module('app_main', [ 'ngRoute' ])

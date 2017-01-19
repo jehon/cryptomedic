@@ -1,5 +1,3 @@
-import catalog              from 'reducers/catalog';
-import dispatch             from 'reducers/dispatch';
 
 function ctrl_folder($scope, $location, $routeParams) {
   /*
@@ -212,15 +210,17 @@ function ctrl_folder($scope, $location, $routeParams) {
       alert('You have errors in your data. Please correct them and try again');
       return ;
     }
+    let prefs = getPref('files');
     if (cachedCurrentFile.Date) {
-      dispatch(catalog.PREFS_FILES, { 'date': cachedCurrentFile.Date });
+      prefs['date'] = cachedCurrentFile.Date;
     }
     if (cachedCurrentFile.ExaminerName) {
-      dispatch(catalog.PREFS_FILES, { 'examinerName': cachedCurrentFile.ExaminerName });
+      prefs['examinerName'] = cachedCurrentFile.ExaminerName;
     }
     if (cachedCurrentFile.Center) {
-      dispatch(catalog.PREFS_FILES, { 'center': cachedCurrentFile.Center });
+      prefs['center'] = cachedCurrentFile.Center;
     }
+    setPref('files', prefs);
 
     getDataService()
       .then(dataService => dataService.createFile(cachedCurrentFile))
@@ -371,6 +371,3 @@ function ctrl_folder($scope, $location, $routeParams) {
 }
 
 ctrl_folder.$inject = [ "$scope", '$location', '$routeParams' ];
-
-export default ctrl_folder;
-
