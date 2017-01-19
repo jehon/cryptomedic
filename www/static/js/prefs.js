@@ -1,7 +1,10 @@
 
 /* exported setPref,getPref */
 function setPref(name, data) {
-  let res = JSON.parse(sessionStorage.cryptomedicPrefs);
+  let res = {};
+  if (sessionStorage.cryptomedicPrefs) {
+    res = JSON.parse(sessionStorage.cryptomedicPrefs);
+  }
 
   res[name] = data;
 
@@ -14,7 +17,10 @@ function setPref(name, data) {
 }
 
 function getPref(part, def = null) {
-  let res = JSON.parse(sessionStorage.cryptomedicPrefs);
+  let res = {};
+  if (sessionStorage.cryptomedicPrefs) {
+    res = JSON.parse(sessionStorage.cryptomedicPrefs);
+  }
   if (res[name]) {
     return res[name];
   }
