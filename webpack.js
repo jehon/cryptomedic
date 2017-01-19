@@ -51,30 +51,30 @@ var config = {
           'babel-loader?sourceMaps=inline&optional=runtime'
         ]
       },
-      {
-        test: /\.html$/,
-        exclude: /index\.html/,
-        loaders: [
-          'ng-cache?-removeEmptyAttributes&prefix=templates:/**/api/v1.0/templates/',
-        ]
-      },
-      {
-        test: /\.php$/,
-        loaders: [
-          // file looks like: /templates/templates/reports/surgery.php
-          'ng-cache?-removeEmptyAttributes&prefix=templates:/**/api/v1.0/templates/',
-          // 'html-minify',
-          'php-loader?' + JSON.stringify({
-            proxy: __dirname + '/loader.php',
-            args: [ '--httplive=' + remoteTarget ],
-            dependancies: [
-              __dirname + '/www/api/v1.0/app/**/*.php',
-              __dirname + '/www/templates/**/*.php'
-            ],
-            debug: true
-          })
-        ]
-      },
+      // {
+      //   test: /\.html$/,
+      //   exclude: /index\.html/,
+      //   loaders: [
+      //     'ng-cache?-removeEmptyAttributes&prefix=templates:/**/api/v1.0/templates/',
+      //   ]
+      // },
+      // {
+      //   test: /\.php$/,
+      //   loaders: [
+      //     // file looks like: /templates/templates/reports/surgery.php
+      //     'ng-cache?-removeEmptyAttributes&prefix=templates:/**/api/v1.0/templates/',
+      //     // 'html-minify',
+      //     'php-loader?' + JSON.stringify({
+      //       proxy: __dirname + '/loader.php',
+      //       args: [ '--httplive=' + remoteTarget ],
+      //       dependancies: [
+      //         __dirname + '/www/api/v1.0/app/**/*.php',
+      //         __dirname + '/www/templates/**/*.php'
+      //       ],
+      //       debug: true
+      //     })
+      //   ]
+      // },
       {
         test: /\.css$/,
         loaders: ['style', 'css']
@@ -105,9 +105,8 @@ var config = {
   ]
 };
 
-var templates = recursiveReadSync(__dirname + '/www/templates/templates');
-
-config.entry = config.entry.concat(templates);
+// var templates = recursiveReadSync(__dirname + '/www/templates/templates');
+// config.entry = config.entry.concat(templates);
 
 // Last one, since it will define what is exported:
 config.entry = config.entry.concat([ './app/status.js' ]);
