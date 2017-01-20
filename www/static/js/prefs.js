@@ -1,12 +1,13 @@
 
 /* exported setPref,getPref */
-function setPref(name, data) {
+
+function setPref(part, data) {
   let res = {};
   if (sessionStorage.cryptomedicPrefs) {
     res = JSON.parse(sessionStorage.cryptomedicPrefs);
   }
 
-  res[name] = data;
+  res[part] = data;
 
   var newState = Object.assign({}, data, res);
 
@@ -21,8 +22,8 @@ function getPref(part, def = null) {
   if (sessionStorage.cryptomedicPrefs) {
     res = JSON.parse(sessionStorage.cryptomedicPrefs);
   }
-  if (res[name]) {
-    return res[name];
+  if (res[part]) {
+    return res[part];
   }
   return def;
 }
