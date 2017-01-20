@@ -1,3 +1,4 @@
+/* global goThere*/
 function ctrl_home($scope) {
   if (typeof($scope.entryyear) == 'undefined') {
     $scope.searched = false;
@@ -10,41 +11,32 @@ function ctrl_home($scope) {
   };
 
   $scope.checkReference = function() {
-    var busyEnd = $scope.doBusy('Checking the reference on the server');
-    service_backend().checkReference($scope.entryyear, $scope.entryorder)
+    getDataService()
+      .then(dataService => dataService.checkReference($scope.entryyear, $scope.entryorder))
       .then(function(data) {
         if (data === false) {
           $scope.searched = true;
         } else {
-          busyEnd();
-        // end the busy mode
-          jQuery('#busy').modal('hide');
           setTimeout(function() {
-            goThere('/folder/' + data);
+            goThere('/folder/' + data.id);
           }, 1);
         }
       }, function(data) {
         console.error(data);
-      }).myFinallyDone(function() {
-        busyEnd();
       });
     $scope.searched = true;
   };
 
   $scope.createReference = function() {
-    var busyEnd = $scope.doBusy('Creating the reference on the server');
-    service_backend().createReference($scope.entryyear, $scope.entryorder)
+    getDataService()
+      .then(dataService => dataService.createReference($scope.entryyear, $scope.entryorder))
       .then(function(data) {
-        busyEnd();
-      // end the busy mode
-        jQuery('#busy').modal('hide');
+        // end the busy mode
         setTimeout(function() {
           goThere('/folder/' + data.id + '/edit');
         }, 1);
       }, function(data) {
         console.error(data);
-      }).myFinallyDone(function() {
-        busyEnd();
       });
     $scope.searched = true;
   };
@@ -56,4 +48,3 @@ function ctrl_home($scope) {
 }
 
 ctrl_home.$inject = [ "$scope" ];
-
