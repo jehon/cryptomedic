@@ -13,7 +13,9 @@ function ctrl_login($scope) {
       return;
     }
     getDataService()
-      .then((dataService) => { dataService.doLogin(this.details.username, this.details.password); })
+      .then((dataService) => {
+        return dataService.doLogin(this.details.username, this.details.password);
+      })
       .then(() => {
         $scope.loginError = false;
       })
