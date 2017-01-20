@@ -30,7 +30,7 @@ class SyncData {
 		$response = $next($request);
 
     if (!AuthController::hasPermission("folder.read")) {
-			return ;
+			return $response;
 		}
 
 		if ($response instanceof JsonResponse)
