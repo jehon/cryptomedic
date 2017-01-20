@@ -44,7 +44,7 @@ class UsersController extends Controller {
  		$obj = User::findOrFail($id);
 		foreach($attributes as $k => $v) {
 			// Skip system fields
-			if (in_array($k, [ $obj->getUpdatedAtColumn(), $obj->getCreatedAtColumn(), "modified", "created" ])) {
+			if (in_array($k, [ $obj->getUpdatedAtColumn(), $obj->getCreatedAtColumn() ])) {
 				continue;
 			}
 			// Set existing fields
@@ -52,6 +52,9 @@ class UsersController extends Controller {
 				$obj->{$k} = $v;
 			}
 		}
+		// Do not update last-login...
+		unset($obj->last_login);
+
 		$obj->save();
 		return $this->index();
 	}
