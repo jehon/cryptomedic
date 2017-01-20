@@ -194,7 +194,9 @@
             {{m.text}}
           </div>
         </span>
-        <div ng-view></div>
+        <cryptomedic-data-service id='dataService'>
+          <div ng-view></div>
+        </cryptomedic-data-service>
       </div>
     </div>
 
