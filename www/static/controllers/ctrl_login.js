@@ -12,8 +12,8 @@ function ctrl_login($scope) {
       alert('No password detected');
       return;
     }
-    dataService
-      .doLogin(this.details.username, this.details.password)
+    getDataService()
+      .then(() => this.doLogin(this.details.username, this.details.password))
       .then(() => {
         $scope.loginError = false;
       })
