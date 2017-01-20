@@ -19,7 +19,6 @@ if (location.protocol == 'https:') {
 
 export default function() {
   return {
-    activateCache,
     store,
     dispatch,
     catalog,
