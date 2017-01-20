@@ -47,12 +47,12 @@ class Kernel extends HttpKernel
      */
     protected $routeMiddleware = [
 
-    'authenticated'   => 'App\Http\Middleware\Authenticated',
-    'syncData'        => 'App\Http\Middleware\SyncData',
-    'writeGroup'      => 'App\Http\Middleware\WriteGroup',
-    'unFreezeGroup'   => 'App\Http\Middleware\UnFreezeGroup',
-    'hasPermission'   => \App\Http\Middleware\HasPermission::class,
-    //'auth.basic' => 'Illuminate\Auth\Middleware\AuthenticateWithBasicAuth',
+        'authenticated'   => 'App\Http\Middleware\Authenticated',
+        'syncData'        => 'App\Http\Middleware\SyncData',
+        'writeGroup'      => 'App\Http\Middleware\WriteGroup',
+        'unFreezeGroup'   => 'App\Http\Middleware\UnFreezeGroup',
+        'hasPermission'   => \App\Http\Middleware\HasPermission::class,
+        //'auth.basic' => 'Illuminate\Auth\Middleware\AuthenticateWithBasicAuth',
 
 
 //       'auth' => \Illuminate\Auth\Middleware\Authenticate::class,
