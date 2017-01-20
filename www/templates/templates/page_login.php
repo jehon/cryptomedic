@@ -1,4 +1,5 @@
 <!--  Login screen -->
+
 <div id='loginForm'>
   <div class='col-sm-offset-4 col-sm-4'>
     <form class="form-signing" role="form">
@@ -15,8 +16,8 @@
         </div>
       </div>
       <br>
-          <button ng-disabled="{{pending}}" id="login_go" ng-click="doLogin()" class="btn btn-lg btn-primary btn-block">Log in</button>
-        </form>
-        <br>
-    </div>
+        <button ng-disabled="{{pending}}" id="login_go" ng-click="doLogin()" class="btn btn-lg btn-primary btn-block">Log in</button>
+      </form>
+      <br>
+  </div>
 </div>
