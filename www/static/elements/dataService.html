@@ -333,14 +333,12 @@
             })
         },
 
-// Check here:
         'usersList': function() {
           return this.start()
             .requestWithGet()
             .requestToUrl('users')
         },
 
-// Check here:
         'userAdd': function(user) {
           return this.start()
             .requestWithPost()
@@ -352,14 +350,14 @@
         'userDelete': function(id) {
           return this.start()
             .requestWithDelete()
-            .requestToUrl('/users/' + id)
+            .requestToUrl('users/' + id)
         },
 
 // Check here:
         'userUpdate': function(user) {
           return this.start()
             .requestWithPut()
-            .requestToUrl('/users/' + user.id)
+            .requestToUrl('users/' + user.id)
             .requestWithData(user)
         },
 
@@ -368,7 +366,7 @@
           return this.start()
             .requestWithPost()
             .requestWithData({ password: pwd })
-            .requestToUrl('/users/password/' + id)
+            .requestToUrl('users/password/' + id)
         }
       })
     })();
