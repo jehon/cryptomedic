@@ -38,7 +38,7 @@ class AuthController extends Controller {
       }
       $profile = $user->group;
       if (!array_key_exists($profile, self::$permissions)) {
-          abort(500, "invalid profile in hasPermission: $profile");
+        abort(500, "invalid profile in hasPermission: $profile");
       }
       return array_key_exists($header, self::$permissions[$profile])
           ? self::$permissions[$profile][$header]
