@@ -14,7 +14,7 @@ function ctrl_home($scope) {
     getDataService()
       .then(dataService => dataService.checkReference($scope.entryyear, $scope.entryorder))
       .then(function(data) {
-        if (data === false) {
+        if (!data.id) {
           $scope.searched = true;
         } else {
           setTimeout(function() {
