@@ -99,8 +99,14 @@ function ctrl_reports($scope, $routeParams, $sce) {
 
     var prefs = {};
     for(var p in $scope.reports[report].params) {
-      var v = $scope.reports[report].params[p];
-      prefs[v] = $scope.values[v];
+      let n = $scope.reports[report].params[p];
+      let v = $scope.values[n];
+      if (n == "period") {
+        let pn = v;
+        let pv = $scope.values[pn];
+        prefs[pn] = pv;
+      }
+      prefs[n] = v
     }
     setPref('report', prefs);
 
