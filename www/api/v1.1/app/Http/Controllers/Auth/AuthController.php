@@ -33,6 +33,9 @@ class AuthController extends Controller {
 
   static public function hasPermission($header) {
       $user = Auth::user();
+      if (!$user) {
+        return false;
+      }
       $profile = $user->group;
       if (!array_key_exists($profile, self::$permissions)) {
           abort(500, "invalid profile in hasPermission: $profile");
@@ -132,7 +135,7 @@ class AuthController extends Controller {
       $user = User::where("username", $credentials['username'])->first();
       if (!$user)
       {
-        return abort(404, "Invalid credentials");
+        return abort(404, "Invalid test credentials");
       }
       Auth::login($user);
       return $this->getSettings();
