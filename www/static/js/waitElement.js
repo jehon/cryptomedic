@@ -33,6 +33,6 @@ function waitElement(element) {
   });
 }
 
-function getDataService(id) {
+function getDataService(id = 'dataService') {
   return waitElement(id);
 }
