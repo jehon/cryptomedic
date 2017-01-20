@@ -22,14 +22,21 @@ function waitElement(element) {
     return Promise.resolve(el);
   }
 
-  return new Promise(function(resolve) {
+  return new Promise(function(resolve, reject) {
+    let i = 20;
     let cron = setInterval(function() {
       let el  = test();
+      i--;
+      if (i < 0) {
+        console.error("Could not find element ", element);
+        reject("Could not find element ", element);
+        clearInterval(cron);
+      }
       if (el) {
         clearInterval(cron);
         resolve(el);
       }
-    }, 100);
+    }, 250);
   });
 }
 
