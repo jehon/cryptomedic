@@ -38,6 +38,10 @@
         // }
       },
 
+      ready: function() {
+        this.setAuthorizedList([]);
+      },
+
       setAuthorizedList: function(authorizedList) {
         // Set it in two steps, to enable trigger of update
         this.authorizedList = null;
