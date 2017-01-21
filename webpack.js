@@ -3,8 +3,8 @@
 
 var path = require('path');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
-var recursiveReadSync = require('recursive-readdir-sync');
-var remoteTarget = require(__dirname + '/bin/lib/vagrantPort');
+// var recursiveReadSync = require('recursive-readdir-sync');
+// var remoteTarget = require(__dirname + '/bin/lib/vagrantPort');
 
 // Global variables
 // https://webpack.github.io/docs/library-and-externals.html
@@ -15,17 +15,13 @@ var remoteTarget = require(__dirname + '/bin/lib/vagrantPort');
 // @see http://mts.io/2015/04/08/webpack-shims-polyfills/
 
 var config = {
-  personnal: {
-    remoteTarget: remoteTarget, // Custom entry - exported for server.js
-  },
+  // personnal: {
+  //   remoteTarget: remoteTarget, // Custom entry - exported for server.js
+  // },
   entry: [ ]
     .concat([
-      // 'script!./node_modules/excellentexport/excellentexport.min.js',
       './app/mainApp.js'
     ])
-    // Last one, since it will define what is exported:
-    // Added at the end of the config file
-    // .concat([ './app/status.js' ])
     ,
   resolve: {
     extensions: ['', '.js', '.jsx'],
@@ -38,8 +34,8 @@ var config = {
     publicPath: '/build/',
 
     // @see https://webpack.github.io/docs/library-and-externals.html
-    libraryTarget: 'var',
-    library: 'appState',
+    // libraryTarget: 'var',
+    // library: 'appState',
     pathinfo: false // Not in production
   },
   module: {
@@ -104,11 +100,5 @@ var config = {
     })
   ]
 };
-
-// var templates = recursiveReadSync(__dirname + '/www/templates/templates');
-// config.entry = config.entry.concat(templates);
-
-// Last one, since it will define what is exported:
-config.entry = config.entry.concat([ './app/status.js' ]);
 
 module.exports = config;
