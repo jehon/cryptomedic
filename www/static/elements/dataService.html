@@ -204,8 +204,11 @@
           ;
         },
 
-// Check here:
         getFolder(id) {
+
+// How to cache getFolder for 1 minute if no change is made???
+// Should be stored in database + flag for getting it in db even if not synced
+
           let finished = Promise.resolve();
           // if (syncRemaining) {
           if (true) {
@@ -278,7 +281,6 @@
             ;
         },
 
-// Check here:
         'getReport': function(reportName, data) {
           return this.start()
             .requestWithGet()
@@ -287,7 +289,6 @@
             .requestToUrl('reports/' + reportName)
         },
 
-// Check here:
         'searchForPatients': function(params) {
           return this.start()
             .requestWithGet()
@@ -320,7 +321,6 @@
           });
         },
 
-// Check here:
         'createReference': function(year, order) {
           return this.start()
             .requestToUrl('reference')
