@@ -171,29 +171,6 @@
     </nav>
     <div class='container-fluid'>
       <!--  Pending screen -->
-      <!-- Modal fade-->
-      <div class="modal " id="busy" role="dialog" aria-labelledby="myModalLabel" aria-describedby="Activity" data-keyboard="false">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title">Waiting for: {{appStateStore.state.busy}} tasks on {{appStateStore.state.max}}</h4>
-            </div>
-            <div class="modal-body">
-              <div ng-bind-html='appStateStore.state.messages | nl2br'>
-              </div>
-            </div>
-           </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-      </div><!-- /.modal -->
-      <div>
-        <span ng-repeat="m in messages">
-          <div class="alert alert-dismissible" ng-class="'alert-' + m.level" alert-dismissible>
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-            {{m.text}}
-          </div>
-        </span>
       <cryptomedic-data-service id='dataService'>
         <div>
           <div ng-view></div>
