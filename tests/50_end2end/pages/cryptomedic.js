@@ -40,14 +40,14 @@ module.exports = (function() {
       return client;
     };
 
-    this.sync = function() {
-      if (!authenticated) {
-        throw new Error('Cryptomedic: You should be authenticated to use report function');
-      }
-      client
-        .waitForElementVisible('img#sync-ok');
-      return client;
-    };
+    // this.sync = function() {
+    //   if (!authenticated) {
+    //     throw new Error('Cryptomedic: You should be authenticated to use report function');
+    //   }
+    //   client
+    //     .waitForElementVisible('img#sync-ok');
+    //   return client;
+    // };
 
     this.report = function(reportName, params) {
       if (!authenticated) {
@@ -89,7 +89,7 @@ module.exports = (function() {
       if (!authenticated) {
         throw new Error('Cryptomedic: You should be authenticated to use report function');
       }
-      this.sync();
+      // this.sync();
       client
         .myClick('#menu_home')
         .waitForElementVisible('input[ng-model=\'entryyear\']')
