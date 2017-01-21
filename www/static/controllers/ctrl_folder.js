@@ -348,12 +348,11 @@ function ctrl_folder($scope, $location, $routeParams) {
 
   $scope.listUpazillas = function(district, current) {
     var list = [ '?' ];
-    if ($scope.appStateStore.connection
-          && $scope.appStateStore.connection.settings) {
-      if ($scope.appStateStore.connection.settings.associations['district.' + district]) {
-        list = list.concat($scope.appStateStore.connection.settings.associations['district.' + district]);
+    if (cryptomedic.serverSettings && cryptomedic.serverSettings.associations) {
+      if (cryptomedic.serverSettings.associations['district.' + district]) {
+        list = list.concat(cryptomedic.serverSettings.associations['district.' + district]);
       }
-      list = list.concat($scope.appStateStore.connection.settings.associations['district.other']);
+      list = list.concat(cryptomedic.serverSettings.associations['district.other']);
     }
     if (list.indexOf(current) < 0) {
       list = [ current ].concat(list);
@@ -363,11 +362,11 @@ function ctrl_folder($scope, $location, $routeParams) {
 
   $scope.listUnions = function(upazilla, current) {
     var list = [ '?' ];
-    if ($scope.appStateStore.connection && $scope.appStateStore.connection.settings) {
-      if ($scope.appStateStore.connection.settings.associations['upazilla.' + upazilla]) {
-        list = list.concat($scope.appStateStore.connection.settings.associations['upazilla.' + upazilla]);
+    if (cryptomedic.serverSettings && cryptomedic.serverSettings.associations) {
+      if (cryptomedic.serverSettings.associations['upazilla.' + upazilla]) {
+        list = list.concat(cryptomedic.serverSettings.associations['upazilla.' + upazilla]);
       }
-      list = list.concat($scope.appStateStore.connection.settings.associations['upazilla.other']);
+      list = list.concat(cryptomedic.serverSettings.associations['upazilla.other']);
     }
     if (list.indexOf(current) < 0) {
       list = [ current ].concat(list);
