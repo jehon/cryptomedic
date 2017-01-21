@@ -249,7 +249,9 @@
             .requestWithPost()
             .requestToUrl('fiche/' + data.getModel())
             .requestWithData(nullify(data))
-            .then(function(data) { return new Folder(data); })
+            .then(function(data) {
+              return new Folder(data);
+            })
             ;
         },
 
