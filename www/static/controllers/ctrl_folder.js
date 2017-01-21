@@ -1,4 +1,4 @@
-
+/* global goThere,create,Folder,jQuery,calculations,template,getPref,setPref,date2CanonicString */
 function ctrl_folder($scope, $location, $routeParams) {
   /*
    * '/folder/:patient_id/:page?/:subtype?/:subid?/:mode?'
@@ -19,6 +19,12 @@ function ctrl_folder($scope, $location, $routeParams) {
   $scope.page = $routeParams['page'];
   $scope.subtype = $routeParams['subtype'];
   $scope.subid = $routeParams['subid'];
+  $scope.mode = $routeParams['mode'];
+
+
+  if (!$scope.mode) {
+    $scope.mode = "read";
+  }
 
   $scope.age = {};
 
@@ -42,7 +48,7 @@ function ctrl_folder($scope, $location, $routeParams) {
   let getFileThen = getDataService();
 
   if ($scope.patient_id < 0) {
-    getFileThen = getFileThen.then(dataService => Promise.resolve(new Folder()));
+    getFileThen = getFileThen.then(() => Promise.resolve(new Folder()));
     $scope.mode = 'add';
   } else {
     getFileThen = getFileThen.then(dataService => dataService.getFolder($scope.patient_id));
@@ -277,7 +283,7 @@ function ctrl_folder($scope, $location, $routeParams) {
 
     getDataService()
       .then(dataService => dataService.saveFile(cachedCurrentFile, $scope.patient_id))
-      .then(function(data) {
+      .then(function() {
       // The data is refreshed by navigating away...
         $scope.$emit('message', { 'level': 'success', 'text': 'The patient has been saved.'});
         goThere('/folder/' + $scope.patient_id);
@@ -293,7 +299,7 @@ function ctrl_folder($scope, $location, $routeParams) {
 
     getDataService()
       .then(dataService => dataService.deleteFile($scope.currentFile()))
-      .then(function(data) {
+      .then(function() {
         $scope.$emit('message', { 'level': 'success', 'text':    'The patient ' + $scope.currentFile().entryyear + '-' + $scope.currentFile().entryorder + ' has been deleted'});
         goThere();
         $scope.safeApply();
