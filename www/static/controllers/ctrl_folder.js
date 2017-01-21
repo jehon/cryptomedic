@@ -22,9 +22,9 @@ function ctrl_folder($scope, $location, $routeParams) {
   $scope.mode = $routeParams['mode'];
 
 
-  if (!$scope.mode) {
-    $scope.mode = "read";
-  }
+  // if (!$scope.mode) {
+  //   $scope.mode = "read";
+  // }
 
   $scope.age = {};
 
@@ -268,7 +268,7 @@ function ctrl_folder($scope, $location, $routeParams) {
       .then(function(data) {
         $scope.$emit('message', { 'level': 'success', 'text':  'The patient has been created.'});
         $scope.folder = data;
-        goThere('/folder/' + data.id);
+        goThere('/folder/' + data.newKey);
         $scope.safeApply();
       });
   };
