@@ -13,7 +13,6 @@ module.exports = {
       .setValue("#Patient_entryyear", 1998)
       .setValue("#Patient_Name", "rezaul")
       .myClick("#bottomsubmenu #patient_create")
-      .waitForElementNotVisible("#busy")
 
       .pause(1000)
 
@@ -25,7 +24,6 @@ module.exports = {
       .myClick("#topsubmenu #patient_delete")
       .acceptAlert()
 
-      .waitForElementNotVisible("#busy")
       .assert.myAssertHashIs("#/home")
 
       .end();
