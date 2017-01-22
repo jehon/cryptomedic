@@ -21,25 +21,33 @@ function ctrl_folder($scope, $location, $routeParams) {
   $scope.subid = $routeParams['subid'];
   $scope.mode = $routeParams['mode'];
 
-
-  // if (!$scope.mode) {
-  //   $scope.mode = "read";
-  // }
-
   $scope.age = {};
 
+  // folder/123
+  if (!$scope.page) {
+    $scope.mode = "read";
+    $scope.page = false;
+  }
+
+  // folder/123/edit
   if ($scope.page == 'edit') {
     // Map page to the mode (see ~>) in case of patient (short url, but wrong parameters)
     $scope.mode = $scope.page;
     $scope.page = false;
+    if ($scope.patient_id < 0) {
+      $scope.mode = 'add';
+    }
   }
 
-  $scope.folder = false;
-  var cachedCurrentFile = null;
   if ($scope.page == 'file' && !$scope.subid) {
     // Adding a file
     $scope.mode = 'add';
   }
+
+  $scope.folder = false;
+  var cachedCurrentFile = null;
+
+  console.log($routeParams, "page", $scope.page, "mode", $scope.mode);
 
   //----------------------
   //   Get data from the server
