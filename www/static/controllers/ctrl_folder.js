@@ -39,9 +39,14 @@ function ctrl_folder($scope, $location, $routeParams) {
     }
   }
 
-  if ($scope.page == 'file' && !$scope.subid) {
-    // Adding a file
-    $scope.mode = 'add';
+  if ($scope.page == 'file') {
+    if (!$scope.mode) {
+      $scope.mode = "read";
+    }
+    if (!$scope.subid) {
+      // Adding a file
+      $scope.mode = 'add';
+    }
   }
 
   $scope.folder = false;
