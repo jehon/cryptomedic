@@ -20,11 +20,11 @@
 	<tr ng-repeat="f in folder.getSubFiles()">
 		<td>#{{$index}}</td>
 		<td>
-			<a href="#/folder/{{patient_id}}/file/{{currentFile()._type}}/{{currentFile().id}}" class="btn btn-default" style="width: 100%">
-				{{f._type}}
+			<a href="#/folder/{{patient_id}}/file/{{f.getModel()}}/{{f.id}}" class="btn btn-default" style="width: 100%">
+				{{f.getModel()}}
 			</a>
 		</td>
 		<td>{{f.Date | date:'longDate' }}</td>
-		<td><span ng-include="template(f._type.toLowerCase(), 'summary')"></span></td>
+		<td><span ng-include="template(f.getModel().toLowerCase(), 'summary')"></span></td>
 	</tr>
 </table>
