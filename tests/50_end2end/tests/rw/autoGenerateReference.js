@@ -24,6 +24,7 @@ module.exports = {
       .myClick("#topsubmenu #patient_delete")
       .acceptAlert()
 
+      .pause(500)
       .assert.myAssertHashIs("#/home")
 
       .end();
