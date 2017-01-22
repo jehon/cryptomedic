@@ -27,9 +27,9 @@ exports.command = function(selector, callback) {
   },
   [ selector ], // arguments array to be passed
   function(result) {
-    if (typeof callback === 'function') {
-      callback.call(self, result);
-    }
+    // if (typeof callback === 'function') {
+    //   callback.call(self, result);
+    // }
   }
   );
   this.pause(100);
