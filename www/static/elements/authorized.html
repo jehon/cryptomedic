@@ -8,13 +8,16 @@
   </template>
 
   <script>
+    /* global jQuery */
     /* exported setAuthorizedObject */
+
+    let setAuthorizedObject_cb = jQuery.Callbacks();
+    let setAuthorizedObject_list = [];
 
     function setAuthorizedObject(authorizedObject = null) {
       let list = (authorizedObject ? Object.keys(authorizedObject) : []);
-      for(let el of document.getElementsByTagName("jh-authorized")) {
-        el.setAuthorizedList(list);
-      }
+      setAuthorizedObject_cb.fire(list);
+      setAuthorizedObject_list = list;
     }
 
     Polymer({
@@ -39,7 +42,8 @@
       },
 
       ready: function() {
-        this.setAuthorizedList([]);
+        setAuthorizedObject_cb.add((list) => { this.setAuthorizedList(list) });
+        this.setAuthorizedList(setAuthorizedObject_list);
       },
 
       setAuthorizedList: function(authorizedList) {
