@@ -16,6 +16,7 @@ module.exports = {
       .clearValue("input[ng-model='entryorder']")
       .setValue("input[ng-model='entryorder']", 104)
       .myClick("[ng-click='checkReference()']")
+      .waitForElementVisible("#button_create_reference", 5000, "The patient '1999-104' could not be created by reference. Does it already exists? Please delete it then...")
       .myClick("#button_create_reference")
 
       .waitForElementPresent("#Patient_Name")
