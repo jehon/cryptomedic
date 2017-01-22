@@ -8,9 +8,7 @@
   "dependencies": {
     "angular": "1.4.x",
     "angular-mocks": "1.4.x",
-    "angular-route": "1.4.x",
-    "redux": "^3.0.4",
-    "redux-logger": "latest"
+    "angular-route": "1.4.x"
   },
   "devDependencies": {
     "babel-core": "5.*",
