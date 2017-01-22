@@ -103,6 +103,7 @@ module.exports = (function() {
         .assert.containsText('#Patient_entryyear', entryyear)
         .waitForElementVisible('#Patient_entryorder')
         .assert.containsText('#Patient_entryorder', entryorder)
+        .pause(500)
         ;
 
       return client;
