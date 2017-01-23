@@ -197,6 +197,18 @@ function ctrl_folder($scope, $location, $routeParams) {
     $scope.folder = false;
     $scope.safeApply();
 
+    let prefs = getPref('file', {});
+    if (cachedCurrentFile.Date) {
+      prefs.date = cachedCurrentFile.Date;
+    }
+    if (cachedCurrentFile.ExaminerName) {
+      prefs.examinerName = cachedCurrentFile.ExaminerName;
+    }
+    if (cachedCurrentFile.Center) {
+      prefs.center = cachedCurrentFile.Center;
+    }
+    setPref('file', prefs);
+
     getDataService()
       .then(dataService => dataService.saveFile(cachedCurrentFile, $scope.patient_id))
       .then(function(data) {
@@ -229,17 +241,17 @@ function ctrl_folder($scope, $location, $routeParams) {
       alert('You have errors in your data. Please correct them and try again');
       return ;
     }
-    let prefs = getPref('files');
+    let prefs = getPref('file', {});
     if (cachedCurrentFile.Date) {
-      prefs['date'] = cachedCurrentFile.Date;
+      prefs.date = cachedCurrentFile.Date;
     }
     if (cachedCurrentFile.ExaminerName) {
-      prefs['examinerName'] = cachedCurrentFile.ExaminerName;
+      prefs.examinerName = cachedCurrentFile.ExaminerName;
     }
     if (cachedCurrentFile.Center) {
-      prefs['center'] = cachedCurrentFile.Center;
+      prefs.center = cachedCurrentFile.Center;
     }
-    setPref('files', prefs);
+    setPref('file', prefs);
 
     getDataService()
       .then(dataService => dataService.createFile(cachedCurrentFile))
