@@ -4,8 +4,11 @@ class Item extends Data {
   constructor(data, folder = null) {
     super(data);
     if (data == null) {
-      let store = appState().store;
-      var c = store.getState().prefs.files;
+      var c = getPref('file', {
+        examinerName: '',
+        center: '',
+        date: ''
+      });
       this.ExaminerName = c.examinerName;
       this.Center       = c.center;
       this.Date         = c.date;
