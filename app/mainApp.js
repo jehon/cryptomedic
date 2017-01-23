@@ -22,26 +22,17 @@ var mainApp = angular.module('app_main', [ 'ngRoute' ])
     $compileProvider.aHrefSanitizationWhitelist(/^\s*((https?|ftp|mailto|chrome-extension):|data:text,)/);
     $compileProvider.imgSrcSanitizationWhitelist($compileProvider.aHrefSanitizationWhitelist());
   }])
-  .filter('mypercentage', function() {
-    return function(text, rnd) {
-      text = text || '';
-      rnd = rnd || 2;
-      if (typeof(text) != 'number') {
-        if (parseFloat(text) != text) return text;
-        text = parseFloat(text);
-      }
-      return '' + (Math.round(text * 100 * Math.pow(10, rnd)) / Math.pow(10, rnd)) + '%';
-    };
-  })
-  // .filter('nl2br', [ '$sce', function($sce) {
-  //   return function(text) {
-  //     var t = text;
-  //     while (t.search('\n') >= 0) {
-  //       t = t.replace('\n', '<br>');
+  // .filter('mypercentage', function() {
+  //   return function(text, rnd) {
+  //     text = text || '';
+  //     rnd = rnd || 2;
+  //     if (typeof(text) != 'number') {
+  //       if (parseFloat(text) != text) return text;
+  //       text = parseFloat(text);
   //     }
-  //     return $sce.trustAsHtml(t);
+  //     return '' + (Math.round(text * 100 * Math.pow(10, rnd)) / Math.pow(10, rnd)) + '%';
   //   };
-  // }])
+  // })
   .directive('catchIt', function() {
     // http://tutorials.jenkov.com/angularjs/custom-directives.html#compile-and-link
     // http://stackoverflow.com/a/15298620
