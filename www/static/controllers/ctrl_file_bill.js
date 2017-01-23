@@ -8,7 +8,7 @@ function ctrl_file_bill($scope) {
   */
 
   $scope.$watch(function() {
-    return $scope.appStateStore.connection.settings;
+    return window.cryptomedic.serverSettings.prices;
   }, function() {
     $scope.currentFile().calculatePriceId();
     $scope.safeApply();
@@ -16,7 +16,7 @@ function ctrl_file_bill($scope) {
 
   $scope.$watch('currentFile().Date', function() {
     if ($scope.currentFile() && $scope.currentFile().calculatePriceId) {
-      $scope.currentFile().calculatePriceId($scope.appStateStore.connection.settings.prices);
+      $scope.currentFile().calculatePriceId(window.cryptomedic.serverSettings.prices);
       $scope.safeApply();
     } else {
       $scope.safeApply();
