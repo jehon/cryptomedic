@@ -41,13 +41,13 @@ window.bug_reporting = (function () {
       document.getElementsByTagName('body')[0].innerHTML = txt;
 
       // Username
-      document.getElementsByName('username')[0].value = appState().store.getState().connection.settings.username;
+      document.getElementsByName('username')[0].value = window.cryptomedic.serverSettings.username;
 
       // User email
       document.getElementsByName('email')[0].value = '';
 
       // Browser custom state
-      document.getElementsByName('browser_state')[0].value = JSON.stringify(appState().store.getState());
+      // document.getElementsByName('browser_state')[0].value = JSON.stringify(appState().store.getState());
 
       document.getElementsByName('url')[0].value = window.location;
       document.getElementsByName('browser_useragent')[0].value = navigator.userAgent;
