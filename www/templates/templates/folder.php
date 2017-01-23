@@ -78,7 +78,7 @@
   <div class='row'>
     <div id='folder_menu' ng-if="patient_id >= 0" class="col-sm-2" class="btn-group btn-group-justified btn-group-vertical">
       <jh-authorized value='folder.delete'>
-        <a id='button_add' ng-class="{ 'btn-warning': page == 'addfile'}" ng-href="#/folder/{{patient_id}}/addfile" class="btn btn-default" style="width: 100%">Add</a>
+        <a id='button_add' ng-class="{ 'btn-warning': page == 'addfile'}" ng-click="go('/folder/' + patient_id + '/addfile')" class="btn btn-default" style="width: 100%">Add</a>
       </jh-authorized>
       <a ng-class="{ 'btn-warning': page == 'summary'}" ng-href="#/folder/{{patient_id}}/summary" class="btn btn-default" style="width: 100%">Summary</a>
       <a ng-class="{ 'btn-warning': page == 'graphics'}" ng-href="#/folder/{{patient_id}}/graphics" class="btn btn-default" style="width: 100%">Graphics</a>
