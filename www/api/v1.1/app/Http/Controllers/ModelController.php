@@ -121,7 +121,7 @@ class ModelController extends Controller {
 
 	// Unfreeze special route
 	public function unfreeze($model, $id) {
-		$obj = $this->getObjectByModelAndId($model, $id);
+		$m = $this->getModelClass($model, $id);
 		$affectedRows = $m::where("id", "=", $id)->update([ "updated_at" => new \DateTime() ]);
 		if ($affectedRows > 1) {
 			abort(500, "Affected rows: " . $affectedRows);
