@@ -28,6 +28,7 @@
     "html2canvas": "^0.4.1",
     "excellentexport": "^2.0.0",
     "paper-tooltip": "^1.1.3",
-    "fetchfull-elements": "latest"
+    "fetchfull-elements": "latest",
+    "numeral-js": "^0.1.3"
   }
 }
