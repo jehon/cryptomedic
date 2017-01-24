@@ -22,17 +22,6 @@ var mainApp = angular.module('app_main', [ 'ngRoute' ])
     $compileProvider.aHrefSanitizationWhitelist(/^\s*((https?|ftp|mailto|chrome-extension):|data:text,)/);
     $compileProvider.imgSrcSanitizationWhitelist($compileProvider.aHrefSanitizationWhitelist());
   }])
-  // .filter('mypercentage', function() {
-  //   return function(text, rnd) {
-  //     text = text || '';
-  //     rnd = rnd || 2;
-  //     if (typeof(text) != 'number') {
-  //       if (parseFloat(text) != text) return text;
-  //       text = parseFloat(text);
-  //     }
-  //     return '' + (Math.round(text * 100 * Math.pow(10, rnd)) / Math.pow(10, rnd)) + '%';
-  //   };
-  // })
   .directive('catchIt', function() {
     // http://tutorials.jenkov.com/angularjs/custom-directives.html#compile-and-link
     // http://stackoverflow.com/a/15298620
@@ -94,28 +83,25 @@ var mainApp = angular.module('app_main', [ 'ngRoute' ])
   .directive('preview', function() {
     return {
       restrict: 'A',
-    // http://tutorials.jenkov.com/angularjs/custom-directives.html#compile-and-link
+      // http://tutorials.jenkov.com/angularjs/custom-directives.html#compile-and-link
       compile: function() {
         return function($scope, $element) {
         // var canvas = document.getElementById($attrs.preview);
         // var transcludeScope = $scope.$parent.$new();
 
           $element[0].onchange = function() {
-            // var busy = $scope.doBusy('Reducing the picture');
 
-          // http://hacks.mozilla.org/2011/01/how-to-develop-a-html5-image-uploader/
+            // http://hacks.mozilla.org/2011/01/how-to-develop-a-html5-image-uploader/
             var file = $element[0].files[0];
             if (!file.type.match(/image.*/)) {
               console.error('Not a picture?');
               alert('Are you sure it is a picture? If it is a picture, please send it by email to marielineet.jean@gmail.com to debug the application. Thank you');
-              // busy();
             }
 
             var img = document.createElement('img');
             var reader = new FileReader();
             reader.onerror = function(e) {
               console.error(e);
-              // busy();
             };
 
             reader.onload = function(e) {
