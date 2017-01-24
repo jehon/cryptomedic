@@ -204,92 +204,9 @@
           ;
         },
 
-        getFolder(id) {
-
-// How to cache getFolder for 1 minute if no change is made???
-// Should be stored in database + flag for getting it in db even if not synced
-
-          let finished = Promise.resolve();
-          // if (syncRemaining) {
-          if (true) {
-            // We are not finished, let's get the info from the server
-            finished = finished.then(() => {
-              return this.start()
-                .requestWithGet()
-                .requestToUrl('folder/' + id)
-                .then(json => {
-                  // Do this after asynchronously
-                  return json.folder;
-                })
-            });
-          }
-
-          // If no data available, look in the local database
-          finished = finished.then(json => {
-            /* global Folder */
-            let folder = new Folder();
-            for(let line of json) {
-              if (line.type == "Patient") {
-                /* global Patient */
-                folder.setMainFile(new Patient(line.record));
-              } else {
-                folder.addSubFile(create(line.type, line.record));
-              }
-            }
-            folder.sort();
-            return folder;
-          })
-
-          return finished;
-        },
-
-// Check here:
-        createFile(data) {
-          return this.start()
-            .requestWithPost()
-            .requestToUrl('fiche/' + data.getModel())
-            .requestWithData(nullify(data))
-            .then(function(data) {
-              return new Folder(data);
-            })
-            ;
-        },
-
-// Check here:
-        saveFile(data) {
-          return this.start()
-            .requestWithPut()
-            .requestToUrl('fiche/' + data.getModel() + '/' + data['id'])
-            .requestWithData(nullify(data))
-            .then(function(data) { return new Folder(data); })
-            ;
-        },
-
-// Check here:
-        deleteFile(data) {
-          return this.start()
-            .requestWithDelete()
-            .requestToUrl('fiche/' + data.getModel() + '/' + data['id'])
-            .then(function(data) { return new Folder(data); })
-            ;
-        },
-
-// Check here:
-        unlockFile(data) {
-          return this.start()
-            .requestWithGet()
-            .requestToUrl('unfreeze/' + data.getModel() + '/' + data['id'])
-            .then(function(data) { return new Folder(data); })
-            ;
-        },
-
-        'getReport': function(reportName, data) {
-          return this.start()
-            .requestWithGet()
-            /* global nullify */
-            .requestWithData(nullify(data))
-            .requestToUrl('reports/' + reportName)
-        },
+        /**************************/
+        /*** Patient            ***/
+        /**************************/
 
         'searchForPatients': function(params) {
           return this.start()
@@ -332,6 +249,101 @@
               'entryorder': order
             })
         },
+
+        getFolder(id) {
+
+// How to cache getFolder for 1 minute if no change is made???
+// Should be stored in database + flag for getting it in db even if not synced
+
+          let finished = Promise.resolve();
+          // if (syncRemaining) {
+          if (true) {
+            // We are not finished, let's get the info from the server
+            finished = finished.then(() => {
+              return this.start()
+                .requestWithGet()
+                .requestToUrl('folder/' + id)
+                .then(json => {
+                  // Do this after asynchronously
+                  return json.folder;
+                })
+            });
+          }
+
+          // If no data available, look in the local database
+          finished = finished.then(json => {
+            /* global Folder */
+            let folder = new Folder();
+            for(let line of json) {
+              if (line.type == "Patient") {
+                /* global Patient */
+                folder.setMainFile(new Patient(line.record));
+              } else {
+                folder.addSubFile(create(line.type, line.record));
+              }
+            }
+            folder.sort();
+            return folder;
+          })
+
+          return finished;
+        },
+
+        /**************************/
+        /*** Patient - File     ***/
+        /**************************/
+
+        createFile(data) {
+          return this.start()
+            .requestWithPost()
+            .requestToUrl('fiche/' + data.getModel())
+            .requestWithData(nullify(data))
+            .then(function(data) {
+              return new Folder(data);
+            })
+            ;
+        },
+
+        saveFile(data) {
+          return this.start()
+            .requestWithPut()
+            .requestToUrl('fiche/' + data.getModel() + '/' + data['id'])
+            .requestWithData(nullify(data))
+            .then(function(data) { return new Folder(data); })
+            ;
+        },
+
+        deleteFile(data) {
+          return this.start()
+            .requestWithDelete()
+            .requestToUrl('fiche/' + data.getModel() + '/' + data['id'])
+            .then(function(data) { return new Folder(data); })
+            ;
+        },
+
+        unlockFile(data) {
+          return this.start()
+            .requestWithGet()
+            .requestToUrl('unfreeze/' + data.getModel() + '/' + data['id'])
+            .then(function(data) { return new Folder(data); })
+            ;
+        },
+
+        /***********************/
+        /*** Report          ***/
+        /***********************/
+
+        'getReport': function(reportName, data) {
+          return this.start()
+            .requestWithGet()
+            /* global nullify */
+            .requestWithData(nullify(data))
+            .requestToUrl('reports/' + reportName)
+        },
+
+        /***********************/
+        /*** User management ***/
+        /***********************/
 
         'usersList': function() {
           return this.start()
