@@ -54,7 +54,6 @@
 
       isAuthorized(value, authorizedList, inversed) {
         if (inversed) {
-          console.log("inversed test: ", value);
           return !this.isAuthorized(value, authorizedList, false);
         }
         if (authorizedList == null) {
