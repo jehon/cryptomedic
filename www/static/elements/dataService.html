@@ -48,25 +48,6 @@
       window.cryptomedic = {};
       window.cryptomedic.serverSettings = {};
 
-      //************************************************************************************/
-      //**** Generic helper functions
-      function sortRecordByTimestamp(a, b) {
-        // -1 => a come first
-        if (a.checkpoint == b.checkpoint) {
-          return 0;
-        }
-        if (!a.checkpoint) {
-          return 1;
-        }
-        if (!b.checkpoint) {
-          return -1;
-        }
-        if (a.checkpoint < b.checkpoint) {
-          return -1
-        }
-        return 1;
-      }
-
       Polymer({
         is: 'cryptomedic-data-service',
 
@@ -82,6 +63,11 @@
 
         userCb,
         syncRemainingCb,
+
+
+        /**************************/
+        /*** Start              ***/
+        /**************************/
 
         start: function() {
           return this.$.network
@@ -100,27 +86,22 @@
 
               let finished = Promise.resolve();
 
-              let offline = json._offline;
-              delete(json._offline);
-
-              if (offline.reset) {
+              if (json._offline.reset) {
                 finished = finished.then(() => db.clear());
               }
 
-              // Run around the offline data, but after all this, send back the ORIGINAL json for treatment...
-              offline.data = offline.data.sort(sortRecordByTimestamp);
 
-              for(let rec of offline.data) {
-                // Bind to keep the actual value of "rec"
-                finished = finished.then(db.triageLine.bind(db, rec))
-              }
+              // Put OFFLINE data
+              finished = finished.then(() => {
+                db.triageList(json._offline.data, true);
+              })
 
               // If remaining, let's ask for them !!!
-              syncRemainingCb.fire(offline.remaining);
+              syncRemainingCb.fire(json._offline.remaining);
               if (syncRemaining == 0) {
                 syncRemaining = false;
               }
-              if (offline.remaining) {
+              if (json._offline.remaining) {
                 finished = finished.then(() => {
                   // This is not binded to what I hoped...
                   console.log("syncRemaining: TODO - syncing again disabled");

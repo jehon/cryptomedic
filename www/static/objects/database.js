@@ -8,6 +8,25 @@ let Database = (function() {
 
   let db = false;
 
+  //************************************************************************************/
+  //**** Generic helper functions
+  function sortRecordByTimestamp(a, b) {
+    // -1 => a come first
+    if (a.checkpoint == b.checkpoint) {
+      return 0;
+    }
+    if (!a.checkpoint) {
+      return 1;
+    }
+    if (!b.checkpoint) {
+      return -1;
+    }
+    if (a.checkpoint < b.checkpoint) {
+      return -1
+    }
+    return 1;
+  }
+
   return class Database {
     constructor() {
       if (!db) {
@@ -64,17 +83,38 @@ let Database = (function() {
     // ------------------ Business functions v2 ------------------------------
     /**
      *
+     * Store a list of records in the correct database
+     *
+     */
+    triageList(list, withCheckpoint = true) {
+      let finished = Promise.resolve();
+
+      // Run around the offline data, but after all this, send back the ORIGINAL json for treatment...
+      list.sort(sortRecordByTimestamp);
+
+      for(let rec of list) {
+        // Bind to keep the actual value of "rec"
+        finished = finished.then(() => { return db.triageLine(rec, withCheckpoint); })
+      }
+
+      return finished;
+    }
+
+    /**
+     *
      * Store a record in the correct database
      *
      */
-    triageLine(line) {
+    triageLine(line, withCheckpoint = true) {
       let finished = Promise.resolve();
       if (line.type == "Deleted") {
         finished = finished.then(() => this.deleteInDB(line.record.entity_type, line.record.entity_id));
       } else {
         finished = finished.then(() => this.storeInDB(line.type, line.record));
       }
-      finished = finished.then(() => this.checkpointInDB(line.checkpoint));
+      if (withCheckpoint) {
+        finished = finished.then(() => this.checkpointInDB(line.checkpoint));
+      }
       return finished;
     }
 
