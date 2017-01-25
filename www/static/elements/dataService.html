@@ -78,36 +78,40 @@
               window.location = "#login";
             })
             .onSuccess(json => {
-              console.log("Success: ", json);
               // Check offline data
-              if (!json._offline) {
-                return json;
-              }
-
               let finished = Promise.resolve();
 
-              if (json._offline.reset) {
+              // Do we reset the database?
+              if (json._offline && json._offline.reset) {
                 finished = finished.then(() => db.clear());
               }
 
+              // Put ONLINE data
+              if (typeof(json._online) != "undefined") {
+                finished = finished.then(() => {
+                  db.triageList(json._online.data, false);
+                })
+              }
 
               // Put OFFLINE data
-              finished = finished.then(() => {
-                db.triageList(json._offline.data, true);
-              })
-
-              // If remaining, let's ask for them !!!
-              syncRemainingCb.fire(json._offline.remaining);
-              if (syncRemaining == 0) {
-                syncRemaining = false;
-              }
-              if (json._offline.remaining) {
+              if (typeof(json._offline) != "undefined") {
                 finished = finished.then(() => {
-                  // This is not binded to what I hoped...
-                  console.log("syncRemaining: TODO - syncing again disabled");
-// TODO: how to continue syncing with or without background???
-                  // background(() => { this.doSync() });
-                });
+                  db.triageList(json._offline.data, true);
+                })
+
+                // If remaining, let's ask for them !!!
+                syncRemainingCb.fire(json._offline.remaining);
+                if (syncRemaining == 0) {
+                  syncRemaining = false;
+                }
+                if (json._offline.remaining) {
+                  finished = finished.then(() => {
+                    // This is not binded to what I hoped...
+                    console.log("syncRemaining: TODO - syncing again disabled");
+                    // TODO: how to continue syncing with or without background???
+                    // background(() => { this.doSync() });
+                  });
+                }
               }
 
               // Return final response with original data:
