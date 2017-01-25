@@ -17,8 +17,8 @@
 // https://raw.githubusercontent.com/GoogleChrome/sw-precache/master/demo/app/js/service-worker-registration.js
 
 /* eslint-env browser */
-'use strict';
-export default function activateCache() {
+/* exported activateCache */
+function activateCache() {
   if ('serviceWorker' in navigator) {
     // Your service-worker.js *must* be located at the top-level directory relative to your site.
     // It won't be able to control pages unless it's located at the same level or higher than them.
@@ -58,4 +58,3 @@ export default function activateCache() {
     });
   }
 }
-
