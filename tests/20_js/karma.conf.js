@@ -28,6 +28,8 @@ module.exports = function(config) {
 
     files : [
       'bower_components/webcomponentsjs/webcomponents-lite.js',
+      'bower_components/angular/angular.min.js',
+      'bower_components/angular-route/angular-route.min.js',
       {
         pattern: "bower_components/**",
         included: false,
