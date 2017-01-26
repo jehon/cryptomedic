@@ -39,13 +39,17 @@
     <script type='text/javascript' src='/bower_components/html2canvas/build/html2canvas.min.js'></script>
     <script type='text/javascript' src='/bower_components/excellentexport/excellentexport.js'></script>
     <script type='text/javascript' src='/bower_components/moment/min/moment.min.js'></script>
+    <script type='text/javascript' src='/bower_components/angular/angular.min.js'></script>
+    <script type='text/javascript' src='/bower_components/angular-route/angular-route.min.js'></script>
 
     <!-- - - - - - - - - - - - - -->
     <!-- JS - custom             -->
     <!-- - - - - - - - - - - - - -->
+    <script type='text/javascript' src='../static/service-worker-registration.js'></script>
+    <script type='text/javascript' src='../static/js/start.js'></script>
+
     <script type='text/javascript' src='../static/objects/exceptions.js'></script>
     <script type='text/javascript' src='../static/objects/database.js'></script>
-
 
     <script type='text/javascript' src='../static/js/amd_stats.js'></script>
     <script type='text/javascript' src='../static/js/background.js'></script>
@@ -56,7 +60,6 @@
     <script type='text/javascript' src='../static/js/html2canvas.js'></script>
     <script type='text/javascript' src='../static/js/nullify.js'></script>
     <script type='text/javascript' src='../static/js/prefs.js'></script>
-    <script type='text/javascript' src='../static/js/start.js'></script>
     <script type='text/javascript' src='../static/js/template.js'></script>
     <script type='text/javascript' src='../static/js/waitElement.js'></script>
 
@@ -101,9 +104,6 @@
     <link rel="import" href="/static/elements/loginStatus.html">
     <!-- <link rel="import" href="/static/elements/htmlbox.html"> -->
     <!-- <link rel="import" href="/static/elements/cryptomedic-file-payment.html"> -->
-
-
-    <script type='text/javascript' src='../static/service-worker-registration.js'></script>
 
   </head>
   <body ng-app="app_main" ng-controller="ctrl" id="ng-app" xxx-fullbleed xxx-unresolved>
