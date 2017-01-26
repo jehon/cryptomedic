@@ -1,7 +1,6 @@
 'use strict';
 
-import angular                  from 'angular';
-import                               'angular-route';
+/* global angular,ApplicationException,jQuery */
 
 var application = {};
 
@@ -220,5 +219,3 @@ mainApp.config([ '$routeProvider', function($routeProvider) {
 window.cryptomedic = {
   serverSettings: {}
 }
-
-export default mainApp;
