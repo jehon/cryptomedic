@@ -2,9 +2,9 @@
 
 /* global angular,ApplicationException,jQuery */
 
-var application = {};
+let application = {};
 
-var mainApp = angular.module('app_main', [ 'ngRoute' ])
+let mainApp = angular.module('app_main', [ 'ngRoute' ])
   .config([ '$compileProvider', function( $compileProvider ) {
     $compileProvider.aHrefSanitizationWhitelist(/^\s*((https?|ftp|mailto|chrome-extension):|data:text,)/);
     $compileProvider.imgSrcSanitizationWhitelist($compileProvider.aHrefSanitizationWhitelist());
