@@ -216,6 +216,3 @@ mainApp.config([ '$routeProvider', function($routeProvider) {
     }).otherwise({ 'redirectTo': '/home'});
 }]);
 
-window.cryptomedic = {
-  serverSettings: {}
-}
