@@ -1,89 +1,189 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
-    <meta charset='utf-8'>
     <title>Cryptomedic</title>
+    <meta charset='utf-8'>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <script>
+      window.Polymer = {
+        useNativeCSSProperties: true
+      };
+    </script>
 
-    <!-- Optional theme -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+    <!-- - - - - - - - - - - - - -->
+    <!-- CSS - globals           -->
+    <!-- - - - - - - - - - - - - -->
+    <link rel="stylesheet" type="text/css" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="/bower_components/jquery-ui/themes/base/core.css">
+    <link rel="stylesheet" type="text/css" href="/bower_components/jquery-ui/themes/base/theme.css">
+    <link rel="stylesheet" type="text/css" href="/bower_components/jquery-ui/themes/base/controlgroup.css">
+    <link rel="stylesheet" type="text/css" href="/bower_components/jquery-ui/themes/base/datepicker.css">
 
-    <!-- Latest compiled and minified JavaScript -->
-    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script> -->
+    <!-- - - - - - - - - - - - - -->
+    <!-- CSS - custom            -->
+    <!-- - - - - - - - - - - - - -->
+    <link rel="stylesheet" type="text/css" href="../static/css/application.css">
 
-    <style type='text/css'>
-      .flag {
-        display: inline-block;
-        width: 60px
-      }
+    <!-- - - - - - - - - - - - - -->
+    <!-- JS - globals            -->
+    <!-- - - - - - - - - - - - - -->
+    <script type='text/javascript' src='/bower_components/webcomponentsjs/webcomponents-lite.js'></script>
+    <script type='text/javascript' src='/bower_components/jquery/dist/jquery.min.js'></script>
+    <script type='text/javascript' src='/bower_components/bootstrap/dist/js/bootstrap.min.js'></script>
+    <script type='text/javascript' src='/bower_components/jquery-ui/jquery-ui.min.js'></script>
+    <script type='text/javascript' src='/bower_components/jquery-ui/ui/widgets/datepicker.js'></script>
+    <script type='text/javascript' src='/bower_components/dexie/dist/dexie.min.js'></script>
+    <script type='text/javascript' src='/bower_components/html2canvas/build/html2canvas.min.js'></script>
+    <script type='text/javascript' src='/bower_components/excellentexport/excellentexport.js'></script>
+    <script type='text/javascript' src='/bower_components/moment/min/moment.min.js'></script>
 
-      .flag > img {
-        height: 20px;
-      }
-    </style>
+    <!-- - - - - - - - - - - - - -->
+    <!-- JS - custom             -->
+    <!-- - - - - - - - - - - - - -->
+    <script type='text/javascript' src='../static/objects/exceptions.js'></script>
+    <script type='text/javascript' src='../static/objects/database.js'></script>
+
+
+    <script type='text/javascript' src='../static/js/amd_stats.js'></script>
+    <script type='text/javascript' src='../static/js/background.js'></script>
+    <script type='text/javascript' src='../static/js/calculations.js'></script>
+    <script type='text/javascript' src='../static/js/create.js'></script>
+    <script type='text/javascript' src='../static/js/date2CanonicString.js'></script>
+    <script type='text/javascript' src='../static/js/goThere.js'></script>
+    <script type='text/javascript' src='../static/js/html2canvas.js'></script>
+    <script type='text/javascript' src='../static/js/nullify.js'></script>
+    <script type='text/javascript' src='../static/js/prefs.js'></script>
+    <script type='text/javascript' src='../static/js/start.js'></script>
+    <script type='text/javascript' src='../static/js/template.js'></script>
+    <script type='text/javascript' src='../static/js/waitElement.js'></script>
+
+    <script type='text/javascript' src='../static/models/0Data.js'></script>
+    <script type='text/javascript' src='../static/models/0Item.js'></script>
+    <script type='text/javascript' src='../static/models/Folder.js'></script>
+    <script type='text/javascript' src='../static/models/Appointment.js'></script>
+    <script type='text/javascript' src='../static/models/Bill.js'></script>
+    <script type='text/javascript' src='../static/models/ClubFoot.js'></script>
+    <script type='text/javascript' src='../static/models/OtherConsult.js'></script>
+    <script type='text/javascript' src='../static/models/Patient.js'></script>
+    <script type='text/javascript' src='../static/models/Payment.js'></script>
+    <script type='text/javascript' src='../static/models/Picture.js'></script>
+    <script type='text/javascript' src='../static/models/RicketConsult.js'></script>
+    <script type='text/javascript' src='../static/models/Surgery.js'></script>
+
+    <script type='text/javascript' src='../static/controllers/ctrl_allgraphics.js'></script>
+    <script type='text/javascript' src='../static/controllers/ctrl_file_appointment.js'></script>
+    <script type='text/javascript' src='../static/controllers/ctrl_file_bill.js'></script>
+    <script type='text/javascript' src='../static/controllers/ctrl_folder.js'></script>
+    <script type='text/javascript' src='../static/controllers/ctrl_graphic.js'></script>
+    <script type='text/javascript' src='../static/controllers/ctrl_home.js'></script>
+    <script type='text/javascript' src='../static/controllers/ctrl_login.js'></script>
+    <script type='text/javascript' src='../static/controllers/ctrl_reports.js'></script>
+    <script type='text/javascript' src='../static/controllers/ctrl_search.js'></script>
+    <script type='text/javascript' src='../static/controllers/ctrl_users.js'></script>
+    <script type='text/javascript' src='../static/controllers/mainApp.js'></script>
+
+    <!-- - - - - - - - - - - - - -->
+    <!-- Web Elements - globals  -->
+    <!-- - - - - - - - - - - - - -->
+    <link rel="import" href="/bower_components/paper-tooltip/paper-tooltip.html">
+    <link rel="import" href="/bower_components/fetchfull-elements/src/fetchfull-element.html">
+    <link rel="import" href="/bower_components/numeral-js/numeral-js.html">
+
+    <!-- - - - - - - - - - - - - -->
+    <!-- HTML Element - custom   -->
+    <!-- - - - - - - - - - - - - -->
+    <link rel="import" href="/static/elements/authorized.html">
+    <link rel="import" href="/static/elements/codage.html">
+    <link rel="import" href="/static/elements/dataService.html">
+    <link rel="import" href="/static/elements/loginStatus.html">
+    <!-- <link rel="import" href="/static/elements/htmlbox.html"> -->
+    <!-- <link rel="import" href="/static/elements/cryptomedic-file-payment.html"> -->
+
+
+    <script type='text/javascript' src='../static/service-worker-registration.js'></script>
+
   </head>
-  <body>
-    <div class="container">
-      <div class="row">
-        <div class="col-md-offset-3 col-md-6">
-          <h1 class="page-header">Cryptomedic</h1>
-          <div>
-            <h3>Online/live mode</h3>
-            <div>
-              This mode is the normal mode to access the application. It should be used when other mode are not visible, and when problem arise in other modes.
-              <br>
-              By default, it should be used in France.
-            </div>
-            <a class='btn btn-default' href='../online/'>
-              <span class='flag'>
-                <img src="../static/img/go.gif" alt='application'>
-              </span>
-              Access to the traditional application
-            </a>
-          </div>
-          <div id='mode_application' style='display: none'>
-            <h3>Application mode</h3>
-            <div>
-            To have this mode enabled, you need a recent browser (Firefox >= 44 - this browser has been released on january 25). Please update your
-            Firefox browser.
-            </div>
-            <a class='btn btn-default' href='../build/'>
-              <span class='flag'>
-                <img src="../static/img/bangladesh.svg" alt="Bangladesh flag">
-              </span>
-              Access to the offline application
-            </a>
-          </div>
-          <div>
-            <h3>Contact me</h3>
-            If you have any suggestion, or if you want to contact me for any reasons, please do so here:
-              <a class='btn btn-default' href='mailto:marielineet.jean+cryptomedic@gmail.com'>
-                <span class='glyphicon glyphicon-envelope'></span>
-                marielineet.jean+cryptomedic@gmail.com
+  <body ng-app="app_main" ng-controller="ctrl" id="ng-app" xxx-fullbleed xxx-unresolved>
+    <!--  Navigation bar -->
+
+    <nav class="navbar navbar-default navbar-static-top" role="navigation">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header" style='width: 100%'>
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#menuMain">
+            <span class="sr-only">Toggle navigation</span>
+          </button>
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+              <a id='menu_home' href="#/home" class="navbar-link">
+                <jh-authorized value="application.open">
+                  <img src="../static/img/home.gif" height="20px"/>
+                  Home
+                </jh-authorized>
               </a>
-            <br>
-            Don't hesitate, I am there for you !
-            <br>
-            <br>
-            <br>
-            Have a good day<br>
-            Jean<br>
-          </div>
+            </li>
+            <li><a id='menu_search' href="#/search" class="navbar-link">
+              <jh-authorized value="folder.read">
+                <img src="../static/img/patientsSearch.gif" height="20px"/>
+                Search a patient
+              </jh-authorized>
+            </a></li>
+            <li><a id='menu_consults' href="#/reports/consultations" class="navbar-link">
+              <jh-authorized value="planning.execute">
+                <img src="../static/img/consultOfDay.gif" height="20px"/>
+                Consults of the day
+              </jh-authorized>
+            </a></li>
+            <li><a id='bug_reporting' href="javascript:bug_reporting()" class="navbar-link">
+              <img src="../static/img/bug.jpeg"/>
+              Bug
+            </a></li>
+            <li><p class="navbar-text">
+                <cryptomedic-login-status></cryptomedic-login-status>
+            </p></li>
+            <li class="dropdown">
+              <a id='menu_more' href="javascript:" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                More<span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu">
+                <li><a id='menu_users'  href='#/users'>
+                  <jh-authorized value="users.manage">
+                    <img src="../static/img/users.png" height="20px"/>
+                    Users
+                  </jh-authorized>
+                </a></li>
+                <li><a id='menu_matrix'  href='/api/v1.1/admin/securityMatrix'>
+                  <jh-authorized value="admin.securityMatrix">
+                    <img src="../static/img/matrix.png" height="20px"/>
+                    Matrix
+                  </jh-authorized>
+                </a></li>
+                <li><a id='menu_reports' href="#/reports" class="navbar-link">
+                  <jh-authorized value="reports.execute">
+                    <img src="../static/img/reports.gif" height="20px"/>
+                    Reports
+                  </jh-authorized>
+                </a></li>
+              </ul>
+            </li>
+          </ul>
         </div>
       </div>
+    </nav>
+    <div class='container-fluid'>
+      <!--  Pending screen -->
+      <cryptomedic-data-service id='dataService'>
+        <div>
+          <div ng-view></div>
+        </div>
+      </cryptomedic-data-service>
     </div>
-    <script type='text/javascript'>
-    function show(id) {
-      console.log("Supported: ", id);
-      div = document.getElementById(id);
-      div.style.display = '';
-    };
 
-    if (ServiceWorker) {
-      show("mode_application");
-    }
-    </script>
+    <!-- script here, so they are after the webpack loaded plugin -->
+
+    <script type='text/javascript' src='../static/js/bugreporting.js'></script>
   </body>
 </html>

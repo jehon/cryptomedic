@@ -1,9 +1,0 @@
-#!/bin/bash
-
-# Stop on error
-set -e
-
-if [ -e package.json ]; then
-  echo -e "\e[1m\e[45mNPM\e[0m"
-  npm run build
-fi
