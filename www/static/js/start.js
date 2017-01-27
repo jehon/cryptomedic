@@ -1,3 +1,7 @@
+
+let API_VERSION='v1.1';
+
+
 if (!Promise || !indexedDB || !sessionStorage || !fetch) {
   window.location.href = '/static/upgrade.html';
 }
