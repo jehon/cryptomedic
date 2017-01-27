@@ -89,9 +89,9 @@ class PictureController extends Controller {
 		return $file;
 	}
 
-	public function _buildResponse($file, $response) {
-
-    return $response
+	public function _buildResponse($file) {
+    return response()
+      ->download($file)
   		->setLastModified((new \DateTime())->setTimestamp(filemtime($file)))
   		->setExpires(new \DateTime("next year"))
   		;
@@ -99,7 +99,7 @@ class PictureController extends Controller {
 
 	public function getFile($id) {
 		$file = $this->_file($id);
-		return $this->_buildResponse($file, response()->download($file));
+		return $this->_buildResponse($file);
 		// ->file($realfile);
 	}
 
@@ -107,7 +107,7 @@ class PictureController extends Controller {
 		$file = $this->_file($id);
 		$file = $this->_buildThumbnail($file);
 		// var_dump($file);
-		return $this->_buildResponse($file, response()->download($file));
+		return $this->_buildResponse($file);
 	}
 
 	public function _buildThumbnail($file) {
