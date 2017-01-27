@@ -1,3 +1,4 @@
+/* global API_VERSION */
 'use strict';
 
 class Picture extends Item {
@@ -14,10 +15,10 @@ class Picture extends Item {
   }
 
   getPictureUrl() {
-    return '/api/v1.0/picture/' + this.id;
+    return '/api/' + API_VERSION + '/picture/' + this.id;
   }
 
   getThumbnailUrl() {
-    return '/api/v1.0/picture/' + this.id + '/thumbnail';
+    return '/api/' + API_VERSION + '/picture/' + this.id + '/thumbnail';
   }
 }

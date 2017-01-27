@@ -23,9 +23,11 @@
         // Store the information locally at least
         syncRemaining = data;
       });
-      // syncRemainingCb.add((data) => {
-      //   console.log("syncRemaining callback: ", data);
-      // });
+
+      // Debug
+      syncRemainingCb.add((data) => {
+        console.log("syncRemaining callback: ", data);
+      });
 
       // Build up the cryptomedicComputerId
       if (!localStorage.cryptomedicComputerId) {
@@ -57,7 +59,7 @@
           // Hook in requestToUrl to add the prefix:
           let r = this.$.network.requestToUrl;
           this.$.network.requestToUrl = function(url) {
-            return r.call(this, '/api/v1.1/' + url);
+            return r.call(this, '/api/' + API_VERSION + '/' + url);
           }
         },
 
