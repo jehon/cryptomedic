@@ -25,12 +25,10 @@
 						</jh-authorized>
 					</td>
 					<td>
-						<jh-authorized value='folder.edit'>
-							<input preview='preview' type="file" name="fileContent" id='file'>
-							<div ng-if='errors.pictureRequired'>
-								<div class='jserror'>Error: you need to add the picture before saving the file.</div>
-							</div>
-						</jh-authorized>
+						<input preview='preview' type="file" name="fileContent" id='file'>
+						<div ng-if='errors.pictureRequired'>
+							<div class='jserror'>Error: you need to add the picture before saving the file.</div>
+						</div>
 					</td>
 				</tr>
 			</table>
