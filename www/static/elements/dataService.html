@@ -10,7 +10,7 @@
   </template>
 
   <script>
-    /* global jQuery, Database, background */
+    /* global jQuery, Database, background, API_VERSION */
     (function() {
       let userCb = jQuery.Callbacks();
       // userCb.add((data) => {
@@ -247,6 +247,7 @@
 // Should be stored in database + flag for getting it in db even if not synced
 
           let finished = Promise.resolve();
+
           // if (syncRemaining) {
           if (true) {
             // We are not finished, let's get the info from the server
