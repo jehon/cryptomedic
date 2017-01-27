@@ -99,6 +99,7 @@ Route::group([ 'prefix' => '/api/' . basename(dirname(__DIR__)) ], function() {
         Route::get('picture/{id}', [
           "uses" => "PictureController@getFile"
         ]);
+
         Route::get('picture/{id}/thumbnail', [
           "uses" => "PictureController@getThumbnail"
         ]);
