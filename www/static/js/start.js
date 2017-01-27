@@ -1,5 +1,6 @@
 
 let API_VERSION='v1.1';
+// Also change matrix url in index.html
 
 
 if (!Promise || !indexedDB || !sessionStorage || !fetch) {
