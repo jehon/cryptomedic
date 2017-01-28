@@ -40,8 +40,5 @@
     "webcomponentsjs": "^1.0.2"
   },
   "scripts": {
-    "build": "webpack --config webpack.js -p",
-    "dev-server": "node server.js",
-    "dev-server-quiet": "node server.js | grep 'built\\|error\\|VALID'"
   }
 }
