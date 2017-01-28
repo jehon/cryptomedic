@@ -3,11 +3,13 @@
 require_once("SyncableTestCase.php");
 
 class BillTest extends SyncableTestCase {
+  protected $model = "Bill";
+
 
 	public function testCreateWithoutPatientId() {
     $response = $this->myRunAssertQuery(
         $this->getNewRequestOptionsBuilder()
-          ->setUrl("fiche/Bill")
+          ->setUrl("fiche/" . $this->model)
           ->setMethod("POST")
           ->setExpected(400)
           ->asText()
@@ -16,12 +18,12 @@ class BillTest extends SyncableTestCase {
 
 	public function testCreate() {
 		// Create it
-    $id = $this->doCreate("Bill", [ "patient_id" => '1' ])->online[0]->id;
+    $id = $this->doCreate($this->model, [ "patient_id" => '1' ])->online[0]->id;
 
 		// Modify it
-    $this->doUpdate("Bill", $id, [ "ExaminerName" => "Ershad" ]);
+    $this->doUpdate($this->model, $id, [ "ExaminerName" => "Ershad" ]);
 
 		// Delete it
-    $this->doDelete("Bill", $id);
+    $this->doDelete($this->model, $id);
 	}
 }
