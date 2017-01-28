@@ -16,41 +16,12 @@ class BillTest extends SyncableTestCase {
 
 	public function testCreate() {
 		// Create it
-    $json = $this->myRunAssertQuery(
-        $this->getNewRequestOptionsBuilder()
-          ->setUrl("fiche/Bill")
-          ->setMethod("POST")
-          ->setParams([ "patient_id" => '1' ])
-      );
-
-		$this->assertObjectHasAttribute('newKey', $json);
-    $this->assertNotNull($json->newKey);
-
-  	$key = $json->newKey;
-
-  	$i = $this->myAssertIsInData($json->online, "Bill", $key);
+    $id = $this->doCreate("Bill", [ "patient_id" => '1' ])->online[0]->id;
 
 		// Modify it
-    $json = $this->myRunAssertQuery(
-        $this->getNewRequestOptionsBuilder()
-          ->setUrl("fiche/Bill/" . $key)
-          ->setMethod("PUT")
-          ->setParams([ 'ExaminerName' => 'Ershad' ])
-      );
-
-		$this->assertEquals($key, $json->id);
-    $this->assertCount(1, $json->online);
-  	$i = $this->myAssertIsInData($json->online, "Bill", $key);
-  	$this->assertEquals("Ershad", $json->online[$i]->record->ExaminerName);
+    $this->doUpdate("Bill", $id, [ "ExaminerName" => "Ershad" ]);
 
 		// Delete it
-    $json = $this->myRunAssertQuery(
-        $this->getNewRequestOptionsBuilder()
-          ->setUrl("fiche/Bill/" . $key)
-          ->setMethod("DELETE")
-      );
-
-    $this->assertCount(1, $json->online);
-  	$i = $this->myAssertIsInData($json->online, "Deleted", false, [ "entity_type" => "Bill", "entity_id" => $key ]);
+    $this->doDelete("Bill", $id);
 	}
 }
