@@ -99,6 +99,10 @@ class CryptomedicModel extends Model {
 		$deleted->save();
 
 		// Let's go delete it...
-		return parent::delete();
+		$res = parent::delete();
+		if (!$res) {
+			return false;
+		}
+		return $deleted;
 	}
 }

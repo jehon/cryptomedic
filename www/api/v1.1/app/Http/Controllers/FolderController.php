@@ -63,7 +63,7 @@ class FolderController extends Controller {
 
 	public function show($id) {
 		return response()->json([
-			"folder" => $this->getFolder($id),
+			"online" => $this->getFolder($id),
 			"id" => $id
 		]);
 	}

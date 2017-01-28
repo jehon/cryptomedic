@@ -26,6 +26,7 @@ class FolderTest extends SyncableTestCase {
     $opt = $this->getNewRequestOptionsBuilder()
       ->setUrl("folder/1");
     $json = $this->myRunAssertQueryForRoles($opt);
+    $this->assertEquals(1, $json->id);
 	}
 
 	public function testSearchAllowed() {

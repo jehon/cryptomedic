@@ -38,6 +38,14 @@ class ModelController extends Controller {
 		return $m::findOrFail($id);
 	}
 
+	protected function getOnlineObject($model, $id) {
+		return (object) [
+			"record" => $this->getObjectByModelAndId($model, $id),
+			"id" => $id,
+			"type" => $model
+		];
+	}
+
 	// POST = create
 	public function create($model) {
 		$data = Input::except('_type');
@@ -63,23 +71,29 @@ class ModelController extends Controller {
 			$id = $id[0]->id;
 
 			if (!$id) {
-				abort(500, "Could not create the patient");
+				abort(500, "Could not create the $model");
 			}
 
-			$m::findOrFail($id);
+			// $m::findOrFail($id);
 			$res = $this->update("Patient", $id);
-			return response()->json([ 'newKey' => $id ]);
+			if (!$res) {
+				abort(500, "Could not update the created $model");
+			}
+		} else {
+			// \DB::enableQueryLog();
+			$newObj = $m::create($data);
+			// print_r(\DB::getQueryLog());
+			if (!$newObj->id) {
+				abort(500, "Could not create the file");
+			}
+			$id = $newObj->id;
 		}
 
-		// \DB::enableQueryLog();
-		$newObj = $m::create($data);
-		// print_r(\DB::getQueryLog());
-
-		if (!$newObj->id) {
-			abort(500, "Could not create the file");
-		}
-
-		return response()->json([ 'newKey' => $newObj->id ]);
+		return response()->json([ 'newKey' => $id,
+			'online' => [
+				$this->getOnlineObject($model, $id)
+			]
+		]);
 	}
 
 	// PUT / PATCH
@@ -101,7 +115,11 @@ class ModelController extends Controller {
 		}
 
 		$obj->save();
-		return response()->json([ "id" => $obj->id ]);
+		return response()->json([ "id" => $obj->id,
+			"online" => [
+				$this->getOnlineObject($model, $id)
+			]
+		]);
 	}
 
 	// DELETE
@@ -111,12 +129,24 @@ class ModelController extends Controller {
 		if (!$obj) {
 			return response()->json(array());
 		}
-		if(!$obj->delete()) {
+		$deleted = $obj->delete();
+		if(!$deleted) {
 			abort(404, "Could not delete $model@$id");
 		}
 
+		$deletedObj = ((object) [
+			"record" => $deleted,
+			"type" => 'Deleted',
+			"id" => $deleted->id
+		]);
+
+
 		// quid if patient has dependancies? -> see Patient model http://laravel.com/docs/5.0/eloquent#model-events
-		return response()->json(array());
+		return response()->json([
+			"online" => [
+				$deletedObj
+			]
+		]);
 	}
 
 	// Unfreeze special route
@@ -126,6 +156,10 @@ class ModelController extends Controller {
 		if ($affectedRows > 1) {
 			abort(500, "Affected rows: " . $affectedRows);
 		}
-		return response()->json([ "id" => $id ]);
+		return response()->json([ "id" => $id,
+			"online" => [
+				$this->getOnlineObject($model, $id)
+			]
+		]);
 	}
 }

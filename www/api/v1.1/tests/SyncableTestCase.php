@@ -76,10 +76,10 @@ class SyncableTestCase extends RouteReferenceTestCase {
     return $this->sync();
   }
 
-  public function myAssertIsInOfflineData($offline, $type, $id = false, $data = false) {
+  public function myAssertIsInData($list, $type, $id = false, $data = false) {
     $found = false;
-    foreach(array_reverse(array_keys($offline->data)) as $i => $v) {
-      $v = $offline->data[$i];
+    foreach(array_reverse(array_keys($list)) as $i => $v) {
+      $v = $list[$i];
       if ($v->type != $type) {
         continue;
       }
