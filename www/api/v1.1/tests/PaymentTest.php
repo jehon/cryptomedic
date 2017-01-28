@@ -6,7 +6,7 @@ class PaymentTest extends SyncableTestCase {
   protected $model = "Payment";
 
 
-  public function testCreateWithoutPatientId() {
+  public function testCreateWithoutBillId() {
     $response = $this->myRunAssertQuery(
         $this->getNewRequestOptionsBuilder()
           ->setUrl("fiche/" . $this->model)
