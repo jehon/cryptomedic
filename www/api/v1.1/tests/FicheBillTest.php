@@ -2,7 +2,7 @@
 
 require_once("SyncableTestCase.php");
 
-class BillTest extends SyncableTestCase {
+class FicheBillTest extends SyncableTestCase {
   protected $model = "Bill";
 
 
