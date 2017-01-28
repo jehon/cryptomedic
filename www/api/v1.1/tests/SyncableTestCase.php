@@ -121,7 +121,7 @@ class SyncableTestCase extends RouteReferenceTestCase {
 
     $id = $json->newKey;
 
-    $i = $this->myAssertIsInData($json->online, "Bill", $id);
+    $i = $this->myAssertIsInData($json->online, $model, $id);
     foreach($data as $k => $v) {
       $this->assertEquals($v, $json->online[$i]->record->$k);
     }
@@ -138,7 +138,7 @@ class SyncableTestCase extends RouteReferenceTestCase {
 
     $this->assertEquals($id, $json->id);
     $this->assertCount(1, $json->online);
-    $i = $this->myAssertIsInData($json->online, "Bill", $id);
+    $i = $this->myAssertIsInData($json->online, $model, $id);
     foreach($data as $k => $v) {
       $this->assertEquals($v, $json->online[$i]->record->$k);
     }
