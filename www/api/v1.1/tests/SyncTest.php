@@ -32,35 +32,35 @@ class SyncTest extends SyncableTestCase {
     $r = 48;
     $this->syncReset();
     $offline = $this->getNext(1);
-    $this->myAssertIsInOfflineData($offline, "Picture", 1);
+    $this->myAssertIsInData($offline->data, "Picture", 1);
     $this->assertEquals($r--, $offline->remaining);
 
     $offline = $this->getNext(1);
-    $this->myAssertIsInOfflineData($offline, "Patient", 7);
+    $this->myAssertIsInData($offline->data, "Patient", 7);
     $this->assertEquals($r--, $offline->remaining);
 
     $offline = $this->getNext(1);
-    $this->myAssertIsInOfflineData($offline, "Picture", 2);
+    $this->myAssertIsInData($offline->data, "Picture", 2);
     $this->assertEquals($r--, $offline->remaining);
 
     $offline = $this->getNext(1);
-    $this->myAssertIsInOfflineData($offline, "Bill", 1);
+    $this->myAssertIsInData($offline->data, "Bill", 1);
     $this->assertEquals($r--, $offline->remaining);
 
     $offline = $this->getNext(1);
-    $this->myAssertIsInOfflineData($offline, "Patient", 1);
+    $this->myAssertIsInData($offline->data, "Patient", 1);
     $this->assertEquals($r--, $offline->remaining);
 
     $offline = $this->getNext(1);
-    $this->myAssertIsInOfflineData($offline, "Patient", 2);
+    $this->myAssertIsInData($offline->data, "Patient", 2);
     $this->assertEquals($r--, $offline->remaining);
 
     $offline = $this->getNext(1);
-    $this->myAssertIsInOfflineData($offline, "Patient", 3);
+    $this->myAssertIsInData($offline->data, "Patient", 3);
     $this->assertEquals($r--, $offline->remaining);
 
     $offline = $this->getNext(1);
-    $this->myAssertIsInOfflineData($offline, "Patient", 4);
+    $this->myAssertIsInData($offline->data, "Patient", 4);
     $this->assertEquals($r--, $offline->remaining);
 
     $offline = $this->getNext($r); // $r-- -> already $r - 1
@@ -77,21 +77,21 @@ class SyncTest extends SyncableTestCase {
     $this->assertTrue($res);
     $offline  = self::getNext(1000);
     $this->assertEquals(0, $offline->remaining);
-    $this->myAssertIsInOfflineData($offline, "Patient", 1);
+    $this->myAssertIsInData($offline->data, "Patient", 1);
 
     // Change file
     $res = DB::statement("UPDATE bills SET updated_at = NOW() WHERE id = 3 LIMIT 1");
     $this->assertTrue($res);
     $offline = self::getNext(1000);
     $this->assertEquals(0, $offline->remaining);
-    $this->myAssertIsInOfflineData($offline, "Bill", 3);
+    $this->myAssertIsInData($offline->data, "Bill", 3);
 
     // Simulating deleting a sub file for a patient
     $res = DB::statement("INSERT INTO deleteds(created_at, entity_type, entity_id) VALUES (NOW(), 'Bill', '1010')");
     $this->assertTrue($res);
     $offline = self::getNext(1000);
     $this->assertEquals(0, $offline->remaining);
-    $this->myAssertIsInOfflineData($offline, "Deleted", false, [ "entity_type" => "Bill", "entity_id" => 1010 ]);
+    $this->myAssertIsInData($offline->data, "Deleted", false, [ "entity_type" => "Bill", "entity_id" => 1010 ]);
   }
 
   public function testChangesInDatabase() {

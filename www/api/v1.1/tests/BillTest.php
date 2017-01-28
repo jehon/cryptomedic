@@ -28,7 +28,7 @@ class BillTest extends SyncableTestCase {
 
   	$key = $json->newKey;
 
-  	$i = $this->myAssertIsInOfflineData($json->_offline, "Bill", $key);
+  	$i = $this->myAssertIsInData($json->online, "Bill", $key);
 
 		// Modify it
     $json = $this->myRunAssertQuery(
@@ -39,9 +39,9 @@ class BillTest extends SyncableTestCase {
       );
 
 		$this->assertEquals($key, $json->id);
-    $this->assertCount(1, $json->_offline->data);
-  	$i = $this->myAssertIsInOfflineData($json->_offline, "Bill", $key);
-  	$this->assertEquals("Ershad", $json->_offline->data[$i]->record->ExaminerName);
+    $this->assertCount(1, $json->online);
+  	$i = $this->myAssertIsInData($json->online, "Bill", $key);
+  	$this->assertEquals("Ershad", $json->online[$i]->record->ExaminerName);
 
 		// Delete it
     $json = $this->myRunAssertQuery(
@@ -50,7 +50,7 @@ class BillTest extends SyncableTestCase {
           ->setMethod("DELETE")
       );
 
-    $this->assertCount(1, $json->_offline->data);
-  	$i = $this->myAssertIsInOfflineData($json->_offline, "Deleted", false, [ "entity_type" => "Bill", "entity_id" => $key ]);
+    $this->assertCount(1, $json->online);
+  	$i = $this->myAssertIsInData($json->online, "Deleted", false, [ "entity_type" => "Bill", "entity_id" => $key ]);
 	}
 }
