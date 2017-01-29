@@ -263,8 +263,7 @@
                 .requestWithGet()
                 .requestToUrl('folder/' + id)
                 .then(json => {
-                  // Do this after asynchronously
-                  return json.folder;
+                  return json.online;
                 })
             });
           }
