@@ -81,6 +81,10 @@ let Database = (function() {
     }
 
     // ------------------ Business functions v2 ------------------------------
+    getDB(type) {
+      return db[type];
+    }
+
     /**
      *
      * Store a list of records in the correct database
@@ -98,10 +102,6 @@ let Database = (function() {
       }
 
       return finished;
-    }
-
-    getDB(type) {
-      return db[type];
     }
 
     /**
