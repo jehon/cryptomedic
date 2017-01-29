@@ -98,7 +98,7 @@ let Database = (function() {
 
       for(let rec of list) {
         // Bind to keep the actual value of "rec"
-        finished = finished.then(() => { return this.triageLine(rec, withCheckpoint); })
+        finished = finished.then(this.triageLine.bind(this, rec, withCheckpoint))
       }
 
       return finished;
