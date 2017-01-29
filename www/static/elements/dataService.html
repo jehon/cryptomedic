@@ -101,8 +101,12 @@
                   db.triageList(json._offline.data, true);
                 })
 
-                // TODO: store the final checkpoint !!!
-                // (in case the last line is also present in online)
+                // Store the final checkpoint
+                // in case the last line is also present in online, and thus pruned
+                // by the optimization...
+                finished = finished.then(() => {
+                  db.checkpointInDB(json._offline.checkpoint);
+                })
 
                 // If remaining, let's ask for them !!!
                 syncRemainingCb.fire(json._offline.remaining);
