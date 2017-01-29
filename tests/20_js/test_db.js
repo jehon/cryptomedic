@@ -12,12 +12,12 @@ describe('DB/Generic', function() {
   function checkFolder(id, entryyear, entryorder) {
     return db.getFolder(id)
       .then(function(data) {
-        expect(data.id).toBe('' + id);
+        expect(data[0].id).toBe(id);
         return data;
       })
       .then(() => { return db.getByReference(entryyear, entryorder); })
       .then(function(data) {
-        expect(data.id).toBe('' + id);
+        expect(data[0].id).toBe(id);
         return data;
       })
       .catch((e) => {
@@ -69,23 +69,21 @@ describe('DB/Generic', function() {
       });
   });
 
-//   it('should be able to store any patient', function(done) {
-//     // http://localhost/cryptomedic/api/v1.0/sync?cp=
-//     loadMock('mock_sync').then(function(json) {
-//       var p = db.clear();
-//       for(var i in json._offline.data) {
-//         p = p.then(() => db.triageLine(json._offline.data[i]));
-//       }
-//       p
-//         .then(() => checkFolder(7, 2001, 4))
-//         .then(() => checkFolder(3, 2014, 103))
-//         .then(() => checkFolder(4, 2014, 104))
-//         .then(() => checkFolder(1, 2000, 1))
-//         .then(() => checkFolder(6, 2001, 1))
-//         .then(() => checkFolder(5, 2014, 105))
-//         .then(() => checkFolder(2, 2014, 107))
-//         .then(done);
-//     });
+  it('should be able to store any patient', function(done) {
+    // http://localhost/cryptomedic/api/v1.1/sync?cp=
+    loadMock('mock_sync').then(function(json) {
+      var p = db.clear();
+      p
+        .then(() => { return db.triageList(json._offline.data, true); })
+        .then(() => checkFolder(7, 2001, 4))
+        .then(() => checkFolder(3, 2014, 103))
+        .then(() => checkFolder(4, 2014, 104))
+        .then(() => checkFolder(1, 2000, 1))
+        .then(() => checkFolder(6, 2001, 1))
+        .then(() => checkFolder(5, 2014, 105))
+        .then(() => checkFolder(2, 2014, 107))
+        .then(done);
+    });
 
-//   });
+  });
 });
