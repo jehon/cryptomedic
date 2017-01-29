@@ -166,5 +166,18 @@ let Database = (function() {
       })
     }
 
+    getPatientByReference(year, order) {
+      return db.Patient
+        .where('[entryyear+entryorder]')
+        .equals([ year, order ])
+        .first()
+        .then((patient) => {
+          if (!patient) {
+            throw "Not found";
+          }
+          return patient;
+        });
+    }
+
   }
 })();
