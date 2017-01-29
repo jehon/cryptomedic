@@ -28,6 +28,12 @@ class SyncTest extends SyncableTestCase {
     return $json->_offline;
   }
 
+  public function testAgainstReferenceFile() {
+    $this->syncReset();
+    $json = $this->getNext(100);
+    $this->myAssertResponseAgainstReference($json);
+  }
+
   public function testFlow() {
     $r = 48;
     $this->syncReset();
