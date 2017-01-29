@@ -1,4 +1,4 @@
-/* global Database */
+/* global Database, buildRecord, Patient, loadMock */
 describe('DB/Generic', function() {
   var db = new Database();
   var def = {
@@ -41,10 +41,10 @@ describe('DB/Generic', function() {
   it('should delete patient', function(done) {
     db.triageLine(def_deleted)
       .then(() => { return db.getFolder(456); })
-      .then(function(data) {
+      .then(function() {
         // Unexpected!!!
         done.fail("The patient should not be found");
-      }, function(data) {
+      }, function() {
         expect(true).toBe(true);
         done();
       });
