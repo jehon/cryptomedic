@@ -100,6 +100,10 @@ let Database = (function() {
       return finished;
     }
 
+    getDB(type) {
+      return db[type];
+    }
+
     /**
      *
      * Store a record in the correct database
@@ -119,11 +123,11 @@ let Database = (function() {
     }
 
     storeInDB(type, record) {
-      return db[type].put(record);
+      return this.getDB(type).put(record);
     }
 
     deleteInDB(type, id) {
-      return db[type].delete(id);
+      return this.getDB(type).delete(id);
     }
 
     checkpointInDB(checkpoint = false) {
@@ -147,6 +151,19 @@ let Database = (function() {
         db.RicketConsult.clear(),
         db.Surgery.clear()
       ]);
+    }
+
+    // TODO here
+    getFolder(id) {
+      // Get everywhere... or get related???
+      return db.Patient.get(id).then((patient) => {
+        if (!patient) {
+          throw "Patient not found: " + id;
+        }
+        let res = [];
+        res.push(patient);
+        return res;
+      })
     }
 
   }
