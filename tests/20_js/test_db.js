@@ -50,29 +50,24 @@ describe('DB/Generic', function() {
       });
   });
 
-//   it('should store and get patient by reference', function(done) {
-//     db.triageLine(buildRecord(def))
-//       .then(function(data) {
-//         expect(data.id).toBe('123');
-//       })
-//       .then(() => db.getByReference(2001, 2323))
-//       .then(function(data) {
-//         expect(data.id).toBe('123');
-//         done();
-//       });
-//   });
+  it('should store and get patient by reference', function(done) {
+    db.triageLine(buildRecord(def))
+      .then(() => db.getPatientByReference(2001, 2323))
+      .then(function(patient) {
+        expect(patient.id).toBe(123);
+        done();
+      });
+  });
 
-//   // it('should fallback if reference does not exists', function(done) {
-//   //   db.getByReference(2999, 9999)
-//   //     .then(function() {
-//   //       // Unexpected!!!
-//   //       expect(true).toBe(false);
-//   //       done();
-//   //     }, function() {
-//   //       expect(true).toBe(true);
-//   //       done();
-//   //     });
-//   // });
+  it('should fallback if reference does not exists', function(done) {
+    db.getPatientByReference(2999, 9999)
+      .then(function() {
+        // Unexpected!!!
+        done.fail("Received something while the patient does not exists.");
+      }, function() {
+        done();
+      });
+  });
 
 //   it('should be able to store any patient', function(done) {
 //     // http://localhost/cryptomedic/api/v1.0/sync?cp=
