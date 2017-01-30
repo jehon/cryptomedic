@@ -26,7 +26,7 @@
 
       // Debug
       syncRemainingCb.add((data) => {
-        console.log("syncRemaining callback: ", data);
+        console.info("syncRemaining callback: ", data);
       });
 
       // Build up the cryptomedicComputerId
@@ -79,6 +79,7 @@
             .onResponseCode(401, () => {
               window.location = "#login";
             })
+            // This is done async % then...
             .onSuccess(json => {
               // Check offline data
               let finished = Promise.resolve();
@@ -91,36 +92,35 @@
               // Put ONLINE data
               if (typeof(json.online) != "undefined") {
                 finished = finished.then(() => {
-                  db.triageList(json.online, false);
+                  return db.triageList(json.online, false);
                 })
               }
 
               // Put OFFLINE data
               if (typeof(json._offline) != "undefined") {
                 finished = finished.then(() => {
-                  db.triageList(json._offline.data, true);
+                  return db.triageList(json._offline.data, true);
                 })
+                .then(() => {
+                  // Store the final checkpoint
+                  // in case the last line is also present in online, and thus pruned
+                  // by the optimization...
 
-                // Store the final checkpoint
-                // in case the last line is also present in online, and thus pruned
-                // by the optimization...
-                finished = finished.then(() => {
-                  db.checkpointInDB(json._offline.checkpoint);
-                })
+                  return db.checkpointInDB(json._offline.checkpoint);
 
-                // If remaining, let's ask for them !!!
-                syncRemainingCb.fire(json._offline.remaining);
-                if (syncRemaining == 0) {
-                  syncRemaining = false;
-                }
-                if (json._offline.remaining) {
-                  finished = finished.then(() => {
+                }).then(() => {
+                  // Adapt remaining /Xor/ launch new sync
+
+                  if (json._offline.remaining) {
                     // This is not binded to what I hoped...
-                    console.log("syncRemaining: TODO - syncing again disabled");
+                    console.log("Triage: syncRemaining: TODO - syncing again disabled");
                     // TODO: how to continue syncing with or without background???
                     // background(() => { this.doSync() });
-                  });
-                }
+                  } else {
+                    syncRemaining = false;
+                  }
+                  syncRemainingCb.fire(json._offline.remaining);
+                });
               }
 
               // Return final response with original data:
@@ -168,7 +168,7 @@
         doSync() {
           // Avoid having two syncing going on in parallel
           if (currentlySyncing) {
-            console.log("Already syncing, not doing it again");
+            console.info("Already syncing, not doing it again");
           }
           currentlySyncing = true;
           return this.start()
@@ -249,12 +249,14 @@
         },
 
         getFolder(id) {
+          console.log("GetFolder on ", id, typeof(id));
 
 // How to cache getFolder for 1 minute if no change is made???
 // Should be stored in database + flag for getting it in db even if not synced
 
           let finished = Promise.resolve();
 
+          // TODO
           // if (syncRemaining) {
           if (true) {
             // We are not finished, let's get the info from the server
@@ -270,23 +272,27 @@
 
           // If no data available, look in the local database
           finished = finished.then(() => {
-            return db.getFolder(id);
+            return db.getFolder(id)
+              .then(f => {
+                return f;
+              })
+              ;
           })
 
           // Build up the object
           finished = finished.then(json => {
-            console.log("Finished getFolder", json);
             /* global Folder */
             let folder = new Folder();
             for(let line of json) {
-              if (line.type == "Patient") {
-                /* global Patient */
-                folder.setMainFile(new Patient(line.record));
+              if (line.getModel() == "Patient") {
+                 /* global Patient */
+                folder.setMainFile(line);
               } else {
-                folder.addSubFile(create(line.type, line.record));
+                folder.addSubFile(line);
               }
             }
             folder.sort();
+            console.log("Folder built up: ", folder);
             return folder;
           })
 

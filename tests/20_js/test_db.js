@@ -12,12 +12,12 @@ describe('DB/Generic', function() {
   function checkFolder(id, entryyear, entryorder) {
     return db.getFolder(id)
       .then(function(data) {
-        expect(data[0].id).toBe(id);
+        expect(data[0].id).toBe('' + id);
         return data;
       })
       .then(() => { return db.getByReference(entryyear, entryorder); })
       .then(function(data) {
-        expect(data[0].id).toBe(id);
+        expect(data[0].id).toBe('' + id);
         return data;
       })
       .catch((e) => {
@@ -32,7 +32,7 @@ describe('DB/Generic', function() {
       .then(() => { return db.getFolder(123); })
       .then(function(data) {
         expect(data[0] instanceof Patient).toBeTruthy();
-        expect(data[0].id).toBe(123);
+        expect(data[0].id).toBe('' + 123);
         expect(data[0].test).toBe(true);
         done();
       })
@@ -54,7 +54,7 @@ describe('DB/Generic', function() {
     db.triageLine(buildRecord(def))
       .then(() => db.getPatientByReference(2001, 2323))
       .then(function(patient) {
-        expect(patient.id).toBe(123);
+        expect(patient.id).toBe('' + 123);
         done();
       });
   });
@@ -82,6 +82,12 @@ describe('DB/Generic', function() {
         .then(() => checkFolder(6, 2001, 1))
         .then(() => checkFolder(5, 2014, 105))
         .then(() => checkFolder(2, 2014, 107))
+        .then(() => {
+          return db.getFolder(1)
+            .then((folder) => {
+              console.log(folder);
+            })
+        })
         .then(done);
     });
 
