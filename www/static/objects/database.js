@@ -68,6 +68,7 @@ let Database = (function() {
 
       // @See https://github.com/dfahlander/db.js/wiki/Table.mapToClass()
       if (typeof(Patient) != "undefined") {
+        console.log("Auto-mapping enabled");
         db.Patient      .mapToClass(Patient);
         db.Appointment  .mapToClass(Appointment);
         db.Bill         .mapToClass(Bill);
@@ -123,11 +124,19 @@ let Database = (function() {
     }
 
     storeInDB(type, record) {
+      // Transform id to string, to unify the recuperation
+      record.id = '' + record.id;
+      if (record.patient_id) {
+        record.patient_id = '' + record.patient_id;
+      }
+      if (record.bill_id) {
+        record.bill_id = '' + record.bill_id;
+      }
       return this.getDB(type).put(record);
     }
 
     deleteInDB(type, id) {
-      return this.getDB(type).delete(id);
+      return this.getDB(type).delete('' + id);
     }
 
     checkpointInDB(checkpoint = false) {
@@ -150,11 +159,12 @@ let Database = (function() {
         db.Picture.clear(),
         db.RicketConsult.clear(),
         db.Surgery.clear()
-      ]);
+      ])
     }
 
     // TODO here
     getFolder(id) {
+      id =  '' + id;
       // Get everywhere... or get related???
       return db.Patient.get(id).then((patient) => {
         if (!patient) {
@@ -162,7 +172,19 @@ let Database = (function() {
         }
         let res = [];
         res.push(patient);
-        return res;
+
+        return Promise.all([
+          db.Appointment  .where("patient_id").equals(id).toArray(list => { return list; }),
+          db.Bill         .where("patient_id").equals(id).toArray(list => { return list; }),
+          db.ClubFoot     .where("patient_id").equals(id).toArray(list => { return list; }),
+          db.OtherConsult .where("patient_id").equals(id).toArray(list => { return list; }),
+          db.Picture      .where("patient_id").equals(id).toArray(list => { return list; }),
+          db.RicketConsult.where("patient_id").equals(id).toArray(list => { return list; }),
+          db.Surgery      .where("patient_id").equals(id).toArray(list => { return list; }),
+        ]).then((byTable) => {
+          res = res.concat(...byTable);
+          return res;
+        });
       })
     }
 
