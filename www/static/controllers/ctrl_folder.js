@@ -52,7 +52,6 @@ function ctrl_folder($scope, $location, $routeParams) {
   $scope.folder = false;
   var cachedCurrentFile = null;
 
-  console.log($routeParams, "page", $scope.page, "mode", $scope.mode);
 
   //----------------------
   //   Get data from the server
@@ -95,7 +94,6 @@ function ctrl_folder($scope, $location, $routeParams) {
       if (cachedCurrentFile.Yearofbirth) {
         var age = calculations.age.fromBirthDate(cachedCurrentFile.Yearofbirth);
         var r = RegExp('([0-9]+) ?y(ears)? ?([0-9]+) ?m(onths)?').exec(age);
-        // console.log(r);
         $scope.age.years = parseInt(r[1]);
         $scope.age.months = parseInt(r[3]);
       }
