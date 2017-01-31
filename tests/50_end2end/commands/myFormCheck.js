@@ -1,5 +1,4 @@
 exports.command = function(selector, fields) {
-  // var self = this;
   this.waitForElementVisible(selector);
   for(var f in fields) {
     var fsel = selector + " " + f;
