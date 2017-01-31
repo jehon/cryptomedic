@@ -1,4 +1,4 @@
-/* global Database, buildRecord, Patient, loadMock */
+/* global Database, buildRecord, Patient, Folder, loadMock */
 describe('DB/Generic', function() {
   var db = new Database();
   var def = {
@@ -30,10 +30,11 @@ describe('DB/Generic', function() {
   it('should store patient', function(done) {
     db.triageLine(Object.assign({}, def))
       .then(() => { return db.getFolder(123); })
-      .then(function(data) {
-        expect(data[0] instanceof Patient).toBeTruthy();
-        expect(data[0].id).toBe('' + 123);
-        expect(data[0].test).toBe(true);
+      .then(function(folder) {
+        expect(folder instanceof Folder).toBeTruthy();
+        expect(folder.getMainFile() instanceof Patient).toBeTruthy();
+        expect(folder.getMainFile().id).toBe('' + 123);
+        expect(folder.getMainFile().test).toBe(true);
         done();
       })
   });
@@ -85,7 +86,15 @@ describe('DB/Generic', function() {
         .then(() => {
           return db.getFolder(1)
             .then((folder) => {
-              console.log(folder);
+              expect(folder.getSubFileByType('Appointment', 2)).not.toBeNull();
+              expect(folder.getSubFileByType('Bill', 1)).not.toBeNull();
+              expect(folder.getSubFileByType('Picture', 2)).not.toBeNull();
+              expect(folder.getSubFileByType('OtherConsult', 1)).not.toBeNull();
+
+              expect(folder.getSubFileByType('Appointment', 1)).toBeNull();
+              expect(folder.getSubFileByType('Bill', 2)).toBeNull();
+              expect(folder.getSubFileByType('Picture', 1)).toBeNull();
+              expect(folder.getSubFileByType('OtherConsult', 2)).toBeNull();
             })
         })
         .then(done);
