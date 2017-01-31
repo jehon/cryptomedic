@@ -68,7 +68,6 @@ let Database = (function() {
 
       // @See https://github.com/dfahlander/db.js/wiki/Table.mapToClass()
       if (typeof(Patient) != "undefined") {
-        console.log("Auto-mapping enabled");
         db.Patient      .mapToClass(Patient);
         db.Appointment  .mapToClass(Appointment);
         db.Bill         .mapToClass(Bill);
