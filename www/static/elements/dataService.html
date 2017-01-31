@@ -44,6 +44,7 @@
       }
 
       let db = new Database();
+      let syncedFolders = {};
 
       let currentlySyncing = false;
 
@@ -254,18 +255,23 @@
 
           let finished = Promise.resolve();
 
-          // TODO
-          // if (syncRemaining) {
-          if (true) {
-            // We are not finished, let's get the info from the server
-            finished = finished.then(() => {
-              return this.start()
-                .requestWithGet()
-                .requestToUrl('folder/' + id)
-                .then(json => {
-                  return json.online;
-                })
-            });
+          if (syncRemaining) {
+            if ((typeof(syncedFolders[id]) != 'undefined') || (syncedFolders[id] >= (new Date()).getTime() - 2 * 60 * 60 * 1000)) {
+              console.warn("Trusting last syncs and not going live for ", id);
+            } else {
+              // We are not finished, let's get the info from the server
+              finished = finished.then(() => {
+                // Trace the synced patients with a timestamp
+                syncedFolders[id] = new Date();
+
+                return this.start()
+                  .requestWithGet()
+                  .requestToUrl('folder/' + id)
+                  .then(json => {
+                    return json.online;
+                  })
+              });
+            }
           }
 
           // If no data available, look in the local database
