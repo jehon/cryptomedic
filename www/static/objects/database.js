@@ -169,8 +169,9 @@ let Database = (function() {
         if (!patient) {
           throw "Patient not found: " + id;
         }
-        let res = [];
-        res.push(patient);
+        /* global Folder */
+        let folder = new Folder();
+        folder.setMainFile(patient);
 
         return Promise.all([
           db.Appointment  .where("patient_id").equals(id).toArray(list => { return list; }),
@@ -181,8 +182,12 @@ let Database = (function() {
           db.RicketConsult.where("patient_id").equals(id).toArray(list => { return list; }),
           db.Surgery      .where("patient_id").equals(id).toArray(list => { return list; }),
         ]).then((byTable) => {
-          res = res.concat(...byTable);
-          return res;
+          let list = [].concat(...byTable);
+          for(let line of list) {
+            folder.addSubFile(line);
+          }
+          folder.sort();
+          return folder;
         });
       })
     }
