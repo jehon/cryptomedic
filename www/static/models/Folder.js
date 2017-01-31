@@ -33,13 +33,13 @@ class Folder extends Data {
     this.mainFile = file;
   }
 
-  sort() {
-    this.subFiles.sort(Folder.ordering);
-  }
-
   addSubFile(subFile) {
     subFile.linkPatient(this.getMainFile());
     this.subFiles.push(subFile);
+  }
+
+  sort() {
+    this.subFiles.sort(Folder.ordering);
   }
 
   getMainFile() {
