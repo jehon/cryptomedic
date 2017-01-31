@@ -283,21 +283,6 @@
               ;
           })
 
-          // Build up the object
-          finished = finished.then(json => {
-            /* global Folder */
-            let folder = new Folder();
-            for(let line of json) {
-              if (line.getModel() == "Patient") {
-                 /* global Patient */
-                folder.setMainFile(line);
-              } else {
-                folder.addSubFile(line);
-              }
-            }
-            folder.sort();
-            return folder;
-          })
 
           return finished;
         },
