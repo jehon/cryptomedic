@@ -52,7 +52,6 @@ function ctrl_folder($scope, $location, $routeParams) {
   $scope.folder = false;
   var cachedCurrentFile = null;
 
-
   //----------------------
   //   Get data from the server
   //----------------------
