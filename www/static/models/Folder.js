@@ -58,6 +58,15 @@ class Folder extends Data {
     return this.subFiles[i];
   }
 
+  getSubFileByType(type, id) {
+    for(let f of this.subFiles) {
+      if (f.getModel() == type && f.id == id) {
+        return f;
+      }
+    }
+    return null;
+  }
+
   graphic_dimensions(axis_x, axis_y) {
     return amd_stats.dimensions[axis_x + '_' + axis_y + '_' + this.getMainFile().sexStr()];
   }
