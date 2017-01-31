@@ -67,25 +67,24 @@ function ctrl_folder($scope, $location, $routeParams) {
     getFileThen = getFileThen.then(dataService => dataService.getFolder($scope.patient_id));
   }
   getFileThen.then(function(data) {
-    $scope.folder = data;
     if (data) {
       if ($scope.page == 'file') {
         if ($scope.mode == 'add') {
           // TODO: Adapt
-          cachedCurrentFile = create($scope.subtype, null, $scope.folder);
+          cachedCurrentFile = create($scope.subtype, null, data);
           cachedCurrentFile.patient_id = $scope.patient_id;
         } else {
           // TODO: Adapt
-          for(var i in $scope.folder.getSubFiles()) {
-            if (($scope.folder.getSubFile(i).getModel() == $scope.subtype)
-                && ($scope.folder.getSubFile(i).id == $scope.subid)) {
-              cachedCurrentFile = $scope.folder.getSubFile(i);
+          for(var i in data.getSubFiles()) {
+            if ((data.getSubFile(i).getModel() == $scope.subtype)
+                && (data.getSubFile(i).id == $scope.subid)) {
+              cachedCurrentFile = data.getSubFile(i);
             }
           }
         }
       } else {
         // TODO: Adapt
-        cachedCurrentFile = $scope.folder.getMainFile();
+        cachedCurrentFile = data.getMainFile();
       }
       if ($scope.mode == 'edit' || $scope.mode == 'add') {
         jQuery('.modeRead').removeClass('modeRead').addClass('modeWrite');
@@ -101,6 +100,7 @@ function ctrl_folder($scope, $location, $routeParams) {
         $scope.age.months = parseInt(r[3]);
       }
     }
+    $scope.folder = data;
     $scope.safeApply();
     $scope.$broadcast('refresh');
   });
