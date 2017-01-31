@@ -5,7 +5,7 @@ exports.command = function(selector, fields) {
     if (f.substr(0, 6) == "select") {
       fsel = selector + " " + f.substr(6);
     }
-    this.waitForElementVisible(fsel);
+    this.waitForElementVisible(fsel + ":not(input)");
     if (fields[f] === true) {
       this
         .assert.visible(fsel + '_ok');
