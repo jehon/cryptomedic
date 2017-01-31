@@ -1,10 +1,6 @@
-exports.command = function(selector, fields, button, afterFillIn) {
+exports.command = function(selector, fields, button) {
   this.
     myFormFillIn(selector, fields);
-
-  if (typeof(afterFillIn) == 'function') {
-    afterFillIn.call(this, this);
-  }
 
   // Submit the form:
   this
