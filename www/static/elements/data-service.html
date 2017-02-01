@@ -10,7 +10,7 @@
   </template>
 
   <script>
-    /* global jQuery, Database, background, API_VERSION */
+    /* global Database, background, API_VERSION, userCb, syncRemainingCb */
     /* exported callbacks */
     (function() {
 
@@ -88,30 +88,30 @@
                 })
               }
 
-              // Put OFFLINE data
+              // Put OFFLINE data (but in background process)
               if (typeof(json._offline) != "undefined") {
-                finished = finished.then(() => {
-                  return db.triageList(json._offline.data, true);
-                })
-                .then(() => {
-                  // Store the final checkpoint
-                  // in case the last line is also present in online, and thus pruned
-                  // by the optimization...
+                background(() => {
+                  db.triageList(json._offline.data, true)
+                  .then(() => {
+                    // Store the final checkpoint
+                    // in case the last line is also present in online, and thus pruned
+                    // by the optimization...
 
-                  return db.checkpointInDB(json._offline.checkpoint);
+                    db.checkpointInDB(json._offline.checkpoint);
+                  })
+                  .then(() => {
+                    // Adapt remaining /Xor/ launch new sync
 
-                }).then(() => {
-                  // Adapt remaining /Xor/ launch new sync
-
-                  if (json._offline.remaining) {
-                    // This is not binded to what I hoped...
-                    console.log("Triage: syncRemaining: TODO - syncing again disabled");
-                    // TODO: how to continue syncing with or without background???
-                    // background(() => { this.doSync() });
-                  } else {
-                    syncRemaining = false;
-                  }
-                  syncRemainingCb.fire(json._offline.remaining);
+                    if (json._offline.remaining) {
+                      // This is not binded to what I hoped...
+                      console.log("Triage: syncRemaining: TODO - syncing again disabled");
+                      // TODO: how to continue syncing with or without background???
+                      // background(() => { this.doSync() });
+                    } else {
+                      syncRemaining = false;
+                    }
+                    syncRemainingCb.fire(json._offline.remaining);
+                  });
                 });
               }
 
