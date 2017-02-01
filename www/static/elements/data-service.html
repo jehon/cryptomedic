@@ -240,7 +240,7 @@
             })
         },
 
-        getFolder(id) {
+        getFolder(type, id) {
           let finished = Promise.resolve();
 
           if (syncRemaining) {
@@ -269,7 +269,7 @@
 
           // If no data available, look in the local database
           finished = finished.then(() => {
-            return db.getFolder(id)
+            return db.getFolder(type, id)
               .then(f => {
                 return f;
               })

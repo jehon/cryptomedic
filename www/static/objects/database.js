@@ -162,26 +162,24 @@ let Database = (function() {
     }
 
     // TODO here
-    getFolder(id) {
+    getFolder(type, id) {
       id =  '' + id;
       // Get everywhere... or get related???
-      return db.Patient.get(id).then((patient) => {
-        if (!patient) {
-          throw "Patient not found: " + id;
+      return this.getDB(type).get(id).then((mainFile) => {
+        if (!mainFile) {
+          throw type + " not found: " + id;
         }
         /* global Folder */
         let folder = new Folder();
-        folder.setMainFile(patient);
+        folder.setMainFile(mainFile);
 
-        return Promise.all([
-          db.Appointment  .where("patient_id").equals(id).toArray(list => { return list; }),
-          db.Bill         .where("patient_id").equals(id).toArray(list => { return list; }),
-          db.ClubFoot     .where("patient_id").equals(id).toArray(list => { return list; }),
-          db.OtherConsult .where("patient_id").equals(id).toArray(list => { return list; }),
-          db.Picture      .where("patient_id").equals(id).toArray(list => { return list; }),
-          db.RicketConsult.where("patient_id").equals(id).toArray(list => { return list; }),
-          db.Surgery      .where("patient_id").equals(id).toArray(list => { return list; }),
-        ]).then((byTable) => {
+        let subs = [];
+        for(let k of Object.keys(mainFile.getRelated())) {
+          subs.push(this.getDB(k).where(mainFile.getRelated()[k]).equals(id).toArray(list => { return list; }));
+        }
+
+        return Promise.all(subs)
+        .then((byTable) => {
           let list = [].concat(...byTable);
           for(let line of list) {
             folder.addSubFile(line);

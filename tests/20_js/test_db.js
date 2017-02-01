@@ -10,7 +10,7 @@ describe('DB/Generic', function() {
   };
 
   function checkFolder(id, entryyear, entryorder) {
-    return db.getFolder(id)
+    return db.getFolder('Patient', id)
       .then(function(data) {
         expect(data[0].id).toBe('' + id);
         return data;
@@ -29,7 +29,7 @@ describe('DB/Generic', function() {
 
   it('should store patient', function(done) {
     db.triageLine(Object.assign({}, def))
-      .then(() => { return db.getFolder(123); })
+      .then(() => { return db.getFolder('Patient', 123); })
       .then(function(folder) {
         expect(folder instanceof Folder).toBeTruthy();
         expect(folder.getMainFile() instanceof Patient).toBeTruthy();
@@ -41,7 +41,7 @@ describe('DB/Generic', function() {
 
   it('should delete patient', function(done) {
     db.triageLine(def_deleted)
-      .then(() => { return db.getFolder(456); })
+      .then(() => { return db.getFolder('Patient', 456); })
       .then(function() {
         // Unexpected!!!
         done.fail("The patient should not be found");
@@ -84,7 +84,7 @@ describe('DB/Generic', function() {
         .then(() => checkFolder(5, 2014, 105))
         .then(() => checkFolder(2, 2014, 107))
         .then(() => {
-          return db.getFolder(1)
+          return db.getFolder('Patient', 1)
             .then((folder) => {
               expect(folder.getSubFileByType('Appointment', 2)).not.toBeNull();
               expect(folder.getSubFileByType('Bill', 1)).not.toBeNull();
