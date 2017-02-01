@@ -5,6 +5,18 @@ class Patient extends Data {
     return 'Patient';
   }
 
+  getRelated() {
+    return {
+      "Appointment":   'patient_id',
+      "Bill":          'patient_id',
+      "ClubFoot":      'patient_id',
+      "OtherConsult":  'patient_id',
+      "Picture":       'patient_id',
+      "RicketConsult": 'patient_id',
+      "Surgery":       'patient_id'
+    }
+  }
+
   sexStr() {
     if (!this.isNotZero('Sex')) {
       return null;

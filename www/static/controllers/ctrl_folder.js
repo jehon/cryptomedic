@@ -62,7 +62,7 @@ function ctrl_folder($scope, $location, $routeParams) {
     getFileThen = getFileThen.then(() => Promise.resolve(new Folder()));
     $scope.mode = 'add';
   } else {
-    getFileThen = getFileThen.then(dataService => dataService.getFolder($scope.patient_id));
+    getFileThen = getFileThen.then(dataService => dataService.getFolder('Patient', $scope.patient_id));
   }
   getFileThen.then(function(data) {
     if (data) {
