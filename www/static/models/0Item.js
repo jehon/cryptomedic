@@ -21,6 +21,14 @@ class Item extends Data {
     }
   }
 
+  getModel() {
+    throw "You should define the getModel on each model";
+  }
+
+  getRelated() {
+    return {};
+  }
+
   linkPatient(patient) {
     // Encapsulate into function, so that it is not persisted
     this.getPatient = function() {
