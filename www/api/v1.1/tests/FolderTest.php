@@ -7,7 +7,7 @@ class FolderTest extends SyncableTestCase {
 	public function testsUnauthenticated() {
     $response = $this->myRunAssertQuery(
         $this->getNewRequestOptionsBuilder()
-          ->setUrl("folder/1")
+          ->setUrl("folder/Patient/1")
         	->asUnauthenticated()
           ->setExpected(401)
           ->asText()
@@ -24,7 +24,7 @@ class FolderTest extends SyncableTestCase {
 
 	public function test1() {
     $opt = $this->getNewRequestOptionsBuilder()
-      ->setUrl("folder/1");
+      ->setUrl("folder/Patient/1");
     $json = $this->myRunAssertQueryForRoles($opt);
     $this->assertEquals(1, $json->id);
 	}

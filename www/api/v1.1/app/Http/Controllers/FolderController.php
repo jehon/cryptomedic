@@ -13,9 +13,9 @@ use Illuminate\Support\Facades\Request;
 class FolderController extends Controller {
 	// @see http://laravel.com/docs/5.0/controllers
 
-	public static function getFolder($id) {
-		$patient = Patient::findOrFail($id);
-		$res = array_merge([ $patient->getSyncRecord() ], $patient->getDependantList());
+	public static function getFolder($model, $id) {
+		$main = ModelController::getObjectByModelAndId($model, $id);
+		$res = array_merge([ $main->getSyncRecord() ], $main->getDependantList());
 		// usort($res, "self::sortFiles");
 		return $res;
 	}
@@ -61,9 +61,9 @@ class FolderController extends Controller {
 		return response()->json($listing);
 	}
 
-	public function show($id) {
+	public function show($model, $id) {
 		return response()->json([
-			"online" => $this->getFolder($id),
+			"online" => $this->getFolder($model, $id),
 			"id" => $id
 		]);
 	}

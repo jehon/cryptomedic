@@ -25,7 +25,7 @@ class ModelController extends Controller {
 		return $data;
 	}
 
-	protected function getModelClass($model) {
+	public static function getModelClass($model) {
 		$model = "\\App\\" . $model;
 		if ($model === false) {
 			abort(400, "No correct model found");
@@ -33,14 +33,14 @@ class ModelController extends Controller {
 		return $model;
 	}
 
-	protected function getObjectByModelAndId($model, $id) {
-		$m = $this->getModelClass($model);
+	public static function getObjectByModelAndId($model, $id) {
+		$m = self::getModelClass($model);
 		return $m::findOrFail($id);
 	}
 
 	protected function getOnlineObject($model, $id) {
 		return (object) [
-			"record" => $this->getObjectByModelAndId($model, $id),
+			"record" => self::getObjectByModelAndId($model, $id),
 			"id" => $id,
 			"type" => $model
 		];
@@ -50,7 +50,7 @@ class ModelController extends Controller {
 	public function create($model) {
 		$data = Input::except('_type');
 		$data = self::cannonize($data);
-		$m = $this->getModelClass($model);
+		$m = self::getModelClass($model);
 
 		if ($model == "Patient") {
 			// In case we create a patient, things are a bit more complicated!!!
@@ -98,7 +98,7 @@ class ModelController extends Controller {
 
 	// PUT / PATCH
 	public function update($model, $id) {
-		$obj = $this->getObjectByModelAndId($model, $id);
+		$obj = self::getObjectByModelAndId($model, $id);
 
  		$data = Input::except([ '_type' ] + $obj->getReadOnlyField());
 		$data = self::cannonize($data);
@@ -124,7 +124,7 @@ class ModelController extends Controller {
 
 	// DELETE
 	public function destroy($model, $id) {
-		$m = $this->getModelClass($model);
+		$m = self::getModelClass($model);
 		$obj = $m::find($id);
 		if (!$obj) {
 			return response()->json(array());
@@ -151,7 +151,7 @@ class ModelController extends Controller {
 
 	// Unfreeze special route
 	public function unfreeze($model, $id) {
-		$m = $this->getModelClass($model, $id);
+		$m = self::getModelClass($model, $id);
 		$affectedRows = $m::where("id", "=", $id)->update([ "updated_at" => new \DateTime() ]);
 		if ($affectedRows > 1) {
 			abort(500, "Affected rows: " . $affectedRows);

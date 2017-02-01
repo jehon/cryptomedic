@@ -28,6 +28,22 @@ class Bill extends CryptomedicModel {
 	public static $categories = [ self::CAT_CONSULT, self::CAT_MEDECINE, self::CAT_OTHER, self::CAT_WORKSHOP, self::CAT_SURGICAL ];
 	public static $translations = [ ];
 
+  public function getDependantList() {
+    $list = [];
+
+    foreach([ "Payment" => "payments"] as $m => $t) {
+      $obj = "\\App\\" . $m;
+
+      // $r = DB::select("SELECT * FROM $t WHERE patient_id = :patient_id", array('patient_id' => $id));
+      $r = $obj::where("bill_id", $this->id)->get();
+      foreach($r as $ri => $rv) {
+        $list = array_merge($list, [ $rv->getSyncRecord() ], $rv->getDependantList());
+      }
+    }
+
+    return $list;
+  }
+
 	/**
 	 * A function testing field appartenance
 	 *
@@ -122,13 +138,4 @@ class Bill extends CryptomedicModel {
     }
     return true;
   }
-
-	public function getDependantList() {
-		$list = [];
-    $r = \App\Payment::where("bill_id", $this->id)->get();
-    foreach($r as $ri => $rv) {
-      $list = array_merge($list, [ $rv->getSyncRecord() ], $rv->getDependantList());
-    }
-		return [];
-	}
 }
