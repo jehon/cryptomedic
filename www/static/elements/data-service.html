@@ -12,22 +12,12 @@
   <script>
     /* global jQuery, Database, background, API_VERSION */
     /* exported callbacks */
-    let dsCallbacks = (function() {
-      let userCb = jQuery.Callbacks();
-      // userCb.add((data) => {
-      //   console.log("User callback: ", data);
-      // });
+    (function() {
 
       let syncRemaining = false;
-      let syncRemainingCb = jQuery.Callbacks();
       syncRemainingCb.add((data) => {
         // Store the information locally at least
         syncRemaining = data;
-      });
-
-      // Debug
-      syncRemainingCb.add((data) => {
-        console.info("syncRemaining callback: ", data);
       });
 
       // Build up the cryptomedicComputerId
