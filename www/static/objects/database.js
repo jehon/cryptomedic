@@ -161,7 +161,6 @@ let Database = (function() {
       ])
     }
 
-    // TODO here
     getFolder(type, id) {
       id =  '' + id;
       // Get everywhere... or get related???
