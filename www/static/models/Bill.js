@@ -7,6 +7,12 @@ class Bill extends Item {
     return 'Bill';
   }
 
+  getRelated() {
+    return {
+      'Payment': 'bill_id'
+    }
+  }
+
   constructor(data, folder = null) {
     super(data, folder);
     if (!data) {
