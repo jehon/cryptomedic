@@ -241,12 +241,14 @@
         },
 
         getFolder(id) {
-// How to cache getFolder for 1 minute if no change is made???
-// Should be stored in database + flag for getting it in db even if not synced
-
           let finished = Promise.resolve();
 
           if (syncRemaining) {
+            //
+            // If we have a cached copy less than 2 hours old, then we use it
+            // We make the hypothesis that we are the only one to use it
+            // and that no modifications are made otherwise
+            //
             if ((typeof(syncedFolders[id]) != 'undefined') || (syncedFolders[id] >= (new Date()).getTime() - 2 * 60 * 60 * 1000)) {
               console.warn("Trusting last syncs and not going live for ", id);
             } else {
