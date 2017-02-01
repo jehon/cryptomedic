@@ -1,3 +1,5 @@
+/* global jQuery */
+/* exported userCb, syncRemainingCb */
 let userCb = jQuery.Callbacks();
 // Debug
 userCb.add((data) => {
@@ -6,7 +8,7 @@ userCb.add((data) => {
 
 let syncRemainingCb = jQuery.Callbacks();
 
-// Debug
-syncRemainingCb.add((data) => {
-  console.info("syncRemaining callback: ", data);
-});
+// // Debug
+// syncRemainingCb.add((data) => {
+//   console.info("syncRemaining callback: ", data);
+// });
