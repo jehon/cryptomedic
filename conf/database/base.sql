@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Sep 28, 2016 at 05:35 AM
--- Server version: 5.7.15-0ubuntu0.16.04.1
--- PHP Version: 7.0.8-0ubuntu0.16.04.2
+-- Generation Time: Feb 01, 2017 at 09:05 PM
+-- Server version: 5.7.17-0ubuntu0.16.04.1
+-- PHP Version: 7.0.13-0ubuntu0.16.04.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `vagrant`
+-- Database: `cryptomedic`
 --
 
 -- --------------------------------------------------------
@@ -28,11 +28,11 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `appointments` (
   `id` int(10) UNSIGNED NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT '1980-01-01 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
   `lastuser` varchar(50) DEFAULT NULL,
   `patient_id` int(10) UNSIGNED NOT NULL,
-  `Date` date NOT NULL DEFAULT '0000-00-00',
+  `Date` date DEFAULT NULL,
   `ExaminerName` varchar(127) DEFAULT NULL,
   `Nextappointment` date NOT NULL,
   `NextCenter` varchar(30) DEFAULT NULL
@@ -43,14 +43,14 @@ CREATE TABLE `appointments` (
 --
 
 INSERT INTO `appointments` (`id`, `created_at`, `updated_at`, `lastuser`, `patient_id`, `Date`, `ExaminerName`, `Nextappointment`, `NextCenter`) VALUES
-(1, '0000-00-00 00:00:00', '2015-02-04 17:57:04', 'transfer', 6, '2003-05-11', NULL, '2015-04-28', 'Chakaria Disability Center'),
-(2, '0000-00-00 00:00:00', '2015-02-19 13:52:16', 'Thierry', 1, '2007-01-10', 'Ershad', '2015-04-28', NULL),
-(3, '0000-00-00 00:00:00', '2015-05-10 08:03:59', 'murshed', 5, '2015-01-10', 'Ershad', '2015-04-28', 'Ukhia'),
-(4, '0000-00-00 00:00:00', '2015-05-10 08:02:40', 'murshed', 5, '2014-09-27', 'Ershad', '2015-01-10', 'Ukhia'),
-(5, '0000-00-00 00:00:00', '2015-05-10 08:01:10', 'murshed', 5, '2014-06-21', 'Ershad', '2014-09-27', 'Ukhia'),
-(6, '0000-00-00 00:00:00', '2015-05-10 04:29:15', 'murshed', 5, '2014-04-21', 'Ershad', '2014-05-31', 'Ukhia'),
-(7, '0000-00-00 00:00:00', '2015-05-07 16:53:30', 'murshed', 5, '2014-03-29', 'Ershad', '2014-04-21', 'Ukhia'),
-(8, '0000-00-00 00:00:00', '2015-05-07 16:49:28', 'murshed', 5, '2014-03-01', 'AMD doctor', '2014-03-21', 'Ukhia');
+(1, '1980-01-01 00:00:00', '2015-02-04 17:57:04', 'transfer', 6, '2003-05-11', NULL, '2015-04-28', 'Chakaria Disability Center'),
+(2, '1980-01-01 00:00:00', '2015-02-19 13:52:16', 'Thierry', 1, '2007-01-10', 'Ershad', '2015-04-28', NULL),
+(3, '1980-01-01 00:00:00', '2015-05-10 08:03:59', 'murshed', 5, '2015-01-10', 'Ershad', '2015-04-28', 'Ukhia'),
+(4, '1980-01-01 00:00:00', '2015-05-10 08:02:40', 'murshed', 5, '2014-09-27', 'Ershad', '2015-01-10', 'Ukhia'),
+(5, '1980-01-01 00:00:00', '2015-05-10 08:01:10', 'murshed', 5, '2014-06-21', 'Ershad', '2014-09-27', 'Ukhia'),
+(6, '1980-01-01 00:00:00', '2015-05-10 04:29:15', 'murshed', 5, '2014-04-21', 'Ershad', '2014-05-31', 'Ukhia'),
+(7, '1980-01-01 00:00:00', '2015-05-07 16:53:30', 'murshed', 5, '2014-03-29', 'Ershad', '2014-04-21', 'Ukhia'),
+(8, '1980-01-01 00:00:00', '2015-05-07 16:49:28', 'murshed', 5, '2014-03-01', 'AMD doctor', '2014-03-21', 'Ukhia');
 
 -- --------------------------------------------------------
 
@@ -60,13 +60,13 @@ INSERT INTO `appointments` (`id`, `created_at`, `updated_at`, `lastuser`, `patie
 
 CREATE TABLE `bills` (
   `id` int(10) UNSIGNED NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT '1980-01-01 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
   `lastuser` varchar(50) DEFAULT NULL,
   `patient_id` int(10) UNSIGNED NOT NULL,
   `sl_familySalary` int(11) DEFAULT NULL,
   `sl_numberOfHouseholdMembers` int(11) DEFAULT NULL,
-  `Date` date NOT NULL DEFAULT '0000-00-00',
+  `Date` date DEFAULT NULL,
   `price_id` int(10) UNSIGNED NOT NULL DEFAULT '1',
   `Center` varchar(30) DEFAULT NULL,
   `ExaminerName` varchar(127) DEFAULT NULL,
@@ -219,11 +219,11 @@ INSERT INTO `bug_reporting` (`id`, `created_at`, `fixed`, `url`, `session`, `use
 
 CREATE TABLE `club_feet` (
   `id` int(10) UNSIGNED NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT '1980-01-01 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
   `lastuser` varchar(50) DEFAULT NULL,
   `patient_id` int(10) UNSIGNED NOT NULL,
-  `Date` date NOT NULL DEFAULT '0000-00-00',
+  `Date` date DEFAULT NULL,
   `ExaminerName` varchar(127) DEFAULT NULL,
   `Center` varchar(30) DEFAULT NULL,
   `Weightkg` int(4) DEFAULT NULL,
@@ -272,12 +272,12 @@ CREATE TABLE `club_feet` (
 --
 
 INSERT INTO `club_feet` (`id`, `created_at`, `updated_at`, `lastuser`, `patient_id`, `Date`, `ExaminerName`, `Center`, `Weightkg`, `Heightcm`, `PainLeft`, `PainRight`, `WalkingFloorContactLeft`, `WalkingFloorContactRight`, `WalkingFirstContactLeft`, `WalkingFirstContactRight`, `JumpingOneLegLeft`, `JumpingOneLegRight`, `RunLeft`, `RunRight`, `AdductionAngleLeft`, `AdductionAngleRight`, `HindFootAngleWLeft`, `HindFootAngleWRight`, `DorsalFlexionMaxLeft`, `DorsalFlexionMaxRight`, `PlantarFlexionMaxLeft`, `PlantarFlexionMaxRight`, `MuscularInbalanceLeft`, `MuscularInbalanceRight`, `CurvedLateralBorderLeft`, `CurvedLateralBorderRight`, `MedialCreaseLeft`, `MedialCreaseRight`, `TalarHeadCoverageLeft`, `TalarHeadCoverageRight`, `PosteriorCreaseLeft`, `PosteriorCreaseRight`, `RigidEquinusLeft`, `RigidEquinusRight`, `EmptyHeelLeft`, `EmptyHeelRight`, `Treatment`, `Comments`, `TreatmentEvaluation`, `TreatmentFinished`, `Brachialcircumferencecm`) VALUES
-(1, '0000-00-00 00:00:00', '2015-05-10 08:03:59', 'murshed', 5, '2015-01-10', 'Ershad', 'Ukhia', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'DB splint', NULL, NULL, NULL, NULL),
-(2, '0000-00-00 00:00:00', '2015-05-10 08:02:40', 'murshed', 5, '2014-09-27', 'Ershad', 'Ukhia', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'DB splint', NULL, NULL, NULL, NULL),
-(3, '0000-00-00 00:00:00', '2015-05-10 08:01:10', 'murshed', 5, '2014-06-21', 'Ershad', 'Ukhia', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'DB splint', 'Use no 10 db splint', NULL, NULL, NULL),
-(4, '0000-00-00 00:00:00', '2015-05-10 04:29:15', 'murshed', 5, '2014-04-21', 'Ershad', 'Chakaria Disability Center', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', 'DB splint', 'No 7 used', NULL, NULL, 0),
-(5, '0000-00-00 00:00:00', '2015-05-07 16:53:30', 'murshed', 5, '2014-03-29', 'Ershad', 'Ukhia', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0.00', NULL, '0.00', NULL, '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', 'DB splint', 'No 7 given', NULL, NULL, NULL),
-(6, '0000-00-00 00:00:00', '2015-05-07 16:49:28', 'murshed', 5, '2014-03-01', 'AMD doctor', 'Chakaria Disability Center', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.50', '0.00', '0.50', '0.00', '1.00', 'tenotomy', '7th plaster done', NULL, NULL, 0);
+(1, '1980-01-01 00:00:00', '2015-05-10 08:03:59', 'murshed', 5, '2015-01-10', 'Ershad', 'Ukhia', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'DB splint', NULL, NULL, NULL, NULL),
+(2, '1980-01-01 00:00:00', '2015-05-10 08:02:40', 'murshed', 5, '2014-09-27', 'Ershad', 'Ukhia', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'DB splint', NULL, NULL, NULL, NULL),
+(3, '1980-01-01 00:00:00', '2015-05-10 08:01:10', 'murshed', 5, '2014-06-21', 'Ershad', 'Ukhia', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'DB splint', 'Use no 10 db splint', NULL, NULL, NULL),
+(4, '1980-01-01 00:00:00', '2015-05-10 04:29:15', 'murshed', 5, '2014-04-21', 'Ershad', 'Chakaria Disability Center', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', 'DB splint', 'No 7 used', NULL, NULL, 0),
+(5, '1980-01-01 00:00:00', '2015-05-07 16:53:30', 'murshed', 5, '2014-03-29', 'Ershad', 'Ukhia', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0.00', NULL, '0.00', NULL, '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', 'DB splint', 'No 7 given', NULL, NULL, NULL),
+(6, '1980-01-01 00:00:00', '2015-05-07 16:49:28', 'murshed', 5, '2014-03-01', 'AMD doctor', 'Chakaria Disability Center', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.50', '0.00', '0.50', '0.00', '1.00', 'tenotomy', '7th plaster done', NULL, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -309,9 +309,9 @@ CREATE TABLE `consults` (
 
 CREATE TABLE `deleteds` (
   `id` int(10) UNSIGNED NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `patient_id` int(10) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT '1980-01-01 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
+  `patient_id` int(10) UNSIGNED DEFAULT NULL,
   `entity_type` varchar(20) NOT NULL,
   `entity_id` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -331,11 +331,11 @@ INSERT INTO `deleteds` (`id`, `created_at`, `updated_at`, `patient_id`, `entity_
 
 CREATE TABLE `other_consults` (
   `id` int(10) UNSIGNED NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT '1980-01-01 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
   `lastuser` varchar(50) DEFAULT NULL,
   `patient_id` int(10) UNSIGNED NOT NULL,
-  `Date` date NOT NULL DEFAULT '0000-00-00',
+  `Date` date DEFAULT NULL,
   `ExaminerName` varchar(127) DEFAULT NULL,
   `Center` varchar(30) DEFAULT NULL,
   `Weightkg` int(4) DEFAULT NULL,
@@ -362,7 +362,7 @@ CREATE TABLE `other_consults` (
 --
 
 INSERT INTO `other_consults` (`id`, `created_at`, `updated_at`, `lastuser`, `patient_id`, `Date`, `ExaminerName`, `Center`, `Weightkg`, `Heightcm`, `Brachialcircumferencecm`, `Side`, `Jointsorbonesaffected`, `Deformity`, `Articulationmobility`, `Musclestrength`, `Pain`, `Walk`, `XRay`, `Performed`, `NotPerformed`, `Surgery66`, `Comments`, `TreatmentEvaluation`, `TreatmentFinished`) VALUES
-(1, '0000-00-00 00:00:00', '2015-02-19 13:52:16', 'Thierry', 1, '2007-01-10', 'Ershad', NULL, 29, 134, 0, NULL, 'PBVE', '', '', '', 'No', NULL, '', NULL, NULL, 'Postero-medial release', '', NULL, NULL);
+(1, '1980-01-01 00:00:00', '2015-02-19 13:52:16', 'Thierry', 1, '2007-01-10', 'Ershad', NULL, 29, 134, 0, NULL, 'PBVE', '', '', '', 'No', NULL, '', NULL, NULL, 'Postero-medial release', '', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -372,12 +372,12 @@ INSERT INTO `other_consults` (`id`, `created_at`, `updated_at`, `lastuser`, `pat
 
 CREATE TABLE `patients` (
   `id` int(10) UNSIGNED NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT '1980-01-01 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
   `lastuser` varchar(50) DEFAULT NULL,
   `entryyear` int(4) UNSIGNED NOT NULL,
   `entryorder` int(4) DEFAULT NULL,
-  `Name` varchar(255) NOT NULL,
+  `Name` varchar(255) NOT NULL DEFAULT '',
   `Sex` enum('Male','Female') DEFAULT NULL,
   `Yearofbirth` varchar(7) DEFAULT NULL,
   `AddressNotes` mediumtext,
@@ -405,18 +405,44 @@ INSERT INTO `patients` (`id`, `created_at`, `updated_at`, `lastuser`, `entryyear
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `payments`
+--
+
+CREATE TABLE `payments` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `lastuser` varchar(50) DEFAULT NULL,
+  `bill_id` int(10) UNSIGNED NOT NULL,
+  `Date` date DEFAULT NULL,
+  `ExaminerName` varchar(127) DEFAULT NULL,
+  `Amount` decimal(10,0) NOT NULL DEFAULT '0',
+  `Notes` text
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `payments`
+--
+
+INSERT INTO `payments` (`id`, `created_at`, `updated_at`, `lastuser`, `bill_id`, `Date`, `ExaminerName`, `Amount`, `Notes`) VALUES
+(1, '2017-02-01 20:04:17', '2017-02-01 20:04:17', 'jehon', 1, '2016-01-01', 'Ershad', '10', 'Advance'),
+(2, '2017-02-01 20:04:55', '2017-02-01 20:04:55', 'jehon', 1, '2016-01-01', 'Kazi', '15', 'Second payment');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `pictures`
 --
 
 CREATE TABLE `pictures` (
   `id` int(10) UNSIGNED NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT '1980-01-01 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
   `lastuser` varchar(50) DEFAULT NULL,
   `patient_id` int(10) UNSIGNED NOT NULL,
   `OriginalName` varchar(255) DEFAULT NULL,
   `file` varchar(255) DEFAULT NULL,
-  `Date` date NOT NULL DEFAULT '0000-00-00',
+  `Date` date DEFAULT NULL,
   `comment` mediumtext
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -427,8 +453,8 @@ CREATE TABLE `pictures` (
 INSERT INTO `pictures` (`id`, `created_at`, `updated_at`, `lastuser`, `patient_id`, `OriginalName`, `file`, `Date`, `comment`) VALUES
 (1, '2014-06-01 14:51:42', '2014-06-17 14:52:18', 'Thierry', 3, 'IMG_4702 (Copy) (Copy).JPG', '98141_2014-06-01_16-51-42.JPG', '2014-01-14', ''),
 (2, '2014-11-06 14:32:45', '2014-11-06 14:32:45', 'thierry', 1, '03.09 a.JPG', '10_2014-11-06_15-32-45.JPG', '2014-11-04', ''),
-(3, '0000-00-00 00:00:00', '2015-01-18 17:58:19', 'ershad', 3, '01 [1600x1200].JPG', '3288.JPG', '2015-01-18', NULL),
-(4, '0000-00-00 00:00:00', '2015-05-17 08:31:28', 'catherine', 5, 'MD Noman 14 0105 (1).JPG', '98146_2015-04-28_3952.jpg', '2015-04-28', 'follow up 1y4m good compliance');
+(3, '1980-01-01 00:00:00', '2015-01-18 17:58:19', 'ershad', 3, '01 [1600x1200].JPG', '3288.JPG', '2015-01-18', NULL),
+(4, '1980-01-01 00:00:00', '2015-05-17 08:31:28', 'catherine', 5, 'MD Noman 14 0105 (1).JPG', '98146_2015-04-28_3952.jpg', '2015-04-28', 'follow up 1y4m good compliance');
 
 -- --------------------------------------------------------
 
@@ -438,8 +464,8 @@ INSERT INTO `pictures` (`id`, `created_at`, `updated_at`, `lastuser`, `patient_i
 
 CREATE TABLE `prices` (
   `id` int(10) UNSIGNED NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT '1980-01-01 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
   `lastuser` varchar(50) DEFAULT NULL,
   `datefrom` date DEFAULT NULL,
   `dateto` date DEFAULT NULL,
@@ -541,8 +567,8 @@ CREATE TABLE `prices` (
 --
 
 INSERT INTO `prices` (`id`, `created_at`, `updated_at`, `lastuser`, `datefrom`, `dateto`, `consult_CDC_consultation_physio`, `consult_CDC_consultation_Bengali_Doctor`, `consult_CDC_consultation_Doctor`, `consult_field_visit`, `consult_home_visit`, `medecine_medecine`, `medecine_calcium_30x500mg`, `workshop_BHKAFO_night`, `workshop_BHKAFO_walking`, `workshop_UHKAFO_night`, `workshop_UHKAFO_walking`, `workshop_BKAFO_night`, `workshop_BKAFO_walking`, `workshop_UKAFO_night`, `workshop_UKAFO_walking`, `workshop_Knee_brace`, `workshop_BAFO_night`, `workshop_BAFO_walking`, `workshop_UAFO_night`, `workshop_UAFO_walking`, `workshop_Orthoshoes_with_bar`, `workshop_Orthoshoes_without_bar`, `workshop_DDB_splint`, `workshop_Compensation_sole`, `workshop_Arch_support`, `workshop_Matetarsal_pade`, `workshop_Supinator_corner`, `workshop_Wirst_splint`, `workshop_Hand_splint`, `workshop_Finger_splint`, `workshop_Walker_with_wheel`, `workshop_Walker_without_wheel`, `workshop_Crutch_a_pair`, `workshop_Crutch_a_piece`, `workshop_Wheel_chair`, `workshop_CP_chair`, `workshop_CP_standing_table`, `workshop_Cervical_Collar`, `workshop_Abdominal_corset_belt`, `workshop_Reparing`, `workshop_Other_orthodevice`, `surgical_osteotomy`, `surgical_epiphysiodesis`, `surgical_polio_AL`, `surgical_percutaneous_AL_club_foot`, `surgical_PMR_club_foot`, `surgical_Burn_release`, `surgical_Pin_removal`, `surgical_other_operation`, `consult_give_appointment`, `medecine_vitamineD`, `workshop_BHKAFO_Drop_lock_single_axis`, `workshop_crutch_alumenium`, `workshop_chair_china`, `workshop_mailwalke_brace`, `workshop_leg_truction`, `workshop_thoracic_brace`, `workshop_samainto_brace`, `workshop_fracture_brace`, `workshop_smo`, `workshop_lifspring_afo`, `surgical_osteotomy_bi`, `surgical_epiphysiodesis_bi`, `surgical_polio_achileus_Achileus_lenthening_bi`, `surgical_percutaneous_achil_tenotomy_bi_cmosh`, `surgical_percutaneous_achil_tenotomy_uni_cdc`, `surgical_percutaneous_achil_tenotomy_bi_cdc`, `surgical_PMR_club_club_foot_bi`, `surgical_burn_little_release`, `other_physiotherapy_adult`, `other_physiotherapy_child`, `other_group_physiotherapy`, `other_nutritionalSupport`, `other_nutritionalAdvice`, `other_CMOSH_follow_up`, `other_microbus`, `other_Other_consultation_care`, `other_physiotherapy`, `other_X_Ray`, `other_making_dressing`, `other_make_short_plaster`, `other_make_long_plaster`, `other_making_plaster`, `socialLevelPercentage_4`, `socialLevelPercentage_3`, `socialLevelPercentage_2`, `socialLevelPercentage_1`, `socialLevelPercentage_0`, `other_Other_plaster`, `other_Other_dressing`, `consult_ClubFoot_Follow_up`) VALUES
-(1, '0000-00-00 00:00:00', '2014-12-17 06:09:19', 'jehon', NULL, '2013-01-01', 200, 200, -1, 100, 150, 100, -1, 4200, 4950, 2420, 2420, 3200, 3200, 1600, 1600, 800, 2400, 2400, 1100, 1100, 1000, 1000, 820, 200, 150, 150, 150, 300, 800, 600, 1320, 1000, 390, 195, 7500, 5000, 5000, 150, 1500, 300, 1, 18000, 8000, 14000, 5000, 18000, 14000, 8000, 1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 200, 200, 1, 200, 120, 100, -1, -1, 200, 1, 0.7, 0.3, 0.1, -1, -1, -1, -1),
-(2, '0000-00-00 00:00:00', '2014-12-17 06:09:19', 'jehon', '2013-01-01', '2016-01-03', 100, 300, -1, -1, 150, 100, -1, 4500, 6670, 3500, 4400, 3200, 3200, 1600, 1600, 2200, 2750, 3000, -1, 1800, 1620, 1250, 1200, 600, 360, 200, 300, 600, 1200, 800, 1620, 1320, -1, 400, 7700, 1500, 5000, 350, 450, 300, 1, 20000, 10000, 15000, 5000, 15000, 20000, 5000, 1, 150, 100, 8800, 1800, 6600, 3500, 460, 2500, 3800, 3200, 1600, 1000, 25000, 15000, 18000, 6000, 2000, 2500, 18000, 10000, -1, -1, 100, 1000, 100, -1, -1, 1, 200, 150, 200, -1, -1, 400, 1, 0.7, 0.4, 0.2, 0, -1, -1, -1),
+(1, '1980-01-01 00:00:00', '2014-12-17 06:09:19', 'jehon', NULL, '2013-01-01', 200, 200, -1, 100, 150, 100, -1, 4200, 4950, 2420, 2420, 3200, 3200, 1600, 1600, 800, 2400, 2400, 1100, 1100, 1000, 1000, 820, 200, 150, 150, 150, 300, 800, 600, 1320, 1000, 390, 195, 7500, 5000, 5000, 150, 1500, 300, 1, 18000, 8000, 14000, 5000, 18000, 14000, 8000, 1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 200, 200, 1, 200, 120, 100, -1, -1, 200, 1, 0.7, 0.3, 0.1, -1, -1, -1, -1),
+(2, '1980-01-01 00:00:00', '2014-12-17 06:09:19', 'jehon', '2013-01-01', '2016-01-03', 100, 300, -1, -1, 150, 100, -1, 4500, 6670, 3500, 4400, 3200, 3200, 1600, 1600, 2200, 2750, 3000, -1, 1800, 1620, 1250, 1200, 600, 360, 200, 300, 600, 1200, 800, 1620, 1320, -1, 400, 7700, 1500, 5000, 350, 450, 300, 1, 20000, 10000, 15000, 5000, 15000, 20000, 5000, 1, 150, 100, 8800, 1800, 6600, 3500, 460, 2500, 3800, 3200, 1600, 1000, 25000, 15000, 18000, 6000, 2000, 2500, 18000, 10000, -1, -1, 100, 1000, 100, -1, -1, 1, 200, 150, 200, -1, -1, 400, 1, 0.7, 0.4, 0.2, 0, -1, -1, -1),
 (3, '2016-01-03 16:13:36', '2016-01-03 16:13:36', 'jehon', '2016-01-03', NULL, 100, 300, -1, -1, 150, 100, -1, 4500, 6670, 3500, 4400, 3200, 3200, 1600, 1600, 2200, 2750, 3000, -1, 1800, 1620, 1250, 1200, 600, 360, 200, 300, 600, 1200, 800, 1620, 1320, -1, 400, 7700, 1500, 5000, 350, 450, 300, 1, 20000, 10000, 15000, 5000, 15000, 20000, 5000, 1, 150, 100, 8800, 1800, 6600, 3500, 460, 2500, 3800, 3200, 1600, 1000, 25000, 15000, 18000, 6000, 2000, 2500, 18000, 10000, -1, -1, 100, 1000, 100, -1, -1, 1, 200, 150, 200, -1, -1, 400, 1, 0.7, 0.4, 0.2, 0, 1, 1, 100);
 
 -- --------------------------------------------------------
@@ -553,11 +579,11 @@ INSERT INTO `prices` (`id`, `created_at`, `updated_at`, `lastuser`, `datefrom`, 
 
 CREATE TABLE `ricket_consults` (
   `id` int(10) UNSIGNED NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT '1980-01-01 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
   `lastuser` varchar(50) DEFAULT NULL,
   `patient_id` int(10) UNSIGNED NOT NULL,
-  `Date` date NOT NULL DEFAULT '0000-00-00',
+  `Date` date DEFAULT NULL,
   `ExaminerName` varchar(127) DEFAULT NULL,
   `Center` varchar(30) DEFAULT NULL,
   `Weightkg` int(4) DEFAULT NULL,
@@ -593,15 +619,15 @@ CREATE TABLE `ricket_consults` (
 --
 
 INSERT INTO `ricket_consults` (`id`, `created_at`, `updated_at`, `lastuser`, `patient_id`, `Date`, `ExaminerName`, `Center`, `Weightkg`, `Heightcm`, `CrossLeftT`, `RightLeg`, `Pain`, `Wristenlargement`, `Ribbeading`, `RightlegAngle`, `LeftlegAngle`, `CrossRightT`, `CrossRightF`, `IMICDistance`, `LeftLeg`, `CrossLeftF`, `Surgery`, `XRay`, `Brace`, `Nutrisupport`, `Brachialcircumferencecm`, `WalkingDifficulties`, `Comments`, `TreatmentEvaluation`, `TreatmentFinished`, `conclusion_medical_calcium500`, `conclusion_medical_calcium1000`, `conclusion_medical_vitaminD`) VALUES
-(1, '0000-00-00 00:00:00', '2015-02-04 17:57:04', 'transfer', 6, '2003-05-11', NULL, NULL, 17, 114, NULL, 'Valgus', NULL, 0, 0, 6, 6, NULL, NULL, '1', 'Valgus', NULL, NULL, NULL, NULL, 0, NULL, NULL, '', NULL, NULL, 0, 0, 0),
-(2, '0000-00-00 00:00:00', '2015-02-04 17:57:04', 'transfer', 6, '2002-11-19', NULL, NULL, 16, 110, NULL, 'Valgus', NULL, 0, 0, 8, 12, NULL, NULL, '1', 'Valgus', NULL, NULL, NULL, NULL, 0, NULL, NULL, '', NULL, NULL, 0, 0, 0),
-(3, '0000-00-00 00:00:00', '2015-02-04 17:57:04', 'transfer', 6, '2004-10-06', NULL, NULL, 18, 115, NULL, 'Valgus', NULL, 0, 0, 6, 6, NULL, NULL, '1', 'Valgus', NULL, NULL, NULL, NULL, 0, NULL, NULL, '', NULL, NULL, 0, 0, 0),
-(4, '0000-00-00 00:00:00', '2015-02-04 17:57:04', 'transfer', 6, '2004-09-26', NULL, NULL, 19, 115, NULL, 'Valgus', NULL, 0, 0, 6, 6, NULL, NULL, '1', 'Valgus', NULL, NULL, NULL, NULL, 0, NULL, NULL, '', NULL, NULL, 0, 0, 0),
-(5, '0000-00-00 00:00:00', '2015-02-04 17:57:04', 'transfer', 6, '2003-09-02', NULL, NULL, 14, 103, NULL, 'Varus', NULL, 1, 1, 2, 2, NULL, NULL, NULL, 'Varus', NULL, NULL, NULL, NULL, 0, NULL, NULL, '', NULL, NULL, 0, 0, 0),
-(6, '0000-00-00 00:00:00', '2015-02-04 17:57:04', 'transfer', 6, '2003-08-05', NULL, NULL, 16, 106, NULL, 'Valgus', NULL, 1, 1, 6, 8, NULL, NULL, NULL, 'Valgus', NULL, NULL, NULL, NULL, 0, NULL, NULL, '', NULL, NULL, 0, 0, 0),
-(7, '0000-00-00 00:00:00', '2015-02-04 17:57:04', 'transfer', 6, '2003-05-28', NULL, NULL, NULL, NULL, NULL, 'Valgus', NULL, 0, 0, 20, 20, NULL, NULL, NULL, 'Valgus', NULL, NULL, NULL, NULL, 0, NULL, NULL, '', NULL, NULL, 0, 0, 0),
-(8, '0000-00-00 00:00:00', '2015-02-04 17:57:04', 'transfer', 6, '2003-01-11', NULL, NULL, 17, 108, NULL, 'Valgus', NULL, 0, 0, 4, 4, NULL, NULL, NULL, 'Valgus', NULL, NULL, NULL, NULL, 0, NULL, NULL, '', NULL, NULL, 0, 0, 0),
-(9, '0000-00-00 00:00:00', '2015-02-04 17:57:04', 'transfer', 6, '2004-05-23', NULL, NULL, 18, 114, NULL, 'Valgus', NULL, 0, 0, 4, 4, NULL, NULL, NULL, 'Valgus', NULL, NULL, NULL, NULL, 0, NULL, NULL, '', NULL, NULL, 0, 0, 0);
+(1, '1980-01-01 00:00:00', '2015-02-04 17:57:04', 'transfer', 6, '2003-05-11', NULL, NULL, 17, 114, NULL, 'Valgus', NULL, 0, 0, 6, 6, NULL, NULL, '1', 'Valgus', NULL, NULL, NULL, NULL, 0, NULL, NULL, '', NULL, NULL, 0, 0, 0),
+(2, '1980-01-01 00:00:00', '2015-02-04 17:57:04', 'transfer', 6, '2002-11-19', NULL, NULL, 16, 110, NULL, 'Valgus', NULL, 0, 0, 8, 12, NULL, NULL, '1', 'Valgus', NULL, NULL, NULL, NULL, 0, NULL, NULL, '', NULL, NULL, 0, 0, 0),
+(3, '1980-01-01 00:00:00', '2015-02-04 17:57:04', 'transfer', 6, '2004-10-06', NULL, NULL, 18, 115, NULL, 'Valgus', NULL, 0, 0, 6, 6, NULL, NULL, '1', 'Valgus', NULL, NULL, NULL, NULL, 0, NULL, NULL, '', NULL, NULL, 0, 0, 0),
+(4, '1980-01-01 00:00:00', '2015-02-04 17:57:04', 'transfer', 6, '2004-09-26', NULL, NULL, 19, 115, NULL, 'Valgus', NULL, 0, 0, 6, 6, NULL, NULL, '1', 'Valgus', NULL, NULL, NULL, NULL, 0, NULL, NULL, '', NULL, NULL, 0, 0, 0),
+(5, '1980-01-01 00:00:00', '2015-02-04 17:57:04', 'transfer', 6, '2003-09-02', NULL, NULL, 14, 103, NULL, 'Varus', NULL, 1, 1, 2, 2, NULL, NULL, NULL, 'Varus', NULL, NULL, NULL, NULL, 0, NULL, NULL, '', NULL, NULL, 0, 0, 0),
+(6, '1980-01-01 00:00:00', '2015-02-04 17:57:04', 'transfer', 6, '2003-08-05', NULL, NULL, 16, 106, NULL, 'Valgus', NULL, 1, 1, 6, 8, NULL, NULL, NULL, 'Valgus', NULL, NULL, NULL, NULL, 0, NULL, NULL, '', NULL, NULL, 0, 0, 0),
+(7, '1980-01-01 00:00:00', '2015-02-04 17:57:04', 'transfer', 6, '2003-05-28', NULL, NULL, NULL, NULL, NULL, 'Valgus', NULL, 0, 0, 20, 20, NULL, NULL, NULL, 'Valgus', NULL, NULL, NULL, NULL, 0, NULL, NULL, '', NULL, NULL, 0, 0, 0),
+(8, '1980-01-01 00:00:00', '2015-02-04 17:57:04', 'transfer', 6, '2003-01-11', NULL, NULL, 17, 108, NULL, 'Valgus', NULL, 0, 0, 4, 4, NULL, NULL, NULL, 'Valgus', NULL, NULL, NULL, NULL, 0, NULL, NULL, '', NULL, NULL, 0, 0, 0),
+(9, '1980-01-01 00:00:00', '2015-02-04 17:57:04', 'transfer', 6, '2004-05-23', NULL, NULL, 18, 114, NULL, 'Valgus', NULL, 0, 0, 4, 4, NULL, NULL, NULL, 'Valgus', NULL, NULL, NULL, NULL, 0, NULL, NULL, '', NULL, NULL, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -611,8 +637,8 @@ INSERT INTO `ricket_consults` (`id`, `created_at`, `updated_at`, `lastuser`, `pa
 
 CREATE TABLE `settings` (
   `id` varchar(50) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT '1980-01-01 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
   `value` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -621,7 +647,7 @@ CREATE TABLE `settings` (
 --
 
 INSERT INTO `settings` (`id`, `created_at`, `updated_at`, `value`) VALUES
-('structure_version', '0000-00-00 00:00:00', '2015-10-15 08:55:01', '61');
+('structure_version', '1980-01-01 00:00:00', '2017-02-01 20:03:23', '70');
 
 -- --------------------------------------------------------
 
@@ -631,8 +657,8 @@ INSERT INTO `settings` (`id`, `created_at`, `updated_at`, `value`) VALUES
 
 CREATE TABLE `surgeries` (
   `id` int(10) UNSIGNED NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT '1980-01-01 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
   `lastuser` varchar(50) DEFAULT NULL,
   `patient_id` int(10) UNSIGNED NOT NULL,
   `Date` date DEFAULT NULL,
@@ -652,10 +678,10 @@ CREATE TABLE `surgeries` (
 
 CREATE TABLE `sync_computers` (
   `id` int(10) UNSIGNED NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT '1980-01-01 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
   `lastuser` varchar(50) DEFAULT NULL,
-  `user_list` varchar(500) NOT NULL,
+  `user_list` varchar(500) DEFAULT NULL,
   `computer_id` varchar(64) NOT NULL,
   `useragent` varchar(255) DEFAULT NULL,
   `cryptomedic_version` varchar(255) NOT NULL DEFAULT '0',
@@ -663,6 +689,7 @@ CREATE TABLE `sync_computers` (
   `last_sync_final` tinyint(1) NOT NULL DEFAULT '0',
   `queue_size` int(16) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 
 -- --------------------------------------------------------
 
@@ -672,8 +699,8 @@ CREATE TABLE `sync_computers` (
 
 CREATE TABLE `sync_keys` (
   `id` int(10) UNSIGNED NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT '1980-01-01 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
   `computer` int(10) UNSIGNED NOT NULL,
   `key` varchar(1028) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -688,15 +715,15 @@ CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `username` varchar(255) DEFAULT NULL,
   `name` varchar(127) DEFAULT NULL,
-  `password` varchar(60) NOT NULL,
+  `password` varchar(60) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
   `notes` varchar(255) DEFAULT NULL,
   `group` char(10) DEFAULT '',
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT '1980-01-01 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
   `lastuser` varchar(50) DEFAULT NULL,
   `last_login` timestamp NULL DEFAULT NULL,
-  `remember_token` varchar(255) NOT NULL
+  `remember_token` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -716,7 +743,7 @@ INSERT INTO `users` (`id`, `username`, `name`, `password`, `email`, `notes`, `gr
 --
 DROP TABLE IF EXISTS `consults`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`vagrant_admin`@`%` SQL SECURITY INVOKER VIEW `consults`  AS  (select 'ricket_consult' AS `type`,`ricket_consults`.`id` AS `id`,`ricket_consults`.`created_at` AS `created_at`,`ricket_consults`.`updated_at` AS `updated_at`,`ricket_consults`.`patient_id` AS `patient_id`,`ricket_consults`.`Date` AS `Date`,`ricket_consults`.`ExaminerName` AS `ExaminerName`,`ricket_consults`.`Center` AS `Center`,`ricket_consults`.`Weightkg` AS `Weightkg`,`ricket_consults`.`Heightcm` AS `Heightcm`,`ricket_consults`.`Brachialcircumferencecm` AS `Brachialcircumferencecm`,`ricket_consults`.`TreatmentEvaluation` AS `TreatmentEvaluation`,`ricket_consults`.`TreatmentFinished` AS `TreatmentFinished`,`ricket_consults`.`Comments` AS `Comments` from `ricket_consults`) union (select 'club_foot' AS `type`,`club_feet`.`id` AS `id`,`club_feet`.`created_at` AS `created_at`,`club_feet`.`updated_at` AS `updated_at`,`club_feet`.`patient_id` AS `patient_id`,`club_feet`.`Date` AS `Date`,`club_feet`.`ExaminerName` AS `ExaminerName`,`club_feet`.`Center` AS `Center`,`club_feet`.`Weightkg` AS `Weightkg`,`club_feet`.`Heightcm` AS `Heightcm`,`club_feet`.`Brachialcircumferencecm` AS `Brachialcircumferencecm`,`club_feet`.`TreatmentEvaluation` AS `TreatmentEvaluation`,`club_feet`.`TreatmentFinished` AS `TreatmentFinished`,`club_feet`.`Comments` AS `Comments` from `club_feet`) union (select 'other_consult' AS `type`,`other_consults`.`id` AS `id`,`other_consults`.`created_at` AS `created_at`,`other_consults`.`updated_at` AS `updated_at`,`other_consults`.`patient_id` AS `patient_id`,`other_consults`.`Date` AS `Date`,`other_consults`.`ExaminerName` AS `ExaminerName`,`other_consults`.`Center` AS `Center`,`other_consults`.`Weightkg` AS `Weightkg`,`other_consults`.`Heightcm` AS `Heightcm`,`other_consults`.`Brachialcircumferencecm` AS `Brachialcircumferencecm`,`other_consults`.`TreatmentEvaluation` AS `TreatmentEvaluation`,`other_consults`.`TreatmentFinished` AS `TreatmentFinished`,`other_consults`.`Comments` AS `Comments` from `other_consults`) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`vagrant_admin`@`localhost` SQL SECURITY INVOKER VIEW `consults`  AS  (select 'ricket_consult' AS `type`,`ricket_consults`.`id` AS `id`,`ricket_consults`.`created_at` AS `created_at`,`ricket_consults`.`updated_at` AS `updated_at`,`ricket_consults`.`patient_id` AS `patient_id`,`ricket_consults`.`Date` AS `Date`,`ricket_consults`.`ExaminerName` AS `ExaminerName`,`ricket_consults`.`Center` AS `Center`,`ricket_consults`.`Weightkg` AS `Weightkg`,`ricket_consults`.`Heightcm` AS `Heightcm`,`ricket_consults`.`Brachialcircumferencecm` AS `Brachialcircumferencecm`,`ricket_consults`.`TreatmentEvaluation` AS `TreatmentEvaluation`,`ricket_consults`.`TreatmentFinished` AS `TreatmentFinished`,`ricket_consults`.`Comments` AS `Comments` from `ricket_consults`) union (select 'club_foot' AS `type`,`club_feet`.`id` AS `id`,`club_feet`.`created_at` AS `created_at`,`club_feet`.`updated_at` AS `updated_at`,`club_feet`.`patient_id` AS `patient_id`,`club_feet`.`Date` AS `Date`,`club_feet`.`ExaminerName` AS `ExaminerName`,`club_feet`.`Center` AS `Center`,`club_feet`.`Weightkg` AS `Weightkg`,`club_feet`.`Heightcm` AS `Heightcm`,`club_feet`.`Brachialcircumferencecm` AS `Brachialcircumferencecm`,`club_feet`.`TreatmentEvaluation` AS `TreatmentEvaluation`,`club_feet`.`TreatmentFinished` AS `TreatmentFinished`,`club_feet`.`Comments` AS `Comments` from `club_feet`) union (select 'other_consult' AS `type`,`other_consults`.`id` AS `id`,`other_consults`.`created_at` AS `created_at`,`other_consults`.`updated_at` AS `updated_at`,`other_consults`.`patient_id` AS `patient_id`,`other_consults`.`Date` AS `Date`,`other_consults`.`ExaminerName` AS `ExaminerName`,`other_consults`.`Center` AS `Center`,`other_consults`.`Weightkg` AS `Weightkg`,`other_consults`.`Heightcm` AS `Heightcm`,`other_consults`.`Brachialcircumferencecm` AS `Brachialcircumferencecm`,`other_consults`.`TreatmentEvaluation` AS `TreatmentEvaluation`,`other_consults`.`TreatmentFinished` AS `TreatmentFinished`,`other_consults`.`Comments` AS `Comments` from `other_consults`) ;
 
 --
 -- Indexes for dumped tables
@@ -773,6 +800,13 @@ ALTER TABLE `patients`
   ADD UNIQUE KEY `patients_entrynumber` (`entryyear`,`entryorder`),
   ADD KEY `Name` (`Name`),
   ADD KEY `Pathology` (`Pathology`);
+
+--
+-- Indexes for table `payments`
+--
+ALTER TABLE `payments`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `bill_id` (`bill_id`);
 
 --
 -- Indexes for table `pictures`
@@ -868,6 +902,11 @@ ALTER TABLE `other_consults`
 ALTER TABLE `patients`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
+-- AUTO_INCREMENT for table `payments`
+--
+ALTER TABLE `payments`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
 -- AUTO_INCREMENT for table `pictures`
 --
 ALTER TABLE `pictures`
@@ -891,7 +930,7 @@ ALTER TABLE `surgeries`
 -- AUTO_INCREMENT for table `sync_computers`
 --
 ALTER TABLE `sync_computers`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 --
 -- AUTO_INCREMENT for table `sync_keys`
 --
@@ -930,6 +969,12 @@ ALTER TABLE `club_feet`
 --
 ALTER TABLE `other_consults`
   ADD CONSTRAINT `other_consults_ibfk_1` FOREIGN KEY (`patient_id`) REFERENCES `patients` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `payments`
+--
+ALTER TABLE `payments`
+  ADD CONSTRAINT `payments_ibfk_1` FOREIGN KEY (`bill_id`) REFERENCES `bills` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `pictures`
