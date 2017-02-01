@@ -90,7 +90,11 @@ Route::group([ 'prefix' => '/api/' . basename(dirname(__DIR__)) ], function() {
       });
 
       hasPermission('folder.read', function() {
-        Route::resource('folder', "FolderController", [ "only" => [ "index", "show" ]]);
+        Route::resource('folder', "FolderController", [ "only" => [ "index" ]]);
+
+        Route::get('folder/{model}/{id}', [
+          "uses" => "FolderController@show"
+        ]);
 
         Route::get('reference/{entryyear}/{entryorder}', [
           "uses" => "FolderController@reference"

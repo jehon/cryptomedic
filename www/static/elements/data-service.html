@@ -259,7 +259,7 @@
 
                 return this.start()
                   .requestWithGet()
-                  .requestToUrl('folder/' + id)
+                  .requestToUrl(`folder/${type}/${id}`)
                   .then(json => {
                     return json.online;
                   })
