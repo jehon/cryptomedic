@@ -30,6 +30,7 @@ module.exports = function(config) {
       'bower_components/webcomponentsjs/webcomponents-lite.js',
       'bower_components/angular/angular.min.js',
       'bower_components/angular-route/angular-route.min.js',
+      'bower_components/jquery/dist/jquery.min.js',
       {
         pattern: "bower_components/**",
         included: false,
