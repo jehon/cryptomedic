@@ -11,7 +11,8 @@
 
   <script>
     /* global jQuery, Database, background, API_VERSION */
-    (function() {
+    /* exported callbacks */
+    let dsCallbacks = (function() {
       let userCb = jQuery.Callbacks();
       // userCb.add((data) => {
       //   console.log("User callback: ", data);
@@ -283,7 +284,6 @@
               ;
           })
 
-
           return finished;
         },
 
@@ -378,7 +378,12 @@
             .requestWithData({ password: pwd })
             .requestToUrl('users/password/' + id)
         }
-      })
+      });
+
+      return {
+        syncRemainingCb,
+        userCb
+      }
     })();
   </script>
 </dom-module>
