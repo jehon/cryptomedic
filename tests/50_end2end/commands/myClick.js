@@ -32,6 +32,6 @@ exports.command = function(selector, callback) {
     // }
   }
   );
-  this.pause(100);
+  this.pause(10);
   return this;
 };
