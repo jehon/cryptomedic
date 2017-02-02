@@ -74,7 +74,7 @@ class FolderController extends Controller {
 			return response()->json(null);
 		}
 		$r = array_pop($r);
-		return $this->show($r->id);
+		return $this->show('Patient', $r->id);
 	}
 
 	public function createFile() {
@@ -84,6 +84,6 @@ class FolderController extends Controller {
 		if (!$newObj->id) {
 			abort(500, "Could not create the patient");
 		}
-		return $this->show($newObj->id);
+		return $this->show('Patient', $newObj->id);
 	}
 }
