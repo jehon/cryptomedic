@@ -1,11 +1,6 @@
 exports.command = function(selector, fields, button) {
   this.
-    myFormFillIn(selector, fields);
-
-  // Submit the form:
-  this
-    .pause(100)
-    .myClick(button);
+    myFormFillIn(selector, fields, button);
 
   this
     .myFormCheck(selector, fields);
