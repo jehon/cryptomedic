@@ -48,8 +48,8 @@ module.exports = (function() {
 
     this.myWaitFetch = function() {
       client
-        // .pause(10)
-        .waitForElementPresent('fetchfull-element[running]')
+        .pause(10)
+        // .waitForElementPresent('fetchfull-element[running]')
         .waitForElementNotPresent('fetchfull-element[running]')
         .pause(10)
 
