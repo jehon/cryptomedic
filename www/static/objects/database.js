@@ -147,7 +147,12 @@ let Database = (function() {
       return checkpoint;
     }
 
+    getCheckpoint() {
+      return localStorage.syncCheckpoint;
+    }
+
     clear() {
+      console.log("Resetting the database");
       return Promise.all([
         db.Patient.clear(),
         db.Appointment.clear(),

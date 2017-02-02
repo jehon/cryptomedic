@@ -21,35 +21,36 @@ class SyncData {
 	 */
 	public function handle(Request $request, Closure $next)
 	{
+		$response = $next($request);
+
+		if (! ($response instanceof JsonResponse)) {
+			return $response;
+		}
+
 		$checkpoint = $request->header("X-SYNC-CHECKPOINT");
 		$n = $request->header("X-SYNC-NBR");
 		if (!is_numeric($n)) {
 			$n = 1000;
 		}
 
-		$response = $next($request);
-
     if (!AuthController::hasPermission("folder.read")) {
 			return $response;
 		}
 
-		if ($response instanceof JsonResponse)
+		$response->setJsonOptions(JSON_NUMERIC_CHECK);
+		if ($response->status() == 200)
 		{
-			$response->setJsonOptions(JSON_NUMERIC_CHECK);
-			if ($response->status() == 200)
+			$data = $response->getData();
+			$offline = (new SyncController())->getOfflineStructuredData($checkpoint, $n);
+			if (is_object($data))
 			{
-				$data = $response->getData();
-				$offline = (new SyncController())->getOfflineStructuredData($checkpoint, $n);
-				if (is_object($data))
-				{
-					$data->_offline = $offline;
-				}
-					else if (is_array($data))
-				{
-					$data['_offline'] = $offline;
-				}
-				$response->setData($data);
+				$data->_offline = $offline;
 			}
+				else if (is_array($data))
+			{
+				$data['_offline'] = $offline;
+			}
+			$response->setData($data);
 		}
 		return $response;
 	}
