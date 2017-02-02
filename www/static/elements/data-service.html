@@ -71,6 +71,7 @@
             .onResponseCode(401, () => {
               window.location = "#login";
             })
+            .requestWithHeader('X-SYNC-CHECKPOINT', db.getCheckpoint())
             // This is done async % then...
             .onSuccess(json => {
               // Check offline data
@@ -78,6 +79,8 @@
 
               // Do we reset the database?
               if (json._offline && json._offline.reset) {
+                // Reset the synced info if we are resetting the database
+                syncedFolders = {};
                 finished = finished.then(() => db.clear());
               }
 
