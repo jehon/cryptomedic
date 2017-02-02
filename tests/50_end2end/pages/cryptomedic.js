@@ -13,7 +13,7 @@ module.exports = (function() {
       }
 
       var password = 'this will not be read by the server in tests';
-      return client.init()
+      client.init()
         .waitForElementVisible('body')
         .assert.title('Cryptomedic')
         .waitForElementVisible('#login_password')
@@ -21,7 +21,12 @@ module.exports = (function() {
         .setValue('#login_password', password)
         .pause(100)
         .myClick('button#login_go')
-        .pause(100);
+        ;
+
+      this
+        .myWaitFetch()
+        ;
+      return client;
     };
 
     // Each action is written as a separate method which must return the browser
@@ -39,6 +44,16 @@ module.exports = (function() {
       authenticated = true;
       return client;
     };
+
+    this.myWaitFetch = function() {
+      client
+        // .pause(10)
+        .waitForElementPresent('fetchfull-element[running]')
+        .waitForElementNotPresent('fetchfull-element[running]')
+        .pause(10)
+
+      return client;
+    }
 
     // this.sync = function() {
     //   if (!authenticated) {
@@ -105,6 +120,9 @@ module.exports = (function() {
         .assert.containsText('#Patient_entryorder', entryorder)
         .pause(500)
         ;
+
+      this
+        .myWaitFetch();
 
       return client;
     };
