@@ -19,7 +19,7 @@ module.exports = (function() {
         .waitForElementVisible('#login_password')
         .setValue('#login_username', login)
         .setValue('#login_password', password)
-        .pause(100)
+        .pause(10)
         .myClick('button#login_go')
         ;
 
@@ -39,8 +39,9 @@ module.exports = (function() {
         .waitForElementPresent('#login_loggedusername')
         .assert.containsText('#login_loggedusername', login)
         .assert.title('Cryptomedic')
-        .pause(1000)
+        .pause(100)
         ;
+
       authenticated = true;
       return client;
     };
