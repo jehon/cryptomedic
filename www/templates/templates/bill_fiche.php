@@ -34,7 +34,7 @@
     }
   }
 ?>
-<div class='container-fluid'>
+<div class='container-fluid' ng-controller="ctrl_file_bill">
   <div class='row'>
     <div ng-if='errors.consultPhisioAndDoctor'>
       <div class='alert alert-danger' >Error: you could not bill "physio" and "doctor" together!</div>
@@ -44,7 +44,7 @@
     </div>
   </div>
   <div class='row'>
-    <div class="col-md-6" ng-controller="ctrl_file_bill">
+    <div class="col-md-6">
       <FieldSet>
         <legend>General data</legend>
         <table>
@@ -116,6 +116,55 @@
         </table>
       </FieldSet>
     </div>
+  </div>
+  <br>
+  <?php
+    t::setDefaultOption("baseExpression", "paymentAdd.");
+  ?>
+  <div class='row' class='modeRead'>
+    <h3>Related payments</h3>
+    <table class='table table-hover table-bordered tablesorter' ng-if='bfolder.getSubFiles().length > 0'>
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Date</th>
+          <th>Receiver</th>
+          <th>Amount</th>
+          <th>Notes</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="p in bfolder.getSubFiles()">
+          <td>{{p.id}}</td>
+          <td>{{p.Date}}</td>
+          <td>{{p.ExaminerName}}</td>
+          <td>{{p.Amount}}</td>
+          <td>{{p.Notes}}</td>
+          <td>
+            Delete (not working for now) - Edit (not working for now)
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <fieldset>
+      <legend>Add a payment</legend>
+      <table>
+        <tr>
+          <td>Date</td>
+          <td>
+            <input id='Payment_Date' type='text' placeholder='yyyy-MM-dd' ng-model="add.Date" mycalendar uuid='payment_1'/>
+            <span ng-if='errors.date_payment_1' class='jserror'>
+              Invalid date: please enter yyyy-mm-dd
+            </span>
+          </td>
+        </tr>
+        <?php (new t("Payment.ExaminerName", [ "list" => References::$lists['examiner']]))->tr("Receiver")->p(); ?>
+        <?php (new t("Payment.Amount"))->tr("Amount")->p(); ?>
+        <?php (new t("Payment.Notes"))->tr("Notes")->p(); ?>
+      </table>
+      <span id='button_save' class="btn btn-default" ng-click="actionAddPayment()">Create</span>
+    </fieldset>
   </div>
 </div>
 <tr>
