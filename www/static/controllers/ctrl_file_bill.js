@@ -7,6 +7,20 @@ function ctrl_file_bill($scope) {
         appState().store.getState().connection.settings.prices
   */
 
+  $scope.paymentAdd = {};
+
+  $scope.payments = [];
+  getDataService()
+    .then(dataService => {
+      dataService.getFolder('Bill', $scope.subid)
+        .then(bfolder => {
+          console.log(bfolder);
+          $scope.bfolder = bfolder;
+          $scope.safeApply();
+        })
+    })
+
+
   $scope.$watch(function() {
     return window.cryptomedic.serverSettings.prices;
   }, function() {
