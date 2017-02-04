@@ -2,6 +2,6 @@
 
 class Payment extends Item {
   getModel() {
-    return 'Surgery';
+    return 'Payment';
   }
 }
