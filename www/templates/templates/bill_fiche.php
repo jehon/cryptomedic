@@ -150,7 +150,8 @@
       </tbody>
     </table>
     <fieldset>
-      <legend>Add a payment</legend>
+      <legend ng-if='paymentEditor.id == null'>Add a payment</legend>
+      <legend ng-if='paymentEditor.id > 0'>Modify a payment</legend>
       <form id='payments'>
         <table>
           <?php (new t("Payment.Date"))->tr("Date of receipt")->p(); ?>
@@ -159,7 +160,12 @@
           <?php (new t("Payment.Notes"))->tr("Notes")->p(); ?>
         </table>
       </form>
-      <span id='button_save' class="btn btn-default" ng-click="actionAddPayment()">Create</span>
+      <span id='button_payment_create' class="btn btn-default" ng-click="actionAddPayment()" ng-if='paymentEditor.id == null'>
+        Create
+      </span>
+      <span id='button_payment_save'   class="btn btn-default" ng-click="actionAddPayment()" ng-if='paymentEditor.id > 0'>
+        Save
+      </span>
     </fieldset>
   </div>
 </div>
