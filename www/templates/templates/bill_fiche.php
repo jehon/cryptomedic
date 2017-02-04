@@ -141,16 +141,16 @@
           <td>{{p.Amount}}</td>
           <td>{{p.Notes}}</td>
           <td>
-            <span id='button_edit_{{p.id}}'   class="btn btn-default" ng-click="actionEditPayment(p.id)">Edit</span>
-            <span id='button_delete_{{p.id}}' class="btn btn-danger"  ng-click="actionDeletePayment(p.id)">Delete</span>
+            <span id='button_edit_{{$index}}'   class="btn btn-default" ng-click="actionEditPayment(p.id)">Edit</span>
+            <span id='button_delete_{{$index}}' class="btn btn-danger"  ng-click="actionDeletePayment(p.id)">Delete</span>
           </td>
         </tr>
       </tbody>
     </table>
-    <fieldset>
+    <fieldset  id='paymentForm'>
       <legend ng-if='paymentEditor.id == null'>Add a payment</legend>
       <legend ng-if='paymentEditor.id > 0'>Modify a payment</legend>
-      <form id='paymentForm'>
+      <form>
         <table>
           <?php (new t("Payment.Date"))->tr("Date of receipt")->p(); ?>
           <?php (new t("Payment.ExaminerName", [ "list" => References::$lists['examiner']]))->tr("Receiver")->p(); ?>
