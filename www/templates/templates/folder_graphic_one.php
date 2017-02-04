@@ -5,7 +5,7 @@
 		    <span ng-repeat="f in folder.getSubFiles()"
 		        ng-if="getValidity($index) == 'v'"
 		        ng-mouseover="hover($index)"
-		    	ng-class="{ hovered: hovered == $index }"
+  		    	ng-class="{ hovered: hovered == $index }"
 		        class="mark"
 		        style="left: {{getAbscisse($index)}}%; top: {{getOrdonnee($index)}}%"
 		        >
