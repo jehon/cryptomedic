@@ -119,9 +119,10 @@
   </div>
   <br>
   <?php
-    t::setDefaultOption("baseExpression", "paymentAdd.");
+    t::setDefaultOption("baseExpression", "paymentEditor.");
+    t::setDefaultOption('writeOnly');
   ?>
-  <div class='row' class='modeRead'>
+  <div class='row notModeWrite'>
     <h3>Related payments</h3>
     <table class='table table-hover table-bordered tablesorter' ng-if='bfolder.getSubFiles().length > 0'>
       <thead>
@@ -142,27 +143,22 @@
           <td>{{p.Amount}}</td>
           <td>{{p.Notes}}</td>
           <td>
-            Delete (not working for now) - Edit (not working for now)
+            <span id='button_edit_{{p.id}}'   class="btn btn-default" ng-click="actionEditPayment(p.id)">Edit</span>
+            <span id='button_delete_{{p.id}}' class="btn btn-danger"  ng-click="actionDeletePayment(p.id)">Delete</span>
           </td>
         </tr>
       </tbody>
     </table>
     <fieldset>
       <legend>Add a payment</legend>
-      <table>
-        <tr>
-          <td>Date</td>
-          <td>
-            <input id='Payment_Date' type='text' placeholder='yyyy-MM-dd' ng-model="add.Date" mycalendar uuid='payment_1'/>
-            <span ng-if='errors.date_payment_1' class='jserror'>
-              Invalid date: please enter yyyy-mm-dd
-            </span>
-          </td>
-        </tr>
-        <?php (new t("Payment.ExaminerName", [ "list" => References::$lists['examiner']]))->tr("Receiver")->p(); ?>
-        <?php (new t("Payment.Amount"))->tr("Amount")->p(); ?>
-        <?php (new t("Payment.Notes"))->tr("Notes")->p(); ?>
-      </table>
+      <form id='payments'>
+        <table>
+          <?php (new t("Payment.Date"))->tr("Date of receipt")->p(); ?>
+          <?php (new t("Payment.ExaminerName", [ "list" => References::$lists['examiner']]))->tr("Receiver")->p(); ?>
+          <?php (new t("Payment.Amount"))->tr("Amount")->p(); ?>
+          <?php (new t("Payment.Notes"))->tr("Notes")->p(); ?>
+        </table>
+      </form>
       <span id='button_save' class="btn btn-default" ng-click="actionAddPayment()">Create</span>
     </fieldset>
   </div>
