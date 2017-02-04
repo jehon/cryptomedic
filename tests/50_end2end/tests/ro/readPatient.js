@@ -39,6 +39,14 @@ module.exports = {
       .assert.elementNotPresent("#button_edit")
       // TODO: check bill
 
+      .page.cryptomedic().tableIterator('#paymentsList')
+            .col(2).assert('Ershad')
+            .nextCol().assert(10)
+            .row(2)
+            .col(2).assert('Murshed')
+            .nextCol().assert(15)
+            .endTable()
+
       .page.cryptomedic().goPatient(2014, 105)
       .assert.containsText("#Patient_Upazilla", "Ukhia")
       .assert.containsText("#Patient_Union_", "Jalia palong")
