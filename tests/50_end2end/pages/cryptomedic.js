@@ -135,15 +135,15 @@ module.exports = (function() {
       return client;
     };
 
-    this.tableIterator = function(tableSelector, row, col) {
+    this.tableIterator = function(tableSelector, row = 1, col = 1) {
       // var self = this;
-      if (!row) { row = 1; }
-      if (!col) { col = 1; }
+      // if (!row) { row = 1; }
+      // if (!col) { col = 1; }
       return {
-        col: function(i) { col = (i ? i : 1); return this; },
-        row: function(i) { row = (i ? i : 1); return this; },
-        nextCol: function(i) { col = col + (i ? i : 1); return this; },
-        nextRow: function(i) { row = row + (i ? i : 1); return this; },
+        col: function(i = 1) { col = i; return this; },
+        row: function(i = 1) { row = i; return this; },
+        nextCol: function(i = 1) { col = col + i; return this; },
+        nextRow: function(i = 1) { row = row + i; return this; },
         toString: function() {
           return tableSelector
             + ' tr:' + (row === 'last' ? 'last-child' : 'nth-child(' + row + ')')
