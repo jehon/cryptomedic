@@ -124,10 +124,9 @@
   ?>
   <div class='row notModeWrite'>
     <h3>Related payments</h3>
-    <table class='table table-hover table-bordered tablesorter' ng-if='bfolder.getSubFiles().length > 0'>
+    <table class='table table-hover table-bordered tablesorter' ng-if='bfolder.getSubFiles().length > 0' id='paymentsList'>
       <thead>
         <tr>
-          <th>Id</th>
           <th>Date</th>
           <th>Receiver</th>
           <th>Amount</th>
@@ -137,7 +136,6 @@
       </thead>
       <tbody>
         <tr ng-repeat="p in bfolder.getSubFiles()">
-          <td>{{p.id}}</td>
           <td>{{p.Date}}</td>
           <td>{{p.ExaminerName}}</td>
           <td>{{p.Amount}}</td>
