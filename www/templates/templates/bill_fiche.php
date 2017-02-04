@@ -150,7 +150,7 @@
     <fieldset>
       <legend ng-if='paymentEditor.id == null'>Add a payment</legend>
       <legend ng-if='paymentEditor.id > 0'>Modify a payment</legend>
-      <form id='payments'>
+      <form id='paymentForm'>
         <table>
           <?php (new t("Payment.Date"))->tr("Date of receipt")->p(); ?>
           <?php (new t("Payment.ExaminerName", [ "list" => References::$lists['examiner']]))->tr("Receiver")->p(); ?>
