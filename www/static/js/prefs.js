@@ -1,5 +1,5 @@
 
-/* exported setPref,getPref,extractPrefs */
+/* exported setPref,getPref,extractPrefsFile */
 
 function setPref(part, data) {
   let res = {};
@@ -28,8 +28,8 @@ function getPref(part, def = null) {
   return def;
 }
 
-function extractPrefs(part, object) {
-  let prefs = getPref(part, {});
+function extractPrefsFile(object) {
+  let prefs = getPref('file', {});
   if (object.Date) {
     prefs.date = object.Date;
   }

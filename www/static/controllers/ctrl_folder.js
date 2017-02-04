@@ -1,4 +1,4 @@
-/* global goThere,create,Folder,jQuery,calculations,template,getPref,setPref,date2CanonicString */
+/* global goThere,create,Folder,jQuery,calculations,template,date2CanonicString,extractPrefsFile */
 function ctrl_folder($scope, $location, $routeParams) {
   /*
    * '/folder/:patient_id/:page?/:subtype?/:subid?/:mode?'
@@ -194,17 +194,7 @@ function ctrl_folder($scope, $location, $routeParams) {
     $scope.folder = false;
     $scope.safeApply();
 
-    let prefs = getPref('file', {});
-    if (cachedCurrentFile.Date) {
-      prefs.date = cachedCurrentFile.Date;
-    }
-    if (cachedCurrentFile.ExaminerName) {
-      prefs.examinerName = cachedCurrentFile.ExaminerName;
-    }
-    if (cachedCurrentFile.Center) {
-      prefs.center = cachedCurrentFile.Center;
-    }
-    setPref('file', prefs);
+    extractPrefsFile(cachedCurrentFile);
 
     getDataService()
       .then(dataService => dataService.saveFile(cachedCurrentFile, $scope.patient_id))
@@ -238,17 +228,8 @@ function ctrl_folder($scope, $location, $routeParams) {
       alert('You have errors in your data. Please correct them and try again');
       return ;
     }
-    let prefs = getPref('file', {});
-    if (cachedCurrentFile.Date) {
-      prefs.date = cachedCurrentFile.Date;
-    }
-    if (cachedCurrentFile.ExaminerName) {
-      prefs.examinerName = cachedCurrentFile.ExaminerName;
-    }
-    if (cachedCurrentFile.Center) {
-      prefs.center = cachedCurrentFile.Center;
-    }
-    setPref('file', prefs);
+
+    extractPrefsFile(cachedCurrentFile);
 
     getDataService()
       .then(dataService => dataService.createFile(cachedCurrentFile))
