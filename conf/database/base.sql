@@ -426,7 +426,7 @@ CREATE TABLE `payments` (
 
 INSERT INTO `payments` (`id`, `created_at`, `updated_at`, `lastuser`, `bill_id`, `Date`, `ExaminerName`, `Amount`, `Notes`) VALUES
 (1, '2017-02-01 20:04:17', '2017-02-01 20:04:17', 'jehon', 1, '2016-01-01', 'Ershad', '10', 'Advance'),
-(2, '2017-02-01 20:04:55', '2017-02-01 20:04:55', 'jehon', 1, '2016-01-01', 'Kazi', '15', 'Second payment');
+(2, '2017-02-01 20:04:55', '2017-02-01 20:04:55', 'jehon', 1, '2016-01-01', 'Murshed', '15', 'Second payment');
 
 -- --------------------------------------------------------
 
