@@ -294,6 +294,13 @@
         /*** Patient - File     ***/
         /**************************/
 
+        createOrSaveFile(data) {
+          if (data.id) {
+            return this.saveFile(data);
+          }
+          return this.createFile(data);
+        },
+
         createFile(data) {
           return this.start()
             .requestWithPost()
