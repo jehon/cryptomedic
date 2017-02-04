@@ -78,7 +78,7 @@ function ctrl_file_bill($scope) {
   $scope.actionDeletePayment = function(id) {
     let data = $scope.bfolder.getSubFileByType('Payment', id);
     getDataService()
-      .then(dataService => dataService.delete(data))
+      .then(dataService => dataService.deleteFile(data))
       .then(function() {
         // The data is refreshed by navigating away...
         $scope.$emit('message', { 'level': 'success', 'text': 'The Payment has been deleted.'});
