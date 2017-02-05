@@ -22,9 +22,9 @@ module.exports = {
       .myClick("[ng-click='checkReference()']")
 
       .waitForElementPresent("#Patient_Name")
-      .assert.containsText("#Patient_Name", "rezaul islam")
+      .assert.containsText("#Patient_Name", "OSMAN")
 
-      .page.cryptomedic().selectFile("Bill", 1)
+      .page.cryptomedic().selectFile("Bill", 2)
       ;
   },
 
