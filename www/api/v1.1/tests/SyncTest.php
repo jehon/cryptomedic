@@ -35,7 +35,7 @@ class SyncTest extends SyncableTestCase {
   }
 
   public function testFlow() {
-    $r = 50;
+    $r = 53;
     $this->syncReset();
     $offline = $this->getNext(1);
     $this->myAssertIsInData($offline->data, "Picture", 1);
