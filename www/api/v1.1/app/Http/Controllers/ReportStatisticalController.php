@@ -46,7 +46,7 @@ class ReportStatisticalController extends ReportController {
 			SUM(total_asked) as total_asked,
       SUM(payments.amount) as total_paid
 			FROM bills
-			JOIN payments ON(payments.bill_id = bills.id)
+			LEFT JOIN payments ON(payments.bill_id = bills.id)
 			WHERE ({$this->filter}) AND ({$stat_filter})"
 			);
 		$stats = array_pop($stats);

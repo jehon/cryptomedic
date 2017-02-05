@@ -189,7 +189,7 @@
             "workshop": {
                 "real": 3000,
                 "asked": 1200,
-                "paid": 0
+                "paid": null
             },
             "consult": {
                 "real": 1200,
