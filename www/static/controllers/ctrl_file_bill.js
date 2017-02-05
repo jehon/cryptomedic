@@ -100,6 +100,16 @@ function ctrl_file_bill($scope) {
     let data = new Payment($scope.bfolder.getSubFileByType('Payment', id));
     $scope.paymentEditor = data;
   }
+
+  $scope.getPaymentTotal = function() {
+    if (!$scope.bfolder) {
+      return "?";
+    }
+    return $scope.bfolder.getSubFiles().reduce((acc, file) => {
+      console.log(acc, file, file.Amount);
+      return acc + (file.Amount ? file.Amount : 0)
+    }, 0);
+  }
 }
 
 ctrl_file_bill.$inject = [ "$scope" ];
