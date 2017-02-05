@@ -59,7 +59,7 @@
             "price_other": 0,
             "total_real": 100,
             "total_asked": 40,
-            "total_paid": 0,
+            "total_paid": null,
             "oldPatient": 1
         }
     ],
