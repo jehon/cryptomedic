@@ -2578,8 +2578,59 @@
                 "Amount": 15,
                 "Notes": "Second payment"
             }
+        },
+        {
+            "ts": "2017-02-05 21:16:06",
+            "id": 3,
+            "type": "Payment",
+            "checkpoint": "2017-02-05 21:16:06|Payment|0000000003",
+            "record": {
+                "id": 3,
+                "created_at": "2017-02-05 21:16:06",
+                "updated_at": null,
+                "lastuser": null,
+                "bill_id": 1,
+                "Date": null,
+                "ExaminerName": null,
+                "Amount": 1500,
+                "Notes": "automatically generated from previous system"
+            }
+        },
+        {
+            "ts": "2017-02-05 21:16:06",
+            "id": 4,
+            "type": "Payment",
+            "checkpoint": "2017-02-05 21:16:06|Payment|0000000004",
+            "record": {
+                "id": 4,
+                "created_at": "2017-02-05 21:16:06",
+                "updated_at": null,
+                "lastuser": null,
+                "bill_id": 8,
+                "Date": null,
+                "ExaminerName": null,
+                "Amount": 7000,
+                "Notes": "automatically generated from previous system"
+            }
+        },
+        {
+            "ts": "2017-02-05 21:16:06",
+            "id": 5,
+            "type": "Payment",
+            "checkpoint": "2017-02-05 21:16:06|Payment|0000000005",
+            "record": {
+                "id": 5,
+                "created_at": "2017-02-05 21:16:06",
+                "updated_at": null,
+                "lastuser": null,
+                "bill_id": 12,
+                "Date": null,
+                "ExaminerName": null,
+                "Amount": 300,
+                "Notes": "automatically generated from previous system"
+            }
         }
     ],
-    "checkpoint": "2017-02-01 20:04:55|Payment|0000000002",
+    "checkpoint": "2017-02-05 21:16:06|Payment|0000000005",
     "remaining": 0
 }

@@ -33,7 +33,7 @@
             "price_other": 400,
             "total_real": 500,
             "total_asked": 200,
-            "total_paid": 0,
+            "total_paid": null,
             "oldPatient": 1
         },
         {

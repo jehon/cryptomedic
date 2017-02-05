@@ -29,7 +29,7 @@ class ReportActivityController extends ReportController {
               " . Bill::getSQLFieldsSum(Bill::CAT_OTHER) . " AS price_other,
               bills.total_real as total_real,
               bills.total_asked as total_asked,
-              bills.total_paid as total_paid,
+              (select sum(amount) from payments where bill_id = bills.id) as total_paid,
         exists(select * from bills as b2 where b2.patient_id = bills.patient_id and b2.Date < bills.Date) as oldPatient
       FROM bills
           JOIN patients ON bills.patient_id = patients.id

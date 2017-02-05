@@ -33,7 +33,7 @@
             "price_other": 400,
             "total_real": 500,
             "total_asked": 200,
-            "total_paid": 0,
+            "total_paid": null,
             "oldPatient": 1
         },
         {
@@ -85,7 +85,7 @@
             "price_other": 0,
             "total_real": 3000,
             "total_asked": 1200,
-            "total_paid": 0,
+            "total_paid": null,
             "oldPatient": 1
         },
         {
@@ -111,7 +111,7 @@
             "price_other": 0,
             "total_real": 100,
             "total_asked": 40,
-            "total_paid": 0,
+            "total_paid": null,
             "oldPatient": 1
         },
         {
@@ -137,7 +137,7 @@
             "price_other": 0,
             "total_real": 100,
             "total_asked": 40,
-            "total_paid": 0,
+            "total_paid": null,
             "oldPatient": 1
         }
     ],

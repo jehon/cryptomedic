@@ -112,7 +112,6 @@
             <td>Price to be asked to the patient</td>
             <td id='total_calculated_asked'>{{currentFile().total_asked | number:0 }}<?php (new t("Bill.total_asked")); ?></td>
           </tr>
-          <?php (new t("Bill.total_paid"))->tr("Paid by the patient")->p(); ?>
         </table>
       </FieldSet>
     </div>
@@ -146,6 +145,14 @@
           </td>
         </tr>
       </tbody>
+      <tfoot>
+        <tr>
+          <td></td>
+          <td>Total</td>
+          <td>{{getPaymentTotal()}}</td>
+          <td></td>
+        </tr>
+      </tfoot>
     </table>
     <fieldset  id='paymentForm'>
       <legend ng-if='paymentEditor.id == null'>Add a payment</legend>

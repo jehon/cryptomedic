@@ -30,7 +30,7 @@ class ReportSurgicalController extends ReportController {
               " . Bill::getSQLFieldsSum(Bill::CAT_OTHER) . " AS price_other,
               bills.total_real as total_real,
               bills.total_asked as total_asked,
-              bills.total_paid as total_paid,
+              (select sum(amount) from payments where bill_id = bills.id) as total_paid,
         exists(select * from bills as b2 where b2.patient_id = bills.patient_id and b2.Date < " . $this->getParamAsSqlNamed("whenFrom") . ") as oldPatient,
         consults.Date AS last_seen,
         consults.TreatmentEvaluation AS last_treat_result,

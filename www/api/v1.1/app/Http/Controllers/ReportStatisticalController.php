@@ -44,8 +44,9 @@ class ReportStatisticalController extends ReportController {
 	protected function billStats($header, $stat_filter) {
 		$stats = $this->runSqlWithNamedParameter("SELECT SUM(total_real) AS total_real,
 			SUM(total_asked) as total_asked,
-			SUM(total_paid) as total_paid
+      SUM(payments.amount) as total_paid
 			FROM bills
+			JOIN payments ON(payments.bill_id = bills.id)
 			WHERE ({$this->filter}) AND ({$stat_filter})"
 			);
 		$stats = array_pop($stats);
