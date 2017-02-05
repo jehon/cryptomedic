@@ -16,9 +16,9 @@ module.exports = {
       .myClick("#menu_home")
       .waitForElementVisible("input[ng-model='entryyear']")
       .clearValue("input[ng-model='entryyear']")
-      .setValue("input[ng-model='entryyear']", 2000)
+      .setValue("input[ng-model='entryyear']", 2014)
       .clearValue("input[ng-model='entryorder']")
-      .setValue("input[ng-model='entryorder']", 1)
+      .setValue("input[ng-model='entryorder']", 103)
       .myClick("[ng-click='checkReference()']")
 
       .waitForElementPresent("#Patient_Name")
