@@ -31,8 +31,16 @@
 <form name='user_edit_form'>
   <div ng-if='edit'>
     <h3 ng-if='edit.id >= 0'>Edit user '{{edit.username}}'</h3>
-    <h3 ng-if='edit.id < 0'>Creatint user</h3>
+    <h3 ng-if='edit.id < 0'>Creating user</h3>
     <span ng-if='!password'>
+      <div class='alert alert-info'>
+        When you have created/edited the user, do not forget to set its password by selecting "change password"
+        on the main screen.
+      </div>
+      <div class='alert alert-warning'>
+        When the user is selected, it still need to be added in the "Examiner" List. To do so, please ask it to Jean
+        at <a href='mailto: marielineet.jean+cryptomedic@gmail.com'>marielineet.jean+cryptomedic@gmail.com</a>.
+      </div>
       <table class='table table-hover table-bordered tablesorter'>
         <tr>
           <td>Id</td>
@@ -66,6 +74,7 @@
       <span class='btn btn-default' ng-click='doCancel()'>cancel</span>
       <span ng-disabled="user_edit_form.$invalid" class='btn btn-info' ng-click='doSave()'>create/save</span>
       <span class='btn btn-danger' ng-click='doDelete()'>!!Delete the user!!</span>
+      <br>
     </span>
   </div>
 
