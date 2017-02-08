@@ -1,6 +1,8 @@
 <?php
 namespace Jehon\Maintenance;
 
+set_time_limit(5 * 60);
+
 echo "# <pre>crc32b:\n";
 
 require_once(__DIR__ . "/../../config.php");
