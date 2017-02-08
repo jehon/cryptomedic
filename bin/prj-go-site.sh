@@ -95,7 +95,7 @@ doDeployToSite() {
   fi
   echo "Deploying to site: $ftp_host"
 
-  php ${PRJ_DIR}/config.php) deployment.$conf_site.packages | while read L; do
+  php ${PRJ_DIR}/config.php deployment.$conf_site.packages | while read L; do
     doDeployPackage "$L"
   done
 }
