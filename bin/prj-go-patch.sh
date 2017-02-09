@@ -88,7 +88,11 @@ build_up(){
   done
 }
 
-diff -u $TMP/md5sum-remote.txt.filtered $TMP/md5sum-local.txt.filtered | build_up | lftp
+if [ "$1" == "test" ]; then
+  diff -u $TMP/md5sum-remote.txt.filtered $TMP/md5sum-local.txt.filtered | build_up > /dev/null
+else
+  diff -u $TMP/md5sum-remote.txt.filtered $TMP/md5sum-local.txt.filtered | build_up | lftp
+fi
 
 echo "******************** Log ************************"
 cat $LOG
