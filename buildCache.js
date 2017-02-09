@@ -10,32 +10,31 @@ console.log("Treating file " + index + " in " + process.cwd());
 // Test website_dependency_tree
 
 website_dependency_tree
-.retrieve(index)
-.then(function(code){
-  var dependencies = [];
-  // console.log(code);
-  for(var i in code.dependees_all) {
-    c = code.dependees_all[i];
-    if (c.last_dependency.uri) {
-      // We need an uri, otherwise it is an abstract stuff
-      // console.info(i, ": ", c.name);
-      if (c.location.disk.path) {
-        // console.info(c.location.disk.path);
-        var r = path.relative(process.cwd(), c.location.disk.path);
-        console.log(i, ": ", r);
-        dependencies.push(r);
+  .retrieve(index)
+  .then(function(code){
+    var dependencies = [];
+    // console.log(code);
+    for(var i in code.dependees_all) {
+      let c = code.dependees_all[i];
+      if (c.last_dependency.uri) {
+        // We need an uri, otherwise it is an abstract stuff
+        // console.info(i, ": ", c.name);
+        if (c.location.disk.path) {
+          // console.info(c.location.disk.path);
+          var r = path.relative(process.cwd(), c.location.disk.path);
+          // console.log(i, ": ", r);
+          dependencies.push(r);
 
-      } else {
-        console.info("?: ", c.location.disk.path);
+        } else {
+          console.info("path not resolved physically: ", c.location.disk.path);
+        }
       }
     }
-  }
-});
-
-// dependencies('static/index.html')
-//   .then(dependencies => {
-//     console.log("deps outside", dependencies);
-//   })
+    return dependencies;
+  })
+  .then(dependencies => {
+    console.log(dependencies);
+  })
 
 // module.exports = {
 //   staticFileGlobs: [
