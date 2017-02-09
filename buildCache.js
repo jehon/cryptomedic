@@ -53,7 +53,7 @@ website_dependency_tree
         //   'static/**/*.html',
         //   'static/**/*.js'
         // ])
-        .filter(v => (v != "static/service-worker.js"))
+        .filter(v => (v != "static/service-worker.js")) // Do not filter the service-worker itself, to avoid cyclical dependency
     })
   })
 
