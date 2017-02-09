@@ -37,9 +37,16 @@
     "selenium-server": "latest",
     "svgo": "latest",
     "sw-precache": "^4.0.0",
-    "webcomponentsjs": "^1.0.2"
+    "webcomponentsjs": "^1.0.2",
+    "website-dependency-tree": "git@github.com:jehon/website-dependency-tree.git",
+
+    "dependency-tree": "^5.5.1",
+    "dependents": "^3.3.0",
+    "precinct": "^3.1.2"
   },
   "scripts": {
-    "cache": "sw-precache --root=www --config=sw-precache-config.js"
+    "cache": "sw-precache --root=www --config=sw-precache-config.js",
+    "test": "cd www && node ../buildCache.js",
+    "xtest": "cd www && node ../../offline-listing/index.js static/index.html"
   }
 }
