@@ -36,20 +36,19 @@
               <br>
               By default, it should be used in France.
             </div>
-            <a class='btn btn-default' href='../online/index.html'>
+            <a class='btn btn-default' href='index.html' id='http'>
               <span class='flag'>
                 <img src="../static/img/go.gif" alt='application'>
               </span>
               Access to the traditional application
             </a>
           </div>
+          <h3>Application mode</h3>
+          <div>
+          To have this mode enabled, you need a recent browser (Firefox >= 44 - this browser has been released on january 25). Please update your Firefox browser.
+          </div>
           <div id='mode_application' style='display: none'>
-            <h3>Application mode</h3>
-            <div>
-            To have this mode enabled, you need a recent browser (Firefox >= 44 - this browser has been released on january 25). Please update your
-            Firefox browser.
-            </div>
-            <a class='btn btn-default' href='index.html'>
+            <a class='btn btn-default' href='index.html' id='https'>
               <span class='flag'>
                 <img src="../static/img/bangladesh.svg" alt="Bangladesh flag">
               </span>
@@ -75,15 +74,19 @@
       </div>
     </div>
     <script type='text/javascript'>
-    function show(id) {
-      console.log("Supported: ", id);
-      div = document.getElementById(id);
-      div.style.display = '';
-    };
+      function show(id) {
+        console.log("Supported: ", id);
+        let div = document.getElementById(id);
+        div.style.display = '';
+      }
 
-    if (ServiceWorker) {
-      show("mode_application");
-    }
+      if (ServiceWorker) {
+        show("mode_application");
+      }
+
+      document.getElementById('https').setAttribute('href', 'https://' + location.host + '/static/index.html');
+      document.getElementById('http') .setAttribute('href',  'http://' + location.host + '/static/index.html');
+
     </script>
   </body>
 </html>
