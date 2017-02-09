@@ -46,7 +46,6 @@
   },
   "scripts": {
     "cache": "sw-precache --root=www --config=sw-precache-config.js",
-    "test": "cd www && node ../buildCache.js",
-    "xtest": "cd www && node ../../offline-listing/index.js static/index.html"
+    "test": "cd www && node ../buildCache.js static/index.html"
   }
 }
