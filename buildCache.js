@@ -51,7 +51,7 @@ website_dependency_tree
         //   'static/**/*.css',
         //   'static/**/*.html',
         //   'static/**/*.html',
-        //   'static/**/*.js'
+        //   'static/**/*.js'    // would match static/service-worker, which is what we try to avoid ???
         // ])
         .filter(v => (v != "static/service-worker.js")) // Do not filter the service-worker itself, to avoid cyclical dependency
         ,
