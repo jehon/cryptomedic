@@ -45,7 +45,8 @@
     "precinct": "^3.1.2"
   },
   "scripts": {
-    "cache": "sw-precache --root=www --config=sw-precache-config.js",
-    "test": "cd www && node ../buildCache.js static/index.html"
+    "old-cache": "sw-precache --root=www --config=sw-precache-config.js",
+    "cache":     "cd www && node ../buildCache.js static/index.html",
+    "cache-dev": "cd www && node ../../offline-listing/index.js static/index.html"
   }
 }
