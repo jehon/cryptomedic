@@ -24,7 +24,3 @@ commit.msg
 /.project
 /.settings
 /.DS_Store
-
-/www/drupal/sites/default/files/
-**/drupal/sites/default/files/
-
