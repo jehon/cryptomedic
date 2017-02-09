@@ -1,9 +1,17 @@
 // https://github.com/GoogleChrome/sw-precache#options
 
-var path = require('path');
-var website_dependency_tree = require('website-dependency-tree');
+/* global require,process */
 
-let index = "static/index.html";
+let path = require('path');
+let website_dependency_tree = require('website-dependency-tree');
+let swprecache = require("sw-precache");
+
+if (process.argc < 3) {
+  console.log("Need a file name");
+  process.exit(255);
+}
+
+let index = process.argv[2];
 
 console.log("Treating file " + index + " in " + process.cwd());
 
@@ -33,7 +41,20 @@ website_dependency_tree
     return dependencies;
   })
   .then(dependencies => {
-    console.log(dependencies);
+    // console.log(dependencies);
+    swprecache.write("service-worker.js", {
+      verbose: true,                 // Show info on build
+      cacheId: 'sw-precache',        // Usefull to match old cache (stay coherent)
+      staticFileGlobs: []
+        .concat(dependencies)   // List of files to be cached (could be glob, but this is good)
+        // .concat([
+        //   'static/**/*.css',
+        //   'static/**/*.html',
+        //   'static/**/*.html',
+        //   'static/**/*.js'
+        // ])
+        .filter(v => (v != "static/service-worker.js"))
+    })
   })
 
 // module.exports = {
