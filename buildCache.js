@@ -54,6 +54,16 @@ website_dependency_tree
         //   'static/**/*.js'
         // ])
         .filter(v => (v != "static/service-worker.js")) // Do not filter the service-worker itself, to avoid cyclical dependency
+        ,
+      // https://github.com/GoogleChrome/sw-precache#runtime-caching
+      // https://googlechrome.github.io/sw-toolbox/docs/master/tutorial-api.html
+      // runtimeCaching: [{
+      //   urlPattern: /\/bower_components\//,
+      //   handler: 'networkFirst'
+      // }, {
+      //   urlPattern: /\/template\//,
+      //   handler: 'networkFirst'
+      // }]
     })
   })
 
