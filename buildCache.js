@@ -66,14 +66,3 @@ website_dependency_tree
       // }]
     })
   })
-
-// module.exports = {
-//   staticFileGlobs: [
-//     'www/static/**/*.css',
-//     'www/static/**/*.html',
-//     'www/static/**/*.html',
-//     'www/static/**/*.js'
-//   ],
-//   stripPrefix: 'www/',
-//   verbose: true
-// }
