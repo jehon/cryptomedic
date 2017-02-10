@@ -20,6 +20,8 @@
 
       worker.onmessage = function(event) {
         console.log("From worker: ", event.data);
+        let data = event.data;
+        syncRemainingCb.fire(data.remaining);
       }
 
       // worker.port.postMessage
