@@ -1,8 +1,0 @@
-#!/bin/bash
-
-set -e
-
-if [ -d "$PRJ_DIR/www/build" ]; then
-  echo "Cleaning old build"
-  find "$PRJ_DIR/www/build/" -mindepth 1 -delete
-fi
