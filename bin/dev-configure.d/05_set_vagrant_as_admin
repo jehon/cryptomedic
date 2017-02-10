@@ -1,8 +1,0 @@
-#!/bin/bash
-
-set -e
-
-USER=`getent passwd "1000" | cut -d: -f1`
-
-# Manage user rights
-usermod -a -G adm $USER

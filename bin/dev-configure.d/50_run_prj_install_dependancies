@@ -1,6 +1,0 @@
-#!/bin/bash
-
-set -e
-
-# Install project dependancies
-$PRJ_DIR/bin/prj-install-dependancies.sh

@@ -1,6 +1,0 @@
-#!/bin/bash
-set -e
-
-echo "** Restarting Mailhog"
-systemctl enable mailhog
-systemctl start mailhog
