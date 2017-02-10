@@ -1,6 +1,6 @@
-// https://github.com/GoogleChrome/sw-precache#options
+/* eslint-env node */
 
-/* global require,process */
+// https://github.com/GoogleChrome/sw-precache#options
 
 let path = require('path');
 let website_dependency_tree = require('website-dependency-tree');
