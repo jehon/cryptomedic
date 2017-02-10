@@ -14,7 +14,6 @@ onmessage = function(event) {
   console.log("Worker: received ", data);
   db.triageList(data.data, true)
     .then(() => {
-      console.log("Worker: update cp");
       // Store the final checkpoint
       // in case the last line is also present in online, and thus pruned
       // by the optimization...
@@ -22,9 +21,8 @@ onmessage = function(event) {
       return db.updateCheckpoint(data.checkpoint);
     })
     .then(() => {
-      console.log("Worker: post message: remaining = ", data.remaining);
       postMessage({
-        remaining: data.remaining
+        remaining: (data.remaining > 0 ? data.remaining : false)
       });
     })
 }
