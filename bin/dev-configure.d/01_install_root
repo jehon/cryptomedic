@@ -1,6 +1,0 @@
-#!/bin/bash
-
-set -e
-
-# Put various configs file in place (cp because needed before vagrant mount)
-rsync -r -i --omit-dir-times $PRJ_DIR/vagrant/root/ /
