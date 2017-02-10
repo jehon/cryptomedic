@@ -49,7 +49,7 @@ else
   "$PRJ_DIR/bin/dev-reset.sh" | sed -e 's/^/[reset] /'
 
   myHeader "Build the application"
-  "$PRJ_DIR/bin/prj-build.sh" | sed -e 's/^/[build] /'
+  npm run build
 
   # Test each api/* folder
   for V in "$PRJ_DIR"/www/api/* ; do
