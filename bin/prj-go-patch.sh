@@ -13,6 +13,8 @@ TMP=$PRJ_DIR/tmp
 LOG=$TMP/`date +%F_%H.%M.%S`.install.log
 conf_site="prod"
 
+$PRJ_DIR/bin/prj-build.sh
+
 echo "Log file: $LOG"
 
 filter() {
@@ -91,6 +93,7 @@ build_up(){
 if [ "$1" == "test" ]; then
   diff -u $TMP/md5sum-remote.txt.filtered $TMP/md5sum-local.txt.filtered | build_up > /dev/null
 else
+  echo "Commiting"
   diff -u $TMP/md5sum-remote.txt.filtered $TMP/md5sum-local.txt.filtered | build_up | lftp
 fi
 
