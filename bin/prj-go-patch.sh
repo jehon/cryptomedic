@@ -93,7 +93,7 @@ build_up(){
 if [ "$1" == "test" ]; then
   diff -u $TMP/md5sum-remote.txt.filtered $TMP/md5sum-local.txt.filtered | build_up > /dev/null
 else
-  echo "Commiting"
+  echo "*** Commiting ***"
   diff -u $TMP/md5sum-remote.txt.filtered $TMP/md5sum-local.txt.filtered | build_up | lftp
 fi
 
