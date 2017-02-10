@@ -45,7 +45,7 @@ let Database = (function() {
 
         db.version(7).stores({
           patients: '++id,[mainFile.entryyear+mainFile.entryorder]',
-          settings: 'key',
+          settings:      'key',
           Patient:       'id,[entryyear+entryorder]',
           Appointment:   'id,patient_id,Date,Nextappointment,NextCenter,[Nextappointment+NextCenter]',
           Bill:          'id,patient_id,Date',
@@ -79,6 +79,27 @@ let Database = (function() {
         db.Surgery      .mapToClass(Surgery);
       }
     }
+
+    // ------------------ System functions ------------------------------
+    getSetting(key, def) {
+      return db.settings.get("" + key).then(function(data) {
+        if (data) {
+          return data.value;
+        } else {
+          def = def || false;
+          return def;
+        }
+      });
+    }
+
+    setSetting(key, value) {
+      return db.settings.put({ key: "" + key, value: value})
+        .then(function() {
+          // Prefer to return the value than the key
+          return value;
+        });
+    }
+
 
     // ------------------ Business functions v2 ------------------------------
     getDB(type) {
@@ -117,7 +138,7 @@ let Database = (function() {
         finished = finished.then(() => this.storeInDB(line.type, line.record));
       }
       if (withCheckpoint) {
-        finished = finished.then(() => this.checkpointInDB(line.checkpoint));
+        finished = finished.then(() => this.updateCheckpoint(line.checkpoint));
       }
       return finished;
     }
@@ -138,13 +159,18 @@ let Database = (function() {
       return this.getDB(type).delete('' + id);
     }
 
-    checkpointInDB(checkpoint = false) {
+    updateCheckpoint(checkpoint = false) {
       if (checkpoint) {
-        if (localStorage.syncCheckpoint < checkpoint) {
-          localStorage.syncCheckpoint = checkpoint;
-        }
+        var key = "checkpoint";
+        return this.getSetting(key, "").then((val) => {
+          if (!val || val < checkpoint) {
+            return this.setSetting(key, checkpoint);
+          } else {
+            return val;
+          }
+        })
       }
-      return checkpoint;
+      return Promise.resolve(checkpoint);
     }
 
     getCheckpoint() {
@@ -162,7 +188,8 @@ let Database = (function() {
         db.Payment.clear(),
         db.Picture.clear(),
         db.RicketConsult.clear(),
-        db.Surgery.clear()
+        db.Surgery.clear(),
+        db.settings.clear()
       ])
     }
 
