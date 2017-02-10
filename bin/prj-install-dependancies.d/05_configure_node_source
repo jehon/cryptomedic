@@ -1,9 +1,0 @@
-#!/bin/bash
-
-set -e
-
-if [ ! -r /etc/apt/sources.list.d/nodesource.list ]; then
-  # Install nodejs 6.* (still v0.10.25 in Ubuntu repository as of 17/07/2016)
-  # This will run a "apt-get update"
-  curl -sL https://deb.nodesource.com/setup_6.x | bash -
-fi

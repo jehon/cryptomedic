@@ -1,8 +1,0 @@
-#!/bin/bash
-
-set -e
-
-# Enable apache modules
-a2enmod  rewrite ssl
-a2enmod  proxy_http
-
