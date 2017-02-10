@@ -35,15 +35,3 @@ Promise.prototype.myFinallyDone = function (callback) {
     .then(callback, callback)
     .catch(function(reason) { console.error(reason); });
 };
-
-/* Service worker */
-if (location.protocol == 'https:') {
-  if (location.pathname.split('/')[1] != 'online') {
-    console.info('[SW] Detection: offline mode, activating plugin');
-    activateCache();
-  } else {
-    console.info('[SW] Detection: online mode');
-  }
-} else {
-  console.info('[SW] Detection: https not detcted, online mode');
-}
