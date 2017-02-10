@@ -170,7 +170,7 @@ let Database = (function() {
           }
         })
       }
-      return Promise.resolve(checkpoint);
+      return Promise.resolve();
     }
 
     getCheckpoint() {
