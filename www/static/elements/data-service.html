@@ -12,7 +12,7 @@
   <script type='text/javascript' src='../../bower_components/dexie/dist/dexie.min.js'></script>
   <script type='text/javascript' src='lib/database.js'></script>
   <script>
-    /* global Database, background, API_VERSION, userCb, syncRemainingCb */
+    /* global Database, API_VERSION, userCb, syncRemainingCb */
     /* exported callbacks */
     (function() {
       // https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers
@@ -103,32 +103,9 @@
                 })
               }
 
-              // Put OFFLINE data (but in background process)
+              // Put OFFLINE data (but in worker process)
               if (typeof(json._offline) != "undefined") {
                 worker.postMessage(json._offline);
-                // background(() => {
-                //   db.triageList(json._offline.data, true)
-                //   .then(() => {
-                //     // Store the final checkpoint
-                //     // in case the last line is also present in online, and thus pruned
-                //     // by the optimization...
-
-                //     db.checkpointInDB(json._offline.checkpoint);
-                //   })
-                //   .then(() => {
-                //     // Adapt remaining /Xor/ launch new sync
-
-                //     if (json._offline.remaining) {
-                //       // This is not binded to what I hoped...
-                //       console.log("Triage: syncRemaining: TODO - syncing again disabled");
-                //       // TODO: how to continue syncing with or without background???
-                //       // background(() => { this.doSync() });
-                //     } else {
-                //       syncRemaining = false;
-                //     }
-                //     syncRemainingCb.fire(json._offline.remaining);
-                //   });
-                // });
               }
 
               // Return final response with original data:
