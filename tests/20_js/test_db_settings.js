@@ -55,9 +55,9 @@ describe("DB/Settings", function() {
 
   it("should be reset'd by false", function(done) {
     db.updateCheckpoint("cp1000")
-      .then(db.updateCheckpoint.bind(db, false))
-      .then(db.updateCheckpoint.bind(db, "cp0900"))
-      .then(db.getSetting.bind(db, "checkpoint"))
+      .then(() => db.updateCheckpoint(false))
+      .then(() => db.updateCheckpoint("cp0900"))
+      .then(() => db.getCheckpoint())
       .then(function(val) {
         expect(val).toBe("cp0900");
         done();
