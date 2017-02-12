@@ -198,7 +198,7 @@ let Database = (function() {
       // Get everywhere... or get related???
       return this.getDB(type).get(id).then((mainFile) => {
         if (!mainFile) {
-          throw type + " not found: " + id;
+          throw "database.js: not found " + type + '#' + id;
         }
         /* global Folder */
         let folder = new Folder();
