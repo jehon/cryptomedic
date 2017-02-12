@@ -89,10 +89,17 @@
               let finished = Promise.resolve();
 
               // Do we reset the database?
-              if (json._offline && json._offline.reset) {
-                // Reset the synced info if we are resetting the database
-                syncedFolders = {};
-                finished = finished.then(() => db.clear());
+              if (json._offline) {
+                if (json._offline.reset) {
+                  // Reset the synced info if we are resetting the database
+                  syncedFolders = {};
+                  finished = finished.then(() => db.clear());
+                }
+
+                // Put OFFLINE data (but in worker process)
+                if (typeof(json._offline) != "undefined") {
+                  worker.postMessage(json._offline);
+                }
               }
 
               // Put ONLINE data
@@ -102,10 +109,6 @@
                 })
               }
 
-              // Put OFFLINE data (but in worker process)
-              if (typeof(json._offline) != "undefined") {
-                worker.postMessage(json._offline);
-              }
 
               // Return final response with original data:
               return finished.then(() => {
