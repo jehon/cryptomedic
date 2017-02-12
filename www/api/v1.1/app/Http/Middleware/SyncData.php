@@ -30,7 +30,7 @@ class SyncData {
 		$checkpoint = $request->header("X-SYNC-CHECKPOINT");
 		$n = $request->header("X-SYNC-NBR");
 		if (!is_numeric($n)) {
-			$n = 200;
+			$n = 10;
 		}
 
     if (!AuthController::hasPermission("folder.read")) {
