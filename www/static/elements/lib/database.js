@@ -27,6 +27,8 @@ let Database = (function() {
     return 1;
   }
 
+  const checkpointKey = "checkpoint";
+
   return class Database {
     constructor() {
       if (!db) {
@@ -161,10 +163,9 @@ let Database = (function() {
 
     updateCheckpoint(checkpoint = false) {
       if (checkpoint) {
-        var key = "checkpoint";
-        return this.getSetting(key, "").then((val) => {
+        return this.getSetting(checkpointKey, "").then((val) => {
           if (!val || val < checkpoint) {
-            return this.setSetting(key, checkpoint);
+            return this.setSetting(checkpointKey, checkpoint);
           } else {
             return val;
           }
@@ -174,7 +175,7 @@ let Database = (function() {
     }
 
     getCheckpoint() {
-      return localStorage.syncCheckpoint;
+      return this.getSetting(checkpointKey, '');
     }
 
     clear() {
