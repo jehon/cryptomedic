@@ -36,6 +36,19 @@ class SyncData {
     if (!AuthController::hasPermission("folder.read")) {
 			return $response;
 		}
+		// Let's build up the response
+    $offline = [];
+
+    // What is the computer we are speaking about?
+    if (Request::input("computerId", false)) {
+      // Record the computer Id into database and session
+      $computerId = Request::input("computerId");
+      $computer = SyncComputer::firstOrNew([ "computer_id" => $computerId ]);
+      $computer->useragent = $_SERVER['HTTP_USER_AGENT'];
+      $computer->cryptomedic_version = Request::input("appVersion", "");
+      if (strpos($computer->user_list, Auth::user()->username) === false) {
+        $computer->user_list .= ',' . Auth::user()->username;
+      }
 
 		$response->setJsonOptions(JSON_NUMERIC_CHECK);
 		if ($response->status() == 200)

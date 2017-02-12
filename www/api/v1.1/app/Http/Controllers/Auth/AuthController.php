@@ -96,19 +96,6 @@ class AuthController extends Controller {
     $user->last_login = new \DateTime();
     $user->save();
 
-    if (Request::input("computerId", false)) {
-      // Record the computer Id into database and session
-      $computerId = Request::input("computerId");
-      $computer = SyncComputer::firstOrNew([ "computer_id" => $computerId ]);
-      $computer->useragent = $_SERVER['HTTP_USER_AGENT'];
-      $computer->cryptomedic_version = Request::input("appVersion", "");
-      if (strpos($computer->user_list, Auth::user()->username) === false) {
-        $computer->user_list .= ',' . Auth::user()->username;
-      }
-      $computer->save();
-      session()->put('computerId', $computerId);
-    }
-
     /*
      * TODO: Define a security key
      *
