@@ -161,16 +161,13 @@ let Database = (function() {
     }
 
     updateCheckpoint(checkpoint = false) {
-      if (checkpoint) {
-        return this.getSetting(checkpointKey, "").then((val) => {
-          if (!val || val < checkpoint) {
-            return this.setSetting(checkpointKey, checkpoint);
-          } else {
-            return val;
-          }
-        })
-      }
-      return Promise.resolve();
+      return this.getSetting(checkpointKey, "").then((val) => {
+        if (!val || val < checkpoint || !checkpoint) {
+          return this.setSetting(checkpointKey, (checkpoint ? checkpoint : ""));
+        } else {
+          return val;
+        }
+      })
     }
 
     getCheckpoint() {
