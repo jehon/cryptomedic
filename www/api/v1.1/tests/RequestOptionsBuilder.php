@@ -23,7 +23,7 @@ class RequestOptionsBuilder {
 
   public function getHeaders() {
     $headers = [];
-    if ($this->syncCheckpoint) {
+    if ($this->syncCheckpoint !== false) {
       $headers["X-SYNC-CHECKPOINT"] = $this->syncCheckpoint;
     }
     if ($this->syncNbr) {
