@@ -29,7 +29,7 @@ module.exports = {
         .nextCol().assert('400')
         .nextCol().assert('500')
         .nextCol().assert('200')
-        .nextCol().assert('0')
+        .nextCol().assert('')
 
         // New / Old patient in same month
         .row(2).col(5).assert('2014-107')
