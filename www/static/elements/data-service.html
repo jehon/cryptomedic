@@ -26,7 +26,7 @@
 
       // worker.port.postMessage
 
-      let syncRemaining = false;
+      let syncRemaining = 1;
       syncRemainingCb.add((data) => {
         // Store the information locally at least
         syncRemaining = data;
@@ -69,7 +69,6 @@
 
         userCb,
         syncRemainingCb,
-
 
         /**************************/
         /*** Start              ***/
