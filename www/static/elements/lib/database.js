@@ -28,8 +28,7 @@ let Database = (function() {
   }
 
   const checkpointKey = "checkpoint";
-
-  return class Database {
+  class Database {
     constructor() {
       if (!db) {
         // https://github.com/dfahlander/db.js/wiki/Version.stores()
@@ -236,4 +235,6 @@ let Database = (function() {
     }
 
   }
+
+  return Database;
 })();
