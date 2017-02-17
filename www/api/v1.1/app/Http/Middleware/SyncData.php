@@ -18,11 +18,25 @@ use App\Http\Controllers\Auth\AuthController;
 class SyncData {
   // @see http://laravel.com/docs/5.0/controllers
 
-  public function getComputerFromSession()
-  {
-    $computerId = session()->get('computerId', 1);
-    $computer = SyncComputer::firstOrNew([ "computer_id" => $computerId ]);
-    return $computer;
+  var $computer = false;
+
+  public function initializeComputer($request) {
+    // What is the computer we are speaking about?
+    if ($request->input("computerId", false)) {
+      // Record the computer Id into database and session
+      $computerId = $request->input("computerId");
+      $this->computer = SyncComputer::firstOrNew([ "computer_id" => $computerId ]);
+
+      session()->put('computerId', $computerId);
+    } else {
+      $computerId = session()->get('computerId', 1);
+    }
+
+    $this->computer = SyncComputer::firstOrNew([ "computer_id" => $computerId ]);
+    $this->computer->cryptomedic_version = $request->input("appVersion", "");
+    if (strpos($this->computer->user_list, Auth::user()->username) === false) {
+      $this->computer->user_list .= ',' . Auth::user()->username;
+    }
   }
 
   public function parseCheckPoint($cp)
@@ -135,6 +149,9 @@ class SyncData {
 		if (!$request->hasHeader("X-SYNC-CHECKPOINT")) {
 			return $response;
 		}
+
+    // Get $this->computer
+    $this->initializeComputer($request);
 		$previous_checkpoint = $request->header("X-SYNC-CHECKPOINT");
 
 		$n = $request->header("X-SYNC-NBR");
@@ -145,37 +162,19 @@ class SyncData {
 		// Let's build up the response
     $offline = [];
 
-    // What is the computer we are speaking about?
-    if ($request->input("computerId", false)) {
-      // Record the computer Id into database and session
-      $computerId = $request->input("computerId");
-      $computer = SyncComputer::firstOrNew([ "computer_id" => $computerId ]);
-      $computer->useragent = $_SERVER['HTTP_USER_AGENT'];
-      $computer->cryptomedic_version = $request->input("appVersion", "");
-      if (strpos($computer->user_list, Auth::user()->username) === false) {
-        $computer->user_list .= ',' . Auth::user()->username;
-      }
 
-      if (!$computer->id) {
-        // RESET 1/ We have a new computer, let's reset it...
-        $offline['reset'] = 1;
-      }
-      $computer->save();
-      session()->put('computerId', $computerId);
-    } else {
-      $computer = $this->getComputerFromSession();
-    }
-
-    if (count(explode("|", $previous_checkpoint)) != 3)
-    {
       $previous_checkpoint = "";
       // RESET 2/ We reset also if the reset is not correctly formatted
+    if (count(explode("|", $previous_checkpoint)) != 3 || !$this->computer->id) {
       $offline['reset'] = 1;
     }
 
-    $offline['data'] = [];
+		// Let's build up the response
+    $offline = [
+      'data' => [],
+      'checkpoint' => $previous_checkpoint
+    ];
 
-    $offline['checkpoint'] = $previous_checkpoint;
     $instantRecords = 0;
     foreach($this->_getList($previous_checkpoint, $n) as $i => $d)
     {
@@ -192,8 +191,7 @@ class SyncData {
     $offline['remaining'] = max(0, $this->_getCount($offline['checkpoint']) - $instantRecords);
 
     // Store the information for helping understanding what is happening out there...
-    $computer->last_sync       = $offline['checkpoint'];
-    $computer->save();
+    $this->computer->last_sync = $offline['checkpoint'];
 
 		$data = $response->getData();
 		if (is_object($data))
@@ -206,6 +204,8 @@ class SyncData {
 		}
 		$response->setData($data);
 
+    // Save the computer object from all we did for modifications
+    $this->computer->save();
 	  return $response;
 	}
 }
