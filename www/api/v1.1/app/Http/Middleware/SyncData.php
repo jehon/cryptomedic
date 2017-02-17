@@ -39,16 +39,13 @@ class SyncData {
     }
   }
 
-  public function parseCheckPoint($cp)
-  {
-    if ($cp == false)
-    {
-      $cp = "";
+  public function string2checkpoint($stringCP) {
+    if ($stringCP == false) {
+      $stringCP = "";
     }
-    $cpe = explode("|", $cp);
+    $cpe = explode("|", $stringCP);
     $cpo = (object) [];
-    if (count($cpe) == 3)
-    {
+    if (count($cpe) == 3) {
       $cpo->ts = $cpe[0];
       $cpo->type = $cpe[1];
       $cpo->id = $cpe[2];
@@ -56,8 +53,13 @@ class SyncData {
       $cpo->ts = "";
       $cpo->type = "";
       $cpo->id = -1;
+      $this->computer->early_sync = $this->checkpoint2string($cpo);
     }
     return $cpo;
+  }
+
+  public function checkpoint2string($data) {
+    return $data->ts . '|' . $data->type . '|' . $data->id;
   }
 
   public function getLineFrom($type, $id)
@@ -75,7 +77,7 @@ class SyncData {
 
   public function _getUnionSQL($cp)
   {
-    $cpo = $this->parseCheckPoint($cp);
+    $cpo = $this->string2checkpoint($cp);
 
     $this->sqlParamsUnion = [];
     $sql = "";
