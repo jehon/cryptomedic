@@ -161,8 +161,7 @@ class SyncData {
 
     // *** Let's build up the response
     $offline = [
-      'data' => [],
-      'checkpoint' => $previous_checkpoint
+      'data' => []
     ];
 
     // *** Get $this->computer
@@ -180,6 +179,7 @@ class SyncData {
       $offline['reset'] = 1;
       $previous_checkpoint = $this->checkpoint2string($this->string2checkpoint(""));
     }
+    $offline['checkpoint'] = $previous_checkpoint;
 
     // *** Get the content
     $instantRecords = 0;
