@@ -157,28 +157,31 @@ class SyncData {
 			return $response;
 		}
 
-    // Get $this->computer
-    $this->initializeComputer($request);
+    // *** Ok, conditions are good, lets go !
 
-    // Get $n
-    $n = $request->header("X-SYNC-NBR");
-    if (!is_numeric($n)) {
-      $n = 10;
-    }
-
-    // Get $previous_checkpoint
-		$previous_checkpoint = $request->header("X-SYNC-CHECKPOINT");
-    if (count(explode("|", $previous_checkpoint)) != 3 || !$this->computer->id) {
-      $offline['reset'] = 1;
-      $previous_checkpoint = $this->checkpoint2string($this->string2checkpoint(""));
-    }
-
-		// Let's build up the response
+    // *** Let's build up the response
     $offline = [
       'data' => [],
       'checkpoint' => $previous_checkpoint
     ];
 
+    // *** Get $this->computer
+    $this->initializeComputer($request);
+
+    // *** Get $n
+    $n = $request->header("X-SYNC-NBR");
+    if (!is_numeric($n)) {
+      $n = 10;
+    }
+
+    // *** Get $previous_checkpoint
+		$previous_checkpoint = $request->header("X-SYNC-CHECKPOINT");
+    if ((count(explode("|", $previous_checkpoint)) != 3) || (!$this->computer->id)) {
+      $offline['reset'] = 1;
+      $previous_checkpoint = $this->checkpoint2string($this->string2checkpoint(""));
+    }
+
+    // *** Get the content
     $instantRecords = 0;
     foreach($this->_getList($previous_checkpoint, $n) as $i => $d)
     {
@@ -193,12 +196,13 @@ class SyncData {
       }
     }
 
-    // Get the remaining count
+    // *** Get the remaining count
     $offline['remaining'] = max(0, $this->_getCount($offline['checkpoint']) - $instantRecords);
 
-    // Store the information for helping understanding what is happening out there...
+    // *** Store the information for helping understanding what is happening out there...
     $this->computer->last_sync = $offline['checkpoint'];
 
+    // *** Send back the offline data into the responde
     // Store the informations in the data send by
     // But we don't know if the data is object or array,
     // so we treat both equally
@@ -210,8 +214,10 @@ class SyncData {
 		}
 		$response->setData($data);
 
-    // Save the computer object from all we did for modifications
+    // *** Save the computer object from all we did for modifications
     $this->computer->save();
+
+    // *** Next...
 	  return $response;
 	}
 }
