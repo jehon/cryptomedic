@@ -50,9 +50,14 @@ class SyncData {
       $cpo->type = $cpe[1];
       $cpo->id = $cpe[2];
     } else {
-      $cpo->ts = "";
-      $cpo->type = "";
-      $cpo->id = -1;
+      // We initialize this one year ago
+
+      // Thanks to: http://stackoverflow.com/a/1990322/1954789
+      $time = strtotime("-1 year");
+      $cpo->ts = date("Y-m-d", $time);
+      $cpo->type = "A";
+      $cpo->id = "0000000000";
+
       $this->computer->early_sync = $this->checkpoint2string($cpo);
     }
     return $cpo;
