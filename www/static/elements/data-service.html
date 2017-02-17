@@ -82,7 +82,12 @@
             .onResponseCode(401, () => {
               window.location = "#login";
             })
-            .requestWithHeader('X-SYNC-CHECKPOINT', db.getCheckpoint())
+            .onFire(() => {
+              return db.getCheckpoint().then(lastCheckPoint => {
+                this.$.network
+                  .requestWithHeader('X-SYNC-CHECKPOINT', lastCheckPoint);
+              });
+            })
             // This is done async % then...
             .onSuccess(json => {
               // Check offline data
