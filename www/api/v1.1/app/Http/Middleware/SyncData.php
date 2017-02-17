@@ -159,21 +159,18 @@ class SyncData {
 
     // Get $this->computer
     $this->initializeComputer($request);
+
+    // Get $n
+    $n = $request->header("X-SYNC-NBR");
+    if (!is_numeric($n)) {
+      $n = 10;
+    }
+
+    // Get $previous_checkpoint
 		$previous_checkpoint = $request->header("X-SYNC-CHECKPOINT");
-
-		$n = $request->header("X-SYNC-NBR");
-		if (!is_numeric($n)) {
-			$n = 10;
-		}
-
-		// Let's build up the response
-    $offline = [];
-
-
-      $previous_checkpoint = "";
-      // RESET 2/ We reset also if the reset is not correctly formatted
     if (count(explode("|", $previous_checkpoint)) != 3 || !$this->computer->id) {
       $offline['reset'] = 1;
+      $previous_checkpoint = $this->checkpoint2string($this->string2checkpoint(""));
     }
 
 		// Let's build up the response
@@ -188,6 +185,8 @@ class SyncData {
       $offline["data"][$i] = $d;
       $offline["data"][$i]->record = $this->getLineFrom($d->type, $d->id);
       if ($d->checkpoint == '') {
+        // The timestamp is 'now', so we are not sure that the 'now' related list is complete
+        // So we don't use it
         $instantRecords++;
       } else {
         $offline['checkpoint'] = max($d->checkpoint, $offline['checkpoint']);
@@ -200,13 +199,13 @@ class SyncData {
     // Store the information for helping understanding what is happening out there...
     $this->computer->last_sync = $offline['checkpoint'];
 
+    // Store the informations in the data send by
+    // But we don't know if the data is object or array,
+    // so we treat both equally
 		$data = $response->getData();
-		if (is_object($data))
-		{
+		if (is_object($data)) {
 			$data->_offline = $offline;
-		}
-			else if (is_array($data))
-		{
+		} else if (is_array($data)) {
 			$data['_offline'] = $offline;
 		}
 		$response->setData($data);
