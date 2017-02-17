@@ -73,7 +73,7 @@ module.exports = {
         .nextCol().assert('400')
         .nextCol().assert('500')
         .nextCol().assert('200')
-        .nextCol().assert('0')
+        .nextCol().assert('')
 
         .row('last').col(17).assert('200')
         .row('last').col('last').assert('300')
