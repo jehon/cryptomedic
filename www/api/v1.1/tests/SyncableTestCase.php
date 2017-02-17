@@ -40,8 +40,8 @@ class SyncableTestCase extends RouteReferenceTestCase {
     return $json;
   }
 
-  public function syncReset() {
-    $this->syncCheckpoint = "";
+  public function syncReset($cp = "") {
+    $this->syncCheckpoint = $cp;
     $this->syncStep = 1;
   }
 
