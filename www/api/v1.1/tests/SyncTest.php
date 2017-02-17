@@ -29,7 +29,7 @@ class SyncTest extends SyncableTestCase {
   }
 
   public function testAgainstReferenceFile() {
-    $this->syncReset();
+    $this->syncReset("2014-01-01 00:00:00|Picture|0000000001");
     $json = $this->getNext(100);
     $this->myAssertResponseAgainstReference($json);
   }
