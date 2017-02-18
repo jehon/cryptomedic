@@ -3,3 +3,5 @@
 ALTER TABLE `deleteds` DROP `patient_id`;
 
 ALTER TABLE bills DROP `total_paid`;
+
+DROP TABLE sync_keys;
