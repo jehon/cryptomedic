@@ -181,7 +181,6 @@ mainApp.controller('ctrl', [ '$scope', function($scope) {
 
   $scope.$on('$routeChangeError', function() { console.error('error in routes', arguments); });
 
-  $scope.remaining = 1;
   /* global syncRemainingCb */
   syncRemainingCb.add(remaining => {
     console.log("MainApp syncRemainingCb: ", remaining);
