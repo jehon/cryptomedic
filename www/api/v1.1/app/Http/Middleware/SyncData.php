@@ -178,6 +178,20 @@ class SyncData {
 
 		$response = $next($request);
 
+    // DISABLE THIS HANDLER
+    // DISABLE THIS HANDLER
+    // DISABLE THIS HANDLER
+    // DISABLE THIS HANDLER
+    // DISABLE THIS HANDLER
+    // DISABLE THIS HANDLER
+    return $response;
+    // DISABLE THIS HANDLER
+    // DISABLE THIS HANDLER
+    // DISABLE THIS HANDLER
+    // DISABLE THIS HANDLER
+    // DISABLE THIS HANDLER
+    // DISABLE THIS HANDLER
+
 		if ($response->status() != 200) {
 			return $response;
 		}
