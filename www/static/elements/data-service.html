@@ -26,8 +26,8 @@
 
       // worker.port.postMessage
 
-      // By default, we don't know if there is data to sync
-      let syncRemaining = "?";
+      // Sync remaining callback - add a local listener
+      let syncRemaining;
       syncRemainingCb.add((data) => {
         // Store the information locally at least
         syncRemaining = data;
