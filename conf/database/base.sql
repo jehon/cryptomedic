@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Feb 01, 2017 at 09:05 PM
+-- Generation Time: Feb 21, 2017 at 08:39 PM
 -- Server version: 5.7.17-0ubuntu0.16.04.1
 -- PHP Version: 7.0.13-0ubuntu0.16.04.1
 
@@ -416,8 +416,8 @@ CREATE TABLE `payments` (
   `bill_id` int(10) UNSIGNED NOT NULL,
   `Date` date DEFAULT NULL,
   `ExaminerName` varchar(127) DEFAULT NULL,
-  `Amount` decimal(10,0) NOT NULL DEFAULT '0',
-  `Notes` text
+  `Amount` int(11) NOT NULL,
+  `Notes` mediumtext
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -425,8 +425,11 @@ CREATE TABLE `payments` (
 --
 
 INSERT INTO `payments` (`id`, `created_at`, `updated_at`, `lastuser`, `bill_id`, `Date`, `ExaminerName`, `Amount`, `Notes`) VALUES
-(1, '2017-02-01 20:04:17', '2017-02-01 20:04:17', 'jehon', 2, '2016-01-01', 'Ershad', '10', 'Advance'),
-(2, '2017-02-01 20:04:55', '2017-02-01 20:04:55', 'jehon', 2, '2016-01-01', 'Murshed', '15', 'Second payment');
+(1, '2017-02-01 20:04:17', '2017-02-01 20:04:17', 'jehon', 2, '2016-01-01', 'Ershad', 10, 'Advance'),
+(2, '2017-02-01 20:04:55', '2017-02-01 20:04:55', 'jehon', 2, '2016-01-01', 'Murshed', 15, 'Second payment'),
+(3, '2017-02-21 19:39:30', NULL, NULL, 1, NULL, NULL, 1500, 'automatically generated from previous system'),
+(4, '2017-02-21 19:39:30', NULL, NULL, 8, NULL, NULL, 7000, 'automatically generated from previous system'),
+(5, '2017-02-21 19:39:30', NULL, NULL, 12, NULL, NULL, 300, 'automatically generated from previous system');
 
 -- --------------------------------------------------------
 
@@ -647,7 +650,7 @@ CREATE TABLE `settings` (
 --
 
 INSERT INTO `settings` (`id`, `created_at`, `updated_at`, `value`) VALUES
-('structure_version', '1980-01-01 00:00:00', '2017-02-01 20:03:23', '70');
+('structure_version', '1980-01-01 00:00:00', '2017-02-21 19:39:30', '73');
 
 -- --------------------------------------------------------
 
@@ -687,9 +690,16 @@ CREATE TABLE `sync_computers` (
   `cryptomedic_version` varchar(255) NOT NULL DEFAULT '0',
   `last_sync` varchar(100) DEFAULT NULL,
   `last_sync_final` tinyint(1) NOT NULL DEFAULT '0',
+  `early_sync` varchar(100) DEFAULT NULL,
   `queue_size` int(16) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `sync_computers`
+--
+
+INSERT INTO `sync_computers` (`id`, `created_at`, `updated_at`, `lastuser`, `user_list`, `computer_id`, `useragent`, `cryptomedic_version`, `last_sync`, `last_sync_final`, `early_sync`, `queue_size`) VALUES
+(40, NULL, '1980-01-01 00:00:00', NULL, NULL, '1', NULL, '0', NULL, 0, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -905,7 +915,7 @@ ALTER TABLE `patients`
 -- AUTO_INCREMENT for table `payments`
 --
 ALTER TABLE `payments`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `pictures`
 --
@@ -930,7 +940,7 @@ ALTER TABLE `surgeries`
 -- AUTO_INCREMENT for table `sync_computers`
 --
 ALTER TABLE `sync_computers`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 --
 -- AUTO_INCREMENT for table `sync_keys`
 --
