@@ -24,11 +24,12 @@ class SyncableTestCase extends RouteReferenceTestCase {
     $json = parent::myRunAssertQuery($opt);
 
     if ($opt->getAsJson()) {
-      // Check the offline informations
-      $this->assertNotNull($json->_offline, "No offline informations?");
-      $this->assertNotNull($json->_offline->checkpoint);
-      $this->assertNotNull($json->_offline->remaining);
-      $this->assertNotNull($json->_offline->data);
+      // // Check the offline informations
+      // // OFFLINE-DISABLE Disable test for offline data
+      // $this->assertNotNull($json->_offline, "No offline informations?");
+      // $this->assertNotNull($json->_offline->checkpoint);
+      // $this->assertNotNull($json->_offline->remaining);
+      // $this->assertNotNull($json->_offline->data);
     }
 
     return $json;
@@ -55,19 +56,20 @@ class SyncableTestCase extends RouteReferenceTestCase {
         ->setUrl("sync")
       );
 
-    $offline = $json->_offline;
+    // // OFFLINE-DISABLE Disable test for offline data
+    // $offline = $json->_offline;
 
-    if ($this->syncCheckpoint == "") {
-      // We asked for a reset
-      $this->assertObjectHasAttribute('reset', $offline);
-      $this->assertEquals(1, $offline->reset);
-    }
+    // if ($this->syncCheckpoint == "") {
+    //   // We asked for a reset
+    //   $this->assertObjectHasAttribute('reset', $offline);
+    //   $this->assertEquals(1, $offline->reset);
+    // }
 
-    $this->assertObjectHasAttribute('data', $offline);
-    $this->assertTrue(count($offline->data) <= $this->syncStep, "We received " . count($offline->data) . " while the maximum was " . $this->syncStep);
+    // $this->assertObjectHasAttribute('data', $offline);
+    // $this->assertTrue(count($offline->data) <= $this->syncStep, "We received " . count($offline->data) . " while the maximum was " . $this->syncStep);
 
-    // Store new situation
-    $this->syncCheckpoint = $offline->checkpoint;
+    // // Store new situation
+    // $this->syncCheckpoint = $offline->checkpoint;
     return $json;
   }
 
