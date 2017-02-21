@@ -176,20 +176,6 @@ class SyncData {
 
 		$response = $next($request);
 
-    // DISABLE THIS HANDLER
-    // DISABLE THIS HANDLER
-    // DISABLE THIS HANDLER
-    // DISABLE THIS HANDLER
-    // DISABLE THIS HANDLER
-    // DISABLE THIS HANDLER
-    // return $response;
-    // DISABLE THIS HANDLER
-    // DISABLE THIS HANDLER
-    // DISABLE THIS HANDLER
-    // DISABLE THIS HANDLER
-    // DISABLE THIS HANDLER
-    // DISABLE THIS HANDLER
-
 		if ($response->status() != 200) {
 			return $response;
 		}
@@ -207,6 +193,20 @@ class SyncData {
 		if (!$request->hasHeader("X-SYNC-CHECKPOINT")) {
 			return $response;
 		}
+
+    // // OFFLINE-DISABLE
+    // // OFFLINE-DISABLE
+    // // OFFLINE-DISABLE
+    // // OFFLINE-DISABLE
+    // // OFFLINE-DISABLE
+    // // OFFLINE-DISABLE
+    return $response;
+    // // OFFLINE-DISABLE
+    // // OFFLINE-DISABLE
+    // // OFFLINE-DISABLE
+    // // OFFLINE-DISABLE
+    // // OFFLINE-DISABLE
+    // // OFFLINE-DISABLE
 
     // *** Ok, conditions are good, lets go !
 
