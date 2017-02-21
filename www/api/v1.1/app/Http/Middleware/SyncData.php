@@ -133,9 +133,6 @@ class SyncData {
       'data' => []
     ];
 
-    // *** Get $this->computer
-    $this->initializeComputer($request);
-
     // *** Fix the previous checkpoint
     if ((count(explode("|", $previous_checkpoint)) != 3) || (!$this->computer->id)) {
       $offline['reset'] = 1;
@@ -164,6 +161,7 @@ class SyncData {
     // *** Store the information for helping understanding what is happening out there...
     $this->computer->last_sync = $offline['checkpoint'];
 
+    return $offline;
   }
 
 	/**
@@ -211,14 +209,20 @@ class SyncData {
 		}
 
     // *** Ok, conditions are good, lets go !
+
     // *** Get $n
     $n = $request->header("X-SYNC-NBR");
     if (!is_numeric($n)) {
       $n = 10;
     }
 
+    // *** Get $this->computer
+    $this->initializeComputer($request);
+
     // *** Get $previous_checkpoint
     $previous_checkpoint = $request->header("X-SYNC-CHECKPOINT");
+
+    // *** Get offline data
     $offline = $this->getOfflineList($n, $previous_checkpoint);
 
     // *** Send back the offline data into the responde
