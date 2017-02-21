@@ -18,13 +18,13 @@ class TemplatesController extends Controller {
     // if     return (substr($haystack, -$length) === $needle);
     \t::setPDO(\DB::connection()->getPdo());
     $file = constant('TEMPLATE_ROOT') . '/' . $category . ($name ? '/' . $name : '');
-    if (substr($file, -strlen('.php'), strlen('.php')) != '.php') {
-      // How to know wich extension to use??? --> always php?
-      $file .=  ".php";
-    }
-    if (!file_exists($file)) {
+
+    if (file_exists($file . ".php")) {
+      require_once($file . ".php");
+    } elseif (file_exists($file . ".html")) {
+      require_once($file . ".html");
+    } else {
       abort(404, "$category/$name not found: $file");
     }
-    require_once($file);
   }
 }
