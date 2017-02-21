@@ -245,6 +245,7 @@
         getFolder(type, id) {
           let finished = Promise.resolve();
 
+          // TODO: Persist syncedFolders
           if (typeof(syncedFolders[type]) == 'undefined') {
             syncedFolders[type] = {};
           }
