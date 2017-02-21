@@ -19,10 +19,10 @@ class TemplatesController extends Controller {
     \t::setPDO(\DB::connection()->getPdo());
     $file = constant('TEMPLATE_ROOT') . '/' . $category . ($name ? '/' . $name : '');
 
-    if (file_exists($file . ".php")) {
-      require_once($file . ".php");
-    } elseif (file_exists($file . ".html")) {
+    if (file_exists($file . ".html")) {
       require_once($file . ".html");
+    } elseif (file_exists($file . ".php")) {
+      require_once($file . ".php");
     } else {
       abort(404, "$category/$name not found: $file");
     }
