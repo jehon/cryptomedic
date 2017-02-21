@@ -182,7 +182,7 @@ class SyncData {
     // DISABLE THIS HANDLER
     // DISABLE THIS HANDLER
     // DISABLE THIS HANDLER
-    return $response;
+    // return $response;
     // DISABLE THIS HANDLER
     // DISABLE THIS HANDLER
     // DISABLE THIS HANDLER
