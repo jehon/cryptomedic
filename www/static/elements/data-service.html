@@ -26,7 +26,8 @@
 
       // worker.port.postMessage
 
-      let syncRemaining = 1;
+      // By default, we don't know if there is data to sync
+      let syncRemaining = "?";
       syncRemainingCb.add((data) => {
         // Store the information locally at least
         syncRemaining = data;
