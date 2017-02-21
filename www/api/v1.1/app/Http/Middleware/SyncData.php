@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Middleware;
 
 use DB;
@@ -128,38 +127,8 @@ class SyncData {
     return DB::select($sqlu . " ORDER BY ts, type, id LIMIT $n", $this->sqlParamsUnion);
   }
 
-	/**
-	 * Handle an incoming request.
-	 *
-	 * @param  \Illuminate\Http\Request  $request
-	 * @param  \Closure  $next
-	 * @return mixed
-	 */
-	public function handle(Request $request, Closure $next)
-	{
-		$response = $next($request);
-
-		if ($response->status() != 200) {
-			return $response;
-		}
-
-		if (! ($response instanceof JsonResponse)) {
-			return $response;
-		}
-
-		$response->setJsonOptions(JSON_NUMERIC_CHECK);
-
-    if (!AuthController::hasPermission("folder.read")) {
-			return $response;
-		}
-
-		if (!$request->hasHeader("X-SYNC-CHECKPOINT")) {
-			return $response;
-		}
-
-    // *** Ok, conditions are good, lets go !
-
-    // *** Let's build up the response
+  public function getOfflineList($n, $previous_checkpoint) {
+       // *** Let's build up the response
     $offline = [
       'data' => []
     ];
@@ -167,14 +136,7 @@ class SyncData {
     // *** Get $this->computer
     $this->initializeComputer($request);
 
-    // *** Get $n
-    $n = $request->header("X-SYNC-NBR");
-    if (!is_numeric($n)) {
-      $n = 10;
-    }
-
-    // *** Get $previous_checkpoint
-		$previous_checkpoint = $request->header("X-SYNC-CHECKPOINT");
+    // *** Fix the previous checkpoint
     if ((count(explode("|", $previous_checkpoint)) != 3) || (!$this->computer->id)) {
       $offline['reset'] = 1;
       $previous_checkpoint = $this->checkpoint2string($this->string2checkpoint(""));
@@ -201,6 +163,49 @@ class SyncData {
 
     // *** Store the information for helping understanding what is happening out there...
     $this->computer->last_sync = $offline['checkpoint'];
+
+  }
+
+	/**
+	 * Handle an incoming request.
+	 *
+	 * @param  \Illuminate\Http\Request  $request
+	 * @param  \Closure  $next
+	 * @return mixed
+	 */
+	public function handle(Request $request, Closure $next)
+	{
+
+		$response = $next($request);
+
+		if ($response->status() != 200) {
+			return $response;
+		}
+
+		if (! ($response instanceof JsonResponse)) {
+			return $response;
+		}
+
+		$response->setJsonOptions(JSON_NUMERIC_CHECK);
+
+    if (!AuthController::hasPermission("folder.read")) {
+			return $response;
+		}
+
+		if (!$request->hasHeader("X-SYNC-CHECKPOINT")) {
+			return $response;
+		}
+
+    // *** Ok, conditions are good, lets go !
+    // *** Get $n
+    $n = $request->header("X-SYNC-NBR");
+    if (!is_numeric($n)) {
+      $n = 10;
+    }
+
+    // *** Get $previous_checkpoint
+    $previous_checkpoint = $request->header("X-SYNC-CHECKPOINT");
+    $offline = $this->getOfflineList($n, $previous_checkpoint);
 
     // *** Send back the offline data into the responde
     // Store the informations in the data send by
