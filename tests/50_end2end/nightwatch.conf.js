@@ -3,10 +3,8 @@
 
 'use strict';
 
-let remoteTarget = require(__dirname + '/../../bin/lib/vagrantPort');
+let remoteTarget = "http://cryptomedic.local:80/"
 let selenium = require('selenium-server');
-
-selenium.path = __dirname + "/../../backups/selenium-server-standalone-3.0.0-beta4.jar"
 
 module.exports = {
   "src_folders" : [ "tests" ],
