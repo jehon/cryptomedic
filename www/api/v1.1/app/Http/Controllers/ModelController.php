@@ -127,6 +127,7 @@ class ModelController extends Controller {
 		$m = self::getModelClass($model);
 		$obj = $m::find($id);
 		if (!$obj) {
+			// Already deleted:
 			return response()->json(array());
 		}
 		$deleted = $obj->delete();
