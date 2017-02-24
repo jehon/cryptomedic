@@ -43,6 +43,9 @@ let calculations = {
 
   age: {
     fromBirthDate: function(birth, options) {
+      if (birth == "" || birth == null) {
+        return "";
+      }
       options = Object.assign({}, {
         reference: new Date(),
         format: false
