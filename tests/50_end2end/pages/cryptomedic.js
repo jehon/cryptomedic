@@ -135,19 +135,18 @@ module.exports = (function() {
       return client;
     };
 
-    this.tableIterator = function(tableSelector, row = 1, col = 1) {
-      // var self = this;
-      // if (!row) { row = 1; }
-      // if (!col) { col = 1; }
+    this.tableIterator = function(tableSelector, row = 1, col = 1, section = 'tbody') {
       return {
         col: function(i = 1) { col = i; return this; },
         row: function(i = 1) { row = i; return this; },
+        section: function(i = 'tbody') { section = i; return this; },
         nextCol: function(i = 1) { col = col + i; return this; },
         nextRow: function(i = 1) { row = row + i; return this; },
         toString: function() {
           return tableSelector
-            + ' tr:' + (row === 'last' ? 'last-child' : 'nth-child(' + row + ')')
-            + ' td:' + (col === 'last' ? 'last-child' : 'nth-child(' + col + ')');
+            + ' ' + section
+            + ' > tr:' + (row === 'last' ? 'last-child' : 'nth-child(' + row + ')')
+            + ' > td:' + (col === 'last' ? 'last-child' : 'nth-child(' + col + ')');
         },
         assert: function(text) {
           client
