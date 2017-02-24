@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Feb 21, 2017 at 08:39 PM
+-- Generation Time: Feb 24, 2017 at 06:17 PM
 -- Server version: 5.7.17-0ubuntu0.16.04.1
 -- PHP Version: 7.0.13-0ubuntu0.16.04.1
 
@@ -73,7 +73,6 @@ CREATE TABLE `bills` (
   `total_real` int(11) NOT NULL DEFAULT '0',
   `Sociallevel` int(10) UNSIGNED DEFAULT NULL,
   `total_asked` int(10) UNSIGNED DEFAULT NULL,
-  `total_paid` int(11) NOT NULL DEFAULT '0',
   `consult_CDC_consultation_physio` int(11) NOT NULL DEFAULT '0',
   `consult_CDC_consultation_Bengali_Doctor` int(11) NOT NULL DEFAULT '0',
   `consult_CDC_consultation_Doctor` int(11) NOT NULL DEFAULT '0',
@@ -166,20 +165,20 @@ CREATE TABLE `bills` (
 -- Dumping data for table `bills`
 --
 
-INSERT INTO `bills` (`id`, `created_at`, `updated_at`, `lastuser`, `patient_id`, `sl_familySalary`, `sl_numberOfHouseholdMembers`, `Date`, `price_id`, `Center`, `ExaminerName`, `total_real`, `Sociallevel`, `total_asked`, `total_paid`, `consult_CDC_consultation_physio`, `consult_CDC_consultation_Bengali_Doctor`, `consult_CDC_consultation_Doctor`, `consult_field_visit`, `consult_home_visit`, `medecine_medecine`, `medecine_calcium_30x500mg`, `other_making_plaster`, `other_make_long_plaster`, `other_make_short_plaster`, `other_making_dressing`, `other_X_Ray`, `other_physiotherapy`, `other_Other_consultation_care`, `workshop_BHKAFO_night`, `workshop_BHKAFO_walking`, `workshop_UHKAFO_night`, `workshop_UHKAFO_walking`, `workshop_BKAFO_night`, `workshop_BKAFO_walking`, `workshop_UKAFO_night`, `workshop_UKAFO_walking`, `workshop_Knee_brace`, `workshop_BAFO_night`, `workshop_BAFO_walking`, `workshop_UAFO_night`, `workshop_UAFO_walking`, `workshop_Orthoshoes_with_bar`, `workshop_Orthoshoes_without_bar`, `workshop_DDB_splint`, `workshop_Compensation_sole`, `workshop_Arch_support`, `workshop_Matetarsal_pade`, `workshop_Supinator_corner`, `workshop_Wirst_splint`, `workshop_Hand_splint`, `workshop_Finger_splint`, `workshop_Walker_with_wheel`, `workshop_Walker_without_wheel`, `workshop_Crutch_a_pair`, `workshop_Crutch_a_piece`, `workshop_Wheel_chair`, `workshop_CP_chair`, `workshop_CP_standing_table`, `workshop_Cervical_Collar`, `workshop_Abdominal_corset_belt`, `workshop_Reparing`, `workshop_Other_orthodevice`, `surgical_osteotomy`, `surgical_epiphysiodesis`, `surgical_polio_AL`, `surgical_percutaneous_AL_club_foot`, `surgical_PMR_club_foot`, `surgical_Burn_release`, `surgical_Pin_removal`, `surgical_other_operation`, `other_microbus`, `other_CMOSH_follow_up`, `consult_give_appointment`, `medecine_vitamineD`, `other_nutritionalAdvice`, `other_nutritionalSupport`, `other_group_physiotherapy`, `other_physiotherapy_child`, `other_physiotherapy_adult`, `workshop_BHKAFO_Drop_lock_single_axis`, `workshop_crutch_alumenium`, `workshop_chair_china`, `workshop_mailwalke_brace`, `workshop_leg_truction`, `workshop_thoracic_brace`, `workshop_samainto_brace`, `workshop_fracture_brace`, `workshop_smo`, `workshop_lifspring_afo`, `surgical_osteotomy_bi`, `surgical_epiphysiodesis_bi`, `surgical_polio_achileus_Achileus_lenthening_bi`, `surgical_percutaneous_achil_tenotomy_bi_cmosh`, `surgical_percutaneous_achil_tenotomy_uni_cdc`, `surgical_percutaneous_achil_tenotomy_bi_cdc`, `surgical_PMR_club_club_foot_bi`, `surgical_burn_little_release`, `other_Other_plaster`, `other_Other_dressing`, `consult_ClubFoot_Follow_up`) VALUES
-(1, '2011-06-10 14:46:57', '2014-12-29 19:57:33', 'Thierry', 1, 3000, 7, '2011-06-09', 1, NULL, '', 22400, 2, 6720, 1500, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(2, '2014-02-28 15:11:38', '2015-01-19 15:12:59', 'josiane', 3, 4500, 9, '2014-01-14', 2, 'Chakaria Disability Center', 'Ershad', 500, 2, 200, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(3, '2014-03-01 07:03:33', '2015-01-19 15:12:59', 'josiane', 4, 7000, 10, '2014-01-18', 2, 'Ukhia', 'Ershad', 500, 2, 200, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(4, '2014-03-01 07:05:25', '2015-01-19 15:12:59', 'josiane', 5, 5000, 5, '2014-01-18', 2, 'Ukhia', 'Ershad', 500, 2, 200, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(5, '2014-03-01 07:17:21', '2015-01-19 15:12:59', 'josiane', 2, 20000, 8, '2015-01-19', 2, 'Chakaria Disability Center', 'Ershad', 500, 4, 500, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(6, '2014-03-02 07:44:13', '2015-01-19 15:12:59', 'Thierry', 3, 4500, 9, '2014-01-25', 2, 'Ukhia', 'Ershad', 4056697, 2, 1622679, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(7, '2014-03-02 07:45:42', '2015-01-19 15:12:59', 'josiane', 5, 5000, 5, '2014-01-25', 2, 'Ukhia', 'Ershad', 500, 2, 200, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(8, '2014-03-02 07:50:43', '2016-01-03 16:15:35', 'jehon', 4, 7000, 10, '2014-01-25', 2, 'Ukhia', 'Ershad', 20500, 2, 8200, 7000, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(9, '2014-06-20 05:58:08', '2015-01-19 15:12:59', 'josiane', 5, 5000, 5, '2014-05-31', 2, 'Chakaria Disability Center', 'Ershad', 100, 2, 40, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(10, '2014-06-21 08:44:48', '2015-01-19 15:12:59', 'josiane', 3, 4500, 9, '2014-05-25', 2, 'Moheshkhali', 'Rezaul', 100, 2, 40, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(11, '2014-06-22 15:45:37', '2015-01-19 15:12:59', 'josiane', 3, 4500, 9, '2014-05-20', 2, 'Ramu', 'Ershad', 500, 2, 200, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(12, '2014-06-25 05:20:49', '2015-10-15 04:29:50', 'josiane', 2, 20000, 8, '2014-05-20', 2, 'Chakaria Disability Center', 'Ershad', 500, 2, 200, 300, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(13, '2014-07-05 07:52:07', '2015-01-19 15:12:59', 'josiane', 2, 20000, 8, '2014-05-21', 2, 'Chakaria Disability Center', 'Hassan 1', 3000, 2, 1200, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+INSERT INTO `bills` (`id`, `created_at`, `updated_at`, `lastuser`, `patient_id`, `sl_familySalary`, `sl_numberOfHouseholdMembers`, `Date`, `price_id`, `Center`, `ExaminerName`, `total_real`, `Sociallevel`, `total_asked`, `consult_CDC_consultation_physio`, `consult_CDC_consultation_Bengali_Doctor`, `consult_CDC_consultation_Doctor`, `consult_field_visit`, `consult_home_visit`, `medecine_medecine`, `medecine_calcium_30x500mg`, `other_making_plaster`, `other_make_long_plaster`, `other_make_short_plaster`, `other_making_dressing`, `other_X_Ray`, `other_physiotherapy`, `other_Other_consultation_care`, `workshop_BHKAFO_night`, `workshop_BHKAFO_walking`, `workshop_UHKAFO_night`, `workshop_UHKAFO_walking`, `workshop_BKAFO_night`, `workshop_BKAFO_walking`, `workshop_UKAFO_night`, `workshop_UKAFO_walking`, `workshop_Knee_brace`, `workshop_BAFO_night`, `workshop_BAFO_walking`, `workshop_UAFO_night`, `workshop_UAFO_walking`, `workshop_Orthoshoes_with_bar`, `workshop_Orthoshoes_without_bar`, `workshop_DDB_splint`, `workshop_Compensation_sole`, `workshop_Arch_support`, `workshop_Matetarsal_pade`, `workshop_Supinator_corner`, `workshop_Wirst_splint`, `workshop_Hand_splint`, `workshop_Finger_splint`, `workshop_Walker_with_wheel`, `workshop_Walker_without_wheel`, `workshop_Crutch_a_pair`, `workshop_Crutch_a_piece`, `workshop_Wheel_chair`, `workshop_CP_chair`, `workshop_CP_standing_table`, `workshop_Cervical_Collar`, `workshop_Abdominal_corset_belt`, `workshop_Reparing`, `workshop_Other_orthodevice`, `surgical_osteotomy`, `surgical_epiphysiodesis`, `surgical_polio_AL`, `surgical_percutaneous_AL_club_foot`, `surgical_PMR_club_foot`, `surgical_Burn_release`, `surgical_Pin_removal`, `surgical_other_operation`, `other_microbus`, `other_CMOSH_follow_up`, `consult_give_appointment`, `medecine_vitamineD`, `other_nutritionalAdvice`, `other_nutritionalSupport`, `other_group_physiotherapy`, `other_physiotherapy_child`, `other_physiotherapy_adult`, `workshop_BHKAFO_Drop_lock_single_axis`, `workshop_crutch_alumenium`, `workshop_chair_china`, `workshop_mailwalke_brace`, `workshop_leg_truction`, `workshop_thoracic_brace`, `workshop_samainto_brace`, `workshop_fracture_brace`, `workshop_smo`, `workshop_lifspring_afo`, `surgical_osteotomy_bi`, `surgical_epiphysiodesis_bi`, `surgical_polio_achileus_Achileus_lenthening_bi`, `surgical_percutaneous_achil_tenotomy_bi_cmosh`, `surgical_percutaneous_achil_tenotomy_uni_cdc`, `surgical_percutaneous_achil_tenotomy_bi_cdc`, `surgical_PMR_club_club_foot_bi`, `surgical_burn_little_release`, `other_Other_plaster`, `other_Other_dressing`, `consult_ClubFoot_Follow_up`) VALUES
+(1, '2011-06-10 14:46:57', '2014-12-29 19:57:33', 'Thierry', 1, 3000, 7, '2011-06-09', 1, NULL, '', 22400, 2, 6720, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(2, '2014-02-28 15:11:38', '2015-01-19 15:12:59', 'josiane', 3, 4500, 9, '2014-01-14', 2, 'Chakaria Disability Center', 'Ershad', 500, 2, 200, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(3, '2014-03-01 07:03:33', '2015-01-19 15:12:59', 'josiane', 4, 7000, 10, '2014-01-18', 2, 'Ukhia', 'Ershad', 500, 2, 200, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(4, '2014-03-01 07:05:25', '2015-01-19 15:12:59', 'josiane', 5, 5000, 5, '2014-01-18', 2, 'Ukhia', 'Ershad', 500, 2, 200, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(5, '2014-03-01 07:17:21', '2015-01-19 15:12:59', 'josiane', 2, 20000, 8, '2015-01-19', 2, 'Chakaria Disability Center', 'Ershad', 500, 4, 500, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(6, '2014-03-02 07:44:13', '2015-01-19 15:12:59', 'Thierry', 3, 4500, 9, '2014-01-25', 2, 'Ukhia', 'Ershad', 4056697, 2, 1622679, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(7, '2014-03-02 07:45:42', '2015-01-19 15:12:59', 'josiane', 5, 5000, 5, '2014-01-25', 2, 'Ukhia', 'Ershad', 500, 2, 200, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(8, '2014-03-02 07:50:43', '2016-01-03 16:15:35', 'jehon', 4, 7000, 10, '2014-01-25', 2, 'Ukhia', 'Ershad', 20500, 2, 8200, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(9, '2014-06-20 05:58:08', '2015-01-19 15:12:59', 'josiane', 5, 5000, 5, '2014-05-31', 2, 'Chakaria Disability Center', 'Ershad', 100, 2, 40, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(10, '2014-06-21 08:44:48', '2015-01-19 15:12:59', 'josiane', 3, 4500, 9, '2014-05-25', 2, 'Moheshkhali', 'Rezaul', 100, 2, 40, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(11, '2014-06-22 15:45:37', '2015-01-19 15:12:59', 'josiane', 3, 4500, 9, '2014-05-20', 2, 'Ramu', 'Ershad', 500, 2, 200, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(12, '2014-06-25 05:20:49', '2015-10-15 04:29:50', 'josiane', 2, 20000, 8, '2014-05-20', 2, 'Chakaria Disability Center', 'Ershad', 500, 2, 200, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(13, '2014-07-05 07:52:07', '2015-01-19 15:12:59', 'josiane', 2, 20000, 8, '2014-05-21', 2, 'Chakaria Disability Center', 'Hassan 1', 3000, 2, 1200, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -311,7 +310,6 @@ CREATE TABLE `deleteds` (
   `id` int(10) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NOT NULL DEFAULT '1980-01-01 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
-  `patient_id` int(10) UNSIGNED DEFAULT NULL,
   `entity_type` varchar(20) NOT NULL,
   `entity_id` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -320,8 +318,8 @@ CREATE TABLE `deleteds` (
 -- Dumping data for table `deleteds`
 --
 
-INSERT INTO `deleteds` (`id`, `created_at`, `updated_at`, `patient_id`, `entity_type`, `entity_id`) VALUES
-(25, '2015-08-21 12:32:35', '2015-08-21 12:32:35', 9, 'patients', 9);
+INSERT INTO `deleteds` (`id`, `created_at`, `updated_at`, `entity_type`, `entity_id`) VALUES
+(25, '2015-08-21 12:32:35', '2015-08-21 12:32:35', 'patients', 9);
 
 -- --------------------------------------------------------
 
@@ -427,9 +425,11 @@ CREATE TABLE `payments` (
 INSERT INTO `payments` (`id`, `created_at`, `updated_at`, `lastuser`, `bill_id`, `Date`, `ExaminerName`, `Amount`, `Notes`) VALUES
 (1, '2017-02-01 20:04:17', '2017-02-01 20:04:17', 'jehon', 2, '2016-01-01', 'Ershad', 10, 'Advance'),
 (2, '2017-02-01 20:04:55', '2017-02-01 20:04:55', 'jehon', 2, '2016-01-01', 'Murshed', 15, 'Second payment'),
-(3, '2017-02-21 19:39:30', NULL, NULL, 1, NULL, NULL, 1500, 'automatically generated from previous system'),
-(4, '2017-02-21 19:39:30', NULL, NULL, 8, NULL, NULL, 7000, 'automatically generated from previous system'),
-(5, '2017-02-21 19:39:30', NULL, NULL, 12, NULL, NULL, 300, 'automatically generated from previous system');
+(3, '2017-02-21 19:39:30', '2017-02-24 17:17:24', 'Thierry', 1, '2011-06-09', '', 1500, 'automatically generated from previous system'),
+(4, '2017-02-21 19:39:30', '2017-02-24 17:17:24', 'jehon', 8, '2014-01-25', 'Ershad', 7000, 'automatically generated from previous system'),
+(5, '2017-02-21 19:39:30', '2017-02-24 17:17:24', 'josiane', 12, '2014-05-20', 'Ershad', 300, 'automatically generated from previous system'),
+(6, '2017-02-24 17:17:29', NULL, 'murshed', 5, '2014-05-20', 'Murshed', 156, NULL),
+(7, '2017-02-24 17:17:29', NULL, 'murshed', 2, '2014-05-20', 'Murshed', 113, NULL);
 
 -- --------------------------------------------------------
 
@@ -650,7 +650,7 @@ CREATE TABLE `settings` (
 --
 
 INSERT INTO `settings` (`id`, `created_at`, `updated_at`, `value`) VALUES
-('structure_version', '1980-01-01 00:00:00', '2017-02-21 19:39:30', '73');
+('structure_version', '1980-01-01 00:00:00', '2017-02-24 17:17:24', '77');
 
 -- --------------------------------------------------------
 
@@ -699,21 +699,7 @@ CREATE TABLE `sync_computers` (
 --
 
 INSERT INTO `sync_computers` (`id`, `created_at`, `updated_at`, `lastuser`, `user_list`, `computer_id`, `useragent`, `cryptomedic_version`, `last_sync`, `last_sync_final`, `early_sync`, `queue_size`) VALUES
-(40, NULL, '1980-01-01 00:00:00', NULL, NULL, '1', NULL, '0', NULL, 0, NULL, NULL);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `sync_keys`
---
-
-CREATE TABLE `sync_keys` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NOT NULL DEFAULT '1980-01-01 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
-  `computer` int(10) UNSIGNED NOT NULL,
-  `key` varchar(1028) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+(41, NULL, '1980-01-01 00:00:00', NULL, NULL, '1', NULL, '0', NULL, 0, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -792,8 +778,7 @@ ALTER TABLE `club_feet`
 -- Indexes for table `deleteds`
 --
 ALTER TABLE `deleteds`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `patient_id` (`patient_id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `other_consults`
@@ -859,12 +844,6 @@ ALTER TABLE `sync_computers`
   ADD UNIQUE KEY `computer_id` (`computer_id`);
 
 --
--- Indexes for table `sync_keys`
---
-ALTER TABLE `sync_keys`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -915,7 +894,7 @@ ALTER TABLE `patients`
 -- AUTO_INCREMENT for table `payments`
 --
 ALTER TABLE `payments`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `pictures`
 --
@@ -940,12 +919,7 @@ ALTER TABLE `surgeries`
 -- AUTO_INCREMENT for table `sync_computers`
 --
 ALTER TABLE `sync_computers`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
---
--- AUTO_INCREMENT for table `sync_keys`
---
-ALTER TABLE `sync_keys`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 --
 -- AUTO_INCREMENT for table `users`
 --

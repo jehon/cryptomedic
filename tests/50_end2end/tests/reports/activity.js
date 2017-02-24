@@ -38,7 +38,7 @@ module.exports = {
         .nextCol(4).assert('Old')
 
         .row('last').col(17).assert('400')
-        .row('last').col('last').assert('300')
+        .row('last').col('last').assert('569')
         ;
     client
       .end();
@@ -76,7 +76,7 @@ module.exports = {
         .nextCol().assert('')
 
         .row('last').col(17).assert('200')
-        .row('last').col('last').assert('300')
+        .row('last').col('last').assert('569')
         ;
     client
       .end();

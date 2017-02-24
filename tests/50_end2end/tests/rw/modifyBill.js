@@ -5,6 +5,7 @@ let payment = {
   "#Payment_Date": "2003-01-01",
   "#Payment_Amount": "123",
   "select#Payment_ExaminerName": "Shetou",
+  "#Payment_Notes": "Created during the test"
 };
 
 module.exports = {
@@ -25,6 +26,11 @@ module.exports = {
       .assert.containsText("#Patient_Name", "OSMAN")
 
       .page.cryptomedic().selectFile("Bill", 2)
+      .page.cryptomedic().tableIterator('#paymentsList')
+        .section('tfoot')
+        .row(1).col(2).assert('Total')
+        .row(1).col(3).assert('138')
+        .endTable()
       ;
   },
 
@@ -32,14 +38,18 @@ module.exports = {
     client
       .myFormFillIn("#paymentForm", payment, "#button_payment_create")
       .page.cryptomedic().tableIterator('#paymentsList')
-        .row(3).col(1).assert('2003-01-01')
+        .row(4).col(1).assert('2003-01-01')
         .nextCol().assert('Shetou')
         .nextCol().assert(123)
+        .section('tfoot')
+        .row(1).col(2).assert('Total')
+        .row(1).col(3).assert('261')
+        .endTable()
   },
 
   "modify a payment": function(client) {
     client
-      .click('#button_edit_2')
+      .click('#button_edit_3')
       ;
 
     // Check form
@@ -50,14 +60,23 @@ module.exports = {
       .click('#button_payment_save')
       .page.cryptomedic().myWaitFetch()
       .page.cryptomedic().tableIterator('#paymentsList')
-        .row(3).col(1).assert('2003-01-01')
+        .row(4).col(1).assert('2003-01-01')
         .nextCol().assert('Shetou')
         .nextCol().assert(456)
+        .section('tfoot')
+        .row(1).col(2).assert('Total')
+        .row(1).col(3).assert('594')
+        .endTable()
   },
 
   "delete a payment": function(client) {
     client
-      .click('#button_delete_2')
+      .click('#button_delete_3')
+      .page.cryptomedic().tableIterator('#paymentsList')
+        .section('tfoot')
+        .row(1).col(2).assert('Total')
+        .row(1).col(3).assert('138')
+        .endTable()
       ;
 
   }
