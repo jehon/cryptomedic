@@ -108,6 +108,7 @@
           <span ng-if="l.sl_numberOfHouseholdMembers > 0">
             {{l.sl_familySalary / l.sl_numberOfHouseholdMembers | number:0 }}
           </span>
+        </td>
         <td>{{l.Sociallevel}}</td>
 
         <td class='b_left'><jh-codage value="{{l.Pathology}}"></jh-codage></td>
@@ -123,6 +124,8 @@
         <td>{{l.total_asked}}</td>
         <td>{{l.total_paid}}</td>
       </tr>
+    </tbody>
+    <tfoot>
       <tr>
         <td colspan=16 class='b_all'></td>
         <td colspan=8 class='b_all'>Total</td>
@@ -153,7 +156,7 @@
         <td class='b_left'>{{result.totals.total_asked}}</td>
         <td class='b_left'>{{result.totals.total_paid}}</td>
       </tr>
-    </tbody>
+    </tfoot>
   </table>
 
   <h1>Legend</h1>

@@ -37,6 +37,7 @@ module.exports = {
         .nextRow(1).col(5).assert('2014-107')
         .nextCol(4).assert('Old')
 
+        .section('tfoot')
         .row('last').col(17).assert('400')
         .row('last').col('last').assert('569')
         ;
@@ -75,6 +76,7 @@ module.exports = {
         .nextCol().assert('200')
         .nextCol().assert('')
 
+        .section('tfoot')
         .row('last').col(17).assert('200')
         .row('last').col('last').assert('569')
         ;
