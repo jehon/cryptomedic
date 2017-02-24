@@ -61,6 +61,11 @@
             "total_asked": 200,
             "total_paid": 300,
             "oldPatient": 0
+        },
+        {
+            "ExaminerName": "Murshed",
+            "Center": "Chakaria Disability Center",
+            "total_paid": 269
         }
     ],
     "totals": {
@@ -86,7 +91,7 @@
         "price_other": 800,
         "total_real": 1000,
         "total_asked": 400,
-        "total_paid": 300,
+        "total_paid": 569,
         "oldPatient": 1
     }
 }
