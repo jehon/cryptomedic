@@ -138,6 +138,10 @@ abstract class ReportController extends Controller {
     return ":" . $sqlParam;
   }
 
+  public function getParamAsSqlReset() {
+    $this->sqlBindParams = [];
+  }
+
   public function getParamAsSqlFilter($name, $field, $mandatory = false) {
     $sqlParam = $name . count($this->sqlBindParams);
 
