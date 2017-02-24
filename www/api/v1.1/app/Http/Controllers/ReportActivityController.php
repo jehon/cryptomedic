@@ -6,7 +6,7 @@ use App\References;
 
 class ReportActivityController extends ReportController {
   public function buildData() {
-    $this->result['list'] = $this->runSqlWithNamedParameter("SELECT
+    $list1 = $this->runSqlWithNamedParameter("SELECT
         bills.id as bid,
         patients.id as pid,
         bills.Date as Date,
@@ -29,7 +29,7 @@ class ReportActivityController extends ReportController {
               " . Bill::getSQLFieldsSum(Bill::CAT_OTHER) . " AS price_other,
               bills.total_real as total_real,
               bills.total_asked as total_asked,
-              (select sum(amount) from payments where bill_id = bills.id) as total_paid,
+              (select sum(amount) from payments where bill_id = bills.id and " . $this->getParamAsSqlFilter("when", "payments.Date") . " ) as total_paid,
         exists(select * from bills as b2 where b2.patient_id = bills.patient_id and b2.Date < bills.Date) as oldPatient
       FROM bills
           JOIN patients ON bills.patient_id = patients.id
@@ -41,6 +41,26 @@ class ReportActivityController extends ReportController {
         AND " . Bill::getActivityFilter($this->getParam("activity", "")) . "
       ORDER BY bills.Date ASC, bills.id ASC "
     );
+
+    $this->getParamAsSqlReset();
+
+    $list2 = $this->runSqlWithNamedParameter("SELECT
+      payments.ExaminerName as ExaminerName,
+      bills.Center as Center,
+      SUM(payments.amount) as total_paid
+      FROM
+        payments
+        JOIN bills ON bills.id = payments.bill_id
+      WHERE " . $this->getParamAsSqlFilter("when", "payments.Date") . "
+        AND NOT(" . $this->getParamAsSqlFilter("when", "bills.Date") . ")
+        AND " . $this->getParamAsSqlFilter("center", "bills.Center") . "
+        AND " . $this->getParamAsSqlFilter("examiner", "payments.ExaminerName") . "
+        AND " . Bill::getActivityFilter($this->getParam("activity", "")) . "
+        GROUP BY payments.ExaminerName, bills.Center
+      ORDER BY ExaminerName ASC, bills.Center ASC "
+    );
+
+    $this->result['list'] = array_merge($list1, $list2);
 
     $this->result['totals'] = array();
     foreach($this->result['list'] as $e) {
