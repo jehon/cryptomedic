@@ -55,6 +55,11 @@
       window.cryptomedic = {};
       window.cryptomedic.serverSettings = {};
 
+      // Since we don't use the data in the databse,
+      // let's clear it at each startup...
+      // OFFLINE-DISABLE: should be removed to enable OFFLINE mode
+      db.clear();
+
       Polymer({
         is: 'cryptomedic-data-service',
 
