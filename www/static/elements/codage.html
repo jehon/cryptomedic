@@ -2,10 +2,10 @@
 
 <dom-module name="jh-codage">
   <template>
-    <span id='translating' hidden$="[[!getTranslated(value)]]" data-toggle='tooltip' data-placement='bottom' title='[[value]]'>
-      <span id='translated'>[[getTranslated(value)]]</span>*
+    <span id='translating' hidden$="[[!getTranslated(value, translated)]]" data-toggle='tooltip' data-placement='bottom' title='[[value]]'>
+      <span id='translated'>[[getTranslated(value, translated)]]</span>*
     </span>
-    <span id='original'   hidden$="[[getTranslated(value)]]">[[value]]</span>
+    <span id='original'   hidden$="[[getTranslated(value, translated)]]">[[value]]</span>
   </template>
 
   <script>
@@ -18,9 +18,16 @@
           type:               String,
           value:              ""
         },
+        translated: {
+          type:               String,
+          value:              ""
+        }
       },
 
-      getTranslated(value) {
+      getTranslated(value, translated) {
+        if (translated) {
+          return translated;
+        }
         if (!cryptomedic) {
           return false;
         }
