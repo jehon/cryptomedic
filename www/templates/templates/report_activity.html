@@ -115,12 +115,14 @@
         <td>{{l.act}}</td>
         <td>{{l.treatment}}</td>
 
-        <td class='b_left'>{{l.price_consult}}</td>
-        <td>{{l.price_medecine}}</td>
-        <td>{{l.price_surgical}}</td>
-        <td>{{l.price_workshop}}</td>
-        <td>{{l.price_other}}</td>
-        <td>{{l.total_real}}</td>
+        <td ng-if="!l.bid" class='b_left' colspan='6'><jh-codage translated='Complementary payments' value='Money collected on bills from previous months'></jh-codage></td>
+
+        <td ng-if=" l.bid" class='b_left'>{{l.price_consult}}</td>
+        <td ng-if=" l.bid" >{{l.price_medecine}}</td>
+        <td ng-if=" l.bid" >{{l.price_surgical}}</td>
+        <td ng-if=" l.bid" >{{l.price_workshop}}</td>
+        <td ng-if=" l.bid" >{{l.price_other}}</td>
+        <td ng-if=" l.bid" >{{l.total_real}}</td>
         <td>{{l.total_asked}}</td>
         <td>{{l.total_paid}}</td>
       </tr>
