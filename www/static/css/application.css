@@ -84,23 +84,23 @@ table.reporting>thead>tr>th.b_all {
  border: white 1px solid;
 }
 
-table.reporting>tbody>tr>td, table.reporting>thead>tr>th {
+table.reporting>tbody>tr>td, table.reporting>thead>tr>th, table.reporting>tfoot>tr>td {
  text-align: center;
 }
 
-table.reporting>tbody {
+table.reporting>tbody, table.reporting>tfoot {
  border: black 2px solid;
 }
 
-table.reporting>tbody>tr>td:nth-child(1) {
+table.reporting>tbody>tr>td:nth-child(1), table.reporting>tfoot>tr>td:nth-child(1) {
  text-align: left;
 }
 
-table.reporting>tbody>tr:nth-child(odd) {
+table.reporting>tbody>tr:nth-child(odd), table.reporting>tfoot>tr:nth-child(odd) {
  background-color: lightgray;
 }
 
-table.reporting>tbody>tr>.subheader {
+table.reporting>tbody>tr>.subheader, table.reporting>tfoot>tr>.subheader {
  background-color: gray;
  padding: 5px;
  padding-top: 10px;
@@ -108,23 +108,23 @@ table.reporting>tbody>tr>.subheader {
  font-weight: bold;
 }
 
-table.reporting>tbody>tr>td.b_right {
+table.reporting>tbody>tr>td.b_right, table.reporting>tfoot>tr>td.b_right {
  border-right: gray 1px solid;
 }
 
-table.reporting>tbody>tr>td.b_left {
+table.reporting>tbody>tr>td.b_left, table.reporting>tfoot>tr>td.b_left {
  border-left: gray 1px solid;
 }
 
-table.reporting>tbody>tr>td.b_bottom {
+table.reporting>tbody>tr>td.b_bottom, table.reporting>tfoot>tr>td.b_bottom {
  border-bottom: gray 1px solid;
 }
 
-table.reporting>tbody>tr>td.b_top {
+table.reporting>tbody>tr>td.b_top, table.reporting>tfoot>tr>td.b_top {
  border-top: gray 1px solid;
 }
 
-table.reporting>tbody>tr>td.b_all {
+table.reporting>tbody>tr>td.b_all, table.reporting>tfoot>tr>td.b_all {
  border: gray 1px solid;
 }
 
