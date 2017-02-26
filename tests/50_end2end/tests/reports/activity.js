@@ -37,6 +37,12 @@ module.exports = {
         .nextRow(1).col(5).assert('2014-107')
         .nextCol(4).assert('Old')
 
+        // Payment recovery
+        .row(6).col(3).assert('Murshed')
+        .nextCol().assert('CDC')
+        .nextCol(13).assert('Complementary payments')
+        .col('last').assert('269')
+
         .section('tfoot')
         .row('last').col(17).assert('400')
         .row('last').col('last').assert('569')
@@ -75,6 +81,12 @@ module.exports = {
         .nextCol().assert('500')
         .nextCol().assert('200')
         .nextCol().assert('')
+
+        // Payment recovery
+        .row(3).col(3).assert('Murshed')
+        .nextCol().assert('CDC')
+        .nextCol(13).assert('Complementary payments')
+        .col('last').assert('269')
 
         .section('tfoot')
         .row('last').col(17).assert('200')
