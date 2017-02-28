@@ -11,15 +11,16 @@ function ctrl_file_bill($scope) {
   $scope.paymentEditor = new Payment();
 
   $scope.payments = [];
-  getDataService()
-    .then(dataService => {
-      dataService.getFolder('Bill', $scope.subid)
-        .then(bfolder => {
-          $scope.bfolder = bfolder;
-          $scope.safeApply();
-        })
-    })
-
+  if ($scope.subid) {
+    getDataService()
+      .then(dataService => {
+        dataService.getFolder('Bill', $scope.subid)
+          .then(bfolder => {
+            $scope.bfolder = bfolder;
+            $scope.safeApply();
+          })
+      })
+  }
 
   $scope.$watch(function() {
     return window.cryptomedic.serverSettings.prices;
