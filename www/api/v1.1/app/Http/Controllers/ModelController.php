@@ -80,9 +80,7 @@ class ModelController extends Controller {
 				abort(500, "Could not update the created $model");
 			}
 		} else {
-			// \DB::enableQueryLog();
 			$newObj = $m::create($data);
-			// print_r(\DB::getQueryLog());
 			if (!$newObj->id) {
 				abort(500, "Could not create the file");
 			}
