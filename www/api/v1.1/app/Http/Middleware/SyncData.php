@@ -173,6 +173,8 @@ class SyncData {
 	 */
 	public function handle(Request $request, Closure $next)
 	{
+    // Prepare the online to be an array
+    session()->push("online", []);
 
 		$response = $next($request);
 
@@ -232,8 +234,10 @@ class SyncData {
 		$data = $response->getData();
 		if (is_object($data)) {
 			$data->_offline = $offline;
+      $data->online = $data->online + $online_complement;
 		} else if (is_array($data)) {
 			$data['_offline'] = $offline;
+      $data['online'] = $data['online'] + $online_complement;
 		}
 		$response->setData($data);
 
