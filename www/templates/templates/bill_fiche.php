@@ -108,12 +108,21 @@
               <numeral-js number="{{currentFile().calculate_percentage_asked()}}" format="0%" print></numeral-js>
             </td>
           </tr>
-                <tr>
+          <tr>
             <td>Price to be asked to the patient</td>
             <td id='total_calculated_asked'>{{currentFile().total_asked | number:0 }}<?php (new t("Bill.total_asked")); ?></td>
           </tr>
         </table>
       </FieldSet>
+      <fieldset>
+        <legend>Recieved payment</legend>
+          <tr>
+            <td>Payment already recieved</td>
+            <td id='first_payment'>
+              <input type='number' id='first_payment' ng-model='currentFile().first_payment'>
+            </td>
+          </tr>
+      </fieldset>
     </div>
   </div>
   <br>

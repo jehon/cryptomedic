@@ -194,6 +194,45 @@ module.exports = {
     nb++;
   },
 
+  "add a bill with direct payment": function(client) {
+    var bill = {
+      "#Bill_Date": "2016-06-01",
+      "#Bill_consult_home_visit": 1,
+      "#Bill_other_Other_consultation_care": 15,
+      "#Bill_sl_familySalary": 3000,
+      "#Bill_sl_numberOfHouseholdMembers": 5
+    };
+
+    var billTotal = {
+      "#total_calculated_raw": 165,
+      "#salary_ratio": 600,
+      "#Bill_Sociallevel": 2,
+      "#percentage": "40%",
+      "#total_calculated_asked": Math.round(165 * 0.4)
+    };
+
+    client
+      .myClick("#button_add")
+      .myClick("#add_bill")
+
+      .myFormFillIn("#fileForm", bill)
+      .myFormCheck("#fileForm", billTotal)
+      .assert.elementPresent("#Bill_other_Other_plaster")
+      .setValue('#fileForm #first_payment', 2323)
+
+      .myClick("#topsubmenu #button_save")
+      .myFormCheck("#fileForm", bill)
+      .myFormCheck("#fileForm", billTotal)
+      .assert.elementPresent("#Bill_other_Other_plaster")
+      .page.cryptomedic().tableIterator('#paymentsList')
+        .row(1).col(1).assert(bill["#Bill_Date"])
+        .nextCol().assert(bill["#Bill_ExaminerName"])
+        .nextCol().assert(2323)
+        .endTable()
+      ;
+    nb++;
+  },
+
   // "check the created appointment": function(client) {
   //   client
   //     .waitForElementVisible("")

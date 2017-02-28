@@ -44,6 +44,27 @@ class Bill extends CryptomedicModel {
     return $list;
   }
 
+	public static function create(array $attributes = array()) {
+		$first_payment = 0;
+		if (array_key_exists('first_payment', $attributes)) {
+			$first_payment = $attributes['first_payment'];
+		}
+		$obj = parent::create($attributes);
+		if ($first_payment) {
+			$p = new Payment([
+				'bill_id'      => $obj->id,
+				'Date'         => $obj->Date,
+				'ExaminerName' => $obj->ExaminerName,
+				'Amount'       => $first_payment,
+			]);
+			$p->save();
+
+			// To enrich the online informations...
+	    session()->push("online", $p);
+		}
+		return $obj;
+	}
+
 	/**
 	 * A function testing field appartenance
 	 *

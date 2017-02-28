@@ -232,6 +232,9 @@ class SyncData {
     // But we don't know if the data is object or array,
     // so we treat both equally
 		$data = $response->getData();
+
+    // Add the online data registered through session (from anywhere)
+    $online_complement = $request->session->pull("online");
 		if (is_object($data)) {
 			$data->_offline = $offline;
       $data->online = $data->online + $online_complement;
