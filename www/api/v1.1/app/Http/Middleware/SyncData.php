@@ -184,7 +184,7 @@ class SyncData {
 			return $response;
 		}
 
-		$response->setJsonOptions(JSON_NUMERIC_CHECK);
+    $response->setEncodingOptions(JSON_NUMERIC_CHECK);
 
     if (!AuthController::hasPermission("folder.read")) {
 			return $response;
