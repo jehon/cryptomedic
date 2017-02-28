@@ -6,7 +6,8 @@ use App\References;
 
 class ReportActivityController extends ReportController {
   public function buildData() {
-    $list1 = $this->runSqlWithNamedParameter("SELECT
+    $list1 = $this->runSqlWithNamedParameter("SELECT *, NOT(" . $this->getParamAsSqlFilter('when', 'Date') . ") as complementary FROM (
+      SELECT
         bills.id as bid,
         patients.id as pid,
         bills.Date as Date,
@@ -34,33 +35,48 @@ class ReportActivityController extends ReportController {
       FROM bills
           JOIN patients ON bills.patient_id = patients.id
           JOIN prices ON bills.price_id = prices.id
+      ) AS t
       WHERE (1 = 1)
-        AND " . $this->getParamAsSqlFilter("when", "bills.Date") . "
-        AND " . $this->getParamAsSqlFilter("center", "bills.Center") . "
-        AND " . $this->getParamAsSqlFilter("examiner", "bills.ExaminerName") . "
+        AND ((" . $this->getParamAsSqlFilter("when", "Date") . ") OR (total_paid > 0))
+        AND " . $this->getParamAsSqlFilter("center", "Center") . "
+        AND " . $this->getParamAsSqlFilter("examiner", "ExaminerName") . "
         AND " . Bill::getActivityFilter($this->getParam("activity", "")) . "
-      ORDER BY bills.Date ASC, bills.id ASC "
+      ORDER BY Date ASC, bid ASC "
     );
 
-    $this->getParamAsSqlReset();
+    $this->result['list'] = $list1;
+    // $this->getParamAsSqlReset();
 
-    $list2 = $this->runSqlWithNamedParameter("SELECT
-      payments.ExaminerName as ExaminerName,
-      bills.Center as Center,
-      SUM(payments.amount) as total_paid
-      FROM
-        payments
-        JOIN bills ON bills.id = payments.bill_id
-      WHERE " . $this->getParamAsSqlFilter("when", "payments.Date") . "
-        AND NOT(" . $this->getParamAsSqlFilter("when", "bills.Date") . ")
-        AND " . $this->getParamAsSqlFilter("center", "bills.Center") . "
-        AND " . $this->getParamAsSqlFilter("examiner", "payments.ExaminerName") . "
-        AND " . Bill::getActivityFilter($this->getParam("activity", "")) . "
-        GROUP BY payments.ExaminerName, bills.Center
-      ORDER BY ExaminerName ASC, bills.Center ASC "
-    );
+    // $list2 = $this->runSqlWithNamedParameter("SELECT
+    //   payments.ExaminerName as ExaminerName,
+    //   bills.Center as Center,
+    //   SUM(payments.amount) as total_paid
+    //   FROM
+    //     payments
+    //     JOIN bills ON bills.id = payments.bill_id
+    //   WHERE " . $this->getParamAsSqlFilter("when", "payments.Date") . "
+    //     AND NOT(" . $this->getParamAsSqlFilter("when", "bills.Date") . ")
+    //     AND " . $this->getParamAsSqlFilter("center", "bills.Center") . "
+    //     AND " . $this->getParamAsSqlFilter("examiner", "payments.ExaminerName") . "
+    //     AND " . Bill::getActivityFilter($this->getParam("activity", "")) . "
+    //     GROUP BY payments.ExaminerName, bills.Center
+    //   ORDER BY ExaminerName ASC, bills.Center ASC "
+    // );
 
-    $this->result['list'] = array_merge($list1, $list2);
+    // $this->result['list'] = array_merge($list1, $list2);
+
+    // If we are a complementary payment, remove all details
+    foreach($this->result['list'] as $e) {
+      if ($e->complementary) {
+        $e->price_consult   = 0;
+        $e->price_medecine  = 0;
+        $e->price_workshop  = 0;
+        $e->price_surgical  = 0;
+        $e->price_other     = 0;
+        $e->total_real      = 0;
+        $e->total_asked     = 0;
+      }
+    }
 
     $this->result['totals'] = array();
     foreach($this->result['list'] as $e) {

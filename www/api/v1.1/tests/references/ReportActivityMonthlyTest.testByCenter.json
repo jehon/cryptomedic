@@ -11,6 +11,33 @@
     },
     "list": [
         {
+            "bid": 2,
+            "pid": 3,
+            "Date": "2014-01-14",
+            "ExaminerName": "Ershad",
+            "Center": "Chakaria Disability Center",
+            "patient_reference": "2014-103",
+            "patient_name": "OSMAN",
+            "yearofbirth": 2009,
+            "Sex": "Male",
+            "sl_familySalary": 4500,
+            "sl_numberOfHouseholdMembers": 9,
+            "Sociallevel": 2,
+            "Pathology": "ClubFoot",
+            "act": "CsP",
+            "treatment": "Plast",
+            "price_consult": 0,
+            "price_medecine": 0,
+            "price_workshop": 0,
+            "price_surgical": 0,
+            "price_other": 0,
+            "total_real": 0,
+            "total_asked": 0,
+            "total_paid": 113,
+            "oldPatient": 0,
+            "complementary": 1
+        },
+        {
             "bid": 12,
             "pid": 2,
             "Date": "2014-05-20",
@@ -34,7 +61,8 @@
             "total_real": 500,
             "total_asked": 200,
             "total_paid": 300,
-            "oldPatient": 0
+            "oldPatient": 0,
+            "complementary": 0
         },
         {
             "bid": 13,
@@ -60,7 +88,8 @@
             "total_real": 3000,
             "total_asked": 1200,
             "total_paid": null,
-            "oldPatient": 1
+            "oldPatient": 1,
+            "complementary": 0
         },
         {
             "bid": 9,
@@ -86,27 +115,50 @@
             "total_real": 100,
             "total_asked": 40,
             "total_paid": null,
-            "oldPatient": 1
+            "oldPatient": 1,
+            "complementary": 0
         },
         {
-            "ExaminerName": "Murshed",
+            "bid": 5,
+            "pid": 2,
+            "Date": "2015-01-19",
+            "ExaminerName": "Ershad",
             "Center": "Chakaria Disability Center",
-            "total_paid": 269
+            "patient_reference": "2014-107",
+            "patient_name": "RIFATH MOHAMED",
+            "yearofbirth": 2002,
+            "Sex": "Male",
+            "sl_familySalary": 20000,
+            "sl_numberOfHouseholdMembers": 8,
+            "Sociallevel": 4,
+            "Pathology": "ClubFoot",
+            "act": "CsP",
+            "treatment": "Plast",
+            "price_consult": 0,
+            "price_medecine": 0,
+            "price_workshop": 0,
+            "price_surgical": 0,
+            "price_other": 0,
+            "total_real": 0,
+            "total_asked": 0,
+            "total_paid": 156,
+            "oldPatient": 1,
+            "complementary": 1
         }
     ],
     "totals": {
-        "bid": 34,
-        "pid": 9,
-        "Date": 6042,
+        "bid": 41,
+        "pid": 14,
+        "Date": 10071,
         "ExaminerName": 0,
         "Center": 0,
-        "patient_reference": 6042,
+        "patient_reference": 10070,
         "patient_name": 0,
-        "yearofbirth": 6017,
+        "yearofbirth": 10028,
         "Sex": 0,
-        "sl_familySalary": 45000,
-        "sl_numberOfHouseholdMembers": 21,
-        "Sociallevel": 6,
+        "sl_familySalary": 69500,
+        "sl_numberOfHouseholdMembers": 38,
+        "Sociallevel": 12,
         "Pathology": 0,
         "act": 0,
         "treatment": 0,
@@ -118,6 +170,7 @@
         "total_real": 3600,
         "total_asked": 1440,
         "total_paid": 569,
-        "oldPatient": 2
+        "oldPatient": 3,
+        "complementary": 2
     }
 }
