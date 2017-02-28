@@ -175,13 +175,13 @@ class AuthController extends Controller {
       // var_dump($routes);
       $list = Route::getRoutes()->getIterator();
       $list->uasort(function($a, $b) {
-          return ($a->getPath() == $b->getPath() ? 0 :
-              ($a->getPath() < $b->getPath() ? -1 : 1));
+          return ($a->uri() == $b->uri() ? 0 :
+              ($a->uri() < $b->uri() ? -1 : 1));
         });
       foreach ($list as $i => $r) {
         $res .= "<tr>";
-        $res .= "<td><a href='/" . $r->getPath() . "'>" . $r->getPath() . "</a></td>";
-        $res .= "<td>" . implode(", ", $r->getMethods()) . "</td>";
+        $res .= "<td><a href='/" . $r->uri() . "'>" . $r->uri() . "</a></td>";
+        $res .= "<td>" . implode(", ", $r->methods()) . "</td>";
         $res .= "<td>" . implode(", ", $r->middleware()) . "</td>";
         $res .= "</tr>";
       }
