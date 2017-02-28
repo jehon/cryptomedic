@@ -115,15 +115,15 @@
         <td>{{l.act}}</td>
         <td>{{l.treatment}}</td>
 
-        <td ng-if="!l.bid" class='b_left' colspan='6'><jh-codage translated='Complementary payments' value='Money collected on bills from previous months'></jh-codage></td>
+        <td ng-if=" l.complementary" class='b_left' colspan='7'><jh-codage translated='Complementary payments' value='Money collected on bills from previous months'></jh-codage></td>
 
-        <td ng-if=" l.bid" class='b_left'>{{l.price_consult}}</td>
-        <td ng-if=" l.bid" >{{l.price_medecine}}</td>
-        <td ng-if=" l.bid" >{{l.price_surgical}}</td>
-        <td ng-if=" l.bid" >{{l.price_workshop}}</td>
-        <td ng-if=" l.bid" >{{l.price_other}}</td>
-        <td ng-if=" l.bid" >{{l.total_real}}</td>
-        <td>{{l.total_asked}}</td>
+        <td ng-if="!l.complementary" class='b_left'>{{l.price_consult}}</td>
+        <td ng-if="!l.complementary" >{{l.price_medecine}}</td>
+        <td ng-if="!l.complementary" >{{l.price_surgical}}</td>
+        <td ng-if="!l.complementary" >{{l.price_workshop}}</td>
+        <td ng-if="!l.complementary" >{{l.price_other}}</td>
+        <td ng-if="!l.complementary" >{{l.total_real}}</td>
+        <td ng-if="!l.complementary" >{{l.total_asked}}</td>
         <td>{{l.total_paid}}</td>
       </tr>
     </tbody>
