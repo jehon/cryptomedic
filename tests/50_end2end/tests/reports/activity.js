@@ -38,10 +38,10 @@ module.exports = {
         .nextCol(4).assert('Old')
 
         // Payment recovery
-        .row(6).col(3).assert('Murshed')
+        .row(6).col(3).assert('Ershad')
         .nextCol().assert('CDC')
         .nextCol(13).assert('Complementary payments')
-        .col('last').assert('269')
+        .col('last').assert('113')
 
         .section('tfoot')
         .row('last').col(17).assert('400')
@@ -83,10 +83,10 @@ module.exports = {
         .nextCol().assert('')
 
         // Payment recovery
-        .row(3).col(3).assert('Murshed')
+        .row(3).col(3).assert('Ershad')
         .nextCol().assert('CDC')
         .nextCol(13).assert('Complementary payments')
-        .col('last').assert('269')
+        .col('last').assert('113')
 
         .section('tfoot')
         .row('last').col(17).assert('200')
