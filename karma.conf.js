@@ -1,11 +1,9 @@
 /* eslint-env node */
 /* eslint no-console: off */
 
-// let server = require("./tests/resources/server.js");
-
 module.exports = function(config) {
   var configuration = {
-    basePath: 'www/',
+    basePath : 'www/',
 
     plugins : [
       'karma-chrome-launcher',
@@ -20,13 +18,12 @@ module.exports = function(config) {
 
     frameworks : [
       'jasmine',
-      // 'express-http-server'
     ],
 
     reporters : [
       'progress',
       'coverage',
-//      'sonarqubeUnit',
+      'html'
     ],
 
     files : [
@@ -35,16 +32,16 @@ module.exports = function(config) {
       'bower_components/angular-route/angular-route.min.js',
       'bower_components/jquery/dist/jquery.min.js',
       {
-        pattern: 'bower_components/**/*.js',
-        watched: false,
+        pattern: "bower_components/**",
         included: false,
         served: true,
-
+        watched: false
       },
       'bower_components/dexie/dist/dexie.min.js',
       'bower_components/karma-read-json/karma-read-json.js',
       'static/**/*.js',
       'static/elements/codage.html',
+      // { pattern: '**/*.html', included: false, served: true },
       '../tests/unitjs/mocks/*.js',
       '../tests/unitjs/*.js',
       { pattern: 'api/v1.1/tests/references/*.json', included: false },
@@ -56,10 +53,11 @@ module.exports = function(config) {
     browsers: [ 'Firefox' ],
 
     preprocessors: {
-      '*.js': [ 'coverage' ],
-      '*.html': [ 'coverage' ],
-      '!(bower_components)/**/*.js': [ 'coverage' ],
-      '!(bower_components)/**/*.html': [ 'coverage' ],
+      'static/**/*.js': [ 'coverage' ],
+      // '*.js': [ 'coverage' ],
+      // '*.html': [ 'coverage' ],
+      // '!(bower_components)/**/*.js': [ 'coverage' ],
+      // '!(bower_components)/**/*.html': [ 'coverage' ],
     },
 
     coverageReporter: {
@@ -68,25 +66,10 @@ module.exports = function(config) {
       subdir: 'unit/'
     },
 
-    // junitReporter: {
-    // sonarQubeUnitReporter: {
-    //   outputFile: 'target/unit/test-results.xml',
-    //   useBrowserName: false,
-    //   // suite: 'tests/unit'
-    // },
-
-    // expressHttpServer: {
-    //   port: 3120,
-    //   // this function takes express app object and allows you to modify it
-    //   // to your liking. For more see http://expressjs.com/4x/api.html
-    //   appVisitor: function (app, log) {
-    //     return server(app, log);
-    //   }
-    // },
-
-    // htmlReporter: {
-    //   outputDir: __dirname + '/target/html/',
-    // }
+    htmlReporter: {
+      outputDir: __dirname + '/target/js/html/',
+    //   // templatePath: '../tmp/jasmine_template.html'
+    }
   };
 
   config.set(configuration);
