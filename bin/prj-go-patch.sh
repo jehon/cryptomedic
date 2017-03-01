@@ -30,6 +30,7 @@ filter() {
     | grep -v "/live-for-test"            \
     | grep -v "/node_modules"             \
     | grep -v "/tmp/"                     \
+    | grep -v "/target"                   \
     | grep -v "/tests"                    \
     | grep -v "/test"                     \
     | grep -v "/Test"                     \
