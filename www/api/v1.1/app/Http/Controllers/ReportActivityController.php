@@ -68,13 +68,13 @@ class ReportActivityController extends ReportController {
     // If we are a complementary payment, remove all details
     foreach($this->result['list'] as $e) {
       if ($e->complementary) {
-        $e->price_consult   = 0;
-        $e->price_medecine  = 0;
-        $e->price_workshop  = 0;
-        $e->price_surgical  = 0;
-        $e->price_other     = 0;
-        $e->total_real      = 0;
-        $e->total_asked     = 0;
+        unset($e->price_consult);
+        unset($e->price_medecine);
+        unset($e->price_workshop);
+        unset($e->price_surgical);
+        unset($e->price_other);
+        unset($e->total_real);
+        unset($e->total_asked);
       }
     }
 
