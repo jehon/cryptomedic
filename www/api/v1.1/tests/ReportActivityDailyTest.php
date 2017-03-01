@@ -30,7 +30,7 @@ class ReportActivityDailyTest extends RouteReferenceTestCase {
 			;
 
 		$json = $this->myRunAssertQueryForRoles($opt);
-		$this->thisAssertResponse($json, [ 3, 6 ]);
+		$this->thisAssertResponse($json, [ 4, 7 ]);
 	}
 
  	public function testByCenter() {
@@ -42,7 +42,7 @@ class ReportActivityDailyTest extends RouteReferenceTestCase {
 		foreach($json->list as $k => $v) {
 			$this->assertEquals("Chakaria Disability Center", $v->Center);
 		}
-		$this->thisAssertResponse($json, [ 2, 4 ]);
+		$this->thisAssertResponse($json, [ 3, 5 ]);
 
 		$this->myRunAssertQuery($opt
 			->asUnauthenticated()
@@ -60,7 +60,7 @@ class ReportActivityDailyTest extends RouteReferenceTestCase {
 		foreach($json->list as $k => $v) {
  			$this->assertEquals("Ershad", $v->ExaminerName);
 		}
-		$this->thisAssertResponse($json, [ 2, 3 ]);
+		$this->thisAssertResponse($json, [ 4, 5 ]);
 
  	}
 
@@ -75,6 +75,6 @@ class ReportActivityDailyTest extends RouteReferenceTestCase {
  			$this->assertEquals("Ershad", $v->ExaminerName);
 			$this->assertEquals("Chakaria Disability Center", $v->Center);
 		}
-		$this->thisAssertResponse($json, [ 1, 2 ]);
+		$this->thisAssertResponse($json, [ 3, 4 ]);
  	}
 }
