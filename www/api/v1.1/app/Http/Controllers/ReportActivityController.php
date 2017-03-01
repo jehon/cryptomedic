@@ -41,7 +41,7 @@ class ReportActivityController extends ReportController {
         AND " . $this->getParamAsSqlFilter("center", "Center") . "
         AND " . $this->getParamAsSqlFilter("examiner", "ExaminerName") . "
         AND " . Bill::getActivityFilter($this->getParam("activity", "")) . "
-      ORDER BY Date ASC, bid ASC "
+      ORDER BY complementary ASC, Date ASC, bid ASC "
     );
 
     $this->result['list'] = $list1;
