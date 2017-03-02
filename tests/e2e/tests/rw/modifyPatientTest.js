@@ -58,7 +58,7 @@ module.exports = {
       .myClick("#button_add")
       .myClick("#add_picture")
       .waitForElementVisible('#file')
-      .setValue('#file', __dirname + '/../../ressources/upload.jpg')
+      .setValue('#file', __dirname + '/../../../resources/upload.jpg')
       .myForm("#fileForm", picture, "#topsubmenu #button_save")
       .assert.visible('#img_file')
       ;
