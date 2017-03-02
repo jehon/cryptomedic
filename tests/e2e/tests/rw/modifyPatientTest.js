@@ -1,4 +1,4 @@
-
+/* eslint-env node */
 var nb = 0;
 
 var appointment = {
