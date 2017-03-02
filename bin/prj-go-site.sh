@@ -67,6 +67,7 @@ doDeployPackage() {
       --exclude "live/"            \
       --exclude "live-for-test/"   \
       --exclude "node_modules"     \
+      --exclude "target/"          \
       --exclude "tmp/"             \
       --exclude "tests"            \
       --exclude "vagrant/"         \
