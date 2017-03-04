@@ -16,15 +16,11 @@
     /* exported callbacks */
     (function() {
       // https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers
-      let worker = new Worker('elements/lib/worker.js');
-
-      worker.onmessage = function(event) {
-        console.log("From worker: ", event.data);
-        let data = event.data;
-        syncRemainingCb.fire(data.remaining);
-      }
-
-      // worker.port.postMessage
+      // let worker  = new Worker('elements/lib/worker.js');
+      // worker.onmessage = function(event) {
+      //   let data = event.data;
+      //   syncRemainingCb.fire(data.remaining);
+      // }
 
       // Sync remaining callback - add a local listener
       let syncRemaining;
@@ -108,10 +104,10 @@
                   finished = finished.then(() => db.clear());
                 }
 
-                // Put OFFLINE data (but in worker process)
-                if (typeof(json._offline) != "undefined") {
-                  worker.postMessage(json._offline);
-                }
+                // // Put OFFLINE data (but in worker process)
+                // if (typeof(json._offline) != "undefined") {
+                //   worker.postMessage(json._offline);
+                // }
               }
 
               // Put ONLINE data
