@@ -30,7 +30,7 @@ module.exports = {
       .myClick("#topsubmenu #patient_edit")
       .myClick("#topsubmenu #patient_delete")
       .acceptAlert()
-      .pause(100)
+      .pause(500)
       .assert.myAssertHashIs("#/home")
       .end();
   }
