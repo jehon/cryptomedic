@@ -48,8 +48,12 @@
 
       let currentlySyncing = false;
 
-      window.cryptomedic = {};
-      window.cryptomedic.serverSettings = {};
+      if (!window.cryptomedic) {
+        window.cryptomedic = {};
+      }
+      if (!window.cryptomedic.serverSettings) {
+        window.cryptomedic.serverSettings = {};
+      }
 
       // Since we don't use the data in the databse,
       // let's clear it at each startup...
