@@ -45,6 +45,7 @@
     "test": "./bin/dev-reset.sh && npm run test-api && npm run test-unit && npm run test-e2e",
     "test-api": "cd www/api/v1.1/ && phpunit",
     "test-unit": "karma start --single-run",
+    "test-unit-cont": "karma start",
     "test-e2e": "nightwatch",
     "cache": "cd www && node ../buildCache.js static/index.html",
     "cache-dev": "cd www && node ../../offline-listing/index.js static/index.html"
