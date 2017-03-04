@@ -1,0 +1,116 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<dom-module name="jh-select">
+  <style>
+    #radio {
+      width: 100%;
+
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    #radio > span {
+      border: 1px solid red;
+      display: block;
+      width: 50%;
+    }
+
+    select {
+      width: 100%;
+    }
+  </style>
+  <template>
+    <span    hidden$='[[isSelect(list)]]' >
+      <span id='radio'>
+        <template is="dom-repeat" items="[[list]]">
+          <span on-tap='updateValueFromRadio' to='[[escape(item)]]'>
+            <input name='[[id]]' type='radio' value='[[escape(item)]]' on-change='updateValueFromRadio' checked="[[isChecked(item, value)]]">
+              <span>[[item]]</span>
+            <br>
+          </span>
+        </template>
+      </span>
+    </span>
+    <select hidden$='[[!isSelect(list)]]' id='select'>
+      <template is="dom-repeat" items="[[list]]">
+        <option name$='[[escape(item)]]' selected="[[isChecked(item, value)]]">[[item]]</option>
+      </template>
+    </select>
+  </template>
+
+  <script>
+    (function() {
+      let internalUUID=1;
+
+      Polymer({
+        is: 'jh-select',
+
+        // https://www.polymer-project.org/1.0/docs/devguide/properties
+        properties: {
+          value: {
+            type:               String,
+            notify:             true,
+            observer:           "updateValue"
+          },
+          list: {
+            type:               Array,
+            value:              [],
+            observer:           "updateValue"
+          }
+        },
+
+        listeners: {
+          'select.change': 'updateValueFromSelect'
+        },
+
+        ready() {
+          this.id = "jh-select-" + (internalUUID + 1);
+        },
+
+        updateValue() {
+          if (!this.value) {
+            return ;
+          }
+          this.$.select.value = this.value;
+        },
+
+        getKeys(list) {
+          if (list == null) {
+            return [];
+          }
+          return Object.keys(list);
+        },
+
+        escape(str) {
+          return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        },
+
+        isSelect(list) {
+          if (!list) {
+            return false;
+          }
+          return list.length > 6;
+        },
+
+        // SELECT
+        updateValueFromSelect() {
+          this.value = this.$.select.value;
+        },
+
+        // RADIO
+        updateValueFromRadio(event) {
+          if (event.target.to) {
+            this.value = event.target.to;
+          } else {
+            this.value = this.$$('input[type=radio]:checked').value;
+          }
+        },
+
+        isChecked(radio, value) {
+          return radio == value;
+        }
+
+      });
+    })();
+  </script>
+</dom-module>
