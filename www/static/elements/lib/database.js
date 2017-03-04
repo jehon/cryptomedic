@@ -4,7 +4,8 @@
 
 // Shared database db object...
 
-let Database = (function() {
+// 'var' allow re-definition of itself, not 'let'
+var Database = (function() {
 
   let db = false;
 
