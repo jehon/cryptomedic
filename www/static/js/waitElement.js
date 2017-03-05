@@ -23,7 +23,7 @@ function waitElement(element) {
   }
 
   return new Promise(function(resolve, reject) {
-    let i = 20;
+    let i = 40;
     let cron = setInterval(function() {
       let el  = test();
       i--;
