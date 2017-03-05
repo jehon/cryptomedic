@@ -186,6 +186,34 @@ function ctrl_folder($scope, $location, $routeParams) {
     }
   };
 
+  $scope.getFormContent = function(basis = {}) {
+    // TODO:
+    // cloning ok, but getModel will fail...
+    let updateData = new basis.constructor();
+    Object.assign(updateData, basis);
+    for(let i of document.querySelector("#fileForm").querySelectorAll("input")) {
+      // Skip hidden input
+      if (i.clientHeight == 0) {
+        continue;
+      }
+
+      // Numeric
+      if (i.type == "number") {
+        i.value = Number.parseInt(i.value);
+      }
+
+      // Date
+      // temp0.attributes.mycalendar
+
+      if (i.value == "") {
+        i.value = null;
+      }
+
+      updateData[i.name] = i.value;
+    }
+    return updateData;
+  }
+
   $scope.actionSave = function() {
     if (!$scope.actionValidate()) {
       alert('You have errors in your data. Please correct them and try again');
