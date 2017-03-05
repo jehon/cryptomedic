@@ -107,7 +107,6 @@ function ctrl_file_bill($scope) {
       return "?";
     }
     return $scope.bfolder.getSubFiles().reduce((acc, file) => {
-      console.log(acc, file, file.Amount);
       return acc + (file.Amount ? file.Amount : 0)
     }, 0);
   }
