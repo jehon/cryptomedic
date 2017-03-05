@@ -60,7 +60,6 @@ module.exports = {
         "javascriptEnabled": true,
         "acceptSslCerts": true,
         "phantomjs.binary.path" : "node_modules/phantomjs/bin/phantomjs",
-//        "path": "www/"
       }
     },
     "chrome" : {
@@ -74,7 +73,6 @@ module.exports = {
         "javascriptEnabled": true,
         "acceptSslCerts": true,
         "args": "no-sandbox",
-//        "path": "www/"
       }
     }
   }
