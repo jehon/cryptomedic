@@ -178,11 +178,11 @@ class SyncData {
 
 		$response = $next($request);
 
-		if ($response->status() != 200) {
-			return $response;
-		}
+    if (! ($response instanceof JsonResponse)) {
+      return $response;
+    }
 
-		if (! ($response instanceof JsonResponse)) {
+		if ($response->status() != 200) {
 			return $response;
 		}
 
