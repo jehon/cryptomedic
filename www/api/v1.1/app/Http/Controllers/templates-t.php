@@ -274,7 +274,7 @@ class t {
       return $this;
     }
 
-    $inline = "class='form-control' id='{$this->jsId}' ng-model='{$this->fieldGetKey()}' "
+    $inline = "name='{$this->field}' class='form-control' id='{$this->jsId}' ng-model='{$this->fieldGetKey()}' "
         . ($this->fieldIsRequired() ? " required " : "")
         . $this->options['inline'];
 
