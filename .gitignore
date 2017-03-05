@@ -1,5 +1,4 @@
-target
-/backups/dev/
+/target/
 /live/
 /tmp/
 
