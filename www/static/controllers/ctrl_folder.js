@@ -93,8 +93,10 @@ function ctrl_folder($scope, $location, $routeParams) {
       if (cachedCurrentFile.Yearofbirth) {
         var age = calculations.age.fromBirthDate(cachedCurrentFile.Yearofbirth);
         var r = RegExp('([0-9]+) ?y(ears)? ?([0-9]+) ?m(onths)?').exec(age);
-        $scope.age.years = parseInt(r[1]);
-        $scope.age.months = parseInt(r[3]);
+        if (r.length > 3) {
+          $scope.age.years = parseInt(r[1]);
+          $scope.age.months = parseInt(r[3]);
+        }
       }
     }
     $scope.folder = data;
