@@ -7,3 +7,5 @@ if [ -d "$PRJ_DIR/tmp" ]; then
 else
   mkdir -p "$PRJ_DIR/tmp"
 fi
+
+find . -name "*.log" -delete
