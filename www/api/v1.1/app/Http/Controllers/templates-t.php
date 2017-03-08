@@ -204,33 +204,9 @@ class t {
     return $this;
   }
 
-  function displayCode($mode) {
-    if (array_key_exists("_meta", $_REQUEST) && $_REQUEST['_meta']) {
-      $this->res .= "=" . $mode . $this->key;
-      $this->res .= ($this->linked2DB ? "db" : "##");
-      $this->res .= "-" . $this->model . "." . $this->field;
-      $this->res .= ":" . $this->fieldGetType();
-      if ($this->fieldGetType() == static::TYPE_LIST) {
-        $this->res .= "(";
-        foreach($this->listing as $v) {
-          $this->res .= $v . ",";
-        }
-        $this->res .= ")";
-      }
-      $this->res .= ($this->fieldIsRequired() ? "!" : "?");
-      $this->res .= "[" . $this->fieldGetKey() . "]";
-      $this->res .= "=";
-      return true;
-    }
-    return false;
-  }
-
   function read() {
     if (!$this->linked2DB) {
       $this->res .= "<span id='{$this->jsId}' class='error'>Read: key is not in the database: '{$this->key}'</span>";
-      return $this;
-    }
-    if ($this->displayCode("r")) {
       return $this;
     }
 
@@ -268,9 +244,6 @@ class t {
   function write() {
     if (!$this->linked2DB) {
       $this->res .= "<span id='{$this->jsId}'class='error'>Write: key is not in the database: '{$this->key}'</span>";
-      return $this;
-    }
-    if ($this->displayCode("w")) {
       return $this;
     }
 
