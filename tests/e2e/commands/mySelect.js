@@ -1,6 +1,5 @@
 
 exports.command = function(selector, value) {
-  console.log("My Select: ", selector, value);
   this
     .click(selector)
     .pause(10)
