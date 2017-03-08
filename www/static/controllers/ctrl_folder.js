@@ -234,7 +234,8 @@ function ctrl_folder($scope, $location, $routeParams) {
     $scope.folder = false;
     $scope.safeApply();
 
-    extractPrefsFile(cachedCurrentFile);
+    let updatedData = this.getFormContent(cachedCurrentFile);
+    extractPrefsFile(updatedData);
 
     getDataService()
       .then(dataService => dataService.saveFile(cachedCurrentFile, $scope.patient_id))
@@ -269,7 +270,8 @@ function ctrl_folder($scope, $location, $routeParams) {
       return ;
     }
 
-    extractPrefsFile(cachedCurrentFile);
+    let updatedData = this.getFormContent(cachedCurrentFile);
+    extractPrefsFile(updatedData);
 
     getDataService()
       .then(dataService => dataService.createFile(cachedCurrentFile))
