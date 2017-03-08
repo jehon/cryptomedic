@@ -49,19 +49,6 @@ module.exports = {
         "acceptSslCerts": true
       }
     },
-    "phantomjs" : {
-      "silent": true,
-      "screenshots" : {
-        "enabled" : true,
-        "path" : "target/e2e/phantomjs/"
-      },
-      "desiredCapabilities": {
-        "browserName": "phantomjs",
-        "javascriptEnabled": true,
-        "acceptSslCerts": true,
-        "phantomjs.binary.path" : "node_modules/phantomjs/bin/phantomjs",
-      }
-    },
     "chrome" : {
       "silent": true,
       "screenshots" : {
