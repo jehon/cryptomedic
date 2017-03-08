@@ -127,7 +127,7 @@ function ctrl_folder($scope, $location, $routeParams) {
   };
 
   $scope.getPathTo = function(mode, index) {
-    var f = cachedCurrentFile;
+    var f = $scope.currentFile();
     if (index) {
       f = $scope.folder.getSubFile(index);
     }
@@ -234,7 +234,7 @@ function ctrl_folder($scope, $location, $routeParams) {
     $scope.folder = false;
     $scope.safeApply();
 
-    let updatedData = this.getFormContent(cachedCurrentFile);
+    let updatedData = this.getFormContent($scope.currentFile());
     extractPrefsFile(updatedData);
 
     getDataService()
@@ -253,7 +253,7 @@ function ctrl_folder($scope, $location, $routeParams) {
     $scope.safeApply();
 
     getDataService()
-      .then(dataService => dataService.unlockFile(cachedCurrentFile))
+      .then(dataService => dataService.unlockFile($scope.currentFile()))
       .then(function(data) {
         $scope.$emit('message', { 'level': 'success', 'text': 'The ' + $scope.subtype + ' #' + $scope.subid + ' has been unlocked.'});
       // Let's refresh the data
@@ -270,7 +270,7 @@ function ctrl_folder($scope, $location, $routeParams) {
       return ;
     }
 
-    let updatedData = this.getFormContent(cachedCurrentFile);
+    let updatedData = this.getFormContent($scope.currentFile());
     extractPrefsFile(updatedData);
 
     getDataService()
