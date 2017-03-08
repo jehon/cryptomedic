@@ -39,7 +39,7 @@ module.exports = {
         "enabled" : true,
         "on_failure" : true,
         "on_error" : true,
-        "path" : "target/end2end/firefox/"
+        "path" : "target/e2e/firefox/"
       },
       "desiredCapabilities": {
         "browserName": "firefox",
@@ -53,7 +53,7 @@ module.exports = {
       "silent": true,
       "screenshots" : {
         "enabled" : true,
-        "path" : "target/end2end/phantomjs/"
+        "path" : "target/e2e/phantomjs/"
       },
       "desiredCapabilities": {
         "browserName": "phantomjs",
@@ -66,7 +66,7 @@ module.exports = {
       "silent": true,
       "screenshots" : {
         "enabled" : true,
-        "path" : "target/end2end/chrome/"
+        "path" : "target/e2e/chrome/"
       },
       "desiredCapabilities": {
         "browserName": "chrome",
