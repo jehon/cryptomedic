@@ -354,10 +354,6 @@ class t {
     return $this;
   }
 
-  function getText() {
-    return $this->res;
-  }
-
   function p() {
     echo $this->res;
   }
