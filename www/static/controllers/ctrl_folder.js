@@ -306,10 +306,11 @@ function ctrl_folder($scope, $location, $routeParams) {
       return ;
     }
     $scope.folder = false;
-    // $scope.currentFile().getModel() = 'Patient';
+
+    let updatedData = this.getFormContent($scope.currentFile());
 
     getDataService()
-      .then(dataService => dataService.createFile($scope.currentFile()))
+      .then(dataService => dataService.createFile(updatedData))
       .then(function(data) {
         $scope.$emit('message', { 'level': 'success', 'text':  'The patient has been created.'});
         $scope.folder = data;
@@ -326,8 +327,10 @@ function ctrl_folder($scope, $location, $routeParams) {
     $scope.folder = false;
     $scope.safeApply();
 
+    let updatedData = this.getFormContent($scope.currentFile());
+
     getDataService()
-      .then(dataService => dataService.saveFile(cachedCurrentFile, $scope.patient_id))
+      .then(dataService => dataService.saveFile(updatedData, $scope.patient_id))
       .then(function() {
       // The data is refreshed by navigating away...
         $scope.$emit('message', { 'level': 'success', 'text': 'The patient has been saved.'});
