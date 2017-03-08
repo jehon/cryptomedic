@@ -79,9 +79,20 @@ class Picture extends CryptomedicModel {
 			return $model;
 		}
 
-		if (Request::has('fileContent')) {
-			// TODO SECURITY: Enforce file size limit
+		// TODO SECURITY: Enforce file size limit
+		if (array_key_exists('fileContent', $_FILES)) {
+			$file = $_FILES['fileContent'];
+			$finfo = finfo_open(FILEINFO_MIME_TYPE);
+			$mimetype = finfo_file($finfo, $file['tmp_name']);
 
+			$model->calculateTargetName($mimetype);
+
+			if (!move_uploaded_file($_FILES['fileContent']['tmp_name'], $model->getPhysicalPath())) {
+				throw new \Error("Impossible to move the file to " . $model->getPhysicalPath());
+			}
+		}
+
+		if (Request::has('fileContent')) {
 			$dataURI = Request::input('fileContent');
 
 			// example = data:image/jpeg;base64
@@ -98,10 +109,12 @@ class Picture extends CryptomedicModel {
 
 			if (!file_put_contents($model->getPhysicalPath(), $contentRaw)) {
 				abort(500, "Storing uploaded file to " . $model->getPhysicalPath());
-			}
-			chmod($model->getPhysicalPath(), 0660);
-			$model->save();
+  		}
 		}
+
+		chmod($model->getPhysicalPath(), 0660);
+		$model->save();
+
 		return $model;
 	}
 
