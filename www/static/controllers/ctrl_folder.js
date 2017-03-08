@@ -238,7 +238,7 @@ function ctrl_folder($scope, $location, $routeParams) {
     extractPrefsFile(updatedData);
 
     getDataService()
-      .then(dataService => dataService.saveFile(cachedCurrentFile, $scope.patient_id))
+      .then(dataService => dataService.saveFile(updatedData, $scope.patient_id))
       .then(function(data) {
         // The data is refreshed by navigating away...
         $scope.$emit('message', { 'level': 'success', 'text': 'The ' + $scope.subtype + ' has been saved.'});
@@ -274,9 +274,9 @@ function ctrl_folder($scope, $location, $routeParams) {
     extractPrefsFile(updatedData);
 
     getDataService()
-      .then(dataService => dataService.createFile(cachedCurrentFile))
+      .then(dataService => dataService.createFile(updatedData))
       .then(function(data) {
-        $scope.$emit('message', { 'level': 'success', 'text': 'The ' + cachedCurrentFile.getModel() + ' has been created.'});
+        $scope.$emit('message', { 'level': 'success', 'text': 'The ' + updatedData.getModel() + ' has been created.'});
       // The data is refreshed by navigating away...
         goThere('/folder/' + $scope.patient_id + '/file/' + $scope.subtype + '/' + data.newKey);
         $scope.safeApply();
