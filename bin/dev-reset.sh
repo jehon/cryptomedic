@@ -3,6 +3,9 @@
 # Stop on error
 set -e
 
+# Clear terminal
+echo -e \\033c
+
 SCRIPT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 PRJ_DIR=$(dirname "$SCRIPT_DIR")
 
