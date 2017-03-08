@@ -25,15 +25,31 @@
 						<th>Right</th>
 						<th>Left</th>
 					</tr>
-					<?php (new t("RicketConsult.?Leg"))->trRightLeft("Leg")->p(); ?>
-					<?php (new t("RicketConsult.?legAngle"))->trRightLeft("Leg Angle")->p(); ?>
+					<tr ng-class='{ emptyValue: !currentFile().RightLeg && !currentFile().LeftLeg }'>
+						<td><label>Leg</label></td>
+						<td><?php (new t("RicketConsult.RightLeg"))->value()->p(); ?></td>
+						<td><?php (new t("RicketConsult.LeftLeg"))->value()->p(); ?></td>
+					</tr>
+					<tr ng-class='{ emptyValue: !currentFile().RightlegAngle && !currentFile().LeftlegAngle }'>
+						<td><label>Leg Angle</label></td>
+						<td><?php (new t("RicketConsult.RightlegAngle"))->value()->p(); ?></td>
+						<td><?php (new t("RicketConsult.LeftlegAngle"))->value()->p(); ?></td>
+					</tr>
 					<tr>
 						<td>Cross</td>
 						<td></td>
 						<td></td>
 					</tr>
-					<?php (new t("RicketConsult.Cross?T"))->trRightLeft()->p(); ?>
-					<?php (new t("RicketConsult.Cross?F"))->trRightLeft()->p(); ?>
+					<tr ng-class='{ emptyValue: !currentFile().CrossRightT && !currentFile().CrossLeftT }'>
+						<td><label>Cross Right T</label></td>
+						<td><?php (new t("RicketConsult.CrossRightT"))->value()->p(); ?></td>
+						<td><?php (new t("RicketConsult.CrossLeftT"))->value()->p(); ?></td>
+					</tr>
+					<tr ng-class='{ emptyValue: !currentFile().CrossRightF && !currentFile().CrossLeftF }'>
+						<td><label>Cross Right F</label></td>
+						<td><?php (new t("RicketConsult.CrossRightF"))->value()->p(); ?></td>
+						<td><?php (new t("RicketConsult.CrossLeftF"))->value()->p(); ?></td>
+					</tr>
 					<?php (new t("RicketConsult.IMICDistance"))->tr()->p(); ?>
 					<?php (new t("RicketConsult.XRay"))->tr()->p(); ?>
 				</table>
