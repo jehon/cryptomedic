@@ -19,6 +19,7 @@ echo "Log file: $LOG"
 
 filter() {
   cat "$1"                                \
+    | grep -v "*.log"                     \
     | grep -v ".git"                      \
     | grep -v "/config-site.php"          \
     | grep -v "/.log"                     \
