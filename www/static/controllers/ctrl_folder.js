@@ -189,31 +189,43 @@ function ctrl_folder($scope, $location, $routeParams) {
   };
 
   $scope.getFormContent = function(basis = {}) {
-    // TODO:
-    // cloning ok, but getModel will fail...
-    let updateData = new basis.constructor();
-    Object.assign(updateData, basis);
+
+    let updatedData = new basis.constructor();
+    Object.assign(updatedData, basis);
     for(let i of document.querySelector("#fileForm").querySelectorAll("input")) {
       // Skip hidden input
       if (i.clientHeight == 0) {
         continue;
       }
 
-      // Numeric
-      if (i.type == "number") {
-        i.value = Number.parseInt(i.value);
+      if (typeof(i.value) == "undefined") {
+        i.value = null;
+        continue;
       }
 
       // Date
       // temp0.attributes.mycalendar
-
-      if (i.value == "") {
+      if (i.value === "") {
         i.value = null;
+        continue;
       }
 
-      updateData[i.name] = i.value;
+      switch(i.type) {
+        case "number":
+          i.value = Number.parseInt(i.value);
+          break;
+        case "file":
+          // http://blog.teamtreehouse.com/uploading-files-ajax
+          // We can pass the "File" object to FormData, it will handle it for us....
+          // var file = ; //document.getElementById("fileForUpload").files[0];
+          updatedData[i.name] = i.files[0];
+          break;
+        default:
+          updatedData[i.name] = i.value;
+          break;
+      }
     }
-    return updateData;
+    return updatedData;
   }
 
   $scope.actionSave = function() {
