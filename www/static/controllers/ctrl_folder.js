@@ -203,8 +203,6 @@ function ctrl_folder($scope, $location, $routeParams) {
         continue;
       }
 
-      // Date
-      // temp0.attributes.mycalendar
       if (i.value === "") {
         i.value = null;
         continue;
