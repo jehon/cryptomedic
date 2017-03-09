@@ -122,12 +122,14 @@ class t {
       // Model.Field specific list
         $this->struct_type = static::TYPE_LIST;
         $this->isList = true;
-        $this->listing = References::$model_listing[$header];
+        $this->listingName = References::$model_listing[$header];
+        $this->listing = References::$lists[$this->listingName];
     } else if (array_key_exists("*.{$this->field}", References::$model_listing)) {
       // *.Field generic list
         $this->struct_type = static::TYPE_LIST;
         $this->isList = true;
-        $this->listing = References::$model_listing["*.{$this->field}"];
+        $this->listingName = References::$model_listing["*.{$this->field}"];
+        $this->listing = References::$lists[$this->listingName];
     } else {
       $matches = array();
       if (false === preg_match("/([a-z]+)(\(([0-9]+)\)(.*[a-zA-Z]+)?)?/", strtolower($this->structure['Type']), $matches)) {

@@ -212,7 +212,7 @@ References::$lists["Pain"] = References::buildValueList(["No", "Moderate", "Seve
 References::$lists["WalkingCapacities"] = References::buildValueList(["Level 1", "Level 2", "Level 3", "Level 4", "Level 5"]);
 References::$lists["LegAnalysis"] = References::buildValueList(["Valgus", "Varus"]);
 References::$lists["Side"] = References::buildValueList(["Right", "Left", "Bi"]);
-References::$lists["examiner"] = References::buildValueList([
+References::$lists["Examiner"] = References::buildValueList([
   // physio
   References::withCode("Ershad",     "Ers"),
   References::withCode("Murshed",    "Mur"),
@@ -269,59 +269,59 @@ References::$lists["CPTreatment"]                               = References::bu
 /***********************/
 /**** Common fields ****/
 /***********************/
-References::$model_listing['*.Center']                          = References::$lists['Centers'];
-References::$model_listing['*.NextCenter']                      = References::$lists["Centers"];
-References::$model_listing['*.TreatmentEvaluation']             = References::$lists["Eval04"];
-References::$model_listing['*.ExaminerName']                    = References::$lists["examiner"];
+References::$model_listing['*.Center']                          = "Centers";
+References::$model_listing['*.NextCenter']                      = "Centers";
+References::$model_listing['*.TreatmentEvaluation']             = "Eval04";
+References::$model_listing['*.ExaminerName']                    = "Examiner";
 
 /*****************/
 /**** By File ****/
 /*****************/
-References::$model_listing['Bill.Sociallevel']                  = References::$lists['SocialLevel'];
+References::$model_listing['Bill.Sociallevel']                  = "SocialLevel";
 
-References::$model_listing['ClubFoot.CurvedLateralBorderLeft']  = References::$lists['Pirani'];
-References::$model_listing['ClubFoot.CurvedLateralBorderRight'] = References::$lists['Pirani'];
-References::$model_listing['ClubFoot.MedialCreaseLeft']         = References::$lists['Pirani'];
-References::$model_listing['ClubFoot.MedialCreaseRight']        = References::$lists['Pirani'];
-References::$model_listing['ClubFoot.TalarHeadCoverageLeft']    = References::$lists['Pirani'];
-References::$model_listing['ClubFoot.TalarHeadCoverageRight']   = References::$lists['Pirani'];
-References::$model_listing['ClubFoot.PosteriorCreaseLeft']      = References::$lists['Pirani'];
-References::$model_listing['ClubFoot.PosteriorCreaseRight']     = References::$lists['Pirani'];
-References::$model_listing['ClubFoot.RigidEquinusLeft']         = References::$lists['Pirani'];
-References::$model_listing['ClubFoot.RigidEquinusRight']        = References::$lists['Pirani'];
-References::$model_listing['ClubFoot.EmptyHeelLeft']            = References::$lists['Pirani'];
-References::$model_listing['ClubFoot.EmptyHeelRight']           = References::$lists['Pirani'];
-References::$model_listing['ClubFoot.PainLeft']                 = References::$lists["Eval02"];
-References::$model_listing['ClubFoot.PainRight']                = References::$lists["Eval02"];
-References::$model_listing['ClubFoot.WalkingFloorContactLeft']  = References::$lists["Eval02"];
-References::$model_listing['ClubFoot.WalkingFloorContactRight'] = References::$lists["Eval02"];
-References::$model_listing['ClubFoot.WalkingFirstContactLeft']  = References::$lists["Eval02"];
-References::$model_listing['ClubFoot.WalkingFirstContactRight'] = References::$lists["Eval02"];
-References::$model_listing['ClubFoot.JumpingOneLegLeft']        = References::$lists["Eval01"];
-References::$model_listing['ClubFoot.JumpingOneLegRight']       = References::$lists["Eval01"];
-References::$model_listing['ClubFoot.RunLeft']                  = References::$lists["Eval02"];
-References::$model_listing['ClubFoot.RunRight']                 = References::$lists["Eval02"];
-References::$model_listing['ClubFoot.Treatment']                = References::$lists["CPTreatment"];
+References::$model_listing['ClubFoot.CurvedLateralBorderLeft']  = "Pirani";
+References::$model_listing['ClubFoot.CurvedLateralBorderRight'] = "Pirani";
+References::$model_listing['ClubFoot.MedialCreaseLeft']         = "Pirani";
+References::$model_listing['ClubFoot.MedialCreaseRight']        = "Pirani";
+References::$model_listing['ClubFoot.TalarHeadCoverageLeft']    = "Pirani";
+References::$model_listing['ClubFoot.TalarHeadCoverageRight']   = "Pirani";
+References::$model_listing['ClubFoot.PosteriorCreaseLeft']      = "Pirani";
+References::$model_listing['ClubFoot.PosteriorCreaseRight']     = "Pirani";
+References::$model_listing['ClubFoot.RigidEquinusLeft']         = "Pirani";
+References::$model_listing['ClubFoot.RigidEquinusRight']        = "Pirani";
+References::$model_listing['ClubFoot.EmptyHeelLeft']            = "Pirani";
+References::$model_listing['ClubFoot.EmptyHeelRight']           = "Pirani";
+References::$model_listing['ClubFoot.PainLeft']                 = "Eval02";
+References::$model_listing['ClubFoot.PainRight']                = "Eval02";
+References::$model_listing['ClubFoot.WalkingFloorContactLeft']  = "Eval02";
+References::$model_listing['ClubFoot.WalkingFloorContactRight'] = "Eval02";
+References::$model_listing['ClubFoot.WalkingFirstContactLeft']  = "Eval02";
+References::$model_listing['ClubFoot.WalkingFirstContactRight'] = "Eval02";
+References::$model_listing['ClubFoot.JumpingOneLegLeft']        = "Eval01";
+References::$model_listing['ClubFoot.JumpingOneLegRight']       = "Eval01";
+References::$model_listing['ClubFoot.RunLeft']                  = "Eval02";
+References::$model_listing['ClubFoot.RunRight']                 = "Eval02";
+References::$model_listing['ClubFoot.Treatment']                = "CPTreatment";
 
-References::$model_listing['OtherConsult.Pain']                 = References::$lists['Pain'];
-References::$model_listing['OtherConsult.Side']                 = References::$lists['Side'];
-References::$model_listing['OtherConsult.Surgery66']            = References::$lists['Surgery'];
-References::$model_listing['OtherConsult.Walk']                 = References::$lists['WalkingCapacities'];
+References::$model_listing['OtherConsult.Pain']                 = "Pain";
+References::$model_listing['OtherConsult.Side']                 = "Side";
+References::$model_listing['OtherConsult.Surgery66']            = "Surgery";
+References::$model_listing['OtherConsult.Walk']                 = "WalkingCapacities";
 
-References::$model_listing['Patient.Pathology']                 = References::$lists['Pathologies'];
-References::$model_listing['Patient.District']                  = References::$lists['Districts'];
-References::$model_listing['Patient.Sex']                       = References::$lists['Sex'];
-References::$model_listing['Patient.Union_']                    = References::$lists['Unions'];
-References::$model_listing['Patient.Upazilla']                  = References::$lists['Upazilla'];
+References::$model_listing['Patient.Pathology']                 = "Pathologies";
+References::$model_listing['Patient.District']                  = "Districts";
+References::$model_listing['Patient.Sex']                       = "Sex";
+References::$model_listing['Patient.Union_']                    = "Unions";
+References::$model_listing['Patient.Upazilla']                  = "Upazilla";
 
-References::$model_listing['RicketConsult.Brace']               = References::$lists['Device'];
-References::$model_listing['RicketConsult.LeftLeg']             = References::$lists['LegAnalysis'];
-References::$model_listing['RicketConsult.Pain']                = References::$lists['Pain'];
-References::$model_listing['RicketConsult.Ribbeading']          = References::$lists['Eval03'];
-References::$model_listing['RicketConsult.RightLeg']            = References::$lists['LegAnalysis'];
-References::$model_listing['RicketConsult.Surgery']             = References::$lists['Surgery'];
-References::$model_listing['RicketConsult.WalkingDifficulties'] = References::$lists['WalkingCapacities'];
-References::$model_listing['RicketConsult.Wristenlargement']    = References::$lists['Eval03'];
+References::$model_listing['RicketConsult.Brace']               = "Device";
+References::$model_listing['RicketConsult.LeftLeg']             = "LegAnalysis";
+References::$model_listing['RicketConsult.Pain']                = "Pain";
+References::$model_listing['RicketConsult.Ribbeading']          = "Eval03";
+References::$model_listing['RicketConsult.RightLeg']            = "LegAnalysis";
+References::$model_listing['RicketConsult.Surgery']             = "Surgery";
+References::$model_listing['RicketConsult.WalkingDifficulties'] = "WalkingCapacities";
+References::$model_listing['RicketConsult.Wristenlargement']    = "Eval03";
 
 
 /*********************/
