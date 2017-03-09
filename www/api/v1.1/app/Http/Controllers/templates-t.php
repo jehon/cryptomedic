@@ -74,7 +74,6 @@ class t {
   var $res = "";
   var $linked2DB = false;
   var $rawExpression = true;
-  var $listing = null;
 
   function __construct($key, array $options = array()) {
     $this->key = $key;
@@ -257,7 +256,7 @@ class t {
         if ($count <= 6) {
           $i = 0;
           $this->res .= "<table style='width: 100%'><tr><td>";
-          foreach($this->listing as $k => $v) {
+          foreach($this->listing as $v) {
             $this->res.= ""
                 . "<input type='radio' value=\"" . htmlentities($v) . "\" ng-model='{$this->fieldGetKey()}' {$this->options['inline']}>"
                 . "$v"
