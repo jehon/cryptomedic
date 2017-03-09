@@ -69,11 +69,6 @@ class t {
     return array_keys(static::cacheSqlStructureFor($sqlTable));
   }
 
-  // static function footer() {
-  //   $date = new DateTime();
-  //   echo "<span class='debug_infos'>" . $date->format('Y-m-d H:i:s') . "<span>";
-  // }
-
   var $key;
   var $options;
   var $res = "";
