@@ -17,7 +17,7 @@
               <select name='examiner' ng-model='values.examiner' class="form-control">
                 <?php
                   echo "<option value='' >* Anybody *</option>";
-                  foreach(References::$lists['examiner'] as $k => $v)
+                  foreach(References::$lists['Examiner'] as $k => $v)
                     echo "<option value=\"". htmlentities($v). "\" >$v</option>";
                 ?>
               </select>
