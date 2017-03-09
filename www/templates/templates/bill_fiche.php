@@ -49,7 +49,7 @@
         <legend>General data</legend>
         <table>
           <?php (new t("Bill.Date"))->tr()->p(); ?>
-          <?php (new t("Bill.ExaminerName", [ "list" => References::$lists['examiner']]))->tr("Examiner")->p(); ?>
+          <?php (new t("Bill.ExaminerName"))->tr("Examiner")->p(); ?>
           <?php (new t("Bill.Center"))->tr("Center where consultation took place")->p(); ?>
         </table>
         <div class='debug_infos'>
@@ -169,7 +169,7 @@
       <form>
         <table>
           <?php (new t("Payment.Date"))->tr("Date of receipt")->p(); ?>
-          <?php (new t("Payment.ExaminerName", [ "list" => References::$lists['examiner']]))->tr("Receiver")->p(); ?>
+          <?php (new t("Payment.ExaminerName"))->tr("Receiver")->p(); ?>
           <?php (new t("Payment.Amount"))->tr("Amount")->p(); ?>
           <?php (new t("Payment.Notes"))->tr("Notes")->p(); ?>
         </table>
