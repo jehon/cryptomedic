@@ -62,6 +62,13 @@ class References {
   }
 }
 
+/*****************************/
+/*****************************/
+/**** Build up the lists  ****/
+/*****************************/
+/*****************************/
+
+
 /***********************/
 /**** Common lists ****/
 /***********************/
@@ -241,67 +248,80 @@ References::withCode("Asma",       "Asm");
 References::withCode("Shudir",     "Shu");
 References::withCode("Kobir",      "Kob");
 
-References::$lists["SocialLevel"] = References::buildValueList(array( 0, 1, 2, 3, 4 ));
-References::$lists["Pirani"] = References::buildValueList(array(0, 0.5, 1));
-References::$lists["0-10"] = References::buildValueList(array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
-References::$lists["Eval03"] = References::buildValueList([0, 1, 2, 3]);
+References::$lists["SocialLevel"]                               = References::buildValueList(array( 0, 1, 2, 3, 4 ));
+References::$lists["Pirani"]                                    = References::buildValueList(array(0, 0.5, 1));
+References::$lists["0-10"]                                      = References::buildValueList(array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
+References::$lists["Eval01"]                                    = References::buildValueList([0, 1]);
+References::$lists["Eval02"]                                    = References::buildValueList([0, 1, 2]);
+References::$lists["Eval03"]                                    = References::buildValueList([0, 1, 2, 3]);
+References::$lists["Eval04"]                                    = References::buildValueList([0, 1, 2, 3, 4]);
+
+References::$lists["CPTreatment"]                               = References::buildValueList(array("plaster", "tenotomy", "DB splint", "surgery"));
+
+/*****************************/
+/*****************************/
+/**** Attribute the lists ****/
+/*****************************/
+/*****************************/
+
+
 
 /***********************/
 /**** Common fields ****/
 /***********************/
-References::$model_listing['*.Center'] = References::$lists['Centers'];
-References::$model_listing['*.NextCenter'] = References::$lists["Centers"];
-References::$model_listing['*.TreatmentEvaluation'] = References::buildValueList(array(0, 1, 2, 3, 4));
-References::$model_listing['*.ExaminerName'] = References::$lists["examiner"];
+References::$model_listing['*.Center']                          = References::$lists['Centers'];
+References::$model_listing['*.NextCenter']                      = References::$lists["Centers"];
+References::$model_listing['*.TreatmentEvaluation']             = References::$lists["Eval04"];
+References::$model_listing['*.ExaminerName']                    = References::$lists["examiner"];
 
 /*****************/
 /**** By File ****/
 /*****************/
-References::$model_listing['Bill.Sociallevel'] = References::$lists['SocialLevel'];
+References::$model_listing['Bill.Sociallevel']                  = References::$lists['SocialLevel'];
 
-References::$model_listing['ClubFoot.CurvedLateralBorderLeft'] = References::$lists['Pirani'];
+References::$model_listing['ClubFoot.CurvedLateralBorderLeft']  = References::$lists['Pirani'];
 References::$model_listing['ClubFoot.CurvedLateralBorderRight'] = References::$lists['Pirani'];
-References::$model_listing['ClubFoot.MedialCreaseLeft'] = References::$lists['Pirani'];
-References::$model_listing['ClubFoot.MedialCreaseRight'] = References::$lists['Pirani'];
-References::$model_listing['ClubFoot.TalarHeadCoverageLeft'] = References::$lists['Pirani'];
-References::$model_listing['ClubFoot.TalarHeadCoverageRight'] = References::$lists['Pirani'];
-References::$model_listing['ClubFoot.PosteriorCreaseLeft'] = References::$lists['Pirani'];
-References::$model_listing['ClubFoot.PosteriorCreaseRight'] = References::$lists['Pirani'];
-References::$model_listing['ClubFoot.RigidEquinusLeft'] = References::$lists['Pirani'];
-References::$model_listing['ClubFoot.RigidEquinusRight'] = References::$lists['Pirani'];
-References::$model_listing['ClubFoot.EmptyHeelLeft'] = References::$lists['Pirani'];
-References::$model_listing['ClubFoot.EmptyHeelRight'] = References::$lists['Pirani'];
-References::$model_listing['ClubFoot.PainLeft'] = References::buildValueList(array(0, 1, 2));
-References::$model_listing['ClubFoot.PainRight'] = References::buildValueList(array(0, 1, 2));
-References::$model_listing['ClubFoot.WalkingFloorContactLeft'] = References::buildValueList(array(0, 1, 2));
-References::$model_listing['ClubFoot.WalkingFloorContactRight'] = References::buildValueList(array(0, 1, 2));
-References::$model_listing['ClubFoot.WalkingFirstContactLeft'] = References::buildValueList(array(0, 1, 2));
-References::$model_listing['ClubFoot.WalkingFirstContactRight'] = References::buildValueList(array(0, 1, 2));
-References::$model_listing['ClubFoot.JumpingOneLegLeft'] = References::buildValueList(array(0, 1));
-References::$model_listing['ClubFoot.JumpingOneLegRight'] = References::buildValueList(array(0, 1));
-References::$model_listing['ClubFoot.RunLeft'] = References::buildValueList(array(0, 1, 2));
-References::$model_listing['ClubFoot.RunRight'] = References::buildValueList(array(0, 1, 2));
-References::$model_listing['ClubFoot.Treatment'] = References::buildValueList(array("plaster", "tenotomy", "DB splint", "surgery"));
+References::$model_listing['ClubFoot.MedialCreaseLeft']         = References::$lists['Pirani'];
+References::$model_listing['ClubFoot.MedialCreaseRight']        = References::$lists['Pirani'];
+References::$model_listing['ClubFoot.TalarHeadCoverageLeft']    = References::$lists['Pirani'];
+References::$model_listing['ClubFoot.TalarHeadCoverageRight']   = References::$lists['Pirani'];
+References::$model_listing['ClubFoot.PosteriorCreaseLeft']      = References::$lists['Pirani'];
+References::$model_listing['ClubFoot.PosteriorCreaseRight']     = References::$lists['Pirani'];
+References::$model_listing['ClubFoot.RigidEquinusLeft']         = References::$lists['Pirani'];
+References::$model_listing['ClubFoot.RigidEquinusRight']        = References::$lists['Pirani'];
+References::$model_listing['ClubFoot.EmptyHeelLeft']            = References::$lists['Pirani'];
+References::$model_listing['ClubFoot.EmptyHeelRight']           = References::$lists['Pirani'];
+References::$model_listing['ClubFoot.PainLeft']                 = References::$lists["Eval02"];
+References::$model_listing['ClubFoot.PainRight']                = References::$lists["Eval02"];
+References::$model_listing['ClubFoot.WalkingFloorContactLeft']  = References::$lists["Eval02"];
+References::$model_listing['ClubFoot.WalkingFloorContactRight'] = References::$lists["Eval02"];
+References::$model_listing['ClubFoot.WalkingFirstContactLeft']  = References::$lists["Eval02"];
+References::$model_listing['ClubFoot.WalkingFirstContactRight'] = References::$lists["Eval02"];
+References::$model_listing['ClubFoot.JumpingOneLegLeft']        = References::$lists["Eval01"];
+References::$model_listing['ClubFoot.JumpingOneLegRight']       = References::$lists["Eval01"];
+References::$model_listing['ClubFoot.RunLeft']                  = References::$lists["Eval02"];
+References::$model_listing['ClubFoot.RunRight']                 = References::$lists["Eval02"];
+References::$model_listing['ClubFoot.Treatment']                = References::$lists["CPTreatment"];
 
-References::$model_listing['OtherConsult.Pain'] = References::$lists['Pain'];
-References::$model_listing['OtherConsult.Side'] = References::$lists['Side'];
-References::$model_listing['OtherConsult.Surgery66'] = References::$lists['Surgery'];
-References::$model_listing['OtherConsult.Walk'] = References::$lists['WalkingCapacities'];
+References::$model_listing['OtherConsult.Pain']                 = References::$lists['Pain'];
+References::$model_listing['OtherConsult.Side']                 = References::$lists['Side'];
+References::$model_listing['OtherConsult.Surgery66']            = References::$lists['Surgery'];
+References::$model_listing['OtherConsult.Walk']                 = References::$lists['WalkingCapacities'];
 
-References::$model_listing['Patient.Pathology'] = References::$lists['Pathologies'];
-References::$model_listing['Patient.District'] = References::$lists['Districts'];
-References::$model_listing['Patient.Sex'] = References::$lists['Sex'];
-References::$model_listing['Patient.Union_'] = References::$lists['Unions'];
-References::$model_listing['Patient.Upazilla'] = References::$lists['Upazilla'];
+References::$model_listing['Patient.Pathology']                 = References::$lists['Pathologies'];
+References::$model_listing['Patient.District']                  = References::$lists['Districts'];
+References::$model_listing['Patient.Sex']                       = References::$lists['Sex'];
+References::$model_listing['Patient.Union_']                    = References::$lists['Unions'];
+References::$model_listing['Patient.Upazilla']                  = References::$lists['Upazilla'];
 
-References::$model_listing['RicketConsult.Brace'] = References::$lists['Device'];
-References::$model_listing['RicketConsult.LeftLeg'] = References::$lists['LegAnalysis'];
-References::$model_listing['RicketConsult.Pain'] = References::$lists['Pain'];
-References::$model_listing['RicketConsult.Ribbeading'] = References::$lists['Eval03'];
-References::$model_listing['RicketConsult.RightLeg'] = References::$lists['LegAnalysis'];
-References::$model_listing['RicketConsult.Surgery'] = References::$lists['Surgery'];
+References::$model_listing['RicketConsult.Brace']               = References::$lists['Device'];
+References::$model_listing['RicketConsult.LeftLeg']             = References::$lists['LegAnalysis'];
+References::$model_listing['RicketConsult.Pain']                = References::$lists['Pain'];
+References::$model_listing['RicketConsult.Ribbeading']          = References::$lists['Eval03'];
+References::$model_listing['RicketConsult.RightLeg']            = References::$lists['LegAnalysis'];
+References::$model_listing['RicketConsult.Surgery']             = References::$lists['Surgery'];
 References::$model_listing['RicketConsult.WalkingDifficulties'] = References::$lists['WalkingCapacities'];
-References::$model_listing['RicketConsult.Wristenlargement'] = References::$lists['Eval03'];
+References::$model_listing['RicketConsult.Wristenlargement']    = References::$lists['Eval03'];
 
 
 /*********************/
