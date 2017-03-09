@@ -158,6 +158,7 @@ mainApp.controller('ctrl', [ '$scope', function($scope) {
   $scope.application  = application;
   $scope.calculations = calculations;
   $scope.template     = template;
+  $scope.cryptomedic  = cryptomedic;
 
   $scope.safeApply = function (fn) {
     if (this.$root && (this.$root.$$phase == '$apply' || this.$root.$$phase == '$digest')) {
