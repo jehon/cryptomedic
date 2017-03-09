@@ -35,7 +35,7 @@ class References {
   }
 
   static function buildValueList($list) {
-    return array_combine($list, $list);
+    return $list;
   }
 
   static function associate($from, $to) {
