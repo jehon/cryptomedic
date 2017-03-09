@@ -114,7 +114,7 @@
           </tr>
         </table>
       </FieldSet>
-      <fieldset>
+      <fieldset ng-if='!currentFile().id'>
         <legend>Recieved payment</legend>
           <tr>
             <td>Payment already recieved</td>
