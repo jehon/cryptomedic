@@ -315,6 +315,7 @@ class t {
         var_dump($this->structure);
         break;
     }
+    $this->res .= "\n";
     return $this;
   }
 
