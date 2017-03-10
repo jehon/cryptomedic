@@ -29,12 +29,17 @@
             <br>
           </span>
         </template>
+        <span hidden='[[required]]' on-tap='updateValueFromRadio' to='0'>
+          <input name='[[id]]' type='radio' value='0' checked='[[isChecked(item, 0)]]'>
+          <span>?</span>
+        </span>
       </span>
     </span>
     <select hidden$='[[!isSelect(list)]]' id='select'>
       <template is="dom-repeat" items="[[list]]">
         <option name$='[[escape(item)]]' selected="[[isChecked(item, value)]]">[[item]]</option>
       </template>
+      <option name$='[[escape(item)]]' selected='[[isChecked(item, 0)]]'>?</option>
     </select>
   </template>
 
