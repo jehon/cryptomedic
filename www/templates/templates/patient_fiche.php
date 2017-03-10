@@ -46,7 +46,7 @@
 						<td>Age (today)</td>
 						<td>{{calculations.age.fromBirthDate(currentFile().Yearofbirth)}} old</td>
 					</tr>
-					<?php (new t("Patient.District", [ "list" => References::$lists['Districts']]))->tr()->p(); ?>
+					<?php (new t("Patient.District"))->tr()->p(); ?>
 					<tr>
 						<td>Upazilla</td>
 						<td>
