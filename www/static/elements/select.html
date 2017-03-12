@@ -72,13 +72,6 @@
           this.id = "jh-select-" + (internalUUID + 1);
         },
 
-        updateValue() {
-          if (!this.value) {
-            return ;
-          }
-          this.$.select.value = this.value;
-        },
-
         getKeys(list) {
           if (list == null) {
             return [];
@@ -86,15 +79,26 @@
           return Object.keys(list);
         },
 
-        escape(str) {
-          return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-        },
+        // Adapt display
 
         isSelect(list) {
           if (!list) {
             return false;
           }
           return list.length > 6;
+        },
+
+        escape(str) {
+          return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        },
+
+        // Handle value update
+
+        updateValue() {
+          if (!this.value) {
+            return ;
+          }
+          this.$.select.value = this.value;
         },
 
         // SELECT
