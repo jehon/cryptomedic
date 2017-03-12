@@ -192,7 +192,7 @@ function ctrl_folder($scope, $location, $routeParams) {
 
     let updatedData = new basis.constructor();
     Object.assign(updatedData, basis);
-    for(let i of document.querySelector("#fileForm").querySelectorAll("input")) {
+    for(let i of document.querySelector("#fileForm").querySelectorAll("input, jh-select")) {
       // Skip hidden input
       if (i.clientHeight == 0) {
         continue;
