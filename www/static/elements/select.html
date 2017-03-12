@@ -23,7 +23,7 @@
     <span    hidden$='[[isSelect(list)]]' >
       <span id='radio'>
         <template is="dom-repeat" items="[[list]]">
-          <span on-tap='updateValueFromRadio' to='[[escape(item)]]'>
+          <span on-tap='updateValueFromSpan' to='[[escape(item)]]'>
             <input name='[[id]]' type='radio' value='[[escape(item)]]' on-change='updateValueFromRadio' checked="[[isChecked(item, value)]]">
               <span>[[item]]</span>
             <br>
@@ -97,12 +97,12 @@
         },
 
         // RADIO
-        updateValueFromRadio(event) {
-          if (event.target.to) {
-            this.value = event.target.to;
-          } else {
-            this.value = this.$$('input[type=radio]:checked').value;
-          }
+        updateValueFromRadio() {
+          this.value = this.$$('input[type=radio]:checked').value;
+        },
+
+        updateValueFromSpan(event) {
+          this.value = event.target.to;
         },
 
         isChecked(radio, value) {
