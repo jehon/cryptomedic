@@ -43,7 +43,7 @@
   "scripts": {
     "build": "npm run cache",
     "test": "./bin/dev-reset.sh && npm run test-api && npm run test-unit && npm run test-e2e",
-    "test-api": "cd www/api/v1.1/ && phpunit --coverage-html ../../../target/php1.1 --coverage-xml ../../../target/php1.1",
+    "test-api": "cd www/api/v1.1/ && phpunit --coverage-html ../../../target/php1.1 --coverage-xml ../../../target/php1.1 && cd ../../../",
     "test-unit": "karma start --single-run",
     "test-unit-cont": "karma start",
     "test-e2e": "nightwatch",
