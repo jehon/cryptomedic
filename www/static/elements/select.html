@@ -37,9 +37,9 @@
     </span>
     <select hidden$='[[!isSelect(list)]]' id='select'>
       <template is="dom-repeat" items="[[list]]">
-        <option name$='[[escape(item)]]' selected="[[isChecked(item, value)]]">[[item]]</option>
+        <option name$='[[escape(item)]]' selected="[[isChecked(item, value)]]" value='[[escape(item)]]'>[[item]]</option>
       </template>
-      <option name$='[[escape(item)]]' selected='[[isChecked(item, 0)]]'>?</option>
+      <option name$='[[escape(item)]]' selected='[[isChecked(item, 0)]]' value=''>?</option>
     </select>
   </template>
 
