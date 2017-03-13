@@ -189,7 +189,6 @@ function ctrl_folder($scope, $location, $routeParams) {
   };
 
   $scope.getFormContent = function(basis = {}) {
-
     let updatedData = new basis.constructor();
     Object.assign(updatedData, basis);
     for(let i of document.querySelector("#fileForm").querySelectorAll("input, jh-select")) {
