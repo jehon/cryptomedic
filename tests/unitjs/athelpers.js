@@ -52,7 +52,7 @@ function testComponent(html) {
     let interval = setInterval(() => {
       i--;
       if (i <= 0) {
-        clearInterval();
+        clearInterval(interval);
         reject();
       }
       if (!div.firstChild || !div.firstChild.$) {
