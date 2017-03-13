@@ -191,7 +191,7 @@ function ctrl_folder($scope, $location, $routeParams) {
   $scope.getFormContent = function(basis = {}) {
     let updatedData = new basis.constructor();
     Object.assign(updatedData, basis);
-    for(let i of document.querySelector("#fileForm").querySelectorAll("input, jh-select")) {
+    for(let i of document.querySelector("#fileForm").querySelectorAll("input:not(.jh-select), jh-select")) {
       // Skip hidden input
       if (i.clientHeight == 0) {
         continue;
@@ -202,23 +202,26 @@ function ctrl_folder($scope, $location, $routeParams) {
         continue;
       }
 
-      if (i.value === "") {
-        i.value = null;
+      let name = i.getAttribute('name');
+      let value = i.value;
+
+      if (value === "") {
+        value = null;
         continue;
       }
 
       switch(i.type) {
         case "number":
-          i.value = Number.parseInt(i.value);
+          updatedData[name] = Number.parseInt(value);
           break;
         case "file":
           // http://blog.teamtreehouse.com/uploading-files-ajax
           // We can pass the "File" object to FormData, it will handle it for us....
           // var file = ; //document.getElementById("fileForUpload").files[0];
-          updatedData[i.name] = i.files[0];
+          updatedData[name] = i.files[0];
           break;
         default:
-          updatedData[i.name] = i.value;
+          updatedData[name] = value;
           break;
       }
     }
