@@ -20,27 +20,36 @@
     }
   </style>
   <template>
-    <span    hidden$='[[isSelect(list)]]' >
-      <span id='radio'>
-        <template is="dom-repeat" items="[[list]]">
-          <span on-tap='updateValueFromSpan' to='[[escape(item)]]'>
-            <input name='[[id]]' type='radio' value='[[escape(item)]]' on-change='updateValueFromRadio' checked="[[isChecked(item, value)]]">
-              <span>[[item]]</span>
-            <br>
-          </span>
-        </template>
-        <span hidden='[[required]]' on-tap='updateValueFromRadio' to='0'>
-          <input name='[[id]]' type='radio' value='0' checked='[[isChecked(item, 0)]]'>
-          <span>?</span>
+    value: '[[value]]'-
+    <form id='t'>
+      <template is='dom-if' if='[[!isSelect(list)]]'>
+        <span id='radio'>
+          <template is="dom-repeat" items="[[list]]">
+            <span on-tap='updateValueFromSpan' to='[[escape(item)]]'>
+              <input name='[[id]]' type='radio' on-change='updateValueFromRadio' value$='[[escape(item)]]' >
+                <span>[[item]]</span>
+              <br>
+            </span>
+          </template>
+          <template is='dom-if' if='[[nullable]]'>
+            <span on-tap='updateValueFromSpan' to=''>
+              <input name='[[id]]' type='radio' on-change='updateValueFromRadio' null>
+              <span>?</span>
+            </span>
+          </template>
         </span>
-      </span>
-    </span>
-    <select hidden$='[[!isSelect(list)]]' id='select'>
-      <template is="dom-repeat" items="[[list]]">
-        <option name$='[[escape(item)]]' selected="[[isChecked(item, value)]]" value='[[escape(item)]]'>[[item]]</option>
       </template>
-      <option name$='[[escape(item)]]' selected='[[isChecked(item, 0)]]' value=''>?</option>
-    </select>
+      <template is='dom-if' if='[[isSelect(list)]]'>
+        <select id='select' on-change='updateValueFromSelect'>
+          <template is="dom-repeat" items="[[list]]">
+            <option name$='[[escape(item)]]' value='[[escape(item)]]'>[[item]]</option>
+          </template>
+          <template is='dom-if' if='[[nullable]]'>
+            <option name$='[[escape(item)]]' value='' null>?</option>
+          </template>
+        </select>
+      </template>
+    </form>
   </template>
 
   <script>
@@ -54,46 +63,98 @@
         properties: {
           value: {
             type:               String,
+            value:              null,
             notify:             true,
-            observer:           "updateValue"
+            observer:           'updateValue'
           },
           list: {
             type:               Array,
             value:              [],
-            observer:           "updateValue"
+          },
+          nullable: {
+            type:               Boolean,
+            value:              false,
+            notify:             true
+          },
+          mode: {
+            type:               String,
+            value:              "radio",
+            notify:             true,
+            readOnly:           true,
+            reflectToAttribute: true
           }
-        },
-
-        listeners: {
-          'select.change': 'updateValueFromSelect'
         },
 
         ready() {
           this.id = "jh-select-" + (internalUUID + 1);
+          this.updateValue();
         },
+
+        listeners: {
+          "dom-change": "updateValue"
+        },
+
+        observers: [
+          // Observer more than one value...
+          "updateValue(value, list, nullify)"
+        ],
 
         // Adapt display
 
         isSelect(list) {
+          if (!list) {
+            return false;
+          }
           return list.length > 6;
         },
 
         escape(str) {
+          if (str == null) {
+            return '';
+          }
           return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
         },
 
         // Handle value update
 
         updateValue() {
-          if (!this.value) {
-            return ;
+          // Readonly could only be set like this: https://www.polymer-project.org/1.0/docs/devguide/properties#read-only
+          this._setMode(this.isSelect(this.list) ? "select" : "radio");
+          if (this.value == '') {
+            this.value = null;
+            return;
           }
-          this.$.select.value = this.value;
+
+          if (this.value == 'null') {
+            this.value = null;
+            return;
+          }
+
+          Polymer.dom.flush();
+          let s = this.$$('select')
+          if (s) {
+            if (this.value == null) {
+              s.value = '';
+            } else {
+              s.value = this.value;
+            }
+          }
+
+          let r;
+          if (this.value == null) {
+            r = this.$$('input[type=radio][null]');
+          } else {
+            r = this.$$('input[type=radio][value="' + this.escape(this.value) + '"]');
+          }
+          if (r) {
+            r.setAttribute('checked', true);
+          }
+          Polymer.dom.flush();
         },
 
         // SELECT
         updateValueFromSelect() {
-          this.value = this.$.select.value;
+          this.value = this.$$('select').value;
         },
 
         // RADIO
@@ -101,14 +162,10 @@
           this.value = this.$$('input[type=radio]:checked').value;
         },
 
+        // RADIO SPAN AROUND
         updateValueFromSpan(event) {
-          this.value = event.target.to;
+          this.value = event.currentTarget.to;
         },
-
-        isChecked(elValue, value) {
-          return elValue == value;
-        }
-
       });
     })();
   </script>
