@@ -4,7 +4,6 @@
  *
  * Parameters available:
  * @param meta: if set, meta informations will be shown
- * @param unused table: if set, show unused fields of the <table> in the database
  *
  * special treatment:
  * /templates/writes/blablabla.html -> will go to /templates/fiches/blablabla.html, but in write mode (writeOnly forced)
@@ -27,7 +26,6 @@ class t {
   const DATETIMEFORMAT = "short";
 
   static protected $pdo = false;
-  static private $cacheUnused = array();
   static private $defaultOptions = [
       "baseExpression" => "",
       "writeOnly" => false,
@@ -107,8 +105,6 @@ class t {
     $this->linked2DB = true;
 
     $this->structure = static::$sqlAllTableStructure[$this->sqlTable][$this->field];
-
-    $this->used($this->sqlTable, $this->field);
 
     $this->isList = false;
     $this->isListLinked = false;
@@ -358,52 +354,4 @@ class t {
   function __toString() {
     return $this->res;
   }
-
-  static public function used($sqlTable, $field) {
-    if (!array_key_exists($sqlTable, static::$cacheUnused)) {
-      static::$cacheUnused[$sqlTable] = static::cacheSqlStructureFor($sqlTable);
-      static::used($sqlTable, 'id');
-      static::used($sqlTable, 'created_at');
-      static::used($sqlTable, 'updated_at');
-      static::used($sqlTable, 'lastuser');
-      static::used($sqlTable, 'patient_id');
-    }
-    if (array_key_exists($field, static::$cacheUnused[$sqlTable])) {
-      unset(static::$cacheUnused[$sqlTable][$field]);
-    }
-  }
-
-  static public function showUnused() {
-    global $config;
-
-    $table = $_REQUEST['_unused'];
-    echo "<h1>Unused fields for $table</h1>";
-    if (array_key_exists($table, static::$cacheUnused)) {
-      foreach(static::$cacheUnused[$table] as $field => $meta) {
-        echo "$field\n";
-        $res = static::$pdo->query("SELECT count(*) as n, $field as val FROM $table GROUP BY $field ORDER BY count(*) DESC LIMIT 5");
-        echo "<table>";
-        foreach($res as $rec) {
-          echo "<tr><td>{$rec['n']}</td><td>{$rec['val']}</td></tr>";
-        }
-        echo "</table>";
-
-        $stmt = static::$pdo->prepare("SELECT `CONSTRAINT_NAME` as k FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE "
-          . "WHERE `CONSTRAINT_SCHEMA` = :schema AND `TABLE_NAME` = :table AND `COLUMN_NAME` = :column");
-        $res = $stmt->execute(array("schema" => $config['database']['pdo_schema'], "table" => $table, "column" => $field));
-        if ($res) {
-          foreach($stmt->fetchAll() as $k) {
-            echo "ALTER TABLE `$table` DROP FOREIGN KEY ${k['k']}; ";
-          }
-        }
-        echo "ALTER TABLE `$table` DROP `$field`;<br>";
-      }
-    } else {
-      echo "Table $table was not used in the template";
-    }
-  }
 }
-
-// if (array_key_exists("_unused", $_REQUEST) && $_REQUEST['_unused']) {
-//   register_shutdown_function("T::showUnused");
-// }
