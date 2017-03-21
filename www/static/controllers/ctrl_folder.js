@@ -205,6 +205,11 @@ function ctrl_folder($scope, $location, $routeParams) {
       let name = i.getAttribute('name');
       let value = i.value;
 
+      if (typeof(value) == 'object') {
+        Object.assign(updatedData, value);
+        continue;
+      }
+
       if (value === "") {
         value = null;
         continue;
