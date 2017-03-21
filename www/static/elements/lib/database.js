@@ -7,7 +7,39 @@
 // 'var' allow re-definition of itself, not 'let'
 var Database = (function() {
 
-  let db = false;
+  // https://github.com/dfahlander/db.js/wiki/Version.stores()
+  let db = new Dexie('cryptomedic');
+
+  // Old version history not important here anymore,
+  // so let's skip it
+
+  // Version 6 = latest from old system, so it is copied in old database.js file
+  db.version(6).stores({
+    patients: '++id,[mainFile.entryyear+mainFile.entryorder]',
+    settings: 'key'
+  });
+
+  db.version(7).stores({
+    patients: '++id,[mainFile.entryyear+mainFile.entryorder]',
+    settings:      'key',
+    Patient:       'id,[entryyear+entryorder]',
+    Appointment:   'id,patient_id,Date,Nextappointment,NextCenter,[Nextappointment+NextCenter]',
+    Bill:          'id,patient_id,Date',
+    ClubFoot:      'id,patient_id,Date',
+    OtherConsult:  'id,patient_id,Date',
+    Payment:       'id,bill_id,   Date',
+    Picture:       'id,patient_id,Date',
+    RicketConsult: 'id,patient_id,Date',
+    Surgery:       'id,patient_id,Date',
+  });
+
+  // db.version(8).upgrade(function(trans) {
+  //   trans.patients.toCollection().modify((p) => {
+
+  //   });
+  // });
+
+  db.open();
 
   //************************************************************************************/
   //**** Generic helper functions
@@ -31,42 +63,6 @@ var Database = (function() {
   const checkpointKey = "checkpoint";
   class Database {
     constructor() {
-      if (!db) {
-        // https://github.com/dfahlander/db.js/wiki/Version.stores()
-
-        db = new Dexie('cryptomedic');
-
-        // Old version history not important here anymore,
-        // so let's skip it
-
-        // Version 6 = latest from old system, so it is copied in old database.js file
-        db.version(6).stores({
-          patients: '++id,[mainFile.entryyear+mainFile.entryorder]',
-          settings: 'key'
-        });
-
-        db.version(7).stores({
-          patients: '++id,[mainFile.entryyear+mainFile.entryorder]',
-          settings:      'key',
-          Patient:       'id,[entryyear+entryorder]',
-          Appointment:   'id,patient_id,Date,Nextappointment,NextCenter,[Nextappointment+NextCenter]',
-          Bill:          'id,patient_id,Date',
-          ClubFoot:      'id,patient_id,Date',
-          OtherConsult:  'id,patient_id,Date',
-          Payment:       'id,bill_id,   Date',
-          Picture:       'id,patient_id,Date',
-          RicketConsult: 'id,patient_id,Date',
-          Surgery:       'id,patient_id,Date',
-        });
-
-        // db.version(8).upgrade(function(trans) {
-        //   trans.patients.toCollection().modify((p) => {
-
-        //   });
-        // });
-
-        db.open();
-      }
 
       // @See https://github.com/dfahlander/db.js/wiki/Table.mapToClass()
       if (typeof(Patient) != "undefined") {
