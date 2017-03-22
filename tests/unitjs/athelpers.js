@@ -55,7 +55,8 @@ function testComponent(html) {
         clearInterval(interval);
         reject();
       }
-      if (!div.firstChild || !div.firstChild.$) {
+      if (div.firstChild instanceof HTMLUnknownElement) {
+        console.log("HTMLUnknownElement");
         return;
       }
       clearInterval(interval);
