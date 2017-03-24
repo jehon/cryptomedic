@@ -48,17 +48,27 @@ function testComponent(html) {
   };
 
   return new Promise((resolve, reject) => {
-    let i = 100;
+    let i = 40;
     let interval = setInterval(() => {
       i--;
       if (i <= 0) {
+        // console.log("too much tests", div.firstChild);
         clearInterval(interval);
         reject();
       }
+      if (!div.firstChild) {
+        // console.log("no first child");
+        return ;
+      }
       if (div.firstChild instanceof HTMLUnknownElement) {
-        console.log("HTMLUnknownElement");
+        // console.log("HTMLUnknownElement");
         return;
       }
+      if (!div.firstChild.shadowRoot && !div.firstChild.$$) {
+        // console.log("no shadow root");
+        return;
+      }
+      // console.log("ok, shadow root");
       clearInterval(interval);
       resolve(div.firstChild);
     }, 100);
