@@ -30,7 +30,12 @@
     <!-- - - - - - - - - - - - - -->
     <!-- JS - globals            -->
     <!-- - - - - - - - - - - - - -->
-    <script type='text/javascript' src='../bower_components/webcomponentsjs/webcomponents-lite.js'></script>
+
+    <script type='text/javascript' src='../bower_components/webcomponentsjs/webcomponents-lite.js'></script> <!-- web components v0-->
+
+    <script type='text/javascript' src='../bower_components/shadydom/cloudydom.min.js'></script> <!-- web components v1 - shadyDom -->
+    <script type='text/javascript' src='../bower_components/custom-elements/custom-elements.min.js'></script> <!-- web components v1 -->
+
     <script type='text/javascript' src='../bower_components/jquery/dist/jquery.min.js'></script>
     <script type='text/javascript' src='../bower_components/bootstrap/dist/js/bootstrap.min.js'></script>
     <script type='text/javascript' src='../bower_components/jquery-ui/jquery-ui.min.js'></script>
@@ -104,6 +109,8 @@
     <link rel="import" href="../static/elements/select.html">
     <!-- <link rel="import" href="/static/elements/htmlbox.html"> -->
     <!-- <link rel="import" href="/static/elements/cryptomedic-file-payment.html"> -->
+
+    <script type='text/javascript' src="../static/elements/read-boolean.js"></script>
 
   </head>
   <body ng-app="app_main" ng-controller="ctrl" id="ng-app" xxx-fullbleed xxx-unresolved>
