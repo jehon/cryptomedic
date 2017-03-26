@@ -9,9 +9,7 @@ class ReadBoolean extends HTMLElement {
     // Create a shadow root
     this.attachShadow({mode: 'open'});
     this.shadowRoot.innerHTML = `
-        <span>read-boolean+</span>
         <img>
-        <span>read-boolean-</span>
       `;
     this.adapt();
   }
@@ -19,7 +17,6 @@ class ReadBoolean extends HTMLElement {
   static get observedAttributes() { return ['value']; }
 
   attributeChangedCallback(attributeName, oldValue, newValue, namespace) {
-    console.log("attributeChangedCallback", attributeName, newValue);
     if (attributeName == 'value') {
       this.adapt();
     }
