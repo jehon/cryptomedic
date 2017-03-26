@@ -1,26 +1,10 @@
 <?php
-/**
- * Bill model.
- *
- * With a summary...
- *
- * @package test
- * @author jehon
- */
 
-namespace App;
+namespace App\Model;
 
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Input;
 
-/**
- * This is the Bill model, encapsulating various function used around the "Bill" concept
- *
- * This is a summary? I think so...
- *
- * @author jehon
- *
- */
 class Picture extends CryptomedicModel {
 	const DATA_PREFIX = "data:image/";
 

@@ -7,7 +7,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-use App\References;
+use App\Model\References;
 
 require_once(__DIR__ . "/templates-t.php");
 

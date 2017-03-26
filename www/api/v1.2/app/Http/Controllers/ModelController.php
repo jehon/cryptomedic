@@ -7,7 +7,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Input;
 
-use App\References;
+use App\Model\References;
 
 // TODO: protect frozen files
 class ModelController extends Controller {
@@ -26,7 +26,7 @@ class ModelController extends Controller {
 	}
 
 	public static function getModelClass($model) {
-		$model = "\\App\\" . $model;
+		$model = "\\App\\Model\\" . $model;
 		if ($model === false) {
 			abort(400, "No correct model found");
 		}

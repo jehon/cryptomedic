@@ -1,5 +1,5 @@
 <?php
-	use App\References;
+	use App\Model\References;
 
 	t::setDefaultOption("baseExpression", "folder.getMainFile().");
 ?>

@@ -1,6 +1,6 @@
 <?php
-	use App\Bill;
-	use App\References;
+	use App\Model\Bill;
+	use App\Model\References;
 
 	t::setDefaultOption("baseExpression", "folder.getSubFile(\$index).");
 	t::setDefaultOption("readOnly");

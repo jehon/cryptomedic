@@ -68,7 +68,7 @@ class SyncData {
 
   public function getLineFrom($type, $id)
   {
-    $name = "\\App\\" . $type;
+    $name = "\\App\\Model\\" . $type;
     $rec = $name::findOrFail($id);
     if ($type == "Deleted") {
       $model = References::db2model($rec['entity_type']);

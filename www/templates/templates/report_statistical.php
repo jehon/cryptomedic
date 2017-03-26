@@ -1,7 +1,7 @@
 <?php
-	use App\CryptomedicModel;
-	use App\Bill;
-	use App\References;
+	use App\Model\CryptomedicModel;
+	use App\Model\Bill;
+	use App\Model\References;
 ?>
 <table class="reporting ng-scope">
 	<tbody>

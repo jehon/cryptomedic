@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Patient;
-use App\References;
+use App\Model\Patient;
+use App\Model\References;
 use App\Http\Controllers\Controller;
 use DB;
 use Illuminate\Http\Response;

@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Bill;
-use App\CryptomedicModel;
-use App\References;
+use App\Model\Bill;
+use App\Model\CryptomedicModel;
+use App\Model\References;
 
 class ReportStatisticalController extends ReportController {
 	protected $filter = "(1=1)";

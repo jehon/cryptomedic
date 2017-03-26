@@ -5,8 +5,8 @@
   // Example: 97573 (2014 = price 2)
   // Hack: 10010
 
-  use App\Bill;
-  use App\References;
+  use App\Model\Bill;
+  use App\Model\References;
 
   t::setDefaultOption("baseExpression", "currentFile().");
 
