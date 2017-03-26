@@ -132,15 +132,6 @@
                 </jh-authorized>
               </a>
             </li>
-            <li ng-if="remaining!='?'">
-              <a ng-if='remaining==0'>
-                <img src='img/sync/ok.png'>
-              </a>
-              <a ng-if='remaining>0'>
-                <img src='img/sync/download.png'>
-                {{remaining}} items remaining
-              </a>
-            </li>
             <li><a id='menu_search' href="#/search" class="navbar-link">
               <jh-authorized value="folder.read">
                 <img src="../static/img/patientsSearch.gif" height="20px"/>
