@@ -15,27 +15,6 @@
     /* global Database, API_VERSION, userCb, Folder, Patient */
     /* exported callbacks */
     (function() {
-      // https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers
-      // let worker  = new Worker('elements/lib/worker.js');
-      // worker.onmessage = function(event) {
-      //   let data = event.data;
-      //   syncRemainingCb.fire(data.remaining);
-      // }
-
-      // Build up the cryptomedicComputerId
-      if (!localStorage.cryptomedicComputerId) {
-        var mask = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-        var result = '';
-        for (var i = 0; i < 32; i++) {
-          result += mask[Math.floor(Math.random() * mask.length)];
-        }
-        localStorage.cryptomedicComputerId = result;
-      }
-
-      if (!localStorage.syncCheckpoint) {
-        localStorage.syncCheckpoint = "";
-      }
-
       let db = new Database();
       let syncedFolders = {};
 
@@ -48,9 +27,6 @@
         window.cryptomedic.serverSettings = {};
       }
 
-      // Since we don't use the data in the databse,
-      // let's clear it at each startup...
-      // OFFLINE-DISABLE: should be removed to enable OFFLINE mode
       db.clear();
 
       Polymer({
@@ -80,12 +56,6 @@
             .onResponseCode(401, () => {
               window.location = "#login";
             })
-            .onFire(() => {
-              return db.getCheckpoint().then(lastCheckPoint => {
-                this.$.network
-                  .requestWithHeader('X-SYNC-CHECKPOINT', lastCheckPoint);
-              });
-            })
 
             // This is done async % then...
             .onSuccess(json => {
@@ -114,9 +84,6 @@
           return this.start()
             .requestWithGet()
             .requestToUrl('auth/settings')
-            .requestWithData({
-              'computerId': localStorage.cryptomedicComputerId
-            })
             .onResponseCode(404, () => {
               return false;
             })
@@ -130,8 +97,7 @@
             .requestToUrl('auth/mylogin')
             .requestWithData({
               'username': username,
-              'password': password,
-              'computerId': localStorage.cryptomedicComputerId
+              'password': password
             })
             .then(userCb.fire)
             ;
