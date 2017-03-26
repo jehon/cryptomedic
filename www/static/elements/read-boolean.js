@@ -23,7 +23,13 @@ class ReadBoolean extends HTMLElement {
   }
 
   adapt() {
-    let val = JSON.parse(this.getAttribute("value"));
+    let raw = this.getAttribute("value");
+    let val = "";
+    try {
+      val = JSON.parse(raw);
+    } catch(e) { // SyntaxError
+      val = raw;
+    }
     this.shadowRoot.querySelector('img').setAttribute('src', `${selfURL}/resources/boolean-${val?'true':'false'}.gif`)
   }
 
