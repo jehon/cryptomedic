@@ -103,28 +103,6 @@
             ;
         },
 
-        /*
-         * Simply get the next data
-         *
-         */
-        doSync() {
-          // Avoid having two syncing going on in parallel
-          if (currentlySyncing) {
-            console.info("Already syncing, not doing it again");
-          }
-          currentlySyncing = true;
-          return this.start()
-            .requestWithGet()
-            .requestToUrl('sync')
-            .then((json) => { currentlySyncing = false; return json; })
-            ;
-        },
-
-        doResync() {
-          localStorage.syncCheckpoint = "";
-          return this.doSync();
-        },
-
         doLogout(localOnly = false) {
           let finished = Promise.resolve();
 
@@ -308,14 +286,12 @@
             .requestWithData(user)
         },
 
-// Check here:
         'userDelete': function(id) {
           return this.start()
             .requestWithDelete()
             .requestToUrl('users/' + id)
         },
 
-// Check here:
         'userUpdate': function(user) {
           return this.start()
             .requestWithPut()
@@ -323,7 +299,6 @@
             .requestWithData(user)
         },
 
-// Check here:
         'userPassword': function(id, pwd) {
           return this.start()
             .requestWithPost()
