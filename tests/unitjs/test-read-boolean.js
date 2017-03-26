@@ -18,6 +18,15 @@ describe('test-read-boolean', function() {
     });
   });
 
+  it("should show false when invalid json data is given", function(done) {
+    testComponent("<read-boolean value='{truc'></read-boolean>").then(el => {
+      // Non empty string is ... "true"
+      expect(el.shadowRoot.querySelector("img").getAttribute('src')).toMatch(/-true.gif/i);
+      el.testDone();
+      done();
+    });
+  });
+
   it("should show true only when attribute value=true is specified", function(done) {
     testComponent("<read-boolean value='true'></read-boolean>").then(el => {
       expect(el.shadowRoot.querySelector("img").getAttribute('src')).toMatch(/-true.gif/i);
