@@ -26,7 +26,7 @@
     "moment": "momentjs#^2.15.2",
     "dexie": "^1.5.1",
     "karma-read-json": "^1.1.0",
-    "jquery": "^3.1.1",
+    "jquery": "^3.2.1",
     "jquery-ui": "^1.12.1",
     "html2canvas": "^0.4.1",
     "excellentexport": "^2.0.0",
