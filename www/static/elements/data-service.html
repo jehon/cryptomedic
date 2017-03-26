@@ -60,6 +60,7 @@
               // Check offline data
               let finished = Promise.resolve();
 
+// TODO HERE
               // Put ONLINE data
               if (typeof(json.online) != "undefined") {
                 finished = finished.then(() => {
@@ -176,28 +177,26 @@
             syncedFolders[type][id] = 0;
           }
 
-          if (syncRemaining) {
-            //
-            // If we have a cached copy less than 2 hours old, then we use it
-            // We make the hypothesis that we are the only one to use it
-            // and that no modifications are made otherwise
-            //
-            if (syncedFolders[type][id] >= (new Date()).getTime() - 2 * 60 * 60 * 1000) {
-              console.warn("Trusting last syncs and not going live for ", id);
-            } else {
-              // We are not finished, let's get the info from the server
-              finished = finished.then(() => {
-                // Trace the synced patients with a timestamp
-                syncedFolders[type][id] = new Date();
+          //
+          // If we have a cached copy less than 2 hours old, then we use it
+          // We make the hypothesis that we are the only one to use it
+          // and that no modifications are made otherwise
+          //
+          if (syncedFolders[type][id] >= (new Date()).getTime() - 2 * 60 * 60 * 1000) {
+            console.warn("Trusting last syncs and not going live for ", id);
+          } else {
+            // We are not finished, let's get the info from the server
+            finished = finished.then(() => {
+              // Trace the synced patients with a timestamp
+              syncedFolders[type][id] = new Date();
 
-                return this.start()
-                  .requestWithGet()
-                  .requestToUrl(`folder/${type}/${id}`)
-                  .then(json => {
-                    return json.online;
-                  })
-              });
-            }
+              return this.start()
+                .requestWithGet()
+                .requestToUrl(`folder/${type}/${id}`)
+                .then(json => {
+                  return json.online;
+                })
+            });
           }
 
           // If no data available, look in the local database
