@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Bill;
-use App\References;
+use App\Model\Bill;
+use App\Model\References;
 
 class ReportSurgicalController extends ReportController {
   public function buildData() {

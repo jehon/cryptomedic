@@ -1,23 +1,7 @@
 <?php
-/**
- * Bill model.
- *
- * With a summary...
- *
- * @package test
- * @author jehon
- */
 
-namespace App;
+namespace App\Model;
 
-/**
- * This is the Bill model, encapsulating various function used around the "Bill" concept
- *
- * This is a summary? I think so...
- *
- * @author jehon
- *
- */
 class Bill extends CryptomedicModel {
 	const CAT_CONSULT = "consult";
 	const CAT_MEDECINE = "medecine";
@@ -32,7 +16,7 @@ class Bill extends CryptomedicModel {
     $list = [];
 
     foreach([ "Payment" => "payments"] as $m => $t) {
-      $obj = "\\App\\" . $m;
+      $obj = "\\App\\Model\\" . $m;
 
       // $r = DB::select("SELECT * FROM $t WHERE patient_id = :patient_id", array('patient_id' => $id));
       $r = $obj::where("bill_id", $this->id)->get();

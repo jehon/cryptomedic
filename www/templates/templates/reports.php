@@ -1,5 +1,5 @@
 <?php
-  use App\References;
+  use App\Model\References;
 ?>
 <div ng-if="getReport()" class='container-fluid'>
   <div class='row'>

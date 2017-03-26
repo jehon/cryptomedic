@@ -7,7 +7,7 @@ use DB;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Request;
 
-use App\References;
+use App\Model\References;
 
 class ReportConsultationsController extends ReportController {
 

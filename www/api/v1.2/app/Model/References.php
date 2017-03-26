@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Model;
 
 class References {
   static $model2db = array(
