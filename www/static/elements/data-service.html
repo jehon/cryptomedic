@@ -12,7 +12,7 @@
   <script type='text/javascript' src='../../bower_components/dexie/dist/dexie.min.js'></script>
   <script type='text/javascript' src='resources/database.js'></script>
   <script>
-    /* global Database, API_VERSION, userCb, syncRemainingCb, Folder, Patient */
+    /* global Database, API_VERSION, userCb, Folder, Patient */
     /* exported callbacks */
     (function() {
       // https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers
@@ -21,13 +21,6 @@
       //   let data = event.data;
       //   syncRemainingCb.fire(data.remaining);
       // }
-
-      // Sync remaining callback - add a local listener
-      let syncRemaining;
-      syncRemainingCb.add((data) => {
-        // Store the information locally at least
-        syncRemaining = data;
-      });
 
       // Build up the cryptomedicComputerId
       if (!localStorage.cryptomedicComputerId) {
@@ -74,7 +67,6 @@
         },
 
         userCb,
-        syncRemainingCb,
 
         /**************************/
         /*** Start              ***/
@@ -100,27 +92,12 @@
               // Check offline data
               let finished = Promise.resolve();
 
-              // Do we reset the database?
-              if (json._offline) {
-                if (json._offline.reset) {
-                  // Reset the synced info if we are resetting the database
-                  syncedFolders = {};
-                  finished = finished.then(() => db.clear());
-                }
-
-                // // Put OFFLINE data (but in worker process)
-                // if (typeof(json._offline) != "undefined") {
-                //   worker.postMessage(json._offline);
-                // }
-              }
-
               // Put ONLINE data
               if (typeof(json.online) != "undefined") {
                 finished = finished.then(() => {
                   return db.triageList(json.online, false);
                 })
               }
-
 
               // Return final response with original data:
               return finished.then(() => {
@@ -195,8 +172,6 @@
           }
           finished.then(() => {
             userCb.fire(null);
-            syncRemainingCb.fire(false);
-
           })
           ;
         },
@@ -392,7 +367,6 @@
       });
 
       return {
-        syncRemainingCb,
         userCb
       }
     })();

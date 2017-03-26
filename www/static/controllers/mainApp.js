@@ -174,20 +174,12 @@ mainApp.controller('ctrl', [ '$scope', function($scope) {
     goThere(path);
   };
 
-  $scope.sync = false;
   $scope.connected = false;
 
   $scope.username = '';
   $scope.password = '';
 
   $scope.$on('$routeChangeError', function() { console.error('error in routes', arguments); });
-
-  /* global syncRemainingCb */
-  syncRemainingCb.add(remaining => {
-    console.log("MainApp syncRemainingCb: ", remaining);
-    $scope.remaining = remaining;
-    $scope.safeApply();
-  })
 }]);
 
 mainApp.controller('ctrl_allGraphics',      ctrl_allGraphics);
