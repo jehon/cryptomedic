@@ -208,8 +208,7 @@ class t {
         $this->res .= "<span id='{$this->jsId}'>{{ {$this->fieldGetKey()} | date:'{static::DATETIMEFORMAT}' }}</span>";
         break;
       case static::TYPE_BOOLEAN:
-        $this->res .= "<span id='{$this->jsId}_ok' ng-show='{$this->fieldGetKey()}'><img src='/static/img/boolean-true.gif'></span>"
-                      . "<span id='{$this->jsId}_ko' ng-hide='{$this->fieldGetKey()}'><img src='/static/img/boolean-false.gif'></span>";
+        $this->res .= "<read-boolean ng-attr-value='{{ {$this->fieldGetKey()} }}'></read-boolean>";
         break;
       case static::TYPE_LIST:
         $this->res .= "<span id='{$this->jsId}'>{{ {$this->fieldGetKey()} }}</span>";
