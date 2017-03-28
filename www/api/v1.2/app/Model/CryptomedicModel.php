@@ -51,8 +51,8 @@ class CryptomedicModel extends Model {
 		return true;
 	}
 
-	public function getDependantList() {
-		return [];
+	public function getDependantsList() {
+		return [ $this->getLineRecord() ];
 	}
 
 	public function getLineRecord() {
@@ -66,6 +66,10 @@ class CryptomedicModel extends Model {
     $rec["id"]     = $this->id;
     $rec["record"] = $this;
     return $rec;
+	}
+
+	public function getRoot() {
+		return $this;
 	}
 
 	public function getReadOnlyField() {

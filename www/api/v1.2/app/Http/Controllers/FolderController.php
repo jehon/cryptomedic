@@ -13,7 +13,7 @@ class FolderController extends Controller {
 
 	public static function getFolder($model, $id) {
 		$main = ModelController::getObjectByModelAndId($model, $id);
-		$res = array_merge([ $main->getLineRecord() ], $main->getDependantList());
+		$res = $main->getDependantsList();
 		// usort($res, "self::sortFiles");
 		return $res;
 	}
