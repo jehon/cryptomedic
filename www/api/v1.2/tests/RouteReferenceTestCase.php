@@ -39,12 +39,13 @@ class RouteReferenceTestCase extends TestCase {
 		// See https://github.com/laravel/framework/blob/5.3/src/Illuminate/Foundation/Testing/Concerns/MakesHttpRequests.php#L62
 		$response = $this->call($opt->getMethod(), $opt->getAbsoluteUrl(), $opt->getParams(), [], [], $this->transformHeadersToServerVars($opt->getHeaders()));
 
-		$response->assertStatus($opt->getExpected());
 
 		$text = $response->getContent();
 		if ($response->getStatusCode() == 500) {
 			echo $text;
 		}
+
+		$response->assertStatus($opt->getExpected());
 
 		if (!$opt->getAsJson()) {
 			return $text;
