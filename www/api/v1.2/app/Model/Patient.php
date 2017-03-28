@@ -5,7 +5,7 @@ namespace App\Model;
 // http://laravel.com/docs/5.0/eloquent#model-events
 
 class Patient extends CryptomedicModel {
-  public function getDependantList() {
+  public function getDependantsList() {
     $list = [];
 
     $dependants = References::$model2db;
@@ -18,10 +18,10 @@ class Patient extends CryptomedicModel {
       // $r = DB::select("SELECT * FROM $t WHERE patient_id = :patient_id", array('patient_id' => $id));
       $r = $obj::where("patient_id", $this->id)->get();
       foreach($r as $ri => $rv) {
-        $list = array_merge($list, [ $rv->getLineRecord() ], $rv->getDependantList());
+        $list = array_merge($list, $rv->getDependantsList());
       }
     }
 
-    return $list;
+    return array_merge([ $this->getLineRecord() ], $list);
   }
 }

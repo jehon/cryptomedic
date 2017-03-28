@@ -12,7 +12,7 @@ class Bill extends CryptomedicModel {
 	public static $categories = [ self::CAT_CONSULT, self::CAT_MEDECINE, self::CAT_OTHER, self::CAT_WORKSHOP, self::CAT_SURGICAL ];
 	public static $translations = [ ];
 
-  public function getDependantList() {
+  public function getDependantsList() {
     $list = [];
 
     foreach([ "Payment" => "payments"] as $m => $t) {
@@ -21,11 +21,11 @@ class Bill extends CryptomedicModel {
       // $r = DB::select("SELECT * FROM $t WHERE patient_id = :patient_id", array('patient_id' => $id));
       $r = $obj::where("bill_id", $this->id)->get();
       foreach($r as $ri => $rv) {
-        $list = array_merge($list, [ $rv->getLineRecord() ], $rv->getDependantList());
+        $list = array_merge($list, $rv->getDependantsList());
       }
     }
 
-    return $list;
+    return array_merge([ $this->getLineRecord() ], $list);
   }
 
 	public static function create(array $attributes = array()) {
