@@ -11,7 +11,7 @@ class ReportSurgicalTest extends RouteReferenceTestCase {
 		$this->opt = $this->getNewRequestOptionsBuilder()
 			->setUrl("reports/surgical")
 			->setParams([ 'period' => self::MONTHLY, 'month' => self::$month ])
-			->setReference()
+			->withReference()
 			;
 	}
 

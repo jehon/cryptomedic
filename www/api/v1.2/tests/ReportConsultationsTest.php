@@ -10,7 +10,7 @@ class ReportConsultationsTest extends RouteReferenceTestCase {
 		$this->opt = $this->getNewRequestOptionsBuilder()
 			->setUrl("reports/consultations")
 			->setParams([ 'period' => self::DAILY, 'day' => self::$day ])
-			->setReference()
+			->withReference()
 			;
 	}
 
