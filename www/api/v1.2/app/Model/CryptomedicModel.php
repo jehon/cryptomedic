@@ -55,7 +55,7 @@ class CryptomedicModel extends Model {
 		return [];
 	}
 
-	public function getSyncRecord() {
+	public function getLineRecord() {
     $classname = get_class($this);
 		if ($pos = strrpos($classname, '\\')) {
 			$classname = substr($classname, $pos + 1);

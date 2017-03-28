@@ -21,7 +21,7 @@ class Bill extends CryptomedicModel {
       // $r = DB::select("SELECT * FROM $t WHERE patient_id = :patient_id", array('patient_id' => $id));
       $r = $obj::where("bill_id", $this->id)->get();
       foreach($r as $ri => $rv) {
-        $list = array_merge($list, [ $rv->getSyncRecord() ], $rv->getDependantList());
+        $list = array_merge($list, [ $rv->getLineRecord() ], $rv->getDependantList());
       }
     }
 
