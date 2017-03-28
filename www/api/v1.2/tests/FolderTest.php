@@ -46,7 +46,7 @@ class FolderTest extends RouteReferenceTestCase {
 	}
 
 	public function testSearchEntryYear() {
-    $json = $this->myRunAsserQueryWithoutOffline(
+    $json = $this->myRunAssertQuery(
         $this->getNewRequestOptionsBuilder()
           ->setUrl("folder?entryyear=2010")
       );
@@ -56,7 +56,7 @@ class FolderTest extends RouteReferenceTestCase {
 	}
 
 	public function testSearchEntryOrder() {
-    $json = $this->myRunAsserQueryWithoutOffline(
+    $json = $this->myRunAssertQuery(
         $this->getNewRequestOptionsBuilder()
           ->setUrl("folder?entryorder=10")
       );
@@ -66,7 +66,7 @@ class FolderTest extends RouteReferenceTestCase {
 	}
 
 	public function testSearchName() {
-    $json = $this->myRunAsserQueryWithoutOffline(
+    $json = $this->myRunAssertQuery(
         $this->getNewRequestOptionsBuilder()
           ->setUrl("folder?Name=md")
       );
@@ -76,7 +76,7 @@ class FolderTest extends RouteReferenceTestCase {
 	}
 
 	public function testSearchNameWithJ() {
-    $json = $this->myRunAsserQueryWithoutOffline(
+    $json = $this->myRunAssertQuery(
         $this->getNewRequestOptionsBuilder()
           ->setUrl("folder?Name=j")
       );
@@ -86,7 +86,7 @@ class FolderTest extends RouteReferenceTestCase {
 	}
 
 	public function testSearchSexBoy() {
-    $json = $this->myRunAsserQueryWithoutOffline(
+    $json = $this->myRunAssertQuery(
         $this->getNewRequestOptionsBuilder()
           ->setUrl("folder?Sex=206")
       );
@@ -97,7 +97,7 @@ class FolderTest extends RouteReferenceTestCase {
 	}
 
 	public function testSearchSexGirl() {
-    $json = $this->myRunAsserQueryWithoutOffline(
+    $json = $this->myRunAssertQuery(
         $this->getNewRequestOptionsBuilder()
           ->setUrl("folder?Sex=207")
       );
@@ -108,7 +108,7 @@ class FolderTest extends RouteReferenceTestCase {
 	}
 
 	public function testSearchYearofbirth() {
-    $json = $this->myRunAsserQueryWithoutOffline(
+    $json = $this->myRunAssertQuery(
         $this->getNewRequestOptionsBuilder()
           ->setUrl("folder?Yearofbirth=2000")
       );
@@ -118,7 +118,7 @@ class FolderTest extends RouteReferenceTestCase {
 	}
 
 	public function testSearchTelephone() {
-    $json = $this->myRunAsserQueryWithoutOffline(
+    $json = $this->myRunAssertQuery(
         $this->getNewRequestOptionsBuilder()
           ->setUrl("folder?Telephone=2")
       );
@@ -128,7 +128,7 @@ class FolderTest extends RouteReferenceTestCase {
 	}
 
 	public function testSearchRicket() {
-    $json = $this->myRunAsserQueryWithoutOffline(
+    $json = $this->myRunAssertQuery(
         $this->getNewRequestOptionsBuilder()
           ->setUrl("folder?Pathology=Ricket")
       );
@@ -138,7 +138,7 @@ class FolderTest extends RouteReferenceTestCase {
 	}
 
 	public function testSearchClubFoot() {
-    $json = $this->myRunAsserQueryWithoutOffline(
+    $json = $this->myRunAssertQuery(
         $this->getNewRequestOptionsBuilder()
           ->setUrl("folder?Pathology=ClubFoot")
       );
@@ -148,7 +148,7 @@ class FolderTest extends RouteReferenceTestCase {
 	}
 
 	public function testSearchOther() {
-    $json = $this->myRunAsserQueryWithoutOffline(
+    $json = $this->myRunAssertQuery(
         $this->getNewRequestOptionsBuilder()
           ->setUrl("folder?Pathology=Other")
       );
