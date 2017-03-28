@@ -1,8 +1,8 @@
 <?php
 
-require_once("SyncableTestCase.php");
+require_once("FicheTestHelper.php");
 
-class FichePaymentTest extends SyncableTestCase {
+class FichePaymentTest extends FicheTestHelper {
   protected $model = "Payment";
 
 
