@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Model\Patient;
-use App\Model\References;
-use App\Http\Controllers\Controller;
 use DB;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Input;
@@ -63,7 +61,7 @@ class FolderController extends Controller {
 
 	public function show($model, $id) {
 		return response()->json([
-			"online" => $this->getFolder($model, $id),
+			"folder" => $this->getFolder($model, $id),
 			"id" => $id
 		]);
 	}
