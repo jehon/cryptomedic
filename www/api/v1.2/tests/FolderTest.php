@@ -1,8 +1,6 @@
 <?php
 
-require_once("SyncableTestCase.php");
-
-class FolderTest extends SyncableTestCase {
+class FolderTest extends RouteReferenceTestCase {
 
 	public function testsUnauthenticated() {
     $response = $this->myRunAssertQuery(

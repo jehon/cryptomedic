@@ -93,7 +93,7 @@ class RouteReferenceTestCase extends TestCase {
 				if ($sti['file'] == __FILE__) {
 					continue;
 				}
-				if (basename($sti['file']) == 'SyncableTestCase.php') {
+				if (basename($sti['file']) == 'FicheTestHelper.php') {
 					continue;
 				}
 				break;
