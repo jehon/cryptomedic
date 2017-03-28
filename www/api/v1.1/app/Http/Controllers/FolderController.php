@@ -11,12 +11,9 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Request;
 
 class FolderController extends Controller {
-	// @see http://laravel.com/docs/5.0/controllers
-
 	public static function getFolder($model, $id) {
 		$main = ModelController::getObjectByModelAndId($model, $id);
 		$res = array_merge([ $main->getSyncRecord() ], $main->getDependantList());
-		// usort($res, "self::sortFiles");
 		return $res;
 	}
 
