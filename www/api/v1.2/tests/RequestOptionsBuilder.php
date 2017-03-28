@@ -156,4 +156,9 @@ class RequestOptionsBuilder {
     return $this;
   }
 
+  public function withReference() {
+    $this->reference = null;
+    return $this;
+  }
+
 }

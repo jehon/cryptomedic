@@ -10,7 +10,7 @@ class ReportStatisticalMonthlyTest extends RouteReferenceTestCase {
     $this->opt = $this->getNewRequestOptionsBuilder()
       ->setUrl("reports/statistical")
       ->setParams([ 'period' => self::MONTHLY, 'month' => self::$month ])
-      ->setReference()
+      ->withReference()
       ;
   }
 
