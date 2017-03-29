@@ -170,6 +170,10 @@ mainApp.controller('ctrl', [ '$scope', function($scope) {
     }
   };
 
+  $scope.apiUrl = function(url = "/") {
+    return "/api/" + API_VERSION + url;
+  }
+
   $scope.go = function(path) {
     goThere(path);
   };
