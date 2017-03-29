@@ -13,8 +13,10 @@ function ctrl_search($scope) {
   };
 
   $scope.submit = function() {
+    let updatedData = getFormContent("#searchForm");
+
     getDataService()
-      .then(dataService => dataService.searchForPatients($scope.params))
+      .then(dataService => dataService.searchForPatients(updatedData))
       .then(function(data) {
         $scope.listing = data;
         $scope.page();
