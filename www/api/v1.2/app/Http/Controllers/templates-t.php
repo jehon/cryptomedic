@@ -253,7 +253,7 @@ class t {
           $this->res .= "<table style='width: 100%'><tr><td>";
           foreach($this->listing as $v) {
             $this->res.= ""
-                . "<input type='radio' value=\"" . htmlentities($v) . "\" ng-model='{$this->fieldGetKey()}' {$this->options['inline']}>"
+                . "<input type='radio' value=\"" . htmlentities($v) . "\" ng-model='{$this->fieldGetKey()}' name='{$this->field}' {$this->options['inline']}>"
                 . "$v"
                 . "<br>"
                 ;
@@ -264,7 +264,7 @@ class t {
           }
           if (!$this->fieldIsRequired()) {
             $this->res.= ""
-                . "<input type='radio' ng-value='0' ng-model='{$this->fieldGetKey()}' {$this->options['inline']}>"
+                . "<input type='radio' value='' ng-model='{$this->fieldGetKey()}' name='{$this->field}' {$this->options['inline']}>"
                 . "?"
                 . "<br>"
                 ;
@@ -277,7 +277,7 @@ class t {
             $this->res .= "<option value=\"" . htmlentities($v) . "\">$v</option>";
           }
           if (!$this->fieldIsRequired()) {
-            $this->res .= "<option value='0'>?</option>";
+            $this->res .= "<option value=''>?</option>";
           }
           $this->res .= "</select>";
         }
