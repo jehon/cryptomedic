@@ -1,5 +1,5 @@
 
-let API_VERSION='v1.2';
+let API_VERSION='v1.1';
 // Also change matrix url in index.html
 
 
