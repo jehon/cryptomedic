@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Input;
 
 use App\Model\References;
+use App\Model\Patient;
 
 // TODO: protect frozen files
 class ModelController extends Controller {
@@ -75,10 +76,11 @@ class ModelController extends Controller {
 			}
 
 			// $m::findOrFail($id);
-			$res = $this->update("Patient", $id);
-			if (!$res) {
+			$response = $this->update("Patient", $id);
+			if (!$response) {
 				abort(500, "Could not update the created $model");
 			}
+			$newObj = Patient::findOrFail($id);
 		} else {
 			$newObj = $m::create($data);
 			if (!$newObj->id) {
@@ -87,10 +89,9 @@ class ModelController extends Controller {
 			$id = $newObj->id;
 		}
 
-		return response()->json([ 'newKey' => $id,
-			'online' => [
-				$this->getOnlineObject($model, $id)
-			]
+		return response()->json([
+			'newKey' => $id,
+			'folder' => $newObj->getRoot()->getDependantsList()
 		]);
 	}
 
@@ -113,10 +114,9 @@ class ModelController extends Controller {
 		}
 
 		$obj->save();
-		return response()->json([ "id" => $obj->id,
-			"online" => [
-				$this->getOnlineObject($model, $id)
-			]
+		return response()->json([
+			"id" => $obj->id,
+			'folder' => $obj->getRoot()->getDependantsList()
 		]);
 	}
 
@@ -124,27 +124,30 @@ class ModelController extends Controller {
 	public function destroy($model, $id) {
 		$m = self::getModelClass($model);
 		$obj = $m::find($id);
-		if (!$obj) {
-			// Already deleted:
-			return response()->json(array());
-		}
-		$deleted = $obj->delete();
-		if(!$deleted) {
-			abort(404, "Could not delete $model@$id");
+
+		if ($model == "Patient") {
+			$root = false;
+		} else {
+			// Keep root reference for folder build up...
+			$root = $obj->getRoot();
 		}
 
-		$deletedObj = ((object) [
-			"record" => $deleted,
-			"type" => 'Deleted',
-			"id" => $deleted->id
-		]);
+		if ($obj) {
+			$obj->delete();
+		}
 
+		if (!$root) {
+			// Patient root
+			return response()->json([
+				'id' => $id,
+				'folder' => []
+			]);
+		}
 
 		// quid if patient has dependancies? -> see Patient model http://laravel.com/docs/5.0/eloquent#model-events
 		return response()->json([
-			"online" => [
-				$deletedObj
-			]
+			"id" => $id,
+			'folder' => $root->getDependantsList()
 		]);
 	}
 

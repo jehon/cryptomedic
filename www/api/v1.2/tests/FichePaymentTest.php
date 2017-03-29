@@ -18,7 +18,7 @@ class FichePaymentTest extends FicheTestHelper {
 
   public function testCreate() {
     // Create it
-    $id = $this->doCreate($this->model, [ "bill_id" => '1', 'Amount' => 1 ])->online[0]->id;
+    $id = $this->doCreate($this->model, [ "bill_id" => '1', 'Amount' => 1 ])->id;
 
     // Modify it
     $this->doUpdate($this->model, $id, [ "Amount" => 3 ]);

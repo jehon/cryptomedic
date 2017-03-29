@@ -11,7 +11,6 @@
 |
 */
 
-use App\Http\Controllers\SyncController;
 use App\Http\Controllers\FolderController;
 
 Route::pattern('id', '[0-9]+');
@@ -33,18 +32,14 @@ Route::group([ 'prefix' => '/api/' . basename(dirname(__DIR__)) ], function() {
 
   // Public public
   Route::get('/templates/{category?}/{name?}', "TemplatesController@render");
+  Route::post('/auth/mylogin', "Auth\AuthController@postMylogin");
   Route::get('/auth/logout', "Auth\AuthController@getLogout");
-
-  // Public with sync enabled
-  Route::group( [ 'middleware' => 'syncData' ], function()
-  {
-    Route::post('/auth/mylogin', "Auth\AuthController@postMylogin");
-  });
 
   // Private
   Route::group(array('middleware' => 'authenticated'), function()
   {
-    // Private without sync
+    Route::get('/auth/settings', "Auth\AuthController@getSettings");
+
     hasPermission('users.manage', function() {
       Route::get('users/emails', 'UsersController@emails');
       Route::resource('users', 'UsersController');
@@ -63,62 +58,54 @@ Route::group([ 'prefix' => '/api/' . basename(dirname(__DIR__)) ], function() {
       Route::get('admin/pictures/checkFileSystem', 'PictureController@checkFileSystem');
     });
 
-    // Private with sync
-    Route::group( [ 'middleware' => 'syncData' ], function()
-    {
 
-      Route::any('sync', [ "uses" => "SyncController@sync" ]);
+    hasPermission('reports.execute', function() {
+      Route::get('reports/consultations', [
+        "uses" => "ReportConsultationsController@index"
+      ]);
 
-      Route::get('/auth/settings', "Auth\AuthController@getSettings");
+      Route::get('reports/activity', [
+        "uses" => "ReportActivityController@index"
+      ]);
 
-      hasPermission('reports.execute', function() {
-        Route::get('reports/consultations', [
-          "uses" => "ReportConsultationsController@index"
-        ]);
+      Route::get('reports/statistical', [
+        "uses" => "ReportStatisticalController@index"
+      ]);
 
-        Route::get('reports/activity', [
-          "uses" => "ReportActivityController@index"
-        ]);
+      Route::get('reports/surgical', [
+        "uses" => "ReportSurgicalController@index"
+      ]);
+    });
 
-        Route::get('reports/statistical', [
-          "uses" => "ReportStatisticalController@index"
-        ]);
+    hasPermission('folder.read', function() {
+      Route::resource('folder', "FolderController", [ "only" => [ "index" ]]);
 
-        Route::get('reports/surgical', [
-          "uses" => "ReportSurgicalController@index"
-        ]);
-      });
+      Route::get('folder/{model}/{id}', [
+        "uses" => "FolderController@show"
+      ]);
 
-      hasPermission('folder.read', function() {
-        Route::resource('folder', "FolderController", [ "only" => [ "index" ]]);
+      Route::get('reference/{entryyear}/{entryorder}', [
+        "uses" => "FolderController@reference"
+      ]);
 
-        Route::get('folder/{model}/{id}', [
-          "uses" => "FolderController@show"
-        ]);
+      Route::get('picture/{id}', [
+        "uses" => "PictureController@getFile"
+      ]);
 
-        Route::get('reference/{entryyear}/{entryorder}', [
-          "uses" => "FolderController@reference"
-        ]);
+      Route::get('picture/{id}/thumbnail', [
+        "uses" => "PictureController@getThumbnail"
+      ]);
+    });
 
-        Route::get('picture/{id}', [
-          "uses" => "PictureController@getFile"
-        ]);
+    hasPermission('folder.edit', function() {
+      Route::POST('/fiche/{model}', 'ModelController@create');
+      Route::PUT('/fiche/{model}/{id}', 'ModelController@update');
+      Route::DELETE('/fiche/{model}/{id}', 'ModelController@destroy');
+      Route::POST('/reference', 'FolderController@createfile');
+    });
 
-        Route::get('picture/{id}/thumbnail', [
-          "uses" => "PictureController@getThumbnail"
-        ]);
-      });
-
-      hasPermission('folder.edit', function() {
-        Route::POST('/fiche/{model}', 'ModelController@create');
-        Route::PUT('/fiche/{model}/{id}', 'ModelController@update');
-        Route::DELETE('/fiche/{model}/{id}', 'ModelController@destroy');
-        Route::POST('/reference', 'FolderController@createfile');
-      });
-
-      hasPermission('folder.unlock', function() {
-        Route::get('unfreeze/{model}/{id}', 'ModelController@unfreeze');
-      });
+    hasPermission('folder.unlock', function() {
+      Route::get('unfreeze/{model}/{id}', 'ModelController@unfreeze');
     });
   });
 });

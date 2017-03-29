@@ -69,6 +69,12 @@ class CryptomedicModel extends Model {
 	}
 
 	public function getRoot() {
+		if ($this->patient_id !== null) {
+			return Patient::findOrFail($this->patient_id)->getRoot();
+		}
+		if ($this->bill_id !== null) {
+			return Bill::findOrFail($this->bill_id)->getRoot();
+		}
 		return $this;
 	}
 
@@ -84,27 +90,5 @@ class CryptomedicModel extends Model {
 			return parent::save($attributes);
 		}
 		return true;
-	}
-
-	public function delete() {
-		// Track deleted elements...
-		$classname = get_called_class();
-		if (preg_match('@\\\\([\w]+)$@', $classname, $matches)) {
-			$classname = $matches[1];
-		}
-		// $dbname = References::model2db($classname);
-		$id = $this->id;
-		$deleted = new Deleted();
-		$deleted->created_at = new \DateTime();
-		$deleted->entity_type = $classname;
-		$deleted->entity_id = $id;
-		$deleted->save();
-
-		// Let's go delete it...
-		$res = parent::delete();
-		if (!$res) {
-			return false;
-		}
-		return $deleted;
 	}
 }

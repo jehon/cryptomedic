@@ -5,6 +5,35 @@ require_once("RouteReferenceTestCase.php");
 use App\User;
 
 class FicheTestHelper extends RouteReferenceTestCase {
+  protected function getRowIndex($list, $type, $id = false, $data = false) {
+    $found = false;
+    foreach(array_keys($list) as $i) {
+      $v = $list[$i];
+      if ($v->type != $type) {
+        continue;
+      }
+      if ($id !== false) {
+        if ($v->id != $id) {
+          continue;
+        }
+      }
+
+      if ($data !== false) {
+        $res = true;
+        foreach($data as $k => $e) {
+          if ($v->record->{$k} != $data[$k]) {
+            $res = false;
+          }
+        }
+        if (!$res) {
+          continue;
+        }
+      }
+      return $i;
+    }
+    return false;
+  }
+
   protected function myAssertIsInData($list, $type, $id = false, $data = false) {
     $found = false;
     foreach(array_reverse(array_keys($list)) as $i => $v) {
@@ -46,15 +75,14 @@ class FicheTestHelper extends RouteReferenceTestCase {
 
     $this->assertObjectHasAttribute('newKey', $json);
     $this->assertNotNull($json->newKey);
-    $this->assertCount(1, $json->online);
-
     $id = $json->newKey;
 
-    $i = $this->myAssertIsInData($json->online, $model, $id);
+    $i = $this->getRowIndex($json->folder, $model, $id);
+    $this->assertNotFalse($i, "The record is not in the result");
     foreach($data as $k => $v) {
-      $this->assertEquals($v, $json->online[$i]->record->$k);
+      $this->assertEquals($v, $json->folder[$i]->record->$k);
     }
-    return $json;
+    return $json->folder[$i];
   }
 
   public function doUpdate($model, $id, $data = []) {
@@ -66,10 +94,10 @@ class FicheTestHelper extends RouteReferenceTestCase {
       );
 
     $this->assertEquals($id, $json->id);
-    $this->assertCount(1, $json->online);
-    $i = $this->myAssertIsInData($json->online, $model, $id);
+    $i = $this->getRowIndex($json->folder, $model, $id);
+    $this->assertNotFalse($i, "The record is not in the result");
     foreach($data as $k => $v) {
-      $this->assertEquals($v, $json->online[$i]->record->$k);
+      $this->assertEquals($v, $json->folder[$i]->record->$k);
     }
     return $json;
   }
@@ -81,7 +109,8 @@ class FicheTestHelper extends RouteReferenceTestCase {
       ->setMethod("DELETE")
       );
 
-    $this->assertCount(1, $json->online);
-    $i = $this->myAssertIsInData($json->online, "Deleted", false, [ "entity_type" => $model, "entity_id" => $id ]);
+    $this->assertEquals($id, $json->id);
+    $i = $this->getRowIndex($json->folder, $model, $id);
+    $this->assertFalse($i, "The record is still in the result");
   }
 }
