@@ -1,7 +1,6 @@
 
-let API_VERSION='v1.1';
-// Also change matrix url in index.html
-
+// Also adapt package.json for adding testing the new api
+let API_VERSION='v1.2';
 
 if (!Promise || !indexedDB || !sessionStorage || !fetch) {
   window.location.href = '/static/upgrade.html';
