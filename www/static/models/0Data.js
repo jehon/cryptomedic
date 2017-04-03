@@ -1,6 +1,6 @@
 
 class Data {
-  constructor(data) {
+  constructor(data = null) {
     if (data) {
       for(var i in data) {
         this[i] = data[i];
