@@ -1,8 +1,8 @@
 /* exported TimedCache */
-let TimedCache = (function() {
+let TimedMap = (function() {
   let cache = new WeakMap();
 
-  class TimedCache {
+  class TimedMap {
     constructor(timeoutSecs = 1 * 60) {
       cache.set(this, {});
       this.timeOutMs = timeoutSecs * 1000;
@@ -44,7 +44,11 @@ let TimedCache = (function() {
       }
       return Object.keys(cache.get(this)).length;
     }
+
+    dump() {
+      console.log(cache.get(this));
+    }
   }
 
-  return TimedCache;
+  return TimedMap;
 }());
