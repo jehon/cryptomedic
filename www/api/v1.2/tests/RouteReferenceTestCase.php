@@ -80,11 +80,6 @@ class RouteReferenceTestCase extends TestCase {
 
 	protected function myAssertResponseAgainstReference($json, $file = null) {
 
-		/* Build up the object to be compared againts*/
-	 	if (property_exists($json, "_offline")) {
-		 	unset($json->_offline);
-	 	}
-
 	 	$jsonPP = json_encode($json, JSON_PRETTY_PRINT);
 
 		/* Calculate the reference file */
