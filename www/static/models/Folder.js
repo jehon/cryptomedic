@@ -7,7 +7,7 @@ class Folder extends Data {
     return 'Folder';
   }
 
-  constructor(data) {
+  constructor(data = []) {
     super(data);
     // TODO: remove this...
     // Used in create and in tests:
