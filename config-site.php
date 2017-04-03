@@ -8,6 +8,10 @@ $myconfig['environment'] = 'dev';
 
 if (file_exists(__DIR__ . "/../secrets.php")) {
   require_once(__DIR__ . "/../secrets.php");
+  $myconfig['database']['rootuser'] = $mysecrets['database.rootuser'];
+  $myconfig['database']['rootpwd']  = $mysecrets['database.rootpwd'];
+
+
   $myconfig['deployment']['prod'] = [
     'ftp_host' => 'ftp.cryptomedic.org',
     'ftp_user' => $mysecrets['cryptomedic.ftp.username'],

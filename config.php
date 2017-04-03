@@ -11,8 +11,8 @@ $myconfig = [
     'schema'     => preg_replace("/[^A-Za-z0-9_]/", '_', basename(dirname(__FILE__))),
     'username'   => 'myuser',
     'password'   => 'empty',
-    'rootuser'   => 'vagrant_admin',
-    'rootpwd'    => 'vagrant_admin_password'
+#    'rootuser'   => '',
+#    'rootpwd'    => ''
   ],
   'security' => [
     'code'       => 'secure_code',
