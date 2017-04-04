@@ -23,6 +23,6 @@ describe('Jasmine', function() {
   it('load json files', function() {
     let valid_respond = loadReference("FolderTest.test1.json");
     expect(valid_respond).not.toBeNull();
-    expect(valid_respond[0].type).toBe("Patient");
+    expect(valid_respond.folder[0].type).toBe("Patient");
   })
 });
