@@ -1,10 +1,8 @@
 
 class Data {
-  constructor(data = null) {
+  constructor(data = {}) {
     if (data) {
-      for(var i in data) {
-        this[i] = data[i];
-      }
+      Object.assign(this, data);
     }
   }
 
