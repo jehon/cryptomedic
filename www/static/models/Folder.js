@@ -26,7 +26,6 @@ class Folder extends Data {
     if (typeof(data) != undefined && typeof(data.id) != undefined) {
       this.id = data.id;
       this.list = [];
-      // this.list = data.folder;
 
       // create the objects
       for(let i in data.folder) {
@@ -56,9 +55,21 @@ class Folder extends Data {
     return res;
   }
 
+  getByTypeAndId(type, id) {
+    let list = this.getListByType(type);
+    for(let i in list) {
+      if (list[i].id + "" == id + "") {
+        return list[i];
+      }
+    }
+    return null;
+  }
+
   getPatient() {
     return this.getListByType(Patient)[0];
   }
+
+
 
 
   setMainFile(file) {

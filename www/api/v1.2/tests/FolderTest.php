@@ -28,6 +28,14 @@ class FolderTest extends RouteReferenceTestCase {
     $this->assertEquals(1, $json->id);
 	}
 
+  public function test6() {
+    $opt = $this->getNewRequestOptionsBuilder()
+      ->withReference()
+      ->setUrl("folder/Patient/6");
+    $json = $this->myRunAssertQueryForRoles($opt);
+    $this->assertEquals(6, $json->id);
+  }
+
 	public function testSearchAllowed() {
     $json = $this->myRunAssertQuery(
         $this->getNewRequestOptionsBuilder()
