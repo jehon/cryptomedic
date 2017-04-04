@@ -1,24 +1,41 @@
-/* global Data, Patient, amd_stats, create */
+/* global Data, Patient, amd_stats, Appointment, Bill, ClubFoot, OtherConsult, Payment, Picture, RicketConsult, Surgery */
 /* exported Folder */
 'use strict';
 
+// TODO: Adapt for: ctrl_folder
+// TODO: Adapt for: ctrl_file_bill
+
 class Folder extends Data {
-  getModel() {
-    return 'Folder';
+  static create(row) {
+    switch(row.type) {
+      case 'Patient':        return new Patient(row.record);
+      case 'Appointment':    return new Appointment(row.record);
+      case 'Bill':           return new Bill(row.record);
+      case 'ClubFoot':       return new ClubFoot(row.record);
+      case 'OtherConsult':   return new OtherConsult(row.record);
+      case 'Payment':        return new Payment(row.record);
+      case 'Picture':        return new Picture(row.record);
+      case 'RicketConsult':  return new RicketConsult(row.record);
+      case 'Surgery':        return new Surgery(row.record);
+    }
+    throw Error("Type not found: ", row.type);
   }
 
-  constructor(data = []) {
-    super(data);
-    // TODO: remove this...
-    // Used in create and in tests:
-    this.mainFile = (this.mainFile ? new Patient(this.mainFile) : new Patient());
-    this.subFiles = this.subFiles || [];
-    this.id = this.id || -1;
-    for(var i = 0; i < this.subFiles.length; i++) {
-      this.subFiles[i] = create(this.subFiles[i]._type, this.subFiles[i], this);
-      this.subFiles[i].linkPatient(this.getMainFile());
+  constructor(data = {}) {
+    super({});
+    if (typeof(data) != undefined && typeof(data.id) != undefined) {
+      this.id = data.id;
+      this.list = [];
+      // this.list = data.folder;
+
+      // create the objects
+      for(let i in data.folder) {
+        let v = data.folder[i];
+        this.list.push(Folder.create(v));
+      }
+
+      // TODO: link patient after this
     }
-    this.subFiles.sort(Folder.ordering);
   }
 
   getId() {
@@ -27,6 +44,22 @@ class Folder extends Data {
     }
     return -1;
   }
+
+  getListByType(type) {
+    let res = [];
+    for(let i in this.list) {
+      if (this.list[i] instanceof type) {
+        res.push(this.list[i]);
+      }
+    }
+    console.log(res);
+    return res;
+  }
+
+  getPatient() {
+    return this.getListByType(Patient)[0];
+  }
+
 
   setMainFile(file) {
     this.id = file.id;
