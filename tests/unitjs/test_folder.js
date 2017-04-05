@@ -30,17 +30,17 @@ describe('test_folder', function() {
   })
 
   it("should give patient related files", () => {
-    // Appointment 2
-    // OtherConsult 1
-    // Bill 1
-    // Picture 2
     let list = this.f.getFilesRelatedToPatient();
-    expect(list.length).toBe(4);
+    expect(list.length).toBe(5);
 
     let i = -1;
     i++;
     expect(list[i]).toEqual(jasmine.any(Picture));
     expect(list[i].id).toBe(2);
+
+    i++;
+    expect(list[i]).toEqual(jasmine.any(RicketConsult));
+    expect(list[i].id).toBe(13);
 
     i++;
     expect(list[i]).toEqual(jasmine.any(Bill));
@@ -53,7 +53,6 @@ describe('test_folder', function() {
     i++;
     expect(list[i]).toEqual(jasmine.any(OtherConsult));
     expect(list[i].id).toBe(1);
-
   })
 
   it("should give bill related files", () => {
@@ -64,5 +63,6 @@ describe('test_folder', function() {
     i++;
     expect(list[i]).toEqual(jasmine.any(Payment));
     expect(list[i].id).toBe(3);
+    expect(list[i].bill_id).toBe(1);
   })
 })
