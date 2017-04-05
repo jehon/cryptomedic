@@ -1,5 +1,7 @@
 'use strict';
 
+/* global calculations */
+
 describe('calculations.math', function() {
   var poly = { 'min': [], 'medium': [], 'max': []};
   poly.medium.push([0, 1]);

@@ -1,5 +1,7 @@
 'use strict';
 
+/* global date2CanonicString, nullify */
+
 describe('Cryptomedic.js', function() {
   describe('date2CanonicString', function() {
     it('should return null for null', function() {
