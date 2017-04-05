@@ -51,7 +51,6 @@ class Folder extends Data {
         res.push(this.list[i]);
       }
     }
-    console.log(res);
     return res;
   }
 
@@ -65,54 +64,26 @@ class Folder extends Data {
     return null;
   }
 
+  getByFieldValue(field, value) {
+    let res = [];
+    for(let i in this.list) {
+      if (this.list[i][field] == value) {
+        res.push(this.list[i]);
+      }
+    }
+    return res;
+  }
+
   getPatient() {
     return this.getListByType(Patient)[0];
   }
 
-
-
-
-  setMainFile(file) {
-    this.id = file.id;
-    this.mainFile = file;
+  getFilesRelatedToPatient() {
+    return this.getByFieldValue('patient_id', this.id).sort(Folder.ordering);
   }
 
-  addSubFile(subFile) {
-    subFile.linkPatient(this.getMainFile());
-    this.subFiles.push(subFile);
-  }
-
-  sort() {
-    this.subFiles.sort(Folder.ordering);
-  }
-
-  getMainFile() {
-    if (this.isSet('mainFile')) {
-      return this.mainFile;
-    }
-    return new Patient();
-  }
-
-  getSubFiles() {
-    return this.subFiles;
-  }
-
-  getSubFile(i) {
-    if (i >= this.subFiles.length) return null;
-    return this.subFiles[i];
-  }
-
-  getSubFileByType(type, id) {
-    for(let f of this.subFiles) {
-      if (f.getModel() == type && f.id == id) {
-        return f;
-      }
-    }
-    return null;
-  }
-
-  graphic_dimensions(axis_x, axis_y) {
-    return amd_stats.dimensions[axis_x + '_' + axis_y + '_' + this.getMainFile().sexStr()];
+  getFilesRelatedToBill(id) {
+    return this.getByFieldValue('bill_id', id).sort(Folder.ordering);
   }
 
   static ordering(o1, o2) {
@@ -165,4 +136,49 @@ class Folder extends Data {
     }
     return 0;
   }
+
+
+  sort() {
+    this.subFiles.sort(Folder.ordering);
+  }
+
+  setMainFile(file) {
+    this.id = file.id;
+    this.mainFile = file;
+  }
+
+  addSubFile(subFile) {
+    subFile.linkPatient(this.getMainFile());
+    this.subFiles.push(subFile);
+  }
+
+  getMainFile() {
+    if (this.isSet('mainFile')) {
+      return this.mainFile;
+    }
+    return new Patient();
+  }
+
+  getSubFiles() {
+    return this.subFiles;
+  }
+
+  getSubFile(i) {
+    if (i >= this.subFiles.length) return null;
+    return this.subFiles[i];
+  }
+
+  getSubFileByType(type, id) {
+    for(let f of this.subFiles) {
+      if (f.getModel() == type && f.id == id) {
+        return f;
+      }
+    }
+    return null;
+  }
+
+  graphic_dimensions(axis_x, axis_y) {
+    return amd_stats.dimensions[axis_x + '_' + axis_y + '_' + this.getMainFile().sexStr()];
+  }
+
 }
