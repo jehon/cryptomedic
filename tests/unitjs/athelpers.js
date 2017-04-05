@@ -1,12 +1,11 @@
 /* exported buildRecord, loadMock, testWithComponent, loadReference, testComponent */
-/* global create, mock_load_test, mock_patient_10, mock_sync, readJSON */
+/* global create, mock_load_test, readJSON */
 
 let mocks = {
-  'mock_load_test':  mock_load_test,
-  'mock_patient_10': mock_patient_10,
-  'mock_sync':       mock_sync
+  'mock_load_test':  mock_load_test
 };
 
+// TODO: Used only in test_model_data
 function loadMock(mock, type = false) {
   let data = Object.assign({}, mocks[mock]);
   if (type) {
