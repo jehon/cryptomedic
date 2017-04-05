@@ -33,6 +33,10 @@ describe('test_folder', function() {
     let list = this.f.getFilesRelatedToPatient();
     expect(list.length).toBe(5);
 
+    list.forEach(e => {
+      expect(e.getPatient().id).toBe(1);
+    })
+
     let i = -1;
     i++;
     expect(list[i]).toEqual(jasmine.any(Picture));

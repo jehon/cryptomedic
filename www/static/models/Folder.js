@@ -34,6 +34,9 @@ class Folder extends Data {
       }
 
       // TODO: link patient after this
+      this.getFilesRelatedToPatient().forEach(f => {
+        f.linkPatient(this.getPatient());
+      })
     }
   }
 
