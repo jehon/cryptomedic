@@ -1,4 +1,6 @@
 'use strict';
+/* global Data, getPref, DataMissingException, calculations, amd_stats */
+/* exported Item */
 
 class Item extends Data {
   constructor(data, folder = null) {
