@@ -1,7 +1,7 @@
 'use strict';
 /* global loadReference, Folder, Patient, OtherConsult, RicketConsult, Appointment, Bill, Payment, Picture */
 
-describe('test_folder', function() {
+describe('test-folder', function() {
   beforeEach(() => {
     this.f = new Folder(loadReference('FolderTest.test1.json'));
     expect(this.f).toEqual(jasmine.any(Folder));
