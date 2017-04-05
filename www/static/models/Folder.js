@@ -33,10 +33,16 @@ class Folder extends Data {
         this.list.push(Folder.create(v));
       }
 
-      // TODO: link patient after this
       this.getFilesRelatedToPatient().forEach(f => {
         f.linkPatient(this.getPatient());
       })
+
+      // TODO: Does the payment need the link to the bills?
+      // this.getListByType(Bill).forEach(b => {
+      //   this.getFilesRelatedToBill(b.id).forEach(bi => {
+      //     bi.set
+      //   })
+      // })
     }
   }
 
