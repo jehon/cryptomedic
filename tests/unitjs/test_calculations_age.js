@@ -1,5 +1,6 @@
 'use strict';
 
+/* global calculations */
 describe('calculations.age', function() {
   var now = new Date(2010, 6, 1);
   describe('BirthDate2Age', function() {
