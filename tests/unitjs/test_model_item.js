@@ -3,7 +3,7 @@ describe('Item', function() {
   // var ricketConsult_8819 = 6;
   // var clubFoot_695 = 4;
 
-  describe('with mock_patient_10', function() {
+  describe('with TestFolder.test1.json', function() {
     it('should have correct properties', function() {
       // Go through the rest_service !!!
       let folder = new Folder(loadReference('FolderTest.test1.json'));
@@ -51,21 +51,19 @@ describe('Item', function() {
     });
   });
 
-  // describe('with patient with sex', function() {
-  //   it('should throw error everytime', function(done) {
-  //     var folder = new Folder();
-  //     folder.mainFile = new Patient({ 'Sex': 'Male' });
-  //     var o = new Item({}, folder);
+  describe('with patient with sex', function() {
+    it('should throw error everytime', function() {
+      let p = new Patient({ 'Sex': 'Male' });
+      var o = new Item({});
+      o.linkPatient(p);
 
-  //     expect(function() { o.ageAtConsultTime(); }).toThrow(new DataMissingException('Date'));
-  //     expect(function() { o.bmi(); }).toThrow(new DataMissingException('Height'));
-  //     expect(function() { o.wh(); }).toThrow(new DataMissingException('Height'));
-  //     expect(function() { o.ds_height(); }).toThrow(new DataMissingException('Date'));
-  //     expect(function() { o.ds_weight(); }).toThrow(new DataMissingException('Date'));
-  //     expect(function() { o.ds_weight_height(); }).toThrow(new DataMissingException('Height'));
-  //     expect(function() { o.ds_bmi(); }).toThrow(new DataMissingException('Date'));
-
-  //     done();
-  //   });
-  // });
+      expect(function() { o.ageAtConsultTime(); }).toThrow(new DataMissingException('Date'));
+      expect(function() { o.bmi(); }).toThrow(new DataMissingException('Height'));
+      expect(function() { o.wh(); }).toThrow(new DataMissingException('Height'));
+      expect(function() { o.ds_height(); }).toThrow(new DataMissingException('Date'));
+      expect(function() { o.ds_weight(); }).toThrow(new DataMissingException('Date'));
+      expect(function() { o.ds_weight_height(); }).toThrow(new DataMissingException('Height'));
+      expect(function() { o.ds_bmi(); }).toThrow(new DataMissingException('Date'));
+    });
+  });
 });
