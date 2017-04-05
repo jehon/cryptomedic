@@ -632,7 +632,7 @@ INSERT INTO `ricket_consults` (`id`, `created_at`, `updated_at`, `lastuser`, `pa
 (7, '1980-01-01 00:00:00', '2015-02-04 17:57:04', 'transfer', 6, '2003-05-28', NULL, NULL, NULL, NULL, NULL, 'Valgus', NULL, 0, 0, 20, 20, NULL, NULL, NULL, 'Valgus', NULL, NULL, NULL, NULL, 0, NULL, NULL, '', NULL, NULL, 0, 0, 0),
 (8, '1980-01-01 00:00:00', '2015-02-04 17:57:04', 'transfer', 6, '2003-01-11', NULL, NULL, 17, 108, NULL, 'Valgus', NULL, 0, 0, 4, 4, NULL, NULL, NULL, 'Valgus', NULL, NULL, NULL, NULL, 0, NULL, NULL, '', NULL, NULL, 0, 0, 0),
 (9, '1980-01-01 00:00:00', '2015-02-04 17:57:04', 'transfer', 6, '2004-05-23', NULL, NULL, 18, 114, NULL, 'Valgus', NULL, 0, 0, 4, 4, NULL, NULL, NULL, 'Valgus', NULL, NULL, NULL, NULL, 0, NULL, NULL, '', NULL, NULL, 0, 0, 0),
-(13, '2014-06-02 07:19:09', '2015-02-19 12:52:19', 'Thierry', 1, '2014-01-14', 'AMD doctor', 'Chakaria Disability Center', 0, 0, '0', 'Varus', 'Moderate', 0, 0, 30, 5, '', '', '10', 'Varus', '0', 'Osteotomy', '', NULL, 0, 0, 'Level 1', '', NULL, NULL, 0, 1, 0);
+(13, '2014-06-02 07:19:09', '2015-02-19 12:52:19', 'Thierry', 1, '2014-01-04', 'AMD doctor', 'Chakaria Disability Center', 37, 110, '0', 'Varus', 'Moderate', 0, 0, 30, 5, '', '', '10', 'Varus', '0', 'Osteotomy', '', NULL, 0, 0, 'Level 1', '', NULL, NULL, 0, 1, 0);
 
 -- --------------------------------------------------------
 
