@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.4.1deb2ubuntu2
--- http://www.phpmyadmin.net
+-- version 4.6.4deb1
+-- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Feb 24, 2017 at 06:17 PM
--- Server version: 5.7.17-0ubuntu0.16.04.1
--- PHP Version: 7.0.13-0ubuntu0.16.04.1
+-- Host: localhost:3306
+-- Generation Time: Apr 05, 2017 at 09:40 PM
+-- Server version: 5.7.17-0ubuntu0.16.10.1
+-- PHP Version: 7.0.15-0ubuntu0.16.10.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -282,6 +282,7 @@ INSERT INTO `club_feet` (`id`, `created_at`, `updated_at`, `lastuser`, `patient_
 
 --
 -- Stand-in structure for view `consults`
+-- (See below for the actual view)
 --
 CREATE TABLE `consults` (
 `type` varchar(14)
@@ -630,7 +631,8 @@ INSERT INTO `ricket_consults` (`id`, `created_at`, `updated_at`, `lastuser`, `pa
 (6, '1980-01-01 00:00:00', '2015-02-04 17:57:04', 'transfer', 6, '2003-08-05', NULL, NULL, 16, 106, NULL, 'Valgus', NULL, 1, 1, 6, 8, NULL, NULL, NULL, 'Valgus', NULL, NULL, NULL, NULL, 0, NULL, NULL, '', NULL, NULL, 0, 0, 0),
 (7, '1980-01-01 00:00:00', '2015-02-04 17:57:04', 'transfer', 6, '2003-05-28', NULL, NULL, NULL, NULL, NULL, 'Valgus', NULL, 0, 0, 20, 20, NULL, NULL, NULL, 'Valgus', NULL, NULL, NULL, NULL, 0, NULL, NULL, '', NULL, NULL, 0, 0, 0),
 (8, '1980-01-01 00:00:00', '2015-02-04 17:57:04', 'transfer', 6, '2003-01-11', NULL, NULL, 17, 108, NULL, 'Valgus', NULL, 0, 0, 4, 4, NULL, NULL, NULL, 'Valgus', NULL, NULL, NULL, NULL, 0, NULL, NULL, '', NULL, NULL, 0, 0, 0),
-(9, '1980-01-01 00:00:00', '2015-02-04 17:57:04', 'transfer', 6, '2004-05-23', NULL, NULL, 18, 114, NULL, 'Valgus', NULL, 0, 0, 4, 4, NULL, NULL, NULL, 'Valgus', NULL, NULL, NULL, NULL, 0, NULL, NULL, '', NULL, NULL, 0, 0, 0);
+(9, '1980-01-01 00:00:00', '2015-02-04 17:57:04', 'transfer', 6, '2004-05-23', NULL, NULL, 18, 114, NULL, 'Valgus', NULL, 0, 0, 4, 4, NULL, NULL, NULL, 'Valgus', NULL, NULL, NULL, NULL, 0, NULL, NULL, '', NULL, NULL, 0, 0, 0),
+(13, '2014-06-02 07:19:09', '2015-02-19 12:52:19', 'Thierry', 1, '2014-01-14', 'AMD doctor', 'Chakaria Disability Center', 0, 0, '0', 'Varus', 'Moderate', 0, 0, 30, 5, '', '', '10', 'Varus', '0', 'Osteotomy', '', NULL, 0, 0, 'Level 1', '', NULL, NULL, 0, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -699,7 +701,7 @@ CREATE TABLE `sync_computers` (
 --
 
 INSERT INTO `sync_computers` (`id`, `created_at`, `updated_at`, `lastuser`, `user_list`, `computer_id`, `useragent`, `cryptomedic_version`, `last_sync`, `last_sync_final`, `early_sync`, `queue_size`) VALUES
-(41, NULL, '1980-01-01 00:00:00', NULL, NULL, '1', NULL, '0', NULL, 0, NULL, NULL);
+(42, NULL, '1980-01-01 00:00:00', NULL, NULL, '1', NULL, '0', NULL, 0, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -739,7 +741,7 @@ INSERT INTO `users` (`id`, `username`, `name`, `password`, `email`, `notes`, `gr
 --
 DROP TABLE IF EXISTS `consults`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`vagrant_admin`@`localhost` SQL SECURITY INVOKER VIEW `consults`  AS  (select 'ricket_consult' AS `type`,`ricket_consults`.`id` AS `id`,`ricket_consults`.`created_at` AS `created_at`,`ricket_consults`.`updated_at` AS `updated_at`,`ricket_consults`.`patient_id` AS `patient_id`,`ricket_consults`.`Date` AS `Date`,`ricket_consults`.`ExaminerName` AS `ExaminerName`,`ricket_consults`.`Center` AS `Center`,`ricket_consults`.`Weightkg` AS `Weightkg`,`ricket_consults`.`Heightcm` AS `Heightcm`,`ricket_consults`.`Brachialcircumferencecm` AS `Brachialcircumferencecm`,`ricket_consults`.`TreatmentEvaluation` AS `TreatmentEvaluation`,`ricket_consults`.`TreatmentFinished` AS `TreatmentFinished`,`ricket_consults`.`Comments` AS `Comments` from `ricket_consults`) union (select 'club_foot' AS `type`,`club_feet`.`id` AS `id`,`club_feet`.`created_at` AS `created_at`,`club_feet`.`updated_at` AS `updated_at`,`club_feet`.`patient_id` AS `patient_id`,`club_feet`.`Date` AS `Date`,`club_feet`.`ExaminerName` AS `ExaminerName`,`club_feet`.`Center` AS `Center`,`club_feet`.`Weightkg` AS `Weightkg`,`club_feet`.`Heightcm` AS `Heightcm`,`club_feet`.`Brachialcircumferencecm` AS `Brachialcircumferencecm`,`club_feet`.`TreatmentEvaluation` AS `TreatmentEvaluation`,`club_feet`.`TreatmentFinished` AS `TreatmentFinished`,`club_feet`.`Comments` AS `Comments` from `club_feet`) union (select 'other_consult' AS `type`,`other_consults`.`id` AS `id`,`other_consults`.`created_at` AS `created_at`,`other_consults`.`updated_at` AS `updated_at`,`other_consults`.`patient_id` AS `patient_id`,`other_consults`.`Date` AS `Date`,`other_consults`.`ExaminerName` AS `ExaminerName`,`other_consults`.`Center` AS `Center`,`other_consults`.`Weightkg` AS `Weightkg`,`other_consults`.`Heightcm` AS `Heightcm`,`other_consults`.`Brachialcircumferencecm` AS `Brachialcircumferencecm`,`other_consults`.`TreatmentEvaluation` AS `TreatmentEvaluation`,`other_consults`.`TreatmentFinished` AS `TreatmentFinished`,`other_consults`.`Comments` AS `Comments` from `other_consults`) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY INVOKER VIEW `consults`  AS  (select 'ricket_consult' AS `type`,`ricket_consults`.`id` AS `id`,`ricket_consults`.`created_at` AS `created_at`,`ricket_consults`.`updated_at` AS `updated_at`,`ricket_consults`.`patient_id` AS `patient_id`,`ricket_consults`.`Date` AS `Date`,`ricket_consults`.`ExaminerName` AS `ExaminerName`,`ricket_consults`.`Center` AS `Center`,`ricket_consults`.`Weightkg` AS `Weightkg`,`ricket_consults`.`Heightcm` AS `Heightcm`,`ricket_consults`.`Brachialcircumferencecm` AS `Brachialcircumferencecm`,`ricket_consults`.`TreatmentEvaluation` AS `TreatmentEvaluation`,`ricket_consults`.`TreatmentFinished` AS `TreatmentFinished`,`ricket_consults`.`Comments` AS `Comments` from `ricket_consults`) union (select 'club_foot' AS `type`,`club_feet`.`id` AS `id`,`club_feet`.`created_at` AS `created_at`,`club_feet`.`updated_at` AS `updated_at`,`club_feet`.`patient_id` AS `patient_id`,`club_feet`.`Date` AS `Date`,`club_feet`.`ExaminerName` AS `ExaminerName`,`club_feet`.`Center` AS `Center`,`club_feet`.`Weightkg` AS `Weightkg`,`club_feet`.`Heightcm` AS `Heightcm`,`club_feet`.`Brachialcircumferencecm` AS `Brachialcircumferencecm`,`club_feet`.`TreatmentEvaluation` AS `TreatmentEvaluation`,`club_feet`.`TreatmentFinished` AS `TreatmentFinished`,`club_feet`.`Comments` AS `Comments` from `club_feet`) union (select 'other_consult' AS `type`,`other_consults`.`id` AS `id`,`other_consults`.`created_at` AS `created_at`,`other_consults`.`updated_at` AS `updated_at`,`other_consults`.`patient_id` AS `patient_id`,`other_consults`.`Date` AS `Date`,`other_consults`.`ExaminerName` AS `ExaminerName`,`other_consults`.`Center` AS `Center`,`other_consults`.`Weightkg` AS `Weightkg`,`other_consults`.`Heightcm` AS `Heightcm`,`other_consults`.`Brachialcircumferencecm` AS `Brachialcircumferencecm`,`other_consults`.`TreatmentEvaluation` AS `TreatmentEvaluation`,`other_consults`.`TreatmentFinished` AS `TreatmentFinished`,`other_consults`.`Comments` AS `Comments` from `other_consults`) ;
 
 --
 -- Indexes for dumped tables
@@ -909,7 +911,7 @@ ALTER TABLE `prices`
 -- AUTO_INCREMENT for table `ricket_consults`
 --
 ALTER TABLE `ricket_consults`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 --
 -- AUTO_INCREMENT for table `surgeries`
 --
@@ -919,7 +921,7 @@ ALTER TABLE `surgeries`
 -- AUTO_INCREMENT for table `sync_computers`
 --
 ALTER TABLE `sync_computers`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 --
 -- AUTO_INCREMENT for table `users`
 --

@@ -203,6 +203,46 @@
                 "Nextappointment": "2015-04-28",
                 "NextCenter": null
             }
+        },
+        {
+            "type": "RicketConsult",
+            "id": 13,
+            "record": {
+                "id": 13,
+                "created_at": "2014-06-02 07:19:09",
+                "updated_at": "2015-02-19 12:52:19",
+                "lastuser": "Thierry",
+                "patient_id": 1,
+                "Date": "2014-01-14",
+                "ExaminerName": "AMD doctor",
+                "Center": "Chakaria Disability Center",
+                "Weightkg": 0,
+                "Heightcm": 0,
+                "CrossLeftT": "0",
+                "RightLeg": "Varus",
+                "Pain": "Moderate",
+                "Wristenlargement": 0,
+                "Ribbeading": 0,
+                "RightlegAngle": 30,
+                "LeftlegAngle": 5,
+                "CrossRightT": "",
+                "CrossRightF": "",
+                "IMICDistance": "10",
+                "LeftLeg": "Varus",
+                "CrossLeftF": "0",
+                "Surgery": "Osteotomy",
+                "XRay": "",
+                "Brace": null,
+                "Nutrisupport": 0,
+                "Brachialcircumferencecm": 0,
+                "WalkingDifficulties": "Level 1",
+                "Comments": "",
+                "TreatmentEvaluation": null,
+                "TreatmentFinished": null,
+                "conclusion_medical_calcium500": 0,
+                "conclusion_medical_calcium1000": 1,
+                "conclusion_medical_vitaminD": 0
+            }
         }
     ],
     "id": "1"
