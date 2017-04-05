@@ -1,7 +1,7 @@
 'use strict';
 /* global testComponent */
 
-describe('test jh-select', function() {
+describe('test-jh-select', function() {
   let listRadio  = [ 'truc' , 'brol' , 'machin', 'chose' ];
   let listSelect = [ 'truc' , 'brol' , 'machin', 'chose', 'bazar', 'ça', 'là' ];
 

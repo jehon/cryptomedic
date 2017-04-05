@@ -1,7 +1,7 @@
 'use strict';
 /* global testComponent */
 
-describe('test jh-codage', function() {
+describe('test-jh-codage', function() {
   window.cryptomedic = {
     serverSettings: {
       codes: {
