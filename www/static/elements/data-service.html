@@ -12,11 +12,12 @@
   <script type='text/javascript' src='../../bower_components/dexie/dist/dexie.min.js'></script>
   <script type='text/javascript' src='resources/database.js'></script>
   <script>
-    /* global Database, API_VERSION, userCb, Folder, Patient */
+    /* global API_VERSION, userCb, Folder, Patient, TimedMap */
     /* exported callbacks */
     (function() {
       let db = new Database();
       let syncedFolders = {};
+      let patientFolderCache = new TimedMap(15 * 60);
 
       if (!window.cryptomedic) {
         window.cryptomedic = {};
@@ -145,8 +146,11 @@
               .onResponseCode(404, () => {
                 resolve(false);
               })
-              .then(data => {
-                resolve(data);
+              .then(json => {
+                let f = new Folder(json.folder);
+                patientFolderCache.set(json.id, f);
+
+                resolve(json);
               })
               .catch((error) => {
                 reject(error);
@@ -163,48 +167,26 @@
               'entryyear': year,
               'entryorder': order
             })
+            .then(data => {
+              return data;
+            })
         },
 
-        getFolder(type, id) {
-          let finished = Promise.resolve();
-
-          // TODO: Persist syncedFolders
-          if (typeof(syncedFolders[type]) == 'undefined') {
-            syncedFolders[type] = {};
+        getFolder(id) {
+          let data = patientFolderCache.get(id);
+          if (data != null) {
+            console.log("using stored folder: ", data);
+            return Promise.resolve(data);
           }
 
-          if (typeof(syncedFolders[type][id]) == 'undefined') {
-            syncedFolders[type][id] = 0;
-          }
-
-          //
-          // If we have a cached copy less than 2 hours old, then we use it
-          // We make the hypothesis that we are the only one to use it
-          // and that no modifications are made otherwise
-          //
-          if (syncedFolders[type][id] >= (new Date()).getTime() - 2 * 60 * 60 * 1000) {
-            console.warn("Trusting last syncs and not going live for ", id);
-          } else {
-            // We are not finished, let's get the info from the server
-            finished = finished.then(() => {
-              // Trace the synced patients with a timestamp
-              syncedFolders[type][id] = new Date();
-
-              return this.start()
-                .requestWithGet()
-                .requestToUrl(`folder/${type}/${id}`)
-                .then(json => {
-                  return json.online;
-                })
+          return this.start()
+            .requestWithGet()
+            .requestToUrl(`folder/Patient/${id}`)
+            .then(json => {
+              let f = new Folder(json);
+              patientFolderCache.set(id, f);
+              return f;
             });
-          }
-
-          // If no data available, look in the local database
-          finished = finished.then(() => {
-            return db.getFolder(type, id);
-          })
-
-          return finished;
         },
 
         /**************************/
@@ -224,9 +206,10 @@
             .requestToUrl('fiche/' + data.getModel())
             .requestWithData(nullify(data))
             .then(function(data) {
-              return new Folder(data);
-            })
-            ;
+              let f = new Folder(data.folder);
+              patientFolderCache.set(data.folder.id, f);
+              return f;
+            });
         },
 
         saveFile(data) {
@@ -234,24 +217,32 @@
             .requestWithPut()
             .requestToUrl('fiche/' + data.getModel() + '/' + data['id'])
             .requestWithData(nullify(data))
-            .then(function(data) { return new Folder(data); })
-            ;
+            .then(function(data) {
+              let f = new Folder(data.folder);
+              patientFolderCache.set(data.folder.id, f);
+              return f;
+            });
         },
 
         deleteFile(data) {
           return this.start()
             .requestWithDelete()
             .requestToUrl('fiche/' + data.getModel() + '/' + data['id'])
-            .then(function(data) { return new Folder(data); })
-            ;
+            .then(function(data) {
+              let f = new Folder(data.folder);
+              patientFolderCache.set(data.folder.id, f);
+            });
         },
 
         unlockFile(data) {
           return this.start()
             .requestWithGet()
             .requestToUrl('unfreeze/' + data.getModel() + '/' + data['id'])
-            .then(function(data) { return new Folder(data); })
-            ;
+            .then(function(data) {
+              let f = new Folder(data.folder);
+              patientFolderCache.set(data.folder.id, f);
+              return f;
+            });
         },
 
         /***********************/
