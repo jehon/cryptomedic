@@ -109,3 +109,17 @@ Route::group([ 'prefix' => '/api/' . basename(dirname(__DIR__)) ], function() {
     });
   });
 });
+
+
+global $myconfig;
+if ($myconfig['environment'] == "dev") {
+  // Only in DEV
+  Route::get('/{path}', function($path) {
+    $f = __DIR__ . "/../../../" . $path;
+    if (file_exists($f)) {
+      include $f;
+    } else {
+      abort(400, "I say: Not found");
+    }
+  })->where('path', '.+');
+}

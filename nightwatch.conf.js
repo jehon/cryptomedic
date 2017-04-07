@@ -4,7 +4,7 @@
 'use strict';
 
 let selenium = require('selenium-server');
-let remoteTarget = "http://cryptomedic.local/static/index.html"
+let remoteTarget = "http://localhost/static/index.html"
 
 module.exports = {
   "src_folders" : [ "tests/e2e/tests" ],
