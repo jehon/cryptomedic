@@ -9,15 +9,12 @@
     </fetchfull-element>
   </template>
 
-  <script type='text/javascript' src='../../bower_components/dexie/dist/dexie.min.js'></script>
-  <script type='text/javascript' src='resources/database.js'></script>
   <script>
     /* global API_VERSION, userCb, Folder, Patient, TimedMap */
     /* exported callbacks */
     (function() {
-      let db = new Database();
-      let syncedFolders = {};
       let patientFolderCache = new TimedMap(15 * 60);
+
 
       if (!window.cryptomedic) {
         window.cryptomedic = {};
@@ -25,8 +22,6 @@
       if (!window.cryptomedic.serverSettings) {
         window.cryptomedic.serverSettings = {};
       }
-
-      db.clear();
 
       Polymer({
         is: 'cryptomedic-data-service',
@@ -55,25 +50,6 @@
             .onResponseCode(401, () => {
               window.location = "#login";
             })
-
-            // This is done async % then...
-            .onSuccess(json => {
-              // Check offline data
-              let finished = Promise.resolve();
-
-// TODO HERE
-              // Put ONLINE data
-              if (typeof(json.online) != "undefined") {
-                finished = finished.then(() => {
-                  return db.triageList(json.online, false);
-                })
-              }
-
-              // Return final response with original data:
-              return finished.then(() => {
-                return json;
-              });
-            });
         },
 
         /**************************/
