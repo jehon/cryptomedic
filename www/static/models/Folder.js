@@ -6,19 +6,19 @@
 // TODO: Adapt for: ctrl_file_bill
 
 class Folder extends Data {
-  static create(row) {
-    switch(row.type) {
-      case 'Patient':        return new Patient(row.record);
-      case 'Appointment':    return new Appointment(row.record);
-      case 'Bill':           return new Bill(row.record);
-      case 'ClubFoot':       return new ClubFoot(row.record);
-      case 'OtherConsult':   return new OtherConsult(row.record);
-      case 'Payment':        return new Payment(row.record);
-      case 'Picture':        return new Picture(row.record);
-      case 'RicketConsult':  return new RicketConsult(row.record);
-      case 'Surgery':        return new Surgery(row.record);
+  static create(type, data = {}) {
+    switch(type) {
+      case 'Patient':        return new Patient(data);
+      case 'Appointment':    return new Appointment(data);
+      case 'Bill':           return new Bill(data);
+      case 'ClubFoot':       return new ClubFoot(data);
+      case 'OtherConsult':   return new OtherConsult(data);
+      case 'Payment':        return new Payment(data);
+      case 'Picture':        return new Picture(data);
+      case 'RicketConsult':  return new RicketConsult(data);
+      case 'Surgery':        return new Surgery(data);
     }
-    throw Error("Type not found: ", row.type);
+    throw Error("Type not found: ", type);
   }
 
   constructor(data = {}) {
@@ -30,7 +30,7 @@ class Folder extends Data {
       // create the objects
       for(let i in data.folder) {
         let v = data.folder[i];
-        this.list.push(Folder.create(v));
+        this.list.push(Folder.create(v.type, v.record));
       }
 
       this.getFilesRelatedToPatient().forEach(f => {
@@ -187,7 +187,7 @@ class Folder extends Data {
   }
 
   graphic_dimensions(axis_x, axis_y) {
-    return amd_stats.dimensions[axis_x + '_' + axis_y + '_' + this.getMainFile().sexStr()];
+    return amd_stats.dimensions[axis_x + '_' + axis_y + '_' + this.getPatient().sexStr()];
   }
 
 }
