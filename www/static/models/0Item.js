@@ -17,7 +17,7 @@ class Item extends Data {
     }
     if (folder) {
       this.patient_id = folder.getId();
-      this.linkPatient(folder.getMainFile());
+      this.linkPatient(folder.getPatient());
     } else {
       this.linkPatient(null);
     }

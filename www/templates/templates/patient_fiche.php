@@ -1,7 +1,7 @@
 <?php
 	use App\Model\References;
 
-	t::setDefaultOption("baseExpression", "folder.getMainFile().");
+	t::setDefaultOption("baseExpression", "folder.getPatient().");
 ?>
 <div class='container-fluid'>
 	<div class='row'>
@@ -29,7 +29,7 @@
 					<tr>
 						<td>Year of birth</td>
 						<td>
-							{{folder.getMainFile().Yearofbirth}}
+							{{folder.getPatient().Yearofbirth}}
 							<div class='notModeRead'>
 								<h5>Calculate year of birth</h5>
 								<input ng-model='age.years' type='number' min='0' max='100'> years<br>
@@ -51,7 +51,7 @@
 						<td>Upazilla</td>
 						<td>
 							<span class='notModeRead'>
-								<select ng-model='folder.getMainFile().Upazilla' null-to-interrogation ng-options='option for option in listUpazillas(folder.getMainFile().District, folder.getMainFile().Upazilla)'></select>
+								<select ng-model='folder.getPatient().Upazilla' null-to-interrogation ng-options='option for option in listUpazillas(folder.getPatient().District, folder.getPatient().Upazilla)'></select>
 							</span>
 							<span class='notModeWrite'>
 								<?php (new t("Patient.Upazilla"))->read()->p(); ?>
@@ -62,7 +62,7 @@
 						<td>Union</td>
 						<td>
 							<span class='notModeRead'>
-								<select ng-model='folder.getMainFile().Union_' null-to-interrogation ng-options='option for option in listUnions(folder.getMainFile().Upazilla, folder.getMainFile().Union_)'></select>
+								<select ng-model='folder.getPatient().Union_' null-to-interrogation ng-options='option for option in listUnions(folder.getPatient().Upazilla, folder.getPatient().Union_)'></select>
 							</span>
 							<span class='notModeWrite'>
 								<?php (new t("Patient.Union_"))->read()->p(); ?>

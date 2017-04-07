@@ -1,5 +1,5 @@
 <?php
-	t::setDefaultOption("baseExpression", "folder.getMainFile().");
+	t::setDefaultOption("baseExpression", "folder.getPatient().");
 	t::setDefaultOption("readOnly");
 ?>
 <table>
