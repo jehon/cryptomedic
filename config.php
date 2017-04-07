@@ -28,7 +28,7 @@ $myconfig = [
     'storage'    => __DIR__ . "/live/storage/",
 
     # Storage of temporary files
-    'temporary'  => __DIR__ . "/tmp/"
+    'temporary'  => __DIR__ . "/target/webTemp/"
   ]
 ];
 

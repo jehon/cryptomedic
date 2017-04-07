@@ -9,7 +9,7 @@ PRJ_DIR=$(dirname "$SCRIPT_DIR")
 # Give it to any sub-scripts
 export PRJ_DIR
 
-TMP=$PRJ_DIR/tmp
+TMP=$PRJ_DIR/target/
 LOG=$TMP/`date +%F_%H.%M.%S`.install.log
 conf_site="prod"
 
