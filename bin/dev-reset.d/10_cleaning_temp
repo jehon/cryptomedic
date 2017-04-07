@@ -2,10 +2,10 @@
 
 set -e
 
-if [ -d "$PRJ_DIR/tmp" ]; then
-  find "$PRJ_DIR/tmp/" -mindepth 1 ! -name '.gitkeep' -delete
+if [ -d "$PRJ_DIR/target" ]; then
+  find "$PRJ_DIR/target/" -mindepth 1 ! -name '.gitkeep' -delete
 else
-  mkdir -p "$PRJ_DIR/tmp"
+  mkdir -p "$PRJ_DIR/target"
 fi
 
 find . -name "*.log" -delete

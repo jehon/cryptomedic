@@ -9,7 +9,7 @@ define("PROXY_VERSION", "1.0");
 define("PROXY_TEMPLATE_ROOT", __DIR__ . "/www/templates/");
 
 function mylog($uri, $msg = "ok") {
-  file_put_contents(__DIR__ . "/tmp/loader.log",
+  file_put_contents(__DIR__ . "/target/loader.log",
       $uri . ": " . $msg . "\n",
       FILE_APPEND);
 }
