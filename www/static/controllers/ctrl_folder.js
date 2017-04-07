@@ -1,4 +1,4 @@
-/* global goThere,create,Folder,jQuery,calculations,template,date2CanonicString,extractPrefsFile */
+/* global goThere,Folder,jQuery,calculations,template,date2CanonicString,extractPrefsFile,getFormContent */
 function ctrl_folder($scope, $location, $routeParams) {
   /*
    * '/folder/:patient_id/:page?/:subtype?/:subid?/:mode?'
@@ -62,27 +62,22 @@ function ctrl_folder($scope, $location, $routeParams) {
     getFileThen = getFileThen.then(() => Promise.resolve(new Folder()));
     $scope.mode = 'add';
   } else {
-    getFileThen = getFileThen.then(dataService => dataService.getFolder('Patient', $scope.patient_id));
+    getFileThen = getFileThen.then(dataService => dataService.getFolder($scope.patient_id));
   }
-  getFileThen.then(function(data) {
-    if (data) {
+  getFileThen.then(function(folder) {
+    if (folder) {
       if ($scope.page == 'file') {
+        let subTypeType = Folder.create($scope.subtype);
+        console.log(subTypeType);
         if ($scope.mode == 'add') {
-          // TODO: Adapt
-          cachedCurrentFile = create($scope.subtype, null, data);
+          cachedCurrentFile = Folder.create($scope.subtype);
           cachedCurrentFile.patient_id = $scope.patient_id;
+          cachedCurrentFile.linkPatient(folder.getPatient());
         } else {
-          // TODO: Adapt
-          for(var i in data.getSubFiles()) {
-            if ((data.getSubFile(i).getModel() == $scope.subtype)
-                && (data.getSubFile(i).id == $scope.subid)) {
-              cachedCurrentFile = data.getSubFile(i);
-            }
-          }
+          cachedCurrentFile = folder.getByTypeAndId(subTypeType, $scope.subid);
         }
       } else {
-        // TODO: Adapt
-        cachedCurrentFile = data.getMainFile();
+        cachedCurrentFile = folder.getPatient();
       }
       if ($scope.mode == 'edit' || $scope.mode == 'add') {
         jQuery('.modeRead').removeClass('modeRead').addClass('modeWrite');
@@ -99,7 +94,7 @@ function ctrl_folder($scope, $location, $routeParams) {
         }
       }
     }
-    $scope.folder = data;
+    $scope.folder = folder;
     $scope.safeApply();
     $scope.$broadcast('refresh');
   });
@@ -218,7 +213,7 @@ function ctrl_folder($scope, $location, $routeParams) {
       .then(dataService => dataService.unlockFile($scope.currentFile()))
       .then(function(data) {
         $scope.$emit('message', { 'level': 'success', 'text': 'The ' + $scope.subtype + ' #' + $scope.subid + ' has been unlocked.'});
-      // Let's refresh the data
+        // Let's refresh the data
         $scope.folder = data;
         goThere('/folder/' + $scope.patient_id + '/file/' + $scope.subtype + '/' + $scope.subid + '/edit');
         $scope.safeApply();
@@ -239,7 +234,9 @@ function ctrl_folder($scope, $location, $routeParams) {
       .then(dataService => dataService.createFile(updatedData))
       .then(function(data) {
         $scope.$emit('message', { 'level': 'success', 'text': 'The ' + updatedData.getModel() + ' has been created.'});
-      // The data is refreshed by navigating away...
+        // The data is refreshed by navigating away...
+        // Let's refresh the data
+        $scope.folder = data;
         goThere('/folder/' + $scope.patient_id + '/file/' + $scope.subtype + '/' + data.newKey);
         $scope.safeApply();
       });
@@ -256,6 +253,8 @@ function ctrl_folder($scope, $location, $routeParams) {
       .then(dataService => dataService.deleteFile($scope.currentFile()))
       .then(function(data) {
         $scope.$emit('message', { 'level': 'success', 'text':  'The ' + $scope.currentFile().getModel() +  ' of ' + $scope.currentFile().Date + ' has been deleted'});
+
+        // Let's refresh the data
         $scope.folder = data;
         goThere('/folder/' + $scope.patient_id);
         $scope.safeApply();
@@ -275,6 +274,8 @@ function ctrl_folder($scope, $location, $routeParams) {
       .then(dataService => dataService.createFile(updatedData))
       .then(function(data) {
         $scope.$emit('message', { 'level': 'success', 'text':  'The patient has been created.'});
+
+        // Let's refresh the data
         $scope.folder = data;
         goThere('/folder/' + data.newKey);
         $scope.safeApply();
@@ -294,7 +295,10 @@ function ctrl_folder($scope, $location, $routeParams) {
     getDataService()
       .then(dataService => dataService.saveFile(updatedData, $scope.patient_id))
       .then(function() {
-      // The data is refreshed by navigating away...
+        // The data is refreshed by navigating away...
+
+        // Let's refresh the data
+        $scope.folder = data;
         $scope.$emit('message', { 'level': 'success', 'text': 'The patient has been saved.'});
         goThere('/folder/' + $scope.patient_id);
       });
@@ -311,6 +315,9 @@ function ctrl_folder($scope, $location, $routeParams) {
       .then(dataService => dataService.deleteFile($scope.currentFile()))
       .then(function() {
         $scope.$emit('message', { 'level': 'success', 'text':    'The patient ' + $scope.currentFile().entryyear + '-' + $scope.currentFile().entryorder + ' has been deleted'});
+
+        // Let's refresh the data
+        $scope.folder = null;
         goThere();
         $scope.safeApply();
       });
@@ -336,7 +343,7 @@ function ctrl_folder($scope, $location, $routeParams) {
     if ($scope.folder) {
       var d = new Date();
       var d2 = new Date(d.getFullYear() - $scope.age.years, d.getMonth() - $scope.age.months, 10);
-      $scope.folder.getMainFile().Yearofbirth  = date2CanonicString(d2).substring(0, 7);
+      $scope.folder.getPatient().Yearofbirth  = date2CanonicString(d2).substring(0, 7);
     }
   }
 

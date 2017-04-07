@@ -9,7 +9,7 @@ function ctrl_graphic($scope) {
 
   $scope.getImageName = function() {
     if (x == null) return '';
-    if (typeof($scope.folder.getMainFile().sexStr) == 'undefined') return '';
+    if (typeof($scope.folder.getPatient().sexStr) == 'undefined') return '';
     var name = '';
     if (x == 'ageAtConsultTime') {
       if (y == 'Heightcm') name += 'height';
@@ -18,7 +18,7 @@ function ctrl_graphic($scope) {
     } else {
       name += 'wh';
     }
-    name += '-' + $scope.folder.getMainFile().sexStr();
+    name += '-' + $scope.folder.getPatient().sexStr();
     return name;
   };
 
@@ -49,7 +49,7 @@ function ctrl_graphic($scope) {
     if (field == 'ageAtConsultTime' || typeof($scope.folder.getSubFile($index)[field]) == 'function') {
       try {
         if (field == 'ageAtConsultTime') {
-          return calculations.age.atConsultTime($scope.folder.getSubFile($index), $scope.folder.getMainFile());
+          return calculations.age.atConsultTime($scope.folder.getSubFile($index), $scope.folder.getPatient());
         } else {
           return $scope.folder.getSubFile($index)[field]();
         }

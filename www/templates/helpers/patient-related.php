@@ -1,6 +1,6 @@
 <?php
 	// Since this page should be included, do not use the default options
-	$opt = [ "readOnly" => true, 'baseExpression' => "folder.getMainFile()." ];
+	$opt = [ "readOnly" => true, 'baseExpression' => "folder.getPatient()." ];
 ?>
 <fieldset class='related'>
 	<legend>Related Patient</legend>
