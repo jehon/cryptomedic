@@ -24,7 +24,6 @@
     "polymer": "Polymer/polymer#^1.6.1",
     "iron-elements": "PolymerElements/iron-elements#^1.0.10",
     "moment": "momentjs#^2.15.2",
-    "dexie": "^1.5.1",
     "karma-read-json": "^1.1.0",
     "jquery": "^3.2.1",
     "jquery-ui": "^1.12.1",
