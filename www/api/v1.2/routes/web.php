@@ -129,5 +129,5 @@ if ($myconfig['environment'] == "dev") {
     } else {
       abort(400, "I say: Not found");
     }
-  })->where('path', '.+');
+  })->where('path', '.+'); // Enable path to be multi "/" included :-) (found somewhere on stackoverflow)
 }
