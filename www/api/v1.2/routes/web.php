@@ -117,6 +117,14 @@ if ($myconfig['environment'] == "dev") {
   Route::get('/{path}', function($path) {
     $f = __DIR__ . "/../../../" . $path;
     if (file_exists($f)) {
+      switch(pathinfo($f, PATHINFO_EXTENSION)) {
+        case "css":
+          header("Content-Type: text/css");
+          break;
+        default:
+          header("Content-Type: ", mime_content_type($f));
+          break;
+      }
       include $f;
     } else {
       abort(400, "I say: Not found");
