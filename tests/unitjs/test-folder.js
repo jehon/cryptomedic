@@ -69,4 +69,10 @@ describe('test-folder', function() {
     expect(list[i].id).toBe(3);
     expect(list[i].bill_id).toBe(1);
   })
+
+  it("should give the constructor", () => {
+    expect(Folder.string2class("Patient")).toEqual(Patient);
+    expect(Folder.string2class("Bill")).toEqual(Bill);
+    expect(() => Folder.string2class("AnythingInvalid")).toThrow();
+  })
 })

@@ -6,7 +6,24 @@
 // TODO: Adapt for: ctrl_file_bill
 
 class Folder extends Data {
+  static string2class(type) {
+    console.assert(typeof type == "string", "create[type/1] expect a string")
+    switch(type) {
+      case 'Patient':        return Patient;
+      case 'Appointment':    return Appointment;
+      case 'Bill':           return Bill;
+      case 'ClubFoot':       return ClubFoot;
+      case 'OtherConsult':   return OtherConsult;
+      case 'Payment':        return Payment;
+      case 'Picture':        return Picture;
+      case 'RicketConsult':  return RicketConsult;
+      case 'Surgery':        return Surgery;
+    }
+    throw Error("Type not found: ", type);
+  }
+
   static create(type, data = {}) {
+    console.assert(typeof type == "string", "create[type/1] expect a string")
     switch(type) {
       case 'Patient':        return new Patient(data);
       case 'Appointment':    return new Appointment(data);
@@ -54,6 +71,7 @@ class Folder extends Data {
   }
 
   getListByType(type) {
+    console.assert(type instanceof Function, "getListByType[type/1] expect a class");
     let res = [];
     for(let i in this.list) {
       if (this.list[i] instanceof type) {
