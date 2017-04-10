@@ -12,7 +12,7 @@ web.stderr.pipe(process.stderr);
 console.log("Web Server: launched");
 
 console.log("Hooks installing");
-function cleanExit() {
+function cleanExit(code = 1) {
   if (web) {
     console.log("Web Server: killing");
     web.kill();
@@ -25,6 +25,7 @@ function cleanExit() {
     console.log("Nightwatch: killed");
     nw = false;
   }
+  process.exit(code);
 }
 
 process.on('SIGTERM', function () {
@@ -54,7 +55,8 @@ nw = exec('node ./node_modules/.bin/nightwatch ' + sargs);
 nw.stdout.pipe(process.stdout);
 nw.stderr.pipe(process.stderr);
 
-nw.on('exit', () => {
+nw.on('exit', (code) => {
   console.log("Nightwatch: exited");
-  cleanExit();
+  cleanExit(code);
 });
+
