@@ -9,6 +9,8 @@ let web = exec('php -S localhost:5556 www/api/v1.2/server.php', (err, stdout, st
   }
   console.log("Web Server: ", stdout);
 });
+web.stdout.pipe(process.stdout);
+web.stderr.pipe(process.stderr);
 console.log("Web Server: launched");
 
 console.log("Hooks installing");
@@ -49,14 +51,8 @@ console.log("Nightwatch: arguments = ", sargs);
 
 console.log("Nightwatch: launch");
 nw = exec('node ./node_modules/.bin/nightwatch');
-// nw.stdout.pipe(process.stdout);
-// nw.stderr.pipe(process.stderr);
-nw.stdout.on('data', function(data) {
-  process.stdout.write(data.toString());
-});
-nw.stderr.on('data', function(data) {
-  process.stderr.write(data.toString());
-});
+nw.stdout.pipe(process.stdout);
+nw.stderr.pipe(process.stderr);
 
 nw.on('exit', () => {
   console.log("Nightwatch: exited");
