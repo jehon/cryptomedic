@@ -12,16 +12,29 @@ let web = exec('php -S localhost:5556 www/api/v1.2/server.php', (err, stdout, st
 console.log("Web Server: launched");
 
 console.log("Hooks installing");
+function cleanExit() {
+  if (web) {
+    console.log("Web Server: killing");
+    web.kill();
+    console.log("Web Server: killed");
+    web = false;
+  }
+  if (nw) {
+    console.log("Nightwatch: killing");
+    nw.kill();
+    console.log("Nightwatch: killed");
+    nw = false;
+  }
+}
+
 process.on('SIGTERM', function () {
-  console.log('Ctrl-C detected, bailing out gracefully');
-  nw.kill();
-  web.kill();
+  console.log('SIGTERM detected, bailing out gracefully');
+  cleanExit();
 });
 
 process.on('SIGINT', function () {
-  console.log('Ctrl-C 2 detected, bailing out gracefully');
-  nw.kill();
-  web.kill();
+  console.log('SIGINT detected, bailing out gracefully');
+  cleanExit();
 });
 console.log("Hooks installed");
 
@@ -31,6 +44,10 @@ console.log("Nightwatch: launched");
 // process.argv.forEach(function (val, index, array) {
 //   console.log(index + ': ' + val);
 // });
+console.log("Nightwatch: arguments = ", sargs);
+
+
+console.log("Nightwatch: launch");
 nw = exec('node ./node_modules/.bin/nightwatch');
 // nw.stdout.pipe(process.stdout);
 // nw.stderr.pipe(process.stderr);
@@ -42,10 +59,7 @@ nw.stderr.on('data', function(data) {
 });
 
 nw.on('exit', () => {
-  console.log("Nightwatch: ended");
-
-  console.log("Web Server: killing");
-  web.kill();
-  console.log("Web Server: killed");
+  console.log("Nightwatch: exited");
+  cleanExit();
 });
 
