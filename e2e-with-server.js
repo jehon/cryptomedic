@@ -40,11 +40,17 @@ process.on('SIGINT', function () {
 console.log("Hooks installed");
 
 
+let subargs = process.argv;
+subargs.unshift();
+subargs.unshift();
+let sargs = "";
+if (subargs.length > 0) {
+  sargs = "'" + subargs.join("' '") + "'";
+}
 console.log("Nightwatch: arguments = ", sargs);
 
-
 console.log("Nightwatch: launch");
-nw = exec('node ./node_modules/.bin/nightwatch');
+nw = exec('node ./node_modules/.bin/nightwatch ' + sargs);
 nw.stdout.pipe(process.stdout);
 nw.stderr.pipe(process.stderr);
 
@@ -52,4 +58,3 @@ nw.on('exit', () => {
   console.log("Nightwatch: exited");
   cleanExit();
 });
-
