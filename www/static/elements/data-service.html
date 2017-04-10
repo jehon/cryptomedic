@@ -123,7 +123,7 @@
                 resolve(false);
               })
               .then(json => {
-                let f = new Folder(json.folder);
+                let f = new Folder(json);
                 patientFolderCache.set(json.id, f);
 
                 resolve(json);
