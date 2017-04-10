@@ -4,8 +4,7 @@ const execSync = require('child_process').execSync;
 console.log("Web Server: starting");
 let web = exec('php -S localhost:5556 www/api/v1.2/server.php', (err, stdout, stderr) => {
   if (err) {
-    console.error("Web Server: ", err);
-    return;
+    console.error("Web Server: terminated abnormaly");
   }
 });
 web.stdout.pipe(process.stdout);
@@ -47,6 +46,7 @@ let sargs = "";
 if (subargs.length > 0) {
   sargs = "'" + subargs.join("' '") + "'";
 }
+sargs = "";
 console.log("Nightwatch: arguments = ", sargs);
 
 console.log("Nightwatch: launch");
