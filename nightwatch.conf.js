@@ -7,7 +7,7 @@ let selenium = require('selenium-server');
 let remoteTarget = "http://localhost/static/index.html"
 
 // PHP Server
-remoteTarget = "http://localhost:5555/static/index.html"
+remoteTarget = "http://localhost:5556/static/index.html"
 
 module.exports = {
   "src_folders" : [ "tests/e2e/tests" ],

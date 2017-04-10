@@ -2,7 +2,7 @@ const exec = require('child_process').exec;
 const execSync = require('child_process').execSync;
 
 console.log("Web Server: starting");
-web = exec('php -S localhost:5555 www/api/v1.2/server.php', (err, stdout, stderr) => {
+let web = exec('php -S localhost:5556 www/api/v1.2/server.php', (err, stdout, stderr) => {
   if (err) {
     console.error("Web Server: ", err);
     return;
