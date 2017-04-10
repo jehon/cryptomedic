@@ -7,7 +7,6 @@ let web = exec('php -S localhost:5556 www/api/v1.2/server.php', (err, stdout, st
     console.error("Web Server: ", err);
     return;
   }
-  console.log("Web Server: ", stdout);
 });
 web.stdout.pipe(process.stdout);
 web.stderr.pipe(process.stderr);
@@ -41,11 +40,6 @@ process.on('SIGINT', function () {
 console.log("Hooks installed");
 
 
-console.log("Nightwatch: launched");
-// Pass parameters:
-// process.argv.forEach(function (val, index, array) {
-//   console.log(index + ': ' + val);
-// });
 console.log("Nightwatch: arguments = ", sargs);
 
 
