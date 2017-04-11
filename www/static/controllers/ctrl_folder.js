@@ -66,8 +66,8 @@ function ctrl_folder($scope, $location, $routeParams) {
   }
   getFileThen.then(function(folder) {
     if (folder) {
-      let subTypeType = Folder.string2class($scope.subtype);
       if ($scope.page == 'file') {
+        let subTypeType = Folder.string2class($scope.subtype);
         if ($scope.mode == 'add') {
           cachedCurrentFile = Folder.create($scope.subtype);
           cachedCurrentFile.patient_id = $scope.patient_id;
