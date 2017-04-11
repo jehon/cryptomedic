@@ -41,13 +41,13 @@ console.log("Hooks installed");
 
 
 let subargs = process.argv;
-subargs.unshift();
-subargs.unshift();
-let sargs = "";
+while(subargs.length > 0 && subargs[0].indexOf('nodejs') > 0) {
+  subargs.shift();
+  subargs.shift();
+}
 if (subargs.length > 0) {
   sargs = "'" + subargs.join("' '") + "'";
 }
-sargs = "";
 console.log("Nightwatch: arguments = ", sargs);
 
 console.log("Nightwatch: launch");
