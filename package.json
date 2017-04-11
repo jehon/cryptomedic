@@ -47,7 +47,7 @@
     "test-api-1.2": "cd www/api/v1.2/ && phpunit --coverage-html ../../../target/php1.2 --coverage-xml ../../../target/php1.2 && cd ../../../",
     "test-unit": "karma start --single-run",
     "test-unit-continuously": "karma start",
-    "test-e2e": "nightwatch",
+    "test-e2e": "node e2e-with-server.js",
     "test-e2e-chrome": "nightwatch -e chrome",
     "cache": "cd www && node ../buildCache.js static/index.html",
     "cache-dev": "cd www && node ../../offline-listing/index.js static/index.html",
