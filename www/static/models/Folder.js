@@ -24,18 +24,7 @@ class Folder extends Data {
 
   static create(type, data = {}) {
     console.assert(typeof type == "string", "create[type/1] expect a string")
-    switch(type) {
-      case 'Patient':        return new Patient(data);
-      case 'Appointment':    return new Appointment(data);
-      case 'Bill':           return new Bill(data);
-      case 'ClubFoot':       return new ClubFoot(data);
-      case 'OtherConsult':   return new OtherConsult(data);
-      case 'Payment':        return new Payment(data);
-      case 'Picture':        return new Picture(data);
-      case 'RicketConsult':  return new RicketConsult(data);
-      case 'Surgery':        return new Surgery(data);
-    }
-    throw Error("Type not found: ", type);
+    return new (this.string2class(type))(data);
   }
 
   constructor(data = {}) {
