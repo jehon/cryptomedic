@@ -10,16 +10,8 @@ function ctrl_file_bill($scope) {
 
   $scope.paymentEditor = new Payment();
 
-  $scope.payments = [];
-  if ($scope.subid) {
-    getDataService()
-      .then(dataService => {
-        dataService.getFolder('Bill', $scope.subid)
-          .then(bfolder => {
-            $scope.bfolder = bfolder;
-            $scope.safeApply();
-          })
-      })
+  $scope.paymentsList = function() {
+    return $scope.folder.getFilesRelatedToBill($scope.subid);
   }
 
   $scope.$watch(function() {
@@ -45,6 +37,10 @@ function ctrl_file_bill($scope) {
   $scope.$watch('currentFile().sl_familySalary', function() {
     $scope.currentFile().ratioSalary();
   });
+
+  $scope.paymentsList = function() {
+    return $scope.folder.getFilesRelatedToBill($scope.subid);
+  }
 
   $scope.actionAddPayment = function() {
     if (!$scope.actionValidate()) {
