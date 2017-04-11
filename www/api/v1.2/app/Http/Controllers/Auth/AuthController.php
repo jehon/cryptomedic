@@ -118,7 +118,7 @@ class AuthController extends Controller {
     global $myconfig;
     if ($myconfig['environment'] != constant('MY_ENVIRONMENT_PRODUCTION'))
     {
-      error_log("environnemnt bypass authentication for " . $credentials['username']);
+      error_log("environment bypass authentication for " . $credentials['username']);
       $user = User::where("username", $credentials['username'])->first();
       if (!$user)
       {
