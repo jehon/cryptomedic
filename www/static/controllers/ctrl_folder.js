@@ -133,8 +133,8 @@ function ctrl_folder($scope, $location, $routeParams) {
   //----------------------
   $scope.errors = {};
   $scope.actionValidate = function() {
-  // TODO: jserror should have an icon before (danger)
-  // TODO: hide action button if form is not ok
+    // TODO: jserror should have an icon before (danger)
+    // TODO: hide action button if form is not ok
     $scope.valide = true;
 
     jQuery('input[type=number][required]').each(function() {
@@ -151,7 +151,7 @@ function ctrl_folder($scope, $location, $routeParams) {
 
     $scope.errors = $scope.currentFile().validate();
 
-    jQuery('input[mycalendar]:visible').each(function(){
+    jQuery('input[mycalendar]:visible').each(function() {
       var date = jQuery(this).val();
       if ((date == '') && !jQuery(this).is('[required]')) {
         return;
@@ -185,7 +185,7 @@ function ctrl_folder($scope, $location, $routeParams) {
   $scope.actionSave = function() {
     if (!$scope.actionValidate()) {
       alert('You have errors in your data. Please correct them and try again');
-      return ;
+      return;
     }
     $scope.folder = false;
     $scope.safeApply();
@@ -197,7 +197,10 @@ function ctrl_folder($scope, $location, $routeParams) {
       .then(dataService => dataService.saveFile(updatedData, $scope.patient_id))
       .then(function(data) {
         // The data is refreshed by navigating away...
-        $scope.$emit('message', { 'level': 'success', 'text': 'The ' + $scope.subtype + ' has been saved.'});
+        $scope.$emit('message', {
+          'level': 'success',
+          'text': 'The ' + $scope.subtype + ' has been saved.'
+        });
         goThere('/folder/' + $scope.patient_id + '/file/' + $scope.subtype + '/' + $scope.subid);
         $scope.folder = data;
         $scope.safeApply();
@@ -211,7 +214,10 @@ function ctrl_folder($scope, $location, $routeParams) {
     getDataService()
       .then(dataService => dataService.unlockFile($scope.currentFile()))
       .then(function(data) {
-        $scope.$emit('message', { 'level': 'success', 'text': 'The ' + $scope.subtype + ' #' + $scope.subid + ' has been unlocked.'});
+        $scope.$emit('message', {
+          'level': 'success',
+          'text': 'The ' + $scope.subtype + ' #' + $scope.subid + ' has been unlocked.'
+        });
         // Let's refresh the data
         $scope.folder = data;
         goThere('/folder/' + $scope.patient_id + '/file/' + $scope.subtype + '/' + $scope.subid + '/edit');
@@ -223,7 +229,7 @@ function ctrl_folder($scope, $location, $routeParams) {
     // Save transversal data for further use later...
     if (!$scope.actionValidate()) {
       alert('You have errors in your data. Please correct them and try again');
-      return ;
+      return;
     }
 
     let updatedData = getFormContent("#fileForm", $scope.currentFile());
@@ -232,7 +238,10 @@ function ctrl_folder($scope, $location, $routeParams) {
     getDataService()
       .then(dataService => dataService.createFile(updatedData))
       .then(function(data) {
-        $scope.$emit('message', { 'level': 'success', 'text': 'The ' + updatedData.getModel() + ' has been created.'});
+        $scope.$emit('message', {
+          'level': 'success',
+          'text': 'The ' + updatedData.getModel() + ' has been created.'
+        });
         // The data is refreshed by navigating away...
         // Let's refresh the data
         $scope.folder = data;
@@ -251,7 +260,10 @@ function ctrl_folder($scope, $location, $routeParams) {
     getDataService()
       .then(dataService => dataService.deleteFile($scope.currentFile()))
       .then(function(data) {
-        $scope.$emit('message', { 'level': 'success', 'text':  'The ' + $scope.currentFile().getModel() +  ' of ' + $scope.currentFile().Date + ' has been deleted'});
+        $scope.$emit('message', {
+          'level': 'success',
+          'text': 'The ' + $scope.currentFile().getModel() + ' of ' + $scope.currentFile().Date + ' has been deleted'
+        });
 
         // Let's refresh the data
         $scope.folder = data;
@@ -263,7 +275,7 @@ function ctrl_folder($scope, $location, $routeParams) {
   $scope.actionCreatePatient = function() {
     if (!$scope.actionValidate()) {
       alert('You have errors in your data. Please correct them and try again');
-      return ;
+      return;
     }
     $scope.folder = false;
 
@@ -272,7 +284,10 @@ function ctrl_folder($scope, $location, $routeParams) {
     getDataService()
       .then(dataService => dataService.createFile(updatedData))
       .then(function(data) {
-        $scope.$emit('message', { 'level': 'success', 'text':  'The patient has been created.'});
+        $scope.$emit('message', {
+          'level': 'success',
+          'text': 'The patient has been created.'
+        });
 
         // Let's refresh the data
         $scope.folder = data;
@@ -284,7 +299,7 @@ function ctrl_folder($scope, $location, $routeParams) {
   $scope.actionSavePatient = function() {
     if (!$scope.actionValidate()) {
       alert('You have errors in your data. Please correct them and try again');
-      return ;
+      return;
     }
     $scope.folder = false;
     $scope.safeApply();
@@ -298,7 +313,10 @@ function ctrl_folder($scope, $location, $routeParams) {
 
         // Let's refresh the data
         $scope.folder = data;
-        $scope.$emit('message', { 'level': 'success', 'text': 'The patient has been saved.'});
+        $scope.$emit('message', {
+          'level': 'success',
+          'text': 'The patient has been saved.'
+        });
         goThere('/folder/' + $scope.patient_id);
       });
   };
@@ -313,7 +331,10 @@ function ctrl_folder($scope, $location, $routeParams) {
     getDataService()
       .then(dataService => dataService.deleteFile($scope.currentFile()))
       .then(function() {
-        $scope.$emit('message', { 'level': 'success', 'text':    'The patient ' + $scope.currentFile().entryyear + '-' + $scope.currentFile().entryorder + ' has been deleted'});
+        $scope.$emit('message', {
+          'level': 'success',
+          'text': 'The patient ' + $scope.currentFile().entryyear + '-' + $scope.currentFile().entryorder + ' has been deleted'
+        });
 
         // Let's refresh the data
         $scope.folder = null;
@@ -325,7 +346,7 @@ function ctrl_folder($scope, $location, $routeParams) {
   $scope.nextAppointment = function() {
     var today = date2CanonicString(new Date(), true);
     var next = false;
-    for(var k in $scope.folder.subFiles) {
+    for (var k in $scope.folder.subFiles) {
       var v = $scope.folder.subFiles[k];
       if (v.getModel() == 'Appointment') {
         if (v.Nextappointment > today) {
@@ -342,7 +363,7 @@ function ctrl_folder($scope, $location, $routeParams) {
     if ($scope.folder) {
       var d = new Date();
       var d2 = new Date(d.getFullYear() - $scope.age.years, d.getMonth() - $scope.age.months, 10);
-      $scope.folder.getPatient().Yearofbirth  = date2CanonicString(d2).substring(0, 7);
+      $scope.folder.getPatient().Yearofbirth = date2CanonicString(d2).substring(0, 7);
     }
   }
 
@@ -363,7 +384,7 @@ function ctrl_folder($scope, $location, $routeParams) {
   });
 
   $scope.listUpazillas = function(district, current) {
-    var list = [ '?' ];
+    var list = ['?'];
     if (cryptomedic.serverSettings && cryptomedic.serverSettings.associations) {
       if (cryptomedic.serverSettings.associations['district.' + district]) {
         list = list.concat(cryptomedic.serverSettings.associations['district.' + district]);
@@ -371,13 +392,13 @@ function ctrl_folder($scope, $location, $routeParams) {
       list = list.concat(cryptomedic.serverSettings.associations['district.other']);
     }
     if (list.indexOf(current) < 0) {
-      list = [ current ].concat(list);
+      list = [current].concat(list);
     }
     return list;
   };
 
   $scope.listUnions = function(upazilla, current) {
-    var list = [ '?' ];
+    var list = ['?'];
     if (cryptomedic.serverSettings && cryptomedic.serverSettings.associations) {
       if (cryptomedic.serverSettings.associations['upazilla.' + upazilla]) {
         list = list.concat(cryptomedic.serverSettings.associations['upazilla.' + upazilla]);
@@ -385,10 +406,10 @@ function ctrl_folder($scope, $location, $routeParams) {
       list = list.concat(cryptomedic.serverSettings.associations['upazilla.other']);
     }
     if (list.indexOf(current) < 0) {
-      list = [ current ].concat(list);
+      list = [current].concat(list);
     }
     return list;
   };
 }
 
-ctrl_folder.$inject = [ "$scope", '$location', '$routeParams' ];
+ctrl_folder.$inject = ['$scope', '$location', '$routeParams'];
