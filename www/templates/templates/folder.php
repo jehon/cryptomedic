@@ -21,7 +21,7 @@
                 You can not edit it anymore.
               </jh-authorized>
               <jh-authorized value='folder.unlock'>
-                <span class="btn btn-default" ng-click='actionUnlock()'>
+                <span class='btn btn-default' ng-click='actionUnlock()'>
                   <img src='/static/img/unlock.gif'>
                   Unlock the file
                 </span>
@@ -36,29 +36,29 @@
           <span ng-if="(mode == 'edit')">
             <!--  Modify file route -->
             <jh-authorized value='folder.delete'>
-              <span id='button_delete' class="btn btn-default" ng-click="actionDelete()">Delete</span>
+              <span id='button_delete' class='btn btn-default' ng-click='actionDelete()'>Delete</span>
             </jh-authorized>
             <jh-authorized value='folder.edit'>
-              <span class="btn btn-default" ng-click="actionSave()">Save</span>
+              <span class='btn btn-default' ng-click="actionSave()">Save</span>
             </jh-authorized>
-            <span class="btn btn-default" ng-click="actionCancel()">Cancel</span>
+            <span class='btn btn-default' ng-click="actionCancel()">Cancel</span>
           </span>
         </div>
 
         <div ng-if="(!page)" >
           <span ng-if="(mode == 'read')">
             <jh-authorized value='folder.edit'>
-              <span id='patient_edit' class="btn btn-default" ng-click="go('/folder/' + patient_id + '/edit')">Edit</span>
+              <span id='patient_edit' class='btn btn-default' ng-click="go('/folder/' + patient_id + '/edit')">Edit</span>
             </jh-authorized>
           </span>
           <span ng-if="(mode == 'edit')">
             <jh-authorized value='folder.edit'>
-              <span id='patient_save' class="btn btn-default" ng-click="actionSavePatient()">Save</span>
+              <span id='patient_save' class='btn btn-default' ng-click="actionSavePatient()">Save</span>
             </jh-authorized>
             <jh-authorized value='folder.delete'>
-              <span id='patient_delete' ng-if='(folder.getSubFiles().length == 0)' class="btn btn-default" ng-click="actionDeletePatient()">Delete</span>
+              <span id='patient_delete' ng-if='(folder.getSubFiles().length == 0)' class='btn btn-default' ng-click="actionDeletePatient()">Delete</span>
             </jh-authorized>
-            <span id='patient_cancel' class="btn btn-default" ng-click="actionCancel()">Cancel</span>
+            <span id='patient_cancel' class='btn btn-default' ng-click="actionCancel()">Cancel</span>
           </span>
           <!--  Modify patient route -->
         </div>
@@ -66,9 +66,9 @@
         <div ng-if="patient_id < 0" class='text-center'>
           <!--  Add patient route -->
           <jh-authorized value='folder.edit'>
-            <span id='patient_create' class="btn btn-default" ng-click="actionCreatePatient()">Create patient</span>
+            <span id='patient_create' class='btn btn-default' ng-click="actionCreatePatient()">Create patient</span>
           </jh-authorized>
-          <span class="btn btn-default" ng-click="go('/home')">Cancel</span>
+          <span class='btn btn-default' ng-click="go('/home')">Cancel</span>
         </div>
       <?php
     }
@@ -76,17 +76,17 @@
 ?>
 <div class='container-fluid modeRead'>
   <div class='row'>
-    <div id='folder_menu' ng-if="patient_id >= 0" class="col-sm-2" class="btn-group btn-group-justified btn-group-vertical">
+    <div id='folder_menu' ng-if="patient_id >= 0" class='col-sm-2' class='btn-group btn-group-justified btn-group-vertical'>
       <jh-authorized value='folder.delete'>
-        <a id='button_add' ng-class="{ 'btn-warning': page == 'addfile'}" ng-click="go('/folder/' + patient_id + '/addfile')" class="btn btn-default" style="width: 100%">Add</a>
+        <a id='button_add' ng-class="{ 'btn-warning': page == 'addfile'}" ng-click="go('/folder/' + patient_id + '/addfile')" class='btn btn-default' style='width: 100%'>Add</a>
       </jh-authorized>
-      <a ng-class="{ 'btn-warning': page == 'summary'}" ng-href="#/folder/{{patient_id}}/summary" class="btn btn-default" style="width: 100%">Summary</a>
-      <a ng-class="{ 'btn-warning': page == 'graphics'}" ng-href="#/folder/{{patient_id}}/graphics" class="btn btn-default" style="width: 100%">Graphics</a>
-      <a id='button_patient' ng-class="{ 'btn-warning': !page}" ng-href="#/folder/{{patient_id}}" class="btn btn-default" style="width: 100%">Patient</a>
+      <a ng-class="{ 'btn-warning': page == 'summary'}" ng-href="#/folder/{{patient_id}}/summary" class='btn btn-default' style='width: 100%'>Summary</a>
+      <a ng-class="{ 'btn-warning': page == 'graphics'}" ng-href="#/folder/{{patient_id}}/graphics" class='btn btn-default' style='width: 100%'>Graphics</a>
+      <a id='button_patient' ng-class="{ 'btn-warning': !page}" ng-href="#/folder/{{patient_id}}" class='btn btn-default' style='width: 100%'>Patient</a>
       <span id='folder_files'>
         <span ng-repeat="f in folder.getFilesRelatedToPatient()" class='folder_file'>
           <a id='folder_menu_{{f.getModel()}}_{{f.id}}' href="#/folder/{{patient_id}}/file/{{f.getModel()}}/{{f.id}}"
-              class="btn btn-default left-menu-button"
+              class='btn btn-default left-menu-button'
               ng-class="{ 'btn-warning': page + subtype + subid == 'file' + f.getModel() + f.id }"
               >
             {{f.getModel()}}<span ng-if="f.Date"><br>[{{f.Date }}]</span>
@@ -94,9 +94,9 @@
         </span>
       </span>
     </div>
-    <div class="col-sm-10">
-      <div class="submenu .container-fluid">
-        <div class="row" ng-if="patient_id >= 0">
+    <div class='col-sm-10'>
+      <div class='submenu .container-fluid'>
+        <div class='row' ng-if="patient_id >= 0">
           <div class="col-sm-4 text-left" style="font-size: x-small">
             Modified on {{currentFile().updated_at | date:'yyyy-MM-dd HH:mm:ss' }}
             by {{currentFile().lastuser}}
