@@ -3,16 +3,29 @@ function ctrl_folder($scope, $location, $routeParams) {
   /*
    * '/folder/:patient_id/:page?/:subtype?/:subid?/:mode?'
    *
-   *  '/folder/123        view the patient file
-   *  '/folder/123/edit     edit the patient  (page ~> mode)
-   *  '/folder/       add a patient     (page ~> mode)
-   *  '/folder/123/file/Bills/456   view the sub file
+   *  '/folder/123                      view the patient file
+   *  '/folder/123/edit                 edit the patient  (page ~> mode)
+   *  '/folder/                         add a patient     (page ~> mode)
+   *  '/folder/123/file/Bills/456       view the sub file
    *  '/folder/123/file/Bills/456/edit  edit the sub file
-   *  '/folder/123/file/Bills     add a bill
+   *  '/folder/123/file/Bills           add a bill
    *  '/folder/123/summary
    *  '/folder/123/graphics
    *  '/folder/123/addfile
    *
+   */
+
+  // *** ROUTING ***
+  /*
+    generic:
+      patient_id:  (-1 => add patient)
+      mode: read / edit / add
+      page: null (patient), file (clubfoot, ...), summary / ...
+
+    if page == file:
+      subtype: ClubFoot / Bill / ...
+      subid: (-1 => add)
+
    */
 
   $scope.patient_id = $routeParams['patient_id'];
@@ -21,15 +34,15 @@ function ctrl_folder($scope, $location, $routeParams) {
   $scope.subid = $routeParams['subid'];
   $scope.mode = $routeParams['mode'];
 
-  $scope.age = {};
-
-  // folder/123
+  // PATIENT ROUTE VIEW
+  // ex: folder/123
   if (!$scope.page) {
-    $scope.mode = "read";
+    $scope.mode = 'read';
     $scope.page = false;
   }
 
-  // folder/123/edit
+  // PATIENT ROUTE EDIT / ADD
+  // ex: folder/123/edit
   if ($scope.page == 'edit') {
     // Map page to the mode (see ~>) in case of patient (short url, but wrong parameters)
     $scope.mode = $scope.page;
@@ -39,6 +52,9 @@ function ctrl_folder($scope, $location, $routeParams) {
     }
   }
 
+  // FICHE ROUTE VIEW / EDIT / ADD
+  // ex: folder/123/file/Bill/456
+  // ex: folder/123/file/Bill/456/edit
   if ($scope.page == 'file') {
     if (!$scope.mode) {
       $scope.mode = "read";
@@ -50,6 +66,7 @@ function ctrl_folder($scope, $location, $routeParams) {
   }
 
   $scope.folder = false;
+  $scope.age = {};
   var cachedCurrentFile = null;
 
   //----------------------
