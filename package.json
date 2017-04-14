@@ -51,6 +51,6 @@
     "test-e2e-chrome": "nightwatch -e chrome",
     "cache": "cd www && node ../buildCache.js static/index.html",
     "cache-dev": "cd www && node ../../offline-listing/index.js static/index.html",
-    "serve" : "php -S localhost:5555 www/api/v1.2/server.php"
+    "serve" : "php -S localhost:5555 webserver.php"
   }
 }
