@@ -42,6 +42,9 @@
     <div ng-if='errors.homeVisitAndGiveAppointment'>
       <div class='alert alert-danger'>Error: you could not bill a "home visit" with "give appointment" together!</div>
     </div>
+    <div ng-if='!currentFile().Date'>
+      <div class='alert alert-danger'>Error: please select a date first!</div>
+    </div>
   </div>
   <div class='row'>
     <div class="col-md-6">
