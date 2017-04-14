@@ -113,9 +113,14 @@ Route::group([ 'prefix' => '/api/' . basename(dirname(__DIR__)) ], function() {
 
 global $myconfig;
 if ($myconfig['environment'] == "dev") {
+  define("www", __DIR__ . "/../../../");
   // Only in DEV
+  Route::get('/', function() {
+      require_once(constant("www") . "/index.html");
+  });
+
   Route::get('/{path}', function($path) {
-    $f = __DIR__ . "/../../../" . $path;
+    $f = constant("www") . $path;
     if (file_exists($f)) {
       switch(pathinfo($f, PATHINFO_EXTENSION)) {
         case "css":
