@@ -1,7 +1,9 @@
 'use strict';
 /* global testComponent */
 
-describe('test-jh-authorized', function() {
+// TODO: remove fdescribe (focused)
+
+fdescribe('test-jh-authorized', function() {
   beforeEach(() => {
     JHAuthorized.setAuthorizedList();
   })
@@ -28,13 +30,21 @@ describe('test-jh-authorized', function() {
     });
   });
 
-  // it("should translate invalid codes", function(done) {
-  //   testComponent("<jh-codage value='anything'></jh-codage>").then(el => {
-  //     expect(el).not.toBeNull();
-  //     expect(el.$$('#original')  .textContent).toEqual('anything');
-  //     expect(el.$$('#translating').attributes.hidden).not.toBeNull();
-  //     el.testDone();
-  //     done();
-  //   });
-  // });
+  it("should be enabled when the list is setted before", function(done) {
+    testComponent("<jh-authorized value='secure'>securized content</jh-authorized>").then(el => {
+      JHAuthorized.setAuthorizedList([ "secure", "anything", "else" ]);
+      expect(el.shadowRoot.querySelector('span#securized').innerHTML.trim()).toContain("securized");
+      el.testDone();
+      done();
+    });
+  });
+
+  it("should work with inversed tests", function(done) {
+    testComponent("<jh-authorized inversed value='secure'>securized content</jh-authorized>").then(el => {
+      JHAuthorized.setAuthorizedList([ "secure", "anything", "else" ]);
+      expect(el.shadowRoot.querySelector('span#securized').innerHTML.trim()).not.toContain("securized");
+      el.testDone();
+      done();
+    });
+  });
 });

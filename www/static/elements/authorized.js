@@ -41,16 +41,10 @@ let JHAuthorized = (function() {
       // Text raw value
       let value = this.getAttribute("value");
 
-      let inversed = this.getAttribute("inversed");
-      try {
-        inversed = JSON.parse(inversed);
-        inversed = (inversed ? true : false);
-      } catch (e) { // SyntaxError
-        inversed = false;
-      }
+      let inversed = this.hasAttribute("inversed");
 
       // XOR: thanks to http://www.howtocreate.co.uk/xor.html
-      if (this.authorizedList.indexOf(value) >= 0) {
+      if (!(this.authorizedList.indexOf(value) >= 0) != !inversed) {
         this.shadowRoot.innerHTML = "<span id='securized'><slot name='securized'></slot></span>";
       } else {
         this.shadowRoot.innerHTML = "<span id='securized'><slot name='free'></slot></span>";
