@@ -1,6 +1,6 @@
 let JHAuthorized = (function() {
 
-  let authorizedListCB = jQuery.Callbacks();
+  let authorizedListCB = jQuery.Callbacks("memory");
 
   class JHAuthorized extends HTMLElement {
     // Object.keys(authorizedObject)
@@ -14,7 +14,11 @@ let JHAuthorized = (function() {
     constructor() {
       super();
 
-      // Authorized list
+      // Create a shadow root
+      this.sr = this.attachShadow({
+        mode: 'open'
+      });
+
       this.authorizedList = [];
       authorizedListCB.add((authorizedList) => {
         // Refresh the list and adapt()
@@ -22,10 +26,6 @@ let JHAuthorized = (function() {
         this.adapt();
       });
 
-      // Create a shadow root
-      this.attachShadow({
-        mode: 'open'
-      });
       this.adapt();
     }
 
@@ -45,9 +45,9 @@ let JHAuthorized = (function() {
 
       // XOR: thanks to http://www.howtocreate.co.uk/xor.html
       if (!(this.authorizedList.indexOf(value) >= 0) != !inversed) {
-        this.shadowRoot.innerHTML = "<span id='securized'><slot name='securized'></slot></span>";
+        this.sr.innerHTML = `<span id='securized'>${this.innerHTML}</span>`;
       } else {
-        this.shadowRoot.innerHTML = "<span id='securized'><slot name='free'></slot></span>";
+        this.sr.innerHTML = "<span>forbidden</span>";
       }
     }
 
