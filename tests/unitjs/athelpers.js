@@ -24,6 +24,7 @@ function loadReference(name) {
 function testComponent(html) {
   // Build up the element
   let div = document.createElement("div");
+  div.style="border: red solid 1px; min-height: 10px"
   div.innerHTML = html;
   document.body.appendChild(div);
   div.firstChild.testDone = () => {
