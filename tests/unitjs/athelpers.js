@@ -48,11 +48,7 @@ function testComponent(html) {
         // console.log("HTMLUnknownElement");
         return;
       }
-      if (!div.firstChild.shadowRoot && !div.firstChild.$$) {
-        // console.log("no shadow root");
-        return;
-      }
-      // console.log("ok, shadow root");
+      // console.log("ok, element ready");
       clearInterval(interval);
       resolve(div.firstChild);
     }, 100);
