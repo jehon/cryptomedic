@@ -52,26 +52,31 @@ fdescribe('test-jh-authorized', function() {
     });
   });
 
-  // it("should work inside angular", function(done) {
-  //   JHAuthorized.setAuthorizedList(["secure", "anything", "else"]);
-  //   angular
-  //     .module('ngauthorized', [])
-  //     .controller('ngauthorizedctrl', ['$scope', function($scope) {
-  //       $scope.test = function() {
-  //         console.log("test");
-  //       }
-  //     }]);
-
-  //   testComponent(`<div ng-app='ngauthorized' ng-controller='ngauthorizedctrl'>
-  //      <jh-authorized value='secure'>
-  //        <span ng-click='test()'>test me</span>
-  //      </jh-authorized>
-  //     </div>`)
-  //     .then(el => {
-  //       debugger;
-  //       // expect(el.shadowRoot.querySelector('span#securized').innerHTML.trim()).not.toContain("securized");
-  //       el.testDone();
-  //       done();
-  //     });
-  // });
+  fit("should work inside angular", function(done) {
+    JHAuthorized.setAuthorizedList(["secure", "anything", "else"]);
+    let mydone = () => {};
+    angular
+      .module('ngauthorized', [])
+      .controller('ngauthorizedctrl', ['$scope', function($scope) {
+        $scope.test = function() {
+          console.log("test");
+          mydone();
+        }
+      }]);
+    testComponent(`<div ng-app='ngauthorized'><div ng-controller='ngauthorizedctrl'>
+        <jh-authorized value='secure'>
+          <a id='click' ng-click='test()'>click test me</a>
+        </jh-authorized>
+      </div></div>`)
+      .then(el => {
+        ShadyDOM.flush();
+        mydone = () => {
+          el.testDone();
+          done();
+        }
+        // setTimeout(() => {
+          el.querySelector("#click").click();
+        // }, 100);
+      });
+  });
 });
