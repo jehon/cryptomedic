@@ -88,7 +88,7 @@ class AuthController extends Controller {
 
     $data['codes'] = References::$codes;
     $data['associations'] = References::$associations;
-    $data['authorized'] = self::$permissions[$data['group']];
+    $data['authorized'] = array_keys(self::$permissions[$data['group']]);
     $data['lists'] = References::$lists;
 
     // Update last_login timestamp
