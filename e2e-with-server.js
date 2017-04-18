@@ -45,6 +45,7 @@ while(subargs.length > 0 && subargs[0].indexOf('nodejs') > 0) {
   subargs.shift();
   subargs.shift();
 }
+let sargs = "";
 if (subargs.length > 0) {
   sargs = "'" + subargs.join("' '") + "'";
 }
