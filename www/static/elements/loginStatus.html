@@ -38,8 +38,8 @@
               }
               window.cryptomedic.serverSettings = data;
 
-              /* global setAuthorizedObject */
-              setAuthorizedObject(data.authorized);
+              /* global JHAuthorized */
+              JHAuthorized.setAuthorizedList(data.authorized);
 
               if (location.hash == "#/login") {
                 location.hash = "#/home";
@@ -49,8 +49,7 @@
               window.cryptomedic.serverSettings = {};
               location.hash = "/login";
 
-              /* global setAuthorizedObject */
-              setAuthorizedObject();
+              JHAuthorized.setAuthorizedList();
             }
           });
 
