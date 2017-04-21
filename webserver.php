@@ -9,11 +9,19 @@ if (substr($path, 0, 4) === "/api") {
   return true;
 }
 
+if ($path == "") {
+  $path = "/";
+}
+
+if (substr($path, -1, 1) == "/") {
+  $path = $path . "index.html";
+}
 
 define("www", __DIR__ . "/www/");
 $file = constant("www") . $path;
 if (!file_exists($file)) {
   header("I say: Not found", 404);
+  return true;
 }
 
 switch(pathinfo($file, PATHINFO_EXTENSION)) {
