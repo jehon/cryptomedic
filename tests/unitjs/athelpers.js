@@ -32,26 +32,39 @@ function testComponent(html) {
     document.body.removeChild(div);
   };
 
+  let check = function(el) {
+    if (el instanceof HTMLUnknownElement) {
+      return el.tagName;
+    }
+    for(let i in el.children) {
+      let res = check(el.children[i]);
+      if (res !== true) {
+        return res;
+      }
+    }
+    return true;
+  }
+
   return new Promise((resolve, reject) => {
     let i = 40;
     let interval = setInterval(() => {
-      i--;
-      if (i <= 0) {
-        // console.log("too much tests", div.firstChild);
-        clearInterval(interval);
-        reject();
-      }
       if (!div.firstChild) {
         // console.log("no first child");
         return ;
       }
-      if (div.firstChild instanceof HTMLUnknownElement) {
-        // console.log("HTMLUnknownElement");
-        return;
+      let ok = check(div.firstChild);
+      if (ok === true) {
+        // console.log("ok, let's continue");
+        clearInterval(interval);
+        resolve(div.firstChild);
       }
-      // console.log("ok, element ready");
-      clearInterval(interval);
-      resolve(div.firstChild);
+      i--;
+      if (i <= 0) {
+        // console.log("too much tests", div.firstChild);
+        console.log("testComponent: HTMLUnknownElement: ", ok);
+        clearInterval(interval);
+        reject();
+      }
     }, 100);
   });
 }
