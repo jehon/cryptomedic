@@ -57,9 +57,9 @@ function ctrl_folder($scope, $location, $routeParams) {
   // ex: folder/123/file/Bill/456/edit
   if ($scope.page == 'file') {
     if (!$scope.mode) {
-      $scope.mode = "read";
+      $scope.mode = 'read';
     }
-    if (!$scope.subid) {
+    if (typeof $scope.subid == 'undefined') {
       // Adding a file
       $scope.mode = 'add';
     }
@@ -77,40 +77,45 @@ function ctrl_folder($scope, $location, $routeParams) {
 
   if ($scope.patient_id < 0) {
     getFileThen = getFileThen.then(() => Promise.resolve(new Folder()));
-    $scope.mode = 'add';
   } else {
     getFileThen = getFileThen.then(dataService => dataService.getFolder($scope.patient_id));
   }
   getFileThen.then(function(folder) {
-    if (folder) {
-      if ($scope.page == 'file') {
-        let subTypeType = Folder.string2class($scope.subtype);
-        if ($scope.mode == 'add') {
-          cachedCurrentFile = Folder.create($scope.subtype);
-          cachedCurrentFile.patient_id = $scope.patient_id;
-          cachedCurrentFile.linkPatient(folder.getPatient());
-        } else {
-          cachedCurrentFile = folder.getByTypeAndId(subTypeType, $scope.subid);
-        }
-      } else {
-        cachedCurrentFile = folder.getPatient();
-      }
-      if ($scope.mode == 'edit' || $scope.mode == 'add') {
-        jQuery('.modeRead').removeClass('modeRead').addClass('modeWrite');
-      } else {
-        jQuery('.modeWrite').removeClass('modeWrite').addClass('modeRead');
-      }
+    if (!folder) {
+      $scope.$broadcast('refresh');
+      return;
+    }
 
-      if (cachedCurrentFile.Yearofbirth) {
-        var age = calculations.age.fromBirthDate(cachedCurrentFile.Yearofbirth);
-        var r = RegExp('([0-9]+) ?y(ears)? ?([0-9]+) ?m(onths)?').exec(age);
-        if (r.length > 3) {
-          $scope.age.years = parseInt(r[1]);
-          $scope.age.months = parseInt(r[3]);
-        }
+    // Build up data
+    if ($scope.page == 'file') {
+      if ($scope.mode == 'add') {
+        cachedCurrentFile = Folder.create($scope.subtype);
+        cachedCurrentFile.linkPatient(folder.getPatient());
+      } else {
+        cachedCurrentFile = folder.getByTypeAndId(Folder.string2class($scope.subtype), $scope.subid);
       }
+    } else {
+      cachedCurrentFile = folder.getPatient();
     }
     $scope.folder = folder;
+
+    // Layout
+    if ($scope.mode == 'edit' || $scope.mode == 'add') {
+      jQuery('.modeRead').removeClass('modeRead').addClass('modeWrite');
+    } else {
+      jQuery('.modeWrite').removeClass('modeWrite').addClass('modeRead');
+    }
+
+    // Date
+    $scope.age = {};
+    if (cachedCurrentFile.Yearofbirth) {
+      var age = calculations.age.fromBirthDate(cachedCurrentFile.Yearofbirth);
+      var r = RegExp('([0-9]+) ?y(ears)? ?([0-9]+) ?m(onths)?').exec(age);
+      if (r.length > 3) {
+        $scope.age.years = parseInt(r[1]);
+        $scope.age.months = parseInt(r[3]);
+      }
+    }
     $scope.safeApply();
     $scope.$broadcast('refresh');
   });
@@ -119,10 +124,11 @@ function ctrl_folder($scope, $location, $routeParams) {
   //  Display helpers
   // ------------------------
   $scope.getTemplateForMe = function() {
-    if (!$scope.folder) {
+    if ($scope.folder === false) {
       return template('waiting');
     }
-    if (!$scope.page) {
+
+    if ($scope.page === false) {
       return template('patient', ($scope.mode == 'read' ? 'fiche' : 'write'));
     }
 
@@ -137,6 +143,7 @@ function ctrl_folder($scope, $location, $routeParams) {
     return cachedCurrentFile;
   };
 
+  // PROBLEM TODO
   $scope.getPathTo = function(mode, index) {
     var f = $scope.currentFile();
     if (index) {
@@ -204,10 +211,11 @@ function ctrl_folder($scope, $location, $routeParams) {
       alert('You have errors in your data. Please correct them and try again');
       return;
     }
+
+    let updatedData = getFormContent("#fileForm", $scope.currentFile());
     $scope.folder = false;
     $scope.safeApply();
 
-    let updatedData = getFormContent("#fileForm", $scope.currentFile());
     extractPrefsFile(updatedData);
 
     getDataService()
@@ -225,6 +233,8 @@ function ctrl_folder($scope, $location, $routeParams) {
   };
 
   $scope.actionUnlock = function() {
+    console.log("action unlock");
+
     $scope.folder = false;
     $scope.safeApply();
 
@@ -250,6 +260,9 @@ function ctrl_folder($scope, $location, $routeParams) {
     }
 
     let updatedData = getFormContent("#fileForm", $scope.currentFile());
+    $scope.folder = false;
+    $scope.safeApply();
+
     extractPrefsFile(updatedData);
 
     getDataService()
@@ -271,11 +284,12 @@ function ctrl_folder($scope, $location, $routeParams) {
     if (!confirm('Are you sure you want to delete this file?')) {
       return;
     }
+    let file = $scope.currentFile();
     $scope.folder = false;
     $scope.safeApply();
 
     getDataService()
-      .then(dataService => dataService.deleteFile($scope.currentFile()))
+      .then(dataService => dataService.deleteFile(file))
       .then(function(data) {
         $scope.$emit('message', {
           'level': 'success',
@@ -294,9 +308,10 @@ function ctrl_folder($scope, $location, $routeParams) {
       alert('You have errors in your data. Please correct them and try again');
       return;
     }
-    $scope.folder = false;
 
     let updatedData = getFormContent("#fileForm", $scope.currentFile());
+    $scope.folder = false;
+    $scope.safeApply();
 
     getDataService()
       .then(dataService => dataService.createFile(updatedData))
@@ -318,10 +333,10 @@ function ctrl_folder($scope, $location, $routeParams) {
       alert('You have errors in your data. Please correct them and try again');
       return;
     }
-    $scope.folder = false;
-    $scope.safeApply();
 
     let updatedData = getFormContent("#fileForm", $scope.currentFile());
+    $scope.folder = false;
+    $scope.safeApply();
 
     getDataService()
       .then(dataService => dataService.saveFile(updatedData, $scope.patient_id))
@@ -342,11 +357,13 @@ function ctrl_folder($scope, $location, $routeParams) {
     if (!confirm('Are you sure you want to delete this patient?')) {
       return;
     }
+
+    let file = $scope.currentFile();
     $scope.folder = false;
     $scope.safeApply();
 
     getDataService()
-      .then(dataService => dataService.deleteFile($scope.currentFile()))
+      .then(dataService => dataService.deleteFile(file))
       .then(function() {
         $scope.$emit('message', {
           'level': 'success',
@@ -360,6 +377,7 @@ function ctrl_folder($scope, $location, $routeParams) {
       });
   };
 
+  // TODO: push to folder
   $scope.nextAppointment = function() {
     var today = date2CanonicString(new Date(), true);
     var next = false;
