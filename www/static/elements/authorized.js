@@ -13,13 +13,24 @@ let JHAuthorized = (function() {
 
     constructor() {
       super();
-
-      // Create a shadow root
-      this.sr = this.attachShadow({
+      this.authorizedList = [];
+      this.shadowRoot = this.attachShadow({
         mode: 'open'
       });
+    // }
 
-      this.authorizedList = [];
+    // connectedCallback() {
+      // Create a shadow root
+
+      this.shadowRoot.innerHTML = `
+        <style>
+          span.restricted {
+            display: none;
+          }
+        </style>
+        <span id='securized'>${this.innerHTML}</span>
+        `;
+
       authorizedListCB.add((authorizedList) => {
         // Refresh the list and adapt()
         this.authorizedList = authorizedList;
@@ -45,15 +56,17 @@ let JHAuthorized = (function() {
 
       // XOR: thanks to http://www.howtocreate.co.uk/xor.html
       if (!(this.authorizedList.indexOf(value) >= 0) != !inversed) {
-        this.sr.innerHTML = `<span id='securized'>${this.innerHTML}</span>`;
+        this.shadowRoot.querySelector("#securized").classList.remove("restricted");
+        // this.shadowRoot.innerHTML = `<span id='securized'>${this.innerHTML}</span>`;
       } else {
-        this.sr.innerHTML = "<span>forbidden</span>";
+        // this.shadowRoot.innerHTML = "<span>forbidden</span>";
+        this.shadowRoot.querySelector("#securized").classList.add("restricted");;
       }
     }
 
   }
 
-  window.customElements.define('jh-authorized', JHAuthorized);
+  window.customElements.define('jh-authorized-raw', JHAuthorized);
 
   return JHAuthorized;
 }());
