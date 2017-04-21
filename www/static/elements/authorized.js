@@ -14,13 +14,11 @@ let JHAuthorized = (function() {
     constructor() {
       super();
       this.authorizedList = [];
+
+      // Create a shadow root
       this.shadowRoot = this.attachShadow({
         mode: 'open'
       });
-    // }
-
-    // connectedCallback() {
-      // Create a shadow root
 
       this.shadowRoot.innerHTML = `
         <style>
