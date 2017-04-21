@@ -11,14 +11,15 @@
     /* global jQuery */
     /* exported setAuthorizedObject */
 
-    let setAuthorizedObject_cb = jQuery.Callbacks();
-    let setAuthorizedObject_list = [];
+    let setAuthorizedObject_cb = jQuery.Callbacks("memory");
 
-    function setAuthorizedObject(authorizedObject = null) {
-      let list = (authorizedObject ? Object.keys(authorizedObject) : []);
-      setAuthorizedObject_cb.fire(list);
-      setAuthorizedObject_list = list;
+    let JHAuthorized = {
+      setAuthorizedList: function(list) {
+        setAuthorizedObject_cb.fire(list);
+      }
     }
+
+
 
     Polymer({
       is: 'jh-authorized',
@@ -42,8 +43,7 @@
       },
 
       ready: function() {
-        setAuthorizedObject_cb.add((list) => { this.setAuthorizedList(list) });
-        this.setAuthorizedList(setAuthorizedObject_list);
+        setAuthorizedObject_cb.add((list) => this.setAuthorizedList(list));
       },
 
       setAuthorizedList: function(authorizedList) {
