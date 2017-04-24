@@ -47,6 +47,7 @@
     <script type='text/javascript' src='../bower_components/angular-route/angular-route.min.js'></script>
 
     <script type='text/javascript' src='../bower_components/clone.js/clone.js'></script>
+
     <!-- - - - - - - - - - - - - -->
     <!-- JS - custom             -->
     <!-- - - - - - - - - - - - - -->
@@ -105,12 +106,13 @@
     <!-- - - - - - - - - - - - - -->
     <!-- HTML Element - custom   -->
     <!-- - - - - - - - - - - - - -->
+    <!-- <link rel="import" href="../static/elements/authorized.html"> -->
     <link rel="import" href="../static/elements/codage.html">
     <link rel="import" href="../static/elements/data-service.html">
     <link rel="import" href="../static/elements/loginStatus.html">
     <link rel="import" href="../static/elements/select.html">
 
-    <script type='text/javascript' src="../static/elements/authorized.js"></script>
+    <!-- <script type='text/javascript' src="../static/elements/authorized.js"></script> -->
     <script type='text/javascript' src="../static/elements/read-boolean.js"></script>
 
   </head>
@@ -127,20 +129,20 @@
           <ul class="nav navbar-nav navbar-right">
             <li>
               <a id='menu_home' href="#/home" class="navbar-link">
-                <jh-authorized value="application.open">
+                <jh-authorized ng-if="isAuthorized('application.open', authorizedList)">
                   <img src="../static/img/home.gif" height="20px"/>
                   Home
                 </jh-authorized>
               </a>
             </li>
             <li><a id='menu_search' href="#/search" class="navbar-link">
-              <jh-authorized value="folder.read">
+              <jh-authorized ng-if="isAuthorized('folder.read', authorizedList)">
                 <img src="../static/img/patientsSearch.gif" height="20px"/>
                 Search a patient
               </jh-authorized>
             </a></li>
             <li><a id='menu_consults' href="#/reports/consultations" class="navbar-link">
-              <jh-authorized value="planning.execute">
+              <jh-authorized ng-if="isAuthorized('planning.execute', authorizedList)">
                 <img src="../static/img/consultOfDay.gif" height="20px"/>
                 Consults of the day
               </jh-authorized>
@@ -158,19 +160,19 @@
               </a>
               <ul class="dropdown-menu">
                 <li><a id='menu_users'  href='#/users'>
-                  <jh-authorized value="users.manage">
+                  <jh-authorized ng-if="isAuthorized('users.manage', authorizedList)">
                     <img src="../static/img/users.png" height="20px"/>
                     Users
                   </jh-authorized>
                 </a></li>
                 <li><a id='menu_matrix' ng-href='{{apiUrl("/admin/securityMatrix")}}'>
-                  <jh-authorized value="admin.securityMatrix">
+                  <jh-authorized ng-if="isAuthorized('admin.securityMatrix', authorizedList)">
                     <img src="../static/img/matrix.png" height="20px"/>
                     Matrix
                   </jh-authorized>
                 </a></li>
                 <li><a id='menu_reports' href="#/reports" class="navbar-link">
-                  <jh-authorized value="reports.execute">
+                  <jh-authorized ng-if="isAuthorized('reports.execute', authorizedList)">
                     <img src="../static/img/reports.gif" height="20px"/>
                     Reports
                   </jh-authorized>

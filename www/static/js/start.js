@@ -34,3 +34,16 @@ Promise.prototype.myFinallyDone = function (callback) {
     .then(callback, callback)
     .catch(function(reason) { console.error(reason); });
 };
+
+
+/* hook for authorized callback BEGIN */
+let setAuthorizedCallback = jQuery.Callbacks("memory");
+let JHAuthorized = {
+  addCallback: function(fn) {
+    setAuthorizedCallback.add(fn);
+  },
+  setAuthorizedList: function(list = []) {
+    setAuthorizedCallback.fire(list);
+  }
+}
+/* hook for authorized callback END */
