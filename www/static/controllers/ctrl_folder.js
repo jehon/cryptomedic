@@ -28,11 +28,17 @@ function ctrl_folder($scope, $location, $routeParams) {
 
    */
 
-  $scope.patient_id = $routeParams['patient_id'];
-  $scope.page = $routeParams['page'];
-  $scope.subtype = $routeParams['subtype'];
-  $scope.subid = $routeParams['subid'];
-  $scope.mode = $routeParams['mode'];
+  let t = function(val, def = false) {
+    if (typeof(val) == "undefined") return def;
+    if (val === null) return def;
+    return val;
+  }
+
+  $scope.patient_id = t($routeParams['patient_id']);
+  $scope.page       = t($routeParams['page']);
+  $scope.subtype    = t($routeParams['subtype']);
+  $scope.subid      = t($routeParams['subid']);
+  $scope.mode       = t($routeParams['mode']);
 
   // PATIENT ROUTE VIEW
   // ex: folder/123
@@ -116,8 +122,8 @@ function ctrl_folder($scope, $location, $routeParams) {
         $scope.age.months = parseInt(r[3]);
       }
     }
-    $scope.safeApply();
     $scope.$broadcast('refresh');
+    $scope.safeApply();
   });
 
   // ------------------------
