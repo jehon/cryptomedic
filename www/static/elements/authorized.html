@@ -11,48 +11,44 @@
     /* global jQuery */
     /* exported setAuthorizedObject */
 
-    let setAuthorizedObject_cb = jQuery.Callbacks("memory");
+    let setAuthorizedCallback = jQuery.Callbacks("memory");
 
     let JHAuthorized = {
-      setAuthorizedList: function(list) {
-        setAuthorizedObject_cb.fire(list);
+      setAuthorizedList: function(list = []) {
+        setAuthorizedCallback.fire(list);
       }
     }
-
-
 
     Polymer({
       is: 'jh-authorized',
 
-      // https://www.polymer-project.org/1.0/docs/devguide/properties
       properties: {
         value: {
           type:               String,
           readonly:           true,
+          notify:             true,
           value:              "application.open"
         },
         inversed: {
           type:               Boolean,
           readonly:           true,
+          notify:             true,
           value:              false
         },
-        // authorizedList: {
-        //   type:               Array,
-        //   value:              []
-        // }
       },
 
       ready: function() {
-        setAuthorizedObject_cb.add((list) => this.setAuthorizedList(list));
+        this.authorizedList = [];
+        setAuthorizedCallback.add((list) => this.setAuthorizedList(list));
       },
 
       setAuthorizedList: function(authorizedList) {
         // Set it in two steps, to enable trigger of update
-        this.authorizedList = null;
+        // this.authorizedList = null;
         this.authorizedList = authorizedList;
       },
 
-      isAuthorized(value, authorizedList, inversed) {
+      isAuthorized(value, authorizedList = [], inversed = false) {
         if (inversed) {
           return !this.isAuthorized(value, authorizedList, false);
         }
