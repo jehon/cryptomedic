@@ -199,6 +199,7 @@ function ctrl_folder($scope, $location, $routeParams) {
 
   $scope.actionCancel = function() {
     // By rerouting, the controller is initialized back
+    $scope.folder = null;
     if ($scope.subid) {
       goThere('/folder/' + $scope.patient_id + '/file/' + $scope.subtype + '/' + $scope.subid);
     } else {
