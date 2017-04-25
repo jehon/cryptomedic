@@ -1,6 +1,9 @@
 
 function ctrl_login($scope) {
-  $scope.details = {};
+  $scope.details = {
+    username: '',
+    password: ''
+  };
   $scope.loginError = false;
 
   $scope.doLogin = function() {
