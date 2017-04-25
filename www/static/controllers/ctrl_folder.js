@@ -65,7 +65,7 @@ function ctrl_folder($scope, $location, $routeParams) {
     if (!$scope.mode) {
       $scope.mode = 'read';
     }
-    if (typeof $scope.subid == 'undefined') {
+    if ($scope.subid === false) {
       // Adding a file
       $scope.mode = 'add';
     }
