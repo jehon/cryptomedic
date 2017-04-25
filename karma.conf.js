@@ -38,6 +38,7 @@ module.exports = function(config) {
       'bower_components/angular-route/angular-route.min.js',
       'bower_components/jquery/dist/jquery.min.js',
       'bower_components/karma-read-json/karma-read-json.js',
+      'bower_components/clone.js/clone.js',
       { pattern: 'api/v1.1/tests/references/*.json', included: false },
       { pattern: 'api/v1.2/tests/references/*.json', included: false },
       { pattern: "bower_components/**",              included: false, served: true, watched: false },
