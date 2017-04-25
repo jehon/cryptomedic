@@ -25,6 +25,7 @@
     "karma-html-reporter": "latest",
     "karma-jasmine": "latest",
     "karma-junit-reporter": "latest",
+    "kill-by-port": "0.0.1",
     "nightwatch": "latest",
     "nightwatch-html-reporter": "latest",
     "offline-plugin": "latest",
@@ -42,10 +43,10 @@
     "test-api-1.2": "cd www/api/v1.2/ && phpunit --coverage-html ../../../target/php1.2 --coverage-xml ../../../target/php1.2 && cd ../../../",
     "test-unit": "karma start --single-run",
     "test-unit-continuously": "karma start",
-    "test-e2e": "node e2e-with-server.js",
+    "test-e2e": "kill-by-port --port 5556 && kill-by-port --port 4444 && node e2e-with-server.js",
     "test-e2e-chrome": "nightwatch -e chrome",
     "cache": "cd www && node ../buildCache.js static/index.html",
     "cache-dev": "cd www && node ../../offline-listing/index.js static/index.html",
-    "start" : "php -S localhost:5555 webserver.php"
+    "start": "kill-by-port --port 5555 && php -S localhost:5555 webserver.php"
   }
 }
