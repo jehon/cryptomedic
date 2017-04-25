@@ -9,6 +9,9 @@ let mainApp = angular.module('app_main', [ 'ngRoute' ])
     $compileProvider.aHrefSanitizationWhitelist(/^\s*((https?|ftp|mailto|chrome-extension):|data:text,)/);
     $compileProvider.imgSrcSanitizationWhitelist($compileProvider.aHrefSanitizationWhitelist());
   }])
+  .config([ '$locationProvider', function($locationProvider) {
+    $locationProvider.hashPrefix('');
+  }])
   .directive('catchIt', function() {
     // http://tutorials.jenkov.com/angularjs/custom-directives.html#compile-and-link
     // http://stackoverflow.com/a/15298620
