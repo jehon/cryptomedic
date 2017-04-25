@@ -178,17 +178,15 @@ mainApp.controller('ctrl', [ '$scope', function($scope) {
     goThere(path);
   };
 
-  /* hook for authorized callback BEGIN */
   $scope.authorizedList = [];
-  JHAuthorized.addCallback((authorizedList) => {
+  JHAuthorized.addCallback(authorizedList => {
     console.log("update authorized list", authorizedList);
     $scope.authorizedList = authorizedList;
     $scope.safeApply();
   })
-  $scope.isAuthorized = function(value, list) {
-    return list.indexOf(value) >= 0;
+  $scope.isAuthorized = function(value, authorizedList) {
+    return authorizedList.indexOf(value) >= 0;
   }
-  /* hook for authorized callback END */
 
   $scope.connected = false;
 
