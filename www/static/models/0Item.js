@@ -36,6 +36,9 @@ class Item extends Data {
     this.getPatient = function() {
       return patient;
     };
+    if (patient) {
+      this.patient_id = patient.id;
+    }
   }
 
   // For graphic, by default it expect number -> textual render it in text only on demand
