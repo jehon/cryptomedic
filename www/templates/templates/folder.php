@@ -48,17 +48,17 @@
         <div ng-if="(!page)" >
           <span ng-if="(mode == 'read')">
             <jh-authorized ng-if="isAuthorized('folder.edit', authorizedList)">
-              <span id='patient_edit' class='btn btn-default' ng-click="go('/folder/' + patient_id + '/edit')">Edit Patient</span>
+              <span id='patient_edit' class='btn btn-default' ng-click="go('/folder/' + patient_id + '/edit')">Edit</span>
             </jh-authorized>
           </span>
           <span ng-if="(mode == 'edit')">
             <jh-authorized ng-if="isAuthorized('folder.edit', authorizedList)">
-              <span id='patient_save' class='btn btn-default' ng-click="actionSavePatient()">Save Patient</span>
+              <span id='patient_save' class='btn btn-default' ng-click="actionSavePatient()">Save</span>
             </jh-authorized>
             <jh-authorized ng-if="isAuthorized('folder.delete', authorizedList)">
-              <span id='patient_delete' ng-if='(folder.getSubFiles().length == 0)' class='btn btn-default' ng-click="actionDeletePatient()">Delete Patient</span>
+              <span id='patient_delete' ng-if='(folder.getSubFiles().length == 0)' class='btn btn-default' ng-click="actionDeletePatient()">Delete</span>
             </jh-authorized>
-            <span id='patient_cancel' class='btn btn-default' ng-click="actionCancel()">Cancel Modify Patient</span>
+            <span id='patient_cancel' class='btn btn-default' ng-click="actionCancel()">Cancel</span>
           </span>
           <!--  Modify patient route -->
         </div>
