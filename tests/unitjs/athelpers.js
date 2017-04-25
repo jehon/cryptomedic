@@ -21,7 +21,7 @@ function loadReference(name) {
   return valid_respond;
 }
 
-function testComponent(html) {
+function testComponent(html, test = () => true) {
   // Build up the element
   let div = document.createElement("div");
   div.style="border: red solid 1px; min-height: 10px"
@@ -52,7 +52,13 @@ function testComponent(html) {
         // console.log("no first child");
         return ;
       }
+
+      // Check all object for HTMLUnknownElements
       let ok = check(div.firstChild);
+
+      // Add custom test
+      ok = ok && test(div.firstChild);
+
       if (ok === true) {
         // console.log("ok, let's continue");
         clearInterval(interval);
