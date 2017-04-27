@@ -94,6 +94,7 @@ function ctrl_folder($scope, $location, $routeParams) {
 
     // Build up data
     if ($scope.page == 'file') {
+      // File
       if ($scope.mode == 'add') {
         cachedCurrentFile = Folder.create($scope.subtype);
         cachedCurrentFile.linkPatient(folder.getPatient());
@@ -101,6 +102,7 @@ function ctrl_folder($scope, $location, $routeParams) {
         cachedCurrentFile = folder.getByTypeAndId(Folder.string2class($scope.subtype), $scope.subid);
       }
     } else {
+      // Patient
       cachedCurrentFile = folder.getPatient();
     }
     $scope.folder = folder;
@@ -322,15 +324,15 @@ function ctrl_folder($scope, $location, $routeParams) {
 
     getDataService()
       .then(dataService => dataService.createFile(updatedData))
-      .then(function(data) {
+      .then(function(folder) {
         $scope.$emit('message', {
           'level': 'success',
           'text': 'The patient has been created.'
         });
 
         // Let's refresh the data
-        $scope.folder = data;
-        goThere('/folder/' + data.newKey);
+        $scope.folder = folder;
+        goThere('/folder/' + folder.getId());
         $scope.safeApply();
       });
   };
@@ -347,16 +349,16 @@ function ctrl_folder($scope, $location, $routeParams) {
 
     getDataService()
       .then(dataService => dataService.saveFile(updatedData, $scope.patient_id))
-      .then(function() {
+      .then(function(folder) {
         // The data is refreshed by navigating away...
 
         // Let's refresh the data
-        $scope.folder = data;
+        $scope.folder = folder;
         $scope.$emit('message', {
           'level': 'success',
           'text': 'The patient has been saved.'
         });
-        goThere('/folder/' + $scope.patient_id);
+        goThere('/folder/' + folder.getId());
       });
   };
 
