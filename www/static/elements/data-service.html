@@ -182,8 +182,9 @@
             .requestWithData(nullify(data))
             .then(function(data) {
               let f = new Folder(data.folder);
+              f.setHeader("newKey", data.newKey);
               patientFolderCache.set(f.getId(), f);
-              return data;
+              return f;
             });
         },
 
