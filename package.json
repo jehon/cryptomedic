@@ -38,7 +38,8 @@
   },
   "scripts": {
     "build": "npm run cache",
-    "test": "./bin/dev-reset.sh && npm run test-api-1.1 && npm run test-api-1.2 && npm run test-unit && npm run test-e2e",
+    "reset": "./bin/dev-reset.sh",
+    "test": "npm run reset && npm run test-api-1.1 && npm run test-api-1.2 && npm run test-unit && npm run test-e2e",
     "test-api-1.1": "cd www/api/v1.1/ && phpunit --coverage-html ../../../target/php1.1 --coverage-xml ../../../target/php1.1 && cd ../../../",
     "test-api-1.2": "cd www/api/v1.2/ && phpunit --coverage-html ../../../target/php1.2 --coverage-xml ../../../target/php1.2 && cd ../../../",
     "test-unit": "karma start --single-run",
