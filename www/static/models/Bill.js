@@ -36,6 +36,9 @@ class Bill extends Item {
           this.sl_numberOfHouseholdMembers = last_bill.sl_numberOfHouseholdMembers;
         }
       }
+      if (typeof(this.Date) == 'undefined' || !this.Date) {
+        this.Date = getPref("date", (new Date()).toISOString().slice(0, 10));
+      }
     }
   }
 
