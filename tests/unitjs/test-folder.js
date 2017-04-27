@@ -11,6 +11,7 @@ describe('test-folder', function() {
     let f = new Folder();
     expect(this.f).toEqual(jasmine.any(Folder));
     expect(f).toEqual(jasmine.any(Folder));
+    expect(f.getPatient()).toEqual(jasmine.any(Patient));
   });
 
   it("should load Mock data", () => {
