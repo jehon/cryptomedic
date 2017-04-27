@@ -42,22 +42,31 @@ describe('test-folder', function() {
     i++;
     expect(list[i]).toEqual(jasmine.any(Picture));
     expect(list[i].id).toBe(2);
+    expect(this.f.getFilesRelatedToPatient(i).id).toBe(list[i].id);
 
     i++;
     expect(list[i]).toEqual(jasmine.any(RicketConsult));
     expect(list[i].id).toBe(13);
+    expect(this.f.getFilesRelatedToPatient(i).id).toBe(list[i].id);
 
     i++;
     expect(list[i]).toEqual(jasmine.any(Bill));
     expect(list[i].id).toBe(1);
+    expect(this.f.getFilesRelatedToPatient(i).id).toBe(list[i].id);
 
     i++;
     expect(list[i]).toEqual(jasmine.any(Appointment));
     expect(list[i].id).toBe(2);
+    expect(this.f.getFilesRelatedToPatient(i).id).toBe(list[i].id);
 
     i++;
     expect(list[i]).toEqual(jasmine.any(OtherConsult));
     expect(list[i].id).toBe(1);
+    expect(this.f.getFilesRelatedToPatient(i).id).toBe(list[i].id);
+
+    // And out of bounds...
+    expect(this.f.getFilesRelatedToPatient(1000)).toBeNull();
+
   })
 
   it("should give bill related files", () => {

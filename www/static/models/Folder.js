@@ -102,7 +102,14 @@ class Folder extends Data {
     return list[0];
   }
 
-  getFilesRelatedToPatient() {
+  getFilesRelatedToPatient(i = false) {
+    if (i !== false) {
+      let list = this.getFilesRelatedToPatient();
+      if (list.length > i) {
+        return list[i];
+      }
+      return null;
+    }
     if (!this.getPatient()) {
       return [];
     }
