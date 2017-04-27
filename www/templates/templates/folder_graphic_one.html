@@ -3,11 +3,12 @@
 	<div class='markContainer'>
 		<img ng-src="/static/img/stats_{{getImageName()}}.jpg" width='100%'>
 		    <span ng-repeat="f in folder.getFilesRelatedToPatient()"
-		        ng-if="getValidity($index) == 'v'"
+		        ng-if="getValidity(f) == 'v'"
 		        ng-mouseover="hover($index)"
   		    	ng-class="{ hovered: hovered == $index }"
+		    	ng-click="go('/folder/' + folder.getId() + '/file/' + f.getModel() + '/' + f.id)"
 		        class="mark"
-		        style="left: {{getAbscisse($index)}}%; top: {{getOrdonnee($index)}}%"
+		        style="left: {{getAbscisse(f)}}%; top: {{getOrdonnee(f)}}%"
 		        >
 		        <span id="stat_{{$index}}">+</span>
 		    </span>
@@ -23,12 +24,12 @@
 	    <tr ng-repeat="f in folder.getFilesRelatedToPatient()" tag="stat_{{$index}}"
 	    	ng-mouseover="hover($index)"
 	    	ng-class="{ hovered: hovered == $index }"
-	    	ng-click="go('/folder/' + folder.id + '/file/' + f.getModel() + '/' + f.id)"
+	    	ng-click="go('/folder/' + folder.getId() + '/file/' + f.getModel() + '/' + f.id)"
 			>
-	        <td>{{getValue($index, "Date") }}</td>
-	        <td>{{getValue($index, getVariableX()) | number:0}}</td>
-	        <td>{{getValue($index, getVariableY()) | number:0}}</td>
-	        <td>{{getValidity($index)}}</td>
+	        <td>{{getValue(f, "Date") }}</td>
+	        <td>{{getValue(f, getVariableX()) | number:0}}</td>
+	        <td>{{getValue(f, getVariableY()) | number:0}}</td>
+	        <td>{{getValidity(f)}}</td>
 	    </tr>
 	</table>
 </fieldset>
