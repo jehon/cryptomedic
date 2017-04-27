@@ -2,7 +2,7 @@
 	<legend>{{getVariableY()}} / {{getVariableX()}}</legend>
 	<div class='markContainer'>
 		<img ng-src="/static/img/stats_{{getImageName()}}.jpg" width='100%'>
-		    <span ng-repeat="f in folder.getSubFiles()"
+		    <span ng-repeat="f in folder.getFilesRelatedToPatient()"
 		        ng-if="getValidity($index) == 'v'"
 		        ng-mouseover="hover($index)"
   		    	ng-class="{ hovered: hovered == $index }"
@@ -20,7 +20,7 @@
 	        <th>{{getVariableY()}}</th>
 	        <th>Validity</th>
 	    </thead>
-	    <tr ng-repeat="f in folder.getSubFiles()" tag="stat_{{$index}}"
+	    <tr ng-repeat="f in folder.getFilesRelatedToPatient()" tag="stat_{{$index}}"
 	    	ng-mouseover="hover($index)"
 	    	ng-class="{ hovered: hovered == $index }"
 	    	ng-click="go('/folder/' + folder.id + '/file/' + folder.getSubFile($index).getModel() + '/' + folder.getSubFile($index).id)"
