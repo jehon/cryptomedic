@@ -282,7 +282,7 @@ input[type=checkbox].form-control {
 }
 
 tr.hovered {
- background-color: gray;
+ background-color: gray !important;
 }
 
 /********************************************
