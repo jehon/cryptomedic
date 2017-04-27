@@ -22,8 +22,8 @@ class Folder extends Data {
     throw Error("Type not found: ", type);
   }
 
-  static create(type, data = {}) {
-    return new (this.string2class(type))(data);
+  static create(folder, type, data = {}) {
+    return new (this.string2class(type))(data, folder);
   }
 
   constructor(listing = {}) {
@@ -35,7 +35,7 @@ class Folder extends Data {
       // create the objects
       for(let i in listing) {
         let v = listing[i];
-        this.list.push(Folder.create(v.type, v.record));
+        this.list.push(Folder.create(this, v.type, v.record));
       }
 
       this.getFilesRelatedToPatient().forEach(f => {

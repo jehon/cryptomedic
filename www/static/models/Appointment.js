@@ -6,7 +6,7 @@ class Appointment extends Item {
   }
 
   constructor(data, folder = null) {
-    super(data, folder);
+    super(data);
     if (!data) {
       var now = new Date();
       var year = now.getFullYear();
