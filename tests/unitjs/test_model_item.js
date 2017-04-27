@@ -6,7 +6,7 @@ describe('Item', function() {
   describe('with TestFolder.test1.json', function() {
     it('should have correct properties', function() {
       // Go through the rest_service !!!
-      let folder = new Folder(loadReference('FolderTest.test1.json'));
+      let folder = new Folder(loadReference('FolderTest.test1.json').folder);
 
       expect(folder.getPatient()).toEqual(jasmine.any(Patient));
       expect(folder.getPatient().Sex).toBe('Male');
@@ -28,7 +28,7 @@ describe('Item', function() {
     describe('with ricketConsult_13', function() {
       it('should have correct statistics', function() {
 
-        let folder = new Folder(loadReference('FolderTest.test1.json'));
+        let folder = new Folder(loadReference('FolderTest.test1.json').folder);
         let rc = folder.getByTypeAndId(RicketConsult, 13);
 
         expect(rc).toEqual(jasmine.any(RicketConsult));

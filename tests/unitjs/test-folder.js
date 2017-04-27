@@ -3,7 +3,7 @@
 
 describe('test-folder', function() {
   beforeEach(() => {
-    this.f = new Folder(loadReference('FolderTest.test1.json'));
+    this.f = new Folder(loadReference('FolderTest.test1.json').folder);
     expect(this.f).toEqual(jasmine.any(Folder));
   });
 
@@ -15,7 +15,7 @@ describe('test-folder', function() {
 
   it("should load Mock data", () => {
     expect(this.f).toEqual(jasmine.any(Folder));
-    expect(this.f.id).toBe('1');
+    expect(this.f.getPatient()).toEqual(jasmine.any(Patient));
     expect(this.f.getId()).toBe('1');
   })
 
@@ -74,5 +74,10 @@ describe('test-folder', function() {
     expect(Folder.string2class("Patient")).toEqual(Patient);
     expect(Folder.string2class("Bill")).toEqual(Bill);
     expect(() => Folder.string2class("AnythingInvalid")).toThrow();
+  })
+
+  it("should kepp extra data", () => {
+    this.f.setHeader("newKey", 14);
+    expect(this.f.getHeader("newKey")).toBe(14);
   })
 })

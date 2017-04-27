@@ -23,24 +23,25 @@ class Folder extends Data {
   }
 
   static create(type, data = {}) {
-    console.assert(typeof type == "string", "create[type/1] expect a string")
     return new (this.string2class(type))(data);
   }
 
-  constructor(data = {}) {
+  constructor(listing = {}) {
     super({});
-    if (typeof(data) != undefined && typeof(data.id) != undefined) {
-      this.id = data.id;
+    this.headers = {};
+    if (typeof(listing) != undefined) {
       this.list = [];
 
       // create the objects
-      for(let i in data.folder) {
-        let v = data.folder[i];
+      for(let i in listing) {
+        let v = listing[i];
         this.list.push(Folder.create(v.type, v.record));
       }
 
       this.getFilesRelatedToPatient().forEach(f => {
-        f.linkPatient(this.getPatient());
+        if (f.linkPatient) {
+          f.linkPatient(this.getPatient());
+        }
       })
 
       // TODO: Does the payment need the link to the bills?
@@ -53,8 +54,9 @@ class Folder extends Data {
   }
 
   getId() {
-    if (this.isSet('id')) {
-      return this.id;
+    console.log("this.getPatient", this.getPatient());
+    if (this.getPatient()) {
+      return this.getPatient().id + "";
     }
     return -1;
   }
@@ -91,15 +93,30 @@ class Folder extends Data {
   }
 
   getPatient() {
-    return this.getListByType(Patient)[0];
+    let list = this.getListByType(Patient);
+    if (list.length > 0) {
+      return list[0];
+    }
+    return null;
   }
 
   getFilesRelatedToPatient() {
-    return this.getByFieldValue('patient_id', this.id).sort(Folder.ordering);
+    if (!this.getPatient()) {
+      return [];
+    }
+    return this.getByFieldValue('patient_id', this.getPatient().id).sort(Folder.ordering);
   }
 
   getFilesRelatedToBill(id) {
     return this.getByFieldValue('bill_id', id).sort(Folder.ordering);
+  }
+
+  setHeader(key, value) {
+    this.headers[key] = value;
+  }
+
+  getHeader(key) {
+    return this.headers[key];
   }
 
   static ordering(o1, o2) {
