@@ -31,10 +31,10 @@ function ctrl_graphic($scope) {
     return $scope.folder.graphic_dimensions(x, y)[what];
   };
 
-  $scope.getValidity = function($index) {
+  $scope.getValidity = function(file) {
     if (x == null) return '?';
-    var vx = $scope.getValue($index, x);
-    var vy = $scope.getValue($index, y);
+    var vx = $scope.getValue(file, x);
+    var vy = $scope.getValue(file, y);
     if (typeof(vx) != 'number') return 'Invalid ' + x;
     if (typeof(vy) != 'number') return 'Invalid ' + y;
     if (vx < imgDimension('vleft')) return x + ' to low';
@@ -45,13 +45,13 @@ function ctrl_graphic($scope) {
     return 'v';
   };
 
-  $scope.getValue = function($index, field) {
-    if (field == 'ageAtConsultTime' || typeof($scope.folder.getSubFile($index)[field]) == 'function') {
+  $scope.getValue = function(file, field) {
+    if (field == 'ageAtConsultTime' || typeof(file[field]) == 'function') {
       try {
         if (field == 'ageAtConsultTime') {
-          return calculations.age.atConsultTime($scope.folder.getSubFile($index), $scope.folder.getPatient());
+          return calculations.age.atConsultTime(file, $scope.folder.getPatient());
         } else {
-          return $scope.folder.getSubFile($index)[field]();
+          return file[field]();
         }
       } catch(e) {
         if (e instanceof DataMissingException) {
@@ -60,23 +60,23 @@ function ctrl_graphic($scope) {
         throw e;
       }
     }
-    if (typeof($scope.folder.getSubFile($index)[field]) == 'undefined') return 'undefined';
-    if ($scope.folder.getSubFile($index)[field] == null) return '#NA';
-    return $scope.folder.getSubFile($index)[field];
+    if (typeof(file[field]) == 'undefined') return 'undefined';
+    if (file[field] == null) return '#NA';
+    return file[field];
   };
 
-  $scope.getAbscisse = function($index) {
-    if (!$scope.getValidity($index)) return 0;
+  $scope.getAbscisse = function(file) {
+    if (!$scope.getValidity(file)) return 0;
 
-    var v = $scope.getValue($index, x);
+    var v = $scope.getValue(file, x);
     var p = (v - imgDimension('vleft')) / (imgDimension('vright') - imgDimension('vleft'));
     return (p * (imgDimension('right') - imgDimension('left')) + imgDimension('left')) * 100;
   };
 
-  $scope.getOrdonnee = function($index) {
-    if (!$scope.getValidity($index)) return 0;
+  $scope.getOrdonnee = function(file) {
+    if (!$scope.getValidity(file)) return 0;
 
-    var v = $scope.getValue($index, y);
+    var v = $scope.getValue(file, y);
     var p = (v - imgDimension('vbottom')) / (imgDimension('vtop') - imgDimension('vbottom'));
     return (p* (imgDimension('top') - imgDimension('bottom')) + imgDimension('bottom')) * 100;
   };
