@@ -123,7 +123,7 @@
                 resolve(false);
               })
               .then(json => {
-                let f = new Folder(json);
+                let f = new Folder(json.folder);
                 patientFolderCache.set(json.id, f);
 
                 resolve(json);
@@ -149,18 +149,17 @@
         },
 
         getFolder(id) {
-          let data = patientFolderCache.get(id);
-          if (data != null) {
-            console.log("using stored folder: ", data);
-            return Promise.resolve(data);
+          let f = patientFolderCache.get(id);
+          if (f != null) {
+            return Promise.resolve(f);
           }
 
           return this.start()
             .requestWithGet()
             .requestToUrl(`folder/Patient/${id}`)
             .then(json => {
-              let f = new Folder(json);
-              patientFolderCache.set(id, f);
+              let f = new Folder(json.folder);
+              patientFolderCache.set(f.getId(), f);
               return f;
             });
         },
@@ -183,8 +182,8 @@
             .requestWithData(nullify(data))
             .then(function(data) {
               let f = new Folder(data.folder);
-              patientFolderCache.set(data.folder.id, f);
-              return f;
+              patientFolderCache.set(f.getId(), f);
+              return data;
             });
         },
 
@@ -195,7 +194,7 @@
             .requestWithData(nullify(data))
             .then(function(data) {
               let f = new Folder(data.folder);
-              patientFolderCache.set(data.folder.id, f);
+              patientFolderCache.set(f.getId(), f);
               return f;
             });
         },
@@ -206,7 +205,7 @@
             .requestToUrl('fiche/' + data.getModel() + '/' + data['id'])
             .then(function(data) {
               let f = new Folder(data.folder);
-              patientFolderCache.set(data.folder.id, f);
+              patientFolderCache.set(f.getId(), f);
             });
         },
 
@@ -216,7 +215,7 @@
             .requestToUrl('unfreeze/' + data.getModel() + '/' + data['id'])
             .then(function(data) {
               let f = new Folder(data.folder);
-              patientFolderCache.set(data.folder.id, f);
+              patientFolderCache.set(f.getId(), f);
               return f;
             });
         },
