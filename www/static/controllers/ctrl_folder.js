@@ -274,15 +274,15 @@ function ctrl_folder($scope, $location, $routeParams) {
 
     getDataService()
       .then(dataService => dataService.createFile(updatedData))
-      .then(function(data) {
+      .then(function(folder) {
         $scope.$emit('message', {
           'level': 'success',
           'text': 'The ' + updatedData.getModel() + ' has been created.'
         });
         // The data is refreshed by navigating away...
         // Let's refresh the data
-        $scope.folder = data;
-        goThere('/folder/' + $scope.patient_id + '/file/' + $scope.subtype + '/' + data.newKey);
+        $scope.folder = folder;
+        goThere('/folder/' + $scope.patient_id + '/file/' + $scope.subtype + '/' + folder.getHeader("newKey"));
         $scope.safeApply();
       });
   };
