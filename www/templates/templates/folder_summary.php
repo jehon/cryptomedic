@@ -17,7 +17,7 @@
 		<td></td>
 		<td ng-include="template('patient', 'summary')"></td>
 	</tr>
-	<tr ng-repeat="f in folder.getSubFiles()">
+	<tr ng-repeat="f in folder.getFilesRelatedToPatient()">
 		<td>#{{$index}}</td>
 		<td>
 			<a href="#/folder/{{patient_id}}/file/{{f.getModel()}}/{{f.id}}" class="btn btn-default" style="width: 100%">

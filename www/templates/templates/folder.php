@@ -56,7 +56,7 @@
               <span id='patient_save' class='btn btn-default' ng-click="actionSavePatient()">Save</span>
             </jh-authorized>
             <jh-authorized ng-if="isAuthorized('folder.delete', authorizedList)">
-              <span id='patient_delete' ng-if='(folder.getSubFiles().length == 0)' class='btn btn-default' ng-click="actionDeletePatient()">Delete</span>
+              <span id='patient_delete' ng-if='(folder.getFilesRelatedToPatient().length == 0)' class='btn btn-default' ng-click="actionDeletePatient()">Delete</span>
             </jh-authorized>
             <span id='patient_cancel' class='btn btn-default' ng-click="actionCancel()">Cancel</span>
           </span>
