@@ -20,7 +20,7 @@
 	<tr ng-repeat="f in folder.getFilesRelatedToPatient()">
 		<td>#{{$index}}</td>
 		<td>
-			<a href="#/folder/{{patient_id}}/file/{{f.getModel()}}/{{f.id}}" class="btn btn-default" style="width: 100%">
+			<a href="#/folder/{{folder.getId()}}/file/{{f.getModel()}}/{{f.id}}" class="btn btn-default" style="width: 100%">
 				{{f.getModel()}}
 			</a>
 		</td>

@@ -1,5 +1,5 @@
 <?php
-	t::setDefaultOption("baseExpression", "folder.getSubFile(\$index).");
+	t::setDefaultOption("baseExpression", "folder.getFilesRelatedToPatient(\$index).");
 	t::setDefaultOption("readOnly");
 ?>
 <table style='width: 100%'>
