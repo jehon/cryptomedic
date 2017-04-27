@@ -15,7 +15,7 @@ class Bill extends Item {
 
   constructor(data, folder = null) {
     super(data, folder);
-    if (!data) {
+    if (!data || Object.keys(data).length == 0) {
       // Initialize social level from last bill (if any)
       var last_bill = null;
       if (folder) {
