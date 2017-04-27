@@ -54,7 +54,6 @@ class Folder extends Data {
   }
 
   getId() {
-    console.log("this.getPatient", this.getPatient());
     if (this.getPatient()) {
       return this.getPatient().id + "";
     }
@@ -94,10 +93,13 @@ class Folder extends Data {
 
   getPatient() {
     let list = this.getListByType(Patient);
-    if (list.length > 0) {
-      return list[0];
+    if (list.length == 0) {
+      // Always have a patient
+      let p = new Patient();
+      this.list.push(p);
+      return p;
     }
-    return null;
+    return list[0];
   }
 
   getFilesRelatedToPatient() {
