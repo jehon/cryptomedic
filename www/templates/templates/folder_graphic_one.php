@@ -23,7 +23,7 @@
 	    <tr ng-repeat="f in folder.getFilesRelatedToPatient()" tag="stat_{{$index}}"
 	    	ng-mouseover="hover($index)"
 	    	ng-class="{ hovered: hovered == $index }"
-	    	ng-click="go('/folder/' + folder.id + '/file/' + folder.getSubFile($index).getModel() + '/' + folder.getSubFile($index).id)"
+	    	ng-click="go('/folder/' + folder.id + '/file/' + f.getModel() + '/' + f.id)"
 			>
 	        <td>{{getValue($index, "Date") }}</td>
 	        <td>{{getValue($index, getVariableX()) | number:0}}</td>
