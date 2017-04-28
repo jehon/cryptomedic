@@ -1,6 +1,6 @@
 'use strict';
 
-class OtherConsult extends Item {
+class OtherConsult extends PatientRelated {
   getModel() {
     return 'OtherConsult';
   }

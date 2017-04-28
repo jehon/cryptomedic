@@ -5,7 +5,7 @@
 // TODO: Adapt for: ctrl_folder
 // TODO: Adapt for: ctrl_file_bill
 
-class Folder extends Data {
+class Folder extends FolderPage {
   static string2class(type) {
     console.assert(typeof type == "string", "create[type/1] expect a string")
     switch(type) {
@@ -27,7 +27,7 @@ class Folder extends Data {
   }
 
   constructor(listing = {}) {
-    super({});
+    super();
     this.headers = {};
     if (typeof(listing) != undefined) {
       this.list = [];

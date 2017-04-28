@@ -2,33 +2,15 @@
 /* global Data, getPref, DataMissingException, calculations, amd_stats */
 /* exported Item */
 
-class Item extends Data {
+class PatientRelated extends FolderPage {
   constructor(data, folder = null) {
     super(data);
-    if (data == null) {
-      var c = getPref('file', {
-        examinerName: '',
-        center: '',
-        date: ''
-      });
-      this.ExaminerName = c.examinerName;
-      this.Center       = c.center;
-      this.Date         = c.date;
-    }
     if (folder) {
       this.patient_id = folder.getId();
       this.linkPatient(folder.getPatient());
     } else {
       this.linkPatient(null);
     }
-  }
-
-  getModel() {
-    throw "You should define the getModel on each model";
-  }
-
-  getRelated() {
-    return {};
   }
 
   linkPatient(patient) {

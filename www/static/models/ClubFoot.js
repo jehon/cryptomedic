@@ -11,7 +11,7 @@ function f(val) {
 }
 
 
-class ClubFoot extends Item {
+class ClubFoot extends PatientRelated {
   getModel() {
     return 'ClubFoot';
   }

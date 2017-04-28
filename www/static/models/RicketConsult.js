@@ -1,6 +1,6 @@
 'use strict';
 
-class RicketConsult extends Item {
+class RicketConsult extends PatientRelated {
   getModel() {
     return 'RicketConsult';
   }

@@ -1,9 +1,20 @@
 
-class Data {
+class FolderPage {
   constructor(data = {}) {
     if (data) {
       Object.assign(this, data);
     }
+  }
+
+  initFromCachedPreferences() {
+    var c = getPref('file', {
+      examinerName: '',
+      center: '',
+      date: ''
+    });
+    this.ExaminerName = c.examinerName;
+    this.Center       = c.center;
+    this.Date         = c.date;
   }
 
   isSet(field) {
@@ -35,5 +46,13 @@ class Data {
 
   isLocked() {
     return false;
+  }
+
+  getModel() {
+    throw "You should define the getModel on each model";
+  }
+
+  getRelated() {
+    return {};
   }
 }

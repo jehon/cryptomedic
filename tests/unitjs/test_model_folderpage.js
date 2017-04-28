@@ -1,15 +1,14 @@
 
-describe('Data', function() {
+describe('FolderPage', function() {
   describe('with empty loader', function() {
-    var data = new Data();
+    var data = new FolderPage();
     it('should have inheritance ok', function() {
-      // expect(data.constructor.name).toBe('Data');
-      expect(data instanceof Data).toBeTruthy();
+      expect(data instanceof FolderPage).toBeTruthy();
     });
   });
 
   describe('with data loading at construction time', function() {
-    var data = new Data({
+    var data = new FolderPage({
       data1: 'data1',
       dataArray: [ 1, 2, 3]
     });
@@ -52,7 +51,7 @@ describe('Data', function() {
   });
 
   it('would interpret notSet correctly', function() {
-    var data = new create('Data');
+    var data = new FolderPage();
     expect(data.data1).toBeUndefined();
     expect(data.isSet('data1')).toBeFalsy();
     expect(data.isNotZero('data1')).toBeFalsy();
