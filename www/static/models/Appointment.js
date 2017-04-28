@@ -1,6 +1,6 @@
 'use strict';
 
-class Appointment extends Item {
+class Appointment extends PatientRelated {
   getModel() {
     return 'Appointment';
   }

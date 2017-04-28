@@ -97,6 +97,7 @@ function ctrl_folder($scope, $location, $routeParams) {
       // File
       if ($scope.mode == 'add') {
         cachedCurrentFile = Folder.create(folder, $scope.subtype);
+        cachedCurrentFile.initFromCachedPreferences();
         cachedCurrentFile.linkPatient(folder.getPatient());
       } else {
         cachedCurrentFile = folder.getByTypeAndId(Folder.string2class($scope.subtype), $scope.subid);

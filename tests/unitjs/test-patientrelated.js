@@ -1,8 +1,4 @@
-/* global loadReference, DataMissingException, Folder, Patient, Item, RicketConsult */
-describe('Item', function() {
-  // var ricketConsult_8819 = 6;
-  // var clubFoot_695 = 4;
-
+describe("PatientRelated", function() {
   describe('with TestFolder.test1.json', function() {
     it('should have correct properties', function() {
       // Go through the rest_service !!!
@@ -15,7 +11,7 @@ describe('Item', function() {
 
       let rc = folder.getByTypeAndId(RicketConsult, 13);
 
-      expect(rc).toEqual(jasmine.any(Item));
+      expect(rc).toEqual(jasmine.any(PatientRelated));
       expect(rc).toEqual(jasmine.any(RicketConsult));
       expect(rc).toEqual(jasmine.anything({ id: 13 }));
       expect(rc.getPatient()).toEqual(jasmine.any(Patient));
@@ -54,7 +50,7 @@ describe('Item', function() {
   describe('with patient with sex', function() {
     it('should throw error everytime', function() {
       let p = new Patient({ 'Sex': 'Male' });
-      var o = new Item({});
+      var o = new PatientRelated({});
       o.linkPatient(p);
 
       expect(function() { o.ageAtConsultTime(); }).toThrow(new DataMissingException('Date'));

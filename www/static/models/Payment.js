@@ -1,6 +1,6 @@
 'use strict';
 
-class Payment extends Item {
+class Payment extends FolderPage {
   getModel() {
     return 'Payment';
   }

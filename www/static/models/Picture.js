@@ -1,7 +1,7 @@
 /* global API_VERSION */
 'use strict';
 
-class Picture extends Item {
+class Picture extends PatientRelated {
   getModel() {
     return 'Picture';
   }

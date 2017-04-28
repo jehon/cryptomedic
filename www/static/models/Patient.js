@@ -1,6 +1,6 @@
 'use strict';
 
-class Patient extends Data {
+class Patient extends FolderPage {
   getModel() {
     return 'Patient';
   }

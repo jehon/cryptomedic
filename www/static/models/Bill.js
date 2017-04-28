@@ -2,7 +2,7 @@
 
 // TODO: there seems to have a race condition around here...
 
-class Bill extends Item {
+class Bill extends PatientRelated {
   getModel() {
     return 'Bill';
   }
@@ -18,16 +18,15 @@ class Bill extends Item {
     if (!data || Object.keys(data).length == 0) {
       // Initialize social level from last bill (if any)
       var last_bill = null;
+      console.log(folder);
       if (folder) {
-        for(var k in folder.subFiles) {
-          var v = folder.subFiles[k];
-          if (v.getModel() == 'Bill') {
-            if (!last_bill) {
+        for(var v of folder.getListByType('Bill')) {
+          console.log("constructor: init - ", v);
+          if (!last_bill) {
+            last_bill = v;
+          } else {
+            if (last_bill.Date < v.Date) {
               last_bill = v;
-            } else {
-              if (last_bill.Date < v.Date) {
-                last_bill = v;
-              }
             }
           }
         }
@@ -35,9 +34,6 @@ class Bill extends Item {
           this.sl_familySalary = last_bill.sl_familySalary;
           this.sl_numberOfHouseholdMembers = last_bill.sl_numberOfHouseholdMembers;
         }
-      }
-      if (typeof(this.Date) == 'undefined' || !this.Date) {
-        this.Date = getPref("date", (new Date()).toISOString().slice(0, 10));
       }
     }
   }
