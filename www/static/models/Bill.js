@@ -20,7 +20,7 @@ class Bill extends PatientRelated {
       var last_bill = null;
       console.log(folder);
       if (folder) {
-        for(var v of folder.getListByType('Bill')) {
+        for(var v of folder.getListByType(Bill)) {
           console.log("constructor: init - ", v);
           if (!last_bill) {
             last_bill = v;
