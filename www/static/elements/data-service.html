@@ -207,6 +207,7 @@
             .then(function(data) {
               let f = new Folder(data.folder);
               patientFolderCache.set(f.getId(), f);
+              return f;
             });
         },
 
