@@ -38,71 +38,48 @@ function ctrl_file_bill($scope) {
     $scope.currentFile().ratioSalary();
   });
 
-  $scope.paymentsList = function() {
-    return $scope.folder.getFilesRelatedToBill($scope.subid);
-  }
-
   $scope.actionAddPayment = function() {
     if (!$scope.actionValidate()) {
       alert('You have errors in your data. Please correct them and try again');
       return ;
     }
     $scope.paymentEditor.bill_id = $scope.subid;
-    $scope.bfolder = null;
     $scope.safeApply();
 
     extractPrefsFile($scope.paymentEditor);
 
     getDataService()
       .then(dataService => dataService.createOrSaveFile($scope.paymentEditor))
-      .then(function() {
+      .then(function(folder) {
         // The data is refreshed by navigating away...
         $scope.$emit('message', { 'level': 'success', 'text': 'The Payment has been saved.'});
+        $scope.folder = folder;
+        $scope.paymentEditor = new Payment();
         $scope.safeApply();
-      })
-      .then(() => {
-        getDataService()
-          .then(dataService => dataService.getFolder('Bill', $scope.subid))
-          .then(bfolder => {
-            $scope.bfolder = bfolder;
-            $scope.paymentEditor = new Payment();
-            $scope.safeApply();
-          })
-          ;
       })
   }
 
   $scope.actionDeletePayment = function(id) {
-    let data = $scope.bfolder.getSubFileByType('Payment', id);
     getDataService()
-      .then(dataService => dataService.deleteFile(data))
-      .then(function() {
+      .then(dataService => dataService.deleteFile($scope.folder.getByTypeAndId(Payment, id)))
+      .then(function(folder) {
         // The data is refreshed by navigating away...
         $scope.$emit('message', { 'level': 'success', 'text': 'The Payment has been deleted.'});
+        $scope.folder = folder;
+        $scope.paymentEditor = new Payment();
         $scope.safeApply();
-      })
-      .then(() => {
-        getDataService()
-          .then(dataService => dataService.getFolder('Bill', $scope.subid))
-          .then(bfolder => {
-            $scope.bfolder = bfolder;
-            $scope.paymentEditor = new Payment();
-            $scope.safeApply();
-          })
-          ;
       })
   }
 
   $scope.actionEditPayment = function(id) {
-    let data = new Payment($scope.bfolder.getSubFileByType('Payment', id));
-    $scope.paymentEditor = data;
+    $scope.paymentEditor = new Payment($scope.folder.getByTypeAndId(Payment, id));
   }
 
   $scope.getPaymentTotal = function() {
-    if (!$scope.bfolder) {
+    if (!$scope.folder) {
       return "?";
     }
-    return $scope.bfolder.getSubFiles().reduce((acc, file) => {
+    return $scope.folder.getFilesRelatedToBill($scope.subid).reduce((acc, file) => {
       return acc + (file.Amount ? file.Amount : 0)
     }, 0);
   }
