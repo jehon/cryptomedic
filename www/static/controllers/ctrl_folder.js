@@ -152,15 +152,6 @@ function ctrl_folder($scope, $location, $routeParams) {
     return cachedCurrentFile;
   };
 
-  // PROBLEM TODO
-  $scope.getPathTo = function(mode, index) {
-    var f = $scope.currentFile();
-    if (index) {
-      f = $scope.folder.getSubFile(index);
-    }
-    return '/folder/' + f.patient_id + '/fiche/' + f.getModel() + '/' + f.id + (mode ? '/' + mode : '');
-  };
-
   //----------------------
   //   Actions
   //----------------------
