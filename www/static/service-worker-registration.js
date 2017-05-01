@@ -64,5 +64,5 @@ if (location.protocol == 'https:') {
   console.info('[SW] Detection: offline mode, activating plugin');
   activateCache();
 } else {
-  console.info('[SW] Detection: https not detcted, online mode');
+  console.info('[SW] Detection: https not detected, online mode');
 }
