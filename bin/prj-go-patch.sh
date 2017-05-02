@@ -75,10 +75,6 @@ fi
 echo "******************** Log ************************"
 cat $LOG
 
-# lftp <<EOC
-#   open -u "$ftp_user","$ftp_pass" "$ftp_host";
-# EOC
-
 echo "[$conf_site] Done"
 
 echo "Running parts:"
