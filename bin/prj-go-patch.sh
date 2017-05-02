@@ -17,31 +17,6 @@ $PRJ_DIR/bin/prj-build.sh
 
 echo "Log file: $LOG"
 
-filter() {
-  cat "$1"                                \
-    | grep -v "*.log"                     \
-    | grep -v ".git"                      \
-    | grep -v "/config-site.php"          \
-    | grep -v "/.log"                     \
-    | grep -v "/.settings"                \
-    | grep -v "/backups"                  \
-    | grep -v "/bin"                      \
-    | grep -v "/conf/database/base.sql"   \
-    | grep -v "/live"                     \
-    | grep -v "/live-for-test"            \
-    | grep -v "/node_modules"             \
-    | grep -v "/tmp/"                     \
-    | grep -v "/target"                   \
-    | grep -v "/tests"                    \
-    | grep -v "/test"                     \
-    | grep -v "/Test"                     \
-    | grep -v "/vagrant/"                 \
-    | grep -v "/storage/"                 \
-    | grep -v "/conf/www-root-10000"      \
-    | grep -v "/documentation"            \
-    > "$1.filtered"
-}
-
 ftp_host=`   php ${PRJ_DIR}/config.php deployment.$conf_site.ftp_host 2>/dev/null || true`
 ftp_user=`   php ${PRJ_DIR}/config.php deployment.$conf_site.ftp_user 2>/dev/null || true`
 ftp_pass=`   php ${PRJ_DIR}/config.php deployment.$conf_site.ftp_pass 2>/dev/null || true`
@@ -61,9 +36,6 @@ echo "[$conf_site] local_root     : $local_root"
 
 wget   cryptomedic.local/maintenance/md5sum.php -O $TMP/md5sum-local.txt
 wget www.cryptomedic.org/maintenance/md5sum.php -O $TMP/md5sum-remote.txt
-
-filter $TMP/md5sum-local.txt
-filter $TMP/md5sum-remote.txt
 
 build_up(){
   while read data; do
@@ -93,10 +65,11 @@ build_up(){
 }
 
 if [ "$1" == "test" ]; then
-  diff -u $TMP/md5sum-remote.txt.filtered $TMP/md5sum-local.txt.filtered | build_up > /dev/null
+  # We will use the log to see the changes
+  diff -u $TMP/md5sum-remote.txt $TMP/md5sum-local.txt | build_up > /dev/null
 else
   echo "*** Commiting ***"
-  diff -u $TMP/md5sum-remote.txt.filtered $TMP/md5sum-local.txt.filtered | build_up | lftp
+  diff -u $TMP/md5sum-remote.txt $TMP/md5sum-local.txt | build_up | lftp
 fi
 
 echo "******************** Log ************************"
