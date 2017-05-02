@@ -64,12 +64,12 @@ build_up(){
   done
 }
 
-if [ "$1" == "test" ]; then
-  # We will use the log to see the changes
-  diff -u $TMP/md5sum-remote.txt $TMP/md5sum-local.txt | build_up > /dev/null
-else
+if [ "$1" == "commit" ]; then
   echo "*** Commiting ***"
   diff -u $TMP/md5sum-remote.txt $TMP/md5sum-local.txt | build_up | lftp
+else
+  # We will use the log to see the changes
+  diff -u $TMP/md5sum-remote.txt $TMP/md5sum-local.txt | build_up > /dev/null
 fi
 
 echo "******************** Log ************************"
@@ -86,4 +86,17 @@ echo "Running parts:"
 # Run project custom files
 run-parts --exit-on-error --report $PRJ_DIR/bin/prj-go-site.d --arg="$conf_site"
 
+
 echo "End result: $?"
+
+if [ "$1" != "commit" ]; then
+  echo "!!!!!!!!!!!!!!!!!!! TEST MODE !!!!!!!!!!!!!!!!!!!!!!"
+  echo "!!!!!!!!!!!!!!!!!!! TEST MODE !!!!!!!!!!!!!!!!!!!!!!"
+  echo "!!!!!!!!!!!!!!!!!!! TEST MODE !!!!!!!!!!!!!!!!!!!!!!"
+  echo "!!!!!!!!!!!!!!!!!!! TEST MODE !!!!!!!!!!!!!!!!!!!!!!"
+  echo "!!!!!!!!!!!!!!!!!!! TEST MODE !!!!!!!!!!!!!!!!!!!!!!"
+  echo "!!!!!!!!!!!!!!!!!!! TEST MODE !!!!!!!!!!!!!!!!!!!!!!"
+  echo "To really commit, use:"
+  echo "$0 commit"
+  echo ""
+fi
