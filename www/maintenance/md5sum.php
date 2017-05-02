@@ -68,6 +68,7 @@ foreach($list as $f)
   ##
   if (contains($fn, "/.git/")) { continue; }
   if (startsWith($fn, "/node_modules/")) { continue; }
+  if (startsWith($fn, "/documentation/")) { continue; }
   if (contains($fn, "/tests/")) { continue; }
   if (contains($fn, "/test/")) { continue; }
   if (contains($fn, "/unused/")) { continue; }
