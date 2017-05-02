@@ -13,7 +13,7 @@ TMP=$PRJ_DIR/target/
 LOG=$TMP/`date +%F_%H.%M.%S`.install.log
 conf_site="prod"
 
-$PRJ_DIR/bin/prj-build.sh
+npm run build
 
 echo "Log file: $LOG"
 
