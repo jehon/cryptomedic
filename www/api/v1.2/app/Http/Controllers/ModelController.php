@@ -152,7 +152,7 @@ class ModelController extends Controller {
   }
 
   // Unfreeze special route
-  public function unfreeze($model, $id) {
+  public function unlock($model, $id) {
     $m = self::getModelClass($model, $id);
     $obj = $m::find($id);
 

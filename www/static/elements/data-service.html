@@ -214,7 +214,7 @@
         unlockFile(data) {
           return this.start()
             .requestWithGet()
-            .requestToUrl('unfreeze/' + data.getModel() + '/' + data['id'])
+            .requestToUrl('unlock/' + data.getModel() + '/' + data['id'])
             .then(function(data) {
               let f = new Folder(data.folder);
               patientFolderCache.set(f.getId(), f);
