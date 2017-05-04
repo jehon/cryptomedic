@@ -51,6 +51,13 @@ class CryptomedicModel extends Model {
 		return true;
 	}
 
+	public function isLocked() {
+		if (!$this->updated_at) {
+			return false;
+		}
+		return false;
+	}
+
 	public function getDependantsList() {
 		return [ $this->getLineRecord() ];
 	}
