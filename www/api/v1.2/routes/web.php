@@ -105,7 +105,10 @@ Route::group([ 'prefix' => '/api/' . basename(dirname(__DIR__)) ], function() {
     });
 
     hasPermission('folder.unlock', function() {
-      Route::get('unfreeze/{model}/{id}', 'ModelController@unfreeze');
+      Route::get('unlock/{model}/{id}', 'ModelController@unlock');
+
+      // TODO: temporary duplicate from above
+      Route::get('unfreeze/{model}/{id}', 'ModelController@unlock');
     });
   });
 });
