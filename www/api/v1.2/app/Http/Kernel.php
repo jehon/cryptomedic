@@ -48,8 +48,6 @@ class Kernel extends HttpKernel
     protected $routeMiddleware = [
 
         'authenticated'   => 'App\Http\Middleware\Authenticated',
-        'writeGroup'      => 'App\Http\Middleware\WriteGroup',
-        'unFreezeGroup'   => 'App\Http\Middleware\UnFreezeGroup',
         'hasPermission'   => \App\Http\Middleware\HasPermission::class,
         //'auth.basic' => 'Illuminate\Auth\Middleware\AuthenticateWithBasicAuth',
 
