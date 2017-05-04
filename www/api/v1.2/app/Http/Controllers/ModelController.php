@@ -99,9 +99,12 @@ class ModelController extends Controller {
   public function update($model, $id) {
     $obj = self::getObjectByModelAndId($model, $id);
 
+    if ($obj->isLocked()) {
+      abort(403, "File is frozen");
+    }
+
     $data = Input::except([ '_type' ] + $obj->getReadOnlyField());
     $data = self::cannonize($data);
-
     foreach($data as $k => $v) {
       // Skip system fields
       if (in_array($k, [ $obj->getUpdatedAtColumn(), $obj->getCreatedAtColumn()])) {
@@ -124,6 +127,10 @@ class ModelController extends Controller {
   public function destroy($model, $id) {
     $m = self::getModelClass($model);
     $obj = $m::find($id);
+
+    if ($obj->isLocked()) {
+      abort(403, "File is frozen");
+    }
 
     if ($model == "Patient") {
       $root = false;

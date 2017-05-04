@@ -5,6 +5,10 @@ namespace App\Model;
 // http://laravel.com/docs/5.0/eloquent#model-events
 
 class Patient extends CryptomedicModel {
+  public function isLocked() {
+    return false;
+  }
+
   public function getDependantsList() {
     $list = [];
 
