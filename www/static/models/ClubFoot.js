@@ -16,6 +16,10 @@ class ClubFoot extends PatientRelated {
     return 'ClubFoot';
   }
 
+  getServerRessource() {
+    return "clubfeet";
+  }
+
   getPiraniLeft() {
     // TODO: try-catch it in gui
     try {
