@@ -11,13 +11,13 @@ use App\Model\References;
 use App\Model\Patient;
 
 // TODO: protect frozen files
-class ModelController extends Controller {
+abstract class ModelController extends Controller {
   // @see http://laravel.com/docs/5.0/controllers
 
   public static function cannonize($data) {
     if (is_array($data)) {
       foreach($data as $k => $v) {
-        $data[$k] = self::cannonize($v);
+        $data[$k] = static::cannonize($v);
       }
     }
     if ($data === "null") {
@@ -26,34 +26,28 @@ class ModelController extends Controller {
     return $data;
   }
 
-  public static function getModelClass($model) {
-    $model = "\\App\\Model\\" . $model;
-    if ($model === false) {
-      abort(400, "No correct model found");
-    }
-    return $model;
-  }
+  abstract static public function getModelClass();
 
-  public static function getObjectByModelAndId($model, $id) {
-    $m = self::getModelClass($model);
+  public static function getObjectById($id) {
+    $m = static::getModelClass();
     return $m::findOrFail($id);
   }
 
-  protected function getOnlineObject($model, $id) {
+  protected function getOnlineObject($id) {
     return (object) [
-      "record" => self::getObjectByModelAndId($model, $id),
+      "record" => static::getObjectByModelAndId($id),
       "id" => $id,
-      "type" => $model
+      "type" => $this->getModelClass()->get_class()
     ];
   }
 
   // POST = create
-  public function create($model) {
+  public function store() {
     $data = Input::except('_type');
-    $data = self::cannonize($data);
-    $m = self::getModelClass($model);
+    $data = static::cannonize($data);
+    $m = static::getModelClass();
 
-    if ($model == "Patient") {
+    if ($m instanceOf Patient) {
       // In case we create a patient, things are a bit more complicated!!!
       // We do this only when we need to generate a reference
       // otherwise, we go to FolderController@reference (other route)
@@ -72,13 +66,13 @@ class ModelController extends Controller {
       $id = $id[0]->id;
 
       if (!$id) {
-        abort(500, "Could not create the $model");
+        abort(500, "Could not create the " . $this->getModelClass()->get_class());
       }
 
       // $m::findOrFail($id);
       $response = $this->update("Patient", $id);
       if (!$response) {
-        abort(500, "Could not update the created $model");
+        abort(500, "Could not update the created " . $this->getModelClass()->get_class());
       }
       $newObj = Patient::findOrFail($id);
     } else {
@@ -96,15 +90,15 @@ class ModelController extends Controller {
   }
 
   // PUT / PATCH
-  public function update($model, $id) {
-    $obj = self::getObjectByModelAndId($model, $id);
+  public function update($id) {
+    $obj = static::getObjectById($id);
 
     if ($obj->isLocked()) {
       abort(403, "File is frozen");
     }
 
     $data = Input::except([ '_type' ] + $obj->getReadOnlyField());
-    $data = self::cannonize($data);
+    $data = static::cannonize($data);
     foreach($data as $k => $v) {
       // Skip system fields
       if (in_array($k, [ $obj->getUpdatedAtColumn(), $obj->getCreatedAtColumn()])) {
@@ -124,15 +118,15 @@ class ModelController extends Controller {
   }
 
   // DELETE
-  public function destroy($model, $id) {
-    $m = self::getModelClass($model);
+  public function destroy($id) {
+    $m = static::getModelClass();
     $obj = $m::find($id);
 
     if ($obj->isLocked()) {
       abort(403, "File is frozen");
     }
 
-    if ($model == "Patient") {
+    if ($this->getModelClass() instanceof Patient) {
       $root = false;
     } else {
       // Keep root reference for folder build up...
@@ -159,8 +153,8 @@ class ModelController extends Controller {
   }
 
   // Unfreeze special route
-  public function unlock($model, $id) {
-    $m = self::getModelClass($model, $id);
+  public function unlock($id) {
+    $m = static::getModelClass($id);
     $obj = $m::find($id);
 
     $affectedRows = $m::where("id", "=", $id)->update([ "updated_at" => new \DateTime() ]);
