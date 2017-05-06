@@ -65,10 +65,10 @@ class FicheTestHelper extends RouteReferenceTestCase {
     return false;
   }
 
-  public function doCreate($model, $data = []) {
+  public function doCreate($data = []) {
     $json = $this->myRunAssertQuery(
         $this->getNewRequestOptionsBuilder()
-          ->setUrl("fiche/$model")
+          ->setUrl("fiche/" . $this->collection)
           ->setMethod("POST")
           ->setParams($data)
       );
@@ -77,7 +77,7 @@ class FicheTestHelper extends RouteReferenceTestCase {
     $this->assertNotNull($json->newKey);
     $id = $json->newKey;
 
-    $i = $this->getRowIndex($json->folder, $model, $id);
+    $i = $this->getRowIndex($json->folder, $this->model, $id);
     $this->assertNotFalse($i, "The record is not in the result");
     foreach($data as $k => $v) {
       $this->assertEquals($v, $json->folder[$i]->record->$k);
@@ -85,16 +85,16 @@ class FicheTestHelper extends RouteReferenceTestCase {
     return $json->folder[$i];
   }
 
-  public function doUpdate($model, $id, $data = []) {
+  public function doUpdate($id, $data = []) {
     $json = $this->myRunAssertQuery(
         $this->getNewRequestOptionsBuilder()
-          ->setUrl("fiche/$model/" . $id)
+          ->setUrl("fiche/" . $this->collection . "/" . $id)
           ->setMethod("PUT")
           ->setParams($data)
       );
 
     $this->assertEquals($id, $json->id);
-    $i = $this->getRowIndex($json->folder, $model, $id);
+    $i = $this->getRowIndex($json->folder, $this->model, $id);
     $this->assertNotFalse($i, "The record is not in the result");
     foreach($data as $k => $v) {
       $this->assertEquals($v, $json->folder[$i]->record->$k);
@@ -102,15 +102,15 @@ class FicheTestHelper extends RouteReferenceTestCase {
     return $json;
   }
 
-  public function doDelete($model, $id) {
+  public function doDelete($id) {
     $json = $this->myRunAssertQuery(
     $this->getNewRequestOptionsBuilder()
-      ->setUrl("fiche/$model/" . $id)
+      ->setUrl("fiche/" . $this->collection . "/" . $id)
       ->setMethod("DELETE")
       );
 
     $this->assertEquals($id, $json->id);
-    $i = $this->getRowIndex($json->folder, $model, $id);
+    $i = $this->getRowIndex($json->folder, $this->model, $id);
     $this->assertFalse($i, "The record is still in the result");
   }
 }
