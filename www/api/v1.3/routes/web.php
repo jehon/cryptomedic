@@ -132,11 +132,5 @@ Route::group([ 'prefix' => '/api/' . basename(dirname(__DIR__)) ], function() {
     // hasPermission('price.edit', function() {
     //   Route::resource('admin/prices',      'PricesController');
     // });
-
-    hasPermission('folder.unlock', function() {
-
-      // TODO: temporary duplicate from above
-      Route::get('unfreeze/{model}/{id}', 'ModelController@unlock');
-    });
   });
 });
