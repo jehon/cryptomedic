@@ -55,6 +55,10 @@ class CryptomedicModel extends Model {
 		if (!$this->updated_at) {
 			return false;
 		}
+		// if ($this->update_at < new \DateTime('36 days ago')) {
+		//  // Too old, locked
+		// 	return true;
+		// }
 		return false;
 	}
 
