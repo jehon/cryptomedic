@@ -4,7 +4,7 @@ require_once("FicheTestHelper.php");
 
 class FichePaymentTest extends FicheTestHelper {
   protected $model = "Payment";
-
+  protected $collection = "payments";
 
   public function testCreateWithoutBillId() {
     $response = $this->myRunAssertQuery(
@@ -18,12 +18,12 @@ class FichePaymentTest extends FicheTestHelper {
 
   public function testCreate() {
     // Create it
-    $id = $this->doCreate($this->model, [ "bill_id" => '1', 'Amount' => 1 ])->id;
+    $id = $this->doCreate([ "bill_id" => '1', 'Amount' => 1 ])->id;
 
     // Modify it
-    $this->doUpdate($this->model, $id, [ "Amount" => 3 ]);
+    $this->doUpdate($id, [ "Amount" => 3 ]);
 
     // Delete it
-    $this->doDelete($this->model, $id);
+    $this->doDelete($id);
   }
 }

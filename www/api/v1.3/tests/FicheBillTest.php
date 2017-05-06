@@ -4,6 +4,7 @@ require_once("FicheTestHelper.php");
 
 class FicheBillTest extends FicheTestHelper {
   protected $model = "Bill";
+  protected $collection = "bills";
 
 
 	public function testCreateWithoutPatientId() {
@@ -18,12 +19,12 @@ class FicheBillTest extends FicheTestHelper {
 
 	public function testCreate() {
 		// Create it
-    $id = $this->doCreate($this->model, [ "patient_id" => '1' ])->id;
+    $id = $this->doCreate([ "patient_id" => '1' ])->id;
 
 		// Modify it
-    $this->doUpdate($this->model, $id, [ "ExaminerName" => "Ershad" ]);
+    $this->doUpdate($id, [ "ExaminerName" => "Ershad" ]);
 
 		// Delete it
-    $this->doDelete($this->model, $id);
+    $this->doDelete($id);
 	}
 }
