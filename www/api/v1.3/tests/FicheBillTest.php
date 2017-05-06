@@ -10,7 +10,7 @@ class FicheBillTest extends FicheTestHelper {
 	public function testCreateWithoutPatientId() {
     $response = $this->myRunAssertQuery(
         $this->getNewRequestOptionsBuilder()
-          ->setUrl("fiche/" . $this->model)
+          ->setUrl("fiche/" . $this->collection)
           ->setMethod("POST")
           ->setExpected(400)
           ->asText()
