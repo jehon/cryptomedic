@@ -9,7 +9,7 @@ class FichePaymentTest extends FicheTestHelper {
   public function testCreateWithoutBillId() {
     $response = $this->myRunAssertQuery(
         $this->getNewRequestOptionsBuilder()
-          ->setUrl("fiche/" . $this->model)
+          ->setUrl("fiche/" . $this->collection)
           ->setMethod("POST")
           ->setExpected(400)
           ->asText()

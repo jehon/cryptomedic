@@ -104,9 +104,9 @@ class FicheTestHelper extends RouteReferenceTestCase {
 
   public function doDelete($id) {
     $json = $this->myRunAssertQuery(
-    $this->getNewRequestOptionsBuilder()
-      ->setUrl("fiche/" . $this->collection . "/" . $id)
-      ->setMethod("DELETE")
+      $this->getNewRequestOptionsBuilder()
+        ->setUrl("fiche/" . $this->collection . "/" . $id)
+        ->setMethod("DELETE")
       );
 
     $this->assertEquals($id, $json->id);
