@@ -12,10 +12,9 @@ class FolderController extends Controller {
 	// @see http://laravel.com/docs/5.0/controllers
 
 	public static function getFolder($model, $id) {
-		$main = ModelController::getObjectByModelAndId($model, $id);
-		$res = $main->getDependantsList();
-		// usort($res, "self::sortFiles");
-		return $res;
+		if ($model == "Patient") {
+			return Patient::findOrFail($id)->getDependantsList();
+		}
 	}
 
 	public function index() {
