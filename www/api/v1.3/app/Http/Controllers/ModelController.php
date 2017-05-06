@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Input;
 
 use App\Model\References;
-use App\Model\Patient;
 
 // TODO: protect frozen files
 abstract class ModelController extends Controller {
@@ -47,41 +46,11 @@ abstract class ModelController extends Controller {
     $data = static::cannonize($data);
     $m = static::getModelClass();
 
-    if ($m instanceOf Patient) {
-      // In case we create a patient, things are a bit more complicated!!!
-      // We do this only when we need to generate a reference
-      // otherwise, we go to FolderController@reference (other route)
-
-      // Generate a reference:
-      $res = DB::insert("INSERT INTO patients(entryyear, entryorder, Name)
-           VALUE(?, coalesce(
-              greatest(10000,
-                (select i from (select (max(entryorder) + 1) as i from patients where entryyear = ? and entryorder BETWEEN 10000 AND 19999) as j )
-              ),
-          10000), ?)", [ Request::input("entryyear"), Request::input("entryyear"), Request::input("Name") ])
-      || abort(500, "Problem inserting and creating reference");
-
-      // TODO: how does Laravel get last_insert_id cleanly???
-      $id = DB::select("SELECT last_insert_id() as id");
-      $id = $id[0]->id;
-
-      if (!$id) {
-        abort(500, "Could not create the " . $this->getModelClass()->get_class());
-      }
-
-      // $m::findOrFail($id);
-      $response = $this->update("Patient", $id);
-      if (!$response) {
-        abort(500, "Could not update the created " . $this->getModelClass()->get_class());
-      }
-      $newObj = Patient::findOrFail($id);
-    } else {
-      $newObj = $m::create($data);
-      if (!$newObj->id) {
-        abort(500, "Could not create the file");
-      }
-      $id = $newObj->id;
+    $newObj = $m::create($data);
+    if (!$newObj->id) {
+      abort(500, "Could not create the file");
     }
+    $id = $newObj->id;
 
     return response()->json([
       'newKey' => $id,
@@ -119,33 +88,19 @@ abstract class ModelController extends Controller {
 
   // DELETE
   public function destroy($id) {
-    $m = static::getModelClass();
-    $obj = $m::find($id);
+    $obj = static::getObjectById($id);
 
     if ($obj->isLocked()) {
       abort(403, "File is frozen");
     }
 
-    if ($this->getModelClass() instanceof Patient) {
-      $root = false;
-    } else {
-      // Keep root reference for folder build up...
-      $root = $obj->getRoot();
-    }
+    // Keep root reference for folder build up...
+    $root = $obj->getRoot();
 
     if ($obj) {
       $obj->delete();
     }
 
-    if (!$root) {
-      // Patient root
-      return response()->json([
-        'id' => $id,
-        'folder' => []
-      ]);
-    }
-
-    // quid if patient has dependancies? -> see Patient model http://laravel.com/docs/5.0/eloquent#model-events
     return response()->json([
       "id" => $id,
       'folder' => $root->getDependantsList()
