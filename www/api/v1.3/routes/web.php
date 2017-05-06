@@ -98,14 +98,42 @@ Route::group([ 'prefix' => '/api/' . basename(dirname(__DIR__)) ], function() {
     });
 
     hasPermission('folder.edit', function() {
-      Route::POST('/fiche/{model}', 'ModelController@create');
-      Route::PUT('/fiche/{model}/{id}', 'ModelController@update');
-      Route::DELETE('/fiche/{model}/{id}', 'ModelController@destroy');
       Route::POST('/reference', 'FolderController@createfile');
     });
 
+    Route::group([ 'prefix' => '/fiche/' ], function() {
+      hasPermission('folder.edit', function() {
+        Route::resource('appointments',          'AppointmentsController');
+        Route::resource('bills',                 'BillsController');
+        Route::resource('clubfeets',             'ClubFeetController');
+        Route::resource('otherconsults',         'OtherConsultsController');
+        Route::resource('patients',              'PatientsController');
+        Route::resource('payments',              'PaymentsController');
+        Route::resource('pictures',              'PicturesController');
+        Route::resource('ricketconsults',        'RicketConsultsController');
+        Route::resource('surgeries',             'SurgeriesController');
+
+        // Route::POST('/fiche/{model}', 'ModelController@create');
+        // Route::PUT('/fiche/{model}/{id}', 'ModelController@update');
+        // Route::DELETE('/fiche/{model}/{id}', 'ModelController@destroy');
+      });
+      hasPermission('folder.unlock', function() {
+        Route::get('appointments/unlock/{id}',   'AppointmentsController@unlock');
+        Route::get('bills/unlock/{id}',          'BillsController@unlock');
+        Route::get('unlock/clubfeets/{id}',      'ClubFeetController@unlock');
+        Route::get('otherconsults/unlock/{id}',  'OtherConsultsController@unlock');
+        Route::get('payments/unlock/{id}',       'PaymentsController@unlock');
+        Route::get('pictures/unlock/{id}',       'PicturesController@unlock');
+        Route::get('ricketconsults/unlock/{id}', 'RicketConsultsController@unlock');
+        Route::get('surgeries/unlock/{id}',      'SurgeriesController@unlock');
+      });
+    });
+
+    // hasPermission('price.edit', function() {
+    //   Route::resource('admin/prices',      'PricesController');
+    // });
+
     hasPermission('folder.unlock', function() {
-      Route::get('unlock/{model}/{id}', 'ModelController@unlock');
 
       // TODO: temporary duplicate from above
       Route::get('unfreeze/{model}/{id}', 'ModelController@unlock');
