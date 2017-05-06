@@ -55,7 +55,7 @@ Route::group([ 'prefix' => '/api/' . basename(dirname(__DIR__)) ], function() {
     });
 
     hasPermission('admin.checkPictures', function() {
-      Route::get('admin/pictures/checkFileSystem', 'PictureController@checkFileSystem');
+      Route::get('admin/pictures/checkFileSystem', 'PicturesController@checkFileSystem');
     });
 
 
@@ -89,11 +89,11 @@ Route::group([ 'prefix' => '/api/' . basename(dirname(__DIR__)) ], function() {
       ]);
 
       Route::get('picture/{id}', [
-        "uses" => "PictureController@getFile"
+        "uses" => "PicturesController@getFile"
       ]);
 
       Route::get('picture/{id}/thumbnail', [
-        "uses" => "PictureController@getThumbnail"
+        "uses" => "PicturesController@getThumbnail"
       ]);
     });
 

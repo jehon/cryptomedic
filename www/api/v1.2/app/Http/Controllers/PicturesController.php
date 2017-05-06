@@ -43,7 +43,7 @@ function myglob($glob, $recursive = false) {
   return $list;
 }
 
-class PictureController extends Controller {
+class PicturesController extends ModelController {
 
   // List all database pictures that does not exists on the file system
   public function checkFileSystem() {
