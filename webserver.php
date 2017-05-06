@@ -5,7 +5,8 @@ $uri = $_SERVER["REQUEST_URI"];
 $path = parse_url($uri,  PHP_URL_PATH);
 
 if (substr($path, 0, 4) === "/api") {
-  require_once("www/api/v1.2/server.php");
+  $v = explode("/", $path)[2];
+  require_once("www/api/$v/server.php");
   return true;
 }
 
