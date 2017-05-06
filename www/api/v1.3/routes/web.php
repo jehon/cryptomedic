@@ -112,10 +112,6 @@ Route::group([ 'prefix' => '/api/' . basename(dirname(__DIR__)) ], function() {
         Route::resource('pictures',              'PicturesController');
         Route::resource('ricketconsults',        'RicketConsultsController');
         Route::resource('surgeries',             'SurgeriesController');
-
-        // Route::POST('/fiche/{model}', 'ModelController@create');
-        // Route::PUT('/fiche/{model}/{id}', 'ModelController@update');
-        // Route::DELETE('/fiche/{model}/{id}', 'ModelController@destroy');
       });
       hasPermission('folder.unlock', function() {
         Route::get('appointments/unlock/{id}',   'AppointmentsController@unlock');
