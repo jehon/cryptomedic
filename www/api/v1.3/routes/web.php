@@ -105,7 +105,7 @@ Route::group([ 'prefix' => '/api/' . basename(dirname(__DIR__)) ], function() {
       hasPermission('folder.edit', function() {
         Route::resource('appointments',          'AppointmentsController');
         Route::resource('bills',                 'BillsController');
-        Route::resource('clubfeets',             'ClubFeetController');
+        Route::resource('clubfeet' ,             'ClubFeetController');
         Route::resource('otherconsults',         'OtherConsultsController');
         Route::resource('patients',              'PatientsController');
         Route::resource('payments',              'PaymentsController');
