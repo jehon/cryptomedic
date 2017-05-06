@@ -52,6 +52,10 @@ class FolderPage {
     throw "You should define the getModel on each model";
   }
 
+  getServerRessource() {
+    return this.getModel().toLowerCase() + "s";
+  }
+
   getRelated() {
     return {};
   }
