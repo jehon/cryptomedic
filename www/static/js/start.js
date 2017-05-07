@@ -1,6 +1,6 @@
 
 // Also adapt package.json for adding testing the new api
-let API_VERSION='v1.2';
+let API_VERSION='v1.3';
 
 if (!Promise || !indexedDB || !sessionStorage || !fetch) {
   window.location.href = '/static/upgrade.html';
