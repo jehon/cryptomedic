@@ -18,7 +18,7 @@ module.exports = {
 
       .assert.containsText("#Patient_entryyear", 1998)
       .assert.containsText("#Patient_Name", "rezaul")
-      .assert.containsText("#Patient_entryorder", 1) // Should be above 10000
+      .assert.containsText("#Patient_entryorder", 10000) // Should be above 10000 as automatically generated
 
       .myClick("#topsubmenu #patient_edit")
       .myClick("#topsubmenu #patient_delete")
