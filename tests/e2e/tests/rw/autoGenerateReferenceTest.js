@@ -23,8 +23,8 @@ module.exports = {
       .myClick("#topsubmenu #patient_edit")
       .myClick("#topsubmenu #patient_delete")
       .acceptAlert()
-
-      .pause(500)
+      .waitForElementVisible("#page_home")
+      // .pause(500)
       .assert.myAssertHashIs("#/home")
 
       .end();
