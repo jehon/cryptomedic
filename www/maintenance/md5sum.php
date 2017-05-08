@@ -78,6 +78,12 @@ foreach($list as $f)
   }
   if (startsWith($fn, "/backup")) { continue; }
   
+  ##
+  ## Protect old version of api
+  ##
+  if (startsWith($fn, "/api/v1.1")) { continue; }
+  if (startsWith($fn, "/api/v1.2")) { continue; }
+
   echo \hash_file('crc32b',$f) . ": " . $fn . "\n";
 }
 
