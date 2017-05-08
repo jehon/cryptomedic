@@ -39,7 +39,7 @@ build_up(){
     DIR=`dirname "$FN"`
     if [[ ${data:0:2} = "++" ]]; then
       # use this as a trigger to open connection
-      echo open -u "$ftp_user","$ftp_pass" "$ftp_host";
+      echo "open -u $ftp_user,$ftp_pass $ftp_host";
       continue;
     fi
     if [[ ${data:0:2} = "--" ]]; then
