@@ -237,6 +237,7 @@ class Role {
 
   (new Role("manager", "cdc"))
     ->givePermission("folder.unlock")
+    ->givePermission("price.edit")
     ->givePermission("users.manage")
     ;
 
