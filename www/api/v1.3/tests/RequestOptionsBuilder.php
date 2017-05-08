@@ -72,7 +72,7 @@ class RequestOptionsBuilder {
   }
 
   public function asJson() {
-    $this->asJson = $asJson;
+    $this->asJson = true;
     return $this;
   }
 
