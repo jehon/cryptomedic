@@ -125,8 +125,8 @@ Route::group([ 'prefix' => '/api/' . basename(dirname(__DIR__)) ], function() {
       });
     });
 
-    // hasPermission('price.edit', function() {
-    //   Route::resource('admin/prices',      'PricesController');
-    // });
+    hasPermission('price.edit', function() {
+      Route::resource('admin/prices',      'PricesController');
+    });
   });
 });
