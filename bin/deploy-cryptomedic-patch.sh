@@ -33,10 +33,6 @@ echo "[$conf_site] ftp_user       : $ftp_user"
 echo "[$conf_site] remote_root    : $remote_root"
 echo "[$conf_site] local_root     : $local_root"
 
-
-cd $PRJ_DIR && php www/maintenance/md5sum.php > $TMP/md5sum-local.txt
-wget www.cryptomedic.org/maintenance/md5sum.php -O $TMP/md5sum-remote.txt
-
 build_up(){
   while read data; do
     FN=${data:11}
@@ -63,6 +59,10 @@ build_up(){
     fi
   done
 }
+
+
+cd $PRJ_DIR && php www/maintenance/md5sum.php > $TMP/md5sum-local.txt
+wget www.cryptomedic.org/maintenance/md5sum.php -O $TMP/md5sum-remote.txt
 
 if [ "$1" == "commit" ]; then
   echo "*** Commiting ***"
