@@ -60,6 +60,9 @@ build_up(){
   done
 }
 
+echo ""
+echo "Updating md5sum.php script [for real]"
+printf "++\n+         /www/maintenance/md5sum.php\n" | build_up | lftp
 
 cd $PRJ_DIR && php www/maintenance/md5sum.php > $TMP/md5sum-local.txt
 wget www.cryptomedic.org/maintenance/md5sum.php -O $TMP/md5sum-remote.txt
