@@ -7,8 +7,7 @@ describe('Price', function() {
     });
 
     it('should have a correct base url', function() {
-      expect(Price.getBaseUrl()).toBe("/admin/prices");
-      expect(data.getBaseUrl()).toBe("/admin/prices");
+      expect(Price.getBaseUrl()).toBe("admin/prices");
     });
   });
 
