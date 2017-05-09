@@ -270,7 +270,7 @@
             .requestWithData({ password: pwd })
             .requestToUrl('users/password/' + id)
         }
-      });
+      })();
 
       return {
         userCb
