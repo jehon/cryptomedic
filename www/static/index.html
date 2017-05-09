@@ -83,6 +83,9 @@
     <script type='text/javascript' src='../static/models/RicketConsult.js'></script>
     <script type='text/javascript' src='../static/models/Surgery.js'></script>
 
+    <script type='text/javascript' src='../static/models/0CRUD.js'></script>
+    <script type='text/javascript' src='../static/models/Price.js'></script>
+
     <script type='text/javascript' src='../static/controllers/ctrl_allgraphics.js'></script>
     <script type='text/javascript' src='../static/controllers/ctrl_file_appointment.js'></script>
     <script type='text/javascript' src='../static/controllers/ctrl_file_bill.js'></script>
@@ -93,6 +96,7 @@
     <script type='text/javascript' src='../static/controllers/ctrl_reports.js'></script>
     <script type='text/javascript' src='../static/controllers/ctrl_search.js'></script>
     <script type='text/javascript' src='../static/controllers/ctrl_users.js'></script>
+    <script type='text/javascript' src='../static/controllers/ctrl_prices.js'></script>
     <script type='text/javascript' src='../static/controllers/mainApp.js'></script>
 
     <!-- - - - - - - - - - - - - -->
@@ -168,6 +172,12 @@
                   <jh-authorized ng-if="isAuthorized('admin.securityMatrix', authorizedList)">
                     <img src="../static/img/matrix.png" height="20px"/>
                     Matrix
+                  </jh-authorized>
+                </a></li>
+                <li><a id='menu_prices' href="#/prices" class="navbar-link">
+                  <jh-authorized ng-if="isAuthorized('price.edit', authorizedList)">
+                    <img src="../static/img/prices.png" height="20px"/>
+                    Prices
                   </jh-authorized>
                 </a></li>
                 <li><a id='menu_reports' href="#/reports" class="navbar-link">

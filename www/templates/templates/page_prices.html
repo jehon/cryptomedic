@@ -1,0 +1,31 @@
+<div ng-if='!edit'>
+  <table class='table table-hover table-bordered tablesorter reporting'>
+    <thead>
+      <tr>
+        <th>Beginning date</th>
+        <th ng-repeat='p in prices'>{{p['datefrom']}}</th>
+      </tr>
+      <tr>
+        <th>End date</th>
+        <th ng-repeat='p in prices'>{{p['dateto']}}</th>
+      </tr>
+      <tr>
+        <th>Modified by</th>
+        <th ng-repeat='p in prices'>{{p['lastuser']}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat='k in getElements()'>
+        <td>{{k}}</td>
+        <td ng-repeat='p in prices'>
+          <span ng-if='p[k]<=0'>-</span>
+          <span ng-if='p[k]>1'>{{p[k]}}</span>
+          <span ng-if='p[k]==1'>free price</span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+<!--   <span class='btn btn-default' ng-click='doAdd()'>Add a new user</span>
+  <a class='btn btn-default' ng-href='mailto:{{emailAll()}}'>Email everybody</a>
+ -->
+</div>

@@ -209,6 +209,7 @@ mainApp.controller('ctrl_login',            ctrl_login);
 mainApp.controller('ctrl_reports',          ctrl_reports);
 mainApp.controller('ctrl_search',           ctrl_search);
 mainApp.controller('ctrl_users',            ctrl_users);
+mainApp.controller('ctrl_prices',           ctrl_prices);
 
 mainApp.config([ '$routeProvider', function($routeProvider) {
   $routeProvider
@@ -230,6 +231,9 @@ mainApp.config([ '$routeProvider', function($routeProvider) {
     }).when('/users', {
       templateUrl: template('page', 'users'),
       controller: 'ctrl_users',
+    }).when('/prices', {
+      templateUrl: template('page', 'prices'),
+      controller: 'ctrl_prices',
     }).otherwise({ 'redirectTo': '/home'});
 }]);
 
