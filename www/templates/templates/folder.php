@@ -10,7 +10,7 @@
             <jh-authorized ng-if="isAuthorized('folder.edit', authorizedList)">
               <span id='button_save' class="btn btn-default" ng-click="actionCreate()">Create/Save</span>
             </jh-authorized>
-            <span class="btn btn-default" ng-click="actionCancel()">Cancel</span>
+            <span id='button_cancel' class="btn btn-default" ng-click="actionCancel()">Cancel</span>
           </span>
           <span ng-if="(mode == 'read')">
             <!--  View file route -->
@@ -39,9 +39,9 @@
               <span id='button_delete' class='btn btn-default' ng-click='actionDelete()'>Delete</span>
             </jh-authorized>
             <jh-authorized ng-if="isAuthorized('folder.edit', authorizedList)">
-              <span class='btn btn-default' ng-click="actionSave()">Save</span>
+              <span id='button_save' class='btn btn-default' ng-click="actionSave()">Save</span>
             </jh-authorized>
-            <span class='btn btn-default' ng-click="actionCancel()">Cancel</span>
+            <span id='button_cancel' class='btn btn-default' ng-click="actionCancel()">Cancel</span>
           </span>
         </div>
 
@@ -68,7 +68,7 @@
           <jh-authorized ng-if="isAuthorized('folder.edit', authorizedList)">
             <span id='patient_create' class='btn btn-default' ng-click="actionCreatePatient()">Create patient</span>
           </jh-authorized>
-          <span class='btn btn-default' ng-click="go('/home')">Cancel</span>
+          <span id='patient_cancel' class='btn btn-default' ng-click="go('/home')">Cancel</span>
         </div>
       <?php
     }
