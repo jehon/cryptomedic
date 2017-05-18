@@ -47,4 +47,14 @@ class ClubFoot extends PatientRelated {
       return 'undefined';
     }
   }
+
+  validate(res) {
+    res = super.validate(res);
+
+    if ((this.Date > (new Date()).toISOString())) {
+      res.dateInTheFuture = true;
+    }
+
+    return res;
+  }
 }

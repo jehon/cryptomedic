@@ -11,7 +11,7 @@ let payment = {
 module.exports = {
   "find the bill": function(client) {
     client
-      .page.cryptomedic().authenticate("murshed")
+      .page.cryptomedic().authenticate("thierry")
 
       // Select file
       .myClick("#menu_home")
@@ -31,6 +31,20 @@ module.exports = {
         .row(1).col(2).assert('Total')
         .row(1).col(3).assert('138')
         .endTable()
+      ;
+  },
+
+  "try to set date in the future": function(client) {
+    client
+      .myClick("#topsubmenu #button_unlock")
+      .waitForElementVisible("#Bill_Date")
+      .myFormFillIn("#fileForm", { "#Bill_Date": "2999-01-01"}, "#topsubmenu #button_save")
+      .acceptAlert()
+      .pause(100)
+      .assert.visible("#errorDateFuture")
+      .assert.visible("#topsubmenu #button_save")
+      .assert.visible("#topsubmenu #button_cancel")
+      .myClick("#topsubmenu #button_cancel")
       ;
   },
 

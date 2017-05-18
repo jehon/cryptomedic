@@ -21,7 +21,7 @@
                 You can not edit it anymore.
               </jh-authorized>
               <jh-authorized ng-if="isAuthorized('folder.unlock', authorizedList)">
-                <span class='btn btn-default' ng-click='actionUnlock()'>
+                <span id='button_unlock' class='btn btn-default' ng-click='actionUnlock()'>
                   <img src='/static/img/unlock.gif'>
                   Unlock the file
                 </span>

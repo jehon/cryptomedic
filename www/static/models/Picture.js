@@ -21,4 +21,13 @@ class Picture extends PatientRelated {
   getThumbnailUrl() {
     return '/api/' + API_VERSION + '/picture/' + this.id + '/thumbnail';
   }
+
+  validate(res) {
+    res = super.validate(res);
+
+    if ((this.Date > (new Date()).toISOString())) {
+      res.dateInTheFuture = true;
+    }
+    return res;
+  }
 }

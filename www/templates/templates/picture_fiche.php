@@ -7,6 +7,11 @@
 	Then you can save the file to the server with the "create/save" button.<br>
 </div>
 <div class="row">
+	<div class='row'>
+    	<div ng-if='errors.dateInTheFuture'>
+		    <div class='alert alert-danger' id='errorDateFuture'>Error: The date can not be in the future!</div>
+    	</div>
+  	</div>
 	<div class="col-md-6">
 		<FieldSet>
 			<Legend>Picture informations</label></Legend>

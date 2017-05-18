@@ -9,4 +9,12 @@ class Surgery extends PatientRelated {
     return "surgeries";
   }
 
+  validate(res) {
+    res = super.validate(res);
+
+    if ((this.Date > (new Date()).toISOString())) {
+      res.dateInTheFuture = true;
+    }
+    return res;
+  }
 }
