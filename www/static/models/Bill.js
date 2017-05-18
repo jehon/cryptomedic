@@ -171,6 +171,10 @@ class Bill extends PatientRelated {
     */
     res = super.validate(res);
 
+    if ((this.Date > (new Date()).toISOString())) {
+      res.dateInTheFuture = true;
+    }
+
     if (this.price_id >= 2) {
       if ((this.consult_home_visit > 0) && (this.consult_give_appointment > 0)) {
         res.homeVisitAndGiveAppointment = true;

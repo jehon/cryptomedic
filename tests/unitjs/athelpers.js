@@ -21,15 +21,22 @@ function loadReference(name) {
   return valid_respond;
 }
 
-function testComponent(html, test = () => true) {
+function testComponent(html, test = (el) => true) {
+  // Set an acceptable timeout
+  let oldTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
+  jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
+
   // Build up the element
   let div = document.createElement("div");
   div.style="border: red solid 1px; min-height: 10px"
   div.innerHTML = html;
   document.body.appendChild(div);
+  
+  // Function to close the test
   div.firstChild.testDone = () => {
     // Register removing it afterwards
     document.body.removeChild(div);
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = oldTimeout;
   };
 
   let check = function(el) {
@@ -48,29 +55,35 @@ function testComponent(html, test = () => true) {
   return new Promise((resolve, reject) => {
     let i = 40;
     let interval = setInterval(() => {
+      if (i-- <= 0) {
+        // console.log("too much tests", div.firstChild);
+        console.error("testComponent: component could not be instanciated ", html);
+        clearInterval(interval);
+        reject();
+        return;
+      }
+
+      // Do we have a first child?
       if (!div.firstChild) {
         // console.log("no first child");
         return ;
       }
 
       // Check all object for HTMLUnknownElements
-      let ok = check(div.firstChild);
+      if (!check(div.firstChild)) {
+        // console.log("checking child nodes does not work");
+        return;
+      }
 
       // Add custom test
-      ok = ok && test(div.firstChild);
+      if (!test(div.firstChild)) {
+        // console.log("custom test does not works");
+        return ;
+      }
 
-      if (ok === true) {
-        // console.log("ok, let's continue");
-        clearInterval(interval);
-        resolve(div.firstChild);
-      }
-      i--;
-      if (i <= 0) {
-        // console.log("too much tests", div.firstChild);
-        console.log("testComponent: HTMLUnknownElement: ", ok);
-        clearInterval(interval);
-        reject();
-      }
+      // Happy case
+      clearInterval(interval);
+      resolve(div.firstChild);
     }, 100);
   });
 }

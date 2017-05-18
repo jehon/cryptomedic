@@ -45,6 +45,9 @@
     <div ng-if='!currentFile().Date'>
       <div class='alert alert-danger'>Error: please select a date first!</div>
     </div>
+    <div ng-if='errors.dateInTheFuture'>
+      <div class='alert alert-danger' id='errorDateFuture'>Error: The date can not be in the future!</div>
+    </div>
   </div>
   <div class='row'>
     <div class="col-md-6">
