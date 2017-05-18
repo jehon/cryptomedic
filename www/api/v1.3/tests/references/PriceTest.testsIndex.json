@@ -96,7 +96,8 @@
         "socialLevelPercentage_0": -1,
         "other_Other_plaster": -1,
         "other_Other_dressing": -1,
-        "consult_ClubFoot_Follow_up": -1
+        "consult_ClubFoot_Follow_up": -1,
+        "_editable": false
     },
     {
         "id": 2,
@@ -195,7 +196,8 @@
         "socialLevelPercentage_0": 0,
         "other_Other_plaster": -1,
         "other_Other_dressing": -1,
-        "consult_ClubFoot_Follow_up": -1
+        "consult_ClubFoot_Follow_up": -1,
+        "_editable": false
     },
     {
         "id": 3,
@@ -294,6 +296,7 @@
         "socialLevelPercentage_0": 0,
         "other_Other_plaster": 1,
         "other_Other_dressing": 1,
-        "consult_ClubFoot_Follow_up": 100
+        "consult_ClubFoot_Follow_up": 100,
+        "_editable": false
     }
 ]
