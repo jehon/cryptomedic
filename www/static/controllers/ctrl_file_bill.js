@@ -11,7 +11,10 @@ function ctrl_file_bill($scope) {
   $scope.paymentEditor = new Payment();
 
   $scope.paymentsList = function() {
-    return $scope.folder.getFilesRelatedToBill($scope.subid);
+    if ($scope.folder) {
+      return $scope.folder.getFilesRelatedToBill($scope.subid);
+    }
+    return [];
   }
 
   $scope.$watch(function() {
