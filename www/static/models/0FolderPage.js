@@ -1,11 +1,5 @@
 
-class FolderPage {
-  constructor(data = {}) {
-    if (data) {
-      Object.assign(this, data);
-    }
-  }
-
+class FolderPage extends CRUD {
   initFromCachedPreferences() {
     var c = getPref('file', {
       examinerName: '',
@@ -35,13 +29,6 @@ class FolderPage {
       return false;
     }
     return true;
-  }
-
-  validate(res) {
-    if (!res) {
-      res = {};
-    }
-    return res;
   }
 
   isLocked() {

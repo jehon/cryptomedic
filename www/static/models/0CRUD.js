@@ -1,11 +1,5 @@
 
 class CRUD {
-	constructor(data = {}) {
-    	if (data) {
-      		Object.assign(this, data);
-    	}
-  }
-
   static getBaseUrl() {
     throw "getBaseUrl is not implemented";
   }
@@ -15,4 +9,17 @@ class CRUD {
       .requestWithGet()
       .requestToUrl(this.getBaseUrl());
 	}
+
+  constructor(data = {}) {
+    if (data) {
+      Object.assign(this, data);
+    }
+  }
+
+  validate(res) {
+    if (!res) {
+      res = {};
+    }
+    return res;
+  }
 }
