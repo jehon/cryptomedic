@@ -50,10 +50,6 @@ Route::group([ 'prefix' => '/api/' . basename(dirname(__DIR__)) ], function() {
       Route::get('admin/securityMatrix', 'Auth\AuthController@matrix');
     });
 
-    hasPermission('admin.computers', function() {
-      Route::get('admin/computers', 'ReportComputersController@index');
-    });
-
     hasPermission('admin.checkPictures', function() {
       Route::get('admin/pictures/checkFileSystem', 'PicturesController@checkFileSystem');
     });
