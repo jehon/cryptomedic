@@ -3,11 +3,8 @@ let JHCodage = (function() {
   class JHCodage extends HTMLElement {
     constructor() {
       super();
-
       // Create a shadow root
-      this.attachShadow({mode: 'open'});
-      this.shadowRoot.innerHTML = `
-        `;
+      this.attachShadow({ mode: 'open' });
       this.adapt();
     }
 
@@ -21,9 +18,45 @@ let JHCodage = (function() {
 
 
     adapt() {
-      console.log("adapt me");
       let value      = this.getAttribute("value");
       let translated = this.getAttribute("translated");
+
+      if (translated) {
+        return this._setTranslated(value, translated);
+      }
+
+      if (!cryptomedic) {
+        return this._setRaw(value);
+      }
+
+      if (!cryptomedic.serverSettings) {
+        return this._setRaw(value);
+      }
+
+      let settings = cryptomedic.serverSettings;
+      if (!settings.codes) {
+        return this._setRaw(value);
+      }
+
+      if (!settings.codes[value]) {
+        return this._setRaw(value);
+      }
+
+      return this._setTranslated(value, settings.codes[value]);
+    }
+
+    _setTranslated(value, translated) {
+      this.shadowRoot.innerHTML = `
+        <span id='translating' data-toggle='tooltip' data-placement='bottom' title='${value}'>
+          <span id='translated'>${translated}</span>*
+        </span>
+      `
+    }
+
+    _setRaw(value) {
+      this.shadowRoot.innerHTML = `
+        <span id='original'>${value}</span>
+      ` 
     }
   }
 
@@ -31,55 +64,3 @@ let JHCodage = (function() {
 
   return JHCodage;
 })();
-
-// <link rel="import" href="../../bower_components/polymer/polymer.html">
-
-// <dom-module name="jh-codage">
-//   <template>
-//     <span id='translating' hidden$="[[!getTranslated(value, translated)]]" data-toggle='tooltip' data-placement='bottom' title='[[value]]'>
-//       <span id='translated'>[[getTranslated(value, translated)]]</span>*
-//     </span>
-//     <span id='original'   hidden$="[[getTranslated(value, translated)]]">[[value]]</span>
-//   </template>
-
-//   <script>
-//     Polymer({
-//       is: 'jh-codage',
-
-//       // https://www.polymer-project.org/1.0/docs/devguide/properties
-//       properties: {
-//         value: {
-//           type:               String,
-//           value:              ""
-//         },
-//         translated: {
-//           type:               String,
-//           value:              ""
-//         }
-//       },
-
-//       getTranslated(value, translated) {
-//         if (translated) {
-//           return translated;
-//         }
-//         if (!cryptomedic) {
-//           return false;
-//         }
-//         if (!cryptomedic.serverSettings) {
-//           return false;
-//         }
-
-//         let settings = cryptomedic.serverSettings;
-//         if (!settings.codes) {
-//           return false;
-//         }
-
-//         if (!settings.codes[value]) {
-//           return false;
-//         }
-
-//         return settings.codes[value];
-//       }
-//     });
-//   </script>
-// </dom-module>
