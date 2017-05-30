@@ -1,38 +1,43 @@
 
-let selfURL = document.currentScript.src
-    .replace(/\/[^/]*\/?$/, '');
+let ReadBoolean = (function() {
 
-class ReadBoolean extends HTMLElement {
-  constructor() {
-    super();
+  let selfURL = document.currentScript.src
+      .replace(/\/[^/]*\/?$/, '');
 
-    // Create a shadow root
-    this.attachShadow({mode: 'open'});
-    this.shadowRoot.innerHTML = `
-        <img>
-      `;
-    this.adapt();
-  }
+  class ReadBoolean extends HTMLElement {
+    constructor() {
+      super();
 
-  static get observedAttributes() { return ['value']; }
-
-  attributeChangedCallback(attributeName, oldValue, newValue, namespace) {
-    if (attributeName == 'value') {
+      // Create a shadow root
+      this.attachShadow({mode: 'open'});
+      this.shadowRoot.innerHTML = `
+          <img>
+        `;
       this.adapt();
     }
-  }
 
-  adapt() {
-    let raw = this.getAttribute("value");
-    let val = "";
-    try {
-      val = JSON.parse(raw);
-    } catch(e) { // SyntaxError
-      val = raw;
+    static get observedAttributes() { return ['value']; }
+
+    attributeChangedCallback(attributeName, oldValue, newValue, namespace) {
+      if (attributeName == 'value') {
+        this.adapt();
+      }
     }
-    this.shadowRoot.querySelector('img').setAttribute('src', `${selfURL}/resources/boolean-${val?'true':'false'}.gif`)
+
+    adapt() {
+      let raw = this.getAttribute("value");
+      let val = "";
+      try {
+        val = JSON.parse(raw);
+      } catch(e) { // SyntaxError
+        val = raw;
+      }
+      this.shadowRoot.querySelector('img').setAttribute('src', `${selfURL}/resources/boolean-${val?'true':'false'}.gif`)
+    }
+
   }
 
-}
+  window.customElements.define('read-boolean', ReadBoolean);
 
-window.customElements.define('read-boolean', ReadBoolean);
+  return ReadBoolean;
+})();
