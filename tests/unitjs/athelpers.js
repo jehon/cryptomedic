@@ -87,3 +87,5 @@ function testComponent(html, test = (el) => true) {
     }, 100);
   });
 }
+
+testComponent.testPolymer = el => typeof(el.$$) != "undefined"
