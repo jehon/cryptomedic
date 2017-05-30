@@ -16,7 +16,7 @@ function loadMock(mock, type = false) {
 
 function loadReference(name) {
   // Thanks to http://stackoverflow.com/a/27830579/1954789
-  let valid_respond = readJSON('api/v1.2/tests/references/' + name);
+  let valid_respond = readJSON('api/' + API_VERSION + '/tests/references/' + name);
   expect(valid_respond).not.toBeNull("The reference " + name + " is empty or not found");
   return valid_respond;
 }
