@@ -39,7 +39,7 @@ module.exports = function(config) {
       'bower_components/jquery/dist/jquery.min.js',
       'bower_components/karma-read-json/karma-read-json.js',
       'bower_components/clone.js/clone.js',
-      { pattern: 'api/v1.2/tests/references/*.json', included: false },
+      { pattern: 'api/*/tests/references/*.json', included: false },
       { pattern: "bower_components/**",              included: false, served: true, watched: false },
       { pattern: "static/elements/resources/*",      included: false, served: true, watched: true },
       'static/!(elements)/**/*.js',
