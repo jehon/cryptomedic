@@ -1,7 +1,7 @@
 'use strict';
 /* global testComponent */
 
-describe('test-jh-select', function() {
+fdescribe('test-write-list', function() {
   let listRadio  = [ 'truc' , 'brol' , 'machin', 'chose' ];
   let listSelect = [ 'truc' , 'brol' , 'machin', 'chose', 'bazar', 'ça', 'là' ];
 
@@ -61,7 +61,7 @@ describe('test-jh-select', function() {
   }
 
   it("should show RADIO when the list is < 5 items", function(done) {
-    testComponent("<jh-select value='machin' list='" + JSON.stringify(listRadio) + "'></jh-select>").then(el => {
+    testComponent("<write-list value='machin' list='" + JSON.stringify(listRadio) + "'></write-list>").then(el => {
 
       checkRadio(el, 'machin');
 
@@ -71,7 +71,7 @@ describe('test-jh-select', function() {
   })
 
   it("should show SELECT when the list is > 5 items", function(done) {
-    testComponent("<jh-select value='machin' list='" + JSON.stringify(listSelect) + "'></jh-select>").then(el => {
+    testComponent("<write-list value='machin' list='" + JSON.stringify(listSelect) + "'></write-list>").then(el => {
 
       checkSelect(el, 'machin');
 
@@ -82,7 +82,7 @@ describe('test-jh-select', function() {
 
 
   it("should handle RADIO nullable", function(done) {
-    testComponent("<jh-select nullable value='machin' list='" + JSON.stringify(listRadio) + "'></jh-select>").then(el => {
+    testComponent("<write-list nullable value='machin' list='" + JSON.stringify(listRadio) + "'></write-list>").then(el => {
       expect(el).not.toBeNull();
       expect(el.$$('input[type=radio][null]')).not.toBeNull();
       el.testDone();
@@ -91,7 +91,7 @@ describe('test-jh-select', function() {
   })
 
   it("should handle SELECT nullable", function(done) {
-    testComponent("<jh-select nullable value='machin' list='" + JSON.stringify(listSelect) + "'></jh-select>").then(el => {
+    testComponent("<write-list nullable value='machin' list='" + JSON.stringify(listSelect) + "'></write-list>").then(el => {
       expect(el).not.toBeNull();
       expect(el.$$('select option[value=""]')).not.toBeNull();
       el.testDone();
@@ -100,7 +100,7 @@ describe('test-jh-select', function() {
   })
 
   it("should handle RADIO with null", function(done) {
-    testComponent("<jh-select nullable value='' list='" + JSON.stringify(listRadio) + "'></jh-select>").then(el => {
+    testComponent("<write-list nullable value='' list='" + JSON.stringify(listRadio) + "'></write-list>").then(el => {
 
       checkRadioNull(el);
 
@@ -110,7 +110,7 @@ describe('test-jh-select', function() {
   })
 
   it("should handle SELECT with null", function(done) {
-    testComponent("<jh-select nullable value='' list='" + JSON.stringify(listSelect) + "'></jh-select>").then(el => {
+    testComponent("<write-list nullable value='' list='" + JSON.stringify(listSelect) + "'></write-list>").then(el => {
 
       checkSelectNull(el);
 
@@ -121,7 +121,7 @@ describe('test-jh-select', function() {
 
   // Test changes in value
   it("should handle RADIO value change", function(done) {
-    testComponent("<jh-select nullable value='machin' list='" + JSON.stringify(listRadio) + "'></jh-select>").then(el => {
+    testComponent("<write-list nullable value='machin' list='" + JSON.stringify(listRadio) + "'></write-list>").then(el => {
 
       checkRadio(el, 'machin');
       el.value = 'truc';
@@ -133,7 +133,7 @@ describe('test-jh-select', function() {
   })
 
   it("should handle SELECT value change", function(done) {
-    testComponent("<jh-select nullable value='machin' list='" + JSON.stringify(listSelect) + "'></jh-select>").then(el => {
+    testComponent("<write-list nullable value='machin' list='" + JSON.stringify(listSelect) + "'></write-list>").then(el => {
 
       checkSelect(el, 'machin');
       el.value = 'truc';
@@ -146,7 +146,7 @@ describe('test-jh-select', function() {
 
   // Test changes in html elements
   it("should handle RADIO html change", function(done) {
-    testComponent("<jh-select nullable value='machin' list='" + JSON.stringify(listRadio) + "'></jh-select>").then(el => {
+    testComponent("<write-list nullable value='machin' list='" + JSON.stringify(listRadio) + "'></write-list>").then(el => {
 
       checkRadio(el, 'machin');
       el.$$('input[type=radio][value=truc]').checked = true;
@@ -159,7 +159,7 @@ describe('test-jh-select', function() {
   })
 
   it("should handle SELECT html change", function(done) {
-    testComponent("<jh-select nullable value='machin' list='" + JSON.stringify(listSelect) + "'></jh-select>").then(el => {
+    testComponent("<write-list nullable value='machin' list='" + JSON.stringify(listSelect) + "'></write-list>").then(el => {
 
       checkSelect(el, 'machin');
 
@@ -174,7 +174,7 @@ describe('test-jh-select', function() {
 
   // Test click on span for radio
   it("should handle RADIO Span click", function(done) {
-    testComponent("<jh-select nullable value='machin' list='" + JSON.stringify(listRadio) + "'></jh-select>").then(el => {
+    testComponent("<write-list nullable value='machin' list='" + JSON.stringify(listRadio) + "'></write-list>").then(el => {
 
       checkRadio(el, 'machin');
       // Simulate the click
