@@ -27,9 +27,27 @@ function testComponent(html, test = (el) => true) {
   jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
 
   // Build up the element
+
+  // - The real component
+
   let div = document.createElement("div");
   div.style="border: red solid 1px; min-height: 10px"
   div.innerHTML = html;
+
+  // - Dump code for info
+  let pre = document.createElement("pre");
+  pre.innerHTML = html.split("<").join("&lt;").split(">").join("&gt");
+  div.appendChild(pre);
+
+  // Add some styling
+  let style = document.createElement("style");
+  style.innerHTML = `
+    pre {
+      background-color: yellow;
+    }
+  `
+  div.appendChild(style);
+
   document.body.appendChild(div);
   
   // Function to close the test
