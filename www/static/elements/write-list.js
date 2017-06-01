@@ -111,6 +111,11 @@ let WriteList = (function() {
       // on-change='updateValueFromRadio' => register on input[type=radio]
 
       this.shadowRoot.innerHTML = this._withStyle() + res;
+      this.shadowRoot.querySelectorAll("span[to]").forEach((el) => {
+        el.onclick = (event) => {
+          el.querySelector('input').setAttribute('checked', true);
+        }
+      });
     }
 
     _asSelect() {
@@ -135,21 +140,6 @@ let WriteList = (function() {
         return '';
       }
       return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-    }
-
-    // SELECT
-    updateValueFromSelect() {
-      // this._initialvalue = this.$$('select').value;
-    }
-
-    // RADIO
-    updateValueFromRadio() {
-      // this._initialvalue = this.$$('input[type=radio]:checked').value;
-    }
-
-    // RADIO SPAN AROUND
-    updateValueFromSpan(event) {
-      // this._initialvalue = event.currentTarget.to;
     }
 
     get value() {

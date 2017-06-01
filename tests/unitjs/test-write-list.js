@@ -1,7 +1,7 @@
 'use strict';
 /* global testComponent */
 
-fdescribe('test-write-list', function() {
+describe('test-write-list', function() {
   let listRadio  = [ 'truc' , 'brol' , 'machin', 'chose' ];
   let listSelect = [ 'truc' , 'brol' , 'machin', 'chose', 'bazar', 'ça', 'là' ];
 
@@ -163,8 +163,6 @@ fdescribe('test-write-list', function() {
       checkSelect(el, 'machin');
 
       el.shadowRoot.querySelector('select').value = 'truc';
-      // Change events are not triggered by javascript, so we act ourself...
-      el.updateValueFromSelect();
       checkSelect(el, 'truc');
       el.testDone();
       done();
@@ -176,8 +174,8 @@ fdescribe('test-write-list', function() {
     testComponent("<write-list nullable value='machin' list='" + JSON.stringify(listRadio) + "'></write-list>").then(el => {
 
       checkRadio(el, 'machin');
-      // Simulate the click
-      el.updateValueFromSpan({ currentTarget: { to: 'truc' }});
+      el.shadowRoot.querySelector('span[to=truc').click();
+
       checkRadio(el, 'truc');
 
       el.testDone();
