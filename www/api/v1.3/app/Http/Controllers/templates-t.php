@@ -244,6 +244,16 @@ class t {
 
     switch($this->fieldGetType()) {
       case static::TYPE_LIST:
+        // New system:
+        // $jsonList = json_encode(array_map(
+        //     function($e) { return htmlentities($e, ENT_QUOTES); },
+        //     $this->listing
+        //   ));
+        // $this->res .= "<write-list value='{{{$this->fieldGetKey()}}}' "
+        //   . "list='" . $jsonList . "' "
+        //   . ($this->fieldIsRequired() ? "" : "nullable")
+        //   . "></write-list>";
+
         $count = count($this->listing);
         if (!$this->fieldIsRequired()) {
           $count++;
