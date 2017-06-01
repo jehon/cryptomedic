@@ -8,7 +8,7 @@ let WriteList = (function() {
       super();
       this.id = "write-list-" + internalUUID++;
       this.attachShadow({ mode: 'open' });
-      this.value = null;
+      this._initialvalue = null;
       this.list = [];
       this.nullable = false;
       this.adapt();
@@ -19,7 +19,10 @@ let WriteList = (function() {
     attributeChangedCallback(attributeName, oldValue, newValue, namespace) {
       switch(attributeName) {
         case 'value':
-          this.value      = this.getAttribute("value");
+          this._initialvalue      = this.getAttribute("value");
+          if (this._initialvalue == "") {
+            this._initialvalue = null;
+          }
           break;
         case 'list':
           this.list       = this.getAttribute("list");
@@ -85,7 +88,7 @@ let WriteList = (function() {
         let escaped = this._escape(item);
         res += `
             <span to='${escaped}'>
-              <input name='${this.id}' type='radio' value='${escaped}' ${(this.value == item) ? "checked" : ""}>
+              <input name='${this.id}' type='radio' value='${escaped}' ${(this._initialvalue == item) ? "checked" : ""}>
               <span>${item}</span>
               <br>
             </span>
@@ -94,7 +97,7 @@ let WriteList = (function() {
       if (this.nullable) {
         res += `
           <span to=''>
-            <input name='${this.id}' type='radio' value=''>
+            <input name='${this.id}' type='radio' value='' ${(this._initialvalue == null) ? "checked" : ""}>
             <span>?</span>
             <br>
           </span>
@@ -115,11 +118,11 @@ let WriteList = (function() {
       // TODO: set initial value
       for(let item of this.list) {
         let escaped = this._escape(item);
-        res += `  <option name$='${escaped}' value='${escaped}'>${item}</option>\n`;
+        res += `  <option name$='${escaped}' value='${escaped}' ${(this._initialvalue == item) ? "selected" : ""}>${item}</option>\n`;
 
       }
       if (this.nullable) {
-        res += "  <option name='null' value='' null>?</option>\n";
+        res += `  <option name='null' value='' ${(this._initialvalue == null) ? "selected" : ""}>?</option>\n`;
       }
       res += "</select>\n";
 
@@ -136,17 +139,33 @@ let WriteList = (function() {
 
     // SELECT
     updateValueFromSelect() {
-      // this.value = this.$$('select').value;
+      // this._initialvalue = this.$$('select').value;
     }
 
     // RADIO
     updateValueFromRadio() {
-      // this.value = this.$$('input[type=radio]:checked').value;
+      // this._initialvalue = this.$$('input[type=radio]:checked').value;
     }
 
     // RADIO SPAN AROUND
     updateValueFromSpan(event) {
-      // this.value = event.currentTarget.to;
+      // this._initialvalue = event.currentTarget.to;
+    }
+
+    get value() {
+      let value = null;
+      switch(this.getAttribute("mode")) {
+        case "select":
+          value = this.shadowRoot.querySelector("select").value;
+          break;
+        case "radio":
+          value = this.shadowRoot.querySelector("input[type=radio][checked]").value;
+          break;
+      }
+      if (value == "") {
+        value = null;
+      }
+      return value;
     }
   }
 

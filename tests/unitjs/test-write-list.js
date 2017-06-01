@@ -28,7 +28,7 @@ fdescribe('test-write-list', function() {
     expect(el.getAttribute('mode')).toBe("radio");
 
     // Check the value
-    expect(el.shadowRoot.querySelector('input[type=radio][null]').getAttribute('checked')).toBeTruthy();
+    expect(el.shadowRoot.querySelector('input[type=radio][value=""]').hasAttribute('checked')).toBeTruthy();
     expect(el.value).toBe(null);
   }
 
@@ -61,7 +61,7 @@ fdescribe('test-write-list', function() {
     expect(el.value).toBe(null);
   }
 
-  fit("should show RADIO when the list is < 5 items", function(done) {
+  it("should show RADIO when the list is < 5 items", function(done) {
     testComponent("<write-list value='machin' list='" + JSON.stringify(listRadio) + "'></write-list>").then(el => {
       expect(el).not.toBeNull()
       checkRadio(el, 'machin');
@@ -84,7 +84,7 @@ fdescribe('test-write-list', function() {
   it("should handle RADIO nullable", function(done) {
     testComponent("<write-list nullable value='machin' list='" + JSON.stringify(listRadio) + "'></write-list>").then(el => {
       expect(el).not.toBeNull();
-      expect(el.shadowRoot.querySelector('input[type=radio][null]')).not.toBeNull();
+      expect(el.shadowRoot.querySelector('input[type=radio][value=""]')).not.toBeNull();
       el.testDone();
       done();
     });
@@ -117,46 +117,45 @@ fdescribe('test-write-list', function() {
       el.testDone();
       done();
     });
-  })
+  });
 
   // Test changes in value
   it("should handle RADIO value change", function(done) {
     testComponent("<write-list nullable value='machin' list='" + JSON.stringify(listRadio) + "'></write-list>").then(el => {
 
       checkRadio(el, 'machin');
-      el.value = 'truc';
+      el.setAttribute('value', 'truc');
       checkRadio(el, 'truc');
 
       el.testDone();
       done();
     });
-  })
+  });
 
   it("should handle SELECT value change", function(done) {
     testComponent("<write-list nullable value='machin' list='" + JSON.stringify(listSelect) + "'></write-list>").then(el => {
 
       checkSelect(el, 'machin');
-      el.value = 'truc';
+      el.setAttribute('value', 'truc');
       checkSelect(el, 'truc');
 
       el.testDone();
       done();
     });
-  })
+  });
 
   // Test changes in html elements
   it("should handle RADIO html change", function(done) {
     testComponent("<write-list nullable value='machin' list='" + JSON.stringify(listRadio) + "'></write-list>").then(el => {
-
       checkRadio(el, 'machin');
-      el.shadowRoot.querySelector('input[type=radio][value=truc]').checked = true;
-      el.updateValueFromRadio();
-      checkRadio(el, 'truc');
 
+      el.shadowRoot.querySelector('input[type=radio][value=truc]').setAttribute('checked', true);
+
+      checkRadio(el, 'truc');
       el.testDone();
       done();
     });
-  })
+  });
 
   it("should handle SELECT html change", function(done) {
     testComponent("<write-list nullable value='machin' list='" + JSON.stringify(listSelect) + "'></write-list>").then(el => {
