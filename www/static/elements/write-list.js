@@ -106,10 +106,6 @@ let WriteList = (function() {
       }
       res += "</span>";
 
-      // TODO
-      // on-tap='updateValueFromSpan'  => register on span[to]
-      // on-change='updateValueFromRadio' => register on input[type=radio]
-
       this.shadowRoot.innerHTML = this._withStyle() + res;
       this.shadowRoot.querySelectorAll("span[to]").forEach((el) => {
         el.onclick = (event) => {
