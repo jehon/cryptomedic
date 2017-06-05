@@ -1,4 +1,4 @@
-/* global goThere,Folder,jQuery,calculations,template,date2CanonicString,extractPrefsFile,getFormContent */
+/* global goThere,Folder,jQuery,calculations,template,date2CanonicString,extractPrefsFile,formGetContent */
 function ctrl_folder($scope, $location, $routeParams) {
   /*
    * '/folder/:patient_id/:page?/:subtype?/:subid?/:mode?'
@@ -213,7 +213,7 @@ function ctrl_folder($scope, $location, $routeParams) {
       return;
     }
 
-    let updatedData = getFormContent("#fileForm", $scope.currentFile());
+    let updatedData = formGetContent("#fileForm", $scope.currentFile());
     $scope.folder = false;
     $scope.safeApply();
 
@@ -260,7 +260,7 @@ function ctrl_folder($scope, $location, $routeParams) {
       return;
     }
 
-    let updatedData = getFormContent("#fileForm", $scope.currentFile());
+    let updatedData = formGetContent("#fileForm", $scope.currentFile());
     $scope.folder = false;
     $scope.safeApply();
 
@@ -310,7 +310,7 @@ function ctrl_folder($scope, $location, $routeParams) {
       return;
     }
 
-    let updatedData = getFormContent("#fileForm", $scope.currentFile());
+    let updatedData = formGetContent("#fileForm", $scope.currentFile());
     $scope.folder = false;
     $scope.safeApply();
 
@@ -335,7 +335,7 @@ function ctrl_folder($scope, $location, $routeParams) {
       return;
     }
 
-    let updatedData = getFormContent("#fileForm", $scope.currentFile());
+    let updatedData = formGetContent("#fileForm", $scope.currentFile());
     $scope.folder = false;
     $scope.safeApply();
 
