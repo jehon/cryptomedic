@@ -3,9 +3,14 @@ function formGetContent(form, prototype = {}) {
   let data = new prototype.constructor();
   Object.assign(data, prototype);
 
-  for(let i of document.querySelector(form).querySelectorAll("input:not([type=radio]), select, input[type=radio]:checked")) {
+  // for(let i of document.querySelector(form).querySelectorAll("input:not([type=radio]), select, input[type=radio]:checked")) {
+  for(let i of document.querySelector(form).querySelectorAll("[name]")) {
     // Skip hidden input
     if (i.clientHeight == 0) {
+      continue;
+    }
+
+    if (i.matches("[type=radio") && !i.matches("[checked]")) {
       continue;
     }
 
