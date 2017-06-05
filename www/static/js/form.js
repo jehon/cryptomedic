@@ -1,5 +1,5 @@
 
-function getFormContent(form, prototype = {}) {
+function formGetContent(form, prototype = {}) {
   let data = new prototype.constructor();
   Object.assign(data, prototype);
 
