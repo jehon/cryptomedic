@@ -15,25 +15,43 @@ describe("test-form", function() {
   	})
 	}
 
+// TODO: test select, write-list
+
 	fit("should skip empty values", function(done) {
 		form(`
   			<input name='n1' value=''>
   			<input type='radio' name='n2' value='n2val'>
+  			<select name='n3'>
+  				<option value='n3val1'>
+  				<option value='n3val2'>
+  			</select>
+  			<write-list name='n4' list='[ "n4val1", "n4val2", "n4val3" ]'></write-list>
+  			<write-list name='n4' list='[ "n4val1", "n4val2", "n4val3", "n4val4", "n4val5", "n4val6", "n4val7" ]'></write-list>
 			`, {
+				n3: 'n3val1',
+				n4: 'n4val1'
 			}, done
 		);
 	})
 
-	fit("should extract info from input", function(done) {
+	it("should extract info from input", function(done) {
 		form(`
   			<input name='n1' value='n1val'>
 				<input type='radio' name='n2' value='n2val' checked>
+  			<select name='n3'>
+  				<option value='n3val1'>
+  				<option value='n3val2' selected>
+  			</select>
+  			<write-list name='n4' value='n4val2' list='[ "n4val1", "n4val2", "n4val3" ]'></write-list>
+  			<write-list name='n5' value='n5val2' list='[ "n5val1", "n5val2", "n5val3", "n5val4", "n5val5", "n5val6", "n5val7" ]'></write-list>
 			`, {
 				n1: 'n1val',
-				n2: 'n2val'
+				n2: 'n2val',
+				n3: 'n3val2',
+				n4: 'n4val2',
+				n5: 'n5val2'
 			}, done
 		);
 	})
 
 })
-
