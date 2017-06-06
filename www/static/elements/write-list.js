@@ -142,7 +142,10 @@ let WriteList = (function() {
           value = this.shadowRoot.querySelector("select").value;
           break;
         case "radio":
-          value = this.shadowRoot.querySelector("input[type=radio][checked]").value;
+          let el = this.shadowRoot.querySelector("input[type=radio][checked]"); 
+          if (el) {
+            value = el.value;  
+          }
           break;
       }
       if (value == "") {
