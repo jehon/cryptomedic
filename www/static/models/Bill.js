@@ -18,10 +18,8 @@ class Bill extends PatientRelated {
     if (!data || Object.keys(data).length == 0) {
       // Initialize social level from last bill (if any)
       var last_bill = null;
-      console.log(folder);
       if (folder) {
         for(var v of folder.getListByType(Bill)) {
-          console.log("constructor: init - ", v);
           if (!last_bill) {
             last_bill = v;
           } else {

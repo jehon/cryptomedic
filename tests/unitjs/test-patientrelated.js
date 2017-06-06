@@ -16,7 +16,6 @@ describe("PatientRelated", function() {
       expect(rc).toEqual(jasmine.anything({ id: 13 }));
       expect(rc.getPatient()).toEqual(jasmine.any(Patient));
       expect(rc.Date).toEqual('2014-01-04');
-      console.log(rc.ageAtConsultTime());
       expect(rc.ageAtConsultTime()).toEqual(16);
       expect(rc.ageAtConsultTime(true)).toBe('16y0m');
     });
