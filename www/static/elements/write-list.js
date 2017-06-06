@@ -1,12 +1,9 @@
 
 let WriteList = (function() {
 
-  let internalUUID=1;
-
   class WriteList extends HTMLElement {
     constructor() {
       super();
-      this.id = "write-list-" + internalUUID++;
       this.attachShadow({ mode: 'open' });
       this._initialvalue = null;
       this.list = [];
@@ -88,7 +85,7 @@ let WriteList = (function() {
         let escaped = this._escape(item);
         res += `
             <span to='${escaped}'>
-              <input name='${this.id}' type='radio' value='${escaped}' ${(this._initialvalue == item) ? "checked" : ""}>
+              <input type='radio' value='${escaped}' ${(this._initialvalue == item) ? "checked" : ""}>
               <span>${item}</span>
               <br>
             </span>
@@ -97,7 +94,7 @@ let WriteList = (function() {
       if (this.nullable) {
         res += `
           <span to=''>
-            <input name='${this.id}' type='radio' value='' ${(this._initialvalue == null) ? "checked" : ""}>
+            <input type='radio' value='' ${(this._initialvalue == null) ? "checked" : ""}>
             <span>?</span>
             <br>
           </span>
@@ -115,7 +112,7 @@ let WriteList = (function() {
     }
 
     _asSelect() {
-      let res = "<select id='select'>\n";
+      let res = "<select>\n";
       // TODO: set initial value
       for(let item of this.list) {
         let escaped = this._escape(item);
