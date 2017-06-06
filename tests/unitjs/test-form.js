@@ -17,7 +17,7 @@ describe("test-form", function() {
 
 // TODO: test select, write-list
 
-	fit("should skip empty values", function(done) {
+	it("should skip empty values", function(done) {
 		form(`
   			<input name='n1' value=''>
   			<input type='radio' name='n2' value='n2val'>
