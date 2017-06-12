@@ -12,10 +12,13 @@ exports.command = function(selector, fields, button) {
     }, [ fsel ]);
 
     if (fields[f] === true) {
-      this
-        .click(f);
+      this.click(f);
     } else if (fields[f] === false) {
-      //
+      // no action needed
+    } else if (typeof(fields[f]) == "object") {
+      for(let k of Object.keys(fields[f])) {
+        this.mySetAttribute(fsel, k, fields[f][k]); 
+      }
     } else if (f.substring(0, 6) == "select") {
       this.mySelect(fsel, fields[f]);
     } else {

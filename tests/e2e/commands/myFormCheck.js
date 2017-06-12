@@ -12,6 +12,10 @@ exports.command = function(selector, fields) {
     } else if (fields[f] === false) {
       this
         .assert.visible(fsel + '_ko');
+    } else if (typeof(fields[f]) == 'object') {
+      this
+        .assert.visible(fsel)
+        .assert.containsText(fsel, fields[f].value);
     } else {
       this
         .assert.visible(fsel)
