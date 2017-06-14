@@ -182,4 +182,20 @@ describe('test-write-list', function() {
       done();
     });
   })
+
+  it("should handle named list", function(done) {
+    testComponent("<write-list value='machin' list='" + JSON.stringify(listRadio) + "'></write-list>").then(el => {
+      expect(el).not.toBeNull();
+
+      WriteList.setLists({
+        listRadio: listRadio,
+        listSelect: listSelect
+      })
+
+      checkRadio(el, 'machin');
+
+      el.testDone();
+      done();
+    });
+  })
 });

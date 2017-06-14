@@ -1,13 +1,28 @@
 
 let WriteList = (function() {
 
+  let listsCB = jQuery.Callbacks("memory");
+
   class WriteList extends HTMLElement {
+    static setLists(lists = {}) {
+      if (!lists) {
+        lists = {};
+      }
+      listsCB.fire(lists);
+    }
+
     constructor() {
       super();
       this.attachShadow({ mode: 'open' });
       this._initialvalue = null;
       this.list = [];
       this.nullable = false;
+
+      listsCB.add((lists) => {
+        this.lists = lists;
+        this.adapt();
+      });
+
       this.adapt();
     }
 
