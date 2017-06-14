@@ -38,7 +38,7 @@ module.exports = {
     client
       .myClick("#topsubmenu #button_unlock")
       .waitForElementVisible("#Bill_Date")
-      .myFormFillIn("#fileForm", { "#Bill_Date": "2999-01-01"}, "#topsubmenu #button_save")
+      .myFormFillIn("#fileForm", { "#Bill_Date": "2999-01-01" }, "#topsubmenu #button_save")
       .acceptAlert()
       .pause(100)
       .assert.visible("#errorDateFuture")
