@@ -156,18 +156,18 @@ function ctrl_folder($scope, $location, $routeParams) {
   //   Actions
   //----------------------
   $scope.errors = {};
-  $scope.actionValidate = function() {
+  $scope.actionValidate = function(form = '#fileForm') {
     // TODO: jserror should have an icon before (danger)
     // TODO: hide action button if form is not ok
     $scope.valide = true;
 
-    jQuery('input[type=number][required]').each(function() {
+    jQuery(form + ' input[type=number][required]').each(function() {
       if (jQuery(this).val() == '') {
         jQuery(this).val(0);
       }
     });
 
-    if (!jQuery('#fileForm')[0].checkValidity()) {
+    if (!jQuery(form)[0].checkValidity()) {
       console.log('Form invalid');
       jQuery('#fileFormSubmit').click();
       $scope.valide = false;
@@ -175,7 +175,7 @@ function ctrl_folder($scope, $location, $routeParams) {
 
     $scope.errors = $scope.currentFile().validate();
 
-    jQuery('input[mycalendar]:visible').each(function() {
+    jQuery(form + ' input[mycalendar]:visible').each(function() {
       var date = jQuery(this).val();
       if ((date == '') && !jQuery(this).is('[required]')) {
         return;
