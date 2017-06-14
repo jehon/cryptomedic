@@ -42,17 +42,21 @@ function ctrl_file_bill($scope) {
   });
 
   $scope.actionAddPayment = function() {
-    if (!$scope.actionValidate()) {
+    if (!$scope.actionValidate("#paymentForm")) {
       alert('You have errors in your data. Please correct them and try again');
       return ;
     }
-    $scope.paymentEditor.bill_id = $scope.subid;
+
+    let updatedData = formGetContent("#paymentForm", new Payment());
+
+    updatedData.id = $scope.paymentEditor.id;
+    updatedData.bill_id = $scope.subid;
     $scope.safeApply();
 
-    extractPrefsFile($scope.paymentEditor);
+    extractPrefsFile(updatedData);
 
     getDataService()
-      .then(dataService => dataService.createOrSaveFile($scope.paymentEditor))
+      .then(dataService => dataService.createOrSaveFile(updatedData))
       .then(function(folder) {
         // The data is refreshed by navigating away...
         $scope.$emit('message', { 'level': 'success', 'text': 'The Payment has been saved.'});
