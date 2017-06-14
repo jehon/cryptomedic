@@ -4,7 +4,7 @@ var nb = 0;
 let payment = {
   "#Payment_Date": "2003-01-02",
   "#Payment_Amount": "123",
-  "select#Payment_ExaminerName": "Shetou",
+  "[name=ExaminerName]": { value: "Shetou" },
   "#Payment_Notes": "Created during the test"
 };
 

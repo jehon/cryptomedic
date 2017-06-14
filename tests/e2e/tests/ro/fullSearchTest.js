@@ -1,6 +1,5 @@
 
 function testSearch(client, search, resultList) {
-
   client
     .myClick("#button_reset")
     .waitForElementPresent("#search_no_results")
@@ -56,8 +55,7 @@ module.exports = {
   },
 
   "byPathology": function(client) {
-    testSearch(client, { "select#Patient_Pathology": 'ClubFoot' }, [ "2014-107", "2014-103", "2014-104", "2014-105", "2000-1" ]);
-
+    testSearch(client, { "write-list[name=Pathology]": { value: 'ClubFoot' }}, [ "2014-107", "2014-103", "2014-104", "2014-105", "2000-1" ]);
     // TODO: search by sex
   }
 };
