@@ -2,7 +2,7 @@
 var nb = 0;
 
 let payment = {
-  "#Payment_Date": "2003-01-01",
+  "#Payment_Date": "2003-01-02",
   "#Payment_Amount": "123",
   "select#Payment_ExaminerName": "Shetou",
   "#Payment_Notes": "Created during the test"
@@ -52,7 +52,7 @@ module.exports = {
     client
       .myFormFillIn("#paymentForm", payment, "#button_payment_create")
       .page.cryptomedic().tableIterator('#paymentsList')
-        .row(4).col(1).assert('2003-01-01')
+        .row(4).col(1).assert(payment["#Payment_Date"])
         .nextCol().assert('Shetou')
         .nextCol().assert(123)
         .section('tfoot')
@@ -74,7 +74,7 @@ module.exports = {
       .click('#button_payment_save')
       .page.cryptomedic().myWaitFetch()
       .page.cryptomedic().tableIterator('#paymentsList')
-        .row(4).col(1).assert('2003-01-01')
+        .row(4).col(1).assert(payment["#Payment_Date"])
         .nextCol().assert('Shetou')
         .nextCol().assert(456)
         .section('tfoot')
