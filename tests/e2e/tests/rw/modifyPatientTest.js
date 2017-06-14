@@ -37,7 +37,7 @@ module.exports = {
     nb++;
   },
 
-  "add a non-ricket consult": function(client) {
+  "add a other-consult": function(client) {
     client
       .myClick("#button_add")
       .myClick("#add_other_consult")
