@@ -3,7 +3,7 @@ var nb = 0;
 
 var appointment = {
   "#Appointment_Nextappointment": "2010-01-01",
-  "select#Appointment_NextCenter": "Ramu"
+  "[name=NextCenter]": "Ramu"
 };
 
 module.exports = {
@@ -93,7 +93,10 @@ module.exports = {
     client
       .myClick("#button_add")
       .myClick("#add_appointment")
-      .myForm("#fileForm", appointment, "#topsubmenu #button_save")
+      .myForm("#fileForm", {
+        "#Appointment_Nextappointment": "2010-01-01",
+        "[name=NextCenter]": { value: "Ramu" },
+      }, "#topsubmenu #button_save")
       ;
     nb++;
   },
@@ -266,7 +269,7 @@ module.exports = {
       .myClick("#topsubmenu #patient_edit")
       .waitForElementPresent("#Patient_Name")
       .assert.value("#Patient_Name", "mozahar ahamed")
-      .mySelect("#Patient_Pathology", "ClubFoot")
+      .mySetAttribute("[name=Pathology]", "value", "ClubFoot")
       .setValue("#Patient_Name", "rezaul")
       .myClick("#topsubmenu #patient_cancel")
       .waitForElementPresent("#Patient_Name")

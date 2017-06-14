@@ -211,7 +211,7 @@ class t {
         $this->res .= "<read-boolean ng-attr-value='{{ {$this->fieldGetKey()} }}'></read-boolean>";
         break;
       case static::TYPE_LIST:
-        $this->res .= "<span id='{$this->jsId}'>{{ {$this->fieldGetKey()} }}</span>";
+        $this->res .= "<span id='{$this->jsId}' name='{$this->field}'>{{ {$this->fieldGetKey()} }}</span>";
         break;
       case static::TYPE_DATE:
           // TODOJH: recheck this later - Workaround!!!
@@ -245,52 +245,14 @@ class t {
     switch($this->fieldGetType()) {
       case static::TYPE_LIST:
         // New system:
-        // $jsonList = json_encode(array_map(
-        //     function($e) { return htmlentities($e, ENT_QUOTES); },
-        //     $this->listing
-        //   ));
-        // $this->res .= "<write-list value='{{{$this->fieldGetKey()}}}' "
-        //   . "list='" . $jsonList . "' "
-        //   . ($this->fieldIsRequired() ? "" : "nullable")
-        //   . "></write-list>";
-
-        $count = count($this->listing);
-        if (!$this->fieldIsRequired()) {
-          $count++;
-        }
-        if ($count <= 6) {
-          $i = 0;
-          $this->res .= "<table style='width: 100%'><tr><td>";
-          foreach($this->listing as $v) {
-            $this->res.= ""
-                . "<input type='radio' value=\"" . htmlentities($v) . "\" ng-model='{$this->fieldGetKey()}' name='{$this->field}' {$this->options['inline']}>"
-                . "$v"
-                . "<br>"
-                ;
-            if ($i == ceil($count/ 2) - 1) {
-              $this->res .= "</td><td>";
-            }
-            $i++;
-          }
-          if (!$this->fieldIsRequired()) {
-            $this->res.= ""
-                . "<input type='radio' value='' ng-model='{$this->fieldGetKey()}' name='{$this->field}' {$this->options['inline']}>"
-                . "?"
-                . "<br>"
-                ;
-            $i++;
-          }
-          $this->res .= "</td></tr></table>";
-        } else {
-          $this->res .= "<select $inline>";
-          foreach($this->listing as $v) {
-            $this->res .= "<option value=\"" . htmlentities($v) . "\">$v</option>";
-          }
-          if (!$this->fieldIsRequired()) {
-            $this->res .= "<option value=''>?</option>";
-          }
-          $this->res .= "</select>";
-        }
+        $jsonList = json_encode(array_map(
+            function($e) { return htmlentities($e, ENT_QUOTES); },
+            $this->listing
+          ));
+        $this->res .= "<write-list value='{{{$this->fieldGetKey()}}}' name='{$this->field}'"
+          . "list='" . $jsonList . "' "
+          . ($this->fieldIsRequired() ? "" : "nullable")
+          . "></write-list>";
         break;
       case static::TYPE_TIMESTAMP:
         $this->res .= "<span id='{$this->jsId}'>{{ {$this->fieldGetKey()} | date:'{static::DATETIMEFORMAT}' }}</span>";
