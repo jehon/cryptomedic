@@ -42,7 +42,7 @@ module.exports = {
       .myClick("#button_add")
       .myClick("#add_other_consult")
       .myForm("#fileForm", {
-        "#Date": "2003-02-01",
+        "#Date": "2003-03-02",
         "#Weightkg": "13"
       }, "#topsubmenu #button_save")
       ;
