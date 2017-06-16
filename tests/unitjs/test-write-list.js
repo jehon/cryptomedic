@@ -184,10 +184,10 @@ describe('test-write-list', function() {
   })
 
   it("should handle named list", function(done) {
-    testComponent("<write-list value='machin' list='" + JSON.stringify(listRadio) + "'></write-list>").then(el => {
+    testComponent("<write-list value='machin' list-name='listRadio'></write-list>").then(el => {
       expect(el).not.toBeNull();
 
-      WriteList.setLists({
+      WriteList.setReferences({
         listRadio: listRadio,
         listSelect: listSelect
       })

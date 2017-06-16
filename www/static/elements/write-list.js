@@ -1,32 +1,34 @@
 
 let WriteList = (function() {
 
-  let listsCB = jQuery.Callbacks("memory");
+  let referencesCB = jQuery.Callbacks("memory");
 
   class WriteList extends HTMLElement {
-    static setLists(lists = {}) {
-      if (!lists) {
-        lists = {};
+    static setReferences(references = {}) {
+      if (!references) {
+        references = {};
       }
-      listsCB.fire(lists);
+      referencesCB.fire(references);
     }
+
+    static get observedAttributes() { return [ 'value', 'list', 'nullable', 'list-name' ]; }
 
     constructor() {
       super();
       this.attachShadow({ mode: 'open' });
       this._initialvalue = null;
+      this.references = {};
       this.list = [];
+      this.listName = false;
       this.nullable = false;
 
-      listsCB.add((lists) => {
-        this.lists = lists;
+      referencesCB.add((references) => {
+        this.references = references;
         this.adapt();
       });
 
       this.adapt();
     }
-
-    static get observedAttributes() { return [ 'value', 'list', 'nullable' ]; }
 
     attributeChangedCallback(attributeName, oldValue, newValue, namespace) {
       switch(attributeName) {
@@ -44,6 +46,13 @@ let WriteList = (function() {
             this.list     = JSON.parse(this.list);
           }
           break;
+        case 'list-name':
+          if (this.hasAttribute("list-name")) {
+            this.listName   = this.getAttribute("list-name");  
+          } else {
+            this.listName = false;
+          }
+          break;
         case 'nullable':
           this.nullable   = this.hasAttribute("nullable");
           break;
@@ -52,6 +61,13 @@ let WriteList = (function() {
     }
 
     adapt() {
+      if (this.listName) {
+        if (typeof(this.references[this.listName]) == 'undefined') {
+          this.list = [];
+        } else {
+          this.list = this.references[this.listName];  
+        }       
+      }
       if (this.list.length == 0) {
         this.mode = 'empty';
         this.shadowRoot.innerHTML = "No list set";
