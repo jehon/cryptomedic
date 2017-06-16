@@ -250,7 +250,7 @@ class t {
             $this->listing
           ));
         $this->res .= "<write-list value='{{{$this->fieldGetKey()}}}' name='{$this->field}'"
-          . "list='" . $jsonList . "' "
+          . "list-name='{$this->listingName}' "
           . ($this->fieldIsRequired() ? "" : "nullable")
           . "></write-list>";
         break;
