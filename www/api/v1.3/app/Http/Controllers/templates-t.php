@@ -245,12 +245,16 @@ class t {
     switch($this->fieldGetType()) {
       case static::TYPE_LIST:
         // New system:
-        $jsonList = json_encode(array_map(
-            function($e) { return htmlentities($e, ENT_QUOTES); },
-            $this->listing
-          ));
+        $jsonList = "";
+        if (!$this->listingName) {
+          $jsonList = json_encode(array_map(
+              function($e) { return htmlentities($e, ENT_QUOTES); },
+              $this->listing
+            ));
+        }
         $this->res .= "<write-list value='{{{$this->fieldGetKey()}}}' name='{$this->field}'"
           . "list-name='{$this->listingName}' "
+          . "list='" . $jsonList . "' "
           . ($this->fieldIsRequired() ? "" : "nullable")
           . "></write-list>";
         break;
