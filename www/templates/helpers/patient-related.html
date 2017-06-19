@@ -1,7 +1,3 @@
-<?php
-	// Since this page should be included, do not use the default options
-	$opt = [ "readOnly" => true, 'baseExpression' => "folder.getPatient()." ];
-?>
 <fieldset class='related'>
 	<legend>Related Patient</legend>
 	<table>
@@ -19,14 +15,21 @@
 			<tr>
 				<td><label>Reference</label></td>
 				<td>
-				<?php (new t("Patient.entryyear", $opt))->value()->p(); ?>
-				-
-				<?php (new t("Patient.entryorder", $opt))->value()->p(); ?>
-				</td>
+				<span id='Patient_entryyear'>{{ folder.getPatient().entryyear }}</span>				-
+				<span id='Patient_entryorder'>{{ folder.getPatient().entryorder }}</span>				</td>
 			</tr>
-			<?php (new t("Patient.Name", $opt))->tr()->p(); ?>
-			<?php (new t("Patient.Yearofbirth", $opt))->tr("Year of birth")->p(); ?>
-			<?php (new t("Patient.Sex", $opt))->tr("Sex")->p(); ?>
+			<tr ng-class='{ emptyValue: !folder.getPatient().Name}'>
+			<td>Name</td>
+			<td><span id='Patient_Name'>{{ folder.getPatient().Name }}</span></td>
+		</tr>
+			<tr ng-class='{ emptyValue: !folder.getPatient().Yearofbirth}'>
+			<td>Year of birth</td>
+			<td><span id='Patient_Yearofbirth'>{{ folder.getPatient().Yearofbirth }}</span></td>
+		</tr>
+			<tr ng-class='{ emptyValue: !folder.getPatient().Sex}'>
+			<td>Sex</td>
+			<td><span id='Patient_Sex' name='Sex'>{{ folder.getPatient().Sex }}</span></td>
+		</tr>
 
       <tr>
       </tr>
@@ -43,7 +46,7 @@
 				</td>
         <td class='text-center'>
         	<div ng-if="nextAppointment()" class='alert alert-info' style='margin-bottom: 0px'>
-        		Next appointment: {{nextAppointment()}}
+        		Next appointment: {{ nextAppointment() }}
         	</div>
         	<div ng-if="!nextAppointment()" class='alert alert-danger' style='margin-bottom: 0px'>
       			No next appointment planned.
