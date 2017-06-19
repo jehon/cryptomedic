@@ -304,11 +304,11 @@ class t {
     if ($label == null) $label = $this->field;
 
     $this->res .= "<tr ng-class='{ emptyValue: !{$this->fieldGetKey()}}'>\n";
-    $this->res .= " <td>$label</td>\n";
-    $this->res .= " <td>";
+    $this->res .= "\t\t\t<td>$label</td>\n";
+    $this->res .= "\t\t\t<td>";
     $this->value();
     $this->res .="</td>\n";
-    $this->res .= "</tr>\n";
+    $this->res .= "\t\t</tr>\n";
     return $this;
   }
 
