@@ -136,7 +136,7 @@
 			</FieldSet>
 		</div>
 		<div class="col-md-6">
-			<?php require(__DIR__ . "/../helpers/patient-related.php"); ?>
+			<?php require(__DIR__ . "/../helpers/patient-related.html"); ?>
 			<FieldSet>
 				<legend>Conclusion</legend>
 				<table>
