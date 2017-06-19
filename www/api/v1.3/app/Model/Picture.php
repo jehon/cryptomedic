@@ -66,6 +66,10 @@ class Picture extends CryptomedicModel {
 		// TODO SECURITY: Enforce file size limit
 		if (array_key_exists('fileContent', $_FILES)) {
 			$file = $_FILES['fileContent'];
+			if ($file['error']) {
+				var_dump($file);
+				abort(500, "Error in received file");
+			}
 			$finfo = finfo_open(FILEINFO_MIME_TYPE);
 			$mimetype = finfo_file($finfo, $file['tmp_name']);
 
