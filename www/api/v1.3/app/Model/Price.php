@@ -13,6 +13,13 @@ class Price extends CryptomedicModel
     // Transient field: http://stackoverflow.com/a/17250429/1954789
     public function getEditableAttribute()
     {
-        return false;
+    	if ($this->dateto) {
+    		return false;
+    	}
+
+    	if ($this->datefrom < self::getLimit()) {
+    		return false;
+    	}
+        return true;
     }
 }

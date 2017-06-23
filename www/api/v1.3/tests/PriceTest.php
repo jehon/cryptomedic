@@ -42,6 +42,10 @@ class PriceTest extends RouteReferenceTestCase {
 	      	);
 
 		$this->assertEquals(count($json), 3);
+
+		foreach($json as $j) {
+			$this->assertEquals($j->_editable, false);
+		}
 		return $json;
 	}
 
@@ -85,6 +89,6 @@ class PriceTest extends RouteReferenceTestCase {
 	    $this->assertTrue(!property_exists($json, 'dateto'));
 	    $this->assertEquals($json->consult_field_visit, -1);
 	    $this->assertEquals($json->consult_home_visit, 150);
-	    // $this->assertEquals($json->_editable, true);
+	    $this->assertEquals($json->_editable, true);
 	}
 }
