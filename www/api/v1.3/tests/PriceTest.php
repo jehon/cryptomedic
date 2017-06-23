@@ -105,7 +105,6 @@ class PriceTest extends RouteReferenceTestCase {
 	         	->setUrl("admin/prices")
 	        	->setMethod("POST")
 	        	->addParams([ "pivot" => $limit ])
-	        	->withReference()
 	      	);
 
 	    $this->assertTrue(property_exists($json, 'id'));
