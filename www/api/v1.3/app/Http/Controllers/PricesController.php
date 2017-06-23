@@ -20,7 +20,7 @@ class PricesController extends Controller {
  		$pivot = Input::get('pivot');
 		$lastPrice = Price::where("dateto", null)->first();
 
-		$limit = date('Y-m-d', mktime(0, 0, 0, date('m'), date('d') + 5, date('Y')));
+		$limit = Price::getLimit();
 		if ($pivot < $limit) {
 			abort(400, "Pivot too low: " . $pivot);
 		}
