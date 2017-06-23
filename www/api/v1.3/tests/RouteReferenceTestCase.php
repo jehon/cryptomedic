@@ -6,8 +6,6 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 require_once("RequestOptionsBuilder.php");
 
 class RouteReferenceTestCase extends TestCase {
-	use DatabaseTransactions;
-
 	const DAILY   = "day";
 	const MONTHLY = "month";
 	const YEARLY  = "year";

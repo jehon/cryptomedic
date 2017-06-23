@@ -2,7 +2,12 @@
 
 require_once("FicheTestHelper.php");
 
+use Illuminate\Foundation\Testing\DatabaseTransactions;
+
 class FicheBillTest extends FicheTestHelper {
+  // Make Unit Tests are transactionals !
+  use DatabaseTransactions;
+
   protected $model = "Bill";
   protected $collection = "bills";
 
