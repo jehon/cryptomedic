@@ -42,38 +42,44 @@ class PricesController extends Controller {
 		return $newObj;
 	}
 
-	// // PUT / PATCH
-	// public function update($id) {
- // 		$attributes = Input::except('_type');
+	// PUT / PATCH
+	public function update($id) {
+ 		$attributes = Input::except('_type');
 
- // 		$obj = Price::findOrFail($id);
-	// 	foreach($attributes as $k => $v) {
-	// 		// Skip system fields
-	// 		if (in_array($k, [ $obj->getUpdatedAtColumn(), $obj->getCreatedAtColumn() ])) {
-	// 			continue;
-	// 		}
-	// 		// Set existing fields
-	// 		if (array_key_exists($k, $obj->getAttributes()) && ($obj->getAttribute($k) != $v)) {
-	// 			$obj->{$k} = $v;
-	// 		}
-	// 	}
-	// 	// Do not update last-login...
-	// 	unset($obj->last_login);
+ 		$obj = Price::findOrFail($id);
+ 		if (!$obj->_editable) {
+ 			abort(403, "Could not be done on that object");
+ 		}
+		foreach($attributes as $k => $v) {
+			// Skip system fields
+			if (in_array($k, [ $obj->getUpdatedAtColumn(), $obj->getCreatedAtColumn() ])) {
+				continue;
+			}
+			// Set existing fields
+			if (array_key_exists($k, $obj->getAttributes()) && ($obj->getAttribute($k) != $v)) {
+				$obj->{$k} = $v;
+			}
+		}
+		// Do not update last-login...
+		unset($obj->last_login);
 
-	// 	$obj->save();
-	// 	return $this->index();
-	// }
+		$obj->save();
+		return $obj;
+	}
 
-	// // DELETE
-	// public function destroy($id) {
-	// 	$obj = User::findOrFail($id);
-	// 	if (!$obj) {
-	// 		return response()->json(array());
-	// 	}
-	// 	if(!$obj->delete()) {
-	// 		abort(404, "Could not delete $model@$id");
-	// 	}
-	// 	// return response()->json(array());
-	// 	return $this->index();
-	// }
+	// DELETE
+	public function destroy($id) {
+		$obj = Price::findOrFail($id);
+		if (!$obj) {
+			return response()->json(array());
+		}
+		if (!$obj->_editable) {
+			abort(403, "Forbidden");
+		}
+		if(!$obj->delete()) {
+			abort(404, "Could not delete $model@$id");
+		}
+		// return response()->json(array());
+		return 0;
+	}
 }
