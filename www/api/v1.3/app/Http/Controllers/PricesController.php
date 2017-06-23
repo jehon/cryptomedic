@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use DB;
 use Illuminate\Http\Response;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use App\Model\Price;
 
@@ -14,15 +15,32 @@ class PricesController extends Controller {
 		return response()->json($list);
 	}
 
-	// // POST = create
-	// public function store() {
-	// 	$attributes = Input::except('_type');
-	// 	$newObj = Price::create($attributes);
-	// 	if (!$newObj->id) {
-	// 		abort(500, "Could not create the file");
-	// 	}
-	// 	return $this->index();
-	// }
+	// POST = create
+	public function store(Request $request) {
+ 		$pivot = Input::get('pivot');
+		$lastPrice = Price::where("dateto", null)->first();
+
+		$limit = date('Y-m-d', mktime(0, 0, 0, date('m'), date('d') + 5, date('Y')));
+		if ($pivot < $limit) {
+			abort(400, "Pivot too low: " . $pivot);
+		}
+
+		$newAttr = $lastPrice->getAttributes();
+
+		unset($newAttr['id']);
+		$newAttr['datefrom'] = $pivot;
+
+		$newObj = Price::create($newAttr);
+
+		if (!$newObj->id) {
+			abort(500, "Could not create the file");
+		}
+
+		$lastPrice->dateto = $pivot;
+		$lastPrice->save();
+
+		return $newObj;
+	}
 
 	// // PUT / PATCH
 	// public function update($id) {
