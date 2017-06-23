@@ -78,7 +78,14 @@ class RouteReferenceTestCase extends TestCase {
 
 	protected function myAssertResponseAgainstReference($json, $file = null) {
 
-	 	$jsonPP = json_encode($json, JSON_PRETTY_PRINT);
+		$jsonFiltered = json_decode(
+			preg_replace(
+				'/"(created_at|updated_at)":"[0-9\- :]+"/',
+				'"$1":"<timestamp>"',
+				json_encode($json))
+			);
+
+	 	$jsonPP = json_encode($jsonFiltered, JSON_PRETTY_PRINT);
 
 		/* Calculate the reference file */
  		if ($file === null) {
