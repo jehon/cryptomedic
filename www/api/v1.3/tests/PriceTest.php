@@ -2,7 +2,11 @@
 
 require_once("RouteReferenceTestCase.php");
 
+use Illuminate\Foundation\Testing\DatabaseTransactions;
+
 class PriceTest extends RouteReferenceTestCase {
+	// Make Unit Tests are transactionals !
+	// use DatabaseTransactions;
 	public function testsUnauthenticated() {
 	    $response = $this->myRunAssertQuery(
 	        $this->getNewRequestOptionsBuilder()

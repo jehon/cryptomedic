@@ -2,6 +2,8 @@
 
 namespace App\Model;
 
+// Note: Unit Tests are transactionals ! -- > see RouteReferenceTestCase
+
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
