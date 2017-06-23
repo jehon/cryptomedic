@@ -203,7 +203,7 @@
         "id": 3,
         "created_at": "<timestamp>",
         "updated_at": "<timestamp>",
-        "lastuser": null,
+        "lastuser": "jehon",
         "datefrom": "2016-01-03",
         "dateto": null,
         "consult_CDC_consultation_physio": 100,
