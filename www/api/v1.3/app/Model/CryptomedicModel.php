@@ -57,6 +57,8 @@ class CryptomedicModel extends Model {
 		if (!$this->updated_at) {
 			return false;
 		}
+		// TODO: test locking in backend here....
+		// TODO: put the number of days into configuration ! And push it to the frontend
 		// if ($this->update_at < new \DateTime('36 days ago')) {
 		//  // Too old, locked
 		// 	return true;
