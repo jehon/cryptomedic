@@ -79,6 +79,10 @@ class PricesController extends Controller {
 		if(!$obj->delete()) {
 			abort(404, "Could not delete $model@$id");
 		}
+
+		// TODO: rollback latests "dateto" to null
+		DB::update("UPDATE prices SET dateto = NULL WHERE dateto = (SELECT max(dateto) FROM (SELECT dateto FROM prices) AS t)");
+
 		// return response()->json(array());
 		return 0;
 	}
