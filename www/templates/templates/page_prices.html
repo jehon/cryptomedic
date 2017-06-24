@@ -1,4 +1,14 @@
 <div ng-if='!edit'>
+  <div class="alert alert-info">
+    Prices have a period of validity: they are valid from &lt;beginning date&gt; to &lt;end date&gt;<br>
+    A price can be modified only if the &lt;beginning date&gt; is still in the future (5 days from now)<br>
+    To create a new price list:<br>
+    <ul>
+      <li>Generate a new price list, and choose the &lt;beginning date&gt;.</li>
+      <li>Specify the various price items.</li>
+    </ul>
+  </div>
+
   <table class='table table-hover table-bordered tablesorter reporting'>
     <thead>
       <tr>
