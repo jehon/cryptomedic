@@ -33,6 +33,14 @@ function ctrl_prices($scope) {
     return list;
   };
 
+  // Add button
+  // ==> soit on édit le dernier
+  //     si: activation n'est pas aujourd'hui
+  //     si: pas d'utilisation avérée
+  //   alors: proposition d'éditer le dernier prix
+  //   sinon: ajout d'un nouveau
+
+
   // $scope.doAdd = function() {
   //   $scope.edit = {
   //     'id' : -1
