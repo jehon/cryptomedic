@@ -19,6 +19,7 @@ function ctrl_prices($scope) {
     let list = Object.keys($scope.prices[0]);
     list = list.filter(v => {
       if (v[0] == "$")                                { return false; }
+      if (v[0] == "_")                                { return false; }
       if (v == "created_at")                          { return false; }
       if (v == "updated_at")                          { return false; }
       if (v == "datefrom")                            { return false; }
