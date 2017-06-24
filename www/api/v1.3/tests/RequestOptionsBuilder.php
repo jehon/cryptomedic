@@ -3,6 +3,7 @@
 class RequestOptionsBuilder {
   protected $url;
   protected $role = "cdc";
+  protected $username = "test";
   protected $asJson = true;
   protected $method = "GET";
   protected $params = [];
@@ -46,19 +47,26 @@ class RequestOptionsBuilder {
     return $this;
   }
 
-
   public function getRole() {
     return $this->role;
   }
 
-  public function setRole($role) {
+  public function getUsername() {
+    return $this->username;
+  }
+
+  public function setRole($role, $username = false) {
     $this->role = $role;
+    if ($username) {
+      $this->username = $username;
+    } else {
+      $this->username = "";
+    }
     return $this;
   }
 
   public function asReadOnly() {
-    $this->role = "readonly";
-    return $this;
+    return $this->setRole("readonly");
   }
 
   public function asUnauthenticated() {

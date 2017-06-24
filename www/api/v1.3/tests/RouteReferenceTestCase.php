@@ -26,7 +26,15 @@ class RouteReferenceTestCase extends TestCase {
 			$opt = $this->getNewRequestOptionsBuilder();
 		}
 		if ($opt->getRole() !== false) {
-			$user = new User(['name' => 'test', 'group' => $opt->getRole() ]);
+			
+			// DUPLICATE TEST USER...
+			if ($opt->getUsername()) {
+				$user = new User(['name' => 'test', 'group' => $opt->getRole(), 'username' => $opt->getUsername() ]);	
+			} else {
+				$user = new User(['name' => 'test', 'group' => $opt->getRole() ]);
+			}
+
+			
 			$this->actingAs($user);
 		} else {
 			// $this->be(null);
