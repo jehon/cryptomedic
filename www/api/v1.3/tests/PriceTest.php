@@ -70,6 +70,7 @@ class PriceTest extends RouteReferenceTestCase {
 	        	->setExpected(400)
 	        	->asText()
 	      	);
+	    $this->testIndex();
 	}
 
 	public function testInvalidDelete() {
@@ -82,6 +83,7 @@ class PriceTest extends RouteReferenceTestCase {
 	        	->setExpected(403)
 	        	->asText()
 	      	);
+	    $this->testIndex();
 	}
 
 	public function testUpdateInvalid() {
@@ -94,6 +96,7 @@ class PriceTest extends RouteReferenceTestCase {
 	        	->setExpected(403)
 	        	->asText()
 	      	);
+	    $this->testIndex();
 	}
 	
 	public function testCreate() {
