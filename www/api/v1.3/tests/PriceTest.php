@@ -143,6 +143,7 @@ class PriceTest extends RouteReferenceTestCase {
 	        	->setMethod("DELETE")
 	      	);
 
+	    // Check that we are back to normal
 	    $this->testIndex();
 	}
 }
