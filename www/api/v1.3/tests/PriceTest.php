@@ -104,7 +104,7 @@ class PriceTest extends RouteReferenceTestCase {
 		$limit = date('Y-m-d', mktime(0, 0, 0, date('m'), date('d') + 10, date('Y')));
 	    $json = $this->myRunAssertQuery(
 	        $this->getNewRequestOptionsBuilder()
-	        	->setRole("manager")
+	        	->setRole("manager", "jehon")
 	         	->setUrl("admin/prices")
 	        	->setMethod("POST")
 	        	->addParams([ "pivot" => $limit ])
