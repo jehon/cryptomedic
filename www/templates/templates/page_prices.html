@@ -23,6 +23,17 @@
         <th>Modified by</th>
         <th ng-repeat='p in prices'>{{p['lastuser']}}</th>
       </tr>
+      <tr>
+        <th></th>
+        <th ng-repeat='p in prices'>
+          <span ng-if='p["_editable"]'>
+            <span id='button_cancel' class="btn btn-default" ng-click="actionEdit($index)">Edit</span>
+          </span>
+          <span ng-if='!p["_editable"]'>
+            Locked
+          </span>
+        </th>
+      </tr>
     </thead>
     <tbody>
       <tr ng-repeat='k in getElements()'>
