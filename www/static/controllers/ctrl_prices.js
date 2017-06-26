@@ -12,6 +12,7 @@ function ctrl_prices($scope) {
       });
   };
 
+  // Filter elements out that does not need to be displayed !
   $scope.getElements = function() {
     if (!$scope.prices || $scope.prices.length == 0 || !$scope.prices[0]) {
       return [];
@@ -33,63 +34,79 @@ function ctrl_prices($scope) {
     return list;
   };
 
-  // Add button
+  // Editing ?
   // ==> soit on édit le dernier
   //     si: activation n'est pas aujourd'hui
   //     si: pas d'utilisation avérée
   //   alors: proposition d'éditer le dernier prix
   //   sinon: ajout d'un nouveau
+  //
 
+  $scope.canAddOne = function() {
+    if (!$scope.prices) {
+      return false;
+    }
+    for(let i of Object.keys($scope.prices)) {
+      if ($scope.prices[i]._editable) {
+        return false;
+      }
+    }
+    return true;
+  }
 
-  // $scope.doAdd = function() {
-  //   $scope.edit = {
-  //     'id' : -1
-  //   };
-  // };
+  //
+  // Create a new price list if possible
+  //
+  $scope.actionCreate = function() {
+    // Ask for the various parameters before creating the new price
 
-  /*** EDIT ****/
+    console.log("create");
+    // $scope.edit = <new object>;
+  }
+
+  $scope.doCreate = function() {
+    // Create the price server-side, and then edit it here...
+
+  }
+
+  //
+  // Edit an existing price list
+  //
+  $scope.actionEdit = function() {
+    console.log("edit: ", index);
+    // $scope.edit = <clone> $scope.prices[index];
+  }
+
+  //
+  // Delete an existing price list
+  //
+  $scope.actionDelete = function(index) {
+    console.log("delete: ", index);
+  }
+
+  // 
+  // Finish editing -> cancel
+  // 
   $scope.doCancel = function() {
-    $scope.edit = false;
-    $scope.safeApply();
+    console.log("Cancelling");
+    // $scope.edit = false;
+    // $scope.safeApply();
   };
 
-  // $scope.doEdit = function(index) {
-  //   $scope.edit = $scope.users[index]; // Put object here
-  // };
-
-  // $scope.doSave = function() {
-  //   if ($scope.edit.id >= 0) {
-  //     getDataService()
-  //       .then(dataService => dataService.userUpdate($scope.edit))
-  //       .then(function(data) {
-  //         $scope.users = data;
-  //         $scope.safeApply();
-  //         $scope.$emit('message', { 'level': 'success', 'text': 'The user \'' + $scope.edit.username + '\' has been saved successfully.'});
-  //         $scope.doCancel();
-  //       });
-  //   } else {
-  //     getDataService()
-  //       .then(dataService => dataService.userAdd($scope.edit))
-  //       .then(function(data) {
-  //         $scope.users = data;
-  //         $scope.safeApply();
-  //         $scope.$emit('message', { 'level': 'success', 'text': 'The user \'' + $scope.edit.username + '\' has been created successfully.'});
-  //         $scope.doCancel();
-  //       });
-  //   }
-  // };
-
-  // $scope.doDelete = function() {
-  //   if (confirm('Are you sure you want to delete user \'' + $scope.edit.name + '\'?')) {
-  //     getDataService()
-  //       .then(dataService => dataService.userDelete($scope.edit.id))
-  //       .then(function(data) {
-  //         $scope.$emit('message', { 'level': 'success', 'text': 'The user \'' + $scope.edit.username + '\' has been deleted successfully.'});
-  //         $scope.users = data;
-  //         $scope.doCancel();
-  //       });
-  //   }
-  // };
+  // 
+  // Finish editing -> save modifications
+  // 
+  $scope.doSave = function() {
+    console.log("Saving");
+    // getDataService()
+    //   .then(dataService => dataService.userUpdate($scope.edit))
+    //   .then(function(data) {
+    //     $scope.users = data;
+    //     $scope.safeApply();
+    //     $scope.$emit('message', { 'level': 'success', 'text': 'The user \'' + $scope.edit.username + '\' has been saved successfully.'});
+    //     $scope.doCancel();
+    //   });
+  };
 
   $scope.doCancel();
   $scope.refresh();
