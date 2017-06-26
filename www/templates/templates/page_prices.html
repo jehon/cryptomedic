@@ -7,8 +7,16 @@
       <li>Generate a new price list, and choose the &lt;beginning date&gt;.</li>
       <li>Specify the various price items.</li>
     </ul>
-    You can delete the price list, if it is necessary.
+    You can delete the price list, if it is necessary, while not being less than 5 days from the activation date &lt;beginning date&gt;.
   </div>
+
+  <fieldset ng-if="canAddOne()">
+    <legend>Add a new price list</legend>
+    <div>
+      If you want to create the price list, please click here:
+      <span id='button_create' class="btn btn-default" ng-click="actionCreate()">Create a new price list</span>
+    </div>
+  </fieldset>
 
   <table class='table table-hover table-bordered tablesorter reporting'>
     <thead>
@@ -28,7 +36,8 @@
         <th></th>
         <th ng-repeat='p in prices'>
           <span ng-if='p["_editable"]'>
-            <span id='button_cancel' class="btn btn-default" ng-click="actionEdit($index)">Edit</span>
+            <span id='button_edit_{$index}'   class="btn btn-default" ng-click="actionEdit($index)">Edit</span>
+            <span id='button_cancel_{$index}' class="btn btn-default" ng-click="actionDelete($index)">Delete</span>
           </span>
           <span ng-if='!p["_editable"]'>
             Locked
@@ -47,7 +56,4 @@
       </tr>
     </tbody>
   </table>
-<!--   <span class='btn btn-default' ng-click='doAdd()'>Add a new user</span>
-  <a class='btn btn-default' ng-href='mailto:{{emailAll()}}'>Email everybody</a>
- -->
 </div>
