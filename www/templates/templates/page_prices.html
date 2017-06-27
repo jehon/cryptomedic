@@ -17,7 +17,21 @@
       <span id='button_create' class="btn btn-default" ng-click="actionCreate()">Create a new price list</span>
     </div>
     <div id='action_creating' ng-if='creating'>
-      Creating a file
+      When will the new price list be active? Please choose the pivot date:<br>
+      <table>
+        <tr>
+          <td>Pivot Date</td>
+          <td>
+            <form id='form_creating'>
+              <input name='pivotDate' type='text' $inline placeholder='yyyy-MM-dd' mycalendar uuid='$uuid_date'/><br>
+              <div id='error_date' ng-if='error_date' class='jserror'>
+                Invalid date: please enter yyyy-mm-dd.<br>
+                The date must be in the future, at least 5 days from now.
+              </div>
+            </form>
+        </tr>
+      </table>
+      <span id='button_do_create' class="btn btn-default" ng-click="doCreate()">Go</span>
     </div>
   </fieldset>
 
