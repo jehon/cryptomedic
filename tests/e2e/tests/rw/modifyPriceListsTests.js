@@ -37,14 +37,35 @@ module.exports = {
             .nextCol().assert("free price")
             .nextCol().assert("free price")
             .nextCol().assert("free price")
-
         .endTable()
+  },
 
+  "create a new Price List": function(client) {
+    client
       // Button to create a new price list
       .waitForElementVisible("#button_create")
       .assert.elementNotPresent("#action_creating")
       .myClick("#button_create")
 
-      .end();
+      .waitForElementVisible("#action_creating")
+      .assert.visible("#form_creating input[name=pivotDate]")
+
+      .myFormFillIn('#form_creating', { '[name=pivotDate]': '2010-01-01' }, "#button_do_create")
+
+      .waitForElementVisible("#error_date")
+
+      .myFormFillIn('#form_creating', { '[name=pivotDate]': '2030-01-01' }, "#button_do_create")
+      .pause(10)
+
+      .assert.elementNotPresent("#error_date")
+
+
+  "edit the created price list": function(client) {
+
   },
+
+  "delete the created price list": function(client) {
+    client
+      .end();
+  }
 };

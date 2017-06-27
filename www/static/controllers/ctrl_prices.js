@@ -86,6 +86,19 @@ function ctrl_prices($scope) {
 
   $scope.doCreate = function() {
     // Create the price server-side, and then edit it here...
+    let updatedData = formGetContent("#form_creating", {});
+    let pivotDate = new Date(updatedData.pivotDate);
+
+    let limit = new Date();
+    limit.setDate(limit.getDate() + 5);
+
+    if (pivotDate < limit) {
+      this.error_date = true;
+      return ;
+    }
+    this.error_date = false;
+
+    console.log("do create", updatedData, pivotDate);
   }
 
   //
