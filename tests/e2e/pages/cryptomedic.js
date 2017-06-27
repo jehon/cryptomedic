@@ -145,8 +145,8 @@ module.exports = (function() {
         toString: function() {
           return tableSelector
             + ' ' + section
-            + ' > tr:' + (row === 'last' ? 'last-child' : 'nth-child(' + row + ')')
-            + ' > td:' + (col === 'last' ? 'last-child' : 'nth-child(' + col + ')');
+            + ' > ' + 'tr'                               + ':' + (row === 'last' ? 'last-child' : 'nth-child(' + row + ')')
+            + ' > ' + (section == 'tbody' ? 'td' : 'th') + ':' + (col === 'last' ? 'last-child' : 'nth-child(' + col + ')');
         },
         assert: function(text) {
           client
