@@ -2,6 +2,7 @@
 function ctrl_prices($scope) {
   $scope.prices = {};
   $scope.edit = false;
+  $scope.creating = false;
 
   $scope.refresh = function() {
     getDataService()
@@ -80,12 +81,11 @@ function ctrl_prices($scope) {
     // Ask for the various parameters before creating the new price
 
     console.log("create");
-    // $scope.edit = <new object>;
+    $scope.creating = true;
   }
 
   $scope.doCreate = function() {
     // Create the price server-side, and then edit it here...
-
   }
 
   //
