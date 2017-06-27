@@ -40,7 +40,11 @@ module.exports = {
 
         .endTable()
 
-      // .pause(10000000)
+      // Button to create a new price list
+      .waitForElementVisible("#button_create")
+      .assert.elementNotPresent("#action_creating")
+      .myClick("#button_create")
+
       .end();
   },
 };

@@ -16,6 +16,9 @@
       If you want to create the price list, please click here:
       <span id='button_create' class="btn btn-default" ng-click="actionCreate()">Create a new price list</span>
     </div>
+    <div id='action_creating' ng-if='creating'>
+      Creating a file
+    </div>
   </fieldset>
 
   <table id='price_lists' class='table table-hover table-bordered tablesorter reporting'>
