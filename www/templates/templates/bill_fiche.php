@@ -162,10 +162,10 @@
       </tbody>
       <tfoot>
         <tr>
-          <td></td>
-          <td>Total</td>
-          <td>{{getPaymentTotal()}}</td>
-          <td></td>
+          <th></th>
+          <th>Total</th>
+          <th>{{getPaymentTotal()}}</th>
+          <th></th>
         </tr>
       </tfoot>
     </table>
