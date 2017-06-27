@@ -7,6 +7,25 @@ function ctrl_prices($scope) {
     getDataService()
       .then(dataService => Price.list(dataService))
       .then(function(data) {
+        data.sort((a, b) => {
+          // Left(smal) == bigger datefrom
+          if (a == null || a.datefrom == null || a.datefrom == "") {
+            return 1;
+          }
+          if (b == null || b.datefrom == null || b.datefrom == "") {
+            return -1;
+          }
+
+          if (a.datefrom == b.datefrom) {
+            return 0;
+          }
+
+          if (a.datefrom > b.datefrom) {
+            return -1;
+          }
+
+          return 1;
+        });
         $scope.prices = data;
         $scope.safeApply();
       });
