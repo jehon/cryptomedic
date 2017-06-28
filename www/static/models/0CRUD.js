@@ -7,14 +7,23 @@ class CRUD {
 	static list(network) {
 		return network.start()
       .requestWithGet()
-      .requestToUrl(this.getBaseUrl());
+      .requestToUrl(this.getBaseUrl())
+      ;
 	}
 
   static create(network, data) {
     return network.start()
       .requestWithPost()
       .requestToUrl(this.getBaseUrl())
-      .requestWithData(data);
+      .requestWithData(data)
+      ;
+  }
+
+  delete(network) {
+    return network.start()
+      .requestWithDelete()
+      .requestToUrl(this.getBaseUrl + '/' + this.id)
+      ;
   }
 
   constructor(data = {}) {
