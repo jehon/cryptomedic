@@ -117,8 +117,21 @@ class PriceTest extends RouteReferenceTestCase {
 	    $this->assertEquals($json->consult_home_visit, 150);
 	    $this->assertEquals($json->_editable, true);
 
-	    // Update some data
 
+	    // Creating a second one would fail
+	    $this->myRunAssertQuery(
+	        $this->getNewRequestOptionsBuilder()
+	        	->setRole("manager", "jehon")
+	         	->setUrl("admin/prices")
+	        	->setMethod("POST")
+	        	->addParams([ "pivot" => $limit ])
+	        	->asText()
+	        	->setExpected(403)
+	      	);
+
+
+
+	    // Update some data
 	    $json->consult_home_visit = 250;
 	    $json = $this->myRunAssertQuery(
 	        $this->getNewRequestOptionsBuilder()

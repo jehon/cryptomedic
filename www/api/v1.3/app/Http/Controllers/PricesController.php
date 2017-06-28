@@ -20,6 +20,10 @@ class PricesController extends Controller {
  		$pivot = Input::get('pivot');
 		$lastPrice = Price::where("dateto", null)->first();
 
+		if ($lastPrice->_editable) {
+			abort(403, "Only one price could be editable at a time");
+		}
+
 		$limit = Price::getLimit();
 		if ($pivot < $limit) {
 			abort(400, "Pivot too low: " . $pivot);
