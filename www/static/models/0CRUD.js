@@ -10,6 +10,13 @@ class CRUD {
       .requestToUrl(this.getBaseUrl());
 	}
 
+  static create(network, data) {
+    return network.start()
+      .requestWithPost()
+      .requestToUrl(this.getBaseUrl())
+      .requestWithData(data);
+  }
+
   constructor(data = {}) {
     if (data) {
       Object.assign(this, data);

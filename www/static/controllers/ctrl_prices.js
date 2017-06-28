@@ -7,7 +7,7 @@ function ctrl_prices($scope) {
   $scope.refresh = function() {
     getDataService()
       .then(dataService => Price.list(dataService))
-      .then(function(data) {
+      .then((data) => {
         data.sort((a, b) => {
           // Left(smal) == bigger datefrom
           if (a == null || a.datefrom == null || a.datefrom == "") {
@@ -98,7 +98,11 @@ function ctrl_prices($scope) {
     }
     this.error_date = false;
 
-    console.log("do create", updatedData, pivotDate);
+    getDataService()
+      .then(dataService => Price.create(dataService, { pivot: updatedData.pivotDate }))
+      .then((data) => {
+        console.log("Created: ", data);
+      });
   }
 
   //
