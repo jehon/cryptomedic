@@ -75,10 +75,11 @@ module.exports = {
 
   "delete the created price list": function(client) {
     client
-      .waitForElementNotPresent("#button_delete_0")
+      .waitForElementPresent("#button_delete_0")
       .myClick("#button_delete_0")
       .page.cryptomedic().myWaitFetch()
       ;
+
     assertTableInitial(client);
 
     client

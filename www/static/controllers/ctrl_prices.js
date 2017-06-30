@@ -121,7 +121,9 @@ function ctrl_prices($scope) {
   // Delete an existing price list
   //
   $scope.actionDelete = function(index) {
-    console.log("delete: ", index);
+    getDataService()
+      .then(dataService => Price.remove(dataService, $scope.prices[index].id))
+      .then(() => $scope.refresh());
   }
 
   // 
