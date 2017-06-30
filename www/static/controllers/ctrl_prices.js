@@ -104,7 +104,7 @@ function ctrl_prices($scope) {
         console.log("Created: ", data);
         $scope.creating = false
         $scope.prices.unshift(data);
-        $scope.edit = data;
+        $scope.edit(0);
         $scope.safeApply();
       });
   }
@@ -112,7 +112,7 @@ function ctrl_prices($scope) {
   //
   // Edit an existing price list
   //
-  $scope.actionEdit = function() {
+  $scope.actionEdit = function(index) {
     console.log("edit: ", index);
     // $scope.edit = <clone> $scope.prices[index];
   }
