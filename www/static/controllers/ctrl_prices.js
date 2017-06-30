@@ -102,6 +102,10 @@ function ctrl_prices($scope) {
       .then(dataService => Price.create(dataService, { pivot: updatedData.pivotDate }))
       .then((data) => {
         console.log("Created: ", data);
+        $scope.creating = false
+        $scope.prices.unshift(data);
+        $scope.edit = data;
+        $scope.safeApply();
       });
   }
 
