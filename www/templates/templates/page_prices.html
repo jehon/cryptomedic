@@ -29,48 +29,49 @@
                 The date must be in the future, at least 5 days from now.
               </div>
             </form>
+          </td>
         </tr>
       </table>
       <span id='button_do_create' class="btn btn-default" ng-click="doCreate()">Go</span>
     </div>
   </fieldset>
-
-  <table id='price_lists' class='table table-hover table-bordered tablesorter reporting'>
-    <thead>
-      <tr>
-        <th>Beginning date</th>
-        <th ng-repeat='p in prices'>{{p['datefrom']}}</th>
-      </tr>
-      <tr>
-        <th>End date</th>
-        <th ng-repeat='p in prices'>{{p['dateto']}}</th>
-      </tr>
-      <tr>
-        <th>Modified by</th>
-        <th ng-repeat='p in prices'>{{p['lastuser']}}</th>
-      </tr>
-      <tr>
-        <th></th>
-        <th ng-repeat='p in prices'>
-          <span ng-if='p["_editable"]'>
-            <span id='button_edit_{$index}'   class="btn btn-default" ng-click="actionEdit($index)">Edit</span>
-            <span id='button_cancel_{$index}' class="btn btn-default" ng-click="actionDelete($index)">Delete</span>
-          </span>
-          <span ng-if='!p["_editable"]'>
-            Locked
-          </span>
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr ng-repeat='k in getElements()'>
-        <td>{{k}}</td>
-        <td ng-repeat='p in prices'>
-          <span ng-if='p[k]<=0'>-</span>
-          <span ng-if='p[k]>1'>{{p[k]}}</span>
-          <span ng-if='p[k]==1'>free price</span>
-        </td>
-      </tr>
-    </tbody>
-  </table>
 </div>
+
+<table id='price_lists' class='table table-hover table-bordered tablesorter reporting'>
+  <thead>
+    <tr>
+      <th>Beginning date</th>
+      <th ng-repeat='p in prices'>{{p['datefrom']}}</th>
+    </tr>
+    <tr>
+      <th>End date</th>
+      <th ng-repeat='p in prices'>{{p['dateto']}}</th>
+    </tr>
+    <tr>
+      <th>Modified by</th>
+      <th ng-repeat='p in prices'>{{p['lastuser']}}</th>
+    </tr>
+    <tr>
+      <th></th>
+      <th ng-repeat='p in prices'>
+        <span ng-if='p["_editable"]'>
+          <span id='button_edit_{{$index}}'   class="btn btn-default" ng-click="actionEdit($index)">Edit</span>
+          <span id='button_cancel_{{$index}}' class="btn btn-default" ng-click="actionDelete($index)">Delete</span>
+        </span>
+        <span ng-if='!p["_editable"]'>
+          Locked
+        </span>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat='k in getElements()'>
+      <td>{{k}}</td>
+      <td ng-repeat='p in prices'>
+        <span ng-if='p[k]<=0'>-</span>
+        <span ng-if='p[k]>1'>{{p[k]}}</span>
+        <span ng-if='p[k]==1'>free price</span>
+      </td>
+    </tr>
+  </tbody>
+</table>
