@@ -19,10 +19,10 @@ class CRUD {
       ;
   }
 
-  delete(network) {
+  static remove(network, id) {
     return network.start()
       .requestWithDelete()
-      .requestToUrl(this.getBaseUrl + '/' + this.id)
+      .requestToUrl(this.getBaseUrl() + '/' + id)
       ;
   }
 
