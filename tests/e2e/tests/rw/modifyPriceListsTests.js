@@ -1,4 +1,37 @@
 
+function assertTableInitial(client) {
+  client
+    .page.cryptomedic().tableIterator('#price_lists')
+      .section("thead")
+        .row(1)
+          .assert("Beginning date")
+          .nextCol().assert("2016-01-03")
+          .nextCol().assert("2013-01-01")
+          .nextCol().assert("")
+        .row(4).col(1)
+          .assert("")
+          .nextCol().assert("Locked")
+          .nextCol().assert("Locked")
+          .nextCol().assert("Locked")
+      .section("tbody")
+        .row(1).col(1)
+          .assert("consult_CDC_consultation_Bengali_Doctor")
+          .nextCol().assert("300")
+          .nextCol().assert("300")
+          .nextCol().assert("200")
+        .nextRow(4).col(1)
+          .assert("consult_field_visit")
+          .nextCol().assert("-")
+          .nextCol().assert("-")
+          .nextCol().assert("100")
+        .nextRow(7).col(1)
+          .assert("other_Other_consultation_care")
+          .nextCol().assert("free price")
+          .nextCol().assert("free price")
+          .nextCol().assert("free price")
+      .endTable()
+}
+
 module.exports = {
   "go to the price page": function(client) {
     client
@@ -8,36 +41,9 @@ module.exports = {
       .myClick('#menu_more')
       .waitForElementVisible('#menu_prices')
       .myClick("#menu_prices")
+      .page.cryptomedic().myWaitFetch();
 
-      .page.cryptomedic().tableIterator('#price_lists')
-        .section("thead")
-          .row(1)
-            .assert("Beginning date")
-            .nextCol().assert("2016-01-03")
-            .nextCol().assert("2013-01-01")
-            .nextCol().assert("")
-          .row(4).col(1)
-            .assert("")
-            .nextCol().assert("Locked")
-            .nextCol().assert("Locked")
-            .nextCol().assert("Locked")
-        .section("tbody")
-          .row(1).col(1)
-            .assert("consult_CDC_consultation_Bengali_Doctor")
-            .nextCol().assert("300")
-            .nextCol().assert("300")
-            .nextCol().assert("200")
-          .nextRow(4).col(1)
-            .assert("consult_field_visit")
-            .nextCol().assert("-")
-            .nextCol().assert("-")
-            .nextCol().assert("100")
-          .nextRow(7).col(1)
-            .assert("other_Other_consultation_care")
-            .nextCol().assert("free price")
-            .nextCol().assert("free price")
-            .nextCol().assert("free price")
-        .endTable()
+    assertTableInitial(client);
   },
 
   "create a new Price List": function(client) {
@@ -57,15 +63,26 @@ module.exports = {
       .myFormFillIn('#form_creating', { '[name=pivotDate]': '2030-01-01' }, "#button_do_create")
       .pause(10)
 
-      .assert.elementNotPresent("#error_date")
+      .waitForElementNotPresent("#error_date")
+      .waitForElementNotPresent("#button_create")
 
+      .waitForElementNotPresent("#action_creating")
+  },
 
   "edit the created price list": function(client) {
-
+    // TODO
   },
 
   "delete the created price list": function(client) {
     client
-      .end();
+      .waitForElementNotPresent("#button_delete_0")
+      .myClick("#button_delete_0")
+      .page.cryptomedic().myWaitFetch()
+      ;
+    assertTableInitial(client);
+
+    client
+      .end()
+      ;
   }
 };
