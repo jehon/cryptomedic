@@ -30,6 +30,9 @@ function assertTableInitial(client) {
           .nextCol().assert("free price")
           .nextCol().assert("free price")
       .endTable()
+    .assert.elementNotPresent("#button_save_0")
+    .assert.elementNotPresent("#button_save_1")
+    .assert.elementNotPresent("#button_save_2")
 }
 
 module.exports = {
@@ -65,11 +68,23 @@ module.exports = {
 
       .waitForElementNotPresent("#error_date")
       .waitForElementNotPresent("#button_create")
-
       .waitForElementNotPresent("#action_creating")
   },
 
-  "edit the created price list": function(client) {
+  "edit the created price list, but not saving": function(client) {
+    client
+      .waitForElementVisible("#button_save_0")
+      .assert.elementNotPresent("#button_edit_0")
+      .page.cryptomedic().tableIterator('#price_lists')
+        .section("tbody")
+          .col(2)
+          .row(1).assert("edit")
+          .nextRow().assert("edit")
+          .nextRow().assert("edit")
+          .nextRow().assert("edit")
+          .nextRow().assert("edit")
+          .nextRow().assert("edit")
+        .endTable()
     // TODO
   },
 
