@@ -55,7 +55,12 @@
       <th></th>
       <th ng-repeat='p in prices'>
         <span ng-if='p["_editable"]'>
-          <span id='button_edit_{{$index}}'   class="btn btn-default" ng-click="actionEdit($index)">Edit</span>
+          <span ng-if='edit !== $index'>
+            <span id='button_edit_{{$index}}'   class="btn btn-default" ng-click="actionEdit($index)">Edit</span>
+          </span>
+          <span ng-if='edit === $index'>
+            <span id='button_save_{{$index}}'   class="btn btn-default" ng-click="actionSave($index)">Save</span>
+          </span>
           <span id='button_delete_{{$index}}' class="btn btn-default" ng-click="actionDelete($index)">Delete</span>
         </span>
         <span ng-if='!p["_editable"]'>
