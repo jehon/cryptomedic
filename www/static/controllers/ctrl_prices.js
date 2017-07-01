@@ -132,6 +132,8 @@ function ctrl_prices($scope) {
   // Finish editing -> cancel
   // 
   $scope.doCancel = function() {
+    $scope.edit = false;
+    $scope.creating = false;
     console.log("Cancelling");
     // $scope.edit = false;
     // $scope.safeApply();
