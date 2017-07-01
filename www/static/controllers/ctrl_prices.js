@@ -125,16 +125,18 @@ function ctrl_prices($scope) {
   $scope.actionDelete = function(index) {
     getDataService()
       .then(dataService => Price.remove(dataService, $scope.prices[index].id))
-      .then(() => $scope.refresh());
+      .then(() => $scope.doCancel())
+      .then(() => $scope.refresh())
+      ;
   }
 
   // 
   // Finish editing -> cancel
   // 
   $scope.doCancel = function() {
+    console.log("Cancelling");
     $scope.edit = false;
     $scope.creating = false;
-    console.log("Cancelling");
     // $scope.edit = false;
     // $scope.safeApply();
   };
