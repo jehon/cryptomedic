@@ -119,6 +119,21 @@ function ctrl_prices($scope) {
     $scope.edit = index;
   }
 
+  // 
+  // Finish editing -> save modifications
+  // 
+  $scope.doSave = function() {
+    console.log("Saving");
+    // getDataService()
+    //   .then(dataService => dataService.userUpdate($scope.edit))
+    //   .then(function(data) {
+    //     $scope.users = data;
+    //     $scope.safeApply();
+    //     $scope.$emit('message', { 'level': 'success', 'text': 'The user \'' + $scope.edit.username + '\' has been saved successfully.'});
+    //     $scope.doCancel();
+    //   });
+  };
+
   //
   // Delete an existing price list
   //
@@ -137,23 +152,7 @@ function ctrl_prices($scope) {
     console.log("Cancelling");
     $scope.edit = false;
     $scope.creating = false;
-    // $scope.edit = false;
-    // $scope.safeApply();
-  };
-
-  // 
-  // Finish editing -> save modifications
-  // 
-  $scope.doSave = function() {
-    console.log("Saving");
-    // getDataService()
-    //   .then(dataService => dataService.userUpdate($scope.edit))
-    //   .then(function(data) {
-    //     $scope.users = data;
-    //     $scope.safeApply();
-    //     $scope.$emit('message', { 'level': 'success', 'text': 'The user \'' + $scope.edit.username + '\' has been saved successfully.'});
-    //     $scope.doCancel();
-    //   });
+    $scope.safeApply();
   };
 
   $scope.doCancel();
