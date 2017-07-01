@@ -68,9 +68,14 @@
     <tr ng-repeat='k in getElements()'>
       <td>{{k}}</td>
       <td ng-repeat='p in prices'>
-        <span ng-if='p[k]<=0'>-</span>
-        <span ng-if='p[k]>1'>{{p[k]}}</span>
-        <span ng-if='p[k]==1'>free price</span>
+        <div ng-if='edit !== $index'>
+          <span ng-if='p[k]<=0'>-</span>
+          <span ng-if='p[k]>1'>{{p[k]}}</span>
+          <span ng-if='p[k]==1'>free price</span>
+        </div>
+        <div ng-if='edit === $index'>
+          edit
+        </div>
       </td>
     </tr>
   </tbody>
