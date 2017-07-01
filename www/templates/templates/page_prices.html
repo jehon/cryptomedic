@@ -60,6 +60,7 @@
           </span>
           <span ng-if='edit === $index'>
             <span id='button_save_{{$index}}'   class="btn btn-default" ng-click="actionSave($index)">Save</span>
+            <span id='button_cancel_{{$index}}'   class="btn btn-default" ng-click="doCancel()">Cancel</span>
           </span>
           <span id='button_delete_{{$index}}' class="btn btn-default" ng-click="actionDelete($index)">Delete</span>
         </span>

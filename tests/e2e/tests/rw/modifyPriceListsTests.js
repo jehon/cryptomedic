@@ -74,6 +74,7 @@ module.exports = {
   "edit the created price list, but not saving": function(client) {
     client
       .waitForElementVisible("#button_save_0")
+      .waitForElementVisible("#button_cancel_0")
       .assert.elementNotPresent("#button_edit_0")
       .page.cryptomedic().tableIterator('#price_lists')
         .section("tbody")
@@ -85,7 +86,25 @@ module.exports = {
           .nextRow().assert("edit")
           .nextRow().assert("edit")
         .endTable()
+      // TODO: edit values (2 first lines)
+
+      .myClick("#button_cancel_0")
+      .pause(10)
+      .page.cryptomedic().myWaitFetch()
+
+      .page.cryptomedic().tableIterator('#price_lists')
+        .section("tbody")
+          .col(2)
+            .row(1)   .assert("300")
+            .nextRow().assert("-")
+            .nextRow().assert("100")
+            .nextRow().assert("100")
+
     // TODO
+  },
+
+  "edit the created price list": function(client) {
+
   },
 
   "delete the created price list": function(client) {
