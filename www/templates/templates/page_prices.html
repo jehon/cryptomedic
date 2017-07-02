@@ -80,6 +80,11 @@
           <span ng-if='p[k]==1'>open</span>
         </div>
         <div ng-if='edit === $index'>
+          <div>
+            <input type='radio' name='{{k}}_radio' value='1'  ng-checked='p[k] == 1'  ng-click='updateRadio(k, 1)' >Open
+            <input type='radio' name='{{k}}_radio' value='-1' ng-checked='p[k] == -1' ng-click='updateRadio(k, -1)'>Not used
+            <input type='radio' name='{{k}}_radio' value='0'  ng-checked='p[k] > 1'   ng-click='updateRadio(k, 0)' >Specified
+          </div>
           <input name='{{k}}' value='{{p[k]}}'>
         </div>
       </td>
