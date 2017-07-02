@@ -79,14 +79,19 @@ module.exports = {
       .page.cryptomedic().tableIterator('#price_lists')
         .section("tbody")
           .col(2)
-          .row(1).assert("edit")
-          .nextRow().assert("edit")
-          .nextRow().assert("edit")
-          .nextRow().assert("edit")
-          .nextRow().assert("edit")
-          .nextRow().assert("edit")
+            .row(1)   .assert(false, "input[name='consult_CDC_consultation_Bengali_Doctor'][value='300']")
+            .nextRow().assert(false, "input[name='consult_CDC_consultation_Doctor'][value='-1']")
+            .nextRow().assert(false, "input[name='consult_CDC_consultation_physio'][value='100']")
+            .nextRow().assert(false, "input[name='consult_ClubFoot_Follow_up'][value='100']")
+            .row(12)  .assert(false, "input[name='other_Other_consultation_care'][value='1']")
         .endTable()
+
       // TODO: edit values (2 first lines)
+
+      .myFormFillIn("#price_lists", {
+        '[name=consult_CDC_consultation_Bengali_Doctor]': 123,
+        '[name=consult_CDC_consultation_Doctor]': 123
+      })
 
       .myClick("#button_cancel_0")
       .pause(10)
@@ -99,12 +104,17 @@ module.exports = {
             .nextRow().assert("-")
             .nextRow().assert("100")
             .nextRow().assert("100")
+            .row(12).assert("free price")
 
     // TODO
+
   },
 
   "edit the created price list": function(client) {
-
+    // client
+    //   .myClick("#button_edit_0")
+    //   .page.cryptomedic().myWaitFetch()
+    //         
   },
 
   "delete the created price list": function(client) {
