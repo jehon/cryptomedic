@@ -26,9 +26,9 @@ function assertTableInitial(client) {
           .nextCol().assert("100")
         .nextRow(7).col(1)
           .assert("other_Other_consultation_care")
-          .nextCol().assert("free price")
-          .nextCol().assert("free price")
-          .nextCol().assert("free price")
+          .nextCol().assert("open")
+          .nextCol().assert("open")
+          .nextCol().assert("open")
       .endTable()
     .assert.elementNotPresent("#button_save_0")
     .assert.elementNotPresent("#button_save_1")
@@ -104,10 +104,10 @@ module.exports = {
             .nextRow().assert("-")
             .nextRow().assert("100")
             .nextRow().assert("100")
-            .row(12).assert("free price")
 
     // TODO
 
+            .row(12).assert("open")
   },
 
   "edit the created price list": function(client) {

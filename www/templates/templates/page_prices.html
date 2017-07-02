@@ -77,7 +77,7 @@
         <div ng-if='edit !== $index'>
           <span ng-if='p[k]<=0'>-</span>
           <span ng-if='p[k]>1'>{{p[k]}}</span>
-          <span ng-if='p[k]==1'>free price</span>
+          <span ng-if='p[k]==1'>open</span>
         </div>
         <div ng-if='edit === $index'>
           <input name='{{k}}' value='{{p[k]}}'>
