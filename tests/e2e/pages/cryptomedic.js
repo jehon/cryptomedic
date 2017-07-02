@@ -148,10 +148,10 @@ module.exports = (function() {
             + ' > ' + 'tr'                               + ':' + (row === 'last' ? 'last-child' : 'nth-child(' + row + ')')
             + ' > ' + (section == 'tbody' ? 'td' : 'th') + ':' + (col === 'last' ? 'last-child' : 'nth-child(' + col + ')');
         },
-        assert: function(text) {
+        assert: function(text = false, selector = "") {
           client
             .waitForElementVisible(tableSelector)
-            .waitForElementVisible(this.toString());
+            .waitForElementVisible(this.toString() + " " + selector);
           if (text) {
             client
               .assert.containsText(this.toString(), text);
