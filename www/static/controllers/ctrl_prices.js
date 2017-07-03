@@ -121,8 +121,6 @@ function ctrl_prices($scope, $timeout) {
     $timeout(function(){
       for(let k of Object.keys($scope.prices[index])) {
         $scope.updateRadio(k, $scope.prices[index][k]);
-        // document.querySelectorAll("[name='" + k + "']");
-        // console.log(k);
       }
     })
   }
@@ -164,12 +162,10 @@ function ctrl_prices($scope, $timeout) {
   };
 
   $scope.updateRadio = function(k, val) {
-    // let radio = document.querySelector("[name='" + k + "_radio'][checked]").value;
     let input = document.querySelector("input[name='" + k + "']");
     if (input === null) {
       return ;
     }
-    // console.log("updateRadio: ", k, " -> ", radio, " / ", val);
     if (val == -1 || val == 1) {
       input.style.visibility = "hidden";
     } else {
