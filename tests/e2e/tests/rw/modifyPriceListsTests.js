@@ -79,18 +79,27 @@ module.exports = {
       .page.cryptomedic().tableIterator('#price_lists')
         .section("tbody")
           .col(2)
-            .row(1)   .assert(false, "input[name='consult_CDC_consultation_Bengali_Doctor'][value='300']")
-            .nextRow().assert(false, "input[name='consult_CDC_consultation_Doctor'][value='-1']")
-            .nextRow().assert(false, "input[name='consult_CDC_consultation_physio'][value='100']")
-            .nextRow().assert(false, "input[name='consult_ClubFoot_Follow_up'][value='100']")
-            .row(12)  .assert(false, "input[name='other_Other_consultation_care'][value='1']")
+            .row(1)   
+              .assert(false, "input[name='consult_CDC_consultation_Bengali_Doctor_radio'][value='0'][checked]")
+              .assert(false, "input[name='consult_CDC_consultation_Bengali_Doctor'][value='300']")
+            .nextRow()
+              .assert(false, "input[name='consult_CDC_consultation_Doctor_radio'][value='-1'][checked]")
+            .nextRow()
+              .assert(false, "input[name='consult_CDC_consultation_physio_radio'][value='0'][checked]")
+              .assert(false, "input[name='consult_CDC_consultation_physio'][value='100']")
+            .nextRow()
+              .assert(false, "input[name='consult_ClubFoot_Follow_up_radio'][value='0'][checked]")
+              .assert(false, "input[name='consult_ClubFoot_Follow_up'][value='100']")
+            .row(12)
+              .assert(false, "input[name='other_Other_consultation_care_radio'][value='1'][checked]")
         .endTable()
 
       // TODO: edit values (2 first lines)
 
       .myFormFillIn("#price_lists", {
         '[name=consult_CDC_consultation_Bengali_Doctor]': 123,
-        '[name=consult_CDC_consultation_Doctor]': 123
+        '[name=consult_ClubFoot_Follow_up]': 123
+        // '[name=consult_CDC_consultation_Doctor]': 123
       })
 
       .myClick("#button_cancel_0")
@@ -104,9 +113,6 @@ module.exports = {
             .nextRow().assert("-")
             .nextRow().assert("100")
             .nextRow().assert("100")
-
-    // TODO
-
             .row(12).assert("open")
   },
 
