@@ -104,12 +104,11 @@ module.exports = {
               .assert(false, "input[name='other_Other_consultation_care_radio'][value='1'][checked]")
         .endTable()
 
-      // TODO: edit values (2 first lines)
-
       .myFormFillIn("#price_lists", {
         '[name=consult_CDC_consultation_Bengali_Doctor]': 123,
-        '[name=consult_ClubFoot_Follow_up]': 123
-        // '[name=consult_CDC_consultation_Doctor]': 123
+        '[name=consult_ClubFoot_Follow_up]': 123,
+        '[name=consult_CDC_consultation_Doctor_radio][value="0"]': true,
+        '[name=consult_CDC_consultation_Doctor]': 123
       })
 
       .myClick("#button_cancel_0")
