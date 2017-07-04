@@ -81,6 +81,7 @@ module.exports = {
   },
 
   "edit the created price list, but not saving": function(client) {
+    assertTableInitial(client, 1);
     client
       .waitForElementVisible("#button_save_0")
       .waitForElementVisible("#button_cancel_0")
@@ -123,6 +124,8 @@ module.exports = {
             .nextRow().assert("100")
             .nextRow().assert("100")
             .row(12).assert("open")
+      ;
+    assertTableInitial(client, 1);
   },
 
   "edit the created price list": function(client) {
@@ -130,6 +133,8 @@ module.exports = {
     //   .myClick("#button_edit_0")
     //   .page.cryptomedic().myWaitFetch()
     //         
+    assertTableInitial(client, 1);
+    assertTableInitial(client, 1);
   },
 
   "delete the created price list": function(client) {
