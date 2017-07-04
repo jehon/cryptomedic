@@ -1,41 +1,47 @@
 
-function assertTableInitial(client) {
 let assert = require("assert");
 
+function assertTableInitial(client, i = 0) {
   assert(client != null);
   client
     .page.cryptomedic().tableIterator('#price_lists')
       .section("thead")
         .row(1)
+          .col(1)
           .assert("Beginning date")
+          .col(1 + i)
           .nextCol().assert("2016-01-03")
           .nextCol().assert("2013-01-01")
           .nextCol().assert("")
         .row(4).col(1)
           .assert("")
+          .col(1 + i)
           .nextCol().assert("Locked")
           .nextCol().assert("Locked")
           .nextCol().assert("Locked")
       .section("tbody")
         .row(1).col(1)
           .assert("consult_CDC_consultation_Bengali_Doctor")
+          .col(1 + i)
           .nextCol().assert("300")
           .nextCol().assert("300")
           .nextCol().assert("200")
         .nextRow(4).col(1)
           .assert("consult_field_visit")
+          .col(1 + i)
           .nextCol().assert("-")
           .nextCol().assert("-")
           .nextCol().assert("100")
         .nextRow(7).col(1)
           .assert("other_Other_consultation_care")
+          .col(1 + i)
           .nextCol().assert("open")
           .nextCol().assert("open")
           .nextCol().assert("open")
       .endTable()
-    .assert.elementNotPresent("#button_save_0")
-    .assert.elementNotPresent("#button_save_1")
-    .assert.elementNotPresent("#button_save_2")
+    .assert.elementNotPresent("#button_save_" + (i))
+    .assert.elementNotPresent("#button_save_" + (i + 1))
+    .assert.elementNotPresent("#button_save_" + (i + 2))
 }
 
 module.exports = {
