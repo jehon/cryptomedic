@@ -15,7 +15,7 @@ class CRUD {
     return network.start()
       .requestWithPost()
       .requestToUrl(this.getBaseUrl())
-      .requestWithData(data)
+      .requestWithData(nullify(data))
       ;
   }
 
@@ -25,6 +25,14 @@ class CRUD {
       .requestToUrl(this.getBaseUrl() + '/' + id)
       ;
   }
+
+  static save(network, data) {
+    return network.start()
+      .requestWithPut()
+      .requestToUrl(this.getBaseUrl() + '/' + data.id)
+      .requestWithData(data)
+      ;
+    }
 
   constructor(data = {}) {
     if (data) {

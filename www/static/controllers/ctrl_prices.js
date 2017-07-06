@@ -80,7 +80,6 @@ function ctrl_prices($scope, $timeout) {
   $scope.actionCreate = function() {
     // Ask for the various parameters before creating the new price
 
-    console.log("create");
     $scope.creating = true;
   }
 
@@ -101,7 +100,6 @@ function ctrl_prices($scope, $timeout) {
     getDataService()
       .then(dataService => Price.create(dataService, { pivot: updatedData.pivotDate }))
       .then((data) => {
-        console.log("Created: ", data);
         $scope.creating = false
         $scope.prices.unshift(data);
         $scope.actionEdit(0);
@@ -113,8 +111,6 @@ function ctrl_prices($scope, $timeout) {
   // Edit an existing price list
   //
   $scope.actionEdit = function(index) {
-    console.log("edit: ", index);
-    // $scope.edit = <clone> $scope.prices[index];
     $scope.creating = false;
     $scope.edit = index;
 
@@ -129,21 +125,25 @@ function ctrl_prices($scope, $timeout) {
   // Finish editing -> save modifications
   // 
   $scope.doSave = function() {
-    console.log("Saving");
-    // getDataService()
-    //   .then(dataService => dataService.userUpdate($scope.edit))
-    //   .then(function(data) {
-    //     $scope.users = data;
-    //     $scope.safeApply();
-    //     $scope.$emit('message', { 'level': 'success', 'text': 'The user \'' + $scope.edit.username + '\' has been saved successfully.'});
-    //     $scope.doCancel();
-    //   });
+    let updatedData = formGetContent("#editForm", $scope.prices[$scope.edit]); 
+    getDataService()
+      .then(dataService => Price.save(dataService, updatedData))
+      .then(function(data) {
+        for(let i of Object.keys($scope.prices)) {
+          if ($scope.prices[i].id == data.id) {
+            $scope.prices[i] = data;
+          }
+        }
+        $scope.safeApply();
+        $scope.$emit('message', { 'level': 'success', 'text': 'The user \'' + $scope.edit.username + '\' has been saved successfully.'});
+        $scope.doCancel();
+      });
   };
 
   //
   // Delete an existing price list
   //
-  $scope.actionDelete = function(index) {
+  $scope.doDelete = function(index) {
     getDataService()
       .then(dataService => Price.remove(dataService, $scope.prices[index].id))
       .then(() => $scope.doCancel())
@@ -155,7 +155,6 @@ function ctrl_prices($scope, $timeout) {
   // Finish editing -> cancel
   // 
   $scope.doCancel = function() {
-    console.log("Cancelling");
     $scope.edit = false;
     $scope.creating = false;
     $scope.safeApply();

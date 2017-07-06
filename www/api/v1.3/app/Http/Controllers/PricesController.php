@@ -48,7 +48,7 @@ class PricesController extends Controller {
 
 	// PUT / PATCH
 	public function update($id) {
- 		$attributes = Input::except('_type');
+ 		$attributes = Input::except([ '_type', 'datefrom', 'dateto' ]);
 
  		$obj = Price::findOrFail($id);
  		if (!$obj->_editable) {
