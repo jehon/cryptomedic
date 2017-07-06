@@ -130,7 +130,7 @@ module.exports = {
       .page.cryptomedic().myWaitFetch()
 
       .myFormFillIn("#price_lists", {
-        '[name=consult_CDC_consultation_Doctor]': 123
+        '[name=consult_CDC_consultation_Doctor]': { value: 123 }
       })
 
       .myClick("#button_save_0")
@@ -144,7 +144,7 @@ module.exports = {
             .nextRow().assert(123)
             .nextRow().assert(100)
             .nextRow().assert(100)
-            .row(12)  .assert(1)
+            .row(12)  .assert("open")
         .endTable()
 
       ;
