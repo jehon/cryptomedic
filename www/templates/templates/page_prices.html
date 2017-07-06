@@ -59,10 +59,10 @@
             <span id='button_edit_{{$index}}'   class="btn btn-default" ng-click="actionEdit($index)">Edit</span>
           </span>
           <span ng-if='edit === $index'>
-            <span id='button_save_{{$index}}'   class="btn btn-default" ng-click="actionSave($index)">Save</span>
+            <span id='button_save_{{$index}}'   class="btn btn-default" ng-click="doSave($index)">Save</span>
             <span id='button_cancel_{{$index}}'   class="btn btn-default" ng-click="doCancel()">Cancel</span>
           </span>
-          <span id='button_delete_{{$index}}' class="btn btn-default" ng-click="actionDelete($index)">Delete</span>
+          <span id='button_delete_{{$index}}' class="btn btn-default" ng-click="doDelete($index)">Delete</span>
         </span>
         <span ng-if='!p["_editable"]'>
           Locked
@@ -80,12 +80,7 @@
           <span ng-if='p[k]==1'>open</span>
         </div>
         <div ng-if='edit === $index'>
-          <div>
-            <input type='radio' name='{{k}}_radio' value='1'  ng-checked='p[k] == 1'  ng-click='updateRadio(k, 1)' >Open
-            <input type='radio' name='{{k}}_radio' value='-1' ng-checked='p[k] == -1' ng-click='updateRadio(k, -1)'>Not used
-            <input type='radio' name='{{k}}_radio' value='0'  ng-checked='p[k] > 1'   ng-click='updateRadio(k, 0)' >Specified
-          </div>
-          <input name='{{k}}' value='{{p[k]}}'>
+          <edit-price name='{{k}}' value='{{p[k]}}'></edit-price>
         </div>
       </td>
     </tr>

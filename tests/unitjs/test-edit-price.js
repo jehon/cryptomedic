@@ -1,7 +1,7 @@
 'use strict';
 /* global testComponent */
 
-describe('test-write-list', function() {
+fdescribe('test-write-list', function() {
   it("should initalize with value=-1", (done) => {
     testComponent("<edit-price value='-1'></edit-price>").then(el => {
       expect(el).not.toBeNull();
@@ -54,4 +54,9 @@ describe('test-write-list', function() {
       done();
     });
   })
+
+  xit("should react to value setted externally", (done) => {
+    // TODO
+    done();
+  });
 });
