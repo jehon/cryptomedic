@@ -90,25 +90,21 @@ module.exports = {
         .section("tbody")
           .col(2)
             .row(1)   
-              .assert(false, "input[name='consult_CDC_consultation_Bengali_Doctor_radio'][value='0'][checked]")
-              .assert(false, "input[name='consult_CDC_consultation_Bengali_Doctor'][value='300']")
+              .assert(false, "[name='consult_CDC_consultation_Bengali_Doctor'][value='300']")
             .nextRow()
-              .assert(false, "input[name='consult_CDC_consultation_Doctor_radio'][value='-1'][checked]")
+              .assert(false, "[name='consult_CDC_consultation_Doctor'][value='-1']")
             .nextRow()
-              .assert(false, "input[name='consult_CDC_consultation_physio_radio'][value='0'][checked]")
-              .assert(false, "input[name='consult_CDC_consultation_physio'][value='100']")
+              .assert(false, "[name='consult_CDC_consultation_physio'][value='100']")
             .nextRow()
-              .assert(false, "input[name='consult_ClubFoot_Follow_up_radio'][value='0'][checked]")
-              .assert(false, "input[name='consult_ClubFoot_Follow_up'][value='100']")
+              .assert(false, "[name='consult_ClubFoot_Follow_up'][value='100']")
             .row(12)
-              .assert(false, "input[name='other_Other_consultation_care_radio'][value='1'][checked]")
+              .assert(false, "[name='other_Other_consultation_care'][value='1']")
         .endTable()
 
       .myFormFillIn("#price_lists", {
-        '[name=consult_CDC_consultation_Bengali_Doctor]': 123,
-        '[name=consult_ClubFoot_Follow_up]': 123,
-        '[name=consult_CDC_consultation_Doctor_radio][value="0"]': true,
-        '[name=consult_CDC_consultation_Doctor]': 123
+        '[name=consult_CDC_consultation_Bengali_Doctor]': { value: 123 },
+        '[name=consult_ClubFoot_Follow_up]': { value: 123 },
+        '[name=consult_CDC_consultation_Doctor]': { value: 123 }
       })
 
       .myClick("#button_cancel_0")
@@ -128,11 +124,31 @@ module.exports = {
   },
 
   "edit the created price list": function(client) {
-    // client
-    //   .myClick("#button_edit_0")
-    //   .page.cryptomedic().myWaitFetch()
-    //         
     assertTableInitial(client, 1);
+    client
+      .myClick("#button_edit_0")
+      .page.cryptomedic().myWaitFetch()
+
+      .myFormFillIn("#price_lists", {
+        '[name=consult_CDC_consultation_Doctor]': 123
+      })
+
+      .myClick("#button_save_0")
+      .pause(10)
+      .page.cryptomedic().myWaitFetch()
+
+      .page.cryptomedic().tableIterator('#price_lists')
+        .section("tbody")
+          .col(2)
+            .row(1)   .assert(300)
+            .nextRow().assert(123)
+            .nextRow().assert(100)
+            .nextRow().assert(100)
+            .row(12)  .assert(1)
+        .endTable()
+
+      ;
+
     assertTableInitial(client, 1);
   },
 
