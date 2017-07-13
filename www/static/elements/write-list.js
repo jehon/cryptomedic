@@ -3,6 +3,8 @@ let WriteList = (function() {
 
   let referencesCB = jQuery.Callbacks("memory");
 
+  let uuid = 1;
+
   class WriteList extends HTMLElement {
     static setReferences(references = {}) {
       if (!references) {
@@ -21,6 +23,8 @@ let WriteList = (function() {
       this.list = [];
       this.listName = false;
       this.nullable = false;
+
+      this.uuid = uuid++;
 
       referencesCB.add((references) => {
         this.references = references;
@@ -116,7 +120,7 @@ let WriteList = (function() {
         let escaped = this._escape(item);
         res += `
             <span to='${escaped}'>
-              <input type='radio' value='${escaped}' ${(this._initialvalue == item) ? "checked" : ""}>
+              <input type='radio' name ='radio_name_${this.uuid}' value='${escaped}' ${(this._initialvalue == item) ? "checked" : ""}>
               <span>${item}</span>
               <br>
             </span>
@@ -125,7 +129,7 @@ let WriteList = (function() {
       if (this.nullable) {
         res += `
           <span to=''>
-            <input type='radio' value='' ${(this._initialvalue == null) ? "checked" : ""}>
+            <input type='radio' name ='radio_name_${this.uuid}' value='' ${(this._initialvalue == null) ? "checked" : ""}>
             <span>?</span>
             <br>
           </span>
@@ -134,7 +138,7 @@ let WriteList = (function() {
       }
       res += "</span>";
 
-      this.shadowRoot.innerHTML = this._withStyle() + res;
+      this.shadowRoot.innerHTML = "<form>" + this._withStyle() + res + "</form>";
       this.shadowRoot.querySelectorAll("span[to]").forEach((el) => {
         el.onclick = (event) => {
           el.querySelector('input').setAttribute('checked', true);
@@ -163,8 +167,8 @@ let WriteList = (function() {
       if (str == null) {
         return '';
       }
-      return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-    }
+      return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&apos;');
+     }
 
     get value() {
       let value = null;
@@ -173,7 +177,7 @@ let WriteList = (function() {
           value = this.shadowRoot.querySelector("select").value;
           break;
         case "radio":
-          let el = this.shadowRoot.querySelector("input[type=radio][checked]"); 
+          let el = this.shadowRoot.querySelector("input[type=radio]:checked"); 
           if (el) {
             value = el.value;  
           }
