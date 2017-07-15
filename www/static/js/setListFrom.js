@@ -1,6 +1,6 @@
 function setListFrom(origin, target, category) {
   console.log("SetListFrom", origin, target, category);
-  let val = document.querySelector(`input[name=${origin}]`).value;
+  let val = document.querySelector(`[name=${origin}]`).value;
   if (!cryptomedic.serverSettings || !cryptomedic.serverSettings.associations) {
     return;
   }
@@ -15,7 +15,7 @@ function setListFrom(origin, target, category) {
     list = [current].concat(list);
   }
 
-  document.querySelectorAll(`input[name=${target}]`).forEach(el => {
+  document.querySelectorAll(`[name=${target}]`).forEach(el => {
     console.log("Set list for ", val, " to ", list, " on ", el);
   });
 }
