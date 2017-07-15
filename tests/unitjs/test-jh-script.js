@@ -1,7 +1,7 @@
 'use strict';
 /* global testComponent */
 
-fdescribe('test-jh-script', function() {
+describe('test-jh-script', function() {
   function getFn() {
     let res = `
         if (typeof(this.value) == 'undefined') { 
