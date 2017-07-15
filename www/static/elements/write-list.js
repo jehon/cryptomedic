@@ -144,6 +144,13 @@ let WriteList = (function() {
           el.querySelector('input').setAttribute('checked', true);
         }
       });
+      this.shadowRoot.querySelectorAll("input").forEach(el => {
+        el.onchange = () => {
+          if (typeof(this.onchange) == "function") {
+            this.onchange();
+          }
+        };
+      })
     }
 
     _asSelect() {
