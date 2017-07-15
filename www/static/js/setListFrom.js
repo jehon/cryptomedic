@@ -11,6 +11,7 @@ function setListFrom(origin, target, category) {
   }
   list = list.concat(cryptomedic.serverSettings.associations[`${category}.other`]);
 
+  let current = document.querySelector(`[name=${target}]`).value;
   if (list.indexOf(current) < 0) {
     list = [current].concat(list);
   }
