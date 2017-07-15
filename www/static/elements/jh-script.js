@@ -3,6 +3,9 @@
   class JHScript extends HTMLElement {
     constructor() {
       super();
+      // To hide the current html
+      this.attachShadow({ mode: 'open' });
+      
       this.alreadyRun = false;
     }
 
