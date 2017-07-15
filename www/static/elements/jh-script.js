@@ -50,7 +50,12 @@
       }
 
       let script = "" + this.innerHTML;
-      eval(script);
+      script = he.decode(script);
+      try {
+        eval(script);
+      } catch(e) {
+        console.error("j-script: error! Script = ", script, " / ", e);
+      }
       this.alreadyRun = true;
     }
   }
