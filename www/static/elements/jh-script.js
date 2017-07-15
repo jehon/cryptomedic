@@ -26,7 +26,17 @@
       let disabled = false;
       if (this.hasAttribute("disabled")) {
         disabled = this.getAttribute("disabled");
-        disabled = JSON.parse(disabled);
+        console.log("disabled: ", disabled);
+        if (disabled == 'disabled') {
+          disabled = true;
+        } else {
+          try {
+            disabled = JSON.parse(disabled);
+          } catch(e) {
+            console.log("catched - disabling: ", disabled);
+            disabled = true;
+          }
+        }
       }
       
       if (disabled) {
