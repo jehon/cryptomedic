@@ -110,9 +110,6 @@
       };
     });
 
-  	setListFrom("District", "Upazilla", "district");
-  	setListFrom("Upazilla", "Union_", "upazilla");
-
   	userCb.add((data) => {
   		console.log("userCB");
 	  	setListFrom("District", "Upazilla", "district");
