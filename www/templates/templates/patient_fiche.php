@@ -46,12 +46,22 @@
 						<td>Age (today)</td>
 						<td>{{calculations.age.fromBirthDate(currentFile().Yearofbirth)}} old</td>
 					</tr>
-					<?php (new t("Patient.District"))->tr()->p(); ?>
+					<tr ng-class='{ emptyValue: !folder.getPatient().District}'>
+						<td>District</td>
+						<td>
+							<span class='notModeRead'>
+								<write-list value='{{folder.getPatient().District}}' name='District' list-name='Districts' nullable></write-list>
+							</span>
+							<span class='notModeWrite'>
+								<?php (new t("Patient.District"))->read()->p(); ?>
+							</span>
+						</td>
+					</tr>
 					<tr>
 						<td>Upazilla</td>
 						<td>
 							<span class='notModeRead'>
-								<select ng-model='folder.getPatient().Upazilla' null-to-interrogation ng-options='option for option in listUpazillas(folder.getPatient().District, folder.getPatient().Upazilla)'></select>
+								<write-list value='{{folder.getPatient().Upazilla}}' name='Upazilla' nullable></write-list>
 							</span>
 							<span class='notModeWrite'>
 								<?php (new t("Patient.Upazilla"))->read()->p(); ?>
@@ -62,7 +72,7 @@
 						<td>Union</td>
 						<td>
 							<span class='notModeRead'>
-								<select ng-model='folder.getPatient().Union_' null-to-interrogation ng-options='option for option in listUnions(folder.getPatient().Upazilla, folder.getPatient().Union_)'></select>
+								<write-list value='{{folder.getPatient().Union_}}' name='Union_' nullable></write-list>
 							</span>
 							<span class='notModeWrite'>
 								<?php (new t("Patient.Union_"))->read()->p(); ?>
@@ -85,4 +95,29 @@
 	 		<br/>
 		</div>
 	</div>
+	<jh-script>
+    document.querySelectorAll("write-list[name=District]").forEach(el => {
+      el.onchange = function() {
+      	console.log("Disctrict changed!");
+      	setListFrom("District", "Upazilla", "district");
+		  	setListFrom("Upazilla", "Union_", "upazilla");
+      };
+    });
+
+    document.querySelectorAll("write-list[name=Upazilla]").forEach(el => {
+      el.onchange = function() {
+      	setListFrom("Upazilla", "Union_", "upazilla");
+      };
+    });
+
+  	setListFrom("District", "Upazilla", "district");
+  	setListFrom("Upazilla", "Union_", "upazilla");
+
+  	userCb.add((data) => {
+  		console.log("userCB");
+	  	setListFrom("District", "Upazilla", "district");
+	  	setListFrom("Upazilla", "Union_", "upazilla");
+  	});
+
+ 	</jh-script>
 </div>

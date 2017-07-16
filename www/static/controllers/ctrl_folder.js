@@ -418,34 +418,6 @@ function ctrl_folder($scope, $location, $routeParams) {
     }
     updateYearOfBirth();
   });
-
-  $scope.listUpazillas = function(district, current) {
-    var list = ['?'];
-    if (cryptomedic.serverSettings && cryptomedic.serverSettings.associations) {
-      if (cryptomedic.serverSettings.associations['district.' + district]) {
-        list = list.concat(cryptomedic.serverSettings.associations['district.' + district]);
-      }
-      list = list.concat(cryptomedic.serverSettings.associations['district.other']);
-    }
-    if (list.indexOf(current) < 0) {
-      list = [current].concat(list);
-    }
-    return list;
-  };
-
-  $scope.listUnions = function(upazilla, current) {
-    var list = ['?'];
-    if (cryptomedic.serverSettings && cryptomedic.serverSettings.associations) {
-      if (cryptomedic.serverSettings.associations['upazilla.' + upazilla]) {
-        list = list.concat(cryptomedic.serverSettings.associations['upazilla.' + upazilla]);
-      }
-      list = list.concat(cryptomedic.serverSettings.associations['upazilla.other']);
-    }
-    if (list.indexOf(current) < 0) {
-      list = [current].concat(list);
-    }
-    return list;
-  };
 }
 
 ctrl_folder.$inject = ['$scope', '$location', '$routeParams'];
