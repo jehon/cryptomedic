@@ -23,6 +23,7 @@ let WriteList = (function() {
       this.list = [];
       this.listName = false;
       this.nullable = false;
+      this.onchange = () => {};
 
       this.uuid = uuid++;
 
@@ -38,7 +39,7 @@ let WriteList = (function() {
       switch(attributeName) {
         case 'value':
           this._initialvalue      = this.getAttribute("value");
-          if (this._initialvalue == "") {
+          if (this._initialvalue == "" || this._initialvalue == "null") {
             this._initialvalue = null;
           }
           break;
@@ -85,6 +86,7 @@ let WriteList = (function() {
         }
       }
       this.setAttribute('mode', this.mode);
+      this.onchange();
     }
 
     _withStyle() {
@@ -146,9 +148,7 @@ let WriteList = (function() {
       });
       this.shadowRoot.querySelectorAll("input").forEach(el => {
         el.onchange = () => {
-          if (typeof(this.onchange) == "function") {
-            this.onchange();
-          }
+          this.onchange();
         };
       })
     }
