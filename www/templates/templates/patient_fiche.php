@@ -98,7 +98,6 @@
 	<jh-script>
     document.querySelectorAll("write-list[name=District]").forEach(el => {
       el.onchange = function() {
-      	console.log("Disctrict changed!");
       	setListFrom("District", "Upazilla", "district");
 		  	setListFrom("Upazilla", "Union_", "upazilla");
       };
@@ -111,7 +110,6 @@
     });
 
   	userCb.add((data) => {
-  		console.log("userCB");
 	  	setListFrom("District", "Upazilla", "district");
 	  	setListFrom("Upazilla", "Union_", "upazilla");
   	});
