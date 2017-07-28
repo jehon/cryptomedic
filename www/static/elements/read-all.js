@@ -1,0 +1,86 @@
+
+let ReadAll = (function() {
+  let selfURL = document.currentScript.src
+      .replace(/\/[^/]*\/?$/, '');
+
+  class ReadAll extends HTMLElement {
+    constructor() {
+      super();
+
+      // Create a shadow root
+      this.attachShadow({mode: 'open'});
+      this.adapt();
+    }
+
+    static get observedAttributes() { return ['value']; }
+
+    attributeChangedCallback(attributeName, oldValue, newValue, namespace) {
+      switch(attributeName) {
+        case "name":
+        case 'value':
+        case 'type':
+        case 'list-name':
+          this.adapt();
+          break;
+      }
+    }
+
+    getValue(name) {
+      if (!this.hasAttribute(name)) {
+        return false;
+      }
+      let raw = this.getAttribute(name);
+      let val = "";
+      try {
+        return JSON.parse(raw);
+      } catch(e) { // SyntaxError
+      }
+      return raw;
+    }
+
+    adapt() {
+      let name =     this.getValue("name");
+      let value =    this.getValue("value");
+      let type =     this.getValue("type");
+      let listName = this.getValue("list-name");
+
+      if (!type) {
+        this.shadowRoot.innerHTML = `<span id='${value}' class='error'>Read: key is not defined: '${type}'</span>`;
+        return;
+      }
+
+      switch(type) {
+        case "timestamp":
+          let display = "";
+          if (value > "") {
+            let date = new Date(Date.parse(value));  
+            if (isNaN(date.getYear())) {
+              display = "";
+            } else {
+              display = date.toLocaleDateString() + " " + date.toLocaleTimeString();
+            }
+          }
+          this.shadowRoot.innerHTML = `<span name='${name}'>${display}</span>"`;
+          break;
+        case "boolean":
+          this.shadowRoot.innerHTML = `<read-boolean name='${name}' value='${value}'></read-boolean>`;
+          break;
+        case "list":
+          this.shadowRoot.innerHTML = `<span name='${name}'>${value}</span>`;
+          break;
+        case "date":
+        case "integer":
+        case "char":
+          this.shadowRoot.innerHTML = `<span name='${name}'>${value}</span>`;
+          break;
+        case "text":
+          this.shadowRoot.innerHTML = `<span name='${name}' style='white-space: pre'>${value}</span>`;
+          break;
+      }
+    }
+  }
+
+  window.customElements.define('read-all', ReadAll);
+
+  return ReadAll;
+})();
