@@ -214,10 +214,6 @@ class t {
         $this->res .= "<span id='{$this->jsId}' name='{$this->field}'>{{ {$this->fieldGetKey()} }}</span>";
         break;
       case static::TYPE_DATE:
-          // TODOJH: recheck this later - Workaround!!!
-          //     // See https://docs.angularjs.org/api/ng/filter/date
-          //     $this->res .= "<span id='{$this->jsId}'>{{ {$this->fieldGetKey()} | date:'{static::DATEFORMAT}' }}</span>";
-          //     break;
       case static::TYPE_INTEGER:
       case static::TYPE_CHAR:
         $this->res .= "<span id='{$this->jsId}'>{{ {$this->fieldGetKey()} }}</span>";
