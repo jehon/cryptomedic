@@ -65,6 +65,7 @@ let ReadAll = (function() {
         case "boolean":
           this.shadowRoot.innerHTML = `<read-boolean name='${name}' value='${value}'></read-boolean>`;
           break;
+
         case "list":
           this.shadowRoot.innerHTML = `<span name='${name}'>${value}</span>`;
           break;
@@ -75,6 +76,10 @@ let ReadAll = (function() {
           break;
         case "text":
           this.shadowRoot.innerHTML = `<span name='${name}' style='white-space: pre'>${value}</span>`;
+          break;
+        default:
+          console.error("Type unknown: ", type);
+          this.shadowRoot.innerHTML = `<span name='${name}'>unknown type: ${type}</span>`;
           break;
       }
     }

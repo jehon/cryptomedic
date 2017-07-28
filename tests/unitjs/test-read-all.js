@@ -10,6 +10,17 @@ fdescribe('test-read-all', function() {
     });
   });
 
+
+  it("should manage unknown type", function(done) {
+    testComponent(`<read-all name='test' type='anything'></read-all>`).then(el => {
+      expect(el.shadowRoot.querySelector("span[name='test']")).not.toBeNull();
+      expect(el.shadowRoot.querySelector("span[name='test']").innerHTML).toContain("unknown");
+      el.testDone();
+      done();
+    });
+  })
+
+
   it("should manage timestamp", function(done) {
     let date = new Date(Date.parse("2017-07-07 18:30:25.432"));
     testComponent(`<read-all name='test' type='timestamp' value='${date.toISOString()}'></read-all>`).then(el => {
