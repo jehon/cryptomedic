@@ -13,8 +13,6 @@ TMP=$PRJ_DIR/target/
 LOG=$TMP/`date +%F_%H.%M.%S`.install.log
 conf_site="prod"
 
-npm run build
-
 echo "Log file: $LOG"
 
 ftp_host=`   php ${PRJ_DIR}/config.php deployment.$conf_site.ftp_host 2>/dev/null || true`

@@ -33,11 +33,9 @@
     "selenium-server": "latest",
     "svgo": "latest",
     "sw-precache": "^4.0.0",
-    "webcomponentsjs": "latest",
-    "website-dependency-tree": "git@github.com:jehon/website-dependency-tree.git"
+    "webcomponentsjs": "latest"
   },
   "scripts": {
-    "build": "npm run cache",
     "reset": "./bin/dev-reset.sh",
     "test": "npm run reset && npm run test-api-1.3 && ./bin/prj-xvfb-run.sh npm run test-unit && ./bin/prj-xvfb-run.sh npm run test-e2e",
     "test-api-1.3": "cd www/api/v1.3/ && phpunit --coverage-html ../../../target/php1.3 --coverage-xml ../../../target/php1.3 && cd ../../../",
@@ -45,8 +43,6 @@
     "test-unit-continuously": "karma start",
     "test-e2e": "kill-by-port --port 5556 && kill-by-port --port 4444 && node e2e-with-server.js",
     "test-e2e-chrome": "nightwatch -e chrome",
-    "cache": "cd www && node ../buildCache.js static/index.html",
-    "cache-dev": "cd www && node ../../offline-listing/index.js static/index.html",
     "start": "kill-by-port --port 5555 && php -S localhost:5555 webserver.php"
   }
 }
