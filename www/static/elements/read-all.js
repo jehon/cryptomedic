@@ -19,7 +19,6 @@ let ReadAll = (function() {
         case "name":
         case 'value':
         case 'type':
-        case 'list-name':
           this.adapt();
           break;
       }
@@ -42,7 +41,6 @@ let ReadAll = (function() {
       let name =     this.getValue("name");
       let value =    this.getValue("value");
       let type =     this.getValue("type");
-      let listName = this.getValue("list-name");
 
       if (!type) {
         this.shadowRoot.innerHTML = `<span id='${value}' class='error'>Read: key is not defined: '${type}'</span>`;
@@ -67,16 +65,24 @@ let ReadAll = (function() {
           break;
 
         case "list":
-          this.shadowRoot.innerHTML = `<span name='${name}'>${value}</span>`;
-          break;
         case "date":
         case "integer":
         case "char":
-          this.shadowRoot.innerHTML = `<span name='${name}'>${value}</span>`;
+          if (!value) {
+            this.shadowRoot.innerHTML = `<span name='${name}'></span>`;
+          } else {
+            this.shadowRoot.innerHTML = `<span name='${name}'>${value}</span>`;  
+          }
           break;
+
         case "text":
-          this.shadowRoot.innerHTML = `<span name='${name}' style='white-space: pre'>${value}</span>`;
+          if (!value) {
+            this.shadowRoot.innerHTML = `<span name='${name}' style='white-space: pre'></span>`;
+          } else {
+            this.shadowRoot.innerHTML = `<span name='${name}' style='white-space: pre'>${value}</span>`;  
+          }
           break;
+
         default:
           console.error("Type unknown: ", type);
           this.shadowRoot.innerHTML = `<span name='${name}'>unknown type: ${type}</span>`;

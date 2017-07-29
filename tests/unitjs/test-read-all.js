@@ -1,7 +1,7 @@
 'use strict';
 /* global testComponent */
 
-fdescribe('test-read-all', function() {
+describe('test-read-all', function() {
   // Test click on span for radio
   it("should be instantiated", function(done) {
     testComponent("<read-all name='test'></read-all>").then(el => {
@@ -51,40 +51,21 @@ fdescribe('test-read-all', function() {
     });
   });
 
-  // it("should show false when no value is specified", function(done) {
-  //   testComponent("<read-all></read-all>").then(el => {
-  //     expect(el.shadowRoot.querySelector("img").getAttribute('src')).toMatch(/-false.gif/i);
-  //     el.testDone();
-  //     done();
-  //   });
-  // });
+  [ "list", "date", "integer", "char", "text" ].forEach(type => {
+    it(`should manage ${type}`, function(done) {
+      testComponent(`<read-all name='test' type='${type}' value='hello'></read-all>`).then(el => {
+        expect(el.shadowRoot.querySelector("span[name=test]")).not.toBeNull();
+        expect(el.shadowRoot.querySelector("span[name=test]").innerHTML).toBe("hello");
 
-  // it("should show false when invalid json data is given", function(done) {
-  //   testComponent("<read-boolean value='{truc'></read-boolean>").then(el => {
-  //     // Non empty string is ... "true"
-  //     expect(el.shadowRoot.querySelector("img").getAttribute('src')).toMatch(/-true.gif/i);
-  //     el.testDone();
-  //     done();
-  //   });
-  // });
+        el.setAttribute("value", "false");
 
-  // it("should show true only when attribute value=true is specified", function(done) {
-  //   testComponent("<read-boolean value='true'></read-boolean>").then(el => {
-  //     expect(el.shadowRoot.querySelector("img").getAttribute('src')).toMatch(/-true.gif/i);
-  //     el.testDone();
-  //     done();
-  //   });
-  // });
+        expect(el.shadowRoot.querySelector("span[name=test]")).not.toBeNull();
+        expect(el.shadowRoot.querySelector("span[name=test]").innerHTML).toBe("");
 
-  // it("should update when value is changed", function(done) {
-  //   testComponent("<read-boolean></read-boolean>").then(el => {
-  //     expect(el.shadowRoot.querySelector("img").getAttribute('src')).toMatch(/-false.gif/i);
-  //     el.setAttribute('value', 'true');
-  //     setTimeout(() => {
-  //       expect(el.shadowRoot.querySelector("img").getAttribute('src')).toMatch(/-true.gif/i);
-  //       el.testDone();
-  //       done();
-  //     }, 10)
-  //   });
-  // });
+        el.testDone();
+        done();
+      });
+    });
+
+  })
 });
