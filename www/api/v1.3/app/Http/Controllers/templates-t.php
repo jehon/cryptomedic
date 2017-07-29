@@ -14,13 +14,13 @@
 use App\Model\References;
 
 class t {
-  const TYPE_LIST         = 0;
-  const TYPE_TIMESTAMP    = 1;
-  const TYPE_BOOLEAN      = 2;
-  const TYPE_INTEGER      = 3;
-  const TYPE_CHAR         = 4;
-  const TYPE_TEXT         = 5;
-  const TYPE_DATE         = 6;
+  const TYPE_LIST         = "list";
+  const TYPE_TIMESTAMP    = "timestamp";
+  const TYPE_BOOLEAN      = "boolean";
+  const TYPE_INTEGER      = "numeric";
+  const TYPE_CHAR         = "char";
+  const TYPE_TEXT         = "text";
+  const TYPE_DATE         = "date";
 
   const DATEFORMAT = "shortDate";
   const DATETIMEFORMAT = "short";
