@@ -66,7 +66,7 @@ let ReadAll = (function() {
 
         case "list":
         case "date":
-        case "integer":
+        case "numeric":
         case "char":
           if (!value) {
             this.shadowRoot.innerHTML = `<span name='${name}'></span>`;

@@ -51,7 +51,7 @@ describe('test-read-all', function() {
     });
   });
 
-  [ "list", "date", "integer", "char", "text" ].forEach(type => {
+  [ "list", "date", "numeric", "char", "text" ].forEach(type => {
     it(`should manage ${type}`, function(done) {
       testComponent(`<read-all name='test' type='${type}' value='hello'></read-all>`).then(el => {
         expect(el.shadowRoot.querySelector("span[name=test]")).not.toBeNull();
