@@ -148,7 +148,6 @@ function ctrl_reports($scope, $routeParams, $sce) {
   $scope.refresh();
 
   $scope.generate = function($event) {
-    console.log("generate: ", $event, $event.currentTarget);
     jQuery('.online').remove();
     // bug fix here: https://github.com/jmaister/excellentexport/issues/54
     ExcellentExport.excel($event.currentTarget,
