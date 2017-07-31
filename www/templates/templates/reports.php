@@ -93,14 +93,14 @@
       </div>
       <div ng-if="result && !error">
         <div class='text-right'>
-          <a id='download_link'
+          <button id='download_link'
               class='btn'
               style='background-color: green; color: white'
               download="{{reportName()}}.xls"
               href="#"
               ng-click='generate($event)'
               >
-          Export current table in XLS</a>
+          Export current table in XLS</button>
               <!-- onclick="return jQuery('.online').remove() & ExcellentExport.excel(this, jQuery('#report_table table')[0], 'cryptomedic');"> -->
         </div>
         <div ng-include="getReport().templateUrl" id='report_table'></div>
