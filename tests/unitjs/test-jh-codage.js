@@ -16,6 +16,7 @@ describe('test-jh-codage', function() {
       expect(el.shadowRoot.querySelector("#original").textContent).toBe('');
       expect(el.shadowRoot.querySelector("#translating")).toBeNull();
       expect(el.shadowRoot.querySelector("#translated")).toBeNull();
+      expect(el.getAttribute("calculated-translated")).toBe('');
       el.testDone();
       done();
     });
@@ -28,6 +29,7 @@ describe('test-jh-codage', function() {
       expect(el.shadowRoot.querySelector("#original")).toBeNull();
       expect(el.shadowRoot.querySelector("#translating").attributes.title.textContent).toEqual('original');
       expect(el.shadowRoot.querySelector("#translated").textContent).toEqual('local');
+      expect(el.getAttribute("calculated-translated")).toBe('local');
       el.testDone();
       done();
     });
@@ -40,6 +42,7 @@ describe('test-jh-codage', function() {
       expect(el.shadowRoot.querySelector("#original")).toBeNull();
       expect(el.shadowRoot.querySelector("#translating").attributes.title.textContent).toEqual('original');
       expect(el.shadowRoot.querySelector("#translated").textContent).toEqual('codage');
+      expect(el.getAttribute("calculated-translated")).toBe('codage');
       el.testDone();
       done();
     });
@@ -51,6 +54,7 @@ describe('test-jh-codage', function() {
       expect(el.shadowRoot.querySelector("#original").textContent).toBe('anything');
       expect(el.shadowRoot.querySelector("#translating")).toBeNull();
       expect(el.shadowRoot.querySelector("#translated")).toBeNull();
+      expect(el.getAttribute("calculated-translated")).toBe('');
       el.testDone();
       done();
     });
@@ -62,12 +66,14 @@ describe('test-jh-codage', function() {
       expect(el.shadowRoot.querySelector("#original").textContent).toBe('');
       expect(el.shadowRoot.querySelector("#translating")).toBeNull();
       expect(el.shadowRoot.querySelector("#translated")).toBeNull();
+      expect(el.getAttribute("calculated-translated")).toBe('');
 
       el.setAttribute('value', 'original');
 
       expect(el.shadowRoot.querySelector("#original")).toBeNull();
       expect(el.shadowRoot.querySelector("#translating").attributes.title.textContent).toEqual('original');
       expect(el.shadowRoot.querySelector("#translated").textContent).toEqual('codage');
+      expect(el.getAttribute("calculated-translated")).toBe('codage');
 
       el.testDone();
       done();

@@ -55,7 +55,7 @@ let JHCodage = (function() {
     }
 
     _setRaw(value) {
-      this.setAttribute("calculated-translated");
+      this.setAttribute("calculated-translated", "");
       this.shadowRoot.innerHTML = `
         <span id='original'>${value}</span>
       ` 
