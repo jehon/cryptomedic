@@ -148,7 +148,12 @@ function ctrl_reports($scope, $routeParams, $sce) {
   $scope.refresh();
 
   $scope.generate = function($event) {
-    jQuery('.online').remove();
+    document.querySelectorAll("#report_table .online").forEach(el => el.parentNode.removeChild(el));
+    document.querySelectorAll("#report_table jh-codage").forEach(el => el.parentNode.replaceChild(
+        document.createRange().createContextualFragment(`<span>${el.getAttribute('calculated-translated')}</span>`), 
+        el
+      )
+    )
     // bug fix here: https://github.com/jmaister/excellentexport/issues/54
     ExcellentExport.excel($event.currentTarget,
       document.getElementById('report_table').getElementsByTagName('table')[0],
