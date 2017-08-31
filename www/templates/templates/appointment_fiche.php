@@ -12,6 +12,7 @@
 						<td>{{today}}</td>
 					</tr>
 					<?php (new t("Appointment.Date"))->tr("Entry date")->p(); ?>
+					<?php (new t("Appointment.purpose"))->tr("Purpose")->p(); ?>
 					<?php (new t("Appointment.Nextappointment"))->tr("Next Appointment")->p(); ?>
 					<?php (new t("Appointment.NextCenter"))->tr("Next Center")->p(); ?>
 					<tr class='notModeRead'>
