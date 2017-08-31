@@ -90,6 +90,13 @@ function ctrl_file_bill($scope) {
       return acc + (file.Amount ? file.Amount : 0)
     }, 0);
   }
+
+  $scope.isEmpty = function(value) {
+    if (value == "" || value == "0" || value == 0 || value == "-1" || value == -1 || value == null) {
+      return "emptyValue";
+    }
+    return "";
+  }
 }
 
 ctrl_file_bill.$inject = [ "$scope" ];
