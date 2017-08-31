@@ -57,7 +57,7 @@ class PicturesController extends ModelController {
     echo "Check database records\n";
     foreach($list as $v) {
       $picture = Picture::findOrFail($v->id);
-      $file = $picture->getPhysicalPath();
+      $file = $picture->getPhysicalPath($picture->file);
       if (!file_exists($file)) {
         echo $i++ . ": " . $v->id . " - " . $v->file . "\n";
       }
@@ -78,7 +78,7 @@ class PicturesController extends ModelController {
 
 	public function _file($id) {
 		$picture = Picture::findOrFail($id);
-		$file = $picture->getPhysicalPath();
+		$file = $picture->getPhysicalPath($picture->file);
 		if (!file_exists($file)) {
 			abort(404, 'file does not exists on disk: ' . $file);
 		}
