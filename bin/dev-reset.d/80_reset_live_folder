@@ -3,10 +3,11 @@
 set -e
 
 echo "* Reset the live folder from live-for-test"
-rsync                       \
-  --times                   \
-  --recursive               \
-  --delete                  \
-  --itemize-changes         \
-  "$PRJ_DIR/live-for-test/" \
-  "$PRJ_DIR/live/"
+rsync                         \
+	--perms      			  \
+    --times                   \
+    --recursive               \
+    --delete                  \
+    --itemize-changes         \
+    "$PRJ_DIR/live-for-test/" \
+    "$PRJ_DIR/live/"
