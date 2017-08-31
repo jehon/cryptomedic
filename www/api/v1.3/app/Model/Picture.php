@@ -18,19 +18,22 @@ class Picture extends CryptomedicModel {
 	}
 
 
-  public function validate() {
-    if (!$this->patient_id) {
-      abort(400, "No patient_id on the file");
-    }
-    return true;
-  }
+	public function validate() {
+	    if (!$this->patient_id) {
+	    	abort(400, "No patient_id on the file");
+	    }
+	    return true;
+	}
 
-	public function getPhysicalPath() {
+	public function getPhysicalPath($file) {
+		if (!$file) {
+			abort(500, "File is empty: $file");
+		}
 		$dir = self::getPhysicalRoot();
 		if (!is_dir($dir)) {
 	   	mkdir($dir, 0777, true);
 		}
-    return $dir . $this->file;
+	    return $dir . $file;
 	}
 
 	public function calculateTargetName($mimetype) {
@@ -49,11 +52,11 @@ class Picture extends CryptomedicModel {
 			. ($this->Date == null ? "undated" : $this->Date)
 			. "_{$this->id}.{$ext}";
 
-		if (file_exists($this->getPhysicalPath())) {
-			abort(500, "Moving uploaded file to " . $this->getPhysicalPath() . ": already exists");
+		if (file_exists($this->getPhysicalPath($this->file))) {
+			abort(500, "Moving uploaded file to " . $this->getPhysicalPath($this->file) . ": already exists");
 		}
 
-		return $this->getPhysicalPath();
+		return $this->getPhysicalPath($this->file);
 	}
 
 	public static function create(array $attributes = array()) {
@@ -75,8 +78,8 @@ class Picture extends CryptomedicModel {
 
 			$model->calculateTargetName($mimetype);
 
-			if (!move_uploaded_file($_FILES['fileContent']['tmp_name'], $model->getPhysicalPath())) {
-				throw new \Error("Impossible to move the file to " . $model->getPhysicalPath());
+			if (!move_uploaded_file($_FILES['fileContent']['tmp_name'], $model->getPhysicalPath($model->file))) {
+				throw new \Error("Impossible to move the file to " . $model->getPhysicalPath($model->file));
 			}
 		}
 
@@ -95,20 +98,20 @@ class Picture extends CryptomedicModel {
 				abort(500, "Received data is empty");
 			}
 
-			if (!file_put_contents($model->getPhysicalPath(), $contentRaw)) {
-				abort(500, "Storing uploaded file to " . $model->getPhysicalPath());
+			if (!file_put_contents($model->getPhysicalPath($model->file), $contentRaw)) {
+				abort(500, "Storing uploaded file to " . $model->getPhysicalPath($model->file));
   		}
 		}
 
-		chmod($model->getPhysicalPath(), 0660);
+		//chmod($model->getPhysicalPath($model->file), 0660);
 		$model->save();
 
 		return $model;
 	}
 
 	public function delete() {
-		if ($this->file && file_exists($this->getPhysicalPath())) {
-			unlink($this->getPhysicalPath());
+		if ($this->file && file_exists($this->getPhysicalPath($this->file))) {
+			unlink($this->getPhysicalPath($this->file));
 		}
 		return parent::delete();
 	}
