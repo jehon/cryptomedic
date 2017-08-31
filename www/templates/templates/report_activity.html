@@ -93,11 +93,11 @@
         <td>{{l.Sex}}</td>
         <td>
           <span ng-if="l.oldPatient == 1">Old</span>
-          <span ng-if="l.oldPatient == 0">
+          <span ng-if="l.oldPatient != 1">
             <span ng-if='l.patient_reference.substr(0, 4) < result.params.when.substr(0, 4) '>
               Old(EN)
             </span>
-            <span ng-if='l.patient_reference.substr(0, 4) == result.params.when.substr(0, 4) '>
+            <span ng-if='!(l.patient_reference.substr(0, 4) < result.params.when.substr(0, 4))'>
               New
             </span>
           </span>
