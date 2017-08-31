@@ -8,6 +8,7 @@
           <th>Patient</th>
           <th>Name</th>
           <th>Phone</th>
+          <th>Appointment from</th>
           <th>Appointment from Date</th>
         </tr>
       </thead>
@@ -17,6 +18,7 @@
           <td><a ng-href='#/folder/{{c.patient_id}}'>{{c.entryyear}}-{{c.entryorder}}</a></td>
           <td>{{c.Name}}</td>
           <td>{{c.Telephone}}</td>
+          <td>{{c.ExaminerName}}</td>
           <td>{{c.c_Date | date }}</td>
         </tr>
       </tbody>
