@@ -33,6 +33,7 @@
                 "patient_id": 6,
                 "Date": "2003-05-11",
                 "ExaminerName": null,
+                "purpose": null,
                 "Nextappointment": "2015-04-28",
                 "NextCenter": "Chakaria Disability Center"
             }

@@ -200,6 +200,7 @@
                 "patient_id": 1,
                 "Date": "2007-01-10",
                 "ExaminerName": "Ershad",
+                "purpose": null,
                 "Nextappointment": "2015-04-28",
                 "NextCenter": null
             }
