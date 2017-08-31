@@ -23,9 +23,11 @@
             "Union_": "",
             "Pathology": "Other",
             "other_comments": "",
+            "ExaminerName": null,
             "c_id": 1,
             "c_Date": "2003-05-11",
             "c_Center": "Chakaria Disability Center",
+            "purpose": null,
             "c_nextAppointment": "2015-04-28",
             "patient_id": 6
         }

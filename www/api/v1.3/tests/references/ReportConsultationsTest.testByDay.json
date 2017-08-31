@@ -23,9 +23,11 @@
             "Union_": "",
             "Pathology": "Other",
             "other_comments": "",
+            "ExaminerName": null,
             "c_id": 1,
             "c_Date": "2003-05-11",
             "c_Center": "Chakaria Disability Center",
+            "purpose": null,
             "c_nextAppointment": "2015-04-28",
             "patient_id": 6
         },
@@ -46,9 +48,11 @@
             "Union_": null,
             "Pathology": "ClubFoot",
             "other_comments": "",
+            "ExaminerName": "Ershad",
             "c_id": 2,
             "c_Date": "2007-01-10",
             "c_Center": null,
+            "purpose": null,
             "c_nextAppointment": "2015-04-28",
             "patient_id": 1
         },
@@ -69,9 +73,11 @@
             "Union_": "Jalia palong",
             "Pathology": "ClubFoot",
             "other_comments": "Right leg metatarsus varus.",
+            "ExaminerName": "Ershad",
             "c_id": 3,
             "c_Date": "2015-01-10",
             "c_Center": "Ukhia",
+            "purpose": null,
             "c_nextAppointment": "2015-04-28",
             "patient_id": 5
         }
