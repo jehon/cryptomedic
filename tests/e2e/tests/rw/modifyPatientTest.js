@@ -54,11 +54,14 @@ module.exports = {
       "#Picture_Date": "2003-01-02"
     };
 
+    const filePath = require('path').resolve(__dirname + '/../../../resources/upload.jpg');
+    console.log("PATH: ", filePath);
+
     client
       .myClick("#button_add")
       .myClick("#add_picture")
       .waitForElementVisible('#file')
-      .setValue('#file', __dirname + '/../../../resources/upload.jpg')
+      .setValue('#file', filePath)
       .myForm("#fileForm", picture, "#topsubmenu #button_save")
       .assert.visible('#img_file')
       ;
