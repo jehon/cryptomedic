@@ -49,25 +49,6 @@ module.exports = {
     nb++;
   },
 
-  "add a picture": function(client) {
-    var picture = {
-      "#Picture_Date": "2003-01-02"
-    };
-
-    const filePath = require('path').resolve(__dirname + '/../../../resources/upload.jpg');
-    console.log("PATH: ", filePath);
-
-    client
-      .myClick("#button_add")
-      .myClick("#add_picture")
-      .waitForElementVisible('#file')
-      .setValue('#file', filePath)
-      .myForm("#fileForm", picture, "#topsubmenu #button_save")
-      .assert.visible('#img_file')
-      ;
-    nb++;
-  },
-
   "add a club foot": function(client) {
     client
       .myClick("#button_add")
@@ -235,6 +216,25 @@ module.exports = {
         .nextCol().assert(bill["#Bill_ExaminerName"])
         .nextCol().assert(2323)
         .endTable()
+      ;
+    nb++;
+  },
+
+  "add a picture": function(client) {
+    var picture = {
+      "#Picture_Date": "2003-01-02"
+    };
+
+    const filePath = require('path').resolve(__dirname + '/../../../resources/upload.jpg');
+    console.log("PATH: ", filePath);
+
+    client
+      .myClick("#button_add")
+      .myClick("#add_picture")
+      .waitForElementVisible('#file')
+      .setValue('#file', filePath)
+      .myForm("#fileForm", picture, "#topsubmenu #button_save")
+      // .assert.visible('#img_file')
       ;
     nb++;
   },
