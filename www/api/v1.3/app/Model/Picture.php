@@ -100,7 +100,7 @@ class Picture extends CryptomedicModel {
 
 			if (!file_put_contents($model->getPhysicalPath($model->file), $contentRaw)) {
 				abort(500, "Storing uploaded file to " . $model->getPhysicalPath($model->file));
-  		}
+  			}
 		}
 
 		//chmod($model->getPhysicalPath($model->file), 0660);
