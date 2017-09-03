@@ -120,7 +120,7 @@ class Bill extends PatientRelated {
       return 1;
     }
     var perc = this.price['socialLevelPercentage_' + sl];
-    console.log("price", this.price, sl, perc)
+    // console.log("price", this.price, sl, perc)
     return perc;
   }
 
