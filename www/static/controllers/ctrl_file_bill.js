@@ -87,7 +87,7 @@ function ctrl_file_bill($scope) {
       return "?";
     }
     return $scope.folder.getFilesRelatedToBill($scope.subid).reduce((acc, file) => {
-      return acc + (file.Amount ? file.Amount : 0)
+      return acc + (file.Amount ? parseInt(file.Amount, 10) : 0)
     }, 0);
   }
 
