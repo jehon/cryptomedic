@@ -90,4 +90,34 @@ class PricesController extends Controller {
 		// return response()->json(array());
 		return 0;
 	}
+
+	public function priceFields() {
+		$values = Input::all();
+		var_dump($values);
+
+		$billDef = "INT(11) NOT NULL DEFAULT '0'";
+		$priceDef = "INT(11) NULL DEFAULT '-1'";
+
+		if ($values['old']) {
+			echo "Changing " . $values['old'] . " to " . $values['new'] . ": <br>";
+			echo "ALTER TABLE `bills` CHANGE `" . $values['old'] . "` `" . $values['new'] . "` " . $billDef . ";";
+			echo "<br>";
+			echo "ALTER TABLE `prices` CHANGE `" . $values['old'] . "` `" . $values['new'] . "` " . $priceDef . ";";
+		} else {
+			echo "Creating " . $values['new'] . ": <br>";
+			echo "ALTER TABLE `bills` CHANGE `" . $values['old'] . "` `" . $values['new'] . "` " . $billDef . ";";
+			echo "<br>";
+			echo "ALTER TABLE `prices` CHANGE `" . $values['old'] . "` `" . $values['new'] . "` " . $priceDef . ";";
+		}
+
+		?>
+			<form>
+				Old: <input name='old' value='a'><br>
+				New: <input name='new' value='b'><br>
+				<button type='submit'>Submit</button>
+			</form>
+		<?php
+
+		echo implode("<br>", \App\Model\Bill::getTableColumnsList());
+	}
 }
