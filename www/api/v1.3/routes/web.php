@@ -35,6 +35,9 @@ Route::group([ 'prefix' => '/api/' . basename(dirname(__DIR__)) ], function() {
   Route::post('/auth/mylogin', "Auth\AuthController@postMylogin");
   Route::get('/auth/logout', "Auth\AuthController@getLogout");
 
+  // Without effect
+  Route::get('admin/priceFields', "PricesController@priceFields");
+
   // Private
   Route::group(array('middleware' => 'authenticated'), function()
   {
