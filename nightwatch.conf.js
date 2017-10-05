@@ -49,7 +49,12 @@ module.exports = {
         "marionnette": true,
         "webdriver.log.driver": "DEBUG",
         "javascriptEnabled": true,
-        "acceptSslCerts": true
+        "acceptSslCerts": true,
+        "moz:firefoxOptions": {
+          "args": [
+            "-headless"
+          ]
+        }
       }
     },
     "chrome" : {
