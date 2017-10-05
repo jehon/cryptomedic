@@ -90,16 +90,16 @@ ALTER TABLE `bills` ADD `workshop_Artificial_limb(AK)_single_axis_standard` INT(
 ALTER TABLE `prices` ADD `workshop_Artificial_limb(AK)_single_axis_standard` INT(11) NULL DEFAULT '-1';
 
 -- Creating Artificial limb(A.K) 4 bar linkage polycentric knee joint standard
-ALTER TABLE `bills` ADD `workshop_artificial_limb_(AK)_4_bar_linkage_polycentric_knee_joint_std` INT(11) NOT NULL DEFAULT '0';
-ALTER TABLE `prices` ADD `workshop_artificial_limb_(AK)_4_bar_linkage_polycentric_knee_joint_std` INT(11) NULL DEFAULT '-1';
+ALTER TABLE `bills` ADD `workshop_artificial_limb_(AK) polycentric_knee_join` INT(11) NOT NULL DEFAULT '0';
+ALTER TABLE `prices` ADD `workshop_artificial_limb_(AK) polycentric_knee_join` INT(11) NULL DEFAULT '-1';
 
 -- Creating Artificial trans radial prosthesis with Alimco components
-ALTER TABLE `bills` ADD `workshop_Artificial_trans_radial_prosthesis_with_Alimco_components` INT(11) NOT NULL DEFAULT '0';
-ALTER TABLE `prices` ADD `workshop_Artificial_trans_radial_prosthesis_with_Alimco_components` INT(11) NULL DEFAULT '-1';
+ALTER TABLE `bills` ADD `workshop_Artificial_ Tr_radial_prosthesis_Alimco` INT(11) NOT NULL DEFAULT '0';
+ALTER TABLE `prices` ADD `workshop_Artificial_ Tr_radial_prosthesis_Alimco` INT(11) NULL DEFAULT '-1';
 
 -- Creating Artificial trans radial prosthesis with jaipur  components
-ALTER TABLE `bills` ADD `workshop_Artificial_trans_radial_prosthesis_with_jaipur_components` INT(11) NOT NULL DEFAULT '0';
-ALTER TABLE `prices` ADD `workshop_Artificial_trans_radial_prosthesis_with_jaipur_components` INT(11) NULL DEFAULT '-1';
+ALTER TABLE `bills` ADD `workshop_Artificial_ Tr_radial_prosthesis_jaipur` INT(11) NOT NULL DEFAULT '0';
+ALTER TABLE `prices` ADD `workshop_Artificial_ Tr_radial_prosthesis_jaipur` INT(11) NULL DEFAULT '-1';
 
 -- Creating Wheel Chair (china) modified
 ALTER TABLE `bills` ADD `workshop_Wheel_Chair_(china)_modified` INT(11) NOT NULL DEFAULT '0';
