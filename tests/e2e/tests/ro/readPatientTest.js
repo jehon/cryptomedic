@@ -38,14 +38,17 @@ module.exports = {
       .page.cryptomedic().selectFile("Bill", 1)
       .assert.elementNotPresent("#button_edit")
       // TODO: check bill
-
+      ;
+  },
+  readPatient5: function(client) {
+    client
       .page.cryptomedic().goPatient(2014, 105)
       .assert.containsText("#Patient_Upazilla", "Ukhia")
       .assert.containsText("#Patient_Union_", "Jalia palong")
       .assert.containsText("#Patient_Telephone", "1813247984")
 
       .page.cryptomedic().selectFile("ClubFoot", 1)
-      // .waitForElementVisible("#ageAtConsultationTime")
+      .waitForElementVisible("#ageAtConsultationTime")
       .assert.containsText("#ageAtConsultationTime", "2y0m")
       .assert.containsText("#ClubFoot_Treatment", "DB splint")
       // TODO: adapt the data and check them
