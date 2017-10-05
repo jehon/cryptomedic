@@ -90,8 +90,8 @@ ALTER TABLE `bills` ADD `workshop_Artificial_limb(AK)_single_axis_standard` INT(
 ALTER TABLE `prices` ADD `workshop_Artificial_limb(AK)_single_axis_standard` INT(11) NULL DEFAULT '-1';
 
 -- Creating Artificial limb(A.K) 4 bar linkage polycentric knee joint standard
-ALTER TABLE `bills` ADD `workshop_artificial_limb_(AK) polycentric_knee_join` INT(11) NOT NULL DEFAULT '0';
-ALTER TABLE `prices` ADD `workshop_artificial_limb_(AK) polycentric_knee_join` INT(11) NULL DEFAULT '-1';
+ALTER TABLE `bills` ADD `workshop_artificial_limb_(AK) polycentric_knee_joint` INT(11) NOT NULL DEFAULT '0';
+ALTER TABLE `prices` ADD `workshop_artificial_limb_(AK) polycentric_knee_joint` INT(11) NULL DEFAULT '-1';
 
 -- Creating Artificial trans radial prosthesis with Alimco components
 ALTER TABLE `bills` ADD `workshop_Artificial_ Tr_radial_prosthesis_Alimco` INT(11) NOT NULL DEFAULT '0';
