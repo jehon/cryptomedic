@@ -95,29 +95,42 @@ class PricesController extends Controller {
 		$values = Input::all();
 		var_dump($values);
 
+		$billFields = \App\Model\Bill::getTableColumnsList();
+		sort($billFields, SORT_NATURAL);
+
 		$billDef = "INT(11) NOT NULL DEFAULT '0'";
 		$priceDef = "INT(11) NULL DEFAULT '-1'";
 
-		if ($values['old']) {
-			echo "Changing " . $values['old'] . " to " . $values['new'] . ": <br>";
-			echo "ALTER TABLE `bills` CHANGE `" . $values['old'] . "` `" . $values['new'] . "` " . $billDef . ";";
-			echo "<br>";
-			echo "ALTER TABLE `prices` CHANGE `" . $values['old'] . "` `" . $values['new'] . "` " . $priceDef . ";";
+		$old = $values['old'];
+		$new = $values['new'];
+
+		echo "<textarea cols=160 rows=5>";
+
+		if ($old) {
+			if (in_array($old, $billFields)) {
+				echo "-- Changing " . $values['old'] . " to " . $values['new'] . "\n";
+				echo "ALTER TABLE `bills` CHANGE `$old` `$new` $billDef;\n";
+				echo "ALTER TABLE `prices` CHANGE `$old` `$new` $priceDef;\n";
+			} else {
+				echo "-- Old field unknown: $old<br>";
+			}
 		} else {
-			echo "Creating " . $values['new'] . ": <br>";
-			echo "ALTER TABLE `bills` CHANGE `" . $values['old'] . "` `" . $values['new'] . "` " . $billDef . ";";
-			echo "<br>";
-			echo "ALTER TABLE `prices` CHANGE `" . $values['old'] . "` `" . $values['new'] . "` " . $priceDef . ";";
+			echo "-- Creating " . $values['new'] . "\n";
+			echo "ALTER TABLE `bills` CHANGE `$old` `$new` $billDef;\n";
+			echo "ALTER TABLE `prices` CHANGE `$old` `$new` $priceDef;\n";
 		}
+
+		echo "\n";
+		echo "</textarea>";
 
 		?>
 			<form>
-				Old: <input name='old' value='a'><br>
-				New: <input name='new' value='b'><br>
+				Old: <input name='old' value='<?php echo $old ?>'><br>
+				New: <input name='new' value='<?php echo $new ?>'><br>
 				<button type='submit'>Submit</button>
 			</form>
 		<?php
 
-		echo implode("<br>", \App\Model\Bill::getTableColumnsList());
+		echo implode("<br>", $billFields);
 	}
 }
