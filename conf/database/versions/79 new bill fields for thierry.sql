@@ -68,3 +68,64 @@ ALTER TABLE `bills` CHANGE `workshop_fracture_brace` `workshop_fracture_brace_(o
 ALTER TABLE `prices` CHANGE `workshop_fracture_brace` `workshop_fracture_brace_(one_leg)` INT(11) NULL DEFAULT '-1';
 
 
+
+-- Creating UHKAFO((Drop_lock_single_axis)_MI
+ALTER TABLE `bills` ADD `workshop_UHKAFO_(Drop_lock_single_axis)_MI` INT(11) NOT NULL DEFAULT '0';
+ALTER TABLE `prices` ADD `workshop_UHKAFO_(Drop_lock_single_axis)_MI` INT(11) NULL DEFAULT '-1';
+
+-- Creating Artificial limb (B.K) Exoskeleton
+ALTER TABLE `bills` ADD `workshop_Artificial_limb_(BK)_Exoskeleton` INT(11) NOT NULL DEFAULT '0';
+ALTER TABLE `prices` ADD `workshop_Artificial_limb_(BK)_Exoskeleton` INT(11) NULL DEFAULT '-1';
+
+-- Creating Artificial limb(A.K) Exoskeleton
+ALTER TABLE `bills` ADD `workshop_Artificial_limb(AK)_Exoskeleton` INT(11) NOT NULL DEFAULT '0';
+ALTER TABLE `prices` ADD `workshop_Artificial_limb(AK)_Exoskeleton` INT(11) NULL DEFAULT '-1';
+
+-- Creating Artificial limb (B.K) Endoskeleton With pylon Standard
+ALTER TABLE `bills` ADD `workshop_Artificial_limb_(BK)_Endoskeleton_with_pylon_Std` INT(11) NOT NULL DEFAULT '0';
+ALTER TABLE `prices` ADD `workshop_Artificial_limb_(BK)_Endoskeleton_with_pylon_Std` INT(11) NULL DEFAULT '-1';
+
+-- Creating Artificial limb(A.K) single axis standard
+ALTER TABLE `bills` ADD `workshop_Artificial_limb(AK)_single_axis_standard` INT(11) NOT NULL DEFAULT '0';
+ALTER TABLE `prices` ADD `workshop_Artificial_limb(AK)_single_axis_standard` INT(11) NULL DEFAULT '-1';
+
+-- Creating Artificial limb(A.K) 4 bar linkage polycentric knee joint standard
+ALTER TABLE `bills` ADD `workshop_artificial_limb_(AK)_4_bar_linkage_polycentric_knee_joint_std` INT(11) NOT NULL DEFAULT '0';
+ALTER TABLE `prices` ADD `workshop_artificial_limb_(AK)_4_bar_linkage_polycentric_knee_joint_std` INT(11) NULL DEFAULT '-1';
+
+-- Creating Artificial trans radial prosthesis with Alimco components
+ALTER TABLE `bills` ADD `workshop_Artificial_trans_radial_prosthesis_with_Alimco_components` INT(11) NOT NULL DEFAULT '0';
+ALTER TABLE `prices` ADD `workshop_Artificial_trans_radial_prosthesis_with_Alimco_components` INT(11) NULL DEFAULT '-1';
+
+-- Creating Artificial trans radial prosthesis with jaipur  components
+ALTER TABLE `bills` ADD `workshop_Artificial_trans_radial_prosthesis_with_jaipur_components` INT(11) NOT NULL DEFAULT '0';
+ALTER TABLE `prices` ADD `workshop_Artificial_trans_radial_prosthesis_with_jaipur_components` INT(11) NULL DEFAULT '-1';
+
+-- Creating Wheel Chair (china) modified
+ALTER TABLE `bills` ADD `workshop_Wheel_Chair_(china)_modified` INT(11) NOT NULL DEFAULT '0';
+ALTER TABLE `prices` ADD `workshop_Wheel_Chair_(china)_modified` INT(11) NULL DEFAULT '-1';
+
+-- Creating White can
+ALTER TABLE `bills` ADD `workshop_White_can` INT(11) NOT NULL DEFAULT '0';
+ALTER TABLE `prices` ADD `workshop_White_can` INT(11) NULL DEFAULT '-1';
+
+-- Creating Hearing aids
+ALTER TABLE `bills` ADD `workshop_Hearing_aids` INT(11) NOT NULL DEFAULT '0';
+ALTER TABLE `prices` ADD `workshop_Hearing_aids` INT(11) NULL DEFAULT '-1';
+
+-- Creating Elbow crutch
+ALTER TABLE `bills` ADD `workshop_Elbow_crutch` INT(11) NOT NULL DEFAULT '0';
+ALTER TABLE `prices` ADD `workshop_Elbow_crutch` INT(11) NULL DEFAULT '-1';
+
+-- Creating Lifspring BAFO
+ALTER TABLE `bills` ADD `workshop_Lifspring_BAFO` INT(11) NOT NULL DEFAULT '0';
+ALTER TABLE `prices` ADD `workshop_Lifspring_BAFO` INT(11) NULL DEFAULT '-1';
+
+-- Creating AFO (Articulated)
+ALTER TABLE `bills` ADD `workshop_AFO_(Articulated)` INT(11) NOT NULL DEFAULT '0';
+ALTER TABLE `prices` ADD `workshop_AFO_(Articulated)` INT(11) NULL DEFAULT '-1';
+
+-- Creating Extension brace (AFO)
+ALTER TABLE `bills` ADD `workshop_Extension_brace_(AFO)` INT(11) NOT NULL DEFAULT '0';
+ALTER TABLE `prices` ADD `workshop_Extension_brace_(AFO)` INT(11) NULL DEFAULT '-1';
+
