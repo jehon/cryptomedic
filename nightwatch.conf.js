@@ -67,7 +67,9 @@ module.exports = {
         "browserName": "chrome",
         "javascriptEnabled": true,
         "acceptSslCerts": true,
-        "args": "no-sandbox",
+        "chromeOptions" : {
+          "args" : [ "--headless" ]
+        }
       }
     }
   }
