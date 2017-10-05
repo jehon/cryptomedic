@@ -98,8 +98,8 @@ ALTER TABLE `bills` ADD `workshop_Artificial_Tr_radial_prosthesis_Alimco` INT(11
 ALTER TABLE `prices` ADD `workshop_Artificial_Tr_radial_prosthesis_Alimco` INT(11) NULL DEFAULT '-1';
 
 -- Creating Artificial trans radial prosthesis with jaipur  components
-ALTER TABLE `bills` ADD `workshop_Artificial_ Tr_radial_prosthesis_jaipur` INT(11) NOT NULL DEFAULT '0';
-ALTER TABLE `prices` ADD `workshop_Artificial_ Tr_radial_prosthesis_jaipur` INT(11) NULL DEFAULT '-1';
+ALTER TABLE `bills` ADD `workshop_Artificial_Tr_radial_prosthesis_jaipur` INT(11) NOT NULL DEFAULT '0';
+ALTER TABLE `prices` ADD `workshop_Artificial_Tr_radial_prosthesis_jaipur` INT(11) NULL DEFAULT '-1';
 
 -- Creating Wheel Chair (china) modified
 ALTER TABLE `bills` ADD `workshop_Wheel_Chair_-_china_-_modified` INT(11) NOT NULL DEFAULT '0';
