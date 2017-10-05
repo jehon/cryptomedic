@@ -52,7 +52,7 @@ module.exports = function(config) {
 
     autoWatch : true,
 
-    browsers: [ 'Firefox' ],
+    browsers: [ 'Firefox', 'ChromeHeadless' ],
 
     preprocessors: {
       'static/**/*.js': [ 'coverage' ],
