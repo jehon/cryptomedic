@@ -106,7 +106,7 @@ class PricesController extends Controller {
 
 		echo "<textarea cols=160 rows=5>";
 
-		if ($old) {
+		if (strlen($old) > 0) {
 			if (in_array($old, $billFields)) {
 				echo "-- Changing " . $values['old'] . " to " . $values['new'] . "\n";
 				echo "ALTER TABLE `bills` CHANGE `$old` `$new` $billDef;\n";
@@ -116,8 +116,8 @@ class PricesController extends Controller {
 			}
 		} else {
 			echo "-- Creating " . $values['new'] . "\n";
-			echo "ALTER TABLE `bills` CHANGE `$old` `$new` $billDef;\n";
-			echo "ALTER TABLE `prices` CHANGE `$old` `$new` $priceDef;\n";
+			echo "ALTER TABLE `bills` ADD `$new` $billDef;\n";
+			echo "ALTER TABLE `prices` ADD `$new` $priceDef;\n";
 		}
 
 		echo "\n";
