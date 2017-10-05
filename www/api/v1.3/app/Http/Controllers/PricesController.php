@@ -102,7 +102,7 @@ class PricesController extends Controller {
 		$priceDef = "INT(11) NULL DEFAULT '-1'";
 
 		$old = $values['old'];
-		$new = $values['new'];
+		$new = str_replace(" ", "_", $values['new']);
 
 		echo "<textarea cols=160 rows=5>";
 
