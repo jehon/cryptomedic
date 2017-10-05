@@ -44,7 +44,7 @@
 					</tr>
 					<tr class='notModeWrite'>
 						<td>Age (today)</td>
-						<td>{{calculations.age.fromBirthDate(currentFile().Yearofbirth)}} old</td>
+						<td id="#ageToday">{{calculations.age.fromBirthDate(currentFile().Yearofbirth)}} old</td>
 					</tr>
 					<tr ng-class='{ emptyValue: !folder.getPatient().District}'>
 						<td>District</td>
