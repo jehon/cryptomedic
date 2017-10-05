@@ -35,8 +35,8 @@ class ReportStatisticalController extends ReportController {
 			$list = "(1=0)";
 		}
 		foreach(Bill::getFieldsList($count_filter) as $f) {
-			$this->resultPathSet("summary.$f", $this->getOneBySQL("SELECT count(*) as res From bills WHERE {$this->filter} AND ($f > 0)"));
-			$list .= "OR($f>0)";
+			$this->resultPathSet("summary.$f", $this->getOneBySQL("SELECT count(*) as res From bills WHERE {$this->filter} AND (`$f` > 0)"));
+			$list .= "OR(`$f`>0)";
 		}
 		$list = "(" . $list . ")";
 	}
