@@ -52,7 +52,15 @@ module.exports = function(config) {
 
     autoWatch : true,
 
-    browsers: [ 'Firefox', 'ChromeHeadless' ],
+    browsers: [ 'FirefoxHeadless', 'ChromeHeadless' ],
+
+    // https://github.com/karma-runner/karma-firefox-launcher/issues/76
+    customLaunchers: {
+      FirefoxHeadless: {
+        base: 'Firefox',
+        flags: [ '-headless' ],
+      },
+    },
 
     preprocessors: {
       'static/**/*.js': [ 'coverage' ],
