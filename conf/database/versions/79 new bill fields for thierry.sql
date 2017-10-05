@@ -70,8 +70,8 @@ ALTER TABLE `prices` CHANGE `workshop_fracture_brace` `workshop_fracture_brace_-
 
 
 -- Creating UHKAFO((Drop_lock_single_axis)_MI
-ALTER TABLE `bills` ADD `workshop_UHKAFO_-_Drop_lock_single_axis)_MI` INT(11) NOT NULL DEFAULT '0';
-ALTER TABLE `prices` ADD `workshop_UHKAFO_-_Drop_lock_single_axis)_MI` INT(11) NULL DEFAULT '-1';
+ALTER TABLE `bills` ADD `workshop_UHKAFO_-_Drop_lock_single_axis_-_MI` INT(11) NOT NULL DEFAULT '0';
+ALTER TABLE `prices` ADD `workshop_UHKAFO_-_Drop_lock_single_axis_-_MI` INT(11) NULL DEFAULT '-1';
 
 -- Creating Artificial limb (B.K) Exoskeleton
 ALTER TABLE `bills` ADD `workshop_Artificial_limb_-_BK_-_Exoskeleton` INT(11) NOT NULL DEFAULT '0';
