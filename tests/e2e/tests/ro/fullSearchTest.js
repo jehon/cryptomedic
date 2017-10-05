@@ -57,5 +57,9 @@ module.exports = {
   "byPathology": function(client) {
     testSearch(client, { "write-list[name=Pathology]": { value: 'ClubFoot' }}, [ "2014-107", "2014-103", "2014-104", "2014-105", "2000-1" ]);
     // TODO: search by sex
+  },
+  
+  "end": function(client) {
+    client.end();
   }
 };
