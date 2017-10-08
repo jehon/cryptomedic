@@ -101,6 +101,14 @@ class PricesController extends Controller {
 		$billDef = "INT(11) NOT NULL DEFAULT '0'";
 		$priceDef = "INT(11) NULL DEFAULT '-1'";
 
+		if (!in_array('new', $values)) {
+			$values['new'] = "";
+		}
+
+		if (!in_array('old', $values)) {
+			$values['old'] = "";
+		}
+
 		$old = $values['old'];
 		$new = str_replace(" ", "_", $values['new']);
 
