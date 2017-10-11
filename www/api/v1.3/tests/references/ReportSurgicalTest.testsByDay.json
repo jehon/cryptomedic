@@ -20,8 +20,8 @@
             "sl_numberOfHouseholdMembers": 10,
             "Sociallevel": 2,
             "Pathology": "ClubFoot",
-            "act": "CsP",
-            "treatment": "Surg Plast",
+            "act": ",CsP",
+            "treatment": ",Plast,Surg",
             "price_consult": 100,
             "price_medecine": 0,
             "price_workshop": 0,
@@ -31,6 +31,7 @@
             "total_asked": 8200,
             "total_paid": 7000,
             "oldPatient": 0,
+            "cid": null,
             "last_seen": null,
             "last_treat_result": null,
             "last_treat_finished": null
@@ -60,6 +61,7 @@
         "total_asked": 8200,
         "total_paid": 7000,
         "oldPatient": 0,
+        "cid": 0,
         "last_seen": 0,
         "last_treat_result": 0,
         "last_treat_finished": 0
