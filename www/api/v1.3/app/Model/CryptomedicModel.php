@@ -76,11 +76,11 @@ class CryptomedicModel extends Model {
 			$classname = substr($classname, $pos + 1);
 		}
 
-    $rec = [];
-    $rec["type"]   = $classname;
-    $rec["id"]     = $this->id;
-    $rec["record"] = $this;
-    return $rec;
+	    $rec = [];
+	    $rec["type"]   = $classname;
+	    $rec["id"]     = $this->id;
+	    $rec["record"] = $this;
+	    return $rec;
 	}
 
 	public function getRoot() {

@@ -11,7 +11,6 @@ class FicheBillTest extends FicheTestHelper {
   protected $model = "Bill";
   protected $collection = "bills";
 
-
 	public function testCreateWithoutPatientId() {
     $response = $this->myRunAssertQuery(
         $this->getNewRequestOptionsBuilder()
@@ -24,12 +23,15 @@ class FicheBillTest extends FicheTestHelper {
 
 	public function testCreate() {
 		// Create it
-    $id = $this->doCreate([ "patient_id" => '1' ])->id;
+    $file = $this->doCreate([ "patient_id" => '1' ]);
 
 		// Modify it
-    $this->doUpdate($id, [ "ExaminerName" => "Ershad" ]);
+    $res = $this->doUpdate($file->id, [ 
+      "ExaminerName" => "Ershad",
+      "consult_CDC_consultation_Bengali_Doctor" => 2
+    ]);
 
 		// Delete it
-    $this->doDelete($id);
+    $this->doDelete($file->id);
 	}
 }
