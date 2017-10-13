@@ -1,5 +1,7 @@
 <?php
 
+require_once(__DIR__ . "/RouteReferenceTestCase.php");
+
 class FolderTest extends RouteReferenceTestCase {
 
 	public function testsUnauthenticated() {
