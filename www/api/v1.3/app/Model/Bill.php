@@ -2,7 +2,7 @@
 
 namespace App\Model;
 
-class Bill extends SplittedModel {
+class Bill extends CryptomedicModel {
 	const CAT_CONSULT = "consult";
 	const CAT_MEDECINE = "medecine";
 	const CAT_OTHER = "other";
@@ -11,6 +11,10 @@ class Bill extends SplittedModel {
 
 	public static $categories = [ self::CAT_CONSULT, self::CAT_MEDECINE, self::CAT_OTHER, self::CAT_WORKSHOP, self::CAT_SURGICAL ];
 	public static $translations = [ ];
+
+    public function billLines() {
+        return $this->hasMany('App\Model\BillLine');
+    }
 
 	public function getDependantsList() {
 		$list = [];
