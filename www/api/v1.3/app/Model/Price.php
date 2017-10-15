@@ -6,6 +6,10 @@ class Price extends CryptomedicModel
 {
     protected $appends = array('_editable');
 
+    public function priceLines() {
+        return $this->hasMany('App\Model\PriceLine');
+    }
+
     public static function getLimit() {
 		return date('Y-m-d', mktime(0, 0, 0, date('m'), date('d') + 5, date('Y')));
     }

@@ -11,7 +11,7 @@ use App\Model\Price;
 
 class PricesController extends Controller {
 	public function index() {
-		$list = Price::all();
+		$list = Price::with("priceLines")->get();
 		return response()->json($list);
 	}
 
