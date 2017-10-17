@@ -15,7 +15,7 @@ class PatientsController extends ModelController {
 
 	public function store() {
 	    $data = Input::except('_type');
-	    $data = static::cannonize($data);
+	    $data = Patient::cannonize($data);
 
 		// In case we create a patient, things are a bit more complicated!!!
 		// We do this only when we need to generate a reference
