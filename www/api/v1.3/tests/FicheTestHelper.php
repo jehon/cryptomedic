@@ -85,7 +85,7 @@ class FicheTestHelper extends RouteReferenceTestCase {
     return $json->folder[$i];
   }
 
-  public function doUpdate($id, $data = []) {
+  public function doUpdate($id, $data = [], $testEqual = true) {
     $json = $this->myRunAssertQuery(
         $this->getNewRequestOptionsBuilder()
           ->setUrl("fiche/" . $this->collection . "/" . $id)
@@ -93,11 +93,14 @@ class FicheTestHelper extends RouteReferenceTestCase {
           ->setParams($data)
       );
 
-    $this->assertEquals($id, $json->id);
     $i = $this->getRowIndex($json->folder, $this->model, $id);
     $this->assertNotFalse($i, "The record is not in the result");
-    foreach($data as $k => $v) {
-      $this->assertEquals($v, $json->folder[$i]->record->$k);
+
+    if ($testEqual) {
+      $this->assertEquals($id, $json->id);
+      foreach($data as $k => $v) {
+        $this->assertEquals($v, $json->folder[$i]->record->$k);
+      }
     }
     return $json;
   }
