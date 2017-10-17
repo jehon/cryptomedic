@@ -16,8 +16,27 @@ use Illuminate\Support\Facades\Auth;
 class CryptomedicModel extends Model {
 	protected $guarded = array('id');
 
+	public static function getReadOnlyField() {
+		return [ "patient_id", "bill_id", "price_id" ];
+	}
+
 	static public function myCleanValue($c) {
-  	return str_replace(["'", " ", "\""], "", $c);
+		return str_replace(["'", " ", "\""], "", $c);
+	}
+
+	public static function cannonize($data) {
+		if (is_array($data)) {
+			foreach($data as $k => $v) {
+				$res = static::cannonize($v);
+				if ($res !== null) {
+					$data[$k] = $res;
+				}
+			}
+		}
+		if ($data === "null" || $data === "undefined" || $data === "") {
+			return null;
+		}
+		return $data;
 	}
 
 	static public function getTableColumnsList() {
@@ -25,22 +44,34 @@ class CryptomedicModel extends Model {
 		return \Schema::getColumnListing(with(new static)->getTable());
 	}
 
-	static public function filterData($data) {
-		$columns = static::getTableColumnsList();
+	static public function filterData($data, $forUpdate = true) {
+		unset($data['_type']);
 		unset($data['created_at']);
 		unset($data['updated_at']);
 		unset($data['id']);
+		unset($data[(new self())->getUpdatedAtColumn()]);
+		unset($data[(new self())->getCreatedAtColumn()]);
+
+		$columns = self::getTableColumnsList();
 		$result = array_intersect_key($data, array_combine($columns, $columns));
-		foreach($result as $k => $v) {
-			if ($result[$k] == "" || $result[$k] == "undefined") {
-				unset($result[$k]);
+
+		if ($forUpdate) {
+			foreach($result as $k => $v) {
+				if (in_array($k, self::getReadOnlyField())) {
+			      	unset($result[$k]);
+		      		continue;
+		    	}
 			}
 		}
 		return $result;
 	}
 
+
+
 	public static function create(array $attributes = array()) {
-		$attributes = static::filterData($attributes);
+	    $attributes = self::cannonize($attributes);
+		$attributes = self::filterData($attributes, false);
+
 		$m = new static($attributes);
 		$m->validate();
 		if ($m->save()) {
@@ -93,17 +124,40 @@ class CryptomedicModel extends Model {
 		return $this;
 	}
 
-	public function getReadOnlyField() {
-		return [ "patient_id", "bill_id" ];
+	public static function updateWithArray($id, $data) {
+	    $obj = self::findOrFail($id);
+
+	    foreach($data as $k => $v) {
+	      // Set existing fields
+	      if (array_key_exists($k, $obj->getAttributes()) && ($obj->getAttribute($k) != $v)) {
+	        $obj->{$k} = $v;
+	      }
+	    }
+
+	    $obj->save();
+	    return $obj;
 	}
 
 	public function save(array $attributes = array()) {
-		$attributes = static::filterData($attributes);
+	    if ($this->isLocked()) {
+	     	abort(403, "File is frozen");
+	    }
+
+	    $attributes = self::cannonize($attributes);
+		$attributes = self::filterData($attributes, true);
 		if ($this->isDirty()) {
 			$this->validate();
 			$this->lastuser = Auth::user()->username;
 			return parent::save($attributes);
 		}
 		return true;
+	}
+
+	public function delete() {
+	    if ($this->isLocked()) {
+			abort(403, "File is frozen");
+	    }
+
+		return parent::delete();
 	}
 }
