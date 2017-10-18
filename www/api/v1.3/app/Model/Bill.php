@@ -48,8 +48,23 @@ class Bill extends CryptomedicModel {
 			$p->save();
 
 			// To enrich the online informations...
-	    session()->push("online", $p);
+		    // session()->push("online", $p);
 		}
+
+		if (array_key_exists('bill_lines', $attributes)) {
+			$obj->syncSubItems(BillLine::class, $obj->billLines(), $attributes['bill_lines']);
+		}
+
+		return $obj;
+	}
+
+	public static function updateWithArray($id, $attributes) {
+		$obj = parent::updateWithArray($id, $attributes);
+
+		if (array_key_exists('bill_lines', $attributes)) {
+			$obj->syncSubItems(BillLine::class, $obj->billLines(), $attributes['bill_lines']);
+		}
+
 		return $obj;
 	}
 
@@ -80,7 +95,6 @@ class Bill extends CryptomedicModel {
 		sort($res, SORT_NATURAL); //  | SORT_FLAG_CASE
 		foreach($res as $k => $v) {
 			if (preg_match("/_other_/i", $v)) {
-				// var_dump($v);
 				unset($res[$k]);
 				$res[] = $v;
 			}
