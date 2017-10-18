@@ -26,12 +26,12 @@ class FicheBillTest extends FicheTestHelper {
     $file = $this->doCreate([ "patient_id" => '1' ]);
 
 		// Modify it
-    $res = $this->doUpdate($file->id, [ 
+    $json = $this->doUpdate($file['id'], [ 
       "ExaminerName" => "Ershad",
       "consult_CDC_consultation_Bengali_Doctor" => 2
     ]);
 
 		// Delete it
-    $this->doDelete($file->id);
+    $this->doDelete($file['id']);
 	}
 }

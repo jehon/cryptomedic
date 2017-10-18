@@ -27,7 +27,7 @@ class FolderTest extends RouteReferenceTestCase {
       ->withReference()
       ->setUrl("folder/Patient/1");
     $json = $this->myRunAssertQueryForRoles($opt);
-    $this->assertEquals(1, $json->id);
+    $this->assertEquals(1, $json['id']);
 	}
 
   public function test6() {
@@ -35,7 +35,7 @@ class FolderTest extends RouteReferenceTestCase {
       ->withReference()
       ->setUrl("folder/Patient/6");
     $json = $this->myRunAssertQueryForRoles($opt);
-    $this->assertEquals(6, $json->id);
+    $this->assertEquals(6, $json['id']);
   }
 
 	public function testSearchAllowed() {
@@ -61,7 +61,7 @@ class FolderTest extends RouteReferenceTestCase {
           ->setUrl("folder?entryyear=2010")
       );
 		foreach($json as $k => $v) {
-			$this->assertEquals(2010, $v->entryyear);
+			$this->assertEquals(2010, $v['entryyear']);
 		}
 	}
 
@@ -71,7 +71,7 @@ class FolderTest extends RouteReferenceTestCase {
           ->setUrl("folder?entryorder=10")
       );
 		foreach($json as $k => $v) {
-			$this->assertEquals(10, $v->entryorder);
+			$this->assertEquals(10, $v['entryorder']);
 		}
 	}
 
@@ -81,7 +81,7 @@ class FolderTest extends RouteReferenceTestCase {
           ->setUrl("folder?Name=md")
       );
 		foreach($json as $k => $v) {
-			$this->assertTrue(stripos($v->Name, 'md') !== false, "Name " . $v->Name . " does not match criteria");
+			$this->assertTrue(stripos($v['Name'], 'md') !== false, "Name " . $v['Name'] . " does not match criteria");
 		}
 	}
 
@@ -91,7 +91,7 @@ class FolderTest extends RouteReferenceTestCase {
           ->setUrl("folder?Name=j")
       );
 		foreach($json as $k => $v) {
-			$this->assertTrue(stripos($v->Name, 'j') !== false || stripos($v->Name, 'z') !== false, "Name " . $v->Name . " does not match criteria");
+			$this->assertTrue(stripos($v['Name'], 'j') !== false || stripos($v['Name'], 'z') !== false, "Name " . $v['Name'] . " does not match criteria");
 		}
 	}
 
@@ -102,7 +102,7 @@ class FolderTest extends RouteReferenceTestCase {
       );
 
 		foreach($json as $k => $v) {
-			$this->assertEquals(206, $v->Sex);
+			$this->assertEquals(206, $v['Sex']);
 		}
 	}
 
@@ -113,7 +113,7 @@ class FolderTest extends RouteReferenceTestCase {
       );
 
 		foreach($json as $k => $v) {
-			$this->assertEquals(207, $v->Sex);
+			$this->assertEquals(207, $v['Sex']);
 		}
 	}
 
@@ -123,7 +123,7 @@ class FolderTest extends RouteReferenceTestCase {
           ->setUrl("folder?Yearofbirth=2000")
       );
 		foreach($json as $k => $v) {
-			$this->assertEquals(2000, $v->Yearofbirth);
+			$this->assertEquals(2000, $v['Yearofbirth']);
 		}
 	}
 
@@ -133,7 +133,7 @@ class FolderTest extends RouteReferenceTestCase {
           ->setUrl("folder?Telephone=2")
       );
 		foreach($json as $k => $v) {
-			$this->assertTrue(strpos($v->Telephone, "2") !== false);
+			$this->assertTrue(strpos($v['Telephone'], "2") !== false);
 		}
 	}
 
@@ -143,7 +143,7 @@ class FolderTest extends RouteReferenceTestCase {
           ->setUrl("folder?Pathology=Ricket")
       );
 		foreach($json as $k => $v) {
-			$this->assertEquals("Ricket", $v->Pathology);
+			$this->assertEquals("Ricket", $v['Pathology']);
 		}
 	}
 
@@ -153,7 +153,7 @@ class FolderTest extends RouteReferenceTestCase {
           ->setUrl("folder?Pathology=ClubFoot")
       );
 		foreach($json as $k => $v) {
-			$this->assertEquals("ClubFoot", $v->Pathology);
+			$this->assertEquals("ClubFoot", $v['Pathology']);
 		}
 	}
 
@@ -163,7 +163,7 @@ class FolderTest extends RouteReferenceTestCase {
           ->setUrl("folder?Pathology=Other")
       );
 		foreach($json as $k => $v) {
-			$this->assertEquals("Other", $v->Pathology);
+			$this->assertEquals("Other", $v['Pathology']);
 		}
 	}
 }
