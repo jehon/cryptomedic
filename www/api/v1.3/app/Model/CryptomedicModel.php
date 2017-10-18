@@ -24,7 +24,7 @@ class CryptomedicModel extends Model {
 		return str_replace(["'", " ", "\""], "", $c);
 	}
 
-	public static function cannonize($data) {
+	static  public function cannonize($data) {
 		if (is_array($data)) {
 			foreach($data as $k => $v) {
 				$res = static::cannonize($v);
@@ -66,9 +66,7 @@ class CryptomedicModel extends Model {
 		return $result;
 	}
 
-
-
-	public static function create(array $attributes = array()) {
+	static public function create(array $attributes = array()) {
 	    $attributes = self::cannonize($attributes);
 		$attributes = self::filterData($attributes, false);
 
@@ -80,6 +78,21 @@ class CryptomedicModel extends Model {
 		abort(500, "Could not create the object");
 	}
 
+	static public function updateWithArray($id, $data) {
+	    $obj = self::findOrFail($id);
+
+	    foreach($data as $k => $v) {
+	      // Set existing fields
+	      if (array_key_exists($k, $obj->getAttributes()) && ($obj->getAttribute($k) != $v)) {
+	        $obj->{$k} = $v;
+	      }
+	    }
+
+	    $obj->save();
+	    return $obj;
+	}
+
+	public function syncSubItems($class, $relation, $list) {		
 	public function validate() {
 		return true;
 	}
@@ -122,20 +135,6 @@ class CryptomedicModel extends Model {
 			return Bill::findOrFail($this->bill_id)->getRoot();
 		}
 		return $this;
-	}
-
-	public static function updateWithArray($id, $data) {
-	    $obj = self::findOrFail($id);
-
-	    foreach($data as $k => $v) {
-	      // Set existing fields
-	      if (array_key_exists($k, $obj->getAttributes()) && ($obj->getAttribute($k) != $v)) {
-	        $obj->{$k} = $v;
-	      }
-	    }
-
-	    $obj->save();
-	    return $obj;
 	}
 
 	public function save(array $attributes = array()) {
