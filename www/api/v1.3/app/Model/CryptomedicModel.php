@@ -93,6 +93,29 @@ class CryptomedicModel extends Model {
 	}
 
 	public function syncSubItems($class, $relation, $list) {		
+		$oids = [];
+
+		$original = $relation->get();
+		foreach($original as $o) {
+			$oids[] = $o->id;
+		}
+
+		foreach($list as $n) {
+			if (in_array("id", $n)) {
+				$class::updateWithArray($n['id'], $n);
+				$oids = array_filter($oid, function($v) { return $v != $n['id']; });
+			} else {
+				$relation->create($n);
+			}
+		}
+
+		foreach($oids as $oid) {
+			var_dump("Remove oid: $oid");
+		}
+
+		return $this;
+	}
+
 	public function validate() {
 		return true;
 	}
