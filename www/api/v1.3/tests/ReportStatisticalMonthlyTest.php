@@ -20,8 +20,8 @@ class ReportStatisticalMonthlyTest extends RouteReferenceTestCase {
 
     $json = $this->myRunAssertQueryForRoles($opt);
 
-    $this->assertObjectHasAttribute('params', $json);
-    $this->assertObjectHasAttribute('summary', $json);
+    $this->assertArrayHasKey('params', $json);
+    $this->assertArrayHasKey('summary', $json);
 
     // TODO: assert values
   }
@@ -33,8 +33,8 @@ class ReportStatisticalMonthlyTest extends RouteReferenceTestCase {
 
     $json = $this->myRunAssertQueryForRoles($opt);
 
-    $this->assertObjectHasAttribute('params', $json);
-    $this->assertObjectHasAttribute('summary', $json);
+    $this->assertArrayHasKey('params', $json);
+    $this->assertArrayHasKey('summary', $json);
 
     // TODO: assert values
   }

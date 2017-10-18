@@ -19,12 +19,12 @@ class ReportConsultationsTest extends RouteReferenceTestCase {
 			;
 		$json = $this->myRunAssertQueryForRoles($opt);
 
-		$this->assertEquals(count($json->list), 3);
-		$this->assertObjectHasAttribute('params', $json);
-		$this->assertObjectHasAttribute('list', $json);
-		$this->assertEquals(count($json->list), 3);
-		foreach($json->list as $k => $v) {
-			$this->assertEquals($v->c_nextAppointment, self::$day);
+		$this->assertEquals(count($json['list']), 3);
+		$this->assertArrayHasKey('params', $json);
+		$this->assertArrayHasKey('list', $json);
+		$this->assertEquals(count($json['list']), 3);
+		foreach($json['list'] as $k => $v) {
+			$this->assertEquals($v['c_nextAppointment'], self::$day);
 		}
 	}
 
@@ -35,10 +35,10 @@ class ReportConsultationsTest extends RouteReferenceTestCase {
 
 		$json = $this->myRunAssertQueryForRoles($opt);
 
-		$this->assertEquals(count($json->list), 1);
-		foreach($json->list as $k => $v) {
-			$this->assertEquals($v->c_nextAppointment, self::$day);
-			$this->assertEquals($v->c_Center, "Chakaria Disability Center");
+		$this->assertEquals(count($json['list']), 1);
+		foreach($json['list'] as $k => $v) {
+			$this->assertEquals($v['c_nextAppointment'], self::$day);
+			$this->assertEquals($v['c_Center'], "Chakaria Disability Center");
 		}
 	}
 }

@@ -44,7 +44,7 @@ class PriceTest extends RouteReferenceTestCase {
 		$this->assertEquals(count($json), 3);
 
 		foreach($json as $j) {
-			$this->assertEquals($j->_editable, false);
+			$this->assertEquals($j['_editable'], false);
 		}
 		return $json;
 	}
@@ -110,12 +110,13 @@ class PriceTest extends RouteReferenceTestCase {
 	        	->addParams([ "pivot" => $limit ])
 	      	);
 
-	    $this->assertTrue(property_exists($json, 'id'));
-	    $this->assertEquals($json->datefrom, $limit);
-	    $this->assertTrue(!property_exists($json, 'dateto'));
-	    $this->assertEquals($json->consult_field_visit, -1);
-	    $this->assertEquals($json->consult_home_visit, 150);
-	    $this->assertEquals($json->_editable, true);
+	    $this->assertArrayHasKey('id', $json);
+	    $this->assertEquals($json['datefrom'], $limit);
+
+	    $this->assertEquals($json['dateto'], null);
+	    $this->assertEquals($json['consult_field_visit'], -1);
+	    $this->assertEquals($json['consult_home_visit'], 150);
+	    $this->assertEquals($json['_editable'], true);
 
 
 	    // Creating a second one would fail
@@ -136,23 +137,23 @@ class PriceTest extends RouteReferenceTestCase {
 	    $json = $this->myRunAssertQuery(
 	        $this->getNewRequestOptionsBuilder()
 	        	->setRole("manager")
-	         	->setUrl("admin/prices/" . $json->id)
+	         	->setUrl("admin/prices/" . $json['id'])
 	        	->setMethod("PUT")
 	        	->addParams((array) $json)
 	      	);
 
 	    $this->assertTrue(property_exists($json, 'id'));
-	    $this->assertEquals($json->datefrom, $limit);
-	    $this->assertEquals($json->dateto, null);
-	    $this->assertEquals($json->consult_field_visit, -1);
-	    $this->assertEquals($json->consult_home_visit, 250);
-	    $this->assertEquals($json->_editable, true);
+	    $this->assertEquals($json['datefrom'], $limit);
+	    $this->assertEquals($json['dateto'], null);
+	    $this->assertEquals($json['consult_field_visit'], -1);
+	    $this->assertEquals($json['consult_home_visit'], 250);
+	    $this->assertEquals($json['_editable'], true);
 
 	    // Delete some data
 	    $json = $this->myRunAssertQuery(
 	        $this->getNewRequestOptionsBuilder()
 	        	->setRole("manager")
-	         	->setUrl("admin/prices/" . $json->id)
+	         	->setUrl("admin/prices/" . $json['id'])
 	        	->setMethod("DELETE")
 	      	);
 

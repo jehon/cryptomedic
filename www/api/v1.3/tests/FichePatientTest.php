@@ -13,7 +13,7 @@ class FichePatientTest extends FicheTestHelper {
 
 	public function testCreate() {
 		// Create it
-    	$id = $this->doCreate([ "Name" => 'a name', 'entryyear' => '1000', 'entryorder' => '1' ])->id;
+    	$id = $this->doCreate([ "Name" => 'a name', 'entryyear' => '1000', 'entryorder' => '1' ])['id'];
 
 		// Modify it
     	$this->doUpdate($id, [ "Telephone" => "phone" ]);

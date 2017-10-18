@@ -45,8 +45,8 @@ class RouteReferenceTestCase extends TestCase {
 		// See https://github.com/laravel/framework/blob/5.3/src/Illuminate/Foundation/Testing/Concerns/MakesHttpRequests.php#L62
 		$response = $this->call($opt->getMethod(), $opt->getAbsoluteUrl(), $opt->getParams(), [], [], $this->transformHeadersToServerVars($opt->getHeaders()));
 
-
 		$text = $response->getContent();
+
 		if ($response->getStatusCode() == 500) {
 			echo $text;
 		}
@@ -57,7 +57,7 @@ class RouteReferenceTestCase extends TestCase {
 			return $text;
 		}
 
-		$json = json_decode($text);
+		$json = json_decode($text, true);
 		$this->assertNotNull($json, "Received JSON is null. Problem parsing response?");
 
 		if ($opt->getReference() !== false) {

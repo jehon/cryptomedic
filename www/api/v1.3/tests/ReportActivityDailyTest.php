@@ -18,11 +18,11 @@ class ReportActivityDailyTest extends RouteReferenceTestCase {
 	}
 
 	protected function thisAssertResponse($json, $nbr) {
-		$this->assertObjectHasAttribute('params', $json);
-		$this->assertObjectHasAttribute('list', $json);
-		$this->assertObjectHasAttribute('totals', $json);
-		$this->assertTrue(count($json->list) >= 1);
-		$this->assertEquals($nbr[$this->type], count($json->list));
+		$this->assertArrayHasKey('params', $json);
+		$this->assertArrayHasKey('list', $json);
+		$this->assertArrayHasKey('totals', $json);
+		$this->assertTrue(count($json['list']) >= 1);
+		$this->assertEquals($nbr[$this->type], count($json['list']));
 	}
 
 	public function testByDate() {
@@ -39,8 +39,8 @@ class ReportActivityDailyTest extends RouteReferenceTestCase {
 			;
 
 		$json = $this->myRunAssertQueryForRoles($opt);
-		foreach($json->list as $k => $v) {
-			$this->assertEquals("Chakaria Disability Center", $v->Center);
+		foreach($json['list'] as $k => $v) {
+			$this->assertEquals("Chakaria Disability Center", $v['Center']);
 		}
 		$this->thisAssertResponse($json, [ 3, 5 ]);
 
@@ -57,8 +57,8 @@ class ReportActivityDailyTest extends RouteReferenceTestCase {
 			;
 
 		$json = $this->myRunAssertQueryForRoles($opt);
-		foreach($json->list as $k => $v) {
- 			$this->assertEquals("Ershad", $v->ExaminerName);
+		foreach($json['list'] as $k => $v) {
+ 			$this->assertEquals("Ershad", $v['ExaminerName']);
 		}
 		$this->thisAssertResponse($json, [ 4, 5 ]);
 
@@ -71,9 +71,9 @@ class ReportActivityDailyTest extends RouteReferenceTestCase {
 			;
 
 		$json = $this->myRunAssertQueryForRoles($opt);
-		foreach($json->list as $k => $v) {
- 			$this->assertEquals("Ershad", $v->ExaminerName);
-			$this->assertEquals("Chakaria Disability Center", $v->Center);
+		foreach($json['list'] as $k => $v) {
+ 			$this->assertEquals("Ershad", $v['ExaminerName']);
+			$this->assertEquals("Chakaria Disability Center", $v['Center']);
 		}
 		$this->thisAssertResponse($json, [ 3, 4 ]);
  	}

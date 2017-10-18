@@ -9,11 +9,11 @@ class FicheTestHelper extends RouteReferenceTestCase {
     $found = false;
     foreach(array_keys($list) as $i) {
       $v = $list[$i];
-      if ($v->type != $type) {
+      if ($v['type'] != $type) {
         continue;
       }
       if ($id !== false) {
-        if ($v->id != $id) {
+        if ($v['id'] != $id) {
           continue;
         }
       }
@@ -21,7 +21,7 @@ class FicheTestHelper extends RouteReferenceTestCase {
       if ($data !== false) {
         $res = true;
         foreach($data as $k => $e) {
-          if ($v->record->{$k} != $data[$k]) {
+          if ($v['record'][$k] != $data[$k]) {
             $res = false;
           }
         }
@@ -38,11 +38,11 @@ class FicheTestHelper extends RouteReferenceTestCase {
     $found = false;
     foreach(array_reverse(array_keys($list)) as $i => $v) {
       $v = $list[$i];
-      if ($v->type != $type) {
+      if ($v['type'] != $type) {
         continue;
       }
       if ($id !== false) {
-        if ($v->id != $id) {
+        if ($v['id'] != $id) {
           continue;
         }
       }
@@ -50,7 +50,7 @@ class FicheTestHelper extends RouteReferenceTestCase {
       if ($data !== false) {
         $res = true;
         foreach($data as $k => $e) {
-          if ($v->record->{$k} != $data[$k]) {
+          if ($v['record'][$k] != $data[$k]) {
             $res = false;
           }
         }
@@ -73,16 +73,16 @@ class FicheTestHelper extends RouteReferenceTestCase {
           ->setParams($data)
       );
 
-    $this->assertObjectHasAttribute('newKey', $json);
-    $this->assertNotNull($json->newKey);
-    $id = $json->newKey;
+    $this->assertArrayHasKey('newKey', $json);
+    $this->assertNotNull($json['newKey']);
+    $id = $json['newKey'];
 
-    $i = $this->getRowIndex($json->folder, $this->model, $id);
+    $i = $this->getRowIndex($json['folder'], $this->model, $id);
     $this->assertNotFalse($i, "The record is not in the result");
     foreach($data as $k => $v) {
-      $this->assertEquals($v, $json->folder[$i]->record->$k);
+      $this->assertEquals($v, $json['folder'][$i]['record'][$k]);
     }
-    return $json->folder[$i];
+    return $json['folder'][$i];
   }
 
   public function doUpdate($id, $data = [], $testEqual = true) {
@@ -93,13 +93,13 @@ class FicheTestHelper extends RouteReferenceTestCase {
           ->setParams($data)
       );
 
-    $i = $this->getRowIndex($json->folder, $this->model, $id);
+    $i = $this->getRowIndex($json['folder'], $this->model, $id);
     $this->assertNotFalse($i, "The record is not in the result");
 
     if ($testEqual) {
-      $this->assertEquals($id, $json->id);
+      $this->assertEquals($id, $json['id']);
       foreach($data as $k => $v) {
-        $this->assertEquals($v, $json->folder[$i]->record->$k);
+        $this->assertEquals($v, $json['folder'][$i]['record'][$k]);
       }
     }
     return $json;
@@ -112,8 +112,8 @@ class FicheTestHelper extends RouteReferenceTestCase {
         ->setMethod("DELETE")
       );
 
-    $this->assertEquals($id, $json->id);
-    $i = $this->getRowIndex($json->folder, $this->model, $id);
+    $this->assertEquals($id, $json['id']);
+    $i = $this->getRowIndex($json['folder'], $this->model, $id);
     $this->assertFalse($i, "The record is still in the result");
   }
 }
