@@ -2,7 +2,7 @@
 
 namespace App\Model;
 
-// Note: Unit Tests are transactionals ! -- > see RouteReferenceTestCase
+// Note: Unit Tests are transactionals ! -- > see RouteReferenceTestCase and each tests
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
@@ -105,6 +105,12 @@ class CryptomedicModel extends Model {
 				$class::updateWithArray($n['id'], $n);
 				$oids = array_filter($oid, function($v) { return $v != $n['id']; });
 			} else {
+				if (!in_array('Date', $n)) {
+					$n['Date'] = $this->Date;
+				}
+				if (!in_array('ExaminerName', $n)) {
+					$n['ExaminerName'] = $this->ExaminerName;
+				}
 				$relation->create($n);
 			}
 		}
