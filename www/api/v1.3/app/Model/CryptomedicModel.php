@@ -101,9 +101,9 @@ class CryptomedicModel extends Model {
 		}
 
 		foreach($list as $n) {
-			if (in_array("id", $n)) {
+			if (array_key_exists("id", $n)) {
 				$class::updateWithArray($n['id'], $n);
-				$oids = array_filter($oid, function($v) { return $v != $n['id']; });
+				$oids = array_filter($oids, function($v) use ($n) { return $v != $n['id']; });
 			} else {
 				if (!in_array('Date', $n)) {
 					$n['Date'] = $this->Date;
@@ -116,7 +116,10 @@ class CryptomedicModel extends Model {
 		}
 
 		foreach($oids as $oid) {
-			var_dump("Remove oid: $oid");
+			$odel = $class::find($oid);
+			if ($odel != null) {
+				$odel->delete();
+			}
 		}
 
 		return $this;
