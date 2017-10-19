@@ -1,7 +1,7 @@
 <?php
 
 use App\User;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+// use Illuminate\Foundation\Testing\DatabaseTransactions; --> use that in each tests
 
 require_once("RequestOptionsBuilder.php");
 
