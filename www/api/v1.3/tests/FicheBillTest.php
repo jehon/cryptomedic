@@ -7,7 +7,7 @@ use Flow\JSONPath\JSONPath;
 
 class FicheBillTest extends FicheTestHelper {
   // Make Unit Tests are transactionals !
-  // use DatabaseTransactions;
+  use DatabaseTransactions;
 
   protected $model = "Bill";
   protected $collection = "bills";
@@ -49,7 +49,6 @@ class FicheBillTest extends FicheTestHelper {
     ], false);
 
     // https://packagist.org/packages/flow/jsonpath
-
     $res = (new JSONPath($json))->find('$.folder.[?(@.type=Bill)][?(@.id=' .  $file['id'] . ')]')->data()[0];
 
     $this->assertArrayHasKey('bill_lines', $res);
@@ -89,6 +88,7 @@ class FicheBillTest extends FicheTestHelper {
 
     $json = $this->doUpdate($file['id'], $res, false);
 
+    // https://packagist.org/packages/flow/jsonpath
     $res = (new JSONPath($json))->find('$.folder.[?(@.type=Bill)][?(@.id=' .  $file['id'] . ')]')->data()[0];
 
     $this->assertArrayHasKey('bill_lines', $res);
