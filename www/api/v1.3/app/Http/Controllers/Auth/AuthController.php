@@ -80,7 +80,10 @@ class AuthController extends Controller {
     $data['group'] = Auth::user()->group;
     $data['name'] = Auth::user()->name;
 
-    $listing = DB::table('prices')->orderBy('id', 'ASC')->get();
+    $listing = \App\Model\Price::with([ "priceLines" => function($query) { return $query->select('title', 'Amount', 'price_id'); } ])
+      ->orderBy('id', 'ASC')
+      ->get();
+
     $data['prices'] = array();
     foreach($listing as $v) {
       $data['prices'][$v->id] = $v;
