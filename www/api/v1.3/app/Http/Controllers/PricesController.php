@@ -59,19 +59,18 @@ class PricesController extends Controller {
 
 	// PUT / PATCH
 	public function update($id) {
- 		$attributes = Input::except([ '_type', 'datefrom', 'dateto' ]);
+ 		$data = Input::except([ '_type', 'datefrom', 'dateto' ]);
 
  		$obj = Price::findOrFail($id);
  		if (!$obj->_editable) {
  			abort(403, "Could not be done on that object");
  		}
 
+		// Do not update last-login...
+        unset($data['last-login']);
+
         $obj = Price::updateWithArray($id, $data);
 
-		// Do not update last-login...
-		unset($obj->last_login);
-
-		$obj->save();
 		return $obj;
 	}
 
