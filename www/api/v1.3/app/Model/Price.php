@@ -17,7 +17,7 @@ class Price extends CryptomedicModel
             $obj->syncSubItems(BillLine::class, $obj->priceLines(), $attributes['price_lines']);
         }
 
-        $obj['price_lines'] = $obj->priceLines();
+        $obj['price_lines'] = $obj->priceLines()->get();
 
         return $obj;
     }
@@ -28,6 +28,8 @@ class Price extends CryptomedicModel
         if (array_key_exists('price_lines', $attributes)) {
             $obj->syncSubItems(PriceLine::class, $obj->priceLines(), $attributes['price_lines']);
         }
+
+        $obj['price_lines'] = $obj->priceLines()->get();
 
         return $obj;
     }
