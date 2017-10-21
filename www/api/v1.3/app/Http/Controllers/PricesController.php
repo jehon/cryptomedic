@@ -34,16 +34,27 @@ class PricesController extends Controller {
 		unset($newAttr['id']);
 		$newAttr['datefrom'] = $pivot;
 
-		$newObj = Price::create($newAttr);
+		$obj = Price::create($newAttr);
 
-		if (!$newObj->id) {
+		if (!$obj->id) {
 			abort(500, "Could not create the file");
 		}
 
 		$lastPrice->dateto = $pivot;
 		$lastPrice->save();
 
-		return $newObj;
+        // TODO: Copy all linked field too
+		$priceLinesOld = $lastPrice->priceLines()->get()->toArray();
+		foreach($priceLinesOld as $i => $pl) {
+			unset($priceLinesOld[$i]['id']);
+			$priceLinesOld[$i]['price_id'] = $obj->id;
+		}
+		$obj->priceLines()->createMany($priceLinesOld);
+
+
+        $obj['price_lines'] = $obj->priceLines()->get();
+
+		return $obj;
 	}
 
 	// PUT / PATCH
@@ -54,16 +65,9 @@ class PricesController extends Controller {
  		if (!$obj->_editable) {
  			abort(403, "Could not be done on that object");
  		}
-		foreach($attributes as $k => $v) {
-			// Skip system fields
-			if (in_array($k, [ $obj->getUpdatedAtColumn(), $obj->getCreatedAtColumn() ])) {
-				continue;
-			}
-			// Set existing fields
-			if (array_key_exists($k, $obj->getAttributes()) && ($obj->getAttribute($k) != $v)) {
-				$obj->{$k} = $v;
-			}
-		}
+
+        $obj = Price::updateWithArray($id, $data);
+
 		// Do not update last-login...
 		unset($obj->last_login);
 
