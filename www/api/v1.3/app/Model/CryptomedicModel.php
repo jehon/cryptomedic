@@ -169,17 +169,18 @@ class CryptomedicModel extends Model {
 		return $this;
 	}
 
-	public function save(array $attributes = array()) {
+	public function save(array $options = array()) {
 	    if ($this->isLocked()) {
 	     	abort(403, "File is frozen");
 	    }
 
-	    $attributes = self::cannonize($attributes);
-		$attributes = self::filterData($attributes, true);
+
+	 	// $this->attributes = self::cannonize($this->attributes);
+		// $this->attributes = self::filterData($this->attributes, false);
 		if ($this->isDirty()) {
 			$this->validate();
 			$this->lastuser = Auth::user()->username;
-			return parent::save($attributes);
+			return parent::save($options);
 		}
 		return true;
 	}
