@@ -10,6 +10,28 @@ class Price extends CryptomedicModel
         return $this->hasMany('App\Model\PriceLine');
     }
 
+    public static function create(array $attributes = array()) {
+        $obj = parent::create($attributes);
+
+        if (array_key_exists('price_lines', $attributes)) {
+            $obj->syncSubItems(BillLine::class, $obj->priceLines(), $attributes['price_lines']);
+        }
+
+        $obj['price_lines'] = $obj->priceLines();
+
+        return $obj;
+    }
+
+    public static function updateWithArray($id, $attributes) {
+        $obj = parent::updateWithArray($id, $attributes);
+
+        if (array_key_exists('price_lines', $attributes)) {
+            $obj->syncSubItems(PriceLine::class, $obj->priceLines(), $attributes['price_lines']);
+        }
+
+        return $obj;
+    }
+
     public static function getLimit() {
 		return date('Y-m-d', mktime(0, 0, 0, date('m'), date('d') + 5, date('Y')));
     }
