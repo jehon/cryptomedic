@@ -102,15 +102,17 @@ class CryptomedicModel extends Model {
 
 		foreach($list as $n) {
 			if (array_key_exists("id", $n)) {
+
 				$class::updateWithArray($n['id'], $n);
 				$oids = array_filter($oids, function($v) use ($n) { return $v != $n['id']; });
 			} else {
-				if (!in_array('Date', $n)) {
+				if (!in_array('Date', $n) && $this->Date) {
 					$n['Date'] = $this->Date;
 				}
-				if (!in_array('ExaminerName', $n)) {
+				if (!in_array('ExaminerName', $n) && $this->ExaminerName) {
 					$n['ExaminerName'] = $this->ExaminerName;
 				}
+
 				$relation->create($n);
 			}
 		}
