@@ -167,7 +167,6 @@ class PriceTest extends RouteReferenceTestCase {
 	    $this->assertEquals(0, count((new JSONPath($json))->find('$.price_lines.[?(@.title=\'workshop_wheel_chair_china\')]')->data()));
 
 	    $this->assertEquals(1, count((new JSONPath($json))->find('$.price_lines.[?(@.title=\'workshop_wheel_chair_china_new\')]')->data()));
-	    $this->assertEquals(6600, $wnew['Amount']);
 
 	    $this->assertEquals($json['_editable'], true);
 
