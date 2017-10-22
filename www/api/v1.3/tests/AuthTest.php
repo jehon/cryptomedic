@@ -10,11 +10,10 @@ class AuthTest extends RouteReferenceTestCase {
 	        $this->getNewRequestOptionsBuilder()
 	         	->setUrl("auth/mylogin")
                 ->setMethod("POST")
-                ->addParam("login", "murshed")
+                ->addParam("username", "murshed")
                 ->addParam("password", "anything")
 	        	->asUnauthenticated()
 	    );
-        echo json_encode($json['prices'], JSON_PRETTY_PRINT);
 
         $this->assertArrayHasKey('prices', $json);
         $this->assertEquals(3, count($json['prices']));
