@@ -7,7 +7,7 @@ use Flow\JSONPath\JSONPath;
 
 class FicheBillTest extends FicheTestHelper {
   // Make Unit Tests are transactionals !
-  use DatabaseTransactions;
+  // use DatabaseTransactions;
 
   protected $model = "Bill";
   protected $collection = "bills";
