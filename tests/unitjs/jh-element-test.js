@@ -44,39 +44,34 @@ describe("test-edit-bill-line", function() {
             sBool: "Boolean"
         };
 
-        element().attributeChangedCallback("sVal", "", "123");
+        element().attributeChangedCallback("s-val", "", "123");
         expect(typeof(element().sVal)).toBe("string");
         expect(element().sVal).toBe("123");
         expect(element().sVal).not.toBe(123);
 
-        element().attributeChangedCallback("sInt", "", "123");
+        element().attributeChangedCallback("s-int", "", "123");
         expect(typeof(element().sInt)).toBe("number");
         expect(element().sInt).toBe(123);
         expect(element().sInt).not.toBe("123");
 
-        element().attributeChangedCallback("sInt", "", "123.5");
+        element().attributeChangedCallback("s-int", "", "123.5");
         expect(typeof(element().sInt)).toBe("number");
         expect(element().sInt).toBe(123.5);
         expect(element().sInt).not.toBe("123.5");
 
-        element().attributeChangedCallback("sInt", "", "123.5");
-        expect(typeof(element().sInt)).toBe("number");
-        expect(element().sInt).toBe(123.5);
-        expect(element().sInt).not.toBe("123.5");
-
-        element().attributeChangedCallback("sObj", "", JSON.stringify({a:1}));
+        element().attributeChangedCallback("s-obj", "", JSON.stringify({a:1}));
         expect(typeof(element().sObj)).toBe("object");
         expect(element().sObj).toEqual({a:1});
 
 
         let hasAttributeRes = true;
         spyOn(element(), "hasAttribute").and.callFake(() => hasAttributeRes);
-        element().attributeChangedCallback("sBool", "", "");
+        element().attributeChangedCallback("s-bool", "", "");
         expect(typeof(element().sBool)).toBe("boolean");
         expect(element().sBool).toBeTruthy();
 
         hasAttributeRes = false;
-        element().attributeChangedCallback("sBool", "", "");
+        element().attributeChangedCallback("s-bool", "", "");
         expect(typeof(element().sBool)).toBe("boolean");
         expect(element().sBool).toBeFalsy();
     })

@@ -2,6 +2,12 @@
 let JHElement = (function() {
     const initialized = Symbol("initialized");
 
+    function snakeToCamel(s){
+        let res = s.replace(/(\-\w)/g, function(m) { return m[1].toUpperCase(); });
+        res[0] = res[0].toLowerCase();
+        return res;
+    }
+
     class JHElement extends HTMLElement {  
         constructor() {
             super();
@@ -16,6 +22,9 @@ let JHElement = (function() {
         }
 
         attributeChangedCallback(attributeName, oldValue, newValue, namespace) {
+            // snake-case to camel-case
+            attributeName = snakeToCamel(attributeName);
+
             let props = this.constructor.properties;
             if (this.properties) {
                 props = this.properties;
