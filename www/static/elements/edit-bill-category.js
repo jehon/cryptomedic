@@ -6,13 +6,8 @@
     class EditBillCategory extends JHElement {
         constructor() {
             super();
-            this.value = {
-                Amount: 0
-            };
-            this.priceLines = {
-                title: 'Unknown',
-                Amount: 1
-            };
+            this.value = [];
+            this.priceLines = [];
             this.date = false;
         }
 
