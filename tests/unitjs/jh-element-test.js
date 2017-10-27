@@ -91,5 +91,15 @@ describe("test-edit-bill-line", function() {
 
             done();
         });
+
+        it("should createElementFromString", function() {
+            let el = element().createElementFromString("<div>test<span>subcontent</span></div>");
+            expect(el.tagName).toBe("DIV");
+            expect(el.textContent).toContain("test");
+            expect(el.textContent).toContain("subcontent");
+
+            expect(el.querySelector("span")).not.toBeNull();
+            expect(el.querySelector("span").innerHTML).toBe("subcontent");
+        })
     });
 });

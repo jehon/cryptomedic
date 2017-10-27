@@ -77,6 +77,12 @@ let JHElement = (function() {
             var event = new CustomEvent(name, { detail: data });
             this.dispatchEvent(event)
         }
+
+        createElementFromString(html) {
+            var template = document.createElement('template');
+            template.innerHTML = html;
+            return template.content.childNodes[0];
+        }
     };
 
     window.customElements.define('jh-element', JHElement);
