@@ -59,6 +59,12 @@
             })
         }
 
+        getTotal() {
+            return Array.from(this.querySelectorAll("edit-bill-line")).reduce((acc, el) => {
+                return acc + el.getTotal();
+            }, 0);
+        }
+
     }
 
     window.customElements.define('edit-bill-category', EditBillCategory);

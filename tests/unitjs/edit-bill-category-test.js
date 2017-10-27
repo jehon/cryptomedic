@@ -25,7 +25,18 @@ describe('edit-bill-category-test', function() {
         }
     ];
 
-    webDescribe("instanciate with price and bill", `<edit-bill-category price-lines='${JSON.stringify(priceCategory)}' category='cat'></edit-bill-category>`, function(element) {
+    let value = [
+        {
+            title: 'Price 1',
+            Amount: 5
+        },
+        {
+            title: 'Other',
+            Amount: 55
+        }
+    ]
+
+    webDescribe("instanciate with price and bill", `<edit-bill-category value='${JSON.stringify(value)}' price-lines='${JSON.stringify(priceCategory)}' category='cat'></edit-bill-category>`, function(element) {
         it("should instanciate", function() {
             expect(element().textContent).toContain("Price 1");
             expect(element().textContent).toContain("Price 2");
