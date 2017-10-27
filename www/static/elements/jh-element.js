@@ -58,6 +58,11 @@ let JHElement = (function() {
         }
 
         adapt() {}
+
+        fire(name, data = {}) {
+            var event = new CustomEvent(name, { detail: data });
+            this.dispatchEvent(event)
+        }
     };
 
     window.customElements.define('jh-element', JHElement);
