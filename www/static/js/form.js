@@ -6,7 +6,7 @@ function formGetContent(form, prototype = {}) {
   // for(let i of document.querySelector(form).querySelectorAll("input:not([type=radio]), select, input[type=radio]:checked")) {
   for(let i of document.querySelector(form).querySelectorAll("[name]")) {
     if (i.disabled) {
-      console.log("disabled element: ", i);
+      // console.log("disabled element: ", i);
       break;
     }
 

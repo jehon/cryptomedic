@@ -26,7 +26,6 @@
       let disabled = false;
       if (this.hasAttribute("disabled")) {
         disabled = this.getAttribute("disabled");
-        console.log("disabled: ", disabled);
         if (disabled == 'disabled') {
           disabled = true;
         } else {
