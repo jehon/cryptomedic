@@ -1,5 +1,10 @@
 
 (function() {
+    const title = Symbol("title");
+    const price = Symbol("price");
+    const input = Symbol("input");
+    const total = Symbol("total");
+
     class EditBillLine extends JHElement {
         constructor() {
             super();
@@ -29,24 +34,34 @@
                 <div style='display: table-cell' id='title'></div>
                 <div style='display: table-cell' id='price'></div>
                 <div style='display: table-cell'><input type='integer' min=0 step=1 style='width: 4em' /></div>
+                <div style='display: table-cell' id='total'></div>
             `;
+            this[title] = this.querySelector("#title");
+            this[price] = this.querySelector("#price");
+            this[input] = this.querySelector("input");
+            this[total] = this.querySelector("#total");
+
+            this[input].addEventListener("change", () => {
+                this[total].innerHTML = this.getTotal();
+            })
         }
 
         adapt() {
             super.adapt();
-            this.querySelector('#title').innerHTML = this.price.title;
-            this.querySelector('#price').innerHTML = this.price.Amount;
-            this.querySelector('input').value = this.value.Amount;
+            this[title].innerHTML = this.price.title;
+            this[price].innerHTML = this.price.Amount;
+            this[input].value = this.value.Amount;
+            this[total].innerHTML = this.getTotal();
         }
 
         getTotal() {
-            let val = this.querySelector("input").value;
+            let val = this[input].value;
             val = parseInt(val);
             return val * this.price.Amount;
         }
 
         getBillLine() {
-            let val = this.querySelector("input").value;
+            let val = this[input].value;
             val = parseInt(val);
             let res = {
                 title: this.price.title,
