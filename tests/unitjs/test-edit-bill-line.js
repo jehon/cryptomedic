@@ -7,6 +7,11 @@ fdescribe('test-edit-bill-line', function() {
         Amount: 100
     }
 
+    const other = { 
+        title: "Other",
+        Amount: 1
+    }
+
     const bill = {
         title: "Some price",
         Amount: 2
@@ -17,6 +22,7 @@ fdescribe('test-edit-bill-line', function() {
             expect(element().querySelector("#title").textContent).toBe("Unknown");
             expect(element().querySelector("#price").textContent).toBe("1");
             expect(element().querySelector("input").value).toBe("0");
+            expect(element().getTotal()).toBe(0);
             done();
         });
     });
@@ -27,16 +33,29 @@ fdescribe('test-edit-bill-line', function() {
             expect(element().querySelector("#title").textContent).toBe("Some price");
             expect(element().querySelector("#price").textContent).toBe("100");
             expect(element().querySelector("input").value).toBe("0");
+            expect(element().getTotal()).toBe(0);
             done();
         });
     });
 
-    webDescribe("instanciate with price", `<edit-bill-line price='${JSON.stringify(price)}' value='${JSON.stringify(bill)}'></edit-bill-line>`, function(element) {
+    webDescribe("instanciate with price 1", `<edit-bill-line price='${JSON.stringify(other)}'></edit-bill-line>`, function(element) {
+        it("should instanciate", function(done) {
+            expect(element().price).toEqual(other);
+            expect(element().querySelector("#title").textContent).toBe("Other");
+            expect(element().querySelector("#price").textContent).toBe("1");
+            expect(element().querySelector("input").value).toBe("0");
+            expect(element().getTotal()).toBe(0);
+            done();
+        });
+    });
+
+    webDescribe("instanciate with price and bill", `<edit-bill-line price='${JSON.stringify(price)}' value='${JSON.stringify(bill)}'></edit-bill-line>`, function(element) {
         it("should instanciate", function(done) {
             expect(element().price).toEqual(price);
             expect(element().querySelector("#title").textContent).toBe("Some price");
             expect(element().querySelector("#price").textContent).toBe("100");
             expect(element().querySelector("input").value).toBe("2");
+            expect(element().getTotal()).toBe(200);
             done();
         });
     });

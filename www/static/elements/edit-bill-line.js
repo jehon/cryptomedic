@@ -34,6 +34,12 @@
             this.querySelector('#price').innerHTML = this.price.Amount;
             this.querySelector('input').value = this.value.Amount;
         }
+
+        getTotal() {
+            let val = this.querySelector("input").value;
+            val = parseInt(val);
+            return val * this.price.Amount;
+        }
     }
 
     window.customElements.define('edit-bill-line', EditBillLine);
