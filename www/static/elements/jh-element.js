@@ -16,8 +16,12 @@ let JHElement = (function() {
         }
 
         attributeChangedCallback(attributeName, oldValue, newValue, namespace) {
-            if (this.properties && this.properties[attributeName]) {
-                switch(this.properties[attributeName]) {
+            let props = this.constructor.properties;
+            if (this.properties) {
+                props = this.properties;
+            }
+            if (props && props[attributeName]) {
+                switch(props[attributeName]) {
                     case "Boolean":
                         this[attributeName] = this.hasAttribute(attributeName);
                         break;
