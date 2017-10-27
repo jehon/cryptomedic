@@ -23,11 +23,13 @@
 
         render() {
             super.render();
-            this.innerHTML = `<div style='display: table-row'>
+            this.innerHTML = "";
+            //this.appendChild(this.createElementFromString(`
+            this.innerHTML = `
                 <div style='display: table-cell' id='title'></div>
                 <div style='display: table-cell' id='price'></div>
                 <div style='display: table-cell'><input type='integer' min=0 step=1 style='width: 4em' /></div>
-            </div>`;
+            `;
         }
 
         adapt() {
