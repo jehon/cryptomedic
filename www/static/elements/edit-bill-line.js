@@ -10,12 +10,14 @@
                 title: 'Unknown',
                 Amount: 1
             };
+            this.Date = false;
         }
 
         static get properties() {
             return {
                 value: "Object",
-                price: "Object"
+                price: "Object",
+                Date: "String"
             }
         }
 
@@ -39,6 +41,24 @@
             let val = this.querySelector("input").value;
             val = parseInt(val);
             return val * this.price.Amount;
+        }
+
+        getBillLine() {
+            let val = this.querySelector("input").value;
+            val = parseInt(val);
+            let res = {
+                title: this.price.title,
+                Amount: val,
+            }
+            if (this.value) {
+                if (this.value.id)  {
+                    res.id = this.value.id;
+                }
+                if (this.value.Date)  {
+                    res.Date = this.value.Date;
+                }
+            }
+            return res;
         }
     }
 

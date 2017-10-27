@@ -1,7 +1,7 @@
 'use strict';
 /* global testComponent */
 
-fdescribe('test-edit-bill-line', function() {
+describe('test-edit-bill-line', function() {
     const price = { 
         title: "Some price",
         Amount: 100
@@ -23,6 +23,7 @@ fdescribe('test-edit-bill-line', function() {
             expect(element().querySelector("#price").textContent).toBe("1");
             expect(element().querySelector("input").value).toBe("0");
             expect(element().getTotal()).toBe(0);
+            expect(element().getBillLine()).toEqual({ title: "Unknown", Amount: 0 });
             done();
         });
     });
@@ -34,6 +35,7 @@ fdescribe('test-edit-bill-line', function() {
             expect(element().querySelector("#price").textContent).toBe("100");
             expect(element().querySelector("input").value).toBe("0");
             expect(element().getTotal()).toBe(0);
+            expect(element().getBillLine()).toEqual({ title: "Some price", Amount: 0 });
             done();
         });
     });
@@ -45,6 +47,7 @@ fdescribe('test-edit-bill-line', function() {
             expect(element().querySelector("#price").textContent).toBe("1");
             expect(element().querySelector("input").value).toBe("0");
             expect(element().getTotal()).toBe(0);
+            expect(element().getBillLine()).toEqual({ title: "Other", Amount: 0 });
             done();
         });
     });
@@ -56,6 +59,7 @@ fdescribe('test-edit-bill-line', function() {
             expect(element().querySelector("#price").textContent).toBe("100");
             expect(element().querySelector("input").value).toBe("2");
             expect(element().getTotal()).toBe(200);
+            expect(element().getBillLine()).toEqual({ title: "Some price", Amount: 2 });
             done();
         });
     });
