@@ -8,6 +8,11 @@ let JHElement = (function() {
         return res;
     }
 
+    function camelToSnake(s){
+        let res = s.replace(/([A-Z])/g, function(m) { return "-" + m[0].toLowerCase(); });
+        return res;
+    }
+
     class JHElement extends HTMLElement {  
         constructor() {
             super();
@@ -16,7 +21,7 @@ let JHElement = (function() {
 
         static get observedAttributes() {
             if (this.properties) {
-                return Object.keys(this.properties);
+                return Object.keys(this.properties).map(k => camelToSnake(k));
             }
             return [];
         }

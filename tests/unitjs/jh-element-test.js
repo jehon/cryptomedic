@@ -34,15 +34,18 @@ describe("test-edit-bill-line", function() {
         expect(JHElement.prototype.adapt).toHaveBeenCalledTimes(3);
     })
 
-    it("should parse attributes correctly", function() {
+    fit("should parse attributes correctly", function() {
         let jhelement = new JHElement();
         let element = () => jhelement;
-        element().properties = {
+
+        Object.defineProperty(element().constructor, 'properties', { get: function() { return { 
             sVal: "String",
             sInt: "Integer",
             sObj: "Object",
             sBool: "Boolean"
-        };
+        }; } });
+
+        expect(element().constructor.observedAttributes).toEqual([ "s-val", "s-int", "s-obj", "s-bool" ]);
 
         element().attributeChangedCallback("s-val", "", "123");
         expect(typeof(element().sVal)).toBe("string");
