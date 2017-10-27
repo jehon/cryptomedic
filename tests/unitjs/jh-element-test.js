@@ -34,7 +34,7 @@ describe("test-edit-bill-line", function() {
         expect(JHElement.prototype.adapt).toHaveBeenCalledTimes(3);
     })
 
-    fit("should parse attributes correctly", function() {
+    it("should parse attributes correctly", function() {
         let jhelement = new JHElement();
         let element = () => jhelement;
 
