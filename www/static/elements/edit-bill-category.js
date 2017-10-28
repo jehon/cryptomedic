@@ -1,7 +1,7 @@
 
 (function() {
-    const tbody = Symbol["tbody"];
-    const total = Symbol['total'];
+    const tbody = Symbol("tbody");
+    const total = Symbol('total');
 
     class EditBillCategory extends JHElement {
         constructor() {
