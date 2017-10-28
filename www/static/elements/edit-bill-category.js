@@ -13,7 +13,7 @@
 
         static get properties() {
             return {
-                bill: "Object",
+                value: "Object",
                 priceLines: "Object",
                 category: "String"
             }
@@ -54,7 +54,12 @@
             this[tbody].innerHTML = "";
             this.priceLines.forEach((p) => {
                 if (p.category == this.category) {
-                    this[tbody].appendChild(this.createElementFromString(`<edit-bill-line style='display: table-row' price='${JSON.stringify(p)}'></edit-bill-line>`));
+                    let v = this.value.reduce((acc, v) => {
+                        return acc || (v.title == p.title ? v : false);
+                    }, false);
+                    this[tbody].appendChild(
+                        this.createElementFromString(`<edit-bill-line style='display: table-row' value='${JSON.stringify(v)}' price='${JSON.stringify(p)}'></edit-bill-line>`)
+                    );
                 }
             })
         }
