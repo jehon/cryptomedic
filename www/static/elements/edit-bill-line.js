@@ -50,7 +50,11 @@
             super.adapt();
             this[title].innerHTML = this.price.title;
             this[price].innerHTML = this.price.Amount;
-            this[input].value = this.value.Amount;
+            if (this.value) {
+                this[input].value = this.value.Amount;
+            } else {
+                this[input].value = 0;
+            }
             this[total].innerHTML = this.getTotal();
         }
 
