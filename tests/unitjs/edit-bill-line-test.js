@@ -73,7 +73,7 @@ describe('test-edit-bill-line', function() {
             expect(element().querySelector("#title").textContent).toBe("Some price");
             expect(element().querySelector("#price").textContent).toBe("100");
             expect(element().querySelector("input").value).toBe("0");
-            expect(element().querySelector("#total").textContent).toBe("200");
+            expect(element().querySelector("#total").textContent).toBe("0");
             expect(element().getTotal()).toBe(0);
             expect(element().getBillLine()).toEqual({ title: "Some price", Amount: 0 });
             done();
