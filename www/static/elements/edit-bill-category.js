@@ -33,14 +33,14 @@
                   </tr>
                 </thead>
                 <tbody></tbody>
-                <tfooter>
+                <tfoot>
                     <tr>
                         <th>Total</th>
                         <th></th>
                         <th></th>
                         <th id='total'></th>
                     </tr>
-                </tfooter>
+                </tfoot>
             </fieldset>`;
             this[tbody] = this.querySelector("tbody");
             this[total] = this.querySelector("#total");
