@@ -1,5 +1,3 @@
-'use strict';
-/* global testComponent */
 
 describe('edit-bill-category-test', function() {
     let priceCategory = [
@@ -42,6 +40,7 @@ describe('edit-bill-category-test', function() {
             expect(element().textContent).toContain("Price 2");
             expect(element().textContent).not.toContain("Price 3");
             expect(element().textContent).toContain("Other");
+            expect(element().getTotal()).toBe(105);
         });
     });
 });
