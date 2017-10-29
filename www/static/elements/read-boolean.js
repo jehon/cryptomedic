@@ -19,9 +19,7 @@ let ReadBoolean = (function() {
     static get observedAttributes() { return ['value']; }
 
     attributeChangedCallback(attributeName, oldValue, newValue, namespace) {
-      if (attributeName == 'value') {
-        this.adapt();
-      }
+      this.adapt();
     }
 
     adapt() {
