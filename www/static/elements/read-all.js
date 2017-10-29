@@ -16,7 +16,6 @@ let ReadAll = (function() {
 
     attributeChangedCallback(attributeName, oldValue, newValue, namespace) {
       switch(attributeName) {
-        case "name":
         case 'value':
         case 'type':
           this.adapt();
