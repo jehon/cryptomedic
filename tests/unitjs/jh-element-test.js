@@ -1,5 +1,5 @@
 
-describe("test-edit-bill-line", function() {
+fdescribe("test-edit-bill-line", function() {
     beforeEach(function() {
         spyOn(JHElement.prototype, 'render').and.callThrough();
         spyOn(JHElement.prototype, 'adapt').and.callThrough();
@@ -32,6 +32,17 @@ describe("test-edit-bill-line", function() {
         element().adaptIfInitialized();
         expect(JHElement.prototype.render).toHaveBeenCalledTimes(1);
         expect(JHElement.prototype.adapt).toHaveBeenCalledTimes(3);
+    })
+
+    it("should handle attributes by default", function() {
+        let jhelement = new JHElement();
+        let element = () => jhelement;
+
+        expect(element().constructor.observedAttributes).toEqual([ ]);
+        element().attributeChangedCallback("s-val", "", "123");
+        expect(typeof(element().sVal)).toBe("string");
+        expect(element().sVal).toBe("123");
+        expect(element().sVal).not.toBe(123);
     })
 
     it("should parse attributes correctly", function() {
@@ -102,7 +113,7 @@ describe("test-edit-bill-line", function() {
             expect(el.querySelector("span").innerHTML).toBe("subcontent");
         })
 
-        fit("should manage events", function() {
+        it("should manage events", function() {
             let res = {}
             element().addEventListener("changed", (event) => {
                 res = event.detail;

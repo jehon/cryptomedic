@@ -31,9 +31,9 @@ let JHElement = (function() {
             attributeName = snakeToCamel(attributeName);
 
             let props = this.constructor.properties;
-            if (this.properties) {
-                props = this.properties;
-            }
+            // if (this.properties) {
+            //     props = this.properties;
+            // }
             if (props && props[attributeName]) {
                 switch(props[attributeName]) {
                     case "Boolean":
