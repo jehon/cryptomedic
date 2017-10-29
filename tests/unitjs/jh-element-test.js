@@ -101,5 +101,20 @@ describe("test-edit-bill-line", function() {
             expect(el.querySelector("span")).not.toBeNull();
             expect(el.querySelector("span").innerHTML).toBe("subcontent");
         })
+
+        fit("should manage events", function() {
+            let res = {}
+            element().addEventListener("changed", (event) => {
+                res = event.detail;
+            });
+
+            expect(res).toEqual({});
+            
+            element().fire("anything", 123);
+            expect(res).toEqual({});
+
+            element().fire("changed", 123);
+            expect(res).toEqual(123);
+        })
     });
 });
