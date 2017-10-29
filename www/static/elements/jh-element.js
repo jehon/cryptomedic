@@ -73,9 +73,9 @@ let JHElement = (function() {
 
         adapt() {}
 
-        fire(name, data = {}) {
+        fire(name, data = {}, target = this) {
             var event = new CustomEvent(name, { detail: data });
-            this.dispatchEvent(event)
+            target.dispatchEvent(event)
         }
 
         createElementFromString(html) {
