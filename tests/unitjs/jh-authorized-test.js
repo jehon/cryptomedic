@@ -4,9 +4,19 @@
 // TODO: remove fdescribe (focused)
 
 describe('test-jh-authorized-raw', function() {
-  // beforeEach(() => {
-  //   JHAuthorized.setAuthorizedList();
-  // })
+    beforeEach(() => {
+      JHAuthorized.setAuthorizedList();
+    })
+
+    it("should manage the callback", function() {
+        let res = null;
+        JHAuthorized.addCallback((data) => { res = data });
+
+        expect(res).toEqual([]);
+
+        JHAuthorized.setAuthorizedList([ "a", "b" ]);
+        expect(res).toEqual([ "a", "b" ]);
+    })
 
   // it("should be empty at the beginning", function(done) {
   //   testComponent("<jh-authorized-raw value='secure'>securized content</jh-authorized-raw>").then(el => {

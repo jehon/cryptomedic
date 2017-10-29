@@ -4,9 +4,6 @@ let JHAuthorized = (function() {
 
   class JHAuthorized extends HTMLElement {
     static setAuthorizedList(authorizedList = []) {
-      if (!authorizedList) {
-        authorizedList = [];
-      }
       authorizedListCB.fire(authorizedList);
     }
 
