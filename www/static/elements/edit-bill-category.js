@@ -76,6 +76,9 @@
             this[catTotal].innerHTML = this.getTotal();
         }
 
+        getBillLines() {
+            return Array.from(this.querySelectorAll("edit-bill-line")).map(x => x.getBillLine()).filter(x => (x.Amount > 0));
+        }
     }
 
     window.customElements.define('edit-bill-category', EditBillCategory);

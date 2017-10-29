@@ -59,6 +59,15 @@ describe('edit-bill-category-test', function() {
             el.querySelector("input").value = 10;
             el.fire("change", "test", element().querySelector("input"));
             expect(element().querySelector("#catTotal").textContent).toContain(155);
+        });
+
+        it("should build up a bill lines list", function() {
+            console.log("LL", element().getBillLines());
+            // let expected = [];
+            // expected[0] = value[0];
+            // expected[1] = { title: 'Price 2', Amount: 0 };
+            // expected[2] = value[1];
+            expect(element().getBillLines()).toEqual(value);
         })
     });
 });
