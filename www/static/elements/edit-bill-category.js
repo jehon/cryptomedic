@@ -1,7 +1,7 @@
 
 (function() {
     const tbody = Symbol("tbody");
-    const total = Symbol('total');
+    const catTotal = Symbol('catTotal');
 
     class EditBillCategory extends JHElement {
         constructor() {
@@ -29,26 +29,26 @@
                     <th></th>
                     <th>Quantity</th>
                     <th>Price</th>
-                    <th>Total</th>
+                    <th>catTotal</th>
                   </tr>
                 </thead>
                 <tbody></tbody>
                 <tfoot>
                     <tr>
-                        <th>Total</th>
+                        <th>catTotal</th>
                         <th></th>
                         <th></th>
-                        <th id='total'></th>
+                        <th id='catTotal'></th>
                     </tr>
                 </tfoot>
             </fieldset>`;
             this[tbody] = this.querySelector("tbody");
-            this[total] = this.querySelector("#total");
+            this[catTotal] = this.querySelector("#catTotal");
         }
 
         adapt() {
             super.adapt();
-            if (!this.priceLines) {
+            if (!this.priceLines || this.priceLines.length < 1) {
                 return;
             }
             this[tbody].innerHTML = "";
@@ -62,12 +62,18 @@
                     );
                 }
             })
+            this.querySelectorAll("edit-bill-line").forEach(el => el.addEventListener("change", () => this._adaptTotal()));
+            this._adaptTotal();
         }
 
         getTotal() {
             return Array.from(this.querySelectorAll("edit-bill-line")).reduce((acc, el) => {
                 return acc + el.getTotal();
             }, 0);
+        }
+
+        _adaptTotal() {
+            this[catTotal].innerHTML = this.getTotal();
         }
 
     }
