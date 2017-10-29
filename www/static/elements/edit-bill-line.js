@@ -40,7 +40,9 @@
             this[total] = this.querySelector("#total");
 
             this[input].addEventListener("change", () => {
-                this[total].innerHTML = this.getTotal();
+                let tot = this.getTotal();
+                this[total].innerHTML = tot;
+                this.fire("change", tot);
             })
         }
 

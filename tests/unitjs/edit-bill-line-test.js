@@ -12,9 +12,16 @@ describe('test-edit-bill-line', function() {
         Amount: 1
     }
 
-    const bill = {
+    const bill1 = {
         title: "Some price",
         Amount: 2
+    }
+
+    const bill2 = {
+        title: "Some price",
+        Amount: 2,
+        id: 333,
+        Date: '2016-01-02'
     }
 
     webDescribe("instanciate empty", `<edit-bill-line></edit-bill-line>`, function(element) {
@@ -29,7 +36,7 @@ describe('test-edit-bill-line', function() {
     });
 
     webDescribe("instanciate with price", `<edit-bill-line price='${JSON.stringify(price)}'></edit-bill-line>`, function(element) {
-        it("should instanciate", function(done) {
+        it("should instanciate", function() {
             expect(element().price).toEqual(price);
             expect(element().querySelector("#title").textContent).toBe("Some price");
             expect(element().querySelector("#price").textContent).toBe("100");
@@ -37,8 +44,17 @@ describe('test-edit-bill-line', function() {
             expect(element().querySelector("#total").textContent).toBe("0");
             expect(element().getTotal()).toBe(0);
             expect(element().getBillLine()).toEqual({ title: "Some price", Amount: 0 });
-            done();
         });
+
+        it("should fire event", function() {
+            expect(element().getTotal()).toBe(0);
+            let res = false;
+            element().addEventListener("change", (event) => { res = "test" });
+            element().querySelector("input").value = 10;
+            element().fire("change", "test", element().querySelector("input"));
+            expect(element().getTotal()).toBe(1000);
+            expect(res).toBe("test");
+        })
     });
 
     webDescribe("instanciate with price 1", `<edit-bill-line price='${JSON.stringify(other)}'></edit-bill-line>`, function(element) {
@@ -54,7 +70,7 @@ describe('test-edit-bill-line', function() {
         });
     });
 
-    webDescribe("instanciate with price and bill", `<edit-bill-line price='${JSON.stringify(price)}' value='${JSON.stringify(bill)}'></edit-bill-line>`, function(element) {
+    webDescribe("instanciate with price and bill", `<edit-bill-line price='${JSON.stringify(price)}' value='${JSON.stringify(bill1)}'></edit-bill-line>`, function(element) {
         it("should instanciate", function(done) {
             expect(element().price).toEqual(price);
             expect(element().querySelector("#title").textContent).toBe("Some price");
@@ -63,6 +79,19 @@ describe('test-edit-bill-line', function() {
             expect(element().querySelector("#total").textContent).toBe("200");
             expect(element().getTotal()).toBe(200);
             expect(element().getBillLine()).toEqual({ title: "Some price", Amount: 2 });
+            done();
+        });
+    });
+
+    webDescribe("instanciate with price and bill", `<edit-bill-line price='${JSON.stringify(price)}' value='${JSON.stringify(bill2)}'></edit-bill-line>`, function(element) {
+        it("should instanciate", function(done) {
+            expect(element().price).toEqual(price);
+            expect(element().querySelector("#title").textContent).toBe("Some price");
+            expect(element().querySelector("#price").textContent).toBe("100");
+            expect(element().querySelector("input").value).toBe("2");
+            expect(element().querySelector("#total").textContent).toBe("200");
+            expect(element().getTotal()).toBe(200);
+            expect(element().getBillLine()).toEqual({ title: "Some price", Amount: 2, id: 333, Date: '2016-01-02' });
             done();
         });
     });
