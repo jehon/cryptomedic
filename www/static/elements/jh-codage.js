@@ -11,9 +11,7 @@ let JHCodage = (function() {
     static get observedAttributes() { return [ 'value', 'translated' ]; }
 
     attributeChangedCallback(attributeName, oldValue, newValue, namespace) {
-      if (attributeName == 'value' || attributeName == 'translated') {
-        this.adapt();
-      }
+      this.adapt();
     }
 
 
@@ -25,18 +23,13 @@ let JHCodage = (function() {
         return this._setTranslated(value, translated);
       }
 
-      if (!cryptomedic) {
-        return this._setRaw(value);
-      }
-
-      if (!cryptomedic.serverSettings) {
+      if ((typeof(window.cryptomedic) == "undefined") 
+          || (typeof(window.cryptomedic.serverSettings) == "undefined")
+          || (typeof(window.cryptomedic.serverSettings.codes) == "undefined")) {
         return this._setRaw(value);
       }
 
       let settings = cryptomedic.serverSettings;
-      if (!settings.codes) {
-        return this._setRaw(value);
-      }
 
       if (!settings.codes[value]) {
         return this._setRaw(value);
