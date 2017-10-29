@@ -28,8 +28,6 @@
 
         render() {
             super.render();
-            this.innerHTML = "";
-            //this.appendChild(this.createElementFromString(`
             this.innerHTML = `
                 <div style='display: table-cell' id='title'></div>
                 <div style='display: table-cell' id='price'></div>
