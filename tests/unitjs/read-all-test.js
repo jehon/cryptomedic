@@ -34,6 +34,15 @@ describe('test-read-all', function() {
       el.testDone();
       done();
     });
+
+    // Invalid date
+    testComponent(`<read-all name='test' type='timestamp' value='aaaa-13-01'></read-all>`).then(el => {
+      expect(el.shadowRoot.querySelector("span[name='test']")).not.toBeNull();
+      expect(el.shadowRoot.querySelector("span[name='test']").innerHTML).toBe("");
+
+      el.testDone();
+      done();
+    });
   })
 
   it("should manage boolean", function(done) {
