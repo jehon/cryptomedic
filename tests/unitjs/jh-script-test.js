@@ -1,42 +1,58 @@
 'use strict';
 /* global testComponent */
 
-describe('test-jh-script', function() {
+fdescribe('test-jh-script', function() {
   function getFn() {
     let res = `
         if (typeof(this.value) == 'undefined') { 
-          this.value = 1;
+          this.value = 0;
         }
         this.value++;
-      `;
+        `;
     return res;
   }
 
-  it("should run script", (done) => {
-    testComponent(`<jh-script>${getFn()}</jh-script>`).then(el => {
-      expect(el).not.toBeNull();
-      expect(el.value).toBe(2);
-      el.testDone();
-      done();
-    });
+  function getFnError() {
+    let res = `let res = 1 / 0;`;
+    return res;
+  }
+
+  webDescribe("should run script", `<jh-script>${getFn()}</jh-script>`, (element) => {
+    it("should run", function() {
+      expect(element().value).toBe(1);
+
+      element().adapt();
+
+      expect(element().value).toBe(1);
+    })
   });
 
-  it("should handle disabled", (done) => {
-    testComponent(`<jh-script disabled=1>${getFn()}</jh-script>`).then(el => {
-      expect(el).not.toBeNull();
-      expect(el.value).toBeUndefined();
+  webDescribe("should run script", `<jh-script disabled=1>${getFn()}</jh-script>`, (element) => {
+    it("should not run", function() {
+      expect(element().value).toBeUndefined();
 
-      el.setAttribute("disabled", "false");
-      expect(el.value).toBe(2);
+      element().removeAttribute("disabled");
+      expect(element().value).toBe(1);
 
-      el.setAttribute("disabled", "true");
-      expect(el.value).toBe(2);
+      element().setAttribute("disabled", "true");
+      expect(element().value).toBe(1);
 
-      el.setAttribute("disabled", "false");
-      expect(el.value).toBe(3);
-
-      el.testDone();
-      done();
-    });
+      element().removeAttribute("disabled");
+      expect(element().value).toBe(2);
+    })
   });
+
+  describe("with error handling", function() {
+    beforeEach(function() {
+      spyOn(console, "error");
+    })
+
+    webDescribe("should display error", `<jh-script>throw "test";</jh-script>`, (element) => {
+      it("should throw", function() {
+        expect(console.error).toHaveBeenCalledTimes(1);
+        expect(console.error.calls.argsFor(0)[1]).toBe("test");
+      })
+    });
+
+  })
 });
