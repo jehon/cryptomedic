@@ -61,6 +61,27 @@ describe('test-write-list', function() {
     expect(el.value).toBe(null);
   }
 
+  webDescribe("with emtpy list", `<write-list value='machin' list=''></write-list>`, function(element) {
+    it("should render", function() {
+      expect(element().getAttribute("mode")).toBe('empty');
+      expect(element().shadowRoot.querySelector('input[type=radio]')).toBeNull();
+      expect(element().shadowRoot.querySelector('select')).toBeNull();
+    })
+  })
+
+  webDescribe("with emtpy list-name", `<write-list value='machin' list-name=''></write-list>`, function(element) {
+    it("should render", function() {
+      expect(element().getAttribute("mode")).toBe('empty');
+      expect(element().shadowRoot.querySelector('input[type=radio]')).toBeNull();
+      expect(element().shadowRoot.querySelector('select')).toBeNull();
+
+      element().removeAttribute("list-name");
+      expect(element().getAttribute("mode")).toBe('empty');
+      expect(element().shadowRoot.querySelector('input[type=radio]')).toBeNull();
+      expect(element().shadowRoot.querySelector('select')).toBeNull();
+    })
+  })
+
   it("should show RADIO when the list is < 5 items", function(done) {
     testComponent("<write-list value='machin' list='" + JSON.stringify(listRadio) + "'></write-list>").then(el => {
       expect(el).not.toBeNull()
