@@ -51,7 +51,7 @@ describe('test-edit-bill-line', function() {
             let res = false;
             element().addEventListener("change", (event) => { res = "test" });
             element().querySelector("input").value = 10;
-            element().fire("change", "test", element().querySelector("input"));
+            JHElement.fireOn(element().querySelector("input"), "change", "test");
             expect(element().getTotal()).toBe(1000);
             expect(res).toBe("test");
         })
