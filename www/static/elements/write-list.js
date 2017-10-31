@@ -7,9 +7,6 @@ let WriteList = (function() {
 
   class WriteList extends HTMLElement {
     static setReferences(references = {}) {
-      if (!references) {
-        references = {};
-      }
       referencesCB.fire(references);
     }
 
@@ -38,13 +35,13 @@ let WriteList = (function() {
     attributeChangedCallback(attributeName, oldValue, newValue, namespace) {
       switch(attributeName) {
         case 'value':
-          this._initialvalue      = this.getAttribute("value");
+          this._initialvalue = this.getAttribute("value");
           if (this._initialvalue == "" || this._initialvalue == "null") {
             this._initialvalue = null;
           }
           break;
         case 'list':
-          this.list       = this.getAttribute("list");
+          this.list = this.getAttribute("list");
           if (!this.list)  {
             this.list = [];
           } else {
@@ -171,7 +168,7 @@ let WriteList = (function() {
     }
 
     _escape(str) {
-      if (str == null) {
+      if (!str) {
         return '';
       }
       return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&apos;');
