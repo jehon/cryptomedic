@@ -57,7 +57,7 @@ describe('edit-bill-category-test', function() {
             let res = false;
             let el = element().querySelector("edit-bill-line");
             el.querySelector("input").value = 10;
-            el.fire("change", "test", element().querySelector("input"));
+            JHElement.fireOn(element().querySelector("input"), "change", "test");
             expect(element().querySelector("#catTotal").textContent).toContain(155);
         });
 

@@ -26,6 +26,12 @@ let JHElement = (function() {
             return [];
         }
 
+        static fireOn(target, name, data = {}) {
+            var event = new CustomEvent(name, { detail: data });
+            target.dispatchEvent(event);
+        }
+
+
         attributeChangedCallback(attributeName, oldValue, newValue, namespace) {
             // snake-case to camel-case
             attributeName = snakeToCamel(attributeName);
@@ -73,9 +79,8 @@ let JHElement = (function() {
 
         adapt() {}
 
-        fire(name, data = {}, target = this) {
-            var event = new CustomEvent(name, { detail: data });
-            target.dispatchEvent(event)
+        fire(name, data = {}) {
+            JHElement.fireOn(this, name, data);
         }
 
         createElementFromString(html) {
