@@ -64,4 +64,12 @@ describe('test-TimedMap', function() {
     // Remove mocking time
     jasmine.clock().uninstall();
   })
+
+  it("should console.log on dump", function() {
+    spyOn(console, "log");
+    let tm1 = new TimedMap();
+    tm1.dump()
+
+    expect(console.log).toHaveBeenCalledTimes(1);
+  })
 });
