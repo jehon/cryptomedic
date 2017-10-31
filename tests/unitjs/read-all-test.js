@@ -12,9 +12,13 @@ describe('test-read-all', function() {
 
 
   it("should manage unknown type", function(done) {
+    spyOn(console, "error");
+
     testComponent(`<read-all name='test' type='anything'></read-all>`).then(el => {
       expect(el.shadowRoot.querySelector("span[name='test']")).not.toBeNull();
       expect(el.shadowRoot.querySelector("span[name='test']").innerHTML).toContain("unknown");
+      expect(console.error).toHaveBeenCalledTimes(1);
+
       el.testDone();
       done();
     });
