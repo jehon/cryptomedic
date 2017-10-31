@@ -1,6 +1,8 @@
 
 (function() {
-  class JHScript extends HTMLElement {
+  const alreadyRun = Symbol("alreadyRun");
+
+  class JHScript extends JHElement {
     constructor() {
       super();
       // To hide the current html
@@ -9,42 +11,18 @@
       this.alreadyRun = false;
     }
 
-    static get observedAttributes() { return [ 'disabled' ]; }
+    static get properties() { return { 
+      'disabled': "Boolean" 
+    }}
 
-    connectedCallback() {
-      this.evalue();
-    }
-
-    attributeChangedCallback(attributeName, oldValue, newValue, namespace) {
-      if (attributeName != 'disabled') {
-        return;
-      }
-      this.evalue();
-    }
-
-    evalue() {
-      let disabled = false;
-      if (this.hasAttribute("disabled")) {
-        disabled = this.getAttribute("disabled");
-        if (disabled == 'disabled') {
-          disabled = true;
-        } else {
-          try {
-            disabled = JSON.parse(disabled);
-          } catch(e) {
-            console.log("catched - disabling: ", disabled);
-            disabled = true;
-          }
-        }
-      }
-      
-      if (disabled) {
+    adapt() {
+      if (this.hasAttribute("disabled") || this.disabled) {    
         // Reset
-        this.alreadyRun = false;
+        this[alreadyRun] = false;
         return;
       }
 
-      if (this.alreadyRun) {
+      if (this[alreadyRun]) {
         return;
       }
 
@@ -53,9 +31,9 @@
       try {
         eval(script);
       } catch(e) {
-        console.error("j-script: error! Script = ", script, " / ", e);
+        console.error("j-script error!", e, " @Script = ", script);
       }
-      this.alreadyRun = true;
+      this[alreadyRun] = true;
     }
   }
 
