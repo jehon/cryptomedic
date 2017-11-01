@@ -17,6 +17,28 @@ let JHElement = (function() {
         constructor() {
             super();
             this[initialized] = false;
+            this._setDefaultValues();
+        }
+
+        _setDefaultValues() {
+            if(!this.constructor.properties) {
+                return 
+            }
+            Object.keys(this.constructor.properties).forEach(k => {
+                switch(this.constructor.properties[k]) {
+                    case "Boolean":
+                        this[k] = false;
+                        break;
+                    case "Object":
+                        this[k] = null;
+                        break;
+                    case "Integer":
+                        this[k] = 0;
+                        break;
+                    default:
+                        this[k] = "";
+                }
+            })
         }
 
         static get observedAttributes() {
