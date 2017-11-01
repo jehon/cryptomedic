@@ -2,6 +2,7 @@
 (function() {
     const tbody = Symbol("tbody");
     const catTotal = Symbol('catTotal');
+    const legend = Symbol('legend');
 
     class EditBillCategory extends JHElement {
         constructor() {
@@ -22,7 +23,7 @@
         render() {
             super.render();
             this.innerHTML = `<fieldset>
-                <legend></legend>
+                <legend>default legend</legend>
                 <table class='prices'>
                 <thead>
                   <tr>
@@ -35,7 +36,7 @@
                 <tbody></tbody>
                 <tfoot>
                     <tr>
-                        <th>catTotal</th>
+                        <th>sub-total</th>
                         <th></th>
                         <th></th>
                         <th id='catTotal'></th>
@@ -44,6 +45,7 @@
             </fieldset>`;
             this[tbody] = this.querySelector("tbody");
             this[catTotal] = this.querySelector("#catTotal");
+            this[legend] = this.querySelector("legend");
         }
 
         adapt() {
@@ -52,6 +54,7 @@
                 return;
             }
             this[tbody].innerHTML = "";
+            this[legend].innerHTML = this.category
             this.priceLines.forEach((p) => {
                 if (p.category == this.category) {
                     let v = this.value.reduce((acc, v) => {
