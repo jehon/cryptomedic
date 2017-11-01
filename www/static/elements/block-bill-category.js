@@ -16,8 +16,7 @@
             return {
                 value: "Object",
                 priceLines: "Object",
-                category: "String",
-                edit: "Boolean"
+                category: "String"
             }
         }
 
@@ -62,7 +61,7 @@
                         return acc || (v.title == p.title ? v : false);
                     }, false);
                     this[tbody].appendChild(
-                        this.createElementFromString(`<block-bill-line ${this.edit ? 'edit' : ''} style='display: table-row' value='${JSON.stringify(v)}' price='${JSON.stringify(p)}'></block-bill-line>`)
+                        this.createElementFromString(`<block-bill-line style='display: table-row' value='${JSON.stringify(v)}' price='${JSON.stringify(p)}'></block-bill-line>`)
                     );
                 }
             })
