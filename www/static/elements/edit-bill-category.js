@@ -56,7 +56,7 @@
             this[tbody].innerHTML = "";
             this[legend].innerHTML = this.category
             this.priceLines.forEach((p) => {
-                if (p.category == this.category) {
+                if (p.type == this.category) {
                     let v = this.value.reduce((acc, v) => {
                         return acc || (v.title == p.title ? v : false);
                     }, false);
