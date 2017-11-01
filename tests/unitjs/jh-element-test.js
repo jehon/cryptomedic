@@ -1,5 +1,5 @@
 
-describe("test-block-bill-line", function() {
+describe("jh-element-test", function() {
     beforeEach(function() {
         spyOn(JHElement.prototype, 'render').and.callThrough();
         spyOn(JHElement.prototype, 'adapt').and.callThrough();
