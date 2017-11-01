@@ -55,6 +55,12 @@ describe("test-edit-bill-line", function() {
             sObj: "Object",
             sBool: "Boolean"
         }; } });
+        element()._setDefaultValues();
+
+        expect(element().sVal).toBe("");
+        expect(element().sInt).toBe(0);
+        expect(element().sObj).toBe(null);
+        expect(element().sBool).toBe(false);
 
         expect(element().constructor.observedAttributes).toEqual([ "s-val", "s-int", "s-obj", "s-bool" ]);
 
