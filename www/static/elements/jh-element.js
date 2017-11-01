@@ -49,7 +49,7 @@ let JHElement = (function() {
                         try {
                             this[attributeName] = JSON.parse(newValue);
                         } catch(e) {
-                            this[attributeName] = "";
+                            this[attributeName] = null;
                         }
                         break;
                     case "Integer":
