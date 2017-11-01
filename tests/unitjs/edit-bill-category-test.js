@@ -2,22 +2,22 @@
 describe('edit-bill-category-test', function() {
     let priceCategory = [
         {
-            category: 'cat',
+            type: 'cat',
             title: 'Price 1',
             Amount: 10
         },
         {
-            category: 'cat',
+            type: 'cat',
             title: 'Price 2',
             Amount: 20
         },
         {
-            category: 'other',
+            type: 'other',
             title: 'Price 3',
             Amount: 30
         },
         {
-            category: 'cat',
+            type: 'cat',
             title: 'Other',
             Amount: 1
         }
