@@ -77,6 +77,9 @@ describe("test-edit-bill-line", function() {
         expect(typeof(element().sObj)).toBe("object");
         expect(element().sObj).toEqual({a:1});
 
+        element().attributeChangedCallback("s-obj", "", "{a:}");
+        expect(typeof(element().sObj)).toBe("object");
+        expect(element().sObj).toEqual(null);
 
         let hasAttributeRes = true;
         spyOn(element(), "hasAttribute").and.callFake(() => hasAttributeRes);
