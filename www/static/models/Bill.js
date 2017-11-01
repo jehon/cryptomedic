@@ -124,6 +124,13 @@ class Bill extends PatientRelated {
     return perc;
   }
 
+  getPriceLines() {
+    if (!this.price) {
+      return [];
+    }
+    return this.price.price_lines;
+  }
+
   getPriceFor(key) {
     if (!this.price) return 0;
     if (!this.price[key]) return 0;
