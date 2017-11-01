@@ -46,7 +46,11 @@ let JHElement = (function() {
                         this[attributeName] = this.hasAttribute(attributeName);
                         break;
                     case "Object":
-                        this[attributeName] = JSON.parse(newValue);
+                        try {
+                            this[attributeName] = JSON.parse(newValue);
+                        } catch(e) {
+                            this[attributeName] = "";
+                        }
                         break;
                     case "Integer":
                         this[attributeName] = Number.parseFloat(newValue);
