@@ -1,39 +1,3 @@
-<?php
-  // Example: 90420 (2010)
-  // Example: 10018 (2011)
-  // Example: 91513 (2012)
-  // Example: 97573 (2014 = price 2)
-  // Hack: 10010
-
-  use App\Model\Bill;
-  use App\Model\References;
-
-  t::setDefaultOption("baseExpression", "currentFile().");
-
-  if (!function_exists("App\price")) {
-    function price($item) {
-      $name = explode(".", $item);
-      $name = $name[1];
-      $label = str_replace("_", " ", substr($item, strpos($item, '_') + 1));
-      if (array_key_exists($item, Bill::$translations)) {
-        $label = Bill::$translations[$item];
-      }
-
-      echo "<tr "
-        . "ng-if=\"currentFile().getPriceFor('$name') > 0\" "
-        . "ng-class='{ notModeRead: !currentFile().$name }'"
-        . ">";
-      echo "<td>$label</td>";
-      echo "<td ng-if=\"currentFile().getPriceFor('$name')<=1\">1x</td>";
-      echo "<td>";
-        (new t($item, [ "inline" => "style='width: 4em' step=1 min=0" ]))->value()->p();
-      echo "</td>";
-      echo "<td ng-if=\"currentFile().getPriceFor('$name')>1\"><div pricefor='$item'>{{currentFile().getPriceFor('$name')}}</div></td>";
-      echo "<td>{{currentFile().getTotalFor('$name')}}</td>";
-      echo "</tr>";
-    }
-  }
-?>
 <div class='container-fluid' ng-controller="ctrl_file_bill">
   <div class='row'>
     <div ng-if='errors.consultPhisioAndDoctor'>
@@ -54,37 +18,33 @@
       <FieldSet>
         <legend>General data</legend>
         <table>
-          <?php (new t("Bill.Date"))->tr()->p(); ?>
-          <?php (new t("Bill.ExaminerName"))->tr("Examiner")->p(); ?>
-          <?php (new t("Bill.Center"))->tr("Center where consultation took place")->p(); ?>
+          <tr ng-class='{ emptyValue: !currentFile().Date}'>
+            <td>Date</td>
+            <td><read-all id='Bill_Date' name='Date' type='date' value='{{ currentFile().Date }}'></read-all></td>
+          </tr>
+                <tr ng-class='{ emptyValue: !currentFile().ExaminerName}'>
+            <td>Examiner</td>
+            <td><read-all id='Bill_ExaminerName' name='ExaminerName' type='list' value='{{ currentFile().ExaminerName }}'></read-all></td>
+          </tr>
+                <tr ng-class='{ emptyValue: !currentFile().Center}'>
+            <td>Center where consultation took place</td>
+            <td><read-all id='Bill_Center' name='Center' type='list' value='{{ currentFile().Center }}'></read-all></td>
+          </tr>
         </table>
         <div class='debug_infos'>
-          price_id <?php (new t("Bill.price_id"))->read()->p(); ?><br>
+          price_id <read-all id='Bill_price_id' name='price_id' type='numeric' value='{{ currentFile().price_id }}'></read-all><br>
         </div>
       </FieldSet>
-      <?php
-        foreach(Bill::$categories as $cat) {
-          ?>
-            <FieldSet>
-              <legend><?php echo $cat; ?> items</legend>
-              <table  class='prices'>
-                <thead>
-                  <tr>
-                    <th></th>
-                    <th>Quantity</th>
-                    <th>Price</th>
-                    <th>Total</th>
-                  </tr>
-                </thead>
-                <?php foreach(Bill::getFieldsList($cat, t::getColumnsOfTable('bills')) as $field) {
-                    price("Bill." . $field);
-                  }
-                ?>
-              </table>
-            </FieldSet>
-          <?php
-        }
-      ?>
+      <block-bill-category category='consult' value='{{currentFile().bill_lines}}' price-lines='{{currentFile().getPriceLines()}}'>
+      </block-bill-category>
+      <block-bill-category category='medecine' value='{{currentFile().bill_lines}}' price-lines='{{currentFile().getPriceLines()}}'>
+      </block-bill-category>
+      <block-bill-category category='other' value='{{currentFile().bill_lines}}' price-lines='{{currentFile().getPriceLines()}}'>
+      </block-bill-category>
+      <block-bill-category category='workshop' value='{{currentFile().bill_lines}}' price-lines='{{currentFile().getPriceLines()}}'>
+      </block-bill-category>
+      <block-bill-category category='surgical' value='{{currentFile().bill_lines}}' price-lines='{{currentFile().getPriceLines()}}'>
+      </block-bill-category>
     </div>
     <div class="col-md-6">
       <?php require(__DIR__ . "/../helpers/patient-related.html");?>
