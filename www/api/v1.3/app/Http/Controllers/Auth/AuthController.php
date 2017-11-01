@@ -80,7 +80,7 @@ class AuthController extends Controller {
     $data['group'] = Auth::user()->group;
     $data['name'] = Auth::user()->name;
 
-    $listing = \App\Model\Price::with([ "priceLines" => function($query) { return $query->select('title', 'Amount', 'price_id'); } ])
+    $listing = \App\Model\Price::with([ "priceLines" => function($query) { return $query->select('type', 'title', 'Amount', 'price_id'); } ])
       ->orderBy('id', 'ASC')
       ->get();
 
