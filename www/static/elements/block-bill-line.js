@@ -5,7 +5,7 @@
     const input = Symbol("input");
     const total = Symbol("total");
 
-    class EditBillLine extends JHElement {
+    class BlockBillLine extends JHElement {
         constructor() {
             super();
             this.value = {
@@ -83,5 +83,5 @@
         }
     }
 
-    window.customElements.define('edit-bill-line', EditBillLine);
+    window.customElements.define('block-bill-line', BlockBillLine);
 })();
