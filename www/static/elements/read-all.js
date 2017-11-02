@@ -1,96 +1,53 @@
 
-let ReadAll = (function() {
-  let selfURL = document.currentScript.src
-      .replace(/\/[^/]*\/?$/, '');
-
-  class ReadAll extends HTMLElement {
-    constructor() {
-      super();
-
-      // Create a shadow root
-      this.attachShadow({mode: 'open'});
-      this.adapt();
-    }
-
-    static get observedAttributes() { return ['value']; }
-
-    attributeChangedCallback(attributeName, oldValue, newValue, namespace) {
-      switch(attributeName) {
-        case 'value':
-        case 'type':
-          this.adapt();
-          break;
-      }
-    }
-
-    getValue(name) {
-      if (!this.hasAttribute(name)) {
-        return false;
-      }
-      let raw = this.getAttribute(name);
-      let val = "";
-      try {
-        return JSON.parse(raw);
-      } catch(e) { // SyntaxError
-      }
-      return raw;
-    }
-
-    adapt() {
-      let name =     this.getValue("name");
-      let value =    this.getValue("value");
-      let type =     this.getValue("type");
-
-      if (!type) {
-        this.shadowRoot.innerHTML = `<span id='${value}' class='error'>Read: key is not defined: '${type}'</span>`;
-        return;
-      }
-
-      switch(type) {
-        case "timestamp":
-          let display = "";
-          if (value > "") {
-            let date = new Date(Date.parse(value));  
-            if (isNaN(date.getYear())) {
-              display = "";
-            } else {
-              display = date.toLocaleDateString() + " " + date.toLocaleTimeString();
+(function() {
+    class ReadAll extends JHElement {
+        static get properties() {
+            return {
+                "name": "String",
+                "value": "String",
+                "type": "String"
             }
-          }
-          this.shadowRoot.innerHTML = `<span name='${name}'>${display}</span>"`;
-          break;
-        case "boolean":
-          this.shadowRoot.innerHTML = `<read-boolean name='${name}' value='${value}'></read-boolean>`;
-          break;
+        }
 
-        case "list":
-        case "date":
-        case "numeric":
-        case "char":
-          if (!value) {
-            this.shadowRoot.innerHTML = `<span name='${name}'></span>`;
-          } else {
-            this.shadowRoot.innerHTML = `<span name='${name}'>${value}</span>`;  
-          }
-          break;
+        adapt() {
+            if (!this.type) {
+                this.innerHTML = `<span id='${this.value}' class='error'>Read: key is not defined: '${this.type}'</span>`;
+                return;
+            }
 
-        case "text":
-          if (!value) {
-            this.shadowRoot.innerHTML = `<span name='${name}' style='white-space: pre'></span>`;
-          } else {
-            this.shadowRoot.innerHTML = `<span name='${name}' style='white-space: pre'>${value}</span>`;  
-          }
-          break;
+            switch(this.type) {
+                case "timestamp":
+                    let display = "";
+                    if (this.value > "") {
+                        let date = new Date(Date.parse(this.value));  
+                        if (isNaN(date.getYear())) {
+                            display = "";
+                        } else {
+                            display = date.toLocaleDateString() + " " + date.toLocaleTimeString();
+                        }
+                    }
+                    this.innerHTML = `<span name='${this.name}'>${display}</span>"`;
+                    break;
+                case "boolean":
+                    this.innerHTML = `<read-boolean name='${this.name}' value='${this.value}'></read-boolean>`;
+                    break;
+                case "list":
+                case "date":
+                case "numeric":
+                case "char":
+                    this.innerHTML = `<span name='${this.name}'>${this.value}</span>`;  
+                    break;
+                case "text":
+                    this.innerHTML = `<span name='${this.name}' style='white-space: pre'>${this.value}</span>`;  
+                    break;
 
-        default:
-          console.error("Type unknown: ", type);
-          this.shadowRoot.innerHTML = `<span name='${name}'>unknown type: ${type}</span>`;
-          break;
-      }
+                default:
+                    console.error("Type unknown: ", this.type);
+                    this.innerHTML = `<span name='${this.name}'>unknown type: ${this.type}</span>`;
+                    break;
+            }
+        }
     }
-  }
 
-  window.customElements.define('read-all', ReadAll);
-
-  return ReadAll;
+    window.customElements.define('read-all', ReadAll);
 })();
