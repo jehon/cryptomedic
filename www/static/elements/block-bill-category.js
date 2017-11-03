@@ -14,9 +14,10 @@
 
         static get properties() {
             return {
-                value: "Object",
+                value:      "Object",
                 priceLines: "Object",
-                category: "String"
+                category:   "String",
+                edit:       "Boolean"
             }
         }
 
@@ -61,7 +62,7 @@
                         return acc || (v.title == p.title ? v : false);
                     }, false);
                     this[tbody].appendChild(
-                        this.createElementFromString(`<block-bill-line style='display: table-row' value='${JSON.stringify(v)}' price='${JSON.stringify(p)}'></block-bill-line>`)
+                        this.createElementFromString(`<block-bill-line ${this.edit ? 'edit' : '' } style='display: table-row' value='${JSON.stringify(v)}' price='${JSON.stringify(p)}'></block-bill-line>`)
                     );
                 }
             })
