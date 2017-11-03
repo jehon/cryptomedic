@@ -60,12 +60,19 @@
             }
             
             if (el) {
-                const val = el.value;
-                el.addEventListener("change", () => this.fire("change", val));
+                const val = this.getValue();
+                el.addEventListener("change", () => { 
+                    this.fire("change", val)
+                    if (this.value != val) {
+                        this.value = val;
+                    }
+                });
             }
         }
 
-        getValue() {}
+        getValue() {
+            return this.value;
+        }
     }
 
     window.customElements.define('x-write', XWrite);
