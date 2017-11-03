@@ -36,7 +36,7 @@
             `;
             this[title] = this.querySelector("#title");
             this[price] = this.querySelector("#price");
-            this[input] = this.querySelector("input");
+            this[input] = this.querySelector("x-inline");
             this[total] = this.querySelector("#total");
 
             this[input].addEventListener("change", () => {
