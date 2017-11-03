@@ -112,8 +112,9 @@ describe("jh-element-test", function() {
             done();
         });
 
-        it("should createElementFromString", function() {
-            let el = element().createElementFromString("<div>test<span>subcontent</span></div>");
+        it("should createElementAndAddThem", function() {
+            element().createElementAndAddThem("<div>test<span>subcontent</span></div>");
+            let el = element().firstChild;
             expect(el.tagName).toBe("DIV");
             expect(el.textContent).toContain("test");
             expect(el.textContent).toContain("subcontent");

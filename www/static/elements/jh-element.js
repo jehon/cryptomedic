@@ -106,10 +106,11 @@ let JHElement = (function() {
             JHElement.fireOn(this, name, data);
         }
 
-        createElementFromString(html) {
+        createElementAndAddThem(html, to = this) {
+            to.innerHTML = "";
             var template = document.createElement('template');
-            template.innerHTML = html;
-            return template.content.childNodes[0];
+            template.innerHTML = html.trim();
+            template.content.childNodes.forEach(el => to.appendChild(el));
         }
     };
 
