@@ -1,7 +1,7 @@
 'use strict';
 /* global testComponent */
 
-describe('test-block-bill-line', function() {
+describe('block-bill-line-test', function() {
     const price = { 
         title: "Some price",
         Amount: 100
