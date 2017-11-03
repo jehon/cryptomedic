@@ -22,18 +22,19 @@
             return {
                 value: "Object",
                 price: "Object",
-                Date: "String"
+                Date:  "String",
+                edit:  "Boolean"
             }
         }
 
         render() {
             super.render();
-            this.innerHTML = `
+            this.createElementAndAddThem(`
                 <div style='display: table-cell' id='title'></div>
                 <div style='display: table-cell' id='price'></div>
-                <div style='display: table-cell'><input type='number' min=0 step=1 style='width: 4em' /></div>
+                <div style='display: table-cell'><x-inline ${this.edit ? 'edit=1' : '' } type='numeric' name='price' value='0' min=0 step=1 style='width: 4em' ></x-inline></div>
                 <div style='display: table-cell' id='total'></div>
-            `;
+            `);
             this[title] = this.querySelector("#title");
             this[price] = this.querySelector("#price");
             this[input] = this.querySelector("x-inline");
