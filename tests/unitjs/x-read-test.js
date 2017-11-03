@@ -1,7 +1,7 @@
 'use strict';
 /* global testComponent */
 
-describe('test-x-read', function() {
+describe('x-read-test', function() {
   // Test click on span for radio
   it("should be instantiated", function(done) {
     testComponent("<x-read name='test'></x-read>").then(el => {
