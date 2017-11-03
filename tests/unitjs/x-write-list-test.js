@@ -1,7 +1,7 @@
 'use strict';
 /* global testComponent */
 
-describe('test-write-list', function() {
+describe('test-x-write-list', function() {
   let listRadio  = [ 'truc' , 'brol' , 'machin', 'chose' ];
   let listSelect = [ 'truc' , 'brol' , 'machin', 'chose', 'bazar', 'ça', 'là' ];
 
@@ -61,7 +61,7 @@ describe('test-write-list', function() {
     expect(el.value).toBe(null);
   }
 
-  webDescribe("with emtpy list", `<write-list value='machin' list=''></write-list>`, function(element) {
+  webDescribe("with emtpy list", `<x-write-list value='machin' list=''></x-write-list>`, function(element) {
     it("should render", function() {
       expect(element().getAttribute("mode")).toBe('empty');
       expect(element().shadowRoot.querySelector('input[type=radio]')).toBeNull();
@@ -69,7 +69,7 @@ describe('test-write-list', function() {
     })
   })
 
-  webDescribe("with emtpy list-name", `<write-list value='machin' list-name=''></write-list>`, function(element) {
+  webDescribe("with emtpy list-name", `<x-write-list value='machin' list-name=''></x-write-list>`, function(element) {
     it("should render", function() {
       expect(element().getAttribute("mode")).toBe('empty');
       expect(element().shadowRoot.querySelector('input[type=radio]')).toBeNull();
@@ -83,7 +83,7 @@ describe('test-write-list', function() {
   })
 
   it("should show RADIO when the list is < 5 items", function(done) {
-    testComponent("<write-list value='machin' list='" + JSON.stringify(listRadio) + "'></write-list>").then(el => {
+    testComponent("<x-write-list value='machin' list='" + JSON.stringify(listRadio) + "'></x-write-list>").then(el => {
       expect(el).not.toBeNull()
       checkRadio(el, 'machin');
       el.testDone();
@@ -92,7 +92,7 @@ describe('test-write-list', function() {
   })
 
   it("should show SELECT when the list is > 5 items", function(done) {
-    testComponent("<write-list value='machin' list='" + JSON.stringify(listSelect) + "'></write-list>").then(el => {
+    testComponent("<x-write-list value='machin' list='" + JSON.stringify(listSelect) + "'></x-write-list>").then(el => {
 
       checkSelect(el, 'machin');
 
@@ -103,7 +103,7 @@ describe('test-write-list', function() {
 
 
   it("should handle RADIO nullable", function(done) {
-    testComponent("<write-list nullable value='machin' list='" + JSON.stringify(listRadio) + "'></write-list>").then(el => {
+    testComponent("<x-write-list nullable value='machin' list='" + JSON.stringify(listRadio) + "'></x-write-list>").then(el => {
       expect(el).not.toBeNull();
       expect(el.shadowRoot.querySelector('input[type=radio][value=""]')).not.toBeNull();
       el.testDone();
@@ -112,7 +112,7 @@ describe('test-write-list', function() {
   })
 
   it("should handle SELECT nullable", function(done) {
-    testComponent("<write-list nullable value='machin' list='" + JSON.stringify(listSelect) + "'></write-list>").then(el => {
+    testComponent("<x-write-list nullable value='machin' list='" + JSON.stringify(listSelect) + "'></x-write-list>").then(el => {
       expect(el).not.toBeNull();
       expect(el.shadowRoot.querySelector('select option[value=""]')).not.toBeNull();
       el.testDone();
@@ -121,7 +121,7 @@ describe('test-write-list', function() {
   })
 
   it("should handle RADIO with null", function(done) {
-    testComponent("<write-list nullable value='' list='" + JSON.stringify(listRadio) + "'></write-list>").then(el => {
+    testComponent("<x-write-list nullable value='' list='" + JSON.stringify(listRadio) + "'></x-write-list>").then(el => {
 
       checkRadioNull(el);
 
@@ -131,7 +131,7 @@ describe('test-write-list', function() {
   })
 
   it("should handle SELECT with null", function(done) {
-    testComponent("<write-list nullable value='' list='" + JSON.stringify(listSelect) + "'></write-list>").then(el => {
+    testComponent("<x-write-list nullable value='' list='" + JSON.stringify(listSelect) + "'></x-write-list>").then(el => {
 
       checkSelectNull(el);
 
@@ -142,7 +142,7 @@ describe('test-write-list', function() {
 
   // Test changes in value
   it("should handle RADIO value change", function(done) {
-    testComponent("<write-list nullable value='machin' list='" + JSON.stringify(listRadio) + "'></write-list>").then(el => {
+    testComponent("<x-write-list nullable value='machin' list='" + JSON.stringify(listRadio) + "'></x-write-list>").then(el => {
 
       checkRadio(el, 'machin');
       el.setAttribute('value', 'truc');
@@ -154,7 +154,7 @@ describe('test-write-list', function() {
   });
 
   it("should handle SELECT value change", function(done) {
-    testComponent("<write-list nullable value='machin' list='" + JSON.stringify(listSelect) + "'></write-list>").then(el => {
+    testComponent("<x-write-list nullable value='machin' list='" + JSON.stringify(listSelect) + "'></x-write-list>").then(el => {
 
       checkSelect(el, 'machin');
       el.setAttribute('value', 'truc');
@@ -167,7 +167,7 @@ describe('test-write-list', function() {
 
   // Test changes in html elements
   it("should handle RADIO html change", function(done) {
-    testComponent("<write-list nullable value='machin' list='" + JSON.stringify(listRadio) + "'></write-list>").then(el => {
+    testComponent("<x-write-list nullable value='machin' list='" + JSON.stringify(listRadio) + "'></x-write-list>").then(el => {
       checkRadio(el, 'machin');
 
       el.shadowRoot.querySelector('input[type=radio][value=truc]').setAttribute('checked', true);
@@ -179,7 +179,7 @@ describe('test-write-list', function() {
   });
 
   it("should handle SELECT html change", function(done) {
-    testComponent("<write-list nullable value='machin' list='" + JSON.stringify(listSelect) + "'></write-list>").then(el => {
+    testComponent("<x-write-list nullable value='machin' list='" + JSON.stringify(listSelect) + "'></x-write-list>").then(el => {
 
       checkSelect(el, 'machin');
 
@@ -192,7 +192,7 @@ describe('test-write-list', function() {
 
   // Test click on span for radio
   it("should handle RADIO Span click", function(done) {
-    testComponent("<write-list nullable value='machin' list='" + JSON.stringify(listRadio) + "'></write-list>").then(el => {
+    testComponent("<x-write-list nullable value='machin' list='" + JSON.stringify(listRadio) + "'></x-write-list>").then(el => {
 
       checkRadio(el, 'machin');
       el.shadowRoot.querySelector('span[to=truc').click();
@@ -205,10 +205,10 @@ describe('test-write-list', function() {
   })
 
   it("should handle named list", function(done) {
-    testComponent("<write-list value='machin' list-name='listRadio'></write-list>").then(el => {
+    testComponent("<x-write-list value='machin' list-name='listRadio'></x-write-list>").then(el => {
       expect(el).not.toBeNull();
 
-      WriteList.setReferences({
+      XWriteList.setReferences({
         listRadio: listRadio,
         listSelect: listSelect
       })

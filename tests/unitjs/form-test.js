@@ -15,7 +15,7 @@ describe("test-form", function() {
   	})
 	}
 
-// TODO: test select, write-list
+// TODO: test select, x-write-list
 
 	it("should skip empty values", function(done) {
 		form(`
@@ -25,8 +25,8 @@ describe("test-form", function() {
   				<option value='n3val1'>
   				<option value='n3val2'>
   			</select>
-  			<write-list name='n4' list='[ "n4val1", "n4val2", "n4val3" ]'></write-list>
-  			<write-list name='n4' list='[ "n4val1", "n4val2", "n4val3", "n4val4", "n4val5", "n4val6", "n4val7" ]'></write-list>
+  			<x-write-list name='n4' list='[ "n4val1", "n4val2", "n4val3" ]'></x-write-list>
+  			<x-write-list name='n4' list='[ "n4val1", "n4val2", "n4val3", "n4val4", "n4val5", "n4val6", "n4val7" ]'></x-write-list>
 			`, {
 				n3: 'n3val1',
 				n4: 'n4val1'
@@ -42,8 +42,8 @@ describe("test-form", function() {
   				<option value='n3val1'>
   				<option value='n3val2' selected>
   			</select>
-  			<write-list name='n4' value='n4val2' list='[ "n4val1", "n4val2", "n4val3" ]'></write-list>
-  			<write-list name='n5' value='n5val2' list='[ "n5val1", "n5val2", "n5val3", "n5val4", "n5val5", "n5val6", "n5val7" ]'></write-list>
+  			<x-write-list name='n4' value='n4val2' list='[ "n4val1", "n4val2", "n4val3" ]'></x-write-list>
+  			<x-write-list name='n5' value='n5val2' list='[ "n5val1", "n5val2", "n5val3", "n5val4", "n5val5", "n5val6", "n5val7" ]'></x-write-list>
 			`, {
 				n1: 'n1val',
 				n2: 'n2val',

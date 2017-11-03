@@ -1,11 +1,11 @@
 
-let WriteList = (function() {
+XWriteList = (function() {
 
   let referencesCB = jQuery.Callbacks("memory");
 
   let uuid = 1;
 
-  class WriteList extends HTMLElement {
+  class XWriteList extends HTMLElement {
     static setReferences(references = {}) {
       referencesCB.fire(references);
     }
@@ -20,7 +20,6 @@ let WriteList = (function() {
       this.list = [];
       this.listName = false;
       this.nullable = false;
-      this.onchange = () => {};
 
       this.uuid = uuid++;
 
@@ -83,7 +82,6 @@ let WriteList = (function() {
         }
       }
       this.setAttribute('mode', this.mode);
-      this.onchange();
     }
 
     _withStyle() {
@@ -143,11 +141,6 @@ let WriteList = (function() {
           el.querySelector('input').setAttribute('checked', true);
         }
       });
-      this.shadowRoot.querySelectorAll("input").forEach(el => {
-        el.onchange = () => {
-          this.onchange();
-        };
-      })
     }
 
     _asSelect() {
@@ -191,7 +184,7 @@ let WriteList = (function() {
     }
   }
 
-  window.customElements.define('write-list', WriteList);
+  window.customElements.define('x-write-list', XWriteList);
 
-  return WriteList;
+  return XWriteList;
 })();

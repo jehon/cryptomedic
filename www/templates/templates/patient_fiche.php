@@ -50,7 +50,7 @@
 						<td>District</td>
 						<td>
 							<span class='notModeRead'>
-								<write-list value='{{folder.getPatient().District}}' name='District' list-name='Districts' nullable></write-list>
+								<x-write-list value='{{folder.getPatient().District}}' name='District' list-name='Districts' nullable></x-write-list>
 							</span>
 							<span class='notModeWrite'>
 								<?php (new t("Patient.District"))->read()->p(); ?>
@@ -61,7 +61,7 @@
 						<td>Upazilla</td>
 						<td>
 							<span class='notModeRead'>
-								<write-list value='{{folder.getPatient().Upazilla}}' name='Upazilla' nullable></write-list>
+								<x-write-list value='{{folder.getPatient().Upazilla}}' name='Upazilla' nullable></x-write-list>
 							</span>
 							<span class='notModeWrite'>
 								<?php (new t("Patient.Upazilla"))->read()->p(); ?>
@@ -72,7 +72,7 @@
 						<td>Union</td>
 						<td>
 							<span class='notModeRead'>
-								<write-list value='{{folder.getPatient().Union_}}' name='Union_' nullable></write-list>
+								<x-write-list value='{{folder.getPatient().Union_}}' name='Union_' nullable></x-write-list>
 							</span>
 							<span class='notModeWrite'>
 								<?php (new t("Patient.Union_"))->read()->p(); ?>
@@ -96,14 +96,14 @@
 		</div>
 	</div>
 	<jh-script>
-    document.querySelectorAll("write-list[name=District]").forEach(el => {
+    document.querySelectorAll("x-write-list[name=District]").forEach(el => {
       el.onchange = function() {
       	setListFrom("District", "Upazilla", "district");
 		  	setListFrom("Upazilla", "Union_", "upazilla");
       };
     });
 
-    document.querySelectorAll("write-list[name=Upazilla]").forEach(el => {
+    document.querySelectorAll("x-write-list[name=Upazilla]").forEach(el => {
       el.onchange = function() {
       	setListFrom("Upazilla", "Union_", "upazilla");
       };
