@@ -56,8 +56,8 @@ describe('block-bill-category-test', function() {
             expect(element().querySelector("#catTotal").textContent).toContain(105);
             let res = false;
             let el = element().querySelector("block-bill-line");
-            el.querySelector("input").value = 10;
-            JHElement.fireOn(element().querySelector("input"), "change", "test");
+            el.querySelector("x-inline").value = 10;
+            JHElement.fireOn(element().querySelector("x-inline"), "change", 10);
             expect(element().querySelector("#catTotal").textContent).toContain(155);
         });
 
