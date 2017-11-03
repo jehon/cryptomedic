@@ -1,11 +1,11 @@
 
 (function() {
-    class ReadAll extends JHElement {
+    class XRead extends JHElement {
         static get properties() {
             return {
-                "name": "String",
-                "value": "String",
-                "type": "String"
+                "name":  "String",
+                "type":  "String",
+                "value": "String"
             }
         }
 
@@ -49,5 +49,5 @@
         }
     }
 
-    window.customElements.define('read-all', ReadAll);
+    window.customElements.define('x-read', XRead);
 })();

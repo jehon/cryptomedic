@@ -1,7 +1,7 @@
 'use strict';
 /* global testComponent */
 
-describe('test-write-list', function() {
+describe('test-x-write-list', function() {
   it("should initalize with value=-1", (done) => {
     testComponent("<edit-price value='-1'></edit-price>").then(el => {
       expect(el).not.toBeNull();

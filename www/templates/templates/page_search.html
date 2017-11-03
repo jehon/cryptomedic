@@ -23,7 +23,7 @@
 							</tr>
 							<tr ng-class='{ emptyValue: !params.Sex}'>
 							 	<td>Sex</td>
-							 	<td><write-list value='{{params.Sex}}' name='Sex'list-name='Sex' list='' nullable></write-list></td>
+							 	<td><x-write-list value='{{params.Sex}}' name='Sex'list-name='Sex' list='' nullable></x-write-list></td>
 							</tr>
 							<tr ng-class='{ emptyValue: !params.Yearofbirth}'>
 							 	<td>Year of birth</td>
@@ -35,7 +35,7 @@
 							</tr>
 				 			<tr ng-class='{ emptyValue: !params.Pathology}'>
 								<td>Main Pathology</td>
-						 		<td><write-list value='{{params.Pathology}}' name='Pathology'list-name='Pathologies' list='' nullable></write-list>
+						 		<td><x-write-list value='{{params.Pathology}}' name='Pathology'list-name='Pathologies' list='' nullable></x-write-list>
 							</td>
 							</tr>
 						</table>
