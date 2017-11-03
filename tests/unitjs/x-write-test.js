@@ -1,7 +1,7 @@
 'use strict';
 /* global testComponent */
 
-fdescribe('x-write-test', function() {
+describe('x-write-test', function() {
     beforeEach(function() {
       spyOn(console, "error");
     })
