@@ -107,10 +107,14 @@ let JHElement = (function() {
         }
 
         createElementAndAddThem(html, to = this) {
-            to.innerHTML = "";
             var template = document.createElement('template');
             template.innerHTML = html.trim();
-            template.content.childNodes.forEach(el => to.appendChild(el));
+
+            if (to != null) {
+                to.innerHTML = "";
+                template.content.childNodes.forEach(el => to.appendChild(el));
+            }
+            return template.content.childNodes;
         }
     };
 
