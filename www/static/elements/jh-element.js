@@ -67,8 +67,9 @@ let JHElement = (function() {
                         } else {
                             if (newValue === "false") {
                                 this[attributeName] = false;
+                            } else {
+                                this[attributeName] = true;
                             }
-                            this[attributeName] = true;
                         }
                         break;
                     case "Object":
