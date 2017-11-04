@@ -51,6 +51,22 @@ describe('block-bill-category-test', function() {
             expect(element().querySelector("#catTotal").textContent).toContain(105);
         });
 
+        it("should build up a bill lines list", function() {
+            expect(element().getBillLines()).toEqual(value);
+        })
+    });
+
+    webDescribe("instanciate with price and bill in edit mode", `<block-bill-category edit value='${JSON.stringify(value)}' price-lines='${JSON.stringify(priceCategory)}' category='cat'></block-bill-category>`, function(element) {
+        it("should instanciate", function() {
+            expect(element().textContent).toContain("Price 1");
+            expect(element().textContent).toContain("Price 2");
+            expect(element().textContent).not.toContain("Price 3");
+            expect(element().textContent).toContain("Other");
+            expect(element().querySelector("block-bill-line").hasAttribute("edit")).toBeTruthy();
+            expect(element().getTotal()).toBe(105);
+            expect(element().querySelector("#catTotal").textContent).toContain(105);
+        });
+
         it("should react to change event", function() {
             expect(element().getTotal()).toBe(105);
             expect(element().querySelector("#catTotal").textContent).toContain(105);

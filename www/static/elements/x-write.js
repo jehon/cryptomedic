@@ -70,9 +70,9 @@
             }
         }
 
-        getValue() {
-            return this.value;
-        }
+        // getValue() {
+            // return this.value;
+        // }
     }
 
     window.customElements.define('x-write', XWrite);

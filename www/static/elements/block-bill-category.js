@@ -61,9 +61,8 @@
                     let v = this.value.reduce((acc, v) => {
                         return acc || (v.title == p.title ? v : false);
                     }, false);
-                    this[tbody].appendChild(
-                        this.createElementFromString(`<block-bill-line ${this.edit ? 'edit' : '' } style='display: table-row' value='${JSON.stringify(v)}' price='${JSON.stringify(p)}'></block-bill-line>`)
-                    );
+                    this[tbody].appendChild(this.createElementAndAddThem(`<block-bill-line ${this.edit ? 'edit' : '' } style='display: table-row' value='${JSON.stringify(v)}' price='${JSON.stringify(p)}'></block-bill-line>`, 
+                        null)[0]);
                 }
             })
             this.querySelectorAll("block-bill-line").forEach(el => el.addEventListener("change", () => this._adaptTotal()));
