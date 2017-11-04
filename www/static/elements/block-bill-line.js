@@ -32,7 +32,7 @@
             this.createElementAndAddThem(`
                 <div style='display: table-cell' id='title'></div>
                 <div style='display: table-cell' id='price'></div>
-                <div style='display: table-cell'><x-inline ${this.edit ? 'edit=1' : '' } type='numeric' name='price' value='0' min=0 step=1 style='width: 4em' ></x-inline></div>
+                <div style='display: table-cell'><x-inline ${this.edit ? 'edit=1' : '' } type='numeric' name='price' value='0' inline='min=0 step=1 style="width: 4em" '></x-inline></div>
                 <div style='display: table-cell' id='total'></div>
             `);
             this[title] = this.querySelector("#title");
@@ -52,9 +52,9 @@
             this[title].innerHTML = this.price.title;
             this[price].innerHTML = this.price.Amount;
             if (this.value) {
-                this[input].value = this.value.Amount;
+                this[input].setAttribute("value", this.value.Amount);
             } else {
-                this[input].value = 0;
+                this[input].setAttribute("value", 0);
             }
             this[total].innerHTML = this.getTotal();
         }
