@@ -62,7 +62,14 @@ let JHElement = (function() {
             if (props && props[attributeName]) {
                 switch(props[attributeName]) {
                     case "Boolean":
-                        this[attributeName] = this.hasAttribute(attributeName);
+                        if (!this.hasAttribute(attributeName)) {
+                            this[attributeName] = false;
+                        } else {
+                            if (newValue === "false") {
+                                this[attributeName] = false;
+                            }
+                            this[attributeName] = true;
+                        }
                         break;
                     case "Object":
                         try {

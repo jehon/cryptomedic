@@ -93,10 +93,16 @@ describe("jh-element-test", function() {
         expect(typeof(element().sBool)).toBe("boolean");
         expect(element().sBool).toBeTruthy();
 
+        hasAttributeRes = true;
+        element().attributeChangedCallback("s-bool", "", "false");
+        expect(typeof(element().sBool)).toBe("boolean");
+        expect(element().sBool).toBeFalsy();
+
         hasAttributeRes = false;
         element().attributeChangedCallback("s-bool", "", "");
         expect(typeof(element().sBool)).toBe("boolean");
         expect(element().sBool).toBeFalsy();
+
     })
 
     webDescribe('without parameter', "<jh-element></jh-element>", function(element) {
