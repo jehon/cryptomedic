@@ -152,6 +152,16 @@ function ctrl_folder($scope, $location, $routeParams) {
     return cachedCurrentFile;
   };
 
+  $scope.getModeEdit = function() {
+    switch(this.mode) {
+      case "edit":
+      case "add":
+        return 'true';
+      default: 
+        return 'false';
+    }
+  }
+
   //----------------------
   //   Actions
   //----------------------
