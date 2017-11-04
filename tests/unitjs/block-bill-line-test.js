@@ -28,7 +28,7 @@ describe('block-bill-line-test', function() {
         it("should instanciate", function(done) {
             expect(element().querySelector("#title").textContent).toBe("Unknown");
             expect(element().querySelector("#price").textContent).toBe("1");
-            expect(element().querySelector("x-inline").value).toBe(0);
+            expect(element().querySelector("x-inline").value).toBe("0");
             expect(element().getTotal()).toBe(0);
             expect(element().getBillLine()).toEqual({ title: "Unknown", Amount: 0 });
             done();
@@ -40,7 +40,7 @@ describe('block-bill-line-test', function() {
             expect(element().price).toEqual(price);
             expect(element().querySelector("#title").textContent).toBe("Some price");
             expect(element().querySelector("#price").textContent).toBe("100");
-            expect(element().querySelector("x-inline").value).toBe(0);
+            expect(element().querySelector("x-inline").value).toBe("0");
             expect(element().querySelector("#total").textContent).toBe("0");
             expect(element().getTotal()).toBe(0);
             expect(element().getBillLine()).toEqual({ title: "Some price", Amount: 0 });
@@ -62,7 +62,7 @@ describe('block-bill-line-test', function() {
             expect(element().price).toEqual(other);
             expect(element().querySelector("#title").textContent).toBe("Other");
             expect(element().querySelector("#price").textContent).toBe("1");
-            expect(element().querySelector("x-inline").value).toBe(0);
+            expect(element().querySelector("x-inline").value).toBe("0");
             expect(element().querySelector("#total").textContent).toBe("0");
             expect(element().getTotal()).toBe(0);
             expect(element().getBillLine()).toEqual({ title: "Other", Amount: 0 });
@@ -75,7 +75,7 @@ describe('block-bill-line-test', function() {
             expect(element().price).toEqual(price);
             expect(element().querySelector("#title").textContent).toBe("Some price");
             expect(element().querySelector("#price").textContent).toBe("100");
-            expect(element().querySelector("x-inline").value).toBe(2);
+            expect(element().querySelector("x-inline").value).toBe("2");
             expect(element().querySelector("#total").textContent).toBe("200");
             expect(element().getTotal()).toBe(200);
             expect(element().getBillLine()).toEqual({ title: "Some price", Amount: 2 });
@@ -88,7 +88,7 @@ describe('block-bill-line-test', function() {
             expect(element().price).toEqual(price);
             expect(element().querySelector("#title").textContent).toBe("Some price");
             expect(element().querySelector("#price").textContent).toBe("100");
-            expect(element().querySelector("x-inline").value).toBe(2);
+            expect(element().querySelector("x-inline").value).toBe("2");
             expect(element().querySelector("#total").textContent).toBe("200");
             expect(element().getTotal()).toBe(200);
             expect(element().getBillLine()).toEqual({ title: "Some price", Amount: 2, id: 333, Date: '2016-01-02' });
@@ -101,7 +101,7 @@ describe('block-bill-line-test', function() {
             expect(element().price).toEqual(price);
             expect(element().querySelector("#title").textContent).toBe("Some price");
             expect(element().querySelector("#price").textContent).toBe("100");
-            expect(element().querySelector("x-inline").value).toBe(2);
+            expect(element().querySelector("x-inline").value).toBe("2");
             expect(element().querySelector("x-inline").hasAttribute("edit")).toBeTruthy();
             expect(element().querySelector("#total").textContent).toBe("200");
             expect(element().getTotal()).toBe(200);
@@ -115,7 +115,7 @@ describe('block-bill-line-test', function() {
             expect(element().price).toEqual(price);
             expect(element().querySelector("#title").textContent).toBe("Some price");
             expect(element().querySelector("#price").textContent).toBe("100");
-            expect(element().querySelector("x-inline").value).toBe(0);
+            expect(element().querySelector("x-inline").value).toBe("0");
             expect(element().querySelector("#total").textContent).toBe("0");
             expect(element().getTotal()).toBe(0);
             expect(element().getBillLine()).toEqual({ title: "Some price", Amount: 0 });
