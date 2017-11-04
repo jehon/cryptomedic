@@ -121,19 +121,6 @@ class Bill extends PatientRelated {
     return this.price.price_lines;
   }
 
-  getPriceFor(key) {
-    if (!this.price) return 0;
-    if (!this.price[key]) return 0;
-    return this.price[key];
-  }
-
-  getTotalFor(key) {
-    if (!this.price) return 0;
-    if (!this.price[key]) return 0;
-    if (!this[key]) return 0;
-    return this.price[key] * this[key];
-  }
-
   calculatePriceId(prices) {
     if (typeof(this.Date) == 'undefined' || !prices) {
       this.price_id = 1;
