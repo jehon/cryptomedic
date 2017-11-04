@@ -51,13 +51,13 @@ describe('x-read-test', function() {
 
   it("should manage boolean", function(done) {
     testComponent("<x-read name='test' type='boolean' value='true'></x-read>").then(el => {
-      expect(el.querySelector("read-boolean[value=true]")).not.toBeNull();
-      expect(el.querySelector("read-boolean[value=false]")).toBeNull();
+      expect(el.querySelector("x-read-boolean[value=true]")).not.toBeNull();
+      expect(el.querySelector("x-read-boolean[value=false]")).toBeNull();
 
       el.setAttribute("value", "false");
 
-      expect(el.querySelector("read-boolean[value=true]")).toBeNull();
-      expect(el.querySelector("read-boolean[value=false]")).not.toBeNull();
+      expect(el.querySelector("x-read-boolean[value=true]")).toBeNull();
+      expect(el.querySelector("x-read-boolean[value=false]")).not.toBeNull();
 
       el.testDone();
       done();

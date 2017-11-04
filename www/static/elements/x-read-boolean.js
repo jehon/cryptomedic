@@ -1,10 +1,10 @@
 
-let ReadBoolean = (function() {
+(function() {
 
     let selfURL = document.currentScript.src
       .replace(/\/[^/]*\/?$/, '');
 
-    class ReadBoolean extends HTMLElement {
+    class XReadBoolean extends HTMLElement {
         constructor() {
             super();
 
@@ -35,7 +35,5 @@ let ReadBoolean = (function() {
 
     }
 
-    window.customElements.define('read-boolean', ReadBoolean);
-
-    return ReadBoolean;
+    window.customElements.define('x-read-boolean', XReadBoolean);
 })();

@@ -29,7 +29,7 @@
                     this.innerHTML = `<span name='${this.name}'>${display}</span>"`;
                     break;
                 case "boolean":
-                    this.innerHTML = `<read-boolean name='${this.name}' value='${this.value}'></read-boolean>`;
+                    this.innerHTML = `<x-read-boolean name='${this.name}' value='${this.value}'></x-read-boolean>`;
                     break;
                 case "list":
                 case "date":
