@@ -248,11 +248,11 @@ class t {
               $this->listing
             ));
         }
-        $this->res .= "<write-list value='{{{$this->fieldGetKey()}}}' name='{$this->field}'"
+        $this->res .= "<x-write-list value='{{{$this->fieldGetKey()}}}' name='{$this->field}'"
           . "list-name='{$this->listingName}' "
           . "list='" . $jsonList . "' "
           . ($this->fieldIsRequired() ? "" : "nullable")
-          . "></write-list>";
+          . "></x-write-list>";
         break;
       case static::TYPE_TIMESTAMP:
         $this->res .= "<span id='{$this->jsId}'>{{ {$this->fieldGetKey()} | date:'{static::DATETIMEFORMAT}' }}</span>";
