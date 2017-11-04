@@ -96,6 +96,20 @@ describe('block-bill-line-test', function() {
         });
     });
 
+    webDescribe("instanciate with price and bill in edit mode", `<block-bill-line edit price='${JSON.stringify(price)}' value='${JSON.stringify(bill2)}'></block-bill-line>`, function(element) {
+        it("should instanciate", function(done) {
+            expect(element().price).toEqual(price);
+            expect(element().querySelector("#title").textContent).toBe("Some price");
+            expect(element().querySelector("#price").textContent).toBe("100");
+            expect(element().querySelector("x-inline").value).toBe(2);
+            expect(element().querySelector("x-inline").hasAttribute("edit")).toBeTruthy();
+            expect(element().querySelector("#total").textContent).toBe("200");
+            expect(element().getTotal()).toBe(200);
+            expect(element().getBillLine()).toEqual({ title: "Some price", Amount: 2, id: 333, Date: '2016-01-02' });
+            done();
+        });
+    });
+
     webDescribe("instanciate with price and false bill", `<block-bill-line price='${JSON.stringify(price)}' value='false'></block-bill-line>`, function(element) {
         it("should instanciate", function(done) {
             expect(element().price).toEqual(price);
