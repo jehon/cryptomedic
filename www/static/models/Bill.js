@@ -78,28 +78,18 @@ class Bill extends PatientRelated {
       this.total_asked = 0;
       return -1;
     }
-    var total = 0;
-    for(var i in this.price) {
-      if (i[0] == '_') { continue; }
-      if (i == 'id') { continue; }
-      if (i == 'created_at') { continue; }
-      if (i == 'updated_at') { continue; }
-      if (i == 'lastuser') { continue; }
-      if (i == 'datefrom') { continue; }
-      if (i == 'dateto') { continue; }
-      if (i == 'controller') { continue; }
-      if (i == 'locked') { continue; }
-      if (i == 'dlocked') { continue; }
-      if (i == 'socialLevelPercentage_0') { continue; }
-      if (i == 'socialLevelPercentage_1') { continue; }
-      if (i == 'socialLevelPercentage_2') { continue; }
-      if (i == 'socialLevelPercentage_3') { continue; }
-      if (i == 'socialLevelPercentage_4') { continue; }
-      if (this.price[i] < 0) { continue; }
-      if (typeof(this[i]) == 'undefined') { continue; }
-      if (this[i] <= 0) { continue; }
-      total += this.price[i] * this[i];
-    }//, this);
+    const total = this.bill_lines.reduce((acc, bval) => {
+      if (bval.Amount <= 0) {
+        return acc;
+      }
+      return acc + this.getPriceLines().reduce((acc, pval) => {
+        if (bval.title == pval.title) {
+          return acc + parseInt(bval.Amount) * parseInt(pval.Amount);
+        }
+        return acc;
+      }, 0);
+    }, 0);
+
     this.total_real = total;
     this.total_asked = this.total_real * this.calculate_percentage_asked();
     return this.total_real;
