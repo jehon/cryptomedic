@@ -35,15 +35,15 @@
           price_id <x-read id='Bill_price_id' name='price_id' type='numeric' value='{{ currentFile().price_id }}'></x-read><br>
         </div>
       </FieldSet>
-      <block-bill-category category='consult' value='{{currentFile().bill_lines}}' price-lines='{{currentFile().getPriceLines()}}'>
+      <block-bill-category edit='{{getModeEdit()}}' category='consult' value='{{currentFile().bill_lines}}' price-lines='{{currentFile().getPriceLines()}}'>
       </block-bill-category>
-      <block-bill-category category='medecine' value='{{currentFile().bill_lines}}' price-lines='{{currentFile().getPriceLines()}}'>
+      <block-bill-category edit='{{getModeEdit()}}' category='medecine' value='{{currentFile().bill_lines}}' price-lines='{{currentFile().getPriceLines()}}'>
       </block-bill-category>
-      <block-bill-category category='other' value='{{currentFile().bill_lines}}' price-lines='{{currentFile().getPriceLines()}}'>
+      <block-bill-category edit='{{getModeEdit()}}' category='other' value='{{currentFile().bill_lines}}' price-lines='{{currentFile().getPriceLines()}}'>
       </block-bill-category>
-      <block-bill-category category='workshop' value='{{currentFile().bill_lines}}' price-lines='{{currentFile().getPriceLines()}}'>
+      <block-bill-category edit='{{getModeEdit()}}' category='workshop' value='{{currentFile().bill_lines}}' price-lines='{{currentFile().getPriceLines()}}'>
       </block-bill-category>
-      <block-bill-category category='surgical' value='{{currentFile().bill_lines}}' price-lines='{{currentFile().getPriceLines()}}'>
+      <block-bill-category edit='{{getModeEdit()}}' category='surgical' value='{{currentFile().bill_lines}}' price-lines='{{currentFile().getPriceLines()}}'>
       </block-bill-category>
     </div>
     <div class="col-md-6">
