@@ -156,10 +156,11 @@ function ctrl_folder($scope, $location, $routeParams) {
     switch(this.mode) {
       case "edit":
       case "add":
-        return 'true';
+        return "true";
       default: 
-        return 'false';
+        return "false";
     }
+    return "false";
   }
 
   //----------------------
