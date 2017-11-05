@@ -3,9 +3,7 @@
 function ctrl_file_bill($scope) {
   /*
     Prices are at
-        $scope.appStateStore.connection.settings.prices
-
-        appState().store.getState().connection.settings.prices
+        window.cryptomedic.serverSettings.prices
   */
 
   $scope.paymentEditor = new Payment();
