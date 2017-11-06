@@ -30,6 +30,8 @@ class CryptomedicModel extends Model {
 				$res = static::cannonize($v);
 				if ($res !== null) {
 					$data[$k] = $res;
+				} else {
+					unset($data[$k]);
 				}
 			}
 		}
@@ -179,6 +181,8 @@ class CryptomedicModel extends Model {
 
 	 	// $this->attributes = self::cannonize($this->attributes);
 		// $this->attributes = self::filterData($this->attributes, false);
+	 	$this->attributes = self::cannonize($this->attributes);
+		$this->attributes = self::filterData($this->attributes, false);
 		if ($this->isDirty()) {
 			$this->validate();
 			$this->lastuser = Auth::user()->username;
