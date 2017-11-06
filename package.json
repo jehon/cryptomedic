@@ -43,6 +43,6 @@
     "test-unit-continuously": "karma start",
     "test-e2e": "nightwatch",
     "test-e2e-chrome": "nightwatch -e chrome",
-    "start": "node server.js"
+    "start": "node bin/server.js"
   }
 }
