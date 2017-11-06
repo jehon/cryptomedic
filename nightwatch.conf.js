@@ -16,6 +16,8 @@ module.exports = {
   "custom_commands_path": [ "tests/e2e/commands" ],
   "custom_assertions_path": [ "tests/e2e/assertions" ],
 
+  "globals_path": "nightwatch-global.js",
+
   "selenium" : {
     "start_process" : true,
     "start_session" : true,
