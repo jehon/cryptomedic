@@ -41,8 +41,8 @@
     "test-api-1.3": "cd www/api/v1.3/ && phpunit --coverage-html ../../../target/php1.3 --coverage-xml ../../../target/php1.3 && cd ../../../",
     "test-unit": "karma start --single-run",
     "test-unit-continuously": "karma start",
-    "test-e2e": "kill-by-port --port 5556 && kill-by-port --port 4444 && node e2e-with-server.js",
+    "test-e2e": "nightwatch",
     "test-e2e-chrome": "nightwatch -e chrome",
-    "start": "kill-by-port --port 5555 && php -S localhost:5555 webserver.php"
+    "start": "node server.js"
   }
 }
