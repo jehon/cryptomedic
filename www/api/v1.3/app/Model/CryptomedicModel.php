@@ -178,9 +178,6 @@ class CryptomedicModel extends Model {
 	     	abort(403, "File is frozen");
 	    }
 
-
-	 	// $this->attributes = self::cannonize($this->attributes);
-		// $this->attributes = self::filterData($this->attributes, false);
 	 	$this->attributes = self::cannonize($this->attributes);
 		$this->attributes = self::filterData($this->attributes, false);
 		if ($this->isDirty()) {
