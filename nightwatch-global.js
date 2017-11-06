@@ -6,7 +6,7 @@ module.exports = {
     before: function(done) {
         require('kill-by-port').killByPort(4444);
 
-        const startServer = require('./server.js')
+        const startServer = require('./bin/server.js')
         web = startServer(5556);
         done();
     },
