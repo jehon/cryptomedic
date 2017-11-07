@@ -58,9 +58,12 @@
             this[legend].innerHTML = this.category
             this.priceLines.forEach((p) => {
                 if (p.type == this.category) {
-                    let v = this.value.reduce((acc, v) => {
-                        return acc || (v.title == p.title ? v : false);
-                    }, false);
+                    let v = 0;
+                    if (this.value) {
+                        v = this.value.reduce((acc, v) => {
+                            return acc || (v.title == p.title ? v : false);
+                        }, false);
+                    }
                     this[tbody].appendChild(this.createElementAndAddThem(`<block-bill-line ${this.edit ? 'edit' : '' } style='display: table-row' value='${JSON.stringify(v)}' price='${JSON.stringify(p)}'></block-bill-line>`, 
                         null)[0]);
                 }
