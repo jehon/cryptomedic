@@ -8,13 +8,13 @@ describe('test-x-write-list', function() {
   let checkRadio = (el, v) => {
     // Are we set?
     expect(el).not.toBeNull();
-    expect(el.querySelector('input[type=radio]')).not.toBeNull();
-    expect(el.querySelector('select')).toBeNull();
+    expect(el.shadowRoot.querySelector('input[type=radio]')).not.toBeNull();
+    expect(el.shadowRoot.querySelector('select')).toBeNull();
     expect(el.getAttribute('mode')).toBe("radio");
 
     // Check the value
-    expect(el.querySelector('input[type=radio][value="' + v + '"]')).not.toBeNull();
-    expect(el.querySelector('input[type=radio][value="' + v + '"]').hasAttribute('checked')).toBeTruthy();
+    expect(el.shadowRoot.querySelector('input[type=radio][value="' + v + '"]')).not.toBeNull();
+    expect(el.shadowRoot.querySelector('input[type=radio][value="' + v + '"]').hasAttribute('checked')).toBeTruthy();
   }
 
   let checkRadioNull = (el) => {
@@ -22,12 +22,12 @@ describe('test-x-write-list', function() {
     expect(el).not.toBeNull();
 
     // Check the mode
-    expect(el.querySelector('input[type=radio]')).not.toBeNull();
-    expect(el.querySelector('select')).toBeNull();
+    expect(el.shadowRoot.querySelector('input[type=radio]')).not.toBeNull();
+    expect(el.shadowRoot.querySelector('select')).toBeNull();
     expect(el.getAttribute('mode')).toBe("radio");
 
     // Check the value
-    expect(el.querySelector('input[type=radio][value=""]').hasAttribute('checked')).toBeTruthy();
+    expect(el.shadowRoot.querySelector('input[type=radio][value=""]').hasAttribute('checked')).toBeTruthy();
     expect(el.getValue()).toBe(null);
   }
 
@@ -36,12 +36,12 @@ describe('test-x-write-list', function() {
     expect(el).not.toBeNull();
 
     // Check the mode
-    expect(el.querySelector('input[type=radio]')).toBeNull();
-    expect(el.querySelector('select')).not.toBeNull();
+    expect(el.shadowRoot.querySelector('input[type=radio]')).toBeNull();
+    expect(el.shadowRoot.querySelector('select')).not.toBeNull();
     expect(el.getAttribute('mode')).toBe("select");
 
     // Check the value
-    expect(el.querySelector('select').value).toBe(v);
+    expect(el.shadowRoot.querySelector('select').value).toBe(v);
     expect(el.getValue()).toBe(v);
   }
 
@@ -50,12 +50,12 @@ describe('test-x-write-list', function() {
     expect(el).not.toBeNull();
 
     // Check the mode
-    expect(el.querySelector('input[type=radio]')).toBeNull();
-    expect(el.querySelector('select')).not.toBeNull();
+    expect(el.shadowRoot.querySelector('input[type=radio]')).toBeNull();
+    expect(el.shadowRoot.querySelector('select')).not.toBeNull();
     expect(el.getAttribute('mode')).toBe("select");
 
     // Check the value
-    expect(el.querySelector('select').value).toBe('');
+    expect(el.shadowRoot.querySelector('select').value).toBe('');
     expect(el.getValue()).toBe(null);
   }
 
@@ -103,7 +103,7 @@ describe('test-x-write-list', function() {
   it("should handle RADIO nullable", function(done) {
     testComponent("<x-write-list nullable value='machin' list='" + JSON.stringify(listRadio) + "'></x-write-list>").then(el => {
       expect(el).not.toBeNull();
-      expect(el.querySelector('input[type=radio][value=""]')).not.toBeNull();
+      expect(el.shadowRoot.querySelector('input[type=radio][value=""]')).not.toBeNull();
       el.testDone();
       done();
     });
@@ -112,7 +112,7 @@ describe('test-x-write-list', function() {
   it("should handle SELECT nullable", function(done) {
     testComponent("<x-write-list nullable value='machin' list='" + JSON.stringify(listSelect) + "'></x-write-list>").then(el => {
       expect(el).not.toBeNull();
-      expect(el.querySelector('select option[value=""]')).not.toBeNull();
+      expect(el.shadowRoot.querySelector('select option[value=""]')).not.toBeNull();
       el.testDone();
       done();
     });
@@ -166,7 +166,7 @@ describe('test-x-write-list', function() {
     testComponent("<x-write-list nullable value='machin' list='" + JSON.stringify(listRadio) + "'></x-write-list>").then(el => {
       checkRadio(el, 'machin');
 
-      el.querySelector('input[type=radio][value=truc]').setAttribute('checked', true);
+      el.shadowRoot.querySelector('input[type=radio][value=truc]').setAttribute('checked', true);
 
       checkRadio(el, 'truc');
       el.testDone();
@@ -179,7 +179,7 @@ describe('test-x-write-list', function() {
 
       checkSelect(el, 'machin');
 
-      el.querySelector('select').value = 'truc';
+      el.shadowRoot.querySelector('select').value = 'truc';
 
       checkSelect(el, 'truc');
       el.testDone();
@@ -192,7 +192,7 @@ describe('test-x-write-list', function() {
     testComponent("<x-write-list nullable value='machin' list='" + JSON.stringify(listRadio) + "'></x-write-list>").then(el => {
 
       checkRadio(el, 'machin');
-      el.querySelector('span[to=truc').click();
+      el.shadowRoot.querySelector('span[to=truc').click();
 
       checkRadio(el, 'truc');
 

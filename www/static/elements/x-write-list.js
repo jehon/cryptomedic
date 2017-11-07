@@ -21,6 +21,7 @@ XWriteList = (function() {
 
         constructor() {
             super();
+            this.attachShadow({mode: 'open'}); // this.shadowRoot
             this.mode = false;
             this.references = {};
 
@@ -45,7 +46,7 @@ XWriteList = (function() {
             }
             if (this.list.length == 0) {
                 this.mode = 'empty';
-                this.innerHTML = "No list set";
+                this.shadowRoot.innerHTML = "No list set";
             } else {
                 if (this.list.length > 5) {
                     this.mode = 'select';
@@ -108,12 +109,19 @@ XWriteList = (function() {
             }
             res += "</span>";
 
-            this.innerHTML = "<form>" + this._withStyle() + res + "</form>";
-            this.querySelectorAll("span[to]").forEach((el) => {
+            this.shadowRoot.innerHTML = "<form>" + this._withStyle() + res + "</form>";
+            this.shadowRoot.querySelectorAll("span[to]").forEach((el) => {
                 el.onclick = (event) => {
                     el.querySelector('input').setAttribute('checked', true);
                 }
             });
+            if (this.shadowRoot.querySelector("input[type=radio]:checked") == null) {
+                if (this.nullable) {
+                    this.shadowRoot.querySelector("input[type=radio][value='']").setAttribute("checked", "checked");
+                } else {
+                    this.shadowRoot.querySelector("input[type=radio]").setAttribute("checked", "checked");
+                }
+            }
         }
 
         _asSelect() {
@@ -130,7 +138,7 @@ XWriteList = (function() {
             res += "</select>\n";
 
             // TODO: Register onclick
-            this.innerHTML = this._withStyle() + res;
+            this.shadowRoot.innerHTML = this._withStyle() + res;
         }
 
         _escape(str) {
@@ -141,11 +149,11 @@ XWriteList = (function() {
             let value = null;
             switch(this.getAttribute("mode")) {
                 case "select":
-                    value = this.querySelector("select").value;
+                    value = this.shadowRoot.querySelector("select").value;
                     break;
                 case "radio":
-                    console.log("radio: ", this.querySelector("input[type=radio]:checked"));
-                    value = this.querySelector("input[type=radio]:checked").value;
+                    console.log("radio: ", this.shadowRoot.querySelector("input[type=radio]:checked"));
+                    value = this.shadowRoot.querySelector("input[type=radio]:checked").value;
                     break;
             }
             if (value == "") {
