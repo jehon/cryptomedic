@@ -20,19 +20,19 @@
         <table>
           <tr ng-class='{ emptyValue: !currentFile().Date}'>
             <td>Date</td>
-            <td><x-read id='Bill_Date' name='Date' type='date' value='{{ currentFile().Date }}'></x-read></td>
+            <td><x-inline edit='{{getModeEdit()}}' id='Bill_Date' name='Date' type='date' value='{{ currentFile().Date }}'></x-inline></td>
           </tr>
                 <tr ng-class='{ emptyValue: !currentFile().ExaminerName}'>
             <td>Examiner</td>
-            <td><x-read id='Bill_ExaminerName' name='ExaminerName' type='list' value='{{ currentFile().ExaminerName }}'></x-read></td>
+            <td><x-inline edit='{{getModeEdit()}}' id='Bill_ExaminerName' name='ExaminerName' type='list' value='{{ currentFile().ExaminerName }}'></x-inline></td>
           </tr>
                 <tr ng-class='{ emptyValue: !currentFile().Center}'>
             <td>Center where consultation took place</td>
-            <td><x-read id='Bill_Center' name='Center' type='list' value='{{ currentFile().Center }}'></x-read></td>
+            <td><x-inline edit='{{getModeEdit()}}' id='Bill_Center' name='Center' type='list' value='{{ currentFile().Center }}'></x-inline></td>
           </tr>
         </table>
         <div class='debug_infos'>
-          price_id <x-read id='Bill_price_id' name='price_id' type='numeric' value='{{ currentFile().price_id }}'></x-read><br>
+          price_id <x-inline id='Bill_price_id' name='price_id' type='numeric' value='{{ currentFile().price_id }}'></x-inline><br>
         </div>
       </FieldSet>
       <block-bill-category edit='{{getModeEdit()}}' category='consult' value='{{currentFile().bill_lines}}' price-lines='{{currentFile().getPriceLines()}}'>
