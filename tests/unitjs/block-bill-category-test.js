@@ -34,9 +34,16 @@ describe('block-bill-category-test', function() {
         }
     ]
 
-    webDescribe("instanciate without prices", `<block-bill-category value='${JSON.stringify(value)}' category='cat'></block-bill-category>`, function(element) {
+    webDescribe("instanciate without prices", `<block-bill-category category='cat'></block-bill-category>`, function(element) {
         it("should instanciate empty", function() {
             expect(element().querySelectorAll("tbody > *").length).toBe(0);
+            expect(element().getTotal()).toBe(0);
+        })
+    });
+
+    webDescribe("instanciate with empty bills", `<block-bill-category value="" price-lines='${JSON.stringify(priceCategory)}' category='cat'></block-bill-category>`, function(element) {
+        it("should instanciate empty", function() {
+            expect(element().querySelectorAll("tbody > *").length).toBe(3);
             expect(element().getTotal()).toBe(0);
         })
     });
