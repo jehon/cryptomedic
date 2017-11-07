@@ -78,19 +78,21 @@ class Bill extends PatientRelated {
       this.total_asked = 0;
       return -1;
     }
-    const total = this.bill_lines.reduce((acc, bval) => {
-      if (bval.Amount <= 0) {
-        return acc;
-      }
-      return acc + this.getPriceLines().reduce((acc, pval) => {
-        if (bval.title == pval.title) {
-          return acc + parseInt(bval.Amount) * parseInt(pval.Amount);
+    if (!this.bill_lines)  {
+      this.total_real = 0;
+    } else {
+      this.total_real = this.bill_lines.reduce((acc, bval) => {
+        if (bval.Amount <= 0) {
+          return acc;
         }
-        return acc;
+        return acc + this.getPriceLines().reduce((acc, pval) => {
+          if (bval.title == pval.title) {
+            return acc + parseInt(bval.Amount) * parseInt(pval.Amount);
+          }
+          return acc;
+        }, 0);
       }, 0);
-    }, 0);
-
-    this.total_real = total;
+    }
     this.total_asked = this.total_real * this.calculate_percentage_asked();
     return this.total_real;
   }
