@@ -50,7 +50,7 @@ class CryptomedicModel extends Model {
 		unset($data['_type']);
 		unset($data['created_at']);
 		unset($data['updated_at']);
-		unset($data['id']);
+		// unset($data['id']);
 		unset($data[(new self())->getUpdatedAtColumn()]);
 		unset($data[(new self())->getCreatedAtColumn()]);
 
@@ -89,6 +89,8 @@ class CryptomedicModel extends Model {
 	        $obj->{$k} = $v;
 	      }
 	    }
+
+	    $obj->id = $id;
 
 	    $obj->save();
 	    return $obj;
@@ -185,7 +187,7 @@ class CryptomedicModel extends Model {
 			$this->lastuser = Auth::user()->username;
 			return parent::save($options);
 		}
-		return true;
+		return $this;
 	}
 
 	public function delete() {
