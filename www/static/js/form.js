@@ -27,6 +27,9 @@ function formGetContent(form, prototype = {}) {
 
     let name = i.getAttribute('name');
     let value = i.value;
+    if (typeof(i.getValue) == 'function') {
+      value = i.getValue();
+    }
 
     if (typeof(value) == 'object') {
       Object.assign(data, value);
