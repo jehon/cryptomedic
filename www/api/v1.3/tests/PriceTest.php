@@ -114,7 +114,7 @@ class PriceTest extends RouteReferenceTestCase {
 	    $this->assertArrayHasKey('id', $json);
 	    $this->assertEquals($json['datefrom'], $limit);
 
-	    // $this->assertEquals($json['dateto'], null);
+	    $this->assertEquals($json['dateto'], null);
 	    $this->assertEquals($json['_editable'], true);
 
         // https://packagist.org/packages/flow/jsonpath
