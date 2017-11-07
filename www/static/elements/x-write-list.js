@@ -116,11 +116,10 @@ XWriteList = (function() {
                 }
             });
             if (this.shadowRoot.querySelector("input[type=radio]:checked") == null) {
-                if (this.nullable) {
-                    this.shadowRoot.querySelector("input[type=radio][value='']").setAttribute("checked", "checked");
-                } else {
-                    this.shadowRoot.querySelector("input[type=radio]").setAttribute("checked", "checked");
-                }
+                // If value is null or not set:
+                // - if we are nullable -> correct value (null) is already set
+                // - other wise, let's pick up the first one
+                this.shadowRoot.querySelector("input[type=radio]").setAttribute("checked", "checked");
             }
         }
 
@@ -152,7 +151,6 @@ XWriteList = (function() {
                     value = this.shadowRoot.querySelector("select").value;
                     break;
                 case "radio":
-                    console.log("radio: ", this.shadowRoot.querySelector("input[type=radio]:checked"));
                     value = this.shadowRoot.querySelector("input[type=radio]:checked").value;
                     break;
             }
