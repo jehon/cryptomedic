@@ -1,18 +1,18 @@
 
-describe("test-form", function() {
+describe("form-test", function() {
 	let i = 0;
 
 	function form(html = "", data = {}, done) {
 		let v = i++
-	  return testComponent(`<form id='testid${v}'>${html}</forms>`).then(el => {
-  		expect(el).not.toBeNull();
-  		let res = formGetContent(`#testid${v}`, {});
+        return testComponent(`<form id='testid${v}'>${html}</forms>`).then(el => {
+  		    expect(el).not.toBeNull();
+  		    let res = formGetContent(`#testid${v}`, {});
 
-  		expect(res).toEqual(data);
+      		expect(res).toEqual(data);
 
-  		el.testDone();
-  		done();
-  	})
+  		    el.testDone();
+  		    done();
+        })
 	}
 
 // TODO: test select, x-write-list
