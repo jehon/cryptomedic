@@ -52,9 +52,10 @@ class PricesController extends Controller {
 		$obj->priceLines()->createMany($priceLinesOld);
 
 
-        $obj['price_lines'] = $obj->priceLines()->get();
+		$nobj = Price::findOrFail($obj->id);
+        $nobj['price_lines'] = $nobj->priceLines()->get();
 
-		return $obj;
+		return $nobj;
 	}
 
 	// PUT / PATCH
