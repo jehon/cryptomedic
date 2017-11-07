@@ -93,7 +93,7 @@ class CryptomedicModel extends Model {
 	    $obj->id = $id;
 
 	    $obj->save();
-	    return $obj;
+	    return self::findOrFail($id);
 	}
 
 	public function syncSubItems($class, $relation, $list) {		
