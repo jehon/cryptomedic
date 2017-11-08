@@ -164,4 +164,40 @@ describe('x-write-test', function() {
         })
     })
 
+// TODO:
+
+    const list = [ 'machin', 'truc', 'brol' ];
+
+    fdescribe("with list", function() {
+        webDescribe("without value", `<x-write name='test' type='list' list='${JSON.stringify(list)}'></x-write`, function(element) {
+            it("should be instantiated", function() {
+                let el = element().querySelector('x-write-list');
+                expect(element().querySelector('span.error')).toBeNull();
+                expect(el).not.toBeNull();
+                expect(element().getValue()).toBe(null);
+            });
+        })
+
+        webDescribe("with value", `<x-write name='test' type='list' list='${JSON.stringify(list)}' value='truc'></x-write`, function(element) {
+            it("should be instantiated", function() {
+                let el = element().querySelector('x-write-list');
+                expect(element().querySelector('span.error')).toBeNull();
+                expect(el).not.toBeNull();
+                console.log(el);
+                console.log(el.list, el.listName);
+                expect(element().getValue()).toBe("truc");
+            });
+
+            it("should fire event", function() {
+                let el = element().querySelector('x-write-list');
+                let res = false;
+                element().addEventListener("change", (event) => { res = "test" });
+                el.value = "brol";
+                JHElement.fireOn(element().querySelector("x-write-list"), "change", "test");
+                expect(res).toBe("test");
+                expect(element().getValue()).toBe("brol");
+            })
+        })
+    })
+
 });
