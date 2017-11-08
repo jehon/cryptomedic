@@ -3,12 +3,10 @@
     class XWrite extends JHElement {
         static get properties() {
             return {
-                "name":     "String",
-                "type":     "String",
-                "value":    "String",
-                "inline":   "String",
-                "list":     "Object",
-                "listName": "Object"
+                "name":   "String",
+                "type":   "String",
+                "value":  "String",
+                "inline": "String"
             }
         }
 
@@ -53,11 +51,8 @@
                 // case "text":
                     // this.innerHTML = `<span name='${this.name}' style='white-space: pre'>${this.value}</span>`;  
                     // break;
-                case "list":
-                    this.innerHTML = `<x-write-list value='${this.value}' list='${JSON.stringify(this.list)}' list-name='${this.listName}' ${this.inline}></x-write-list>`;
-                    el = this.querySelector('x-write-list');
-                    this.getValue = () => el.getValue();
-                    break;
+                // case "list":
+                //     break;
                 default:
                     console.error("Type unknown: ", this.type);
                     this.innerHTML = `<span name='${this.name}' class='error'>unknown type: ${this.type}</span>`;
