@@ -7,16 +7,19 @@ if (!defined("MY_ENVIRONMENT_PRODUCTION")) {
 
 $myconfig = [
   'database' => [
-    'host'       => 'localhost',
-    'schema'     => preg_replace("/[^A-Za-z0-9_]/", '_', basename(dirname(__FILE__))),
-    'username'   => 'myuser',
-    'password'   => 'empty',
-#    'rootuser'   => '',
-#    'rootpwd'    => ''
+    'host'       => 'mysql',
+    'schema'     => 'cryptomedic',
+    'rootuser'   => 'root',
+    'rootpwd'    => 'password',
+    'username'   => 'root',
+    'password'   => 'password',
   ],
   'security' => [
     'code'       => 'secure_code',
     'token'      => 'secure_token'
+  ],
+  'laravel' => [
+    'key' => '12345678901234567890123456789012'
   ],
   'environment' => constant('MY_ENVIRONMENT_PRODUCTION'),
   'randomString' => str_pad("random script ", 256, "abcdefghijklmnopqrstuvwxyz"),

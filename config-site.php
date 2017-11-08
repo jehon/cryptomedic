@@ -8,9 +8,6 @@ $myconfig['environment'] = 'dev';
 if (file_exists(__DIR__ . "/../secrets.ini")) {
   $mysecrets = parse_ini_file(__DIR__ . "/../secrets.ini", true, INI_SCANNER_TYPED);
 
-  $myconfig['database']['rootuser'] = $mysecrets['database']['rootuser'];
-  $myconfig['database']['rootpwd']  = $mysecrets['database']['rootpwd'];
-
   $myconfig['deployment']['prod'] = [
     'ftp_host' => 'ftp.cryptomedic.org',
     'ftp_user' => $mysecrets['cryptomedic']['ftp']['username'],
