@@ -105,7 +105,7 @@ return [
     |
     */
 
-    'key' => env('APP_KEY'),
+    'key' => $myconfig['laravel']['key'],
 
     'cipher' => 'AES-256-CBC',
 

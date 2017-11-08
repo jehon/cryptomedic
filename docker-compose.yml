@@ -1,0 +1,37 @@
+version: "3.1"
+services:
+    mysql:
+        # https://hub.docker.com/_/mysql/
+        image: mysql
+        environment:
+            MYSQL_ROOT_PASSWORD: password
+            MYSQL_DATABASE: cryptomedic
+            MYSQL_USER: username
+            MYSQL_PASSWORD: password
+        volumes:
+            - ./conf/database:/docker-entrypoint-initdb.d
+
+    phpmyadmin:
+        # https://hub.docker.com/r/phpmyadmin/phpmyadmin/
+        image: phpmyadmin/phpmyadmin
+        environment:
+            PMA_HOST: mysql
+            PMA_PORT: 3306
+            PMA_USER: root
+            PMA_PASSWORD: password
+        ports:
+            - 5558:80
+        depends_on:
+            - mysql
+
+    php:
+        # http://dockerfile.readthedocs.io/en/latest/content/DockerImages/dockerfiles/php-apache.html#
+        image: webdevops/php-apache
+        environment:
+            WEB_DOCUMENT_ROOT: /app/www
+        ports:
+            - 5555:80
+        depends_on:
+            - mysql
+        volumes:
+            - .:/app
