@@ -15,6 +15,7 @@ $myconfig = [
     'password'   => 'password',
   ],
   'security' => [
+    'key'        => 'secret',
     'code'       => 'secure_code',
     'token'      => 'secure_token'
   ],
