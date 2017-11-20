@@ -164,4 +164,36 @@ describe('x-write-test', function() {
         })
     })
 
+    const list = [ 'machin', 'truc', 'brol' ];
+
+    describe("with list", function() {
+        webDescribe("without value", `<x-write name='test' type='list' list='${JSON.stringify(list)}'></x-write`, function(element) {
+            it("should be instantiated", function() {
+                let el = element().querySelector('x-write-list');
+                expect(element().querySelector('span.error')).toBeNull();
+                expect(el).not.toBeNull();
+                // First one is automatically selected
+                expect(element().getValue()).toBe('machin');
+            });
+        })
+
+        webDescribe("with value", `<x-write name='test' type='list' list='${JSON.stringify(list)}' value='truc'></x-write`, function(element) {
+            it("should be instantiated", function() {
+                let el = element().querySelector('x-write-list');
+                expect(element().querySelector('span.error')).toBeNull();
+                expect(el).not.toBeNull();
+                expect(element().getValue()).toBe("truc");
+            });
+
+            it("should fire event", function() {
+                let el = element().querySelector('x-write-list');
+                let res = false;
+                element().addEventListener("change", (event) => { res = "test" });
+                el.setAttribute('value', 'brol');
+                JHElement.fireOn(el, "change", "test");
+                expect(res).toBe("test");
+                expect(element().getValue()).toBe("brol");
+            })
+        })
+    })
 });

@@ -83,7 +83,11 @@ let JHElement = (function() {
                         this[attributeName] = Number.parseFloat(newValue);
                         break;
                     default:
-                        this[attributeName] = newValue;
+                        if (newValue === 'null') {
+                            this[attributeName] = null;
+                        } else {
+                            this[attributeName] = newValue;
+                        }
                 }
             } else {
                 this[attributeName] = newValue;
