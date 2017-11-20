@@ -50,9 +50,11 @@
                     el = this.querySelector('input');
                     this.getValue = () => el.value;
                     break;
-                // case "text":
-                    // this.innerHTML = `<span name='${this.name}' style='white-space: pre'>${this.value}</span>`;  
-                    // break;
+                case "text":
+                    this.innerHTML = `<textarea name='${this.name}'>${this.value}</textarea>`;
+                    el = this.querySelector('textarea');
+                    this.getValue = () => el.value;
+                    break;
                 case "list":
                     this.innerHTML = `<x-write-list value='${this.value}' list='${JSON.stringify(this.list)}' list-name='${this.listName}' ${this.inline}></x-write-String>`;
                     el = this.querySelector('x-write-list');

@@ -164,6 +164,37 @@ describe('x-write-test', function() {
         })
     })
 
+    describe("with text", function() {
+        webDescribe("without value", `<x-write name='test' type='text'></x-write`, function(element) {
+            it("should be instantiated", function() {
+                let el = element().querySelector('textarea');
+                expect(element().querySelector('span.error')).toBeNull();
+                expect(el).not.toBeNull();
+                expect(element().getValue()).toBe("");
+            });
+        })
+
+        webDescribe("with value", `<x-write name='test' type='text' value='xvalue'></x-write`, function(element) {
+            it("should be instantiated", function() {
+                let el = element().querySelector('textarea');
+                expect(element().querySelector('span.error')).toBeNull();
+                expect(el).not.toBeNull();
+                expect(element().getValue()).toBe("xvalue");
+            });
+
+            it("should fire event", function() {
+                let el = element().querySelector('textarea');
+                let res = false;
+                element().addEventListener("change", (event) => { res = "test" });
+                el.value = "blablabla";
+                JHElement.fireOn(el, "change", "test");
+                expect(res).toBe("test");
+                expect(element().getValue()).toBe("blablabla");
+            });
+        })
+    })
+
+
     const list = [ 'machin', 'truc', 'brol' ];
 
     describe("with list", function() {
