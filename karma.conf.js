@@ -8,8 +8,6 @@ module.exports = function(config) {
     plugins : [
       'karma-chrome-launcher',
       'karma-firefox-launcher',
-      // 'karma-phantomjs-launcher',
-      // 'karma-detect-browsers',
       'karma-jasmine',
       'karma-coverage',
       'karma-junit-reporter',
@@ -65,10 +63,6 @@ module.exports = function(config) {
 
     preprocessors: {
       'static/**/*.js': [ 'coverage' ],
-      // '*.js': [ 'coverage' ],
-      // '*.html': [ 'coverage' ],
-      // '!(bower_components)/**/*.js': [ 'coverage' ],
-      // '!(bower_components)/**/*.html': [ 'coverage' ],
     },
 
     coverageReporter: {
