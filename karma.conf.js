@@ -31,7 +31,6 @@ module.exports = function(config) {
       'bower_components/webcomponentsjs/webcomponents-lite.js',
 
       // Custom Elements v1
-      'bower_components/shadydom/cloudydom.min.js',
       'bower_components/custom-elements/custom-elements.min.js',
 
       'bower_components/angular/angular.min.js',
@@ -40,6 +39,7 @@ module.exports = function(config) {
       'bower_components/karma-read-json/karma-read-json.js',
       'bower_components/clone.js/clone.js',
       'bower_components/he/he.js',
+      'bundle.js',
       { pattern: 'api/*/tests/references/*.json',    included: false },
       { pattern: "bower_components/**",              included: false, served: true, watched: false },
       { pattern: "static/elements/resources/*",      included: false, served: true, watched: true },
