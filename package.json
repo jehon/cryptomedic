@@ -33,7 +33,7 @@
     "selenium-server": "latest",
     "svgo": "latest",
     "sw-precache": "^4.0.0",
-    "webcomponentsjs": "latest"
+    "webcomponentsjs": "latest",
     "webpack": "^3.8.1"
   },
   "scripts": {
