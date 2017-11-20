@@ -10,6 +10,8 @@ services:
             MYSQL_PASSWORD: password
         ports:
             - 5556:3306
+        # volumes:
+        #     - ./conf/database:/docker-entrypoint-initdb.d
 
     phpmyadmin:
         # https://hub.docker.com/r/phpmyadmin/phpmyadmin/
