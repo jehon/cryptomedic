@@ -24,3 +24,5 @@ commit.msg
 /.project
 /.settings
 /.DS_Store
+
+www/bundle.js
