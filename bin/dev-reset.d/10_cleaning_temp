@@ -2,6 +2,8 @@
 
 set -e
 
+sudo chown jehon.jehon -R $PRJ_DIR/target
+
 if [ -d "$PRJ_DIR/target" ]; then
   find "$PRJ_DIR/target/" -mindepth 1 ! -name '.gitkeep' -delete
 else
