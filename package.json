@@ -6,9 +6,10 @@
   "repository": "https://github.com/jehon/CryptomedicApp",
   "license": "MIT",
   "dependencies": {
-    "angular": "1.4.x",
+    "@webcomponents/shadydom": "^1.0.8",
+    "angular": "^1.4.14",
     "angular-mocks": "1.4.x",
-    "angular-route": "1.4.x"
+    "angular-route": "1.4.x",
     "clone": "^2.1.1",
     "excellentexport": "^2.1.0",
   },

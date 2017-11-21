@@ -14,9 +14,6 @@
     "tests"
   ],
   "dependencies": {
-    "angular": "1.4.14",
-    "angular-mocks": "1.4.14",
-    "angular-route": "1.4.14",
     "bootstrap": "^3.3",
     "webcomponentsjs": "^0.7.22",
     "platform": "Polymer/platform#0.*",
