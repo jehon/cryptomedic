@@ -25,7 +25,7 @@ let TimedMap = (function() {
     get(id) {
       if (this.checkValidity(id)) {
         // clone.js:
-        return Object.clone(cache.get(this)[id]['data'], true);
+        return window.clone(cache.get(this)[id]['data'], true);
       }
       return null;
     }
