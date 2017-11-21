@@ -9,6 +9,7 @@
     "angular": "1.4.x",
     "angular-mocks": "1.4.x",
     "angular-route": "1.4.x"
+    "excellentexport": "^2.1.0",
   },
   "devDependencies": {
     "bower": "1.*",
