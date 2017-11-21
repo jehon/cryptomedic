@@ -56,6 +56,9 @@ module.exports = {
           "args": [
             "-headless"
           ]
+        },
+        "chromeOptions" : {
+          "args" : [ "--headless" ]
         }
       }
     },
@@ -69,9 +72,6 @@ module.exports = {
         "browserName": "chrome",
         "javascriptEnabled": true,
         "acceptSslCerts": true,
-        "chromeOptions" : {
-          "args" : [ "--headless" ]
-        }
       }
     }
   }
