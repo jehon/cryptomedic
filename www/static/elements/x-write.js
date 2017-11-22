@@ -3,7 +3,6 @@
     class XWrite extends JHElement {
         static get properties() {
             return {
-                "name":     "String",
                 "type":     "String",
                 "value":    "String",
                 "inline":   "String",
@@ -22,11 +21,11 @@
 
             switch(this.type) {
                 case "timestamp":
-                    this.innerHTML = `<x-read name='${this.name}' type='${this.type}' value='${this.value}' ${this.inline}></x-read>`;
+                    this.innerHTML = `<x-read type='${this.type}' value='${this.value}' ${this.inline}></x-read>`;
                     this.getValue = () => this.value;
                     break;
                 case "boolean":
-                    this.innerHTML = `<input name='${this.name}' type='checkbox' ${this.value ? 'checked' : ''}/>`;
+                    this.innerHTML = `<input type='checkbox' ${this.value ? 'checked' : ''}/>`;
                     el = this.querySelector('input');
                     this.getValue = () => el.checked;
                     break;
@@ -51,7 +50,7 @@
                     this.getValue = () => el.value;
                     break;
                 case "text":
-                    this.innerHTML = `<textarea name='${this.name}'>${this.value}</textarea>`;
+                    this.innerHTML = `<textarea>${this.value}</textarea>`;
                     el = this.querySelector('textarea');
                     this.getValue = () => el.value;
                     break;
@@ -62,7 +61,7 @@
                     break;
                 default:
                     console.error("Type unknown: ", this.type);
-                    this.innerHTML = `<span name='${this.name}' class='error'>unknown type: ${this.type}</span>`;
+                    this.innerHTML = `<span class='error'>unknown type: ${this.type}</span>`;
                     break;
             }
             

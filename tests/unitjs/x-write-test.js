@@ -25,7 +25,7 @@ describe('x-write-test', function() {
                 expect(element().querySelector('span.error')).toBeNull();
                 let el = element().querySelector('x-read');
                 expect(el).not.toBeNull();
-                expect(el.getAttribute('name')).toBe("test");
+                expect(el.getAttribute('name')).toBeNull();
                 expect(el.getAttribute('type')).toBe("timestamp");
                 expect(element().getValue()).toBe("");
             });
@@ -36,7 +36,7 @@ describe('x-write-test', function() {
                 expect(element().querySelector('span.error')).toBeNull();
                 let el = element().querySelector('x-read');
                 expect(el).not.toBeNull();
-                expect(el.getAttribute('name')).toBe("test");
+                expect(el.getAttribute('name')).toBeNull();
                 expect(el.getAttribute('type')).toBe("timestamp");
                 expect(el.getAttribute('value')).toBe("2016-01-01");
                 expect(element().getValue()).toBe("2016-01-01");
