@@ -1,10 +1,10 @@
 /* global Payment,goThere,extractPrefsFile */
 
-function ctrl_file_bill($scope) {
-  /*
-    Prices are at
-        window.cryptomedic.serverSettings.prices
-  */
+function ctrl_file_bill($scope, $element) {
+    /*
+      Prices are at
+          window.cryptomedic.serverSettings.prices
+    */
 
     $scope.paymentEditor = new Payment();
 
@@ -88,15 +88,16 @@ function ctrl_file_bill($scope) {
         $scope.paymentEditor = new Payment($scope.folder.getByTypeAndId(Payment, id));
     }
 
-    $scope.getPaymentTotal = function() {
-        if (!$scope.folder) {
-            return "?";
-        }
-        return $scope.folder.getFilesRelatedToBill($scope.subid).reduce((acc, file) => {
-            return acc + (file.Amount ? parseInt(file.Amount, 10) : 0)
-        }, 0);
-    }
+    // $scope.getPaymentTotal = function() {
+    //     if (!$scope.folder) {
+    //         return "?";
+    //     }
+    //     return $scope.folder.getFilesRelatedToBill($scope.subid).reduce((acc, file) => {
+    //         return acc + (file.Amount ? parseInt(file.Amount, 10) : 0)
+    //     }, 0);
+    // }
 
+    // Used in bill_summary
     $scope.isEmpty = function(value) {
         if (value == "" || value == "0" || value == 0 || value == "-1" || value == -1 || value == null) {
             return "emptyValue";
@@ -105,4 +106,4 @@ function ctrl_file_bill($scope) {
     }
 }
 
-ctrl_file_bill.$inject = [ "$scope" ];
+// ctrl_file_bill.$inject = [ "$scope", "$element" ];
