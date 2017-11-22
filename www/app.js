@@ -7,7 +7,7 @@ import angular         from 'angular';
 import angularRoute    from 'angular-route';
 
 // Export to excell
-import ExcellentExport from 'excellentexport';-
+import ExcellentExport from 'excellentexport';
 
 // Clone object clone(...)
 import clone           from 'clone';
