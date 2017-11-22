@@ -12,6 +12,7 @@
     "angular-route": "1.4.x",
     "clone": "^2.1.1",
     "excellentexport": "^2.1.0",
+    "webcomponentsjs": "^1.0.2"
   },
   "devDependencies": {
     "bower": "1.*",
@@ -36,7 +37,6 @@
     "selenium-server": "latest",
     "svgo": "latest",
     "sw-precache": "^4.0.0",
-    "webcomponentsjs": "latest",
     "webpack": "^3.8.1"
   },
   "scripts": {
