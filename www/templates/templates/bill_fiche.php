@@ -24,11 +24,11 @@
           </tr>
                 <tr ng-class='{ emptyValue: !currentFile().ExaminerName}'>
             <td>Examiner</td>
-            <td><x-inline edit='{{getModeEdit()}}' id='Bill_ExaminerName' name='ExaminerName' type='list' value='{{ currentFile().ExaminerName }}'></x-inline></td>
+            <td><x-inline edit='{{getModeEdit()}}' id='Bill_ExaminerName' name='ExaminerName' type='list' value='{{ currentFile().ExaminerName }}' list-name='Examiner'></x-inline></td>
           </tr>
                 <tr ng-class='{ emptyValue: !currentFile().Center}'>
             <td>Center where consultation took place</td>
-            <td><x-inline edit='{{getModeEdit()}}' id='Bill_Center' name='Center' type='list' value='{{ currentFile().Center }}'></x-inline></td>
+            <td><x-inline edit='{{getModeEdit()}}' id='Bill_Center' name='Center' type='list' value='{{ currentFile().Center }}' list-name='Centers'></x-inline></td>
           </tr>
         </table>
         <div class='debug_infos'>
