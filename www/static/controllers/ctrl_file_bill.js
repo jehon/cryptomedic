@@ -23,6 +23,11 @@ function ctrl_file_bill($scope, $element) {
         $scope.safeApply();
     }
 
+    $element[0].querySelectorAll('block-bill-category').forEach(el => el.addEventListener('change', () => {
+        $scope.rebuildList();
+        $scope.currentFile().calculate_total_real();
+    }));
+
     $scope.$watch(function() {
         return window.cryptomedic.serverSettings.prices;
     }, function() {
