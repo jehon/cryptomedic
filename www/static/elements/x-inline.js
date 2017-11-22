@@ -3,7 +3,6 @@
     class XInline extends JHElement {
         static get properties() {
             return {
-                "name":     "String",
                 "type":     "String",
                 "value":    "String",
                 "edit":     "Boolean",
@@ -15,7 +14,7 @@
 
         adapt() {
             if (this.edit) {
-                this.innerHTML = `<x-write name='${this.name}' type='${this.type}' 
+                this.innerHTML = `<x-write type='${this.type}' 
                         value='${this.value}' 
                         list='${this.list}' list-name='${this.listName}'
                         inline='${this.inline}' 
@@ -26,7 +25,7 @@
                     this.value = el.getValue();
                 });
             } else {
-                this.innerHTML = `<x-read name='${this.name}' type='${this.type}' value='${this.value}' inline='${this.inline}'></x-read>`;
+                this.innerHTML = `<x-read type='${this.type}' value='${this.value}' inline='${this.inline}'></x-read>`;
             }
         }
 

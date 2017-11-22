@@ -95,7 +95,7 @@ XWriteList = (function() {
                 let escaped = this._escape(item);
                 res += `
                     <span to='${escaped}'>
-                        <input type='radio' name ='radio_name_${this.uuid}' value='${escaped}' ${(this.value == item) ? "checked" : ""}>
+                        <input type='radio' value='${escaped}' ${(this.value == item) ? "checked" : ""}>
                         <span>${item}</span>
                     <br>
                     </span>
@@ -104,7 +104,7 @@ XWriteList = (function() {
             if (this.nullable) {
                 res += `
                     <span to=''>
-                        <input type='radio' name ='radio_name_${this.uuid}' value='' ${(this.value == "") ? "checked" : ""}>
+                        <input type='radio' value='' ${(this.value == "") ? "checked" : ""}>
                         <span>?</span>
                         <br>
                     </span>
@@ -128,18 +128,16 @@ XWriteList = (function() {
 
         _asSelect() {
             let res = "<select>\n";
-            // TODO: set initial value
             for(let item of this.list) {
                 let escaped = this._escape(item);
-                res += `  <option name$='${escaped}' value='${escaped}' ${(this.value == item) ? "selected" : ""}>${item}</option>\n`;
+                res += `  <option value='${escaped}' ${(this.value == item) ? "selected" : ""}>${item}</option>\n`;
 
             }
             if (this.nullable) {
-                res += `  <option name='null' value='' ${(this.value == "") ? "selected" : ""}>?</option>\n`;
+                res += `  <option value='' ${(this.value == "") ? "selected" : ""}>?</option>\n`;
             }
             res += "</select>\n";
 
-            // TODO: Register onclick
             this.shadowRoot.innerHTML = this._withStyle() + res;
         }
 
