@@ -9,7 +9,7 @@
                 "edit":     "Boolean",
                 "inline":   "String",
                 "list":     "Object",
-                "listName": "Object"
+                "listName": "String"
             }
         }
 
