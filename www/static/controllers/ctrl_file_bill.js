@@ -6,15 +6,6 @@ function ctrl_file_bill($scope, $element) {
           window.cryptomedic.serverSettings.prices
     */
 
-    $scope.paymentEditor = new Payment();
-
-    $scope.paymentsList = function() {
-        if ($scope.folder) {
-          return $scope.folder.getFilesRelatedToBill($scope.subid);
-        }
-        return [];
-    }
-
     $scope.rebuildList = function() {
         const list = $element[0].querySelectorAll("block-bill-category").reduce((acc, bl) => {
             return acc.concat(bl.getBillLines());
@@ -60,6 +51,19 @@ function ctrl_file_bill($scope, $element) {
         }
     });
 
+    /**********************/
+    /* Payment management */
+    /**********************/
+
+    $scope.paymentEditor = new Payment();
+
+    $scope.paymentsList = function() {
+        if ($scope.folder) {
+          return $scope.folder.getFilesRelatedToBill($scope.subid);
+        }
+        return [];
+    }
+
     $scope.actionAddPayment = function() {
         if (!$scope.actionValidate("#paymentForm")) {
             alert('You have errors in your data. Please correct them and try again');
@@ -100,15 +104,6 @@ function ctrl_file_bill($scope, $element) {
     $scope.actionEditPayment = function(id) {
         $scope.paymentEditor = new Payment($scope.folder.getByTypeAndId(Payment, id));
     }
-
-    // $scope.getPaymentTotal = function() {
-    //     if (!$scope.folder) {
-    //         return "?";
-    //     }
-    //     return $scope.folder.getFilesRelatedToBill($scope.subid).reduce((acc, file) => {
-    //         return acc + (file.Amount ? parseInt(file.Amount, 10) : 0)
-    //     }, 0);
-    // }
 
     // Used in bill_summary
     $scope.isEmpty = function(value) {
