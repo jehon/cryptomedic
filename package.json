@@ -12,7 +12,7 @@
     "angular-route": "1.4.x",
     "clone": "^2.1.1",
     "excellentexport": "^2.1.0",
-    "webcomponentsjs": "^1.0.2"
+    "webcomponentsjs": "latest"
   },
   "devDependencies": {
     "bower": "1.*",

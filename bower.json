@@ -15,7 +15,6 @@
   ],
   "dependencies": {
     "bootstrap": "^3.3",
-    "webcomponentsjs": "^0.7.22",
     "platform": "Polymer/platform#0.*",
     "polymer": "Polymer/polymer#1.*",
     "moment": "momentjs#^2.15.2",
