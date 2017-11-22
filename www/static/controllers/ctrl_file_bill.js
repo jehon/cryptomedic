@@ -15,6 +15,14 @@ function ctrl_file_bill($scope, $element) {
         return [];
     }
 
+    $scope.rebuildList = function() {
+        const list = $element[0].querySelectorAll("block-bill-category").reduce((acc, bl) => {
+            return acc.concat(bl.getBillLines());
+        }, []);
+        $scope.currentFile().bill_lines = list;
+        $scope.safeApply();
+    }
+
     $scope.$watch(function() {
         return window.cryptomedic.serverSettings.prices;
     }, function() {
