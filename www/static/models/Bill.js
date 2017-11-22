@@ -99,20 +99,16 @@ class Bill extends PatientRelated {
 
   calculate_percentage_asked() {
     if (!this.price) {
-      //console.warn('calculate_percentage_asked(): no price id');
       return 1;
     }
     var sl = this['Sociallevel'];
     if (sl == null) {
-      //console.warn('calculate_percentage_asked(): no social level');
       return 1;
     }
     if (typeof(this.price['socialLevelPercentage_' + sl]) == 'undefined') {
-      //console.warn('calculate_percentage_asked(): no social level in price for sl ' + sl);
       return 1;
     }
     var perc = this.price['socialLevelPercentage_' + sl];
-    // console.log("price", this.price, sl, perc)
     return perc;
   }
 
