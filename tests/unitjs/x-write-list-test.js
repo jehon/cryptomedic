@@ -1,7 +1,7 @@
 'use strict';
 /* global testComponent */
 
-describe('test-x-write-list', function() {
+describe('x-write-list-test', function() {
   let listRadio  = [ 'truc' , 'brol' , 'machin', 'chose' ];
   let listSelect = [ 'truc' , 'brol' , 'machin', 'chose', 'bazar', 'ça', 'là' ];
 
