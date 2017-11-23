@@ -1,5 +1,7 @@
 
 (function() {
+    const element = Symbol("element");
+
     class XInline extends JHElement {
         static get properties() {
             return {
@@ -19,10 +21,10 @@
                         list='${this.list}' list-name='${this.listName}'
                         inline='${this.inline}' 
                     ></x-write>`;
-                let el = this.querySelector("x-write");
-                el.addEventListener("change", () => {
-                    this.fire("change", el.getValue());
                     this.value = el.getValue();
+                this[element] = this.querySelector("x-write");
+                this[element].addEventListener("change", () => {
+                    this.fire("change", this[element].getValue());
                 });
             } else {
                 this.innerHTML = `<x-read type='${this.type}' value='${this.value}' inline='${this.inline}'></x-read>`;
@@ -31,6 +33,7 @@
 
         getValue() {
             return this.value;
+            return this[element].getValue();
         }
     }
 
