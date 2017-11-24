@@ -15,8 +15,6 @@ describe("form-test", function() {
         })
 	}
 
-// TODO: test select, x-write-list
-
 	it("should skip empty values", function(done) {
 		form(`
   			<input name='n1' value=''>
@@ -25,11 +23,15 @@ describe("form-test", function() {
   				<option value='n3val1'>
   				<option value='n3val2'>
   			</select>
-  			<x-write-list name='n4' list='[ "n4val1", "n4val2", "n4val3" ]'></x-write-list>
-  			<x-write-list name='n4' list='[ "n4val1", "n4val2", "n4val3", "n4val4", "n4val5", "n4val6", "n4val7" ]'></x-write-list>
-			`, {
+  			<x-write name='n4' type='list' list='[ "n4val1", "n4val2", "n4val3" ]'></x-write>
+  			<x-write-list edit name='n5' type='list' list='[ "n5val1", "n5val2", "n5val3", "n5val4", "n5val5", "n5val6", "n5val7" ]'></x-write-list>
+  			<x-inline edit name='n6' type='list' list='[ "n6val1", "n6val2", "n6val3" ]'></x-inline>
+  			<x-inline edit name='n7' type='char'></x-inline>
+ 			`, {
 				n3: 'n3val1',
-				n4: 'n4val1'
+				n4: 'n4val1',
+				n5: 'n5val1',
+				n6: 'n6val1'
 			}, done
 		);
 	})
@@ -42,16 +44,19 @@ describe("form-test", function() {
   				<option value='n3val1'>
   				<option value='n3val2' selected>
   			</select>
-  			<x-write-list name='n4' value='n4val2' list='[ "n4val1", "n4val2", "n4val3" ]'></x-write-list>
-  			<x-write-list name='n5' value='n5val2' list='[ "n5val1", "n5val2", "n5val3", "n5val4", "n5val5", "n5val6", "n5val7" ]'></x-write-list>
+        <x-write name='n4' type='list' value='n4val2' list='[ "n4val1", "n4val2", "n4val3" ]'></x-write>
+        <x-write-list name='n5' value='n5val2' list='[ "n5val1", "n5val2", "n5val3", "n5val4", "n5val5", "n5val6", "n5val7" ]'></x-write-list>
+        <x-inline edit name='n6' value='n6val2'  type='list' list='[ "n6val1", "n6val2", "n6val3" ]'></x-inline>
+        <x-inline edit name='n7' value='n7val' type='char'></x-inline>
 			`, {
 				n1: 'n1val',
 				n2: 'n2val',
 				n3: 'n3val2',
 				n4: 'n4val2',
-				n5: 'n5val2'
+				n5: 'n5val2',
+				n6: 'n6val2',
+				n7: 'n7val'
 			}, done
 		);
 	})
-
 })

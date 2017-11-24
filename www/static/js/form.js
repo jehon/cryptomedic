@@ -3,29 +3,24 @@ function formGetContent(form, prototype = {}) {
   let data = new prototype.constructor();
   Object.assign(data, prototype);
 
+  let formElement = form;
+  if (!(form instanceof HTMLElement)) {
+    formElement = document.querySelector(form);
+  }
+
   // for(let i of document.querySelector(form).querySelectorAll("input:not([type=radio]), select, input[type=radio]:checked")) {
-  for(let i of document.querySelector(form).querySelectorAll("[name]")) {
+  for(let i of formElement.querySelectorAll("[name]")) {
     if (i.disabled) {
-      // console.log("disabled element: ", i);
       break;
     }
 
-    // Skip hidden input
-    // if (i.clientHeight == 0) {
-    //   console.log("hidden: ", i);
-    //   continue;
-    // }
-
+    // Only take the selected radio
     if (i.matches("[type=radio") && !i.matches("[checked]")) {
       continue;
     }
 
-    if (typeof(i.value) == "undefined") {
-      i.value = null;
-      continue;
-    }
-
     let name = i.getAttribute('name');
+
     let value = i.value;
     if (typeof(i.getValue) == 'function') {
       value = i.getValue();
@@ -36,8 +31,8 @@ function formGetContent(form, prototype = {}) {
       continue;
     }
 
+    // Skip empty values
     if (value === "") {
-      value = null;
       continue;
     }
 
@@ -50,7 +45,6 @@ function formGetContent(form, prototype = {}) {
         case "file":
           // http://blog.teamtreehouse.com/uploading-files-ajax
           // We can pass the "File" object to FormData, it will handle it for us....
-          // var file = ; //document.getElementById("fileForUpload").files[0];
           data[name] = i.files[0];
           break;
       }

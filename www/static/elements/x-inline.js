@@ -18,10 +18,9 @@
             if (this.edit) {
                 this.innerHTML = `<x-write type='${this.type}' 
                         value='${this.value}' 
-                        list='${this.list}' list-name='${this.listName}'
+                        list='${JSON.stringify(this.list)}' list-name='${this.listName}'
                         inline='${this.inline}' 
                     ></x-write>`;
-                    this.value = el.getValue();
                 this[element] = this.querySelector("x-write");
                 this[element].addEventListener("change", () => {
                     this.fire("change", this[element].getValue());
@@ -32,7 +31,6 @@
         }
 
         getValue() {
-            return this.value;
             return this[element].getValue();
         }
     }
