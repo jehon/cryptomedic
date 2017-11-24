@@ -49,7 +49,7 @@ XWriteList = (function() {
             }
             if (this.list.length == 0) {
                 this.mode = 'empty';
-                this.shadowRoot.innerHTML = "No list set";
+                this.shadowRoot.innerHTML = "X-Write-List: no list set";
             } else {
                 if (this.list.length > 5) {
                     this.mode = 'select';
@@ -128,13 +128,13 @@ XWriteList = (function() {
 
         _asSelect() {
             let res = "<select>\n";
+            if (this.nullable) {
+                res += `  <option value='' ${(this.value == "") ? "selected" : ""}>?</option>\n`;
+            }
             for(let item of this.list) {
                 let escaped = this._escape(item);
                 res += `  <option value='${escaped}' ${(this.value == item) ? "selected" : ""}>${item}</option>\n`;
 
-            }
-            if (this.nullable) {
-                res += `  <option value='' ${(this.value == "") ? "selected" : ""}>?</option>\n`;
             }
             res += "</select>\n";
 
