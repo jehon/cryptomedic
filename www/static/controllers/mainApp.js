@@ -183,7 +183,6 @@ mainApp.controller('ctrl', [ '$scope', function($scope) {
 
   $scope.authorizedList = [];
   JHAuthorized.addCallback(authorizedList => {
-    console.log("update authorized list", authorizedList);
     $scope.authorizedList = authorizedList;
     $scope.safeApply();
   })
