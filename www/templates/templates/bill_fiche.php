@@ -51,13 +51,22 @@
       <fieldset>
         <legend>Social Data</legend>
         <table>
-          <?php (new t("Bill.sl_familySalary"))->tr("Family Salary in a Month")->p(); ?>
-          <?php (new t("Bill.sl_numberOfHouseholdMembers"))->tr("Number of Houslehold Members")->p(); ?>
+          <tr ng-class='{ emptyValue: !currentFile().sl_familySalary}'>
+            <td>Family Salary in a Month</td>
+            <td><x-inline edit='{{getModeEdit()}}' id='Bill_sl_familySalary' name='sl_familySalary' type='numeric' value='{{currentFile().sl_familySalary}}'></x-inline></td>
+          </tr>
+          <tr ng-class='{ emptyValue: !currentFile().sl_numberOfHouseholdMembers}'>
+            <td>Number of Houslehold Members</td>
+            <td><x-inline edit='{{getModeEdit()}}' id='Bill_sl_numberOfHouseholdMembers' name='sl_numberOfHouseholdMembers' type='numeric' value='{{currentFile().sl_numberOfHouseholdMembers}}'></x-inline></td>
+          </tr>
           <tr>
             <td>Salary ratio</td>
             <td><span id='salary_ratio' catch-it ng-model="folder" tryit="currentFile().ratioSalary()">{{ currentFile().ratioSalary() | number:0 }}</span></td>
           </tr>
-          <?php (new t("Bill.Sociallevel"))->id("calculated_social_level")->readOnly()->tr("Calculated Social Level")->p(); ?>
+          <tr ng-class='{ emptyValue: !currentFile().Sociallevel}'>
+            <td>Calculated Social Level</td>
+            <td><x-read id='calculated_social_level' name='Sociallevel' type='list' list-name='SocialLevel' value='{{currentFile().Sociallevel}}'></x-read></td>
+          </tr>
         </table>
       </fieldset>
       <fieldSet>
@@ -67,8 +76,11 @@
             <td>Raw Calculated total</td>
             <td id='total_calculated_raw'>{{currentFile().calculate_total_real()}}<?php new t("Bill.total_real"); ?></td>
           </tr>
-          <?php (new t("Bill.Sociallevel"))->readOnly()->tr("Social Level")->p(); ?>
-                <tr>
+          <tr ng-class='{ emptyValue: !currentFile().Sociallevel}'>
+            <td>Social Level</td>
+            <td><x-inline edit='{{getModeEdit()}}' id='Bill_Sociallevel' name='Sociallevel' type='list' list-name='SocialLevel' value='{{ currentFile().Sociallevel }}'></x-inline></td>
+          </tr>
+          <tr>
             <td>Percentage of price to be asked</td>
             <td id='percentage'>
               <numeral-js number="{{currentFile().calculate_percentage_asked()}}" format="0%" print></numeral-js>
