@@ -51,12 +51,13 @@
             super.adapt();
             this[title].innerHTML = this.price.title;
             this[price].innerHTML = this.price.Amount;
-            if (this.value) {
+            if (this.value && typeof(this.value) == 'object' && isFinite(this.value.Amount)) {
                 this[input].setAttribute("value", this.value.Amount);
+                this[total].innerHTML = this.getTotal();
             } else {
                 this[input].setAttribute("value", 0);
+                this[total].innerHTML = 0;
             }
-            this[total].innerHTML = this.getTotal();
         }
 
         getTotal() {
