@@ -1,7 +1,3 @@
-'use strict';
-
-// TODO: there seems to have a race condition around here...
-
 class Bill extends PatientRelated {
   getModel() {
     return 'Bill';
@@ -36,54 +32,79 @@ class Bill extends PatientRelated {
     }
   }
 
-  ratioSalary() {
-  /**
-    From TC:
-    Level 0 is when the familial ration is < 300
-    Level 1 is when the familial ration is 300<  FR < 500
-    Level 2 is when the familial ration is 500< FR < 1500
-    Level 3 is when the familial ration is 1500< FR < 3000
-    Level 4 is when the familial ration is 3000< FR
-   */
-    this.Sociallevel = 4;
+  getRatioSalary() {
     if (this.isNotZero('sl_numberOfHouseholdMembers')) {
-      var rs = Math.ceil(this.sl_familySalary / this.sl_numberOfHouseholdMembers);
+      return  Math.ceil(this.sl_familySalary / this.sl_numberOfHouseholdMembers);
+    }
+    return 0;      
+  }
 
-      if (rs <= 300)  {
-        this.Sociallevel = 0;
-      } else {
-        if (rs <= 500) {
-          this.Sociallevel = 1;
+  getCalculatedSocialLevel() {
+    const rs = this.getRatioSalary();
+    /**
+      From TC:
+      Level 0 is when the familial ration is < 300
+      Level 1 is when the familial ration is 300<  FR < 500
+      Level 2 is when the familial ration is 500< FR < 1500
+      Level 3 is when the familial ration is 1500< FR < 3000
+      Level 4 is when the familial ration is 3000< FR
+     */
+      if (rs < 0) {
+        return 4;
+      }
+
+      if (this.isNotZero('sl_numberOfHouseholdMembers')) {
+        if (rs <= 300)  {
+          return 0;
         } else {
-          if (rs <= 1500) {
-            this.Sociallevel = 2;
+          if (rs <= 500) {
+            return 1;
           } else {
-            if (rs <= 3000) {
-              this.Sociallevel = 3;
+            if (rs <= 1500) {
+              return 2;
             } else {
-              this.Sociallevel = 4;
+              if (rs <= 3000) {
+                return 3;
+              }
             }
           }
         }
       }
+      return 4;
     }
-    return this.Sociallevel;
+
+  getPriceId() {
+    if (window.cryptomedic && window.cryptomedic.serverSettings && window.cryptomedic.serverSettings.prices && this.Date) {
+      const prices = window.cryptomedic.serverSettings.prices;
+      for(const i in prices) {
+        const p = prices[i];
+        if (((p['datefrom'] == null) || (p['datefrom'] <= this.Date)) && ((p['dateto'] == null) || (p['dateto'] > this.Date))) {
+          return i;
+        }
+      }
+    }
+    return -1;
   }
 
-  calculate_total_real() {
-    if (!this.price) {
-      this.total_real = 0;
-      this.total_asked = 0;
-      return -1;
+  getPrice() {
+    let i = this.getPriceId();
+    if (i < 0) {
+      return null;
     }
-    if (!this.bill_lines)  {
+    const prices = window.cryptomedic.serverSettings.prices;
+    return prices[i];
+  }
+
+  calculateTotalReal() {
+    const price = this.getPrice();
+    if (!price || !this.bill_lines) {
       this.total_real = 0;
     } else {
       this.total_real = this.bill_lines.reduce((acc, bval) => {
         if (bval.Amount <= 0) {
           return acc;
         }
-        return acc + this.getPriceLines().reduce((acc, pval) => {
+        return acc + this.getPrice().price_lines.reduce((acc, pval) => {
           if (bval.title == pval.title) {
             return acc + parseInt(bval.Amount) * parseInt(pval.Amount);
           }
@@ -91,57 +112,30 @@ class Bill extends PatientRelated {
         }, 0);
       }, 0);
     }
-    this.total_asked = this.total_real * this.calculate_percentage_asked();
     return this.total_real;
   }
 
-  calculate_percentage_asked() {
-    if (!this.price) {
+  getPercentageAsked() {
+    const price = this.getPrice();
+    const sl = this.getCalculatedSocialLevel();
+
+    if (!price) {
       return 1;
     }
-    var sl = this['Sociallevel'];
-    if (sl == null) {
-      return 1;
+
+    if (price['socialLevelPercentage_' + sl]) {
+      return price['socialLevelPercentage_' + sl];
     }
-    if (typeof(this.price['socialLevelPercentage_' + sl]) == 'undefined') {
-      return 1;
-    }
-    var perc = this.price['socialLevelPercentage_' + sl];
-    return perc;
+    return 1;
   }
 
-  getPriceLines() {
-    if (!this.price) {
-      return [];
-    }
-    return this.price.price_lines;
+  getPercentageAskedAsString() {
+    return Math.round(this.getPercentageAsked() * 100) + '%';
   }
 
-  calculatePriceId() {
-    if ((!window.cryptomedic || ! window.cryptomedic.serverSettings || ! window.cryptomedic.serverSettings.prices) 
-        || (typeof(this.Date) == 'undefined')) {
-      this.price_id = -1;
-      this.price = false;
-      return -1;
-    }
-    const prices = window.cryptomedic.serverSettings.prices;
-    this.price_id = -1;
-    for(const i in prices) {
-      const p = prices[i];
-      if (((p['datefrom'] == null) || (p['datefrom'] <= this.Date))
-        && ((p['dateto'] == null) || (p['dateto'] > this.Date))) {
-        this.price_id = i;
-        this.price = prices[i];
-      }
-    }
-    if (this.price_id < 0) {
-      throw new Error('Price Id not set');
-    }
-    this.calculate_total_real();
-  }
-
-  getPriceId() {
-    return this.price_id;
+  calculateTotalAsked() {
+    this.total_asked = this.calculateTotalReal() * this.getPercentageAsked();
+    return this.total_asked;
   }
 
   validate(res) {

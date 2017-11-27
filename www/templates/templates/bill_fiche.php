@@ -18,54 +18,49 @@
       <FieldSet>
         <legend>General data</legend>
         <table>
-          <tr ng-class='{ emptyValue: !currentFile().Date}'>
+          <tr>
             <td>Date</td>
-            <td><x-inline edit='{{getModeEdit()}}' id='Bill_Date' name='Date' type='date' value='{{ currentFile().Date }}'></x-inline></td>
+            <td><x-inline editable-bill name='Date' type='date'></x-inline></td>
           </tr>
-          <tr ng-class='{ emptyValue: !currentFile().ExaminerName}'>
+          <tr>
             <td>Examiner</td>
-            <td><x-inline edit='{{getModeEdit()}}' id='Bill_ExaminerName' name='ExaminerName' type='list' value='{{ currentFile().ExaminerName }}' list-name='Examiner'></x-inline></td>
+            <td><x-inline editable-bill name='ExaminerName' type='list' list-name='Examiner'></x-inline></td>
           </tr>
-          <tr ng-class='{ emptyValue: !currentFile().Center}'>
+          <tr>
             <td>Center where consultation took place</td>
-            <td><x-inline edit='{{getModeEdit()}}' id='Bill_Center' name='Center' type='list' value='{{ currentFile().Center }}' list-name='Centers'></x-inline></td>
+            <td><x-inline editable-bill name='Center' type='list' list-name='Centers'></x-inline></td>
           </tr>
         </table>
         <div class='debug_infos'>
           price_id <x-inline id='Bill_price_id' name='price_id' type='numeric' value='{{ currentFile().price_id }}'></x-inline><br>
         </div>
       </FieldSet>
-      <block-bill-category edit='{{getModeEdit()}}' category='consult' value='{{currentFile().bill_lines}}' price-lines='{{currentFile().getPriceLines()}}'>
-      </block-bill-category>
-      <block-bill-category edit='{{getModeEdit()}}' category='medecine' value='{{currentFile().bill_lines}}' price-lines='{{currentFile().getPriceLines()}}'>
-      </block-bill-category>
-      <block-bill-category edit='{{getModeEdit()}}' category='other' value='{{currentFile().bill_lines}}' price-lines='{{currentFile().getPriceLines()}}'>
-      </block-bill-category>
-      <block-bill-category edit='{{getModeEdit()}}' category='workshop' value='{{currentFile().bill_lines}}' price-lines='{{currentFile().getPriceLines()}}'>
-      </block-bill-category>
-      <block-bill-category edit='{{getModeEdit()}}' category='surgical' value='{{currentFile().bill_lines}}' price-lines='{{currentFile().getPriceLines()}}'>
-      </block-bill-category>
+      <block-bill-category editable-bill category='consult'></block-bill-category>
+      <block-bill-category editable-bill category='medecine'></block-bill-category>
+      <block-bill-category editable-bill category='other'></block-bill-category>
+      <block-bill-category editable-bill category='workshop'></block-bill-category>
+      <block-bill-category editable-bill category='surgical'></block-bill-category>
     </div>
     <div class="col-md-6">
       <?php require(__DIR__ . "/../helpers/patient-related.html");?>
       <fieldset>
         <legend>Social Data</legend>
         <table>
-          <tr ng-class='{ emptyValue: !currentFile().sl_familySalary}'>
+          <tr>
             <td>Family Salary in a Month</td>
-            <td><x-inline edit='{{getModeEdit()}}' id='Bill_sl_familySalary' name='sl_familySalary' type='numeric' value='{{currentFile().sl_familySalary}}'></x-inline></td>
+            <td><x-inline editable-bill name='sl_familySalary' type='numeric'></x-inline></td>
           </tr>
-          <tr ng-class='{ emptyValue: !currentFile().sl_numberOfHouseholdMembers}'>
+          <tr>
             <td>Number of Houslehold Members</td>
-            <td><x-inline edit='{{getModeEdit()}}' id='Bill_sl_numberOfHouseholdMembers' name='sl_numberOfHouseholdMembers' type='numeric' value='{{currentFile().sl_numberOfHouseholdMembers}}'></x-inline></td>
+            <td><x-inline editable-bill name='sl_numberOfHouseholdMembers' type='numeric'></x-inline></td>
           </tr>
           <tr>
             <td>Salary ratio</td>
-            <td><span id='salary_ratio' catch-it ng-model="folder" tryit="currentFile().ratioSalary()">{{ currentFile().ratioSalary() | number:0 }}</span></td>
+            <td><span function='getRatioSalary'></span></td>
           </tr>
-          <tr ng-class='{ emptyValue: !currentFile().Sociallevel}'>
+          <tr>
             <td>Calculated Social Level</td>
-            <td><x-read id='calculated_social_level' name='Sociallevel' type='list' list-name='SocialLevel' value='{{currentFile().Sociallevel}}'></x-read></td>
+            <td><span function='getCalculatedSocialLevel'></span></td>
           </tr>
         </table>
       </fieldset>
@@ -74,21 +69,21 @@
         <table>
           <tr>
             <td>Raw Calculated total</td>
-            <td id='total_calculated_raw'>{{currentFile().calculate_total_real()}}<?php new t("Bill.total_real"); ?></td>
+            <td><span function='calculateTotalReal'></span></td>
           </tr>
-          <tr ng-class='{ emptyValue: !currentFile().Sociallevel}'>
+          <tr>
             <td>Social Level</td>
-            <td><x-inline edit='{{getModeEdit()}}' id='Bill_Sociallevel' name='Sociallevel' type='list' list-name='SocialLevel' value='{{ currentFile().Sociallevel }}'></x-inline></td>
+            <td><x-inline editable-bill name='Sociallevel' type='list' list-name='SocialLevel'></x-inline></td>
           </tr>
           <tr>
             <td>Percentage of price to be asked</td>
-            <td id='percentage'>
-              <numeral-js number="{{currentFile().calculate_percentage_asked()}}" format="0%" print></numeral-js>
+            <td>
+              <span function='getPercentageAskedAsString'></span>
             </td>
           </tr>
           <tr>
             <td>Price to be asked to the patient</td>
-            <td id='total_calculated_asked'>{{currentFile().total_asked | number:0 }}<?php (new t("Bill.total_asked")); ?></td>
+            <td><span function='calculateTotalAsked'></span></td>
           </tr>
         </table>
       </FieldSet>
@@ -96,9 +91,7 @@
         <legend>Recieved payment</legend>
           <tr>
             <td>Payment already recieved</td>
-            <td id='first_payment'>
-              <input type='number' id='first_payment' ng-model='currentFile().first_payment'>
-            </td>
+            <td><x-write type='numeric' name='first_payment'></td>
           </tr>
       </fieldset>
     </div>
