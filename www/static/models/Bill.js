@@ -46,30 +46,28 @@ class Bill extends PatientRelated {
     Level 4 is when the familial ration is 3000< FR
    */
     this.Sociallevel = 4;
-    if (!this.isNotZero('sl_numberOfHouseholdMembers')) {
-      throw new DataMissingException('sl_numberOfHouseholdMembers');
-    }
+    if (this.isNotZero('sl_numberOfHouseholdMembers')) {
+      var rs = Math.ceil(this.sl_familySalary / this.sl_numberOfHouseholdMembers);
 
-    var rs = Math.ceil(this.sl_familySalary / this.sl_numberOfHouseholdMembers);
-
-    if (rs <= 300)  {
-      this.Sociallevel = 0;
-    } else {
-      if (rs <= 500) {
-        this.Sociallevel = 1;
+      if (rs <= 300)  {
+        this.Sociallevel = 0;
       } else {
-        if (rs <= 1500) {
-          this.Sociallevel = 2;
+        if (rs <= 500) {
+          this.Sociallevel = 1;
         } else {
-          if (rs <= 3000) {
-            this.Sociallevel = 3;
+          if (rs <= 1500) {
+            this.Sociallevel = 2;
           } else {
-            this.Sociallevel = 4;
+            if (rs <= 3000) {
+              this.Sociallevel = 3;
+            } else {
+              this.Sociallevel = 4;
+            }
           }
         }
       }
     }
-    return rs;
+    return this.Sociallevel;
   }
 
   calculate_total_real() {
@@ -119,20 +117,21 @@ class Bill extends PatientRelated {
     return this.price.price_lines;
   }
 
-  calculatePriceId(prices) {
-    if (typeof(this.Date) == 'undefined' || !prices) {
-      this.price_id = 1;
-      return 0;
+  calculatePriceId() {
+    if ((!window.cryptomedic || ! window.cryptomedic.serverSettings || ! window.cryptomedic.serverSettings.prices) 
+        || (typeof(this.Date) == 'undefined')) {
+      this.price_id = -1;
+      this.price = false;
+      return -1;
     }
+    const prices = window.cryptomedic.serverSettings.prices;
     this.price_id = -1;
-    var t = this;
-    var dref = this.Date;
-    for(var i in prices) {
-      var p = prices[i];
-      if (((p['datefrom'] == null) || (p['datefrom'] <= dref))
-        && ((p['dateto'] == null) || (p['dateto'] > dref))) {
-        t.price_id = i;
-        t.price = prices[i];
+    for(const i in prices) {
+      const p = prices[i];
+      if (((p['datefrom'] == null) || (p['datefrom'] <= this.Date))
+        && ((p['dateto'] == null) || (p['dateto'] > this.Date))) {
+        this.price_id = i;
+        this.price = prices[i];
       }
     }
     if (this.price_id < 0) {
