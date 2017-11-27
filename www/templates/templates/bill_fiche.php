@@ -32,7 +32,7 @@
           </tr>
         </table>
         <div class='debug_infos'>
-          price_id <x-inline id='Bill_price_id' name='price_id' type='numeric' value='{{ currentFile().price_id }}'></x-inline><br>
+          price_id <span function='getPriceId'></span><br>
         </div>
       </FieldSet>
       <block-bill-category editable-bill category='consult'></block-bill-category>
