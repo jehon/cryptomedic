@@ -77,8 +77,6 @@ function formSwitch(form, tag, mode) {
         formElement = document.querySelector(form);
     }
 
-    console.log("FormSwitch: ", tag, mode);
-
     formElement.querySelectorAll(`[${tag}]`).forEach(el => {
         if (mode == "read") {
             el.removeAttribute('edit');
