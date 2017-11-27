@@ -52,3 +52,38 @@ function formGetContent(form, prototype = {}) {
   }
   return data;
 }
+
+function formFillIn(form, object) {
+    let formElement = form;
+    if (!(form instanceof HTMLElement)) {
+        formElement = document.querySelector(form);
+    }
+
+    Object.keys(object).forEach(k => {
+        formElement.querySelectorAll(`[name='${k}']`).forEach(el => el.setAttribute("value", (object[k] ? object[k] : "")));
+    });
+
+    formElement.querySelectorAll(`[function]`).forEach(el => {
+        fn = el.getAttribute('function');
+        if (fn in object) {
+            el.innerHTML = object[fn]()
+        }
+    });
+}
+
+function formSwitch(form, tag, mode) {
+    let formElement = form;
+    if (!(form instanceof HTMLElement)) {
+        formElement = document.querySelector(form);
+    }
+
+    console.log("FormSwitch: ", tag, mode);
+
+    formElement.querySelectorAll(`[${tag}]`).forEach(el => {
+        if (mode == "read") {
+            el.removeAttribute('edit');
+        } else {
+            el.setAttribute('edit', tag);
+        }
+    })
+}
