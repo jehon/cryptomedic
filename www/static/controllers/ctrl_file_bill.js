@@ -36,19 +36,11 @@ function ctrl_file_bill($scope, $element) {
     });
 
     $scope.$watch('currentFile().sl_numberOfHouseholdMembers', function() {
-        try {
-            $scope.currentFile().ratioSalary();
-        } catch (e) {
-            // Nothing to do
-        }
+        $scope.currentFile().ratioSalary();
     });
 
     $scope.$watch('currentFile().sl_familySalary', function() {
-        try {
-            $scope.currentFile().ratioSalary();
-        } catch (e) {
-            // Nothing to do
-        }
+        $scope.currentFile().ratioSalary();
     });
 
     /**********************/
