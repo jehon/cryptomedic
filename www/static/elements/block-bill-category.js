@@ -54,8 +54,11 @@
             if (!this.priceLines || this.priceLines.length < 1) {
                 return;
             }
+            this.removeAttribute("hidden");
+
             this[tbody].innerHTML = "";
             this[legend].innerHTML = this.category
+            let displayed = false;
             this.priceLines.forEach((p) => {
                 if (p.type == this.category) {
                     let v = 0;
@@ -64,12 +67,18 @@
                             return acc || (v.title == p.title ? v : false);
                         }, false);
                     }
-                    this[tbody].appendChild(this.createElementAndAddThem(`<block-bill-line ${this.edit ? 'edit' : '' } style='display: table-row' value='${JSON.stringify(v)}' price='${JSON.stringify(p)}'></block-bill-line>`, 
+                    if (v.Amount || this.edit) {
+                        this[tbody].appendChild(this.createElementAndAddThem(`<block-bill-line ${this.edit ? 'edit' : '' } style='display: table-row' value='${JSON.stringify(v)}' price='${JSON.stringify(p)}'></block-bill-line>`, 
                         null)[0]);
+                        displayed = true;
+                    }
                 }
             })
             this.querySelectorAll("block-bill-line").forEach(el => el.addEventListener("change", () => this._adaptTotal()));
             this._adaptTotal();
+            if (!displayed) {
+                this.setAttribute("hidden", "empty-edit")
+            }
         }
 
         getTotal() {

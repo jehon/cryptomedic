@@ -41,9 +41,9 @@ describe('block-bill-category-test', function() {
         })
     });
 
-    webDescribe("instanciate with empty bills", `<block-bill-category value="" price-lines='${JSON.stringify(priceCategory)}' category='cat'></block-bill-category>`, function(element) {
+    webDescribe("instanciate with empty bills should be empty", `<block-bill-category value="" price-lines='${JSON.stringify(priceCategory)}' category='cat'></block-bill-category>`, function(element) {
         it("should instanciate empty", function() {
-            expect(element().querySelectorAll("tbody > *").length).toBe(3);
+            expect(element().querySelectorAll("tbody > *").length).toBe(0);
             expect(element().getTotal()).toBe(0);
         })
     });
@@ -51,7 +51,7 @@ describe('block-bill-category-test', function() {
     webDescribe("instanciate with price and bill", `<block-bill-category value='${JSON.stringify(value)}' price-lines='${JSON.stringify(priceCategory)}' category='cat'></block-bill-category>`, function(element) {
         it("should instanciate", function() {
             expect(element().textContent).toContain("Price 1");
-            expect(element().textContent).toContain("Price 2");
+            expect(element().textContent).not.toContain("Price 2");
             expect(element().textContent).not.toContain("Price 3");
             expect(element().textContent).toContain("Other");
             expect(element().getTotal()).toBe(105);
