@@ -105,5 +105,3 @@ function ctrl_file_bill($scope, $element) {
         return "";
     }
 }
-
-// ctrl_file_bill.$inject = [ "$scope", "$element" ];
