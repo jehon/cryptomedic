@@ -3,15 +3,33 @@ function formGetContent(form, prototype = {}) {
   let data = new prototype.constructor();
   Object.assign(data, prototype);
 
+  // form can be:
+  //  - css selector
+  //  - NodeList
+  //  - HTMLElement
+
   let formElement = form;
-  if (!(form instanceof HTMLElement)) {
+  if (typeof(form) == "string") {
+    // CSS Selector -> HTMLElement
     formElement = document.querySelector(form);
   }
 
-  // for(let i of document.querySelector(form).querySelectorAll("input:not([type=radio]), select, input[type=radio]:checked")) {
-  for(let i of formElement.querySelectorAll("[name]")) {
+  let elementsList = formElement;
+  if (formElement instanceof HTMLElement) {
+    // HTMLElement -> NodeList
+    elementsList = formElement.querySelectorAll("[name]");
+  }
+
+  for(let i of elementsList) {
+    // Skip disabled elements
     if (i.disabled) {
-      break;
+      continue;
+    }
+
+    // Skip empty names
+    let name = i.getAttribute('name');
+    if (!name) {
+      continue;
     }
 
     // Only take the selected radio
@@ -19,36 +37,40 @@ function formGetContent(form, prototype = {}) {
       continue;
     }
 
-    let name = i.getAttribute('name');
-
     let value = i.value;
+
+    // If getValue() exists, take it
     if (typeof(i.getValue) == 'function') {
       value = i.getValue();
     }
 
-    if (typeof(value) == 'object') {
-      Object.assign(data, value);
-      continue;
-    }
+    // if (typeof(value) == 'object') {
+    //   Object.assign(data, value);
+    //   continue;
+    // }
 
     // Skip empty values
     if (value === "") {
       continue;
     }
 
-    data[name] = value;
+    // Treat some special cases
     if (i.type) {
       switch(i.type) {
         case "number":
-          data[name] = Number.parseInt(value);
+          value = Number.parseInt(value);
           break;
+        /* istanbul ignore next: impossible to fill in a input[type=file] element - see MSDN */
         case "file":
           // http://blog.teamtreehouse.com/uploading-files-ajax
           // We can pass the "File" object to FormData, it will handle it for us....
-          data[name] = i.files[0];
+          value = i.files[0];
           break;
       }
     }
+
+    // Assign it
+    data[name] = value;
   }
   return data;
 }

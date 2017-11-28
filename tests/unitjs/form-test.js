@@ -1,22 +1,54 @@
 
 describe("form-test", function() {
-	let i = 0;
+	webDescribe("should work with css selector", `<form id='testid0'>
+  			<input name='n1' value='n1val'>
+		</form>`, function(element) {
+		it("should get values correctly", function() {
+	 		expect(formGetContent('#testid0')).toEqual({
+				n1: 'n1val'
+			});
+		});
+	});
 
-	function form(html = "", data = {}, done) {
-		let v = i++
-        return testComponent(`<form id='testid${v}'>${html}</forms>`).then(el => {
-  		    expect(el).not.toBeNull();
-  		    let res = formGetContent(`#testid${v}`, {});
+	webDescribe("should work with HTML Element", `<form>
+  			<input name='n1' value='n1val'>
+		</form>`, function(element) {
+		it("should get values correctly", function() {
+	 		expect(formGetContent(element())).toEqual({
+				n1: 'n1val'
+			});
+		});
+	});
 
-      		expect(res).toEqual(data);
+	webDescribe("should skip elements disabled", `<form><input disabled name='n1' value='n1val'></form>`, function(element) {
+		it("should get values correctly", function() {
+	 		expect(formGetContent(element())).toEqual({});
+		});
+	});
 
-  		    el.testDone();
-  		    done();
-        })
-	}
+	webDescribe("should parse int", `<form><input type='number' name='n1' value='14'></form>`, function(element) {
+		it("should get values correctly", function() {
+	 		expect(formGetContent(element())).toEqual({ n1: 14 });
+		});
+	});
 
-	it("should skip empty values", function(done) {
-		form(`
+	webDescribe("should work with NodeList", `<form><input name='n1' value='n1val'></form>`, function(element) {
+		it("should get values correctly", function() {
+	 		expect(formGetContent(element().querySelectorAll("input"))).toEqual({
+				n1: 'n1val'
+			});
+		});
+	});
+
+	webDescribe("should skip elements without name", `<form><input value='n1val'></form>`, function(element) {
+		it("should get values correctly", function() {
+			// When not giving NodeList, the non-named are filtered high in the list
+	 		expect(formGetContent(element().querySelectorAll("input"))).toEqual({});
+		});
+	});
+
+
+	webDescribe("should skip empty values", `<form>
   			<input name='n1' value=''>
   			<input type='radio' name='n2' value='n2val'>
   			<select name='n3'>
@@ -27,28 +59,31 @@ describe("form-test", function() {
   			<x-write-list edit name='n5' type='list' list='[ "n5val1", "n5val2", "n5val3", "n5val4", "n5val5", "n5val6", "n5val7" ]'></x-write-list>
   			<x-inline edit name='n6' type='list' list='[ "n6val1", "n6val2", "n6val3" ]'></x-inline>
   			<x-inline edit name='n7' type='char'></x-inline>
- 			`, {
+ 		</form>`, function(element) {
+	 	it("should get values correctly", function() {
+	 		expect(formGetContent(element())).toEqual({
 				n3: 'n3val1',
 				n4: 'n4val1',
 				n5: 'n5val1',
 				n6: 'n6val1'
-			}, done
-		);
-	})
+			});
+		});
+	});
 
-	it("should extract info from input", function(done) {
-		form(`
+	webDescribe("should extract info from fields", `<form>
   			<input name='n1' value='n1val'>
-				<input type='radio' name='n2' value='n2val' checked>
+			<input type='radio' name='n2' value='n2val' checked>
   			<select name='n3'>
   				<option value='n3val1'>
   				<option value='n3val2' selected>
   			</select>
-        <x-write name='n4' type='list' value='n4val2' list='[ "n4val1", "n4val2", "n4val3" ]'></x-write>
-        <x-write-list name='n5' value='n5val2' list='[ "n5val1", "n5val2", "n5val3", "n5val4", "n5val5", "n5val6", "n5val7" ]'></x-write-list>
-        <x-inline edit name='n6' value='n6val2'  type='list' list='[ "n6val1", "n6val2", "n6val3" ]'></x-inline>
-        <x-inline edit name='n7' value='n7val' type='char'></x-inline>
-			`, {
+	        <x-write name='n4' type='list' value='n4val2' list='[ "n4val1", "n4val2", "n4val3" ]'></x-write>
+	        <x-write-list name='n5' value='n5val2' list='[ "n5val1", "n5val2", "n5val3", "n5val4", "n5val5", "n5val6", "n5val7" ]'></x-write-list>
+	        <x-inline edit name='n6' value='n6val2'  type='list' list='[ "n6val1", "n6val2", "n6val3" ]'></x-inline>
+	        <x-inline edit name='n7' value='n7val' type='char'></x-inline>
+		</form>`, function(element) {
+		it("should get values correctly", function() {
+	 		expect(formGetContent(element())).toEqual({
 				n1: 'n1val',
 				n2: 'n2val',
 				n3: 'n3val2',
@@ -56,7 +91,8 @@ describe("form-test", function() {
 				n5: 'n5val2',
 				n6: 'n6val2',
 				n7: 'n7val'
-			}, done
-		);
-	})
+			});
+		});
+	});
 })
+
