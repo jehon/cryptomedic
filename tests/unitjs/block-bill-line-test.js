@@ -1,5 +1,3 @@
-'use strict';
-/* global testComponent */
 
 describe('block-bill-line-test', function() {
     const price = { 
