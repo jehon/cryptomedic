@@ -95,7 +95,7 @@ XWriteList = (function() {
                 let escaped = this._escape(item);
                 res += `
                     <span to='${escaped}'>
-                        <input type='radio' value='${escaped}' ${(this.value == item) ? "checked" : ""}>
+                        <input type='radio' name='x-write-list-radio-${uuid}' value='${escaped}' ${(this.value == item) ? "checked" : ""}>
                         <span>${item}</span>
                     <br>
                     </span>
@@ -104,7 +104,7 @@ XWriteList = (function() {
             if (this.nullable) {
                 res += `
                     <span to=''>
-                        <input type='radio' value='' ${(this.value == "") ? "checked" : ""}>
+                        <input type='radio' name='x-write-list-radio-${uuid}' value='' ${(this.value == "") ? "checked" : ""}>
                         <span>?</span>
                         <br>
                     </span>
