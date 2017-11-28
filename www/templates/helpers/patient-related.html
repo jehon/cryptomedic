@@ -7,16 +7,17 @@
 					<img src="/static/img/patient.gif">
 					<br/>
 					<a class='textbutton' href="#/folder/{{folder.getId()}}">
-						<img src="/static/img/go.gif">
-						view
+						<img src="/static/img/go.gif">view
 					</a>
 				</td>
 			</tr>
 			<tr>
 				<td><label>Reference</label></td>
 				<td>
-				<span id='Patient_entryyear'>{{ folder.getPatient().entryyear }}</span>				-
-				<span id='Patient_entryorder'>{{ folder.getPatient().entryorder }}</span>				</td>
+					<span id='Patient_entryyear'>{{ folder.getPatient().entryyear }}</span>	
+					-
+					<span id='Patient_entryorder'>{{ folder.getPatient().entryorder }}</span>
+				</td>
 			</tr>
 			<tr ng-class='{ emptyValue: !folder.getPatient().Name}'>
 			<td>Name</td>
@@ -28,7 +29,7 @@
 		</tr>
 			<tr ng-class='{ emptyValue: !folder.getPatient().Sex}'>
 			<td>Sex</td>
-			<td><span id='Patient_Sex' name='Sex'>{{ folder.getPatient().Sex }}</span></td>
+			<td><span id='Patient_Sex'>{{ folder.getPatient().Sex }}</span></td>
 		</tr>
 
       <tr>
