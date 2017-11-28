@@ -68,9 +68,6 @@
             if (el) {
                 el.addEventListener("change", () => { 
                     const v = this.getValue();
-                    if (this.value != v) {
-                        this.value = v;
-                    }
                     this.fire("change", v);
                 });
             }
