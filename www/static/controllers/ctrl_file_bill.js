@@ -16,6 +16,15 @@ function ctrl_file_bill($scope, $element) {
 
     $scope.adapt();
 
+    $element[0].querySelectorAll('[editable-bill]').forEach(el => el.addEventListener('change', () => {
+        console.log("editable-bill change");
+
+        const newData = formGetContent($element[0].querySelectorAll('[editable-bill]'), {});
+        console.log("New data: ", newData);
+
+        $scope.safeApply();
+    }));
+
     // $scope.currentFile().calculatePriceId();
     // $scope.currentFile().calculate_total_real();
 
