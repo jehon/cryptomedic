@@ -61,13 +61,13 @@
         }
 
         getTotal() {
-            let val = this[input].value;
+            let val = this[input].getValue();
             val = parseInt(val);
             return val * this.price.Amount;
         }
 
         getBillLine() {
-            let val = this[input].value;
+            let val = this[input].getValue();
             val = parseInt(val);
             let res = {
                 title: this.price.title,
