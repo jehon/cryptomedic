@@ -4,13 +4,13 @@ describe('x-write-test', function() {
       spyOn(console, "error");
     })
 
-    webDescribe("without parameters", `<x-write name='test'></x-write`, function(element) {
+    webDescribe("without parameters", `<x-write name='test'></x-write>`, function(element) {
         it("should be instantiated", function() {
             expect(element().querySelector('span.error')).not.toBeNull();
         });
     })
 
-    webDescribe("with unknown type", `<x-write name='test' type='anything'></x-write`, function(element) {
+    webDescribe("with unknown type", `<x-write name='test' type='anything'></x-write>`, function(element) {
         it("should be instantiated", function() {
             expect(element().querySelector('span.error')).not.toBeNull();
             expect(console.error).toHaveBeenCalledTimes(1);
@@ -18,7 +18,7 @@ describe('x-write-test', function() {
     })
 
     describe("with timestamp", function() {
-        webDescribe("without value", `<x-write name='test' type='timestamp'></x-write`, function(element) {
+        webDescribe("without value", `<x-write name='test' type='timestamp'></x-write>`, function(element) {
             it("should be instantiated", function() {
                 expect(element().querySelector('span.error')).toBeNull();
                 let el = element().querySelector('x-read');
@@ -29,7 +29,7 @@ describe('x-write-test', function() {
             });
         })
 
-        webDescribe("with value", `<x-write name='test' type='timestamp' value='2016-01-01'></x-write`, function(element) {
+        webDescribe("with value", `<x-write name='test' type='timestamp' value='2016-01-01'></x-write>`, function(element) {
             it("should be instantiated", function() {
                 expect(element().querySelector('span.error')).toBeNull();
                 let el = element().querySelector('x-read');
@@ -43,7 +43,7 @@ describe('x-write-test', function() {
     })
 
     describe("with boolean", function() {
-        webDescribe("without value", `<x-write name='test' type='boolean'></x-write`, function(element) {
+        webDescribe("without value", `<x-write name='test' type='boolean'></x-write>`, function(element) {
             it("should be instantiated", function() {
                 let el = element().querySelector('input[type=checkbox]');
                 expect(element().querySelector('span.error')).toBeNull();
@@ -52,7 +52,7 @@ describe('x-write-test', function() {
             });
         })
 
-        webDescribe("with value", `<x-write name='test' type='boolean' value='1'></x-write`, function(element) {
+        webDescribe("with value", `<x-write name='test' type='boolean' value='1'></x-write>`, function(element) {
             it("should be instantiated", function() {
                 let el = element().querySelector('input[type=checkbox]');
                 expect(element().querySelector('span.error')).toBeNull();
@@ -73,7 +73,7 @@ describe('x-write-test', function() {
     })
 
     describe("with date", function() {
-        webDescribe("without value", `<x-write name='test' type='date'></x-write`, function(element) {
+        webDescribe("without value", `<x-write name='test' type='date'></x-write>`, function(element) {
             it("should be instantiated", function() {
                 let el = element().querySelector('input[type=date]');
                 expect(element().querySelector('span.error')).toBeNull();
@@ -82,7 +82,7 @@ describe('x-write-test', function() {
             });
         })
 
-        webDescribe("with value", `<x-write name='test' type='date' value='2016-01-15'></x-write`, function(element) {
+        webDescribe("with value", `<x-write name='test' type='date' value='2016-01-15'></x-write>`, function(element) {
             it("should be instantiated", function() {
                 let el = element().querySelector('input[type=date]');
                 expect(element().querySelector('span.error')).toBeNull();
@@ -103,7 +103,7 @@ describe('x-write-test', function() {
     })
 
     describe("with numeric", function() {
-        webDescribe("without value", `<x-write name='test' type='numeric'></x-write`, function(element) {
+        webDescribe("without value", `<x-write name='test' type='numeric'></x-write>`, function(element) {
             it("should be instantiated", function() {
                 let el = element().querySelector('input[type=number]');
                 expect(element().querySelector('span.error')).toBeNull();
@@ -112,7 +112,7 @@ describe('x-write-test', function() {
             });
         })
 
-        webDescribe("with value", `<x-write name='test' type='numeric' value='15'></x-write`, function(element) {
+        webDescribe("with value", `<x-write name='test' type='numeric' value='15'></x-write>`, function(element) {
             it("should be instantiated", function() {
                 let el = element().querySelector('input[type=number]');
                 expect(element().querySelector('span.error')).toBeNull();
@@ -133,7 +133,7 @@ describe('x-write-test', function() {
     })
 
     describe("with char", function() {
-        webDescribe("without value", `<x-write name='test' type='char'></x-write`, function(element) {
+        webDescribe("without value", `<x-write name='test' type='char'></x-write>`, function(element) {
             it("should be instantiated", function() {
                 let el = element().querySelector('input');
                 expect(element().querySelector('span.error')).toBeNull();
@@ -142,7 +142,7 @@ describe('x-write-test', function() {
             });
         })
 
-        webDescribe("with value", `<x-write name='test' type='char' value='xvalue'></x-write`, function(element) {
+        webDescribe("with value", `<x-write name='test' type='char' value='xvalue'></x-write>`, function(element) {
             it("should be instantiated", function() {
                 let el = element().querySelector('input');
                 expect(element().querySelector('span.error')).toBeNull();
@@ -163,7 +163,7 @@ describe('x-write-test', function() {
     })
 
     describe("with text", function() {
-        webDescribe("without value", `<x-write name='test' type='text'></x-write`, function(element) {
+        webDescribe("without value", `<x-write name='test' type='text'></x-write>`, function(element) {
             it("should be instantiated", function() {
                 let el = element().querySelector('textarea');
                 expect(element().querySelector('span.error')).toBeNull();
@@ -172,7 +172,7 @@ describe('x-write-test', function() {
             });
         })
 
-        webDescribe("with value", `<x-write name='test' type='text' value='xvalue'></x-write`, function(element) {
+        webDescribe("with value", `<x-write name='test' type='text' value='xvalue'></x-write>`, function(element) {
             it("should be instantiated", function() {
                 let el = element().querySelector('textarea');
                 expect(element().querySelector('span.error')).toBeNull();
@@ -196,7 +196,7 @@ describe('x-write-test', function() {
     const list = [ 'machin', 'truc', 'brol' ];
 
     describe("with list", function() {
-        webDescribe("without value", `<x-write name='test' type='list' list='${JSON.stringify(list)}'></x-write`, function(element) {
+        webDescribe("without value", `<x-write name='test' type='list' list='${JSON.stringify(list)}'></x-write>`, function(element) {
             it("should be instantiated", function() {
                 let el = element().querySelector('x-write-list');
                 expect(element().querySelector('span.error')).toBeNull();
@@ -206,7 +206,7 @@ describe('x-write-test', function() {
             });
         })
 
-        webDescribe("with value", `<x-write name='test' type='list' list='${JSON.stringify(list)}' value='truc'></x-write`, function(element) {
+        webDescribe("with value", `<x-write name='test' type='list' list='${JSON.stringify(list)}' value='truc'></x-write>`, function(element) {
             it("should be instantiated", function() {
                 let el = element().querySelector('x-write-list');
                 expect(element().querySelector('span.error')).toBeNull();
