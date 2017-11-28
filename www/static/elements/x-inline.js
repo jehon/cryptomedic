@@ -23,7 +23,7 @@
                     ></x-write>`;
                 this[element] = this.querySelector("x-write");
                 this[element].addEventListener("change", () => {
-                    this.fire("change", this[element].getValue());
+                    this.fire("change", this.getValue());
                 });
             } else {
                 this.innerHTML = `<x-read type='${this.type}' value='${this.value}' inline='${this.inline}'></x-read>`;
@@ -31,7 +31,10 @@
         }
 
         getValue() {
-            return this[element].getValue();
+            if (this.edit) {
+                return this[element].getValue();
+            }
+            return this.value;
         }
     }
 

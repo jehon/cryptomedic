@@ -66,12 +66,12 @@
             }
             
             if (el) {
-                const val = this.getValue();
                 el.addEventListener("change", () => { 
-                    this.fire("change", val)
-                    if (this.value != val) {
-                        this.value = val;
+                    const v = this.getValue();
+                    if (this.value != v) {
+                        this.value = v;
                     }
+                    this.fire("change", v);
                 });
             }
         }
