@@ -116,121 +116,81 @@ describe('x-write-list-test', function() {
         });
     })
 
-
-    it("should handle RADIO nullable", function(done) {
-        testComponent("<x-write-list nullable value='machin' list='" + JSON.stringify(listRadio) + "'></x-write-list>").then(el => {
-            expect(el).not.toBeNull();
-            expect(el.shadowRoot.querySelector('input[type=radio][value=""]')).not.toBeNull();
-            el.testDone();
-            done();
+    webDescribe("should handle RADIO nullable", `<x-write-list nullable value='machin' list='${JSON.stringify(listRadio)}'></x-write-list>`, function(element) {
+        it("should instanciated", function() {
+            expect(element().shadowRoot.querySelector('input[type=radio][value=""]')).not.toBeNull();
         });
     })
 
-    it("should handle SELECT nullable", function(done) {
-        testComponent("<x-write-list nullable value='machin' list='" + JSON.stringify(listSelect) + "'></x-write-list>").then(el => {
-            expect(el).not.toBeNull();
-            expect(el.shadowRoot.querySelector('select option[value=""]')).not.toBeNull();
-            el.testDone();
-            done();
+    webDescribe("should handle SELECT nullable", `<x-write-list nullable value='machin' list='${JSON.stringify(listSelect)}'></x-write-list>`, function(element) {
+        it("should instanciated", function() {
+            expect(element().shadowRoot.querySelector('select option[value=""]')).not.toBeNull();
         });
     })
 
-    it("should handle RADIO with null", function(done) {
-        testComponent("<x-write-list nullable value='' list='" + JSON.stringify(listRadio) + "'></x-write-list>").then(el => {
-            checkRadioNull(el);
-            el.testDone();
-            done();
+    webDescribe("should handle RADIO with null", `<x-write-list nullable value='' list='${JSON.stringify(listRadio)}'></x-write-list>`, function(element) {
+        it("should instanciated", function() {
+            checkRadioNull(element());
         });
     })
 
-    it("should handle SELECT with null", function(done) {
-        testComponent("<x-write-list nullable value='' list='" + JSON.stringify(listSelect) + "'></x-write-list>").then(el => {
-
-            checkSelectNull(el);
-
-            el.testDone();
-            done();
+    webDescribe("should handle SELECT with null", `<x-write-list nullable value='' list='${JSON.stringify(listSelect)}'></x-write-list>`, function(element) {
+        it("should instanciated", function() {
+            checkSelectNull(element());
         });
     });
 
     // Test changes in value
-    it("should handle RADIO value change", function(done) {
-        testComponent("<x-write-list nullable value='machin' list='" + JSON.stringify(listRadio) + "'></x-write-list>").then(el => {
-
-            checkRadio(el, 'machin');
-            el.setAttribute('value', 'truc');
-            checkRadio(el, 'truc');
-
-            el.testDone();
-            done();
+    webDescribe("should handle RADIO value change", `<x-write-list nullable value='machin' list='${JSON.stringify(listRadio)}'></x-write-list>`, function(element) {
+        it("should instanciated", function() {
+            checkRadio(element(), 'machin');
+            element().setAttribute('value', 'truc');
+            checkRadio(element(), 'truc');
         });
     });
 
-    it("should handle SELECT value change", function(done) {
-        testComponent("<x-write-list nullable value='machin' list='" + JSON.stringify(listSelect) + "'></x-write-list>").then(el => {
-
-            checkSelect(el, 'machin');
-            el.setAttribute('value', 'truc');
-            checkSelect(el, 'truc');
-
-            el.testDone();
-            done();
+    webDescribe("should handle SELECT value change", `<x-write-list nullable value='machin' list='${JSON.stringify(listSelect)}'></x-write-list>`, function(element) {
+        it("should instanciated", function() {
+            checkSelect(element(), 'machin');
+            element().setAttribute('value', 'truc');
+            checkSelect(element(), 'truc');
         });
     });
 
     // Test changes in html elements
-    it("should handle RADIO html change", function(done) {
-        testComponent("<x-write-list nullable value='machin' list='" + JSON.stringify(listRadio) + "'></x-write-list>").then(el => {
-            checkRadio(el, 'machin');
-
-            el.shadowRoot.querySelector('input[type=radio][value=truc]').setAttribute('checked', true);
-
-            checkRadio(el, 'truc');
-            el.testDone();
-            done();
+    webDescribe("should handle RADIO html change", `<x-write-list nullable value='machin' list='${JSON.stringify(listRadio)}'></x-write-list>`, function(element) {
+        it("should instanciated", function() {
+            checkRadio(element(), 'machin');
+            element().shadowRoot.querySelector('input[type=radio][value=truc]').setAttribute('checked', true);
+            checkRadio(element(), 'truc');
         });
     });
 
-    it("should handle SELECT html change", function(done) {
-        testComponent("<x-write-list nullable value='machin' list='" + JSON.stringify(listSelect) + "'></x-write-list>").then(el => {
-
-            checkSelect(el, 'machin');
-
-            el.shadowRoot.querySelector('select').value = 'truc';
-
-            checkSelect(el, 'truc');
-            el.testDone();
-            done();
+    webDescribe("should handle SELECT html change", `<x-write-list nullable value='machin' list='${JSON.stringify(listSelect)}'></x-write-list>`, function(element) {
+        it("should instanciated", function() {
+            checkSelect(element(), 'machin');
+            element().shadowRoot.querySelector('select').value = 'truc';
+            checkSelect(element(), 'truc');
         });
     })
 
     // Test click on span for radio
-    it("should handle RADIO Span click", function(done) {
-        testComponent("<x-write-list nullable value='machin' list='" + JSON.stringify(listRadio) + "'></x-write-list>").then(el => {
-
-            checkRadio(el, 'machin');
-            el.shadowRoot.querySelector('span[to=truc').click();
-
-            checkRadio(el, 'truc');
-
-            el.testDone();
-            done();
+    webDescribe("should handle RADIO Span click", `<x-write-list nullable value='machin' list='${JSON.stringify(listRadio)}'></x-write-list>`, function(element) {
+        it("should instanciated", function() {
+            checkRadio(element(), 'machin');
+            element().shadowRoot.querySelector('span[to=truc').click();
+            checkRadio(element(), 'truc');
         });
     })
 
-    it("should handle named list", function(done) {
-        testComponent("<x-write-list value='machin' list-name='listRadio'></x-write-list>").then(el => {
-            expect(el).not.toBeNull();
-
+    webDescribe("should handle named list", `<x-write-list value='machin' list-name='listRadio'></x-write-list>`, function(element) {
+        it("should instanciated", function() {
+            expect(element()).not.toBeNull();
             XWriteList.setReferences({
                 listRadio: listRadio,
                 listSelect: listSelect
             })
-
-            checkRadio(el, 'machin');
-
-            el.testDone();
-            done();
+            checkRadio(element(), 'machin');
         });
     })
 });
