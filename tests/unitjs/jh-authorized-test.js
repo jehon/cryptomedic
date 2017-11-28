@@ -1,5 +1,4 @@
 'use strict';
-/* global testComponent */
 
 // TODO: remove fdescribe (focused)
 

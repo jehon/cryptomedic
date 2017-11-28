@@ -1,5 +1,3 @@
-'use strict';
-/* global testComponent */
 
 describe('x-write-test', function() {
     beforeEach(function() {

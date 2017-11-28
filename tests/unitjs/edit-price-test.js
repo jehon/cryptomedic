@@ -1,5 +1,3 @@
-'use strict';
-/* global testComponent */
 
 describe('test-x-write-list', function() {
   it("should initalize with value=-1", (done) => {
