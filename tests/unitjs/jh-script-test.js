@@ -1,5 +1,3 @@
-'use strict';
-/* global testComponent */
 
 describe('test-jh-script', function() {
   function getFn() {
