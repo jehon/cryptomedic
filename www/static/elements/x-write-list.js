@@ -113,9 +113,15 @@ XWriteList = (function() {
             res += "</span>";
 
             this.shadowRoot.innerHTML = "<form>" + this._withStyle() + res + "</form>";
-            this.shadowRoot.querySelectorAll("span[to]").forEach((el) => {
+            this.shadowRoot.querySelectorAll('input').forEach(el => {
+                el.addEventListener('change', () => {
+                    this.fire("change", 0);
+                })
+            })
+            this.shadowRoot.querySelectorAll("span[to]").forEach(el => {
                 el.onclick = (event) => {
                     el.querySelector('input').setAttribute('checked', true);
+                    this.fire("change", el.querySelector('input').getAttribute('value'));
                 }
             });
             if (this.shadowRoot.querySelector("input[type=radio]:checked") == null) {
@@ -139,6 +145,10 @@ XWriteList = (function() {
             res += "</select>\n";
 
             this.shadowRoot.innerHTML = this._withStyle() + res;
+
+            this.shadowRoot.querySelector("select").addEventListener("change", el => {
+                this.fire("change", 0);
+            });
         }
 
         _escape(str) {
