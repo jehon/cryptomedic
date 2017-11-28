@@ -144,4 +144,27 @@ describe("jh-element-test", function() {
             expect(res).toEqual(123);
         })
     });
+
+    // Instanciate a real element to test properties...
+
+    class JHElementTest extends JHElement {
+        static get properties() {
+            return {
+                "type":     "String",
+                "value":    "String",
+                "inline":   "String",
+                "list":     "Object",
+                "listName": "String"
+            }
+        }
+    }
+
+    window.customElements.define('jh-element-test', JHElementTest);
+
+    webDescribe("with some parameters", `<jh-element-test type='null' list='null'></jh-element-test>`, function(element) {
+        it("should have a null value", function() {
+            expect(element().type).toBeNull();
+            expect(element().list).toBeNull();
+        })
+    })
 });
