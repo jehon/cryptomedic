@@ -8,33 +8,50 @@
                 "type":     "String",
                 "value":    "String",
                 "edit":     "Boolean",
-                "inline":   "String",
                 "list":     "Object",
                 "listName": "String"
             }
         }
 
         adapt() {
-            if (this.edit) {
-                this.innerHTML = `<x-write type='${this.type}' 
-                        value='${this.value}' 
-                        list='${JSON.stringify(this.list)}' list-name='${this.listName}'
-                        inline='${this.inline}' 
+            let inline = ""; //= this.attributes;
+            for(const a of this.attributes) { 
+                const n = a.name;
+                if (n == "name" || n == "id" || n == "type") {
+                    continue;
+                }
+                if (typeof(a.value) == "object") {
+                    inline += ` ${n}='${JSON.stringify(a.value)}' `
+                } else {
+                    inline += ` ${n}='${a.value}'`;
+                }
+            }
+
+            if (this._edit) {
+                this.innerHTML = `<x-write type='${this._type}' ${inline}
+                        value='${this._value}' 
+                        list='${JSON.stringify(this._list)}' list-name='${this._listName}'
                     ></x-write>`;
                 this[element] = this.querySelector("x-write");
                 this[element].addEventListener("change", () => {
-                    this.fire("change", this.getValue());
+                    // value is calculated at getter below
+                    this.fire("change", this.value);
                 });
             } else {
-                this.innerHTML = `<x-read type='${this.type}' value='${this.value}' inline='${this.inline}'></x-read>`;
+                this.innerHTML = `<x-read type='${this._type}' value='${this._value}' ${inline}></x-read>`;
+                this[element] = this.querySelector("x-read");
             }
         }
 
-        getValue() {
-            if (this.edit) {
-                return this[element].getValue();
-            }
-            return this.value;
+        set value(v) {
+            this._value = v;
+        }
+
+        get value() {
+            // if (this._edit) {
+                return this[element].value;
+            // }
+            // return this._value;
         }
     }
 

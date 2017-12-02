@@ -39,18 +39,8 @@ function formGetContent(form, prototype = {}) {
 
     let value = i.value;
 
-    // If getValue() exists, take it
-    if (typeof(i.getValue) == 'function') {
-      value = i.getValue();
-    }
-
-    // if (typeof(value) == 'object') {
-    //   Object.assign(data, value);
-    //   continue;
-    // }
-
     // Skip empty values
-    if (value === "") {
+    if (value === "" || value == null) {
       continue;
     }
 

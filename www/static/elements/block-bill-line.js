@@ -8,14 +8,14 @@
     class BlockBillLine extends JHElement {
         constructor() {
             super();
-            this.value = {
+            this._value = {
                 Amount: 0
             };
-            this.price = {
+            this._price = {
                 title: 'Unknown',
                 Amount: 1
             };
-            this.Date = false;
+            this._Date = false;
         }
 
         static get properties() {
@@ -49,10 +49,10 @@
 
         adapt() {
             super.adapt();
-            this[title].innerHTML = this.price.title;
-            this[price].innerHTML = this.price.Amount;
-            if (this.value && typeof(this.value) == 'object' && isFinite(this.value.Amount)) {
-                this[input].setAttribute("value", this.value.Amount);
+            this[title].innerHTML = this._price.title;
+            this[price].innerHTML = this._price.Amount;
+            if (this._value && typeof(this._value) == 'object' && isFinite(this._value.Amount)) {
+                this[input].setAttribute("value", this._value.Amount);
                 this[total].innerHTML = this.getTotal();
             } else {
                 this[input].setAttribute("value", 0);
@@ -61,24 +61,24 @@
         }
 
         getTotal() {
-            let val = this[input].getValue();
+            let val = this[input].value;
             val = parseInt(val);
-            return val * this.price.Amount;
+            return val * this._price.Amount;
         }
 
         getBillLine() {
-            let val = this[input].getValue();
+            let val = this[input].value;
             val = parseInt(val);
             let res = {
-                title: this.price.title,
+                title: this._price.title,
                 Amount: val,
             }
-            if (this.value) {
-                if (this.value.id)  {
-                    res.id = this.value.id;
+            if (this._value) {
+                if (this._value.id)  {
+                    res.id = this._value.id;
                 }
-                if (this.value.Date)  {
-                    res.Date = this.value.Date;
+                if (this._value.Date)  {
+                    res.Date = this._value.Date;
                 }
             }
             return res;

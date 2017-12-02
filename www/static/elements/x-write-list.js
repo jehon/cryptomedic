@@ -21,45 +21,81 @@ XWriteList = (function() {
 
         constructor() {
             super();
-            this.mode = false;
+            this._mode = false;
             this.references = {};
 
-            this.uuid = uuid++;
+            this._uuid = uuid++;
 
             referencesCB.add((references) => {
                 this.references = references;
-                this.adaptIfInitialized();
+                if (this.isInitialized()) {
+                    this.onListNameChanged(this._listName);
+                }
             });
         }
 
         render() {
-            this.attachShadow({ mode: 'open' }); // this.shadowRoot
+            super.render();
+            this.attachShadow({ mode: 'open' });
+            this.createList();
+            this.onValueChanged(this._value);
         }
 
-        adapt() {
-            if (this.listName) {
-                if (typeof(this.references[this.listName]) == 'undefined') {
-                  this.list = [];
+        onValueChanged(v) {
+            const escaped = this._escape(v);
+            let el;
+            switch(this.getAttribute("mode")) {
+                case "select":
+                    el = this.shadowRoot.querySelector("select");
+                    if (el == null) {
+                        return;
+                    }
+                    el.value = escaped;
+                    break;
+                case "radio":
+                    el = this.shadowRoot.querySelector(`input[type=radio][value='${escaped}']`);
+                    if (el == null) {
+                        return;
+                    }
+                    el.setAttribute('checked', 'checked');
+                    break;
+            }
+        }
+
+        onListChanged(v) {
+            this.createList();
+            this.onValueChanged(this._value);
+        }
+
+        onListNameChanged(v) {
+            this.createList();
+            this.onValueChanged(this._value);
+        }
+
+        createList() {
+            if (this._listName) {
+                if (typeof(this.references[this._listName]) == 'undefined') {
+                  this._list = [];
                 } else {
-                  this.list = this.references[this.listName];  
+                  this._list = this.references[this._listName];  
                 }       
             }
-            if (!this.list) {
-                this.list = [];
+            if (!this._list) {
+                this._list = [];
             }
-            if (this.list.length == 0) {
-                this.mode = 'empty';
+            if (this._list.length == 0) {
+                this._mode = 'empty';
                 this.shadowRoot.innerHTML = "X-Write-List: no list set";
             } else {
-                if (this.list.length > 5) {
-                    this.mode = 'select';
+                if (this._list.length > 5) {
+                    this._mode = 'select';
                     this._asSelect();
                 } else {
-                    this.mode = 'radio';
+                    this._mode = 'radio';
                     this._asRadio();
                 }
             }
-            this.setAttribute('mode', this.mode);
+            this.setAttribute('mode', this._mode);
         }
 
         _withStyle() {
@@ -91,20 +127,20 @@ XWriteList = (function() {
         _asRadio() {
             let res = "<span id='radio'>";
             // TODO: set initial value
-            for(let item of this.list) {
+            for(let item of this._list) {
                 let escaped = this._escape(item);
                 res += `
                     <span to='${escaped}'>
-                        <input type='radio' name='x-write-list-radio-${uuid}' value='${escaped}' ${(this.value == item) ? "checked" : ""}>
+                        <input type='radio' name='x-write-list-radio-${uuid}' value='${escaped}'>
                         <span>${item}</span>
                     <br>
                     </span>
                 `
             }
-            if (this.nullable) {
+            if (this._nullable) {
                 res += `
                     <span to=''>
-                        <input type='radio' name='x-write-list-radio-${uuid}' value='' ${(this.value == "") ? "checked" : ""}>
+                        <input type='radio' name='x-write-list-radio-${uuid}' value=''>
                         <span>?</span>
                         <br>
                     </span>
@@ -124,22 +160,22 @@ XWriteList = (function() {
                     this.fire("change", el.querySelector('input').getAttribute('value'));
                 }
             });
-            if (this.shadowRoot.querySelector("input[type=radio]:checked") == null) {
-                // If value is null or not set:
-                // - if we are nullable -> correct value (null) is already set
-                // - other wise, let's pick up the first one
-                this.shadowRoot.querySelector("input[type=radio]").setAttribute("checked", "checked");
-            }
+            // if (this.shadowRoot.querySelector("input[type=radio]:checked") == null) {
+            //     // If value is null or not set:
+            //     // - if we are nullable -> correct value (null) is already set
+            //     // - other wise, let's pick up the first one
+            //     this.shadowRoot.querySelector("input[type=radio]").setAttribute("checked", "checked");
+            // }
         }
 
         _asSelect() {
             let res = "<select>\n";
-            if (this.nullable) {
-                res += `  <option value='' ${(this.value == "") ? "selected" : ""}>?</option>\n`;
+            if (this._nullable) {
+                res += `  <option value=''>?</option>\n`;
             }
-            for(let item of this.list) {
+            for(let item of this._list) {
                 let escaped = this._escape(item);
-                res += `  <option value='${escaped}' ${(this.value == item) ? "selected" : ""}>${item}</option>\n`;
+                res += `  <option value='${escaped}'>${item}</option>\n`;
 
             }
             res += "</select>\n";
@@ -155,14 +191,23 @@ XWriteList = (function() {
             return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&apos;');
         }
 
-        getValue() {
+        set value(v) {
+            this._value = v;
+        }
+
+        get value() {
             let value = null;
             switch(this.getAttribute("mode")) {
                 case "select":
                     value = this.shadowRoot.querySelector("select").value;
                     break;
                 case "radio":
-                    value = this.shadowRoot.querySelector("input[type=radio]:checked").value;
+                    const checked = this.shadowRoot.querySelector("input[type=radio]:checked");
+                    if (checked == null) {
+                        value = null;
+                    } else {
+                        value = checked.value;
+                    }
                     break;
             }
             if (value == "") {

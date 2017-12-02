@@ -40,9 +40,9 @@ describe("jh-element-test", function() {
 
         expect(element().constructor.observedAttributes).toEqual([ ]);
         element().attributeChangedCallback("s-val", "", "123");
-        expect(typeof(element().sVal)).toBe("string");
-        expect(element().sVal).toBe("123");
-        expect(element().sVal).not.toBe(123);
+        expect(typeof(element()._sVal)).toBe("string");
+        expect(element()._sVal).toBe("123");
+        expect(element()._sVal).not.toBe(123);
     })
 
     it("should parse attributes correctly", function() {
@@ -57,52 +57,47 @@ describe("jh-element-test", function() {
         }; } });
         element()._setDefaultValues();
 
-        expect(element().sVal).toBe("");
-        expect(element().sInt).toBe(0);
-        expect(element().sObj).toBe(null);
-        expect(element().sBool).toBe(false);
+        expect(element()._sVal).toBe("");
+        expect(element()._sInt).toBe(0);
+        expect(element()._sObj).toBe(null);
+        expect(element()._sBool).toBe(false);
 
         expect(element().constructor.observedAttributes).toEqual([ "s-val", "s-int", "s-obj", "s-bool" ]);
 
         element().attributeChangedCallback("s-val", "", "123");
-        expect(typeof(element().sVal)).toBe("string");
-        expect(element().sVal).toBe("123");
-        expect(element().sVal).not.toBe(123);
+        expect(typeof(element()._sVal)).toBe("string");
+        expect(element()._sVal).toBe("123");
+        expect(element()._sVal).not.toBe(123);
 
         element().attributeChangedCallback("s-int", "", "123");
-        expect(typeof(element().sInt)).toBe("number");
-        expect(element().sInt).toBe(123);
-        expect(element().sInt).not.toBe("123");
+        expect(typeof(element()._sInt)).toBe("number");
+        expect(element()._sInt).toBe(123);
+        expect(element()._sInt).not.toBe("123");
 
         element().attributeChangedCallback("s-int", "", "123.5");
-        expect(typeof(element().sInt)).toBe("number");
-        expect(element().sInt).toBe(123.5);
-        expect(element().sInt).not.toBe("123.5");
+        expect(typeof(element()._sInt)).toBe("number");
+        expect(element()._sInt).toBe(123.5);
+        expect(element()._sInt).not.toBe("123.5");
 
         element().attributeChangedCallback("s-obj", "", JSON.stringify({a:1}));
-        expect(typeof(element().sObj)).toBe("object");
-        expect(element().sObj).toEqual({a:1});
+        expect(typeof(element()._sObj)).toBe("object");
+        expect(element()._sObj).toEqual({a:1});
 
         element().attributeChangedCallback("s-obj", "", "{a:}");
-        expect(typeof(element().sObj)).toBe("object");
-        expect(element().sObj).toEqual(null);
+        expect(typeof(element()._sObj)).toBe("object");
+        expect(element()._sObj).toEqual(null);
 
-        let hasAttributeRes = true;
-        spyOn(element(), "hasAttribute").and.callFake(() => hasAttributeRes);
         element().attributeChangedCallback("s-bool", "", "");
-        expect(typeof(element().sBool)).toBe("boolean");
-        expect(element().sBool).toBeTruthy();
+        expect(typeof(element()._sBool)).toBe("boolean");
+        expect(element()._sBool).toBeTruthy();
 
-        hasAttributeRes = true;
         element().attributeChangedCallback("s-bool", "", "false");
-        expect(typeof(element().sBool)).toBe("boolean");
-        expect(element().sBool).toBeFalsy();
+        expect(typeof(element()._sBool)).toBe("boolean");
+        expect(element()._sBool).toBeFalsy();
 
-        hasAttributeRes = false;
-        element().attributeChangedCallback("s-bool", "", "");
-        expect(typeof(element().sBool)).toBe("boolean");
-        expect(element().sBool).toBeFalsy();
-
+        element().attributeChangedCallback("s-bool", "", null);
+        expect(typeof(element()._sBool)).toBe("boolean");
+        expect(element()._sBool).toBeFalsy();
     })
 
     webDescribe('without parameter', "<jh-element></jh-element>", function(element) {
@@ -127,6 +122,11 @@ describe("jh-element-test", function() {
 
             expect(el.querySelector("span")).not.toBeNull();
             expect(el.querySelector("span").innerHTML).toBe("subcontent");
+        })
+
+        it("should createElementAndAddThem to not existing target", function() {
+            element().createElementAndAddThem("<div id='anything'>anything</div>", null);
+            expect(element().querySelector("#anything")).toBeNull();
         })
 
         it("should manage events", function() {
@@ -154,17 +154,72 @@ describe("jh-element-test", function() {
                 "value":    "String",
                 "inline":   "String",
                 "list":     "Object",
-                "listName": "String"
+                "listName": "String",
+                "bool":     "Boolean"
             }
+        }
+
+        onValueChanged() {
+            if (!this.valueChanged) {
+                this.valueChanged = 0;
+            }
+            this.valueChanged++;
         }
     }
 
     window.customElements.define('jh-element-test', JHElementTest);
 
+    it("shoudl not be initialized when created without rendering", function() {
+        const el = new JHElementTest();
+        expect(el.isInitialized()).toBeFalsy();
+    })
+
     webDescribe("with some parameters", `<jh-element-test type='null' list='null'></jh-element-test>`, function(element) {
         it("should have a null value", function() {
-            expect(element().type).toBeNull();
-            expect(element().list).toBeNull();
-        })
-    })
+            expect(element()._type).toBe("");
+            expect(element()._list).toEqual(null);
+
+            expect(element().type).toBe("");
+            expect(element().list).toEqual(null);
+        });
+    });
+
+    webDescribe("with specific handler", `<jh-element-test value='123' inline='abc'></jh-element-test>`, function(element) {
+        it("should handle it", function() {
+            expect(element()._value).toBe('123');
+            expect(element().value).toBe('123');
+
+            // Changes generated before the first render does not trigger the onValueChanged()
+            expect(element().valueChanged).toBeUndefined();
+            element().setAttribute('value', '456');
+            expect(element()._value).toBe('456');
+            expect(element().valueChanged).toBe(1);
+
+            element().setAttribute('bool', 'true');
+            expect(element()._bool).toBe(true);
+            expect(element().bool).toBe(true);
+
+            element().setAttribute('bool', 'false');
+            expect(element()._bool).toBe(false);
+            expect(element().bool).toBe(false);
+
+            element().setAttribute('bool', '');
+            expect(element()._bool).toBe(true);
+            expect(element().bool).toBe(true);
+
+            element().removeAttribute('bool', '');
+            expect(element()._bool).toBe(false);
+            expect(element().bool).toBe(false);
+        });
+
+        it("should not fail with no handler", function() {
+            expect(element()._inline).toBe('abc');
+            expect(element().inline).toBe('abc');
+
+            // Changes generated before the first render does not trigger the onValueChanged()
+            element().setAttribute('inline', 'def');
+            expect(element()._inline).toBe('def');
+            expect(element().inline).toBe('def');
+        });
+    });
 });

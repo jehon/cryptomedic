@@ -7,9 +7,9 @@
     class BlockBillCategory extends JHElement {
         constructor() {
             super();
-            this.value = [];
-            this.priceLines = [];
-            this.date = false;
+            this._value = [];
+            this._priceLines = [];
+            this._date = false;
         }
 
         static get properties() {
@@ -51,24 +51,24 @@
 
         adapt() {
             super.adapt();
-            if (!this.priceLines || this.priceLines.length < 1) {
+            if (!this._priceLines || this._priceLines.length < 1) {
                 return;
             }
             this.removeAttribute("hidden");
 
             this[tbody].innerHTML = "";
-            this[legend].innerHTML = this.category
+            this[legend].innerHTML = this._category
             let displayed = false;
-            this.priceLines.forEach((p) => {
-                if (p.type == this.category) {
+            this._priceLines.forEach((p) => {
+                if (p.type == this._category) {
                     let v = 0;
-                    if (this.value) {
-                        v = this.value.reduce((acc, v) => {
+                    if (this._value) {
+                        v = this._value.reduce((acc, v) => {
                             return acc || (v.title == p.title ? v : false);
                         }, false);
                     }
-                    if (v.Amount || this.edit) {
-                        this[tbody].appendChild(this.createElementAndAddThem(`<block-bill-line ${this.edit ? 'edit' : '' } style='display: table-row' value='${JSON.stringify(v)}' price='${JSON.stringify(p)}'></block-bill-line>`, 
+                    if (v.Amount || this._edit) {
+                        this[tbody].appendChild(this.createElementAndAddThem(`<block-bill-line ${this._edit ? 'edit' : '' } style='display: table-row' value='${JSON.stringify(v)}' price='${JSON.stringify(p)}'></block-bill-line>`, 
                         null)[0]);
                         displayed = true;
                     }
