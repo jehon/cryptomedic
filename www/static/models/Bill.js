@@ -1,3 +1,4 @@
+
 class Bill extends PatientRelated {
   getModel() {
     return 'Bill';
