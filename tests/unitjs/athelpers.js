@@ -48,7 +48,7 @@ function testComponent(html, test = (el) => true) {
   `
   div.appendChild(style);
 
-  document.body.appendChild(div);
+  document.body.insertBefore(div, document.body.firstChild);
   
   // Function to close the test
   div.firstChild.testDone = () => {
