@@ -18,6 +18,14 @@ describe('x-read-boolean-test', function() {
     });
   });
 
+  it("should show false when 'false' is specified", function(done) {
+    testComponent("<x-read-boolean value='false'></x-read-boolean>").then(el => {
+      expect(el.shadowRoot.querySelector("img").getAttribute('src')).toMatch(/-false.gif/i);
+      el.testDone();
+      done();
+    });
+  });
+
   it("should show false when invalid json data is given", function(done) {
     testComponent("<x-read-boolean value='{truc'></x-read-boolean>").then(el => {
       // Non empty string is ... "true"
