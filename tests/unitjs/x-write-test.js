@@ -25,7 +25,7 @@ describe('x-write-test', function() {
                 expect(el).not.toBeNull();
                 expect(el.getAttribute('name')).toBeNull();
                 expect(el.getAttribute('type')).toBe("timestamp");
-                expect(element().getValue()).toBe("");
+                expect(element().value).toBe("");
             });
         })
 
@@ -37,7 +37,7 @@ describe('x-write-test', function() {
                 expect(el.getAttribute('name')).toBeNull();
                 expect(el.getAttribute('type')).toBe("timestamp");
                 expect(el.getAttribute('value')).toBe("2016-01-01");
-                expect(element().getValue()).toBe("2016-01-01");
+                expect(element().value).toBe("2016-01-01");
             });
         })
     })
@@ -48,7 +48,7 @@ describe('x-write-test', function() {
                 let el = element().querySelector('input[type=checkbox]');
                 expect(element().querySelector('span.error')).toBeNull();
                 expect(el).not.toBeNull();
-                expect(element().getValue()).toBe(false);
+                expect(element().value).toBe(false);
             });
         })
 
@@ -57,7 +57,7 @@ describe('x-write-test', function() {
                 let el = element().querySelector('input[type=checkbox]');
                 expect(element().querySelector('span.error')).toBeNull();
                 expect(el).not.toBeNull();
-                expect(element().getValue()).toBe(true);
+                expect(element().value).toBe(true);
             });
 
             it("should fire event", function() {
@@ -67,7 +67,7 @@ describe('x-write-test', function() {
                 el.setAttribute("checked", "checked");
                 JHElement.fireOn(element().querySelector("input"), "change", "test");
                 expect(res).toBe("test");
-                expect(element().getValue()).toBe(true);
+                expect(element().value).toBe(true);
             })
         })
     })
@@ -78,7 +78,7 @@ describe('x-write-test', function() {
                 let el = element().querySelector('input[type=date]');
                 expect(element().querySelector('span.error')).toBeNull();
                 expect(el).not.toBeNull();
-                expect(element().getValue()).not.toBeNull();
+                expect(element().value).not.toBeNull();
             });
         })
 
@@ -87,7 +87,7 @@ describe('x-write-test', function() {
                 let el = element().querySelector('input[type=date]');
                 expect(element().querySelector('span.error')).toBeNull();
                 expect(el).not.toBeNull();
-                expect(element().getValue()).toBe("2016-01-15");
+                expect(element().value).toBe("2016-01-15");
             });
 
             it("should fire event", function() {
@@ -97,7 +97,7 @@ describe('x-write-test', function() {
                 el.value = "2016-02-25";
                 JHElement.fireOn(element().querySelector("input"), "change", "test");
                 expect(res).toBe("test");
-                expect(element().getValue()).toBe("2016-02-25");
+                expect(element().value).toBe("2016-02-25");
             })
         })
     })
@@ -108,7 +108,7 @@ describe('x-write-test', function() {
                 let el = element().querySelector('input[type=number]');
                 expect(element().querySelector('span.error')).toBeNull();
                 expect(el).not.toBeNull();
-                expect(element().getValue()).toBe(null);
+                expect(element().value).toBe(null);
             });
         })
 
@@ -117,7 +117,7 @@ describe('x-write-test', function() {
                 let el = element().querySelector('input[type=number]');
                 expect(element().querySelector('span.error')).toBeNull();
                 expect(el).not.toBeNull();
-                expect(element().getValue()).toBe(15);
+                expect(element().value).toBe(15);
             });
 
             it("should fire event", function() {
@@ -127,7 +127,7 @@ describe('x-write-test', function() {
                 el.value = 10;
                 JHElement.fireOn(element().querySelector("input"), "change", "test");
                 expect(res).toBe("test");
-                expect(element().getValue()).toBe(10);
+                expect(element().value).toBe(10);
             })
         })
     })
@@ -138,7 +138,7 @@ describe('x-write-test', function() {
                 let el = element().querySelector('input');
                 expect(element().querySelector('span.error')).toBeNull();
                 expect(el).not.toBeNull();
-                expect(element().getValue()).toBe("");
+                expect(element().value).toBe("");
             });
         })
 
@@ -147,7 +147,7 @@ describe('x-write-test', function() {
                 let el = element().querySelector('input');
                 expect(element().querySelector('span.error')).toBeNull();
                 expect(el).not.toBeNull();
-                expect(element().getValue()).toBe("xvalue");
+                expect(element().value).toBe("xvalue");
             });
 
             it("should fire event", function() {
@@ -157,7 +157,7 @@ describe('x-write-test', function() {
                 el.value = "blablabla";
                 JHElement.fireOn(element().querySelector("input"), "change", "test");
                 expect(res).toBe("test");
-                expect(element().getValue()).toBe("blablabla");
+                expect(element().value).toBe("blablabla");
             })
         })
     })
@@ -168,7 +168,7 @@ describe('x-write-test', function() {
                 let el = element().querySelector('textarea');
                 expect(element().querySelector('span.error')).toBeNull();
                 expect(el).not.toBeNull();
-                expect(element().getValue()).toBe("");
+                expect(element().value).toBe("");
             });
         })
 
@@ -177,7 +177,7 @@ describe('x-write-test', function() {
                 let el = element().querySelector('textarea');
                 expect(element().querySelector('span.error')).toBeNull();
                 expect(el).not.toBeNull();
-                expect(element().getValue()).toBe("xvalue");
+                expect(element().value).toBe("xvalue");
             });
 
             it("should fire event", function() {
@@ -187,7 +187,7 @@ describe('x-write-test', function() {
                 el.value = "blablabla";
                 JHElement.fireOn(el, "change", "test");
                 expect(res).toBe("test");
-                expect(element().getValue()).toBe("blablabla");
+                expect(element().value).toBe("blablabla");
             });
         })
     })
@@ -201,8 +201,9 @@ describe('x-write-test', function() {
                 let el = element().querySelector('x-write-list');
                 expect(element().querySelector('span.error')).toBeNull();
                 expect(el).not.toBeNull();
+
                 // First one is automatically selected
-                expect(element().getValue()).toBe('machin');
+                expect(element().value).toBe(null);
             });
         })
 
@@ -211,7 +212,7 @@ describe('x-write-test', function() {
                 let el = element().querySelector('x-write-list');
                 expect(element().querySelector('span.error')).toBeNull();
                 expect(el).not.toBeNull();
-                expect(element().getValue()).toBe("truc");
+                expect(element().value).toBe("truc");
             });
 
             it("should fire event", function() {
@@ -221,7 +222,7 @@ describe('x-write-test', function() {
                 el.setAttribute('value', 'brol');
                 JHElement.fireOn(el, "change", "test");
                 expect(res).toBe("test");
-                expect(element().getValue()).toBe("brol");
+                expect(element().value).toBe("brol");
             })
         })
     })

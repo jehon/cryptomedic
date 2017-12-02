@@ -5,37 +5,49 @@
             return {
                 "type":     "String",
                 "value":    "String",
-                "inline":   "String",
                 "list":     "Object",
                 "listName": "String"
             }
         }
 
         adapt() {
-            if (!this.type) {
-                this.innerHTML = `<span id='${this.value}' class='error'>Read: key is not defined: '${this.type}'</span>`;
+            if (!this._type) {
+                this.innerHTML = `<span id='${this._value}' class='error'>Read: key is not defined: '${this._type}'</span>`;
                 return;
             }
 
             let el = false;
 
-            switch(this.type) {
+            let inline = ""; //= this.attributes;
+            for(const a of this.attributes) { 
+                const n = a.name;
+                if (n == "name" || n == "id" || n == "type" ) {
+                    continue;
+                }
+                if (typeof(a.value) == "object") {
+                    inline += ` ${n}='${JSON.stringify(a.value)}' `
+                } else {
+                    inline += ` ${n}='${a.value}'`;
+                }
+            }
+
+            switch(this._type) {
                 case "timestamp":
-                    this.innerHTML = `<x-read type='${this.type}' value='${this.value}' ${this.inline}></x-read>`;
-                    this.getValue = () => this.value;
+                    this.innerHTML = `<x-read type='${this._type}' value='${this._value}'></x-read>`;
+                    this.getValue = () => this._value;
                     break;
                 case "boolean":
-                    this.innerHTML = `<input type='checkbox' ${this.value ? 'checked' : ''}/>`;
+                    this.innerHTML = `<input type='checkbox' ${this._value ? 'checked' : ''}/>`;
                     el = this.querySelector('input');
                     this.getValue = () => el.checked;
                     break;
                 case "date":
-                    this.innerHTML = `<input type='date' value='${this.value}' ${this.inline} />`;
+                    this.innerHTML = `<input type='date' value='${this._value}' ${inline} />`;
                     el = this.querySelector('input');
                     this.getValue = () => el.value;
                     break;
                 case "numeric":
-                    this.innerHTML = `<input type='number' value='${this.value}' ${this.inline} />`;
+                    this.innerHTML = `<input type='number' value='${this._value}' ${inline} />`;
                     el = this.querySelector('input');
                     this.getValue = () => {
                         if (el.value === "") {
@@ -45,32 +57,40 @@
                     }
                     break;
                 case "char":
-                    this.innerHTML = `<input value='${this.value}' ${this.inline} />`;
+                    this.innerHTML = `<input value='${this._value}' ${inline} />`;
                     el = this.querySelector('input');
                     this.getValue = () => el.value;
                     break;
                 case "text":
-                    this.innerHTML = `<textarea>${this.value}</textarea>`;
+                    this.innerHTML = `<textarea ${inline}>${this._value}</textarea>`;
                     el = this.querySelector('textarea');
                     this.getValue = () => el.value;
                     break;
                 case "list":
-                    this.innerHTML = `<x-write-list value='${this.value}' list='${JSON.stringify(this.list)}' list-name='${this.listName}' ${this.inline}></x-write-String>`;
+                    this.innerHTML = `<x-write-list value='${this._value}' list='${JSON.stringify(this._list)}' list-name='${this._listName}' ${inline}></x-write-String>`;
                     el = this.querySelector('x-write-list');
-                    this.getValue = () => el.getValue();
+                    this.getValue = () => el.value;
                     break;
                 default:
-                    console.error("Type unknown: ", this.type);
-                    this.innerHTML = `<span class='error'>unknown type: ${this.type}</span>`;
+                    console.error("Type unknown: ", this._type);
+                    this.innerHTML = `<span class='error'>unknown type: ${this._type}</span>`;
                     break;
             }
             
             if (el) {
-                el.addEventListener("change", () => { 
-                    const v = this.getValue();
-                    this.fire("change", v);
-                });
+                el.addEventListener("change", () => this.fire("change", this.value));
             }
+        }
+
+        set value(v) {
+            this._value = v;
+        }
+
+        get value() {
+            if (this.isInitialized()) {
+                return this.getValue();
+            }
+            return null;
         }
     }
 

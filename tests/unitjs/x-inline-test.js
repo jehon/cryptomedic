@@ -57,7 +57,7 @@ describe('x-inline-test', function() {
             input.value = 10;
             JHElement.fireOn(input, "change", 10);
             expect(res).toBe("test");
-            expect(element().getValue()).toBe(10);
+            expect(element().value).toBe(10);
         })
     })
 });

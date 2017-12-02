@@ -1,5 +1,12 @@
 
 describe('x-write-list-test', function() {
+    beforeEach(function() {
+        XWriteList.setReferences({
+            listRadio: listRadio,
+            listSelect: listSelect
+        })
+    });
+
     let listRadio = ['truc', 'brol', 'machin', 'chose'];
     let listSelect = ['truc', 'brol', 'machin', 'chose', 'bazar', 'ça', 'là'];
 
@@ -26,7 +33,7 @@ describe('x-write-list-test', function() {
 
         // Check the value
         expect(el.shadowRoot.querySelector('input[type=radio][value=""]').hasAttribute('checked')).toBeTruthy();
-        expect(el.getValue()).toBe(null);
+        expect(el.value).toBe(null);
     }
 
     let checkSelect = (el, v) => {
@@ -40,7 +47,7 @@ describe('x-write-list-test', function() {
 
         // Check the value
         expect(el.shadowRoot.querySelector('select').value).toBe(v);
-        expect(el.getValue()).toBe(v);
+        expect(el.value).toBe(v);
     }
 
     let checkSelectNull = (el) => {
@@ -54,7 +61,7 @@ describe('x-write-list-test', function() {
 
         // Check the value
         expect(el.shadowRoot.querySelector('select').value).toBe('');
-        expect(el.getValue()).toBe(null);
+        expect(el.value).toBe(null);
     }
 
     webDescribe("with emtpy list", `<x-write-list value='machin' list=''></x-write-list>`, function(element) {
@@ -93,7 +100,7 @@ describe('x-write-list-test', function() {
             el.setAttribute('checked', 'checked');
             JHElement.fireOn(el, "change", "test");
             expect(res).toBe("test");
-            expect(element().getValue()).toBe("brol");
+            expect(element().value).toBe("brol");
         });
     })
 
@@ -112,7 +119,7 @@ describe('x-write-list-test', function() {
             el.value = 'brol';
             JHElement.fireOn(el, "change", "test");
             expect(res).toBe("test");
-            expect(element().getValue()).toBe("brol");
+            expect(element().value).toBe("brol");
         });
     })
 
@@ -186,10 +193,6 @@ describe('x-write-list-test', function() {
     webDescribe("should handle named list", `<x-write-list value='machin' list-name='listRadio'></x-write-list>`, function(element) {
         it("should instanciated", function() {
             expect(element()).not.toBeNull();
-            XWriteList.setReferences({
-                listRadio: listRadio,
-                listSelect: listSelect
-            })
             checkRadio(element(), 'machin');
         });
     })
