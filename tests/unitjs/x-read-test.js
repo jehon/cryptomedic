@@ -15,8 +15,8 @@ describe('x-read-test', function() {
     spyOn(console, "error").and.returnValue(null);
 
     testComponent(`<x-read name='test' type='anything'></x-read>`).then(el => {
-      expect(el.querySelector("span[name='test']")).not.toBeNull();
-      expect(el.querySelector("span[name='test']").innerHTML).toContain("unknown");
+      expect(el.querySelector("span:not(#error)")).not.toBeNull();
+      expect(el.querySelector("span:not(#error)").innerHTML).toContain("unknown");
       expect(console.error).toHaveBeenCalledTimes(1);
 
       el.testDone();
@@ -28,12 +28,12 @@ describe('x-read-test', function() {
   it("should manage timestamp", function(done) {
     let date = new Date(Date.parse("2017-07-07 18:30:25.432"));
     testComponent(`<x-read name='test' type='timestamp' value='${date.toISOString()}'></x-read>`).then(el => {
-      expect(el.querySelector("span[name='test']")).not.toBeNull();
-      expect(el.querySelector("span[name='test']").innerHTML).toBe(date.toLocaleDateString() + " " + date.toLocaleTimeString());
+      expect(el.querySelector("span:not(#error)")).not.toBeNull();
+      expect(el.querySelector("span:not(#error)").innerHTML).toBe(date.toLocaleDateString() + " " + date.toLocaleTimeString());
 
       el.setAttribute("value", "");
-      expect(el.querySelector("span[name='test']")).not.toBeNull();
-      expect(el.querySelector("span[name='test']").innerHTML).toBe("");
+      expect(el.querySelector("span:not(#error)")).not.toBeNull();
+      expect(el.querySelector("span:not(#error)").innerHTML).toBe("");
 
       el.testDone();
       done();
@@ -41,8 +41,8 @@ describe('x-read-test', function() {
 
     // Invalid date
     testComponent(`<x-read name='test' type='timestamp' value='aaaa-13-01'></x-read>`).then(el => {
-      expect(el.querySelector("span[name='test']")).not.toBeNull();
-      expect(el.querySelector("span[name='test']").innerHTML).toBe("");
+      expect(el.querySelector("span:not(#error)")).not.toBeNull();
+      expect(el.querySelector("span:not(#error)").innerHTML).toBe("");
 
       el.testDone();
       done();
@@ -64,15 +64,32 @@ describe('x-read-test', function() {
     });
   });
 
-  [ "list", "date", "numeric", "char", "text" ].forEach(type => {
+  it(`should manage numeric`, function(done) {
+    testComponent(`<x-read name='test' type='numeric' value='123'></x-read>`).then(el => {
+      expect(el.querySelector("span:not(#error)")).not.toBeNull();
+      expect(el.querySelector("span:not(#error)").innerHTML).toBe("123");
+
+      el.setAttribute("value", 0);
+
+      let span = el.querySelector("span:not(#error)");
+
+      expect(span).not.toBeNull();
+      expect(span.innerHTML).toBe("0");
+
+      el.testDone();
+      done();
+    });
+  });
+
+  [ "list", "date", "char", "text" ].forEach(type => {
     it(`should manage ${type}`, function(done) {
       testComponent(`<x-read name='test' type='${type}' value='hello'></x-read>`).then(el => {
-        expect(el.querySelector("span[name=test]")).not.toBeNull();
-        expect(el.querySelector("span[name=test]").innerHTML).toBe("hello");
+        expect(el.querySelector("span:not(#error)")).not.toBeNull();
+        expect(el.querySelector("span:not(#error)").innerHTML).toBe("hello");
 
         el.setAttribute("value", "");
 
-        let span = el.querySelector("span[name=test]");
+        let span = el.querySelector("span:not(#error)");
 
         expect(span).not.toBeNull();
         expect(span.innerHTML).toBe("");
@@ -81,6 +98,6 @@ describe('x-read-test', function() {
         done();
       });
     });
-
   })
+
 });
