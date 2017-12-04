@@ -107,7 +107,7 @@ let JHElement = (function() {
                 }
             } else {
                 if (newValue == "null" || newValue == "undefined") {
-                    this[attributeNameInternal] = "";
+                    this[attributeNameInternal] = defaultValue();
                 } else {
                     this[attributeNameInternal] = newValue;
                 }
