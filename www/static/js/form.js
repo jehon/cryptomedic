@@ -41,6 +41,7 @@ function formGetContent(form, prototype = {}) {
 
     // Skip empty values
     if (value === "" || value == null) {
+      delete(data[name]);
       continue;
     }
 
