@@ -116,8 +116,8 @@ class Bill extends PatientRelated {
     }
 
     getPercentageAsked() {
-        const price = this.getPrice();
-        const sl = this.getCalculatedSocialLevel();
+        let price = this.getPrice();
+        let sl = this.Sociallevel;
 
         if (!price) {
             return 1;
