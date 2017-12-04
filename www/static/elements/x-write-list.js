@@ -156,16 +156,10 @@ XWriteList = (function() {
             })
             this.shadowRoot.querySelectorAll("span[to]").forEach(el => {
                 el.onclick = (event) => {
+                    // Setting this attribute will fire the "input" change event
                     el.querySelector('input').setAttribute('checked', true);
-                    this.fire("change", el.querySelector('input').getAttribute('value'));
                 }
             });
-            // if (this.shadowRoot.querySelector("input[type=radio]:checked") == null) {
-            //     // If value is null or not set:
-            //     // - if we are nullable -> correct value (null) is already set
-            //     // - other wise, let's pick up the first one
-            //     this.shadowRoot.querySelector("input[type=radio]").setAttribute("checked", "checked");
-            // }
         }
 
         _asSelect() {
