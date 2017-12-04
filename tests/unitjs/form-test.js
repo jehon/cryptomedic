@@ -65,6 +65,12 @@ describe("form-test", function() {
 	 		expect(formGetContent(element())).toEqual({
 				n3: 'n3val1',
 			});
+	 	});
+
+	 	it("should remove unsetted values", function() {
+	 		expect(formGetContent(element(), { n4: true })).toEqual({
+				n3: 'n3val1',
+			});
 		});
 	});
 
