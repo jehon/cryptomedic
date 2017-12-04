@@ -20,6 +20,9 @@
                 if (n == "name" || n == "id" || n == "type") {
                     continue;
                 }
+                if (n.substr(0, "edit".length) == "edit") {
+                    continue;
+                }
                 if (typeof(a.value) == "object") {
                     inline += ` ${n}='${JSON.stringify(a.value)}' `
                 } else {
