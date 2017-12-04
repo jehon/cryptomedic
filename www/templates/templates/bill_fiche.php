@@ -154,4 +154,3 @@
     </fieldset>
   </div>
 </div>
-<tr>
