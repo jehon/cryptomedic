@@ -76,6 +76,10 @@ function formFillIn(form, object) {
         formElement.querySelectorAll(`[name='${k}']`).forEach(el => el.setAttribute("value", (object[k] ? object[k] : "")));
     });
 
+    formEvaluateFunctions(formElement, object);
+}
+
+function formEvaluateFunctions(formElement, object) {
     formElement.querySelectorAll(`[function]`).forEach(el => {
         fn = el.getAttribute('function');
         if (fn in object) {
