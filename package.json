@@ -12,6 +12,8 @@
     "angular-route": "1.4.x",
     "clone": "^2.1.1",
     "excellentexport": "^2.1.0",
+    "fetchfull": "github:jehon/fetchfull",
+    "fetchfull-elements": "github:jehon/fetchfull-elements",
     "webcomponentsjs": "latest"
   },
   "devDependencies": {
