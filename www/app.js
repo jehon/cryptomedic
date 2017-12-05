@@ -13,7 +13,6 @@ import ExcellentExport  from 'excellentexport';
 import clone            from 'clone';
 
 import fetchfull        from 'fetchfull';
-import fetchfullElement from 'fetchfull-elements';
 window.angular          = angular;
 window.ExcellentExport  = ExcellentExport;
 window.clone            = clone;
