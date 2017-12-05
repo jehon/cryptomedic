@@ -20,6 +20,9 @@
                 if (n == "name" || n == "id" || n == "type") {
                     continue;
                 }
+                if (n in this.constructor.properties) {
+                    continue;
+                }
                 if (n.substr(0, "edit".length) == "edit") {
                     continue;
                 }

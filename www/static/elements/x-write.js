@@ -24,6 +24,9 @@
                 if (n == "name" || n == "id" || n == "type" ) {
                     continue;
                 }
+                if (n in this.constructor.properties) {
+                    continue;
+                }
                 if (typeof(a.value) == "object") {
                     inline += ` ${n}='${JSON.stringify(a.value)}' `
                 } else {
