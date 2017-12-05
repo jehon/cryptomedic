@@ -19,6 +19,13 @@ function ctrl_file_bill($scope, $element) {
         // Calculate totals
         newData.calculateTotalAsked();
 
+        errors = this.currentFile().validate();
+
+        $element[0].querySelectorAll("[error]").forEach(el => el.setAttribute("hidden", "hidden"));
+        Object.keys(errors).forEach(e => {
+            $element[0].querySelectorAll(`[error=${e}]`).forEach(el => el.removeAttribute("hidden"));
+        })
+
         return newData;
     }
 
@@ -28,6 +35,8 @@ function ctrl_file_bill($scope, $element) {
 
         $element[0].querySelectorAll("block-bill-category").forEach(el => el.setAttribute('price-lines', JSON.stringify($scope.currentFile().getPrice().price_lines)));
         $element[0].querySelectorAll("block-bill-category").forEach(el => el.setAttribute('value', JSON.stringify($scope.currentFile().bill_lines)));
+
+        $scope.rebuildData();
     }
     $scope.adapt();
 
@@ -40,6 +49,7 @@ function ctrl_file_bill($scope, $element) {
         $scope.safeApply();
     }));
 
+// TODO: calculated socialLevel to be migrated to SocialLevel
 
 // TODO: make the calculations directly from the various input (use formGetContent ?) + set values on input
 //   and build up the form at the end
