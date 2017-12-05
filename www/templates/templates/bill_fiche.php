@@ -1,15 +1,15 @@
 <div class='container-fluid' ng-controller="ctrl_file_bill">
   <div class='row'>
-    <div ng-if='errors.consultPhisioAndDoctor'>
+    <div error='consultPhisioAndDoctor'>
       <div class='alert alert-danger' >Error: you could not bill "physio" and "doctor" together!</div>
     </div>
-    <div ng-if='errors.homeVisitAndGiveAppointment'>
+    <div error='homeVisitAndGiveAppointment'>
       <div class='alert alert-danger'>Error: you could not bill a "home visit" with "give appointment" together!</div>
     </div>
-    <div ng-if='!currentFile().Date'>
+    <div error='!currentFile().Date'>
       <div class='alert alert-danger'>Error: please select a date first!</div>
     </div>
-    <div ng-if='errors.dateInTheFuture'>
+    <div error='dateInTheFuture'>
       <div class='alert alert-danger' id='errorDateFuture'>Error: The date can not be in the future!</div>
     </div>
   </div>
