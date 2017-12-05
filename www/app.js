@@ -12,8 +12,14 @@ import ExcellentExport  from 'excellentexport';
 // Clone object clone(...)
 import clone            from 'clone';
 
-import fetchfull        from 'fetchfull';
+// html entities decode for jh-script
+
+// Add objectPath to the library dynamically
+// https://github.com/webpack-contrib/imports-loader
+import fetchfull        from 'imports-loader?objectPath=object-path!fetchfull';
+// import fetchfull        from 'fetchfull';
+
 window.angular          = angular;
 window.ExcellentExport  = ExcellentExport;
 window.clone            = clone;
-window.fetchfull        = fetchfull;
+window.FetchFull        = fetchfull;

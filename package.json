@@ -14,6 +14,7 @@
     "excellentexport": "^2.1.0",
     "fetchfull": "github:jehon/fetchfull",
     "fetchfull-elements": "github:jehon/fetchfull-elements",
+    "object-path": "^0.11.4",
     "webcomponentsjs": "latest"
   },
   "devDependencies": {
@@ -23,6 +24,7 @@
     "fs-extra": "latest",
     "geckodriver": "latest",
     "glob": "latest",
+    "imports-loader": "^0.7.1",
     "jasmine-core": "latest",
     "karma": "latest",
     "karma-chrome-launcher": "latest",
