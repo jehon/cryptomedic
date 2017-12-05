@@ -23,7 +23,6 @@
     "jquery-ui": "^1.12.1",
     "html2canvas": "^0.4.1",
     "paper-tooltip": "^1.1.3",
-    "fetchfull-elements": "git@github.com:jehon/fetchfull-elements.git",
     "custom-elements": "webcomponents/custom-elements#^1.0.0",
     "he": "^1.1.1"
   }
