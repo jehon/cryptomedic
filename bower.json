@@ -15,6 +15,7 @@
   ],
   "dependencies": {
     "bootstrap": "^3.3",
+    "fetchfull-elements": "git@github.com:jehon/fetchfull-elements.git",
     "platform": "Polymer/platform#0.*",
     "polymer": "Polymer/polymer#1.*",
     "moment": "momentjs#^2.15.2",
