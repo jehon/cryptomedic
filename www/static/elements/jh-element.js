@@ -73,8 +73,8 @@ let JHElement = (function() {
                 }
                 if (!(k in this)) {
                     Object.defineProperty(this, k, {
-                        set: (v) => { this[ki] = v; }
                         get: () => this[ki],
+                        set: (v) => this.attributeChangedCallback(camelToSnake(k), this[ki], k)
                     });
                 }
             })
