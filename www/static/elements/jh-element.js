@@ -2,7 +2,6 @@
 /*
   TODO:
   - annotation -> register element
-  - set x()    -> trigger attributeChangedCallback
   - template   -> externalize ?
 */
 
