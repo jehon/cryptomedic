@@ -9,34 +9,10 @@
 let JHElement = (function() {
     const initialized = Symbol("initialized");
 
-    function snakeToCamel(s){
-        let res = s.replace(/(\-\w)/g, function(m) { return m[1].toUpperCase(); });
-        res[0] = res[0].toLowerCase();
-        return res;
-    }
-
-    function camelToSnake(s){
-        let res = s.replace(/([A-Z])/g, function(m) { return "-" + m[0].toLowerCase(); });
-        return res;
-    }
-
-    function withInitialUpper(s) {
-        return s[0].toUpperCase() + s.substring(1);
-    }
-
-    function defaultValue(type) {
-        switch(type) {
-            case "Boolean": return false;
-            case "Object":  return null;
-            case "Integer": return 0;
-        }
-        return "";
-    }
-
     class JHElement extends HTMLElement {  
         static get observedAttributes() {
             if (this.properties) {
-                return Object.keys(this.properties).map(k => camelToSnake(k));
+                return Object.keys(this.properties).map(k => JHElement.camelToSnake(k));
             }
             return [];
         }
@@ -56,6 +32,29 @@ let JHElement = (function() {
             return true;
         }
 
+        static snakeToCamel(s) {
+            let res = s.replace(/(\-\w)/g, function(m) { return m[1].toUpperCase(); });
+            return res[0].toLowerCase() + res.substring(1);
+        }
+
+        static camelToSnake(s){
+            let res = s.replace(/([A-Z])/g, function(m) { return "-" + m[0].toLowerCase(); });
+            return res;
+        }
+
+        static withInitialUpper(s) {
+            return s[0].toUpperCase() + s.substring(1);
+        }
+
+        static defaultValue(type) {
+            switch(type) {
+                case "Boolean": return false;
+                case "Object":  return null;
+            case "Integer": return 0;
+            }
+            return "";
+        }
+
         constructor() {
             super();
             this[initialized] = false;
@@ -69,12 +68,12 @@ let JHElement = (function() {
             Object.keys(this.constructor.properties).forEach(k => {
                 const ki = '_' + k;
                 if (!(ki in this)) {
-                    this[ki] = defaultValue(this.constructor.properties[k]);
+                    this[ki] = JHElement.defaultValue(this.constructor.properties[k]);
                 }
                 if (!(k in this)) {
                     Object.defineProperty(this, k, {
                         get: () => this[ki],
-                        set: (v) => this.attributeChangedCallback(camelToSnake(k), this[ki], k)
+                        set: (v) => this.attributeChangedCallback(JHElement.camelToSnake(k), this[ki], k)
                     });
                 }
             })
@@ -86,17 +85,17 @@ let JHElement = (function() {
 
         attributeChangedCallback(attributeName, oldValue, newValue, namespace) {
             // snake-case to camel-case
-            const attributeNameCamel = snakeToCamel(attributeName);
+            const attributeNameCamel = JHElement.snakeToCamel(attributeName);
             const attributeNameInternal = '_' + attributeNameCamel
 
             let props = this.constructor.properties;
             if (props && props[attributeNameCamel]) {
                 if (newValue === "null" || newValue === "undefined") {
-                    this[attributeNameInternal] = defaultValue(props[attributeNameCamel]);
+                    this[attributeNameInternal] = JHElement.defaultValue(props[attributeNameCamel]);
                 } else {
                     switch(props[attributeNameCamel]) {
                         case "Boolean":
-                            this[attributeNameInternal] = this.constructor.canonizeBoolean(newValue);
+                            this[attributeNameInternal] = JHElement.canonizeBoolean(newValue);
                             break;
                         case "Object":
                             try {
@@ -114,14 +113,14 @@ let JHElement = (function() {
                 }
             } else {
                 if (newValue == "null" || newValue == "undefined") {
-                    this[attributeNameInternal] = defaultValue();
+                    this[attributeNameInternal] = JHElement.defaultValue();
                 } else {
                     this[attributeNameInternal] = newValue;
                 }
             }
             if (this.isInitialized()) {
                 // onValueChanged(new value);
-                const cb = "on" + withInitialUpper(attributeNameCamel) + "Changed"
+                const cb = "on" + JHElement.withInitialUpper(attributeNameCamel) + "Changed"
                 if (typeof(this[cb]) == 'function') {
                     this[cb](this[attributeNameInternal]);
                 }
