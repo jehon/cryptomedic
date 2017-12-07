@@ -126,7 +126,9 @@ let JHElement = (function() {
                     this[cb](this[attributeNameInternal]);
                 }
             }
-            this.adaptIfInitialized();
+            if (this.isInitialized()) {
+                this.adapt();
+            }
         }
 
         connectedCallback() {
@@ -138,12 +140,6 @@ let JHElement = (function() {
         }
 
         render() {}
-
-        adaptIfInitialized() {
-            if (this.isInitialized()) {
-                this.adapt();
-            }
-        }
 
         adapt() {}
 

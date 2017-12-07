@@ -16,10 +16,6 @@ describe("jh-element-test", function() {
         expect(JHElement.prototype.render).toHaveBeenCalledTimes(0);
         expect(JHElement.prototype.adapt).toHaveBeenCalledTimes(0);
 
-        element().adaptIfInitialized();
-        expect(JHElement.prototype.render).toHaveBeenCalledTimes(0);
-        expect(JHElement.prototype.adapt).toHaveBeenCalledTimes(0);
-
         element().connectedCallback();
         expect(JHElement.prototype.render).toHaveBeenCalledTimes(1);
         expect(JHElement.prototype.adapt).toHaveBeenCalledTimes(1);
@@ -28,10 +24,6 @@ describe("jh-element-test", function() {
         element().connectedCallback();
         expect(JHElement.prototype.render).toHaveBeenCalledTimes(1);
         expect(JHElement.prototype.adapt).toHaveBeenCalledTimes(2);
-
-        element().adaptIfInitialized();
-        expect(JHElement.prototype.render).toHaveBeenCalledTimes(1);
-        expect(JHElement.prototype.adapt).toHaveBeenCalledTimes(3);
     })
 
     it("should handle attributes by default", function() {
