@@ -12,7 +12,7 @@ function ctrl_file_bill($scope, $element) {
         }
         const newData = formGetContent($element[0].querySelectorAll('[editable-bill]'), $scope.currentFile());
 
-        newData.bill_lines = $element[0].querySelectorAll("block-bill-category").reduce((acc, bl) => {
+        newData.bill_lines = Array.from($element[0].querySelectorAll("block-bill-category")).reduce((acc, bl) => {
             return acc.concat(bl.getBillLines());
         }, []);
 
