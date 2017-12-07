@@ -68,7 +68,7 @@
 
         doLogin(username, password) {
           return this.start()
-            .requestWithPost()
+            .requestWithPostWithJSONBody()
             .requestToUrl('auth/mylogin')
             .requestWithData({
               'username': username,
@@ -137,7 +137,7 @@
         'createReference': function(year, order) {
           return this.start()
             .requestToUrl('reference')
-            .requestWithPost()
+            .requestWithPostWithJSONBody()
             .requestWithData({
               'entryyear': year,
               'entryorder': order
@@ -176,7 +176,7 @@
 
         createFile(data) {
           return this.start()
-            .requestWithPost()
+            .requestWithPostWithJSONBody()
             .requestToUrl('fiche/' + data.getServerRessource())
             .requestWithData(nullify(data))
             .then(function(data) {
@@ -189,7 +189,7 @@
 
         saveFile(data) {
           return this.start()
-            .requestWithPut()
+            .requestWithPutWithJSONBody()
             .requestToUrl('fiche/' + data.getServerRessource() + '/' + data['id'])
             .requestWithData(nullify(data))
             .then(function(data) {
@@ -245,7 +245,7 @@
 
         'userAdd': function(user) {
           return this.start()
-            .requestWithPost()
+            .requestWithPostWithJSONBody()
             .requestToUrl('users')
             .requestWithData(user)
         },
@@ -258,14 +258,14 @@
 
         'userUpdate': function(user) {
           return this.start()
-            .requestWithPut()
+            .requestWithPutWithJSONBody()
             .requestToUrl('users/' + user.id)
             .requestWithData(user)
         },
 
         'userPassword': function(id, pwd) {
           return this.start()
-            .requestWithPost()
+            .requestWithPostWithJSONBody()
             .requestWithData({ password: pwd })
             .requestToUrl('users/password/' + id)
         }
