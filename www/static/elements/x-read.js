@@ -28,7 +28,7 @@
                     this.innerHTML = `<span>${display}</span>"`;
                     break;
                 case "boolean":
-                    this._value = this.constructor._canonizeBoolean(this._value);
+                    this._value = this.constructor.canonizeBoolean(this._value);
                     this.innerHTML = `<x-read-boolean value='${this._value}'></x-read-boolean>`;
                     break;
                 case "numeric":
