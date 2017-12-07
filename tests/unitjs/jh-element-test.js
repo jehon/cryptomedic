@@ -1,5 +1,26 @@
 
 describe("jh-element-test", function() {
+    // Instanciate a real element to test properties...
+    class JHElementTest extends JHElement {
+        static get properties() {
+            return {
+                sVal:     "String",
+                sInt:     "Integer",
+                sObj:     "Object",
+                sBool:    "Boolean",
+                value:    "String"
+            }
+        }
+
+        onValueChanged() {
+            if (!this.valueChanged) {
+                this.valueChanged = 0;
+            }
+            this.valueChanged++;
+        }
+    }
+    window.customElements.define('jh-element-test', JHElementTest);
+
     beforeEach(function() {
         spyOn(JHElement.prototype, 'render').and.callThrough();
         spyOn(JHElement.prototype, 'adapt').and.callThrough();
@@ -38,23 +59,15 @@ describe("jh-element-test", function() {
     })
 
     it("should parse attributes correctly", function() {
-        let jhelement = new JHElement();
+        let jhelement = new JHElementTest();
         let element = () => jhelement;
-
-        Object.defineProperty(element().constructor, 'properties', { get: function() { return { 
-            sVal: "String",
-            sInt: "Integer",
-            sObj: "Object",
-            sBool: "Boolean"
-        }; } });
-        element()._setDefaultValues();
 
         expect(element()._sVal).toBe("");
         expect(element()._sInt).toBe(0);
         expect(element()._sObj).toBe(null);
         expect(element()._sBool).toBe(false);
 
-        expect(element().constructor.observedAttributes).toEqual([ "s-val", "s-int", "s-obj", "s-bool" ]);
+        expect(element().constructor.observedAttributes).toEqual([ "s-val", "s-int", "s-obj", "s-bool", "value" ]);
 
         element().attributeChangedCallback("s-val", "", "123");
         expect(typeof(element()._sVal)).toBe("string");
@@ -137,46 +150,22 @@ describe("jh-element-test", function() {
         })
     });
 
-    // Instanciate a real element to test properties...
-
-    class JHElementTest extends JHElement {
-        static get properties() {
-            return {
-                "type":     "String",
-                "value":    "String",
-                "inline":   "String",
-                "list":     "Object",
-                "listName": "String",
-                "bool":     "Boolean"
-            }
-        }
-
-        onValueChanged() {
-            if (!this.valueChanged) {
-                this.valueChanged = 0;
-            }
-            this.valueChanged++;
-        }
-    }
-
-    window.customElements.define('jh-element-test', JHElementTest);
-
     it("shoudl not be initialized when created without rendering", function() {
         const el = new JHElementTest();
         expect(el.isInitialized()).toBeFalsy();
     })
 
-    webDescribe("with some parameters", `<jh-element-test type='null' list='null'></jh-element-test>`, function(element) {
+    webDescribe("with some parameters", `<jh-element-test s-val='null' s-obj='null'></jh-element-test>`, function(element) {
         it("should have a null value", function() {
-            expect(element()._type).toBe("");
-            expect(element()._list).toEqual(null);
+            expect(element()._sVal).toBe("");
+            expect(element()._sObj).toEqual(null);
 
-            expect(element().type).toBe("");
-            expect(element().list).toEqual(null);
+            expect(element().sVal).toBe("");
+            expect(element().sObj).toEqual(null);
         });
     });
 
-    webDescribe("with specific handler", `<jh-element-test value='123' inline='abc'></jh-element-test>`, function(element) {
+    webDescribe("with specific handler", `<jh-element-test value='123' s-val='abc'></jh-element-test>`, function(element) {
         it("should handle it", function() {
             expect(element()._value).toBe('123');
             expect(element().value).toBe('123');
@@ -187,31 +176,31 @@ describe("jh-element-test", function() {
             expect(element()._value).toBe('456');
             expect(element().valueChanged).toBe(1);
 
-            element().setAttribute('bool', 'true');
-            expect(element()._bool).toBe(true);
-            expect(element().bool).toBe(true);
+            element().setAttribute('s-bool', 'true');
+            expect(element()._sBool).toBe(true);
+            expect(element().sBool).toBe(true);
 
-            element().setAttribute('bool', 'false');
-            expect(element()._bool).toBe(false);
-            expect(element().bool).toBe(false);
+            element().setAttribute('s-bool', 'false');
+            expect(element()._sBool).toBe(false);
+            expect(element().sBool).toBe(false);
 
-            element().setAttribute('bool', '');
-            expect(element()._bool).toBe(true);
-            expect(element().bool).toBe(true);
+            element().setAttribute('s-bool', '');
+            expect(element()._sBool).toBe(true);
+            expect(element().sBool).toBe(true);
 
-            element().removeAttribute('bool', '');
-            expect(element()._bool).toBe(false);
-            expect(element().bool).toBe(false);
+            element().removeAttribute('s-bool', '');
+            expect(element()._sBool).toBe(false);
+            expect(element().sBool).toBe(false);
         });
 
         it("should not fail with no handler", function() {
-            expect(element()._inline).toBe('abc');
-            expect(element().inline).toBe('abc');
+            expect(element()._sVal).toBe('abc');
+            expect(element().sVal).toBe('abc');
 
             // Changes generated before the first render does not trigger the onValueChanged()
-            element().setAttribute('inline', 'def');
-            expect(element()._inline).toBe('def');
-            expect(element().inline).toBe('def');
+            element().setAttribute('s-val', 'def');
+            expect(element()._sVal).toBe('def');
+            expect(element().sVal).toBe('def');
         });
     });
 });

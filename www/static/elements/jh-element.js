@@ -58,25 +58,21 @@ let JHElement = (function() {
         constructor() {
             super();
             this[initialized] = false;
-            this._setDefaultValues();
-        }
 
-        _setDefaultValues() {
-            if(!this.constructor.properties) {
-                return 
+            if(this.constructor.properties) {
+                Object.keys(this.constructor.properties).forEach(k => {
+                    const ki = '_' + k;
+                    if (!(ki in this)) {
+                        this[ki] = JHElement.defaultValue(this.constructor.properties[k]);
+                    }
+                    if (!(k in this)) {
+                        Object.defineProperty(this, k, {
+                            get: () => this[ki],
+                            set: (v) => this.attributeChangedCallback(JHElement.camelToSnake(k), this[ki], k)
+                        });
+                    }
+                })
             }
-            Object.keys(this.constructor.properties).forEach(k => {
-                const ki = '_' + k;
-                if (!(ki in this)) {
-                    this[ki] = JHElement.defaultValue(this.constructor.properties[k]);
-                }
-                if (!(k in this)) {
-                    Object.defineProperty(this, k, {
-                        get: () => this[ki],
-                        set: (v) => this.attributeChangedCallback(JHElement.camelToSnake(k), this[ki], k)
-                    });
-                }
-            })
         }
 
         isInitialized() {
@@ -162,4 +158,3 @@ let JHElement = (function() {
 
     return JHElement;
 })();
-
