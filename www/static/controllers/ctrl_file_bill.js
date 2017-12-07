@@ -91,6 +91,12 @@ function ctrl_file_bill($scope, $element) {
         return [];
     }
 
+    $scope.getPaymentTotal = function() {
+        return $scope.paymentsList().reduce((sum, value) => {
+            return sum + value.Amount;
+        }, 0);
+    }
+
     $scope.actionAddPayment = function() {
         if (!$scope.actionValidate("#paymentForm")) {
             alert('You have errors in your data. Please correct them and try again');
