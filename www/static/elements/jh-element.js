@@ -62,13 +62,11 @@ let JHElement = (function() {
             if(this.constructor.properties) {
                 Object.keys(this.constructor.properties).forEach(k => {
                     const ki = '_' + k;
-                    if (!(ki in this)) {
-                        this[ki] = JHElement.defaultValue(this.constructor.properties[k]);
-                    }
+                    this[ki] = JHElement.defaultValue(this.constructor.properties[k]);
                     if (!(k in this)) {
                         Object.defineProperty(this, k, {
                             get: () => this[ki],
-                            set: (v) => this.attributeChangedCallback(JHElement.camelToSnake(k), this[ki], k)
+                            set: (v) => this.attributeChangedCallback(JHElement.camelToSnake(k), this[ki], v)
                         });
                     }
                 })
@@ -94,10 +92,14 @@ let JHElement = (function() {
                             this[attributeNameInternal] = JHElement.canonizeBoolean(newValue);
                             break;
                         case "Object":
-                            try {
-                                this[attributeNameInternal] = JSON.parse(newValue);
-                            } catch(e) {
-                                this[attributeNameInternal] = null;
+                            if (typeof(newValue) == "string") {
+                                try {
+                                    this[attributeNameInternal] = JSON.parse(newValue);
+                                } catch(e) {
+                                    this[attributeNameInternal] = null;
+                                }
+                            } else {
+                                this[attributeNameInternal] = newValue;
                             }
                             break;
                         case "Integer":
@@ -108,6 +110,7 @@ let JHElement = (function() {
                     }
                 }
             } else {
+                // Could happen if one element override the getAttributes...
                 if (newValue == "null" || newValue == "undefined") {
                     this[attributeNameInternal] = JHElement.defaultValue();
                 } else {
