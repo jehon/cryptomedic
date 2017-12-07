@@ -58,7 +58,10 @@ module.exports = {
           ]
         },
         "chromeOptions" : {
-          "args" : [ "--headless" ]
+          "args" : [ 
+           "--auto-open-devtools-for-tabs",
+           "--headless" 
+          ]
         }
       }
     },
