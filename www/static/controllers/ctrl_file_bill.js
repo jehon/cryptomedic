@@ -51,9 +51,6 @@ function ctrl_file_bill($scope, $element) {
 
 // TODO: calculated socialLevel to be migrated to SocialLevel
 
-// TODO: make the calculations directly from the various input (use formGetContent ?) + set values on input
-//   and build up the form at the end
-
     // $element[0].querySelector("[name=Date]").addEventListener("change", el => {
     //     console.log("Change detected: ", el.getAttribute("name"), el.getValue());
     // })
