@@ -73,8 +73,8 @@ let JHElement = (function() {
                 }
                 if (!(k in this)) {
                     Object.defineProperty(this, k, {
-                        get: () => { return this[ki] },
                         set: (v) => { this[ki] = v; }
+                        get: () => this[ki],
                     });
                 }
             })
