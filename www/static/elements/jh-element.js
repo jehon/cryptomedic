@@ -1,4 +1,11 @@
 
+/*
+  TODO:
+  - annotation -> register element
+  - set x()    -> trigger attributeChangedCallback
+  - template   -> externalize ?
+*/
+
 let JHElement = (function() {
     const initialized = Symbol("initialized");
 
