@@ -34,6 +34,28 @@ let JHElement = (function() {
     }
 
     class JHElement extends HTMLElement {  
+        static get observedAttributes() {
+            if (this.properties) {
+                return Object.keys(this.properties).map(k => JHElement.camelToSnake(k));
+            }
+            return [];
+        }
+
+        static fireOn(target, name, data = {}) {
+            var event = new CustomEvent(name, { detail: data });
+            target.dispatchEvent(event);
+        }
+
+        static canonizeBoolean(v) {
+            if (v == null) {
+                return false;
+            }
+            if (v === "false") {
+                return false;
+            }
+            return true;
+        }
+
         constructor() {
             super();
             this[initialized] = false;
@@ -58,28 +80,6 @@ let JHElement = (function() {
             })
         }
 
-        static get observedAttributes() {
-            if (this.properties) {
-                return Object.keys(this.properties).map(k => camelToSnake(k));
-            }
-            return [];
-        }
-
-        static fireOn(target, name, data = {}) {
-            var event = new CustomEvent(name, { detail: data });
-            target.dispatchEvent(event);
-        }
-
-        static _canonizeBoolean(v) {
-            if (v == null) {
-                return false;
-            }
-            if (v === "false") {
-                return false;
-            } 
-            return true;
-        }
-
         isInitialized() {
             return this[initialized];
         }
@@ -96,7 +96,7 @@ let JHElement = (function() {
                 } else {
                     switch(props[attributeNameCamel]) {
                         case "Boolean":
-                            this[attributeNameInternal] = this.constructor._canonizeBoolean(newValue);
+                            this[attributeNameInternal] = this.constructor.canonizeBoolean(newValue);
                             break;
                         case "Object":
                             try {
