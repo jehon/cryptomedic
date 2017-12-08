@@ -151,7 +151,7 @@ XWriteList = (function() {
             this.shadowRoot.innerHTML = "<form>" + this._withStyle() + res + "</form>";
             this.shadowRoot.querySelectorAll('input').forEach(el => {
                 el.addEventListener('change', () => {
-                    this.fire("change", 0);
+                    this.fire("changed", 0);
                 })
             })
             this.shadowRoot.querySelectorAll("span[to]").forEach(el => {
@@ -176,9 +176,7 @@ XWriteList = (function() {
 
             this.shadowRoot.innerHTML = this._withStyle() + res;
 
-            this.shadowRoot.querySelector("select").addEventListener("change", el => {
-                this.fire("change", 0);
-            });
+            this.shadowRoot.querySelector("select").addEventListener("change", el => this.fire("changed", 0));
         }
 
         _escape(str) {

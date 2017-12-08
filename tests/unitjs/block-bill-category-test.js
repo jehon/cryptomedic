@@ -80,7 +80,7 @@ describe('block-bill-category-test', function() {
             let res = false;
             let el = element().querySelector("block-bill-line");
             el.querySelector("input").value = 10;
-            JHElement.fireOn(element().querySelector("x-inline"), "change", 10);
+            JHElement.fireOn(element().querySelector("x-inline"), "changed", 10);
             expect(element().querySelector("#catTotal").textContent).toContain(155);
         });
 

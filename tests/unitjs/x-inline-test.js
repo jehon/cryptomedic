@@ -54,10 +54,10 @@ describe('x-inline-test', function() {
 
         it("should fire event", function() {
             let res = false;
-            element().addEventListener("change", (event) => { res = "test" });
+            element().addEventListener("changed", (event) => { res = "test" });
             const input = element().querySelector("input");
             input.value = 10;
-            JHElement.fireOn(input, "change", 10);
+            JHElement.fireOn(input, "blur", 10);
             expect(res).toBe("test");
             expect(element().value).toBe(10);
         });
