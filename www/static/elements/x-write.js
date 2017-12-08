@@ -104,14 +104,11 @@
         }
 
         set value(v) {
-            this._value = v;
+            this.attributeChangedCallback("value", this._value, v);
         }
 
         get value() {
-            if (this.isInitialized()) {
-                return this.getValue();
-            }
-            return null;
+            return this.getValue();
         }
     }
 

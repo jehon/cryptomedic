@@ -54,10 +54,7 @@
         }
 
         get value() {
-            // if (this._edit) {
-                return this[element].value;
-            // }
-            // return this._value;
+            return this[element].value;
         }
     }
 
