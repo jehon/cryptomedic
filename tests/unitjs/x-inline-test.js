@@ -3,9 +3,9 @@
 describe('x-inline-test', function() {
     beforeEach(function() {
         spyOn(console, "error");
-    })
+    });
 
-    webDescribe("without parameters", `<x-inline edit inline='xinline'></x-inline>`, function(element) {
+    webDescribe("without parameters", `<x-inline edit></x-inline>`, function(element) {
         it("should be instanciated", function() {
             let xelement = element().querySelector("x-write");
             expect(xelement).not.toBeNull();
@@ -13,9 +13,8 @@ describe('x-inline-test', function() {
             expect(xelement.getAttribute('name')).toBeNull();
             expect(xelement.getAttribute('type')).toBe("");
             expect(xelement.getAttribute('value')).toBe("");
-            expect(xelement.getAttribute('inline')).toBe("xinline");
-        })
-    })
+        });
+    });
 
     webDescribe("without parameters", `<x-inline></x-inline>`, function(element) {
         it("should be instanciated", function() {
@@ -25,8 +24,8 @@ describe('x-inline-test', function() {
             expect(xelement.getAttribute('name')).toBeNull();
             expect(xelement.getAttribute('type')).toBe("");
             expect(xelement.getAttribute('value')).toBe("");
-        })
-    })
+        });
+    });
 
     webDescribe("with mode read", `<x-inline name='xname' type='xtype' value='xvalue'></x-inline>`, function(element) {
         it("should be instanciated", function() {
@@ -36,10 +35,10 @@ describe('x-inline-test', function() {
             expect(xelement.getAttribute('name')).toBeNull();
             expect(xelement.getAttribute('type')).toBe("xtype");
             expect(xelement.getAttribute('value')).toBe("xvalue");
-        })
-    })
+        });
+    });
 
-    webDescribe("with mode edit", `<x-inline edit name='xname' type='numeric' value='xvalue' inline='xinline'></x-inline>`, function(element) {
+    webDescribe("with mode edit", `<x-inline edit name='xname' type='numeric' value='xvalue' ping='pong' test editable></x-inline>`, function(element) {
         it("should be instanciated", function() {
             let xelement = element().querySelector("x-write");
             expect(xelement).not.toBeNull();
@@ -47,8 +46,11 @@ describe('x-inline-test', function() {
             expect(xelement.getAttribute('name')).toBeNull();
             expect(xelement.getAttribute('type')).toBe("numeric");
             expect(xelement.getAttribute('value')).toBe("xvalue");
-            expect(xelement.getAttribute('inline')).toBe("xinline");
-        })
+            expect(xelement.getAttribute('ping')).toBe("pong");
+            expect(xelement.hasAttribute('test')).toBeTruthy();
+            // edit* parameters should not be passed through
+            expect(xelement.hasAttribute('editable')).toBeFalsy();
+        });
 
         it("should fire event", function() {
             let res = false;
@@ -58,6 +60,10 @@ describe('x-inline-test', function() {
             JHElement.fireOn(input, "change", 10);
             expect(res).toBe("test");
             expect(element().value).toBe(10);
+
+        it("should react to set value", function() {
+            element().value = 111;
+            expect(element().value).toBe(111);
         })
-    })
+    });
 });
