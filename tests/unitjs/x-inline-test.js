@@ -60,6 +60,7 @@ describe('x-inline-test', function() {
             JHElement.fireOn(input, "change", 10);
             expect(res).toBe("test");
             expect(element().value).toBe(10);
+        });
 
         it("should react to set value", function() {
             element().value = 111;
