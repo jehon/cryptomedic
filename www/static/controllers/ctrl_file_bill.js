@@ -78,6 +78,14 @@ function ctrl_file_bill($scope, $element) {
     // $scope.$watch('currentFile().Sociallevel', function() {
     // })
 
+    // Used in bill_summary
+    $scope.isEmpty = function(value) {
+        if (value == "" || value == "0" || value == 0 || value == "-1" || value == -1 || value == null) {
+            return "emptyValue";
+        }
+        return "";
+    }
+
     /**********************/
     /* Payment management */
     /**********************/
@@ -136,13 +144,5 @@ function ctrl_file_bill($scope, $element) {
 
     $scope.actionEditPayment = function(id) {
         $scope.paymentEditor = new Payment($scope.folder.getByTypeAndId(Payment, id));
-    }
-
-    // Used in bill_summary
-    $scope.isEmpty = function(value) {
-        if (value == "" || value == "0" || value == 0 || value == "-1" || value == -1 || value == null) {
-            return "emptyValue";
-        }
-        return "";
     }
 }
