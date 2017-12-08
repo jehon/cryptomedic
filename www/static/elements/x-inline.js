@@ -26,11 +26,7 @@
                 if (n.substr(0, "edit".length) == "edit") {
                     continue;
                 }
-                if (typeof(a.value) == "object") {
-                    inline += ` ${n}='${JSON.stringify(a.value)}' `
-                } else {
-                    inline += ` ${n}='${a.value}'`;
-                }
+                inline += ` ${n}='${a.value}'`;
             }
 
             if (this._edit) {
