@@ -94,7 +94,7 @@ describe('x-write-list-test', function() {
             let el = element().shadowRoot.querySelector('input[value="brol"]');
             expect(el).not.toBeNull();
             let res = false;
-            element().addEventListener("change", (event) => {
+            element().addEventListener("changed", (event) => {
                 res = "test"
             });
             el.setAttribute('checked', 'checked');
@@ -113,7 +113,7 @@ describe('x-write-list-test', function() {
             let el = element().shadowRoot.querySelector('select');
             expect(el).not.toBeNull();
             let res = false;
-            element().addEventListener("change", (event) => {
+            element().addEventListener("changed", (event) => {
                 res = "test"
             });
             el.value = 'brol';

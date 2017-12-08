@@ -40,7 +40,7 @@ function ctrl_file_bill($scope, $element) {
     }
     $scope.adapt();
 
-    $element[0].querySelectorAll('[editable-bill]').forEach(el => el.addEventListener('change', () => {
+    $element[0].querySelectorAll('[editable-bill]').forEach(el => el.addEventListener('changed', event => {
         const newData = $scope.rebuildData();
 
         // Commit it

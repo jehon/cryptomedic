@@ -39,7 +39,7 @@ describe('x-write-test', function() {
             it("should fire event", function() {
                 let el = element().querySelector('input');
                 let res = false;
-                element().addEventListener("blur", (event) => { res = "test" });
+                element().addEventListener("changed", (event) => { res = "test" });
                 el.value = "blablabla";
                 JHElement.fireOn(element().querySelector("input"), "blur", "test");
                 expect(res).toBe("test");
@@ -100,9 +100,9 @@ describe('x-write-test', function() {
             it("should fire event", function() {
                 let el = element().querySelector('input[type=checkbox]');
                 let res = false;
-                element().addEventListener("change", (event) => { res = "test" });
+                element().addEventListener("changed", (event) => { res = "test" });
                 el.setAttribute("checked", "checked");
-                JHElement.fireOn(element().querySelector("input"), "change", "test");
+                JHElement.fireOn(element().querySelector("input"), "blur", "test");
                 expect(res).toBe("test");
                 expect(element().value).toBe(true);
             })
@@ -130,9 +130,9 @@ describe('x-write-test', function() {
             it("should fire event", function() {
                 let el = element().querySelector('input[type=date]');
                 let res = false;
-                element().addEventListener("change", (event) => { res = "test" });
+                element().addEventListener("changed", (event) => { res = "test" });
                 el.value = "2016-02-25";
-                JHElement.fireOn(element().querySelector("input"), "change", "test");
+                JHElement.fireOn(element().querySelector("input"), "blur", "test");
                 expect(res).toBe("test");
                 expect(element().value).toBe("2016-02-25");
             })
@@ -160,9 +160,9 @@ describe('x-write-test', function() {
             it("should fire event", function() {
                 let el = element().querySelector('input[type=number]');
                 let res = false;
-                element().addEventListener("change", (event) => { res = "test" });
+                element().addEventListener("changed", (event) => { res = "test" });
                 el.value = 10;
-                JHElement.fireOn(element().querySelector("input"), "change", "test");
+                JHElement.fireOn(element().querySelector("input"), "blur", "test");
                 expect(res).toBe("test");
                 expect(element().value).toBe(10);
             })
@@ -190,9 +190,9 @@ describe('x-write-test', function() {
             it("should fire event", function() {
                 let el = element().querySelector('textarea');
                 let res = false;
-                element().addEventListener("change", (event) => { res = "test" });
+                element().addEventListener("changed", (event) => { res = "test" });
                 el.value = "blablabla";
-                JHElement.fireOn(el, "change", "test");
+                JHElement.fireOn(el, "blur", "test");
                 expect(res).toBe("test");
                 expect(element().value).toBe("blablabla");
             });
@@ -225,9 +225,9 @@ describe('x-write-test', function() {
             it("should fire event", function() {
                 let el = element().querySelector('x-write-list');
                 let res = false;
-                element().addEventListener("change", (event) => { res = "test" });
+                element().addEventListener("changed", (event) => { res = "test" });
                 el.setAttribute('value', 'brol');
-                JHElement.fireOn(el, "change", "test");
+                JHElement.fireOn(el, "changed", "test");
                 expect(res).toBe("test");
                 expect(element().value).toBe("brol");
             })

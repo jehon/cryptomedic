@@ -81,7 +81,25 @@
             }
             
             if (el) {
-                el.addEventListener("change", () => this.fire("change", this.value));
+                if (el.matches("input") || el.matches("textarea")) {
+                    el.addEventListener("blur", () => {
+                        this.fire("changed", this.value);
+                    });
+                    el.addEventListener("change", event => {
+                        // If we still have the focus, we don't go further
+                        // This is in the case of input[numeric], where
+                        // clicking on gui is not setting the focus...
+                        if (event.target.matches(":focus")) {
+                            event.stopPropagation();
+                            return false;
+                        }
+                        this.fire("changed", this.value);
+                    });
+                } else {
+                    el.addEventListener("changed", () => {
+                        this.fire("changed", this.value);
+                    });
+                }
             }
         }
 

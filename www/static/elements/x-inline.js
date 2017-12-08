@@ -39,9 +39,9 @@
                         list='${JSON.stringify(this._list)}' list-name='${this._listName}'
                     ></x-write>`;
                 this[element] = this.querySelector("x-write");
-                this[element].addEventListener("change", () => {
+                this[element].addEventListener("changed", () => {
                     // value is calculated at getter below
-                    this.fire("change", this.value);
+                    this.fire("changed", this.value);
                 });
             } else {
                 this.innerHTML = `<x-read type='${this._type}' value='${this._value}' ${inline}></x-read>`;

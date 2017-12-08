@@ -74,7 +74,10 @@
                     }
                 }
             })
-            this.querySelectorAll("block-bill-line").forEach(el => el.addEventListener("change", () => this._adaptTotal()));
+            this.querySelectorAll("block-bill-line").forEach(el => el.addEventListener("changed", () => {
+                this._adaptTotal();
+                this.fire("changed", null);
+            }));
             this._adaptTotal();
             if (!displayed) {
                 this.setAttribute("hidden", "empty-edit")
