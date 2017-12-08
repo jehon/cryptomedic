@@ -6,7 +6,7 @@
     <div error='homeVisitAndGiveAppointment'>
       <div class='alert alert-danger'>Error: you could not bill a "home visit" with "give appointment" together!</div>
     </div>
-    <div error='!currentFile().Date'>
+    <div error='noDate'>
       <div class='alert alert-danger'>Error: please select a date first!</div>
     </div>
     <div error='dateInTheFuture'>

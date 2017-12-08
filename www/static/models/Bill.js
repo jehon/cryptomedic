@@ -145,6 +145,10 @@ class Bill extends PatientRelated {
         */
         res = super.validate(res);
 
+        if (!this.Date) {
+            res.noDate = true;
+        }
+
         if ((this.Date > (new Date()).toISOString())) {
             res.dateInTheFuture = true;
         }
