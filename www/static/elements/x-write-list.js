@@ -68,8 +68,7 @@ XWriteList = (function() {
         }
 
         onListNameChanged(v) {
-            this.createList();
-            this.onValueChanged(this._value);
+            this.onListChanged(v);
         }
 
         createList() {
