@@ -161,6 +161,9 @@ describe('x-write-list-test', function() {
             checkSelect(element(), 'machin');
             element().setAttribute('value', 'truc');
             checkSelect(element(), 'truc');
+
+            element().value = 'machin';
+            checkSelect(element(), 'machin');
         });
     });
 
@@ -179,7 +182,7 @@ describe('x-write-list-test', function() {
             element().shadowRoot.querySelector('select').value = 'truc';
             checkSelect(element(), 'truc');
         });
-    })
+    });
 
     // Test click on span for radio
     webDescribe("should handle RADIO Span click", `<x-write-list nullable value='machin' list='${JSON.stringify(listRadio)}'></x-write-list>`, function(element) {
@@ -188,12 +191,17 @@ describe('x-write-list-test', function() {
             element().shadowRoot.querySelector('span[to=truc').click();
             checkRadio(element(), 'truc');
         });
-    })
+    });
 
     webDescribe("should handle named list", `<x-write-list value='machin' list-name='listRadio'></x-write-list>`, function(element) {
         it("should instanciated", function() {
-            expect(element()).not.toBeNull();
             checkRadio(element(), 'machin');
         });
-    })
+    });
+
+    webDescribe("should handle named list", `<x-write-list value='machin' list-name='unknownList'></x-write-list>`, function(element) {
+        it("should instanciated", function() {
+            expect(element()._mode).toBe("empty");
+        });
+    });
 });

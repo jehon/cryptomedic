@@ -15,7 +15,7 @@ XWriteList = (function() {
                 'value':     "String", 
                 'list':      "Object", 
                 'nullable':  "Boolean", 
-                'list-name': "String" 
+                'list-name': "String"
             };
         }
 
@@ -186,28 +186,28 @@ XWriteList = (function() {
         }
 
         set value(v) {
-            this._value = v;
+            this.attributeChangedCallback("value", this._value, v);
         }
 
         get value() {
-            let value = null;
+            this._value = null;
             switch(this.getAttribute("mode")) {
                 case "select":
-                    value = this.shadowRoot.querySelector("select").value;
+                    this._value = this.shadowRoot.querySelector("select").value;
                     break;
                 case "radio":
                     const checked = this.shadowRoot.querySelector("input[type=radio]:checked");
                     if (checked == null) {
-                        value = null;
+                        this._value = null;
                     } else {
-                        value = checked.value;
+                        this._value = checked.value;
                     }
                     break;
             }
-            if (value == "") {
-                value = null;
+            if (this._value == "") {
+                this._value = null;
             }
-            return value;
+            return this._value;
         }
     }
 
