@@ -47,9 +47,6 @@ XWriteList = (function() {
             switch(this.getAttribute("mode")) {
                 case "select":
                     el = this.shadowRoot.querySelector("select");
-                    if (el == null) {
-                        return;
-                    }
                     el.value = escaped;
                     break;
                 case "radio":

@@ -27,11 +27,7 @@
                 if (n in this.constructor.properties) {
                     continue;
                 }
-                if (typeof(a.value) == "object") {
-                    inline += ` ${n}='${JSON.stringify(a.value)}' `
-                } else {
-                    inline += ` ${n}='${a.value}'`;
-                }
+                inline += ` ${n}='${a.value}'`;
             }
 
             switch(this._type) {
