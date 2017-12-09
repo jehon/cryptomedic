@@ -52,6 +52,11 @@
         get value() {
             return this[element].value;
         }
+
+        blur() {
+            super.blur();
+            this.fire("changed", this.value);
+        }
     }
 
     window.customElements.define('x-inline', XInline);
