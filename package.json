@@ -54,6 +54,7 @@
     "test-unit-continuously": "karma start",
     "test-e2e": "nightwatch",
     "test-e2e-chrome": "nightwatch -e chrome",
+    "test-reset": "./bin/prj-db-upgrade ./conf/database/test-reset.sql",
     "start": "node bin/server.js"
   }
 }
