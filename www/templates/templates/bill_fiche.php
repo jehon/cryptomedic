@@ -1,101 +1,103 @@
 <div class='container-fluid' ng-controller="ctrl_file_bill">
-  <div class='row'>
-    <div error='consultPhisioAndDoctor'>
-      <div class='alert alert-danger' >Error: you could not bill "physio" and "doctor" together!</div>
+  <span id='bill_form'>
+    <div class='row'>
+      <div error='consultPhisioAndDoctor'>
+        <div class='alert alert-danger' >Error: you could not bill "physio" and "doctor" together!</div>
+      </div>
+      <div error='homeVisitAndGiveAppointment'>
+        <div class='alert alert-danger'>Error: you could not bill a "home visit" with "give appointment" together!</div>
+      </div>
+      <div error='noDate'>
+        <div class='alert alert-danger'>Error: please select a date first!</div>
+      </div>
+      <div error='dateInTheFuture'>
+        <div class='alert alert-danger' id='errorDateFuture'>Error: The date can not be in the future!</div>
+      </div>
     </div>
-    <div error='homeVisitAndGiveAppointment'>
-      <div class='alert alert-danger'>Error: you could not bill a "home visit" with "give appointment" together!</div>
+    <div class='row'>
+      <div class="col-md-6">
+        <FieldSet>
+          <legend>General data</legend>
+          <table>
+            <tr>
+              <td>Date</td>
+              <td><x-inline editable-bill name='Date' type='date'></x-inline></td>
+            </tr>
+            <tr>
+              <td>Examiner</td>
+              <td><x-inline editable-bill name='ExaminerName' type='list' list-name='Examiner'></x-inline></td>
+            </tr>
+            <tr>
+              <td>Center where consultation took place</td>
+              <td><x-inline editable-bill name='Center' type='list' list-name='Centers'></x-inline></td>
+            </tr>
+          </table>
+          <div class='debug_infos'>
+            price_id <span function='getPriceId'></span><br>
+          </div>
+        </FieldSet>
+        <block-bill-category editable-bill category='consult'></block-bill-category>
+        <block-bill-category editable-bill category='medecine'></block-bill-category>
+        <block-bill-category editable-bill category='other'></block-bill-category>
+        <block-bill-category editable-bill category='workshop'></block-bill-category>
+        <block-bill-category editable-bill category='surgical'></block-bill-category>
+      </div>
+      <div class="col-md-6">
+        <?php require(__DIR__ . "/../helpers/patient-related.html");?>
+        <fieldset>
+          <legend>Social Data</legend>
+          <table>
+            <tr>
+              <td>Family Salary in a Month</td>
+              <td><x-inline editable-bill name='sl_familySalary' type='numeric'></x-inline></td>
+            </tr>
+            <tr>
+              <td>Number of Houslehold Members</td>
+              <td><x-inline editable-bill name='sl_numberOfHouseholdMembers' type='numeric'></x-inline></td>
+            </tr>
+            <tr>
+              <td>Salary ratio</td>
+              <td><span function='getRatioSalary'></span></td>
+            </tr>
+            <tr>
+              <td>Calculated Social Level</td>
+              <td><span function='getCalculatedSocialLevel'></span></td>
+            </tr>
+          </table>
+        </fieldset>
+        <fieldSet>
+          <legend>Summary</legend>
+          <table>
+            <tr>
+              <td>Raw Calculated total</td>
+              <td><span function='calculateTotalReal'></span></td>
+            </tr>
+            <tr>
+              <td>Social Level</td>
+              <td><x-inline editable-bill name='Sociallevel' type='list' list-name='SocialLevel'></x-inline></td>
+            </tr>
+            <tr>
+              <td>Percentage of price to be asked</td>
+              <td>
+                <span function='getPercentageAskedAsString'></span>
+              </td>
+            </tr>
+            <tr>
+              <td>Price to be asked to the patient</td>
+              <td><span function='calculateTotalAsked'></span></td>
+            </tr>
+          </table>
+        </fieldSet>
+        <fieldset ng-if='!currentFile().id'>
+          <legend>Recieved payment</legend>
+            <tr>
+              <td>Payment already recieved</td>
+              <td><x-write type='numeric' name='first_payment'></x-write></td>
+            </tr>
+        </fieldset>
+      </div>
     </div>
-    <div error='noDate'>
-      <div class='alert alert-danger'>Error: please select a date first!</div>
-    </div>
-    <div error='dateInTheFuture'>
-      <div class='alert alert-danger' id='errorDateFuture'>Error: The date can not be in the future!</div>
-    </div>
-  </div>
-  <div class='row'>
-    <div class="col-md-6">
-      <FieldSet>
-        <legend>General data</legend>
-        <table>
-          <tr>
-            <td>Date</td>
-            <td><x-inline editable-bill name='Date' type='date'></x-inline></td>
-          </tr>
-          <tr>
-            <td>Examiner</td>
-            <td><x-inline editable-bill name='ExaminerName' type='list' list-name='Examiner'></x-inline></td>
-          </tr>
-          <tr>
-            <td>Center where consultation took place</td>
-            <td><x-inline editable-bill name='Center' type='list' list-name='Centers'></x-inline></td>
-          </tr>
-        </table>
-        <div class='debug_infos'>
-          price_id <span function='getPriceId'></span><br>
-        </div>
-      </FieldSet>
-      <block-bill-category editable-bill category='consult'></block-bill-category>
-      <block-bill-category editable-bill category='medecine'></block-bill-category>
-      <block-bill-category editable-bill category='other'></block-bill-category>
-      <block-bill-category editable-bill category='workshop'></block-bill-category>
-      <block-bill-category editable-bill category='surgical'></block-bill-category>
-    </div>
-    <div class="col-md-6">
-      <?php require(__DIR__ . "/../helpers/patient-related.html");?>
-      <fieldset>
-        <legend>Social Data</legend>
-        <table>
-          <tr>
-            <td>Family Salary in a Month</td>
-            <td><x-inline editable-bill name='sl_familySalary' type='numeric'></x-inline></td>
-          </tr>
-          <tr>
-            <td>Number of Houslehold Members</td>
-            <td><x-inline editable-bill name='sl_numberOfHouseholdMembers' type='numeric'></x-inline></td>
-          </tr>
-          <tr>
-            <td>Salary ratio</td>
-            <td><span function='getRatioSalary'></span></td>
-          </tr>
-          <tr>
-            <td>Calculated Social Level</td>
-            <td><span function='getCalculatedSocialLevel'></span></td>
-          </tr>
-        </table>
-      </fieldset>
-      <fieldSet>
-        <legend>Summary</legend>
-        <table>
-          <tr>
-            <td>Raw Calculated total</td>
-            <td><span function='calculateTotalReal'></span></td>
-          </tr>
-          <tr>
-            <td>Social Level</td>
-            <td><x-inline editable-bill name='Sociallevel' type='list' list-name='SocialLevel'></x-inline></td>
-          </tr>
-          <tr>
-            <td>Percentage of price to be asked</td>
-            <td>
-              <span function='getPercentageAskedAsString'></span>
-            </td>
-          </tr>
-          <tr>
-            <td>Price to be asked to the patient</td>
-            <td><span function='calculateTotalAsked'></span></td>
-          </tr>
-        </table>
-      </FieldSet>
-      <fieldset ng-if='!currentFile().id'>
-        <legend>Recieved payment</legend>
-          <tr>
-            <td>Payment already recieved</td>
-            <td><x-write type='numeric' name='first_payment'></td>
-          </tr>
-      </fieldset>
-    </div>
-  </div>
+  </span>
   <br>
   <?php
     t::setDefaultOption("baseExpression", "paymentEditor.");
