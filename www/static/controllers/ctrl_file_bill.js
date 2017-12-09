@@ -19,7 +19,8 @@ function ctrl_file_bill($scope, $element) {
         // Calculate totals
         newData.calculateTotalAsked();
 
-        errors = this.currentFile().validate();
+        oNewData = new Bill(newData);
+        errors = oNewData.validate();
 
         $element[0].querySelectorAll("[error]").forEach(el => el.setAttribute("hidden", "hidden"));
         Object.keys(errors).forEach(e => {
