@@ -2,14 +2,12 @@
 exports.command = function(selector, fields, button) {
   this.waitForElementVisible(selector);
   this.assert.visible(selector);
-  for(var f in fields) {
-    var fsel = selector + " " + f;
+  for(const f in fields) {
+    const fsel = selector + " " + f;
     this.waitForElementVisible(fsel);
 
     // Put focus on element
-    this.execute(function(fsel) {
-      document.querySelector(fsel).focus();
-    }, [ fsel ]);
+    this.execute((fsel) => document.querySelector(fsel).focus(), [ fsel ]);
 
     if (fields[f] === true) {
       this.click(f);
@@ -34,15 +32,11 @@ exports.command = function(selector, fields, button) {
     this.keys(this.Keys.TAB);
 
     // Loose focus on element
-    this.execute(function(fsel) {
-      document.querySelector(fsel).blur();
-    }, [ fsel ]);
-
+    this.execute((fsel) => document.querySelector(fsel).blur(), [ fsel ]);
   }
   if (button) {
-    this
-      .pause(100)
-      .myClick(button);
+    this.pause(100);
+    this.myClick(button);
   }
 
   return this;
