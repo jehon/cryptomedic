@@ -7,7 +7,7 @@ exports.command = function(selector, fields, button) {
     this.waitForElementVisible(fsel);
 
     // Put focus on element
-    this.execute((fsel) => document.querySelector(fsel).focus(), [ fsel ]);
+    this.execute(function(fsel) { document.querySelector(fsel).focus(); }, [ fsel ]);
 
     if (fields[f] === true) {
       this.click(f);
@@ -20,9 +20,9 @@ exports.command = function(selector, fields, button) {
     } else if (f.substring(0, 6) == "select") {
       this.mySelect(fsel, fields[f]);
     } else {
-      this
-        .clearValue(f)
-        .setValue(fsel, fields[f]);
+      this.execute(function(fsel, val) {
+        document.querySelector(fsel).value = val;
+      }, [ fsel, fields[f]]);
     }
 
     // http://nightwatchjs.org/api#keys
@@ -32,9 +32,10 @@ exports.command = function(selector, fields, button) {
     this.keys(this.Keys.TAB);
 
     // Loose focus on element
-    this.execute((fsel) => document.querySelector(fsel).blur(), [ fsel ]);
+    this.execute(function(fsel) { document.querySelector(fsel).blur(); }, [ fsel ]);
   }
   if (button) {
+    this.execute((fsel) => document.querySelector(fsel).focus(), button);
     this.pause(100);
     this.myClick(button);
   }
