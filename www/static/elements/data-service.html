@@ -47,7 +47,7 @@
             .requestWithCredentials("include")
             .responseAsJson()
             .onResponseCode(401, () => {
-              window.location = "#login";
+              location.hash = "#/login";
             })
         },
 

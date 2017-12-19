@@ -35,19 +35,17 @@ module.exports = {
   },
 
   "try to set date in the future": function(client) {
-    client.myClick("#topsubmenu #button_unlock");
-    client.waitForElementVisible("#bill_form [name=Date]");
-    client.myFormFillIn("#bill_form", { "[name=Date]": "2999-01-01" });
-    client.pause(10);
-    client.assert.visible("[error=dateInTheFuture]");
-
-    client.myClick("#topsubmenu #button_save");
-    client.acceptAlert();
-    client.pause(100);
-    client.assert.visible("[error=dateInTheFuture]");
-    client.assert.visible("#topsubmenu #button_save");
-    client.assert.visible("#topsubmenu #button_cancel");
-    client.myClick("#topsubmenu #button_cancel");
+    client
+      .myClick("#topsubmenu #button_unlock")
+      .waitForElementVisible("#Bill_Date")
+      .myFormFillIn("#fileForm", { "#Bill_Date": "2999-01-01" }, "#topsubmenu #button_save")
+      .acceptAlert()
+      .pause(100)
+      .assert.visible("#errorDateFuture")
+      .assert.visible("#topsubmenu #button_save")
+      .assert.visible("#topsubmenu #button_cancel")
+      .myClick("#topsubmenu #button_cancel")
+      ;
   },
 
   "add a payment": function(client) {

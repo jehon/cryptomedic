@@ -2,12 +2,8 @@
 
 set -e
 
+
+mkdir -p "$PRJ_DIR/target"
 sudo chown jehon.jehon -R $PRJ_DIR/target
-
-if [ -d "$PRJ_DIR/target" ]; then
-  find "$PRJ_DIR/target/" -mindepth 1 ! -name '.gitkeep' -delete
-else
-  mkdir -p "$PRJ_DIR/target"
-fi
-
-find . -name "*.log" -delete
+sudo find "$PRJ_DIR/target/" -mindepth 1 ! -name '.gitkeep' -delete
+sudo find . -name "*.log" -delete

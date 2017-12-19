@@ -10,7 +10,7 @@ describe('edit-price-test', function() {
 
       expect(el.shadowRoot.querySelector('input[type=number]')).toBeNull();
 
-      expect(el.value).toBe('-1');
+      expect(el.value).toBe(-1);
 
       el.testDone();
       done();
@@ -27,7 +27,7 @@ describe('edit-price-test', function() {
 
       expect(el.shadowRoot.querySelector('input[type=number]')).toBeNull();
 
-      expect(el.value).toBe('1');
+      expect(el.value).toBe(1);
 
       el.testDone();
       done();
@@ -46,7 +46,7 @@ describe('edit-price-test', function() {
       expect(el.shadowRoot.querySelector('input[type=number]')).not.toBeNull();
       expect(el.shadowRoot.querySelector('input[type=number]').value).toBe('200');
 
-      expect(el.value).toBe('200');
+      expect(el.value).toBe(200);
 
       el.testDone();
       done();

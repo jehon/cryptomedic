@@ -48,6 +48,7 @@ module.exports = {
       },
       "desiredCapabilities": {
         "browserName": "firefox",
+        "browserName": "chrome",
         "marionnette": true,
         "webdriver.log.driver": "DEBUG",
         "javascriptEnabled": true,
@@ -59,8 +60,8 @@ module.exports = {
         },
         "chromeOptions" : {
           "args" : [ 
-           "--auto-open-devtools-for-tabs",
-           "--headless"
+            "--auto-open-devtools-for-tabs",
+            "--headless"
           ]
         }
       }

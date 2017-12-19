@@ -33,6 +33,7 @@
                     break;
                 case "numeric":
                     this._value = parseFloat(this._value);
+                    // TODO: fix rounding
                     this.innerHTML = `<span>${this._value}</span>`;
                     break;
                 case "list":

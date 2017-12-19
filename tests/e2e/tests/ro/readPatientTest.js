@@ -4,8 +4,6 @@ module.exports = {
       .page.cryptomedic().authenticate("readonly")
       .page.cryptomedic().goPatient(2000, 1)
       .assert.myAssertHashIs("#/folder/1")
-
-      .assert.elementPresent("x-read#Patient_Name[value='rezaul islam']") // equivalent to next line?
       .assert.containsText("#Patient_Name", "rezaul islam")
       .assert.containsText("#Patient_Sex", "Male")
       .assert.containsText("#Patient_District", "Chittagong")

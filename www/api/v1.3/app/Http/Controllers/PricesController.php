@@ -11,7 +11,7 @@ use App\Model\Price;
 
 class PricesController extends Controller {
 	public function index() {
-		$list = Price::with("priceLines")->get();
+		$list = Price::all();
 		return response()->json($list);
 	}
 
@@ -34,44 +34,40 @@ class PricesController extends Controller {
 		unset($newAttr['id']);
 		$newAttr['datefrom'] = $pivot;
 
-		$obj = Price::create($newAttr);
+		$newObj = Price::create($newAttr);
 
-		if (!$obj->id) {
+		if (!$newObj->id) {
 			abort(500, "Could not create the file");
 		}
 
 		$lastPrice->dateto = $pivot;
 		$lastPrice->save();
 
-        // TODO: Copy all linked field too
-		$priceLinesOld = $lastPrice->priceLines()->get()->toArray();
-		foreach($priceLinesOld as $i => $pl) {
-			unset($priceLinesOld[$i]['id']);
-			$priceLinesOld[$i]['price_id'] = $obj->id;
-		}
-		$obj->priceLines()->createMany($priceLinesOld);
-
-
-		$nobj = Price::findOrFail($obj->id);
-        $nobj['price_lines'] = $nobj->priceLines()->get();
-
-		return $nobj;
+		return $newObj;
 	}
 
 	// PUT / PATCH
 	public function update($id) {
- 		$data = Input::except([ '_type', 'datefrom', 'dateto' ]);
+ 		$attributes = Input::except([ '_type', 'datefrom', 'dateto' ]);
 
  		$obj = Price::findOrFail($id);
  		if (!$obj->_editable) {
  			abort(403, "Could not be done on that object");
  		}
-
+		foreach($attributes as $k => $v) {
+			// Skip system fields
+			if (in_array($k, [ $obj->getUpdatedAtColumn(), $obj->getCreatedAtColumn() ])) {
+				continue;
+			}
+			// Set existing fields
+			if (array_key_exists($k, $obj->getAttributes()) && ($obj->getAttribute($k) != $v)) {
+				$obj->{$k} = $v;
+			}
+		}
 		// Do not update last-login...
-        unset($data['last-login']);
+		unset($obj->last_login);
 
-        $obj = Price::updateWithArray($id, $data);
-
+		$obj->save();
 		return $obj;
 	}
 
@@ -95,4 +91,50 @@ class PricesController extends Controller {
 		return 0;
 	}
 
+	public function priceFields() {
+		$values = Input::all();
+		var_dump($values);
+
+		$billFields = \App\Model\Bill::getTableColumnsList();
+		sort($billFields, SORT_NATURAL);
+
+		$billDef = "INT(11) NOT NULL DEFAULT '0'";
+		$priceDef = "INT(11) NULL DEFAULT '-1'";
+
+		$old = $values['old'];
+		$new = str_replace(" ", "_", $values['new']);
+
+		echo "<textarea cols=160 rows=5>";
+
+		if (strlen($new) > 64) {
+			echo "--Field length is too long\n";
+		} else {
+			if (strlen($old) > 0) {
+				if (in_array($old, $billFields)) {
+					echo "-- Changing " . $values['old'] . " to " . $values['new'] . "\n";
+					echo "ALTER TABLE `bills` CHANGE `$old` `$new` $billDef;\n";
+					echo "ALTER TABLE `prices` CHANGE `$old` `$new` $priceDef;\n";
+				} else {
+					echo "-- Old field unknown: $old<br>";
+				}
+			} else {
+				echo "-- Creating " . $values['new'] . "\n";
+				echo "ALTER TABLE `bills` ADD `$new` $billDef;\n";
+				echo "ALTER TABLE `prices` ADD `$new` $priceDef;\n";
+			}
+		}
+
+		echo "\n";
+		echo "</textarea>";
+
+		?>
+			<form>
+				Old: <input name='old' value='<?php echo $old ?>'><br>
+				New: <input name='new' value='<?php echo $new ?>'><br>
+				<button type='submit'>Submit</button>
+			</form>
+		<?php
+
+		echo implode("<br>", $billFields);
+	}
 }

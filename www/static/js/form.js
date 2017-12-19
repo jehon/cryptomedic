@@ -26,6 +26,10 @@ function formGetContent(form, prototype = {}) {
       continue;
     }
 
+    if (i.offsetHeight + i.offsetWidth < 1) {
+      continue;
+    }
+
     // Skip empty names
     let name = i.getAttribute('name');
     if (!name) {
@@ -55,13 +59,21 @@ function formGetContent(form, prototype = {}) {
         case "file":
           // http://blog.teamtreehouse.com/uploading-files-ajax
           // We can pass the "File" object to FormData, it will handle it for us....
-          value = i.files[0];
+          if (i.data) {
+            value = i.data.data;
+          } else {
+            value = null;
+          }
           break;
       }
     }
 
     // Assign it
-    data[name] = value;
+    if (value == null) {
+      delete(data[name]);
+    } else {
+      data[name] = value;
+    }
   }
   return data;
 }

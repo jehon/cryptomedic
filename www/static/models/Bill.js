@@ -32,15 +32,7 @@ class Bill extends PatientRelated {
         }
     }
 
-    getRatioSalary() {
-        if (this.isNotZero('sl_numberOfHouseholdMembers')) {
-            return Math.ceil(this.sl_familySalary / this.sl_numberOfHouseholdMembers);
-        }
-        return 0;
-    }
-
-    getCalculatedSocialLevel() {
-        const rs = this.getRatioSalary();
+  ratioSalary() {
         /**
           From TC:
           Level 0 is when the familial ration is < 300
@@ -49,94 +41,123 @@ class Bill extends PatientRelated {
           Level 3 is when the familial ration is 1500< FR < 3000
           Level 4 is when the familial ration is 3000< FR
          */
-        if (rs < 0) {
-            return 4;
-        }
-
-        if (this.isNotZero('sl_numberOfHouseholdMembers')) {
-            if (rs <= 300) {
-                return 0;
-            } else {
-                if (rs <= 500) {
-                    return 1;
-                } else {
-                    if (rs <= 1500) {
-                        return 2;
-                    } else {
-                        if (rs <= 3000) {
-                            return 3;
-                        }
-                    }
-                }
-            }
-        }
-        return 4;
+    this.Sociallevel = 4;
+    if (!this.isNotZero('sl_numberOfHouseholdMembers')) {
+      throw new DataMissingException('sl_numberOfHouseholdMembers');
     }
 
-    getPriceId() {
-        if (window.cryptomedic && window.cryptomedic.serverSettings && window.cryptomedic.serverSettings.prices && this.Date) {
-            const prices = window.cryptomedic.serverSettings.prices;
-            for (const i in prices) {
-                const p = prices[i];
-                if (((p['datefrom'] == null) || (p['datefrom'] <= this.Date)) && ((p['dateto'] == null) || (p['dateto'] > this.Date))) {
-                    return i;
-                }
-            }
-        }
-        return -1;
-    }
+    var rs = Math.ceil(this.sl_familySalary / this.sl_numberOfHouseholdMembers);
 
-    getPrice() {
-        let i = this.getPriceId();
-        if (i < 0) {
-            return null;
-        }
-        const prices = window.cryptomedic.serverSettings.prices;
-        return prices[i];
-    }
-
-    calculateTotalReal() {
-        const price = this.getPrice();
-        if (!price || !this.bill_lines) {
-            this.total_real = 0;
+    if (rs <= 300)  {
+      this.Sociallevel = 0;
+    } else {
+      if (rs <= 500) {
+        this.Sociallevel = 1;
+      } else {
+        if (rs <= 1500) {
+          this.Sociallevel = 2;
         } else {
-            this.total_real = this.bill_lines.reduce((acc, bval) => {
-                if (bval.Amount <= 0) {
-                    return acc;
-                }
-                return acc + this.getPrice().price_lines.reduce((acc, pval) => {
-                    if (bval.title == pval.title) {
-                        return acc + parseInt(bval.Amount) * parseInt(pval.Amount);
-                    }
-                    return acc;
-                }, 0);
-            }, 0);
+          if (rs <= 3000) {
+            this.Sociallevel = 3;
+          } else {
+            this.Sociallevel = 4;
+          }
         }
-        return this.total_real;
+      }
     }
+    return rs;
+  }
 
-    getPercentageAsked() {
-        let price = this.getPrice();
-        let sl = this.Sociallevel;
-
-        if (!price) {
-            return 1;
-        }
-
-        if (price['socialLevelPercentage_' + sl]) {
-            return price['socialLevelPercentage_' + sl];
-        }
-        return 1;
+  calculate_total_real() {
+    if (!this.price) {
+      this.total_real = 0;
+      this.total_asked = 0;
+      return -1;
     }
+    var total = 0;
+    for(var i in this.price) {
+      if (i[0] == '_') { continue; }
+      if (i == 'id') { continue; }
+      if (i == 'created_at') { continue; }
+      if (i == 'updated_at') { continue; }
+      if (i == 'lastuser') { continue; }
+      if (i == 'datefrom') { continue; }
+      if (i == 'dateto') { continue; }
+      if (i == 'controller') { continue; }
+      if (i == 'locked') { continue; }
+      if (i == 'dlocked') { continue; }
+      if (i == 'socialLevelPercentage_0') { continue; }
+      if (i == 'socialLevelPercentage_1') { continue; }
+      if (i == 'socialLevelPercentage_2') { continue; }
+      if (i == 'socialLevelPercentage_3') { continue; }
+      if (i == 'socialLevelPercentage_4') { continue; }
+      if (this.price[i] < 0) { continue; }
+      if (typeof(this[i]) == 'undefined') { continue; }
+      if (this[i] <= 0) { continue; }
+      total += this.price[i] * this[i];
+    }//, this);
+    this.total_real = total;
+    this.total_asked = this.total_real * this.calculate_percentage_asked();
+    return this.total_real;
+  }
 
-    getPercentageAskedAsString() {
-        return Math.round(this.getPercentageAsked() * 100) + '%';
+  calculate_percentage_asked() {
+    if (!this.price) {
+      //console.warn('calculate_percentage_asked(): no price id');
+      return 1;
     }
+    var sl = this['Sociallevel'];
+    if (sl == null) {
+      //console.warn('calculate_percentage_asked(): no social level');
+      return 1;
+    }
+    if (typeof(this.price['socialLevelPercentage_' + sl]) == 'undefined') {
+      //console.warn('calculate_percentage_asked(): no social level in price for sl ' + sl);
+      return 1;
+    }
+    var perc = this.price['socialLevelPercentage_' + sl];
+    // console.log("price", this.price, sl, perc)
+    return perc;
+  }
 
-    calculateTotalAsked() {
-        this.total_asked = this.calculateTotalReal() * this.getPercentageAsked();
-        return this.total_asked;
+  getPriceFor(key) {
+    if (!this.price) return 0;
+    if (!this.price[key]) return 0;
+    return this.price[key];
+  }
+
+  getTotalFor(key) {
+    if (!this.price) return 0;
+    if (!this.price[key]) return 0;
+    if (!this[key]) return 0;
+    return this.price[key] * this[key];
+  }
+
+  calculatePriceId(prices) {
+    if (typeof(this.Date) == 'undefined' || !prices) {
+      this.price_id = 1;
+      return 0;
     }
+    this.price_id = -1;
+    var t = this;
+    var dref = this.Date;
+    for(var i in prices) {
+      var p = prices[i];
+      if (((p['datefrom'] == null) || (p['datefrom'] <= dref))
+        && ((p['dateto'] == null) || (p['dateto'] > dref))) {
+        t.price_id = i;
+        t.price = prices[i];
+      }
+    }
+    if (this.price_id < 0) {
+      throw new Error('Price Id not set');
+    }
+    this.calculate_total_real();
+  }
+
+  getPriceId() {
+    return this.price_id;
+  }
 
     validate(res) {
         /* Business rules (price > 4):

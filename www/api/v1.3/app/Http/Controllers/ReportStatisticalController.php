@@ -28,33 +28,26 @@ class ReportStatisticalController extends ReportController {
 		return 1;
 	}
 
-	protected function billStats($header, $include = false, $excludes = []) {
-		$stat_filter = "(1 = 1)";
-
-		$filter = function($what) {
-			return "EXISTS(SELECT * FROM bill_lines JOIN price_lines 
-				ON (bill_lines.title = price_lines.title)
-				WHERE (bill_lines.bill_id = bills.id AND price_lines.price_id = prices.id)
-				AND price_lines.type = '$what')";
-		};
-
-		if ($include) {
-			$stat_filter = $filter($include);
+	// By bill element
+	protected function billCountByType($count_filter, &$list) {
+		global $bills;
+		if ($list == "") {
+			$list = "(1=0)";
 		}
-
-		foreach($excludes as $e) {
-			$stat_filter = $stat_filter . " AND NOT(" . $filter($e) . ")";
+		foreach(Bill::getFieldsList($count_filter) as $f) {
+			$this->resultPathSet("summary.$f", $this->getOneBySQL("SELECT count(*) as res From bills WHERE {$this->filter} AND (`$f` > 0)"));
+			$list .= "OR(`$f`>0)";
 		}
+		$list = "(" . $list . ")";
+	}
 
-		$stats = $this->runSqlWithNamedParameter("
-			SELECT SUM(total_real) AS total_real,
+	protected function billStats($header, $stat_filter) {
+		$stats = $this->runSqlWithNamedParameter("SELECT SUM(total_real) AS total_real,
 			SUM(total_asked) as total_asked,
-		    SUM(payments.amount) as total_paid
+      SUM(payments.amount) as total_paid
 			FROM bills
-			JOIN prices ON (bills.price_id = prices.id)
-			LEFT JOIN payments ON (payments.bill_id = bills.id)
-			WHERE ({$this->filter}) 
-			AND ({$stat_filter})"
+			LEFT JOIN payments ON(payments.bill_id = bills.id)
+			WHERE ({$this->filter}) AND ({$stat_filter})"
 			);
 		$stats = array_pop($stats);
 		$this->resultPathSet("$header.real", $stats->total_real);
@@ -116,29 +109,27 @@ class ReportStatisticalController extends ReportController {
 		$this->resultPathSet("summary.centers.unspecified", array_key_exists('', $res2) ? $res2[''] : 0);
 
 		// By act
-		$res = $this->runSqlWithNamedParameter("
-			SELECT count(*) as res, price_lines.title as title
-			FROM bills 
-			JOIN bill_lines ON (bill_lines.bill_id = bills.id)
-			JOIN prices ON (bills.price_id = prices.id)
-			JOIN price_lines ON (price_lines.price_id = prices.id AND price_lines.title = bill_lines.title)
-			WHERE {$this->filter}
-			GROUP BY price_lines.title, price_lines.type
-			HAVING res > 0
-			ORDER BY price_lines.type, price_lines.title
+		$anySurgery = "";
+		$this->billCountByType(Bill::CAT_SURGICAL, $anySurgery);
 
-		");
-		foreach($res as $line) {
-			$this->resultPathSet("summary." . $line->title, $line->res);
-		}
+		$anyMedical = "";
+		$this->billCountByType(Bill::CAT_MEDECINE, $anyMedical);
+
+		$anyWorkshop = "";
+		$this->billCountByType(Bill::CAT_WORKSHOP, $anyWorkshop);
+
+		$anyConsult = "";
+		$this->billCountByType(Bill::CAT_CONSULT, $anyConsult);
+
+		$anyOther = "";
+		$this->billCountByType(Bill::CAT_OTHER, $anyOther);
 
 		// Financials
-
-		$this->billStats("summary.financials.surgery",  Bill::CAT_SURGICAL );
-		$this->billStats("summary.financials.medical",  BILL::CAT_MEDECINE, [ Bill::CAT_SURGICAL ]);
-		$this->billStats("summary.financials.workshop", BILL::CAT_WORKSHOP, [ Bill::CAT_SURGICAL, BILL::CAT_MEDECINE ]);
-		$this->billStats("summary.financials.consult",  BILL::CAT_CONSULT,  [ Bill::CAT_SURGICAL, BILL::CAT_MEDECINE, BILL::CAT_WORKSHOP ]);
-		$this->billStats("summary.financials.other",    BILL::CAT_OTHER,    [ Bill::CAT_SURGICAL, BILL::CAT_MEDECINE, BILL::CAT_WORKSHOP, BILL::CAT_CONSULT ]);
-		$this->billStats("summary.financials.total");
+		$this->billStats("summary.financials.surgery", $anySurgery);
+		$this->billStats("summary.financials.medical", "NOT($anySurgery) AND ($anyMedical)");
+		$this->billStats("summary.financials.workshop", "NOT($anyMedical OR $anySurgery) AND ($anyWorkshop)");
+		$this->billStats("summary.financials.consult", "NOT($anyMedical OR $anySurgery OR $anyWorkshop) AND $anyConsult");
+		$this->billStats("summary.financials.other", "NOT($anyMedical OR $anySurgery OR $anyWorkshop OR $anyConsult) AND $anyOther");
+		$this->billStats("summary.financials.total", "(1=1)");
 	}
 }

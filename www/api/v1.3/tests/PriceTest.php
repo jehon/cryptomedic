@@ -114,18 +114,11 @@ class PriceTest extends RouteReferenceTestCase {
 	    $this->assertArrayHasKey('id', $json);
 	    $this->assertEquals($json['datefrom'], $limit);
 
-	    $this->assertEquals($json['dateto'], null);
 	    $this->assertEquals($json['_editable'], true);
 
-        // https://packagist.org/packages/flow/jsonpath
-	    $this->assertEquals(0, count((new JSONPath($json))->find('$.price_lines.[?(@.title=\'consult_field_visit\')]')->data()));
-	    $this->assertEquals(1, count((new JSONPath($json))->find('$.price_lines')->data()));
+	    $this->assertEquals($json['consult_field_visit'], -1);
+	    $this->assertEquals($json['consult_home_visit'], 150);
 
-	    $this->assertEquals(3, count((new JSONPath($json))->find('$.price_lines.[?(@.Amount=150)]')->data()));
-
-	    $hvisit = (new JSONPath($json))->find('$.price_lines.[?(@.title=\'consult_home_visit\')]')->data()[0];
-	    $this->assertEquals(150, $hvisit['Amount']);
-	    // $this->assertEquals(1, count((new JSONPath($json))->find('$.price_lines.[?(@.title=\'consult_home_visit\')][?(@.Amount=150)]')->data()));
 
 	    // Creating a second one would fail
 	    $this->myRunAssertQuery(
@@ -138,17 +131,10 @@ class PriceTest extends RouteReferenceTestCase {
 	        	->setExpected(403)
 	      	);
 
-	    // Update some data
-	    foreach($json['price_lines'] as $i => $v) {
-	    	if ($v['title'] == 'consult_home_visit') {
-	    		$json['price_lines'][$i]['Amount'] = 250;
-	    	}
-	    	if ($v['title'] == 'workshop_wheel_chair_china') {
-	    		unset($json['price_lines'][$i]['id']);
-	    		$json['price_lines'][$i]['title'] = 'workshop_wheel_chair_china_new';
-	    	}
-	    }
 
+
+	    // Update some data
+	    $json['consult_home_visit'] = 250;
 	    $json = $this->myRunAssertQuery(
 	        $this->getNewRequestOptionsBuilder()
 	        	->setRole("manager")
@@ -159,15 +145,9 @@ class PriceTest extends RouteReferenceTestCase {
 
 	    $this->assertArrayHasKey('id', $json);
 	    $this->assertEquals($json['datefrom'], $limit);
-	    $this->assertEquals($json['dateto'], null);
 
-	    $hvisit = (new JSONPath($json))->find('$.price_lines.[?(@.title=\'consult_home_visit\')]')->data()[0];
-	    $this->assertEquals(250, $hvisit['Amount']);
-
-	    $this->assertEquals(0, count((new JSONPath($json))->find('$.price_lines.[?(@.title=\'workshop_wheel_chair_china\')]')->data()));
-
-	    $this->assertEquals(1, count((new JSONPath($json))->find('$.price_lines.[?(@.title=\'workshop_wheel_chair_china_new\')]')->data()));
-
+	    $this->assertEquals($json['consult_field_visit'], -1);
+	    $this->assertEquals($json['consult_home_visit'], 250);
 	    $this->assertEquals($json['_editable'], true);
 
 	    // Delete some data

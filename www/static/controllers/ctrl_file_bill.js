@@ -6,78 +6,29 @@ function ctrl_file_bill($scope, $element) {
           window.cryptomedic.serverSettings.prices
     */
 
-    $scope.rebuildData = function() {
-        if (!$scope.currentFile()) {
-            return false;
-        }
-        const newData = formGetContent($element[0].querySelectorAll('[editable-bill]'), $scope.currentFile());
+  $scope.$watch(function() {
+    return window.cryptomedic.serverSettings.prices;
+  }, function() {
+    $scope.currentFile().calculatePriceId();
+    $scope.safeApply();
+  });
 
-        newData.bill_lines = Array.from($element[0].querySelectorAll("block-bill-category")).reduce((acc, bl) => {
-            return acc.concat(bl.getBillLines());
-        }, []);
-
-        // Calculate totals
-        newData.calculateTotalAsked();
-
-        oNewData = new Bill(newData);
-        errors = oNewData.validate();
-
-        $element[0].querySelectorAll("[error]").forEach(el => el.setAttribute("hidden", "hidden"));
-        Object.keys(errors).forEach(e => {
-            $element[0].querySelectorAll(`[error=${e}]`).forEach(el => el.removeAttribute("hidden"));
-        })
-
-        return newData;
+  $scope.$watch('currentFile().Date', function() {
+    if ($scope.currentFile() && $scope.currentFile().calculatePriceId) {
+      $scope.currentFile().calculatePriceId(window.cryptomedic.serverSettings.prices);
+      $scope.safeApply();
+    } else {
+      $scope.safeApply();
     }
+  });
 
-    $scope.adapt = function() {
-        formFillIn($element[0], $scope.currentFile());
-        formSwitch($element[0], 'editable-bill', $scope.mode);
+  $scope.$watch('currentFile().sl_numberOfHouseholdMembers', function() {
+    $scope.currentFile().ratioSalary();
+  });
 
-        $element[0].querySelectorAll("block-bill-category").forEach(el => el.setAttribute('price-lines', JSON.stringify($scope.currentFile().getPrice().price_lines)));
-        $element[0].querySelectorAll("block-bill-category").forEach(el => el.setAttribute('value', JSON.stringify($scope.currentFile().bill_lines)));
-
-        $scope.rebuildData();
-    }
-    $scope.adapt();
-
-    $element[0].querySelectorAll('[editable-bill]').forEach(el => el.addEventListener('changed', event => {
-        const newData = $scope.rebuildData();
-
-        // Commit it
-        $scope.setCurrentFile(newData);
-        formFillIn($element[0], $scope.currentFile());
-        $scope.safeApply();
-    }));
-
-// TODO: calculated socialLevel to be migrated to SocialLevel
-
-    // $element[0].querySelector("[name=Date]").addEventListener("change", el => {
-    //     console.log("Change detected: ", el.getAttribute("name"), el.getValue());
-    // })
-
-    // $scope.$watch(function() {
-    //     return window.cryptomedic.serverSettings.prices;
-    // }, function() {
-    //     $scope.currentFile().calculatePriceId();
-    //     $scope.currentFile().calculate_total_real();
-    //     $scope.safeApply();
-    // });
-
-    // $scope.$watch('currentFile().Date', function() {
-    //     $scope.rebuildList();
-    //     $scope.currentFile().calculate_total_real();
-    //     if ($scope.currentFile() && $scope.currentFile().calculatePriceId) {
-    //         $scope.currentFile().calculatePriceId(window.cryptomedic.serverSettings.prices);
-    //         $scope.safeApply();
-    //     } else {
-    //         $scope.currentFile().calculatePriceId();
-    //         $scope.safeApply();
-    //     }
-    // });
-
-    // $scope.$watch('currentFile().Sociallevel', function() {
-    // })
+  $scope.$watch('currentFile().sl_familySalary', function() {
+    $scope.currentFile().ratioSalary();
+  });
 
     // Used in bill_summary
     $scope.isEmpty = function(value) {
@@ -101,8 +52,11 @@ function ctrl_file_bill($scope, $element) {
     }
 
     $scope.getPaymentTotal = function() {
-        return $scope.paymentsList().reduce((sum, value) => {
-            return sum + value.Amount;
+      if (!$scope.folder) {
+          return "?";
+      }
+      return $scope.folder.getFilesRelatedToBill($scope.subid).reduce((acc, file) => {
+           return acc + (file.Amount ? parseInt(file.Amount, 10) : 0)
         }, 0);
     }
 

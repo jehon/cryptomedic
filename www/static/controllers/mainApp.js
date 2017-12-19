@@ -126,6 +126,10 @@ let mainApp = angular.module('app_main', [ 'ngRoute' ])
                 var dataURI = canvas.toDataURL('image/jpeg');
                 $scope.currentFile().fileContent = dataURI;
                 $scope.currentFile().OriginalName = file.name;
+                $element[0].data = {
+                  data: dataURI,
+                  name: file.name
+                };
                 $scope.$emit('revalidate');
                 // busy();
               };
