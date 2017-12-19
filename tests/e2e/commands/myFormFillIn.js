@@ -20,9 +20,6 @@ exports.command = function(selector, fields, button) {
     } else if (f.substring(0, 6) == "select") {
       this.mySelect(fsel, fields[f]);
     } else {
-      // this.execute(function(fsel, val) {
-      //   document.querySelector(fsel).value = val;
-      // }, [ fsel, fields[f]]);
       this
        .clearValue(f)
        .setValue(fsel, fields[f]);
