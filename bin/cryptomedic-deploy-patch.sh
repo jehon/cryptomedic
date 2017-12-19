@@ -1,5 +1,9 @@
 #!/bin/bash
 
+#
+# To protect a version, please see md5sum.php (at the bottom)
+#
+
 # Stop on error
 set -e
 
