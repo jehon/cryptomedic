@@ -47,31 +47,31 @@
 		<tr><td colspan="2" class="subheader">Surgical activity</td></tr>
 		<?php
 			foreach(Bill::getFieldsList(Bill::CAT_SURGICAL, t::getColumnsOfTable('bills')) as $i) {
-		 		echo "<tr><td>$i</td><td>{{result.summary[$i]}}</td></tr>";
+		 		echo "<tr><td>$i</td><td>{{result.summary['$i']}}</td></tr>";
 			}
 		?>
 		<tr><td colspan="2" class="subheader">Medical Activity</td></tr>
 		<?php
 			foreach(Bill::getFieldsList(Bill::CAT_MEDECINE, t::getColumnsOfTable('bills')) as $i) {
-		 		echo "<tr><td>$i</td><td>{{result.summary[$i]}}</td></tr>";
+		 		echo "<tr><td>$i</td><td>{{result.summary['$i']}}</td></tr>";
 			}
 		?>
 		<tr><td colspan="2" class="subheader">Workshop Activity</td></tr>
 		<?php
 			foreach(Bill::getFieldsList(Bill::CAT_WORKSHOP, t::getColumnsOfTable('bills')) as $i) {
-		 		echo "<tr><td>$i</td><td>{{result.summary[$i]}}</td></tr>";
+		 		echo "<tr><td>$i</td><td>{{result.summary['$i']}}</td></tr>";
 			}
 		?>
 		<tr><td colspan="2" class="subheader">Consult Activity</td></tr>
 		<?php
 			foreach(Bill::getFieldsList(Bill::CAT_CONSULT, t::getColumnsOfTable('bills')) as $i) {
-		 		echo "<tr><td>$i</td><td>{{result.summary[$i]}}</td></tr>";
+		 		echo "<tr><td>$i</td><td>{{result.summary['$i']}}</td></tr>";
 			}
 		?>
 		<tr><td colspan="2" class="subheader">Other activity</td></tr>
 		<?php
 			foreach(Bill::getFieldsList(Bill::CAT_OTHER, t::getColumnsOfTable('bills')) as $i) {
-		 		echo "<tr><td>$i</td><td>{{result.summary[$i]}}</td></tr>";
+		 		echo "<tr><td>$i</td><td>{{result.summary['$i']}}</td></tr>";
 			}
 		?>
 		<tr><td colspan="2" class="subheader">Financials</td></tr>
