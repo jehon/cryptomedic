@@ -24,7 +24,7 @@ class CryptomedicModel extends Model {
 		return str_replace(["'", " ", "\""], "", $c);
 	}
 
-	static  public function cannonize($data) {
+	static public function cannonize($data) {
 		if (is_array($data)) {
 			foreach($data as $k => $v) {
 				$res = static::cannonize($v);

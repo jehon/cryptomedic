@@ -125,7 +125,7 @@ function ctrl_prices($scope, $timeout) {
   // Finish editing -> save modifications
   // 
   $scope.doSave = function() {
-    let updatedData = formGetContent("#editForm", $scope.prices[$scope.edit]); 
+    let updatedData = formGetContent("#editForm", $scope.prices[$scope.edit]);
     getDataService()
       .then(dataService => Price.save(dataService, updatedData))
       .then(function(data) {

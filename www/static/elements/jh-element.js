@@ -103,6 +103,9 @@ let JHElement = (function() {
                             break;
                         case "Integer":
                             this[attributeNameInternal] = Number.parseFloat(newValue);
+                            if (isNaN(this[attributeNameInternal])) {
+                                this[attributeNameInternal] = JHElement.defaultValue(props[attributeNameCamel]);
+                            }
                             break;
                         default:
                             this[attributeNameInternal] = newValue;
@@ -122,14 +125,16 @@ let JHElement = (function() {
                 if (typeof(this[cb]) == 'function') {
                     this[cb](this[attributeNameInternal]);
                 }
-            }
-            if (this.isInitialized()) {
                 this.adapt();
             }
         }
 
         connectedCallback() {
             if (!this.isInitialized()) {
+                // We have to set it to be "inline-block" to have some dimensions for "formGetContent"
+                if (!this.style.display) {
+                    this.style.display = 'inline-block';
+                }
                 this[initialized] = true;
                 this.render();
             }

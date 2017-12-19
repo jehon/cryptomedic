@@ -68,8 +68,8 @@ describe("form-test", function() {
 	 	});
 
 	 	it("should remove unsetted values", function() {
-	 		expect(formGetContent(element(), { n4: true })).toEqual({
-				n3: 'n3val1',
+	 		expect(formGetContent(element(), { n4: 'template value' })).toEqual({
+				n3: 'n3val1'
 			});
 		});
 	});
@@ -87,8 +87,6 @@ describe("form-test", function() {
 	        <x-inline edit name='n7' type='char' value='n7val' ></x-inline>
   		</form>`, function(element) {
 		it("should get values correctly", function() {
-/*
-*/
 	 		expect(formGetContent(element())).toEqual({
 				n1: 'n1val',
 				n2: 'n2val',

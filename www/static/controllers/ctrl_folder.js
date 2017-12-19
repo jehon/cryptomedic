@@ -154,7 +154,7 @@ function ctrl_folder($scope, $location, $routeParams) {
 
   $scope.setCurrentFile = function(v) {
     cachedCurrentFile = v;
-    return v;
+    return cachedCurrentFile;
   }
 
   $scope.getModeEdit = function() {
@@ -168,6 +168,11 @@ function ctrl_folder($scope, $location, $routeParams) {
     return "false";
   }
 
+  $scope.rebuildData = function() {
+    cachedCurrentFile = formGetContent("#fileForm", $scope.currentFile());
+    return cachedCurrentFile;
+  }
+
   //----------------------
   //   Actions
   //----------------------
@@ -177,6 +182,8 @@ function ctrl_folder($scope, $location, $routeParams) {
     // TODO: hide action button if form is not ok
     $scope.valide = true;
 
+    updatedData = $scope.rebuildData();
+
     jQuery(form + ' input[type=number][required]').each(function() {
       if (jQuery(this).val() == '') {
         jQuery(this).val(0);
@@ -184,12 +191,11 @@ function ctrl_folder($scope, $location, $routeParams) {
     });
 
     if (!jQuery(form)[0].checkValidity()) {
-      console.log('Form invalid');
       jQuery('#fileFormSubmit').click();
       $scope.valide = false;
     }
 
-    $scope.errors = $scope.currentFile().validate();
+    $scope.errors = updatedData.validate();
 
     jQuery(form + ' input[mycalendar]:visible').each(function() {
       var date = jQuery(this).val();
@@ -208,10 +214,10 @@ function ctrl_folder($scope, $location, $routeParams) {
       $scope.valide = false;
     }
 
-    // console.log('validation', $scope.errors);
+    $scope.safeApply();
     return $scope.valide;
   };
-  $scope.$on('revalidate', $scope.actionValidate);
+  $scope.$on('revalidate', () => $scope.actionValidate());
 
   $scope.actionCancel = function() {
     // By rerouting, the controller is initialized back
@@ -224,19 +230,19 @@ function ctrl_folder($scope, $location, $routeParams) {
   };
 
   $scope.actionSave = function() {
+    $scope.rebuildData();
+
     if (!$scope.actionValidate()) {
       alert('You have errors in your data. Please correct them and try again');
       return;
     }
 
-    let updatedData = formGetContent("#fileForm", $scope.currentFile());
-    $scope.folder = false;
     $scope.safeApply();
 
-    extractPrefsFile(updatedData);
+    extractPrefsFile(cachedCurrentFile);
 
     getDataService()
-      .then(dataService => dataService.saveFile(updatedData, $scope.patient_id))
+      .then(dataService => dataService.saveFile(cachedCurrentFile, $scope.patient_id))
       .then(function(data) {
         // The data is refreshed by navigating away...
         $scope.$emit('message', {
@@ -271,23 +277,23 @@ function ctrl_folder($scope, $location, $routeParams) {
 
   $scope.actionCreate = function() {
     // Save transversal data for further use later...
+    $scope.rebuildData();
+
     if (!$scope.actionValidate()) {
       alert('You have errors in your data. Please correct them and try again');
       return;
     }
 
-    let updatedData = formGetContent("#fileForm", $scope.currentFile());
     $scope.folder = false;
-    $scope.safeApply();
 
-    extractPrefsFile(updatedData);
+    extractPrefsFile(cachedCurrentFile);
 
     getDataService()
-      .then(dataService => dataService.createFile(updatedData))
+      .then(dataService => dataService.createFile(cachedCurrentFile))
       .then(function(folder) {
         $scope.$emit('message', {
           'level': 'success',
-          'text': 'The ' + updatedData.getModel() + ' has been created.'
+          'text': 'The ' + cachedCurrentFile.getModel() + ' has been created.'
         });
         // The data is refreshed by navigating away...
         // Let's refresh the data

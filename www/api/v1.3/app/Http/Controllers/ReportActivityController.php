@@ -21,26 +21,21 @@ class ReportActivityController extends ReportController {
         bills.sl_numberOfHouseholdMembers,
         bills.Sociallevel,
         patients.Pathology,
-        TRIM(BOTH ',' FROM GROUP_CONCAT(DISTINCT " . Bill::getSQLAct() . ")) as act,
-        TRIM(BOTH ',' FROM GROUP_CONCAT(DISTINCT " . Bill::getSQLTreatment() . ")) as treatment,
-        SUM(bill_lines.Amount * price_lines.Amount * (price_lines.`type` = 'consult' )) AS price_consult,
-        SUM(bill_lines.Amount * price_lines.Amount * (price_lines.`type` = 'medecine')) AS price_medecine,
-        SUM(bill_lines.Amount * price_lines.Amount * (price_lines.`type` = 'workshop')) AS price_workshop,
-        SUM(bill_lines.Amount * price_lines.Amount * (price_lines.`type` = 'surgical')) AS price_surgical,
-        SUM(bill_lines.Amount * price_lines.Amount * (price_lines.`type` = 'other'   )) AS price_other,
-        bills.total_real as total_real,
-        bills.total_asked as total_asked,
-        (select sum(amount) from payments where bill_id = bills.id and " . $this->getParamAsSqlFilter("when", "payments.Date") . " ) as total_paid,
+        " . Bill::getSQLAct() . " as act,
+        " . Bill::getSQLTreatment() . " as treatment,
+        " . Bill::getSQLFieldsSum(Bill::CAT_CONSULT) . " AS price_consult,
+              " . Bill::getSQLFieldsSum(Bill::CAT_MEDECINE) . " AS price_medecine,
+        " . Bill::getSQLFieldsSum(Bill::CAT_WORKSHOP) . " AS price_workshop,
+              " . Bill::getSQLFieldsSum(Bill::CAT_SURGICAL) . " AS price_surgical,
+              " . Bill::getSQLFieldsSum(Bill::CAT_OTHER) . " AS price_other,
+              bills.total_real as total_real,
+              bills.total_asked as total_asked,
+              (select sum(amount) from payments where bill_id = bills.id and " . $this->getParamAsSqlFilter("when", "payments.Date") . " ) as total_paid,
         exists(select * from bills as b2 where b2.patient_id = bills.patient_id and b2.Date < bills.Date) as oldPatient
       FROM bills
           JOIN patients ON bills.patient_id = patients.id
-          LEFT OUTER JOIN bill_lines ON bill_lines.bill_id = bills.id
           JOIN prices ON bills.price_id = prices.id
-          LEFT OUTER JOIN price_lines ON price_lines.price_id = prices.id AND price_lines.title = bill_lines.title
-      GROUP BY
-          bills.id,
-          patients.id
-    ) AS t
+      ) AS t
       WHERE (1 = 1)
         AND ((" . $this->getParamAsSqlFilter("when", "Date") . ") OR (total_paid > 0))
         AND " . $this->getParamAsSqlFilter("center", "Center") . "

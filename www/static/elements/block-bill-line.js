@@ -31,7 +31,7 @@
             super.render();
             this.createElementAndAddThem(`
                 <div style='display: table-cell' id='title'></div>
-                <div style='display: table-cell'><x-inline ${this.edit ? 'edit=1' : '' } type='numeric' name='price' value='0' inline='min=0 step=1 style="width: 4em" '></x-inline></div>
+                <div style='display: table-cell'><x-inline ${this.edit ? 'edit=1' : '' } type='numeric' name='${this._price.title}' value='0' inline='min=0 step=1 style="width: 4em" '></x-inline></div>
                 <div style='display: table-cell' id='price'></div>
                 <div style='display: table-cell' id='total'></div>
             `);

@@ -180,7 +180,11 @@ class t {
   }
 
   function fieldGetKey() {
-    return $this->options['baseExpression'] . $this->field;
+    $be = $this->options['baseExpression'];
+    if (substr($be, -1) == ".") {
+      $be = substr($be, 0, -1);
+    }
+    return $be . '["' . $this->field . '"]';
   }
 
   function fieldIsRequired() {
@@ -201,7 +205,30 @@ class t {
       $this->res .= "<span id='{$this->jsId}' class='error'>Read: key is not in the database: '{$this->key}'</span>";
       return $this;
     }
-    $this->res .= "<x-read id='{$this->jsId}' name='{$this->field}' type='{$this->fieldGetType()}' value='{{ {$this->fieldGetKey()} }}'></x-read>";
+
+    switch($this->fieldGetType()) {
+      case static::TYPE_TIMESTAMP:
+        // See https://docs.angularjs.org/api/ng/filter/date
+        $this->res .= "<span id='{$this->jsId}'>{{ {$this->fieldGetKey()} | date:'{static::DATETIMEFORMAT}' }}</span>";
+        break;
+      case static::TYPE_BOOLEAN:
+        $this->res .= "<read-boolean ng-attr-value='{{ {$this->fieldGetKey()} }}'></read-boolean>";
+        break;
+      case static::TYPE_LIST:
+        $this->res .= "<span id='{$this->jsId}' name='{$this->field}'>{{ {$this->fieldGetKey()} }}</span>";
+        break;
+      case static::TYPE_DATE:
+      case static::TYPE_INTEGER:
+      case static::TYPE_CHAR:
+        $this->res .= "<span id='{$this->jsId}'>{{ {$this->fieldGetKey()} }}</span>";
+        break;
+      case static::TYPE_TEXT:
+        $this->res .= "<span id='{$this->jsId}' style='white-space: pre'>{{ {$this->fieldGetKey()} }}</span>";
+        break;
+      default:
+        $this->res .= "{$this->key} input id={$this->jsId}";
+        break;
+    }
     return $this;
   }
 
