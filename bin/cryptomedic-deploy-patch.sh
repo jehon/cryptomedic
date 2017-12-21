@@ -19,11 +19,11 @@ conf_site="prod"
 
 echo "Log file: $LOG"
 
-ftp_host=`   php ${PRJ_DIR}/config.php deployment.$conf_site.ftp_host 2>/dev/null || true`
-ftp_user=`   php ${PRJ_DIR}/config.php deployment.$conf_site.ftp_user 2>/dev/null || true`
-ftp_pass=`   php ${PRJ_DIR}/config.php deployment.$conf_site.ftp_pass 2>/dev/null || true`
+ftp_host=`php ${PRJ_DIR}/config.php deployment.$conf_site.ftp_host 2>/dev/null || true`
+ftp_user=`php ${PRJ_DIR}/config.php deployment.$conf_site.ftp_user 2>/dev/null || true`
+ftp_pass=`php ${PRJ_DIR}/config.php deployment.$conf_site.ftp_pass 2>/dev/null || true`
 remote_root="/"
-local_root=$PRJ_DIR
+local_root="$PRJ_DIR"
 
 if [[ "$ftp_host" = "" ]]; then
   echo "Site not found in configuration: $conf_site"
