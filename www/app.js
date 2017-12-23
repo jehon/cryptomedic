@@ -6,6 +6,13 @@ import shadydom         from '@webcomponents/shadydom';
 import angular          from 'angular';
 import angularRoute     from 'angular-route';
 
+
+// Bootstrap 3.3 (https://getbootstrap.com/docs/4.0/getting-started/webpack/)
+import jQuery           from 'jquery/src/jquery.js';
+import 'bootstrap';
+// require('bootstrap/dist/css/bootstrap.min.css');
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 // Export to excell
 import ExcellentExport  from 'excellentexport';
 
@@ -20,6 +27,7 @@ import fetchfull        from 'imports-loader?objectPath=object-path!fetchfull';
 // html entities decode for jh-script
 import he               from 'he';
 
+window.jQuery           = jQuery;
 window.angular          = angular;
 window.ExcellentExport  = ExcellentExport;
 window.clone            = clone;
