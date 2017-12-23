@@ -24,7 +24,9 @@
   "devDependencies": {
     "bower": "1.*",
     "chromedriver": "latest",
+    "css-loader": "^0.28.7",
     "eslint": "3.*",
+    "file-loader": "^1.1.6",
     "fs-extra": "latest",
     "geckodriver": "latest",
     "glob": "latest",
@@ -44,6 +46,7 @@
     "offline-plugin": "latest",
     "recursive-readdir-sync": "latest",
     "selenium-server": "latest",
+    "style-loader": "^0.19.1",
     "svgo": "latest",
     "sw-precache": "^4.0.0",
     "webpack": "^3.8.1"
