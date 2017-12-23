@@ -26,9 +26,13 @@ import fetchfull        from 'imports-loader?objectPath=object-path!fetchfull';
 // html entities decode for jh-script
 import he               from 'he';
 
+// Screenshots
+import html2canvas      from 'html2canvas';
+
 window.jQuery           = jQuery;
 window.angular          = angular;
 window.ExcellentExport  = ExcellentExport;
 window.clone            = clone;
 window.FetchFull        = fetchfull;
 window.he               = he;
+window.html2canvas      = html2canvas;
