@@ -14,11 +14,9 @@
     "tests"
   ],
   "dependencies": {
-    "bootstrap": "^3.3",
     "fetchfull-elements": "git@github.com:jehon/fetchfull-elements.git",
     "platform": "Polymer/platform#0.*",
     "polymer": "Polymer/polymer#1.*",
-    "jquery": "^3.2.1",
     "jquery-ui": "^1.12.1",
     "html2canvas": "^0.4.1",
     "numeral-js": "^0.1.3",
