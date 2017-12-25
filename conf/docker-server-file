@@ -2,4 +2,6 @@
 # http://dockerfile.readthedocs.io/en/latest/content/DockerImages/dockerfiles/php-apache.html#
 FROM webdevops/php-apache
 
-RUN apt update && apt install php-xdebug
+RUN apt update && apt install -y php-xdebug ssmtp
+
+COPY conf/ssmtp.conf /etc/ssmtp/ssmtp.conf

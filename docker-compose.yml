@@ -28,7 +28,7 @@ services:
         # http://dockerfile.readthedocs.io/en/latest/content/DockerImages/dockerfiles/php-apache.html#
         build:
             context: .
-            dockerfile: docker-server-file
+            dockerfile: conf/docker-server-file
         environment:
             WEB_DOCUMENT_ROOT: /app/www
         ports:
@@ -37,3 +37,10 @@ services:
             - mysql
         volumes:
             - .:/app
+
+    mail:
+        # https://hub.docker.com/r/mailhog/mailhog/
+        image: mailhog/mailhog
+        ports:
+            - 5551:8025 # web server
+            - 5559:1025 # smpt
