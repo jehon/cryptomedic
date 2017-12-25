@@ -40,7 +40,12 @@ services:
 
     mail:
         # https://hub.docker.com/r/mailhog/mailhog/
-        image: mailhog/mailhog
+        # image: mailhog/mailhog
+
+        # https://hub.docker.com/r/42bv/mailhog/~/dockerfile/
+        # Offer mail dump in /srv/Maildir
+        image: 42bv/mailhog
         ports:
             - 5551:8025 # web server
-            - 5559:1025 # smpt
+        volumes:
+            - ./target/emails:/srv/Maildir
