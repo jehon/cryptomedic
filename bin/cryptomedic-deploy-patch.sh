@@ -7,6 +7,9 @@
 # Stop on error
 set -e
 
+TAG=`date +"%Y-%m-%d"`
+echo "Tag: $TAG"
+
 SCRIPT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 PRJ_DIR=$(dirname "$SCRIPT_DIR")
 
@@ -72,6 +75,8 @@ wget www.cryptomedic.org/maintenance/md5sum.php -O $TMP/md5sum-remote.txt
 if [ "$1" == "commit" ]; then
   echo "*** Commiting ***"
   diff -u $TMP/md5sum-remote.txt $TMP/md5sum-local.txt | build_up | lftp
+  git tag "$TAG"
+  git push --tags
 else
   # We will use the log to see the changes
   diff -u $TMP/md5sum-remote.txt $TMP/md5sum-local.txt | build_up > /dev/null
@@ -97,6 +102,8 @@ if [ "$1" != "commit" ]; then
   echo "!!!!!!!!!!!!!!!!!!! TEST MODE !!!!!!!!!!!!!!!!!!!!!!"
   echo "!!!!!!!!!!!!!!!!!!! TEST MODE !!!!!!!!!!!!!!!!!!!!!!"
   echo "!!!!!!!!!!!!!!!!!!! TEST MODE !!!!!!!!!!!!!!!!!!!!!!"
+  echo "Tag: $TAG"
+  echo ""
   echo "To really commit, use:"
   echo "$0 commit"
   echo ""
