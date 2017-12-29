@@ -81,6 +81,8 @@
         doLogout(localOnly = false) {
           let finished = Promise.resolve();
 
+          store.dispatch({ type: ACT_FOLDER_INVALIDATE });
+
           // localOnly could be the "tap" event, we thus check carefully what we receive
           if (localOnly !== true) {
             finished = finished.then(() => {
@@ -135,6 +137,8 @@
         },
 
         'createReference': function(year, order) {
+          store.dispatch({ type: ACT_FOLDER_INVALIDATE });
+
           return this.start()
             .requestToUrl('reference')
             .requestWithPostWithJSONBody()
@@ -148,8 +152,11 @@
         },
 
         getFolder(id) {
+          store.dispatch({ type: ACT_FOLDER_INVALIDATE });
+
           let f = patientFolderCache.get(id);
           if (f != null) {
+            store.dispatch({ type: ACT_FOLDER_STORE, payload: f });
             return Promise.resolve(f);
           }
 
@@ -158,6 +165,7 @@
             .requestToUrl(`folder/Patient/${id}`)
             .then(json => {
               let f = new Folder(json.folder);
+              store.dispatch({ type: ACT_FOLDER_STORE, payload: f });
               patientFolderCache.set(f.getId(), f);
               return f;
             });
@@ -175,6 +183,8 @@
         },
 
         createFile(data) {
+          store.dispatch({ type: ACT_FOLDER_INVALIDATE });
+
           return this.start()
             .requestWithPostWithJSONBody()
             .requestToUrl('fiche/' + data.getServerRessource())
@@ -188,6 +198,8 @@
         },
 
         saveFile(data) {
+          store.dispatch({ type: ACT_FOLDER_INVALIDATE });
+
           return this.start()
             .requestWithPutWithJSONBody()
             .requestToUrl('fiche/' + data.getServerRessource() + '/' + data['id'])
@@ -200,6 +212,8 @@
         },
 
         deleteFile(data) {
+          store.dispatch({ type: ACT_FOLDER_INVALIDATE });
+
           return this.start()
             .requestWithDelete()
             .requestToUrl('fiche/' + data.getServerRessource() + '/' + data['id'])
@@ -211,6 +225,8 @@
         },
 
         unlockFile(data) {
+          store.dispatch({ type: ACT_FOLDER_INVALIDATE });
+
           return this.start()
             .requestWithGet()
             .requestToUrl('fiche/' + data.getServerRessource() + '/unlock/' + data['id'])
