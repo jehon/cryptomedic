@@ -18,6 +18,7 @@ const store = (function() {
 	// Integration with dev-tools
 	// https://github.com/zalmoxisus/redux-devtools-extension#usage
 	/* eslint-disable no-underscore-dangle */
+	/* istanbul ignore next */
 	return redux.createStore(
 		redux.combineReducers({
 				folder: folderReducer
