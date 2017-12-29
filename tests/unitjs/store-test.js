@@ -4,7 +4,7 @@ describe("store", function() {
 		expect(store).not.toBeUndefined();
 		expect(typeof(store.dispatch)).toBe("function");
 		expect(typeof(store.getState)).toBe("function");
-	})
+	});
 
 	it("should handle ACT_FOLDER_*", function() {
 		expect(store.getState().folder).toBeFalsy();
@@ -16,5 +16,5 @@ describe("store", function() {
 
 		store.dispatch({ type: ACT_FOLDER_INVALIDATE });
 		expect(store.getState().folder).toBeFalsy();
-	})
+	});
 });
