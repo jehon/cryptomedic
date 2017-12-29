@@ -57,6 +57,7 @@ XWriteList = (function() {
                     el.setAttribute('checked', 'checked');
                     break;
             }
+            this.fire("changed", 0);
         }
 
         onListChanged(v) {
