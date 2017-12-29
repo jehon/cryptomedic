@@ -2,7 +2,7 @@
 
 // See polyfill for html imports: http://webcomponents.org/polyfills/html-imports/
 
-function waitElement(element) {
+function getDataService(element = 'dataService') {
   let test = function() {
     let el = element;
     if (typeof(element) == "string") {
@@ -38,8 +38,4 @@ function waitElement(element) {
       }
     }, 250);
   });
-}
-
-function getDataService(id = 'dataService') {
-  return waitElement(id);
 }
