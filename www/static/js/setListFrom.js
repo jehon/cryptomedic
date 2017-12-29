@@ -9,7 +9,8 @@ function setListFrom(origin, target, category) {
     }
     list = list.concat(cryptomedic.serverSettings.associations[`${category}.other`]);
 
-    if (document.querySelector(`[name=${target}]`).value) {
+    const current = document.querySelector(`[name=${target}]`).value;
+    if (current) {
         // If the current is already selected, add it to the list to keep it...
         if (list.indexOf(current) < 0) {
             list = [current].concat(list);
