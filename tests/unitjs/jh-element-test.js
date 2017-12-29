@@ -208,6 +208,18 @@ describe("jh-element-test", function() {
         });
     });
 
+    webDescribe("with invalid integer value", `<jh-element-test s-int='abc'></jh-element-test>`, function(element) {
+        it("should have default 0", function() {
+            expect(element()._sInt).toBe(0);
+            expect(element().sInt).toBe(0);
+        });
+
+        it("should handle custom setter/getter", function() {
+            element().sInt = "def";
+            expect(element()._sInt).toBe(0);
+        });
+    });
+
     webDescribe("with specific handler", `<jh-element-test s-val='123' value='abc'></jh-element-test>`, function(element) {
         it("should handle specific handler (onSValChanged)", function() {
             expect(element()._sVal).toBe('123');
