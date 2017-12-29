@@ -50,6 +50,21 @@ describe('x-write-test', function() {
                 element().value = "something new";
                 expect(element().value).toBe("something new");
             });
+
+            it("should not fire event if still having focus", function() {
+                let el = element().querySelector('input');
+                let res = false;
+                element().addEventListener("changed", (event) => { res = "test" });
+
+                el.focus();
+                JHElement.fireOn(element().querySelector("input"), "change", "test");
+                expect(res).toBe(false);
+
+                el.blur();
+                JHElement.fireOn(element().querySelector("input"), "change", "test");
+                expect(res).toBe("test");
+            })
+
         })
     })
 
@@ -107,7 +122,7 @@ describe('x-write-test', function() {
                 expect(element().value).toBe(true);
             })
         })
-    })
+    });
 
     describe("with date", function() {
         webDescribe("without value", `<x-write name='test' type='date'></x-write>`, function(element) {
