@@ -12,7 +12,6 @@
     "angular-route": "1.4.x",
     "bootstrap": "^3.3.7",
     "clone": "^2.1.1",
-    "custom-elements": "^1.0.2",
     "excellentexport": "^2.1.0",
     "fetchfull": "github:jehon/fetchfull",
     "fetchfull-elements": "github:jehon/fetchfull-elements",
