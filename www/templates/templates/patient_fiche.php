@@ -96,23 +96,24 @@
 		</div>
 	</div>
 	<jh-script>
-    document.querySelectorAll("x-write-list[name=District]").forEach(el => {
-      el.onchange = function() {
-      	setListFrom("District", "Upazilla", "district");
-		  	setListFrom("Upazilla", "Union_", "upazilla");
-      };
-    });
+	    document.querySelectorAll("x-write-list[name=District]").forEach(el => {
+	    	el.addEventListener("changed", function() {
+	    		console.log("EventListener: changed");
+				setListFrom("District", "Upazilla", "district");
+				setListFrom("Upazilla", "Union_", "upazilla");
+			});
+	    });
 
-    document.querySelectorAll("x-write-list[name=Upazilla]").forEach(el => {
-      el.onchange = function() {
-      	setListFrom("Upazilla", "Union_", "upazilla");
-      };
-    });
+		document.querySelectorAll("x-write-list[name=Upazilla]").forEach(el => {
+	    	el.addEventListener("changed", function() {
+				setListFrom("Upazilla", "Union_", "upazilla");
+			});
+		});
 
-  	userCb.add((data) => {
-	  	setListFrom("District", "Upazilla", "district");
-	  	setListFrom("Upazilla", "Union_", "upazilla");
-  	});
+		userCb.add((data) => {
+			setListFrom("District", "Upazilla", "district");
+			setListFrom("Upazilla", "Union_", "upazilla");
+		});
 
  	</jh-script>
 </div>
