@@ -98,7 +98,6 @@
 	<jh-script>
 	    document.querySelectorAll("x-write-list[name=District]").forEach(el => {
 	    	el.addEventListener("changed", function() {
-	    		console.log("EventListener: changed");
 				setListFrom("District", "Upazilla", "district");
 				setListFrom("Upazilla", "Union_", "upazilla");
 			});

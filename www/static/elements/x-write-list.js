@@ -50,7 +50,7 @@ XWriteList = (function() {
                     el.value = escaped;
                     break;
                 case "radio":
-                    el = this.shadowRoot.querySelector(`input[type=radio][value='${escaped}']`);
+                    el = this.shadowRoot.querySelector(`input[type=radio][value="${escaped}"]`);
                     if (el == null) {
                         return;
                     }
@@ -128,7 +128,7 @@ XWriteList = (function() {
                 let escaped = this._escape(item);
                 res += `
                     <span to='${escaped}'>
-                        <input type='radio' name='x-write-list-radio-${uuid}' value='${escaped}'>
+                        <input type='radio' name='x-write-list-radio-${uuid}' value="${escaped}">
                         <span>${item}</span>
                     <br>
                     </span>
@@ -137,7 +137,7 @@ XWriteList = (function() {
             if (this._nullable) {
                 res += `
                     <span to=''>
-                        <input type='radio' name='x-write-list-radio-${uuid}' value=''>
+                        <input type='radio' name='x-write-list-radio-${uuid}' value="">
                         <span>?</span>
                         <br>
                     </span>
@@ -162,11 +162,11 @@ XWriteList = (function() {
         _asSelect() {
             let res = "<select>\n";
             if (this._nullable) {
-                res += `  <option value=''>?</option>\n`;
+                res += `  <option value="">?</option>\n`;
             }
             for(let item of this._list) {
                 let escaped = this._escape(item);
-                res += `  <option value='${escaped}'>${item}</option>\n`;
+                res += `  <option value="${escaped}">${item}</option>\n`;
 
             }
             res += "</select>\n";
@@ -177,7 +177,13 @@ XWriteList = (function() {
         }
 
         _escape(str) {
-            return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&apos;');
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                // .replace(/'/g, '&apos;')
+                ;
         }
 
         set value(v) {
