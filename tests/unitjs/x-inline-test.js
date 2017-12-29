@@ -62,6 +62,13 @@ describe('x-inline-test', function() {
             expect(element().value).toBe(10);
         });
 
+        it("should fire event on blur", function() {
+            let res = false;
+            element().addEventListener("changed", (event) => { res = "test" });
+            element().blur();
+            expect(res).toBe("test");
+        });
+
         it("should react to set value", function() {
             element().value = 111;
             expect(element().value).toBe(111);
