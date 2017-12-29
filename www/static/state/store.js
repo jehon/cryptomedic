@@ -15,14 +15,16 @@ const store = (function() {
 	  };
 	}
 
+	// Integration with dev-tools
+	// https://github.com/zalmoxisus/redux-devtools-extension#usage
 	return redux.createStore(
 		redux.combineReducers({
 				folder: folderReducer
-			})
+			}),
+		window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
   		// applyMiddleware(...middleware)
 	);
 
-	// store.dispatch({ type: 'INCREMENT' })
 	// store.subscribe(() =>
 	//   console.log(store.getState())
 	// )
