@@ -12,6 +12,9 @@ import jQuery           from 'jquery/src/jquery.js';
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+// Redux
+import { createStore, combineReducers } from 'redux';
+
 // Export to excell
 import ExcellentExport  from 'excellentexport';
 
@@ -36,3 +39,7 @@ window.clone            = clone;
 window.FetchFull        = fetchfull;
 window.he               = he;
 window.html2canvas      = html2canvas;
+window.redux = {
+	createStore,
+	combineReducers
+};
