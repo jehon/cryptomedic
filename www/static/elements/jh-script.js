@@ -8,7 +8,7 @@
       // To hide the current html
       this.attachShadow({ mode: 'open' });
       
-      this.alreadyRun = false;
+      this[alreadyRun] = false;
     }
 
     static get properties() { return { 
