@@ -16,10 +16,7 @@ let JHAuthorized = (function() {
     //   this.authorizedList = [];
 
     //   // Create a shadow root
-    //   this.shadowRoot = this.attachShadow({
-    //     mode: 'open'
-    //   });
-
+    //   this.attachShadow({ mode: 'open' });
     //   this.shadowRoot.innerHTML = `
     //     <style>
     //       span.restricted {

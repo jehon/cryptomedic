@@ -11,11 +11,14 @@
             }
         }
 
+        constructor() {
+            super();
+            this.attachShadow({mode: 'open'});
+        }
+
         render() {
             super.render();
 
-            // Create a shadow root
-            this.attachShadow({mode: 'open'});
             this.shadowRoot.innerHTML = `
                 <img>
               `;
