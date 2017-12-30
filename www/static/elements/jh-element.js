@@ -134,6 +134,8 @@ let JHElement = (function() {
                 if (!this.style.display) {
                     this.style.display = 'inline-block';
                 }
+                // Comomn render functions
+                // here to avoid calling "super" everywhere in all render()
                 this[initialized] = true;
                 this.render();
             }
