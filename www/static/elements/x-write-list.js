@@ -21,6 +21,7 @@ XWriteList = (function() {
 
         constructor() {
             super();
+            this.attachShadow({ mode: 'open' });
             this._mode = false;
             this.references = {};
 
@@ -36,7 +37,6 @@ XWriteList = (function() {
 
         render() {
             super.render();
-            this.attachShadow({ mode: 'open' });
             this.createList();
             this.onValueChanged(this._value);
         }
