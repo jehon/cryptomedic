@@ -31,29 +31,29 @@ const XWaiting = (function() {
                 <slot></slot>
             </div>`;
             this[overlay] = this.shadowRoot.querySelector("#overlay");
-            this.hide();
+            this.free();
         }  
 
-        show() {
+        block() {
             this[overlay].removeAttribute("hidden");
         }
 
-        hide() {
+        free() {
             this[overlay].setAttribute("hidden", "hidden");
         }
 
-        isShown() {
+        isBlocked() {
             return !this[overlay].hasAttribute("hidden");
         }
 
         aroundPromise(p) {
-            this.show();
+            this.block();
             return p.then((data) => {
-                this.hide();
+                this.free();
                 return data;
             })
             .catch((error) => {
-                this.hide();
+                this.free();
                 throw error;
             })
         }
