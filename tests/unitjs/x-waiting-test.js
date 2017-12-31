@@ -1,5 +1,5 @@
 
-fdescribe("tests/unit/x-waiting-test.js", function() {
+describe("tests/unit/x-waiting-test.js", function() {
 	webDescribe("initialized", `<x-waiting><div style='width: 200px; height: 100px'>Content</div></x-waiting>`, function(element) {
 		it("should be hidden when initialized simply", function() {
 			expect(element().isShown()).toBeFalsy();
@@ -42,7 +42,7 @@ fdescribe("tests/unit/x-waiting-test.js", function() {
 				});
 			});
 
-			xit("should be shown and hidden if the promise fail", function(done) {
+			it("should be shown and hidden if the promise fail", function(done) {
 				let p = new Promise(function(resolve, reject) {
 					setTimeout(() => reject(), 100);
 				});
