@@ -109,7 +109,6 @@ function testComponent(html, test = (el) => true) {
 testComponent.testPolymer = el => typeof(el.$$) != "undefined"
 
 
-
 function webDescribe(title, html, fn) {
   return describe(title, function() {
     let div;
@@ -208,10 +207,9 @@ function webDescribe(title, html, fn) {
   });
 }
 
-
 webDescribe("webDescribe.js", "<div></div>", function(element) {
   it("should work", function() {
     expect(element()).not.toBe(null);
     expect(element().tagName).toBe("DIV");
-  })
-})
+  });
+});
