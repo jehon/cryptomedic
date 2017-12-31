@@ -1,4 +1,4 @@
-(function() {
+const XWaiting = (function() {
     const overlay = Symbol("overlay");
 
     class XWaiting extends JHElement {
@@ -60,4 +60,6 @@
     }
 
     window.customElements.define('x-waiting', XWaiting);
+
+    return XWaiting;
 })();
