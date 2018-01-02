@@ -14,6 +14,18 @@ describe("store", function() {
 		store.dispatch({ type: ACT_FOLDER_STORE, payload: "blablabla" });
 		expect(store.getState().folder).toBe("blablabla");
 
+		// Empty case reduce to false
+		store.dispatch({ type: ACT_FOLDER_STORE, payload: null });
+		expect(store.getState().folder).toBe(false);
+
+		// Empty case reduce to false
+		store.dispatch({ type: ACT_FOLDER_STORE, payload: false });
+		expect(store.getState().folder).toBe(false);
+
+		// Empty case reduce to false
+		store.dispatch({ type: ACT_FOLDER_STORE, payload: {} });
+		expect(store.getState().folder).toBe(false);
+
 		store.dispatch({ type: ACT_FOLDER_INVALIDATE });
 		expect(store.getState().folder).toBeFalsy();
 	});

@@ -9,6 +9,13 @@ const store = (function() {
 	    case ACT_FOLDER_INVALIDATE:
 	    	return false;
 	    case ACT_FOLDER_STORE:
+	    	if (!action.payload) {
+	    		return false;
+	    	}
+	    	// https://stackoverflow.com/a/32108184/1954789
+	    	if (Object.keys(action.payload).length === 0 && action.payload.constructor === Object) {
+	    		return false;
+	    	}
 	    	return action.payload;
 	    default:
 	      return state
