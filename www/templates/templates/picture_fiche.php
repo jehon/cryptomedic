@@ -40,7 +40,7 @@
 		</FieldSet>
 	</div>
 	<div class="col-md-6">
-		<?php require(__DIR__ . "/../helpers/patient-related.html"); ?>
+		<x-patient-related></x-patient-related>
 	</div>
 </div>
 <hr>

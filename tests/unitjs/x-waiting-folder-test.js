@@ -1,7 +1,10 @@
 
 describe("tests/unit/x-waiting-folder-test.js", function() {
 	webDescribe("initialized", `<x-waiting-folder></x-waiting-folder>`, function(element) {
-		const f = { a: 123 };
+		let f;
+		beforeEach(() => {
+	    	f = new Folder(loadReference('FolderTest.test1.json').folder);
+	    });
 
 		it("should be blocked when initialized", function() {
 			expect(element().isBlocked()).toBeTruthy();
