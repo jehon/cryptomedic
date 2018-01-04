@@ -57,6 +57,11 @@ let JHElement = (function() {
             super();
             this[initialized] = false;
 
+            // We have to set it to be "inline-block" to have some dimensions for "formGetContent"
+            if (!this.style.display) {
+                this.style.display = 'inline-block';
+            }
+
             if(this.constructor.properties) {
                 Object.keys(this.constructor.properties).forEach(k => {
                     const ki = '_' + k;
@@ -130,10 +135,6 @@ let JHElement = (function() {
 
         connectedCallback() {
             if (!this.isInitialized()) {
-                // We have to set it to be "inline-block" to have some dimensions for "formGetContent"
-                if (!this.style.display) {
-                    this.style.display = 'inline-block';
-                }
                 // Comomn render functions
                 // here to avoid calling "super" everywhere in all render()
                 this[initialized] = true;
