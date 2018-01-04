@@ -12,6 +12,7 @@ let mainApp = angular.module('app_main', [ 'ngRoute' ])
   .config([ '$locationProvider', function($locationProvider) {
     $locationProvider.hashPrefix('');
   }])
+  // bill_fiche and consult_introduction:
   .directive('catchIt', function() {
     // http://tutorials.jenkov.com/angularjs/custom-directives.html#compile-and-link
     // http://stackoverflow.com/a/15298620
@@ -70,6 +71,7 @@ let mainApp = angular.module('app_main', [ 'ngRoute' ])
       });
     };
   })
+  // picture-fiche:
   .directive('preview', function() {
     return {
       restrict: 'A',
