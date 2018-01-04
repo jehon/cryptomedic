@@ -3,6 +3,11 @@
 
 (function() {
     class XPatientRelated extends XWaitingFolder {
+    	constructor() {
+    		super();
+    		this.style.width = '100%';
+    	}
+
 		_nextAppointment() {
 			const today = date2CanonicString(new Date(), true);
 			var next = "";
