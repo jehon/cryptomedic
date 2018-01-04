@@ -12,8 +12,14 @@ const store = (function() {
 	    	if (!action.payload) {
 	    		return false;
 	    	}
+	    	// Test empty object
 	    	// https://stackoverflow.com/a/32108184/1954789
 	    	if (Object.keys(action.payload).length === 0 && action.payload.constructor === Object) {
+	    		return false;
+	    	}
+
+	    	if (!(action.payload instanceof Folder)) {
+	    		console.error("ACT_FOLDER_STORE expect a 'Folder' class object");
 	    		return false;
 	    	}
 	    	return action.payload;

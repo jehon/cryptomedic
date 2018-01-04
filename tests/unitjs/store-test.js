@@ -1,5 +1,10 @@
 
 describe("store", function() {
+	let f;
+	beforeEach(() => {
+    	f = new Folder(loadReference('FolderTest.test1.json').folder);
+    });
+
 	it("should exists", function() {
 		expect(store).not.toBeUndefined();
 		expect(typeof(store.dispatch)).toBe("function");
@@ -11,8 +16,13 @@ describe("store", function() {
 		store.dispatch({ type: ACT_FOLDER_INVALIDATE });
 		expect(store.getState().folder).toBeFalsy();
 
+		spyOn(console, "error");
 		store.dispatch({ type: ACT_FOLDER_STORE, payload: "blablabla" });
-		expect(store.getState().folder).toBe("blablabla");
+		expect(store.getState().folder).toBeFalsy();
+		expect(console.error).toHaveBeenCalled();
+
+		store.dispatch({ type: ACT_FOLDER_STORE, payload: f });
+		expect(store.getState().folder).toBe(f);
 
 		// Empty case reduce to false
 		store.dispatch({ type: ACT_FOLDER_STORE, payload: null });
