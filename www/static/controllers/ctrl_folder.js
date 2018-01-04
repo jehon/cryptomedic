@@ -400,23 +400,6 @@ function ctrl_folder($scope, $location, $routeParams) {
       });
   };
 
-  // TODO: push to folder
-  $scope.nextAppointment = function() {
-    var today = date2CanonicString(new Date(), true);
-    var next = false;
-    for (var k in $scope.folder.subFiles) {
-      var v = $scope.folder.subFiles[k];
-      if (v.getModel() == 'Appointment') {
-        if (v.Nextappointment > today) {
-          if (!next || v.Nextappointment < next) {
-            next = v.Nextappointment;
-          }
-        }
-      }
-    }
-    return next;
-  };
-
   function updateYearOfBirth() {
     if ($scope.folder) {
       var d = new Date();
