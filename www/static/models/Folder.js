@@ -52,13 +52,6 @@ class Folder extends FolderPage {
                     f.linkPatient(this.getPatient());
                 }
             })
-
-            // TODO: Does the payment need the link to the bills?
-            // this.getListByType(Bill).forEach(b => {
-            //   this.getFilesRelatedToBill(b.id).forEach(bi => {
-            //     bi.set
-            //   })
-            // })
         }
     }
 
