@@ -166,17 +166,16 @@ class Folder extends FolderPage {
             if (o1.Date > o2.Date) return 30 * o1First;
         }
 
-        // Both 'type' are present
-        if ((typeof(o1.getModel()) != 'undefined') && (typeof(o2.getModel()) != 'undefined')) {
-            if (o1.getModel() < o2.getModel()) return 40 * o1First;
-            if (o1.getModel() > o2.getModel()) return 40 * o2First;
-        }
-
         // Both 'id' are present
         if (!isNaN(o1id) && !isNaN(o2id)) {
             if (o1id > o2id) return 50 * o1First;
             if (o1id < o2id) return 50 * o2First;
         }
+
+        // Both 'type' are present
+        if (o1.getModel() < o2.getModel()) return 40 * o1First;
+        if (o1.getModel() > o2.getModel()) return 40 * o2First;
+
         return 0;
     }
 }
