@@ -2,8 +2,7 @@
 
 set -e
 
-
 mkdir -p "$PRJ_DIR/target"
-sudo chown jehon.jehon -R $PRJ_DIR/target
-sudo find "$PRJ_DIR/target/" -mindepth 1 ! -name '.gitkeep' -delete
-sudo find . -name "*.log" -delete
+chown jehon.jehon -R $PRJ_DIR/target
+find "$PRJ_DIR/target/" -mindepth 1 ! -name '.gitkeep' -delete
+find . -name "*.log" -delete
