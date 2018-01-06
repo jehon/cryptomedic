@@ -28,7 +28,7 @@ function ctrl_graphic($scope) {
   };
 
   var imgDimension = function(what) {
-    return $scope.folder.graphic_dimensions(x, y)[what];
+    return amd_stats.dimensions[x + '_' + y + '_' + $scope.folder.getPatient().sexStr()][what];
   };
 
   $scope.getValidity = function(file) {
