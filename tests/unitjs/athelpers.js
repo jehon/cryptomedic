@@ -191,6 +191,11 @@ function webDescribe(title, html, fn) {
     });
 
     afterEach(function() {
+      // For debugging purpose, sometimes, we want to keep the element...
+      if (this.jh_keep) {
+        return;
+      }
+
       // Register removing it afterwards
       document.body.removeChild(div);
       jasmine.DEFAULT_TIMEOUT_INTERVAL = oldTimeout;
