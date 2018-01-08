@@ -71,7 +71,7 @@ let mainApp = angular.module('app_main', [ 'ngRoute' ])
       });
     };
   })
-  // picture-fiche:
+  // picture-fiche (migrating to x-input-picture)
   .directive('preview', function() {
     return {
       restrict: 'A',
