@@ -45,6 +45,7 @@ module.exports = function(config) {
       'static/elements/*.html',
       '../tests/unitjs/mocks/*.js',
       '../tests/unitjs/*.js',
+      { pattern: "static/**",                        included: false, served: true, watched: false },
     ],
 
     autoWatch : true,
@@ -72,7 +73,12 @@ module.exports = function(config) {
     htmlReporter: {
       outputDir: __dirname + '/target/js/html/',
     //   // templatePath: '../tmp/jasmine_template.html'
-    }
+    },
+
+    proxies: {
+      "/static/": "/base/static/",
+      "/elements/": "/base/static/elements/"
+    },
   };
 
   config.set(configuration);
