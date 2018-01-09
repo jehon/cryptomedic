@@ -1,6 +1,6 @@
 /* global Payment,goThere,extractPrefsFile */
 
-function ctrl_file_bill($scope, $element) {
+function ctrl_file_bill($scope) {
     /*
       Prices are at
           window.cryptomedic.serverSettings.prices
