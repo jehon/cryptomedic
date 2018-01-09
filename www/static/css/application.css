@@ -242,6 +242,10 @@ input[type=checkbox].form-control {
  color: black;
 }
 
+x-input-picture {
+	max-width: 300px;
+}
+
 /********************************************
  * Menu / buttons
  */
