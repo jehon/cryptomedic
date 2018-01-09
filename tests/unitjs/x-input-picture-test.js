@@ -8,8 +8,8 @@ describe("tests/unit/x-input-picture-test.js", function() {
 	webDescribe("initialized", `<x-input-picture></x-input-picture>`, function(element) {
 		it("should be visible when initialized simply", function() {
 			expect(element().isBlocked()).toBeFalsy();
-			expect(element().querySelector("input")).not.toBeNull();
-			expect(element().querySelector("canvas")).not.toBeNull();
+			expect(element().shadowRoot.querySelector("input")).not.toBeNull();
+			expect(element().shadowRoot.querySelector("canvas")).not.toBeNull();
 		});
 
 		it("should load a text file and show warning ", function() {
@@ -26,7 +26,7 @@ describe("tests/unit/x-input-picture-test.js", function() {
 			expect(element().isBlocked()).toBeTruthy();
 			expect(element().value).toBeFalsy();
 
-			const canvas = element().querySelector("canvas");
+			const canvas = element().shadowRoot.querySelector("canvas");
 			expect(canvas.offsetWidth).toBeGreaterThan(100);
 			expect(canvas.offsetHeight).toBeGreaterThan(100);
 			expect(element().getOriginalName()).toBe("test.jpg");

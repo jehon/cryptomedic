@@ -44,7 +44,7 @@ const XInputPicture = (function() {
 		}
 
 		render() {
-			this.innerHTML = `
+			this.shadowRoot.querySelector("#overlay").insertAdjacentHTML("afterend", `
 				<style>
 					x-input-picture * {
 						width: 100%;
@@ -52,11 +52,11 @@ const XInputPicture = (function() {
 				</style>
 				<input id="file" type="file" name="fileContent" accept="image/*"><br>
 				<div class='text-center'>
-					<canvas id='preview'></canvas>
+					<canvas></canvas>
 				</div>
-			`;
-			this[inputElement]   = this.querySelector("input");
-			this[previewElement] = this.querySelector("canvas");
+			`);
+			this[inputElement]   = this.shadowRoot.querySelector("input");
+			this[previewElement] = this.shadowRoot.querySelector("canvas");
 
 			/* istanbul ignore next: impossible to set "file" property of input */
 			this[inputElement].addEventListener("change", () => this._generatePreview(this[inputElement].files[0]));
