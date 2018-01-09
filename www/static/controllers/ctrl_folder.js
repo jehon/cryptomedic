@@ -424,5 +424,3 @@ function ctrl_folder($scope, $location, $routeParams) {
     updateYearOfBirth();
   });
 }
-
-ctrl_folder.$inject = ['$scope', '$location', '$routeParams'];
