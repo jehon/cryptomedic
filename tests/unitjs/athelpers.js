@@ -149,7 +149,7 @@ function webDescribe(title, html, fn) {
 
       document.body.appendChild(div);
       
-      let check = function(el) {
+      let check = (el) => {
         if (el instanceof HTMLUnknownElement) {
           return el.tagName;
         }
