@@ -15,6 +15,11 @@ chmod a+rwx target
 
 cd "$PRJ_DIR/www/api"
 
+if [ "$1" == "COMMIT" ]; then
+	echo "Setting COMMIT"
+	export COMMIT=1
+fi
+
 for V in v* ; do
 	cd $V
 	echo "Version $V (`pwd`)"
