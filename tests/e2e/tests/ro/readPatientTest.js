@@ -29,7 +29,6 @@ module.exports = {
 
       .page.cryptomedic().selectFile("Picture", 2)
       .assert.containsText("#Picture_Date", "2014-11-04")
-      .assert.containsText("#Picture_OriginalName", "03.09 a.JPG")
       .assert.containsText("#Picture_file", "10_2014-11-06_15-32-45.JPG")
       .assert.containsText("#Patient_entryyear", "2000")
       .assert.containsText("#Patient_entryorder", "1")

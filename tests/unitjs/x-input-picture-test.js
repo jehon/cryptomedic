@@ -29,7 +29,6 @@ describe("tests/unit/x-input-picture-test.js", function() {
 			const canvas = element().shadowRoot.querySelector("canvas");
 			expect(canvas.offsetWidth).toBeGreaterThan(100);
 			expect(canvas.offsetHeight).toBeGreaterThan(100);
-			expect(element().getOriginalName()).toBe("test.jpg");
 
 			// Wait for constructed element...
 			setTimeout(() => {
@@ -45,8 +44,6 @@ describe("tests/unit/x-input-picture-test.js", function() {
 			element()._generatePreview(XInputPicture.dataURItoBlob(img, "test.jpg"));
 			expect(element().isBlocked()).toBeTruthy();
 			expect(element().value).toBeFalsy();
-
-			expect(element().getOriginalName()).toBe("test.jpg");
 
 			// Wait for constructed element...
 			setTimeout(() => {
