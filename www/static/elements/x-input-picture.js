@@ -65,7 +65,6 @@ const XInputPicture = (function() {
 		_generatePreview(file) {
 			this.block();
 			this._value = false;
-			this._originalName = "";
 
 			// Erase preview
 
@@ -75,8 +74,6 @@ const XInputPicture = (function() {
 				console.error('Not a picture?');
 				alert('Are you sure it is a picture? If it is a picture, please send it by email to marielineet.jean@gmail.com to debug the application. Thank you');
 			}
-
-			this._originalName = file.name;
 
 			var imgBuilder = document.createElement('img');
 			var reader = new FileReader();
@@ -120,10 +117,6 @@ const XInputPicture = (function() {
 				};
 			};
 			reader.readAsDataURL(file);
-		}
-
-		getOriginalName() {
-			return this._originalName;
 		}
 	}
 

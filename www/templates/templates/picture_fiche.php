@@ -18,7 +18,6 @@
 			<table>
 				<?php (new t("Picture.Date"))->tr()->p(); ?>
 				<?php (new t("Picture.comment"))->tr()->p(); ?>
-				<?php (new t("Picture.OriginalName"))->readOnly()->tr("Original name")->p(); ?>
 				<?php (new t("Picture.file"))->readOnly()->tr("File")->p(); ?>
 				<tr class='notModeRead'
 						ng-if="!currentFile().file"
