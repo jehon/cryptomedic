@@ -166,6 +166,11 @@ class Folder extends FolderPage {
             if (o1.Date > o2.Date) return 30 * o1First;
         }
 
+        if ((typeof(o1.updated_at) != 'undefined') && (typeof(o2.updated_at) != 'undefined')) {
+            if (o1.updated_at < o2.updated_at) return 40 * o2First;
+            if (o1.updated_at > o2.updated_at) return 40 * o1First;
+        }
+
         // Both 'id' are present
         if (!isNaN(o1id) && !isNaN(o2id)) {
             if (o1id > o2id) return 50 * o1First;
