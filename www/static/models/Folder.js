@@ -145,13 +145,6 @@ class Folder extends FolderPage {
             return 10 * o2First;
         }
 
-        // // What to do if one 'type' is missing
-        // if (typeof(o1.getModel()) == 'undefined') {
-        //     if (typeof(o2.getModel()) != 'undefined') return o1First;
-        // } else {
-        //     if (typeof(o2.getModel()) == 'undefined') return o2First;
-        // }
-
         // What to do if one 'Date' is missing
         if ((typeof(o1.Date) == 'undefined') && (typeof(o2.Date) != 'undefined')) {
             return 20 * o1First;
