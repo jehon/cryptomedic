@@ -113,29 +113,31 @@ describe('test-folder', function() {
             expect(Folder.ordering(a, b)).toBeLessThan(0);
             expect(Folder.ordering(b, a)).toBeGreaterThan(0);
         }
-        const build = (data, model = "anything") => {
-            return Object.assign({}, data, { getModel: function() { return model ; }});
+        const build = (basis, data, model = "anything") => {
+            return Object.assign({}, basis, data, { getModel: function() { return model ; }});
         }
 
         it("should order about id", function() {
-            const o1 = build({});
-            const o2 = build({ id: "2" });
-            const o3 = build({ id: "1" });
+            const basis = {};
+            const o1 = build(basis, {});
+            const o2 = build(basis, { id: "2" });
+            const o3 = build(basis, { id: "1" });
 
             resFirst(o1, o2);
             resFirst(o1, o3);
             resFirst(o2, o3);
 
             // Test string completely...
-            resFirst(build({ id: "25" }), o2);
-            resFirst(build({ id: "25" }), build({ id: "20" }));
-            resFirst(build({ id: "25" }), build({ id: "3" }));
+            resFirst(build(basis, { id: "25" }), o2);
+            resFirst(build(basis, { id: "25" }), build(basis, { id: "20" }));
+            resFirst(build(basis, { id: "25" }), build(basis, { id: "3" }));
         });
 
         it("should order about getModel", function() {
-            const o1 = build({}, "a");
-            const o2 = build({}, "b");
-            const o3 = build({}, "c");
+            const basis = {};
+            const o1 = build(basis, {}, "a");
+            const o2 = build(basis, {}, "b");
+            const o3 = build(basis, {}, "c");
 
             resFirst(o1, o2);
             resFirst(o1, o3);
@@ -146,9 +148,21 @@ describe('test-folder', function() {
         });
 
         it("should order about Date", function() {
+            const basis = {};
+            const o1 = build(basis, {});
+            const o2 = build(basis, { Date: "2010-01-01" });
+            const o3 = build(basis, { Date: "2000-01-01" });
+
+            resFirst(o1, o2);
+            resFirst(o1, o3);
+            resFirst(o2, o3);
+        });
+
+        it("should order about updated_at", function() {
+            const basis = { id: "1" };
             const o1 = build({});
-            const o2 = build({ Date: "2010-01-01" });
-            const o3 = build({ Date: "2000-01-01" });
+            const o2 = build(basis, { updated_at: "2010-01-01" });
+            const o3 = build(basis, { updated_at: "2000-01-01" });
 
             resFirst(o1, o2);
             resFirst(o1, o3);
@@ -156,10 +170,11 @@ describe('test-folder', function() {
         });
 
         it("should new > date > model > id", function() {
-            const o1 = build({});
-            const o2 = build({ Date: "2000-01-01" });
-            const o3 = build({ id: "25" }, "a");
-            const o4 = build({ id: "25", Date: "2000-01-01" });
+            const basis = {};
+            const o1 = build(basis, {});
+            const o2 = build(basis, { Date: "2000-01-01" });
+            const o3 = build(basis, { id: "25" }, "a");
+            const o4 = build(basis, { id: "25", Date: "2000-01-01" });
 
             resFirst(o1, o2);
             resFirst(o1, o3);
