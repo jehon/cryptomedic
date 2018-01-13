@@ -33,7 +33,15 @@
 						<div ng-if='errors.pictureRequired'>
 							<div class='jserror'>Error: you need to add the picture before saving the file.</div>
 						</div>
-					</td>
+<!--
+ 						<jh-authorized value='folder.edit'>
+							<x-input-picture name='file'></x-input-picture>
+							<div ng-if='errors.pictureRequired'>
+								<div class='jserror'>Error: you need to add the picture before saving the file.</div>
+							</div>
+						</jh-authorized>
+ -->
+ 					</td>
 				</tr>
 			</table>
 		</FieldSet>
