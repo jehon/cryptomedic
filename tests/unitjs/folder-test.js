@@ -158,11 +158,11 @@ describe('test-folder', function() {
             resFirst(o2, o3);
         });
 
-        it("should order about updated_at", function() {
+        it("should order about created_at", function() {
             const basis = { id: "1" };
             const o1 = build({});
-            const o2 = build(basis, { updated_at: "2010-01-01" });
-            const o3 = build(basis, { updated_at: "2000-01-01" });
+            const o2 = build(basis, { created_at: "2010-01-01" });
+            const o3 = build(basis, { created_at: "2000-01-01" });
 
             resFirst(o1, o2);
             resFirst(o1, o3);
