@@ -43,3 +43,5 @@ window.redux = {
 	createStore,
 	combineReducers
 };
+window.application_version = APPLICATION_BUILD_TIME;
+console.log("Version: ", window.application_version);
