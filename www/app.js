@@ -32,19 +32,20 @@ import he               from 'he';
 // Screenshots
 import html2canvas      from 'html2canvas';
 
-window.jQuery           = jQuery;
+
 import uuid             from 'uuid/v4';
 
 window.angular          = angular;
+window.jQuery           = jQuery;
+window.redux = {
+	createStore,
+	combineReducers
+};
 window.ExcellentExport  = ExcellentExport;
 window.clone            = clone;
 window.FetchFull        = fetchfull;
 window.he               = he;
 window.html2canvas      = html2canvas;
-window.redux = {
-	createStore,
-	combineReducers
-};
 window.uuid             = uuid;
 
 window.application_version = APPLICATION_BUILD_TIME;
