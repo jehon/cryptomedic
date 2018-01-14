@@ -33,6 +33,8 @@ import he               from 'he';
 import html2canvas      from 'html2canvas';
 
 window.jQuery           = jQuery;
+import uuid             from 'uuid/v4';
+
 window.angular          = angular;
 window.ExcellentExport  = ExcellentExport;
 window.clone            = clone;
@@ -43,5 +45,7 @@ window.redux = {
 	createStore,
 	combineReducers
 };
+window.uuid             = uuid;
+
 window.application_version = APPLICATION_BUILD_TIME;
 console.log("Version: ", window.application_version);
