@@ -28,15 +28,14 @@ window.bug_reporting = (function() {
     if (window.location.host.substr(0, 'localhost'.length) != 'localhost') {
         console.log("Capturing console.log/info/error and exceptions");
         if (typeof(Raven) != "undefined") {
-            Raven.config('https://7dece2b0b38e413baca8b81e17929eb2@sentry.io/270948').install()
+            Raven.config('https://7dece2b0b38e413baca8b81e17929eb2@sentry.io/270948', {
+                release: window.application_version
+            }).install();
 
             const waitForUserCB = () => {
                 if (typeof userCB !== "undefined") {
                     const data = userCB.add(data => {
                         if (data) {
-                            // Raven.config({
-                            //     release: window.application_version
-                            // });
                             Raven.setUserContext({
                                 username:   data.username,
                                 group:      data.group,
