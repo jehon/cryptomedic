@@ -1,9 +1,6 @@
 <?php
 
 global $myconfig;
-if (!defined("MY_ENVIRONMENT_PRODUCTION")) {
-  define("MY_ENVIRONMENT_PRODUCTION", "production");
-}
 
 $myconfig = [
   'database' => [
@@ -22,7 +19,9 @@ $myconfig = [
   'laravel' => [
     'key' => '12345678901234567890123456789012'
   ],
-  'environment' => constant('MY_ENVIRONMENT_PRODUCTION'),
+  'environment' => "production",
+  'debug' => false,
+  'bypass' => false,
   'randomString' => str_pad("random script ", 256, "abcdefghijklmnopqrstuvwxyz"),
   'folders' => [
     # A pointer to this folder
