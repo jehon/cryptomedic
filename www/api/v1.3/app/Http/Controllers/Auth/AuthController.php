@@ -26,8 +26,6 @@ class AuthController extends Controller {
   |
   */
 
-  // use AuthenticatesAndRegistersUsers;
-
   static protected $permissions = [];
 
   static public function hasPermission($header) {
@@ -99,20 +97,6 @@ class AuthController extends Controller {
     $user = Auth::user();
     $user->last_login = new \DateTime();
     $user->save();
-
-    /*
-     * TODO: Define a security key
-     *
-     * - The security key should be unique by [ computerId ]
-     * - How and when should we deprecate a key?
-     *    - two keys: old and new -> when we receive data signed with "new" key, old is deprecated
-     * - What to sign, and how to sign it?
-     *    - date of modification
-     *      - type of modification
-     *      - user who made it (for security checks)
-     *      - data
-     *      - folderId (for tracking)
-     */
 
     return response()->json($data);
   }
