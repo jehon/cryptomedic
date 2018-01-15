@@ -1,6 +1,8 @@
 <?php
 
-define("RELEASE_FILE", __dir__ . "/../../../../www/release_version.txt");
+if (!defined("RELEASE_FILE")) {
+	define("RELEASE_FILE", __dir__ . "/../../../../www/release_version.txt");
+}
 
 if (file_exists(constant("RELEASE_FILE"))) {
 	$release_version = file_get_contents(constant("RELEASE_FILE"));
