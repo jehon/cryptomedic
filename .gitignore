@@ -26,3 +26,4 @@ commit.msg
 /.DS_Store
 
 www/bundle.js
+www/release_version.txt
