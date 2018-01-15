@@ -120,7 +120,7 @@ class AuthController extends Controller {
   public function postMylogin() {
     $credentials = Request::only('username', 'password');
     global $myconfig;
-    if ($myconfig['environment'] != constant('MY_ENVIRONMENT_PRODUCTION'))
+    if ($myconfig['bypass'])
     {
       error_log("environment bypass authentication for " . $credentials['username']);
       $user = User::where("username", $credentials['username'])->first();
