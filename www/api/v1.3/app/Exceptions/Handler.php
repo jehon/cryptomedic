@@ -42,6 +42,21 @@ class Handler extends ExceptionHandler
         // 500 <= $e->getStatusCode();
         return SymfonyResponse::create($html, $e->getStatusCode(), $e->getHeaders());
     }
+
+    // For Sentry.io
+    // See https://sentry.io/amd-chakaria/laravel/getting-started/php-laravel/
+    public function report(Exception $exception)
+    {
+        global $myconfig;
+        if (!$myconfig['bypass']) {
+            // Avoid phpunit
+            if (app()->bound('sentry') && $this->shouldReport($exception)) {
+                app('sentry')->captureException($exception);
+            }
+        }
+
+        parent::report($exception);
+    }
 }
 
 
