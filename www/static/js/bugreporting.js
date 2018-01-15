@@ -5,18 +5,6 @@
   Raven:
     https://docs.sentry.io/clients/javascript/config/
     https://docs.sentry.io/clients/javascript/
-
-    https://docs.sentry.io/clients/javascript/usage/#passing-additional-data
-    Raven.captureMessage('Broken!', {
-      logger: "data-service",
-      level: 'info' // one of 'info', 'warning', or 'error'
-      extra: blablabla
-    })
-
-    // https://docs.sentry.io/learn/user-feedback/
-    Raven.showReportDialog({
-        eventId: '{{ request.sentry.id }}',
-    });
 */
 
 if (!("computerUUID" in localStorage)) {
