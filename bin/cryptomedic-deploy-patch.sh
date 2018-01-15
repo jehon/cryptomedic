@@ -7,11 +7,11 @@
 # Stop on error
 set -e
 
-TAG=`date +"%Y-%m-%d"`
-echo "Tag: $TAG"
-
 SCRIPT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 PRJ_DIR=$(dirname "$SCRIPT_DIR")
+
+TAG=`cat "$PRJ_DIR/www/release_version.txt"`
+echo "Tag: $TAG"
 
 # Give it to any sub-scripts
 export PRJ_DIR
