@@ -11,6 +11,7 @@ SCRIPT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 PRJ_DIR=$(dirname "$SCRIPT_DIR")
 
 TAG=`cat "$PRJ_DIR/www/release_version.txt"`
+TAG=${TAG:0:10}
 echo "Tag: $TAG"
 
 # Give it to any sub-scripts
