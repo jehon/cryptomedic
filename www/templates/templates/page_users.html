@@ -5,8 +5,10 @@
       <th>username</th>
       <th>full name</th>
       <th>email</th>
-      <th>notes</th>
+      <th>codage</th>
       <th>group</th>
+      <th>in examiner list</th>
+      <th>notes</th>
       <th></th>
     </thead>
     <tbody>
@@ -15,8 +17,10 @@
         <td>{{u.username}}</td>
         <td>{{u.name}}</td>
         <td>{{u.email}}</td>
-        <td>{{u.notes}}</td>
+        <td>{{u.codage}}</td>
         <td>{{u.group}}</td>
+        <td>{{u.inExaminerList}}</td>
+        <td>{{u.notes}}</td>
         <td>
           <span class='btn btn-default' ng-click='doEdit($index)'>edit</span>
           <span class='btn btn-default' ng-click='doShowPassword($index)'>Change password</span>
@@ -49,25 +53,37 @@
         <tr>
           <td>Username</td>
           <td>
-            <input id='newcode' ng-model="edit.username" class="form-control" required autofocus>
+            <input ng-model="edit.username" class="form-control" required autofocus>
           </td>
         </tr>
         <tr>
           <td>Name</td>
           <td>
-            <input id='newcode' ng-model="edit.name" class="form-control" required>
+            <input ng-model="edit.name" class="form-control" required>
           </td>
         </tr>
         <tr>
           <td>Email</td>
           <td>
-            <input id='newcode' ng-model="edit.email" class="form-control">
+            <input ng-model="edit.email" class="form-control">
+          </td>
+        </tr>
+        <tr>
+          <td>Codage</td>
+          <td>
+            <input ng-model="edit.codage" class="form-control">
+          </td>
+        </tr>
+        <tr>
+          <td>In examiner list</td>
+          <td>
+            <input type='checkbox' ng-model="edit.inExaminerList" class="form-control">Yes
           </td>
         </tr>
         <tr>
           <td>Notes</td>
           <td>
-            <input id='newcode' ng-model="edit.notes" class="form-control">
+            <input ng-model="edit.notes" class="form-control">
           </td>
         </tr>
       </table>
@@ -83,7 +99,7 @@
       <tr>
         <td>New password for {{password.name}}</td>
         <td>
-          <input id='newcode' ng-model="password.newcode" class="form-control" placeholder="enter new password here" required autofocus>
+          <input ng-model="password.newcode" class="form-control" placeholder="enter new password here" required autofocus>
         </td>
       </tr>
     </table>
