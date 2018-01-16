@@ -1,0 +1,14 @@
+{
+    "params": {
+        "period": "month",
+        "month": "2014-05",
+        "when": "2014-05",
+        "whenFrom": "2014-05-01",
+        "whenTo": "2014-05-31",
+        "center": "",
+        "examiner": "",
+        "activity": "surgical"
+    },
+    "list": [],
+    "totals": []
+}
