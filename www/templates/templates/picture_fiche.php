@@ -29,18 +29,24 @@
 						</jh-authorized>
 					</td>
 					<td>
-						<input preview='preview' type="file" name="fileContent" id='file'>
-						<div ng-if='errors.pictureRequired'>
-							<div class='jserror'>Error: you need to add the picture before saving the file.</div>
-						</div>
-<!--
  						<jh-authorized value='folder.edit'>
+							<input preview='preview' type="file" name="fileContent" id='file'>
+							<table>
+								<tr>
+									<td><img src='/static/img/smartphone.svg' style='width: 50px'></td>
+									<td>If you are currently on smartphone, clicking on the button above ("browse" or "choose file") should allow you to take a photo with your camera, and to upload it immediately.</td>
+								</tr>
+							</table>
+							<div ng-if='errors.pictureRequired'>
+								<div class='jserror'>Error: you need to add the picture before saving the file.</div>
+							</div>
+<!--
 							<x-input-picture name='file'></x-input-picture>
 							<div ng-if='errors.pictureRequired'>
 								<div class='jserror'>Error: you need to add the picture before saving the file.</div>
 							</div>
-						</jh-authorized>
  -->
+						</jh-authorized>
  					</td>
 				</tr>
 			</table>
