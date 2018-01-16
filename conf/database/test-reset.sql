@@ -19,3 +19,6 @@ DELETE FROM bills           WHERE patient_id = 7;
 -- modifyPriceListsTest: delete generated price
 DELETE FROM prices WHERE datefrom > '2016-01-04';
 UPDATE prices SET dateto = NULL WHERE id = (SELECT * FROM (SELECT max(id) FROM prices) AS t);
+
+-- ???
+DELETE FROM users WHERE username = '' OR username IS NULL;
