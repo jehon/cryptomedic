@@ -1,27 +1,23 @@
 <?php
 require_once(__DIR__ . "/vendor/autoload.php");
 
-function getParameter($name, $default = null) {
+function getParameter($name, $default = "") {
 	if (array_key_exists($name, $_REQUEST)) {
 		return $_REQUEST[$name];
 	} else {
-		if ($default === null) {
-			throw new Exception("Could not get key $name");
-		} else {
-			return $default;
-		}
+		return $default;
 	}
 }
 
 $bug = [];
-$bug['url']                = getParameter("url");
 $bug['username']           = getParameter("username");
 $bug['email']              = getParameter("email");
+$bug['url']                = getParameter("url");
 $bug['description']        = getParameter("description");
+$bug['computer_id']        = getParameter("computer_id");
+$bug['screenshot']         = getParameter("screenshot");
 $bug['browser_useragent']  = getParameter("browser_useragent");
 $bug['browser_state']      = getParameter("browser_state");
-$bug['browser_console']    = getParameter("browser_console");
-$bug['screenshot']         = getParameter("screenshot");
 
 use PHPMailer\PHPMailer\PHPMailer;
 
@@ -29,7 +25,6 @@ $mail = new PHPMailer();
 
 // Set PHPMailer to use the sendmail transport
 $mail->isSendmail();
-
 $mail->setFrom('noreply@cryptomedic.org', 'Bug report');
 $mail->addAddress('marielineetjean+cryptomedic@gmail.com', 'Cryptomedic Maintainer');
 $mail->isHTML(true);                                  // Set email format to HTML
