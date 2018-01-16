@@ -122,7 +122,8 @@ return [
     |
     */
 
-    'log' => env('APP_LOG', 'single'),
+    // In debug mode, we are in docker and we don't log into files
+    'log' => ($myconfig['debug'] ? 'errorlog' : 'single'),
 
     'log_level' => env('APP_LOG_LEVEL', 'debug'),
 
