@@ -2,6 +2,14 @@ function setListFrom(origin, target, category) {
     if (!cryptomedic.serverSettings || !cryptomedic.serverSettings.associations) {
         return;
     }
+    if (!document.querySelector(`[name=${origin}]`)) {
+        console.error("setListFrom: Origin not defined...", origin);
+        return ;
+    }
+    if (!document.querySelector(`[name=${target}]`)) {
+        console.error("setListFrom: Target not defined...", target);
+        return ;
+    }
     const val = document.querySelector(`[name=${origin}]`).value;
     let list = [];
     if (cryptomedic.serverSettings.associations[`${category}.${val}`]) {
