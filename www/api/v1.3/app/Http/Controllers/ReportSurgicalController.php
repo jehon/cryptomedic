@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Model\Bill;
-use App\Model\References;
 
 class ReportSurgicalController extends ReportController {
   public function buildData() {

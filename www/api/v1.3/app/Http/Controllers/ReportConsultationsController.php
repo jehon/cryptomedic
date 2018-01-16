@@ -7,8 +7,6 @@ use DB;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Request;
 
-use App\Model\References;
-
 class ReportConsultationsController extends ReportController {
 
   public function buildData() {
