@@ -7,8 +7,6 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Input;
 
-use App\Model\References;
-
 // TODO: protect frozen files
 abstract class ModelController extends Controller {
     // @see http://laravel.com/docs/5.0/controllers

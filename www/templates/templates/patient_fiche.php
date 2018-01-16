@@ -1,6 +1,4 @@
 <?php
-	use App\Model\References;
-
 	t::setDefaultOption("baseExpression", "folder.getPatient().");
 ?>
 <div class='container-fluid'>

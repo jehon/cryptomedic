@@ -6,7 +6,6 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Request;
 
 use App\Model\Bill;
-use App\Model\References;
 
 abstract class ReportController extends Controller {
   protected $params;

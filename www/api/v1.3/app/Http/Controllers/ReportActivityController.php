@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\Controller;
 use App\Model\Bill;
-use App\Model\References;
 
 class ReportActivityController extends ReportController {
   public function buildData() {
