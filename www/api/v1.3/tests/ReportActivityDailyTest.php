@@ -21,7 +21,7 @@ class ReportActivityDailyTest extends RouteReferenceTestCase {
 		$this->assertArrayHasKey('params', $json);
 		$this->assertArrayHasKey('list', $json);
 		$this->assertArrayHasKey('totals', $json);
-		$this->assertTrue(count($json['list']) >= 1);
+		$this->assertTrue(count($json['list']) >= 0);
 		$this->assertEquals($nbr[$this->type], count($json['list']));
 	}
 
@@ -76,5 +76,23 @@ class ReportActivityDailyTest extends RouteReferenceTestCase {
 			$this->assertEquals("Chakaria Disability Center", $v['Center']);
 		}
 		$this->thisAssertResponse($json, [ 3, 4 ]);
+ 	}
+
+ 	public function testByActivityConsult() {
+		$opt = $this->opt->clone()
+			->addParam('activity', 'consult')
+			;
+
+		$json = $this->myRunAssertQueryForRoles($opt);
+		$this->thisAssertResponse($json, [ 4, 6 ]);
+ 	}
+
+ 	public function testByActivitySurgical() {
+		$opt = $this->opt->clone()
+			->addParam('activity', 'surgical')
+			;
+
+		$json = $this->myRunAssertQueryForRoles($opt);
+		$this->thisAssertResponse($json, [ 0, 0 ]);
  	}
 }

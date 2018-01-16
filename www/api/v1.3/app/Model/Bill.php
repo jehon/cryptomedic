@@ -89,9 +89,9 @@ class Bill extends CryptomedicModel {
 			return "(1 = 1)";
 		}
 		$list = self::getFieldsList($filter, $fieldList);
-		return "((bills."
-			. implode($list, " > 0) OR (bills.")
-			. " > 0 ))";
+		return "((bills.`"
+			. implode($list, "` > 0) OR (bills.`")
+			. "` > 0 ))";
 	}
 
 	public static function getSQLFieldsSum($filter) {
