@@ -220,7 +220,7 @@ References::$lists["Examiner"] = References::buildValueList([
   References::withCode("Rezaul",     "Res"),
   References::withCode("Sultana",    "Sul"),
 - References::withCode("Lipa",       "Lip"), // As of 05/2017
-  // References::withCode("Raj",        "Raj"), // As of 02/2017
+  References::withCode("Raj",        "Raj"), // As of 02/2017
   References::withCode("Juwel",      "Juwel"), // As of 01/2018
 
   // orthesis
