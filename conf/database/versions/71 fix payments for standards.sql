@@ -1,4 +1,0 @@
-
-ALTER TABLE `payments` CHANGE `Notes` `Notes` MEDIUMTEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
-
-ALTER TABLE `payments` CHANGE `Amount` `Amount` INT NOT NULL;
