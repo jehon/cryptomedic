@@ -17,7 +17,7 @@
               <select name='examiner' ng-model='values.examiner' class="form-control">
                 <?php
                   echo "<option value='' >* Anybody *</option>";
-                  foreach(References::$lists['Examiner'] as $v)
+                  foreach(References::getList('Examiner') as $v)
                     echo "<option value=\"". htmlentities($v). "\" >$v</option>";
                 ?>
               </select>
@@ -29,7 +29,7 @@
               <select name='center' ng-model='values.center' class="form-control">
                 <?php
                   echo "<option value='' >* Any place *</option>";
-                  foreach(References::$lists['Centers'] as $v)
+                  foreach(References::getList('Centers') as $v)
                     echo "<option value=\"". htmlentities($v). "\" >$v</option>";
                 ?>
               </select>

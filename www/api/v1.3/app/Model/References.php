@@ -2,6 +2,8 @@
 
 namespace App\Model;
 
+use Illuminate\Support\Facades\DB;
+
 class References {
   static $model2db = array(
     "Bill"             => "bills",
@@ -15,10 +17,32 @@ class References {
     "Payment"          => "payments",
   );
 
+  static $_init = false;
   static $lists = array();
   static $codes = array();
   static $model_listing = array();
   static $associations = array();
+
+  static function init() {
+    if (self::$_init) {
+      return ;
+    }
+  }
+
+  static function getList($name) {
+    self::init();
+    return self::$lists[$name];
+  }
+
+  static function getLists() {
+    self::init();
+    return self::$lists;
+  }
+
+  static function getCodes() {
+    self::init();
+    return self::$codes;
+  }
 
   static function model2db($model) {
     if (array_key_exists($model, static::$model2db))
