@@ -79,8 +79,8 @@ class References {
   static function withCode($value, $code) {
     if ($code) {
       self::$codes[$value] = $code;
-    } else {
-      self::$codes[$value] = $value;
+    // } else {
+    //   self::$codes[$value] = $value;
     }
     return $value;
   }
