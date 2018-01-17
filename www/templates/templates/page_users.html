@@ -8,6 +8,7 @@
       <th>codage</th>
       <th>group</th>
       <th>in examiner list</th>
+      <th>has a password</th>
       <th>notes</th>
       <th></th>
     </thead>
@@ -19,7 +20,8 @@
         <td>{{u.email}}</td>
         <td>{{u.codage}}</td>
         <td>{{u.group}}</td>
-        <td>{{u.inExaminerList}}</td>
+        <td><x-read-boolean value="{{u.inExaminerList}}"></x-read-boolean></td>
+        <td><x-read-boolean value="{{u.hasAPassword}}"></x-read-boolean></td>
         <td>{{u.notes}}</td>
         <td>
           <span class='btn btn-default' ng-click='doEdit($index)'>edit</span>

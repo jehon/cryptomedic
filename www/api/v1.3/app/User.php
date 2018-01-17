@@ -33,4 +33,16 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+   /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['hasAPassword'];
+
+    public function getHasAPasswordAttribute() {
+        return $this->password > ""; 
+    }
+
 }
