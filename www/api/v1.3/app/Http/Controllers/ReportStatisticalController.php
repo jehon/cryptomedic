@@ -90,14 +90,14 @@ class ReportStatisticalController extends ReportController {
 
 
 		$allSL = 0;
-		foreach(References::$lists['SocialLevel'] as $i) {
+		foreach(References::getList('SocialLevel') as $i) {
 			$allSL += $this->resultPathSet("summary.sociallevel.$i",
 					$this->getOneBySQL("SELECT Count(*) as res FROM bills WHERE {$this->filter} AND SocialLevel = $i"));
 		}
 		$this->resultPathSet("summary.sociallevel.total", $allSL);
 
 		// By center
-		$centers = References::$lists['Centers'];
+		$centers = References::getList('Centers');
 		$res = $this->runSqlWithNamedParameter("SELECT Center, Count(*) as `count` FROM bills WHERE {$this->filter} GROUP BY Center");
 		$res2 = array();
 		foreach($res as $line) {

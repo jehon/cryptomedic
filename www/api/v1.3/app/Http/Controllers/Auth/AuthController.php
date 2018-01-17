@@ -88,10 +88,10 @@ class AuthController extends Controller {
       $data['prices'][$v->id] = $v;
     }
 
-    $data['codes'] = References::$codes;
+    $data['codes'] = References::getCodes();
     $data['associations'] = References::$associations;
     $data['authorized'] = array_keys(self::$permissions[$data['group']]);
-    $data['lists'] = References::$lists;
+    $data['lists'] = References::getLists();
 
     // Update last_login timestamp
     $user = Auth::user();

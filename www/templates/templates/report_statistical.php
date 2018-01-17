@@ -32,14 +32,14 @@
 		<tr><td>Nb household mb (mean)</td><td>{{result.summary.sociallevel.nbhousehold | number:1}}</td></tr>
 		<tr><td>ratio (mean)</td><td>{{result.summary.sociallevel.familyincome / result.summary.sociallevel.nbhousehold | number:2}}</td></tr>
 		<?php
-			foreach(References::$lists['SocialLevel'] as $i) {
+			foreach(References::getList('SocialLevel') as $i) {
 		 		echo "<tr><td>Social Level $i</td><td>{{result.summary.sociallevel[$i]}}</td></tr>";
 			}
 		?>
 		<tr><td>All social level together</td><td>{{result.summary.sociallevel.total}}</td></tr>
 		<tr><td colspan="2" class="subheader">Where</td></tr>
 		<?php
-			foreach(References::$lists['Centers'] as $i) {
+			foreach(References::getList('Centers') as $i) {
 				echo "<tr><td>@ $i</td><td>{{result.summary.centers." . CryptomedicModel::myCleanValue($i) . "}}</td></tr>";
 			}
 		?>
