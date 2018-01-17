@@ -227,12 +227,17 @@ module.exports = {
 
     const filePath = require('path').resolve(__dirname + '/../../../resources/upload.jpg');
     console.log("PATH: ", filePath);
+    const fileContent = require("fs").readFileSync(filePath);
+    const btoa = function (binary) { return new Buffer(binary, 'binary').toString('base64'); };
+    const imgValue = "data:image/gif;base64," + btoa(fileContent);  
+    // const img = "data:image/gif;base64,R0lGODlhPQBEAPeoAJosM//AwO
+    // element()._generatePreview(XInputPicture.dataURItoBlob(img, "test.jpg"));
 
     client
       .myClick("#button_add")
       .myClick("#add_picture")
-      .waitForElementVisible('#file')
-      .setValue('#file', filePath)
+      // I think this does not works...
+      .mySetXInputPicture('[name=fileContent]', imgValue)
       .myForm("#fileForm", picture, "#topsubmenu #button_save")
       // .assert.visible('#img_file')
       ;
