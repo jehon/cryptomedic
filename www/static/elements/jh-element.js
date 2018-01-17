@@ -27,6 +27,9 @@ let JHElement = (function() {
             if (v === "false") {
                 return false;
             }
+            if (v === "0" || v === 0) {
+                return false;
+            }
             return true;
         }
 
