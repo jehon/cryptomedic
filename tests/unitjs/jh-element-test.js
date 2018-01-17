@@ -108,6 +108,10 @@ describe("jh-element-test", function() {
         expect(typeof(element()._sBool)).toBe("boolean");
         expect(element()._sBool).toBeFalsy();
 
+        element().attributeChangedCallback("s-bool", "", "0");
+        expect(typeof(element()._sBool)).toBe("boolean");
+        expect(element()._sBool).toBeFalsy();
+
         element().attributeChangedCallback("s-bool", "", null);
         expect(typeof(element()._sBool)).toBe("boolean");
         expect(element()._sBool).toBeFalsy();
