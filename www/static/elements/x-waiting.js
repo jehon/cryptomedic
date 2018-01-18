@@ -1,6 +1,4 @@
 const XWaiting = (function() {
-    const overlay = Symbol("overlay");
-
     class XWaiting extends JHElement {
         constructor() {
             super();
@@ -30,20 +28,19 @@ const XWaiting = (function() {
                 </div>
                 <slot></slot>
             </div>`;
-            this[overlay] = this.shadowRoot.querySelector("#overlay");
             this.free();
         }  
 
         block() {
-            this[overlay].removeAttribute("hidden");
+            this.shadowRoot.querySelector("#overlay").removeAttribute("hidden");
         }
 
         free() {
-            this[overlay].setAttribute("hidden", "hidden");
+            this.shadowRoot.querySelector("#overlay").setAttribute("hidden", "hidden");
         }
 
         isBlocked() {
-            return !this[overlay].hasAttribute("hidden");
+            return !this.shadowRoot.querySelector("#overlay").hasAttribute("hidden");
         }
 
         aroundPromise(p) {
