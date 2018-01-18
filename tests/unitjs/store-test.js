@@ -39,4 +39,18 @@ describe("store", function() {
 		store.dispatch({ type: ACT_FOLDER_INVALIDATE });
 		expect(store.getState().folder).toBeFalsy();
 	});
+
+	it("should handle ACT_USER_*", function() {
+		const user = { username: "test" };
+
+		expect(store.getState().user).toBeFalsy();
+		store.dispatch({ type: ACT_USER_LOGOUT });
+		expect(store.getState().user).toBeFalsy();
+
+		store.dispatch({ type: ACT_USER_LOGIN, payload: user });
+		expect(store.getState().user).toBe(user);
+
+		store.dispatch({ type: ACT_USER_LOGOUT });
+		expect(store.getState().user).toBeFalsy();
+	});
 });
