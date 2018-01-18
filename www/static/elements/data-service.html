@@ -10,7 +10,7 @@
   </template>
 
   <script>
-    /* global API_VERSION, userCb, Folder, Patient, TimedMap */
+    /* global API_VERSION, Folder, Patient, TimedMap */
     /* exported callbacks */
     (function() {
       let patientFolderCache = new TimedMap(15 * 60);
@@ -34,8 +34,6 @@
             return r.call(this, '/api/' + API_VERSION + '/' + url);
           }
         },
-
-        userCb,
 
         /**************************/
         /*** Start              ***/
@@ -62,7 +60,7 @@
             .onResponseCode(404, () => {
               return false;
             })
-            .then(userCb.fire)
+            .then(data => { store.dispatch({ type: ACT_USER_LOGIN, payload: data })})
             ;
         },
 
@@ -74,7 +72,7 @@
               'username': username,
               'password': password
             })
-            .then(userCb.fire)
+            .then(data => { store.dispatch({ type: ACT_USER_LOGIN, payload: data })})
             ;
         },
 
@@ -91,9 +89,7 @@
                 .requestToUrl('auth/logout');
             });
           }
-          finished.then(() => {
-            userCb.fire(null);
-          })
+          finished.then(() => store.dispatch({ type: ACT_USER_LOGOUT }))
           ;
         },
 
@@ -287,9 +283,6 @@
         }
       });
 
-      return {
-        userCb
-      }
     })();
   </script>
 </dom-module>
