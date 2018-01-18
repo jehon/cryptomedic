@@ -2,6 +2,9 @@
 const ACT_FOLDER_INVALIDATE = 'ACT_FOLDER_INVALIDATE';
 const ACT_FOLDER_STORE      = 'ACT_FOLDER_STORE';
 
+const ACT_USER_LOGIN        = 'ACT_USER_LOGIN';
+const ACT_USER_LOGOUT       = 'ACT_USER_LOGOUT';
+
 // store API is { subscribe, dispatch, getState }.
 const store = (function() {
 	const folderReducer = (state = false, action) => {
@@ -28,20 +31,28 @@ const store = (function() {
 	  };
 	}
 
+	const userReducer = (state = false, action) => {
+		switch (action.type) {
+			case ACT_USER_LOGOUT:
+				return false;
+			case ACT_USER_LOGIN:
+				return action.payload;
+			default:
+				return state;
+		}
+	}
+
 	// Integration with dev-tools
 	// https://github.com/zalmoxisus/redux-devtools-extension#usage
 	/* eslint-disable no-underscore-dangle */
 	/* istanbul ignore next */
 	return redux.createStore(
 		redux.combineReducers({
-				folder: folderReducer
+				folder: folderReducer,
+				user:   userReducer
 			}),
 		window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
   		// applyMiddleware(...middleware)
 	);
 	/* eslint-enable */
-
-	// store.subscribe(() =>
-	//   console.log(store.getState())
-	// )
 })();
