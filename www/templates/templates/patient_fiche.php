@@ -107,7 +107,7 @@
 			});
 		});
 
-		userCb.add((data) => {
+	    store.subscribe(() => {
 			setListFrom("District", "Upazilla", "district");
 			setListFrom("Upazilla", "Union_", "upazilla");
 		});

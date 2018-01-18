@@ -216,3 +216,10 @@ XWriteList = (function() {
 
     return XWriteList;
 })();
+
+store.subscribe(() => {
+    const data = store.getState();
+    if (data.user && data.user.lists) {
+        XWriteList.setReferences(data.user.lists);
+    }
+});

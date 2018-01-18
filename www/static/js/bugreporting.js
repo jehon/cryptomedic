@@ -20,26 +20,21 @@ window.bug_reporting = (function() {
                 release: window.application_version
             }).install();
 
-            const waitForUserCB = () => {
-                if (typeof userCB !== "undefined") {
-                    const data = userCB.add(data => {
-                        if (data) {
-                            Raven.setUserContext({
-                                username:   data.username,
-                                group:      data.group,
-                                name:       data.name,
-                                computerID: localStorage.computerUUID
-                            });
-                        } else {
-                            Raven.setUserContext({
-                                computerID: localStorage.computerUUID                                
-                            });
-                        }
+            store.subscribe(() => {
+                const data = store.getState().user;
+                if (data) {
+                    Raven.setUserContext({
+                        username:   data.username,
+                        group:      data.group,
+                        name:       data.name,
+                        computerID: localStorage.computerUUID
                     });
                 } else {
-                    setTimeout(waitForUserCB, 250);
+                    Raven.setUserContext({
+                        computerID: localStorage.computerUUID
+                    });
                 }
-            }
+            });
         }
     } else {
         console.info('Disabling capturing console.log/info/error on localhost');

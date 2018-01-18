@@ -29,7 +29,8 @@
           this.username = false;
 
           // Let's react to info about the user
-          this.$.service.userCb.add((data) => {
+          store.subscribe(() => {
+            const data = store.getState().user;
             if (data) {
               this.username = data.username;
               if (!window.cryptomedic) {
