@@ -80,8 +80,8 @@ Can I ask you a bit more informations?<br>
 
         html2canvas(document.body).then(function(canvas) {
             document.getElementsByTagName('body')[0].innerHTML = txt;
-            document.getElementsByName('username')[0].value          = window.cryptomedic.serverSettings.username;
-            document.getElementsByName('email')[0].value             = window.cryptomedic.serverSettings.email;
+            document.getElementsByName('username')[0].value          = store.getState().user.username;
+            document.getElementsByName('email')[0].value             = store.getState().user.email;
             document.getElementsByName('url')[0].value               = url;
             document.getElementsByName('computer_id')[0].value       = localStorage.computerUUID;
             document.getElementsByName('screenshot')[0].value        = canvas.toDataURL();
