@@ -19,12 +19,13 @@ const XWaiting = (function() {
                     left: 0; 
                     width: 100%; 
                     height: 100%; 
-                    background: lightgray; 
 
                     display: flex; 
                     flex-direction: row; 
                     align-items: center; 
                     justify-content: center;
+
+                    background: lightgray;
                 }
             </style>
             <div id='overlay'>
