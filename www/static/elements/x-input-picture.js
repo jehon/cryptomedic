@@ -41,11 +41,9 @@ const XInputPicture = (function() {
 			super();
 			this.free();
 			this._maxSize = 300 * 1024;
-		}
 
-		render() {
-			this.shadowRoot.querySelector("#overlay").insertAdjacentHTML("afterend", `
-				<style>
+			this.shadowRoot.innerHTML += 
+				`<style>
 					x-input-picture * {
 						width: 100%;
 					}
@@ -53,8 +51,7 @@ const XInputPicture = (function() {
 				<input id="file" type="file" name="fileContent" accept="image/*"><br>
 				<div class='text-center'>
 					<canvas></canvas>
-				</div>
-			`);
+				</div>`;
 			this[inputElement]   = this.shadowRoot.querySelector("input");
 			this[previewElement] = this.shadowRoot.querySelector("canvas");
 
