@@ -34,9 +34,10 @@ const XWaiting = (function() {
                 }
             </style>
             <div id='overlay'>
-                <img src='elements/resources/waiting.gif' >
-                <slot></slot>
-            </div>`;
+                <img src='elements/resources/waiting.gif' />
+            </div>
+            <slot></slot>
+            `;
             this.free();
         }  
 
