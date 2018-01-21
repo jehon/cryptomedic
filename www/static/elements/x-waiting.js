@@ -6,8 +6,8 @@ const XWaiting = (function() {
         constructor() {
             super();
             this.attachShadow({ mode: 'open' });
-            this.shadowRoot.innerHTML = `
-            <style>
+            this.shadowRoot.innerHTML = 
+            `<style>
                 :host {
                     position: relative;
                 }
@@ -34,10 +34,9 @@ const XWaiting = (function() {
                 }
             </style>
             <div id='overlay'>
-                <img src='elements/resources/waiting.gif'/>
+                <img src='elements/resources/waiting.gif' >
                 <slot></slot>
-            </div>
-            `;
+            </div>`;
             this.free();
         }  
 
