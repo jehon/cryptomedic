@@ -23,7 +23,6 @@
 
         adapt() {
         	if (!this.folder) {
-        		this.innerHTML = "";
         		return;
         	}
         	const patient = this.folder.getPatient();
