@@ -5,7 +5,11 @@ const XWaiting = (function() {
             this.attachShadow({ mode: 'open' });
             this.shadowRoot.innerHTML = `
             <style>
-                [hidden] { 
+                :host {
+                    position: relative;
+                }
+
+                #overlay[hidden] {
                     display: none !important;
                 }
 
@@ -22,12 +26,11 @@ const XWaiting = (function() {
                     justify-content: center;
                 }
             </style>
-            <div style='position: relative'>
-                <div id='overlay'>
-                    <img src='elements/resources/waiting.gif'/>
-                </div>
+            <div id='overlay'>
+                <img src='elements/resources/waiting.gif'/>
                 <slot></slot>
-            </div>`;
+            </div>
+            `;
             this.free();
         }  
 
