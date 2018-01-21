@@ -1,3 +1,6 @@
+// TODO: rewrite this as a subset of x-overlay with image insert
+//    and relative to the content
+
 const XWaiting = (function() {
     class XWaiting extends JHElement {
         constructor() {
@@ -25,7 +28,9 @@ const XWaiting = (function() {
                     align-items: center; 
                     justify-content: center;
 
-                    background: lightgray;
+                    background-color: rgba(0, 0, 0, 0.9); /* Black w/opacity */
+                    overflow-x: hidden;
+                    transition: 0.5s;
                 }
             </style>
             <div id='overlay'>
