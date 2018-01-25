@@ -15,7 +15,7 @@
 				<x-overlay>
 					<div id='loginForm'>
 					  	<div class='col-sm-offset-4 col-sm-4'>
-					    	<form class="form-signing" role="form">
+					    	<x-form class="form-signing" role="form">
 					        	<h2 class="form-signin-heading">Please sign in</h2>
 					        	<label for="username">Username</label>
 				         		<input id="login_username" class="form-control" placeholder="Username" required autofocus>
@@ -30,7 +30,7 @@
 					      		</div>
 					      		<br>
 						  		<button id="go" class="btn btn-lg btn-primary btn-block">Log in</button>
-					      	</form>
+					      	</x-form>
 					      	<br>
 					  </div>
 					</div>
