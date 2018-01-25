@@ -30,8 +30,8 @@
 					      		</div>
 					      		<br>
 						  		<button id="go" class="btn btn-lg btn-primary btn-block">Log in</button>
-					      </form>
-					      <br>
+					      	</form>
+					      	<br>
 					  </div>
 					</div>
 				</x-overlay>
@@ -85,7 +85,7 @@
 		// doLogin() {
 		// }
 
-		doLogout() {
+		doLogout(localOnly = false) {
 			store.dispatch({ type: ACT_USER_LOGOUT });
 			// TODO: request Logout
 		}
