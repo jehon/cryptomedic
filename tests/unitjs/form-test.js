@@ -49,7 +49,6 @@ describe("form-test", function() {
 
 
 	webDescribe("should skip empty values", `<form>
-  			<x-inline edit name='n6' type='list' list='[ "n6val1", "n6val2", "n6val3" ]'></x-inline>
   			<input name='n1' value=''>
   			<input type='radio' name='n2' value='n2val'>
   			<select name='n3'>
