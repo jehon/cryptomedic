@@ -1,8 +1,6 @@
-// Form + validator
-//  - initialize form from data
-
 (function() {
-	const form = Symbol["form"];
+	const form   = Symbol("form");
+	const submit = Symbol("submit");
 
 	class XForm extends JHElement {
 
@@ -12,17 +10,24 @@
 			}
 		}
 
-		constructor() {
-			super();
-			this._method = "GET";
+		// constructor() {
+		// 	super();
+		// }
 
-            this.attachShadow({ mode: 'open' });
-            this.shadowRoot.innerHTML = 
-			`<form>
-				<slot></slot>
-			</form>`;
+		render() {
+			// Encapsulate all the form into a classic "form" content
 
-			this[form] = this.shadowRoot.querySelector("form");
+			this[form] = document.createElement('form');
+			Array.from(this.children).forEach(el => {
+				this[form].appendChild(el);
+			});
+
+			this[submit] = document.createElement("input");
+			this[submit].setAttribute("type", "submit");
+
+			this[form].appendChild(this[submit]);
+
+			this.appendChild(this[form]);
 		}
 
 		onValueChanged() {
@@ -99,12 +104,40 @@
 			return data;
 		}
 
+		validate() {
+			let result = true;
+
+			this.querySelectorAll("[name]").forEach(el => {
+				if ("checkValidity" in el) {
+					// Store it, because if we don't click, it could not appear
+					const res = el.checkValidity();
+					result = result && res;
+				}
+			})
+
+		    if (!this[form].checkValidity()) {
+		     	this[submit].click();
+		      	return false;
+		    }
+
+		    if (!result) {
+		    	return false;
+		    }
+
+		    // $scope.errors = updatedData.validate();
+		    // if (!jQuery.isEmptyObject($scope.errors)) {
+		    //   return false;
+		    // }
+
+		    return true;
+		}
+
 		// onEditChanged() {
 		//     this.querySelectorAll(`[name]`).forEach(el => {
-		//         if (mode == "read") {
-		//             el.removeAttribute('edit');
+		//         if (this.edit) {
+		//             el.setAttribute('edit', 'edit');
 		//         } else {
-		//             el.setAttribute('edit', tag);
+		//             el.removeAttribute('edit');
 		//         }
 		//     })
 		// }
@@ -112,15 +145,11 @@
 		// _evaluateFunctions() {
 		    // this[form].querySelectorAll(`[function]`).forEach(el => {
 		    //     fn = el.getAttribute('function');
-		    //     if (fn in object) {
-		    //         el.innerHTML = object[fn]()
+		    //     if (fn in this._value) {
+		    //         el.innerHTML = this._value[fn]()
 		    //     }
 		    // });
 		// }
-
-		// validate() {
-		// }
-
 	}
 
 	window.customElements.define('x-form', XForm);

@@ -8,7 +8,7 @@ describe('x-form-test', function() {
 	});
 
 	webDescribe("with simple inputs", `<x-form>
-			<input name='n1'>
+			<input name='n1' >
 			<input name='n2' type='number'>
 			<input name='n3' type='date'>
 			<input name='n4' type='hidden'>
@@ -16,6 +16,7 @@ describe('x-form-test', function() {
 
 		it("should get empty object", function() {
 	 		expect(element().rebuildData()).toEqual({});
+			expect(element().validate()).toBeTruthy();
 		});
 
 		it("should keep initial object", function() {
@@ -31,8 +32,8 @@ describe('x-form-test', function() {
 			const values = { n1: 'val1', n2: 123, n3: '2017-01-01', n4: 'val4' };
 			element().value = values;
 	 		expect(element().rebuildData()).toEqual(values);
+			expect(element().validate()).toBeTruthy();
 		});
-
 	});
 
 	webDescribe("with radios", `<x-form>
@@ -42,12 +43,14 @@ describe('x-form-test', function() {
 
 		it("should get empty object", function() {
 	 		expect(element().rebuildData()).toEqual({});
+			expect(element().validate()).toBeTruthy();
 		});
 
 		it("should fill in the form", function() {
 			const values = { n: 'val1' };
 			element().value = values;
 	 		expect(element().rebuildData()).toEqual(values);
+			expect(element().validate()).toBeTruthy();
 		});
 	});
 
@@ -62,12 +65,14 @@ describe('x-form-test', function() {
 	 		expect(element().rebuildData()).toEqual({
 	 			n: "val1"
 	 		});
+			expect(element().validate()).toBeTruthy();
 		});
 
 		it("should fill in the form", function() {
 			const values = { n: 'val1' };
 			element().value = values;
 	 		expect(element().rebuildData()).toEqual(values);
+			expect(element().validate()).toBeTruthy();
 		});
 	});
 
@@ -88,6 +93,7 @@ describe('x-form-test', function() {
 
 		it("should not get it", function() {
 	 		expect(element().rebuildData()).toEqual({});
+			expect(element().validate()).toBeTruthy();
 		});
 	});
 
@@ -97,6 +103,7 @@ describe('x-form-test', function() {
 
 		it("should not get it", function() {
 	 		expect(element().rebuildData()).toEqual({});
+			expect(element().validate()).toBeTruthy();
 		});
 	});
 
@@ -106,18 +113,35 @@ describe('x-form-test', function() {
 		</x-form>`, function(element) {
 		it("should get empty object", function() {
 	 		expect(element().rebuildData()).toEqual({});
+			expect(element().validate()).toBeTruthy();
 		});
 
 		it("should fill in the form", function() {
 			const values = { n: 135 };
 			element().value = values;
 	 		expect(element().rebuildData()).toEqual(values);
+			expect(element().validate()).toBeTruthy();
 		});
 	});
 
 
+	/* Validation */
+	webDescribe("with simple inputs", `<x-form>
+			<input name='n1' required>
+		</x-form>`, function(element) {
 
+		it("should get empty object", function() {
+	 		expect(element().rebuildData()).toEqual({});
+			expect(element().validate()).toBeFalsy();
+		});
 
+		it("should fill in the form", function() {
+			const values = { n1: 'val1' };
+			element().value = values;
+	 		expect(element().rebuildData()).toEqual(values);
+			expect(element().validate()).toBeTruthy();
+		});
+	});
 
 
 
