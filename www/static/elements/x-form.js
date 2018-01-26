@@ -10,10 +10,6 @@
 			}
 		}
 
-		// constructor() {
-		// 	super();
-		// }
-
 		render() {
 			// Encapsulate all the form into a classic "form" content
 
@@ -120,13 +116,9 @@
 		      	return false;
 		    }
 
-		    if (!result) {
-		    	return false;
-		    }
-
-		    // $scope.errors = updatedData.validate();
-		    // if (!jQuery.isEmptyObject($scope.errors)) {
-		    //   return false;
+		    // Use only for custom elements?
+		    // if (!result) {
+		    // 	return false;
 		    // }
 
 		    return true;
@@ -153,5 +145,4 @@
 	}
 
 	window.customElements.define('x-form', XForm);
-
 })();
