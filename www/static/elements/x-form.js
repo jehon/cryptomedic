@@ -1,8 +1,5 @@
 // Form + validator
 //  - initialize form from data
-//  - validation of elements -> standards only (custom by inheritance)
-//  - post (wait)
-//  - post -> global catch error ?
 
 (function() {
 	const form = Symbol["form"];
@@ -28,14 +25,7 @@
 			this[form] = this.shadowRoot.querySelector("form");
 		}
 
-		// get value(prototype = {}) {
-		// }
-
-		// set value(value) {
-		// }
-
-		fillIn(value) {
-			this._value = value;
+		onValueChanged() {
 		    Object.keys(this._value).forEach(k => {
 		    	const escaped = k.split('"').join("&quot;");
 		        this.querySelectorAll(`[name="${escaped}"]`).forEach(el => {
@@ -129,7 +119,6 @@
 		// }
 
 		// validate() {
-
 		// }
 
 	}
