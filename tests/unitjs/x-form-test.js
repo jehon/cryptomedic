@@ -29,7 +29,7 @@ describe('x-form-test', function() {
 
 		it("should fill in the form", function() {
 			const values = { n1: 'val1', n2: 123, n3: '2017-01-01', n4: 'val4' };
-			element().fillIn(values);
+			element().value = values;
 	 		expect(element().rebuildData()).toEqual(values);
 		});
 
@@ -46,7 +46,7 @@ describe('x-form-test', function() {
 
 		it("should fill in the form", function() {
 			const values = { n: 'val1' };
-			element().fillIn(values);
+			element().value = values;
 	 		expect(element().rebuildData()).toEqual(values);
 		});
 	});
@@ -66,7 +66,7 @@ describe('x-form-test', function() {
 
 		it("should fill in the form", function() {
 			const values = { n: 'val1' };
-			element().fillIn(values);
+			element().value = values;
 	 		expect(element().rebuildData()).toEqual(values);
 		});
 	});
@@ -110,7 +110,7 @@ describe('x-form-test', function() {
 
 		it("should fill in the form", function() {
 			const values = { n: 135 };
-			element().fillIn(values);
+			element().value = values;
 	 		expect(element().rebuildData()).toEqual(values);
 		});
 	});
