@@ -47,9 +47,9 @@ describe('block-bill-line-test', function() {
         it("should fire event", function() {
             expect(element().getTotal()).toBe(0);
             let res = false;
-            element().addEventListener("changed", (event) => { res = "test" });
+            element().addEventListener("blur", (event) => { res = "test" });
             element().querySelector("x-inline").setAttribute("value", 10);
-            JHElement.fireOn(element().querySelector("x-inline"), "changed", "test");
+            JHElement.fireOn(element().querySelector("x-inline"), "blur", "test");
             expect(element().getTotal()).toBe(1000);
             expect(res).toBe("test");
         })

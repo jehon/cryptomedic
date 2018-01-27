@@ -74,9 +74,9 @@
                     }
                 }
             })
-            this.querySelectorAll("block-bill-line").forEach(el => el.addEventListener("changed", () => {
+            this.querySelectorAll("block-bill-line").forEach(el => el.addEventListener("blur", () => {
                 this._adaptTotal();
-                this.fire("changed", null);
+                this.fire("blur", null);
             }));
             this._adaptTotal();
             if (!displayed) {

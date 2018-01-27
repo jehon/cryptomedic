@@ -165,7 +165,7 @@ describe("jh-element-test", function() {
 
         it("should manage events", function() {
             let res = {}
-            element().addEventListener("changed", (event) => {
+            element().addEventListener("blur", (event) => {
                 res = event.detail;
             });
 
@@ -174,7 +174,7 @@ describe("jh-element-test", function() {
             element().fire("anything", 123);
             expect(res).toEqual({});
 
-            element().fire("changed", 123);
+            element().fire("blur", 123);
             expect(res).toEqual(123);
         });
 

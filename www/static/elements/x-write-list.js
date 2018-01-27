@@ -57,7 +57,7 @@ XWriteList = (function() {
                     el.setAttribute('checked', 'checked');
                     break;
             }
-            this.fire("changed", 0);
+            this.fire("blur", 0);
         }
 
         onListChanged(v) {
@@ -148,7 +148,7 @@ XWriteList = (function() {
             this.shadowRoot.innerHTML = "<form>" + this._withStyle() + res + "</form>";
             this.shadowRoot.querySelectorAll('input').forEach(el => {
                 el.addEventListener('change', () => {
-                    this.fire("changed", 0);
+                    this.fire("blur", 0);
                 })
             })
             this.shadowRoot.querySelectorAll("span[to]").forEach(el => {
@@ -173,7 +173,7 @@ XWriteList = (function() {
 
             this.shadowRoot.innerHTML = this._withStyle() + res;
 
-            this.shadowRoot.querySelector("select").addEventListener("change", el => this.fire("changed", 0));
+            this.shadowRoot.querySelector("select").addEventListener("change", el => this.fire("blur", 0));
         }
 
         _escape(str) {
