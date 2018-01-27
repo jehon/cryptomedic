@@ -1,6 +1,6 @@
 (function() {
-	const form   = Symbol("form");
-	const submit = Symbol("submit");
+	const form     = Symbol("form");
+	const submit   = Symbol("submit");
 
 	class XForm extends JHElement {
 
@@ -18,12 +18,17 @@
 				this[form].appendChild(el);
 			});
 
+			/* Simulated submit button */
 			this[submit] = document.createElement("input");
 			this[submit].setAttribute("type", "submit");
 
 			this[form].appendChild(this[submit]);
 
 			this.appendChild(this[form]);
+			this.querySelectorAll("[name]").forEach(el => el.addEventListener("blur", () => { 
+				// this.validate();
+				this.onFormUpdated();
+			}));
 		}
 
 		onValueChanged() {
@@ -41,7 +46,6 @@
 		        	}
 		        });
 		    });
-		    // this._evaluateFunctions();
 		}
 
 		rebuildData(prototype = {}) {
@@ -124,6 +128,7 @@
 		    return true;
 		}
 
+		onFormUpdated() {}
 		// onEditChanged() {
 		//     this.querySelectorAll(`[name]`).forEach(el => {
 		//         if (this.edit) {
@@ -132,15 +137,6 @@
 		//             el.removeAttribute('edit');
 		//         }
 		//     })
-		// }
-
-		// _evaluateFunctions() {
-		    // this[form].querySelectorAll(`[function]`).forEach(el => {
-		    //     fn = el.getAttribute('function');
-		    //     if (fn in this._value) {
-		    //         el.innerHTML = this._value[fn]()
-		    //     }
-		    // });
 		// }
 	}
 
