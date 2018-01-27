@@ -133,7 +133,7 @@ describe('x-form-test', function() {
 	});
 
 
-	/* Validation */
+	/* Validation and messasges */
 	webDescribe("with simple inputs", `<x-form>
 			<input name='n1' required>
 		</x-form>`, function(element) {
@@ -149,6 +149,21 @@ describe('x-form-test', function() {
 	 		expect(element().rebuildData()).toEqual(values);
 			expect(element().validate()).toBeTruthy();
 		});
+
+		it("should handle messages", function() {
+			expect(element().shadowRoot.querySelectorAll(".alert").length).toBe(0);
+
+			element().showMessages([ "test" ]);
+			expect(element().shadowRoot.querySelectorAll(".alert").length).toBe(1);
+			expect(element().shadowRoot.querySelector(".alert").innerText).toBe("test");
+
+			element().showMessages([ "another" ]);
+			expect(element().shadowRoot.querySelectorAll(".alert").length).toBe(1);
+			expect(element().shadowRoot.querySelector(".alert").innerText).toBe("another");
+
+			element().showMessages([]);
+			expect(element().shadowRoot.querySelectorAll(".alert").length).toBe(0);
+		})
 	});
 
 
