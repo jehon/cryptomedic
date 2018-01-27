@@ -40,10 +40,10 @@
             this[input] = this.querySelector("x-inline");
             this[total] = this.querySelector("#total");
 
-            this[input].addEventListener("changed", () => {
+            this[input].addEventListener("blur", () => {
                 let tot = this.getTotal();
                 this[total].innerHTML = tot;
-                this.fire("changed", tot);
+                this.fire("blur", tot);
             })
         }
 

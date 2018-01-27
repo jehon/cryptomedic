@@ -109,7 +109,7 @@ const XInputPicture = (function() {
 					this[previewElement].style.display = 'block';
 
 					this._value = this[previewElement].toDataURL('image/jpeg');
-					this.fire("changed");
+					this.fire("blur");
 					this.free();
 				};
 			};

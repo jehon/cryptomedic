@@ -36,9 +36,9 @@
                         list-name='${this._listName}'
                     ></x-write>`;
                 this[element] = this.querySelector("x-write");
-                this[element].addEventListener("changed", () => {
+                this[element].addEventListener("blur", () => {
                     // value is calculated at getter below
-                    this.fire("changed", this.value);
+                    this.fire("blur", this.value);
                 });
             } else {
                 this.innerHTML = `<x-read type='${this._type}' value='${this._value}' ${inline}></x-read>`;
@@ -56,7 +56,7 @@
 
         blur() {
             super.blur();
-            this.fire("changed", this.value);
+            this.fire("blur", this.value);
         }
     }
 

@@ -54,7 +54,7 @@ describe('x-inline-test', function() {
 
         it("should fire event", function() {
             let res = false;
-            element().addEventListener("changed", (event) => { res = "test" });
+            element().addEventListener("blur", (event) => { res = "test" });
             const input = element().querySelector("input");
             input.value = 10;
             JHElement.fireOn(input, "blur", 10);
@@ -64,7 +64,7 @@ describe('x-inline-test', function() {
 
         it("should fire event on blur", function() {
             let res = false;
-            element().addEventListener("changed", (event) => { res = "test" });
+            element().addEventListener("blur", (event) => { res = "test" });
             element().blur();
             expect(res).toBe("test");
         });
