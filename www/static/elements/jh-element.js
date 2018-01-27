@@ -155,6 +155,8 @@ let JHElement = (function() {
         }
 
         createElementAndAddThem(html, to = this) {
+            // TODO: insertAdjacentHTML ? 
+            // https://developer.mozilla.org/en-US/docs/Web/API/Element/insertAdjacentHTML
             var template = document.createElement('template');
             template.innerHTML = html.trim();
 
