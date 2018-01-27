@@ -34,6 +34,14 @@ describe('x-form-test', function() {
 	 		expect(element().rebuildData()).toEqual(values);
 			expect(element().validate()).toBeTruthy();
 		});
+
+		it("should react on blur events", function() {
+	        spyOn(element(), 'onFormUpdated').and.callThrough();
+
+            JHElement.fireOn(element().querySelector("input[name=n1"), "blur", 10);
+
+	        expect(element().onFormUpdated).toHaveBeenCalledTimes(1);
+		})
 	});
 
 	webDescribe("with radios", `<x-form>
