@@ -1,6 +1,7 @@
 (function() {
 	const form     = Symbol("form");
 	const submit   = Symbol("submit");
+	const messages = Symbol("messages");
 
 	class XForm extends JHElement {
 
@@ -10,9 +11,19 @@
 			}
 		}
 
+		constructor() {
+			super();
+			this.attachShadow({ mode: 'open' });
+			this.shadowRoot.innerHTML = `<div class='container-fluid'>
+			  	<div class='row'>
+			    </div>
+			</div>
+			<slot></slot>`;
+			this[messages] = this.shadowRoot.querySelector(".row");
+		}
+
 		render() {
 			// Encapsulate all the form into a classic "form" content
-
 			this[form] = document.createElement('form');
 			Array.from(this.children).forEach(el => {
 				this[form].appendChild(el);
@@ -21,10 +32,10 @@
 			/* Simulated submit button */
 			this[submit] = document.createElement("input");
 			this[submit].setAttribute("type", "submit");
-
 			this[form].appendChild(this[submit]);
 
 			this.appendChild(this[form]);
+
 			this.querySelectorAll("[name]").forEach(el => el.addEventListener("blur", () => { 
 				// this.validate();
 				this.onFormUpdated();
@@ -129,6 +140,14 @@
 		}
 
 		onFormUpdated() {}
+
+		showMessages(list = []) {
+			this[messages].innerHTML = "";
+			list.forEach(msg => {
+				this[messages].insertAdjacentHTML("beforeend", `<div class='alert alert-danger'>${msg}</div>`);
+			});
+		}
+
 		// onEditChanged() {
 		//     this.querySelectorAll(`[name]`).forEach(el => {
 		//         if (this.edit) {
