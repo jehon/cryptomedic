@@ -37,7 +37,6 @@
 			this.appendChild(this[form]);
 
 			this.querySelectorAll("[name]").forEach(el => el.addEventListener("blur", () => { 
-				// this.validate();
 				this.onFormUpdated();
 			}));
 		}
