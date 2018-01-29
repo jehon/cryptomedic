@@ -32,7 +32,6 @@ import he               from 'he';
 // Screenshots
 import html2canvas      from 'html2canvas';
 
-
 import uuid             from 'uuid/v4';
 
 window.angular          = angular;
@@ -50,3 +49,8 @@ window.uuid             = uuid;
 
 window.application_version = APPLICATION_BUILD_TIME;
 console.log("Version: ", window.application_version);
+
+
+/* For fetchfull v2 inline */
+import objectPath       from 'object-path';
+window.objectPath = objectPath;
