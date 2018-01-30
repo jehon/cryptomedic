@@ -565,14 +565,14 @@
                 fetch(new Request(
                     request.url,
                     request.options))
-                .catch((exception) => {
+                .catch((response) => {
                     /* istanbul ignore if */
                     if (firstwin) {
                         throw "Timeout " + this.getOption("internal.debugTag", "");
                     }
                     firstwin = true;
                     this._trace("Exception received after fetch");
-                    throw exception;
+                    throw response;
                 })
                 .then((response) => {
                     /* istanbul ignore if */
@@ -581,7 +581,6 @@
                     }
                     firstwin = true;
                     this._trace("Response received", response);
-                    let status = response.status;
                     let transform = this.getOption("response.transform");
                     let finished = Promise.resolve(response);
 
@@ -599,6 +598,7 @@
 
     const error      = Symbol("error");
     const waiting    = Symbol("waiting");
+    const errorMsg   = Symbol("errorMsg");
 
     class XRequestor extends JHElement {
         // static get properties() {
@@ -617,10 +617,22 @@
                     <x-waiting>
                         <slot></slot>
                     </x-waiting>
+                    <div id='errorMessageContainer'>
+                        <h1>Network error</h1>
+                        <div>
+                            Something went very wrong on your network. Please check:<br>
+                            - that you have an internet connection<br>
+                            - that your connection is really workign<br>
+                            In other case, please reload the page and try again...<br>
+                            <a javascript="window.reload()">Reload the page here</a>
+                            <h3 id='errorMsg'></h3>
+                        </div>
+                    </div>
                 </x-overlay>
             `;
-            this[error]   = this.shadowRoot.querySelector("x-overlay");
-            this[waiting] = this.shadowRoot.querySelector("x-waiting");
+            this[waiting]  = this.shadowRoot.querySelector("x-waiting");
+            this[error]    = this.shadowRoot.querySelector("x-overlay");
+            this[errorMsg] = this.shadowRoot.querySelector("#errorMsg");
         }
 
         isRequesting() {
@@ -631,7 +643,7 @@
             return this[error].isBlocked();
         }
 
-        request({ url, data = {}, method = "GET" } = {}) {
+        request({ url = "/", data = {}, method = "GET", timeout = 30 } = {}) {
             this[waiting].block();
 
             const fetchfull = new FetchFull();
@@ -639,7 +651,7 @@
             fetchfull.requestToUrl(url);
             fetchfull.requestWithData(data);
             fetchfull.responseAsJson();
-            fetchfull.requestWithTimeOut(30);
+            fetchfull.requestWithTimeOut(timeout);
 
             if (method == "GET") {
                 fetchfull.requestWithGet();
@@ -652,17 +664,30 @@
                 this[waiting].free();
                 return response;
             })
-            .catch(error => {
+            .catch(errorObj => {
                 this[waiting].free();
                 this[error].block();
                 // Fill in the overlay
-                throw error;
+                this.showFailure(errorObj);
+                throw errorObj;
             });
         }
 
-        makeItFail(informations) {
-            for(const k of informations) {
-                
+        showFailure(message) {
+            this[waiting].free();
+            this[error].block();
+            if (typeof(message) == "object") {
+                // Complex message
+                let html = "<table>";
+                Object.keys(message).forEach(k => {
+                    // Part message in a table
+                    html += `<tr><td>${k}</td><td>${message[k]}</td></tr>`;
+                })
+                html += "</table>";
+                this[errorMsg].innerHTML = html;
+            } else {
+                // String message
+                this[errorMsg].innerHTML = message;
             }
         }
     }
