@@ -639,6 +639,7 @@
             fetchfull.requestToUrl(url);
             fetchfull.requestWithData(data);
             fetchfull.responseAsJson();
+            fetchfull.requestWithTimeOut(30);
 
             if (method == "GET") {
                 fetchfull.requestWithGet();
