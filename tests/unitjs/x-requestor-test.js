@@ -8,15 +8,15 @@ describe("tests/unit/x-requestor-test.js", function() {
 			expect(element().isFailed()).toBeFalsy();
 		});
 
-
 		describe("with success", function() {
 			beforeEach(function() {
 				this.ref = { "test": 123 };
 				spyOn(window, "fetch").and.callFake(() => {
-					const response = new Response(JSON.stringify(this.ref), {
-						status: 200
+					return new Promise((resolve, reject) => {
+						resolve(new Response(JSON.stringify(this.ref), {
+							status: 200
+						}));
 					});
-					return Promise.resolve(response);
 				});
 			})
 
@@ -54,6 +54,79 @@ describe("tests/unit/x-requestor-test.js", function() {
 				})
 				.catch(error => {
 					done.fail(error);
+				})
+			});
+
+			it("should display string messages when requested", function() {
+				element().showFailure("Test message");
+				expect(element().isRequesting()).toBeFalsy();
+				expect(element().isFailed()).toBeTruthy();
+				expect(element().shadowRoot.querySelector("x-overlay #errorMsg").innerText).toContain("Test message");
+			});
+
+			it("should display object messages when requested", function() {
+				this.jh_keep = true;
+				element().showFailure({ label: "Test message" });
+				expect(element().isRequesting()).toBeFalsy();
+				expect(element().isFailed()).toBeTruthy();
+				expect(element().shadowRoot.querySelector("x-overlay #errorMsg").innerText).toContain("label");
+				expect(element().shadowRoot.querySelector("x-overlay #errorMsg").innerText).toContain("Test message");
+			});
+		});
+
+		describe("with timeout", function() {
+			beforeEach(function() {
+				this.ref = { "test": 123 };
+				spyOn(window, "fetch").and.callFake(() => {
+					return new Promise((resolve, reject) => {
+						setTimeout(() => {
+							resolve(new Response(JSON.stringify(this.ref), {
+								status: 200
+							}));
+						}, 5000);
+					});
+				});
+			})
+
+			it("should handle time-out requests", function(done) {
+				const promise = element().request({ timeout: 0.001 });
+
+				promise.then(response => {
+					done.fail("We should be in catch");
+				})
+				.catch(error => {
+					expect(element().shadowRoot.querySelector("x-waiting").isBlocked()).toBeFalsy();
+					expect(element().shadowRoot.querySelector("x-overlay").isBlocked()).toBeTruthy();
+					expect(element().isRequesting()).toBeFalsy();
+					expect(element().isFailed()).toBeTruthy();
+					expect(error.timeoutSecs).toEqual(0.001);
+					done();
+				})
+			});
+		});
+
+		describe("with general error", function() {
+			beforeEach(function() {
+				spyOn(window, "fetch").and.callFake(() => {
+					this.ref = "Error message";
+					return new Promise((resolve, reject) => {
+						reject(new Response(this.ref, {}));
+					});
+				});
+			})
+
+			it("should handle time-out requests", function(done) {
+				const promise = element().request({ timeout: 0.001 });
+
+				promise.then(response => {
+					done.fail("We should be in catch");
+				})
+				.catch(error => {
+					expect(element().shadowRoot.querySelector("x-waiting").isBlocked()).toBeFalsy();
+					expect(element().shadowRoot.querySelector("x-overlay").isBlocked()).toBeTruthy();
+					expect(element().isRequesting()).toBeFalsy();
+					expect(element().isFailed()).toBeTruthy();
+					done();
 				})
 			});
 		});
