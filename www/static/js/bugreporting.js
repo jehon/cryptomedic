@@ -59,7 +59,6 @@ Can I ask you a bit more informations?<br>
         <tr><td>Description of the problem</td><td><textarea name="description" cols=100></textarea></td></tr>
         <tr><td></td></tr>
             <tr><td><button type="submit">Submit your bug report to Jean</button></td></tr>
-            <tr><td><a href="javascript:location.reload()">Close this page and go back to cryptomedic. Your bug report will NOT be submitted!</a></td></tr>
             <tr><td></td></tr>
         <tr><td><h3>Technical informations</h3></td></tr>
         <tr><td>URL</td><td><input name="url" size=100 readonly="readonly"></td></tr>
@@ -68,6 +67,7 @@ Can I ask you a bit more informations?<br>
         <tr><td>Browser internal State</td><td><textarea name="browser_state" cols=100 readonly="readonly"></textarea></td></tr>
     </table>
     <input type="hidden" name="screenshot" length="65535">
+    Psss: If you don't want to submit this bug report, simply refresh the page...
 </form>`;
 
     return () => {
