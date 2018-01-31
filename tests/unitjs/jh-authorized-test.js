@@ -1,7 +1,5 @@
 'use strict';
 
-// TODO: remove fdescribe (focused)
-
 describe('test-jh-authorized-raw', function() {
     beforeEach(() => {
       JHAuthorized.setAuthorizedList();
