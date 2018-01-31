@@ -61,7 +61,7 @@ describe("tests/unit/x-requestor-test.js", function() {
 				element().showFailure("Test message");
 				expect(element().isRequesting()).toBeFalsy();
 				expect(element().isFailed()).toBeTruthy();
-				expect(element().shadowRoot.querySelector("x-overlay #errorMsg").innerText).toContain("Test message");
+				expect(element().shadowRoot.querySelector("#errorMsg").innerText).toContain("Test message");
 			});
 
 			it("should display object messages when requested", function() {
@@ -69,8 +69,8 @@ describe("tests/unit/x-requestor-test.js", function() {
 				element().showFailure({ label: "Test message" });
 				expect(element().isRequesting()).toBeFalsy();
 				expect(element().isFailed()).toBeTruthy();
-				expect(element().shadowRoot.querySelector("x-overlay #errorMsg").innerText).toContain("label");
-				expect(element().shadowRoot.querySelector("x-overlay #errorMsg").innerText).toContain("Test message");
+				expect(element().shadowRoot.querySelector("#errorMsg").innerText).toContain("label");
+				expect(element().shadowRoot.querySelector("#errorMsg").innerText).toContain("Test message");
 			});
 		});
 

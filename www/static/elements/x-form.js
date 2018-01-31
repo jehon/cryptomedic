@@ -7,7 +7,8 @@
 
 		static get properties() {
 			return {
-				value:  "Object",
+				value: "Object",
+				// edit:  "Boolean"
 			}
 		}
 
@@ -25,6 +26,10 @@
 		render() {
 			// Encapsulate all the form into a classic "form" content
 			this[form] = document.createElement('form');
+			// Prevent form submission (thanks to https://stackoverflow.com/a/8664680/1954789)
+			this[form].addEventListener("submit", function(event) { event.preventDefault(); return false; });
+
+
 			Array.from(this.children).forEach(el => {
 				this[form].appendChild(el);
 			});
@@ -32,6 +37,7 @@
 			/* Simulated submit button */
 			this[submit] = document.createElement("input");
 			this[submit].setAttribute("type", "submit");
+			this[submit].style.display = "none";
 			this[form].appendChild(this[submit]);
 
 			this.appendChild(this[form]);
