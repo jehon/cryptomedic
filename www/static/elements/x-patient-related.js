@@ -86,8 +86,7 @@
         	</tr>
 		</tbody>
 	</table>
-</fieldset>
-        	`;
+</fieldset>`;
 
         	if (nextAppointment) {
         		this.querySelector("#withAppointment").removeAttribute("hidden")
