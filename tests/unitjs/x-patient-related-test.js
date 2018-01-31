@@ -37,8 +37,8 @@ describe("tests/unit/x-patient-related-test.js", function() {
 			element().folder = f;
 			expect(element().isBlocked()).toBeFalsy();
 			setTimeout(() => {
-				expect(element().querySelector("#withoutAppointment").offsetWidth > 0).toBeTruthy();
-				expect(element().querySelector("#withAppointment").offsetWidth == 0).toBeTruthy();
+				expect(element().querySelector("#withoutAppointment").offsetWidth).toBeGreaterThan(0);
+				expect(element().querySelector("#withAppointment").offsetWidth).toBe(0);
 				done();
 			});
 		});
@@ -48,8 +48,8 @@ describe("tests/unit/x-patient-related-test.js", function() {
 			element().folder = f;
 			expect(element().isBlocked()).toBeFalsy();
 			setTimeout(() => {
-				expect(element().querySelector("#withoutAppointment").offsetWidth == 0).toBeTruthy();
-				expect(element().querySelector("#withAppointment").offsetWidth > 0).toBeTruthy();
+				expect(element().querySelector("#withoutAppointment").offsetWidth).toBe(0);
+				expect(element().querySelector("#withAppointment").offsetWidth).toBeGreaterThan(0);
 				expect(element().querySelector("#withAppointment").innerText).toContain("2999-01-10");
 				done();
 			});
