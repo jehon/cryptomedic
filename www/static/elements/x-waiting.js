@@ -1,56 +1,37 @@
-// TODO: rewrite this as a subset of x-overlay with image insert
-//    and relative to the content
 
 const XWaiting = (function() {
+	const overlay = Symbol("overlay");
+	const slot    = Symbol("slot");
+
     class XWaiting extends JHElement {
         constructor() {
             super();
             this.attachShadow({ mode: 'open' });
-            this.shadowRoot.innerHTML = 
-            `<style>
-                :host {
-                    position: relative;
-                }
+            this.shadowRoot.innerHTML = `
+            	<div id='overlay'>
+            		<img src='elements/resources/waiting.gif' />Loading
+            	</div>
+            	<div id='slot'>
+            		<slot></slot>
+            	</div>`
 
-                #overlay[hidden] {
-                    display: none !important;
-                }
-
-                #overlay {
-                    position: absolute;
-                    top: 0; 
-                    left: 0; 
-                    width: 100%; 
-                    height: 100%; 
-
-                    display: flex; 
-                    flex-direction: row; 
-                    align-items: center; 
-                    justify-content: center;
-
-                    background-color: rgba(0, 0, 0, 0.9); /* Black w/opacity */
-                    overflow-x: hidden;
-                    transition: 0.5s;
-                }
-            </style>
-            <div id='overlay'>
-                <img src='elements/resources/waiting.gif' />
-            </div>
-            <slot></slot>
-            `;
+            this[overlay] = this.shadowRoot.querySelector("#overlay");
+            this[slot]    = this.shadowRoot.querySelector("#slot");
             this.free();
         }  
 
         block() {
-            this.shadowRoot.querySelector("#overlay").removeAttribute("hidden");
+            this[overlay].removeAttribute("hidden");
+            this[slot].setAttribute("hidden", "hidden");
         }
 
         free() {
-            this.shadowRoot.querySelector("#overlay").setAttribute("hidden", "hidden");
+            this[overlay].setAttribute("hidden", "hidden");
+            this[slot].removeAttribute("hidden");
         }
 
         isBlocked() {
-            return !this.shadowRoot.querySelector("#overlay").hasAttribute("hidden");
+            return !this[overlay].hasAttribute("hidden");
         }
 
         aroundPromise(p) {
