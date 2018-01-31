@@ -649,6 +649,10 @@
         request({ url = "/", data = {}, method = "GET", timeout = 30 } = {}) {
             this[waiting].block();
 
+            if (url[0] != "/") {
+                url = "/api/" + API_VERSION + "/" + url;
+            }
+
             const fetchfull = new FetchFull();
             fetchfull.requestWithCredentials("include");
             fetchfull.requestToUrl(url);
