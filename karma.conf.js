@@ -38,6 +38,7 @@ module.exports = function(config) {
       { pattern: "bower_components/**",              included: false, served: true, watched: false },
       { pattern: "static/elements/resources/*",      included: false, served: true, watched: true },
       'static/elements/jh-element.js',
+      'static/elements/x-overlay.js',
       'static/elements/x-waiting.js',
       'static/elements/x-waiting-folder.js',
       'static/!(elements)/**/*.js',
