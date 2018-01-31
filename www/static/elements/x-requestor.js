@@ -613,26 +613,29 @@
             super();
             this.attachShadow({ mode: 'open' });
             this.shadowRoot.innerHTML = `
-                <x-overlay id='errors'>
-                    <x-waiting>
-                        <slot></slot>
-                    </x-waiting>
-                    <div id='errorMessageContainer'>
-                        <h1>Network error</h1>
-                        <div>
-                            Something went very wrong on your network. Please check:<br>
-                            - that you have an internet connection<br>
-                            - that your connection is really workign<br>
-                            In other case, please reload the page and try again...<br>
-                            <a javascript="window.reload()">Reload the page here</a>
-                            <h3 id='errorMsg'></h3>
-                        </div>
+            <span>
+                <x-overlay closable z-index=20 >
+                    <h1>Network error</h1>
+                    <div>
+                        Something went very wrong on your network. Please check:<br>
+                        - that you have an internet connection<br>
+                        - that your connection is really workign<br>
+                        In other case, please reload the page and try again...<br>
+                        <a javascript="window.reload()">Reload the page here</a>
+                        <h3 id='errorMsg'></h3>
                     </div>
                 </x-overlay>
-            `;
+                <x-waiting>
+                    <slot></slot>
+                </x-waiting>
+            </span>`;
+
             this[waiting]  = this.shadowRoot.querySelector("x-waiting");
             this[error]    = this.shadowRoot.querySelector("x-overlay");
             this[errorMsg] = this.shadowRoot.querySelector("#errorMsg");
+
+            this[waiting].free();
+            this[error].free();
         }
 
         isRequesting() {

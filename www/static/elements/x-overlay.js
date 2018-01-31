@@ -12,9 +12,9 @@ const XOverlay = (function() {
 
         constructor() {
             super();
-            this.attachShadow({ mode: 'open' });
-            this.zIndex = 10;
+	            this.zIndex = 10;
 
+            this.attachShadow({ mode: 'open' });
             this.shadowRoot.innerHTML = `
 			<style>
 				:host {
@@ -86,15 +86,15 @@ const XOverlay = (function() {
 		}
 
         block() {
-            this.shadowRoot.querySelector("#overlay").removeAttribute("hidden");
+            this[overlayDiv].removeAttribute("hidden");
         }
 
         free() {
-            this.shadowRoot.querySelector("#overlay").setAttribute("hidden", "hidden");
+            this[overlayDiv].setAttribute("hidden", "hidden");
         }
 
         isBlocked() {
-            return !this.shadowRoot.querySelector("#overlay").hasAttribute("hidden");
+            return !this[overlayDiv].hasAttribute("hidden");
         }
 
         aroundPromise(p) {
