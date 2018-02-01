@@ -1,5 +1,5 @@
 
-describe("tests/unit/x-login-status-test.js", function() {
+fdescribe("tests/unit/x-login-status-test.js", function() {
 	const buildResponse = function(status = 200, json = {}) {
 		const response = new Response(JSON.stringify(), {
 			status: status,
@@ -103,7 +103,7 @@ describe("tests/unit/x-login-status-test.js", function() {
 			});
 
 			it("should refuse invalid login", function(done) {
-				nextRequest = buildResponse(401);
+				nextRequest = buildResponse(404);
 
 				element().shadowRoot.querySelector("#username").value = "test2";
 				element().shadowRoot.querySelector("#password").value = "password2";
@@ -112,7 +112,7 @@ describe("tests/unit/x-login-status-test.js", function() {
 				setTimeout(() => {
 					testLoggedOut(element);
 // TODO: should have an error message...
-			// 		expect(element().shadowRoot.querySelector("x-form").shadowRoot.querySelector(".alert").innerText).toBe("");
+					expect(element().shadowRoot.querySelector("x-form").shadowRoot.querySelector(".alert").innerText).toContain("Invalid");
 					done();
 				});
 			});
