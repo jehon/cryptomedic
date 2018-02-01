@@ -46,6 +46,7 @@ describe("store", function() {
 		expect(store.getState().user).toBeFalsy();
 		store.dispatch({ type: ACT_USER_LOGOUT });
 		expect(store.getState().user).toBeFalsy();
+		expect(store.getState().folder).toBeFalsy();
 
 		store.dispatch({ type: ACT_USER_LOGIN, payload: user });
 		expect(store.getState().user).toBe(user);
