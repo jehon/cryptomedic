@@ -14,7 +14,7 @@ fdescribe("tests/unit/x-login-status-test.js", function() {
 
 	const unauthorizedRequest = buildResponse(401);
 
-	let nextRequest;
+	let nextRequest = settingsRequest;
 	beforeEach(function() {
 		spyOn(XRequestor.prototype, "request").and.callFake(() => nextRequest);
 	})
