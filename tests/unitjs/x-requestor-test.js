@@ -18,7 +18,7 @@ describe("tests/unit/x-requestor-test.js", function() {
 						}));
 					});
 				});
-			})
+			});
 
 			it("should make a get request", function(done) {
 				const promise = element().request({ url: "/", data: { test: 1 }});
