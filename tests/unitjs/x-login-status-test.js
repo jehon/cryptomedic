@@ -90,21 +90,32 @@ describe("tests/unit/x-login-status-test.js", function() {
 				testLoggedOut(element);
 			});
 
-			// it("should refuse invalid login", function(done) {
-			// 	this.jh_keep = true;
-			// 	nextRequest = buildResponse(401);
+			it("should refuse incomplete login", function(done) {
+				nextRequest = buildResponse(401);
 
-			// 	element().shadowRoot.querySelector("#username").value = "test2";
-			// 	element().shadowRoot.querySelector("#password").value = "password2";
+				element().shadowRoot.querySelector("#username").value = "test2";
+				JHElement.fireOn(element().shadowRoot.querySelector("#login"), "click");
 
-			// 	JHElement.fireOn(element().shadowRoot.querySelector("#login"), "click");
+				setTimeout(() => {
+					testLoggedOut(element);
+					done();
+				});
+			});
 
-			// 	// setTimeout(() => {				
-			// 		testLoggedOut(element);
+			it("should refuse invalid login", function(done) {
+				nextRequest = buildResponse(401);
+
+				element().shadowRoot.querySelector("#username").value = "test2";
+				element().shadowRoot.querySelector("#password").value = "password2";
+				JHElement.fireOn(element().shadowRoot.querySelector("#login"), "click");
+
+				setTimeout(() => {
+					testLoggedOut(element);
+// TODO: should have an error message...
 			// 		expect(element().shadowRoot.querySelector("x-form").shadowRoot.querySelector(".alert").innerText).toBe("");
-			// 		done();
-			// 	// }, 1000);
-			// });
+					done();
+				});
+			});
 
 			it("should accept valid login", function(done) {
 				this.jh_keep = true;
