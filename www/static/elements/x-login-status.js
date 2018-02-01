@@ -1,5 +1,5 @@
 (function() {
-	const username  = Symbol("username");
+	const user      = Symbol("user");
 	const logout    = Symbol("logout");
 	const overlay   = Symbol("overlay");
 	const requestor = Symbol("requestor");
@@ -13,23 +13,23 @@
 			this.attachShadow({ mode: 'open' });
 			this.shadowRoot.innerHTML = `
 				<span>
-					<span id='username'></span>
+					<span id='user'></span>
 					<img id='logout' src="/static/img/logout.gif" />
 					<x-requestor></x-requestor>
 					<x-overlay closable z-index=15 >
 				    	<x-form class="form-signing" role="form">
 				        	<h2 class="form-signin-heading">Please sign in</h2>
 				        	<label for="username">Username</label>
-			         		<input name="username" class="form-control" placeholder="Username" required autofocus>
+			         		<input id="username" name="username" class="form-control" placeholder="Username" required autofocus>
 				        	<label for="password">Password</label>
-				        	<input name="password" class="form-control" placeholder="Password" required type="password">
+				        	<input id="password" name="password" class="form-control" placeholder="Password" required type="password">
 				      		<br />
 					  		<button id="login" class="btn btn-lg btn-primary btn-block">Log in</button>
 				      	</x-form>
 					</x-overlay>
 				</span>
 			`;
-			this[username]  = this.shadowRoot.querySelector("#username");
+			this[user]      = this.shadowRoot.querySelector("#user");
 			this[logout]    = this.shadowRoot.querySelector("#logout");
 			this[overlay]   = this.shadowRoot.querySelector("x-overlay");
 			this[requestor] = this.shadowRoot.querySelector("x-requestor");
@@ -68,11 +68,11 @@
 		adapt() {
 			if (this.username) {
 				this[logout].removeAttribute("hidden");
-				this[username].innerHTML = this.username;
+				this[user].innerHTML = this.username;
 				this[overlay].free();
 			} else {
 				this[logout].setAttribute("hidden", "hidden");
-				this[username].innerHTML = "";
+				this[user].innerHTML = "";
 				this[overlay].block();
 			}
 		}
@@ -95,7 +95,6 @@
 		}
 
 		_treatLoginResponse(response) {
-			console.log(response.status, response.asJson);
 			if (response.status == 200) {
 				this[overlay].free();
 				store.dispatch({ type: ACT_USER_LOGIN, payload: response.asJson });
