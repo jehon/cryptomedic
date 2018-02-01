@@ -9,6 +9,7 @@ const ACT_USER_LOGOUT       = 'ACT_USER_LOGOUT';
 const store = (function() {
 	const folderReducer = (state = false, action) => {
 	  switch (action.type) {
+	  		case ACT_USER_LOGOUT:
 		    case ACT_FOLDER_INVALIDATE:
 		    	return false;
 		    case ACT_FOLDER_STORE:
