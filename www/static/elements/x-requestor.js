@@ -1,4 +1,4 @@
-(function() {
+const XRequestor = (function() {
     /* Private */
     function filterParameter(fnName, value, allowed) {
         if (allowed.indexOf(value) < 0) {
@@ -700,4 +700,6 @@
     }
 
     window.customElements.define('x-requestor', XRequestor);
+
+    return XRequestor;
 })();

@@ -1,32 +1,125 @@
 
 describe("tests/unit/x-login-status-test.js", function() {
-	webDescribe("initialized", `<x-login-status></x-login-status>`, function(element) {
-		it("should be hidden when initialized simply", function() {
-			expect(element().shadowRoot.querySelector("#logout").offsetHeight).toBe(0);
+	const buildResponse = function(status = 200, json = {}) {
+		const response = new Response(JSON.stringify(), {
+			status: status,
+		});
+		response.asJson = json;
+		return Promise.resolve(response);
+	}
 
-			// this.jh_keep = true;
+	const settingsRequest = buildResponse(200, {
+		username: "test"
+	});
+
+	const unauthorizedRequest = buildResponse(401);
+
+	let nextRequest;
+	beforeEach(function() {
+		spyOn(XRequestor.prototype, "request").and.callFake(() => nextRequest);
+	})
+
+	const testLoggedIn = function(element, username) {
+		expect(element().shadowRoot.querySelector("#logout").offsetHeight).toBeGreaterThan(0);
+		expect(element().shadowRoot.querySelector("#user").innerHTML).toBe(username);
+		expect(element().shadowRoot.querySelector("x-overlay").isBlocked()).toBeFalsy();
+	}
+
+	const testLoggedOut = function(element) {
+		expect(element().shadowRoot.querySelector("#logout").offsetHeight).toBe(0);
+		expect(element().shadowRoot.querySelector("#user").innerHTML).toBe("");
+		expect(element().shadowRoot.querySelector("x-overlay").isBlocked()).toBeTruthy();
+	}
+
+	describe("with logged in at initialization", function() {
+		beforeEach(() => {
+			nextRequest = settingsRequest;
 		});
 
-		it("should show username when set", function() {
-			store.dispatch({ type: ACT_USER_LOGIN, payload: { username: "test" }});
-			expect(element().shadowRoot.querySelector("#logout").offsetHeight).toBeGreaterThan(0);
-			expect(element().shadowRoot.querySelector("#username").innerHTML).toBe("test");
+		webDescribe("*", `<x-login-status></x-login-status>`, function(element) {
+			describe("with interaction with the store", function() {
+				it("should be hidden when initialized simply", function() {
+					testLoggedIn(element, "test");
+				});
 
-			store.dispatch({ type: ACT_USER_LOGOUT});
-			expect(element().shadowRoot.querySelector("#logout").offsetHeight).toBe(0);
-			expect(element().shadowRoot.querySelector("#username").innerHTML).toBe("");
+				it("should show username when set", function() {
+					store.dispatch({ type: ACT_USER_LOGIN, payload: { username: "test" }});
+					testLoggedIn(element, "test");
+
+					store.dispatch({ type: ACT_USER_LOGOUT});
+					testLoggedOut(element);
+				});
+			});
+
+			describe("with logout", function() {
+				it("should logout when clicked", function() {
+					store.dispatch({ type: ACT_USER_LOGIN, payload: { username: "test" }});
+					testLoggedIn(element, "test");
+
+					// Logged out request
+					nextRequest = new Promise((resolve, reject) => {
+							resolve(new Response(JSON.stringify(this.ref), {
+								status: 200,
+							}));
+						});
+					JHElement.fireOn(element().shadowRoot.querySelector("#logout"), "click");
+
+					testLoggedOut(element, "");
+				});
+
+				it("should logout locally", function() {
+					store.dispatch({ type: ACT_USER_LOGIN, payload: { username: "test" }});
+					testLoggedIn(element, "test");
+
+					element().doLogout(true);
+
+					testLoggedOut(element, "");
+					expect(XRequestor.prototype.request).toHaveBeenCalledTimes(1);
+				});
+			});
+		});
+	});
+
+	describe("with logged out at initialization", function() {
+		beforeEach(() => {
+			nextRequest = unauthorizedRequest;
 		});
 
-		it("should logout when clicked", function(done) {
-			store.dispatch({ type: ACT_USER_LOGIN, payload: { username: "test" }});
+		webDescribe("*", `<x-login-status></x-login-status>`, function(element) {
+			it("should be hidden when initialized simply", function() {
+				testLoggedOut(element);
+			});
 
-			JHElement.fireOn(element().shadowRoot.querySelector("#logout"), "click");
+			// it("should refuse invalid login", function(done) {
+			// 	this.jh_keep = true;
+			// 	nextRequest = buildResponse(401);
 
-			setTimeout(() => {
-				expect(element().shadowRoot.querySelector("#logout").offsetHeight).toBe(0);
-				expect(element().shadowRoot.querySelector("#username").innerHTML).toBe("");
-				done();
-			}, 1);
+			// 	element().shadowRoot.querySelector("#username").value = "test2";
+			// 	element().shadowRoot.querySelector("#password").value = "password2";
+
+			// 	JHElement.fireOn(element().shadowRoot.querySelector("#login"), "click");
+
+			// 	// setTimeout(() => {				
+			// 		testLoggedOut(element);
+			// 		expect(element().shadowRoot.querySelector("x-form").shadowRoot.querySelector(".alert").innerText).toBe("");
+			// 		done();
+			// 	// }, 1000);
+			// });
+
+			it("should accept valid login", function(done) {
+				this.jh_keep = true;
+
+				nextRequest = settingsRequest;
+
+				element().shadowRoot.querySelector("#username").value = "test";
+				element().shadowRoot.querySelector("#password").value = "password";
+				JHElement.fireOn(element().shadowRoot.querySelector("#login"), "click");
+
+				setTimeout(() => {
+					testLoggedIn(element, "test");
+					done();
+				});
+			});
 		});
 	});
 });
