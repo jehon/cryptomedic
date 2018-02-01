@@ -46,6 +46,7 @@
             .responseAsJson()
             .onResponseCode(401, () => {
               location.hash = "#/login";
+              store.dispatch({ type: ACT_USER_LOGOUT });
             })
         },
 
