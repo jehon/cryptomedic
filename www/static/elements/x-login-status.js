@@ -78,11 +78,15 @@
 		}
 
 		doLoginCheck() {
+			// 401: not authenticated
+
 			this[requestor].request({ url: "auth/settings" })
 				.then(response => this._treatLoginResponse(response));
 		}
 
 		doLogin() {
+			// 404: user not found (invalid credentials)
+
 			this[form].showMessages();
 			if (!this[form].validate()) {
 				return;
@@ -95,11 +99,18 @@
 		}
 
 		_treatLoginResponse(response) {
-			if (response.status == 200) {
-				this[overlay].free();
-				store.dispatch({ type: ACT_USER_LOGIN, payload: response.asJson });
-			} else {
-				store.dispatch({ type: ACT_USER_LOGOUT });
+			switch(response.status) {
+				case 200: 
+					this[overlay].free();
+					store.dispatch({ type: ACT_USER_LOGIN, payload: response.asJson });
+					break;
+				case 404:
+					this[form].showMessages([ "Invalid credentials" ]);					
+					store.dispatch({ type: ACT_USER_LOGOUT });
+					break;
+				default:
+					store.dispatch({ type: ACT_USER_LOGOUT });
+					break;
 			}
 		}
 
