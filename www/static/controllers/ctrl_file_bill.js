@@ -3,19 +3,25 @@
 function ctrl_file_bill($scope) {
     /*
       Prices are at
-          window.cryptomedic.serverSettings.prices
+          store.definitions.prices
     */
 
-  $scope.$watch(function() {
-    return window.cryptomedic.serverSettings.prices;
-  }, function() {
-    $scope.currentFile().calculatePriceId();
-    $scope.safeApply();
-  });
+    getPrices = function() {
+      const definitions = store.getState().definitions;
+      if (definitions == false) {
+        return false;
+      }
+      return definitions.prices;
+    }
+
+    store.subscribe(() => {
+        $scope.currentFile().calculatePriceId(getPrices());
+        $scope.safeApply();
+    })
 
   $scope.$watch('currentFile().Date', function() {
     if ($scope.currentFile() && $scope.currentFile().calculatePriceId) {
-      $scope.currentFile().calculatePriceId(window.cryptomedic.serverSettings.prices);
+      $scope.currentFile().calculatePriceId(getPrices());
       $scope.safeApply();
     } else {
       $scope.safeApply();

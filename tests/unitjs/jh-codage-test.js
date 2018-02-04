@@ -1,10 +1,14 @@
 'use strict';
 /* global testComponent */
 
-describe('test-jh-codage', function() {
+describe('jh-codage-test', function() {
   describe("without cryptomedic", function() {
+    beforeEach(function() {
+      store.dispatch({ type: ACT_DEFINITIONS_STORE, payload: false });
+    });
+
     it("should translate correctly when specified in globals", function(done) {
-      delete(window.cryptomedic);
+      store.dispatch({ type: ACT_DEFINITIONS_STORE, payload: false });
       testComponent("<jh-codage value='original'></jh-codage>").then(el => {
         expect(el).not.toBeNull();
         expect(el.shadowRoot).not.toBeNull();
@@ -20,14 +24,12 @@ describe('test-jh-codage', function() {
 
   describe("with cryptomedic", function() {
     beforeEach(function() {
-      window.cryptomedic = {
-        serverSettings: {
-          codes: {
-            'original': 'codage'
-          }
+      store.dispatch({ type: ACT_DEFINITIONS_STORE, payload: { 
+        codes: {
+          'original': 'codage'
         }
-      };      
-    })
+      }});
+    });
 
     it("should handle empty values", function(done) {
       testComponent("<jh-codage value=''></jh-codage>").then(el => {

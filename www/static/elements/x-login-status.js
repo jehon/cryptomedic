@@ -41,21 +41,14 @@
 				const data = store.getState().user;
 				if (data) {
 					this.username = data.username;
-					if (!window.cryptomedic) {
-						window.cryptomedic = {};
-					}
-					window.cryptomedic.serverSettings = data;
 
-					/* global JHAuthorized */
-					JHAuthorized.setAuthorizedList(data.authorized);
 
 					if (location.hash == "#/login") {
 						location.hash = "#/home";
 					}
 				} else {
 					this.username = false;
-					window.cryptomedic.serverSettings = {};
-					location.hash = "/login";
+					// location.hash = "/login";
 				}
 				this.adapt();
 			});

@@ -15,13 +15,6 @@
     (function() {
       let patientFolderCache = new TimedMap(15 * 60);
 
-      if (!window.cryptomedic) {
-        window.cryptomedic = {};
-      }
-      if (!window.cryptomedic.serverSettings) {
-        window.cryptomedic.serverSettings = {};
-      }
-
       Polymer({
         is: 'cryptomedic-data-service',
 

@@ -1,16 +1,8 @@
-let JHAuthorized = (function() {
+(function() {
 
   let authorizedListCB = jQuery.Callbacks("memory");
 
   class JHAuthorized extends HTMLElement {
-    static setAuthorizedList(authorizedList = []) {
-      authorizedListCB.fire(authorizedList);
-    }
-
-    static addCallback(fn) {
-      authorizedListCB.add(fn);
-    }
-
     // constructor() {
     //   super();
     //   this.authorizedList = [];
@@ -62,6 +54,4 @@ let JHAuthorized = (function() {
   }
 
   // window.customElements.define('jh-authorized-raw', JHAuthorized);
-
-  return JHAuthorized;
 }());
