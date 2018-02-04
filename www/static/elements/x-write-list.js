@@ -2,6 +2,12 @@
 XWriteList = (function() {
 
     let referencesCB = jQuery.Callbacks("memory");
+    store.subscribe(() => {
+        const data = store.getState();
+        if (data.definitions && data.definitions.lists) {
+            XWriteList.setReferences(data.definitions.lists);
+        }
+    });
 
     let uuid = 1;
 
@@ -216,10 +222,3 @@ XWriteList = (function() {
 
     return XWriteList;
 })();
-
-store.subscribe(() => {
-    const data = store.getState();
-    if (data.user && data.user.lists) {
-        XWriteList.setReferences(data.user.lists);
-    }
-});

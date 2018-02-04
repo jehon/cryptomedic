@@ -1,5 +1,5 @@
 
-fdescribe("tests/unit/x-login-status-test.js", function() {
+describe("tests/unit/x-login-status-test.js", function() {
 	const buildResponse = function(status = 200, json = {}) {
 		const response = new Response(JSON.stringify(), {
 			status: status,

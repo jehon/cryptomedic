@@ -41,17 +41,31 @@ describe("store", function() {
 	});
 
 	it("should handle ACT_USER_*", function() {
-		const user = { username: "test" };
+		const user = { username: "test", prices: 123 };
 
 		expect(store.getState().user).toBeFalsy();
 		store.dispatch({ type: ACT_USER_LOGOUT });
 		expect(store.getState().user).toBeFalsy();
 		expect(store.getState().folder).toBeFalsy();
+		expect(store.getState().definitions).toBeFalsy();
 
 		store.dispatch({ type: ACT_USER_LOGIN, payload: user });
-		expect(store.getState().user).toBe(user);
+		expect(store.getState().user.username).toBe(user.username);
+		expect(store.getState().definitions.prices).toBe(123);
 
 		store.dispatch({ type: ACT_USER_LOGOUT });
 		expect(store.getState().user).toBeFalsy();
+	});
+
+	it("should handle ACT_DEFINITIONS_*", function() {
+		const defs = { prices: 123 };
+
+		expect(store.getState().definitions).toBeFalsy();
+
+		store.dispatch({ type: ACT_DEFINITIONS_STORE, payload: defs });
+		expect(store.getState().definitions.prices).toBe(123);
+
+		store.dispatch({ type: ACT_USER_LOGOUT });
+		expect(store.getState().definitions).toBeFalsy();
 	});
 });

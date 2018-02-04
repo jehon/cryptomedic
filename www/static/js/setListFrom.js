@@ -1,5 +1,7 @@
 function setListFrom(origin, target, category) {
-    if (!cryptomedic.serverSettings || !cryptomedic.serverSettings.associations) {
+    const definitions = store.getState().definitions;
+
+    if (!definitions || !definitions.associations) {
         return;
     }
     if (!document.querySelector(`[name=${origin}]`)) {
@@ -12,10 +14,10 @@ function setListFrom(origin, target, category) {
     }
     const val = document.querySelector(`[name=${origin}]`).value;
     let list = [];
-    if (cryptomedic.serverSettings.associations[`${category}.${val}`]) {
-        list = list.concat(cryptomedic.serverSettings.associations[`${category}.${val}`]);
+    if (definitions.associations[`${category}.${val}`]) {
+        list = list.concat(definitions.associations[`${category}.${val}`]);
     }
-    list = list.concat(cryptomedic.serverSettings.associations[`${category}.other`]);
+    list = list.concat(definitions.associations[`${category}.other`]);
 
     const current = document.querySelector(`[name=${target}]`).value;
     if (current) {

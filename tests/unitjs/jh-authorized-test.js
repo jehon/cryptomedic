@@ -1,19 +1,9 @@
 'use strict';
 
-describe('test-jh-authorized-raw', function() {
-    beforeEach(() => {
-      JHAuthorized.setAuthorizedList();
-    })
-
-    it("should manage the callback", function() {
-        let res = null;
-        JHAuthorized.addCallback((data) => { res = data });
-
-        expect(res).toEqual([]);
-
-        JHAuthorized.setAuthorizedList([ "a", "b" ]);
-        expect(res).toEqual([ "a", "b" ]);
-    })
+describe('jh-authorized-test', function() {
+    // beforeEach(() => {
+    //   store.dispatch({ type: ACT_DEFINITIONS_STORE, payload: false });
+    // })
 
   // it("should be empty at the beginning", function(done) {
   //   testComponent("<jh-authorized-raw value='secure'>securized content</jh-authorized-raw>").then(el => {

@@ -1,5 +1,5 @@
 
-let JHCodage = (function() {
+(function() {
   class JHCodage extends HTMLElement {
     constructor() {
       super();
@@ -14,7 +14,6 @@ let JHCodage = (function() {
       this.adapt();
     }
 
-
     adapt() {
       let value      = this.getAttribute("value");
       let translated = this.getAttribute("translated");
@@ -23,19 +22,17 @@ let JHCodage = (function() {
         return this._setTranslated(value, translated);
       }
 
-      if ((typeof(window.cryptomedic) == "undefined") 
-          || (typeof(window.cryptomedic.serverSettings) == "undefined")
-          || (typeof(window.cryptomedic.serverSettings.codes) == "undefined")) {
+      const definitions = store.getState().definitions;
+
+      if (!definitions) {
         return this._setRaw(value);
       }
 
-      let settings = cryptomedic.serverSettings;
-
-      if (!settings.codes[value]) {
+      if (!definitions.codes[value]) {
         return this._setRaw(value);
       }
 
-      return this._setTranslated(value, settings.codes[value]);
+      return this._setTranslated(value, definitions.codes[value]);
     }
 
     _setTranslated(value, translated) {
@@ -56,6 +53,4 @@ let JHCodage = (function() {
   }
 
   window.customElements.define('jh-codage', JHCodage);
-
-  return JHCodage;
 })();

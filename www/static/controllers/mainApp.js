@@ -96,7 +96,6 @@ mainApp.controller('ctrl', [ '$scope', function($scope) {
   $scope.application  = application;
   $scope.calculations = calculations;
   $scope.template     = template;
-  $scope.cryptomedic  = cryptomedic;
 
   $scope.safeApply = function (fn) {
     if (this.$root && (this.$root.$$phase == '$apply' || this.$root.$$phase == '$digest')) {
@@ -117,11 +116,14 @@ mainApp.controller('ctrl', [ '$scope', function($scope) {
   };
 
   $scope.authorizedList = [];
-  JHAuthorized.addCallback(authorizedList => {
-    $scope.authorizedList = authorizedList;
-    $scope.safeApply();
-  })
-  $scope.isAuthorized = function(value, authorizedList) {
+  store.subscribe(() => {
+    if (!store.getState().definitions) {
+      $scope.authorizedList = [];
+    } else {
+      $scope.authorizedList = store.getState().definitions.authorized;
+    }
+  });
+  $scope.isAuthorized = function(value, authorizedList = []) {
     return authorizedList.indexOf(value) >= 0;
   }
 
