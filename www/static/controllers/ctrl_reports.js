@@ -96,6 +96,7 @@ function ctrl_reports($scope, $routeParams, $sce) {
       return;
     }
     $scope.result = null;
+    $scope.safeApply();
 
     var prefs = {};
     for(var p in $scope.reports[report].params) {
