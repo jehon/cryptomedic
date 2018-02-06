@@ -6,7 +6,7 @@
 let selenium = require('selenium-server');
 // let remoteTarget = "http://localhost/static/index.html"
 
-// PHP Server
+// PHP Server: @latitude = not debug mode
 let remoteTarget = "http://localhost:5555/static/index.html"
 
 module.exports = {
