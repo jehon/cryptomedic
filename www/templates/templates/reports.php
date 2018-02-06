@@ -93,7 +93,7 @@
       </div>
       <div ng-if="result && !error">
         <div class='text-right'>
-          <a id='download_link'
+          <a id='report_download_button'
               class='btn'
               style='background-color: green; color: white'
               href="#"
