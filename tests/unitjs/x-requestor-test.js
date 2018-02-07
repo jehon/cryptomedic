@@ -8,6 +8,20 @@ describe("tests/unit/x-requestor-test.js", function() {
 			expect(element().isFailed()).toBeFalsy();
 		});
 
+		describe("should match URL", function() {
+			it("should make an absolute request", function() {
+				spyOn(window, "fetch").and.callFake((request) => new Promise((resolve, reject) => resolve(new Response(request.url, {}))));
+				const promise = element().request({ url: "/baseUrl", data: { test: 1 }});
+				promise.then(response => expect(response.asText).toBe(`http://localhost:9876/baseUrl?test=1`));
+			});
+
+			it("should make an relative request", function() {
+				spyOn(window, "fetch").and.callFake((request) => new Promise((resolve, reject) => resolve(new Response(request.url, {}))));
+				const promise = element().request({ url: "relativeUrl", data: { test: 1 }});
+				promise.then(response => expect(response.asText).toBe(`http://localhost:9876/api/${API_VERSION}/relativeUrl?test=1`));
+			});
+		});
+
 		describe("with success", function() {
 			beforeEach(function() {
 				this.ref = { "test": 123 };
