@@ -42,10 +42,6 @@
 				if (data) {
 					this.username = data.username;
 
-
-					if (location.hash == "#/login") {
-						location.hash = "#/home";
-					}
 				} else {
 					this.username = false;
 					// location.hash = "/login";
@@ -119,9 +115,7 @@
 			}
 			finished.then(() => store.dispatch({ type: ACT_USER_LOGOUT }))
 		}
-
 	}
 
 	window.customElements.define('x-login-status', XLoginStatus);
-
 })();
