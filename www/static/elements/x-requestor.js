@@ -1,3 +1,6 @@
+
+// TODO: general error handler
+
 const XRequestor = (function() {
     /* Private */
     function filterParameter(fnName, value, allowed) {
@@ -34,7 +37,7 @@ const XRequestor = (function() {
         return body;
     }
 
-    /* Private */
+    // /* Private */
     function bodyBuilderUrlEncode(data, self) {
         const uri = _bodyBuilderRecurse(new URLSearchParams(), data).toString();
 
@@ -48,17 +51,17 @@ const XRequestor = (function() {
         return null;
     }
 
-    /* Private */
-    function bodyBuilderFormDataEncode(data) {
-        return _bodyBuilderRecurse(new FormData(), data);
-    }
+    // /* Private */
+    // function bodyBuilderFormDataEncode(data) {
+    //     return _bodyBuilderRecurse(new FormData(), data);
+    // }
 
-    /* Private */
-    function bodyBuilderFormUrlEncode(data, self) {
-        // Thanks to: http://blog.gospodarets.com/fetch_in_action/
-        self.requestWithHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
-        return _bodyBuilderRecurse(new URLSearchParams(), data).toString();
-    }
+    // /* Private */
+    // function bodyBuilderFormUrlEncode(data, self) {
+    //     // Thanks to: http://blog.gospodarets.com/fetch_in_action/
+    //     self.requestWithHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+    //     return _bodyBuilderRecurse(new URLSearchParams(), data).toString();
+    // }
 
     /* Private */
     function bodyBuilderJSONEncode(data, self) {
@@ -241,25 +244,25 @@ const XRequestor = (function() {
             return this;
         }
 
-        /**
-         * Get the data set by requestWithData
-         *
-         * @return the data
-         */
-        getRequestedData() {
-            return this.getOption("request.options.data", {});
-        }
+        // /**
+        //  * Get the data set by requestWithData
+        //  *
+        //  * @return the data
+        //  */
+        // getRequestedData() {
+        //     return this.getOption("request.options.data", {});
+        // }
 
-        /**
-         * Add a header to the request.
-         *
-         * If the header already exists, add a second value to it.
-         *
-         * @param key: the start of the header (eg. Content-Type)
-         * @param value: the value of the header (eg. "application/json")
-         *
-         * @return this: to allow chaining
-         */
+        // /**
+        //  * Add a header to the request.
+        //  *
+        //  * If the header already exists, add a second value to it.
+        //  *
+        //  * @param key: the start of the header (eg. Content-Type)
+        //  * @param value: the value of the header (eg. "application/json")
+        //  *
+        //  * @return this: to allow chaining
+        //  */
         requestWithHeader(key, value = null) {
             this._trace("requestWithHeader", key, value);
             this.errorOnFired();
@@ -273,32 +276,32 @@ const XRequestor = (function() {
             return this;
         }
 
-        /**
-         * Add all the headers in this map
-         * Through requestWithHeader
-         *
-         * @return this: to allow chaining
-         */
-        requestWithHeaders(map) {
-            this._trace("requestWithHeaders", map);
-            this.errorOnFired();
-            for (let i of Object.keys(map)) {
-                this.requestWithHeader(i, map[i]);
-            }
-            return this;
-        }
+        // /**
+        //  * Add all the headers in this map
+        //  * Through requestWithHeader
+        //  *
+        //  * @return this: to allow chaining
+        //  */
+        // requestWithHeaders(map) {
+        //     this._trace("requestWithHeaders", map);
+        //     this.errorOnFired();
+        //     for (let i of Object.keys(map)) {
+        //         this.requestWithHeader(i, map[i]);
+        //     }
+        //     return this;
+        // }
 
-        /**
-         * Get the headers already set by the request.
-         *
-         * Please note that some other functions could add some headers
-         * (eg. responseAsJson)
-         *
-         * @return the headers as a "Headers" object
-         */
-        getRequestedHeaders() {
-            return this.getOption("request.options.headers", {});
-        }
+        // /**
+        //  * Get the headers already set by the request.
+        //  *
+        //  * Please note that some other functions could add some headers
+        //  * (eg. responseAsJson)
+        //  *
+        //  * @return the headers as a "Headers" object
+        //  */
+        // getRequestedHeaders() {
+        //     return this.getOption("request.options.headers", {});
+        // }
 
         /**
          * Set the "Verb" of the request (Get/Post/Put/Delete/...)
@@ -403,50 +406,50 @@ const XRequestor = (function() {
             return this;
         }
 
-        /**
-         * Make a "post" request.
-         *
-         * This function set various options
-         *
-         * @return this: to allow chaining
-         */
-        requestWithPost() {
-            this._trace("requestWithPost");
-            this.errorOnFired();
-            this.requestWithMethod("POST");
-            this.requestWithBodyBuilder(bodyBuilderFormDataEncode);
-            return this;
-        }
+        // /**
+        //  * Make a "post" request.
+        //  *
+        //  * This function set various options
+        //  *
+        //  * @return this: to allow chaining
+        //  */
+        // requestWithPost() {
+        //     this._trace("requestWithPost");
+        //     this.errorOnFired();
+        //     this.requestWithMethod("POST");
+        //     this.requestWithBodyBuilder(bodyBuilderFormDataEncode);
+        //     return this;
+        // }
 
-        /**
-         * Make a "post" request.
-         *
-         * This function set various options
-         *
-         * @return this: to allow chaining
-         */
-        requestWithPostWithJSONBody() {
-            this._trace("requestWithPostWithJSONBody");
-            this.errorOnFired();
-            this.requestWithMethod("POST");
-            this.requestWithBodyBuilder(bodyBuilderJSONEncode);
-            return this;
-        }
+        // /**
+        //  * Make a "post" request.
+        //  *
+        //  * This function set various options
+        //  *
+        //  * @return this: to allow chaining
+        //  */
+        // requestWithPostWithJSONBody() {
+        //     this._trace("requestWithPostWithJSONBody");
+        //     this.errorOnFired();
+        //     this.requestWithMethod("POST");
+        //     this.requestWithBodyBuilder(bodyBuilderJSONEncode);
+        //     return this;
+        // }
 
-        /**
-         * Make a "put" request.
-         *
-         * This function set various options
-         *
-         * @return this: to allow chaining
-         */
-        requestWithPut() {
-            this._trace("requestWithPut");
-            this.errorOnFired();
-            this.requestWithMethod("PUT");
-            this.requestWithBodyBuilder(bodyBuilderFormUrlEncode);
-            return this;
-        }
+        // /**
+        //  * Make a "put" request.
+        //  *
+        //  * This function set various options
+        //  *
+        //  * @return this: to allow chaining
+        //  */
+        // requestWithPut() {
+        //     this._trace("requestWithPut");
+        //     this.errorOnFired();
+        //     this.requestWithMethod("PUT");
+        //     this.requestWithBodyBuilder(bodyBuilderFormUrlEncode);
+        //     return this;
+        // }
 
         /**
          * Make a "put" request.
@@ -463,35 +466,35 @@ const XRequestor = (function() {
             return this;
         }
 
-        /**
-         * Make a "delete" request.
-         *
-         * This function set various options
-         *
-         * @return this: to allow chaining
-         */
-        requestWithDelete() {
-            this._trace("requestWithDelete");
-            this.errorOnFired();
-            this.requestWithPut();
-            this.requestWithMethod("DELETE");
-            return this;
-        }
+        // /**
+        //  * Make a "delete" request.
+        //  *
+        //  * This function set various options
+        //  *
+        //  * @return this: to allow chaining
+        //  */
+        // requestWithDelete() {
+        //     this._trace("requestWithDelete");
+        //     this.errorOnFired();
+        //     this.requestWithPut();
+        //     this.requestWithMethod("DELETE");
+        //     return this;
+        // }
 
-        /**
-         * Make a "delete" request.
-         *
-         * This function set various options
-         *
-         * @return this: to allow chaining
-         */
-        requestWithDeleteWithJSONBody() {
-            this._trace("requestWithDeleteWithJSONBody");
-            this.errorOnFired();
-            this.requestWithPutWithJSONBody();
-            this.requestWithMethod("DELETE");
-            return this;
-        }
+        // /**
+        //  * Make a "delete" request.
+        //  *
+        //  * This function set various options
+        //  *
+        //  * @return this: to allow chaining
+        //  */
+        // requestWithDeleteWithJSONBody() {
+        //     this._trace("requestWithDeleteWithJSONBody");
+        //     this.errorOnFired();
+        //     this.requestWithPutWithJSONBody();
+        //     this.requestWithMethod("DELETE");
+        //     return this;
+        // }
 
         /*********************** Response handling **********************/
         /**
@@ -601,14 +604,6 @@ const XRequestor = (function() {
     const errorMsg   = Symbol("errorMsg");
 
     class XRequestor extends JHElement {
-        // static get properties() {
-        //     return {
-        //         url:    "String",
-        //         method: "String",
-        //         data:   "Object"
-        //     }
-        // }
-
         constructor() {
             super();
             this.attachShadow({ mode: 'open' });

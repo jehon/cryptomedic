@@ -5,6 +5,12 @@ describe('x-form-test', function() {
 		it("should be initialized", function() {
 			expect(element()).not.toBeNull();
 		})
+
+		it("should not submit", function(done) {
+			// Submit would reload the page...
+			element().querySelector("input[type=submit]").click();
+			done();
+		});
 	});
 
 	webDescribe("with simple inputs", `<x-form>
