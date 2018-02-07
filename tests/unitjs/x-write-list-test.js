@@ -3,6 +3,60 @@ describe('x-write-list-test', function() {
     const listRadio = ['truc', 'brol', 'machin', 'chose'];
     const listSelect = ['truc', 'brol', 'machin', 'chose', 'bazar', 'ça', 'là'];
 
+    const checkRadio = (el, v) => {
+        // Are we set?
+        expect(el).not.toBeNull();
+        expect(el.shadowRoot.querySelector('input[type=radio]')).not.toBeNull();
+        expect(el.shadowRoot.querySelector('select')).toBeNull();
+        expect(el.getAttribute('mode')).toBe("radio");
+
+        // Check the value
+        expect(el.shadowRoot.querySelector('input[type=radio][value="' + v + '"]')).not.toBeNull();
+        expect(el.shadowRoot.querySelector('input[type=radio][value="' + v + '"]').hasAttribute('checked')).toBeTruthy();
+    }
+
+    const checkRadioNull = (el) => {
+        // Are we set?
+        expect(el).not.toBeNull();
+
+        // Check the mode
+        expect(el.shadowRoot.querySelector('input[type=radio]')).not.toBeNull();
+        expect(el.shadowRoot.querySelector('select')).toBeNull();
+        expect(el.getAttribute('mode')).toBe("radio");
+
+        // Check the value
+        expect(el.shadowRoot.querySelector('input[type=radio][value=""]').hasAttribute('checked')).toBeTruthy();
+        expect(el.value).toBe(null);
+    }
+
+    const checkSelect = (el, v) => {
+        // Are we set?
+        expect(el).not.toBeNull();
+
+        // Check the mode
+        expect(el.shadowRoot.querySelector('input[type=radio]')).toBeNull();
+        expect(el.shadowRoot.querySelector('select')).not.toBeNull();
+        expect(el.getAttribute('mode')).toBe("select");
+
+        // Check the value
+        expect(el.shadowRoot.querySelector('select').value).toBe(v);
+        expect(el.value).toBe(v);
+    }
+
+    const checkSelectNull = (el) => {
+        // Are we set?
+        expect(el).not.toBeNull();
+
+        // Check the mode
+        expect(el.shadowRoot.querySelector('input[type=radio]')).toBeNull();
+        expect(el.shadowRoot.querySelector('select')).not.toBeNull();
+        expect(el.getAttribute('mode')).toBe("select");
+
+        // Check the value
+        expect(el.shadowRoot.querySelector('select').value).toBe('');
+        expect(el.value).toBe(null);
+    }
+
     describe("without lists initialized", function() {
         beforeEach(function() {
             store.dispatch({ type: "ACT_DEFINITIONS_STORE", payload: {} });
@@ -20,60 +74,6 @@ describe('x-write-list-test', function() {
                 listSelect: listSelect
             }}});
         });
-
-        let checkRadio = (el, v) => {
-            // Are we set?
-            expect(el).not.toBeNull();
-            expect(el.shadowRoot.querySelector('input[type=radio]')).not.toBeNull();
-            expect(el.shadowRoot.querySelector('select')).toBeNull();
-            expect(el.getAttribute('mode')).toBe("radio");
-
-            // Check the value
-            expect(el.shadowRoot.querySelector('input[type=radio][value="' + v + '"]')).not.toBeNull();
-            expect(el.shadowRoot.querySelector('input[type=radio][value="' + v + '"]').hasAttribute('checked')).toBeTruthy();
-        }
-
-        let checkRadioNull = (el) => {
-            // Are we set?
-            expect(el).not.toBeNull();
-
-            // Check the mode
-            expect(el.shadowRoot.querySelector('input[type=radio]')).not.toBeNull();
-            expect(el.shadowRoot.querySelector('select')).toBeNull();
-            expect(el.getAttribute('mode')).toBe("radio");
-
-            // Check the value
-            expect(el.shadowRoot.querySelector('input[type=radio][value=""]').hasAttribute('checked')).toBeTruthy();
-            expect(el.value).toBe(null);
-        }
-
-        let checkSelect = (el, v) => {
-            // Are we set?
-            expect(el).not.toBeNull();
-
-            // Check the mode
-            expect(el.shadowRoot.querySelector('input[type=radio]')).toBeNull();
-            expect(el.shadowRoot.querySelector('select')).not.toBeNull();
-            expect(el.getAttribute('mode')).toBe("select");
-
-            // Check the value
-            expect(el.shadowRoot.querySelector('select').value).toBe(v);
-            expect(el.value).toBe(v);
-        }
-
-        let checkSelectNull = (el) => {
-            // Are we set?
-            expect(el).not.toBeNull();
-
-            // Check the mode
-            expect(el.shadowRoot.querySelector('input[type=radio]')).toBeNull();
-            expect(el.shadowRoot.querySelector('select')).not.toBeNull();
-            expect(el.getAttribute('mode')).toBe("select");
-
-            // Check the value
-            expect(el.shadowRoot.querySelector('select').value).toBe('');
-            expect(el.value).toBe(null);
-        }
 
         webDescribe("with emtpy list", `<x-write-list value='machin' list=''></x-write-list>`, function(element) {
             it("should render", function() {
