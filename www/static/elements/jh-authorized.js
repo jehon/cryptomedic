@@ -2,7 +2,7 @@
 
   let authorizedListCB = jQuery.Callbacks("memory");
 
-  class JHAuthorized extends HTMLElement {
+  class JHAuthorized extends JHElement {
     // constructor() {
     //   super();
     //   this.authorizedList = [];
