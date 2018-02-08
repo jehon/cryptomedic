@@ -1,7 +1,7 @@
 
 describe('x-write-list-test', function() {
-    const listRadio = ['truc', 'brol', 'machin', 'chose'];
-    const listSelect = ['truc', 'brol', 'machin', 'chose', 'bazar', 'ça', 'là'];
+    const listRadio = [ 'truc', 'brol', 'machin', 'chose' ];
+    const listSelect = [ 'truc', 'brol', 'machin', 'chose', 'bazar', 'ça', 'là' ];
 
     const checkRadio = (el, v) => {
         // Are we set?
@@ -223,5 +223,114 @@ describe('x-write-list-test', function() {
                 expect(element().value).toBe(null);
             });
         })
+    });
+
+    describe("with following", function() {
+        beforeEach(function() {
+            store.dispatch({ type: "ACT_DEFINITIONS_STORE", payload: { lists: {
+                listRadio,
+                listSelect
+            }, associations: {
+                'cat.machin': listSelect,
+                'cat.chose': listRadio
+            }}});
+        });
+
+        webDescribe("should handle named list", `<div>
+                    <x-write-list id='master' value='machin' list-name='listRadio'></x-write-list>
+                    <x-write-list id='slave'  value='truc'   list='${JSON.stringify(listSelect)}'></x-write-list>
+                </div>`, function(element) {
+            it("should instanciated", function() {
+                const master = element().querySelector("#master");
+                const slave  = element().querySelector("#slave");
+                checkRadio(master, 'machin');
+                checkSelect(slave,  'truc');
+                expect(slave.list).toEqual(listSelect);
+                expect(slave.value).toBe("truc");
+
+                slave.follow(master, 'cat');
+                expect(slave.list).toEqual(listSelect);
+                expect(slave.value).toBe("truc");
+
+                master.value = 'chose';
+                master.fire("blur");
+
+                expect(master.value).toBe("chose");
+                expect(slave.list).toEqual(listRadio);
+                expect(slave.value).toBe("truc");
+            });
+
+            it("should add 'the value' if it does not exists in the new list", function() {
+                const master = element().querySelector("#master");
+                const slave  = element().querySelector("#slave");
+
+                slave.follow(master, 'cat');
+
+                slave.value = "ça";
+                expect(slave.value).toBe("ça");
+
+                master.value = 'chose';
+                master.fire("blur");
+
+                expect(master.value).toBe("chose");
+                expect(slave.list).toEqual([ "ça" ].concat(listRadio));
+                expect(slave.value).toBe("ça");
+            });
+
+            it("should add '.other' if it exists", function() {
+                const def = store.getState().definitions;
+                def.associations['cat.other'] = [ "other" ];
+
+                const master = element().querySelector("#master");
+                const slave  = element().querySelector("#slave");
+                slave.follow(master, 'cat');
+
+                master.value = 'chose';
+                master.fire("blur");
+
+                expect(master.value).toBe("chose");
+                expect(slave.list).toEqual(listRadio.concat([ "other" ]));
+                expect(slave.value).toBe("truc");
+
+                master.value = 'truc';
+                master.fire("blur");
+
+                expect(master.value).toBe("truc");
+                expect(slave.list).toEqual([ "truc", "other" ]);
+                expect(slave.value).toBe("truc");
+            })
+        });
+
+        webDescribe("should error if a named list is specified as slave", `<div>
+                    <x-write-list id='master' value='machin' list-name='listRadio'></x-write-list>
+                    <x-write-list id='slave'  value='truc'   list-name='listRadio'></x-write-list>
+                </div>`, function(element) {
+            beforeEach(function() {
+                spyOn(console, "error");
+            });
+            it("should show an error", function() {
+                const master = element().querySelector("#master");
+                const slave  = element().querySelector("#slave");
+                slave.follow(master, 'cat');
+                expect(console.error).toHaveBeenCalled();
+            });
+        });
+
+        webDescribe("should works if no store definitions is present", `<div>
+                    <x-write-list id='master' value='machin' list-name='listRadio'></x-write-list>
+                    <x-write-list id='slave'  value='truc'   list='${JSON.stringify(listSelect)}'></x-write-list>
+                </div>`, function(element) {
+            beforeEach(function() {
+                store.dispatch({ type: ACT_DEFINITIONS_STORE, payload: {} });
+            });
+            it("should not show an error", function() {
+                const master = element().querySelector("#master");
+                const slave  = element().querySelector("#slave");
+                slave.follow(master, 'cat');
+
+                master.value = 'chose';
+                master.fire("blur");
+            });
+        });
     });
 });
