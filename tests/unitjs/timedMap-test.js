@@ -1,7 +1,7 @@
 'use strict';
 /* global  TimedMap */
 
-describe('test-TimedMap', function() {
+describe('timedMap-test', function() {
   it("should exists a timeCache class", () => {
     expect((new TimedMap()) instanceof TimedMap).toBeTruthy();
   });
