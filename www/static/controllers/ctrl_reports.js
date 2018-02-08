@@ -20,7 +20,6 @@ function ctrl_reports($scope, $routeParams, $sce) {
     $scope.values['period'] = 'month';
   }
 
-
   $scope.reports = {
     'activity': {
       name: 'Activity (daily/monthly) Report',
@@ -148,8 +147,6 @@ function ctrl_reports($scope, $routeParams, $sce) {
         $scope.safeApply();
       });
   };
-
-  $scope.refresh();
 
   $scope.generate = function($event) {
     document.querySelectorAll("#report_table .online").forEach(el => el.parentNode.removeChild(el));
