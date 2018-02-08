@@ -111,6 +111,5 @@
 			setListFrom("District", "Upazilla", "district");
 			setListFrom("Upazilla", "Union_", "upazilla");
 		});
-
  	</jh-script>
 </div>

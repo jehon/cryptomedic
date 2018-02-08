@@ -1,6 +1,9 @@
 
 XWriteList = (function() {
 
+    const followedElement  = Symbol("followedElement");
+    const followedCategory = Symbol("followedCategory");
+
     let referencesCB = jQuery.Callbacks("memory");
     store.subscribe(() => {
         const data = store.getState();
@@ -32,6 +35,7 @@ XWriteList = (function() {
             this.references = {};
 
             this._uuid = uuid++;
+            this[followedElement] = false;
 
             referencesCB.add((references) => {
                 this.references = references;
@@ -215,6 +219,47 @@ XWriteList = (function() {
                 this._value = null;
             }
             return this._value;
+        }
+
+        follow(followed, category) {
+            this[followedElement]  = followed;
+            this[followedCategory] = category;
+            this[followedElement].addEventListener("blur", () => this._adaptToFollowed());
+            if(this._listName) {
+                console.error("You could not follow another item if you have a list-name: ", this._listName);
+                this._listName = JHElement.defaultValue("String");
+            }
+        }
+
+        _adaptToFollowed() {
+            const definitions = store.getState().definitions;
+            if (!definitions || !definitions.associations) {
+                return;
+            }
+
+            const val = this[followedElement].value;
+            let list = [];
+            // Take the first associated value
+            if (definitions.associations[`${this[followedCategory]}.${val}`]) {
+                list = list.concat(definitions.associations[`${this[followedCategory]}.${val}`]);
+            }
+
+            // Add the "other" of the category
+            if (definitions.associations[`${this[followedCategory]}.other`]) {
+                list = list.concat(definitions.associations[`${this[followedCategory]}.other`]);
+            }
+
+            // Add the current value, if selected and not in the list
+            const current = this.value;
+            // If the current is already selected, add it to the list to keep it...
+            // if (current) {
+            if (list.indexOf(current) < 0) {
+                list = [current].concat(list);
+                }
+            // }
+
+            // Commit
+            this.list = list;
         }
     }
 
