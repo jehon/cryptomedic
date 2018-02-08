@@ -1,4 +1,7 @@
 /* exported nullify */
+
+// Is this obsolete?
+
 function nullify(what) {
   switch(typeof(what)) {
     case 'string':
