@@ -94,6 +94,8 @@
 		</div>
 	</div>
 	<jh-script>
+		// Obsolete by x-write-list.follow()
+
 	    document.querySelectorAll("x-write-list[name=District]").forEach(el => {
 	    	el.addEventListener("changed", function() {
 				setListFrom("District", "Upazilla", "district");

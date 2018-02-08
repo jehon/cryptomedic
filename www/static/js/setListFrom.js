@@ -1,3 +1,5 @@
+// Obsolete by x-write-list.follow()
+
 function setListFrom(origin, target, category) {
     const definitions = store.getState().definitions;
 
