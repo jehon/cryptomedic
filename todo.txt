@@ -1,0 +1,22 @@
+
+Remove Polymer:
+- loginStatus.html -> activate x-login-status
+- data-service.html -> use x-requestor?
+-> in karma/app.js:
+	+ remove polyfill
+	+ remove polymer
+	+ remove fetchfull-element
+
+Remove template.php
+- how to render external templates? -> eval ?
+
+Remove Angular:
+- migrate reports
+- migrate home page
+- migrate various files
+
+- html2canvas:
+https://www.npmjs.com/package/html2canvas
+
+- jhcodage
+use the JHElement
