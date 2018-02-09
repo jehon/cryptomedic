@@ -4,18 +4,22 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const webpack = require('webpack');
 const path = require('path');
 const fs = require('fs');
+const fse = require('fs-extra');
 const www = path.resolve(__dirname, 'www');
 const build = "build";
 
 const released_version = (new Date()).toISOString();
 
 fs.writeFileSync(__dirname + "/www/release_version.txt", released_version);
+fse.copySync(__dirname + "/node_modules/bootstrap/dist/", __dirname + "/www/build/bootstrap");
 
 module.exports = {
-	entry: www + '/app.js',
+	entry: { 
+		app: www + '/app.js',
+	},
 	output: {
 		path: www,
-		filename: `${build}/bundle.js`
+		filename: `${build}/[name].js`
 	},
 	plugins: [
 		new CleanWebpackPlugin([ build ]),
