@@ -1,5 +1,11 @@
 
 describe("jh-element-test", function() {
+    describe("on static function", function() {
+        it("should handle css", function() {
+            expect(JHElement.getCss()).toContain("stylesheet");
+        })
+    })
+
     // Instanciate a real element to test properties...
     class JHElementTest extends JHElement {
         static get properties() {
