@@ -60,12 +60,7 @@ let JHElement = (function() {
             super();
             this[initialized] = false;
 
-            // We have to set it to be "inline-block" to have some dimensions for "formGetContent"
-            if (!this.style.display) {
-                this.style.display = 'inline-block';
-            }
-
-            if(this.constructor.properties) {
+            if (this.constructor.properties) {
                 Object.keys(this.constructor.properties).forEach(k => {
                     const ki = '_' + k;
                     this[ki] = JHElement.defaultValue(this.constructor.properties[k]);
@@ -141,6 +136,12 @@ let JHElement = (function() {
                 // Comomn render functions
                 // here to avoid calling "super" everywhere in all render()
                 this[initialized] = true;
+
+                // We have to set it to be "inline-block" to have some dimensions for "formGetContent"
+                if (!this.style.display) {
+                    this.style.display = 'inline-block';
+                }
+
                 this.render();
             }
             this.adapt();
