@@ -611,8 +611,8 @@ const XRequestor = (function() {
             this.shadowRoot.innerHTML = `
             <span>
                 <x-overlay closable z-index=20 >
-                    <h1 id='errorMsg'>Network error</h1>
-                    <div id='errorContent'></h3>
+                    <h1 id='errorMsg'></h1>
+                    <div id='errorContent'></div>
                 </x-overlay>
                 <x-waiting>
                     <slot></slot>
@@ -698,24 +698,27 @@ const XRequestor = (function() {
                             html += `<tr><td>Message</td><td>${message.statusMessage}</td></tr>`;
                         }
                     }
+                } else if (message instanceof TypeError) {
+                    this[errorMsg].innerHTML = "Network Error";
+                    html += `<tr><td>Message</td><td>
+                    Something went very wrong on your network. Please check:<br>
+                    <ul>
+                        <li>that you have an internet connection</li>
+                        <li>that your connection is really working</li>
+                    </ul>
+                    In other case, please reload the page and try again..
+                    <a href="javascript:window.location.reload()">Reload the page here</a></td></tr>`;
                 } else {
                     // Complex message
                     Object.keys(message).forEach(k => {
                         // Part message in a table
                         html += `<tr><td>${k}</td><td>${message[k]}</td></tr>`;
                     })
-                    html += "</table>";
                 }
+                html += "</table>";
                 this[errorContent].innerHTML = html;
             } else {
                 // String message
-                this[errorMsg].innerHTML = "Network Error";
-                this[errorContent].innerHTML = `
-                Something went very wrong on your network. Please check:<br>
-                - that you have an internet connection<br>
-                - that your connection is really workign<br>
-                In other case, please reload the page and try again...<br>
-                <a javascript="window.reload()">Reload the page here</a>`;
             }
         }
     }
