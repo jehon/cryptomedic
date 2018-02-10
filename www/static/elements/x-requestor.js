@@ -116,9 +116,11 @@ const XRequestor = (function() {
      */
     const storage = Symbol("storage");
 
+    class TimeoutException {}
+
     class FetchFull {
         static get TimeoutException() {
-            return class TimeoutException {};
+            return TimeoutException;
         }
 
         constructor() {
@@ -636,7 +638,7 @@ const XRequestor = (function() {
             return this[error].isBlocked();
         }
 
-        request({ url = "/", data = {}, method = "GET", timeout = 30 } = {}) {
+        request({ url = "/", data = {}, method = "GET", timeout = 3 } = {}) {
             this[waiting].block();
 
             if (url[0] != "/") {
@@ -698,6 +700,9 @@ const XRequestor = (function() {
                             html += `<tr><td>Message</td><td>${message.statusMessage}</td></tr>`;
                         }
                     }
+                } else if (message instanceof FetchFull.TimeoutException) {
+                    this[errorMsg].innerHTML = "Time-out";
+                    html += `<tr><td>Message</td><td>Is your network connection ok?</td></tr>`;
                 } else if (message instanceof TypeError) {
                     this[errorMsg].innerHTML = "Network Error";
                     html += `<tr><td>Message</td><td>
