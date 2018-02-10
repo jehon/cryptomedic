@@ -599,9 +599,10 @@ const XRequestor = (function() {
     }
 
 
-    const error      = Symbol("error");
-    const waiting    = Symbol("waiting");
-    const errorMsg   = Symbol("errorMsg");
+    const error        = Symbol("error");
+    const waiting      = Symbol("waiting");
+    const errorMsg     = Symbol("errorMsg");
+    const errorContent = Symbol("errorContent");
 
     class XRequestor extends JHElement {
         constructor() {
@@ -610,24 +611,18 @@ const XRequestor = (function() {
             this.shadowRoot.innerHTML = `
             <span>
                 <x-overlay closable z-index=20 >
-                    <h1>Network error</h1>
-                    <div>
-                        Something went very wrong on your network. Please check:<br>
-                        - that you have an internet connection<br>
-                        - that your connection is really workign<br>
-                        In other case, please reload the page and try again...<br>
-                        <a javascript="window.reload()">Reload the page here</a>
-                        <h3 id='errorMsg'></h3>
-                    </div>
+                    <h1 id='errorMsg'>Network error</h1>
+                    <div id='errorContent'></h3>
                 </x-overlay>
                 <x-waiting>
                     <slot></slot>
                 </x-waiting>
             </span>`;
 
-            this[waiting]  = this.shadowRoot.querySelector("x-waiting");
-            this[error]    = this.shadowRoot.querySelector("x-overlay");
-            this[errorMsg] = this.shadowRoot.querySelector("#errorMsg");
+            this[waiting]      = this.shadowRoot.querySelector("x-waiting");
+            this[error]        = this.shadowRoot.querySelector("x-overlay");
+            this[errorMsg]     = this.shadowRoot.querySelector("#errorMsg");
+            this[errorContent] = this.shadowRoot.querySelector("#errorContent");
 
             this[waiting].free();
             this[error].free();
@@ -678,18 +673,49 @@ const XRequestor = (function() {
         showFailure(message) {
             this[waiting].free();
             this[error].block();
+            this[errorMsg].innerHTML = "Network error";
             if (typeof(message) == "object") {
-                // Complex message
-                let html = "<table>";
-                Object.keys(message).forEach(k => {
-                    // Part message in a table
-                    html += `<tr><td>${k}</td><td>${message[k]}</td></tr>`;
-                })
-                html += "</table>";
-                this[errorMsg].innerHTML = html;
+                let html = "<table style='width: 300px'>";
+                if (message instanceof Response) {
+                    if (message.status) {
+                        html += `<tr><td>Status code</td><td>${message.status}</td></tr>`;
+                        switch(message.status) {
+                            case 404:
+                                this[errorMsg].innerHTML = "Not found";
+                                html += `<tr><td>Message</td><td>The element you are looking was not found.</td></tr>`;
+                                break;
+                            case 500:
+                                this[errorMsg].innerHTML = "Internal Server Error";
+                                html += `<tr><td>Message</td><td>An error occured on the server. Please try again. If the problem persist, please report it.</td></tr>`;
+                                break;
+                            default:
+                                this[errorMsg].innerHTML = "Error";
+                                html += `<tr><td>Message</td><td>${message.statusMessage}</td></tr>`;
+                                break;
+                        }
+                    } else {
+                        if (message.statusMessage) {
+                            html += `<tr><td>Message</td><td>${message.statusMessage}</td></tr>`;
+                        }
+                    }
+                } else {
+                    // Complex message
+                    Object.keys(message).forEach(k => {
+                        // Part message in a table
+                        html += `<tr><td>${k}</td><td>${message[k]}</td></tr>`;
+                    })
+                    html += "</table>";
+                }
+                this[errorContent].innerHTML = html;
             } else {
                 // String message
-                this[errorMsg].innerHTML = message;
+                this[errorMsg].innerHTML = "Network Error";
+                this[errorContent].innerHTML = `
+                Something went very wrong on your network. Please check:<br>
+                - that you have an internet connection<br>
+                - that your connection is really workign<br>
+                In other case, please reload the page and try again...<br>
+                <a javascript="window.reload()">Reload the page here</a>`;
             }
         }
     }
