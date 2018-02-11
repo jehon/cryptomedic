@@ -53,6 +53,10 @@ h1>img {
  margin-right: 20px;
 }
 
+x-login-status {
+	height: 25px;
+}
+
 /********************************************
  * Reports
  */

@@ -17,7 +17,7 @@
 				<span>
 					${JHElement.getCss()}
 					<span id='user'></span>
-					<img id='logout' src="/static/img/logout.gif" />
+					<img id='logout' style='height: 100%' src="/static/img/logout.gif" />
 					<x-requestor></x-requestor>
 					<x-overlay z-index=15 >
 				    	<x-form class="form-signing" role="form">
