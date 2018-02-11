@@ -57,8 +57,7 @@ let JHElement = (function() {
         }
 
         static getCss() {
-            return `<link rel="stylesheet" type="text/css" href="/build/bootstrap/css/bootstrap.min.css">
-            `;
+            return `<link rel="stylesheet" type="text/css" href="/build/bootstrap/css/bootstrap.min.css">`;
         }
 
         constructor() {
