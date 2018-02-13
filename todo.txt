@@ -1,11 +1,10 @@
 
 [en cours] Remove Polymer:
-[en cours] - loginStatus.html -> activate x-login-status
-- data-service.html -> use x-requestor?
--> in karma/app.js:
-	+ remove polyfill
-	+ remove polymer
-	+ remove fetchfull-element
+[en cours] - loginStatus.html -> activate x-login-status (e2e)
+[        ] - data-service.html -> use x-requestor?
+[        ] - in karma/app.js:
+[        ] 	 - remove polymer
+[        ] 	 - remove fetchfull-element
 
 
 Remove template.php
