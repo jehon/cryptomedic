@@ -158,18 +158,22 @@ describe('x-form-test', function() {
 
 		it("should handle messages", function() {
 			expect(element().shadowRoot.querySelectorAll(".alert").length).toBe(0);
+			expect(element().hasMessages()).toBeFalsy();
 
 			element().showMessages([ "test" ]);
 			expect(element().shadowRoot.querySelectorAll(".alert").length).toBe(1);
 			expect(element().shadowRoot.querySelector(".alert").innerText).toBe("test");
+			expect(element().hasMessages()).toBeTruthy();
 
 			element().showMessages([ "another" ]);
 			expect(element().shadowRoot.querySelectorAll(".alert").length).toBe(1);
 			expect(element().shadowRoot.querySelector(".alert").innerText).toBe("another");
+			expect(element().hasMessages()).toBeTruthy();
 
 			element().showMessages([]);
 			expect(element().shadowRoot.querySelectorAll(".alert").length).toBe(0);
-		})
+			expect(element().hasMessages()).toBeFalsy();
+		});
 	});
 
 

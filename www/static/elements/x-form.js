@@ -15,11 +15,13 @@
 		constructor() {
 			super();
 			this.attachShadow({ mode: 'open' });
-			this.shadowRoot.innerHTML = `<div class='container-fluid'>
-			  	<div class='row'>
-			    </div>
-			</div>
-			<slot></slot>`;
+			this.shadowRoot.innerHTML = `
+			<slot></slot>
+			<br/>
+			${JHElement.getCss()}
+			<div class='container-fluid'>
+			  	<div class='row'></div>
+			</div>`;
 			this[messages] = this.shadowRoot.querySelector(".row");
 		}
 
@@ -151,6 +153,10 @@
 			list.forEach(msg => {
 				this[messages].insertAdjacentHTML("beforeend", `<div class='alert alert-danger'>${msg}</div>`);
 			});
+		}
+
+		hasMessages() {
+			return this[messages].innerHTML.length > 0;
 		}
 
 		// onEditChanged() {
