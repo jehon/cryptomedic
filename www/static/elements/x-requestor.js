@@ -2,6 +2,67 @@
 // TODO: general error handler
 
 const XRequestor = (function() {
+    // const httpStatusMessages = {};
+    // httpStatusMessages[400] = 'Bad Request';
+    // httpStatusMessages[401] = 'Unauthorized';
+    // httpStatusMessages[402] = 'Payment Required';
+    // httpStatusMessages[403] = 'Forbidden';
+    // httpStatusMessages[404] = 'Not Found';
+    // httpStatusMessages[405] = 'Method Not Allowed';
+    // httpStatusMessages[406] = 'Not Acceptable';
+    // httpStatusMessages[407] = 'Proxy Authentication Required';
+    // httpStatusMessages[408] = 'Request Timeout';
+    // httpStatusMessages[409] = 'Conflict';
+    // httpStatusMessages[410] = 'Gone';
+    // httpStatusMessages[411] = 'Length Required';
+    // httpStatusMessages[412] = 'Precondition Failed';
+    // httpStatusMessages[413] = 'Request Entity Too Large';
+    // httpStatusMessages[414] = 'Request URI Too Long';
+    // httpStatusMessages[415] = 'Unsupported Media Type';
+    // httpStatusMessages[416] = 'Requested Range Not Satisfiable';
+    // httpStatusMessages[417] = 'Expectation Failed';
+    // httpStatusMessages[418] = 'I\'m a Teapot';
+    // httpStatusMessages[419] = 'Authentication Timeout';
+    // httpStatusMessages[420] = 'Enhance Your Calm';
+    // httpStatusMessages[422] = 'Unprocessable Entity';
+    // httpStatusMessages[423] = 'Locked';
+    // httpStatusMessages[424] = 'Method Failure';
+    // httpStatusMessages[424] = 'Failed Dependency';
+    // httpStatusMessages[425] = 'Unordered Collection';
+    // httpStatusMessages[426] = 'Upgrade Required';
+    // httpStatusMessages[428] = 'Precondition Required';
+    // httpStatusMessages[429] = 'Too Many Requests';
+    // httpStatusMessages[431] = 'Request Header Fields Too Large';
+    // httpStatusMessages[440] = 'Login Timeout';
+    // httpStatusMessages[444] = 'No Response';
+    // httpStatusMessages[449] = 'Retry With';
+    // httpStatusMessages[450] = 'Blocked By Windows Parental Controls';
+    // httpStatusMessages[451] = 'Redirect';
+    // httpStatusMessages[451] = 'Unavailable For Legal Reasons';
+    // httpStatusMessages[494] = 'Request Header Too Large';
+    // httpStatusMessages[495] = 'Cert Error';
+    // httpStatusMessages[496] = 'No Cert';
+    // httpStatusMessages[497] = 'HTTP To HTTPS';
+    // httpStatusMessages[499] = 'Client Closed Request';
+    // httpStatusMessages[500] = 'Internal Server Error';
+    // httpStatusMessages[501] = 'Not Implemented';
+    // httpStatusMessages[502] = 'Bad Gateway';
+    // httpStatusMessages[503] = 'Service Unavailable';
+    // httpStatusMessages[504] = 'Gateway Timeout';
+    // httpStatusMessages[505] = 'HTTP Version Not Supported';
+    // httpStatusMessages[506] = 'Variant Also Negotiates';
+    // httpStatusMessages[507] = 'Insufficient Storage';
+    // httpStatusMessages[508] = 'Loop Detected';
+    // httpStatusMessages[509] = 'Bandwidth Limit Exceeded';
+    // httpStatusMessages[510] = 'Not Extended';
+    // httpStatusMessages[511] = 'Network Authentication Required';
+    // httpStatusMessages[520] = 'Origin Error';
+    // httpStatusMessages[522] = 'Connection Timed Out';
+    // httpStatusMessages[523] = 'Proxy Declined Request';
+    // httpStatusMessages[524] = 'A Timeout Occured';
+    // httpStatusMessages[598] = 'Network Read Timeout Error';
+    // httpStatusMessages[599] = 'Network Connect Timeout Error';
+
     /* Private */
     function filterParameter(fnName, value, allowed) {
         if (allowed.indexOf(value) < 0) {
@@ -679,27 +740,9 @@ const XRequestor = (function() {
             if (typeof(message) == "object") {
                 let html = "<table style='width: 300px'>";
                 if (message instanceof Response) {
-                    if (message.status) {
-                        html += `<tr><td>Status code</td><td>${message.status}</td></tr>`;
-                        switch(message.status) {
-                            case 404:
-                                this[errorMsg].innerHTML = "Not found";
-                                html += `<tr><td>Message</td><td>The element you are looking was not found.</td></tr>`;
-                                break;
-                            case 500:
-                                this[errorMsg].innerHTML = "Internal Server Error";
-                                html += `<tr><td>Message</td><td>An error occured on the server. Please try again. If the problem persist, please report it.</td></tr>`;
-                                break;
-                            default:
-                                this[errorMsg].innerHTML = "Error";
-                                html += `<tr><td>Message</td><td>${message.statusMessage}</td></tr>`;
-                                break;
-                        }
-                    } else {
-                        if (message.statusMessage) {
-                            html += `<tr><td>Message</td><td>${message.statusMessage}</td></tr>`;
-                        }
-                    }
+                    this[errorMsg].innerHTML = message.statusText;
+                    html += `<tr><td>Status code</td><td>${message.status}</td></tr>`;
+                    // html += `<tr><td>Status text</td><td>${message.statusText}</td></tr>`;
                 } else if (message instanceof FetchFull.TimeoutException) {
                     this[errorMsg].innerHTML = "Time-out";
                     html += `<tr><td>Message</td><td>Is your network connection ok?</td></tr>`;
@@ -718,12 +761,13 @@ const XRequestor = (function() {
                     Object.keys(message).forEach(k => {
                         // Part message in a table
                         html += `<tr><td>${k}</td><td>${message[k]}</td></tr>`;
-                    })
+                    });
                 }
                 html += "</table>";
                 this[errorContent].innerHTML = html;
             } else {
                 // String message
+                this[errorMsg].innerHTML = message;
             }
         }
     }

@@ -1,5 +1,13 @@
 
 describe("tests/unit/x-requestor-test.js", function() {
+	const buildErrorResponse = function(status = 200, message = false) {
+		const response = new Response(JSON.stringify(), {
+			status: status,
+			statusText: message
+		});
+		return response;
+	}
+
 	webDescribe("initialized", `<x-requestor><div style='width: 200px; height: 100px; background-color: red;'>Content</div></x-requestor>`, function(element) {
 		it("should be hidden when initialized simply", function() {
 			expect(element().shadowRoot.querySelector("x-waiting").isBlocked()).toBeFalsy();
@@ -79,12 +87,27 @@ describe("tests/unit/x-requestor-test.js", function() {
 			});
 
 			it("should display object messages when requested", function() {
-				this.jh_keep = true;
 				element().showFailure({ label: "Test message" });
 				expect(element().isRequesting()).toBeFalsy();
 				expect(element().isFailed()).toBeTruthy();
-				expect(element().shadowRoot.querySelector("#errorMsg").innerText).toContain("label");
-				expect(element().shadowRoot.querySelector("#errorMsg").innerText).toContain("Test message");
+				expect(element().shadowRoot.querySelector("#errorContent").innerText).toContain("label");
+				expect(element().shadowRoot.querySelector("#errorContent").innerText).toContain("Test message");
+			});
+
+			it("should display response messages when requested", function() {
+				element().showFailure(buildErrorResponse(404, "Not Found"));
+				expect(element().isRequesting()).toBeFalsy();
+				expect(element().isFailed()).toBeTruthy();
+				expect(element().shadowRoot.querySelector("#errorMsg").innerText).toContain("Not Found");
+				expect(element().shadowRoot.querySelector("#errorContent").innerText).toContain("404");
+			});
+
+			it("should display TypeError messages when requested", function() {
+				element().showFailure(new TypeError());
+				expect(element().isRequesting()).toBeFalsy();
+				expect(element().isFailed()).toBeTruthy();
+				expect(element().shadowRoot.querySelector("#errorMsg").innerText).toContain("Network Error");
+				expect(element().shadowRoot.querySelector("#errorContent").innerText).toContain("Something went very wrong");
 			});
 		});
 

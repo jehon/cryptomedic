@@ -112,8 +112,22 @@ describe("tests/unit/x-login-status-test.js", function() {
 
 				setTimeout(() => {
 					testLoggedOut(element);
-// TODO: should have an error message...
 					expect(element().shadowRoot.querySelector("x-form").shadowRoot.querySelector(".alert").innerText).toContain("Invalid");
+					done();
+				});
+			});
+
+			it("should react to other errors", function(done) {
+				nextRequest = buildResponse(500);
+
+				element().shadowRoot.querySelector("#username").value = "test2";
+				element().shadowRoot.querySelector("#password").value = "password2";
+				JHElement.fireOn(element().shadowRoot.querySelector("#login"), "click");
+
+				setTimeout(() => {
+					testLoggedOut(element);
+// TODO
+					// expect(element().shadowRoot.querySelector("x-form").shadowRoot.querySelector(".alert").innerText).toContain("Invalid");
 					done();
 				});
 			});

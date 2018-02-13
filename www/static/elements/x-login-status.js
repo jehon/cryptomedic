@@ -81,9 +81,7 @@
 						this[overlay].free();
 						store.dispatch({ type: ACT_USER_LOGIN, payload: response.asJson });				
 					} else {
-						if (response.status == 401) {
-							store.dispatch({ type: ACT_USER_LOGOUT });
-						}
+						store.dispatch({ type: ACT_USER_LOGOUT });
 					}
 				})
 		}
@@ -105,7 +103,7 @@
 						store.dispatch({ type: ACT_USER_LOGIN, payload: response.asJson });				
 					} else {
 						switch(response.status) {
-							case 401:
+							// case 401:
 							case 404:
 								this[form].showMessages([ "Invalid credentials" ]);					
 								store.dispatch({ type: ACT_USER_LOGOUT });

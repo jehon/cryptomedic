@@ -2,7 +2,22 @@
 describe("jh-element-test", function() {
     describe("on static function", function() {
         it("should handle css", function() {
+            const init = window.ShadyDOM;
+            window.ShadyDOM = {
+                inUse: true
+            };
+            expect(JHElement.getCss()).not.toContain("stylesheet");
+
+            window.ShadyDOM.inUse = false;
             expect(JHElement.getCss()).toContain("stylesheet");
+
+            window.ShadyDOM = null;
+            expect(JHElement.getCss()).toContain("stylesheet");
+
+            delete(window.ShadyDOM);
+            expect(JHElement.getCss()).toContain("stylesheet");
+
+            window.ShadyDOM = init;
         })
     })
 
@@ -258,6 +273,12 @@ describe("jh-element-test", function() {
             element().removeAttribute('s-bool', '');
             expect(element()._sBool).toBe(false);
             expect(element().sBool).toBe(false);
+        });
+    });
+
+    webDescribe("with style already diplayed", `<jh-element style='display: inline'></jh-element>`, function(element) {
+        it("should handle specific handler (onSValChanged)", function() {
+            expect(element().style.display).toBe("inline");
         });
     });
 });
