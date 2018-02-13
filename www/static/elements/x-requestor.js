@@ -742,7 +742,6 @@ const XRequestor = (function() {
                 if (message instanceof Response) {
                     this[errorMsg].innerHTML = message.statusText;
                     html += `<tr><td>Status code</td><td>${message.status}</td></tr>`;
-                    // html += `<tr><td>Status text</td><td>${message.statusText}</td></tr>`;
                 } else if (message instanceof FetchFull.TimeoutException) {
                     this[errorMsg].innerHTML = "Time-out";
                     html += `<tr><td>Message</td><td>Is your network connection ok?</td></tr>`;
