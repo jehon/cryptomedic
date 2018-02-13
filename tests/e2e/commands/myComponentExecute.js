@@ -2,8 +2,6 @@
 
 /**
  * This function runs in the browser context
- * @param {string|Array<string>} selectors
- * @return {?Element}
  */
 function executeInShadowDom(selector, fn, ...args) {
     const selectors = selector.split(">>>").map(s => s.trim());
@@ -12,33 +10,30 @@ function executeInShadowDom(selector, fn, ...args) {
         if (i > 0) {
             currentElement = currentElement.shadowRoot;
         }
-
-        if (currentElement) {
-            currentElement = currentElement.querySelector(selectors[i]);
+        if (selectors[i] == "") {
+            console.log("returning current element shadow Root");
+            return currentElement.shadowRoot;
         }
-
+        currentElement = currentElement.querySelector(selectors[i]);
         if (!currentElement) {
-            break;
+            throw("Element not found: " + selector + " at " + selectors[i]);
         }
-    }
-
-    if (!currentElement) {
-        throw("Element not found: ", selector);
     }
 
     if ((fn.substring(0, 8) == "function") || (fn[0] == "(")) {
         // https://stackoverflow.com/a/1271572/1954789
-        (eval("[" + fn + "]")[0]).apply(currentElement, args);
+        val = (eval("[" + fn + "]")[0]).apply(currentElement, args);
     } else {
-        currentElement[fn].apply(currentElement, args);
+        // Function given is the name of a function
+        val = currentElement[fn].apply(currentElement, args);
     }
-    return currentElement;
+    return val;
 }
 
-exports.command = function(selector, fn, ...args) {
+exports.command = function(selector, fn = () => { return this; }, args = [], callback = function() {}) {
     if (typeof(fn) == "function") {
         fn = fn.toString();
     }
-    this.execute(executeInShadowDom, [ selector, fn, args ]);
+    this.execute(executeInShadowDom, [ selector, fn, args ], function(result) { callback(result.value) });
     return this;
 };
