@@ -57,7 +57,7 @@ let JHElement = (function() {
         }
 
         static getCss() {
-            if ((typeof(ShadyDOM) !== "undefined") && ShadyDOM.inUse) {
+            if ((typeof(window.ShadyDOM) == "object") && (window.ShadyDOM != null) && window.ShadyDOM.inUse) {
                 return "";
             }
             return `<link rel="stylesheet" type="text/css" href="/build/bootstrap/css/bootstrap.min.css">`;
