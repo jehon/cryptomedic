@@ -49,7 +49,6 @@
 
 				} else {
 					this.username = false;
-					// location.hash = "/login";
 				}
 				this.adapt();
 			});
