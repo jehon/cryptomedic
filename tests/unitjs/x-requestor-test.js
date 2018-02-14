@@ -118,7 +118,6 @@ describe("tests/unit/x-requestor-test.js", function() {
 			});
 
 			it("should resquestAndTreat with treated", function(done) {
-				this.jh_keep = true;
 				const promise = element().requestAndTreat({}, () => true);
 				setTimeout(() => {
 					expect(element().isFailed()).toBeFalsy();
@@ -127,7 +126,6 @@ describe("tests/unit/x-requestor-test.js", function() {
 			});
 
 			it("should resquestAndTreat with without treated", function(done) {
-				this.jh_keep = true;
 				const promise = element().requestAndTreat({}, () => false);
 				setTimeout(() => {
 					expect(element().isFailed()).toBeTruthy();
