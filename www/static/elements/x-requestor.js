@@ -672,10 +672,12 @@ const XRequestor = (function() {
             super();
             this.attachShadow({ mode: 'open' });
             this.shadowRoot.innerHTML = `
+            ${ JHElement.getCss() }
             <span>
                 <x-overlay closable z-index=20 >
                     <h1 id='errorMsg'></h1>
                     <div id='errorContent'></div>
+                    <div id='closeButton' class='btn btn-default'></div>
                 </x-overlay>
                 <x-waiting>
                     <slot></slot>
@@ -689,6 +691,9 @@ const XRequestor = (function() {
 
             this[waiting].free();
             this[error].free();
+            this.shadowRoot.querySelector("#closeButton").addEventListener("click", () => {
+                this[error].free();
+            })
         }
 
         isRequesting() {
@@ -768,6 +773,17 @@ const XRequestor = (function() {
                 // String message
                 this[errorMsg].innerHTML = message;
             }
+        }
+
+        requestAndTreat(options, callback) {
+            this.request(options)
+                .then(response => {
+                    const res = callback(response);
+                    if (!res) {
+                        this.showFailure(response);
+                    }
+                    return response;
+                });
         }
     }
 

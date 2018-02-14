@@ -86,6 +86,13 @@ describe("tests/unit/x-requestor-test.js", function() {
 				expect(element().shadowRoot.querySelector("#errorMsg").innerText).toContain("Test message");
 			});
 
+			it("should close error messages with button", function() {
+				element().showFailure("Test message");
+				expect(element().isFailed()).toBeTruthy();
+				JHElement.fireOn(element().shadowRoot.querySelector("#closeButton"), "click");
+				expect(element().isFailed()).toBeFalsy();
+			});
+
 			it("should display object messages when requested", function() {
 				element().showFailure({ label: "Test message" });
 				expect(element().isRequesting()).toBeFalsy();
@@ -108,6 +115,24 @@ describe("tests/unit/x-requestor-test.js", function() {
 				expect(element().isFailed()).toBeTruthy();
 				expect(element().shadowRoot.querySelector("#errorMsg").innerText).toContain("Network Error");
 				expect(element().shadowRoot.querySelector("#errorContent").innerText).toContain("Something went very wrong");
+			});
+
+			it("should resquestAndTreat with treated", function(done) {
+				this.jh_keep = true;
+				const promise = element().requestAndTreat({}, () => true);
+				setTimeout(() => {
+					expect(element().isFailed()).toBeFalsy();
+					done();
+				}, 100);
+			});
+
+			it("should resquestAndTreat with without treated", function(done) {
+				this.jh_keep = true;
+				const promise = element().requestAndTreat({}, () => false);
+				setTimeout(() => {
+					expect(element().isFailed()).toBeTruthy();
+					done();
+				}, 100);
 			});
 		});
 
