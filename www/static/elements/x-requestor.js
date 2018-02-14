@@ -1,6 +1,4 @@
 
-// TODO: general error handler
-
 const XRequestor = (function() {
     // const httpStatusMessages = {};
     // httpStatusMessages[400] = 'Bad Request';
@@ -484,20 +482,20 @@ const XRequestor = (function() {
         //     return this;
         // }
 
-        // /**
-        //  * Make a "post" request.
-        //  *
-        //  * This function set various options
-        //  *
-        //  * @return this: to allow chaining
-        //  */
-        // requestWithPostWithJSONBody() {
-        //     this._trace("requestWithPostWithJSONBody");
-        //     this.errorOnFired();
-        //     this.requestWithMethod("POST");
-        //     this.requestWithBodyBuilder(bodyBuilderJSONEncode);
-        //     return this;
-        // }
+        /**
+         * Make a "post" request.
+         *
+         * This function set various options
+         *
+         * @return this: to allow chaining
+         */
+        requestWithPostWithJSONBody() {
+            this._trace("requestWithPostWithJSONBody");
+            this.errorOnFired();
+            this.requestWithMethod("POST");
+            this.requestWithBodyBuilder(bodyBuilderJSONEncode);
+            return this;
+        }
 
         // /**
         //  * Make a "put" request.
@@ -529,20 +527,20 @@ const XRequestor = (function() {
             return this;
         }
 
-        // /**
-        //  * Make a "delete" request.
-        //  *
-        //  * This function set various options
-        //  *
-        //  * @return this: to allow chaining
-        //  */
-        // requestWithDelete() {
-        //     this._trace("requestWithDelete");
-        //     this.errorOnFired();
-        //     this.requestWithPut();
-        //     this.requestWithMethod("DELETE");
-        //     return this;
-        // }
+        /**
+         * Make a "delete" request.
+         *
+         * This function set various options
+         *
+         * @return this: to allow chaining
+         */
+        requestWithDelete() {
+            this._trace("requestWithDelete");
+            this.errorOnFired();
+            this.requestWithPut();
+            this.requestWithMethod("DELETE");
+            return this;
+        }
 
         // /**
         //  * Make a "delete" request.
