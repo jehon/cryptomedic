@@ -42,6 +42,7 @@
                 .then(response => {
                     let f = new Folder(json.folder);
                     patientFolderCache.set(json.id, f);
+                    store.dispatch({ type: ACT_FOLDER_STORE, payload: f });
                     return json;
                 });
         }
@@ -51,20 +52,14 @@
 
             let f = patientFolderCache.get(id);
             if (f != null) {
-                store.dispatch({
-                    type: ACT_FOLDER_STORE,
-                    payload: f
-                });
+                store.dispatch({ type: ACT_FOLDER_STORE, payload: f });
                 return Promise.resolve(f);
             }
 
             return this.requestAndFilter({ url: `folder/Patient/${id}` })
                 .then(response => {
                     let f = new Folder(response.asJson.folder);
-                    store.dispatch({
-                        type: ACT_FOLDER_STORE,
-                        payload: f
-                    });
+                    store.dispatch({ type: ACT_FOLDER_STORE, payload: f });
                     patientFolderCache.set(f.getId(), f);
                     return f;
                 })
@@ -88,6 +83,7 @@
                     let f = new Folder(response.asJson.folder);
                     f.setHeader("newKey", data.newKey);
                     patientFolderCache.set(f.getId(), f);
+                    store.dispatch({ type: ACT_FOLDER_STORE, payload: f });
                     return f;
                 })
         }
@@ -98,6 +94,7 @@
                 .then(response => {
                     let f = new Folder(response.asJson.folder);
                     patientFolderCache.set(f.getId(), f);
+                    store.dispatch({ type: ACT_FOLDER_STORE, payload: f });
                     return f;
                 })
         }
@@ -108,6 +105,7 @@
                 .then(response => {
                     let f = new Folder(response.asJson.folder);
                     patientFolderCache.set(f.getId(), f);
+                    store.dispatch({ type: ACT_FOLDER_STORE, payload: f });
                     return f;
                 })
         }
@@ -118,6 +116,7 @@
                 .then(response => {
                     let f = new Folder(response.asJson.folder);
                     patientFolderCache.set(f.getId(), f);
+                    store.dispatch({ type: ACT_FOLDER_STORE, payload: f });
                     return f;
                 })
         }
