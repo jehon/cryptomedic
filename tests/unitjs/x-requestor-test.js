@@ -12,6 +12,7 @@ describe("tests/unit/x-requestor-test.js", function() {
 		it("should be hidden when initialized simply", function() {
 			expect(element().shadowRoot.querySelector("x-waiting").isBlocked()).toBeFalsy();
 			expect(element().shadowRoot.querySelector("x-overlay").isBlocked()).toBeFalsy();
+			expect(element().hasAttribute("running")).toBeFalsy();
 			expect(element().isRequesting()).toBeFalsy();
 			expect(element().isFailed()).toBeFalsy();
 		});
@@ -47,12 +48,14 @@ describe("tests/unit/x-requestor-test.js", function() {
 
 				expect(element().shadowRoot.querySelector("x-waiting").isBlocked()).toBeTruthy();
 				expect(element().shadowRoot.querySelector("x-overlay").isBlocked()).toBeFalsy();
+				expect(element().hasAttribute("running")).toBeTruthy();
 				expect(element().isRequesting()).toBeTruthy();
 				expect(element().isFailed()).toBeFalsy();
 
 				promise.then(response => {
 					expect(element().shadowRoot.querySelector("x-waiting").isBlocked()).toBeFalsy();
 					expect(element().shadowRoot.querySelector("x-overlay").isBlocked()).toBeFalsy();
+					expect(element().hasAttribute("running")).toBeFalsy();
 					expect(element().isRequesting()).toBeFalsy();
 					expect(element().isFailed()).toBeFalsy();
 					expect(response.asJson).toEqual(this.ref);
@@ -69,6 +72,7 @@ describe("tests/unit/x-requestor-test.js", function() {
 				promise.then(response => {
 					expect(element().shadowRoot.querySelector("x-waiting").isBlocked()).toBeFalsy();
 					expect(element().shadowRoot.querySelector("x-overlay").isBlocked()).toBeFalsy();
+					expect(element().hasAttribute("running")).toBeFalsy();
 					expect(element().isRequesting()).toBeFalsy();
 					expect(element().isFailed()).toBeFalsy();
 					expect(response.asJson).toEqual(this.ref);
@@ -164,6 +168,7 @@ describe("tests/unit/x-requestor-test.js", function() {
 				.catch(error => {
 					expect(element().shadowRoot.querySelector("x-waiting").isBlocked()).toBeFalsy();
 					expect(element().shadowRoot.querySelector("x-overlay").isBlocked()).toBeTruthy();
+					expect(element().hasAttribute("running")).toBeFalsy();
 					expect(element().isRequesting()).toBeFalsy();
 					expect(element().isFailed()).toBeTruthy();
 					expect(error.timeoutSecs).toEqual(0.001);
@@ -191,6 +196,7 @@ describe("tests/unit/x-requestor-test.js", function() {
 				.catch(error => {
 					expect(element().shadowRoot.querySelector("x-waiting").isBlocked()).toBeFalsy();
 					expect(element().shadowRoot.querySelector("x-overlay").isBlocked()).toBeTruthy();
+					expect(element().hasAttribute("running")).toBeFalsy();
 					expect(element().isRequesting()).toBeFalsy();
 					expect(element().isFailed()).toBeTruthy();
 					done();
