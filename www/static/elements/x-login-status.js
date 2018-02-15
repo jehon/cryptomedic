@@ -74,14 +74,15 @@
 		doLoginCheck() {
 			// 401: not authenticated
 
-			this[requestor].request({ url: "auth/settings" })
-				.then(response => {
+			this[requestor].requestAndTreat({ url: "auth/settings" },
+				(response) => {
 					if (response.ok) {
 						this[overlay].free();
-						store.dispatch({ type: ACT_USER_LOGIN, payload: response.asJson });				
-					} else {
-						store.dispatch({ type: ACT_USER_LOGOUT });
+						store.dispatch({ type: ACT_USER_LOGIN, payload: response.asJson });
+						return true;
 					}
+					store.dispatch({ type: ACT_USER_LOGOUT });
+					return true;
 				})
 		}
 
@@ -95,23 +96,17 @@
 			const data = this[form].rebuildData();
 			data.username = data.username.toLowerCase();
 
-			this[requestor].request({ url: "auth/mylogin", method: "POST", data })
-				.then(response => {
+			this[requestor].requestAndTreat({ url: "auth/mylogin", method: "POST", data },
+				response => {
 					if (response.ok) {
 						this[overlay].free();
-						store.dispatch({ type: ACT_USER_LOGIN, payload: response.asJson });				
-					} else {
-						switch(response.status) {
-							// case 401:
-							case 404:
-								this[form].showMessages([ "Invalid credentials" ]);					
-								store.dispatch({ type: ACT_USER_LOGOUT });
-								break;
-							default:
-								this[requestor].showFailure(response);
-								store.dispatch({ type: ACT_USER_LOGOUT });
-								break;
-						}
+						store.dispatch({ type: ACT_USER_LOGIN, payload: response.asJson });
+						return true;
+					}
+					store.dispatch({ type: ACT_USER_LOGOUT });
+					if (response.status == 404) {
+						this[form].showMessages([ "Invalid credentials" ]);					
+						return true;
 					}
 				});
 		}
