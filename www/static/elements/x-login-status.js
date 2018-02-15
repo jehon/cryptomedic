@@ -111,16 +111,11 @@
 		}
 
 		doLogout(localOnly = false) {
-			let finished = Promise.resolve();
-
 			store.dispatch({ type: ACT_USER_LOGOUT });
 			// localOnly could be the "tap" event, we thus check carefully what we receive
 			if (localOnly !== true) {
-				finished = finished.then(() => {
-					this[requestor].request({ url: "auth/logout" })
-				});
+				this[requestor].request({ url: "auth/logout" });
 			}
-			finished.then(() => store.dispatch({ type: ACT_USER_LOGOUT }))
 		}
 	}
 
