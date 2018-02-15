@@ -95,18 +95,17 @@
 			data.username = data.username.toLowerCase();
 
 			this[requestor].requestAndFilter({ url: "auth/mylogin", method: "POST", data }, [ 404 ])
-				.then(response => {
+				.then((response) => {
 					if (response.ok) {
 						this[overlay].free();
 						store.dispatch({ type: ACT_USER_LOGIN, payload: response.asJson });
-						return response.asJson;
+						return ;
 					}
 					store.dispatch({ type: ACT_USER_LOGOUT });
 					if (response.status == 404) {
 						this[form].showMessages([ "Invalid credentials" ]);
-						return response.asJson;
+						return ;
 					}
-					this[requestor].showFailure(response);
 				});
 		}
 
