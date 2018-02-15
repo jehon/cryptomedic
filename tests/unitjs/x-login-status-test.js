@@ -16,6 +16,7 @@ describe("tests/unit/x-login-status-test.js", function() {
 
 	let nextRequest;
 	beforeEach(function() {
+		store.dispatch({ type: ACT_USER_LOGOUT });
 		nextRequest = settingsRequest;
 		spyOn(XRequestor.prototype, "request").and.callFake(() => nextRequest);
 	})
@@ -40,7 +41,8 @@ describe("tests/unit/x-login-status-test.js", function() {
 		webDescribe("*", `<x-login-status></x-login-status>`, function(element) {
 			describe("with interaction with the store", function() {
 				it("should be hidden when initialized simply", function() {
-					testLoggedIn(element, "test");
+					store.dispatch({ type: ACT_USER_LOGOUT });
+					testLoggedOut(element);
 				});
 
 				it("should show username when set", function() {
@@ -133,8 +135,6 @@ describe("tests/unit/x-login-status-test.js", function() {
 			});
 
 			it("should accept valid login", function(done) {
-				this.jh_keep = true;
-
 				nextRequest = settingsRequest;
 
 				element().shadowRoot.querySelector("#username").value = "test";
