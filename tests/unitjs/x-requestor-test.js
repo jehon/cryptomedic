@@ -138,10 +138,10 @@ describe("tests/unit/x-requestor-test.js", function() {
 
 			it("should resquestAndFilter with filter and have correct results", function(done) {
 				element().requestAndFilter({})
-					.then(({ json, ok, status }) => {
-						expect(json).toEqual({ test: 123 });
+					.then(({ asJson, ok, status }) => {
+						expect(asJson).toEqual({ test: 123 });
 						expect(ok).toBeTruthy();
-						expect(status).toBe(true);
+						expect(status).toBe(200);
 						done();
 					});
 			});
@@ -184,8 +184,8 @@ describe("tests/unit/x-requestor-test.js", function() {
 
 			it("should resquestAndFilter with filter and have correct results", function(done) {
 				element().requestAndFilter({}, [ 404 ])
-					.then(({ text, ok, status }) => {
-						expect(text).toEqual("Data is not found");
+					.then(({ asText, ok, status }) => {
+						expect(asText).toEqual("Data is not found");
 						expect(ok).toBeFalsy();
 						expect(status).toBe(404);
 						done();
