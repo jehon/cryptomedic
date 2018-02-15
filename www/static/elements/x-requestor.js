@@ -780,14 +780,19 @@ const XRequestor = (function() {
             }
         }
 
-        requestAndTreat(options, callback) {
-            this.request(options)
+        requestAndFilter(options, allowed = []) {
+            return this.request(options)
                 .then(response => {
-                    const res = callback(response);
-                    if (!res) {
-                        this.showFailure(response);
+                    if (response.ok || allowed.indexOf(response.status) >= 0) {
+                        return {
+                            json: response.asJson,
+                            text: response.asText,
+                            ok: response.ok,
+                            status: (response.ok ? true : response.status)
+                        };
                     }
-                    return response;
+                    this.showFailure(response);
+                    throw response;
                 });
         }
     }

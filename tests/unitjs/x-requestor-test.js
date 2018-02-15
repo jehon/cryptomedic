@@ -128,23 +128,70 @@ describe("tests/unit/x-requestor-test.js", function() {
 				expect(element().shadowRoot.querySelector("#errorContent").innerText).toContain("Something went very wrong");
 			});
 
-			it("should resquestAndTreat with treated", function(done) {
-				const promise = element().requestAndTreat({}, () => true);
+			it("should resquestAndFilter with filter", function(done) {
+				const promise = element().requestAndFilter({});
 				setTimeout(() => {
 					expect(element().isFailed()).toBeFalsy();
 					done();
 				}, 100);
 			});
 
-			it("should resquestAndTreat with without treated", function(done) {
-				const promise = element().requestAndTreat({}, () => false);
+			it("should resquestAndFilter with filter and have correct results", function(done) {
+				element().requestAndFilter({})
+					.then(({ json, ok, status }) => {
+						expect(json).toEqual({ test: 123 });
+						expect(ok).toBeTruthy();
+						expect(status).toBe(true);
+						done();
+					});
+			});
+
+			it("should resquestAndFilter with without treated", function(done) {
+				const promise = element().requestAndFilter({}, [ 404 ]);
 				setTimeout(() => {
-					expect(element().isFailed()).toBeTruthy();
+					expect(element().isFailed()).toBeFalsy();
 					done();
 				}, 100);
 			});
 		});
 
+		describe("with 404", function() {
+			beforeEach(function() {
+				this.ref = { "test": 123 };
+				spyOn(window, "fetch").and.callFake(() => {
+					return new Promise((resolve, reject) => {
+						resolve(new Response("Data is not found", {
+							status: 404
+						}));
+					});
+				});
+			});
+			it("should resquestAndTreat with filter", function(done) {
+				const promise = element().requestAndFilter({});
+				setTimeout(() => {
+					expect(element().isFailed()).toBeTruthy();
+					done();
+				}, 100);
+			});
+
+			it("should resquestAndTreat with without treated", function(done) {
+				const promise = element().requestAndFilter({}, [ 404 ]);
+				setTimeout(() => {
+					expect(element().isFailed()).toBeFalsy();
+					done();
+				}, 100);
+			});
+
+			it("should resquestAndFilter with filter and have correct results", function(done) {
+				element().requestAndFilter({}, [ 404 ])
+					.then(({ text, ok, status }) => {
+						expect(text).toEqual("Data is not found");
+						expect(ok).toBeFalsy();
+						expect(status).toBe(404);
+						done();
+					});
+			});
+		});
 		describe("with timeout", function() {
 			beforeEach(function() {
 				this.ref = { "test": 123 };
