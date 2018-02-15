@@ -122,6 +122,7 @@ mainApp.controller('ctrl', [ '$scope', function($scope) {
     } else {
       $scope.authorizedList = store.getState().definitions.authorized;
     }
+    $scope.safeApply();
   });
   $scope.isAuthorized = function(value, authorizedList = []) {
     return authorizedList.indexOf(value) >= 0;
