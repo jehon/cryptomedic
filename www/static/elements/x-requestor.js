@@ -784,12 +784,7 @@ const XRequestor = (function() {
             return this.request(options)
                 .then(response => {
                     if (response.ok || allowed.indexOf(response.status) >= 0) {
-                        return {
-                            json: response.asJson,
-                            text: response.asText,
-                            ok: response.ok,
-                            status: (response.ok ? true : response.status)
-                        };
+                        return response;
                     }
                     this.showFailure(response);
                     throw response;
