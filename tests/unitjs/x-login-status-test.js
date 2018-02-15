@@ -128,8 +128,6 @@ describe("tests/unit/x-login-status-test.js", function() {
 
 				setTimeout(() => {
 					testLoggedOut(element);
-// TODO
-					// expect(element().shadowRoot.querySelector("x-form").shadowRoot.querySelector(".alert").innerText).toContain("Invalid");
 					done();
 				});
 			});
