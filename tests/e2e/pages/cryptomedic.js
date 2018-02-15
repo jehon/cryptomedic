@@ -56,15 +56,6 @@ module.exports = (function() {
       return client;
     }
 
-    // this.sync = function() {
-    //   if (!authenticated) {
-    //     throw new Error('Cryptomedic: You should be authenticated to use report function');
-    //   }
-    //   client
-    //     .waitForElementVisible('img#sync-ok');
-    //   return client;
-    // };
-
     this.report = function(reportName, params) {
       if (!authenticated) {
         throw new Error('Cryptomedic: You should be authenticated to use report function');
