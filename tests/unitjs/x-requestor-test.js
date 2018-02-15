@@ -109,6 +109,13 @@ describe("tests/unit/x-requestor-test.js", function() {
 				expect(element().shadowRoot.querySelector("#errorContent").innerText).toContain("404");
 			});
 
+			it("should logout on 401 Response messages", function() {
+				store.dispatch({ type: ACT_USER_LOGIN, payload: "blabla" });
+				expect(store.getState().user).toBe("blabla");
+				element().showFailure(buildErrorResponse(401, "Unauthorized"));
+				expect(store.getState().user).toBeFalsy();
+			});
+
 			it("should display TypeError messages when requested", function() {
 				element().showFailure(new TypeError());
 				expect(element().isRequesting()).toBeFalsy();

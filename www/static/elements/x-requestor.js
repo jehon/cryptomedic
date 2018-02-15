@@ -745,6 +745,11 @@ const XRequestor = (function() {
                 if (message instanceof Response) {
                     this[errorMsg].innerHTML = message.statusText;
                     html += `<tr><td>Status code</td><td>${message.status}</td></tr>`;
+                    if (message.status == 401) {
+                        console.log(401);
+                        // Logout if 401
+                        store.dispatch({ type: ACT_USER_LOGOUT });
+                    }
                 } else if (message instanceof FetchFull.TimeoutException) {
                     this[errorMsg].innerHTML = "Time-out";
                     html += `<tr><td>Message</td><td>Is your network connection ok?</td></tr>`;
