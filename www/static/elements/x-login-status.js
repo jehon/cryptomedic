@@ -79,6 +79,7 @@
 					if (response.ok) {
 						this[overlay].free();
 						store.dispatch({ type: ACT_USER_LOGIN, payload: response.asJson });
+						return ;
 					}
 					store.dispatch({ type: ACT_USER_LOGOUT });
 				});
