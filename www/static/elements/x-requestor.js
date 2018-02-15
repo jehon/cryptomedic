@@ -704,6 +704,7 @@ const XRequestor = (function() {
 
         request({ url = "/", data = {}, method = "GET", timeout = 3 } = {}) {
             this[waiting].block();
+            this.setAttribute("running", "running");
 
             if (url[0] != "/") {
                 url = "/api/" + API_VERSION + "/" + url;
@@ -724,10 +725,12 @@ const XRequestor = (function() {
             }
 
             return fetchfull.then(response => {
+                this.removeAttribute("running");
                 this[waiting].free();
                 return response;
             })
             .catch(errorObj => {
+                this.removeAttribute("running");
                 this[waiting].free();
                 this[error].block();
                 // Fill in the overlay
@@ -746,7 +749,6 @@ const XRequestor = (function() {
                     this[errorMsg].innerHTML = message.statusText;
                     html += `<tr><td>Status code</td><td>${message.status}</td></tr>`;
                     if (message.status == 401) {
-                        console.log(401);
                         // Logout if 401
                         store.dispatch({ type: ACT_USER_LOGOUT });
                     }
