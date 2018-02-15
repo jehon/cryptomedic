@@ -21,6 +21,7 @@ function loadReference(name) {
   return valid_respond;
 }
 
+// DEPRECATED ...
 function testComponent(html, test = (el) => true) {
   // Set an acceptable timeout
   let oldTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
