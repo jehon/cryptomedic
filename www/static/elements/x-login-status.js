@@ -74,16 +74,14 @@
 		doLoginCheck() {
 			// 401: not authenticated
 
-			this[requestor].requestAndTreat({ url: "auth/settings" },
-				(response) => {
+			this[requestor].request({ url: "auth/settings" })
+				.then(response => {
 					if (response.ok) {
 						this[overlay].free();
 						store.dispatch({ type: ACT_USER_LOGIN, payload: response.asJson });
-						return true;
 					}
 					store.dispatch({ type: ACT_USER_LOGOUT });
-					return true;
-				})
+				});
 		}
 
 		doLogin() {
@@ -96,18 +94,19 @@
 			const data = this[form].rebuildData();
 			data.username = data.username.toLowerCase();
 
-			this[requestor].requestAndTreat({ url: "auth/mylogin", method: "POST", data },
-				response => {
+			this[requestor].requestAndFilter({ url: "auth/mylogin", method: "POST", data }, [ 404 ])
+				.then(response => {
 					if (response.ok) {
 						this[overlay].free();
 						store.dispatch({ type: ACT_USER_LOGIN, payload: response.asJson });
-						return true;
+						return response.asJson;
 					}
 					store.dispatch({ type: ACT_USER_LOGOUT });
 					if (response.status == 404) {
-						this[form].showMessages([ "Invalid credentials" ]);					
-						return true;
+						this[form].showMessages([ "Invalid credentials" ]);
+						return response.asJson;
 					}
+					this[requestor].showFailure(response);
 				});
 		}
 
