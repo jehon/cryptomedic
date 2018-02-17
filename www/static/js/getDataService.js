@@ -11,7 +11,7 @@ function getDataService(element = 'dataService') {
     if (!el) {
       return false;
     }
-    if (typeof(el["$"]) == "undefined") {
+    if (typeof(el["$"]) == "undefined" && typeof(el["report"]) == "undefined") {
       return false;
     }
     return el;
