@@ -13,35 +13,26 @@ module.exports = (function() {
       }
 
       var password = 'this will not be read by the server in tests';
-      client.init()
-        .waitForElementVisible('body')
-        .assert.title('Cryptomedic')
-        .waitForElementVisible('#login_password')
-        .setValue('#login_username', login)
-        .setValue('#login_password', password)
-        .pause(10)
-        .myClick('button#login_go')
-        ;
+      client.init();
+      client.waitForElementVisible('body');
+      client.assert.title('Cryptomedic');
+      client.myComponentExecute("x-login-status >>> #username", function(v) { this.value = v; }, [ login ]);
+      client.myComponentExecute("x-login-status >>> #password", function(v) { this.value = v; }, [ password ]);
+      client.pause(10);
+      client.myComponentExecute("x-login-status >>> button#login", function() { JHElement.fireOn(this, "click"); });
 
-      this
-        .myWaitFetch()
-        ;
+      client.pause(100);
+
       return client;
     };
 
     // Each action is written as a separate method which must return the browser
     // object in order to be able to be queued
     this.authenticate = function(login) {
-      this
-        .authenticate_fillIn(login);
-
-      client
-        .waitForElementPresent('#login_loggedusername')
-        .assert.containsText('#login_loggedusername', login)
-        .assert.title('Cryptomedic')
-        .pause(100)
-        ;
-
+      this.authenticate_fillIn(login);
+      client.myComponentExecute("x-login-status >>> #user", function() { return this.innerText; }, [], 
+          function(result) { client.assert.equal(result, login); }
+      );
       authenticated = true;
       return client;
     };
@@ -50,6 +41,7 @@ module.exports = (function() {
       client
         .pause(10)
         .waitForElementNotPresent('fetchfull-element[running]')
+        // .waitForElementNotPresent('cryptomedic-data-service[running]')
         .pause(10)
 
       return client;
