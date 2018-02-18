@@ -18,8 +18,9 @@
         }
 
         checkReference(year, order) {
-            return this.request({ url: 'reference/' + year + '/' + order , data: params })
+            return this.request({ url: 'reference/' + year + '/' + order })
                 .then(response => {
+                    const json = response.asJson;
                     if (response.ok) {
                         let f = new Folder(json.folder);
                         patientFolderCache.set(json.id, f);
