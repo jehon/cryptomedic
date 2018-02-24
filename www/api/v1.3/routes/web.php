@@ -97,7 +97,7 @@ Route::group([ 'prefix' => '/api/' . basename(dirname(__DIR__)) ], function() {
     });
 
     hasPermission('folder.edit', function() {
-      Route::POST('/reference', 'FolderController@createfile');
+      Route::POST('reference', 'FolderController@createfile');
     });
 
     Route::group([ 'prefix' => '/fiche/' ], function() {
