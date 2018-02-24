@@ -641,7 +641,7 @@ const XRequestor = (function() {
             return this[error].isBlocked();
         }
 
-        request({ url = "/", data = {}, method = "GET", timeout = 3 } = {}) {
+        request({ url = "/", data = {}, method = "GET", timeout = 30 } = {}) {
             this[waiting].block();
             this.setAttribute("running", "running");
 
