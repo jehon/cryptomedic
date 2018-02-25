@@ -690,6 +690,7 @@ const XRequestor = (function() {
                     if (message.status == 401) {
                         // Logout if 401
                         store.dispatch({ type: ACT_USER_LOGOUT });
+                        this[error].free();
                     }
                 } else if (message instanceof FetchFull.TimeoutException) {
                     this[errorMsg].innerHTML = "Time-out";
