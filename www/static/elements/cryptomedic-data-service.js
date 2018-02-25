@@ -20,10 +20,9 @@
         checkReference(year, order) {
             return this.request({ url: 'reference/' + year + '/' + order })
                 .then(response => {
-                    const json = response.asJson;
                     if (response.ok) {
-                        let f = new Folder(json.folder);
-                        patientFolderCache.set(json.id, f);
+                        let f = new Folder(response.asJson.folder);
+                        patientFolderCache.set(response.asJson.id, f);
                         return json;
                     }
                     if (response.status == 404) {
@@ -36,13 +35,13 @@
         createReference(year, order) {
             store.dispatch({ type: ACT_FOLDER_INVALIDATE });
 
-            return this.requestAndFilter({ url: 'reference/', method: "POST", data: {
+            return this.requestAndFilter({ url: 'reference', method: "POST", data: {
                     'entryyear': year,
                     'entryorder': order
                 }})
                 .then(response => {
-                    let f = new Folder(json.folder);
-                    patientFolderCache.set(json.id, f);
+                    let f = new Folder(response.asJson.folder);
+                    patientFolderCache.set(response.asJson.id, f);
                     store.dispatch({ type: ACT_FOLDER_STORE, payload: f });
                     return json;
                 });
@@ -82,7 +81,7 @@
             return this.requestAndFilter({ url: 'fiche/' + data.getServerRessource(), method: "POST", data: nullify(data) })
                 .then(response => {
                     let f = new Folder(response.asJson.folder);
-                    f.setHeader("newKey", data.newKey);
+                    f.setHeader("newKey", response.asJson.newKey);
                     patientFolderCache.set(f.getId(), f);
                     store.dispatch({ type: ACT_FOLDER_STORE, payload: f });
                     return f;
@@ -161,5 +160,5 @@
         }
     }
 
-    // window.customElements.define('cryptomedic-data-service', CryptomedicDataService);
+    window.customElements.define('cryptomedic-data-service', CryptomedicDataService);
 })();
