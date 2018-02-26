@@ -7,11 +7,11 @@ function setListFrom(origin, target, category) {
         return;
     }
     if (!document.querySelector(`[name=${origin}]`)) {
-        console.error("setListFrom: Origin not defined...", origin);
+        // console.error("setListFrom: Origin not defined...", origin);
         return ;
     }
     if (!document.querySelector(`[name=${target}]`)) {
-        console.error("setListFrom: Target not defined...", target);
+        // console.error("setListFrom: Target not defined...", target);
         return ;
     }
     const val = document.querySelector(`[name=${origin}]`).value;
