@@ -14,7 +14,6 @@
     "tests"
   ],
   "dependencies": {
-    "fetchfull-elements": "git@github.com:jehon/fetchfull-elements.git",
     "platform": "Polymer/platform#0.*",
     "polymer": "Polymer/polymer#1.*",
     "jquery-ui": "^1.12.1",
