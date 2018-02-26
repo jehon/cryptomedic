@@ -5,9 +5,10 @@ function ctrl_prices($scope, $timeout) {
   $scope.creating = false;
 
   $scope.refresh = function() {
-    getDataService()
-      .then(dataService => Price.list(dataService))
-      .then((data) => {
+    getDataService("#pricesRequestor")
+      .then(dataService => { console.log(dataService); return dataService; })
+      .then(dataService => dataService.list())
+      .then(data => {
         data.sort((a, b) => {
           // Left(smal) == bigger datefrom
           if (a == null || a.datefrom == null || a.datefrom == "") {
@@ -97,8 +98,8 @@ function ctrl_prices($scope, $timeout) {
     }
     this.error_date = false;
 
-    getDataService()
-      .then(dataService => Price.create(dataService, { pivot: updatedData.pivotDate }))
+    getDataService("#pricesRequestor")
+      .then(dataService => dataService.create({ pivot: updatedData.pivotDate }))
       .then((data) => {
         $scope.creating = false
         $scope.prices.unshift(data);
@@ -126,8 +127,8 @@ function ctrl_prices($scope, $timeout) {
   // 
   $scope.doSave = function() {
     let updatedData = formGetContent("#editForm", $scope.prices[$scope.edit]);
-    getDataService()
-      .then(dataService => Price.save(dataService, updatedData))
+    getDataService("#pricesRequestor")
+      .then(dataService => dataService.update(updatedData))
       .then(function(data) {
         for(let i of Object.keys($scope.prices)) {
           if ($scope.prices[i].id == data.id) {
@@ -144,8 +145,8 @@ function ctrl_prices($scope, $timeout) {
   // Delete an existing price list
   //
   $scope.doDelete = function(index) {
-    getDataService()
-      .then(dataService => Price.remove(dataService, $scope.prices[index].id))
+    getDataService("#pricesRequestor")
+      .then(dataService => dataService.delete($scope.prices[index].id))
       .then(() => $scope.doCancel())
       .then(() => $scope.refresh())
       ;
