@@ -14,8 +14,6 @@
     "tests"
   ],
   "dependencies": {
-    "platform": "Polymer/platform#0.*",
-    "polymer": "Polymer/polymer#1.*",
     "jquery-ui": "^1.12.1",
     "custom-elements": "webcomponents/custom-elements#^1.0.0"
   }

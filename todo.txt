@@ -1,11 +1,9 @@
 
-[en cours] Remove Polymer:
-[en cours] - loginStatus.html -> activate x-login-status (e2e)
-[        ] - data-service.html -> use x-requestor?
-[        ] - in karma/app.js:
-[        ] 	 - remove polymer
-[        ] 	 - remove fetchfull-element
-
+[ok      ] Remove bower:
+[ok      ] - remove numeraljs
+[ok      ] - remove fetchfull-element
+[to do   ] - remove jquery-ui calendar -> native component?
+[to do   ] - migrate polyfill custom elements (v1) to node_modules
 
 Remove template.php
 - how to render external templates? -> eval ?
