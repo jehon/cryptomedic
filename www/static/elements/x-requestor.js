@@ -633,6 +633,12 @@ const XRequestor = (function() {
             })
         }
 
+        render() {
+            super.render();
+            this.style.width = "100%";
+            this.style.display = "inline";
+        }
+
         isRequesting() {
             return this[waiting].isBlocked();
         }

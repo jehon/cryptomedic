@@ -11,14 +11,20 @@ const XWaiting = (function() {
             	<div id='overlay'>
             		<img src='elements/resources/waiting.gif' />Loading
             	</div>
-            	<div id='slot'>
+            	<span id='slot'>
             		<slot></slot>
-            	</div>`
+            	</span>`
 
             this[overlay] = this.shadowRoot.querySelector("#overlay");
             this[slot]    = this.shadowRoot.querySelector("#slot");
             this.free();
         }  
+
+        render() {
+            super.render();
+            this.style.width = "100%";
+            this.style.display = "inline";
+        }
 
         block() {
             this[overlay].removeAttribute("hidden");
