@@ -2,11 +2,11 @@
 
 // See polyfill for html imports: http://webcomponents.org/polyfills/html-imports/
 
-function getDataService(element = 'dataService') {
+function getDataService(cssSelector = 'dataService') {
   let test = function() {
-    let el = element;
-    if (typeof(element) == "string") {
-      el = document.getElementById(element);
+    let el = cssSelector;
+    if (typeof(cssSelector) == "string") {
+      el = document.querySelector(cssSelector);
     }
     if (!el) {
       return false;
@@ -28,8 +28,8 @@ function getDataService(element = 'dataService') {
       let el  = test();
       i--;
       if (i < 0) {
-        console.error("Could not find element ", element);
-        reject("Could not find element ", element);
+        console.error("Could not find cssSelector ", cssSelector);
+        reject("Could not find cssSelector ", cssSelector);
         clearInterval(cron);
       }
       if (el) {
