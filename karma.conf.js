@@ -27,8 +27,6 @@ module.exports = function(config) {
     files : [
       // Custom Elements v1
       'bower_components/custom-elements/custom-elements.min.js',
-
-      'bower_components/jquery/dist/jquery.min.js',
       '../node_modules/karma-read-json/karma-read-json.js',
       'build/app.js',
       { pattern: 'api/*/tests/references/*.json',    included: false },
@@ -42,7 +40,6 @@ module.exports = function(config) {
       'static/elements/x-requestor-crud.js',
       'static/!(elements)/**/*.js',
       'static/elements/*.js',
-      'static/elements/*.html',
       '../tests/unitjs/mocks/*.js',
       '../tests/unitjs/*.js',
       { pattern: "static/**",                        included: false, served: true, watched: false },
