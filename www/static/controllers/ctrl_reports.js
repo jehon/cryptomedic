@@ -133,7 +133,7 @@ function ctrl_reports($scope, $routeParams, $sce) {
     console.log("ctrl_report: Calling server to refresh the data's");
 
     // Launch the call
-    getDataService('reportService')
+    getDataService('#reportService')
       .then(dataService => dataService.getReport(dataGenerator, $scope.values))
       .then((data) => {
         console.log("ctrl_report: Data received from server.");
