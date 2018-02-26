@@ -25,8 +25,6 @@ module.exports = function(config) {
     ],
 
     files : [
-      // Custom Elements v1
-      'bower_components/custom-elements/custom-elements.min.js',
       '../node_modules/karma-read-json/karma-read-json.js',
       'build/app.js',
       { pattern: 'api/*/tests/references/*.json',    included: false },

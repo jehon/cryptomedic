@@ -1,9 +1,9 @@
 
 [ok      ] Remove bower:
-[ok      ] - remove numeraljs
-[ok      ] - remove fetchfull-element
+[en cours] - migrate polyfill custom elements (v1) to node_modules
 [to do   ] - remove jquery-ui calendar -> native component?
-[to do   ] - migrate polyfill custom elements (v1) to node_modules
+
+Push back changes to fetchfull.js
 
 Remove template.php
 - how to render external templates? -> eval ?
