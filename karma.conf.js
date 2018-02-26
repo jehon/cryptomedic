@@ -42,6 +42,7 @@ module.exports = function(config) {
       'static/elements/x-waiting.js',
       'static/elements/x-waiting-folder.js',
       'static/elements/x-requestor.js',
+      'static/elements/x-requestor-crud.js',
       'static/!(elements)/**/*.js',
       'static/elements/*.js',
       'static/elements/*.html',
