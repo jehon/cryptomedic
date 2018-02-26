@@ -2,7 +2,7 @@
 
 // See polyfill for html imports: http://webcomponents.org/polyfills/html-imports/
 
-function getDataService(cssSelector = 'dataService') {
+function getDataService(cssSelector = '#dataService') {
   let test = function() {
     let el = cssSelector;
     if (typeof(cssSelector) == "string") {
