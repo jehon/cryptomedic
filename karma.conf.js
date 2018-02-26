@@ -25,9 +25,6 @@ module.exports = function(config) {
     ],
 
     files : [
-      // Custom Elements v0
-      'bower_components/webcomponentsjs/webcomponents-lite.js',
-
       // Custom Elements v1
       'bower_components/custom-elements/custom-elements.min.js',
 
