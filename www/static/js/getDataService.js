@@ -11,7 +11,7 @@ function getDataService(cssSelector = '#dataService') {
     if (!el) {
       return false;
     }
-    if (typeof(el["$"]) == "undefined" && typeof(el.request) == "undefined") {
+    if (!("$" in el) && !("request" in el)) {
       return false;
     }
     return el;
