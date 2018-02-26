@@ -38,54 +38,57 @@
   </fieldset>
 </div>
 
-<form id='editForm'>
-  <table id='price_lists' class='table table-hover table-bordered tablesorter reporting'>
-    <thead>
-      <tr>
-        <th>Beginning date</th>
-        <th ng-repeat='p in prices'>{{p['datefrom']}}</th>
-      </tr>
-      <tr>
-        <th>End date</th>
-        <th ng-repeat='p in prices'>{{p['dateto']}}</th>
-      </tr>
-      <tr>
-        <th>Modified by</th>
-        <th ng-repeat='p in prices'>{{p['lastuser']}}</th>
-      </tr>
-      <tr>
-        <th></th>
-        <th ng-repeat='p in prices'>
-          <span ng-if='p["_editable"]'>
-            <span ng-if='edit !== $index'>
-              <span id='button_edit_{{$index}}'   class="btn btn-default" ng-click="actionEdit($index)">Edit</span>
+<x-requestor-crud id='pricesRequestor' relative-url='admin/prices'>
+  <form id='editForm'>
+    <table id='price_lists' class='table table-hover table-bordered tablesorter reporting'>
+      <thead>
+        <tr>
+          <th>Beginning date</th>
+          <th ng-repeat='p in prices'>{{p['datefrom']}}</th>
+        </tr>
+        <tr>
+          <th>End date</th>
+          <th ng-repeat='p in prices'>{{p['dateto']}}</th>
+        </tr>
+        <tr>
+          <th>Modified by</th>
+          <th ng-repeat='p in prices'>{{p['lastuser']}}</th>
+        </tr>
+        <tr>
+          <th></th>
+          <th ng-repeat='p in prices'>
+            <span ng-if='p["_editable"]'>
+              <span ng-if='edit !== $index'>
+                <span id='button_edit_{{$index}}'   class="btn btn-default" ng-click="actionEdit($index)">Edit</span>
+              </span>
+              <span ng-if='edit === $index'>
+                <span id='button_save_{{$index}}'   class="btn btn-default" ng-click="doSave($index)">Save</span>
+                <span id='button_cancel_{{$index}}'   class="btn btn-default" ng-click="doCancel()">Cancel</span>
+              </span>
+              <span id='button_delete_{{$index}}' class="btn btn-default" ng-click="doDelete($index)">Delete</span>
             </span>
-            <span ng-if='edit === $index'>
-              <span id='button_save_{{$index}}'   class="btn btn-default" ng-click="doSave($index)">Save</span>
-              <span id='button_cancel_{{$index}}'   class="btn btn-default" ng-click="doCancel()">Cancel</span>
+            <span ng-if='!p["_editable"]'>
+              Locked
             </span>
-            <span id='button_delete_{{$index}}' class="btn btn-default" ng-click="doDelete($index)">Delete</span>
-          </span>
-          <span ng-if='!p["_editable"]'>
-            Locked
-          </span>
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr ng-repeat='k in getElements()'>
-        <td>{{k}}</td>
-        <td ng-repeat='p in prices'>
-          <div ng-if='edit !== $index'>
-            <span ng-if='p[k]<=0'>-</span>
-            <span ng-if='p[k]>1'>{{p[k]}}</span>
-            <span ng-if='p[k]==1'>open</span>
-          </div>
-          <div ng-if='edit === $index'>
-            <edit-price name='{{k}}' value='{{p[k]}}'></edit-price>
-          </div>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</form></span>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat='k in getElements()'>
+          <td>{{k}}</td>
+          <td ng-repeat='p in prices'>
+            <div ng-if='edit !== $index'>
+              <span ng-if='p[k]<=0'>-</span>
+              <span ng-if='p[k]>1'>{{p[k]}}</span>
+              <span ng-if='p[k]==1'>open</span>
+            </div>
+            <div ng-if='edit === $index'>
+              <edit-price name='{{k}}' value='{{p[k]}}'></edit-price>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </form>
+</x-requestor-crud>
+</span>
