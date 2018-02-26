@@ -40,6 +40,7 @@ function ctrl_users($scope) {
   $scope.doEdit = function(index) {
     $scope.edit = $scope.users[index]; // Put object here
     $scope.password = false;
+    $scope.safeApply();
   };
 
   $scope.doSave = function() {
