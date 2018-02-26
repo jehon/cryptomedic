@@ -37,8 +37,7 @@ const XRequestorCRUD = (function() {
         delete(id) {
             return this.requestAndFilter({
                 url: this.relativeUrl + '/' + id,
-                method: "DELETE",
-                data: nullify(data)
+                method: "DELETE"
             }).then(response => response.asJson);
         }
     }
