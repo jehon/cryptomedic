@@ -142,7 +142,6 @@ mainApp.controller('ctrl_file_bill',        ctrl_file_bill);
 mainApp.controller('ctrl_folder',           ctrl_folder);
 mainApp.controller('ctrl_graphic',          ctrl_graphic);
 mainApp.controller('ctrl_home',             ctrl_home);
-mainApp.controller('ctrl_login',            ctrl_login);
 mainApp.controller('ctrl_reports',          ctrl_reports);
 mainApp.controller('ctrl_search',           ctrl_search);
 mainApp.controller('ctrl_users',            ctrl_users);
@@ -153,9 +152,6 @@ mainApp.config([ '$routeProvider', function($routeProvider) {
     .when('/home', {
       templateUrl: template('page', 'home'),
       controller: 'ctrl_home'
-    }).when('/login', {
-      templateUrl: template('page', 'login'),
-      controller: 'ctrl_login',
     }).when('/folder/:patient_id/:page?/:subtype?/:subid?/:mode?', {
       templateUrl: template('folder'),
       controller: 'ctrl_folder',
