@@ -23,7 +23,7 @@
                     if (response.ok) {
                         let f = new Folder(response.asJson.folder);
                         patientFolderCache.set(response.asJson.id, f);
-                        return json;
+                        return response.asJson;
                     }
                     if (response.status == 404) {
                         return false;
@@ -43,7 +43,7 @@
                     let f = new Folder(response.asJson.folder);
                     patientFolderCache.set(response.asJson.id, f);
                     store.dispatch({ type: ACT_FOLDER_STORE, payload: f });
-                    return json;
+                    return response.asJson;
                 });
         }
 
