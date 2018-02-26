@@ -109,9 +109,7 @@
           <?php (new t("Bill.Sociallevel"))->readOnly()->tr("Social Level")->p(); ?>
                 <tr>
             <td>Percentage of price to be asked</td>
-            <td id='percentage'>
-              <numeral-js number="{{currentFile().calculate_percentage_asked()}}" format="0%" print></numeral-js>
-            </td>
+            <td id='percentage'>{{currentFile().calculate_percentage_asked() * 100 | number:0}}%</td>
           </tr>
           <tr>
             <td>Price to be asked to the patient</td>
