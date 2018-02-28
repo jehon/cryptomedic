@@ -5,7 +5,6 @@
 /**/build/
 /**/logs/
 /**/node_modules/
-/**/bower_components/
 /**/tmp/
 /**/unused/
 /**/vendor/

@@ -28,7 +28,6 @@ module.exports = function(config) {
       '../node_modules/karma-read-json/karma-read-json.js',
       'build/app.js',
       { pattern: 'api/*/tests/references/*.json',    included: false },
-      { pattern: "bower_components/**",              included: false, served: true, watched: false },
       { pattern: "static/elements/resources/*",      included: false, served: true, watched: true },
       'static/elements/jh-element.js',
       'static/elements/x-overlay.js',

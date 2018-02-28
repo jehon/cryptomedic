@@ -24,7 +24,6 @@
     "webcomponentsjs": "latest"
   },
   "devDependencies": {
-    "bower": "1.*",
     "chromedriver": "latest",
     "clean-webpack-plugin": "^0.1.17",
     "css-loader": "^0.28.7",
