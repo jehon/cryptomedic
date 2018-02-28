@@ -27,14 +27,13 @@ function ctrl_file_bill($scope) {
       $scope.safeApply();
     }
   });
+    $scope.$watch('currentFile().sl_numberOfHouseholdMembers', function() {
+        $scope.currentFile().ratioSalary();
+    });
 
-  $scope.$watch('currentFile().sl_numberOfHouseholdMembers', function() {
-    $scope.currentFile().ratioSalary();
-  });
-
-  $scope.$watch('currentFile().sl_familySalary', function() {
-    $scope.currentFile().ratioSalary();
-  });
+    $scope.$watch('currentFile().sl_familySalary', function() {
+        $scope.currentFile().ratioSalary();
+    });
 
     // Used in bill_summary
     $scope.isEmpty = function(value) {
