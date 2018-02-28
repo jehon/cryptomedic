@@ -1,20 +1,22 @@
 
-[ok      ] Remove bower:
-[en cours] - migrate polyfill custom elements (v1) to node_modules
-[to do   ] - remove jquery-ui calendar -> native component?
+[urgent] When logged in, reload the page:
+	http://localhost:5555/static/index.html#/folder/1
 
-Push back changes to fetchfull.js
+[ok    ] Remove bower:
+[doing ] - remove jquery-ui calendar -> native component?
 
-Remove template.php
+[urgent] Push back changes to fetchfull.js
+
+[      ] Remove template.php
 - how to render external templates? -> eval ?
 
-Remove Angular:
+[      ] Remove Angular:
 - migrate reports
 - migrate home page
 - migrate various files
 
-- html2canvas:
+[      ] html2canvas:
 https://www.npmjs.com/package/html2canvas
 
-- jhcodage
+[      ] jhcodage
 use the JHElement
