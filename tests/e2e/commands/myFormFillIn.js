@@ -20,9 +20,15 @@ exports.command = function(selector, fields, button) {
     } else if (f.substring(0, 6) == "select") {
       this.mySelect(fsel, fields[f]);
     } else {
-      this
-       .clearValue(f)
-       .setValue(fsel, fields[f]);
+      // this
+      //   .clearValue(f)
+      //   .setValue(fsel, fields[f]);
+      this.execute(function(fsel, val) {
+        const el = document.querySelector(fsel);
+        el.value = val;
+        JHElement.fireOn(el, "change");
+        JHElement.fireOn(el, "blur");
+      }, [ fsel, fields[f]]);
     }
 
     // http://nightwatchjs.org/api#keys

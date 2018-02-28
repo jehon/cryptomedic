@@ -197,19 +197,6 @@ function ctrl_folder($scope, $location, $routeParams) {
 
     $scope.errors = updatedData.validate();
 
-    jQuery(form + ' input[mycalendar]:visible').each(function() {
-      var date = jQuery(this).val();
-      if ((date == '') && !jQuery(this).is('[required]')) {
-        return;
-      }
-      var ok = ((new Date(date) !== 'Invalid Date' && !isNaN(new Date(date))));
-      if (!ok) {
-        var uuid = jQuery(this).attr('uuid');
-        $scope.errors['date_' + uuid] = true;
-        $scope.valide = false;
-      }
-    });
-
     if (!jQuery.isEmptyObject($scope.errors)) {
       $scope.valide = false;
     }

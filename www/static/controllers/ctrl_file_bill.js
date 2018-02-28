@@ -1,6 +1,6 @@
 /* global Payment,goThere,extractPrefsFile */
 
-function ctrl_file_bill($scope) {
+function ctrl_file_bill($scope, $element) {
     /*
       Prices are at
           store.definitions.prices
@@ -18,15 +18,17 @@ function ctrl_file_bill($scope) {
         $scope.currentFile().calculatePriceId(getPrices());
         $scope.safeApply();
     })
+  
+    const dateElement = $element[0].querySelector("input[type=date]");
+    dateElement.addEventListener("blur", () => {
+        $scope.currentFile().Date = dateElement.value;
+        if ($scope.currentFile() && $scope.currentFile().calculatePriceId) {
+            $scope.currentFile().calculatePriceId(getPrices());
+        }
+        $scope.safeApply();
+    });
+    $scope.currentFile().calculatePriceId(getPrices());
 
-  $scope.$watch('currentFile().Date', function() {
-    if ($scope.currentFile() && $scope.currentFile().calculatePriceId) {
-      $scope.currentFile().calculatePriceId(getPrices());
-      $scope.safeApply();
-    } else {
-      $scope.safeApply();
-    }
-  });
     $scope.$watch('currentFile().sl_numberOfHouseholdMembers', function() {
         $scope.currentFile().ratioSalary();
     });

@@ -60,17 +60,6 @@ let mainApp = angular.module('app_main', [ 'ngRoute' ])
       } // end of link function
     };
   })
-  .directive('mycalendar', function() {
-    return function (scope, elem) {
-      jQuery(elem).datepicker({
-        dateFormat: 'yy-mm-dd',
-        changeMonth: true,
-        changeYear: true,
-        yearRange: '1980:+2',
-        monthNamesShort: [ '1 Jan', '2 Feb', '3 Mar', '4 Apr', '5 May', '6 Jun', '7 Jul', '8 Aug', '9 Sep', '10 Oct', '11 Nov', '12 Dec' ]
-      });
-    };
-  })
   .directive('nullToInterrogation', function() {
   // https://docs.angularjs.org/api/ng/directive/select
   // usage: <select ng-model='model.id' null-to-interrogation>
