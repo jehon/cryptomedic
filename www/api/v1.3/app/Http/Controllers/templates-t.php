@@ -22,7 +22,6 @@ class t {
   const TYPE_TEXT         = "text";
   const TYPE_DATE         = "date";
 
-  const DATEFORMAT = "shortDate";
   const DATETIMEFORMAT = "short";
 
   static protected $pdo = false;
@@ -34,7 +33,6 @@ class t {
       "inline" => "",
     "model" => null
   ];
-  static private $uuid = 0;
   static $sqlAllTableStructure = array();
 
   static function setPDO($pdo) {
@@ -46,11 +44,6 @@ class t {
           return trace("Setting unsupported option: $key"); // @codeCoverageIgnore
       }
       static::$defaultOptions[$key] = $val;
-  }
-
-  static function UUID()  {
-      static::$uuid++;
-      return static::$uuid;
   }
 
   static function cacheSqlStructureFor($sqlTable) {
@@ -238,9 +231,11 @@ class t {
       return $this;
     }
 
-    $inline = "name='{$this->field}' class='form-control' id='{$this->jsId}' ng-model='{$this->fieldGetKey()}' "
+    $inlineWithoutModel = "name='{$this->field}' class='form-control' id='{$this->jsId}' "
         . ($this->fieldIsRequired() ? " required " : "")
         . $this->options['inline'];
+
+    $inline = $inlineWithoutModel . " ng-model='{$this->fieldGetKey()}' ";
 
     switch($this->fieldGetType()) {
       case static::TYPE_LIST:
@@ -274,12 +269,9 @@ class t {
         $this->res .= "<input $inline />";
         break;
       case static::TYPE_DATE:
-        // TODOJH: date workaround
-        $uuid_date = static::UUID();
-        $this->res .= "<input id='{$this->jsId}' type='text' $inline placeholder='yyyy-MM-dd' mycalendar uuid='$uuid_date'/>";
-        $this->res .= "<span ng-if='errors.date_$uuid_date' class='jserror'>"
-            . "Invalid date: please enter yyyy-mm-dd."
-            . "</span>";
+        $this->res .= "<input id='{$this->jsId}' type='date' $inlineWithoutModel placeholder='yyyy-MM-dd' "
+          . " ng-value='" . $this->fieldGetKey() . "' "
+          . "/>";
         break;
       default:
         $this->res .= "WW {$this->fieldGetType()} input ";
