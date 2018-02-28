@@ -11,7 +11,7 @@ module.exports = {
     client
       .page.cryptomedic().authenticate("murshed")
 
-      // Select file
+      // Select file (id: 7)
       .myClick("#menu_home")
       .waitForElementVisible("input[ng-model='entryyear']")
       .clearValue("input[ng-model='entryyear']")
