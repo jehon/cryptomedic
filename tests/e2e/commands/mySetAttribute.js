@@ -9,12 +9,6 @@ exports.command = function(selector, attributeName, attributeValue, callback) {
 
   this.execute(function(selector, attributeName, attributeValue) {
     let el = document.querySelector(selector);
-    // if (el.matches("input[mycalendar]") && attributeName == "value") {
-    //   // Problem with months?
-    //   let d = new Date(attributeValue);
-    //   attributeValue = ().toISOString().substring(0, 10);
-    //   // attributeValue = "1999-01-01";
-    // }
     el.setAttribute(attributeName, attributeValue);
     return true;
   },
