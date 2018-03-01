@@ -27,7 +27,6 @@ module.exports = {
     "cli_args" : {
       "webdriver.chrome.driver": "node_modules/chromedriver/lib/chromedriver/chromedriver",
       "webdriver.gecko.driver": require('geckodriver').path
-      // "webdriver.gecko.driver": "node_modules/chromedriver/lib/"
     }
   },
   "test_settings" : {
