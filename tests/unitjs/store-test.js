@@ -12,7 +12,6 @@ describe("store", function() {
 	});
 
 	it("should handle ACT_FOLDER_*", function() {
-		expect(store.getState().folder).toBeFalsy();
 		store.dispatch({ type: ACT_FOLDER_INVALIDATE });
 		expect(store.getState().folder).toBeFalsy();
 
@@ -58,8 +57,6 @@ describe("store", function() {
 
 	it("should handle ACT_DEFINITIONS_*", function() {
 		const defs = { prices: 123 };
-
-		expect(store.getState().definitions).toBeFalsy();
 
 		store.dispatch({ type: ACT_DEFINITIONS_STORE, payload: defs });
 		expect(store.getState().definitions.prices).toBe(123);
