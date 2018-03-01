@@ -9,7 +9,6 @@
     "@webcomponents/custom-elements": "^1.0.8",
     "@webcomponents/shadydom": "^1.0.8",
     "angular": "^1.4.14",
-    "angular-mocks": "1.4.x",
     "angular-route": "1.4.x",
     "bootstrap": "^3.3.7",
     "clone": "^2.1.1",
@@ -43,12 +42,10 @@
     "kill-by-port": "0.0.1",
     "nightwatch": "latest",
     "nightwatch-html-reporter": "latest",
-    "offline-plugin": "latest",
     "recursive-readdir-sync": "latest",
     "selenium-server": "latest",
     "style-loader": "^0.19.1",
     "svgo": "latest",
-    "sw-precache": "^4.0.0",
     "webpack": "^3.8.1"
   },
   "scripts": {
