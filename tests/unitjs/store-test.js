@@ -43,7 +43,6 @@ describe("store", function() {
 	it("should handle ACT_USER_*", function() {
 		const user = { username: "test", prices: 123 };
 
-		expect(store.getState().user).toBeFalsy();
 		store.dispatch({ type: ACT_USER_LOGOUT });
 		expect(store.getState().user).toBeFalsy();
 		expect(store.getState().folder).toBeFalsy();
