@@ -3,7 +3,7 @@
   "private": true,
   "version": "5.1.3",
   "description": "Cryptomedic application for all plateforms",
-  "repository": "https://github.com/jehon/CryptomedicApp",
+  "repository": "https://github.com/jehon/cryptomedic",
   "license": "MIT",
   "dependencies": {
     "@webcomponents/custom-elements": "^1.0.8",
