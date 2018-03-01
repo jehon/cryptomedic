@@ -15,14 +15,11 @@
     "clone": "^2.1.1",
     "excellentexport": "^2.1.0",
     "fetchfull": "github:jehon/fetchfull",
-    "fetchfull-elements": "github:jehon/fetchfull-elements",
     "he": "^1.1.1",
     "html2canvas": "^0.5.0-beta4",
     "jquery": "^3.2.1",
     "object-path": "^0.11.4",
-    "redux": "3.7.x",
-    "redux-subscribe": "^1.0.2",
-    "webcomponentsjs": "latest"
+    "redux": "3.7.x"
   },
   "devDependencies": {
     "chromedriver": "latest",
