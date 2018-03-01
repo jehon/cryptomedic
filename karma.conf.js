@@ -27,8 +27,9 @@ module.exports = function(config) {
     files : [
       '../node_modules/karma-read-json/karma-read-json.js',
       'build/app.js',
+      { pattern: 'build/**',                         included: false, served: true, watched: true },
       { pattern: 'api/*/tests/references/*.json',    included: false },
-      { pattern: "static/elements/resources/*",      included: false, served: true, watched: true },
+      { pattern: 'static/elements/resources/*',      included: false, served: true, watched: true },
       'static/elements/jh-element.js',
       'static/elements/x-overlay.js',
       'static/elements/x-waiting.js',
@@ -71,7 +72,8 @@ module.exports = function(config) {
 
     proxies: {
       "/static/": "/base/static/",
-      "/elements/": "/base/static/elements/"
+      "/elements/": "/base/static/elements/",
+      "/build/bootstrap/": "/base/build/bootstrap/"
     },
   };
 
