@@ -7,6 +7,8 @@ describe("tests/unit/x-waiting-folder-test.js", function() {
 	    });
 
 		it("should be blocked when initialized", function() {
+			element().folder = null;
+			expect(element().folder).toBe(null);
 			expect(element().isBlocked()).toBeTruthy();
 		});
 
