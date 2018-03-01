@@ -55,7 +55,7 @@
     "webpack": "^3.8.1"
   },
   "scripts": {
-    "postinstall": "bower install && cd www/api/v1.3/ && composer.phar install && cd - && npm build",
+    "postinstall": "cd www/api/v1.3/ && composer.phar install && cd - && npm build",
     "reset": "./bin/dev-reset.sh",
     "build": "webpack",
     "test": "npm run reset && npm run build && npm run -s test-api && npm run -s test-unit && npm run -s test-e2e",
