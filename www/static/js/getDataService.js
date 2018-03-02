@@ -17,15 +17,32 @@ function getDataService(cssSelector = '#dataService') {
     return el;
   }
 
-  let el = test();
-  if (el) {
-    return Promise.resolve(el);
+  const waitForLogin = function(resolveFn) {
+    const testLogin = function() {
+      const user = store.getState().user;
+      if (user) {
+        return true;
+      }
+      return false;
+    };
+
+    if (testLogin()) {
+      return resolveFn();
+    }
+
+    const unsubscribe = store.subscribe(() => {
+      const user = store.getState().user;
+      if (testLogin()) {
+        unsubscribe();
+        resolveFn();
+      }
+    })
   }
 
   return new Promise(function(resolve, reject) {
     let i = 40;
-    let cron = setInterval(function() {
-      let el  = test();
+    const cron = setInterval(function() {
+      const el  = test();
       i--;
       if (i < 0) {
         console.error("Could not find cssSelector ", cssSelector);
@@ -34,7 +51,8 @@ function getDataService(cssSelector = '#dataService') {
       }
       if (el) {
         clearInterval(cron);
-        resolve(el);
+        // Now, wait for the login...
+        waitForLogin(() => resolve(el));
       }
     }, 250);
   });
