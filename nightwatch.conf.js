@@ -46,23 +46,22 @@ module.exports = {
         "path" : "target/e2e/firefox/"
       },
       "desiredCapabilities": {
-        "browserName": "firefox",
-        "browserName": "chrome",
         "marionnette": true,
         "webdriver.log.driver": "DEBUG",
         "javascriptEnabled": true,
         "acceptSslCerts": true,
+        "chromeOptions" : {
+          "args" : [ 
+            // "--auto-open-devtools-for-tabs",
+            "--headless"
+          ]
+        },
         "moz:firefoxOptions": {
           "args": [
             "-headless"
           ]
         },
-        "chromeOptions" : {
-          "args" : [ 
-            "--auto-open-devtools-for-tabs",
-            "--headless"
-          ]
-        }
+        // "browserName": "firefox"
       }
     },
     "chrome" : {
@@ -75,6 +74,12 @@ module.exports = {
         "browserName": "chrome",
         "javascriptEnabled": true,
         "acceptSslCerts": true,
+        "chromeOptions" : {
+          "args" : [ 
+            // "--auto-open-devtools-for-tabs",
+            "--headless"
+          ]
+        }
       }
     }
   }
