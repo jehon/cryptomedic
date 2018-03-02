@@ -40,8 +40,7 @@ module.exports = (function() {
     this.myWaitFetch = function() {
       client
         .pause(10)
-        .waitForElementNotPresent('fetchfull-element[running]')
-        // .waitForElementNotPresent('cryptomedic-data-service[running]')
+        .waitForElementNotPresent('cryptomedic-data-service[running]')
         .pause(10)
 
       return client;

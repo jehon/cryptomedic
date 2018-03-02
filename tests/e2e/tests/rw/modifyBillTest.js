@@ -68,10 +68,11 @@ module.exports = {
         client.setValue("#Payment_Amount", 456);
         client.click('#button_payment_save');
         client.page.cryptomedic().myWaitFetch();
+        client.pause(1000);
         client.page.cryptomedic().tableIterator('#paymentsList')
             .row(4).col(1).assert(payment["#Payment_Date"])
             .nextCol().assert('Shetou')
-            .nextCol().assert(456)
+            .nextCol().assert('456')
             .section('tfoot')
             .row(1).col(2).assert('Total')
             .row(1).col(3).assert('594')
@@ -80,6 +81,8 @@ module.exports = {
 
     "delete a payment": function(client) {
         client.click('#button_delete_3');
+        client.page.cryptomedic().myWaitFetch();
+        client.pause(1000);
         client.page.cryptomedic().tableIterator('#paymentsList')
             .section('tfoot')
             .row(1).col(2).assert('Total')
