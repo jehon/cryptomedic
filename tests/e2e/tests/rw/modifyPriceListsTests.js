@@ -136,6 +136,7 @@ module.exports = {
       .myClick("#button_save_0")
       .pause(10)
       .page.cryptomedic().myWaitFetch()
+      .pause(1000)
 
       .page.cryptomedic().tableIterator('#price_lists')
         .section("tbody")
@@ -159,6 +160,7 @@ module.exports = {
       .page.cryptomedic().myWaitFetch()
       ;
 
+    client.pause(1000);
     assertTableInitial(client);
 
     client
