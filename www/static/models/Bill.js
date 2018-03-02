@@ -134,8 +134,9 @@ class Bill extends PatientRelated {
   }
 
   calculatePriceId(prices) {
-    if (typeof(this.Date) == 'undefined' || !prices) {
-      this.price_id = 1;
+    if (typeof(this.Date) == 'undefined' || !this.Date || !prices) {
+      this.price_id = 0;
+      this.price = false;
       return 0;
     }
     this.price_id = -1;
