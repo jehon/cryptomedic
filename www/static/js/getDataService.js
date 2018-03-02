@@ -3,7 +3,7 @@
 // See polyfill for html imports: http://webcomponents.org/polyfills/html-imports/
 
 function getDataService(cssSelector = '#dataService') {
-  let test = function() {
+  const test = function() {
     let el = cssSelector;
     if (typeof(cssSelector) == "string") {
       el = document.querySelector(cssSelector);
