@@ -41,9 +41,6 @@
     <div ng-if='errors.homeVisitAndGiveAppointment'>
       <div class='alert alert-danger'>Error: you could not bill a "home visit" with "give appointment" together!</div>
     </div>
-    <div ng-if='errors.noDate'>
-      <div class='alert alert-danger'>Error: please select a date first!</div>
-    </div>
     <div ng-if='errors.dateInTheFuture'>
       <div class='alert alert-danger' id='errorDateFuture'>Error: The date can not be in the future!</div>
     </div>
@@ -61,29 +58,36 @@
           price_id <?php (new t("Bill.price_id"))->read()->p(); ?><br>
         </div>
       </FieldSet>
-      <?php
-        foreach(Bill::$categories as $cat) {
-          ?>
-            <FieldSet>
-              <legend><?php echo $cat; ?> items</legend>
-              <table  class='prices'>
-                <thead>
-                  <tr>
-                    <th></th>
-                    <th>Quantity</th>
-                    <th>Price</th>
-                    <th>Total</th>
-                  </tr>
-                </thead>
-                <?php foreach(Bill::getFieldsList($cat, t::getColumnsOfTable('bills')) as $field) {
-                    price("Bill." . $field);
-                  }
-                ?>
-              </table>
-            </FieldSet>
-          <?php
-        }
-      ?>
+      <div ng-if='!currentFile().price'>
+        <div class='alert alert-info' role="alert" id="errorNoDate">
+          Please select a date first!
+        </div>
+      </div>
+      <div ng-if='currentFile().price'>
+        <?php
+          foreach(Bill::$categories as $cat) {
+            ?>
+              <FieldSet>
+                <legend><?php echo $cat; ?> items</legend>
+                <table  class='prices'>
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th>Quantity</th>
+                      <th>Price</th>
+                      <th>Total</th>
+                    </tr>
+                  </thead>
+                  <?php foreach(Bill::getFieldsList($cat, t::getColumnsOfTable('bills')) as $field) {
+                      price("Bill." . $field);
+                    }
+                  ?>
+                </table>
+              </FieldSet>
+            <?php
+          }
+        ?>
+      </div>
     </div>
     <div class="col-md-6">
       <x-patient-related></x-patient-related>

@@ -115,6 +115,16 @@ module.exports = {
     nb++;
   },
 
+    "add a bill with no date, no price": function(client) {
+        client.myClick("#button_add");
+        client.myClick("#add_bill");
+        client.myFormFillIn("#fileForm", { "#Bill_Date": "" });
+
+        client.assert.elementNotPresent("[priceFor]");
+        client.assert.elementPresent("#errorNoDate");
+        client.myClick("#topsubmenu #button_cancel");
+    },
+
   "add a bill 2": function(client) {
     var bill = {
       "#Bill_Date": "2003-06-01",
