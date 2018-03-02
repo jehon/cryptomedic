@@ -6,10 +6,13 @@ describe("tests/unit/x-waiting-test.js", function() {
 			expect(element().shadowRoot.querySelector("img").offsetWidth > 0).toBeFalsy();
 		});
 
-		it("should show()", function() {
+		it("should show()", function(done) {
 			element().block();
 			expect(element().isBlocked()).toBeTruthy();
-			expect(element().shadowRoot.querySelector("img").offsetWidth > 0).toBeTruthy();
+			setTimeout(() => {
+				expect(element().shadowRoot.querySelector("img").offsetWidth > 0).toBeTruthy();
+				done();
+			})
 		});
 
 		it("should hide()", function() {
