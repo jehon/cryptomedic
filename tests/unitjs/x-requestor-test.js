@@ -21,13 +21,16 @@ describe("tests/unit/x-requestor-test.js", function() {
 			it("should make an absolute request", function() {
 				spyOn(window, "fetch").and.callFake((request) => new Promise((resolve, reject) => resolve(new Response(request.url, {}))));
 				const promise = element().request({ url: "/baseUrl", data: { test: 1 }});
-				promise.then(response => expect(response.asText.endsWith(`/baseUrl?test=1`)).toBeTruthy());
+				promise.then(response => {
+					expect(response.url.contain(`/api/`)).toBeFalsy()
+					expect(response.url.endsWith(`/baseUrl?test=1`)).toBeTruthy()
+				});
 			});
 
 			it("should make an relative request", function() {
 				spyOn(window, "fetch").and.callFake((request) => new Promise((resolve, reject) => resolve(new Response(request.url, {}))));
 				const promise = element().request({ url: "relativeUrl", data: { test: 1 }});
-				promise.then(response => expect(response.asText.endsWith(`/api/${API_VERSION}/relativeUrl?test=1`)).toBeTruthy());
+				promise.then(response => expect(response.url.endsWith(`/api/${API_VERSION}/relativeUrl?test=1`)).toBeTruthy());
 			});
 		});
 
