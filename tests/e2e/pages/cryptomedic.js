@@ -41,7 +41,7 @@ module.exports = (function() {
       client
         .pause(10)
         .waitForElementNotPresent('cryptomedic-data-service[running]')
-        .pause(10)
+        .pause(10);
 
       return client;
     }
