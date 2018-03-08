@@ -22,8 +22,7 @@ describe("tests/unit/x-requestor-test.js", function() {
 				spyOn(window, "fetch").and.callFake((request) => new Promise((resolve, reject) => resolve(new Response(request.url, {}))));
 				const promise = element().request({ url: "/baseUrl", data: { test: 1 }});
 				promise.then(response => {
-					expect(response.url.contain(`/api/`)).toBeFalsy()
-					expect(response.url.endsWith(`/baseUrl?test=1`)).toBeTruthy()
+					expect(extractPath(response.url)).toBe(`/baseUrl?test=1`);
 				});
 			});
 
