@@ -1,26 +1,26 @@
 
-[      ] Remove testComponent
-[      ] - edit-price-test.js
-[      ] - jh-authorized-test.js
-[      ] - jh-codage-test.js
-[      ] - x-read-boolean-test
-[      ] - x-read-test
-[      ] - athelper
+[     ] Remove testComponent
+[     ] - edit-price-test.js
+[     ] - jh-authorized-test.js
+[     ] - jh-codage-test.js
+[     ] - x-read-boolean-test
+[     ] - x-read-test
+[     ] - athelper
 
-[      ] Remove loadMock
-[      ] - model-folderpage-test
-[      ] - athelper
+[done ] Remove loadMock
+[done ] - model-folderpage-test
+[done ] - athelper
 
-[      ] Remove template.php
+[     ] Remove template.php
 - how to render external templates? -> eval ?
 
-[      ] Remove Angular:
+[     ] Remove Angular:
 - migrate reports
 - migrate home page
 - migrate various files
 
-[      ] html2canvas:
+[     ] html2canvas:
 https://www.npmjs.com/package/html2canvas
 
-[      ] jhcodage
+[     ] jhcodage
 use the JHElement

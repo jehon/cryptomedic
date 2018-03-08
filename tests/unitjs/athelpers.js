@@ -1,18 +1,5 @@
-/* exported loadMock, testWithComponent, loadReference, testComponent */
-/* global create, mock_load_test, readJSON */
-
-let mocks = {
-  'mock_load_test':  mock_load_test
-};
-
-// DEPRECATED - TODO: Used only in test_model_data
-function loadMock(mock, type = false) {
-  let data = Object.assign({}, mocks[mock]);
-  if (type) {
-    data = create(type, data);
-  }
-  return Promise.resolve(data);
-}
+/* exported testWithComponent, loadReference, testComponent */
+/* global create, readJSON */
 
 function loadReference(name) {
   // Thanks to http://stackoverflow.com/a/27830579/1954789
