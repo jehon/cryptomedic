@@ -30,6 +30,7 @@ module.exports = function(config) {
       { pattern: 'build/**',                         included: false, served: true, watched: true },
       { pattern: 'api/*/tests/references/*.json',    included: false },
       { pattern: 'static/elements/resources/*',      included: false, served: true, watched: true },
+      'static/objects/*.js',
       'static/elements/jh-element.js',
       'static/elements/x-overlay.js',
       'static/elements/x-waiting.js',
