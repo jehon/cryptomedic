@@ -7,10 +7,6 @@
 [     ] - x-read-test
 [     ] - athelper
 
-[done ] Remove loadMock
-[done ] - model-folderpage-test
-[done ] - athelper
-
 [     ] Remove template.php
 - how to render external templates? -> eval ?
 
