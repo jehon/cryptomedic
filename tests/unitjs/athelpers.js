@@ -219,3 +219,16 @@ webDescribe("webDescribe.js", "<div></div>", function(element) {
     expect(element().tagName).toBe("DIV");
   });
 });
+
+
+function extractPath(url) {
+  return url.replace(/^http.?:\/\/localhost:[0-9]+/, "")
+}
+
+it("with extractPath", function() {
+    expect(extractPath("http://localhost:9876/test")).toBe("/test");
+    expect(extractPath("https://localhost:9876/test")).toBe("/test");
+
+    // invalid
+    expect(extractPath("xhttp://localhost:9876/test")).toBe("xhttp://localhost:9876/test");
+});
