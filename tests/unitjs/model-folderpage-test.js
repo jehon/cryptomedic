@@ -23,33 +23,6 @@ describe('FolderPage', function() {
     });
   });
 
-
-  describe('with data loaded remotely', function() {
-    it('should load correctly load_test and store it', function() {
-      loadMock('mock_load_test').then(function(data) {
-        expect(data.data1).toBe('data1');
-        expect(data.dataArray).toContain(1);
-        expect(data.dataArray).toContain(2);
-        expect(data.dataArray).toContain(3);
-        expect(data.dataArray).not.toContain(4);
-        expect(data.anything).toBeUndefined();
-      });
-    });
-  });
-
-  describe('with data loaded remotely tested through myAsyncTest', function() {
-    it('should load correctly load_test and store it', function() {
-      loadMock('mock_load_test').then(function(data) {
-        expect(data.data1).toBe('data1');
-        expect(data.dataArray).toContain(1);
-        expect(data.dataArray).toContain(2);
-        expect(data.dataArray).toContain(3);
-        expect(data.dataArray).not.toContain(4);
-        expect(data.anything).toBeUndefined();
-      });
-    });
-  });
-
   it('would interpret notSet correctly', function() {
     var data = new FolderPage();
     expect(data.data1).toBeUndefined();
