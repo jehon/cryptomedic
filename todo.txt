@@ -1,11 +1,15 @@
 
-[urgent] When logged in, reload the page:
-	http://localhost:5555/static/index.html#/folder/1
+[      ] Remove testComponent
+[      ] - edit-price-test.js
+[      ] - jh-authorized-test.js
+[      ] - jh-codage-test.js
+[      ] - x-read-boolean-test
+[      ] - x-read-test
+[      ] - athelper
 
-[ok    ] Remove bower:
-[doing ] - remove jquery-ui calendar -> native component?
-
-[urgent] Push back changes to fetchfull.js
+[      ] Remove loadMock
+[      ] - model-folderpage-test
+[      ] - athelper
 
 [      ] Remove template.php
 - how to render external templates? -> eval ?
