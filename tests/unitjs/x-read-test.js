@@ -1,4 +1,3 @@
-'use strict';
 
 describe('x-read-test', function() {
   // Test click on span for radio
