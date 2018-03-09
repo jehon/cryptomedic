@@ -1,4 +1,8 @@
 
+
+[     ] jhcodage
+use the JHElement
+
 [     ] Remove template.php
 - how to render external templates? -> eval ?
 
@@ -9,6 +13,3 @@
 
 [     ] html2canvas:
 https://www.npmjs.com/package/html2canvas
-
-[     ] jhcodage
-use the JHElement
