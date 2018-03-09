@@ -1,4 +1,4 @@
-/* exported testWithComponent, loadReference, testComponent */
+/* exported loadReference, webDescribe, extractPath */
 /* global create, readJSON */
 
 function loadReference(name) {
