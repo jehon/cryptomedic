@@ -1,7 +1,12 @@
 
 
-[     ] jhcodage
-use the JHElement
+[     ] jhcodage: use the JHElement
+
+[     ] Prices/Bills as lines
+[     ] - Adapt DB
+[     ] - Insert bills
+[     ] - Edit prices
+[     ] - Adapt statistics
 
 [     ] Remove template.php
 - how to render external templates? -> eval ?
