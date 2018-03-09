@@ -1,57 +1,42 @@
 'use strict';
-/* global testComponent */
 
 describe('x-read-boolean-test', function() {
   // Test click on span for radio
-  it("should be instantiated", function(done) {
-    testComponent("<x-read-boolean></x-read-boolean>").then(el => {
-      el.testDone();
+  webDescribe("without value", "<x-read-boolean></x-read-boolean>", function(element) {
+    it("should be instantiated", function(done) {
       done();
     });
-  });
 
-  it("should show false when no value is specified", function(done) {
-    testComponent("<x-read-boolean></x-read-boolean>").then(el => {
-      expect(el.shadowRoot.querySelector("img").getAttribute('src')).toMatch(/-false.gif/i);
-      el.testDone();
-      done();
+    it("should show false when no value is specified", function() {
+      expect(element().shadowRoot.querySelector("img").getAttribute('src')).toMatch(/-false.gif/i);
     });
-  });
 
-  it("should show false when 'false' is specified", function(done) {
-    testComponent("<x-read-boolean value='false'></x-read-boolean>").then(el => {
-      expect(el.shadowRoot.querySelector("img").getAttribute('src')).toMatch(/-false.gif/i);
-      el.testDone();
-      done();
-    });
-  });
-
-  it("should show false when invalid json data is given", function(done) {
-    testComponent("<x-read-boolean value='{truc'></x-read-boolean>").then(el => {
-      // Non empty string is ... "true"
-      expect(el.shadowRoot.querySelector("img").getAttribute('src')).toMatch(/-true.gif/i);
-      el.testDone();
-      done();
-    });
-  });
-
-  it("should show true only when attribute value=true is specified", function(done) {
-    testComponent("<x-read-boolean value='true'></x-read-boolean>").then(el => {
-      expect(el.shadowRoot.querySelector("img").getAttribute('src')).toMatch(/-true.gif/i);
-      el.testDone();
-      done();
-    });
-  });
-
-  it("should update when value is changed", function(done) {
-    testComponent("<x-read-boolean></x-read-boolean>").then(el => {
-      expect(el.shadowRoot.querySelector("img").getAttribute('src')).toMatch(/-false.gif/i);
-      el.setAttribute('value', 'true');
+    it("should update when value is changed", function(done) {
+      expect(element().shadowRoot.querySelector("img").getAttribute('src')).toMatch(/-false.gif/i);
+      element().setAttribute('value', 'true');
       setTimeout(() => {
-        expect(el.shadowRoot.querySelector("img").getAttribute('src')).toMatch(/-true.gif/i);
-        el.testDone();
+        expect(element().shadowRoot.querySelector("img").getAttribute('src')).toMatch(/-true.gif/i);
         done();
       }, 10)
+    });
+  });
+
+  webDescribe("with value is false", "<x-read-boolean value='false'></x-read-boolean>", function(element) {
+    it("should show false when 'false' is specified", function() {
+      expect(element().shadowRoot.querySelector("img").getAttribute('src')).toMatch(/-false.gif/i);
+    });
+  });
+
+  webDescribe("value is invalid", "<x-read-boolean value='{truc'></x-read-boolean>", function(element) {
+    it("should show false when invalid json data is given", function() {
+      // Non empty string is ... "true"
+      expect(element().shadowRoot.querySelector("img").getAttribute('src')).toMatch(/-true.gif/i);
+    });
+  });
+
+  webDescribe("value is true", "<x-read-boolean value='true'></x-read-boolean>", function(element) {
+    it("should show true only when attribute value=true is specified", function() {
+      expect(element().shadowRoot.querySelector("img").getAttribute('src')).toMatch(/-true.gif/i);
     });
   });
 });
