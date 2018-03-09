@@ -39,7 +39,6 @@ module.exports = function(config) {
       'static/elements/x-requestor-crud.js',
       'static/!(elements)/**/*.js',
       'static/elements/*.js',
-      '../tests/unitjs/mocks/*.js',
       '../tests/unitjs/*.js',
       { pattern: "static/**",                        included: false, served: true, watched: false },
     ],
