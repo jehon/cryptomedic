@@ -1,11 +1,4 @@
 
-[done ] Remove testComponent
-[done ] - edit-price-test.js
-[done ] - jh-codage-test.js
-[done ] - x-read-boolean-test
-[done ] - x-read-test
-[done ] - athelper
-
 [     ] Remove template.php
 - how to render external templates? -> eval ?
 
