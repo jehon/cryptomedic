@@ -1,25 +1,22 @@
 'use strict';
-/* global testComponent */
 
 describe('jh-codage-test', function() {
-  describe("without cryptomedic", function() {
+  describe("without definitions", function() {
     beforeEach(function() {
       store.dispatch({ type: ACT_DEFINITIONS_STORE, payload: false });
     });
 
-    it("should translate correctly when specified in globals", function(done) {
-      store.dispatch({ type: ACT_DEFINITIONS_STORE, payload: false });
-      testComponent("<jh-codage value='original'></jh-codage>").then(el => {
-        expect(el).not.toBeNull();
-        expect(el.shadowRoot).not.toBeNull();
-        expect(el.shadowRoot.querySelector("#original").textContent).toBe('original');
-        expect(el.shadowRoot.querySelector("#translating")).toBeNull();
-        expect(el.shadowRoot.querySelector("#translated")).toBeNull();
-        expect(el.getAttribute("calculated-translated")).toBe('');
-        el.testDone();
-        done();
+    webDescribe("with value=original", "<jh-codage value='original'></jh-codage>", function(element) {
+      it("should translate correctly when specified in globals", function() {
+        store.dispatch({ type: ACT_DEFINITIONS_STORE, payload: false });
+        expect(element()).not.toBeNull();
+        expect(element().shadowRoot).not.toBeNull();
+        expect(element().shadowRoot.querySelector("#original").textContent).toBe('original');
+        expect(element().shadowRoot.querySelector("#translating")).toBeNull();
+        expect(element().shadowRoot.querySelector("#translated")).toBeNull();
+        expect(element().getAttribute("calculated-translated")).toBe('');
       });
-    });
+    })
   })
 
   describe("with cryptomedic", function() {
@@ -31,73 +28,62 @@ describe('jh-codage-test', function() {
       }});
     });
 
-    it("should handle empty values", function(done) {
-      testComponent("<jh-codage value=''></jh-codage>").then(el => {
-        expect(el).not.toBeNull();
-        expect(el.shadowRoot.querySelector("#original").textContent).toBe('');
-        expect(el.shadowRoot.querySelector("#translating")).toBeNull();
-        expect(el.shadowRoot.querySelector("#translated")).toBeNull();
-        expect(el.getAttribute("calculated-translated")).toBe('');
-        el.testDone();
-        done();
+    webDescribe("with value empty", "<jh-codage value=''></jh-codage>", function(element) {
+      it("should handle empty values", function() {
+        expect(element()).not.toBeNull();
+        expect(element().shadowRoot.querySelector("#original").textContent).toBe('');
+        expect(element().shadowRoot.querySelector("#translating")).toBeNull();
+        expect(element().shadowRoot.querySelector("#translated")).toBeNull();
+        expect(element().getAttribute("calculated-translated")).toBe('');
       });
     });
 
-    it("should translate correctly when specified directly", function(done) {
-      testComponent("<jh-codage value='original' translated='local'></jh-codage>").then(el => {
-        expect(el).not.toBeNull();
-        expect(el.shadowRoot).not.toBeNull();
-        expect(el.shadowRoot.querySelector("#original")).toBeNull();
-        expect(el.shadowRoot.querySelector("#translating").attributes.title.textContent).toEqual('original');
-        expect(el.shadowRoot.querySelector("#translated").textContent).toEqual('local');
-        expect(el.getAttribute("calculated-translated")).toBe('local');
-        el.testDone();
-        done();
+    webDescribe("with translated is local", "<jh-codage value='original' translated='local'></jh-codage>", function(element) {
+      it("should translate correctly when specified directly", function() {
+        expect(element()).not.toBeNull();
+        expect(element().shadowRoot).not.toBeNull();
+        expect(element().shadowRoot.querySelector("#original")).toBeNull();
+        expect(element().shadowRoot.querySelector("#translating").attributes.title.textContent).toEqual('original');
+        expect(element().shadowRoot.querySelector("#translated").textContent).toEqual('local');
+        expect(element().getAttribute("calculated-translated")).toBe('local');
       });
     });
 
-    it("should translate correctly when specified in globals", function(done) {
-      testComponent("<jh-codage value='original'></jh-codage>").then(el => {
-        expect(el).not.toBeNull();
-        expect(el.shadowRoot).not.toBeNull();
-        expect(el.shadowRoot.querySelector("#original")).toBeNull();
-        expect(el.shadowRoot.querySelector("#translating").attributes.title.textContent).toEqual('original');
-        expect(el.shadowRoot.querySelector("#translated").textContent).toEqual('codage');
-        expect(el.getAttribute("calculated-translated")).toBe('codage');
-        el.testDone();
-        done();
+    webDescribe("with value is original and is translatable", "<jh-codage value='original'></jh-codage>", function(element) {
+      it("should translate correctly when specified in globals", function() {
+        expect(element()).not.toBeNull();
+        expect(element().shadowRoot).not.toBeNull();
+        expect(element().shadowRoot.querySelector("#original")).toBeNull();
+        expect(element().shadowRoot.querySelector("#translating").attributes.title.textContent).toEqual('original');
+        expect(element().shadowRoot.querySelector("#translated").textContent).toEqual('codage');
+        expect(element().getAttribute("calculated-translated")).toBe('codage');
       });
     });
 
-    it("should translate invalid codes", function(done) {
-      testComponent("<jh-codage value='anything'></jh-codage>").then(el => {
-        expect(el).not.toBeNull();
-        expect(el.shadowRoot.querySelector("#original").textContent).toBe('anything');
-        expect(el.shadowRoot.querySelector("#translating")).toBeNull();
-        expect(el.shadowRoot.querySelector("#translated")).toBeNull();
-        expect(el.getAttribute("calculated-translated")).toBe('');
-        el.testDone();
-        done();
+    webDescribe("with value is anything and is not translatable", "<jh-codage value='anything'></jh-codage>", function(element) {
+      it("should translate invalid codes", function() {
+        expect(element()).not.toBeNull();
+        expect(element().shadowRoot.querySelector("#original").textContent).toBe('anything');
+        expect(element().shadowRoot.querySelector("#translating")).toBeNull();
+        expect(element().shadowRoot.querySelector("#translated")).toBeNull();
+        expect(element().getAttribute("calculated-translated")).toBe('');
       });
     });
 
-    it("should handle changes in values", function(done) {
-      testComponent("<jh-codage value=''></jh-codage>").then(el => {
-        expect(el).not.toBeNull();
-        expect(el.shadowRoot.querySelector("#original").textContent).toBe('');
-        expect(el.shadowRoot.querySelector("#translating")).toBeNull();
-        expect(el.shadowRoot.querySelector("#translated")).toBeNull();
-        expect(el.getAttribute("calculated-translated")).toBe('');
+    webDescribe("with value is empty", "<jh-codage value=''></jh-codage>", function(element) {
+      it("should handle changes in values", function() {
+        expect(element()).not.toBeNull();
+        expect(element().shadowRoot.querySelector("#original").textContent).toBe('');
+        expect(element().shadowRoot.querySelector("#translating")).toBeNull();
+        expect(element().shadowRoot.querySelector("#translated")).toBeNull();
+        expect(element().getAttribute("calculated-translated")).toBe('');
 
-        el.setAttribute('value', 'original');
+        element().setAttribute('value', 'original');
 
-        expect(el.shadowRoot.querySelector("#original")).toBeNull();
-        expect(el.shadowRoot.querySelector("#translating").attributes.title.textContent).toEqual('original');
-        expect(el.shadowRoot.querySelector("#translated").textContent).toEqual('codage');
-        expect(el.getAttribute("calculated-translated")).toBe('codage');
-
-        el.testDone();
-        done();
+        expect(element().shadowRoot.querySelector("#original")).toBeNull();
+        expect(element().shadowRoot.querySelector("#translating").attributes.title.textContent).toEqual('original');
+        expect(element().shadowRoot.querySelector("#translated").textContent).toEqual('codage');
+        expect(element().getAttribute("calculated-translated")).toBe('codage');
       });
     });
   });
