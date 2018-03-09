@@ -220,14 +220,20 @@ References::$lists["Unions"] = References::buildValueList(
 
 References::$lists["Sex"] = References::buildValueList([ "Male", "Female" ]);
 References::$lists["Centers"] = References::buildValueList([
+
+
   References::withCode("Chakaria Disability Center" , "CDC"),
   References::withCode("Chakaria Device Center"     , "CDev"),
   References::withCode("Cox's Bazar"                , "CB"),
+  References::withCode("Cox's Bazar Device Center"  , "CBDC"),
   References::withCode("Ukhia"                      , "UK"),
+  References::withCode("Ukhiya Device Center"       , "UKDC"),
   References::withCode("Ramu"                       , "RA"),
   References::withCode("Moheshkhali"                , "MO"),
+  References::withCode("Moheshkhali Device Center"  , "MODC"),
   References::withCode("Lohagara"                   , "LOH"),
   References::withCode("CMOSH"                      , false),
+  References::withCode("CMOSH Device Center"        , false),         
   References::withCode("Other Field"                , "OF")
 ]);
 References::$lists["Surgery"] = References::buildValueList(["~ Other ~", "Need to see surgeon", "Epiphysiodesis", "Osteotomy", "Little Burn release", "Big burn release", "Achileus lengthening", "Postero-medial release", "Pin removal"]);
