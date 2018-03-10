@@ -1,6 +1,4 @@
-
-
-[     ] jhcodage: use the JHElement
+[done ] jhcodage: use the JHElement
 
 [     ] Prices/Bills as lines
 [     ] - Adapt DB
