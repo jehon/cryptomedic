@@ -14,7 +14,6 @@
         }
 
         adapt() {
-            console.log("adapt: ", this._value, this._translated);
             if (this._translated) {
                 return this._setTranslated(this._value, this._translated);
             }
