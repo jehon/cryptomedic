@@ -31,7 +31,8 @@ let calculations = {
       } else {
         ref = this.evaluatePoly(line.max, x);
       }
-        /* istanbul skip next */
+
+      /* istanbul ignore next: this case is when the polynome is not fully completed */
       if (isNaN(ref)) return '#Out of bound#';
 
       var dev = Math.abs((avg - ref) / this.sigma);
@@ -103,5 +104,4 @@ let calculations = {
       return this.fromBirthDate(patient.Yearofbirth, { reference: file.Date, format: format });
     }
   }
-
 };
