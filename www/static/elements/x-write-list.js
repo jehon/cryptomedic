@@ -251,12 +251,13 @@ XWriteList = (function() {
 
             // Add the current value, if selected and not in the list
             const current = this.value;
-            // If the current is already selected, add it to the list to keep it...
-            // if (current) {
-            if (list.indexOf(current) < 0) {
-                list = [current].concat(list);
+            if (current) {
+                // Only add if current value is not null...
+                if (list.indexOf(current) < 0) {
+                    list = [current].concat(list);
+                    console.log("List 3: ", list);
                 }
-            // }
+            }
 
             // Commit
             this.list = list;
