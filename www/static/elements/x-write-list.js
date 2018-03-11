@@ -255,7 +255,6 @@ XWriteList = (function() {
                 // Only add if current value is not null...
                 if (list.indexOf(current) < 0) {
                     list = [current].concat(list);
-                    console.log("List 3: ", list);
                 }
             }
 
