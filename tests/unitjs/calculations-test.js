@@ -103,7 +103,13 @@ fdescribe("calculations", function() {
             it('should handle empty yearOfBirth', function() {
                 expect(calculations.age.fromBirthDate('', {
                     reference: nowPlus5
-                })).toBe('?');
+                })).toBe('');
+            })
+
+            it('should handle empty yearOfBirth', function() {
+                expect(calculations.age.fromBirthDate(null, {
+                    reference: nowPlus5
+                })).toBe('');
             })
 
             it('should handle yearOfBirth invalid', function() {
