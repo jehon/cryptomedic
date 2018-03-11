@@ -102,11 +102,9 @@
 						store.dispatch({ type: ACT_USER_LOGIN, payload: response.asJson });
 						return ;
 					}
+					// We have a 404 (filtered)
 					store.dispatch({ type: ACT_USER_LOGOUT });
-					if (response.status == 404) {
-						this[form].showMessages([ "Invalid credentials" ]);
-						return ;
-					}
+					this[form].showMessages([ "Invalid credentials" ]);
 				});
 		}
 
