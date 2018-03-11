@@ -94,24 +94,10 @@
 		</div>
 	</div>
 	<jh-script>
-		// Obsolete by x-write-list.follow()
+		document.querySelector("x-write-list[name=Upazilla]")
+			.follow(document.querySelector("x-write-list[name=District]"), "district");
 
-	    document.querySelectorAll("x-write-list[name=District]").forEach(el => {
-	    	el.addEventListener("changed", function() {
-				setListFrom("District", "Upazilla", "district");
-				setListFrom("Upazilla", "Union_", "upazilla");
-			});
-	    });
-
-		document.querySelectorAll("x-write-list[name=Upazilla]").forEach(el => {
-	    	el.addEventListener("changed", function() {
-				setListFrom("Upazilla", "Union_", "upazilla");
-			});
-		});
-
-	    store.subscribe(() => {
-			setListFrom("District", "Upazilla", "district");
-			setListFrom("Upazilla", "Union_", "upazilla");
-		});
- 	</jh-script>
+		document.querySelector("x-write-list[name=Union_]")
+			.follow(document.querySelector("x-write-list[name=Upazilla]"), "upazilla");
+  	</jh-script>
 </div>
