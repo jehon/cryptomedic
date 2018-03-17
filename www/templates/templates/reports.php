@@ -12,7 +12,7 @@
       <div class='col-sm-6'>
         <fieldset>
           <legend>Parameters</legend>
-          <form class="form-horizontal" role="form">
+          <form id='reportParamsForm' class="form-horizontal" role="form">
             <div ng-if="isParam('examiner')" class="form-group">
               <label class="col-sm-2 control-label">Examiner</label>
               <div class="col-sm-10">
@@ -48,7 +48,7 @@
               <div ng-if="isParam('day')" class="form-group">
                 <label class="col-sm-2 control-label">Day (yyyy-mm-dd)?</label>
                 <div class="col-sm-10">
-                  <input name='day' ng-model='values.day' class="form-control" mycalendar>
+                  <input name='day' ng-model='values.day' class="form-control" type='date'>
                 </div>
               </div>
             <div ng-if="isParam('month')" class="form-group">
