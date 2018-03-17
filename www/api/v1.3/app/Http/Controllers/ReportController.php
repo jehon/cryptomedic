@@ -80,7 +80,7 @@ abstract class ReportController extends Controller {
         $when = substr($when, 0, 10);
 
         if (!preg_match("/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/", $when)) {
-          abort(406, "Invalid day: " . $when);
+          abort(406, "Invalid day: '" . $when . "'");
         }
         $year = substr($when, 0, 4);
         $month = substr($when, 5, 2);
