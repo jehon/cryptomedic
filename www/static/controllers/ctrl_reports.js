@@ -7,7 +7,7 @@ function ctrl_reports($scope, $routeParams, $sce) {
     examiner : '',
     period   : 'month',
     activity : '',
-    day      : date2CanonicString(new Date(), true),
+    day      : new Date(),
     month    : date2CanonicString(new Date(), true).substring(0, 7),
     year     : date2CanonicString(new Date(), true).substring(0, 4)
   });
@@ -132,9 +132,15 @@ function ctrl_reports($scope, $routeParams, $sce) {
 
     console.log("ctrl_report: Calling server to refresh the data's");
 
+    const reportParamsValues = {};
+    Object.keys($scope.values).forEach(k => {
+      const v = $scope.values[k];
+      reportParamsValues[k] = (v instanceof Date ? v.toISOString().substring(0, 10) : v)
+    });
+
     // Launch the call
     getDataService('#reportService')
-      .then(dataService => dataService.getReport(dataGenerator, $scope.values))
+      .then(dataService => dataService.getReport(dataGenerator, reportParamsValues))
       .then((data) => {
         console.log("ctrl_report: Data received from server.");
         $scope.result = data;
