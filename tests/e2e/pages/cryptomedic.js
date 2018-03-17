@@ -58,16 +58,16 @@ module.exports = (function() {
         .myClick('#launch_report_' + reportName)
         ;
       for(var k in params) {
-        var el = 'input[name=' + k + ']';
+        const el = 'input[name=' + k + ']';
         if (k == "period") {
-          el = 'input[name=' + k + ']';
           client.myRadio(el, params['period']);
         } else {
-          client
-            .waitForElementVisible(el, '@@ Waiting for parameter ' + k + ' => ' + params[k])
-            .clearValue(el);
+          client.waitForElementVisible(el, '@@ Waiting for parameter ' + k + ' => ' + params[k])
+          client.clearValue(el);
           if (params[k]) {
-            client.setValue(el, params[k]);
+            const p = {};
+            p[el] = params[k];
+            client.myFormFillIn("#reportParamsForm", p);
           }
         }
       }
