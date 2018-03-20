@@ -7,8 +7,7 @@
 
 		static get properties() {
 			return {
-				value: "Object",
-				// edit:  "Boolean"
+				value: "Object"
 			}
 		}
 
