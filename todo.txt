@@ -1,3 +1,7 @@
+[     ] Migrate read-only
+[     ] - reports
+[     ] - pseudo-menu
+[     ] - graphics
 
 [     ] Prices/Bills as lines
 [     ] - Adapt DB
