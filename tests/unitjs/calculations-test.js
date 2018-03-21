@@ -1,6 +1,6 @@
 'use strict';
 
-fdescribe("calculations", function() {
+describe("calculations", function() {
     const poly = {
         'min': [],
         'medium': [],
