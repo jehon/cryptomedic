@@ -1,6 +1,6 @@
 'use strict';
 
-describe('jh-authorized-test', function() {
+// describe('jh-authorized-test', function() {
     // beforeEach(() => {
     //   store.dispatch({ type: ACT_DEFINITIONS_STORE, payload: false });
     // })
@@ -82,4 +82,4 @@ describe('jh-authorized-test', function() {
   // //       // }, 100);
   // //     });
   // // });
-});
+// });
