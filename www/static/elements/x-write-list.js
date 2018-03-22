@@ -1,112 +1,112 @@
 
 XWriteList = (function() {
 
-    const followedElement  = Symbol("followedElement");
-    const followedCategory = Symbol("followedCategory");
+	const followedElement  = Symbol('followedElement');
+	const followedCategory = Symbol('followedCategory');
 
-    let referencesCB = jQuery.Callbacks("memory");
-    store.subscribe(() => {
-        const data = store.getState();
-        if (data.definitions && data.definitions.lists) {
-            XWriteList.setReferences(data.definitions.lists);
-        }
-    });
+	let referencesCB = jQuery.Callbacks('memory');
+	store.subscribe(() => {
+		const data = store.getState();
+		if (data.definitions && data.definitions.lists) {
+			XWriteList.setReferences(data.definitions.lists);
+		}
+	});
 
-    let uuid = 1;
+	let uuid = 1;
 
-    class XWriteList extends JHElement {
-        static setReferences(references = {}) {
-            referencesCB.fire(references);
-        }
+	class XWriteList extends JHElement {
+		static setReferences(references = {}) {
+			referencesCB.fire(references);
+		}
 
-        static get properties() {
-            return {
-                'value':     "String", 
-                'list':      "Object", 
-                'nullable':  "Boolean", 
-                'list-name': "String"
-            };
-        }
+		static get properties() {
+			return {
+				'value':     'String', 
+				'list':      'Object', 
+				'nullable':  'Boolean', 
+				'list-name': 'String'
+			};
+		}
 
-        constructor() {
-            super();
-            this.attachShadow({ mode: 'open' });
-            this._mode = false;
-            this.references = {};
+		constructor() {
+			super();
+			this.attachShadow({ mode: 'open' });
+			this._mode = false;
+			this.references = {};
 
-            this._uuid = uuid++;
-            this[followedElement] = false;
+			this._uuid = uuid++;
+			this[followedElement] = false;
 
-            referencesCB.add((references) => {
-                this.references = references;
-                if (this.isInitialized()) {
-                    this.onListNameChanged(this._listName);
-                }
-            });
-        }
+			referencesCB.add((references) => {
+				this.references = references;
+				if (this.isInitialized()) {
+					this.onListNameChanged(this._listName);
+				}
+			});
+		}
 
-        render() {
-            super.render();
-            this.createList();
-            this.onValueChanged(this._value);
-        }
+		render() {
+			super.render();
+			this.createList();
+			this.onValueChanged(this._value);
+		}
 
-        onValueChanged(v) {
-            const escaped = this._escape(v);
-            let el;
-            switch(this.getAttribute("mode")) {
-                case "select":
-                    el = this.shadowRoot.querySelector("select");
-                    el.value = escaped;
-                    break;
-                case "radio":
-                    el = this.shadowRoot.querySelector(`input[type=radio][value="${escaped}"]`);
-                    if (el == null) {
-                        return;
-                    }
-                    el.setAttribute('checked', 'checked');
-                    break;
-            }
-            this.fire("blur", 0);
-        }
+		onValueChanged(v) {
+			const escaped = this._escape(v);
+			let el;
+			switch(this.getAttribute('mode')) {
+				case 'select':
+					el = this.shadowRoot.querySelector('select');
+					el.value = escaped;
+					break;
+				case 'radio':
+					el = this.shadowRoot.querySelector(`input[type=radio][value="${escaped}"]`);
+					if (el == null) {
+						return;
+					}
+					el.setAttribute('checked', 'checked');
+					break;
+			}
+			this.fire('blur', 0);
+		}
 
-        onListChanged(v) {
-            this.createList();
-            this.onValueChanged(this._value);
-        }
+		onListChanged(v) {
+			this.createList();
+			this.onValueChanged(this._value);
+		}
 
-        onListNameChanged(v) {
-            this.onListChanged(v);
-        }
+		onListNameChanged(v) {
+			this.onListChanged(v);
+		}
 
-        createList() {
-            if (this._listName) {
-                if (typeof(this.references[this._listName]) == 'undefined') {
-                  this._list = [];
-                } else {
-                  this._list = this.references[this._listName];  
-                }       
-            }
-            if (!this._list) {
-                this._list = [];
-            }
-            if (this._list.length == 0) {
-                this._mode = 'empty';
-                this.shadowRoot.innerHTML = "X-Write-List: no list set";
-            } else {
-                if (this._list.length > 5) {
-                    this._mode = 'select';
-                    this._asSelect();
-                } else {
-                    this._mode = 'radio';
-                    this._asRadio();
-                }
-            }
-            this.setAttribute('mode', this._mode);
-        }
+		createList() {
+			if (this._listName) {
+				if (typeof(this.references[this._listName]) == 'undefined') {
+					this._list = [];
+				} else {
+					this._list = this.references[this._listName];  
+				}       
+			}
+			if (!this._list) {
+				this._list = [];
+			}
+			if (this._list.length == 0) {
+				this._mode = 'empty';
+				this.shadowRoot.innerHTML = 'X-Write-List: no list set';
+			} else {
+				if (this._list.length > 5) {
+					this._mode = 'select';
+					this._asSelect();
+				} else {
+					this._mode = 'radio';
+					this._asRadio();
+				}
+			}
+			this.setAttribute('mode', this._mode);
+		}
 
-        _withStyle() {
-            return `
+		_withStyle() {
+			return `
                 <style>
                     :host {
                         display: block;
@@ -128,142 +128,142 @@ XWriteList = (function() {
                         width: 100%;
                     }
                 </style>
-            `
-        }
+            `;
+		}
 
-        _asRadio() {
-            let res = "<span id='radio'>";
-            // TODO: set initial value
-            for(let item of this._list) {
-                let escaped = this._escape(item);
-                res += `
+		_asRadio() {
+			let res = '<span id=\'radio\'>';
+			// TODO: set initial value
+			for(let item of this._list) {
+				let escaped = this._escape(item);
+				res += `
                     <span to='${escaped}'>
                         <input type='radio' name='x-write-list-radio-${uuid}' value="${escaped}">
                         <span>${item}</span>
                     <br>
                     </span>
-                `
-            }
-            if (this._nullable) {
-                res += `
+                `;
+			}
+			if (this._nullable) {
+				res += `
                     <span to=''>
                         <input type='radio' name='x-write-list-radio-${uuid}' value="">
                         <span>?</span>
                         <br>
                     </span>
                 `;
-            }
-            res += "</span>";
+			}
+			res += '</span>';
 
-            this.shadowRoot.innerHTML = "<form>" + this._withStyle() + res + "</form>";
-            this.shadowRoot.querySelectorAll('input').forEach(el => {
-                el.addEventListener('change', () => {
-                    this.fire("blur", 0);
-                })
-            })
-            this.shadowRoot.querySelectorAll("span[to]").forEach(el => {
-                el.onclick = (event) => {
-                    // Setting this attribute will fire the "input" change event
-                    el.querySelector('input').setAttribute('checked', true);
-                }
-            });
-        }
+			this.shadowRoot.innerHTML = '<form>' + this._withStyle() + res + '</form>';
+			this.shadowRoot.querySelectorAll('input').forEach(el => {
+				el.addEventListener('change', () => {
+					this.fire('blur', 0);
+				});
+			});
+			this.shadowRoot.querySelectorAll('span[to]').forEach(el => {
+				el.onclick = (event) => {
+					// Setting this attribute will fire the "input" change event
+					el.querySelector('input').setAttribute('checked', true);
+				};
+			});
+		}
 
-        _asSelect() {
-            let res = "<select>\n";
-            if (this._nullable) {
-                res += `  <option value="">?</option>\n`;
-            }
-            for(let item of this._list) {
-                let escaped = this._escape(item);
-                res += `  <option value="${escaped}">${item}</option>\n`;
+		_asSelect() {
+			let res = '<select>\n';
+			if (this._nullable) {
+				res += '  <option value="">?</option>\n';
+			}
+			for(let item of this._list) {
+				let escaped = this._escape(item);
+				res += `  <option value="${escaped}">${item}</option>\n`;
 
-            }
-            res += "</select>\n";
+			}
+			res += '</select>\n';
 
-            this.shadowRoot.innerHTML = this._withStyle() + res;
+			this.shadowRoot.innerHTML = this._withStyle() + res;
 
-            this.shadowRoot.querySelector("select").addEventListener("change", el => this.fire("blur", 0));
-        }
+			this.shadowRoot.querySelector('select').addEventListener('change', el => this.fire('blur', 0));
+		}
 
-        _escape(str) {
-            return String(str)
-                .replace(/&/g, '&amp;')
-                .replace(/</g, '&lt;')
-                .replace(/>/g, '&gt;')
-                .replace(/"/g, '&quot;')
-                // .replace(/'/g, '&apos;')
-                ;
-        }
+		_escape(str) {
+			return String(str)
+				.replace(/&/g, '&amp;')
+				.replace(/</g, '&lt;')
+				.replace(/>/g, '&gt;')
+				.replace(/"/g, '&quot;')
+			// .replace(/'/g, '&apos;')
+			;
+		}
 
-        set value(v) {
-            this.attributeChangedCallback("value", this._value, v);
-        }
+		set value(v) {
+			this.attributeChangedCallback('value', this._value, v);
+		}
 
-        get value() {
-            this._value = null;
-            switch(this.getAttribute("mode")) {
-                case "select":
-                    this._value = this.shadowRoot.querySelector("select").value;
-                    break;
-                case "radio":
-                    const checked = this.shadowRoot.querySelector("input[type=radio]:checked");
-                    if (checked == null) {
-                        this._value = null;
-                    } else {
-                        this._value = checked.value;
-                    }
-                    break;
-            }
-            if (this._value == "") {
-                this._value = null;
-            }
-            return this._value;
-        }
+		get value() {
+			this._value = null;
+			switch(this.getAttribute('mode')) {
+				case 'select':
+					this._value = this.shadowRoot.querySelector('select').value;
+					break;
+				case 'radio':
+					const checked = this.shadowRoot.querySelector('input[type=radio]:checked');
+					if (checked == null) {
+						this._value = null;
+					} else {
+						this._value = checked.value;
+					}
+					break;
+			}
+			if (this._value == '') {
+				this._value = null;
+			}
+			return this._value;
+		}
 
-        follow(followed, category) {
-            this[followedElement]  = followed;
-            this[followedCategory] = category;
-            this[followedElement].addEventListener("blur", () => this._adaptToFollowed());
-            if(this._listName) {
-                console.error("You could not follow another item if you have a list-name: ", this._listName);
-                this._listName = JHElement.defaultValue("String");
-            }
-        }
+		follow(followed, category) {
+			this[followedElement]  = followed;
+			this[followedCategory] = category;
+			this[followedElement].addEventListener('blur', () => this._adaptToFollowed());
+			if(this._listName) {
+				console.error('You could not follow another item if you have a list-name: ', this._listName);
+				this._listName = JHElement.defaultValue('String');
+			}
+		}
 
-        _adaptToFollowed() {
-            const definitions = store.getState().definitions;
-            if (!definitions || !definitions.associations) {
-                return;
-            }
+		_adaptToFollowed() {
+			const definitions = store.getState().definitions;
+			if (!definitions || !definitions.associations) {
+				return;
+			}
 
-            const val = this[followedElement].value;
-            let list = [];
-            // Take the first associated value
-            if (definitions.associations[`${this[followedCategory]}.${val}`]) {
-                list = list.concat(definitions.associations[`${this[followedCategory]}.${val}`]);
-            }
+			const val = this[followedElement].value;
+			let list = [];
+			// Take the first associated value
+			if (definitions.associations[`${this[followedCategory]}.${val}`]) {
+				list = list.concat(definitions.associations[`${this[followedCategory]}.${val}`]);
+			}
 
-            // Add the "other" of the category
-            if (definitions.associations[`${this[followedCategory]}.other`]) {
-                list = list.concat(definitions.associations[`${this[followedCategory]}.other`]);
-            }
+			// Add the "other" of the category
+			if (definitions.associations[`${this[followedCategory]}.other`]) {
+				list = list.concat(definitions.associations[`${this[followedCategory]}.other`]);
+			}
 
-            // Add the current value, if selected and not in the list
-            const current = this.value;
-            if (current) {
-                // Only add if current value is not null...
-                if (list.indexOf(current) < 0) {
-                    list = [current].concat(list);
-                }
-            }
+			// Add the current value, if selected and not in the list
+			const current = this.value;
+			if (current) {
+				// Only add if current value is not null...
+				if (list.indexOf(current) < 0) {
+					list = [current].concat(list);
+				}
+			}
 
-            // Commit
-            this.list = list;
-        }
-    }
+			// Commit
+			this.list = list;
+		}
+	}
 
-    window.customElements.define('x-write-list', XWriteList);
+	window.customElements.define('x-write-list', XWriteList);
 
-    return XWriteList;
+	return XWriteList;
 })();

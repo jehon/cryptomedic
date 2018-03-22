@@ -1,27 +1,27 @@
 
-describe("tests/unit/x-waiting-test.js", function() {
-	webDescribe("initialized", `<x-waiting><div style='width: 200px; height: 100px; background-color: red;'>Content</div></x-waiting>`, function(element) {
-		it("should be hidden when initialized simply", function() {
+describe('tests/unit/x-waiting-test.js', function() {
+	webDescribe('initialized', '<x-waiting><div style=\'width: 200px; height: 100px; background-color: red;\'>Content</div></x-waiting>', function(element) {
+		it('should be hidden when initialized simply', function() {
 			expect(element().isBlocked()).toBeFalsy();
-			expect(element().shadowRoot.querySelector("img").offsetWidth > 0).toBeFalsy();
+			expect(element().shadowRoot.querySelector('img').offsetWidth > 0).toBeFalsy();
 		});
 
-		it("should show()", function(done) {
+		it('should show()', function(done) {
 			element().block();
 			expect(element().isBlocked()).toBeTruthy();
 			setTimeout(() => {
-				expect(element().shadowRoot.querySelector("img").offsetWidth > 0).toBeTruthy();
+				expect(element().shadowRoot.querySelector('img').offsetWidth > 0).toBeTruthy();
 				done();
-			})
+			});
 		});
 
-		it("should hide()", function() {
+		it('should hide()', function() {
 			element().free();
 			expect(element().isBlocked()).toBeFalsy();
-			expect(element().shadowRoot.querySelector("img").offsetWidth > 0).toBeFalsy();
+			expect(element().shadowRoot.querySelector('img').offsetWidth > 0).toBeFalsy();
 		});
 
-		describe("run around a promise", function() {
+		describe('run around a promise', function() {
 			beforeEach(function() {
 				jasmine.clock().install();
 			});
@@ -30,7 +30,7 @@ describe("tests/unit/x-waiting-test.js", function() {
 				jasmine.clock().uninstall();
 			});
 
-			it("should be shown and hidden when the promise succeed", function(done) {
+			it('should be shown and hidden when the promise succeed', function(done) {
 				let p = new Promise(function(resolve, reject) {
 					setTimeout(() => resolve(), 100);
 				});
@@ -45,7 +45,7 @@ describe("tests/unit/x-waiting-test.js", function() {
 				});
 			});
 
-			it("should be shown and hidden if the promise fail", function(done) {
+			it('should be shown and hidden if the promise fail', function(done) {
 				let p = new Promise(function(resolve, reject) {
 					setTimeout(() => reject(), 100);
 				});

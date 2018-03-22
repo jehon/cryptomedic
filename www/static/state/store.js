@@ -25,14 +25,14 @@ const store = (function() {
 		    	}
 
 		    	if (!(action.payload instanceof Folder)) {
-		    		console.error("ACT_FOLDER_STORE expect a 'Folder' class object");
+		    		console.error('ACT_FOLDER_STORE expect a \'Folder\' class object');
 		    		return false;
 		    	}
 		    	return action.payload;
 		    default:
-  				return state
-	  };
-	}
+  				return state;
+	  }
+	};
 
 	const userReducer = (state = false, action) => {
 		switch (action.type) {
@@ -43,7 +43,7 @@ const store = (function() {
 			default:
 				return state;
 		}
-	}
+	};
 
 	const definitionsReducer = (state = false, action) => {
 		switch (action.type) {
@@ -56,7 +56,7 @@ const store = (function() {
 			default:
 				return state;
 		}
-	}
+	};
 
 	// Integration with dev-tools
 	// https://github.com/zalmoxisus/redux-devtools-extension#usage
@@ -64,10 +64,10 @@ const store = (function() {
 	/* istanbul ignore next */
 	return redux.createStore(
 		redux.combineReducers({
-				folder:      folderReducer,
-				user:        userReducer,
-				definitions: definitionsReducer
-			}),
+			folder:      folderReducer,
+			user:        userReducer,
+			definitions: definitionsReducer
+		}),
 		window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
   		// applyMiddleware(...middleware)
 	);

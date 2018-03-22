@@ -1,17 +1,17 @@
 
 const XInputPicture = (function() {
-	const previewElement = Symbol("previewElement");
-	const inputElement   = Symbol("inputElement");
+	const previewElement = Symbol('previewElement');
+	const inputElement   = Symbol('inputElement');
 
 	class XInputPicture extends XWaiting {
 		static get properties() {
 			return {
-				"value":    "String",
-				"maxSize":  "Integer"
-			}
+				'value':    'String',
+				'maxSize':  'Integer'
+			};
 		}
 	 
-		static dataURItoBlob(dataURI, name = "test") {
+		static dataURItoBlob(dataURI, name = 'test') {
 			// https://stackoverflow.com/a/5100158/1954789
 		    // convert base64/URLEncoded data component to raw binary data held in a string
 		    var byteString;
@@ -31,8 +31,8 @@ const XInputPicture = (function() {
 		    }
 
 		    const blob = new Blob([ia], { type:mimeString });
-			blob["lastModifiedDate"] = "";
-			blob["name"] = name;
+			blob['lastModifiedDate'] = '';
+			blob['name'] = name;
 
 		    return blob;
 		}
@@ -52,11 +52,11 @@ const XInputPicture = (function() {
 				<div class='text-center'>
 					<canvas></canvas>
 				</div>`;
-			this[inputElement]   = this.shadowRoot.querySelector("input");
-			this[previewElement] = this.shadowRoot.querySelector("canvas");
+			this[inputElement]   = this.shadowRoot.querySelector('input');
+			this[previewElement] = this.shadowRoot.querySelector('canvas');
 
 			/* istanbul ignore next: impossible to set "file" property of input */
-			this[inputElement].addEventListener("change", () => this._generatePreview(this[inputElement].files[0]));
+			this[inputElement].addEventListener('change', () => this._generatePreview(this[inputElement].files[0]));
 		}
 
 		_generatePreview(file) {
@@ -109,7 +109,7 @@ const XInputPicture = (function() {
 					this[previewElement].style.display = 'block';
 
 					this._value = this[previewElement].toDataURL('image/jpeg');
-					this.fire("blur");
+					this.fire('blur');
 					this.free();
 				};
 			};

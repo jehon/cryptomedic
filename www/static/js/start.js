@@ -5,10 +5,10 @@ let API_VERSION = 'v1.3';
 (function() {
 	const shouldUpgrade = function(msg) {
 		window.location.href = '/static/upgrade.html';
-	}
+	};
 
 	if (!Promise || !indexedDB || !sessionStorage || !fetch) {
-		shouldUpgrade("Promise || indexedDB || sessionStorage || fetch");
+		shouldUpgrade('Promise || indexedDB || sessionStorage || fetch');
 	}
 
 	// Test input[type=date]
@@ -21,7 +21,7 @@ let API_VERSION = 'v1.3';
 	    input.setAttribute('value', notADateValue);
 
 	    if (input.value === notADateValue) {
-	    	shouldUpgrade("input[type=date]")
+	    	shouldUpgrade('input[type=date]');
 	    }
 	})();
 
@@ -35,7 +35,7 @@ let API_VERSION = 'v1.3';
 		}
 		if (!cookieEnabled) {
 			alert('Your cookie are disabled. Please enable them.\nVos cookies sont désactivés. Merci de les activer.');
-			console.error("Cookies are disabled");
+			console.error('Cookies are disabled');
 		}
 	})();
 })();
