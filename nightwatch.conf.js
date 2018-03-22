@@ -76,7 +76,6 @@ module.exports = {
         "acceptSslCerts": true,
         "chromeOptions" : {
           "args" : [ 
-            // "--auto-open-devtools-for-tabs",
             "--headless"
           ]
         }
