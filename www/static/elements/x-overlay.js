@@ -1,21 +1,21 @@
 
 const XOverlay = (function() {
-	const overlayDiv = Symbol("overlayDiv");
+	const overlayDiv = Symbol('overlayDiv');
 
-    class XOverlay extends JHElement {
-        static get properties() {
-            return {
-                zIndex:   "Integer",
-                closable: "Boolean"
-            }
-        }
+	class XOverlay extends JHElement {
+		static get properties() {
+			return {
+				zIndex:   'Integer',
+				closable: 'Boolean'
+			};
+		}
 
-        constructor() {
-            super();
+		constructor() {
+			super();
 	            this.zIndex = 10;
 
-            this.attachShadow({ mode: 'open' });
-            this.shadowRoot.innerHTML = `
+			this.attachShadow({ mode: 'open' });
+			this.shadowRoot.innerHTML = `
 			<style>
 				:host {
 					position: relative;
@@ -74,39 +74,39 @@ const XOverlay = (function() {
 				<slot></slot>
 			</div>
 			`;
-			this[overlayDiv] = this.shadowRoot.querySelector("#overlay");
-            this.shadowRoot.querySelector("#close").addEventListener("click", () => this.free());
-            this.free();
+			this[overlayDiv] = this.shadowRoot.querySelector('#overlay');
+			this.shadowRoot.querySelector('#close').addEventListener('click', () => this.free());
+			this.free();
 		}
 
 		adapt() {
 			let style = `z-index: ${this._zIndex}`;
-	        this.shadowRoot.querySelector("#close").style.display = ( this.closable ? "block" : "none" );
+	        this.shadowRoot.querySelector('#close').style.display = ( this.closable ? 'block' : 'none' );
 			this[overlayDiv].style = style;
 		}
 
-        block() {
-            this[overlayDiv].removeAttribute("hidden");
-        }
+		block() {
+			this[overlayDiv].removeAttribute('hidden');
+		}
 
-        free() {
-            this[overlayDiv].setAttribute("hidden", "hidden");
-        }
+		free() {
+			this[overlayDiv].setAttribute('hidden', 'hidden');
+		}
 
-        isBlocked() {
-            return !this[overlayDiv].hasAttribute("hidden");
-        }
+		isBlocked() {
+			return !this[overlayDiv].hasAttribute('hidden');
+		}
 
-        aroundPromise(p) {
-            this.free();
-            return p.catch((error) => {
-                this.block();
-                throw error;
-            })
-        }
+		aroundPromise(p) {
+			this.free();
+			return p.catch((error) => {
+				this.block();
+				throw error;
+			});
+		}
 	}
 
-    window.customElements.define('x-overlay', XOverlay);
+	window.customElements.define('x-overlay', XOverlay);
 
-    return XOverlay;
+	return XOverlay;
 })();

@@ -1,22 +1,22 @@
 
 let EditPrice = (function() {
-  let uuid = 0;
+	let uuid = 0;
 
-  class EditPrice  extends JHElement {
-    constructor() {
-      super();
-      // Create a shadow root
-      this.attachShadow({ mode: 'open' });
-      this.uuid = uuid++;
-    }
+	class EditPrice  extends JHElement {
+		constructor() {
+			super();
+			// Create a shadow root
+			this.attachShadow({ mode: 'open' });
+			this.uuid = uuid++;
+		}
 
-    static get properties() { return {
-        value: "Integer"
-      };
-    }
+		static get properties() { return {
+			value: 'Integer'
+		};
+		}
 
-    adapt() {
-      let html = `
+		adapt() {
+			let html = `
         <div>
           <input type='radio' name='edit_price_radio_${this.uuid}' value='1'  ${this._value == 1  ? 'checked' : '' }                    >Open
           <input type='radio' name='edit_price_radio_${this.uuid}' value='-1' ${this._value == -1 ? 'checked' : '' }                    >Not used
@@ -24,28 +24,28 @@ let EditPrice = (function() {
         </div>
       `;
 
-      if (this._value != -1 && this._value != 1) {
-        html += `
+			if (this._value != -1 && this._value != 1) {
+				html += `
           <input type='number' min=2 value='${this._value}'>
         `;
-      }
-      this.shadowRoot.innerHTML = html;
+			}
+			this.shadowRoot.innerHTML = html;
       
-      this.shadowRoot.querySelectorAll('input[type=radio]').forEach(el => el.onchange = (event => {
-        this._value = event.currentTarget.value;
-        this.adapt();
-      }));
+			this.shadowRoot.querySelectorAll('input[type=radio]').forEach(el => el.onchange = (event => {
+				this._value = event.currentTarget.value;
+				this.adapt();
+			}));
 
-      if (this._value != -1 && this.value != 1) {
-        this.shadowRoot.querySelector('input[type=number]').onchange = (event => {
-          this._value = event.currentTarget.value;
-        });
-      }
-    }
+			if (this._value != -1 && this.value != 1) {
+				this.shadowRoot.querySelector('input[type=number]').onchange = (event => {
+					this._value = event.currentTarget.value;
+				});
+			}
+		}
 
-  }
+	}
 
-  window.customElements.define('edit-price', EditPrice);
+	window.customElements.define('edit-price', EditPrice);
 
-  return EditPrice;
+	return EditPrice;
 })();

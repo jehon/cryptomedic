@@ -105,7 +105,7 @@ function formEvaluateFunctions(formElement, object) {
 	formElement.querySelectorAll('[function]').forEach(el => {
 		const fn = el.getAttribute('function');
 		if (fn in object) {
-			el.innerHTML = object[fn]()
+			el.innerHTML = object[fn]();
 		}
 	});
 }
@@ -122,5 +122,5 @@ function formSwitch(form, tag, mode) {
 		} else {
 			el.setAttribute('edit', tag);
 		}
-	})
+	});
 }

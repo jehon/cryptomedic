@@ -2,7 +2,7 @@
 // http://localhost:5555/static/index.html#/folder/6/file/RicketConsult/3
 
 (function() {
-    class XPatientRelated extends XWaitingFolder {
+	class XPatientRelated extends XWaitingFolder {
     	constructor() {
     		super();
     		this.style.width = '100%';
@@ -10,18 +10,18 @@
 
 		_nextAppointment() {
 			const today = date2CanonicString(new Date(), true);
-			var next = "";
+			var next = '';
 			this.folder.getListByType(Appointment).forEach((v, k) => { 
 				if (v.Nextappointment > today) {
 					if (!next || v.Nextappointment < next) {
 						next = v.Nextappointment;
 					}
 				}
-			})
+			});
 			return next;
 		}
 
-        adapt() {
+		adapt() {
         	if (!this.folder) {
         		return;
         	}
@@ -89,14 +89,14 @@
 </fieldset>`;
 
         	if (nextAppointment) {
-        		this.querySelector("#withAppointment").removeAttribute("hidden")
-        		this.querySelector("#withoutAppointment").setAttribute("hidden", "hidden");
+        		this.querySelector('#withAppointment').removeAttribute('hidden');
+        		this.querySelector('#withoutAppointment').setAttribute('hidden', 'hidden');
         	} else {
-        		this.querySelector("#withAppointment").setAttribute("hidden", "hidden");
-        		this.querySelector("#withoutAppointment").removeAttribute("hidden")
+        		this.querySelector('#withAppointment').setAttribute('hidden', 'hidden');
+        		this.querySelector('#withoutAppointment').removeAttribute('hidden');
         	}
-        }
-    }
+		}
+	}
 
-    window.customElements.define('x-patient-related', XPatientRelated);
+	window.customElements.define('x-patient-related', XPatientRelated);
 })();

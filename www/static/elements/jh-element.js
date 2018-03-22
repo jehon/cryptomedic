@@ -5,178 +5,178 @@
 */
 
 let JHElement = (function() {
-    const initialized = Symbol("initialized");
+	const initialized = Symbol('initialized');
 
-    class JHElement extends HTMLElement {  
-        static get observedAttributes() {
-            if (this.properties) {
-                return Object.keys(this.properties).map(k => JHElement.camelToSnake(k));
-            }
-            return [];
-        }
+	class JHElement extends HTMLElement {  
+		static get observedAttributes() {
+			if (this.properties) {
+				return Object.keys(this.properties).map(k => JHElement.camelToSnake(k));
+			}
+			return [];
+		}
 
-        static fireOn(target, name, data = {}) {
-            var event = new CustomEvent(name, { detail: data });
-            target.dispatchEvent(event);
-        }
+		static fireOn(target, name, data = {}) {
+			var event = new CustomEvent(name, { detail: data });
+			target.dispatchEvent(event);
+		}
 
-        static canonizeBoolean(v) {
-            if (v == null) {
-                return false;
-            }
-            if (v === "false") {
-                return false;
-            }
-            if (v === "0" || v === 0) {
-                return false;
-            }
-            return true;
-        }
+		static canonizeBoolean(v) {
+			if (v == null) {
+				return false;
+			}
+			if (v === 'false') {
+				return false;
+			}
+			if (v === '0' || v === 0) {
+				return false;
+			}
+			return true;
+		}
 
-        static snakeToCamel(s) {
-            let res = s.replace(/(\-\w)/g, function(m) { return m[1].toUpperCase(); });
-            return res[0].toLowerCase() + res.substring(1);
-        }
+		static snakeToCamel(s) {
+			let res = s.replace(/(\-\w)/g, function(m) { return m[1].toUpperCase(); });
+			return res[0].toLowerCase() + res.substring(1);
+		}
 
-        static camelToSnake(s){
-            let res = s.replace(/([A-Z])/g, function(m) { return "-" + m[0].toLowerCase(); });
-            return res;
-        }
+		static camelToSnake(s){
+			let res = s.replace(/([A-Z])/g, function(m) { return '-' + m[0].toLowerCase(); });
+			return res;
+		}
 
-        static withInitialUpper(s) {
-            return s[0].toUpperCase() + s.substring(1);
-        }
+		static withInitialUpper(s) {
+			return s[0].toUpperCase() + s.substring(1);
+		}
 
-        static defaultValue(type) {
-            switch(type) {
-                case "Boolean": return false;
-                case "Object":  return null;
-            case "Integer": return 0;
-            }
-            return "";
-        }
+		static defaultValue(type) {
+			switch(type) {
+				case 'Boolean': return false;
+				case 'Object':  return null;
+				case 'Integer': return 0;
+			}
+			return '';
+		}
 
-        static getCss() {
-            if ((typeof(window.ShadyDOM) == "object") && (window.ShadyDOM != null) && window.ShadyDOM.inUse) {
-                return "";
-            }
-            return `<link rel="stylesheet" type="text/css" href="/build/bootstrap/css/bootstrap.min.css">`;
-        }
+		static getCss() {
+			if ((typeof(window.ShadyDOM) == 'object') && (window.ShadyDOM != null) && window.ShadyDOM.inUse) {
+				return '';
+			}
+			return '<link rel="stylesheet" type="text/css" href="/build/bootstrap/css/bootstrap.min.css">';
+		}
 
-        constructor() {
-            super();
-            this[initialized] = false;
+		constructor() {
+			super();
+			this[initialized] = false;
 
-            if (this.constructor.properties) {
-                Object.keys(this.constructor.properties).forEach(k => {
-                    const ki = '_' + k;
-                    this[ki] = JHElement.defaultValue(this.constructor.properties[k]);
-                    if (!(k in this)) {
-                        Object.defineProperty(this, k, {
-                            get: () => this[ki],
-                            set: (v) => this.attributeChangedCallback(JHElement.camelToSnake(k), this[ki], v)
-                        });
-                    }
-                })
-            }
-        }
+			if (this.constructor.properties) {
+				Object.keys(this.constructor.properties).forEach(k => {
+					const ki = '_' + k;
+					this[ki] = JHElement.defaultValue(this.constructor.properties[k]);
+					if (!(k in this)) {
+						Object.defineProperty(this, k, {
+							get: () => this[ki],
+							set: (v) => this.attributeChangedCallback(JHElement.camelToSnake(k), this[ki], v)
+						});
+					}
+				});
+			}
+		}
 
-        isInitialized() {
-            return this[initialized];
-        }
+		isInitialized() {
+			return this[initialized];
+		}
 
-        attributeChangedCallback(attributeName, oldValue, newValue) {
-            // snake-case to camel-case
-            const attributeNameCamel = JHElement.snakeToCamel(attributeName);
-            const attributeNameInternal = '_' + attributeNameCamel;
+		attributeChangedCallback(attributeName, oldValue, newValue) {
+			// snake-case to camel-case
+			const attributeNameCamel = JHElement.snakeToCamel(attributeName);
+			const attributeNameInternal = '_' + attributeNameCamel;
 
-            let props = this.constructor.properties;
-            if (props && props[attributeNameCamel]) {
-                if (newValue === "null" || newValue === "undefined") {
-                    this[attributeNameInternal] = JHElement.defaultValue(props[attributeNameCamel]);
-                } else {
-                    switch(props[attributeNameCamel]) {
-                        case "Boolean":
-                            this[attributeNameInternal] = JHElement.canonizeBoolean(newValue);
-                            break;
-                        case "Object":
-                            if (typeof(newValue) == "string") {
-                                try {
-                                    this[attributeNameInternal] = JSON.parse(newValue);
-                                } catch(e) {
-                                    this[attributeNameInternal] = null;
-                                }
-                            } else {
-                                this[attributeNameInternal] = newValue;
-                            }
-                            break;
-                        case "Integer":
-                            this[attributeNameInternal] = Number.parseFloat(newValue);
-                            if (isNaN(this[attributeNameInternal])) {
-                                this[attributeNameInternal] = JHElement.defaultValue(props[attributeNameCamel]);
-                            }
-                            break;
-                        default:
-                            this[attributeNameInternal] = newValue;
-                    }
-                }
-            } else {
-                // Could happen if one element override the getAttributes...
-                if (newValue == "null" || newValue == "undefined") {
-                    this[attributeNameInternal] = JHElement.defaultValue();
-                } else {
-                    this[attributeNameInternal] = newValue;
-                }
-            }
-            if (this.isInitialized()) {
-                // onValueChanged(new value);
-                const cb = "on" + JHElement.withInitialUpper(attributeNameCamel) + "Changed"
-                if (typeof(this[cb]) == 'function') {
-                    this[cb](this[attributeNameInternal]);
-                }
-                this.adapt();
-            }
-        }
+			let props = this.constructor.properties;
+			if (props && props[attributeNameCamel]) {
+				if (newValue === 'null' || newValue === 'undefined') {
+					this[attributeNameInternal] = JHElement.defaultValue(props[attributeNameCamel]);
+				} else {
+					switch(props[attributeNameCamel]) {
+						case 'Boolean':
+							this[attributeNameInternal] = JHElement.canonizeBoolean(newValue);
+							break;
+						case 'Object':
+							if (typeof(newValue) == 'string') {
+								try {
+									this[attributeNameInternal] = JSON.parse(newValue);
+								} catch(e) {
+									this[attributeNameInternal] = null;
+								}
+							} else {
+								this[attributeNameInternal] = newValue;
+							}
+							break;
+						case 'Integer':
+							this[attributeNameInternal] = Number.parseFloat(newValue);
+							if (isNaN(this[attributeNameInternal])) {
+								this[attributeNameInternal] = JHElement.defaultValue(props[attributeNameCamel]);
+							}
+							break;
+						default:
+							this[attributeNameInternal] = newValue;
+					}
+				}
+			} else {
+				// Could happen if one element override the getAttributes...
+				if (newValue == 'null' || newValue == 'undefined') {
+					this[attributeNameInternal] = JHElement.defaultValue();
+				} else {
+					this[attributeNameInternal] = newValue;
+				}
+			}
+			if (this.isInitialized()) {
+				// onValueChanged(new value);
+				const cb = 'on' + JHElement.withInitialUpper(attributeNameCamel) + 'Changed';
+				if (typeof(this[cb]) == 'function') {
+					this[cb](this[attributeNameInternal]);
+				}
+				this.adapt();
+			}
+		}
 
-        connectedCallback() {
-            if (!this.isInitialized()) {
-                // Comomn render functions
-                // here to avoid calling "super" everywhere in all render()
-                this[initialized] = true;
+		connectedCallback() {
+			if (!this.isInitialized()) {
+				// Comomn render functions
+				// here to avoid calling "super" everywhere in all render()
+				this[initialized] = true;
 
-                // We have to set it to be "inline-block" to have some dimensions for "formGetContent"
-                if (!this.style.display) {
-                    this.style.display = 'inline-block';
-                }
+				// We have to set it to be "inline-block" to have some dimensions for "formGetContent"
+				if (!this.style.display) {
+					this.style.display = 'inline-block';
+				}
 
-                this.render();
-            }
-            this.adapt();
-        }
+				this.render();
+			}
+			this.adapt();
+		}
 
-        render() {}
+		render() {}
 
-        adapt() {}
+		adapt() {}
 
-        fire(name, data = {}) {
-            JHElement.fireOn(this, name, data);
-        }
+		fire(name, data = {}) {
+			JHElement.fireOn(this, name, data);
+		}
 
-        createElementAndAddThem(html, to = this) {
-            // TODO: insertAdjacentHTML ? 
-            // https://developer.mozilla.org/en-US/docs/Web/API/Element/insertAdjacentHTML
-            var template = document.createElement('template');
-            template.innerHTML = html.trim();
+		createElementAndAddThem(html, to = this) {
+			// TODO: insertAdjacentHTML ? 
+			// https://developer.mozilla.org/en-US/docs/Web/API/Element/insertAdjacentHTML
+			var template = document.createElement('template');
+			template.innerHTML = html.trim();
 
-            if (to != null) {
-                to.innerHTML = "";
-                template.content.childNodes.forEach(el => to.appendChild(el));
-            }
-            return template.content.childNodes;
-        }
-    };
+			if (to != null) {
+				to.innerHTML = '';
+				template.content.childNodes.forEach(el => to.appendChild(el));
+			}
+			return template.content.childNodes;
+		}
+	}
 
-    window.customElements.define('jh-element', JHElement);
+	window.customElements.define('jh-element', JHElement);
 
-    return JHElement;
+	return JHElement;
 })();
