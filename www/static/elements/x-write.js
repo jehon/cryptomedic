@@ -41,8 +41,8 @@
                     this.getValue = () => el.checked;
                     break;
                 case "date":
-                    this.innerHTML = `<input type='date' value='${this._value}' ${inline} />`;
-                    el = this.querySelector('input');
+                    this.innerHTML = `<x-input-date value='${this._value}' ${inline} />`;
+                    el = this.querySelector('x-input-date');
                     this.getValue = () => el.value;
                     break;
                 case "numeric":

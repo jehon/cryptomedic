@@ -58,11 +58,11 @@ module.exports = (function() {
         .myClick('#launch_report_' + reportName)
         ;
       for(var k in params) {
-        const el = 'input[name=' + k + ']';
+        const el = '[name=' + k + ']';
         if (k == "period") {
           client.myRadio(el, params['period']);
         } else {
-          client.waitForElementVisible(el, '@@ Waiting for parameter ' + k + ' => ' + params[k])
+          client.waitForElementVisible(el, '@@ Waiting for parameter ' + k + ' => ' + params[k] + ': ' + el);
           client.clearValue(el);
           if (params[k]) {
             const p = {};

@@ -127,7 +127,7 @@ describe('x-write-test', function() {
     describe("with date", function() {
         webDescribe("without value", `<x-write name='test' type='date'></x-write>`, function(element) {
             it("should be instantiated", function() {
-                let el = element().querySelector('input[type=date]');
+                let el = element().querySelector('x-input-date');
                 expect(element().querySelector('span.error')).toBeNull();
                 expect(el).not.toBeNull();
                 expect(element().value).not.toBeNull();
@@ -136,18 +136,18 @@ describe('x-write-test', function() {
 
         webDescribe("with value", `<x-write name='test' type='date' value='2016-01-15'></x-write>`, function(element) {
             it("should be instantiated", function() {
-                let el = element().querySelector('input[type=date]');
+                let el = element().querySelector('x-input-date');
                 expect(element().querySelector('span.error')).toBeNull();
                 expect(el).not.toBeNull();
                 expect(element().value).toBe("2016-01-15");
             });
 
             it("should fire event", function() {
-                let el = element().querySelector('input[type=date]');
+                let el = element().querySelector('x-input-date');
                 let res = false;
                 element().addEventListener("blur", (event) => { res = "test" });
                 el.value = "2016-02-25";
-                JHElement.fireOn(element().querySelector("input"), "blur", "test");
+                JHElement.fireOn(element().querySelector("x-input-date"), "blur", "test");
                 expect(res).toBe("test");
                 expect(element().value).toBe("2016-02-25");
             })

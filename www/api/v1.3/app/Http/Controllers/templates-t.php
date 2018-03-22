@@ -269,8 +269,8 @@ class t {
         $this->res .= "<input $inline />";
         break;
       case static::TYPE_DATE:
-        $this->res .= "<input id='{$this->jsId}' type='date' $inlineWithoutModel placeholder='yyyy-MM-dd' "
-          . " ng-value='" . $this->fieldGetKey() . "' "
+        $this->res .= "<x-input-date id='{$this->jsId}' $inlineWithoutModel "
+          . " value='{{" . $this->fieldGetKey() . "}}' "
           . "/>";
         break;
       default:

@@ -20,12 +20,7 @@ function setPref(part, data) {
 function getPref(part, def = null) {
   let res = {};
   if (sessionStorage.cryptomedicPrefs) {
-    res = JSON.parse(sessionStorage.cryptomedicPrefs, (key, val) => {
-      if (/^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9]{3}.*$/.test(val)) {
-        return new Date(val);
-      }
-      return val;
-    });
+    res = JSON.parse(sessionStorage.cryptomedicPrefs);
   }
   if (res[part]) {
     return res[part];
