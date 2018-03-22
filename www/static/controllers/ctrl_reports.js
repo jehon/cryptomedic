@@ -97,6 +97,9 @@ function ctrl_reports($scope, $routeParams, $sce) {
     $scope.result = null;
     $scope.safeApply();
 
+	const newValues = formGetContent("#reportParamsForm");
+    $scope.values = newValues;
+
     var prefs = {};
     for(var p in $scope.reports[report].params) {
       let n = $scope.reports[report].params[p];
@@ -132,15 +135,15 @@ function ctrl_reports($scope, $routeParams, $sce) {
 
     console.log("ctrl_report: Calling server to refresh the data's");
 
-    const reportParamsValues = {};
-    Object.keys($scope.values).forEach(k => {
-      const v = $scope.values[k];
-      reportParamsValues[k] = (v instanceof Date ? v.toISOString().substring(0, 10) : v)
-    });
+    // const reportParamsValues = {};
+    // Object.keys($scope.values).forEach(k => {
+    //   const v = $scope.values[k];
+    //   reportParamsValues[k] = (v instanceof Date ? v.toISOString().substring(0, 10) : v)
+    // });
 
     // Launch the call
     getDataService('#reportService')
-      .then(dataService => dataService.getReport(dataGenerator, reportParamsValues))
+      .then(dataService => dataService.getReport(dataGenerator, $scope.values))
       .then((data) => {
         console.log("ctrl_report: Data received from server.");
         $scope.result = data;
@@ -169,4 +172,3 @@ function ctrl_reports($scope, $routeParams, $sce) {
 }
 
 ctrl_reports.$inject = [ '$scope', '$routeParams', '$sce' ];
-

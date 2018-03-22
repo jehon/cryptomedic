@@ -85,10 +85,10 @@ let JHElement = (function() {
             return this[initialized];
         }
 
-        attributeChangedCallback(attributeName, oldValue, newValue, namespace) {
+        attributeChangedCallback(attributeName, oldValue, newValue) {
             // snake-case to camel-case
             const attributeNameCamel = JHElement.snakeToCamel(attributeName);
-            const attributeNameInternal = '_' + attributeNameCamel
+            const attributeNameInternal = '_' + attributeNameCamel;
 
             let props = this.constructor.properties;
             if (props && props[attributeNameCamel]) {

@@ -19,7 +19,7 @@ function ctrl_file_bill($scope, $element) {
         $scope.safeApply();
     })
   
-    const dateElement = $element[0].querySelector("input[type=date]");
+    const dateElement = $element[0].querySelector("[name=Date]");
     dateElement.addEventListener("blur", () => {
         $scope.currentFile().Date = dateElement.value;
         if ($scope.currentFile() && $scope.currentFile().calculatePriceId) {
