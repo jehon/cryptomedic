@@ -11,7 +11,17 @@ describe('x-input-date-test', function() {
 			expect(element().value).toBe('2018-10-21');
 		});
 
-		it('should allow setting the value programmatically', function() {
+		it('should allow setting the value programmatically being a Date', function() {
+			element().value = new Date('2018-10-21');
+			expect(element().value).toBe('2018-10-21');
+		});
+
+		it('should allow setting the value programmatically being invalid', function() {
+			element().value = 123;
+			expect(element().value).toBe('');
+		});
+
+		it('should allow setting the value by attributes', function() {
 			element().setAttribute('value', '2018-11-21');
 			expect(element().value).toBe('2018-11-21');
 		});
@@ -20,6 +30,11 @@ describe('x-input-date-test', function() {
 			element().addEventListener('blur', () => done());
 			JHElement.fireOn(element().querySelector('input'), 'blur', {});
 		});
+
+		it('should give the focus to the underlying element', function() {
+			element().click();
+			expect(element().querySelector('input:focus')).not.toBeNull();
+		})
 	});
 
 	webDescribe('with value', '<x-input-date value=\'2017-02-03\'></x-input-date>', function(element) {
