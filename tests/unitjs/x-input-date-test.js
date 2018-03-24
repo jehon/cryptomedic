@@ -1,4 +1,4 @@
-'use strict';
+/* global webDescribe, JHElement */
 
 describe('x-input-date-test', function() {
 	webDescribe('initial', '<x-input-date></x-input-date>', function(element) {

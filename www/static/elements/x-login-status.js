@@ -1,3 +1,5 @@
+/* global JHElement, store, ACT_USER_LOGIN, ACT_USER_LOGOUT */
+
 (function() {
 	const user      = Symbol('user');
 	const logout    = Symbol('logout');

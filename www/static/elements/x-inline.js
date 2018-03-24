@@ -1,3 +1,4 @@
+/* global JHElement */
 
 (function() {
 	const element = Symbol('element');

@@ -1,3 +1,5 @@
+/* global JHElement */
+
 (function() {
 	const form     = Symbol('form');
 	const submit   = Symbol('submit');
@@ -49,20 +51,20 @@
 		}
 
 		onValueChanged() {
-		    Object.keys(this._value).forEach(k => {
-		    	const escaped = k.split('"').join('&quot;');
-		        this.querySelectorAll(`[name="${escaped}"]`).forEach(el => {
-		        	if (el.matches('input[type=radio]')) {
-		        		if (el.value == this._value[k]) {
-		        			el.setAttribute('checked', 'checked');
-		        		} else {
-		        			el.removeAttribute('checked');
-		        		}
-		        	} else {
-		        		el.value = this._value[k];
-		        	}
-		        });
-		    });
+			Object.keys(this._value).forEach(k => {
+				const escaped = k.split('"').join('&quot;');
+				this.querySelectorAll(`[name="${escaped}"]`).forEach(el => {
+					if (el.matches('input[type=radio]')) {
+						if (el.value == this._value[k]) {
+							el.setAttribute('checked', 'checked');
+						} else {
+							el.removeAttribute('checked');
+						}
+					} else {
+						el.value = this._value[k];
+					}
+				});
+			});
 		}
 
 		rebuildData(prototype = {}) {
@@ -132,17 +134,17 @@
 				}
 			});
 
-		    if (!this[form].checkValidity()) {
-		     	this[submit].click();
-		      	return false;
-		    }
+			if (!this[form].checkValidity()) {
+				this[submit].click();
+				return false;
+			}
 
-		    // Use only for custom elements?
-		    // if (!result) {
-		    // 	return false;
-		    // }
+			// Use only for custom elements?
+			// if (!result) {
+			// 	return false;
+			// }
 
-		    return true;
+			return true;
 		}
 
 		onFormUpdated() {}

@@ -1,3 +1,4 @@
+/* global JHElement */
 
 let EditPrice = (function() {
 	let uuid = 0;

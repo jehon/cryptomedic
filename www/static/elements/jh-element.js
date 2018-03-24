@@ -1,3 +1,5 @@
+/* global HTMLElement */
+
 /*
   TODO:
   - annotation -> register element

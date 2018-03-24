@@ -1,3 +1,5 @@
+/* global JHElement, JQuery */
+
 (function() {
 
 	let authorizedListCB = jQuery.Callbacks('memory');

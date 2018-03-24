@@ -1,3 +1,4 @@
+/* global JHElement */
 
 (function() {
 	const tbody = Symbol('tbody');

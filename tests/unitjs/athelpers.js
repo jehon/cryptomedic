@@ -1,5 +1,5 @@
 /* exported loadReference, webDescribe, extractPath */
-/* global create, readJSON */
+/* global readJSON, API_VERSION */
 
 function loadReference(name) {
 	// Thanks to http://stackoverflow.com/a/27830579/1954789
