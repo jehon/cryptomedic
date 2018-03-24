@@ -1,10 +1,12 @@
-
+/* eslint-env jasmine */
+/* global webDescribe, JHElement */
+/* global formGetContent */
 describe('form-test', function() {
 	webDescribe('should work with css selector', `<form id='testid0'>
   			<input name='n1' value='n1val'>
-		</form>`, function(element) {
+		</form>`, function() {
 		it('should get values correctly', function() {
-	 		expect(formGetContent('#testid0')).toEqual({
+			expect(formGetContent('#testid0')).toEqual({
 				n1: 'n1val'
 			});
 		});
@@ -14,7 +16,7 @@ describe('form-test', function() {
   			<input name='n1' value='n1val'>
 		</form>`, function(element) {
 		it('should get values correctly', function() {
-	 		expect(formGetContent(element())).toEqual({
+			expect(formGetContent(element())).toEqual({
 				n1: 'n1val'
 			});
 		});
@@ -22,19 +24,19 @@ describe('form-test', function() {
 
 	webDescribe('should skip elements disabled', '<form><input disabled name=\'n1\' value=\'n1val\'></form>', function(element) {
 		it('should get values correctly', function() {
-	 		expect(formGetContent(element())).toEqual({});
+			expect(formGetContent(element())).toEqual({});
 		});
 	});
 
 	webDescribe('should parse int', '<form><input type=\'number\' name=\'n1\' value=\'14\'></form>', function(element) {
 		it('should get values correctly', function() {
-	 		expect(formGetContent(element())).toEqual({ n1: 14 });
+			expect(formGetContent(element())).toEqual({ n1: 14 });
 		});
 	});
 
 	webDescribe('should work with NodeList', '<form><input name=\'n1\' value=\'n1val\'></form>', function(element) {
 		it('should get values correctly', function() {
-	 		expect(formGetContent(element().querySelectorAll('input'))).toEqual({
+			expect(formGetContent(element().querySelectorAll('input'))).toEqual({
 				n1: 'n1val'
 			});
 		});
@@ -43,7 +45,7 @@ describe('form-test', function() {
 	webDescribe('should skip elements without name', '<form><input value=\'n1val\'></form>', function(element) {
 		it('should get values correctly', function() {
 			// When not giving NodeList, the non-named are filtered high in the list
-	 		expect(formGetContent(element().querySelectorAll('input'))).toEqual({});
+			expect(formGetContent(element().querySelectorAll('input'))).toEqual({});
 		});
 	});
 
@@ -60,14 +62,14 @@ describe('form-test', function() {
 	        <x-inline edit name='n6' type='list' list='[ "n6val1", "n6val2", "n6val3" ]'></x-inline>
   			<x-inline edit name='n7' type='char'></x-inline>
  		</form>`, function(element) {
-	 	it('should get values correctly', function() {
-	 		expect(formGetContent(element())).toEqual({
+		it('should get values correctly', function() {
+			expect(formGetContent(element())).toEqual({
 				n3: 'n3val1',
 			});
-	 	});
+		});
 
-	 	it('should remove unsetted values', function() {
-	 		expect(formGetContent(element(), { n4: 'template value' })).toEqual({
+		it('should remove unsetted values', function() {
+			expect(formGetContent(element(), { n4: 'template value' })).toEqual({
 				n3: 'n3val1'
 			});
 		});
@@ -86,7 +88,7 @@ describe('form-test', function() {
 	        <x-inline edit name='n7' type='char' value='n7val' ></x-inline>
   		</form>`, function(element) {
 		it('should get values correctly', function() {
-	 		expect(formGetContent(element())).toEqual({
+			expect(formGetContent(element())).toEqual({
 				n1: 'n1val',
 				n2: 'n2val',
 				n3: 'n3val2',

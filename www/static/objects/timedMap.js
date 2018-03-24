@@ -1,4 +1,5 @@
 /* exported TimedCache */
+
 let TimedMap = (function() {
 	let cache = new WeakMap();
 
@@ -47,7 +48,7 @@ let TimedMap = (function() {
 		}
 
 		dump() {
-			console.log(cache.get(this));
+			console.info(cache.get(this));
 		}
 	}
 

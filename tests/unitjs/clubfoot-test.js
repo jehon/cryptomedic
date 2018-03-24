@@ -1,3 +1,6 @@
+/* eslint-env jasmine */
+/* global webDescribe, JHElement */
+/* global ClubFoot */
 
 describe('ClubFoot', function() {
 	it('should give the correct model', function() {

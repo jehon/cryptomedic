@@ -1,3 +1,5 @@
+/* eslint-env jasmine */
+/* global webDescribe, JHElement */
 
 describe('test-jh-script', function() {
 	function getFn() {
@@ -7,11 +9,6 @@ describe('test-jh-script', function() {
         }
         this.value++;
         `;
-		return res;
-	}
-
-	function getFnError() {
-		let res = 'let res = 1 / 0;';
 		return res;
 	}
 

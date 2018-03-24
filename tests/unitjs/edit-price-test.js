@@ -1,3 +1,5 @@
+/* eslint-env jasmine */
+/* global webDescribe, JHElement */
 
 describe('edit-price-test', function() {
 	webDescribe('', '<edit-price value=\'-1\'></edit-price>', function(element) {

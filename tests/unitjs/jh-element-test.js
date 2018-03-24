@@ -1,3 +1,5 @@
+/* eslint-env jasmine */
+/* global webDescribe, JHElement */
 
 describe('jh-element-test', function() {
 	describe('on static function', function() {

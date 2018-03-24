@@ -1,4 +1,5 @@
-'use strict';
+/* eslint-env jasmine */
+/* global webDescribe, ApplicationException, DataMissingException */
 
 describe('ApplicationException', function() {
 	it('should inherit from Error', function() {

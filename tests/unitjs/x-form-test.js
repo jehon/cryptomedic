@@ -1,4 +1,5 @@
-'use strict';
+/* eslint-env jasmine */
+/* global webDescribe, JHElement */
 
 describe('x-form-test', function() {
 	webDescribe('initial', '<x-form></x-form>', function(element) {
@@ -21,32 +22,32 @@ describe('x-form-test', function() {
 		</x-form>`, function(element) {
 
 		it('should get empty object', function() {
-	 		expect(element().rebuildData()).toEqual({});
+			expect(element().rebuildData()).toEqual({});
 			expect(element().validate()).toBeTruthy();
 		});
 
 		it('should keep initial object', function() {
-	 		expect(element().rebuildData({ a: 1 })).toEqual({ a: 1 });
-	 		const Test = class {};
-	 		const t = new Test();
-	 		t.a = 1;
-	 		expect(element().rebuildData(t)).toEqual(jasmine.any(Test));
-	 		expect(element().rebuildData(t).a).toBe(1);
+			expect(element().rebuildData({ a: 1 })).toEqual({ a: 1 });
+			const Test = class {};
+			const t = new Test();
+			t.a = 1;
+			expect(element().rebuildData(t)).toEqual(jasmine.any(Test));
+			expect(element().rebuildData(t).a).toBe(1);
 		});
 
 		it('should fill in the form', function() {
 			const values = { n1: 'val1', n2: 123, n3: '2017-01-01', n4: 'val4' };
 			element().value = values;
-	 		expect(element().rebuildData()).toEqual(values);
+			expect(element().rebuildData()).toEqual(values);
 			expect(element().validate()).toBeTruthy();
 		});
 
 		it('should react on blur events', function() {
-	        spyOn(element(), 'onFormUpdated').and.callThrough();
+			spyOn(element(), 'onFormUpdated').and.callThrough();
 
 			JHElement.fireOn(element().querySelector('input[name=n1'), 'blur', 10);
 
-	        expect(element().onFormUpdated).toHaveBeenCalledTimes(1);
+			expect(element().onFormUpdated).toHaveBeenCalledTimes(1);
 		});
 	});
 
@@ -56,14 +57,14 @@ describe('x-form-test', function() {
 		</x-form>`, function(element) {
 
 		it('should get empty object', function() {
-	 		expect(element().rebuildData()).toEqual({});
+			expect(element().rebuildData()).toEqual({});
 			expect(element().validate()).toBeTruthy();
 		});
 
 		it('should fill in the form', function() {
 			const values = { n: 'val1' };
 			element().value = values;
-	 		expect(element().rebuildData()).toEqual(values);
+			expect(element().rebuildData()).toEqual(values);
 			expect(element().validate()).toBeTruthy();
 		});
 	});
@@ -76,16 +77,16 @@ describe('x-form-test', function() {
 		</x-form>`, function(element) {
 
 		it('should get empty object', function() {
-	 		expect(element().rebuildData()).toEqual({
-	 			n: 'val1'
-	 		});
+			expect(element().rebuildData()).toEqual({
+				n: 'val1'
+			});
 			expect(element().validate()).toBeTruthy();
 		});
 
 		it('should fill in the form', function() {
 			const values = { n: 'val1' };
 			element().value = values;
-	 		expect(element().rebuildData()).toEqual(values);
+			expect(element().rebuildData()).toEqual(values);
 			expect(element().validate()).toBeTruthy();
 		});
 	});
@@ -97,7 +98,7 @@ describe('x-form-test', function() {
 		</x-form>`, function(element) {
 
 		it('should not get it', function() {
-	 		expect(element().rebuildData()).toEqual({});
+			expect(element().rebuildData()).toEqual({});
 		});
 	});
 
@@ -106,7 +107,7 @@ describe('x-form-test', function() {
 		</x-form>`, function(element) {
 
 		it('should not get it', function() {
-	 		expect(element().rebuildData()).toEqual({});
+			expect(element().rebuildData()).toEqual({});
 			expect(element().validate()).toBeTruthy();
 		});
 	});
@@ -116,7 +117,7 @@ describe('x-form-test', function() {
 		</x-form>`, function(element) {
 
 		it('should not get it', function() {
-	 		expect(element().rebuildData()).toEqual({});
+			expect(element().rebuildData()).toEqual({});
 			expect(element().validate()).toBeTruthy();
 		});
 	});
@@ -126,14 +127,14 @@ describe('x-form-test', function() {
   			<x-write name='n' type='numeric'></x-write>
 		</x-form>`, function(element) {
 		it('should get empty object', function() {
-	 		expect(element().rebuildData()).toEqual({});
+			expect(element().rebuildData()).toEqual({});
 			expect(element().validate()).toBeTruthy();
 		});
 
 		it('should fill in the form', function() {
 			const values = { n: 135 };
 			element().value = values;
-	 		expect(element().rebuildData()).toEqual(values);
+			expect(element().rebuildData()).toEqual(values);
 			expect(element().validate()).toBeTruthy();
 		});
 	});
@@ -145,14 +146,14 @@ describe('x-form-test', function() {
 		</x-form>`, function(element) {
 
 		it('should get empty object', function() {
-	 		expect(element().rebuildData()).toEqual({});
+			expect(element().rebuildData()).toEqual({});
 			expect(element().validate()).toBeFalsy();
 		});
 
 		it('should fill in the form', function() {
 			const values = { n1: 'val1' };
 			element().value = values;
-	 		expect(element().rebuildData()).toEqual(values);
+			expect(element().rebuildData()).toEqual(values);
 			expect(element().validate()).toBeTruthy();
 		});
 
@@ -181,7 +182,7 @@ describe('x-form-test', function() {
 	webDescribe('with custom elements', `<x-form>
   			<x-write       name='n4' type='list' list='[ "n4val1", "n4val2", "n4val3" ]'></x-write>
   			<x-write-list  name='n5'             list='[ "n5val1", "n5val2", "n5val3", "n5val4", "n5val5", "n5val6", "n5val7" ]'></x-write-list>
-	        <x-inline edit name='n6' type='list' list='[ "n6val1", "n6val2", "n6val3" ]'></x-inline>
+			<x-inline edit name='n6' type='list' list='[ "n6val1", "n6val2", "n6val3" ]'></x-inline>
   			<x-inline edit name='n7' type='char'></x-inline>
 		</x-form>`, function(element) {
 

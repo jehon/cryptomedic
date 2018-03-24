@@ -1,3 +1,5 @@
+/* eslint-env jasmine */
+/* global webDescribe, JHElement */
 
 describe('x-write-test', function() {
 	beforeEach(function() {
@@ -39,7 +41,7 @@ describe('x-write-test', function() {
 			it('should fire event', function() {
 				let el = element().querySelector('input');
 				let res = false;
-				element().addEventListener('blur', (event) => { res = 'test'; });
+				element().addEventListener('blur', () => { res = 'test'; });
 				el.value = 'blablabla';
 				JHElement.fireOn(element().querySelector('input'), 'blur', 'test');
 				expect(res).toBe('test');
@@ -54,7 +56,7 @@ describe('x-write-test', function() {
 			it('should not fire event if still having focus', function() {
 				let el = element().querySelector('input');
 				let res = false;
-				element().addEventListener('blur', (event) => { res = 'test'; });
+				element().addEventListener('blur', () => { res = 'test'; });
 
 				el.focus();
 				JHElement.fireOn(element().querySelector('input'), 'change', 'test');
@@ -115,7 +117,7 @@ describe('x-write-test', function() {
 			it('should fire event', function() {
 				let el = element().querySelector('input[type=checkbox]');
 				let res = false;
-				element().addEventListener('blur', (event) => { res = 'test'; });
+				element().addEventListener('blur', () => { res = 'test'; });
 				el.setAttribute('checked', 'checked');
 				JHElement.fireOn(element().querySelector('input'), 'blur', 'test');
 				expect(res).toBe('test');
@@ -145,7 +147,7 @@ describe('x-write-test', function() {
 			it('should fire event', function() {
 				let el = element().querySelector('x-input-date');
 				let res = false;
-				element().addEventListener('blur', (event) => { res = 'test'; });
+				element().addEventListener('blur', () => { res = 'test'; });
 				el.value = '2016-02-25';
 				JHElement.fireOn(element().querySelector('x-input-date'), 'blur', 'test');
 				expect(res).toBe('test');
@@ -175,7 +177,7 @@ describe('x-write-test', function() {
 			it('should fire event', function() {
 				let el = element().querySelector('input[type=number]');
 				let res = false;
-				element().addEventListener('blur', (event) => { res = 'test'; });
+				element().addEventListener('blur', () => { res = 'test'; });
 				el.value = 10;
 				JHElement.fireOn(element().querySelector('input'), 'blur', 'test');
 				expect(res).toBe('test');
@@ -205,7 +207,7 @@ describe('x-write-test', function() {
 			it('should fire event', function() {
 				let el = element().querySelector('textarea');
 				let res = false;
-				element().addEventListener('blur', (event) => { res = 'test'; });
+				element().addEventListener('blur', () => { res = 'test'; });
 				el.value = 'blablabla';
 				JHElement.fireOn(el, 'blur', 'test');
 				expect(res).toBe('test');
@@ -240,7 +242,7 @@ describe('x-write-test', function() {
 			it('should fire event', function() {
 				let el = element().querySelector('x-write-list');
 				let res = false;
-				element().addEventListener('blur', (event) => { res = 'test'; });
+				element().addEventListener('blur', () => { res = 'test'; });
 				el.setAttribute('value', 'brol');
 				JHElement.fireOn(el, 'blur', 'test');
 				expect(res).toBe('test');

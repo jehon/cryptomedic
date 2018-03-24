@@ -1,3 +1,6 @@
+/* eslint-env jasmine */
+/* global webDescribe, JHElement */
+/* global store, ACT_DEFINITIONS_STORE */
 
 describe('x-write-list-test', function() {
 	const listRadio = [ 'truc', 'brol', 'machin', 'chose' ];
@@ -105,7 +108,7 @@ describe('x-write-list-test', function() {
 				let el = element().shadowRoot.querySelector('input[value="brol"]');
 				expect(el).not.toBeNull();
 				let res = false;
-				element().addEventListener('blur', (event) => {
+				element().addEventListener('blur', () => {
 					res = 'test';
 				});
 				el.setAttribute('checked', 'checked');
@@ -124,7 +127,7 @@ describe('x-write-list-test', function() {
 				let el = element().shadowRoot.querySelector('select');
 				expect(el).not.toBeNull();
 				let res = false;
-				element().addEventListener('blur', (event) => {
+				element().addEventListener('blur', () => {
 					res = 'test';
 				});
 				el.value = 'brol';

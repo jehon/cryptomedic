@@ -1,3 +1,6 @@
+/* eslint-env jasmine */
+/* global webDescribe, JHElement */
+/* global FolderPage */
 
 describe('FolderPage', function() {
 	describe('with empty loader', function() {

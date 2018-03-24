@@ -1,3 +1,7 @@
+/* eslint-env jasmine */
+/* global webDescribe, JHElement */
+/* global loadReference, Patient, Folder, RicketConsult, PatientRelated, DataMissingException */
+
 describe('PatientRelated', function() {
 	describe('with TestFolder.test1.json', function() {
 		it('should have correct properties', function() {

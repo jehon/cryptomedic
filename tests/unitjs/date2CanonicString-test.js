@@ -1,3 +1,5 @@
+/* eslint-env jasmine */
+/* global date2CanonicString */
 
 describe('date2CanonicString-test', function() {
 	it('should return null', function() {

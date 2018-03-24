@@ -1,9 +1,13 @@
+/* eslint-env jasmine */
+/* global webDescribe, JHElement */
+/* global store, ACT_FOLDER_INVALIDATE */
+/* global Folder, loadReference, Appointment */
 
 describe('tests/unit/x-patient-related-test.js', function() {
 	let f;
 	beforeEach(() => {
 		store.dispatch({ type: ACT_FOLDER_INVALIDATE });
-    	f = new Folder(loadReference('FolderTest.test1.json').folder);
+		f = new Folder(loadReference('FolderTest.test1.json').folder);
 	});
 
 	const na =  {
@@ -57,7 +61,7 @@ describe('tests/unit/x-patient-related-test.js', function() {
 		});
 
 		it('should show the closest appointment', function(done) {
-			nb = JSON.parse(JSON.stringify(na));
+			let nb = JSON.parse(JSON.stringify(na));
 			nb.Nextappointment = '3999-01-12';
 			f.list.push(new Appointment(na));
 			f.list.push(new Appointment(nb));

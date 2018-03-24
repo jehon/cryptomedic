@@ -1,5 +1,7 @@
-'use strict';
-/* global loadReference, Folder, Patient, OtherConsult, RicketConsult, Appointment, Bill, Payment, Picture */
+/* eslint-env jasmine */
+/* global webDescribe, JHElement */
+/* global loadReference, Folder, Patient */
+/* global ClubFoot, Surgery, OtherConsult, RicketConsult, Appointment, Bill, Payment, Picture */
 
 describe('test-folder', function() {
 	beforeEach(() => {
@@ -102,7 +104,7 @@ describe('test-folder', function() {
 	});
 
 	describe('should order files correctly', function() {
-		const resEqual  = (a, b) => { expect(Folder.ordering(a, b)).toBe(0); };
+		// const resEqual  = (a, b) => { expect(Folder.ordering(a, b)).toBe(0); };
 		const resFirst  = (a, b) => {
 			expect(Folder.ordering(a, a)).toBe(0);
 			expect(Folder.ordering(b, b)).toBe(0);

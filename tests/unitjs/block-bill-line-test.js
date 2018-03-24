@@ -1,4 +1,5 @@
-/* global webDescribe */
+/* eslint-env jasmine */
+/* global webDescribe, JHElement */
 
 describe('block-bill-line-test', function() {
 	const price = { 
@@ -48,7 +49,7 @@ describe('block-bill-line-test', function() {
 		it('should fire event', function() {
 			expect(element().getTotal()).toBe(0);
 			let res = false;
-			element().addEventListener('blur', (event) => { res = 'test'; });
+			element().addEventListener('blur', () => { res = 'test'; });
 			element().querySelector('x-inline').setAttribute('value', 10);
 			JHElement.fireOn(element().querySelector('x-inline'), 'blur', 'test');
 			expect(element().getTotal()).toBe(1000);

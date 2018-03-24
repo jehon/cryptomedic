@@ -1,4 +1,6 @@
-/* global JHElement */
+/* eslint-env jasmine */
+/* global webDescribe, JHElement */
+
 describe('block-bill-category-test', function() {
 	let priceCategory = [
 		{

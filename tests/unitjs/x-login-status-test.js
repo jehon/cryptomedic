@@ -1,3 +1,7 @@
+/* eslint-env jasmine */
+/* global webDescribe, JHElement */
+/* global XRequestor */
+/* global store, ACT_USER_LOGOUT, ACT_USER_LOGIN */
 
 describe('tests/unit/x-login-status-test.js', function() {
 	const buildResponse = function(status = 200, json = {}) {
@@ -60,7 +64,7 @@ describe('tests/unit/x-login-status-test.js', function() {
 					testLoggedIn(element, 'test');
 
 					// Logged out request
-					nextRequest = new Promise((resolve, reject) => {
+					nextRequest = new Promise((resolve) => {
 						resolve(new Response(JSON.stringify(this.ref), {
 							status: 200,
 						}));

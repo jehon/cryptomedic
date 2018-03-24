@@ -1,3 +1,7 @@
+/* eslint-env jasmine */
+/* global webDescribe, JHElement */
+/* global extractPath, API_VERSION */
+/* global store, ACT_USER_LOGIN */
 
 describe('tests/unit/x-requestor-test.js', function() {
 	const buildErrorResponse = function(status = 200, message = false) {
@@ -19,7 +23,7 @@ describe('tests/unit/x-requestor-test.js', function() {
 
 		describe('should match URL', function() {
 			it('should make an absolute request', function() {
-				spyOn(window, 'fetch').and.callFake((request) => new Promise((resolve, reject) => resolve(new Response(request.url, {}))));
+				spyOn(window, 'fetch').and.callFake((request) => new Promise((resolve) => resolve(new Response(request.url, {}))));
 				const promise = element().request({ url: '/baseUrl', data: { test: 1 }});
 				promise.then(response => {
 					expect(extractPath(response.url)).toBe('/baseUrl?test=1');
@@ -27,7 +31,7 @@ describe('tests/unit/x-requestor-test.js', function() {
 			});
 
 			it('should make an relative request', function() {
-				spyOn(window, 'fetch').and.callFake((request) => new Promise((resolve, reject) => resolve(new Response(request.url, {}))));
+				spyOn(window, 'fetch').and.callFake((request) => new Promise((resolve) => resolve(new Response(request.url, {}))));
 				const promise = element().request({ url: 'relativeUrl', data: { test: 1 }});
 				promise.then(response => expect(response.url.endsWith(`/api/${API_VERSION}/relativeUrl?test=1`)).toBeTruthy());
 			});
@@ -37,7 +41,7 @@ describe('tests/unit/x-requestor-test.js', function() {
 			beforeEach(function() {
 				this.ref = { 'test': 123 };
 				spyOn(window, 'fetch').and.callFake(() => {
-					return new Promise((resolve, reject) => {
+					return new Promise((resolve) => {
 						resolve(new Response(JSON.stringify(this.ref), {
 							status: 200
 						}));
@@ -131,7 +135,7 @@ describe('tests/unit/x-requestor-test.js', function() {
 			});
 
 			it('should resquestAndFilter with filter', function(done) {
-				const promise = element().requestAndFilter({});
+				element().requestAndFilter({});
 				setTimeout(() => {
 					expect(element().isFailed()).toBeFalsy();
 					done();
@@ -149,7 +153,7 @@ describe('tests/unit/x-requestor-test.js', function() {
 			});
 
 			it('should resquestAndFilter with without treated', function(done) {
-				const promise = element().requestAndFilter({}, [ 404 ]);
+				element().requestAndFilter({}, [ 404 ]);
 				setTimeout(() => {
 					expect(element().isFailed()).toBeFalsy();
 					done();
@@ -161,7 +165,7 @@ describe('tests/unit/x-requestor-test.js', function() {
 			beforeEach(function() {
 				this.ref = { 'test': 123 };
 				spyOn(window, 'fetch').and.callFake(() => {
-					return new Promise((resolve, reject) => {
+					return new Promise((resolve) => {
 						resolve(new Response('Data is not found', {
 							status: 404
 						}));
@@ -169,7 +173,7 @@ describe('tests/unit/x-requestor-test.js', function() {
 				});
 			});
 			it('should resquestAndTreat with filter', function(done) {
-				const promise = element().requestAndFilter({});
+				element().requestAndFilter({});
 				setTimeout(() => {
 					expect(element().isFailed()).toBeTruthy();
 					done();
@@ -177,7 +181,7 @@ describe('tests/unit/x-requestor-test.js', function() {
 			});
 
 			it('should resquestAndTreat with without treated', function(done) {
-				const promise = element().requestAndFilter({}, [ 404 ]);
+				element().requestAndFilter({}, [ 404 ]);
 				setTimeout(() => {
 					expect(element().isFailed()).toBeFalsy();
 					done();
@@ -198,7 +202,7 @@ describe('tests/unit/x-requestor-test.js', function() {
 			beforeEach(function() {
 				this.ref = { 'test': 123 };
 				spyOn(window, 'fetch').and.callFake(() => {
-					return new Promise((resolve, reject) => {
+					return new Promise((resolve) => {
 						setTimeout(() => {
 							resolve(new Response(JSON.stringify(this.ref), {
 								status: 200
@@ -211,7 +215,7 @@ describe('tests/unit/x-requestor-test.js', function() {
 			it('should handle time-out requests', function(done) {
 				const promise = element().request({ timeout: 0.001 });
 
-				promise.then(response => {
+				promise.then(() => {
 					done.fail('We should be in catch');
 				})
 					.catch(error => {
@@ -239,10 +243,10 @@ describe('tests/unit/x-requestor-test.js', function() {
 			it('should handle time-out requests', function(done) {
 				const promise = element().request({ timeout: 0.001 });
 
-				promise.then(response => {
+				promise.then(() => {
 					done.fail('We should be in catch');
 				})
-					.catch(error => {
+					.catch(() => {
 						expect(element().shadowRoot.querySelector('x-waiting').isBlocked()).toBeFalsy();
 						expect(element().shadowRoot.querySelector('x-overlay').isBlocked()).toBeTruthy();
 						expect(element().hasAttribute('running')).toBeFalsy();

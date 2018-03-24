@@ -1,3 +1,5 @@
+/* eslint-env jasmine */
+/* global webDescribe, JHElement */
 
 describe('tests/unit/x-overlay-test.js', function() {
 	webDescribe('initialized', '<x-overlay><div style=\'width: 200px; height: 100px; background-color: red\'>Content</div></x-overlay>', function(element) {
@@ -38,7 +40,7 @@ describe('tests/unit/x-overlay-test.js', function() {
 			});
 
 			it('should be shidden when the promise succeed', function(done) {
-				let p = new Promise(function(resolve, reject) {
+				let p = new Promise(function(resolve) {
 					setTimeout(() => resolve(), 100);
 				});
 

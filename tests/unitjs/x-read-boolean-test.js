@@ -1,4 +1,5 @@
-'use strict';
+/* eslint-env jasmine */
+/* global webDescribe, JHElement */
 
 describe('x-read-boolean-test', function() {
 	// Test click on span for radio
