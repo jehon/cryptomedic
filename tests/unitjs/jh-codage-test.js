@@ -1,4 +1,6 @@
-'use strict';
+/* eslint-env jasmine */
+/* global webDescribe, JHElement */
+/* global store, ACT_DEFINITIONS_STORE */
 
 describe('jh-codage-test', function() {
 	describe('without definitions', function() {

@@ -1,3 +1,6 @@
+/* eslint-env jasmine */
+/* global nullify */
+
 describe('nullify-test', function() {
 	it('should nullify string', function() {
 		expect(nullify('')).toEqual('');

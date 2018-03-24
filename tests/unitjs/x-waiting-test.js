@@ -1,3 +1,5 @@
+/* eslint-env jasmine */
+/* global webDescribe, JHElement */
 
 describe('tests/unit/x-waiting-test.js', function() {
 	webDescribe('initialized', '<x-waiting><div style=\'width: 200px; height: 100px; background-color: red;\'>Content</div></x-waiting>', function(element) {
@@ -31,7 +33,7 @@ describe('tests/unit/x-waiting-test.js', function() {
 			});
 
 			it('should be shown and hidden when the promise succeed', function(done) {
-				let p = new Promise(function(resolve, reject) {
+				let p = new Promise(function(resolve) {
 					setTimeout(() => resolve(), 100);
 				});
 

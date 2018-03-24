@@ -1,3 +1,4 @@
+/* eslint-env jasmine */
 
 describe('The browser', function() {
 	it('should parse date correctly', function() {

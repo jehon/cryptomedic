@@ -1,3 +1,5 @@
+/* eslint-env jasmine */
+/* global webDescribe, JHElement */
 /* global loadReference, DataMissingException */
 
 describe('Jasmine', function() {

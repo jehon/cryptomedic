@@ -1,7 +1,9 @@
+/* eslint-env jasmine */
+/* global webDescribe, JHElement */
 
 describe('x-read-test', function() {
 	// Test click on span for radio
-	webDescribe('', '<x-read name=\'test\'></x-read>', function(element) {
+	webDescribe('', '<x-read name=\'test\'></x-read>', function() {
 		it('should be instantiated', function() {});
 	});
 

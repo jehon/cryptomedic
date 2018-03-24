@@ -1,4 +1,4 @@
-'use strict';
+/* eslint-env jasmine */
 /* global  TimedMap */
 
 describe('timedMap-test', function() {
@@ -65,11 +65,11 @@ describe('timedMap-test', function() {
 		jasmine.clock().uninstall();
 	});
 
-	it('should console.log on dump', function() {
-		spyOn(console, 'log');
+	it('should console.info on dump', function() {
+		spyOn(console, 'info');
 		let tm1 = new TimedMap();
 		tm1.dump();
 
-		expect(console.log).toHaveBeenCalledTimes(1);
+		expect(console.info).toHaveBeenCalledTimes(1);
 	});
 });

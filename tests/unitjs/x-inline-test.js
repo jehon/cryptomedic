@@ -1,4 +1,5 @@
-'use strict';
+/* eslint-env jasmine */
+/* global webDescribe, JHElement */
 
 describe('x-inline-test', function() {
 	beforeEach(function() {
@@ -54,7 +55,7 @@ describe('x-inline-test', function() {
 
 		it('should fire event', function() {
 			let res = false;
-			element().addEventListener('blur', (event) => { res = 'test'; });
+			element().addEventListener('blur', () => { res = 'test'; });
 			const input = element().querySelector('input');
 			input.value = 10;
 			JHElement.fireOn(input, 'blur', 10);
@@ -64,7 +65,7 @@ describe('x-inline-test', function() {
 
 		it('should fire event on blur', function() {
 			let res = false;
-			element().addEventListener('blur', (event) => { res = 'test'; });
+			element().addEventListener('blur', () => { res = 'test'; });
 			element().blur();
 			expect(res).toBe('test');
 		});

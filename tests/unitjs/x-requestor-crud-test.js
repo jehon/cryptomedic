@@ -1,3 +1,6 @@
+/* eslint-env jasmine */
+/* global webDescribe, JHElement */
+/* global extractPath, */
 
 describe('tests/unit/x-requestor-crud-test.js', function() {
 	webDescribe('x-requestor-crud', '<x-requestor-crud relative-url=\'/object\'></x-requestor-crud>', function(element) {
@@ -29,9 +32,7 @@ describe('tests/unit/x-requestor-crud-test.js', function() {
 				// TODO: check the body
 				return buildResponse();
 			});
-			element().create(data).then(result => {
-				done();
-			});
+			element().create(data).then(done);
 		});
 
 		it('should read', function(done) {
@@ -40,9 +41,7 @@ describe('tests/unit/x-requestor-crud-test.js', function() {
 				expect(extractPath(request.url)).toBe('/object/15?');
 				return buildResponse();
 			});
-			element().read(15).then(result => {
-				done();
-			});
+			element().read(15).then(done);
 		});
 
 		it('should update', function(done) {
@@ -52,9 +51,7 @@ describe('tests/unit/x-requestor-crud-test.js', function() {
 				// TODO: check the body
 				return buildResponse();
 			});
-			element().update({ id: 15 }).then(result => {
-				done();
-			});
+			element().update({ id: 15 }).then(done);
 		});
 
 		it('should delete', function(done) {
@@ -63,9 +60,7 @@ describe('tests/unit/x-requestor-crud-test.js', function() {
 				expect(extractPath(request.url)).toBe('/object/15');
 				return buildResponse();
 			});
-			element().delete(15).then(result => {
-				done();
-			});
+			element().delete(15).then(done);
 		});
 	});
 });

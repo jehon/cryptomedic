@@ -1,3 +1,5 @@
+/* eslint-env jasmine */
+/* global webDescribe, JHElement */
 /* global Bill */
 
 describe('Bill', function() {

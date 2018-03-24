@@ -1,3 +1,4 @@
+/* eslint-env jasmine */
 /* global webDescribe, JHElement */
 
 describe('x-input-date-test', function() {
@@ -34,7 +35,7 @@ describe('x-input-date-test', function() {
 		it('should give the focus to the underlying element', function() {
 			element().click();
 			expect(element().querySelector('input:focus')).not.toBeNull();
-		})
+		});
 	});
 
 	webDescribe('with value', '<x-input-date value=\'2017-02-03\'></x-input-date>', function(element) {

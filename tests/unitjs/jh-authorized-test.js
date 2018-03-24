@@ -1,4 +1,5 @@
-'use strict';
+/* eslint-env jasmine */
+/* global webDescribe, JHElement */
 
 // describe('jh-authorized-test', function() {
 // beforeEach(() => {

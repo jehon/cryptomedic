@@ -1,4 +1,5 @@
-'use strict';
+/* eslint-env jasmine */
+/* global calculations */
 
 describe('calculations', function() {
 	const poly = {

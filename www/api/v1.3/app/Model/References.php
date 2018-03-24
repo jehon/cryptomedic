@@ -27,6 +27,17 @@ class References {
     if (self::$_init) {
       return ;
     }
+    // TODO later
+
+    // $list = [];
+    // $examiners = DB::select("SELECT username, codage, inExaminerList FROM users");
+    // foreach($examiners as $examiner) {
+    //   $ec = References::withCode($examiner->username, $examiner->codage);
+    //   if ($examiner->inExaminerList > 0) {
+    //     $list[] = $ec;
+    //   }
+    // }
+    // References::$lists["Examiner"] = References::buildValueList($list);
   }
 
   static function getList($name) {

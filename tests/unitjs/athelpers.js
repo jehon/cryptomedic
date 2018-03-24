@@ -1,5 +1,7 @@
-/* exported loadReference, webDescribe, extractPath */
+/* eslint-env jasmine */
+/* global webDescribe, JHElement */
 /* global readJSON, API_VERSION */
+/* exported loadReference, webDescribe, extractPath */
 
 function loadReference(name) {
 	// Thanks to http://stackoverflow.com/a/27830579/1954789

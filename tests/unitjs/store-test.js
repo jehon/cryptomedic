@@ -1,8 +1,13 @@
+/* eslint-env jasmine */
+/* global store, loadReference, Folder */
+/* global ACT_FOLDER_INVALIDATE, ACT_FOLDER_STORE */
+/* global ACT_USER_LOGOUT, ACT_USER_LOGIN */
+/* global ACT_DEFINITIONS_STORE */
 
 describe('store', function() {
 	let f;
 	beforeEach(() => {
-    	f = new Folder(loadReference('FolderTest.test1.json').folder);
+		f = new Folder(loadReference('FolderTest.test1.json').folder);
 	});
 
 	it('should exists', function() {
