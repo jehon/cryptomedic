@@ -48,7 +48,7 @@
               <div ng-if="isParam('day')" class="form-group">
                 <label class="col-sm-2 control-label">Day (yyyy-mm-dd)?</label>
                 <div class="col-sm-10">
-                  <x-input-date name='day' value='{{values.day}}'>
+                  <x-input-date name='day' value='{{values.day}}' class="form-control">
                 </div>
               </div>
             <div ng-if="isParam('month')" class="form-group">
