@@ -1,3 +1,4 @@
+/* global Bill */
 
 describe('Bill', function() {
 	it('should give the correct model', function() {

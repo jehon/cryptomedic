@@ -1,11 +1,6 @@
 /* eslint-env node */
 var nb = 0;
 
-var appointment = {
-	'#Appointment_Nextappointment': '2010-01-01',
-	'[name=NextCenter]': 'Ramu'
-};
-
 module.exports = {
 	'modify a Patient': function (client) {
 		client.page.cryptomedic().authenticate('murshed');
@@ -233,6 +228,11 @@ module.exports = {
 		nb++;
 	},
 
+	// var appointment = {
+	// 	'#Appointment_Nextappointment': '2010-01-01',
+	// 	'[name=NextCenter]': 'Ramu'
+	// };
+	
 	// 'check the created appointment': function(client) {
 	//   client
 	//     .waitForElementVisible('')

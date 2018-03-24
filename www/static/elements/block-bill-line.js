@@ -1,3 +1,4 @@
+/* global JHElement */
 
 (function() {
 	const title = Symbol('title');

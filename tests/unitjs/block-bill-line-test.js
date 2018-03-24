@@ -1,3 +1,4 @@
+/* global webDescribe */
 
 describe('block-bill-line-test', function() {
 	const price = { 

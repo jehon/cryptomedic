@@ -1,3 +1,4 @@
+/* global JHElement */
 
 (function() {
 	const alreadyRun = Symbol('alreadyRun');

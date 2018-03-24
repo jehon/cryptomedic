@@ -1,4 +1,4 @@
-
+/* global JHElement */
 describe('block-bill-category-test', function() {
 	let priceCategory = [
 		{
@@ -77,7 +77,6 @@ describe('block-bill-category-test', function() {
 		it('should react to change event', function() {
 			expect(element().getTotal()).toBe(105);
 			expect(element().querySelector('#catTotal').textContent).toContain(105);
-			let res = false;
 			let el = element().querySelector('block-bill-line');
 			el.querySelector('input').value = 10;
 			JHElement.fireOn(element().querySelector('x-inline'), 'blur', 10);
