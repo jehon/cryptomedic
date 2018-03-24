@@ -1,4 +1,5 @@
 /* global JHElement */
+
 (function () {
 	const element = Symbol('element');
 
@@ -27,9 +28,19 @@
 		render() {
 			super.render();
 			this._value = cleanUpDate(this._value);
-			this.innerHTML = `<input type=date value='${this._value}'>`;
+			this.innerHTML = `
+				<style>
+					input {
+						border-style: none;
+					}
+				</style>
+				<input type=date value='${this._value}'>
+			`;
 			this[element] = this.querySelector('input');
 			this[element].addEventListener('blur', () => this.fire('blur'));
+			this.addEventListener('click', () => {
+				this[element].focus();
+			});
 		}
 
 		onValueChanged() {
