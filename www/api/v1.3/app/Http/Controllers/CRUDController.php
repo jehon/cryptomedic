@@ -1,0 +1,53 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use DB;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\Input;
+
+abstract class CRUDController extends Controller
+{
+    abstract static public function getModelClass();
+
+    public static function getObjectById($id) {
+        $m = static::getModelClass();
+        return $m::findOrFail($id);
+    }
+
+	// show = Read
+	public function show($id) {
+		return getObjectById($id);		
+	}
+
+    // POST = create
+	public function store() {
+        $data = Input::all();
+        $m = static::getModelClass();
+
+        $newObj = $m::create($data);
+        if (!$newObj->id) {
+            abort(500, "Could not create the file");
+		}
+		return $newObj;
+	}
+
+	// PUT / PATCH = modify
+	public function update($id) {
+		$data = Input::all();
+        $m = static::getModelClass();
+
+        $obj = $m::updateWithArray($id, $data);
+		return $obj;
+	}
+
+    // DELETE
+    public function destroy($id) {
+        $obj = static::getObjectById($id);
+
+        if ($obj) {
+            $obj->delete();
+		}
+	}
+
+}
