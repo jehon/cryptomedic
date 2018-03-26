@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers;
 
 use DB;
 use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
-// use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use App\Http\Controllers\PriceController;
 use Route;
 
