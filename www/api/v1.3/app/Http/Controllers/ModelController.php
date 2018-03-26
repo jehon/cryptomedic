@@ -1,22 +1,15 @@
 <?php namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Http\Controllers\FolderController;
-use DB;
+// use App\Http\Controllers\Controller;
+// use App\Http\Controllers\FolderController;
+// use DB;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Request;
-use Illuminate\Support\Facades\Input;
+// use Illuminate\Support\Facades\Request;
+// use Illuminate\Support\Facades\Input;
 
 // TODO: protect frozen files
-abstract class ModelController extends Controller {
+abstract class ModelController extends CRUDController {
     // @see http://laravel.com/docs/5.0/controllers
-
-    abstract static public function getModelClass();
-
-    public static function getObjectById($id) {
-        $m = static::getModelClass();
-        return $m::findOrFail($id);
-    }
 
     protected function getOnlineObject($id) {
         return (object) [
@@ -26,16 +19,9 @@ abstract class ModelController extends Controller {
         ];
     }
 
-    // POST = create
     public function store() {
-        $data = Input::all();
-        $m = static::getModelClass();
-
-        $newObj = $m::create($data);
-        if (!$newObj->id) {
-            abort(500, "Could not create the file");
-        }
-        $id = $newObj->id;
+		$newObj = parent::store();
+		$id = $newObj->id;
 
         return response()->json([
             'newKey' => $id,
@@ -43,29 +29,20 @@ abstract class ModelController extends Controller {
         ]);
     }
 
-    // PUT / PATCH
     public function update($id) {
-        $data = Input::all();
-        $m = static::getModelClass();
-
-        $obj = $m::updateWithArray($id, $data);
-
+		$obj = parent::update($id);
         return response()->json([
             "id" => $obj->id,
             'folder' => $obj->getRoot()->getDependantsList()
         ]);
     }
 
-    // DELETE
-    public function destroy($id) {
-        $obj = static::getObjectById($id);
-
+	public function destroy($id) {
         // Keep root reference for folder build up...
+        $obj = static::getObjectById($id);
         $root = $obj->getRoot();
 
-        if ($obj) {
-            $obj->delete();
-        }
+		parent::destroy($id);
 
         return response()->json([
             "id" => $id,
