@@ -8,7 +8,7 @@ use Illuminate\Http\Response;
 // use Illuminate\Support\Facades\Input;
 
 // TODO: protect frozen files
-abstract class ModelController extends CRUDController {
+abstract class FicheController extends CRUDController {
     // @see http://laravel.com/docs/5.0/controllers
 
     protected function getOnlineObject($id) {

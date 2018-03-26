@@ -8,7 +8,7 @@ use DB;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Input;
 
-class PatientsController extends ModelController {
+class PatientsController extends FicheController {
 	static public function getModelClass() {
 		return "App\\Model\\Patient";
 	}
