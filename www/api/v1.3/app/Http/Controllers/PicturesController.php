@@ -43,7 +43,7 @@ function myglob($glob, $recursive = false) {
   return $list;
 }
 
-class PicturesController extends ModelController {
+class PicturesController extends FicheController {
   static public function getModelClass() {
     return "App\\Model\\Picture";
   }
