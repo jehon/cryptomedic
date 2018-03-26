@@ -32,8 +32,8 @@ Route::group([ 'prefix' => '/api/' . basename(dirname(__DIR__)) ], function() {
 
   // Public public
   Route::get('/templates/{category?}/{name?}', "TemplatesController@render");
-  Route::post('/auth/mylogin', "Auth\AuthController@postMylogin");
-  Route::get('/auth/logout', "Auth\AuthController@getLogout");
+  Route::post('/auth/mylogin', "AuthController@postMylogin");
+  Route::get('/auth/logout', "AuthController@getLogout");
 
   // Without effect
   Route::get('admin/priceFields', "PricesController@priceFields");
@@ -41,7 +41,7 @@ Route::group([ 'prefix' => '/api/' . basename(dirname(__DIR__)) ], function() {
   // Private
   Route::group(array('middleware' => 'authenticated'), function()
   {
-    Route::get('/auth/settings', "Auth\AuthController@getSettings");
+    Route::get('/auth/settings', "AuthController@getSettings");
 
     hasPermission('users.manage', function() {
       Route::get('users/emails', 'UsersController@emails');
@@ -50,7 +50,7 @@ Route::group([ 'prefix' => '/api/' . basename(dirname(__DIR__)) ], function() {
     });
 
     hasPermission('admin.securityMatrix', function() {
-      Route::get('admin/securityMatrix', 'Auth\AuthController@matrix');
+      Route::get('admin/securityMatrix', 'AuthController@matrix');
     });
 
     hasPermission('admin.checkPictures', function() {
