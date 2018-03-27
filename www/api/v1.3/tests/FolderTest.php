@@ -7,27 +7,27 @@ class FolderTest extends RouteReferenceTestCase {
 	public function testsUnauthenticated() {
     $response = $this->myRunAssertQuery(
         $this->getNewRequestOptionsBuilder()
-          ->setUrl("folder/Patient/1")
+          	->setUrl("folder/Patient/1")
         	->asUnauthenticated()
-          ->setExpected(401)
-          ->asText()
+          	->setExpected(401)
+          	->asText()
       );
 
     $response = $this->myRunAssertQuery(
         $this->getNewRequestOptionsBuilder()
-          ->setUrl("folder/")
+        	->setUrl("folder/")
         	->asUnauthenticated()
-          ->setExpected(401)
-          ->asText()
+        	->setExpected(401)
+        	->asText()
       );
 	}
 
 	public function test1() {
-    $opt = $this->getNewRequestOptionsBuilder()
-      ->withReference()
-      ->setUrl("folder/Patient/1");
-    $json = $this->myRunAssertQueryForRoles($opt);
-    $this->assertEquals(1, $json['id']);
+		$opt = $this->getNewRequestOptionsBuilder()
+			->withReference()
+			->setUrl("folder/Patient/1");
+		$json = $this->myRunAssertQueryForRoles($opt);
+		$this->assertEquals(1, $json['id']);
 	}
 
   public function test6() {
@@ -56,10 +56,10 @@ class FolderTest extends RouteReferenceTestCase {
 	}
 
 	public function testSearchEntryYear() {
-    $json = $this->myRunAssertQuery(
-        $this->getNewRequestOptionsBuilder()
-          ->setUrl("folder?entryyear=2010")
-      );
+		$json = $this->myRunAssertQuery(
+			$this->getNewRequestOptionsBuilder()
+				->setUrl("folder?entryyear=2010")
+			);
 		foreach($json as $k => $v) {
 			$this->assertEquals(2010, $v['entryyear']);
 		}
