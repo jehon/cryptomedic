@@ -97,10 +97,13 @@ class FicheTestHelper extends RouteReferenceTestCase {
     $this->assertNotFalse($i, "The record is not in the result");
 
     if ($testEqual) {
-      $this->assertEquals($id, $json['id']);
-      foreach($data as $k => $v) {
-        $this->assertEquals($v, $json['folder'][$i]['record'][$k]);
-      }
+      	$this->assertEquals($id, $json['id']);
+      	foreach($data as $k => $v) {
+			if (!array_key_exists($k, $json['folder'][$i]['record'])) {
+				throw new Error("Data received does not contains [$i] in record: $k - " . JSON_encode($json['folder'][$i]));
+			}
+			$this->assertEquals($v, $json['folder'][$i]['record'][$k]);
+      	}
     }
     return $json;
   }
