@@ -13,9 +13,9 @@ use Illuminate\Support\Facades\Auth;
 
 // TODO: restrict operations to unlocked files
 class CryptomedicModel extends Model {
-	protected $guarded = array('id');
 	use OptimisticLockingTrait;
 
+	protected $guarded = array('id' );
 
 	public static function getReadOnlyField() {
 		return [ "patient_id", "bill_id", "price_id" ];
@@ -45,11 +45,6 @@ class CryptomedicModel extends Model {
 
 	static public function filterData($data, $forUpdate = true) {
 		unset($data['_type']);
-		unset($data['created_at']);
-		unset($data['updated_at']);
-		// unset($data['id']);
-		unset($data[(new self())->getUpdatedAtColumn()]);
-		unset($data[(new self())->getCreatedAtColumn()]);
 
 		$columns = self::getTableColumnsList();
 		$result = array_intersect_key($data, array_combine($columns, $columns));
