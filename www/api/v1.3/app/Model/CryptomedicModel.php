@@ -29,11 +29,7 @@ class CryptomedicModel extends Model {
 		if (is_array($data)) {
 			foreach($data as $k => $v) {
 				$res = static::cannonize($v);
-				if ($res !== null) {
-					$data[$k] = $res;
-				} else {
-					unset($data[$k]);
-				}
+				$data[$k] = $res;
 			}
 		}
 		if ($data === "null" || $data === "undefined" || $data === "") {
