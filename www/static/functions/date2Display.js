@@ -1,6 +1,11 @@
 /* export date2Display */
 
 let date2Display = (function() {
+	const pad = (what, l) => {
+		const int = ('000' + what);
+		return int.substring(int.length - l, int.length);
+	};
+
 	const Invalid = 'Invalid date';
 	function date2Display(date) {
 
@@ -17,7 +22,7 @@ let date2Display = (function() {
 		if (isNaN(dateObj.getFullYear())) {
 			return Invalid;
 		}
-		return `${dateObj.getDate()}-${dateObj.getMonth() + 1}-${dateObj.getFullYear()}`;
+		return `${pad(dateObj.getDate(), 2)}-${pad(dateObj.getMonth() + 1, 2)}-${pad(dateObj.getFullYear(), 4)}`;
 	}
 
 	date2Display.invalid = Invalid;
