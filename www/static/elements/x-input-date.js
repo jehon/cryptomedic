@@ -1,4 +1,4 @@
-/* global JHElement */
+/* global JHElement, date2Display */
 
 (function () {
 	const element = Symbol('element');
@@ -28,15 +28,34 @@
 		render() {
 			super.render();
 			this._value = cleanUpDate(this._value);
+			// http://jsfiddle.net/g7mvaosL/3421/
 			this.innerHTML = `
 				<style>
-					input {
+					x-input-date > input[type=date] {
+						position: relative;
+						width: 150px; height: 20px;
+						color: white;
 						border-style: none;
+					}
+
+					x-input-date > input[type=date]:before {
+						position: absolute;
+						display: inline-block;
+						color: black;
+						content: attr(data-date);
+						background-color: white;
+						width: 120px;
+						height: 20px;
 					}
 				</style>
 				<input type=date value='${this._value}'>
 			`;
 			this[element] = this.querySelector('input');
+			this[element].addEventListener('change', () => {
+				this[element].setAttribute('data-date', date2Display(this[element].value));
+			});
+			JHElement.fireOn(this[element], 'change');
+
 			this[element].addEventListener('blur', () => this.fire('blur'));
 			this.addEventListener('click', () => {
 				this[element].focus();
@@ -50,6 +69,7 @@
 		set value(val) {
 			this._value = cleanUpDate(val);
 			this[element].value = this._value;
+			JHElement.fireOn(this[element], 'change');
 		}
 
 		get value() {
