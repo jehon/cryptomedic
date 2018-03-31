@@ -12,9 +12,10 @@ use Illuminate\Support\Facades\Auth;
 // See https://github.com/laravel/framework/issues/5276
 
 // TODO: restrict operations to unlocked files
-// TODO: optimistic locking
 class CryptomedicModel extends Model {
 	protected $guarded = array('id');
+	use OptimisticLockingTrait;
+
 
 	public static function getReadOnlyField() {
 		return [ "patient_id", "bill_id", "price_id" ];
