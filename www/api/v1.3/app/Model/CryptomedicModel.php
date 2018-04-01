@@ -17,6 +17,7 @@ class CryptomedicModel extends Model {
 
 	protected $guarded = array('id' );
 
+	// Protected fields in update only (allowed in create)
 	public static function getReadOnlyField() {
 		return [ "patient_id", "bill_id", "price_id" ];
 	}
