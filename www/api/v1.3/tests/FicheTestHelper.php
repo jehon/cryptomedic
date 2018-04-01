@@ -65,16 +65,19 @@ class FicheTestHelper extends RouteReferenceTestCase {
     return false;
   }
 
-  public function doGetFile($patient_id, $type = 'Patient', $id = -1) {
+  public function doGetFile($patient_id, $type = null, $id = false) {
 	if ($id == -1) {
 		$id = $patient_id;
 	}
 	$json = $this->myRunAssertQuery(
 		$this->getNewRequestOptionsBuilder()
-			->setUrl("folder/Patient/6")
+			->setUrl("folder/Patient/" . $patient_id)
 	);
+	if ($type == "null") {
+		return $json;
+	}
 	$i = $this->getRowIndex($json['folder'], $this->model, $id);
-	return $json['folder'][$i];
+	return $json['folder'][$i]['record'];
   }
 
   public function doCreate($data = []) {
