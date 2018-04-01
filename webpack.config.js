@@ -1,3 +1,4 @@
+/* eslint-env node */
 
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 
@@ -23,10 +24,10 @@ module.exports = {
 	},
 	plugins: [
 		new CleanWebpackPlugin([ build ]),
-  		new webpack.DefinePlugin({
-    		APPLICATION_BUILD_TIME: '\'' + released_version + '\''
-  		})
-  	],
+		new webpack.DefinePlugin({
+			APPLICATION_BUILD_TIME: '\'' + released_version + '\''
+		})
+	],
 	module: {
 		loaders: [
 			{ test: /\.css$/, loader: 'style-loader!css-loader' },
