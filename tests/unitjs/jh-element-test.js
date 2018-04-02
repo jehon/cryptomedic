@@ -2,27 +2,6 @@
 /* global webDescribe, JHElement */
 
 describe('jh-element-test', function() {
-	describe('on static function', function() {
-		it('should handle css', function() {
-			const init = window.ShadyDOM;
-			window.ShadyDOM = {
-				inUse: true
-			};
-			expect(JHElement.getCss()).not.toContain('stylesheet');
-
-			window.ShadyDOM.inUse = false;
-			expect(JHElement.getCss()).toContain('stylesheet');
-
-			window.ShadyDOM = null;
-			expect(JHElement.getCss()).toContain('stylesheet');
-
-			delete(window.ShadyDOM);
-			expect(JHElement.getCss()).toContain('stylesheet');
-
-			window.ShadyDOM = init;
-		});
-	});
-
 	// Instanciate a real element to test properties...
 	class JHElementTest extends JHElement {
 		static get properties() {
@@ -76,6 +55,37 @@ describe('jh-element-test', function() {
 		element().connectedCallback();
 		expect(JHElement.prototype.render).toHaveBeenCalledTimes(1);
 		expect(JHElement.prototype.adapt).toHaveBeenCalledTimes(2);
+	});
+
+	fit('should handle css', function() {
+		let jhelement = new JHElement();
+		let element = () => jhelement;
+
+		const init = window.ShadyDOM;
+		window.ShadyDOM = {
+			inUse: true
+		};
+		element().inheritCSS();
+		element().attachShadow({ mode: 'open' });
+		expect(element().shadowRoot.innerHTML).not.toContain('<style ');
+		expect(element().shadowRoot.innerHTML).not.toContain('<link ');
+
+		window.ShadyDOM.inUse = false;
+		element().inheritCSS();
+		expect(element().shadowRoot.innerHTML).toContain('<style ');
+		expect(element().shadowRoot.innerHTML).toContain('<link ');
+
+		window.ShadyDOM = null;
+		element().inheritCSS();
+		expect(element().shadowRoot.innerHTML).toContain('<style ');
+		expect(element().shadowRoot.innerHTML).toContain('<link ');
+
+		delete(window.ShadyDOM);
+		element().inheritCSS();
+		expect(element().shadowRoot.innerHTML).toContain('<style ');
+		expect(element().shadowRoot.innerHTML).toContain('<link ');
+
+		window.ShadyDOM = init;
 	});
 
 	it('should handle attributes by default', function() {

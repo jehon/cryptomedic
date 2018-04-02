@@ -19,10 +19,10 @@
 			this.shadowRoot.innerHTML = `
 			<slot></slot>
 			<br/>
-			${JHElement.getCss()}
 			<div class='container-fluid'>
 			  	<div class='row'></div>
 			</div>`;
+			this.inheritCSS();
 			this[messages] = this.shadowRoot.querySelector('.row');
 		}
 

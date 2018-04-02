@@ -17,7 +17,6 @@
 			this.attachShadow({ mode: 'open' });
 			this.shadowRoot.innerHTML = `
 				<span>
-					${JHElement.getCss()}
 					<span id='user'></span>
 					<img id='logout' style='height: 100%' src="/static/img/logout.gif" />
 					<x-requestor></x-requestor>
@@ -36,6 +35,7 @@
 					</x-overlay>
 				</span>
 			`;
+			this.inheritCSS();
 			this[user]      = this.shadowRoot.querySelector('#user');
 			this[logout]    = this.shadowRoot.querySelector('#logout');
 			this[overlay]   = this.shadowRoot.querySelector('x-overlay');

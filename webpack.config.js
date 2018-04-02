@@ -13,7 +13,6 @@ const released_version = (new Date()).toISOString();
 
 fse.emptyDirSync(__dirname + '/www/build');
 fs.writeFileSync(__dirname + '/www/release_version.txt', released_version);
-fse.copySync(__dirname + '/node_modules/bootstrap/dist/', __dirname + '/www/build/bootstrap');
 
 module.exports = {
 	entry: { 

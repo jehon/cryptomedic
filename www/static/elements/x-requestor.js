@@ -10,7 +10,6 @@ const XRequestor = (function() {
 			super();
 			this.attachShadow({ mode: 'open' });
 			this.shadowRoot.innerHTML = `
-            ${ JHElement.getCss() }
             <span>
                 <x-overlay closable z-index=20 >
                     <h1 id='errorMsg'></h1>
@@ -21,6 +20,7 @@ const XRequestor = (function() {
                     <slot></slot>
                 </x-waiting>
             </span>`;
+			this.inheritCSS();
 
 			this[waiting]      = this.shadowRoot.querySelector('x-waiting');
 			this[error]        = this.shadowRoot.querySelector('x-overlay');
