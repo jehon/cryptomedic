@@ -58,13 +58,6 @@ let JHElement = (function() {
 			return '';
 		}
 
-		static getCss() {
-			if ((typeof(window.ShadyDOM) == 'object') && (window.ShadyDOM != null) && window.ShadyDOM.inUse) {
-				return '';
-			}
-			return '<link rel="stylesheet" type="text/css" href="/build/bootstrap/css/bootstrap.min.css">';
-		}
-
 		constructor() {
 			super();
 			this[initialized] = false;
@@ -85,6 +78,16 @@ let JHElement = (function() {
 
 		isInitialized() {
 			return this[initialized];
+		}
+
+		inheritCSS() {
+			if ((typeof(window.ShadyDOM) == 'object') && (window.ShadyDOM != null) && window.ShadyDOM.inUse) {
+				return ;
+			}
+			document.querySelectorAll('style, link').forEach(el => {
+				const node = el.cloneNode(true);
+				this.shadowRoot.appendChild(node);
+			});
 		}
 
 		attributeChangedCallback(attributeName, oldValue, newValue) {
