@@ -1,6 +1,7 @@
 /* eslint-env node */
 
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const webpack = require('webpack');
 const path = require('path');
@@ -20,12 +21,17 @@ module.exports = {
 	},
 	output: {
 		path: www,
-		filename: `${build}/[name].js`
+		filename: `${build}/[name]-[hash].js`
 	},
 	plugins: [
 		new CleanWebpackPlugin([ build ]),
 		new webpack.DefinePlugin({
 			APPLICATION_BUILD_TIME: '\'' + released_version + '\''
+		}),
+		new HtmlWebpackPlugin({
+			template: www + '/static/index-original.html',
+			filename: www + '/static/index.html',
+			inject: false
 		})
 	],
 	module: {
