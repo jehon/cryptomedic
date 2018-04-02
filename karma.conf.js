@@ -26,7 +26,7 @@ module.exports = function(config) {
 
 		files : [
 			'../node_modules/karma-read-json/karma-read-json.js',
-			'build/app.js',
+			'build/app-*.js',
 			{ pattern: 'build/**',                         included: false, served: true, watched: true },
 			{ pattern: 'api/*/tests/references/*.json',    included: false },
 			{ pattern: 'static/elements/resources/*',      included: false, served: true, watched: true },
