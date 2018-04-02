@@ -22,7 +22,6 @@
   },
   "devDependencies": {
     "chromedriver": "latest",
-    "clean-webpack-plugin": "^0.1.17",
     "css-loader": "^0.28.7",
     "eslint": "^4.19.0",
     "file-loader": "^1.1.6",
