@@ -47,10 +47,6 @@ window.he               = he;
 window.html2canvas      = html2canvas;
 window.uuid             = uuid;
 
-window.application_version = APPLICATION_BUILD_TIME;
-console.log("Version: ", window.application_version);
-
-
 /* For fetchfull v2 inline */
 import objectPath       from 'object-path';
 window.objectPath = objectPath;

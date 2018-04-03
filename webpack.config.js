@@ -1,14 +1,14 @@
 /* eslint-env node */
 
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 const fs = require('fs');
 const fse = require('fs-extra');
+
 const www = path.resolve(__dirname, 'www');
 const build = 'build';
-
 const released_version = (new Date()).toISOString();
 
 fse.emptyDirSync(__dirname + '/www/build');
@@ -21,17 +21,18 @@ module.exports = {
 	},
 	output: {
 		path: www,
-		filename: `${build}/[name]-[hash].js`
+		filename: `${build}/[name]-[chunkhash].js`
 	},
 	plugins: [
-		new webpack.DefinePlugin({
-			APPLICATION_BUILD_TIME: '\'' + released_version + '\''
-		}),
 		new HtmlWebpackPlugin({
 			template: www + '/static/index-original.html',
 			filename: www + '/static/index.html',
 			inject: false
-		})
+		}),
+		// new webpack.optimize.CommonsChunkPlugin({
+		// 	name: 'manifest'
+		// }),
+		new webpack.HashedModuleIdsPlugin()
 	],
 	module: {
 		loaders: [
