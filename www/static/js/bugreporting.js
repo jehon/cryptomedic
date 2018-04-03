@@ -1,6 +1,5 @@
-'use strict';
-// http://stackoverflow.com/a/16156043/1954789
-
+/* global store */
+/* global Raven, html2canvas */
 /*
   Raven:
     https://docs.sentry.io/clients/javascript/config/
@@ -9,15 +8,15 @@
 
 if (!('computerUUID' in localStorage)) {
 	localStorage.computerUUID = window.uuid();
-	console.log('Generated computer UUID: ', localStorage.computerUUID);
+	console.info('Generated computer UUID: ', localStorage.computerUUID);
 }
 
 window.bug_reporting = (function() {
 	if (window.location.host.substr(0, 'localhost'.length) != 'localhost') {
-		console.log('Capturing console.log/info/error and exceptions');
+		console.info('Capturing console.log/info/error and exceptions');
 		if (typeof(Raven) != 'undefined') {
 			Raven.config('https://7dece2b0b38e413baca8b81e17929eb2@sentry.io/270948', {
-				release: window.application_version
+				// release: window.application_version
 			}).install();
 
 			store.subscribe(() => {
