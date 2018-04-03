@@ -1,23 +1,14 @@
-<IfModule mod_expires.c>
-	ExpiresActive 	  On
-	ExpiresByType	    img/*			              "access plus 1 month"
-  ExpiresByType     image/*                 "access plus 1 month"
-	ExpiresByType	    css/*			              "access plus 1 week"
-	#ExpiresByType     js/*			              "access plus 1 week"
-	ExpiresByType     text/cache-manifest			A0
-  <FilesMatch "bundle.*\.js">
-    ExpiresDefault  "access plus 1 month"
-  </FilesMatch>
-  ExpiresDefault    A0
-</IfModule>
+AddType text/css .css
+AddType text/javascript .js
+AddType image/gif .gif
+AddType image/png .png
+AddType image/jpg .jpg
+AddType image/jpg .jpeg
 
-RewriteEngine On
-
-########### Map offline to build ###########
-#RewriteRule         online/(.*)            static/$1
-
-########### Hybride app and build ##########
-#RewriteCond         %{REQUEST_URI}      build/
-#RewriteCond         %{DOCUMENT_ROOT}/%{REQUEST_URI} !-d
-#RewriteCond         %{DOCUMENT_ROOT}/%{REQUEST_URI} !-f
-#RewriteRule         build/(.*)          app/$1  [L]
+ExpiresActive 	  On
+ExpiresDefault    "access plus 1 hour"
+ExpiresByType	  text/css						"access plus 1 week"
+ExpiresByType	  text/javascript				"access plus 1 hour"
+ExpiresByType     image/gif   					"access plus 1 year"
+ExpiresByType     image/png   					"access plus 1 year"
+ExpiresByType     image/jpg   					"access plus 1 year"
