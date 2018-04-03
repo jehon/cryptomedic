@@ -1,9 +1,7 @@
-ExpiresActive On
-ExpiresDefault "access plus 1 month"
+<IfModule mod_expires.c>
+	ExpiresActive On
 
-# They seems to be a default value hidden somewhere
-# https://stackoverflow.com/a/12925966/1954789
-ExpiresByType text/js "access plus 1 month"
-ExpiresByType text/javascript "access plus 1 month"
-ExpiresByType application/javascript "access plus 1 month"
-ExpiresByType application/x-javascript "access plus 1 month" 
+	ExpiresDefault "access plus 1 month"
+	ExpiresByType 	text/javascript		"access plus 1 month"
+	ExpiresByType	text/css			"access plus 1 month"
+</IfModule>
