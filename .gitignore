@@ -23,6 +23,3 @@ commit.msg
 /.project
 /.settings
 /.DS_Store
-
-www/bundle.js
-www/release_version.txt

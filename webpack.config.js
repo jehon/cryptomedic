@@ -13,6 +13,7 @@ const released_version = (new Date()).toISOString();
 
 fse.emptyDirSync(__dirname + '/www/build');
 fs.writeFileSync(__dirname + '/www/release_version.txt', released_version);
+fs.writeFileSync(__dirname + '/www/release_version.js', `window.application_version = '${released_version}';`);
 fse.copy(__dirname + '/refs/build.htaccess', __dirname + '/www/build/.htaccess');
 
 module.exports = {
