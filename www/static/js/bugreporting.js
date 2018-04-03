@@ -16,7 +16,7 @@ window.bug_reporting = (function() {
 		console.info('Capturing console.log/info/error and exceptions');
 		if (typeof(Raven) != 'undefined') {
 			Raven.config('https://7dece2b0b38e413baca8b81e17929eb2@sentry.io/270948', {
-				// release: window.application_version
+				release: window.application_version
 			}).install();
 
 			store.subscribe(() => {
