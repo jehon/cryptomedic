@@ -12,3 +12,4 @@ ExpiresByType	  text/javascript				"access plus 1 hour"
 ExpiresByType     image/gif   					"access plus 1 year"
 ExpiresByType     image/png   					"access plus 1 year"
 ExpiresByType     image/jpg   					"access plus 1 year"
+ExpiresByType     application/json              A0
