@@ -78,8 +78,12 @@ wget www.cryptomedic.org/maintenance/md5sum.php -O $TMP/md5sum-remote.txt
 if [ "$1" == "commit" ]; then
   echo "*** Commiting ***"
   diff -u $TMP/md5sum-remote.txt $TMP/md5sum-local.txt | build_up | lftp
-  git tag "$TAG"
-  git push --tags
+  if [ `git tag | grep "$TAG"` = "" ]; then
+  	git tag "$TAG"
+  	git push --tags
+  else
+	echo "TAG ALREADY EXISTS: $TAG"
+  fi
 else
   # We will use the log to see the changes
   diff -u $TMP/md5sum-remote.txt $TMP/md5sum-local.txt | build_up > /dev/null
