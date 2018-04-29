@@ -14,8 +14,7 @@ DBROOTUSER=root
 
 # Give it to any sub-scripts
 export PRJ_DIR
-export MYSQL="mysql --quick --host 127.0.0.1 --port=5556 --user=$DBROOTUSER "
-export MYSQL_PWD="$DBROOTPASS"
+export MYSQL="docker-compose exec -T -e MYSQL_PWD=$DBROOTPASS mysql mysql"
 
 # Run project custom files
 run-parts --exit-on-error --report $PRJ_DIR/bin/dev-reset.d
