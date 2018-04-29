@@ -1,0 +1,3 @@
+#!/bin/bash
+
+docker-compose exec server /app/bin/dev-reset.d/10_cleaning_folders.docker.sh
