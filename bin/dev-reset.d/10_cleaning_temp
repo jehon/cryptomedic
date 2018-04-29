@@ -2,9 +2,15 @@
 
 set -e
 
+# Clean up .../target
 mkdir -p "$PRJ_DIR/target"
 sudo chown jehon.jehon -R $PRJ_DIR/target
 sudo find "$PRJ_DIR/target/" -mindepth 1 ! -name '.gitkeep' -delete
+
+# Clean up logs
 sudo find . -name "*.log" -delete
+
+# Clean up builded artifacts
 rm -fv "$PRJ_DIR/www/build/*"
 rm -fv "$PRJ_DIR/www/static/index.html"
+
