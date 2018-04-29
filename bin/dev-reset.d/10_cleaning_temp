@@ -14,3 +14,6 @@ sudo find . -name "*.log" -delete
 rm -fv "$PRJ_DIR/www/build/*"
 rm -fv "$PRJ_DIR/www/static/index.html"
 
+# Clean up .../live
+sudo find "$PRJ_DIR/live/" -mindepth 1 ! -name '.gitkeep' -type f -delete
+sudo find "$PRJ_DIR/live/" -mindepth 1 ! -name '.gitkeep' -empty -type d -delete
