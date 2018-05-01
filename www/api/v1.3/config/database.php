@@ -61,6 +61,9 @@ return [
 			'database'  => $myconfig["database"]["schema"],
 			'username'  => $myconfig["database"]["username"],
 			'password'  => $myconfig["database"]["password"],
+			
+			// https://laracasts.com/discuss/channels/laravel/laravel-existing-mysql-db
+			'modes' => [],
 
     	    // http://laravel.io/forum/10-16-2015-set-default-mysql-timezone-on-connect
 	        'timezone'  => '+00:00',
