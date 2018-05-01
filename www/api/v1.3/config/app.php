@@ -3,7 +3,6 @@
 global $myconfig;
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Application Name
@@ -108,24 +107,6 @@ return [
     'key' => $myconfig['laravel']['key'],
 
     'cipher' => 'AES-256-CBC',
-
-    /*
-    |--------------------------------------------------------------------------
-    | Logging Configuration
-    |--------------------------------------------------------------------------
-    |
-    | Here you may configure the log settings for your application. Out of
-    | the box, Laravel uses the Monolog PHP logging library. This gives
-    | you a variety of powerful log handlers / formatters to utilize.
-    |
-    | Available Settings: "single", "daily", "syslog", "errorlog"
-    |
-    */
-
-    // In debug mode, we are in docker and we don't log into files
-    'log' => ($myconfig['debug'] ? 'errorlog' : 'single'),
-
-    'log_level' => env('APP_LOG_LEVEL', 'debug'),
 
     /*
     |--------------------------------------------------------------------------
