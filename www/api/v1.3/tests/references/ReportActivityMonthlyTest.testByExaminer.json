@@ -135,19 +135,10 @@
     "totals": {
         "bid": 39,
         "pid": 15,
-        "Date": 10071,
-        "ExaminerName": 0,
-        "Center": 0,
-        "patient_reference": 10070,
-        "patient_name": 0,
         "yearofbirth": 10035,
-        "Sex": 0,
         "sl_familySalary": 54000,
         "sl_numberOfHouseholdMembers": 39,
         "Sociallevel": 12,
-        "Pathology": 0,
-        "act": 0,
-        "treatment": 0,
         "price_consult": 300,
         "price_medecine": 0,
         "price_workshop": 0,
@@ -155,8 +146,8 @@
         "price_other": 800,
         "total_real": 1100,
         "total_asked": 440,
-        "total_paid": 569,
         "oldPatient": 3,
-        "complementary": 2
+        "complementary": 2,
+        "total_paid": 569
     }
 }
