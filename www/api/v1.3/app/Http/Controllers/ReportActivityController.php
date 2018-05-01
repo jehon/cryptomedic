@@ -83,9 +83,12 @@ class ReportActivityController extends ReportController {
     $this->result['totals'] = array();
     foreach($this->result['list'] as $e) {
       foreach($e as $k => $v) {
-        if (!array_key_exists($k, $this->result['totals'])) {
+		if (!is_numeric($v)) {
+			continue;
+		}
+		if (!array_key_exists($k, $this->result['totals'])) {
           $this->result['totals'][$k] = 0;
-        }
+		}
         $this->result['totals'][$k] += $v;
       }
     }
