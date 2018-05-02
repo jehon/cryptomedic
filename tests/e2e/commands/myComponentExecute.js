@@ -11,7 +11,6 @@ function executeInShadowDom(selector, fn, ...args) {
 			currentElement = currentElement.shadowRoot;
 		}
 		if (selectors[i] == '') {
-			console.log('returning current element shadow Root');
 			return currentElement.shadowRoot;
 		}
 		currentElement = currentElement.querySelector(selectors[i]);
