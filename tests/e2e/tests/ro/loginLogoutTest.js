@@ -10,9 +10,9 @@ module.exports = {
 	},
 
 	'authenticate_multiple': function(client) {
-	    client.page.cryptomedic().authenticate('readonly');
+		client.page.cryptomedic().authenticate('readonly');
 		client.myComponentExecute('x-login-status >>> #logout', function() { JHElement.fireOn(this, 'click'); });
-	    client.page.cryptomedic().authenticate('readonly');
+		client.page.cryptomedic().authenticate('readonly');
 		client.end();
 	},
 };
