@@ -1,3 +1,4 @@
+/* global store,JHElement, API_VERSION, FetchFull */
 
 const XRequestor = (function() {
 	const error        = Symbol('error');
