@@ -1,7 +1,18 @@
+# https://hub.docker.com/_/php/
 
-# http://dockerfile.readthedocs.io/en/latest/content/DockerImages/dockerfiles/php-apache.html#
-FROM webdevops/php-apache
+FROM php:7.1-apache
 
-RUN apt update && apt install -y php-xdebug ssmtp
+# COPY config/smtp.ini /etc/apache2/conf-enabled
+# RUN apt update && apt install -y php-xdebug ssmtp
+
+RUN a2enmod expires rewrite
+
+RUN docker-php-ext-install pdo_mysql
+
+ENV APACHE_DOCUMENT_ROOT /app/www
+RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
+RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
+
+RUN apt update && apt --yes install ssmtp
 
 COPY conf/ssmtp.conf /etc/ssmtp/ssmtp.conf
