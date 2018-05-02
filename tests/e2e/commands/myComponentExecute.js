@@ -20,6 +20,7 @@ function executeInShadowDom(selector, fn, ...args) {
 		}
 	}
 
+	let val = '';
 	if ((fn.substring(0, 8) == 'function') || (fn[0] == '(')) {
 		// https://stackoverflow.com/a/1271572/1954789
 		val = (eval('[' + fn + ']')[0]).apply(currentElement, args);
