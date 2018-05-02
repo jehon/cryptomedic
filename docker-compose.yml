@@ -25,13 +25,12 @@ services:
             - mysql
 
     server:
-        # http://dockerfile.readthedocs.io/en/latest/content/DockerImages/dockerfiles/php-apache.html#
         build:
             context: .
             dockerfile: conf/docker-server-file
         environment:
             PRJ_DIR: /app
-            WEB_DOCUMENT_ROOT: /app/www
+            APACHE_DOCUMENT_ROOT: /app/www
         ports:
             - 5555:80
         depends_on:
