@@ -66,24 +66,31 @@
 				this[logout].removeAttribute('hidden');
 				this[user].innerHTML = this.username;
 				this[overlay].free();
+				this.setAttribute('login', this.username);
 			} else {
 				this[logout].setAttribute('hidden', 'hidden');
 				this[user].innerHTML = '';
 				this[overlay].block();
+				this.removeAttribute('login');
 			}
 		}
 
 		doLoginCheck() {
 			// 401: not authenticated
-
+			this.setAttribute('requesting', 'doLoginCheck');
 			this[requestor].request({ url: 'auth/settings' })
 				.then(response => {
+					this.removeAttribute('requesting');
 					if (response.ok) {
 						this[overlay].free();
 						store.dispatch({ type: ACT_USER_LOGIN, payload: response.asJson });
 						return ;
 					}
 					store.dispatch({ type: ACT_USER_LOGOUT });
+				})
+				.catch(e => {
+					this.removeAttribute('requesting');
+					throw e;
 				});
 		}
 
@@ -97,8 +104,10 @@
 			const data = this[form].rebuildData();
 			data.username = data.username.toLowerCase();
 
+			this.setAttribute('requesting', 'doLogin');
 			this[requestor].requestAndFilter({ url: 'auth/mylogin', method: 'POST', data }, [ 404 ])
 				.then((response) => {
+					this.removeAttribute('requesting');
 					if (response.ok) {
 						this[overlay].free();
 						store.dispatch({ type: ACT_USER_LOGIN, payload: response.asJson });
@@ -107,6 +116,10 @@
 					// We have a 404 (filtered)
 					store.dispatch({ type: ACT_USER_LOGOUT });
 					this[form].showMessages([ 'Invalid credentials' ]);
+				})
+				.catch(e => {
+					this.removeAttribute('requesting');
+					throw e;
 				});
 		}
 
