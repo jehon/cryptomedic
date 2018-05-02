@@ -21,7 +21,7 @@ module.exports = (function() {
 			client.pause(10);
 			client.myComponentExecute('x-login-status >>> button#login', function() { JHElement.fireOn(this, 'click'); });
 
-			client.pause(100);
+			client.waitForElementNotPresent('x-login-status[requesting]');
 
 			return client;
 		};
@@ -30,6 +30,8 @@ module.exports = (function() {
 		// object in order to be able to be queued
 		this.authenticate = function(login) {
 			this.authenticate_fillIn(login);
+			client.waitForElementPresent('x-login-status[login]');
+			client.waitForElementPresent(`x-login-status[login=${login}]`);
 			client.myComponentExecute('x-login-status >>> #user', function() { return this.innerText; }, [], 
 				function(result) { client.assert.equal(result, login); }
 			);
