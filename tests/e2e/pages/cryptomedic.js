@@ -1,150 +1,143 @@
 'use strict';
 
-module.exports = (function() {
-	// Static variables:
-	var authenticated = false;
+/* global JHElement, module */
 
-	// Public module:
-	return function(client) {
+var authenticated = false;
 
-		this.authenticate_fillIn = function(login) {
+module.exports = {
+	elements: {},
+	commands: [{
+		authenticate_fillIn: function(login) {
 			if (!login) {
 				throw new Error('Cryptomedic: Authenticate expect parameter 1 to be the login');
 			}
 
 			var password = 'this will not be read by the server in tests';
-			client.init();
-			client.waitForElementVisible('body');
-			client.assert.title('Cryptomedic');
-			client.myComponentExecute('x-login-status >>> #username', function(v) { this.value = v; }, [ login ]);
-			client.myComponentExecute('x-login-status >>> #password', function(v) { this.value = v; }, [ password ]);
-			client.pause(10);
-			client.myComponentExecute('x-login-status >>> button#login', function() { JHElement.fireOn(this, 'click'); });
+			this.api.init();
+			this.waitForElementVisible('body');
+			this.assert.title('Cryptomedic');
+			this.myComponentExecute('x-login-status >>> #username', function(v) { this.value = v; }, [ login ]);
+			this.myComponentExecute('x-login-status >>> #password', function(v) { this.value = v; }, [ password ]);
+			this.api.pause(10);
+			this.myComponentExecute('x-login-status >>> button#login', function() { JHElement.fireOn(this, 'click'); });
 
-			client.waitForElementNotPresent('x-login-status[requesting]');
+			this.waitForElementNotPresent('x-login-status[requesting]');
 
-			return client;
-		};
+			return this;
+		},
 
 		// Each action is written as a separate method which must return the browser
 		// object in order to be able to be queued
-		this.authenticate = function(login) {
+		authenticate: function(login) {
 			this.authenticate_fillIn(login);
-			client.waitForElementPresent('x-login-status[login]');
-			client.waitForElementPresent(`x-login-status[login=${login}]`);
-			client.myComponentExecute('x-login-status >>> #user', function() { return this.innerText; }, [], 
-				function(result) { client.assert.equal(result, login); }
+			this.waitForElementPresent('x-login-status[login]');
+			this.waitForElementPresent(`x-login-status[login=${login}]`);
+			this.myComponentExecute('x-login-status >>> #user', function() { return this.innerText; }, [], 
+				(result) => { this.assert.equal(result, login); }
 			);
 			authenticated = true;
-			return client;
-		};
+			return this;
+		},
 
-		this.myWaitFetch = function() {
-			client
-				.pause(10)
-				.waitForElementNotPresent('cryptomedic-data-service[running]')
-				.pause(10);
+		myWaitFetch: function() {
+			this.api.pause(10);
+			this.waitForElementNotPresent('cryptomedic-data-service[running]');
+			this.api.pause(10);
 
-			return client;
-		};
+			return this;
+		},
 
-		this.report = function(reportName, params) {
+		report: function(reportName, params) {
 			if (!authenticated) {
 				throw new Error('Cryptomedic: You should be authenticated to use report function');
 			}
-			client
-				.myClick('#menu_more')
-				.waitForElementVisible('#menu_reports')
-				.myClick('#menu_reports')
-				.waitForElementVisible('#launch_report_' + reportName)
-				.myClick('#launch_report_' + reportName)
-			;
+			
+			this.myClick('#menu_more');
+			this.waitForElementVisible('#menu_reports');
+			this.myClick('#menu_reports');
+			this.waitForElementVisible('#launch_report_' + reportName);
+			this.myClick('#launch_report_' + reportName);
 			for(var k in params) {
 				const el = '[name=' + k + ']';
 				if (k == 'period') {
-					client.myRadio(el, params['period']);
+					this.myRadio(el, params['period']);
 				} else {
-					client.waitForElementVisible(el, '@@ Waiting for parameter ' + k + ' => ' + params[k] + ': ' + el);
-					client.clearValue(el);
+					this.waitForElementVisible(el, '@@ Waiting for parameter ' + k + ' => ' + params[k] + ': ' + el);
+					this.clearValue(el);
 					if (params[k]) {
 						const p = {};
 						p[el] = params[k];
-						client.myFormFillIn('#reportParamsForm', p);
+						this.myFormFillIn('#reportParamsForm', p);
 					}
 				}
 			}
-			client
-				.pause(100)
-				.waitForElementVisible('#report_refresh_button')
-				.myClick('#report_refresh_button')
-			// .waitForElementVisible('.loading')
-				.waitForElementVisible('#report_table')
-				.waitForElementVisible('#report_table table');
+			this.api.pause(100);
+			this.waitForElementVisible('#report_refresh_button');
+			this.myClick('#report_refresh_button');
+			this.waitForElementVisible('#report_table');
+			this.waitForElementVisible('#report_table table');
 
-			return client;
-		};
+			return this;
+		},
 
-		this.goPatient = function(entryyear, entryorder) {
+		goPatient: function(entryyear, entryorder) {
 			if (!authenticated) {
 				throw new Error('Cryptomedic: You should be authenticated to use report function');
 			}
 			// this.sync();
-			client
-				.myClick('#menu_home')
-				.waitForElementVisible('input[ng-model=\'entryyear\']')
-				.clearValue('input[ng-model=\'entryyear\']')
-				.setValue('input[ng-model=\'entryyear\']', entryyear)
-				.clearValue('input[ng-model=\'entryorder\']')
-				.setValue('input[ng-model=\'entryorder\']', entryorder)
-				.waitForElementVisible('[ng-click=\'checkReference()\']')
-				.myClick('[ng-click=\'checkReference()\']')
-				.waitForElementVisible('#Patient_entryyear')
-				.assert.containsText('#Patient_entryyear', entryyear)
-				.waitForElementVisible('#Patient_entryorder')
-				.assert.containsText('#Patient_entryorder', entryorder)
-				.pause(500)
-			;
+			this.myClick('#menu_home');
+			this.waitForElementVisible('input[ng-model=\'entryyear\']');
+			this.clearValue('input[ng-model=\'entryyear\']');
+			this.setValue('input[ng-model=\'entryyear\']', entryyear);
+			this.clearValue('input[ng-model=\'entryorder\']');
+			this.setValue('input[ng-model=\'entryorder\']', entryorder);
+			this.waitForElementVisible('[ng-click=\'checkReference()\']');
+			this.myClick('[ng-click=\'checkReference()\']');
+			this.waitForElementVisible('#Patient_entryyear');
+			this.assert.containsText('#Patient_entryyear', entryyear);
+			this.waitForElementVisible('#Patient_entryorder');
+			this.assert.containsText('#Patient_entryorder', entryorder);
+			this.api.pause(500);
 
+			this.myWaitFetch();
+
+			return this;
+		},
+
+		selectFile: function(type, id) {
 			this
-				.myWaitFetch();
-
-			return client;
-		};
-
-		this.selectFile = function(type, id) {
-			client
 				.myClick('#folder_menu_' + type + '_' + id)
 				.waitForElementVisible('#folder_menu_' + type + '_' + id);
-			return client;
-		};
+			return this;
+		},
 
-		this.tableIterator = function(tableSelector, row = 1, col = 1, section = 'tbody') {
-			return {
-				col: function(i = 1) { col = i; return this; },
-				row: function(i = 1) { row = i; return this; },
-				section: function(i = 'tbody') { section = i; return this; },
-				nextCol: function(i = 1) { col = col + i; return this; },
-				nextRow: function(i = 1) { row = row + i; return this; },
-				toString: function() {
+		tableIterator: function(tableSelector, row = 1, col = 1, section = 'tbody') {
+			const iterator = {
+				col: (i = 1) => { col = i; return iterator; },
+				row: (i = 1) => { row = i; return iterator; },
+				section: (i = 'tbody') => { section = i; return iterator; },
+				nextCol: (i = 1) => { col = col + i; return iterator; },
+				nextRow: (i = 1) => { row = row + i; return iterator; },
+				toString: () => {
 					return tableSelector
             + ' ' + section
             + ' > ' + 'tr'                               + ':' + (row === 'last' ? 'last-child' : 'nth-child(' + row + ')')
             + ' > ' + (section == 'tbody' ? 'td' : 'th') + ':' + (col === 'last' ? 'last-child' : 'nth-child(' + col + ')');
 				},
-				assert: function(text = false, selector = '') {
-					client
-						.waitForElementVisible(tableSelector)
-						.waitForElementVisible(this.toString() + ' ' + selector);
+				assert: (text = false, selector = '') => {
+					this.waitForElementVisible(tableSelector);
+					this.waitForElementVisible(iterator.toString() + ' ' + selector);
 					if (text) {
-						client
-							.assert.containsText(this.toString(), text);
+						this
+							.assert.containsText(iterator.toString(), text);
 					}
-					return this;
+					return iterator;
 				},
-				endTable: function() {
-					return client;
+				endTable: () => {
+					return iterator;
 				}
 			};
-		};
-	};
-})();
+			return iterator;
+		}
+	}]
+};
