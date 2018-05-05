@@ -2,10 +2,9 @@ module.exports = {
 	'tags': [ 'readonly', 'reports' ],
 	'reportMonthlyActivity': function(client) {
 		var report_table = client.page.cryptomedic().tableIterator('#report_table table');
-		client
-			.page.cryptomedic().authenticate('readonly')
-			.page.cryptomedic().report('activity', { 'period': 'month', 'month': '2014-05' })
-		;
+		client.page.cryptomedic().authenticate('readonly');
+		client.page.cryptomedic().report('activity', { 'period': 'month', 'month': '2014-05' });
+
 		report_table.assert('1')
 			.nextCol().assert('2014-05')
 			.nextCol().assert('Ershad')
@@ -53,10 +52,9 @@ module.exports = {
 
 	'reportDailyActivity': function(client) {
 		var report_table = client.page.cryptomedic().tableIterator('#report_table table');
-		client
-			.page.cryptomedic().authenticate('readonly')
-			.page.cryptomedic().report('activity', { 'period': 'day', 'day': '2014-05-20' })
-		;
+		client.page.cryptomedic().authenticate('readonly');
+		client.page.cryptomedic().report('activity', { 'period': 'day', 'day': '2014-05-20' });
+
 		report_table.assert('1')
 			.nextCol().assert('2014-05-20')
 			.nextCol().assert('Ershad')
@@ -92,7 +90,6 @@ module.exports = {
 			.row('last').col(17).assert('200')
 			.row('last').col('last').assert('569')
 		;
-		client
-			.end();
+		client.end();
 	}
 };

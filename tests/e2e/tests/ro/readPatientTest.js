@@ -1,79 +1,74 @@
 module.exports = {
 	'readPatient2000': function(client) {
-		client
-			.page.cryptomedic().authenticate('readonly')
-			.page.cryptomedic().goPatient(2000, 1)
-			.assert.myAssertHashIs('#/folder/1')
-			.assert.containsText('#Patient_Name', 'rezaul islam')
-			.assert.containsText('#Patient_Sex', 'Male')
-			.assert.containsText('#Patient_District', 'Chittagong')
-			.assert.containsText('#Patient_Pathology', 'ClubFoot')
-			.assert.elementNotPresent('#button_edit')
+		client.page.cryptomedic().authenticate('readonly');
+		client.page.cryptomedic().goPatient(2000, 1);
+		client.assert.myAssertHashIs('#/folder/1');
+		client.assert.containsText('#Patient_Name', 'rezaul islam');
+		client.assert.containsText('#Patient_Sex', 'Male');
+		client.assert.containsText('#Patient_District', 'Chittagong');
+		client.assert.containsText('#Patient_Pathology', 'ClubFoot');
+		client.assert.elementNotPresent('#button_edit');
 
 		// Nonrickect Consult
-			.page.cryptomedic().selectFile('OtherConsult', 1)
-			.assert.containsText('#Date', '2007-01-10')
-			.assert.containsText('#ExaminerName', 'Ershad')
+		client.page.cryptomedic().selectFile('OtherConsult', 1);
+		client.assert.containsText('#Date', '2007-01-10');
+		client.assert.containsText('#ExaminerName', 'Ershad');
 
-			.assert.containsText('#Patient_entryyear', '2000')
-			.assert.containsText('#Patient_entryorder', '1')
+		client.assert.containsText('#Patient_entryyear', '2000');
+		client.assert.containsText('#Patient_entryorder', '1');
 
-			.assert.containsText('#ds_weight', '0.0 ds')
-			.assert.containsText('#ds_height', '0.0 ds')
+		client.assert.containsText('#ds_weight', '0.0 ds');
+		client.assert.containsText('#ds_height', '0.0 ds');
 
-			.assert.containsText('#wh', '0.22')
+		client.assert.containsText('#wh', '0.22');
 		// TODO: .assert.containsText("#ds_wh", "0.00 ds")
-			.assert.containsText('#bmi', '16.15')
-			.assert.containsText('#ds_bmi', '0.0 ds')
-			.assert.elementNotPresent('#button_edit')
+		client.assert.containsText('#bmi', '16.15');
+		client.assert.containsText('#ds_bmi', '0.0 ds');
+		client.assert.elementNotPresent('#button_edit');
 
-			.page.cryptomedic().selectFile('Picture', 2)
-			.assert.containsText('#Picture_Date', '2014-11-04')
-			.assert.containsText('#Picture_file', '10_2014-11-06_15-32-45.JPG')
-			.assert.containsText('#Patient_entryyear', '2000')
-			.assert.containsText('#Patient_entryorder', '1')
-			.assert.elementNotPresent('#button_edit')
+		client.page.cryptomedic().selectFile('Picture', 2);
+		client.assert.containsText('#Picture_Date', '2014-11-04');
+		client.assert.containsText('#Picture_file', '10_2014-11-06_15-32-45.JPG');
+		client.assert.containsText('#Patient_entryyear', '2000');
+		client.assert.containsText('#Patient_entryorder', '1');
+		client.assert.elementNotPresent('#button_edit');
 
-			.page.cryptomedic().selectFile('Bill', 1)
-			.assert.elementNotPresent('#button_edit')
+		client.page.cryptomedic().selectFile('Bill', 1);
+		client.assert.elementNotPresent('#button_edit');
 		// TODO: check bill
-		;
 	},
 	readPatient5: function(client) {
-		client
-			.page.cryptomedic().goPatient(2014, 105)
-			.assert.containsText('#Patient_Upazilla', 'Ukhia')
-			.assert.containsText('#Patient_Union_', 'Jalia palong')
-			.assert.containsText('#Patient_Telephone', '1813247984')
+		client.page.cryptomedic().goPatient(2014, 105);
+		client.assert.containsText('#Patient_Upazilla', 'Ukhia');
+		client.assert.containsText('#Patient_Union_', 'Jalia palong');
+		client.assert.containsText('#Patient_Telephone', '1813247984');
 
-			.page.cryptomedic().selectFile('ClubFoot', 1)
-			.waitForElementVisible('#ageAtConsultationTime')
-			.assert.containsText('#ageAtConsultationTime', '2y0m')
-			.assert.containsText('#ClubFoot_Treatment', 'DB splint')
+		client.page.cryptomedic().selectFile('ClubFoot', 1);
+		client.waitForElementVisible('#ageAtConsultationTime');
+		client.assert.containsText('#ageAtConsultationTime', '2y0m');
+		client.assert.containsText('#ClubFoot_Treatment', 'DB splint');
 		// TODO: adapt the data and check them
-			.assert.elementNotPresent('#button_edit')
+		client.assert.elementNotPresent('#button_edit');
 
-			.page.cryptomedic().goPatient(2001, 1)
-			.page.cryptomedic().selectFile('RicketConsult', 3)
+		client.page.cryptomedic().goPatient(2001, 1);
+		client.page.cryptomedic().selectFile('RicketConsult', 3);
 		// TODO: adapt the data and check them
-			.assert.elementNotPresent('#button_edit')
+		client.assert.elementNotPresent('#button_edit');
 
-			.end();
+		client.end();
 	},
 
 	readPatient3: function(client) {
-		client
-			.page.cryptomedic().authenticate('readonly')
-			.page.cryptomedic().goPatient(2014, 103)
-			.page.cryptomedic().selectFile('Bill', 2)
-			.page.cryptomedic().tableIterator('#paymentsList')
+		client.page.cryptomedic().authenticate('readonly');
+		client.page.cryptomedic().goPatient(2014, 103);
+		client.page.cryptomedic().selectFile('Bill', 2);
+		client.page.cryptomedic().tableIterator('#paymentsList')
 			.col(2).assert('Murshed')
 			.nextCol().assert(15)
 			.row(2)
 			.col(2).assert('Ershad')
 			.nextCol().assert(10)
-			.endTable()
-			.end()
-		;
+			.endTable();
+		client.end();
 	}
 };
