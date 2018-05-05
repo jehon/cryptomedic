@@ -3,8 +3,7 @@ let assert = require('assert');
 
 function assertTableInitial(client, i = 0) {
 	assert(client != null);
-	client
-		.page.cryptomedic().tableIterator('#price_lists')
+	client.page.cryptomedic().tableIterator('#price_lists')
 		.section('thead')
 		.row(1)
 		.col(1)
@@ -38,55 +37,53 @@ function assertTableInitial(client, i = 0) {
 		.nextCol().assert('open')
 		.nextCol().assert('open')
 		.nextCol().assert('open')
-		.endTable()
-		.assert.elementNotPresent('#button_save_' + (i))
-		.assert.elementNotPresent('#button_save_' + (i + 1))
-		.assert.elementNotPresent('#button_save_' + (i + 2));
+		.endTable();
+
+	client.assert.elementNotPresent('#button_save_' + (i));
+	client.assert.elementNotPresent('#button_save_' + (i + 1));
+	client.assert.elementNotPresent('#button_save_' + (i + 2));
 }
 
 module.exports = {
 	'go to the price page': function(client) {
-		client
-			.page.cryptomedic().authenticate('thierry')
+		client.page.cryptomedic().authenticate('thierry');
 
 		// Select file
-			.myClick('#menu_more')
-			.waitForElementVisible('#menu_prices')
-			.myClick('#menu_prices')
-			.page.cryptomedic().myWaitFetch();
+		client.myClick('#menu_more');
+		client.waitForElementVisible('#menu_prices');
+		client.myClick('#menu_prices');
+		client.page.cryptomedic().myWaitFetch();
 
 		assertTableInitial(client);
 	},
 
 	'create a new Price List': function(client) {
-		client
 		// Button to create a new price list
-			.waitForElementVisible('#button_create')
-			.assert.elementNotPresent('#action_creating')
-			.myClick('#button_create')
+		client.waitForElementVisible('#button_create');
+		client.assert.elementNotPresent('#action_creating');
+		client.myClick('#button_create');
 
-			.waitForElementVisible('#action_creating')
-			.assert.visible('#form_creating input[name=pivotDate]')
+		client.waitForElementVisible('#action_creating');
+		client.assert.visible('#form_creating input[name=pivotDate]');
 
-			.myFormFillIn('#form_creating', { '[name=pivotDate]': '2010-01-01' }, '#button_do_create')
+		client.myFormFillIn('#form_creating', { '[name=pivotDate]': '2010-01-01' }, '#button_do_create');
 
-			.waitForElementVisible('#error_date')
+		client.waitForElementVisible('#error_date');
 
-			.myFormFillIn('#form_creating', { '[name=pivotDate]': '2030-01-01' }, '#button_do_create')
-			.pause(10)
+		client.myFormFillIn('#form_creating', { '[name=pivotDate]': '2030-01-01' }, '#button_do_create');
+		client.pause(10);
 
-			.waitForElementNotPresent('#error_date')
-			.waitForElementNotPresent('#button_create')
-			.waitForElementNotPresent('#action_creating');
+		client.waitForElementNotPresent('#error_date');
+		client.waitForElementNotPresent('#button_create');
+		client.waitForElementNotPresent('#action_creating');
 	},
 
 	'edit the created price list, but not saving': function(client) {
 		assertTableInitial(client, 1);
-		client
-			.waitForElementVisible('#button_save_0')
-			.waitForElementVisible('#button_cancel_0')
-			.assert.elementNotPresent('#button_edit_0')
-			.page.cryptomedic().tableIterator('#price_lists')
+		client.waitForElementVisible('#button_save_0');
+		client.waitForElementVisible('#button_cancel_0');
+		client.assert.elementNotPresent('#button_edit_0');
+		client.page.cryptomedic().tableIterator('#price_lists')
 			.section('tbody')
 			.col(2)
 			.row(1)   
@@ -99,19 +96,19 @@ module.exports = {
 			.assert(false, '[name=\'consult_ClubFoot_Follow_up\'][value=\'100\']')
 			.row(12)
 			.assert(false, '[name=\'other_Other_consultation_care\'][value=\'1\']')
-			.endTable()
+			.endTable();
 
-			.myFormFillIn('#price_lists', {
-				'[name=consult_CDC_consultation_Bengali_Doctor]': { value: 123 },
-				'[name=consult_ClubFoot_Follow_up]': { value: 123 },
-				'[name=consult_CDC_consultation_Doctor]': { value: 123 }
-			})
+		client.myFormFillIn('#price_lists', {
+			'[name=consult_CDC_consultation_Bengali_Doctor]': { value: 123 },
+			'[name=consult_ClubFoot_Follow_up]': { value: 123 },
+			'[name=consult_CDC_consultation_Doctor]': { value: 123 }
+		});
 
-			.myClick('#button_cancel_0')
-			.pause(10)
-			.page.cryptomedic().myWaitFetch()
+		client.myClick('#button_cancel_0');
+		client.pause(10);
+		client.page.cryptomedic().myWaitFetch();
 
-			.page.cryptomedic().tableIterator('#price_lists')
+		client.page.cryptomedic().tableIterator('#price_lists')
 			.section('tbody')
 			.col(2)
 			.row(1)   .assert('300')
@@ -125,20 +122,19 @@ module.exports = {
 
 	'edit the created price list': function(client) {
 		assertTableInitial(client, 1);
-		client
-			.myClick('#button_edit_0')
-			.page.cryptomedic().myWaitFetch()
+		client.myClick('#button_edit_0');
+		client.page.cryptomedic().myWaitFetch();
 
-			.myFormFillIn('#price_lists', {
-				'[name=consult_CDC_consultation_Doctor]': { value: 123 }
-			})
+		client.myFormFillIn('#price_lists', {
+			'[name=consult_CDC_consultation_Doctor]': { value: 123 }
+		});
 
-			.myClick('#button_save_0')
-			.pause(10)
-			.page.cryptomedic().myWaitFetch()
-			.pause(1000)
+		client.myClick('#button_save_0');
+		client.pause(10);
+		client.page.cryptomedic().myWaitFetch();
+		client.pause(1000);
 
-			.page.cryptomedic().tableIterator('#price_lists')
+		client.page.cryptomedic().tableIterator('#price_lists')
 			.section('tbody')
 			.col(2)
 			.row(1)   .assert(300)
@@ -146,25 +142,19 @@ module.exports = {
 			.nextRow().assert(100)
 			.nextRow().assert(100)
 			.row(12)  .assert('open')
-			.endTable()
-
-		;
+			.endTable();
 
 		assertTableInitial(client, 1);
 	},
 
 	'delete the created price list': function(client) {
-		client
-			.waitForElementPresent('#button_delete_0')
-			.myClick('#button_delete_0')
-			.page.cryptomedic().myWaitFetch()
-		;
+		client.waitForElementPresent('#button_delete_0');
+		client.myClick('#button_delete_0');
+		client.page.cryptomedic().myWaitFetch();
 
 		client.pause(1000);
 		assertTableInitial(client);
 
-		client
-			.end()
-		;
+		client.end();
 	}
 };
