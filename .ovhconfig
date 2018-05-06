@@ -3,6 +3,6 @@
 
 app.engine=php
 app.engine.version=7.1
-http.firewall=none
+http.firewall=security
 environment=production
 container.image=stable
