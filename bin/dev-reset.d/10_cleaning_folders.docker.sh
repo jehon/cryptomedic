@@ -24,3 +24,16 @@ cp -v \
 	"$PRJ_DIR/live-for-test"/* "$PRJ_DIR/live/"
 
 touch $PRJ_DIR/live/.gitkeep
+
+rm -fr "/tmp/laravel"
+
+mkdir -p "/tmp/laravel/framework"
+mkdir -p "/tmp/laravel/framework"
+mkdir -p "/tmp/laravel/framework/cache"
+mkdir -p "/tmp/laravel/framework/sessions"
+mkdir -p "/tmp/laravel/framework/views"
+mkdir -p "/tmp/laravel/app"
+mkdir -p "/tmp/laravel/app/public"
+mkdir -p "/tmp/laravel/logs"
+
+chmod -R 777 "/tmp/laravel/"
