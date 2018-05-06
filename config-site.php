@@ -36,3 +36,10 @@ if (file_exists(__DIR__ . "/../secrets.php")) {
         'security_key' => $mysecrets['cryptomedic.security_key']
     ];
 }
+
+if (! function_exists('storage_path')) {
+	# Come out of www/api/v1.3/vendor/laravel/framework/src/Illuminate/Foundation/helpers.php
+	function storage_path($path = '') {
+		return "/tmp/laravel/".($path ? DIRECTORY_SEPARATOR.$path : $path); 
+    }
+}
