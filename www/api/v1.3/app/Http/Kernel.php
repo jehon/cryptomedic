@@ -14,7 +14,6 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $middleware = [
-//        \Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode::class,
 		\App\Http\Middleware\MarkHeader::class
 	];
 
@@ -28,7 +27,6 @@ class Kernel extends HttpKernel
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
             \Illuminate\Session\Middleware\StartSession::class,
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
-//            \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
 
@@ -49,9 +47,8 @@ class Kernel extends HttpKernel
 
         'authenticated'   => \App\Http\Middleware\Authenticated::class,
         'hasPermission'   => \App\Http\Middleware\HasPermission::class,
-        //'auth.basic' => 'Illuminate\Auth\Middleware\AuthenticateWithBasicAuth',
 
-//       'auth' => \Illuminate\Auth\Middleware\Authenticate::class,
+//        'auth' => \Illuminate\Auth\Middleware\Authenticate::class,
 //        'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
 //        'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,
 //        'can' => \Illuminate\Auth\Middleware\Authorize::class,
