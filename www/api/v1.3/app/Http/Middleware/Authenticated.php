@@ -38,7 +38,7 @@ class Authenticated {
 	{
 		if ($this->auth->guest() || !$request->user()->group)
 		{
-				return response('Unauthorized.', 401);
+			return response('Unauthorized by Rest server.', 401);
 		}
 		return $next($request);
 	}
