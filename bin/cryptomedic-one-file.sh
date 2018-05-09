@@ -18,8 +18,12 @@ if [[ "$ftp_host" = "" ]]; then
   exit 255
 fi
 
-FN="$1"
-
+FN="${1#$PRJ_DIR/}"
+echo "Reduced file: $FN"
+if [ ! -r "$FN" ]; then
+	echo "File not found: $FN"
+	exit 255
+fi
 (
     echo "open -u $ftp_user,$ftp_pass $ftp_host";
     echo "put '$local_root/$FN' -o '$remote_root/$FN'"
