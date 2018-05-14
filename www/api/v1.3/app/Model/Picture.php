@@ -13,9 +13,9 @@ class Picture extends CryptomedicModel {
 		return $myconfig['folders']['storage'] . DIRECTORY_SEPARATOR . "uploadedPictures" . DIRECTORY_SEPARATOR;
 	}
 
-	public static function getPictureĈountByPhysicalPath($file) {
-		return self::where('file', $file)->count();
-	}
+	// public static function getPictureCountByPhysicalPath($file) {
+	// 	return self::where('file', $file)->count();
+	// }
 
 
 	public function validate() {
