@@ -9,7 +9,9 @@ class MarkHeader
 	public function handle($request, Closure $next)
 	{
 		$response = $next($request);
-		$response->header('X-Source', 'The rest');
+		if (method_exists($response, 'header')) {
+			$response->header('X-Source', 'The rest');
+		}
 		return $response;
   	}
 }
