@@ -82,30 +82,32 @@ class PicturesController extends FicheController {
 		if (!file_exists($file)) {
 			abort(404, 'file does not exists on disk: ' . $file);
 		}
-    // Handle client cache (304)
-    // Browser cache version not too old ?
-    if (array_key_exists('HTTP_IF_MODIFIED_SINCE', $_SERVER) && (filemtime($file) <= strtotime($_SERVER['HTTP_IF_MODIFIED_SINCE']))) {
-        // End the request with status 304
-        // header("HTTP/1.1 304 Not modified");
-        abort(304, 'Not Modified $id');
-    }
+		// Handle client cache (304)
+		// Browser cache version not too old ?
+		if (array_key_exists('HTTP_IF_MODIFIED_SINCE', $_SERVER) && (filemtime($file) <= strtotime($_SERVER['HTTP_IF_MODIFIED_SINCE']))) {
+			// End the request with status 304
+			// header("HTTP/1.1 304 Not modified");
+			abort(304, 'Not Modified $id');
+		}
 		return $file;
 	}
 
 	public function _buildResponse($file) {
     return response()
-      ->download($file)
+    	->download($file)
   		->setLastModified((new \DateTime())->setTimestamp(filemtime($file)))
   		->setExpires(new \DateTime("next year"))
   		;
 	}
 
+	// Entry point for full image
 	public function getFile($id) {
 		$file = $this->_file($id);
 		return $this->_buildResponse($file);
-		// ->file($realfile);
+		// return response()->file($file);
 	}
 
+	// Entry point for thumbnail
 	public function getThumbnail($id) {
 		$file = $this->_file($id);
 		$file = $this->_buildThumbnail($file);
