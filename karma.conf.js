@@ -38,6 +38,7 @@ module.exports = function(config) {
 			'static/elements/x-waiting-folder.js',
 			'static/elements/x-requestor.js',
 			'static/elements/x-requestor-crud.js',
+			'static/elements/x-file.js',
 			'static/!(elements)/**/*.js',
 			'static/elements/*.js',
 			'../tests/unitjs/*.js',
