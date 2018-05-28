@@ -19,7 +19,7 @@ const XWaiting = (function() {
 			this[overlay] = this.shadowRoot.querySelector('#overlay');
 			this[slot]    = this.shadowRoot.querySelector('#slot');
 			this.free();
-		}  
+		}
 
 		render() {
 			super.render();

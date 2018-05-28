@@ -1,4 +1,4 @@
-/* global Payment,goThere,extractPrefsFile */
+/* global Payment,goThere,extractPrefsFile,store */
 
 function ctrl_file_bill($scope, $element) {
 	/*
@@ -6,7 +6,8 @@ function ctrl_file_bill($scope, $element) {
           store.definitions.prices
     */
 
-	getPrices = function() {
+
+	const getPrices = function() {
 		const definitions = store.getState().definitions;
 		if (definitions == false) {
 			return false;
@@ -18,7 +19,7 @@ function ctrl_file_bill($scope, $element) {
 		$scope.currentFile().calculatePriceId(getPrices());
 		$scope.safeApply();
 	});
-  
+
 	const dateElement = $element[0].querySelector('[name=Date]');
 	dateElement.addEventListener('blur', () => {
 		$scope.currentFile().Date = dateElement.value;

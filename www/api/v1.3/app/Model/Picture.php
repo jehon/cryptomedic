@@ -17,7 +17,6 @@ class Picture extends CryptomedicModel {
 	// 	return self::where('file', $file)->count();
 	// }
 
-
 	public function validate() {
 	    if (!$this->patient_id) {
 	    	abort(400, "No patient_id on the file");
