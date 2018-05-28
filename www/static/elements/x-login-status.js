@@ -78,7 +78,7 @@
 		doLoginCheck() {
 			// 401: not authenticated
 			this.setAttribute('requesting', 'doLoginCheck');
-			this[requestor].request({ url: 'auth/settings' })
+			return this[requestor].request({ url: 'auth/settings' })
 				.then(response => {
 					this.removeAttribute('requesting');
 					if (response.ok) {
@@ -105,7 +105,7 @@
 			data.username = data.username.toLowerCase();
 
 			this.setAttribute('requesting', 'doLogin');
-			this[requestor].requestAndFilter({ url: 'auth/mylogin', method: 'POST', data }, [ 404 ])
+			return this[requestor].requestAndFilter({ url: 'auth/mylogin', method: 'POST', data }, [ 404 ])
 				.then((response) => {
 					this.removeAttribute('requesting');
 					if (response.ok) {
