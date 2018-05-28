@@ -1,4 +1,4 @@
-/* global goThere*/
+/* global goThere,getDataService */
 function ctrl_home($scope) {
 	if (typeof($scope.entryyear) == 'undefined') {
 		$scope.searched = false;

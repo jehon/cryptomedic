@@ -1,3 +1,4 @@
+/* global XWaiting,store */
 
 const XWaitingFolder = (function() {
 	class XWaitingFolder extends XWaiting {
