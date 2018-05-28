@@ -31,7 +31,7 @@ function webDescribe(title, html, fn) {
 
 			// - Add the title for completeness
 			let h3 = document.createElement('h3');
-			h3.innerHTML = title;
+			h3.innerHTML = 'Test: "' + title + '"';
 			div.appendChild(h3);
 
 			// - Dump code for info
@@ -49,7 +49,7 @@ function webDescribe(title, html, fn) {
 			div.appendChild(style);
 
 			document.body.appendChild(div);
-      
+
 			let check = (el) => {
 				if (el instanceof HTMLUnknownElement) {
 					return el.tagName;
@@ -103,8 +103,8 @@ function webDescribe(title, html, fn) {
 		});
 
 		it('should initialize the object correctly', function() {
-			expect(element).not.toBeUndefined();     
-			expect(element).not.toBeNull();     
+			expect(element).not.toBeUndefined();
+			expect(element).not.toBeNull();
 		});
 
 		// We need to pass it as a function, because as we start this function
