@@ -57,7 +57,7 @@ describe('jh-element-test', function() {
 		expect(JHElement.prototype.adapt).toHaveBeenCalledTimes(2);
 	});
 
-	fit('should handle css', function() {
+	it('should handle css', function() {
 		let jhelement = new JHElement();
 		let element = () => jhelement;
 
