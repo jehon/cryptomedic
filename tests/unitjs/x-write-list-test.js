@@ -241,7 +241,7 @@ describe('x-write-list-test', function() {
 
 		webDescribe('should handle named list', `<div>
                     <x-write-list id='master' value='machin' list-name='listRadio'></x-write-list>
-                    <x-write-list id='slave'  value='truc'   list='${JSON.stringify(listSelect)}'></x-write-list>
+                    <x-write-list id='slave'  value='truc'   list='${JSON.stringify(listSelect)}' nullable></x-write-list>
                 </div>`, function(element) {
 			it('should instanciated', function() {
 				const master = element().querySelector('#master');
@@ -261,6 +261,13 @@ describe('x-write-list-test', function() {
 				expect(master.value).toBe('chose');
 				expect(slave.list).toEqual(listRadio);
 				expect(slave.value).toBe('truc');
+
+				// Test with value empty
+				slave.value = '';
+				expect(slave.value).toBeNull();
+				master.value = 'machin';
+				master.fire('machin');
+				expect(slave.value).toBeNull();
 			});
 
 			it('should add \'the value\' if it does not exists in the new list', function() {
