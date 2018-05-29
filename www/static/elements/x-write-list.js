@@ -1,3 +1,4 @@
+/* global store,JHElement,jQuery */
 
 XWriteList = (function() {
 
@@ -21,9 +22,9 @@ XWriteList = (function() {
 
 		static get properties() {
 			return {
-				'value':     'String', 
-				'list':      'Object', 
-				'nullable':  'Boolean', 
+				'value':     'String',
+				'list':      'Object',
+				'nullable':  'Boolean',
 				'list-name': 'String'
 			};
 		}
@@ -162,7 +163,7 @@ XWriteList = (function() {
 				});
 			});
 			this.shadowRoot.querySelectorAll('span[to]').forEach(el => {
-				el.onclick = (event) => {
+				el.onclick = () => {
 					// Setting this attribute will fire the "input" change event
 					el.querySelector('input').setAttribute('checked', true);
 				};
@@ -183,7 +184,7 @@ XWriteList = (function() {
 
 			this.shadowRoot.innerHTML = this._withStyle() + res;
 
-			this.shadowRoot.querySelector('select').addEventListener('change', el => this.fire('blur', 0));
+			this.shadowRoot.querySelector('select').addEventListener('change', () => this.fire('blur', 0));
 		}
 
 		_escape(str) {
@@ -207,11 +208,13 @@ XWriteList = (function() {
 					this._value = this.shadowRoot.querySelector('select').value;
 					break;
 				case 'radio':
-					const checked = this.shadowRoot.querySelector('input[type=radio]:checked');
-					if (checked == null) {
-						this._value = null;
-					} else {
-						this._value = checked.value;
+					{ // avoid no-case-declarations
+						const checked = this.shadowRoot.querySelector('input[type=radio]:checked');
+						if (checked == null) {
+							this._value = null;
+						} else {
+							this._value = checked.value;
+						}
 					}
 					break;
 			}
