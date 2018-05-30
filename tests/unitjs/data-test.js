@@ -7,7 +7,11 @@ describe('tests/unit/data-test.js', function() {
 		b: 'azer',
 		c: 0,
 		d: '1',
-		nullKey: null
+		nullKey: null,
+		dateNum: '2015',
+		dateNumInv: '20',
+		dateNum6: '2016-02',
+		dateObj: new Date()
 	};
 
 	describe('dataCatch', function() {
@@ -41,6 +45,18 @@ describe('tests/unit/data-test.js', function() {
 		expect(Data(data).assertNumericNotZero('a')).toBeTruthy();
 		expect(() => Data(data).assertNumericNotZero('b')).toThrowError('Data b is not numeric(azer)');
 		expect(() => Data(data).assertNumericNotZero('c')).toThrowError('Data c is not non-zero(0)');
+		expect(Data(data).assertNumericNotZero('d')).toBeTruthy();
+	});
+
+	it('with assertDate', function() {
+		expect(() => Data(data).assertDate('anything')).toThrowError('Data anything is undefined');
+		expect(() => Data(data).assertDate('nullKey')).toThrowError('Data nullKey is undefined');
+		expect(() => Data(data).assertDate('a')).toThrowError('Data a is not a valid date(1)');
+		expect(() => Data(data).assertDate('b')).toThrowError('Data b is not a valid date(azer)');
+		expect(() => Data(data).assertDate('c')).toThrowError('Data c is not a valid date(0)');
+		expect(() => Data(data).assertDate('d')).toThrowError('Data d is not a valid date(1)');
+
+		expect(() => Data(data).assertDate('dateNumInv')).toThrowError('Data dateNumInv is not a valid date(20)');
 		expect(Data(data).assertNumericNotZero('d')).toBeTruthy();
 	});
 });
