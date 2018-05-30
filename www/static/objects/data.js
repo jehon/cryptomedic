@@ -1,26 +1,6 @@
 /* global DataMissingException, ApplicationException */
 
-function cannonizeDate(value) {
-	if (typeof(value) == 'number') {
-		value = '' + value;
-	}
-	if (value == 'string') {
-		if (value.length < 4) {
-			throw 'Invalid reference';
-		}
-		var ry = parseInt(value.substring(0, 4));
-		var rm = parseInt(value.substring(5, 7));
-		if (isNaN(rm)) {
-			rm = 1; // emulate january
-		}
-		value = new Date(ry, rm - 1, 1);
-	}
-	return value;
-}
-
-
 class DataClass {
-
 	constructor(data) {
 		this.value = data;
 	}
@@ -63,6 +43,36 @@ class DataClass {
 			return v;
 		}
 		throw new DataMissingException(field, `is not non-zero(${v})`);
+	}
+
+	cannonizeDate(value) {
+		if (typeof(value) == 'number') {
+			value = '' + value;
+		}
+		if (typeof(value) == 'string') {
+			if (value.length < 4) {
+				throw 'Invalid date';
+			}
+			var ry = parseInt(value.substring(0, 4));
+			if (isNaN(ry)) {
+				throw 'Invalid date';
+			}
+			var rm = parseInt(value.substring(5, 7));
+			if (isNaN(rm)) {
+				rm = 1; // emulate january
+			}
+			value = new Date(ry, rm - 1, 1);
+		}
+		return value;
+	}
+
+	assertDate(field) {
+		const v = this.assertExists(field);
+		try {
+			return this.cannonizeDate(v);
+		} catch (e) {
+			throw new DataMissingException(field, `is not a valid date(${v})`);
+		}
 	}
 
 	// // For graphic, by default it expect number -> textual render it in text only on demand
