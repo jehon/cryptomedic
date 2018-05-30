@@ -11,8 +11,8 @@ class ApplicationException extends Error {
 }
 
 class DataMissingException extends ApplicationException {
-	constructor(data) {
-		super('Missing '  + (data || 'some data'));
+	constructor(data, reason = 'is missing') {
+		super('Data '  + (data || 'some data') + ' ' + reason);
 		this.data = data;
 	}
 }
