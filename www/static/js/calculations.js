@@ -67,6 +67,8 @@ let calculations = {
 				}
 				options.reference = new Date(ry, rm - 1, 1);
 			}
+			// reference is a Date
+
 			if (typeof(birth) == 'number') {
 				birth = '' + birth;
 			}
@@ -82,14 +84,20 @@ let calculations = {
 				}
 				birth = new Date(by, bm - 1 -1, 30);
 			}
+			// birth is a Date
+
 			var days = new Date(0, 0, 0, 0, 0, 0, options.reference - birth);
 			var res = { years: days.getFullYear() - 1900, months: days.getMonth()};
 			if (options.format == 'object') {
 				return res;
 			}
+			// Future default ? See fromBirthDateAsHumanReadable
 			if (options.format == 'number') {
 				return res.years + (res.months / 12);
 			}
+			// Default ?
+			return res.years + 'y' + res.months + 'm';
+		},
 			return res.years + 'y' + res.months + 'm';
 		},
 
