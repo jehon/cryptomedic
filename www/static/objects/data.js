@@ -32,9 +32,9 @@ class DataClass {
 			if (!isNaN(vi)) {
 				return vi;
 			}
+			throw new DataMissingException(field, `is not numeric(${v})`);
 		}
-
-		throw new DataMissingException(field, `is not numeric(${v})`);
+		throw new DataMissingException(field, `is not numeric(${typeof(v)})`);
 	}
 
 	assertNumericNotZero(field) {
@@ -45,95 +45,91 @@ class DataClass {
 		throw new DataMissingException(field, `is not non-zero(${v})`);
 	}
 
-	cannonizeDate(value) {
-		if (typeof(value) == 'number') {
-			value = '' + value;
+	assertDate(field) {
+		let v = this.assertExists(field);
+		if (typeof(v) == 'number') {
+			v = '' + v;
 		}
-		if (typeof(value) == 'string') {
-			if (value.length < 4) {
-				throw 'Invalid date';
+		if (typeof(v) == 'string') {
+			if (v.length < 4) {
+				throw new DataMissingException(field, `is not a valid date(${v})`);
 			}
-			var ry = parseInt(value.substring(0, 4));
+			var ry = parseInt(v.substring(0, 4));
 			if (isNaN(ry)) {
-				throw 'Invalid date';
+				throw new DataMissingException(field, `is not a valid date(${v})`);
 			}
-			var rm = parseInt(value.substring(5, 7));
+			var rm = parseInt(v.substring(5, 7));
 			if (isNaN(rm)) {
 				rm = 1; // emulate january
 			}
-			value = new Date(ry, rm - 1, 1);
+			return new Date(ry, rm - 1, 1);
 		}
-		return value;
-	}
-
-	assertDate(field) {
-		const v = this.assertExists(field);
-		try {
-			return this.cannonizeDate(v);
-		} catch (e) {
-			throw new DataMissingException(field, `is not a valid date(${v})`);
+		if (v instanceof Date) {
+			return v;
 		}
+		throw new DataMissingException(field, `is not a valid date(${typeof(v)})`);
+		// return v;
 	}
 
 	// // For graphic, by default it expect number -> textual render it in text only on demand
-	ageAtConsultTimeFractionnal(toDate = new Date()) {
-		if (!this.isSet('Date')) {
-			throw new DataMissingException('Date');
-		}
-		if (birth == '' || birth == null) {
-			return '';
-		}
-		options = Object.assign({}, {
-			reference: new Date(),
-			format: false
-		}, options);
-		// reference = reference || new Date();
-		if (typeof(options.reference) == 'number') {
-			options.reference = '' + options.reference;
-		}
-		if (typeof(options.reference) == 'string') {
-			if (options.reference.length < 4) {
-				return options.format ? null : '?';
-				// throw new Exception('Invalid reference');
-			}
-			var ry = parseInt(options.reference.substring(0, 4));
-			var rm = parseInt(options.reference.substring(5, 7));
-			if (isNaN(rm)) {
-				rm = 1; // emulate january
-			}
-			options.reference = new Date(ry, rm - 1, 1);
-		}
-		// reference is a Date
+	// ageAtConsultTimeFractionnal(toDate = new Date()) {
+	// 	if (!this.isSet('Date')) {
+	// 		throw new DataMissingException('Date');
+	// 	}
+	// 	if (birth == '' || birth == null) {
+	// 		return '';
+	// 	}
+	// 	options = Object.assign({}, {
+	// 		reference: new Date(),
+	// 		format: false
+	// 	}, options);
+	// 	// reference = reference || new Date();
+	// 	if (typeof(options.reference) == 'number') {
+	// 		options.reference = '' + options.reference;
+	// 	}
+	// 	if (typeof(options.reference) == 'string') {
+	// 		if (options.reference.length < 4) {
+	// 			return options.format ? null : '?';
+	// 			// throw new Exception('Invalid reference');
+	// 		}
+	// 		var ry = parseInt(options.reference.substring(0, 4));
+	// 		var rm = parseInt(options.reference.substring(5, 7));
+	// 		if (isNaN(rm)) {
+	// 			rm = 1; // emulate january
+	// 		}
+	// 		options.reference = new Date(ry, rm - 1, 1);
+	// 	}
+	// 	// reference is a Date
 
-		if (typeof(birth) == 'number') {
-			birth = '' + birth;
-		}
-		if (typeof(birth) == 'string') {
-			if (birth.length < 4) {
-				return options.format ? null : '?';
-				// throw new Exception('Invalid birth');
-			}
-			var by = parseInt(birth.substring(0, 4));
-			var bm = parseInt(birth.substring(5, 7));
-			if (isNaN(bm)) {
-				bm = 1; // emulate january
-			}
-			birth = new Date(by, bm - 1 -1, 30);
-		}
-		// birth is a Date
+	// 	if (typeof(birth) == 'number') {
+	// 		birth = '' + birth;
+	// 	}
+	// 	if (typeof(birth) == 'string') {
+	// 		if (birth.length < 4) {
+	// 			return options.format ? null : '?';
+	// 			// throw new Exception('Invalid birth');
+	// 		}
+	// 		var by = parseInt(birth.substring(0, 4));
+	// 		var bm = parseInt(birth.substring(5, 7));
+	// 		if (isNaN(bm)) {
+	// 			bm = 1; // emulate january
+	// 		}
+	// 		birth = new Date(by, bm - 1 -1, 30);
+	// 	}
+	// 	// birth is a Date
 
-		var days = new Date(0, 0, 0, 0, 0, 0, options.reference - birth);
-		var res = { years: days.getFullYear() - 1900, months: days.getMonth()};
-		if (options.format == 'object') {
-			return res;
-		}
-		// Future default ? See fromBirthDateAsHumanReadable
-		if (options.format == 'number') {
-			return res.years + (res.months / 12);
-		}
-		// Default ?
-		return res.years + 'y' + res.months + 'm';
-	}
+	// 	var days = new Date(0, 0, 0, 0, 0, 0, options.reference - birth);
+	// 	var res = { years: days.getFullYear() - 1900, months: days.getMonth()};
+	// 	if (options.format == 'object') {
+	// 		return res;
+	// 	}
+	// 	// Future default ? See fromBirthDateAsHumanReadable
+	// 	if (options.format == 'number') {
+	// 		return res.years + (res.months / 12);
+	// 	}
+	// 	// Default ?
+	// 	return res.years + 'y' + res.months + 'm';
+	// }
 
 	// ageAtConsultTimeForHuman() {
 	// 	if (!this.patient) {
@@ -238,10 +234,10 @@ function DataCatch(array) {
 				try {
 					return origMethod.apply(o, args);
 				} catch(e) {
-					if (e instanceof Error) {
-						return e.message;
-					}
-					return e;
+					// if (e instanceof Error) {
+					return e.message;
+					// }
+					// return e;
 				}
 			};
 		}
