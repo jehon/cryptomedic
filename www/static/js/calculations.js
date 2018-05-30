@@ -98,8 +98,6 @@ let calculations = {
 			// Default ?
 			return res.years + 'y' + res.months + 'm';
 		},
-			return res.years + 'y' + res.months + 'm';
-		},
 
 		toBirthDate: function(years, months, reference) {
 			reference = reference || new Date();
