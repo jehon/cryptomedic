@@ -22,18 +22,23 @@ describe('tests/unit/x-requestor-test.js', function() {
 		});
 
 		describe('should match URL', function() {
+			beforeEach(function() {
+				spyOn(window, 'fetch').and.callFake(request => Promise.resolve(new Response(request.url, {})));
+			});
 			it('should make an absolute request', function() {
-				spyOn(window, 'fetch').and.callFake((request) => new Promise((resolve) => resolve(new Response(request.url, {}))));
-				const promise = element().request({ url: '/baseUrl', data: { test: 1 }});
-				promise.then(response => {
-					expect(extractPath(response.url)).toBe('/baseUrl?test=1');
-				});
+				element()
+					.request({ url: '/baseUrl', data: { test: 1 }})
+					// On Firefox, the url is not set on the response
+					// so we pass it as body
+					.then(response => expect(extractPath(response.asText)).toBe('/baseUrl?test=1'));
 			});
 
 			it('should make an relative request', function() {
-				spyOn(window, 'fetch').and.callFake((request) => new Promise((resolve) => resolve(new Response(request.url, {}))));
-				const promise = element().request({ url: 'relativeUrl', data: { test: 1 }});
-				promise.then(response => expect(response.url.endsWith(`/api/${API_VERSION}/relativeUrl?test=1`)).toBeTruthy());
+				element()
+					.request({ url: 'relativeUrl', data: { test: 1 }})
+					// On Firefox, the url is not set on the response
+					// so we pass it as body
+					.then(response => expect(response.asText.endsWith(`/api/${API_VERSION}/relativeUrl?test=1`)).toBeTruthy());
 			});
 		});
 
