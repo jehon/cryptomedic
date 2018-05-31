@@ -1,4 +1,6 @@
 /* global XWaiting,store */
+/* global DataMissingException */
+/* global calculations */
 
 const XFile = (function() {
 	class XFile extends XWaiting {
