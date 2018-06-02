@@ -7,6 +7,11 @@ const XFileBill = (function() {
 			return [ 'consult', 'medecine', 'workshop', 'surgical', 'other' ]; 
 		}
 
+		label(key) {
+			let p1 = key.indexOf('_');
+			return key.substring(p1).split('_').join(' ');
+		}
+
 		constructor() {
 			super();
 			store.subscribe(() => {
