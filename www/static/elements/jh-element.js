@@ -9,7 +9,7 @@
 let JHElement = (function() {
 	const initialized = Symbol('initialized');
 
-	class JHElement extends HTMLElement {  
+	class JHElement extends HTMLElement {
 		static get observedAttributes() {
 			if (this.properties) {
 				return Object.keys(this.properties).map(k => JHElement.camelToSnake(k));
