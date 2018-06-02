@@ -51,7 +51,7 @@ module.exports = {
 			if (!authenticated) {
 				throw new Error('Cryptomedic: You should be authenticated to use report function');
 			}
-			
+
 			this.myClick('#menu_more');
 			this.waitForElementVisible('#menu_reports');
 			this.myClick('#menu_reports');
@@ -120,7 +120,7 @@ module.exports = {
 				nextRow: (i = 1) => { row = row + i; return iterator; },
 				toString: () => {
 					return tableSelector
-            + ' ' + section
+            + ' > ' + section
             + ' > ' + 'tr'                               + ':' + (row === 'last' ? 'last-child' : 'nth-child(' + row + ')')
             + ' > ' + (section == 'tbody' ? 'td' : 'th') + ':' + (col === 'last' ? 'last-child' : 'nth-child(' + col + ')');
 				},
