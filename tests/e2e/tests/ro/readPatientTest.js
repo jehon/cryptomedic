@@ -9,6 +9,14 @@ module.exports = {
 		client.assert.containsText('#Patient_Pathology', 'ClubFoot');
 		client.assert.elementNotPresent('#button_edit');
 
+		// Summary
+		client.myClick('#summary');
+		client.page.cryptomedic().tableIterator('#table_summary')
+			// Summary Bill#1
+			.row(4).assert('#2')
+			.col(4).assert('Sociallevel')
+			.endTable();
+
 		// Nonrickect Consult
 		client.page.cryptomedic().selectFile('OtherConsult', 1);
 		client.assert.containsText('#Date', '2007-01-10');
