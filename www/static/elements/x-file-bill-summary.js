@@ -5,8 +5,8 @@ const XFileBillSummary = (function() {
 	class XFileBillSummary extends XFileBill {
 		adapt() {
 			super.adapt();
+
 			let html = '';
-			html = 'go<br>';
 			html += '<table>';
 			html += this.addLine('Sociallevel');
 			html += this.addLine('total_asked');
