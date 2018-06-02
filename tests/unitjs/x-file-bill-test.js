@@ -35,14 +35,13 @@ fdescribe('tests/unit/x-file-bill-test.js', function() {
 		});
 
 		describe('with prices', function() {
-			beforeAll(function() {
+			beforeEach(function() {
 				const prices = loadReference('PriceTest.testIndex.json');
 				store.dispatch({ type: 'ACT_DEFINITIONS_STORE', payload: { prices }});
+				element().value = getBill('FolderTest.test1.json', 1);
 			});
 
 			it('should be configured', function() {
-				let b = getBill('FolderTest.test1.json', 1);
-				element().value = b;
 				expect(element().innerHTML).toContain('bill available');
 				expect(element().price).not.toBeFalsy();
 			});
