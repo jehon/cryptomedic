@@ -10,6 +10,13 @@ const XFileBillSummary = (function() {
 			html += '<table>';
 			html += this.addLine('Sociallevel');
 			html += this.addLine('total_asked');
+
+			for(const cat of this.categoriesList) {
+				for(const p of this.getFieldsBelongingTo(cat)) {
+					html += this.addLine(p);
+				}
+			}
+
 			html += '</table>';
 			this.innerHTML = html;
 		}
