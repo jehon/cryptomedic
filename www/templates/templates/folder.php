@@ -80,7 +80,7 @@
       <jh-authorized ng-if="isAuthorized('folder.delete', authorizedList)">
         <a id='button_add' ng-class="{ 'btn-warning': page == 'addfile'}" ng-click="go('/folder/' + patient_id + '/addfile')" class='btn btn-default' style='width: 100%'>Add</a>
       </jh-authorized>
-      <a ng-class="{ 'btn-warning': page == 'summary'}" ng-href="#/folder/{{patient_id}}/summary" class='btn btn-default' style='width: 100%'>Summary</a>
+      <a id='summary' ng-class="{ 'btn-warning': page == 'summary'}" ng-href="#/folder/{{patient_id}}/summary" class='btn btn-default' style='width: 100%'>Summary</a>
       <a ng-class="{ 'btn-warning': page == 'graphics'}" ng-href="#/folder/{{patient_id}}/graphics" class='btn btn-default' style='width: 100%'>Graphics</a>
       <a id='button_patient' ng-class="{ 'btn-warning': !page}" ng-href="#/folder/{{patient_id}}" class='btn btn-default' style='width: 100%'>Patient</a>
       <span id='folder_files'>
