@@ -1,17 +1,11 @@
-#!/bin/sh
-#
-# This pre-commit hook looks for `fdescribe`, `fcontext`, `fit`, `fspecify` and `fexample` in the
-# staged files and exits with an error code of 1 if there are such changes.
-#
+#!/bin/bash
 
-# Thanks to https://gist.github.com/DerLobi/d938ac7dc422145f85e6
+# Thanks to https://gist.github.com/PaulTaykalo/e10d3bd1b79dfbf550c4872307953438
 
-for focus in fdescribe fcontext fit fspecify fexample; do
-    FILES=$(git diff --staged -G"^\s*$focus\(" --name-only | wc -l)
-    if [ $FILES -gt 0 ]; then
-        echo "You forgot to remove a $focus in the following files:"
-        git diff --staged --name-only -G"^\s*$focus\("
-        echo ""
-        STATUS=1
-    fi
-done
+exec 1>&2
+if test $(git diff-index -p -M --cached HEAD -- | grep '^+' | grep '^+[[:space:]]*\(fdescribe(\|fcontext(\|fit(\)' | wc -c ) != 0
+then	
+    searchedStrings=`git diff-index -p -M --cached HEAD -- | grep '^+' | grep '^+[[:space:]]*\(fdescribe(\|fcontext(\|fit(\)'`
+	echo "Error: You forgot to remove fdescribe: ${searchedStrings}"
+	exit 1
+fi
