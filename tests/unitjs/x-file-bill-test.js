@@ -2,7 +2,7 @@
 /* global webDescribe, JHElement, store */
 /* global loadReference, Folder, Bill */
 
-fdescribe('tests/unit/x-file-bill-test.js', function() {
+describe('tests/unit/x-file-bill-test.js', function() {
 	let getBill = function(ref = 'FolderTest.test1.json', id = 1) {
 		let f = new Folder(loadReference(ref).folder);
 		expect(f).toEqual(jasmine.any(Folder));
