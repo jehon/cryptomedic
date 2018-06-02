@@ -16,3 +16,10 @@ class DataMissingException extends ApplicationException {
 		this.data = data;
 	}
 }
+
+class ConfigurationMissingException extends ApplicationException {
+	constructor(data) {
+		super(`Configuration ${data} is missing.`);
+		this.data = data;
+	}
+}
