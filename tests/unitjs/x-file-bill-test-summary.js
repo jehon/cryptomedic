@@ -2,7 +2,7 @@
 /* global webDescribe, JHElement, store */
 /* global loadReference, Folder, Bill */
 
-fdescribe('tests/unit/x-file-bill-test-summary.js', function() {
+describe('tests/unit/x-file-bill-test-summary.js', function() {
 	function hasRow(element, name, value) {
 		expect(element().innerHTML).toContain(name);
 		expect(element().innerHTML).toContain(`name="${name}">${value}<`);
