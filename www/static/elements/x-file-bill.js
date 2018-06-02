@@ -13,34 +13,36 @@ const XFileBill = (function() {
 
 		adapt() {
 			super.adapt();
+			this.calculatePrice();
 			this.innerHTML = 'bill available: ' + JSON.stringify(this.value);
 		}
 
 		calculatePrice() {
-			const definitions = store.getState().definitions;
-			if (definitions == false || !('prices' in definitions)) {
-				throw ConfigurationMissingException('Prices')
-			}
-			const prices = definitions.prices;
-
 			try {
-				const dref = this.assertDate('Date');
-				if (!this.prices || this.prices.length < 1) {
+				const definitions = store.getState().definitions;
+				if (!definitions || !('prices' in definitions)) {
+					throw ConfigurationMissingException('Prices');
+				}
+				const prices = definitions.prices;
+				if (!prices || prices.length < 1) {
 					throw new DataMissingException('prices');
 				}
 
-				let price_id = -1;
-				for(var i in prices) {
-					var p = prices[i];
+				// Should be in string for comparisons to works...
+				const dref = this.assertExists('Date');
+
+				let index = -1;
+				for(const i in prices) {
+					const p = prices[i];
 					if (((p['datefrom'] == null) || (p['datefrom'] <= dref))
 						&& ((p['dateto'] == null) || (p['dateto'] > dref))) {
-						price_id = i;
+						index = i;
 					}
 				}
-				if (price_id < 0) {
+				if (index < 0) {
 					throw new Error('Price id not found');
 				}
-				this.price = prices[price_id];
+				this.price = prices[index];
 			} catch (_e) {
 				this.price = false;
 			}
