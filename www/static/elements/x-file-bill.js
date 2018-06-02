@@ -3,6 +3,10 @@
 
 const XFileBill = (function() {
 	class XFileBill extends XFile {
+		get categoriesList() {
+			return [ 'consult', 'medecine', 'workshop', 'surgical', 'other' ]; 
+		}
+
 		constructor() {
 			super();
 			store.subscribe(() => {

@@ -10,7 +10,6 @@ describe('tests/unit/x-file-bill-test.js', function() {
 	};
 
 	webDescribe('initialized', '<x-file-bill></x-file-bill>', function(element) {
-
 		describe('without prices', function() {
 			beforeEach(function() {
 				store.dispatch({ type: 'ACT_USER_LOGOUT', payload: { }});
@@ -46,6 +45,7 @@ describe('tests/unit/x-file-bill-test.js', function() {
 			it('should be configured', function() {
 				expect(element().innerHTML).toContain('bill available');
 				expect(element().price).not.toBeFalsy();
+				expect(element().categoriesList).toContain('other');
 			});
 
 			it('should getFieldsBelongingTo', function() {
