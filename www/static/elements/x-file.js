@@ -1,9 +1,9 @@
-/* global XWaiting,store */
+/* global JHElement,store */
 /* global DataMissingException, ApplicationException */
 /* global calculations */
 
 const XFile = (function() {
-	class XFile extends XWaiting {
+	class XFile extends JHElement {
 		static get properties() {
 			return {
 				value: 'Object',
@@ -13,25 +13,12 @@ const XFile = (function() {
 
 		constructor() {
 			super();
-			this.block();
-			this.data = false;
+			this.value = false;
 		}
 
-		get value() {
-			return this._value;
-		}
-
-		set value(value) {
-			this._value = value;
-			if (this._value) {
-				this.free();
-				if (this.isInitialized()) {
-					this.adapt();
-				}
-			} else {
-				this.block();
-				this.innerHTML = '';
-			}
+		render() {
+			super.render();
+			this.style.width = '100%';
 		}
 
 		adapt() {

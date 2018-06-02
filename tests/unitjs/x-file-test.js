@@ -6,20 +6,17 @@ describe('tests/unit/x-file-test.js', function() {
 		const f = { a: 1 };
 		it('should be blocked when initialized', function() {
 			expect(element().value).toBeFalsy();
-			expect(element().isBlocked()).toBeTruthy();
 		});
 
 		it('should free when value is set', function() {
 			element().value = f;
 			expect(element().value).toBe(f);
-			expect(element().isBlocked()).toBeFalsy();
 		});
 
 		it('should free when value is set and call adapt', function() {
 			spyOn(element(), 'adapt');
 			element().value = f;
 			expect(element().value).toBe(f);
-			expect(element().isBlocked()).toBeFalsy();
 			expect(element().adapt).toHaveBeenCalled();
 		});
 
@@ -28,7 +25,6 @@ describe('tests/unit/x-file-test.js', function() {
 			spyOn(element(), 'isInitialized').and.returnValue(false);
 			element().value = f;
 			expect(element().value).toBe(f);
-			expect(element().isBlocked()).toBeFalsy();
 			expect(element().adapt).not.toHaveBeenCalled();
 		});
 
@@ -36,8 +32,6 @@ describe('tests/unit/x-file-test.js', function() {
 			spyOn(element(), 'adapt');
 			element().value = null;
 			expect(element().value).toBeFalsy();
-			expect(element().isBlocked()).toBeTruthy();
-			expect(element().adapt).not.toHaveBeenCalled();
 		});
 
 		describe('with data', function() {
