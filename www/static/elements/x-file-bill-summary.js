@@ -5,18 +5,21 @@ const XFileBillSummary = (function() {
 	class XFileBillSummary extends XFileBill {
 		adapt() {
 			super.adapt();
-			this.innerHTML = 'go<br>';
-			this.innerHTML += this.addLine('Sociallevel');
-			this.innerHTML += this.addLine('total_asked');
-
+			let html = '';
+			html = 'go<br>';
+			html += '<table>';
+			html += this.addLine('Sociallevel');
+			html += this.addLine('total_asked');
+			html += '</table>';
+			this.innerHTML = html;
 		}
 
 		addLine(field) {
 			try {
-				Data(this.value).assertNumericNotZero(field);
+				const val = this.assertNumericNotZero(field);
 				return `<tr>
-					<td><span id='Bill_${field}' name='${field}'>${this.value[field]}</span></td>
 					<td>${field}</td>
+					<td><span id='Bill_${field}' name='${field}'>${val}</span></td>
 				</tr>`;
 			} catch (_e) {
 				return '';

@@ -2,7 +2,12 @@
 /* global webDescribe, JHElement, store */
 /* global loadReference, Folder, Bill */
 
-describe('tests/unit/x-file-bill-test-summary.js', function() {
+fdescribe('tests/unit/x-file-bill-test-summary.js', function() {
+	function hasRow(element, name, value) {
+		expect(element().innerHTML).toContain(name);
+		expect(element().innerHTML).toContain(`name="${name}">${value}<`);
+	}
+
 	beforeAll(function() {
 		const prices = loadReference('PriceTest.testIndex.json');
 		store.dispatch({ type: 'ACT_DEFINITIONS_STORE', payload: { prices }});
@@ -18,7 +23,8 @@ describe('tests/unit/x-file-bill-test-summary.js', function() {
 		it('should be instantiated', function() {
 			let b = getBill('FolderTest.test1.json', 1);
 			element().value = b;
-			// expect(element().innerHTML).toContain('Sociallevel');
+			hasRow(element, 'Sociallevel', '2');
+			hasRow(element, 'total_asked', '6720');
 		});
 	});
 });
