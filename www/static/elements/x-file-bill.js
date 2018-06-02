@@ -9,7 +9,10 @@ const XFileBill = (function() {
 
 		label(key) {
 			let p1 = key.indexOf('_');
-			return key.substring(p1).split('_').join(' ');
+			if (p1 > 0) {
+				return key.substring(p1 + 1).split('_').join(' ');
+			}
+			return key;
 		}
 
 		constructor() {

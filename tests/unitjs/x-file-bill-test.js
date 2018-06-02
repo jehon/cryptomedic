@@ -32,6 +32,12 @@ describe('tests/unit/x-file-bill-test.js', function() {
 				store.dispatch({ type: 'ACT_DEFINITIONS_STORE', payload: { prices }});
 				expect(element().price).toBeFalsy();
 			});
+
+			it('should label elements', function() {
+				expect(element().label('test')).toBe('test');
+				expect(element().label('_test')).toBe('_test');
+				expect(element().label('one_two_three')).toBe('two three');
+			});
 		});
 
 		describe('with prices', function() {
