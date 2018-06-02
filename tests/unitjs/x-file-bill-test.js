@@ -44,7 +44,6 @@ fdescribe('tests/unit/x-file-bill-test.js', function() {
 				let b = getBill('FolderTest.test1.json', 1);
 				element().value = b;
 				expect(element().innerHTML).toContain('bill available');
-				console.log(this.price);
 				expect(element().price).not.toBeFalsy();
 			});
 		});
