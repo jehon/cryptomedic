@@ -43,7 +43,7 @@ const XInputPicture = (function() {
 			this.free();
 			this._maxSize = 300 * 1024;
 
-			this.shadowRoot.innerHTML += 
+			this.shadowRoot.innerHTML +=
 				`<style>
 					x-input-picture * {
 						width: 100%;
