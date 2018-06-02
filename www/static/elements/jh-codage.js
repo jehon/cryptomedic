@@ -15,6 +15,14 @@
 			this.attachShadow({ mode: 'open' });
 		}
 
+		// TODO: should we adapt test for this to works?
+		// render() {
+		// 	super.render();
+		// 	store.subscribe(() => {
+		//		this.adapt();
+		// 	});
+		// }
+
 		adapt() {
 			if (this._translated) {
 				return this._setTranslated(this._value, this._translated);
