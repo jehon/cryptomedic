@@ -7,7 +7,7 @@ const XFileBillSummary = (function() {
 			super.adapt();
 
 			let html = '';
-			html += '<table>';
+			html += '<table style="width: 100%;">';
 			html += this.addLine('Sociallevel');
 			html += this.addLine('total_asked');
 

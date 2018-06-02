@@ -337,6 +337,10 @@ table.summary table>tbody>tr>td:nth-of-type(1) {
  padding-right: 10px;
 }
 
+table.summary table>tbody>tr:nth-child(2n) {
+	background-color: rgb(230, 230, 230);
+}
+
 /*******************************************
 /* Data Legend
  */
