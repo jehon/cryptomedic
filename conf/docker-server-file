@@ -2,7 +2,17 @@
 
 FROM php:7.1-apache
 
+RUN apt-get update
+
 # enable some extensions
+RUN apt-get install -y \
+        libfreetype6-dev \
+        libjpeg62-turbo-dev \
+        libmcrypt-dev \
+        libpng-dev \
+	&& docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
+    && docker-php-ext-install -j$(nproc) gd
+
 RUN pecl install xdebug-2.6.0 \
 	&& docker-php-ext-enable xdebug  \
 	&& docker-php-ext-install pdo_mysql \
@@ -16,4 +26,4 @@ COPY conf/ssmtp.conf /etc/ssmtp/ssmtp.conf
 
 WORKDIR /app
 
-RUN apt update && apt --yes install ssmtp
+RUN apt --yes install ssmtp
