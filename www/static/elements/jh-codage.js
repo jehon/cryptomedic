@@ -1,10 +1,10 @@
-/* global JHElement */
+/* global JHElement, store */
 
 (function() {
 	class JHCodage extends JHElement {
 		static get properties() {
-			return { 
-				'value': 'string', 
+			return {
+				'value': 'string',
 				'translated': 'string'
 			};
 		}
