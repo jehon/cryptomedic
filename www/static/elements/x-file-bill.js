@@ -49,9 +49,18 @@ const XFileBill = (function() {
 			return this.price;
 		}
 
-		// getFieldsBelongingTo(category) {
-		// 	return [];
-		// }
+		getFieldsBelongingTo(category) {
+			if (!this.price) {
+				return [];
+			}
+			const res = [];
+			for(const key in this.price) {
+				if (key.substr(0, category.length + 1) == category + '_') {
+					res.push(key);
+				}
+			}
+			return res;
+		}
 
 		// ratioSalary() {
 		// 	/**

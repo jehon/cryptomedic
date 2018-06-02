@@ -23,6 +23,7 @@ fdescribe('tests/unit/x-file-bill-test.js', function() {
 				store.dispatch({ type: 'ACT_USER_LOGOUT', payload: { }});
 				expect(element().innerHTML).toContain('bill available');
 				expect(element().price).toBeFalsy();
+				expect(element().getFieldsBelongingTo('anything')).toEqual([]);
 
 				store.dispatch({ type: 'ACT_DEFINITIONS_STORE', payload: { prices: [] }});
 				expect(element().price).toBeFalsy();
@@ -38,12 +39,21 @@ fdescribe('tests/unit/x-file-bill-test.js', function() {
 			beforeEach(function() {
 				const prices = loadReference('PriceTest.testIndex.json');
 				store.dispatch({ type: 'ACT_DEFINITIONS_STORE', payload: { prices }});
+
 				element().value = getBill('FolderTest.test1.json', 1);
 			});
 
 			it('should be configured', function() {
 				expect(element().innerHTML).toContain('bill available');
 				expect(element().price).not.toBeFalsy();
+			});
+
+			it('should getFieldsBelongingTo', function() {
+				expect(element().getFieldsBelongingTo('anything')).toEqual([]);
+				expect(element().getFieldsBelongingTo('other').length).toBe(16);
+				expect(element().getFieldsBelongingTo('other')).toContain('other_making_plaster');
+				expect(element().getFieldsBelongingTo('other')).not.toContain('consult_home_visit');
+				expect(element().getFieldsBelongingTo('other')).not.toContain('created_at');
 			});
 		});
 	});
