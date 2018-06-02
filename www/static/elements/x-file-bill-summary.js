@@ -25,7 +25,7 @@ const XFileBillSummary = (function() {
 			try {
 				const val = this.assertNumericNotZero(field);
 				return `<tr>
-					<td>${field}</td>
+					<td>${this.label(field)}</td>
 					<td><span id='Bill_${field}' name='${field}'>${val}</span></td>
 				</tr>`;
 			} catch (_e) {
