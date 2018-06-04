@@ -19,6 +19,9 @@ describe('twoColumns', function() {
 		expect(html).toContain('</table>');
 		expect(html).not.toContain('truc');
 		expect(html).not.toContain('brol');
+
+		// Double closure ?
+		expect(tc.toString()).not.toContain('</table></table>');
 	});
 
 	it('should handle objects', function() {

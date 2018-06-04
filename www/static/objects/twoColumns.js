@@ -2,6 +2,7 @@
 
 class TwoColumns {
 	constructor(about, options = {}) {
+		this.closed = false;
 		this.about = about;
 		this.text = '<table style="width: 100%">';
 		this.options = Object.assign({}, {
@@ -11,7 +12,10 @@ class TwoColumns {
 	}
 
 	toString() {
-		this.text += '</table>';
+		if (!this.closed) {
+			this.text += '</table>';
+			this.closed = true;
+		}
 		return this.text;
 	}
 
@@ -23,9 +27,10 @@ class TwoColumns {
 				<td><span id='${this.options.id_scope}${field}' name='${field}'>${val}</span></td>
 			</tr>`;
 		} catch (e) {
-			if (!(e instanceof ApplicationException)) {
-				throw e;
-			}
+			/* istanbul ignore next: what error could I catch here? */
+			// if (!(e instanceof ApplicationException)) {
+			// throw e;
+			// }
 		}
 		return this;
 	}
