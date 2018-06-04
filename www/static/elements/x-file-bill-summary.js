@@ -1,4 +1,4 @@
-/* global store,XFileBill */
+/* global store,XFileBill, TwoColumns */
 /* global Data */
 
 const XFileBillSummary = (function() {
@@ -6,31 +6,17 @@ const XFileBillSummary = (function() {
 		adapt() {
 			super.adapt();
 
-			let html = '';
-			html += '<table style="width: 100%;">';
-			html += this.addLine('Sociallevel');
-			html += this.addLine('total_asked');
+			const tc = new TwoColumns(this, {
+				label: this.label
+			});
+			tc.addLine('Sociallevel');
+			tc.addLine('total_asked');
 
 			for(const cat of this.categoriesList) {
-				for(const p of this.getFieldsBelongingTo(cat)) {
-					html += this.addLine(p);
-				}
+				tc.addLines(this.getFieldsBelongingTo(cat));
 			}
 
-			html += '</table>';
-			this.innerHTML = html;
-		}
-
-		addLine(field) {
-			try {
-				const val = this.assertNumericNotZero(field);
-				return `<tr>
-					<td>${this.label(field)}</td>
-					<td><span id='Bill_${field}' name='${field}'>${val}</span></td>
-				</tr>`;
-			} catch (_e) {
-				return '';
-			}
+			this.innerHTML = tc.toString();
 		}
 	}
 
