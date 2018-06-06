@@ -45,7 +45,10 @@ describe('tests/unit/x-login-status-test.js', function() {
 				nextRequest = settingsRequest;
 			});
 
-			webDescribe('*', '<x-login-status></x-login-status>', function(element) {
+			webDescribe('*', {
+				html: '<x-login-status></x-login-status>',
+				setupTime: 100
+			}, function(element) {
 				describe('with interaction with the store', function() {
 					it('should be hidden when initialized simply', function() {
 						store.dispatch({ type: ACT_USER_LOGOUT });
