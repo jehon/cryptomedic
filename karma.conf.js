@@ -11,11 +11,13 @@ module.exports = function(config) {
 			'karma-jasmine',
 			'karma-coverage',
 			'karma-junit-reporter',
-			'karma-html-reporter'
+			'karma-html-reporter',
+			'jasmine-webcomponents'
 		],
 
 		frameworks : [
 			'jasmine',
+			'jasmine-webcomponents'
 		],
 
 		reporters : [
