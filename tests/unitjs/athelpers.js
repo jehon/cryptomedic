@@ -11,6 +11,8 @@ function loadReference(name) {
 	return valid_respond;
 }
 
+/* TODO: DEPRECATED */
+/* map old version to new one */
 function webDescribe(title, options, fn) {
 	if (typeof(options) == 'object') {
 		return withElement(Object.assign({ title }, options), fn);
