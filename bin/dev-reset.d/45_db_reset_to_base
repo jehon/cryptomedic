@@ -2,12 +2,12 @@
 
 set -e
 
-DBNAME=`php $PRJ_DIR/config.php 'database.schema'`
+DBNAME=$( php "$PRJ_DIR"/config.php 'database.schema' )
 BASE="$PRJ_DIR"/conf/database/base.sql
 
 if [ ! -r "$BASE" ]; then
   echo "No '$BASE' base sql script found"
 else
   echo "* Loading $BASE into $DBNAME"
-  cat "$BASE" | $MYSQL  --database=$DBNAME
+  $MYSQL  --database="$DBNAME" < "$BASE"
 fi

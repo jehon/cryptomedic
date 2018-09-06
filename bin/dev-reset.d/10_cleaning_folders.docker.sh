@@ -39,5 +39,6 @@ mkdir -p "/tmp/laravel/logs"
 chmod -R 777 "/tmp/laravel/"
 
 # laravel.log
+mkdir -p /app/www/api/v1.3/storage/logs/
 touch /app/www/api/v1.3/storage/logs/laravel.log
 chmod a+rw /app/www/api/v1.3/storage/logs/laravel.log
