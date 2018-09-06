@@ -16,7 +16,7 @@
 
 			switch(this._type) {
 				case 'timestamp':
-					let display = '';
+					var display = '';
 					if (this._value > '') {
 						let date = new Date(Date.parse(this._value));  
 						if (isNaN(date.getYear())) {
