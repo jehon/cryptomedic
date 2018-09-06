@@ -5,19 +5,11 @@ module.exports = function(config) {
 	var configuration = {
 		basePath : 'www/',
 
-		plugins : [
-			'karma-chrome-launcher',
-			'karma-firefox-launcher',
-			'karma-jasmine',
-			'karma-coverage',
-			'karma-junit-reporter',
-			'karma-html-reporter',
-			'jasmine-webcomponents'
-		],
 
 		frameworks : [
+			'jasmine-es6',
 			'jasmine',
-			'jasmine-webcomponents'
+			'jasmine-html'
 		],
 
 		reporters : [

@@ -39,6 +39,8 @@
     "karma-firefox-launcher": "latest",
     "karma-html-reporter": "latest",
     "karma-jasmine": "latest",
+    "karma-jasmine-es6": "0.0.3",
+    "karma-jasmine-html": "github:jehon/jasmine-webcomponents",
     "karma-junit-reporter": "latest",
     "karma-read-json": "^1.1.0",
     "kill-by-port": "0.0.1",

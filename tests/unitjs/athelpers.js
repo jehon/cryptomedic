@@ -1,7 +1,7 @@
 /* eslint-env jasmine */
 /* global webDescribe, JHElement */
 /* global readJSON, API_VERSION */
-/* global withElement */
+/* global withHtml */
 /* exported loadReference, webDescribe, extractPath */
 
 function loadReference(name) {
@@ -15,9 +15,9 @@ function loadReference(name) {
 /* map old version to new one */
 function webDescribe(title, options, fn) {
 	if (typeof(options) == 'object') {
-		return withElement(Object.assign({ title }, options), fn);
+		return withHtml(Object.assign({ title }, options), fn);
 	}
-	return withElement({ title, html: options }, fn);
+	return withHtml({ title, html: options }, fn);
 }
 
 function extractPath(url) {
