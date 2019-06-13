@@ -256,40 +256,49 @@ References::$lists["Side"] = References::buildValueList(["Right", "Left", "Bi"])
 References::$lists["Examiner"] = References::buildValueList([
   // physio
   References::withCode("Ershad",     "Ers"),
-  References::withCode("Murshed",    "Mur"),
+//  References::withCode("Murshed",    "Mur"),
   References::withCode("Shetou",     "She"),
   References::withCode("Rezaul",     "Res"),
-  References::withCode("Sultana",    "Sul"),
-  References::withCode("Lipa",       "Lip"), // As of 05/2017
-  References::withCode("Raj",        "Raj"), // As of 02/2017
-  References::withCode("Juwel",      "Juwel"), // As of 01/2018
+//   References::withCode("Sultana",    "Sul"),
+//   References::withCode("Lipa",       "Lip"), // As of 05/2017
+//   References::withCode("Raj",        "Raj"), // As of 02/2017
+//   References::withCode("Juwel",      "Juwel"), // As of 01/2018
+  References::withCode("Shakil",   ""),
+  References::withCode("Humaira",  ""),
 
   // orthesis
-  References::withCode("Hassan 1",   "Has 1"),
-  References::withCode("Hassan 2",   "Has 2"),
   References::withCode("Debashish",  "Deb"),
+  References::withCode("Hasan",   "Has 1"),
+  References::withCode("Ahsan",    "Has 2"),
   References::withCode("Rina",       "Rin"),
-  References::withCode("Liton",      "Lit"),
+//   References::withCode("Liton",      "Lit"),
+  References::withCode("Jamshed",    ""),
+  References::withCode("Masud",      ""),
 
   // Field monitors
-  References::withCode("Prietush",   "Pri"),
-  References::withCode("Rokeya",     "Ruk"),
-  References::withCode("Nur Alam",   "Nur"),
-  References::withCode("Shuhal",     "Shu"),
+//   References::withCode("Prietush",   "Pri"),
+//   References::withCode("Rokeya",     "Ruk"),
+//   References::withCode("Nur Alam",   "Nur"),
+//   References::withCode("Shuhal",     "Shu"),
   References::withCode("Zia",        "Zia"),
 
   // Doctors
-  References::withCode("Dr Monir",   "Mon"),
+//   References::withCode("Dr Monir",   "Mon"),
   References::withCode("Dr Taslim",  "Tas"),
-  References::withCode("AMD doctor", "AMD"),
+  References::withCode("Dr Craviari",  "CRAV"),
+  References::withCode("V Cunin",  ""),
+  References::withCode("Th Haumont",  ""),
+  References::withCode("G Py",  ""),
+  References::withCode("V Raux",  ""),
+  References::withCode("Other practitionner", "OTHER"),
 ]);
 
 // Not present anymore
-References::withCode("Ferdawsi",   "Fer");
-References::withCode("Ricta",      "Ric");
-References::withCode("Asma",       "Asm");
-References::withCode("Shudir",     "Shu");
-References::withCode("Kobir",      "Kob");
+// References::withCode("Ferdawsi",   "Fer");
+// References::withCode("Ricta",      "Ric");
+// References::withCode("Asma",       "Asm");
+// References::withCode("Shudir",     "Shu");
+// References::withCode("Kobir",      "Kob");
 
 References::$lists["SocialLevel"]                               = References::buildValueList(array( 0, 1, 2, 3, 4 ));
 References::$lists["Pirani"]                                    = References::buildValueList(array(0, 0.5, 1));
