@@ -27,17 +27,17 @@ class References {
     if (self::$_init) {
       return ;
     }
-    // TODO later
 
-    // $list = [];
-    // $examiners = DB::select("SELECT username, codage, inExaminerList FROM users");
-    // foreach($examiners as $examiner) {
-    //   $ec = References::withCode($examiner->username, $examiner->codage);
-    //   if ($examiner->inExaminerList > 0) {
-    //     $list[] = $ec;
-    //   }
-    // }
-    // References::$lists["Examiner"] = References::buildValueList($list);
+    // Dynamic examiner names
+    $list = [];
+    $examiners = DB::select("SELECT username, `name`, codage, inExaminerList FROM users");
+    foreach($examiners as $examiner) {
+      $ec = References::withCode($examiner->name, $examiner->codage);
+      if ($examiner->inExaminerList > 0) {
+        $list[] = $ec;
+      }
+    }
+    References::$lists["Examiner"] = References::buildValueList($list);
   }
 
   static function getList($name) {
@@ -231,8 +231,6 @@ References::$lists["Unions"] = References::buildValueList(
 
 References::$lists["Sex"] = References::buildValueList([ "Male", "Female" ]);
 References::$lists["Centers"] = References::buildValueList([
-
-
   References::withCode("Chakaria Disability Center" , "CDC"),
   References::withCode("Chakaria Device Center"     , "CDev"),
   References::withCode("Cox's Bazar"                , "CB"),
@@ -253,52 +251,6 @@ References::$lists["Pain"] = References::buildValueList(["No", "Moderate", "Seve
 References::$lists["WalkingCapacities"] = References::buildValueList(["Level 1", "Level 2", "Level 3", "Level 4", "Level 5"]);
 References::$lists["LegAnalysis"] = References::buildValueList(["Valgus", "Varus"]);
 References::$lists["Side"] = References::buildValueList(["Right", "Left", "Bi"]);
-References::$lists["Examiner"] = References::buildValueList([
-  // physio
-  References::withCode("Ershad",     "Ers"),
-  References::withCode("Murshed",    "Mur"),
-  References::withCode("Shetou",     "She"),
-  References::withCode("Rezaul",     "Res"),
-//   References::withCode("Sultana",    "Sul"),
-//   References::withCode("Lipa",       "Lip"), // As of 05/2017
-//   References::withCode("Raj",        "Raj"), // As of 02/2017
-//   References::withCode("Juwel",      "Juwel"), // As of 01/2018
-  References::withCode("Shakil",   ""),
-  References::withCode("Humaira",  ""),
-
-  // orthesis
-  References::withCode("Debashish",  "Deb"),
-  References::withCode("Hasan",   "Has 1"),
-  References::withCode("Ahsan",    "Has 2"),
-  References::withCode("Rina",       "Rin"),
-//   References::withCode("Liton",      "Lit"),
-  References::withCode("Jamshed",    ""),
-  References::withCode("Masud",      ""),
-
-  // Field monitors
-//   References::withCode("Prietush",   "Pri"),
-//   References::withCode("Rokeya",     "Ruk"),
-//   References::withCode("Nur Alam",   "Nur"),
-//   References::withCode("Shuhal",     "Shu"),
-  References::withCode("Zia",        "Zia"),
-
-  // Doctors
-//   References::withCode("Dr Monir",   "Mon"),
-  References::withCode("Dr Taslim",  "Tas"),
-  References::withCode("Dr Craviari",  "CRAV"),
-  References::withCode("V Cunin",  ""),
-  References::withCode("Th Haumont",  ""),
-  References::withCode("G Py",  ""),
-  References::withCode("V Raux",  ""),
-  References::withCode("Other practitionner", "OTHER"),
-]);
-
-// Not present anymore
-// References::withCode("Ferdawsi",   "Fer");
-// References::withCode("Ricta",      "Ric");
-// References::withCode("Asma",       "Asm");
-// References::withCode("Shudir",     "Shu");
-// References::withCode("Kobir",      "Kob");
 
 References::$lists["SocialLevel"]                               = References::buildValueList(array( 0, 1, 2, 3, 4 ));
 References::$lists["Pirani"]                                    = References::buildValueList(array(0, 0.5, 1));
