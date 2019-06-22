@@ -63,7 +63,11 @@ module.exports = {
 					this.myRadio(el, params['period']);
 				} else {
 					this.waitForElementVisible(el, '@@ Waiting for parameter ' + k + ' => ' + params[k] + ': ' + el);
-					this.clearValue(el);
+					if (k == 'day') {
+						true;
+					} else {
+						this.clearValue(el);
+					}
 					if (params[k]) {
 						const p = {};
 						p[el] = params[k];

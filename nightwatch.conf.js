@@ -3,7 +3,7 @@
 
 'use strict';
 
-let selenium = require('selenium-server');
+// let selenium = require('selenium-server');
 // let remoteTarget = "http://localhost/static/index.html"
 
 // PHP Server: @latitude = not debug mode
@@ -18,68 +18,64 @@ module.exports = {
 
 	'globals_path': 'nightwatch-global.js',
 
-	'selenium' : {
-		'start_process' : true,
-		'start_session' : true,
-		'server_path': selenium.path,
-		'host' : '127.0.0.1',
-		'port' : 4444,
-		'cli_args' : {
-			'webdriver.chrome.driver': 'node_modules/chromedriver/lib/chromedriver/chromedriver',
-			'webdriver.gecko.driver': require('geckodriver').path
-		}
+	'webdriver': {
+		'start_process': true,
+
+		// For chrome, because firefox does not works:
+		'server_path': 'node_modules/.bin/chromedriver',
+		'port' : 9515,
+		'use_legacy_jsonwire': true,
 	},
+
 	'test_settings' : {
 		'default' : {
 			'launch_url' : remoteTarget,
-			'selenium_port'  : 4444,
-			'selenium_host'  : '127.0.0.1',
-			'silent': true,
 			'globals': {
 				'waitForConditionTimeout': 10000,
 				'waitForConditionPoolInterval': 10000
 			},
+			// 'webdriver': {
+			// 	'server_path': 'node_modules/.bin/geckodriver',
+			// 	'port' : 4444,
+			// // 'cli_args': [
+			// // '--headless'
+			// // ]
+			// },
+			'desiredCapabilities' : {
+				// 'browserName' : 'firefox',
+				'browserName': 'chrome',
+				// 'acceptInsecureCerts' : true,
+				// 'loggingPrefs': {'driver': 'INFO', 'server': 'OFF', 'browser': 'INFO'}
+				'goog:chromeOptions': {
+					// w3c: false,
+					args: [
+						'--headless',
+					]
+				},			},
 			'screenshots' : {
 				'enabled' : true,
 				'on_failure' : true,
 				'on_error' : true,
 				'path' : 'target/e2e/firefox/'
 			},
-			'desiredCapabilities': {
-				'marionnette': true,
-				'webdriver.log.driver': 'DEBUG',
-				'javascriptEnabled': true,
-				'acceptSslCerts': true,
-				'chromeOptions' : {
-					'args' : [ 
-						// "--auto-open-devtools-for-tabs",
-						'--headless'
-					]
-				},
-				'moz:firefoxOptions': {
-					'args': [
-						'-headless'
-					]
-				},
-				// "browserName": "firefox"
-			}
 		},
-		'chrome' : {
-			'silent': true,
-			'screenshots' : {
-				'enabled' : true,
-				'path' : 'target/e2e/chrome/'
-			},
-			'desiredCapabilities': {
-				'browserName': 'chrome',
-				'javascriptEnabled': true,
-				'acceptSslCerts': true,
-				'chromeOptions' : {
-					'args' : [ 
-						'--headless'
-					]
-				}
-			}
-		}
+		// 'chrome' : {
+		// 	'webdriver': {
+		// 		'port': 9515,
+		// 		'server_path': 'node_modules/.bin/chromedriver',
+		// 		'cli_args': [
+		// 			// 	'--headless',
+		// 			// 	'--auto-open-devtools-for-tabs'
+		// 		]
+		// 	},
+
+		// 	'desiredCapabilities' : {
+		// 		'browserName' : 'chrome'
+		// 	},
+		// 	'screenshots' : {
+		// 		'enabled' : true,
+		// 		'path' : 'target/e2e/chrome/'
+		// 	},
+		// },
 	}
 };
