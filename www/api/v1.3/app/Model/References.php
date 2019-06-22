@@ -256,7 +256,7 @@ References::$lists["Side"] = References::buildValueList(["Right", "Left", "Bi"])
 References::$lists["Examiner"] = References::buildValueList([
   // physio
   References::withCode("Ershad",     "Ers"),
-//  References::withCode("Murshed",    "Mur"),
+  References::withCode("Murshed",    "Mur"),
   References::withCode("Shetou",     "She"),
   References::withCode("Rezaul",     "Res"),
 //   References::withCode("Sultana",    "Sul"),
