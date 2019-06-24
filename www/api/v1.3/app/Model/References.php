@@ -233,14 +233,15 @@ References::$lists["Sex"] = References::buildValueList([ "Male", "Female" ]);
 References::$lists["Centers"] = References::buildValueList([
   References::withCode("Chakaria Disability Center" , "CDC"),
   References::withCode("Chakaria Device Center"     , "CDev"),
-  References::withCode("Cox's Bazar"                , "CB"),
-  References::withCode("Cox's Bazar Device Center"  , "CBDC"),
+  References::withCode("Chakaria XRay Center"       , "CXR"),
+//   References::withCode("Cox's Bazar"                , "CB"),
+//   References::withCode("Cox's Bazar Device Center"  , "CBDC"),
   References::withCode("Ukhia"                      , "UK"),
   References::withCode("Ukhiya Device Center"       , "UKDC"),
   References::withCode("Ramu"                       , "RA"),
   References::withCode("Moheshkhali"                , "MO"),
   References::withCode("Moheshkhali Device Center"  , "MODC"),
-  References::withCode("Lohagara"                   , "LOH"),
+//   References::withCode("Lohagara"                   , "LOH"),
   References::withCode("CMOSH"                      , false),
   References::withCode("CMOSH Device Center"        , false),         
   References::withCode("Other Field"                , "OF")
