@@ -22,6 +22,9 @@ ENV APACHE_DOCUMENT_ROOT /app/www
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
 RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 
+RUN curl -s https://getcomposer.org/installer | php
+RUN mv composer.phar /usr/local/bin/composer
+
 COPY conf/ssmtp.conf /etc/ssmtp/ssmtp.conf
 
 WORKDIR /app
