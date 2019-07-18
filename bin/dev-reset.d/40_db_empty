@@ -2,9 +2,9 @@
 
 set -e
 
-DBNAME=`php $PRJ_DIR/config.php 'database.schema'`
-DBUSER=`php $PRJ_DIR/config.php 'database.username'`
-DBPASS=`php $PRJ_DIR/config.php 'database.password'`
+DBNAME=$(php $PRJ_DIR/config.php 'database.schema')
+DBUSER=$(php $PRJ_DIR/config.php 'database.username')
+DBPASS=$(php $PRJ_DIR/config.php 'database.password')
 
 $MYSQL --database=mysql <<-EOC
   DROP SCHEMA IF EXISTS $DBNAME;
