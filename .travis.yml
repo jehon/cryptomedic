@@ -2,10 +2,14 @@ language: node_js
 node_js:
   - "12"
 
+addons:
+  chrome: latest
+  firefox: latest
+
 before_install:
     - docker-compose up --quiet-pull --detach
 
-before_script:
+    before_script:
   - npm run reset
 
 script:
