@@ -2,6 +2,10 @@
 
 set -e
 
+# Make it back executable
+chmod +x "$PRJ_DIR"/node_modules/.bin/*
+chmod +x "$PRJ_DIR"/www/api/*/vendor/bin/*
+
 # Clean up .../target
 mkdir -p "$PRJ_DIR/target"
 find "$PRJ_DIR/target/" -mindepth 1 ! -name '.gitkeep' -delete
@@ -9,7 +13,7 @@ find "$PRJ_DIR/target/" -mindepth 1 ! -name '.gitkeep' -delete
 # Clean up logs
 find . -name "*.log" -delete
 
-# Clean up builded artifacts
+# Clean up built artifacts
 rm -fv "$PRJ_DIR/www/build/*"
 rm -fv "$PRJ_DIR/www/static/index.html"
 
@@ -23,7 +27,7 @@ cp -v \
 	--preserve=mode,timestamp \
 	"$PRJ_DIR/live-for-test"/* "$PRJ_DIR/live/"
 
-touch $PRJ_DIR/live/.gitkeep
+touch "$PRJ_DIR/live/.gitkeep"
 
 rm -fr "/tmp/laravel"
 

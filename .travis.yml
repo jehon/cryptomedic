@@ -30,6 +30,6 @@ before_script:
   - npm run reset
 
 script:
-  - npm run -s test-api
-  - npm run -s test-unit
+  - npm run --silent test-api
+  - npm run --silent test-unit
   # - npm run -s test-e2e
