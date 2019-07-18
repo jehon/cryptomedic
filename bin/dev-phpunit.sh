@@ -21,15 +21,15 @@ if [ "$1" == "COMMIT" ]; then
 fi
 
 for V in v* ; do
-	cd $V
+	cd "$V" || exit 255
 	echo "Version $V (`pwd`)"
 	REPORTS="../../../target/php$V"
-	mkdir -p $REPORTS
-	chmod a+wx $REPORTS
+	mkdir -p "$REPORTS"
+	chmod a+wx "$REPORTS"
 	./vendor/bin/phpunit  --coverage-html $REPORTS --coverage-xml $REPORTS "$@"
 	cd ..
 done
 
-cd $PRJ_DIR
+cd "$PRJ_DIR"
 
 chmod a+rwX target/
