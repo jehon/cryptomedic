@@ -22,6 +22,9 @@ before_install:
   # After version
   - docker-compose --version
 
+  # Build server
+  - docker-compose build server
+
   # Start docker-compose stack
   # This is needed by the install (composer.phar) part
   - docker-compose up --quiet-pull --detach
