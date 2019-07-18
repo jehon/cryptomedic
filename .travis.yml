@@ -8,8 +8,8 @@ addons:
 
 before_install:
   - docker-compose --version
-  - docker-compose up --detach
-  # --quiet-pull
+  - docker-compose up -d
+  # --quiet-pull --detach
 
 before_script:
   - npm run reset
