@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+set -e
+
+docker-compose exec -T server /app/bin/dev-reset.d/10_server-install.docker.sh
