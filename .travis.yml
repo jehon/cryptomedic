@@ -3,7 +3,7 @@ node_js:
   - "12"
 
 addons:
-  chrome: latest
+  chrome: stable
   firefox: latest
 
 before_install:
