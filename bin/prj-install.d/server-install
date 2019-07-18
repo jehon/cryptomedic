@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 
 set -e
+set -x
 
-cd "$PRJ_DIR"
+pushd "$PRJ_DIR/www/api"
 
 for V in v* ; do
 	cd "$V" || exit 255
