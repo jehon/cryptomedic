@@ -15,3 +15,4 @@ before_install:
 script:
   - npm run -s test-api
   - npm run -s test-unit
+  - npm run -s test-e2e
