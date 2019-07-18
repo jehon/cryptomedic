@@ -3,8 +3,8 @@
 set -e
 
 # Make it back executable
-chmod +x "$PRJ_DIR"/node_modules/.bin/*
-chmod +x "$PRJ_DIR"/www/api/*/vendor/bin/*
+chmod +x "$PRJ_DIR"/node_modules/.bin/* || true
+chmod +x "$PRJ_DIR"/www/api/*/vendor/bin/* || true
 
 # Clean up .../target
 mkdir -p "$PRJ_DIR/target"

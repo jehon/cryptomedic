@@ -26,8 +26,8 @@ before_install:
   # This is needed by the install (composer.phar) part
   - docker-compose up --quiet-pull --detach
 
-before_script:
-  - npm run reset
+# before_script:
+#   - npm run reset
 
 script:
   - npm run --silent test-api
