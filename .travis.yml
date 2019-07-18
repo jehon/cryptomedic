@@ -9,4 +9,5 @@ before_script:
   - npm run reset
 
 script:
-  - npm run test-api
+  - npm run -s test-api
+  - npm run -s test-unit
