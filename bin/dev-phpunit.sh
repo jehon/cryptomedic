@@ -26,6 +26,8 @@ for V in v* ; do
 	REPORTS="../../../target/php$V"
 	mkdir -p "$REPORTS"
 	chmod a+wx "$REPORTS"
+	echo "Current folder: $(pwd)"
+	ls -l vendor/bin
 	./vendor/bin/phpunit  --coverage-html $REPORTS --coverage-xml $REPORTS "$@"
 	cd ..
 done
