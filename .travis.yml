@@ -9,4 +9,4 @@ before_script:
   - npm run reset
 
 script:
-  - echo "todo - ok"
+  - npm run test-api
