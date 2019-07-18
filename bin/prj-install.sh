@@ -1,3 +1,10 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
-docker-compose exec server bin/prj-install.scripts/server-install.sh
+# Stop on error
+set -e
+
+# Clear terminal
+echo -e \\033c
+
+# Run project custom files
+run-parts --exit-on-error --report $PRJ_DIR/bin/prj-install.d

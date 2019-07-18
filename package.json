@@ -54,7 +54,7 @@
     "webpack": "^3.8.1"
   },
   "scripts": {
-    "postinstall": "cd www/api/v1.3/ && docker-compose exec -T server composer install && cd - && npm run reset",
+    "postinstall": "./bin/prj-install.sh && npm run reset",
     "reset": "./bin/dev-reset.sh && npm run build",
     "build": "webpack",
     "test": "npm run reset && npm run -s test-api && npm run -s test-unit && npm run -s test-e2e",
