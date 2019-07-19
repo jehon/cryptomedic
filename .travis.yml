@@ -9,12 +9,10 @@ addons:
   apt:
     packages:
       - make
-      - docker-compose
   chrome: stable
   firefox: latest
 
 before_install:
-  # Before version
   - docker-compose --version
 
   # Update docker-compose
@@ -23,21 +21,16 @@ before_install:
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
 
-  # After version
-  - docker-compose --version
-
-  # Build server
-  - docker-compose build server
-
   # Start docker-compose stack
   # This is needed by the install (composer.phar) part
   - docker-compose up --quiet-pull --detach
 
-# before_script:
-#   - npm run reset
+before_script:
+  - npm run clean
   - make ci
 
 script:
   - npm run --silent test-api
   - npm run --silent test-unit
-  - npm run -s test-e2e
+  - npm run --silent test-e2e
+
