@@ -6,6 +6,9 @@ env:
   DOCKER_COMPOSE_VERSION=1.24.1
 
 addons:
+  apt:
+    packages:
+      - make
   chrome: stable
   firefox: latest
 
@@ -31,6 +34,7 @@ before_install:
 
 # before_script:
 #   - npm run reset
+  - make ci
 
 script:
   - npm run --silent test-api
