@@ -26,11 +26,9 @@ before_install:
   - docker-compose up --quiet-pull --detach
 
 before_script:
-  - npm run clean
-  - make ci
+  - make clean
 
 script:
   - npm run --silent test-api
   - npm run --silent test-unit
   - npm run --silent test-e2e
-
