@@ -35,4 +35,4 @@ before_install:
 script:
   - npm run --silent test-api
   - npm run --silent test-unit
-  # - npm run -s test-e2e
+  - npm run -s test-e2e
