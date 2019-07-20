@@ -1,39 +1,76 @@
 
-VAPI := "1.3"
+VAPI := v1.3
 
 
-define pipe_to_docker
+define run_in_docker
 	docker-compose exec -T $(1) /bin/bash -c $(2)
 endef
 
-all:
-	@echo "ok, makefile is there"
+# See https://coderwall.com/p/cezf6g/define-your-own-function-in-a-makefile
+# 1: folder where to look
+# 2: base file to have files newer than, to limit the length of the output
+define recursive-dependencies
+        $(shell \
+                if [ -r "$(2)" ]; then \
+                        find "$(1)" -name tests_data -prune -o -name tmp -prune -o -newer "$(2)"; \
+                else \
+                        echo "$(1)";\
+                fi \
+        )
+endef
 
-ci:
-	@echo "ok, makefile is there, and we are in the CI pass"
 
-clean-hard: clean
+all: install-dev
+	@echo "ok, ready to dev! open http://localhost:5555/ to browse !"
+
+clean-hard: clean stop-docker-compose fix-rights
 	rm -fr node_modules
-	$(call pipe_to_docker,"server", "\
-		rm -fr /app/www/api/$(VAPI)/vendor \
-		&& bin/ensure_empty_folder.sh /app/www/api/$(VAPI)/bootstrap/cache/")
+	rm -fr www/api/$(VAPI)/vendor
+	bin/ensure_empty_folder.sh www/api/$(VAPI)/bootstrap/cache/
 
-clean: docker-compose-is-running target/.structure.dev
-	$(call pipe_to_docker,"server","bin/ensure_empty_folder.sh /app/target")
-	rm -fv "www/static/index.html"
-	rm -fv "www/build/*"
-	$(call pipe_to_docker,"server","\
-		find . -name *.log -delete \
-		&& find /tmp/laravel -type f -delete \
-		&& rm -fr /app/www/api/$(VAPI)/storage/logs/")
+clean: docker-compose-is-running structure.dev database-reset fix-rights
+	bin/ensure_empty_folder.sh target
+	rm -f "www/static/index.html"
+	bin/ensure_empty_folder.sh www/build/
+	find . -name *.log -delete
+	rm -f www/api/$(VAPI)/storage/logs/laravel.log
+	touch www/api/$(VAPI)/storage/logs/laravel.log
+	chmod a+rw www/api/$(VAPI)/storage/logs/laravel.log
+	bin/ensure_empty_folder.sh live/
+	chmod a+rwX live/
+	$(call run_in_docker,"server","find /tmp/laravel -type f -delete")
 
-install: target/.structure.prod
-	
-build: target/.structure.prod
+install: docker-compose-is-running structure.prod \
+		node.dependencies \
+		api.dependencies
 
-test: docker-compose-is-running target/.structure.dev
+install-dev: structure.dev install live-folder-test
 
-deploy:
+build: www/static/index.html
+
+reset-dev: live-folder-test database-reset
+
+test: docker-compose-is-running install-dev reset-dev
+	# TODO test-api must run in docker-...
+	# TODO: split in subcommands ?
+	npm run --silent test-api
+	npm run --silent test-unit
+	npm run --silent test-e2e
+
+start-docker-compose: docker-compose-is-running
+
+stop-docker-compose:
+	docker-compose down || true
+
+deploy: install
+	# TODO: deploy to server
+
+fix-rights:
+	# TODO: complete this
+	$(call run_in_docker,"server","\
+		chmod a+rwX -R www/api/$(VAPI)/bootstrap/cache/ \
+		&& chmod a+rwX -R live \
+	")
 
 #
 #
@@ -41,34 +78,70 @@ deploy:
 #
 #
 docker-compose-is-running:
-	@$(call pipe_to_docker,"server","true")
-	@echo "Docker-compose is running"
+	@$(call run_in_docker,"server","true") || docker-compose up -d
+
+#
+#
+# Data
+#
+#
+live-folder-test: live/.installed
+live/.installed: live/.created fix-rights $(call recursive-dependencies,live/,$@)
+	rsync -a --delete live-for-test/ live/
+	chmod a+rwX -R live
+	touch live/.installed
+
+database-reset: database-load database-upgrade
+	# TODO everything
+
+database-load:  # must be idempotent -> how ?
+	# TODO
+
+database-upgrade:
+	# TODO Do it by http
+	# database-patch-dev: # TODO
 
 #
 #
 # Structure
 #
 #
+www/static/index.html: structure.prod \
+		node.dependencies \
+		www/app.js
 
+	npm run build
 
-target/.structure.dev: \
-		target/.structure.prod \
+node.dependencies: node_modules/.dependencies
+node_modules/.dependencies: package.json package-lock.json
+	npm install
+	touch node_modules/.dependencies
+
+api.dependencies: www/api/$(VAPI)/vendor/.dependencies
+www/api/$(VAPI)/vendor/.dependencies: www/api/$(VAPI)/composer.json www/api/$(VAPI)/composer.lock
+	$(call run_in_docker,"server","\
+		cd www/api/$(VAPI) \
+		&& composer install \
+		&& chmod -R a+rwX vendor \
+	")
+	touch www/api/$(VAPI)/vendor/.dependencies
+
+structure.dev: \
+		structure.prod \
 		target/.tmp.exists
 
-	touch target/.structure.dev
-
-target/.structure.prod: \
+structure.prod: \
 		target/.exists \
-		www/api/v1.3/storage/logs/laravel.log
-
-	touch target/.structure.prod
+		www/api/$(VAPI)/storage/logs/laravel.log \
+		live/.created
 
 target/.exists:
 	mkdir -p target/
+	chmod a+rwX target
 	touch target/.exists
 
 target/.tmp.exists:
-	$(call pipe_to_docker,"server","mkdir -p \
+	$(call run_in_docker,"server","mkdir -p \
 		/tmp/laravel/framework \
 		/tmp/laravel/framework/cache \
 		/tmp/laravel/framework/sessions \
@@ -80,7 +153,11 @@ target/.tmp.exists:
 	touch target/.tmp.exists
 
 www/api/v1.3/storage/logs/laravel.log:
-	$(call pipe_to_docker,"server","\
-		mkdir -p /app/www/api/v1.3/storage/logs/ \
-		&& touch /app/www/api/v1.3/storage/logs/laravel.log \
-		&& chmod a+rw /app/www/api/v1.3/storage/logs/laravel.log")
+	mkdir -p www/api/v1.3/storage/logs/
+	touch www/api/v1.3/storage/logs/laravel.log
+	chmod a+rw www/api/v1.3/storage/logs/laravel.log
+
+live: live/.created
+live/.created:
+	mkdir -p live
+	touch live/.created

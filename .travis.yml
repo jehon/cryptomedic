@@ -21,14 +21,15 @@ before_install:
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
 
+install:
   # Start docker-compose stack
   # This is needed by the install (composer.phar) part
-  - docker-compose up --quiet-pull --detach
+  - make docker-compose-is-running
 
-before_script:
-  - make clean
+  - make install-dev
+  - make database-reset
+  - make build
 
 script:
-  - npm run --silent test-api
-  - npm run --silent test-unit
-  - npm run --silent test-e2e
+  - make test
+  - make stop
