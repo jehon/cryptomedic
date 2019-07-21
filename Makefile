@@ -1,9 +1,12 @@
 
 VAPI := v1.3
 DBNAME := cryptomedic
-DBUSER := username # From docker-compose.yml
-DBPASS := password # From docker-compose.yml
-DBROOTPASS := password # From docker-compose.yml
+# From docker-compose.yml
+DBUSER := username
+DBPASS := password
+DBROOTPASS := password
+# From config.php
+DBUPDATEPWD := secret
 
 define run_in_docker
 	docker-compose exec -T $(1) /bin/bash -c $(2)
@@ -91,7 +94,7 @@ docker-compose-is-running:
 live-folder-test: live/.installed
 live/.installed: live/.created fix-rights $(call recursive-dependencies,live/,$@)
 	rsync -a --delete live-for-test/ live/
-	chmod a+rwX -R live
+	# chmod a+rwX -R live
 	touch live/.installed
 
 database-reset: database-load database-upgrade
@@ -106,8 +109,8 @@ database-load:  # must be idempotent -> how ?
 			DROP SCHEMA IF EXISTS $(DBNAME); \
 			CREATE SCHEMA $(DBNAME); \
 			USE $(DBNAME); \
-			GRANT ALL PRIVILEGES ON $(DBNAME)   TO $(DBNAME); \
-			GRANT ALL PRIVILEGES ON $(DBNAME).* TO $(DBNAME); \
+			GRANT ALL PRIVILEGES ON $(DBNAME)   TO $(DBUSER); \
+			GRANT ALL PRIVILEGES ON $(DBNAME).* TO $(DBUSER); \
 			SET PASSWORD FOR $(DBUSER) = PASSWORD('$(DBPASS)'); \
 	\" ")
 
@@ -115,8 +118,10 @@ database-load:  # must be idempotent -> how ?
 	# ALTER USER 'root' IDENTIFIED WITH mysql_native_password BY 'password';
 	# ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
 
-	docker-compose exec -T $(1) mysql mysql -u root -p$(DBROOTPASS) --database="$(DBNAME)" \
-		< "conf/database/base.sql"
+	cat "conf/database/base.sql" \
+		| docker-compose exec -T mysql mysql -u root -p$(DBROOTPASS) --database="$(DBNAME)"
+
+	wget -O - "http://localhost:5555/maintenance/patch_db.php?pwd=$(DBUPDATEPWD)"
 
 	# myqsl --database="$DBNAME" < "conf/database/base.sql"
 
@@ -160,7 +165,7 @@ structure.prod: \
 
 target/.exists:
 	mkdir -p target/
-	chmod a+rwX target
+	# chmod a+rwX target
 	touch target/.exists
 
 target/.tmp.exists:
@@ -178,7 +183,7 @@ target/.tmp.exists:
 www/api/v1.3/storage/logs/laravel.log:
 	mkdir -p www/api/v1.3/storage/logs/
 	touch www/api/v1.3/storage/logs/laravel.log
-	chmod a+rw www/api/v1.3/storage/logs/laravel.log
+	# chmod a+rw www/api/v1.3/storage/logs/laravel.log
 
 live: live/.created
 live/.created:
