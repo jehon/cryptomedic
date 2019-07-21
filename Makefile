@@ -1,6 +1,9 @@
 
 VAPI := v1.3
-
+DBNAME := cryptomedic
+DBUSER := username # From docker-compose.yml
+DBPASS := password # From docker-compose.yml
+DBROOTPASS := password # From docker-compose.yml
 
 define run_in_docker
 	docker-compose exec -T $(1) /bin/bash -c $(2)
@@ -95,7 +98,27 @@ database-reset: database-load database-upgrade
 	# TODO everything
 
 database-load:  # must be idempotent -> how ?
-	# TODO
+	# export DBROOTPASS=password
+	# export DBROOTUSER=root
+
+	$(call run_in_docker,"mysql"," \
+		mysql -u root -p$(DBROOTPASS) --database=mysql -e \" \
+			DROP SCHEMA IF EXISTS $(DBNAME); \
+			CREATE SCHEMA $(DBNAME); \
+			USE $(DBNAME); \
+			GRANT ALL PRIVILEGES ON $(DBNAME)   TO $(DBNAME); \
+			GRANT ALL PRIVILEGES ON $(DBNAME).* TO $(DBNAME); \
+			SET PASSWORD FOR $(DBUSER) = PASSWORD('$(DBPASS)'); \
+	\" ")
+
+	# Mysql 5.7, 7.0:
+	# ALTER USER 'root' IDENTIFIED WITH mysql_native_password BY 'password';
+	# ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
+
+	docker-compose exec -T $(1) mysql mysql -u root -p$(DBROOTPASS) --database="$(DBNAME)" \
+		< "conf/database/base.sql"
+
+	# myqsl --database="$DBNAME" < "conf/database/base.sql"
 
 database-upgrade:
 	# TODO Do it by http
