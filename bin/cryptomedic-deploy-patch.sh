@@ -12,22 +12,16 @@ PRJ_DIR=$(dirname "$SCRIPT_DIR")
 
 npm run build
 
-TAG=`cat "$PRJ_DIR/www/release_version.txt"`
-TAG=${TAG:0:10}
-echo "Tag: $TAG"
-
 # Give it to any sub-scripts
 export PRJ_DIR
-
 TMP=$PRJ_DIR/target/
 LOG=$TMP/`date +%F_%H.%M.%S`.install.log
-conf_site="prod"
 
 echo "Log file: $LOG"
 
-ftp_host=`php ${PRJ_DIR}/config.php deployment.$conf_site.ftp_host 2>/dev/null || true`
-ftp_user=`php ${PRJ_DIR}/config.php deployment.$conf_site.ftp_user 2>/dev/null || true`
-ftp_pass=`php ${PRJ_DIR}/config.php deployment.$conf_site.ftp_pass 2>/dev/null || true`
+ftp_host=$( php ${PRJ_DIR}/config.php deployment.ftp_host 2>/dev/null || true )
+ftp_user=$( php ${PRJ_DIR}/config.php deployment.ftp_user 2>/dev/null || true )
+ftp_pass=$( php ${PRJ_DIR}/config.php deployment.ftp_pass 2>/dev/null || true )
 remote_root="/"
 local_root="$PRJ_DIR"
 
@@ -37,7 +31,7 @@ if [[ "$ftp_host" = "" ]]; then
 fi
 echo "[$conf_site] ftp_host       : $ftp_host"
 echo "[$conf_site] ftp_user       : $ftp_user"
-#echo "[$conf_site.$1] ftp_pass       : $ftp_pass"
+#echo "[$conf_site] ftp_pass       : $ftp_pass"
 echo "[$conf_site] remote_root    : $remote_root"
 echo "[$conf_site] local_root     : $local_root"
 
@@ -78,12 +72,6 @@ wget www.cryptomedic.org/maintenance/md5sum.php -O $TMP/md5sum-remote.txt
 if [ "$1" == "commit" ]; then
   echo "*** Commiting ***"
   diff -u $TMP/md5sum-remote.txt $TMP/md5sum-local.txt | build_up | lftp
-  if [ `git tag | grep "$TAG"` = "" ]; then
-  	git tag "$TAG"
-  	git push --tags
-  else
-	echo "TAG ALREADY EXISTS: $TAG"
-  fi
 else
   # We will use the log to see the changes
   diff -u $TMP/md5sum-remote.txt $TMP/md5sum-local.txt | build_up > /dev/null
