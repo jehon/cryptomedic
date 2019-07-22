@@ -30,3 +30,10 @@ install:
 script:
   - make test
   - make stop-docker-compose
+
+deploy:
+  skip_cleanup: true
+  provider: script
+  script: make deploy
+  on:
+    branch: master

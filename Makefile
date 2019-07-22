@@ -69,7 +69,7 @@ start-docker-compose: docker-compose-is-running
 stop-docker-compose:
 	docker-compose down || true
 
-deploy: install
+deploy:
 	# TODO: deploy to server
 
 fix-rights:
@@ -137,10 +137,7 @@ database-backup:
 # Structure
 #
 #
-www/static/index.html: structure.prod \
-		node.dependencies \
-		www/app.js
-
+www/static/index.html: node.dependencies package.json package-lock.json www/app.js
 	npm run build
 
 node.dependencies: node_modules/.dependencies
