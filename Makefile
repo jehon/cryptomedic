@@ -57,7 +57,7 @@ build: www/static/index.html
 
 reset-dev: live-folder-test database-reset
 
-test: docker-compose-is-running install-dev reset-dev
+test: docker-compose-is-running install-dev reset-dev build
 	# TODO test-api must run in docker-...
 	# TODO: split in subcommands ?
 	npm run --silent test-api
