@@ -6,11 +6,13 @@ env:
   DOCKER_COMPOSE_VERSION=1.24.1
 
 addons:
+  apt:
+    packages:
+      - make
   chrome: stable
   firefox: latest
 
 before_install:
-  # Before version
   - docker-compose --version
 
   # Update docker-compose
@@ -19,20 +21,12 @@ before_install:
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
 
-  # After version
-  - docker-compose --version
-
-  # Build server
-  - docker-compose build server
-
+install:
   # Start docker-compose stack
   # This is needed by the install (composer.phar) part
-  - docker-compose up --quiet-pull --detach
-
-# before_script:
-#   - npm run reset
+  - make docker-compose-is-running
+  - make build
 
 script:
-  - npm run --silent test-api
-  - npm run --silent test-unit
-  - npm run -s test-e2e
+  - make test
+  - make stop-docker-compose

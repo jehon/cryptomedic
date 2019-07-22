@@ -12,7 +12,6 @@
   global $myconfig;
 
   $db = new \Jehon\Maintenance\Database(
-    //   "mysql:host=127.0.0.1;port=5556;dbname={$myconfig['database']['schema']}",
       "mysql:host={$myconfig['database']['host']};dbname={$myconfig['database']['schema']}",
       $myconfig['database']['rootuser'],
       $myconfig['database']['rootpwd']
