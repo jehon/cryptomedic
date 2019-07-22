@@ -10,36 +10,27 @@ set -e
 SCRIPT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 PRJ_DIR=$(dirname "$SCRIPT_DIR")
 
-npm run build
-
-TAG=`cat "$PRJ_DIR/www/release_version.txt"`
-TAG=${TAG:0:10}
-echo "Tag: $TAG"
-
-# Give it to any sub-scripts
-export PRJ_DIR
-
 TMP=$PRJ_DIR/target/
 LOG=$TMP/`date +%F_%H.%M.%S`.install.log
-conf_site="prod"
 
 echo "Log file: $LOG"
 
-ftp_host=`php ${PRJ_DIR}/config.php deployment.$conf_site.ftp_host 2>/dev/null || true`
-ftp_user=`php ${PRJ_DIR}/config.php deployment.$conf_site.ftp_user 2>/dev/null || true`
-ftp_pass=`php ${PRJ_DIR}/config.php deployment.$conf_site.ftp_pass 2>/dev/null || true`
+ftp_host=$( php ${PRJ_DIR}/config.php deployment.ftp_host 2>/dev/null || true )
+ftp_user=$( php ${PRJ_DIR}/config.php deployment.ftp_user 2>/dev/null || true )
+ftp_pass=$( php ${PRJ_DIR}/config.php deployment.ftp_pass 2>/dev/null || true )
+UPGRADE_PWD=$( php "$PRJ_DIR"/config.php "deployment.security_key" )
 remote_root="/"
 local_root="$PRJ_DIR"
 
 if [[ "$ftp_host" = "" ]]; then
-  echo "Site not found in configuration: $conf_site"
+  echo "Site not found in configuration"
   exit 255
 fi
-echo "[$conf_site] ftp_host       : $ftp_host"
-echo "[$conf_site] ftp_user       : $ftp_user"
-#echo "[$conf_site.$1] ftp_pass       : $ftp_pass"
-echo "[$conf_site] remote_root    : $remote_root"
-echo "[$conf_site] local_root     : $local_root"
+echo "ftp_host       : $ftp_host"
+echo "ftp_user       : $ftp_user"
+#echo "ftp_pass       : $ftp_pass"
+echo "remote_root    : $remote_root"
+echo "local_root     : $local_root"
 
 build_up(){
   while read data; do
@@ -73,17 +64,11 @@ echo "Updating md5sum.php script [for real]"
 printf "++\n+         /www/maintenance/md5sum.php\n" | build_up | lftp
 
 cd $PRJ_DIR && php www/maintenance/md5sum.php > $TMP/md5sum-local.txt
-wget www.cryptomedic.org/maintenance/md5sum.php -O $TMP/md5sum-remote.txt
+curl --silent www.cryptomedic.org/maintenance/md5sum.php > $TMP/md5sum-remote.txt
 
 if [ "$1" == "commit" ]; then
   echo "*** Commiting ***"
   diff -u $TMP/md5sum-remote.txt $TMP/md5sum-local.txt | build_up | lftp
-  if [ `git tag | grep "$TAG"` = "" ]; then
-  	git tag "$TAG"
-  	git push --tags
-  else
-	echo "TAG ALREADY EXISTS: $TAG"
-  fi
 else
   # We will use the log to see the changes
   diff -u $TMP/md5sum-remote.txt $TMP/md5sum-local.txt | build_up > /dev/null
@@ -92,13 +77,10 @@ fi
 echo "******************** Log ************************"
 cat $LOG
 
-echo "[$conf_site] Done"
-
-echo "Running parts:"
+echo "Upgrading database"
 
 # Run project custom files
-UPGRADE_PWD=$( php "$PRJ_DIR"/config.php "deployment.$1.security_key" )
-wget -O - "www.cryptomedic.org/maintenance/patch_db.php?pwd=${UPGRADE_PWD}"
+curl --silent "www.cryptomedic.org/maintenance/patch_db.php?pwd=${UPGRADE_PWD}"
 
 echo "End result: $?"
 
