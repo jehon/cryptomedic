@@ -71,6 +71,7 @@ stop-docker-compose:
 
 deploy:
 	# TODO: deploy to server
+	bin/cryptomedic-deploy-patch.sh
 
 fix-rights:
 	# TODO: complete this

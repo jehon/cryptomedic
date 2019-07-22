@@ -1,5 +1,0 @@
-#!/bin/bash
-
-PWD=$( php "$PRJ_DIR"/config.php "deployment.$1.security_key" )
-
-wget -O - "www.cryptomedic.org/maintenance/patch_db.php?pwd=$PWD"
