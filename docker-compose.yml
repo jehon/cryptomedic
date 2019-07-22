@@ -48,8 +48,8 @@ services:
         #image: 42bv/mailhog
         ports:
             - 5551:8025 # web server
-        volumes:
-            - ./target/emails:/srv/Maildir
+        # volumes:
+        #     - ./target/emails:/srv/Maildir
 
         environment:
             - MH_STORAGE=maildir
