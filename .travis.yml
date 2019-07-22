@@ -25,15 +25,16 @@ install:
   # Start docker-compose stack
   # This is needed by the install (composer.phar) part
   - make docker-compose-is-running
+  - make install-dev
   - make build
 
 script:
-  - make test
+  #- make test
   - make stop-docker-compose
 
 deploy:
   provider: script
-  script: bash make deploy
+  script: make deploy
   skip_cleanup: true
   on:
     branch: 
