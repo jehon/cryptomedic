@@ -32,11 +32,11 @@ script:
   - make test
   - make stop-docker-compose
 
-# deploy:
-#   provider: script
-#   script: make deploy
-#   skip_cleanup: true
-#   on:
-#     branch: 
-#         - master
-#         - publish
+deploy:
+  provider: script
+  script: make deploy
+  skip_cleanup: true
+  on:
+    branch: 
+        # - master
+        - publish
