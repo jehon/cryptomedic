@@ -7,6 +7,7 @@ DBPASS := password
 DBROOTPASS := password
 # From config.php
 DBUPDATEPWD := secret
+DB_BASE := conf/database/base.sql
 
 define run_in_docker
 	docker-compose exec -T $(1) /bin/bash -c $(2)
@@ -50,7 +51,7 @@ install: docker-compose-is-running structure.prod \
 		node.dependencies \
 		api.dependencies
 
-install-dev: structure.dev install live-folder-test
+install-dev: structure.dev install live-folder-test database-reset
 
 build: www/static/index.html
 
@@ -128,6 +129,8 @@ database-load:  # must be idempotent -> how ?
 database-upgrade:
 	# TODO Do it by http
 	# database-patch-dev: # TODO
+database-backup:
+	$(call run_in_docker,"mysql", "mysqldump -u root -p$(DBROOTPASS) $(DBNAME)") > $(DB_BASE)
 
 #
 #

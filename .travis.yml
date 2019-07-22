@@ -25,9 +25,6 @@ install:
   # Start docker-compose stack
   # This is needed by the install (composer.phar) part
   - make docker-compose-is-running
-
-  - make install-dev
-  - make database-reset
   - make build
 
 script:
