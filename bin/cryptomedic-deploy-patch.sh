@@ -97,8 +97,8 @@ echo "[$conf_site] Done"
 echo "Running parts:"
 
 # Run project custom files
-run-parts --exit-on-error --report $PRJ_DIR/bin/prj-go-site.d --arg="$conf_site"
-
+UPGRADE_PWD=$( php "$PRJ_DIR"/config.php "deployment.$1.security_key" )
+wget -O - "www.cryptomedic.org/maintenance/patch_db.php?pwd=${UPGRADE_PWD}"
 
 echo "End result: $?"
 
