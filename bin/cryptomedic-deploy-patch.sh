@@ -10,10 +10,6 @@ set -e
 SCRIPT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 PRJ_DIR=$(dirname "$SCRIPT_DIR")
 
-npm run build
-
-# Give it to any sub-scripts
-export PRJ_DIR
 TMP=$PRJ_DIR/target/
 LOG=$TMP/`date +%F_%H.%M.%S`.install.log
 
@@ -22,6 +18,7 @@ echo "Log file: $LOG"
 ftp_host=$( php ${PRJ_DIR}/config.php deployment.ftp_host 2>/dev/null || true )
 ftp_user=$( php ${PRJ_DIR}/config.php deployment.ftp_user 2>/dev/null || true )
 ftp_pass=$( php ${PRJ_DIR}/config.php deployment.ftp_pass 2>/dev/null || true )
+UPGRADE_PWD=$( php "$PRJ_DIR"/config.php "deployment.security_key" )
 remote_root="/"
 local_root="$PRJ_DIR"
 
@@ -80,13 +77,10 @@ fi
 echo "******************** Log ************************"
 cat $LOG
 
-echo "[$conf_site] Done"
-
-echo "Running parts:"
+echo "Upgrading database"
 
 # Run project custom files
-UPGRADE_PWD=$( php "$PRJ_DIR"/config.php "deployment.$1.security_key" )
-wget -O - "www.cryptomedic.org/maintenance/patch_db.php?pwd=${UPGRADE_PWD}"
+curl --silent "www.cryptomedic.org/maintenance/patch_db.php?pwd=${UPGRADE_PWD}"
 
 echo "End result: $?"
 
