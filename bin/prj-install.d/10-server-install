@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-
-set -e
-
-docker-compose exec -T server /app/bin/prj-install.d/10-server-install.docker.sh
