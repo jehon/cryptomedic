@@ -32,8 +32,10 @@ script:
   - make stop-docker-compose
 
 deploy:
-  skip_cleanup: true
   provider: script
-  script: make deploy
+  script: bash make deploy
+  skip_cleanup: true
   on:
-    branch: master
+    branch: 
+        - master
+        - publish
