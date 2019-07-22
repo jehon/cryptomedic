@@ -23,14 +23,14 @@ remote_root="/"
 local_root="$PRJ_DIR"
 
 if [[ "$ftp_host" = "" ]]; then
-  echo "Site not found in configuration: $conf_site"
+  echo "Site not found in configuration"
   exit 255
 fi
-echo "[$conf_site] ftp_host       : $ftp_host"
-echo "[$conf_site] ftp_user       : $ftp_user"
-#echo "[$conf_site] ftp_pass       : $ftp_pass"
-echo "[$conf_site] remote_root    : $remote_root"
-echo "[$conf_site] local_root     : $local_root"
+echo "ftp_host       : $ftp_host"
+echo "ftp_user       : $ftp_user"
+#echo "ftp_pass       : $ftp_pass"
+echo "remote_root    : $remote_root"
+echo "local_root     : $local_root"
 
 build_up(){
   while read data; do
