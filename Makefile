@@ -123,7 +123,7 @@ database-load:  # must be idempotent -> how ?
 	cat "conf/database/base.sql" \
 		| docker-compose exec -T mysql mysql -u root -p$(DBROOTPASS) --database="$(DBNAME)"
 
-	wget -O - "http://localhost:5555/maintenance/patch_db.php?pwd=$(DBUPDATEPWD)"
+	curl --silent "http://localhost:5555/maintenance/patch_db.php?pwd=$(DBUPDATEPWD)"
 
 	# myqsl --database="$DBNAME" < "conf/database/base.sql"
 
