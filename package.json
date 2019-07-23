@@ -48,7 +48,7 @@
     "nightwatch-html-reporter": "latest",
     "selenium-server": "latest",
     "style-loader": "0.19.1",
-    "stylelint": "9.5.0",
+    "stylelint": "9.10.1",
     "stylelint-config-standard": "18.2.0",
     "svgo": "latest",
     "webpack": "3.12.0"
