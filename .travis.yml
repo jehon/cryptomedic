@@ -9,6 +9,7 @@ addons:
   apt:
     packages:
       - make
+      - lftp
   chrome: stable
   firefox: latest
 
