@@ -22,13 +22,14 @@ fi
 
 for V in v* ; do
 	cd "$V" || exit 255
-	echo "Version $V (`pwd`)"
-	REPORTS="../../../target/php$V"
+	echo "Version $V ($(pwd))"
+	REPORTS="$PRJ_DIR/target/php$V"
 	mkdir -p "$REPORTS"
 	chmod a+wx "$REPORTS"
 	echo "Current folder: $(pwd)"
 	ls -l vendor/bin
 	./vendor/bin/phpunit  --coverage-html $REPORTS --coverage-xml $REPORTS "$@"
+	chmod -R a+wx "$REPORTS"
 	cd ..
 done
 
