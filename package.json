@@ -16,7 +16,7 @@
     "fetchfull": "github:jehon/fetchfull",
     "he": "1.1.1",
     "html2canvas": "0.5.0-beta4",
-    "jquery": "^3.2.1",
+    "jquery": "3.4.0",
     "object-path": "0.11.4",
     "redux": "3.7.2",
     "uuid": "3.3.2"
