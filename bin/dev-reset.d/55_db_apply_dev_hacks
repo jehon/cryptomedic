@@ -1,6 +1,0 @@
-#!/bin/bash
-
-set -e
-
-"$PRJ_DIR"/bin/prj-db-upgrade "conf/database/dev/"
-"$PRJ_DIR"/bin/prj-db-upgrade "conf/database/always-dev/"
