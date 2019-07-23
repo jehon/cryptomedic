@@ -33,7 +33,6 @@ all: install-dev
 clean-hard: clean stop-docker-compose fix-rights
 	rm -fr node_modules
 	rm -fr www/api/$(VAPI)/vendor
-	bin/ensure_empty_folder.sh www/api/$(VAPI)/bootstrap/cache/
 
 clean: docker-compose-is-running structure.dev database-reset fix-rights
 	bin/ensure_empty_folder.sh target
@@ -43,6 +42,7 @@ clean: docker-compose-is-running structure.dev database-reset fix-rights
 	rm -f www/api/$(VAPI)/storage/logs/laravel.log
 	touch www/api/$(VAPI)/storage/logs/laravel.log
 	chmod a+rw www/api/$(VAPI)/storage/logs/laravel.log
+	bin/ensure_empty_folder.sh www/api/$(VAPI)/bootstrap/cache/
 	bin/ensure_empty_folder.sh live/
 	chmod a+rwX live/
 	$(call run_in_docker,"server","find /tmp/laravel -type f -delete")
@@ -79,7 +79,8 @@ deploy: docker-compose-is-running
 fix-rights:
 	# TODO: complete this
 	$(call run_in_docker,"server","\
-		chmod a+rwX -R www/api/$(VAPI)/bootstrap/cache/ \
+		mkdir -p www/api/$(VAPI)/bootstrap/cache/ \
+		&& chmod a+rwX -R www/api/$(VAPI)/bootstrap/cache/ \
 		&& chmod a+rwX -R live \
 	")
 
