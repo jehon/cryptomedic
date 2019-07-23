@@ -64,10 +64,13 @@ test: docker-compose-is-running install-dev reset-dev build
 	npm run --silent test-unit
 	npm run --silent test-e2e
 
-start-docker-compose: docker-compose-is-running
+start: docker-compose-is-running
+	@echo "Open browser:"
+	@echo " cryptomedic: http://localhost:5555/"
+	@echo " phpmyadmin:  http://localhost:5550/"
+	@echo " mailhog:     http://localhost:5559/"
 
-stop-docker-compose:
-	docker-compose down || true
+stop: stop-docker-compose
 
 deploy: docker-compose-is-running
 	# TODO: deploy to server
@@ -87,6 +90,9 @@ fix-rights:
 #
 docker-compose-is-running:
 	@$(call run_in_docker,"server","true") || docker-compose up -d
+
+stop-docker-compose:
+	docker-compose down || true
 
 #
 #
