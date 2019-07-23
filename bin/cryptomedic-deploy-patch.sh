@@ -67,9 +67,13 @@ echo "Updating md5sum.php script [for real]"
     echo "+         /www/maintenance/md5sum.php"
 ) | build_up | lftp
 
+echo "Getting the md5 from local"
 curl --silent      localhost:5555/maintenance/md5sum.php > "$TMP"/md5sum-local.txt
+
+echo "Getting the md5 from remote"
 curl --silent www.cryptomedic.org/maintenance/md5sum.php > "$TMP"/md5sum-remote.txt
 
+echo "Building the diff"
 if [ "$1" == "commit" ]; then
     echo "*** Commiting ***"
     diff -u "$TMP"/md5sum-remote.txt "$TMP"/md5sum-local.txt | build_up | lftp
