@@ -10,7 +10,7 @@
     "@webcomponents/shadydom": "1.6.0",
     "angular": "^1.4.14",
     "angular-route": "1.4.14",
-    "bootstrap": "^3.3.7",
+    "bootstrap": "3.4.1",
     "clone": "2.1.2",
     "excellentexport": "2.1.0",
     "fetchfull": "github:jehon/fetchfull",
