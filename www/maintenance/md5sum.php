@@ -36,7 +36,7 @@ function contains($haystack, $needle)
 
 foreach($list as $f)
 {
-  $fn = str_replace($root, "", $f);
+	$fn = substr($f, strlen($root));
 
   ## 
   ## Data to be protected
