@@ -10,8 +10,6 @@ set -e
 SCRIPT_DIR="$( dirname "${BASH_SOURCE[0]}" )"
 PRJ_DIR="$(dirname "$SCRIPT_DIR")"
 TMP="$PRJ_DIR/target/"
-LOG="$TMP/$(date +%F_%H.%M.%S$).install.log"
-echo "Log file: $LOG"
 
 CRYPTOMEDIC_UPLOAD_HOST="ftp.cluster003.ovh.net"
 if [ -z "$CRYPTOMEDIC_UPLOAD_USER" ]; then
@@ -29,6 +27,12 @@ if [ -z "$CRYPTOMEDIC_DB_UPGRADE" ]; then
     exit 255
 fi
 
+
+# Create a "3"rd out where all structured messages will go
+# This allow us to capture stdout and stderr everywhere, 
+# while still letting passing through the messages "Success / failure / ..."
+exec 3>&1
+
 build_up(){
     while read -r data; do
         FN="${data:11}"
@@ -43,13 +47,13 @@ build_up(){
             continue
         fi
         if [[ ${data:0:1} = "+" ]]; then
-            echo "+ $FN" >> "$LOG"
-            echo "mkdir -p /$DIR"
+            echo "+ $FN" >&3
+            echo "cd /$DIR || mkdir -p /$DIR"
             echo "put '$PRJ_DIR/$FN' -o '/$FN'"
             continue
         fi
         if [[ ${data:0:1} = "-" ]]; then
-            echo "- $FN" >> "$LOG"
+            echo "- $FN" >&3
             echo "rm '/$FN'"
             continue
         fi
@@ -73,9 +77,6 @@ else
     # We will use the log to see the changes
     diff -u "$TMP"/md5sum-remote.txt "$TMP"/md5sum-local.txt | build_up > /dev/null
 fi
-
-echo "******************** Log ************************"
-cat "$LOG"
 
 echo "Upgrading database"
 
