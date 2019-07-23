@@ -30,8 +30,7 @@ install:
   - make build
 
 script:
-  #- make test
-  - make stop-docker-compose
+  - make test
 
 deploy:
   provider: script
@@ -41,3 +40,6 @@ deploy:
     branch: 
         # - master
         - publish
+
+after_script:
+  - make stop-docker-compose
