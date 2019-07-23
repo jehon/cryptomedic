@@ -6,17 +6,17 @@
     "type": "project",
     "require": {
         "php": ">=7.0.0",
-        "laravel/framework": "^5.6",
-        "flow/jsonpath": "^0.3.4",
-        "sentry/sentry-laravel": "^0.8.0"
+        "laravel/framework": "5.5.28",
+        "flow/jsonpath": "0.3.4",
+        "sentry/sentry-laravel": "0.8.0"
     },
     "require-dev": {
-        "fzaninotto/faker": "~1.4",
-        "mockery/mockery": "0.9.*",
-        "phpunit/phpunit": "~6.0",
-        "symfony/css-selector": "3.1.*",
-        "symfony/dom-crawler": "3.1.*",
-        "filp/whoops": "~2.0"
+        "fzaninotto/faker": "1.8.0",
+        "mockery/mockery": "0.9.11",
+        "phpunit/phpunit": "6.5.14",
+        "symfony/css-selector": "3.1.10",
+        "symfony/dom-crawler": "3.1.10",
+        "filp/whoops": "2.4.1"
     },
     "autoload": {
         "classmap": [
