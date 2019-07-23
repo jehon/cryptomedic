@@ -11,7 +11,8 @@ RUN DEBIAN_FRONTEND=noninteractive apt install -y \
 	curl rsync \
 	apache2 php libapache2-mod-php php-mysql \
 	php-curl php-gd php-intl php-json php-mbstring php-xml php-zip \
-	ssmtp
+	ssmtp \
+	unzip
 
 #    libfreetype6-dev libjpeg62-turbo-dev libmcrypt-dev libpng-dev
 
@@ -30,8 +31,8 @@ RUN sed -ri -e 's!/var/www/html!/app/www!g' /etc/apache2/sites-available/*.conf
 # RUN sed -ri -e 's!/var/www/!/app/www!g' /etc/apache2/conf-available/*.conf
 COPY conf/custom.conf /etc/apache2/conf-enabled/
 
-RUN curl -s https://getcomposer.org/installer | php
-RUN mv composer.phar /usr/local/bin/composer
+RUN cd /usr/local/bin && curl -s https://getcomposer.org/installer | php
+RUN ln -s /usr/local/bin/composer.phar /usr/local/bin/composer
 
 COPY conf/ssmtp.conf /etc/ssmtp/ssmtp.conf
 

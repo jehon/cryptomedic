@@ -25,9 +25,7 @@ before_install:
 install:
   # Start docker-compose stack
   # This is needed by the install (composer.phar) part
-  - make docker-compose-is-running
-  - make install-dev
-  - make build
+  - make start
 
 script:
   - make test
@@ -42,4 +40,4 @@ deploy:
         - publish
 
 after_script:
-  - make stop-docker-compose
+  - make stop
