@@ -44,7 +44,7 @@ build_up(){
         fi
         if [[ ${data:0:1} = "+" ]]; then
             echo "+ $FN" >> "$LOG"
-            echo "mkdir -f -p /$DIR"
+            echo "mkdir -p /$DIR"
             echo "put '$PRJ_DIR/$FN' -o '/$FN'"
             continue
         fi
