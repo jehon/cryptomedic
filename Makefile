@@ -69,7 +69,7 @@ start-docker-compose: docker-compose-is-running
 stop-docker-compose:
 	docker-compose down || true
 
-deploy:
+deploy: docker-compose-is-running
 	# TODO: deploy to server
 	bin/cryptomedic-deploy-patch.sh
 

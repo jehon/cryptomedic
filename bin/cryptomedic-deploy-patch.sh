@@ -7,93 +7,98 @@
 # Stop on error
 set -e
 
-SCRIPT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
-PRJ_DIR=$(dirname "$SCRIPT_DIR")
+SCRIPT_DIR="$( dirname "${BASH_SOURCE[0]}" )"
+PRJ_DIR="$(dirname "$SCRIPT_DIR")"
+TMP="$PRJ_DIR/target/"
 
-TMP=$PRJ_DIR/target/
-LOG=$TMP/`date +%F_%H.%M.%S`.install.log
-
-echo "Log file: $LOG"
-
-ftp_host=$( php ${PRJ_DIR}/config.php deployment.ftp_host 2>/dev/null || true )
-ftp_user=$( php ${PRJ_DIR}/config.php deployment.ftp_user 2>/dev/null || true )
-ftp_pass=$( php ${PRJ_DIR}/config.php deployment.ftp_pass 2>/dev/null || true )
-UPGRADE_PWD=$( php "$PRJ_DIR"/config.php "deployment.security_key" )
-remote_root="/"
-local_root="$PRJ_DIR"
-
-if [[ "$ftp_host" = "" ]]; then
-  echo "Site not found in configuration"
-  exit 255
+CRYPTOMEDIC_UPLOAD_HOST="ftp.cluster003.ovh.net"
+if [ -z "$CRYPTOMEDIC_UPLOAD_USER" ]; then
+    echo "Missing CRYPTOMEDIC_UPLOAD_USER" >&2
+    exit 255
 fi
-echo "ftp_host       : $ftp_host"
-echo "ftp_user       : $ftp_user"
-#echo "ftp_pass       : $ftp_pass"
-echo "remote_root    : $remote_root"
-echo "local_root     : $local_root"
+
+if [ -z "$CRYPTOMEDIC_UPLOAD_PASSWORD" ]; then
+    echo "Missing CRYPTOMEDIC_UPLOAD_PASSWORD" >&2
+    exit 255
+fi
+
+if [ -z "$CRYPTOMEDIC_DB_UPGRADE" ]; then
+    echo "Missing CRYPTOMEDIC_DB_UPGRADE" >&2
+    exit 255
+fi
+
+
+# Create a "3"rd out where all structured messages will go
+# This allow us to capture stdout and stderr everywhere, 
+# while still letting passing through the messages "Success / failure / ..."
+exec 3>&1
 
 build_up(){
-  while read data; do
-    FN=${data:11}
-    DIR=`dirname "$FN"`
-    if [[ ${data:0:2} = "++" ]]; then
-      # use this as a trigger to open connection
-      echo "open -u $ftp_user,$ftp_pass $ftp_host";
-      continue;
-    fi
-    if [[ ${data:0:2} = "--" ]]; then
-      # skip
-      continue
-    fi
-    if [[ ${data:0:1} = "+" ]]; then
-      echo "+ $FN" >> $LOG
-      echo "mkdir -f -p $remote_root/$DIR"
-      echo "put '$local_root/$FN' -o '$remote_root/$FN'"
-      continue
-    fi
-    if [[ ${data:0:1} = "-" ]]; then
-      echo "- $FN" >> $LOG
-      echo "rm '$remote_root/$FN'"
-      continue
-    fi
-  done
+    while read -r data; do
+        FN="${data:11}"
+        DIR="$( dirname "$FN" )"
+        if [[ ${data:0:2} = "++" ]]; then
+            # use this as a trigger to open connection
+            echo "open -u $CRYPTOMEDIC_UPLOAD_USER,$CRYPTOMEDIC_UPLOAD_PASSWORD $CRYPTOMEDIC_UPLOAD_HOST";
+            continue;
+        fi
+        if [[ ${data:0:2} = "--" ]]; then
+            # skip
+            continue
+        fi
+        if [[ ${data:0:1} = "+" ]]; then
+            echo "+ $FN" >&3
+            echo "cd /$DIR || mkdir -p /$DIR"
+            echo "put '$PRJ_DIR/$FN' -o '/$FN'"
+            continue
+        fi
+        if [[ ${data:0:1} = "-" ]]; then
+            echo "- $FN" >&3
+            echo "rm '/$FN'"
+            continue
+        fi
+    done
 }
 
 echo ""
 echo "Updating md5sum.php script [for real]"
-printf "++\n+         /www/maintenance/md5sum.php\n" | build_up | lftp
+(
+    echo "++"
+    echo "+         /www/maintenance/md5sum.php"
+) | build_up | lftp -v
 
-cd $PRJ_DIR && php www/maintenance/md5sum.php > $TMP/md5sum-local.txt
-curl --silent www.cryptomedic.org/maintenance/md5sum.php > $TMP/md5sum-remote.txt
+echo "Getting the md5 from local"
+curl --silent      localhost:5555/maintenance/md5sum.php > "$TMP"/md5sum-local.txt
 
+echo "Getting the md5 from remote"
+curl --silent www.cryptomedic.org/maintenance/md5sum.php > "$TMP"/md5sum-remote.txt
+
+echo "Building the diff"
 if [ "$1" == "commit" ]; then
-  echo "*** Commiting ***"
-  diff -u $TMP/md5sum-remote.txt $TMP/md5sum-local.txt | build_up | lftp
+    echo "*** Commiting ***"
+    diff -u "$TMP"/md5sum-remote.txt "$TMP"/md5sum-local.txt | build_up | lftp
 else
-  # We will use the log to see the changes
-  diff -u $TMP/md5sum-remote.txt $TMP/md5sum-local.txt | build_up > /dev/null
+    # We will use the log to see the changes
+    diff -u "$TMP"/md5sum-remote.txt "$TMP"/md5sum-local.txt | build_up > /dev/null
 fi
-
-echo "******************** Log ************************"
-cat $LOG
 
 echo "Upgrading database"
 
 # Run project custom files
-curl --silent "www.cryptomedic.org/maintenance/patch_db.php?pwd=${UPGRADE_PWD}"
-
-echo "End result: $?"
+curl --silent "www.cryptomedic.org/maintenance/patch_db.php?pwd=${CRYPTOMEDIC_DB_UPGRADE}"
 
 if [ "$1" != "commit" ]; then
-  echo "!!!!!!!!!!!!!!!!!!! TEST MODE !!!!!!!!!!!!!!!!!!!!!!"
-  echo "!!!!!!!!!!!!!!!!!!! TEST MODE !!!!!!!!!!!!!!!!!!!!!!"
-  echo "!!!!!!!!!!!!!!!!!!! TEST MODE !!!!!!!!!!!!!!!!!!!!!!"
-  echo "!!!!!!!!!!!!!!!!!!! TEST MODE !!!!!!!!!!!!!!!!!!!!!!"
-  echo "!!!!!!!!!!!!!!!!!!! TEST MODE !!!!!!!!!!!!!!!!!!!!!!"
-  echo "!!!!!!!!!!!!!!!!!!! TEST MODE !!!!!!!!!!!!!!!!!!!!!!"
-  echo "Tag: $TAG"
-  echo ""
-  echo "To really commit, use:"
-  echo "$0 commit"
-  echo ""
+    echo "!!!!!!!!!!!!!!!!!!! TEST MODE !!!!!!!!!!!!!!!!!!!!!!"
+    echo "!!!!!!!!!!!!!!!!!!! TEST MODE !!!!!!!!!!!!!!!!!!!!!!"
+    echo "!!!!!!!!!!!!!!!!!!! TEST MODE !!!!!!!!!!!!!!!!!!!!!!"
+    echo "!!!!!!!!!!!!!!!!!!! TEST MODE !!!!!!!!!!!!!!!!!!!!!!"
+    echo "!!!!!!!!!!!!!!!!!!! TEST MODE !!!!!!!!!!!!!!!!!!!!!!"
+    echo "!!!!!!!!!!!!!!!!!!! TEST MODE !!!!!!!!!!!!!!!!!!!!!!"
+    echo "Tag: $TAG"
+    echo ""
+    echo "To really commit, use:"
+    echo "$0 commit"
+    echo ""
 fi
+
+echo "End"

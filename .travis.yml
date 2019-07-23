@@ -9,6 +9,7 @@ addons:
   apt:
     packages:
       - make
+      - lftp
   chrome: stable
   firefox: latest
 
@@ -30,7 +31,6 @@ install:
 
 script:
   - make test
-  - make stop-docker-compose
 
 deploy:
   provider: script
@@ -40,3 +40,6 @@ deploy:
     branch: 
         # - master
         - publish
+
+after_script:
+  - make stop-docker-compose
