@@ -65,7 +65,7 @@ echo "Updating md5sum.php script [for real]"
 (
     echo "++"
     echo "+         /www/maintenance/md5sum.php"
-) | build_up | lftp
+) | build_up | lftp -v
 
 echo "Getting the md5 from local"
 curl --silent      localhost:5555/maintenance/md5sum.php > "$TMP"/md5sum-local.txt
