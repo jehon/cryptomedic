@@ -28,7 +28,7 @@ services:
     server:
         build:
             context: .
-            dockerfile: conf/docker-server-file
+            dockerfile: conf/server/Dockerfile
         environment:
             PRJ_DIR: /app
             APACHE_DOCUMENT_ROOT: /app/www
