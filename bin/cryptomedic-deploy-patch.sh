@@ -49,7 +49,7 @@ build_up(){
         if [[ ${data:0:1} = "+" ]]; then
             echo "+ $FN" >&3
             echo "cd /$DIR || mkdir -p /$DIR"
-            echo "put '$PRJ_DIR/$FN' -o '/$FN'"
+            echo "put './$FN' -o '/$FN'"
             continue
         fi
         if [[ ${data:0:1} = "-" ]]; then
