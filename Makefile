@@ -219,6 +219,4 @@ database-reset:
 	cat "conf/database/base.sql" \
 		| docker-compose exec -T mysql mysql -u root -p$(DBROOTPASS) --database="$(DBNAME)"
 
-	curl --silent "http://localhost:5555/maintenance/patch_db.php?pwd=$(DBUPDATEPWD)"
-
-
+	wget -O - --quiet --content-on-error "http://localhost:5555/maintenance/patch_db.php?pwd=$(DBUPDATEPWD)"
