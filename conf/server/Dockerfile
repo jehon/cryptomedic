@@ -27,14 +27,15 @@ RUN a2enmod expires rewrite
 # AllowOverride all
 
 RUN sed -ri -e 's!/var/www/html!/app/www!g' /etc/apache2/sites-available/*.conf
-# RUN sed -ri -e 's!/var/www/!/app/www!g' /etc/apache2/apache2.conf 
-# RUN sed -ri -e 's!/var/www/!/app/www!g' /etc/apache2/conf-available/*.conf
-COPY conf/custom.conf /etc/apache2/conf-enabled/
+COPY conf/server/custom.conf /etc/apache2/conf-enabled/
+COPY conf/server/php.ini /etc/php/7.2/apache2/conf.d/99-php.ini
 
 RUN cd /usr/local/bin && curl -s https://getcomposer.org/installer | php
 RUN ln -s /usr/local/bin/composer.phar /usr/local/bin/composer
 
-COPY conf/ssmtp.conf /etc/ssmtp/ssmtp.conf
+COPY conf/server/ssmtp.conf /etc/ssmtp/ssmtp.conf
 
 # https://stackoverflow.com/a/49765176/1954789
 CMD apachectl -D FOREGROUND
+
+
