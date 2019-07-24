@@ -68,10 +68,10 @@ echo "Updating md5sum.php script [for real]"
 ) | build_up | lftp -v
 
 echo "Getting the md5 from local"
-curl --silent      localhost:5555/maintenance/md5sum.php > "$TMP"/md5sum-local.txt
+wget --quiet --content-on-error localhost:5555/maintenance/md5sum.php -O "$TMP"/md5sum-local.txt
 
 echo "Getting the md5 from remote"
-curl --silent www.cryptomedic.org/maintenance/md5sum.php > "$TMP"/md5sum-remote.txt
+wget --quiet --content-on-error www.cryptomedic.org/maintenance/md5sum.php -O "$TMP"/md5sum-remote.txt
 
 echo "Building the diff"
 if [ "$1" == "commit" ]; then
@@ -85,7 +85,7 @@ fi
 echo "Upgrading database"
 
 # Run project custom files
-curl --silent "www.cryptomedic.org/maintenance/patch_db.php?pwd=${CRYPTOMEDIC_DB_UPGRADE}"
+wget -O - --quiet --content-on-error "www.cryptomedic.org/maintenance/patch_db.php?pwd=${CRYPTOMEDIC_DB_UPGRADE}"
 
 if [ "$1" != "commit" ]; then
     echo "!!!!!!!!!!!!!!!!!!! TEST MODE !!!!!!!!!!!!!!!!!!!!!!"
