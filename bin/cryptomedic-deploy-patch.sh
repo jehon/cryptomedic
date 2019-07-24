@@ -35,7 +35,7 @@ exec 3>&1
 
 build_up(){
     while read -r data; do
-        FN="${data:11}"
+        FN="${data:12}"
         DIR="$( dirname "$FN" )"
         if [[ ${data:0:2} = "++" ]]; then
             # use this as a trigger to open connection
@@ -49,7 +49,7 @@ build_up(){
         if [[ ${data:0:1} = "+" ]]; then
             echo "+ $FN" >&3
             echo "cd /$DIR || mkdir -p /$DIR"
-            echo "put './$FN' -o '/$FN'"
+            echo "put '$FN' -o '/$FN'"
             continue
         fi
         if [[ ${data:0:1} = "-" ]]; then
@@ -64,14 +64,14 @@ echo ""
 echo "Updating md5sum.php script [for real]"
 (
     echo "++"
-    echo "+         /www/maintenance/md5sum.php"
+    echo "+ aaaaaaa /www/maintenance/md5sum.php"
 ) | build_up | lftp -v
 
 echo "Getting the md5 from local"
-wget --quiet --content-on-error localhost:5555/maintenance/md5sum.php -O "$TMP"/md5sum-local.txt
+wget --quiet --content-on-error "http://localhost:5555/maintenance/md5sum.php" -O "$TMP"/md5sum-local.txt
 
 echo "Getting the md5 from remote"
-wget --quiet --content-on-error www.cryptomedic.org/maintenance/md5sum.php -O "$TMP"/md5sum-remote.txt
+wget --quiet --content-on-error "http://www.cryptomedic.org/maintenance/md5sum.php" -O "$TMP"/md5sum-remote.txt
 
 echo "Building the diff"
 if [ "$1" == "commit" ]; then
@@ -79,7 +79,7 @@ if [ "$1" == "commit" ]; then
     diff -u "$TMP"/md5sum-remote.txt "$TMP"/md5sum-local.txt | build_up | lftp
 else
     # We will use the log to see the changes
-    diff -u "$TMP"/md5sum-remote.txt "$TMP"/md5sum-local.txt | build_up > /dev/null
+    diff -u "$TMP"/md5sum-remote.txt "$TMP"/md5sum-local.txt | build_up > /dev/null || true
 fi
 
 echo "Upgrading database"
