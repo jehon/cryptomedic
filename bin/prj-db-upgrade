@@ -1,8 +1,0 @@
-#!/bin/bash
-
-if [ "$1" != "" ]; then
-	TARGET="/app/$1";
-fi
-
-docker-compose exec -T server php /app/bin/prj-db-upgrade.php "$TARGET"
-echo ".";
