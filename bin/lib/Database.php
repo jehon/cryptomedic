@@ -178,7 +178,6 @@ class Database {
 				$this->runPrepareSqlStatement($query, array(), "running query $i");
 				if ($i % 50 == 0) {
 					echo "$i\n";
-					flush();
 				}
 			}
 

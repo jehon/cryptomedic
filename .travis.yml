@@ -10,6 +10,7 @@ addons:
     packages:
       - make
       - lftp
+      - wget
   chrome: stable
   firefox: latest
 

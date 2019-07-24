@@ -16,10 +16,13 @@
       $myconfig['database']['rootuser'],
       $myconfig['database']['rootpwd']
     );
-
+try {
   if (count($myargs) > 1 && $myargs[1] > "") {
     $db->runFileOrDirectory($myargs[1]);
   } else {
     $db->runDirectory(__DIR__ . "/../conf/database/versions/");
     $db->runDirectory(__DIR__ . "/../conf/database/always/");
   }
+} catch (Exception $e) {
+	echo "Upgrade failed: " . $e->getMessage();
+}
