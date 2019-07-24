@@ -76,7 +76,7 @@ wget --quiet --content-on-error "http://www.cryptomedic.org/maintenance/md5sum.p
 echo "Building the diff"
 if [ "$1" == "commit" ]; then
     echo "*** Commiting ***"
-    diff -u "$TMP"/md5sum-remote.txt "$TMP"/md5sum-local.txt | build_up | lftp
+    diff -u "$TMP"/md5sum-remote.txt "$TMP"/md5sum-local.txt | build_up | lftp -v || true
 else
     # We will use the log to see the changes
     diff -u "$TMP"/md5sum-remote.txt "$TMP"/md5sum-local.txt | build_up > /dev/null || true
