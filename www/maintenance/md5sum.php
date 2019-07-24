@@ -6,7 +6,7 @@ set_time_limit(5 * 60);
 echo "# <pre>crc32b:\n";
 
 require_once(__DIR__ . "/../../config.php");
-require_once(__DIR__ . "/../../bin/lib/Database.php");
+require_once(__DIR__ . "/Database.php");
 
 $root = dirname(dirname(__DIR__));
 
