@@ -54,16 +54,12 @@
     "webpack": "3.12.0"
   },
   "scripts": {
-    "reset": "./bin/dev-reset.sh && npm run build",
     "build": "webpack",
-    "test": "npm run reset && npm run -s test-api && npm run -s test-unit && npm run -s test-e2e",
     "test-api": "docker-compose exec -T server /app/bin/dev-phpunit.sh",
     "test-api-commit": "docker-compose exec -T -e COMMIT=1 server /app/bin/dev-phpunit.sh",
     "test-unit": "karma start --single-run",
     "test-unit-continuously": "karma start",
     "test-e2e": "nightwatch",
-    "test-e2e-chrome": "nightwatch -e chrome",
-    "test-reset": "./bin/prj-db-upgrade ./conf/database/test-reset.sql",
-    "start": "node bin/server.js"
+    "test-e2e-chrome": "nightwatch -e chrome"
   }
 }
