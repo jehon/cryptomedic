@@ -36,8 +36,7 @@ deploy:
   skip_cleanup: true
   on:
     branch: 
-        # - master
-        - publish
+      - master
 
 after_script:
   - make stop
