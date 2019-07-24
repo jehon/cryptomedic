@@ -112,6 +112,7 @@
         "workshop_Lifspring_BAFO": -1,
         "workshop_AFO_-_Articulated": -1,
         "workshop_Extension_brace_-_AFO": -1,
+        "workshop_other": -1,
         "_editable": false
     },
     {
@@ -227,6 +228,7 @@
         "workshop_Lifspring_BAFO": -1,
         "workshop_AFO_-_Articulated": -1,
         "workshop_Extension_brace_-_AFO": -1,
+        "workshop_other": -1,
         "_editable": false
     },
     {
@@ -342,6 +344,7 @@
         "workshop_Lifspring_BAFO": -1,
         "workshop_AFO_-_Articulated": -1,
         "workshop_Extension_brace_-_AFO": -1,
+        "workshop_other": 0,
         "_editable": false
     }
 ]
