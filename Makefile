@@ -29,7 +29,6 @@ endef
 
 
 all: start
-	@echo "ok, ready to dev! open http://localhost:5555/ to browse !"
 
 clean-hard: | clean stop
 	rm -fr node_modules
@@ -59,8 +58,10 @@ start: | docker-compose-is-running \
 
 	@echo "Open browser:"
 	@echo " cryptomedic: http://localhost:5555/"
+	@echo ""
+	@echo "DevTools:
 	@echo " phpmyadmin:  http://localhost:5550/"
-	@echo " mailhog:     http://localhost:5559/"
+	@echo " mailhog:     http://localhost:5551/"
 
 test: start
 	# TODO: split in subcommands ?
