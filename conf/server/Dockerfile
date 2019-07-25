@@ -1,6 +1,6 @@
 # https://hub.docker.com/_/ubuntu/
 
-FROM ubuntu:19.04
+FROM ubuntu:19.10
 
 WORKDIR /app
 
