@@ -50,9 +50,7 @@ clean: | docker-compose-is-running fix-rights
 
 start: | docker-compose-is-running \
 		install.structure \
-		dependencies.node \
-		dependencies.composer.api \
-		dependencies.composer.root \
+		dependencies \
 		build \
 		data.reset
 
@@ -155,6 +153,9 @@ docker.server.tmp:
 # Install->dependencies
 #
 #
+dependencies: dependencies.node \
+	dependencies.composer.root \
+	dependencies.composer.api 
 
 dependencies.node: node_modules/.dependencies
 node_modules/.dependencies: package.json package-lock.json
