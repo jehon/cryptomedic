@@ -56,7 +56,7 @@ start: | docker-compose-is-running \
 
 	@echo "Open browser:"
 	@echo " cryptomedic: http://localhost:5555/"
-	@echo ""
+	@echo " "
 	@echo "DevTools:
 	@echo " phpmyadmin:  http://localhost:5550/"
 	@echo " mailhog:     http://localhost:5551/"
