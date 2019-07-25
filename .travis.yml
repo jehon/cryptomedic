@@ -32,12 +32,18 @@ script:
   - make test
 
 deploy:
-  provider: script
-  script: make deploy
-  skip_cleanup: true
-  on:
-    branch: 
-      - master
+  - provider: script
+    script: make deploy
+    skip_cleanup: true
+    on:
+      branch: 
+        - master
+  - provider: script
+    script: make deploy-test
+    skip_cleanup: true
+    on:
+      branch: 
+        - deploy-rework
 
 after_script:
   - make stop
