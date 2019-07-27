@@ -14,8 +14,8 @@
         "fzaninotto/faker": "1.8.0",
         "mockery/mockery": "0.9.11",
         "phpunit/phpunit": "6.5.14",
-        "symfony/css-selector": "3.1.10",
-        "symfony/dom-crawler": "3.1.10",
+        "symfony/css-selector": "3.4.30",
+        "symfony/dom-crawler": "3.4.30",
         "filp/whoops": "2.4.1"
     },
     "autoload": {
