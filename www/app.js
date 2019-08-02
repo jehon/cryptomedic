@@ -1,7 +1,7 @@
 
 // Custom Elements v1
-import '@webcomponents/custom-elements';
-import shadydom         from '@webcomponents/shadydom';
+// import '@webcomponents/custom-elements';
+// import shadydom         from '@webcomponents/shadydom';
 
 // Angular 1.x
 import angular          from 'angular';
