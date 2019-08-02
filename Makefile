@@ -30,7 +30,7 @@ endef
 
 all: start
 
-clean-hard: | clean stop
+clean-hard: fix-rights | clean stop
 	rm -fr node_modules
 	rm -fr www/api/$(VAPI)/vendor
 	rm -fr vendor
@@ -98,7 +98,9 @@ logs:
 fix-rights:
 	$(call run_in_docker,"server","\
 		chmod a+rwX -R www/api/$(VAPI)/bootstrap/cache/ || true; \
-		chmod a+rwX -R live || true \
+		chmod a+rwX -R www/api/$(VAPI)/vendor || true; \
+		chmod a+rwX -R live || true; \
+		chmod a+rwX -R target || true; \
 	")
 
 
