@@ -1,7 +1,5 @@
 /* exported getDataService */
 
-// See polyfill for html imports: http://webcomponents.org/polyfills/html-imports/
-
 function getDataService(cssSelector = '#dataService') {
 	const test = function() {
 		let el = cssSelector;

@@ -7,22 +7,22 @@ let API_VERSION = 'v1.3';
 		window.location.href = '/static/upgrade.html';
 	};
 
-	if (!Promise || !indexedDB || !sessionStorage || !fetch) {
-		shouldUpgrade('Promise || indexedDB || sessionStorage || fetch');
+	if (!Promise || !sessionStorage || !fetch || !ShadowRoot || !customElements) {
+		shouldUpgrade('Promise || sessionStorage || fetch || ShadowRoot || customElements');
 	}
 
 	// Test input[type=date]
 	// @See https://stackoverflow.com/a/10199306/1954789
 	(function() {
-	    var input = document.createElement('input');
-	    input.setAttribute('type','date');
+		var input = document.createElement('input');
+		input.setAttribute('type','date');
 
-	    var notADateValue = 'not-a-date';
-	    input.setAttribute('value', notADateValue);
+		var notADateValue = 'not-a-date';
+		input.setAttribute('value', notADateValue);
 
-	    if (input.value === notADateValue) {
-	    	shouldUpgrade('input[type=date]');
-	    }
+		if (input.value === notADateValue) {
+			shouldUpgrade('input[type=date]');
+		}
 	})();
 
 	// Test cookies

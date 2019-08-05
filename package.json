@@ -6,8 +6,6 @@
   "repository": "https://github.com/jehon/cryptomedic",
   "license": "MIT",
   "dependencies": {
-    "@webcomponents/custom-elements": "1.2.4",
-    "@webcomponents/shadydom": "1.6.0",
     "angular": "1.7.8",
     "angular-route": "1.7.8",
     "bootstrap": "3.4.1",
