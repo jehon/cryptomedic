@@ -8,7 +8,7 @@
         "php": ">=7.0.0",
         "laravel/framework": "5.5.28",
         "flow/jsonpath": "0.4.0",
-        "sentry/sentry-laravel": "0.8.0"
+        "sentry/sentry-laravel": "0.11.0"
     },
     "require-dev": {
         "fzaninotto/faker": "1.8.0",
