@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "660eb58b2c0925d6d77fe23d0e99dbd5",
+    "content-hash": "0e9d61039e7ded2caf2c065804b2fec5",
     "packages": [
         {
             "name": "doctrine/inflector",
@@ -1259,7 +1259,7 @@
         },
         {
             "name": "symfony/css-selector",
-            "version": "v3.4.34",
+            "version": "v3.4.35",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/css-selector.git",
@@ -4059,7 +4059,7 @@
         },
         {
             "name": "symfony/dom-crawler",
-            "version": "v3.4.34",
+            "version": "v3.4.35",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/dom-crawler.git",
