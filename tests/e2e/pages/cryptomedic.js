@@ -1,6 +1,6 @@
 'use strict';
 
-/* global JHElement, module */
+/* global JHElement */
 
 var authenticated = false;
 

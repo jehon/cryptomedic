@@ -1,4 +1,4 @@
-/* global exports,JHElement */
+/* global JHElement */
 
 exports.command = function (selector, fields, button) {
 	this.waitForElementVisible(selector);
@@ -8,7 +8,7 @@ exports.command = function (selector, fields, button) {
 		this.waitForElementVisible(fsel);
 
 		// Put focus on element
-		this.execute(function (fsel) { document.querySelector(fsel).focus(); }, [fsel]);
+		this.execute(function (fsel) { document.querySelector(fsel).focus(); }, [ fsel ]);
 
 		if (fields[f] === true) {
 			this.click(f);
@@ -42,7 +42,7 @@ exports.command = function (selector, fields, button) {
 		this.execute(function (fsel) { document.querySelector(fsel).blur(); }, [fsel]);
 	}
 	if (button) {
-		this.execute((fsel) => document.querySelector(fsel).focus(), button);
+		this.execute((fsel) => document.querySelector(fsel).focus(), [ button ]);
 		this.pause(100);
 		this.myClick(button);
 	}

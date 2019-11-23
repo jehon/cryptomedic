@@ -1,3 +1,5 @@
+/* global XInputPicture */
+
 exports.command = function(selector, value, callback) {
 	this.waitForElementVisible(selector);
 	this.assert.visible(selector);
@@ -6,7 +8,7 @@ exports.command = function(selector, value, callback) {
 		let el = document.querySelector(selector);
 		el._generatePreview(XInputPicture.dataURItoBlob(value, 'test.jpg'));
 		return true;
-	}, [selector, value],
+	}, [ selector, value ],
 	(result) => {
 		if (typeof callback === 'function') {
 			this[callback](result);

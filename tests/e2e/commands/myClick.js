@@ -26,7 +26,7 @@ exports.command = function(selector, callback) {
 		return true;
 	},
 	[ selector ], // arguments array to be passed
-	function(result) {
+	function(_result) {
 		// if (typeof callback === 'function') {
 		//   callback.call(self, result);
 		// }
