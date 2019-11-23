@@ -63,7 +63,6 @@
 // //     .module('ngauthorized', [])
 // //     .controller('ngauthorizedctrl', ['$scope', function($scope) {
 // //       $scope.test = function() {
-// //         console.log("test");
 // //         mydone();
 // //       }
 // //     }]);
