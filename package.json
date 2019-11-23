@@ -21,7 +21,7 @@
   },
   "devDependencies": {
     "chromedriver": "latest",
-    "css-loader": "0.28.11",
+    "css-loader": "3.2.0",
     "eslint": "6.7.0",
     "file-loader": "1.1.11",
     "fs-extra": "latest",
@@ -47,7 +47,7 @@
     "selenium-server": "latest",
     "style-loader": "0.23.1",
     "stylelint": "10.1.0",
-    "stylelint-config-standard": "18.3.0",
+    "stylelint-config-standard": "19.0.0",
     "svgo": "latest",
     "webpack": "3.12.0"
   },
