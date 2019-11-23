@@ -144,6 +144,7 @@ www/api/$(VAPI)/bootstrap/cache/.exists:
 www/api/v1.3/storage/logs/laravel.log:
 	mkdir -p www/api/v1.3/storage/logs/
 	touch www/api/v1.3/storage/logs/laravel.log
+	chmod 666 www/api/v1.3/storage/logs/laravel.log
 
 docker.server.tmp:
 	$(call run_in_docker,"server","mkdir -p \
