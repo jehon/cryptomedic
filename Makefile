@@ -163,22 +163,12 @@ docker.server.tmp:
 #
 #
 dependencies: dependencies.node \
-	dependencies.composer.root \
 	dependencies.composer.api 
 
 dependencies.node: node_modules/.dependencies
 node_modules/.dependencies: package.json package-lock.json
 	npm install
 	touch node_modules/.dependencies
-
-dependencies.composer.root: vendor/.dependencies
-vendor/.dependencies: # composer.json composer.lock
-	# $(call run_in_docker,"server","\
-	# 	composer install \
-	# 	&& chmod -R a+rwX vendor \
-	# ")
-	mkdir -p vendor
-	touch vendor/.dependencies
 
 dependencies.composer.api: www/api/$(VAPI)/vendor/.dependencies
 www/api/$(VAPI)/vendor/.dependencies: www/api/$(VAPI)/composer.json www/api/$(VAPI)/composer.lock
