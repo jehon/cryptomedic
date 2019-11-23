@@ -61,10 +61,16 @@ start: | docker-compose-is-running \
 	@echo " phpmyadmin:  http://localhost:5550/"
 	@echo " mailhog:     http://localhost:5551/"
 
-test: start
-	# TODO: split in subcommands ?
+test: test-api test-unit test-e2e
+
+test-api: start
 	npm run --silent test-api
+
+test-unit: start
 	npm run --silent test-unit
+
+
+test-e2e: start
 	npm run --silent test-e2e
 
 stop:
