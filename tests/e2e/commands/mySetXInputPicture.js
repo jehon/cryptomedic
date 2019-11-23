@@ -4,7 +4,7 @@ exports.command = function(selector, value, callback) {
 	this.waitForElementVisible(selector);
 	this.assert.visible(selector);
 
-	this.execute(function(selector, attributeName, attributeValue) {
+	this.execute(function(selector, value) {
 		let el = document.querySelector(selector);
 		el._generatePreview(XInputPicture.dataURItoBlob(value, 'test.jpg'));
 		return true;
