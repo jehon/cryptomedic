@@ -87,12 +87,12 @@ module.exports = {
 
 		client.myFormFillIn('#fileForm', bill);
 		client.myFormCheck('#fileForm', billTotal);
-		client.assert.elementNotPresent('#Bill_other_Other_plaster');
+		client.assert.not.elementPresent('#Bill_other_Other_plaster');
 
 		client.myClick('#topsubmenu #button_save');
 		client.myFormCheck('#fileForm', bill);
 		client.myFormCheck('#fileForm', billTotal);
-		client.assert.elementNotPresent('#Bill_other_Other_plaster');
+		client.assert.not.elementPresent('#Bill_other_Other_plaster');
 		nb++;
 	},
 
@@ -101,7 +101,7 @@ module.exports = {
 		client.myClick('#add_bill');
 		client.myFormFillIn('#fileForm', { '#Bill_Date': '' });
 
-		client.assert.elementNotPresent('[priceFor]');
+		client.assert.not.elementPresent('[priceFor]');
 		client.assert.elementPresent('#errorNoDate');
 		client.myClick('#topsubmenu #button_cancel');
 	},
@@ -128,13 +128,13 @@ module.exports = {
 
 		client.myFormFillIn('#fileForm', bill);
 		client.myFormCheck('#fileForm', billTotal);
-		client.assert.elementNotPresent('#Bill_other_Other_plaster');
+		client.assert.not.elementPresent('#Bill_other_Other_plaster');
 
 		client.myClick('#topsubmenu #button_save');
 		client.myFormCheck('#fileForm', bill);
 
 		client.myFormCheck('#fileForm', billTotal);
-		client.assert.elementNotPresent('#Bill_other_Other_plaster');
+		client.assert.not.elementPresent('#Bill_other_Other_plaster');
 		nb++;
 	},
 
