@@ -1,6 +1,5 @@
 /* eslint-env node */
 
-
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
@@ -30,13 +29,10 @@ module.exports = {
 			filename: www + '/static/index.html',
 			inject: false
 		}),
-		// new webpack.optimize.CommonsChunkPlugin({
-		// 	name: 'manifest'
-		// }),
 		new webpack.HashedModuleIdsPlugin()
 	],
 	module: {
-		loaders: [
+		rules: [
 			{ test: /\.css$/, loader: 'style-loader!css-loader' },
 			{
 				test: /\.(eot|svg|ttf|woff|woff2)$/,
