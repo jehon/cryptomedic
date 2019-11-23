@@ -207,26 +207,26 @@ module.exports = {
 		nb++;
 	},
 
-	'add a picture': function (client) {
-		var picture = {
-			'#Picture_Date': '2003-01-02'
-		};
+	// 'add a picture': function (client) {
+	// 	var picture = {
+	// 		'#Picture_Date': '2003-01-02'
+	// 	};
 
-		const filePath = require('path').resolve(__dirname + '/../../../resources/upload.jpg');
-		const fileContent = require('fs').readFileSync(filePath);
-		const btoa = function (binary) { return new Buffer(binary, 'binary').toString('base64'); };
-		const imgValue = 'data:image/gif;base64,' + btoa(fileContent);
-		// const img = 'data:image/gif;base64,R0lGODlhPQBEAPeoAJosM//AwO
-		// element()._generatePreview(XInputPicture.dataURItoBlob(img, 'test.jpg'));
+	// 	const filePath = require('path').resolve(__dirname + '/../../../resources/upload.jpg');
+	// 	const fileContent = require('fs').readFileSync(filePath);
+	// 	const btoa = function (binary) { return new Buffer(binary, 'binary').toString('base64'); };
+	// 	const imgValue = 'data:image/gif;base64,' + btoa(fileContent);
+	// 	// const img = 'data:image/gif;base64,R0lGODlhPQBEAPeoAJosM//AwO
+	// 	// element()._generatePreview(XInputPicture.dataURItoBlob(img, 'test.jpg'));
 
-		client.myClick('#button_add');
-		client.myClick('#add_picture');
-		// I think this does not works...
-		client.mySetXInputPicture('[name=fileContent]', imgValue);
-		client.myForm('#fileForm', picture, '#topsubmenu #button_save');
-		// .assert.visible('#img_file');
-		nb++;
-	},
+	// 	client.myClick('#button_add');
+	// 	client.myClick('#add_picture');
+	// 	// I think this does not works...
+	// 	client.mySetXInputPicture('[name=fileContent]', imgValue);
+	// 	client.myForm('#fileForm', picture, '#topsubmenu #button_save');
+	// 	// .assert.visible('#img_file');
+	// 	nb++;
+	// },
 
 	// var appointment = {
 	// 	'#Appointment_Nextappointment': '2010-01-01',
