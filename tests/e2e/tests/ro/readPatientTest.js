@@ -7,7 +7,7 @@ module.exports = {
 		client.assert.containsText('#Patient_Sex', 'Male');
 		client.assert.containsText('#Patient_District', 'Chittagong');
 		client.assert.containsText('#Patient_Pathology', 'ClubFoot');
-		client.assert.elementNotPresent('#button_edit');
+		client.assert.not.elementPresent('#button_edit');
 
 		// Summary
 		client.myClick('#summary');
@@ -32,17 +32,17 @@ module.exports = {
 		// TODO: .assert.containsText("#ds_wh", "0.00 ds")
 		client.assert.containsText('#bmi', '16.15');
 		client.assert.containsText('#ds_bmi', '0.0 ds');
-		client.assert.elementNotPresent('#button_edit');
+		client.assert.not.elementPresent('#button_edit');
 
 		client.page.cryptomedic().selectFile('Picture', 2);
 		client.assert.containsText('#Picture_Date', '2014-11-04');
 		client.assert.containsText('#Picture_file', '10_2014-11-06_15-32-45.JPG');
 		client.assert.containsText('#Patient_entryyear', '2000');
 		client.assert.containsText('#Patient_entryorder', '1');
-		client.assert.elementNotPresent('#button_edit');
+		client.assert.not.elementPresent('#button_edit');
 
 		client.page.cryptomedic().selectFile('Bill', 1);
-		client.assert.elementNotPresent('#button_edit');
+		client.assert.not.elementPresent('#button_edit');
 		// TODO: check bill
 	},
 	readPatient5: function(client) {
@@ -56,12 +56,12 @@ module.exports = {
 		client.assert.containsText('#ageAtConsultationTime', '2y0m');
 		client.assert.containsText('#ClubFoot_Treatment', 'DB splint');
 		// TODO: adapt the data and check them
-		client.assert.elementNotPresent('#button_edit');
+		client.assert.not.elementPresent('#button_edit');
 
 		client.page.cryptomedic().goPatient(2001, 1);
 		client.page.cryptomedic().selectFile('RicketConsult', 3);
 		// TODO: adapt the data and check them
-		client.assert.elementNotPresent('#button_edit');
+		client.assert.not.elementPresent('#button_edit');
 
 		client.end();
 	},

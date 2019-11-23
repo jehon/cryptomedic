@@ -39,9 +39,9 @@ function assertTableInitial(client, i = 0) {
 		.nextCol().assert('open')
 		.endTable();
 
-	client.assert.elementNotPresent('#button_save_' + (i));
-	client.assert.elementNotPresent('#button_save_' + (i + 1));
-	client.assert.elementNotPresent('#button_save_' + (i + 2));
+	client.assert.not.elementPresent('#button_save_' + (i));
+	client.assert.not.elementPresent('#button_save_' + (i + 1));
+	client.assert.not.elementPresent('#button_save_' + (i + 2));
 }
 
 module.exports = {
@@ -60,7 +60,7 @@ module.exports = {
 	'create a new Price List': function(client) {
 		// Button to create a new price list
 		client.waitForElementVisible('#button_create');
-		client.assert.elementNotPresent('#action_creating');
+		client.assert.not.elementPresent('#action_creating');
 		client.myClick('#button_create');
 
 		client.waitForElementVisible('#action_creating');
@@ -82,7 +82,7 @@ module.exports = {
 		assertTableInitial(client, 1);
 		client.waitForElementVisible('#button_save_0');
 		client.waitForElementVisible('#button_cancel_0');
-		client.assert.elementNotPresent('#button_edit_0');
+		client.assert.not.elementPresent('#button_edit_0');
 		client.page.cryptomedic().tableIterator('#price_lists')
 			.section('tbody')
 			.col(2)
