@@ -48,6 +48,9 @@ clean: | docker-compose-is-running fix-rights
 	rm -f "www/release_version.txt"
 	$(call run_in_docker,"server","find /tmp/laravel -type f -delete") || true
 
+lint:
+	npm run stylelint
+
 start: | docker-compose-is-running \
 		install.structure \
 		dependencies \
