@@ -60,7 +60,6 @@
     "test-unit-continuously": "karma start",
     "test-e2e": "nightwatch",
     "test-e2e-chrome": "nightwatch -e chrome",
-    "style": "npm run eslint; npm run stylelint",
     "eslint": "eslint",
     "stylelint": "stylelint www/**/*.css !www/api"
   }
