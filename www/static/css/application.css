@@ -2,248 +2,265 @@
  * Globals
  */
 ::-webkit-calendar-picker-indicator {
- color: red;
- background-image: url('img/cal.gif');
+	color: red;
+	background-image: url('img/cal.gif');
 }
 
 .debug {
- /* color: white; */
- /* background-color: yellow; */
- border-left: solid 15px yellow;
- border-right: solid 15px yellow;
- border-color: yellow;
+	/* color: white; */
+
+	/* background-color: yellow; */
+	border-left: solid 15px yellow;
+	border-right: solid 15px yellow;
+	border-color: yellow;
 }
 
 .debug_infos {
- font-size: xx-small;
- font-style: italic;
- color: lightgray;
- text-align: right;
+	font-size: xx-small;
+	font-style: italic;
+	color: lightgray;
+	text-align: right;
 }
 
 .toberemoved {
- background-color: red;
+	background-color: red;
 }
 
 .loading {
- text-align: center;
+	text-align: center;
 }
 
-.loading:before {
- content: url(img/waiting.gif);
+.loading::before {
+	content: url(img/waiting.gif);
 }
 
 /*
  * Base structure
  */
-html, body {
- height: 100%;
+html,
+body {
+	height: 100%;
 }
 
-body>.container {
- padding-bottom: 60px;
+body > .container {
+	padding-bottom: 60px;
 }
 
 .submenu {
- background-color: lightgray;
+	background-color: lightgray;
 }
 
-h1>img {
- height: 35px;
- margin-right: 20px;
+h1 > img {
+	height: 35px;
+	margin-right: 20px;
 }
 
 x-login-status {
 	height: 25px;
 }
 
+/**********************************************
+ * Fieldsets (databoxes)
+ */
+
+fieldset {
+	border-radius: 10px;
+	padding: 10px;
+	border-style: solid;
+	border-width: 2px;
+	border-color: #002060;
+}
+
+fieldset > legend {
+	font-size: 120%;
+	color: #004a94;
+	padding-left: 10px;
+	padding-right: 10px;
+	width: auto;
+	margin-bottom: 0;
+}
+
+fieldset > legend > label {
+	padding: 0;
+}
+
+fieldset > table {
+	width: 100%;
+}
+
+fieldset > table > thead {
+	font-style: italic;
+}
+
+fieldset > table > tbody > tr:nth-child(odd) {
+	background-color: rgb(230, 230, 230);
+}
+
+fieldset > table > tbody > tr > td:nth-of-type(1) {
+	/* Setting the width of column 1. */
+	width: 120px;
+	font-weight: 700;
+}
+
+fieldset > table > tbody > tr > td:nth-of-type(3),
+fieldset > table > thead > tr > th:nth-of-type(3) { /* Setting the width of column 1. */
+	border-left: solid blue 1px;
+	padding-left: 5px;
+}
+
 /********************************************
  * Reports
  */
-table.reporting>thead {
- border: black 2px solid;
- color: white;
+table.reporting > thead {
+	border: black 2px solid;
+	color: white;
 }
 
-table.reporting>thead>tr>th {
- background-color: gray;
+table.reporting > thead > tr > th {
+	background-color: gray;
 }
 
-table.reporting>thead>tr>th.b_right {
- border-right: white 1px solid;
+table.reporting > thead > tr > th.b_right {
+	border-right: white 1px solid;
 }
 
-table.reporting>thead>tr>th.b_left {
- border-left: white 1px solid;
+table.reporting > thead > tr > th.b_left {
+	border-left: white 1px solid;
 }
 
-table.reporting>thead>tr>th.b_bottom {
- border-bottom: white 1px solid;
+table.reporting > thead > tr > th.b_bottom {
+	border-bottom: white 1px solid;
 }
 
-table.reporting>thead>tr>th.b_top {
- border-top: white 1px solid;
+table.reporting > thead > tr > th.b_top {
+	border-top: white 1px solid;
 }
 
-table.reporting>thead>tr>th.b_all {
- border: white 1px solid;
+table.reporting > thead > tr > th.b_all {
+	border: white 1px solid;
 }
 
-table.reporting>tbody>tr>td, table.reporting>thead>tr>th, table.reporting>tfoot>tr>td {
- text-align: center;
+table.reporting > tbody > tr > td,
+table.reporting > thead > tr > th,
+table.reporting > tfoot > tr > td {
+	text-align: center;
 }
 
-table.reporting>tbody, table.reporting>tfoot {
- border: black 2px solid;
+table.reporting > tbody,
+table.reporting > tfoot {
+	border: black 2px solid;
 }
 
-table.reporting>tbody>tr>td:nth-child(1), table.reporting>tfoot>tr>td:nth-child(1) {
- text-align: left;
+table.reporting > tbody > tr > td:nth-child(1),
+table.reporting > tfoot > tr > td:nth-child(1) {
+	text-align: left;
 }
 
-table.reporting>tbody>tr:nth-child(odd), table.reporting>tfoot>tr:nth-child(odd) {
- background-color: lightgray;
+table.reporting > tbody > tr:nth-child(odd),
+table.reporting > tfoot > tr:nth-child(odd) {
+	background-color: lightgray;
 }
 
-table.reporting>tbody>tr>.subheader, table.reporting>tfoot>tr>.subheader {
- background-color: gray;
- padding: 5px;
- padding-top: 10px;
- text-align: center;
- font-weight: bold;
+table.reporting > tbody > tr > .subheader,
+table.reporting > tfoot > tr > .subheader {
+	background-color: gray;
+	padding: 5px;
+	padding-top: 10px;
+	text-align: center;
+	font-weight: bold;
 }
 
-table.reporting>tbody>tr>td.b_right, table.reporting>tfoot>tr>td.b_right {
- border-right: gray 1px solid;
+table.reporting > tbody > tr > td.b_right,
+table.reporting > tfoot > tr > td.b_right {
+	border-right: gray 1px solid;
 }
 
-table.reporting>tbody>tr>td.b_left, table.reporting>tfoot>tr>td.b_left {
- border-left: gray 1px solid;
+table.reporting > tbody > tr > td.b_left,
+table.reporting > tfoot > tr > td.b_left {
+	border-left: gray 1px solid;
 }
 
-table.reporting>tbody>tr>td.b_bottom, table.reporting>tfoot>tr>td.b_bottom {
- border-bottom: gray 1px solid;
+table.reporting > tbody > tr > td.b_bottom,
+table.reporting > tfoot > tr > td.b_bottom {
+	border-bottom: gray 1px solid;
 }
 
-table.reporting>tbody>tr>td.b_top, table.reporting>tfoot>tr>td.b_top {
- border-top: gray 1px solid;
+table.reporting > tbody > tr > td.b_top,
+table.reporting > tfoot > tr > td.b_top {
+	border-top: gray 1px solid;
 }
 
-table.reporting>tbody>tr>td.b_all, table.reporting>tfoot>tr>td.b_all {
- border: gray 1px solid;
+table.reporting > tbody > tr > td.b_all,
+table.reporting > tfoot > tr > td.b_all {
+	border: gray 1px solid;
 }
 
 /********************************************
  * Data display (modes, emtpyValues)
  */
 .summary .emptyValue {
- display: none;
+	display: none;
 }
 
 .related .emptyValue {
- display: none;
+	display: none;
 }
 
 .modeRead .emptyValue {
- color: lightgray;
- font-size: smaller;
- background-color: white;
+	color: lightgray;
+	font-size: smaller;
+	background-color: white;
 }
 
 .modeRead .notModeRead {
- display: none;
+	display: none;
 }
 
 .modeWrite .notModeWrite {
- display: none;
+	display: none;
 }
 
 .catchedError {
- color: rgb(180, 0, 0);
+	color: rgb(180, 0, 0);
 }
 
 .emptyValue .catchedError {
- color: lightgray;
-}
-/**********************************************
- * Fieldsets (databoxes)
- */
-fieldset {
- border-radius: 10px;
- padding: 10px;
- border-style: solid;
- border-width: 2px;
- border-color: #002060;
-}
-
-fieldset>legend {
- font-size: 120%;
- color: #004A94;
- padding-left: 10px;
- padding-right: 10px;
- width: auto;
- margin-bottom: 0;
-}
-
-fieldset>legend>label {
- padding: 0;
-}
-
-fieldset>table {
- width: 100%;
-}
-
-fieldset>table>thead {
- font-style: italic;
-}
-
-fieldset>table>tbody>tr:nth-child(odd) {
- background-color: rgb(230, 230, 230);
-}
-
-fieldset>table>tbody>tr>td:nth-of-type(1) {
- /*Setting the width of column 1.*/
- width: 120px;
- font-weight: 700;
-}
-
-fieldset>table>tbody>tr>td:nth-of-type(3), fieldset>table>thead>tr>th:nth-of-type(3)
- { /*Setting the width of column 1.*/
- border-left: solid blue 1px;
- padding-left: 5px;
+	color: lightgray;
 }
 
 /********************************************
  * Input
  */
 input.ng-required {
- border: 1px solid blue;
+	border: 1px solid blue;
 }
 
-input.ng-invalid, .error {
- border: 3px solid red;
+input.ng-invalid,
+.error {
+	border: 3px solid red;
 }
 
 input[type=date] {
- /*line-height: inherit !important; */
- line-height: normal !important; /* Workaround bootstrap */
+	/* line-height: inherit !important; */
+	line-height: normal !important; /* Workaround bootstrap */
 }
 
 input[type=checkbox].form-control {
- width: auto;
+	width: auto;
 }
 
 .jserror {
- color: red;
- min-height: 20px;
- background-image: url('img/error.png');
- background-repeat: no-repeat;
- background-size: 20px;
- padding-left: 25px;
+	color: red;
+	min-height: 20px;
+	background-image: url('img/error.png');
+	background-repeat: no-repeat;
+	background-size: 20px;
+	padding-left: 25px;
 }
 
-.ui-datepicker-month, .ui-datepicker-year {
- color: black;
+.ui-datepicker-month,
+.ui-datepicker-year {
+	color: black;
 }
 
 x-input-picture {
