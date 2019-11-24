@@ -1,3 +1,5 @@
 module.exports = {
-	env: "jasmine"
+	env: {
+		"jasmine": true
+	}
 }
