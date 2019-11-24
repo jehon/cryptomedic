@@ -271,90 +271,92 @@ x-input-picture {
  * Menu / buttons
  */
 .left-menu-button {
- width: 100%;
- white-space: normal;
- line-height: 1;
+	width: 100%;
+	white-space: normal;
+	line-height: 1;
 }
 
 .navbar img {
- height: 25px;
+	height: 25px;
 }
 
 /********************************************
  *  Marks and graphics
  */
 .markContainer {
- /* position: absolute -> relative to the first non-static element -> relative to 0,0 = pseudo-static */
- position: relative;
+	/* position: absolute -> relative to the first non-static element -> relative to 0,0 = pseudo-static */
+	position: relative;
 }
 
 .mark {
- color: red;
- position: absolute;
- margin: 0;
- padding: 0;
- border: 0;
- margin-top: -10px;
+	color: red;
+	position: absolute;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	margin-top: -10px;
 }
 
 .mark span {
- margin-left: -50%;
+	margin-left: -50%;
 }
 
-.mark.hovered>span {
- background-color: red;
- color: white;
- z-index: 100;
+.mark.hovered > span {
+	background-color: red;
+	color: white;
+	z-index: 100;
 }
 
 tr.hovered {
- background-color: gray !important;
+	background-color: gray !important;
 }
 
 /********************************************
  *  Overlays
  */
 .site-wrapper {
- display: table;
- width: 100%;
- height: 100%; /* For at least Firefox */
- min-height: 100%;
- position: absolute;
- text-align: center;
- background: rgba(3, 3, 3, 0.6);
- /*   background-color: #333; */
- color: #fff;
- z-index: 500;
+	display: table;
+	width: 100%;
+	height: 100%; /* For at least Firefox */
+	min-height: 100%;
+	position: absolute;
+	text-align: center;
+	background: rgba(3, 3, 3, 0.6);
+
+	/*   background-color: #333; */
+	color: #fff;
+	z-index: 500;
 }
 
 .site-wrapper-inner {
- display: table-cell;
- vertical-align: top;
- background-color: #333;
- /*    background: rgba(3, 3, 3, 1); */
+	display: table-cell;
+	vertical-align: top;
+	background-color: #333;
+
+	/*    background: rgba(3, 3, 3, 1); */
 }
 
 .cover-container {
- margin-right: auto;
- margin-left: auto;
+	margin-right: auto;
+	margin-left: auto;
 }
 
 /* Padding for spacing */
 .inner {
- padding: 30px;
+	padding: 30px;
 }
 
 /**********************************************
  * Summary
  */
-table.summary table>tbody>tr>td:nth-of-type(1) {
- /*Setting the width of column 1.*/
- width: 120px;
- font-weight: 700;
- padding-right: 10px;
+table.summary table > tbody > tr > td:nth-of-type(1) {
+	/* Setting the width of column 1. */
+	width: 120px;
+	font-weight: 700;
+	padding-right: 10px;
 }
 
-table.summary table>tbody>tr:nth-child(2n) {
+table.summary table > tbody > tr:nth-child(2n) {
 	background-color: rgb(230, 230, 230);
 }
 
@@ -362,48 +364,54 @@ table.summary table>tbody>tr:nth-child(2n) {
 /* Data Legend
  */
 table.datalegend {
- font-size: 9px;
- padding: 0px;
- width: 100%;
+	font-size: 9px;
+	padding: 0;
+	width: 100%;
 }
 
-table.datalegend>thead>tr>th {
- font-size: 9px;
- padding: 2px;
+table.datalegend > thead > tr > th {
+	font-size: 9px;
+	padding: 2px;
 }
 
 /********************************************
 /******************************************** OLD
-/********************************************/
+/ ********************************************/
 
 /*
  * Affix and center
  */
-@media(min-width:768px) {
+@media (min-width: 768px) {
 	/* Pull out the header and footer */
 	.masthead {
-	 position: fixed;
-	 top: 0;
+		position: fixed;
+		top: 0;
 	}
 
 	.mastfoot {
-	 position: fixed;
-	 bottom: 0;
+		position: fixed;
+		bottom: 0;
 	}
+
 	/* Start the vertical centering */
 	.site-wrapper-inner {
-	 vertical-align: middle;
-	}
-	/* Handle the widths */
-	.masthead, .mastfoot, .cover-container {
-	 width: 100%;
-	 /* Must be percentage or pixels for horizontal alignment */
+		vertical-align: middle;
 	}
 
+	/* Handle the widths */
+	.masthead,
+	.mastfoot,
+	.cover-container {
+		width: 100%;
+
+		/* Must be percentage or pixels for horizontal alignment */
+	}
 }
 
-@media(min-width: 992px) {
-	.masthead, .mastfoot, .cover-container {
-	 width: 700px;
+@media (min-width: 992px) {
+	.masthead,
+	.mastfoot,
+	.cover-container {
+		width: 700px;
 	}
 }
