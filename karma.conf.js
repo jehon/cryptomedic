@@ -5,7 +5,6 @@ module.exports = function(config) {
 	var configuration = {
 		basePath : 'www/',
 
-
 		frameworks : [
 			'jasmine-es6',
 			'jasmine',
