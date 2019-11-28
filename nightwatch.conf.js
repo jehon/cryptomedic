@@ -11,10 +11,10 @@ let remoteTarget = 'http://localhost:5555/static/index.html';
 
 module.exports = {
 	'src_folders' : [ 'tests/e2e/tests' ],
-	'output_folder' : 'target/e2e/',
 	'page_objects_path' : 'tests/e2e/pages',
 	'custom_commands_path': [ 'tests/e2e/commands' ],
 	'custom_assertions_path': [ 'tests/e2e/assertions' ],
+	'output_folder' : 'target/e2e/',
 
 	'globals_path': 'nightwatch-global.js',
 
@@ -56,7 +56,7 @@ module.exports = {
 				'enabled' : true,
 				'on_failure' : true,
 				'on_error' : true,
-				'path' : 'target/e2e/firefox/'
+				'path' : 'target/e2e/browsers/firefox/'
 			},
 		},
 		// 'chrome' : {
@@ -74,7 +74,7 @@ module.exports = {
 		// 	},
 		// 	'screenshots' : {
 		// 		'enabled' : true,
-		// 		'path' : 'target/e2e/chrome/'
+		// 		'path' : 'target/e2e/browsers/chrome/'
 		// 	},
 		// },
 	}
