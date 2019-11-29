@@ -1,6 +1,7 @@
 
 const path = require('path');
 const glob = require('glob');
+const resemble = require('node-resemble-js');
 
 const globP = (pattern, options) => {
 	return glob.sync(pattern, options);
@@ -17,19 +18,20 @@ for (let f of fullList) {
 	it('screenshot: ' + f, function(done) {
 		if (refs.includes(f)) {
 			if (tests.includes(f)) {
-				// 	var screenshot = new Buffer(pngString, 'base64');
-				// 	resemble(image)
-				// 	  .compareTo(screenshot)
-				// 	  .onComplete(function(data){
-				// 		if (Number(data.misMatchPercentage) <= 0.01) {
-				// 		  callback();
-				// 		} else {
-				// 		  data.getDiffImage().pack().pipe(fs.createWriteStream(image + 'diff.png'));
-				// 		  callback.fail(new Error("Screenshot '" + image+  "' differ " + data.misMatchPercentage + "%"));
-				// 		}
-				// 	  });
-				//   });
-				done();
+				resemble(path.join(testPath, f))
+					.compareTo(path.join(refPath, f))
+					.onComplete(function(data){
+						// console.log(f, data);
+						const diffContent = data.misMatchPercentage;
+						const diffSize = Math.hypot(data.dimensionDifference.width, data.dimensionDifference.height);
+						expect(diffSize)
+							.withContext('differ too much in size')
+							.toBeLessThan(2);
+						expect(diffContent)
+							.withContext('differ too much in content')
+							.toBeLessThan(5);
+						done();
+					});
 			} else {
 				done.fail('test is not available');
 			}
