@@ -31,6 +31,7 @@ install:
 script:
   - make test
   - make lint
+  - make deploy-test
 
 deploy:
   - provider: script
@@ -38,13 +39,7 @@ deploy:
     skip_cleanup: true
     on:
       branch: 
-        - master
-  - provider: script
-    script: make deploy-test
-    skip_cleanup: true
-    on:
-      branch: 
-        - deploy-rework
+        - master-disabled
 
 after_script:
   - make stop
