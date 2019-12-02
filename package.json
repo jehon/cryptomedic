@@ -22,7 +22,7 @@
   },
   "devDependencies": {
     "chromedriver": "latest",
-    "css-loader": "3.2.0",
+    "css-loader": "3.2.1",
     "eslint": "6.7.2",
     "file-loader": "4.3.0",
     "fs-extra": "latest",
