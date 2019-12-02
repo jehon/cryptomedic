@@ -64,7 +64,7 @@ start: | docker-compose-is-running \
 	@echo " phpmyadmin:  http://localhost:5550/"
 	@echo " mailhog:     http://localhost:5551/"
 
-test: test-api test-unit test-e2e
+test: test-api test-unit test-e2e test-style
 
 test-api: start
 	npm run --silent test-api
@@ -72,9 +72,12 @@ test-api: start
 test-unit: start
 	npm run --silent test-unit
 
-
+target/e2e/browsers: test-e2e
 test-e2e: start
 	npm run --silent test-e2e
+
+test-style: target/e2e/browsers
+	npm run --silet test-style
 
 stop:
 	docker-compose down || true
