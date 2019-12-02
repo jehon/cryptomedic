@@ -39,7 +39,7 @@ deploy:
     skip_cleanup: true
     on:
       branch: 
-        - master-disabled
+        - master
 
 after_script:
   - make stop
