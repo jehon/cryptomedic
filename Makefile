@@ -72,12 +72,18 @@ test-api: start
 test-unit: start
 	npm run --silent test-unit
 
-target/e2e/browsers: test-e2e
+target/e2e/browsers/.tested: test-e2e
 test-e2e: start
 	npm run --silent test-e2e
+	touch target/e2e/browsers/.tested
 
-test-style: target/e2e/browsers
-	npm run --silet test-style
+test-style: target/e2e/browsers/.tested
+	npm run --silent test-style
+
+style-update-references:
+	rsync --progress --recursive --delete \
+		--include "*_reference.png" --include "*_reference_*.png" --exclude "*" \
+		target/e2e/browsers/firefox/ tests/style/references
 
 stop:
 	docker-compose down || true

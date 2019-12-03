@@ -1,6 +1,5 @@
 
-exports.command = function(selector, callback) {
-	var self = this;
+exports.command = function(selector, _callback) {
 	this.waitForElementVisible(selector);
 	this.assert.visible(selector);
 	this.myScreenshot('click');
@@ -8,6 +7,7 @@ exports.command = function(selector, callback) {
 	// http://stackoverflow.com/questions/38102543/when-running-nightwatch-js-test-how-can-i-get-the-name-of-browser-currently-runn
 
 	this.execute(function(selector) {
+		/* eslint-env browser */
 		document.querySelector(selector).focus();
 		if (typeof(document.querySelector(selector).click) == 'function') {
 			document.querySelector(selector).click();
