@@ -1,12 +1,7 @@
 /* eslint-env node */
-/* eslint no-console: off */
 
 'use strict';
 
-// let selenium = require('selenium-server');
-// let remoteTarget = "http://localhost/static/index.html"
-
-// PHP Server: @latitude = not debug mode
 let remoteTarget = 'http://localhost:5555/static/index.html';
 
 module.exports = {
@@ -34,20 +29,12 @@ module.exports = {
 				'waitForConditionTimeout': 10000,
 				'waitForConditionPoolInterval': 10000
 			},
-			// 'webdriver': {
-			// 	'server_path': 'node_modules/.bin/geckodriver',
-			// 	'port' : 4444,
-			// // 'cli_args': [
-			// // '--headless'
-			// // ]
-			// },
 			'desiredCapabilities' : {
 				// 'browserName' : 'firefox',
 				'browserName': 'chrome',
 				// 'acceptInsecureCerts' : true,
 				// 'loggingPrefs': {'driver': 'INFO', 'server': 'OFF', 'browser': 'INFO'}
 				'goog:chromeOptions': {
-					// w3c: false,
 					args: [
 						'--headless',
 						'window-size=1280,800'
@@ -66,7 +53,6 @@ module.exports = {
 		// 		'server_path': 'node_modules/.bin/chromedriver',
 		// 		'cli_args': [
 		// 			// 	'--headless',
-		// 			// 	'--auto-open-devtools-for-tabs'
 		// 		]
 		// 	},
 
