@@ -8,6 +8,7 @@ exports.command = function(selector, attributeName, attributeValue, callback) {
 	// http://stackoverflow.com/questions/38102543/when-running-nightwatch-js-test-how-can-i-get-the-name-of-browser-currently-runn
 
 	this.execute(function(selector, attributeName, attributeValue) {
+		/* eslint-env browser */
 		let el = document.querySelector(selector);
 		el.setAttribute(attributeName, attributeValue);
 		return true;

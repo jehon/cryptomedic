@@ -9,8 +9,11 @@ module.exports = {
 		client.assert.containsText('#Patient_Pathology', 'ClubFoot');
 		client.assert.not.elementPresent('#button_edit');
 
+		client.myScreenshotReference('patient');
+
 		// Summary
 		client.myClick('#summary');
+		client.myScreenshotReference('summary');
 		client.page.cryptomedic().tableIterator('#table_summary')
 			// Summary Bill#1
 			.row(4).assert('#2')
@@ -19,6 +22,7 @@ module.exports = {
 
 		// Nonrickect Consult
 		client.page.cryptomedic().selectFile('OtherConsult', 1);
+		client.myScreenshotReference('OtherConsult');
 		client.assert.containsText('#Date', '2007-01-10');
 		client.assert.containsText('#ExaminerName', 'Ershad');
 
@@ -35,6 +39,7 @@ module.exports = {
 		client.assert.not.elementPresent('#button_edit');
 
 		client.page.cryptomedic().selectFile('Picture', 2);
+		client.myScreenshotReference('Picture');
 		client.assert.containsText('#Picture_Date', '2014-11-04');
 		client.assert.containsText('#Picture_file', '10_2014-11-06_15-32-45.JPG');
 		client.assert.containsText('#Patient_entryyear', '2000');
@@ -52,6 +57,7 @@ module.exports = {
 		client.assert.containsText('#Patient_Telephone', '1813247984');
 
 		client.page.cryptomedic().selectFile('ClubFoot', 1);
+		client.myScreenshotReference('ClubFoot');
 		client.waitForElementVisible('#ageAtConsultationTime');
 		client.assert.containsText('#ageAtConsultationTime', '2y0m');
 		client.assert.containsText('#ClubFoot_Treatment', 'DB splint');
@@ -60,6 +66,7 @@ module.exports = {
 
 		client.page.cryptomedic().goPatient(2001, 1);
 		client.page.cryptomedic().selectFile('RicketConsult', 3);
+		client.myScreenshotReference('RicketConsult');
 		// TODO: adapt the data and check them
 		client.assert.not.elementPresent('#button_edit');
 

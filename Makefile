@@ -64,7 +64,7 @@ start: | docker-compose-is-running \
 	@echo " phpmyadmin:  http://localhost:5550/"
 	@echo " mailhog:     http://localhost:5551/"
 
-test: test-api test-unit test-e2e
+test: test-api test-unit test-e2e test-style
 
 test-api: start
 	npm run --silent test-api
@@ -72,9 +72,18 @@ test-api: start
 test-unit: start
 	npm run --silent test-unit
 
-
+target/e2e/browsers/.tested: test-e2e
 test-e2e: start
 	npm run --silent test-e2e
+	touch target/e2e/browsers/.tested
+
+test-style: target/e2e/browsers/.tested
+	npm run --silent test-style
+
+style-update-references:
+	rsync --progress --recursive --delete \
+		--include "*_reference.png" --include "*_reference_*.png" --exclude "*" \
+		target/e2e/browsers/firefox/ tests/style/references
 
 stop:
 	docker-compose down || true
