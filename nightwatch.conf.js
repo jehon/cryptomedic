@@ -50,6 +50,7 @@ module.exports = {
 					// w3c: false,
 					args: [
 						'--headless',
+						'window-size=1280,800'
 					]
 				},			},
 			'screenshots' : {
