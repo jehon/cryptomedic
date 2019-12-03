@@ -6,6 +6,7 @@ function testSearch(client, search, resultList) {
 	client.waitForElementPresent('#search_results');
 	client.page.cryptomedic().tableIterator('#search_results', 1, resultList.length).assert().endTable();
 	client.pause(100);
+	client.myScreenshotReference();
 
 	for(var i in resultList) {
 		var tsel = '#search_results tr:nth-child(' + (parseInt(i) + 1) + ') td:nth-child(2)';

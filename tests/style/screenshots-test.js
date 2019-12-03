@@ -11,7 +11,7 @@ const refPath = path.join(__dirname, 'references');
 const testPath = path.join(__dirname, '..', '..', 'target', 'e2e', 'browsers', 'firefox');
 
 let refs =     globP('*', { cwd: refPath });
-let tests =    globP('*', { cwd: testPath });
+let tests =    globP('*_reference*.png', { cwd: testPath });
 let fullList = new Set([...refs, ...tests]);
 
 for (let f of fullList) {
