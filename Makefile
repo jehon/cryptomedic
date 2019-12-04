@@ -61,7 +61,8 @@ start: target/structure-exists \
 	@echo " mailhog:     http://localhost:5551/"
 
 target/docker-is-running:
-	@$(call run_in_docker,"server","true") 2>/dev/null || docker-compose up --force-recreate -d
+	@$(call run_in_docker,"server","true") 2>/dev/null \
+		|| HOST_UID=$(shell id -u) HOST_GID=$(shell id -g) docker-compose up --force-recreate -d
 	$(call run_in_docker,"server","mkdir -p \
 		/tmp/laravel/framework \
 		/tmp/laravel/framework/cache \
