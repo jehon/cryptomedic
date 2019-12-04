@@ -1,4 +1,8 @@
 /* global getPref,setPref,date2CanonicString,template,ExcellentExport,jQuery */
+/* global formGetContent,getDataService */
+/* exported ctrl_reports */
+
+'use strict';
 
 function ctrl_reports($scope, $routeParams, $sce) {
 	var report = $routeParams['report'];
@@ -133,7 +137,7 @@ function ctrl_reports($scope, $routeParams, $sce) {
 			}
 		}
 
-		console.log('ctrl_report: Calling server to refresh the data\'s');
+		console.info('ctrl_report: Calling server to refresh the data\'s');
 
 		// const reportParamsValues = {};
 		// Object.keys($scope.values).forEach(k => {
@@ -145,7 +149,7 @@ function ctrl_reports($scope, $routeParams, $sce) {
 		getDataService('#reportService')
 			.then(dataService => dataService.getReport(dataGenerator, $scope.values))
 			.then((data) => {
-				console.log('ctrl_report: Data received from server.');
+				console.info('ctrl_report: Data received from server.');
 				$scope.result = data;
 				$scope.error = false;
 				$scope.safeApply();

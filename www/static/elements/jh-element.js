@@ -1,4 +1,6 @@
-/* global HTMLElement */
+/* exported JHElement */
+
+'use strict';
 
 /*
   TODO:
@@ -36,7 +38,7 @@ let JHElement = (function() {
 		}
 
 		static snakeToCamel(s) {
-			let res = s.replace(/(\-\w)/g, function(m) { return m[1].toUpperCase(); });
+			let res = s.replace(/(-\w)/g, function(m) { return m[1].toUpperCase(); });
 			return res[0].toLowerCase() + res.substring(1);
 		}
 

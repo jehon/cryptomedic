@@ -5,6 +5,7 @@ exports.command = function(selector, value, callback) {
 	this.assert.visible(selector);
 
 	this.execute(function(selector, value) {
+		/* eslint-env browser */
 		let el = document.querySelector(selector);
 		el._generatePreview(XInputPicture.dataURItoBlob(value, 'test.jpg'));
 		return true;

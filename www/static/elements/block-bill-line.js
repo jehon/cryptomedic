@@ -1,5 +1,7 @@
 /* global JHElement */
 
+'use strict';
+
 (function() {
 	const title = Symbol('title');
 	const price = Symbol('price');

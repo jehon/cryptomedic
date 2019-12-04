@@ -1,3 +1,8 @@
+/* global XRequestor,nullify */
+/* exported XRequestorCRUD */
+
+'use strict';
+
 const XRequestorCRUD = (function() {
 	class XRequestorCRUD extends XRequestor {
 		static get properties() {

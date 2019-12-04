@@ -1,4 +1,7 @@
-/* global store,JHElement, API_VERSION, FetchFull */
+/* global store,JHElement,API_VERSION,FetchFull,ACT_USER_LOGOUT */
+/* exported XRequestor */
+
+'use strict';
 
 const XRequestor = (function() {
 	const error        = Symbol('error');

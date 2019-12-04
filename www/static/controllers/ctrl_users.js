@@ -1,3 +1,8 @@
+/* global getDataService */
+/* exported ctrl_users */
+
+'use strict';
+
 // TODO: manage change in groups
 
 function ctrl_users($scope) {

@@ -1,5 +1,7 @@
 /* global JHElement, date2Display */
 
+'use strict';
+
 (function () {
 	const element = Symbol('element');
 

@@ -1,4 +1,8 @@
 /* global goThere,getDataService */
+/* exported ctrl_home */
+
+'use strict';
+
 function ctrl_home($scope) {
 	if (typeof($scope.entryyear) == 'undefined') {
 		$scope.searched = false;

@@ -1,11 +1,7 @@
 
-// Custom Elements v1
-// import '@webcomponents/custom-elements';
-// import shadydom         from '@webcomponents/shadydom';
-
 // Angular 1.x
 import angular          from 'angular';
-import angularRoute     from 'angular-route';
+import 'angular-route';
 
 // Bootstrap 3.3 (https://getbootstrap.com/docs/4.0/getting-started/webpack/)
 import jQuery           from 'jquery/src/jquery.js';

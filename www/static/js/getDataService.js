@@ -1,4 +1,7 @@
+/* global store */
 /* exported getDataService */
+
+'use strict';
 
 function getDataService(cssSelector = '#dataService') {
 	const test = function() {
@@ -29,7 +32,7 @@ function getDataService(cssSelector = '#dataService') {
 		}
 
 		const unsubscribe = store.subscribe(() => {
-			const user = store.getState().user;
+			// const user = store.getState().user;
 			if (testLogin()) {
 				unsubscribe();
 				resolveFn();

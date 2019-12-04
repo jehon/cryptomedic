@@ -1,3 +1,8 @@
+/* global TimedMap,XRequestor,Patient,Folder,nullify */
+/* global store,ACT_FOLDER_INVALIDATE,ACT_FOLDER_STORE*/
+
+'use strict';
+
 (function() {
 	let patientFolderCache = new TimedMap(15 * 60);
 

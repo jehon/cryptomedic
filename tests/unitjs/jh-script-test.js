@@ -1,4 +1,3 @@
-/* eslint-env jasmine */
 /* global webDescribe, JHElement */
 
 describe('test-jh-script', function() {
@@ -42,7 +41,7 @@ describe('test-jh-script', function() {
 			spyOn(console, 'error');
 		});
 
-		webDescribe('should display error', '<jh-script>throw "test";</jh-script>', (element) => {
+		webDescribe('should display error', '<jh-script>throw "test";</jh-script>', (_element) => {
 			it('should throw', function() {
 				expect(console.error).toHaveBeenCalledTimes(1);
 				expect(console.error.calls.argsFor(0)[1]).toBe('test');

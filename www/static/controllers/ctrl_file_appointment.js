@@ -1,3 +1,7 @@
+/* global date2CanonicString */
+/* exported ctrl_file_appointment */
+
+'use strict';
 
 function ctrl_file_appointment($scope) {
 	$scope.today = date2CanonicString(new Date(), true);

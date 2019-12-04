@@ -1,4 +1,7 @@
 /* global JHElement */
+/* exported XWaiting */
+
+'use strict';
 
 const XWaiting = (function() {
 	const overlay = Symbol('overlay');

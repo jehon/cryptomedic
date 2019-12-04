@@ -1,4 +1,8 @@
 
+/* global JHElement */
+
+'use strict';
+
 (function() {
 
 	let selfURL = document.currentScript.src

@@ -1,5 +1,7 @@
 'use strict';
 
+/* global PatientRelated */
+
 class OtherConsult extends PatientRelated {
 	getModel() {
 		return 'OtherConsult';

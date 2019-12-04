@@ -1,3 +1,6 @@
+/* global JHElement */
+
+'use strict';
 
 (function() {
 	class XRead extends JHElement {

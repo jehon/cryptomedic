@@ -1,6 +1,8 @@
 'use strict';
 
-/* global angular,ApplicationException,jQuery */
+/* global angular,ApplicationException,jQuery,template,calculations,API_VERSION,goThere,store */
+/* global ctrl_allGraphics,ctrl_file_appointment,ctrl_file_bill,ctrl_folder,ctrl_graphic,ctrl_home,ctrl_prices,ctrl_reports*/
+/* global ctrl_search,ctrl_users */
 
 let application = {};
 
@@ -24,40 +26,40 @@ let mainApp = angular.module('app_main', [ 'ngRoute' ])
 			},
 			template: '<span ng-if="error" class="catchedError">{{errorMsg}}</span><span ng-if="!error" ng-transclude></span>',
 			link:
-      function($scope, $element) {
-      	function testIt() {
-      		try {
-      			$scope.error = false;
-      			$scope.result = '';
-      			$scope.errorMSg = '';
-      			$scope.result = $scope.tryit();
-      		} catch (e) {
-      			$scope.error = true;
-      			if (e instanceof ApplicationException) {
-      				$scope.errorMsg = e.getMessage();
-      			} else {
-      				$scope.errorMsg = 'Uncatchable error';
-      				console.warn(e);
-      				throw e;
-      			}
-      		}
-      	}
-      	$scope.$watch(function() {
-      		try  {
-      			return $scope.tryit();
-      		} catch (e) {
-      			return e.toString();
-      		}
-      	}, function() {
-      		testIt();
-      	});
-      	testIt();
+function($scope, $element) {
+	function testIt() {
+		try {
+			$scope.error = false;
+			$scope.result = '';
+			$scope.errorMSg = '';
+			$scope.result = $scope.tryit();
+		} catch (e) {
+			$scope.error = true;
+			if (e instanceof ApplicationException) {
+				$scope.errorMsg = e.getMessage();
+			} else {
+				$scope.errorMsg = 'Uncatchable error';
+				console.warn(e);
+				throw e;
+			}
+		}
+	}
+	$scope.$watch(function() {
+		try  {
+			return $scope.tryit();
+		} catch (e) {
+			return e.toString();
+		}
+	}, function() {
+		testIt();
+	});
+	testIt();
 
-      	// Destroy of the element
-      	$element.on('$destroy', function() {
-      		$scope.$destroy();
-      	});
-      } // end of link function
+	// Destroy of the element
+	$element.on('$destroy', function() {
+		$scope.$destroy();
+	});
+} // end of link function
 		};
 	})
 	.directive('nullToInterrogation', function() {
@@ -81,7 +83,7 @@ let mainApp = angular.module('app_main', [ 'ngRoute' ])
 	});
 
 mainApp.controller('ctrl', [ '$scope', function($scope) {
-	// Global variables intorduced into the scope:
+// Global variables intorduced into the scope:
 	$scope.application  = application;
 	$scope.calculations = calculations;
 	$scope.template     = template;

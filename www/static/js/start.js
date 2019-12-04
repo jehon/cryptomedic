@@ -3,7 +3,7 @@
 let API_VERSION = 'v1.3';
 
 (function() {
-	const shouldUpgrade = function(msg) {
+	const shouldUpgrade = function(_msg) {
 		window.location.href = '/static/upgrade.html';
 	};
 

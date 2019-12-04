@@ -1,4 +1,4 @@
-var nb = 0;
+'use strict';
 
 let payment = {
 	'#Payment_Date': '2003-01-02',

@@ -1,3 +1,7 @@
+/* global PatientRelated, DataMissingException */
+
+'use strict';
+
 class Bill extends PatientRelated {
 	getModel() {
 		return 'Bill';

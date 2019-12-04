@@ -1,5 +1,7 @@
 /* global JHElement */
 
+'use strict';
+
 (function() {
 	const tbody = Symbol('tbody');
 	const catTotal = Symbol('catTotal');

@@ -1,6 +1,9 @@
 /* global store,JHElement,jQuery */
+/* exported XWriteList */
 
-XWriteList = (function() {
+'use strict';
+
+const XWriteList = (function() {
 
 	const followedElement  = Symbol('followedElement');
 	const followedCategory = Symbol('followedCategory');
@@ -71,7 +74,7 @@ XWriteList = (function() {
 			this.fire('blur', 0);
 		}
 
-		onListChanged(v) {
+		onListChanged(_v) {
 			this.createList();
 			this.onValueChanged(this._value);
 		}

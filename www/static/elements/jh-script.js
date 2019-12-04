@@ -1,4 +1,6 @@
-/* global JHElement */
+/* global JHElement,he */
+
+'use strict';
 
 (function() {
 	const alreadyRun = Symbol('alreadyRun');

@@ -1,3 +1,6 @@
+/* global JHElement */
+
+'use strict';
 
 const XOverlay = (function() {
 	const overlayDiv = Symbol('overlayDiv');
@@ -12,7 +15,7 @@ const XOverlay = (function() {
 
 		constructor() {
 			super();
-	            this.zIndex = 10;
+			this.zIndex = 10;
 
 			this.attachShadow({ mode: 'open' });
 			this.shadowRoot.innerHTML = `
@@ -81,7 +84,7 @@ const XOverlay = (function() {
 
 		adapt() {
 			let style = `z-index: ${this._zIndex}`;
-	        this.shadowRoot.querySelector('#close').style.display = ( this.closable ? 'block' : 'none' );
+			this.shadowRoot.querySelector('#close').style.display = ( this.closable ? 'block' : 'none' );
 			this[overlayDiv].style = style;
 		}
 

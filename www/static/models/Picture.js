@@ -1,17 +1,10 @@
-/* global API_VERSION */
+/* global API_VERSION, PatientRelated */
+
 'use strict';
 
 class Picture extends PatientRelated {
 	getModel() {
 		return 'Picture';
-	}
-
-	validate(res) {
-		res = super.validate(res);
-		if (!this.fileContent && !this.file) {
-			res.pictureRequired = true;
-		}
-		return res;
 	}
 
 	getPictureUrl() {
@@ -24,6 +17,10 @@ class Picture extends PatientRelated {
 
 	validate(res) {
 		res = super.validate(res);
+
+		if (!this.fileContent && !this.file) {
+			res.pictureRequired = true;
+		}
 
 		if ((this.Date > (new Date()).toISOString())) {
 			res.dateInTheFuture = true;

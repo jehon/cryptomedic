@@ -1,3 +1,5 @@
+/* global PatientRelated */
+
 'use strict';
 
 class Appointment extends PatientRelated {
@@ -6,7 +8,7 @@ class Appointment extends PatientRelated {
 	}
 
 	constructor(data, folder = null) {
-		super(data);
+		super(data, folder);
 		if (!data) {
 			var now = new Date();
 			var year = now.getFullYear();
