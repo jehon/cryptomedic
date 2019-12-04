@@ -14,17 +14,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt install -y \
 	ssmtp \
 	unzip
 
-#    libfreetype6-dev libjpeg62-turbo-dev libmcrypt-dev libpng-dev
-
-	# && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
-    # && docker-php-ext-install -j$(nproc) gd
-
-# RUN pecl install xdebug-2.6.0 \
-# 	&& docker-php-ext-enable xdebug  \
-# RUN docker-php-ext-install pdo_mysql
 RUN a2enmod expires rewrite
-
-# AllowOverride all
 
 RUN sed -ri -e 's!/var/www/html!/app/www!g' /etc/apache2/sites-available/*.conf
 COPY conf/server/custom.conf /etc/apache2/conf-enabled/
