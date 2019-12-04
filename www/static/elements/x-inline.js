@@ -1,5 +1,7 @@
 /* global JHElement */
 
+'use strict';
+
 (function() {
 	const element = Symbol('element');
 

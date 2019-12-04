@@ -1,4 +1,7 @@
 /* global JHElement */
+/* exported EditPrice */
+
+'use strict';
 
 let EditPrice = (function() {
 	let uuid = 0;

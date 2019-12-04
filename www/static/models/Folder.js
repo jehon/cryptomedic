@@ -1,4 +1,4 @@
-/* global Data, Patient, amd_stats, Appointment, Bill, ClubFoot, OtherConsult, Payment, Picture, RicketConsult, Surgery */
+/* global FolderPage, Data, Patient, amd_stats, Appointment, Bill, ClubFoot, OtherConsult, Payment, Picture, RicketConsult, Surgery */
 /* exported Folder */
 'use strict';
 

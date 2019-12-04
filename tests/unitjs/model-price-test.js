@@ -1,3 +1,4 @@
+/* global Price */
 
 describe('Price', function() {
 	describe('with empty loader', function() {

@@ -1,3 +1,6 @@
+/* global JHElement */
+
+'use strict';
 
 (function() {
 	class XWrite extends JHElement {

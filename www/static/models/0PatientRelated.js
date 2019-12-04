@@ -1,6 +1,7 @@
-'use strict';
-/* global Data, getPref, DataMissingException, calculations, amd_stats */
+/* global FolderPage Data, getPref, DataMissingException, calculations, amd_stats */
 /* exported Item */
+
+'use strict';
 
 class PatientRelated extends FolderPage {
 	constructor(data, folder = null) {

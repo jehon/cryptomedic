@@ -1,4 +1,8 @@
 /* global goThere,Folder,jQuery,calculations,template,date2CanonicString,extractPrefsFile,formGetContent */
+/* global getDataService */
+
+'use strict';
+
 function ctrl_folder($scope, $location, $routeParams) {
 	/*
    * '/folder/:patient_id/:page?/:subtype?/:subid?/:mode?'
@@ -162,8 +166,6 @@ function ctrl_folder($scope, $location, $routeParams) {
 			case 'edit':
 			case 'add':
 				return 'true';
-			default: 
-				return 'false';
 		}
 		return 'false';
 	};
@@ -182,7 +184,7 @@ function ctrl_folder($scope, $location, $routeParams) {
 		// TODO: hide action button if form is not ok
 		$scope.valide = true;
 
-		updatedData = $scope.rebuildData();
+		let updatedData = $scope.rebuildData();
 
 		jQuery(form + ' input[type=number][required]').each(function() {
 			if (jQuery(this).val() == '') {
@@ -243,8 +245,6 @@ function ctrl_folder($scope, $location, $routeParams) {
 	};
 
 	$scope.actionUnlock = function() {
-		console.log('action unlock');
-
 		$scope.folder = false;
 		$scope.safeApply();
 

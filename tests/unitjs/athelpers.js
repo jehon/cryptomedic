@@ -1,5 +1,4 @@
-/* eslint-env jasmine */
-/* global webDescribe, JHElement */
+/* global JHElement */
 /* global readJSON, API_VERSION */
 /* global withHtml */
 /* exported loadReference, webDescribe, extractPath */

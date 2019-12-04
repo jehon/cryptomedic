@@ -1,3 +1,6 @@
+/* exported ctrl_allGraphics */
+
+'use strict';
 
 function ctrl_allGraphics($scope) {
 	$scope.hovered = -1;

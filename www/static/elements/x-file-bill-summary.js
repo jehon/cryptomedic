@@ -1,6 +1,8 @@
 /* global store,XFileBill, TwoColumns */
 /* global Data */
 
+'use strict';
+
 const XFileBillSummary = (function() {
 	class XFileBillSummary extends XFileBill {
 		adapt() {

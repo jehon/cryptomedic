@@ -4,6 +4,8 @@
  * This function runs in the browser context
  */
 function executeInShadowDom(selector, fn, ...args) {
+	/* eslint-env browser */
+
 	const selectors = selector.split('>>>').map(s => s.trim());
 	var currentElement = document;
 	for (var i = 0; i < selectors.length; i++) {

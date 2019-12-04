@@ -1,3 +1,7 @@
+/* global getDataService,formGetContent */
+/* exported ctrl_prices */
+
+'use strict';
 
 function ctrl_prices($scope, $timeout) {
 	$scope.prices = {};
@@ -6,7 +10,6 @@ function ctrl_prices($scope, $timeout) {
 
 	$scope.refresh = function() {
 		getDataService('#pricesRequestor')
-			.then(dataService => { console.log(dataService); return dataService; })
 			.then(dataService => dataService.list())
 			.then(data => {
 				data.sort((a, b) => {

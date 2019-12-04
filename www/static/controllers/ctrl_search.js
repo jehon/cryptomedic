@@ -1,3 +1,8 @@
+/* global formGetContent,getDataService */
+/* exported ctrl_search */
+
+'use strict';
+
 function ctrl_search($scope) {
 	if (typeof($scope.params) == 'undefined') {
 		$scope.params = {};
@@ -14,7 +19,6 @@ function ctrl_search($scope) {
 
 	$scope.submit = function() {
 		let updatedData = formGetContent('#searchForm');
-		console.log(updatedData);
 
 		getDataService()
 			.then(dataService => dataService.searchForPatients(updatedData))

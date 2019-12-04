@@ -1,3 +1,5 @@
+/* global PatientRelated */
+
 'use strict';
 
 class RicketConsult extends PatientRelated {
@@ -9,8 +11,8 @@ class RicketConsult extends PatientRelated {
 		res = super.validate(res);
 
 		if ((this.Date > (new Date()).toISOString())) {
-    	console.log('error');
-      	res.dateInTheFuture = true;
+			console.error('error');
+			res.dateInTheFuture = true;
 		}
 		return res;
 	}

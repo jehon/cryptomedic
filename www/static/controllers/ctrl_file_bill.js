@@ -1,4 +1,7 @@
-/* global Payment,goThere,extractPrefsFile,store */
+/* global Payment,goThere,extractPrefsFile,store,formGetContent,getDataService */
+/* exported ctrl_file_bill */
+
+'use strict';
 
 function ctrl_file_bill($scope, $element) {
 	/*

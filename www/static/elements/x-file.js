@@ -2,6 +2,8 @@
 /* global DataMissingException, ApplicationException */
 /* global calculations */
 
+'use strict';
+
 const XFile = (function() {
 	class XFile extends JHElement {
 		static get properties() {

@@ -1,5 +1,7 @@
 /* global JHElement, store */
 
+'use strict';
+
 (function() {
 	class JHCodage extends JHElement {
 		static get properties() {

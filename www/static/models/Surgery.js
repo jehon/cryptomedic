@@ -1,3 +1,5 @@
+/* global PatientRelated */
+
 'use strict';
 
 class Surgery extends PatientRelated {

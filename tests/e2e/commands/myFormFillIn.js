@@ -8,7 +8,10 @@ exports.command = function (selector, fields, button) {
 		this.waitForElementVisible(fsel);
 
 		// Put focus on element
-		this.execute(function (fsel) { document.querySelector(fsel).focus(); }, [ fsel ]);
+		this.execute(function (fsel) { 
+			/* eslint-env browser */
+			document.querySelector(fsel).focus(); 
+		}, [ fsel ]);
 
 		if (fields[f] === true) {
 			this.click(f);

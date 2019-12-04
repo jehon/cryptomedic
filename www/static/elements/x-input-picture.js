@@ -1,5 +1,7 @@
 /* global XWaiting */
 
+'use strict';
+
 const XInputPicture = (function() {
 	const previewElement = Symbol('previewElement');
 	const inputElement   = Symbol('inputElement');

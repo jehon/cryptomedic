@@ -1,3 +1,5 @@
+/* global FolderPage */
+
 'use strict';
 
 class Patient extends FolderPage {

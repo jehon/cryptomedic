@@ -18,27 +18,25 @@ endef
 # 1: folder where to look
 # 2: base file to have files newer than, to limit the length of the output
 define recursive-dependencies
-        $(shell \
-                if [ -r "$(2)" ]; then \
-                        find "$(1)" -name tests_data -prune -o -name tmp -prune -o -newer "$(2)"; \
-                else \
-                        echo "$(1)";\
-                fi \
-        )
+	$(shell \
+		if [ -r "$(2)" ]; then \
+			find "$(1)" -name tests_data -prune -o -name tmp -prune -o -newer "$(2)"; \
+		else \
+			echo "$(1)";\
+		fi \
+	)
 endef
 
 
 all: start
 
-clean-hard: fix-rights | clean stop
+clean: fix-rights stop
 	rm -fr node_modules
 	rm -fr www/api/$(VAPI)/vendor
 	rm -fr vendor
-	git status --ignored
 
-clean: | docker-compose-is-running fix-rights
-	find . -name *.log -delete
 	rm -fr "target/"
+	find . -name *.log -delete
 	rm -fr "www/build/"
 	rm -fr "www/api/$(VAPI)/storage/logs/"
 	rm -fr "www/api/$(VAPI)/bootstrap/cache/"
@@ -46,16 +44,14 @@ clean: | docker-compose-is-running fix-rights
 	rm -f "www/static/index.html"
 	rm -f "www/release_version.js"
 	rm -f "www/release_version.txt"
-	$(call run_in_docker,"server","find /tmp/laravel -type f -delete") || true
 
-lint:
-	npm run stylelint
+init: target/structure-exists
 
-start: | docker-compose-is-running \
-		install.structure \
+start: target/structure-exists \
+		target/docker-is-running \
 		dependencies \
 		build \
-		data.reset
+		data-reset
 
 	@echo "Open browser:"
 	@echo " cryptomedic: http://localhost:5555/"
@@ -64,101 +60,8 @@ start: | docker-compose-is-running \
 	@echo " phpmyadmin:  http://localhost:5550/"
 	@echo " mailhog:     http://localhost:5551/"
 
-test: test-api test-unit test-e2e test-style
-
-test-api: start
-	npm run --silent test-api
-
-test-unit: start
-	npm run --silent test-unit
-
-target/e2e/browsers/.tested: test-e2e
-test-e2e: start
-	npm run --silent test-e2e
-	touch target/e2e/browsers/.tested
-
-test-style: target/e2e/browsers/.tested
-	npm run --silent test-style
-
-style-update-references:
-	rsync --progress --recursive --delete \
-		--include "*_reference.png" --include "*_reference_*.png" --exclude "*" \
-		target/e2e/browsers/firefox/ tests/style/references
-
-stop:
-	docker-compose down || true
-
-#
-# Deploy command
-#
-deploy: docker-compose-is-running
-	bin/cryptomedic-deploy-patch.sh commit
-
-deploy-test: docker-compose-is-running
-	bin/cryptomedic-deploy-patch.sh
-
-#
-# Other commands
-# 
-docker-compose-is-running:
-	@$(call run_in_docker,"server","true") || docker-compose up --force-recreate -d
-
-build: www/static/index.html
-
-data.reset: live-folder-test database-reset
-
-database-backup:
-	$(call run_in_docker,"mysql", "mysqldump -u root -p$(DBROOTPASS) $(DBNAME)") > $(DB_BASE)
-
-logs:
-	docker-compose logs -f -t
-
-fix-rights:
-	$(call run_in_docker,"server","\
-		chmod a+rwX -R www/api/$(VAPI)/bootstrap/cache/ || true; \
-		chmod a+rwX -R www/api/$(VAPI)/vendor || true; \
-		chmod a+rwX -R live || true; \
-		chmod a+rwX -R target || true; \
-	")
-
-
-#
-#
-# Install
-#
-#
-
-#
-#
-# Install > Structure
-#
-#
-install.structure: \
-		target/.exists \
-		live/.exists \
-		www/api/$(VAPI)/bootstrap/cache/.exists \
-		www/api/$(VAPI)/storage/logs/laravel.log \
-		docker.server.tmp
-
-target/.exists:
-	mkdir -p target/
-	touch target/.exists
-
-live/.exists:
-	mkdir -p live
-	touch live/.exists
-
-www/api/$(VAPI)/bootstrap/cache/.exists:
-	mkdir -p www/api/$(VAPI)/bootstrap/cache
-	chmod a+rwX www/api/$(VAPI)/bootstrap/cache
-	touch www/api/$(VAPI)/bootstrap/cache/.exists
-
-www/api/v1.3/storage/logs/laravel.log:
-	mkdir -p www/api/v1.3/storage/logs/
-	touch www/api/v1.3/storage/logs/laravel.log
-	chmod 666 www/api/v1.3/storage/logs/laravel.log
-
-docker.server.tmp:
+target/docker-is-running:
+	@$(call run_in_docker,"server","true") 2>/dev/null || docker-compose up --force-recreate -d
 	$(call run_in_docker,"server","mkdir -p \
 		/tmp/laravel/framework \
 		/tmp/laravel/framework/cache \
@@ -168,10 +71,87 @@ docker.server.tmp:
 		/tmp/laravel/app/public \
 		/tmp/laravel/logs \
 		&& chmod -R 777 /tmp/laravel/")
+	mkdir -p target
+	touch target/docker-is-running
+
+stop:
+	docker-compose down || true
+	rm target/docker-is-running
 
 #
 #
-# Install->dependencies
+# Tests
+#
+#
+
+lint:
+	npm run stylelint
+
+test: test-api test-unit test-e2e test-style
+
+test-api: target/docker-is-running
+	npm run --silent test-api
+
+test-unit: target/docker-is-running
+	npm run --silent test-unit
+
+test-e2e: target/e2e/.tested
+target/e2e/.tested: target/docker-is-running
+	npm run --silent test-e2e
+	touch target/e2e/.tested
+
+test-style: target/e2e/.tested
+	npm run --silent test-style
+
+style-update-references:
+	rsync --progress --recursive --delete \
+		--include "*_reference.png" --include "*_reference_*.png" --exclude "*" \
+		target/e2e/browsers/firefox/ tests/style/references
+
+#
+# Deploy command
+#
+deploy: target/docker-is-running
+	bin/cryptomedic-deploy-patch.sh commit
+
+deploy-test: target/docker-is-running
+	bin/cryptomedic-deploy-patch.sh
+
+#
+# Other commands
+# 
+logs:
+	docker-compose logs -f -t
+
+fix-rights: target/docker-is-running
+	$(call run_in_docker,"server","\
+		chmod a+rwX -R www/api/$(VAPI)/bootstrap/cache/ || true; \
+		chmod a+rwX -R www/api/$(VAPI)/vendor || true; \
+		chmod a+rwX -R www/api/$(VAPI)/storage/ || true; \
+		chmod a+rwX -R live || true; \
+		chmod a+rwX -R target || true; \
+		find /tmp/laravel -type d -exec chmod a+rwx \"{}\" \";\" ; \
+		find /tmp/laravel -type f -exec chmod a+rw \"{}\" \";\" ; \
+	")
+
+#
+#
+# Install > Structure
+#
+#
+target/structure-exists:
+	mkdir -p    target
+	mkdir -p    live
+	mkdir -p    www/api/$(VAPI)/bootstrap/cache
+	mkdir -p    www/api/$(VAPI)/storage/logs/
+	touch       www/api/$(VAPI)/storage/logs/laravel.log
+	chmod a+rwX www/api/$(VAPI)/bootstrap/cache
+	chmod 666   www/api/$(VAPI)/storage/logs/laravel.log
+	touch 		target/structure-exists
+
+#
+#
+# Install > dependencies
 #
 #
 dependencies: dependencies.node \
@@ -192,28 +172,27 @@ www/api/$(VAPI)/vendor/.dependencies: www/api/$(VAPI)/composer.json www/api/$(VA
 	touch www/api/$(VAPI)/vendor/.dependencies
 
 
-
 #
 #
 # Build
 #
 #
+build: www/static/index.html
+
 www/static/index.html: dependencies.node package.json package-lock.json www/app.js
 	npm run build
 
 
 #
 #
-# data-reset
+# data
 #
 #
+database-backup:
+	$(call run_in_docker,"mysql", "mysqldump -u root -p$(DBROOTPASS) $(DBNAME)") > $(DB_BASE)
 
-live-folder-test: live/.installed
-live/.installed: live/.exists fix-rights $(call recursive-dependencies,live/,$@)
-	rsync -a --delete live-for-test/ live/
-	touch live/.installed
-
-database-reset: 
+data-reset: target/docker-is-running
+	# database
 	$(call run_in_docker,"mysql"," \
 		mysql -u root -p$(DBROOTPASS) --database=mysql -e \" \
 			USE mysql; \
@@ -233,3 +212,6 @@ database-reset:
 		| docker-compose exec -T mysql mysql -u root -p$(DBROOTPASS) --database="$(DBNAME)"
 
 	wget -O - --quiet --content-on-error "http://localhost:5555/maintenance/patch_db.php?pwd=$(DBUPDATEPWD)"
+
+	# live folder
+	rsync -a --delete live-for-test/ live/

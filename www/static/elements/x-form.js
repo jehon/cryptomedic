@@ -1,5 +1,7 @@
 /* global JHElement */
 
+'use strict';
+
 (function() {
 	const form     = Symbol('form');
 	const submit   = Symbol('submit');

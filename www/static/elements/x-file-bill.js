@@ -1,6 +1,8 @@
 /* global XFile,store */
 /* global DataMissingException, ConfigurationMissingException */
 
+'use strict';
+
 const XFileBill = (function() {
 	class XFileBill extends XFile {
 		get categoriesList() {

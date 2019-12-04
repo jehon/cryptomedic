@@ -1,3 +1,6 @@
+/* global amd_stats,calculations,DataMissingException */
+
+'use strict';
 
 function ctrl_graphic($scope) {
 	// This controller is intended for ONE graphic only

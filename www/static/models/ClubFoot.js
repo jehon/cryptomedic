@@ -1,3 +1,5 @@
+/* global PatientRelated */
+
 'use strict';
 
 const ClubFoot = (function() {

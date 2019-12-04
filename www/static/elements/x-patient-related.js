@@ -1,17 +1,20 @@
+/* global XWaitingFolder,date2CanonicString,Appointment */
+
+'use strict';
 
 // http://localhost:5555/static/index.html#/folder/6/file/RicketConsult/3
 
 (function() {
 	class XPatientRelated extends XWaitingFolder {
-    	constructor() {
-    		super();
-    		this.style.width = '100%';
-    	}
+		constructor() {
+			super();
+			this.style.width = '100%';
+		}
 
 		_nextAppointment() {
 			const today = date2CanonicString(new Date(), true);
 			var next = '';
-			this.folder.getListByType(Appointment).forEach((v, k) => { 
+			this.folder.getListByType(Appointment).forEach((v, _k) => { 
 				if (v.Nextappointment > today) {
 					if (!next || v.Nextappointment < next) {
 						next = v.Nextappointment;
@@ -22,13 +25,13 @@
 		}
 
 		adapt() {
-        	if (!this.folder) {
-        		return;
-        	}
-        	const patient = this.folder.getPatient();
-        	const nextAppointment = this._nextAppointment();
+			if (!this.folder) {
+				return;
+			}
+			const patient = this.folder.getPatient();
+			const nextAppointment = this._nextAppointment();
 
-        	this.innerHTML = `
+			this.innerHTML = `
 <fieldset class='related'>
 	<legend>Related Patient</legend>
 	<table>
@@ -88,13 +91,13 @@
 	</table>
 </fieldset>`;
 
-        	if (nextAppointment) {
-        		this.querySelector('#withAppointment').removeAttribute('hidden');
-        		this.querySelector('#withoutAppointment').setAttribute('hidden', 'hidden');
-        	} else {
-        		this.querySelector('#withAppointment').setAttribute('hidden', 'hidden');
-        		this.querySelector('#withoutAppointment').removeAttribute('hidden');
-        	}
+			if (nextAppointment) {
+				this.querySelector('#withAppointment').removeAttribute('hidden');
+				this.querySelector('#withoutAppointment').setAttribute('hidden', 'hidden');
+			} else {
+				this.querySelector('#withAppointment').setAttribute('hidden', 'hidden');
+				this.querySelector('#withoutAppointment').removeAttribute('hidden');
+			}
 		}
 	}
 

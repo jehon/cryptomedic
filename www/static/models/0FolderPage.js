@@ -1,3 +1,6 @@
+/* global CRUD, getPref */
+
+'use strict';
 
 class FolderPage extends CRUD {
 	initFromCachedPreferences() {

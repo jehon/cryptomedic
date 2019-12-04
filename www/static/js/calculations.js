@@ -1,3 +1,6 @@
+/* global date2CanonicString */
+
+'use strict';
 
 let calculations = {
 	math: {

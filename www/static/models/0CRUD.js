@@ -1,3 +1,7 @@
+/* global nullify */
+/* exported CRUD */
+
+'use strict';
 
 class CRUD {
 	static getBaseUrl() {
