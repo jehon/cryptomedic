@@ -1,47 +1,46 @@
 version: "3.1"
 services:
-    mysql:
-        # https://hub.docker.com/_/mysql/
-        # OVH is on 5.5
-        image: mysql:5.5
-        environment:
-            MYSQL_ROOT_PASSWORD: password
-            MYSQL_DATABASE: cryptomedic
-            MYSQL_USER: username
-            MYSQL_PASSWORD: password
-        ports:
-            - 5556:3306
+  mysql:
+    # https://hub.docker.com/_/mysql/
+    # OVH is on 5.5
+    image: mysql:5.5
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: cryptomedic
+      MYSQL_USER: username
+      MYSQL_PASSWORD: password
+    ports:
+      - 5556:3306
 
-    phpmyadmin:
-        # https://hub.docker.com/r/phpmyadmin/phpmyadmin/
-        image: phpmyadmin/phpmyadmin
-        environment:
-            PMA_HOST: mysql
-            PMA_PORT: 3306
-            PMA_USER: root
-            PMA_PASSWORD: password
-        ports:
-            - 5550:80
-        depends_on:
-            - mysql
+  phpmyadmin:
+    # https://hub.docker.com/r/phpmyadmin/phpmyadmin/
+    image: phpmyadmin/phpmyadmin
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      PMA_USER: root
+      PMA_PASSWORD: password
+    ports:
+      - 5550:80
+    depends_on:
+      - mysql
 
-    server:
-        build:
-            context: .
-            dockerfile: conf/server/Dockerfile
-        environment:
-            PRJ_DIR: /app
-            APACHE_DOCUMENT_ROOT: /app/www
-        ports:
-            - 5555:80
-        depends_on:
-            - mysql
-        volumes:
-            - .:/app
+  server:
+    build:
+      context: .
+      dockerfile: conf/server/Dockerfile
+    environment:
+      PRJ_DIR: /app
+      APACHE_DOCUMENT_ROOT: /app/www
+    ports:
+      - 5555:80
+    depends_on:
+      - mysql
+    volumes:
+      - .:/app
 
-    mail:
-        # https://hub.docker.com/r/mailhog/mailhog/
-        image: mailhog/mailhog
-
-        ports:
-            - 5551:8025 # web server
+  mail:
+    # https://hub.docker.com/r/mailhog/mailhog/
+    image: mailhog/mailhog
+    ports:
+        - 5551:8025 # web server
