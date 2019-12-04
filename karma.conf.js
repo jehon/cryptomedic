@@ -1,6 +1,10 @@
 /* eslint-env node */
 /* eslint no-console: off */
 
+const fse = require('fs-extra');
+fse.emptyDirSync(__dirname + '/target/js');
+fse.emptyDirSync(__dirname + '/target/unit');
+
 module.exports = function(config) {
 	var configuration = {
 		basePath : 'www/',
