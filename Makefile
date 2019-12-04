@@ -60,6 +60,9 @@ start: target/structure-exists \
 	@echo " phpmyadmin:  http://localhost:5550/"
 	@echo " mailhog:     http://localhost:5551/"
 
+t:
+	HOST_UID=$(shell id -u) HOST_GID=$(shell id -g) docker-compose up --build server
+
 target/docker-is-running:
 	@$(call run_in_docker,"server","true") 2>/dev/null \
 		|| HOST_UID=$(shell id -u) HOST_GID=$(shell id -g) docker-compose up --force-recreate -d

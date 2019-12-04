@@ -36,8 +36,8 @@ services:
       - APACHE_DOCUMENT_ROOT=/app/www
     ports:
       - 5555:80
-    depends_on:
-      - mysql
+    # depends_on:
+      # - mysql
     volumes:
       - .:/app
 
