@@ -9,12 +9,11 @@ DBROOTPASS := password
 DBUPDATEPWD := secret
 DB_BASE := conf/database/base.sql
 
-# --user ?
-define run_in_docker
-	$(DOCKERCOMPOSE) exec -T $(1) /bin/bash -c $(2)
-endef
-
 DOCKERCOMPOSE := HOST_UID=$(shell id -u) HOST_GID=$(shell id -g) docker-compose
+
+define run_in_docker
+	$(DOCKERCOMPOSE) exec --user $(shell id -u) -T $(1) /bin/bash -c $(2)
+endef
 
 # See https://coderwall.com/p/cezf6g/define-your-own-function-in-a-makefile
 # 1: folder where to look
@@ -149,9 +148,9 @@ fix-rights: target/docker-is-running
 #
 #
 target/structure-exists:
-	mkdir -p    target
-	mkdir -p    live
-	mkdir -p    www/api/$(VAPI)/bootstrap/cache
+	mkdir -p    target/
+	mkdir -p    live/
+	mkdir -p    www/api/$(VAPI)/bootstrap/cache/
 	mkdir -p    www/api/$(VAPI)/storage/logs/
 	touch       www/api/$(VAPI)/storage/logs/laravel.log
 	chmod a+rwX www/api/$(VAPI)/bootstrap/cache
