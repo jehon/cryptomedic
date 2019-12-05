@@ -57,8 +57,6 @@
   },
   "scripts": {
     "build": "webpack",
-    "test-api": "docker-compose exec -T server /app/bin/dev-phpunit.sh",
-    "test-api-commit": "docker-compose exec -T -e COMMIT=1 server /app/bin/dev-phpunit.sh",
     "test-unit": "karma start --single-run",
     "test-unit-continuously": "karma start",
     "test-e2e": "nightwatch",

@@ -11,8 +11,10 @@ DB_BASE := conf/database/base.sql
 
 # --user ?
 define run_in_docker
-	docker-compose exec -T $(1) /bin/bash -c $(2)
+	$(DOCKERCOMPOSE) exec -T $(1) /bin/bash -c $(2)
 endef
+
+DOCKERCOMPOSE := HOST_UID=$(shell id -u) HOST_GID=$(shell id -g) docker-compose
 
 # See https://coderwall.com/p/cezf6g/define-your-own-function-in-a-makefile
 # 1: folder where to look
@@ -61,11 +63,11 @@ start: target/structure-exists \
 	@echo " mailhog:     http://localhost:5551/"
 
 t:
-	HOST_UID=$(shell id -u) HOST_GID=$(shell id -g) docker-compose up --build server
+	$(DOCKERCOMPOSE) up --build server
 
 target/docker-is-running:
 	@$(call run_in_docker,"server","true") 2>/dev/null \
-		|| HOST_UID=$(shell id -u) HOST_GID=$(shell id -g) docker-compose up --force-recreate -d
+		|| $(DOCKERCOMPOSE) up --force-recreate -d
 	$(call run_in_docker,"server","mkdir -p \
 		/tmp/laravel/framework \
 		/tmp/laravel/framework/cache \
@@ -79,7 +81,7 @@ target/docker-is-running:
 	touch target/docker-is-running
 
 stop:
-	docker-compose down || true
+	$(DOCKERCOMPOSE) down || true
 	rm target/docker-is-running
 
 #
@@ -93,8 +95,11 @@ lint:
 
 test: test-api test-unit test-e2e test-style
 
-test-api: target/docker-is-running
-	npm run --silent test-api
+test-api: target/docker-is-running www/api/$(VAPI)/vendor/.dependencies
+	$(DOCKERCOMPOSE) exec -T server /app/bin/dev-phpunit.sh
+
+test-api-commit: target/docker-is-running www/api/$(VAPI)/vendor/.dependencies
+	$(DOCKERCOMPOSE) exec -T -e COMMIT=1 server /app/bin/dev-phpunit.sh
 
 test-unit: target/docker-is-running
 	npm run --silent test-unit
@@ -125,7 +130,7 @@ deploy-test: target/docker-is-running
 # Other commands
 # 
 logs:
-	docker-compose logs -f -t
+	$(DOCKERCOMPOSE) logs -f -t
 
 fix-rights: target/docker-is-running
 	$(call run_in_docker,"server","\
@@ -213,7 +218,7 @@ data-reset: target/docker-is-running
 	# ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
 
 	cat "conf/database/base.sql" \
-		| docker-compose exec -T mysql mysql -u root -p$(DBROOTPASS) --database="$(DBNAME)"
+		| $(DOCKERCOMPOSE) exec -T mysql mysql -u root -p$(DBROOTPASS) --database="$(DBNAME)"
 
 	wget -O - --quiet --content-on-error "http://localhost:5555/maintenance/patch_db.php?pwd=$(DBUPDATEPWD)"
 

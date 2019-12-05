@@ -30,10 +30,10 @@ services:
       context: .
       dockerfile: conf/server/Dockerfile
     environment:
-      HOST_UID: ${HOST_UID}
-      HOST_GID: ${HOST_GID}
-      PRJ_DIR: /app
-      APACHE_DOCUMENT_ROOT: /app/www
+      - HOST_UID=${HOST_UID}
+      - HOST_GID=${HOST_GID}
+      - PRJ_DIR=/app
+      - APACHE_DOCUMENT_ROOT=/app/www
     ports:
       - 5555:80
     # depends_on:
