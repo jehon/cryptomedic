@@ -25,7 +25,8 @@ RUN ln -s /usr/local/bin/composer.phar /usr/local/bin/composer
 
 COPY conf/server/ssmtp.conf /etc/ssmtp/ssmtp.conf
 
+COPY conf/server/start.sh /start.sh
+RUN chmod +x /start.sh
+
 # https://stackoverflow.com/a/49765176/1954789
-CMD apachectl -D FOREGROUND
-
-
+CMD /start.sh
