@@ -9,9 +9,10 @@ DBROOTPASS := password
 DBUPDATEPWD := secret
 DB_BASE := conf/database/base.sql
 
-# --user ?
+DOCKERCOMPOSE := HOST_UID=$(shell id -u) HOST_GID=$(shell id -g) docker-compose
+
 define run_in_docker
-	docker-compose exec -T $(1) /bin/bash -c $(2)
+	$(DOCKERCOMPOSE) exec --user $(shell id -u) -T $(1) /bin/bash -c $(2)
 endef
 
 # See https://coderwall.com/p/cezf6g/define-your-own-function-in-a-makefile
@@ -30,7 +31,7 @@ endef
 
 all: start
 
-clean: fix-rights stop
+clean: stop
 	rm -fr node_modules
 	rm -fr www/api/$(VAPI)/vendor
 	rm -fr vendor
@@ -60,8 +61,12 @@ start: target/structure-exists \
 	@echo " phpmyadmin:  http://localhost:5550/"
 	@echo " mailhog:     http://localhost:5551/"
 
+t:
+	$(DOCKERCOMPOSE) up --build server
+
 target/docker-is-running:
-	@$(call run_in_docker,"server","true") 2>/dev/null || docker-compose up --force-recreate -d
+	@$(call run_in_docker,"server","true") 2>/dev/null \
+		|| $(DOCKERCOMPOSE) up --force-recreate -d
 	$(call run_in_docker,"server","mkdir -p \
 		/tmp/laravel/framework \
 		/tmp/laravel/framework/cache \
@@ -75,8 +80,8 @@ target/docker-is-running:
 	touch target/docker-is-running
 
 stop:
-	docker-compose down || true
-	rm target/docker-is-running
+	$(DOCKERCOMPOSE) down || true
+	rm -f target/docker-is-running
 
 #
 #
@@ -89,8 +94,11 @@ lint:
 
 test: test-api test-unit test-e2e test-style
 
-test-api: target/docker-is-running
-	npm run --silent test-api
+test-api: target/docker-is-running www/api/$(VAPI)/vendor/.dependencies
+	$(call run_in_docker,"server","/app/bin/dev-phpunit.sh")
+
+test-api-commit: target/docker-is-running www/api/$(VAPI)/vendor/.dependencies
+	$(call run_in_docker,"server","/app/bin/dev-phpunit.sh commit")
 
 test-unit: target/docker-is-running
 	npm run --silent test-unit
@@ -121,18 +129,7 @@ deploy-test: target/docker-is-running
 # Other commands
 # 
 logs:
-	docker-compose logs -f -t
-
-fix-rights: target/docker-is-running
-	$(call run_in_docker,"server","\
-		chmod a+rwX -R www/api/$(VAPI)/bootstrap/cache/ || true; \
-		chmod a+rwX -R www/api/$(VAPI)/vendor || true; \
-		chmod a+rwX -R www/api/$(VAPI)/storage/ || true; \
-		chmod a+rwX -R live || true; \
-		chmod a+rwX -R target || true; \
-		find /tmp/laravel -type d -exec chmod a+rwx \"{}\" \";\" ; \
-		find /tmp/laravel -type f -exec chmod a+rw \"{}\" \";\" ; \
-	")
+	$(DOCKERCOMPOSE) logs -f -t
 
 #
 #
@@ -140,9 +137,9 @@ fix-rights: target/docker-is-running
 #
 #
 target/structure-exists:
-	mkdir -p    target
-	mkdir -p    live
-	mkdir -p    www/api/$(VAPI)/bootstrap/cache
+	mkdir -p    target/
+	mkdir -p    live/
+	mkdir -p    www/api/$(VAPI)/bootstrap/cache/
 	mkdir -p    www/api/$(VAPI)/storage/logs/
 	touch       www/api/$(VAPI)/storage/logs/laravel.log
 	chmod a+rwX www/api/$(VAPI)/bootstrap/cache
@@ -167,7 +164,6 @@ www/api/$(VAPI)/vendor/.dependencies: www/api/$(VAPI)/composer.json www/api/$(VA
 	$(call run_in_docker,"server","\
 		cd www/api/$(VAPI) \
 		&& composer install \
-		&& chmod -R a+rwX vendor \
 	")
 	touch www/api/$(VAPI)/vendor/.dependencies
 
@@ -209,7 +205,7 @@ data-reset: target/docker-is-running
 	# ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
 
 	cat "conf/database/base.sql" \
-		| docker-compose exec -T mysql mysql -u root -p$(DBROOTPASS) --database="$(DBNAME)"
+		| $(DOCKERCOMPOSE) exec -T mysql mysql -u root -p$(DBROOTPASS) --database="$(DBNAME)"
 
 	wget -O - --quiet --content-on-error "http://localhost:5555/maintenance/patch_db.php?pwd=$(DBUPDATEPWD)"
 
