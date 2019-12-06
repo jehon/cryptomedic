@@ -81,7 +81,7 @@ target/docker-is-running:
 
 stop:
 	$(DOCKERCOMPOSE) down || true
-	rm target/docker-is-running
+	rm -f target/docker-is-running
 
 #
 #
