@@ -31,7 +31,7 @@ endef
 
 all: start
 
-clean: fix-rights stop
+clean: stop
 	rm -fr node_modules
 	rm -fr www/api/$(VAPI)/vendor
 	rm -fr vendor
@@ -131,17 +131,6 @@ deploy-test: target/docker-is-running
 logs:
 	$(DOCKERCOMPOSE) logs -f -t
 
-fix-rights: target/docker-is-running
-	$(call run_in_docker,"server","\
-		chmod a+rwX -R www/api/$(VAPI)/bootstrap/cache/ || true; \
-		chmod a+rwX -R www/api/$(VAPI)/vendor || true; \
-		chmod a+rwX -R www/api/$(VAPI)/storage/ || true; \
-		chmod a+rwX -R live || true; \
-		chmod a+rwX -R target || true; \
-		find /tmp/laravel -type d -exec chmod a+rwx \"{}\" \";\" ; \
-		find /tmp/laravel -type f -exec chmod a+rw \"{}\" \";\" ; \
-	")
-
 #
 #
 # Install > Structure
@@ -175,7 +164,6 @@ www/api/$(VAPI)/vendor/.dependencies: www/api/$(VAPI)/composer.json www/api/$(VA
 	$(call run_in_docker,"server","\
 		cd www/api/$(VAPI) \
 		&& composer install \
-		&& chmod -R a+rwX vendor \
 	")
 	touch www/api/$(VAPI)/vendor/.dependencies
 
