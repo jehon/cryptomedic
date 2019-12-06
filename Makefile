@@ -95,10 +95,10 @@ lint:
 test: test-api test-unit test-e2e test-style
 
 test-api: target/docker-is-running www/api/$(VAPI)/vendor/.dependencies
-	$(DOCKERCOMPOSE) exec -T server /app/bin/dev-phpunit.sh
+	$(call run_in_docker,"server","/app/bin/dev-phpunit.sh")
 
 test-api-commit: target/docker-is-running www/api/$(VAPI)/vendor/.dependencies
-	$(DOCKERCOMPOSE) exec -T -e COMMIT=1 server /app/bin/dev-phpunit.sh
+	$(call run_in_docker,"server","/app/bin/dev-phpunit.sh commit")
 
 test-unit: target/docker-is-running
 	npm run --silent test-unit
