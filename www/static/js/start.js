@@ -3,12 +3,12 @@
 let API_VERSION = 'v1.3';
 
 (function() {
-	const shouldUpgrade = function(_msg) {
+	const shouldUpgrade = function() {
 		window.location.href = '/static/upgrade.html';
 	};
 
 	if (!Promise || !sessionStorage || !fetch || !ShadowRoot || !customElements) {
-		shouldUpgrade('Promise || sessionStorage || fetch || ShadowRoot || customElements');
+		shouldUpgrade();
 	}
 
 	// Test input[type=date]
