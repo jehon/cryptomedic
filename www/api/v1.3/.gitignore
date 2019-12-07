@@ -2,7 +2,8 @@
 /public/storage
 /vendor
 /bootstrap/cache
-/.idea
+/storage/*
+/bootstrap/app
 Homestead.json
 Homestead.yaml
 .env

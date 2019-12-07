@@ -11,6 +11,11 @@ DB_BASE := conf/database/base.sql
 
 DOCKERCOMPOSE := HOST_UID=$(shell id -u) HOST_GID=$(shell id -g) docker-compose
 
+define ensure_folder_empty
+	rm -fr "$1"
+	mkdir -p "$1"
+endef
+
 define run_in_docker
 	$(DOCKERCOMPOSE) exec --user $(shell id -u) -T $(1) /bin/bash -c $(2)
 endef
@@ -31,17 +36,23 @@ endef
 
 all: start
 
-clean: stop
+clean:
 	rm -fr node_modules
 	rm -fr www/api/$(VAPI)/vendor
 	rm -fr vendor
 
 	rm -fr "target/"
 	find . -name *.log -delete
-	rm -fr "www/build/"
-	rm -fr "www/api/$(VAPI)/storage/logs/"
-	rm -fr "www/api/$(VAPI)/bootstrap/cache/"
-	rm -fr live/
+
+	$(call ensure_folder_empty,www/build/)
+	$(call ensure_folder_empty,www/api/$(VAPI)/bootstrap/cache/)
+	$(call ensure_folder_empty,www/api/$(VAPI)/app/public)
+	$(call ensure_folder_empty,www/api/$(VAPI)/storage/framework/cache)
+	$(call ensure_folder_empty,www/api/$(VAPI)/storage/framework/sessions)
+	$(call ensure_folder_empty,www/api/$(VAPI)/storage/framework/views)
+	$(call ensure_folder_empty,www/api/$(VAPI)/storage/logs/)
+	$(call ensure_folder_empty,live/)
+	
 	rm -f "www/static/index.html"
 	rm -f "www/release_version.js"
 	rm -f "www/release_version.txt"
@@ -92,7 +103,7 @@ stop:
 lint:
 	npm run stylelint
 
-test: test-api test-unit test-e2e test-style
+test: data-reset test-api test-unit test-e2e test-style
 
 test-api: target/docker-is-running www/api/$(VAPI)/vendor/.dependencies
 	$(call run_in_docker,"server","/app/bin/dev-phpunit.sh")
@@ -140,10 +151,12 @@ target/structure-exists:
 	mkdir -p    target/
 	mkdir -p    live/
 	mkdir -p    www/api/$(VAPI)/bootstrap/cache/
+	mkdir -p    www/api/$(VAPI)/app/public
+	mkdir -p    www/api/$(VAPI)/storage/framework/cache
+	mkdir -p    www/api/$(VAPI)/storage/framework/sessions
+	mkdir -p    www/api/$(VAPI)/storage/framework/views
 	mkdir -p    www/api/$(VAPI)/storage/logs/
 	touch       www/api/$(VAPI)/storage/logs/laravel.log
-	chmod a+rwX www/api/$(VAPI)/bootstrap/cache
-	chmod 666   www/api/$(VAPI)/storage/logs/laravel.log
 	touch 		target/structure-exists
 
 #
