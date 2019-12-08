@@ -1,3 +1,5 @@
+dist: bionic
+
 language: node_js
 node_js:
   - "12"
@@ -9,12 +11,12 @@ addons:
   apt:
     packages:
       - make
-      - lftp
       - wget
   chrome: stable
   firefox: latest
 
 before_install:
+  - lftp --version
   - docker-compose --version
 
   # Update docker-compose
