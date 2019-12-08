@@ -169,7 +169,7 @@ dependencies: dependencies.node \
 
 dependencies.node: node_modules/.dependencies
 node_modules/.dependencies: package.json package-lock.json
-	npm install
+	npm ci
 	touch node_modules/.dependencies
 
 dependencies.composer.api: www/api/$(VAPI)/vendor/.dependencies
