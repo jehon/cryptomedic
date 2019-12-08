@@ -10,7 +10,11 @@
       window.Polymer = {
         useNativeCSSProperties: true
       };
-    </script>
+	</script>
+	<script nomodule>
+		// We need a browser that support modules
+		window.location.href = '/static/upgrade.html';
+	</script>
 
     <!-- Catch errors -->
 	<script src="/release_version.js"></script>
