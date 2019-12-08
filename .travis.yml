@@ -18,7 +18,6 @@ addons:
 
 before_install:
   - lftp --version
-  - lftp --rcfile
   - docker-compose --version
 
   # Update docker-compose
