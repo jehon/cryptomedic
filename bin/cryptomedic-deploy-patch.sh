@@ -68,8 +68,9 @@ echo ""
 echo "Updating md5sum.php script [for real]"
 (
     lftp_connect
-    echo "put www/maintenance/md5sum.php /www/maintenance/md5sum.php"
-) | lftp -v
+    echo "put www/maintenance/md5sum.php"
+) | lftp
+
 
 echo "Getting the md5 from local"
 wget --quiet --content-on-error "http://localhost:5555/maintenance/md5sum.php" -O "$TMP"/deploy-local.txt
@@ -95,13 +96,14 @@ sort --unique < "$TMP"/deploy-changed.txt > "$TMP"/deploy-changed-sorted.txt
 
 echo "Transforming into ftp commands"
 (
+	lftp_connect
     while read -r file; do
         if [ -r "$file" ]; then
             echo "+ $file" >&3
             echo "echo + $file"
             dir="$(dirname "$file")"
             echo "cd \"/$dir\" || mkdir -p \"/$dir\" "
-            echo "put \"/$file\""
+            echo "put \"$file\""
         else
             echo "- $file" >&3
             echo "echo - $file"
@@ -113,7 +115,7 @@ echo "Transforming into ftp commands"
 
 if [ "$1" == "commit" ]; then
     echo "*** Commiting ***"
-    lftp --rcfile "$TMP"/deploy-ftpcommands.txt  || true
+    lftp --rcfile "$TMP"/deploy-ftpcommands.txt
 
     echo "Upgrading database"
     wget -O - --quiet --content-on-error "www.cryptomedic.org/maintenance/patch_db.php?pwd=${CRYPTOMEDIC_DB_UPGRADE}"
@@ -128,7 +130,7 @@ else
     echo "To really commit, use:"
     echo "$0 commit"
     echo ""
-	cat "$TMP"/deploy-ftpcommands.txt
+	# cat "$TMP"/deploy-ftpcommands.txt
 fi
 
 echo "End"
