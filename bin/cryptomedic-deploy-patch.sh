@@ -69,8 +69,8 @@ echo "Updating md5sum.php script [for real]"
 (
     lftp_connect
     echo "put www/maintenance/md5sum.php"
-) | lftp
-
+) > "$TMP"deploy-md5sum.txt
+lftp -f "$TMP"deploy-md5sum.txt
 
 echo "Getting the md5 from local"
 wget --quiet --content-on-error "http://localhost:5555/maintenance/md5sum.php" -O "$TMP"deploy-local.txt
