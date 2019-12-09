@@ -73,26 +73,26 @@ echo "Updating md5sum.php script [for real]"
 
 
 echo "Getting the md5 from local"
-wget --quiet --content-on-error "http://localhost:5555/maintenance/md5sum.php" -O "$TMP"/deploy-local.txt
+wget --quiet --content-on-error "http://localhost:5555/maintenance/md5sum.php" -O "$TMP"deploy-local.txt
 
 echo "Getting the md5 from remote"
-wget --quiet --content-on-error "http://www.cryptomedic.org/maintenance/md5sum.php" -O "$TMP"/deploy-remote.txt
+wget --quiet --content-on-error "http://www.cryptomedic.org/maintenance/md5sum.php" -O "$TMP"deploy-remote.txt
 
 echo "Sorting local file"
-sort --stable "$TMP"/deploy-local.txt > "$TMP"/deploy-local.sorted.txt
+sort --stable "$TMP"deploy-local.txt > "$TMP"deploy-local.sorted.txt
 
 echo "Sorting remote file"
-sort --stable "$TMP"/deploy-remote.txt > "$TMP"/deploy-remote.sorted.txt
+sort --stable "$TMP"deploy-remote.txt > "$TMP"deploy-remote.sorted.txt
 
 echo "Building the diff"
-diff -u "$TMP"/deploy-remote.sorted.txt "$TMP"/deploy-local.sorted.txt | grep -e "^[+-]"  | grep -v "^(+++)" | grep -v "^---" \
-    | cut -c 13- > "$TMP"/deploy-changed.txt \
+diff -u "$TMP"deploy-remote.sorted.txt "$TMP"deploy-local.sorted.txt | grep -e "^[+-]"  | grep -v "^+++" | grep -v "^---" \
+    | cut -c 13- > "$TMP"deploy-changed.txt \
     || true
 
 # We got a list of changed files
 
 echo "Sortering the diff"
-sort --unique < "$TMP"/deploy-changed.txt > "$TMP"/deploy-changed-sorted.txt 
+sort --unique < "$TMP"deploy-changed.txt > "$TMP"deploy-changed-sorted.txt 
 
 echo "Transforming into ftp commands"
 (
@@ -107,15 +107,15 @@ echo "Transforming into ftp commands"
         else
             echo "- $file" >&3
             echo "echo - $file"
-            echo "rm \"/$file\""
+            echo "rm \"/$file\" || true"
         fi
     done
 
-) < "$TMP"/deploy-changed-sorted.txt > "$TMP"/deploy-ftpcommands.txt
+) < "$TMP"deploy-changed-sorted.txt > "$TMP"deploy-ftpcommands.txt
 
 if [ "$1" == "commit" ]; then
     echo "*** Commiting ***"
-    lftp --rcfile "$TMP"/deploy-ftpcommands.txt
+    lftp -f "$TMP"deploy-ftpcommands.txt
 
     echo "Upgrading database"
     wget -O - --quiet --content-on-error "www.cryptomedic.org/maintenance/patch_db.php?pwd=${CRYPTOMEDIC_DB_UPGRADE}"
@@ -130,7 +130,7 @@ else
     echo "To really commit, use:"
     echo "$0 commit"
     echo ""
-	# cat "$TMP"/deploy-ftpcommands.txt
+	# cat "$TMP"deploy-ftpcommands.txt
 fi
 
 echo "End"
