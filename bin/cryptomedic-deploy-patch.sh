@@ -69,8 +69,7 @@ echo "Updating md5sum.php script [for real]"
 (
     lftp_connect
     echo "put www/maintenance/md5sum.php /www/maintenance/md5sum.php"
-    echo "alias del rm"
-) | build_up | lftp -v
+) | lftp -v
 
 echo "Getting the md5 from local"
 wget --quiet --content-on-error "http://localhost:5555/maintenance/md5sum.php" -O "$TMP"/deploy-local.txt
@@ -129,6 +128,7 @@ else
     echo "To really commit, use:"
     echo "$0 commit"
     echo ""
+	cat "$TMP"/deploy-ftpcommands.txt
 fi
 
 echo "End"
