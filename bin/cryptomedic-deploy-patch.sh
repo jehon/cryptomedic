@@ -115,7 +115,7 @@ echo "Transforming into ftp commands"
 
 if [ "$1" == "commit" ]; then
     echo "*** Commiting ***"
-    lftp -f "$TMP"deploy-ftpcommands.txt
+    lftp -v -f "$TMP"deploy-ftpcommands.txt
 
     echo "Upgrading database"
     wget -O - --quiet --content-on-error "www.cryptomedic.org/maintenance/patch_db.php?pwd=${CRYPTOMEDIC_DB_UPGRADE}"
@@ -133,4 +133,6 @@ else
 	# cat "$TMP"deploy-ftpcommands.txt
 fi
 
-echo "End"
+echo "*** End ***"
+echo "*** End ***"
+echo "*** End ***"
