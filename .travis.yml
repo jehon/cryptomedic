@@ -33,6 +33,7 @@ deploy:
     on:
       branch: 
         - master
+        - build/*
 
 after_script:
   - make stop
