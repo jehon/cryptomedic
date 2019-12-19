@@ -70,7 +70,6 @@ echo "Updating md5sum.php script [for real]"
 (
     lftp_connect
     echo "put www/maintenance/md5sum.php"
-	close
 	exit
 ) > "$TMP"deploy-md5sum.txt
 lftp -f "$TMP"deploy-md5sum.txt
