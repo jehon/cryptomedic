@@ -16,7 +16,7 @@
         "phpunit/phpunit": "6.5.14",
         "symfony/css-selector": "3.4.36",
         "symfony/dom-crawler": "3.4.36",
-        "filp/whoops": "2.5.0"
+        "filp/whoops": "2.5.1"
     },
     "autoload": {
         "classmap": [
