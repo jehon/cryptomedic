@@ -16,7 +16,6 @@ addons:
   firefox: latest
 
 before_install:
-  - lftp --version
   - ssh -V
   - docker-compose --version
 
