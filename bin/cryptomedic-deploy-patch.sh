@@ -11,7 +11,7 @@ SCRIPT_DIR="$( dirname "${BASH_SOURCE[0]}" )"
 PRJ_DIR="$(dirname "$SCRIPT_DIR")"
 TMP="$PRJ_DIR/target/"
 
-CRYPTOMEDIC_UPLOAD_HOST="sftp://ftp.cluster003.ovh.net:21"
+CRYPTOMEDIC_UPLOAD_HOST="ftp.cluster003.ovh.net"
 if [ -z "$CRYPTOMEDIC_UPLOAD_USER" ]; then
     echo "Missing CRYPTOMEDIC_UPLOAD_USER" >&2
     exit 255
@@ -35,6 +35,11 @@ exec 3>&1
 
 lftp_connect() {
     echo "open -u $CRYPTOMEDIC_UPLOAD_USER,$CRYPTOMEDIC_UPLOAD_PASSWORD $CRYPTOMEDIC_UPLOAD_HOST";
+}
+
+sftp_exec() {
+	SSHPASS="$CRYPTOMEDIC_UPLOAD_PASSWORD" sshpass -e \
+		sftp "$CRYPTOMEDIC_UPLOAD_USER@$CRYPTOMEDIC_UPLOAD_HOST"
 }
 
 build_up(){
@@ -66,12 +71,11 @@ build_up(){
 
 echo ""
 echo "Updating md5sum.php script [for real]"
-(
-    lftp_connect
-    echo "put www/maintenance/md5sum.php"
-	exit
-) > "$TMP"deploy-md5sum.txt
-lftp -f "$TMP"deploy-md5sum.txt
+sftp_exec <<EOC
+	@put www/maintenance/md5sum.php
+EOC
+
+exit 0
 
 echo "Getting the md5 from local"
 wget --quiet --content-on-error "http://localhost:5555/maintenance/md5sum.php" -O "$TMP"deploy-local.txt

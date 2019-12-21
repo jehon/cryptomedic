@@ -8,8 +8,9 @@ addons:
   apt:
     packages:
       - make
-      - lftp
       - wget
+      - openssh-client
+      - sshpass
   chrome: stable
   firefox: latest
 
