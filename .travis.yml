@@ -17,10 +17,11 @@ addons:
 
 before_install:
   - lftp --version
+  - sftp --version
   - docker-compose --version
-  - make init-computer
 
 install:
+  - make init-computer
   # Start docker-compose stack
   # This is needed by the install (composer.phar) part
   - make start
