@@ -40,6 +40,7 @@ lftp_connect() {
 sftp_exec() {
 	SSHPASS="$CRYPTOMEDIC_UPLOAD_PASSWORD" sshpass -e \
 		sftp "$CRYPTOMEDIC_UPLOAD_USER@$CRYPTOMEDIC_UPLOAD_HOST"
+	echo "sftp: returl $?"
 }
 
 build_up(){
