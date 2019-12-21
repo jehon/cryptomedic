@@ -73,7 +73,7 @@ build_up(){
 echo ""
 echo "Updating md5sum.php script [for real]"
 sftp_exec <<-EOC
-	@put www/maintenance/md5sum.php
+	put www/maintenance/md5sum.php
 EOC
 
 exit 0
