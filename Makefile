@@ -134,10 +134,10 @@ test-api: target/docker-is-running www/api/$(VAPI)/vendor/.dependencies
 test-api-commit: target/docker-is-running www/api/$(VAPI)/vendor/.dependencies
 	$(call run_in_docker,"server","/app/bin/dev-phpunit.sh commit")
 
-test-unit: target/docker-is-running
+test-unit: target/docker-is-running node_modules/.dependencies
 	npm run --silent test-unit
 
-test-e2e: target/e2e/.tested
+test-e2e: target/e2e/.tested node_modules/.dependencies
 target/e2e/.tested: target/docker-is-running
 	npm run --silent test-e2e
 	touch target/e2e/.tested
