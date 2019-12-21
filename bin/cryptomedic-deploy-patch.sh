@@ -11,7 +11,7 @@ SCRIPT_DIR="$( dirname "${BASH_SOURCE[0]}" )"
 PRJ_DIR="$(dirname "$SCRIPT_DIR")"
 TMP="$PRJ_DIR/target/"
 
-CRYPTOMEDIC_UPLOAD_HOST="sftp://ftp.cluster003.ovh.net"
+CRYPTOMEDIC_UPLOAD_HOST="sftp://ftp.cluster003.ovh.net:21"
 if [ -z "$CRYPTOMEDIC_UPLOAD_USER" ]; then
     echo "Missing CRYPTOMEDIC_UPLOAD_USER" >&2
     exit 255

@@ -16,6 +16,7 @@ addons:
 before_install:
   - lftp --version
   - docker-compose --version
+  - make init-computer
 
 install:
   # Start docker-compose stack

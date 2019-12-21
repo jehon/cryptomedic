@@ -9,7 +9,11 @@ DBROOTPASS := password
 DBUPDATEPWD := secret
 DB_BASE := conf/database/base.sql
 
+DEPLOY_HOST := ftp.cluster003.ovh.net
+
 DOCKERCOMPOSE := HOST_UID=$(shell id -u) HOST_GID=$(shell id -g) docker-compose
+
+SSH_KNOWN_HOSTS := ~/.ssh/known_hosts
 
 define ensure_folder_empty
 	rm -fr "$1"
@@ -59,6 +63,28 @@ clean:
 
 init: target/structure-exists
 
+init-computer: deploy-host-key-test
+	mkdir -p ~/.ssh/
+	@if grep $(DEPLOY_HOST) $(SSH_KNOWN_HOSTS) >/dev/null; then \
+		echo "Removing old key"; \
+		sed -i "/$(DEPLOY_HOST).*/d" $(SSH_KNOWN_HOSTS) ; \
+	fi
+	echo "Installing the key"
+	cat ovh.key >> $(SSH_KNOWN_HOSTS)
+
+deploy-host-key-update:
+	ssh-keyscan -t ssh-rsa $(DEPLOY_HOST) > ovh.key
+
+deploy-host-key-test: 
+	@REMOTE="$(shell ssh-keyscan -t ssh-rsa $(DEPLOY_HOST) 2>/dev/null )"; \
+	STORED="$(shell cat ovh.key)"; \
+	if [ "$$REMOTE" != "$$STORED" ]; then \
+		echo "Key is updated on remote host"; \
+		exit 1; \
+	else  \
+		echo "Key is still the same, good!"; \
+	fi
+
 start: target/structure-exists \
 		target/docker-is-running \
 		dependencies \
@@ -71,9 +97,6 @@ start: target/structure-exists \
 	@echo "DevTools:"
 	@echo " phpmyadmin:  http://localhost:5550/"
 	@echo " mailhog:     http://localhost:5551/"
-
-t:
-	$(DOCKERCOMPOSE) up --build server
 
 target/docker-is-running:
 	@$(call run_in_docker,"server","true") 2>/dev/null \
