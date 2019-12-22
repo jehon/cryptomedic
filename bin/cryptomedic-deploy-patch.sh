@@ -79,11 +79,11 @@ echo "Transforming into ftp commands"
         if [ -r "$file" ]; then
             echo "+ $file" >&3
             dir="$(dirname "$file")"
-            echo "-mkdir \"/$dir\" "
+            echo "-mkdir \"$dir\" "
             echo "put \"$file\""
         else
             echo "- $file" >&3
-            echo "rm \"/$file\" || true"
+            echo "rm \"$file\" || true"
         fi
     done
 
