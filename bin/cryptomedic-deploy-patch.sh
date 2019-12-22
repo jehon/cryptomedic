@@ -89,9 +89,6 @@ echo "Transforming into ftp commands"
 
 ) < "$TMP"deploy-changed-sorted.txt > "$TMP"deploy-ftpcommands.txt
 
-cat "$TMP"deploy-ftpcommands.txt
-exit 0
-
 if [ "$1" == "commit" ]; then
     echo "*** Commiting ***"
 	sftp_exec < "$TMP"deploy-ftpcommands.txt
