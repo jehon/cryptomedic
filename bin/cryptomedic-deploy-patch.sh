@@ -47,6 +47,7 @@ sftp_exec() {
 echo ""
 echo "Updating md5sum.php script [for real]"
 sftp_exec <<-EOC
+	mkdir www/maintenance
 	put www/maintenance/md5sum.php
 EOC
 
@@ -78,7 +79,7 @@ echo "Transforming into ftp commands"
         if [ -r "$file" ]; then
             echo "+ $file" >&3
             dir="$(dirname "$file")"
-            echo "-mkdir -p \"/$dir\" "
+            echo "-mkdir \"/$dir\" "
             echo "put \"$file\""
         else
             echo "- $file" >&3
