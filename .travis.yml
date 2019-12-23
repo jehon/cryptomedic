@@ -10,14 +10,17 @@ addons:
       - make
       - lftp
       - wget
+      - openssh-client
+      - sshpass
   chrome: stable
   firefox: latest
 
 before_install:
-  - lftp --version
+  - ssh -V
   - docker-compose --version
 
 install:
+  - make init-computer
   # Start docker-compose stack
   # This is needed by the install (composer.phar) part
   - make start
@@ -33,6 +36,7 @@ deploy:
     on:
       branch: 
         - master
+        - build/*
 
 after_script:
   - make stop

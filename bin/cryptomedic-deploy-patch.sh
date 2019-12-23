@@ -6,6 +6,7 @@
 
 # Stop on error
 set -e
+set -o pipefail
 
 SCRIPT_DIR="$( dirname "${BASH_SOURCE[0]}" )"
 PRJ_DIR="$(dirname "$SCRIPT_DIR")"
@@ -37,43 +38,18 @@ lftp_connect() {
     echo "open -u $CRYPTOMEDIC_UPLOAD_USER,$CRYPTOMEDIC_UPLOAD_PASSWORD $CRYPTOMEDIC_UPLOAD_HOST";
 }
 
-build_up(){
-    while read -r data; do
-        FN="${data:12}"
-        DIR="$( dirname "$FN" )"
-        if [[ ${data:0:2} = "++" ]]; then
-            # use this as a trigger to open connection
-            lftp_connect
-            continue;
-        fi
-        if [[ ${data:0:2} = "--" ]]; then
-            # skip
-            continue
-        fi
-        if [[ ${data:0:1} = "+" ]]; then
-            echo "+ $FN" >&3
-            echo "cd /$DIR || mkdir -p /$DIR"
-            echo "put '$FN' -o '/$FN'"
-            continue
-        fi
-        if [[ ${data:0:1} = "-" ]]; then
-            echo "- $FN" >&3
-            echo "del '/$FN'"
-            continue
-        fi
-    done
+sftp_exec() {
+	SSHPASS="$CRYPTOMEDIC_UPLOAD_PASSWORD" sshpass -e \
+		sftp "$CRYPTOMEDIC_UPLOAD_USER@$CRYPTOMEDIC_UPLOAD_HOST"
+	echo "sftp exit code: $?"
 }
 
 echo ""
-set -x
 echo "Updating md5sum.php script [for real]"
-(
-    lftp_connect
-    echo "put www/maintenance/md5sum.php"
-	close
-	exit
-) > "$TMP"deploy-md5sum.txt
-lftp -f "$TMP"deploy-md5sum.txt
+sftp_exec <<-EOC
+	mkdir www/maintenance
+	put www/maintenance/md5sum.php
+EOC
 
 echo "Getting the md5 from local"
 wget --quiet --content-on-error "http://localhost:5555/maintenance/md5sum.php" -O "$TMP"deploy-local.txt
@@ -99,18 +75,15 @@ sort --unique < "$TMP"deploy-changed.txt > "$TMP"deploy-changed-sorted.txt
 
 echo "Transforming into ftp commands"
 (
-	lftp_connect
     while read -r file; do
         if [ -r "$file" ]; then
             echo "+ $file" >&3
-            echo "echo + $file"
             dir="$(dirname "$file")"
-            echo "cd \"/$dir\" || mkdir -p \"/$dir\" "
+            echo "-mkdir \"$dir\" "
             echo "put \"$file\""
         else
             echo "- $file" >&3
-            echo "echo - $file"
-            echo "rm \"/$file\" || true"
+            echo "rm \"$file\" || true"
         fi
     done
 
@@ -118,7 +91,8 @@ echo "Transforming into ftp commands"
 
 if [ "$1" == "commit" ]; then
     echo "*** Commiting ***"
-    lftp -v -f "$TMP"deploy-ftpcommands.txt
+	sftp_exec < "$TMP"deploy-ftpcommands.txt
+    # lftp -v -f "$TMP"deploy-ftpcommands.txt
 
     echo "Upgrading database"
     wget -O - --quiet --content-on-error "www.cryptomedic.org/maintenance/patch_db.php?pwd=${CRYPTOMEDIC_DB_UPGRADE}"
