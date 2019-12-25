@@ -97,6 +97,9 @@ start: target/structure-exists \
 	@echo "DevTools:"
 	@echo " phpmyadmin:  http://localhost:5550/"
 	@echo " mailhog:     http://localhost:5551/"
+	
+	# let the time to all services to be up and running
+	sleep 5s
 
 target/docker-is-running:
 	@$(call run_in_docker,"server","true") 2>/dev/null \
@@ -134,10 +137,10 @@ test-api: target/docker-is-running www/api/$(VAPI)/vendor/.dependencies
 test-api-commit: target/docker-is-running www/api/$(VAPI)/vendor/.dependencies
 	$(call run_in_docker,"server","/app/bin/dev-phpunit.sh commit")
 
-test-unit: target/docker-is-running node_modules/.dependencies
+test-unit: target/docker-is-running node_modules/.dependencies build
 	npm run --silent test-unit
 
-test-e2e: target/e2e/.tested node_modules/.dependencies
+test-e2e: target/e2e/.tested node_modules/.dependencies build
 target/e2e/.tested: target/docker-is-running
 	npm run --silent test-e2e
 	touch target/e2e/.tested
