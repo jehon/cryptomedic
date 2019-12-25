@@ -7,6 +7,7 @@ use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\Input;
 use App\Http\Controllers\PriceController;
 use Route;
 
@@ -60,6 +61,13 @@ class AuthController extends Controller {
       self::$permissions[$profile][$header] = $value;
   }
 
+  public function storeStatistics() {
+	$data = Input::all();
+	// TODO
+	// $data[computer_id]
+	// $data[feature] = true / false
+  }
+
   /**
    * Create a new authentication controller instance.
    *
@@ -71,7 +79,9 @@ class AuthController extends Controller {
   public function getSettings() {
     if (!Auth::user()) {
       abort(401);
-    }
+	}
+	$this->storeStatistics();
+
     $data = array();
     $data['username'] = Auth::user()->username;
     $data['group'] = Auth::user()->group;
