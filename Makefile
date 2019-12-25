@@ -46,7 +46,7 @@ clean:
 	rm -fr vendor
 
 	rm -fr "target/"
-	find . -name *.log -delete
+	find . -name "*.log" -delete
 
 	$(call ensure_folder_empty,www/build/)
 	$(call ensure_folder_empty,www/api/$(VAPI)/bootstrap/cache/)
