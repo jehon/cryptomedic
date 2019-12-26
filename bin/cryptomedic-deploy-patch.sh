@@ -48,14 +48,14 @@ echo ""
 echo "Updating md5sum.php script [for real]"
 sftp_exec <<-EOC
 	mkdir www/maintenance
-	put www/maintenance/md5sum.php
+	put www/maintenance/md5sum.php www/maintenance/md5sum.php
 EOC
 
 echo "Getting the md5 from local"
 wget --quiet --content-on-error "http://localhost:5555/maintenance/md5sum.php" -O "$TMP"deploy-local.txt
 
 echo "Getting the md5 from remote"
-wget --quiet --content-on-error "http://www.cryptomedic.org/maintenance/md5sum.php" -O "$TMP"deploy-remote.txt
+wget --quiet --content-on-error "http://www.cryptomedic.org/maintenance/md5sum.php?remote=1" -O "$TMP"deploy-remote.txt
 
 echo "Sorting local file"
 sort --stable "$TMP"deploy-local.txt > "$TMP"deploy-local.sorted.txt
@@ -80,7 +80,7 @@ echo "Transforming into ftp commands"
             echo "+ $file" >&3
             dir="$(dirname "$file")"
             echo "-mkdir \"$dir\" "
-            echo "put \"$file\""
+            echo "put \"$file\" \"$file\""
         else
             echo "- $file" >&3
             echo "rm \"$file\" || true"
