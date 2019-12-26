@@ -40,16 +40,27 @@ lftp_connect() {
 
 sftp_exec() {
 	SSHPASS="$CRYPTOMEDIC_UPLOAD_PASSWORD" sshpass -e \
-		sftp "$CRYPTOMEDIC_UPLOAD_USER@$CRYPTOMEDIC_UPLOAD_HOST"
-	echo "sftp exit code: $?"
+		sftp "$CRYPTOMEDIC_UPLOAD_USER@$CRYPTOMEDIC_UPLOAD_HOST" \
+		| grep -v "sftp> " \
+}
+
+sftp_put() {
+	(
+		dir="$(dirname "$1")"
+		echo "-mkdir \"$dir\" "
+		echo "put \"$1\" \"$1\""
+	) | sftp_exec \
+		| grep -v "Couldn't create directory: Failure"
+}
+
+sftp_rm() {
+    echo "rm \"$file\" || true" \
+		| sftp_exec 
 }
 
 echo ""
 echo "Updating md5sum.php script [for real]"
-sftp_exec <<-EOC
-	mkdir www/maintenance
-	put www/maintenance/md5sum.php www/maintenance/md5sum.php
-EOC
+sftp_put www/maintenance/md5sum.php
 
 echo "Getting the md5 from local"
 wget --quiet --content-on-error "http://localhost:5555/maintenance/md5sum.php" -O "$TMP"deploy-local.txt
@@ -77,22 +88,24 @@ echo "Transforming into ftp commands"
 (
     while read -r file; do
         if [ -r "$file" ]; then
-            echo "+ $file" >&3
-            dir="$(dirname "$file")"
-            echo "-mkdir \"$dir\" "
-            echo "put \"$file\" \"$file\""
+			if [ "$1" == "commit" ]; then
+				sftp_put "$file"
+			else 
+            	echo "+ $file" >&3
+			fi
         else
-            echo "- $file" >&3
-            echo "rm \"$file\" || true"
+			if [ "$1" == "commit" ]; then
+				sftp_rm "$file"
+			else 
+            	echo "- $file" >&3
+			fi
         fi
     done
 
-) < "$TMP"deploy-changed-sorted.txt > "$TMP"deploy-ftpcommands.txt
+) < "$TMP"deploy-changed-sorted.txt
 
 if [ "$1" == "commit" ]; then
     echo "*** Commiting ***"
-	sftp_exec < "$TMP"deploy-ftpcommands.txt
-    # lftp -v -f "$TMP"deploy-ftpcommands.txt
 
     echo "Upgrading database"
     wget -O - --quiet --content-on-error "www.cryptomedic.org/maintenance/patch_db.php?pwd=${CRYPTOMEDIC_DB_UPGRADE}"
@@ -107,7 +120,6 @@ else
     echo "To really commit, use:"
     echo "$0 commit"
     echo ""
-	# cat "$TMP"deploy-ftpcommands.txt
 fi
 
 echo "*** End ***"
