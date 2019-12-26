@@ -52,7 +52,6 @@ foreach($list as $f) {
 
 	# Live folder
 	if (startsWith($fn, "/live/")) { continue; }
-	if (startsWith($fn, "/live-for-test/")) { continue; }
 
 	# Live config
 	if ($fn == "/config-site.php") { continue; }
@@ -83,6 +82,7 @@ foreach($list as $f) {
 		## 
 		## Data not necessary on production
 		##
+		if (startsWith($fn, "/live-for-test/")) { continue; }
 		if (contains($fn, "/.git/")) { continue; }
 		if (startsWith($fn, "/node_modules/")) { continue; }
 		if (startsWith($fn, "/documentation/")) { continue; }
