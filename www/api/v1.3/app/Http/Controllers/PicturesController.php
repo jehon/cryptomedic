@@ -52,22 +52,26 @@ class PicturesController extends FicheController {
   public function checkFileSystem() {
     $i = 0;
     $list = DB::table('pictures')->get();
-    $res = [];
+	$res = [];
     echo "<pre>";
     echo "Check database records\n";
     foreach($list as $v) {
-      $picture = Picture::findOrFail($v->id);
-      $file = $picture->getPhysicalPath($picture->file);
-      if (!file_exists($file)) {
-        echo $i++ . ": " . $v->id . " - " . $v->file . "\n";
-      }
+		$picture = Picture::findOrFail($v->id);
+		if ($picture->file == null) {
+			echo $i++ . ": " . $v->id . " - null\n";
+		} else {
+			$file = $picture->getPhysicalPath($picture->file);
+			if (!file_exists($file)) {
+				echo $i++ . ": " . $v->id . " - " . $v->file . "\n";
+			}
+		}
     }
 
     echo "\n";
     echo "Check files present\n";
     foreach(myglob(Picture::getPhysicalRoot() . "/*") as $file) {
       $file = substr($file, strlen(Picture::getPhysicalRoot()));
-      if (!Picture::getPictureĈountByPhysicalPath($file)) {
+      if (!Picture::getPictureCountByPhysicalPath($file)) {
         echo $i++ . ": " . $file . "\n";
       }
     }
