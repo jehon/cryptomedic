@@ -43,6 +43,7 @@ sftp_exec() {
 		sftp "$CRYPTOMEDIC_UPLOAD_USER@$CRYPTOMEDIC_UPLOAD_HOST" \
 			2>&1 \
 				| grep -v "Connected to" \
+				| grep -v "Couldn't create directory: Failure" \
 				| grep -v "sftp> "
 }
 
