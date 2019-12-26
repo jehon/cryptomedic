@@ -68,6 +68,7 @@ foreach($list as $f) {
 		// if (startsWith($fn, "/www/api/v1.2/")) { continue; }
 	}
 
+	if ($filter == 'local') { 
 		
 		## 
 		## Data transcient (temporary)
@@ -91,7 +92,7 @@ foreach($list as $f) {
 			if (endsWith($fn, "/base.sql")) { continue; }
 		}
 		if (startsWith($fn, "/backup")) { continue; }
-  
+	}
 
 	echo \hash_file('crc32b',$f) . ": " . $fn . "\n";
 }
