@@ -41,7 +41,7 @@ lftp_connect() {
 sftp_exec() {
 	SSHPASS="$CRYPTOMEDIC_UPLOAD_PASSWORD" sshpass -e \
 		sftp "$CRYPTOMEDIC_UPLOAD_USER@$CRYPTOMEDIC_UPLOAD_HOST" \
-		| grep -v "sftp> " \
+		| grep -v "sftp> "
 }
 
 sftp_put() {
