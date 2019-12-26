@@ -9,6 +9,8 @@ require_once(__DIR__ . "/../../config.php");
 require_once(__DIR__ . "/Database.php");
 
 $root = dirname(dirname(__DIR__));
+$filter = $_REQUEST['filter'];
+$filter || http_response_code(400, "Should specify a filter");
 
 $list = myglob($root ."/*", true);
 sort($list);
