@@ -49,7 +49,7 @@ sftp_put() {
 		dir="$(dirname "$1")"
 		echo "-mkdir \"$dir\" "
 		echo "put \"$1\" \"$1\""
-	) | sftp_exec \
+	) | sftp_exec 2>&1 \
 		| grep -v "Couldn't create directory: Failure"
 }
 
