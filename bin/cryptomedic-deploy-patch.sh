@@ -63,10 +63,10 @@ echo "Updating md5sum.php script [for real]"
 sftp_put www/maintenance/md5sum.php
 
 echo "Getting the md5 from local"
-wget --quiet --content-on-error "http://localhost:5555/maintenance/md5sum.php" -O "$TMP"deploy-local.txt
+wget --quiet --content-on-error "http://localhost:5555/maintenance/md5sum.php?filter=local" -O "$TMP"deploy-local.txt
 
 echo "Getting the md5 from remote"
-wget --quiet --content-on-error "http://www.cryptomedic.org/maintenance/md5sum.php?remote=1" -O "$TMP"deploy-remote.txt
+wget --quiet --content-on-error "http://www.cryptomedic.org/maintenance/md5sum.php?filter=remote" -O "$TMP"deploy-remote.txt
 
 echo "Sorting local file"
 sort --stable "$TMP"deploy-local.txt > "$TMP"deploy-local.sorted.txt
