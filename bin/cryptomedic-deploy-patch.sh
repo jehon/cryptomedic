@@ -41,7 +41,9 @@ lftp_connect() {
 sftp_exec() {
 	SSHPASS="$CRYPTOMEDIC_UPLOAD_PASSWORD" sshpass -e \
 		sftp "$CRYPTOMEDIC_UPLOAD_USER@$CRYPTOMEDIC_UPLOAD_HOST" \
-		| grep -v "sftp> "
+			2>&1 \
+				| grep -v "Connected to" \
+				| grep -v "sftp> "
 }
 
 sftp_put() {
@@ -49,12 +51,12 @@ sftp_put() {
 		dir="$(dirname "$1")"
 		echo "-mkdir \"$dir\" "
 		echo "put \"$1\" \"$1\""
-	) | sftp_exec 2>&1 \
+	) | sftp_exec \
 		| grep -v "Couldn't create directory: Failure"
 }
 
 sftp_rm() {
-    echo "rm \"$file\" || true" \
+    echo "rm \"$file\"" \
 		| sftp_exec 
 }
 
@@ -88,8 +90,6 @@ echo "Transforming into ftp commands"
 (
     while read -r lfile; do
 		file=${lfile:1}
-		# echo "file: $lfile = ${lfile:0:1} # $file"
-		# continue
         if [ "${lfile:0:1}" == "+" ]; then
 			if [ "$1" == "commit" ]; then
 				sftp_put "$file"
