@@ -48,22 +48,18 @@ sftp_exec() {
 }
 
 sftp_put() {
-	(
-		dir="$(dirname "$1")"
-		echo "-mkdir \"$dir\" "
-		echo "put \"$1\" \"$1\""
-	) | sftp_exec \
-		| grep -v "Couldn't create directory: Failure"
+	dir="$(dirname "$1")"
+	echo "mkdir \"$dir\" "
+	echo "put \"$1\" \"$1\""
 }
 
 sftp_rm() {
-    echo "rm \"$file\"" \
-		| sftp_exec 
+    echo "rm \"$file\""
 }
 
 echo ""
 echo "Updating md5sum.php script [for real]"
-sftp_put www/maintenance/md5sum.php
+sftp_put www/maintenance/md5sum.php | sftp_exec
 
 echo "Getting the md5 from local"
 wget --quiet --content-on-error "http://localhost:5555/maintenance/md5sum.php?filter=local" -O "$TMP"deploy-local.txt
@@ -92,28 +88,23 @@ echo "Transforming into ftp commands"
     while read -r lfile; do
 		file=${lfile:1}
         if [ "${lfile:0:1}" == "+" ]; then
-			if [ "$1" == "commit" ]; then
-				sftp_put "$file"
-			else 
-            	echo "+ $file" >&3
-			fi
+			sftp_put "$file"
         else
-			if [ "$1" == "commit" ]; then
-				sftp_rm "$file"
-			else 
-            	echo "- $file" >&3
-			fi
+			sftp_rm "$file"
         fi
     done
 
-) < "$TMP"deploy-changed-sorted.txt
+) < "$TMP"deploy-changed-sorted.txt > "$TMP"deploy-sftp-commands.txt
 
 if [ "$1" == "commit" ]; then
     echo "*** Commiting ***"
+	cat "$TMP"deploy-sftp-commands.txt | sftp_exec
 
     echo "Upgrading database"
     wget -O - --quiet --content-on-error "www.cryptomedic.org/maintenance/patch_db.php?pwd=${CRYPTOMEDIC_DB_UPGRADE}"
 else
+	cat "$TMP"deploy-sftp-commands.txt
+
     echo "!!!!!!!!!!!!!!!!!!! TEST MODE !!!!!!!!!!!!!!!!!!!!!!"
     echo "!!!!!!!!!!!!!!!!!!! TEST MODE !!!!!!!!!!!!!!!!!!!!!!"
     echo "!!!!!!!!!!!!!!!!!!! TEST MODE !!!!!!!!!!!!!!!!!!!!!!"
