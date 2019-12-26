@@ -7,8 +7,18 @@ require_once(__DIR__ . "/../../config.php");
 require_once(__DIR__ . "/Database.php");
 
 $root = dirname(dirname(__DIR__));
+
+const F_LOCAL = "local";
+const F_REMOTE = "remote";
 $filter = $_REQUEST['filter'];
-$filter || http_response_code(400, "Should specify a filter");
+if (!$filter) {
+	\http_response_code(400, "Should specify a filter");
+	die('bye bye');
+}
+if (!in_array($filter, [ F_LOCAL, F_REMOTE])) {
+	\http_response_code(400, "Invalid filter: $filter");
+	die('bye bye');
+}
 
 $list = myglob($root ."/*", true);
 sort($list);
