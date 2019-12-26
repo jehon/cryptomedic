@@ -76,18 +76,21 @@ sort --stable "$TMP"deploy-remote.txt > "$TMP"deploy-remote.sorted.txt
 
 echo "Building the diff"
 diff -u "$TMP"deploy-remote.sorted.txt "$TMP"deploy-local.sorted.txt | grep -e "^[+-]"  | grep -v "^+++" | grep -v "^---" \
-    | cut -c 13- > "$TMP"deploy-changed.txt \
+    | cut -c 1,13- > "$TMP"deploy-changed.txt \
     || true
 
 # We got a list of changed files
 
 echo "Sortering the diff"
-sort --unique < "$TMP"deploy-changed.txt > "$TMP"deploy-changed-sorted.txt 
+sort -k 1.1r < "$TMP"deploy-changed.txt > "$TMP"deploy-changed-sorted.txt 
 
 echo "Transforming into ftp commands"
 (
-    while read -r file; do
-        if [ -r "$file" ]; then
+    while read -r lfile; do
+		file=${lfile:1}
+		# echo "file: $lfile = ${lfile:0:1} # $file"
+		# continue
+        if [ "${lfile:0:1}" == "+" ]; then
 			if [ "$1" == "commit" ]; then
 				sftp_put "$file"
 			else 
