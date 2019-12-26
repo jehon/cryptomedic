@@ -43,13 +43,25 @@ sftp_exec() {
 		sftp "$CRYPTOMEDIC_UPLOAD_USER@$CRYPTOMEDIC_UPLOAD_HOST" \
 			2>&1 \
 				| grep -v "Connected to" \
-				| grep -v "Couldn't create directory: Failure" \
-				| grep -v "sftp> "
+				| grep -v "Couldn't create directory" \
+				| grep -v "sftp> " \
+				| while read R ; do
+					echo "$R"
+					if [[ "$R" =~ "No such file or directory" ]]; then
+						echo "Problem uploading file" >&2
+						return 1
+					fi
+				done
+
 }
 
 sftp_put() {
-	dir="$(dirname "$1")"
-	echo "mkdir \"$dir\" "
+	dir="$( dirname "$1" )"
+	while [ "$dir" != "." ] ; do
+		echo "mkdir \"$dir\""
+		dir="$( dirname "$dir" )"
+	done
+
 	echo "put \"$1\" \"$1\""
 }
 
