@@ -23,77 +23,77 @@ if (!in_array($filter, [ F_LOCAL, F_REMOTE])) {
 $list = myglob($root ."/*", true);
 sort($list);
 
-function startsWith($haystack, $needle)
-{
-  $length = strlen($needle);
-  return (substr($haystack, 0, $length) === $needle);
+function startsWith($haystack, $needle) {
+	$length = strlen($needle);
+	return (substr($haystack, 0, $length) === $needle);
 }
 
-function endsWith($haystack, $needle)
-{
-  $length = strlen($needle);
-  if ($length == 0) {
-    return true;
-  }
+function endsWith($haystack, $needle) {
+	$length = strlen($needle);
+	if ($length == 0) {
+		return true;
+	}
 
-  return (substr($haystack, -$length) === $needle);
+	return (substr($haystack, -$length) === $needle);
 }
 
-function contains($haystack, $needle) 
-{
-  return strpos($haystack, $needle) !== false;
+function contains($haystack, $needle) {
+	return strpos($haystack, $needle) !== false;
 }
 
-foreach($list as $f)
-{
+foreach($list as $f) {
 	$fn = substr($f, strlen($root));
 
-  ## 
-  ## Data to be protected
-  ##
+	## 
+	## Data to be protected
+	##
 
-  # Live folder
-  if (startsWith($fn, "/live/")) { continue; }
-  if (startsWith($fn, "/live-for-test/")) { continue; }
+	# Live folder
+	if (startsWith($fn, "/live/")) { continue; }
+	if (startsWith($fn, "/live-for-test/")) { continue; }
 
-  # Live config
-  if ($fn == "/config-site.php") { continue; }
+	# Live config
+	if ($fn == "/config-site.php") { continue; }
 
-  ## 
-  ## Data transcient (temporary)
-  ##
-  if (contains($fn, "/tmp/")) { continue; }
-  if (contains($fn, "/temp/")) { continue; }
-  if (contains($fn, "/Temp/")) { continue; }
-  if (endsWith($fn, ".log")) { continue; }
-  if (startsWith($fn, "/target/")) { continue; }
+	# Some live storage
+	if (startsWith($fn, "/target/")) { continue; }
 
-  # Storage of Laravel
-  if (contains($fn, "/api/") && contains($fn, "/storage/")) {
-  	continue;
-  }
+	# Storage of Laravel
+	if (contains($fn, "/api/") && contains($fn, "/storage/")) { continue; }
 
-  ## 
-  ## Data not necessary on production
-  ##
-  if (contains($fn, "/.git/")) { continue; }
-  if (startsWith($fn, "/node_modules/")) { continue; }
-  if (startsWith($fn, "/documentation/")) { continue; }
-  if (contains($fn, "/tests/")) { continue; }
-  if (contains($fn, "/test/")) { continue; }
-  if (contains($fn, "/unused/")) { continue; }
-  if (startsWith($fn, "/conf")) {
-    if (contains($fn, "dev/")) { continue; }
-    if (endsWith($fn, "/base.sql")) { continue; }
-  }
-  if (startsWith($fn, "/backup")) { continue; }
+	if ($filter == 'remote') { 
+		##
+		## Protect old version of api
+		##
+		// if (startsWith($fn, "/www/api/v1.2/")) { continue; }
+	}
+
+		
+		## 
+		## Data transcient (temporary)
+		##
+		if (contains($fn, "/tmp/")) { continue; }
+		if (contains($fn, "/temp/")) { continue; }
+		if (contains($fn, "/Temp/")) { continue; }
+		if (endsWith($fn, ".log")) { continue; }
+		
+		## 
+		## Data not necessary on production
+		##
+		if (contains($fn, "/.git/")) { continue; }
+		if (startsWith($fn, "/node_modules/")) { continue; }
+		if (startsWith($fn, "/documentation/")) { continue; }
+		if (contains($fn, "/tests/")) { continue; }
+		if (contains($fn, "/test/")) { continue; }
+		if (contains($fn, "/unused/")) { continue; }
+		if (startsWith($fn, "/conf")) {
+			if (contains($fn, "dev/")) { continue; }
+			if (endsWith($fn, "/base.sql")) { continue; }
+		}
+		if (startsWith($fn, "/backup")) { continue; }
   
-  ##
-  ## Protect old version of api
-  ##
-  // if (startsWith($fn, "/www/api/v1.2/")) { continue; }
 
-  echo \hash_file('crc32b',$f) . ": " . $fn . "\n";
+	echo \hash_file('crc32b',$f) . ": " . $fn . "\n";
 }
 
 ?>
