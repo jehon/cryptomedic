@@ -12,6 +12,7 @@ addons:
       - wget
       - openssh-client
       - sshpass
+      - sshfs
   chrome: stable
   firefox: latest
 
@@ -36,7 +37,7 @@ deploy:
     on:
       branch: 
         - master
-        - build/*
+        - ci/*
 
 after_script:
   - make stop

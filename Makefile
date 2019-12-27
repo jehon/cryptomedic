@@ -14,6 +14,9 @@ DEPLOY_HOST := ftp.cluster003.ovh.net
 DOCKERCOMPOSE := HOST_UID=$(shell id -u) HOST_GID=$(shell id -g) docker-compose
 
 SSH_KNOWN_HOSTS := ~/.ssh/known_hosts
+DEPLOY_MOUNT := target/remote
+BACKUP_DIR ?= target/backup-online
+DEPLOY_TEST_DIR ?= target/deploy-test-dir
 
 define ensure_folder_empty
 	rm -fr "$1"
@@ -40,7 +43,7 @@ endef
 
 all: start
 
-clean:
+clean: deploy-unmount
 	rm -fr node_modules
 	rm -fr www/api/$(VAPI)/vendor
 	rm -fr vendor
@@ -250,3 +253,67 @@ data-reset: target/docker-is-running
 
 	# live folder
 	rsync -a --delete live-for-test/ live/
+
+
+#
+#
+# Deploy
+#
+#
+define deploy-check-config
+	@if [ -z "$$CRYPTOMEDIC_UPLOAD_USER" ]; then \
+		echo "Missing CRYPTOMEDIC_UPLOAD_USER" >&2; \
+		exit 255; \
+	fi
+
+	@if [ -z "$$CRYPTOMEDIC_UPLOAD_PASSWORD" ]; then \
+		echo "Missing CRYPTOMEDIC_UPLOAD_PASSWORD" >&2; \
+		exit 255; \
+	fi
+
+	@if [ -z "$$CRYPTOMEDIC_DB_UPGRADE" ]; then \
+    	echo "Missing CRYPTOMEDIC_DB_UPGRADE" >&2; \
+    	exit 255; \
+	fi
+	@echo "Deploy config ok"
+endef
+
+.PHONY: deploy-mount
+deploy-mount: $(DEPLOY_MOUNT)/Makefile
+$(DEPLOY_MOUNT)/Makefile:
+	$(call deploy-check-config)
+	@mkdir -p $(DEPLOY_MOUNT)
+	SSHPASS="$$CRYPTOMEDIC_UPLOAD_PASSWORD" sshpass -e \
+		sshfs -f -o uid=$(shell id -u) \
+			$(CRYPTOMEDIC_UPLOAD_USER)@$(DEPLOY_HOST):/home/$(CRYPTOMEDIC_UPLOAD_USER) $(DEPLOY_MOUNT) \
+			&
+
+deploy-unmount:
+	if [ -r $(DEPLOY_MOUNT)/favicon.ico ]; then \
+		fusermount -u $(DEPLOY_MOUNT); \
+	fi
+
+deploy-backup: $(BACKUP_DIR)/Makefile
+$(BACKUP_DIR)/Makefile: $(DEPLOY_MOUNT)/Makefile
+	rsync --progress --recursive --times --delete \
+		--exclude target/ \
+		$(DEPLOY_MOUNT)/ $(BACKUP_DIR)
+
+deploy-rsync:	deploy-host-key-test \
+		target/structure-exists \
+		dependencies \
+		build \
+		$(BACKUP_DIR)/Makefile
+
+	rsync --recursive --itemize-changes --checksum \
+		--dry-run \
+		--filter='dir-merge /deploy-filter' \
+		--delete \
+		. $(DEPLOY_MOUNT)
+
+# deploy-backup-compare-with-online: $(BACKUP_DIR)/Makefile
+# 	rsync --dry-run -r -i --omit-dir-times --ignore-times \
+# 		--exclude node_modules \
+# 		--exclude .git \
+# 		--exclude target \
+# 		$(DEPLOY_MOUNT) $(BACKUP_DIR)
