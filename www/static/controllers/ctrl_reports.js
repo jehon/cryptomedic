@@ -151,6 +151,7 @@ function ctrl_reports($scope, $routeParams, $sce) {
 			.then((data) => {
 				console.info('ctrl_report: Data received from server.');
 				$scope.result = data;
+				$scope.centersList = Object.keys(data.summary.centers);
 				$scope.error = false;
 				$scope.safeApply();
 			}, (error) => {
