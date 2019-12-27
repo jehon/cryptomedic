@@ -86,37 +86,26 @@ echo "Sorting remote file"
 sort --stable "$TMP"deploy-remote.txt > "$TMP"deploy-remote.sorted.txt
 
 echo "Building the diff"
-diff -u "$TMP"deploy-remote.sorted.txt "$TMP"deploy-local.sorted.txt | grep -e "^[+-]"  | grep -v "^+++" | grep -v "^---" \
-    | cut -c 1,13- > "$TMP"deploy-changed.txt \
-    || true
-
-# We got a list of changed files
-
-echo "Sortering the diff"
-sort -k 1.1r < "$TMP"deploy-changed.txt > "$TMP"deploy-changed-sorted.txt 
-
-echo "Transforming into ftp commands"
-(
-    while read -r lfile; do
+diff -u "$TMP"deploy-remote.sorted.txt "$TMP"deploy-local.sorted.txt | tee "$TMP"deploy-diff-1-raw.txt \
+	| grep -e "^[+-]"  | grep -v "^+++" | grep -v "^---" | tee "$TMP"deploy-diff-2-filtered.txt \
+    | cut -c 1,13- | tee "$TMP"deploy-diff-3-changed.txt
+	| sort -r > "$TMP"deploy-diff-4-sorted.txt \
+	| while read -r lfile; do
 		file=${lfile:1}
         if [ "${lfile:0:1}" == "+" ]; then
 			sftp_put "$file"
         else
 			sftp_rm "$file"
         fi
-    done
-
-) < "$TMP"deploy-changed-sorted.txt > "$TMP"deploy-sftp-commands.txt
+    done | tee "$TMP"deploy-diff-5-sftp-commands.txt
 
 if [ "$1" == "commit" ]; then
     echo "*** Commiting ***"
-	cat "$TMP"deploy-sftp-commands.txt | sftp_exec
+	cat "$TMP"deploy-diff-5-sftp-commands.txt | sftp_exec
 
     echo "Upgrading database"
     wget -O - --quiet --content-on-error "http://www.cryptomedic.org/maintenance/patch_db.php?pwd=${CRYPTOMEDIC_DB_UPGRADE}"
 else
-	cat "$TMP"deploy-sftp-commands.txt
-
     echo "!!!!!!!!!!!!!!!!!!! TEST MODE !!!!!!!!!!!!!!!!!!!!!!"
     echo "!!!!!!!!!!!!!!!!!!! TEST MODE !!!!!!!!!!!!!!!!!!!!!!"
     echo "!!!!!!!!!!!!!!!!!!! TEST MODE !!!!!!!!!!!!!!!!!!!!!!"
