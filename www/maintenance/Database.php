@@ -16,27 +16,27 @@ function myglob($glob, $recursive = false) {
 
 	$handle = opendir($path);
  	if ($handle === false) {
-    return array();
-  }
- 	$list = array();
-  while (false !== ($file = readdir($handle))) {
-   	if ($file == ".") {
+    	return array();
+  	}
+	$list = array();
+  	while (false !== ($file = readdir($handle))) {
+	   	if ($file == ".") {
 			continue;
-    }
-    if ($file == "..") {
-    	continue;
-	  }
+    	}
+    	if ($file == "..") {
+	    	continue;
+	  	}
 		if (is_file(dirname($glob) . DIRECTORY_SEPARATOR . $file) && fnmatch($pattern, $file)) {
-	  	$list[] = $path . DIRECTORY_SEPARATOR . $file;
-	  }
-	  if (is_dir(dirname($glob) . DIRECTORY_SEPARATOR . $file) && $recursive) {
-	  	$res = myglob(dirname($glob) . DIRECTORY_SEPARATOR . $file . DIRECTORY_SEPARATOR . basename($glob), $recursive);
-	  	$list = array_merge($list, $res);
-	  }
+		  	$list[] = $path . DIRECTORY_SEPARATOR . $file;
+	  	}
+	  	if (is_dir(dirname($glob) . DIRECTORY_SEPARATOR . $file) && $recursive) {
+		  	$res = myglob(dirname($glob) . DIRECTORY_SEPARATOR . $file . DIRECTORY_SEPARATOR . basename($glob), $recursive);
+	  		$list = array_merge($list, $res);
+	  	}
 	}
-  closedir($handle);
-  natsort($list);
-  return $list;
+  	closedir($handle);
+  	natsort($list);
+  	return $list;
 }
 
 class Database {
