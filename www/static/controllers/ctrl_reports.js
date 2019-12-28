@@ -146,12 +146,15 @@ function ctrl_reports($scope, $routeParams, $sce) {
 		// });
 
 		// Launch the call
+		$scope.centersList = [];
 		getDataService('#reportService')
 			.then(dataService => dataService.getReport(dataGenerator, $scope.values))
 			.then((data) => {
 				console.info('ctrl_report: Data received from server.');
 				$scope.result = data;
-				$scope.centersList = Object.keys(data.summary.centers);
+				if (data.summary && data.summary.centers) {
+					$scope.centersList = Object.keys(data.summary.centers);
+				}
 				$scope.error = false;
 				$scope.safeApply();
 			}, (error) => {
