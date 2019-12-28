@@ -8,7 +8,15 @@
 		}
 
 		attributeChangedCallback(attributeName, oldValue, newValue) {
-			this.innerHTML = newValue.split(/(?=[A-Z]+[a-z])/).join(' ');
+			if (newValue) {
+				try {
+					this.innerHTML = newValue.split(/(?=[A-Z]+[a-z])/).join(' ');
+				} catch (_e) {
+					this.innerHTML = newValue;
+				}
+			} else {
+				this.innerHTML = '';
+			}
 		}
 	}
 
