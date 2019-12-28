@@ -1,6 +1,5 @@
 - *.sh
 - *.log
-P *.log
 - bin
 - tests
 - test
@@ -15,25 +14,24 @@ P *.log
 + /config.php
 + /index.html
 
-- /config-site.php
-P /config-site.php
-
-+ /conf
++ /conf/
 + /conf/database
 + /conf/database/versions
 + /conf/database/always
-- /conf/database/***
+- /conf/database/*
 - /conf/*
 
-+ /www/
-- /www/api/*/storage/***
-P /www/api/*/storage/***
+- /www/api/*/storage
 - /www/api/*/tests
 - /www/api/*/vendor/bin
++ /www/
 
-- /target/***
-P /target/***
-- /live/***
-P /live/***
+P *.log
+P config-site.php
+- live
+P live
+- target/
+P target/
+P www/api/*/storage
 
 - /*

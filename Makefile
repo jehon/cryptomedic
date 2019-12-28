@@ -303,7 +303,7 @@ deploy-rsync:	deploy-host-key-test \
 		target/structure-exists \
 		dependencies \
 		build \
-		$(BACKUP_DIR)/Makefile
+		$(DEPLOY_MOUNT)/Makefile
 
 	rsync --recursive --itemize-changes --checksum \
 		--dry-run \
