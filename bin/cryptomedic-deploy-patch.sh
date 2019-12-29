@@ -119,7 +119,7 @@ echo "-------------- Differences --------------"
 echo "-------------- Differences --------------"
 
 if [ "$1" == "commit" ]; then
-    # echo "*** Commiting ***"
+    echo "*** Commiting ***"
 	# cat "$TMP"deploy-diff-5-sftp-commands.txt | sftp_exec
 
     # echo "Upgrading database"
