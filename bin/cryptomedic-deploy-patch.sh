@@ -5,8 +5,15 @@
 #
 
 # Stop on error
-set -e
+# Thanks to https://unix.stackexchange.com/a/462157/240487
+set -eE -o functrace
 set -o pipefail
+
+failure() {
+	set +x
+	echo "Failed at $1: $2"
+}
+trap 'failure ${LINENO} "$BASH_COMMAND"' ERR
 
 SCRIPT_DIR="$( dirname "${BASH_SOURCE[0]}" )"
 PRJ_DIR="$(dirname "$SCRIPT_DIR")"
@@ -86,29 +93,42 @@ echo "Sorting remote file"
 sort --stable "$TMP"deploy-remote.txt > "$TMP"deploy-remote.sorted.txt
 
 echo "Building the diff"
-diff -u "$TMP"deploy-remote.sorted.txt "$TMP"deploy-local.sorted.txt | tee "$TMP"deploy-diff-1-raw.txt \
-	| grep -e "^[+-]"  | grep -v "^+++" | grep -v "^---" | tee "$TMP"deploy-diff-2-filtered.txt \
-    | cut -c 1,13- | tee "$TMP"deploy-diff-3-changed.txt
-	| sort -r > "$TMP"deploy-diff-4-sorted.txt \
-	| while read -r lfile; do
-		file=${lfile:1}
-        if [ "${lfile:0:1}" == "+" ]; then
-			sftp_put "$file"
-        else
-			sftp_rm "$file"
-        fi
-    done | tee "$TMP"deploy-diff-5-sftp-commands.txt
+{ 
+	diff -u "$TMP"deploy-remote.sorted.txt "$TMP"deploy-local.sorted.txt || true 
+} | tee "$TMP"deploy-diff-1-raw.txt \
+	| grep -e "^[+-]" | grep -v "^+++" | grep -v "^---" | tee "$TMP"deploy-diff-2-filtered.txt \
+    | cut -c 1,13- | tee "$TMP"deploy-diff-3-changed.txt \
+	| sort -r | tee "$TMP"deploy-diff-4-sorted.txt \
+	| {
+		while read -r lfile; do
+			file="${lfile:1}"
+			if [ "${lfile:0:1}" == "+" ]; then
+				sftp_put "$file"
+			else
+				sftp_rm "$file"
+			fi
+	    done
+	} > "$TMP"deploy-diff-5-sftp-commands.txt
+
+echo "-------------- Differences --------------"
+echo "-------------- Differences --------------"
+echo "-------------- Differences --------------"
+cat "$TMP"deploy-diff-4-sorted.txt
+echo "-------------- Differences --------------"
+echo "-------------- Differences --------------"
+echo "-------------- Differences --------------"
 
 if [ "$1" == "commit" ]; then
-    echo "*** Commiting ***"
-	cat "$TMP"deploy-diff-5-sftp-commands.txt | sftp_exec
+    # echo "*** Commiting ***"
+	# cat "$TMP"deploy-diff-5-sftp-commands.txt | sftp_exec
 
-    echo "Upgrading database"
-    wget -O - --quiet --content-on-error "http://www.cryptomedic.org/maintenance/patch_db.php?pwd=${CRYPTOMEDIC_DB_UPGRADE}"
+    # echo "Upgrading database"
+    # wget -O - --quiet --content-on-error "http://www.cryptomedic.org/maintenance/patch_db.php?pwd=${CRYPTOMEDIC_DB_UPGRADE}"
 else
     echo "!!!!!!!!!!!!!!!!!!! TEST MODE !!!!!!!!!!!!!!!!!!!!!!"
     echo "!!!!!!!!!!!!!!!!!!! TEST MODE !!!!!!!!!!!!!!!!!!!!!!"
     echo "!!!!!!!!!!!!!!!!!!! TEST MODE !!!!!!!!!!!!!!!!!!!!!!"
+	cat $TMP"deploy-diff-5-sftp-commands.txt"
     echo "!!!!!!!!!!!!!!!!!!! TEST MODE !!!!!!!!!!!!!!!!!!!!!!"
     echo "!!!!!!!!!!!!!!!!!!! TEST MODE !!!!!!!!!!!!!!!!!!!!!!"
     echo "!!!!!!!!!!!!!!!!!!! TEST MODE !!!!!!!!!!!!!!!!!!!!!!"
