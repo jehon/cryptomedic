@@ -1,3 +1,4 @@
+# Generic filters
 - *.sh
 - *.log
 - bin
@@ -8,12 +9,14 @@
 - Tmp
 - Temp
 
+# Required root files
 + /.ovhconfig
 + /favicon.*
 + /licenses*
 + /config.php
 + /index.html
 
+# Required config is only databases prod files
 + /conf/
 + /conf/database
 + /conf/database/versions
@@ -22,10 +25,13 @@
 - /conf/*
 
 - /www/api/*/storage
+
+# Not very usefull
 - /www/api/*/tests
 - /www/api/*/vendor/bin
 + /www/
 
+# Protect: server-side files
 P *.log
 P config-site.php
 - live
