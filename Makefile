@@ -308,7 +308,7 @@ deploy-rsync:	deploy-host-key-test \
 	rsync --recursive --itemize-changes --checksum \
 		--dry-run \
 		--filter='dir-merge /deploy-filter' \
-		--delete \
+		--delete --delete-excluded \
 		. $(DEPLOY_MOUNT)
 
 # deploy-backup-compare-with-online: $(BACKUP_DIR)/Makefile
