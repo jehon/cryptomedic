@@ -98,7 +98,7 @@ echo "Building the diff"
 } | tee "$TMP"deploy-diff-1-raw.txt \
 	| grep -e "^[+-]" | grep -v "^+++" | grep -v "^---" | tee "$TMP"deploy-diff-2-filtered.txt \
     | cut -c 1,13- | tee "$TMP"deploy-diff-3-changed.txt \
-	| sort -r | tee "$TMP"deploy-diff-4-sorted.txt \
+	| LC_ALL=POSIX sort -k1.2 -k1.1r | tee "$TMP"deploy-diff-4-sorted.txt \
 	| {
 		while read -r lfile; do
 			file="${lfile:1}"
