@@ -78,7 +78,10 @@ sftp_rm() {
 
 echo ""
 echo "Updating md5sum.php script [for real]"
-sftp_put www/maintenance/md5sum.php | sftp_exec
+(
+	sftp_put www/maintenance/md5sum.php
+	sftp_put deploy-filter
+) | sftp_exec
 
 echo "Getting the md5 from local"
 wget --quiet --content-on-error "http://localhost:5555/maintenance/md5sum.php?filter=local" -O "$TMP"deploy-local.txt
