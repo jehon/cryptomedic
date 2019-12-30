@@ -1,7 +1,10 @@
 <?php
 namespace Jehon\Maintenance;
 
-echo "# <pre>crc32b:\n";
+function fatalError($code, $msg) {
+	http_response_code($code);
+	die($msg);
+}
 
 set_time_limit(5 * 60);
 
@@ -14,13 +17,41 @@ const F_LOCAL = "local";
 const F_REMOTE = "remote";
 $filter = $_REQUEST['filter'];
 if (!$filter) {
-	\http_response_code(400, "Should specify a filter");
-	die('bye bye');
+	fatalError(400, "Should specify a filter");
 }
 if (!in_array($filter, [ F_LOCAL, F_REMOTE])) {
-	\http_response_code(400, "Invalid filter: $filter");
-	die('bye bye');
+	fatalError(400, "Invalid filter: $filter");
 }
+
+$filterFile = "$root/deploy-filter";
+if (!file_exists($filterFile)) {
+	fatalError(500, "Filter file not found: $filterFile");
+}
+
+$filters = array_map(
+	# normalize for fnmatch
+	function($a) { 
+		$m = $a[1];
+		if (strpos($m, "/") !== false) {
+			$m = str_replace("*", "[^\/]*", $m);
+		} else {
+			$m = str_replace("*", "[^\/]*", $m);
+			$m = "^(.*\/|)(?<name>" . $m . ")(\/[^\/]+|)$";
+		}
+		return [ $a[0], $a[1], $m];
+	},
+	array_map(
+		# split to filter
+		function($a) { return [ $a[0], trim(substr($a, 1)) ]; },
+		array_filter(
+			file($filterFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES),
+			# remove comments
+			function($a) { return $a[0] != "#" && strlen($a) > 0; }
+		)
+	)
+);
+// echo "<pre>" . str_replace('<', '&lt;', print_r($filters, true)) . "</pre>";
+// die();
 
 $list = myglob($root ."/*", true);
 sort($list);
@@ -42,6 +73,8 @@ function endsWith($haystack, $needle) {
 function contains($haystack, $needle) {
 	return strpos($haystack, $needle) !== false;
 }
+
+echo "# <pre>crc32b:\n";
 
 foreach($list as $f) {
 	$fn = substr($f, strlen($root));
