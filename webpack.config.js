@@ -43,5 +43,10 @@ module.exports = {
 				loader: 'file-loader?name=[name]-[hash].[ext]'
 			}
 		]
-	}
+	},
+	optimization: {
+		splitChunks: {
+			chunks: 'all',
+		},
+	},
 };
