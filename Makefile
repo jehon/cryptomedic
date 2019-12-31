@@ -55,6 +55,7 @@ clean: deploy-unmount
 	$(call ensure_folder_empty,www/api/$(VAPI)/bootstrap/cache/)
 	$(call ensure_folder_empty,www/api/$(VAPI)/app/public)
 	$(call ensure_folder_empty,www/api/$(VAPI)/storage/framework/cache)
+	$(call ensure_folder_empty,www/api/$(VAPI)/storage/framework/cache/data)
 	$(call ensure_folder_empty,www/api/$(VAPI)/storage/framework/sessions)
 	$(call ensure_folder_empty,www/api/$(VAPI)/storage/framework/views)
 	$(call ensure_folder_empty,www/api/$(VAPI)/storage/logs/)
