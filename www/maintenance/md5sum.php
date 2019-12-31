@@ -11,10 +11,20 @@ set_time_limit(5 * 60);
 require_once(__DIR__ . "/../../config.php");
 require_once(__DIR__ . "/Database.php");
 
-$root = dirname(dirname(__DIR__));
+define("PRJ_ROOT", dirname(dirname(__DIR__)));
 
 const F_LOCAL = "local";
 const F_REMOTE = "remote";
+
+$debug = isset($_REQUEST['debug']);
+function debug($explain, $msg) {
+	global $debug;
+	if (!$debug) {
+		return;
+	}
+	echo "<pre>" . $explain . ": " . str_replace('<', '&lt;', print_r($msg, true)) . "</pre>";
+}
+
 $filter = $_REQUEST['filter'];
 if (!$filter) {
 	fatalError(400, "Should specify a filter");
@@ -23,7 +33,7 @@ if (!in_array($filter, [ F_LOCAL, F_REMOTE])) {
 	fatalError(400, "Invalid filter: $filter");
 }
 
-$filterFile = "$root/deploy-filter";
+$filterFile = PRJ_ROOT . "/deploy-filter";
 if (!file_exists($filterFile)) {
 	fatalError(500, "Filter file not found: $filterFile");
 }
@@ -32,13 +42,18 @@ $filters = array_map(
 	# normalize for fnmatch
 	function($a) { 
 		$m = $a[1];
-		if (strpos($m, "/") !== false) {
-			$m = str_replace("*", "[^\/]*", $m);
-		} else {
-			$m = str_replace("*", "[^\/]*", $m);
-			$m = "^(.*\/|)(?<name>" . $m . ")(\/[^\/]+|)$";
+		# We use ::slash:: to keep the "/" meaning for raw folder separation to the end
+		
+		# Translate * and ** into regex
+		$m = str_replace([ ".", "?", "**", "*", "::doublestar::", "::point::" ], 
+			[ "::point::", "(?<interrogation>.)", "::doublestar::", "(?<singlestart>[^::slash::]*)", "(?<doublestar>.*)", "\." ], $m);
+		if (strpos($m, "/") !== 0) {
+			# Anchor anywhere
+			$m = "(?<anchor>.*::slash::)$m";
 		}
-		return [ $a[0], $a[1], $m];
+		$m = str_replace([ "/", "::slash::" ], "\/", $m);
+
+		return [ $a[0], $a[1], "/^$m\$/"];
 	},
 	array_map(
 		# split to filter
@@ -50,87 +65,66 @@ $filters = array_map(
 		)
 	)
 );
-// echo "<pre>" . str_replace('<', '&lt;', print_r($filters, true)) . "</pre>";
-// die();
 
-$list = myglob($root ."/*", true);
-sort($list);
+debug("Raw filters", $filters);
 
-function startsWith($haystack, $needle) {
-	$length = strlen($needle);
-	return (substr($haystack, 0, $length) === $needle);
+if ($filter == "remote") {
+	$filters = array_filter($filters,
+		function($a) { return $a[0] == "P"; }
+	);
+// } else {
+// 	$filters = array_filter($filters,
+// 		function($a) { return $a[0] != "P"; }
+// 	);
 }
+debug("Post filter location", $filters);
 
-function endsWith($haystack, $needle) {
-	$length = strlen($needle);
-	if ($length == 0) {
-		return true;
-	}
+function getFiles($absPath) {
+	global $filters;
 
-	return (substr($haystack, -$length) === $needle);
-}
+	if ($handle = opendir($absPath)) {
+		/* Ceci est la façon correcte de traverser un dossier. */
+		while (false !== ($f = readdir($handle))) {
+			if ($f == "." || $f == "..") {
+				continue;
+			}
+			$fabs = $absPath . DIRECTORY_SEPARATOR . $f;
+			$frel = substr($fabs, strlen(PRJ_ROOT));
 
-function contains($haystack, $needle) {
-	return strpos($haystack, $needle) !== false;
-}
+			$keep = true;
+			$matchingTest = [];
+			foreach($filters as $filt) {
+				$match = preg_match($filt[2], $frel);
+				debug("TEST", $frel . ': ' . $filt[1] . ' ? ' . ($match ? 'Y' : 'n'));
+				$matchingTest = $filt;
+				if ($filt[0] == "P" && $match) {
+					$keep = false;
+				}
+				if ($filt[0] == "-" && $match) {
+					$keep = false;
+				}
+				if ($match) {
+					break;
+				}
+			}
+			if (!$keep) {
+				debug("SKIPPING", str_pad($frel, 100, '_') . " from '${matchingTest[1]}'");
+				continue;
+			}
 
-echo "# <pre>crc32b:\n";
-
-foreach($list as $f) {
-	$fn = substr($f, strlen($root));
-
-	## 
-	## Data to be protected
-	##
-
-	# Live folder
-	if (startsWith($fn, "/live/")) { continue; }
-
-	# Live config
-	if ($fn == "/config-site.php") { continue; }
-
-	# Some live storage
-	if (startsWith($fn, "/target/")) { continue; }
-
-	# Storage of Laravel
-	if (contains($fn, "/api/") && contains($fn, "/storage/")) { continue; }
-
-	if ($filter == 'remote') { 
-		##
-		## Protect old version of api
-		##
-		// if (startsWith($fn, "/www/api/v1.2/")) { continue; }
-	}
-
-	if ($filter == 'local') { 
-		
-		## 
-		## Data transcient (temporary)
-		##
-		if (contains($fn, "/tmp/")) { continue; }
-		if (contains($fn, "/temp/")) { continue; }
-		if (contains($fn, "/Temp/")) { continue; }
-		if (endsWith($fn, ".log")) { continue; }
-		
-		## 
-		## Data not necessary on production
-		##
-		if (startsWith($fn, "/live-for-test/")) { continue; }
-		if (contains($fn, "/.git/")) { continue; }
-		if (startsWith($fn, "/node_modules/")) { continue; }
-		if (startsWith($fn, "/documentation/")) { continue; }
-		if (contains($fn, "/tests/")) { continue; }
-		if (contains($fn, "/test/")) { continue; }
-		if (contains($fn, "/unused/")) { continue; }
-		if (startsWith($fn, "/conf")) {
-			if (contains($fn, "dev/")) { continue; }
-			if (endsWith($fn, "/base.sql")) { continue; }
+			if (is_dir($fabs)) {
+				getfiles($fabs);
+			} else {
+				echo \hash_file('crc32b',$fabs) . ": " . $frel . "\n";
+			}
 		}
-		if (startsWith($fn, "/backup")) { continue; }
+		closedir($handle);
+	} else {
+		fatalError(500, "Could not read: " . $absPath);
 	}
-
-	echo \hash_file('crc32b',$f) . ": " . $fn . "\n";
 }
+
+getFiles(PRJ_ROOT . "/www");
 
 ?>
 # done
