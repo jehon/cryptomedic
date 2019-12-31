@@ -202,7 +202,7 @@ node_modules/.dependencies: package.json package-lock.json
 	touch node_modules/.dependencies
 
 dependencies.composer.api: www/api/$(VAPI)/vendor/.dependencies
-www/api/$(VAPI)/vendor/.dependencies: www/api/$(VAPI)/composer.json www/api/$(VAPI)/composer.lock
+www/api/$(VAPI)/vendor/.dependencies: www/api/$(VAPI)/composer.json www/api/$(VAPI)/composer.lock target/structure-exists
 	$(call run_in_docker,"server","\
 		cd www/api/$(VAPI) \
 		&& composer install \
@@ -303,12 +303,12 @@ deploy-rsync:	deploy-host-key-test \
 		target/structure-exists \
 		dependencies \
 		build \
-		$(BACKUP_DIR)/Makefile
+		$(DEPLOY_MOUNT)/Makefile
 
 	rsync --recursive --itemize-changes --checksum \
 		--dry-run \
 		--filter='dir-merge /deploy-filter' \
-		--delete \
+		--delete --delete-excluded \
 		. $(DEPLOY_MOUNT)
 
 # deploy-backup-compare-with-online: $(BACKUP_DIR)/Makefile
