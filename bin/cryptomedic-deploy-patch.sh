@@ -51,7 +51,7 @@ sftp_exec() {
 			2>&1 \
 				| grep -v "Connected to" \
 				| grep -v "Couldn't create directory" \
-				| grep -v "sftp> " \
+				| grep -v "^sftp" \
 				| while read R ; do
 					echo "$R"
 					if [[ "$R" =~ "No such file or directory" ]]; then
@@ -59,7 +59,6 @@ sftp_exec() {
 						return 1
 					fi
 				done
-
 }
 
 sftp_put() {
