@@ -15,6 +15,7 @@
 + /licenses*
 + /config.php
 + /index.html
++ /deploy-filter
 
 # Required config is only databases prod files
 + /conf/
@@ -33,11 +34,11 @@
 
 # Protect: server-side files
 P *.log
-P config-site.php
-- live
-P live
-- target/
-P target/
-P www/api/*/storage
+P /config-site.php
+- /live
+P /live
+- /target/
+P /target/
+P /www/api/*/storage
 
 - /*
