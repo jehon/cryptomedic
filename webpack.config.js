@@ -17,6 +17,8 @@ fs.writeFileSync(__dirname + '/www/release_version.js', `window.application_vers
 fse.copy(__dirname + '/conf/refs/build.htaccess', __dirname + '/www/build/.htaccess');
 
 module.exports = {
+	// TODO: use $myconfig["debug"]
+	mode: 'production',
 	entry: { 
 		app: www + '/app.js',
 	},
