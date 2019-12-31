@@ -2,6 +2,7 @@
 
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const path = require('path');
 const fs = require('fs');
 const fse = require('fs-extra');
@@ -10,20 +11,23 @@ const www = path.resolve(__dirname, 'www');
 const build = 'build';
 const released_version = (new Date()).toISOString();
 
-fse.emptyDirSync(__dirname + '/www/build');
+// fse.emptyDirSync(__dirname + '/www/build');
 fs.writeFileSync(__dirname + '/www/release_version.txt', released_version);
 fs.writeFileSync(__dirname + '/www/release_version.js', `window.application_version = '${released_version}';`);
 fse.copy(__dirname + '/conf/refs/build.htaccess', __dirname + '/www/build/.htaccess');
 
 module.exports = {
+	// TODO: use $myconfig["debug"]
+	mode: 'production',
 	entry: { 
 		app: www + '/app.js',
 	},
 	output: {
-		path: www,
-		filename: `${build}/[name]-[chunkhash].js`
+		path: `${www}/${build}`,
+		filename: '[name]-[chunkhash].js'
 	},
 	plugins: [
+		new CleanWebpackPlugin(),
 		new HtmlWebpackPlugin({
 			template: www + '/static/index-original.html',
 			filename: www + '/static/index.html',
@@ -36,8 +40,13 @@ module.exports = {
 			{ test: /\.css$/, loader: 'style-loader!css-loader' },
 			{
 				test: /\.(eot|svg|ttf|woff|woff2)$/,
-				loader: `file-loader?name=${build}/[name]-[hash].[ext]`
+				loader: 'file-loader?name=[name]-[hash].[ext]'
 			}
 		]
-	}
+	},
+	optimization: {
+		splitChunks: {
+			chunks: 'all',
+		},
+	},
 };
