@@ -51,7 +51,7 @@ sftp_exec() {
 			2>&1 \
 				| grep -v "Connected to" \
 				| grep -v "Couldn't create directory" \
-				| grep -v "sftp> " \
+				| grep -v "^sftp" \
 				| while read R ; do
 					echo "$R"
 					if [[ "$R" =~ "No such file or directory" ]]; then
@@ -59,7 +59,6 @@ sftp_exec() {
 						return 1
 					fi
 				done
-
 }
 
 sftp_put() {
@@ -78,7 +77,10 @@ sftp_rm() {
 
 echo ""
 echo "Updating md5sum.php script [for real]"
-sftp_put www/maintenance/md5sum.php | sftp_exec
+(
+	sftp_put www/maintenance/md5sum.php
+	sftp_put deploy-filter
+) | sftp_exec
 
 echo "Getting the md5 from local"
 wget --quiet --content-on-error "http://localhost:5555/maintenance/md5sum.php?filter=local" -O "$TMP"deploy-local.txt
