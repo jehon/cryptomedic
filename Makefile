@@ -236,7 +236,7 @@ data-reset: target/docker-is-running
 			USE mysql; \
 			DROP SCHEMA IF EXISTS $(DBNAME); \
 			CREATE SCHEMA $(DBNAME); \
-			USE $(DBNAMe); \
+			USE $(DBNAME); \
 			GRANT ALL PRIVILEGES ON $(DBNAME)   TO $(DBUSER); \
 			GRANT ALL PRIVILEGES ON $(DBNAME).* TO $(DBUSER); \
 			SET PASSWORD FOR $(DBUSER) = PASSWORD('$(DBPASS)'); \
