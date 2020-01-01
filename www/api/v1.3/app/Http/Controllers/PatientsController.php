@@ -6,7 +6,6 @@ use App\Model\Patient;
 
 use DB;
 use Illuminate\Support\Facades\Request;
-use Illuminate\Support\Facades\Input;
 
 class PatientsController extends FicheController {
 	static public function getModelClass() {
@@ -14,7 +13,7 @@ class PatientsController extends FicheController {
 	}
 
 	public function store() {
-	    $data = Input::except('_type');
+	    $data = Request::except('_type');
 	    $data = Patient::cannonize($data);
 
 		// In case we create a patient, things are a bit more complicated!!!
@@ -27,7 +26,7 @@ class PatientsController extends FicheController {
 		      greatest(10000,
 		        (select i from (select (max(entryorder) + 1) as i from patients where entryyear = ? and entryorder BETWEEN 10000 AND 19999) as j )
 		      ),
-		  10000), ?)", [ Input::get("entryyear"), Input::get("entryyear"), Input::get("Name") ])
+		  10000), ?)", [ Request::input("entryyear"), Request::input("entryyear"), Request::input("Name") ])
 		|| abort(500, "Problem inserting and creating reference");
 
 		// TODO: how does Laravel get last_insert_id cleanly???

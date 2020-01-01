@@ -4,7 +4,6 @@ use App\Http\Controllers\Controller;
 use DB;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Request;
-use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Hash;
 use App\User;
 
@@ -29,7 +28,7 @@ class UsersController extends Controller {
 
 	// POST = create
 	public function store() {
-		$attributes = Input::except('_type');
+		$attributes = Request::except('_type');
 		$newObj = User::create($attributes);
 		if (!$newObj->id) {
 			abort(500, "Could not create the file");
@@ -39,7 +38,7 @@ class UsersController extends Controller {
 
 	// PUT / PATCH
 	public function update($id) {
- 		$attributes = Input::except('_type');
+ 		$attributes = Request::except('_type');
 
  		$obj = User::findOrFail($id);
 		foreach($attributes as $k => $v) {

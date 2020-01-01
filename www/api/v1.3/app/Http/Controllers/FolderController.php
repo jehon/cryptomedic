@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Model\Patient;
 use DB;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Request;
 
 class FolderController extends Controller {
@@ -75,7 +74,7 @@ class FolderController extends Controller {
 	}
 
 	public function createFile() {
-		$data = Input::except('_type');
+		$data = Request::except('_type');
 
 		$newObj = Patient::create($data);
 		if (!$newObj->id) {

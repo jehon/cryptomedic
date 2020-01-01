@@ -7,7 +7,6 @@ use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
-use Illuminate\Support\Facades\Input;
 use App\Http\Controllers\PriceController;
 use Route;
 
@@ -62,7 +61,7 @@ class AuthController extends Controller {
   }
 
   public function storeStatistics() {
-	$data = Input::all();
+	$data = Request::all();
 	// TODO
 	// $data[computer_id]
 	// $data[feature] = true / false

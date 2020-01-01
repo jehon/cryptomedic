@@ -3,7 +3,6 @@
 namespace App\Model;
 
 use Illuminate\Support\Facades\Request;
-use Illuminate\Support\Facades\Input;
 
 class Picture extends CryptomedicModel {
 	const DATA_PREFIX = "data:image/";

@@ -5,7 +5,6 @@ use App\Http\Controllers\FolderController;
 use DB;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Request;
-use Illuminate\Support\Facades\Input;
 
 use App\Model\Picture;
 
