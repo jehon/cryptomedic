@@ -1,3 +1,5 @@
+TODO: see in models if we use "Request::" or not (See Picture.php <- input should come from controller)
+
 [     ] Migrate read-only
 [     ] - reports
 [     ] - pseudo-menu
