@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use DB;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Request;
 
 abstract class CRUDController extends Controller
 {
@@ -22,7 +22,7 @@ abstract class CRUDController extends Controller
 
     // POST = create
 	public function store() {
-        $data = Input::all();
+        $data = Request::all();
         $m = static::getModelClass();
 
         $newObj = $m::create($data);
@@ -34,7 +34,7 @@ abstract class CRUDController extends Controller
 
 	// PUT / PATCH = modify
 	public function update($id) {
-		$data = Input::all();
+		$data = Request::all();
         $m = static::getModelClass();
 
         $obj = $m::updateWithArray($id, $data);

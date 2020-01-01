@@ -5,8 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use DB;
 use Illuminate\Http\Response;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Request;
 use App\Model\Price;
 
 class PricesController extends Controller {
@@ -16,8 +15,8 @@ class PricesController extends Controller {
 	}
 
 	// POST = create
-	public function store(Request $request) {
- 		$pivot = Input::get('pivot');
+	public function store() {
+ 		$pivot = Request::input('pivot');
 		$lastPrice = Price::where("dateto", null)->first();
 
 		if ($lastPrice->_editable) {
@@ -48,7 +47,7 @@ class PricesController extends Controller {
 
 	// PUT / PATCH
 	public function update($id) {
- 		$attributes = Input::except([ '_type', 'datefrom', 'dateto' ]);
+ 		$attributes = Request::except([ '_type', 'datefrom', 'dateto' ]);
 
  		$obj = Price::findOrFail($id);
  		if (!$obj->_editable) {
@@ -92,7 +91,7 @@ class PricesController extends Controller {
 	}
 
 	public function priceFields() {
-		$values = Input::all();
+		$values = Request::all();
 		var_dump($values);
 
 		$billFields = \App\Model\Bill::getTableColumnsList();
