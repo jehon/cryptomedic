@@ -1,0 +1,23 @@
+{
+	"root": true,
+	"extends": "eslint:recommended",
+	"env": {
+	  "node": true,
+	  "es6": true,
+	  "browser": true
+	},
+	"parserOptions": {
+	  "ecmaVersion": 2019,
+	  "sourceType": "module"
+	},
+	"rules": {
+	  "indent":             [ "error", "tab", { "SwitchCase": 1 } ],
+	  "linebreak-style":    [ "error", "unix" ],
+	  "quotes":             [ "error", "single" ],
+	  "semi":               [ "error", "always" ],
+	  "no-unused-vars":     [ "error", { "vars": "local", "argsIgnorePattern": "^_" }],
+	  "no-console":         [ "error", { "allow": ["warn", "error", "info", "assert" ] } ],
+	  "no-trailing-spaces": [ "error" ],
+	  "no-warning-comments": "off"
+	}
+}

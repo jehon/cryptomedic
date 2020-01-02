@@ -10,16 +10,16 @@
 			super();
 			// To hide the current html
 			this.attachShadow({ mode: 'open' });
-      
+
 			this[alreadyRun] = false;
 		}
 
-		static get properties() { return { 
-			'disabled': 'Boolean' 
+		static get properties() { return {
+			'disabled': 'Boolean'
 		};}
 
 		adapt() {
-			if (this.hasAttribute('disabled') || this.disabled) {    
+			if (this.hasAttribute('disabled') || this.disabled) {
 				// Reset
 				this[alreadyRun] = false;
 				return;
