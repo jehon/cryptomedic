@@ -38,6 +38,8 @@
     "karma": "latest",
     "karma-chrome-launcher": "latest",
     "karma-coverage": "latest",
+    "karma-coverage-istanbul-instrumenter": "^1.0.1",
+    "karma-coverage-istanbul-reporter": "^2.1.1",
     "karma-firefox-launcher": "latest",
     "karma-html-reporter": "latest",
     "karma-jasmine": "latest",
