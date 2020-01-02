@@ -39,7 +39,7 @@
 		<tr><td>All social level together</td><td>{{result.summary.sociallevel.total}}</td></tr>
 		<tr><td colspan="2" class="subheader">Where</td></tr>
 		<tr ng-repeat="c in centersList">
-			<td>@<jh-key-to-label value='{{c}}'></jh-key-to-label></td>
+			<td>@<jh-i18n value='{{c}}'></jh-i18n></td>
 			<td>{{result.summary.centers[c]}}</td>
 		</tr>
 		<tr><td>center unspecified</td><td>{{result.summary.centers.unspecified}}</td></tr>
