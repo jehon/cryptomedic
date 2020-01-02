@@ -1,9 +1,12 @@
 /* eslint-env node */
 /* eslint no-console: off */
 
+const path = require('path');
 const fse = require('fs-extra');
 fse.emptyDirSync(__dirname + '/target/js');
 fse.emptyDirSync(__dirname + '/target/unit');
+
+// https://blog.cepharum.de/en/post/natively-unit-testing-es6-modules-in-browser-including-coverage.html
 
 module.exports = function(config) {
 	var configuration = {
@@ -17,7 +20,7 @@ module.exports = function(config) {
 
 		reporters : [
 			'progress',
-			'coverage',
+			'coverage-istanbul',
 			'html'
 		],
 
@@ -38,7 +41,7 @@ module.exports = function(config) {
 			'static/elements/x-requestor-crud.js',
 			'static/elements/x-file.js',
 			'static/elements/x-file-bill.js',
-			'static/!(elements)/**/*.js',
+			'static/!(elements)/**/!(jh-i18n.js)',
 			'static/elements/*.js',
 			'../tests/unitjs/*.js',
 			{ pattern: 'static/**',                        included: false, served: true, watched: false },
@@ -60,13 +63,22 @@ module.exports = function(config) {
 		},
 
 		preprocessors: {
-			'static/**/*.js': [ 'coverage' ],
+			'static/**/*.js': [ 'karma-coverage-istanbul-instrumenter' ],
+		},
+
+		coverageIstanbulInstrumenter: {
+			esModules: true
 		},
 
 		coverageReporter: {
 			type :  'lcov',
 			dir :   __dirname + '/target/',
 			subdir: 'unit/'
+		},
+
+		coverageIstanbulReporter: {
+			reports: [ 'html', 'text' ],
+			dir: path.join( __dirname, 'target/js/htmlInstanbul' ),
 		},
 
 		htmlReporter: {
