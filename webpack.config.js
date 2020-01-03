@@ -19,7 +19,7 @@ fse.copy(__dirname + '/conf/refs/build.htaccess', __dirname + '/www/build/.htacc
 module.exports = {
 	// TODO: use $myconfig["debug"]
 	mode: 'production',
-	entry: { 
+	entry: {
 		app: www + '/app.js',
 	},
 	output: {
@@ -41,6 +41,19 @@ module.exports = {
 			{
 				test: /\.(eot|svg|ttf|woff|woff2)$/,
 				loader: 'file-loader?name=[name]-[hash].[ext]'
+			},
+			{
+				test: /\.js$/,
+				exclude: /node_modules/,
+				loader: 'babel-loader',
+				options: {
+					plugins: [
+						[ '@babel/plugin-proposal-decorators', { decoratorsBeforeExport: true } ],
+						'@babel/plugin-proposal-optional-chaining',
+						'@babel/plugin-proposal-nullish-coalescing-operator',
+						'@babel/plugin-proposal-class-properties'
+					]
+				}
 			}
 		]
 	},
