@@ -22,7 +22,7 @@ before_install:
   - docker-compose --version
 
 install:
-  - make init-computer
+  - make setup-computer
   # Start docker-compose stack
   # This is needed by the install (composer.phar) part
   - make start

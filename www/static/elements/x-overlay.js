@@ -2,7 +2,7 @@
 
 'use strict';
 
-const XOverlay = (function() {
+(function() {
 	const overlayDiv = Symbol('overlayDiv');
 
 	class XOverlay extends JHElement {
@@ -110,6 +110,4 @@ const XOverlay = (function() {
 	}
 
 	window.customElements.define('x-overlay', XOverlay);
-
-	return XOverlay;
 })();

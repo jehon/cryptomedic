@@ -7,11 +7,7 @@
 
 		attributeChangedCallback(attributeName, oldValue, newValue) {
 			if (newValue) {
-				try {
-					this.innerHTML = newValue.split(/(?=[A-Z]+[a-z])/).join(' ');
-				} catch (_e) {
-					this.innerHTML = newValue;
-				}
+				this.innerHTML = newValue.split(/(?=[A-Z]+[a-z])/).join(' ');
 			} else {
 				this.innerHTML = '';
 			}
