@@ -65,9 +65,9 @@ clean: deploy-unmount
 	rm -f "www/release_version.js"
 	rm -f "www/release_version.txt"
 
-init: target/structure-exists
+setup: setup-structure
 
-init-computer: deploy-host-key-test
+setup-computer: deploy-host-key-test
 	mkdir -p ~/.ssh/
 	@if grep $(DEPLOY_HOST) $(SSH_KNOWN_HOSTS) >/dev/null; then \
 		echo "Removing old key"; \
@@ -76,10 +76,10 @@ init-computer: deploy-host-key-test
 	echo "Installing the key"
 	cat ovh.key >> $(SSH_KNOWN_HOSTS)
 
-deploy-host-key-update:
+deploy-host-key-do-update:
 	ssh-keyscan -t ssh-rsa $(DEPLOY_HOST) > ovh.key
 
-deploy-host-key-test: 
+deploy-host-key-check: 
 	@REMOTE="$(shell ssh-keyscan -t ssh-rsa $(DEPLOY_HOST) 2>/dev/null )"; \
 	STORED="$(shell cat ovh.key)"; \
 	if [ "$$REMOTE" != "$$STORED" ]; then \
@@ -89,8 +89,8 @@ deploy-host-key-test:
 		echo "Key is still the same, good!"; \
 	fi
 
-start: target/structure-exists \
-		target/docker-is-running \
+start: setup-structure \
+		docker-started \
 		dependencies \
 		build \
 		data-reset
@@ -105,6 +105,8 @@ start: target/structure-exists \
 	# let the time to all services to be up and running
 	sleep 5s
 
+.PHONY: docker-started
+docker-started: target/docker-is-running
 target/docker-is-running:
 	@$(call run_in_docker,"server","true") 2>/dev/null \
 		|| $(DOCKERCOMPOSE) up --force-recreate -d
@@ -135,17 +137,17 @@ lint:
 
 test: data-reset test-api test-unit test-e2e test-style
 
-test-api: target/docker-is-running www/api/$(VAPI)/vendor/.dependencies
+test-api: docker-started dependencies-api
 	$(call run_in_docker,"server","/app/bin/dev-phpunit.sh")
 
-test-api-commit: target/docker-is-running www/api/$(VAPI)/vendor/.dependencies
+test-api-commit: docker-started depencencies.api
 	$(call run_in_docker,"server","/app/bin/dev-phpunit.sh commit")
 
-test-unit: target/docker-is-running node_modules/.dependencies build
+test-unit: docker-started dependencies-node build
 	npm run --silent test-unit
 
-test-e2e: target/e2e/.tested node_modules/.dependencies build
-target/e2e/.tested: target/docker-is-running
+test-e2e: dependencies-node build
+target/e2e/.tested: docker-started
 	npm run --silent test-e2e
 	touch target/e2e/.tested
 
@@ -160,10 +162,10 @@ style-update-references:
 #
 # Deploy command
 #
-deploy: target/docker-is-running
+deploy: docker-started
 	bin/cryptomedic-deploy-patch.sh commit
 
-deploy-test: target/docker-is-running
+deploy-test: docker-started
 	bin/cryptomedic-deploy-patch.sh
 
 #
@@ -177,6 +179,8 @@ logs:
 # Install > Structure
 #
 #
+.PHONY: setup-structure
+setup-structure: target/structure-exists
 target/structure-exists:
 	mkdir -p    target/
 	mkdir -p    live/
@@ -187,22 +191,21 @@ target/structure-exists:
 	mkdir -p    www/api/$(VAPI)/storage/framework/views
 	mkdir -p    www/api/$(VAPI)/storage/logs/
 	touch       www/api/$(VAPI)/storage/logs/laravel.log
-	touch 		target/structure-exists
+	touch       target/structure-exists
 
 #
 #
 # Install > dependencies
 #
 #
-dependencies: dependencies.node \
-	dependencies.composer.api 
+dependencies: dependencies-node dependencies-api 
 
-dependencies.node: node_modules/.dependencies
+dependencies-node: node_modules/.dependencies
 node_modules/.dependencies: package.json package-lock.json
 	npm ci
 	touch node_modules/.dependencies
 
-dependencies.composer.api: www/api/$(VAPI)/vendor/.dependencies
+dependencies-api: www/api/$(VAPI)/vendor/.dependencies
 www/api/$(VAPI)/vendor/.dependencies: www/api/$(VAPI)/composer.json www/api/$(VAPI)/composer.lock target/structure-exists
 	$(call run_in_docker,"server","\
 		cd www/api/$(VAPI) \
@@ -218,7 +221,8 @@ www/api/$(VAPI)/vendor/.dependencies: www/api/$(VAPI)/composer.json www/api/$(VA
 #
 build: www/static/index.html
 
-www/static/index.html: dependencies.node package.json package-lock.json www/app.js
+www/static/index.html: dependencies-node package.json package-lock.json \
+		www/app.js www/static/index-original.html
 	npm run build
 
 
@@ -230,7 +234,7 @@ www/static/index.html: dependencies.node package.json package-lock.json www/app.
 database-backup:
 	$(call run_in_docker,"mysql", "mysqldump -u root -p$(DBROOTPASS) $(DBNAME)") > $(DB_BASE)
 
-data-reset: target/docker-is-running
+data-reset: docker-started
 	# database
 	$(call run_in_docker,"mysql"," \
 		mysql -u root -p$(DBROOTPASS) --database=mysql -e \" \
@@ -294,14 +298,13 @@ deploy-unmount:
 		fusermount -u $(DEPLOY_MOUNT); \
 	fi
 
-deploy-backup: $(BACKUP_DIR)/Makefile
-$(BACKUP_DIR)/Makefile: $(DEPLOY_MOUNT)/Makefile
+deploy-backup: deploy-mount
 	rsync --progress --recursive --times --delete \
 		--exclude target/ \
 		$(DEPLOY_MOUNT)/ $(BACKUP_DIR)
 
 deploy-rsync:	deploy-host-key-test \
-		target/structure-exists \
+		setup-structure \
 		dependencies \
 		build \
 		$(DEPLOY_MOUNT)/Makefile
