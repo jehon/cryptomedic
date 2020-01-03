@@ -67,7 +67,7 @@ clean: deploy-unmount
 
 setup: setup-structure
 
-setup-computer: deploy-host-key-test
+setup-computer: deploy-host-key-check
 	mkdir -p ~/.ssh/
 	@if grep $(DEPLOY_HOST) $(SSH_KNOWN_HOSTS) >/dev/null; then \
 		echo "Removing old key"; \
