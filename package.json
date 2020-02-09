@@ -66,8 +66,8 @@
   },
   "scripts": {
     "build": "webpack",
-    "test-unit": "karma start --single-run",
-    "test-unit-continuously": "karma start",
+    "test-unit": "karma start tests/unitjs/karma.conf.js --single-run",
+    "test-unit-continuously": "karma start tests/unitjs/karma.conf.js",
     "test-e2e": "nightwatch",
     "test-e2e-chrome": "nightwatch -e chrome",
     "test-style": "jasmine --config=tests/style/jasmine.json",
