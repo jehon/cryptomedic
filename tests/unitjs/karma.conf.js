@@ -3,14 +3,15 @@
 
 const path = require('path');
 const fse = require('fs-extra');
-fse.emptyDirSync(__dirname + '/target/js');
-fse.emptyDirSync(__dirname + '/target/unit');
+const root = path.dirname(path.dirname(__dirname));
+fse.emptyDirSync(path.join(root, '/target/js'));
+fse.emptyDirSync(path.join(root, '/target/unit'));
 
 // https://blog.cepharum.de/en/post/natively-unit-testing-es6-modules-in-browser-including-coverage.html
 
 module.exports = function(config) {
 	var configuration = {
-		basePath : 'www/',
+		basePath : path.join(root, 'www/'),
 
 		frameworks : [
 			'jasmine-es6',
@@ -78,11 +79,11 @@ module.exports = function(config) {
 
 		coverageIstanbulReporter: {
 			reports: [ 'html', 'text' ],
-			dir: path.join( __dirname, 'target/js/htmlInstanbul' ),
+			dir: path.join(root, 'target/js/htmlInstanbul' ),
 		},
 
 		htmlReporter: {
-			outputDir: __dirname + '/target/js/html/',
+			outputDir: path.join(root, '/target/js/html/'),
 			//   // templatePath: '../tmp/jasmine_template.html'
 		},
 
