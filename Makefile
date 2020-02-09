@@ -143,7 +143,7 @@ test-api: docker-started dependencies-api
 test-api-commit: docker-started depencencies.api
 	$(call run_in_docker,"server","/app/bin/dev-phpunit.sh commit")
 
-test-unit: docker-started dependencies-node build
+test-unit: dependencies-node build
 	npm run --silent test-unit
 
 test-e2e: dependencies-node build
