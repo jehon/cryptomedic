@@ -206,7 +206,7 @@ node_modules/.dependencies: package.json package-lock.json
 	touch node_modules/.dependencies
 
 dependencies-api: www/api/$(VAPI)/vendor/.dependencies
-www/api/$(VAPI)/vendor/.dependencies: www/api/$(VAPI)/composer.json www/api/$(VAPI)/composer.lock target/structure-exists
+www/api/$(VAPI)/vendor/.dependencies: www/api/$(VAPI)/composer.json www/api/$(VAPI)/composer.lock target/structure-exists docker-started
 	$(call run_in_docker,"server","\
 		cd www/api/$(VAPI) \
 		&& composer install \
