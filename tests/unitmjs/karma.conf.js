@@ -11,7 +11,7 @@ fse.emptyDirSync(path.join(root, '/target/munit'));
 
 module.exports = function (config) {
 	const configuration = {
-		basePath: path.join(root, 'www/'),
+		basePath: root,
 
 		frameworks: [
 			// 'jasmine-es6',
@@ -26,12 +26,14 @@ module.exports = function (config) {
 		],
 
 		files: [
-			'../node_modules/karma-read-json/karma-read-json.js',
-			'../node_modules/bootstrap/dist/css/bootstrap.min.css',
-			{ pattern: '../tests/unitmjs/*-test.js', type: 'module' },
-			{ pattern: '../tests/**', type: 'module', included: false },
-			{ pattern: 'static/**/*', included: false },
-			{ pattern: '../node_modules/**/*', included: false, watched: false },
+			'node_modules/karma-read-json/karma-read-json.js',
+			'node_modules/bootstrap/dist/css/bootstrap.min.css',
+			{ pattern: 'tests/unitmjs/*-test.js', type: 'module' },
+			{ pattern: 'tests/unitmjs/**', included: false },
+			{ pattern: 'tests/resources/**', included: false },
+			{ pattern: 'www/api/**/*', included: false, watched: false },
+			{ pattern: 'www/**/*', included: false },
+			{ pattern: 'node_modules/**/*', included: false, watched: false },
 			{ pattern: '**/*', included: false, watched: false },
 		],
 
@@ -51,7 +53,7 @@ module.exports = function (config) {
 		},
 
 		preprocessors: {
-			'static/**/*.js': ['karma-coverage-istanbul-instrumenter'],
+			'www/**/*.js': ['karma-coverage-istanbul-instrumenter'],
 		},
 
 		coverageIstanbulInstrumenter: {
@@ -60,7 +62,7 @@ module.exports = function (config) {
 
 		coverageReporter: {
 			type: 'lcov',
-			dir: __dirname + '/target/',
+			dir: path.join(root, '/target/'),
 			subdir: 'munit/'
 		},
 
@@ -74,10 +76,10 @@ module.exports = function (config) {
 			//   // templatePath: '../tmp/jasmine_template.html'
 		},
 
-		proxies: {
-			'/static/': '/base/static/',
-			'/elements/': '/base/static/elements/',
-		},
+		// proxies: {
+		// 	'/static/': '/base/static/',
+		// 	'/elements/': '/base/static/elements/',
+		// },
 	};
 
 	config.set(configuration);
