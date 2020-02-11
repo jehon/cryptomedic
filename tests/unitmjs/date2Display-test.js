@@ -1,5 +1,5 @@
 
-import date2Display, { Invalid } from '/base/static/functions/date2Display.js';
+import date2Display, { Invalid } from '../../www/static/functions/date2Display.js';
 
 describe('date2Display-test', function () {
 	it('should treat empty', function () {
