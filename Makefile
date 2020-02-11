@@ -145,6 +145,7 @@ test-api-commit: docker-started depencencies.api
 
 test-unit: dependencies-node build
 	npm run --silent test-unit
+	npm run --silent test-unit-mjs
 
 test-e2e: dependencies-node build
 target/e2e/.tested: docker-started

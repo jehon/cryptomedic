@@ -1,207 +1,213 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Cryptomedic</title>
-    <meta charset='utf-8'>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <script>
-      window.Polymer = {
-        useNativeCSSProperties: true
-      };
-	</script>
-	<script nomodule>
-		// We need a browser that support modules
-		window.location.href = '/static/upgrade.html';
-	</script>
+<head>
+  <title>Cryptomedic</title>
+  <meta charset='utf-8'>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Catch errors -->
-	<script src="/release_version.js"></script>
-	<script src="https://cdn.ravenjs.com/3.22.0/raven.min.js" crossorigin="anonymous"></script>
+  <script>
+    window.Polymer = {
+      useNativeCSSProperties: true
+    };
+  </script>
+  <script nomodule>
+    // We need a browser that support modules
+    window.location.href = '/static/upgrade.html';
+  </script>
 
-    <!-- Dynamic imports -->
-<% for (var css in htmlWebpackPlugin.files.css) { %>
-	<link href="<%= htmlWebpackPlugin.files.css[css] %>" rel="stylesheet">
-<% } %>
-<% for (var chunk in htmlWebpackPlugin.files.chunks) { %>
-	<script src="<%= htmlWebpackPlugin.files.chunks[chunk].entry %>"></script>
-<% } %>
+  <!-- Catch errors -->
+  <script src="/release_version.js"></script>
+  <script src="https://cdn.ravenjs.com/3.22.0/raven.min.js" crossorigin="anonymous"></script>
 
-	<!-- - - - - - - - - - - - - -->
-    <!-- JS - Redux Store        -->
-    <!-- - - - - - - - - - - - - -->
-    <script type='text/javascript' src='../static/state/store.js'></script>
+  <!-- Dynamic imports -->
+  <% for (var css in htmlWebpackPlugin.files.css) { %>
+  <link href="<%= htmlWebpackPlugin.files.css[css] %>" rel="stylesheet">
+  <% } %>
+  <% for (var chunk in htmlWebpackPlugin.files.chunks) { %>
+  <script src="<%= htmlWebpackPlugin.files.chunks[chunk].entry %>"></script>
+  <% } %>
 
-    <script type='text/javascript' src='../static/js/bugreporting.js'></script>
+  <!-- - - - - - - - - - - - - -->
+  <!-- JS - Redux Store        -->
+  <!-- - - - - - - - - - - - - -->
+  <script type='text/javascript' src='../static/state/store.js'></script>
 
-    <!-- - - - - - - - - - - - - -->
-    <!-- CSS - custom            -->
-    <!-- - - - - - - - - - - - - -->
-    <link rel="stylesheet" type="text/css" href="../static/css/application.css">
+  <script type='text/javascript' src='../static/js/bugreporting.js'></script>
 
-    <!-- - - - - - - - - - - - - -->
-    <!-- JS - custom             -->
-    <!-- - - - - - - - - - - - - -->
-    <script type='text/javascript' src='../static/js/start.js'></script>
+  <!-- - - - - - - - - - - - - -->
+  <!-- CSS - custom            -->
+  <!-- - - - - - - - - - - - - -->
+  <link rel="stylesheet" type="text/css" href="../static/css/application.css">
 
-    <script type='text/javascript' src='../static/functions/date2CanonicString.js'></script>
-    <script type='text/javascript' src='../static/functions/date2Display.js'></script>
-	<script type='text/javascript' src='../static/functions/nullify.js'></script>
+  <!-- - - - - - - - - - - - - -->
+  <!-- JS - custom             -->
+  <!-- - - - - - - - - - - - - -->
+  <script type='text/javascript' src='../static/js/start.js'></script>
 
-	<script type='text/javascript' src='../static/objects/exceptions.js'></script>
-    <script type='text/javascript' src='../static/objects/timedMap.js'></script>
-    <script type='text/javascript' src='../static/objects/twoColumns.js'></script>
+  <script type='text/javascript' src='../static/functions/date2CanonicString.js'></script>
+  <script type='text/javascript' src='../static/functions/date2Display.js'></script>
+  <script type='text/javascript' src='../static/functions/nullify.js'></script>
 
-    <script type='text/javascript' src='../static/js/amd_stats.js'></script>
-    <script type='text/javascript' src='../static/js/calculations.js'></script>
-    <script type='text/javascript' src='../static/js/form.js'></script>
-    <script type='text/javascript' src='../static/js/goThere.js'></script>
-    <script type='text/javascript' src='../static/js/prefs.js'></script>
-    <script type='text/javascript' src='../static/js/template.js'></script>
-    <script type='text/javascript' src='../static/js/getDataService.js'></script>
+  <script type='text/javascript' src='../static/objects/exceptions.js'></script>
+  <script type='text/javascript' src='../static/objects/timedMap.js'></script>
+  <script type='text/javascript' src='../static/objects/twoColumns.js'></script>
 
-    <script type='text/javascript' src='../static/models/0CRUD.js'></script>
-    <script type='text/javascript' src='../static/models/Price.js'></script>
+  <script type='text/javascript' src='../static/js/amd_stats.js'></script>
+  <script type='text/javascript' src='../static/js/calculations.js'></script>
+  <script type='text/javascript' src='../static/js/form.js'></script>
+  <script type='text/javascript' src='../static/js/goThere.js'></script>
+  <script type='text/javascript' src='../static/js/prefs.js'></script>
+  <script type='text/javascript' src='../static/js/template.js'></script>
+  <script type='text/javascript' src='../static/js/getDataService.js'></script>
 
-    <script type='text/javascript' src='../static/models/0FolderPage.js'></script>
-    <script type='text/javascript' src='../static/models/0PatientRelated.js'></script>
-    <script type='text/javascript' src='../static/models/Folder.js'></script>
-    <script type='text/javascript' src='../static/models/Appointment.js'></script>
-    <script type='text/javascript' src='../static/models/Bill.js'></script>
-    <script type='text/javascript' src='../static/models/ClubFoot.js'></script>
-    <script type='text/javascript' src='../static/models/OtherConsult.js'></script>
-    <script type='text/javascript' src='../static/models/Patient.js'></script>
-    <script type='text/javascript' src='../static/models/Payment.js'></script>
-    <script type='text/javascript' src='../static/models/Picture.js'></script>
-    <script type='text/javascript' src='../static/models/RicketConsult.js'></script>
-    <script type='text/javascript' src='../static/models/Surgery.js'></script>
+  <script type='text/javascript' src='../static/models/0CRUD.js'></script>
+  <script type='text/javascript' src='../static/models/Price.js'></script>
 
-    <script type='text/javascript' src='../static/controllers/ctrl_allgraphics.js'></script>
-    <script type='text/javascript' src='../static/controllers/ctrl_file_appointment.js'></script>
-    <script type='text/javascript' src='../static/controllers/ctrl_file_bill.js'></script>
-    <script type='text/javascript' src='../static/controllers/ctrl_folder.js'></script>
-    <script type='text/javascript' src='../static/controllers/ctrl_graphic.js'></script>
-    <script type='text/javascript' src='../static/controllers/ctrl_home.js'></script>
-    <script type='text/javascript' src='../static/controllers/ctrl_reports.js'></script>
-    <script type='text/javascript' src='../static/controllers/ctrl_search.js'></script>
-    <script type='text/javascript' src='../static/controllers/ctrl_users.js'></script>
-    <script type='text/javascript' src='../static/controllers/ctrl_prices.js'></script>
-    <script type='text/javascript' src='../static/controllers/mainApp.js'></script>
+  <script type='text/javascript' src='../static/models/0FolderPage.js'></script>
+  <script type='text/javascript' src='../static/models/0PatientRelated.js'></script>
+  <script type='text/javascript' src='../static/models/Folder.js'></script>
+  <script type='text/javascript' src='../static/models/Appointment.js'></script>
+  <script type='text/javascript' src='../static/models/Bill.js'></script>
+  <script type='text/javascript' src='../static/models/ClubFoot.js'></script>
+  <script type='text/javascript' src='../static/models/OtherConsult.js'></script>
+  <script type='text/javascript' src='../static/models/Patient.js'></script>
+  <script type='text/javascript' src='../static/models/Payment.js'></script>
+  <script type='text/javascript' src='../static/models/Picture.js'></script>
+  <script type='text/javascript' src='../static/models/RicketConsult.js'></script>
+  <script type='text/javascript' src='../static/models/Surgery.js'></script>
 
-    <!-- - - - - - - - - - - - - -->
-    <!-- HTML Element - custom   -->
-    <!-- - - - - - - - - - - - - -->
-    <!-- <link rel="import" href="../static/elements/authorized.html"> -->
+  <script type='text/javascript' src='../static/controllers/ctrl_allgraphics.js'></script>
+  <script type='text/javascript' src='../static/controllers/ctrl_file_appointment.js'></script>
+  <script type='text/javascript' src='../static/controllers/ctrl_file_bill.js'></script>
+  <script type='text/javascript' src='../static/controllers/ctrl_folder.js'></script>
+  <script type='text/javascript' src='../static/controllers/ctrl_graphic.js'></script>
+  <script type='text/javascript' src='../static/controllers/ctrl_home.js'></script>
+  <script type='text/javascript' src='../static/controllers/ctrl_reports.js'></script>
+  <script type='text/javascript' src='../static/controllers/ctrl_search.js'></script>
+  <script type='text/javascript' src='../static/controllers/ctrl_users.js'></script>
+  <script type='text/javascript' src='../static/controllers/ctrl_prices.js'></script>
+  <script type='text/javascript' src='../static/controllers/mainApp.js'></script>
 
-    <script type='text/javascript' src="../static/elements/jh-element.js"></script>
-    <script type='text/javascript' src="../static/elements/x-form.js"></script>
-    <script type='text/javascript' src="../static/elements/x-overlay.js"></script>
-    <script type='text/javascript' src="../static/elements/x-waiting.js"></script>
-    <script type='text/javascript' src="../static/elements/x-waiting-folder.js"></script>
-    <script type='text/javascript' src="../static/elements/x-requestor.js"></script>
-    <script type='text/javascript' src="../static/elements/x-requestor-crud.js"></script>
-    <script type='text/javascript' src="../static/js/cryptomedic-data-service.js"></script>
+  <!-- - - - - - - - - - - - - -->
+  <!-- HTML Element - custom   -->
+  <!-- - - - - - - - - - - - - -->
+  <!-- <link rel="import" href="../static/elements/authorized.html"> -->
 
-    <script type='text/javascript' src="../static/elements/jh-authorized.js"></script> <!-- Currently only an object -->
-    <script type='text/javascript' src="../static/elements/jh-codage.js"></script>
-    <script type='text/javascript' src="../static/elements/jh-script.js"></script>
-    <script type='text/javascript' src="../static/elements/block-bill-category.js"></script>
-    <script type='text/javascript' src="../static/elements/block-bill-line.js"></script>
-    <script type='text/javascript' src="../static/elements/edit-price.js"></script>
-    <script type='text/javascript' src="../static/elements/x-inline.js"></script>
-    <script type='text/javascript' src="../static/elements/x-input-date.js"></script>
-    <script type='text/javascript' src="../static/elements/x-input-picture.js"></script>
-    <script type='text/javascript' src="../static/elements/x-login-status.js"></script>
-    <script type='text/javascript' src="../static/elements/x-patient-related.js"></script>
-    <script type='text/javascript' src="../static/elements/x-read.js"></script>
-    <script type='text/javascript' src="../static/elements/x-read-boolean.js"></script>
-    <script type='text/javascript' src="../static/elements/x-write.js"></script>
-    <script type='text/javascript' src="../static/elements/x-write-list.js"></script>
+  <script type='text/javascript' src="../static/elements/jh-element.js"></script>
+  <script type='text/javascript' src="../static/elements/x-form.js"></script>
+  <script type='text/javascript' src="../static/elements/x-overlay.js"></script>
+  <script type='text/javascript' src="../static/elements/x-waiting.js"></script>
+  <script type='text/javascript' src="../static/elements/x-waiting-folder.js"></script>
+  <script type='text/javascript' src="../static/elements/x-requestor.js"></script>
+  <script type='text/javascript' src="../static/elements/x-requestor-crud.js"></script>
+  <script type='text/javascript' src="../static/js/cryptomedic-data-service.js"></script>
 
-    <script type='text/javascript' src="../static/elements/x-file.js"></script>
-    <script type='text/javascript' src="../static/elements/x-file-bill.js"></script>
-    <script type='text/javascript' src="../static/elements/x-file-bill-summary.js"></script>
-  </head>
-  <body ng-app="app_main" ng-controller="ctrl" id="ng-app" xxx-fullbleed xxx-unresolved>
-    <!--  Navigation bar -->
-    <nav class="navbar navbar-default navbar-static-top" role="navigation">
-      <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header" style='width: 100%;'>
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#menuMain">
-            <span class="sr-only">Toggle navigation</span>
-          </button>
-          <ul class="nav navbar-nav navbar-right">
-            <li>
-              <a id='menu_home' href="#/home" class="navbar-link">
-                <jh-authorized ng-if="isAuthorized('application.open', authorizedList)">
-                  <img src="../static/img/home.gif" height="20px"/>
-                  Home
-                </jh-authorized>
-              </a>
-            </li>
-            <li><a id='menu_search' href="#/search" class="navbar-link">
+  <script type='text/javascript' src="../static/elements/jh-authorized.js"></script> <!-- Currently only an object -->
+  <script type='text/javascript' src="../static/elements/jh-codage.js"></script>
+  <script type='text/javascript' src="../static/elements/jh-script.js"></script>
+  <script type='text/javascript' src="../static/elements/block-bill-category.js"></script>
+  <script type='text/javascript' src="../static/elements/block-bill-line.js"></script>
+  <script type='text/javascript' src="../static/elements/edit-price.js"></script>
+  <script type='text/javascript' src="../static/elements/x-inline.js"></script>
+  <script type='text/javascript' src="../static/elements/x-input-date.js"></script>
+  <script type='text/javascript' src="../static/elements/x-input-picture.js"></script>
+  <script type='text/javascript' src="../static/elements/x-login-status.js"></script>
+  <script type='text/javascript' src="../static/elements/x-patient-related.js"></script>
+  <script type='text/javascript' src="../static/elements/x-read.js"></script>
+  <script type='text/javascript' src="../static/elements/x-read-boolean.js"></script>
+  <script type='text/javascript' src="../static/elements/x-write.js"></script>
+  <script type='text/javascript' src="../static/elements/x-write-list.js"></script>
+
+  <script type='text/javascript' src="../static/elements/x-file.js"></script>
+  <script type='text/javascript' src="../static/elements/x-file-bill.js"></script>
+  <script type='text/javascript' src="../static/elements/x-file-bill-summary.js"></script>
+</head>
+
+<body ng-app="app_main" ng-controller="ctrl" id="ng-app" xxx-fullbleed xxx-unresolved>
+  <!--  Navigation bar -->
+  <nav class="navbar navbar-default navbar-static-top" role="navigation">
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header" style='width: 100%;'>
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#menuMain">
+          <span class="sr-only">Toggle navigation</span>
+        </button>
+        <ul class="nav navbar-nav navbar-right">
+          <li>
+            <a id='menu_home' href="#/home" class="navbar-link">
+              <jh-authorized ng-if="isAuthorized('application.open', authorizedList)">
+                <img src="../static/img/home.gif" height="20px" />
+                Home
+              </jh-authorized>
+            </a>
+          </li>
+          <li><a id='menu_search' href="#/search" class="navbar-link">
               <jh-authorized ng-if="isAuthorized('folder.read', authorizedList)">
-                <img src="../static/img/patientsSearch.gif" height="20px"/>
+                <img src="../static/img/patientsSearch.gif" height="20px" />
                 Search a patient
               </jh-authorized>
             </a></li>
-            <li><a id='menu_consults' href="#/reports/consultations" class="navbar-link">
+          <li><a id='menu_consults' href="#/reports/consultations" class="navbar-link">
               <jh-authorized ng-if="isAuthorized('planning.execute', authorizedList)">
-                <img src="../static/img/consultOfDay.gif" height="20px"/>
+                <img src="../static/img/consultOfDay.gif" height="20px" />
                 Consults of the day
               </jh-authorized>
             </a></li>
-            <li><a id='bug_reporting' href="javascript:bug_reporting()" class="navbar-link">
-              <img src="../static/img/bug.jpeg"/>
+          <li><a id='bug_reporting' href="javascript:bug_reporting()" class="navbar-link">
+              <img src="../static/img/bug.jpeg" />
               Bug
             </a></li>
-            <li><p class="navbar-text">
-                <x-login-status></x-login-status>
-            </p></li>
-            <li class="dropdown">
-              <a id='menu_more' href="javascript:" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                More<span class="caret"></span>
-              </a>
-              <ul class="dropdown-menu">
-                <li><a id='menu_users'  href='#/users'>
+          <li>
+            <p class="navbar-text">
+              <x-login-status></x-login-status>
+            </p>
+          </li>
+          <li class="dropdown">
+            <a id='menu_more' href="javascript:" class="dropdown-toggle" data-toggle="dropdown" role="button"
+              aria-haspopup="true" aria-expanded="false">
+              More<span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+              <li><a id='menu_users' href='#/users'>
                   <jh-authorized ng-if="isAuthorized('users.manage', authorizedList)">
-                    <img src="../static/img/users.png" height="20px"/>
+                    <img src="../static/img/users.png" height="20px" />
                     Users
                   </jh-authorized>
                 </a></li>
-                <li><a id='menu_matrix' ng-href='{{apiUrl("/admin/securityMatrix")}}'>
+              <li><a id='menu_matrix' ng-href='{{apiUrl("/admin/securityMatrix")}}'>
                   <jh-authorized ng-if="isAuthorized('admin.securityMatrix', authorizedList)">
-                    <img src="../static/img/matrix.png" height="20px"/>
+                    <img src="../static/img/matrix.png" height="20px" />
                     Matrix
                   </jh-authorized>
                 </a></li>
-                <li><a id='menu_prices' href="#/prices" class="navbar-link">
+              <li><a id='menu_prices' href="#/prices" class="navbar-link">
                   <jh-authorized ng-if="isAuthorized('price.edit', authorizedList)">
-                    <img src="../static/img/prices.png" height="20px"/>
+                    <img src="../static/img/prices.png" height="20px" />
                     Prices
                   </jh-authorized>
                 </a></li>
-                <li><a id='menu_reports' href="#/reports" class="navbar-link">
+              <li><a id='menu_reports' href="#/reports" class="navbar-link">
                   <jh-authorized ng-if="isAuthorized('reports.execute', authorizedList)">
-                    <img src="../static/img/reports.gif" height="20px"/>
+                    <img src="../static/img/reports.gif" height="20px" />
                     Reports
                   </jh-authorized>
                 </a></li>
-              </ul>
-            </li>
-          </ul>
-        </div>
+            </ul>
+          </li>
+        </ul>
       </div>
-    </nav>
-    <div class='container-fluid'>
-      <!--  Pending screen -->
-      <cryptomedic-data-service id='dataService'>
-        <div>
-          <div ng-view></div>
-        </div>
-      </cryptomedic-data-service>
     </div>
-  </body>
+  </nav>
+  <div class='container-fluid'>
+    <!--  Pending screen -->
+    <cryptomedic-data-service id='dataService'>
+      <div>
+        <div ng-view></div>
+      </div>
+    </cryptomedic-data-service>
+  </div>
+</body>
+
 </html>
