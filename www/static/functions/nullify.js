@@ -1,9 +1,5 @@
-/* exported nullify */
-
-// Is this obsolete?
-
-function nullify(what) {
-	switch(typeof(what)) {
+export default function nullify(what) {
+	switch (typeof (what)) {
 		case 'string':
 			if (what === '?') {
 				return null;
@@ -16,7 +12,7 @@ function nullify(what) {
 			}
 			return what;
 		case 'object':
-			for(var k in what) {
+			for (var k in what) {
 				what[k] = nullify(what[k]);
 			}
 			// });
