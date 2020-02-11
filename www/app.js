@@ -1,4 +1,6 @@
 
+import './static/jh-i18n.js';
+
 // Angular 1.x
 import angular from 'angular';
 import 'angular-route';
