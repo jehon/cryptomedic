@@ -10,7 +10,7 @@ fse.emptyDirSync(path.join(root, '/target/unit'));
 // https://blog.cepharum.de/en/post/natively-unit-testing-es6-modules-in-browser-including-coverage.html
 
 module.exports = function(config) {
-	var configuration = {
+	const configuration = {
 		basePath : path.join(root, 'www/'),
 
 		frameworks : [
