@@ -1,32 +1,32 @@
-/* eslint-env jasmine */
-/* global nullify */
 
-describe('nullify-test', function() {
-	it('should nullify string', function() {
+import nullify from '/base/static/functions/nullify.js';
+
+describe('nullify-test', function () {
+	it('should nullify string', function () {
 		expect(nullify('')).toEqual('');
 	});
 
-	it('should nullify string null', function() {
+	it('should nullify string null', function () {
 		expect(nullify('null')).toEqual(null);
 	});
 
-	it('should nullify string ?', function() {
+	it('should nullify string ?', function () {
 		expect(nullify('?')).toEqual(null);
 	});
 
-	it('should nullify string undefined', function() {
+	it('should nullify string undefined', function () {
 		expect(nullify('undefined')).toEqual(null);
 	});
 
-	it('should nullify string anything', function() {
+	it('should nullify string anything', function () {
 		expect(nullify('anything')).toEqual('anything');
 	});
 
-	it('should nullify int 123', function() {
+	it('should nullify int 123', function () {
 		expect(nullify(123)).toEqual(123);
 	});
 
-	it('should nullify object', function() {
+	it('should nullify object', function () {
 		expect(nullify({
 			a: 1,
 			b: 'null',
@@ -39,28 +39,28 @@ describe('nullify-test', function() {
 	});
 
 
-	it('should handle null', function() {
+	it('should handle null', function () {
 		expect(nullify(null)).toBe(null);
 	});
-	it('should handle "null"', function() {
+	it('should handle "null"', function () {
 		expect(nullify('null')).toBe(null);
 	});
-	it('should handle "?"', function() {
+	it('should handle "?"', function () {
 		expect(nullify('?')).toBe(null);
 	});
-	it('should handle numbers', function() {
+	it('should handle numbers', function () {
 		expect(nullify(123)).toBe(123);
 	});
-	it('should handle strings', function() {
+	it('should handle strings', function () {
 		expect(nullify('hehehe')).toBe('hehehe');
 	});
-	it('should handle false', function() {
+	it('should handle false', function () {
 		expect(nullify(false)).toBe(false);
 	});
-	it('should handle true', function() {
+	it('should handle true', function () {
 		expect(nullify(true)).toBe(true);
 	});
-	it('should handle object', function() {
+	it('should handle object', function () {
 		expect(nullify({
 			a: 123,
 			b: null,

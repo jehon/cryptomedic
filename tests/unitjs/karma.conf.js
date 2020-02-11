@@ -9,30 +9,30 @@ fse.emptyDirSync(path.join(root, '/target/unit'));
 
 // https://blog.cepharum.de/en/post/natively-unit-testing-es6-modules-in-browser-including-coverage.html
 
-module.exports = function(config) {
+module.exports = function (config) {
 	const configuration = {
-		basePath : path.join(root, 'www/'),
+		basePath: path.join(root, 'www/'),
 
-		frameworks : [
+		frameworks: [
 			'jasmine-es6',
 			'jasmine',
 			'jasmine-html'
 		],
 
-		reporters : [
+		reporters: [
 			'progress',
 			'coverage-istanbul',
 			'html'
 		],
 
-		files : [
+		files: [
 			'../node_modules/karma-read-json/karma-read-json.js',
 			'../node_modules/bootstrap/dist/css/bootstrap.min.css',
 			'build/vendor*.js',
 			'build/app-*.js',
-			{ pattern: 'build/**',                         included: false },
-			{ pattern: 'api/*/tests/references/*.json',    included: false },
-			{ pattern: 'static/elements/resources/*',      included: false },
+			{ pattern: 'build/**', included: false },
+			{ pattern: 'api/*/tests/references/*.json', included: false },
+			{ pattern: 'static/elements/resources/*', included: false },
 			'static/objects/*.js',
 			'static/elements/jh-element.js',
 			'static/elements/x-overlay.js',
@@ -42,13 +42,13 @@ module.exports = function(config) {
 			'static/elements/x-requestor-crud.js',
 			'static/elements/x-file.js',
 			'static/elements/x-file-bill.js',
-			'static/!(elements)/**/*.js',
+			'static/!(elements|functions)/**/*.js',
 			'static/elements/*.js',
 			'../tests/unitjs/*.js',
-			{ pattern: 'static/**',                        included: false },
+			{ pattern: 'static/**', included: false },
 		],
 
-		autoWatch : true,
+		autoWatch: true,
 
 		browsers: [
 			// 'FirefoxHeadless',
@@ -59,12 +59,12 @@ module.exports = function(config) {
 		customLaunchers: {
 			FirefoxHeadless: {
 				base: 'Firefox',
-				flags: [ '-headless' ],
+				flags: ['-headless'],
 			},
 		},
 
 		preprocessors: {
-			'static/**/*.js': [ 'karma-coverage-istanbul-instrumenter' ],
+			'static/**/*.js': ['karma-coverage-istanbul-instrumenter'],
 		},
 
 		coverageIstanbulInstrumenter: {
@@ -72,14 +72,14 @@ module.exports = function(config) {
 		},
 
 		coverageReporter: {
-			type :  'lcov',
-			dir :   __dirname + '/target/',
+			type: 'lcov',
+			dir: __dirname + '/target/',
 			subdir: 'unit/'
 		},
 
 		coverageIstanbulReporter: {
-			reports: [ 'html', 'text' ],
-			dir: path.join(root, 'target/js/htmlInstanbul' ),
+			reports: ['html', 'text'],
+			dir: path.join(root, 'target/js/htmlInstanbul'),
 		},
 
 		htmlReporter: {

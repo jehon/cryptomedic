@@ -1,5 +1,13 @@
 
 import './static/jh-i18n.js';
+import nullify from './static/functions/nullify.js';
+window.nullify = nullify;
+
+import date2Display from './static/functions/date2Display.js';
+window.date2Display = date2Display;
+
+import date2CanonicString from './static/functions/date2CanonicString.js';
+window.date2CanonicString = date2CanonicString;
 
 // Angular 1.x
 import angular from 'angular';

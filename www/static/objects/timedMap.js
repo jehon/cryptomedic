@@ -1,6 +1,6 @@
-/* exported TimedCache */
+/* exported TimedMap */
 
-let TimedMap = (function() {
+let TimedMap = (function () {
 	let cache = new WeakMap();
 
 	class TimedMap {
@@ -11,13 +11,13 @@ let TimedMap = (function() {
 
 		checkValidity(id) {
 			// Empty case
-			if (typeof(cache.get(this)[id]) === 'undefined') {
+			if (typeof (cache.get(this)[id]) === 'undefined') {
 				return null;
 			}
 
 			// Expired case
 			if ((cache.get(this)[id]['ts'] + this.timeOutMs) < ((new Date()).getTime())) {
-				delete(cache.get(this)[id]);
+				delete (cache.get(this)[id]);
 				return false;
 			}
 			return true;
@@ -41,7 +41,7 @@ let TimedMap = (function() {
 
 		count() {
 			// First, remove perished values
-			for(let i in cache.get(this)) {
+			for (let i in cache.get(this)) {
 				this.checkValidity(i);
 			}
 			return Object.keys(cache.get(this)).length;
