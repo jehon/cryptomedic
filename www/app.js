@@ -9,6 +9,17 @@ window.date2Display = date2Display;
 import date2CanonicString from './static/functions/date2CanonicString.js';
 window.date2CanonicString = date2CanonicString;
 
+import { ApplicationException, DataMissingException, ConfigurationMissingException } from './static/objects/exceptions.js';
+window.ApplicationException = ApplicationException;
+window.DataMissingException = DataMissingException;
+window.ConfigurationMissingException = ConfigurationMissingException;
+
+import TimedMap from './static/objects/timedMap.js';
+window.TimedMap = TimedMap;
+
+import TwoColumns from './static/objects/twoColumns.js';
+window.TwoColumns = TwoColumns;
+
 // Angular 1.x
 import angular from 'angular';
 import 'angular-route';
@@ -23,9 +34,6 @@ import { createStore, combineReducers } from 'redux';
 
 // Export to excell
 import ExcellentExport from 'excellentexport';
-
-// Clone object clone(...)
-import clone from 'clone';
 
 // Add objectPath to the library dynamically
 // https://github.com/webpack-contrib/imports-loader
@@ -47,7 +55,6 @@ window.redux = {
 	combineReducers
 };
 window.ExcellentExport = ExcellentExport;
-window.clone = clone;
 window.FetchFull = fetchfull;
 window.he = he;
 window.html2canvas = html2canvas;

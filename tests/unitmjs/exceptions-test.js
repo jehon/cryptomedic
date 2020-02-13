@@ -1,5 +1,5 @@
-/* eslint-env jasmine */
-/* global webDescribe, ApplicationException, DataMissingException, ConfigurationMissingException */
+
+import { ApplicationException, DataMissingException, ConfigurationMissingException } from '../www/static/objects/exceptions.js';
 
 describe('ApplicationException', function() {
 	it('should inherit from Error', function() {
@@ -19,6 +19,10 @@ describe('ApplicationException', function() {
 
 		var ae2 = new DataMissingException('data', 'is not null');
 		expect(ae2.message).toBe('Data data is not null');
+
+		var ae3 = new DataMissingException();
+		expect(ae3.message).toBe('Data some data is missing');
+
 	});
 
 	it('should have ConfigurationMissingException', function() {

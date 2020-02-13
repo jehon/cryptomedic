@@ -1,5 +1,5 @@
 
-class ApplicationException extends Error {
+export class ApplicationException extends Error {
 	constructor(msg) {
 		super(msg);
 		this.message = msg;
@@ -10,14 +10,14 @@ class ApplicationException extends Error {
 	}
 }
 
-class DataMissingException extends ApplicationException {
-	constructor(data, reason = 'is missing') {
-		super('Data '  + (data || 'some data') + ' ' + reason);
+export class DataMissingException extends ApplicationException {
+	constructor(data = 'some data', reason = 'is missing') {
+		super('Data '  + data + ' ' + reason);
 		this.data = data;
 	}
 }
 
-class ConfigurationMissingException extends ApplicationException {
+export class ConfigurationMissingException extends ApplicationException {
 	constructor(data) {
 		super(`Configuration ${data} is missing.`);
 		this.data = data;

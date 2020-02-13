@@ -1,6 +1,7 @@
-/* global ApplicationException */
 
-class TwoColumns {
+// import { ApplicationException } from './exceptions.js';
+
+export default class TwoColumns {
 	constructor(about, options = {}) {
 		this.closed = false;
 		this.about = about;

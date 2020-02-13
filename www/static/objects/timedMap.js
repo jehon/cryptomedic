@@ -1,56 +1,53 @@
-/* exported TimedMap */
 
-let TimedMap = (function () {
-	let cache = new WeakMap();
+import clone from '../../../node_modules/clone/clone.js';
 
-	class TimedMap {
-		constructor(timeoutSecs = 1 * 60) {
-			cache.set(this, {});
-			this.timeOutMs = timeoutSecs * 1000;
-		}
+let cache = new WeakMap();
 
-		checkValidity(id) {
-			// Empty case
-			if (typeof (cache.get(this)[id]) === 'undefined') {
-				return null;
-			}
+export default class TimedMap {
+	constructor(timeoutSecs = 1 * 60) {
+		cache.set(this, {});
+		this.timeOutMs = timeoutSecs * 1000;
+	}
 
-			// Expired case
-			if ((cache.get(this)[id]['ts'] + this.timeOutMs) < ((new Date()).getTime())) {
-				delete (cache.get(this)[id]);
-				return false;
-			}
-			return true;
-		}
-
-		get(id) {
-			if (this.checkValidity(id)) {
-				// clone.js:
-				return window.clone(cache.get(this)[id]['data'], true);
-			}
+	checkValidity(id) {
+		// Empty case
+		if (typeof (cache.get(this)[id]) === 'undefined') {
 			return null;
 		}
 
-		set(id, data) {
-			cache.get(this)[id] = {
-				ts: (new Date()).getTime(),
-				data: data
-			};
-			return data;
+		// Expired case
+		if ((cache.get(this)[id]['ts'] + this.timeOutMs) < ((new Date()).getTime())) {
+			delete (cache.get(this)[id]);
+			return false;
 		}
-
-		count() {
-			// First, remove perished values
-			for (let i in cache.get(this)) {
-				this.checkValidity(i);
-			}
-			return Object.keys(cache.get(this)).length;
-		}
-
-		dump() {
-			console.info(cache.get(this));
-		}
+		return true;
 	}
 
-	return TimedMap;
-}());
+	get(id) {
+		if (this.checkValidity(id)) {
+			// clone.js:
+			return clone(cache.get(this)[id]['data'], true);
+		}
+		return null;
+	}
+
+	set(id, data) {
+		cache.get(this)[id] = {
+			ts: (new Date()).getTime(),
+			data: data
+		};
+		return data;
+	}
+
+	count() {
+		// First, remove perished values
+		for (let i in cache.get(this)) {
+			this.checkValidity(i);
+		}
+		return Object.keys(cache.get(this)).length;
+	}
+
+	dump() {
+		console.info(cache.get(this));
+	}
+}

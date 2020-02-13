@@ -1,5 +1,5 @@
-/* eslint-env jasmine */
-/* global  TimedMap */
+
+import TimedMap from '../www/static/objects/timedMap.js';
 
 describe('timedMap-test', function() {
 	it('should exists a timeCache class', () => {
