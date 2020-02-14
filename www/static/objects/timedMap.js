@@ -1,5 +1,5 @@
 
-import clone from '../../../node_modules/clone/clone.js';
+import cloneDeep from '../../../node_modules/lodash-es/cloneDeep.js';
 
 let cache = new WeakMap();
 
@@ -26,7 +26,7 @@ export default class TimedMap {
 	get(id) {
 		if (this.checkValidity(id)) {
 			// clone.js:
-			return clone(cache.get(this)[id]['data'], true);
+			return cloneDeep(cache.get(this)[id]['data'], true);
 		}
 		return null;
 	}
@@ -34,7 +34,7 @@ export default class TimedMap {
 	set(id, data) {
 		cache.get(this)[id] = {
 			ts: (new Date()).getTime(),
-			data: data
+			data: cloneDeep(data)
 		};
 		return data;
 	}

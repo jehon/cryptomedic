@@ -41,7 +41,7 @@ module.exports = function (config) {
 			'static/elements/x-requestor-crud.js',
 			'static/elements/x-file.js',
 			'static/elements/x-file-bill.js',
-			'static/!(elements|functions|objects)/**/*.js',
+			'static/!(elements|functions|objects|state)/**/*.js',
 			'static/elements/*.js',
 			'../tests/unitjs/*.js',
 			{ pattern: 'static/**', included: false },
