@@ -1,5 +1,5 @@
 
-import { ApplicationException, DataMissingException, ConfigurationMissingException } from '../www/static/objects/exceptions.js';
+import { ApplicationException, DataMissingException, ConfigurationMissingException } from '../../www/static/objects/exceptions.js';
 
 describe('ApplicationException', function() {
 	it('should inherit from Error', function() {

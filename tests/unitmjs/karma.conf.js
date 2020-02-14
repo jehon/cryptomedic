@@ -53,7 +53,7 @@ module.exports = function (config) {
 		},
 
 		preprocessors: {
-			'www/**/*.js': ['karma-coverage-istanbul-instrumenter'],
+			'www/static/**/*.js': ['karma-coverage-istanbul-instrumenter'],
 		},
 
 		coverageIstanbulInstrumenter: {

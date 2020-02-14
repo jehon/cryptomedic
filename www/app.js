@@ -20,6 +20,20 @@ window.TimedMap = TimedMap;
 import TwoColumns from './static/objects/twoColumns.js';
 window.TwoColumns = TwoColumns;
 
+import store, {
+	ACT_FOLDER_INVALIDATE,
+	ACT_FOLDER_STORE,
+	ACT_USER_LOGIN,
+	ACT_USER_LOGOUT,
+	ACT_DEFINITIONS_STORE
+} from './static/state/store.js';
+window.store = store;
+window.ACT_FOLDER_INVALIDATE = ACT_FOLDER_INVALIDATE;
+window.ACT_FOLDER_STORE = ACT_FOLDER_STORE;
+window.ACT_USER_LOGIN = ACT_USER_LOGIN;
+window.ACT_USER_LOGOUT = ACT_USER_LOGOUT;
+window.ACT_DEFINITIONS_STORE = ACT_DEFINITIONS_STORE;
+
 // Angular 1.x
 import angular from 'angular';
 import 'angular-route';
@@ -28,9 +42,6 @@ import 'angular-route';
 import jQuery from 'jquery/src/jquery.js';
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
-// Redux
-import { createStore, combineReducers } from 'redux';
 
 // Export to excell
 import ExcellentExport from 'excellentexport';
@@ -50,10 +61,6 @@ import uuid from 'uuid/v4';
 
 window.angular = angular;
 window.jQuery = jQuery;
-window.redux = {
-	createStore,
-	combineReducers
-};
 window.ExcellentExport = ExcellentExport;
 window.FetchFull = fetchfull;
 window.he = he;
