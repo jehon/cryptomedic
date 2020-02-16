@@ -1,7 +1,7 @@
 
-import TimedMap from '../../www/static/objects/timedMap.js';
+import TimedMap from '../../app/objects/timedMap.js';
 
-describe('timedMap-test', function() {
+describe('timedMap-test', function () {
 	it('should exists a timeCache class', () => {
 		expect((new TimedMap()) instanceof TimedMap).toBeTruthy();
 	});
@@ -65,7 +65,7 @@ describe('timedMap-test', function() {
 		jasmine.clock().uninstall();
 	});
 
-	it('should console.info on dump', function() {
+	it('should console.info on dump', function () {
 		spyOn(console, 'info');
 		let tm1 = new TimedMap();
 		tm1.dump();

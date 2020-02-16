@@ -1,4 +1,3 @@
-/* export date2Display */
 
 const pad = (what, l) => {
 	const int = ('000' + what);

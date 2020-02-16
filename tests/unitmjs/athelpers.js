@@ -2,7 +2,7 @@
 /* global readJSON, API_VERSION */
 /* exported loadReference, webDescribe, extractPath */
 
-import { API_VERSION } from '../../www/static/config.js';
+import { API_VERSION } from '../../app/config.js';
 
 export function loadReference(name) {
 	// Thanks to http://stackoverflow.com/a/27830579/1954789

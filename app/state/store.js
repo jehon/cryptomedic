@@ -1,11 +1,11 @@
 
-import { createStore, combineReducers } from '../../../node_modules/redux/es/redux.mjs';
+import { createStore, combineReducers } from '../../node_modules/redux/es/redux.mjs';
 
 export const ACT_FOLDER_INVALIDATE = 'ACT_FOLDER_INVALIDATE';
-export const ACT_FOLDER_STORE      = 'ACT_FOLDER_STORE';
+export const ACT_FOLDER_STORE = 'ACT_FOLDER_STORE';
 
-export const ACT_USER_LOGIN        = 'ACT_USER_LOGIN';
-export const ACT_USER_LOGOUT       = 'ACT_USER_LOGOUT';
+export const ACT_USER_LOGIN = 'ACT_USER_LOGIN';
+export const ACT_USER_LOGOUT = 'ACT_USER_LOGOUT';
 
 export const ACT_DEFINITIONS_STORE = 'ACT_DEFINITIONS_STORE';
 
@@ -67,8 +67,8 @@ const definitionsReducer = (state = false, action) => {
 /* istanbul ignore next */
 const store = createStore(
 	combineReducers({
-		folder:      folderReducer,
-		user:        userReducer,
+		folder: folderReducer,
+		user: userReducer,
 		definitions: definitionsReducer
 	}),
 	window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
