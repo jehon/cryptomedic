@@ -50,8 +50,9 @@ clean: deploy-unmount
 
 	rm -fr "target/"
 	find . -name "*.log" -delete
+	rm -fr www/build
+	rm -f www/static/index.html
 
-	$(call ensure_folder_empty,www/build/)
 	$(call ensure_folder_empty,www/api/$(VAPI)/bootstrap/cache/)
 	$(call ensure_folder_empty,www/api/$(VAPI)/app/public)
 	$(call ensure_folder_empty,www/api/$(VAPI)/storage/framework/cache)
@@ -61,10 +62,6 @@ clean: deploy-unmount
 	$(call ensure_folder_empty,www/api/$(VAPI)/storage/logs/)
 	$(call ensure_folder_empty,live/)
 	
-	rm -f "www/static/index.html"
-	rm -f "www/release_version.js"
-	rm -f "www/release_version.txt"
-
 setup: setup-structure
 
 setup-computer: deploy-host-key-check
@@ -135,9 +132,9 @@ stop:
 lint:
 	npm run stylelint
 
-test: data-reset test-api test-unit test-e2e test-style
+test: test-api test-unit test-e2e test-style
 
-test-api: docker-started dependencies-api
+test-api: docker-started dependencies-api data-reset
 	$(call run_in_docker,"server","/app/bin/dev-phpunit.sh")
 
 test-api-commit: docker-started depencencies.api
@@ -147,8 +144,8 @@ test-unit: dependencies-node build
 	npm run --silent test-unit
 	npm run --silent test-unit-mjs
 
-test-e2e: dependencies-node build
-target/e2e/.tested: docker-started
+test-e2e: dependencies-node build target/e2e/.tested
+target/e2e/.tested: docker-started data-reset
 	npm run --silent test-e2e
 	touch target/e2e/.tested
 
@@ -201,6 +198,7 @@ target/structure-exists:
 #
 dependencies: dependencies-node dependencies-api 
 
+.PHONY: dependencies-node
 dependencies-node: node_modules/.dependencies
 node_modules/.dependencies: package.json package-lock.json
 	npm ci
@@ -220,12 +218,11 @@ www/api/$(VAPI)/vendor/.dependencies: www/api/$(VAPI)/composer.json www/api/$(VA
 # Build
 #
 #
+.PHONY: build
 build: www/static/index.html
 
-www/static/index.html: dependencies-node package.json package-lock.json \
-		www/app.js www/static/index-original.html
+www/static/index.html: node_modules/.dependencies package.json package-lock.json $(call recursive-dependencies, "app/")
 	npm run build
-
 
 #
 #
@@ -259,7 +256,6 @@ data-reset: docker-started
 
 	# live folder
 	rsync -a --delete live-for-test/ live/
-
 
 #
 #

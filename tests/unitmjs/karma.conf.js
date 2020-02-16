@@ -32,8 +32,7 @@ module.exports = function (config) {
 			{ pattern: 'tests/unitmjs/**', included: false },
 			{ pattern: 'tests/resources/**', included: false },
 			{ pattern: 'www/api/**/*', included: false, watched: false },
-			{ pattern: 'www/**/*', included: false },
-			{ pattern: 'node_modules/**/*', included: false, watched: false },
+			{ pattern: 'app/**/*', included: false, watched: true },
 			{ pattern: '**/*', included: false, watched: false },
 		],
 
@@ -53,7 +52,7 @@ module.exports = function (config) {
 		},
 
 		preprocessors: {
-			'www/static/**/*.js': ['karma-coverage-istanbul-instrumenter'],
+			'app/**/*.js': ['karma-coverage-istanbul-instrumenter'],
 		},
 
 		coverageIstanbulInstrumenter: {

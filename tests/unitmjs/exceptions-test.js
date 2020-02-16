@@ -1,15 +1,15 @@
 
-import { ApplicationException, DataMissingException, ConfigurationMissingException } from '../../www/static/objects/exceptions.js';
+import { ApplicationException, DataMissingException, ConfigurationMissingException } from '../../app/objects/exceptions.js';
 
-describe('ApplicationException', function() {
-	it('should inherit from Error', function() {
+describe('ApplicationException', function () {
+	it('should inherit from Error', function () {
 		var ae = new ApplicationException('my message');
 
 		expect(ae instanceof Error).toBeTruthy('ApplicationException is not an Error');
 		expect(ae.getMessage()).toBe('my message');
 	});
 
-	it('should have DataMissingException', function() {
+	it('should have DataMissingException', function () {
 		var ae = new DataMissingException('data');
 
 		expect(ae instanceof ApplicationException).toBeTruthy('DataMissingException is not an ApplicationException');
@@ -25,7 +25,7 @@ describe('ApplicationException', function() {
 
 	});
 
-	it('should have ConfigurationMissingException', function() {
+	it('should have ConfigurationMissingException', function () {
 		var ae = new ConfigurationMissingException('data');
 
 		expect(ae.getMessage()).toBe('Configuration data is missing.');

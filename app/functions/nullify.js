@@ -1,3 +1,4 @@
+
 export default function nullify(what) {
 	switch (typeof (what)) {
 		case 'string':

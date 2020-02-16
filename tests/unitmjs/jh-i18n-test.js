@@ -1,5 +1,5 @@
 
-import '../../www/static/jh-i18n.js';
+import '../../app/elements/jh-i18n.js';
 
 describe('jh-i18n-test', function () {
 	withHtml({ title: 'without value', html: '<jh-i18n></jh-i18n>' },

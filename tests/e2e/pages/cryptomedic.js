@@ -7,7 +7,7 @@ var authenticated = false;
 module.exports = {
 	elements: {},
 	commands: [{
-		authenticate_fillIn: function(login) {
+		authenticate_fillIn: function (login) {
 			if (!login) {
 				throw new Error('Cryptomedic: Authenticate expect parameter 1 to be the login');
 			}
@@ -16,10 +16,14 @@ module.exports = {
 			this.api.init();
 			this.waitForElementVisible('body');
 			this.assert.title('Cryptomedic');
-			this.myComponentExecute('x-login-status >>> #username', function(v) { this.value = v; }, [ login ]);
-			this.myComponentExecute('x-login-status >>> #password', function(v) { this.value = v; }, [ password ]);
+			this.myComponentExecute('x-login-status >>> #username', function (v) { this.value = v; }, [login]);
+			this.myComponentExecute('x-login-status >>> #password', function (v) { this.value = v; }, [password]);
 			this.api.pause(10);
-			this.myComponentExecute('x-login-status >>> button#login', function() { JHElement.fireOn(this, 'click'); });
+			this.myComponentExecute('x-login-status >>> button#login', function () { JHElement.fireOn(this, 'click'); });
+
+			this.getLog('browser', function (result) {
+				console.log(result);
+			});
 
 			this.waitForElementNotPresent('x-login-status[requesting]');
 
@@ -28,18 +32,18 @@ module.exports = {
 
 		// Each action is written as a separate method which must return the browser
 		// object in order to be able to be queued
-		authenticate: function(login) {
+		authenticate: function (login) {
 			this.authenticate_fillIn(login);
 			this.waitForElementPresent('x-login-status[login]');
 			this.waitForElementPresent(`x-login-status[login=${login}]`);
-			this.myComponentExecute('x-login-status >>> #user', function() { return this.innerText; }, [], 
+			this.myComponentExecute('x-login-status >>> #user', function () { return this.innerText; }, [],
 				(result) => { this.assert.equal(result, login); }
 			);
 			authenticated = true;
 			return this;
 		},
 
-		myWaitFetch: function() {
+		myWaitFetch: function () {
 			this.api.pause(10);
 			this.waitForElementNotPresent('cryptomedic-data-service[running]');
 			this.api.pause(10);
@@ -47,7 +51,7 @@ module.exports = {
 			return this;
 		},
 
-		report: function(reportName, params) {
+		report: function (reportName, params) {
 			if (!authenticated) {
 				throw new Error('Cryptomedic: You should be authenticated to use report function');
 			}
@@ -57,7 +61,7 @@ module.exports = {
 			this.myClick('#menu_reports');
 			this.waitForElementVisible('#launch_report_' + reportName);
 			this.myClick('#launch_report_' + reportName);
-			for(var k in params) {
+			for (var k in params) {
 				const el = '[name=' + k + ']';
 				if (k == 'period') {
 					this.myRadio(el, params['period']);
@@ -84,7 +88,7 @@ module.exports = {
 			return this;
 		},
 
-		goPatient: function(entryyear, entryorder) {
+		goPatient: function (entryyear, entryorder) {
 			if (!authenticated) {
 				throw new Error('Cryptomedic: You should be authenticated to use report function');
 			}
@@ -108,14 +112,14 @@ module.exports = {
 			return this;
 		},
 
-		selectFile: function(type, id) {
+		selectFile: function (type, id) {
 			this
 				.myClick('#folder_menu_' + type + '_' + id)
 				.waitForElementVisible('#folder_menu_' + type + '_' + id);
 			return this;
 		},
 
-		tableIterator: function(tableSelector, row = 1, col = 1, section = 'tbody') {
+		tableIterator: function (tableSelector, row = 1, col = 1, section = 'tbody') {
 			const iterator = {
 				col: (i = 1) => { col = i; return iterator; },
 				row: (i = 1) => { row = i; return iterator; },
@@ -124,9 +128,9 @@ module.exports = {
 				nextRow: (i = 1) => { row = row + i; return iterator; },
 				toString: () => {
 					return tableSelector
-            + ' > ' + section
-            + ' > ' + 'tr'                               + ':' + (row === 'last' ? 'last-child' : 'nth-child(' + row + ')')
-            + ' > ' + (section == 'tbody' ? 'td' : 'th') + ':' + (col === 'last' ? 'last-child' : 'nth-child(' + col + ')');
+						+ ' > ' + section
+						+ ' > ' + 'tr' + ':' + (row === 'last' ? 'last-child' : 'nth-child(' + row + ')')
+						+ ' > ' + (section == 'tbody' ? 'td' : 'th') + ':' + (col === 'last' ? 'last-child' : 'nth-child(' + col + ')');
 				},
 				assert: (text = false, selector = '') => {
 					this.waitForElementVisible(tableSelector);

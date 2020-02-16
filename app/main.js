@@ -1,23 +1,23 @@
 
-import './static/jh-i18n.js';
-import nullify from './static/functions/nullify.js';
+import './elements/jh-i18n.js';
+import nullify from './functions/nullify.js';
 window.nullify = nullify;
 
-import date2Display from './static/functions/date2Display.js';
+import date2Display from './functions/date2Display.js';
 window.date2Display = date2Display;
 
-import date2CanonicString from './static/functions/date2CanonicString.js';
+import date2CanonicString from './functions/date2CanonicString.js';
 window.date2CanonicString = date2CanonicString;
 
-import { ApplicationException, DataMissingException, ConfigurationMissingException } from './static/objects/exceptions.js';
+import { ApplicationException, DataMissingException, ConfigurationMissingException } from './objects/exceptions.js';
 window.ApplicationException = ApplicationException;
 window.DataMissingException = DataMissingException;
 window.ConfigurationMissingException = ConfigurationMissingException;
 
-import TimedMap from './static/objects/timedMap.js';
+import TimedMap from './objects/timedMap.js';
 window.TimedMap = TimedMap;
 
-import TwoColumns from './static/objects/twoColumns.js';
+import TwoColumns from './objects/twoColumns.js';
 window.TwoColumns = TwoColumns;
 
 import store, {
@@ -26,7 +26,7 @@ import store, {
 	ACT_USER_LOGIN,
 	ACT_USER_LOGOUT,
 	ACT_DEFINITIONS_STORE
-} from './static/state/store.js';
+} from './state/store.js';
 window.store = store;
 window.ACT_FOLDER_INVALIDATE = ACT_FOLDER_INVALIDATE;
 window.ACT_FOLDER_STORE = ACT_FOLDER_STORE;
