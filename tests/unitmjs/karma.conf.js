@@ -31,8 +31,7 @@ module.exports = function (config) {
 			{ pattern: 'tests/unitmjs/*-test.js', type: 'module' },
 			{ pattern: 'tests/unitmjs/**', included: false },
 			{ pattern: 'tests/resources/**', included: false },
-			{ pattern: 'www/api/**/*', included: false, watched: false },
-			{ pattern: 'app/**/*', included: false, watched: true },
+			{ pattern: 'app/**/*', included: false },
 			{ pattern: '**/*', included: false, watched: false },
 		],
 
