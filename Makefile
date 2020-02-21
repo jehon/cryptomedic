@@ -221,7 +221,7 @@ www/api/$(VAPI)/vendor/.dependencies: www/api/$(VAPI)/composer.json www/api/$(VA
 .PHONY: build
 build: www/static/index.html
 
-www/static/index.html: node_modules/.dependencies package.json package-lock.json $(call recursive-dependencies, "app/")
+www/static/index.html: node_modules/.dependencies package.json package-lock.json $(call recursive-dependencies,app/,www/static/index.html)
 	npm run build
 
 #
