@@ -1,12 +1,12 @@
 
 import './elements/jh-i18n.js';
-import nullify from './functions/nullify.js';
+import nullify from './js/nullify.js';
 window.nullify = nullify;
 
-import date2Display from './functions/date2Display.js';
+import date2Display from './js/date2Display.js';
 window.date2Display = date2Display;
 
-import date2CanonicString from './functions/date2CanonicString.js';
+import date2CanonicString from './js/date2CanonicString.js';
 window.date2CanonicString = date2CanonicString;
 
 import { ApplicationException, DataMissingException, ConfigurationMissingException } from './js/exceptions.js';
