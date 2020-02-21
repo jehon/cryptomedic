@@ -1,9 +1,7 @@
-/* global store */
-/* exported getDataService */
 
-'use strict';
+import store from './store.js';
 
-function getDataService(cssSelector = '#dataService') {
+export default function getDataService(cssSelector = '#dataService') {
 	const test = function() {
 		let el = cssSelector;
 		if (typeof(cssSelector) == 'string') {
