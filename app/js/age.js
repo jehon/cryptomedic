@@ -1,5 +1,5 @@
 
-import date2CanonicString from '../functions/date2CanonicString.js';
+import date2CanonicString from './date2CanonicString.js';
 
 export function fromBirthDate(birth, options) {
 	if (birth == '' || birth == null) {

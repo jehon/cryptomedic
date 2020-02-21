@@ -1,5 +1,5 @@
 
-import nullify from '../../app/functions/nullify.js';
+import nullify from '../../app/js/nullify.js';
 
 describe('nullify-test', function () {
 	it('should nullify string', function () {
