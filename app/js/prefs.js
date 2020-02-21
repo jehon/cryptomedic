@@ -1,7 +1,5 @@
 
-/* exported setPref,getPref,extractPrefsFile */
-
-function setPref(part, data) {
+export function setPref(part, data) {
 	let res = {};
 	if (sessionStorage.cryptomedicPrefs) {
 		res = JSON.parse(sessionStorage.cryptomedicPrefs);
@@ -17,7 +15,7 @@ function setPref(part, data) {
 	return newState;
 }
 
-function getPref(part, def = null) {
+export function getPref(part, def = null) {
 	let res = {};
 	if (sessionStorage.cryptomedicPrefs) {
 		res = JSON.parse(sessionStorage.cryptomedicPrefs);
@@ -28,7 +26,7 @@ function getPref(part, def = null) {
 	return def;
 }
 
-function extractPrefsFile(object) {
+export function extractPrefsFile(object) {
 	let prefs = getPref('file', {});
 	if (object.Date) {
 		prefs.date = object.Date;

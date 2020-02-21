@@ -44,6 +44,18 @@ window.calculations = {
 	age: { fromBirthDate, toBirthDate, atConsultTime }
 };
 
+import { formGetContent, formFillIn, formEvaluateFunctions, formSwitch } from './js/form.js';
+window.formGetContent = formGetContent;
+window.formFillIn = formFillIn;
+window.formEvaluateFunctions = formEvaluateFunctions;
+window.formSwitch = formSwitch;
+
+import { setPref, getPref, extractPrefsFile } from './js/prefs.js';
+window.setPref = setPref;
+window.getPref = getPref;
+window.extractPrefsFile = extractPrefsFile;
+
+
 // Angular 1.x
 import angular from 'angular';
 import 'angular-route';
