@@ -34,6 +34,16 @@ window.ACT_USER_LOGIN = ACT_USER_LOGIN;
 window.ACT_USER_LOGOUT = ACT_USER_LOGOUT;
 window.ACT_DEFINITIONS_STORE = ACT_DEFINITIONS_STORE;
 
+import amd_stats from './js/amd_stats.js';
+window.amd_stats = amd_stats;
+
+import { evaluatePoly, stdDeviation, sigma } from './js/math.js';
+import { fromBirthDate, toBirthDate, atConsultTime } from './js/age.js';
+window.calculations = {
+	math: { evaluatePoly, stdDeviation, sigma },
+	age: { fromBirthDate, toBirthDate, atConsultTime }
+};
+
 // Angular 1.x
 import angular from 'angular';
 import 'angular-route';
