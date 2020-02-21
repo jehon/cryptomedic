@@ -61,6 +61,9 @@ window.getDataService = getDataService;
 import template from './js/template.js';
 window.template = template;
 
+import goThere from './js/goThere.js';
+window.goThere = goThere;
+
 // Angular 1.x
 import angular from 'angular';
 import 'angular-route';
