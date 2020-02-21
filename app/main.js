@@ -55,6 +55,11 @@ window.setPref = setPref;
 window.getPref = getPref;
 window.extractPrefsFile = extractPrefsFile;
 
+import getDataService from './js/getDataService.js';
+window.getDataService = getDataService;
+
+import template from './js/template.js';
+window.template = template;
 
 // Angular 1.x
 import angular from 'angular';
