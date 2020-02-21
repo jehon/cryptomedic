@@ -1,7 +1,7 @@
 
-function formGetContent(form, prototype = {}) {
+export function formGetContent(form, prototype = {}) {
 	// const log = (...args) => console.log(...args);
-	const log = () => {};
+	const log = () => { };
 
 	let data = new prototype.constructor();
 	Object.assign(data, prototype);
@@ -52,7 +52,7 @@ function formGetContent(form, prototype = {}) {
 
 		// Skip empty values
 		if (value === '' || value == null) {
-			log('no value: ', name, value, typeof(value));
+			log('no value: ', name, value, typeof (value));
 			delete (data[name]);
 			continue;
 		}
@@ -88,7 +88,7 @@ function formGetContent(form, prototype = {}) {
 	return data;
 }
 
-function formFillIn(form, object) {
+export function formFillIn(form, object) {
 	let formElement = form;
 	if (!(form instanceof HTMLElement)) {
 		formElement = document.querySelector(form);
@@ -101,7 +101,7 @@ function formFillIn(form, object) {
 	formEvaluateFunctions(formElement, object);
 }
 
-function formEvaluateFunctions(formElement, object) {
+export function formEvaluateFunctions(formElement, object) {
 	formElement.querySelectorAll('[function]').forEach(el => {
 		const fn = el.getAttribute('function');
 		if (fn in object) {
@@ -110,7 +110,7 @@ function formEvaluateFunctions(formElement, object) {
 	});
 }
 
-function formSwitch(form, tag, mode) {
+export function formSwitch(form, tag, mode) {
 	let formElement = form;
 	if (!(form instanceof HTMLElement)) {
 		formElement = document.querySelector(form);
