@@ -9,15 +9,15 @@ window.date2Display = date2Display;
 import date2CanonicString from './functions/date2CanonicString.js';
 window.date2CanonicString = date2CanonicString;
 
-import { ApplicationException, DataMissingException, ConfigurationMissingException } from './objects/exceptions.js';
+import { ApplicationException, DataMissingException, ConfigurationMissingException } from './js/exceptions.js';
 window.ApplicationException = ApplicationException;
 window.DataMissingException = DataMissingException;
 window.ConfigurationMissingException = ConfigurationMissingException;
 
-import TimedMap from './objects/timedMap.js';
+import TimedMap from './js/timedMap.js';
 window.TimedMap = TimedMap;
 
-import TwoColumns from './objects/twoColumns.js';
+import TwoColumns from './js/twoColumns.js';
 window.TwoColumns = TwoColumns;
 
 import store, {
@@ -26,7 +26,7 @@ import store, {
 	ACT_USER_LOGIN,
 	ACT_USER_LOGOUT,
 	ACT_DEFINITIONS_STORE
-} from './state/store.js';
+} from './js/store.js';
 window.store = store;
 window.ACT_FOLDER_INVALIDATE = ACT_FOLDER_INVALIDATE;
 window.ACT_FOLDER_STORE = ACT_FOLDER_STORE;
