@@ -86,14 +86,11 @@ import fetchfull from 'imports-loader?objectPath=object-path!fetchfull';
 // html entities decode for jh-script
 import he from 'he';
 
-import uuid from 'uuid/v4';
-
 window.angular = angular;
 window.jQuery = jQuery;
 window.ExcellentExport = ExcellentExport;
 window.FetchFull = fetchfull;
 window.he = he;
-window.uuid = uuid;
 
 /* For fetchfull v2 inline */
 import objectPath from 'object-path';
