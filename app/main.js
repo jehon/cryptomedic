@@ -64,6 +64,8 @@ window.template = template;
 import goThere from './js/goThere.js';
 window.goThere = goThere;
 
+import './elements/bugreporting.js';
+
 // Angular 1.x
 import angular from 'angular';
 import 'angular-route';
@@ -84,9 +86,6 @@ import fetchfull from 'imports-loader?objectPath=object-path!fetchfull';
 // html entities decode for jh-script
 import he from 'he';
 
-// Screenshots
-import html2canvas from 'html2canvas';
-
 import uuid from 'uuid/v4';
 
 window.angular = angular;
@@ -94,7 +93,6 @@ window.jQuery = jQuery;
 window.ExcellentExport = ExcellentExport;
 window.FetchFull = fetchfull;
 window.he = he;
-window.html2canvas = html2canvas;
 window.uuid = uuid;
 
 /* For fetchfull v2 inline */

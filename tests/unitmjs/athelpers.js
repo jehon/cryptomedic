@@ -1,5 +1,5 @@
 /* global JHElement */
-/* global readJSON, API_VERSION */
+/* global readJSON */
 /* exported loadReference, webDescribe, extractPath */
 
 import { API_VERSION } from '../../app/config.js';
