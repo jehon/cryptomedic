@@ -6,11 +6,12 @@
 */
 
 import html2canvas from '../../node_modules/html2canvas/dist/html2canvas.js';
+import uuid from '../../node_modules/uuid/v4.js';
 
 import store from '../js/store.js';
 
 if (!('computerUUID' in localStorage)) {
-	localStorage.computerUUID = window.uuid();
+	localStorage.computerUUID = uuid();
 	console.info('Generated computer UUID: ', localStorage.computerUUID);
 }
 
