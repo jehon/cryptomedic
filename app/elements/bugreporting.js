@@ -1,10 +1,13 @@
-/* global store */
-/* global Raven, html2canvas */
+
 /*
   Raven:
     https://docs.sentry.io/clients/javascript/config/
     https://docs.sentry.io/clients/javascript/
 */
+
+import html2canvas from '../../node_modules/html2canvas/dist/html2canvas.js';
+
+import store from '../js/store.js';
 
 if (!('computerUUID' in localStorage)) {
 	localStorage.computerUUID = window.uuid();
@@ -15,25 +18,25 @@ window.bug_reporting = (function() {
 	if (window.location.host.substr(0, 'localhost'.length) != 'localhost') {
 		console.info('Capturing console.log/info/error and exceptions');
 		if (typeof(Raven) != 'undefined') {
-			Raven.config('https://7dece2b0b38e413baca8b81e17929eb2@sentry.io/270948', {
-				release: window.application_version
-			}).install();
+			// Raven.config('https://7dece2b0b38e413baca8b81e17929eb2@sentry.io/270948', {
+			// 	release: window.application_version
+			// }).install();
 
-			store.subscribe(() => {
-				const data = store.getState().user;
-				if (data) {
-					Raven.setUserContext({
-						username:   data.username,
-						group:      data.group,
-						name:       data.name,
-						computerID: localStorage.computerUUID
-					});
-				} else {
-					Raven.setUserContext({
-						computerID: localStorage.computerUUID
-					});
-				}
-			});
+			// store.subscribe(() => {
+			// 	const data = store.getState().user;
+			// 	if (data) {
+			// 		Raven.setUserContext({
+			// 			username:   data.username,
+			// 			group:      data.group,
+			// 			name:       data.name,
+			// 			computerID: localStorage.computerUUID
+			// 		});
+			// 	} else {
+			// 		Raven.setUserContext({
+			// 			computerID: localStorage.computerUUID
+			// 		});
+			// 	}
+			// });
 		}
 	} else {
 		console.info('Disabling capturing console.log/info/error on localhost');
@@ -71,11 +74,11 @@ Can I ask you a bit more informations?<br>
 
 	return () => {
 		const url = window.location;
-		Raven.captureMessage('User Feedback sent for ' + url, {
-			logger: 'data-service',
-			level: 'warn', // one of 'info', 'warning', or 'error'
-			extra: {}
-		});
+		// Raven.captureMessage('User Feedback sent for ' + url, {
+		// 	logger: 'data-service',
+		// 	level: 'warn', // one of 'info', 'warning', or 'error'
+		// 	extra: {}
+		// });
 
 		html2canvas(document.body).then(function(canvas) {
 			document.getElementsByTagName('body')[0].innerHTML = txt;
