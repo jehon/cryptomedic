@@ -1,6 +1,3 @@
-// Also adapt package.json for adding testing the new api
-// See md5sum.php to protect old versions... and delete them when necessary !!!
-let API_VERSION = 'v1.3';
 
 (function() {
 	const shouldUpgrade = function() {

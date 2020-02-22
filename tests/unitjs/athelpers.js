@@ -1,5 +1,5 @@
 /* global JHElement */
-/* global readJSON, API_VERSION */
+/* global readJSON */
 /* global withHtml */
 /* exported loadReference, webDescribe, extractPath */
 
