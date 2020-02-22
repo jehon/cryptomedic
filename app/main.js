@@ -1,4 +1,7 @@
 
+import { API_VERSION } from './config.js';
+window.API_VERSION = API_VERSION;
+
 import './elements/jh-i18n.js';
 import nullify from './js/nullify.js';
 window.nullify = nullify;
