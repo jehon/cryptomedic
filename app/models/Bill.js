@@ -1,8 +1,8 @@
-/* global PatientRelated, DataMissingException */
 
-'use strict';
+import PatientRelated from './PatientRelated.js';
+import { DataMissingException } from '../js/exceptions.js';
 
-class Bill extends PatientRelated {
+export default class Bill extends PatientRelated {
 	getModel() {
 		return 'Bill';
 	}
@@ -52,7 +52,7 @@ class Bill extends PatientRelated {
 
 		var rs = Math.ceil(this.sl_familySalary / this.sl_numberOfHouseholdMembers);
 
-		if (rs <= 300)  {
+		if (rs <= 300) {
 			this.Sociallevel = 0;
 		} else {
 			if (rs <= 500) {
@@ -79,7 +79,7 @@ class Bill extends PatientRelated {
 			return -1;
 		}
 		var total = 0;
-		for(var i in this.price) {
+		for (var i in this.price) {
 			if (i[0] == '_') { continue; }
 			if (i == 'id') { continue; }
 			if (i == 'created_at') { continue; }
@@ -96,7 +96,7 @@ class Bill extends PatientRelated {
 			if (i == 'socialLevelPercentage_3') { continue; }
 			if (i == 'socialLevelPercentage_4') { continue; }
 			if (this.price[i] < 0) { continue; }
-			if (typeof(this[i]) == 'undefined') { continue; }
+			if (typeof (this[i]) == 'undefined') { continue; }
 			if (this[i] <= 0) { continue; }
 			total += this.price[i] * this[i];
 		}//, this);
@@ -115,7 +115,7 @@ class Bill extends PatientRelated {
 			//console.warn('calculate_percentage_asked(): no social level');
 			return 1;
 		}
-		if (typeof(this.price['socialLevelPercentage_' + sl]) == 'undefined') {
+		if (typeof (this.price['socialLevelPercentage_' + sl]) == 'undefined') {
 			//console.warn('calculate_percentage_asked(): no social level in price for sl ' + sl);
 			return 1;
 		}
@@ -138,7 +138,7 @@ class Bill extends PatientRelated {
 	}
 
 	calculatePriceId(prices) {
-		if (typeof(this.Date) == 'undefined' || !this.Date || !prices) {
+		if (typeof (this.Date) == 'undefined' || !this.Date || !prices) {
 			this.price_id = 0;
 			this.price = false;
 			return 0;
@@ -146,10 +146,10 @@ class Bill extends PatientRelated {
 		this.price_id = -1;
 		var t = this;
 		var dref = this.Date;
-		for(var i in prices) {
+		for (var i in prices) {
 			var p = prices[i];
 			if (((p['datefrom'] == null) || (p['datefrom'] <= dref))
-        && ((p['dateto'] == null) || (p['dateto'] > dref))) {
+				&& ((p['dateto'] == null) || (p['dateto'] > dref))) {
 				t.price_id = i;
 				t.price = prices[i];
 			}

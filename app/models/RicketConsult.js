@@ -1,8 +1,7 @@
-/* global PatientRelated */
 
-'use strict';
+import PatientRelated from './PatientRelated.js';
 
-class RicketConsult extends PatientRelated {
+export default class RicketConsult extends PatientRelated {
 	getModel() {
 		return 'RicketConsult';
 	}

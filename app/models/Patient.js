@@ -1,21 +1,20 @@
-/* global FolderPage */
 
-'use strict';
+import FolderPage from './FolderPage.js';
 
-class Patient extends FolderPage {
+export default class Patient extends FolderPage {
 	getModel() {
 		return 'Patient';
 	}
 
 	getRelated() {
 		return {
-			'Appointment':   'patient_id',
-			'Bill':          'patient_id',
-			'ClubFoot':      'patient_id',
-			'OtherConsult':  'patient_id',
-			'Picture':       'patient_id',
+			'Appointment': 'patient_id',
+			'Bill': 'patient_id',
+			'ClubFoot': 'patient_id',
+			'OtherConsult': 'patient_id',
+			'Picture': 'patient_id',
 			'RicketConsult': 'patient_id',
-			'Surgery':       'patient_id'
+			'Surgery': 'patient_id'
 		};
 	}
 
@@ -42,10 +41,10 @@ class Patient extends FolderPage {
 			'format': false
 		}, options);
 		// reference = reference || new Date();
-		if (typeof(options.reference) == 'number') {
+		if (typeof (options.reference) == 'number') {
 			options.reference = '' + options.reference;
 		}
-		if (typeof(options.reference) == 'string') {
+		if (typeof (options.reference) == 'string') {
 			if (options.reference.length < 4) {
 				return options.format ? null : '?';
 				// throw new Exception('Invalid reference');
@@ -57,10 +56,10 @@ class Patient extends FolderPage {
 			}
 			options.reference = new Date(ry, rm - 1, 1);
 		}
-		if (typeof(birth) == 'number') {
+		if (typeof (birth) == 'number') {
 			birth = '' + birth;
 		}
-		if (typeof(birth) == 'string') {
+		if (typeof (birth) == 'string') {
 			if (birth.length < 4) {
 				return options.format ? null : '?';
 				// throw new Exception('Invalid birth');
@@ -70,10 +69,10 @@ class Patient extends FolderPage {
 			if (isNaN(bm)) {
 				bm = 1; // emulate january
 			}
-			birth = new Date(by, bm - 1 -1, 30);
+			birth = new Date(by, bm - 1 - 1, 30);
 		}
 		var days = new Date(0, 0, 0, 0, 0, 0, options.reference - birth);
-		var res = { years: days.getFullYear() - 1900, months: days.getMonth()};
+		var res = { years: days.getFullYear() - 1900, months: days.getMonth() };
 		if (options.format == 'object') {
 			return res;
 		}

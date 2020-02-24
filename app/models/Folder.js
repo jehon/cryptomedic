@@ -1,11 +1,19 @@
-/* global FolderPage, Data, Patient, amd_stats, Appointment, Bill, ClubFoot, OtherConsult, Payment, Picture, RicketConsult, Surgery */
-/* exported Folder */
-'use strict';
 
 // TODO: Adapt for: ctrl_folder
 // TODO: Adapt for: ctrl_file_bill
 
-class Folder extends FolderPage {
+import FolderPage from './FolderPage.js';
+import Patient from './Patient.js';
+import Appointment from './Appointment.js';
+import Bill from './Bill.js';
+import ClubFoot from './ClubFoot.js';
+import OtherConsult from './OtherConsult.js';
+import Payment from './Payment.js';
+import Picture from './Picture.js';
+import RicketConsult from './RicketConsult.js';
+import Surgery from './Surgery.js';
+
+export default class Folder extends FolderPage {
 	static string2class(type) {
 		console.assert(typeof type == 'string', 'create[type/1] expect a string');
 		switch (type) {
@@ -32,7 +40,7 @@ class Folder extends FolderPage {
 	}
 
 	static create(folder, type, data = {}) {
-		return new(this.string2class(type))(data, folder);
+		return new (this.string2class(type))(data, folder);
 	}
 
 	constructor(listing = {}) {
@@ -146,20 +154,20 @@ class Folder extends FolderPage {
 		}
 
 		// What to do if one 'Date' is missing
-		if ((typeof(o1.Date) == 'undefined') && (typeof(o2.Date) != 'undefined')) {
+		if ((typeof (o1.Date) == 'undefined') && (typeof (o2.Date) != 'undefined')) {
 			return 20 * o1First;
 		}
-		if ((typeof(o2.Date) == 'undefined') && (typeof(o1.Date) != 'undefined')) {
+		if ((typeof (o2.Date) == 'undefined') && (typeof (o1.Date) != 'undefined')) {
 			return 20 * o2First;
 		}
 
 		// Both 'date' are present
-		if ((typeof(o1.Date) != 'undefined') && (typeof(o2.Date) != 'undefined')) {
+		if ((typeof (o1.Date) != 'undefined') && (typeof (o2.Date) != 'undefined')) {
 			if (o1.Date < o2.Date) return 30 * o2First;
 			if (o1.Date > o2.Date) return 30 * o1First;
 		}
 
-		if ((typeof(o1.created_at) != 'undefined') && (typeof(o2.created_at) != 'undefined')) {
+		if ((typeof (o1.created_at) != 'undefined') && (typeof (o2.created_at) != 'undefined')) {
 			if (o1.created_at < o2.created_at) return 40 * o2First;
 			if (o1.created_at > o2.created_at) return 40 * o1First;
 		}

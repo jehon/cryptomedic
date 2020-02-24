@@ -1,14 +1,9 @@
-/* global PatientRelated */
 
-'use strict';
+import PatientRelated from './PatientRelated.js';
 
-class Surgery extends PatientRelated {
+export default class OtherConsult extends PatientRelated {
 	getModel() {
-		return 'Surgery';
-	}
-
-	getServerRessource() {
-		return 'surgeries';
+		return 'OtherConsult';
 	}
 
 	validate(res) {
@@ -17,6 +12,7 @@ class Surgery extends PatientRelated {
 		if ((this.Date > (new Date()).toISOString())) {
 			res.dateInTheFuture = true;
 		}
+
 		return res;
 	}
 }

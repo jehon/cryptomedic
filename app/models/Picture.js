@@ -1,8 +1,8 @@
-/* global API_VERSION, PatientRelated */
 
-'use strict';
+import PatientRelated from './PatientRelated.js';
+import { API_VERSION } from '../config.js';
 
-class Picture extends PatientRelated {
+export default class Picture extends PatientRelated {
 	getModel() {
 		return 'Picture';
 	}
