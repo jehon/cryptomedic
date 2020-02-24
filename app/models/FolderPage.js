@@ -1,8 +1,8 @@
-/* global CRUD, getPref */
 
-'use strict';
+import CRUD from './CRUD.js';
+import { getPref } from '../js/prefs.js';
 
-class FolderPage extends CRUD {
+export default class FolderPage extends CRUD {
 	initFromCachedPreferences() {
 		var c = getPref('file', {
 			examinerName: '',
@@ -10,12 +10,12 @@ class FolderPage extends CRUD {
 			date: ''
 		});
 		this.ExaminerName = c.examinerName;
-		this.Center       = c.center;
-		this.Date         = c.date;
+		this.Center = c.center;
+		this.Date = c.date;
 	}
 
 	isSet(field) {
-		if (typeof(this[field]) == 'undefined') {
+		if (typeof (this[field]) == 'undefined') {
 			return false;
 		}
 		if (this[field] == null) {

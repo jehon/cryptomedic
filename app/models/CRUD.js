@@ -1,9 +1,7 @@
-/* global nullify */
-/* exported CRUD */
 
-'use strict';
+import nullify from '../js/nullify.js';
 
-class CRUD {
+export default class CRUD {
 	static getBaseUrl() {
 		throw 'getBaseUrl is not implemented';
 	}
@@ -11,31 +9,27 @@ class CRUD {
 	static list(network) {
 		return network.start()
 			.requestWithGet()
-			.requestToUrl(this.getBaseUrl())
-		;
+			.requestToUrl(this.getBaseUrl());
 	}
 
 	static create(network, data) {
 		return network.start()
 			.requestWithPost()
 			.requestToUrl(this.getBaseUrl())
-			.requestWithData(nullify(data))
-		;
+			.requestWithData(nullify(data));
 	}
 
 	static remove(network, id) {
 		return network.start()
 			.requestWithDelete()
-			.requestToUrl(this.getBaseUrl() + '/' + id)
-		;
+			.requestToUrl(this.getBaseUrl() + '/' + id);
 	}
 
 	static save(network, data) {
 		return network.start()
 			.requestWithPut()
 			.requestToUrl(this.getBaseUrl() + '/' + data.id)
-			.requestWithData(data)
-		;
+			.requestWithData(data);
 	}
 
 	constructor(data = {}) {

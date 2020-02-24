@@ -1,9 +1,11 @@
-/* global FolderPage Data, getPref, DataMissingException, calculations, amd_stats */
-/* exported Item */
 
-'use strict';
+import FolderPage from './FolderPage.js';
+import { DataMissingException } from '../js/exceptions.js';
+import amd_stats from '../js/amd_stats.js';
+import { fromBirthDate } from '../js/age.js';
+import { stdDeviation } from '../js/math.js';
 
-class PatientRelated extends FolderPage {
+export default class PatientRelated extends FolderPage {
 	constructor(data, folder = null) {
 		super(data);
 		if (folder) {
@@ -16,7 +18,7 @@ class PatientRelated extends FolderPage {
 
 	linkPatient(patient) {
 		// Encapsulate into function, so that it is not persisted
-		this.getPatient = function() {
+		this.getPatient = function () {
 			return patient;
 		};
 		if (patient) {
@@ -29,7 +31,7 @@ class PatientRelated extends FolderPage {
 		if (!this.isSet('Date')) {
 			throw new DataMissingException('Date');
 		}
-		var age = calculations.age.fromBirthDate(this.getPatient().Yearofbirth, { reference: this.Date, format: (textual ? false : 'number') });
+		var age = fromBirthDate(this.getPatient().Yearofbirth, { reference: this.Date, format: (textual ? false : 'number') });
 		// if (age == '?') throw new DataMissingException('Date');
 		return age;
 	}
@@ -40,13 +42,13 @@ class PatientRelated extends FolderPage {
 			throw new DataMissingException('sex');
 		}
 		var age = this.ageAtConsultTime();
-		if (typeof(age) != 'number') {
+		if (typeof (age) != 'number') {
 			throw new DataMissingException('Age');
 		}
 		if (!this.isNotZero('Heightcm')) {
 			throw new DataMissingException('Height');
 		}
-		return calculations.math.stdDeviation(amd_stats[sex]['Heightcm'], age, this.Heightcm);
+		return stdDeviation(amd_stats[sex]['Heightcm'], age, this.Heightcm);
 	}
 
 	ds_weight() {
@@ -55,13 +57,13 @@ class PatientRelated extends FolderPage {
 			throw new DataMissingException('sex');
 		}
 		var age = this.ageAtConsultTime();
-		if (typeof(age) != 'number') {
+		if (typeof (age) != 'number') {
 			throw new DataMissingException('Age');
 		}
 		if (!this.isNotZero('Weightkg')) {
 			throw new DataMissingException('Weight');
 		}
-		return calculations.math.stdDeviation(amd_stats[sex]['Weightkg'], age, this.Weightkg);
+		return stdDeviation(amd_stats[sex]['Weightkg'], age, this.Weightkg);
 	}
 
 	wh() {
@@ -71,7 +73,7 @@ class PatientRelated extends FolderPage {
 		if (!this.isNotZero('Weightkg')) {
 			throw new DataMissingException('Weight');
 		}
-		return this.Weightkg/this.Heightcm;
+		return this.Weightkg / this.Heightcm;
 	}
 
 	ds_weight_height() {
@@ -85,7 +87,7 @@ class PatientRelated extends FolderPage {
 		if (!this.isNotZero('Weightkg')) {
 			throw new DataMissingException('Weight');
 		}
-		return calculations.math.stdDeviation(amd_stats[sex]['wh'], this.Heightcm, this.Weightkg);
+		return stdDeviation(amd_stats[sex]['wh'], this.Heightcm, this.Weightkg);
 	}
 
 	bmi() {
@@ -104,10 +106,10 @@ class PatientRelated extends FolderPage {
 			throw new DataMissingException('sex');
 		}
 		var age = this.ageAtConsultTime();
-		if (typeof(age) != 'number') {
+		if (typeof (age) != 'number') {
 			throw new DataMissingException('Age');
 		}
-		return calculations.math.stdDeviation(amd_stats[sex]['bmi'], age, this.bmi());
+		return stdDeviation(amd_stats[sex]['bmi'], age, this.bmi());
 	}
 
 	isLocked() {

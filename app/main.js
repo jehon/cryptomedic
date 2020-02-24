@@ -67,6 +67,17 @@ window.template = template;
 import goThere from './js/goThere.js';
 window.goThere = goThere;
 
+import CRUD from './models/CRUD.js';
+window.CRUD = CRUD;
+
+import FolderPage from './models/FolderPage.js';
+window.FolderPage = FolderPage;
+
+import PatientRelated from './models/PatientRelated.js';
+window.PatientRelated = PatientRelated;
+
+
+
 import './elements/bugreporting.js';
 
 // Angular 1.x
