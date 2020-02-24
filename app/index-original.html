@@ -8,13 +8,53 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <script>
-    window.Polymer = {
-      useNativeCSSProperties: true
-    };
+    /* Test if all necessary technologies are present */
+    (function () {
+      const shouldUpgrade = function () {
+        window.location.href = '/static/upgrade.html';
+      };
+
+      // Test custom elements
+      // Ok since 2018 except Edge
+      if (!ShadowRoot || !customElements) {
+        shouldUpgrade();
+      }
+
+      // Test input[type=date]
+      // Ok since 2015 except Safari
+      // @See https://stackoverflow.com/a/10199306/1954789
+      var input = document.createElement('input');
+      input.setAttribute('type', 'date');
+
+      var notADateValue = 'not-a-date';
+      input.setAttribute('value', notADateValue);
+
+      if (input.value === notADateValue) {
+        shouldUpgrade('input[type=date]');
+      }
+    })();
+
   </script>
   <script nomodule>
+    /* Test if all necessary technologies are present */
+    // Ok since 2019 except Opera mini
     // We need a browser that support modules
     window.location.href = '/static/upgrade.html';
+  </script>
+  <script>
+    // Test cookies
+    (function () {
+      var cookieEnabled = (navigator.cookieEnabled) ? true : false;
+
+      if (typeof (navigator.cookieEnabled) == 'undefined' && !cookieEnabled) {
+        document.cookie = 'testcookie';
+        cookieEnabled = (document.cookie.indexOf('testcookie') != -1) ? true : false;
+      }
+      if (!cookieEnabled) {
+        alert('Your cookie are disabled. Please enable them.\nVos cookies sont désactivés. Merci de les activer.');
+        console.error('Cookies are disabled');
+      }
+    })();
   </script>
 
   <!-- Catch errors -->
@@ -37,8 +77,6 @@
   <!-- - - - - - - - - - - - - -->
   <!-- JS - custom             -->
   <!-- - - - - - - - - - - - - -->
-  <script type='text/javascript' src='../static/js/start.js'></script>
-
   <script type='text/javascript' src='../static/models/0CRUD.js'></script>
   <script type='text/javascript' src='../static/models/Price.js'></script>
 
