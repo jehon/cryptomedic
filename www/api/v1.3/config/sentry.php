@@ -1,7 +1,7 @@
 <?php
 
 if (!defined("RELEASE_FILE")) {
-	define("RELEASE_FILE", __dir__ . "/../../../../www/release_version.txt");
+	define("RELEASE_FILE", __dir__ . "/../../../../www/build/release_version.txt");
 }
 
 if (file_exists(constant("RELEASE_FILE"))) {

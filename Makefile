@@ -51,7 +51,6 @@ clean: deploy-unmount
 	rm -fr "target/"
 	find . -name "*.log" -delete
 	rm -fr www/build
-	rm -f www/static/index.html
 
 	$(call ensure_folder_empty,www/api/$(VAPI)/bootstrap/cache/)
 	$(call ensure_folder_empty,www/api/$(VAPI)/app/public)
@@ -219,9 +218,9 @@ www/api/$(VAPI)/vendor/.dependencies: www/api/$(VAPI)/composer.json www/api/$(VA
 #
 #
 .PHONY: build
-build: www/static/index.html
+build: www/build/index.html
 
-www/static/index.html: node_modules/.dependencies package.json package-lock.json $(call recursive-dependencies,app/,www/static/index.html)
+www/build/index.html: node_modules/.dependencies package.json package-lock.json $(call recursive-dependencies,app/,www/build/index.html)
 	npm run build
 
 #

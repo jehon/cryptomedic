@@ -2,9 +2,9 @@
 
 'use strict';
 
-// http://localhost:5555/static/index.html#/folder/6/file/RicketConsult/3
+// http://localhost:5555/build/index.html#/folder/6/file/RicketConsult/3
 
-(function() {
+(function () {
 	class XPatientRelated extends XWaitingFolder {
 		constructor() {
 			super();
@@ -14,7 +14,7 @@
 		_nextAppointment() {
 			const today = date2CanonicString(new Date(), true);
 			var next = '';
-			this.folder.getListByType(Appointment).forEach((v, _k) => { 
+			this.folder.getListByType(Appointment).forEach((v, _k) => {
 				if (v.Nextappointment > today) {
 					if (!next || v.Nextappointment < next) {
 						next = v.Nextappointment;
