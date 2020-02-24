@@ -52,7 +52,7 @@ sftp_exec() {
 				| grep -v "Connected to" \
 				| grep -v "Couldn't create directory" \
 				| grep -v "^sftp" \
-				| while read R ; do
+				| while read -r R ; do
 					echo "$R"
 					if [[ "$R" =~ "No such file or directory" ]]; then
 						echo "Problem uploading file" >&2
@@ -122,7 +122,7 @@ echo "-------------- Differences --------------"
 
 if [ "$1" == "commit" ]; then
     echo "*** Commiting ***"
-	# cat "$TMP"deploy-diff-5-sftp-commands.txt | sftp_exec
+	sftp_exec < "$TMP"deploy-diff-5-sftp-commands.txt
 
     # echo "Upgrading database"
     # wget -O - --quiet --content-on-error "http://www.cryptomedic.org/maintenance/patch_db.php?pwd=${CRYPTOMEDIC_DB_UPGRADE}"
