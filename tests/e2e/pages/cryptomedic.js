@@ -3,11 +3,13 @@
 /* global JHElement */
 
 var authenticated = false;
+var timestampStart = 0;
 
 module.exports = {
 	elements: {},
 	commands: [{
 		authenticate_fillIn: function (login) {
+			timestampStart = Date.now();
 			if (!login) {
 				throw new Error('Cryptomedic: Authenticate expect parameter 1 to be the login');
 			}
@@ -22,7 +24,7 @@ module.exports = {
 			this.myComponentExecute('x-login-status >>> button#login', function () { JHElement.fireOn(this, 'click'); });
 
 			this.getLog('browser', function (result) {
-				console.log(result);
+				console.log(`+${result.timestamp - timestampStart} [${result.level}] ${result.source}: ${result.message}`);
 			});
 
 			this.waitForElementNotPresent('x-login-status[requesting]');
