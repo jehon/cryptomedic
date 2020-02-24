@@ -76,7 +76,38 @@ window.FolderPage = FolderPage;
 import PatientRelated from './models/PatientRelated.js';
 window.PatientRelated = PatientRelated;
 
+import Appointment from './models/Appointment.js';
+window.Appointment = Appointment;
 
+import ClubFoot from './models/ClubFoot.js';
+window.ClubFoot = ClubFoot;
+
+import Price from './models/Price.js';
+window.Price = Price;
+
+import OtherConsult from './models/OtherConsult.js';
+window.OtherConsult = OtherConsult;
+
+import RicketConsult from './models/RicketConsult.js';
+window.RicketConsult = RicketConsult;
+
+import Bill from './models/Bill.js';
+window.Bill = Bill;
+
+import Folder from './models/Folder.js';
+window.Folder = Folder;
+
+import Patient from './models/Patient.js';
+window.Patient = Patient;
+
+import Surgery from './models/Surgery.js';
+window.Surgery = Surgery;
+
+import Payment from './models/Payment.js';
+window.Payment = Payment;
+
+import Picture from './models/Picture.js';
+window.Picture = Picture;
 
 import './elements/bugreporting.js';
 

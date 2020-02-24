@@ -1,8 +1,7 @@
-/* global PatientRelated */
 
-'use strict';
+import PatientRelated from './PatientRelated.js';
 
-class Appointment extends PatientRelated {
+export default class Appointment extends PatientRelated {
 	getModel() {
 		return 'Appointment';
 	}
