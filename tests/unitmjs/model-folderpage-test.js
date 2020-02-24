@@ -1,22 +1,21 @@
-/* eslint-env jasmine */
-/* global webDescribe, JHElement */
-/* global FolderPage */
 
-describe('FolderPage', function() {
-	describe('with empty loader', function() {
+import FolderPage from '../../app/models/FolderPage.js';
+
+describe('FolderPage', function () {
+	describe('with empty loader', function () {
 		var data = new FolderPage();
-		it('should have inheritance ok', function() {
+		it('should have inheritance ok', function () {
 			expect(data instanceof FolderPage).toBeTruthy();
 		});
 	});
 
-	describe('with data loading at construction time', function() {
+	describe('with data loading at construction time', function () {
 		var data = new FolderPage({
 			data1: 'data1',
-			dataArray: [ 1, 2, 3]
+			dataArray: [1, 2, 3]
 		});
 
-		it('should contain all datas', function() {
+		it('should contain all datas', function () {
 			expect(data.data1).toBe('data1');
 			expect(data.dataArray).toContain(1);
 			expect(data.dataArray).toContain(2);
@@ -26,7 +25,7 @@ describe('FolderPage', function() {
 		});
 	});
 
-	it('would interpret notSet correctly', function() {
+	it('would interpret notSet correctly', function () {
 		var data = new FolderPage();
 		expect(data.data1).toBeUndefined();
 		expect(data.isSet('data1')).toBeFalsy();

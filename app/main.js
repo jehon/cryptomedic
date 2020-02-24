@@ -111,6 +111,39 @@ window.Picture = Picture;
 
 import './elements/bugreporting.js';
 
+
+import JHElement from './elements/jh-element.js';
+window.JHElement = JHElement;
+import './elements/x-form.js';
+import './elements/x-overlay.js';
+import './elements/x-waiting.js';
+import './elements/x-waiting-folder.js';
+import XRequestor from './elements/x-requestor.js';
+window.XRequestor = XRequestor;
+import './elements/x-requestor-crud.js';
+import './elements/cryptomedic-data-service.js';
+
+import './elements/jh-codage.js';
+import './elements/jh-script.js';
+import './elements/block-bill-category.js';
+import './elements/block-bill-line.js';
+import './elements/edit-price.js';
+import './elements/x-inline.js';
+import './elements/x-input-date.js';
+import XInputPicture from './elements/x-input-picture.js';
+window.XInputPicture = XInputPicture;
+import './elements/x-login-status.js';
+import './elements/x-patient-related.js';
+import './elements/x-read.js';
+import './elements/x-read-boolean.js';
+import './elements/x-write.js';
+import './elements/x-write-list.js';
+
+import XFile from './elements/x-file.js';
+window.XFile = XFile;
+import './elements/x-file-bill.js';
+import './elements/x-file-bill-summary.js';
+
 // Angular 1.x
 import angular from 'angular';
 import 'angular-route';

@@ -1,10 +1,15 @@
-/* eslint-env jasmine */
-/* global webDescribe, JHElement */
-/* global loadReference, Patient, Folder, RicketConsult, PatientRelated, DataMissingException */
 
-describe('PatientRelated', function() {
-	describe('with TestFolder.test1.json', function() {
-		it('should have correct properties', function() {
+import PatientRelated from '../../app/models/PatientRelated.js';
+import Patient from '../../app/models/Patient.js';
+import Folder from '../../app/models/Folder.js';
+import RicketConsult from '../../app/models/RicketConsult.js';
+import { DataMissingException } from '../../app/js/exceptions.js';
+
+import { loadReference } from './athelpers.js';
+
+describe('PatientRelated', function () {
+	describe('with TestFolder.test1.json', function () {
+		it('should have correct properties', function () {
 			// Go through the rest_service !!!
 			let folder = new Folder(loadReference('FolderTest.test1.json').folder);
 
@@ -24,8 +29,8 @@ describe('PatientRelated', function() {
 			expect(rc.ageAtConsultTime(true)).toBe('16y0m');
 		});
 
-		describe('with ricketConsult_13', function() {
-			it('should have correct statistics', function() {
+		describe('with ricketConsult_13', function () {
+			it('should have correct statistics', function () {
 
 				let folder = new Folder(loadReference('FolderTest.test1.json').folder);
 				let rc = folder.getByTypeAndId(RicketConsult, 13);
@@ -39,7 +44,7 @@ describe('PatientRelated', function() {
 				expect(rc.wh()).toBeCloseTo(0.3363, 3);
 				try {
 					rc.ds_height();
-				} catch(e) {
+				} catch (e) {
 					console.error('ds_height', e, e.message, e.fileName, e.lineNumber);
 				}
 				expect(rc.ds_height()).toBeCloseTo(-9.570, 2);
@@ -50,19 +55,19 @@ describe('PatientRelated', function() {
 		});
 	});
 
-	describe('with patient with sex', function() {
-		it('should throw error everytime', function() {
+	describe('with patient with sex', function () {
+		it('should throw error everytime', function () {
 			let p = new Patient({ 'Sex': 'Male' });
 			var o = new PatientRelated({});
 			o.linkPatient(p);
 
-			expect(function() { o.ageAtConsultTime(); }).toThrow(new DataMissingException('Date'));
-			expect(function() { o.bmi(); }).toThrow(new DataMissingException('Height'));
-			expect(function() { o.wh(); }).toThrow(new DataMissingException('Height'));
-			expect(function() { o.ds_height(); }).toThrow(new DataMissingException('Date'));
-			expect(function() { o.ds_weight(); }).toThrow(new DataMissingException('Date'));
-			expect(function() { o.ds_weight_height(); }).toThrow(new DataMissingException('Height'));
-			expect(function() { o.ds_bmi(); }).toThrow(new DataMissingException('Date'));
+			expect(function () { o.ageAtConsultTime(); }).toThrow(new DataMissingException('Date'));
+			expect(function () { o.bmi(); }).toThrow(new DataMissingException('Height'));
+			expect(function () { o.wh(); }).toThrow(new DataMissingException('Height'));
+			expect(function () { o.ds_height(); }).toThrow(new DataMissingException('Date'));
+			expect(function () { o.ds_weight(); }).toThrow(new DataMissingException('Date'));
+			expect(function () { o.ds_weight_height(); }).toThrow(new DataMissingException('Height'));
+			expect(function () { o.ds_bmi(); }).toThrow(new DataMissingException('Date'));
 		});
 	});
 });

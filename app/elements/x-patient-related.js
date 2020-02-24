@@ -1,37 +1,37 @@
-/* global XWaitingFolder,date2CanonicString,Appointment */
 
-'use strict';
+import XWaitingFolder from './x-waiting-folder.js';
+import date2CanonicString from '../js/date2CanonicString.js';
+import Appointment from '../models/Appointment.js';
 
 // http://localhost:5555/build/index.html#/folder/6/file/RicketConsult/3
 
-(function () {
-	class XPatientRelated extends XWaitingFolder {
-		constructor() {
-			super();
-			this.style.width = '100%';
-		}
+export default class XPatientRelated extends XWaitingFolder {
+	constructor() {
+		super();
+		this.style.width = '100%';
+	}
 
-		_nextAppointment() {
-			const today = date2CanonicString(new Date(), true);
-			var next = '';
-			this.folder.getListByType(Appointment).forEach((v, _k) => {
-				if (v.Nextappointment > today) {
-					if (!next || v.Nextappointment < next) {
-						next = v.Nextappointment;
-					}
+	_nextAppointment() {
+		const today = date2CanonicString(new Date(), true);
+		var next = '';
+		this.folder.getListByType(Appointment).forEach((v, _k) => {
+			if (v.Nextappointment > today) {
+				if (!next || v.Nextappointment < next) {
+					next = v.Nextappointment;
 				}
-			});
-			return next;
-		}
-
-		adapt() {
-			if (!this.folder) {
-				return;
 			}
-			const patient = this.folder.getPatient();
-			const nextAppointment = this._nextAppointment();
+		});
+		return next;
+	}
 
-			this.innerHTML = `
+	adapt() {
+		if (!this.folder) {
+			return;
+		}
+		const patient = this.folder.getPatient();
+		const nextAppointment = this._nextAppointment();
+
+		this.innerHTML = `
 <fieldset class='related'>
 	<legend>Related Patient</legend>
 	<table>
@@ -91,15 +91,14 @@
 	</table>
 </fieldset>`;
 
-			if (nextAppointment) {
-				this.querySelector('#withAppointment').removeAttribute('hidden');
-				this.querySelector('#withoutAppointment').setAttribute('hidden', 'hidden');
-			} else {
-				this.querySelector('#withAppointment').setAttribute('hidden', 'hidden');
-				this.querySelector('#withoutAppointment').removeAttribute('hidden');
-			}
+		if (nextAppointment) {
+			this.querySelector('#withAppointment').removeAttribute('hidden');
+			this.querySelector('#withoutAppointment').setAttribute('hidden', 'hidden');
+		} else {
+			this.querySelector('#withAppointment').setAttribute('hidden', 'hidden');
+			this.querySelector('#withoutAppointment').removeAttribute('hidden');
 		}
 	}
+}
 
-	window.customElements.define('x-patient-related', XPatientRelated);
-})();
+window.customElements.define('x-patient-related', XPatientRelated);
