@@ -1,7 +1,7 @@
-<IfModule mod_expires.c>
-	ExpiresActive On
+ExpiresActive On
 
-	ExpiresDefault "access plus 1 month"
-	ExpiresByType 	text/javascript		"access plus 1 month"
-	ExpiresByType	text/css			"access plus 1 month"
-</IfModule>
+<FilesMatch "^index.html$">
+	ExpiresDefault A0
+</FilesMatch>
+
+ExpiresDefault "access plus 1 month"

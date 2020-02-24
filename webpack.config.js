@@ -27,7 +27,7 @@ module.exports = {
 	plugins: [
 		new HtmlWebpackPlugin({
 			template: path.join(__dirname, 'app/index-original.html'),
-			filename: path.join(__dirname, 'www/static/index.html'),
+			filename: path.join(__dirname, 'www/build/index.html'),
 			inject: false
 		}),
 		new webpack.HashedModuleIdsPlugin()
