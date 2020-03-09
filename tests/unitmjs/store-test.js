@@ -5,7 +5,7 @@ import store, {
 	ACT_USER_LOGIN,
 	ACT_USER_LOGOUT,
 	ACT_DEFINITIONS_STORE
-} from '../../app/state/store.js';
+} from '../../app/js/store.js';
 import { loadReference } from './athelpers.js';
 
 describe('store', function () {

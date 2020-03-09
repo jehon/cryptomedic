@@ -1,5 +1,5 @@
 
-import TimedMap from '../../app/objects/timedMap.js';
+import TimedMap from '../../app/js/timedMap.js';
 
 describe('timedMap-test', function () {
 	it('should exists a timeCache class', () => {
