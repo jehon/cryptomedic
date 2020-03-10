@@ -79,7 +79,8 @@ module.exports = function (config) {
 		proxies: {
 			'/static/': '/base/static/',
 			'/elements/': '/base/static/elements/',
-			'/build/bootstrap/': '/base/build/bootstrap/'
+			'/build/bootstrap/': '/base/build/bootstrap/',
+			'/resources/': '/base/build/resources/'
 		},
 	};
 
