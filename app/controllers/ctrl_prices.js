@@ -1,14 +1,13 @@
-/* global getDataService,formGetContent */
-/* exported ctrl_prices */
 
-'use strict';
+import getDataService from '../js/getDataService.js';
+import { formGetContent } from '../js/form.js';
 
-function ctrl_prices($scope, $timeout) {
+export default function ctrl_prices($scope, $timeout) {
 	$scope.prices = {};
 	$scope.edit = false;
 	$scope.creating = false;
 
-	$scope.refresh = function() {
+	$scope.refresh = function () {
 		getDataService('#pricesRequestor')
 			.then(dataService => dataService.list())
 			.then(data => {
@@ -37,20 +36,20 @@ function ctrl_prices($scope, $timeout) {
 	};
 
 	// Filter elements out that does not need to be displayed !
-	$scope.getElements = function() {
+	$scope.getElements = function () {
 		if (!$scope.prices || $scope.prices.length == 0 || !$scope.prices[0]) {
 			return [];
 		}
 		let list = Object.keys($scope.prices[0]);
 		list = list.filter(v => {
-			if (v[0] == '$')                                { return false; }
-			if (v[0] == '_')                                { return false; }
-			if (v == 'created_at')                          { return false; }
-			if (v == 'updated_at')                          { return false; }
-			if (v == 'datefrom')                            { return false; }
-			if (v == 'dateto')                              { return false; }
-			if (v == 'lastuser')                            { return false; }
-			if (v == 'id')                                  { return false; }
+			if (v[0] == '$') { return false; }
+			if (v[0] == '_') { return false; }
+			if (v == 'created_at') { return false; }
+			if (v == 'updated_at') { return false; }
+			if (v == 'datefrom') { return false; }
+			if (v == 'dateto') { return false; }
+			if (v == 'lastuser') { return false; }
+			if (v == 'id') { return false; }
 			if (v.substr(0, 21) == 'socialLevelPercentage') { return false; }
 			return true;
 		});
@@ -66,11 +65,11 @@ function ctrl_prices($scope, $timeout) {
 	//   sinon: ajout d'un nouveau
 	//
 
-	$scope.canAddOne = function() {
+	$scope.canAddOne = function () {
 		if (!$scope.prices) {
 			return false;
 		}
-		for(let i of Object.keys($scope.prices)) {
+		for (let i of Object.keys($scope.prices)) {
 			if ($scope.prices[i]._editable) {
 				return false;
 			}
@@ -81,13 +80,13 @@ function ctrl_prices($scope, $timeout) {
 	//
 	// Create a new price list if possible
 	//
-	$scope.actionCreate = function() {
+	$scope.actionCreate = function () {
 		// Ask for the various parameters before creating the new price
 
 		$scope.creating = true;
 	};
 
-	$scope.doCreate = function() {
+	$scope.doCreate = function () {
 		// Create the price server-side, and then edit it here...
 		let updatedData = formGetContent('#form_creating', {});
 		let pivotDate = new Date(updatedData.pivotDate);
@@ -97,7 +96,7 @@ function ctrl_prices($scope, $timeout) {
 
 		if (pivotDate < limit) {
 			this.error_date = true;
-			return ;
+			return;
 		}
 		this.error_date = false;
 
@@ -114,32 +113,32 @@ function ctrl_prices($scope, $timeout) {
 	//
 	// Edit an existing price list
 	//
-	$scope.actionEdit = function(index) {
+	$scope.actionEdit = function (index) {
 		$scope.creating = false;
 		$scope.edit = index;
 
-		$timeout(function(){
-			for(let k of Object.keys($scope.prices[index])) {
+		$timeout(function () {
+			for (let k of Object.keys($scope.prices[index])) {
 				$scope.updateRadio(k, $scope.prices[index][k]);
 			}
 		});
 	};
 
-	// 
+	//
 	// Finish editing -> save modifications
-	// 
-	$scope.doSave = function() {
+	//
+	$scope.doSave = function () {
 		let updatedData = formGetContent('#editForm', $scope.prices[$scope.edit]);
 		getDataService('#pricesRequestor')
 			.then(dataService => dataService.update(updatedData))
-			.then(function(data) {
-				for(let i of Object.keys($scope.prices)) {
+			.then(function (data) {
+				for (let i of Object.keys($scope.prices)) {
 					if ($scope.prices[i].id == data.id) {
 						$scope.prices[i] = data;
 					}
 				}
 				$scope.safeApply();
-				$scope.$emit('message', { 'level': 'success', 'text': 'The user \'' + $scope.edit.username + '\' has been saved successfully.'});
+				$scope.$emit('message', { 'level': 'success', 'text': 'The user \'' + $scope.edit.username + '\' has been saved successfully.' });
 				$scope.doCancel();
 			});
 	};
@@ -147,27 +146,26 @@ function ctrl_prices($scope, $timeout) {
 	//
 	// Delete an existing price list
 	//
-	$scope.doDelete = function(index) {
+	$scope.doDelete = function (index) {
 		getDataService('#pricesRequestor')
 			.then(dataService => dataService.delete($scope.prices[index].id))
 			.then(() => $scope.doCancel())
-			.then(() => $scope.refresh())
-		;
+			.then(() => $scope.refresh());
 	};
 
-	// 
+	//
 	// Finish editing -> cancel
-	// 
-	$scope.doCancel = function() {
+	//
+	$scope.doCancel = function () {
 		$scope.edit = false;
 		$scope.creating = false;
 		$scope.safeApply();
 	};
 
-	$scope.updateRadio = function(k, val) {
+	$scope.updateRadio = function (k, val) {
 		let input = document.querySelector('input[name=\'' + k + '\']');
 		if (input === null) {
-			return ;
+			return;
 		}
 		if (val == -1 || val == 1) {
 			input.style.visibility = 'hidden';
@@ -180,4 +178,4 @@ function ctrl_prices($scope, $timeout) {
 	$scope.refresh();
 }
 
-ctrl_prices.$inject = [ '$scope', '$timeout' ];
+ctrl_prices.$inject = ['$scope', '$timeout'];

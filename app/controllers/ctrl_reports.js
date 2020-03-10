@@ -1,21 +1,22 @@
-/* global getPref,setPref,date2CanonicString,template,ExcellentExport,jQuery */
-/* global formGetContent,getDataService */
-/* exported ctrl_reports */
+import { formGetContent } from '../js/form.js';
+import { getPref, setPref } from '../js/prefs.js';
+import getDataService from '../js/getDataService.js';
+import date2CanonicString from '../js/date2CanonicString.js';
+import template from '../js/template.js';
+import ExcellentExport from '../../node_modules/excellentexport/dist/excellentexport.js';
 
-'use strict';
-
-function ctrl_reports($scope, $routeParams, $sce) {
+export default function ctrl_reports($scope, $routeParams, $sce) {
 	var report = $routeParams['report'];
 	$scope.values = getPref('report', {
-		center   : '',
-		examiner : '',
-		period   : 'month',
-		activity : '',
-		day      : new Date(),
-		month    : date2CanonicString(new Date(), true).substring(0, 7),
-		year     : date2CanonicString(new Date(), true).substring(0, 4)
+		center: '',
+		examiner: '',
+		period: 'month',
+		activity: '',
+		day: new Date(),
+		month: date2CanonicString(new Date(), true).substring(0, 7),
+		year: date2CanonicString(new Date(), true).substring(0, 4)
 	});
-	for(var k in $scope.values) {
+	for (var k in $scope.values) {
 		if ($scope.values[k] === null) {
 			$scope.values[k] = '';
 		}
@@ -28,16 +29,16 @@ function ctrl_reports($scope, $routeParams, $sce) {
 		'activity': {
 			name: 'Activity (daily/monthly) Report',
 			description: 'If you want to know your activity, choose this report.<br>'
-        + 'Options: the day, and optionnaly the examiner, the center and type of activity (workshop / consult / surgical / ...).<br>',
-			params: [ 'period', 'center', 'examiner', 'activity' ],
+				+ 'Options: the day, and optionnaly the examiner, the center and type of activity (workshop / consult / surgical / ...).<br>',
+			params: ['period', 'center', 'examiner', 'activity'],
 			templateUrl: template('report', 'activity')
 		},
 		'consultations': {
 			name: 'Consultations planned',
 			description: 'List of consultations planned on a specific day in a specific center.<br>'
-        + 'See also the button in the menu<br>'
-        + 'Options: the day and the center.',
-			params: [ 'day', 'center' ],
+				+ 'See also the button in the menu<br>'
+				+ 'Options: the day and the center.',
+			params: ['day', 'center'],
 			fixedParams: {
 				period: 'day'
 			},
@@ -46,29 +47,29 @@ function ctrl_reports($scope, $routeParams, $sce) {
 		'statistical': {
 			name: 'Statistical Report',
 			description: 'If you want to know the activity of the SARPV CDC on a period, choose this report',
-			params: [ 'period', 'center', 'examiner' ],
+			params: ['period', 'center', 'examiner'],
 			dataGenerator: 'statistical',
 			templateUrl: template('report', 'statistical')
 		},
 		'surgical': {
 			name: 'Surgical Report',
 			description: 'Follow up of the surgical activity of the period',
-			params: [ 'period' ],
+			params: ['period'],
 			dataGenerator: 'surgical',
 			templateUrl: template('report', 'surgery')
 		}
 	};
 
-	for(var r in $scope.reports) {
+	for (var r in $scope.reports) {
 		// Make the content 'trustable' to be shown as html
 		$scope.reports[r].description = $sce.trustAsHtml($scope.reports[r].description);
 	}
 
-	$scope.reportName = function() {
+	$scope.reportName = function () {
 		if (!$scope.reports[report]) return false;
 		var r = $scope.reports[report];
 		var rname = r.name;
-		for(var p in r.params) {
+		for (var p in r.params) {
 			if ($scope.values[r.params[p]]) {
 				rname = rname + ' - ' + $scope.values[r.params[p]];
 			}
@@ -76,14 +77,14 @@ function ctrl_reports($scope, $routeParams, $sce) {
 		return rname;
 	};
 
-	$scope.getReport = function() {
+	$scope.getReport = function () {
 		if (report) {
 			return $scope.reports[report];
 		}
 		return false;
 	};
 
-	$scope.isParam = function(name) {
+	$scope.isParam = function (name) {
 		if (!$scope.reports[report]) return false;
 
 		if (($scope.reports[report]['params'].indexOf('period') > -1)) {
@@ -94,7 +95,7 @@ function ctrl_reports($scope, $routeParams, $sce) {
 		return $scope.reports[report]['params'].indexOf(name) > -1;
 	};
 
-	$scope.refresh = function() {
+	$scope.refresh = function () {
 		if (!report) {
 			return;
 		}
@@ -105,7 +106,7 @@ function ctrl_reports($scope, $routeParams, $sce) {
 		$scope.values = newValues;
 
 		var prefs = {};
-		for(var p in $scope.reports[report].params) {
+		for (var p in $scope.reports[report].params) {
 			let n = $scope.reports[report].params[p];
 			let v = $scope.values[n];
 			if (n == 'period') {
@@ -118,7 +119,7 @@ function ctrl_reports($scope, $routeParams, $sce) {
 		setPref('report', prefs);
 
 		var dataGenerator = report;
-		if (typeof($scope.reports[report].dataGenerator) != 'undefined') {
+		if (typeof ($scope.reports[report].dataGenerator) != 'undefined') {
 			dataGenerator = $scope.reports[report].dataGenerator;
 		}
 		if ($scope.reports[report].fixedParams) {
@@ -133,7 +134,7 @@ function ctrl_reports($scope, $routeParams, $sce) {
 				$scope.result = true;
 				$scope.error = 'Invalid period (' + period + ')';
 				$scope.safeApply();
-				return ;
+				return;
 			}
 		}
 
@@ -165,10 +166,10 @@ function ctrl_reports($scope, $routeParams, $sce) {
 			});
 	};
 
-	$scope.generate = function($event) {
+	$scope.generate = function ($event) {
 		document.querySelectorAll('#report_table .online').forEach(el => el.parentNode.removeChild(el));
 		document.querySelectorAll('#report_table jh-codage').forEach(el => el.parentNode.replaceChild(
-			document.createRange().createContextualFragment(`<span>${el.getAttribute('calculated-translated')}</span>`), 
+			document.createRange().createContextualFragment(`<span>${el.getAttribute('calculated-translated')}</span>`),
 			el
 		)
 		);
@@ -179,4 +180,4 @@ function ctrl_reports($scope, $routeParams, $sce) {
 	};
 }
 
-ctrl_reports.$inject = [ '$scope', '$routeParams', '$sce' ];
+ctrl_reports.$inject = ['$scope', '$routeParams', '$sce'];

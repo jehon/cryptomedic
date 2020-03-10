@@ -1,54 +1,53 @@
-/* global goThere,getDataService */
-/* exported ctrl_home */
 
-'use strict';
+import getDataService from '../js/getDataService.js';
+import goThere from '../js/goThere.js';
 
-function ctrl_home($scope) {
-	if (typeof($scope.entryyear) == 'undefined') {
+export default function ctrl_home($scope) {
+	if (typeof ($scope.entryyear) == 'undefined') {
 		$scope.searched = false;
 		$scope.entryyear = (new Date()).getFullYear();
 		$scope.entryorder = '';
 	}
 
-	$scope.resetSearched = function() {
+	$scope.resetSearched = function () {
 		$scope.searched = false;
 	};
 
-	$scope.checkReference = function() {
+	$scope.checkReference = function () {
 		getDataService()
 			.then(dataService => dataService.checkReference($scope.entryyear, $scope.entryorder))
-			.then(function(data) {
+			.then(function (data) {
 				if (!data.id) {
 					$scope.searched = true;
 				} else {
-					setTimeout(function() {
+					setTimeout(function () {
 						goThere('/folder/' + data.id);
 					}, 1);
 				}
-			}, function(data) {
+			}, function (data) {
 				console.error(data);
 			});
 		$scope.searched = true;
 	};
 
-	$scope.createReference = function() {
+	$scope.createReference = function () {
 		getDataService()
 			.then(dataService => dataService.createReference($scope.entryyear, $scope.entryorder))
-			.then(function(data) {
+			.then(function (data) {
 				// end the busy mode
-				setTimeout(function() {
+				setTimeout(function () {
 					goThere('/folder/' + data.id + '/edit');
 				}, 1);
-			}, function(data) {
+			}, function (data) {
 				console.error(data);
 			});
 		$scope.searched = true;
 	};
 
-	$scope.generateReference = function() {
+	$scope.generateReference = function () {
 		goThere('/folder/-1/edit');
 		return;
 	};
 }
 
-ctrl_home.$inject = [ '$scope' ];
+ctrl_home.$inject = ['$scope'];

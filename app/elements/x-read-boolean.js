@@ -27,7 +27,7 @@ export default class XReadBoolean extends JHElement {
 	adapt() {
 		super.adapt();
 
-		this.shadowRoot.querySelector('img').setAttribute('src', `${selfURL}/resources/boolean-${this._value ? 'true' : 'false'}.gif`);
+		this.shadowRoot.querySelector('img').setAttribute('src', `/resources/boolean-${this._value ? 'true' : 'false'}.gif`);
 	}
 }
 
