@@ -205,7 +205,7 @@ class t {
         $this->res .= "<span id='{$this->jsId}'>{{ {$this->fieldGetKey()} | date:'{static::DATETIMEFORMAT}' }}</span>";
         break;
       case static::TYPE_BOOLEAN:
-        $this->res .= "<read-boolean ng-attr-value='{{ {$this->fieldGetKey()} }}'></read-boolean>";
+        $this->res .= "<x-read-boolean ng-attr-value='{{ {$this->fieldGetKey()} }}'></x-read-boolean>";
         break;
       case static::TYPE_LIST:
         $this->res .= "<span id='{$this->jsId}' name='{$this->field}'>{{ {$this->fieldGetKey()} }}</span>";
