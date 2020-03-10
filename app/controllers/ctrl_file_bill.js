@@ -1,16 +1,18 @@
-/* global Payment,goThere,extractPrefsFile,store,formGetContent,getDataService */
-/* exported ctrl_file_bill */
 
-'use strict';
+import store from '../js/store.js';
+import Payment from '../models/Payment.js';
+import { formGetContent } from '../js/form.js';
+import { extractPrefsFile } from '../js/prefs.js';
+import getDataService from '../js/getDataService.js';
 
-function ctrl_file_bill($scope, $element) {
+export default function ctrl_file_bill($scope, $element) {
 	/*
       Prices are at
           store.definitions.prices
     */
 
 
-	const getPrices = function() {
+	const getPrices = function () {
 		const definitions = store.getState().definitions;
 		if (definitions == false) {
 			return false;
@@ -33,16 +35,16 @@ function ctrl_file_bill($scope, $element) {
 	});
 	$scope.currentFile().calculatePriceId(getPrices());
 
-	$scope.$watch('currentFile().sl_numberOfHouseholdMembers', function() {
+	$scope.$watch('currentFile().sl_numberOfHouseholdMembers', function () {
 		$scope.currentFile().ratioSalary();
 	});
 
-	$scope.$watch('currentFile().sl_familySalary', function() {
+	$scope.$watch('currentFile().sl_familySalary', function () {
 		$scope.currentFile().ratioSalary();
 	});
 
 	// Used in bill_summary
-	$scope.isEmpty = function(value) {
+	$scope.isEmpty = function (value) {
 		if (value == '' || value == '0' || value == 0 || value == '-1' || value == -1 || value == null) {
 			return 'emptyValue';
 		}
@@ -55,14 +57,14 @@ function ctrl_file_bill($scope, $element) {
 
 	$scope.paymentEditor = new Payment();
 
-	$scope.paymentsList = function() {
+	$scope.paymentsList = function () {
 		if ($scope.folder) {
 			return $scope.folder.getFilesRelatedToBill($scope.subid);
 		}
 		return [];
 	};
 
-	$scope.getPaymentTotal = function() {
+	$scope.getPaymentTotal = function () {
 		if (!$scope.folder) {
 			return '?';
 		}
@@ -71,10 +73,10 @@ function ctrl_file_bill($scope, $element) {
 		}, 0);
 	};
 
-	$scope.actionAddPayment = function() {
+	$scope.actionAddPayment = function () {
 		if (!$scope.actionValidate('#paymentForm')) {
 			alert('You have errors in your data. Please correct them and try again');
-			return ;
+			return;
 		}
 
 		let updatedData = formGetContent('#paymentForm', new Payment());
@@ -87,28 +89,30 @@ function ctrl_file_bill($scope, $element) {
 
 		getDataService()
 			.then(dataService => dataService.createOrSaveFile(updatedData))
-			.then(function(folder) {
+			.then(function (folder) {
 				// The data is refreshed by navigating away...
-				$scope.$emit('message', { 'level': 'success', 'text': 'The Payment has been saved.'});
+				$scope.$emit('message', { 'level': 'success', 'text': 'The Payment has been saved.' });
 				$scope.folder = folder;
 				$scope.paymentEditor = new Payment();
 				$scope.safeApply();
 			});
 	};
 
-	$scope.actionDeletePayment = function(id) {
+	$scope.actionDeletePayment = function (id) {
 		getDataService()
 			.then(dataService => dataService.deleteFile($scope.folder.getByTypeAndId(Payment, id)))
-			.then(function(folder) {
+			.then(function (folder) {
 				// The data is refreshed by navigating away...
-				$scope.$emit('message', { 'level': 'success', 'text': 'The Payment has been deleted.'});
+				$scope.$emit('message', { 'level': 'success', 'text': 'The Payment has been deleted.' });
 				$scope.folder = folder;
 				$scope.paymentEditor = new Payment();
 				$scope.safeApply();
 			});
 	};
 
-	$scope.actionEditPayment = function(id) {
+	$scope.actionEditPayment = function (id) {
 		$scope.paymentEditor = new Payment($scope.folder.getByTypeAndId(Payment, id));
 	};
 }
+
+ctrl_file_bill.$inject = ['$scope', '$element'];

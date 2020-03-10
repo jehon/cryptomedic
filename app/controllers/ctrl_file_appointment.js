@@ -1,12 +1,10 @@
-/* global date2CanonicString */
-/* exported ctrl_file_appointment */
 
-'use strict';
+import date2CanonicString from '../js/date2CanonicString.js';
 
-function ctrl_file_appointment($scope) {
+export default function ctrl_file_appointment($scope) {
 	$scope.today = date2CanonicString(new Date(), true);
 
-	$scope.nextMonth = function(months) {
+	$scope.nextMonth = function (months) {
 		var d = new Date();
 		var nd = new Date(d.getFullYear(), d.getMonth() + months, d.getDate(), 0, 0, 0);
 
@@ -14,4 +12,4 @@ function ctrl_file_appointment($scope) {
 	};
 }
 
-ctrl_file_appointment.$inject = [ '$scope' ];
+ctrl_file_appointment.$inject = ['$scope'];

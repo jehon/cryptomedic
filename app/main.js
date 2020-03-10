@@ -1,8 +1,52 @@
+// Bootstrap 3.3 (https://getbootstrap.com/docs/4.0/getting-started/webpack/)
+import jQuery from 'jquery/src/jquery.js';
+window.jQuery = jQuery;
+import 'bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+import './controllers/mainApp.js';
+
+import './elements/jh-i18n.js';
+import './elements/bugreporting.js';
+
+import JHElement from './elements/jh-element.js';
+window.JHElement = JHElement;
+import './elements/x-form.js';
+import './elements/x-overlay.js';
+import './elements/x-waiting.js';
+import './elements/x-waiting-folder.js';
+import XRequestor from './elements/x-requestor.js';
+window.XRequestor = XRequestor;
+import './elements/x-requestor-crud.js';
+import './elements/cryptomedic-data-service.js';
+
+import './elements/jh-codage.js';
+import './elements/jh-script.js';
+import './elements/block-bill-category.js';
+import './elements/block-bill-line.js';
+import './elements/edit-price.js';
+import './elements/x-inline.js';
+import './elements/x-input-date.js';
+import XInputPicture from './elements/x-input-picture.js';
+window.XInputPicture = XInputPicture;
+import './elements/x-login-status.js';
+import './elements/x-patient-related.js';
+import './elements/x-read.js';
+import './elements/x-read-boolean.js';
+import './elements/x-write.js';
+import './elements/x-write-list.js';
+
+import XFile from './elements/x-file.js';
+window.XFile = XFile;
+import './elements/x-file-bill.js';
+import './elements/x-file-bill-summary.js';
+
+
+/* Should be removed */
 
 import { API_VERSION } from './config.js';
 window.API_VERSION = API_VERSION;
 
-import './elements/jh-i18n.js';
 import nullify from './js/nullify.js';
 window.nullify = nullify;
 
@@ -109,67 +153,28 @@ window.Payment = Payment;
 import Picture from './models/Picture.js';
 window.Picture = Picture;
 
-import './elements/bugreporting.js';
-
-
-import JHElement from './elements/jh-element.js';
-window.JHElement = JHElement;
-import './elements/x-form.js';
-import './elements/x-overlay.js';
-import './elements/x-waiting.js';
-import './elements/x-waiting-folder.js';
-import XRequestor from './elements/x-requestor.js';
-window.XRequestor = XRequestor;
-import './elements/x-requestor-crud.js';
-import './elements/cryptomedic-data-service.js';
-
-import './elements/jh-codage.js';
-import './elements/jh-script.js';
-import './elements/block-bill-category.js';
-import './elements/block-bill-line.js';
-import './elements/edit-price.js';
-import './elements/x-inline.js';
-import './elements/x-input-date.js';
-import XInputPicture from './elements/x-input-picture.js';
-window.XInputPicture = XInputPicture;
-import './elements/x-login-status.js';
-import './elements/x-patient-related.js';
-import './elements/x-read.js';
-import './elements/x-read-boolean.js';
-import './elements/x-write.js';
-import './elements/x-write-list.js';
-
-import XFile from './elements/x-file.js';
-window.XFile = XFile;
-import './elements/x-file-bill.js';
-import './elements/x-file-bill-summary.js';
 
 // Angular 1.x
-import angular from 'angular';
-import 'angular-route';
-
-// Bootstrap 3.3 (https://getbootstrap.com/docs/4.0/getting-started/webpack/)
-import jQuery from 'jquery/src/jquery.js';
-import 'bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
+// import angular from 'angular';
+// import 'angular-route';
 
 // Export to excell
-import ExcellentExport from 'excellentexport';
+// import ExcellentExport from 'excellentexport';
 
 // Add objectPath to the library dynamically
 // https://github.com/webpack-contrib/imports-loader
-import fetchfull from 'imports-loader?objectPath=object-path!fetchfull';
+// import fetchfull from 'imports-loader?objectPath=object-path!fetchfull';
 // import fetchfull        from 'fetchfull';
 
 // html entities decode for jh-script
-import he from 'he';
+// import he from 'he';
 
-window.angular = angular;
-window.jQuery = jQuery;
-window.ExcellentExport = ExcellentExport;
-window.FetchFull = fetchfull;
-window.he = he;
+// window.angular = angular;
+// window.jQuery = jQuery;
+// window.ExcellentExport = ExcellentExport;
+// window.FetchFull = fetchfull;
+// window.he = he;
 
 /* For fetchfull v2 inline */
-import objectPath from 'object-path';
-window.objectPath = objectPath;
+// import objectPath from 'object-path';
+// window.objectPath = objectPath;

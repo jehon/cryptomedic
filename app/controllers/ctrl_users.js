@@ -1,27 +1,25 @@
-/* global getDataService */
-/* exported ctrl_users */
 
-'use strict';
+import getDataService from '../js/getDataService.js';
 
 // TODO: manage change in groups
 
-function ctrl_users($scope) {
+export default function ctrl_users($scope) {
 	$scope.users = {};
 	$scope.edit = false;
 	$scope.password = false;
 
-	$scope.refresh = function() {
+	$scope.refresh = function () {
 		getDataService()
 			.then(dataService => dataService.usersList())
-			.then(function(data) {
+			.then(function (data) {
 				$scope.users = data;
 				$scope.safeApply();
 			});
 	};
 
-	$scope.emailAll = function() {
+	$scope.emailAll = function () {
 		var res = '';
-		for(var i in $scope.users) {
+		for (var i in $scope.users) {
 			if ($scope.users[i].email) {
 				res += $scope.users[i].name + '<' + $scope.users[i].email + '>,';
 			}
@@ -29,54 +27,54 @@ function ctrl_users($scope) {
 		return res;
 	};
 
-	$scope.doAdd = function() {
+	$scope.doAdd = function () {
 		$scope.edit = {
-			'id' : -1
+			'id': -1
 		};
 	};
 
 	// *** EDIT ****
-	$scope.doCancel = function() {
+	$scope.doCancel = function () {
 		$scope.edit = false;
 		$scope.password = false;
 		$scope.safeApply();
 	};
 
-	$scope.doEdit = function(index) {
+	$scope.doEdit = function (index) {
 		$scope.edit = $scope.users[index]; // Put object here
 		$scope.password = false;
 		$scope.safeApply();
 	};
 
-	$scope.doSave = function() {
+	$scope.doSave = function () {
 		if ($scope.edit.id >= 0) {
 			getDataService()
 				.then(dataService => dataService.userUpdate($scope.edit))
-				.then(function(data) {
+				.then(function (data) {
 					$scope.users = data;
 					$scope.safeApply();
-					$scope.$emit('message', { 'level': 'success', 'text': 'The user \'' + $scope.edit.username + '\' has been saved successfully.'});
+					$scope.$emit('message', { 'level': 'success', 'text': 'The user \'' + $scope.edit.username + '\' has been saved successfully.' });
 					$scope.doCancel();
 				});
 		} else {
 			getDataService()
 				.then(dataService => dataService.userAdd($scope.edit))
-				.then(function(data) {
+				.then(function (data) {
 					$scope.users = data;
 					$scope.safeApply();
-					$scope.$emit('message', { 'level': 'success', 'text': 'The user \'' + $scope.edit.username + '\' has been created successfully.'});
+					$scope.$emit('message', { 'level': 'success', 'text': 'The user \'' + $scope.edit.username + '\' has been created successfully.' });
 					// $scope.doShowPassword();
 					$scope.doCancel();
 				});
 		}
 	};
 
-	$scope.doDelete = function() {
+	$scope.doDelete = function () {
 		if (confirm('Are you sure you want to delete user \'' + $scope.edit.name + '\'?')) {
 			getDataService()
 				.then(dataService => dataService.userDelete($scope.edit.id))
-				.then(function(data) {
-					$scope.$emit('message', { 'level': 'success', 'text': 'The user \'' + $scope.edit.username + '\' has been deleted successfully.'});
+				.then(function (data) {
+					$scope.$emit('message', { 'level': 'success', 'text': 'The user \'' + $scope.edit.username + '\' has been deleted successfully.' });
 					$scope.users = data;
 					$scope.doCancel();
 				});
@@ -85,15 +83,15 @@ function ctrl_users($scope) {
 
 	// *** Passwords ****
 
-	$scope.doShowPassword = function(index) {
+	$scope.doShowPassword = function (index) {
 		$scope.password = $scope.users[index];
 	};
 
-	$scope.doSavePassword = function() {
+	$scope.doSavePassword = function () {
 		getDataService()
 			.then(dataService => dataService.userPassword($scope.password.id, $scope.password.newcode))
-			.then(function() {
-				$scope.$emit('message', { 'level': 'success', 'text': 'The password of user \'' + $scope.password.username + '\' has been updated successfully.'});
+			.then(function () {
+				$scope.$emit('message', { 'level': 'success', 'text': 'The password of user \'' + $scope.password.username + '\' has been updated successfully.' });
 				$scope.doCancel();
 				// $scope.safeApply();
 			});
@@ -103,4 +101,4 @@ function ctrl_users($scope) {
 	$scope.refresh();
 }
 
-ctrl_users.$inject = [ '$scope' ];
+ctrl_users.$inject = ['$scope'];
