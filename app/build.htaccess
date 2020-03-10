@@ -1,7 +1,5 @@
+
 ExpiresActive On
 
-<FilesMatch "^index.html$">
-	ExpiresDefault A0
-</FilesMatch>
-
-ExpiresDefault "access plus 1 month"
+ExpiresByType     application/json              "access plus 1 year"
+ExpiresByType     text/javascript				"access plus 1 year"
