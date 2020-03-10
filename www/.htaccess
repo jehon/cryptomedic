@@ -1,3 +1,6 @@
+
+ExpiresActive 	  On
+
 AddType text/css .css
 AddType text/javascript .js
 AddType image/gif .gif
@@ -5,11 +8,10 @@ AddType image/png .png
 AddType image/jpg .jpg
 AddType image/jpg .jpeg
 
-ExpiresActive 	  On
-ExpiresDefault    "access plus 1 hour"
+ExpiresByType 	  text/html                     "A0"
+ExpiresByType     application/json              "A0"
+ExpiresByType     text/javascript				"A0"
+
 ExpiresByType	  text/css						"access plus 1 week"
-ExpiresByType	  text/javascript				"access plus 1 hour"
-ExpiresByType     image/gif   					"access plus 1 year"
-ExpiresByType     image/png   					"access plus 1 year"
-ExpiresByType     image/jpg   					"access plus 1 year"
-ExpiresByType     application/json              A0
+
+ExpiresDefault    "access plus 1 year"
