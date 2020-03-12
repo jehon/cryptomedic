@@ -1,12 +1,15 @@
 
 import JHElement from './jh-element.js';
 import store from '../js/store.js';
-import jQuery from '../../node_modules/jquery/dist/jquery.js';
+
+// We sync over "document" as our EventListener object:
+const XWriteListSetReferences = "XWriteList-setReferences"
 
 const followedElement = Symbol('followedElement');
 const followedCategory = Symbol('followedCategory');
 
-let referencesCB = jQuery.Callbacks('memory');
+let lastReferences = {}; // For memory
+
 store.subscribe(() => {
 	const data = store.getState();
 	if (data.definitions && data.definitions.lists) {
@@ -18,7 +21,8 @@ let uuid = 1;
 
 export default class XWriteList extends JHElement {
 	static setReferences(references = {}) {
-		referencesCB.fire(references);
+		lastReferences = references;
+		document.dispatchEvent(new CustomEvent(XWriteListSetReferences));
 	}
 
 	static get properties() {
@@ -34,13 +38,13 @@ export default class XWriteList extends JHElement {
 		super();
 		this.attachShadow({ mode: 'open' });
 		this._mode = false;
-		this.references = {};
+		this.references = lastReferences;
 
 		this._uuid = uuid++;
 		this[followedElement] = false;
 
-		referencesCB.add((references) => {
-			this.references = references;
+		document.addEventListener(XWriteListSetReferences, () => {
+			this.references = lastReferences;
 			if (this.isInitialized()) {
 				this.onListNameChanged(this._listName);
 			}
