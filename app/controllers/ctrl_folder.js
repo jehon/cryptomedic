@@ -1,6 +1,4 @@
 
-import jQuery from '../../node_modules/jquery/dist/jquery.js';
-
 import Folder from '../models/Folder.js';
 import { formGetContent } from '../js/form.js';
 import { extractPrefsFile } from '../js/prefs.js';
@@ -12,19 +10,19 @@ import date2CanonicString from '../js/date2CanonicString.js';
 
 export default function ctrl_folder($scope, $routeParams) {
 	/*
-   * '/folder/:patient_id/:page?/:subtype?/:subid?/:mode?'
-   *
-   *  '/folder/123                      view the patient file
-   *  '/folder/123/edit                 edit the patient  (page ~> mode)
-   *  '/folder/                         add a patient     (page ~> mode)
-   *  '/folder/123/file/Bills/456       view the sub file
-   *  '/folder/123/file/Bills/456/edit  edit the sub file
-   *  '/folder/123/file/Bills           add a bill
-   *  '/folder/123/summary
-   *  '/folder/123/graphics
-   *  '/folder/123/addfile
-   *
-   */
+	 * '/folder/:patient_id/:page?/:subtype?/:subid?/:mode?'
+	 *
+	 *  '/folder/123                      view the patient file
+	 *  '/folder/123/edit                 edit the patient  (page ~> mode)
+	 *  '/folder/                         add a patient     (page ~> mode)
+	 *  '/folder/123/file/Bills/456       view the sub file
+	 *  '/folder/123/file/Bills/456/edit  edit the sub file
+	 *  '/folder/123/file/Bills           add a bill
+	 *  '/folder/123/summary
+	 *  '/folder/123/graphics
+	 *  '/folder/123/addfile
+	 *
+	 */
 
 	// *** ROUTING ***
 	/*
@@ -121,9 +119,9 @@ export default function ctrl_folder($scope, $routeParams) {
 
 		// Layout
 		if ($scope.mode == 'edit' || $scope.mode == 'add') {
-			jQuery('.modeRead').removeClass('modeRead').addClass('modeWrite');
+			document.querySelectorAll('.modeRead').forEach(e => { e.classList.remove('modeRead'); e.classList.add('modeWrite') });
 		} else {
-			jQuery('.modeWrite').removeClass('modeWrite').addClass('modeRead');
+			document.querySelectorAll('.modeWrite').forEach(e => { e.classList.remove('modeWrite'); e.classList.add('modeRead') });
 		}
 
 		// Date
@@ -193,20 +191,22 @@ export default function ctrl_folder($scope, $routeParams) {
 
 		let updatedData = $scope.rebuildData();
 
-		jQuery(form + ' input[type=number][required]').each(function () {
-			if (jQuery(this).val() == '') {
-				jQuery(this).val(0);
+		const myform = document.querySelector(form);
+
+		myform.querySelectorAll('input[type=number][required]').forEach(e => {
+			if (e.value == '') {
+				e.value = 0;
 			}
 		});
 
-		if (!jQuery(form)[0].checkValidity()) {
-			jQuery('#fileFormSubmit').click();
+		if (!myform.checkValidity()) {
+			document.querySelector('#fileFormSubmit').click();
 			$scope.valide = false;
 		}
 
 		$scope.errors = updatedData.validate();
 
-		if (!jQuery.isEmptyObject($scope.errors)) {
+		if (Object.keys($scope.errors).length > 0) {
 			$scope.valide = false;
 		}
 
