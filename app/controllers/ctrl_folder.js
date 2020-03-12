@@ -10,7 +10,7 @@ import template from '../js/template.js';
 import goThere from '../js/goThere.js';
 import date2CanonicString from '../js/date2CanonicString.js';
 
-export default function ctrl_folder($scope, $location, $routeParams) {
+export default function ctrl_folder($scope, $routeParams) {
 	/*
    * '/folder/:patient_id/:page?/:subtype?/:subid?/:mode?'
    *
@@ -419,4 +419,4 @@ export default function ctrl_folder($scope, $location, $routeParams) {
 	});
 }
 
-ctrl_folder.$inject = ['$scope', '$location', '$routeParams'];
+ctrl_folder.$inject = ['$scope', '$routeParams'];
