@@ -17,7 +17,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt install -y \
 RUN a2enmod expires rewrite
 
 RUN sed -ri -e 's!/var/www/html!/app/www!g' /etc/apache2/sites-available/*.conf
-COPY conf/server/custom.conf /etc/apache2/conf-enabled/
+COPY conf/server/custom.conf /etc/apache2/conf-enabled/99-custom.conf
 COPY conf/server/php.ini /etc/php/7.2/apache2/conf.d/99-php.ini
 
 RUN cd /usr/local/bin && curl -s https://getcomposer.org/installer | php
