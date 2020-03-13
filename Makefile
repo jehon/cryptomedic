@@ -43,7 +43,7 @@ endef
 
 all: start
 
-clean: deploy-unmount
+clean: deploy-unmount stop
 	rm -fr node_modules
 	rm -fr www/maintenance/vendor
 	rm -fr www/api/$(VAPI)/vendor
@@ -86,6 +86,7 @@ deploy-host-key-check:
 		echo "Key is still the same, good!"; \
 	fi
 
+.PHONY: start
 start: setup-structure \
 		docker-started \
 		dependencies \
@@ -103,25 +104,13 @@ start: setup-structure \
 	sleep 5s
 
 .PHONY: docker-started
-docker-started: target/docker-is-running
-target/docker-is-running:
-	@$(call run_in_docker,"server","true") 2>/dev/null \
-		|| $(DOCKERCOMPOSE) up --force-recreate -d
-	$(call run_in_docker,"server","mkdir -p \
-		/tmp/laravel/framework \
-		/tmp/laravel/framework/cache \
-		/tmp/laravel/framework/sessions \
-		/tmp/laravel/framework/views \
-		/tmp/laravel/app \
-		/tmp/laravel/app/public \
-		/tmp/laravel/logs \
-		&& chmod -R 777 /tmp/laravel/")
-	mkdir -p target
-	touch target/docker-is-running
+docker-started:
+	$(DOCKERCOMPOSE) build server
+	$(DOCKERCOMPOSE) up -d
 
+.PHONY: stop
 stop:
 	$(DOCKERCOMPOSE) down || true
-	rm -f target/docker-is-running
 
 #
 #
@@ -129,26 +118,33 @@ stop:
 #
 #
 
+.PHONY: lint
 lint:
 	npm run stylelint
 
+.PHONY: test
 test: test-api test-unit test-e2e test-style
 
+.PHONY: test-api
 test-api: docker-started dependencies-api data-reset
 	$(call run_in_docker,"server","/app/bin/dev-phpunit.sh")
 
+.PHONY: test-api-commit
 test-api-commit: docker-started depencencies.api
 	$(call run_in_docker,"server","/app/bin/dev-phpunit.sh commit")
 
+.PHONY: test-unit
 test-unit: dependencies-node build
 	npm run --silent test-unit
 	npm run --silent test-unit-mjs
 
+.PHONY: test-e2e
 test-e2e: dependencies-node build target/e2e/.tested
 target/e2e/.tested: docker-started data-reset
 	npm run --silent test-e2e
 	touch target/e2e/.tested
 
+.PHONY: test-style
 test-style: target/e2e/.tested
 	npm run --silent test-style
 
@@ -160,15 +156,18 @@ style-update-references:
 #
 # Deploy command
 #
+.PHONY: deploy
 deploy: docker-started
 	bin/cryptomedic-deploy-patch.sh commit
 
+.PHONY: deploy-test
 deploy-test: docker-started
 	bin/cryptomedic-deploy-patch.sh
 
 #
 # Other commands
 # 
+.PHONY: logs
 logs:
 	$(DOCKERCOMPOSE) logs -f -t
 
@@ -230,7 +229,6 @@ www/maintenance/vendor/.dependencies: www/maintenance/composer.json www/maintena
 #
 .PHONY: build
 build: www/build/index.html
-
 www/build/index.html: node_modules/.dependencies package.json package-lock.json $(call recursive-dependencies,app/,www/build/index.html)
 	npm run build
 
@@ -239,11 +237,19 @@ www/build/index.html: node_modules/.dependencies package.json package-lock.json 
 # data
 #
 #
+.PHONY: database-backup
 database-backup:
 	$(call run_in_docker,"mysql", "mysqldump -u root -p$(DBROOTPASS) $(DBNAME)") > $(DB_BASE)
 
+.PHONY: data-reset
 data-reset: docker-started
-	# database
+# Remove all trace of previous sessions
+	$(call run_in_docker,"server","find /tmp/laravel -type f -delete")
+
+# Live folder
+	rsync -a --delete live-for-test/ live/
+
+# Reset database
 	$(call run_in_docker,"mysql"," \
 		mysql -u root -p$(DBROOTPASS) --database=mysql -e \" \
 			USE mysql; \
@@ -255,17 +261,14 @@ data-reset: docker-started
 			SET PASSWORD FOR $(DBUSER) = PASSWORD('$(DBPASS)'); \
 	\" ")
 
-	# Mysql 5.7, 7.0:
-	# ALTER USER 'root' IDENTIFIED WITH mysql_native_password BY 'password';
-	# ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
+# Mysql 5.7, 7.0:
+# 	ALTER USER 'root' IDENTIFIED WITH mysql_native_password BY 'password';
+# 	ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
 
 	cat "conf/database/base.sql" \
 		| $(DOCKERCOMPOSE) exec -T mysql mysql -u root -p$(DBROOTPASS) --database="$(DBNAME)"
 
 	wget -O - --quiet --content-on-error "http://localhost:5555/maintenance/patch_db.php?pwd=$(DBUPDATEPWD)"
-
-	# live folder
-	rsync -a --delete live-for-test/ live/
 
 #
 #
