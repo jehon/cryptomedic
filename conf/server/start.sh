@@ -4,6 +4,18 @@
 # export APACHE_RUN_USER=www-data
 # export APACHE_RUN_GROUP=www-data
 
+echo "Creating folder structure for Cryptomedic"
+mkdir -p \
+		/tmp/laravel/framework \
+		/tmp/laravel/framework/cache \
+		/tmp/laravel/framework/sessions \
+		/tmp/laravel/framework/views \
+		/tmp/laravel/app \
+		/tmp/laravel/app/public \
+		/tmp/laravel/logs
+		
+chmod -R 777 /tmp/laravel/
+
 echo "Should run as: $HOST_UID : $HOST_GID"
 
 GN=$( cat /etc/group | grep ":HOST_GID:" | cut -d ":" -f 1 )
