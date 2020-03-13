@@ -32,7 +32,6 @@ module.exports = function (config) {
 			'build/app-*.js',
 			{ pattern: 'build/**', included: false },
 			{ pattern: 'api/*/tests/references/*.json', included: false },
-			'static/**/*.js',
 			'../tests/unitjs/*.js',
 			{ pattern: 'static/**', included: false },
 		],
