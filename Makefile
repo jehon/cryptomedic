@@ -45,6 +45,7 @@ all: start
 
 clean: deploy-unmount
 	rm -fr node_modules
+	rm -fr www/maintenance/vendor
 	rm -fr www/api/$(VAPI)/vendor
 	rm -fr vendor
 
@@ -195,7 +196,8 @@ target/structure-exists:
 # Install > dependencies
 #
 #
-dependencies: dependencies-node dependencies-api 
+.PHONY: depencencies
+dependencies: dependencies-node dependencies-api depencencies-maintenance
 
 .PHONY: dependencies-node
 dependencies-node: node_modules/.dependencies
@@ -203,6 +205,7 @@ node_modules/.dependencies: package.json package-lock.json
 	npm ci
 	touch node_modules/.dependencies
 
+.PHONY: depencencies-api
 dependencies-api: www/api/$(VAPI)/vendor/.dependencies
 www/api/$(VAPI)/vendor/.dependencies: www/api/$(VAPI)/composer.json www/api/$(VAPI)/composer.lock target/structure-exists docker-started
 	$(call run_in_docker,"server","\
@@ -211,6 +214,14 @@ www/api/$(VAPI)/vendor/.dependencies: www/api/$(VAPI)/composer.json www/api/$(VA
 	")
 	touch www/api/$(VAPI)/vendor/.dependencies
 
+.PHONY: depencencies-maintenance
+depencencies-maintenance: www/maintenance/vendor/.dependencies
+www/maintenance/vendor/.dependencies: www/maintenance/composer.json www/maintenance/composer.lock docker-started
+	$(call run_in_docker,"server","\
+		cd www/maintenance/ \
+		&& composer install \
+	")
+	touch www/maintenance/vendor/.dependencies
 
 #
 #
