@@ -16,16 +16,16 @@ RUN DEBIAN_FRONTEND=noninteractive apt install -y \
 
 RUN a2enmod expires rewrite
 
-COPY conf/server/website.conf /etc/apache2/sites-enabled/website.conf
+COPY website.conf /etc/apache2/sites-enabled/website.conf
 RUN rm -fr /etc/apache2/sites-enabled/000-default.conf
-COPY conf/server/php.ini /etc/php/7.2/apache2/conf.d/99-php.ini
+COPY php.ini /etc/php/7.2/apache2/conf.d/99-php.ini
 
 RUN cd /usr/local/bin && curl -s https://getcomposer.org/installer | php
 RUN ln -s /usr/local/bin/composer.phar /usr/local/bin/composer
 
-COPY conf/server/ssmtp.conf /etc/ssmtp/ssmtp.conf
+COPY ssmtp.conf /etc/ssmtp/ssmtp.conf
 
-COPY conf/server/start.sh /start.sh
+COPY start.sh /start.sh
 RUN chmod +x /start.sh
 
 # https://stackoverflow.com/a/49765176/1954789

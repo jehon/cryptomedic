@@ -27,8 +27,8 @@ services:
 
   server:
     build:
-      context: .
-      dockerfile: conf/server/Dockerfile
+      context: conf/server/
+      dockerfile: Dockerfile
     environment:
       - HOST_UID=${HOST_UID}
       - HOST_GID=${HOST_GID}
@@ -37,7 +37,7 @@ services:
     ports:
       - 5555:80
     # depends_on:
-      # - mysql
+    # - mysql
     volumes:
       - .:/app
 
@@ -45,4 +45,4 @@ services:
     # https://hub.docker.com/r/mailhog/mailhog/
     image: mailhog/mailhog
     ports:
-        - 5551:8025 # web server
+      - 5551:8025 # web server
