@@ -1,6 +1,3 @@
-/* global JHElement */
-/* global readJSON */
-/* exported loadReference, webDescribe, extractPath */
 
 import { API_VERSION } from '../../app/config.js';
 
@@ -13,4 +10,13 @@ export function loadReference(name) {
 
 export function extractPath(url) {
 	return url.replace(/^http.?:\/\/localhost:[0-9]+/, '');
+}
+
+/* TODO: DEPRECATED */
+/* map old version to new one */
+export function webDescribe(title, options, fn) {
+	if (typeof (options) == 'object') {
+		return withHtml(Object.assign({ title }, options), fn);
+	}
+	return withHtml({ title, html: options }, fn);
 }

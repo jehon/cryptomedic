@@ -1,15 +1,19 @@
-/* eslint-env jasmine */
-/* global webDescribe, JHElement */
-/* global store, ACT_DEFINITIONS_STORE */
 
-describe('jh-codage-test', function() {
-	describe('without definitions', function() {
-		beforeEach(function() {
+import { webDescribe } from './athelpers.js';
+
+import '../../app/elements/jh-codage.js';
+
+import store from '../../app/js/store.js';
+import { ACT_DEFINITIONS_STORE } from '../../app/js/store.js';
+
+describe('jh-codage-test', function () {
+	describe('without definitions', function () {
+		beforeEach(function () {
 			store.dispatch({ type: ACT_DEFINITIONS_STORE, payload: false });
 		});
 
-		webDescribe('with value=original', '<jh-codage value=\'original\'></jh-codage>', function(element) {
-			it('should translate correctly when specified in globals', function() {
+		webDescribe('with value=original', '<jh-codage value=\'original\'></jh-codage>', function (element) {
+			it('should translate correctly when specified in globals', function () {
 				store.dispatch({ type: ACT_DEFINITIONS_STORE, payload: false });
 				expect(element()).not.toBeNull();
 				expect(element().shadowRoot).not.toBeNull();
@@ -21,17 +25,19 @@ describe('jh-codage-test', function() {
 		});
 	});
 
-	describe('with cryptomedic', function() {
-		beforeEach(function() {
-			store.dispatch({ type: ACT_DEFINITIONS_STORE, payload: { 
-				codes: {
-					'original': 'codage'
+	describe('with cryptomedic', function () {
+		beforeEach(function () {
+			store.dispatch({
+				type: ACT_DEFINITIONS_STORE, payload: {
+					codes: {
+						'original': 'codage'
+					}
 				}
-			}});
+			});
 		});
 
-		webDescribe('with value empty', '<jh-codage value=\'\'></jh-codage>', function(element) {
-			it('should handle empty values', function() {
+		webDescribe('with value empty', '<jh-codage value=\'\'></jh-codage>', function (element) {
+			it('should handle empty values', function () {
 				expect(element()).not.toBeNull();
 				expect(element().shadowRoot.querySelector('#original').textContent).toBe('');
 				expect(element().shadowRoot.querySelector('#translating')).toBeNull();
@@ -40,8 +46,8 @@ describe('jh-codage-test', function() {
 			});
 		});
 
-		webDescribe('with translated is local', '<jh-codage value=\'original\' translated=\'local\'></jh-codage>', function(element) {
-			it('should translate correctly when specified directly', function() {
+		webDescribe('with translated is local', '<jh-codage value=\'original\' translated=\'local\'></jh-codage>', function (element) {
+			it('should translate correctly when specified directly', function () {
 				expect(element()).not.toBeNull();
 				expect(element().shadowRoot).not.toBeNull();
 				expect(element().shadowRoot.querySelector('#original')).toBeNull();
@@ -51,8 +57,8 @@ describe('jh-codage-test', function() {
 			});
 		});
 
-		webDescribe('with value is original and is translatable', '<jh-codage value=\'original\'></jh-codage>', function(element) {
-			it('should translate correctly when specified in globals', function() {
+		webDescribe('with value is original and is translatable', '<jh-codage value=\'original\'></jh-codage>', function (element) {
+			it('should translate correctly when specified in globals', function () {
 				expect(element()).not.toBeNull();
 				expect(element().shadowRoot).not.toBeNull();
 				expect(element().shadowRoot.querySelector('#original')).toBeNull();
@@ -62,8 +68,8 @@ describe('jh-codage-test', function() {
 			});
 		});
 
-		webDescribe('with value is anything and is not translatable', '<jh-codage value=\'anything\'></jh-codage>', function(element) {
-			it('should translate invalid codes', function() {
+		webDescribe('with value is anything and is not translatable', '<jh-codage value=\'anything\'></jh-codage>', function (element) {
+			it('should translate invalid codes', function () {
 				expect(element()).not.toBeNull();
 				expect(element().shadowRoot.querySelector('#original').textContent).toBe('anything');
 				expect(element().shadowRoot.querySelector('#translating')).toBeNull();
@@ -72,8 +78,8 @@ describe('jh-codage-test', function() {
 			});
 		});
 
-		webDescribe('with value is empty', '<jh-codage value=\'\'></jh-codage>', function(element) {
-			it('should handle changes in values', function() {
+		webDescribe('with value is empty', '<jh-codage value=\'\'></jh-codage>', function (element) {
+			it('should handle changes in values', function () {
 				expect(element()).not.toBeNull();
 				expect(element().shadowRoot.querySelector('#original').textContent).toBe('');
 				expect(element().shadowRoot.querySelector('#translating')).toBeNull();

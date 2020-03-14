@@ -1,6 +1,6 @@
 
-import { evaluatePoly, stdDeviation, sigma } from './js/math.js';
-import { fromBirthDate, toBirthDate, atConsultTime } from './js/age.js';
+import { evaluatePoly, stdDeviation, sigma } from '../../app/js/math.js';
+import { fromBirthDate, toBirthDate, atConsultTime } from '../../app/js/age.js';
 
 describe('calculations', function () {
 	const poly = {

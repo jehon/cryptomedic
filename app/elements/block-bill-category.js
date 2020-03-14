@@ -1,5 +1,6 @@
 
 import JHElement from './jh-element.js';
+import './block-bill-line.js';
 
 const tbody = Symbol('tbody');
 const catTotal = Symbol('catTotal');

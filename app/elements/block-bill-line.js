@@ -1,5 +1,6 @@
 
 import JHElement from './jh-element.js';
+import './x-inline.js';
 
 const title = Symbol('title');
 const price = Symbol('price');
