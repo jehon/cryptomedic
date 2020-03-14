@@ -1,9 +1,6 @@
 
 import JHElement from './jh-element.js';
 
-let selfURL = document.currentScript.src
-	.replace(/\/[^/]*\/?$/, '');
-
 export default class XReadBoolean extends JHElement {
 	static get properties() {
 		return {

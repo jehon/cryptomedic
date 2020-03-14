@@ -1,5 +1,6 @@
 
 import JHElement from './jh-element.js';
+import './x-read-boolean.js';
 
 export default class XRead extends JHElement {
 	static get properties() {

@@ -1,5 +1,7 @@
 
 import JHElement from './jh-element.js';
+import './x-write-list.js';
+import './x-input-date.js';
 
 export default class XWrite extends JHElement {
 	static get properties() {

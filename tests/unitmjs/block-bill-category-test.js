@@ -1,7 +1,10 @@
-/* eslint-env jasmine */
-/* global webDescribe, JHElement */
 
-describe('block-bill-category-test', function() {
+import { webDescribe } from './athelpers.js';
+
+import '../../app/elements/block-bill-category.js';
+import JHElement from '../../app/elements/jh-element.js';
+
+describe('block-bill-category-test', function () {
 	let priceCategory = [
 		{
 			type: 'cat',
@@ -36,22 +39,22 @@ describe('block-bill-category-test', function() {
 		}
 	];
 
-	webDescribe('instanciate without prices', '<block-bill-category category=\'cat\'></block-bill-category>', function(element) {
-		it('should instanciate empty', function() {
+	webDescribe('instanciate without prices', '<block-bill-category category=\'cat\'></block-bill-category>', function (element) {
+		it('should instanciate empty', function () {
 			expect(element().querySelectorAll('tbody > *').length).toBe(0);
 			expect(element().getTotal()).toBe(0);
 		});
 	});
 
-	webDescribe('instanciate with empty bills should be empty', `<block-bill-category value="" price-lines='${JSON.stringify(priceCategory)}' category='cat'></block-bill-category>`, function(element) {
-		it('should instanciate empty', function() {
+	webDescribe('instanciate with empty bills should be empty', `<block-bill-category value="" price-lines='${JSON.stringify(priceCategory)}' category='cat'></block-bill-category>`, function (element) {
+		it('should instanciate empty', function () {
 			expect(element().querySelectorAll('tbody > *').length).toBe(0);
 			expect(element().getTotal()).toBe(0);
 		});
 	});
 
-	webDescribe('instanciate with price and bill', `<block-bill-category value='${JSON.stringify(value)}' price-lines='${JSON.stringify(priceCategory)}' category='cat'></block-bill-category>`, function(element) {
-		it('should instanciate', function() {
+	webDescribe('instanciate with price and bill', `<block-bill-category value='${JSON.stringify(value)}' price-lines='${JSON.stringify(priceCategory)}' category='cat'></block-bill-category>`, function (element) {
+		it('should instanciate', function () {
 			expect(element().textContent).toContain('Price 1');
 			expect(element().textContent).not.toContain('Price 2');
 			expect(element().textContent).not.toContain('Price 3');
@@ -60,13 +63,13 @@ describe('block-bill-category-test', function() {
 			expect(element().querySelector('#catTotal').textContent).toContain(105);
 		});
 
-		it('should build up a bill lines list', function() {
+		it('should build up a bill lines list', function () {
 			expect(element().getBillLines()).toEqual(value);
 		});
 	});
 
-	webDescribe('instanciate with price and bill in edit mode', `<block-bill-category edit value='${JSON.stringify(value)}' price-lines='${JSON.stringify(priceCategory)}' category='cat'></block-bill-category>`, function(element) {
-		it('should instanciate', function() {
+	webDescribe('instanciate with price and bill in edit mode', `<block-bill-category edit value='${JSON.stringify(value)}' price-lines='${JSON.stringify(priceCategory)}' category='cat'></block-bill-category>`, function (element) {
+		it('should instanciate', function () {
 			expect(element().textContent).toContain('Price 1');
 			expect(element().textContent).toContain('Price 2');
 			expect(element().textContent).not.toContain('Price 3');
@@ -76,7 +79,7 @@ describe('block-bill-category-test', function() {
 			expect(element().querySelector('#catTotal').textContent).toContain(105);
 		});
 
-		it('should react to change event', function() {
+		it('should react to change event', function () {
 			expect(element().getTotal()).toBe(105);
 			expect(element().querySelector('#catTotal').textContent).toContain(105);
 			let el = element().querySelector('block-bill-line');
@@ -85,7 +88,7 @@ describe('block-bill-category-test', function() {
 			expect(element().querySelector('#catTotal').textContent).toContain(155);
 		});
 
-		it('should build up a bill lines list', function() {
+		it('should build up a bill lines list', function () {
 			expect(element().getBillLines()).toEqual(value);
 		});
 	});
