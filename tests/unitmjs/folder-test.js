@@ -1,9 +1,18 @@
-/* eslint-env jasmine */
-/* global webDescribe, JHElement */
-/* global loadReference, Folder, Patient */
-/* global ClubFoot, Surgery, OtherConsult, RicketConsult, Appointment, Bill, Payment, Picture */
 
-describe('test-folder', function() {
+import Folder from '../../app/models/Folder.js';
+import Appointment from '../../app/models/Appointment.js';
+import Bill from '../../app/models/Bill.js';
+import ClubFoot from '../../app/models/ClubFoot.js';
+import OtherConsult from '../../app/models/OtherConsult.js';
+import Patient from '../../app/models/Patient.js';
+import Payment from '../../app/models/Payment.js';
+import Picture from '../../app/models/Picture.js';
+import RicketConsult from '../../app/models/RicketConsult.js';
+import Surgery from '../../app/models/Surgery.js';
+
+import { loadReference } from './athelpers.js';
+
+describe('test-folder', function () {
 	beforeEach(() => {
 		this.f = new Folder(loadReference('FolderTest.test1.json').folder);
 		expect(this.f).toEqual(jasmine.any(Folder));
@@ -27,15 +36,15 @@ describe('test-folder', function() {
 		expect(this.f.getPatient()).toEqual(jasmine.any(Patient));
 		expect(this.f.getPatient().id).toBe(1);
 
-		expect(Folder.create(this.f, 'Appointment',   {})).toEqual(jasmine.any(Appointment));
-		expect(Folder.create(this.f, 'Bill',          {})).toEqual(jasmine.any(Bill));
-		expect(Folder.create(this.f, 'ClubFoot',      {})).toEqual(jasmine.any(ClubFoot));
-		expect(Folder.create(this.f, 'OtherConsult',  {})).toEqual(jasmine.any(OtherConsult));
-		expect(Folder.create(this.f, 'Payment',       {})).toEqual(jasmine.any(Payment));
-		expect(Folder.create(this.f, 'Picture',       {})).toEqual(jasmine.any(Picture));
+		expect(Folder.create(this.f, 'Appointment', {})).toEqual(jasmine.any(Appointment));
+		expect(Folder.create(this.f, 'Bill', {})).toEqual(jasmine.any(Bill));
+		expect(Folder.create(this.f, 'ClubFoot', {})).toEqual(jasmine.any(ClubFoot));
+		expect(Folder.create(this.f, 'OtherConsult', {})).toEqual(jasmine.any(OtherConsult));
+		expect(Folder.create(this.f, 'Payment', {})).toEqual(jasmine.any(Payment));
+		expect(Folder.create(this.f, 'Picture', {})).toEqual(jasmine.any(Picture));
 		expect(Folder.create(this.f, 'RicketConsult', {})).toEqual(jasmine.any(RicketConsult));
-		expect(Folder.create(this.f, 'Surgery',       {})).toEqual(jasmine.any(Surgery));
- 
+		expect(Folder.create(this.f, 'Surgery', {})).toEqual(jasmine.any(Surgery));
+
 		expect(() => Folder.create(this.f, 'AnythingInvalid', {})).toThrow();
 	});
 
@@ -103,9 +112,9 @@ describe('test-folder', function() {
 		expect(this.f.getHeader('newKey')).toBe(14);
 	});
 
-	describe('should order files correctly', function() {
+	describe('should order files correctly', function () {
 		// const resEqual  = (a, b) => { expect(Folder.ordering(a, b)).toBe(0); };
-		const resFirst  = (a, b) => {
+		const resFirst = (a, b) => {
 			expect(Folder.ordering(a, a)).toBe(0);
 			expect(Folder.ordering(b, b)).toBe(0);
 
@@ -116,10 +125,10 @@ describe('test-folder', function() {
 			expect(Folder.ordering(b, a)).toBeGreaterThan(0);
 		};
 		const build = (basis, data, model = 'anything') => {
-			return Object.assign({}, basis, data, { getModel: function() { return model ; }});
+			return Object.assign({}, basis, data, { getModel: function () { return model; } });
 		};
 
-		it('should order about id', function() {
+		it('should order about id', function () {
 			const basis = {};
 			const o1 = build(basis, {});
 			const o2 = build(basis, { id: '2' });
@@ -135,7 +144,7 @@ describe('test-folder', function() {
 			resFirst(build(basis, { id: '25' }), build(basis, { id: '3' }));
 		});
 
-		it('should order about getModel', function() {
+		it('should order about getModel', function () {
 			const basis = {};
 			const o1 = build(basis, {}, 'a');
 			const o2 = build(basis, {}, 'b');
@@ -149,7 +158,7 @@ describe('test-folder', function() {
 			resFirst(o2, build({ id: '25' }, 'a'));
 		});
 
-		it('should order about Date', function() {
+		it('should order about Date', function () {
 			const basis = {};
 			const o1 = build(basis, {});
 			const o2 = build(basis, { Date: '2010-01-01' });
@@ -160,7 +169,7 @@ describe('test-folder', function() {
 			resFirst(o2, o3);
 		});
 
-		it('should order about created_at', function() {
+		it('should order about created_at', function () {
 			const basis = { id: '1' };
 			const o1 = build({});
 			const o2 = build(basis, { created_at: '2010-01-01' });
@@ -171,7 +180,7 @@ describe('test-folder', function() {
 			resFirst(o2, o3);
 		});
 
-		it('should new > date > model > id', function() {
+		it('should new > date > model > id', function () {
 			const basis = {};
 			const o1 = build(basis, {});
 			const o2 = build(basis, { Date: '2000-01-01' });
