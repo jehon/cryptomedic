@@ -1,8 +1,10 @@
-/* eslint-env jasmine */
-/* global TwoColumns, XFile */
 
-describe('twoColumns', function() {
-	beforeEach(function() {
+import TwoColumns from '../../app/js/twoColumns.js';
+
+import XFile from '../../app/elements/x-file.js';
+
+describe('twoColumns', function () {
+	beforeEach(function () {
 		this.OBJ = new XFile();
 		this.OBJ.value = {
 			a: 1,
@@ -10,10 +12,10 @@ describe('twoColumns', function() {
 		};
 	});
 
-	it('should be instanciated', function() {
+	it('should be instanciated', function () {
 		const tc = new TwoColumns(new XFile());
 		expect(tc.addLine('truc')).toEqual(jasmine.any(TwoColumns));
-		expect(tc.addLines([ 'brol' ])).toEqual(jasmine.any(TwoColumns));
+		expect(tc.addLines(['brol'])).toEqual(jasmine.any(TwoColumns));
 		const html = tc.toString();
 		expect(html).toContain('<table');
 		expect(html).toContain('</table>');
@@ -24,20 +26,20 @@ describe('twoColumns', function() {
 		expect(tc.toString()).not.toContain('</table></table>');
 	});
 
-	it('should handle objects', function() {
+	it('should handle objects', function () {
 		const tc = new TwoColumns(this.OBJ);
-		tc.addLines([ 'a', 'b', 'c' ]);
+		tc.addLines(['a', 'b', 'c']);
 		const html = tc.toString();
 		expect(html).toContain('name=\'a\'');
 		expect(html).toContain('b');
 	});
 
-	it('should custom labels objects', function() {
+	it('should custom labels objects', function () {
 		const tc = new TwoColumns(this.OBJ, {
 			label: l => ('truc_' + l),
 			id_scope: 'brol_'
 		});
-		tc.addLines([ 'a', 'b', 'c' ]);
+		tc.addLines(['a', 'b', 'c']);
 		const html = tc.toString();
 		expect(html).toContain('name=\'a\'');
 		expect(html).toContain('b');

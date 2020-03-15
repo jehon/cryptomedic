@@ -1,19 +1,22 @@
-/* eslint-env jasmine */
-/* global webDescribe, JHElement */
 
-describe('x-read-test', function() {
+import '../../app/elements/x-read.js';
+
+import { webDescribe } from './athelpers.js';
+// import JHElement from '../../app/elements/jh-element.js';
+
+describe('x-read-test', function () {
 	// Test click on span for radio
-	webDescribe('', '<x-read name=\'test\'></x-read>', function() {
-		it('should be instantiated', function() {});
+	webDescribe('', '<x-read name=\'test\'></x-read>', function () {
+		it('should be instantiated', function () { });
 	});
 
 
-	describe('with error', function() {
+	describe('with error', function () {
 		beforeEach(() => {
 			spyOn(console, 'error').and.returnValue(null);
 		});
-		webDescribe('', '<x-read name=\'test\' type=\'anything\'></x-read>', function(element) {
-			it('should manage unknown type', function() {
+		webDescribe('', '<x-read name=\'test\' type=\'anything\'></x-read>', function (element) {
+			it('should manage unknown type', function () {
 				expect(element().querySelector('span:not(#error)')).not.toBeNull();
 				expect(element().querySelector('span:not(#error)').innerHTML).toContain('unknown');
 				expect(console.error).toHaveBeenCalledTimes(1);
@@ -22,8 +25,8 @@ describe('x-read-test', function() {
 	});
 
 	const date = new Date(Date.parse('2017-07-07 18:30:25.432'));
-	webDescribe('', `<x-read name='test' type='timestamp' value='${date.toISOString()}'></x-read>`, function(element) {
-		it('should manage timestamp', function() {
+	webDescribe('', `<x-read name='test' type='timestamp' value='${date.toISOString()}'></x-read>`, function (element) {
+		it('should manage timestamp', function () {
 			expect(element().querySelector('span:not(#error)')).not.toBeNull();
 			expect(element().querySelector('span:not(#error)').innerHTML).toBe(date.toLocaleDateString() + ' ' + date.toLocaleTimeString());
 
@@ -34,15 +37,15 @@ describe('x-read-test', function() {
 	});
 
 	// Invalid date
-	webDescribe('', '<x-read name=\'test\' type=\'timestamp\' value=\'aaaa-13-01\'></x-read>', function(element) {
-		it('should show an error message', function() {
+	webDescribe('', '<x-read name=\'test\' type=\'timestamp\' value=\'aaaa-13-01\'></x-read>', function (element) {
+		it('should show an error message', function () {
 			expect(element().querySelector('span:not(#error)')).not.toBeNull();
 			expect(element().querySelector('span:not(#error)').innerHTML).toBe('');
 		});
 	});
 
-	webDescribe('', '<x-read name=\'test\' type=\'boolean\' value=\'true\'></x-read>', function(element) {
-		it('should manage boolean', function() {
+	webDescribe('', '<x-read name=\'test\' type=\'boolean\' value=\'true\'></x-read>', function (element) {
+		it('should manage boolean', function () {
 			expect(element().querySelector('x-read-boolean[value=true]')).not.toBeNull();
 			expect(element().querySelector('x-read-boolean[value=false]')).toBeNull();
 
@@ -53,8 +56,8 @@ describe('x-read-test', function() {
 		});
 	});
 
-	webDescribe('', '<x-read name=\'test\' type=\'numeric\' value=\'123\'></x-read>', function(element) {
-		it('should manage numeric', function() {
+	webDescribe('', '<x-read name=\'test\' type=\'numeric\' value=\'123\'></x-read>', function (element) {
+		it('should manage numeric', function () {
 			expect(element().querySelector('span:not(#error)')).not.toBeNull();
 			expect(element().querySelector('span:not(#error)').innerHTML).toBe('123');
 
@@ -67,9 +70,9 @@ describe('x-read-test', function() {
 		});
 	});
 
-	[ 'list', 'date', 'char', 'text' ].forEach(type => {
-		webDescribe('', `<x-read name='test' type='${type}' value='hello'></x-read>`, function(element) {
-			it(`should manage ${type}`, function() {
+	['list', 'date', 'char', 'text'].forEach(type => {
+		webDescribe('', `<x-read name='test' type='${type}' value='hello'></x-read>`, function (element) {
+			it(`should manage ${type}`, function () {
 				expect(element().querySelector('span:not(#error)')).not.toBeNull();
 				expect(element().querySelector('span:not(#error)').innerHTML).toBe('hello');
 
