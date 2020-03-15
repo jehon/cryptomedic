@@ -1,28 +1,31 @@
-/* eslint-env jasmine */
-/* global webDescribe, JHElement */
 
-describe('x-write-test', function() {
-	beforeEach(function() {
+import '../../app/elements/x-write.js';
+
+import JHElement from '../../app/elements/jh-element.js';
+import { webDescribe } from './athelpers.js';
+
+describe('x-write-test', function () {
+	beforeEach(function () {
 		spyOn(console, 'error');
 	});
 
-	webDescribe('without parameters', '<x-write name=\'test\'></x-write>', function(element) {
-		it('should be instantiated', function() {
+	webDescribe('without parameters', '<x-write name=\'test\'></x-write>', function (element) {
+		it('should be instantiated', function () {
 			expect(element().querySelector('span.error')).not.toBeNull();
 		});
 	});
 
-	webDescribe('with unknown type', '<x-write name=\'test\' type=\'anything\'></x-write>', function(element) {
-		it('should be instantiated', function() {
+	webDescribe('with unknown type', '<x-write name=\'test\' type=\'anything\'></x-write>', function (element) {
+		it('should be instantiated', function () {
 			expect(element().querySelector('span.error')).not.toBeNull();
 			expect(console.error).toHaveBeenCalledTimes(1);
 		});
 	});
 
 	/* default one, testing some more... */
-	describe('with char', function() {
-		webDescribe('without value', '<x-write name=\'test\' type=\'char\'></x-write>', function(element) {
-			it('should be instantiated', function() {
+	describe('with char', function () {
+		webDescribe('without value', '<x-write name=\'test\' type=\'char\'></x-write>', function (element) {
+			it('should be instantiated', function () {
 				let el = element().querySelector('input');
 				expect(element().querySelector('span.error')).toBeNull();
 				expect(el).not.toBeNull();
@@ -30,15 +33,15 @@ describe('x-write-test', function() {
 			});
 		});
 
-		webDescribe('with value', '<x-write name=\'test\' type=\'char\' value=\'xvalue\'></x-write>', function(element) {
-			it('should be instantiated', function() {
+		webDescribe('with value', '<x-write name=\'test\' type=\'char\' value=\'xvalue\'></x-write>', function (element) {
+			it('should be instantiated', function () {
 				let el = element().querySelector('input');
 				expect(element().querySelector('span.error')).toBeNull();
 				expect(el).not.toBeNull();
 				expect(element().value).toBe('xvalue');
 			});
 
-			it('should fire event', function() {
+			it('should fire event', function () {
 				let el = element().querySelector('input');
 				let res = false;
 				element().addEventListener('blur', () => { res = 'test'; });
@@ -48,12 +51,12 @@ describe('x-write-test', function() {
 				expect(element().value).toBe('blablabla');
 			});
 
-			it('should work with setter', function() {
+			it('should work with setter', function () {
 				element().value = 'something new';
 				expect(element().value).toBe('something new');
 			});
 
-			it('should not fire event if still having focus', function() {
+			it('should not fire event if still having focus', function () {
 				let el = element().querySelector('input');
 				let res = false;
 				element().addEventListener('blur', () => { res = 'test'; });
@@ -71,9 +74,9 @@ describe('x-write-test', function() {
 	});
 
 
-	describe('with timestamp', function() {
-		webDescribe('without value', '<x-write name=\'test\' type=\'timestamp\'></x-write>', function(element) {
-			it('should be instantiated', function() {
+	describe('with timestamp', function () {
+		webDescribe('without value', '<x-write name=\'test\' type=\'timestamp\'></x-write>', function (element) {
+			it('should be instantiated', function () {
 				expect(element().querySelector('span.error')).toBeNull();
 				let el = element().querySelector('x-read');
 				expect(el).not.toBeNull();
@@ -83,8 +86,8 @@ describe('x-write-test', function() {
 			});
 		});
 
-		webDescribe('with value', '<x-write name=\'test\' type=\'timestamp\' value=\'2016-01-01\'></x-write>', function(element) {
-			it('should be instantiated', function() {
+		webDescribe('with value', '<x-write name=\'test\' type=\'timestamp\' value=\'2016-01-01\'></x-write>', function (element) {
+			it('should be instantiated', function () {
 				expect(element().querySelector('span.error')).toBeNull();
 				let el = element().querySelector('x-read');
 				expect(el).not.toBeNull();
@@ -96,9 +99,9 @@ describe('x-write-test', function() {
 		});
 	});
 
-	describe('with boolean', function() {
-		webDescribe('without value', '<x-write name=\'test\' type=\'boolean\'></x-write>', function(element) {
-			it('should be instantiated', function() {
+	describe('with boolean', function () {
+		webDescribe('without value', '<x-write name=\'test\' type=\'boolean\'></x-write>', function (element) {
+			it('should be instantiated', function () {
 				let el = element().querySelector('input[type=checkbox]');
 				expect(element().querySelector('span.error')).toBeNull();
 				expect(el).not.toBeNull();
@@ -106,15 +109,15 @@ describe('x-write-test', function() {
 			});
 		});
 
-		webDescribe('with value', '<x-write name=\'test\' type=\'boolean\' value=\'1\'></x-write>', function(element) {
-			it('should be instantiated', function() {
+		webDescribe('with value', '<x-write name=\'test\' type=\'boolean\' value=\'1\'></x-write>', function (element) {
+			it('should be instantiated', function () {
 				let el = element().querySelector('input[type=checkbox]');
 				expect(element().querySelector('span.error')).toBeNull();
 				expect(el).not.toBeNull();
 				expect(element().value).toBe(true);
 			});
 
-			it('should fire event', function() {
+			it('should fire event', function () {
 				let el = element().querySelector('input[type=checkbox]');
 				let res = false;
 				element().addEventListener('blur', () => { res = 'test'; });
@@ -126,9 +129,9 @@ describe('x-write-test', function() {
 		});
 	});
 
-	describe('with date', function() {
-		webDescribe('without value', '<x-write name=\'test\' type=\'date\'></x-write>', function(element) {
-			it('should be instantiated', function() {
+	describe('with date', function () {
+		webDescribe('without value', '<x-write name=\'test\' type=\'date\'></x-write>', function (element) {
+			it('should be instantiated', function () {
 				let el = element().querySelector('x-input-date');
 				expect(element().querySelector('span.error')).toBeNull();
 				expect(el).not.toBeNull();
@@ -136,15 +139,15 @@ describe('x-write-test', function() {
 			});
 		});
 
-		webDescribe('with value', '<x-write name=\'test\' type=\'date\' value=\'2016-01-15\'></x-write>', function(element) {
-			it('should be instantiated', function() {
+		webDescribe('with value', '<x-write name=\'test\' type=\'date\' value=\'2016-01-15\'></x-write>', function (element) {
+			it('should be instantiated', function () {
 				let el = element().querySelector('x-input-date');
 				expect(element().querySelector('span.error')).toBeNull();
 				expect(el).not.toBeNull();
 				expect(element().value).toBe('2016-01-15');
 			});
 
-			it('should fire event', function() {
+			it('should fire event', function () {
 				let el = element().querySelector('x-input-date');
 				let res = false;
 				element().addEventListener('blur', () => { res = 'test'; });
@@ -156,9 +159,9 @@ describe('x-write-test', function() {
 		});
 	});
 
-	describe('with numeric', function() {
-		webDescribe('without value', '<x-write name=\'test\' type=\'numeric\'></x-write>', function(element) {
-			it('should be instantiated', function() {
+	describe('with numeric', function () {
+		webDescribe('without value', '<x-write name=\'test\' type=\'numeric\'></x-write>', function (element) {
+			it('should be instantiated', function () {
 				let el = element().querySelector('input[type=number]');
 				expect(element().querySelector('span.error')).toBeNull();
 				expect(el).not.toBeNull();
@@ -166,15 +169,15 @@ describe('x-write-test', function() {
 			});
 		});
 
-		webDescribe('with value', '<x-write name=\'test\' type=\'numeric\' value=\'15\'></x-write>', function(element) {
-			it('should be instantiated', function() {
+		webDescribe('with value', '<x-write name=\'test\' type=\'numeric\' value=\'15\'></x-write>', function (element) {
+			it('should be instantiated', function () {
 				let el = element().querySelector('input[type=number]');
 				expect(element().querySelector('span.error')).toBeNull();
 				expect(el).not.toBeNull();
 				expect(element().value).toBe(15);
 			});
 
-			it('should fire event', function() {
+			it('should fire event', function () {
 				let el = element().querySelector('input[type=number]');
 				let res = false;
 				element().addEventListener('blur', () => { res = 'test'; });
@@ -186,9 +189,9 @@ describe('x-write-test', function() {
 		});
 	});
 
-	describe('with text', function() {
-		webDescribe('without value', '<x-write name=\'test\' type=\'text\'></x-write>', function(element) {
-			it('should be instantiated', function() {
+	describe('with text', function () {
+		webDescribe('without value', '<x-write name=\'test\' type=\'text\'></x-write>', function (element) {
+			it('should be instantiated', function () {
 				let el = element().querySelector('textarea');
 				expect(element().querySelector('span.error')).toBeNull();
 				expect(el).not.toBeNull();
@@ -196,15 +199,15 @@ describe('x-write-test', function() {
 			});
 		});
 
-		webDescribe('with value', '<x-write name=\'test\' type=\'text\' value=\'xvalue\'></x-write>', function(element) {
-			it('should be instantiated', function() {
+		webDescribe('with value', '<x-write name=\'test\' type=\'text\' value=\'xvalue\'></x-write>', function (element) {
+			it('should be instantiated', function () {
 				let el = element().querySelector('textarea');
 				expect(element().querySelector('span.error')).toBeNull();
 				expect(el).not.toBeNull();
 				expect(element().value).toBe('xvalue');
 			});
 
-			it('should fire event', function() {
+			it('should fire event', function () {
 				let el = element().querySelector('textarea');
 				let res = false;
 				element().addEventListener('blur', () => { res = 'test'; });
@@ -217,11 +220,11 @@ describe('x-write-test', function() {
 	});
 
 
-	const list = [ 'machin', 'truc', 'brol' ];
+	const list = ['machin', 'truc', 'brol'];
 
-	describe('with list', function() {
-		webDescribe('without value', `<x-write name='test' type='list' list='${JSON.stringify(list)}'></x-write>`, function(element) {
-			it('should be instantiated', function() {
+	describe('with list', function () {
+		webDescribe('without value', `<x-write name='test' type='list' list='${JSON.stringify(list)}'></x-write>`, function (element) {
+			it('should be instantiated', function () {
 				let el = element().querySelector('x-write-list');
 				expect(element().querySelector('span.error')).toBeNull();
 				expect(el).not.toBeNull();
@@ -231,15 +234,15 @@ describe('x-write-test', function() {
 			});
 		});
 
-		webDescribe('with value', `<x-write name='test' type='list' list='${JSON.stringify(list)}' value='truc'></x-write>`, function(element) {
-			it('should be instantiated', function() {
+		webDescribe('with value', `<x-write name='test' type='list' list='${JSON.stringify(list)}' value='truc'></x-write>`, function (element) {
+			it('should be instantiated', function () {
 				let el = element().querySelector('x-write-list');
 				expect(element().querySelector('span.error')).toBeNull();
 				expect(el).not.toBeNull();
 				expect(element().value).toBe('truc');
 			});
 
-			it('should fire event', function() {
+			it('should fire event', function () {
 				let el = element().querySelector('x-write-list');
 				let res = false;
 				element().addEventListener('blur', () => { res = 'test'; });
