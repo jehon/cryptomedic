@@ -1,5 +1,7 @@
-/* eslint-env jasmine */
-/* global webDescribe, JHElement */
+
+import '../../app/elements/x-waiting.js';
+
+import { webDescribe } from './athelpers.js';
 
 describe('tests/unit/x-waiting-test.js', function () {
 	webDescribe('initialized', '<x-waiting><div style=\'width: 200px; height: 100px; background-color: red;\'>Content</div></x-waiting>', function (element) {

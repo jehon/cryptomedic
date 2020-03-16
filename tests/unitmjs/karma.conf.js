@@ -71,7 +71,6 @@ module.exports = function (config) {
 
 		htmlReporter: {
 			outputDir: path.join(root, '/target/mjs/html/'),
-			//   // templatePath: '../tmp/jasmine_template.html'
 		},
 
 		// proxies: {

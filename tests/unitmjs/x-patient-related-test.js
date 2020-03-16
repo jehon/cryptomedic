@@ -1,16 +1,20 @@
-/* eslint-env jasmine */
-/* global webDescribe, JHElement */
-/* global store, ACT_FOLDER_INVALIDATE */
-/* global Folder, loadReference, Appointment */
 
-describe('tests/unit/x-patient-related-test.js', function() {
+import '../../app/elements/x-patient-related.js';
+
+import { webDescribe, loadReference } from './athelpers.js';
+
+import store, { ACT_FOLDER_INVALIDATE } from '../../app/js/store.js';
+import Folder from '../../app/models/Folder.js';
+import Appointment from '../../app/models/Appointment.js';
+
+describe('tests/unit/x-patient-related-test.js', function () {
 	let f;
 	beforeEach(() => {
 		store.dispatch({ type: ACT_FOLDER_INVALIDATE });
 		f = new Folder(loadReference('FolderTest.test1.json').folder);
 	});
 
-	const na =  {
+	const na = {
 		'id': 999,
 		'created_at': '<timestamp>',
 		'updated_at': '<timestamp>',
@@ -23,12 +27,12 @@ describe('tests/unit/x-patient-related-test.js', function() {
 		'NextCenter': null
 	};
 
-	webDescribe('initialized', '<x-patient-related></x-patient-related>', function(element) {
-		it('should be initialized', function() {
+	webDescribe('initialized', '<x-patient-related></x-patient-related>', function (element) {
+		it('should be initialized', function () {
 			expect(element().isBlocked()).toBeTruthy();
 		});
 
-		it('should show patient informations', function() {
+		it('should show patient informations', function () {
 			element().folder = f;
 			expect(element().isBlocked()).toBeFalsy();
 			expect(element().querySelector('#Patient_entryyear').innerText).toBe('2000');
@@ -38,7 +42,7 @@ describe('tests/unit/x-patient-related-test.js', function() {
 			expect(element().querySelector('#Patient_Sex').innerText).toBe('Male');
 		});
 
-		it('should show no appointment', function(done) {
+		it('should show no appointment', function (done) {
 			element().folder = f;
 			expect(element().isBlocked()).toBeFalsy();
 			setTimeout(() => {
@@ -48,7 +52,7 @@ describe('tests/unit/x-patient-related-test.js', function() {
 			});
 		});
 
-		it('should show appointment', function(done) {
+		it('should show appointment', function (done) {
 			f.list.push(new Appointment(na));
 			element().folder = f;
 			expect(element().isBlocked()).toBeFalsy();
@@ -60,7 +64,7 @@ describe('tests/unit/x-patient-related-test.js', function() {
 			});
 		});
 
-		it('should show the closest appointment', function(done) {
+		it('should show the closest appointment', function (done) {
 			let nb = JSON.parse(JSON.stringify(na));
 			nb.Nextappointment = '3999-01-12';
 			f.list.push(new Appointment(na));
