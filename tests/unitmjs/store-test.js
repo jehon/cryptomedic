@@ -7,13 +7,14 @@ import store, {
 	ACT_DEFINITIONS_STORE
 } from '../../app/js/store.js';
 import { loadReference } from './athelpers.js';
+import Folder from '../../app/models/Folder.js';
 
 describe('store', function () {
 	let f;
 	beforeEach(() => {
 		// TODO: real test is here (when folder is modularized):
 		// f = new Folder(loadReference('FolderTest.test1.json').folder);
-		f = loadReference('FolderTest.test1.json').folder;
+		f = new Folder(loadReference('FolderTest.test1.json').folder);
 	});
 
 	it('should exists', function () {
