@@ -1,26 +1,28 @@
-/* eslint-env jasmine */
-/* global webDescribe, JHElement */
 
-describe('tests/unit/x-file-test.js', function() {
-	webDescribe('initialized', '<x-file></x-file>', function(element) {
+import '../../app/elements/x-file.js';
+
+import { webDescribe } from './athelpers.js';
+
+describe('tests/unit/x-file-test.js', function () {
+	webDescribe('initialized', '<x-file></x-file>', function (element) {
 		const f = { a: 1 };
-		it('should be blocked when initialized', function() {
+		it('should be blocked when initialized', function () {
 			expect(element().value).toBeFalsy();
 		});
 
-		it('should free when value is set', function() {
+		it('should free when value is set', function () {
 			element().value = f;
 			expect(element().value).toBe(f);
 		});
 
-		it('should free when value is set and call adapt', function() {
+		it('should free when value is set and call adapt', function () {
 			spyOn(element(), 'adapt');
 			element().value = f;
 			expect(element().value).toBe(f);
 			expect(element().adapt).toHaveBeenCalled();
 		});
 
-		it('should free when value is set and not call adapt if not initialized', function() {
+		it('should free when value is set and not call adapt if not initialized', function () {
 			spyOn(element(), 'adapt');
 			spyOn(element(), 'isInitialized').and.returnValue(false);
 			element().value = f;
@@ -28,14 +30,14 @@ describe('tests/unit/x-file-test.js', function() {
 			expect(element().adapt).not.toHaveBeenCalled();
 		});
 
-		it('should block when value is null', function() {
+		it('should block when value is null', function () {
 			spyOn(element(), 'adapt');
 			element().value = null;
 			expect(element().value).toBeFalsy();
 		});
 
-		describe('with data', function() {
-			beforeEach(function() {
+		describe('with data', function () {
+			beforeEach(function () {
 				element().value = {
 					a: 1,
 					b: 'azer',
@@ -50,12 +52,12 @@ describe('tests/unit/x-file-test.js', function() {
 				};
 			});
 
-			it('should handle null value', function() {
+			it('should handle null value', function () {
 				element().value = null;
 				expect(() => element().assertExists('anything')).toThrowError('Data not set');
 			});
 
-			it('with assertExists', function() {
+			it('with assertExists', function () {
 				expect(() => element().assertExists('anything')).toThrowError('Data anything is undefined');
 				expect(() => element().assertExists('nullKey')).toThrowError('Data nullKey is undefined');
 				expect(element().assertExists('a')).toBeTruthy();
@@ -65,7 +67,7 @@ describe('tests/unit/x-file-test.js', function() {
 				expect(element().assertExists('obj')).toEqual({});
 			});
 
-			it('with assertNumeric', function() {
+			it('with assertNumeric', function () {
 				expect(() => element().assertNumeric('anything')).toThrowError('Data anything is undefined');
 				expect(() => element().assertNumeric('nullKey')).toThrowError('Data nullKey is undefined');
 				expect(element().assertNumeric('a')).toBe(1);
@@ -75,7 +77,7 @@ describe('tests/unit/x-file-test.js', function() {
 				expect(() => element().assertNumericNotZero('obj')).toThrowError('Data obj is not numeric(object)');
 			});
 
-			it('with assertNumericNotZero', function() {
+			it('with assertNumericNotZero', function () {
 				expect(() => element().assertNumericNotZero('anything')).toThrowError('Data anything is undefined');
 				expect(() => element().assertNumericNotZero('nullKey')).toThrowError('Data nullKey is undefined');
 				expect(element().assertNumericNotZero('a')).toBeTruthy();
@@ -85,7 +87,7 @@ describe('tests/unit/x-file-test.js', function() {
 				expect(() => element().assertNumericNotZero('obj')).toThrowError('Data obj is not numeric(object)');
 			});
 
-			it('with assertDate', function() {
+			it('with assertDate', function () {
 				expect(() => element().assertDate('anything')).toThrowError('Data anything is undefined');
 				expect(() => element().assertDate('nullKey')).toThrowError('Data nullKey is undefined');
 				expect(() => element().assertDate('a')).toThrowError('Data a is not a valid date(1)');
