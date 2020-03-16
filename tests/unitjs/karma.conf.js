@@ -11,10 +11,10 @@ fse.emptyDirSync(path.join(root, '/target/unit'));
 
 module.exports = function (config) {
 	const configuration = {
-		basePath: path.join(root, 'www/'),
+		basePath: root,
 
 		frameworks: [
-			'jasmine-es6',
+			// 'jasmine-es6',
 			'jasmine',
 			'jasmine-html'
 		],
@@ -26,14 +26,13 @@ module.exports = function (config) {
 		],
 
 		files: [
-			'../node_modules/karma-read-json/karma-read-json.js',
-			'../node_modules/bootstrap/dist/css/bootstrap.min.css',
-			'build/vendor*.js',
-			'build/app-*.js',
-			{ pattern: 'build/**', included: false },
-			{ pattern: 'api/*/tests/references/*.json', included: false },
-			'../tests/unitjs/*.js',
-			{ pattern: 'static/**', included: false },
+			'node_modules/karma-read-json/karma-read-json.js',
+			'node_modules/bootstrap/dist/css/bootstrap.min.css',
+			{ pattern: 'tests/unitjs/*-test.js', type: 'module' },
+			{ pattern: 'tests/unitjs/**', included: false },
+			{ pattern: 'tests/resources/**', included: false },
+			{ pattern: 'app/**/*', included: false },
+			{ pattern: '**/*', included: false, watched: false },
 		],
 
 		autoWatch: true,
@@ -52,7 +51,7 @@ module.exports = function (config) {
 		},
 
 		preprocessors: {
-			'static/**/*.js': ['karma-coverage-istanbul-instrumenter'],
+			'app/**/*.js': ['karma-coverage-istanbul-instrumenter'],
 		},
 
 		coverageIstanbulInstrumenter: {
@@ -61,26 +60,23 @@ module.exports = function (config) {
 
 		coverageReporter: {
 			type: 'lcov',
-			dir: __dirname + '/target/',
+			dir: path.join(root, '/target/'),
 			subdir: 'unit/'
 		},
 
 		coverageIstanbulReporter: {
-			reports: ['html', 'text'],
+			reports: ['html'],
 			dir: path.join(root, 'target/js/htmlInstanbul'),
 		},
 
 		htmlReporter: {
 			outputDir: path.join(root, '/target/js/html/'),
-			//   // templatePath: '../tmp/jasmine_template.html'
 		},
 
-		proxies: {
-			'/static/': '/base/static/',
-			'/elements/': '/base/static/elements/',
-			'/build/bootstrap/': '/base/build/bootstrap/',
-			'/resources/': '/base/build/resources/'
-		},
+		// proxies: {
+		// 	'/static/': '/base/static/',
+		// 	'/elements/': '/base/static/elements/',
+		// },
 	};
 
 	config.set(configuration);

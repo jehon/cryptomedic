@@ -136,7 +136,6 @@ test-api-commit: docker-started depencencies.api
 .PHONY: test-unit
 test-unit: dependencies-node build
 	npm run --silent test-unit
-	npm run --silent test-unit-mjs
 
 .PHONY: test-e2e
 test-e2e: dependencies-node build target/e2e/.tested

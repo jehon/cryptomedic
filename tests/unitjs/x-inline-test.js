@@ -1,13 +1,17 @@
-/* eslint-env jasmine */
-/* global webDescribe, JHElement */
 
-describe('x-inline-test', function() {
-	beforeEach(function() {
+import '../../app/elements/x-inline.js';
+
+import { webDescribe } from './athelpers.js';
+
+import JHElement from '../../app/elements/jh-element.js';
+
+describe('x-inline-test', function () {
+	beforeEach(function () {
 		spyOn(console, 'error');
 	});
 
-	webDescribe('without parameters', '<x-inline edit></x-inline>', function(element) {
-		it('should be instanciated', function() {
+	webDescribe('without parameters', '<x-inline edit></x-inline>', function (element) {
+		it('should be instanciated', function () {
 			let xelement = element().querySelector('x-write');
 			expect(xelement).not.toBeNull();
 
@@ -17,8 +21,8 @@ describe('x-inline-test', function() {
 		});
 	});
 
-	webDescribe('without parameters', '<x-inline></x-inline>', function(element) {
-		it('should be instanciated', function() {
+	webDescribe('without parameters', '<x-inline></x-inline>', function (element) {
+		it('should be instanciated', function () {
 			let xelement = element().querySelector('x-read');
 			expect(xelement).not.toBeNull();
 
@@ -28,8 +32,8 @@ describe('x-inline-test', function() {
 		});
 	});
 
-	webDescribe('with mode read', '<x-inline name=\'xname\' type=\'xtype\' value=\'xvalue\'></x-inline>', function(element) {
-		it('should be instanciated', function() {
+	webDescribe('with mode read', '<x-inline name=\'xname\' type=\'xtype\' value=\'xvalue\'></x-inline>', function (element) {
+		it('should be instanciated', function () {
 			let xelement = element().querySelector('x-read');
 			expect(xelement).not.toBeNull();
 
@@ -39,8 +43,8 @@ describe('x-inline-test', function() {
 		});
 	});
 
-	webDescribe('with mode edit', '<x-inline edit name=\'xname\' type=\'numeric\' value=\'xvalue\' ping=\'pong\' test editable></x-inline>', function(element) {
-		it('should be instanciated', function() {
+	webDescribe('with mode edit', '<x-inline edit name=\'xname\' type=\'numeric\' value=\'xvalue\' ping=\'pong\' test editable></x-inline>', function (element) {
+		it('should be instanciated', function () {
 			let xelement = element().querySelector('x-write');
 			expect(xelement).not.toBeNull();
 
@@ -53,7 +57,7 @@ describe('x-inline-test', function() {
 			expect(xelement.hasAttribute('editable')).toBeFalsy();
 		});
 
-		it('should fire event', function() {
+		it('should fire event', function () {
 			let res = false;
 			element().addEventListener('blur', () => { res = 'test'; });
 			const input = element().querySelector('input');
@@ -63,14 +67,14 @@ describe('x-inline-test', function() {
 			expect(element().value).toBe(10);
 		});
 
-		it('should fire event on blur', function() {
+		it('should fire event on blur', function () {
 			let res = false;
 			element().addEventListener('blur', () => { res = 'test'; });
 			element().blur();
 			expect(res).toBe('test');
 		});
 
-		it('should react to set value', function() {
+		it('should react to set value', function () {
 			element().value = 111;
 			expect(element().value).toBe(111);
 		});
