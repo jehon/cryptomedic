@@ -5,6 +5,7 @@ import XWaiting from './x-waiting.js';
 export default class XWaitingFolder extends XWaiting {
 	constructor() {
 		super();
+		this.folder = null;
 		this.block();
 		store.subscribe(() => this._store2folder());
 		this._store2folder();

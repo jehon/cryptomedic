@@ -9,7 +9,6 @@ export default class XPatientRelated extends XWaitingFolder {
 	constructor() {
 		super();
 		this.style.width = '100%';
-		this.folder = null;
 	}
 
 	_nextAppointment() {
