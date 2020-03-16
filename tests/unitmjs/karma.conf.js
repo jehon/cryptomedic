@@ -65,7 +65,7 @@ module.exports = function (config) {
 		},
 
 		coverageIstanbulReporter: {
-			reports: ['html', 'text'],
+			reports: ['html'],
 			dir: path.join(root, 'target/mjs/htmlInstanbul'),
 		},
 

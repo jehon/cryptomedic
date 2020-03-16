@@ -1,18 +1,19 @@
-/* eslint-env jasmine */
-/* global webDescribe, JHElement */
-/* global extractPath, */
 
-describe('tests/unit/x-requestor-crud-test.js', function() {
-	webDescribe('x-requestor-crud', '<x-requestor-crud relative-url=\'/object\'></x-requestor-crud>', function(element) {
-		const buildResponse = function(result) { 
+import '../../app/elements/x-requestor-crud.js';
+
+import { webDescribe, extractPath } from './athelpers.js';
+
+describe('tests/unit/x-requestor-crud-test.js', function () {
+	webDescribe('x-requestor-crud', '<x-requestor-crud relative-url=\'/object\'></x-requestor-crud>', function (element) {
+		const buildResponse = function (result) {
 			return Promise.resolve(new Response(JSON.stringify(result), {
 				status: 200,
 				statusText: 'Ok'
 			}));
 		};
 
-		it('should list', function(done) {
-			const res = [ 1, 2 ];
+		it('should list', function (done) {
+			const res = [1, 2];
 			spyOn(window, 'fetch').and.callFake((request) => {
 				expect(request.method).toBe('GET');
 				expect(extractPath(request.url)).toBe('/object?');
@@ -24,7 +25,7 @@ describe('tests/unit/x-requestor-crud-test.js', function() {
 			});
 		});
 
-		it('should create', function(done) {
+		it('should create', function (done) {
 			const data = { a: 1 };
 			spyOn(window, 'fetch').and.callFake((request) => {
 				expect(request.method).toBe('POST');
@@ -35,7 +36,7 @@ describe('tests/unit/x-requestor-crud-test.js', function() {
 			element().create(data).then(done);
 		});
 
-		it('should read', function(done) {
+		it('should read', function (done) {
 			spyOn(window, 'fetch').and.callFake((request) => {
 				expect(request.method).toBe('GET');
 				expect(extractPath(request.url)).toBe('/object/15?');
@@ -44,7 +45,7 @@ describe('tests/unit/x-requestor-crud-test.js', function() {
 			element().read(15).then(done);
 		});
 
-		it('should update', function(done) {
+		it('should update', function (done) {
 			spyOn(window, 'fetch').and.callFake((request) => {
 				expect(request.method).toBe('PUT');
 				expect(extractPath(request.url)).toBe('/object/15');
@@ -54,7 +55,7 @@ describe('tests/unit/x-requestor-crud-test.js', function() {
 			element().update({ id: 15 }).then(done);
 		});
 
-		it('should delete', function(done) {
+		it('should delete', function (done) {
 			spyOn(window, 'fetch').and.callFake((request) => {
 				expect(request.method).toBe('DELETE');
 				expect(extractPath(request.url)).toBe('/object/15');
