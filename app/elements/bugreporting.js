@@ -9,35 +9,35 @@ import html2canvas from '../../node_modules/html2canvas/dist/html2canvas.js';
 
 import store from '../js/store.js';
 
-import { browserUUID, isProduction } from '../js/browser.js';
+import { browserUUID } from '../js/browser.js';
 
 window.bug_reporting = (function () {
-	if (isProduction()) {
-		console.info('Capturing console.log/info/error and exceptions');
-		if (typeof (Raven) != 'undefined') {
-			// Raven.config('https://7dece2b0b38e413baca8b81e17929eb2@sentry.io/270948', {
-			// 	release: window.application_version
-			// }).install();
+	// if (isProduction()) {
+	// 	console.info('Capturing console.log/info/error and exceptions');
+	// if (typeof (Raven) != 'undefined') {
+	// Raven.config('https://7dece2b0b38e413baca8b81e17929eb2@sentry.io/270948', {
+	// 	release: window.application_version
+	// }).install();
 
-			// store.subscribe(() => {
-			// 	const data = store.getState().user;
-			// 	if (data) {
-			// 		Raven.setUserContext({
-			// 			username:   data.username,
-			// 			group:      data.group,
-			// 			name:       data.name,
-			// 			computerID: localStorage.computerUUID
-			// 		});
-			// 	} else {
-			// 		Raven.setUserContext({
-			// 			computerID: localStorage.computerUUID
-			// 		});
-			// 	}
-			// });
-		}
-	} else {
-		console.info('Disabling capturing console.log/info/error on localhost');
-	}
+	// store.subscribe(() => {
+	// 	const data = store.getState().user;
+	// 	if (data) {
+	// 		Raven.setUserContext({
+	// 			username:   data.username,
+	// 			group:      data.group,
+	// 			name:       data.name,
+	// 			computerID: localStorage.computerUUID
+	// 		});
+	// 	} else {
+	// 		Raven.setUserContext({
+	// 			computerID: localStorage.computerUUID
+	// 		});
+	// 	}
+	// });
+	// }
+	// } else {
+	// 	console.info('Disabling capturing console.log/info/error on localhost');
+	// }
 
 	const txt = `
 <style>
