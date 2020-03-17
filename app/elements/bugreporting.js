@@ -6,19 +6,15 @@
 */
 
 import html2canvas from '../../node_modules/html2canvas/dist/html2canvas.js';
-import uuid from '../../node_modules/uuid/v4.js';
 
 import store from '../js/store.js';
 
-if (!('computerUUID' in localStorage)) {
-	localStorage.computerUUID = uuid();
-	console.info('Generated computer UUID: ', localStorage.computerUUID);
-}
+import { browserUUID, isProduction } from '../js/browser.js';
 
-window.bug_reporting = (function() {
-	if (window.location.host.substr(0, 'localhost'.length) != 'localhost') {
+window.bug_reporting = (function () {
+	if (isProduction()) {
 		console.info('Capturing console.log/info/error and exceptions');
-		if (typeof(Raven) != 'undefined') {
+		if (typeof (Raven) != 'undefined') {
 			// Raven.config('https://7dece2b0b38e413baca8b81e17929eb2@sentry.io/270948', {
 			// 	release: window.application_version
 			// }).install();
@@ -81,15 +77,15 @@ Can I ask you a bit more informations?<br>
 		// 	extra: {}
 		// });
 
-		html2canvas(document.body).then(function(canvas) {
+		html2canvas(document.body).then(function (canvas) {
 			document.getElementsByTagName('body')[0].innerHTML = txt;
-			document.getElementsByName('username')[0].value          = store.getState().user.username;
-			document.getElementsByName('email')[0].value             = store.getState().user.email;
-			document.getElementsByName('url')[0].value               = url;
-			document.getElementsByName('computer_id')[0].value       = localStorage.computerUUID;
-			document.getElementsByName('screenshot')[0].value        = canvas.toDataURL();
+			document.getElementsByName('username')[0].value = store.getState().user.username;
+			document.getElementsByName('email')[0].value = store.getState().user.email;
+			document.getElementsByName('url')[0].value = url;
+			document.getElementsByName('browser_id')[0].value = browserUUID;
+			document.getElementsByName('screenshot')[0].value = canvas.toDataURL();
 			document.getElementsByName('browser_useragent')[0].value = navigator.userAgent;
-			document.getElementsByName('browser_state')[0].value     = JSON.stringify(store.getState());
+			document.getElementsByName('browser_state')[0].value = JSON.stringify(store.getState());
 		});
 	};
 })();

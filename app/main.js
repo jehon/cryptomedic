@@ -152,29 +152,3 @@ window.Payment = Payment;
 
 import Picture from './models/Picture.js';
 window.Picture = Picture;
-
-
-// Angular 1.x
-// import angular from 'angular';
-// import 'angular-route';
-
-// Export to excell
-// import ExcellentExport from 'excellentexport';
-
-// Add objectPath to the library dynamically
-// https://github.com/webpack-contrib/imports-loader
-// import fetchfull from 'imports-loader?objectPath=object-path!fetchfull';
-// import fetchfull        from 'fetchfull';
-
-// html entities decode for jh-script
-// import he from 'he';
-
-// window.angular = angular;
-// window.jQuery = jQuery;
-// window.ExcellentExport = ExcellentExport;
-// window.FetchFull = fetchfull;
-// window.he = he;
-
-/* For fetchfull v2 inline */
-// import objectPath from 'object-path';
-// window.objectPath = objectPath;
