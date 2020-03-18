@@ -73,10 +73,10 @@ module.exports = function (config) {
 			outputDir: path.join(root, '/target/js/html/'),
 		},
 
-		// proxies: {
-		// 	'/static/': '/base/static/',
-		// 	'/elements/': '/base/static/elements/',
-		// },
+		proxies: {
+			'/static/': '/base/www/static/',
+			'/resources/': '/base/resources/',
+		},
 	};
 
 	config.set(configuration);
