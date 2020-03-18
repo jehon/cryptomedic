@@ -134,7 +134,7 @@ test-api-commit: docker-started depencencies.api
 	$(call run_in_docker,"server","/app/bin/dev-phpunit.sh commit")
 
 .PHONY: test-unit
-test-unit: dependencies-node build
+test-unit: dependencies-node
 	npm run --silent test-unit
 
 .PHONY: test-e2e
