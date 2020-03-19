@@ -123,7 +123,7 @@ lint:
 	npm run stylelint
 
 .PHONY: test
-test: test-api test-unit test-e2e test-style
+test: docker-started dependencies build test-api test-unit test-e2e test-style
 
 .PHONY: test-api
 test-api: docker-started dependencies-api data-reset
