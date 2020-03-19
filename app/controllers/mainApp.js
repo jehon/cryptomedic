@@ -163,6 +163,9 @@ mainApp.controller('ctrl_prices', ctrl_prices);
 
 mainApp.config(['$routeProvider', function ($routeProvider) {
 	$routeProvider
+		// .when('/login/:redirect*?', {
+		// 	template: '<div>You should login :-)</div>'
+		// })
 		.when('/home', {
 			templateUrl: template('page', 'home'),
 			controller: 'ctrl_home'
