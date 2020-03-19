@@ -59,11 +59,13 @@
     "stylelint": "13.2.1",
     "stylelint-config-standard": "20.0.0",
     "svgo": "latest",
+    "watch": "^1.0.2",
     "webpack": "4.42.0",
     "webpack-cli": "3.3.11"
   },
   "scripts": {
     "build": "webpack",
+    "build-continuously": "watch 'npm run build' app/",
     "test-unit": "karma start tests/unitjs/karma.conf.js --single-run",
     "test-unit-continuously": "karma start tests/unitjs/karma.conf.js",
     "test-e2e": "nightwatch",
