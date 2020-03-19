@@ -43,7 +43,7 @@ export default class XLoginStatus extends JHElement {
 		this[requestor] = this.shadowRoot.querySelector('x-requestor');
 		this[form] = this.shadowRoot.querySelector('x-form');
 
-		this[logout].addEventListener('click', () => this.doLogout());
+		this[logout].addEventListener('click', () => this.doLogout(false));
 
 		store.subscribe(() => {
 			const data = store.getState().user;
@@ -87,7 +87,7 @@ export default class XLoginStatus extends JHElement {
 					store.dispatch({ type: ACT_USER_LOGIN, payload: response.asJson });
 					return;
 				}
-				store.dispatch({ type: ACT_USER_LOGOUT });
+				this.doLogout(true);
 			})
 			.catch(e => {
 				this.removeAttribute('requesting');
@@ -115,7 +115,7 @@ export default class XLoginStatus extends JHElement {
 					return;
 				}
 				// We have a 404 (filtered)
-				store.dispatch({ type: ACT_USER_LOGOUT });
+				this.doLogout(true);
 				this[form].showMessages(['Invalid credentials']);
 			})
 			.catch(e => {
