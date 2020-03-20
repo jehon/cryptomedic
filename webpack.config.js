@@ -13,7 +13,6 @@ fse.emptyDirSync(__dirname + '/www/build');
 fs.writeFileSync(__dirname + '/www/build/release_version.txt', released_version);
 fs.writeFileSync(__dirname + '/www/build/release_version.js', `window.application_version = '${released_version}';`);
 fse.copy(__dirname + '/app/build.htaccess', __dirname + '/www/build/.htaccess');
-fse.copy(__dirname + '/app/elements/resources', __dirname + '/www/build/resources');
 
 module.exports = {
 	// TODO: use $myconfig["debug"]
