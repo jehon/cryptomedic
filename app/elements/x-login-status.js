@@ -1,5 +1,6 @@
 
 import JHElement from './jh-element.js';
+import { API_VERSION } from '../config.js'
 import store, { ACT_USER_LOGIN, ACT_USER_LOGOUT } from '../js/store.js';
 
 const user = Symbol('user');
@@ -43,7 +44,7 @@ export default class XLoginStatus extends JHElement {
 		this[requestor] = this.shadowRoot.querySelector('x-requestor');
 		this[form] = this.shadowRoot.querySelector('x-form');
 
-		this[logout].addEventListener('click', () => this.doLogout(false));
+		this[logout].addEventListener('click', () => this.doLogout());
 
 		store.subscribe(() => {
 			const data = store.getState().user;
@@ -81,18 +82,14 @@ export default class XLoginStatus extends JHElement {
 		this.setAttribute('requesting', 'doLoginCheck');
 		return this[requestor].request({ url: 'auth/settings' })
 			.then(response => {
-				this.removeAttribute('requesting');
 				if (response.ok) {
 					this[overlay].free();
 					store.dispatch({ type: ACT_USER_LOGIN, payload: response.asJson });
-					return;
 				}
-				this.doLogout(true);
 			})
-			.catch(e => {
+			.finally(() => {
 				this.removeAttribute('requesting');
-				throw e;
-			});
+			})
 	}
 
 	doLogin() {
@@ -108,28 +105,22 @@ export default class XLoginStatus extends JHElement {
 		this.setAttribute('requesting', 'doLogin');
 		return this[requestor].requestAndFilter({ url: 'auth/mylogin', method: 'POST', data }, [404])
 			.then((response) => {
-				this.removeAttribute('requesting');
 				if (response.ok) {
 					this[overlay].free();
 					store.dispatch({ type: ACT_USER_LOGIN, payload: response.asJson });
 					return;
 				}
 				// We have a 404 (filtered)
-				this.doLogout(true);
 				this[form].showMessages(['Invalid credentials']);
 			})
-			.catch(e => {
+			.finally(() => {
 				this.removeAttribute('requesting');
-				throw e;
-			});
+			})
 	}
 
-	doLogout(localOnly = false) {
-		store.dispatch({ type: ACT_USER_LOGOUT });
-		// localOnly could be the "tap" event, we thus check carefully what we receive
-		if (localOnly !== true) {
-			this[requestor].request({ url: 'auth/logout' });
-		}
+	/* istanbul ignore next: impossible to cover location change */
+	doLogout() {
+		document.location.assign(`/api/${API_VERSION}/auth/logout`);
 	}
 }
 
