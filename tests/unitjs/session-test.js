@@ -1,7 +1,7 @@
 
 import { getSession, setSession, resetSession, getUsername } from '../../app/js/session.js';
 
-fdescribe('session-test', function () {
+describe('session-test', function () {
     it("should set and reset session", async function () {
         resetSession();
         // The session is set before

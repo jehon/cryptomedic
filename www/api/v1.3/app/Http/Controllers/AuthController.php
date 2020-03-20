@@ -131,9 +131,13 @@ class AuthController extends Controller {
     return abort(404, "Invalid credentials");
   }
 
-  public function getLogout() {
+  public function getLogout(Request $request) {
     Auth::logout();
-    return response()->json(null);
+    if (\Illuminate\Support\Facades\Request::ajax()) {
+      // if ($request->isAjax()) {
+        return response()->json(null);
+    } 
+    return redirect('/static/logout.html');
   }
 
   public function matrix() {

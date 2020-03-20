@@ -1,5 +1,5 @@
 
-import '../../app/elements/x-login-status.js';
+import XLoginStatus from '../../app/elements/x-login-status.js';
 import XRequestor from '../../app/elements/x-requestor.js';
 import JHElement from '../../app/elements/jh-element.js';
 import store, { ACT_USER_LOGOUT, ACT_USER_LOGIN } from '../../app/js/store.js';
@@ -79,19 +79,10 @@ describe('tests/unit/x-login-status-test.js', function () {
 								status: 200,
 							}));
 						});
+
+						spyOn(XLoginStatus.prototype, 'doLogout');
 						JHElement.fireOn(element().shadowRoot.querySelector('#logout'), 'click');
-
-						testLoggedOut(element, '');
-					});
-
-					it('should logout locally', function () {
-						store.dispatch({ type: ACT_USER_LOGIN, payload: { username: 'test' } });
-						testLoggedIn(element, 'test');
-
-						element().doLogout(true);
-
-						testLoggedOut(element, '');
-						expect(XRequestor.prototype.request).toHaveBeenCalledTimes(1);
+						expect(XLoginStatus.prototype.doLogout).toHaveBeenCalled();
 					});
 				});
 			});
