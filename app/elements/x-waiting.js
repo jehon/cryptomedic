@@ -10,7 +10,7 @@ export default class XWaiting extends JHElement {
 		this.attachShadow({ mode: 'open' });
 		this.shadowRoot.innerHTML = `
             	<div id='overlay'>
-            		<img src='resources/waiting.gif' />Loading
+            		<img src='/static/img/waiting.gif' />Loading
             	</div>
             	<span id='slot'>
             		<slot></slot>
