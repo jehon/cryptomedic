@@ -1,5 +1,5 @@
 module.exports = {
-	'readPatient2000': function(client) {
+	'readPatient2000': function (client) { // id: 1
 		client.page.cryptomedic().authenticate('readonly');
 		client.page.cryptomedic().goPatient(2000, 1);
 		client.assert.myAssertHashIs('#/folder/1');
@@ -44,14 +44,18 @@ module.exports = {
 		client.assert.containsText('#Patient_entryyear', '2000');
 		client.assert.containsText('#Patient_entryorder', '1');
 		client.assert.not.elementPresent('#button_edit');
+		// bug+
+		client.assert.containsText('#Picture_Date', '2014-11-04');
 		client.myScreenshotReference('Picture');
 
 		client.page.cryptomedic().selectFile('Bill', 1);
 		client.assert.not.elementPresent('#button_edit');
+		// bug+
+		client.assert.containsText('#Bill_Date', '2011-06-09');
 		client.myScreenshotReference('Bill');
 		// TODO: check bill
 	},
-	readPatient5: function(client) {
+	readPatient5: function (client) { // id: 5
 		client.page.cryptomedic().goPatient(2014, 105);
 		client.assert.containsText('#Patient_Upazilla', 'Ukhia');
 		client.assert.containsText('#Patient_Union_', 'Jalia palong');
@@ -64,17 +68,22 @@ module.exports = {
 		// TODO: adapt the data and check them
 		client.assert.not.elementPresent('#button_edit');
 		client.myScreenshotReference('ClubFoot');
-
-		client.page.cryptomedic().goPatient(2001, 1);
-		client.page.cryptomedic().selectFile('RicketConsult', 3);
-		client.myScreenshotReference('RicketConsult');
-		// TODO: adapt the data and check them
-		client.assert.not.elementPresent('#button_edit');
-
 		client.end();
 	},
 
-	readPatient3: function(client) {
+	readPatient6: function (client) { // id: 6
+		client.page.cryptomedic().authenticate('readonly');
+		client.page.cryptomedic().goPatient(2001, 1);
+		client.page.cryptomedic().selectFile('RicketConsult', 3);
+		// TODO: adapt the data and check them
+		client.assert.not.elementPresent('#button_edit');
+		// bug+
+		client.assert.containsText('#Date', '2004-10-06');
+		client.myScreenshotReference('RicketConsult');
+		client.end();
+	},
+
+	readPatient3: function (client) {
 		client.page.cryptomedic().authenticate('readonly');
 		client.page.cryptomedic().goPatient(2014, 103);
 		client.page.cryptomedic().selectFile('Bill', 2);
