@@ -40,8 +40,9 @@ module.exports = {
 
 		client.page.cryptomedic().selectFile('Picture', 2);
 		client.assert.not.elementPresent('#button_edit');
-		client.assert.containsText('span#Picture_Date', '2014-11-04');
-		client.assert.containsText('span#Picture_file', '10_2014-11-06_15-32-45.JPG');
+		client.assert.containsText('#Picture_Date', '2014-11-04');
+		client.assert.containsText('#Picture_file', '10_2014-11-06_15-32-45.JPG');
+		client.waitForElementVisible('#img_file');
 		client.myScreenshotReference('Picture');
 
 		client.page.cryptomedic().selectFile('Bill', 1);
