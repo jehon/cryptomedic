@@ -232,7 +232,7 @@ module.exports = {
 	// 	'#Appointment_Nextappointment': '2010-01-01',
 	// 	'[name=NextCenter]': 'Ramu'
 	// };
-	
+
 	// 'check the created appointment': function(client) {
 	//   client
 	//     .waitForElementVisible('')
@@ -260,7 +260,7 @@ module.exports = {
 		client.pause(500);
 		client.myClick('#button_patient');
 		client.myClick('#topsubmenu #patient_edit');
-		client.waitForElementPresent('#Patient_Name');
+		client.waitForElementPresent('input#Patient_Name');
 		client.assert.value('#Patient_Name', 'mozahar ahamed');
 		client.mySetAttribute('[name=Pathology]', 'value', 'ClubFoot');
 		client.setValue('#Patient_Name', 'rezaul');
