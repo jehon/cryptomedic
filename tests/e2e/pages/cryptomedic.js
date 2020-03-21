@@ -117,7 +117,8 @@ module.exports = {
 		selectFile: function (type, id) {
 			this
 				.myClick('#folder_menu_' + type + '_' + id)
-				.waitForElementVisible('#folder_menu_' + type + '_' + id);
+				.waitForElementVisible('#folder_menu_' + type + '_' + id)
+				.assert.containsText('#file_id', id);
 			return this;
 		},
 
