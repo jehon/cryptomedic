@@ -10,13 +10,13 @@ describe('tests/unit/x-waiting-test.js', function () {
 			expect(element().shadowRoot.querySelector('img').offsetWidth > 0).toBeFalsy();
 		});
 
-		it('should show()', function (done) {
+		it('should show()', function () {
 			element().block();
 			expect(element().isBlocked()).toBeTruthy();
-			setTimeout(() => {
-				expect(element().shadowRoot.querySelector('img').offsetWidth > 0).toBeTruthy();
-				done();
-			}, 10);
+			// setTimeout(() => {
+			expect(element().shadowRoot.querySelector('img').offsetWidth > 0).toBeTruthy();
+			// done();
+			// }, 100);
 		});
 
 		it('should hide()', function () {
