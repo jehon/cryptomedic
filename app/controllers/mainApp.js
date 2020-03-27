@@ -84,25 +84,6 @@ let mainApp = angular.module('app_main', ['ngRoute'])
 					});
 				} // end of link function
 		};
-		// })
-		// .directive('nullToInterrogation', function () {
-		// 	// https://docs.angularjs.org/api/ng/directive/select
-		// 	// usage: <select ng-model='model.id' null-to-interrogation>
-		// 	return {
-		// 		require: 'ngModel',
-		// 		link: function (scope, element, attrs, ngModel) {
-		// 			ngModel.$parsers.push(function (val) {
-		// 				// From option to model
-		// 				if (val == '?') return null;
-		// 				return val;
-		// 			});
-		// 			ngModel.$formatters.push(function (val) {
-		// 				// From model to option
-		// 				if (val == null) return '?';
-		// 				return val;
-		// 			});
-		// 		}
-		// 	};
 	});
 
 mainApp.controller('ctrl', ['$scope', function ($scope) {
