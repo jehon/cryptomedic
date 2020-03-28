@@ -2,6 +2,7 @@
 
 const path = require('path');
 const fs = require('fs');
+var child_process = require('child_process');
 
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -14,9 +15,13 @@ fs.writeFileSync(__dirname + '/www/build/release_version.txt', released_version)
 fs.writeFileSync(__dirname + '/www/build/release_version.js', `window.application_version = '${released_version}';`);
 fse.copy(__dirname + '/app/build.htaccess', __dirname + '/www/build/.htaccess');
 
+const isDebug = child_process.execSync('php config.php debug').toString() > 0;
+if (isDebug) {
+	console.info('Enabling debug/development mode in webpack');
+}
+
 module.exports = {
-	// TODO: use $myconfig["debug"]
-	mode: 'production',
+	mode: (isDebug ? 'development' : 'production'),
 	entry: {
 		app: path.join(__dirname, '/app/main.js'),
 	},
