@@ -52,6 +52,7 @@ clean: deploy-unmount stop
 	rm -fr "target/"
 	find . -name "*.log" -delete
 	rm -fr www/build
+	rm -fr app/cjs2esm
 
 	$(call ensure_folder_empty,www/api/$(VAPI)/bootstrap/cache/)
 	$(call ensure_folder_empty,www/api/$(VAPI)/app/public)
