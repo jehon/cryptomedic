@@ -19,6 +19,7 @@ DEPLOY_MOUNT := target/remote
 BACKUP_DIR ?= target/backup-online
 DEPLOY_TEST_DIR ?= target/deploy-test-dir
 CJS2ESM_DIR := app/cjs2esm
+NM_BIN := node_modules/.bin/
 
 define ensure_folder_empty
 	rm -fr "$1"
@@ -138,12 +139,12 @@ test-api-commit: docker-started depencencies.api
 
 .PHONY: test-unit
 test-unit: dependencies-node $(CJS2ESM_DIR)/axios.js $(CJS2ESM_DIR)/axios-mock-adapter.js
-	npm run --silent test-unit
+	$(NM_BIN)/karma start tests/unitjs/karma.conf.js --single-run
 
 .PHONY: test-e2e
 test-e2e: dependencies-node build target/e2e/.tested $(CJS2ESM_DIR)/axios.js
 target/e2e/.tested: docker-started data-reset
-	npm run --silent test-e2e
+	$(NM_BIN)/nightwatch
 	touch target/e2e/.tested
 
 .PHONY: test-style
@@ -235,7 +236,7 @@ www/build/index.html: node_modules/.dependencies \
 		package.json package-lock.json \
 		$(call recursive-dependencies,app/,www/build/index.html) \
 		$(CJS2ESM_DIR)/axios.js
-	npm run build
+	$(NM_BIN)webpack
 
 $(CJS2ESM_DIR)/axios.js: node_modules/axios/dist/axios.js
 	$(NM_BIN)babel --out-dir="$(CJS2ESM_DIR)" --plugins=transform-commonjs $?

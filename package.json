@@ -68,11 +68,8 @@
     "webpack-cli": "3.3.11"
   },
   "scripts": {
-    "build": "webpack",
-    "build-continuously": "watch 'npm run build' app/",
-    "test-unit": "karma start tests/unitjs/karma.conf.js --single-run",
+    "build-continuously": "watch 'make build' app/",
     "test-unit-continuously": "karma start tests/unitjs/karma.conf.js",
-    "test-e2e": "nightwatch",
     "test-e2e-chrome": "nightwatch -e chrome",
     "test-style": "jasmine --config=tests/style/jasmine.json",
     "eslint": "eslint .",
