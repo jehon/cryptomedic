@@ -141,7 +141,7 @@ test-unit: dependencies-node $(CJS2ESM_DIR)/axios.js $(CJS2ESM_DIR)/axios-mock-a
 	npm run --silent test-unit
 
 .PHONY: test-e2e
-test-e2e: dependencies-node build target/e2e/.tested
+test-e2e: dependencies-node build target/e2e/.tested $(CJS2ESM_DIR)/axios.js
 target/e2e/.tested: docker-started data-reset
 	npm run --silent test-e2e
 	touch target/e2e/.tested
@@ -231,7 +231,8 @@ www/maintenance/vendor/.dependencies: www/maintenance/composer.json www/maintena
 #
 .PHONY: build
 build: www/build/index.html
-www/build/index.html: node_modules/.dependencies package.json package-lock.json \
+www/build/index.html: node_modules/.dependencies \
+		package.json package-lock.json \
 		$(call recursive-dependencies,app/,www/build/index.html) \
 		$(CJS2ESM_DIR)/axios.js
 	npm run build
@@ -241,6 +242,7 @@ $(CJS2ESM_DIR)/axios.js: node_modules/axios/dist/axios.js
 
 $(CJS2ESM_DIR)/axios-mock-adapter.js: node_modules/axios-mock-adapter/dist/axios-mock-adapter.js
 	$(NM_BIN)babel --out-dir="$(CJS2ESM_DIR)" --plugins=transform-commonjs $?
+	sed -i 's/from "axios";/from ".\/axios.js";/' $@
 
 #
 #
