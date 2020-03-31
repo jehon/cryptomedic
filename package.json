@@ -8,9 +8,9 @@
   "dependencies": {
     "angular": "1.7.9",
     "angular-route": "1.7.9",
+    "axios": "0.19.2",
     "bootstrap": "3.4.1",
     "excellentexport": "3.4.2",
-    "fetchfull": "github:jehon/fetchfull",
     "he": "1.2.0",
     "html2canvas": "0.5.0-beta4",
     "jquery": "3.4.1",
@@ -20,12 +20,16 @@
     "redux": "4.0.5"
   },
   "devDependencies": {
-    "@babel/core": "7.9.0",
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "7.8.4",
     "@babel/plugin-proposal-class-properties": "7.8.3",
     "@babel/plugin-proposal-decorators": "7.8.3",
     "@babel/plugin-proposal-nullish-coalescing-operator": "7.8.3",
     "@babel/plugin-proposal-optional-chaining": "7.9.0",
+    "axios-mock-adapter": "^1.18.1",
+    "babel-eslint": "10.0.3",
     "babel-loader": "8.1.0",
+    "babel-plugin-transform-commonjs": "1.1.6",
     "chromedriver": "latest",
     "css-loader": "3.4.2",
     "eslint": "6.8.0",

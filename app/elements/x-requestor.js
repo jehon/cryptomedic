@@ -1,10 +1,9 @@
 
 import JHElement from './jh-element.js';
 import { API_VERSION } from '../config.js';
-// TODO: remove FetchFull
-import FetchFull from '../../node_modules/fetchfull/src/fetchfull.js';
 import store, { ACT_USER_LOGOUT } from '../js/store.js';
 
+import axios from '../cjs2esm/axios.js';
 
 const error = Symbol('error');
 const waiting = Symbol('waiting');
@@ -54,61 +53,64 @@ export default class XRequestor extends JHElement {
 		return this[error].isBlocked();
 	}
 
-	request({ url = '/', data = {}, method = 'GET', timeout = 30 } = {}) {
+	request(opts) {
 		this[waiting].block();
 		this.setAttribute('running', 'running');
 
-		if (url[0] != '/') {
-			url = '/api/' + API_VERSION + '/' + url;
+		const options = {
+			url: '/',
+			...opts,
+			timeout: ((('timeout' in opts) ? opts.timeout : 30) * 1000)
+		};
+
+		if (options.url[0] != '/') {
+			options.url = `/api/${API_VERSION}/${options.url}`;
 		}
 
-		const fetchfull = new FetchFull();
-		fetchfull.requestWithCredentials('include');
-		fetchfull.requestToUrl(url);
-		fetchfull.requestWithData(data);
-		fetchfull.responseAsJson();
-		fetchfull.requestWithTimeOut(timeout);
-
-		if (method == 'GET') {
-			fetchfull.requestWithGet();
-		} else {
-			fetchfull.requestWithPutWithJSONBody();
-			fetchfull.requestWithMethod(method);
+		if (!options.method || options.method == 'GET') {
+			options.params = options.data;
+			delete options.data;
 		}
 
-		return fetchfull.then(response => {
-			this.removeAttribute('running');
-			this[waiting].free();
-			return response;
-		})
-			.catch(errorObj => {
+		return axios(options)
+			.then(response => {
+				// TODO: temp hack
+				response.ok = (response.status >= 200 && response.status < 300); // TODO: temp hack
+				response.asJson = response.data; // TODO: temp hack
+
+				this.removeAttribute('running');
+				this[waiting].free();
+				return response;
+			}, errorResponse => {
 				this.removeAttribute('running');
 				this[waiting].free();
 				this[error].block();
 				// Fill in the overlay
-				this.showFailure(errorObj);
-				throw errorObj;
+				this.showFailure(errorResponse);
+				throw errorResponse;
 			});
 	}
 
-	showFailure(message) {
+	// See https://github.com/axios/axios#handling-errors
+	showFailure(errorResponse) {
 		this[waiting].free();
 		this[error].block();
 		this[errorMsg].innerHTML = 'Network error';
-		if (typeof (message) == 'object') {
+		if (typeof (errorResponse) == 'object') {
 			let html = '<table style=\'width: 300px\'>';
-			if (message instanceof Response) {
-				this[errorMsg].innerHTML = message.statusText;
-				html += `<tr><td>Status code</td><td>${message.status}</td></tr>`;
-				if (message.status == 401) {
+			if (errorResponse.response) {
+				// Code is not 2xx
+				this[errorMsg].innerHTML = errorResponse.response.statusText;
+				html += `<tr><td>Status code</td><td>${errorResponse.response.status}</td></tr>`;
+				if (errorResponse.response.status == 401) {
 					// Logout if 401
 					store.dispatch({ type: ACT_USER_LOGOUT });
 					this[error].free();
 				}
-			} else if (message instanceof FetchFull.TimeoutException) {
-				this[errorMsg].innerHTML = 'Time-out';
-				html += '<tr><td>Message</td><td>Is your network connection ok?</td></tr>';
-			} else if (message instanceof TypeError) {
+				// } else if (response instanceof FetchFull.TimeoutException) {
+				// 	this[errorMsg].innerHTML = 'Time-out';
+				// 	html += '<tr><td>Message</td><td>Is your network connection ok?</td></tr>';
+			} else if (errorResponse.request) {
 				this[errorMsg].innerHTML = 'Network Error';
 				html += `<tr><td>Message</td><td>
                     Something went very wrong on your network. Please check:<br>
@@ -119,28 +121,33 @@ export default class XRequestor extends JHElement {
                     In other case, please reload the page and try again..
                     <a href="javascript:window.location.reload()">Reload the page here</a></td></tr>`;
 			} else {
-				// Complex message
-				Object.keys(message).forEach(k => {
-					// Part message in a table
-					html += `<tr><td>${k}</td><td>${message[k]}</td></tr>`;
-				});
+				html += `<tr><td>Error</td><td>${errorResponse.message}</td></tr>`;
 			}
 			html += '</table>';
 			this[errorContent].innerHTML = html;
 		} else {
 			// String message
-			this[errorMsg].innerHTML = message;
+			this[errorMsg].innerHTML = errorResponse;
 		}
 	}
 
 	requestAndFilter(options, allowed = []) {
-		return this.request(options)
-			.then(response => {
-				if (response.ok || allowed.indexOf(response.status) >= 0) {
-					return response;
+		return this.request({
+			// https://github.com/axios/axios#handling-errors
+			validateStatus: function (status) {
+				if (status >= 200 && status < 300) {
+					return true;
 				}
-				this.showFailure(response);
-				throw response;
+				if (allowed.indexOf(status) >= 0) {
+					return true;
+				}
+				return false;
+			},
+			...options
+		})
+			.catch(errorResponse => {
+				this.showFailure(errorResponse);
+				throw errorResponse;
 			});
 	}
 }
