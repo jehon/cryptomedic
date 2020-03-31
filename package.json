@@ -68,9 +68,7 @@
     "webpack-cli": "3.3.11"
   },
   "scripts": {
-    "build": "npm run build-es6 && npm run build-webpack",
-    "build-es6": "babel --out-dir=app/cjs2esm --plugins=transform-commonjs node_modules/axios/dist/axios.js",
-    "build-webpack": "webpack",
+    "build": "webpack",
     "build-continuously": "watch 'npm run build' app/",
     "test-unit": "karma start tests/unitjs/karma.conf.js --single-run",
     "test-unit-continuously": "karma start tests/unitjs/karma.conf.js",
