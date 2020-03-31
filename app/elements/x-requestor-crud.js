@@ -11,8 +11,9 @@ export default class XRequestorCRUD extends XRequestor {
 
 	list() {
 		return this.requestAndFilter({
-			url: this.relativeUrl
-		}).then(response => response.asJson);
+			url: this.relativeUrl,
+			method: 'GET',
+		}).then(response => response.data);
 	}
 
 	create(data) {
@@ -20,13 +21,14 @@ export default class XRequestorCRUD extends XRequestor {
 			url: this.relativeUrl,
 			method: 'POST',
 			data: nullify(data)
-		}).then(response => response.asJson);
+		}).then(response => response.data);
 	}
 
 	read(id) {
 		return this.requestAndFilter({
+			method: 'GET',
 			url: this.relativeUrl + '/' + id
-		}).then(response => response.asJson);
+		}).then(response => response.data);
 	}
 
 	update(data) {
@@ -34,14 +36,14 @@ export default class XRequestorCRUD extends XRequestor {
 			url: this.relativeUrl + '/' + data.id,
 			method: 'PUT',
 			data: data
-		}).then(response => response.asJson);
+		}).then(response => response.data);
 	}
 
 	delete(id) {
 		return this.requestAndFilter({
 			url: this.relativeUrl + '/' + id,
 			method: 'DELETE'
-		}).then(response => response.asJson);
+		}).then(response => response.data);
 	}
 }
 
