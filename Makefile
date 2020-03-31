@@ -230,8 +230,10 @@ www/maintenance/vendor/.dependencies: www/maintenance/composer.json www/maintena
 #
 #
 .PHONY: build
-build: www/build/index.html $(CJS2ESM_DIR)/axios.js
-www/build/index.html: node_modules/.dependencies package.json package-lock.json $(call recursive-dependencies,app/,www/build/index.html)
+build: www/build/index.html
+www/build/index.html: node_modules/.dependencies package.json package-lock.json \
+		$(call recursive-dependencies,app/,www/build/index.html) \
+		$(CJS2ESM_DIR)/axios.js
 	npm run build
 
 $(CJS2ESM_DIR)/axios.js: node_modules/axios/dist/axios.js
