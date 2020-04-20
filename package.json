@@ -10,6 +10,7 @@
     "angular-route": "1.7.9",
     "axios": "0.19.2",
     "bootstrap": "3.4.1",
+    "css-inherit": "github:jehon/css-inherit",
     "excellentexport": "3.4.2",
     "he": "1.2.0",
     "html2canvas": "0.5.0-beta4",
