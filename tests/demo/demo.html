@@ -1,0 +1,42 @@
+<html>
+
+<head>
+    <script type=module src='../../app/elements/panels/x-panel.js'></script>
+    <script type=module src='../../app/elements/panels/x-waiting.js'></script>
+</head>
+
+<body>
+    <style>
+        #flex {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        #flex>* {
+            width: 300px;
+            height: 300px;
+            border: dashed 1px blue;
+        }
+
+        [highlight] {
+            background-color: gray;
+            border: 1px solid green;
+        }
+    </style>
+    <div id='flex'>
+        <x-panel>
+            <div>test</div>
+        </x-panel>
+        <x-waiting t-waiting>content waiting</x-waiting>
+        <x-waiting t-free>content free</x-waiting>
+
+    </div>
+    <script type='module'>
+        document.querySelectorAll("x-waiting[t-waiting]").forEach(e => e.block());
+        // document.addEventListener('DOMContentLoaded', (event) => {});
+    </script>
+</body>
+
+</html>
