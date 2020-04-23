@@ -20,7 +20,8 @@ const listener = app.listen(5558, function () {
     hotReloadingProxy.start({
         port: 5557,
         remote: `http://localhost:${demoPort}`,
-        watch: ['app', 'www']
+        watch: ['app', 'www/static', 'tests/demo'],
+        // logLevel: 10
     }).then((realHotPort) => {
         console.info(`Hot reloading proxy listening on port ${realHotPort}!`);
         console.info(`http://localhost:${realHotPort}/tests/demo/`);
