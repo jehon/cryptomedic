@@ -7,14 +7,13 @@
 
 <body>
     <style>
-        #flex {
+        .flex {
             width: 100%;
-            height: 100%;
             display: flex;
             flex-wrap: wrap;
         }
 
-        #flex>* {
+        .flex>* {
             width: 300px;
             height: 300px;
             border: dashed 1px blue;
@@ -25,16 +24,32 @@
             border: 1px solid green;
         }
     </style>
-    <div id='flex'>
+    <h2>Pannels</h2>
+    <div class='flex'>
         <x-panel>
             <div>test</div>
         </x-panel>
-        <x-waiting t-waiting>content waiting</x-waiting>
-        <x-waiting t-free>content free</x-waiting>
-
+        <x-waiting fn-block>content waiting</x-waiting>
+        <x-waiting fn-free>content free</x-waiting>
     </div>
+    <h2>Overlay's</h2>
+    <div class='flex'>
+        <x-overlay>
+            <div slot='content'>Content</div>
+            <div slot='overlay'>Overlay</div>
+        </x-overlay>
+        <x-overlay fn-block>
+            <div slot='content'>Content</div>
+            <div slot='overlay'>Overlay</div>
+        </x-overlay>
+        <x-overlay fn-block closable>
+            <div slot='content'>Content</div>
+            <div slot='overlay'>Overlay</div>
+        </x-overlay>
+    </div>
+
     <script type='module'>
-        document.querySelectorAll("x-waiting[t-waiting]").forEach(e => e.block());
+        document.querySelectorAll("[fn-block]").forEach(e => e.block());
         // document.addEventListener('DOMContentLoaded', (event) => {});
     </script>
 </body>
