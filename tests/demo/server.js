@@ -1,6 +1,7 @@
 
 
 const express = require('express');
+const serveIndex = require('serve-index');
 const morgan = require('morgan');
 const hotReloadingProxy = require('hot-reloading-proxy/server.js');
 
@@ -11,6 +12,7 @@ app.use(morgan('tiny'));
 
 app.use('/static', express.static('www/static'));
 app.use('/', express.static('.'));
+app.use('/', serveIndex('.'));
 
 const listener = app.listen(5558, function () {
     const demoPort = listener.address().port;
@@ -27,4 +29,3 @@ const listener = app.listen(5558, function () {
         console.info(`http://localhost:${realHotPort}/tests/demo/`);
     });
 });
-
