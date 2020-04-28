@@ -2,6 +2,7 @@
 
 <head>
     <script type=module src='../../app/elements/panels/x-panel.js'></script>
+    <script type=module src='../../app/elements/panels/x-overlay.js'></script>
     <script type=module src='../../app/elements/panels/x-waiting.js'></script>
 </head>
 
@@ -29,8 +30,8 @@
         <x-panel>
             <div>test</div>
         </x-panel>
-        <x-waiting fn-block>content waiting</x-waiting>
-        <x-waiting fn-free>content free</x-waiting>
+        <x-waiting>content free</x-waiting>
+        <x-waiting blocked>content waiting</x-waiting>
     </div>
     <h2>Overlay's</h2>
     <div class='flex'>
@@ -38,20 +39,15 @@
             <div slot='content'>Content</div>
             <div slot='overlay'>Overlay</div>
         </x-overlay>
-        <x-overlay fn-block>
+        <x-overlay blocked>
             <div slot='content'>Content</div>
             <div slot='overlay'>Overlay</div>
         </x-overlay>
-        <x-overlay fn-block closable>
+        <x-overlay blocked closable>
             <div slot='content'>Content</div>
             <div slot='overlay'>Overlay</div>
         </x-overlay>
     </div>
-
-    <script type='module'>
-        document.querySelectorAll("[fn-block]").forEach(e => e.block());
-        // document.addEventListener('DOMContentLoaded', (event) => {});
-    </script>
 </body>
 
 </html>
