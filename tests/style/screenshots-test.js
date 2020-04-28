@@ -22,7 +22,7 @@ jasmine.getEnv().addReporter({
         const fn = result.fullName.split(':').splice(1).join('').trim();
         const status = result.failedExpectations.length < 1;
         if (status) {
-            problemsList.remove(fn);
+            problemsList.delete(fn);
         }
     }
 });
