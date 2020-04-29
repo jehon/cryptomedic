@@ -4,7 +4,7 @@ import '../../app/elements/panels/x-waiting.js';
 import { webDescribe } from './athelpers.js';
 
 describe('tests/unit/x-waiting-test.js', function () {
-    webDescribe('initialized', '<x-waiting><div style=\'width: 200px; height: 100px; background-color: red;\'>Content</div></x-waiting>', function (element) {
+    webDescribe('initialized', '<x-waiting><div slot="content" style=\'width: 200px; height: 100px; background-color: red;\'>Content</div></x-waiting>', function (element) {
         it('should be hidden when initialized simply', function () {
             expect(element().isBlocked()).toBeFalsy();
             expect(element().shadowRoot.querySelector('img').offsetWidth > 0).toBeFalsy();

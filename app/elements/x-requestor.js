@@ -2,6 +2,8 @@
 import JHElement from './jh-element.js';
 import { API_VERSION } from '../config.js';
 import store, { ACT_USER_LOGOUT } from '../js/store.js';
+import './x-waiting.js';
+import './x-overlay.js';
 
 import axios from '../cjs2esm/axios.js';
 
@@ -16,21 +18,21 @@ export default class XRequestor extends JHElement {
 		this.attachShadow({ mode: 'open' });
 		this.shadowRoot.innerHTML = `
             <span>
-                <x-overlay closable z-index=20 >
+                <x-o-overlay closable z-index=20 >
                     <h1 id='errorMsg'></h1>
                     <div id='errorContent'></div>
                     <div id='closeButton' class='btn btn-default'></div>
-                </x-overlay>
-                <x-waiting>
+                </x-o-overlay>
+                <x-o-waiting>
                     <slot></slot>
-                </x-waiting>
+                </x-o-waiting>
             </span>`;
-		this.inheritCSS();
+        this.inheritCSS();
 
-		this[waiting] = this.shadowRoot.querySelector('x-waiting');
-		this[error] = this.shadowRoot.querySelector('x-overlay');
-		this[errorMsg] = this.shadowRoot.querySelector('#errorMsg');
-		this[errorContent] = this.shadowRoot.querySelector('#errorContent');
+        this[waiting] = this.shadowRoot.querySelector('x-o-waiting');
+        this[error] = this.shadowRoot.querySelector('x-o-overlay');
+        this[errorMsg] = this.shadowRoot.querySelector('#errorMsg');
+        this[errorContent] = this.shadowRoot.querySelector('#errorContent');
 
 		this[waiting].free();
 		this[error].free();

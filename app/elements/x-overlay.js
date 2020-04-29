@@ -107,4 +107,4 @@ export default class XOverlay extends JHElement {
 	}
 }
 
-window.customElements.define('x-overlay', XOverlay);
+window.customElements.define('x-o-overlay', XOverlay);
