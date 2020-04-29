@@ -54,4 +54,4 @@ export default class XWaiting extends JHElement {
 	}
 }
 
-window.customElements.define('x-waiting', XWaiting);
+window.customElements.define('x-o-waiting', XWaiting);

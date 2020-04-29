@@ -24,8 +24,6 @@ export default class XForm extends JHElement {
 			</div>`;
         this.inheritCSS();
         this[messages] = this.shadowRoot.querySelector('.row');
-        this.classList.add('full');
-        this.classList.add('center');
     }
 
     render() {

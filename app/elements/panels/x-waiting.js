@@ -5,8 +5,8 @@ import { insertInSlot } from '../element-helpers.js';
 export default class XWaiting extends XOverlay {
     constructor() {
         super();
-        insertInSlot(this, 'overlay', '<img src=\'/static/img/waiting.gif\' /> Loading');
-        insertInSlot(this, 'content', '<slot></slot>');
+        insertInSlot(this, 'overlay', '<img src=\'/static/img/waiting.gif\' /> Loading<slot name="waiting">');
+        insertInSlot(this, 'content', '<slot name="content"></slot>');
     }
 
     aroundPromise(p) {

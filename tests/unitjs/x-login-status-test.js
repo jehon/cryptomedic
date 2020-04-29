@@ -25,14 +25,14 @@ describe('tests/unit/x-login-status-test.js', function () {
         expect(element().hasAttribute('requesting')).toBeFalsy();
         expect(element().shadowRoot.querySelector('#logout').offsetHeight).toBeGreaterThan(0);
         expect(element().shadowRoot.querySelector('#user').innerHTML).toBe(username);
-        expect(element().shadowRoot.querySelector('x-overlay').isBlocked()).toBeFalsy();
+        expect(element().shadowRoot.querySelector('x-o-overlay').isBlocked()).toBeFalsy();
     };
 
     const testLoggedOut = function (element) {
         expect(element().hasAttribute('requesting')).toBeFalsy();
         expect(element().shadowRoot.querySelector('#logout').offsetHeight).toBe(0);
         expect(element().shadowRoot.querySelector('#user').innerHTML).toBe('');
-        expect(element().shadowRoot.querySelector('x-overlay').isBlocked()).toBeTruthy();
+        expect(element().shadowRoot.querySelector('x-o-overlay').isBlocked()).toBeTruthy();
     };
 
     describe('with spy "then"', function () {
