@@ -1,13 +1,16 @@
 
 import '../../../node_modules/css-inherit/css-inherit.js';
 
+/**
+ * Slot[]: content
+ */
 export default class XPanel extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
         this.shadowRoot.innerHTML = `
             <css-inherit></css-inherit>
-            <style>
+            <style css-inherit-local>
                 :host {
                     width: 100%;
                     height: 100%;

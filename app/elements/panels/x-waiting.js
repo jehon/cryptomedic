@@ -2,6 +2,9 @@
 import XOverlay from './x-overlay.js';
 import { insertInSlot } from '../element-helpers.js';
 
+/**
+ * Slot[]: content
+ */
 export default class XWaiting extends XOverlay {
     constructor() {
         super();

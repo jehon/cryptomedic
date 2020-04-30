@@ -2,12 +2,15 @@
 import XPanel from './x-panel.js';
 import { insertInSlotDefault } from '../element-helpers.js';
 
-
+/**
+ * Slot[content]: content
+ * Slot[overlay]: overlay
+ */
 export default class XOverlay extends XPanel {
     constructor() {
         super();
         insertInSlotDefault(this, `
-            <style>
+            <style css-inherit-local>
                 #overlay {
                     position: absolute;
                     top: 0;
