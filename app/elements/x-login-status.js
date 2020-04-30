@@ -25,7 +25,7 @@ export default class XLoginStatus extends JHElement {
 				<span>
 					<span id='user'></span>
 					<img id='logout' style='height: 100%' src="/static/img/logout.gif" />
-					<x-requestor></x-requestor>
+					<x-o-requestor></x-o-requestor>
                     <x-o-overlay z-index=15 >
                         <x-panel>
                             <x-form class="form-signing" role="form">
@@ -47,7 +47,7 @@ export default class XLoginStatus extends JHElement {
         this[user] = this.shadowRoot.querySelector('#user');
         this[logout] = this.shadowRoot.querySelector('#logout');
         this[overlay] = this.shadowRoot.querySelector('x-o-overlay');
-        this[requestor] = this.shadowRoot.querySelector('x-requestor');
+        this[requestor] = this.shadowRoot.querySelector('x-o-requestor');
         this[form] = this.shadowRoot.querySelector('x-form');
 
         this[logout].addEventListener('click', () => this.doLogout());

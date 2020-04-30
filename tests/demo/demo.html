@@ -1,11 +1,5 @@
 <html>
 
-<head>
-    <script type=module src='../../app/elements/panels/x-panel.js'></script>
-    <script type=module src='../../app/elements/panels/x-overlay.js'></script>
-    <script type=module src='../../app/elements/panels/x-waiting.js'></script>
-</head>
-
 <body>
     <style>
         .flex {
@@ -25,15 +19,34 @@
             border: 1px solid green;
         }
     </style>
-    <h2>Pannels</h2>
+    <h2>Widgets</h2>
+    <script type='module' src='../../app/elements/widgets/x-button.js'></script>
+    <div class='flex'>
+        <x-panel>
+            <x-button>primary</x-button>
+            <x-button icon='error.svg'>iconic</x-button>
+            <x-button level='secondary'>secondary</x-button>
+            <x-button level='dangerous'>dangerous</x-button>
+        </x-panel>
+        <script>
+            document.querySelectorAll('x-button').forEach(e => e.addEventListener('click', evt => console.info('clicked', evt.target)));
+        </script>
+    </div>
+    <h2>X-Panels</h2>
+    <script type='module' src='../../app/elements/panels/x-panel.js'></script>
     <div class='flex'>
         <x-panel>
             <div>test</div>
         </x-panel>
+    </div>
+    <h2>X-Waiting's</h2>
+    <script type='module' src='../../app/elements/panels/x-waiting.js'></script>
+    <div class='flex'>
         <x-waiting>content free</x-waiting>
         <x-waiting blocked>content waiting</x-waiting>
     </div>
-    <h2>Overlay's</h2>
+    <h2>X-Overlay's</h2>
+    <script type='module' src='../../app/elements/panels/x-overlay.js'></script>
     <div class='flex'>
         <x-overlay>
             <div slot='content'>Content</div>
@@ -47,6 +60,19 @@
             <div slot='content'>Content</div>
             <div slot='overlay'>Overlay</div>
         </x-overlay>
+    </div>
+    <h2>X-Requestor's</h2>
+    <script type='module' src='../../app/elements/panels/x-requestor.js'></script>
+    <div class='flex'>
+        <x-requestor>
+            <div slot>Content</div>
+        </x-requestor>
+        <x-requestor blocked fail>
+            <div slot>Content</div>
+        </x-requestor>
+        <script type='module'>
+            document.querySelectorAll('x-requestor[fail]').forEach(e => e.request({ url: '/nothing' }));
+        </script>
     </div>
 </body>
 

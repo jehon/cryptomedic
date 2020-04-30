@@ -154,4 +154,4 @@ export default class XRequestor extends JHElement {
 	}
 }
 
-window.customElements.define('x-requestor', XRequestor);
+window.customElements.define('x-o-requestor', XRequestor);
