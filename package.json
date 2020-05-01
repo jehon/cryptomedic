@@ -51,7 +51,7 @@
     "karma-chrome-launcher": "latest",
     "karma-coverage": "latest",
     "karma-coverage-istanbul-instrumenter": "1.0.2",
-    "karma-coverage-istanbul-reporter": "2.1.1",
+    "karma-coverage-istanbul-reporter": "3.0.0",
     "karma-firefox-launcher": "latest",
     "karma-html-reporter": "latest",
     "karma-jasmine": "latest",
