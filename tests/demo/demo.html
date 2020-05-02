@@ -74,6 +74,18 @@
             document.querySelectorAll('x-requestor[fail]').forEach(e => e.request({ url: '/nothing' }));
         </script>
     </div>
+    <h2>X-Messages</h2>
+    <script type='module' src='../../app/elements/panels/x-messages.js'></script>
+    <div class='flex'>
+        <x-messages></x-messages>
+        <script type='module'>
+            document.querySelectorAll('x-messages').forEach(e => e.showMessages([
+                "This is an error",
+                { level: "warning", text: "This is a warning" }
+            ]));
+        </script>
+    </div>
+
 </body>
 
 </html>
