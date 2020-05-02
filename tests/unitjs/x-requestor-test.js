@@ -81,7 +81,7 @@ describe('tests/unit/x-requestor-test.js', function () {
                     });
             });
 
-            xit('should make an relative request', function (done) {
+            it('should make an relative request', function (done) {
                 testRequest({ url: 'relativeUrl' }, done)
                     .then(response => {
                         expect(response.data).toBe(34567);

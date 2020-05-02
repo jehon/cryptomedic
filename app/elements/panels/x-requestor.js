@@ -65,7 +65,7 @@ export default class XRequestor extends XWaiting {
         };
 
         if (options.url[0] != '/') {
-            options.url = `/api/ ${API_VERSION} /${options.url}`;
+            options.url = `/api/${API_VERSION}/${options.url}`;
         }
 
         if (!options.method || options.method == 'GET') {
