@@ -171,4 +171,4 @@ export default class XForm extends JHElement {
     // }
 }
 
-window.customElements.define('x-form', XForm);
+window.customElements.define('x-o-form', XForm);

@@ -28,7 +28,7 @@ export default class XLoginStatus extends JHElement {
 					<x-o-requestor></x-o-requestor>
                     <x-o-overlay z-index=15 >
                         <x-panel>
-                            <x-form class="form-signing" role="form">
+                            <x-o-form class="form-signing" role="form">
                                 <div style='width: 300px'>
                                     <h2 class="form-signin-heading">Please sign in</h2>
                                     <label for="username">Username</label>
@@ -38,7 +38,7 @@ export default class XLoginStatus extends JHElement {
                                     <br />
                                     <button id="login" class="btn btn-lg btn-primary btn-block">Log in</button>
                                 </div>
-                            </x-form>
+                            </x-o-form>
                         </x-panel>
 					</x-o-overlay>
 				</span>
@@ -48,7 +48,7 @@ export default class XLoginStatus extends JHElement {
         this[logout] = this.shadowRoot.querySelector('#logout');
         this[overlay] = this.shadowRoot.querySelector('x-o-overlay');
         this[requestor] = this.shadowRoot.querySelector('x-o-requestor');
-        this[form] = this.shadowRoot.querySelector('x-form');
+        this[form] = this.shadowRoot.querySelector('x-o-form');
 
         this[logout].addEventListener('click', () => this.doLogout());
 

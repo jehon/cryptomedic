@@ -118,7 +118,7 @@ describe('tests/unit/x-login-status-test.js', function () {
 
                     setTimeout(() => {
                         testLoggedOut(element);
-                        expect(element().shadowRoot.querySelector('x-form').shadowRoot.querySelector('.alert').innerText).toContain('Invalid');
+                        expect(element().shadowRoot.querySelector('x-o-form').shadowRoot.querySelector('.alert').innerText).toContain('Invalid');
                         done();
                     });
                 });
