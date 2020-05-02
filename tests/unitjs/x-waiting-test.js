@@ -13,13 +13,15 @@ describe('tests/unit/x-waiting-test.js', function () {
         it('should show()', function () {
             element().block();
             expect(element().isBlocked()).toBeTruthy();
-            expect(element().shadowRoot.querySelector('img').offsetWidth > 0).toBeTruthy();
+            expect(element().hasAttribute('blocked')).toBeTruthy();
+            // expect(element().shadowRoot.querySelector('img').offsetWidth > 0).toBeTruthy();
         });
 
         it('should hide()', function () {
             element().free();
             expect(element().isBlocked()).toBeFalsy();
-            expect(element().shadowRoot.querySelector('img').offsetWidth > 0).toBeFalsy();
+            expect(element().hasAttribute('blocked')).toBeFalsy();
+            // expect(element().shadowRoot.querySelector('img').offsetWidth > 0).toBeFalsy();
         });
 
         describe('run around a promise', function () {
