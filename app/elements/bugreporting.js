@@ -12,34 +12,34 @@ import store from '../js/store.js';
 import { browserUUID } from '../js/browser.js';
 
 window.bug_reporting = (function () {
-	// if (isProduction()) {
-	// 	console.info('Capturing console.log/info/error and exceptions');
-	// if (typeof (Raven) != 'undefined') {
-	// Raven.config('https://7dece2b0b38e413baca8b81e17929eb2@sentry.io/270948', {
-	// 	release: window.application_version
-	// }).install();
+    // if (isProduction()) {
+    // 	console.info('Capturing console.log/info/error and exceptions');
+    // if (typeof (Raven) != 'undefined') {
+    // Raven.config('https://7dece2b0b38e413baca8b81e17929eb2@sentry.io/270948', {
+    // 	release: window.application_version
+    // }).install();
 
-	// store.subscribe(() => {
-	// 	const data = store.getState().user;
-	// 	if (data) {
-	// 		Raven.setUserContext({
-	// 			username:   data.username,
-	// 			group:      data.group,
-	// 			name:       data.name,
-	// 			computerID: localStorage.computerUUID
-	// 		});
-	// 	} else {
-	// 		Raven.setUserContext({
-	// 			computerID: localStorage.computerUUID
-	// 		});
-	// 	}
-	// });
-	// }
-	// } else {
-	// 	console.info('Disabling capturing console.log/info/error on localhost');
-	// }
+    // store.subscribe(() => {
+    // 	const data = store.getState().user;
+    // 	if (data) {
+    // 		Raven.setUserContext({
+    // 			username:   data.username,
+    // 			group:      data.group,
+    // 			name:       data.name,
+    // 			computerID: localStorage.computerUUID
+    // 		});
+    // 	} else {
+    // 		Raven.setUserContext({
+    // 			computerID: localStorage.computerUUID
+    // 		});
+    // 	}
+    // });
+    // }
+    // } else {
+    // 	console.info('Disabling capturing console.log/info/error on localhost');
+    // }
 
-	const txt = `
+    const txt = `
 <style>
     input[readonly], textarea[readonly] { color:gray; background-color: white; border: none }
     table, tr, td { vertical-align: top; }
@@ -69,23 +69,23 @@ Can I ask you a bit more informations?<br>
     Psss: If you don't want to submit this bug report, simply refresh the page...
 </form>`;
 
-	return () => {
-		const url = window.location;
-		// Raven.captureMessage('User Feedback sent for ' + url, {
-		// 	logger: 'data-service',
-		// 	level: 'warn', // one of 'info', 'warning', or 'error'
-		// 	extra: {}
-		// });
+    return () => {
+        const url = window.location;
+        // Raven.captureMessage('User Feedback sent for ' + url, {
+        // 	logger: 'data-service',
+        // 	level: 'warn', // one of 'info', 'warning', or 'error'
+        // 	extra: {}
+        // });
 
-		html2canvas(document.body).then(function (canvas) {
-			document.getElementsByTagName('body')[0].innerHTML = txt;
-			document.getElementsByName('username')[0].value = store.getState().user.username;
-			document.getElementsByName('email')[0].value = store.getState().user.email;
-			document.getElementsByName('url')[0].value = url;
-			document.getElementsByName('browser_id')[0].value = browserUUID;
-			document.getElementsByName('screenshot')[0].value = canvas.toDataURL();
-			document.getElementsByName('browser_useragent')[0].value = navigator.userAgent;
-			document.getElementsByName('browser_state')[0].value = JSON.stringify(store.getState());
-		});
-	};
+        html2canvas(document.body).then(function (canvas) {
+            document.getElementsByTagName('body')[0].innerHTML = txt;
+            document.getElementsByName('username')[0].value = store.getState().user.username;
+            document.getElementsByName('email')[0].value = store.getState().user.email;
+            document.getElementsByName('url')[0].value = url;
+            document.getElementsByName('browser_id')[0].value = browserUUID;
+            document.getElementsByName('screenshot')[0].value = canvas.toDataURL();
+            document.getElementsByName('browser_useragent')[0].value = navigator.userAgent;
+            document.getElementsByName('browser_state')[0].value = JSON.stringify(store.getState());
+        });
+    };
 })();

@@ -1,4 +1,4 @@
 
 exports.command = function(name, _callback) {
-	this.myScreenshot('reference' + (name ? '_' + name : ''));
+    this.myScreenshot('reference' + (name ? '_' + name : ''));
 };
