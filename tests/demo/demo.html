@@ -1,6 +1,7 @@
 <html>
 
 <body>
+    <link rel="stylesheet" type="text/css" href="../../node_modules/bootstrap/dist/css/bootstrap.css">
     <style>
         .flex {
             width: 100%;
@@ -23,10 +24,12 @@
     <script type='module' src='../../app/elements/widgets/x-button.js'></script>
     <div class='flex'>
         <x-panel>
-            <x-button>primary</x-button>
-            <x-button icon='error.svg'>iconic</x-button>
-            <x-button level='secondary'>secondary</x-button>
-            <x-button level='dangerous'>dangerous</x-button>
+            <div>
+                <x-button level='success'>primary</x-button>
+                <x-button icon='error.svg'>iconic</x-button>
+            </div>
+            <x-button level='default'>secondary</x-button>
+            <x-button level='danger'>dangerous</x-button>
         </x-panel>
         <script>
             document.querySelectorAll('x-button').forEach(e => e.addEventListener('click', evt => console.info('clicked', evt.target)));
