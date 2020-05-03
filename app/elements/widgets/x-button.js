@@ -19,29 +19,27 @@ export default class XButton extends HTMLElement {
         this.shadowRoot.innerHTML = `
             <css-inherit></css-inherit>
             <style css-inherit-local>
-            :host {
-                display: inline-block;
+                :host {
+                    display: inline-block;
+                    background-color: rgba(0,0,0,0);
+                }
 
+                button {
+                    height: 3em;
+                }
 
-            }
-            img[src=''] {
-                display: none;
-            }
+                img[src=''] {
+                    display: none;
+                }
 
-            img {
-                height: 1.5em;
-                vertical-align: middle;
-                padding-right: ${spacing.element};
-            }
-
-            button {
-                height: 3em;
-            }
-
+                img {
+                    height: 1.5em;
+                    vertical-align: middle;
+                    padding-right: ${spacing.element};
+                }
             </style>
             <button class='btn btn-primary'>
                 <img src=''><slot></slot>
-
             </button>
         `;
         this[button] = this.shadowRoot.querySelector('button');
