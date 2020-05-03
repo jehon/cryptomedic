@@ -9,7 +9,6 @@ export default class XPanel extends HTMLElement {
         super();
         this.attachShadow({ mode: 'open' });
         this.shadowRoot.innerHTML = `
-            <css-inherit></css-inherit>
             <style css-inherit-local>
                 :host {
                     width: 100%;

@@ -1,12 +1,16 @@
 
 import { spacing, colors } from '../../config.js';
 
+const button = Symbol('button');
+
 /**
  * Slot[]: content
+ * level: default / primary / success / info / warning / danger
+ *     https://getbootstrap.com/docs/3.3/css/#buttons-options
  */
 export default class XButton extends HTMLElement {
     static get observedAttributes() {
-        return ['icon'];
+        return ['icon', 'level'];
     }
 
     constructor() {
@@ -15,53 +19,45 @@ export default class XButton extends HTMLElement {
         this.shadowRoot.innerHTML = `
             <css-inherit></css-inherit>
             <style css-inherit-local>
-                :host {
-                    display: inline-block;
+            :host {
+                display: inline-block;
 
-                    height: 1.5em;
 
-                    margin: ${spacing.element};
-                    padding: 16px 30px;
-                    border: none;
-                    border-radius: ${spacing.element};
+            }
+            img[src=''] {
+                display: none;
+            }
 
-                    cursor: pointer;
-                    text-align: center;
+            img {
+                height: 1.5em;
+                vertical-align: middle;
+                padding-right: ${spacing.element};
+            }
 
-                    font-size: 16px;
+            button {
+                height: 3em;
+            }
 
-                    color: ${colors.actions.default.fg};
-                    background-color: ${colors.actions.default.bg};
-                }
-
-                :host([level=secondary]) {
-                    color: ${colors.actions.secondary.fg};
-                    background-color: ${colors.actions.secondary.bg};
-                }
-
-                :host([level=dangerous]) {
-                    color: ${colors.actions.dangerous.fg};
-                    background-color: ${colors.actions.dangerous.bg};
-                }
-                
-                img[src=''] {
-                    display: none;
-                }
-
-                img {
-                    height: 1.5em;
-                    vertical-align: middle;
-                    padding-right: ${spacing.element};
-                }
             </style>
-            <img src=''><slot></slot>
+            <button class='btn btn-primary'>
+                <img src=''><slot></slot>
+
+            </button>
         `;
+        this[button] = this.shadowRoot.querySelector('button');
     }
 
     attributeChangedCallback(attributeName, oldValue, newValue) {
         switch (attributeName) {
             case 'icon':
                 this.shadowRoot.querySelector('img').setAttribute('src', `/static/img/${newValue}`);
+                break;
+            case 'level':
+                this[button].classList.forEach(c => {
+                    if (c.startsWith('btn-'))
+                        this[button].classList.remove(c);
+                });
+                this[button].classList.add('btn-' + newValue);
                 break;
         }
     }
