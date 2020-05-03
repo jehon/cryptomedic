@@ -14,7 +14,7 @@ export async function getUsername() {
 
 export function setSession(session) {
     if (sessionIsResolved) {
-        throw new Error("Impossible to set the session twice!");
+        throw new Error('Impossible to set the session twice!');
     }
     sessionIsResolved = true;
     sessionResolve(session);
