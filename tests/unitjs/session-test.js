@@ -1,7 +1,9 @@
 
 import { getSession, setSession, resetSession, getUsername } from '../../app/js/session.js';
 
-describe('session-test', function () {
+import { fn } from './athelpers.js';
+
+describe(fn(import.meta.url), function () {
     it('should set and reset session', async function () {
         resetSession();
         // The session is set before

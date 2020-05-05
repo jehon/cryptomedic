@@ -1,10 +1,10 @@
 
 import '../../app/elements/panels/x-messages.js';
 
-import { webDescribe } from './athelpers.js';
+import { fn, webDescribe } from './athelpers.js';
 import { levels } from '../../app/config.js';
 
-describe('tests/unit/x-messages-test.js', function () {
+describe(fn(import.meta.url), function () {
     webDescribe('initialized', '<x-messages></x-messages>', function (element) {
         beforeEach(() => {
             element().clear();

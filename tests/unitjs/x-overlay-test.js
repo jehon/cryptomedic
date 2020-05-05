@@ -1,11 +1,11 @@
 
 import '../../app/elements/panels/x-overlay.js';
 
-import { webDescribe } from './athelpers.js';
+import { fn, webDescribe } from './athelpers.js';
 
 import JHElement from '../../app/elements/jh-element.js';
 
-describe('tests/unit/x-overlay-test.js', function () {
+describe(fn(import.meta.url), function () {
     webDescribe('initialized', '<x-overlay><div slot="content">Content</div><div slot="overlay">Overlay</div></x-overlay>', function (element) {
         it('should be hidden when initialized simply', function () {
             expect(element().isBlocked()).toBeFalsy();

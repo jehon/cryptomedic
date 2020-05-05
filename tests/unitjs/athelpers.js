@@ -20,3 +20,7 @@ export function webDescribe(title, options, fn) {
     }
     return withHtml({ title, html: options }, fn);
 }
+
+export function fn(url) {
+    return new URL(url).pathname.split('/').pop();
+}

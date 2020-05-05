@@ -1,10 +1,10 @@
 
 import '../../app/elements/widgets/x-button.js';
 
-import { webDescribe } from './athelpers.js';
+import { fn, webDescribe } from './athelpers.js';
 import { levels, icons } from '../../app/config.js';
 
-describe('tests/unit/x-button-test.js', function () {
+describe(fn(import.meta.url), function () {
     webDescribe('initialized', '<x-button></x-button>', function (element) {
         it('should initialize', function () {
             expect(element()).not.toBeNull();
