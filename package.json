@@ -60,7 +60,6 @@
     "karma-junit-reporter": "latest",
     "karma-read-json": "1.1.0",
     "kill-by-port": "0.0.1",
-    "morgan": "1.10.0",
     "nightwatch": "latest",
     "nightwatch-html-reporter": "latest",
     "selenium-server": "latest",

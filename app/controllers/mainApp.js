@@ -37,7 +37,7 @@ let mainApp = angular.module('app_main', ['ngRoute'])
     .config(['$locationProvider', function ($locationProvider) {
         $locationProvider.hashPrefix('');
     }])
-// bill_fiche and consult_introduction:
+    // bill_fiche and consult_introduction:
     .directive('catchIt', function () {
         // http://tutorials.jenkov.com/angularjs/custom-directives.html#compile-and-link
         // http://stackoverflow.com/a/15298620
@@ -49,40 +49,40 @@ let mainApp = angular.module('app_main', ['ngRoute'])
             },
             template: '<span ng-if="error" class="catchedError">{{errorMsg}}</span><span ng-if="!error" ng-transclude></span>',
             link:
-				function ($scope, $element) {
-				    function testIt() {
-				        try {
-				            $scope.error = false;
-				            $scope.result = '';
-				            $scope.errorMSg = '';
-				            $scope.result = $scope.tryit();
-				        } catch (e) {
-				            $scope.error = true;
-				            if (e instanceof ApplicationException) {
-				                $scope.errorMsg = e.getMessage();
-				            } else {
-				                $scope.errorMsg = 'Uncatchable error';
-				                console.warn(e);
-				                throw e;
-				            }
-				        }
-				    }
-				    $scope.$watch(function () {
-				        try {
-				            return $scope.tryit();
-				        } catch (e) {
-				            return e.toString();
-				        }
-				    }, function () {
-				        testIt();
-				    });
-				    testIt();
+                function ($scope, $element) {
+                    function testIt() {
+                        try {
+                            $scope.error = false;
+                            $scope.result = '';
+                            $scope.errorMSg = '';
+                            $scope.result = $scope.tryit();
+                        } catch (e) {
+                            $scope.error = true;
+                            if (e instanceof ApplicationException) {
+                                $scope.errorMsg = e.getMessage();
+                            } else {
+                                $scope.errorMsg = 'Uncatchable error';
+                                console.warn(e);
+                                throw e;
+                            }
+                        }
+                    }
+                    $scope.$watch(function () {
+                        try {
+                            return $scope.tryit();
+                        } catch (e) {
+                            return e.toString();
+                        }
+                    }, function () {
+                        testIt();
+                    });
+                    testIt();
 
-				    // Destroy of the element
-				    $element.on('$destroy', function () {
-				        $scope.$destroy();
-				    });
-				} // end of link function
+                    // Destroy of the element
+                    $element.on('$destroy', function () {
+                        $scope.$destroy();
+                    });
+                } // end of link function
         };
     });
 
