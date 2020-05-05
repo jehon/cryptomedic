@@ -2,13 +2,9 @@
 
 const express = require('express');
 const serveIndex = require('serve-index');
-const morgan = require('morgan');
 const hotReloadingProxy = require('hot-reloading-proxy/server.js');
 
 const app = express();
-
-// https://github.com/expressjs/morgan
-app.use(morgan('tiny'));
 
 app.use('/static', express.static('www/static'));
 app.use('/', express.static('.'));

@@ -1,5 +1,5 @@
 
-import { spacing, colors } from '../../config.js';
+import { spacing } from '../../config.js';
 
 const button = Symbol('button');
 

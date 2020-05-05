@@ -139,11 +139,6 @@ export default class XForm extends JHElement {
             return false;
         }
 
-        // Use only for custom elements?
-        // if (!result) {
-        // 	return false;
-        // }
-
         return true;
     }
 
