@@ -16,6 +16,10 @@ export const levels = {
     default: 'default'
 };
 
+export const icons = {
+    error: '/static/img/error.svg'
+};
+
 export const colors = {
     actions: {
         default: {
