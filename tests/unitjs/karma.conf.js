@@ -50,7 +50,8 @@ module.exports = function (config) {
         },
 
         preprocessors: {
-            'app/**/*.js': ['karma-coverage-istanbul-instrumenter'],
+            'app/*.js': ['karma-coverage-istanbul-instrumenter'],
+            'app/!(cjs2esm)/**/*.js': ['karma-coverage-istanbul-instrumenter']
         },
 
         coverageIstanbulInstrumenter: {
