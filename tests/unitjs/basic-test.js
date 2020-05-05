@@ -1,7 +1,7 @@
 
-import { loadReference, extractPath } from './athelpers.js';
+import { fn, loadReference, extractPath } from './athelpers.js';
 
-describe('basic test', () => {
+describe(fn(import.meta.url), function () {
     it('should be true', () => {
         expect(true).toBeTruthy();
     });

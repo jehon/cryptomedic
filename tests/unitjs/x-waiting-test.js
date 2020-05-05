@@ -1,9 +1,9 @@
 
 import '../../app/elements/panels/x-waiting.js';
 
-import { webDescribe } from './athelpers.js';
+import { fn, webDescribe } from './athelpers.js';
 
-describe('tests/unit/x-waiting-test.js', function () {
+describe(fn(import.meta.url), function () {
     webDescribe('initialized', '<x-waiting><div slot="content" style=\'width: 200px; height: 100px; background-color: red;\'>Content</div></x-waiting>', function (element) {
         it('should be hidden when initialized simply', function () {
             expect(element().isBlocked()).toBeFalsy();

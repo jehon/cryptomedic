@@ -1,7 +1,7 @@
 
 import '../../app/elements/panels/x-requestor.js';
 
-import { webDescribe } from './athelpers.js';
+import { fn, webDescribe } from './athelpers.js';
 import JHElement from '../../app/elements/jh-element.js';
 import { API_VERSION } from '../../app/config.js';
 import store, { ACT_USER_LOGIN } from '../../app/js/store.js';
@@ -9,7 +9,7 @@ import store, { ACT_USER_LOGIN } from '../../app/js/store.js';
 import axios from '../../app/cjs2esm/axios.js';
 import MockAdapter from '../../app/cjs2esm/axios-mock-adapter.js';
 
-describe('tests/unit/x-requestor-test.js', function () {
+describe(fn(import.meta.url), function () {
     var mock;
 
     beforeEach(function () {
