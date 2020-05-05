@@ -226,6 +226,14 @@ describe('tests/unit/x-requestor-test.js', function () {
                         done();
                     });
             });
+
+            it('should resquestAndTreat with with treated', function (done) {
+                element().requestAndFilter({ url: '/404' }, [401]);
+                setTimeout(() => {
+                    expect(element().isFailed()).toBeTruthy();
+                    done();
+                }, 100);
+            });
         });
     });
 });
