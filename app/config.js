@@ -7,6 +7,15 @@ export const spacing = {
     element: '5px'
 };
 
+export const levels = {
+    primary: 'primary',
+    danger: 'danger',
+    warning: 'warning',
+    success: 'success',
+    info: 'info',
+    default: 'default'
+};
+
 export const colors = {
     actions: {
         default: {
