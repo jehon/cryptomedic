@@ -1,14 +1,11 @@
 
 import { spacing } from '../../config.js';
+import { levels } from '../../config.js';
 
 /**
  * Slot[]: content
  */
 export default class XMessages extends HTMLElement {
-    static get observedAttributes() {
-        return ['icon'];
-    }
-
     constructor() {
         super();
         this.clear();
@@ -35,17 +32,30 @@ export default class XMessages extends HTMLElement {
         }
     }
 
-    addMessage(msg) {
+    /**
+     *
+     * @param {string|obj}* msg
+     * @param string level (danger, warning, success, info, primary, default)
+     * @param string icon
+     */
+    addMessage(msg, level = false, icon = false) {
         if (typeof (msg) == 'string') {
             msg = { text: msg };
         }
 
+        if (level !== false) {
+            msg.level = level;
+        }
+
+        if (icon !== false) {
+            msg.icon = icon;
+        }
+
         msg = {
-            level: 'danger',
+            level: levels.danger,
             ...msg
         };
         this.insertAdjacentHTML('beforeend', `<div class="alert alert-${msg.level}">${msg.text}</div>`);
-
     }
 }
 

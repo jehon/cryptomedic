@@ -2,8 +2,9 @@
 import '../../app/elements/panels/x-messages.js';
 
 import { webDescribe } from './athelpers.js';
+import { levels } from '../../app/config.js';
 
-fdescribe('tests/unit/x-messages-test.js', function () {
+describe('tests/unit/x-messages-test.js', function () {
     webDescribe('initialized', '<x-messages></x-messages>', function (element) {
         beforeEach(() => {
             element().clear();
@@ -30,12 +31,15 @@ fdescribe('tests/unit/x-messages-test.js', function () {
             expect(element().querySelectorAll('div').length).toBe(0);
         });
 
-        it('should show objects', () => {
+        it('should add messages', () => {
             element().addMessage('c');
             expect(element().querySelectorAll('div').length).toBe(1);
 
-            element().addMessage({ text: 'c', level: 'danger' });
+            element().addMessage({ text: 'c', level: levels.danger });
             expect(element().querySelectorAll('div').length).toBe(2);
+
+            element().addMessage('c', levels.danger, '');
+            expect(element().querySelectorAll('div').length).toBe(3);
         });
     });
 });
