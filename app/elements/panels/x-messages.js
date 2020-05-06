@@ -38,7 +38,7 @@ export default class XMessages extends HTMLElement {
      * @param string level (danger, warning, success, info, primary, default)
      * @param string icon
      */
-    addMessage(msg, level = false, icon = false) {
+    addMessage(msg, level = false, icon = false, id = false) {
         if (typeof (msg) == 'string') {
             msg = { text: msg };
         }
@@ -51,12 +51,26 @@ export default class XMessages extends HTMLElement {
             msg.icon = icon;
         }
 
+        if (id !== false) {
+            msg.id = id;
+        }
+
         msg = {
             level: levels.danger,
+            id: '',
             ...msg
         };
-        this.insertAdjacentHTML('beforeend', `<div class="alert alert-${msg.level}">${msg.text}</div>`);
+        this.insertAdjacentHTML('beforeend', `<div class="alert alert-${msg.level}" id="${msg.id}">${msg.text}</div>`);
     }
+
+    get messagesCount() {
+        return this.querySelectorAll('div').length;
+    }
+
+    get messagesIds() {
+        return new Set(Array.from(this.querySelectorAll('div')).map(e => e.getAttribute('id')));
+    }
+
 }
 
 window.customElements.define('x-messages', XMessages);
