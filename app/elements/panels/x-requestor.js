@@ -141,26 +141,29 @@ export default class XRequestor extends XWaiting {
             this[errorMsg].innerHTML = errorResponse;
         }
     }
-
-    requestAndFilter(options, allowed = []) {
-        return this.request({
-            // https://github.com/axios/axios#handling-errors
-            validateStatus: function (status) {
-                if (status >= 200 && status < 300) {
-                    return true;
-                }
-                if (allowed.indexOf(status) >= 0) {
-                    return true;
-                }
-                return false;
-            },
-            ...options
-        })
-            .catch(errorResponse => {
-                this.showFailure(errorResponse);
-                throw errorResponse;
-            });
-    }
 }
 
 window.customElements.define('x-requestor', XRequestor);
+
+export function requestAndFilterBuilder(options, allowed = []) {
+    return {
+        ...options,
+        // https://github.com/axios/axios#handling-errors
+        validateStatus: function (status) {
+            if (status >= 200 && status < 300) {
+                return true;
+            }
+            if (allowed.indexOf(status) >= 0) {
+                return true;
+            }
+            return false;
+        }
+    }
+}
+
+export function loginRequestBuilder(username, password) {
+    return requestAndFilterBuilder({
+        url: 'auth/mylogin', method: 'POST',
+        data: { username, password }
+    }, [404])
+}

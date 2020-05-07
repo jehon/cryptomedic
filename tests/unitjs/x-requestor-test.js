@@ -8,7 +8,7 @@ import store, { ACT_USER_LOGIN } from '../../app/js/store.js';
 
 import axios from '../../app/cjs2esm/axios.js';
 import MockAdapter from '../../app/cjs2esm/axios-mock-adapter.js';
-import XRequestor from '../../app/elements/panels/x-requestor.js';
+import XRequestor, { requestAndFilterBuilder } from '../../app/elements/panels/x-requestor.js';
 
 const buildResponse = function (ok = true, status = 200, statusText = false) {
     return {
@@ -233,7 +233,7 @@ describe(fn(import.meta.url), function () {
 
         describe('with request and filter', function () {
             it('should resquestAndFilter with filter and have correct results', function (done) {
-                element().requestAndFilter({ url: '/absolute' })
+                element().request(requestAndFilterBuilder({ url: '/absolute' }))
                     .then((response) => {
                         expect(response.data).toEqual(123456);
                         expect(response.ok).toBeTruthy();
@@ -243,7 +243,7 @@ describe(fn(import.meta.url), function () {
             });
 
             it('should resquestAndFilter with without treated', function (done) {
-                element().requestAndFilter({ url: '/absolute' }, [404]);
+                element().request(requestAndFilterBuilder({ url: '/absolute' }, [404]));
                 setTimeout(() => {
                     expect(element().isFailed()).toBeFalsy();
                     done();
@@ -251,7 +251,7 @@ describe(fn(import.meta.url), function () {
             });
 
             it('should resquestAndTreat with with treated', function (done) {
-                element().requestAndFilter({ url: '/404' }, [404]);
+                element().request(requestAndFilterBuilder({ url: '/404' }, [404]));
                 setTimeout(() => {
                     expect(element().isFailed()).toBeFalsy();
                     done();
@@ -259,7 +259,7 @@ describe(fn(import.meta.url), function () {
             });
 
             it('should resquestAndFilter with filter and have correct results', function (done) {
-                element().requestAndFilter({ url: '/404' }, [404])
+                element().request(requestAndFilterBuilder({ url: '/404' }, [404]))
                     .then((response) => {
                         expect(response.data).toEqual('Test: data is not found');
                         expect(response.ok).toBeFalsy();
@@ -269,7 +269,7 @@ describe(fn(import.meta.url), function () {
             });
 
             it('should resquestAndTreat with with treated', function (done) {
-                element().requestAndFilter({ url: '/404' }, [401]);
+                element().request(requestAndFilterBuilder({ url: '/404' }, [401]));
                 setTimeout(() => {
                     expect(element().isFailed()).toBeTruthy();
                     done();
