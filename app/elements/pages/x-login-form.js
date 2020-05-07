@@ -7,6 +7,7 @@ import '../panels/x-requestor.js';
 import '../panels/x-panel.js';
 import '../panels/x-messages.js';
 import { formInit, formGetContent, formValidate } from '../../js/form.js';
+import { loginRequestBuilder } from '../panels/x-requestor.js';
 
 const requestor = Symbol('requestor');
 const form = Symbol('form');
@@ -62,11 +63,10 @@ export default class XLoginForm extends HTMLElement {
             this[messages].addMessage({ text: 'Please fill in the form', level: levels.warning, id: 'empty' })
             return 1;
         }
-        const data = formGetContent(this[form]);
-        data.username = data.username.toLowerCase();
+        const formData = formGetContent(this[form]);
 
         this.setAttribute('requesting', 'doLogin');
-        return this[requestor].requestAndFilter({ url: 'auth/mylogin', method: 'POST', data }, [404])
+        return this[requestor].request(loginRequestBuilder(formData.username.toLowerCase(), formData.password))
             .then((response) => {
                 if (response.ok) {
                     this[messages].addMessage({ text: 'Login success', level: levels.success, id: 'success' });
