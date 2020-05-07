@@ -5,6 +5,9 @@ import '../../app/elements/x-write.js';
 import '../../app/elements/x-write-list.js';
 import '../../app/elements/x-inline.js';
 
+export function mockFormSubmit(form) {
+    form.dispatchEvent(new CustomEvent("submit", { "bubbles": true, "cancelable": true }));
+}
 
 describe('form-test', function () {
     webDescribe('should work with css selector', `<form id='testid0'>

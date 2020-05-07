@@ -1,4 +1,19 @@
 
+// TODO: how to trigger "submit" event on form ? -> x-login-form-test
+
+export function formInit(formElement, submitCallback) {
+    let submit = formElement.querySelector('input[type="submit"]');
+    if (!submit) {
+        submit = document.createElement('input');
+        submit.setAttribute('type', 'submit');
+        submit.style.display = 'none';
+        formElement.appendChild(submit);
+    }
+
+    // Prevent form submission (thanks to https://stackoverflow.com/a/8664680/1954789)
+    formElement.addEventListener('submit', function (event) { event.preventDefault(); submitCallback(); return false; });
+}
+
 export function formGetContent(form, prototype = {}) {
     // const log = (...args) => console.log(...args);
     const log = () => { };
@@ -63,7 +78,7 @@ export function formGetContent(form, prototype = {}) {
                 case 'number':
                     value = Number.parseInt(value);
                     break;
-                    /* istanbul ignore next: impossible to fill in a input[type=file] element - see MSDN */
+                /* istanbul ignore next: impossible to fill in a input[type=file] element - see MSDN */
                 case 'file':
                     // http://blog.teamtreehouse.com/uploading-files-ajax
                     // We can pass the 'File' object to FormData, it will handle it for us....
@@ -100,6 +115,26 @@ export function formFillIn(form, object) {
 
     formEvaluateFunctions(formElement, object);
 }
+
+export function formValidate(formElement) {
+    let result = true;
+    formElement.querySelectorAll('[name]').forEach(el => {
+        if ('checkValidity' in el) {
+            // Store it, because if we don't click, it could not appear
+            const res = el.checkValidity();
+            result = result && res;
+        }
+    });
+
+    if (!formElement.checkValidity()) {
+        const submit = formElement.querySelector('input[type="submit"]');
+        submit.click();
+        return false;
+    }
+
+    return true;
+}
+
 
 export function formEvaluateFunctions(formElement, object) {
     formElement.querySelectorAll('[function]').forEach(el => {
