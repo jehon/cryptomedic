@@ -8,6 +8,56 @@ import store, { ACT_USER_LOGIN } from '../../app/js/store.js';
 
 import axios from '../../app/cjs2esm/axios.js';
 import MockAdapter from '../../app/cjs2esm/axios-mock-adapter.js';
+import XRequestor from '../../app/elements/panels/x-requestor.js';
+
+const buildResponse = function (ok = true, status = 200, statusText = false) {
+    return {
+        response: {
+            ok,
+            status,
+            statusText
+        }
+    };
+};
+
+export function mockNoResponse(cb = () => { }) {
+    let result = {};
+    spyOn(XRequestor.prototype, '_rawRequest').and.callFake((args) => new Promise((resolve, reject) => {
+        result.args = args;
+        result.resolve = resolve;
+        result.reject = reject;
+        return cb(result);
+    }));
+    return result;
+}
+
+export function mockResponseWithSuccess(data) {
+    return mockNoResponse(result => result.resolve({
+        status: 200,
+        ok: true,
+        data
+    }));
+}
+
+export function mockResponseWithSuccessbutCode(code, data = {}) {
+    const result = mockNoResponse(result => result.resolve({
+        ok: false,
+        status: code,
+        statusCode: 'error ' + code,
+        data
+    }));
+    return result;
+}
+
+export function mockResponseWithFailureCode(code, data = {}) {
+    const result = mockNoResponse(result => result.reject({
+        ok: false,
+        status: code,
+        statusCode: 'error ' + code,
+        data
+    }));
+    return result;
+}
 
 describe(fn(import.meta.url), function () {
     var mock;
@@ -35,15 +85,6 @@ describe(fn(import.meta.url), function () {
     afterEach(function () {
         mock.restore();
     });
-
-    const buildErrorResponse = function (status = 200, message = false) {
-        return {
-            response: {
-                status: status,
-                statusText: message
-            }
-        };
-    };
 
     webDescribe('initialized', '<x-requestor><div slot="content" style=\'width: 200px; height: 100px; background-color: red;\'>Content</div></x-requestor>', function (element) {
         const testRequest = function (opts, done) {
@@ -118,7 +159,7 @@ describe(fn(import.meta.url), function () {
                         expect(element().hasAttribute('running')).toBeFalsy();
                         expect(element().isRequesting()).toBeFalsy();
                         expect(element().isFailed()).toBeFalsy();
-                        expect(response.asJson).toEqual(555);
+                        expect(response.data).toEqual(555);
                         done();
                     });
             });
@@ -138,7 +179,7 @@ describe(fn(import.meta.url), function () {
             });
 
             it('should display object messages when requested', function () {
-                element().showFailure(buildErrorResponse(404, 'Not found'));
+                element().showFailure(buildResponse(false, 404, 'Not found'));
                 expect(element().isRequesting()).toBeFalsy();
                 expect(element().isFailed()).toBeTruthy();
                 expect(element().shadowRoot.querySelector('#errorMsg').innerText).toContain('Not found');
@@ -148,7 +189,7 @@ describe(fn(import.meta.url), function () {
             it('should logout on 401 Response messages', function () {
                 store.dispatch({ type: ACT_USER_LOGIN, payload: 'blabla' });
                 expect(store.getState().user).toBe('blabla');
-                element().showFailure(buildErrorResponse(401, 'Unauthorized'));
+                element().showFailure(buildResponse(false, 401, 'Unauthorized'));
                 expect(store.getState().user).toBeFalsy();
             });
 
@@ -235,5 +276,52 @@ describe(fn(import.meta.url), function () {
                 }, 100);
             });
         });
+
+        describe('mocks', function () {
+            it('should accept no response', async (done) => {
+                const mock = mockNoResponse();
+                const req = element().request({ url: '/anything' });
+                expect(mock.args.url).toBe('/anything');
+                expect(element().isBlocked()).toBeTruthy();
+                req.then(
+                    () => done.fail('should not be resolved'),
+                    () => done.fail('should not be catched')
+                );
+                done();
+            });
+
+            it('should accept success', async () => {
+                const mock = await mockResponseWithSuccess(123);
+                const req = await element().request({ url: '/anything' });
+                expect(mock.args.url).toBe('/anything');
+                expect(element().isRequesting()).toBeFalsy();
+                expect(element().isFailed()).toBeFalsy();
+                expect(element().isBlocked()).toBeFalsy();
+            });
+
+            it('should accept filtered success', async () => {
+                const mock = await mockResponseWithSuccessbutCode(123);
+                const req = await element().request({ url: '/anything' });
+                expect(mock.args.url).toBe('/anything');
+                expect(element().isRequesting()).toBeFalsy();
+                expect(element().isFailed()).toBeFalsy();
+                expect(element().isBlocked()).toBeFalsy();
+            });
+
+            it('should accept error', async (done) => {
+                const mock = await mockResponseWithFailureCode(400);
+                try {
+                    const req = await element().request({ url: '/anything' });
+                    done.fail('it should throw an error');
+                } catch {
+                    expect(mock.args.url).toBe('/anything');
+                    expect(element().isRequesting()).toBeFalsy();
+                    expect(element().isFailed()).toBeTruthy();
+                    expect(element().isBlocked()).toBeTruthy();
+                    done();
+                }
+            });
+        });
     });
 });
+

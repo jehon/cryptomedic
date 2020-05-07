@@ -56,25 +56,20 @@ export default class XRequestor extends XWaiting {
 
     _rawRequest(options) {
         return axios(options)
-            .then(response => {
-                // TODO: temp hack
-                response.ok = (response.status >= 200 && response.status < 300); // TODO: temp hack
-                response.asJson = response.data; // TODO: temp hack
+    }
 
-                this.free();
-                return response;
-            }, errorResponse => {
-                this.free();
-                // Fill in the overlay
-                this.showFailure(errorResponse);
-                throw errorResponse;
-            });
+    reset() {
+        this.removeAttribute('running');
+        this.removeAttribute('erroneous');
+        this.free();
+        this[error].free();
+        this[errorMsg].innerHTML = '';
+        this[errorContent].innerHTML = '';
     }
 
     request(opts) {
+        this.reset();
         this.block();
-        console.log("blocking", this.isRequesting());
-        this.removeAttribute('erroneous');
 
         const options = {
             url: '/',
@@ -91,7 +86,19 @@ export default class XRequestor extends XWaiting {
             delete options.data;
         }
 
-        return this._rawRequest(options);
+        return this._rawRequest(options)
+            .then(response => {
+                // TODO: temp hack
+                response.ok = (response.status >= 200 && response.status < 300); // TODO: temp hack
+
+                this.free();
+                return response;
+            }, errorResponse => {
+                this.free();
+                // Fill in the overlay
+                this.showFailure(errorResponse);
+                throw errorResponse;
+            });
     }
 
     // See https://github.com/axios/axios#handling-errors
