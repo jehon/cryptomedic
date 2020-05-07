@@ -56,10 +56,6 @@ describe('with screenshots', () => {
     }
 
     afterAll(() => {
-        if (problemsList.size < 1) {
-            return;
-        }
-        // Houston, we've had a problem...
         let res = `
             <html><body>
             <script>
@@ -113,9 +109,13 @@ describe('with screenshots', () => {
                 }
             </style>\n`;
 
-        let id = 0;
-        for (let f of problemsList) {
-            res += `<div class='compare'>
+        if (problemsList.size < 1) {
+            res += "no problem found";
+        } else {
+            // Houston, we've had a problem...
+            let id = 0;
+            for (let f of problemsList) {
+                res += `<div class='compare'>
                 <img id='i${id}_ref' src='../tests/style/references/${f}'></img>
                 <img id='i${id}_tst' src='e2e/browsers/firefox/${f}'></img>
                 <canvas id='i${id}_fin' for='${id}'></canvas>
@@ -128,7 +128,8 @@ describe('with screenshots', () => {
                 })
             </script>
             \n`;
-            id++;
+                id++;
+            }
         }
         res += '\n</body></html>';
         fs.writeFileSync('target/style.html', res);
