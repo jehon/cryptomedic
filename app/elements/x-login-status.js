@@ -1,7 +1,7 @@
 
 import JHElement from './jh-element.js';
 import { API_VERSION } from '../config.js';
-import store, { ACT_USER_LOGIN, ACT_USER_LOGOUT } from '../js/store.js';
+import store, { ACT_USER_LOGIN } from '../js/store.js';
 import './x-overlay.js';
 import './x-form.js';
 import './x-requestor.js';
