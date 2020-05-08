@@ -37,7 +37,9 @@ module.exports = {
                 'goog:chromeOptions': {
                     args: [
                         '--headless',
-                        'window-size=1280,800'
+                        // https://stackoverflow.com/a/41546370/1954789
+                        // 'window-size=1280,800'
+                        'window-size=1280,1600'
                     ]
                 },
             },
