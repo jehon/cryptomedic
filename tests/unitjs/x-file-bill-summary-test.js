@@ -5,6 +5,7 @@ import '../../app/elements/x-file-bill-summary.js';
 import { webDescribe, loadReference } from './athelpers.js';
 
 import Folder from '../../app/models/Folder.js';
+import Bill from '../../app/models/Bill.js';
 import store, { ACT_DEFINITIONS_STORE } from '../../app/js/store.js';
 
 describe('tests/unit/x-file-bill-test-summary.js', function () {
