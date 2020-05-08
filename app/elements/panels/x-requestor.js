@@ -1,4 +1,7 @@
 
+import axios from '../../cjs2esm/axios.js';
+axios.defaults.timeout = 30 * 1000;
+
 import { API_VERSION } from '../../config.js';
 import store, { ACT_USER_LOGOUT } from '../../js/store.js';
 import { insertInSlot } from '../element-helpers.js';
@@ -7,9 +10,6 @@ import './x-panel.js';
 import './x-overlay.js';
 import XWaiting from './x-waiting.js';
 import '../widgets/x-button.js';
-
-import axios from '../../cjs2esm/axios.js';
-axios.defaults.timeout = 30 * 1000;
 
 const error = Symbol('error');
 const errorMsg = Symbol('errorMsg');
@@ -118,9 +118,6 @@ export default class XRequestor extends XWaiting {
                     store.dispatch({ type: ACT_USER_LOGOUT });
                     this[error].free();
                 }
-                // } else if (response instanceof FetchFull.TimeoutException) {
-                // 	this[errorMsg].innerHTML = 'Time-out';
-                // 	html += '<tr><td>Message</td><td>Is your network connection ok?</td></tr>';
             } else if (errorResponse.request) {
                 this[errorMsg].innerHTML = 'Network Error';
                 html += `<tr><td>Message</td><td>
