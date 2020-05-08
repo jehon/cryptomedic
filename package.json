@@ -22,7 +22,7 @@
   },
   "devDependencies": {
     "@babel/cli": "7.8.4",
-    "@babel/core": "7.9.0",
+    "@babel/core": "7.9.6",
     "@babel/plugin-proposal-class-properties": "7.8.3",
     "@babel/plugin-proposal-decorators": "7.8.3",
     "@babel/plugin-proposal-nullish-coalescing-operator": "7.8.3",
@@ -52,7 +52,7 @@
     "karma-chrome-launcher": "latest",
     "karma-coverage": "latest",
     "karma-coverage-istanbul-instrumenter": "1.0.2",
-    "karma-coverage-istanbul-reporter": "2.1.1",
+    "karma-coverage-istanbul-reporter": "3.0.2",
     "karma-firefox-launcher": "latest",
     "karma-html-reporter": "latest",
     "karma-jasmine": "latest",
