@@ -14,6 +14,7 @@ import ctrl_search from './ctrl_search.js';
 import ctrl_users from './ctrl_users.js';
 
 import { ApplicationException } from '../js/exceptions.js';
+import { parseRouteLogin } from '../js/router.js';
 import template from '../js/template.js';
 import { API_VERSION } from '../config.js';
 import goThere from '../js/goThere.js';
@@ -144,9 +145,13 @@ mainApp.controller('ctrl_prices', ctrl_prices);
 
 mainApp.config(['$routeProvider', function ($routeProvider) {
     $routeProvider
-    // .when('/login/:redirect*?', {
-    // 	template: '<div>You should login :-)</div>'
-    // })
+        .when('/login/:redirect*?', {
+            template: function (_params) {
+                // Thanks to https://stackoverflow.com/a/34217927/1954789
+                return import(/* webpackChunkName: "x-login-form", webpackPrefetch: true */'../elements/pages/x-login-form.js')
+                    .then(() => `<x-login-form redirect=${parseRouteLogin().redirect}></x-login-form>`);
+            }
+        })
         .when('/home', {
             templateUrl: template('page', 'home'),
             controller: 'ctrl_home'
