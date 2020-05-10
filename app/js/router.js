@@ -1,3 +1,4 @@
+import { API_VERSION } from '../config.js';
 
 // export default function route() {
 // }
@@ -18,4 +19,10 @@ export function parseRouteLogin() {
     return {
         redirect: getCurrentRoute().substring(('/login/').length)
     };
+}
+
+/* istanbul ignore next: impossible to cover location change */
+export function routeToLogout(reason) {
+    /* istanbul ignore next: impossible to cover location change */
+    document.location.assign(`/api/${API_VERSION}/auth/logout?reason=${reason}`);
 }
