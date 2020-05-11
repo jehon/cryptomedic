@@ -81,6 +81,6 @@
     "test-e2e-chrome": "nightwatch -e chrome",
     "test-style": "jasmine --config=tests/style/jasmine.json",
     "eslint": "eslint .",
-    "stylelint": "stylelint app/**/*.css !www/api"
+    "stylelint": "stylelint app/**/*.css"
   }
 }
