@@ -145,7 +145,7 @@ test-unit: dependencies-node $(CJS2ESM_DIR)/axios.js $(CJS2ESM_DIR)/axios-mock-a
 .PHONY: test-e2e
 test-e2e: target/e2e/.tested
 target/e2e/.tested: start data-reset
-	$(NM_BIN)/nightwatch
+	npm run --silent test-e2e
 	touch target/e2e/.tested
 
 .PHONY: test-style
