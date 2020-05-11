@@ -22,18 +22,16 @@ if (isDebug) {
 
 module.exports = {
     mode: (isDebug ? 'development' : 'production'),
-    entry: {
-        app: path.join(__dirname, '/app/main.js'),
-    },
+    entry: path.join(__dirname, '/app/main.js'),
     output: {
         path: path.join(__dirname, 'www/build/'),
         filename: '[name]-[chunkhash].js'
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: path.join(__dirname, 'app/index-original.html'),
+            template: path.join(__dirname, 'app/index-template.html'),
             filename: path.join(__dirname, 'www/build/index.html'),
-            inject: false
+            // inject: false
         }),
         new webpack.HashedModuleIdsPlugin()
     ],
