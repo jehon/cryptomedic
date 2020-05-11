@@ -109,6 +109,7 @@ start: setup-structure \
 
 .PHONY: docker-started
 docker-started:
+    # TODO: do this only when needed
 	$(DOCKERCOMPOSE) build server
 	$(DOCKERCOMPOSE) up -d
 
@@ -142,8 +143,8 @@ test-unit: dependencies-node $(CJS2ESM_DIR)/axios.js $(CJS2ESM_DIR)/axios-mock-a
 	$(NM_BIN)/karma start tests/unitjs/karma.conf.js --single-run
 
 .PHONY: test-e2e
-test-e2e: dependencies-node build target/e2e/.tested $(CJS2ESM_DIR)/axios.js
-target/e2e/.tested: docker-started data-reset
+test-e2e: target/e2e/.tested
+target/e2e/.tested: start data-reset
 	$(NM_BIN)/nightwatch
 	touch target/e2e/.tested
 

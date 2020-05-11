@@ -11,7 +11,7 @@ module.exports = {
     'custom_assertions_path': ['tests/e2e/assertions'],
     'output_folder': 'target/e2e/',
 
-    'globals_path': 'nightwatch-global.js',
+    'globals_path': 'tests/e2e/nightwatch-global.js',
 
     'webdriver': {
         'start_process': true,
