@@ -31,7 +31,8 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: path.join(__dirname, 'app/index-template.html'),
             filename: path.join(__dirname, 'www/build/index.html'),
-            // inject: false
+            inject: 'head',
+            xhtml: true
         }),
         new webpack.HashedModuleIdsPlugin()
     ],
@@ -39,7 +40,7 @@ module.exports = {
         rules: [
             { test: /\.css$/, loader: 'style-loader!css-loader' },
             {
-                test: /\.(eot|svg|ttf|woff|woff2)$/,
+                test: /\.(eot|svg|ttf|woff|woff2|png|svg|jpg|gif)$/,
                 loader: 'file-loader?name=[name]-[hash].[ext]'
             },
             {
