@@ -54,7 +54,7 @@ export default class XRequestor extends XWaiting {
         return super.isBlocked() || this.isFailed();
     }
 
-    _rawRequest(options) {
+    async _rawRequest(options) {
         return axios(options)
     }
 
@@ -67,7 +67,7 @@ export default class XRequestor extends XWaiting {
         this[errorContent].innerHTML = '';
     }
 
-    request(opts) {
+    async request(opts) {
         this.reset();
         this.block();
 
