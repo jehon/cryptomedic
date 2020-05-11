@@ -22,18 +22,17 @@ if (isDebug) {
 
 module.exports = {
     mode: (isDebug ? 'development' : 'production'),
-    entry: {
-        app: path.join(__dirname, '/app/main.js'),
-    },
+    entry: path.join(__dirname, '/app/main.js'),
     output: {
         path: path.join(__dirname, 'www/build/'),
         filename: '[name]-[chunkhash].js'
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: path.join(__dirname, 'app/index-original.html'),
+            template: path.join(__dirname, 'app/index-template.html'),
             filename: path.join(__dirname, 'www/build/index.html'),
-            inject: false
+            inject: 'head',
+            xhtml: true
         }),
         new webpack.HashedModuleIdsPlugin()
     ],
@@ -41,7 +40,7 @@ module.exports = {
         rules: [
             { test: /\.css$/, loader: 'style-loader!css-loader' },
             {
-                test: /\.(eot|svg|ttf|woff|woff2)$/,
+                test: /\.(eot|svg|ttf|woff|woff2|png|svg|jpg|gif)$/,
                 loader: 'file-loader?name=[name]-[hash].[ext]'
             },
             {

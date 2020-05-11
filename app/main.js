@@ -40,3 +40,5 @@ import XFile from './elements/x-file.js';
 window.XFile = XFile;
 import './elements/x-file-bill.js';
 import './elements/x-file-bill-summary.js';
+
+import './css/application.css';
