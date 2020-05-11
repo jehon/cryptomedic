@@ -78,8 +78,8 @@
     "build-continuously": "watch 'make build' app/",
     "demo": "node tests/demo/server.js",
     "test-unit-continuously": "karma start tests/unitjs/karma.conf.js",
-    "test-e2e": "nightwatch",
-    "test-e2e-chrome": "nightwatch -e chrome",
+    "test-e2e": "nightwatch -c tests/e2e/nightwatch.conf.js",
+    "test-e2e-chrome": "nightwatch -c tests/e2e/nightwatch.conf.js -e chrome",
     "test-style": "jasmine --config=tests/style/jasmine.json",
     "eslint": "eslint .",
     "stylelint": "stylelint www/**/*.css !www/api"
