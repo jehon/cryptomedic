@@ -232,7 +232,7 @@ www/maintenance/vendor/.dependencies: www/maintenance/composer.json www/maintena
 #
 .PHONY: build
 build: www/build/index.html
-www/build/index.html: node_modules/.dependencies \
+www/build/index.html: node_modules/.dependencies webpack.config.js \
 		package.json package-lock.json \
 		$(call recursive-dependencies,app/,www/build/index.html) \
 		$(CJS2ESM_DIR)/axios.js
