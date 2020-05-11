@@ -41,7 +41,7 @@
     "geckodriver": "latest",
     "glob": "7.1.6",
     "hot-reloading-proxy": "1.0.4",
-    "html-webpack-plugin": "3.2.0",
+    "html-webpack-plugin": "4.3.0",
     "htmlhint": "0.11.0",
     "http-server": "0.12.3",
     "imports-loader": "0.8.0",
@@ -82,6 +82,6 @@
     "test-e2e-chrome": "nightwatch -c tests/e2e/nightwatch.conf.js -e chrome",
     "test-style": "jasmine --config=tests/style/jasmine.json",
     "eslint": "eslint .",
-    "stylelint": "stylelint www/**/*.css !www/api"
+    "stylelint": "stylelint app/**/*.css"
   }
 }

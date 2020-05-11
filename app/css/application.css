@@ -31,7 +31,7 @@
 }
 
 .loading::before {
-	content: url(img/waiting.gif);
+	content: url('img/waiting.gif');
 }
 
 /*
