@@ -95,6 +95,7 @@ describe('with screenshots', () => {
                         diffImg.data, 
                         w, h, { threshold: 0.01 });
                     diff.putImageData(diffImg, 0, 0);
+                    canvas.removeAttribute('loading');
                 }
             </script>
             <script src='../../node_modules/pixelmatch/index.js'></script>
@@ -103,6 +104,11 @@ describe('with screenshots', () => {
                     width: 30%;
                     border: solid 1px black;
                 }
+
+                [loading] {
+                    border: solid yellow 2px;
+                }
+
                 compare {
                     border-bottom: 1px solid black;
                     margin-bottom: 5px;
@@ -118,7 +124,7 @@ describe('with screenshots', () => {
                 res += `<div class='compare'>
                 <img id='i${id}_ref' src='../tests/style/references/${f}'></img>
                 <img id='i${id}_tst' src='e2e/browsers/firefox/${f}'></img>
-                <canvas id='i${id}_fin' for='${id}'></canvas>
+                <canvas loading id='i${id}_fin' for='${id}'></canvas>
             </div>
             <script>
                 window.addEventListener('load', () => {
