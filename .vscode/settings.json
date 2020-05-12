@@ -1,5 +1,10 @@
 {
-    "files.watcherExclude": {
-        "**/vendor/**": true
-    }
+  "files.watcherExclude": {
+    "**/vendor/**": true
+  },
+  "workbench.colorCustomizations": {
+    "activityBar.background": "#001f00",
+    "titleBar.activeBackground": "#001f00",
+    "titleBar.activeForeground": "#ffffff"
+  }
 }
