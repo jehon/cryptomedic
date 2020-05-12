@@ -1,5 +1,6 @@
 
 import { API_VERSION } from '../../app/config.js';
+import { mock as mockRoute } from '../../app/js/router.js';
 
 export function loadReference(name) {
     // Thanks to http://stackoverflow.com/a/27830579/1954789
@@ -24,3 +25,5 @@ export function webDescribe(title, options, fn) {
 export function fn(url) {
     return new URL(url).pathname.split('/').pop();
 }
+
+mockRoute('routeToLogout');

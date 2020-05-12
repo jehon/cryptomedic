@@ -4,14 +4,14 @@ import '../../app/elements/pages/x-login-form.js';
 import { fn, webDescribe } from './athelpers.js';
 
 import * as router from '../../app/js/router.js';
-import { getSession, resetSession } from '../../app/js/session.js';
+import { getSession, _resetSession } from '../../app/js/session.js';
 
 import { mockNoResponse, mockResponseWithSuccess, mockResponseWithSuccessbutCode } from './x-requestor-test.js';
 import { mockFormSubmit } from './form-test.js';
 
 describe(fn(import.meta.url), function () {
     beforeEach(() => {
-        resetSession();
+        _resetSession();
         router.setRoute('/login/test');
     });
 

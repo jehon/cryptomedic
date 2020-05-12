@@ -23,4 +23,8 @@ describe(fn(import.meta.url), function () {
             expect(router.parseRouteLogin().redirect).toBe(r);
         }
     });
+
+    it('should route to logout', function () {
+        router.routeToLogout('test');
+    })
 });

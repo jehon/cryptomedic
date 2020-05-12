@@ -3,8 +3,8 @@ import axios from '../../cjs2esm/axios.js';
 axios.defaults.timeout = 30 * 1000;
 
 import { API_VERSION } from '../../config.js';
-import store, { ACT_USER_LOGOUT } from '../../js/store.js';
 import { insertInSlot } from '../element-helpers.js';
+import { routeToLogout } from '../../js/router.js';
 
 import './x-panel.js';
 import './x-overlay.js';
@@ -115,8 +115,7 @@ export default class XRequestor extends XWaiting {
                 html += `<tr><td>Status code</td><td>${errorResponse.response.status}</td></tr>`;
                 if (errorResponse.response.status == 401) {
                     // Logout if 401
-                    store.dispatch({ type: ACT_USER_LOGOUT });
-                    this[error].free();
+                    routeToLogout('401');
                 }
             } else if (errorResponse.request) {
                 this[errorMsg].innerHTML = 'Network Error';
