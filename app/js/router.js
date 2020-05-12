@@ -1,4 +1,14 @@
+
 import { API_VERSION } from '../config.js';
+
+let mockEnabled = {
+    routeToLogout: false
+}
+
+export function mock(route) {
+    console.info(`Mocking route ${route}`);
+    mockEnabled[route] = true;
+}
 
 // export default function route() {
 // }
@@ -21,8 +31,11 @@ export function parseRouteLogin() {
     };
 }
 
-/* istanbul ignore next: impossible to cover location change */
 export function routeToLogout(reason) {
+    /* istanbul ignore else: impossible to cover location change */
+    if (mockEnabled.routeToLogout) {
+        return;
+    }
     /* istanbul ignore next: impossible to cover location change */
     document.location.assign(`/api/${API_VERSION}/auth/logout?reason=${reason}`);
 }

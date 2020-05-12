@@ -27,11 +27,11 @@ export function setSession(session) {
     sessionResolve(session);
 }
 
-export function resetSession() {
+export function _resetSession() {
     sessionPromise = new Promise(resolve => {
         sessionResolve = resolve;
     });
     sessionIsResolved = false;
 }
 
-resetSession();
+_resetSession();

@@ -1,11 +1,11 @@
 
-import { getSession, setSession, resetSession, getUsername } from '../../app/js/session.js';
+import { getSession, setSession, _resetSession, getUsername } from '../../app/js/session.js';
 
 import { fn } from './athelpers.js';
 
 describe(fn(import.meta.url), function () {
     it('should set and reset session', async function () {
-        resetSession();
+        _resetSession();
         // The session is set before
         setSession(1);
         expect(await getSession()).toBe(1);
@@ -15,7 +15,7 @@ describe(fn(import.meta.url), function () {
 
     it('should set and then get the session', async function (done) {
         // The session is set after
-        resetSession();
+        _resetSession();
         getSession().then(session => {
             expect(session).toBe(3);
             done();
@@ -25,17 +25,17 @@ describe(fn(import.meta.url), function () {
 
     it('should not set twice', async function () {
         // The session is set after
-        resetSession();
+        _resetSession();
         setSession(5);
         expect(() => setSession(10)).toThrowError();
 
-        resetSession();
+        _resetSession();
         setSession(15);
         expect(await getSession()).toBe(15);
     });
 
     it('should give info', async function () {
-        resetSession();
+        _resetSession();
         setSession({
             username: 'user'
         });

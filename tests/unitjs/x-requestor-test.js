@@ -4,11 +4,11 @@ import '../../app/elements/panels/x-requestor.js';
 import { fn, webDescribe } from './athelpers.js';
 import JHElement from '../../app/elements/jh-element.js';
 import { API_VERSION } from '../../app/config.js';
-import store, { ACT_USER_LOGIN } from '../../app/js/store.js';
 
 import axios from '../../app/cjs2esm/axios.js';
 import MockAdapter from '../../app/cjs2esm/axios-mock-adapter.js';
 import XRequestor, { requestAndFilterBuilder } from '../../app/elements/panels/x-requestor.js';
+import { setSession, getUsername } from '../../app/js/session.js';
 
 const buildResponse = function (ok = true, status = 200, statusText = false) {
     return {
@@ -187,10 +187,9 @@ describe(fn(import.meta.url), function () {
             });
 
             it('should logout on 401 Response messages', function () {
-                store.dispatch({ type: ACT_USER_LOGIN, payload: 'blabla' });
-                expect(store.getState().user).toBe('blabla');
                 element().showFailure(buildResponse(false, 401, 'Unauthorized'));
-                expect(store.getState().user).toBeFalsy();
+                expect(element().shadowRoot.querySelector('#errorMsg').innerText).toContain('Unauthorized');
+                expect(element().shadowRoot.querySelector('#errorContent').innerText).toContain('401');
             });
 
             it('should display TypeError messages when requested', function () {
