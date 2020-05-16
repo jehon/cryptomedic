@@ -244,10 +244,10 @@ www/build/index.html: node_modules/.dependencies webpack.config.js \
 	$(NM_BIN)webpack
 
 $(CJS2ESM_DIR)/axios.js: node_modules/axios/dist/axios.js
-	$(NM_BIN)babel --out-dir="$(CJS2ESM_DIR)" --plugins=transform-commonjs $?
+	$(NM_BIN)babel --out-file="$@" --plugins=transform-commonjs $?
 
 $(CJS2ESM_DIR)/axios-mock-adapter.js: node_modules/axios-mock-adapter/dist/axios-mock-adapter.js
-	$(NM_BIN)babel --out-dir="$(CJS2ESM_DIR)" --plugins=transform-commonjs $?
+	$(NM_BIN)babel --out-file="$@" --plugins=transform-commonjs $?
 	sed -i 's/from "axios";/from ".\/axios.js";/' $@
 
 #
