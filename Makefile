@@ -231,6 +231,10 @@ www/maintenance/vendor/.dependencies: www/maintenance/composer.json www/maintena
 # Build
 #
 #
+
+package-lock.json: package.json
+	npm install
+
 .PHONY: build
 build: www/build/index.html
 www/build/index.html: node_modules/.dependencies webpack.config.js \
