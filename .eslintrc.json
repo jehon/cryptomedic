@@ -1,59 +1,60 @@
 {
-    "root": true,
-    "extends": "eslint:recommended",
-    "env": {
-        "node": true,
-        "es6": true,
-        "browser": true
-    },
-    "parserOptions": {
-        "ecmaVersion": 2020,
-        "sourceType": "module"
-    },
-    "plugins": [
-        "@babel/plugin-syntax-import-meta"
+  "root": true,
+  "extends": "eslint:recommended",
+  "env": {
+    "node": true,
+    "es6": true,
+    "browser": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "sourceType": "module"
+  },
+  "plugins": [
+    "@babel/plugin-syntax-import-meta",
+    "@babel/plugin-proposal-optional-chaining"
+  ],
+  "rules": {
+    "indent": [
+      "error",
+      4,
+      {
+        "SwitchCase": 1
+      }
     ],
-    "rules": {
-        "indent": [
-            "error",
-            4,
-            {
-                "SwitchCase": 1
-            }
-        ],
-        "linebreak-style": [
-            "error",
-            "unix"
-        ],
-        "quotes": [
-            "error",
-            "single"
-        ],
-        "semi": [
-            "error",
-            "always"
-        ],
-        "no-unused-vars": [
-            "error",
-            {
-                "vars": "local",
-                "argsIgnorePattern": "^_"
-            }
-        ],
-        "no-console": [
-            "error",
-            {
-                "allow": [
-                    "warn",
-                    "error",
-                    "info",
-                    "assert"
-                ]
-            }
-        ],
-        "no-trailing-spaces": [
-            "error"
-        ],
-        "no-warning-comments": "off"
-    }
+    "linebreak-style": [
+      "error",
+      "unix"
+    ],
+    "quotes": [
+      "error",
+      "single"
+    ],
+    "semi": [
+      "error",
+      "always"
+    ],
+    "no-unused-vars": [
+      "error",
+      {
+        "vars": "local",
+        "argsIgnorePattern": "^_"
+      }
+    ],
+    "no-console": [
+      "error",
+      {
+        "allow": [
+          "warn",
+          "error",
+          "info",
+          "assert"
+        ]
+      }
+    ],
+    "no-trailing-spaces": [
+      "error"
+    ],
+    "no-warning-comments": "off"
+  }
 }
