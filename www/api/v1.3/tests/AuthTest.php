@@ -8,6 +8,7 @@ class AuthTest extends RouteReferenceTestCase {
 	public function testsLogin() {
 	    $json = $this->myRunAssertQuery(
 	        $this->getNewRequestOptionsBuilder()
+    			->withReference()
 	         	->setUrl("auth/mylogin")
                 ->setMethod("POST")
                 ->addParam("username", "murshed")
