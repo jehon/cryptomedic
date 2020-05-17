@@ -135,8 +135,8 @@ test-api: docker-started dependencies-api data-reset
 	$(call run_in_docker,"server","/app/bin/dev-phpunit.sh")
 
 .PHONY: test-api-commit
-test-api-commit: docker-started depencencies.api
-	$(call run_in_docker,"server","/app/bin/dev-phpunit.sh commit")
+test-api-commit: docker-started dependencies-api data-reset
+	$(call run_in_docker,"server","/app/bin/dev-phpunit.sh COMMIT")
 
 .PHONY: test-unit
 test-unit: dependencies-node $(CJS2ESM_DIR)/axios.js $(CJS2ESM_DIR)/axios-mock-adapter.js

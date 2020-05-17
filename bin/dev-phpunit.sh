@@ -18,6 +18,7 @@ cd "$PRJ_DIR/www/api"
 if [ "$1" == "COMMIT" ]; then
 	echo "Setting COMMIT"
 	export COMMIT=1
+    shift
 fi
 
 for V in v* ; do
