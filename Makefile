@@ -240,15 +240,19 @@ build: www/build/index.html
 www/build/index.html: node_modules/.dependencies webpack.config.js \
 		package.json package-lock.json \
 		$(call recursive-dependencies,app/,www/build/index.html) \
-		$(CJS2ESM_DIR)/axios.js
+		$(CJS2ESM_DIR)/axios.js \
+		$(CJS2ESM_DIR)/duix.js
 	$(NM_BIN)webpack
 
 $(CJS2ESM_DIR)/axios.js: node_modules/axios/dist/axios.js
-	$(NM_BIN)babel --out-file="$@" --plugins=transform-commonjs $?
+	$(NM_BIN)babel --out-file="$@" --plugins=transform-commonjs --source-maps inline $?
 
 $(CJS2ESM_DIR)/axios-mock-adapter.js: node_modules/axios-mock-adapter/dist/axios-mock-adapter.js
-	$(NM_BIN)babel --out-file="$@" --plugins=transform-commonjs $?
+	$(NM_BIN)babel --out-file="$@" --plugins=transform-commonjs --source-maps inline $?
 	sed -i 's/from "axios";/from ".\/axios.js";/' $@
+
+$(CJS2ESM_DIR)/duix.js: node_modules/duix/build.js
+	$(NM_BIN)babel --out-file="$@" --plugins=transform-commonjs --source-maps inline $?
 
 #
 #
