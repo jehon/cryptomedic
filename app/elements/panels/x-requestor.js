@@ -163,3 +163,9 @@ export function loginRequestBuilder(username, password) {
         data: { username, password }
     }, [404])
 }
+
+export function loginCheckRequestBuilder() {
+    return requestAndFilterBuilder({
+        url: 'auth/settings'
+    }, [401]);
+}
