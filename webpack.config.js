@@ -49,9 +49,7 @@ module.exports = {
                 loader: 'babel-loader',
                 options: {
                     plugins: [
-                        ['@babel/plugin-proposal-decorators', { decoratorsBeforeExport: true }],
                         '@babel/plugin-proposal-optional-chaining',
-                        '@babel/plugin-proposal-nullish-coalescing-operator',
                         '@babel/plugin-proposal-class-properties'
                     ]
                 }
