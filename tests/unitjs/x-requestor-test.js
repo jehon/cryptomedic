@@ -8,7 +8,6 @@ import { API_VERSION } from '../../app/config.js';
 import axios from '../../app/cjs2esm/axios.js';
 import MockAdapter from '../../app/cjs2esm/axios-mock-adapter.js';
 import XRequestor, { requestAndFilterBuilder } from '../../app/elements/panels/x-requestor.js';
-import { setSession, getUsername } from '../../app/js/session.js';
 
 const buildResponse = function (ok = true, status = 200, statusText = false) {
     return {
