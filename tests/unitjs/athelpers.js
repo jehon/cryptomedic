@@ -2,6 +2,11 @@
 import { API_VERSION } from '../../app/config.js';
 import { mock as mockRoute } from '../../app/js/router.js';
 
+export function fireOn(target, name, data = {}) {
+    var event = new CustomEvent(name, { detail: data });
+    target.dispatchEvent(event);
+}
+
 export function loadReference(name) {
     // Thanks to http://stackoverflow.com/a/27830579/1954789
     let valid_respond = readJSON('www/api/' + API_VERSION + '/tests/references/' + name);
