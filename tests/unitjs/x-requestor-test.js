@@ -7,7 +7,7 @@ import { API_VERSION } from '../../app/config.js';
 
 import axios from '../../app/cjs2esm/axios.js';
 import MockAdapter from '../../app/cjs2esm/axios-mock-adapter.js';
-import XRequestor, { requestAndFilterBuilder } from '../../app/elements/panels/x-requestor.js';
+import XRequestor, { requestAndFilterBuilder, loginRequestBuilder, loginCheckRequestBuilder } from '../../app/elements/panels/x-requestor.js';
 
 const buildResponse = function (ok = true, status = 200, statusText = false) {
     return {
@@ -319,6 +319,20 @@ describe(fn(import.meta.url), function () {
                     done();
                 }
             });
+        });
+    });
+
+    describe("with builders", function () {
+        it('loginRequestBuilder', function () {
+            const bb = loginRequestBuilder('test', 'password');
+            expect(bb.method).toBe('POST');
+            expect(bb.url).toBe('auth/mylogin');
+            expect(bb.data.username).toBe('test');
+        });
+
+        it('loginCheckRequestBuilder', function () {
+            const bb = loginCheckRequestBuilder();
+            expect(bb.url).toBe('auth/settings');
         });
     });
 });
