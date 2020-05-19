@@ -16,6 +16,8 @@ export default class XMessages extends HTMLElement {
             <style>
                 x-messages {
                     padding: ${spacing.element};
+                    width: 100%;
+                    text-align: center;
                 }
             </style>
         `;
