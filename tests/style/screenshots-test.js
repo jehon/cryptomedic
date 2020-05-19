@@ -60,6 +60,7 @@ describe('with screenshots', () => {
             <html><body>
             <script>
                 module = { exports: {}};
+                const done = new Set();
 
                 function img2data(id, w, h) {
                     const myImgElement = document.querySelector('#' + id);
@@ -77,12 +78,28 @@ describe('with screenshots', () => {
                     return ctx.getImageData(0,0,w,h).data;
                 }
 
+                let p = new Promise(resolve => {
+                    window.addEventListener('load', () => resolve());
+                });
+                function img_diff_tempo(id) {
+                    p = p.then(() => img_diff(id));
+                    return p;
+                }
+
                 function img_diff(id) {
+                    if (done.has(id)) {
+                        return;
+                    }
+                    done.add(id);
+
+                    console.info("Calculating ", id);
+
                     const myImgElement = document.querySelector('#i' + id + '_ref');
                     const w = myImgElement.naturalWidth;
                     const h = myImgElement.naturalHeight;
 
                     const canvas = document.querySelector('#i' + id + '_fin');
+                    canvas.setAttribute('status', 'running');
                     canvas.width = w;
                     canvas.height = h;
                     const diff = canvas.getContext('2d');
@@ -95,7 +112,7 @@ describe('with screenshots', () => {
                         diffImg.data, 
                         w, h, { threshold: 0.01 });
                     diff.putImageData(diffImg, 0, 0);
-                    canvas.removeAttribute('loading');
+                    canvas.removeAttribute('status');
                 }
             </script>
             <script src='../../node_modules/pixelmatch/index.js'></script>
@@ -105,7 +122,11 @@ describe('with screenshots', () => {
                     border: solid 1px black;
                 }
 
-                [loading] {
+                [status='empty'] {
+                    border: solid gray 2px;
+                }
+
+                [status='running'] {
                     border: solid yellow 2px;
                 }
 
@@ -121,23 +142,19 @@ describe('with screenshots', () => {
             // Houston, we've had a problem...
             let id = 0;
             for (let f of problemsList) {
-                res += `<div class='compare'>
+                res += `<h3>${f}</h3>
+            <div class='compare'>
                 <img id='i${id}_ref' src='../tests/style/references/${f}'></img>
                 <img id='i${id}_tst' src='e2e/browsers/firefox/${f}'></img>
-                <canvas loading id='i${id}_fin' for='${id}'></canvas>
+                <canvas status='empty' id='i${id}_fin' for='${id}'></canvas>
+                <script>img_diff_tempo(${id});</script>
             </div>
-            <script>
-                window.addEventListener('load', () => {
-                    document.querySelectorAll('canvas[for]').forEach(e => {
-                        img_diff(e.getAttribute('for'));
-                    });
-                })
-            </script>
             \n`;
                 id++;
             }
         }
-        res += '\n</body></html>';
+        res += `
+        </body></html>`;
         fs.writeFileSync('target/style.html', res);
     });
 });
