@@ -10,6 +10,7 @@ import './x-panel.js';
 import './x-overlay.js';
 import XWaiting from './x-waiting.js';
 import '../widgets/x-button.js';
+import { setSession } from '../../js/session.js';
 
 const error = Symbol('error');
 const errorMsg = Symbol('errorMsg');
@@ -114,8 +115,8 @@ export default class XRequestor extends XWaiting {
                 this[errorMsg].innerHTML = errorResponse.response.statusText;
                 html += `<tr><td>Status code</td><td>${errorResponse.response.status}</td></tr>`;
                 if (errorResponse.response.status == 401) {
-                    // Logout if 401
-                    routeToLogout('401');
+                    // this will trigger a redirect to some login form or anything else
+                    setSession();
                 }
             } else if (errorResponse.request) {
                 this[errorMsg].innerHTML = 'Network Error';

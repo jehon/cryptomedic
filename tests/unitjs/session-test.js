@@ -1,44 +1,71 @@
 
-import { getSession, setSession, _resetSession, getUsername } from '../../app/js/session.js';
+import {
+    setSession, onSession, getSession,
+    onUsername, getUsername
+} from '../../app/js/session.js';
 
-import { fn } from './athelpers.js';
+import { fn, loadReference } from './athelpers.js';
 
 describe(fn(import.meta.url), function () {
-    it('should set and reset session', async function () {
-        _resetSession();
-        // The session is set before
-        setSession(1);
-        expect(await getSession()).toBe(1);
-        expect(await getSession()).toBe(1);
-        expect(await getSession()).toBe(1);
+    let refSession;
+    beforeEach(function () {
+        refSession = loadReference('AuthTest.testsLogin.json');
     });
 
-    it('should set and then get the session', async function (done) {
-        // The session is set after
-        _resetSession();
-        getSession().then(session => {
-            expect(session).toBe(3);
-            done();
+    describe('without session', function () {
+        beforeEach(function () {
+            setSession();
+        })
+
+        it('is empty on start', async function (done) {
+            const unreg = onSession(data => {
+                expect(data).toBeNull();
+                expect(getSession()).toBeNull();
+                done();
+            });
+            // cb is called by 'get' value, thus before sending back the unreg
+            // so we need to call unreg here
+            unreg();
         });
-        setSession(3);
-    });
 
-    it('should not set twice', async function () {
-        // The session is set after
-        _resetSession();
-        setSession(5);
-        expect(() => setSession(10)).toThrowError();
 
-        _resetSession();
-        setSession(15);
-        expect(await getSession()).toBe(15);
-    });
-
-    it('should give info', async function () {
-        _resetSession();
-        setSession({
-            username: 'user'
+        it('should set session', async function (done) {
+            const unreg = onSession(data => {
+                if (!data) return;
+                expect(data.group).toBe("cdc");
+                expect(getSession().group).toBe("cdc");
+                done();
+            });
+            setSession(refSession);
+            unreg();
         });
-        expect(await getUsername()).toBe('user');
+
+        it('with username', function () {
+            expect(getUsername()).toBeUndefined();
+        })
+    });
+
+    describe('with session', function () {
+        beforeEach(function () {
+            setSession(refSession);
+        });
+
+        it('with memorized value', async function (done) {
+            expect(getSession().group).toBe("cdc");
+            const unreg = onSession(data => {
+                expect(data.group).toBe("cdc");
+                done();
+            });
+            unreg();
+        });
+
+        it('with username', async function (done) {
+            expect(getUsername()).toBe("murshed");
+            const unreg = onUsername(data => {
+                expect(data).toBe("murshed");
+                done();
+            });
+            unreg();
+        });
     });
 });
