@@ -24,6 +24,8 @@ before_install:
 
 install:
   - make setup-computer
+  - npm ci
+  - touch node_modules/.dependencies
   # Start docker-compose stack
   # This is needed by the install (composer.phar) part
   - make start

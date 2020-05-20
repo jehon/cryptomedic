@@ -205,7 +205,7 @@ dependencies: dependencies-node dependencies-api depencencies-maintenance
 .PHONY: dependencies-node
 dependencies-node: node_modules/.dependencies
 node_modules/.dependencies: package.json package-lock.json
-	npm ci
+	npm install
 	touch node_modules/.dependencies
 
 .PHONY: depencencies-api
