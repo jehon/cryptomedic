@@ -1,37 +1,42 @@
 
+import duix from '../cjs2esm/duix.js';
+const SESSION = 'session';
+const USERNAME = 'username';
+
 import store, { ACT_USER_LOGIN } from './store.js';
 
-let sessionResolve = false;
-let sessionPromise = null;
-let sessionIsResolved = false;
+// Thanks to https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze
+function deepFreeze(object) {
+    var propNames = Object.getOwnPropertyNames(object);
+    for (let name of propNames) {
+        let value = object[name];
 
-export async function getSession() {
-    return sessionPromise;
-}
-
-export async function getUsername() {
-    return getSession()
-        .then(data => data.username);
-}
-
-export function setSession(session) {
-    if (sessionIsResolved) {
-        throw new Error('Impossible to set the session twice!');
+        if (value && typeof value === "object") {
+            deepFreeze(value);
+        }
     }
-    sessionIsResolved = true;
 
-    // TODO: legacy
+    return Object.freeze(object);
+}
+
+function onWithMemory(key, cb) {
+    cb(duix.get(key));
+    return duix.subscribe(key, cb);
+}
+
+export function setSession(session = {}) {
+    if (Object.keys(session).length < 1) {
+        session = null;
+    } else {
+        deepFreeze(session);
+    }
+    duix.set(USERNAME, session?.username);
+    duix.set(SESSION, session);
     store.dispatch({ type: ACT_USER_LOGIN, payload: session });
-
-    // Store the value inside the promise (built by resetSession)
-    sessionResolve(session);
 }
 
-export function _resetSession() {
-    sessionPromise = new Promise(resolve => {
-        sessionResolve = resolve;
-    });
-    sessionIsResolved = false;
-}
+export const onSession = (cb) => onWithMemory(SESSION, cb);
+export const getSession = () => duix.get(SESSION);
 
-_resetSession();
+export const onUsername = (cb) => onWithMemory(USERNAME, cb);
+export const getUsername = () => duix.get(USERNAME);

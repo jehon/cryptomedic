@@ -8,6 +8,7 @@ import { API_VERSION } from '../../app/config.js';
 import axios from '../../app/cjs2esm/axios.js';
 import MockAdapter from '../../app/cjs2esm/axios-mock-adapter.js';
 import XRequestor, { requestAndFilterBuilder, loginRequestBuilder, loginCheckRequestBuilder } from '../../app/elements/panels/x-requestor.js';
+import { getUsername } from '../../app/js/session.js';
 
 const buildResponse = function (ok = true, status = 200, statusText = false) {
     return {
@@ -189,6 +190,7 @@ describe(fn(import.meta.url), function () {
                 element().showFailure(buildResponse(false, 401, 'Unauthorized'));
                 expect(element().shadowRoot.querySelector('#errorMsg').innerText).toContain('Unauthorized');
                 expect(element().shadowRoot.querySelector('#errorContent').innerText).toContain('401');
+                expect(getUsername()).toBeUndefined();
             });
 
             it('should display TypeError messages when requested', function () {

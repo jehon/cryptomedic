@@ -4,14 +4,14 @@ import '../../app/elements/pages/x-login-form.js';
 import { fn, webDescribe } from './athelpers.js';
 
 import * as router from '../../app/js/router.js';
-import { getSession, _resetSession } from '../../app/js/session.js';
+import { setSession, getUsername } from '../../app/js/session.js';
 
 import { mockNoResponse, mockResponseWithSuccess, mockResponseWithSuccessbutCode } from './x-requestor-test.js';
 import { mockFormSubmit } from './form-test.js';
 
 describe(fn(import.meta.url), function () {
     beforeEach(() => {
-        _resetSession();
+        setSession();
         router.setRoute('/login/test');
     });
 
@@ -65,6 +65,7 @@ describe(fn(import.meta.url), function () {
                 await expectAsync(element().doLogin()).toBeResolvedTo(true);
                 expect(element().querySelector('x-messages').messagesCount).toBe(1);
                 expect(element().querySelector('x-messages').messagesIds).toContain('success');
+                expect(getUsername()).toBe('test');
             });
 
             it('should show a message when incorrect info are fill in', async function () {

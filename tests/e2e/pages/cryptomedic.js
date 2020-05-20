@@ -18,10 +18,11 @@ module.exports = {
             this.api.init();
             this.waitForElementVisible('body');
             this.assert.title('Cryptomedic');
-            this.myComponentExecute('x-login-status >>> #username', function (v) { this.value = v; }, [login]);
-            this.myComponentExecute('x-login-status >>> #password', function (v) { this.value = v; }, [password]);
+            this.waitForElementPresent('x-login-form');
+            this.myComponentExecute('x-login-form #username', function (v) { this.value = v; }, [login]);
+            this.myComponentExecute('x-login-form #password', function (v) { this.value = v; }, [password]);
             this.api.pause(10);
-            this.myComponentExecute('x-login-status >>> button#login', function () { JHElement.fireOn(this, 'click'); });
+            this.myComponentExecute('x-login-form button#login', function () { JHElement.fireOn(this, 'click'); });
 
             this.getLog('browser', function (result) {
                 console.log(`+${result.timestamp - timestampStart} [${result.level}] ${result.source}: ${result.message}`);
@@ -131,9 +132,9 @@ module.exports = {
                 nextRow: (i = 1) => { row = row + i; return iterator; },
                 toString: () => {
                     return tableSelector
-						+ ' > ' + section
-						+ ' > ' + 'tr' + ':' + (row === 'last' ? 'last-child' : 'nth-child(' + row + ')')
-						+ ' > ' + (section == 'tbody' ? 'td' : 'th') + ':' + (col === 'last' ? 'last-child' : 'nth-child(' + col + ')');
+                        + ' > ' + section
+                        + ' > ' + 'tr' + ':' + (row === 'last' ? 'last-child' : 'nth-child(' + row + ')')
+                        + ' > ' + (section == 'tbody' ? 'td' : 'th') + ':' + (col === 'last' ? 'last-child' : 'nth-child(' + col + ')');
                 },
                 assert: (text = false, selector = '') => {
                     this.waitForElementVisible(tableSelector);
