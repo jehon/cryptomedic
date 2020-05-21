@@ -13,6 +13,9 @@ export default function nullify(what) {
             }
             return what;
         case 'object':
+            if (what == null) {
+                return what;
+            }
             let what2 = {};
             for (var k in what) {
                 what2[k] = nullify(what[k]);
