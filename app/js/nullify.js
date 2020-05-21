@@ -13,11 +13,12 @@ export default function nullify(what) {
             }
             return what;
         case 'object':
+            let what2 = {};
             for (var k in what) {
-                what[k] = nullify(what[k]);
+                what2[k] = nullify(what[k]);
             }
             // });
-            return what;
+            return what2;
     }
     return what;
 }
