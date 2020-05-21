@@ -49,23 +49,10 @@ module.exports = {
                 'on_error': true,
                 'path': 'target/e2e/browsers/firefox/'
             },
-        },
-        // 'chrome' : {
-        // 	'webdriver': {
-        // 		'port': 9515,
-        // 		'server_path': 'node_modules/.bin/chromedriver',
-        // 		'cli_args': [
-        // 			// 	'--headless',
-        // 		]
-        // 	},
-
-        // 	'desiredCapabilities' : {
-        // 		'browserName' : 'chrome'
-        // 	},
-        // 	'screenshots' : {
-        // 		'enabled' : true,
-        // 		'path' : 'target/e2e/browsers/chrome/'
-        // 	},
-        // },
+        }
     }
 };
+
+if (process.env['E2E_FULL']) {
+    module.exports.test_settings.default.desiredCapabilities['goog:chromeOptions'].args = [];
+}
