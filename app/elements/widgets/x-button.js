@@ -51,11 +51,8 @@ export default class XButton extends HTMLElement {
                 this.shadowRoot.querySelector('img').setAttribute('src', `/static/img/${newValue}`);
                 break;
             case 'level':
-                this[button].classList.forEach(c => {
-                    if (c.startsWith('btn-'))
-                        this[button].classList.remove(c);
-                });
-                this[button].classList.add('btn-' + newValue);
+                // !! could not have any other class on button, otherwise it will be wiped out :-)
+                this[button].className = `btn btn-${newValue}`;
                 break;
         }
     }
