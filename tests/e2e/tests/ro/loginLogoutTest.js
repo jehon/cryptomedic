@@ -7,10 +7,10 @@ module.exports = {
 
         client.myScreenshotReference();
 
-        client.myComponentExecute('x-login-status >>> x-o-form', function () {
-            return this.hasMessages();
+        client.myComponentExecute('x-login-form x-messages', function () {
+            return this.messagesCount;
         }, [], function (result) {
-            client.assert.equal(result, true);
+            client.assert.equal(result, 1);
         });
     },
 
