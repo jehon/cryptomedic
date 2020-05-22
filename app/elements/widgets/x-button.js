@@ -26,6 +26,7 @@ export default class XButton extends HTMLElement {
 
                 button {
                     height: 3em;
+                    width: 100%;
                 }
 
                 img[src=''] {
