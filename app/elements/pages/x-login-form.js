@@ -6,6 +6,7 @@ import { setSession } from '../../js/session.js';
 import '../panels/x-requestor.js';
 import '../panels/x-panel.js';
 import '../panels/x-messages.js';
+import '../widgets/x-button.js';
 import { formInit, formGetContent, formValidate } from '../../js/form.js';
 import { loginRequestBuilder } from '../panels/x-requestor.js';
 
@@ -32,7 +33,7 @@ export default class XLoginForm extends HTMLElement {
                             <input id="password" name="password" class="form-control" placeholder="Password" required type="password">
                             <x-messages></x-messages>
                             <br />
-                            <button id="login" class="btn btn-lg btn-primary btn-block">Log in</button>
+                            <x-button id="login" level="primary" style='width: 100%'>Log in</x-button>
                         </form>
                     </div>
                 </x-panel>
@@ -43,7 +44,7 @@ export default class XLoginForm extends HTMLElement {
         this[messages] = this.querySelector('x-messages');
 
         formInit(this[form], () => this.doLogin());
-        this.querySelector('button#login').addEventListener('click', (event) => { event.preventDefault(); this.doLogin(); return false; });
+        this.querySelector('x-button#login').addEventListener('click', (event) => { event.preventDefault(); this.doLogin(); return false; });
 
         this.classList.add('full');
     }
