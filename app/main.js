@@ -8,6 +8,7 @@ import './controllers/mainApp.js';
 
 import './elements/jh-i18n.js';
 import './elements/bugreporting.js';
+import './elements/widgets/x-login-status.js';
 
 import JHElement from './elements/jh-element.js';
 window.JHElement = JHElement;
@@ -29,7 +30,6 @@ import './elements/x-inline.js';
 import './elements/x-input-date.js';
 import XInputPicture from './elements/x-input-picture.js';
 window.XInputPicture = XInputPicture;
-import './elements/x-login-status.js';
 import './elements/x-patient-related.js';
 import './elements/x-read.js';
 import './elements/x-read-boolean.js';

@@ -55,8 +55,12 @@ h1 > img {
 	margin-right: 20px;
 }
 
+.nav > li > * {
+    padding-top: 5px;
+}
+
 x-login-status {
-	height: 25px;
+    height: 25px;
 }
 
 /**********************************************
