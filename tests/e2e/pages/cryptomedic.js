@@ -39,9 +39,6 @@ module.exports = {
             this.authenticate_fillIn(login);
             this.waitForElementPresent('x-login-status[login]');
             this.waitForElementPresent(`x-login-status[login=${login}]`);
-            this.myComponentExecute('x-login-status >>> #user', function () { return this.innerText; }, [],
-                (result) => { this.assert.equal(result, login); }
-            );
             authenticated = true;
             return this;
         },

@@ -1,32 +1,35 @@
 
-import JHElement from './jh-element.js';
-import './panels/x-requestor.js';
-import { routeToLogout, routeToLogin } from '../js/router.js';
-import { setSession, onUsername } from '../js/session.js';
-import { loginCheckRequestBuilder } from './panels/x-requestor.js';
+import '../panels/x-requestor.js';
+import './x-button.js';
+import { routeToLogout, routeToLogin } from '../../js/router.js';
+import { setSession, onUsername } from '../../js/session.js';
+import { loginCheckRequestBuilder } from '../panels/x-requestor.js';
+import { levels } from '../../config.js';
 
 const user = Symbol('user');
 const logout = Symbol('logout');
 const requestor = Symbol('requestor');
 
-export default class XLoginStatus extends JHElement {
-    render() {
-        this.attachShadow({ mode: 'open' });
-        this.shadowRoot.innerHTML = `
-				<span>
-					<span id='user'></span>
-					<img id='logout' style='height: 100%' src="/static/img/logout.gif" />
-					<x-requestor global></x-requestor>
-				</span>
-			`;
-        this.inheritCSS();
-        this[user] = this.shadowRoot.querySelector('#user');
-        this[logout] = this.shadowRoot.querySelector('#logout');
-        this[requestor] = this.shadowRoot.querySelector('x-requestor');
+export default class XLoginStatus extends HTMLElement {
+    connectedCallback() {
+        this.innerHTML = `
+                <style>
+                    x-login-status {
+                        display: block;
+                    }
+                </style>
+                <x-button id='logout' icon='logout' level='${levels.discrete}'>
+                    <span id='user'></span>
+                </x-button>
+                <x-requestor global></x-requestor>
+        	`;
+        this[user] = this.querySelector('#user');
+        this[logout] = this.querySelector('#logout');
+        this[requestor] = this.querySelector('x-requestor');
 
         this[logout].addEventListener('click', () => this.doLogout());
 
-        onUsername(username => {
+        this.unregisterListener = onUsername(username => {
             if (username) {
                 this[logout].removeAttribute('hidden');
                 this[user].innerHTML = username;
@@ -39,6 +42,13 @@ export default class XLoginStatus extends JHElement {
         });
 
         this.doLoginCheck();
+    }
+
+    disconnectedCallback() {
+        if (this.unregisterListener) {
+            this.unregisterListener();
+        }
+        this.unregisterListener = false;
     }
 
     doLogout() {
