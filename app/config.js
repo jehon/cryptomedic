@@ -13,11 +13,13 @@ export const levels = {
     warning: 'warning',
     success: 'success',
     info: 'info',
-    default: 'default'
+    default: 'default',
+    discrete: 'discrete'
 };
 
 export const icons = {
-    error: '/static/img/error.svg'
+    error: '/static/img/error.svg',
+    logout: '/static/img/logout.gif'
 };
 
 export const colors = {
