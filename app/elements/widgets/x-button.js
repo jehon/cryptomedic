@@ -1,5 +1,5 @@
 
-import { spacing } from '../../config.js';
+import { spacing, icons, levels } from '../../config.js';
 
 const button = Symbol('button');
 
@@ -49,11 +49,20 @@ export default class XButton extends HTMLElement {
     attributeChangedCallback(attributeName, oldValue, newValue) {
         switch (attributeName) {
             case 'icon':
-                this.shadowRoot.querySelector('img').setAttribute('src', `/static/img/${newValue}`);
+                if (!(newValue in icons)) {
+                    console.error(`Icon ${newValue} is not found in config.icons`);
+                }
+                this.shadowRoot.querySelector('img').setAttribute('src', icons[newValue]);
                 break;
             case 'level':
                 // !! could not have any other class on button, otherwise it will be wiped out :-)
-                this[button].className = `btn btn-${newValue}`;
+                if (newValue == levels.discrete) {
+                    this[button].className = `btn`;
+                    this[button].style = 'background-color: transparent';
+                } else {
+                    this[button].className = `btn btn-${newValue}`;
+                    this[button].style = '';
+                }
                 break;
         }
     }
