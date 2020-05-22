@@ -27,7 +27,7 @@ export function routeToLogin(redirect = getCurrentRoute()) {
 
 export function parseRouteLogin() {
     return {
-        redirect: getCurrentRoute().substring(('/login/').length)
+        redirect: getCurrentRoute().replace(/^(\/+login)+\/+/, "/")
     };
 }
 
