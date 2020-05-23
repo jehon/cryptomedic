@@ -1,5 +1,5 @@
 
-import duix from '../cjs2esm/duix.js';
+import duix from '../../node_modules/duix/index.js';
 const SESSION = 'session';
 const USERNAME = 'username';
 
@@ -20,8 +20,7 @@ function deepFreeze(object) {
 }
 
 function onWithMemory(key, cb) {
-    cb(duix.get(key));
-    return duix.subscribe(key, cb);
+    return duix.subscribe(key, cb, { callMeNow: true });
 }
 
 export function setSession(session = {}) {
@@ -35,8 +34,8 @@ export function setSession(session = {}) {
     store.dispatch({ type: ACT_USER_LOGIN, payload: session });
 }
 
-export const onSession = (cb) => onWithMemory(SESSION, cb);
 export const getSession = () => duix.get(SESSION);
-
-export const onUsername = (cb) => onWithMemory(USERNAME, cb);
 export const getUsername = () => duix.get(USERNAME);
+
+export const onSession = (cb) => onWithMemory(SESSION, cb);
+export const onUsername = (cb) => onWithMemory(USERNAME, cb);
