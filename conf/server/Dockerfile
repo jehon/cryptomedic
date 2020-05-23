@@ -12,7 +12,8 @@ RUN DEBIAN_FRONTEND=noninteractive apt install -y \
 	apache2 php libapache2-mod-php php-mysql \
 	php-curl php-gd php-intl php-json php-mbstring php-xml php-zip \
 	ssmtp \
-	unzip
+	unzip \
+    git
 
 RUN a2enmod expires rewrite
 
