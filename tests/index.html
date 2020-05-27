@@ -1,0 +1,62 @@
+<html>
+
+<head>
+    <style>
+        body {
+            display: flex;
+        }
+
+        body>* {
+            width: 30%;
+            border: 1px solid black;
+            margin: 5px;
+            padding: 15px;
+        }
+
+        a {
+            display: block;
+            margin: 10px;
+        }
+
+        a::after {
+            content: " ("attr(href) ") ";
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <h2>Online</h2>
+        <a href='http://www.cryptomedic.org/'>Cryptomedic</a>
+        <a href='https://github.com/jehon/'>GitHub</a>
+        <a href='https://travis-ci.com/github/jehon/cryptomedic/branches'><img
+                src="https://travis-ci.com/jehon/cryptomedic.svg?branch=master&amp;status=passed" alt="build:passed">
+            Travis</a>
+    </div>
+    <div>
+        <h2>Acceptance</h2>
+        <a href=':5555'>Live Cryptomedic</a>
+        <a href=':5550'>PhpMyAdmin</a>
+        <a href=':5551'>MailHog</a>
+    </div>
+    <div>
+        <h2>Tests</h2>
+        <a href=':9876/debug.html'>Karma debug</a>
+        <a href='/tests/demo/demo.html'>Demo</a>
+
+        <h3>Tests results</h3>
+        <a href='/target/js/htmlInstanbul/index.html'>Coverage</a>
+        <a href='/target/style.html'>Style comparison</a>
+    </div>
+    <script>
+        const host = window.location.origin.split(':').slice(0, -1).join(':');
+        document.querySelectorAll('a').forEach(/* type HTMLElement */ e => {
+            const href = e.getAttribute('href');
+            if (href[0] == ':') {
+                e.setAttribute('href', host + href);
+            }
+        })
+    </script>
+</body>
+
+</html>
