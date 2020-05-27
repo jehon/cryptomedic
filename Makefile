@@ -97,12 +97,7 @@ start: setup-structure \
 		build \
 		data-reset
 
-	@echo "Open browser:"
-	@echo " cryptomedic: http://localhost:5555/"
-	@echo " "
-	@echo "DevTools:"
-	@echo " phpmyadmin:  http://localhost:5550/"
-	@echo " mailhog:     http://localhost:5551/"
+	@echo "Open browser: http://localhost:5557/"
 	
 	# let the time to all services to be up and running
 	sleep 5s
