@@ -1,7 +1,7 @@
 
 import XFile from './x-file.js';
-import store from '../js/store.js';
 import { DataMissingException, ConfigurationMissingException } from '../js/exceptions.js';
+import { onSession, getSession } from '../js/session.js';
 
 export default class XFileBill extends XFile {
     get categoriesList() {
@@ -18,9 +18,7 @@ export default class XFileBill extends XFile {
 
     constructor() {
         super();
-        store.subscribe(() => {
-            this.adapt();
-        });
+        onSession(() => this.adapt());
         this.calculatePrice();
     }
 
@@ -32,7 +30,7 @@ export default class XFileBill extends XFile {
 
     calculatePrice() {
         try {
-            const definitions = store.getState().definitions;
+            const definitions = getSession();
             if (!definitions || !('prices' in definitions)) {
                 throw ConfigurationMissingException('Prices');
             }
@@ -48,7 +46,7 @@ export default class XFileBill extends XFile {
             for (const i in prices) {
                 const p = prices[i];
                 if (((p['datefrom'] == null) || (p['datefrom'] <= dref))
-					&& ((p['dateto'] == null) || (p['dateto'] > dref))) {
+                    && ((p['dateto'] == null) || (p['dateto'] > dref))) {
                     index = i;
                 }
             }

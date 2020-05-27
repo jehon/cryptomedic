@@ -1,6 +1,6 @@
 
 import JHElement from './jh-element.js';
-import store from '../js/store.js';
+import { getSession } from '../js/session.js';
 
 export default class JHCodage extends JHElement {
     static get properties() {
@@ -19,7 +19,7 @@ export default class JHCodage extends JHElement {
     // TODO: should we adapt test for this to works?
     // render() {
     // 	super.render();
-    // 	store.subscribe(() => {
+    // 	onSession((_session) => {
     //		this.adapt();
     // 	});
     // }
@@ -29,7 +29,7 @@ export default class JHCodage extends JHElement {
             return this._setTranslated(this._value, this._translated);
         }
 
-        const definitions = store.getState().definitions;
+        const definitions = getSession();
 
         if (!definitions) {
             return this._setRaw(this._value);

@@ -1,26 +1,26 @@
 
-import store from '../js/store.js';
 import Payment from '../models/Payment.js';
 import { formGetContent } from '../js/form.js';
 import { extractPrefsFile } from '../js/prefs.js';
 import getDataService from '../js/getDataService.js';
+import { getSession, onSession } from '../js/session.js';
 
 export default function ctrl_file_bill($scope, $element) {
     /*
       Prices are at
-          store.definitions.prices
+          getSession().prices
     */
 
 
     const getPrices = function () {
-        const definitions = store.getState().definitions;
+        const definitions = getSession();
         if (definitions == false) {
             return false;
         }
         return definitions.prices;
     };
 
-    store.subscribe(() => {
+    onSession(() => {
         $scope.currentFile().calculatePriceId(getPrices());
         $scope.safeApply();
     });

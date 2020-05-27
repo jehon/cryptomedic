@@ -4,7 +4,7 @@ import '../../app/elements/x-file-bill.js';
 import { webDescribe, loadReference } from './athelpers.js';
 import Folder from '../../app/models/Folder.js';
 import Bill from '../../app/models/Bill.js';
-import store, { ACT_USER_LOGOUT, ACT_DEFINITIONS_STORE } from '../../app/js/store.js';
+import { setSession } from '../../app/js/session.js';
 
 describe('tests/unit/x-file-bill-test.js', function () {
     let getBill = function (ref = 'FolderTest.test1.json', id = 1) {
@@ -16,24 +16,24 @@ describe('tests/unit/x-file-bill-test.js', function () {
     webDescribe('initialized', '<x-file-bill></x-file-bill>', function (element) {
         describe('without prices', function () {
             beforeEach(function () {
-                store.dispatch({ type: ACT_USER_LOGOUT, payload: {} });
+                setSession();
             });
 
             it('should be instantiated', function () {
                 let b = getBill('FolderTest.test1.json', 1);
                 element().value = b;
 
-                store.dispatch({ type: ACT_USER_LOGOUT, payload: {} });
+                setSession({});
                 expect(element().innerHTML).toContain('bill available');
                 expect(element().price).toBeFalsy();
                 expect(element().getFieldsBelongingTo('anything')).toEqual([]);
 
-                store.dispatch({ type: ACT_DEFINITIONS_STORE, payload: { prices: [] } });
+                setSession({});
                 expect(element().price).toBeFalsy();
 
                 const prices = loadReference('PriceTest.testIndex.json');
                 prices[0].datefrom = '2015-01-01';
-                store.dispatch({ type: ACT_DEFINITIONS_STORE, payload: { prices } });
+                setSession({ prices });
                 expect(element().price).toBeFalsy();
             });
 
@@ -47,7 +47,7 @@ describe('tests/unit/x-file-bill-test.js', function () {
         describe('with prices', function () {
             beforeEach(function () {
                 const prices = loadReference('PriceTest.testIndex.json');
-                store.dispatch({ type: ACT_DEFINITIONS_STORE, payload: { prices } });
+                setSession({ prices });
 
                 element().value = getBill('FolderTest.test1.json', 1);
             });

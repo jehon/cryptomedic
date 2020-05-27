@@ -3,7 +3,7 @@ import '../../app/elements/x-write-list.js';
 
 import { webDescribe } from './athelpers.js';
 import JHElement from '../../app/elements/jh-element.js';
-import store, { ACT_DEFINITIONS_STORE } from '../../app/js/store.js';
+import { setSession, getSession, deepCopy } from '../../app/js/session.js';
 
 describe('x-write-list-test', function () {
     const listRadio = ['truc', 'brol', 'machin', 'chose'];
@@ -65,7 +65,7 @@ describe('x-write-list-test', function () {
 
     describe('without lists initialized', function () {
         beforeEach(function () {
-            store.dispatch({ type: ACT_DEFINITIONS_STORE, payload: {} });
+            setSession();
         });
 
         it('should work', function () {
@@ -75,12 +75,10 @@ describe('x-write-list-test', function () {
 
     describe('with lists initialized', function () {
         beforeEach(function () {
-            store.dispatch({
-                type: ACT_DEFINITIONS_STORE, payload: {
-                    lists: {
-                        listRadio: listRadio,
-                        listSelect: listSelect
-                    }
+            setSession({
+                lists: {
+                    listRadio: listRadio,
+                    listSelect: listSelect
                 }
             });
         });
@@ -237,15 +235,13 @@ describe('x-write-list-test', function () {
 
     describe('with following', function () {
         beforeEach(function () {
-            store.dispatch({
-                type: ACT_DEFINITIONS_STORE, payload: {
-                    lists: {
-                        listRadio,
-                        listSelect
-                    }, associations: {
-                        'cat.machin': listSelect,
-                        'cat.chose': listRadio
-                    }
+            setSession({
+                lists: {
+                    listRadio,
+                    listSelect
+                }, associations: {
+                    'cat.machin': listSelect,
+                    'cat.chose': listRadio
                 }
             });
         });
@@ -299,8 +295,9 @@ describe('x-write-list-test', function () {
             });
 
             it('should add \'.other\' if it exists', function () {
-                const def = store.getState().definitions;
+                const def = deepCopy(getSession());
                 def.associations['cat.other'] = ['other'];
+                setSession(def);
 
                 const master = element().querySelector('#master');
                 const slave = element().querySelector('#slave');
@@ -337,12 +334,12 @@ describe('x-write-list-test', function () {
             });
         });
 
-        webDescribe('should works if no store definitions is present', `<div>
+        webDescribe('should works if no definitions is present', `<div>
                     <x-write-list id='master' value='machin' list-name='listRadio'></x-write-list>
                     <x-write-list id='slave'  value='truc'   list='${JSON.stringify(listSelect)}'></x-write-list>
                 </div>`, function (element) {
             beforeEach(function () {
-                store.dispatch({ type: ACT_DEFINITIONS_STORE, payload: {} });
+                setSession();
             });
             it('should not show an error', function () {
                 const master = element().querySelector('#master');
