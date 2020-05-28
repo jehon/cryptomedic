@@ -1,5 +1,5 @@
 
-import { getUsername, onUsername } from './session.js';
+import { onSession, getUsername } from './session.js';
 
 export default function getDataService(cssSelector = '#dataService') {
     const test = function () {
@@ -29,7 +29,7 @@ export default function getDataService(cssSelector = '#dataService') {
             return resolveFn();
         }
 
-        const unsubscribe = onUsername(() => {
+        const unsubscribe = onSession(() => {
             // const user = getUsername();
             if (testLogin()) {
                 unsubscribe();

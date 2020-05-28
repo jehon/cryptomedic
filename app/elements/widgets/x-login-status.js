@@ -1,9 +1,7 @@
 
 import '../panels/x-requestor.js';
 import './x-button.js';
-import { routeToLogout, routeToLogin } from '../../js/router.js';
-import { setSession, onUsername } from '../../js/session.js';
-import { loginCheckRequestBuilder } from '../panels/x-requestor.js';
+import { onSession, getUsername } from '../../js/session.js';
 import { levels } from '../../config.js';
 
 const user = Symbol('user');
@@ -29,7 +27,8 @@ export default class XLoginStatus extends HTMLElement {
 
         this[logout].addEventListener('click', () => this.doLogout());
 
-        this.unregisterListener = onUsername(username => {
+        this.unregisterListener = onSession(() => {
+            const username = getUsername();
             if (username) {
                 this[logout].removeAttribute('hidden');
                 this[user].innerHTML = username;
