@@ -4,6 +4,7 @@ import './x-button.js';
 import { routeToLogin } from '../../js/router.js';
 import { onSession, getUsername } from '../../js/session.js';
 import { levels } from '../../config.js';
+import { logoutBuilder } from '../panels/x-requestor.js';
 
 const user = Symbol('user');
 const logout = Symbol('logout');
@@ -51,7 +52,10 @@ export default class XLoginStatus extends HTMLElement {
     }
 
     async doLogout() {
+        return this[requestor].request(logoutBuilder())
+            .finally(() => {
                 routeToLogin();
+            })
     }
 }
 
