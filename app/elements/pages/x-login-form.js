@@ -1,6 +1,6 @@
 
 import { levels } from '../../config.js';
-import { setRoute } from '../../js/router.js';
+import { setRoute, parseRouteLogin, routeToLogin } from '../../js/router.js';
 import { setSession } from '../../js/session.js';
 
 import '../panels/x-requestor.js';
@@ -8,7 +8,7 @@ import '../panels/x-panel.js';
 import '../panels/x-messages.js';
 import '../widgets/x-button.js';
 import { formInit, formGetContent, formValidate } from '../../js/form.js';
-import { loginRequestBuilder } from '../panels/x-requestor.js';
+import { loginRequestBuilder, loginCheckRequestBuilder } from '../panels/x-requestor.js';
 
 const requestor = Symbol('requestor');
 const form = Symbol('form');

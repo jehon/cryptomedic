@@ -1,5 +1,6 @@
 
 import duix from '../../node_modules/duix/index.js';
+import { routeToLogin } from './router.js';
 const SESSION = 'session';
 
 // Thanks to https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze
@@ -58,18 +59,11 @@ export const getSession = () => duix.get(SESSION);
 export const onSession = (cb) => duix.subscribe(SESSION, cb, { callMeNow: true, fireImmediately: true }); /* TODO: legacy arg name */
 
 /*
- * Username
+ * Functions
  */
 
 export const getUsername = (session = getSession()) => session?.username;
-export const onUsername = (cb) => filterOnValue(getUsername, cb);
-
-/*
- * Authorizations
- */
-
 export const getAuthorized = (key, session = getSession()) => session?.authorized?.includes(key) || false;
-export const onAuthorized = (key, cb) => filterOnValue(session => getAuthorized(key, session), cb);
 
 /*
  * Current folder (TODO: legacy)
@@ -80,3 +74,5 @@ export const getCurrentFolder = () => duix.get(FOLDER);
 export const onCurrentFolder = (cb) => duix.subscribe(FOLDER, cb);
 
 setSession();
+
+routeToLogin();
