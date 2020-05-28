@@ -2,19 +2,16 @@
 import { webDescribe } from './athelpers.js';
 
 import '../../app/elements/jh-codage.js';
-
-import store from '../../app/js/store.js';
-import { ACT_DEFINITIONS_STORE } from '../../app/js/store.js';
+import { setSession } from '../../app/js/session.js';
 
 describe('jh-codage-test', function () {
     describe('without definitions', function () {
         beforeEach(function () {
-            store.dispatch({ type: ACT_DEFINITIONS_STORE, payload: false });
+            setSession();
         });
 
         webDescribe('with value=original', '<jh-codage value=\'original\'></jh-codage>', function (element) {
             it('should translate correctly when specified in globals', function () {
-                store.dispatch({ type: ACT_DEFINITIONS_STORE, payload: false });
                 expect(element()).not.toBeNull();
                 expect(element().shadowRoot).not.toBeNull();
                 expect(element().shadowRoot.querySelector('#original').textContent).toBe('original');
@@ -27,11 +24,9 @@ describe('jh-codage-test', function () {
 
     describe('with cryptomedic', function () {
         beforeEach(function () {
-            store.dispatch({
-                type: ACT_DEFINITIONS_STORE, payload: {
-                    codes: {
-                        'original': 'codage'
-                    }
+            setSession({
+                codes: {
+                    'original': 'codage'
                 }
             });
         });

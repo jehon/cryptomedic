@@ -2,8 +2,6 @@
 import duix from '../../node_modules/duix/index.js';
 const SESSION = 'session';
 
-import store, { ACT_USER_LOGIN, ACT_USER_LOGOUT } from './store.js';
-
 // Thanks to https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze
 function deepFreeze(object) {
     var propNames = Object.getOwnPropertyNames(object);
@@ -16,6 +14,10 @@ function deepFreeze(object) {
     }
 
     return Object.freeze(object);
+}
+
+export function deepCopy(object) {
+    return JSON.parse(JSON.stringify(object));
 }
 
 /**
@@ -47,14 +49,10 @@ export function setSession(session = null) {
 
     duix.set(SESSION, session);
 
-    // TODO: legacy store
-    if (session) {
-        store.dispatch({ type: ACT_USER_LOGIN, payload: session });
-    } else {
-        store.dispatch({ type: ACT_USER_LOGOUT });
+    if (!session) {
+        setCurrentFolder();
     }
 }
-setSession();
 
 export const getSession = () => duix.get(SESSION);
 export const onSession = (cb) => duix.subscribe(SESSION, cb, { callMeNow: true, fireImmediately: true }); /* TODO: legacy arg name */
@@ -72,3 +70,13 @@ export const onUsername = (cb) => filterOnValue(getUsername, cb);
 
 export const getAuthorized = (key, session = getSession()) => session?.authorized?.includes(key) || false;
 export const onAuthorized = (key, cb) => filterOnValue(session => getAuthorized(key, session), cb);
+
+/*
+ * Current folder (TODO: legacy)
+ */
+const FOLDER = 'FOLDER'
+export const setCurrentFolder = (value = null) => duix.set(FOLDER, value);
+export const getCurrentFolder = () => duix.get(FOLDER);
+export const onCurrentFolder = (cb) => duix.subscribe(FOLDER, cb);
+
+setSession();

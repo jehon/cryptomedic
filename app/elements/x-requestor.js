@@ -1,11 +1,11 @@
 
 import JHElement from './jh-element.js';
 import { API_VERSION } from '../config.js';
-import store, { ACT_USER_LOGOUT } from '../js/store.js';
 import './x-waiting.js';
 import './x-overlay.js';
 
 import axios from '../cjs2esm/axios.js';
+import { routeToLogout } from '../js/router.js';
 
 const error = Symbol('error');
 const waiting = Symbol('waiting');
@@ -106,7 +106,7 @@ export default class XRequestor extends JHElement {
                 html += `<tr><td>Status code</td><td>${errorResponse.response.status}</td></tr>`;
                 if (errorResponse.response.status == 401) {
                     // Logout if 401
-                    store.dispatch({ type: ACT_USER_LOGOUT });
+                    routeToLogout("401");
                     this[error].free();
                 }
                 // } else if (response instanceof FetchFull.TimeoutException) {

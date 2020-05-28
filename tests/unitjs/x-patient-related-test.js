@@ -3,14 +3,14 @@ import '../../app/elements/x-patient-related.js';
 
 import { webDescribe, loadReference } from './athelpers.js';
 
-import store, { ACT_FOLDER_INVALIDATE } from '../../app/js/store.js';
 import Folder from '../../app/models/Folder.js';
 import Appointment from '../../app/models/Appointment.js';
+import { setCurrentFolder } from '../../app/js/session.js';
 
 describe('tests/unit/x-patient-related-test.js', function () {
     let f;
     beforeEach(() => {
-        store.dispatch({ type: ACT_FOLDER_INVALIDATE });
+        setCurrentFolder();
         f = new Folder(loadReference('FolderTest.test1.json').folder);
     });
 

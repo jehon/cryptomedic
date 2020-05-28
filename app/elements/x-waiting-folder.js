@@ -1,18 +1,18 @@
 
-import store from '../js/store.js';
 import XWaiting from './x-waiting.js';
+import { getCurrentFolder, onCurrentFolder } from '../js/session.js';
 
 export default class XWaitingFolder extends XWaiting {
     constructor() {
         super();
         this.folder = null;
         this.block();
-        store.subscribe(() => this._store2folder());
+        onCurrentFolder(f => this._store2folder());
         this._store2folder();
     }
 
     _store2folder() {
-        this.folder = store.getState().folder;
+        this.folder = getCurrentFolder();
     }
 
     get folder() {
