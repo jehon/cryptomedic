@@ -1,7 +1,7 @@
 
 import '../panels/x-requestor.js';
 import './x-button.js';
-import { routeToLogout } from '../../js/router.js';
+import { routeToLogin } from '../../js/router.js';
 import { onSession, getUsername } from '../../js/session.js';
 import { levels } from '../../config.js';
 
@@ -50,8 +50,8 @@ export default class XLoginStatus extends HTMLElement {
         this.unregisterListener = false;
     }
 
-    doLogout() {
-        routeToLogout('user');
+    async doLogout() {
+                routeToLogin();
     }
 }
 
