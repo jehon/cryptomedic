@@ -18,10 +18,10 @@ import { parseRouteLogin } from '../js/router.js';
 import template from '../js/template.js';
 import { API_VERSION } from '../config.js';
 import goThere from '../js/goThere.js';
-import store from '../js/store.js';
 
 import { evaluatePoly, stdDeviation, sigma } from '../js/math.js';
 import { fromBirthDate, toBirthDate, atConsultTime } from '../js/age.js';
+import { onSession } from '../js/session.js';
 const calculations = {
     math: { evaluatePoly, stdDeviation, sigma },
     age: { fromBirthDate, toBirthDate, atConsultTime }
@@ -112,11 +112,11 @@ mainApp.controller('ctrl', ['$scope', function ($scope) {
     };
 
     $scope.authorizedList = [];
-    store.subscribe(() => {
-        if (!store.getState().definitions) {
+    onSession((session) => {
+        if (!session) {
             $scope.authorizedList = [];
         } else {
-            $scope.authorizedList = store.getState().definitions.authorized;
+            $scope.authorizedList = session.authorized;
         }
         $scope.safeApply();
     });

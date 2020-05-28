@@ -1,10 +1,10 @@
 
-import store from './store.js';
+import { getUsername, onUsername } from './session.js';
 
 export default function getDataService(cssSelector = '#dataService') {
-    const test = function() {
+    const test = function () {
         let el = cssSelector;
-        if (typeof(cssSelector) == 'string') {
+        if (typeof (cssSelector) == 'string') {
             el = document.querySelector(cssSelector);
         }
         if (!el) {
@@ -16,9 +16,9 @@ export default function getDataService(cssSelector = '#dataService') {
         return el;
     };
 
-    const waitForLogin = function(resolveFn) {
-        const testLogin = function() {
-            const user = store.getState().user;
+    const waitForLogin = function (resolveFn) {
+        const testLogin = function () {
+            const user = getUsername();
             if (user) {
                 return true;
             }
@@ -29,8 +29,8 @@ export default function getDataService(cssSelector = '#dataService') {
             return resolveFn();
         }
 
-        const unsubscribe = store.subscribe(() => {
-            // const user = store.getState().user;
+        const unsubscribe = onUsername(() => {
+            // const user = getUsername();
             if (testLogin()) {
                 unsubscribe();
                 resolveFn();
@@ -38,10 +38,10 @@ export default function getDataService(cssSelector = '#dataService') {
         });
     };
 
-    return new Promise(function(resolve, reject) {
+    return new Promise(function (resolve, reject) {
         let i = 40;
-        const cron = setInterval(function() {
-            const el  = test();
+        const cron = setInterval(function () {
+            const el = test();
             i--;
             if (i < 0) {
                 console.error('Could not find cssSelector ', cssSelector);

@@ -3,8 +3,8 @@
 import '../../app/elements/x-waiting-folder.js';
 
 import { webDescribe, loadReference } from './athelpers.js';
-import store, { ACT_FOLDER_INVALIDATE, ACT_FOLDER_STORE } from '../../app/js/store.js';
 import Folder from '../../app/models/Folder.js';
+import { setCurrentFolder } from '../../app/js/session.js';
 
 /* eslint-env jasmine */
 /* global webDescribe, JHElement */
@@ -15,7 +15,7 @@ describe('tests/unit/x-waiting-folder-test.js', function () {
     webDescribe('initialized', '<x-waiting-folder></x-waiting-folder>', function (element) {
         let f;
         beforeEach(() => {
-            store.dispatch({ type: ACT_FOLDER_INVALIDATE });
+            setCurrentFolder();
             f = new Folder(loadReference('FolderTest.test1.json').folder);
         });
 
@@ -57,13 +57,13 @@ describe('tests/unit/x-waiting-folder-test.js', function () {
 
         describe('should react to store change', function () {
             it('should react to store ACT_FOLDER_INVALIDATE', function () {
-                store.dispatch({ type: ACT_FOLDER_INVALIDATE });
+                setCurrentFolder();
                 expect(element().folder).toBeFalsy();
                 expect(element().isBlocked()).toBeTruthy();
             });
 
             it('should react to store ACT_FOLDER_STORE', function () {
-                store.dispatch({ type: ACT_FOLDER_STORE, payload: f });
+                setCurrentFolder(f);
                 expect(element().folder).toBe(f);
                 expect(element().isBlocked()).toBeFalsy();
             });

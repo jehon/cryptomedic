@@ -1,6 +1,6 @@
 
 import JHElement from './jh-element.js';
-import store from '../js/store.js';
+import { onSession, getSession } from '../js/session.js';
 
 // We sync over "document" as our EventListener object:
 const XWriteListSetReferences = 'XWriteList-setReferences';
@@ -10,10 +10,9 @@ const followedCategory = Symbol('followedCategory');
 
 let lastReferences = {}; // For memory
 
-store.subscribe(() => {
-    const data = store.getState();
-    if (data.definitions && data.definitions.lists) {
-        XWriteList.setReferences(data.definitions.lists);
+onSession((session) => {
+    if (session?.lists) {
+        XWriteList.setReferences(session.lists);
     }
 });
 
@@ -238,7 +237,7 @@ export default class XWriteList extends JHElement {
     }
 
     _adaptToFollowed() {
-        const definitions = store.getState().definitions;
+        const definitions = getSession();
         if (!definitions || !definitions.associations) {
             return;
         }

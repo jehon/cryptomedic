@@ -6,7 +6,7 @@ import { webDescribe, loadReference } from './athelpers.js';
 
 import Folder from '../../app/models/Folder.js';
 import Bill from '../../app/models/Bill.js';
-import store, { ACT_DEFINITIONS_STORE } from '../../app/js/store.js';
+import { setSession } from '../../app/js/session.js';
 
 describe('tests/unit/x-file-bill-test-summary.js', function () {
     function hasRow(element, name, value) {
@@ -16,7 +16,7 @@ describe('tests/unit/x-file-bill-test-summary.js', function () {
 
     beforeAll(function () {
         const prices = loadReference('PriceTest.testIndex.json');
-        store.dispatch({ type: ACT_DEFINITIONS_STORE, payload: { prices } });
+        setSession({ prices });
     });
 
     let getBill = function (ref = 'FolderTest.test1.json', id = 1) {
