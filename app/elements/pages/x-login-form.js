@@ -1,6 +1,6 @@
 
 import { levels } from '../../config.js';
-import { setRoute, parseRouteLogin, routeToLogin } from '../../js/router.js';
+import { setRoute, parseRouteLogin } from '../../js/router.js';
 import { setSession } from '../../js/session.js';
 
 import '../panels/x-requestor.js';

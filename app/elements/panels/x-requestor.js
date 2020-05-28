@@ -4,13 +4,13 @@ axios.defaults.timeout = 30 * 1000;
 
 import { API_VERSION } from '../../config.js';
 import { insertInSlot } from '../element-helpers.js';
-import { routeToLogout } from '../../js/router.js';
 
 import './x-panel.js';
 import './x-overlay.js';
 import XWaiting from './x-waiting.js';
 import '../widgets/x-button.js';
 import { setSession } from '../../js/session.js';
+import { routeToLogin } from '../../js/router.js';
 
 const error = Symbol('error');
 const errorMsg = Symbol('errorMsg');
@@ -117,6 +117,7 @@ export default class XRequestor extends XWaiting {
                 if (errorResponse.response.status == 401) {
                     // this will trigger a redirect to some login form or anything else
                     setSession();
+                    routeToLogin();
                 }
             } else if (errorResponse.request) {
                 this[errorMsg].innerHTML = 'Network Error';
