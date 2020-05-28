@@ -171,3 +171,9 @@ export function loginCheckRequestBuilder() {
         url: 'auth/settings'
     }, [401]);
 }
+
+export function logoutBuilder() {
+    return {
+        url: `/api/${API_VERSION}/auth/logout`
+    };
+}
