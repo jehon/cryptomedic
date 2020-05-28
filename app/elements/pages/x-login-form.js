@@ -47,6 +47,7 @@ export default class XLoginForm extends HTMLElement {
         this.querySelector('x-button#login').addEventListener('click', (event) => { event.preventDefault(); this.doLogin(); return false; });
 
         this.classList.add('full');
+        this.doLoginCheck();
     }
 
     reset() {
@@ -78,6 +79,21 @@ export default class XLoginForm extends HTMLElement {
                 // We have a 404 (filtered)
                 this[messages].addMessage({ text: 'Invalid credentials', id: 'cred' });
                 return 2;
+            })
+            .finally(() => {
+                this.removeAttribute('requesting');
+            });
+    }
+
+    doLoginCheck() {
+        // 401: not authenticated
+        this.setAttribute('requesting', 'doLoginCheck');
+        return this[requestor].request(loginCheckRequestBuilder())
+            .then(response => {
+                if (response.ok) {
+                    setSession(response.data);
+                    setRoute(parseRouteLogin().redirect);
+                }
             })
             .finally(() => {
                 this.removeAttribute('requesting');

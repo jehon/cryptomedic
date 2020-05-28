@@ -48,7 +48,7 @@ describe('tests/unit/x-login-status-test.js', function () {
                     // mock the logout request
                     mockResponseWithSuccess();
 
-                    spyOn(XLoginStatus.prototype, 'doLogout');
+                    spyOn(XLoginStatus.prototype, 'doLogout').and.callThrough();
                     fireOn(element().querySelector('#logout'), 'click');
                     expect(XLoginStatus.prototype.doLogout).toHaveBeenCalled();
                 });

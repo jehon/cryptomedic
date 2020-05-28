@@ -1,6 +1,7 @@
 
 import '../panels/x-requestor.js';
 import './x-button.js';
+import { routeToLogout } from '../../js/router.js';
 import { onSession, getUsername } from '../../js/session.js';
 import { levels } from '../../config.js';
 
@@ -39,11 +40,10 @@ export default class XLoginStatus extends HTMLElement {
                 this.removeAttribute('login');
             }
         });
-
-        this.doLoginCheck();
     }
 
     disconnectedCallback() {
+        /* istanbul ignore else */
         if (this.unregisterListener) {
             this.unregisterListener();
         }
@@ -52,23 +52,6 @@ export default class XLoginStatus extends HTMLElement {
 
     doLogout() {
         routeToLogout('user');
-    }
-
-    // TODO: put this function in session.js
-    doLoginCheck() {
-        // 401: not authenticated
-        this.setAttribute('requesting', 'doLoginCheck');
-        return this[requestor].request(loginCheckRequestBuilder())
-            .then(response => {
-                if (response.ok) {
-                    setSession(response.data);
-                    // Where to route here ?? --> do this in login form
-                }
-                routeToLogin();
-            })
-            .finally(() => {
-                this.removeAttribute('requesting');
-            });
     }
 }
 
