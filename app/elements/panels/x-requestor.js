@@ -5,13 +5,14 @@ axios.defaults.timeout = 30 * 1000;
 
 import { API_VERSION } from '../../config.js';
 import { insertInSlot } from '../element-helpers.js';
-
-import './x-panel.js';
-import './x-overlay.js';
-import XWaiting from './x-waiting.js';
-import '../widgets/x-button.js';
 import { setSession } from '../../js/session.js';
 import { routeToLogin } from '../../js/router.js';
+
+import XWaiting from './x-waiting.js';
+import './x-overlay.js';
+import './x-panel.js';
+import '../widgets/x-button.js';
+import '../../../node_modules/css-inherit/css-inherit.js';
 
 const error = Symbol('error');
 const errorMsg = Symbol('errorMsg');
@@ -36,12 +37,11 @@ export default class XRequestor extends XWaiting {
             </x-overlay>
         `);
 
+        /** @type module:widgets/x-overlay:XOverlay */
         this[error] = this.shadowRoot.querySelector('#error');
         this[errorMsg] = this.shadowRoot.querySelector('#errorMsg');
         this[errorContent] = this.shadowRoot.querySelector('#errorContent');
-        this.shadowRoot.querySelector('#closeButton').addEventListener('click', () => {
-            this[error].free();
-        });
+        this.shadowRoot.querySelector('#closeButton').addEventListener('click', () => this[error].free());
     }
 
     isFailed() {

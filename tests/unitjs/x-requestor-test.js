@@ -10,7 +10,7 @@ import MockAdapter from '../../app/cjs2esm/axios-mock-adapter.js';
 import XRequestor, { requestAndFilterBuilder, loginRequestBuilder, loginCheckRequestBuilder } from '../../app/elements/panels/x-requestor.js';
 import { getSession } from '../../app/js/session.js';
 
-const buildResponse = function (ok = true, status = 200, statusText = false) {
+const buildResponse = function (ok = true, status = 200, statusText = '') {
     return {
         response: {
             ok,
@@ -20,7 +20,7 @@ const buildResponse = function (ok = true, status = 200, statusText = false) {
     };
 };
 
-export function mockNoResponse(cb = () => { }) {
+export function mockNoResponse(cb = (_result) => { }) {
     let result = {};
     spyOn(XRequestor.prototype, '_rawRequest').and.callFake((args) => new Promise((resolve, reject) => {
         result.args = args;
