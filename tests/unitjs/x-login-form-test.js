@@ -76,4 +76,32 @@ describe(fn(import.meta.url), function () {
             });
         });
     });
+
+    describe("with loginCheck", function () {
+        beforeEach(() => {
+            mockResponseWithSuccess({ username: 'test' });
+        });
+
+        webDescribe('with session', "<x-login-form></x-login-form>", function (element) {
+            it('should redirect on login exists', async function () {
+                router.setRoute('/login/test');
+                await element().doLoginCheck();
+                expect(router.getCurrentRoute()).toBe('/test');
+            });
+        });
+    });
+
+    describe("with loginCheck", function () {
+        beforeEach(() => {
+            mockResponseWithSuccessbutCode(401);
+        });
+
+        webDescribe('with session', "<x-login-form></x-login-form>", function (element) {
+            it('should show login form if no session is available', async function () {
+                router.setRoute('/login/test');
+                await element().doLoginCheck();
+                expect(router.getCurrentRoute()).toBe('/login/test');
+            });
+        });
+    });
 });
