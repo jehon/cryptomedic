@@ -66,5 +66,9 @@ export default class XButton extends HTMLElement {
                 break;
         }
     }
+
+    click() {
+        this[button].click();
+    }
 }
 window.customElements.define('x-button', XButton);
