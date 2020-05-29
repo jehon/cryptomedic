@@ -30,7 +30,8 @@ describe(fn(import.meta.url), function () {
         }
     });
 
-    it('should route to logout', function () {
-        router.routeToLogout('test');
+    it('should route to login', function () {
+        router.routeToLogin('test');
+        expect(router.getCurrentRoute()).toBe('/login/test');
     })
 });
