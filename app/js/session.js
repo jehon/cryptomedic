@@ -26,7 +26,7 @@ export function deepCopy(object) {
  * @param {function(any): any} valueCb - Extract the value from the session
  * @param {function(any, any): any} cb - The callback that will be called with the new value
  */
-function filterOnValue(valueCb, cb) {
+export function filterOnValue(valueCb, cb) {
     let oldValue = Symbol('undefined'); // To make the difference between undefined and never initialized
     return duix.subscribe(SESSION, session => {
         let newValue = valueCb(session);
@@ -70,8 +70,9 @@ export const onSession = (cb) => duix.subscribe(SESSION, cb, { callMeNow: true, 
 export const getUsername = (session = getSession()) => session?.username;
 export const getAuthorized = (key, session = getSession()) => session?.authorized?.includes(key) || false;
 
-/*
+/**
  * Current folder (TODO: legacy)
+ * @obsolete
  */
 const FOLDER = 'FOLDER'
 export const setCurrentFolder = (value = null) => duix.set(FOLDER, value);
