@@ -1,10 +1,11 @@
 {
   "env": {
-    "browser": true,
+    "browser": false,
     "es6": true,
     "jasmine": true
   },
   "globals": {
-    "withHtml": true
+    "withHtml": true,
+    "readJSON": true
   }
 }

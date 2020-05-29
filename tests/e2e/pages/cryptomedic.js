@@ -22,13 +22,14 @@ module.exports = {
             this.myComponentExecute('x-login-form #username', function (v) { this.value = v; }, [login]);
             this.myComponentExecute('x-login-form #password', function (v) { this.value = v; }, [password]);
             this.api.pause(10);
-            this.myComponentExecute('x-login-form x-button#login', function () { JHElement.fireOn(this, 'click'); });
+            this.myComponentExecute('x-login-form', function () { this.doLogin(); });
 
-            this.getLog('browser', function (result) {
-                console.log(`+${result.timestamp - timestampStart} [${result.level}] ${result.source}: ${result.message}`);
-            });
+            // this.getLog('browser', function (result) {
+            //     console.log(`+${result.timestamp - timestampStart} [${result.level}] ${result.source}: ${result.message}`);
+            // });
 
-            this.waitForElementNotPresent('x-login-status[requesting]');
+            this.api.pause(10);
+            this.waitForElementNotPresent('x-login-form[requesting]');
 
             return this;
         },
