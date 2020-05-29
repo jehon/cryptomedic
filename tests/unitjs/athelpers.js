@@ -1,6 +1,5 @@
 
 import { API_VERSION } from '../../app/config.js';
-import { mock as mockRoute } from '../../app/js/router.js';
 
 export function fireOn(target, name, data = {}) {
     var event = new CustomEvent(name, { detail: data });
@@ -30,5 +29,3 @@ export function webDescribe(title, options, fn) {
 export function fn(url) {
     return new URL(url).pathname.split('/').pop();
 }
-
-mockRoute('routeToLogout');

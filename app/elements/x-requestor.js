@@ -5,7 +5,8 @@ import './x-waiting.js';
 import './x-overlay.js';
 
 import axios from '../cjs2esm/axios.js';
-import { routeToLogout } from '../js/router.js';
+import { routeToLogin } from '../js/router.js';
+import { setSession } from '../js/session.js';
 
 const error = Symbol('error');
 const waiting = Symbol('waiting');
@@ -106,7 +107,8 @@ export default class XRequestor extends JHElement {
                 html += `<tr><td>Status code</td><td>${errorResponse.response.status}</td></tr>`;
                 if (errorResponse.response.status == 401) {
                     // Logout if 401
-                    routeToLogout("401");
+                    setSession();
+                    routeToLogin("401");
                     this[error].free();
                 }
                 // } else if (response instanceof FetchFull.TimeoutException) {

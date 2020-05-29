@@ -1,9 +1,4 @@
 
-export function mock(route) {
-    console.info(`Mocking route ${route}`);
-    mockEnabled[route] = true;
-}
-
 // export default function route() {
 // }
 
