@@ -1,3 +1,4 @@
+/** @module panels/x-messages */
 
 import { spacing } from '../../config.js';
 import { levels } from '../../config.js';
@@ -25,7 +26,7 @@ export default class XMessages extends HTMLElement {
 
     /**
      *
-     * @param {Array[string]} list
+     * @param {Array<string>} list
      */
     showMessages(list) {
         this.clear();
@@ -36,9 +37,10 @@ export default class XMessages extends HTMLElement {
 
     /**
      *
-     * @param {string|obj}* msg
-     * @param string level (danger, warning, success, info, primary, default)
-     * @param string icon
+     * @param {string|any} msg
+     * @param {string|boolean} level (danger, warning, success, info, primary, default)
+     * @param {string|boolean} icon
+     * @param {string|boolean} id    technical id
      */
     addMessage(msg, level = false, icon = false, id = false) {
         if (typeof (msg) == 'string') {

@@ -19,8 +19,8 @@ const messages = Symbol('messages');
  * @attribute {url} redirect - Where to redirect on login
  */
 export default class XLoginForm extends HTMLElement {
-    constructor(...args) {
-        super(...args);
+    constructor() {
+        super();
         this.innerHTML = `
 			<x-requestor style="width: 100%">
                 <x-panel>
@@ -39,15 +39,20 @@ export default class XLoginForm extends HTMLElement {
                 </x-panel>
 			</x-requestor>`;
 
+        /** @type module:widgets/x-requestor:XRequestor */
         this[requestor] = this.querySelector('x-requestor');
         this[form] = this.querySelector('form');
+        /** @type module:widgets/x-panels:XMessages */
         this[messages] = this.querySelector('x-messages');
 
         formInit(this[form], () => this.doLogin());
         this.querySelector('x-button#login').addEventListener('click', (event) => { event.preventDefault(); this.doLogin(); return false; });
 
         this.classList.add('full');
-        this.doLoginCheck();
+    }
+
+    connectedCallback() {
+        return this.doLoginCheck();
     }
 
     reset() {
@@ -85,7 +90,7 @@ export default class XLoginForm extends HTMLElement {
             });
     }
 
-    doLoginCheck() {
+    async doLoginCheck() {
         // 401: not authenticated
         this.setAttribute('requesting', 'doLoginCheck');
         return this[requestor].request(loginCheckRequestBuilder())
