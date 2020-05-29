@@ -24,7 +24,7 @@ export function deepCopy(object) {
 /**
  * 
  * @param {function(any): any} valueCb - Extract the value from the session
- * @param {function(any): any} cb - The callback that will be called with the new value
+ * @param {function(any, any): any} cb - The callback that will be called with the new value
  */
 function filterOnValue(valueCb, cb) {
     let oldValue = Symbol('undefined'); // To make the difference between undefined and never initialized
@@ -56,6 +56,11 @@ export function setSession(session = null) {
 }
 
 export const getSession = () => duix.get(SESSION);
+/**
+ * 
+ * @param {function} cb
+ * @return {function} unregistering functino
+ */
 export const onSession = (cb) => duix.subscribe(SESSION, cb, { callMeNow: true, fireImmediately: true }); /* TODO: legacy arg name */
 
 /*
