@@ -25,6 +25,8 @@ export default class XLoginStatus extends HTMLElement {
         	`;
         this[user] = this.querySelector('#user');
         this[logout] = this.querySelector('#logout');
+
+        /** @type module:widgets/x-requestor:XRequestor */
         this[requestor] = this.querySelector('x-requestor');
 
         this[logout].addEventListener('click', () => this.doLogout());
@@ -45,17 +47,15 @@ export default class XLoginStatus extends HTMLElement {
 
     disconnectedCallback() {
         /* istanbul ignore else */
-        if (this.unregisterListener) {
+        if (typeof (this.unregisterListener) == "function") {
             this.unregisterListener();
         }
-        this.unregisterListener = false;
+        this.unregisterListener = null;
     }
 
     async doLogout() {
         return this[requestor].request(logoutBuilder())
-            .finally(() => {
-                routeToLogin();
-            })
+            .finally(() => routeToLogin());
     }
 }
 

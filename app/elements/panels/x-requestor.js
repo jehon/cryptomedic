@@ -1,3 +1,4 @@
+/** @module widgets/x-requestor */
 
 import axios from '../../cjs2esm/axios.js';
 axios.defaults.timeout = 30 * 1000;
