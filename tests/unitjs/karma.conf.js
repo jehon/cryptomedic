@@ -79,9 +79,11 @@ module.exports = function (config) {
     };
 
     if (process.env.NOCOV) {
-        console.log("*** NOCOV: disable coverage ***");
-        configuration.preprocessors = {};
+        console.info("*** NOCOV: disable coverage ***");
+        delete configuration.preprocessors;
+    } else {
+        console.info("*** Coverage enabled - disable it with NOCOV");
     }
-    
+
     config.set(configuration);
 };
