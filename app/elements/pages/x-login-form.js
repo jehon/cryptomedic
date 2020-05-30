@@ -61,20 +61,24 @@ export default class XLoginForm extends HTMLElement {
     }
 
     async doLogin() {
+        console.error("do-login 1");
         if (this[requestor].isRequesting()) {
             return -1;
         }
         this.reset();
+        console.error("do-login 2");
 
         if (!formValidate(this[form])) {
             this[messages].addMessage({ text: 'Please fill in the form', level: levels.warning, id: 'empty' })
             return 1;
         }
+        console.error("do-login 3");
         const formData = formGetContent(this[form]);
 
         this.setAttribute('requesting', 'doLogin');
         return this[requestor].request(loginRequestBuilder(formData.username.toLowerCase(), formData.password))
             .then((response) => {
+                console.error("do-login 4", response.ok);
                 if (response.ok) {
                     this[messages].addMessage({ text: 'Login success', level: levels.success, id: 'success' });
                     setSession(response.data);
