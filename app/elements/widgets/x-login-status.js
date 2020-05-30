@@ -32,6 +32,7 @@ export default class XLoginStatus extends HTMLElement {
         this[logout].addEventListener('click', () => this.doLogout());
 
         this.unregisterListener = onSession(() => {
+            console.error('username received in x-login-status: ', JSON.stringify(getUsername()));
             const username = getUsername();
             if (username) {
                 this[logout].removeAttribute('hidden');

@@ -42,6 +42,7 @@ export function filterOnValue(valueCb, cb) {
 }
 
 export function setSession(session = null) {
+    console.error('Set Session: ', JSON.stringify(session).substring(0, 50));
     if (!session || Object.keys(session).length < 1) {
         session = null;
     } else {
