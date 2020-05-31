@@ -19,6 +19,7 @@ module.exports = {
             this.waitForElementVisible('body');
             this.assert.title('Cryptomedic');
             this.waitForElementPresent('x-login-form');
+            this.waitForElementNotPresent('x-login-form[requesting=doLoginCheck]');
             this.myComponentExecute('x-login-form #username', function (v) { this.value = v; }, [login]);
             this.myComponentExecute('x-login-form #password', function (v) { this.value = v; }, [password]);
             this.api.pause(10);
