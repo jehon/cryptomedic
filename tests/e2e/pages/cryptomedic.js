@@ -28,8 +28,6 @@ module.exports = {
 
             this.api.pause(10);
             this.waitForElementNotPresent('x-login-form[requesting]');
-
-            this.myLogs(timestampStart);
             return this;
         },
 
