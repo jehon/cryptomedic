@@ -42,7 +42,6 @@ export function filterOnValue(valueCb, cb) {
 }
 
 export function setSession(session = null) {
-    console.error('Set Session: ', JSON.stringify(session).substring(0, 50));
     if (!session || Object.keys(session).length < 1) {
         session = null;
     } else {
@@ -60,7 +59,7 @@ export const getSession = () => duix.get(SESSION);
 /**
  * 
  * @param {function} cb
- * @return {function} unregistering functino
+ * @return {function(void):void} unregistering function
  */
 export const onSession = (cb) => duix.subscribe(SESSION, cb, { callMeNow: true, fireImmediately: true }); /* TODO: legacy arg name */
 
