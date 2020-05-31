@@ -65,6 +65,7 @@ export default class XLoginForm extends HTMLElement {
         if (this[requestor].isRequesting()) {
             return -1;
         }
+        console.error("do-login 21");
         this.reset();
         console.error("do-login 2");
 
