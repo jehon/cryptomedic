@@ -59,7 +59,7 @@ export const getSession = () => duix.get(SESSION);
 /**
  * 
  * @param {function} cb
- * @return {function} unregistering functino
+ * @return {function(void):void} unregistering function
  */
 export const onSession = (cb) => duix.subscribe(SESSION, cb, { callMeNow: true, fireImmediately: true }); /* TODO: legacy arg name */
 
