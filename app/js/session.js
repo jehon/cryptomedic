@@ -36,7 +36,6 @@ export function filterOnValue(valueCb, cb) {
         cb(newValue, oldValue);
         oldValue = newValue;
     }, {
-        callMeNow: true, /* TODO: legacy name */
         fireImmediately: true
     });
 }
@@ -61,7 +60,7 @@ export const getSession = () => duix.get(SESSION);
  * @param {function} cb
  * @return {function(void):void} unregistering function
  */
-export const onSession = (cb) => duix.subscribe(SESSION, cb, { callMeNow: true, fireImmediately: true }); /* TODO: legacy arg name */
+export const onSession = (cb) => duix.subscribe(SESSION, cb, { fireImmediately: true }); /* TODO: legacy arg name */
 
 /*
  * Functions
