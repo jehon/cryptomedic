@@ -22,6 +22,8 @@ import goThere from '../js/goThere.js';
 import { evaluatePoly, stdDeviation, sigma } from '../js/math.js';
 import { fromBirthDate, toBirthDate, atConsultTime } from '../js/age.js';
 import { onSession } from '../js/session.js';
+import '../elements/widgets/x-restricted.js';
+
 const calculations = {
     math: { evaluatePoly, stdDeviation, sigma },
     age: { fromBirthDate, toBirthDate, atConsultTime }
@@ -109,19 +111,6 @@ mainApp.controller('ctrl', ['$scope', function ($scope) {
 
     $scope.go = function (path) {
         goThere(path);
-    };
-
-    $scope.authorizedList = [];
-    onSession((session) => {
-        if (!session) {
-            $scope.authorizedList = [];
-        } else {
-            $scope.authorizedList = session.authorized;
-        }
-        $scope.safeApply();
-    });
-    $scope.isAuthorized = function (value, authorizedList = []) {
-        return authorizedList.indexOf(value) >= 0;
     };
 
     $scope.connected = false;

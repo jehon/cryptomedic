@@ -73,23 +73,23 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li>
                         <a id='menu_home' href="#/home" class="navbar-link">
-                            <jh-authorized ng-if="isAuthorized('application.open', authorizedList)">
+                            <x-restricted value='application.open'>
                                 <img src="../static/img/home.gif" height="20px" />
                                 Home
-                            </jh-authorized>
+                            </x-restricted>
                         </a>
                     </li>
                     <li><a id='menu_search' href="#/search" class="navbar-link">
-                            <jh-authorized ng-if="isAuthorized('folder.read', authorizedList)">
+                            <x-restricted value='folder.read'>
                                 <img src="../static/img/patientsSearch.gif" height="20px" />
                                 Search a patient
-                            </jh-authorized>
+                            </x-restricted>
                         </a></li>
                     <li><a id='menu_consults' href="#/reports/consultations" class="navbar-link">
-                            <jh-authorized ng-if="isAuthorized('planning.execute', authorizedList)">
+                            <x-restricted value='planning.execute'>
                                 <img src="../static/img/consultOfDay.gif" height="20px" />
                                 Consults of the day
-                            </jh-authorized>
+                            </x-restricted>
                         </a></li>
                     <li><a id='bug_reporting' href="javascript:bug_reporting()" class="navbar-link">
                             <img src="../static/img/bug.jpeg" />
@@ -105,28 +105,28 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li><a id='menu_users' href='#/users'>
-                                    <jh-authorized ng-if="isAuthorized('users.manage', authorizedList)">
+                                    <x-restricted value='users.manage'>
                                         <img src="../static/img/users.png" height="20px" />
                                         Users
-                                    </jh-authorized>
+                                    </x-restricted>
                                 </a></li>
                             <li><a id='menu_matrix' ng-href='{{apiUrl("/admin/securityMatrix")}}'>
-                                    <jh-authorized ng-if="isAuthorized('admin.securityMatrix', authorizedList)">
+                                    <x-restricted value='admin.securityMatrix'>
                                         <img src="../static/img/matrix.png" height="20px" />
                                         Matrix
-                                    </jh-authorized>
+                                    </x-restricted>
                                 </a></li>
                             <li><a id='menu_prices' href="#/prices" class="navbar-link">
-                                    <jh-authorized ng-if="isAuthorized('price.edit', authorizedList)">
+                                    <x-restricted value='price.edit'>
                                         <img src="../static/img/prices.png" height="20px" />
                                         Prices
-                                    </jh-authorized>
+                                    </x-restricted>
                                 </a></li>
                             <li><a id='menu_reports' href="#/reports" class="navbar-link">
-                                    <jh-authorized ng-if="isAuthorized('reports.execute', authorizedList)">
+                                    <x-restricted value='reports.execute'>
                                         <img src="../static/img/reports.gif" height="20px" />
                                         Reports
-                                    </jh-authorized>
+                                    </x-restricted>
                                 </a></li>
                         </ul>
                     </li>
