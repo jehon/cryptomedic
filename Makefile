@@ -202,6 +202,8 @@ dependencies-node: node_modules/.dependencies
 node_modules/.dependencies: package.json package-lock.json
 	npm install
 	touch node_modules/.dependencies
+    # TODO: workaround waiting for duix 2.0.1
+	sed -i "s/'./utils/deepEqual';/'./utils/deepEqual.js';/" node_modules/duix/index.js
 
 .PHONY: depencencies-api
 dependencies-api: www/api/$(VAPI)/vendor/.dependencies
