@@ -36,7 +36,7 @@
     "geckodriver": "latest",
     "glob": "7.1.6",
     "html-webpack-plugin": "4.3.0",
-    "htmlhint": "0.13.0",
+    "htmlhint": "0.14.0",
     "http-server": "0.12.3",
     "imports-loader": "0.8.0",
     "jasmine": "3.5.0",
