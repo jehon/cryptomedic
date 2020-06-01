@@ -25,12 +25,12 @@
 							ng-class="{ error: errors.pictureRequired }"
 						>
 						<td>
-							<jh-authorized value='folder.edit'>
-								Upload a file
-							</jh-authorized>
+                            <x-restricted value='folder.edit'>
+                                Upload a file
+                            </x-restricted>
 						</td>
 						<td>
-	 						<jh-authorized value='folder.edit'>
+	 						<x-restricted value='folder.edit'>
 								<x-input-picture name='fileContent'></x-input-picture>
 								<table>
 									<tr>
@@ -41,7 +41,7 @@
 								<div ng-if='errors.pictureRequired'>
 									<div class='jserror'>Error: you need to add the picture before saving the file.</div>
 								</div>
-							</jh-authorized>
+                            </x-restricted>
 	 					</td>
 					</tr>
 				</table>
