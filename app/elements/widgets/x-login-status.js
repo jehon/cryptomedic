@@ -1,5 +1,4 @@
 
-import '../panels/x-requestor.js';
 import './x-button.js';
 import { routeToLogin } from '../../js/router.js';
 import { onSession, getUsername } from '../../js/session.js';
