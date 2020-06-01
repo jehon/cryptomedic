@@ -113,11 +113,6 @@ mainApp.controller('ctrl', ['$scope', function ($scope) {
         goThere(path);
     };
 
-    $scope.connected = false;
-
-    $scope.username = '';
-    $scope.password = '';
-
     $scope.$on('$routeChangeError', function () { console.error('error in routes', arguments); });
 }]);
 
