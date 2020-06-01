@@ -4,7 +4,7 @@ import { fn, webDescribe, loadReference } from './athelpers.js';
 
 import '../../app/elements/widgets/x-restricted.js';
 
-fdescribe(fn(import.meta.url), function () {
+describe(fn(import.meta.url), function () {
     let refSession;
     beforeEach(function () {
         refSession = loadReference('AuthTest.testsLogin.json');
@@ -41,7 +41,7 @@ fdescribe(fn(import.meta.url), function () {
     });
 
     webDescribe('with value authorized', '<x-restricted value="application.open"><div id="content">Content</div></x-restricted>', function (element) {
-        it('should be hidden', function () {
+        it('should be visible', function () {
             expect(element().querySelector('#content').offsetHeight).toBeGreaterThan(0);
         });
 
@@ -55,6 +55,24 @@ fdescribe(fn(import.meta.url), function () {
             nsession.authorized = refSession.authorized.filter(v => v != 'application.open');
             setSession(nsession);
             expect(element().querySelector('#content').offsetHeight).toBe(0);
+        });
+    });
+
+    webDescribe('with inverted', '<x-restricted value="application.open" inverted><div id="content">Content</div></x-restricted>', function (element) {
+        it('should be hidden', function () {
+            expect(element().querySelector('#content').offsetHeight).toBe(0);
+        });
+
+        it('should show on value change', function () {
+            element().setAttribute('value', 'anything.else');
+            expect(element().querySelector('#content').offsetHeight).toBeGreaterThan(0);
+        });
+
+        it('should show when disabled by session', function () {
+            const nsession = deepCopy(refSession);
+            nsession.authorized = refSession.authorized.filter(v => v != 'application.open');
+            setSession(nsession);
+            expect(element().querySelector('#content').offsetHeight).toBeGreaterThan(0);
         });
     });
 });

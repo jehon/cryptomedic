@@ -1,3 +1,4 @@
+
 // Bootstrap 3.3 (https://getbootstrap.com/docs/4.0/getting-started/webpack/)
 import jQuery from 'jquery/src/jquery.js';
 window.jQuery = jQuery;

@@ -6,13 +6,13 @@ import { onSession, getAuthorized } from '../../js/session.js';
  */
 export default class XRestricted extends HTMLElement {
     static get observedAttributes() {
-        return ['value'];
+        return ['value', 'inverted'];
     }
 
     constructor() {
         super();
         /**@type {function} */
-        this.unreg = () => { };
+        this.unreg = null;
         this.attachShadow({ mode: 'open' });
     }
 
@@ -22,13 +22,17 @@ export default class XRestricted extends HTMLElement {
     }
 
     disconnectedCallback() {
-        this.unreg();
-        this.unreg = () => { };
+        /* istanbul ignore else */
+        if (this.unreg) {
+            this.unreg();
+        }
+        this.unreg = null;
     }
 
     attributeChangedCallback(attributeName, oldValue, newValue) {
         switch (attributeName) {
             case 'value':
+            case 'inverted':
                 this.adapt();
                 break;
         }
@@ -39,6 +43,9 @@ export default class XRestricted extends HTMLElement {
         this.active = false;
         if (authKey) {
             this.active = getAuthorized(authKey);
+        }
+        if (this.hasAttribute('inverted')) {
+            this.active = !this.active;
         }
         if (this.active) {
             this.shadowRoot.innerHTML = '<slot></slot>';
