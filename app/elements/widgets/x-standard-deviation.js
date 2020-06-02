@@ -40,3 +40,4 @@ export function stdDeviation(line, x, y) {
 
 // 1.64485 = sigma at 90 for normal distribution
 export const sigma = 1.64485;
+
