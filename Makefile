@@ -136,6 +136,15 @@ test-api-commit: docker-started dependencies-api data-reset
 .PHONY: test-unit
 test-unit: dependencies-node $(CJS2ESM_DIR)/axios.js $(CJS2ESM_DIR)/axios-mock-adapter.js
 	$(NM_BIN)/karma start tests/unitjs/karma.conf.js --single-run
+    
+	@NBR_TESTS=$$(cat target/js/junit/TESTS.xml | grep testCase | wc -l); \
+	NORM_TESTS=$$( cat tests/unitjs/nbr.txt ); \
+	if [ "$$NBR_TESTS" = "$$NORM_TESTS" ]; then \
+    	echo "V Correct number of tests"; \
+	else \
+		echo "X Incorrect number of tests (expected $$NORM_TESTS - recevied $$NBR_TESTS)" >&2 ; \
+		exit 1; \
+	fi
 
 .PHONY: test-e2e
 test-e2e: target/e2e/.tested
@@ -203,8 +212,6 @@ node_modules/.dependencies: package.json package-lock.json
 	npm install
 	touch package-lock.json
 	touch node_modules/.dependencies
-	# TODO: workaround waiting for duix 2.0.1
-	sed -i "s/deepEqual'/deepEqual.js'/" node_modules/duix/index.js
 
 .PHONY: depencencies-api
 dependencies-api: www/api/$(VAPI)/vendor/.dependencies
