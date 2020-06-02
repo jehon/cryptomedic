@@ -14,8 +14,6 @@ indent_size = 2
 
 [*.css]
 indent_size = tab
-indent_size = 4
 
 [Makefile]
 indent_size = tab
-indent_size = 4
