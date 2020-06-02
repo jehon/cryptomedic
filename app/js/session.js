@@ -21,24 +21,24 @@ export function deepCopy(object) {
     return JSON.parse(JSON.stringify(object));
 }
 
-/**
- * 
- * @param {function(any): any} valueCb - Extract the value from the session
- * @param {function(any, any): any} cb - The callback that will be called with the new value
- */
-export function filterOnValue(valueCb, cb) {
-    let oldValue = Symbol('undefined'); // To make the difference between undefined and never initialized
-    return duix.subscribe(SESSION, session => {
-        let newValue = valueCb(session);
-        if (oldValue === newValue) {
-            return;
-        }
-        cb(newValue, oldValue);
-        oldValue = newValue;
-    }, {
-        fireImmediately: true
-    });
-}
+// /**
+//  * 
+//  * @param {function(any): any} valueCb - Extract the value from the session
+//  * @param {function(any, any): any} cb - The callback that will be called with the new value
+//  */
+// export function filterOnValue(valueCb, cb) {
+//     let oldValue = Symbol('undefined'); // To make the difference between undefined and never initialized
+//     return duix.subscribe(SESSION, session => {
+//         let newValue = valueCb(session);
+//         if (oldValue === newValue) {
+//             return;
+//         }
+//         cb(newValue, oldValue);
+//         oldValue = newValue;
+//     }, {
+//         fireImmediately: true
+//     });
+// }
 
 export function setSession(session = null) {
     if (!session || Object.keys(session).length < 1) {
