@@ -20,7 +20,8 @@ module.exports = function (config) {
         reporters: [
             'progress',
             'coverage-istanbul',
-            'html'
+            'html',
+            'junit'
         ],
 
         files: [
@@ -70,6 +71,12 @@ module.exports = function (config) {
 
         htmlReporter: {
             outputDir: path.join(root, '/target/js/html/'),
+        },
+
+        junitReporter: {
+            outputDir: 'target/js/junit',
+            useBrowserName: false,
+            xmlVersion: 1
         },
 
         proxies: {
