@@ -19,15 +19,12 @@ import template from '../js/template.js';
 import { API_VERSION } from '../config.js';
 import goThere from '../js/goThere.js';
 
-import { evaluatePoly, stdDeviation, sigma } from '../js/math.js';
 import { fromBirthDate, toBirthDate, atConsultTime } from '../js/age.js';
 import '../elements/widgets/x-restricted.js';
 
 const calculations = {
-    math: { evaluatePoly, stdDeviation, sigma },
     age: { fromBirthDate, toBirthDate, atConsultTime }
 };
-
 
 let application = {};
 
