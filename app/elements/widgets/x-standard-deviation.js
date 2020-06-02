@@ -41,3 +41,23 @@ export function stdDeviation(line, x, y) {
 // 1.64485 = sigma at 90 for normal distribution
 export const sigma = 1.64485;
 
+export default class XStandardDeviation extends HTMLElement {
+    static get observedAttributes() {
+        return ['sex', 'graph-name', 'x', 'y'];
+    }
+
+    constructor() {
+        super();
+        this.adapt();
+    }
+
+    attributeChangedCallback(_attributeName, _oldValue, _newValue) {
+        this.adapt();
+    }
+
+    adapt() {
+        this.innerHTML = 'euh?';
+    }
+}
+
+window.customElements.define('x-standard-deviation', XStandardDeviation);
