@@ -201,8 +201,9 @@ dependencies: dependencies-node dependencies-api depencencies-maintenance
 dependencies-node: node_modules/.dependencies
 node_modules/.dependencies: package.json package-lock.json
 	npm install
+	touch package-lock.json
 	touch node_modules/.dependencies
-    # TODO: workaround waiting for duix 2.0.1
+	# TODO: workaround waiting for duix 2.0.1
 	sed -i "s/deepEqual'/deepEqual.js'/" node_modules/duix/index.js
 
 .PHONY: depencencies-api
