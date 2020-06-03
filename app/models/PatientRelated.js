@@ -3,7 +3,7 @@ import FolderPage from './FolderPage.js';
 import { DataMissingException } from '../js/exceptions.js';
 import amd_stats from '../js/amd_stats.js';
 import { fromBirthDate } from '../js/age.js';
-import { stdDeviation } from '../elements/widgets/x-standard-deviation.js';
+import { stdDeviationString } from '../elements/widgets/x-standard-deviation.js';
 
 export default class PatientRelated extends FolderPage {
     constructor(data, folder = null) {
@@ -48,7 +48,7 @@ export default class PatientRelated extends FolderPage {
         if (!this.isNotZero('Heightcm')) {
             throw new DataMissingException('Height');
         }
-        return stdDeviation(amd_stats[sex]['Heightcm'], age, this.Heightcm);
+        return stdDeviationString(amd_stats[sex]['Heightcm'], age, this.Heightcm);
     }
 
     ds_weight() {
@@ -63,7 +63,7 @@ export default class PatientRelated extends FolderPage {
         if (!this.isNotZero('Weightkg')) {
             throw new DataMissingException('Weight');
         }
-        return stdDeviation(amd_stats[sex]['Weightkg'], age, this.Weightkg);
+        return stdDeviationString(amd_stats[sex]['Weightkg'], age, this.Weightkg);
     }
 
     wh() {
@@ -87,7 +87,7 @@ export default class PatientRelated extends FolderPage {
         if (!this.isNotZero('Weightkg')) {
             throw new DataMissingException('Weight');
         }
-        return stdDeviation(amd_stats[sex]['wh'], this.Heightcm, this.Weightkg);
+        return stdDeviationString(amd_stats[sex]['wh'], this.Heightcm, this.Weightkg);
     }
 
     bmi() {
@@ -109,7 +109,7 @@ export default class PatientRelated extends FolderPage {
         if (typeof (age) != 'number') {
             throw new DataMissingException('Age');
         }
-        return stdDeviation(amd_stats[sex]['bmi'], age, this.bmi());
+        return stdDeviationString(amd_stats[sex]['bmi'], age, this.bmi());
     }
 
     isLocked() {
