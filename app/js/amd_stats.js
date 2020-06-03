@@ -1,4 +1,6 @@
 
+import { deepFreeze } from './session.js';
+
 const amd_stats = { m: {}, f: {} };
 export default amd_stats;
 
@@ -58,3 +60,5 @@ amd_stats.dimensions.Heightcm_Weightkg_null = {}; amd_stats.dimensions.Heightcm_
 amd_stats.dimensions.ageAtConsultTime_bmi_m = {}; amd_stats.dimensions.ageAtConsultTime_bmi_m.top = 0.05; amd_stats.dimensions.ageAtConsultTime_bmi_m.bottom = 0.95; amd_stats.dimensions.ageAtConsultTime_bmi_m.left = 0.03; amd_stats.dimensions.ageAtConsultTime_bmi_m.right = 0.97; amd_stats.dimensions.ageAtConsultTime_bmi_m.vtop = 31.; amd_stats.dimensions.ageAtConsultTime_bmi_m.vbottom = 14.; amd_stats.dimensions.ageAtConsultTime_bmi_m.vleft = 2.; amd_stats.dimensions.ageAtConsultTime_bmi_m.vright = 20.;
 amd_stats.dimensions.ageAtConsultTime_bmi_f = {}; amd_stats.dimensions.ageAtConsultTime_bmi_f.top = 0.05; amd_stats.dimensions.ageAtConsultTime_bmi_f.bottom = 0.95; amd_stats.dimensions.ageAtConsultTime_bmi_f.left = 0.03; amd_stats.dimensions.ageAtConsultTime_bmi_f.right = 0.97; amd_stats.dimensions.ageAtConsultTime_bmi_f.vtop = 32.; amd_stats.dimensions.ageAtConsultTime_bmi_f.vbottom = 13.; amd_stats.dimensions.ageAtConsultTime_bmi_f.vleft = 2.; amd_stats.dimensions.ageAtConsultTime_bmi_f.vright = 20.;
 amd_stats.dimensions.ageAtConsultTime_bmi_null = {}; amd_stats.dimensions.ageAtConsultTime_bmi_null.top = 0.05; amd_stats.dimensions.ageAtConsultTime_bmi_null.bottom = 0.95; amd_stats.dimensions.ageAtConsultTime_bmi_null.left = 0.03; amd_stats.dimensions.ageAtConsultTime_bmi_null.right = 0.97; amd_stats.dimensions.ageAtConsultTime_bmi_null.vtop = 31.; amd_stats.dimensions.ageAtConsultTime_bmi_null.vbottom = 13.; amd_stats.dimensions.ageAtConsultTime_bmi_null.vleft = 2.; amd_stats.dimensions.ageAtConsultTime_bmi_null.vright = 20.;
+
+deepFreeze(amd_stats);

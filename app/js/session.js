@@ -4,7 +4,7 @@ import { routeToLogin } from './router.js';
 const SESSION = 'session';
 
 // Thanks to https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze
-function deepFreeze(object) {
+export function deepFreeze(object) {
     var propNames = Object.getOwnPropertyNames(object);
     for (let name of propNames) {
         let value = object[name];
