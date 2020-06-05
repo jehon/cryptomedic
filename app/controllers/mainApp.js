@@ -26,8 +26,6 @@ const calculations = {
     age: { fromBirthDate, toBirthDate, atConsultTime }
 };
 
-let application = {};
-
 let mainApp = angular.module('app_main', ['ngRoute'])
     .config(['$compileProvider', function ($compileProvider) {
         $compileProvider.aHrefSanitizationWhitelist(/^\s*((https?|ftp|mailto|chrome-extension):|data:text,)/);
@@ -87,7 +85,6 @@ let mainApp = angular.module('app_main', ['ngRoute'])
 
 mainApp.controller('ctrl', ['$scope', function ($scope) {
     // Global variables intorduced into the scope:
-    $scope.application = application;
     $scope.calculations = calculations;
     $scope.template = template;
 
@@ -99,10 +96,6 @@ mainApp.controller('ctrl', ['$scope', function ($scope) {
         } else {
             this.$apply(fn);
         }
-    };
-
-    $scope.apiUrl = function (url = '/') {
-        return '/api/' + API_VERSION + url;
     };
 
     $scope.go = function (path) {
