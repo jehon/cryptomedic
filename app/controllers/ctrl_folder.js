@@ -3,7 +3,7 @@ import Folder from '../models/Folder.js';
 import { formGetContent } from '../js/form.js';
 import { extractPrefsFile } from '../js/prefs.js';
 import getDataService from '../js/getDataService.js';
-import { fromBirthDate } from '../js/age.js';
+import { fromBirthDate } from '../elements/widgets/x-age.js';
 import template from '../js/template.js';
 import goThere from '../js/goThere.js';
 import date2CanonicString from '../js/date2CanonicString.js';

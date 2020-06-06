@@ -19,11 +19,11 @@ import template from '../js/template.js';
 import { API_VERSION } from '../config.js';
 import goThere from '../js/goThere.js';
 
-import { fromBirthDate, toBirthDate, atConsultTime } from '../js/age.js';
+import { fromBirthDate } from '../elements/widgets/x-age.js';
 import '../elements/widgets/x-restricted.js';
 
 const calculations = {
-    age: { fromBirthDate, toBirthDate, atConsultTime }
+    age: { fromBirthDate }
 };
 
 let mainApp = angular.module('app_main', ['ngRoute'])

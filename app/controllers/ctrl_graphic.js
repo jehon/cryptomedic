@@ -1,6 +1,6 @@
 
 import amd_stats from '../js/amd_stats.js';
-import { atConsultTime } from '../js/age.js';
+import { fromBirthDate } from '../elements/widgets/x-age.js';
 import { DataMissingException } from '../js/exceptions.js';
 
 export default function ctrl_graphic($scope) {
@@ -53,7 +53,7 @@ export default function ctrl_graphic($scope) {
         if (field == 'ageAtConsultTime' || typeof (file[field]) == 'function') {
             try {
                 if (field == 'ageAtConsultTime') {
-                    return atConsultTime(file, $scope.folder.getPatient());
+                    return fromBirthDate($scope.folder.getPatient().Yearofbirth, { reference: file.Date, format: "number" });
                 } else {
                     return file[field]();
                 }
