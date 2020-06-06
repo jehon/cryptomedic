@@ -1,8 +1,16 @@
 
+import { toTitleCase } from "./string-utils.js";
+
 export class ApplicationException extends Error {
+    data = '';
+
     constructor(msg) {
         super(msg);
         this.message = msg;
+    }
+
+    get id() {
+        return this.constructor.name + (this.data ? '#' + this.data : '');
     }
 
     getMessage() {
@@ -12,14 +20,14 @@ export class ApplicationException extends Error {
 
 export class DataMissingException extends ApplicationException {
     constructor(data = 'some data', reason = 'is missing') {
-        super('Data ' + data + ' ' + reason);
+        super(toTitleCase(data) + ' ' + reason);
         this.data = data;
     }
 }
 
 export class DataInvalidException extends ApplicationException {
-    constructor(data = 'value', reason = 'is invalid') {
-        super('Data ' + data + ' ' + reason);
+    constructor(data = 'some data', reason = 'is invalid') {
+        super(toTitleCase(data) + ' ' + reason);
         this.data = data;
     }
 }

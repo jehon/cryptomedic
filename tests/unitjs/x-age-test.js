@@ -199,23 +199,23 @@ describe(fn(import.meta.url), function () {
     });
 
     webDescribe('x-age', '<x-age></x-age>', function (element) {
-        xit('should show nothing', function () {
-            expect(element().innerHTML).toBe('');
-            expect(element().hasAttribute('error')).toBeTrue();
+        it('should show nothing', function () {
+            expect(element().innerHTML).toBe('Date is missing');
             expect(() => element().value).toThrow();
+            expect(element().getAttribute('error')).toBe('DataMissingException#date');
         });
     });
 
     webDescribe('x-age', '<x-age value="x"></x-age>', function (element) {
-        xit('should show an error', function () {
-            expect(element().innerHTML).toBe('');
-            expect(element().hasAttribute('error')).toBeTrue();
+        it('should show an error', function () {
+            expect(element().innerHTML).toBe('Date is too short');
             expect(() => element().value).toThrow();
+            expect(element().getAttribute('error')).toBe('DataInvalidException#date');
         });
     });
 
     webDescribe('x-age', '<x-age value="2019-01-12"></x-age>', function (element) {
-        xit('should show a value', function () {
+        it('should show a value', function () {
             expect(element().innerHTML).not.toBe('');
             expect(element().hasAttribute('error')).toBeFalse();
             expect(element().value).toBeGreaterThan(1);
@@ -223,8 +223,8 @@ describe(fn(import.meta.url), function () {
     });
 
     webDescribe('x-age', '<x-age value="2019-01-12" ref="2020-01-13"></x-age>', function (element) {
-        xit('should show a value', function () {
-            expect(element().innerHTML).toBe('1 year old');
+        it('should show a value', function () {
+            expect(element().innerHTML).toBe('1y0m');
             expect(element().hasAttribute('error')).toBeFalse();
             expect(element().value).toBe(1);
         });

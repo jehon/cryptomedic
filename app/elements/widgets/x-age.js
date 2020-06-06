@@ -1,5 +1,5 @@
 
-import { DataInvalidException } from '../../js/exceptions.js';
+import { DataInvalidException, DataMissingException, ApplicationException } from '../../js/exceptions.js';
 
 // TODO: legacy
 export function fromBirthDate(birth, options) {
@@ -25,7 +25,7 @@ export function fromBirthDate(birth, options) {
         return yearsToYM(res);
 
     } catch (e) {
-        if (e instanceof DataInvalidException) {
+        if (e instanceof ApplicationException) {
             return options.format ? null : '?';
         }
         return options.format ? null : '';
@@ -46,7 +46,7 @@ export function yearsToYM(value) {
  */
 export function fromBirthDateTo(date, reference = new Date()) {
     if (date == '' || date == null) {
-        throw new DataInvalidException('date');
+        throw new DataMissingException('date');
     }
 
     if (typeof (reference) == 'number') {
@@ -102,14 +102,19 @@ export default class XAge extends HTMLElement {
     }
 
     adapt() {
-        const value = this.getAttribute('value');
-        const ref = this.getAttribute('ref');
-
         try {
-            this.innerHTML = yearsToYM(fromBirthDateTo(value, ref));
+            this.removeAttribute('error');
+            this.innerHTML = yearsToYM(this.value);
         } catch (e) {
+            this.setAttribute('error', e.id)
             this.innerHTML = e.message
         }
+    }
+
+    get value() {
+        const value = this.getAttribute('value');
+        const ref = this.getAttribute('ref');
+        return fromBirthDateTo(value, ref ? ref : new Date());
     }
 }
 
