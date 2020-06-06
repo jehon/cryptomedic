@@ -16,15 +16,10 @@ import ctrl_users from './ctrl_users.js';
 import { ApplicationException } from '../js/exceptions.js';
 import { parseRouteLogin, parseRouteApi } from '../js/router.js';
 import template from '../js/template.js';
-import { API_VERSION } from '../config.js';
 import goThere from '../js/goThere.js';
 
-import { fromBirthDate } from '../elements/widgets/x-age.js';
 import '../elements/widgets/x-restricted.js';
 
-const calculations = {
-    age: { fromBirthDate }
-};
 
 let mainApp = angular.module('app_main', ['ngRoute'])
     .config(['$compileProvider', function ($compileProvider) {
@@ -85,7 +80,6 @@ let mainApp = angular.module('app_main', ['ngRoute'])
 
 mainApp.controller('ctrl', ['$scope', function ($scope) {
     // Global variables intorduced into the scope:
-    $scope.calculations = calculations;
     $scope.template = template;
 
     $scope.safeApply = function (fn) {

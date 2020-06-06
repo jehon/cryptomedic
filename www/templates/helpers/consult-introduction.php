@@ -6,7 +6,7 @@
 		<?php (new t("Center"))->tr("Center")->p(); ?>
 		<tr class='notModeWrite'>
 			<td>Age during consultation</td>
-			<td id='ageAtConsultationTime'>{{calculations.age.fromBirthDate(folder.getPatient().Yearofbirth, { reference: currentFile().Date } )}} old at consultation time</td>
+			<td id='ageAtConsultationTime'><x-age value='{{folder.getPatient().Yearofbirth}}' ref='{{currentFile().Date}}'></x-age> old at consultation time</td>
 		</tr>
 	</table>
 </fieldset>

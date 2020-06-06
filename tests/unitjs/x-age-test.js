@@ -80,6 +80,10 @@ describe(fn(import.meta.url), function () {
         it('should handle yearOfBirth invalid (format object)', function () {
             expect(() => fromBirthDateTo('199', nowPlus5)).toThrow();
         });
+
+        it('should handle ref invalid (format object)', function () {
+            expect(() => fromBirthDateTo('2000', '199')).toThrow();
+        });
     });
 
     // TODO: remove
