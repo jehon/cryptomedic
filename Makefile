@@ -135,7 +135,7 @@ test-api-commit: docker-started dependencies-api data-reset
 
 .PHONY: test-unit
 test-unit: dependencies-node $(CJS2ESM_DIR)/axios.js $(CJS2ESM_DIR)/axios-mock-adapter.js
-	$(NM_BIN)/karma start tests/unitjs/karma.conf.js --single-run
+	npm run test-unit-continuously -- --single-run
     
 	@NBR_TESTS=$$(cat target/js/junit/TESTS.xml | grep testCase | wc -l); \
 	NORM_TESTS=$$( cat tests/unitjs/nbr.txt ); \

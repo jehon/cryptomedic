@@ -12,7 +12,14 @@ export class ApplicationException extends Error {
 
 export class DataMissingException extends ApplicationException {
     constructor(data = 'some data', reason = 'is missing') {
-        super('Data '  + data + ' ' + reason);
+        super('Data ' + data + ' ' + reason);
+        this.data = data;
+    }
+}
+
+export class DataInvalidException extends ApplicationException {
+    constructor(data = 'value', reason = 'is invalid') {
+        super('Data ' + data + ' ' + reason);
         this.data = data;
     }
 }
@@ -23,3 +30,4 @@ export class ConfigurationMissingException extends ApplicationException {
         this.data = data;
     }
 }
+

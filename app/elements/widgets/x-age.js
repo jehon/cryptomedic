@@ -1,59 +1,90 @@
 
+import { DataInvalidException } from '../../js/exceptions.js';
 
+// TODO: legacy
 export function fromBirthDate(birth, options) {
-    if (birth == '' || birth == null) {
-        return '';
-    }
-    options = Object.assign({}, {
+    options = {
+        format: false,
         reference: new Date(),
-        format: false
-    }, options);
-    // reference = reference || new Date();
-    if (typeof (options.reference) == 'number') {
-        options.reference = '' + options.reference;
+        ...options
     }
-    if (typeof (options.reference) == 'string') {
-        if (options.reference.length < 4) {
-            return options.format ? null : '?';
-            // throw new Exception('Invalid reference');
+
+    try {
+        const res = fromBirthDateTo(birth, options.reference);
+        const obj = {
+            years: Math.floor(res),
+            months: Math.round((res - Math.trunc(res)) * 12)
+        };
+        if (options.format == 'object') {
+            return obj;
         }
-        var ry = parseInt(options.reference.substring(0, 4));
-        var rm = parseInt(options.reference.substring(5, 7));
+        if (options.format == 'number') {
+            return res;
+        }
+        // Default ?
+        return yearsToYM(res);
+
+    } catch (e) {
+        if (e instanceof DataInvalidException) {
+            return options.format ? null : '?';
+        }
+        return options.format ? null : '';
+    }
+}
+
+export function yearsToYM(value) {
+    const years = Math.floor(value);
+    const months = Math.round((value - Math.trunc(value)) * 12);
+    return years + 'y' + months + 'm';
+}
+
+/**
+ * 
+ * @param {number|Date|string} date - the date of birth (can be anything)
+ * @param {number|Date|string} [reference] - must represent a full date
+ * @returns {number} - years old
+ */
+export function fromBirthDateTo(date, reference = new Date()) {
+    if (date == '' || date == null) {
+        throw new DataInvalidException('date');
+    }
+
+    if (typeof (reference) == 'number') {
+        reference = '' + reference;
+    }
+    if (typeof (reference) == 'string') {
+        if (reference.length < 4) {
+            throw new DataInvalidException('reference', 'is too short');
+        }
+        var ry = parseInt(reference.substring(0, 4));
+        var rm = parseInt(reference.substring(5, 7));
         if (isNaN(rm)) {
             rm = 1; // emulate january
         }
-        options.reference = new Date(ry, rm - 1, 1);
+        reference = new Date(ry, rm - 1, 1);
     }
     // reference is a Date
 
-    if (typeof (birth) == 'number') {
-        birth = '' + birth;
+    if (typeof (date) == 'number') {
+        date = '' + date;
     }
-    if (typeof (birth) == 'string') {
-        if (birth.length < 4) {
-            return options.format ? null : '?';
+    if (typeof (date) == 'string') {
+        if (date.length < 4) {
+            throw new DataInvalidException('date', 'is too short');
             // throw new Exception('Invalid birth');
         }
-        var by = parseInt(birth.substring(0, 4));
-        var bm = parseInt(birth.substring(5, 7));
+        var by = parseInt(date.substring(0, 4));
+        var bm = parseInt(date.substring(5, 7));
         if (isNaN(bm)) {
             bm = 1; // emulate january
         }
-        birth = new Date(by, bm - 1 - 1, 30);
+        date = new Date(by, bm - 1 - 1, 30);
     }
     // birth is a Date
 
-    var days = new Date(0, 0, 0, 0, 0, 0, options.reference - birth);
-    var res = { years: days.getFullYear() - 1900, months: days.getMonth() };
-    if (options.format == 'object') {
-        return res;
-    }
-    // Future default ? See fromBirthDateAsHumanReadable
-    if (options.format == 'number') {
-        return res.years + (res.months / 12);
-    }
-    // Default ?
-    return res.years + 'y' + res.months + 'm';
+    var days = new Date(0, 0, 0, 0, 0, 0, reference.getTime() - date.getTime());
+
+    return (days.getFullYear() - 1900) + (days.getMonth() / 12);
 }
 
 export default class XAge extends HTMLElement {
@@ -74,7 +105,11 @@ export default class XAge extends HTMLElement {
         const value = this.getAttribute('value');
         const ref = this.getAttribute('ref');
 
-
+        try {
+            this.innerHTML = yearsToYM(fromBirthDateTo(value, ref));
+        } catch (e) {
+            this.innerHTML = e.message
+        }
     }
 }
 
