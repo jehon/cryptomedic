@@ -14,14 +14,14 @@ describe('ApplicationException', function () {
 
         expect(ae instanceof ApplicationException).toBeTruthy('DataMissingException is not an ApplicationException');
         expect(ae instanceof Error).toBeTruthy('DataMissingException is not an Error');
-        expect(ae.getMessage()).toBe('Data data is missing');
+        expect(ae.getMessage()).toBe('Data is missing');
         expect(ae.data).toBe('data');
 
         var ae2 = new DataMissingException('data', 'is not null');
-        expect(ae2.message).toBe('Data data is not null');
+        expect(ae2.message).toBe('Data is not null');
 
         var ae3 = new DataMissingException();
-        expect(ae3.message).toBe('Data some data is missing');
+        expect(ae3.message).toBe('Some Data is missing');
 
     });
 
