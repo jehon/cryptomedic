@@ -64,7 +64,7 @@ describe('tests/unit/x-waiting-folder-test.js', function () {
 
             it('should react to store ACT_FOLDER_STORE', function () {
                 setCurrentFolder(f);
-                expect(element().folder).toBe(f);
+                expect(element().folder).toEqual(f);
                 expect(element().isBlocked()).toBeFalsy();
             });
         });
