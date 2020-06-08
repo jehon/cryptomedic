@@ -25,10 +25,7 @@ export function fromBirthDate(birth, options) {
         return yearsToYM(res);
 
     } catch (e) {
-        if (e instanceof ApplicationException) {
-            return options.format ? null : '?';
-        }
-        return options.format ? null : '';
+        return options.format ? null : '?';
     }
 }
 
