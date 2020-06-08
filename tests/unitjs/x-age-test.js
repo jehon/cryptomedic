@@ -3,7 +3,7 @@ import { fn, webDescribe } from './athelpers.js';
 import { fromBirthDate, fromBirthDateTo } from '../../app/elements/widgets/x-age.js';
 
 describe(fn(import.meta.url), function () {
-    describe('BirthDate2Age', function () {
+    describe('fromBirthDateTo', function () {
         const now = new Date(2010, 6, 1);
         const nowPlus5 = new Date(2015, 6, 1);
 
@@ -42,9 +42,21 @@ describe(fn(import.meta.url), function () {
             expect(fromBirthDateTo('2000', now)).toBe(10.5);
         });
 
+        it('should handle yearOfBirth of string/4 vs. same', function () {
+            expect(fromBirthDateTo('2000', 2000)).toBe(0);
+        });
+
+        it('should have (string/4) a default value for reference', function () {
+            expect(fromBirthDateTo('2000')).toBeGreaterThan(20);
+        })
+
         // Int vs...
         it('should handle yearOfBirth of number vs. date', function () {
             expect(fromBirthDateTo(2000, now)).toBe(10.5);
+        });
+
+        it('should have (int) a default value for reference', function () {
+            expect(fromBirthDateTo(2000)).toBeGreaterThan(20);
         });
 
         // Date vs...
