@@ -14,8 +14,8 @@ export default class XSDWeight extends HTMLElement {
     }
 
     adapt() {
-        const folder = this.getAttribute('folder');
-        const patient = this.getAttribute('patient');
+        const _folder = this.getAttribute('folder');
+        const _patient = this.getAttribute('patient');
 
         // this.innerHTML =
     }
