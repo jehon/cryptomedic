@@ -29,7 +29,7 @@ export default class XRestricted extends HTMLElement {
         this.unreg = null;
     }
 
-    attributeChangedCallback(attributeName, oldValue, newValue) {
+    attributeChangedCallback(attributeName, _oldValue, _newValue) {
         switch (attributeName) {
             case 'value':
             case 'inverted':

@@ -66,7 +66,7 @@ export default class JHElement extends HTMLElement {
                 if (!(k in this)) {
                     Object.defineProperty(this, k, {
                         get: () => this[ki],
-                        set: (v) => this.attributeChangedCallback(JHElement.camelToSnake(k), this[ki], v)
+                        set: (v) => { this.attributeChangedCallback(JHElement.camelToSnake(k), this[ki], v); }
                     });
                 }
             });

@@ -7,7 +7,7 @@ export default class XWaitingFolder extends XWaiting {
         super();
         this.folder = null;
         this.block();
-        onCurrentFolder(f => this._store2folder());
+        onCurrentFolder(_f => this._store2folder());
         this._store2folder();
     }
 

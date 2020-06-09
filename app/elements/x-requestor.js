@@ -108,7 +108,7 @@ export default class XRequestor extends JHElement {
                 if (errorResponse.response.status == 401) {
                     // Logout if 401
                     setSession();
-                    routeToLogin("401");
+                    routeToLogin('401');
                     this[error].free();
                 }
                 // } else if (response instanceof FetchFull.TimeoutException) {

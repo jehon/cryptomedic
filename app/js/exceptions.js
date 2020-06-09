@@ -1,5 +1,5 @@
 
-import { toTitleCase } from "./string-utils.js";
+import { toTitleCase } from './string-utils.js';
 
 export class ApplicationException extends Error {
     data = '';

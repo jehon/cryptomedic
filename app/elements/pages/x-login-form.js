@@ -67,7 +67,7 @@ export default class XLoginForm extends HTMLElement {
         this.reset();
 
         if (!formValidate(this[form])) {
-            this[messages].addMessage({ text: 'Please fill in the form', level: levels.warning, id: 'empty' })
+            this[messages].addMessage({ text: 'Please fill in the form', level: levels.warning, id: 'empty' });
             return 1;
         }
         const formData = formGetContent(this[form]);
@@ -78,7 +78,7 @@ export default class XLoginForm extends HTMLElement {
                 if (response.ok) {
                     this[messages].addMessage({ text: 'Login success', level: levels.success, id: 'success' });
                     setSession(response.data);
-                    setRoute(this.getAttribute("redirect"));
+                    setRoute(this.getAttribute('redirect'));
                     return true;
                 }
                 // We have a 404 (filtered)

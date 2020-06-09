@@ -120,6 +120,7 @@ stop:
 
 .PHONY: lint
 lint:
+	npm run eslint
 	npm run stylelint
 
 .PHONY: test

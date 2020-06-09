@@ -7,27 +7,27 @@ import { API_VERSION } from '../../app/config.js';
 describe(fn(import.meta.url), function () {
     it('should parse login routes', function () {
         {
-            router.setRoute('/test')
+            router.setRoute('/test');
             const r = router.getCurrentRoute();
             router.routeToLogin();
             expect(router.parseRouteLogin().redirect).toBe(r);
         }
 
         {
-            const r = "/home";
+            const r = '/home';
             router.routeToLogin(r);
             expect(router.parseRouteLogin().redirect).toBe(r);
         }
 
         {
-            const r = "/home/test/123";
+            const r = '/home/test/123';
             router.routeToLogin(r);
             expect(router.parseRouteLogin().redirect).toBe(r);
         }
 
         {
-            router.setRoute("/login/login/test");
-            expect(router.parseRouteLogin().redirect).toBe("/test");
+            router.setRoute('/login/login/test');
+            expect(router.parseRouteLogin().redirect).toBe('/test');
         }
     });
 

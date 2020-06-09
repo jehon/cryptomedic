@@ -6,7 +6,7 @@ import '../../app/elements/x-write-list.js';
 import '../../app/elements/x-inline.js';
 
 export function mockFormSubmit(form) {
-    form.dispatchEvent(new CustomEvent("submit", { "bubbles": true, "cancelable": true }));
+    form.dispatchEvent(new CustomEvent('submit', { 'bubbles': true, 'cancelable': true }));
 }
 
 describe('form-test', function () {

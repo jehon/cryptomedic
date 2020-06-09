@@ -137,7 +137,7 @@ describe('with screenshots', () => {
             </style>\n`;
 
         if (problemsList.size < 1) {
-            res += "no problem found";
+            res += 'no problem found';
         } else {
             // Houston, we've had a problem...
             let id = 0;

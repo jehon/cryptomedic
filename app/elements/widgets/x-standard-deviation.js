@@ -1,4 +1,4 @@
-import amd_stats from "../../js/amd_stats.js";
+import amd_stats from '../../js/amd_stats.js';
 
 export function _evaluatePoly(line, x) {
     var i = -1;
@@ -94,7 +94,7 @@ export default class XStandardDeviation extends HTMLElement {
 
         try {
             const ds = stdDeviation(amd_stats[sex][graphName], x, y);
-            this.innerHTML = "" + (Math.round(ds * 100) / 100);
+            this.innerHTML = '' + (Math.round(ds * 100) / 100);
         } catch (e) {
             this.setError('stats', e);
         }
