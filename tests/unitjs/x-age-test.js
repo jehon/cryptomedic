@@ -48,7 +48,7 @@ describe(fn(import.meta.url), function () {
 
         it('should have (string/4) a default value for reference', function () {
             expect(fromBirthDateTo('2000')).toBeGreaterThan(20);
-        })
+        });
 
         // Int vs...
         it('should handle yearOfBirth of number vs. date', function () {

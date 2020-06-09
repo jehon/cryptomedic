@@ -46,7 +46,7 @@ export default class XLoginStatus extends HTMLElement {
 
     disconnectedCallback() {
         /* istanbul ignore else */
-        if (typeof (this.unregisterListener) == "function") {
+        if (typeof (this.unregisterListener) == 'function') {
             this.unregisterListener();
         }
         this.unregisterListener = null;

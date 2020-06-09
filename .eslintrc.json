@@ -6,14 +6,12 @@
     "es6": true,
     "browser": true
   },
+  "parser": "babel-eslint",
   "parserOptions": {
     "ecmaVersion": 2020,
     "sourceType": "module"
   },
-  "plugins": [
-    "@babel/plugin-syntax-import-meta",
-    "@babel/plugin-proposal-optional-chaining"
-  ],
+  "plugins": [],
   "rules": {
     "indent": [
       "error",
@@ -38,6 +36,7 @@
       "error",
       {
         "vars": "local",
+        "varsIgnorePattern": "^_",
         "argsIgnorePattern": "^_"
       }
     ],

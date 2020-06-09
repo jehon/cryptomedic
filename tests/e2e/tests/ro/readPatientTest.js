@@ -14,7 +14,7 @@ module.exports = {
         // Summary
         client.myClick('#summary');
         client.page.cryptomedic().tableIterator('#table_summary')
-        // Summary Bill#1
+            // Summary Bill#1
             .row(4).assert('#2')
             .col(4).assert('Sociallevel')
             .endTable();

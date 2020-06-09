@@ -9,7 +9,7 @@ export function deepFreeze(object) {
     for (let name of propNames) {
         let value = object[name];
 
-        if (value && typeof value === "object") {
+        if (value && typeof value === 'object') {
             deepFreeze(value);
         }
     }
@@ -22,7 +22,7 @@ export function deepCopy(object) {
 }
 
 // /**
-//  * 
+//  *
 //  * @param {function(any): any} valueCb - Extract the value from the session
 //  * @param {function(any, any): any} cb - The callback that will be called with the new value
 //  */
@@ -56,7 +56,7 @@ export function setSession(session = null) {
 
 export const getSession = () => duix.get(SESSION);
 /**
- * 
+ *
  * @param {function} cb
  * @return {function(void):void} unregistering function
  */
@@ -73,7 +73,7 @@ export const getAuthorized = (key, session = getSession()) => session?.authorize
  * Current folder (TODO: legacy)
  * @obsolete
  */
-const FOLDER = 'FOLDER'
+const FOLDER = 'FOLDER';
 export const setCurrentFolder = (value = null) => duix.set(FOLDER, value);
 export const getCurrentFolder = () => duix.get(FOLDER);
 export const onCurrentFolder = (cb) => duix.subscribe(FOLDER, cb);

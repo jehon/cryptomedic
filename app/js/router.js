@@ -15,12 +15,12 @@ export function routeToLogin(redirect = getCurrentRoute()) {
 
 export function parseRouteLogin() {
     return {
-        redirect: getCurrentRoute().replace(/^(\/+login)+\/+/, "/")
+        redirect: getCurrentRoute().replace(/^(\/+login)+\/+/, '/')
     };
 }
 
 export function parseRouteApi() {
     return {
-        redirect: '/api/' + API_VERSION + getCurrentRoute().replace(/^(\/+redirect\/api)+\/+/, "/")
+        redirect: '/api/' + API_VERSION + getCurrentRoute().replace(/^(\/+redirect\/api)+\/+/, '/')
     };
 }

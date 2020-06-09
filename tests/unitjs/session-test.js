@@ -15,7 +15,7 @@ describe(fn(import.meta.url), function () {
     describe('without session', function () {
         beforeEach(function () {
             setSession();
-        })
+        });
 
         it('is empty on start', async function (done) {
             const unreg = onSession(data => {
@@ -45,14 +45,14 @@ describe(fn(import.meta.url), function () {
             let users = [];
             const unreg = onSession(data => {
                 sessions.push(data ? true : false);
-                users.push(getUsername())
+                users.push(getUsername());
             });
 
             setSession(refSession);
             unreg();
 
             expect(sessions).withContext('sessions').toEqual([false, true]);
-            expect(users).withContext('users').toEqual([undefined, "murshed"]);
+            expect(users).withContext('users').toEqual([undefined, 'murshed']);
         });
     });
 
@@ -64,9 +64,9 @@ describe(fn(import.meta.url), function () {
         it('with memorized value', async function (done) {
             expect(getSession()).not.toBeNull();
             expect(getSession()).toBeTruthy();
-            expect(getSession().group).toBe("cdc");
+            expect(getSession().group).toBe('cdc');
             const unreg = onSession(data => {
-                expect(data.group).toBe("cdc");
+                expect(data.group).toBe('cdc');
                 done();
             });
             unreg();
@@ -74,9 +74,9 @@ describe(fn(import.meta.url), function () {
 
         it('with username', async function (done) {
             expect(getSession()).toBeTruthy();
-            expect(getUsername()).toBe("murshed");
-            const unreg = onSession(data => {
-                expect(getUsername()).toBe("murshed");
+            expect(getUsername()).toBe('murshed');
+            const unreg = onSession(_data => {
+                expect(getUsername()).toBe('murshed');
                 done();
             });
             unreg();

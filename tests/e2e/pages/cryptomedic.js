@@ -3,13 +3,13 @@
 /* global JHElement */
 
 var authenticated = false;
-var timestampStart = 0;
+var _timestampStart = 0;
 
 module.exports = {
     elements: {},
     commands: [{
         authenticate_fillIn: function (login) {
-            timestampStart = Date.now();
+            _timestampStart = Date.now();
             if (!login) {
                 throw new Error('Cryptomedic: Authenticate expect parameter 1 to be the login');
             }

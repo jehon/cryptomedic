@@ -1,4 +1,13 @@
 
+function nullifyOjbect(what) {
+    let what2 = {};
+    for (var k in what) {
+        what2[k] = nullify(what[k]);
+    }
+    // });
+    return what2;
+}
+
 export default function nullify(what) {
     switch (typeof (what)) {
         case 'string':
@@ -16,12 +25,7 @@ export default function nullify(what) {
             if (what == null) {
                 return what;
             }
-            let what2 = {};
-            for (var k in what) {
-                what2[k] = nullify(what[k]);
-            }
-            // });
-            return what2;
+            return nullifyOjbect(what);
     }
     return what;
 }

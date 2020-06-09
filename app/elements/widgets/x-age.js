@@ -1,5 +1,5 @@
 
-import { DataInvalidException, DataMissingException, ApplicationException } from '../../js/exceptions.js';
+import { DataInvalidException, DataMissingException } from '../../js/exceptions.js';
 
 // TODO: legacy
 export function fromBirthDate(birth, options) {
@@ -7,7 +7,7 @@ export function fromBirthDate(birth, options) {
         format: false,
         reference: new Date(),
         ...options
-    }
+    };
 
     try {
         const res = fromBirthDateTo(birth, options.reference);
@@ -36,7 +36,7 @@ export function yearsToYM(value) {
 }
 
 /**
- * 
+ *
  * @param {number|Date|string} date - the date of birth (can be anything)
  * @param {number|Date|string} [reference] - must represent a full date
  * @returns {number} - years old
@@ -94,7 +94,7 @@ export default class XAge extends HTMLElement {
         this.adapt();
     }
 
-    attributeChangedCallback(attributeName, _oldValue, _newValue) {
+    attributeChangedCallback(_attributeName, _oldValue, _newValue) {
         this.adapt();
     }
 
@@ -103,8 +103,8 @@ export default class XAge extends HTMLElement {
             this.removeAttribute('error');
             this.innerHTML = yearsToYM(this.value);
         } catch (e) {
-            this.setAttribute('error', e.id)
-            this.innerHTML = e.message
+            this.setAttribute('error', e.id);
+            this.innerHTML = e.message;
         }
     }
 

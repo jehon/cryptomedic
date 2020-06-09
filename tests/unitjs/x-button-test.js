@@ -13,7 +13,7 @@ describe(fn(import.meta.url), function () {
         });
 
         it('should reac to click', function (done) {
-            element().addEventListener('click', (event) => done());
+            element().addEventListener('click', (_event) => done());
             element().shadowRoot.querySelector('button').click();
         });
     });
@@ -33,6 +33,6 @@ describe(fn(import.meta.url), function () {
             setTimeout(() => {
                 done();
             }, 10);
-        })
-    })
+        });
+    });
 });

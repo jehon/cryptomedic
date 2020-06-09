@@ -51,7 +51,7 @@ describe(fn(import.meta.url), function () {
             beforeEach(() => {
                 element().querySelector('input[name="username"]').value = 'user';
                 element().querySelector('input[name="password"]').value = 'pass';
-            })
+            });
 
             it('should refuse if pending request is running', async function () {
                 const mock = mockNoResponse();
@@ -61,7 +61,7 @@ describe(fn(import.meta.url), function () {
             });
 
             it('should login when giving correct infos', async function () {
-                mockResponseWithSuccess({ username: "test" });
+                mockResponseWithSuccess({ username: 'test' });
                 await expectAsync(element().doLogin()).toBeResolvedTo(true);
                 expect(element().querySelector('x-messages').messagesCount).toBe(1);
                 expect(element().querySelector('x-messages').messagesIds).toContain('success');
@@ -77,12 +77,12 @@ describe(fn(import.meta.url), function () {
         });
     });
 
-    describe("with loginCheck", function () {
+    describe('with loginCheck', function () {
         beforeEach(() => {
             mockResponseWithSuccess({ username: 'test' });
         });
 
-        webDescribe('with session', "<x-login-form></x-login-form>", function (element) {
+        webDescribe('with session', '<x-login-form></x-login-form>', function (element) {
             it('should redirect on login exists', async function () {
                 router.setRoute('/login/test');
                 await element().doLoginCheck();
@@ -91,12 +91,12 @@ describe(fn(import.meta.url), function () {
         });
     });
 
-    describe("with loginCheck", function () {
+    describe('with loginCheck', function () {
         beforeEach(() => {
             mockResponseWithSuccessbutCode(401);
         });
 
-        webDescribe('with session', "<x-login-form></x-login-form>", function (element) {
+        webDescribe('with session', '<x-login-form></x-login-form>', function (element) {
             it('should show login form if no session is available', async function () {
                 router.setRoute('/login/test');
                 await element().doLoginCheck();

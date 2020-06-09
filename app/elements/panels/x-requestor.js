@@ -57,7 +57,7 @@ export default class XRequestor extends XWaiting {
     }
 
     async _rawRequest(options) {
-        return axios(options)
+        return axios(options);
     }
 
     reset() {
@@ -157,14 +157,14 @@ export function requestAndFilterBuilder(options, allowed = []) {
             }
             return false;
         }
-    }
+    };
 }
 
 export function loginRequestBuilder(username, password) {
     return requestAndFilterBuilder({
         url: 'auth/mylogin', method: 'POST',
         data: { username, password }
-    }, [404])
+    }, [404]);
 }
 
 export function loginCheckRequestBuilder() {

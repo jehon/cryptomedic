@@ -292,7 +292,7 @@ describe(fn(import.meta.url), function () {
 
             it('should accept success', async () => {
                 const mock = await mockResponseWithSuccess(123);
-                const req = await element().request({ url: '/anything' });
+                const _req = await element().request({ url: '/anything' });
                 expect(mock.args.url).toBe('/anything');
                 expect(element().isRequesting()).toBeFalsy();
                 expect(element().isFailed()).toBeFalsy();
@@ -301,7 +301,7 @@ describe(fn(import.meta.url), function () {
 
             it('should accept filtered success', async () => {
                 const mock = await mockResponseWithSuccessbutCode(123);
-                const req = await element().request({ url: '/anything' });
+                const _req = await element().request({ url: '/anything' });
                 expect(mock.args.url).toBe('/anything');
                 expect(element().isRequesting()).toBeFalsy();
                 expect(element().isFailed()).toBeFalsy();
@@ -311,7 +311,7 @@ describe(fn(import.meta.url), function () {
             it('should accept error', async (done) => {
                 const mock = await mockResponseWithFailureCode(400);
                 try {
-                    const req = await element().request({ url: '/anything' });
+                    const _req = await element().request({ url: '/anything' });
                     done.fail('it should throw an error');
                 } catch {
                     expect(mock.args.url).toBe('/anything');
@@ -324,7 +324,7 @@ describe(fn(import.meta.url), function () {
         });
     });
 
-    describe("with builders", function () {
+    describe('with builders', function () {
         it('loginRequestBuilder', function () {
             const bb = loginRequestBuilder('test', 'password');
             expect(bb.method).toBe('POST');
