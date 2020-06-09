@@ -1,6 +1,9 @@
 {
   "root": true,
-  "extends": "eslint:recommended",
+  "extends": [
+    "eslint:recommended",
+    "plugin:jsdoc/recommended"
+  ],
   "env": {
     "node": true,
     "es6": true,
@@ -11,7 +14,9 @@
     "ecmaVersion": 2020,
     "sourceType": "module"
   },
-  "plugins": [],
+  "plugins": [
+    "jsdoc"
+  ],
   "rules": {
     "indent": [
       "error",
