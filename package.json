@@ -31,7 +31,7 @@
     "chromedriver": "83.0.0",
     "css-loader": "3.5.3",
     "eslint": "7.2.0",
-    "eslint-plugin-jsdoc": "27.0.5",
+    "eslint-plugin-jsdoc": "27.0.6",
     "file-loader": "6.0.0",
     "fs-extra": "latest",
     "geckodriver": "latest",
