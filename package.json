@@ -42,7 +42,7 @@
     "imports-loader": "0.8.0",
     "jasmine": "3.5.0",
     "jasmine-webcomponents": "github:jehon/jasmine-webcomponents",
-    "karma": "5.0.9",
+    "karma": "5.1.0",
     "karma-chrome-launcher": "3.1.0",
     "karma-coverage": "2.0.2",
     "karma-coverage-istanbul-instrumenter": "1.0.3",
