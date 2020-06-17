@@ -8,6 +8,10 @@ import template from '../js/template.js';
 import goThere from '../js/goThere.js';
 import date2CanonicString from '../js/date2CanonicString.js';
 
+/**
+ * @param $scope
+ * @param $routeParams
+ */
 export default function ctrl_folder($scope, $routeParams) {
     /*
 	 * '/folder/:patient_id/:page?/:subtype?/:subid?/:mode?'
@@ -394,6 +398,9 @@ export default function ctrl_folder($scope, $routeParams) {
             });
     };
 
+    /**
+     *
+     */
     function updateYearOfBirth() {
         if ($scope.folder) {
             var d = new Date();

@@ -4,6 +4,11 @@ import { routeToLogin } from './router.js';
 const SESSION = 'session';
 
 // Thanks to https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze
+/**
+ * @template {object} T
+ * @param {T} object to be freezed
+ * @returns {T} The object being freezed
+ */
 export function deepFreeze(object) {
     var propNames = Object.getOwnPropertyNames(object);
     for (let name of propNames) {
@@ -17,6 +22,13 @@ export function deepFreeze(object) {
     return Object.freeze(object);
 }
 
+/**
+ * Make a deep copy of the object
+ *
+ * @template {object} T
+ * @param {T} object to be copied
+ * @returns {T} The object being copied
+ */
 export function deepCopy(object) {
     return JSON.parse(JSON.stringify(object));
 }
@@ -40,6 +52,9 @@ export function deepCopy(object) {
 //     });
 // }
 
+/**
+ * @param {object} session
+ */
 export function setSession(session = null) {
     if (!session || Object.keys(session).length < 1) {
         session = null;
@@ -54,11 +69,15 @@ export function setSession(session = null) {
     }
 }
 
+/**
+ * @returns {object} the session
+ */
 export const getSession = () => duix.get(SESSION);
+
 /**
  *
- * @param {function} cb
- * @return {function(void):void} unregistering function
+ * @param {function(object):any} cb - a callback that will be called on session change
+ * @returns {function(void):void} unregistering function
  */
 export const onSession = (cb) => duix.subscribe(SESSION, cb, { fireImmediately: true }); /* TODO: legacy arg name */
 
@@ -71,6 +90,7 @@ export const getAuthorized = (key, session = getSession()) => session?.authorize
 
 /**
  * Current folder (TODO: legacy)
+ *
  * @obsolete
  */
 const FOLDER = 'FOLDER';

@@ -17,6 +17,11 @@
   "plugins": [
     "jsdoc"
   ],
+  "settings": {
+    "jsdoc": {
+      "mode": "typescript"
+    }
+  },
   "rules": {
     "indent": [
       "error",

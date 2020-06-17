@@ -21,3 +21,6 @@ TODO: see in models if we use "Request::" or not (See Picture.php <- input shoul
 
 [     ] html2canvas:
 https://www.npmjs.com/package/html2canvas
+
+
+https://github.com/google/closure-compiler/wiki/Generic-Types
