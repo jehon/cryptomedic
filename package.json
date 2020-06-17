@@ -58,7 +58,7 @@
     "nightwatch-html-reporter": "2.0.6",
     "pixelmatch": "5.2.0",
     "style-loader": "1.2.1",
-    "stylelint": "13.6.0",
+    "stylelint": "13.6.1",
     "stylelint-config-standard": "20.0.0",
     "watch": "1.0.2",
     "webpack": "4.43.0",
