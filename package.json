@@ -39,7 +39,7 @@
     "html-webpack-plugin": "4.3.0",
     "htmlhint": "0.14.0",
     "http-server": "0.12.3",
-    "imports-loader": "0.8.0",
+    "imports-loader": "1.0.0",
     "jasmine": "3.5.0",
     "jasmine-webcomponents": "github:jehon/jasmine-webcomponents",
     "karma": "5.1.0",
