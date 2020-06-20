@@ -67,6 +67,7 @@
             },
             "total": 3
         },
+        "nbPatients": 2,
         "sociallevel": {
             "familyincome": 15000,
             "nbhousehold": 7,

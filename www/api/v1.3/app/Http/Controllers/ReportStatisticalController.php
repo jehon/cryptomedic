@@ -78,6 +78,9 @@ class ReportStatisticalController extends ReportController {
 		$this->billsByPathology("summary.pathologies.other", false);
 		$this->resultPathSet("summary.pathologies.total", $this->getOneBySQL("SELECT count(*) as res FROM bills WHERE {$this->filter} "));
 
+		// Nb of patients seen
+		$this->resultPathSet("summary.nbPatients", $this->getOneBySQL("SELECT count(*) as res FROM (select DISTINCT patient_id FROM bills WHERE {$this->filter} ) AS patients"));
+
 		// Social levels
 		$res = $this->runSqlWithNamedParameter("SELECT CAST(SUM(sl_familySalary) / COUNT(*) AS DECIMAL) as income,
 				SUM(sl_numberOfHouseholdMembers) / COUNT(*) as nbhous
