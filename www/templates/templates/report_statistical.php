@@ -26,6 +26,8 @@
 		<tr><td>Normal</td><td>{{result.summary.pathologies.normal.total}}</td></tr>
 		<tr><td>Other</td><td>{{result.summary.pathologies.other.total}}</td></tr>
 		<tr><td>All consultations</td><td>{{result.summary.pathologies.total}}</td></tr>
+		<tr><td colspan="2" class="subheader">Patients seen</td></tr>
+		<tr><td>Number of patients seen</td><td>{{result.summary.nbPatients}}</td></tr>
 
 		<tr><td colspan="2" class="subheader">Social Level</td></tr>
 		<tr><td>Family income (mean)</td><td>{{result.summary.sociallevel.familyincome | number:1}}</td></tr>
