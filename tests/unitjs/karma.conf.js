@@ -19,7 +19,7 @@ module.exports = function (config) {
 
         reporters: [
             'progress',
-            'coverage-istanbul',
+            'coverage',
             'html',
             'junit'
         ],
@@ -50,23 +50,15 @@ module.exports = function (config) {
         },
 
         preprocessors: {
-            'app/*.js': ['karma-coverage-istanbul-instrumenter'],
-            'app/!(cjs2esm)/**/*.js': ['karma-coverage-istanbul-instrumenter']
-        },
-
-        coverageIstanbulInstrumenter: {
-            esModules: true
+            'app/*.js': ['coverage'],
+            'app/!(cjs2esm)/**/*.js': ['coverage']
         },
 
         coverageReporter: {
             type: 'lcov',
             dir: path.join(root, '/target/'),
-            subdir: 'unit/'
-        },
-
-        coverageIstanbulReporter: {
-            reports: ['html'],
-            dir: path.join(root, 'target/js/htmlInstanbul'),
+            subdir: 'js/',
+            includeAllSources: true
         },
 
         htmlReporter: {
