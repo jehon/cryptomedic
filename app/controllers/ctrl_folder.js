@@ -7,6 +7,16 @@ import { fromBirthDate } from '../elements/widgets/x-age.js';
 import template from '../js/template.js';
 import goThere from '../js/goThere.js';
 import date2CanonicString from '../js/date2CanonicString.js';
+import { setPropertyOn } from '../elements/mixins/with-folder-mixin.js';
+
+/**
+ * @param {object} folder the folder to be dispatched, false or null otherwise
+ */
+function newRefresh(folder) {
+    const mc = document.querySelector('#main_content');
+    mc.setAttribute('x-top', 'x-top');
+    setPropertyOn(mc, 'folder', folder);
+}
 
 /**
  * @param $scope
@@ -85,6 +95,8 @@ export default function ctrl_folder($scope, $routeParams) {
     }
 
     $scope.folder = false;
+    newRefresh($scope.folder);
+
     $scope.age = {};
     var cachedCurrentFile = null;
 
@@ -120,6 +132,7 @@ export default function ctrl_folder($scope, $routeParams) {
             cachedCurrentFile = folder.getPatient();
         }
         $scope.folder = folder;
+        newRefresh($scope.folder);
 
         // Layout
         if ($scope.mode == 'edit' || $scope.mode == 'add') {
@@ -138,6 +151,7 @@ export default function ctrl_folder($scope, $routeParams) {
                 $scope.age.months = parseInt(r[3]);
             }
         }
+
         $scope.$broadcast('refresh');
         $scope.safeApply();
     });
@@ -177,6 +191,12 @@ export default function ctrl_folder($scope, $routeParams) {
                 return 'true';
         }
         return 'false';
+    };
+
+    $scope.reinject = function () {
+        // https://docs.angularjs.org/api/ng/directive/ngInclude
+        // To fill in the new objects
+        newRefresh($scope.folder);
     };
 
     $scope.rebuildData = function () {
@@ -222,6 +242,8 @@ export default function ctrl_folder($scope, $routeParams) {
     $scope.actionCancel = function () {
         // By rerouting, the controller is initialized back
         $scope.folder = null;
+        newRefresh(null);
+
         if ($scope.subid) {
             goThere('/folder/' + $scope.patient_id + '/file/' + $scope.subtype + '/' + $scope.subid);
         } else {
@@ -251,12 +273,14 @@ export default function ctrl_folder($scope, $routeParams) {
                 });
                 goThere('/folder/' + $scope.patient_id + '/file/' + $scope.subtype + '/' + $scope.subid);
                 $scope.folder = data;
+                newRefresh($scope.folder);
                 $scope.safeApply();
             });
     };
 
     $scope.actionUnlock = function () {
         $scope.folder = false;
+        newRefresh($scope.folder);
         $scope.safeApply();
 
         getDataService()
@@ -268,6 +292,8 @@ export default function ctrl_folder($scope, $routeParams) {
                 });
                 // Let's refresh the data
                 $scope.folder = data;
+                newRefresh($scope.folder);
+
                 goThere('/folder/' + $scope.patient_id + '/file/' + $scope.subtype + '/' + $scope.subid + '/edit');
                 $scope.safeApply();
             });
@@ -283,6 +309,7 @@ export default function ctrl_folder($scope, $routeParams) {
         }
 
         $scope.folder = false;
+        newRefresh($scope.folder);
 
         extractPrefsFile(cachedCurrentFile);
 
@@ -296,6 +323,8 @@ export default function ctrl_folder($scope, $routeParams) {
                 // The data is refreshed by navigating away...
                 // Let's refresh the data
                 $scope.folder = folder;
+                newRefresh($scope.folder);
+
                 goThere('/folder/' + $scope.patient_id + '/file/' + $scope.subtype + '/' + folder.getHeader('newKey'));
                 $scope.safeApply();
             });
@@ -307,6 +336,8 @@ export default function ctrl_folder($scope, $routeParams) {
         }
         let file = $scope.currentFile();
         $scope.folder = false;
+        newRefresh($scope.folder);
+
         $scope.safeApply();
 
         getDataService()
@@ -319,6 +350,8 @@ export default function ctrl_folder($scope, $routeParams) {
 
                 // Let's refresh the data
                 $scope.folder = data;
+                newRefresh($scope.folder);
+
                 goThere('/folder/' + $scope.patient_id);
                 $scope.safeApply();
             });
@@ -332,6 +365,8 @@ export default function ctrl_folder($scope, $routeParams) {
 
         let updatedData = formGetContent('#fileForm', $scope.currentFile());
         $scope.folder = false;
+        newRefresh($scope.folder);
+
         $scope.safeApply();
 
         getDataService()
@@ -344,6 +379,8 @@ export default function ctrl_folder($scope, $routeParams) {
 
                 // Let's refresh the data
                 $scope.folder = folder;
+                newRefresh($scope.folder);
+
                 goThere('/folder/' + folder.getId());
                 $scope.safeApply();
             });
@@ -357,6 +394,8 @@ export default function ctrl_folder($scope, $routeParams) {
 
         let updatedData = formGetContent('#fileForm', $scope.currentFile());
         $scope.folder = false;
+        newRefresh($scope.folder);
+
         $scope.safeApply();
 
         getDataService()
@@ -366,6 +405,8 @@ export default function ctrl_folder($scope, $routeParams) {
 
                 // Let's refresh the data
                 $scope.folder = folder;
+                newRefresh($scope.folder);
+
                 $scope.$emit('message', {
                     'level': 'success',
                     'text': 'The patient has been saved.'
@@ -381,6 +422,8 @@ export default function ctrl_folder($scope, $routeParams) {
 
         let file = $scope.currentFile();
         $scope.folder = false;
+        newRefresh($scope.folder);
+
         $scope.safeApply();
 
         getDataService()
@@ -393,6 +436,8 @@ export default function ctrl_folder($scope, $routeParams) {
 
                 // Let's refresh the data
                 $scope.folder = null;
+                newRefresh($scope.folder);
+
                 goThere();
                 $scope.safeApply();
             });
