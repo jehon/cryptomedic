@@ -7,7 +7,7 @@ import { fromBirthDate } from '../elements/widgets/x-age.js';
 import template from '../js/template.js';
 import goThere from '../js/goThere.js';
 import date2CanonicString from '../js/date2CanonicString.js';
-import { setPropertyOn } from '../elements/mixins/with-folder-mixin.js';
+// import { setPropertyOn } from '../elements/mixins/with-folder-mixin.js';
 
 /**
  * @param {object} folder the folder to be dispatched, false or null otherwise
@@ -15,7 +15,7 @@ import { setPropertyOn } from '../elements/mixins/with-folder-mixin.js';
 function newRefresh(folder) {
     const mc = document.querySelector('#main_content');
     mc.setAttribute('x-top', 'x-top');
-    setPropertyOn(mc, 'folder', folder);
+    // setPropertyOn(mc, 'folder', folder);
 }
 
 /**
