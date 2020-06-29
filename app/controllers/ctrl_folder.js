@@ -11,8 +11,9 @@ import date2CanonicString from '../js/date2CanonicString.js';
 
 /**
  * @param {object} folder the folder to be dispatched, false or null otherwise
+ * @param _folder
  */
-function newRefresh(folder) {
+function newRefresh(_folder) {
     const mc = document.querySelector('#main_content');
     mc.setAttribute('x-top', 'x-top');
     // setPropertyOn(mc, 'folder', folder);
