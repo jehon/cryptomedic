@@ -2,38 +2,38 @@
 import XWaitingFolder from './x-waiting-folder.js';
 import date2CanonicString from '../js/date2CanonicString.js';
 import Appointment from '../models/Appointment.js';
+import './panels/x-group-panel.js';
 
 // http://localhost:5555/build/index.html#/folder/6/file/RicketConsult/3
 
 export default class XPatientRelated extends XWaitingFolder {
-    constructor() {
-        super();
-        this.style.width = '100%';
-    }
+	constructor() {
+		super();
+		this.style.width = '100%';
+	}
 
-    _nextAppointment() {
-        const today = date2CanonicString(new Date(), true);
-        var next = '';
-        this.folder.getListByType(Appointment).forEach((v, _k) => {
-            if (v.Nextappointment > today) {
-                if (!next || v.Nextappointment < next) {
-                    next = v.Nextappointment;
-                }
-            }
-        });
-        return next;
-    }
+	_nextAppointment() {
+		const today = date2CanonicString(new Date(), true);
+		var next = '';
+		this.folder.getListByType(Appointment).forEach((v, _k) => {
+			if (v.Nextappointment > today) {
+				if (!next || v.Nextappointment < next) {
+					next = v.Nextappointment;
+				}
+			}
+		});
+		return next;
+	}
 
-    adapt() {
-        if (!this.folder) {
-            return;
-        }
-        const patient = this.folder.getPatient();
-        const nextAppointment = this._nextAppointment();
+	adapt() {
+		if (!this.folder) {
+			return;
+		}
+		const patient = this.folder.getPatient();
+		const nextAppointment = this._nextAppointment();
 
-        this.innerHTML = `
-<fieldset class='related'>
-	<legend>Related Patient</legend>
+		this.innerHTML = `
+<x-group-panel class='related' title='Related Patient'>
 	<table>
 		<tbody>
 			<tr>
@@ -68,9 +68,8 @@ export default class XPatientRelated extends XWaitingFolder {
 	    	<tr></tr>
 		</tbody>
 	</table>
-</fieldset>
-<fieldset class='related'>
-	<legend>Agenda</legend>
+</x-group-panel>
+<x-group-panel class='related' title='Agenda'>
 	<table>
 		<tbody>
 			<tr>
@@ -89,16 +88,16 @@ export default class XPatientRelated extends XWaitingFolder {
         	</tr>
 		</tbody>
 	</table>
-</fieldset>`;
+</x-group-panel>`;
 
-        if (nextAppointment) {
-            this.querySelector('#withAppointment').removeAttribute('hidden');
-            this.querySelector('#withoutAppointment').setAttribute('hidden', 'hidden');
-        } else {
-            this.querySelector('#withAppointment').setAttribute('hidden', 'hidden');
-            this.querySelector('#withoutAppointment').removeAttribute('hidden');
-        }
-    }
+		if (nextAppointment) {
+			this.querySelector('#withAppointment').removeAttribute('hidden');
+			this.querySelector('#withoutAppointment').setAttribute('hidden', 'hidden');
+		} else {
+			this.querySelector('#withAppointment').setAttribute('hidden', 'hidden');
+			this.querySelector('#withoutAppointment').removeAttribute('hidden');
+		}
+	}
 }
 
 window.customElements.define('x-patient-related', XPatientRelated);

@@ -1,10 +1,11 @@
 
 import JHElement from './jh-element.js';
 import './block-bill-line.js';
+import './panels/x-group-panel.js';
 
 const tbody = Symbol('tbody');
 const catTotal = Symbol('catTotal');
-const legend = Symbol('legend');
+const xGroupPanel = Symbol('x-group-panel');
 
 export default class BlockBillCategory extends JHElement {
     constructor() {
@@ -25,30 +26,30 @@ export default class BlockBillCategory extends JHElement {
 
     render() {
         super.render();
-        this.innerHTML = `<fieldset>
-                <legend>default legend</legend>
-                <table class='prices'>
-                <thead>
-                  <tr>
+        this.innerHTML = `
+        <x-group-panel title='default legend'>
+            <table class='prices'>
+            <thead>
+                <tr>
+                <th></th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>catTotal</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+            <tfoot>
+                <tr>
+                    <th>sub-total</th>
                     <th></th>
-                    <th>Quantity</th>
-                    <th>Price</th>
-                    <th>catTotal</th>
-                  </tr>
-                </thead>
-                <tbody></tbody>
-                <tfoot>
-                    <tr>
-                        <th>sub-total</th>
-                        <th></th>
-                        <th></th>
-                        <th id='catTotal'></th>
-                    </tr>
-                </tfoot>
-            </fieldset>`;
+                    <th></th>
+                    <th id='catTotal'></th>
+                </tr>
+            </tfoot>
+        </x-group-panel>`;
         this[tbody] = this.querySelector('tbody');
         this[catTotal] = this.querySelector('#catTotal');
-        this[legend] = this.querySelector('legend');
+        this[xGroupPanel] = this.querySelector('x-group-panel');
     }
 
     adapt() {
@@ -59,7 +60,7 @@ export default class BlockBillCategory extends JHElement {
         this.removeAttribute('hidden');
 
         this[tbody].innerHTML = '';
-        this[legend].innerHTML = this._category;
+        this[xGroupPanel].setAttribute('title', this._category);
         let displayed = false;
         this._priceLines.forEach((p) => {
             if (p.type == this._category) {

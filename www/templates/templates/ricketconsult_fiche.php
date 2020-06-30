@@ -13,8 +13,7 @@
 		<div class="col-md-6">
 			<?php require(__DIR__ . "/../helpers/consult-introduction.php"); ?>
 		 	<br>
-			<fieldset>
-				<legend>RicketsData</legend>
+			<x-group-panel title='RicketsData'>
 				<table>
 					<?php (new t("RicketConsult.WalkingDifficulties"))->tr()->p(); ?>
 					<?php (new t("RicketConsult.Pain"))->tr()->p(); ?>
@@ -58,12 +57,11 @@
 					<?php (new t("RicketConsult.IMICDistance"))->tr()->p(); ?>
 					<?php (new t("RicketConsult.XRay"))->tr()->p(); ?>
 				</table>
-			</fieldset>
+			</x-group-panel>
 		</div>
 		<div class="col-md-6">
 			<x-patient-related></x-patient-related>
-			<fieldset>
-				<legend>Conclusion</legend>
+			<x-group-panel title='Conclusion'>
 				<table>
 					<?php (new t("RicketConsult.Nutrisupport"))->tr()->p(); ?>
 					<?php (new t("RicketConsult.conclusion_medical_calcium500"))->tr()->p(); ?>
@@ -77,7 +75,7 @@
 					<?php //(new t("RicketConsult.NextCenter"))->tr()->p(); ?>
 					<?php require(__DIR__ . "/../helpers/consult-conclusion.php"); ?>
 				</table>
-			</fieldset>
+			</x-group-panel>
 		</div>
 	</div>
 </div>

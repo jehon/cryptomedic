@@ -12,8 +12,7 @@
 	<div class='row'>
 		<div class="col-md-6">
 			<?php require(__DIR__ . "/../helpers/consult-introduction.php"); ?>
-			<FieldSet>
-				<legend>Club Foot Pirani Score</legend>
+			<x-group-panel title='Club Foot Pirani Score'>
 				<table>
 					<thead>
 						<tr>
@@ -67,9 +66,8 @@
 						<td>{{currentFile().getPiraniLeft()}}</td>
 					</tr>
 				</table>
-			</FieldSet>
-			<FieldSet>
-				<legend>Walking Club Foot > 3 years CCRS</legend>
+			</x-group-panel>
+			<x-group-panel title='Walking Club Foot > 3 years CCRS'>
 				<table>
 					<thead>
 						<tr>
@@ -133,17 +131,16 @@
 						<td><?php (new t("ClubFoot.MuscularInbalanceLeft"))->value()->p(); ?></td>
 					</tr>
 				</table>
-			</FieldSet>
+			</x-group-panel>
 		</div>
 		<div class="col-md-6">
 			<x-patient-related></x-patient-related>
-			<FieldSet>
-				<legend>Conclusion</legend>
+			<x-group-panel title='Conclusion'>
 				<table>
 					<?php (new t("ClubFoot.Treatment"))->tr()->p(); ?>
 					<?php require(__DIR__ . "/../helpers/consult-conclusion.php"); ?>
 				</table>
-			</FieldSet>
+			</x-group-panel>
 		</div>
 	</div>
 </div>

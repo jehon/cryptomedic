@@ -2,6 +2,7 @@
 
 <body>
     <link rel="stylesheet" type="text/css" href="../../node_modules/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../app/css/application.css">
     <style>
         .flex {
             width: 100%;
@@ -46,12 +47,35 @@
             <x-standard-deviation sex='m' graph-name='anything' x='25' y='20'></x-standard-deviation>
         </x-panel>
     </div>
-    <h2>X-Panels</h2>
+    <h2>X-Panel's</h2>
     <script type='module' src='../../app/elements/panels/x-panel.js'></script>
     <div class='flex'>
         <x-panel>
             <div>test</div>
         </x-panel>
+    </div>
+    <h2>X-Group-Panel's</h2>
+    <script type='module' src='../../app/elements/panels/x-group-panel.js'></script>
+    <div class='flex'>
+        <x-group-panel title='my title'>
+            <div>test</div>
+        </x-group-panel>
+        <x-group-panel title='my title'>
+            <table>
+                <thead>
+                    <tr>
+                        <th>title 1</th>
+                        <th>title 2</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>content 1</td>
+                        <td>content 2</td>
+                    </tr>
+                </tbody>
+            </table>
+        </x-group-panel>
     </div>
     <h2>X-Waiting's</h2>
     <script type='module' src='../../app/elements/panels/x-waiting.js'></script>

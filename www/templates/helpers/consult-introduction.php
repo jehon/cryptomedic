@@ -1,5 +1,4 @@
-<?php ?><fieldset>
-	<legend>General data</legend>
+<?php ?><x-group-panel title='General Data'>
 	<table>
 		<?php (new t("Date"))->tr("Date")->p(); ?>
 		<?php (new t("ExaminerName"))->tr("Examiner Name")->p(); ?>
@@ -9,10 +8,9 @@
 			<td id='ageAtConsultationTime'><x-age value='{{folder.getPatient().Yearofbirth}}' ref='{{currentFile().Date}}'></x-age> old at consultation time</td>
 		</tr>
 	</table>
-</fieldset>
+</x-group-panel>
 <br/>
-<fieldset>
-	<legend>Nutritional Data</legend>
+<x-group-panel title='Nutritional Data'>
 	<table>
 		<thead>
 			<tr>
@@ -44,4 +42,4 @@
 			<td class='notModeWrite'><span id='ds_bmi'catch-it ng-model="folder" tryit="currentFile().ds_bmi()">{{currentFile().ds_bmi() | number:1 }} ds</span></td>
 		</tr>
 	</table>
-</fieldset>
+</x-group-panel>
