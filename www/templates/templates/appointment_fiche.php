@@ -4,8 +4,7 @@
 <div class='container-fluid' ng-controller='ctrl_file_appointment'>
 	<div class='row'>
 		<div class="col-md-6">
-			<fieldSet>
-				<legend>Next appointment</legend>
+			<x-group-panel title='Next appointment'>
 				<table>
 					<tr class='notModeRead'>
 						<td>Today</td>
@@ -24,7 +23,7 @@
 						</td>
 					</tr>
 				</table>
-			</fieldSet>
+			</x-group-panel>
 		</div>
 		<div class="col-md-6">
 			<x-patient-related></x-patient-related>

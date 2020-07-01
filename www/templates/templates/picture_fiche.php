@@ -14,8 +14,7 @@
 	</div>
 	<div class="row">
 		<div class="col-md-6">
-			<fieldset>
-	 			<Legend>Picture informations</Legend>
+			<x-group-panel title='Picture informations'>
 				<table>
 					<?php (new t("Picture.Date"))->tr()->p(); ?>
 					<?php (new t("Picture.comment"))->tr()->p(); ?>
@@ -45,7 +44,7 @@
 	 					</td>
 					</tr>
 				</table>
-			</fieldset>
+			</x-group-panel>
 		</div>
 		<div class="col-md-6">
 			<x-patient-related></x-patient-related>

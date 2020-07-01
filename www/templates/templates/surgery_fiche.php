@@ -9,8 +9,7 @@
   	</div>
 	<div class='row'>
 		<div class="col-md-6">
-			<fieldSet>
-				<legend>Surgical Report</legend>
+			<x-group-panel title='Surgical Report'>
 				<table>
 					<?php (new t("Surgery.Date"))->tr("Operation Date")->p(); ?>
 					<?php (new t("Surgery.ReportDiagnostic"))->tr()->p(); ?>
@@ -19,13 +18,12 @@
 					<?php (new t("Surgery.ReportSideL"))->tr()->p(); ?>
 					<?php (new t("Surgery.report_procedure"))->tr()->p(); ?>
 				</table>
-			</fieldSet>
-			<fieldSet>
-				<legend>Hospitalisation Follow-Up</legend>
+			</x-group-panel>
+			<x-group-panel title='Hospitalisation Follow-Up'>
 				<table>
 					<?php (new t("Surgery.FollowUpComplication"))->tr()->p(); ?>
 				</table>
-			</fieldSet>
+			</x-group-panel>
 		</div>
 		<div class="col-md-6">
 			<x-patient-related></x-patient-related>

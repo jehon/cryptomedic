@@ -1,94 +1,94 @@
 <span>
-<div ng-if='!edit'>
-  <div class="alert alert-info">
-    Prices have a period of validity: they are valid from &lt;beginning date&gt; to &lt;end date&gt;<br>
-    A price can be modified only if the &lt;beginning date&gt; is still in the future (5 days from now)<br>
-    To create a new price list:<br>
-    <ul>
-      <li>Generate a new price list, and choose the &lt;beginning date&gt;.</li>
-      <li>Specify the various price items.</li>
-    </ul>
-    You can delete the price list, if it is necessary, while not being less than 5 days from the activation date &lt;beginning date&gt;.
+  <div ng-if='!edit'>
+    <div class="alert alert-info">
+      Prices have a period of validity: they are valid from &lt;beginning date&gt; to &lt;end date&gt;<br>
+      A price can be modified only if the &lt;beginning date&gt; is still in the future (5 days from now)<br>
+      To create a new price list:<br>
+      <ul>
+        <li>Generate a new price list, and choose the &lt;beginning date&gt;.</li>
+        <li>Specify the various price items.</li>
+      </ul>
+      You can delete the price list, if it is necessary, while not being less than 5 days from the activation date
+      &lt;beginning date&gt;.
+    </div>
+
+    <x-group-panel ng-if="canAddOne()" title='Add a new price list'>
+      <div>
+        If you want to create the price list, please click here:
+        <span id='button_create' class="btn btn-default" ng-click="actionCreate()">Create a new price list</span>
+      </div>
+      <div id='action_creating' ng-if='creating'>
+        When will the new price list be active? Please choose the pivot date:<br>
+        <table>
+          <tr>
+            <td>Pivot Date</td>
+            <td>
+              <form id='form_creating'>
+                <input name='pivotDate' type='text' $inline placeholder='yyyy-MM-dd' mycalendar uuid='$uuid_date' /><br>
+                <div id='error_date' ng-if='error_date' class='jserror'>
+                  Invalid date: please enter yyyy-mm-dd.<br>
+                  The date must be in the future, at least 5 days from now.
+                </div>
+              </form>
+            </td>
+          </tr>
+        </table>
+        <span id='button_do_create' class="btn btn-default" ng-click="doCreate()">Go</span>
+      </div>
+    </x-group-panel>
   </div>
 
-  <fieldset ng-if="canAddOne()">
-    <legend>Add a new price list</legend>
-    <div>
-      If you want to create the price list, please click here:
-      <span id='button_create' class="btn btn-default" ng-click="actionCreate()">Create a new price list</span>
-    </div>
-    <div id='action_creating' ng-if='creating'>
-      When will the new price list be active? Please choose the pivot date:<br>
-      <table>
-        <tr>
-          <td>Pivot Date</td>
-          <td>
-            <form id='form_creating'>
-              <input name='pivotDate' type='text' $inline placeholder='yyyy-MM-dd' mycalendar uuid='$uuid_date'/><br>
-              <div id='error_date' ng-if='error_date' class='jserror'>
-                Invalid date: please enter yyyy-mm-dd.<br>
-                The date must be in the future, at least 5 days from now.
+  <x-requestor-crud id='pricesRequestor' relative-url='admin/prices'>
+    <form id='editForm'>
+      <table id='price_lists' class='table table-hover table-bordered tablesorter reporting'>
+        <thead>
+          <tr>
+            <th>Beginning date</th>
+            <th ng-repeat='p in prices'>{{p['datefrom']}}</th>
+          </tr>
+          <tr>
+            <th>End date</th>
+            <th ng-repeat='p in prices'>{{p['dateto']}}</th>
+          </tr>
+          <tr>
+            <th>Modified by</th>
+            <th ng-repeat='p in prices'>{{p['lastuser']}}</th>
+          </tr>
+          <tr>
+            <th></th>
+            <th ng-repeat='p in prices'>
+              <span ng-if='p["_editable"]'>
+                <span ng-if='edit !== $index'>
+                  <span id='button_edit_{{$index}}' class="btn btn-default" ng-click="actionEdit($index)">Edit</span>
+                </span>
+                <span ng-if='edit === $index'>
+                  <span id='button_save_{{$index}}' class="btn btn-default" ng-click="doSave($index)">Save</span>
+                  <span id='button_cancel_{{$index}}' class="btn btn-default" ng-click="doCancel()">Cancel</span>
+                </span>
+                <span id='button_delete_{{$index}}' class="btn btn-default" ng-click="doDelete($index)">Delete</span>
+              </span>
+              <span ng-if='!p["_editable"]'>
+                Locked
+              </span>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat='k in getElements()'>
+            <td>{{k}}</td>
+            <td ng-repeat='p in prices'>
+              <div ng-if='edit !== $index'>
+                <span ng-if='p[k]<=0'>-</span>
+                <span ng-if='p[k]>1'>{{p[k]}}</span>
+                <span ng-if='p[k]==1'>open</span>
               </div>
-            </form>
-          </td>
-        </tr>
+              <div ng-if='edit === $index'>
+                <edit-price name='{{k}}' value='{{p[k]}}'></edit-price>
+              </div>
+            </td>
+          </tr>
+        </tbody>
       </table>
-      <span id='button_do_create' class="btn btn-default" ng-click="doCreate()">Go</span>
-    </div>
-  </fieldset>
-</div>
-
-<x-requestor-crud id='pricesRequestor' relative-url='admin/prices'>
-  <form id='editForm'>
-    <table id='price_lists' class='table table-hover table-bordered tablesorter reporting'>
-      <thead>
-        <tr>
-          <th>Beginning date</th>
-          <th ng-repeat='p in prices'>{{p['datefrom']}}</th>
-        </tr>
-        <tr>
-          <th>End date</th>
-          <th ng-repeat='p in prices'>{{p['dateto']}}</th>
-        </tr>
-        <tr>
-          <th>Modified by</th>
-          <th ng-repeat='p in prices'>{{p['lastuser']}}</th>
-        </tr>
-        <tr>
-          <th></th>
-          <th ng-repeat='p in prices'>
-            <span ng-if='p["_editable"]'>
-              <span ng-if='edit !== $index'>
-                <span id='button_edit_{{$index}}'   class="btn btn-default" ng-click="actionEdit($index)">Edit</span>
-              </span>
-              <span ng-if='edit === $index'>
-                <span id='button_save_{{$index}}'   class="btn btn-default" ng-click="doSave($index)">Save</span>
-                <span id='button_cancel_{{$index}}'   class="btn btn-default" ng-click="doCancel()">Cancel</span>
-              </span>
-              <span id='button_delete_{{$index}}' class="btn btn-default" ng-click="doDelete($index)">Delete</span>
-            </span>
-            <span ng-if='!p["_editable"]'>
-              Locked
-            </span>
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr ng-repeat='k in getElements()'>
-          <td>{{k}}</td>
-          <td ng-repeat='p in prices'>
-            <div ng-if='edit !== $index'>
-              <span ng-if='p[k]<=0'>-</span>
-              <span ng-if='p[k]>1'>{{p[k]}}</span>
-              <span ng-if='p[k]==1'>open</span>
-            </div>
-            <div ng-if='edit === $index'>
-              <edit-price name='{{k}}' value='{{p[k]}}'></edit-price>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </form>
-</x-requestor-crud>
+    </form>
+  </x-requestor-crud>
 </span>

@@ -6,43 +6,52 @@
 				<div class="col-md-3">
 				</div>
 				<div class="col-md-6">
-					<fieldset>
-						<legend>Patient Criteria</legend>
+					<x-group-panel title='Patient Criteria'>
 						<table>
 							<tr ng-class='{ emptyValue: !params.entryyear}'>
 								<td>Entry Year</td>
-								<td><input type='number' name='entryyear' class='form-control' id='Patient_entryyear' ng-model='params.entryyear'  required  /></td>
+								<td><input type='number' name='entryyear' class='form-control' id='Patient_entryyear'
+										ng-model='params.entryyear' required /></td>
 							</tr>
 							<tr ng-class='{ emptyValue: !params.entryorder}'>
-							 	<td>Entry Order</td>
-								<td><input type='number' name='entryorder' class='form-control' id='Patient_entryorder' ng-model='params.entryorder'  /></td>
+								<td>Entry Order</td>
+								<td><input type='number' name='entryorder' class='form-control' id='Patient_entryorder'
+										ng-model='params.entryorder' /></td>
 							</tr>
 							<tr ng-class='{ emptyValue: !params.Name}'>
-							 <td>Name</td>
-							 <td><input name='Name' class='form-control' id='Patient_Name' ng-model='params.Name'  required  /></td>
+								<td>Name</td>
+								<td><input name='Name' class='form-control' id='Patient_Name' ng-model='params.Name'
+										required /></td>
 							</tr>
 							<tr ng-class='{ emptyValue: !params.Sex}'>
-							 	<td>Sex</td>
-							 	<td><x-write-list value='{{params.Sex}}' name='Sex'list-name='Sex' list='' nullable></x-write-list></td>
+								<td>Sex</td>
+								<td>
+									<x-write-list value='{{params.Sex}}' name='Sex' list-name='Sex' list='' nullable>
+									</x-write-list>
+								</td>
 							</tr>
 							<tr ng-class='{ emptyValue: !params.Yearofbirth}'>
-							 	<td>Year of birth</td>
-							 	<td><input name='Yearofbirth' class='form-control' id='Patient_Yearofbirth' ng-model='params.Yearofbirth'  /></td>
+								<td>Year of birth</td>
+								<td><input name='Yearofbirth' class='form-control' id='Patient_Yearofbirth'
+										ng-model='params.Yearofbirth' /></td>
 							</tr>
 							<tr ng-class='{ emptyValue: !params.Telephone}'>
-							 	<td>Telephone</td>
-							 	<td><input name='Telephone' class='form-control' id='Patient_Telephone' ng-model='params.Telephone'  /></td>
+								<td>Telephone</td>
+								<td><input name='Telephone' class='form-control' id='Patient_Telephone'
+										ng-model='params.Telephone' /></td>
 							</tr>
-				 			<tr ng-class='{ emptyValue: !params.Pathology}'>
+							<tr ng-class='{ emptyValue: !params.Pathology}'>
 								<td>Main Pathology</td>
-						 		<td><x-write-list value='{{params.Pathology}}' name='Pathology'list-name='Pathologies' list='' nullable></x-write-list>
-							</td>
+								<td>
+									<x-write-list value='{{params.Pathology}}' name='Pathology' list-name='Pathologies'
+										list='' nullable></x-write-list>
+								</td>
 							</tr>
 						</table>
-					</fieldset>
+					</x-group-panel>
 				</div>
 			</div>
-		   	<p class="text-center">
+			<p class="text-center">
 				<span id='button_submit' class="btn btn-primary" ng-click="submit()">Submit</span>
 				<span id='button_reset' class="btn btn-warning" ng-click="reset()">Reset</span>
 			</p>
@@ -52,11 +61,11 @@
 	<div>
 		<div id='search_no_results' ng-if="listing.length == 0">No results</div>
 		<div ng-if="listing.length > 0">
-	        <div style='text-align: center; color: red'>Only the first 100 results are shown</div>
-		    <table id='search_results' class='table table-hover table-bordered tablesorter' pagesize="10">
-		    	<thead>
-		    		<tr>
-		    			<th></th>
+			<div style='text-align: center; color: red'>Only the first 100 results are shown</div>
+			<table id='search_results' class='table table-hover table-bordered tablesorter' pagesize="10">
+				<thead>
+					<tr>
+						<th></th>
 						<th>Entry Year - Entry order</th>
 						<th>Name</th>
 						<th>Sex</th>
@@ -64,24 +73,25 @@
 						<th>Telephone</th>
 						<th>Pathology</th>
 					</tr>
-		    	</thead>
-		    	<tr ng-repeat="patient in listing" ng-click="go('#/folder/' + patient.id + '/')">
-		    		<td>
-			    		{{id}}
-		    			<a ng-href='#/folder/{{patient.id}}'>
-		    				<img src='/static/img/go.gif'>
-		    			</a>
-		    		</td>
-		    		<td>
-						<span id='Patient_entryyear'>{{ patient.entryyear }}</span>-<span id='Patient_entryorder'>{{ patient.entryorder }}</span>
-		    		</td>
+				</thead>
+				<tr ng-repeat="patient in listing" ng-click="go('#/folder/' + patient.id + '/')">
+					<td>
+						{{id}}
+						<a ng-href='#/folder/{{patient.id}}'>
+							<img src='/static/img/go.gif'>
+						</a>
+					</td>
+					<td>
+						<span id='Patient_entryyear'>{{ patient.entryyear }}</span>-<span
+							id='Patient_entryorder'>{{ patient.entryorder }}</span>
+					</td>
 					<td><span id='Patient_Name'>{{ patient.Name }}</span></td>
-		    		<td><span id='Patient_Sex'>{{ patient.Sex }}</span></td>
-		    		<td><span id='Patient_Yearofbirth'>{{ patient.Yearofbirth }}</span></td>
-		    		<td><span id='Patient_Telephone'>{{ patient.Telephone }}</span></td>
-		    		<td><span id='Patient_Pathology'>{{ patient.Pathology }}</span></td>	
-		    	</tr>
+					<td><span id='Patient_Sex'>{{ patient.Sex }}</span></td>
+					<td><span id='Patient_Yearofbirth'>{{ patient.Yearofbirth }}</span></td>
+					<td><span id='Patient_Telephone'>{{ patient.Telephone }}</span></td>
+					<td><span id='Patient_Pathology'>{{ patient.Pathology }}</span></td>
+				</tr>
 			</table>
-	    </div>
+		</div>
 	</div>
 </div>

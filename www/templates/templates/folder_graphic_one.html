@@ -1,35 +1,28 @@
-<fieldset>
-	<legend>{{getVariableY()}} / {{getVariableX()}}</legend>
+<x-group-panel title='{{getVariableY()}} / {{getVariableX()}}'>
 	<div class='markContainer'>
 		<img ng-src="/static/img/stats_{{getImageName()}}.jpg" width='100%'>
-		    <span ng-repeat="f in folder.getFilesRelatedToPatient()"
-		        ng-if="getValidity(f) == 'v'"
-		        ng-mouseover="hover($index)"
-  		    	ng-class="{ hovered: hovered == $index }"
-		    	ng-click="go('/folder/' + folder.getId() + '/file/' + f.getModel() + '/' + f.id)"
-		        class="mark"
-		        style="left: {{getAbscisse(f)}}%; top: {{getOrdonnee(f)}}%"
-		        >
-		        <span id="stat_{{$index}}">+</span>
-		    </span>
+		<span ng-repeat="f in folder.getFilesRelatedToPatient()" ng-if="getValidity(f) == 'v'"
+			ng-mouseover="hover($index)" ng-class="{ hovered: hovered == $index }"
+			ng-click="go('/folder/' + folder.getId() + '/file/' + f.getModel() + '/' + f.id)" class="mark"
+			style="left: {{getAbscisse(f)}}%; top: {{getOrdonnee(f)}}%">
+			<span id="stat_{{$index}}">+</span>
+		</span>
 		</img>
 	</div>
 	<table class='colorize datalegend'>
-	    <thead>
-	        <th>Date</th>
-	        <th>{{getVariableX()}}</th>
-	        <th>{{getVariableY()}}</th>
-	        <th>Validity</th>
-	    </thead>
-	    <tr ng-repeat="f in folder.getFilesRelatedToPatient()" tag="stat_{{$index}}"
-	    	ng-mouseover="hover($index)"
-	    	ng-class="{ hovered: hovered == $index }"
-	    	ng-click="go('/folder/' + folder.getId() + '/file/' + f.getModel() + '/' + f.id)"
-			>
-	        <td>{{getValue(f, "Date") }}</td>
-	        <td>{{getValue(f, getVariableX()) | number:0}}</td>
-	        <td>{{getValue(f, getVariableY()) | number:0}}</td>
-	        <td>{{getValidity(f)}}</td>
-	    </tr>
+		<thead>
+			<th>Date</th>
+			<th>{{getVariableX()}}</th>
+			<th>{{getVariableY()}}</th>
+			<th>Validity</th>
+		</thead>
+		<tr ng-repeat="f in folder.getFilesRelatedToPatient()" tag="stat_{{$index}}" ng-mouseover="hover($index)"
+			ng-class="{ hovered: hovered == $index }"
+			ng-click="go('/folder/' + folder.getId() + '/file/' + f.getModel() + '/' + f.id)">
+			<td>{{getValue(f, "Date") }}</td>
+			<td>{{getValue(f, getVariableX()) | number:0}}</td>
+			<td>{{getValue(f, getVariableY()) | number:0}}</td>
+			<td>{{getValidity(f)}}</td>
+		</tr>
 	</table>
-</fieldset>
+</x-group-panel>

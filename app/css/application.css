@@ -88,26 +88,33 @@ fieldset > legend > label {
 	padding: 0;
 }
 
-fieldset > table {
+fieldset > table,
+x-group-panel > table {
 	width: 100%;
 }
 
-fieldset > table > thead {
+fieldset > table > thead,
+x-group-panel > table > thead {
 	font-style: italic;
 }
 
-fieldset > table > tbody > tr:nth-child(odd) {
+fieldset > table > tbody > tr:nth-child(odd),
+x-group-panel > table > tbody > tr:nth-child(odd) {
 	background-color: rgb(230, 230, 230);
 }
 
-fieldset > table > tbody > tr > td:nth-of-type(1) {
+fieldset > table > tbody > tr > td:nth-of-type(1),
+x-group-panel > table > tbody > tr > td:nth-of-type(1) {
 	/* Setting the width of column 1. */
 	width: 120px;
 	font-weight: 700;
 }
 
 fieldset > table > tbody > tr > td:nth-of-type(3),
-fieldset > table > thead > tr > th:nth-of-type(3) { /* Setting the width of column 1. */
+fieldset > table > thead > tr > th:nth-of-type(3),
+x-group-panel > table > tbody > tr > td:nth-of-type(3),
+x-group-panel > table > thead > tr > th:nth-of-type(3) { 
+	/* Setting the width of column 1. */
 	border-left: solid blue 1px;
 	padding-left: 5px;
 }

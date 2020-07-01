@@ -10,8 +10,7 @@
         <div ng-bind-html='getReport().description'></div>
       </div>
       <div class='col-sm-6'>
-        <fieldset>
-          <legend>Parameters</legend>
+        <x-group-panel title='Parameters'>
           <form id='reportParamsForm' class="form-horizontal" role="form">
             <div ng-if="isParam('examiner')" class="form-group">
               <label class="col-sm-2 control-label">Examiner</label>
@@ -80,7 +79,7 @@
               </div>
             </div>
           </form>
-        </fieldset>
+        </x-group-panel>
       </div>
     </div>
     <hr>
@@ -116,8 +115,7 @@
 <div class='container-fluid' ng-if="!getReport()">
   <div class='row'>
     <div class='col-sm-offset-3 col-sm-6'>
-      <fieldset id='add'>
-        <legend>Global reporting</legend>
+      <x-group-panel id='add' title='Global reporting'>
         <div ng-repeat='(k,r) in reports'>
           <h3>{{r.name}}</h3>
           <div ng-bind-html="r.description"></div>
@@ -126,7 +124,7 @@
             <a id='launch_report_{{k}}' class='btn btn-primary' href='#/reports/{{k}}'>{{r.name}}</a>
           </div>
         </div>
-      </fieldset>
+      </x-group-panel>
     </div>
   </div>
 </div>

@@ -4,8 +4,7 @@
 <div class='container-fluid'>
 	<div class='row'>
 		<div class="col-md-6">
-	        <fieldset>
-				<legend>General data</legend>
+	        <x-group-panel title='General data'>
 				<table>
 					<tr ng-if="patient_id > -1">
 						<td>Entry Number</td>
@@ -80,16 +79,15 @@
 					<?php (new t("Patient.Telephone"))->tr()->p(); ?>
 					<?php (new t("Patient.AddressNotes"))->tr("Adress Notes")->p(); ?>
 				</table>
-			</fieldset>
+			</x-group-panel>
 	 	</div>
 		<div class="col-md-6">
-			<fieldset id='PatientPathology' ng-class='{ jserror: errors.noPathology }'>
-			<legend>Pathology</legend>
+			<x-group-panel id='PatientPathology' ng-class='{ jserror: errors.noPathology }' title='Pathology'>
 				<table>
 					<?php (new t("Patient.Pathology"))->tr("Main pathology")->p(); ?>
 					<?php (new t("Patient.other_comments"))->tr("Other comments")->p(); ?>
 				</table>
-			</fieldset>
+			</x-group-panel>
 	 		<br/>
 		</div>
 	</div>

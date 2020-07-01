@@ -47,8 +47,7 @@
   </div>
   <div class='row'>
     <div class="col-md-6">
-      <FieldSet>
-        <legend>General data</legend>
+      <x-group-panel title='General data'>
         <table>
           <?php (new t("Bill.Date"))->tr()->p(); ?>
           <?php (new t("Bill.ExaminerName"))->tr("Examiner")->p(); ?>
@@ -57,7 +56,7 @@
         <div class='debug_infos'>
           price_id <?php (new t("Bill.price_id"))->read()->p(); ?><br>
         </div>
-      </FieldSet>
+      </x-group-panel>
       <div ng-if='!currentFile().price'>
         <div class='alert alert-info' role="alert" id="errorNoDate">
           Please select a date first!
@@ -67,8 +66,7 @@
         <?php
           foreach(Bill::$categories as $cat) {
             ?>
-              <FieldSet>
-                <legend><?php echo $cat; ?> items</legend>
+              <x-group-panel title='<?php echo $cat; ?> items'>
                 <table  class='prices'>
                   <thead>
                     <tr>
@@ -83,7 +81,7 @@
                     }
                   ?>
                 </table>
-              </FieldSet>
+              </x-group-panel>
             <?php
           }
         ?>
@@ -91,8 +89,7 @@
     </div>
     <div class="col-md-6">
       <x-patient-related></x-patient-related>
-      <fieldset>
-        <legend>Social Data</legend>
+      <x-group-panel title='Social Data'>
         <table>
           <?php (new t("Bill.sl_familySalary"))->tr("Family Salary in a Month")->p(); ?>
           <?php (new t("Bill.sl_numberOfHouseholdMembers"))->tr("Number of Houslehold Members")->p(); ?>
@@ -102,9 +99,8 @@
           </tr>
           <?php (new t("Bill.Sociallevel"))->id("calculated_social_level")->readOnly()->tr("Calculated Social Level")->p(); ?>
         </table>
-      </fieldset>
-      <fieldSet>
-        <legend>Summary</legend>
+      </x-group-panel>
+      <x-group-panel title='Summary'>
         <table>
           <tr>
             <td>Raw Calculated total</td>
@@ -120,16 +116,15 @@
             <td id='total_calculated_asked'>{{currentFile().total_asked | number:0 }}<?php (new t("Bill.total_asked")); ?></td>
           </tr>
         </table>
-      </FieldSet>
-      <fieldset ng-if='!currentFile().id'>
-        <legend>Recieved payment</legend>
+      </x-group-panel>
+      <x-group-panel title='Recieved payment' ng-if='!currentFile().id'>
           <tr>
             <td>Payment already recieved</td>
             <td id='first_payment'>
               <input type='number' id='first_payment' ng-model='currentFile().first_payment'>
             </td>
           </tr>
-      </fieldset>
+      </x-group-panel>
     </div>
   </div>
   <br>
@@ -170,9 +165,7 @@
         </tr>
       </tfoot>
     </table>
-    <fieldset  id='paymentForm'>
-      <legend ng-if='paymentEditor.id == null'>Add a payment</legend>
-      <legend ng-if='paymentEditor.id > 0'>Modify a payment</legend>
+    <x-group-panel  id='paymentForm' title='Add / modify a payment'>
       <form>
         <table>
           <?php (new t("Payment.Date"))->tr("Date of receipt")->p(); ?>
@@ -187,7 +180,7 @@
       <span id='button_payment_save'   class="btn btn-default" ng-click="actionAddPayment()" ng-if='paymentEditor.id > 0'>
         Save
       </span>
-    </fieldset>
+    </x-group-panel>
   </div>
 </div>
 <tr>

@@ -43,5 +43,6 @@ import './elements/x-file-bill.js';
 import './elements/x-file-bill-summary.js';
 
 import './elements/widgets/x-age.js';
+import './elements/panels/x-group-panel.js';
 
 import './css/application.css';
