@@ -1,7 +1,4 @@
 
-import XPanel from './x-panel.js';
-import { insertInSlotDefault } from '../element-helpers.js';
-
 /**
  * Slot[]: content
  */
