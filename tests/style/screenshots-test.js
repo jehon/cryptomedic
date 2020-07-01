@@ -39,10 +39,10 @@ describe('with screenshots', () => {
                             const diffSize = Math.hypot(data.dimensionDifference.width, data.dimensionDifference.height);
                             expect(diffSize)
                                 .withContext('differ too much in size')
-                                .toBeLessThan(1);
+                                .toBeLessThan(0.5);
                             expect(diffContent)
                                 .withContext('differ too much in content')
-                                .toBeLessThan(1);
+                                .toBeLessThan(0.5);
                             done();
                         });
                 } else {
