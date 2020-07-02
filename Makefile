@@ -149,13 +149,15 @@ test-unit: dependencies-node $(CJS2ESM_DIR)/axios.js $(CJS2ESM_DIR)/axios-mock-a
 
 .PHONY: test-e2e
 test-e2e: target/e2e/.tested
-target/e2e/.tested: start data-reset
+target/e2e/.tested: start data-reset www/build/index.html tests/e2e/**
 	npm run --silent test-e2e
 	touch target/e2e/.tested
 
 .PHONY: test-style
-test-style: target/e2e/.tested
+test-style: target/style.html
+target/style.html: target/e2e/.tested
 	npm run --silent test-style
+	echo "Report is at http://localhost:5557/target/style.html"
 
 style-update-references:
 	rsync --progress --recursive --delete \
