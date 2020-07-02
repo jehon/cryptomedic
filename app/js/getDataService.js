@@ -1,4 +1,5 @@
 
+/* istanbul ignore file */
 import { onSession, getUsername } from './session.js';
 
 export default function getDataService(cssSelector = '#dataService') {

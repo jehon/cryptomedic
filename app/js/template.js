@@ -1,4 +1,5 @@
 
+/* istanbul ignore file */
 import { API_VERSION } from '../config.js';
 
 export default function template(...names) {

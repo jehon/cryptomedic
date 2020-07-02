@@ -1,4 +1,6 @@
 
+/* istanbul ignore file */
+
 import getDataService from '../js/getDataService.js';
 import goThere from '../js/goThere.js';
 

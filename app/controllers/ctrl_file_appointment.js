@@ -1,4 +1,5 @@
 
+/* istanbul ignore file */
 import date2CanonicString from '../js/date2CanonicString.js';
 
 export default function ctrl_file_appointment($scope) {

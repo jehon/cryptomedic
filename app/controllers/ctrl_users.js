@@ -1,4 +1,6 @@
 
+/* istanbul ignore file */
+
 import getDataService from '../js/getDataService.js';
 
 // TODO: manage change in groups

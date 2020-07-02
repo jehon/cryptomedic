@@ -1,4 +1,6 @@
 
+/* istanbul ignore file */
+
 import Folder from '../models/Folder.js';
 import { formGetContent } from '../js/form.js';
 import { extractPrefsFile } from '../js/prefs.js';
