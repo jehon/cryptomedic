@@ -23,6 +23,12 @@ describe('FolderPage', function () {
             expect(data.dataArray).not.toContain(4);
             expect(data.anything).toBeUndefined();
         });
+
+        it('should have uid', function () {
+            data.id = 123;
+            data.getModel = () => 'data';
+            expect(data.uid()).toBe('uid_data_123');
+        });
     });
 
     it('would interpret notSet correctly', function () {
