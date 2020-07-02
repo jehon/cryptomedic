@@ -1,4 +1,6 @@
 
+/* istanbul ignore file */
+
 import getDataService from '../js/getDataService.js';
 import { formGetContent } from '../js/form.js';
 

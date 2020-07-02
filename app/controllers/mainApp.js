@@ -1,4 +1,6 @@
 
+/* istanbul ignore file */
+
 import angular from 'angular';
 import 'angular-route';
 

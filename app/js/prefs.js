@@ -1,4 +1,5 @@
 
+/* istanbul ignore file */
 export function setPref(part, data) {
     let res = {};
     if (sessionStorage.cryptomedicPrefs) {
