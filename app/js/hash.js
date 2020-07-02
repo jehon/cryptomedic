@@ -1,4 +1,7 @@
 
+/* istanbul ignore file */
+/* eslint-disable */
+
 // Thanks to https://stackoverflow.com/a/33486055/1954789
 
 export default function MD5(d) {
