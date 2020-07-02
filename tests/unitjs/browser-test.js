@@ -1,5 +1,12 @@
 
+import { browserUUID, isProduction } from '../../app/js/browser.js';
+
 describe('The browser', function () {
+    it('should have a uuid', function () {
+        expect(browserUUID).not.toBeNull();
+        expect(isProduction()).toBeFalse();
+    });
+
     it('should parse date correctly', function () {
         var d = new Date('2001-02-04T00:00:00Z');
         expect(d.getUTCDate()).toBe(4);
