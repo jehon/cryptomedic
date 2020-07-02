@@ -9,6 +9,8 @@ describe(fn(import.meta.url), function () {
             expect(element()).not.toBeNull();
             expect(element().shadowRoot.querySelector('legend')).not.toBeNull();
             expect(element().shadowRoot.querySelector('legend').innerHTML).toBe('test');
+
+            expect(element().checkValidity()).toBeTruthy();
         });
     });
 });

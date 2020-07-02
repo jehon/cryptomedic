@@ -53,7 +53,7 @@ export function deepCopy(object) {
 // }
 
 /**
- * @param {object} session
+ * @param {object} session - the object to be stored
  */
 export function setSession(session = null) {
     if (!session || Object.keys(session).length < 1) {
