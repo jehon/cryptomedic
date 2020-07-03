@@ -1,5 +1,5 @@
 
-import { toPropertyCase, toSentenceCase } from './string-utils.js';
+import { toSentenceCase } from './string-utils.js';
 
 export class ApplicationException extends Error {
     data = '';
