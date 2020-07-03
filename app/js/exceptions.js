@@ -1,5 +1,5 @@
 
-import { toTitleCase } from './string-utils.js';
+import { toPropertyCase, toSentenceCase } from './string-utils.js';
 
 export class ApplicationException extends Error {
     data = '';
@@ -20,21 +20,21 @@ export class ApplicationException extends Error {
 
 export class DataMissingException extends ApplicationException {
     constructor(data = 'some data', reason = 'is missing') {
-        super(toTitleCase(data) + ' ' + reason);
+        super(toSentenceCase(data) + ' ' + reason);
         this.data = data;
     }
 }
 
 export class DataInvalidException extends ApplicationException {
     constructor(data = 'some data', reason = 'is invalid') {
-        super(toTitleCase(data) + ' ' + reason);
+        super(toSentenceCase(data) + ' ' + reason);
         this.data = data;
     }
 }
 
 export class ConfigurationMissingException extends ApplicationException {
     constructor(data) {
-        super(`Configuration ${data} is missing.`);
+        super(`Configuration '${toSentenceCase(data, true)}' is missing.`);
         this.data = data;
     }
 }

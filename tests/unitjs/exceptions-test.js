@@ -21,14 +21,14 @@ describe('ApplicationException', function () {
         expect(ae2.message).toBe('Data is not null');
 
         var ae3 = new DataMissingException();
-        expect(ae3.message).toBe('Some Data is missing');
+        expect(ae3.message).toBe('Some data is missing');
 
     });
 
     it('should have ConfigurationMissingException', function () {
         var ae = new ConfigurationMissingException('data');
 
-        expect(ae.getMessage()).toBe('Configuration data is missing.');
+        expect(ae.getMessage()).toBe('Configuration \'data\' is missing.');
         expect(ae.data).toBe('data');
     });
 });
