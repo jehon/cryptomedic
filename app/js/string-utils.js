@@ -20,8 +20,8 @@ function toUpperWordCase(text) {
 
 /**
  * @param {string} text to be transformed (abc dev ghi)
- * @param middle
- * @returns {string} the test in title case (Abc Def Ghi)
+ * @param {boolean} middle if the string has to be put in the middle of a block (... abc def)
+ * @returns {string} the test in title case (Abc def ghi)
  */
 export function toSentenceCase(text, middle = false) {
     return _canonize(text)
@@ -43,13 +43,13 @@ export function toTitleCase(text) {
  * Transform into camel case (abcDefGhi - to use in object)
  *
  * @see https://en.wikipedia.org/wiki/Letter_case#Special_case_styles
- *
+ * @param {boolean} middle if the string has to be put in the middle of a block (...AbcDef)
  * @param {string} text to be transformed (abc-def-ghi)
  * @returns {string} transformed into camel case (AbcDefGhi)
  */
-export function toPropertyCase(text) {
+export function toPropertyCase(text, middle = false) {
     return _canonize(text)
-        .map((s, i) => (i > 0 ? toUpperWordCase(s) : s))
+        .map((s, i) => ((i > 0 || middle) ? toUpperWordCase(s) : s))
         .join('');
 }
 
