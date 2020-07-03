@@ -1,8 +1,9 @@
 
 import { fn } from './athelpers.js';
 import setPropertyOn from '../../app/js/set-property.js';
+import { toAttributeCase } from '../../app/js/string-utils.js';
 
-const p = 'test';
+const p = toAttributeCase('test');
 
 export class XXTestPropertySet extends HTMLElement {
     constructor() {

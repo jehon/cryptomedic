@@ -20,7 +20,7 @@ describe(fn(import.meta.url), function () {
         expect(toTitleCase('abc def')).toBe('Abc Def');
     });
 
-    it('should camel case', function () {
+    it('should toPropertyCase case (camel case)', function () {
         expect(toPropertyCase('abc def')).toBe('abcDef');
         expect(toPropertyCase('abc-def')).toBe('abcDef');
         expect(toPropertyCase('abc_def')).toBe('abcDef');
@@ -28,9 +28,11 @@ describe(fn(import.meta.url), function () {
         expect(toPropertyCase('abc-def-ghi-klm')).toBe('abcDefGhiKlm');
         expect(toPropertyCase('abc_def_ghi_klm')).toBe('abcDefGhiKlm');
         expect(toPropertyCase('abc def-ghi_klm')).toBe('abcDefGhiKlm');
+        expect(toPropertyCase('abc def-ghi_klm', false)).toBe('abcDefGhiKlm');
+        expect(toPropertyCase('abc def-ghi_klm', true)).toBe('AbcDefGhiKlm');
     });
 
-    it('should kebab case', function () {
+    it('should toAttributeCase case (kebab case)', function () {
         expect(toAttributeCase('abcDefGhi')).toBe('abc-def-ghi');
     });
 
