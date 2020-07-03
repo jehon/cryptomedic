@@ -21,10 +21,9 @@ const WithMixin = (name, cls) =>
             const attributeName = toAttributeCase(name);
             const changeFunction = `on${toPropertyCase(name, true)}Changed`;
 
-            this.setAttribute(`with-${attributeName}`, `with-${attributeName}`);
+            // console.log('***', name, propertyName, attributeName, changeFunction);
 
-            // onPropertyChanged:
-            this[changeFunction] = () => { };
+            this.setAttribute(`with-${attributeName}`, `with-${attributeName}`);
 
             let value;
             Object.defineProperty(this, propertyName, {
@@ -32,7 +31,9 @@ const WithMixin = (name, cls) =>
                 set: (v) => {
                     value = v;
                     setPropertyOn(this, propertyName, value);
-                    this[changeFunction](value);
+                    if (changeFunction in this) {
+                        this[changeFunction](value);
+                    }
                 }
             });
         }
