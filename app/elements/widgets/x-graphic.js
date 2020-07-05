@@ -9,13 +9,14 @@ const hooverCallback = createCallback('hooverCallback');
 
 /**
  * @param {*} val
+ * @param {string} varName
  * @param {number} low
  * @param {number} high
  * @returns {string|number} The result
  */
-function valueToDisplay(val, low, high) {
+function valueToDisplay(val, varName, low, high) {
     if (isNaN(val) || !val || typeof (val) != 'number') {
-        return 'Invalid ' + this.getVariableX();
+        return 'Invalid ' + varName;
     }
     val = Math.round(val);
     if (val < low) {
@@ -69,6 +70,7 @@ export default class XGraphic extends WithMixin('folder', HTMLElement) {
 
     displayX(file) {
         return valueToDisplay(this.getValueX(file),
+            this.getVariableX(),
             this.getImageDimensions(this.folder?.getPatient().sexStr()).vleft,
             this.getImageDimensions(this.folder?.getPatient().sexStr()).vright
         );
@@ -76,6 +78,7 @@ export default class XGraphic extends WithMixin('folder', HTMLElement) {
 
     displayY(file) {
         return valueToDisplay(this.getValueY(file),
+            this.getVariableY(),
             this.getImageDimensions(this.folder?.getPatient().sexStr()).vbottom,
             this.getImageDimensions(this.folder?.getPatient().sexStr()).vtop
         );
