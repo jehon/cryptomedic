@@ -61,4 +61,33 @@ amd_stats.dimensions.ageAtConsultTime_bmi_m = {}; amd_stats.dimensions.ageAtCons
 amd_stats.dimensions.ageAtConsultTime_bmi_f = {}; amd_stats.dimensions.ageAtConsultTime_bmi_f.top = 0.05; amd_stats.dimensions.ageAtConsultTime_bmi_f.bottom = 0.95; amd_stats.dimensions.ageAtConsultTime_bmi_f.left = 0.03; amd_stats.dimensions.ageAtConsultTime_bmi_f.right = 0.97; amd_stats.dimensions.ageAtConsultTime_bmi_f.vtop = 32.; amd_stats.dimensions.ageAtConsultTime_bmi_f.vbottom = 13.; amd_stats.dimensions.ageAtConsultTime_bmi_f.vleft = 2.; amd_stats.dimensions.ageAtConsultTime_bmi_f.vright = 20.;
 amd_stats.dimensions.ageAtConsultTime_bmi_null = {}; amd_stats.dimensions.ageAtConsultTime_bmi_null.top = 0.05; amd_stats.dimensions.ageAtConsultTime_bmi_null.bottom = 0.95; amd_stats.dimensions.ageAtConsultTime_bmi_null.left = 0.03; amd_stats.dimensions.ageAtConsultTime_bmi_null.right = 0.97; amd_stats.dimensions.ageAtConsultTime_bmi_null.vtop = 31.; amd_stats.dimensions.ageAtConsultTime_bmi_null.vbottom = 13.; amd_stats.dimensions.ageAtConsultTime_bmi_null.vleft = 2.; amd_stats.dimensions.ageAtConsultTime_bmi_null.vright = 20.;
 
+// TODO: rework the stat system
+// /**
+//  * @param {number} xlow - x low
+//  * @param {number} xhigh - x high
+//  * @param {number} ylow - y low
+//  * @param {number} yhigh - y high
+//  * @param {number} point - x point
+//  * @returns {number} y low
+//  */
+// function interpolate(xlow, xhigh, ylow, yhigh, point) {
+//     // y = a * x + b
+//     const a = (yhigh - ylow) / (xhigh - xlow);
+//     const b = yhigh - a * xhigh;
+//     return a * point + b;
+// }
+
+// for(const k of Object.keys(amd_stats.dimensions)) {
+//     const img = amd_stats.dimensions[k];
+//     img.x_axis = {
+//         low: interpolate(img.left, img.right, img.vleft, img.vright, 0),
+//         high: interpolate(img.left, img.right, img.vleft, img.vright, 1),
+//     };
+//     img.y_axis = {
+//         low: interpolate(img.bottom, img.top, img.vbottom, img.vtop, 0),
+//         high: interpolate(img.bottomleft, img.top, img.vbottom, img.vtop, 1)
+//     };
+//     console.log(img);
+// }
+
 deepFreeze(amd_stats);
