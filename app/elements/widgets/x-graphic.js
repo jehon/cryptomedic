@@ -8,12 +8,30 @@ import createCallback from '../../js/callback.js';
 const hooverCallback = createCallback('hooverCallback');
 
 /**
+ * @param {*} val
+ * @param {number} low
+ * @param {number} high
+ * @returns {string|number} The result
+ */
+function valueToDisplay(val, low, high) {
+    if (isNaN(val) || !val || typeof (val) != 'number') {
+        return 'Invalid ' + this.getVariableX();
+    }
+    val = Math.round(val);
+    if (val < low) {
+        return val + ' too low';
+    }
+    if (val > high) {
+        return val + ' too high';
+    }
+    return val;
+}
+
+/**
  * @augments HTMLElement
  */
 export default class XGraphic extends WithMixin('folder', HTMLElement) {
-
-    /* istanbul-ignore-next */
-    onHooverUnsubscribe =  () => { }
+    onHooverUnsubscribe;
 
     constructor() {
         super();
@@ -33,7 +51,6 @@ export default class XGraphic extends WithMixin('folder', HTMLElement) {
 
     disconnectedCallback() {
         this.onHooverUnsubscribe();
-        this.onHooverUnsubscribe = /* istanbul-ignore-next */ () => { };
     }
 
     getAge(file) {
@@ -51,37 +68,17 @@ export default class XGraphic extends WithMixin('folder', HTMLElement) {
     getValueY(_file) { return 0; }
 
     displayX(file) {
-        let v = this.getValueX(file);
-        if (isNaN(v) || !v || typeof(v) != 'number') {
-            return 'Invalid ' + this.getVariableX();
-        }
-        v = Math.round(v);
-        if (v < this.getImageDimensions(this.folder?.getPatient().sexStr()).vleft) {
-            return v + ' to low';
-        }
-        if (v > this.getImageDimensions(this.folder?.getPatient().sexStr()).vright) {
-            return v + ' to high';
-        }
-        return v;
+        return valueToDisplay(this.getValueX(file),
+            this.getImageDimensions(this.folder?.getPatient().sexStr()).vleft,
+            this.getImageDimensions(this.folder?.getPatient().sexStr()).vright
+        );
     }
 
     displayY(file) {
-        let v = this.getValueY(file);
-
-        if (isNaN(v)) {
-            return 'Invalid ' + this.getVariableY();
-        }
-        if (!v) {
-            return 'No ' + this.getVariableY();
-        }
-        v = Math.round(v);
-        if (v < this.getImageDimensions(this.folder?.getPatient().sexStr()).vbottom) {
-            return v + ' to low';
-        }
-        if (v > this.getImageDimensions(this.folder?.getPatient().sexStr()).vtop) {
-            return v + ' to high';
-        }
-        return v;
+        return valueToDisplay(this.getValueY(file),
+            this.getImageDimensions(this.folder?.getPatient().sexStr()).vbottom,
+            this.getImageDimensions(this.folder?.getPatient().sexStr()).vtop
+        );
     }
 
     isValid(file) {

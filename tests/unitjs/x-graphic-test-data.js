@@ -22,7 +22,8 @@ const folder = new Folder(
                 'patient_id': 1,
                 'Date': '2007-01-10',
                 'Weightkg': 0,
-                'Heightcm': 0
+                'Heightcm': 0,
+                'Y': 0
             }
         },
         {
@@ -33,7 +34,8 @@ const folder = new Folder(
                 'patient_id': 1,
                 'Date': '2007-01-10',
                 'Weightkg': 29,
-                'Heightcm': 134
+                'Heightcm': 134,
+                'Y': 100
             }
         },
         {
@@ -45,7 +47,8 @@ const folder = new Folder(
                 'Date': '2014-01-04',
                 'ExaminerName': 'AMD doctor',
                 'Weightkg': 37,
-                'Heightcm': 110
+                'Heightcm': 110,
+                'Y': 90
             }
         }
     ]
