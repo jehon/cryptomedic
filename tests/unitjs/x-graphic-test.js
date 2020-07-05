@@ -31,14 +31,32 @@ describe(fn(import.meta.url), function () {
         });
 
         describe('with folder', function () {
+            let folder;
+
             beforeEach(() => {
-                const folder = new Folder(loadReference('FolderTest.test1.json').folder);
+                folder = new Folder(loadReference('FolderTest.test1.json').folder);
                 expect(folder).toEqual(jasmine.any(Folder));
                 element().folder = folder;
             });
 
             it('should initialize', function () {
                 expect(element().innerHTML).not.toContain('No patient');
+
+                let n = 1;
+                expect(folder.getFilesRelatedToPatient(n).id).toBe(13);
+                expect(folder.getFilesRelatedToPatient(n).getModel()).toBe('RicketConsult');
+                expect(element().displayX(folder.getFilesRelatedToPatient(n))).toBe('16 too high');
+                expect(element().displayY(folder.getFilesRelatedToPatient(n))).toBe('No Y');
+
+                n = 2;
+                expect(folder.getFilesRelatedToPatient(n).id).toBe(1);
+                expect(folder.getFilesRelatedToPatient(n).getModel()).toBe('Bill');
+                expect(element().displayX(folder.getFilesRelatedToPatient(n))).toBe('13 too high');
+                expect(element().displayY(folder.getFilesRelatedToPatient(n))).toBe('No Y');
+            });
+
+            it('should handle special value', function() {
+                expect(element().displayY(folder.getFilesRelatedToPatient({ Y: -1000 }))).toBe('13 too high');
             });
         });
     });
