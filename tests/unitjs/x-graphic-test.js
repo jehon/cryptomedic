@@ -46,17 +46,13 @@ describe(fn(import.meta.url), function () {
                 expect(folder.getFilesRelatedToPatient(n).id).toBe(13);
                 expect(folder.getFilesRelatedToPatient(n).getModel()).toBe('RicketConsult');
                 expect(element().displayX(folder.getFilesRelatedToPatient(n))).toBe('16 too high');
-                expect(element().displayY(folder.getFilesRelatedToPatient(n))).toBe('No Y');
+                expect(element().displayY(folder.getFilesRelatedToPatient(n))).toBe('Invalid Y');
 
                 n = 2;
                 expect(folder.getFilesRelatedToPatient(n).id).toBe(1);
                 expect(folder.getFilesRelatedToPatient(n).getModel()).toBe('Bill');
                 expect(element().displayX(folder.getFilesRelatedToPatient(n))).toBe('13 too high');
-                expect(element().displayY(folder.getFilesRelatedToPatient(n))).toBe('No Y');
-            });
-
-            it('should handle special value', function() {
-                expect(element().displayY(folder.getFilesRelatedToPatient({ Y: -1000 }))).toBe('13 too high');
+                expect(element().displayY(folder.getFilesRelatedToPatient(n))).toBe('Invalid Y');
             });
         });
     });
