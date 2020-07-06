@@ -4,11 +4,9 @@
 import angular from 'angular';
 import 'angular-route';
 
-import ctrl_allGraphics from './ctrl_allgraphics.js';
 import ctrl_file_appointment from './ctrl_file_appointment.js';
 import ctrl_file_bill from './ctrl_file_bill.js';
 import ctrl_folder from './ctrl_folder.js';
-import ctrl_graphic from './ctrl_graphic.js';
 import ctrl_home from './ctrl_home.js';
 import ctrl_prices from './ctrl_prices.js';
 import ctrl_reports from './ctrl_reports.js';
@@ -44,6 +42,9 @@ let mainApp = angular.module('app_main', ['ngRoute'])
             template: '<span ng-if="error" class="catchedError">{{errorMsg}}</span><span ng-if="!error" ng-transclude></span>',
             link:
                 function ($scope, $element) {
+                    /**
+                     *
+                     */
                     function testIt() {
                         try {
                             $scope.error = false;
@@ -101,11 +102,9 @@ mainApp.controller('ctrl', ['$scope', function ($scope) {
     $scope.$on('$routeChangeError', function () { console.error('error in routes', arguments); });
 }]);
 
-mainApp.controller('ctrl_allGraphics', ctrl_allGraphics);
 mainApp.controller('ctrl_file_appointment', ctrl_file_appointment);
 mainApp.controller('ctrl_file_bill', ctrl_file_bill);
 mainApp.controller('ctrl_folder', ctrl_folder);
-mainApp.controller('ctrl_graphic', ctrl_graphic);
 mainApp.controller('ctrl_home', ctrl_home);
 mainApp.controller('ctrl_reports', ctrl_reports);
 mainApp.controller('ctrl_search', ctrl_search);
