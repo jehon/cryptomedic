@@ -1,5 +1,7 @@
 
-export default class XSDWeight extends HTMLElement {
+import WithMixin from '../mixins/with-mixin.js';
+
+export default class XSDWeight extends WithMixin('file-uid', WithMixin('folder', HTMLElement)) {
     static get observedAttributes() {
         return ['folder', 'patient'];
     }

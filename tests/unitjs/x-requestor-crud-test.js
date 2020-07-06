@@ -5,8 +5,8 @@ import { webDescribe } from './athelpers.js';
 
 import XRequestor from '../../app/elements/x-requestor.js';
 
-describe('tests/unit/x-requestor-crud-test.js', function () {
-    webDescribe('x-requestor-crud', '<x-requestor-crud relative-url=\'/object\'></x-requestor-crud>', function (element) {
+describe('tests/unit/x-o-requestor-crud-test.js', function () {
+    webDescribe('x-o-requestor-crud', '<x-o-requestor-crud relative-url=\'/object\'></x-o-requestor-crud>', function (element) {
         it('should list', function (done) {
             const data = [1, 2];
             spyOn(XRequestor.prototype, 'request').and.callFake((opts) => {

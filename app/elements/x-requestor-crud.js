@@ -47,4 +47,4 @@ export default class XRequestorCRUD extends XRequestor {
     }
 }
 
-window.customElements.define('x-requestor-crud', XRequestorCRUD);
+window.customElements.define('x-o-requestor-crud', XRequestorCRUD);
