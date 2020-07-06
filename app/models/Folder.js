@@ -79,10 +79,24 @@ export default class Folder extends FolderPage {
     }
 
     getByTypeAndId(type, id) {
-        let list = this.getListByType(type);
-        for (let i in list) {
+        const list = this.getListByType(type);
+        for (const i in list) {
             if (list[i].id + '' == id + '') {
                 return list[i];
+            }
+        }
+        return null;
+    }
+
+    /**
+     *
+     * @param {string} uid - see FolderPage#uid
+     * @returns {*} a file or null
+     */
+    getByUID(uid) {
+        for (const i in this.list) {
+            if (this.list[i].uid && this.list[i].uid() == uid) {
+                return this.list[i];
             }
         }
         return null;

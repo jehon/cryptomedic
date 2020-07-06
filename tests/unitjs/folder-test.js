@@ -13,52 +13,56 @@ import Surgery from '../../app/models/Surgery.js';
 import { loadReference } from './athelpers.js';
 
 describe('test-folder', function () {
+    let f;
+
     beforeEach(() => {
-        this.f = new Folder(loadReference('FolderTest.test1.json').folder);
-        expect(this.f).toEqual(jasmine.any(Folder));
+        f = new Folder(loadReference('FolderTest.test1.json').folder);
+        expect(f).toEqual(jasmine.any(Folder));
     });
 
     it('sould instanciate folder', () => {
         let f = new Folder();
-        expect(this.f).toEqual(jasmine.any(Folder));
+        expect(f).toEqual(jasmine.any(Folder));
         expect(f).toEqual(jasmine.any(Folder));
         expect(f.getPatient()).toEqual(jasmine.any(Patient));
         expect(f.getId()).toEqual(-1);
     });
 
     it('should have loaded Mock data', () => {
-        expect(this.f).toEqual(jasmine.any(Folder));
-        expect(this.f.getPatient()).toEqual(jasmine.any(Patient));
-        expect(this.f.getId()).toBe('1');
+        expect(f).toEqual(jasmine.any(Folder));
+        expect(f.getPatient()).toEqual(jasmine.any(Patient));
+        expect(f.getId()).toBe('1');
     });
 
     it('should instanciate classes', () => {
-        expect(this.f.getPatient()).toEqual(jasmine.any(Patient));
-        expect(this.f.getPatient().id).toBe(1);
+        expect(f.getPatient()).toEqual(jasmine.any(Patient));
+        expect(f.getPatient().id).toBe(1);
 
-        expect(Folder.create(this.f, 'Appointment', {})).toEqual(jasmine.any(Appointment));
-        expect(Folder.create(this.f, 'Bill', {})).toEqual(jasmine.any(Bill));
-        expect(Folder.create(this.f, 'ClubFoot', {})).toEqual(jasmine.any(ClubFoot));
-        expect(Folder.create(this.f, 'OtherConsult', {})).toEqual(jasmine.any(OtherConsult));
-        expect(Folder.create(this.f, 'Payment', {})).toEqual(jasmine.any(Payment));
-        expect(Folder.create(this.f, 'Picture', {})).toEqual(jasmine.any(Picture));
-        expect(Folder.create(this.f, 'RicketConsult', {})).toEqual(jasmine.any(RicketConsult));
-        expect(Folder.create(this.f, 'Surgery', {})).toEqual(jasmine.any(Surgery));
+        expect(Folder.create(f, 'Appointment', {})).toEqual(jasmine.any(Appointment));
+        expect(Folder.create(f, 'Bill', {})).toEqual(jasmine.any(Bill));
+        expect(Folder.create(f, 'ClubFoot', {})).toEqual(jasmine.any(ClubFoot));
+        expect(Folder.create(f, 'OtherConsult', {})).toEqual(jasmine.any(OtherConsult));
+        expect(Folder.create(f, 'Payment', {})).toEqual(jasmine.any(Payment));
+        expect(Folder.create(f, 'Picture', {})).toEqual(jasmine.any(Picture));
+        expect(Folder.create(f, 'RicketConsult', {})).toEqual(jasmine.any(RicketConsult));
+        expect(Folder.create(f, 'Surgery', {})).toEqual(jasmine.any(Surgery));
 
-        expect(() => Folder.create(this.f, 'AnythingInvalid', {})).toThrow();
+        expect(() => Folder.create(f, 'AnythingInvalid', {})).toThrow();
     });
 
     it('should query specific element (Otherconsult 1)', () => {
-        expect(this.f.getByTypeAndId(OtherConsult, 1)).toEqual(jasmine.any(OtherConsult));
-        expect(this.f.getByTypeAndId(OtherConsult, 1).id).toBe(1);
+        expect(f.getByTypeAndId(OtherConsult, 1)).toEqual(jasmine.any(OtherConsult));
+        expect(f.getByTypeAndId(OtherConsult, 1).id).toBe(1);
+
+        expect(f.getByUID('other-consult-1')?.id).toBe(1);
     });
 
     it('should return null if element is not found (Otherconsult 0)', () => {
-        expect(this.f.getByTypeAndId(OtherConsult, 0)).toBeNull();
+        expect(f.getByTypeAndId(OtherConsult, 0)).toBeNull();
     });
 
     it('should give patient related files', () => {
-        let list = this.f.getFilesRelatedToPatient();
+        let list = f.getFilesRelatedToPatient();
         expect(list.length).toBe(5);
 
         list.forEach(e => {
@@ -69,35 +73,35 @@ describe('test-folder', function () {
         i++;
         expect(list[i]).toEqual(jasmine.any(Picture));
         expect(list[i].id).toBe(2);
-        expect(this.f.getFilesRelatedToPatient(i).id).toBe(list[i].id);
+        expect(f.getFilesRelatedToPatient(i).id).toBe(list[i].id);
 
         i++;
         expect(list[i]).toEqual(jasmine.any(RicketConsult));
         expect(list[i].id).toBe(13);
-        expect(this.f.getFilesRelatedToPatient(i).id).toBe(list[i].id);
+        expect(f.getFilesRelatedToPatient(i).id).toBe(list[i].id);
 
         i++;
         expect(list[i]).toEqual(jasmine.any(Bill));
         expect(list[i].id).toBe(1);
-        expect(this.f.getFilesRelatedToPatient(i).id).toBe(list[i].id);
+        expect(f.getFilesRelatedToPatient(i).id).toBe(list[i].id);
 
         i++;
         expect(list[i]).toEqual(jasmine.any(Appointment));
         expect(list[i].id).toBe(2);
-        expect(this.f.getFilesRelatedToPatient(i).id).toBe(list[i].id);
+        expect(f.getFilesRelatedToPatient(i).id).toBe(list[i].id);
 
         i++;
         expect(list[i]).toEqual(jasmine.any(OtherConsult));
         expect(list[i].id).toBe(1);
-        expect(this.f.getFilesRelatedToPatient(i).id).toBe(list[i].id);
+        expect(f.getFilesRelatedToPatient(i).id).toBe(list[i].id);
 
         // And out of bounds...
-        expect(this.f.getFilesRelatedToPatient(1000)).toBeNull();
+        expect(f.getFilesRelatedToPatient(1000)).toBeNull();
 
     });
 
     it('should give bill related files', () => {
-        let list = this.f.getFilesRelatedToBill(1);
+        let list = f.getFilesRelatedToBill(1);
         expect(list.length).toBe(1);
 
         let i = -1;
@@ -108,8 +112,8 @@ describe('test-folder', function () {
     });
 
     it('should kepp extra data', () => {
-        this.f.setHeader('newKey', 14);
-        expect(this.f.getHeader('newKey')).toBe(14);
+        f.setHeader('newKey', 14);
+        expect(f.getHeader('newKey')).toBe(14);
     });
 
     describe('should order files correctly', function () {

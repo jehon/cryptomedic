@@ -27,7 +27,7 @@ describe('FolderPage', function () {
         it('should have uid', function () {
             data.id = 123;
             data.getModel = () => 'data';
-            expect(data.uid()).toBe('uid_data_123');
+            expect(data.uid()).toBe('data-123');
         });
     });
 
