@@ -14,11 +14,13 @@ import setPropertyOn from '../js/set-property.js';
 
 /**
  * @param {object} folder the folder to be dispatched, false or null otherwise
+ * @param {string} file_uid the uid of the file currently selected
  */
-function newRefresh(folder) {
+function newRefresh(folder = null, file_uid = null) {
     const mc = document.querySelector('#main_content');
     mc.setAttribute('x-top', 'x-top');
     setPropertyOn(mc, 'folder', folder);
+    setPropertyOn(mc, 'file-uid', file_uid);
 }
 
 /**
@@ -97,11 +99,11 @@ export default function ctrl_folder($scope, $routeParams) {
         }
     }
 
-    $scope.folder = false;
-    newRefresh($scope.folder);
+    var cachedCurrentFile = null;
+    $scope.folder = null;
+    newRefresh($scope.folder, null);
 
     $scope.age = {};
-    var cachedCurrentFile = null;
 
     //----------------------
     //   Get data from the server
@@ -135,7 +137,7 @@ export default function ctrl_folder($scope, $routeParams) {
             cachedCurrentFile = folder.getPatient();
         }
         $scope.folder = folder;
-        newRefresh($scope.folder);
+        newRefresh($scope.folder, cachedCurrentFile?.uid());
 
         // Layout
         if ($scope.mode == 'edit' || $scope.mode == 'add') {
@@ -163,7 +165,7 @@ export default function ctrl_folder($scope, $routeParams) {
     //  Display helpers
     // ------------------------
     $scope.getTemplateForMe = function () {
-        if ($scope.folder === false) {
+        if ($scope.folder === null) {
             return template('waiting');
         }
 
@@ -199,7 +201,7 @@ export default function ctrl_folder($scope, $routeParams) {
     $scope.reinject = function () {
         // https://docs.angularjs.org/api/ng/directive/ngInclude
         // To fill in the new objects
-        newRefresh($scope.folder);
+        newRefresh($scope.folder, cachedCurrentFile?.uid());
     };
 
     $scope.rebuildData = function () {
@@ -245,7 +247,7 @@ export default function ctrl_folder($scope, $routeParams) {
     $scope.actionCancel = function () {
         // By rerouting, the controller is initialized back
         $scope.folder = null;
-        newRefresh(null);
+        newRefresh();
 
         if ($scope.subid) {
             goThere('/folder/' + $scope.patient_id + '/file/' + $scope.subtype + '/' + $scope.subid);
@@ -276,14 +278,14 @@ export default function ctrl_folder($scope, $routeParams) {
                 });
                 goThere('/folder/' + $scope.patient_id + '/file/' + $scope.subtype + '/' + $scope.subid);
                 $scope.folder = data;
-                newRefresh($scope.folder);
+                newRefresh($scope.folder, cachedCurrentFile?.uid());
                 $scope.safeApply();
             });
     };
 
     $scope.actionUnlock = function () {
-        $scope.folder = false;
-        newRefresh($scope.folder);
+        $scope.folder = null;
+        newRefresh($scope.folder, cachedCurrentFile?.uid());
         $scope.safeApply();
 
         getDataService()
@@ -295,7 +297,7 @@ export default function ctrl_folder($scope, $routeParams) {
                 });
                 // Let's refresh the data
                 $scope.folder = data;
-                newRefresh($scope.folder);
+                newRefresh($scope.folder, cachedCurrentFile?.uid());
 
                 goThere('/folder/' + $scope.patient_id + '/file/' + $scope.subtype + '/' + $scope.subid + '/edit');
                 $scope.safeApply();
@@ -311,8 +313,8 @@ export default function ctrl_folder($scope, $routeParams) {
             return;
         }
 
-        $scope.folder = false;
-        newRefresh($scope.folder);
+        $scope.folder = null;
+        newRefresh($scope.folder, cachedCurrentFile?.uid());
 
         extractPrefsFile(cachedCurrentFile);
 
@@ -326,7 +328,7 @@ export default function ctrl_folder($scope, $routeParams) {
                 // The data is refreshed by navigating away...
                 // Let's refresh the data
                 $scope.folder = folder;
-                newRefresh($scope.folder);
+                newRefresh($scope.folder, cachedCurrentFile?.uid());
 
                 goThere('/folder/' + $scope.patient_id + '/file/' + $scope.subtype + '/' + folder.getHeader('newKey'));
                 $scope.safeApply();
@@ -338,8 +340,8 @@ export default function ctrl_folder($scope, $routeParams) {
             return;
         }
         let file = $scope.currentFile();
-        $scope.folder = false;
-        newRefresh($scope.folder);
+        $scope.folder = null;
+        newRefresh($scope.folder, cachedCurrentFile?.uid());
 
         $scope.safeApply();
 
@@ -353,7 +355,7 @@ export default function ctrl_folder($scope, $routeParams) {
 
                 // Let's refresh the data
                 $scope.folder = data;
-                newRefresh($scope.folder);
+                newRefresh($scope.folder, cachedCurrentFile?.uid());
 
                 goThere('/folder/' + $scope.patient_id);
                 $scope.safeApply();
@@ -367,8 +369,8 @@ export default function ctrl_folder($scope, $routeParams) {
         }
 
         let updatedData = formGetContent('#fileForm', $scope.currentFile());
-        $scope.folder = false;
-        newRefresh($scope.folder);
+        $scope.folder = null;
+        newRefresh($scope.folder, cachedCurrentFile?.uid());
 
         $scope.safeApply();
 
@@ -382,7 +384,7 @@ export default function ctrl_folder($scope, $routeParams) {
 
                 // Let's refresh the data
                 $scope.folder = folder;
-                newRefresh($scope.folder);
+                newRefresh($scope.folder, cachedCurrentFile?.uid());
 
                 goThere('/folder/' + folder.getId());
                 $scope.safeApply();
@@ -396,8 +398,8 @@ export default function ctrl_folder($scope, $routeParams) {
         }
 
         let updatedData = formGetContent('#fileForm', $scope.currentFile());
-        $scope.folder = false;
-        newRefresh($scope.folder);
+        $scope.folder = null;
+        newRefresh($scope.folder, cachedCurrentFile?.uid());
 
         $scope.safeApply();
 
@@ -408,7 +410,7 @@ export default function ctrl_folder($scope, $routeParams) {
 
                 // Let's refresh the data
                 $scope.folder = folder;
-                newRefresh($scope.folder);
+                newRefresh($scope.folder, cachedCurrentFile?.uid());
 
                 $scope.$emit('message', {
                     'level': 'success',
@@ -424,8 +426,8 @@ export default function ctrl_folder($scope, $routeParams) {
         }
 
         let file = $scope.currentFile();
-        $scope.folder = false;
-        newRefresh($scope.folder);
+        $scope.folder = null;
+        newRefresh($scope.folder, cachedCurrentFile?.uid());
 
         $scope.safeApply();
 
@@ -439,7 +441,7 @@ export default function ctrl_folder($scope, $routeParams) {
 
                 // Let's refresh the data
                 $scope.folder = null;
-                newRefresh($scope.folder);
+                newRefresh($scope.folder, cachedCurrentFile?.uid());
 
                 goThere();
                 $scope.safeApply();
