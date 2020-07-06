@@ -1,6 +1,7 @@
 
 import CRUD from './CRUD.js';
 import { getPref } from '../js/prefs.js';
+import { toAttributeCase } from '../js/string-utils.js';
 
 export default class FolderPage extends CRUD {
     /**
@@ -12,7 +13,7 @@ export default class FolderPage extends CRUD {
      * @returns {string} an unique id
      */
     uid() {
-        return `uid_${this.getModel()}_${this.id}`;
+        return `${toAttributeCase(this.getModel())}-${this.id}`;
     }
 
     initFromCachedPreferences() {
@@ -55,7 +56,7 @@ export default class FolderPage extends CRUD {
      * @returns {string} the model name
      */
     getModel() {
-        throw 'You should define the getModel on each model';
+        return this.constructor.name;
     }
 
     getServerRessource() {
