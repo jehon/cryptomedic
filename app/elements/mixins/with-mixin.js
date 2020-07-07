@@ -6,7 +6,7 @@ import { toPropertyCase, toAttributeCase } from '../../js/string-utils.js';
  * @mixin
  * @param {string} name - the property name, in CamelCase
  * @param {HTMLElement} cls - an element to be extended
- * @returns {Element} - the same htmlElement that listen to the folder
+ * @returns {HTMLElement} - the same htmlElement that listen to the folder
  */
 const WithMixin = (name, cls) =>
     /**
@@ -40,3 +40,6 @@ const WithMixin = (name, cls) =>
     };
 
 export default WithMixin;
+
+export const WithMixinFolder = (cls) => WithMixin('folder', cls);
+export const WithMixinFileUid = (cls) => WithMixin('file-uid', WithMixin('folder', cls));
