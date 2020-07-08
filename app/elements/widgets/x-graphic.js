@@ -1,9 +1,9 @@
 
-import WithMixin from '../mixins/with-mixin.js';
 import { fromBirthDateTo } from './x-age.js';
 import { getRouteToFolderFile, setRoute } from '../../js/router.js';
 
 import createCallback from '../../js/callback.js';
+import XWithFolder from '../abstract/x-with-folder.js';
 
 const hooverCallback = createCallback('hooverCallback');
 
@@ -28,18 +28,11 @@ function valueToDisplay(val, varName, low, high) {
     return val;
 }
 
-/**
- * @augments HTMLElement
- */
-export default class XGraphic extends WithMixin('folder', HTMLElement) {
+export default class XGraphic extends XWithFolder {
     onHooverUnsubscribe;
 
     constructor() {
         super();
-        this.adapt();
-    }
-
-    onFolderChanged(_f) {
         this.adapt();
     }
 

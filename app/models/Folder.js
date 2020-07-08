@@ -93,7 +93,7 @@ export default class Folder extends FolderPage {
      * @param {string} uid - see FolderPage#uid
      * @returns {*} a file or null
      */
-    getByUID(uid) {
+    getByUid(uid) {
         for (const i in this.list) {
             if (this.list[i].uid && this.list[i].uid() == uid) {
                 return this.list[i];
