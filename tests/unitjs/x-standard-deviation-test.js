@@ -75,7 +75,7 @@ describe(fn(import.meta.url), function () {
     webDescribe('with s,gn,x,y', '<x-standard-deviation sex="m" graph-name="Heightcm" x=4 y=96></x-standard-deviation>', function (element) {
         it('should have an error', function () {
             expect(element().hasAttribute('error')).toBeFalse();
-            expect(element().innerHTML).toBe('-1.84');
+            expect(element().innerHTML).toBe('-1.8');
         });
     });
 
