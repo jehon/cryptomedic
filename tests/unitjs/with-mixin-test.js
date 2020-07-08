@@ -41,7 +41,7 @@ describe(fn(import.meta.url), function () {
                 expect(ok).toBe(123);
             });
         });
-    })
+    });
 
     describe('with file-uid and folder', function () {
         withHtml('<xx-with-mixin-file-uid-test></xx-with-file-uid-test>', function (element) {
@@ -78,5 +78,4 @@ describe(fn(import.meta.url), function () {
             });
         });
     });
-
 });
