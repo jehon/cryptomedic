@@ -9,8 +9,9 @@ import { fromBirthDate } from '../elements/widgets/x-age.js';
 import template from '../js/template.js';
 import goThere from '../js/goThere.js';
 import date2CanonicString from '../js/date2CanonicString.js';
-import '../elements/pages/x-folder-graphics.js';
 import setPropertyOn from '../js/set-property.js';
+
+import '../elements/pages/x-folder-graphics.js';
 
 /**
  * @param {object} folder the folder to be dispatched, false or null otherwise
