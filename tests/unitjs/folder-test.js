@@ -54,7 +54,7 @@ describe('test-folder', function () {
         expect(f.getByTypeAndId(OtherConsult, 1)).toEqual(jasmine.any(OtherConsult));
         expect(f.getByTypeAndId(OtherConsult, 1).id).toBe(1);
 
-        expect(f.getByUID('other-consult-1')?.id).toBe(1);
+        expect(f.getByUid('other-consult-1')?.id).toBe(1);
     });
 
     it('should return null if element is not found (Otherconsult 0)', () => {
