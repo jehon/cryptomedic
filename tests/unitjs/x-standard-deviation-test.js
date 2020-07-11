@@ -1,8 +1,9 @@
 
 import { fn, webDescribe } from './athelpers.js';
-import { _evaluatePoly, stdDeviation, sigma } from '../../app/elements/widgets/x-standard-deviation.js';
+import { _evaluatePoly, _stdDeviation, stdDeviationFor, sigma } from '../../app/elements/widgets/x-standard-deviation.js';
+import { DataInvalidException, DataOutOfBoundException, ConfigurationMissingException } from '../../app/js/exceptions.js';
 
-describe(fn(import.meta.url), function () {
+fdescribe(fn(import.meta.url), function () {
     const poly = {
         'min': [],
         'medium': [],
@@ -34,10 +35,17 @@ describe(fn(import.meta.url), function () {
     });
 
     it('calculate standard deviations', function () {
-        expect(stdDeviation(poly, 0, 1)).toBe(0);
-        expect(stdDeviation(poly, 0, 0)).toBe(-sigma);
-        expect(stdDeviation(poly, 0, 2)).toBe(sigma);
-        expect(() => stdDeviation(poly, -1, 2)).toThrow('Out of bound');
+        expect(_stdDeviation(poly, 0, 1)).toBe(0);
+        expect(_stdDeviation(poly, 0, 0)).toBe(-sigma);
+        expect(_stdDeviation(poly, 0, 2)).toBe(sigma);
+        expect(() => _stdDeviation(poly, -1, 2)).toThrow(new DataOutOfBoundException());
+
+        expect(stdDeviationFor('m', 'Weightkg', 10, 32)).toBe(0);
+        expect(stdDeviationFor('m', 'Weightkg', 10, 42)).toBeCloseTo(sigma);
+        expect(stdDeviationFor('f', 'Weightkg', 3, 13.8)).toBe(0);
+        expect(() => stdDeviationFor('f', 'invalid', 3, 13.8)).toThrow(jasmine.any(ConfigurationMissingException));
+        expect(() => stdDeviationFor('invalid', 'Weightkg', 3, 13.8)).toThrow(jasmine.any(DataInvalidException));
+        expect(() => stdDeviationFor('m', 'Weightkg', 99, 13.8)).toThrow(jasmine.any(DataOutOfBoundException));
     });
 
     webDescribe('initialized', '<x-standard-deviation></x-standard-deviation>', function (element) {
