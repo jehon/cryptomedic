@@ -1,5 +1,11 @@
-import amd_stats from '../../js/amd_stats.js';
 
+import amd_stats from '../../js/amd_stats.js';
+import { DataInvalidException, ConfigurationMissingException, DataOutOfBoundException } from '../../js/exceptions.js';
+
+/**
+ * @param line
+ * @param x
+ */
 export function _evaluatePoly(line, x) {
     var i = -1;
     if ((x < line[0][0]) || (x > line[line.length - 1][0])) {
@@ -20,9 +26,14 @@ export function _evaluatePoly(line, x) {
     return ydw + (yup - ydw) * ((x - xdw) / (xup - xdw));
 }
 
-export function stdDeviation(line, x, y) {
+/**
+ * @param line
+ * @param x
+ * @param y
+ */
+export function _stdDeviation(line, x, y) {
     var avg = _evaluatePoly(line.medium, x);
-    if (isNaN(avg)) throw 'Out of bound';
+    if (isNaN(avg)) throw new DataOutOfBoundException();
     if (y == avg) return 0;
 
     var ref;
@@ -33,24 +44,58 @@ export function stdDeviation(line, x, y) {
     }
 
     /* istanbul ignore next: this case is when the polynome is not fully completed */
-    if (isNaN(ref)) throw 'Out of bound';
+    if (isNaN(ref)) {
+        throw new DataOutOfBoundException();
+    }
 
     var dev = Math.abs((avg - ref) / sigma);
     return (y - avg) / dev;
 }
 
+/**
+ * @param {string} sex - m / f / null / '' - as in amd_stats
+ * @param {string} graphName - the name of the graph, as in amd_stats[sex]
+ * @param {number} x on the line
+ * @param {number} y on the line
+ * @returns {number} the sd
+ * @throws {Error}
+ */
+export function stdDeviationFor(sex, graphName, x, y) {
+    if (!(sex in amd_stats)) {
+        throw new DataInvalidException('invalid_sex');
+    }
+    if (!(graphName in amd_stats[sex])) {
+        throw new ConfigurationMissingException('invalid graph name');
+    }
+    if (isNaN(x)) {
+        throw new DataInvalidException('invalid x');
+    }
+    if (isNaN(y)) {
+        throw new DataInvalidException('invalid y');
+    }
+
+    return _stdDeviation(amd_stats[sex][graphName], x, y);
+}
+
 // TODO: remove stdDeviationString
 /* istanbul ignore next */
+/**
+ * @param line
+ * @param x
+ * @param y
+ */
 export function stdDeviationString(line, x, y) {
     try {
-        return stdDeviation(line, x, y);
+        return _stdDeviation(line, x, y);
     } catch (e) {
-        return '#' + e + '#';
+        return '#' + e.getMessage() + '#';
     }
 }
 
 // 1.64485 = sigma at 90 for normal distribution
 export const sigma = 1.64485;
+
+// TODO: remove x-standard-deviation
 
 export default class XStandardDeviation extends HTMLElement {
     static get observedAttributes() {
@@ -93,7 +138,7 @@ export default class XStandardDeviation extends HTMLElement {
         }
 
         try {
-            const ds = stdDeviation(amd_stats[sex][graphName], x, y);
+            const ds = _stdDeviation(amd_stats[sex][graphName], x, y);
             this.innerHTML = '' + (Math.round(ds * 10) / 10);
         } catch (e) {
             this.setError('stats', e);
