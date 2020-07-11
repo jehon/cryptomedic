@@ -1,7 +1,7 @@
 
-import { ApplicationException, DataMissingException, ConfigurationMissingException } from '../../app/js/exceptions.js';
+import { ApplicationException, DataMissingException, ConfigurationMissingException, DataInvalidException, DataOutOfBoundException } from '../../app/js/exceptions.js';
 
-describe('ApplicationException', function () {
+fdescribe('ApplicationException', function () {
     it('should inherit from Error', function () {
         var ae = new ApplicationException('my message');
 
@@ -22,6 +22,38 @@ describe('ApplicationException', function () {
 
         var ae3 = new DataMissingException();
         expect(ae3.message).toBe('Some data is missing');
+
+    });
+
+    it('should have DataInvalidException', function () {
+        var ae = new DataInvalidException('data');
+
+        expect(ae instanceof ApplicationException).toBeTruthy('DataInvalidException is not an ApplicationException');
+        expect(ae instanceof Error).toBeTruthy('DataInvalidException is not an Error');
+        expect(ae.getMessage()).toBe('Data is invalid');
+        expect(ae.data).toBe('data');
+
+        var ae2 = new DataInvalidException('data', 'is not null');
+        expect(ae2.message).toBe('Data is not null');
+
+        var ae3 = new DataInvalidException();
+        expect(ae3.message).toBe('Some data is invalid');
+
+    });
+
+    it('should have DataOutOfBoundException', function () {
+        var ae = new DataOutOfBoundException('data');
+
+        expect(ae instanceof ApplicationException).toBeTruthy('DataOutOfBoundException is not an ApplicationException');
+        expect(ae instanceof Error).toBeTruthy('DataOutOfBoundException is not an Error');
+        expect(ae.getMessage()).toBe('Data is out-of-bounds');
+        expect(ae.data).toBe('data');
+
+        var ae2 = new DataOutOfBoundException('data', [0, 1]);
+        expect(ae2.message).toBe('Data is out-of-bounds [0 -> 1]');
+
+        var ae3 = new DataOutOfBoundException();
+        expect(ae3.message).toBe('Some data is out-of-bounds');
 
     });
 
