@@ -38,12 +38,16 @@ export default class XWithFolder extends XWaiting {
         }
     }
 
+    /**
+     * @returns {string|number} as the result of the calcul
+     * @throws {import('../../js/exceptions.js').ApplicationException} when the calcul is not possible
+     */
     formula() { return 'ok'; }
 
     adapt() {
         try {
             this.removeAttribute('error');
-            this.innerHTML = this.formula();
+            this.innerHTML = '' + this.formula();
         } catch(e) {
             let msg = 'In error';
             if (typeof(e) == 'string') {
