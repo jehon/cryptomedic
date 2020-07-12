@@ -38,7 +38,26 @@ export default class XWithFolder extends XWaiting {
         }
     }
 
-    adapt() { }
+    formula() { return 'ok'; }
+
+    adapt() {
+        try {
+            this.removeAttribute('error');
+            this.innerHTML = this.formula();
+        } catch(e) {
+            let msg = 'In error';
+            if (typeof(e) == 'string') {
+                msg = e;
+            }
+
+            if (e instanceof Error) {
+                msg = e.message;
+            }
+
+            this.setAttribute('error', msg);
+            this.innerHTML = msg;
+        }
+    }
 }
 
 defineCustomElement(XWithFolder);

@@ -34,8 +34,6 @@ export default class XWithFile extends XWithFolder {
     isOk() {
         return !!this.file;
     }
-
-    adapt() { }
 }
 
 defineCustomElement(XWithFile);
