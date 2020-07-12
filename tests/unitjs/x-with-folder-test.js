@@ -3,6 +3,7 @@ import { fn, loadReference } from './athelpers.js';
 
 import XWithFolder from '../../app/elements/abstract/x-with-folder.js';
 import Folder from '../../app/models/Folder.js';
+import { ApplicationException } from '../../app/js/exceptions.js';
 
 let testFolder;
 
@@ -47,6 +48,23 @@ describe(fn(import.meta.url), function () {
             expect(el.getAttribute('with-folder')).toBe('' + testFolder.getId());
             expect(el.hasAttribute('blocked')).toBeFalse();
             expect(ok).toBeTrue();
+        });
+
+        it('should render the function', function() {
+            el.folder = testFolder;
+
+            expect(el.innerHTML).toBe('ok');
+            expect(el.hasAttribute('error')).toBeFalse();
+
+            el.formula = function () { throw 'blabla'; };
+            el.adapt();
+            expect(el.innerHTML).toBe('blabla');
+            expect(el.hasAttribute('error')).toBeTrue();
+
+            el.formula = function () { throw new ApplicationException('appError'); };
+            el.adapt();
+            expect(el.innerHTML).toBe('appError');
+            expect(el.hasAttribute('error')).toBeTrue();
         });
     });
 });
