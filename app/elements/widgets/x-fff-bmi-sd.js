@@ -13,7 +13,7 @@ export default class XFffBmiSd extends XWithFile {
             this.file.bmi()
         );
 
-        return Math.round(sd * 10) / 10;
+        return Math.round(sd * 10) / 10 + ' ds';
     }
 }
 
