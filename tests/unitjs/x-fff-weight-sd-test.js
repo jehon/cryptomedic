@@ -23,7 +23,7 @@ describe(fn(import.meta.url), function () {
 
         it('shoud show', function() {
             el.fileUid = fuid;
-            expect(el.innerText).toBe('3.9');
+            expect(el.innerText).toBe('-3.6 ds');
         });
     });
 });

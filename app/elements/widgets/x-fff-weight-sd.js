@@ -8,12 +8,12 @@ export default class XFffWeightSd extends XWithFile {
     formula() {
         const sd = stdDeviationFor(
             this.folder.getPatient().sexStr(),
-            'bmi',
+            'Weightkg',
             fromBirthDateTo(this.folder.getPatient().Yearofbirth, this.file.Date),
             this.file.Weightkg
         );
 
-        return Math.round(sd * 10) / 10;
+        return Math.round(sd * 10) / 10 + ' ds';
     }
 }
 
