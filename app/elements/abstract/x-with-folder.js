@@ -47,10 +47,10 @@ export default class XWithFolder extends XWaiting {
     adapt() {
         try {
             this.removeAttribute('error');
-            this.innerHTML = '' + this.formula();
-        } catch(e) {
+            this.innerHTML = `<span slot='content'>${this.formula()}</span>`;
+        } catch (e) {
             let msg = 'In error';
-            if (typeof(e) == 'string') {
+            if (typeof (e) == 'string') {
                 msg = e;
             }
 
@@ -59,7 +59,7 @@ export default class XWithFolder extends XWaiting {
             }
 
             this.setAttribute('error', msg);
-            this.innerHTML = msg;
+            this.innerHTML = `<span slot='content'>${msg}</span>`;
         }
     }
 }
