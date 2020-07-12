@@ -1,6 +1,6 @@
 
-import amd_stats from '../../js/amd_stats.js';
-import { DataInvalidException, ConfigurationMissingException, DataOutOfBoundException } from '../../js/exceptions.js';
+import amd_stats from './amd_stats.js';
+import { DataInvalidException, ConfigurationMissingException, DataOutOfBoundException } from './exceptions.js';
 
 /**
  * @param line
@@ -94,61 +94,3 @@ export function stdDeviationString(line, x, y) {
 
 // 1.64485 = sigma at 90 for normal distribution
 export const sigma = 1.64485;
-
-// TODO: remove x-standard-deviation
-
-export default class XStandardDeviation extends HTMLElement {
-    static get observedAttributes() {
-        return ['sex', 'graph-name', 'x', 'y'];
-    }
-
-    constructor() {
-        super();
-        this.adapt();
-    }
-
-    attributeChangedCallback(attributeName, _oldValue, _newValue) {
-        switch (attributeName) {
-            case 'sex':
-            case 'graph-name':
-            case 'x':
-            case 'y':
-                this.adapt();
-                break;
-        }
-    }
-
-    adapt() {
-        const sex = this.getAttribute('sex');
-        const graphName = this.getAttribute('graph-name');
-        const x = parseFloat(this.getAttribute('x'));
-        const y = parseFloat(this.getAttribute('y'));
-
-        if (!(sex in amd_stats)) {
-            return this.setError('invalid_sex', 'Invalid Sex');
-        }
-        if (!(graphName in amd_stats[sex])) {
-            return this.setError('invalid_graph_name', 'Invalid line');
-        }
-        if (isNaN(x)) {
-            return this.setError('invalid_x', 'Invalid data x');
-        }
-        if (isNaN(y)) {
-            return this.setError('invalid_y', 'Invalid data y');
-        }
-
-        try {
-            const ds = _stdDeviation(amd_stats[sex][graphName], x, y);
-            this.innerHTML = '' + (Math.round(ds * 10) / 10);
-        } catch (e) {
-            this.setError('stats', e);
-        }
-    }
-
-    setError(type, msg) {
-        this.setAttribute('error', type);
-        this.innerHTML = '#' + msg + '#';
-    }
-}
-
-window.customElements.define('x-standard-deviation', XStandardDeviation);
