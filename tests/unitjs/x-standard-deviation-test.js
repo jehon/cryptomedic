@@ -3,7 +3,7 @@ import { fn, webDescribe } from './athelpers.js';
 import { _evaluatePoly, _stdDeviation, stdDeviationFor, sigma } from '../../app/elements/widgets/x-standard-deviation.js';
 import { DataInvalidException, DataOutOfBoundException, ConfigurationMissingException } from '../../app/js/exceptions.js';
 
-fdescribe(fn(import.meta.url), function () {
+describe(fn(import.meta.url), function () {
     const poly = {
         'min': [],
         'medium': [],
