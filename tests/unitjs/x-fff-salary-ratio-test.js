@@ -2,7 +2,7 @@
 import { fn, loadReference } from './athelpers.js';
 
 import Folder from '../../app/models/Folder.js';
-import XFffWh from '../../app/elements/widgets/x-fff-salary-ratio.js';
+import XFffSalaryRatio from '../../app/elements/widgets/x-fff-salary-ratio.js';
 
 let testFolder;
 const fuid = 'bill-1';
@@ -14,10 +14,10 @@ describe(fn(import.meta.url), function () {
     });
 
     describe('with folder', function () {
-        /** @type {XFffWh} */
+        /** @type {XFffSalaryRatio} */
         let el;
         beforeEach(() => {
-            el = new XFffWh();
+            el = new XFffSalaryRatio();
             el.folder = testFolder;
         });
 
