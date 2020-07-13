@@ -12,7 +12,7 @@
     },
     "require-dev": {
         "fzaninotto/faker": "1.9.1",
-        "mockery/mockery": "1.4.0",
+        "mockery/mockery": "1.4.1",
         "phpunit/phpunit": "9.2.5",
         "symfony/css-selector": "5.1.2",
         "symfony/dom-crawler": "5.1.2",
