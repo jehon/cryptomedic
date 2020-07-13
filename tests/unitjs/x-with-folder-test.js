@@ -53,17 +53,17 @@ describe(fn(import.meta.url), function () {
         it('should render the function', function() {
             el.folder = testFolder;
 
-            expect(el.innerHTML).toBe('ok');
+            expect(el.innerText).toBe('ok');
             expect(el.hasAttribute('error')).toBeFalse();
 
             el.formula = function () { throw 'blabla'; };
             el.adapt();
-            expect(el.innerHTML).toBe('blabla');
+            expect(el.innerText).toBe('blabla');
             expect(el.hasAttribute('error')).toBeTrue();
 
             el.formula = function () { throw new ApplicationException('appError'); };
             el.adapt();
-            expect(el.innerHTML).toBe('appError');
+            expect(el.innerText).toBe('appError');
             expect(el.hasAttribute('error')).toBeTrue();
         });
     });
