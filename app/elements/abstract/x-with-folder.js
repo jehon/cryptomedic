@@ -22,14 +22,14 @@ export default class XWithFolder extends XWaiting {
             this.setAttribute('with-folder', 'null');
         }
 
-        this._onAdapt();
+        this.refresh();
     }
 
     isOk() {
         return this.folder;
     }
 
-    _onAdapt() {
+    refresh() {
         if (this.isOk()) {
             this.free();
             this.adapt();
@@ -47,7 +47,9 @@ export default class XWithFolder extends XWaiting {
     adapt() {
         try {
             this.removeAttribute('error');
-            this.innerHTML = `<span slot='content'>${this.formula()}</span>`;
+            const val = this.formula();
+            this.setAttribute('value', '' + val);
+            this.innerHTML = `<span slot='content'>${val}</span>`;
         } catch (e) {
             let msg = 'In error';
             if (typeof (e) == 'string') {
@@ -59,6 +61,7 @@ export default class XWithFolder extends XWaiting {
             }
 
             this.setAttribute('error', msg);
+            this.removeAttribute('value');
             this.innerHTML = `<span slot='content'>${msg}</span>`;
         }
     }
