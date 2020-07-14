@@ -28,13 +28,15 @@ module.exports = {
         client.assert.containsText('#Patient_entryyear', '2000');
         client.assert.containsText('#Patient_entryorder', '1');
 
-        client.assert.containsText('#ds_weight', '0.0 ds');
-        client.assert.containsText('#ds_height', '0.0 ds');
+        client.assert.containsText('x-fff-weight-sd', '0 ds');
+        client.assert.containsText('x-fff-height-sd', '0 ds');
 
-        client.assert.containsText('#wh', '0.22');
-        // TODO: .assert.containsText("#ds_wh", "0.00 ds")
-        client.assert.containsText('#bmi', '16.15');
-        client.assert.containsText('#ds_bmi', '0.0 ds');
+        client.assert.containsText('x-fff-wh', '0.22');
+        client.assert.containsText('x-fff-wh-sd', 'Some data is out-of-bounds');
+
+        client.assert.containsText('x-fff-bmi', '16.2');
+        client.assert.containsText('x-fff-bmi-sd', '0 ds');
+
         client.assert.not.elementPresent('#button_edit');
         client.myScreenshotReference('OtherConsult');
 

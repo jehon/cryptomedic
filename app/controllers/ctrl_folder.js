@@ -12,6 +12,12 @@ import date2CanonicString from '../js/date2CanonicString.js';
 import setPropertyOn from '../js/set-property.js';
 
 import '../elements/pages/x-folder-graphics.js';
+import '../elements/widgets/x-fff-bmi.js';
+import '../elements/widgets/x-fff-bmi-sd.js';
+import '../elements/widgets/x-fff-height-sd.js';
+import '../elements/widgets/x-fff-weight-sd.js';
+import '../elements/widgets/x-fff-wh.js';
+import '../elements/widgets/x-fff-wh-sd.js';
 
 /**
  * @param {object} folder the folder to be dispatched, false or null otherwise
