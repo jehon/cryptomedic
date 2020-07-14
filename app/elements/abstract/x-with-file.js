@@ -18,7 +18,7 @@ export default class XWithFile extends XWithFolder {
     set fileUid(f) {
         this[fileUid] = f;
         this.setAttribute('with-file-uid', f ?? 'null');
-        this._onAdapt();
+        this.refresh();
     }
 
     get file() {
