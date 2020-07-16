@@ -13,13 +13,21 @@ export default function setPropertyOn(root, name, value) {
 
     if (root.hasAttribute('x-top')) {
         root.querySelectorAll(`[with-${attr}]`).forEach(el => {
-            el[prop] = value;
+            try {
+                el[prop] = value;
+            } catch(_e) {
+                true;
+            }
         });
     }
 
     if (root.shadowRoot) {
         root.shadowRoot.querySelectorAll(`[with-${attr}]`).forEach(el => {
-            el[prop] = value;
+            try {
+                el[prop] = value;
+            } catch(_e) {
+                true;
+            }
         });
     }
     return root;
