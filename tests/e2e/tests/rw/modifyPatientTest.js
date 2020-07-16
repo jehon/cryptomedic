@@ -117,7 +117,6 @@ module.exports = {
 
         var billTotal = {
             '#total_calculated_raw': 165,
-            '#salary_ratio': 600,
             '#Bill_Sociallevel': 2,
             '#percentage': '30%',
             '#total_calculated_asked': Math.round(165 * 0.3)
@@ -128,6 +127,7 @@ module.exports = {
 
         client.myFormFillIn('#fileForm', bill);
         client.myFormCheck('#fileForm', billTotal);
+        client.assert.containsText('x-fff-salary-ratio', '600');
         client.assert.not.elementPresent('#Bill_other_Other_plaster');
 
         client.myClick('#topsubmenu #button_save');
@@ -149,7 +149,6 @@ module.exports = {
 
         var billTotal = {
             '#total_calculated_raw': 165,
-            '#salary_ratio': 600,
             '#Bill_Sociallevel': 2,
             '#percentage': '40%',
             '#total_calculated_asked': Math.round(165 * 0.4)
@@ -160,6 +159,7 @@ module.exports = {
 
         client.myFormFillIn('#fileForm', bill);
         client.myFormCheck('#fileForm', billTotal);
+        client.assert.containsText('x-fff-salary-ratio', '600');
         client.assert.elementPresent('#Bill_other_Other_plaster');
 
         client.myClick('#topsubmenu #button_save');
@@ -180,7 +180,6 @@ module.exports = {
 
         var billTotal = {
             '#total_calculated_raw': 165,
-            '#salary_ratio': 600,
             '#Bill_Sociallevel': 2,
             '#percentage': '40%',
             '#total_calculated_asked': Math.round(165 * 0.4)
@@ -191,6 +190,7 @@ module.exports = {
 
         client.myFormFillIn('#fileForm', bill);
         client.myFormCheck('#fileForm', billTotal);
+        client.assert.containsText('x-fff-salary-ratio', '600');
         client.assert.elementPresent('#Bill_other_Other_plaster');
         client.setValue('#fileForm #first_payment', 2323);
 

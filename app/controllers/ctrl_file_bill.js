@@ -5,7 +5,12 @@ import { formGetContent } from '../js/form.js';
 import { extractPrefsFile } from '../js/prefs.js';
 import getDataService from '../js/getDataService.js';
 import { getSession, onSession } from '../js/session.js';
+import XFffSalaryRatio from '../elements/widgets/x-fff-salary-ratio.js';
 
+/**
+ * @param $scope
+ * @param $element
+ */
 export default function ctrl_file_bill($scope, $element) {
     /*
       Prices are at
@@ -35,13 +40,16 @@ export default function ctrl_file_bill($scope, $element) {
         $scope.safeApply();
     });
     $scope.currentFile().calculatePriceId(getPrices());
+    document.querySelectorAll('x-fff-salary-ratio').forEach((/** @type {XFffSalaryRatio} */el) => el.refresh());
 
     $scope.$watch('currentFile().sl_numberOfHouseholdMembers', function () {
         $scope.currentFile().ratioSalary();
+        document.querySelectorAll('x-fff-salary-ratio').forEach((/** @type {XFffSalaryRatio} */el) => el.refresh());
     });
 
     $scope.$watch('currentFile().sl_familySalary', function () {
         $scope.currentFile().ratioSalary();
+        document.querySelectorAll('x-fff-salary-ratio').forEach((/** @type {XFffSalaryRatio} */el) => el.refresh());
     });
 
     // Used in bill_summary
