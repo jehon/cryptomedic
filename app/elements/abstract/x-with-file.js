@@ -2,33 +2,34 @@
 import { defineCustomElement } from '../../js/custom-element.js';
 import XWithFolder from './x-with-folder.js';
 
-const fileUid = Symbol('file');
+const file = Symbol('file');
 
 
 export default class XWithFile extends XWithFolder {
     constructor() {
         super();
-        this.fileUid = null;
+        this.file = null;
     }
 
     get fileUid() {
-        return this[fileUid];
-    }
-
-    set fileUid(f) {
-        this[fileUid] = f;
-        this.setAttribute('with-file-uid', f ?? 'null');
-        this.refresh();
+        if (this.file) {
+            return this.file.uid();
+        }
+        return '';
     }
 
     get file() {
-        if (!this.folder) {
-            return null;
+        return this[file];
+    }
+
+    set file(f) {
+        this[file] = f;
+        if (f && f.uid()) {
+            this.setAttribute('with-file', f.uid());
+        } else {
+            this.setAttribute('with-file', 'null');
         }
-        if (!this.fileUid) {
-            return null;
-        }
-        return this.folder.getByUid(this.fileUid);
+        this.refresh();
     }
 
     isOk() {

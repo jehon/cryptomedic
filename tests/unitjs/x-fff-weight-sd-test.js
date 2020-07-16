@@ -21,8 +21,8 @@ describe(fn(import.meta.url), function () {
             el.folder = testFolder;
         });
 
-        it('shoud show', function() {
-            el.fileUid = fuid;
+        it('shoud show', function () {
+            el.file = testFolder.getByUid(fuid);
             expect(el.innerText).toBe('-3.6 ds');
         });
     });

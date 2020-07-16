@@ -21,13 +21,13 @@ import '../elements/widgets/x-fff-wh-sd.js';
 
 /**
  * @param {object} folder the folder to be dispatched, false or null otherwise
- * @param {string} file_uid the uid of the file currently selected
+ * @param {object} file the uid of the file currently selected
  */
-function newRefresh(folder = null, file_uid = null) {
+function newRefresh(folder = null, file = null) {
     const mc = document.querySelector('#main_content');
     mc.setAttribute('x-top', 'x-top');
     setPropertyOn(mc, 'folder', folder);
-    setPropertyOn(mc, 'file-uid', file_uid);
+    setPropertyOn(mc, 'file', file);
 }
 
 /**
@@ -144,7 +144,7 @@ export default function ctrl_folder($scope, $routeParams) {
             cachedCurrentFile = folder.getPatient();
         }
         $scope.folder = folder;
-        newRefresh($scope.folder, cachedCurrentFile?.uid());
+        newRefresh($scope.folder, cachedCurrentFile);
 
         // Layout
         if ($scope.mode == 'edit' || $scope.mode == 'add') {
@@ -208,7 +208,7 @@ export default function ctrl_folder($scope, $routeParams) {
     $scope.reinject = function () {
         // https://docs.angularjs.org/api/ng/directive/ngInclude
         // To fill in the new objects
-        newRefresh($scope.folder, cachedCurrentFile?.uid());
+        newRefresh($scope.folder, cachedCurrentFile);
     };
 
     $scope.rebuildData = function () {
@@ -285,14 +285,14 @@ export default function ctrl_folder($scope, $routeParams) {
                 });
                 goThere('/folder/' + $scope.patient_id + '/file/' + $scope.subtype + '/' + $scope.subid);
                 $scope.folder = data;
-                newRefresh($scope.folder, cachedCurrentFile?.uid());
+                newRefresh($scope.folder, cachedCurrentFile);
                 $scope.safeApply();
             });
     };
 
     $scope.actionUnlock = function () {
         $scope.folder = null;
-        newRefresh($scope.folder, cachedCurrentFile?.uid());
+        newRefresh($scope.folder, cachedCurrentFile);
         $scope.safeApply();
 
         getDataService()
@@ -304,7 +304,7 @@ export default function ctrl_folder($scope, $routeParams) {
                 });
                 // Let's refresh the data
                 $scope.folder = data;
-                newRefresh($scope.folder, cachedCurrentFile?.uid());
+                newRefresh($scope.folder, cachedCurrentFile);
 
                 goThere('/folder/' + $scope.patient_id + '/file/' + $scope.subtype + '/' + $scope.subid + '/edit');
                 $scope.safeApply();
@@ -321,7 +321,7 @@ export default function ctrl_folder($scope, $routeParams) {
         }
 
         $scope.folder = null;
-        newRefresh($scope.folder, cachedCurrentFile?.uid());
+        newRefresh($scope.folder, cachedCurrentFile);
 
         extractPrefsFile(cachedCurrentFile);
 
@@ -335,7 +335,7 @@ export default function ctrl_folder($scope, $routeParams) {
                 // The data is refreshed by navigating away...
                 // Let's refresh the data
                 $scope.folder = folder;
-                newRefresh($scope.folder, cachedCurrentFile?.uid());
+                newRefresh($scope.folder, cachedCurrentFile);
 
                 goThere('/folder/' + $scope.patient_id + '/file/' + $scope.subtype + '/' + folder.getHeader('newKey'));
                 $scope.safeApply();
@@ -348,7 +348,7 @@ export default function ctrl_folder($scope, $routeParams) {
         }
         let file = $scope.currentFile();
         $scope.folder = null;
-        newRefresh($scope.folder, cachedCurrentFile?.uid());
+        newRefresh($scope.folder, cachedCurrentFile);
 
         $scope.safeApply();
 
@@ -362,7 +362,7 @@ export default function ctrl_folder($scope, $routeParams) {
 
                 // Let's refresh the data
                 $scope.folder = data;
-                newRefresh($scope.folder, cachedCurrentFile?.uid());
+                newRefresh($scope.folder, cachedCurrentFile);
 
                 goThere('/folder/' + $scope.patient_id);
                 $scope.safeApply();
@@ -377,7 +377,7 @@ export default function ctrl_folder($scope, $routeParams) {
 
         let updatedData = formGetContent('#fileForm', $scope.currentFile());
         $scope.folder = null;
-        newRefresh($scope.folder, cachedCurrentFile?.uid());
+        newRefresh($scope.folder, cachedCurrentFile);
 
         $scope.safeApply();
 
@@ -391,7 +391,7 @@ export default function ctrl_folder($scope, $routeParams) {
 
                 // Let's refresh the data
                 $scope.folder = folder;
-                newRefresh($scope.folder, cachedCurrentFile?.uid());
+                newRefresh($scope.folder, cachedCurrentFile);
 
                 goThere('/folder/' + folder.getId());
                 $scope.safeApply();
@@ -406,7 +406,7 @@ export default function ctrl_folder($scope, $routeParams) {
 
         let updatedData = formGetContent('#fileForm', $scope.currentFile());
         $scope.folder = null;
-        newRefresh($scope.folder, cachedCurrentFile?.uid());
+        newRefresh($scope.folder, cachedCurrentFile);
 
         $scope.safeApply();
 
@@ -417,7 +417,7 @@ export default function ctrl_folder($scope, $routeParams) {
 
                 // Let's refresh the data
                 $scope.folder = folder;
-                newRefresh($scope.folder, cachedCurrentFile?.uid());
+                newRefresh($scope.folder, cachedCurrentFile);
 
                 $scope.$emit('message', {
                     'level': 'success',
@@ -434,7 +434,7 @@ export default function ctrl_folder($scope, $routeParams) {
 
         let file = $scope.currentFile();
         $scope.folder = null;
-        newRefresh($scope.folder, cachedCurrentFile?.uid());
+        newRefresh($scope.folder, cachedCurrentFile);
 
         $scope.safeApply();
 
@@ -448,7 +448,7 @@ export default function ctrl_folder($scope, $routeParams) {
 
                 // Let's refresh the data
                 $scope.folder = null;
-                newRefresh($scope.folder, cachedCurrentFile?.uid());
+                newRefresh($scope.folder, cachedCurrentFile);
 
                 goThere();
                 $scope.safeApply();
