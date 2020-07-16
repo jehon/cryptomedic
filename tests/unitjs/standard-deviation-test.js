@@ -3,7 +3,7 @@ import { fn } from './athelpers.js';
 import { _evaluatePoly, _stdDeviation, stdDeviationFor, sigma } from '../../app/js/standard-deviation.js';
 import { DataInvalidException, DataOutOfBoundException, ConfigurationMissingException } from '../../app/js/exceptions.js';
 
-describe(fn(import.meta.url), function () {
+fdescribe(fn(import.meta.url), function () {
     const poly = {
         'min': [],
         'medium': [],
@@ -46,6 +46,10 @@ describe(fn(import.meta.url), function () {
         expect(() => stdDeviationFor('f', 'invalid', 3, 13.8)).toThrow(jasmine.any(ConfigurationMissingException));
         expect(() => stdDeviationFor('invalid', 'Weightkg', 3, 13.8)).toThrow(jasmine.any(DataInvalidException));
         expect(() => stdDeviationFor('m', 'Weightkg', 99, 13.8)).toThrow(jasmine.any(DataOutOfBoundException));
+
+        // https://cheatsheets.joshuatz.com/cheatsheets/js/jsdoc/
+        expect(() => stdDeviationFor('m', 'Weightkg', (/** @type {number} */ (/** @type {*} */ ('a'))), 13.8)).toThrow(jasmine.any(DataInvalidException));
+        expect(() => stdDeviationFor('m', 'Weightkg', 3, (/** @type {number} */ (/** @type {*} */ ('a'))))).toThrow(jasmine.any(DataInvalidException));
     });
 
 });
