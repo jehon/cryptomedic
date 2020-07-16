@@ -4,6 +4,7 @@
     <style>
         body {
             display: flex;
+            flex-wrap: wrap;
         }
 
         body>* {
@@ -18,9 +19,9 @@
             margin: 10px;
         }
 
-        a::after {
+        /* a::after {
             content: " ("attr(href) ") ";
-        }
+        } */
     </style>
 </head>
 
@@ -55,13 +56,26 @@
         <a href='/target/style.html'>Style comparison</a>
     </div>
     <div>
-        <table>
-            <tr>
-                <td>tests/e2e/tests/ro/readPatientTest.js (patient2000)</td>
-                <td><a href=':5555/build/index.html#/folder/1/file/RicketConsult/13'></a></td>
-            </tr>
-        </table>
+        <h2>E2E: tests/e2e/tests/ro/readPatientTest.js</h2>
+        <h5>readPatient2000</h5>
+        <a href=':5555/build/index.html#/folder/1'>patient 2000-1</a>
+        <a href=':5555/build/index.html#/folder/1/file/RicketConsult/13'>ricket consult 13</a>
+
+        <h5>readPatient5</h5>
+        <a href=':5555/build/index.html#/folder/5'>patient 2014-105</a>
+
+        <h5>readPatient6</h5>
+        <a href=':5555/build/index.html#/folder/6'>patient 2001-1</a>
+
+        <h5>readPatient3</h5>
+        <a href=':5555/build/index.html#/folder/3'>patient 2014-103</a>
     </div>
+
+    <div>
+        <h2>E2E: tests/e2e/tests/modifyPatientTest.js</h2>
+        <div><a href=':5555/build/index.html#/folder/7'>patient 2001-4</a></div>
+    </div>
+
     <script>
         const host = window.location.origin.split(':').slice(0, -1).join(':');
         document.querySelectorAll('a').forEach(/* type HTMLElement */ e => {
