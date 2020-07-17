@@ -1,9 +1,6 @@
 
 import FolderPage from './FolderPage.js';
 import { DataMissingException } from '../js/exceptions.js';
-import amd_stats from '../js/amd_stats.js';
-import { fromBirthDate } from '../elements/widgets/x-age.js';
-import { stdDeviationString } from '../js/standard-deviation.js';
 
 export default class PatientRelated extends FolderPage {
     constructor(data, folder = null) {
