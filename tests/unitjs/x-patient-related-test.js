@@ -6,7 +6,7 @@ import { webDescribe, loadReference } from './athelpers.js';
 import Folder from '../../app/models/Folder.js';
 import Appointment from '../../app/models/Appointment.js';
 
-fdescribe('tests/unit/x-patient-related-test.js', function () {
+describe('tests/unit/x-patient-related-test.js', function () {
     let f;
     beforeEach(() => {
         f = new Folder(loadReference('FolderTest.test1.json').folder);

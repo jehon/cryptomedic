@@ -31,7 +31,6 @@ import './elements/x-inline.js';
 import './elements/x-input-date.js';
 import XInputPicture from './elements/x-input-picture.js';
 window.XInputPicture = XInputPicture;
-import './elements/x-patient-related.js';
 import './elements/x-read.js';
 import './elements/x-read-boolean.js';
 import './elements/x-write.js';
