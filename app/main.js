@@ -15,8 +15,6 @@ import './elements/widgets/x-login-status.js';
 import JHElement from './elements/jh-element.js';
 window.JHElement = JHElement;
 import './elements/x-overlay.js';
-import './elements/x-waiting.js';
-import './elements/x-waiting-folder.js';
 import XRequestor from './elements/x-requestor.js';
 window.XRequestor = XRequestor;
 import './elements/x-requestor-crud.js';
