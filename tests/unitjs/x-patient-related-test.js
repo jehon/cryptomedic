@@ -1,16 +1,14 @@
 
-import '../../app/elements/x-patient-related.js';
+import '../../app/elements/widgets/x-patient-related.js';
 
 import { webDescribe, loadReference } from './athelpers.js';
 
 import Folder from '../../app/models/Folder.js';
 import Appointment from '../../app/models/Appointment.js';
-import { setCurrentFolder } from '../../app/js/session.js';
 
-describe('tests/unit/x-patient-related-test.js', function () {
+fdescribe('tests/unit/x-patient-related-test.js', function () {
     let f;
     beforeEach(() => {
-        setCurrentFolder();
         f = new Folder(loadReference('FolderTest.test1.json').folder);
     });
 

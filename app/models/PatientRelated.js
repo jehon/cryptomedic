@@ -26,46 +26,6 @@ export default class PatientRelated extends FolderPage {
         }
     }
 
-    // For graphic, by default it expect number -> textual render it in text only on demand
-    ageAtConsultTime(textual) {
-        if (!this.isSet('Date')) {
-            throw new DataMissingException('Date');
-        }
-        var age = fromBirthDate(this.getPatient().Yearofbirth, { reference: this.Date, format: (textual ? false : 'number') });
-        // if (age == '?') throw new DataMissingException('Date');
-        return age;
-    }
-
-    ds_height() {
-        var sex = this.getPatient().sexStr();
-        if (!sex) {
-            throw new DataMissingException('sex');
-        }
-        var age = this.ageAtConsultTime();
-        if (typeof (age) != 'number') {
-            throw new DataMissingException('Age');
-        }
-        if (!this.isNotZero('Heightcm')) {
-            throw new DataMissingException('Height');
-        }
-        return stdDeviationString(amd_stats[sex]['Heightcm'], age, this.Heightcm);
-    }
-
-    ds_weight() {
-        var sex = this.getPatient().sexStr();
-        if (!sex) {
-            throw new DataMissingException('sex');
-        }
-        var age = this.ageAtConsultTime();
-        if (typeof (age) != 'number') {
-            throw new DataMissingException('Age');
-        }
-        if (!this.isNotZero('Weightkg')) {
-            throw new DataMissingException('Weight');
-        }
-        return stdDeviationString(amd_stats[sex]['Weightkg'], age, this.Weightkg);
-    }
-
     wh() {
         if (!this.isNotZero('Heightcm')) {
             throw new DataMissingException('Height');
@@ -76,19 +36,6 @@ export default class PatientRelated extends FolderPage {
         return this.Weightkg / this.Heightcm;
     }
 
-    ds_weight_height() {
-        var sex = this.getPatient().sexStr();
-        if (!sex) {
-            throw new DataMissingException('sex');
-        }
-        if (!this.isNotZero('Heightcm')) {
-            throw new DataMissingException('Height');
-        }
-        if (!this.isNotZero('Weightkg')) {
-            throw new DataMissingException('Weight');
-        }
-        return stdDeviationString(amd_stats[sex]['wh'], this.Heightcm, this.Weightkg);
-    }
 
     bmi() {
         if (!this.isNotZero('Heightcm')) {
@@ -98,18 +45,6 @@ export default class PatientRelated extends FolderPage {
             throw new DataMissingException('Weight');
         }
         return 10000 * this.Weightkg / (this.Heightcm * this.Heightcm);
-    }
-
-    ds_bmi() {
-        var sex = this.getPatient().sexStr();
-        if (!sex) {
-            throw new DataMissingException('sex');
-        }
-        var age = this.ageAtConsultTime();
-        if (typeof (age) != 'number') {
-            throw new DataMissingException('Age');
-        }
-        return stdDeviationString(amd_stats[sex]['bmi'], age, this.bmi());
     }
 
     isLocked() {
