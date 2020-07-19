@@ -31,7 +31,7 @@
     "babel-plugin-transform-commonjs": "1.1.6",
     "chromedriver": "84.0.0",
     "css-loader": "3.6.0",
-    "eslint": "7.4.0",
+    "eslint": "7.5.0",
     "eslint-plugin-jsdoc": "29.2.0",
     "file-loader": "6.0.0",
     "fs-extra": "latest",
