@@ -25,7 +25,9 @@ export default class XLoginStatus extends HTMLElement {
         this[user] = this.querySelector('#user');
         this[logout] = this.querySelector('#logout');
 
-        /** @type module:widgets/x-requestor:XRequestor */
+        /**
+         * @type {import('../panels/x-requestor.js').default} XRequestor
+         */
         this[requestor] = this.querySelector('x-requestor');
 
         this[logout].addEventListener('click', () => this.doLogout());

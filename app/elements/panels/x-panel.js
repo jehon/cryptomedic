@@ -1,5 +1,6 @@
 
 import '../../../node_modules/css-inherit/css-inherit.js';
+import { defineCustomElement } from '../../js/custom-element.js';
 
 /**
  * Slot[]: content
@@ -34,4 +35,4 @@ export default class XPanel extends HTMLElement {
     }
 }
 
-window.customElements.define('x-panel', XPanel);
+defineCustomElement(XPanel);

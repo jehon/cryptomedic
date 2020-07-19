@@ -1,8 +1,9 @@
 
-import '../../app/elements/jh-i18n.js';
+import XI18n from '../../app/elements/widgets/x-i18n.js';
+import { fn } from './athelpers.js';
 
-describe('jh-i18n-test', function () {
-    withHtml({ title: 'without value', html: '<jh-i18n></jh-i18n>' },
+describe(fn(import.meta.url), function () {
+    withHtml({ title: 'without value', html: '<x-i18n></x-i18n>' },
         function (element) {
             it('should show text', function () {
                 expect(element()).not.toBeNull();
@@ -10,7 +11,7 @@ describe('jh-i18n-test', function () {
             });
         });
 
-    withHtml({ title: 'with value=', html: '<jh-i18n value=""></jh-i18n>' },
+    withHtml({ title: 'with value=', html: '<x-i18n value=""></x-i18n>' },
         function (element) {
             it('should show text', function () {
                 expect(element()).not.toBeNull();
@@ -18,7 +19,7 @@ describe('jh-i18n-test', function () {
             });
         });
 
-    withHtml({ title: 'with value=original', html: '<jh-i18n value=\'original\'></jh-i18n>' },
+    withHtml({ title: 'with value=original', html: '<x-i18n value=\'original\'></x-i18n>' },
         function (element) {
             it('should show text', function () {
                 expect(element()).not.toBeNull();
@@ -26,7 +27,7 @@ describe('jh-i18n-test', function () {
             });
         });
 
-    withHtml({ title: 'with value=originalThere', html: '<jh-i18n value=\'originalThere\'></jh-i18n>' },
+    withHtml({ title: 'with value=originalThere', html: '<x-i18n value=\'originalThere\'></x-i18n>' },
         function (element) {
             it('should show text', function () {
                 expect(element()).not.toBeNull();
@@ -34,11 +35,12 @@ describe('jh-i18n-test', function () {
             });
         });
 
-    withHtml({ title: 'with value=123', html: '<jh-i18n value=\'123\'></jh-i18n>' },
+    withHtml({ title: 'with value=123', html: '<x-i18n value=\'123\'></x-i18n>' },
         function (element) {
             it('should show text', function () {
                 expect(element()).not.toBeNull();
                 expect(element().innerHTML).toBe('123');
             });
         });
+
 });

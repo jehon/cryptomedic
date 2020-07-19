@@ -1,6 +1,7 @@
 
 import XPanel from './x-panel.js';
 import { insertInSlotDefault } from '../element-helpers.js';
+import { defineCustomElement } from '../../js/custom-element.js';
 
 /**
  * Slot[content]: content
@@ -109,4 +110,4 @@ export default class XOverlay extends XPanel {
     }
 }
 
-window.customElements.define('x-overlay', XOverlay);
+defineCustomElement(XOverlay);

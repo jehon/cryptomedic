@@ -1,7 +1,10 @@
 
 import { spacing, icons, levels } from '../../config.js';
+import { defineCustomElement } from '../../js/custom-element.js';
 
 const button = Symbol('button');
+
+// TODO: restrict by auth -> extends XRestricted ?
 
 /**
  * Slot[]: content
@@ -71,4 +74,5 @@ export default class XButton extends HTMLElement {
         this[button].click();
     }
 }
-window.customElements.define('x-button', XButton);
+
+defineCustomElement(XButton);

@@ -13,6 +13,7 @@ import './x-overlay.js';
 import './x-panel.js';
 import '../widgets/x-button.js';
 import '../../../node_modules/css-inherit/css-inherit.js';
+import { defineCustomElement } from '../../js/custom-element.js';
 
 const error = Symbol('error');
 const errorMsg = Symbol('errorMsg');
@@ -142,8 +143,12 @@ export default class XRequestor extends XWaiting {
     }
 }
 
-window.customElements.define('x-requestor', XRequestor);
+defineCustomElement(XRequestor);
 
+/**
+ * @param options
+ * @param allowed
+ */
 export function requestAndFilterBuilder(options, allowed = []) {
     return {
         ...options,
@@ -160,6 +165,10 @@ export function requestAndFilterBuilder(options, allowed = []) {
     };
 }
 
+/**
+ * @param username
+ * @param password
+ */
 export function loginRequestBuilder(username, password) {
     return requestAndFilterBuilder({
         url: 'auth/mylogin', method: 'POST',
@@ -167,12 +176,18 @@ export function loginRequestBuilder(username, password) {
     }, [404]);
 }
 
+/**
+ *
+ */
 export function loginCheckRequestBuilder() {
     return requestAndFilterBuilder({
         url: 'auth/settings'
     }, [401]);
 }
 
+/**
+ *
+ */
 export function logoutBuilder() {
     return {
         url: `/api/${API_VERSION}/auth/logout`

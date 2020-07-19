@@ -1,3 +1,4 @@
+import { defineCustomElement } from '../../js/custom-element.js';
 
 /**
  * Slot[]: content
@@ -70,4 +71,4 @@ export default class XGroupPanel extends HTMLElement {
 
 }
 
-window.customElements.define('x-group-panel', XGroupPanel);
+defineCustomElement(XGroupPanel);
