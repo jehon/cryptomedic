@@ -242,8 +242,10 @@ References::$lists["Centers"] = References::buildValueList([
   References::withCode("Moheshkhali"                , "MO"),
   References::withCode("Moheshkhali Device Center"  , "MODC"),
 //   References::withCode("Lohagara"                   , "LOH"),
+  References::withCode("Pakua"                      , false), // since 07-2020
+  References::withCode("Rohinga Camp"               , false), // since 07-2020
   References::withCode("CMOSH"                      , false),
-  References::withCode("CMOSH Device Center"        , false),         
+  References::withCode("CMOSH Device Center"        , false),
   References::withCode("Other Field"                , "OF")
 ]);
 References::$lists["Surgery"] = References::buildValueList(["~ Other ~", "Need to see surgeon", "Epiphysiodesis", "Osteotomy", "Little Burn release", "Big burn release", "Achileus lengthening", "Postero-medial release", "Pin removal"]);
