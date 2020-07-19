@@ -1,10 +1,11 @@
+import { defineCustomElement } from '../../js/custom-element.js';
 
-export default class JHI18n extends HTMLElement {
+export default class XI18n extends HTMLElement {
     static get observedAttributes() {
         return [ 'value' ];
     }
 
-    attributeChangedCallback(attributeName, oldValue, newValue) {
+    attributeChangedCallback(_attributeName, _oldValue, newValue) {
         if (newValue) {
             this.innerHTML = newValue.split(/(?=[A-Z]+[a-z])/).join(' ');
         } else {
@@ -13,4 +14,4 @@ export default class JHI18n extends HTMLElement {
     }
 }
 
-window.customElements.define('jh-i18n', JHI18n);
+defineCustomElement(XI18n);

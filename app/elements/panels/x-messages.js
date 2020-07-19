@@ -2,6 +2,7 @@
 
 import { spacing } from '../../config.js';
 import { levels } from '../../config.js';
+import { defineCustomElement } from '../../js/custom-element.js';
 
 /**
  * Slot[]: content
@@ -77,4 +78,4 @@ export default class XMessages extends HTMLElement {
 
 }
 
-window.customElements.define('x-messages', XMessages);
+defineCustomElement(XMessages);

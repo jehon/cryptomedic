@@ -26,6 +26,8 @@ export default class XPatientRelated extends XWithFolder {
         return next;
     }
 
+    // TODO: use x-i18n
+
     adapt() {
         const patient = this.folder.getPatient();
         const nextAppointment = this._nextAppointment();

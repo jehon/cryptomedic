@@ -9,6 +9,7 @@ import '../panels/x-messages.js';
 import '../widgets/x-button.js';
 import { formInit, formGetContent, formValidate } from '../../js/form.js';
 import { loginRequestBuilder, loginCheckRequestBuilder } from '../panels/x-requestor.js';
+import { defineCustomElement } from '../../js/custom-element.js';
 
 const requestor = Symbol('requestor');
 const form = Symbol('form');
@@ -106,4 +107,5 @@ export default class XLoginForm extends HTMLElement {
     }
 }
 
-window.customElements.define('x-login-form', XLoginForm);
+defineCustomElement(XLoginForm);
+

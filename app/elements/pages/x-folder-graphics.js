@@ -3,6 +3,7 @@ import '../widgets/x-graphic-height.js';
 import '../widgets/x-graphic-weight.js';
 import '../widgets/x-graphic-bmi.js';
 import '../widgets/x-graphic-wh.js';
+import { defineCustomElement } from '../../js/custom-element.js';
 
 /**
  */
@@ -27,4 +28,4 @@ export default class XFolderGraphics extends HTMLElement {
     }
 }
 
-window.customElements.define('x-folder-graphics', XFolderGraphics);
+defineCustomElement(XFolderGraphics);

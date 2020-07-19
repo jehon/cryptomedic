@@ -1,7 +1,12 @@
 
 import { DataInvalidException, DataMissingException } from '../../js/exceptions.js';
+import { defineCustomElement } from '../../js/custom-element.js';
 
 // TODO: legacy
+/**
+ * @param birth
+ * @param options
+ */
 export function fromBirthDate(birth, options) {
     options = {
         format: false,
@@ -29,6 +34,9 @@ export function fromBirthDate(birth, options) {
     }
 }
 
+/**
+ * @param value
+ */
 export function yearsToYM(value) {
     const years = Math.floor(value);
     const months = Math.round((value - Math.trunc(value)) * 12);
@@ -115,4 +123,4 @@ export default class XAge extends HTMLElement {
     }
 }
 
-window.customElements.define('x-age', XAge);
+defineCustomElement(XAge);

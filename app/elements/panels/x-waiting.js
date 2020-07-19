@@ -1,6 +1,7 @@
 
 import XOverlay from './x-overlay.js';
 import { insertInSlot } from '../element-helpers.js';
+import { defineCustomElement } from '../../js/custom-element.js';
 
 /**
  * Slot[]: content
@@ -25,4 +26,4 @@ export default class XWaiting extends XOverlay {
     }
 }
 
-window.customElements.define('x-waiting', XWaiting);
+defineCustomElement(XWaiting);
