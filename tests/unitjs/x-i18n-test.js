@@ -1,5 +1,5 @@
 
-import XI18n from '../../app/elements/widgets/x-i18n.js';
+import _XI18n from '../../app/elements/widgets/x-i18n.js';
 import { fn } from './athelpers.js';
 
 describe(fn(import.meta.url), function () {
