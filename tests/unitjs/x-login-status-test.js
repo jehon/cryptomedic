@@ -5,6 +5,8 @@ import { webDescribe, fireOn } from './athelpers.js';
 import { mockResponseWithSuccess } from './x-requestor-test.js';
 import { setSession } from '../../app/js/session.js';
 
+// TODO: use constructor instead of webDescribe
+
 describe('tests/unit/x-login-status-test.js', function () {
     const testLoggedIn = function (element, username) {
         expect(element().hasAttribute('requesting')).toBeFalsy();

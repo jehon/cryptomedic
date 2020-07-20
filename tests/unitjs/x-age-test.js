@@ -1,6 +1,6 @@
 
-import { fn, webDescribe } from './athelpers.js';
-import { fromBirthDate, fromBirthDateTo } from '../../app/elements/widgets/x-age.js';
+import { fn } from './athelpers.js';
+import XAge, { fromBirthDate, fromBirthDateTo } from '../../app/elements/widgets/x-age.js';
 
 describe(fn(import.meta.url), function () {
     describe('fromBirthDateTo', function () {
@@ -214,35 +214,35 @@ describe(fn(import.meta.url), function () {
         });
     });
 
-    webDescribe('x-age', '<x-age></x-age>', function (element) {
-        it('should show nothing', function () {
-            expect(element().innerHTML).toBe('Date is missing');
-            expect(() => element().value).toThrow();
-            expect(element().getAttribute('error')).toBe('DataMissingException#date');
-        });
+    it('should show nothing', function () {
+        const el = new XAge();
+        expect(el.innerHTML).toBe('Date is missing');
+        expect(() => el.value).toThrow();
+        expect(el.getAttribute('error')).toBe('DataMissingException#date');
     });
 
-    webDescribe('x-age', '<x-age value="x"></x-age>', function (element) {
-        it('should show an error', function () {
-            expect(element().innerHTML).toBe('Date is too short');
-            expect(() => element().value).toThrow();
-            expect(element().getAttribute('error')).toBe('DataInvalidException#date');
-        });
+    it('should show an error', function () {
+        const el = new XAge();
+        el.setAttribute('value', 'x');
+        expect(el.innerHTML).toBe('Date is too short');
+        expect(() => el.value).toThrow();
+        expect(el.getAttribute('error')).toBe('DataInvalidException#date');
     });
 
-    webDescribe('x-age', '<x-age value="2019-01-12"></x-age>', function (element) {
-        it('should show a value', function () {
-            expect(element().innerHTML).not.toBe('');
-            expect(element().hasAttribute('error')).toBeFalse();
-            expect(element().value).toBeGreaterThan(1);
-        });
+    it('should show a value', function () {
+        const el = new XAge();
+        el.setAttribute('value', '2019-01-12');
+        expect(el.innerHTML).not.toBe('');
+        expect(el.hasAttribute('error')).toBeFalse();
+        expect(el.value).toBeGreaterThan(1);
     });
 
-    webDescribe('x-age', '<x-age value="2019-01-12" ref="2020-01-13"></x-age>', function (element) {
-        it('should show a value', function () {
-            expect(element().innerHTML).toBe('1y0m');
-            expect(element().hasAttribute('error')).toBeFalse();
-            expect(element().value).toBe(1);
-        });
+    it('should show a value', function () {
+        const el = new XAge();
+        el.setAttribute('value', '2019-01-12');
+        el.setAttribute('ref', '2020-01-13');
+        expect(el.innerHTML).toBe('1y0m');
+        expect(el.hasAttribute('error')).toBeFalse();
+        expect(el.value).toBe(1);
     });
 });

@@ -3,6 +3,8 @@ import '../../app/elements/x-read.js';
 
 import { webDescribe } from './athelpers.js';
 
+// TODO: use constructor instead of webDescribe
+
 describe('x-read-boolean-test', function () {
     // Test click on span for radio
     webDescribe('without value', '<x-read-boolean></x-read-boolean>', function (element) {

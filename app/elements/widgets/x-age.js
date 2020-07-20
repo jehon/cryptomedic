@@ -2,7 +2,6 @@
 import { DataInvalidException, DataMissingException } from '../../js/exceptions.js';
 import { defineCustomElement } from '../../js/custom-element.js';
 
-// TODO: legacy
 /**
  * @param birth
  * @param options

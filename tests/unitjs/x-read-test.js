@@ -4,6 +4,8 @@ import '../../app/elements/x-read.js';
 import { webDescribe } from './athelpers.js';
 // import JHElement from '../../app/elements/jh-element.js';
 
+// TODO: use constructor instead of webDescribe
+
 describe('x-read-test', function () {
     // Test click on span for radio
     webDescribe('', '<x-read name=\'test\'></x-read>', function () {

@@ -10,6 +10,8 @@ import MockAdapter from '../../app/cjs2esm/axios-mock-adapter.js';
 import XRequestor, { requestAndFilterBuilder, loginRequestBuilder, loginCheckRequestBuilder } from '../../app/elements/panels/x-requestor.js';
 import { getSession } from '../../app/js/session.js';
 
+// TODO: use constructor instead of webDescribe
+
 const buildResponse = function (ok = true, status = 200, statusText = '') {
     return {
         response: {
@@ -20,6 +22,9 @@ const buildResponse = function (ok = true, status = 200, statusText = '') {
     };
 };
 
+/**
+ * @param cb
+ */
 export function mockNoResponse(cb = (_result) => { }) {
     let result = {};
     spyOn(XRequestor.prototype, '_rawRequest').and.callFake((args) => new Promise((resolve, reject) => {
@@ -31,6 +36,9 @@ export function mockNoResponse(cb = (_result) => { }) {
     return result;
 }
 
+/**
+ * @param data
+ */
 export function mockResponseWithSuccess(data) {
     return mockNoResponse(result => result.resolve({
         status: 200,
@@ -39,6 +47,10 @@ export function mockResponseWithSuccess(data) {
     }));
 }
 
+/**
+ * @param code
+ * @param data
+ */
 export function mockResponseWithSuccessbutCode(code, data = {}) {
     const result = mockNoResponse(result => result.resolve({
         ok: false,
@@ -49,6 +61,10 @@ export function mockResponseWithSuccessbutCode(code, data = {}) {
     return result;
 }
 
+/**
+ * @param code
+ * @param data
+ */
 export function mockResponseWithFailureCode(code, data = {}) {
     const result = mockNoResponse(result => result.reject({
         ok: false,

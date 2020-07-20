@@ -3,6 +3,8 @@ import '../../app/elements/panels/x-waiting.js';
 
 import { fn, webDescribe } from './athelpers.js';
 
+// TODO: use constructor instead of webDescribe
+
 describe(fn(import.meta.url), function () {
     webDescribe('initialized', '<x-waiting><div slot="content" style=\'width: 200px; height: 100px; background-color: red;\'>Content</div></x-waiting>', function (element) {
         it('should be hidden when initialized simply', function () {

@@ -16,8 +16,7 @@ const form = Symbol('form');
 const messages = Symbol('messages');
 
 /**
- *
- * @attribute {url} redirect - Where to redirect on login
+ * attribute redirect - Where to redirect on login
  */
 export default class XLoginForm extends HTMLElement {
     constructor() {
@@ -40,10 +39,10 @@ export default class XLoginForm extends HTMLElement {
                 </x-panel>
 			</x-requestor>`;
 
-        /** @type module:widgets/x-requestor:XRequestor */
+        /** @type {import('../panels/x-requestor.js').default} */
         this[requestor] = this.querySelector('x-requestor');
         this[form] = this.querySelector('form');
-        /** @type module:widgets/x-panels:XMessages */
+        /** @type {import('../panels/x-messages.js').default} */
         this[messages] = this.querySelector('x-messages');
 
         formInit(this[form], () => this.doLogin());

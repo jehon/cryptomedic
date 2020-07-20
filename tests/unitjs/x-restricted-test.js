@@ -4,6 +4,8 @@ import { fn, webDescribe, loadReference } from './athelpers.js';
 
 import '../../app/elements/widgets/x-restricted.js';
 
+// TODO: use constructor instead of webDescribe
+
 describe(fn(import.meta.url), function () {
     let refSession;
     beforeEach(function () {

@@ -4,6 +4,8 @@ import '../../app/elements/panels/x-messages.js';
 import { fn, webDescribe } from './athelpers.js';
 import { levels } from '../../app/config.js';
 
+// TODO: use constructor instead of webDescribe
+
 describe(fn(import.meta.url), function () {
     webDescribe('initialized', '<x-messages></x-messages>', function (element) {
         beforeEach(() => {

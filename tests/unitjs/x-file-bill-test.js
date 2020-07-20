@@ -6,6 +6,8 @@ import Folder from '../../app/models/Folder.js';
 import Bill from '../../app/models/Bill.js';
 import { setSession } from '../../app/js/session.js';
 
+// TODO: use constructor instead of webDescribe
+
 describe('tests/unit/x-file-bill-test.js', function () {
     let getBill = function (ref = 'FolderTest.test1.json', id = 1) {
         let f = new Folder(loadReference(ref).folder);

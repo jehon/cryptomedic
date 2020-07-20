@@ -4,6 +4,8 @@ import '../../app/elements/widgets/x-button.js';
 import { fn, webDescribe } from './athelpers.js';
 import { levels, icons } from '../../app/config.js';
 
+// TODO: use constructor instead of webDescribe
+
 describe(fn(import.meta.url), function () {
     webDescribe('initialized', '<x-button></x-button>', function (element) {
         it('should initialize', function () {

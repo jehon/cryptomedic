@@ -5,6 +5,8 @@ import { webDescribe } from './athelpers.js';
 import JHElement from '../../app/elements/jh-element.js';
 import { setSession, getSession, deepCopy } from '../../app/js/session.js';
 
+// TODO: use constructor instead of webDescribe
+
 describe('x-write-list-test', function () {
     const listRadio = ['truc', 'brol', 'machin', 'chose'];
     const listSelect = ['truc', 'brol', 'machin', 'chose', 'bazar', 'ça', 'là'];
