@@ -12,6 +12,7 @@ export default class CryptomedicDataService extends XRequestor {
     /**************************/
     /*** Patient            ***/
     /**************************/
+
     searchForPatients(params) {
         return this.requestAndFilter({ url: 'folder', data: params })
             .then(response => {

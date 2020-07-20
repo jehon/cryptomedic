@@ -5,6 +5,15 @@ const pad = (what, l) => {
 };
 
 export const Invalid = 'Invalid date';
+
+// TODO: choose between date2Display and x-date
+
+/**
+ * Render a date to display
+ *
+ * @param {Date} date to be rendered
+ * @returns {string} the rendered date
+ */
 export default function date2Display(date) {
 
     if (date == null) {

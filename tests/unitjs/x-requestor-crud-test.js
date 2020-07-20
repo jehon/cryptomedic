@@ -5,6 +5,8 @@ import { webDescribe } from './athelpers.js';
 
 import XRequestor from '../../app/elements/x-requestor.js';
 
+// TODO: use constructor instead of webDescribe
+
 describe('tests/unit/x-o-requestor-crud-test.js', function () {
     webDescribe('x-o-requestor-crud', '<x-o-requestor-crud relative-url=\'/object\'></x-o-requestor-crud>', function (element) {
         it('should list', function (done) {

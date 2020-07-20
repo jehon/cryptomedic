@@ -5,6 +5,8 @@ import { webDescribe } from './athelpers.js';
 
 import JHElement from '../../app/elements/jh-element.js';
 
+// TODO: use constructor instead of webDescribe
+
 describe('x-input-date-test', function () {
     webDescribe('initial', '<x-input-date></x-input-date>', function (element) {
         it('should be initialized', function () {

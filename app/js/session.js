@@ -90,8 +90,6 @@ export const getAuthorized = (key, session = getSession()) => session?.authorize
 
 /**
  * Current folder (TODO: legacy)
- *
- * @obsolete
  */
 const FOLDER = 'FOLDER';
 export const setCurrentFolder = (value = null) => duix.set(FOLDER, value);

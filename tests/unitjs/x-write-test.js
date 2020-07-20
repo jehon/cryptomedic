@@ -4,6 +4,8 @@ import '../../app/elements/x-write.js';
 import JHElement from '../../app/elements/jh-element.js';
 import { webDescribe } from './athelpers.js';
 
+// TODO: use constructor instead of webDescribe
+
 describe('x-write-test', function () {
     beforeEach(function () {
         spyOn(console, 'error');

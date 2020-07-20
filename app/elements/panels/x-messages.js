@@ -5,6 +5,14 @@ import { levels } from '../../config.js';
 import { defineCustomElement } from '../../js/custom-element.js';
 
 /**
+ * @typedef {object} Message a message for x-messages
+ * @property {string} text to be shown
+ * @property {string} [level] of the message
+ * @property {string} [icon] of the message
+ * @property {string} [id] of the message
+ */
+
+/**
  * Slot[]: content
  */
 export default class XMessages extends HTMLElement {
@@ -27,7 +35,7 @@ export default class XMessages extends HTMLElement {
 
     /**
      *
-     * @param {Array<string>} list
+     * @param {Array<string|Message>} list - the list of messages to be shown
      */
     showMessages(list) {
         this.clear();
@@ -37,26 +45,30 @@ export default class XMessages extends HTMLElement {
     }
 
     /**
-     *
-     * @param {string|any} msg
-     * @param {string|boolean} level (danger, warning, success, info, primary, default)
-     * @param {string|boolean} icon
-     * @param {string|boolean} id    technical id
+     * @param {string|Message} text to be shown
+     * @param {string} level (danger, warning, success, info, primary, default)
+     * @param {string} icon of the message
+     * @param {string} id    technical id
      */
-    addMessage(msg, level = false, icon = false, id = false) {
-        if (typeof (msg) == 'string') {
-            msg = { text: msg };
+    addMessage(text, level = '', icon = '', id = '') {
+        /** @type {Message} */
+        let msg;
+
+        if (typeof (text) == 'string') {
+            msg = { text };
+        } else {
+            msg = text;
         }
 
-        if (level !== false) {
+        if (level) {
             msg.level = level;
         }
 
-        if (icon !== false) {
+        if (icon) {
             msg.icon = icon;
         }
 
-        if (id !== false) {
+        if (id) {
             msg.id = id;
         }
 

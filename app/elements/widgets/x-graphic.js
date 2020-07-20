@@ -8,11 +8,13 @@ import XWithFolder from '../abstract/x-with-folder.js';
 const hooverCallback = createCallback('hooverCallback');
 
 /**
- * @param {*} val
- * @param {string} varName
- * @param {number} low
- * @param {number} high
- * @returns {string|number} The result
+ * Transform the value into a readable string
+ *
+ * @param {number} val the value to display
+ * @param {string} varName the variable name in case of error
+ * @param {number} low - the lowest acceptable value
+ * @param {number} high - the highest acceptable value
+ * @returns {string|number} The result (string in case of error)
  */
 function valueToDisplay(val, varName, low, high) {
     if (isNaN(val) || !val || typeof (val) != 'number') {
@@ -47,6 +49,12 @@ export default class XGraphic extends XWithFolder {
         this.onHooverUnsubscribe();
     }
 
+    /**
+     * Return the age at the time of the file
+     *
+     * @param {object} file for the age
+     * @returns {number} the age as a fractional number of years
+     */
     getAge(file) {
         return fromBirthDateTo(this.folder.getPatient().Yearofbirth, file.Date);
     }

@@ -3,6 +3,8 @@ import '../../app/elements/panels/x-group-panel.js';
 
 import { fn, webDescribe } from './athelpers.js';
 
+// TODO: use constructor instead of webDescribe
+
 describe(fn(import.meta.url), function () {
     webDescribe('initialized', '<x-group-panel title="test"></x-group-panel>', function (element) {
         it('should initialize', function () {

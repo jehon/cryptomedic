@@ -38,21 +38,30 @@ export default class XRequestor extends XWaiting {
             </x-overlay>
         `);
 
-        /** @type module:widgets/x-overlay:XOverlay */
+        /** @type {import('../panels/x-overlay.js').default} */
         this[error] = this.shadowRoot.querySelector('#error');
         this[errorMsg] = this.shadowRoot.querySelector('#errorMsg');
         this[errorContent] = this.shadowRoot.querySelector('#errorContent');
         this.shadowRoot.querySelector('#closeButton').addEventListener('click', () => this[error].free());
     }
 
+    /**
+     * @returns {boolean} wheter the request is failed
+     */
     isFailed() {
         return this[error].isBlocked();
     }
 
+    /**
+     * @returns {boolean} wheter the request is running
+     */
     isRequesting() {
         return super.isBlocked();
     }
 
+    /**
+     * @returns {boolean} wheter the request is running or has failed (isFailed || isRequesting)
+     */
     isBlocked() {
         return super.isBlocked() || this.isFailed();
     }
@@ -61,6 +70,9 @@ export default class XRequestor extends XWaiting {
         return axios(options);
     }
 
+    /**
+     * Return to standard state
+     */
     reset() {
         this.removeAttribute('running');
         this.removeAttribute('erroneous');
@@ -70,6 +82,17 @@ export default class XRequestor extends XWaiting {
         this[errorContent].innerHTML = '';
     }
 
+    /**
+     * Make a request
+     *
+     * @param {object} opts of the request
+     * @property {string} url of the resquest
+     * @property {string} [method] of the request (GET by default)
+     * @property {number} [timeout] of the request (in seconds)
+     * @property {object} [data] of the request (GET param will be taken from here)
+     *
+     * @returns {Promise} that resolve whith the request
+     */
     async request(opts) {
         this.reset();
         this.block();
@@ -104,7 +127,12 @@ export default class XRequestor extends XWaiting {
             });
     }
 
-    // See https://github.com/axios/axios#handling-errors
+    /**
+     * Show an error response in a pop-up
+     *
+     * @param {object} errorResponse from axios
+     * @see See https://github.com/axios/axios#handling-errors
+     */
     showFailure(errorResponse) {
         this.setAttribute('erroneous', 'erroneous');
         this.free();
@@ -146,8 +174,11 @@ export default class XRequestor extends XWaiting {
 defineCustomElement(XRequestor);
 
 /**
- * @param options
- * @param allowed
+ * Build the request options for request where 'allowed' return code is not an error
+ *
+ * @param {object} options of the request
+ * @param {Array<number>} allowed http return codes
+ * @returns {object} options for request (see XRequestor#request)
  */
 export function requestAndFilterBuilder(options, allowed = []) {
     return {
@@ -166,8 +197,11 @@ export function requestAndFilterBuilder(options, allowed = []) {
 }
 
 /**
- * @param username
- * @param password
+ * Build object for XRequestor#request
+ *
+ * @param {string} username of the request
+ * @param {string} password of the request
+ * @returns {object} options for request (see XRequestor#request)
  */
 export function loginRequestBuilder(username, password) {
     return requestAndFilterBuilder({
@@ -177,7 +211,9 @@ export function loginRequestBuilder(username, password) {
 }
 
 /**
+ * Build object for XRequestor#request
  *
+ * @returns {object} options for request (see XRequestor#request)
  */
 export function loginCheckRequestBuilder() {
     return requestAndFilterBuilder({
@@ -186,7 +222,9 @@ export function loginCheckRequestBuilder() {
 }
 
 /**
+ * Build object for XRequestor#request
  *
+ * @returns {object} options for request (see XRequestor#request)
  */
 export function logoutBuilder() {
     return {

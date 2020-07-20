@@ -4,6 +4,8 @@ import XWaiting from '../panels/x-waiting.js';
 
 const folder = Symbol('folder');
 
+// TODO: remove dependency on XWaiting
+
 export default class XWithFolder extends XWaiting {
     constructor() {
         super();

@@ -8,7 +8,14 @@ import Folder from '../../app/models/Folder.js';
 import Bill from '../../app/models/Bill.js';
 import { setSession } from '../../app/js/session.js';
 
+// TODO: use constructor instead of webDescribe
+
 describe('tests/unit/x-file-bill-test-summary.js', function () {
+    /**
+     * @param element
+     * @param name
+     * @param value
+     */
     function hasRow(element, name, value) {
         expect(element().innerHTML).toContain(name);
         expect(element().innerHTML).toContain(`name="${name}">${value}<`);

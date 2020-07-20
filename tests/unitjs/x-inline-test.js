@@ -5,6 +5,8 @@ import { webDescribe } from './athelpers.js';
 
 import JHElement from '../../app/elements/jh-element.js';
 
+// TODO: use constructor instead of webDescribe
+
 describe('x-inline-test', function () {
     beforeEach(function () {
         spyOn(console, 'error');
