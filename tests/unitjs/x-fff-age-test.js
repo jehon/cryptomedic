@@ -1,6 +1,8 @@
 
-import { fn } from './athelpers.js';
-import XAge, { fromBirthDate, fromBirthDateTo } from '../../app/elements/widgets/x-age.js';
+import XFffAge, { fromBirthDate, fromBirthDateTo } from '../../app/elements/widgets/x-fff-age.js';
+
+import { fn, loadReference, refFolder1 } from './athelpers.js';
+import Folder from '../../app/models/Folder.js';
 
 describe(fn(import.meta.url), function () {
     describe('fromBirthDateTo', function () {
@@ -214,35 +216,37 @@ describe(fn(import.meta.url), function () {
         });
     });
 
-    it('should show nothing', function () {
-        const el = new XAge();
-        expect(el.innerHTML).toBe('Date is missing');
-        expect(() => el.value).toThrow();
-        expect(el.getAttribute('error')).toBe('DataMissingException#date');
-    });
+    xdescribe('with x-fff-age', function () {
+        let f;
+        beforeEach(function () {
+            f = new Folder(loadReference(refFolder1).folder);
+        });
 
-    it('should show an error', function () {
-        const el = new XAge();
-        el.setAttribute('value', 'x');
-        expect(el.innerHTML).toBe('Date is too short');
-        expect(() => el.value).toThrow();
-        expect(el.getAttribute('error')).toBe('DataInvalidException#date');
-    });
+        it('should show nothing without file', function () {
+            const el = new XFffAge();
+            el.folder = f;
+            expect(el.innerText).toBe('');
+            expect(() => el.value).toThrow();
+        });
 
-    it('should show a value', function () {
-        const el = new XAge();
-        el.setAttribute('value', '2019-01-12');
-        expect(el.innerHTML).not.toBe('');
-        expect(el.hasAttribute('error')).toBeFalse();
-        expect(el.value).toBeGreaterThan(1);
-    });
+        it('should show patient age', function () {
+            const el = new XFffAge();
+            el.folder = f;
+            el.file = f.getPatient();
 
-    it('should show a value', function () {
-        const el = new XAge();
-        el.setAttribute('value', '2019-01-12');
-        el.setAttribute('ref', '2020-01-13');
-        expect(el.innerHTML).toBe('1y0m');
-        expect(el.hasAttribute('error')).toBeFalse();
-        expect(el.value).toBe(1);
+            // expect(el.innerText).toBe('Date is too short');
+            // expect(() => el.value).toThrow();
+            // expect(el.getAttribute('error')).toBe('DataInvalidException#date');
+        });
+
+        it('should show file age', function () {
+            const el = new XFffAge();
+            el.folder = f;
+            // el.file = ???;
+
+            // expect(el.innerText).not.toBe('');
+            // expect(el.hasAttribute('error')).toBeFalse();
+            // expect(el.value).toBeGreaterThan(1);
+        });
     });
 });

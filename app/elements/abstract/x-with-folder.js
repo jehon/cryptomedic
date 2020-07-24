@@ -27,10 +27,16 @@ export default class XWithFolder extends XWaiting {
         this.refresh();
     }
 
+    /**
+     * @returns {boolean} if all data are set
+     */
     isOk() {
-        return this.folder;
+        return !!this.folder;
     }
 
+    /**
+     * Redraw the setup on data change, or on external call
+     */
     refresh() {
         if (this.isOk()) {
             this.free();
@@ -41,11 +47,9 @@ export default class XWithFolder extends XWaiting {
     }
 
     /**
-     * @returns {string|number} as the result of the calcul
-     * @throws {import('../../js/exceptions.js').ApplicationException} when the calcul is not possible
+     * Try to render the formula when data change.
+     * Called by refresh only when data is present.
      */
-    formula() { return 'ok'; }
-
     adapt() {
         try {
             this.removeAttribute('error');
@@ -67,6 +71,12 @@ export default class XWithFolder extends XWaiting {
             this.innerHTML = `<span slot='content'>${msg}</span>`;
         }
     }
+
+    /**
+     * @returns {string|number} as the result of the calcul
+     * @throws {import('../../js/exceptions.js').ApplicationException} when the calcul is not possible
+     */
+    formula() { return 'ok'; }
 }
 
 defineCustomElement(XWithFolder);

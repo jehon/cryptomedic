@@ -1,5 +1,5 @@
 
-import { fn, loadReference } from './athelpers.js';
+import { fn, loadReference, refFolder1 } from './athelpers.js';
 
 import Folder from '../../app/models/Folder.js';
 import XFffWh from '../../app/elements/widgets/x-fff-wh.js';
@@ -9,7 +9,7 @@ const fuid = 'ricket-consult-13';
 
 describe(fn(import.meta.url), function () {
     beforeEach(() => {
-        testFolder = new Folder(loadReference('FolderTest.test1.json').folder);
+        testFolder = new Folder(loadReference(refFolder1).folder);
         expect(testFolder.getByUid(fuid)).not.toBeNull();
     });
 

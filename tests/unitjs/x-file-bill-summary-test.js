@@ -2,7 +2,7 @@
 
 import '../../app/elements/x-file-bill-summary.js';
 
-import { webDescribe, loadReference } from './athelpers.js';
+import { webDescribe, loadReference, refFolder1 } from './athelpers.js';
 
 import Folder from '../../app/models/Folder.js';
 import Bill from '../../app/models/Bill.js';
@@ -26,7 +26,7 @@ describe('tests/unit/x-file-bill-test-summary.js', function () {
         setSession({ prices });
     });
 
-    let getBill = function (ref = 'FolderTest.test1.json', id = 1) {
+    let getBill = function (ref = refFolder1, id = 1) {
         let f = new Folder(loadReference(ref).folder);
         expect(f).toEqual(jasmine.any(Folder));
         return f.getByTypeAndId(Bill, id);
@@ -34,7 +34,7 @@ describe('tests/unit/x-file-bill-test-summary.js', function () {
 
     webDescribe('initialized', '<x-file-bill-summary></x-file-bill-summary>', function (element) {
         it('should be instantiated', function () {
-            let b = getBill('FolderTest.test1.json', 1);
+            let b = getBill(refFolder1, 1);
             element().value = b;
             hasRow(element, 'Sociallevel', '2');
             hasRow(element, 'total_asked', '6720');

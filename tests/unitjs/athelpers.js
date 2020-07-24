@@ -14,6 +14,8 @@ export function loadReference(name) {
     return valid_respond;
 }
 
+export const refFolder1 = 'FolderTest.test1.json';
+
 /**
  * @param url
  */

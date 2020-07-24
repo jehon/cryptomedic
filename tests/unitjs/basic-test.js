@@ -1,5 +1,5 @@
 
-import { fn, loadReference, extractPath } from './athelpers.js';
+import { fn, loadReference, extractPath, refFolder1 } from './athelpers.js';
 
 describe(fn(import.meta.url), function () {
     it('should be true', () => {
@@ -11,7 +11,7 @@ describe(fn(import.meta.url), function () {
     });
 
     it('should load references', async () => {
-        const ref = loadReference('FolderTest.test1.json');
+        const ref = loadReference(refFolder1);
         expect(ref).not.toBeUndefined();
         expect(ref.folder).not.toBeUndefined();
     });
