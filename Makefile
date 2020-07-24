@@ -104,7 +104,6 @@ start: setup-structure \
 
 .PHONY: docker-started
 docker-started:
-    # TODO: do this only when needed
 	$(DOCKERCOMPOSE) build server
 	$(DOCKERCOMPOSE) up -d
 
