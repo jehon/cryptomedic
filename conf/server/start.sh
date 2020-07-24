@@ -18,7 +18,7 @@ chmod -R 777 /tmp/laravel/
 
 echo "Should run as: $HOST_UID : $HOST_GID"
 
-GN=$( cat /etc/group | grep ":HOST_GID:" | cut -d ":" -f 1 )
+GN=$( cat /etc/group | grep ":$HOST_GID:" | cut -d ":" -f 1 )
 if [ -z "$GN" ]; then
 	GN="hostgroup"
 	echo "Creating group $GN"
