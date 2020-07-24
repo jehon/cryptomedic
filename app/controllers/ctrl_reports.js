@@ -7,6 +7,7 @@ import getDataService from '../js/getDataService.js';
 import date2CanonicString from '../js/date2CanonicString.js';
 import template from '../js/template.js';
 import ExcellentExport from '../../node_modules/excellentexport/dist/excellentexport.js';
+import '../elements/x-age.js';
 
 export default function ctrl_reports($scope, $routeParams, $sce) {
     var report = $routeParams['report'];
@@ -32,15 +33,15 @@ export default function ctrl_reports($scope, $routeParams, $sce) {
         'activity': {
             name: 'Activity (daily/monthly) Report',
             description: 'If you want to know your activity, choose this report.<br>'
-				+ 'Options: the day, and optionnaly the examiner, the center and type of activity (workshop / consult / surgical / ...).<br>',
+                + 'Options: the day, and optionnaly the examiner, the center and type of activity (workshop / consult / surgical / ...).<br>',
             params: ['period', 'center', 'examiner', 'activity'],
             templateUrl: template('report', 'activity')
         },
         'consultations': {
             name: 'Consultations planned',
             description: 'List of consultations planned on a specific day in a specific center.<br>'
-				+ 'See also the button in the menu<br>'
-				+ 'Options: the day and the center.',
+                + 'See also the button in the menu<br>'
+                + 'Options: the day and the center.',
             params: ['day', 'center'],
             fixedParams: {
                 period: 'day'
