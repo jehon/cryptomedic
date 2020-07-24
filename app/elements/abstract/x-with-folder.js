@@ -1,14 +1,14 @@
 
 import { defineCustomElement } from '../../js/custom-element.js';
-import XWaiting from '../panels/x-waiting.js';
 
 const folder = Symbol('folder');
 
 // TODO: remove dependency on XWaiting
 
-export default class XWithFolder extends XWaiting {
+export default class XWithFolder extends HTMLElement {
     constructor() {
         super();
+        this.attachShadow({ mode: 'open' });
         this.folder = null;
     }
 
@@ -39,10 +39,12 @@ export default class XWithFolder extends XWaiting {
      */
     refresh() {
         if (this.isOk()) {
-            this.free();
+            this.shadowRoot.innerHTML = '<slot></slot>';
+            this.removeAttribute('blocked');
             this.adapt();
         } else {
-            this.block();
+            this.setAttribute('blocked', 'blocked');
+            this.shadowRoot.innerHTML = '?';
         }
     }
 
@@ -55,7 +57,7 @@ export default class XWithFolder extends XWaiting {
             this.removeAttribute('error');
             const val = this.formula();
             this.setAttribute('value', '' + val);
-            this.innerHTML = `<span slot='content'>${val}</span>`;
+            this.innerHTML = `<span>${val}</span>`;
         } catch (e) {
             let msg = 'In error';
             if (typeof (e) == 'string') {
@@ -68,7 +70,7 @@ export default class XWithFolder extends XWaiting {
 
             this.setAttribute('error', msg);
             this.removeAttribute('value');
-            this.innerHTML = `<span slot='content'>${msg}</span>`;
+            this.innerHTML = `<span>${msg}</span>`;
         }
     }
 

@@ -33,7 +33,7 @@ export default class XPatientRelated extends XWithFolder {
         const nextAppointment = this._nextAppointment();
 
         this.innerHTML = `
-<span slot='content'>
+<span>
     <x-group-panel class='related' title='Related Patient'>
         <table>
             <tbody>
