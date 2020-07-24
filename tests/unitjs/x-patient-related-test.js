@@ -1,12 +1,10 @@
 
-import '../../app/elements/widgets/x-patient-related.js';
+import XPatientRelated from '../../app/elements/widgets/x-patient-related.js';
 
-import { webDescribe, loadReference, refFolder1 } from './athelpers.js';
+import { loadReference, refFolder1 } from './athelpers.js';
 
 import Folder from '../../app/models/Folder.js';
 import Appointment from '../../app/models/Appointment.js';
-
-// TODO: use constructor instead of webDescribe
 
 describe('tests/unit/x-patient-related-test.js', function () {
     let f;
@@ -27,54 +25,63 @@ describe('tests/unit/x-patient-related-test.js', function () {
         'NextCenter': null
     };
 
-    webDescribe('initialized', '<x-patient-related></x-patient-related>', function (element) {
-        it('should be initialized', function () {
-            expect(element().isBlocked()).toBeTruthy();
+    describe('with object', function() {
+        it('should be initialized', function() {
+            const el = new XPatientRelated();
+            expect(el.hasAttribute('blocked')).toBeTrue();
         });
 
         it('should show patient informations', function () {
-            element().folder = f;
-            expect(element().isBlocked()).toBeFalsy();
-            expect(element().querySelector('#Patient_entryyear').innerText).toBe('2000');
-            expect(element().querySelector('#Patient_entryorder').innerText).toBe('1');
-            expect(element().querySelector('#Patient_Name').innerText).toBe('rezaul islam');
-            expect(element().querySelector('#Patient_Yearofbirth').innerText).toBe('1998');
-            expect(element().querySelector('#Patient_Sex').innerText).toBe('Male');
+            const el = new XPatientRelated();
+            el.folder = f;
+            expect(el.hasAttribute('blocked')).toBeFalse();
+            expect(el.querySelector('#Patient_entryyear').innerHTML).toBe('2000');
+            expect(el.querySelector('#Patient_entryorder').innerHTML).toBe('1');
+            expect(el.querySelector('#Patient_Name').innerHTML).toBe('rezaul islam');
+
+            expect(el.querySelector('#Patient_Yearofbirth').innerHTML).toBe('1998');
+            expect(el.querySelector('#Patient_Sex').innerHTML).toBe('Male');
+            expect((/** @type {HTMLElement} */ (el.querySelector('#Patient_Yearofbirth'))).innerText).toBe('1998');
+            expect((/** @type {HTMLElement} */ (el.querySelector('#Patient_Sex'))).innerText).toBe('Male');
         });
 
         it('should show no appointment', function (done) {
-            element().folder = f;
-            expect(element().isBlocked()).toBeFalsy();
+            const el = new XPatientRelated();
+            el.folder = f;
+
+            expect(el.hasAttribute('blocked')).toBeFalse();
             setTimeout(() => {
-                expect(element().querySelector('#withoutAppointment').offsetWidth).toBeGreaterThan(0);
-                expect(element().querySelector('#withAppointment').offsetWidth).toBe(0);
+                expect(el.querySelector('#withoutAppointment').hasAttribute('hidden')).toBeFalse();
+                expect(el.querySelector('#withAppointment').hasAttribute('hidden')).toBeTrue();
                 done();
             });
         });
 
         it('should show appointment', function (done) {
+            const el = new XPatientRelated();
             f.list.push(new Appointment(na));
-            element().folder = f;
-            expect(element().isBlocked()).toBeFalsy();
+            el.folder = f;
+            expect(el.hasAttribute('blocked')).toBeFalse();
             setTimeout(() => {
-                expect(element().querySelector('#withoutAppointment').offsetWidth).toBe(0);
-                expect(element().querySelector('#withAppointment').offsetWidth).toBeGreaterThan(0);
-                expect(element().querySelector('#withAppointment').innerText).toContain('2999-01-10');
+                expect(el.querySelector('#withoutAppointment').hasAttribute('hidden')).toBeTrue();
+                expect(el.querySelector('#withAppointment').hasAttribute('hidden')).toBeFalse();
+                expect(el.querySelector('#withAppointment').innerHTML).toContain('2999-01-10');
                 done();
             });
         });
 
         it('should show the closest appointment', function (done) {
+            const el = new XPatientRelated();
             let nb = JSON.parse(JSON.stringify(na));
             nb.Nextappointment = '3999-01-12';
             f.list.push(new Appointment(na));
             f.list.push(new Appointment(nb));
-            element().folder = f;
-            expect(element().isBlocked()).toBeFalsy();
+            el.folder = f;
+            expect(el.hasAttribute('blocked')).toBeFalse();
             setTimeout(() => {
-                expect(element().querySelector('#withoutAppointment').offsetWidth == 0).toBeTruthy();
-                expect(element().querySelector('#withAppointment').offsetWidth > 0).toBeTruthy();
-                expect(element().querySelector('#withAppointment').innerText).toContain('2999-01-10');
+                expect(el.querySelector('#withoutAppointment').hasAttribute('hidden')).toBeTrue();
+                expect(el.querySelector('#withAppointment').hasAttribute('hidden')).toBeFalse();
+                expect(el.querySelector('#withAppointment').innerHTML).toContain('2999-01-10');
                 done();
             });
         });
