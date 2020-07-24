@@ -1,6 +1,8 @@
 
 import { DataInvalidException, DataMissingException } from '../../js/exceptions.js';
 import { defineCustomElement } from '../../js/custom-element.js';
+import XWithFile from '../abstract/x-with-file.js';
+import Patient from '../../models/Patient.js';
 
 /**
  * @param birth
@@ -91,35 +93,32 @@ export function fromBirthDateTo(date, reference = new Date()) {
     return (days.getFullYear() - 1900) + (days.getMonth() / 12);
 }
 
-export default class XAge extends HTMLElement {
+export default class XFffAge extends XWithFile {
     static get observedAttributes() {
         return ['value', 'ref'];
     }
 
     constructor() {
         super();
-        this.adapt();
+        this.style.display = 'inline';
     }
 
-    attributeChangedCallback(_attributeName, _oldValue, _newValue) {
-        this.adapt();
-    }
-
-    adapt() {
-        try {
-            this.removeAttribute('error');
-            this.innerHTML = yearsToYM(this.value);
-        } catch (e) {
-            this.setAttribute('error', e.id);
-            this.innerHTML = e.message;
-        }
+    formula() {
+        return yearsToYM(this.value);
     }
 
     get value() {
-        const value = this.getAttribute('value');
-        const ref = this.getAttribute('ref');
-        return fromBirthDateTo(value, ref ? ref : new Date());
+        if (!this.isOk()) {
+            throw 'No enough data';
+        }
+        if (this.file instanceof Patient) {
+            this.setAttribute('source', 'patient');
+            return fromBirthDateTo((/** @type {Patient} */ this.file).Yearofbirth, new Date());
+        }
+
+        this.setAttribute('source', 'non-patient');
+        return fromBirthDateTo(this.folder.getPatient().Yearofbirth, this.file.Date);
     }
 }
 
-defineCustomElement(XAge);
+defineCustomElement(XFffAge);

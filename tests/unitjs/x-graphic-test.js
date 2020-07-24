@@ -1,7 +1,7 @@
 
 import '../../app/elements/widgets/x-graphic.js';
 
-import { fn, loadReference } from './athelpers.js';
+import { fn, loadReference, refFolder1 } from './athelpers.js';
 import Folder from '../../app/models/Folder.js';
 
 // TODO: use constructor instead of webDescribe
@@ -21,7 +21,7 @@ describe(fn(import.meta.url), function () {
 
         describe('with invalid patient', function () {
             beforeEach(() => {
-                const folder = new Folder(loadReference('FolderTest.test1.json').folder);
+                const folder = new Folder(loadReference(refFolder1).folder);
                 folder.getPatient().Sex = 0;
                 element().folder = folder;
             });
@@ -36,7 +36,7 @@ describe(fn(import.meta.url), function () {
             let folder;
 
             beforeEach(() => {
-                folder = new Folder(loadReference('FolderTest.test1.json').folder);
+                folder = new Folder(loadReference(refFolder1).folder);
                 expect(folder).toEqual(jasmine.any(Folder));
                 element().folder = folder;
             });

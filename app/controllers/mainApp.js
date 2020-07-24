@@ -49,7 +49,7 @@ window.XFile = XFile;
 import '../elements/x-file-bill.js';
 import '../elements/x-file-bill-summary.js';
 
-import '../elements/widgets/x-age.js';
+import '../elements/widgets/x-fff-age.js';
 import '../elements/panels/x-group-panel.js';
 
 let mainApp = angular.module('app_main', ['ngRoute'])
