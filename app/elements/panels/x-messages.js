@@ -8,9 +8,10 @@ import { defineCustomElement } from '../../js/custom-element.js';
  * @typedef {object} Message a message for x-messages
  * @property {string} text to be shown
  * @property {string} [level] of the message
- * @property {string} [icon] of the message
  * @property {string} [id] of the message
  */
+
+let msgId = 0;
 
 /**
  * Slot[]: content
@@ -45,39 +46,22 @@ export default class XMessages extends HTMLElement {
     }
 
     /**
-     * @param {string|Message} text to be shown
-     * @param {string} level (danger, warning, success, info, primary, default)
-     * @param {string} icon of the message
-     * @param {string} id    technical id
+     * @param {string|Message} msg to be shown
+     * @returns {string} messageId
      */
-    addMessage(text, level = '', icon = '', id = '') {
-        /** @type {Message} */
-        let msg;
-
-        if (typeof (text) == 'string') {
-            msg = { text };
-        } else {
-            msg = text;
+    addMessage(msg) {
+        if (typeof(msg) == 'string') {
+            msg = { text: msg };
         }
-
-        if (level) {
-            msg.level = level;
-        }
-
-        if (icon) {
-            msg.icon = icon;
-        }
-
-        if (id) {
-            msg.id = id;
-        }
-
         msg = {
             level: levels.danger,
-            id: '',
             ...msg
         };
+        if (!('id' in msg)) {
+            msg.id = '' + msgId++;
+        }
         this.insertAdjacentHTML('beforeend', `<div class="alert alert-${msg.level}" id="${msg.id}">${msg.text}</div>`);
+        return msg.id;
     }
 
     get messagesCount() {
