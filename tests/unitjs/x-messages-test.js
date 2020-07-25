@@ -1,54 +1,56 @@
 
 import '../../app/elements/panels/x-messages.js';
 
-import { fn, webDescribe } from './athelpers.js';
+import { fn } from './athelpers.js';
 import { levels } from '../../app/config.js';
-
-// TODO: use constructor instead of webDescribe
+import XMessages from '../../app/elements/panels/x-messages.js';
 
 describe(fn(import.meta.url), function () {
-    webDescribe('initialized', '<x-messages></x-messages>', function (element) {
-        beforeEach(() => {
-            element().clear();
-        });
+    const el = new XMessages();
 
-        it('should show messages', () => {
-            expect(element().querySelectorAll('div').length).toBe(0);
-            expect(element().messagesCount).toBe(0);
+    beforeEach(() => {
+        el.clear();
+    });
 
-            element().showMessages(['a', 'b']);
-            expect(element().querySelectorAll('div').length).toBe(2);
-            expect(element().messagesCount).toBe(2);
+    it('should show messages', () => {
+        expect(el.querySelectorAll('div').length).toBe(0);
+        expect(el.messagesCount).toBe(0);
 
-            element().addMessage('c');
-            expect(element().querySelectorAll('div').length).toBe(3);
-            expect(element().messagesCount).toBe(3);
+        el.showMessages(['a', 'b']);
+        expect(el.querySelectorAll('div').length).toBe(2);
+        expect(el.messagesCount).toBe(2);
 
-            element().showMessages(['a', 'b']);
-            expect(element().querySelectorAll('div').length).toBe(2);
-            expect(element().messagesCount).toBe(2);
-        });
+        el.addMessage('c');
+        expect(el.querySelectorAll('div').length).toBe(3);
+        expect(el.messagesCount).toBe(3);
 
-        it('should clear', () => {
-            element().showMessages(['a', 'b']);
-            expect(element().messagesCount).toBe(2);
+        el.showMessages(['a', 'b']);
+        expect(el.querySelectorAll('div').length).toBe(2);
+        expect(el.messagesCount).toBe(2);
+    });
 
-            element().clear();
-            expect(element().messagesCount).toBe(0);
-        });
+    it('should clear', () => {
+        el.showMessages(['a', 'b']);
+        expect(el.messagesCount).toBe(2);
 
-        it('should add messages', () => {
-            element().addMessage('c');
-            expect(element().messagesCount).toBe(1);
+        el.clear();
+        expect(el.messagesCount).toBe(0);
+    });
 
-            element().addMessage({ text: 'c', level: levels.danger, id: 'MSG_C' });
-            expect(element().messagesCount).toBe(2);
-            expect(element().querySelectorAll('div#MSG_C').length).toBe(1);
-            expect(element().messagesIds).toContain('MSG_C');
+    it('should add messages', () => {
+        let res;
+        el.addMessage('c');
+        expect(el.messagesCount).toBe(1);
 
-            element().addMessage('c', levels.danger, '', 'MSG_D');
-            expect(element().messagesCount).toBe(3);
-            expect(element().messagesIds).toContain('MSG_D');
-        });
+        res = el.addMessage({ text: 'c', level: levels.danger, id: 'MSG_C' });
+        expect(res).toBe('MSG_C');
+        expect(el.messagesCount).toBe(2);
+        expect(el.querySelectorAll('div#MSG_C').length).toBe(1);
+        expect(el.messagesIds).toContain('MSG_C');
+
+        res = el.addMessage({ text: 'c', level: levels.danger, id: 'MSG_D' });
+        expect(res).toBe('MSG_D');
+        expect(el.messagesCount).toBe(3);
+        expect(el.messagesIds).toContain('MSG_D');
     });
 });
