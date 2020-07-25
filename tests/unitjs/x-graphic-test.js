@@ -1,60 +1,49 @@
 
-import '../../app/elements/widgets/x-graphic.js';
-
 import { fn, loadReference, refFolder1 } from './athelpers.js';
 import Folder from '../../app/models/Folder.js';
-
-// TODO: use constructor instead of webDescribe
+import XGraphic from '../../app/elements/widgets/x-graphic.js';
 
 describe(fn(import.meta.url), function () {
 
-    withHtml('<x-graphic></x-graphic>', function (element) {
-        describe('without folder', function () {
-            beforeEach(() => {
-                element().folder = null;
-            });
+    describe('without folder', function () {
 
-            it('should initialize', function () {
-                expect(element().innerHTML).toContain('No patient');
-            });
+        it('should initialize', function () {
+            const el = new XGraphic();
+            el.folder = null;
+            expect(el.innerHTML).toContain('No patient');
         });
 
         describe('with invalid patient', function () {
-            beforeEach(() => {
+            it('should initialize', function () {
+                const el = new XGraphic();
                 const folder = new Folder(loadReference(refFolder1).folder);
                 folder.getPatient().Sex = 0;
-                element().folder = folder;
-            });
-
-            it('should initialize', function () {
-                expect(element().innerHTML).toContain('Sex of the patient is unknown');
+                el.folder = folder;
+                expect(el.innerHTML).toContain('Sex of the patient is unknown');
             });
 
         });
 
         describe('with folder', function () {
-            let folder;
-
-            beforeEach(() => {
-                folder = new Folder(loadReference(refFolder1).folder);
-                expect(folder).toEqual(jasmine.any(Folder));
-                element().folder = folder;
-            });
-
             it('should initialize', function () {
-                expect(element().innerHTML).not.toContain('No patient');
+                const el = new XGraphic();
+                const folder = new Folder(loadReference(refFolder1).folder);
+                expect(folder).toEqual(jasmine.any(Folder));
+                el.folder = folder;
+
+                expect(el.innerHTML).not.toContain('No patient');
 
                 let n = 1;
                 expect(folder.getFilesRelatedToPatient(n).id).toBe(13);
                 expect(folder.getFilesRelatedToPatient(n).getModel()).toBe('RicketConsult');
-                expect(element().displayX(folder.getFilesRelatedToPatient(n))).toBe('16 too high');
-                expect(element().displayY(folder.getFilesRelatedToPatient(n))).toBe('Invalid Y');
+                expect(el.displayX(folder.getFilesRelatedToPatient(n))).toBe('16 too high');
+                expect(el.displayY(folder.getFilesRelatedToPatient(n))).toBe('Invalid Y');
 
                 n = 2;
                 expect(folder.getFilesRelatedToPatient(n).id).toBe(1);
                 expect(folder.getFilesRelatedToPatient(n).getModel()).toBe('Bill');
-                expect(element().displayX(folder.getFilesRelatedToPatient(n))).toBe('13 too high');
-                expect(element().displayY(folder.getFilesRelatedToPatient(n))).toBe('Invalid Y');
+                expect(el.displayX(folder.getFilesRelatedToPatient(n))).toBe('13 too high');
+                expect(el.displayY(folder.getFilesRelatedToPatient(n))).toBe('Invalid Y');
             });
         });
     });

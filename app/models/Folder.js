@@ -123,6 +123,11 @@ export default class Folder extends FolderPage {
         return list[0];
     }
 
+    /**
+     *
+     * @param {boolean|number} i is the index of the file
+     * @returns {object} file
+     */
     getFilesRelatedToPatient(i = false) {
         if (i !== false) {
             let list = this.getFilesRelatedToPatient();
