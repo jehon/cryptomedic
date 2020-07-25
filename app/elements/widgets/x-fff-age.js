@@ -94,10 +94,6 @@ export function fromBirthDateTo(date, reference = new Date()) {
 }
 
 export default class XFffAge extends XWithFile {
-    static get observedAttributes() {
-        return ['value', 'ref'];
-    }
-
     constructor() {
         super();
         this.style.display = 'inline';
