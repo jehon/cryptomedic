@@ -216,7 +216,7 @@ describe(fn(import.meta.url), function () {
         });
     });
 
-    xdescribe('with x-fff-age', function () {
+    describe('with x-fff-age', function () {
         let f;
         beforeEach(function () {
             f = new Folder(loadReference(refFolder1).folder);
@@ -225,8 +225,8 @@ describe(fn(import.meta.url), function () {
         it('should show nothing without file', function () {
             const el = new XFffAge();
             el.folder = f;
-            expect(el.innerText).toBe('');
             expect(() => el.value).toThrow();
+            expect(el.innerText).toBe('');
         });
 
         it('should show patient age', function () {
@@ -234,19 +234,17 @@ describe(fn(import.meta.url), function () {
             el.folder = f;
             el.file = f.getPatient();
 
-            // expect(el.innerText).toBe('Date is too short');
-            // expect(() => el.value).toThrow();
-            // expect(el.getAttribute('error')).toBe('DataInvalidException#date');
+            expect(el.value).toBeGreaterThan(22);
+            expect(parseInt(el.innerText.split('m')[0])).toBeGreaterThan(21);
         });
 
         it('should show file age', function () {
             const el = new XFffAge();
             el.folder = f;
-            // el.file = ???;
+            el.file = f.getByUid('ricket-consult-13');
 
-            // expect(el.innerText).not.toBe('');
-            // expect(el.hasAttribute('error')).toBeFalse();
-            // expect(el.value).toBeGreaterThan(1);
+            expect(el.value).toBe(16);
+            expect(el.innerText).toBe('16y0m');
         });
     });
 });
