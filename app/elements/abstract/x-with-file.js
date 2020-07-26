@@ -33,6 +33,9 @@ export default class XWithFile extends XWithFolder {
     }
 
     isOk() {
+        if (!super.isOk()) {
+            return false;
+        }
         return !!this.file;
     }
 
