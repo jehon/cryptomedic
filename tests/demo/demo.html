@@ -103,7 +103,14 @@
             <div slot>Content</div>
         </x-requestor>
         <script type='module'>
-            document.querySelectorAll('x-requestor[fail]').forEach(e => e.request({ url: '/nothing' }));
+            document
+                .querySelectorAll('x-requestor[fail]').forEach(
+                    e =>
+                        e.request({ url: '/nothing' })
+                            // Avoid it to appear in logs
+                            .catch(() => { })
+                );
+
         </script>
     </div>
     <h2>X-Messages</h2>
