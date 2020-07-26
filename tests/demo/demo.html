@@ -137,7 +137,7 @@
     <script type='module' src='../../app/elements/widgets/x-graphic-weight.js'></script>
     <script type='module' src='../../app/elements/widgets/x-graphic-bmi.js'></script>
     <script type='module' src='../../app/elements/widgets/x-graphic-wh.js'></script>
-    <div class='flex' id='graphics-folder-test1'>
+    <div class='flex' folder='test1'>
         <x-graphic-height></x-graphic-height>
         <x-graphic-weight></x-graphic-weight>
         <x-graphic-bmi></x-graphic-bmi>
@@ -153,16 +153,19 @@
 
 
     <script type='module'>
+        import Folder from '../../app/models/Folder.js';
 
-            fetch('../../www/api/v1.3/tests/references/FolderTest.test1.json')
-                .then(response => response.json())
-                .then(data => new Folder(data.folder))
-                .then(folder => {
-                    console.log(folder);
-                    document
-                        .querySelector('#graphics-folder-test1')
-                        .querySelectorAll('[with-folder]')
-                        .forEach(el => el.folder = folder)
+        fetch('../../www/api/v1.3/tests/references/FolderTest.test1.json')
+            .then(response => response.json())
+            .then(data => new Folder(data.folder))
+            .then(folder => {
+                console.log("loading folder: ", folder);
+                document
+                    .querySelectorAll('[folder="test1"]').forEach(el => {
+                        el.querySelectorAll('[with-folder]')
+                            .forEach(el => el.folder = folder)
+                    })
+            });
     </script>
 </body>
 
