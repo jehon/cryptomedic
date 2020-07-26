@@ -137,11 +137,11 @@
     <script type='module' src='../../app/elements/widgets/x-graphic-weight.js'></script>
     <script type='module' src='../../app/elements/widgets/x-graphic-bmi.js'></script>
     <script type='module' src='../../app/elements/widgets/x-graphic-wh.js'></script>
-    <div class='flex' folder='test1'>
-        <x-graphic-height></x-graphic-height>
-        <x-graphic-weight></x-graphic-weight>
-        <x-graphic-bmi></x-graphic-bmi>
-        <x-graphic-wh></x-graphic-wh>
+    <div class='flex'>
+        <x-graphic-height demo-folder='test1'></x-graphic-height>
+        <x-graphic-weight demo-folder='test1'></x-graphic-weight>
+        <x-graphic-bmi demo-folder='test1'></x-graphic-bmi>
+        <x-graphic-wh demo-folder='test1'></x-graphic-wh>
     </div>
 
     <h2>x-input-date</h2>
@@ -161,7 +161,8 @@
             .then(folder => {
                 console.log("loading folder: ", folder);
                 document
-                    .querySelectorAll('[folder="test1"]').forEach(el => {
+                    .querySelectorAll('[demo-folder="test1"]').forEach(el => {
+                        el.folder = folder;
                         el.querySelectorAll('[with-folder]')
                             .forEach(el => el.folder = folder)
                     })
