@@ -1,16 +1,15 @@
 
-import { fn, loadReference, refFolder1 } from './athelpers.js';
+import { fn, loadReference, RefFolder1, RefFolder1RicketConsult13 } from './athelpers.js';
 
 import Folder from '../../app/models/Folder.js';
 import XFffHeightSd from '../../app/elements/widgets/x-fff-height-sd.js';
 
 let testFolder;
-const fuid = 'ricket-consult-13';
 
 describe(fn(import.meta.url), function () {
     beforeEach(() => {
-        testFolder = new Folder(loadReference(refFolder1).folder);
-        expect(testFolder.getByUid(fuid)).not.toBeNull();
+        testFolder = new Folder(loadReference(RefFolder1).folder);
+        expect(testFolder.getByUid(RefFolder1RicketConsult13)).not.toBeNull();
     });
 
     describe('with folder', function () {
@@ -22,7 +21,7 @@ describe(fn(import.meta.url), function () {
         });
 
         it('shoud show', function () {
-            el.file = testFolder.getByUid(fuid);
+            el.file = testFolder.getByUid(RefFolder1RicketConsult13);
             expect(el.innerText).toBe('-9.6 ds');
         });
     });

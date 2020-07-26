@@ -1,7 +1,7 @@
 
 import * as router from '../../app/js/router.js';
 
-import { fn, refFolder1 } from './athelpers.js';
+import { fn, RefFolder1 } from './athelpers.js';
 import { API_VERSION } from '../../app/config.js';
 
 import Folder from '../../app/models/Folder.js';
@@ -48,7 +48,7 @@ describe(fn(import.meta.url), function () {
     describe('folder routes', function () {
         let f;
         beforeEach(() => {
-            f = new Folder(loadReference(refFolder1).folder);
+            f = new Folder(loadReference(RefFolder1).folder);
             expect(f).toEqual(jasmine.any(Folder));
         });
 

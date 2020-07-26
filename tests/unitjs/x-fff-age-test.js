@@ -1,7 +1,7 @@
 
 import XFffAge, { fromBirthDate, fromBirthDateTo } from '../../app/elements/widgets/x-fff-age.js';
 
-import { fn, loadReference, refFolder1 } from './athelpers.js';
+import { fn, loadReference, RefFolder1, RefFolder1RicketConsult13 } from './athelpers.js';
 import Folder from '../../app/models/Folder.js';
 
 describe(fn(import.meta.url), function () {
@@ -219,7 +219,7 @@ describe(fn(import.meta.url), function () {
     describe('with x-fff-age', function () {
         let f;
         beforeEach(function () {
-            f = new Folder(loadReference(refFolder1).folder);
+            f = new Folder(loadReference(RefFolder1).folder);
         });
 
         it('should show nothing without file', function () {
@@ -241,7 +241,7 @@ describe(fn(import.meta.url), function () {
         it('should show file age', function () {
             const el = new XFffAge();
             el.folder = f;
-            el.file = f.getByUid('ricket-consult-13');
+            el.file = f.getByUid(RefFolder1RicketConsult13);
 
             expect(el.value).toBe(16);
             expect(el.innerText).toBe('16y0m');

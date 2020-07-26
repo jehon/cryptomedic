@@ -1,5 +1,5 @@
 
-import { fn, loadReference, refFolder1 } from './athelpers.js';
+import { fn, loadReference, RefFolder1 } from './athelpers.js';
 import Folder from '../../app/models/Folder.js';
 import XGraphic from '../../app/elements/widgets/x-graphic.js';
 
@@ -16,7 +16,7 @@ describe(fn(import.meta.url), function () {
         describe('with invalid patient', function () {
             it('should initialize', function () {
                 const el = new XGraphic();
-                const folder = new Folder(loadReference(refFolder1).folder);
+                const folder = new Folder(loadReference(RefFolder1).folder);
                 folder.getPatient().Sex = 0;
                 el.folder = folder;
                 expect(el.innerHTML).toContain('Sex of the patient is unknown');
@@ -27,7 +27,7 @@ describe(fn(import.meta.url), function () {
         describe('with folder', function () {
             it('should initialize', function () {
                 const el = new XGraphic();
-                const folder = new Folder(loadReference(refFolder1).folder);
+                const folder = new Folder(loadReference(RefFolder1).folder);
                 expect(folder).toEqual(jasmine.any(Folder));
                 el.folder = folder;
 

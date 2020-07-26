@@ -1,5 +1,5 @@
 
-import { fn, loadReference, refFolder1 } from './athelpers.js';
+import { fn, loadReference, RefFolder1 } from './athelpers.js';
 
 import XWithFolder from '../../app/elements/abstract/x-with-folder.js';
 import Folder from '../../app/models/Folder.js';
@@ -9,7 +9,7 @@ let testFolder;
 
 describe(fn(import.meta.url), function () {
     beforeEach(() => {
-        testFolder = new Folder(loadReference(refFolder1).folder);
+        testFolder = new Folder(loadReference(RefFolder1).folder);
     });
 
     describe('with folder', function () {

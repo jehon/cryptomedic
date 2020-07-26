@@ -1,7 +1,7 @@
 
 import '../../app/elements/x-file-bill.js';
 
-import { webDescribe, loadReference, refFolder1 } from './athelpers.js';
+import { webDescribe, loadReference, RefFolder1 } from './athelpers.js';
 import Folder from '../../app/models/Folder.js';
 import Bill from '../../app/models/Bill.js';
 import { setSession } from '../../app/js/session.js';
@@ -9,7 +9,7 @@ import { setSession } from '../../app/js/session.js';
 // TODO: use constructor instead of webDescribe
 
 describe('tests/unit/x-file-bill-test.js', function () {
-    let getBill = function (ref = refFolder1, id = 1) {
+    let getBill = function (ref = RefFolder1, id = 1) {
         let f = new Folder(loadReference(ref).folder);
         expect(f).toEqual(jasmine.any(Folder));
         return f.getByTypeAndId(Bill, id);
@@ -22,7 +22,7 @@ describe('tests/unit/x-file-bill-test.js', function () {
             });
 
             it('should be instantiated', function () {
-                let b = getBill(refFolder1, 1);
+                let b = getBill(RefFolder1, 1);
                 element().value = b;
 
                 setSession({});
@@ -51,7 +51,7 @@ describe('tests/unit/x-file-bill-test.js', function () {
                 const prices = loadReference('PriceTest.testIndex.json');
                 setSession({ prices });
 
-                element().value = getBill(refFolder1, 1);
+                element().value = getBill(RefFolder1, 1);
             });
 
             it('should be configured', function () {

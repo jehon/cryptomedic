@@ -39,8 +39,8 @@ export default class XWithFolder extends HTMLElement {
      */
     refresh() {
         if (this.isOk()) {
-            this.shadowRoot.innerHTML = '<slot></slot>';
             this.removeAttribute('blocked');
+            this.shadowRoot.innerHTML = '<slot></slot>';
             this.adapt();
         } else {
             this.setAttribute('blocked', 'blocked');
