@@ -1,5 +1,5 @@
 
-import { fn, loadReference, refFolder1 } from './athelpers.js';
+import { fn, loadReference, RefFolder1 } from './athelpers.js';
 
 import Folder from '../../app/models/Folder.js';
 import XFffSalaryRatio from '../../app/elements/widgets/x-fff-salary-ratio.js';
@@ -9,7 +9,7 @@ const fuid = 'bill-1';
 
 describe(fn(import.meta.url), function () {
     beforeEach(() => {
-        testFolder = new Folder(loadReference(refFolder1).folder);
+        testFolder = new Folder(loadReference(RefFolder1).folder);
         expect(testFolder.getByUid(fuid)).not.toBeNull();
     });
 

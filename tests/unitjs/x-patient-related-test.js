@@ -1,7 +1,7 @@
 
 import XPatientRelated from '../../app/elements/widgets/x-patient-related.js';
 
-import { loadReference, refFolder1 } from './athelpers.js';
+import { loadReference, RefFolder1 } from './athelpers.js';
 
 import Folder from '../../app/models/Folder.js';
 import Appointment from '../../app/models/Appointment.js';
@@ -9,7 +9,7 @@ import Appointment from '../../app/models/Appointment.js';
 describe('tests/unit/x-patient-related-test.js', function () {
     let f;
     beforeEach(() => {
-        f = new Folder(loadReference(refFolder1).folder);
+        f = new Folder(loadReference(RefFolder1).folder);
     });
 
     const na = {

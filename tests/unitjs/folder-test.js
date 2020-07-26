@@ -10,13 +10,13 @@ import Picture from '../../app/models/Picture.js';
 import RicketConsult from '../../app/models/RicketConsult.js';
 import Surgery from '../../app/models/Surgery.js';
 
-import { loadReference, refFolder1 } from './athelpers.js';
+import { loadReference, RefFolder1 } from './athelpers.js';
 
 describe('test-folder', function () {
     let f;
 
     beforeEach(() => {
-        f = new Folder(loadReference(refFolder1).folder);
+        f = new Folder(loadReference(RefFolder1).folder);
         expect(f).toEqual(jasmine.any(Folder));
     });
 

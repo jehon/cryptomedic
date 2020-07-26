@@ -5,13 +5,13 @@ import Folder from '../../app/models/Folder.js';
 import RicketConsult from '../../app/models/RicketConsult.js';
 import { DataMissingException } from '../../app/js/exceptions.js';
 
-import { loadReference, refFolder1 } from './athelpers.js';
+import { loadReference, RefFolder1 } from './athelpers.js';
 
 describe('PatientRelated', function () {
     describe('with TestFolder.test1.json', function () {
         it('should have correct properties', function () {
             // Go through the rest_service !!!
-            let folder = new Folder(loadReference(refFolder1).folder);
+            let folder = new Folder(loadReference(RefFolder1).folder);
 
             expect(folder.getPatient()).toEqual(jasmine.any(Patient));
             expect(folder.getPatient().Sex).toBe('Male');
@@ -30,7 +30,7 @@ describe('PatientRelated', function () {
         describe('with ricketConsult_13', function () {
             it('should have correct statistics', function () {
 
-                let folder = new Folder(loadReference(refFolder1).folder);
+                let folder = new Folder(loadReference(RefFolder1).folder);
                 let rc = folder.getByTypeAndId(RicketConsult, 13);
 
                 expect(rc).toEqual(jasmine.any(RicketConsult));

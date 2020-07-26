@@ -35,6 +35,13 @@ export default class XWithFile extends XWithFolder {
     isOk() {
         return !!this.file;
     }
+
+    refresh() {
+        if (this.folder && !this.file && this.hasAttribute('file-uid')) {
+            this.file = this.folder.getByUid(this.getAttribute('file-uid'));
+        }
+        super.refresh();
+    }
 }
 
 defineCustomElement(XWithFile);

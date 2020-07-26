@@ -1,5 +1,5 @@
 
-import { loadReference, refFolder1 } from './athelpers.js';
+import { loadReference, RefFolder1 } from './athelpers.js';
 import { DataMissingException } from '../../app/js/exceptions.js';
 
 describe('Jasmine', function () {
@@ -25,7 +25,7 @@ describe('Jasmine', function () {
     });
 
     it('load json files', function () {
-        let valid_respond = loadReference(refFolder1);
+        let valid_respond = loadReference(RefFolder1);
         expect(valid_respond).not.toBeNull();
         expect(valid_respond.folder[0].type).toBe('Patient');
     });

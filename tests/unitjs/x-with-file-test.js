@@ -1,5 +1,5 @@
 
-import { fn, loadReference, refFolder1 } from './athelpers.js';
+import { fn, loadReference, RefFolder1, RefFolder1RicketConsult13 } from './athelpers.js';
 
 import XWithFile from '../../app/elements/abstract/x-with-file.js';
 import Folder from '../../app/models/Folder.js';
@@ -9,7 +9,7 @@ let file;
 
 describe(fn(import.meta.url), function () {
     beforeEach(() => {
-        testFolder = new Folder(loadReference(refFolder1).folder);
+        testFolder = new Folder(loadReference(RefFolder1).folder);
         file = testFolder.list[0];
     });
 
@@ -60,6 +60,20 @@ describe(fn(import.meta.url), function () {
             expect(el.getAttribute('with-file')).toBe('' + testFolder.list[0].uid());
             expect(el.hasAttribute('blocked')).toBeFalse();
             expect(ok).toBeTrue();
+        });
+
+    });
+    describe('without folder at first', function() {
+        it('should select file based on file-uid', function () {
+            const el = new XWithFile();
+            el.setAttribute('file-uid', RefFolder1RicketConsult13);
+            el.folder = testFolder;
+
+            expect(el.folder.getId()).toBe(testFolder.getId());
+            expect(el.file.uid()).toBe(RefFolder1RicketConsult13);
+            expect(el.getAttribute('with-folder')).toBe('' + testFolder.getId());
+            expect(el.getAttribute('with-file')).toBe(RefFolder1RicketConsult13);
+            expect(el.hasAttribute('blocked')).toBeFalse();
         });
     });
 });
