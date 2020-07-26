@@ -25,6 +25,7 @@
             border: 1px solid green;
         }
     </style>
+
     <h2>Widgets</h2>
     <div class='flex'>
         <x-panel>
@@ -41,6 +42,7 @@
             document.querySelectorAll('x-button').forEach(e => e.addEventListener('click', evt => console.info('clicked', evt.target)));
         </script>
     </div>
+
     <h2>X-Panel's</h2>
     <script type='module' src='../../app/elements/panels/x-panel.js'></script>
     <div class='flex'>
@@ -48,6 +50,7 @@
             <div>test</div>
         </x-panel>
     </div>
+
     <h2>X-Group-Panel's</h2>
     <script type='module' src='../../app/elements/panels/x-group-panel.js'></script>
     <div class='flex'>
@@ -71,12 +74,14 @@
             </table>
         </x-group-panel>
     </div>
+
     <h2>X-Waiting's</h2>
     <script type='module' src='../../app/elements/panels/x-waiting.js'></script>
     <div class='flex'>
         <x-waiting>content free</x-waiting>
         <x-waiting blocked>content waiting</x-waiting>
     </div>
+
     <h2>X-Overlay's</h2>
     <script type='module' src='../../app/elements/panels/x-overlay.js'></script>
     <div class='flex'>
@@ -93,6 +98,7 @@
             <div slot='overlay'>Overlay</div>
         </x-overlay>
     </div>
+
     <h2>X-Requestor's</h2>
     <script type='module' src='../../app/elements/panels/x-requestor.js'></script>
     <div class='flex'>
@@ -113,6 +119,7 @@
 
         </script>
     </div>
+
     <h2>X-Messages</h2>
     <script type='module' src='../../app/elements/panels/x-messages.js'></script>
     <div class='flex'>
