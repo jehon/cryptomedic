@@ -1,18 +1,17 @@
 
-import '../../app/elements/panels/x-group-panel.js';
-
-import { fn, webDescribe } from './athelpers.js';
+import XGroupPanel from '../../app/elements/panels/x-group-panel.js';
+import { fn } from './athelpers.js';
 
 // TODO: use constructor instead of webDescribe
 
 describe(fn(import.meta.url), function () {
-    webDescribe('initialized', '<x-group-panel title="test"></x-group-panel>', function (element) {
-        it('should initialize', function () {
-            expect(element()).not.toBeNull();
-            expect(element().shadowRoot.querySelector('legend')).not.toBeNull();
-            expect(element().shadowRoot.querySelector('legend').innerHTML).toBe('test');
+    it('should initialize', function () {
+        const el = new XGroupPanel();
+        el.setAttribute('title', 'test');
 
-            expect(element().checkValidity()).toBeTruthy();
-        });
+        expect(el.shadowRoot.querySelector('legend')).not.toBeNull();
+        expect(el.shadowRoot.querySelector('legend').innerHTML).toBe('test');
+
+        expect(el.checkValidity()).toBeTruthy();
     });
 });

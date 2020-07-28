@@ -45,14 +45,35 @@ export default class XGroupPanel extends HTMLElement {
                     padding: 0;
                 }
                 
-                fieldset > slot {
+                fieldset slot {
                     width: 100%;
                 }
 
+                table {
+                    width: 100%;
+                }
+
+                table td#versal {
+                    background-color: white;
+                }
+
+                ::slotted([slot=content]:nth-child(odd):not([white])) {
+                    background-color: #f5f5f5;
+                }
+
+                ::slotted([slot=content]:nth-child(even):not([white])) {
+                    background-color: lightgray;
+                }
             </style>
             <fieldset>
                 <legend></legend>
-                <slot></slot>
+                <table>
+                    <tr>
+                        <td id='versal'><slot name='versal'></slot></td>
+                        <td><slot></slot></td>
+                    </tr>
+                </table>
+                
             </fieldset>
         `;
     }
