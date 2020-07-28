@@ -10,6 +10,7 @@ export default class XWithFolder extends HTMLElement {
         super();
         this.attachShadow({ mode: 'open' });
         this.folder = null;
+        this.shadowRoot.innerHTML = '<slot></slot>';
     }
 
     get folder() {
@@ -40,11 +41,9 @@ export default class XWithFolder extends HTMLElement {
     refresh() {
         if (this.isOk()) {
             this.removeAttribute('blocked');
-            this.shadowRoot.innerHTML = '<slot></slot>';
             this.adapt();
         } else {
             this.setAttribute('blocked', 'blocked');
-            this.shadowRoot.innerHTML = '?';
         }
     }
 
