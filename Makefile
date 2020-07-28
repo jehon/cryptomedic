@@ -143,7 +143,7 @@ test-unit: dependencies-node $(CJS2ESM_DIR)/axios.js $(CJS2ESM_DIR)/axios-mock-a
 	if [ "$$NBR_TESTS" = "$$NORM_TESTS" ]; then \
     	echo "V Correct number of tests"; \
 	else \
-		echo "X Incorrect number of tests (expected $$NORM_TESTS - recevied $$NBR_TESTS)" >&2 ; \
+		echo "X Incorrect number of tests (expected $$NORM_TESTS - received $$NBR_TESTS)" >&2 ; \
 		exit 1; \
 	fi
 
