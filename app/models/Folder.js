@@ -94,6 +94,9 @@ export default class Folder extends FolderPage {
      * @returns {*} a file or null
      */
     getByUid(uid) {
+        if (uid == 'patient') {
+            return this.getPatient();
+        }
         for (const i in this.list) {
             if (this.list[i].uid && this.list[i].uid() == uid) {
                 return this.list[i];

@@ -50,6 +50,10 @@ describe('test-folder', function () {
         expect(() => Folder.create(f, 'AnythingInvalid', {})).toThrow();
     });
 
+    it('should give the patient', function() {
+        expect(f.getByUid('patient')).toEqual(jasmine.any(Patient));
+    });
+
     it('should query specific element (Otherconsult 1)', () => {
         expect(f.getByTypeAndId(OtherConsult, 1)).toEqual(jasmine.any(OtherConsult));
         expect(f.getByTypeAndId(OtherConsult, 1).id).toBe(1);
