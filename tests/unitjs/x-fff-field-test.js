@@ -52,6 +52,14 @@ describe(fn(import.meta.url), function () {
         it('shoud set field', function () {
             el.setAttribute('field', 'helloThere');
             expect(el.shadowRoot.querySelector('#label').innerHTML).toBe('Hello there');
+            expect(el.hasAttribute('empty')).toBeTrue();
+
+            el.setAttribute('field', 'ExaminerName');
+            expect(el.shadowRoot.querySelector('#label').innerHTML).toBe('Examiner name');
+            expect(el.hasAttribute('empty')).toBeFalse();
+
+            el.setAttribute('field', 'CrossRightT');
+            expect(el.hasAttribute('empty')).toBeTrue();
         });
     });
 });
