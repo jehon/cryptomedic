@@ -1,5 +1,6 @@
 
 import { defineCustomElement } from '../../js/custom-element.js';
+import setPropertyOn from '../../js/set-property.js';
 
 const folder = Symbol('folder');
 
@@ -8,9 +9,7 @@ const folder = Symbol('folder');
 export default class XWithFolder extends HTMLElement {
     constructor() {
         super();
-        this.attachShadow({ mode: 'open' });
         this.folder = null;
-        this.shadowRoot.innerHTML = '<slot></slot>';
     }
 
     get folder() {
@@ -24,6 +23,7 @@ export default class XWithFolder extends HTMLElement {
         } else {
             this.setAttribute('with-folder', 'null');
         }
+        setPropertyOn(this, 'folder', f);
 
         this.refresh();
     }
