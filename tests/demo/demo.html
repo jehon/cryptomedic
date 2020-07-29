@@ -53,6 +53,7 @@
 
     <h2>X-Group-Panel's</h2>
     <script type='module' src='../../app/elements/panels/x-group-panel.js'></script>
+    <script type='module' src='../../app/elements/widgets/x-fff-field.js'></script>
     <div class='flex'>
         <x-group-panel title='my title'>
             <div>test</div>
@@ -72,6 +73,17 @@
                     </tr>
                 </tbody>
             </table>
+        </x-group-panel>
+        <x-group-panel title='With fields'>
+            <x-fff-field demo-folder='test1' file-uid='ricket-consult-13' field='test'>
+                <span>hello</span>
+            </x-fff-field>
+            <x-fff-field demo-folder='test1' file-uid='ricket-consult-13' field='test2'>
+                <span>hello2</span>
+            </x-fff-field>
+            <x-fff-field demo-folder='test1' file-uid='ricket-consult-13' field='test3'>
+                <span>hello3</span>
+            </x-fff-field>
         </x-group-panel>
     </div>
 
