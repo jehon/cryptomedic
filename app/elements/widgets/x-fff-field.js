@@ -52,7 +52,13 @@ export default class XFffField extends XWithFile {
     }
 
     adapt() {
-        // Set the value
+        // We dont' call super.adapt, because we are not based on formula();
+        const field = this.getAttribute('field');
+        if (field in this.file && this.file[field]) {
+            this.removeAttribute('empty');
+        } else {
+            this.setAttribute('empty', field);
+        }
     }
 }
 
