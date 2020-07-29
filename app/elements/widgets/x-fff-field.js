@@ -2,7 +2,6 @@
 import { defineCustomElement } from '../../js/custom-element.js';
 import { toSentenceCase } from '../../js/string-utils.js';
 import XWithFile from '../abstract/x-with-file.js';
-import { yearsToYM } from './x-fff-age.js';
 
 export default class XFffField extends XWithFile {
     static get observedAttributes() {
