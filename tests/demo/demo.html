@@ -164,13 +164,11 @@
         <x-graphic-wh demo-folder='test1'></x-graphic-wh>
     </div>
 
-    <h2>x-input-date</h2>
-    <script type='module' src='../../app/elements/x-input-date.js'></script>
-    <div class='flex'>
-        <x-input-date></x-input-date>
-        <x-input-date value='01-02-2020'></x-input-date>
+    <h2>Patient related</h2>
+    <script type='module' src='../../app/elements/widgets/x-ff-patient-related.js'></script>
+    <div class=' flex'>
+        <x-ff-patient-related demo-folder='test1'></x-ff-patient-related>
     </div>
-
 
     <script type='module'>
         import Folder from '../../app/models/Folder.js';
@@ -179,13 +177,11 @@
             .then(response => response.json())
             .then(data => new Folder(data.folder))
             .then(folder => {
-                console.log("loading folder: ", folder);
-                document
-                    .querySelectorAll('[demo-folder="test1"]').forEach(el => {
-                        el.folder = folder;
-                        el.querySelectorAll('[with-folder]')
-                            .forEach(el => el.folder = folder)
-                    })
+                document.querySelectorAll('[demo-folder="test1"]').forEach(el => {
+                    el.folder = folder;
+                    el.querySelectorAll('[with-folder]')
+                        .forEach(el => el.folder = folder)
+                })
             });
     </script>
 </body>

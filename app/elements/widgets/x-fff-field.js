@@ -3,6 +3,8 @@ import { defineCustomElement } from '../../js/custom-element.js';
 import { toSentenceCase } from '../../js/string-utils.js';
 import XWithFile from '../abstract/x-with-file.js';
 
+// TODO: use x-i18n
+
 export default class XFffField extends XWithFile {
     static get observedAttributes() {
         return ['field', 'label'];
@@ -10,6 +12,7 @@ export default class XFffField extends XWithFile {
 
     constructor() {
         super();
+        this.attachShadow({ mode: 'open' });
 
         // PS: Could be placed in a <style> tag, but would slow down the render
         this.style.display = 'grid';
@@ -24,7 +27,7 @@ export default class XFffField extends XWithFile {
                 <span id='label'></span>
             </div>
             <div>
-                <slot></slot>
+                <slot><div id='content'></div></slot>
             </div>
         `;
     }
@@ -58,6 +61,9 @@ export default class XFffField extends XWithFile {
             this.removeAttribute('empty');
         } else {
             this.setAttribute('empty', field);
+        }
+        if (field) {
+            this.shadowRoot.querySelectorAll('#content').forEach(e => e.innerHTML = this.file[field]);
         }
     }
 }
