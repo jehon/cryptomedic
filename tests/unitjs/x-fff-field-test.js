@@ -37,6 +37,7 @@ describe(fn(import.meta.url), function () {
         beforeEach(() => {
             el = new XFffField();
             el.folder = f;
+            el.file = f.getByUid(RefFolder1RicketConsult13);
         });
 
         it('shoud show', function () {
