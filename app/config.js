@@ -4,7 +4,19 @@
 export const API_VERSION = 'v1.3';
 
 export const spacing = {
-    element: '5px'
+    /**
+     * between the elements
+     *
+     * @type {string}
+     */
+    element: '5px',
+
+    /**
+     * between the container and the text
+     *
+     * @type {string}
+     */
+    text: '5px'
 };
 
 export const levels = {

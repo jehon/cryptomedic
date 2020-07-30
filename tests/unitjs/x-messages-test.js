@@ -1,9 +1,9 @@
 
-import '../../app/elements/panels/x-messages.js';
-
-import { fn } from './athelpers.js';
 import { levels } from '../../app/config.js';
+import '../../app/elements/panels/x-messages.js';
 import XMessages from '../../app/elements/panels/x-messages.js';
+import { fn } from './athelpers.js';
+
 
 describe(fn(import.meta.url), function () {
     const el = new XMessages();
@@ -13,19 +13,19 @@ describe(fn(import.meta.url), function () {
     });
 
     it('should show messages', () => {
-        expect(el.querySelectorAll('div').length).toBe(0);
+        expect(el.shadowRoot.querySelectorAll('x-message').length).toBe(0);
         expect(el.messagesCount).toBe(0);
 
         el.showMessages(['a', 'b']);
-        expect(el.querySelectorAll('div').length).toBe(2);
+        expect(el.shadowRoot.querySelectorAll('x-message').length).toBe(2);
         expect(el.messagesCount).toBe(2);
 
         el.addMessage('c');
-        expect(el.querySelectorAll('div').length).toBe(3);
+        expect(el.shadowRoot.querySelectorAll('x-message').length).toBe(3);
         expect(el.messagesCount).toBe(3);
 
         el.showMessages(['a', 'b']);
-        expect(el.querySelectorAll('div').length).toBe(2);
+        expect(el.shadowRoot.querySelectorAll('x-message').length).toBe(2);
         expect(el.messagesCount).toBe(2);
     });
 
@@ -45,7 +45,7 @@ describe(fn(import.meta.url), function () {
         res = el.addMessage({ text: 'c', level: levels.danger, id: 'MSG_C' });
         expect(res).toBe('MSG_C');
         expect(el.messagesCount).toBe(2);
-        expect(el.querySelectorAll('div#MSG_C').length).toBe(1);
+        expect(el.shadowRoot.querySelectorAll('x-message[msg-id=MSG_C]').length).toBe(1);
         expect(el.messagesIds).toContain('MSG_C');
 
         res = el.addMessage({ text: 'c', level: levels.danger, id: 'MSG_D' });
