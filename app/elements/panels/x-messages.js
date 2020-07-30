@@ -1,8 +1,7 @@
-/** @module panels/x-messages */
 
-import { spacing } from '../../config.js';
-import { levels } from '../../config.js';
+import { levels, spacing } from '../../config.js';
 import { defineCustomElement } from '../../js/custom-element.js';
+import '../widgets/x-message.js';
 
 /**
  * @typedef {object} Message a message for x-messages
@@ -19,19 +18,19 @@ let msgId = 0;
 export default class XMessages extends HTMLElement {
     constructor() {
         super();
+        this.attachShadow({ mode: 'open' });
         this.clear();
     }
 
     clear() {
-        this.innerHTML = `
+        this.shadowRoot.innerHTML = `
             <style>
-                x-messages {
-                    padding: ${spacing.element};
-                    width: 100%;
-                    text-align: center;
+                div#root {
                 }
             </style>
+            <div id='root'></div>
         `;
+        this.root = this.shadowRoot.querySelector('div#root');
     }
 
     /**
@@ -57,19 +56,16 @@ export default class XMessages extends HTMLElement {
             level: levels.danger,
             ...msg
         };
-        if (!('id' in msg)) {
-            msg.id = '' + msgId++;
-        }
-        this.insertAdjacentHTML('beforeend', `<div class="alert alert-${msg.level}" id="${msg.id}">${msg.text}</div>`);
+        this.root.insertAdjacentHTML('beforeend', `<x-message msg-id='${msg.id}' level='${msg.level}'>${msg.text}</x-message>`);
         return msg.id;
     }
 
     get messagesCount() {
-        return this.querySelectorAll('div').length;
+        return this.root.querySelectorAll('x-message').length;
     }
 
     get messagesIds() {
-        return new Set(Array.from(this.querySelectorAll('div')).map(e => e.getAttribute('id')));
+        return new Set(Array.from(this.root.querySelectorAll('x-message')).map(e => e.getAttribute('msg-id')));
     }
 
 }
