@@ -88,7 +88,8 @@
       </div>
     </div>
     <div class="col-md-6">
-      <x-patient-related></x-patient-related>
+      <x-ff-patient-related></x-ff-patient-related>
+			<x-ff-next-appointment></x-ff-next-appointment>
       <x-group-panel title='Social Data'>
         <table>
           <?php (new t("Bill.sl_familySalary"))->tr("Family Salary in a Month")->p(); ?>
