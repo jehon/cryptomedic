@@ -21,4 +21,12 @@ describe(fn(import.meta.url), function () {
         expect(el.shadowRoot.querySelector('[field=Name]').shadowRoot.querySelector('div#content').innerHTML).toBe('rezaul islam');
         expect(el.shadowRoot.querySelector('[field=Sex]').shadowRoot.querySelector('div#content').innerHTML).toBe('Male');
     });
+
+    it('should click', function() {
+        location.hash = '#/';
+        el.click();
+        expect(location.hash)
+            .withContext('should move to folder on click')
+            .toBe('#/folder/1');
+    });
 });
