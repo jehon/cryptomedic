@@ -30,8 +30,10 @@ export default class XFfPatientRelated extends XWithFolder {
 
     adapt() {
         const patient = this.folder.getPatient();
+        const pen = `${patient.entryyear}-${patient.entryorder}`;
+        this.setAttribute('patient-entry-number', pen);
         setPropertyOn(this, 'file', patient);
-        this.shadowRoot.querySelector('[field=entryorder]').innerHTML = `${patient.entryyear}-${patient.entryorder}`;
+        this.shadowRoot.querySelector('[field=entryorder]').innerHTML = pen;
     }
 }
 
