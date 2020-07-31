@@ -48,3 +48,18 @@ export function parseRouteApi() {
 export function getRouteToFolderFile(folderPage) {
     return '/folder/' + folderPage.patient_id + '/file/' + folderPage.getModel() + '/' + folderPage.id;
 }
+
+/**
+ * @param {number} folderId - the folder of wich to show the patient
+ */
+export function routeToFolderPatient(folderId) {
+    setRoute(`/folder/${folderId}`);
+}
+/**
+ * @param {number} folderId - the folder where to add
+ * @param {string} type - the type (string name of the class)
+ * @returns {string} the route
+ */
+export function getRouteToFolderAdd(folderId, type) {
+    return `#/folder/${folderId}/file/${type}`;
+}
