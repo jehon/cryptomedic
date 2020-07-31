@@ -138,14 +138,14 @@ test-api-commit: docker-started dependencies-api data-reset
 test-unit: dependencies-node $(CJS2ESM_DIR)/axios.js $(CJS2ESM_DIR)/axios-mock-adapter.js
 	npm run test-unit-continuously -- --single-run
     
-	@NBR_TESTS=$$(cat target/js/junit/TESTS.xml | grep "<testCase" | wc -l); \
-	NORM_TESTS=$$( cat tests/unitjs/nbr.txt ); \
-	if [ "$$NBR_TESTS" = "$$NORM_TESTS" ]; then \
-    	echo "V Correct number of tests"; \
-	else \
-		echo "X Incorrect number of tests (expected $$NORM_TESTS - received $$NBR_TESTS)" >&2 ; \
-		exit 1; \
-	fi
+# @NBR_TESTS=$$(cat target/js/junit/TESTS.xml | grep "<testCase" | wc -l); \
+# NORM_TESTS=$$( cat tests/unitjs/nbr.txt ); \
+# if [ "$$NBR_TESTS" = "$$NORM_TESTS" ]; then \
+# 	echo "V Correct number of tests"; \
+# else \
+# 	echo "X Incorrect number of tests (expected $$NORM_TESTS - received $$NBR_TESTS)" >&2 ; \
+# 	exit 1; \
+# fi
 
 .PHONY: test-e2e
 test-e2e: target/e2e/.tested
