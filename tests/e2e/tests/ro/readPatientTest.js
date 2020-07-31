@@ -25,8 +25,8 @@ module.exports = {
         client.assert.containsText('#Date', '2007-01-10');
         client.assert.containsText('#ExaminerName', 'Ershad');
 
-        client.assert.containsText('#Patient_entryyear', '2000');
-        client.assert.containsText('#Patient_entryorder', '1');
+        client.assert.elementPresent('x-ff-patient-related');
+        client.assert.elementPresent('x-ff-patient-related[patient-entry-number="2000-1"]');
 
         client.assert.containsText('x-fff-weight-sd', '0 ds');
         client.assert.containsText('x-fff-height-sd', '0 ds');
