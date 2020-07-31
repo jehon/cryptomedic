@@ -18,7 +18,8 @@ import '../elements/widgets/x-fff-height-sd.js';
 import '../elements/widgets/x-fff-weight-sd.js';
 import '../elements/widgets/x-fff-wh.js';
 import '../elements/widgets/x-fff-wh-sd.js';
-
+import '../elements/widgets/x-ff-patient-related.js';
+import '../elements/widgets/x-ff-next-appointment.js';
 
 /**
  * @param {object} folder the folder to be dispatched, false or null otherwise

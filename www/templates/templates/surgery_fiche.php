@@ -26,7 +26,8 @@
 			</x-group-panel>
 		</div>
 		<div class="col-md-6">
-			<x-patient-related></x-patient-related>
+			<x-ff-patient-related></x-ff-patient-related>
+			<x-ff-next-appointment></x-ff-next-appointment>
 		</div>
 	</div>
 </div>
