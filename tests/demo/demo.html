@@ -26,6 +26,9 @@
         }
     </style>
 
+    TODO: put h2 into div flex
+    TODO: reorganize widgets vs pages vs ... and alphabetically
+
     <h2>Widgets</h2>
     <div class='flex'>
         <x-panel>
@@ -37,6 +40,12 @@
             </div>
             <x-button level='default'>secondary</x-button>
             <x-button level='danger'>dangerous</x-button>
+        </x-panel>
+        <x-panel>
+            <h3>x-message</h3>
+            <script type='module' src='../../app/elements/widgets/x-message.js'></script>
+            <x-message level='success'>primary</x-message>
+            <x-message level='warning'>warning</x-message>
         </x-panel>
         <script>
             document.querySelectorAll('x-button').forEach(e => e.addEventListener('click', evt => console.info('clicked', evt.target)));
