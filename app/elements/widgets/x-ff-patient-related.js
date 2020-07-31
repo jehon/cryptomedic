@@ -1,10 +1,11 @@
 
+import { defineCustomElement } from '../../js/custom-element.js';
+import { routeToFolderPatient } from '../../js/router.js';
+import setPropertyOn from '../../js/set-property.js';
 import XWithFolder from '../abstract/x-with-folder.js';
-
 import '../panels/x-group-panel.js';
 import '../widgets/x-fff-field.js';
-import { defineCustomElement } from '../../js/custom-element.js';
-import setPropertyOn from '../../js/set-property.js';
+
 
 export default class XFfPatientRelated extends XWithFolder {
     constructor() {
@@ -23,6 +24,8 @@ export default class XFfPatientRelated extends XWithFolder {
                 <x-fff-field field='Yearofbirth'></x-fff-field>
                 <x-fff-field field='Sex'></x-fff-field>
             </x-group-panel>`;
+
+        this.addEventListener('click', () => routeToFolderPatient(this.folder.getId()));
     }
 
     adapt() {
