@@ -49,7 +49,7 @@ export default class XButton extends HTMLElement {
         this[button] = this.shadowRoot.querySelector('button');
     }
 
-    attributeChangedCallback(attributeName, oldValue, newValue) {
+    attributeChangedCallback(attributeName, _oldValue, newValue) {
         switch (attributeName) {
             case 'icon':
                 if (!(newValue in icons)) {

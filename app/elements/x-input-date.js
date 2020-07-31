@@ -35,7 +35,6 @@ export default class XInputDate extends JHElement {
 					x-input-date > input[type=date] {
 						position: relative;
 						width: 150px; height: 20px;
-						color: white;
 						border-style: none;
 					}
 
