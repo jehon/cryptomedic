@@ -1,6 +1,7 @@
 
 import '../../../node_modules/css-inherit/css-inherit.js';
 import { defineCustomElement } from '../../js/custom-element.js';
+import { spacing } from '../../config.js';
 
 /**
  * Slot[]: content
@@ -18,6 +19,7 @@ export default class XPanel extends HTMLElement {
                     /* absolute will be relative to panel */
                     position: relative;
                     display: block;
+                    padding: ${spacing.text};
                 }
 
                 :host > slot {

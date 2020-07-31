@@ -57,11 +57,11 @@ export default class XGroupPanel extends HTMLElement {
                     background-color: white;
                 }
 
-                ::slotted([slot=content]:nth-child(odd):not([white])) {
+                ::slotted(:not([slot]):nth-child(odd):not([white])) {
                     background-color: #f5f5f5;
                 }
 
-                ::slotted([slot=content]:nth-child(even):not([white])) {
+                ::slotted(:not([slot]):nth-child(even):not([white])) {
                     background-color: lightgray;
                 }
             </style>
