@@ -1,0 +1,130 @@
+<html>
+
+<head>
+    <title>Compare screenshots</title>
+    <meta charset='utf-8'>
+</head>
+
+<body>
+    <style>
+        body[wide] {
+            width: 150%;
+        }
+
+        img,
+        canvas {
+            box-sizing: border-box;
+            width: 32%;
+            border: solid 1px black;
+        }
+
+        [status='empty'] {
+            border: solid gray 2px;
+        }
+
+        [status='running'] {
+            border: solid yellow 2px;
+        }
+
+        compare {
+            border-bottom: 1px solid black;
+            margin-bottom: 5px;
+        }
+    </style>
+    <script>
+        module = { exports: {} };
+        const done = new Set();
+
+        function img2data(id, w, h) {
+            const myImgElement = document.querySelector('#' + id);
+
+            // 1) Create a canvas, either on the page or simply in code
+            var canvas = document.createElement('canvas');
+            canvas.height = h;
+            canvas.width = w;
+            var ctx = canvas.getContext('2d');
+
+            // 2) Copy your image data into the canvas
+            ctx.drawImage(myImgElement, 0, 0, w, h);
+
+            // 3) Read your image data
+            return ctx.getImageData(0, 0, w, h).data;
+        }
+
+        function img_diff(id) {
+            if (done.has(id)) {
+                return;
+            }
+            const myImgRef = document.querySelector('#i' + id + '_ref');
+            if (!myImgRef.complete) {
+                return;
+            }
+
+            const myImgTest = document.querySelector('#i' + id + '_tst');
+            if (!myImgTest.complete) {
+                return;
+            }
+
+            console.info("Calculating ", id);
+            done.add(id);
+
+            const w = myImgRef.naturalWidth;
+            const h = myImgRef.naturalHeight;
+
+            const canvas = document.querySelector('#i' + id + '_fin');
+            canvas.setAttribute('status', 'running');
+            canvas.width = w;
+            canvas.height = h;
+            const diff = canvas.getContext('2d');
+
+            const diffImg = diff.createImageData(w, h);
+
+            pixelmatch(
+                img2data('i' + id + '_ref', w, h),
+                img2data('i' + id + '_tst', w, h),
+                diffImg.data,
+                w, h, { threshold: 0.01 });
+            diff.putImageData(diffImg, 0, 0);
+            canvas.removeAttribute('status');
+        }
+
+        let p = new Promise(resolve => {
+            window.addEventListener('load', () => resolve());
+        });
+
+        function img_diff_tempo(id) {
+            p = p.then(() => img_diff(id));
+            return p;
+        }
+
+    </script>
+    <script src='../../node_modules/pixelmatch/index.js'></script>
+
+    <a onclick='document.querySelector("body").setAttribute("wide", "wide");'>wide</a>
+
+    <div id='results'></div>
+
+    <script>
+        fetch('../../target/styles.json')
+            .then(res => res.json())
+            .then(problemsList => {
+                console.log(problemsList);
+
+                let id = 0;
+                for (let f of Object.keys(problemsList)) {
+
+                    document.querySelector('#results').insertAdjacentHTML('beforeend',
+                        `<h3>${f}</h3>
+                        <div class='compare'>
+                                    <img target-id='${id}' onload='img_diff_tempo(${id})' id='i${id}_ref' src='/tests/style/references/${f}'></img>
+                                    <img target-id='${id}' onload='img_diff_tempo(${id})' id='i${id}_tst' src='/target/e2e/browsers/firefox/${f}'></img>
+                                    <canvas status='empty' id='i${id}_fin' for='${id}'></canvas>
+                        </div>`);
+                    id++;
+                }
+
+            })
+    </script>
+</body>
+
+</html>

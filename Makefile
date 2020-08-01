@@ -154,8 +154,8 @@ target/e2e/.tested: start data-reset www/build/index.html tests/e2e/**
 	touch target/e2e/.tested
 
 .PHONY: test-style
-test-style: target/style.html
-target/style.html: target/e2e/.tested
+test-style: target/style.json
+target/style.json: target/e2e/**
 	npm run --silent test-style
 	echo "Report is at http://localhost:5557/target/style.html"
 
