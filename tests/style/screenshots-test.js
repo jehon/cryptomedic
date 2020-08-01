@@ -29,11 +29,17 @@ Promise.allSettled(Array.from(fullList).map(f => {
         if (!refs.includes(f)) {
             // if refs does not includes it, it is only present from 'test'
             console.info(p_warn, f, 'reference is not available');
-            result[f] = { type: 'pending' };
+            result[f] = {
+                level: 'warning',
+                type: 'pending'
+            };
             return resolve();
         }
         if (!tests.includes(f)) {
-            result[f] = { type: 'unavailable' };
+            result[f] = {
+                level: 'error',
+                type: 'unavailable'
+            };
             console.error(p_ko, f, 'test is not available');
             success = false;
             return resolve();
@@ -44,16 +50,39 @@ Promise.allSettled(Array.from(fullList).map(f => {
                 const diffContent = data.misMatchPercentage;
                 const diffSize = Math.hypot(data.dimensionDifference.width, data.dimensionDifference.height);
                 if (diffSize > 0.5) {
-                    result[f] = { msg: f + ' differ is size', type: 'size', max: 0.5, actual: diffSize };
+                    result[f] = {
+                        level: 'error',
+                        msg: f + ' differ is size',
+                        type: 'size',
+                        max: 0.5,
+                        actual: diffSize
+                    };
                     console.error(p_ko, f, ': ko');
                     success = false;
                     return reject();
                 }
                 if (diffContent > 0.5) {
-                    result[f] = { msg: f + ' differ is content', type: 'content', max: 0.5, actual: diffContent };
+                    result[f] = {
+                        level: 'error',
+                        msg: f + ' differ is content',
+                        type: 'content',
+                        max: 0.5,
+                        actual: diffContent
+                    };
                     console.error(p_ko, f, ': ko');
                     success = false;
                     return reject();
+                }
+                if (diffContent > 0) {
+                    result[f] = {
+                        level: 'warning',
+                        msg: f + ' differ is content',
+                        type: 'content',
+                        max: 0.5,
+                        actual: diffContent
+                    };
+                    console.info(p_warn, f, ': small difference');
+                    return resolve();
                 }
                 console.info(p_ok, f, ': ok');
                 return resolve();
