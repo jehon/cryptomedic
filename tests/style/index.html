@@ -5,9 +5,13 @@
     <meta charset='utf-8'>
 </head>
 
-<body>
+<body wide='normal'>
     <style>
-        body[wide] {
+        body[wide=normal] {
+            width: 100%;
+        }
+
+        body[wide=wide] {
             width: 150%;
         }
 
@@ -101,6 +105,7 @@
     <script src='../../node_modules/pixelmatch/index.js'></script>
 
     <a onclick='document.querySelector("body").setAttribute("wide", "wide");'>wide</a>
+    <a onclick='document.querySelector("body").setAttribute("wide", "normal");'>normal</a>
 
     <div id='results'></div>
 
@@ -112,9 +117,11 @@
 
                 let id = 0;
                 for (let f of Object.keys(problemsList)) {
+                    const data = problemsList[f];
 
+                    // TODO: show warning / error level + more details
                     document.querySelector('#results').insertAdjacentHTML('beforeend',
-                        `<h3>${f}</h3>
+                        `<h3>${f} (${data.actual}/${data.max}: ${data.level}</h3>
                         <div class='compare'>
                                     <img target-id='${id}' onload='img_diff_tempo(${id})' id='i${id}_ref' src='/tests/style/references/${f}'></img>
                                     <img target-id='${id}' onload='img_diff_tempo(${id})' id='i${id}_tst' src='/target/e2e/browsers/firefox/${f}'></img>
