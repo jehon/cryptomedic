@@ -159,7 +159,7 @@ target/style.json: target/e2e/**
 	npm run --silent test-style
 	echo "Report is at http://localhost:5557/target/style.html"
 
-style-update-references:
+test-style-update-references:
 	rsync --progress --recursive --delete \
 		--include "*_reference.png" --include "*_reference_*.png" --exclude "*" \
 		target/e2e/browsers/firefox/ tests/style/references
