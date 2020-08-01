@@ -68,7 +68,7 @@
     "test-unit-continuously": "karma start tests/unitjs/karma.conf.js",
     "test-e2e": "nightwatch -c tests/e2e/nightwatch.conf.js",
     "test-e2e-chrome": "nightwatch -c tests/e2e/nightwatch.conf.js -e chrome",
-    "test-style": "jasmine --config=tests/style/jasmine.json",
+    "test-style": "tests/style/screenshots-test.js",
     "eslint": "eslint .",
     "stylelint": "stylelint app/**/*.css"
   }
