@@ -99,9 +99,6 @@ start: setup-structure \
 
 	@echo "Open browser: http://localhost:5557/"
 	
-	# let the time to all services to be up and running
-	sleep 5s
-
 .PHONY: docker-started
 docker-started:
 	$(DOCKERCOMPOSE) build server
@@ -149,13 +146,13 @@ test-unit: dependencies-node $(CJS2ESM_DIR)/axios.js $(CJS2ESM_DIR)/axios-mock-a
 
 .PHONY: test-e2e
 test-e2e: target/e2e/.tested
-target/e2e/.tested: start data-reset www/build/index.html tests/e2e/**
+target/e2e/.tested: data-reset www/build/index.html tests/e2e/**
 	npm run --silent test-e2e
 	touch target/e2e/.tested
 
 .PHONY: test-style
 test-style: target/style.json
-target/style.json: target/e2e/**
+target/style.json: target/e2e/.tested
 	npm run --silent test-style
 	echo "Report is at http://localhost:5557/target/style.html"
 
@@ -276,6 +273,7 @@ data-reset: docker-started
 	rsync -a --delete live-for-test/ live/
 
 # Reset database
+	$(call run_in_docker,"mysql", "while ! mysql -u root -p$(DBROOTPASS) --database=mysql -e 'Show tables;' >/dev/null; do sleep 1; done")
 	$(call run_in_docker,"mysql"," \
 		mysql -u root -p$(DBROOTPASS) --database=mysql -e \" \
 			USE mysql; \
