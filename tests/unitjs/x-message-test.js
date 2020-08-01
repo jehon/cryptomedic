@@ -2,7 +2,6 @@
 import '../../app/elements/panels/x-messages.js';
 
 import { fn } from './athelpers.js';
-import { levels } from '../../app/config.js';
 import XMessage from '../../app/elements/widgets/x-message.js';
 
 describe(fn(import.meta.url), function () {

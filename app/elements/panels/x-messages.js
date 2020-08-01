@@ -1,5 +1,5 @@
 
-import { levels, spacing } from '../../config.js';
+import { levels } from '../../config.js';
 import { defineCustomElement } from '../../js/custom-element.js';
 import '../widgets/x-message.js';
 
@@ -9,8 +9,6 @@ import '../widgets/x-message.js';
  * @property {string} [level] of the message
  * @property {string} [id] of the message
  */
-
-let msgId = 0;
 
 /**
  * Slot[]: content
