@@ -5,18 +5,22 @@
 </head>
 
 <body>
+    <script src='./demo.js' type='module'></script>
+
     <link rel="stylesheet" type="text/css" href="../../node_modules/bootstrap/dist/css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../../app/css/application.css">
     <style>
-        .flex {
+        body {
             width: 100%;
             display: flex;
             flex-wrap: wrap;
         }
 
-        .flex>* {
+        xx-test {
+            box-sizing: border-box;
             width: 300px;
-            height: 300px;
+            margin: 10px;
+            /* height: 400px; */
             border: dashed 1px blue;
         }
 
@@ -25,48 +29,52 @@
             border: 1px solid green;
         }
     </style>
+    <script type='module' src='../../app/elements/x-input-date.js'></script>
 
-    TODO: put h2 into div flex
-    TODO: reorganize widgets vs pages vs ... and alphabetically
-
-    <h2>Widgets</h2>
-    <div class='flex'>
-        <x-panel>
-            <h3>x-button</h3>
-            <script type='module' src='../../app/elements/widgets/x-button.js'></script>
-            <div>
-                <x-button level='success'>primary</x-button>
-                <x-button icon='error'>iconic</x-button>
-            </div>
-            <x-button level='default'>secondary</x-button>
-            <x-button level='danger'>dangerous</x-button>
-        </x-panel>
-        <x-panel>
-            <h3>x-message</h3>
-            <script type='module' src='../../app/elements/widgets/x-message.js'></script>
-            <x-message level='success'>primary</x-message>
-            <x-message level='warning'>warning</x-message>
-        </x-panel>
-        <script>
-            document.querySelectorAll('x-button').forEach(e => e.addEventListener('click', evt => console.info('clicked', evt.target)));
-        </script>
-    </div>
-
-    <h2>X-Panel's</h2>
+    <script type='module' src='../../app/elements/widgets/x-button.js'></script>
+    <script type='module' src='../../app/elements/widgets/x-ff-patient-related.js'></script>
+    <script type='module' src='../../app/elements/widgets/x-fff-field.js'></script>
+    <script type='module' src='../../app/elements/widgets/x-graphic-bmi.js'></script>
+    <script type='module' src='../../app/elements/widgets/x-graphic-height.js'></script>
+    <script type='module' src='../../app/elements/widgets/x-graphic-weight.js'></script>
+    <script type='module' src='../../app/elements/widgets/x-graphic-wh.js'></script>
+    <script type='module' src='../../app/elements/widgets/x-group-panel.js'></script>
+    <script type='module' src='../../app/elements/widgets/x-message.js'></script>
+    <script type='module' src='../../app/elements/widgets/x-messages.js'></script>
+    <script type='module' src='../../app/elements/widgets/x-overlay.js'></script>
     <script type='module' src='../../app/elements/widgets/x-panel.js'></script>
-    <div class='flex'>
+    <script type='module' src='../../app/elements/widgets/x-requestor.js'></script>
+    <script type='module' src='../../app/elements/widgets/x-waiting.js'></script>
+
+    <xx-test>
+        <x-button level='danger'>dangerous</x-button>
+    </xx-test>
+    <xx-test title='x-button within div'>
+        <div>
+            <x-button level='success'>primary</x-button>
+            <x-button icon='error'>iconic</x-button>
+        </div>
+    </xx-test>
+    <xx-test>
+        <x-button level='default'>secondary</x-button>
+    </xx-test>
+    <xx-test>
+        <x-message level='success'>primary</x-message>
+    </xx-test>
+    <xx-test>
+        <x-message level='warning'>warning</x-message>
+    </xx-test>
+    <xx-test>
         <x-panel>
             <div>test</div>
         </x-panel>
-    </div>
-
-    <h2>X-Group-Panel's</h2>
-    <script type='module' src='../../app/elements/widgets/x-group-panel.js'></script>
-    <script type='module' src='../../app/elements/widgets/x-fff-field.js'></script>
-    <div class='flex'>
+    </xx-test>
+    <xx-test>
         <x-group-panel title='my title'>
             <div>test</div>
         </x-group-panel>
+    </xx-test>
+    <xx-test>
         <x-group-panel title='my title'>
             <table>
                 <thead>
@@ -83,6 +91,8 @@
                 </tbody>
             </table>
         </x-group-panel>
+    </xx-test>
+    <xx-test>
         <x-group-panel title='With fields'>
             <x-fff-field demo-folder='test1' file-uid='ricket-consult-13' field='test'>
                 <span>hello</span>
@@ -94,93 +104,83 @@
                 <span>hello3</span>
             </x-fff-field>
         </x-group-panel>
-    </div>
-
-    <h2>X-Waiting's</h2>
-    <script type='module' src='../../app/elements/widgets/x-waiting.js'></script>
-    <div class='flex'>
+    </xx-test>
+    <xx-test>
         <x-waiting>content free</x-waiting>
+    </xx-test>
+    <xx-test>
         <x-waiting blocked>content waiting</x-waiting>
-    </div>
-
-    <h2>X-Overlay's</h2>
-    <script type='module' src='../../app/elements/widgets/x-overlay.js'></script>
-    <div class='flex'>
+    </xx-test>
+    <xx-test>
         <x-overlay>
             <div slot='content'>Content</div>
             <div slot='overlay'>Overlay</div>
         </x-overlay>
+    </xx-test>
+    <xx-test>
         <x-overlay blocked>
             <div slot='content'>Content</div>
             <div slot='overlay'>Overlay</div>
         </x-overlay>
+    </xx-test>
+    <xx-test>
         <x-overlay blocked closable>
             <div slot='content'>Content</div>
             <div slot='overlay'>Overlay</div>
         </x-overlay>
-    </div>
-
-    <h2>X-Requestor's</h2>
-    <script type='module' src='../../app/elements/widgets/x-requestor.js'></script>
-    <div class='flex'>
+    </xx-test>
+    <xx-test>
         <x-requestor>
             <div slot>Content</div>
         </x-requestor>
+    </xx-test>
+    <xx-test>
         <x-requestor blocked fail>
             <div slot>Content</div>
         </x-requestor>
-        <script type='module'>
-            document
-                .querySelectorAll('x-requestor[fail]').forEach(
-                    e =>
-                        e.request({ url: '/nothing' })
-                            // Avoid it to appear in logs
-                            .catch(() => { })
-                );
-
-        </script>
-    </div>
-
-    <h2>X-Messages</h2>
-    <script type='module' src='../../app/elements/widgets/x-messages.js'></script>
-    <div class='flex'>
+    </xx-test>
+    <xx-test>
         <x-messages></x-messages>
-        <script type='module'>
-            document.querySelectorAll('x-messages').forEach(e => e.showMessages([
-                "This is an error",
-                { level: "warning", text: "This is a warning" }
-            ]));
-        </script>
-    </div>
-
-    <h2>x-input-date</h2>
-    <script type='module' src='../../app/elements/x-input-date.js'></script>
-    <div class='flex'>
+    </xx-test>
+    <xx-test>
         <x-input-date></x-input-date>
+    </xx-test>
+    <xx-test>
         <x-input-date value='01-02-2020'></x-input-date>
-    </div>
-
-    <h1>Folder related</h1>
-    <h2>x-graphics</h2>
-    <script type='module' src='../../app/elements/widgets/x-graphic-height.js'></script>
-    <script type='module' src='../../app/elements/widgets/x-graphic-weight.js'></script>
-    <script type='module' src='../../app/elements/widgets/x-graphic-bmi.js'></script>
-    <script type='module' src='../../app/elements/widgets/x-graphic-wh.js'></script>
-    <div class='flex'>
+    </xx-test>
+    <xx-test>
         <x-graphic-height demo-folder='test1'></x-graphic-height>
+    </xx-test>
+    <xx-test>
         <x-graphic-weight demo-folder='test1'></x-graphic-weight>
+    </xx-test>
+    <xx-test>
         <x-graphic-bmi demo-folder='test1'></x-graphic-bmi>
+    </xx-test>
+    <xx-test>
         <x-graphic-wh demo-folder='test1'></x-graphic-wh>
-    </div>
-
-    <h2>Patient related</h2>
-    <script type='module' src='../../app/elements/widgets/x-ff-patient-related.js'></script>
-    <div class=' flex'>
+    </xx-test>
+    <xx-test>
         <x-ff-patient-related demo-folder='test1'></x-ff-patient-related>
-    </div>
+    </xx-test>
 
     <script type='module'>
         import Folder from '../../app/models/Folder.js';
+
+        document
+            .querySelectorAll('x-requestor[fail]').forEach(
+                e =>
+                    e.request({ url: '/nothing' })
+                        // Avoid it to appear in logs
+                        .catch(() => { })
+            );
+
+        document.querySelectorAll('x-button').forEach(e => e.addEventListener('click', evt => console.info('clicked', evt.target)));
+
+        document.querySelectorAll('x-messages').forEach(e => e.showMessages([
+            "This is an error",
+            { level: "warning", text: "This is a warning" }
+        ]));
 
         fetch('../../www/api/v1.3/tests/references/FolderTest.test1.json')
             .then(response => response.json())
