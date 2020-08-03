@@ -13,6 +13,7 @@ export default class XPanel extends HTMLElement {
         this.shadowRoot.innerHTML = `
             <style css-inherit-local>
                 :host {
+                    box-sizing: border-box;
                     width: 100%;
                     height: 100%;
 

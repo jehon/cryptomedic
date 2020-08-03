@@ -16,7 +16,7 @@
             flex-wrap: wrap;
         }
 
-        xx-test {
+        body>* {
             box-sizing: border-box;
             width: 300px;
             margin: 10px;
@@ -27,6 +27,12 @@
         [highlight] {
             background-color: gray;
             border: 1px solid green;
+        }
+
+        x-waiting,
+        x-overlay,
+        x-requestor {
+            height: 200px;
         }
     </style>
     <script type='module' src='../../app/elements/x-input-date.js'></script>
@@ -45,6 +51,11 @@
     <script type='module' src='../../app/elements/widgets/x-panel.js'></script>
     <script type='module' src='../../app/elements/widgets/x-requestor.js'></script>
     <script type='module' src='../../app/elements/widgets/x-waiting.js'></script>
+
+    <div>
+        <h2>Menu</h2>
+        <a href='http://localhost:5557/tests/'>Go back to index</a>
+    </div>
 
     <xx-test>
         <x-button level='danger'>dangerous</x-button>

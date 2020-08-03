@@ -9,6 +9,12 @@ export default class XxTest extends HTMLElement {
             <h2>title</h2>
             <slot></slot>
             <div id='code'></div>
+            <style>
+                #code {
+                    font-size: 8px;
+                    padding-top: 10px;
+                }
+            </style>
         `;
     }
 
