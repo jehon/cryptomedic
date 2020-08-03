@@ -108,6 +108,9 @@ docker-started:
 stop:
 	$(DOCKERCOMPOSE) down || true
 
+.PHONY: full
+full: test lint
+	git status
 #
 #
 # Tests
@@ -121,7 +124,6 @@ lint:
 
 .PHONY: test
 test: docker-started dependencies build test-api test-unit test-e2e test-style
-	git status
 
 .PHONY: test-api
 test-api: docker-started dependencies-api data-reset
