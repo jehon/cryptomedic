@@ -1,7 +1,7 @@
 
 import { levels } from '../../config.js';
 import { defineCustomElement } from '../../js/custom-element.js';
-import '../widgets/x-message.js';
+import './x-message.js';
 
 /**
  * @typedef {object} Message a message for x-messages

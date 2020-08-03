@@ -1,5 +1,5 @@
 
-import '../../app/elements/panels/x-waiting.js';
+import '../../app/elements/widgets/x-waiting.js';
 
 import { fn, webDescribe } from './athelpers.js';
 

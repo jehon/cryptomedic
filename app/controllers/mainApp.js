@@ -50,7 +50,7 @@ import '../elements/x-file-bill.js';
 import '../elements/x-file-bill-summary.js';
 
 import '../elements/widgets/x-fff-age.js';
-import '../elements/panels/x-group-panel.js';
+import '../elements/widgets/x-group-panel.js';
 
 let mainApp = angular.module('app_main', ['ngRoute'])
     .config(['$compileProvider', function ($compileProvider) {

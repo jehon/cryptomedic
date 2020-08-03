@@ -5,7 +5,7 @@ import date2CanonicString from '../../js/date2CanonicString.js';
 import { getRouteToFolderAdd, setRoute } from '../../js/router.js';
 import Appointment from '../../models/Appointment.js';
 import XWithFolder from '../abstract/x-with-folder.js';
-import '../panels/x-group-panel.js';
+import './x-group-panel.js';
 import '../widgets/x-fff-field.js';
 import '../widgets/x-message.js';
 

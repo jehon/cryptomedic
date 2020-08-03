@@ -11,7 +11,7 @@ import { routeToLogin } from '../../js/router.js';
 import XWaiting from './x-waiting.js';
 import './x-overlay.js';
 import './x-panel.js';
-import '../widgets/x-button.js';
+import './x-button.js';
 import '../../../node_modules/css-inherit/css-inherit.js';
 import { defineCustomElement } from '../../js/custom-element.js';
 
@@ -38,7 +38,7 @@ export default class XRequestor extends XWaiting {
             </x-overlay>
         `);
 
-        /** @type {import('../panels/x-overlay.js').default} */
+        /** @type {import('./x-overlay.js').default} */
         this[error] = this.shadowRoot.querySelector('#error');
         this[errorMsg] = this.shadowRoot.querySelector('#errorMsg');
         this[errorContent] = this.shadowRoot.querySelector('#errorContent');

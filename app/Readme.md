@@ -32,10 +32,6 @@ Wigets also have sub-categories:
 - x-ff: they expect to have a 'folder'
 - x-fff: they expect to have a 'folder' and a 'file'
 
-### elements > panels (LEGACY)
-
-Panels organize widgets into a rendered elements. They should not have any styling.
-
 ### elements > pages
 
 Pages organize widgets into unit of logic. They should not have any styling. They should coordinate the various widgets into more complex logic.

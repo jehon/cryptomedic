@@ -3,7 +3,7 @@ import './x-button.js';
 import { routeToLogin } from '../../js/router.js';
 import { onSession, getUsername } from '../../js/session.js';
 import { levels } from '../../config.js';
-import { logoutBuilder } from '../panels/x-requestor.js';
+import { logoutBuilder } from './x-requestor.js';
 
 const user = Symbol('user');
 const logout = Symbol('logout');
@@ -26,7 +26,7 @@ export default class XLoginStatus extends HTMLElement {
         this[logout] = this.querySelector('#logout');
 
         /**
-         * @type {import('../panels/x-requestor.js').default} XRequestor
+         * @type {import('./x-requestor.js').default} XRequestor
          */
         this[requestor] = this.querySelector('x-requestor');
 

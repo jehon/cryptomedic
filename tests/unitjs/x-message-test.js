@@ -1,5 +1,5 @@
 
-import '../../app/elements/panels/x-messages.js';
+import '../../app/elements/widgets/x-messages.js';
 
 import { fn } from './athelpers.js';
 import XMessage from '../../app/elements/widgets/x-message.js';
