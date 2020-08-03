@@ -1,5 +1,5 @@
 
-import '../../app/elements/panels/x-requestor.js';
+import '../../app/elements/widgets/x-requestor.js';
 
 import { fn, webDescribe } from './athelpers.js';
 import JHElement from '../../app/elements/jh-element.js';
@@ -7,7 +7,7 @@ import { API_VERSION } from '../../app/config.js';
 
 import axios from '../../app/cjs2esm/axios.js';
 import MockAdapter from '../../app/cjs2esm/axios-mock-adapter.js';
-import XRequestor, { requestAndFilterBuilder, loginRequestBuilder, loginCheckRequestBuilder } from '../../app/elements/panels/x-requestor.js';
+import XRequestor, { requestAndFilterBuilder, loginRequestBuilder, loginCheckRequestBuilder } from '../../app/elements/widgets/x-requestor.js';
 import { getSession } from '../../app/js/session.js';
 
 // TODO: use constructor instead of webDescribe
