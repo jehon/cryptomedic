@@ -22,7 +22,7 @@ let success = true;
 
 const p_ok = chalk.green('✓');
 const p_warn = chalk.yellow('!');
-const p_ko = chalk.red('X');
+const p_ko = chalk.red('✗');
 
 Promise.allSettled(Array.from(fullList).map(f => {
     return new Promise((resolve, reject) => {
