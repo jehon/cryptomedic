@@ -31,19 +31,18 @@ export default class XFffField extends XWithFile {
                     display: none !important;
                 }
 
-                :host > * {
-                    padding: 5px;
-                    flex-grow: 1;
-                    flex-shrink: 1;
-                    flex-basis: 10px;
-                }
-
                 #label {
                     width: min(25%, 150px);
                     flex-grow: 0;
                     flex-shrink: 0;
                     font-weight: bold;
-                    flex-basis: auto;
+                }
+
+                ::slotted(*) {
+                    padding: 5px;
+                    flex-grow: 1;
+                    flex-shrink: 1;
+                    flex-basis: 10px;
                 }
 
                 ::slotted([slot=third]) {
@@ -53,12 +52,8 @@ export default class XFffField extends XWithFile {
 
             </style>
             <div id='label'></div>
-            <div>
-                <slot><div id='content'></div></slot>
-            </div>
-            <div>
-                <slot name='third'></slot>
-            </div>
+            <slot><div id='content'></div></slot>
+            <slot name='third'></slot>
         `;
     }
 
