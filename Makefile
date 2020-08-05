@@ -36,7 +36,7 @@ endef
 define recursive-dependencies
 	$(shell \
 		if [ -r "$(2)" ]; then \
-			find "$(1)" -name tests_data -prune -o -name tmp -prune -o -newer "$(2)"; \
+			find "$(1)" -name tests_data -prune -o -name tmp -prune -o -type f -newer "$(2)"; \
 		else \
 			echo "$(1)";\
 		fi \
