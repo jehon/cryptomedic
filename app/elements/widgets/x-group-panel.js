@@ -20,6 +20,8 @@ export default class XGroupPanel extends HTMLElement {
                     border-width: 2px;
                     border-color: #002060;
                     margin: 0px;
+
+                    display: flex;
                 }
                 
                 fieldset > legend {
@@ -40,21 +42,14 @@ export default class XGroupPanel extends HTMLElement {
                     border-bottom-width: 0px;
                     border-bottom: 1px solid #e5e5e5;
                 }
-                
-                fieldset > legend > label {
-                    padding: 0;
-                }
-                
-                fieldset slot {
-                    width: 100%;
-                }
 
-                table {
-                    width: 100%;
-                }
-
-                table td#versal {
+                ::slotted([slot=versal]) {
                     background-color: white;
+                    flex-grow: 0;
+                }
+
+                div#content {
+                    flex-grow: 1;
                 }
 
                 ::slotted(:not([slot]):nth-child(odd):not([white])) {
@@ -67,13 +62,10 @@ export default class XGroupPanel extends HTMLElement {
             </style>
             <fieldset>
                 <legend></legend>
-                <table>
-                    <tr>
-                        <td id='versal'><slot name='versal'></slot></td>
-                        <td><slot></slot></td>
-                    </tr>
-                </table>
-                
+                <slot name='versal'></slot>
+                <div id='content'>
+                    <slot></slot>
+                </div>
             </fieldset>
         `;
     }
