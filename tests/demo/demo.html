@@ -14,14 +14,23 @@
             width: 100%;
             display: flex;
             flex-wrap: wrap;
+
         }
 
+
         body>* {
+            --box-width: 300px;
+            --margin-width: 10px;
+
             box-sizing: border-box;
-            width: 300px;
+            width: var(--box-width);
             margin: 10px;
             /* height: 400px; */
             border: dashed 1px blue;
+        }
+
+        [double] {
+            width: calc(var(--box-width) * 2 + var(--margin-width) * 2);
         }
 
         [highlight] {
@@ -103,16 +112,17 @@
             </table>
         </x-group-panel>
     </xx-test>
-    <xx-test>
+    <xx-test double>
         <x-group-panel title='With fields'>
             <x-fff-field demo-folder='test1' file-uid='ricket-consult-13' field='test'>
                 <span>hello</span>
             </x-fff-field>
             <x-fff-field demo-folder='test1' file-uid='ricket-consult-13' field='test2'>
-                <span>hello2</span>
+                <span>hello2 hello2 hello2 hello2 hello2 hello2 hello2 hello2 hello2 hello2</span>
             </x-fff-field>
             <x-fff-field demo-folder='test1' file-uid='ricket-consult-13' field='test3'>
                 <span>hello3</span>
+                <span slot='third'>hello3bis</span>
             </x-fff-field>
         </x-group-panel>
     </xx-test>
