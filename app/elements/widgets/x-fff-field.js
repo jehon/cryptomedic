@@ -5,29 +5,59 @@ import XWithFile from '../abstract/x-with-file.js';
 
 // TODO: use x-i18n
 
+
+/**
+ * mode: read (hide empty values), write (?)
+ */
 export default class XFffField extends XWithFile {
     static get observedAttributes() {
-        return ['field', 'label'];
+        return ['field', 'label', 'mode'];
     }
 
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
 
-        // PS: Could be placed in a <style> tag, but would slow down the render
-        this.style.display = 'grid';
-        this.style.gridTemplateColumns = '150px auto';
         this.shadowRoot.innerHTML = `
             <style>
-                #label {
-                    font-weight: bold
+                :host {
+                    display: flex;
+                    flex-direction: row;
+                    flex-wrap: nowrap;
+                    justify-content: start;
                 }
+
+                :host([mode=read][empty]) {
+                    display: none !important;
+                }
+
+                :host > * {
+                    padding: 5px;
+                    flex-grow: 1;
+                    flex-shrink: 1;
+                    flex-basis: 10px;
+                }
+
+                #label {
+                    width: min(25%, 150px);
+                    flex-grow: 0;
+                    flex-shrink: 0;
+                    font-weight: bold;
+                    flex-basis: auto;
+                }
+
+                ::slotted([slot=third]) {
+                    border-left: 1px solid black;
+                    padding-left: 5px;
+                }
+
             </style>
-            <div>
-                <span id='label'></span>
-            </div>
+            <div id='label'></div>
             <div>
                 <slot><div id='content'></div></slot>
+            </div>
+            <div>
+                <slot name='third'></slot>
             </div>
         `;
     }
