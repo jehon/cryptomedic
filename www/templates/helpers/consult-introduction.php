@@ -3,18 +3,18 @@
 		<?php (new t("Date"))->tr("Date")->p(); ?>
 		<?php (new t("ExaminerName"))->tr("Examiner Name")->p(); ?>
 		<?php (new t("Center"))->tr("Center")->p(); ?>
-		<tr class='notModeWrite'>
-			<td>Age during consultation</td>
-			<td id='ageAtConsultationTime'><x-fff-age></x-fff-age> old at consultation time</td>
-		</tr>
 	</table>
+	<x-fff-field label='Age at consultation' not-write>
+		<div id='ageAtConsultationTime'><x-fff-age></x-fff-age> old at consultation time</div>
+	</x-fff-field>
 </x-group-panel>
 <br/>
 <x-group-panel title='Nutritional Data'>
 	<table>
 		<thead>
 			<tr>
-				<th/><th/>
+				<th></th>
+				<th></th>
 				<th class='notModeWrite'>Standard deviation (statistic)</th>
 			</tr>
 		</thead>
