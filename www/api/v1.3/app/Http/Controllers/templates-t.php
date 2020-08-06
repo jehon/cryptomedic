@@ -301,6 +301,15 @@ class t {
     $this->value();
     $this->res .="</td>\n";
     $this->res .= "\t\t</tr>\n";
+
+    // $mode = $this->options['writeOnly'] ? '' : 'mode=read';
+
+    // $this->res .= "<x-fff-field field='{$this->field}' {$mode} type='{$this->fieldGetType()}'>\n";
+    // $this->res .= "\t\t\t<div>";
+    // $this->value();
+    // $this->res .="</div>\n";
+    // $this->res .= "\t\t</x-fff-field>\n";
+
     return $this;
   }
 
