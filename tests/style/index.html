@@ -15,8 +15,12 @@
             width: 150%;
         }
 
-        img,
-        canvas {
+        div.compare {
+            width: 100%;
+        }
+
+        div.compare>* {
+            display: inline-block;
             box-sizing: border-box;
             width: 32%;
             border: solid 1px black;
@@ -104,24 +108,29 @@
     </script>
     <script src='../../node_modules/pixelmatch/index.js'></script>
 
-    <a onclick='document.querySelector("body").setAttribute("wide", "wide");'>wide</a>
-    <a onclick='document.querySelector("body").setAttribute("wide", "normal");'>normal</a>
 
-    <div id='results'></div>
+    <div id='results'>
+        <div class='compare'>
+            <span>Test result
+                <button onclick='document.querySelector("body").setAttribute("wide", "wide");'>wide</button>
+                <button onclick='document.querySelector("body").setAttribute("wide", "normal");'>normal</button>
+            </span>
+            <span>Reference</span>
+            <span>Comparison</span>
+        </div>
+    </div>
 
     <script>
         fetch('../../target/styles.json')
             .then(res => res.json())
             .then(problemsList => {
-                console.log(problemsList);
-
                 let id = 0;
                 for (let f of Object.keys(problemsList)) {
                     const data = problemsList[f];
 
                     // TODO: show warning / error level + more details
                     document.querySelector('#results').insertAdjacentHTML('beforeend',
-                        `<h3>${f} (${data.actual}/${data.max}: ${data.level}</h3>
+                        `<h3>${f} (${data.actual}/${data.max}: ${data.level})</h3>
                         <div class='compare'>
                                     <img target-id='${id}' onload='img_diff_tempo(${id})' id='i${id}_ref' src='/tests/style/references/${f}'></img>
                                     <img target-id='${id}' onload='img_diff_tempo(${id})' id='i${id}_tst' src='/target/e2e/browsers/firefox/${f}'></img>
