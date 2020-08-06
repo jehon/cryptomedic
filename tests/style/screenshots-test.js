@@ -28,11 +28,11 @@ Promise.allSettled(Array.from(fullList).map(f => {
     return new Promise((resolve, reject) => {
         if (!refs.includes(f)) {
             // if refs does not includes it, it is only present from 'test'
-            console.info(p_warn, f, 'reference is not available');
             result[f] = {
                 level: 'warning',
                 type: 'pending'
             };
+            console.error(`${p_warn} ${f}: ${result[f].type}`);
             return resolve();
         }
         if (!tests.includes(f)) {
@@ -40,7 +40,7 @@ Promise.allSettled(Array.from(fullList).map(f => {
                 level: 'error',
                 type: 'unavailable'
             };
-            console.error(p_ko, f, 'test is not available');
+            console.error(`${p_ko} ${f}: ${result[f].type}`);
             success = false;
             return resolve();
         }
@@ -52,24 +52,22 @@ Promise.allSettled(Array.from(fullList).map(f => {
                 if (diffSize > 0.5) {
                     result[f] = {
                         level: 'error',
-                        msg: f + ' differ is size',
                         type: 'size',
                         max: 0.5,
                         actual: diffSize
                     };
-                    console.error(p_ko, f, ': ko');
+                    console.error(`${p_ko} ${f}: (${result[f].type}) - ${result[f].actual} vs. ${result[f].max}`);
                     success = false;
                     return reject();
                 }
                 if (diffContent > 0.5) {
                     result[f] = {
                         level: 'error',
-                        msg: f + ' differ is content',
                         type: 'content',
                         max: 0.5,
                         actual: diffContent
                     };
-                    console.error(p_ko, f, ': ko');
+                    console.error(`${p_ko} ${f}: (${result[f].type}) - ${result[f].actual} vs. ${result[f].max}`);
                     success = false;
                     return reject();
                 }
@@ -81,7 +79,7 @@ Promise.allSettled(Array.from(fullList).map(f => {
                         max: 0.5,
                         actual: diffContent
                     };
-                    console.info(p_warn, f, ': small difference');
+                    console.error(`${p_warn} ${f}: (${result[f].type}) - ${result[f].actual} vs. ${result[f].max}`);
                     return resolve();
                 }
                 console.info(p_ok, f, ': ok');
