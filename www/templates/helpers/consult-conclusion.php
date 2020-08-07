@@ -1,3 +1,3 @@
-<?php (new t("Comments"))->tr("Other comments/treatment")->p(); ?>
-<?php (new t("TreatmentEvaluation"))->tr("Treament evaluation")->p(); ?>
-<?php (new t("TreatmentFinished"))->tr("Treatment is finished")->p(); ?>
+<?php (new t("Comments"))->tr2("Other comments/treatment")->p(); ?>
+<?php (new t("TreatmentEvaluation"))->tr2("Treament evaluation")->p(); ?>
+<?php (new t("TreatmentFinished"))->tr2("Treatment is finished")->p(); ?>
