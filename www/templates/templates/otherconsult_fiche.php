@@ -35,14 +35,8 @@
 			<x-ff-patient-related></x-ff-patient-related>
 			<x-ff-next-appointment></x-ff-next-appointment>
 			<x-group-panel title='Conclusion'>
-				<table>
-					<?php (new t("OtherConsult.Surgery66"))->tr("Surgery")->p(); ?>
-					<?php //(new t("OtherConsult.Othertreatment68"))->tr("Other treatment")->p(); ?>
-
-					<?php // (new t("OtherConsult.Nextappointment"))->tr()->p(); ?>
-					<?php // (new t("OtherConsult.NextCenter"))->tr()->p(); ?>
-					<?php require(__DIR__ . "/../helpers/consult-conclusion.php"); ?>
-				</table>
+				<?php (new t("OtherConsult.Surgery66"))->tr2("Surgery")->p(); ?>
+				<?php require(__DIR__ . "/../helpers/consult-conclusion.php"); ?>
 			</x-group-panel>
 		</div>
 	</div>

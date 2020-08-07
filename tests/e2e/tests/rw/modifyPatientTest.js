@@ -181,7 +181,6 @@ module.exports = {
         client.myFormCheck('#fileForm', bill);
         client.myFormCheck('#fileForm', billTotal);
         client.assert.elementPresent('#Bill_other_Other_plaster');
-        client.myScreenshotReference();
         nb++;
     },
 

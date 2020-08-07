@@ -63,19 +63,14 @@
 			<x-ff-patient-related></x-ff-patient-related>
 			<x-ff-next-appointment></x-ff-next-appointment>
 			<x-group-panel title='Conclusion'>
-				<table>
-					<?php (new t("RicketConsult.Nutrisupport"))->tr()->p(); ?>
-					<?php (new t("RicketConsult.conclusion_medical_calcium500"))->tr()->p(); ?>
-					<?php (new t("RicketConsult.conclusion_medical_calcium1000"))->tr()->p(); ?>
-					<?php (new t("RicketConsult.conclusion_medical_vitaminD"))->tr()->p(); ?>
-					<?php (new t("RicketConsult.Surgery"))->tr()->p(); ?>
-					<?php (new t("RicketConsult.Brace"))->tr()->p(); ?>
+				<?php (new t("RicketConsult.Nutrisupport"))->tr2()->p(); ?>
+				<?php (new t("RicketConsult.conclusion_medical_calcium500"))->tr2()->p(); ?>
+				<?php (new t("RicketConsult.conclusion_medical_calcium1000"))->tr2()->p(); ?>
+				<?php (new t("RicketConsult.conclusion_medical_vitaminD"))->tr2()->p(); ?>
+				<?php (new t("RicketConsult.Surgery"))->tr2()->p(); ?>
+				<?php (new t("RicketConsult.Brace"))->tr2()->p(); ?>
 
-					<?php //(new t("RicketConsult.Commentary"))->tr()->p(); ?>
-					<?php //(new t("RicketConsult.Nextappointment"))->tr()->p(); ?>
-					<?php //(new t("RicketConsult.NextCenter"))->tr()->p(); ?>
-					<?php require(__DIR__ . "/../helpers/consult-conclusion.php"); ?>
-				</table>
+				<?php require(__DIR__ . "/../helpers/consult-conclusion.php"); ?>
 			</x-group-panel>
 		</div>
 	</div>
