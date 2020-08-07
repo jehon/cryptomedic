@@ -1,6 +1,6 @@
 module.exports = {
 
-    'autoGenerateReference': function(client) {
+    'autoGenerateReference': function (client) {
         client.page.cryptomedic().authenticate('murshed');
 
         client.myClick('#menu_home');
@@ -11,6 +11,7 @@ module.exports = {
         // // Edit and save
         client.setValue('#Patient_entryyear', 1998);
         client.setValue('#Patient_Name', 'rezaul');
+        client.myScreenshotReference();
         client.myClick('#bottomsubmenu #patient_create');
 
         client.pause(1000);

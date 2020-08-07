@@ -3,7 +3,7 @@ module.exports = {
 
     // },
 
-    'createReference': function(client) {
+    'createReference': function (client) {
         var r = Math.floor(Math.random() * 100);
 
         client.page.cryptomedic().authenticate('murshed');
@@ -16,6 +16,7 @@ module.exports = {
         client.setValue('input[ng-model=\'entryorder\']', 104);
         client.myClick('[ng-click=\'checkReference()\']');
         client.waitForElementVisible('#button_create_reference', 5000, 'The patient \'1999-104\' could not be created by reference. Does it already exists? Please delete it then...');
+        client.myScreenshotReference();
         client.myClick('#button_create_reference');
 
         client.waitForElementPresent('#Patient_Name');

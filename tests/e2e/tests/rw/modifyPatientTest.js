@@ -21,6 +21,8 @@ module.exports = {
     'add_a ricket_consult': function (client) {
         client.myClick('#button_add');
         client.myClick('#add_ricket_consult');
+        client.waitForElementPresent('form#fileForm input');
+        client.myScreenshotReference();
         client.myForm('#fileForm', {
             '#Date': '2003-01-01',
             '#Weightkg': '13'
@@ -31,6 +33,8 @@ module.exports = {
     'add a other-consult': function (client) {
         client.myClick('#button_add');
         client.myClick('#add_other_consult');
+        client.waitForElementPresent('form#fileForm input');
+        client.myScreenshotReference();
         client.myForm('#fileForm', {
             '#Date': '2003-03-02',
             '#Weightkg': '13'
@@ -41,6 +45,8 @@ module.exports = {
     'add a club foot': function (client) {
         client.myClick('#button_add');
         client.myClick('#add_clubfoot');
+        client.waitForElementPresent('form#fileForm input');
+        client.myScreenshotReference();
         client.myForm('#fileForm', {
             '#Date': '2003-04-01',
             '#Weightkg': '13'
@@ -51,6 +57,8 @@ module.exports = {
     'add a surgery': function (client) {
         client.myClick('#button_add');
         client.myClick('#add_surgery');
+        client.waitForElementPresent('form#fileForm input');
+        client.myScreenshotReference();
         client.myForm('#fileForm', {
             '#Surgery_Date': '2003-05-01',
             '#Surgery_ReportDiagnostic': 'diagnostique'
@@ -61,6 +69,8 @@ module.exports = {
     'add an appointement': function (client) {
         client.myClick('#button_add');
         client.myClick('#add_appointment');
+        client.waitForElementPresent('form#fileForm input');
+        client.myScreenshotReference();
         client.myForm('#fileForm', {
             '#Appointment_Nextappointment': '2010-01-01',
             '[name=NextCenter]': { value: 'Ramu' },
@@ -86,6 +96,7 @@ module.exports = {
         client.myClick('#add_bill');
 
         client.myFormFillIn('#fileForm', bill);
+        client.myScreenshotReference();
         client.myFormCheck('#fileForm', billTotal);
         client.assert.not.elementPresent('#Bill_other_Other_plaster');
 
@@ -99,6 +110,8 @@ module.exports = {
     'add a bill with no date, no price': function (client) {
         client.myClick('#button_add');
         client.myClick('#add_bill');
+        client.waitForElementPresent('form#fileForm input');
+        client.myScreenshotReference();
         client.myFormFillIn('#fileForm', { '#Bill_Date': '' });
 
         client.assert.not.elementPresent('[priceFor]');
@@ -161,11 +174,14 @@ module.exports = {
         client.myFormCheck('#fileForm', billTotal);
         client.assert.containsText('x-fff-salary-ratio', '600');
         client.assert.elementPresent('#Bill_other_Other_plaster');
+        client.waitForElementPresent('form#fileForm input');
+        client.myScreenshotReference();
 
         client.myClick('#topsubmenu #button_save');
         client.myFormCheck('#fileForm', bill);
         client.myFormCheck('#fileForm', billTotal);
         client.assert.elementPresent('#Bill_other_Other_plaster');
+        client.myScreenshotReference();
         nb++;
     },
 
