@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const glob = require('glob');
 const resemble = require('node-resemble-js');
-var chalk = require('chalk');
+const chalk = require('chalk');
 
 const globP = (pattern, options) => {
     return glob.sync(pattern, options);
@@ -20,9 +20,9 @@ let fullList = new Set([...refs, ...tests]);
 const result = {};
 let success = true;
 
-const p_ok = chalk.green('✓');
-const p_warn = chalk.yellow('!');
-const p_ko = chalk.red('✗');
+const p_ok = chalk.green(' ✓');
+const p_warn = chalk.yellow(' !');
+const p_ko = chalk.red(' ✗');
 
 Promise.allSettled(Array.from(fullList).map(f => {
     return new Promise((resolve, reject) => {
