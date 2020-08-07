@@ -1,8 +1,5 @@
 
-let assert = require('assert');
-
 function assertTableInitial(client, i = 0) {
-    assert(client != null);
     client.page.cryptomedic().tableIterator('#price_lists')
         .section('thead')
         .row(1)
