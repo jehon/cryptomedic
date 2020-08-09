@@ -11,7 +11,7 @@ import XWithFile from '../abstract/x-with-file.js';
  */
 export default class XFffField extends XWithFile {
     static get observedAttributes() {
-        return ['field', 'label', 'mode'];
+        return ['field', 'label'];
     }
 
     constructor() {
@@ -53,6 +53,8 @@ export default class XFffField extends XWithFile {
             </style>
             <div id='label'></div>
             <slot><div id='content'></div></slot>
+            <slot><div id='left'></div></slot>
+            <slot><div id='right'></div></slot>
             <slot name='third'><div id='alternate'></div></slot>
         `;
     }
@@ -60,18 +62,35 @@ export default class XFffField extends XWithFile {
     attributeChangedCallback(attributeName, _oldValue, _newValue) {
         switch (attributeName) {
             case 'label':
-                this.refreshLabel();
+                this.adaptLabel();
                 break;
             case 'field':
-                this.refreshLabel();
+                this.adaptLabel();
                 if (this.isOk()) {
-                    this.adapt();
+                    this.adaptField();
                 }
                 break;
         }
     }
 
-    refreshLabel() {
+    adapt() {
+        // We dont' call super.adapt, because we are not based on formula();
+        this.adaptField();
+    }
+
+    adaptEmpty() {
+        const field = this.getAttribute('field');
+        if (field) {
+            if (!(field in this.file) || !this.file[field]) {
+                this.setAttribute('empty', field);
+                return;
+            }
+        }
+
+        this.removeAttribute('empty');
+    }
+
+    adaptLabel() {
         this.label = this.getAttribute('label');
         if (!this.label) {
             this.label = toSentenceCase(this.getAttribute('field'));
@@ -79,18 +98,17 @@ export default class XFffField extends XWithFile {
         this.shadowRoot.querySelector('#label').innerHTML = this.label;
     }
 
-    adapt() {
-        // We dont' call super.adapt, because we are not based on formula();
+    adaptField() {
+        this.adaptEmpty();
+
         const field = this.getAttribute('field');
-        if (field in this.file && this.file[field]) {
-            this.removeAttribute('empty');
-        } else {
-            this.setAttribute('empty', field);
-        }
         if (field) {
             this.shadowRoot.querySelectorAll('#content').forEach(e => e.innerHTML = this.file[field]);
+        } else {
+            this.shadowRoot.querySelectorAll('#content').forEach(e => e.innerHTML = '');
         }
     }
+
 }
 
 defineCustomElement(XFffField);
