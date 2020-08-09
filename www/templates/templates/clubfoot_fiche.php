@@ -6,20 +6,18 @@
 <div class='container-fluid'>
 	<div class='row'>
     	<div ng-if='errors.dateInTheFuture'>
-		    <div class='alert alert-danger' id='errorDateFuture'>Error: The date can not be in the future!</div>
+			<x-message level='danger' id='errorDateFuture'>Error: The date can not be in the future!</x-message>
     	</div>
   	</div>
 	<div class='row'>
 		<div class="col-md-6">
 			<?php require(__DIR__ . "/../helpers/consult-introduction.php"); ?>
 			<x-group-panel title='Club Foot Pirani Score'>
+				<x-fff-field>
+					<x-message level='danger'>Warning! Left and right sides are opposite.</x-message>
+				</x-fff-field>
 				<table>
 					<thead>
-						<tr>
-							<th colspan=3>
-								<div class='alert alert-danger'>Warning! Left and right sides are opposite.</div>
-							</th>
-						</tr>
 						<tr>
 							<th></th>
 							<th>Right</th>

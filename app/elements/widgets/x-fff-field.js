@@ -53,7 +53,7 @@ export default class XFffField extends XWithFile {
             </style>
             <div id='label'></div>
             <slot><div id='content'></div></slot>
-            <slot name='third'></slot>
+            <slot name='third'><div id='alternate'></div></slot>
         `;
     }
 
@@ -71,7 +71,7 @@ export default class XFffField extends XWithFile {
         }
     }
 
-    refreshLabel(){
+    refreshLabel() {
         this.label = this.getAttribute('label');
         if (!this.label) {
             this.label = toSentenceCase(this.getAttribute('field'));
