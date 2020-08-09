@@ -5,24 +5,19 @@
 	<div class='row'>
 		<div class="col-md-6">
 			<x-group-panel title='Next appointment'>
-				<table>
-					<tr class='notModeRead'>
-						<td>Today</td>
-						<td>{{today}}</td>
-					</tr>
-					<?php (new t("Appointment.Date"))->tr("Entry date")->p(); ?>
-					<?php (new t("Appointment.purpose"))->tr("Purpose")->p(); ?>
-					<?php (new t("Appointment.Nextappointment"))->tr("Next Appointment")->p(); ?>
-					<?php (new t("Appointment.NextCenter"))->tr("Next Center")->p(); ?>
-					<tr class='notModeRead'>
-						<td>
-						</td>
-						<td>
-							<div class='btn btn-default' ng-click='nextMonth(3)'>Plan in 3 months</div>
-							<div class='btn btn-default' ng-click='nextMonth(6)'>Plan in 6 months</div>
-						</td>
-					</tr>
-				</table>
+				<x-fff-field label='Today' class='notModeRead'>
+					<div>{{today}}</div>
+				</x-fff-field>
+				<?php (new t("Appointment.Date"))->tr2("Entry date")->p(); ?>
+				<?php (new t("Appointment.purpose"))->tr2("Purpose")->p(); ?>
+				<?php (new t("Appointment.Nextappointment"))->tr2("Next Appointment")->p(); ?>
+				<?php (new t("Appointment.NextCenter"))->tr2("Next Center")->p(); ?>
+				<x-fff-field>
+					<div>
+						<x-button ng-click='nextMonth(3)'>Plan in 3 months</x-button>
+						<x-button ng-click='nextMonth(6)'>Plan in 6 months</x-button>
+					</div>
+				</x-fff-field>
 			</x-group-panel>
 		</div>
 		<div class="col-md-6">
