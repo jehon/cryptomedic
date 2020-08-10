@@ -14,8 +14,13 @@ export default class XFffField extends XWithFile {
         return ['field', 'label'];
     }
 
+    #field = '';
+    #bySides = '';
+    #label = '';
+
     constructor() {
         super();
+
         this.attachShadow({ mode: 'open' });
 
         this.shadowRoot.innerHTML = `
@@ -59,12 +64,14 @@ export default class XFffField extends XWithFile {
         `;
     }
 
-    attributeChangedCallback(attributeName, _oldValue, _newValue) {
+    attributeChangedCallback(attributeName, _oldValue, newValue) {
         switch (attributeName) {
             case 'label':
+                this.#label = newValue;
                 this.adaptLabel();
                 break;
             case 'field':
+                this.#field = newValue;
                 this.adaptLabel();
                 if (this.isOk()) {
                     this.adaptField();
@@ -79,10 +86,9 @@ export default class XFffField extends XWithFile {
     }
 
     adaptEmpty() {
-        const field = this.getAttribute('field');
-        if (field) {
-            if (!(field in this.file) || !this.file[field]) {
-                this.setAttribute('empty', field);
+        if (this.#field) {
+            if (!(this.#field in this.file) || !this.file[this.#field]) {
+                this.setAttribute('empty', this.#field);
                 return;
             }
         }
@@ -91,19 +97,18 @@ export default class XFffField extends XWithFile {
     }
 
     adaptLabel() {
-        this.label = this.getAttribute('label');
-        if (!this.label) {
-            this.label = toSentenceCase(this.getAttribute('field'));
+        let label = this.#label;
+        if (!this.#label) {
+            label = toSentenceCase(this.#field);
         }
-        this.shadowRoot.querySelector('#label').innerHTML = this.label;
+        this.shadowRoot.querySelector('#label').innerHTML = label;
     }
 
     adaptField() {
         this.adaptEmpty();
 
-        const field = this.getAttribute('field');
-        if (field) {
-            this.shadowRoot.querySelectorAll('#content').forEach(e => e.innerHTML = this.file[field]);
+        if (this.#field) {
+            this.shadowRoot.querySelectorAll('#content').forEach(e => e.innerHTML = this.file[this.#field]);
         } else {
             this.shadowRoot.querySelectorAll('#content').forEach(e => e.innerHTML = '');
         }
