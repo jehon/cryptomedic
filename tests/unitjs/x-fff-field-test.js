@@ -61,5 +61,19 @@ describe(fn(import.meta.url), function () {
             el.setAttribute('field', 'CrossRightT');
             expect(el.hasAttribute('empty')).toBeTrue();
         });
+
+        it('shoud set sides', function () {
+            el.setAttribute('by-sides', 'helloThere');
+            expect(el.shadowRoot.querySelector('#label').innerHTML).toBe('Hello there');
+            expect(el.hasAttribute('empty')).toBeTrue();
+
+            el.setAttribute('by-sides', '*legAngle');
+            expect(el.shadowRoot.querySelector('#label').innerHTML).toBe('Leg angle');
+            expect(el.hasAttribute('empty')).toBeFalse();
+
+            el.setAttribute('by-sides', 'ExaminerName');
+            expect(el.shadowRoot.querySelector('#label').innerHTML).toBe('Examiner name');
+            expect(el.hasAttribute('empty')).toBeTrue();
+        });
     });
 });
