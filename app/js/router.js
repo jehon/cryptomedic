@@ -3,28 +3,32 @@ import { API_VERSION } from '../config.js';
 import FolderPage from '../models/FolderPage.js';
 
 /**
- *
+ * @returns {string} the current route
  */
 export function getCurrentRoute() {
     return document.location.hash.substr(1);
 }
 
 /**
- * @param hash
+ * @param {string} hash to be set
+ * @returns {string} the same hash
  */
 export function setRoute(hash) {
     return document.location.hash = hash;
 }
 
 /**
- * @param redirect
+ * Route to the login form
+ *
+ * @param {string} redirect is the current route to redirect to when login complete
  */
 export function routeToLogin(redirect = getCurrentRoute()) {
     setRoute(`/login/${redirect}`);
 }
 
 /**
- *
+ * @see routeToLogin
+ * @returns {object} the route parsed
  */
 export function parseRouteLogin() {
     return {
@@ -33,7 +37,9 @@ export function parseRouteLogin() {
 }
 
 /**
+ * Used for logout and some advanced routes
  *
+ * @returns {object} the route parsed
  */
 export function parseRouteApi() {
     return {
