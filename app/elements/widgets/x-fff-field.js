@@ -7,9 +7,11 @@ import XWithFile from '../abstract/x-with-file.js';
 
 
 /**
- * @param {string} field
- * @param {string} side
- * @returns {string}
+ * Transform an abstract field into a real sided field
+ *
+ * @param {string} field - the name of the abstract field (with * as placeholder)
+ * @param {string} side - the side (Left / Right)
+ * @returns {string} - the field in the object
  */
 function toSide(field, side) {
     if (field.includes('*')) {

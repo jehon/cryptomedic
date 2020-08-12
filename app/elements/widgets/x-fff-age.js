@@ -5,8 +5,9 @@ import XWithFile from '../abstract/x-with-file.js';
 import Patient from '../../models/Patient.js';
 
 /**
- * @param birth
- * @param options
+ * @param {*} birth the date of birth
+ * @param {object} options of the transformation
+ * @returns {string|object} 0y0m
  */
 export function fromBirthDate(birth, options) {
     options = {
@@ -36,7 +37,8 @@ export function fromBirthDate(birth, options) {
 }
 
 /**
- * @param value
+ * @param {number} value the fractional year
+ * @returns {string} 0y0m
  */
 export function yearsToYM(value) {
     const years = Math.floor(value);

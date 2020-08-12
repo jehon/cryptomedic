@@ -3,8 +3,9 @@ import amd_stats from './amd_stats.js';
 import { DataInvalidException, ConfigurationMissingException, DataOutOfBoundException } from './exceptions.js';
 
 /**
- * @param line
- * @param x
+ * @param {Array<Array<number>>} line - the line ([[x, y]+])
+ * @param {number} x the absice
+ * @returns {number} the y value on the line
  */
 export function _evaluatePoly(line, x) {
     var i = -1;
@@ -27,20 +28,21 @@ export function _evaluatePoly(line, x) {
 }
 
 /**
- * @param line
- * @param x
- * @param y
+ * @param {object} statLines - the line group
+ * @param {number} x on the line
+ * @param {number} y on the line
+ * @returns {number} the standard deviation on the line at (x, y)
  */
-export function _stdDeviation(line, x, y) {
-    var avg = _evaluatePoly(line.medium, x);
+export function _stdDeviation(statLines, x, y) {
+    var avg = _evaluatePoly(statLines.medium, x);
     if (isNaN(avg)) throw new DataOutOfBoundException();
     if (y == avg) return 0;
 
     var ref;
     if (y < avg) {
-        ref = _evaluatePoly(line.min, x);
+        ref = _evaluatePoly(statLines.min, x);
     } else {
-        ref = _evaluatePoly(line.max, x);
+        ref = _evaluatePoly(statLines.max, x);
     }
 
     /* istanbul ignore next: this case is when the polynome is not fully completed */
