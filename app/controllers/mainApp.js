@@ -53,10 +53,10 @@ import '../elements/widgets/x-fff-age.js';
 import '../elements/widgets/x-group-panel.js';
 
 let mainApp = angular.module('app_main', ['ngRoute'])
-    .config(['$compileProvider', function ($compileProvider) {
-        $compileProvider.aHrefSanitizationWhitelist(/^\s*((https?|ftp|mailto|chrome-extension):|data:text,)/);
-        $compileProvider.imgSrcSanitizationWhitelist($compileProvider.aHrefSanitizationWhitelist());
-    }])
+    // .config(['$compileProvider', function ($compileProvider) {
+    //     $compileProvider.aHrefSanitizationWhitelist(/^\s*((https?|ftp|mailto|chrome-extension):|data:text,)/);
+    //     $compileProvider.imgSrcSanitizationWhitelist($compileProvider.aHrefSanitizationWhitelist());
+    // }])
     .config(['$locationProvider', function ($locationProvider) {
         $locationProvider.hashPrefix('');
     }]);
