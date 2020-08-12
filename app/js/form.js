@@ -1,6 +1,10 @@
 
 // TODO: how to trigger "submit" event on form ? -> x-login-form-test
 
+/**
+ * @param formElement
+ * @param submitCallback
+ */
 export function formInit(formElement, submitCallback) {
     let submit = formElement.querySelector('input[type="submit"]');
     if (!submit) {
@@ -14,6 +18,10 @@ export function formInit(formElement, submitCallback) {
     formElement.addEventListener('submit', function (event) { event.preventDefault(); submitCallback(); return false; });
 }
 
+/**
+ * @param form
+ * @param prototype
+ */
 export function formGetContent(form, prototype = {}) {
     // const log = (...args) => console.log(...args);
     const log = () => { };
@@ -103,6 +111,10 @@ export function formGetContent(form, prototype = {}) {
     return data;
 }
 
+/**
+ * @param form
+ * @param object
+ */
 export function formFillIn(form, object) {
     let formElement = form;
     if (!(form instanceof HTMLElement)) {
@@ -116,6 +128,9 @@ export function formFillIn(form, object) {
     formEvaluateFunctions(formElement, object);
 }
 
+/**
+ * @param formElement
+ */
 export function formValidate(formElement) {
     let result = true;
     formElement.querySelectorAll('[name]').forEach(el => {
@@ -136,6 +151,10 @@ export function formValidate(formElement) {
 }
 
 
+/**
+ * @param formElement
+ * @param object
+ */
 export function formEvaluateFunctions(formElement, object) {
     formElement.querySelectorAll('[function]').forEach(el => {
         const fn = el.getAttribute('function');
@@ -145,6 +164,11 @@ export function formEvaluateFunctions(formElement, object) {
     });
 }
 
+/**
+ * @param form
+ * @param tag
+ * @param mode
+ */
 export function formSwitch(form, tag, mode) {
     let formElement = form;
     if (!(form instanceof HTMLElement)) {

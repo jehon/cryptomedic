@@ -2,6 +2,9 @@
 /* istanbul ignore file */
 import { onSession, getUsername } from './session.js';
 
+/**
+ * @param cssSelector
+ */
 export default function getDataService(cssSelector = '#dataService') {
     const test = function () {
         let el = cssSelector;

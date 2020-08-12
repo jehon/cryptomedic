@@ -1,6 +1,9 @@
 
 import PatientRelated from './PatientRelated.js';
 
+/**
+ * @param val
+ */
 function f(val) {
     if (val == null) {
         throw new Error('Null value', val);
