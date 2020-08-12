@@ -1,4 +1,7 @@
 
+/**
+ * @param what
+ */
 function nullifyOjbect(what) {
     let what2 = {};
     for (var k in what) {
@@ -8,6 +11,9 @@ function nullifyOjbect(what) {
     return what2;
 }
 
+/**
+ * @param what
+ */
 export default function nullify(what) {
     switch (typeof (what)) {
         case 'string':

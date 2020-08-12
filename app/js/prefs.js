@@ -1,5 +1,9 @@
 
 /* istanbul ignore file */
+/**
+ * @param part
+ * @param data
+ */
 export function setPref(part, data) {
     let res = {};
     if (sessionStorage.cryptomedicPrefs) {
@@ -16,6 +20,10 @@ export function setPref(part, data) {
     return newState;
 }
 
+/**
+ * @param part
+ * @param def
+ */
 export function getPref(part, def = null) {
     let res = {};
     if (sessionStorage.cryptomedicPrefs) {
@@ -27,6 +35,9 @@ export function getPref(part, def = null) {
     return def;
 }
 
+/**
+ * @param object
+ */
 export function extractPrefsFile(object) {
     let prefs = getPref('file', {});
     if (object.Date) {
