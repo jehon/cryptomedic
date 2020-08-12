@@ -43,8 +43,8 @@ export function toTitleCase(text) {
  * Transform into camel case (abcDefGhi - to use in object)
  *
  * @see https://en.wikipedia.org/wiki/Letter_case#Special_case_styles
- * @param {boolean} middle if the string has to be put in the middle of a block (...AbcDef)
  * @param {string} text to be transformed (abc-def-ghi)
+ * @param {boolean} middle if the string has to be put in inside of a block (...AbcDef)
  * @returns {string} transformed into camel case (AbcDefGhi)
  */
 export function toPropertyCase(text, middle = false) {
