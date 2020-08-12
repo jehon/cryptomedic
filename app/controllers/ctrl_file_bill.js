@@ -1,5 +1,7 @@
 
 /* istanbul ignore file */
+/* eslint-disable */
+
 import Payment from '../models/Payment.js';
 import { formGetContent } from '../js/form.js';
 import { extractPrefsFile } from '../js/prefs.js';

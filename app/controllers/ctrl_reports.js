@@ -1,5 +1,6 @@
 
 /* istanbul ignore file */
+/* eslint-disable */
 
 import { formGetContent } from '../js/form.js';
 import { getPref, setPref } from '../js/prefs.js';

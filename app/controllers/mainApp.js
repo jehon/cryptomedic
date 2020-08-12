@@ -1,5 +1,6 @@
 
 /* istanbul ignore file */
+/* eslint-disable */
 
 import angular from 'angular';
 import 'angular-route';
