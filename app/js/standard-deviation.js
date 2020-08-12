@@ -79,20 +79,5 @@ export function stdDeviationFor(sex, graphName, x, y) {
     return _stdDeviation(amd_stats[sex][graphName], x, y);
 }
 
-// TODO: remove stdDeviationString
-/* istanbul ignore next */
-/**
- * @param line
- * @param x
- * @param y
- */
-export function stdDeviationString(line, x, y) {
-    try {
-        return _stdDeviation(line, x, y);
-    } catch (e) {
-        return '#' + e.getMessage() + '#';
-    }
-}
-
 // 1.64485 = sigma at 90 for normal distribution
 export const sigma = 1.64485;
