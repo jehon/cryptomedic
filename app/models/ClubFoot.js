@@ -2,11 +2,12 @@
 import PatientRelated from './PatientRelated.js';
 
 /**
- * @param val
+ * @param {string|null} val the value to be parsed
+ * @returns {number} the value parsed as float
  */
 function f(val) {
     if (val == null) {
-        throw new Error('Null value', val);
+        throw new Error('Null value');
     }
     if (typeof (val) == 'string') {
         return parseFloat(val);

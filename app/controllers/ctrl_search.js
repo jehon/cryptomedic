@@ -1,5 +1,6 @@
 
 /* istanbul ignore file */
+/* eslint-disable */
 
 import { formGetContent } from '../js/form.js';
 import getDataService from '../js/getDataService.js';

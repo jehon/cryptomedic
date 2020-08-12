@@ -1,5 +1,6 @@
 
 /* istanbul ignore file */
+/* eslint-disable */
 
 import Folder from '../models/Folder.js';
 import { formGetContent } from '../js/form.js';

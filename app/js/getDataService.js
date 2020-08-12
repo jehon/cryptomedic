@@ -1,5 +1,7 @@
 
 /* istanbul ignore file */
+/* eslint-disable */
+
 import { onSession, getUsername } from './session.js';
 
 /**
