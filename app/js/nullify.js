@@ -1,6 +1,9 @@
 
 /**
- * @param what
+ * Treat the object received from json, and standardize its content
+ *
+ * @param {object} what to be nullified
+ * @returns {object} the object treated
  */
 function nullifyOjbect(what) {
     let what2 = {};
@@ -12,7 +15,10 @@ function nullifyOjbect(what) {
 }
 
 /**
- * @param what
+ * Treat the object received from json, and standardize its content
+ *
+ * @param {object} what to be normalized
+ * @returns {*} normalized
  */
 export default function nullify(what) {
     switch (typeof (what)) {
