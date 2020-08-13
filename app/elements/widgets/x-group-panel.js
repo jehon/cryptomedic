@@ -59,7 +59,13 @@ export default class XGroupPanel extends HTMLElement {
                 ::slotted(:not([slot]):nth-child(even):not([white])) {
                     background-color: lightgray;
                 }
-            </style>
+
+                ::slotted(div:not([slot])) {
+                    font-weight: bold;
+                    text-align: center;
+                }
+
+                </style>
             <fieldset>
                 <legend></legend>
                 <slot name='versal'></slot>
