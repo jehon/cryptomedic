@@ -115,7 +115,7 @@ Route::group([ 'prefix' => '/api/' . basename(dirname(__DIR__)) ], function() {
       hasPermission('folder.unlock', function() {
         Route::get('appointments/unlock/{id}',   'AppointmentsController@unlock');
         Route::get('bills/unlock/{id}',          'BillsController@unlock');
-        Route::get('unlock/clubfeets/{id}',      'ClubFeetController@unlock');
+        Route::get('clubfeet/unlock/{id}',       'ClubFeetController@unlock');
         Route::get('otherconsults/unlock/{id}',  'OtherConsultsController@unlock');
         Route::get('payments/unlock/{id}',       'PaymentsController@unlock');
         Route::get('pictures/unlock/{id}',       'PicturesController@unlock');
