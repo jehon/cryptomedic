@@ -110,7 +110,10 @@ stop:
 
 .PHONY: full
 full: test lint
-	git status
+	@echo "** Status **"
+	@git status -s
+	@echo "** Stash list **"
+	@git stash list
 #
 #
 # Tests
