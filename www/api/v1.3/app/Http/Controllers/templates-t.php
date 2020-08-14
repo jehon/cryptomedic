@@ -26,11 +26,11 @@ class t {
 
   static protected $pdo = false;
   static private $defaultOptions = [
-      "baseExpression" => "",
-      "writeOnly" => false,
-      "readOnly" => false,
-      "forceAllowNull" => false,
-      "inline" => "",
+    "baseExpression" => "",
+    "writeOnly" => false,
+    "readOnly" => false,
+    "forceAllowNull" => false,
+    "inline" => "",
     "model" => null
   ];
   static $sqlAllTableStructure = array();
@@ -334,5 +334,15 @@ class t {
 
   function __toString() {
     return $this->res;
+  }
+
+  static function trSided($field, $label = "") {
+    $mode = static::$defaultOptions['writeOnly'] ? "" : "mode=read";
+    $label = ($label ? "label='$label'" : "");
+    echo "<x-fff-field by-sides='$field' $mode $label>";
+    
+    echo "  <div slot='left'>"  . (new t(str_replace("*", "Left",  static::$defaultOptions['model'] . ".$field")))->value()->__toString() . "</div>";
+    echo "  <div slot='right'>"  . (new t(str_replace("*", "Right",  static::$defaultOptions['model'] . ".$field")))->value()->__toString() . "</div>";
+    echo "</x-fff-field>";
   }
 }
