@@ -20,9 +20,10 @@
 							</div>
 						</td>
 					</tr>
-
-					<?php (new t("Patient.Name"))->tr("Name")->p(); ?>
-					<?php (new t("Patient.Sex"))->tr()->p(); ?>
+				</table>
+				<?php (new t("Patient.Name"))->tr2("Name")->p(); ?>
+				<?php (new t("Patient.Sex"))->tr2()->p(); ?>
+				<table>
 					<tr>
 						<td>Year of birth</td>
 						<td>
@@ -76,17 +77,15 @@
 							</span>
 						</td>
 					</tr>
-					<?php (new t("Patient.Telephone"))->tr()->p(); ?>
-					<?php (new t("Patient.AddressNotes"))->tr("Adress Notes")->p(); ?>
 				</table>
+				<?php (new t("Patient.Telephone"))->tr2()->p(); ?>
+				<?php (new t("Patient.AddressNotes"))->tr2("Adress Notes")->p(); ?>
 			</x-group-panel>
 	 	</div>
 		<div class="col-md-6">
 			<x-group-panel id='PatientPathology' ng-class='{ jserror: errors.noPathology }' title='Pathology'>
-				<table>
-					<?php (new t("Patient.Pathology"))->tr("Main pathology")->p(); ?>
-					<?php (new t("Patient.other_comments"))->tr("Other comments")->p(); ?>
-				</table>
+				<?php (new t("Patient.Pathology"))->tr2("Main pathology")->p(); ?>
+				<?php (new t("Patient.other_comments"))->tr2("Other comments")->p(); ?>
 			</x-group-panel>
 	 		<br/>
 		</div>

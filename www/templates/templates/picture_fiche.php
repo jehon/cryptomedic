@@ -15,10 +15,10 @@
 	<div class="row">
 		<div class="col-md-6">
 			<x-group-panel title='Picture informations'>
+				<?php (new t("Picture.Date"))->tr2()->p(); ?>
+				<?php (new t("Picture.comment"))->tr2()->p(); ?>
+				<?php (new t("Picture.file"))->readOnly()->tr2("File")->p(); ?>
 				<table>
-					<?php (new t("Picture.Date"))->tr()->p(); ?>
-					<?php (new t("Picture.comment"))->tr()->p(); ?>
-					<?php (new t("Picture.file"))->readOnly()->tr("File")->p(); ?>
 					<tr class='notModeRead'
 							ng-if="!currentFile().file"
 							ng-class="{ error: errors.pictureRequired }"
