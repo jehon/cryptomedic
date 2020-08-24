@@ -13,22 +13,18 @@
 		<div class="col-md-6">
 			<?php require(__DIR__ . "/../helpers/consult-introduction.php"); ?>
 			<x-group-panel title='Orthopedic Data'>
-				<table>
-					<?php (new t("OtherConsult.Side"))->tr()->p(); ?>
-					<?php (new t("OtherConsult.Jointsorbonesaffected"))->tr()->p(); ?>
-					<?php (new t("OtherConsult.Deformity"))->tr()->p(); ?>
-					<?php (new t("OtherConsult.Articulationmobility"))->tr()->p(); ?>
-					<?php (new t("OtherConsult.Musclestrength"))->tr()->p(); ?>
-					<?php (new t("OtherConsult.Pain"))->tr()->p(); ?>
-					<?php (new t("OtherConsult.Walk"))->tr()->p(); ?>
-					<?php (new t("OtherConsult.XRay"))->tr()->p(); ?>
-				</table>
+				<?php (new t("OtherConsult.Side"))->tr2()->p(); ?>
+				<?php (new t("OtherConsult.Jointsorbonesaffected"))->tr2()->p(); ?>
+				<?php (new t("OtherConsult.Deformity"))->tr2()->p(); ?>
+				<?php (new t("OtherConsult.Articulationmobility"))->tr2()->p(); ?>
+				<?php (new t("OtherConsult.Musclestrength"))->tr2()->p(); ?>
+				<?php (new t("OtherConsult.Pain"))->tr2()->p(); ?>
+				<?php (new t("OtherConsult.Walk"))->tr2()->p(); ?>
+				<?php (new t("OtherConsult.XRay"))->tr2()->p(); ?>
 			</x-group-panel>
 			<x-group-panel title='Conclusion'>
-				<table>
-					<?php (new t("OtherConsult.Performed"))->tr("Activities Performed by the Patient")->p(); ?>
-					<?php (new t("OtherConsult.NotPerformed"))->tr("Activities NOT Performed by the Patient")->p(); ?>
-				</table>
+				<?php (new t("OtherConsult.Performed"))->tr2("Activities Performed by the Patient")->p(); ?>
+				<?php (new t("OtherConsult.NotPerformed"))->tr2("Activities NOT Performed by the Patient")->p(); ?>
 			</x-group-panel>
 		</div>
 		<div class="col-md-6">
