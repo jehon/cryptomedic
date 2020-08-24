@@ -61,10 +61,10 @@ export default class XButton extends HTMLElement {
                 // !! could not have any other class on button, otherwise it will be wiped out :-)
                 if (newValue == levels.discrete) {
                     this[button].className = 'btn';
-                    this[button].style = 'background-color: transparent';
+                    this[button].style.backgroundColor = 'transparent';
                 } else {
                     this[button].className = `btn btn-${newValue}`;
-                    this[button].style = '';
+                    this[button].style.backgroundColor = '';
                 }
                 break;
         }
