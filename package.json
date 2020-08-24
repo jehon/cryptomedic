@@ -64,7 +64,7 @@
     "webpack-cli": "3.3.12"
   },
   "scripts": {
-    "build-continuously": "watch 'make build' app/",
+    "build-continuously": "watch 'clear; make build' app/",
     "test-unit-continuously": "karma start tests/unitjs/karma.conf.js",
     "test-e2e": "nightwatch -c tests/e2e/nightwatch.conf.js",
     "test-e2e-chrome": "nightwatch -c tests/e2e/nightwatch.conf.js -e chrome",
