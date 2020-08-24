@@ -29,6 +29,10 @@ export default class JHElement extends HTMLElement {
         if (v === '0' || v === 0) {
             return false;
         }
+        // TODO:
+        // if (v == '') {
+        //     return false;
+        // }
         return true;
     }
 
