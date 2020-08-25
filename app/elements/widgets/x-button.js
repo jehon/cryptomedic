@@ -1,6 +1,7 @@
 
 import { spacing, icons, levels } from '../../config.js';
 import { defineCustomElement } from '../../js/custom-element.js';
+import { setRoute } from '../../js/router.js';
 
 const button = Symbol('button');
 
@@ -10,6 +11,7 @@ const button = Symbol('button');
  * Slot[]: content
  * level: default / primary / success / info / warning / danger
  *     https://getbootstrap.com/docs/3.3/css/#buttons-options
+ * to-route: the route where to go on click (if set)
  */
 export default class XButton extends HTMLElement {
     static get observedAttributes() {
@@ -47,6 +49,12 @@ export default class XButton extends HTMLElement {
             </button>
         `;
         this[button] = this.shadowRoot.querySelector('button');
+        this[button].addEventListener('click', () => {
+            const toRoute = this.getAttribute('to-route');
+            if (toRoute) {
+                setRoute(toRoute);
+            }
+        });
     }
 
     attributeChangedCallback(attributeName, _oldValue, newValue) {
