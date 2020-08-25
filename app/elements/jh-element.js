@@ -1,3 +1,6 @@
+
+/* istanbul ignore file */
+
 /*
   TODO:
   - annotation -> register element

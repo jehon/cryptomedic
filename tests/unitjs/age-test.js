@@ -12,6 +12,8 @@ describe('calculations', function () {
                 expect(fromBirthDate(toBirthDate(10, 5, now), {
                     reference: now
                 })).toBe('10y5m');
+
+                expect(fromBirthDate(toBirthDate(10, 5), {})).toBe('10y5m');
             });
         });
     });

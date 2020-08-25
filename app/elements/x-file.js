@@ -1,4 +1,6 @@
 
+/* istanbul ignore file */
+
 import JHElement from './jh-element.js';
 import { ApplicationException, DataMissingException } from '../js/exceptions.js';
 

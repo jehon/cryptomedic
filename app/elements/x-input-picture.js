@@ -1,4 +1,6 @@
 
+/* istanbul ignore file */
+
 import XWaiting from './x-waiting.js';
 
 const previewElement = Symbol('previewElement');

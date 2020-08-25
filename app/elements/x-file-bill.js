@@ -1,4 +1,6 @@
 
+/* istanbul ignore file */
+
 import XFile from './x-file.js';
 import { DataMissingException, ConfigurationMissingException } from '../js/exceptions.js';
 import { onSession, getSession } from '../js/session.js';

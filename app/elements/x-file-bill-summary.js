@@ -1,4 +1,6 @@
 
+/* istanbul ignore file */
+
 import XFileBill from './x-file-bill.js';
 import TwoColumns from '../js/twoColumns.js';
 

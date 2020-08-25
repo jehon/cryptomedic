@@ -1,4 +1,6 @@
 
+/* istanbul ignore file */
+
 import JHElement from './jh-element.js';
 
 let uuid = 0;

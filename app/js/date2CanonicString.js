@@ -4,10 +4,10 @@
  * TODO: check this definition
  *
  * @param {Date} d to be represented
- * @param {*} dateOnly if only the yyyy-mm-dd part must be returned if time was given
+ * @param {boolean} dateOnly if only the yyyy-mm-dd part must be returned if time was given
  * @returns {string} the date in a readable way
  */
-export default function date2CanonicString(d = null, dateOnly = false) {
+export default function date2CanonicString(d, dateOnly = false) {
     if (d == null) return null;
 
     var ts = - (new Date()).getTimezoneOffset() / 60 * 100;

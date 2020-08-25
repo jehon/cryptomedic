@@ -1,6 +1,7 @@
 
 import hash from './hash.js';
 
+/* istanbul ignore else: impossible to test */
 if (!('browserUUID' in localStorage)) {
     localStorage.browserUUID = hash(navigator.userAgent + ':' + new Date());
     console.info('Generated browser UUID: ', localStorage.browserUUID);

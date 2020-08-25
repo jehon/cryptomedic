@@ -1,4 +1,6 @@
 
+/* istanbul ignore file */
+
 import JHElement from './jh-element.js';
 import './block-bill-line.js';
 import './widgets/x-group-panel.js';

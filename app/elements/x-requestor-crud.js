@@ -1,4 +1,6 @@
 
+/* istanbul ignore file */
+
 import XRequestor from './x-requestor.js';
 import nullify from '../js/nullify.js';
 
