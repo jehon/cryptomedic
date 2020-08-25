@@ -1,40 +1,49 @@
 
-import '../../app/elements/widgets/x-button.js';
-
-import { fn, webDescribe } from './athelpers.js';
-import { levels, icons } from '../../app/config.js';
-
-// TODO: use constructor instead of webDescribe
+import { icons, levels } from '../../app/config.js';
+import XButton from '../../app/elements/widgets/x-button.js';
+import { getCurrentRoute, setRoute } from '../../app/js/router.js';
+import { fn } from './athelpers.js';
 
 describe(fn(import.meta.url), function () {
-    webDescribe('initialized', '<x-button></x-button>', function (element) {
-        it('should initialize', function () {
-            expect(element()).not.toBeNull();
-            expect(element().shadowRoot.querySelector('button')).not.toBeNull();
-            expect(element().shadowRoot.querySelector('img').offsetWidth).toBe(0);
-        });
-
-        it('should reac to click', function (done) {
-            element().addEventListener('click', (_event) => done());
-            element().shadowRoot.querySelector('button').click();
-        });
+    /** @type {XButton} */
+    let el;
+    beforeEach(() => {
+        el = new XButton();
     });
 
-    webDescribe('with level and icon', `<x-button level="${levels.success}" icon='${icons.error}'></x-button>`, function (element) {
-        it('should initialize', function () {
-            expect(element()).not.toBeNull();
-            expect(element().shadowRoot.querySelector('button')).not.toBeNull();
-            expect(element().shadowRoot.querySelector('img').offsetWidth).toBeGreaterThan(0);
-        });
+    it('should initialize', function () {
+        expect(el.shadowRoot.querySelector('button')).not.toBeNull();
+        expect(el.shadowRoot.querySelector('img').getAttribute('src')).toBe('');
     });
 
-    webDescribe('within form', '<form><x-button></x-button></form>', function (element) {
-        it('should not submit a form', function (done) {
-            element().addEventListener('submit', () => done.fail('form has been submitted'));
-            element().querySelector('x-button').shadowRoot.querySelector('button').click();
-            setTimeout(() => {
-                done();
-            }, 10);
-        });
+    it('should react to click', function (done) {
+        el.addEventListener('click', (_event) => done());
+        el.shadowRoot.querySelector('button').click();
+    });
+
+    it('should handle to-route attribute', function() {
+        setRoute('/');
+        el.setAttribute('to-route', '/test');
+        el.click();
+        expect(getCurrentRoute()).toBe('/test');
+    });
+
+    it('should initialize', function () {
+        el.setAttribute('level', levels.success);
+        el.setAttribute('icon', icons.error);
+
+        expect(el.shadowRoot.querySelector('button')).not.toBeNull();
+        expect(el.shadowRoot.querySelector('img').getAttribute('src')).not.toBe('');
+    });
+
+    it('should not submit a form', function (done) {
+        const f = document.createElement('form');
+        f.appendChild(el);
+
+        el.addEventListener('submit', () => done.fail('form has been submitted'));
+        el.shadowRoot.querySelector('button').click();
+        setTimeout(() => {
+            done();
+        }, 10);
     });
 });
