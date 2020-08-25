@@ -1,4 +1,6 @@
 
+/* istanbul ignore file */
+
 // TODO: how to trigger "submit" event on form ? -> x-login-form-test
 
 /**

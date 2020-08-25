@@ -67,5 +67,14 @@ export function routeToFolderPatient(folderId) {
  * @returns {string} the route
  */
 export function getRouteToFolderAdd(folderId, type) {
-    return `#/folder/${folderId}/file/${type}`;
+    return `/folder/${folderId}/file/${type}`;
+}
+
+/**
+ * Get a route to the creation of a folder
+ *
+ * @returns {string} the route
+ */
+export function getRouteToCreateReference() {
+    return '/folder/-1/edit';
 }

@@ -1,4 +1,6 @@
 
+/* istanbul ignore file */
+
 import XRequestor from './x-requestor.js';
 import TimedMap from '../js/timedMap.js';
 import Patient from '../models/Patient.js';

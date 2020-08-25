@@ -1,4 +1,6 @@
 
+/* istanbul ignore file */
+
 import JHElement from './jh-element.js';
 import './x-write-list.js';
 import './x-input-date.js';

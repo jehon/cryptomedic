@@ -93,7 +93,9 @@ export const getAuthorized = (key, session = getSession()) => session?.authorize
  */
 const FOLDER = 'FOLDER';
 export const setCurrentFolder = (value = null) => duix.set(FOLDER, value);
+/* TODO: temp function *//* istanbul ignore next */
 export const getCurrentFolder = () => duix.get(FOLDER);
+/* TODO: temp function *//* istanbul ignore next */
 export const onCurrentFolder = (cb) => duix.subscribe(FOLDER, cb);
 
 setSession();

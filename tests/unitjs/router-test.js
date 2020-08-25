@@ -56,5 +56,13 @@ describe(fn(import.meta.url), function () {
             let fp = f.getByTypeAndId(OtherConsult, 1);
             expect(router.getRouteToFolderFile(fp)).toBe('/folder/1/file/OtherConsult/1');
         });
+
+        it('should route to create reference', function () {
+            expect(router.getRouteToCreateReference()).toBe('/folder/-1/edit');
+        });
+
+        it('should route to add file', function () {
+            expect(router.getRouteToFolderAdd(1, 'Type')).toBe('/folder/1/file/Type');
+        });
     });
 });
