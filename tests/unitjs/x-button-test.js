@@ -16,8 +16,13 @@ describe(fn(import.meta.url), function () {
         expect(el.shadowRoot.querySelector('img').getAttribute('src')).toBe('');
     });
 
-    it('should react to click', function (done) {
+    it('should react to click by event listener', function (done) {
         el.addEventListener('click', (_event) => done());
+        el.shadowRoot.querySelector('button').click();
+    });
+
+    it('should react to click by onclick', function (done) {
+        el.onclick = (_event) => done();
         el.shadowRoot.querySelector('button').click();
     });
 
