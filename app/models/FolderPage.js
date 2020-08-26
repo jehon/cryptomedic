@@ -1,4 +1,6 @@
 
+/* istanbul ignore file */
+
 import CRUD from './CRUD.js';
 import { getPref } from '../js/prefs.js';
 import { toAttributeCase } from '../js/string-utils.js';

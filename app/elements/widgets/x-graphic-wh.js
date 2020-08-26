@@ -1,4 +1,6 @@
 
+/* istanbul ignore file: TODO */
+
 import XGraphic from './x-graphic.js';
 import amd_stats from '../../js/amd_stats.js';
 

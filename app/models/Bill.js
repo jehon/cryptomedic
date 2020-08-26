@@ -1,4 +1,6 @@
 
+/* istanbul ignore file */
+
 import PatientRelated from './PatientRelated.js';
 import { DataMissingException } from '../js/exceptions.js';
 

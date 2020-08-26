@@ -1,4 +1,6 @@
 
+/* istanbul ignore file */
+
 import FolderPage from './FolderPage.js';
 import { DataMissingException } from '../js/exceptions.js';
 
