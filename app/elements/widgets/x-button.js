@@ -81,6 +81,10 @@ export default class XButton extends HTMLElement {
     click() {
         this[button].click();
     }
+
+    set onclick(fn) {
+        this[button].addEventListener('click', fn);
+    }
 }
 
 defineCustomElement(XButton);
