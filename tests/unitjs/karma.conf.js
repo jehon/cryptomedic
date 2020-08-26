@@ -55,10 +55,15 @@ module.exports = function (config) {
         },
 
         coverageReporter: {
-            type: 'lcov',
             dir: path.join(root, '/target/'),
-            subdir: 'js/',
-            includeAllSources: true
+            includeAllSources: true,
+            reporters: [
+                {
+                    type: 'lcov',
+                    subdir: 'js/'
+                },
+                /* { type: 'text-summary' } */
+            ]
         },
 
         htmlReporter: {
