@@ -4,6 +4,7 @@
 
 import getDataService from '../js/getDataService.js';
 import goThere from '../js/goThere.js';
+import { getRouteToCreateReference } from '../js/router.js';
 
 export default function ctrl_home($scope) {
     if (typeof ($scope.entryyear) == 'undefined') {
@@ -47,9 +48,8 @@ export default function ctrl_home($scope) {
         $scope.searched = true;
     };
 
-    $scope.generateReference = function () {
-        goThere('/folder/-1/edit');
-        return;
+    $scope.getRouteToCreateReference = function() {
+        return getRouteToCreateReference();
     };
 }
 
