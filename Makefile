@@ -139,7 +139,7 @@ test-api-commit: docker-started dependencies-api data-reset
 .PHONY: test-unit
 test-unit: dependencies-node $(CJS2ESM_DIR)/axios.js $(CJS2ESM_DIR)/axios-mock-adapter.js
 	npm run test-unit-continuously -- --single-run
-	npm run tests/report.js
+	node tests/report.js
     
 # @NBR_TESTS=$$(cat target/js/junit/TESTS.xml | grep "<testCase" | wc -l); \
 # NORM_TESTS=$$( cat tests/unitjs/nbr.txt ); \

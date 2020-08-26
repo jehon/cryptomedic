@@ -1,4 +1,6 @@
 
+/* istanbul ignore file */
+
 // TODO: Adapt for: ctrl_folder
 // TODO: Adapt for: ctrl_file_bill
 

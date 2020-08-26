@@ -1,4 +1,6 @@
 
+/* istanbul ignore file */
+
 import FolderPage from './FolderPage.js';
 
 export default class Patient extends FolderPage {

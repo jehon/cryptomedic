@@ -1,4 +1,6 @@
 
+/* istanbul ignore file */
+
 import PatientRelated from './PatientRelated.js';
 
 export default class Surgery extends PatientRelated {
