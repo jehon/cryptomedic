@@ -1,109 +1,113 @@
 <span>
-<div ng-if='!edit && !password'>
-  <table class='table table-hover table-bordered tablesorter'>
-    <thead>
-      <th>id</th>
-      <th>username</th>
-      <th>full name</th>
-      <th>email</th>
-      <th>codage</th>
-      <th>group</th>
-      <th>in examiner list</th>
-      <th>has a password</th>
-      <th>notes</th>
-      <th></th>
-    </thead>
-    <tbody>
-      <tr ng-repeat='u in users'>
-        <td>{{u.id}}</td>
-        <td>{{u.username}}</td>
-        <td>{{u.name}}</td>
-        <td>{{u.email}}</td>
-        <td>{{u.codage}}</td>
-        <td>{{u.group}}</td>
-        <td><x-read-boolean value="{{u.inExaminerList}}"></x-read-boolean></td>
-        <td><x-read-boolean value="{{u.hasAPassword}}"></x-read-boolean></td>
-        <td>{{u.notes}}</td>
-        <td>
-          <span class='btn btn-default' ng-click='doEdit($index)'>edit</span>
-          <span class='btn btn-default' ng-click='doShowPassword($index)'>Change password</span>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-  <span class='btn btn-default' ng-click='doAdd()'>Add a new user</span>
-  <a class='btn btn-default' ng-href='mailto:{{emailAll()}}'>Email everybody</a>
-</div>
+  <div ng-if='!edit && !password'>
+    <table class='table table-hover table-bordered tablesorter'>
+      <thead>
+        <th>id</th>
+        <th>username</th>
+        <th>full name</th>
+        <th>email</th>
+        <th>codage</th>
+        <th>group</th>
+        <th>in examiner list</th>
+        <th>has a password</th>
+        <th>notes</th>
+        <th></th>
+      </thead>
+      <tbody>
+        <tr ng-repeat='u in users'>
+          <td>{{u.id}}</td>
+          <td>{{u.username}}</td>
+          <td>{{u.name}}</td>
+          <td>{{u.email}}</td>
+          <td>{{u.codage}}</td>
+          <td>{{u.group}}</td>
+          <td>
+            <x-read-boolean value="{{u.inExaminerList}}"></x-read-boolean>
+          </td>
+          <td>
+            <x-read-boolean value="{{u.hasAPassword}}"></x-read-boolean>
+          </td>
+          <td>{{u.notes}}</td>
+          <td>
+            <x-button ng-click='doEdit($index)'>edit</x-button>
+            <x-button ng-click='doShowPassword($index)'>Change password</x-button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <x-button ng-click='doAdd()'>Add a new user</x-button>
+  </div>
 
-<form name='user_edit_form'>
-  <div ng-if='edit'>
-    <h3 ng-if='edit.id >= 0'>Edit user '{{edit.username}}'</h3>
-    <h3 ng-if='edit.id < 0'>Creating user</h3>
-    <span ng-if='!password'>
-      <div class='alert alert-info'>
-        When you have created/edited the user, do not forget to set its password by selecting "change password"
-        on the main screen.
-      </div>
+  <form name='user_edit_form'>
+    <div ng-if='edit'>
+      <h3 ng-if='edit.id >= 0'>Edit user '{{edit.username}}'</h3>
+      <h3 ng-if='edit.id < 0'>Creating user</h3>
+      <span ng-if='!password'>
+        <div class='alert alert-info'>
+          When you have created/edited the user, do not forget to set its password by selecting "change password"
+          on the main screen.
+        </div>
+        <table class='table table-hover table-bordered tablesorter'>
+          <tr>
+            <td>Id</td>
+            <td>{{edit.id}}</td>
+          </tr>
+          <tr>
+            <td>Username</td>
+            <td>
+              <input ng-model="edit.username" class="form-control" required autofocus>
+            </td>
+          </tr>
+          <tr>
+            <td>Name</td>
+            <td>
+              <input ng-model="edit.name" class="form-control" required>
+            </td>
+          </tr>
+          <tr>
+            <td>Email</td>
+            <td>
+              <input ng-model="edit.email" class="form-control">
+            </td>
+          </tr>
+          <tr>
+            <td>Codage</td>
+            <td>
+              <input ng-model="edit.codage" class="form-control">
+            </td>
+          </tr>
+          <tr>
+            <td>In examiner list</td>
+            <td>
+              <input type='checkbox' ng-model="edit.inExaminerList" class="form-control">Yes
+            </td>
+          </tr>
+          <tr>
+            <td>Notes</td>
+            <td>
+              <input ng-model="edit.notes" class="form-control">
+            </td>
+          </tr>
+        </table>
+        <x-button ng-click='doCancel()'>cancel</x-button>
+        <x-button ng-disabled="user_edit_form.$invalid" level='info' ng-click='doSave()'>create/save</x-button>
+        <x-button level='danger' ng-click='doDelete()'>!!Delete the user!!</x-button>
+        <br>
+      </span>
+    </div>
+
+    <div ng-if='password'>
       <table class='table table-hover table-bordered tablesorter'>
         <tr>
-          <td>Id</td>
-          <td>{{edit.id}}</td>
-        </tr>
-        <tr>
-          <td>Username</td>
+          <td>New password for {{password.name}}</td>
           <td>
-            <input ng-model="edit.username" class="form-control" required autofocus>
-          </td>
-        </tr>
-        <tr>
-          <td>Name</td>
-          <td>
-            <input ng-model="edit.name" class="form-control" required>
-          </td>
-        </tr>
-        <tr>
-          <td>Email</td>
-          <td>
-            <input ng-model="edit.email" class="form-control">
-          </td>
-        </tr>
-        <tr>
-          <td>Codage</td>
-          <td>
-            <input ng-model="edit.codage" class="form-control">
-          </td>
-        </tr>
-        <tr>
-          <td>In examiner list</td>
-          <td>
-            <input type='checkbox' ng-model="edit.inExaminerList" class="form-control">Yes
-          </td>
-        </tr>
-        <tr>
-          <td>Notes</td>
-          <td>
-            <input ng-model="edit.notes" class="form-control">
+            <input ng-model="password.newcode" class="form-control" placeholder="enter new password here" required
+              autofocus>
           </td>
         </tr>
       </table>
-      <span class='btn btn-default' ng-click='doCancel()'>cancel</span>
-      <span ng-disabled="user_edit_form.$invalid" class='btn btn-info' ng-click='doSave()'>create/save</span>
-      <span class='btn btn-danger' ng-click='doDelete()'>!!Delete the user!!</span>
-      <br>
-    </span>
-  </div>
-
-  <div ng-if='password'>
-    <table class='table table-hover table-bordered tablesorter'>
-      <tr>
-        <td>New password for {{password.name}}</td>
-        <td>
-          <input ng-model="password.newcode" class="form-control" placeholder="enter new password here" required autofocus>
-        </td>
-      </tr>
-    </table>
-    <span class='btn btn-default' ng-click='doCancel()'>cancel</span>
-    <span class='btn btn-info' ng-click='doSavePassword()'>Set password</span>
-  </div>
-</form>
+      <x-button ng-click='doCancel()'>cancel</x-button>
+      <x-button level='info' ng-click='doSavePassword()'>Set password</x-button>
+    </div>
+  </form>
 </span>
