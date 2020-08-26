@@ -75,7 +75,7 @@
             </div>
             <div class="form-group">
               <div class="col-sm-offset-2 col-sm-10">
-                <div id='report_refresh_button' class='btn btn-primary' ng-click="refresh()">Refresh</div>
+                <x-button id='report_refresh_button' ng-click="refresh()">Refresh</x-button>
               </div>
             </div>
           </form>
@@ -96,14 +96,13 @@
       </div>
       <div ng-if="result && !error">
         <div class='text-right'>
-          <a id='report_download_button'
-              class='btn'
-              style='background-color: green; color: white'
-              href="#"
+          <x-button id='report_download_button'
+              level='success'
               download="{{reportName()}}.xls"
               ng-click='generate($event)'
               >
-          Export current table in XLS</a>
+            Export current table in XLS
+          </x-button>
               <!-- onclick="return jQuery('.online').remove() & ExcellentExport.excel(this, jQuery('#report_table table')[0], 'cryptomedic');"> -->
         </div>
         <div ng-include="getReport().templateUrl" id='report_table'></div>
@@ -121,7 +120,7 @@
           <div ng-bind-html="r.description"></div>
           <br>
           <div>
-            <a id='launch_report_{{k}}' class='btn btn-primary' href='#/reports/{{k}}'>{{r.name}}</a>
+            <x-button id='launch_report_{{k}}' to-route='#/reports/{{k}}'>{{r.name}}</x-button>
           </div>
         </div>
       </x-group-panel>
