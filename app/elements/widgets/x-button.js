@@ -1,5 +1,5 @@
 
-import { spacing, icons, levels, actions } from '../../config.js';
+import { spacing, icons, actions } from '../../config.js';
 import { defineCustomElement } from '../../js/custom-element.js';
 import { setRoute } from '../../js/router.js';
 
@@ -72,9 +72,10 @@ export default class XButton extends HTMLElement {
                     this[button].className = 'btn';
                     this[button].style.backgroundColor = 'transparent';
                 } else {
-                    const action = this.getAttribute('action');
+                    let action = this.getAttribute('action');
                     if (!(action in actions)) {
                         console.error('unknown action: ', action);
+                        action = 'alternate';
                     }
                     const color = actions[action];
                     this[button].className = `btn btn-${color}`;
