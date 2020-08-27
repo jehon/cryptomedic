@@ -32,7 +32,7 @@ export default class XRequestor extends XWaiting {
                     <css-inherit></css-inherit>
                     <h1 id='errorMsg'></h1>
                     <div id='errorContent'></div>
-                    <x-button id='closeButton'>Dismiss</x-button>
+                    <x-button action='cancel' id='closeButton'>Dismiss</x-button>
                 </x-panel>
                 <div slot='content'><slot></slot></div>
             </x-overlay>

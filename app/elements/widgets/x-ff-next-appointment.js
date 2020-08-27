@@ -1,13 +1,13 @@
 
-import { levels } from '../../config.js';
 import { defineCustomElement } from '../../js/custom-element.js';
 import date2CanonicString from '../../js/date2CanonicString.js';
 import { getRouteToFolderAdd, setRoute } from '../../js/router.js';
 import Appointment from '../../models/Appointment.js';
 import XWithFolder from '../abstract/x-with-folder.js';
 import './x-group-panel.js';
-import '../widgets/x-fff-field.js';
-import '../widgets/x-message.js';
+import './x-fff-field.js';
+import './x-message.js';
+import './x-button.js';
 
 
 // TODO: better layout for without appointment
@@ -26,7 +26,7 @@ export default class XFfNextAppointment extends XWithFolder {
                 </div>
                 <div id='withoutAppointment'>
                     <x-message level='warning'>No appointment planned</x-message>
-                    <x-button id='add-appointment' level=${levels.primary}>Add an appointment</x-button>
+                    <x-button id='add-appointment' action='commit'>Add an appointment</x-button>
                 </div>
             </x-group-panel>`;
 

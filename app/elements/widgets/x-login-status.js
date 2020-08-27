@@ -2,7 +2,6 @@
 import './x-button.js';
 import { routeToLogin } from '../../js/router.js';
 import { onSession, getUsername } from '../../js/session.js';
-import { levels } from '../../config.js';
 import { logoutBuilder } from './x-requestor.js';
 
 const user = Symbol('user');
@@ -17,7 +16,7 @@ export default class XLoginStatus extends HTMLElement {
                         display: block;
                     }
                 </style>
-                <x-button id='logout' icon='logout' level='${levels.discrete}'>
+                <x-button id='logout' icon='logout' discrete>
                     <span id='user'></span>
                 </x-button>
                 <x-requestor global></x-requestor>
