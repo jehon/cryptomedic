@@ -15,7 +15,7 @@
     <x-group-panel ng-if="canAddOne()" title='Add a new price list'>
       <div>
         If you want to create the price list, please click here:
-        <span id='button_create' class="btn btn-default" ng-click="actionCreate()">Create a new price list</span>
+        <x-button action='commit' id='button_create' ng-click="actionCreate()">Create a new price list</x-button>
       </div>
       <div id='action_creating' ng-if='creating'>
         When will the new price list be active? Please choose the pivot date:<br>
@@ -33,7 +33,7 @@
             </td>
           </tr>
         </table>
-        <span id='button_do_create' class="btn btn-default" ng-click="doCreate()">Go</span>
+        <x-button action='commit' id='button_do_create' ng-click="doCreate()">Go</x-button>
       </div>
     </x-group-panel>
   </div>
@@ -59,13 +59,13 @@
             <th ng-repeat='p in prices'>
               <span ng-if='p["_editable"]'>
                 <span ng-if='edit !== $index'>
-                  <span id='button_edit_{{$index}}' class="btn btn-default" ng-click="actionEdit($index)">Edit</span>
+                  <x-button id='button_edit_{{$index}}' ng-click="actionEdit($index)">Edit</x-button>
                 </span>
                 <span ng-if='edit === $index'>
-                  <span id='button_save_{{$index}}' class="btn btn-default" ng-click="doSave($index)">Save</span>
-                  <span id='button_cancel_{{$index}}' class="btn btn-default" ng-click="doCancel()">Cancel</span>
+                  <x-button action='commit' id='button_save_{{$index}}' ng-click="doSave($index)">Save</x-button>
+                  <x-button action='cancel' id='button_cancel_{{$index}}' ng-click="doCancel()">Cancel</x-button>
                 </span>
-                <span id='button_delete_{{$index}}' class="btn btn-default" ng-click="doDelete($index)">Delete</span>
+                <x-button action='delete' id='button_delete_{{$index}}' ng-click="doDelete($index)">Delete</x-button>
               </span>
               <span ng-if='!p["_editable"]'>
                 Locked
