@@ -43,6 +43,10 @@ export default class XButton extends HTMLElement {
                     vertical-align: middle;
                     padding-right: ${spacing.element};
                 }
+
+                :host(.selected) button {
+                    background-color: blue;
+                }
             </style>
             <button class='btn btn-${actions.alternate}'>
                 <img src=''><slot></slot>
