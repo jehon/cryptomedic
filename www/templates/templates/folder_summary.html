@@ -10,9 +10,9 @@
 	<tr id='summary_patient'>
 		<td></td>
 		<td>
-			<a href="#/folder/{{id()}}/" class="btn btn-default" style="width: 100%">
+			<x-button to-route="#/folder/{{id()}}/" style="width: 100%">
 				Patient
-			</a>
+			</x-button>
 		</td>
 		<td></td>
 		<td ng-include="template('patient', 'summary')"></td>
@@ -20,9 +20,9 @@
 	<tr ng-repeat="f in folder.getFilesRelatedToPatient()">
 		<td>#{{$index}}</td>
 		<td>
-			<a href="#/folder/{{folder.getId()}}/file/{{f.getModel()}}/{{f.id}}" class="btn btn-default" style="width: 100%">
+			<x-button href="#/folder/{{folder.getId()}}/file/{{f.getModel()}}/{{f.id}}" style="width: 100%">
 				{{f.getModel()}}
-			</a>
+			</x-button>
 		</td>
 		<td>{{f.Date | date:'longDate' }}</td>
 		<td><span ng-include="template(f.getModel().toLowerCase(), 'summary')"></span></td>

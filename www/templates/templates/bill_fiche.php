@@ -152,8 +152,8 @@
           <td>{{p.Amount}}</td>
           <td>{{p.Notes}}</td>
           <td>
-            <span id='button_edit_{{$index}}'   class="btn btn-default" ng-click="actionEditPayment(p.id)">Edit</span>
-            <span id='button_delete_{{$index}}' class="btn btn-danger"  ng-click="actionDeletePayment(p.id)">Delete</span>
+            <x-button id='button_edit_{{$index}}' ng-click="actionEditPayment(p.id)">Edit</x-button>
+            <x-button action='delete' id='button_delete_{{$index}}' ng-click="actionDeletePayment(p.id)">Delete</x-button>
           </td>
         </tr>
       </tbody>
@@ -175,12 +175,8 @@
           <?php (new t("Payment.Notes"))->tr("Notes")->p(); ?>
         </table>
       </form>
-      <span id='button_payment_create' class="btn btn-default" ng-click="actionAddPayment()" ng-if='paymentEditor.id == null'>
-        Create
-      </span>
-      <span id='button_payment_save'   class="btn btn-default" ng-click="actionAddPayment()" ng-if='paymentEditor.id > 0'>
-        Save
-      </span>
+      <x-button action='commit' id='button_payment_create' ng-click="actionAddPayment()" ng-if='paymentEditor.id == null'>Create</x-button>
+      <x-button action='commit' id='button_payment_save'   ng-click="actionAddPayment()" ng-if='paymentEditor.id > 0'>Save</x-button>
     </x-group-panel>
   </div>
 </div>
