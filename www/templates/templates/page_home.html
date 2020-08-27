@@ -24,16 +24,16 @@
 				</span>
 				<br>
 				<div ng-if="(entryyear > 0) && (entryorder > 0)" class="text-center">
-					<button ng-click="checkReference()" class="btn btn-primary">Check it</button>
+					<x-button action='commit' ng-click="checkReference()">Check it</x-button>
 				</div>
 			</x-group-panel>
 			<x-group-panel ng-if="searched" title='Results'>
 				The patient does <b>not</b> exist.
 				Do you want to <b>create</b> it?<br>
 				<br>
-				<button id="button_create_reference" ng-click="createReference()" class="btn btn-primary">
+				<x-button action='commit' id="button_create_reference" ng-click="createReference()">
 					<img src="/static/img/go.gif" alt="[go]"> Create the patient
-				</button>
+				</x-button>
 			</x-group-panel>
 		</div>
 		<div class='col-sm-6'>
