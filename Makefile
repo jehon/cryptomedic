@@ -157,15 +157,20 @@ target/e2e/.tested: data-reset www/build/index.html tests/e2e/**
 	touch target/e2e/.tested
 
 .PHONY: test-style
-test-style: target/style.json
-target/style.json: target/e2e/.tested
+test-style: target/styles.json
+target/styles.json: target/e2e/.tested
 	npm run --silent test-style
 	echo "Report is at http://localhost:5557/target/style.html"
 
 test-style-update-references:
-	rsync --progress --recursive --delete \
-		--include "*_reference.png" --include "*_reference_*.png" --exclude "*" \
-		target/e2e/browsers/firefox/ tests/style/references
+	@jq -r 'keys[]' target/styles.json | while IFS='' read -r F; do \
+		echo "updating $$F"; \
+		cp "target/e2e/browsers/firefox/$$F" "tests/style/references/$$F"; \
+	done
+
+# rsync --progress --recursive --delete \
+# 	--include "*_reference.png" --include "*_reference_*.png" --exclude "*" \
+# 	target/e2e/browsers/firefox/ tests/style/references
 
 #
 # Deploy command
