@@ -1,5 +1,5 @@
 
-import { spacing, icons, levels } from '../../config.js';
+import { spacing, icons, levels, actions } from '../../config.js';
 import { defineCustomElement } from '../../js/custom-element.js';
 import { setRoute } from '../../js/router.js';
 
@@ -15,7 +15,7 @@ const button = Symbol('button');
  */
 export default class XButton extends HTMLElement {
     static get observedAttributes() {
-        return ['icon', 'level'];
+        return ['icon', 'action', 'discrete'];
     }
 
     constructor() {
@@ -65,13 +65,19 @@ export default class XButton extends HTMLElement {
                 }
                 this.shadowRoot.querySelector('img').setAttribute('src', icons[newValue]);
                 break;
-            case 'level':
+            case 'discrete':
+            case 'action':
                 // !! could not have any other class on button, otherwise it will be wiped out :-)
-                if (newValue == levels.discrete) {
+                if (this.hasAttribute('discrete')) {
                     this[button].className = 'btn';
                     this[button].style.backgroundColor = 'transparent';
                 } else {
-                    this[button].className = `btn btn-${newValue}`;
+                    const action = this.getAttribute('action');
+                    if (!(action in actions)) {
+                        console.error('unknown action: ', action);
+                    }
+                    const color = actions[action];
+                    this[button].className = `btn btn-${color}`;
                     this[button].style.backgroundColor = '';
                 }
                 break;

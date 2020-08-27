@@ -29,6 +29,13 @@ export const levels = {
     discrete: 'discrete'
 };
 
+export const actions = {
+    commit: levels.success,
+    cancel: levels.warning,
+    delete: levels.danger,
+    alternate: levels.info
+};
+
 export const icons = {
     error: '/static/img/error.svg',
     logout: '/static/img/logout.gif'

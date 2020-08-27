@@ -29,13 +29,13 @@
           </td>
           <td>{{u.notes}}</td>
           <td>
-            <x-button ng-click='doEdit($index)'>edit</x-button>
-            <x-button ng-click='doShowPassword($index)'>Change password</x-button>
+            <x-button action='alternate' ng-click='doEdit($index)'>edit</x-button>
+            <x-button action='alternate' ng-click='doShowPassword($index)'>Change password</x-button>
           </td>
         </tr>
       </tbody>
     </table>
-    <x-button ng-click='doAdd()'>Add a new user</x-button>
+    <x-button action='alternate' ng-click='doAdd()'>Add a new user</x-button>
   </div>
 
   <form name='user_edit_form'>
@@ -89,9 +89,9 @@
             </td>
           </tr>
         </table>
-        <x-button ng-click='doCancel()'>cancel</x-button>
-        <x-button ng-disabled="user_edit_form.$invalid" level='info' ng-click='doSave()'>create/save</x-button>
-        <x-button level='danger' ng-click='doDelete()'>!!Delete the user!!</x-button>
+        <x-button action='cancel' ng-click='doCancel()'>cancel</x-button>
+        <x-button action='commit' ng-disabled="user_edit_form.$invalid" ng-click='doSave()'>create/save</x-button>
+        <x-button action='delete' ng-click='doDelete()'>!!Delete the user!!</x-button>
         <br>
       </span>
     </div>
@@ -106,8 +106,8 @@
           </td>
         </tr>
       </table>
-      <x-button ng-click='doCancel()'>cancel</x-button>
-      <x-button level='info' ng-click='doSavePassword()'>Set password</x-button>
+      <x-button action='cancel' ng-click='doCancel()'>cancel</x-button>
+      <x-button action='alternate' ng-click='doSavePassword()'>Set password</x-button>
     </div>
   </form>
 </span>

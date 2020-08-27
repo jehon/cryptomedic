@@ -75,7 +75,7 @@
             </div>
             <div class="form-group">
               <div class="col-sm-offset-2 col-sm-10">
-                <x-button id='report_refresh_button' ng-click="refresh()">Refresh</x-button>
+                <x-button action='commit' id='report_refresh_button' ng-click="refresh()">Refresh</x-button>
               </div>
             </div>
           </form>
@@ -96,8 +96,8 @@
       </div>
       <div ng-if="result && !error">
         <div class='text-right'>
-          <x-button id='report_download_button'
-              level='success'
+          <x-button action='alternate'
+              id='report_download_button'
               download="{{reportName()}}.xls"
               ng-click='generate($event)'
               >
@@ -120,7 +120,7 @@
           <div ng-bind-html="r.description"></div>
           <br>
           <div>
-            <x-button id='launch_report_{{k}}' to-route='#/reports/{{k}}'>{{r.name}}</x-button>
+            <x-button action='commit' id='launch_report_{{k}}' to-route='#/reports/{{k}}'>{{r.name}}</x-button>
           </div>
         </div>
       </x-group-panel>

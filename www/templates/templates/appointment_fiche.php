@@ -14,8 +14,8 @@
 				<?php (new t("Appointment.NextCenter"))->tr2("Next Center")->p(); ?>
 				<x-fff-field>
 					<div>
-						<x-button ng-click='nextMonth(3)'>Plan in 3 months</x-button>
-						<x-button ng-click='nextMonth(6)'>Plan in 6 months</x-button>
+						<x-button action='alternate' ng-click='nextMonth(3)'>Plan in 3 months</x-button>
+						<x-button action='alternate' ng-click='nextMonth(6)'>Plan in 6 months</x-button>
 					</div>
 				</x-fff-field>
 			</x-group-panel>

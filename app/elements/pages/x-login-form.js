@@ -33,7 +33,7 @@ export default class XLoginForm extends HTMLElement {
                             <input id="password" name="password" class="form-control" placeholder="Password" required type="password">
                             <x-messages></x-messages>
                             <br />
-                            <x-button id="login" level="primary" style='width: 100%'>Log in</x-button>
+                            <x-button id="login" action="commit" style='width: 100%'>Log in</x-button>
                         </form>
                     </div>
                 </x-panel>
