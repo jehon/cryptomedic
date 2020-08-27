@@ -44,7 +44,7 @@ export default class XButton extends HTMLElement {
                     padding-right: ${spacing.element};
                 }
             </style>
-            <button class='btn btn-primary'>
+            <button class='btn btn-${actions.alternate}'>
                 <img src=''><slot></slot>
             </button>
         `;
