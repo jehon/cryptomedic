@@ -1,6 +1,6 @@
 
-import { defineCustomElement } from '../../js/custom-element.js';
-import XWithFolder from './x-with-folder.js';
+import { defineCustomElement } from '../../../js/custom-element.js';
+import XWithFolder from '../folder/x-with-folder.js';
 
 const file = Symbol('file');
 
