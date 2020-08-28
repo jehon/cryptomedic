@@ -256,7 +256,7 @@ module.exports = {
     // },
 
     'Delete a file but not confirm it': function (client) {
-        client.myClick('#folder_files .folder_file:nth-child(1) .btn');
+        client.myClick('#folder_files .folder_file:nth-child(1) x-button');
         client.myClick('#topsubmenu #button_edit');
         client.myClick('#topsubmenu #button_delete');
         client.dismissAlert();
@@ -264,7 +264,7 @@ module.exports = {
 
     'Delete all sub-files': function (client) {
         for (var i = 0; i < nb; i++) {
-            client.myClick('#folder_files .folder_file:nth-child(1) .btn');
+            client.myClick('#folder_files .folder_file:nth-child(1) x-button');
             client.myClick('#topsubmenu #button_edit');
             client.myClick('#topsubmenu #button_delete');
             client.acceptAlert();
