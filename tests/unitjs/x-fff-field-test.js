@@ -2,7 +2,7 @@
 import { fn, loadReference, RefFolder1, RefFolder1RicketConsult13 } from './athelpers.js';
 
 import Folder from '../../app/models/Folder.js';
-import XFffField from '../../app/elements/widgets/x-fff-field.js';
+import XFffField from '../../app/elements/widgets/file/x-fff-field.js';
 
 let f;
 

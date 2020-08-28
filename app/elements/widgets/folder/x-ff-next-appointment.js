@@ -5,7 +5,7 @@ import { getRouteToFolderAdd, setRoute } from '../../../js/router.js';
 import Appointment from '../../../models/Appointment.js';
 import XWithFolder from '../../abstract/x-with-folder.js';
 import '../generic/x-group-panel.js';
-import '../x-fff-field.js';
+import '../file/x-fff-field.js';
 import '../generic/x-message.js';
 import '../generic/x-button.js';
 

@@ -1,7 +1,7 @@
 
 /* istanbul ignore file */
 
-import { yearsToYM, fromBirthDateTo } from './widgets/x-fff-age';
+import { yearsToYM, fromBirthDateTo } from './widgets/file/x-fff-age';
 import { defineCustomElement } from '../js/custom-element';
 
 export default class XAge extends HTMLElement {

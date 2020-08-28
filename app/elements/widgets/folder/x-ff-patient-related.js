@@ -4,7 +4,7 @@ import { routeToFolderPatient } from '../../../js/router.js';
 import setPropertyOn from '../../../js/set-property.js';
 import XWithFolder from '../../abstract/x-with-folder.js';
 import '../generic/x-group-panel.js';
-import '../x-fff-field.js';
+import '../file/x-fff-field.js';
 
 
 export default class XFfPatientRelated extends XWithFolder {
