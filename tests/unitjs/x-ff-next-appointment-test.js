@@ -2,7 +2,7 @@
 import { fn, loadReference, RefFolder1 } from './athelpers.js';
 
 import Folder from '../../app/models/Folder.js';
-import XFfNextAppointment from '../../app/elements/widgets/x-ff-next-appointment.js';
+import XFfNextAppointment from '../../app/elements/widgets/folder/x-ff-next-appointment.js';
 import Appointment from '../../app/models/Appointment.js';
 
 let testFolder;

@@ -1,19 +1,18 @@
-/** @module widgets/x-requestor */
 
-import axios from '../../cjs2esm/axios.js';
+import axios from '../../../cjs2esm/axios.js';
 axios.defaults.timeout = 30 * 1000;
 
-import { API_VERSION } from '../../config.js';
-import { insertInSlot } from '../element-helpers.js';
-import { setSession } from '../../js/session.js';
-import { routeToLogin } from '../../js/router.js';
+import { API_VERSION } from '../../../config.js';
+import { insertInSlot } from '../../element-helpers.js';
+import { setSession } from '../../../js/session.js';
+import { routeToLogin } from '../../../js/router.js';
 
-import XWaiting from './generic/x-waiting.js';
-import './generic/x-overlay.js';
-import './generic/x-panel.js';
-import './generic/x-button.js';
-import '../../../node_modules/css-inherit/css-inherit.js';
-import { defineCustomElement } from '../../js/custom-element.js';
+import XWaiting from './x-waiting.js';
+import './x-overlay.js';
+import './x-panel.js';
+import './x-button.js';
+import '../../../../node_modules/css-inherit/css-inherit.js';
+import { defineCustomElement } from '../../../js/custom-element.js';
 
 const error = Symbol('error');
 const errorMsg = Symbol('errorMsg');
@@ -38,7 +37,7 @@ export default class XRequestor extends XWaiting {
             </x-overlay>
         `);
 
-        /** @type {import('./generic/x-overlay.js').default} */
+        /** @type {import('./x-overlay.js').default} */
         this[error] = this.shadowRoot.querySelector('#error');
         this[errorMsg] = this.shadowRoot.querySelector('#errorMsg');
         this[errorContent] = this.shadowRoot.querySelector('#errorContent');
