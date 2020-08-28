@@ -27,10 +27,10 @@ export default class XButton extends HTMLElement {
                 :host {
                     display: inline-block;
                     background-color: rgba(0,0,0,0);
+                    padding: calc(${spacing.element} / 2);
                 }
 
                 button {
-                    height: 3em;
                     width: 100%;
                 }
 
