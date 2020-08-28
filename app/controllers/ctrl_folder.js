@@ -13,7 +13,7 @@ import date2CanonicString from '../js/date2CanonicString.js';
 import setPropertyOn from '../js/set-property.js';
 
 import '../elements/pages/x-folder-graphics.js';
-import '../elements/widgets/x-button.js';
+import '../elements/widgets/generic/x-button.js';
 import '../elements/widgets/x-fff-bmi.js';
 import '../elements/widgets/x-fff-bmi-sd.js';
 import '../elements/widgets/x-fff-height-sd.js';

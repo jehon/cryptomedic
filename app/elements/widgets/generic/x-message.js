@@ -1,7 +1,7 @@
 
-import { spacing } from '../../config.js';
-import { defineCustomElement } from '../../js/custom-element.js';
-import { toAttributeCase } from '../../js/string-utils.js';
+import { spacing } from '../../../config.js';
+import { defineCustomElement } from '../../../js/custom-element.js';
+import { toAttributeCase } from '../../../js/string-utils.js';
 
 /**
  * Slot[]: content

@@ -4,9 +4,9 @@ import { setRoute, parseRouteLogin } from '../../js/router.js';
 import { setSession } from '../../js/session.js';
 
 import '../widgets/x-requestor.js';
-import '../widgets/x-panel.js';
-import '../widgets/x-messages.js';
-import '../widgets/x-button.js';
+import '../widgets/generic/x-panel.js';
+import '../widgets/generic/x-messages.js';
+import '../widgets/generic/x-button.js';
 import { formInit, formGetContent, formValidate } from '../../js/form.js';
 import { loginRequestBuilder, loginCheckRequestBuilder } from '../widgets/x-requestor.js';
 import { defineCustomElement } from '../../js/custom-element.js';
@@ -42,7 +42,7 @@ export default class XLoginForm extends HTMLElement {
         /** @type {import('../widgets/x-requestor.js').default} */
         this[requestor] = this.querySelector('x-requestor');
         this[form] = this.querySelector('form');
-        /** @type {import('../widgets/x-messages.js').default} */
+        /** @type {import('../widgets/generic/x-messages.js').default} */
         this[messages] = this.querySelector('x-messages');
 
         formInit(this[form], () => this.doLogin());

@@ -2,7 +2,7 @@
 import { setSession, deepCopy } from '../../app/js/session.js';
 import { fn, webDescribe, loadReference } from './athelpers.js';
 
-import '../../app/elements/widgets/x-restricted.js';
+import '../../app/elements/widgets/generic/x-restricted.js';
 
 // TODO: use constructor instead of webDescribe
 

@@ -18,8 +18,8 @@ import { parseRouteLogin, parseRouteApi } from '../js/router.js';
 import template from '../js/template.js';
 import goThere from '../js/goThere.js';
 
-import '../elements/widgets/x-restricted.js';
-import '../elements/widgets/x-i18n.js';
+import '../elements/widgets/generic/x-restricted.js';
+import '../elements/widgets/generic/x-i18n.js';
 
 import '../elements/widgets/x-login-status.js';
 
@@ -51,7 +51,7 @@ import '../elements/x-file-bill.js';
 import '../elements/x-file-bill-summary.js';
 
 import '../elements/widgets/x-fff-age.js';
-import '../elements/widgets/x-group-panel.js';
+import '../elements/widgets/generic/x-group-panel.js';
 
 let mainApp = angular.module('app_main', ['ngRoute'])
     // .config(['$compileProvider', function ($compileProvider) {

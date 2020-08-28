@@ -1,7 +1,7 @@
 
-import { spacing, icons, actions } from '../../config.js';
-import { defineCustomElement } from '../../js/custom-element.js';
-import { setRoute } from '../../js/router.js';
+import { spacing, icons, actions } from '../../../config.js';
+import { defineCustomElement } from '../../../js/custom-element.js';
+import { setRoute } from '../../../js/router.js';
 
 const button = Symbol('button');
 

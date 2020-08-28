@@ -1,7 +1,7 @@
 
-import '../../../node_modules/css-inherit/css-inherit.js';
-import { defineCustomElement } from '../../js/custom-element.js';
-import { spacing } from '../../config.js';
+import '../../../../node_modules/css-inherit/css-inherit.js';
+import { defineCustomElement } from '../../../js/custom-element.js';
+import { spacing } from '../../../config.js';
 
 /**
  * Slot[]: content

@@ -1,7 +1,7 @@
 
 import XPanel from './x-panel.js';
-import { insertInSlotDefault } from '../element-helpers.js';
-import { defineCustomElement } from '../../js/custom-element.js';
+import { insertInSlotDefault } from '../../element-helpers.js';
+import { defineCustomElement } from '../../../js/custom-element.js';
 
 /**
  * Slot[content]: content

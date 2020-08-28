@@ -1,5 +1,5 @@
 
-import { onSession, getAuthorized } from '../../js/session.js';
+import { onSession, getAuthorized } from '../../../js/session.js';
 
 // TODO: adapt to work with x-button
 
@@ -39,8 +39,6 @@ export default class XRestricted extends HTMLElement {
                 break;
         }
     }
-
-
 
     adapt() {
         const authKey = this.getAttribute('value');

@@ -1,6 +1,6 @@
 
 import { icons } from '../../app/config.js';
-import XButton from '../../app/elements/widgets/x-button.js';
+import XButton from '../../app/elements/widgets/generic/x-button.js';
 import { getCurrentRoute, setRoute } from '../../app/js/router.js';
 import { fn } from './athelpers.js';
 

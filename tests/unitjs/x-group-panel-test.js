@@ -1,5 +1,5 @@
 
-import XGroupPanel from '../../app/elements/widgets/x-group-panel.js';
+import XGroupPanel from '../../app/elements/widgets/generic/x-group-panel.js';
 import { fn } from './athelpers.js';
 
 // TODO: use constructor instead of webDescribe

@@ -29,6 +29,10 @@
             border: dashed 1px blue;
         }
 
+        body>h1 {
+            background-color: lightgray;
+        }
+
         [double] {
             width: calc(var(--box-width) * 2 + var(--margin-width) * 2);
         }
@@ -46,26 +50,29 @@
     </style>
     <script type='module' src='../../app/elements/x-input-date.js'></script>
 
-    <script type='module' src='../../app/elements/widgets/x-button.js'></script>
+    <script type='module' src='../../app/elements/widgets/generic/x-button.js'></script>
+    <script type='module' src='../../app/elements/widgets/generic/x-i18n.js'></script>
+    <script type='module' src='../../app/elements/widgets/generic/x-group-panel.js'></script>
+    <script type='module' src='../../app/elements/widgets/generic/x-message.js'></script>
+    <script type='module' src='../../app/elements/widgets/generic/x-messages.js'></script>
+    <script type='module' src='../../app/elements/widgets/generic/x-overlay.js'></script>
+    <script type='module' src='../../app/elements/widgets/generic/x-panel.js'></script>
+    <script type='module' src='../../app/elements/widgets/generic/x-waiting.js'></script>
+
     <script type='module' src='../../app/elements/widgets/x-ff-patient-related.js'></script>
     <script type='module' src='../../app/elements/widgets/x-fff-field.js'></script>
     <script type='module' src='../../app/elements/widgets/x-graphic-bmi.js'></script>
     <script type='module' src='../../app/elements/widgets/x-graphic-height.js'></script>
     <script type='module' src='../../app/elements/widgets/x-graphic-weight.js'></script>
     <script type='module' src='../../app/elements/widgets/x-graphic-wh.js'></script>
-    <script type='module' src='../../app/elements/widgets/x-group-panel.js'></script>
-    <script type='module' src='../../app/elements/widgets/x-message.js'></script>
-    <script type='module' src='../../app/elements/widgets/x-messages.js'></script>
-    <script type='module' src='../../app/elements/widgets/x-overlay.js'></script>
-    <script type='module' src='../../app/elements/widgets/x-panel.js'></script>
     <script type='module' src='../../app/elements/widgets/x-requestor.js'></script>
-    <script type='module' src='../../app/elements/widgets/x-waiting.js'></script>
 
     <div>
         <h2>Menu</h2>
         <a href='http://localhost:5557/tests/'>Go back to index</a>
     </div>
 
+    <h1>generic</h1>
     <xx-test>
         <x-button action='commit'>commit</x-button>
     </xx-test>
@@ -82,17 +89,6 @@
         <x-button action='delete'>delete</x-button>
         <x-button action='alternate'>alternate</x-button>
         <x-button class='selected'>selected</x-button>
-    </xx-test>
-    <xx-test>
-        <x-message level='success'>primary</x-message>
-    </xx-test>
-    <xx-test>
-        <x-message level='warning'>warning</x-message>
-    </xx-test>
-    <xx-test>
-        <x-panel>
-            <div>test</div>
-        </x-panel>
     </xx-test>
     <xx-test>
         <x-group-panel title='my title'>
@@ -139,10 +135,13 @@
         </x-group-panel>
     </xx-test>
     <xx-test>
-        <x-waiting>content free</x-waiting>
+        <x-message level='success'>primary</x-message>
     </xx-test>
     <xx-test>
-        <x-waiting blocked>content waiting</x-waiting>
+        <x-message level='warning'>warning</x-message>
+    </xx-test>
+    <xx-test>
+        <x-messages></x-messages>
     </xx-test>
     <xx-test>
         <x-overlay>
@@ -163,6 +162,21 @@
         </x-overlay>
     </xx-test>
     <xx-test>
+        <x-panel>
+            <div>test</div>
+        </x-panel>
+    </xx-test>
+    <xx-test>
+        <x-waiting>content free</x-waiting>
+    </xx-test>
+    <xx-test>
+        <x-waiting blocked>content waiting</x-waiting>
+    </xx-test>
+
+    <h1>folder</h1>
+    <h1>file</h1>
+    <h1>other</h1>
+    <xx-test>
         <x-requestor>
             <div slot>Content</div>
         </x-requestor>
@@ -171,9 +185,6 @@
         <x-requestor blocked fail>
             <div slot>Content</div>
         </x-requestor>
-    </xx-test>
-    <xx-test>
-        <x-messages></x-messages>
     </xx-test>
     <xx-test>
         <x-input-date></x-input-date>

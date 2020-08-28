@@ -5,7 +5,7 @@
 import getDataService from '../js/getDataService.js';
 import goThere from '../js/goThere.js';
 import { getRouteToCreateReference } from '../js/router.js';
-import '../elements/widgets/x-button.js';
+import '../elements/widgets/generic/x-button.js';
 
 export default function ctrl_home($scope) {
     if (typeof ($scope.entryyear) == 'undefined') {
