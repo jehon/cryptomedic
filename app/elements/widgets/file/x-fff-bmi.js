@@ -1,5 +1,5 @@
 
-import XWithFile from '../../abstract/x-with-file.js';
+import XWithFile from './x-with-file.js';
 import { defineCustomElement } from '../../../js/custom-element.js';
 
 export default class XFffBmi extends XWithFile {
