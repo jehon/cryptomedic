@@ -1,8 +1,8 @@
 
-import { DataInvalidException, DataMissingException } from '../../js/exceptions.js';
-import { defineCustomElement } from '../../js/custom-element.js';
-import XWithFile from '../abstract/x-with-file.js';
-import Patient from '../../models/Patient.js';
+import { DataInvalidException, DataMissingException } from '../../../js/exceptions.js';
+import { defineCustomElement } from '../../../js/custom-element.js';
+import XWithFile from '../../abstract/x-with-file.js';
+import Patient from '../../../models/Patient.js';
 
 /**
  * @param {*} birth the date of birth

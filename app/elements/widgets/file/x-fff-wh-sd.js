@@ -1,7 +1,7 @@
 
-import XWithFile from '../abstract/x-with-file.js';
-import { defineCustomElement } from '../../js/custom-element.js';
-import { stdDeviationFor } from '../../js/standard-deviation.js';
+import XWithFile from '../../abstract/x-with-file.js';
+import { defineCustomElement } from '../../../js/custom-element.js';
+import { stdDeviationFor } from '../../../js/standard-deviation.js';
 
 export default class XFffWhSd extends XWithFile {
     formula() {

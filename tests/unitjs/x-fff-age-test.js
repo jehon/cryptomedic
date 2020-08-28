@@ -1,5 +1,5 @@
 
-import XFffAge, { fromBirthDate, fromBirthDateTo } from '../../app/elements/widgets/x-fff-age.js';
+import XFffAge, { fromBirthDate, fromBirthDateTo } from '../../app/elements/widgets/file/x-fff-age.js';
 
 import { fn, loadReference, RefFolder1, RefFolder1RicketConsult13 } from './athelpers.js';
 import Folder from '../../app/models/Folder.js';
