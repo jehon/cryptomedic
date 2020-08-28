@@ -4,7 +4,7 @@
 
 import { formGetContent } from '../js/form.js';
 import getDataService from '../js/getDataService.js';
-import '../elements/widgets/x-button.js';
+import '../elements/widgets/generic/x-button.js';
 
 export default function ctrl_search($scope) {
     if (typeof ($scope.params) == 'undefined') {

@@ -81,7 +81,7 @@ describe(fn(import.meta.url), function () {
         el.folder = testFolder;
         location.hash = '#/';
 
-        (/** @type {import('../../app/elements/widgets/x-button.js').default} */
+        (/** @type {import('../../app/elements/widgets/generic/x-button.js').default} */
             (el.shadowRoot.querySelector('x-button#add-appointment'))
         ).click();
         expect(location.hash).toBe('#/folder/1/file/Appointment');

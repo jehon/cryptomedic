@@ -3,7 +3,7 @@ import { defineCustomElement } from '../../js/custom-element.js';
 import { routeToFolderPatient } from '../../js/router.js';
 import setPropertyOn from '../../js/set-property.js';
 import XWithFolder from '../abstract/x-with-folder.js';
-import './x-group-panel.js';
+import './generic/x-group-panel.js';
 import './x-fff-field.js';
 
 

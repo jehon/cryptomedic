@@ -1,6 +1,6 @@
 
-import { levels } from '../../config.js';
-import { defineCustomElement } from '../../js/custom-element.js';
+import { levels } from '../../../config.js';
+import { defineCustomElement } from '../../../js/custom-element.js';
 import './x-message.js';
 
 /**

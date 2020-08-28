@@ -1,6 +1,6 @@
 
 import { fn } from './athelpers.js';
-import XI18n from '../../app/elements/widgets/x-i18n.js';
+import XI18n from '../../app/elements/widgets/generic/x-i18n.js';
 
 describe(fn(import.meta.url), function () {
     it('without value', function() {

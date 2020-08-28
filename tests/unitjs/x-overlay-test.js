@@ -1,5 +1,5 @@
 
-import '../../app/elements/widgets/x-overlay.js';
+import '../../app/elements/widgets/generic/x-overlay.js';
 
 import { fn, webDescribe } from './athelpers.js';
 

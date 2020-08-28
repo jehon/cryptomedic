@@ -3,7 +3,7 @@
 
 import JHElement from './jh-element.js';
 import './block-bill-line.js';
-import './widgets/x-group-panel.js';
+import './widgets/generic/x-group-panel.js';
 
 const tbody = Symbol('tbody');
 const catTotal = Symbol('catTotal');
