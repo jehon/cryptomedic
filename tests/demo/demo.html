@@ -57,15 +57,17 @@
     <script type='module' src='../../app/elements/widgets/generic/x-messages.js'></script>
     <script type='module' src='../../app/elements/widgets/generic/x-overlay.js'></script>
     <script type='module' src='../../app/elements/widgets/generic/x-panel.js'></script>
+    <script type='module' src='../../app/elements/widgets/generic/x-requestor.js'></script>
     <script type='module' src='../../app/elements/widgets/generic/x-waiting.js'></script>
 
-    <script type='module' src='../../app/elements/widgets/x-ff-patient-related.js'></script>
+    <script type='module' src='../../app/elements/widgets/folder/x-ff-next-appointment.js'></script>
+    <script type='module' src='../../app/elements/widgets/folder/x-ff-patient-related.js'></script>
+    <script type='module' src='../../app/elements/widgets/folder/x-graphic-bmi.js'></script>
+    <script type='module' src='../../app/elements/widgets/folder/x-graphic-height.js'></script>
+    <script type='module' src='../../app/elements/widgets/folder/x-graphic-weight.js'></script>
+    <script type='module' src='../../app/elements/widgets/folder/x-graphic-wh.js'></script>
+
     <script type='module' src='../../app/elements/widgets/x-fff-field.js'></script>
-    <script type='module' src='../../app/elements/widgets/x-graphic-bmi.js'></script>
-    <script type='module' src='../../app/elements/widgets/x-graphic-height.js'></script>
-    <script type='module' src='../../app/elements/widgets/x-graphic-weight.js'></script>
-    <script type='module' src='../../app/elements/widgets/x-graphic-wh.js'></script>
-    <script type='module' src='../../app/elements/widgets/x-requestor.js'></script>
 
     <div>
         <h2>Menu</h2>
@@ -167,16 +169,6 @@
         </x-panel>
     </xx-test>
     <xx-test>
-        <x-waiting>content free</x-waiting>
-    </xx-test>
-    <xx-test>
-        <x-waiting blocked>content waiting</x-waiting>
-    </xx-test>
-
-    <h1>folder</h1>
-    <h1>file</h1>
-    <h1>other</h1>
-    <xx-test>
         <x-requestor>
             <div slot>Content</div>
         </x-requestor>
@@ -187,10 +179,21 @@
         </x-requestor>
     </xx-test>
     <xx-test>
-        <x-input-date></x-input-date>
+        <x-waiting>content free</x-waiting>
     </xx-test>
     <xx-test>
-        <x-input-date value='01-02-2020'></x-input-date>
+        <x-waiting blocked>content waiting</x-waiting>
+    </xx-test>
+
+    <h1>folder</h1>
+    <xx-test double>
+        <x-ff-next-appointment demo-folder='test1'></x-ff-next-appointment>
+    </xx-test>
+    <xx-test double>
+        <x-ff-patient-related demo-folder='test1'></x-ff-patient-related>
+    </xx-test>
+    <xx-test>
+        <x-graphic-bmi demo-folder='test1'></x-graphic-bmi>
     </xx-test>
     <xx-test>
         <x-graphic-height demo-folder='test1'></x-graphic-height>
@@ -199,13 +202,16 @@
         <x-graphic-weight demo-folder='test1'></x-graphic-weight>
     </xx-test>
     <xx-test>
-        <x-graphic-bmi demo-folder='test1'></x-graphic-bmi>
-    </xx-test>
-    <xx-test>
         <x-graphic-wh demo-folder='test1'></x-graphic-wh>
     </xx-test>
-    <xx-test double>
-        <x-ff-patient-related demo-folder='test1'></x-ff-patient-related>
+
+    <h1>file</h1>
+    <h1>other</h1>
+    <xx-test>
+        <x-input-date></x-input-date>
+    </xx-test>
+    <xx-test>
+        <x-input-date value='01-02-2020'></x-input-date>
     </xx-test>
 
     <script type='module'>

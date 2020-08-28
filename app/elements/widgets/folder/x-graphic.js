@@ -1,11 +1,11 @@
 
 /* istanbul ignore file: TODO */
 
-import { fromBirthDateTo } from './x-fff-age.js';
-import { getRouteToFolderFile, setRoute } from '../../js/router.js';
+import { fromBirthDateTo } from '../x-fff-age.js';
+import { getRouteToFolderFile, setRoute } from '../../../js/router.js';
 
-import createCallback from '../../js/callback.js';
-import XWithFolder from '../abstract/x-with-folder.js';
+import createCallback from '../../../js/callback.js';
+import XWithFolder from '../../abstract/x-with-folder.js';
 
 const hooverCallback = createCallback('hooverCallback');
 
