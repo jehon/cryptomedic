@@ -73,20 +73,20 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li>
                         <a id='menu_home' href="#/home" class="navbar-link">
-                            <x-restricted value='application.open'>
+                            <x-restricted restricted-by='application.open'>
                                 <img src="../static/img/home.gif" height="20px" />
                                 Home
                             </x-restricted>
                         </a>
                     </li>
                     <li><a id='menu_search' href="#/search" class="navbar-link">
-                            <x-restricted value='folder.read'>
+                            <x-restricted restricted-by='folder.read'>
                                 <img src="../static/img/patientsSearch.gif" height="20px" />
                                 Search a patient
                             </x-restricted>
                         </a></li>
                     <li><a id='menu_consults' href="#/reports/consultations" class="navbar-link">
-                            <x-restricted value='planning.execute'>
+                            <x-restricted restricted-by='planning.execute'>
                                 <img src="../static/img/consultOfDay.gif" height="20px" />
                                 Consults of the day
                             </x-restricted>
@@ -105,25 +105,25 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li><a id='menu_users' href='#/users'>
-                                    <x-restricted value='users.manage'>
+                                    <x-restricted restricted-by='users.manage'>
                                         <img src="../static/img/users.png" height="20px" />
                                         Users
                                     </x-restricted>
                                 </a></li>
                             <li><a id='menu_matrix' href='#/redirect/api/admin/securityMatrix'>
-                                    <x-restricted value='admin.securityMatrix'>
+                                    <x-restricted restricted-by='admin.securityMatrix'>
                                         <img src="../static/img/matrix.png" height="20px" />
                                         Matrix
                                     </x-restricted>
                                 </a></li>
                             <li><a id='menu_prices' href="#/prices" class="navbar-link">
-                                    <x-restricted value='price.edit'>
+                                    <x-restricted restricted-by='price.edit'>
                                         <img src="../static/img/prices.png" height="20px" />
                                         Prices
                                     </x-restricted>
                                 </a></li>
                             <li><a id='menu_reports' href="#/reports" class="navbar-link">
-                                    <x-restricted value='reports.execute'>
+                                    <x-restricted restricted-by='reports.execute'>
                                         <img src="../static/img/reports.gif" height="20px" />
                                         Reports
                                     </x-restricted>

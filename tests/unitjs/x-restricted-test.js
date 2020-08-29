@@ -1,80 +1,99 @@
 
-import { setSession, deepCopy } from '../../app/js/session.js';
-import { fn, webDescribe, loadReference } from './athelpers.js';
-
-import '../../app/elements/widgets/generic/x-restricted.js';
-
-// TODO: use constructor instead of webDescribe
+import XRestricted from '../../app/elements/widgets/generic/x-restricted.js';
+import { deepCopy, setSession } from '../../app/js/session.js';
+import { fn, loadReference } from './athelpers.js';
 
 describe(fn(import.meta.url), function () {
+    let el;
     let refSession;
+
     beforeEach(function () {
         refSession = loadReference('AuthTest.testsLogin.json');
         setSession(refSession);
+        el = new XRestricted;
+        el.innerHTML = '<div id="content">Content</div>';
+        el.connectedCallback();
     });
 
-    webDescribe('without value', '<x-restricted ><div id="content">Content</div></x-restricted>', function (element) {
+    afterEach(function() {
+        el.disconnectedCallback();
+    });
+
+    describe('without restricted-by', function() {
         it('should be hidden', function () {
-            expect(element().querySelector('#content').offsetHeight).toBe(0);
+            expect(el.style.display).toBe('none');
         });
 
-        it('should show on value change', function () {
-            element().setAttribute('value', 'application.open');
-            expect(element().querySelector('#content').offsetHeight).toBeGreaterThan(0);
+        it('should show on restricted-by change', function () {
+            el.setAttribute('restricted-by', 'application.open');
+            expect(el.style.display).toBe('inline-block');
         });
     });
 
-    webDescribe('with value not authorized', '<x-restricted value="anything.forbidden"><div id="content">Content</div></x-restricted>', function (element) {
-        it('should be hidden', function () {
-            expect(element().querySelector('#content').offsetHeight).toBe(0);
+    describe('with restricted-by not authorized', function () {
+        beforeEach(function() {
+            el.setAttribute('restricted-by', 'anything.forbidden');
         });
 
-        it('should show on value change', function () {
-            element().setAttribute('value', 'application.open');
-            expect(element().querySelector('#content').offsetHeight).toBeGreaterThan(0);
+        it('should be hidden', function () {
+            expect(el.style.display).toBe('none');
+        });
+
+        it('should show on restricted-by change', function () {
+            el.setAttribute('restricted-by', 'application.open');
+            expect(el.style.display).toBe('inline-block');
         });
 
         it('should show when enabled by session', function () {
             const nsession = deepCopy(refSession);
             nsession.authorized.push('anything.forbidden');
             setSession(nsession);
-            expect(element().querySelector('#content').offsetHeight).toBeGreaterThan(0);
+            expect(el.style.display).toBe('inline-block');
         });
     });
 
-    webDescribe('with value authorized', '<x-restricted value="application.open"><div id="content">Content</div></x-restricted>', function (element) {
-        it('should be visible', function () {
-            expect(element().querySelector('#content').offsetHeight).toBeGreaterThan(0);
+    describe('with restricted-by authorized', function () {
+        beforeEach(function() {
+            el.setAttribute('restricted-by', 'application.open');
         });
 
-        it('should hide on value change', function () {
-            element().setAttribute('value', 'anything.else');
-            expect(element().querySelector('#content').offsetHeight).toBe(0);
+        it('should be visible', function () {
+            expect(el.style.display).toBe('inline-block');
+        });
+
+        it('should hide on restricted-by change', function () {
+            el.setAttribute('restricted-by', 'anything.else');
+            expect(el.style.display).toBe('none');
         });
 
         it('should hide when disabled by session', function () {
             const nsession = deepCopy(refSession);
             nsession.authorized = refSession.authorized.filter(v => v != 'application.open');
             setSession(nsession);
-            expect(element().querySelector('#content').offsetHeight).toBe(0);
+            expect(el.style.display).toBe('none');
         });
     });
 
-    webDescribe('with inverted', '<x-restricted value="application.open" inverted><div id="content">Content</div></x-restricted>', function (element) {
-        it('should be hidden', function () {
-            expect(element().querySelector('#content').offsetHeight).toBe(0);
+    describe('with inverted', function () {
+        beforeEach(function() {
+            el.setAttribute('restricted-by', 'application.open');
+            el.setAttribute('inverted','');
         });
 
-        it('should show on value change', function () {
-            element().setAttribute('value', 'anything.else');
-            expect(element().querySelector('#content').offsetHeight).toBeGreaterThan(0);
+        it('should be hidden', function () {
+            expect(el.style.display).toBe('none');
+        });
+
+        it('should show on restricted-by change', function () {
+            el.setAttribute('restricted-by', 'anything.else');
+            expect(el.style.display).toBe('inline-block');
         });
 
         it('should show when disabled by session', function () {
             const nsession = deepCopy(refSession);
             nsession.authorized = refSession.authorized.filter(v => v != 'application.open');
             setSession(nsession);
-            expect(element().querySelector('#content').offsetHeight).toBeGreaterThan(0);
+            expect(el.style.display).toBe('inline-block');
         });
     });
 });

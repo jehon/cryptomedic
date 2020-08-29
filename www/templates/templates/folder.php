@@ -7,7 +7,7 @@
         <div ng-if="(page == 'file')" >
           <span ng-if="(mode == 'add')" >
             <!--  Add file route -->
-            <x-restricted value='folder.edit'>
+            <x-restricted restricted-by='folder.edit'>
               <x-button action='commit' id='button_save' ng-click="actionCreate()">Create/Save</x-button>
             </x-restricted>
             <x-button action='cancel' id='button_cancel' ng-click="actionCancel()">Cancel</x-button>
@@ -17,10 +17,10 @@
             <span ng-if="currentFile().isLocked()">
               <img src='/static/img/locked.gif' />
               File is locked.
-              <x-restricted value='folder.unlock' inverted>
+              <x-restricted restricted-by='folder.unlock' inverted>
                 You can not edit it anymore.
               </x-restricted>
-              <x-restricted value='folder.unlock'>
+              <x-restricted restricted-by='folder.unlock'>
                 <x-button action='commit' id='button_unlock' ng-click='actionUnlock()'>
                   <img src='/static/img/unlock.gif'>
                   Unlock the file
@@ -28,17 +28,17 @@
               </x-restricted>
             </span>
             <span ng-if="!currentFile().isLocked()" >
-              <x-restricted value='folder.edit'>
+              <x-restricted restricted-by='folder.edit'>
                 <x-button id='button_edit' ng-click="go('/folder/' + patient_id + '/file/' + subtype + '/' + subid + '/edit')">Edit</x-button>
               </x-restricted>
             </span>
           </span>
           <span ng-if="(mode == 'edit')">
             <!--  Modify file route -->
-            <x-restricted value='folder.delete'>
+            <x-restricted restricted-by='folder.delete'>
               <x-button action='delete' id='button_delete' ng-click='actionDelete()'>Delete</x-button>
             </x-restricted>
-            <x-restricted value='folder.edit'>
+            <x-restricted restricted-by='folder.edit'>
               <x-button action='commit' id='button_save' ng-click="actionSave()">Save</x-button>
             </x-restricted>
             <x-button action='cancel' id='button_cancel' ng-click="actionCancel()">Cancel</x-button>
@@ -47,15 +47,15 @@
 
         <div ng-if="(!page)" >
           <span ng-if="(mode == 'read')">
-            <x-restricted value='folder.edit'>
+            <x-restricted restricted-by='folder.edit'>
               <x-button action='commit' id='patient_edit' ng-click="go('/folder/' + patient_id + '/edit')">Edit</x-button>
             </x-restricted>
           </span>
           <span ng-if="(mode == 'edit')">
-            <x-restricted value='folder.edit'>
+            <x-restricted restricted-by='folder.edit'>
               <x-button action='commit' id='patient_save' ng-click="actionSavePatient()">Save</x-button>
             </x-restricted>
-            <x-restricted value='folder.delete'>
+            <x-restricted restricted-by='folder.delete'>
               <x-button action='delete' id='patient_delete' ng-if='(folder.getFilesRelatedToPatient().length == 0)' ng-click="actionDeletePatient()">Delete</x-button>
             </x-restricted>
             <x-button action='cancel' id='patient_cancel' ng-click="actionCancel()">Cancel</x-button>
@@ -65,7 +65,7 @@
 
         <div ng-if="patient_id < 0" class='text-center'>
           <!--  Add patient route -->
-          <x-restricted value='folder.edit'>
+          <x-restricted restricted-by='folder.edit'>
             <x-button id='patient_create' ng-click="actionCreatePatient()">Create patient</x-button>
           </x-restricted>
           <x-button action='cancel' id='patient_cancel' ng-click="go('/home')">Cancel</x-button>
@@ -77,7 +77,7 @@
 <div class='container-fluid modeRead'>
   <div class='row'>
     <div id='folder_menu' ng-if="patient_id >= 0" class='col-sm-2'>
-      <x-restricted value='folder.delete'>
+      <x-restricted restricted-by='folder.delete'>
         <x-button id='button_add' ng-class="{ 'selected': page == 'addfile'}" ng-click="go('/folder/' + patient_id + '/addfile')" style='width: 100%'>Add</x-button>
       </x-restricted>
       <x-button id='summary' ng-class="{ 'selected': page == 'summary'}" to-route="#/folder/{{patient_id}}/summary" style='width: 100%'>Summary</x-button>

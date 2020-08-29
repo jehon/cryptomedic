@@ -61,7 +61,7 @@ export default class XButton extends HTMLElement {
         });
     }
 
-    attributeChangedCallback(attributeName, _oldValue, newValue) {
+    attributeChangedCallback(attributeName, oldValue, newValue) {
         switch (attributeName) {
             case 'icon':
                 if (!(newValue in icons)) {
@@ -86,6 +86,11 @@ export default class XButton extends HTMLElement {
                     this[button].style.backgroundColor = '';
                 }
                 break;
+        }
+
+        /* istanbul ignore if */
+        if (super.attributeChangedCallback) {
+            super.attributeChangedCallback(attributeName, oldValue, newValue);
         }
     }
 
