@@ -24,12 +24,12 @@
 							ng-class="{ error: errors.pictureRequired }"
 						>
 						<td>
-                            <x-restricted value='folder.edit'>
+                            <x-restricted restricted-by='folder.edit'>
                                 Upload a file
                             </x-restricted>
 						</td>
 						<td>
-	 						<x-restricted value='folder.edit'>
+	 						<x-restricted restricted-by='folder.edit'>
 								<x-input-picture name='fileContent'></x-input-picture>
 								<table>
 									<tr>

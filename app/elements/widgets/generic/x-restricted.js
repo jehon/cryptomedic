@@ -8,7 +8,7 @@ import { onSession, getAuthorized } from '../../../js/session.js';
  */
 export default class XRestricted extends HTMLElement {
     static get observedAttributes() {
-        return ['value', 'inverted'];
+        return ['restricted-by', 'inverted'];
     }
 
     constructor() {
@@ -20,6 +20,7 @@ export default class XRestricted extends HTMLElement {
     connectedCallback() {
         // Will fire immediately
         this.unreg = onSession(() => this.adapt());
+        this.adapt();
     }
 
     disconnectedCallback() {
@@ -32,7 +33,7 @@ export default class XRestricted extends HTMLElement {
 
     attributeChangedCallback(attributeName, _oldValue, _newValue) {
         switch (attributeName) {
-            case 'value':
+            case 'restricted-by':
             case 'inverted':
                 this.adapt();
                 break;
@@ -44,7 +45,7 @@ export default class XRestricted extends HTMLElement {
     }
 
     adapt() {
-        const authKey = this.getAttribute('value');
+        const authKey = this.getAttribute('restricted-by');
         this.active = false;
         if (authKey) {
             this.active = getAuthorized(authKey);
