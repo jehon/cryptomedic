@@ -15,7 +15,6 @@ export default class XRestricted extends HTMLElement {
         super();
         /**@type {function} */
         this.unreg = null;
-        this.attachShadow({ mode: 'open' });
     }
 
     connectedCallback() {
@@ -40,21 +39,25 @@ export default class XRestricted extends HTMLElement {
         }
     }
 
+    getDisplayMode() {
+        return 'inline-block';
+    }
+
     adapt() {
         const authKey = this.getAttribute('value');
         this.active = false;
         if (authKey) {
             this.active = getAuthorized(authKey);
-        }
-        if (this.hasAttribute('inverted')) {
-            this.active = !this.active;
+            if (this.hasAttribute('inverted')) {
+                this.active = !this.active;
+            }
         }
         if (this.active) {
-            this.shadowRoot.innerHTML = '<slot></slot>';
             this.setAttribute('authorized', 'authorized');
+            this.style.display = this.getDisplayMode();
         } else {
-            this.shadowRoot.innerHTML = '';
             this.removeAttribute('authorized');
+            this.style.display = 'none';
         }
     }
 }
