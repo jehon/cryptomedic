@@ -77,7 +77,7 @@
 <div class='container-fluid modeRead'>
   <div class='row'>
     <div id='folder_menu' ng-if="patient_id >= 0" class='col-sm-2'>
-      <x-restricted restricted-by='folder.delete'>
+      <x-restricted restricted-by='folder.delete' style='width: 100%'>
         <x-button id='button_add' ng-class="{ 'selected': page == 'addfile'}" ng-click="go('/folder/' + patient_id + '/addfile')" style='width: 100%'>Add</x-button>
       </x-restricted>
       <x-button id='summary' ng-class="{ 'selected': page == 'summary'}" to-route="#/folder/{{patient_id}}/summary" style='width: 100%'>Summary</x-button>
