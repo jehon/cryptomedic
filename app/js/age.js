@@ -1,6 +1,4 @@
 
-import date2CanonicString from './date2CanonicString.js';
-
 /**
  * Calculate the birth date based on age and reference date
  *
@@ -10,6 +8,11 @@ import date2CanonicString from './date2CanonicString.js';
  * @returns {string} representation of the date
  */
 export function toBirthDate(years, months, reference = new Date()) {
-    var d2 = new Date(reference.getFullYear() - years, reference.getMonth() - months, 10);
-    return date2CanonicString(d2).substring(0, 7);
+    let dyears = reference.getFullYear() - years;
+    let dmonths = reference.getMonth() + 1 - months;
+    if (dmonths < 0) {
+        dyears--;
+        dmonths += 12;
+    }
+    return dyears + '-' + (dmonths + '').padStart(2, '0');
 }
