@@ -21,7 +21,8 @@ module.exports = function (config) {
             'progress',
             'coverage',
             'html',
-            'junit'
+            'junit',
+            'kjhtml' // allow output in debug.html page
         ],
 
         files: [

@@ -63,15 +63,15 @@ describe(fn(import.meta.url), function () {
 
         // Date vs...
         it('should handle yearOfBirth of date vs. date', function () {
-            expect(fromBirthDateTo(now, nowPlus5)).toBe(4 + 11 / 12);
+            expect(fromBirthDateTo(now, nowPlus5)).toBe(5);
         });
 
         it('should handle yearOfBirth of date vs. date (format object)', function () {
-            expect(fromBirthDateTo(now, nowPlus5)).toEqual(4 + 11 / 12);
+            expect(fromBirthDateTo(now, nowPlus5)).toEqual(5);
         });
 
         it('should handle yearOfBirth of date vs. date (format number)', function () {
-            expect(fromBirthDateTo(now, nowPlus5)).toEqual(4 + 11 / 12);
+            expect(fromBirthDateTo(now, nowPlus5)).toEqual(5);
         });
 
         // Invalid
@@ -164,22 +164,22 @@ describe(fn(import.meta.url), function () {
         it('should handle yearOfBirth of date vs. date', function () {
             expect(fromBirthDate(now, {
                 reference: nowPlus5
-            })).toBe('4y11m');
+            })).toBe('5y0m');
         });
         it('should handle yearOfBirth of date vs. date (format object)', function () {
             expect(fromBirthDate(now, {
                 reference: nowPlus5,
                 format: 'object'
             })).toEqual({
-                years: 4,
-                months: 11
+                years: 5,
+                months: 0
             });
         });
         it('should handle yearOfBirth of date vs. date (format number)', function () {
             expect(fromBirthDate(now, {
                 reference: nowPlus5,
                 format: 'number'
-            })).toEqual(4 + 11 / 12);
+            })).toEqual(5);
         });
 
         // Invalid
