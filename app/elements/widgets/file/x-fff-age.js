@@ -5,6 +5,8 @@ import XWithFile from './x-with-file.js';
 import Patient from '../../../models/Patient.js';
 
 /**
+ * Obsolete (TODO: remove this function)
+ *
  * @param {*} birth the date of birth
  * @param {object} options of the transformation
  * @returns {string|object} 0y0m
@@ -86,13 +88,17 @@ export function fromBirthDateTo(date, reference = new Date()) {
         if (isNaN(bm)) {
             bm = 1; // emulate january
         }
-        date = new Date(by, bm - 1 - 1, 30);
+        // We take the 'second' of the month,
+        // because birth date will resolve to 20xx-xx-01,
+        // and so, we count the running month
+        date = new Date(by, bm - 1, 2);
     }
     // birth is a Date
 
-    var days = new Date(0, 0, 0, 0, 0, 0, reference.getTime() - date.getTime());
+    let years = reference.getFullYear() - date.getFullYear();
+    let months = reference.getMonth() - date.getMonth();
 
-    return (days.getFullYear() - 1900) + (days.getMonth() / 12);
+    return years + months / 12;
 }
 
 export default class XFffAge extends XWithFile {
