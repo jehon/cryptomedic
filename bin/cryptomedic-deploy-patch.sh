@@ -125,7 +125,7 @@ if [ "$1" == "commit" ]; then
 	sftp_exec < "$TMP"deploy-diff-5-sftp-commands.txt
 
     # echo "Upgrading database"
-    # wget -O - --quiet --content-on-error "http://www.cryptomedic.org/maintenance/patch_db.php?pwd=${CRYPTOMEDIC_DB_UPGRADE}"
+    wget -O - --quiet --content-on-error "http://www.cryptomedic.org/maintenance/patch_db.php?pwd=${CRYPTOMEDIC_DB_UPGRADE}"
 else
     echo "!!!!!!!!!!!!!!!!!!! TEST MODE !!!!!!!!!!!!!!!!!!!!!!"
     echo "!!!!!!!!!!!!!!!!!!! TEST MODE !!!!!!!!!!!!!!!!!!!!!!"
