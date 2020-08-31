@@ -44,7 +44,7 @@
     "imports-loader": "1.1.0",
     "jasmine": "3.6.1",
     "jasmine-webcomponents": "github:jehon/jasmine-webcomponents",
-    "karma": "5.1.1",
+    "karma": "5.2.0",
     "karma-chrome-launcher": "3.1.0",
     "karma-coverage": "2.0.3",
     "karma-html-reporter": "latest",
