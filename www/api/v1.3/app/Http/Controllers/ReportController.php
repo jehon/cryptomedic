@@ -99,7 +99,7 @@ abstract class ReportController extends Controller {
 
     $this->buildData();
 
-    return response()->json($this->result)->setEncodingOptions(JSON_NUMERIC_CHECK);;
+    return response()->json($this->result)->setEncodingOptions(JSON_NUMERIC_CHECK);
   }
 
   abstract function buildData();
