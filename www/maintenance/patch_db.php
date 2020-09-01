@@ -5,6 +5,8 @@
 require_once(__DIR__ . "/../../config.php");
 require_once(__DIR__ . "/Database.php");
 
+define('PATCH_DB', 1);
+
 global $myconfig;
 
 if (!$myconfig['security']['key']) {
