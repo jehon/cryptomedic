@@ -70,8 +70,8 @@ export default class XFffField extends XWithFile {
             </style>
             <div id='label'></div>
             <slot><div id='content'></div></slot>
-            <slot name='left'><div id='side-left'></div></slot>
             <slot name='right'><div id='side-right'></div></slot>
+            <slot name='left'><div id='side-left'></div></slot>
             <slot name='third'></slot>
         `;
     }
