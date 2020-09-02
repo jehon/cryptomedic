@@ -728,6 +728,8 @@ CREATE TABLE `surgeries` (
 
 LOCK TABLES `surgeries` WRITE;
 /*!40000 ALTER TABLE `surgeries` DISABLE KEYS */;
+INSERT INTO `surgeries` (`id`, `created_at`, `updated_at`, `lastuser`, `patient_id`, `Date`, `ReportDiagnostic`, `ReportSurgeon`, `ReportSideR`, `ReportSideL`, `report_procedure`, `FollowUpComplication`) VALUES
+(5, '2020-09-02 07:20:43', '2020-09-02 07:20:43', 'jehon', 1, NULL, 'test', 'someone', NULL, NULL, NULL, 'nothing');
 /*!40000 ALTER TABLE `surgeries` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -798,3 +800,4 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2019-07-22  7:37:33
+

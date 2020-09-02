@@ -59,6 +59,10 @@ export function fromBirthDateTo(date, reference = new Date()) {
         throw new DataMissingException('date');
     }
 
+    if (reference == '' || reference == null) {
+        throw new DataMissingException('reference');
+    }
+
     if (typeof (reference) == 'number') {
         reference = '' + reference;
     }

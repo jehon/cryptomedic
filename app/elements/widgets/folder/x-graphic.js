@@ -58,7 +58,14 @@ export default class XGraphic extends XWithFolder {
      * @returns {number} the age as a fractional number of years
      */
     getAge(file) {
-        return fromBirthDateTo(this.folder.getPatient().Yearofbirth, file.Date);
+        // if (!file.Date) {
+        //     return NaN;
+        // }
+        try {
+            return fromBirthDateTo(this.folder.getPatient().Yearofbirth, file.Date);
+        } catch(e) {
+            return NaN;
+        }
     }
 
     // Presentation
@@ -88,7 +95,19 @@ export default class XGraphic extends XWithFolder {
     }
 
     isValid(file) {
-        return typeof (this.displayX(file)) == 'number' && typeof (this.displayY(file)) == 'number';
+        if (typeof (this.displayX(file)) != 'number') {
+            return false;
+        }
+        if (typeof (this.displayY(file)) != 'number') {
+            return false;
+        }
+        if (isNaN(/** @type {number}*/ (this.displayX(file)))) {
+            return false;
+        }
+        if (isNaN(/** @type {number}*/ (this.displayY(file)))) {
+            return false;
+        }
+        return true;
     }
 
     getAbscisse(file) {
@@ -183,7 +202,7 @@ export default class XGraphic extends XWithFolder {
             const file = this.folder.getFilesRelatedToPatient(index);
             const uid = file.uid();
             tableElement.insertAdjacentHTML('beforeend', `
-                <tr uid="${uid}" 
+                <tr uid="${uid}"
                     valid="${this.isValid(file) ? 'valid' : 'invalid'}"
                     ng-class="{ hovered: hovered == $index }"
                 >

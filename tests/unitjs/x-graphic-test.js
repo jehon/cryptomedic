@@ -39,7 +39,7 @@ describe(fn(import.meta.url), function () {
                 expect(el.displayX(folder.getFilesRelatedToPatient(n))).toBe('16 too high');
                 expect(el.displayY(folder.getFilesRelatedToPatient(n))).toBe('Invalid Y');
 
-                n = 2;
+                n = 3;
                 expect(folder.getFilesRelatedToPatient(n).id).toBe(1);
                 expect(folder.getFilesRelatedToPatient(n).getModel()).toBe('Bill');
                 expect(el.displayX(folder.getFilesRelatedToPatient(n))).toBe('13 too high');
