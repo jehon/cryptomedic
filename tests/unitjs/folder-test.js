@@ -67,7 +67,7 @@ describe('test-folder', function () {
 
     it('should give patient related files', () => {
         let list = f.getFilesRelatedToPatient();
-        expect(list.length).toBe(5);
+        expect(list.length).toBe(6);
 
         list.forEach(e => {
             expect(e.getPatient().id).toBe(1);
@@ -82,6 +82,11 @@ describe('test-folder', function () {
         i++;
         expect(list[i]).toEqual(jasmine.any(RicketConsult));
         expect(list[i].id).toBe(13);
+        expect(f.getFilesRelatedToPatient(i).id).toBe(list[i].id);
+
+        i++;
+        expect(list[i]).toEqual(jasmine.any(Surgery));
+        expect(list[i].id).toBe(5);
         expect(f.getFilesRelatedToPatient(i).id).toBe(list[i].id);
 
         i++;

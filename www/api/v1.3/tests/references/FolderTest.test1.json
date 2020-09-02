@@ -259,6 +259,24 @@
                 "conclusion_medical_calcium1000": 1,
                 "conclusion_medical_vitaminD": 0
             }
+        },
+        {
+            "type": "Surgery",
+            "id": 5,
+            "record": {
+                "id": 5,
+                "created_at": "<timestamp>",
+                "updated_at": "<timestamp>",
+                "lastuser": "jehon",
+                "patient_id": 1,
+                "Date": null,
+                "ReportDiagnostic": "test",
+                "ReportSurgeon": "someone",
+                "ReportSideR": null,
+                "ReportSideL": null,
+                "report_procedure": null,
+                "FollowUpComplication": "nothing"
+            }
         }
     ],
     "id": "1"

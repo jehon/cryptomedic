@@ -15,7 +15,7 @@ module.exports = {
         client.myClick('#summary');
         client.page.cryptomedic().tableIterator('#table_summary')
             // Summary Bill#1
-            .row(4).assert('#2')
+            .row(5).assert('#3')
             .col(4).assert('Sociallevel')
             .endTable();
         client.myScreenshotReference('summary');
@@ -52,6 +52,11 @@ module.exports = {
         client.assert.containsText('#Bill_Date', '2011-06-09');
         client.myScreenshotReference('Bill');
         // TODO: check bill
+
+        client.page.cryptomedic().selectFile('Surgery', 5);
+        client.assert.containsText('#Surgery_ReportDiagnostic', 'test');
+        client.assert.containsText('#Surgery_FollowUpComplication', 'nothing');
+        client.myScreenshotReference('Surgery');
     },
     readPatient5: function (client) { // id: 5
         client.page.cryptomedic().goPatient(2014, 105);
