@@ -10,19 +10,15 @@
 	<div class='row'>
 		<div class="col-md-6">
 			<x-group-panel title='Surgical Report'>
-				<table>
-					<?php (new t("Surgery.Date"))->tr("Operation Date")->p(); ?>
-					<?php (new t("Surgery.ReportDiagnostic"))->tr()->p(); ?>
-					<?php (new t("Surgery.ReportSurgeon"))->tr()->p(); ?>
-					<?php (new t("Surgery.ReportSideR"))->tr()->p(); ?>
-					<?php (new t("Surgery.ReportSideL"))->tr()->p(); ?>
-					<?php (new t("Surgery.report_procedure"))->tr()->p(); ?>
-				</table>
+				<?php (new t("Surgery.Date"))->tr2("Operation Date")->p(); ?>
+				<?php (new t("Surgery.ReportDiagnostic"))->tr2()->p(); ?>
+				<?php (new t("Surgery.ReportSurgeon"))->tr2()->p(); ?>
+				<?php (new t("Surgery.ReportSideR"))->tr2()->p(); ?>
+				<?php (new t("Surgery.ReportSideL"))->tr2()->p(); ?>
+				<?php (new t("Surgery.report_procedure"))->tr2()->p(); ?>
 			</x-group-panel>
 			<x-group-panel title='Hospitalisation Follow-Up'>
-				<table>
-					<?php (new t("Surgery.FollowUpComplication"))->tr()->p(); ?>
-				</table>
+				<?php (new t("Surgery.FollowUpComplication"))->tr2()->p(); ?>
 			</x-group-panel>
 		</div>
 		<div class="col-md-6">
