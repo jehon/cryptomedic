@@ -96,9 +96,9 @@
       </div>
       <div ng-if="result && !error">
         <div class='text-right'>
+          <a style='display: none' id='report_download_button' download="{{reportName()}}.xls">download</a>
           <x-button action='alternate'
-              id='report_download_button'
-              download="{{reportName()}}.xls"
+              xid='report_download_button'
               ng-click='generate($event)'
               >
             Export current table in XLS

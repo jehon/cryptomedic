@@ -173,16 +173,19 @@ export default function ctrl_reports($scope, $routeParams, $sce) {
     };
 
     $scope.generate = function ($event) {
+        // TODO: check fixValue (see website) => on the fly filtering
         document.querySelectorAll('#report_table .online').forEach(el => el.parentNode.removeChild(el));
         document.querySelectorAll('#report_table jh-codage').forEach(el => el.parentNode.replaceChild(
             document.createRange().createContextualFragment(`<span>${el.getAttribute('calculated-translated')}</span>`),
             el
         )
         );
+        const alink = document.getElementById('report_download_button');
         // bug fix here: https://github.com/jmaister/excellentexport/issues/54
-        ExcellentExport.excel($event.currentTarget,
+        ExcellentExport.excel(alink,
             document.getElementById('report_table').getElementsByTagName('table')[0],
             'cryptomedic');
+        alink.click();
     };
 }
 
