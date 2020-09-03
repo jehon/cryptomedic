@@ -30,6 +30,7 @@ export default function ctrl_file_bill($scope, $element) {
 
     onSession(() => {
         $scope.currentFile().calculatePriceId(getPrices());
+        $scope.currentFile().ratioSalary();
         $scope.safeApply();
     });
 
@@ -53,7 +54,7 @@ export default function ctrl_file_bill($scope, $element) {
         $scope.currentFile().ratioSalary();
         document.querySelectorAll('x-fff-salary-ratio').forEach((/** @type {XFffSalaryRatio} */el) => el.refresh());
     });
-
+    
     // Used in bill_summary
     $scope.isEmpty = function (value) {
         if (value == '' || value == '0' || value == 0 || value == '-1' || value == -1 || value == null) {

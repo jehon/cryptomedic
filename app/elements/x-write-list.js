@@ -222,7 +222,7 @@ export default class XWriteList extends JHElement {
                 }
                 break;
         }
-        if (this._value == '') {
+        if (this._value == '' || this._value == undefined) {
             this._value = null;
         }
         return this._value;
