@@ -74,6 +74,9 @@ export function formGetContent(form, prototype = {}) {
         }
 
         let value = i.value;
+        if (value === undefined) {
+            continue;
+        }
 
         // Skip empty values
         if (value === '' || value == null) {
