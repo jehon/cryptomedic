@@ -30,7 +30,9 @@ export default function ctrl_file_bill($scope, $element) {
 
     onSession(() => {
         $scope.currentFile().calculatePriceId(getPrices());
-        $scope.currentFile().ratioSalary();
+        try {
+            $scope.currentFile().ratioSalary();
+        } catch (e) {}
         $scope.safeApply();
     });
 
@@ -46,13 +48,17 @@ export default function ctrl_file_bill($scope, $element) {
     document.querySelectorAll('x-fff-salary-ratio').forEach((/** @type {XFffSalaryRatio} */el) => el.refresh());
 
     $scope.$watch('currentFile().sl_numberOfHouseholdMembers', function () {
-        $scope.currentFile().ratioSalary();
-        document.querySelectorAll('x-fff-salary-ratio').forEach((/** @type {XFffSalaryRatio} */el) => el.refresh());
+        try {
+            $scope.currentFile().ratioSalary();
+            document.querySelectorAll('x-fff-salary-ratio').forEach((/** @type {XFffSalaryRatio} */el) => el.refresh());
+        } catch (e) {}
     });
 
     $scope.$watch('currentFile().sl_familySalary', function () {
-        $scope.currentFile().ratioSalary();
-        document.querySelectorAll('x-fff-salary-ratio').forEach((/** @type {XFffSalaryRatio} */el) => el.refresh());
+        try {
+            $scope.currentFile().ratioSalary();
+            document.querySelectorAll('x-fff-salary-ratio').forEach((/** @type {XFffSalaryRatio} */el) => el.refresh());
+        } catch (e) {}
     });
     
     // Used in bill_summary
