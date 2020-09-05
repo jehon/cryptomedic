@@ -1,6 +1,8 @@
 <?php
 require_once(__DIR__ . "/vendor/autoload.php");
 
+// TODO: need to be protected by application.open
+
 function getParameter($name, $default = "") {
 	if (array_key_exists($name, $_REQUEST)) {
 		return $_REQUEST[$name];
