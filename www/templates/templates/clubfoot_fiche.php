@@ -40,18 +40,16 @@
 					<div slot='right'>Right</div>
 					<div slot='left'>Left</div>
 				</x-fff-field>
-				<table>
-					<?php t::trSided('Pain*'); ?>
-					<?php t::trSided('WalkingFloorContact*'); ?>
-					<?php t::trSided('WalkingFirstContact*'); ?>
-					<?php t::trSided('JumpingOneLeg*'); ?>
-					<?php t::trSided('Run*'); ?>
-					<?php t::trSided('AdductionAngle*'); ?>
-					<?php t::trSided('HindFootAngleW*'); ?>
-					<?php t::trSided('DorsalFlexionMax*'); ?>
-					<?php t::trSided('PlantarFlexionMax*'); ?>
-					<?php t::trSided('MuscularInbalance*'); ?>
-				</table>
+				<?php t::trSided('Pain*'); ?>
+				<?php t::trSided('WalkingFloorContact*'); ?>
+				<?php t::trSided('WalkingFirstContact*'); ?>
+				<?php t::trSided('JumpingOneLeg*'); ?>
+				<?php t::trSided('Run*'); ?>
+				<?php t::trSided('AdductionAngle*'); ?>
+				<?php t::trSided('HindFootAngleW*'); ?>
+				<?php t::trSided('DorsalFlexionMax*'); ?>
+				<?php t::trSided('PlantarFlexionMax*'); ?>
+				<?php t::trSided('MuscularInbalance*'); ?>
 			</x-group-panel>
 		</div>
 		<div class="col-md-6">

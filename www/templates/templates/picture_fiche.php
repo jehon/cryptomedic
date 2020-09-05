@@ -18,6 +18,11 @@
 				<?php (new t("Picture.Date"))->tr2()->p(); ?>
 				<?php (new t("Picture.comment"))->tr2()->p(); ?>
 				<?php (new t("Picture.file"))->readOnly()->tr2("File")->p(); ?>
+				<x-fff-field class='notModeRead' label='Upload a file' ng-if="!currentFile().file" ng-class="{ error: errors.pictureRequired }">
+					<x-restricted slot='label' restricted-by='folder.edit'>
+                                Upload a file
+					</x-restricted>
+				</x-fff-field>
 				<table>
 					<tr class='notModeRead'
 							ng-if="!currentFile().file"

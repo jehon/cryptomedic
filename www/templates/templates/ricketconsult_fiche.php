@@ -14,49 +14,22 @@
 			<?php require(__DIR__ . "/../helpers/consult-introduction.php"); ?>
 		 	<br>
 			<x-group-panel title='RicketsData'>
-				<table>
-					<?php (new t("RicketConsult.WalkingDifficulties"))->tr()->p(); ?>
-					<?php (new t("RicketConsult.Pain"))->tr()->p(); ?>
-					<?php (new t("RicketConsult.Wristenlargement"))->tr()->p(); ?>
-					<?php (new t("RicketConsult.Ribbeading"))->tr()->p(); ?>
-					<tr>
-						<th colspan=3>
-							<div class='alert alert-danger'>Warning! Left and right sides are opposite.</div>
-						</th>
-					</tr>
-					<tr>
-						<th>Legs</th>
-						<th>Right</th>
-						<th>Left</th>
-					</tr>
-					<tr ng-class='{ emptyValue: !currentFile().RightLeg && !currentFile().LeftLeg }'>
-						<td><label>Leg</label></td>
-						<td><?php (new t("RicketConsult.RightLeg"))->value()->p(); ?></td>
-						<td><?php (new t("RicketConsult.LeftLeg"))->value()->p(); ?></td>
-					</tr>
-					<tr ng-class='{ emptyValue: !currentFile().RightlegAngle && !currentFile().LeftlegAngle }'>
-						<td><label>Leg Angle</label></td>
-						<td><?php (new t("RicketConsult.RightlegAngle"))->value()->p(); ?></td>
-						<td><?php (new t("RicketConsult.LeftlegAngle"))->value()->p(); ?></td>
-					</tr>
-					<tr>
-						<td>Cross</td>
-						<td></td>
-						<td></td>
-					</tr>
-					<tr ng-class='{ emptyValue: !currentFile().CrossRightT && !currentFile().CrossLeftT }'>
-						<td><label>Cross Right T</label></td>
-						<td><?php (new t("RicketConsult.CrossRightT"))->value()->p(); ?></td>
-						<td><?php (new t("RicketConsult.CrossLeftT"))->value()->p(); ?></td>
-					</tr>
-					<tr ng-class='{ emptyValue: !currentFile().CrossRightF && !currentFile().CrossLeftF }'>
-						<td><label>Cross Right F</label></td>
-						<td><?php (new t("RicketConsult.CrossRightF"))->value()->p(); ?></td>
-						<td><?php (new t("RicketConsult.CrossLeftF"))->value()->p(); ?></td>
-					</tr>
-					<?php (new t("RicketConsult.IMICDistance"))->tr()->p(); ?>
-					<?php (new t("RicketConsult.XRay"))->tr()->p(); ?>
-				</table>
+				<?php (new t("RicketConsult.WalkingDifficulties"))->tr2()->p(); ?>
+				<?php (new t("RicketConsult.Pain"))->tr2()->p(); ?>
+				<?php (new t("RicketConsult.Wristenlargement"))->tr2()->p(); ?>
+				<?php (new t("RicketConsult.Ribbeading"))->tr2()->p(); ?>
+				<div class='alert alert-danger'>Warning! Left and right sides are opposite.</div>
+				<x-fff-field label='Legs'>
+					<div slot='left'>Left</div>
+					<div slot='right'>Right</div>
+				</x-fff-field>
+				<?php t::trSided('*Leg'); ?>
+				<?php t::trSided('*legAngle'); ?>
+				<div>Cross</div>
+				<?php t::trSided('Cross*T'); ?>
+				<?php t::trSided('Cross*F'); ?>
+				<?php (new t("RicketConsult.IMICDistance"))->tr2("IMIC Distance")->p(); ?>
+				<?php (new t("RicketConsult.XRay"))->tr2()->p(); ?>
 			</x-group-panel>
 		</div>
 		<div class="col-md-6">
