@@ -92,8 +92,10 @@
                             </x-restricted>
                         </a></li>
                     <li><a id='bug_reporting' href="javascript:bug_reporting()" class="navbar-link">
-                            <img src="../static/img/bug.jpeg" />
-                            Bug
+                            <x-restricted restricted-by='application.open'>
+                                <img src="../static/img/bug.jpeg" />
+                                Bug
+                            </x-restricted>
                         </a></li>
                     <li>
                         <x-login-status></x-login-status>
