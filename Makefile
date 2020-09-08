@@ -303,7 +303,8 @@ data-reset: docker-started
 	cat "conf/database/base.sql" \
 		| $(DOCKERCOMPOSE) exec -T mysql mysql -u root -p$(DBROOTPASS) --database="$(DBNAME)"
 
-	wget -O - --quiet --content-on-error "http://localhost:5555/maintenance/patch_db.php?pwd=$(DBUPDATEPWD)"
+	# wget -O - --quiet --content-on-error "http://localhost:5555/maintenance/patch_db.php?pwd=$(DBUPDATEPWD)"
+	bin/cryptomedic-refresh-structure.sh
 
 #
 #
