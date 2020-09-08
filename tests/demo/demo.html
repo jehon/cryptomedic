@@ -197,6 +197,7 @@
     </xx-test>
 
     <script type='module'>
+        import { API_VERSION } from '../../app/config.js';
         import Folder from '../../app/models/Folder.js';
 
         document
@@ -214,7 +215,7 @@
             { level: "warning", text: "This is a warning" }
         ]));
 
-        fetch('../../www/api/v1.3/tests/references/FolderTest.test1.json')
+        fetch(`../../www/api/${API_VERSION}/tests/references/FolderTest.test1.json`)
             .then(response => response.json())
             .then(data => new Folder(data.folder))
             .then(folder => {
