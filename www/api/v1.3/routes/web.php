@@ -37,8 +37,6 @@ Route::group([ 'prefix' => '/api/' . basename(dirname(__DIR__)) ], function() {
 
   // Without effect
   Route::get('admin/priceFields', "PricesController@priceFields");
-  // TODO: protect this?
-  Route::get('bare/database-structure', "AdminController@databaseStructure");
 
   // Private
   Route::group(array('middleware' => 'authenticated'), function()
