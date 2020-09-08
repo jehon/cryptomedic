@@ -123,9 +123,6 @@ echo "-------------- Differences --------------"
 if [ "$1" == "commit" ]; then
     echo "*** Commiting ***"
 	sftp_exec < "$TMP"deploy-diff-5-sftp-commands.txt
-
-    # echo "Upgrading database"
-    wget -O - --quiet --content-on-error "http://www.cryptomedic.org/maintenance/patch_db.php?pwd=${CRYPTOMEDIC_DB_UPGRADE}"
 else
     echo "!!!!!!!!!!!!!!!!!!! TEST MODE !!!!!!!!!!!!!!!!!!!!!!"
     echo "!!!!!!!!!!!!!!!!!!! TEST MODE !!!!!!!!!!!!!!!!!!!!!!"
@@ -139,6 +136,12 @@ else
     echo "$0 commit"
     echo ""
 fi
+
+# Variable necessary for refresh.sh scripts
+export CRYPTOMEDIC_HTTP_HOST="www.cryptomedic.org"
+export CRYPTOMEDIC_DB_UPGRADE
+
+"$SCRIPT_DIR/"cryptomedic-refresh-structure.sh
 
 echo "*** End ***"
 echo "*** End ***"
