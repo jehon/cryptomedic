@@ -74,10 +74,22 @@ export default class XFffField extends XWithFile {
             <slot name='left'><div id='side-left'></div></slot>
             <slot name='third'></slot>
         `;
+        // this.refresh();
     }
 
     static get observedAttributes() {
         return ['field', 'label', 'by-sides'];
+    }
+
+    connectedCallback() {
+        // TODO (angular): workaround for ng-if
+        if (!this.folder) {
+            let parent = this.closest('[x-top]');
+            if (parent.folder) {
+                this.folder = parent.folder;
+            }
+        }
+        this.refresh();
     }
 
     attributeChangedCallback(attributeName, _oldValue, newValue) {
@@ -152,7 +164,6 @@ export default class XFffField extends XWithFile {
                 return ;
             }
         }
-
         this.removeAttribute('empty');
     }
 

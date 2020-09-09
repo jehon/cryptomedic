@@ -12,6 +12,8 @@ export default function setPropertyOn(root, name, value) {
     const prop = toPropertyCase(name);
 
     if (root.hasAttribute('x-top')) {
+        // TODO (angular): workaround for ng-if
+        root[name] = value;
         root.querySelectorAll(`[with-${attr}]`).forEach(el => {
             try {
                 el[prop] = value;
