@@ -49,6 +49,11 @@ export default class XMessage extends HTMLElement {
                 this.style.backgroundColor = '#dff0d8';
                 this.style.borderColor = '#d6e9c6';
                 break;
+            case 'info':
+                this.style.color = '#004085';
+                this.style.backgroundColor = '#cce5ff';
+                this.style.borderColor = '#b8daff;';
+                break;
             case 'warning':
                 this.style.color = '#8a6d3b';
                 this.style.backgroundColor = '#fcf8e3';
