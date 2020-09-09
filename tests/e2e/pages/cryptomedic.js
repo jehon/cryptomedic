@@ -60,11 +60,11 @@ module.exports = {
             this.waitForElementVisible('#launch_report_' + reportName);
             this.myClick('#launch_report_' + reportName);
             for (var k in params) {
-                const el = '[name=' + k + ']';
+                const el = '[name="' + k + '"]';
                 if (k == 'period') {
                     this.myRadio(el, params['period']);
                 } else {
-                    this.waitForElementVisible(el, '@@ Waiting for parameter ' + k + ' => ' + params[k] + ': ' + el);
+                    this.waitForElementVisible('css selector', el, '@@ Waiting for parameter ' + k + ' => ' + params[k] + ': ' + el);
                     if (k == 'day') {
                         true;
                     } else {
