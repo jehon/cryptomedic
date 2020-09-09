@@ -21,8 +21,8 @@ COPY website.conf /etc/apache2/sites-enabled/website.conf
 RUN rm -fr /etc/apache2/sites-enabled/000-default.conf
 COPY php.ini /etc/php/7.2/apache2/conf.d/99-php.ini
 
-# TODO: use latest composer
-RUN cd /usr/local/bin && curl -s https://getcomposer.org/installer | php -- --version 1.9.3
+# Note: to specify composer version: | php -- --version 1.9.3
+RUN cd /usr/local/bin && curl -s https://getcomposer.org/installer | php
 RUN ln -s /usr/local/bin/composer.phar /usr/local/bin/composer
 
 COPY ssmtp.conf /etc/ssmtp/ssmtp.conf
