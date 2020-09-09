@@ -23,32 +23,24 @@
                                 Upload a file
 					</x-restricted>
 				</x-fff-field>
-				<table>
-					<tr class='notModeRead'
-							ng-if="!currentFile().file"
-							ng-class="{ error: errors.pictureRequired }"
-						>
-						<td>
-                            <x-restricted restricted-by='folder.edit'>
-                                Upload a file
-                            </x-restricted>
-						</td>
-						<td>
-	 						<x-restricted restricted-by='folder.edit'>
-								<x-input-picture name='fileContent'></x-input-picture>
-								<table>
-									<tr>
-										<td><img src='/static/img/smartphone.svg' style='width: 50px'></td>
-										<td>If you are currently on smartphone, clicking on the button above ("browse" or "choose file") should allow you to take a photo with your camera, and to upload it immediately.</td>
-									</tr>
-								</table>
-								<div ng-if='errors.pictureRequired'>
-									<div class='jserror'>Error: you need to add the picture before saving the file.</div>
-								</div>
-                            </x-restricted>
-	 					</td>
-					</tr>
-				</table>
+				<x-fff-field class='notModeRead'
+					ng-if="!currentFile().file"
+					ng-class="{ error: errors.pictureRequired }"
+					>
+					<div>
+						<x-restricted restricted-by='folder.edit'>
+							Upload a file
+							<x-input-picture name='fileContent'></x-input-picture>
+							<img src='/static/img/smartphone.svg' style='width: 50px'>
+							If you are currently on smartphone, clicking on the button above ("browse" or "choose file") should allow you to take a photo with your camera, and to upload it immediately.
+						</x-restricted>
+						<x-restricted restricted-by='folder.edit'>
+							<div ng-if='errors.pictureRequired'>
+								<div class='jserror'>Error: you need to add the picture before saving the file.</div>
+							</div>
+						</x-restricted>
+					</div>
+				</x-fff-field>					
 			</x-group-panel>
 		</div>
 		<div class="col-md-6">

@@ -98,8 +98,19 @@ export default class XFffField extends XWithFile {
         }
     }
 
+    isOk() {
+        if (!this.folder) {
+            return super.isOk();
+        }
+        if (!this.field && !this.bySides) {
+            // If we don't have a field, we are valid with already a folder
+            return true;
+        }
+        return super.isOk();
+    }
+
     _setElementFor(field, where) {
-        if (field) {
+        if (field && this.folder) {
             this.shadowRoot.querySelectorAll(where).forEach(e => {
                 e.style.display = 'inline-block';
                 e.innerHTML = this.file[field];
@@ -127,11 +138,9 @@ export default class XFffField extends XWithFile {
         // We dont' call super.adapt, because we are not based on formula();
         this.adaptEmpty();
         this.adaptLabel();
-        if (this.isOk()) {
-            this._setElementFor(this.field, '#content');
-            this._setElementFor(this.sideLeft, '#side-left');
-            this._setElementFor(this.sideRight, '#side-right');
-        }
+        this._setElementFor(this.field, '#content');
+        this._setElementFor(this.sideLeft, '#side-left');
+        this._setElementFor(this.sideRight, '#side-right');
     }
 
     adaptEmpty() {
