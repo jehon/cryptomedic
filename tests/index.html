@@ -48,7 +48,7 @@
             <li><a href=':5550'>PhpMyAdmin</a></li>
             <li><a href=':5551'>MailHog</a></li>
             <hr>
-            <li><a href=':5555/api/v1.3/bare/database-structure'>database-structure</a></li>
+            <li><a href=':5555/api/-api.version-/struct/data.php'>database-structure</a></li>
         </ul>
     </div>
     <div>
@@ -109,13 +109,18 @@
         </div>
     </div>
 
-    <script>
+    <script type='module'>
+        import { API_VERSION } from '../app/config.js';
+
         const host = window.location.origin.split(':').slice(0, -1).join(':');
         document.querySelectorAll('a').forEach(/* type HTMLElement */ e => {
-            const href = e.getAttribute('href');
+            let href = e.getAttribute('href');
+            href = href.replace('-api.version-', API_VERSION)
             if (href[0] == ':') {
-                e.setAttribute('href', host + href);
+                href = host + href;
             }
+            // console.log(e.getAttribute('href'), href);
+            e.setAttribute('href', href);
         })
     </script>
 </body>

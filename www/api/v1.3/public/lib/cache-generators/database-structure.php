@@ -1,16 +1,9 @@
 <?php
 
-define('STORAGE_FILE', __DIR__ . '/../storage/framework/cache/database.json');
+// 1. Load the database structure
 
-// 1. Connect to the database
-
-// 2. Load the database structure
-
-global $myconfig;
-require_once(__DIR__ . '/../../../../config.php');
-
-$pdoConnection = new PDO("mysql:host={$myconfig["database"]["host"]};dbname={$myconfig["database"]["schema"]}", $myconfig["database"]["username"], $myconfig["database"]["password"]);
-$pdoConnection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+global $pdoConnection;
+require_once(__DIR__ . '/../config.php');
 
 const TYPE_LIST         = "list";
 const TYPE_TIMESTAMP    = "timestamp";
@@ -106,33 +99,20 @@ function parseColumn($sqlData) {
     return $res;
 }
 
-if (defined('PATCH_DB') || !file_exists(constant('STORAGE_FILE'))) {
-    $dir = dirname(constant('STORAGE_FILE'));
-    is_dir($dir) || mkdir($dir, 0777, true);
+global $databaseStructure;
+$databaseStructure = [];
 
-    $dataStructure = [];
+foreach($pdoConnection->query("SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE table_schema = '{$myconfig["database"]["schema"]}'") as $row) {
+    $sqlTable = $row['TABLE_NAME'];
+    $sqlField = $row['COLUMN_NAME'];
 
-    foreach($pdoConnection->query(
-        "SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE table_schema = '{$myconfig["database"]["schema"]}'") as $row) {
-
-            $sqlTable = $row['TABLE_NAME'];
-            $sqlField = $row['COLUMN_NAME'];
-
-            if (in_array($sqlTable, [ 'bug_reporting' ])) {
-                continue;
-            }
-
-            if (!in_array($sqlTable, $dataStructure)) {
-                $dataStructure[$sqlTable] = [];
-            }
-
-            $dataStructure[$sqlTable][$sqlField] = parseColumn($row);
+    if (in_array($sqlTable, [ 'bug_reporting' ])) {
+        continue;
     }
-    
-    $export = 'define("DATABASE_STRUCTURE", ' . var_export($dataStructure, true) . ');';
 
-    file_put_contents(constant('STORAGE_FILE'), "<?php $export") 
-        || die("Could not save data to file " . constant('STORAGE_FILE'));
+    if (!in_array($sqlTable, $databaseStructure)) {
+        $databaseStructure[$sqlTable] = [];
+    }
+
+    $databaseStructure[$sqlTable][$sqlField] = parseColumn($row);
 }
-
-require(constant('STORAGE_FILE'));

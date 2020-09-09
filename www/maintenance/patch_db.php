@@ -33,19 +33,8 @@ try {
 	echo "\n\nRunning always\n";
 	$db->runDirectory(__DIR__ . "/../../conf/database/always/");
 
-	echo "\n\nRecreate structure\n";
-	$list = glob(__DIR__ . "/../api/v*");
-	foreach($list as $v) {
-		echo "Version $v\n<br>";
-		$DBS = "$v/bare/database-structure.php";
-		if (file_exists($DBS)) {
-			echo "Importing $DBS<br>\n";
-			require($DBS);
-		} else {
-			echo "No $DBS found<br>\n";
-		}
-	}
 
+	echo "\n\nDone\n";
 	http_response_code(200);
 } catch (Exception $e) {
 	echo "Upgrade failed: " . $e->getMessage();
