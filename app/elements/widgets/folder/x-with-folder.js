@@ -4,8 +4,6 @@ import setPropertyOn from '../../../js/set-property.js';
 
 const folder = Symbol('folder');
 
-// TODO: remove dependency on XWaiting
-
 export default class XWithFolder extends HTMLElement {
     constructor() {
         super();
