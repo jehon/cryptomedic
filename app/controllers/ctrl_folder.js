@@ -159,7 +159,7 @@ export default function ctrl_folder($scope, $routeParams) {
 
         // Date
         $scope.age = {};
-        if (cachedCurrentFile.Yearofbirth) {
+        if (cachedCurrentFile && cachedCurrentFile.Yearofbirth) {
             var age = fromBirthDate(cachedCurrentFile.Yearofbirth);
             var r = RegExp('([0-9]+) ?y(ears)? ?([0-9]+) ?m(onths)?').exec(age);
             if (r != null && r.length > 3) {

@@ -29,11 +29,13 @@ export default function ctrl_file_bill($scope, $element) {
     };
 
     onSession(() => {
-        $scope.currentFile().calculatePriceId(getPrices());
-        try {
-            $scope.currentFile().ratioSalary();
-        } catch (e) {}
-        $scope.safeApply();
+        if ($scope.currentFile()) {
+            $scope.currentFile().calculatePriceId(getPrices());
+            try {
+                $scope.currentFile().ratioSalary();
+            } catch (e) {}
+        }
+    $scope.safeApply();
     });
 
     const dateElement = $element[0].querySelector('[name=Date]');
@@ -44,7 +46,9 @@ export default function ctrl_file_bill($scope, $element) {
         }
         $scope.safeApply();
     });
-    $scope.currentFile().calculatePriceId(getPrices());
+    if ($scope.currentFile()) {
+        $scope.currentFile().calculatePriceId(getPrices());
+    }
     document.querySelectorAll('x-fff-salary-ratio').forEach((/** @type {XFffSalaryRatio} */el) => el.refresh());
 
     $scope.$watch('currentFile().sl_numberOfHouseholdMembers', function () {

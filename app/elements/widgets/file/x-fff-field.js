@@ -85,7 +85,7 @@ export default class XFffField extends XWithFile {
         // TODO (angular): workaround for ng-if
         if (!this.folder) {
             let parent = this.closest('[x-top]');
-            if (parent.folder) {
+            if (parent && parent.folder) {
                 this.folder = parent.folder;
             }
         }
