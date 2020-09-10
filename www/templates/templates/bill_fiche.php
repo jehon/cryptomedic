@@ -18,18 +18,17 @@
         $label = Bill::$translations[$item];
       }
 
-      echo "<tr "
+      echo "<x-fff-field label='$label'"
         . "ng-if=\"currentFile().getPriceFor('$name') > 0\" "
         . "ng-class='{ notModeRead: !currentFile()[\"$name\"] }'"
         . ">";
-      echo "<td>$label</td>";
-      echo "<td ng-if=\"currentFile().getPriceFor('$name')<=1\">1x</td>";
-      echo "<td>";
+      echo "<div ng-if=\"currentFile().getPriceFor('$name')<=1\">1x</div>";
+      echo "<div>";
         (new t($item, [ "inline" => "style='width: 4em' step=1 min=0" ]))->value()->p();
-      echo "</td>";
-      echo "<td ng-if=\"currentFile().getPriceFor('$name')>1\"><div pricefor='$item'>{{currentFile().getPriceFor('$name')}}</div></td>";
-      echo "<td>{{currentFile().getTotalFor('$name')}}</td>";
-      echo "</tr>";
+      echo "</div>";
+      echo "<div ng-if=\"currentFile().getPriceFor('$name')>1\"><div pricefor='$item'>{{currentFile().getPriceFor('$name')}}</div></div>";
+      echo "<div>{{currentFile().getTotalFor('$name')}}</div>";
+      echo "</x-fff-field>";
     }
   }
 ?>
@@ -48,39 +47,28 @@
   <div class='row'>
     <div class="col-md-6">
       <x-group-panel title='General data'>
-        <table>
-          <?php (new t("Bill.Date"))->tr()->p(); ?>
-          <?php (new t("Bill.ExaminerName"))->tr("Examiner")->p(); ?>
-          <?php (new t("Bill.Center"))->tr("Center where consultation took place")->p(); ?>
-        </table>
+        <?php (new t("Bill.Date"))->tr2()->p(); ?>
+        <?php (new t("Bill.ExaminerName"))->tr2("Examiner")->p(); ?>
+        <?php (new t("Bill.Center"))->tr2("Center where consultation took place")->p(); ?>
         <div class='debug_infos'>
           price_id <?php (new t("Bill.price_id"))->read()->p(); ?><br>
         </div>
       </x-group-panel>
-      <div ng-if='!currentFile().price'>
-        <div class='alert alert-info' role="alert" id="errorNoDate">
-          Please select a date first!
-        </div>
-      </div>
+      <x-message ng-if='!currentFile().price' level='danger' role="alert" id="errorNoDate">Please select a date first!</x-message>
       <div ng-if='currentFile().price'>
         <?php
           foreach(Bill::$categories as $cat) {
             ?>
               <x-group-panel title='<?php echo $cat; ?> items'>
-                <table  class='prices'>
-                  <thead>
-                    <tr>
-                      <th></th>
-                      <th>Quantity</th>
-                      <th>Price</th>
-                      <th>Total</th>
-                    </tr>
-                  </thead>
-                  <?php foreach(Bill::getFieldsList($cat, t::getColumnsOfTable('bills')) as $field) {
-                      price("Bill." . $field);
-                    }
-                  ?>
-                </table>
+                <x-fff-field label=''>
+                  <div>Quantity</div>
+                  <div>Price</div>
+                  <div>Total</div>
+                </x-fff-field>
+                <?php foreach(Bill::getFieldsList($cat, t::getColumnsOfTable('bills')) as $field) {
+                    price("Bill." . $field);
+                  }
+                ?>
               </x-group-panel>
             <?php
           }
@@ -91,40 +79,32 @@
       <x-ff-patient-related></x-ff-patient-related>
 			<x-ff-next-appointment></x-ff-next-appointment>
       <x-group-panel title='Social Data'>
-        <table>
-          <?php (new t("Bill.sl_familySalary"))->tr("Family Salary in a Month")->p(); ?>
-          <?php (new t("Bill.sl_numberOfHouseholdMembers"))->tr("Number of Houslehold Members")->p(); ?>
-          <tr>
-            <td>Salary ratio</td>
-            <td><x-fff-salary-ratio></x-fff-salary-ratio></td>
-          </tr>
-          <?php (new t("Bill.Sociallevel"))->id("calculated_social_level")->readOnly()->tr("Calculated Social Level")->p(); ?>
-        </table>
+        <?php (new t("Bill.sl_familySalary"))->tr2("Family Salary in a Month")->p(); ?>
+        <?php (new t("Bill.sl_numberOfHouseholdMembers"))->tr2("Number of Houslehold Members")->p(); ?>
+        <x-fff-field label='Salary Ratio'>
+        <x-fff-salary-ratio></x-fff-salary-ratio>
+        </x-fff-field>
+        <?php (new t("Bill.Sociallevel"))->id("calculated_social_level")->readOnly()->tr2("Calculated Social Level")->p(); ?>
       </x-group-panel>
       <x-group-panel title='Summary'>
-        <table>
-          <tr>
-            <td>Raw Calculated total</td>
-            <td id='total_calculated_raw'>{{currentFile().calculate_total_real()}}<?php new t("Bill.total_real"); ?></td>
-          </tr>
-          <?php (new t("Bill.Sociallevel"))->readOnly()->tr("Social Level")->p(); ?>
-                <tr>
-            <td>Percentage of price to be asked</td>
-            <td id='percentage'>{{currentFile().calculate_percentage_asked() * 100 | number:0}}%</td>
-          </tr>
-          <tr>
-            <td>Price to be asked to the patient</td>
-            <td id='total_calculated_asked'>{{currentFile().total_asked | number:0 }}<?php (new t("Bill.total_asked")); ?></td>
-          </tr>
-        </table>
+        <x-fff-field label='Raw Calculated total'>
+          <div id='total_calculated_raw'>{{currentFile().calculate_total_real()}}<?php new t("Bill.total_real"); ?></div>
+        </x-fff-field>
+        <?php (new t("Bill.Sociallevel"))->readOnly()->tr2("Social Level")->p(); ?>
+        <x-fff-field label='Percentage of price to be asked'>
+          <div id='percentage'>{{currentFile().calculate_percentage_asked() * 100 | number:0}}%</div>
+        </x-fff-field>
+        <x-fff-field label='Price to be asked to the patient'>
+          <div id='total_calculated_asked'>{{currentFile().total_asked | number:0 }}<?php (new t("Bill.total_asked")); ?></div>
+        </x-fff-field>
       </x-group-panel>
-      <x-group-panel title='Recieved payment' ng-if='!currentFile().id'>
-          <tr>
-            <td>Payment already recieved</td>
-            <td id='first_payment'>
+      <x-group-panel title='Received payment' ng-if='!currentFile().id'>
+          <x-fff-field label='Payment already recieved'>
+            <div id='first_payment'>
               <input type='number' id='first_payment' ng-model='currentFile().first_payment'>
-            </td>
+            </div>
           </tr>
+          <x-fff-field>
       </x-group-panel>
     </div>
   </div>
@@ -168,16 +148,13 @@
     </table>
     <x-group-panel  id='paymentForm' title='Add / modify a payment'>
       <form>
-        <table>
-          <?php (new t("Payment.Date"))->tr("Date of receipt")->p(); ?>
-          <?php (new t("Payment.ExaminerName"))->tr("Receiver")->p(); ?>
-          <?php (new t("Payment.Amount"))->tr("Amount")->p(); ?>
-          <?php (new t("Payment.Notes"))->tr("Notes")->p(); ?>
-        </table>
+        <?php (new t("Payment.Date"))->tr2("Date of receipt")->p(); ?>
+        <?php (new t("Payment.ExaminerName"))->tr2("Receiver")->p(); ?>
+        <?php (new t("Payment.Amount"))->tr2("Amount")->p(); ?>
+        <?php (new t("Payment.Notes"))->tr2("Notes")->p(); ?>
       </form>
       <x-button action='commit' id='button_payment_create' ng-click="actionAddPayment()" ng-if='paymentEditor.id == null'>Create</x-button>
       <x-button action='commit' id='button_payment_save'   ng-click="actionAddPayment()" ng-if='paymentEditor.id > 0'>Save</x-button>
     </x-group-panel>
   </div>
 </div>
-<tr>
