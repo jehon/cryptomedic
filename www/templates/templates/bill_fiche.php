@@ -18,17 +18,21 @@
         $label = Bill::$translations[$item];
       }
 
-      echo "<x-fff-field label='$label'"
-        . "ng-if=\"currentFile().getPriceFor('$name') > 0\" "
-        . "ng-class='{ notModeRead: !currentFile()[\"$name\"] }'"
-        . ">";
-      echo "<div ng-if=\"currentFile().getPriceFor('$name')<=1\">1x</div>";
-      echo "<div>";
-        (new t($item, [ "inline" => "style='width: 4em' step=1 min=0" ]))->value()->p();
-      echo "</div>";
-      echo "<div ng-if=\"currentFile().getPriceFor('$name')>1\"><div pricefor='$item'>{{currentFile().getPriceFor('$name')}}</div></div>";
-      echo "<div>{{currentFile().getTotalFor('$name')}}</div>";
-      echo "</x-fff-field>";
+      echo <<<EOD
+<x-fff-field label='$label'
+    ng-if="currentFile().getPriceFor('$name') > 0"
+    ng-class='{ notModeRead: !currentFile()[\"$name\"] }'
+  >
+  <div ng-if=\"currentFile().getPriceFor('$name')<=1\">1x</div>
+  <div>
+EOD;
+      (new t($item, [ "inline" => "style='width: 4em' step=1 min=0" ]))->value()->p();
+      echo <<<EOD
+  </div>
+  <div ng-if=\"currentFile().getPriceFor('$name')>1\"><div pricefor='$item'>{{currentFile().getPriceFor('$name')}}</div></div>
+  <div>{{currentFile().getTotalFor('$name')}}</div>
+</x-fff-field>
+EOD;
     }
   }
 ?>
@@ -82,7 +86,7 @@
         <?php (new t("Bill.sl_familySalary"))->tr2("Family Salary in a Month")->p(); ?>
         <?php (new t("Bill.sl_numberOfHouseholdMembers"))->tr2("Number of Houslehold Members")->p(); ?>
         <x-fff-field label='Salary Ratio'>
-        <x-fff-salary-ratio></x-fff-salary-ratio>
+          <x-fff-salary-ratio></x-fff-salary-ratio>
         </x-fff-field>
         <?php (new t("Bill.Sociallevel"))->id("calculated_social_level")->readOnly()->tr2("Calculated Social Level")->p(); ?>
       </x-group-panel>
@@ -99,12 +103,11 @@
         </x-fff-field>
       </x-group-panel>
       <x-group-panel title='Received payment' ng-if='!currentFile().id'>
-          <x-fff-field label='Payment already recieved'>
-            <div id='first_payment'>
-              <input type='number' id='first_payment' ng-model='currentFile().first_payment'>
-            </div>
-          </tr>
-          <x-fff-field>
+        <x-fff-field label='Payment already recieved'>
+          <div id='first_payment'>
+            <input type='number' id='first_payment' ng-model='currentFile().first_payment'>
+          </div>
+        </x-fff-field>
       </x-group-panel>
     </div>
   </div>
