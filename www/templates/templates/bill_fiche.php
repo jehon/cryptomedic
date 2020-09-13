@@ -21,7 +21,7 @@
       echo <<<EOD
 <x-fff-field label='$label'
     ng-if="currentFile().getPriceFor('$name') > 0"
-    ng-class='{ notModeRead: !currentFile()[\"$name\"] }'
+    ng-class='{ notModeRead: !currentFile()["$name"] }'
   >
   <div ng-if=\"currentFile().getPriceFor('$name')<=1\">1x</div>
   <div>
