@@ -20,6 +20,7 @@ describe(fn(import.meta.url), function () {
         el.setAttribute('level', 'success');
         el.setAttribute('level', 'warning');
         el.setAttribute('level', 'danger');
+        el.setAttribute('level', 'info');
         expect(console.info).not.toHaveBeenCalled();
 
         el.setAttribute('level', 'anything');
