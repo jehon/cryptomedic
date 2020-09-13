@@ -23,13 +23,13 @@
     ng-if="currentFile().getPriceFor('$name') > 0"
     ng-class='{ notModeRead: !currentFile()["$name"] }'
   >
-  <div ng-if=\"currentFile().getPriceFor('$name')<=1\">1x</div>
+  <div ng-if="currentFile().getPriceFor('$name')<=1">1x</div>
   <div>
 EOD;
       (new t($item, [ "inline" => "style='width: 4em' step=1 min=0" ]))->value()->p();
       echo <<<EOD
   </div>
-  <div ng-if=\"currentFile().getPriceFor('$name')>1\"><div pricefor='$item'>{{currentFile().getPriceFor('$name')}}</div></div>
+  <div ng-if="currentFile().getPriceFor('$name')>1"><div pricefor='$item'>{{currentFile().getPriceFor('$name')}}</div></div>
   <div>{{currentFile().getTotalFor('$name')}}</div>
 </x-fff-field>
 EOD;
