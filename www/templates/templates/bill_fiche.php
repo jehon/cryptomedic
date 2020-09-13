@@ -101,13 +101,20 @@ EOD;
         <x-fff-field label='Price to be asked to the patient'>
           <div id='total_calculated_asked'>{{currentFile().total_asked | number:0 }}<?php (new t("Bill.total_asked")); ?></div>
         </x-fff-field>
-      </x-group-panel>
-      <x-group-panel title='Received payment' ng-if='!currentFile().id'>
-        <x-fff-field label='Payment already recieved'>
+        </x-group-panel>
+        <x-group-panel title='Received payment' ng-if='!currentFile().id'>
+          <tr>
+            <td>Payment already recieved</td>
+            <td id='first_payment'>
+              <input type='number' id='first_payment' ng-model='currentFile().first_payment'>
+            </td>
+          </tr>
+        <!-- TODO: migrate to x-fff-field
+        <x-fff-field label='Payment already recieved' ng-if='!currentFile().id'>
           <div id='first_payment'>
             <input type='number' id='first_payment' ng-model='currentFile().first_payment'>
           </div>
-        </x-fff-field>
+        </x-fff-field> -->
       </x-group-panel>
     </div>
   </div>
