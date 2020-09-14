@@ -188,7 +188,7 @@ deploy-test: docker-started
 # 
 .PHONY: logs
 logs:
-	$(DOCKERCOMPOSE) logs -f -t
+	$(DOCKERCOMPOSE) logs -f -t | sed 's/\\n/\n/g'
 
 #
 #
