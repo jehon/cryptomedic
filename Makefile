@@ -215,7 +215,7 @@ target/structure-exists:
 #
 #
 .PHONY: depencencies
-dependencies: dependencies-node dependencies-api depencencies-maintenance
+dependencies: dependencies-node dependencies-api
 
 .PHONY: dependencies-node
 dependencies-node: node_modules/.dependencies
@@ -232,15 +232,6 @@ www/api/$(VAPI)/vendor/.dependencies: www/api/$(VAPI)/composer.json www/api/$(VA
 		&& composer install \
 	")
 	touch www/api/$(VAPI)/vendor/.dependencies
-
-.PHONY: depencencies-maintenance
-depencencies-maintenance: www/maintenance/vendor/.dependencies
-www/maintenance/vendor/.dependencies: www/maintenance/composer.json www/maintenance/composer.lock docker-started
-	$(call run_in_docker,"server","\
-		cd www/maintenance/ \
-		&& composer install \
-	")
-	touch www/maintenance/vendor/.dependencies
 
 #
 #
