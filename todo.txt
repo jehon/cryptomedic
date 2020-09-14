@@ -1,26 +1,16 @@
-TODO: see in models if we use "Request::" or not (See Picture.php <- input should come from controller)
 
-[     ] Migrate read-only
-[     ] - reports
-[     ] - pseudo-menu
-[     ] - graphics
+[     ] Know the clients
+- add info on logged computers
 
-[     ] Prices/Bills as lines
-[     ] - Adapt DB
-[     ] - Insert bills
-[     ] - Edit prices
-[     ] - Adapt statistics
-
-[     ] Remove template.php
-        -> how to render external templates? -> eval ?
+[     ] Remove jQuery & bootstrap
+- migrate home page
 
 [     ] Remove Angular:
-- migrate reports
-- migrate home page
-- migrate various files
-
-[     ] html2canvas:
-https://www.npmjs.com/package/html2canvas
+- migrate district selection
+- migrate bill lines & blocks
 
 
 https://github.com/google/closure-compiler/wiki/Generic-Types
+
+Compile:
+https://docs.angularjs.org/api/ng/service/$compile
