@@ -137,7 +137,10 @@ test-api-commit: docker-started dependencies-api data-reset
 	$(call run_in_docker,"server","/app/bin/dev-phpunit.sh COMMIT")
 
 .PHONY: test-unit
-test-unit: dependencies-node $(CJS2ESM_DIR)/axios.js $(CJS2ESM_DIR)/axios-mock-adapter.js
+test-unit: dependencies-node \
+		$(CJS2ESM_DIR)/axios.js \
+		$(CJS2ESM_DIR)/axios-mock-adapter.js \
+		$(CJS2ESM_DIR)/platform.js
 	npm run test-unit-continuously -- --single-run
 	node tests/report.js
     
@@ -247,7 +250,8 @@ build: www/build/index.html
 www/build/index.html: node_modules/.dependencies webpack.config.js \
 		package.json package-lock.json \
 		$(call recursive-dependencies,app/,www/build/index.html) \
-		$(CJS2ESM_DIR)/axios.js
+		$(CJS2ESM_DIR)/axios.js \
+		$(CJS2ESM_DIR)/platform.js
 	$(NM_BIN)webpack
 
 $(CJS2ESM_DIR)/axios.js: node_modules/axios/dist/axios.js
@@ -256,6 +260,9 @@ $(CJS2ESM_DIR)/axios.js: node_modules/axios/dist/axios.js
 $(CJS2ESM_DIR)/axios-mock-adapter.js: node_modules/axios-mock-adapter/dist/axios-mock-adapter.js
 	$(NM_BIN)babel --out-file="$@" --plugins=transform-commonjs --source-maps inline $?
 	sed -i 's/from "axios";/from ".\/axios.js";/' $@
+
+$(CJS2ESM_DIR)/platform.js: node_modules/platform/platform.js
+	$(NM_BIN)babel --out-file="$@" --plugins=transform-commonjs --source-maps inline $?
 
 #
 #

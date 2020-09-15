@@ -13,6 +13,7 @@ import './x-panel.js';
 import './x-button.js';
 import '../../../../node_modules/css-inherit/css-inherit.js';
 import { defineCustomElement } from '../../../js/custom-element.js';
+import { getBrowserDescription } from '../../../js/browser.js';
 
 const error = Symbol('error');
 const errorMsg = Symbol('errorMsg');
@@ -205,7 +206,7 @@ export function requestAndFilterBuilder(options, allowed = []) {
 export function loginRequestBuilder(username, password) {
     return requestAndFilterBuilder({
         url: 'auth/mylogin', method: 'POST',
-        data: { username, password }
+        data: { username, password, browser: getBrowserDescription() }
     }, [404]);
 }
 
@@ -216,7 +217,8 @@ export function loginRequestBuilder(username, password) {
  */
 export function loginCheckRequestBuilder() {
     return requestAndFilterBuilder({
-        url: 'auth/settings'
+        url: 'auth/settings', method: 'POST',
+        data: { browser: getBrowserDescription() }
     }, [401]);
 }
 
