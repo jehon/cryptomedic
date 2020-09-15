@@ -24,12 +24,22 @@ fi
 for V in v* ; do
 	cd "$V" || exit 255
 	echo "Version $V ($(pwd))"
+	echo "** Laravel $V **"
 	REPORTS="$PRJ_DIR/target/php$V"
 	mkdir -p "$REPORTS"
 	chmod a+wx "$REPORTS"
 	echo "Current folder: $(pwd)"
-	ls -l vendor/bin
-	./vendor/bin/phpunit  --coverage-html $REPORTS --coverage-xml $REPORTS "$@"
+	./vendor/bin/phpunit  --coverage-html "$REPORTS" --coverage-xml "$REPORTS" "$@"
+	chmod -R a+wx "$REPORTS"
+	cd ..
+
+	echo "** Bare $V **"
+	cd "$V/public" || exit 255
+	REPORTS="$PRJ_DIR/target/php$V-bare"
+	mkdir -p "$REPORTS"
+	chmod a+wx "$REPORTS"
+	echo "Current folder: $(pwd)"
+	./vendor/bin/phpunit  --coverage-html "$REPORTS" --coverage-xml "$REPORTS" "$@"
 	chmod -R a+wx "$REPORTS"
 	cd ..
 done

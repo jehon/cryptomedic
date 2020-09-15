@@ -5,8 +5,6 @@
 require_once(__DIR__ . "/../../config.php");
 require_once(__DIR__ . "/Database.php");
 
-define('PATCH_DB', 1);
-
 global $myconfig;
 
 if (!$myconfig['security']['key']) {
@@ -32,7 +30,6 @@ try {
 
 	echo "\n\nRunning always\n";
 	$db->runDirectory(__DIR__ . "/../../conf/database/always/");
-
 
 	echo "\n\nDone\n";
 	http_response_code(200);
