@@ -22,3 +22,5 @@ commit.msg
 /.project
 /.settings
 /.DS_Store
+
+.phpunit.result.cache
