@@ -13,7 +13,7 @@
     "require-dev": {
         "fzaninotto/faker": "1.9.1",
         "mockery/mockery": "1.4.2",
-        "phpunit/phpunit": "9.3.8",
+        "phpunit/phpunit": "9.3.10",
         "symfony/css-selector": "5.1.5",
         "symfony/dom-crawler": "5.1.5",
         "filp/whoops": "2.7.3"
