@@ -9,6 +9,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import './controllers/mainApp.js';
 
-import './elements/bugreporting.js';
+import './elements/bug-reporting.js';
 
 import './css/application.css';

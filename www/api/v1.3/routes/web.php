@@ -41,7 +41,8 @@ Route::group([ 'prefix' => '/api/' . basename(dirname(__DIR__)) ], function() {
   // Private
   Route::group(array('middleware' => 'authenticated'), function()
   {
-    Route::get('/auth/settings', "AuthController@getSettings");
+    Route::get('/auth/settings', "AuthController@getSettings"); // TODO: legacy in v1.4
+    Route::post('/auth/settings', "AuthController@getSettings");
 
     hasPermission('users.manage', function() {
       Route::get('users/emails', 'UsersController@emails');
