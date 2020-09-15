@@ -1,9 +1,12 @@
 <?php
 
+namespace App\Cryptomedic\Lib\CacheGenerators\DatabaseStructure;
+
 // 1. Load the database structure
 
 global $pdoConnection;
-require_once(__DIR__ . '/../config.php');
+
+use Cryptomedic\Lib\Database;
 
 const TYPE_LIST         = "list";
 const TYPE_TIMESTAMP    = "timestamp";
@@ -15,41 +18,30 @@ const TYPE_DATE         = "date";
 const TYPE_BINARY       = "binary";
 
 function parseColumn($sqlData) {
+    $name = $sqlData['COLUMN_NAME'];
 
-    $matches = array();
     $res = [
-        'isList' => false,
-        'isListLinked' => false,
-        'isNullable' => $sqlData['IS_NULLABLE'] == "YES"
+        'protected'  => in_array($name, [ 'id', 'create_at', 'updated_at', 'lastuser']),
+        'optional'   => ($sqlData['IS_NULLABLE'] == "YES"),
+        'insertOnly' => preg_match('/^.+_id$/', $name)
     ];
+
 
     // if (array_key_exists("list", $options) && $options['list']) {
     //     $res['type'] = TYPE_LIST;
-    //     $this->isList = true;
     //     $this->listing = $options['list'];
     // } else if (array_key_exists($header, References::$model_listing)) {
     //     // Model.Field specific list
     //       $res['type'] = TYPE_LIST;
-    //       $this->isList = true;
     //       $this->listingName = References::$model_listing[$header];
     //       $this->listing = References::getList($this->listingName);
     // } else if (array_key_exists("*.{$this->field}", References::$model_listing)) {
     //     // *.Field generic list
     //       $res['type'] = TYPE_LIST;
-    //       $this->isList = true;
     //       $this->listingName = References::$model_listing["*.{$this->field}"];
     //       $this->listing = References::getList($this->listingName);
     // } else {
-          /*
-        * ==== $matches ====
-        * 1: type natif
-        * 3: length
-        * 4: qualificatif (unsigned)
-        *
-        * All matches are lowercase
-        */
         $res['type'] = $sqlData['DATA_TYPE'];
-        $res['length'] = $sqlData['CHARACTER_MAXIMUM_LENGTH'];
 
         // Special case:
         switch($res['type']) {
@@ -60,8 +52,8 @@ function parseColumn($sqlData) {
             case "decimal":
             case "tinyint":
             case "int":
-                $res['length'] = $sqlData['NUMERIC_PRECISION'];
-                if ($res['length'] == 3) {
+                $length = $sqlData['NUMERIC_PRECISION'];
+                if ($length == 3) {
                     $res['type'] = TYPE_BOOLEAN;
                 } else {
                     $res['type'] = TYPE_INTEGER;
@@ -72,6 +64,7 @@ function parseColumn($sqlData) {
             case "text":
             case "char":
             case "varchar":
+                $res['length'] = $sqlData['CHARACTER_MAXIMUM_LENGTH'];
                 if ($res['length'] >= 800) {
                     // Long text = blob
                     $res['type'] = TYPE_TEXT;
@@ -80,12 +73,14 @@ function parseColumn($sqlData) {
                 }
                 break;
             case "mediumtext":
+                $res['length'] = $sqlData['CHARACTER_MAXIMUM_LENGTH'];
                 $res['type'] = TYPE_TEXT;
                 break;
             case "timestamp":
                 $res['type'] = TYPE_TIMESTAMP;
                 break;
             case "longblob":
+                $res['length'] = $sqlData['CHARACTER_MAXIMUM_LENGTH'];
                 $res['type'] = TYPE_BINARY;
                 break;
             default:
@@ -94,7 +89,6 @@ function parseColumn($sqlData) {
                 break;
             
         }
-        // var_dump($sqlData);
     // }
     return $res;
 }
@@ -102,15 +96,12 @@ function parseColumn($sqlData) {
 global $databaseStructure;
 $databaseStructure = [];
 
-foreach($pdoConnection->query("SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE table_schema = '{$myconfig["database"]["schema"]}'") as $row) {
+global $myconfig;
+foreach(Database::select("SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE table_schema = '{$myconfig["database"]["schema"]}'") as $row) {
     $sqlTable = $row['TABLE_NAME'];
     $sqlField = $row['COLUMN_NAME'];
 
-    if (in_array($sqlTable, [ 'bug_reporting' ])) {
-        continue;
-    }
-
-    if (!in_array($sqlTable, $databaseStructure)) {
+    if (!array_key_exists($sqlTable, $databaseStructure)) {
         $databaseStructure[$sqlTable] = [];
     }
 

@@ -50,6 +50,7 @@ clean: deploy-unmount stop
 	rm -fr node_modules
 	rm -fr www/maintenance/vendor
 	rm -fr www/api/$(VAPI)/vendor
+	rm -fr www/api/$(VAPI)/public/vendor
 	rm -fr vendor
 
 	rm -fr "target/"
@@ -228,13 +229,22 @@ node_modules/.dependencies: package.json package-lock.json
 	touch node_modules/.dependencies
 
 .PHONY: depencencies-api
-dependencies-api: www/api/$(VAPI)/vendor/.dependencies
+dependencies-api: www/api/$(VAPI)/vendor/.dependencies dependencies-api-bare
 www/api/$(VAPI)/vendor/.dependencies: www/api/$(VAPI)/composer.json www/api/$(VAPI)/composer.lock target/structure-exists docker-started
 	$(call run_in_docker,"server","\
 		cd www/api/$(VAPI) \
 		&& composer install \
 	")
 	touch www/api/$(VAPI)/vendor/.dependencies
+
+.PHONY: depencencies-api-bare
+dependencies-api-bare: www/api/$(VAPI)/public/vendor/.dependencies
+www/api/$(VAPI)/public/vendor/.dependencies: www/api/$(VAPI)/public/composer.json www/api/$(VAPI)/public/composer.lock target/structure-exists docker-started
+	$(call run_in_docker,"server","\
+		cd www/api/$(VAPI)/public/ \
+		&& composer install \
+	")
+	touch www/api/$(VAPI)/public/vendor/.dependencies
 
 #
 #
@@ -274,7 +284,7 @@ database-backup:
 	$(call run_in_docker,"mysql", "mysqldump -u root -p$(DBROOTPASS) $(DBNAME)") > $(DB_BASE)
 
 .PHONY: data-reset
-data-reset: docker-started
+data-reset: docker-started dependencies-api-bare
 # Remove all trace of previous sessions
 	$(call run_in_docker,"server","find /tmp/laravel -type f -delete")
 
