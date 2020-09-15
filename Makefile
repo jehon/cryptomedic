@@ -192,7 +192,7 @@ deploy-test: docker-started
 # 
 .PHONY: logs
 logs:
-	$(DOCKERCOMPOSE) logs -f -t | sed 's/\\n/\n/g'
+	$(DOCKERCOMPOSE) logs -f --tail=10 | sed 's/\\n/\n/g'
 
 #
 #
