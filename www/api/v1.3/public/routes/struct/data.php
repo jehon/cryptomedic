@@ -2,8 +2,6 @@
 
 namespace Routes;
 
-echo "<pre>";
-
 require_once(__DIR__ . '/../../app/bootstrap.php');
 
 use Cryptomedic\Lib\Request;
@@ -13,6 +11,6 @@ if (Request::hasParam('force')) {
     Cache::generate();
 }
 
-print_r(Cache::get());
+Request::replyWith(Cache::get());
 
 http_response_code(200);

@@ -21,5 +21,3 @@ date_default_timezone_set("GMT");
 require_once(__DIR__ . '/../../../../../config.php');
 
 define('MY_FOLDER_TMP',  __DIR__ . '/../../storage/framework/cache/');
-
-var_dump(constant('MY_FOLDER_TMP'));

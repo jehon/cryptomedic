@@ -1,13 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit backupGlobals="false"
-         backupStaticAttributes="false"
-         bootstrap="app/bootstrap.php"
-         colors="true"
-         convertErrorsToExceptions="true"
-         convertNoticesToExceptions="true"
-         convertWarningsToExceptions="true"
-         processIsolation="false"
-         stopOnFailure="false">
+<phpunit 
+        bootstrap="app/bootstrap.php"
+        colors="true"
+        >
     <testsuites>
         <testsuite name="Application Test Suite">
             <directory suffix="Test.php">./tests</directory>
