@@ -10,7 +10,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt update
 RUN DEBIAN_FRONTEND=noninteractive apt install -y \
 	curl rsync \
 	apache2 php libapache2-mod-php php-mysql \
-	php-curl php-gd php-intl php-json php-mbstring php-xml php-zip \
+	php-xdebug php-curl php-gd php-intl php-json php-mbstring php-xml php-zip \
 	ssmtp \
 	unzip \
 	git
