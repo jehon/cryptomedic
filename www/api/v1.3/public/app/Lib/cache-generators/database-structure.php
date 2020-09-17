@@ -21,11 +21,17 @@ function parseColumn($sqlData) {
     $name = $sqlData['COLUMN_NAME'];
 
     $res = [
-        'protected'  => in_array($name, [ 'id', 'create_at', 'updated_at', 'lastuser']),
-        'optional'   => ($sqlData['IS_NULLABLE'] == "YES"),
-        'insertOnly' => preg_match('/^.+_id$/', $name)
+        'protected'  => in_array($name, [ 'id', 'created_at', 'updated_at', 'lastuser'])
     ];
 
+    if (!$res['protected']) {
+        $res['optional']   = ($sqlData['IS_NULLABLE'] == "YES");
+
+        if (!$res['optional']) {
+            // Only mandatory fields can be insertOnly (e.g. patient_id)
+            $res['insertOnly'] = (preg_match('/^.+_id$/', $name) > 0);
+        }
+    }
 
     // if (array_key_exists("list", $options) && $options['list']) {
     //     $res['type'] = TYPE_LIST;
@@ -85,7 +91,7 @@ function parseColumn($sqlData) {
                 break;
             default:
                 var_dump($sqlData);
-                throw new Exception("Unhandled type in __construct: {$res['type']}");
+                throw new \Exception("Unhandled type in __construct: {$res['type']}");
                 break;
             
         }
