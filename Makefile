@@ -133,6 +133,9 @@ test: docker-started dependencies build test-api test-unit test-e2e test-style
 test-api: docker-started dependencies-api data-reset
 	$(call run_in_docker,"server","/app/bin/dev-phpunit.sh")
 
+test-api-bare:
+	$(call run_in_docker,"server","/app/bin/dev-phpunit.sh bare")
+
 .PHONY: test-api-commit
 test-api-commit: docker-started dependencies-api data-reset
 	$(call run_in_docker,"server","/app/bin/dev-phpunit.sh COMMIT")
