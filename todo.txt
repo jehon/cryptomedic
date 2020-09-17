@@ -1,6 +1,9 @@
 
 [     ] Know the clients
-- add info on logged computers
+> add info on logged computers
+
+[     ] Remove Laravel
+> build up the cache system
 
 [     ] Remove jQuery & bootstrap
 - migrate home page
@@ -8,7 +11,6 @@
 [     ] Remove Angular:
 - migrate district selection
 - migrate bill lines & blocks
-
 
 https://github.com/google/closure-compiler/wiki/Generic-Types
 

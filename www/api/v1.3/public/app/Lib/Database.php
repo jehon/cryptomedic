@@ -18,15 +18,40 @@ function getDefinitionFor($table, $field) {
 }
 
 class Database {
-    static $pdoConnection;
+    static $pdoConnection = false;
 
-    static function select($request) {
+    static function init() {
+        if (Database::$pdoConnection !== false) {
+            return;
+        }
+
+        global $myconfig;
+        Database::$pdoConnection = new PDO("mysql:host={$myconfig["database"]["host"]};dbname={$myconfig["database"]["schema"]}", $myconfig["database"]["username"], $myconfig["database"]["password"]);
+        Database::$pdoConnection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    }
+
+    static function exec(string $request): int {
+        self::init();
+        return self::$pdoConnection->exec($request);
+    }
+
+    static function select(string $request): \PDOStatement {
+        self::init();
         return self::$pdoConnection->query($request);
     }
 
-    static function insert($table, $data, $onDuplicateKeyUpdate = false) {
-        global $databaseStructure;
+    static function selectAsArray(string $request, string $field): array {
+        $res = [];
+        foreach(self::select($request) as $line) {
+            $res[$line[$field]] = $line;
+        }
+        return $res;
+    }
 
+    static function insert(string $table, array $data, bool $onDuplicateKeyUpdate = false): bool {
+        self::init();
+
+        global $cture;
         $validFields = array_filter(array_keys($data),
             function ($key) use ($table) { 
                 $desc = getDefinitionFor($table, $key);
@@ -43,11 +68,7 @@ class Database {
         var_dump($sql, $validFields);
     }
 
-    static function update($table, $data) {
-
+    static function update(string $table, object $data): bool {
+        self::init();
     }
 }
-
-global $myconfig;
-Database::$pdoConnection = new PDO("mysql:host={$myconfig["database"]["host"]};dbname={$myconfig["database"]["schema"]}", $myconfig["database"]["username"], $myconfig["database"]["password"]);
-Database::$pdoConnection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

@@ -38,7 +38,8 @@ script:
 deploy:
   - provider: script
     script: make deploy
-    cleanup: false
+    skip_cleanup: true
+    # cleanup: false
     on:
       branch: 
         - master
