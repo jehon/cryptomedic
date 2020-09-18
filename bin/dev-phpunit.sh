@@ -1,7 +1,6 @@
 #!/bin/bash
 
 set -e
-set -x
 
 SCRIPT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 PRJ_DIR=$(dirname "$SCRIPT_DIR")
@@ -28,9 +27,7 @@ testOne() {
 	shift
 	shift
 
-	echo "- Type: $T version: $V"
-
-	pushd "$V" || exit 255
+	pushd "$V" >/dev/null || exit 255
 	echo "Version $V ($(pwd))"
 
 	if [[ -z "$T" ]] || [[ "$T" == "laravel" ]]; then
@@ -48,7 +45,7 @@ testOne() {
 
 	if [[ -z "$T" ]] || [[ "$T" == "bare" ]]; then
 		if [ -f "public/phpunit.xml" ]; then
-			pushd "public" || exit 255
+			pushd "public" >/dev/null || exit 255
 			echo "** Bare $V **"
 
 			REPORTS="$PRJ_DIR/target/php$V-bare"
@@ -56,12 +53,12 @@ testOne() {
 			chmod a+wx "$REPORTS"
 			./vendor/bin/phpunit  --coverage-html "$REPORTS" --coverage-xml "$REPORTS" "$@"
 			chmod -R a+wx "$REPORTS"
-			popd
+			popd >/dev/null
 		else
 			echo "** Bare $V: skipping because no phpunit.xml **"
 		fi
 	fi
-	popd
+	popd >/dev/null
 }
 
 # 1: type (laravel/bare)
@@ -71,26 +68,20 @@ V="$2"
 shift || true # If arg is missing, do not fail...
 shift || true # If arg is missing, do not fail...
 
-echo "Type: $T version: $V"
-
 if [ -n "$T" ]; then
 	if [[ -z "$V" ]]; then
 		for Vi in v* ; do
-			echo "T- Type: $T version: $V"
 			testOne "$T" "$Vi"
 		done
 	else
-		echo "TV Type: $T version: $V"
 		testOne "$T" "$V"
 	fi
 else
 	if [[ -z "$V" ]]; then
 		for Vi in v* ; do
-			echo "-- Type: $T version: $V"
 			testOne "" "$Vi"
 		done
 	else
-		echo "-V Type: $T version: $V"
 		testOne "" "$V"
 	fi
 fi
