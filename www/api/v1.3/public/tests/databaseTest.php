@@ -2,6 +2,7 @@
 use PHPUnit\Framework\TestCase;
 
 use Cryptomedic\Lib\Database;
+use Cryptomedic\Lib\Cache;
 
 class DatabaseTest extends TestCase {
     protected function setUp(): void {
@@ -19,9 +20,9 @@ CREATE TABLE `test` (
     UNIQUE KEY `id` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8       
 EOSQL);
-
+        
+        Cache::generate();
     }
-
 
     protected function tearDown(): void {
         Database::exec('DROP TABLE IF EXISTS test');
@@ -35,6 +36,26 @@ EOSQL);
         $this->assertArrayHasKey('users', $res);
     }
 
+    public function testProtections() {
+        $sql = Database::buildSetStatement('test', [ 'id' => '1', 'test_id' => '2', 'test1' => 'test_1' ]);
+        $this->assertMatchesRegularExpression("/id = '1'/", $sql);
+        $this->assertMatchesRegularExpression("/test_id = '2'/", $sql);
+    }
+
+    public function testDoubleInsert() {
+        $res = Database::insert('test', [ 'id' => '1', 'test_id' => '2', 'test1' => 'test_1' ]);
+        $this->assertTrue($res);
+
+        try {
+            $res = Database::insert('test', [ 'id' => '1', 'test_id' => '2', 'test1' => 'test_1' ]);
+            $this->assertFail(true, 'duplicate insert should throw');
+        } catch (Exception $e) {
+            $this->assertTrue(true, 'exception was thrown');
+        }
+    }
+
     // public function testCRUD() {
+    //     $res = Database::insert('test', [ 'id' => '2', 'test_id' => '2', 'test1' => 'test_1' ]);
+    //     $this->assertTrue($res);
     // }
 }
