@@ -61,10 +61,10 @@ class AuthController extends Controller {
   }
 
   public function storeStatistics() {
-	$data = Request::all();
-	// TODO
-	// $data[computer_id]
-	// $data[feature] = true / false
+  	$data = Request::all();
+  	// TODO
+  	// $data[computer_id]
+    // $data[feature] = true / false
   }
 
   /**
@@ -78,8 +78,8 @@ class AuthController extends Controller {
   public function getSettings() {
     if (!Auth::user()) {
       abort(401);
-	}
-	$this->storeStatistics();
+	  }
+	  $this->storeStatistics();
 
     $data = array();
     $data['username'] = Auth::user()->username;
