@@ -1,2 +1,2 @@
 
-DROP TABLE bug_reporting IF EXISTS;
+DROP TABLE bug_reporting;
