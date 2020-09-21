@@ -19,7 +19,7 @@ class Auth {
     }
 
     static function storeStatistics(string $browserUUID, string $login, array $features) {
-        Database::exec(<<<EOSQL
+        Database::exec("
 INSERT INTO browser_login SET
     created_at = NOW(),
     updated_at = NOW(),
@@ -28,21 +28,19 @@ INSERT INTO browser_login SET
     login = '$login'
 ON DUPLICATE KEY UPDATE
     updated_at = NOW(),
-    lastuser = '$login'
-EOSQL);
+    lastuser = '$login' ");
 
         // Insert or update features in the browser_features table
         $featuresSql = Database::buildSetStatement('browser_features', $features);
 
-        Database::exec(<<<EOSQL
-        INSERT INTO browser_features SET
-            created_at = NOW(),
-            browser_uuid = '$browserUUID',
-            $featuresSql
-        ON DUPLICATE KEY UPDATE
-            updated_at = NOW(),
-            lastuser = '$login',
-            $featuresSql
-EOSQL);
+        Database::exec("
+INSERT INTO browser_features SET
+    created_at = NOW(),
+    browser_uuid = '$browserUUID',
+    $featuresSql
+ON DUPLICATE KEY UPDATE
+    updated_at = NOW(),
+    lastuser = '$login',
+    $featuresSql");
     }
 }
