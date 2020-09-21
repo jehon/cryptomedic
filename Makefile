@@ -66,7 +66,7 @@ clean: deploy-unmount stop
 	$(call ensure_folder_empty,www/api/$(VAPI)/storage/framework/views)
 	$(call ensure_folder_empty,www/api/$(VAPI)/storage/logs/)
 	$(call ensure_folder_empty,live/)
-	
+
 setup: setup-structure
 
 setup-computer: deploy-host-key-check
@@ -81,7 +81,7 @@ setup-computer: deploy-host-key-check
 deploy-host-key-do-update:
 	ssh-keyscan -t ssh-rsa $(DEPLOY_HOST) > ovh.key
 
-deploy-host-key-check: 
+deploy-host-key-check:
 	@REMOTE="$(shell ssh-keyscan -t ssh-rsa $(DEPLOY_HOST) 2>/dev/null )"; \
 	STORED="$(shell cat ovh.key)"; \
 	if [ "$$REMOTE" != "$$STORED" ]; then \
@@ -99,7 +99,7 @@ start: setup-structure \
 		data-reset
 
 	@echo "Open browser: http://localhost:5557/"
-	
+
 .PHONY: docker-started
 docker-started:
 	$(DOCKERCOMPOSE) build server
@@ -131,9 +131,9 @@ test: docker-started dependencies build test-api test-unit test-e2e test-style
 
 .PHONY: test-api
 test-api: docker-started dependencies-api data-reset
-	$(call run_in_docker,"server","/app/bin/dev-phpunit.sh")
+	$(call run_in_docker,"server","/app/bin/dev-phpunit.sh bare")
 
-test-api-bare:
+test-api-bare: dependencies-api data-reset
 	$(call run_in_docker,"server","/app/bin/dev-phpunit.sh bare")
 
 .PHONY: test-api-commit
@@ -147,7 +147,7 @@ test-unit: dependencies-node \
 		$(CJS2ESM_DIR)/platform.js
 	npm run test-unit-continuously -- --single-run
 	node tests/report.js
-    
+
 # @NBR_TESTS=$$(cat target/js/junit/TESTS.xml | grep "<testCase" | wc -l); \
 # NORM_TESTS=$$( cat tests/unitjs/nbr.txt ); \
 # if [ "$$NBR_TESTS" = "$$NORM_TESTS" ]; then \
@@ -192,7 +192,7 @@ deploy-test: docker-started
 
 #
 # Other commands
-# 
+#
 .PHONY: logs
 logs:
 	$(DOCKERCOMPOSE) logs -f --tail=10 | sed 's/\\n/\n/g'

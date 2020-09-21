@@ -2,14 +2,25 @@
 
 namespace Cryptomedic\Lib;
 
+use Exception;
 use PDO;
 use function App\Cryptomedic\Lib\Cache;
+
+class DatabaseQueryException extends \Exception {
+}
+
+class DatabaseUndefinedException extends \Exception {
+    function __construct($table, $field = '') {
+        parent::__construct("Table undefined: $table" . ($field ? "#$field" : ""));
+    }
+}
+
 
 function getDefinitionForTable($table) {
     Cache::load();
 
     if (!array_key_exists($table, Cache::get()['dataStructure'])) {
-        return false;
+        throw new DatabaseUndefinedException($table);
     }
 
     return Cache::get()['dataStructure'][$table];
@@ -18,22 +29,20 @@ function getDefinitionForTable($table) {
 function getDefinitionForField($table, $field) {
     $tableDef = getDefinitionForTable($table);
 
-    if (!$tableDef) {
-        return false;
-    }
-
     if (!array_key_exists($field, $tableDef)) {
-        return false;
+        throw new DatabaseUndefinedException($table, $field);
     }
 
     return $tableDef[$field];
 }
 
 function parseColumn($sqlData) {
+    // TODO: normalize and test this function
+
     $name = $sqlData['COLUMN_NAME'];
 
     $res = [
-        'protected'  => in_array($name, [ 'id', 'created_at', 'updated_at', 'lastuser'])
+        'protected'  => in_array($name, ['id', 'created_at', 'updated_at', 'lastuser'])
     ];
 
     if (!$res['protected']) {
@@ -59,56 +68,59 @@ function parseColumn($sqlData) {
     //       $this->listingName = References::$model_listing["*.{$this->field}"];
     //       $this->listing = References::getList($this->listingName);
     // } else {
-        $res['type'] = $sqlData['DATA_TYPE'];
+    $res['type'] = $sqlData['DATA_TYPE'];
 
-        // Special case:
-        switch($res['type']) {
-            case "date":
-                $res['type'] = Database::TYPE_DATE;
-                break;
-            case "float":
-            case "decimal":
-            case "tinyint":
-            case "int":
-                $length = $sqlData['NUMERIC_PRECISION'];
-                if ($length == 3) {
-                    $res['type'] = Database::TYPE_BOOLEAN;
-                } else {
-                    $res['type'] = Database::TYPE_INTEGER;
-                }
-                break;
-            case "enum":
-            case "longtext":
-            case "text":
-            case "char":
-            case "varchar":
-                $res['length'] = $sqlData['CHARACTER_MAXIMUM_LENGTH'];
-                if ($res['length'] >= 800) {
-                    // Long text = blob
-                    $res['type'] = Database::TYPE_TEXT;
-                } else {
-                    $res['type'] = Database::TYPE_CHAR;
-                }
-                break;
-            case "mediumtext":
-                $res['length'] = $sqlData['CHARACTER_MAXIMUM_LENGTH'];
+    // Special case:
+    switch ($res['type']) {
+        case "date":
+            $res['type'] = Database::TYPE_DATE;
+            break;
+        case "float":
+        case "decimal":
+        case "tinyint":
+        case "int":
+            $length = $sqlData['NUMERIC_PRECISION'];
+            if ($length == 3) {
+                $res['type'] = Database::TYPE_BOOLEAN;
+            } else {
+                $res['type'] = Database::TYPE_INTEGER;
+            }
+            break;
+        case "enum":
+        case "longtext":
+        case "text":
+        case "char":
+        case "varchar":
+            $res['length'] = $sqlData['CHARACTER_MAXIMUM_LENGTH'];
+            if ($res['length'] >= 800) {
+                // Long text = blob
                 $res['type'] = Database::TYPE_TEXT;
-                break;
-            case "timestamp":
-                $res['type'] = Database::TYPE_TIMESTAMP;
-                break;
-            case "longblob":
-                $res['length'] = $sqlData['CHARACTER_MAXIMUM_LENGTH'];
-                $res['type'] = Database::TYPE_BINARY;
-                break;
-            default:
-                var_dump($sqlData);
-                throw new \Exception("Unhandled type in __construct: {$res['type']}");
-                break;
-            
-        }
+            } else {
+                $res['type'] = Database::TYPE_CHAR;
+            }
+            break;
+        case "mediumtext":
+            $res['length'] = $sqlData['CHARACTER_MAXIMUM_LENGTH'];
+            $res['type'] = Database::TYPE_TEXT;
+            break;
+        case "timestamp":
+            $res['type'] = Database::TYPE_TIMESTAMP;
+            break;
+        case "longblob":
+            $res['length'] = $sqlData['CHARACTER_MAXIMUM_LENGTH'];
+            $res['type'] = Database::TYPE_BINARY;
+            break;
+        default:
+            var_dump($sqlData);
+            throw new \Exception("Unhandled type in __construct: {$res['type']}");
+            break;
+    }
     // }
     return $res;
+}
+
+function normalizeRecord(string $table, array $data): array {
+    return $data;
 }
 
 class Database {
@@ -121,20 +133,22 @@ class Database {
     const TYPE_DATE         = "date";
     const TYPE_BINARY       = "binary";
 
-    static private $pdoConnection = false;
+    static private $pdoConnection = null;
 
     static function buildSetStatement(string $table, array $data) {
         $data = array_intersect_key($data, getDefinitionForTable($table));
-    
-        $escapedData = array_map(function($value, $key) { return "$key = " . self::$pdoConnection->quote($value); }, $data, array_keys($data));
-    
+
+        $escapedData = array_map(function ($value, $key) {
+            return "$key = " . self::$pdoConnection->quote($value);
+        }, $data, array_keys($data));
+
         $sql = implode(", ", $escapedData);
-    
+
         return $sql;
     }
-    
+
     static function init() {
-        if (Database::$pdoConnection !== false) {
+        if (Database::$pdoConnection !== null) {
             return;
         }
 
@@ -145,7 +159,16 @@ class Database {
 
     static function exec(string $request): int {
         self::init();
+        // Log::error($request);
         return self::$pdoConnection->exec($request);
+    }
+
+    static function startTransaction() {
+        return self::exec('START TRANSACTION');
+    }
+
+    static function cancelTransaction() {
+        return self::exec('ROLLBACK');
     }
 
     static function select(string $request): \PDOStatement {
@@ -155,43 +178,77 @@ class Database {
 
     static function selectAsArray(string $request, string $field): array {
         $res = [];
-        foreach(self::select($request) as $line) {
+        foreach (self::select($request) as $line) {
             $res[$line[$field]] = $line;
         }
         return $res;
     }
 
-    static function insert(string $table, array $data): bool {
+    static function selectInTable(string $table, string $where): array {
+        return array_map(
+            function ($rec) use ($table) {
+                return normalizeRecord($table, $rec);
+            },
+            self::selectAsArray("SELECT * FROM `$table` where $where", "id")
+        );
+    }
+
+    static function selectIdInTable(string $table, string $id): array {
+        $list = self::selectInTable($table, "id = " . self::$pdoConnection->quote($id));
+        if (array_key_exists($id, $list)) {
+            return $list[$id];
+        }
+        throw new DatabaseQueryException("Id not found: $table#$id");
+    }
+
+    static function insert(string $table, array $data, bool $orUpdate = false) {
         self::init();
 
         $validData = [];
-        foreach($data as $key => $value) {
-            if (!getDefinitionForField($table, $key)) {
-                continue;
+        $updateOnlyData = [];
+        foreach ($data as $key => $value) {
+            try {
+                $def = getDefinitionForField($table, $key);
+                $validData[$key] = $value;
+                if (!$def['protected'] && !$def['insertOnly']) {
+                    $updateOnlyData[$key] = $value;
+                }
+            } catch (DatabaseUndefinedException $e) {
+                // TODO: what to do with undefined columns?
             }
-            if (getDefinitionForField($table, $key)['protected']) {
-                continue;
-            }
-            $validData[$key] = $value;
         }
 
         $sql = self::buildSetStatement($table, $validData);
 
         // INSERT INTO table (id, name, age) VALUES(1, "A", 19) ON DUPLICATE KEY UPDATE name="A", age=19
-        $res = self::exec("INSERT INTO $table SET $sql");
-        return ($res == 1);
+        $sql = "INSERT INTO $table SET $sql";
+        if ($orUpdate) {
+            $sqlUpdate = self::buildSetStatement($table, $updateOnlyData);
+            $sql .= " ON DUPLICATE KEY UPDATE $sqlUpdate";
+        }
+        self::exec($sql);
+
+        // if ($res == 1) {
+        //     return;
+        // }
+        // if ($res == 0 && $orUpdate) {
+        //     return;
+        // }
+        // throw new DatabaseQueryException("Insert gave invalid result " . $res);
     }
 
-    static function update(string $table, object $data): bool {
-        self::init();
-    }
+    // static function update(string $table, object $data): bool
+    // {
+    //     self::init();
+    //     return false;
+    // }
 
     static function generateStructureData(): array {
         global $myconfig;
 
         $databaseStructure = [];
 
-        foreach(Database::select("SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE table_schema = '{$myconfig["database"]["schema"]}'") as $row) {
+        foreach (Database::select("SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE table_schema = '{$myconfig["database"]["schema"]}'") as $row) {
             $sqlTable = $row['TABLE_NAME'];
             $sqlField = $row['COLUMN_NAME'];
 

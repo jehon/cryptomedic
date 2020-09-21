@@ -1,4 +1,5 @@
 <?php
+// @codeCoverageIgnoreStart
 
 namespace Cryptomedic\Lib;
 
@@ -13,7 +14,7 @@ class Request {
         if (!array_key_exists($name, $cachedRequest)) {
             return false;
         }
-        return !! $_REQUEST[$name];
+        return !!$_REQUEST[$name];
     }
 
     // static function getHeader($name) {
