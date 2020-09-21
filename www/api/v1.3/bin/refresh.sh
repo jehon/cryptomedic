@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -x
+set -e
 
 SCRIPT_DIR="$( dirname "${BASH_SOURCE[0]}" )"
 
