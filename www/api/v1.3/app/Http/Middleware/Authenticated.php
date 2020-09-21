@@ -33,10 +33,23 @@ class Authenticated {
 	 * @param  \Closure  $next
 	 * @return mixed
 	 */
-	public function handle(Request $request, Closure $next)
-	{
-		if ($this->auth->guest() || !$request->user()->group)
-		{
+	public function handle(Request $request, Closure $next) {
+		// --- Begin
+		// Export to bare server
+		// See Auth.php
+		// www/api/v1.3/public/app/Lib/Auth.php
+		// TODO(BRIDGE): bridge to bare server
+		global $bareUserName;
+		global $bareUserGroup;
+		$user = Auth::user();
+		if ($user) {
+			$bareUserName = $user['username'];
+			$bareUserGroup = $user['group'];
+		}
+		// echo $bareAuthLogin . "<br>\n";
+		// --- End
+
+		if ($this->auth->guest() || !$request->user()->group) {
 			return response('Unauthorized by Rest server.', 401);
 		}
 		return $next($request);

@@ -32,8 +32,8 @@ export function getBrowserDescription() {
         browser_uuid: browserUUID,
         browser_name: platform.name,
         browser_version: platform.version,
-        browser_fullName: platform.description,
+        browser_full_name: platform.description,
         screen_height: window.screen.height,
-        screen_Width: window.screen.width
+        screen_width: window.screen.width
     };
 }

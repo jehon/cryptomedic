@@ -32,12 +32,13 @@ testOne() {
 
 	if [[ -z "$T" ]] || [[ "$T" == "laravel" ]]; then
 		if [ -f "phpunit.xml" ]; then
-			echo "** Laravel $V **"
+			echo "** Laravel $V starting **"
 			REPORTS="$PRJ_DIR/target/php$V"
 			mkdir -p "$REPORTS"
 			chmod a+wx "$REPORTS"
 			./vendor/bin/phpunit  --coverage-html "$REPORTS" --coverage-xml "$REPORTS" "$@"
 			chmod -R a+wx "$REPORTS"
+			echo "** Laravel $V done **"
 		else
 			echo "** Laravel $V: skipping because no phpunit.xml **"
 		fi
@@ -46,7 +47,7 @@ testOne() {
 	if [[ -z "$T" ]] || [[ "$T" == "bare" ]]; then
 		if [ -f "public/phpunit.xml" ]; then
 			pushd "public" >/dev/null || exit 255
-			echo "** Bare $V **"
+			echo "** Bare $V starting **"
 
 			REPORTS="$PRJ_DIR/target/php$V-bare"
 			mkdir -p "$REPORTS"
@@ -54,6 +55,7 @@ testOne() {
 			./vendor/bin/phpunit  --coverage-html "$REPORTS" --coverage-xml "$REPORTS" "$@"
 			chmod -R a+wx "$REPORTS"
 			popd >/dev/null
+			echo "** Bare $V done **"
 		else
 			echo "** Bare $V: skipping because no phpunit.xml **"
 		fi
