@@ -1,4 +1,5 @@
 <?php
+
 namespace Jehon\Maintenance;
 
 function fatalError($code, $msg) {
@@ -17,19 +18,12 @@ const F_LOCAL = "local";
 const F_REMOTE = "remote";
 
 $debug = isset($_REQUEST['debug']);
-function debug($explain, $msg) {
-	global $debug;
-	if (!$debug) {
-		return;
-	}
-	echo "<pre>" . $explain . ": " . str_replace('<', '&lt;', print_r($msg, true)) . "</pre>";
-}
 
 $filter = $_REQUEST['filter'];
 if (!$filter) {
 	fatalError(400, "Should specify a filter");
 }
-if (!in_array($filter, [ F_LOCAL, F_REMOTE])) {
+if (!in_array($filter, [F_LOCAL, F_REMOTE])) {
 	fatalError(400, "Invalid filter: $filter");
 }
 
@@ -40,50 +34,66 @@ if (!file_exists($filterFile)) {
 
 $filters = array_map(
 	# normalize for fnmatch
-	function($a) { 
+	function ($a) {
 		$m = $a[1];
 		# We use ::slash:: to keep the "/" meaning for raw folder separation to the end
-		
+
 		# Translate * and ** into regex
-		$m = str_replace([ ".", "?", "**", "*", "::doublestar::", "::point::" ], 
-			[ "::point::", "(?<interrogation>.)", "::doublestar::", "(?<singlestart>[^::slash::]*)", "(?<doublestar>.*)", "\." ], $m);
+		$m = str_replace(
+			[".", "?", "**", "*", "::doublestar::", "::point::"],
+			["::point::", "(?<interrogation>.)", "::doublestar::", "(?<singlestart>[^::slash::]*)", "(?<doublestar>.*)", "\."],
+			$m
+		);
 		if (strpos($m, "/") !== 0) {
 			# Anchor anywhere
 			$m = "(?<anchor>.*::slash::)$m";
 		}
-		$m = str_replace([ "/", "::slash::" ], "\/", $m);
+		$m = str_replace(["/", "::slash::"], "\/", $m);
 
-		return [ $a[0], $a[1], "/^$m\$/"];
+		return [$a[0], $a[1], "/^$m\$/"];
 	},
 	array_map(
 		# split to filter
-		function($a) { return [ $a[0], trim(substr($a, 1)) ]; },
+		function ($a) {
+			return [$a[0], trim(substr($a, 1))];
+		},
 		array_filter(
 			file($filterFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES),
 			# remove comments
-			function($a) { return $a[0] != "#" && strlen($a) > 0; }
+			function ($a) {
+				return $a[0] != "#" && strlen($a) > 0;
+			}
 		)
 	)
 );
 
-debug("Raw filters", $filters);
+if ($debug) {
+	echo "\nRaw filters: \n";
+	print_r($filters);
+}
 
 if ($filter == "remote") {
-	$filters = array_filter($filters,
-		function($a) { return $a[0] == "P"; }
+	$filters = array_filter(
+		$filters,
+		function ($a) {
+			return $a[0] == "P";
+		}
 	);
-// } else {
-// 	$filters = array_filter($filters,
-// 		function($a) { return $a[0] != "P"; }
-// 	);
+	// } else {
+	// 	$filters = array_filter($filters,
+	// 		function($a) { return $a[0] != "P"; }
+	// 	);
 }
-debug("Post filter location", $filters);
+
+if ($debug) {
+	echo "\nPost filter: \n";
+	print_r($filters);
+}
 
 function getFiles($absPath) {
-	global $filters;
+	global $filters, $debug;
 
 	if ($handle = opendir($absPath)) {
-		/* Ceci est la façon correcte de traverser un dossier. */
 		while (false !== ($f = readdir($handle))) {
 			if ($f == "." || $f == "..") {
 				continue;
@@ -91,12 +101,18 @@ function getFiles($absPath) {
 			$fabs = $absPath . DIRECTORY_SEPARATOR . $f;
 			$frel = substr($fabs, strlen(PRJ_ROOT));
 
+			if ($debug) {
+				echo ("\nTEST $frel: ");
+			}
+
 			$keep = true;
-			$matchingTest = [];
-			foreach($filters as $filt) {
+			foreach ($filters as $filt) {
 				$match = preg_match($filt[2], $frel);
-				debug("TEST", $frel . ': ' . $filt[1] . ' ? ' . ($match ? 'Y' : 'n'));
-				$matchingTest = $filt;
+
+				if ($debug) {
+					echo " - " . $filt[1] . ' ? ' . ($match ? 'Y' : 'n');
+				}
+
 				if ($filt[0] == "P" && $match) {
 					$keep = false;
 				}
@@ -108,14 +124,19 @@ function getFiles($absPath) {
 				}
 			}
 			if (!$keep) {
-				debug("SKIPPING", str_pad($frel, 100, '_') . " from '${matchingTest[1]}'");
+				if ($debug) {
+					echo "SKIPPING";
+				}
 				continue;
+			}
+			if ($debug) {
+				echo "\n";
 			}
 
 			if (is_dir($fabs)) {
 				getfiles($fabs);
 			} else {
-				echo \hash_file('crc32b',$fabs) . ": " . $frel . "\n";
+				echo \hash_file('crc32b', $fabs) . ": " . $frel . "\n";
 			}
 		}
 		closedir($handle);
@@ -125,6 +146,7 @@ function getFiles($absPath) {
 }
 
 getFiles(PRJ_ROOT . "/www");
+getFiles(PRJ_ROOT . "/conf/database");
 
 ?>
 # done
