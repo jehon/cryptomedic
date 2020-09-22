@@ -17,6 +17,24 @@ class Request {
         return !!$_REQUEST[$name];
     }
 
+    static function getParam($name) {
+        if (self::hasParam($name)) {
+            return $_REQUEST($name);
+        }
+        return "";
+    }
+
+    static function isParam($name) {
+        // if (!self::hasParam(($name))) {
+        //     return false;
+        // }
+        $val = self::getParam($name);
+        if ($val == "1" || strcasecmp($val, "true") == 0) {
+            return true;
+        }
+        return false;
+    }
+
     // static function getHeader($name) {
     //     return getallheaders()[$name];
     // }
