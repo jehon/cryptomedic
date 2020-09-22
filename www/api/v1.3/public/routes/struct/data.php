@@ -11,6 +11,8 @@ if (Request::hasParam('force')) {
     Cache::generate();
 }
 
-Request::replyWith(Cache::get());
+if (!Request::hasParam('quiet')) {
+    Request::replyWith(Cache::get());
+}
 
 http_response_code(200);
