@@ -5,8 +5,8 @@ ALTER TABLE `browser_features`
 ALTER TABLE `browser_features`
     CHANGE `uid` `id` INT(10) NOT NULL AUTO_INCREMENT;
 
-ALTER TABLE `cryptomekpmain`.`browser_features`
+ALTER TABLE `browser_features`
     DROP INDEX `uid`, ADD UNIQUE `id` (`id`) USING BTREE;
 
-ALTER TABLE `cryptomekpmain`.`browser_features`
+ALTER TABLE `browser_features`
     ADD UNIQUE `browser_uuid` (`browser_uuid`);
