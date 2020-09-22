@@ -5,6 +5,9 @@ language: node_js
 node_js:
   - "14"
 
+git:
+  quiet: true
+
 addons:
   apt:
     packages:
@@ -38,10 +41,9 @@ script:
 deploy:
   - provider: script
     script: make deploy
-    skip_cleanup: true
-    # cleanup: false
+    skip_cleanup: true # legacy in dpl v2
     on:
-      branch: 
+      branch:
         - master
         - ci/*
 
