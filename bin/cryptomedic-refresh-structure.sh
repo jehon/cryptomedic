@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 SCRIPT_DIR="$( dirname "${BASH_SOURCE[0]}" )"
 PRJ_DIR="$(dirname "$SCRIPT_DIR")"
 
