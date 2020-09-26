@@ -69,6 +69,10 @@ export default class Folder extends FolderPage {
         return -1;
     }
 
+    get id() {
+        return this.getId();
+    }
+
     getListByType(type) {
         console.assert(type instanceof Function, 'getListByType[type/1] expect a class');
         let res = [];

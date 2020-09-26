@@ -45,12 +45,12 @@ describe(fn(import.meta.url), function () {
 
             el.folder = testFolder;
             expect(el.folder.id).toBe(testFolder.id);
-            expect(el.getAttribute('with-folder')).toBe('' + testFolder.getId());
+            expect(el.getAttribute('with-folder')).toBe(testFolder.uid());
             expect(el.hasAttribute('blocked')).toBeFalse();
             expect(ok).toBeTrue();
         });
 
-        it('should render the function', function() {
+        it('should render the function', function () {
             el.folder = testFolder;
 
             expect(el.innerText).toBe('ok');
