@@ -17,7 +17,7 @@ export default class XWithFolder extends HTMLElement {
     set folder(f) {
         this[folder] = f;
         if (f) {
-            this.setAttribute('with-folder', f.getId());
+            this.setAttribute('with-folder', f.uid());
         } else {
             this.setAttribute('with-folder', 'null');
         }

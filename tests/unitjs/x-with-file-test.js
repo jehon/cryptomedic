@@ -56,7 +56,7 @@ describe(fn(import.meta.url), function () {
             el.file = file;
             expect(el.folder.getId()).toBe(testFolder.getId());
             expect(el.file.id).toBe(testFolder.list[0].id);
-            expect(el.getAttribute('with-folder')).toBe('' + testFolder.getId());
+            expect(el.getAttribute('with-folder')).toBe(testFolder.uid());
             expect(el.getAttribute('with-file')).toBe('' + testFolder.list[0].uid());
             expect(el.hasAttribute('blocked')).toBeFalse();
             expect(ok).toBeTrue();
@@ -71,7 +71,7 @@ describe(fn(import.meta.url), function () {
 
             expect(el.folder.getId()).toBe(testFolder.getId());
             expect(el.file.uid()).toBe(RefFolder1RicketConsult13);
-            expect(el.getAttribute('with-folder')).toBe('' + testFolder.getId());
+            expect(el.getAttribute('with-folder')).toBe(testFolder.uid());
             expect(el.getAttribute('with-file')).toBe(RefFolder1RicketConsult13);
             expect(el.hasAttribute('blocked')).toBeFalse();
         });
