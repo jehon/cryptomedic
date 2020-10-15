@@ -24,6 +24,10 @@
                 this.showParent("discon");
             }
 
+            adoptedCallback() {
+                this.showParent("adopt");
+            }
+
             showParent(ctx = 'direct') {
                 console.log(ctx, this.getAttribute('debug'), "parentElement", this.parentElement?.parentElement, "rootNode", this.getRootNode());
             }
