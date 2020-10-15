@@ -24,7 +24,7 @@ export default class XGroupPanel extends HTMLElement {
 
                     display: flex;
                 }
-                
+
                 fieldset > legend {
                     font-size: 120%;
                     color: #004a94;
@@ -61,7 +61,7 @@ export default class XGroupPanel extends HTMLElement {
                     background-color: lightgray;
                 }
 
-                ::slotted(div:not([slot])) {
+                ::slotted(div:not([slot]):not([white])) {
                     font-weight: bold;
                     text-align: center;
                 }
