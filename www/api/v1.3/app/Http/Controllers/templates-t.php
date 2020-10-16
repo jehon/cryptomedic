@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Generate a template into the cache
  *
@@ -40,16 +41,16 @@ class t {
   }
 
   static function setDefaultOption($key, $val = true) {
-      if (!array_key_exists($key, static::$defaultOptions)) {
-          return trace("Setting unsupported option: $key"); // @codeCoverageIgnore
-      }
-      static::$defaultOptions[$key] = $val;
+    if (!array_key_exists($key, static::$defaultOptions)) {
+      return trace("Setting unsupported option: $key"); // @codeCoverageIgnore
+    }
+    static::$defaultOptions[$key] = $val;
   }
 
   static function cacheSqlStructureFor($sqlTable) {
     if (!array_key_exists($sqlTable, static::$sqlAllTableStructure)) {
       static::$sqlAllTableStructure[$sqlTable] = array();
-      foreach(static::$pdo->query("SHOW COLUMNS FROM `{$sqlTable}`") as $row) {
+      foreach (static::$pdo->query("SHOW COLUMNS FROM `{$sqlTable}`") as $row) {
         static::$sqlAllTableStructure[$sqlTable][$row['Field']] = $row;
       }
     }
@@ -68,7 +69,7 @@ class t {
 
   function __construct($key, array $options = array()) {
     $this->key = $key;
-    $this->jsId = str_replace([".", "#", " ", "/", "\\" ], "_", $this->key);
+    $this->jsId = str_replace([".", "#", " ", "/", "\\"], "_", $this->key);
     $this->options = $options;
     $this->field = $key;
     $this->options = array_merge(static::$defaultOptions, $this->options);
@@ -77,7 +78,7 @@ class t {
     if (count($data) != 2) {
       if ($this->options['model'] == null) {
         $this->linked2DB = false;
-        return ;
+        return;
       } else {
         $this->field = $key;
         $this->model = $this->options['model'];
@@ -93,7 +94,7 @@ class t {
 
     if (!in_array($this->field, static::getColumnsOfTable($this->sqlTable))) {
       $this->linked2DB = false;
-      return ;
+      return;
     }
     $this->linked2DB = true;
 
@@ -108,23 +109,23 @@ class t {
       $this->listing = $options['list'];
     } else if (array_key_exists($header, References::$model_listing)) {
       // Model.Field specific list
-        $this->struct_type = static::TYPE_LIST;
-        $this->isList = true;
-        $this->listingName = References::$model_listing[$header];
-        $this->listing = References::getList($this->listingName);
+      $this->struct_type = static::TYPE_LIST;
+      $this->isList = true;
+      $this->listingName = References::$model_listing[$header];
+      $this->listing = References::getList($this->listingName);
     } else if (array_key_exists("*.{$this->field}", References::$model_listing)) {
       // *.Field generic list
-        $this->struct_type = static::TYPE_LIST;
-        $this->isList = true;
-        $this->listingName = References::$model_listing["*.{$this->field}"];
-        $this->listing = References::getList($this->listingName);
+      $this->struct_type = static::TYPE_LIST;
+      $this->isList = true;
+      $this->listingName = References::$model_listing["*.{$this->field}"];
+      $this->listing = References::getList($this->listingName);
     } else {
       $matches = array();
       if (false === preg_match("/([a-z]+)(\(([0-9]+)\)(.*[a-zA-Z]+)?)?/", strtolower($this->structure['Type']), $matches)) {
         throw new Exception("Error in preg_match"); // @codeCoverageIgnore
       }
 
-    /*
+      /*
      * ==== $matches ====
      * 1: type natif
      * 3: length
@@ -132,41 +133,41 @@ class t {
      *
      * All matches are lowercase
      */
-    $this->struct_type = $matches[1];
-    $this->struct_length = (count($matches) > 3 ? intval($matches[3]) : 0);
-    $this->struct_unsigned = (count($matches) > 4 ? $matches[4] : "");
-    // Special case:
-    switch($this->struct_type) {
-      case "date":
-        $this->struct_type = static::TYPE_DATE;
-        break;
-      case "tinyint":
-      case "int":
-        if ($this->struct_length == 1) {
-          $this->struct_type = static::TYPE_BOOLEAN;
-        } else {
-          $this->struct_type = static::TYPE_INTEGER;
-        }
-        break;
-      case "varchar":
-        if ($this->struct_length >= 800) {
-          // Long text = blob
+      $this->struct_type = $matches[1];
+      $this->struct_length = (count($matches) > 3 ? intval($matches[3]) : 0);
+      $this->struct_unsigned = (count($matches) > 4 ? $matches[4] : "");
+      // Special case:
+      switch ($this->struct_type) {
+        case "date":
+          $this->struct_type = static::TYPE_DATE;
+          break;
+        case "tinyint":
+        case "int":
+          if ($this->struct_length == 1) {
+            $this->struct_type = static::TYPE_BOOLEAN;
+          } else {
+            $this->struct_type = static::TYPE_INTEGER;
+          }
+          break;
+        case "varchar":
+          if ($this->struct_length >= 800) {
+            // Long text = blob
+            $this->struct_type = static::TYPE_TEXT;
+          } else {
+            $this->struct_type = static::TYPE_CHAR;
+          }
+          break;
+        case "mediumtext":
           $this->struct_type = static::TYPE_TEXT;
-        } else {
-          $this->struct_type = static::TYPE_CHAR;
-        }
-        break;
-      case "mediumtext":
-        $this->struct_type = static::TYPE_TEXT;
-        break;
-      case "timestamp":
-        $this->struct_type = static::TYPE_TIMESTAMP;
-        break;
-      default:
-        echo "Unhandled type in __construct: {$this->struct_type}";
-        var_dump($this->structure);
-        throw new Exception("Unhandled type in __construct: {$this->struct_type}");
-        break;
+          break;
+        case "timestamp":
+          $this->struct_type = static::TYPE_TIMESTAMP;
+          break;
+        default:
+          echo "Unhandled type in __construct: {$this->struct_type}";
+          var_dump($this->structure);
+          throw new Exception("Unhandled type in __construct: {$this->struct_type}");
+          break;
       }
     }
     return $this;
@@ -199,7 +200,7 @@ class t {
       return $this;
     }
 
-    switch($this->fieldGetType()) {
+    switch ($this->fieldGetType()) {
       case static::TYPE_TIMESTAMP:
         // See https://docs.angularjs.org/api/ng/filter/date
         $this->res .= "<span id='{$this->jsId}'>{{ {$this->fieldGetKey()} | date:'{static::DATETIMEFORMAT}' }}</span>";
@@ -232,20 +233,22 @@ class t {
     }
 
     $inlineWithoutModel = "name='{$this->field}' class='form-control' id='{$this->jsId}' "
-        . ($this->fieldIsRequired() ? " required " : "")
-        . $this->options['inline'];
+      . ($this->fieldIsRequired() ? " required " : "")
+      . $this->options['inline'];
 
     $inline = $inlineWithoutModel . " ng-model='{$this->fieldGetKey()}' ";
 
-    switch($this->fieldGetType()) {
+    switch ($this->fieldGetType()) {
       case static::TYPE_LIST:
         // New system:
         $jsonList = "";
         if (!$this->listingName) {
           $jsonList = json_encode(array_map(
-              function($e) { return htmlentities($e, ENT_QUOTES); },
-              $this->listing
-            ));
+            function ($e) {
+              return htmlentities($e, ENT_QUOTES);
+            },
+            $this->listing
+          ));
         }
         $this->res .= "<x-write-list value='{{{$this->fieldGetKey()}}}' name='{$this->field}'"
           . "list-name='{$this->listingName}' "
@@ -299,7 +302,7 @@ class t {
     $this->res .= "\t\t\t<td>$label</td>\n";
     $this->res .= "\t\t\t<td>";
     $this->value();
-    $this->res .="</td>\n";
+    $this->res .= "</td>\n";
     $this->res .= "\t\t</tr>\n";
 
     return $this;
@@ -312,7 +315,7 @@ class t {
     $this->res .= "<x-fff-field field='{$this->field}' {$label} {$mode} type='{$this->fieldGetType()}'>\n";
     $this->res .= "\t\t\t<div>";
     $this->value();
-    $this->res .="</div>\n";
+    $this->res .= "</div>\n";
     $this->res .= "\t\t</x-fff-field>\n";
 
     return $this;
@@ -340,7 +343,7 @@ class t {
     $mode = static::$defaultOptions['writeOnly'] ? "" : "mode=read";
     $label = ($label ? "label='$label'" : "");
     echo "<x-fff-field by-sides='$field' $mode $label>";
-    
+
     echo "  <div slot='left'>"  . (new t(str_replace("*", "Left",  static::$defaultOptions['model'] . ".$field")))->value()->__toString() . "</div>";
     echo "  <div slot='right'>"  . (new t(str_replace("*", "Right",  static::$defaultOptions['model'] . ".$field")))->value()->__toString() . "</div>";
     echo "</x-fff-field>";

@@ -16,15 +16,15 @@ class Patient extends CryptomedicModel {
     unset($dependants["Payment"]);
     unset($dependants["Patient"]);
 
-    foreach($dependants as $m => $t) {
+    foreach ($dependants as $m => $t) {
       $obj = "\\App\\Model\\" . $m;
 
       $r = $obj::where("patient_id", $this->id)->get();
-      foreach($r as $ri => $rv) {
+      foreach ($r as $ri => $rv) {
         $list = array_merge($list, $rv->getDependantsList());
       }
     }
 
-    return array_merge([ $this->getLineRecord() ], $list);
+    return array_merge([$this->getLineRecord()], $list);
   }
 }

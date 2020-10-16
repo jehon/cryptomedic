@@ -27,13 +27,13 @@ class References {
 
   static function init() {
     if (self::$_init) {
-      return ;
+      return;
     }
 
     // Dynamic examiner names
     $list = [];
     $examiners = DB::select("SELECT username, `name`, codage, inExaminerList FROM users");
-    foreach($examiners as $examiner) {
+    foreach ($examiners as $examiner) {
       $ec = References::withCode($examiner->name, $examiner->codage);
       if ($examiner->inExaminerList > 0) {
         $list[] = $ec;
@@ -92,8 +92,8 @@ class References {
   static function withCode($value, $code) {
     if ($code) {
       self::$codes[$value] = $code;
-    // } else {
-    //   self::$codes[$value] = $value;
+      // } else {
+      //   self::$codes[$value] = $value;
     }
     return $value;
   }
@@ -110,145 +110,147 @@ class References {
 /**** Common lists ****/
 /***********************/
 References::$lists['Pathologies'] = References::buildValueList([
-  References::withCode("Ricket"          , "Ric"),
-  References::withCode("ClubFoot"        , "CF"),
-  References::withCode("Polio"           , "Po"),
-  References::withCode("Burn retraction" , "BR"),
-  References::withCode("Cerebral Palsy"  , "CP"),
-  References::withCode("Fracture"        , "Fra"),
-  References::withCode("Infection"       , "Inf"),
-  References::withCode("Congenital"      , "Con"),
-  References::withCode("Adult Physio"    , "AP"),
-  References::withCode("Normal Patient"  , "NP"),
-  References::withCode("Other"           , "Oth")
+  References::withCode("Ricket", "Ric"),
+  References::withCode("ClubFoot", "CF"),
+  References::withCode("Polio", "Po"),
+  References::withCode("Burn retraction", "BR"),
+  References::withCode("Cerebral Palsy", "CP"),
+  References::withCode("Fracture", "Fra"),
+  References::withCode("Infection", "Inf"),
+  References::withCode("Congenital", "Con"),
+  References::withCode("Adult Physio", "AP"),
+  References::withCode("Normal Patient", "NP"),
+  References::withCode("Other", "Oth")
 ]);
 
-References::$lists["Districts"] = References::buildValueList([ "Chittagong", "Cox's Bazar", "Bandarban", "~ Other ~" ]);
+References::$lists["Districts"] = References::buildValueList(["Chittagong", "Cox's Bazar", "Bandarban", "~ Other ~"]);
 
 References::$lists["Upazilla"] = References::buildValueList(
   array_merge(
     References::sortNatural([
-      References::associate("Chakaria"           , "district.Cox's Bazar"),
-      References::associate("Cox's Bazar Sadar"  , "district.Cox's Bazar"),
-      References::associate("Chandanish"         , "district.Chittagong"),
-      References::associate("Patia"              , "district.Chittagong"),
-      References::associate("Shatkania"          , "district.Chittagong"),
-      References::associate("Lohagora"           , "district.Chittagong"),
-      References::associate("Ukhia"              , "district.Cox's Bazar"),
-      References::associate("Ramu"               , "district.Cox's Bazar"),
-      References::associate("Pekua"              , "district.Cox's Bazar"),
-      References::associate("Kutubdia"           , "district.Cox's Bazar"),
-      References::associate("Moheshkhali"        , "district.Cox's Bazar"),
-      References::associate("Teknaf"             , "district.Cox's Bazar"),
+      References::associate("Chakaria", "district.Cox's Bazar"),
+      References::associate("Cox's Bazar Sadar", "district.Cox's Bazar"),
+      References::associate("Chandanish", "district.Chittagong"),
+      References::associate("Patia", "district.Chittagong"),
+      References::associate("Shatkania", "district.Chittagong"),
+      References::associate("Lohagora", "district.Chittagong"),
+      References::associate("Ukhia", "district.Cox's Bazar"),
+      References::associate("Ramu", "district.Cox's Bazar"),
+      References::associate("Pekua", "district.Cox's Bazar"),
+      References::associate("Kutubdia", "district.Cox's Bazar"),
+      References::associate("Moheshkhali", "district.Cox's Bazar"),
+      References::associate("Teknaf", "district.Cox's Bazar"),
     ]),
     [
-      References::associate("~ Other ~"          , "district.other"),
-    ])
-  );
+      References::associate("~ Other ~", "district.other"),
+    ]
+  )
+);
 
 References::$lists["Unions"] = References::buildValueList(
   array_merge(
     References::sortNatural([
-      References::associate("Senmartin"         , "upazilla.Teknaf"),
-      References::associate("Shabrang"          , "upazilla.Teknaf"),
-      References::associate("Teknaf Sadar"      , "upazilla.Teknaf"),
-      References::associate("Phourashava"       , "upazilla.Teknaf"),
-      References::associate("Bahar Chara"       , "upazilla.Teknaf"),
-      References::associate("Nhila"             , "upazilla.Teknaf"),
-      References::associate("Hakkan"            , "upazilla.Teknaf"),
+      References::associate("Senmartin", "upazilla.Teknaf"),
+      References::associate("Shabrang", "upazilla.Teknaf"),
+      References::associate("Teknaf Sadar", "upazilla.Teknaf"),
+      References::associate("Phourashava", "upazilla.Teknaf"),
+      References::associate("Bahar Chara", "upazilla.Teknaf"),
+      References::associate("Nhila", "upazilla.Teknaf"),
+      References::associate("Hakkan", "upazilla.Teknaf"),
 
-      References::associate("Pekua"             , "upazilla.Pekua"),
-      References::associate("Barobakia"         , "upazilla.Pekua"),
-      References::associate("Shilkhali"         , "upazilla.Pekua"),
-      References::associate("Taytang"           , "upazilla.Pekua"),
-      References::associate("Magnama"           , "upazilla.Pekua"),
-      References::associate("Rajakhali"         , "upazilla.Pekua"),
-      References::associate("Ujantia"           , "upazilla.Pekua"),
+      References::associate("Pekua", "upazilla.Pekua"),
+      References::associate("Barobakia", "upazilla.Pekua"),
+      References::associate("Shilkhali", "upazilla.Pekua"),
+      References::associate("Taytang", "upazilla.Pekua"),
+      References::associate("Magnama", "upazilla.Pekua"),
+      References::associate("Rajakhali", "upazilla.Pekua"),
+      References::associate("Ujantia", "upazilla.Pekua"),
 
-      References::associate("Halodia Palang"    , "upazilla.Ukhia"),
-      References::associate("Ratna Palang"      , "upazilla.Ukhia"),
-      References::associate("Raja Palang"       , "upazilla.Ukhia"),
-      References::associate("Jalia Palang"      , "upazilla.Ukhia"),
-      References::associate("Palang Khali"      , "upazilla.Ukhia"),
+      References::associate("Halodia Palang", "upazilla.Ukhia"),
+      References::associate("Ratna Palang", "upazilla.Ukhia"),
+      References::associate("Raja Palang", "upazilla.Ukhia"),
+      References::associate("Jalia Palang", "upazilla.Ukhia"),
+      References::associate("Palang Khali", "upazilla.Ukhia"),
 
-      References::associate("Chakmar Kul"       , "upazilla.Ramu"),
-      References::associate("Kawar Kup"         , "upazilla.Ramu"),
-      References::associate("Dakkin Mitachari"  , "upazilla.Ramu"),
-      References::associate("Juaria Nala"       , "upazilla.Ramu"),
-      References::associate("Photekarkul"       , "upazilla.Ramu"),
-      References::associate("Kochchapia"        , "upazilla.Ramu"),
-      References::associate("Rasid Nagar"       , "upazilla.Ramu"),
-      References::associate("Gorjania"          , "upazilla.Ramu"),
-      References::associate("RajarKool"         , "upazilla.Ramu"),
-      References::associate("Eidgar"            , "upazilla.Ramu"),
-      References::associate("Khonia Palang"     , "upazilla.Ramu"),
+      References::associate("Chakmar Kul", "upazilla.Ramu"),
+      References::associate("Kawar Kup", "upazilla.Ramu"),
+      References::associate("Dakkin Mitachari", "upazilla.Ramu"),
+      References::associate("Juaria Nala", "upazilla.Ramu"),
+      References::associate("Photekarkul", "upazilla.Ramu"),
+      References::associate("Kochchapia", "upazilla.Ramu"),
+      References::associate("Rasid Nagar", "upazilla.Ramu"),
+      References::associate("Gorjania", "upazilla.Ramu"),
+      References::associate("RajarKool", "upazilla.Ramu"),
+      References::associate("Eidgar", "upazilla.Ramu"),
+      References::associate("Khonia Palang", "upazilla.Ramu"),
 
-      References::associate("Varoakhali"        , "upazilla.Cox's Bazar Sadar"),
-      References::associate("Chafuldhandi"      , "upazilla.Cox's Bazar Sadar"),
-      References::associate("Eidgha"            , "upazilla.Cox's Bazar Sadar"),
-      References::associate("Islamabad"         , "upazilla.Cox's Bazar Sadar"),
-      References::associate("Jalalabad"         , "upazilla.Cox's Bazar Sadar"),
-      References::associate("Jilongja"          , "upazilla.Cox's Bazar Sadar"),
-      References::associate("Khoroshkhol"       , "upazilla.Cox's Bazar Sadar"),
-      References::associate("Masuakhali"        , "upazilla.Cox's Bazar Sadar"),
-      References::associate("P.M. Khali"        , "upazilla.Cox's Bazar Sadar"),
-      References::associate("Pukkhali"          , "upazilla.Cox's Bazar Sadar"),
-      References::associate("Cos'x Bazar Sadar" , "upazilla.Cox's Bazar Sadar"),
-      References::associate("Islampur"          , "upazilla.Cox's Bazar Sadar"),
+      References::associate("Varoakhali", "upazilla.Cox's Bazar Sadar"),
+      References::associate("Chafuldhandi", "upazilla.Cox's Bazar Sadar"),
+      References::associate("Eidgha", "upazilla.Cox's Bazar Sadar"),
+      References::associate("Islamabad", "upazilla.Cox's Bazar Sadar"),
+      References::associate("Jalalabad", "upazilla.Cox's Bazar Sadar"),
+      References::associate("Jilongja", "upazilla.Cox's Bazar Sadar"),
+      References::associate("Khoroshkhol", "upazilla.Cox's Bazar Sadar"),
+      References::associate("Masuakhali", "upazilla.Cox's Bazar Sadar"),
+      References::associate("P.M. Khali", "upazilla.Cox's Bazar Sadar"),
+      References::associate("Pukkhali", "upazilla.Cox's Bazar Sadar"),
+      References::associate("Cos'x Bazar Sadar", "upazilla.Cox's Bazar Sadar"),
+      References::associate("Islampur", "upazilla.Cox's Bazar Sadar"),
 
-      References::associate("Dhalghat"          , "upazilla.Moheshkhali"),
-      References::associate("Kalamar Chara"     , "upazilla.Moheshkhali"),
-      References::associate("Bara Moheshkhali"  , "upazilla.Moheshkhali"),
-      References::associate("Hoanak"            , "upazilla.Moheshkhali"),
-      References::associate("Shaplapur"         , "upazilla.Moheshkhali"),
-      References::associate("Kutobzom"          , "upazilla.Moheshkhali"),
-      References::associate("Chota Moheshkhali" , "upazilla.Moheshkhali"),
-      References::associate("Phour Shava"       , "upazilla.Moheshkhali"),
-      References::associate("Matarbari"         , "upazilla.Moheshkhali"),
+      References::associate("Dhalghat", "upazilla.Moheshkhali"),
+      References::associate("Kalamar Chara", "upazilla.Moheshkhali"),
+      References::associate("Bara Moheshkhali", "upazilla.Moheshkhali"),
+      References::associate("Hoanak", "upazilla.Moheshkhali"),
+      References::associate("Shaplapur", "upazilla.Moheshkhali"),
+      References::associate("Kutobzom", "upazilla.Moheshkhali"),
+      References::associate("Chota Moheshkhali", "upazilla.Moheshkhali"),
+      References::associate("Phour Shava", "upazilla.Moheshkhali"),
+      References::associate("Matarbari", "upazilla.Moheshkhali"),
 
-      References::associate("Harbang"           , "upazilla.Chakaria"),
-      References::associate("Baraitoly"         , "upazilla.Chakaria"),
-      References::associate("Kayarbil"          , "upazilla.Chakaria"),
-      References::associate("Lakkar Char"       , "upazilla.Chakaria"),
-      References::associate("Kakara"            , "upazilla.Chakaria"),
-      References::associate("Surajpur"          , "upazilla.Chakaria"),
-      References::associate("Chiringa"          , "upazilla.Chakaria"),
-      References::associate("Bomobil Chory"     , "upazilla.Chakaria"),
-      References::associate("Fashia Khali"      , "upazilla.Chakaria"),
-      References::associate("Dulahazara"        , "upazilla.Chakaria"),
-      References::associate("Khutakhali"        , "upazilla.Chakaria"),
-      References::associate("Shaharbil"         , "upazilla.Chakaria"),
-      References::associate("Purbaboroveola"    , "upazilla.Chakaria"),
-      References::associate("Passim .B Veola"   , "upazilla.Chakaria"),
-      References::associate("B.M. Char"         , "upazilla.Chakaria"),
-      References::associate("Badar Khali"       , "upazilla.Chakaria"),
-      References::associate("Kona Khali"        , "upazilla.Chakaria"),
-      References::associate("Demoshia"          , "upazilla.Chakaria"),
-      References::associate("Phourashava"       , "upazilla.Chakaria"),
+      References::associate("Harbang", "upazilla.Chakaria"),
+      References::associate("Baraitoly", "upazilla.Chakaria"),
+      References::associate("Kayarbil", "upazilla.Chakaria"),
+      References::associate("Lakkar Char", "upazilla.Chakaria"),
+      References::associate("Kakara", "upazilla.Chakaria"),
+      References::associate("Surajpur", "upazilla.Chakaria"),
+      References::associate("Chiringa", "upazilla.Chakaria"),
+      References::associate("Bomobil Chory", "upazilla.Chakaria"),
+      References::associate("Fashia Khali", "upazilla.Chakaria"),
+      References::associate("Dulahazara", "upazilla.Chakaria"),
+      References::associate("Khutakhali", "upazilla.Chakaria"),
+      References::associate("Shaharbil", "upazilla.Chakaria"),
+      References::associate("Purbaboroveola", "upazilla.Chakaria"),
+      References::associate("Passim .B Veola", "upazilla.Chakaria"),
+      References::associate("B.M. Char", "upazilla.Chakaria"),
+      References::associate("Badar Khali", "upazilla.Chakaria"),
+      References::associate("Kona Khali", "upazilla.Chakaria"),
+      References::associate("Demoshia", "upazilla.Chakaria"),
+      References::associate("Phourashava", "upazilla.Chakaria"),
     ]),
     [
-      References::associate("~ Other ~"         , "upazilla.other"),
-    ])
-  );
+      References::associate("~ Other ~", "upazilla.other"),
+    ]
+  )
+);
 
-References::$lists["Sex"] = References::buildValueList([ "Male", "Female" ]);
+References::$lists["Sex"] = References::buildValueList(["Male", "Female"]);
 References::$lists["Centers"] = References::buildValueList([
-  References::withCode("Chakaria Disability Center" , "CDC"),
-  References::withCode("Chakaria Device Center"     , "CDev"),
-  References::withCode("Chakaria XRay Center"       , "CXR"),
-//   References::withCode("Cox's Bazar"                , "CB"),
-//   References::withCode("Cox's Bazar Device Center"  , "CBDC"),
-  References::withCode("Ukhia"                      , "UK"),
-  References::withCode("Ukhiya Device Center"       , "UKDC"),
-  References::withCode("Ramu"                       , "RA"),
-  References::withCode("Moheshkhali"                , "MO"),
-  References::withCode("Moheshkhali Device Center"  , "MODC"),
-//   References::withCode("Lohagara"                   , "LOH"),
-  References::withCode("Pakua"                      , false), // since 07-2020
-  References::withCode("Rohinga Camp"               , false), // since 07-2020
-  References::withCode("CMOSH"                      , false),
-  References::withCode("CMOSH Device Center"        , false),
-  References::withCode("Other Field"                , "OF")
+  References::withCode("Chakaria Disability Center", "CDC"),
+  References::withCode("Chakaria Device Center", "CDev"),
+  References::withCode("Chakaria XRay Center", "CXR"),
+  //   References::withCode("Cox's Bazar"                , "CB"),
+  //   References::withCode("Cox's Bazar Device Center"  , "CBDC"),
+  References::withCode("Ukhia", "UK"),
+  References::withCode("Ukhiya Device Center", "UKDC"),
+  References::withCode("Ramu", "RA"),
+  References::withCode("Moheshkhali", "MO"),
+  References::withCode("Moheshkhali Device Center", "MODC"),
+  //   References::withCode("Lohagara"                   , "LOH"),
+  References::withCode("Pakua", false), // since 07-2020
+  References::withCode("Rohinga Camp", false), // since 07-2020
+  References::withCode("CMOSH", false),
+  References::withCode("CMOSH Device Center", false),
+  References::withCode("Other Field", "OF")
 ]);
 References::$lists["Surgery"] = References::buildValueList(["~ Other ~", "Need to see surgeon", "Epiphysiodesis", "Osteotomy", "Little Burn release", "Big burn release", "Achileus lengthening", "Postero-medial release", "Pin removal"]);
 References::$lists["Device"] = References::buildValueList(["BHKAFO for night", "BHKAFO", "UHKAFO for night", "UHKAFO", "U.K.A.F.O", "BAFO for night", "BAFO", "orthoshoes with bar", "orthoshoes without bar", "Compensation Sole", "Arch support", "Supinator Corner", "wirst splint", "Hand Splint", "finger splint (ext/flex)", "Walker with wheel", "Walker without wheel", "Crutch(a pair)", "Wheel Chair", "CP standing table", "cervical collar", "Abdominal Corset belt", "Repairing", "others ortho device"]);
@@ -257,7 +259,7 @@ References::$lists["WalkingCapacities"] = References::buildValueList(["Level 1",
 References::$lists["LegAnalysis"] = References::buildValueList(["Valgus", "Varus"]);
 References::$lists["Side"] = References::buildValueList(["Right", "Left", "Bi"]);
 
-References::$lists["SocialLevel"]                               = References::buildValueList(array( 0, 1, 2, 3, 4 ));
+References::$lists["SocialLevel"]                               = References::buildValueList(array(0, 1, 2, 3, 4));
 References::$lists["Pirani"]                                    = References::buildValueList(array(0, 0.5, 1));
 References::$lists["0-10"]                                      = References::buildValueList(array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
 References::$lists["Eval01"]                                    = References::buildValueList([0, 1]);
