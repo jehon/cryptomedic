@@ -16,12 +16,12 @@ class ReportStatisticalController extends ReportController {
 		}
 		$newPatients = " (patients.entryyear >= YEAR(bills.Date)) AND (ADDDATE(patients.created_at, INTERVAL 1 MONTH) >= bills.Date) ";
 		$sql = "SELECT count(*) as res FROM bills JOIN patients ON (bills.patient_id = patients.id)"
-				. " WHERE {$this->filter} AND $thisfilter";
+			. " WHERE {$this->filter} AND $thisfilter";
 		$all = $this->getOneBySQL($sql);
 		$this->resultPathSet($header . ".total", $all);
 
 		$sql = "SELECT count(*) as res FROM bills JOIN patients ON (bills.patient_id = patients.id)"
-				. " WHERE {$this->filter} AND $thisfilter AND $newPatients";
+			. " WHERE {$this->filter} AND $thisfilter AND $newPatients";
 		$newone = $this->getOneBySQL($sql);
 		$this->resultPathSet($header . ".new", $newone);
 		$this->resultPathSet($header . ".old", $all - $newone);
@@ -34,7 +34,7 @@ class ReportStatisticalController extends ReportController {
 		if ($list == "") {
 			$list = "(1=0)";
 		}
-		foreach(Bill::getFieldsList($count_filter) as $f) {
+		foreach (Bill::getFieldsList($count_filter) as $f) {
 			$this->resultPathSet("summary.$f", $this->getOneBySQL("SELECT count(*) as res From bills WHERE {$this->filter} AND (`$f` > 0)"));
 			$list .= "OR(`$f`>0)";
 		}
@@ -47,15 +47,14 @@ class ReportStatisticalController extends ReportController {
       SUM(payments.amount) as total_paid
 			FROM bills
 			LEFT JOIN payments ON(payments.bill_id = bills.id)
-			WHERE ({$this->filter}) AND ({$stat_filter})"
-			);
+			WHERE ({$this->filter}) AND ({$stat_filter})");
 		$stats = array_pop($stats);
 		$this->resultPathSet("$header.real", $stats->total_real);
 		$this->resultPathSet("$header.asked", $stats->total_asked);
 		$this->resultPathSet("$header.paid", $stats->total_paid);
 	}
 
-  public function buildData() {
+	public function buildData() {
 		$this->filter = "("
 			. $this->getParamAsSqlFilter("when", "bills.Date")
 			. " AND "
@@ -93,9 +92,11 @@ class ReportStatisticalController extends ReportController {
 
 
 		$allSL = 0;
-		foreach(References::getList('SocialLevel') as $i) {
-			$allSL += $this->resultPathSet("summary.sociallevel.$i",
-					$this->getOneBySQL("SELECT Count(*) as res FROM bills WHERE {$this->filter} AND SocialLevel = $i"));
+		foreach (References::getList('SocialLevel') as $i) {
+			$allSL += $this->resultPathSet(
+				"summary.sociallevel.$i",
+				$this->getOneBySQL("SELECT Count(*) as res FROM bills WHERE {$this->filter} AND SocialLevel = $i")
+			);
 		}
 		$this->resultPathSet("summary.sociallevel.total", $allSL);
 
@@ -103,10 +104,10 @@ class ReportStatisticalController extends ReportController {
 		$centers = References::getList('Centers');
 		$res = $this->runSqlWithNamedParameter("SELECT Center, Count(*) as `count` FROM bills WHERE {$this->filter} GROUP BY Center");
 		$res2 = array();
-		foreach($res as $line) {
+		foreach ($res as $line) {
 			$res2[$line->Center] = $line->count;
 		}
-		foreach($centers as $c) {
+		foreach ($centers as $c) {
 			$this->resultPathSet("summary.centers." . CryptomedicModel::myCleanValue($c), array_key_exists($c, $res2) ? $res2[$c] : 0);
 		}
 		$this->resultPathSet("summary.centers.unspecified", array_key_exists('', $res2) ? $res2[''] : 0);
