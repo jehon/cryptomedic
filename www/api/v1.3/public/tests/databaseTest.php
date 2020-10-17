@@ -8,7 +8,7 @@ use Cryptomedic\Lib\DatabaseUndefinedException; // From Database
 use function Cryptomedic\Lib\getDefinitionForTable;
 use function Cryptomedic\Lib\getDefinitionForField;
 
-use Cryptomedic\Lib\Cache;
+use Cryptomedic\Lib\CacheManager;
 
 function createTestTable() {
     Database::exec(<<<EOSQL
@@ -29,7 +29,7 @@ CREATE TABLE `test` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8
 EOSQL);
 
-    Cache::generate();
+    CacheManager::generate();
 }
 
 class DatabaseTest extends TestCase {
