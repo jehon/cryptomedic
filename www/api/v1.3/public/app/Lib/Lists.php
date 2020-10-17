@@ -49,9 +49,6 @@ class Lists {
             "lists" => [],        // List[name] => array(values)
             "codes" => [],        // array(code => translation/value)
             "associations" => [], // key => list of associated values (ex: upazilla => [ districts ])
-
-            // TODO: refactor this into table structure!
-            "models2Lists" => []  // table.field => listing
         ];
 
         /***********************/
@@ -226,67 +223,6 @@ class Lists {
         /**** Attribute the lists ****/
         /*****************************/
         /*****************************/
-
-
-
-        // TODO: use building function
-
-        /***********************/
-        /**** Common fields ****/
-        /***********************/
-        $dataListings['model_listing']['*.Center']                          = "Centers";
-        $dataListings['model_listing']['*.NextCenter']                      = "Centers";
-        $dataListings['model_listing']['*.TreatmentEvaluation']             = "Eval04";
-        $dataListings['model_listing']['*.ExaminerName']                    = "Examiner";
-
-        /*****************/
-        /**** By File ****/
-        /*****************/
-        $dataListings['model_listing']['Bill.Sociallevel']                  = "SocialLevel";
-
-        $dataListings['model_listing']['ClubFoot.CurvedLateralBorderLeft']  = "Pirani";
-        $dataListings['model_listing']['ClubFoot.CurvedLateralBorderRight'] = "Pirani";
-        $dataListings['model_listing']['ClubFoot.MedialCreaseLeft']         = "Pirani";
-        $dataListings['model_listing']['ClubFoot.MedialCreaseRight']        = "Pirani";
-        $dataListings['model_listing']['ClubFoot.TalarHeadCoverageLeft']    = "Pirani";
-        $dataListings['model_listing']['ClubFoot.TalarHeadCoverageRight']   = "Pirani";
-        $dataListings['model_listing']['ClubFoot.PosteriorCreaseLeft']      = "Pirani";
-        $dataListings['model_listing']['ClubFoot.PosteriorCreaseRight']     = "Pirani";
-        $dataListings['model_listing']['ClubFoot.RigidEquinusLeft']         = "Pirani";
-        $dataListings['model_listing']['ClubFoot.RigidEquinusRight']        = "Pirani";
-        $dataListings['model_listing']['ClubFoot.EmptyHeelLeft']            = "Pirani";
-        $dataListings['model_listing']['ClubFoot.EmptyHeelRight']           = "Pirani";
-        $dataListings['model_listing']['ClubFoot.PainLeft']                 = "Eval02";
-        $dataListings['model_listing']['ClubFoot.PainRight']                = "Eval02";
-        $dataListings['model_listing']['ClubFoot.WalkingFloorContactLeft']  = "Eval02";
-        $dataListings['model_listing']['ClubFoot.WalkingFloorContactRight'] = "Eval02";
-        $dataListings['model_listing']['ClubFoot.WalkingFirstContactLeft']  = "Eval02";
-        $dataListings['model_listing']['ClubFoot.WalkingFirstContactRight'] = "Eval02";
-        $dataListings['model_listing']['ClubFoot.JumpingOneLegLeft']        = "Eval01";
-        $dataListings['model_listing']['ClubFoot.JumpingOneLegRight']       = "Eval01";
-        $dataListings['model_listing']['ClubFoot.RunLeft']                  = "Eval02";
-        $dataListings['model_listing']['ClubFoot.RunRight']                 = "Eval02";
-        $dataListings['model_listing']['ClubFoot.Treatment']                = "CPTreatment";
-
-        $dataListings['model_listing']['OtherConsult.Pain']                 = "Pain";
-        $dataListings['model_listing']['OtherConsult.Side']                 = "Side";
-        $dataListings['model_listing']['OtherConsult.Surgery66']            = "Surgery";
-        $dataListings['model_listing']['OtherConsult.Walk']                 = "WalkingCapacities";
-
-        $dataListings['model_listing']['Patient.Pathology']                 = "Pathologies";
-        $dataListings['model_listing']['Patient.District']                  = "Districts";
-        $dataListings['model_listing']['Patient.Sex']                       = "Sex";
-        $dataListings['model_listing']['Patient.Union_']                    = "Unions";
-        $dataListings['model_listing']['Patient.Upazilla']                  = "Upazilla";
-
-        $dataListings['model_listing']['RicketConsult.Brace']               = "Device";
-        $dataListings['model_listing']['RicketConsult.LeftLeg']             = "LegAnalysis";
-        $dataListings['model_listing']['RicketConsult.Pain']                = "Pain";
-        $dataListings['model_listing']['RicketConsult.Ribbeading']          = "Eval03";
-        $dataListings['model_listing']['RicketConsult.RightLeg']            = "LegAnalysis";
-        $dataListings['model_listing']['RicketConsult.Surgery']             = "Surgery";
-        $dataListings['model_listing']['RicketConsult.WalkingDifficulties'] = "WalkingCapacities";
-        $dataListings['model_listing']['RicketConsult.Wristenlargement']    = "Eval03";
 
         return $dataListings;
     }

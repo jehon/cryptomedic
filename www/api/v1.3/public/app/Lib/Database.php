@@ -54,20 +54,6 @@ function parseColumn($sqlData) {
         }
     }
 
-    // if (array_key_exists("list", $options) && $options['list']) {
-    //     $res['type'] = Database::TYPE_LIST;
-    //     $this->listing = $options['list'];
-    // } else if (array_key_exists($header, References::$model_listing)) {
-    //     // Model.Field specific list
-    //       $res['type'] = Database::TYPE_LIST;
-    //       $this->listingName = References::$model_listing[$header];
-    //       $this->listing = References::getList($this->listingName);
-    // } else if (array_key_exists("*.{$this->field}", References::$model_listing)) {
-    //     // *.Field generic list
-    //       $res['type'] = Database::TYPE_LIST;
-    //       $this->listingName = References::$model_listing["*.{$this->field}"];
-    //       $this->listing = References::getList($this->listingName);
-    // } else {
     $res['type'] = $sqlData['DATA_TYPE'];
 
     // Special case:
@@ -155,6 +141,30 @@ class Database {
             }
 
             $databaseStructure[$sqlTable][$sqlField] = parseColumn($row);
+        }
+
+        // Hardcoded generics
+        foreach (constant('HARDCODED_LISTINGS')['all'] as $targetField => $listData) {
+            foreach ($databaseStructure as $table => $data) {
+                if (array_key_exists($targetField, $databaseStructure[$table])) {
+                    $databaseStructure[$table][$targetField]['type'] = 'listing';
+                    $databaseStructure[$table][$targetField]['listing'] = $listData;
+                }
+            }
+        }
+
+        foreach (constant('HARDCODED_LISTINGS') as $table => $tableListData) {
+            if (!array_key_exists($table, $databaseStructure)) {
+                // Skip table that does not exists
+                // This will also skip 'all' definition :-)
+                continue;
+            }
+            foreach ($tableListData as $targetField => $listData) {
+                if (array_key_exists($targetField, $databaseStructure[$table])) {
+                    $databaseStructure[$table][$targetField]['type'] = 'listing';
+                    $databaseStructure[$table][$targetField]['listing'] = $listData;
+                }
+            }
         }
 
         return $databaseStructure;
@@ -270,3 +280,68 @@ class Database {
     //     return false;
     // }
 }
+
+
+define("HARDCODED_LISTINGS", [
+    /***********************/
+    /**** Common fields ****/
+    /***********************/
+    "all" => [
+        "Center"                   => "Centers",
+        "NextCenter"               => "Centers",
+        "TreatmentEvaluation"      => "Eval04",
+        "ExaminerName"             => "Examiner"
+    ],
+    "Bill" => [
+        "Sociallevel"              => "SocialLevel"
+    ],
+
+    "ClubFoot" => [
+        "CurvedLateralBorderLeft"  => "Pirani",
+        "CurvedLateralBorderRight" => "Pirani",
+        "MedialCreaseLeft"         => "Pirani",
+        "MedialCreaseRight"        => "Pirani",
+        "TalarHeadCoverageLeft"    => "Pirani",
+        "TalarHeadCoverageRight"   => "Pirani",
+        "PosteriorCreaseLeft"      => "Pirani",
+        "PosteriorCreaseRight"     => "Pirani",
+        "RigidEquinusLeft"         => "Pirani",
+        "RigidEquinusRight"        => "Pirani",
+        "EmptyHeelLeft"            => "Pirani",
+        "EmptyHeelRight"           => "Pirani",
+        "PainLeft"                 => "Eval02",
+        "PainRight"                => "Eval02",
+        "WalkingFloorContactLeft"  => "Eval02",
+        "WalkingFloorContactRight" => "Eval02",
+        "WalkingFirstContactLeft"  => "Eval02",
+        "WalkingFirstContactRight" => "Eval02",
+        "JumpingOneLegLeft"        => "Eval01",
+        "JumpingOneLegRight"       => "Eval01",
+        "RunLeft"                  => "Eval02",
+        "RunRight"                 => "Eval02",
+        "Treatment"                => "CPTreatment"
+    ],
+    "OtherConsult" => [
+        "Pain"                     => "Pain",
+        "Side"                     => "Side",
+        "Surgery66"                => "Surgery",
+        "Walk"                     => "WalkingCapacities"
+    ],
+    "Patient" => [
+        "Pathology"                => "Pathologies",
+        "District"                 => "Districts",
+        "Sex"                      => "Sex",
+        "Union_"                   => "Unions",
+        "Upazilla"                 => "Upazilla"
+    ],
+    "RicketConsult" => [
+        "Brace"                    => "Device",
+        "LeftLeg"                  => "LegAnalysis",
+        "Pain"                     => "Pain",
+        "Ribbeading"               => "Eval03",
+        "RightLeg"                 => "LegAnalysis",
+        "Surgery"                  => "Surgery",
+        "WalkingDifficulties"      => "WalkingCapacities",
+        "Wristenlargement"         => "Eval03"
+    ]
+]);
