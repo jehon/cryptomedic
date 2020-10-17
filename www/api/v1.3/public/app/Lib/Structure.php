@@ -17,14 +17,3 @@ define('MODEL_TO_DB', array(
 /****************************/
 /**** Dynamic references ****/
 /****************************/
-
-// // Dynamic examiner names
-    // $list = [];
-    // $examiners = DB::select("SELECT username, `name`, codage, inExaminerList FROM users");
-    // foreach($examiners as $examiner) {
-    //   $ec = References::withCode($examiner->name, $examiner->codage);
-    //   if ($examiner->inExaminerList > 0) {
-    //     $list[] = $ec;
-    //   }
-    // }
-    // References::$lists["Examiner"] = References::buildValueList($list);

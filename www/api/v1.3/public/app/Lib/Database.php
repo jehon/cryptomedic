@@ -4,7 +4,8 @@ namespace Cryptomedic\Lib;
 
 use Exception;
 use PDO;
-use function App\Cryptomedic\Lib\Cache;
+
+use Cryptomedic\Lib\CachedTrait;
 
 class DatabaseQueryException extends \Exception {
 }
@@ -15,15 +16,14 @@ class DatabaseUndefinedException extends \Exception {
     }
 }
 
-
 function getDefinitionForTable($table) {
-    Cache::load();
+    Database::cacheInit();
 
-    if (!array_key_exists($table, Cache::get()['dataStructure'])) {
+    if (!array_key_exists($table, Database::$cached)) {
         throw new DatabaseUndefinedException($table);
     }
 
-    return Cache::get()['dataStructure'][$table];
+    return Database::$cached[$table];
 }
 
 function getDefinitionForField($table, $field) {
@@ -124,6 +124,8 @@ function normalizeRecord(string $table, array $data): array {
 }
 
 class Database {
+    use CachedTrait;
+
     const TYPE_LIST         = "list";
     const TYPE_TIMESTAMP    = "timestamp";
     const TYPE_BOOLEAN      = "boolean";
@@ -135,16 +137,27 @@ class Database {
 
     static private $pdoConnection = null;
 
-    static function buildSetStatement(string $table, array $data) {
-        $data = array_intersect_key($data, getDefinitionForTable($table));
+    static function cacheName(): string {
+        return "database";
+    }
 
-        $escapedData = array_map(function ($value, $key) {
-            return "$key = " . self::$pdoConnection->quote($value);
-        }, $data, array_keys($data));
+    static function cacheGenerate(): array {
+        global $myconfig;
 
-        $sql = implode(", ", $escapedData);
+        $databaseStructure = [];
 
-        return $sql;
+        foreach (Database::select("SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE table_schema = '{$myconfig["database"]["schema"]}'") as $row) {
+            $sqlTable = $row['TABLE_NAME'];
+            $sqlField = $row['COLUMN_NAME'];
+
+            if (!array_key_exists($sqlTable, $databaseStructure)) {
+                $databaseStructure[$sqlTable] = [];
+            }
+
+            $databaseStructure[$sqlTable][$sqlField] = parseColumn($row);
+        }
+
+        return $databaseStructure;
     }
 
     static function init() {
@@ -201,6 +214,20 @@ class Database {
         throw new DatabaseQueryException("Id not found: $table#$id");
     }
 
+    static function buildSetStatement(string $table, array $data) {
+        self::cacheInit();
+
+        $data = array_intersect_key($data, getDefinitionForTable($table));
+
+        $escapedData = array_map(function ($value, $key) {
+            return "$key = " . self::$pdoConnection->quote($value);
+        }, $data, array_keys($data));
+
+        $sql = implode(", ", $escapedData);
+
+        return $sql;
+    }
+
     static function insert(string $table, array $data, bool $orUpdate = false) {
         self::init();
 
@@ -242,23 +269,4 @@ class Database {
     //     self::init();
     //     return false;
     // }
-
-    static function generateStructureData(): array {
-        global $myconfig;
-
-        $databaseStructure = [];
-
-        foreach (Database::select("SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE table_schema = '{$myconfig["database"]["schema"]}'") as $row) {
-            $sqlTable = $row['TABLE_NAME'];
-            $sqlField = $row['COLUMN_NAME'];
-
-            if (!array_key_exists($sqlTable, $databaseStructure)) {
-                $databaseStructure[$sqlTable] = [];
-            }
-
-            $databaseStructure[$sqlTable][$sqlField] = parseColumn($row);
-        }
-
-        return $databaseStructure;
-    }
 }
