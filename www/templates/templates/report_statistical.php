@@ -2,7 +2,8 @@
 
 use App\Model\CryptomedicModel;
 use App\Model\Bill;
-use App\Model\References;
+use Cryptomedic\Lib\Lists;
+
 ?>
 <table class="reporting ng-scope">
 	<tbody>
@@ -109,7 +110,7 @@ use App\Model\References;
 			<td>{{result.summary.sociallevel.familyincome / result.summary.sociallevel.nbhousehold | number:2}}</td>
 		</tr>
 		<?php
-		foreach (References::getList('SocialLevel') as $i) {
+		foreach (Lists::getList('SocialLevel') as $i) {
 			echo "<tr><td>Social Level $i</td><td>{{result.summary.sociallevel[$i]}}</td></tr>";
 		}
 		?>

@@ -13,6 +13,7 @@
 // date_default_timezone_set("GMT");
 
 use App\Model\References;
+use Cryptomedic\Lib\Lists;
 
 class t {
   const TYPE_LIST         = "list";
@@ -112,13 +113,13 @@ class t {
       $this->struct_type = static::TYPE_LIST;
       $this->isList = true;
       $this->listingName = References::$model_listing[$header];
-      $this->listing = References::getList($this->listingName);
+      $this->listing = Lists::getList($this->listingName);
     } else if (array_key_exists("*.{$this->field}", References::$model_listing)) {
       // *.Field generic list
       $this->struct_type = static::TYPE_LIST;
       $this->isList = true;
       $this->listingName = References::$model_listing["*.{$this->field}"];
-      $this->listing = References::getList($this->listingName);
+      $this->listing = Lists::getList($this->listingName);
     } else {
       $matches = array();
       if (false === preg_match("/([a-z]+)(\(([0-9]+)\)(.*[a-zA-Z]+)?)?/", strtolower($this->structure['Type']), $matches)) {
