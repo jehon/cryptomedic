@@ -2,10 +2,39 @@
 
 namespace Cryptomedic\Lib;
 
+use App\Model\Payment;
 use Exception;
 use PDO;
 
 use Cryptomedic\Lib\CachedTrait;
+use Cryptomedic\Lib\StringsOps;
+
+define('MODEL_TO_DB', array(
+    "Bill"             => "bills",
+    "ClubFoot"         => "club_feet",
+    "OtherConsult"     => "other_consults",
+    "Patient"          => "patients",
+    "Picture"          => "pictures",
+    "Appointment"      => "appointments",
+    "RicketConsult"    => "ricket_consults",
+    "Surgery"          => "surgeries",
+    "Payment"          => "payments",
+));
+
+define('DB_DEPENDANTS', [
+    "patients" => [
+        "appointments" => "patient_id",
+        "bills" => "patient_id",
+        "club_feet" => "patient_id",
+        "other_consults" => "patient_id",
+        "pictures" => "patient_id",
+        "ricket_consults" => "patient_id",
+        "surgeries" => "patient_id",
+    ],
+    "bills" => [
+        "payments" => "bill_id"
+    ]
+]);
 
 class DatabaseQueryException extends \Exception {
 }
@@ -131,6 +160,11 @@ class Database {
         global $myconfig;
 
         $databaseStructure = [];
+        $databaseStructure['_relations'] = [];
+
+        /*****************************/
+        /* Structure of the database */
+        /*****************************/
 
         foreach (Database::select("SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE table_schema = '{$myconfig["database"]["schema"]}'") as $row) {
             $sqlTable = $row['TABLE_NAME'];
@@ -141,9 +175,23 @@ class Database {
             }
 
             $databaseStructure[$sqlTable][$sqlField] = parseColumn($row);
+
+            // if (StringsOps::endsWith($sqlField, '_id')) {
+            //     $targetTable = substr($sqlField, 0, -3);
+            //     if (!array_key_exists($targetTable, $databaseStructure['_relations'])) {
+
+            //         // TODO: translate $targetTable into model ?
+
+            //         $databaseStructure['_relations'][$targetTable] = [];
+            //     }
+            //     $databaseStructure['_relations'][$targetTable][$sqlTable] = $sqlField;
+            // }
         }
 
-        // Hardcoded generics
+        /**********************/
+        /* Hardcoded generics */
+        /**********************/
+
         foreach (constant('HARDCODED_LISTINGS')['all'] as $targetField => $listData) {
             foreach ($databaseStructure as $table => $data) {
                 if (array_key_exists($targetField, $databaseStructure[$table])) {
@@ -168,6 +216,18 @@ class Database {
         }
 
         return $databaseStructure;
+    }
+
+    static function getDependantsOfTable($table) {
+        return DB_DEPENDANTS[$table];
+    }
+
+    static function getModelForTable($table) {
+        return array_search($table, MODEL_TO_DB);
+    }
+
+    static function getTableForModel($model) {
+        return MODEL_TO_DB[$model];
     }
 
     static function init() {

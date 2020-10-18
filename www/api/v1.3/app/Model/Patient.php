@@ -2,7 +2,7 @@
 
 namespace App\Model;
 
-// http://laravel.com/docs/5.0/eloquent#model-events
+use Cryptomedic\Lib\Database;
 
 class Patient extends CryptomedicModel {
   public function isLocked() {
@@ -12,14 +12,10 @@ class Patient extends CryptomedicModel {
   public function getDependantsList() {
     $list = [];
 
-    $dependants = References::$model2db;
-    unset($dependants["Payment"]);
-    unset($dependants["Patient"]);
+    foreach (Database::getDependantsOfTable(Database::getTableForModel('Patient')) as $table => $field) {
+      $obj = "\\App\\Model\\" . Database::getModelForTable($table);
 
-    foreach ($dependants as $m => $t) {
-      $obj = "\\App\\Model\\" . $m;
-
-      $r = $obj::where("patient_id", $this->id)->get();
+      $r = $obj::where($field, $this->id)->get();
       foreach ($r as $ri => $rv) {
         $list = array_merge($list, $rv->getDependantsList());
       }
