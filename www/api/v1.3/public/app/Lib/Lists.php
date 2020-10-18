@@ -228,8 +228,10 @@ class Lists {
     }
 
     static function getAllLists() {
+        self::cacheInit();
 
         /* Dynamic listings */
+        /* TODO: handle dynamic listings appart of cached listing ? */
 
         $examiners = Database::selectAsArray("SELECT username, `name`, codage, inExaminerList FROM users", 'username');
         foreach ($examiners as $examiner) {
@@ -240,11 +242,12 @@ class Lists {
                 $list[] = $ec;
             }
         }
-        buildValueList('Examiner', $list);
+        self::$cached['lists']['Examiner'] = $list;
+        return self::$cached['lists'];
     }
 
     static function getList(string $name): array {
-        $cachedLists = self::getAllLists()['lists'];
+        $cachedLists = self::getAllLists();
 
         if (array_key_exists($name, $cachedLists)) {
             return $cachedLists[$name];
