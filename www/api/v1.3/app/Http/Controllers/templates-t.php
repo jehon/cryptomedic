@@ -14,16 +14,9 @@
 
 use App\Model\References;
 use Cryptomedic\Lib\Lists;
+use Cryptomedic\Lib\Database;
 
 class t {
-  const TYPE_LIST         = "list";
-  const TYPE_TIMESTAMP    = "timestamp";
-  const TYPE_BOOLEAN      = "boolean";
-  const TYPE_INTEGER      = "numeric";
-  const TYPE_CHAR         = "char";
-  const TYPE_TEXT         = "text";
-  const TYPE_DATE         = "date";
-
   const DATETIMEFORMAT = "short";
 
   static protected $pdo = false;
@@ -35,6 +28,9 @@ class t {
     "inline" => "",
     "model" => null
   ];
+
+  /* TODO: Modif BEGIN */
+
   static $sqlAllTableStructure = array();
 
   static function setPDO($pdo) {
@@ -89,7 +85,7 @@ class t {
       $this->field = $data[1];
     }
 
-    $this->sqlTable = References::model2db($this->model);
+    $this->sqlTable = Database::getTableForModel($this->model);
 
     static::cacheSqlStructureFor($this->sqlTable);
 
@@ -105,18 +101,18 @@ class t {
     $this->isListLinked = false;
     $header = $this->model . "." . $this->field;
     if (array_key_exists("list", $options) && $options['list']) {
-      $this->struct_type = static::TYPE_LIST;
+      $this->struct_type = Database::TYPE_LIST;
       $this->isList = true;
       $this->listing = $options['list'];
     } else if (array_key_exists($header, References::$model_listing)) {
       // Model.Field specific list
-      $this->struct_type = static::TYPE_LIST;
+      $this->struct_type = Database::TYPE_LIST;
       $this->isList = true;
       $this->listingName = References::$model_listing[$header];
       $this->listing = Lists::getList($this->listingName);
     } else if (array_key_exists("*.{$this->field}", References::$model_listing)) {
       // *.Field generic list
-      $this->struct_type = static::TYPE_LIST;
+      $this->struct_type = Database::TYPE_LIST;
       $this->isList = true;
       $this->listingName = References::$model_listing["*.{$this->field}"];
       $this->listing = Lists::getList($this->listingName);
@@ -140,29 +136,29 @@ class t {
       // Special case:
       switch ($this->struct_type) {
         case "date":
-          $this->struct_type = static::TYPE_DATE;
+          $this->struct_type = Database::TYPE_DATE;
           break;
         case "tinyint":
         case "int":
           if ($this->struct_length == 1) {
-            $this->struct_type = static::TYPE_BOOLEAN;
+            $this->struct_type = Database::TYPE_BOOLEAN;
           } else {
-            $this->struct_type = static::TYPE_INTEGER;
+            $this->struct_type = Database::TYPE_INTEGER;
           }
           break;
         case "varchar":
           if ($this->struct_length >= 800) {
             // Long text = blob
-            $this->struct_type = static::TYPE_TEXT;
+            $this->struct_type = Database::TYPE_TEXT;
           } else {
-            $this->struct_type = static::TYPE_CHAR;
+            $this->struct_type = Database::TYPE_CHAR;
           }
           break;
         case "mediumtext":
-          $this->struct_type = static::TYPE_TEXT;
+          $this->struct_type = Database::TYPE_TEXT;
           break;
         case "timestamp":
-          $this->struct_type = static::TYPE_TIMESTAMP;
+          $this->struct_type = Database::TYPE_TIMESTAMP;
           break;
         default:
           echo "Unhandled type in __construct: {$this->struct_type}";
@@ -173,6 +169,8 @@ class t {
     }
     return $this;
   }
+
+  /* TODO: Modif END */
 
   function fieldGetKey() {
     $be = $this->options['baseExpression'];
@@ -202,22 +200,22 @@ class t {
     }
 
     switch ($this->fieldGetType()) {
-      case static::TYPE_TIMESTAMP:
+      case Database::TYPE_TIMESTAMP:
         // See https://docs.angularjs.org/api/ng/filter/date
         $this->res .= "<span id='{$this->jsId}'>{{ {$this->fieldGetKey()} | date:'{static::DATETIMEFORMAT}' }}</span>";
         break;
-      case static::TYPE_BOOLEAN:
+      case Database::TYPE_BOOLEAN:
         $this->res .= "<x-read-boolean ng-attr-value='{{ {$this->fieldGetKey()} }}'></x-read-boolean>";
         break;
-      case static::TYPE_LIST:
+      case Database::TYPE_LIST:
         $this->res .= "<span id='{$this->jsId}' name='{$this->field}'>{{ {$this->fieldGetKey()} }}</span>";
         break;
-      case static::TYPE_DATE:
-      case static::TYPE_INTEGER:
-      case static::TYPE_CHAR:
+      case Database::TYPE_DATE:
+      case Database::TYPE_INTEGER:
+      case Database::TYPE_CHAR:
         $this->res .= "<span id='{$this->jsId}'>{{ {$this->fieldGetKey()} }}</span>";
         break;
-      case static::TYPE_TEXT:
+      case Database::TYPE_TEXT:
         $this->res .= "<span id='{$this->jsId}' style='white-space: pre'>{{ {$this->fieldGetKey()} }}</span>";
         break;
       default:
@@ -240,7 +238,7 @@ class t {
     $inline = $inlineWithoutModel . " ng-model='{$this->fieldGetKey()}' ";
 
     switch ($this->fieldGetType()) {
-      case static::TYPE_LIST:
+      case Database::TYPE_LIST:
         // New system:
         $jsonList = "";
         if (!$this->listingName) {
@@ -257,22 +255,22 @@ class t {
           . ($this->fieldIsRequired() ? "" : "nullable")
           . "></x-write-list>";
         break;
-      case static::TYPE_TIMESTAMP:
+      case Database::TYPE_TIMESTAMP:
         $this->res .= "<span id='{$this->jsId}'>{{ {$this->fieldGetKey()} | date:'{static::DATETIMEFORMAT}' }}</span>";
         break;
-      case static::TYPE_BOOLEAN:
+      case Database::TYPE_BOOLEAN:
         $this->res .= "<input id='{$this->jsId}' type='checkbox' ng-model='{$this->fieldGetKey()}' ng-true-value='1' ng-false-value='0' />";
         break;
-      case static::TYPE_INTEGER:
+      case Database::TYPE_INTEGER:
         $this->res .= "<input type='number' $inline />";
         break;
-      case static::TYPE_TEXT:
+      case Database::TYPE_TEXT:
         $this->res .= "<textarea cols=40 rows=4 $inline></textarea>";
         break;
-      case static::TYPE_CHAR:
+      case Database::TYPE_CHAR:
         $this->res .= "<input $inline />";
         break;
-      case static::TYPE_DATE:
+      case Database::TYPE_DATE:
         $this->res .= "<x-input-date id='{$this->jsId}' $inlineWithoutModel "
           . " value='{{" . $this->fieldGetKey() . "}}' "
           . "/>";
@@ -294,19 +292,6 @@ class t {
       return $this->write();
     }
     return $this->read();
-  }
-
-  function tr($label = null) {
-    if ($label == null) $label = $this->field;
-
-    $this->res .= "<tr ng-class='{ emptyValue: !{$this->fieldGetKey()}}'>\n";
-    $this->res .= "\t\t\t<td>$label</td>\n";
-    $this->res .= "\t\t\t<td>";
-    $this->value();
-    $this->res .= "</td>\n";
-    $this->res .= "\t\t</tr>\n";
-
-    return $this;
   }
 
   function tr2($label = null) {
