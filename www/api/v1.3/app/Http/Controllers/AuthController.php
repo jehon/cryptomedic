@@ -12,6 +12,7 @@ use Route;
 use App\Model\References;
 
 use Cryptomedic\Lib\Auth as CryptomedicAuth;
+use Cryptomedic\Lib\Lists;
 
 class AuthController extends Controller {
     /*
@@ -102,8 +103,9 @@ class AuthController extends Controller {
 
         $data['codes'] = References::getCodes();
         $data['associations'] = References::$associations;
+        $data['lists'] = Lists::getAllLists();
+
         $data['authorized'] = array_keys(self::$permissions[$data['group']]);
-        $data['lists'] = References::getLists();
 
         // Update last_login timestamp
         $user = Auth::user();

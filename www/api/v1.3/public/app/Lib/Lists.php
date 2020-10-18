@@ -3,7 +3,6 @@
 namespace Cryptomedic\Lib;
 
 use Cryptomedic\Lib\Database;
-use Cryptomedic\Lib\CacheManager;
 use Cryptomedic\Lib\CachedTrait;
 use Exception;
 

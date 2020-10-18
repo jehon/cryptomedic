@@ -2,8 +2,6 @@
 
 namespace App\Model;
 
-# require_once(__DIR__ . '/../../public/app/Lib/Data.php');
-
 use Illuminate\Support\Facades\DB;
 
 class References {
