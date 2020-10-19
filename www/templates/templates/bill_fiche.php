@@ -69,7 +69,7 @@ EOD;
                   <div>Price</div>
                   <div>Total</div>
                 </x-fff-field>
-                <?php foreach(Bill::getFieldsList($cat, t::getColumnsOfTable('bills')) as $field) {
+                <?php foreach(Bill::getFieldsList($cat) as $field) {
                     price("Bill." . $field);
                   }
                 ?>

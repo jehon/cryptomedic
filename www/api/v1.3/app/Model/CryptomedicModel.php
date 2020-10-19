@@ -5,9 +5,10 @@ namespace App\Model;
 // Note: Unit Tests are transactionals ! -- > see RouteReferenceTestCase and each tests
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Facades\DB;
+// use Illuminate\Database\Eloquent\Builder;
+// use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Cryptomedic\Lib\Database;
 
 // See https://github.com/laravel/framework/issues/5276
 
@@ -15,11 +16,11 @@ use Illuminate\Support\Facades\Auth;
 class CryptomedicModel extends Model {
 	use OptimisticLockingTrait;
 
-	protected $guarded = array('id' );
+	protected $guarded = array('id');
 
 	// Protected fields in update only (allowed in create)
 	public static function getReadOnlyField() {
-		return [ "patient_id", "bill_id", "price_id" ];
+		return ["patient_id", "bill_id", "price_id"];
 	}
 
 	static public function myCleanValue($c) {
@@ -28,7 +29,7 @@ class CryptomedicModel extends Model {
 
 	static public function cannonize($data) {
 		if (is_array($data)) {
-			foreach($data as $k => $v) {
+			foreach ($data as $k => $v) {
 				$res = static::cannonize($v);
 				$data[$k] = $res;
 			}
@@ -40,8 +41,9 @@ class CryptomedicModel extends Model {
 	}
 
 	static public function getTableColumnsList() {
-		// @see http://stackoverflow.com/a/19953826/1954789
-		return \Schema::getColumnListing(with(new static)->getTable());
+		return array_keys(Database::getDefinitionForTable(with(new static)->getTable()));
+		// // @see http://stackoverflow.com/a/19953826/1954789
+		// return \Schema::getColumnListing(with(new static)->getTable());
 	}
 
 	static public function filterData($data, $forUpdate = true) {
@@ -51,18 +53,18 @@ class CryptomedicModel extends Model {
 		$result = array_intersect_key($data, array_combine($columns, $columns));
 
 		if ($forUpdate) {
-			foreach($result as $k => $v) {
+			foreach ($result as $k => $v) {
 				if (in_array($k, self::getReadOnlyField())) {
-			      	unset($result[$k]);
-		      		continue;
-		    	}
+					unset($result[$k]);
+					continue;
+				}
 			}
 		}
 		return $result;
 	}
 
 	static public function create(array $attributes = array()) {
-	    $attributes = self::cannonize($attributes);
+		$attributes = self::cannonize($attributes);
 		$attributes = self::filterData($attributes, false);
 
 		$m = new static($attributes);
@@ -76,32 +78,34 @@ class CryptomedicModel extends Model {
 	static public function updateWithArray($id, $data) {
 		$obj = self::findOrFail($id);
 
-	    foreach($data as $k => $v) {
-	      // Set existing fields
-	      if (array_key_exists($k, $obj->getAttributes()) && ($obj->getAttribute($k) != $v)) {
-			$obj->{$k} = $v;
-		  }
-	    }
+		foreach ($data as $k => $v) {
+			// Set existing fields
+			if (array_key_exists($k, $obj->getAttributes()) && ($obj->getAttribute($k) != $v)) {
+				$obj->{$k} = $v;
+			}
+		}
 
-	    $obj->id = $id;
+		$obj->id = $id;
 
-	    $obj->save();
-	    return self::findOrFail($id);
+		$obj->save();
+		return self::findOrFail($id);
 	}
 
-	public function syncSubItems($class, $relation, $list) {		
+	public function syncSubItems($class, $relation, $list) {
 		$oids = [];
 
 		$original = $relation->get();
-		foreach($original as $o) {
+		foreach ($original as $o) {
 			$oids[] = $o->id;
 		}
 
-		foreach($list as $n) {
+		foreach ($list as $n) {
 			if (array_key_exists("id", $n)) {
 
 				$class::updateWithArray($n['id'], $n);
-				$oids = array_filter($oids, function($v) use ($n) { return $v != $n['id']; });
+				$oids = array_filter($oids, function ($v) use ($n) {
+					return $v != $n['id'];
+				});
 			} else {
 				if (!in_array('Date', $n) && $this->Date) {
 					$n['Date'] = $this->Date;
@@ -114,7 +118,7 @@ class CryptomedicModel extends Model {
 			}
 		}
 
-		foreach($oids as $oid) {
+		foreach ($oids as $oid) {
 			$odel = $class::find($oid);
 			if ($odel != null) {
 				$odel->delete();
@@ -142,20 +146,20 @@ class CryptomedicModel extends Model {
 	}
 
 	public function getDependantsList() {
-		return [ $this->getLineRecord() ];
+		return [$this->getLineRecord()];
 	}
 
 	public function getLineRecord() {
-    $classname = get_class($this);
+		$classname = get_class($this);
 		if ($pos = strrpos($classname, '\\')) {
 			$classname = substr($classname, $pos + 1);
 		}
 
-	    $rec = [];
-	    $rec["type"]   = $classname;
-	    $rec["id"]     = $this->id;
-	    $rec["record"] = $this;
-	    return $rec;
+		$rec = [];
+		$rec["type"]   = $classname;
+		$rec["id"]     = $this->id;
+		$rec["record"] = $this;
+		return $rec;
 	}
 
 	public function getRoot() {
@@ -169,11 +173,11 @@ class CryptomedicModel extends Model {
 	}
 
 	public function save(array $options = array()) {
-	    if ($this->isLocked()) {
-	     	abort(403, "File is frozen");
-	    }
+		if ($this->isLocked()) {
+			abort(403, "File is frozen");
+		}
 
-	 	$this->attributes = self::cannonize($this->attributes);
+		$this->attributes = self::cannonize($this->attributes);
 		$this->attributes = self::filterData($this->attributes, false);
 		if ($this->isDirty()) {
 			$this->validate();
@@ -184,9 +188,9 @@ class CryptomedicModel extends Model {
 	}
 
 	public function delete() {
-	    if ($this->isLocked()) {
+		if ($this->isLocked()) {
 			abort(403, "File is frozen");
-	    }
+		}
 
 		return parent::delete();
 	}
