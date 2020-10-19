@@ -9,8 +9,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
 use Route;
 
-use App\Model\References;
-
 use Cryptomedic\Lib\Auth as CryptomedicAuth;
 use Cryptomedic\Lib\Lists;
 
@@ -101,8 +99,8 @@ class AuthController extends Controller {
             $data['prices'][$v->id] = $v;
         }
 
-        $data['codes'] = References::getCodes();
-        $data['associations'] = References::$associations;
+        $data['codes'] = Lists::getCodes();
+        $data['associations'] = Lists::getAssociations();
         $data['lists'] = Lists::getAllLists();
 
         $data['authorized'] = array_keys(self::$permissions[$data['group']]);

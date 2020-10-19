@@ -254,4 +254,12 @@ class Lists {
 
         throw new Exception('List does not exists: ' . $name);
     }
+
+    static function getCodes(): array {
+        return self::$cached['codes'];
+    }
+
+    static function getAssociations(): array {
+        return self::$cached['associations'];
+    }
 }
