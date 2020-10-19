@@ -49,26 +49,25 @@ function parseColumn($sqlData) {
     // TODO: normalize and test this function
 
     $name = $sqlData['COLUMN_NAME'];
+    $res = new \stdClass;
 
-    $res = [
-        'protected'  => in_array($name, ['id', 'created_at', 'updated_at', 'lastuser'])
-    ];
+    $res->protected = in_array($name, ['id', 'created_at', 'updated_at', 'lastuser']);
 
-    if (!$res['protected']) {
-        $res['optional']   = ($sqlData['IS_NULLABLE'] == "YES");
+    if (!$res->protected) {
+        $res->optional = ($sqlData['IS_NULLABLE'] == "YES");
 
-        if (!$res['optional']) {
+        if (!$res->optional) {
             // Only mandatory fields can be insertOnly (e.g. patient_id)
-            $res['insertOnly'] = (preg_match('/^.+_id$/', $name) > 0);
+            $res->insertOnly = (preg_match('/^.+_id$/', $name) > 0);
         }
     }
 
-    $res['type'] = $sqlData['DATA_TYPE'];
+    $res->type = $sqlData['DATA_TYPE'];
 
     // Special case:
-    switch ($res['type']) {
+    switch ($res->type) {
         case "date":
-            $res['type'] = Database::TYPE_DATE;
+            $res->type = Database::TYPE_DATE;
             break;
         case "float":
         case "decimal":
@@ -76,9 +75,9 @@ function parseColumn($sqlData) {
         case "int":
             $length = $sqlData['NUMERIC_PRECISION'];
             if ($length == 3) {
-                $res['type'] = Database::TYPE_BOOLEAN;
+                $res->type = Database::TYPE_BOOLEAN;
             } else {
-                $res['type'] = Database::TYPE_INTEGER;
+                $res->type = Database::TYPE_INTEGER;
             }
             break;
         case "enum":
@@ -86,24 +85,24 @@ function parseColumn($sqlData) {
         case "text":
         case "char":
         case "varchar":
-            $res['length'] = $sqlData['CHARACTER_MAXIMUM_LENGTH'];
-            if ($res['length'] >= 800) {
+            $res->length = $sqlData['CHARACTER_MAXIMUM_LENGTH'];
+            if ($res->length >= 800) {
                 // Long text = blob
-                $res['type'] = Database::TYPE_TEXT;
+                $res->type = Database::TYPE_TEXT;
             } else {
-                $res['type'] = Database::TYPE_CHAR;
+                $res->type = Database::TYPE_CHAR;
             }
             break;
         case "mediumtext":
-            $res['length'] = $sqlData['CHARACTER_MAXIMUM_LENGTH'];
-            $res['type'] = Database::TYPE_TEXT;
+            $res->length = $sqlData['CHARACTER_MAXIMUM_LENGTH'];
+            $res->type = Database::TYPE_TEXT;
             break;
         case "timestamp":
-            $res['type'] = Database::TYPE_TIMESTAMP;
+            $res->type = Database::TYPE_TIMESTAMP;
             break;
         case "longblob":
-            $res['length'] = $sqlData['CHARACTER_MAXIMUM_LENGTH'];
-            $res['type'] = Database::TYPE_BINARY;
+            $res->length = $sqlData['CHARACTER_MAXIMUM_LENGTH'];
+            $res->type = Database::TYPE_BINARY;
             break;
         default:
             var_dump($sqlData);
@@ -140,7 +139,6 @@ class Database {
         global $myconfig;
 
         $databaseStructure = [];
-        $databaseStructure['_relations'] = [];
 
         /*****************************/
         /* Structure of the database */
@@ -175,8 +173,8 @@ class Database {
         foreach (constant('HARDCODED_LISTINGS')['all'] as $targetField => $listData) {
             foreach ($databaseStructure as $table => $data) {
                 if (array_key_exists($targetField, $databaseStructure[$table])) {
-                    $databaseStructure[$table][$targetField]['type'] = 'listing';
-                    $databaseStructure[$table][$targetField]['listing'] = $listData;
+                    $databaseStructure[$table][$targetField]->type = self::TYPE_LIST;
+                    $databaseStructure[$table][$targetField]->listing = $listData;
                 }
             }
         }
@@ -189,8 +187,8 @@ class Database {
             }
             foreach ($tableListData as $targetField => $listData) {
                 if (array_key_exists($targetField, $databaseStructure[$table])) {
-                    $databaseStructure[$table][$targetField]['type'] = 'listing';
-                    $databaseStructure[$table][$targetField]['listing'] = $listData;
+                    $databaseStructure[$table][$targetField]->type = self::TYPE_LIST;
+                    $databaseStructure[$table][$targetField]->listing = $listData;
                 }
             }
         }
@@ -307,7 +305,7 @@ class Database {
             try {
                 $def = self::getDefinitionForField($table, $key);
                 $validData[$key] = $value;
-                if (!$def['protected'] && !$def['insertOnly']) {
+                if (!$def->protected && !$def->insertOnly) {
                     $updateOnlyData[$key] = $value;
                 }
             } catch (DatabaseUndefinedException $e) {
@@ -352,11 +350,11 @@ define("HARDCODED_LISTINGS", [
         "TreatmentEvaluation"      => "Eval04",
         "ExaminerName"             => "Examiner"
     ],
-    "Bill" => [
+    "bills" => [
         "Sociallevel"              => "SocialLevel"
     ],
 
-    "ClubFoot" => [
+    "club_feet" => [
         "CurvedLateralBorderLeft"  => "Pirani",
         "CurvedLateralBorderRight" => "Pirani",
         "MedialCreaseLeft"         => "Pirani",
@@ -381,20 +379,20 @@ define("HARDCODED_LISTINGS", [
         "RunRight"                 => "Eval02",
         "Treatment"                => "CPTreatment"
     ],
-    "OtherConsult" => [
+    "other_consults" => [
         "Pain"                     => "Pain",
         "Side"                     => "Side",
         "Surgery66"                => "Surgery",
         "Walk"                     => "WalkingCapacities"
     ],
-    "Patient" => [
+    "patients" => [
         "Pathology"                => "Pathologies",
         "District"                 => "Districts",
         "Sex"                      => "Sex",
         "Union_"                   => "Unions",
         "Upazilla"                 => "Upazilla"
     ],
-    "RicketConsult" => [
+    "ricket_consults" => [
         "Brace"                    => "Device",
         "LeftLeg"                  => "LegAnalysis",
         "Pain"                     => "Pain",
