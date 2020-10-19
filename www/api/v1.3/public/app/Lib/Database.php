@@ -45,26 +45,6 @@ class DatabaseUndefinedException extends \Exception {
     }
 }
 
-function getDefinitionForTable($table) {
-    Database::cacheInit();
-
-    if (!array_key_exists($table, Database::$cached)) {
-        throw new DatabaseUndefinedException($table);
-    }
-
-    return Database::$cached[$table];
-}
-
-function getDefinitionForField($table, $field) {
-    $tableDef = getDefinitionForTable($table);
-
-    if (!array_key_exists($field, $tableDef)) {
-        throw new DatabaseUndefinedException($table, $field);
-    }
-
-    return $tableDef[$field];
-}
-
 function parseColumn($sqlData) {
     // TODO: normalize and test this function
 
@@ -218,6 +198,26 @@ class Database {
         return $databaseStructure;
     }
 
+    static function getDefinitionForTable($table) {
+        self::cacheInit();
+
+        if (!array_key_exists($table, self::$cached)) {
+            throw new DatabaseUndefinedException($table);
+        }
+
+        return Database::$cached[$table];
+    }
+
+    static function getDefinitionForField($table, $field) {
+        $tableDef = self::getDefinitionForTable($table);
+
+        if (!array_key_exists($field, $tableDef)) {
+            throw new DatabaseUndefinedException($table, $field);
+        }
+
+        return $tableDef[$field];
+    }
+
     static function getDependantsOfTable($table) {
         return DB_DEPENDANTS[$table];
     }
@@ -287,7 +287,7 @@ class Database {
     static function buildSetStatement(string $table, array $data) {
         self::cacheInit();
 
-        $data = array_intersect_key($data, getDefinitionForTable($table));
+        $data = array_intersect_key($data, self::getDefinitionForTable($table));
 
         $escapedData = array_map(function ($value, $key) {
             return "$key = " . self::$pdoConnection->quote($value);
@@ -305,7 +305,7 @@ class Database {
         $updateOnlyData = [];
         foreach ($data as $key => $value) {
             try {
-                $def = getDefinitionForField($table, $key);
+                $def = self::getDefinitionForField($table, $key);
                 $validData[$key] = $value;
                 if (!$def['protected'] && !$def['insertOnly']) {
                     $updateOnlyData[$key] = $value;
