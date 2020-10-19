@@ -12,7 +12,7 @@ function buildValueList(string $name, array $list): array {
     return $list;
 }
 
-function withCode(string $value, string $code): string {
+function withCode(string $value, string $code = null): string {
     global $dataListings;
     if ($code) {
         $dataListings['codes'][$value] = $code;
@@ -193,14 +193,26 @@ class Lists {
             withCode("Moheshkhali", "MO"),
             withCode("Moheshkhali Device Center", "MODC"),
             //   withCode("Lohagara"                   , "LOH"),
-            withCode("Pakua", false), // since 07-2020
-            withCode("Rohinga Camp", false), // since 07-2020
-            withCode("CMOSH", false),
-            withCode("CMOSH Device Center", false),
-            withCode("Other Field", "OF")
+            withCode("Pakua"), // since 07-2020
+            withCode("Rohinga Camp"), // since 07-2020
+            withCode("CMOSH"),
+            withCode("CMOSH Device Center"),
+            withCode("Other Field", "OF"),
+            withCode("Virtual Consultation")
         ]);
 
-        buildValueList("Surgery",     ["~ Other ~", "Need to see surgeon", "Epiphysiodesis", "Osteotomy", "Little Burn release", "Big burn release", "Achileus lengthening", "Postero-medial release", "Pin removal"]);
+        buildValueList("Surgery",     [
+            "~ Other ~",
+            "Need to see surgeon",
+            "Epiphysiodesis",
+            "Osteotomy",
+            "Little Burn release",
+            "Big burn release",
+            "Achileus lengthening",
+            "Postero-medial release",
+            "Pin removal",
+            "No surgery"
+        ]);
         buildValueList("Device",      ["BHKAFO for night", "BHKAFO", "UHKAFO for night", "UHKAFO", "U.K.A.F.O", "BAFO for night", "BAFO", "orthoshoes with bar", "orthoshoes without bar", "Compensation Sole", "Arch support", "Supinator Corner", "wirst splint", "Hand Splint", "finger splint (ext/flex)", "Walker with wheel", "Walker without wheel", "Crutch(a pair)", "Wheel Chair", "CP standing table", "cervical collar", "Abdominal Corset belt", "Repairing", "others ortho device"]);
         buildValueList("Pain",        ["No", "Moderate", "Severe"]);
         buildValueList("WalkingCapacities", ["Level 1", "Level 2", "Level 3", "Level 4", "Level 5"]);
