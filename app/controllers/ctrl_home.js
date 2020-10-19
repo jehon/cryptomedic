@@ -6,6 +6,7 @@ import getDataService from '../js/getDataService.js';
 import goThere from '../js/goThere.js';
 import { getRouteToCreateReference } from '../js/router.js';
 import '../elements/widgets/generic/x-button.js';
+// import '../elements/pages/x-home.js';
 
 export default function ctrl_home($scope) {
     if (typeof ($scope.entryyear) == 'undefined') {
@@ -49,7 +50,7 @@ export default function ctrl_home($scope) {
         $scope.searched = true;
     };
 
-    $scope.getRouteToCreateReference = function() {
+    $scope.getRouteToCreateReference = function () {
         return getRouteToCreateReference();
     };
 }
