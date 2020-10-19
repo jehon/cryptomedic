@@ -68,9 +68,8 @@ class t {
   function __construct($key, array $options = array()) {
     $this->key = $key;
     $this->jsId = str_replace([".", "#", " ", "/", "\\"], "_", $this->key);
-    $this->options = $options;
     $this->field = $key;
-    $this->options = array_merge(static::$defaultOptions, $this->options);
+    $this->options = array_merge(static::$defaultOptions, $options);
 
     $data = explode(".", $this->key);
     if (count($data) != 2) {
@@ -91,86 +90,23 @@ class t {
     static::cacheSqlStructureFor($this->sqlTable);
 
     try {
-      $def = Database::getDefinitionForField($this->sqlTable, $this->field);
+      $this->structure = Database::getDefinitionForField($this->sqlTable, $this->field);
+      $this->linked2DB = true;
+
+      if (array_key_exists("list", $options) && $options['list']) {
+        $this->structure->type = Database::TYPE_LIST;
+        $this->structure->listing = $options['list'];
+      }
+
+      if ($this->structure->type == Database::TYPE_LIST) {
+        if (is_string($this->structure->listing)) {
+          // String list name
+          $this->listingName = $this->structure->listing;
+        }
+      }
     } catch (DatabaseUndefinedException $e) {
       $this->linked2DB = false;
-      return;
     }
-    $this->linked2DB = true;
-
-    $this->structure = static::$sqlAllTableStructure[$this->sqlTable][$this->field];
-
-    $this->isList = false;
-    $this->isListLinked = false;
-    $header = $this->model . "." . $this->field;
-    if (array_key_exists("list", $options) && $options['list']) {
-      $this->struct_type = Database::TYPE_LIST;
-      $this->isList = true;
-      $this->listing = $options['list'];
-    } else if (array_key_exists($header, References::$model_listing)) {
-      // Model.Field specific list
-      $this->struct_type = Database::TYPE_LIST;
-      $this->isList = true;
-      $this->listingName = References::$model_listing[$header];
-      $this->listing = Lists::getList($this->listingName);
-    } else if (array_key_exists("*.{$this->field}", References::$model_listing)) {
-      // *.Field generic list
-      $this->struct_type = Database::TYPE_LIST;
-      $this->isList = true;
-      $this->listingName = References::$model_listing["*.{$this->field}"];
-      $this->listing = Lists::getList($this->listingName);
-    } else {
-      $matches = array();
-      if (false === preg_match("/([a-z]+)(\(([0-9]+)\)(.*[a-zA-Z]+)?)?/", strtolower($this->structure['Type']), $matches)) {
-        throw new Exception("Error in preg_match"); // @codeCoverageIgnore
-      }
-
-      /*
-     * ==== $matches ====
-     * 1: type natif
-     * 3: length
-     * 4: qualificatif (unsigned)
-     *
-     * All matches are lowercase
-     */
-      $this->struct_type = $matches[1];
-      $this->struct_length = (count($matches) > 3 ? intval($matches[3]) : 0);
-      $this->struct_unsigned = (count($matches) > 4 ? $matches[4] : "");
-      // Special case:
-      switch ($this->struct_type) {
-        case "date":
-          $this->struct_type = Database::TYPE_DATE;
-          break;
-        case "tinyint":
-        case "int":
-          if ($this->struct_length == 1) {
-            $this->struct_type = Database::TYPE_BOOLEAN;
-          } else {
-            $this->struct_type = Database::TYPE_INTEGER;
-          }
-          break;
-        case "varchar":
-          if ($this->struct_length >= 800) {
-            // Long text = blob
-            $this->struct_type = Database::TYPE_TEXT;
-          } else {
-            $this->struct_type = Database::TYPE_CHAR;
-          }
-          break;
-        case "mediumtext":
-          $this->struct_type = Database::TYPE_TEXT;
-          break;
-        case "timestamp":
-          $this->struct_type = Database::TYPE_TIMESTAMP;
-          break;
-        default:
-          echo "Unhandled type in __construct: {$this->struct_type}";
-          var_dump($this->structure);
-          throw new Exception("Unhandled type in __construct: {$this->struct_type}");
-          break;
-      }
-    }
-    return $this;
   }
 
   /* TODO: Modif END */
@@ -184,11 +120,11 @@ class t {
   }
 
   function fieldIsRequired() {
-    return $this->structure['Null'] == "NO";
+    return !$this->structure->optional;
   }
 
   function fieldGetType() {
-    return $this->struct_type;
+    return $this->structure->type;
   }
 
   function id($id) {
