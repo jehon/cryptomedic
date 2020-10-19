@@ -15,6 +15,7 @@
 use App\Model\References;
 use Cryptomedic\Lib\Lists;
 use Cryptomedic\Lib\Database;
+use Cryptomedic\Lib\DatabaseUndefinedException;
 
 class t {
   const DATETIMEFORMAT = "short";
@@ -89,7 +90,9 @@ class t {
 
     static::cacheSqlStructureFor($this->sqlTable);
 
-    if (!in_array($this->field, static::getColumnsOfTable($this->sqlTable))) {
+    try {
+      $def = Database::getDefinitionForField($this->sqlTable, $this->field);
+    } catch (DatabaseUndefinedException $e) {
       $this->linked2DB = false;
       return;
     }

@@ -5,8 +5,6 @@ use PHPUnit\Framework\TestCase;
 use Cryptomedic\Lib\Database;
 use Cryptomedic\Lib\DatabaseQueryException; // From Database
 use Cryptomedic\Lib\DatabaseUndefinedException; // From Database
-use function Cryptomedic\Lib\getDefinitionForTable;
-use function Cryptomedic\Lib\getDefinitionForField;
 
 use Cryptomedic\Lib\CacheManager;
 
@@ -44,21 +42,21 @@ class DatabaseTest extends TestCase {
     public function testStructureFunctions() {
         createTestTable();
         try {
-            $res = getDefinitionForTable('anything');
+            $res = Database::getDefinitionForTable('anything');
             $this->assertTrue(false, 'Should have thrown an DatabaseUndefinedException exception');
         } catch (DatabaseUndefinedException $e) {
             $this->assertTrue(true, 'Exception received');
         }
 
         try {
-            $res = getDefinitionForField('anything', 'id');
+            $res = Database::getDefinitionForField('anything', 'id');
             $this->assertTrue(false, 'Should have thrown an DatabaseUndefinedException exception');
         } catch (DatabaseUndefinedException $e) {
             $this->assertTrue(true, 'Exception received');
         }
 
         try {
-            $res = getDefinitionForField('test', 'anything');
+            $res = Database::getDefinitionForField('test', 'anything');
             $this->assertTrue(false, 'Should have thrown an DatabaseUndefinedException exception');
         } catch (DatabaseUndefinedException $e) {
             $this->assertTrue(true, 'Exception received');
