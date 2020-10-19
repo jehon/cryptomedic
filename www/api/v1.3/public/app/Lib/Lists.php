@@ -247,10 +247,10 @@ class Lists {
         $examiners = Database::selectAsArray("SELECT username, `name`, codage, inExaminerList FROM users", 'username');
         foreach ($examiners as $examiner) {
             if ($examiner['codage'] > '') {
-                $ec = withCode($examiner['name'], $examiner['codage']);
+                withCode($examiner['name'], $examiner['codage']);
             }
             if ($examiner['inExaminerList'] > 0) {
-                $list[] = $ec;
+                $list[] = $examiner['name'];
             }
         }
         self::$cached['lists']['Examiner'] = $list;
