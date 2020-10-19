@@ -268,10 +268,12 @@ class Lists {
     }
 
     static function getCodes(): array {
+        self::cacheInit();
         return self::$cached['codes'];
     }
 
     static function getAssociations(): array {
+        self::cacheInit();
         return self::$cached['associations'];
     }
 }

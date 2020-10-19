@@ -99,9 +99,10 @@ class AuthController extends Controller {
             $data['prices'][$v->id] = $v;
         }
 
+        // Order is important: getAllList will get all the lists
+        $data['lists'] = Lists::getAllLists();
         $data['codes'] = Lists::getCodes();
         $data['associations'] = Lists::getAssociations();
-        $data['lists'] = Lists::getAllLists();
 
         $data['authorized'] = array_keys(self::$permissions[$data['group']]);
 
