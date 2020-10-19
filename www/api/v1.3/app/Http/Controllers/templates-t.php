@@ -12,7 +12,6 @@
 
 // date_default_timezone_set("GMT");
 
-use Cryptomedic\Lib\Lists;
 use Cryptomedic\Lib\Database;
 use Cryptomedic\Lib\DatabaseUndefinedException;
 
