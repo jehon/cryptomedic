@@ -12,7 +12,6 @@
 
 // date_default_timezone_set("GMT");
 
-use App\Model\References;
 use Cryptomedic\Lib\Lists;
 use Cryptomedic\Lib\Database;
 use Cryptomedic\Lib\DatabaseUndefinedException;
@@ -20,7 +19,6 @@ use Cryptomedic\Lib\DatabaseUndefinedException;
 class t {
   const DATETIMEFORMAT = "short";
 
-  static protected $pdo = false;
   static private $defaultOptions = [
     "baseExpression" => "",
     "writeOnly" => false,
@@ -30,33 +28,11 @@ class t {
     "model" => null
   ];
 
-  /* TODO: Modif BEGIN */
-
-  static $sqlAllTableStructure = array();
-
-  static function setPDO($pdo) {
-    static::$pdo = $pdo;
-  }
-
   static function setDefaultOption($key, $val = true) {
     if (!array_key_exists($key, static::$defaultOptions)) {
       return trace("Setting unsupported option: $key"); // @codeCoverageIgnore
     }
     static::$defaultOptions[$key] = $val;
-  }
-
-  static function cacheSqlStructureFor($sqlTable) {
-    if (!array_key_exists($sqlTable, static::$sqlAllTableStructure)) {
-      static::$sqlAllTableStructure[$sqlTable] = array();
-      foreach (static::$pdo->query("SHOW COLUMNS FROM `{$sqlTable}`") as $row) {
-        static::$sqlAllTableStructure[$sqlTable][$row['Field']] = $row;
-      }
-    }
-    return static::$sqlAllTableStructure[$sqlTable];
-  }
-
-  static function getColumnsOfTable($sqlTable) {
-    return array_keys(static::cacheSqlStructureFor($sqlTable));
   }
 
   var $key;
@@ -87,8 +63,6 @@ class t {
 
     $this->sqlTable = Database::getTableForModel($this->model);
 
-    static::cacheSqlStructureFor($this->sqlTable);
-
     try {
       $this->structure = Database::getDefinitionForField($this->sqlTable, $this->field);
       $this->linked2DB = true;
@@ -108,8 +82,6 @@ class t {
       $this->linked2DB = false;
     }
   }
-
-  /* TODO: Modif END */
 
   function fieldGetKey() {
     $be = $this->options['baseExpression'];

@@ -13,8 +13,6 @@ define('TEMPLATE_ROOT', __DIR__ . "/../../../../../templates/templates");
 
 class TemplatesController extends Controller {
   public function render($category, $name = false) {
-    // if     return (substr($haystack, -$length) === $needle);
-    \t::setPDO(\DB::connection()->getPdo());
     $file = constant('TEMPLATE_ROOT') . '/' . $category . ($name ? '/' . $name : '');
 
     if (file_exists($file . ".html")) {
