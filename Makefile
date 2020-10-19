@@ -75,7 +75,7 @@ setup-computer: deploy-host-key-check
 		echo "Removing old key"; \
 		sed -i "/$(DEPLOY_HOST).*/d" $(SSH_KNOWN_HOSTS) ; \
 	fi
-	echo "Installing the key"
+	@echo "Installing the key"
 	cat ovh.key >> $(SSH_KNOWN_HOSTS)
 
 deploy-host-key-do-update:
@@ -167,7 +167,7 @@ target/e2e/.tested: data-reset www/build/index.html tests/e2e/**
 test-style: target/styles.json
 target/styles.json: target/e2e/.tested
 	npm run --silent test-style
-	echo "Report is at http://localhost:5557/target/style.html"
+	@echo "Report is at http://localhost:5557/target/style.html"
 
 test-style-update-references:
 	@jq -r 'keys[]' target/styles.json | while IFS='' read -r F; do \
