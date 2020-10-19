@@ -234,8 +234,16 @@ class Database {
         }
 
         global $myconfig;
-        Database::$pdoConnection = new PDO("mysql:host={$myconfig["database"]["host"]};dbname={$myconfig["database"]["schema"]}", $myconfig["database"]["username"], $myconfig["database"]["password"]);
-        Database::$pdoConnection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        Database::$pdoConnection = new PDO(
+            "mysql:host={$myconfig["database"]["host"]};dbname={$myconfig["database"]["schema"]};charset=UTF8",
+            $myconfig["database"]["username"],
+            $myconfig["database"]["password"],
+            [
+                // PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8",
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+            ]
+        );
+        // Database::$pdoConnection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 
     static function exec(string $request): int {
