@@ -6,8 +6,8 @@
   "repository": "https://github.com/jehon/cryptomedic",
   "license": "MIT",
   "dependencies": {
-    "angular": "1.8.1",
-    "angular-route": "1.8.1",
+    "angular": "1.8.2",
+    "angular-route": "1.8.2",
     "axios": "0.20.0",
     "bootstrap": "3.4.1",
     "css-inherit": "github:jehon/css-inherit",
