@@ -249,6 +249,20 @@ www/api/$(VAPI)/public/vendor/.dependencies: www/api/$(VAPI)/public/composer.jso
 	")
 	touch www/api/$(VAPI)/public/vendor/.dependencies
 
+dependencies-api-update:
+	$(call run_in_docker,"server","\
+		cd www/api/$(VAPI) \
+		&& composer update \
+	")
+	touch www/api/$(VAPI)/vendor/.dependencies
+
+dependencies-api-bare-update:
+	$(call run_in_docker,"server","\
+		cd www/api/$(VAPI)/public/ \
+		&& composer update \
+	")
+	touch www/api/$(VAPI)/public/vendor/.dependencies
+
 #
 #
 # Build
