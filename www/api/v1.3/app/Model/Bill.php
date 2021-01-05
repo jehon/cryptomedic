@@ -88,7 +88,7 @@ class Bill extends CryptomedicModel {
 		}
 		$list = self::getFieldsList($filter, $fieldList);
 		return "((bills.`"
-			. implode($list, "` > 0) OR (bills.`")
+			. implode("` > 0) OR (bills.`", $list)
 			. "` > 0 ))";
 	}
 
