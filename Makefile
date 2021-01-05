@@ -15,9 +15,9 @@ DOCKERCOMPOSE := HOST_UID=$(shell id -u) HOST_GID=$(shell id -g) docker-compose
 
 SSH_KNOWN_HOSTS := ~/.ssh/known_hosts
 
-DEPLOY_MOUNT := target/remote
-BACKUP_DIR ?= target/backup-online
-DEPLOY_TEST_DIR ?= target/deploy-test-dir
+DEPLOY_MOUNT := tmp/remote
+BACKUP_DIR ?= tmp/backup-online
+DEPLOY_TEST_DIR ?= tmp/deploy-test-dir
 CJS2ESM_DIR := app/cjs2esm
 NM_BIN := node_modules/.bin/
 
@@ -53,7 +53,7 @@ clean: deploy-unmount stop
 	rm -fr www/api/$(VAPI)/public/vendor
 	rm -fr vendor
 
-	rm -fr "target/"
+	rm -fr "tmp/"
 	find . -name "*.log" -delete
 	rm -fr www/build
 	rm -fr app/cjs2esm
@@ -148,7 +148,7 @@ test-unit: dependencies-node \
 	npm run test-unit-continuously -- --single-run
 	node tests/report.js
 
-# @NBR_TESTS=$$(cat target/js/junit/TESTS.xml | grep "<testCase" | wc -l); \
+# @NBR_TESTS=$$(cat tmp/js/junit/TESTS.xml | grep "<testCase" | wc -l); \
 # NORM_TESTS=$$( cat tests/unitjs/nbr.txt ); \
 # if [ "$$NBR_TESTS" = "$$NORM_TESTS" ]; then \
 # 	echo "V Correct number of tests"; \
@@ -158,26 +158,26 @@ test-unit: dependencies-node \
 # fi
 
 .PHONY: test-e2e
-test-e2e: target/e2e/.tested
-target/e2e/.tested: data-reset www/build/index.html tests/e2e/**
+test-e2e: tmp/e2e/.tested
+tmp/e2e/.tested: data-reset www/build/index.html tests/e2e/**
 	npm run --silent test-e2e
-	touch target/e2e/.tested
+	touch tmp/e2e/.tested
 
 .PHONY: test-style
-test-style: target/styles.json
-target/styles.json: target/e2e/.tested
+test-style: tmp/styles.json
+tmp/styles.json: tmp/e2e/.tested
 	npm run --silent test-style
-	@echo "Report is at http://localhost:5557/target/style.html"
+	@echo "Report is at http://localhost:5557/tmp/style.html"
 
 test-style-update-references:
-	@jq -r 'keys[]' target/styles.json | while IFS='' read -r F; do \
+	@jq -r 'keys[]' tmp/styles.json | while IFS='' read -r F; do \
 		echo "updating $$F"; \
-		cp "target/e2e/browsers/firefox/$$F" "tests/style/references/$$F"; \
+		cp "tmp/e2e/browsers/firefox/$$F" "tests/style/references/$$F"; \
 	done
 
 # rsync --progress --recursive --delete \
 # 	--include "*_reference.png" --include "*_reference_*.png" --exclude "*" \
-# 	target/e2e/browsers/firefox/ tests/style/references
+# 	tmp/e2e/browsers/firefox/ tests/style/references
 
 #
 # Deploy command
@@ -203,9 +203,9 @@ logs:
 #
 #
 .PHONY: setup-structure
-setup-structure: target/structure-exists
-target/structure-exists:
-	mkdir -p    target/
+setup-structure: tmp/structure-exists
+tmp/structure-exists:
+	mkdir -p    tmp/
 	mkdir -p    live/
 	mkdir -p    www/api/$(VAPI)/bootstrap/cache/
 	mkdir -p    www/api/$(VAPI)/app/public
@@ -214,7 +214,7 @@ target/structure-exists:
 	mkdir -p    www/api/$(VAPI)/storage/framework/views
 	mkdir -p    www/api/$(VAPI)/storage/logs/
 	touch       www/api/$(VAPI)/storage/logs/laravel.log
-	touch       target/structure-exists
+	touch       tmp/structure-exists
 
 #
 #
@@ -233,7 +233,7 @@ node_modules/.dependencies: package.json package-lock.json
 
 .PHONY: depencencies-api
 dependencies-api: www/api/$(VAPI)/vendor/.dependencies dependencies-api-bare
-www/api/$(VAPI)/vendor/.dependencies: www/api/$(VAPI)/composer.json www/api/$(VAPI)/composer.lock target/structure-exists docker-started
+www/api/$(VAPI)/vendor/.dependencies: www/api/$(VAPI)/composer.json www/api/$(VAPI)/composer.lock tmp/structure-exists docker-started
 	$(call run_in_docker,"server","\
 		cd www/api/$(VAPI) \
 		&& composer install \
@@ -242,7 +242,7 @@ www/api/$(VAPI)/vendor/.dependencies: www/api/$(VAPI)/composer.json www/api/$(VA
 
 .PHONY: depencencies-api-bare
 dependencies-api-bare: www/api/$(VAPI)/public/vendor/.dependencies
-www/api/$(VAPI)/public/vendor/.dependencies: www/api/$(VAPI)/public/composer.json www/api/$(VAPI)/public/composer.lock target/structure-exists docker-started
+www/api/$(VAPI)/public/vendor/.dependencies: www/api/$(VAPI)/public/composer.json www/api/$(VAPI)/public/composer.lock tmp/structure-exists docker-started
 	$(call run_in_docker,"server","\
 		cd www/api/$(VAPI)/public/ \
 		&& composer install \
@@ -370,7 +370,7 @@ deploy-unmount:
 
 deploy-backup: deploy-mount
 	rsync --progress --recursive --times --delete \
-		--exclude target/ \
+		--exclude tmp/ \
 		$(DEPLOY_MOUNT)/ $(BACKUP_DIR)
 
 deploy-rsync:	deploy-host-key-test \
@@ -389,5 +389,5 @@ deploy-rsync:	deploy-host-key-test \
 # 	rsync --dry-run -r -i --omit-dir-times --ignore-times \
 # 		--exclude node_modules \
 # 		--exclude .git \
-# 		--exclude target \
+# 		--exclude tmp \
 # 		$(DEPLOY_MOUNT) $(BACKUP_DIR)

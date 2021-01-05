@@ -38,8 +38,8 @@ P *.log
 P /config-site.php
 - /live
 P /live
-- /target/
-P /target/
+- /tmp/
+P /tmp/
 P /www/api/*/storage
 
 - /*

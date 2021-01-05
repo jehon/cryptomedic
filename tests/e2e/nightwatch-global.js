@@ -1,6 +1,6 @@
 
 const fse = require('fs-extra');
-fse.emptyDirSync(__dirname + '/target/e2e');
+fse.emptyDirSync(__dirname + '/tmp/e2e');
 
 // var timestampStart = 0;
 

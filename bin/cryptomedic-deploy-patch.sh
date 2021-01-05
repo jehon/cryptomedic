@@ -17,7 +17,7 @@ trap 'failure ${LINENO} "$BASH_COMMAND"' ERR
 
 SCRIPT_DIR="$( dirname "${BASH_SOURCE[0]}" )"
 PRJ_DIR="$(dirname "$SCRIPT_DIR")"
-TMP="$PRJ_DIR/target/"
+TMP="$PRJ_DIR/tmp/"
 
 CRYPTOMEDIC_UPLOAD_HOST="ftp.cluster003.ovh.net"
 if [ -z "$CRYPTOMEDIC_UPLOAD_USER" ]; then
@@ -37,7 +37,7 @@ fi
 
 
 # Create a "3"rd out where all structured messages will go
-# This allow us to capture stdout and stderr everywhere, 
+# This allow us to capture stdout and stderr everywhere,
 # while still letting passing through the messages "Success / failure / ..."
 exec 3>&1
 
@@ -95,8 +95,8 @@ echo "Sorting remote file"
 sort --stable "$TMP"deploy-remote.txt > "$TMP"deploy-remote.sorted.txt
 
 echo "Building the diff"
-{ 
-	diff -u "$TMP"deploy-remote.sorted.txt "$TMP"deploy-local.sorted.txt || true 
+{
+	diff -u "$TMP"deploy-remote.sorted.txt "$TMP"deploy-local.sorted.txt || true
 } | tee "$TMP"deploy-diff-1-raw.txt \
 	| grep -e "^[+-]" | grep -v "^+++" | grep -v "^---" | tee "$TMP"deploy-diff-2-filtered.txt \
     | cut -c 1,13- | tee "$TMP"deploy-diff-3-changed.txt \

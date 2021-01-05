@@ -11,7 +11,7 @@ const globP = (pattern, options) => {
 };
 
 const refPath = path.join(__dirname, 'references');
-const testPath = path.join(__dirname, '..', '..', 'target', 'e2e', 'browsers', 'firefox');
+const testPath = path.join(__dirname, '..', '..', 'tmp', 'e2e', 'browsers', 'firefox');
 
 let refs = globP('*', { cwd: refPath });
 let tests = globP('*_reference*.png', { cwd: testPath });
@@ -88,7 +88,7 @@ Promise.allSettled(Array.from(fullList).map(f => {
     });
 }))
     .finally(() => {
-        fs.writeFileSync(path.join(__dirname, '../../target/styles.json'), JSON.stringify(result));
+        fs.writeFileSync(path.join(__dirname, '../../tmp/styles.json'), JSON.stringify(result));
     }).then((_result) => {
         console.info('*** Final result ***');
 

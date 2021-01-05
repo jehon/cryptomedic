@@ -31,7 +31,7 @@ $myconfig = [
     'storage'    => __DIR__ . "/live/storage/",
 
     # Storage of temporary files
-    'temporary'  => __DIR__ . "/target/webTemp/"
+    'temporary'  => __DIR__ . "/tmp/webTemp/"
   ]
 ];
 
@@ -60,7 +60,7 @@ function myShowConfigByPathForCmdLine($path) {
   }
   if (is_array($array)) {
     # If we have an array, then display the various keys
-    echo implode(array_keys($array), "\n"). "\n";
+    echo implode(array_keys($array), "\n") . "\n";
   } else {
     echo $array;
   }
