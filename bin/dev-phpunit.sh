@@ -10,8 +10,8 @@ PRJ_DIR=$(dirname "$SCRIPT_DIR")
 # apt update && apt install php-xdebug
 
 cd "$PRJ_DIR"
-mkdir -p target
-chmod a+rwx target
+mkdir -p tmp
+chmod a+rwx tmp
 
 cd "$PRJ_DIR/www/api"
 
@@ -33,7 +33,7 @@ testOne() {
 	if [[ -z "$T" ]] || [[ "$T" == "laravel" ]]; then
 		if [ -f "phpunit.xml" ]; then
 			echo "** Laravel $V starting **"
-			REPORTS="$PRJ_DIR/target/php$V"
+			REPORTS="$PRJ_DIR/tmp/php$V"
 			mkdir -p "$REPORTS"
 			chmod a+wx "$REPORTS"
 			./vendor/bin/phpunit  --coverage-html "$REPORTS" --coverage-xml "$REPORTS" "$@"
@@ -49,7 +49,7 @@ testOne() {
 			pushd "public" >/dev/null || exit 255
 			echo "** Bare $V starting **"
 
-			REPORTS="$PRJ_DIR/target/php$V-bare"
+			REPORTS="$PRJ_DIR/tmp/php$V-bare"
 			mkdir -p "$REPORTS"
 			chmod a+wx "$REPORTS"
 			./vendor/bin/phpunit  --coverage-html "$REPORTS" --coverage-xml "$REPORTS" "$@"
@@ -90,4 +90,4 @@ fi
 
 cd "$PRJ_DIR"
 
-chmod a+rwX target/
+chmod a+rwX tmp/

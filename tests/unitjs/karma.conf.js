@@ -4,7 +4,7 @@
 const path = require('path');
 const fse = require('fs-extra');
 const root = path.dirname(path.dirname(__dirname));
-fse.emptyDirSync(path.join(root, '/target/js'));
+fse.emptyDirSync(path.join(root, '/tmp/js'));
 
 // https://blog.cepharum.de/en/post/natively-unit-testing-es6-modules-in-browser-including-coverage.html
 
@@ -56,7 +56,7 @@ module.exports = function (config) {
         },
 
         coverageReporter: {
-            dir: path.join(root, '/target/'),
+            dir: path.join(root, '/tmp/'),
             includeAllSources: true,
             reporters: [
                 {
@@ -68,11 +68,11 @@ module.exports = function (config) {
         },
 
         htmlReporter: {
-            outputDir: path.join(root, '/target/js/html/'),
+            outputDir: path.join(root, '/tmp/js/html/'),
         },
 
         junitReporter: {
-            outputDir: 'target/js/junit',
+            outputDir: 'tmp/js/junit',
             useBrowserName: false,
             xmlVersion: 1
         },
