@@ -3,16 +3,13 @@
 namespace App\Exceptions;
 
 use Exception;
-use Illuminate\Auth\AuthenticationException;
+use Symfony\Component\ErrorHandler\Exception\FlattenException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
-use Symfony\Component\Debug\Exception\FlattenException;
-use Symfony\Component\Debug\ExceptionHandler as SymfonyExceptionHandler;
 use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
+use Throwable;
 
-
-class Handler extends ExceptionHandler
-{
+class Handler extends ExceptionHandler {
     /**
      * A list of the exception types that should not be reported.
      *
@@ -27,42 +24,19 @@ class Handler extends ExceptionHandler
     //     \Illuminate\Validation\ValidationException::class,
     // ];
 
-    protected function convertExceptionToResponse(Exception $e)
-    {
+    protected function convertExceptionToResponse(Throwable $e) {
         $html = "\n<pre>"
-                . jTraceEx($e)
-                . "</pre>";
+            . jTraceEx($e)
+            . "</pre>";
 
-        // From parent...
         $e = FlattenException::create($e);
 
-        // $handler = new SymfonyExceptionHandler(config('app.debug'));
-
-        // $html = $handler->getHtml($e);
-        // 500 <= $e->getStatusCode();
         return SymfonyResponse::create($html, $e->getStatusCode(), $e->getHeaders());
     }
-
-    // // For Sentry.io
-    // // See https://sentry.io/amd-chakaria/laravel/getting-started/php-laravel/
-    // public function report(Exception $exception)
-    // {
-    //     global $myconfig;
-    //     if (!$myconfig['bypass']) {
-    //         // Avoid phpunit
-    //         if (app()->bound('sentry') && $this->shouldReport($exception)) {
-    //             app('sentry')->captureException($exception);
-    //         }
-    //     }
-
-    //     parent::report($exception);
-    // }
 }
 
 
-
-
-function jTraceEx($e, $seen=null) {
+function jTraceEx($e, $seen = null) {
     $starter = $seen ? 'Caused by: ' : '';
     $result = array();
     if (!$seen) $seen = array();
@@ -74,17 +48,18 @@ function jTraceEx($e, $seen=null) {
     while (true) {
         $current = "$file:$line";
         if (is_array($seen) && in_array($current, $seen)) {
-            $result[] = sprintf(' ... %d more', count($trace)+1);
+            $result[] = sprintf(' ... %d more', count($trace) + 1);
             break;
         }
         $mine = count($trace) && array_key_exists('class', $trace[0]) && (substr($trace[0]['class'], 0, 3) == "App");
-        $result[] = sprintf(' at %s %s%s%s(%s)',
+        $result[] = sprintf(
+            ' at %s %s%s%s(%s)',
             count($trace) && ($mine ? "***" : '   '),
             count($trace) && array_key_exists('class', $trace[0]) ? str_replace('\\', '.', $trace[0]['class']) : '',
             count($trace) && array_key_exists('class', $trace[0]) && array_key_exists('function', $trace[0]) ? '.' : '',
             count($trace) && array_key_exists('function', $trace[0]) ? str_replace('\\', '.', $trace[0]['function']) : '(main)',
             $line === null ? $file : basename($file) . ':' . $line
-            );
+        );
         if (is_array($seen))
             $seen[] = "$file:$line";
         if (!count($trace))
