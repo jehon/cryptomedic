@@ -22,7 +22,14 @@ make dependencies'''
         sh 'make lint'
       }
     }
-
+    stage('Deploy') {
+      when {
+        branch 'master'
+      }
+      steps {
+        sh 'echo "deploying"'
+      }
+    }
   }
   post {
     always {
