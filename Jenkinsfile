@@ -3,8 +3,9 @@ pipeline {
   stages {
     stage('install') {
       steps {
-        sh '''npm ci
-&& touch node_modules/.dependencies'''
+        sh '''set -e
+npm ci
+touch node_modules/.dependencies'''
       }
     }
 
