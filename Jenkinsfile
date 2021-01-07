@@ -1,11 +1,13 @@
 pipeline {
   agent any
   stages {
-    stage('install') {
+    stage('dependencies') {
       steps {
         sh '''set -e
 npm ci
-touch node_modules/.dependencies'''
+touch node_modules/.dependencies
+
+make dependencies'''
       }
     }
 
