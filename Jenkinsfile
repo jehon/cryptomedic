@@ -1,9 +1,10 @@
 pipeline {
   agent any
   stages {
-    stage('build') {
+    stage('install') {
       steps {
-        sh 'ls'
+        sh '''npm ci
+&& touch node_modules/.dependencies'''
       }
     }
 
