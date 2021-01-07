@@ -22,4 +22,9 @@ touch node_modules/.dependencies'''
     }
 
   }
+  post {
+    always {
+      sh 'docker-compose down'
+    }
+  }
 }
