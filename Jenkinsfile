@@ -10,6 +10,11 @@ pipeline {
     skipStagesAfterUnstable()
   }
   stages {
+    stage('setup') {
+      steps {
+        sh '''make setup-computer'''
+      }
+    }
     stage('dependencies') {
       steps {
         sh '''set -e
