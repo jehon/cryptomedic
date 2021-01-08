@@ -10,7 +10,7 @@ services:
       MYSQL_USER: username
       MYSQL_PASSWORD: password
     ports:
-      - 5556:3306
+      - 3306
 
   phpmyadmin:
     # https://hub.docker.com/r/phpmyadmin/phpmyadmin/
@@ -46,4 +46,5 @@ services:
     # https://hub.docker.com/r/mailhog/mailhog/
     image: mailhog/mailhog
     ports:
+      - 1025
       - 5551:8025 # web server
