@@ -385,6 +385,17 @@ deploy-rsync:	deploy-host-key-test \
 		--delete --delete-excluded \
 		. $(DEPLOY_MOUNT)
 
+deploy-rsync-test:	deploy-host-key-test \
+		setup-structure \
+		dependencies \
+		build \
+		$(DEPLOY_MOUNT)/Makefile
+
+	rsync --recursive --itemize-changes --checksum \
+		--filter='dir-merge /deploy-filter' \
+		--delete --delete-excluded \
+		. $(DEPLOY_MOUNT)
+
 # deploy-backup-compare-with-online: $(BACKUP_DIR)/Makefile
 # 	rsync --dry-run -r -i --omit-dir-times --ignore-times \
 # 		--exclude node_modules \

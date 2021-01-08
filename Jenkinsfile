@@ -6,7 +6,8 @@ pipeline {
     CRYPTOMEDIC_DB_UPGRADE = credentials('CRYPTOMEDIC_DB_UPGRADE')
   }
   options {
-    lock resource: 'cryptomedic_docker_compose'
+    lock resource: 'port_5550'
+    skipStagesAfterUnstable()
   }
   stages {
     stage('dependencies') {
@@ -32,7 +33,11 @@ make dependencies'''
     }
     stage('Deploy test') {
       steps {
-        sh 'make deploy-test'
+        sh '''
+make deploy-mount
+make deploy-rsync-test
+make deploy-umount
+        '''
       }
     }
     stage('Deploy') {
