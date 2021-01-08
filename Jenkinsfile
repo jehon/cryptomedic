@@ -24,7 +24,7 @@ make dependencies'''
     }
     stage('Deploy') {
       when {
-        branch 'master'
+        anyOf { branch 'master' ; branch pattern: "build/.*", comparator: "REGEXP" }
       }
       steps {
         sh 'echo "deploying"'
