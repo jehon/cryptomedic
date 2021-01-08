@@ -380,7 +380,6 @@ deploy-rsync: setup-structure \
 		$(DEPLOY_MOUNT)/Makefile
 
 	rsync --recursive --itemize-changes --checksum \
-		--dry-run \
 		--filter='dir-merge /deploy-filter' \
 		--delete --delete-excluded \
 		. $(DEPLOY_MOUNT)
@@ -391,6 +390,7 @@ deploy-rsync-test: setup-structure \
 		$(DEPLOY_MOUNT)/Makefile
 
 	rsync --recursive --itemize-changes --checksum \
+		--dry-run \
 		--filter='dir-merge /deploy-filter' \
 		--delete --delete-excluded \
 		. $(DEPLOY_MOUNT)
