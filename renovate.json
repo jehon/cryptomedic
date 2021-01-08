@@ -5,7 +5,7 @@
   "ignorePaths": [
     "docker-compose.yml"
   ],
-  "automerge": true,
+  "automerge": false,
   "major": {
     "automerge": false
   }
