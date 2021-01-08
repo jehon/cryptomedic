@@ -17,11 +17,12 @@ pipeline {
     }
     stage('dependencies') {
       steps {
-        sh '''set -e
+        sh '''
+set -e
 npm ci
 touch node_modules/.dependencies
-
-make dependencies'''
+make dependencies
+'''
       }
     }
 
@@ -38,11 +39,7 @@ make dependencies'''
     }
     stage('Deploy test') {
       steps {
-        sh '''
-make deploy-mount
-make deploy-rsync-test
-make deploy-unmount
-        '''
+        sh 'make deploy-rsync-test'
       }
     }
     stage('Deploy') {
@@ -56,8 +53,7 @@ make deploy-unmount
   }
   post {
     always {
-      sh 'docker-compose down'
-      sh 'make deploy-unmount'
+      sh 'make stop'
       junit 'tmp/js/junit/TESTS.xml'
     }
   }
