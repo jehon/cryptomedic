@@ -81,6 +81,7 @@ setup-computer: deploy-host-key-check
 deploy-host-key-do-update:
 	ssh-keyscan -t ssh-rsa $(DEPLOY_HOST) > ovh.key
 
+# Legacy
 deploy-host-key-check:
 	@REMOTE="$(shell ssh-keyscan -t ssh-rsa $(DEPLOY_HOST) 2>/dev/null )"; \
 	STORED="$(shell cat ovh.key)"; \
@@ -373,8 +374,7 @@ deploy-backup: deploy-mount
 		--exclude tmp/ \
 		$(DEPLOY_MOUNT)/ $(BACKUP_DIR)
 
-deploy-rsync:	deploy-host-key-test \
-		setup-structure \
+deploy-rsync: setup-structure \
 		dependencies \
 		build \
 		$(DEPLOY_MOUNT)/Makefile
@@ -385,8 +385,7 @@ deploy-rsync:	deploy-host-key-test \
 		--delete --delete-excluded \
 		. $(DEPLOY_MOUNT)
 
-deploy-rsync-test:	deploy-host-key-test \
-		setup-structure \
+deploy-rsync-test: setup-structure \
 		dependencies \
 		build \
 		$(DEPLOY_MOUNT)/Makefile
