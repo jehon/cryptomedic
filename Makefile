@@ -78,7 +78,7 @@ setup-computer: deploy-host-key-check
 	@echo "Installing the key"
 	cat ovh.key >> $(SSH_KNOWN_HOSTS)
 
-deploy-host-key-do-update:
+update-deploy-host-key:
 	ssh-keyscan -t ssh-rsa $(DEPLOY_HOST) > ovh.key
 
 # Legacy
@@ -107,7 +107,7 @@ docker-started:
 	$(DOCKERCOMPOSE) up -d
 
 .PHONY: stop
-stop:
+stop: deploy-unmount
 	$(DOCKERCOMPOSE) down || true
 
 .PHONY: full
@@ -170,7 +170,7 @@ tmp/styles.json: tmp/e2e/.tested
 	npm run --silent test-style
 	@echo "Report is at http://localhost:5557/tmp/style.html"
 
-test-style-update-references:
+update-test-style-references:
 	@jq -r 'keys[]' tmp/styles.json | while IFS='' read -r F; do \
 		echo "updating $$F"; \
 		cp "tmp/e2e/browsers/firefox/$$F" "tests/style/references/$$F"; \
@@ -250,14 +250,14 @@ www/api/$(VAPI)/public/vendor/.dependencies: www/api/$(VAPI)/public/composer.jso
 	")
 	touch www/api/$(VAPI)/public/vendor/.dependencies
 
-dependencies-api-update:
+update-dependencies-api:
 	$(call run_in_docker,"server","\
 		cd www/api/$(VAPI) \
 		&& composer update \
 	")
 	touch www/api/$(VAPI)/vendor/.dependencies
 
-dependencies-api-bare-update:
+update-dependencies-api-bare:
 	$(call run_in_docker,"server","\
 		cd www/api/$(VAPI)/public/ \
 		&& composer update \
@@ -336,7 +336,22 @@ data-reset: docker-started dependencies-api-bare
 # Deploy
 #
 #
-define deploy-check-config
+
+.PHONY: deploy-backup
+deploy-backup: deploy-mount
+	rsync --progress --recursive --times --delete \
+		--exclude tmp/ \
+		$(DEPLOY_MOUNT)/ $(BACKUP_DIR)
+
+.PHONY: deploy-rsync
+deploy-rsync: | deploy-mount deploy-rsync-act deploy-unmount
+
+.PHONY: deploy-rsync-test
+deploy-rsync-test: | deploy-mount deploy-rsync-noact deploy-unmount
+
+.PHONY: deploy-mount
+deploy-mount: $(DEPLOY_MOUNT)/Makefile
+$(DEPLOY_MOUNT)/Makefile:
 	@if [ -z "$$CRYPTOMEDIC_UPLOAD_USER" ]; then \
 		echo "Missing CRYPTOMEDIC_UPLOAD_USER" >&2; \
 		exit 255; \
@@ -352,29 +367,21 @@ define deploy-check-config
     	exit 255; \
 	fi
 	@echo "Deploy config ok"
-endef
 
-.PHONY: deploy-mount
-deploy-mount: $(DEPLOY_MOUNT)/Makefile
-$(DEPLOY_MOUNT)/Makefile:
-	$(call deploy-check-config)
 	@mkdir -p $(DEPLOY_MOUNT)
 	SSHPASS="$$CRYPTOMEDIC_UPLOAD_PASSWORD" sshpass -e \
 		sshfs -f -o uid=$(shell id -u) \
 			$(CRYPTOMEDIC_UPLOAD_USER)@$(DEPLOY_HOST):/home/$(CRYPTOMEDIC_UPLOAD_USER) $(DEPLOY_MOUNT) \
 			&
 
+.PHONY: deploy-unmount
 deploy-unmount:
 	if [ -r $(DEPLOY_MOUNT)/favicon.ico ]; then \
 		fusermount -u $(DEPLOY_MOUNT); \
 	fi
 
-deploy-backup: deploy-mount
-	rsync --progress --recursive --times --delete \
-		--exclude tmp/ \
-		$(DEPLOY_MOUNT)/ $(BACKUP_DIR)
-
-deploy-rsync: setup-structure \
+.PHONY: deploy-rsync-act
+deploy-rsync-act: setup-structure \
 		dependencies \
 		build \
 		$(DEPLOY_MOUNT)/Makefile
@@ -384,7 +391,8 @@ deploy-rsync: setup-structure \
 		--delete --delete-excluded \
 		. $(DEPLOY_MOUNT)
 
-deploy-rsync-test: setup-structure \
+.PHONY: deploy-rsync-noact
+deploy-rsync-noact: setup-structure \
 		dependencies \
 		build \
 		$(DEPLOY_MOUNT)/Makefile
@@ -394,10 +402,3 @@ deploy-rsync-test: setup-structure \
 		--filter='dir-merge /deploy-filter' \
 		--delete --delete-excluded \
 		. $(DEPLOY_MOUNT)
-
-# deploy-backup-compare-with-online: $(BACKUP_DIR)/Makefile
-# 	rsync --dry-run -r -i --omit-dir-times --ignore-times \
-# 		--exclude node_modules \
-# 		--exclude .git \
-# 		--exclude tmp \
-# 		$(DEPLOY_MOUNT) $(BACKUP_DIR)
