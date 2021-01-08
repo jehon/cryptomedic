@@ -41,7 +41,7 @@ make dependencies'''
         sh '''
 make deploy-mount
 make deploy-rsync-test
-make deploy-umount
+make deploy-unmount
         '''
       }
     }
@@ -57,6 +57,7 @@ make deploy-umount
   post {
     always {
       sh 'docker-compose down'
+      sh 'make deploy-unmount'
       junit 'tmp/js/junit/TESTS.xml'
     }
   }
