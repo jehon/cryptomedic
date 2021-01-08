@@ -37,8 +37,6 @@ services:
     ports:
       - ${CRYPTOMEDIC_PORT:-5080}:80 # Only if the variable is not set in the environment
       - 5557:88
-    # depends_on:
-    # - mysql
     volumes:
       - .:/app
 
