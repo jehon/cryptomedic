@@ -11,7 +11,9 @@ DB_BASE := conf/database/base.sql
 
 DEPLOY_HOST := ftp.cluster003.ovh.net
 
-DOCKERCOMPOSE := HOST_UID=$(shell id -u) HOST_GID=$(shell id -g) docker-compose
+CRYPTOMEDIC_PORT=5080
+
+DOCKERCOMPOSE := CRYPTOMEDIC_PORT=$(CRYPTOMEDIC_PORT) HOST_UID=$(shell id -u) HOST_GID=$(shell id -g) docker-compose
 
 SSH_KNOWN_HOSTS := ~/.ssh/known_hosts
 
@@ -99,11 +101,12 @@ start: setup-structure \
 		build \
 		data-reset
 
-	@echo "Open browser: http://localhost:5557/"
+	@echo "Open browser: http://localhost:$(CRYPTOMEDIC_PORT)/"
 
 .PHONY: docker-started
 docker-started:
-	$(DOCKERCOMPOSE) build server
+	# $(DOCKERCOMPOSE) build server
+	# $(DOCKERCOMPOSE) build dev
 	$(DOCKERCOMPOSE) up -d
 
 .PHONY: stop

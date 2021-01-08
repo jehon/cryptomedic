@@ -35,7 +35,7 @@ services:
       - PRJ_DIR=/app
       - APACHE_DOCUMENT_ROOT=/app/www
     ports:
-      - 5555:80
+      - ${CRYPTOMEDIC_PORT:-5080}:80 # Only if the variable is not set in the environment
       - 5557:88
     # depends_on:
     # - mysql
