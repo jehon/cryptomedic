@@ -39,13 +39,19 @@ make dependencies
       }
     }
     stage('Deploy test') {
+      when {
+        anyOf { branch pattern: "ci/.*", comparator: "REGEXP" }
+      }
       steps {
         sh 'make deploy-rsync-test'
       }
     }
     stage('Deploy') {
+      options {
+        lock resource: 'cryptomedic_production'
+      }
       when {
-        anyOf { branch 'master' ; branch pattern: "build/.*", comparator: "REGEXP" }
+        branch 'master'
       }
       steps {
         sh 'make deploy'
