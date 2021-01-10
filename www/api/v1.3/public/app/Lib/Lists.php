@@ -35,6 +35,18 @@ function sortNatural(array $array): array {
     return $narray;
 }
 
+function resetDataListing() {
+    global $dataListings;
+
+    $dataListings = [
+        "lists" => [],        // List[name] => array(values)
+        "codes" => [],        // array(code => translation/value)
+        "associations" => [], // key => list of associated values (ex: upazilla => [ districts ])
+    ];
+}
+
+resetDataListing();
+
 class Lists {
     use CachedTrait;
 
@@ -43,12 +55,7 @@ class Lists {
     }
 
     static function cacheGenerate(): array {
-        global $dataListings;
-        $dataListings = [
-            "lists" => [],        // List[name] => array(values)
-            "codes" => [],        // array(code => translation/value)
-            "associations" => [], // key => list of associated values (ex: upazilla => [ districts ])
-        ];
+        resetDataListing();
 
         /***********************/
         /**** Common lists ****/
@@ -235,26 +242,42 @@ class Lists {
         /*****************************/
         /*****************************/
 
+        global $dataListings;
         return $dataListings;
     }
 
-    static function getAllLists() {
+    static $dynamicCache = null;
+
+    static function dynamicDataInit() {
         self::cacheInit();
+        if (!self::$dynamicCache) {
+            global $dataListings;
 
-        /* Dynamic listings */
-        /* TODO: handle dynamic listings appart of cached listing ? */
+            resetDataListing();
+            $dynamicData = unserialize(serialize(self::$cached));
 
-        $examiners = Database::selectAsArray("SELECT username, `name`, codage, inExaminerList FROM users", 'username');
-        foreach ($examiners as $examiner) {
-            if ($examiner['codage'] > '') {
-                withCode($examiner['name'], $examiner['codage']);
+            $examiners = Database::selectAsArray("SELECT username, `name`, codage, inExaminerList FROM users", 'username');
+            foreach ($examiners as $examiner) {
+                if ($examiner['codage'] > '') {
+
+                    // This will modify $dataListings
+                    withCode($examiner['name'], $examiner['codage']);
+                }
+                if ($examiner['inExaminerList'] > 0) {
+                    $list[] = $examiner['name'];
+                }
             }
-            if ($examiner['inExaminerList'] > 0) {
-                $list[] = $examiner['name'];
-            }
+
+            $dynamicData['lists']['Examiner'] = $list;
+            $dynamicData['codes'] = array_merge($dynamicData['codes'], $dataListings['codes']);
+
+            self::$dynamicCache = $dynamicData;
         }
-        self::$cached['lists']['Examiner'] = $list;
-        return self::$cached['lists'];
+    }
+
+    static function getAllLists() {
+        self::dynamicDataInit();
+        return self::$dynamicCache['lists'];
     }
 
     static function getList(string $name): array {
@@ -268,12 +291,13 @@ class Lists {
     }
 
     static function getCodes(): array {
-        self::cacheInit();
-        return self::$cached['codes'];
+        self::dynamicDataInit();
+
+        return self::$dynamicCache['codes'];
     }
 
     static function getAssociations(): array {
-        self::cacheInit();
-        return self::$cached['associations'];
+        self::dynamicDataInit();
+        return self::$dynamicCache['associations'];
     }
 }

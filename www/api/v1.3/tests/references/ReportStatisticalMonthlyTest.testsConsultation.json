@@ -92,6 +92,7 @@
             "CMOSH": 0,
             "CMOSHDeviceCenter": 0,
             "OtherField": 0,
+            "VirtualConsultation": 0,
             "unspecified": 0
         },
         "surgical_Burn_release": 0,

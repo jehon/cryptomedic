@@ -50,7 +50,11 @@ class RouteReferenceTestCase extends TestCase {
 			echo $text;
 		}
 
-		$response->assertStatus($opt->getExpected());
+		if ($opt->getExpected()) {
+			$response->assertStatus($opt->getExpected());
+		} else {
+			$response->assertSuccessful();
+		}
 
 		if (!$opt->getAsJson()) {
 			return $text;
@@ -88,7 +92,7 @@ class RouteReferenceTestCase extends TestCase {
 
 		$jsonFiltered = json_decode(
 			preg_replace(
-				'/"(created_at|updated_at)":"[0-9\- :]+"/',
+				'/"(created_at|updated_at)":"[0-9\- :T]+(\.0+Z)?"/',
 				'"$1":"<timestamp>"',
 				json_encode($json)
 			)

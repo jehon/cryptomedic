@@ -23,6 +23,22 @@
             }
         },
         {
+            "type": "Appointment",
+            "id": 2,
+            "record": {
+                "id": 2,
+                "created_at": "<timestamp>",
+                "updated_at": "<timestamp>",
+                "lastuser": "Thierry",
+                "patient_id": 1,
+                "Date": "2007-01-10",
+                "ExaminerName": "Ershad",
+                "purpose": null,
+                "Nextappointment": "2015-04-28",
+                "NextCenter": null
+            }
+        },
+        {
             "type": "Bill",
             "id": 1,
             "record": {
@@ -202,22 +218,6 @@
                 "file": "10_2014-11-06_15-32-45.JPG",
                 "Date": "2014-11-04",
                 "comment": ""
-            }
-        },
-        {
-            "type": "Appointment",
-            "id": 2,
-            "record": {
-                "id": 2,
-                "created_at": "<timestamp>",
-                "updated_at": "<timestamp>",
-                "lastuser": "Thierry",
-                "patient_id": 1,
-                "Date": "2007-01-10",
-                "ExaminerName": "Ershad",
-                "purpose": null,
-                "Nextappointment": "2015-04-28",
-                "NextCenter": null
             }
         },
         {

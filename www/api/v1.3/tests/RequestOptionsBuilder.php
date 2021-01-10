@@ -7,7 +7,7 @@ class RequestOptionsBuilder {
   protected $asJson = true;
   protected $method = "GET";
   protected $params = [];
-  protected $expected = 200;
+  protected $expected = 0; // If 0 -> testSuccess() only
   protected $syncCheckpoint = false;
   protected $syncNbr = false;
   protected $reference = false;
@@ -39,7 +39,7 @@ class RequestOptionsBuilder {
   }
 
   public function getAbsoluteUrl() {
-    return "/api/" . basename(dirname(dirname(__FILE__))). "/" . $this->getUrl();
+    return "/api/" . basename(dirname(dirname(__FILE__))) . "/" . $this->getUrl();
   }
 
   public function setUrl($url) {
@@ -168,5 +168,4 @@ class RequestOptionsBuilder {
     $this->reference = null;
     return $this;
   }
-
 }
