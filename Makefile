@@ -106,6 +106,7 @@ start: setup-structure \
 		data-reset
 
 	@echo "Open browser: http://localhost:$(CRYPTOMEDIC_PORT)/"
+	@echo "Test page: http://localhost:$(CRYPTOMEDIC_PORT)/xappx/tests/index.html"
 
 .PHONY: docker-started
 docker-started:
@@ -175,7 +176,7 @@ tmp/e2e/.tested: data-reset www/build/index.html tests/e2e/**
 test-style: tmp/styles.json
 tmp/styles.json: tmp/e2e/.tested
 	npm run --silent test-style
-	@echo "Report is at http://localhost:5557/tmp/style.html"
+	@echo "Report is at http://localhost:$(CRYPTOMEDIC_PORT)/xappx/tmp/style.html"
 
 update-test-style-references:
 	@jq -r 'keys[]' tmp/styles.json | while IFS='' read -r F; do \

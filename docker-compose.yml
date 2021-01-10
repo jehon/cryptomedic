@@ -21,7 +21,7 @@ services:
       PMA_USER: root
       PMA_PASSWORD: password
     ports:
-      - 5550:80
+       - 80
     depends_on:
       - mysql
 
@@ -36,7 +36,6 @@ services:
       - APACHE_DOCUMENT_ROOT=/app/www
     ports:
       - ${CRYPTOMEDIC_PORT:-5080}:80 # Only if the variable is not set in the environment
-      - 5557:88
     volumes:
       - .:/app
 
