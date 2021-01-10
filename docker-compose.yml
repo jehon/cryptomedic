@@ -6,8 +6,8 @@ services:
       context: conf/server/
       dockerfile: Dockerfile
     environment:
-      - HOST_UID=${HOST_UID:-33}
-      - HOST_GID=${HOST_GID:-33}
+      - HOST_UID=${HOST_UID}
+      - HOST_GID=${HOST_GID}
       - PRJ_DIR=/app
       - APACHE_DOCUMENT_ROOT=/app/www
     ports:
