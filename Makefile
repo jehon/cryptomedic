@@ -136,7 +136,7 @@ test: docker-started dependencies build test-api test-unit test-e2e test-style
 
 .PHONY: test-api
 test-api: docker-started dependencies-api data-reset
-	$(call run_in_docker,"server","/app/bin/dev-phpunit.sh bare")
+	$(call run_in_docker,"server","/app/bin/dev-phpunit.sh laravel")
 
 test-api-bare: dependencies-api data-reset
 	$(call run_in_docker,"server","/app/bin/dev-phpunit.sh bare")
