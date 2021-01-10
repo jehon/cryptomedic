@@ -49,6 +49,9 @@ endef
 
 all: start
 
+clear:
+	clear
+
 clean: deploy-unmount stop
 	if [ -r $(DEPLOY_MOUNT_TEST_FILE) ]; then echo "Remote mounted - stopping"; exit 1; fi
 	rm -fr node_modules
