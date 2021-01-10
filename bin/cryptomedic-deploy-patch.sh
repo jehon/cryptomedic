@@ -45,10 +45,13 @@ lftp_connect() {
     echo "open -u $CRYPTOMEDIC_UPLOAD_USER,$CRYPTOMEDIC_UPLOAD_PASSWORD $CRYPTOMEDIC_UPLOAD_HOST";
 }
 
+rm -f sftp.log
+
 sftp_exec() {
 	SSHPASS="$CRYPTOMEDIC_UPLOAD_PASSWORD" sshpass -e \
 		sftp "$CRYPTOMEDIC_UPLOAD_USER@$CRYPTOMEDIC_UPLOAD_HOST" \
 			2>&1 \
+				| tee -a sftp.log \
 				| grep -v "Connected to" \
 				| grep -v "Couldn't create directory" \
 				| grep -v "^sftp" \
@@ -59,6 +62,7 @@ sftp_exec() {
 						return 1
 					fi
 				done
+	echo "**********" >> sftp.log
 }
 
 sftp_put() {
@@ -83,7 +87,7 @@ echo "Updating md5sum.php script [for real]"
 ) | sftp_exec
 
 echo "Getting the md5 from local"
-wget --quiet --content-on-error "http://localhost:5555/maintenance/md5sum.php?filter=local" -O "$TMP"deploy-local.txt
+wget --quiet --content-on-error "http://localhost:5080/maintenance/md5sum.php?filter=local" -O "$TMP"deploy-local.txt
 
 echo "Getting the md5 from remote"
 wget --quiet --content-on-error "http://www.cryptomedic.org/maintenance/md5sum.php?filter=remote" -O "$TMP"deploy-remote.txt

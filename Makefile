@@ -340,68 +340,68 @@ data-reset: docker-started dependencies-api-bare
 #
 #
 
-.PHONY: deploy-backup
-deploy-backup: deploy-mount
-	rsync --progress --recursive --times --delete \
-		--exclude tmp/ \
-		$(DEPLOY_MOUNT)/ $(BACKUP_DIR)
+# .PHONY: deploy-backup
+# deploy-backup: deploy-mount
+# 	rsync --progress --recursive --times --delete \
+# 		--exclude tmp/ \
+# 		$(DEPLOY_MOUNT)/ $(BACKUP_DIR)
 
-.PHONY: deploy-rsync
-deploy-rsync: | deploy-mount deploy-rsync-act deploy-unmount
+# .PHONY: deploy-rsync
+# deploy-rsync: | deploy-mount deploy-rsync-act deploy-unmount
 
-.PHONY: deploy-rsync-test
-deploy-rsync-test: | deploy-mount deploy-rsync-noact deploy-unmount
+# .PHONY: deploy-rsync-test
+# deploy-rsync-test: | deploy-mount deploy-rsync-noact deploy-unmount
 
-.PHONY: deploy-mount
-deploy-mount: $(DEPLOY_MOUNT)/Makefile
-$(DEPLOY_MOUNT)/Makefile:
-	@if [ -z "$$CRYPTOMEDIC_UPLOAD_USER" ]; then \
-		echo "Missing CRYPTOMEDIC_UPLOAD_USER" >&2; \
-		exit 255; \
-	fi
+# .PHONY: deploy-mount
+# deploy-mount:
+# 	@if [ -z "$$CRYPTOMEDIC_UPLOAD_USER" ]; then \
+# 		echo "Missing CRYPTOMEDIC_UPLOAD_USER" >&2; \
+# 		exit 255; \
+# 	fi
 
-	@if [ -z "$$CRYPTOMEDIC_UPLOAD_PASSWORD" ]; then \
-		echo "Missing CRYPTOMEDIC_UPLOAD_PASSWORD" >&2; \
-		exit 255; \
-	fi
+# 	@if [ -z "$$CRYPTOMEDIC_UPLOAD_PASSWORD" ]; then \
+# 		echo "Missing CRYPTOMEDIC_UPLOAD_PASSWORD" >&2; \
+# 		exit 255; \
+# 	fi
 
-	@if [ -z "$$CRYPTOMEDIC_DB_UPGRADE" ]; then \
-    	echo "Missing CRYPTOMEDIC_DB_UPGRADE" >&2; \
-    	exit 255; \
-	fi
-	@echo "Deploy config ok"
+# 	@if [ -z "$$CRYPTOMEDIC_DB_UPGRADE" ]; then \
+#     	echo "Missing CRYPTOMEDIC_DB_UPGRADE" >&2; \
+#     	exit 255; \
+# 	fi
+# 	@echo "Deploy config ok"
 
-	@mkdir -p $(DEPLOY_MOUNT)
-	SSHPASS="$$CRYPTOMEDIC_UPLOAD_PASSWORD" sshpass -e \
-		sshfs -f -o uid=$(shell id -u) \
-			$(CRYPTOMEDIC_UPLOAD_USER)@$(DEPLOY_HOST):/home/$(CRYPTOMEDIC_UPLOAD_USER) $(DEPLOY_MOUNT) \
-			&
+# 	@mkdir -p $(DEPLOY_MOUNT)
+# 	if [ ! -r $(DEPLOY_MOUNT)/config.php ]; then \
+# 		SSHPASS="$$CRYPTOMEDIC_UPLOAD_PASSWORD" sshpass -e \
+# 			sshfs -f -o uid=$(shell id -u) \
+# 				$(CRYPTOMEDIC_UPLOAD_USER)@$(DEPLOY_HOST):/home/$(CRYPTOMEDIC_UPLOAD_USER) $(DEPLOY_MOUNT) & \
+# 	fi \
 
-.PHONY: deploy-unmount
-deploy-unmount:
-	if [ -r $(DEPLOY_MOUNT)/favicon.ico ]; then \
-		fusermount -u $(DEPLOY_MOUNT); \
-	fi
+# .PHONY: deploy-unmount
+# deploy-unmount:
+# 	if [ -r $(DEPLOY_MOUNT)/favicon.ico ]; then \
+# 		fusermount -u $(DEPLOY_MOUNT); \
+# 	fi
 
-.PHONY: deploy-rsync-act
-deploy-rsync-act: setup-structure \
-		dependencies \
-		build \
-		$(DEPLOY_MOUNT)/Makefile
+# .PHONY: deploy-rsync-act
+# deploy-rsync-act: setup-structure \
+# 		dependencies \
+# 		build \
+# 		deploy-mount
 
-	rsync --recursive --itemize-changes --checksum \
-		--filter='dir-merge /deploy-filter' \
-		--delete --delete-excluded \
-		. $(DEPLOY_MOUNT)
+# 	rsync --recursive --itemize-changes --times \
+# 		--filter='dir-merge /deploy-filter' \
+# 		--delete --delete-excluded \
+# 		. $(DEPLOY_MOUNT)
 
-.PHONY: deploy-rsync-noact
-deploy-rsync-noact: setup-structure \
-		dependencies \
-		build \
-		$(DEPLOY_MOUNT)/Makefile
+# .PHONY: deploy-rsync-noact
+# deploy-rsync-noact: setup-structure \
+# 		dependencies \
+# 		build \
+# 		deploy-mount
 
-	rsync --recursive --itemize-changes --checksum \
-		--dry-run \
-		--filter='dir-merge /deploy-filter' \
-		--delete --delete-excluded \
-		. $(DEPLOY_MOUNT)
+# 	rsync --recursive --itemize-changes --times \
+# 		--dry-run \
+# 		--filter='dir-merge /deploy-filter' \
+# 		--delete --delete-excluded \
+# 		. $(DEPLOY_MOUNT)

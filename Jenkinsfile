@@ -43,7 +43,7 @@ make dependencies
         anyOf { branch pattern: "ci/.*", comparator: "REGEXP" }
       }
       steps {
-        sh 'make deploy-rsync-test'
+        sh 'make deploy-test'
       }
     }
     stage('Deploy') {
