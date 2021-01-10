@@ -20,7 +20,7 @@ date_default_timezone_set("GMT");
 |
 */
 
-require __DIR__.'/../vendor/autoload.php';
+require __DIR__ . '/../vendor/autoload.php';
 
 /*
 |--------------------------------------------------------------------------
@@ -33,7 +33,7 @@ require __DIR__.'/../vendor/autoload.php';
 |
 */
 
-$compiledPath = __DIR__.'/cache/compiled.php';
+$compiledPath = __DIR__ . '/cache/compiled.php';
 
 if (file_exists($compiledPath)) {
     require $compiledPath;
