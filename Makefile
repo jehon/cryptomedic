@@ -49,6 +49,7 @@ endef
 all: start
 
 clean: deploy-unmount stop
+	if [ -r tmp/remote ]; then echo "Remote mounted - stopping"; exit 1; fi
 	rm -fr node_modules
 	rm -fr www/maintenance/vendor
 	rm -fr www/api/$(VAPI)/vendor
@@ -352,36 +353,36 @@ data-reset: docker-started dependencies-api-bare
 # .PHONY: deploy-rsync-test
 # deploy-rsync-test: | deploy-mount deploy-rsync-noact deploy-unmount
 
-# .PHONY: deploy-mount
-# deploy-mount:
-# 	@if [ -z "$$CRYPTOMEDIC_UPLOAD_USER" ]; then \
-# 		echo "Missing CRYPTOMEDIC_UPLOAD_USER" >&2; \
-# 		exit 255; \
-# 	fi
+.PHONY: deploy-mount
+deploy-mount:
+	@if [ -z "$$CRYPTOMEDIC_UPLOAD_USER" ]; then \
+		echo "Missing CRYPTOMEDIC_UPLOAD_USER" >&2; \
+		exit 255; \
+	fi
 
-# 	@if [ -z "$$CRYPTOMEDIC_UPLOAD_PASSWORD" ]; then \
-# 		echo "Missing CRYPTOMEDIC_UPLOAD_PASSWORD" >&2; \
-# 		exit 255; \
-# 	fi
+	@if [ -z "$$CRYPTOMEDIC_UPLOAD_PASSWORD" ]; then \
+		echo "Missing CRYPTOMEDIC_UPLOAD_PASSWORD" >&2; \
+		exit 255; \
+	fi
 
-# 	@if [ -z "$$CRYPTOMEDIC_DB_UPGRADE" ]; then \
-#     	echo "Missing CRYPTOMEDIC_DB_UPGRADE" >&2; \
-#     	exit 255; \
-# 	fi
-# 	@echo "Deploy config ok"
+	@if [ -z "$$CRYPTOMEDIC_DB_UPGRADE" ]; then \
+    	echo "Missing CRYPTOMEDIC_DB_UPGRADE" >&2; \
+    	exit 255; \
+	fi
+	@echo "Deploy config ok"
 
-# 	@mkdir -p $(DEPLOY_MOUNT)
-# 	if [ ! -r $(DEPLOY_MOUNT)/config.php ]; then \
-# 		SSHPASS="$$CRYPTOMEDIC_UPLOAD_PASSWORD" sshpass -e \
-# 			sshfs -f -o uid=$(shell id -u) \
-# 				$(CRYPTOMEDIC_UPLOAD_USER)@$(DEPLOY_HOST):/home/$(CRYPTOMEDIC_UPLOAD_USER) $(DEPLOY_MOUNT) & \
-# 	fi \
+	@mkdir -p $(DEPLOY_MOUNT)
+	if [ ! -r $(DEPLOY_MOUNT)/config.php ]; then \
+		SSHPASS="$$CRYPTOMEDIC_UPLOAD_PASSWORD" sshpass -e \
+			sshfs -f -o uid=$(shell id -u) \
+				$(CRYPTOMEDIC_UPLOAD_USER)@$(DEPLOY_HOST):/home/$(CRYPTOMEDIC_UPLOAD_USER) $(DEPLOY_MOUNT) & \
+	fi \
 
-# .PHONY: deploy-unmount
-# deploy-unmount:
-# 	if [ -r $(DEPLOY_MOUNT)/favicon.ico ]; then \
-# 		fusermount -u $(DEPLOY_MOUNT); \
-# 	fi
+.PHONY: deploy-unmount
+deploy-unmount:
+	if [ -r $(DEPLOY_MOUNT)/favicon.ico ]; then \
+		fusermount -u $(DEPLOY_MOUNT); \
+	fi
 
 # .PHONY: deploy-rsync-act
 # deploy-rsync-act: setup-structure \
