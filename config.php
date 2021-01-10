@@ -60,7 +60,7 @@ function myShowConfigByPathForCmdLine($path) {
   }
   if (is_array($array)) {
     # If we have an array, then display the various keys
-    echo implode(array_keys($array), "\n") . "\n";
+    echo implode("\n", array_keys($array)) . "\n";
   } else {
     echo $array;
   }
