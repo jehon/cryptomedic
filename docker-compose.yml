@@ -1,5 +1,20 @@
 version: "3.1"
 services:
+
+  server:
+    build:
+      context: conf/server/
+      dockerfile: Dockerfile
+    environment:
+      - HOST_UID=${HOST_UID:-33}
+      - HOST_GID=${HOST_GID:-33}
+      - PRJ_DIR=/app
+      - APACHE_DOCUMENT_ROOT=/app/www
+    ports:
+      - ${CRYPTOMEDIC_PORT:-5080}:80 # Only if the variable is not set in the environment
+    volumes:
+      - .:/app
+
   mysql:
     # https://hub.docker.com/_/mysql/
     # OVH is on 5.5
@@ -24,20 +39,6 @@ services:
        - 80
     depends_on:
       - mysql
-
-  server:
-    build:
-      context: conf/server/
-      dockerfile: Dockerfile
-    environment:
-      - HOST_UID=${HOST_UID:-33}
-      - HOST_GID=${HOST_GID:-33}
-      - PRJ_DIR=/app
-      - APACHE_DOCUMENT_ROOT=/app/www
-    ports:
-      - ${CRYPTOMEDIC_PORT:-5080}:80 # Only if the variable is not set in the environment
-    volumes:
-      - .:/app
 
   mail:
     # https://hub.docker.com/r/mailhog/mailhog/
