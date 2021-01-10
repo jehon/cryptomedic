@@ -6,18 +6,16 @@ class ReportSurgicalTest extends RouteReferenceTestCase {
 	static public $month = "2014-01";
 	static public $year = "2014";
 
-	public function setUp() {
+	public function setUp(): void {
 		parent::setUp();
 		$this->opt = $this->getNewRequestOptionsBuilder()
 			->setUrl("reports/surgical")
-			->setParams([ 'period' => self::MONTHLY, 'month' => self::$month ])
-			->withReference()
-			;
+			->setParams(['period' => self::MONTHLY, 'month' => self::$month])
+			->withReference();
 	}
 
 	public function testsByDay() {
-		$opt = $this->opt->clone()
-			;
+		$opt = $this->opt->clone();
 
 		$json = $this->myRunAssertQueryForRoles($opt);
 		$this->assertArrayHasKey('params', $json);
@@ -25,20 +23,19 @@ class ReportSurgicalTest extends RouteReferenceTestCase {
 		$this->assertEquals(1, count($json['list']));
 
 		$this->assertEquals(1, count($json['list']));
-		foreach($json['list'] as $k => $v) {
+		foreach ($json['list'] as $k => $v) {
 			$this->assertEquals(substr($v['Date'], 0, 7), self::$month);
 		}
 	}
 
 	public function testsByDayAndCenter() {
 		$opt = $this->opt->clone()
-			->addParam("center", "Ukhia")
-			;
+			->addParam("center", "Ukhia");
 
 		$json = $this->myRunAssertQueryForRoles($opt);
 
 		$this->assertEquals(1, count($json['list']));
-		foreach($json['list'] as $k => $v) {
+		foreach ($json['list'] as $k => $v) {
 			$this->assertEquals(substr($v['Date'], 0, 7), self::$month);
 			$this->assertEquals($v['Center'], "Ukhia");
 		}

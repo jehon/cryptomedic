@@ -2,39 +2,25 @@
 
 namespace App\Exceptions;
 
-use Exception;
-use Symfony\Component\ErrorHandler\Exception\FlattenException;
-use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-
-use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 use Throwable;
+use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 
 class Handler extends ExceptionHandler {
-    /**
-     * A list of the exception types that should not be reported.
-     *
-     * @var array
-     */
-    // protected $dontReport = [
-    //     \Illuminate\Auth\AuthenticationException::class,
-    //     \Illuminate\Auth\Access\AuthorizationException::class,
-    //     \Symfony\Component\HttpKernel\Exception\HttpException::class,
-    //     \Illuminate\Database\Eloquent\ModelNotFoundException::class,
-    //     \Illuminate\Session\TokenMismatchException::class,
-    //     \Illuminate\Validation\ValidationException::class,
-    // ];
-
     protected function convertExceptionToResponse(Throwable $e) {
         $html = "\n<pre>"
             . jTraceEx($e)
             . "</pre>";
 
-        $e = FlattenException::create($e);
-
-        return SymfonyResponse::create($html, $e->getStatusCode(), $e->getHeaders());
+        // $e = FlattenException::create($e);
+        if (method_exists($e, 'getStatusCode')) {
+            return response($html, $e->getStatusCode(), $e->getHeaders());
+        } else {
+            return response($html, 500);
+        }
+        //     return SymfonyResponse::create($html, $e->getStatusCode(), $e->getHeaders());
     }
 }
-
 
 function jTraceEx($e, $seen = null) {
     $starter = $seen ? 'Caused by: ' : '';

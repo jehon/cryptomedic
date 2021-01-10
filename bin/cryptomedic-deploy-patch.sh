@@ -84,6 +84,8 @@ echo "Updating md5sum.php script [for real]"
 (
 	sftp_put www/maintenance/md5sum.php
 	sftp_put deploy-filter
+	sftp_rm www/api/v1.3/bootstrap/cache/packages.php
+	sftp_rm www/api/v1.3/bootstrap/cache/services.php
 ) | sftp_exec
 
 echo "Getting the md5 from local"
@@ -116,29 +118,31 @@ echo "Building the diff"
 	    done
 	} > "$TMP"deploy-diff-5-sftp-commands.txt
 
-echo "-------------- Differences --------------"
-echo "-------------- Differences --------------"
-echo "-------------- Differences --------------"
-cat "$TMP"deploy-diff-4-sorted.txt
-echo "-------------- Differences --------------"
-echo "-------------- Differences --------------"
-echo "-------------- Differences --------------"
+if [ -r "$TMP"deploy-diff-4-sorted.txt ]; then
+	echo "-------------- Differences --------------"
+	echo "-------------- Differences --------------"
+	echo "-------------- Differences --------------"
+	cat "$TMP"deploy-diff-4-sorted.txt
+	echo "-------------- Differences --------------"
+	echo "-------------- Differences --------------"
+	echo "-------------- Differences --------------"
 
-if [ "$1" == "commit" ]; then
-    echo "*** Commiting ***"
-	sftp_exec < "$TMP"deploy-diff-5-sftp-commands.txt
-else
-    echo "!!!!!!!!!!!!!!!!!!! TEST MODE !!!!!!!!!!!!!!!!!!!!!!"
-    echo "!!!!!!!!!!!!!!!!!!! TEST MODE !!!!!!!!!!!!!!!!!!!!!!"
-    echo "!!!!!!!!!!!!!!!!!!! TEST MODE !!!!!!!!!!!!!!!!!!!!!!"
-	cat $TMP"deploy-diff-5-sftp-commands.txt"
-    echo "!!!!!!!!!!!!!!!!!!! TEST MODE !!!!!!!!!!!!!!!!!!!!!!"
-    echo "!!!!!!!!!!!!!!!!!!! TEST MODE !!!!!!!!!!!!!!!!!!!!!!"
-    echo "!!!!!!!!!!!!!!!!!!! TEST MODE !!!!!!!!!!!!!!!!!!!!!!"
-    echo ""
-    echo "To really commit, use:"
-    echo "$0 commit"
-    echo ""
+	if [ "$1" == "commit" ]; then
+		echo "*** Commiting ***"
+		sftp_exec < "$TMP"deploy-diff-5-sftp-commands.txt
+	else
+		echo "!!!!!!!!!!!!!!!!!!! TEST MODE !!!!!!!!!!!!!!!!!!!!!!"
+		echo "!!!!!!!!!!!!!!!!!!! TEST MODE !!!!!!!!!!!!!!!!!!!!!!"
+		echo "!!!!!!!!!!!!!!!!!!! TEST MODE !!!!!!!!!!!!!!!!!!!!!!"
+		cat "$TMP"deploy-diff-5-sftp-commands.txt
+		echo "!!!!!!!!!!!!!!!!!!! TEST MODE !!!!!!!!!!!!!!!!!!!!!!"
+		echo "!!!!!!!!!!!!!!!!!!! TEST MODE !!!!!!!!!!!!!!!!!!!!!!"
+		echo "!!!!!!!!!!!!!!!!!!! TEST MODE !!!!!!!!!!!!!!!!!!!!!!"
+		echo ""
+		echo "To really commit, use:"
+		echo "$0 commit"
+		echo ""
+	fi
 fi
 
 # Variable necessary for refresh.sh scripts
