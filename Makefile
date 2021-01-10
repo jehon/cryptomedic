@@ -18,6 +18,7 @@ DOCKERCOMPOSE := CRYPTOMEDIC_PORT=$(CRYPTOMEDIC_PORT) HOST_UID=$(shell id -u) HO
 SSH_KNOWN_HOSTS := ~/.ssh/known_hosts
 
 DEPLOY_MOUNT := tmp/remote
+DEPLOY_MOUNT_TEST_FILE := $(DEPLOY_MOUNT)/favicon.ico
 BACKUP_DIR ?= tmp/backup-online
 DEPLOY_TEST_DIR ?= tmp/deploy-test-dir
 CJS2ESM_DIR := app/cjs2esm
@@ -49,7 +50,7 @@ endef
 all: start
 
 clean: deploy-unmount stop
-	if [ -r tmp/remote ]; then echo "Remote mounted - stopping"; exit 1; fi
+	if [ -r $(DEPLOY_MOUNT_TEST_FILE) ]; then echo "Remote mounted - stopping"; exit 1; fi
 	rm -fr node_modules
 	rm -fr www/maintenance/vendor
 	rm -fr www/api/$(VAPI)/vendor
@@ -72,7 +73,17 @@ clean: deploy-unmount stop
 
 setup: setup-structure
 
-setup-computer: deploy-host-key-check
+setup-computer:
+# Test the remote key
+	@REMOTE="$(shell ssh-keyscan -t ssh-rsa $(DEPLOY_HOST) 2>/dev/null )"; \
+	STORED="$(shell cat ovh.key)"; \
+	if [ "$$REMOTE" != "$$STORED" ]; then \
+		echo "Key is updated on remote host"; \
+		exit 1; \
+	else  \
+		echo "Key is still the same, good!"; \
+	fi
+
 	mkdir -p ~/.ssh/
 	@if grep $(DEPLOY_HOST) $(SSH_KNOWN_HOSTS) >/dev/null; then \
 		echo "Removing old key"; \
@@ -83,17 +94,6 @@ setup-computer: deploy-host-key-check
 
 update-deploy-host-key:
 	ssh-keyscan -t ssh-rsa $(DEPLOY_HOST) > ovh.key
-
-# Legacy
-deploy-host-key-check:
-	@REMOTE="$(shell ssh-keyscan -t ssh-rsa $(DEPLOY_HOST) 2>/dev/null )"; \
-	STORED="$(shell cat ovh.key)"; \
-	if [ "$$REMOTE" != "$$STORED" ]; then \
-		echo "Key is updated on remote host"; \
-		exit 1; \
-	else  \
-		echo "Key is still the same, good!"; \
-	fi
 
 .PHONY: start
 start: setup-structure \
@@ -372,7 +372,7 @@ deploy-mount:
 	@echo "Deploy config ok"
 
 	@mkdir -p $(DEPLOY_MOUNT)
-	if [ ! -r $(DEPLOY_MOUNT)/config.php ]; then \
+	if [ ! -r $(DEPLOY_MOUNT_TEST_FILE) ]; then \
 		SSHPASS="$$CRYPTOMEDIC_UPLOAD_PASSWORD" sshpass -e \
 			sshfs -f -o uid=$(shell id -u) \
 				$(CRYPTOMEDIC_UPLOAD_USER)@$(DEPLOY_HOST):/home/$(CRYPTOMEDIC_UPLOAD_USER) $(DEPLOY_MOUNT) & \
@@ -380,7 +380,7 @@ deploy-mount:
 
 .PHONY: deploy-unmount
 deploy-unmount:
-	if [ -r $(DEPLOY_MOUNT)/favicon.ico ]; then \
+	if [ -r $(DEPLOY_MOUNT_TEST_FILE) ]; then \
 		fusermount -u $(DEPLOY_MOUNT); \
 	fi
 
