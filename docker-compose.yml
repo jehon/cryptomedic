@@ -40,9 +40,12 @@ services:
     depends_on:
       - mysql
 
+# docker-compose run --publish 5081:8025 mail bash
   mail:
     # https://hub.docker.com/r/mailhog/mailhog/
     image: mailhog/mailhog
+    environment:
+      MH_UI_WEB_PATH: /mail
     ports:
       - 1025
       - 5551:8025 # web server
