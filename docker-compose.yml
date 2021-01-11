@@ -1,6 +1,5 @@
 version: "3.1"
 services:
-
   server:
     build:
       context: conf/server/
@@ -40,12 +39,13 @@ services:
     depends_on:
       - mysql
 
-# docker-compose run --publish 5081:8025 mail bash
   mail:
     # https://hub.docker.com/r/mailhog/mailhog/
+    # The WS does not work correctly, due to proxy...
     image: mailhog/mailhog
     environment:
-      MH_UI_WEB_PATH: /mail
+      MH_UI_WEB_PATH: /xmailx
     ports:
       - 1025
-      - 5551:8025 # web server
+      - 8025
+
