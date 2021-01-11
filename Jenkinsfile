@@ -44,6 +44,7 @@ make dependencies
       }
       steps {
         sh 'make deploy-test'
+        archiveArtifacts 'tmp/e2e/browsers/firefox/*.png'
       }
     }
     stage('Deploy') {
@@ -61,7 +62,7 @@ make dependencies
   post {
     always {
       sh 'make stop'
-      junit 'tmp/js/junit/TESTS.xml'
+//      junit 'tmp/js/junit/TESTS.xml'
     }
   }
 }
