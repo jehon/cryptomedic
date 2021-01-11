@@ -38,8 +38,8 @@ module.exports = function (config) {
         autoWatch: true,
 
         browsers: [
-            // 'FirefoxHeadless',
-            'ChromeHeadless'
+            'FirefoxHeadless',
+            // 'ChromeHeadless'
         ],
 
         // https://github.com/karma-runner/karma-firefox-launcher/issues/76
