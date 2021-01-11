@@ -2,7 +2,7 @@
 
 'use strict';
 
-let remoteTarget = 'http://localhost:5555/build/index.html';
+let remoteTarget = 'http://localhost:5080/build/index.html';
 
 module.exports = {
     'src_folders': ['tests/e2e/tests'],
