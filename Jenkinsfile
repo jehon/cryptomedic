@@ -16,6 +16,11 @@ pipeline {
         sh '''make setup-computer'''
       }
     }
+    stage('dump') {
+      steps {
+        sh '''make dump'''
+      }
+    }
     stage('dependencies') {
       steps {
         sh '''

@@ -89,7 +89,7 @@ echo "Updating md5sum.php script [for real]"
 ) | sftp_exec
 
 echo "Getting the md5 from local"
-wget --quiet --content-on-error "http://localhost:5080/maintenance/md5sum.php?filter=local" -O "$TMP"deploy-local.txt
+wget --quiet --content-on-error "http://localhost:${CRYPTOMEDIC_PORT:-5080}/maintenance/md5sum.php?filter=local" -O "$TMP"deploy-local.txt
 
 echo "Getting the md5 from remote"
 wget --quiet --content-on-error "http://www.cryptomedic.org/maintenance/md5sum.php?filter=remote" -O "$TMP"deploy-remote.txt

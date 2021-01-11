@@ -23,7 +23,7 @@ sudo apt install docker-compose docker.io make wget nodejs
 
 | Command    | What does it does?
 |------------|----------------------
-| make start | will install and start the whole stack. Open localhost:5080 to view cryptomedic
+| make start | will install and start the whole stack. Open localhost:${CRYPTOMEDIC_PORT:-5080} to view cryptomedic
 | make stop  | stop the server
 | make test  | launch the tests
 | make clean | clean up generated files
