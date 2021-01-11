@@ -110,8 +110,8 @@ start: setup-structure \
 
 .PHONY: docker-started
 docker-started:
-	# $(DOCKERCOMPOSE) build server
-	# $(DOCKERCOMPOSE) build dev
+# $(DOCKERCOMPOSE) build server
+# $(DOCKERCOMPOSE) build dev
 	$(DOCKERCOMPOSE) up --build -d
 
 .PHONY: stop
@@ -241,8 +241,8 @@ node_modules/.dependencies: package.json package-lock.json
 	touch node_modules/.dependencies
 
 .PHONY: depencencies-api
-dependencies-api: www/api/$(VAPI)/vendor/.dependencies dependencies-api-bare
-www/api/$(VAPI)/vendor/.dependencies: www/api/$(VAPI)/composer.json www/api/$(VAPI)/composer.lock tmp/structure-exists docker-started
+dependencies-api: www/api/$(VAPI)/vendor/.dependencies
+www/api/$(VAPI)/vendor/.dependencies: www/api/$(VAPI)/composer.json www/api/$(VAPI)/composer.lock tmp/structure-exists docker-started dependencies-api-bare
 	$(call run_in_docker,"server","\
 		cd www/api/$(VAPI) \
 		&& composer install \
