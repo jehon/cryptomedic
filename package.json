@@ -46,6 +46,7 @@
     "jasmine-webcomponents": "github:jehon/jasmine-webcomponents",
     "karma": "5.2.2",
     "karma-chrome-launcher": "3.1.0",
+    "karma-firefox-launcher": "2.1.0",
     "karma-coverage": "2.0.3",
     "karma-html-reporter": "latest",
     "karma-jasmine": "3.3.1",
