@@ -2,7 +2,12 @@
 
 'use strict';
 
-let remoteTarget = 'http://localhost:5080/build/index.html';
+let port = "5080";
+if (process.env['CRYPTOMEDIC_PORT']) {
+    port = process.env['CRYPTOMEDIC_PORT'];
+}
+
+let remoteTarget = `http://localhost:${port}/build/index.html`;
 
 module.exports = {
     'src_folders': ['tests/e2e/tests'],

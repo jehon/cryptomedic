@@ -7,7 +7,7 @@ PRJ_DIR="$(dirname "$SCRIPT_DIR")"
 
 if [ -z "$CRYPTOMEDIC_HTTP_HOST" ]; then
     echo "Deploying locally"
-    CRYPTOMEDIC_HTTP_HOST="localhost:5080"
+    CRYPTOMEDIC_HTTP_HOST="localhost:${CRYPTOMEDIC_PORT:-5080}"
     CRYPTOMEDIC_DB_UPGRADE="$( php "$PRJ_DIR/config.php" "security.key" )"
 fi
 

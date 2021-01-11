@@ -46,6 +46,8 @@ define recursive-dependencies
 	)
 endef
 
+dump:
+	@echo "CRYPTOMEDIC_PORT: $(CRYPTOMEDIC_PORT)"
 
 all: start
 
