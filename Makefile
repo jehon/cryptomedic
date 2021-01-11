@@ -11,7 +11,7 @@ DB_BASE := conf/database/base.sql
 
 DEPLOY_HOST := ftp.cluster003.ovh.net
 
-CRYPTOMEDIC_PORT=5080
+CRYPTOMEDIC_PORT ?= 5080
 
 DOCKERCOMPOSE := CRYPTOMEDIC_PORT=$(CRYPTOMEDIC_PORT) HOST_UID=$(shell id -u) HOST_GID=$(shell id -g) docker-compose
 
