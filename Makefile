@@ -112,7 +112,7 @@ start: setup-structure \
 docker-started:
 	# $(DOCKERCOMPOSE) build server
 	# $(DOCKERCOMPOSE) build dev
-	$(DOCKERCOMPOSE) up -d
+	$(DOCKERCOMPOSE) up --build -d
 
 .PHONY: stop
 stop: deploy-unmount
