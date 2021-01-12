@@ -26,11 +26,14 @@
     "@babel/plugin-proposal-nullish-coalescing-operator": "7.12.1",
     "@babel/plugin-proposal-optional-chaining": "7.12.7",
     "@babel/plugin-syntax-import-meta": "7.10.4",
+    "@commitlint/cli": "11.0.0",
+    "@commitlint/config-conventional": "11.0.0",
     "axios-mock-adapter": "1.18.2",
     "babel-eslint": "10.1.0",
     "babel-loader": "8.2.2",
     "babel-plugin-transform-commonjs": "1.1.6",
     "chromedriver": "85.0.1",
+    "commitizen": "4.2.2",
     "css-loader": "5.0.0",
     "eslint": "7.12.0",
     "eslint-plugin-jsdoc": "30.7.3",
@@ -41,13 +44,14 @@
     "html-webpack-plugin": "4.4.1",
     "htmlhint": "0.14.1",
     "http-server": "0.12.3",
+    "husky": "4.3.7",
     "imports-loader": "1.2.0",
     "jasmine": "3.6.3",
     "jasmine-webcomponents": "github:jehon/jasmine-webcomponents",
     "karma": "5.2.2",
     "karma-chrome-launcher": "3.1.0",
-    "karma-firefox-launcher": "2.1.0",
     "karma-coverage": "2.0.3",
+    "karma-firefox-launcher": "2.1.0",
     "karma-html-reporter": "latest",
     "karma-jasmine": "3.3.1",
     "karma-jasmine-es6": "0.0.3",
@@ -56,6 +60,7 @@
     "karma-junit-reporter": "2.0.1",
     "karma-read-json": "1.1.0",
     "kill-by-port": "0.0.1",
+    "lint-staged": "10.5.3",
     "nightwatch": "1.5.1",
     "nightwatch-html-reporter": "2.0.6",
     "pixelmatch": "5.2.1",
@@ -74,5 +79,9 @@
     "test-style": "tests/style/screenshots-test.js",
     "eslint": "eslint .",
     "stylelint": "stylelint app/**/*.css"
+  },
+  "lint-staged": {
+    "*.{js,jsx}": "eslint",
+    "*.css": "stylelint"
   }
 }
