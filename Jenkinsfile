@@ -65,7 +65,7 @@ make dependencies
     }
   }
   post {
-    always {
+    cleanup {
       sh 'make stop'
 //      junit 'tmp/js/junit/TESTS.xml'
     }
