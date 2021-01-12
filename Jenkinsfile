@@ -67,7 +67,8 @@ make dependencies
   post {
     always {
       sh 'make stop'
-      junit 'tmp/js/junit/*.xml' 'tmp/phpv*/index*.xml'
+      junit 'tmp/js/junit/*.xml'
+      junit 'tmp/phpv*/index*.xml'
       deleteDir() /* clean up our workspace */
     }
   }
