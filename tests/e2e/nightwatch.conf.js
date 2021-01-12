@@ -2,7 +2,7 @@
 
 'use strict';
 
-let port = "5080";
+let port = '5080';
 if (process.env['CRYPTOMEDIC_PORT']) {
     port = process.env['CRYPTOMEDIC_PORT'];
 }
