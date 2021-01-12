@@ -65,9 +65,9 @@ make dependencies
     }
   }
   post {
-    cleanup {
+    always {
       sh 'make stop'
-//      junit 'tmp/js/junit/TESTS.xml'
+      deleteDir() /* clean up our workspace */
     }
   }
 }
