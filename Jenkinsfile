@@ -13,12 +13,12 @@ pipeline {
   stages {
     stage('setup') {
       steps {
-        sh '''make setup-computer'''
+        sh 'make setup-computer'
       }
     }
     stage('dump') {
       steps {
-        sh '''make dump'''
+        sh 'make dump'
       }
     }
     stage('dependencies') {
@@ -67,6 +67,7 @@ make dependencies
   post {
     always {
       sh 'make stop'
+      junit 'tmp/js/junit/*.xml' 'tmp/phpv*/index*.xml'
       deleteDir() /* clean up our workspace */
     }
   }
