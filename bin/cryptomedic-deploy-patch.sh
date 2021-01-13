@@ -54,7 +54,7 @@ sftp_exec() {
 				| tee -a sftp.log \
 				| grep -v "Connected to" \
 				| grep -v "Couldn't create directory" \
-				| grep -v "^sftp" \
+				| ( grep -v "^sftp" || [[ $? == 1 ]] ) \
 				| while read -r R ; do
 					echo "$R"
 					if [[ "$R" =~ "No such file or directory" ]]; then
@@ -100,6 +100,10 @@ sort --stable "$TMP"deploy-local.txt > "$TMP"deploy-local.sorted.txt
 echo "Sorting remote file"
 sort --stable "$TMP"deploy-remote.txt > "$TMP"deploy-remote.sorted.txt
 
+if diff -u "$TMP"deploy-remote.sorted.txt "$TMP"deploy-local.sorted.txt ; then
+	echo "No diff found"
+	exit 0
+fi
 echo "Building the diff"
 {
 	diff -u "$TMP"deploy-remote.sorted.txt "$TMP"deploy-local.sorted.txt || true
