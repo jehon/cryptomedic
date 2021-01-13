@@ -23,7 +23,7 @@ services:
       MYSQL_DATABASE: cryptomedic
       MYSQL_USER: username
       MYSQL_PASSWORD: password
-    ports:
+    expose:
       - 3306
 
   phpmyadmin:
@@ -34,7 +34,7 @@ services:
       PMA_PORT: 3306
       PMA_USER: root
       PMA_PASSWORD: password
-    ports:
+    expose:
        - 80
     depends_on:
       - mysql
@@ -45,7 +45,7 @@ services:
     image: mailhog/mailhog
     environment:
       MH_UI_WEB_PATH: /xmailx
-    ports:
+    expose:
       - 1025
       - 8025
 
