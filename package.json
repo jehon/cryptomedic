@@ -35,7 +35,7 @@
     "chromedriver": "87.0.5",
     "commitizen": "4.2.2",
     "css-loader": "5.0.1",
-    "eslint": "7.17.0",
+    "eslint": "7.18.0",
     "eslint-plugin-jsdoc": "31.0.5",
     "file-loader": "6.2.0",
     "fs-extra": "latest",
