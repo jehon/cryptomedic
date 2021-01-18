@@ -9,8 +9,8 @@ services:
       - HOST_GID=${HOST_GID}
       - PRJ_DIR=/app
       - APACHE_DOCUMENT_ROOT=/app/www
-    ports:
-      - ${CRYPTOMEDIC_PORT:-5080}:80 # Only if the variable is not set in the environment
+    expose:
+      - 80
     volumes:
       - .:/app
 
@@ -49,3 +49,14 @@ services:
       - 1025
       - 8025
 
+  dev:
+    build:
+      context: conf/dev
+      dockerfile: Dockerfile
+    environment:
+      - HOST_UID=${HOST_UID}
+      - HOST_GID=${HOST_GID}
+    volumes:
+      - .:/app
+    ports:
+      - ${CRYPTOMEDIC_PORT2:-5080}:80 # Only if the variable is not set in the environment
