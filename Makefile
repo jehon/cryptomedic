@@ -100,10 +100,6 @@ setup-computer:
 update-deploy-host-key:
 	ssh-keyscan -t ssh-rsa $(DEPLOY_HOST) > ovh.key
 
-.PHONY: trigger-jenkins
-trigger-jenkins:
-	curl -X POST "http://$(JENKINS_TOKEN)@$(JENKINS_HOST)/job/cryptomedic/job/$(shell git branch --show-current)/build?delay=0sec"
-
 .PHONY: start
 start: setup-structure \
 		docker-started \
