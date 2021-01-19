@@ -7,6 +7,7 @@ pipeline {
     CRYPTOMEDIC_PORT = 10580
   }
   options {
+    ansiColor('xterm')
     lock resource: 'port_${CRYPTOMEDIC_PORT}'
     skipStagesAfterUnstable()
   }
