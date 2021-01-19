@@ -1,26 +1,24 @@
 # https://hub.docker.com/_/ubuntu/
 
+# use https://hub.docker.com/_/php ?
+# FROM php:7.3-apache
+
 FROM ubuntu:20.10
+
+ENV DEBIAN_FRONTEND=noninteractive
 
 WORKDIR /app
 
-RUN DEBIAN_FRONTEND=noninteractive apt update
+RUN apt-get update
 
 # enable some extensions
-RUN DEBIAN_FRONTEND=noninteractive apt install -y \
-	curl rsync \
+RUN apt-get install -y \
 	apache2 \
-	php libapache2-mod-php php-mysql \
-	php-xdebug php-curl php-gd php-intl php-json php-mbstring php-xml php-zip \
-	ssmtp \
-	unzip \
-	git
+	php libapache2-mod-php  \
+	php-xdebug php-mysql php-curl php-gd php-mbstring php-xml \
+	ssmtp
 
-RUN a2enmod expires rewrite proxy proxy_http proxy_html proxy_connect proxy_wstunnel
-
-# Note: to specify composer version: | php -- --version 1.9.3
-RUN cd /usr/local/bin && curl -s https://getcomposer.org/installer | php
-RUN ln -s /usr/local/bin/composer.phar /usr/local/bin/composer
+RUN a2enmod expires rewrite
 
 COPY ssmtp.conf /etc/ssmtp/ssmtp.conf
 
