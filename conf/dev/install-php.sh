@@ -8,8 +8,8 @@ mkdir -p /setup/composer
 # PHP: https://www.tecmint.com/install-different-php-versions-in-ubuntu/
 
 add-apt-repository --yes ppa:ondrej/php
-apt-get install php7.3 \
-    php7.3-xdebug php7.3-curl php7.3-gd php7.3-intl php7.3-json php7.3-mbstring php7.3-xml php7.3-zip
+apt-get install --yes php7.3 php7.3-xdebug php7.3-mbstring php7.3-xml
+# php7.3-curl php7.3-gd php7.3-intl php7.3-json
 
 update-alternatives --set php /usr/bin/php7.3
 
