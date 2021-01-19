@@ -245,7 +245,7 @@ node_modules/.dependencies: package.json package-lock.json
 .PHONY: depencencies-api
 dependencies-api: www/api/$(VAPI)/vendor/.dependencies
 www/api/$(VAPI)/vendor/.dependencies: www/api/$(VAPI)/composer.json www/api/$(VAPI)/composer.lock tmp/structure-exists docker-started dependencies-api-bare
-	$(call run_in_docker,"server","\
+	$(call run_in_docker,"dev","\
 		cd www/api/$(VAPI) \
 		&& composer install \
 	")
@@ -254,21 +254,21 @@ www/api/$(VAPI)/vendor/.dependencies: www/api/$(VAPI)/composer.json www/api/$(VA
 .PHONY: depencencies-api-bare
 dependencies-api-bare: www/api/$(VAPI)/public/vendor/.dependencies
 www/api/$(VAPI)/public/vendor/.dependencies: www/api/$(VAPI)/public/composer.json www/api/$(VAPI)/public/composer.lock tmp/structure-exists docker-started
-	$(call run_in_docker,"server","\
+	$(call run_in_docker,"dev","\
 		cd www/api/$(VAPI)/public/ \
 		&& composer install \
 	")
 	touch www/api/$(VAPI)/public/vendor/.dependencies
 
 update-dependencies-api:
-	$(call run_in_docker,"server","\
+	$(call run_in_docker,"dev","\
 		cd www/api/$(VAPI) \
 		&& composer update \
 	")
 	touch www/api/$(VAPI)/vendor/.dependencies
 
 update-dependencies-api-bare:
-	$(call run_in_docker,"server","\
+	$(call run_in_docker,"dev","\
 		cd www/api/$(VAPI)/public/ \
 		&& composer update \
 	")
