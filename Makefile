@@ -30,7 +30,7 @@ define ensure_folder_empty
 endef
 
 define run_in_docker
-	$(DOCKERCOMPOSE) exec --user $(shell id -u) -T $(1) /bin/bash -c $(2)
+	$(DOCKERCOMPOSE) exec --user $(shell id -u) -T "$(1)" /bin/bash -c $(2)
 endef
 
 # See https://coderwall.com/p/cezf6g/define-your-own-function-in-a-makefile
@@ -142,14 +142,14 @@ test: docker-started dependencies build test-api test-unit test-e2e test-style
 
 .PHONY: test-api
 test-api: docker-started dependencies-api data-reset
-	$(call run_in_docker,"server","/app/bin/dev-phpunit.sh laravel")
+	$(call run_in_docker,server,"/app/bin/dev-phpunit.sh laravel")
 
 test-api-bare: dependencies-api data-reset
-	$(call run_in_docker,"server","/app/bin/dev-phpunit.sh bare")
+	$(call run_in_docker,server,"/app/bin/dev-phpunit.sh bare")
 
 .PHONY: test-api-commit
 test-api-commit: docker-started dependencies-api data-reset
-	$(call run_in_docker,"server","/app/bin/dev-phpunit.sh COMMIT")
+	$(call run_in_docker,server,"/app/bin/dev-phpunit.sh COMMIT")
 
 .PHONY: test-unit
 test-unit: dependencies-node \
@@ -245,7 +245,7 @@ node_modules/.dependencies: package.json package-lock.json
 .PHONY: depencencies-api
 dependencies-api: www/api/$(VAPI)/vendor/.dependencies
 www/api/$(VAPI)/vendor/.dependencies: www/api/$(VAPI)/composer.json www/api/$(VAPI)/composer.lock tmp/structure-exists docker-started dependencies-api-bare
-	$(call run_in_docker,"dev","\
+	$(call run_in_docker,dev,"\
 		cd www/api/$(VAPI) \
 		&& composer install \
 	")
@@ -254,21 +254,21 @@ www/api/$(VAPI)/vendor/.dependencies: www/api/$(VAPI)/composer.json www/api/$(VA
 .PHONY: depencencies-api-bare
 dependencies-api-bare: www/api/$(VAPI)/public/vendor/.dependencies
 www/api/$(VAPI)/public/vendor/.dependencies: www/api/$(VAPI)/public/composer.json www/api/$(VAPI)/public/composer.lock tmp/structure-exists docker-started
-	$(call run_in_docker,"dev","\
+	$(call run_in_docker,dev,"\
 		cd www/api/$(VAPI)/public/ \
 		&& composer install \
 	")
 	touch www/api/$(VAPI)/public/vendor/.dependencies
 
 update-dependencies-api:
-	$(call run_in_docker,"dev","\
+	$(call run_in_docker,dev,"\
 		cd www/api/$(VAPI) \
 		&& composer update \
 	")
 	touch www/api/$(VAPI)/vendor/.dependencies
 
 update-dependencies-api-bare:
-	$(call run_in_docker,"dev","\
+	$(call run_in_docker,dev,"\
 		cd www/api/$(VAPI)/public/ \
 		&& composer update \
 	")
@@ -309,19 +309,19 @@ $(CJS2ESM_DIR)/platform.js: node_modules/platform/platform.js
 #
 .PHONY: database-backup
 database-backup:
-	$(call run_in_docker,"mysql", "mysqldump -u root -p$(DBROOTPASS) $(DBNAME)") > $(DB_BASE)
+	$(call run_in_docker,mysql, "mysqldump -u root -p$(DBROOTPASS) $(DBNAME)") > $(DB_BASE)
 
 .PHONY: data-reset
 data-reset: docker-started dependencies-api-bare
 # Remove all trace of previous sessions
-	$(call run_in_docker,"server","find /tmp/laravel -type f -delete")
+	$(call run_in_docker,server,"find /tmp/laravel -type f -delete")
 
 # Live folder
 	rsync -a --delete live-for-test/ live/
 
 # Reset database
-	$(call run_in_docker,"mysql", "while ! mysql -u root -p$(DBROOTPASS) --database=mysql -e 'Show tables;' >/dev/null; do sleep 1; done")
-	$(call run_in_docker,"mysql"," \
+	$(call run_in_docker,mysql, "while ! mysql -u root -p$(DBROOTPASS) --database=mysql -e 'Show tables;' >/dev/null; do sleep 1; done")
+	$(call run_in_docker,mysql," \
 		mysql -u root -p$(DBROOTPASS) --database=mysql -e \" \
 			USE mysql; \
 			DROP SCHEMA IF EXISTS $(DBNAME); \
