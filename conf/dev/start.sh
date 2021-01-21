@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 
-whoami
+id
 
 apachectl -D FOREGROUND || tail /var/log/apache2/error.log
