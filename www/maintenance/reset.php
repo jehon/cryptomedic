@@ -14,9 +14,30 @@ if ($_REQUEST['pwd'] != $myconfig['security']['key']) {
     die("No correct pwd given");
 }
 
-function deleteFileFromGlob($file) {
-    $files = glob($file);
+function deleteRecursively($filepath) {
+    if (is_dir($filepath)) {
+        if (substr($filepath, strlen($filepath) - 1, 1) != '/') {
+            $filepath .= '/';
+        }
+        $files = glob($filepath . '*', GLOB_MARK);
+        foreach ($files as $file) {
+            if (is_dir($file)) {
+                deleteRecursively($file);
+            } else {
+                unlink($file);
+            }
+        }
+    }
+    rmdir($filepath);
+}
+
+function deleteFileFromGlob($glob) {
+    $files = glob($glob);
     foreach ($files as $file) {
+        if (is_dir($file)) {
+            deleteRecursively($file);
+        }
+
         if (is_file($file)) {
             echo "Removing $file\n";
             unlink($file);
@@ -26,14 +47,23 @@ function deleteFileFromGlob($file) {
 
 try {
     http_response_code(500);
+    ob_start();
     echo "\nRunning\n";
 
     deleteFileFromGlob(__DIR__ . "/../api/*/bootstrap/cache/*");
     deleteFileFromGlob(__DIR__ . "/../api/*/storage/framework/cache/cache.php");
 
+    if ($_REQUEST['env'] && $_REQUEST['env'] == 'dev') {
+        // Clean up local structure
+        // $(call run_in_docker,server,"find /tmp/laravel -type f -delete")
+        deleteFileFromGlob('/tmp/laravel/*');
+    }
+
     echo "\n\nDone\n";
     http_response_code(200);
+    ob_end_flush();
 } catch (Exception $e) {
-    echo "Failed: " . $e->getMessage();
     http_response_code(500);
+    ob_end_flush();
+    echo "Failed: " . $e->getMessage();
 }
