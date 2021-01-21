@@ -36,7 +36,7 @@ testOne() {
 			REPORTS="$PRJ_DIR/tmp/php$V"
 			mkdir -p "$REPORTS"
 			chmod a+wx "$REPORTS"
-			./vendor/bin/phpunit  --coverage-html "$REPORTS" --coverage-xml "$REPORTS" "$@"
+			XDEBUG_MODE=coverage ./vendor/bin/phpunit  --coverage-html "$REPORTS" --coverage-xml "$REPORTS" "$@"
 			chmod -R a+wx "$REPORTS"
 			echo "** Laravel $V done **"
 		else
