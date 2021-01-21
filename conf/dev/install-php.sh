@@ -2,16 +2,34 @@
 
 set -e
 
+PHPVERSION="7.3"
+
+###############################
+#
+# Install php version $PHPVERSION
+#
+#
+echo "* Installing php version $PHPVERSION"
+
 mkdir -p /setup/tmp
-mkdir -p /setup/composer
 
 # PHP: https://www.tecmint.com/install-different-php-versions-in-ubuntu/
 
 add-apt-repository --yes ppa:ondrej/php
-apt-get install --yes php7.3 php7.3-xdebug php7.3-mbstring php7.3-xml
-# php7.3-curl php7.3-gd php7.3-intl php7.3-json
+apt-get install --yes php${PHPVERSION} php${PHPVERSION}-xdebug php${PHPVERSION}-mbstring php${PHPVERSION}-xml php${PHPVERSION}-mysql
+# php${PHPVERSION}-curl php${PHPVERSION}-gd php${PHPVERSION}-intl php${PHPVERSION}-json
 
-update-alternatives --set php /usr/bin/php7.3
+update-alternatives --set php /usr/bin/php${PHPVERSION}
+
+
+###############################
+#
+# Install composer
+#
+#
+echo "* Installing composer"
+
+mkdir -p /setup/composer
 
 # Note: to specify composer version: | php -- --version 1.9.3
 curl https://getcomposer.org/installer \

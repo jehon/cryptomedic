@@ -1,35 +1,35 @@
-# https://hub.docker.com/_/ubuntu/
+#
+# https://hub.docker.com/_/php
+#
+# See https://github.com/docker-library/docs/blob/master/php/variant-apache.md
+#
+FROM php:7.3-apache
 
-FROM ubuntu:20.10
+RUN a2enmod expires rewrite
 
-WORKDIR /app
+ENV APACHE_DOCUMENT_ROOT /app/www
+RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
+RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 
-RUN DEBIAN_FRONTEND=noninteractive apt update
+ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
+RUN chmod +x /usr/local/bin/install-php-extensions
 
-# enable some extensions
-RUN DEBIAN_FRONTEND=noninteractive apt install -y \
-	curl rsync \
-	apache2 \
-	php libapache2-mod-php php-mysql \
-	php-xdebug php-curl php-gd php-intl php-json php-mbstring php-xml php-zip \
-	ssmtp \
-	unzip \
-	git
-
-RUN a2enmod expires rewrite proxy proxy_http proxy_html proxy_connect proxy_wstunnel
-
-# Note: to specify composer version: | php -- --version 1.9.3
-RUN cd /usr/local/bin && curl -s https://getcomposer.org/installer | php
-RUN ln -s /usr/local/bin/composer.phar /usr/local/bin/composer
+# mbstring, xml already installed
+RUN install-php-extensions gd pdo_mysql xdebug
 
 COPY ssmtp.conf /etc/ssmtp/ssmtp.conf
 
-COPY website.conf /etc/apache2/sites-enabled/website.conf
-RUN rm -fr /etc/apache2/sites-enabled/000-default.conf
-COPY php.ini /etc/php/7.2/apache2/conf.d/99-php.ini
+COPY php.ini /etc/php/7.3/apache2/conf.d/99-php.ini
 
-COPY start.sh /start.sh
-RUN chmod +x /start.sh
+RUN mkdir -p \
+    /tmp/laravel/framework \
+    /tmp/laravel/framework/cache \
+    /tmp/laravel/framework/sessions \
+    /tmp/laravel/framework/views \
+    /tmp/laravel/app \
+    /tmp/laravel/app/public \
+    /tmp/laravel/logs
 
-# https://stackoverflow.com/a/49765176/1954789
-CMD /start.sh
+RUN chmod -R 777 /tmp/laravel/
+
+WORKDIR /app
