@@ -301,9 +301,6 @@ database-backup:
 
 .PHONY: data-reset
 data-reset: docker-started dependencies-api-bare
-# Remove all trace of previous sessions
-	$(call run_in_docker,server,"find /tmp/laravel -type f -delete")
-
 # Live folder
 	rsync -a --delete live-for-test/ live/
 
