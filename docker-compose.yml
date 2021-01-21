@@ -4,11 +4,7 @@ services:
     build:
       context: conf/server/
       dockerfile: Dockerfile
-    environment:
-      - HOST_UID=${HOST_UID}
-      - HOST_GID=${HOST_GID}
-      - PRJ_DIR=/app
-      - APACHE_DOCUMENT_ROOT=/app/www
+    user: "${UID:-1000}:${GID:-1000}"
     expose:
       - 80
     volumes:
