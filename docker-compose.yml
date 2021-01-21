@@ -53,6 +53,7 @@ services:
     build:
       context: conf/dev
       dockerfile: Dockerfile
+    user: "${UID:-1000}:${GID:-1000}"
     environment:
       - HOST_UID=${HOST_UID}
       - HOST_GID=${HOST_GID}

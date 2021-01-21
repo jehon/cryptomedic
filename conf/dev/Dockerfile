@@ -40,8 +40,24 @@ RUN mkdir -p /setup
 ADD . /setup
 RUN chmod +x /setup/*.sh
 
+###################
+#
+# Apache2 config
+#
+
+# Because we will not run as www-data...
+RUN chmod a+rwx -R /var/log/apache2
+RUN mkdir -p /var/run/apache2
+RUN chmod a+rwx -R /var/run/apache2
+
 COPY website.conf /etc/apache2/sites-enabled/website.conf
 RUN rm -fr /etc/apache2/sites-enabled/000-default.conf
+
+###################
+#
+# Other configs
+#
+#
 
 RUN /setup/install-ovh-key.sh
 RUN /setup/install-php.sh
