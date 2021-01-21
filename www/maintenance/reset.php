@@ -26,6 +26,7 @@ function deleteFileFromGlob($file) {
 
 try {
     http_response_code(500);
+    ob_start();
     echo "\nRunning\n";
 
     deleteFileFromGlob(__DIR__ . "/../api/*/bootstrap/cache/*");
@@ -33,7 +34,9 @@ try {
 
     echo "\n\nDone\n";
     http_response_code(200);
+    ob_end_flush();
 } catch (Exception $e) {
-    echo "Failed: " . $e->getMessage();
     http_response_code(500);
+    ob_end_flush();
+    echo "Failed: " . $e->getMessage();
 }
