@@ -4,7 +4,6 @@ const path = require('path');
 const fs = require('fs');
 var child_process = require('child_process');
 
-const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const fse = require('fs-extra');
 
@@ -25,7 +24,7 @@ module.exports = {
     entry: path.join(__dirname, '/app/main.js'),
     output: {
         path: path.join(__dirname, 'www/build/'),
-        filename: '[name]-[chunkhash].js'
+        filename: '[name]-[fullhash].js'
     },
     plugins: [
         new HtmlWebpackPlugin({
@@ -33,15 +32,17 @@ module.exports = {
             filename: path.join(__dirname, 'www/build/index.html'),
             inject: 'head',
             xhtml: true
-        }),
-        new webpack.HashedModuleIdsPlugin()
+        })
     ],
     module: {
         rules: [
-            { test: /\.css$/, loader: 'style-loader!css-loader' },
+            { test: /\.css$/, use: ['style-loader', 'css-loader'] },
             {
                 test: /\.(eot|svg|ttf|woff|woff2|png|svg|jpg|gif)$/,
-                loader: 'file-loader?name=[name]-[hash].[ext]'
+                loader: 'file-loader',
+                options: {
+                    name: '[name]-[contenthash].[ext]'
+                }
             },
             {
                 test: /\.js$/,
@@ -58,8 +59,9 @@ module.exports = {
         ]
     },
     optimization: {
-        splitChunks: {
-            chunks: 'all',
-        },
+        moduleIds: 'deterministic',
+        // splitChunks: {
+        //     chunks: 'all',
+        // },
     },
 };
