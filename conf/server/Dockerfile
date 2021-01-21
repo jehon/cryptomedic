@@ -15,7 +15,7 @@ ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/do
 RUN chmod +x /usr/local/bin/install-php-extensions
 
 # mbstring, xml already installed
-RUN install-php-extensions gd pdo_mysql
+RUN install-php-extensions gd pdo_mysql xdebug
 
 COPY ssmtp.conf /etc/ssmtp/ssmtp.conf
 
@@ -31,3 +31,5 @@ RUN mkdir -p \
     /tmp/laravel/logs
 
 RUN chmod -R 777 /tmp/laravel/
+
+WORKDIR /app
