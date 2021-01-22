@@ -248,48 +248,37 @@ describe(fn(import.meta.url), function () {
         });
 
         describe('with request and filter', function () {
-            it('should resquestAndFilter with filter and have correct results', function (done) {
-                element().request(requestAndFilterBuilder({ url: '/absolute' }))
+            it('should resquestAndFilter with filter and have correct results', async function () {
+                await element().request(requestAndFilterBuilder({ url: '/absolute' }))
                     .then((response) => {
                         expect(response.data).toEqual(123456);
                         expect(response.ok).toBeTruthy();
                         expect(response.status).toBe(200);
-                        done();
                     });
             });
 
-            it('should resquestAndFilter with without treated', function (done) {
-                element().request(requestAndFilterBuilder({ url: '/absolute' }, [404]));
-                setTimeout(() => {
-                    expect(element().isFailed()).toBeFalsy();
-                    done();
-                }, 100);
+            it('should resquestAndFilter with without treated', async function () {
+                await element().request(requestAndFilterBuilder({ url: '/absolute' }, [404]));
+                expect(element().isFailed()).toBeFalsy();
             });
 
-            it('should resquestAndTreat with with treated', function (done) {
-                element().request(requestAndFilterBuilder({ url: '/404' }, [404]));
-                setTimeout(() => {
-                    expect(element().isFailed()).toBeFalsy();
-                    done();
-                }, 100);
+            it('should resquestAndTreat with with treated', async function () {
+                await element().request(requestAndFilterBuilder({ url: '/404' }, [404]));
+                expect(element().isFailed()).toBeFalsy();
             });
 
-            it('should resquestAndFilter with filter and have correct results', function (done) {
-                element().request(requestAndFilterBuilder({ url: '/404' }, [404]))
+            it('should resquestAndFilter with filter and have correct results', async function () {
+                await element().request(requestAndFilterBuilder({ url: '/404' }, [404]))
                     .then((response) => {
                         expect(response.data).toEqual('Test: data is not found');
                         expect(response.ok).toBeFalsy();
                         expect(response.status).toBe(404);
-                        done();
                     });
             });
 
-            it('should resquestAndTreat with with treated', function (done) {
-                element().request(requestAndFilterBuilder({ url: '/404' }, [401]));
-                setTimeout(() => {
-                    expect(element().isFailed()).toBeTruthy();
-                    done();
-                }, 100);
+            it('should resquestAndTreat with with treated', async function () {
+                await expectAsync(element().request(requestAndFilterBuilder({ url: '/404' }, [401]))).toBeRejected();
+                expect(element().isFailed()).toBeTruthy();
             });
         });
 
