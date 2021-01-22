@@ -27,7 +27,7 @@ export default class XRequestor extends XWaiting {
         super();
 
         insertInSlot(this, 'content', `
-            <x-overlay id='error'>
+            <x-overlay id='error' debug-origin='x-requestor'>
                 <x-panel slot='overlay'>
                     <css-inherit></css-inherit>
                     <h1 id='errorMsg'></h1>

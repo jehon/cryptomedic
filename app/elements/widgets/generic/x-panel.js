@@ -11,7 +11,7 @@ export default class XPanel extends HTMLElement {
         super();
         this.attachShadow({ mode: 'open' });
         this.shadowRoot.innerHTML = `
-            <style css-inherit-local>
+            <style css-inherit-local debug-origin='x-panel'>
                 :host {
                     box-sizing: border-box;
                     width: 100%;
@@ -29,7 +29,7 @@ export default class XPanel extends HTMLElement {
                     height: 100%;
 
                     flex-direction: column;
-                    align-items: center; 
+                    align-items: center;
                     justify-content: center;
                 }
             </style>

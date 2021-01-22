@@ -19,7 +19,7 @@ function htmlToElement(html) {
  * @param {string} content - an html string to insert
  */
 export function insertInSlotDefault(element, content) {
-    element.shadowRoot.querySelector('slot').replaceWith(htmlToElement(`<span from-slot>${content}</span>`));
+    element.shadowRoot.querySelector('slot').replaceWith(htmlToElement(`<span from-slot='-' debug-replaced-by='${element.tagName.toLowerCase()}'>${content}</span>`));
 }
 
 /**
@@ -31,5 +31,5 @@ export function insertInSlotDefault(element, content) {
  * @param {string} content - an html string to insert
  */
 export function insertInSlot(element, name, content) {
-    element.shadowRoot.querySelector(`slot[name=${name}]`).replaceWith(htmlToElement(`<span from-slot-${name}>${content}</span>`));
+    element.shadowRoot.querySelector(`slot[name=${name}]`).replaceWith(htmlToElement(`<span from-slot='${name}' debug-replaced-by='${element.tagName.toLowerCase()}'>${content}</span>`));
 }

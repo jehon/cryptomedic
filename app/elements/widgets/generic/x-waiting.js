@@ -9,7 +9,7 @@ import { defineCustomElement } from '../../../js/custom-element.js';
 export default class XWaiting extends XOverlay {
     constructor() {
         super();
-        insertInSlot(this, 'overlay', '<img src=\'/static/img/waiting.gif\' /> Loading<slot name="waiting">');
+        insertInSlot(this, 'overlay', '<img src=\'/static/img/waiting.gif\' /> Loading<slot name="waiting"></slot>');
         insertInSlot(this, 'content', '<slot name="content"></slot>');
     }
 
