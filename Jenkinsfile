@@ -4,10 +4,12 @@ pipeline {
     CRYPTOMEDIC_UPLOAD_USER = credentials('CRYPTOMEDIC_UPLOAD_USER')
     CRYPTOMEDIC_UPLOAD_PASSWORD = credentials('CRYPTOMEDIC_UPLOAD_PASSWORD')
     CRYPTOMEDIC_DB_UPGRADE = credentials('CRYPTOMEDIC_DB_UPGRADE')
-    CRYPTOMEDIC_PORT = 0
+    // Need a port for console call -> do everything from dev is ok
+    CRYPTOMEDIC_PORT = 15080
   }
   options {
     ansiColor('xterm')
+    lock resource: 'port_${CRYPTOMEDIC_PORT}'
     skipStagesAfterUnstable()
   }
   stages {
@@ -53,14 +55,13 @@ make dependencies
       }
     }
     stage('Deploy') {
-      options {
-        lock resource: 'cryptomedic_production'
-      }
       when {
         branch 'master'
       }
       steps {
-        sh 'make deploy'
+        lock(resource: 'cryptomedic_production') {
+          sh 'make deploy'
+        }
       }
     }
   }
