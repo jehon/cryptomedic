@@ -52,14 +52,16 @@ make dependencies
       }
     }
     stage('Deploy') {
-      options {
-        lock resource: 'cryptomedic_production'
-      }
+      // options {
+      //   lock resource: 'cryptomedic_production'
+      // }
       when {
         branch 'master'
       }
       steps {
-        sh 'make deploy'
+        lock(resource: 'cryptomedic_production') {
+          sh 'make deploy'
+        }
       }
     }
   }
