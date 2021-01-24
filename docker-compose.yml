@@ -56,4 +56,4 @@ services:
     volumes:
       - .:/app
     ports:
-      - ${CRYPTOMEDIC_PORT:-5080}:80 # Only if the variable is not set in the environment
+      - ${CRYPTOMEDIC_PORT:-0}:80 # Only if the variable is not set in the environment
