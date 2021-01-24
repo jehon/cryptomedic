@@ -7,6 +7,6 @@ import { toAttributeCase } from './string-utils.js';
  * @returns {string} the calculated name
  */
 export function defineCustomElement(cl, name = toAttributeCase(cl.name)) {
-    window.customElements.define(name, cl);
+    customElements.define(name, cl);
     return name;
 }

@@ -3,7 +3,7 @@ import axios from '../../../cjs2esm/axios.js';
 axios.defaults.timeout = 30 * 1000;
 
 import { API_VERSION } from '../../../config.js';
-import { insertInSlot } from '../../element-helpers.js';
+import { insertInSlotDefault } from '../../element-helpers.js';
 import { setSession } from '../../../js/session.js';
 import { routeToLogin } from '../../../js/router.js';
 
@@ -26,15 +26,15 @@ export default class XRequestor extends XWaiting {
     constructor() {
         super();
 
-        insertInSlot(this, 'content', `
-            <x-overlay id='error'>
+        insertInSlotDefault(this, `
+            <x-overlay id='error' debug-origin='x-requestor'>
                 <x-panel slot='overlay'>
                     <css-inherit></css-inherit>
                     <h1 id='errorMsg'></h1>
                     <div id='errorContent'></div>
                     <x-button action='cancel' id='closeButton'>Dismiss</x-button>
                 </x-panel>
-                <div slot='content'><slot></slot></div>
+                <div><slot></slot></div>
             </x-overlay>
         `);
 
