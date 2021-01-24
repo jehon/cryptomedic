@@ -55,6 +55,9 @@ make dependencies
       }
     }
     stage('Deploy') {
+      // options {
+      //   lock resource: 'cryptomedic_production'
+      // }
       when {
         branch 'master'
       }
