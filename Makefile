@@ -31,6 +31,7 @@ endef
 
 define run_in_docker
 	$(DOCKERCOMPOSE) exec --user $(shell id -u) -T "$(1)" /bin/bash -c $(2)
+#	$(DOCKERCOMPOSE) $(shell bash -c '[ "$(1)" == "dev" ] && echo "run" || echo "exec"' ) --user $(shell id -u) -T $(1) /bin/bash -c $(2)
 endef
 
 # See https://coderwall.com/p/cezf6g/define-your-own-function-in-a-makefile

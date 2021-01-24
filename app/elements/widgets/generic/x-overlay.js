@@ -11,7 +11,7 @@ export default class XOverlay extends XPanel {
     constructor() {
         super();
         insertInSlotDefault(this, `
-            <style css-inherit-local>
+            <style css-inherit-local debug-origin='x-overlay'>
                 :host {
                     box-sizing: border-box;
                     padding: 0px;
@@ -92,7 +92,7 @@ export default class XOverlay extends XPanel {
 				    }
 				}
 			</style>
-            <slot name='content'></slot>
+            <slot></slot>
             <x-panel id='overlay'>
                 <a id='close' href="javascript:void(0)">&times;</a>
                 <slot name='overlay'></slot>

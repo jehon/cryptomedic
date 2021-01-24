@@ -3,12 +3,11 @@ import { levels } from '../../config.js';
 import { setRoute, parseRouteLogin } from '../../js/router.js';
 import { setSession } from '../../js/session.js';
 
-import '../widgets/generic/x-requestor.js';
+import { loginRequestBuilder, loginCheckRequestBuilder } from '../widgets/generic/x-requestor.js';
 import '../widgets/generic/x-panel.js';
 import '../widgets/generic/x-messages.js';
 import '../widgets/generic/x-button.js';
 import { formInit, formGetContent, formValidate } from '../../js/form.js';
-import { loginRequestBuilder, loginCheckRequestBuilder } from '../widgets/generic/x-requestor.js';
 import { defineCustomElement } from '../../js/custom-element.js';
 
 const requestor = Symbol('requestor');
