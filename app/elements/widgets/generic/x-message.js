@@ -4,11 +4,11 @@ import { defineCustomElement } from '../../../js/custom-element.js';
 import { toAttributeCase } from '../../../js/string-utils.js';
 
 /**
- * Slot[]: content
+ * Slot[]: default
  */
 export default class XMessage extends HTMLElement {
     static get observedAttributes() {
-        return [ 'level' ];
+        return ['level'];
     }
 
     constructor() {
@@ -41,7 +41,7 @@ export default class XMessage extends HTMLElement {
 
     refresh() {
         const level = this.getAttribute('level');
-        switch(level) {
+        switch (level) {
             case '':
                 break;
             case 'success':

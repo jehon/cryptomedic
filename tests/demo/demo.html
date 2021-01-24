@@ -69,6 +69,8 @@
 
     <script type='module' src='../../app/elements/widgets/file/x-fff-field.js'></script>
 
+    <script type='module' src='../../app/elements/pages/x-login-form.js'></script>
+
     <div>
         <h2>Menu</h2>
         <a href='http://localhost:5557/tests/'>Go back to index</a>
@@ -129,19 +131,19 @@
     </xx-test>
     <xx-test>
         <x-overlay>
-            <div slot='content'>Content</div>
+            <div>Content</div>
             <div slot='overlay'>Overlay</div>
         </x-overlay>
     </xx-test>
     <xx-test>
         <x-overlay blocked>
-            <div slot='content'>Content</div>
+            <div>Content</div>
             <div slot='overlay'>Overlay</div>
         </x-overlay>
     </xx-test>
     <xx-test>
         <x-overlay blocked closable>
-            <div slot='content'>Content</div>
+            <div>Content</div>
             <div slot='overlay'>Overlay</div>
         </x-overlay>
     </xx-test>
@@ -167,6 +169,11 @@
         <x-waiting blocked>content waiting</x-waiting>
     </xx-test>
 
+    <h1>pages</h1>
+    <xx-test>
+        <x-login-form></x-login-form>
+    </xx-test>
+
     <h1>folder</h1>
     <xx-test double>
         <x-ff-next-appointment demo-folder='test1'></x-ff-next-appointment>
@@ -188,6 +195,7 @@
     </xx-test>
 
     <h1>file</h1>
+
     <h1>other</h1>
     <xx-test>
         <x-input-date></x-input-date>
