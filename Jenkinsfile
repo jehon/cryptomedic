@@ -4,11 +4,9 @@ pipeline {
     CRYPTOMEDIC_UPLOAD_USER = credentials('CRYPTOMEDIC_UPLOAD_USER')
     CRYPTOMEDIC_UPLOAD_PASSWORD = credentials('CRYPTOMEDIC_UPLOAD_PASSWORD')
     CRYPTOMEDIC_DB_UPGRADE = credentials('CRYPTOMEDIC_DB_UPGRADE')
-    CRYPTOMEDIC_PORT = 10580
   }
   options {
     ansiColor('xterm')
-    lock resource: 'port_${CRYPTOMEDIC_PORT}'
     skipStagesAfterUnstable()
   }
   stages {
