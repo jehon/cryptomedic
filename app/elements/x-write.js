@@ -8,10 +8,10 @@ import './x-input-date.js';
 export default class XWrite extends JHElement {
     static get properties() {
         return {
-            'type': 'String',
-            'value': 'String',
-            'list': 'Object',
-            'listName': 'String'
+            type: 'String',
+            value: 'String',
+            list: 'Object',
+            listName: 'String'
         };
     }
 

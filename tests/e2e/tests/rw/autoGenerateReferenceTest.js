@@ -1,6 +1,6 @@
 module.exports = {
 
-    'autoGenerateReference': function (client) {
+    autoGenerateReference: function (client) {
         client.page.cryptomedic().authenticate('murshed');
 
         client.myClick('#menu_home');

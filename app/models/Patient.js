@@ -10,13 +10,13 @@ export default class Patient extends FolderPage {
 
     getRelated() {
         return {
-            'Appointment': 'patient_id',
-            'Bill': 'patient_id',
-            'ClubFoot': 'patient_id',
-            'OtherConsult': 'patient_id',
-            'Picture': 'patient_id',
-            'RicketConsult': 'patient_id',
-            'Surgery': 'patient_id'
+            Appointment: 'patient_id',
+            Bill: 'patient_id',
+            ClubFoot: 'patient_id',
+            OtherConsult: 'patient_id',
+            Picture: 'patient_id',
+            RicketConsult: 'patient_id',
+            Surgery: 'patient_id'
         };
     }
 
@@ -39,8 +39,8 @@ export default class Patient extends FolderPage {
         }
         var birth = this.Yearofbirth;
         var options = Object.assign({}, {
-            'reference': reference || new Date(),
-            'format': false
+            reference: reference || new Date(),
+            format: false
         }, options);
         // reference = reference || new Date();
         if (typeof (options.reference) == 'number') {

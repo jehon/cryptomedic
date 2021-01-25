@@ -1,5 +1,5 @@
 module.exports = {
-    'readPatient2000': function (client) { // id: 1
+    readPatient2000: function (client) { // id: 1
         client.page.cryptomedic().authenticate('readonly');
         client.page.cryptomedic().goPatient(2000, 1);
         client.assert.myAssertHashIs('#/folder/1');

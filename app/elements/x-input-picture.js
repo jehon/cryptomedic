@@ -9,8 +9,8 @@ const inputElement = Symbol('inputElement');
 export default class XInputPicture extends XWaiting {
     static get properties() {
         return {
-            'value': 'String',
-            'maxSize': 'Integer'
+            value: 'String',
+            maxSize: 'Integer'
         };
     }
 

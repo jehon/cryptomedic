@@ -5,9 +5,9 @@ import { DataInvalidException, DataOutOfBoundException, ConfigurationMissingExce
 
 describe(fn(import.meta.url), function () {
     const poly = {
-        'min': [],
-        'medium': [],
-        'max': []
+        min: [],
+        medium: [],
+        max: []
     };
 
     poly.min.push([0, 0]);

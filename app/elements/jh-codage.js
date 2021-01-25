@@ -7,8 +7,8 @@ import { getSession } from '../js/session.js';
 export default class JHCodage extends JHElement {
     static get properties() {
         return {
-            'value': 'string',
-            'translated': 'string'
+            value: 'string',
+            translated: 'string'
         };
     }
 

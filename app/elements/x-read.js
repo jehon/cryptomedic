@@ -7,8 +7,8 @@ import './x-read-boolean.js';
 export default class XRead extends JHElement {
     static get properties() {
         return {
-            'type': 'String',
-            'value': 'String'
+            type: 'String',
+            value: 'String'
         };
     }
 

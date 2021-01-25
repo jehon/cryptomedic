@@ -17,7 +17,7 @@ export default class JHScript extends JHElement {
 
     static get properties() {
         return {
-            'disabled': 'Boolean'
+            disabled: 'Boolean'
         };
     }
 

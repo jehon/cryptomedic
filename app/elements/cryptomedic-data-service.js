@@ -47,8 +47,8 @@ export default class CryptomedicDataService extends XRequestor {
 
         return this.requestAndFilter({
             url: 'reference', method: 'POST', data: {
-                'entryyear': year,
-                'entryorder': order
+                entryyear: year,
+                entryorder: order
             }
         })
             .then(response => {

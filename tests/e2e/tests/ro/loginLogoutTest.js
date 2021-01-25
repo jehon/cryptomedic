@@ -2,7 +2,7 @@
 /* global JHElement */
 
 module.exports = {
-    'wrong_password': function (client) {
+    wrong_password: function (client) {
         client.page.cryptomedic().authenticate_fillIn('user_that_does_not_exists_at_all');
 
         client.myScreenshotReference();
@@ -14,7 +14,7 @@ module.exports = {
         });
     },
 
-    'authenticate_multiple': function (client) {
+    authenticate_multiple: function (client) {
         client.page.cryptomedic().authenticate('readonly');
         client.myComponentExecute('x-login-status #logout', function () { this.click(); });
         client.page.cryptomedic().authenticate('readonly');

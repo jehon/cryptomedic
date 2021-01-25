@@ -9,16 +9,16 @@ let testFolder;
 
 describe(fn(import.meta.url), function () {
     const na = {
-        'id': 999,
-        'created_at': '<timestamp>',
-        'updated_at': '<timestamp>',
-        'lastuser': 'Thierry',
-        'patient_id': 1,
-        'Date': '2007-01-10',
-        'ExaminerName': 'Ershad',
-        'purpose': null,
-        'Nextappointment': '2999-01-10',
-        'NextCenter': null
+        id: 999,
+        created_at: '<timestamp>',
+        updated_at: '<timestamp>',
+        lastuser: 'Thierry',
+        patient_id: 1,
+        Date: '2007-01-10',
+        ExaminerName: 'Ershad',
+        purpose: null,
+        Nextappointment: '2999-01-10',
+        NextCenter: null
     };
 
     beforeEach(() => {

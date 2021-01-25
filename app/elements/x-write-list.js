@@ -28,9 +28,9 @@ export default class XWriteList extends JHElement {
 
     static get properties() {
         return {
-            'value': 'String',
-            'list': 'Object',
-            'nullable': 'Boolean',
+            value: 'String',
+            list: 'Object',
+            nullable: 'Boolean',
             'list-name': 'String'
         };
     }

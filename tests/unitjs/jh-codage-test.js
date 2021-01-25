@@ -26,7 +26,7 @@ describe('jh-codage-test', function () {
         beforeEach(function () {
             setSession({
                 codes: {
-                    'original': 'codage'
+                    original: 'codage'
                 }
             });
         });

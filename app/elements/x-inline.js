@@ -10,11 +10,11 @@ const element = Symbol('element');
 export default class XInline extends JHElement {
     static get properties() {
         return {
-            'type': 'String',
-            'value': 'String',
-            'edit': 'Boolean',
-            'list': 'Object',
-            'listName': 'String'
+            type: 'String',
+            value: 'String',
+            edit: 'Boolean',
+            list: 'Object',
+            listName: 'String'
         };
     }
 
