@@ -45,7 +45,7 @@ describe('PatientRelated', function () {
 
     describe('with patient with sex', function () {
         it('should throw error everytime', function () {
-            let p = new Patient({ 'Sex': 'Male' });
+            let p = new Patient({ Sex: 'Male' });
             var o = new PatientRelated({});
             o.linkPatient(p);
 

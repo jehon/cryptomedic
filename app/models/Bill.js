@@ -11,7 +11,7 @@ export default class Bill extends PatientRelated {
 
     getRelated() {
         return {
-            'Payment': 'bill_id'
+            Payment: 'bill_id'
         };
     }
 

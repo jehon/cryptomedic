@@ -11,7 +11,7 @@ describe(fn(import.meta.url), function () {
     beforeEach(() => {
         element = createElementWith(XOverlay, {}, [
             createElementWith('div', {}, 'Content'),
-            createElementWith('div', { 'slot': 'overlay' }, 'Overlay')
+            createElementWith('div', { slot: 'overlay' }, 'Overlay')
         ]);
     });
 

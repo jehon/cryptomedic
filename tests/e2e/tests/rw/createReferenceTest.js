@@ -3,7 +3,7 @@ module.exports = {
 
     // },
 
-    'createReference': function (client) {
+    createReference: function (client) {
         var r = Math.floor(Math.random() * 100);
 
         client.page.cryptomedic().authenticate('murshed');

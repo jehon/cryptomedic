@@ -1,10 +1,10 @@
 
 module.exports = {
-    'tags': [ 'readonly', 'reports' ],
-    'reportSurgical': function(client) {
+    tags: [ 'readonly', 'reports' ],
+    reportSurgical: function(client) {
         var report_table = client.page.cryptomedic().tableIterator('#report_table table');
         client.page.cryptomedic().authenticate('readonly');
-        client.page.cryptomedic().report('surgical', { 'month': '2014-01' });
+        client.page.cryptomedic().report('surgical', { month: '2014-01' });
         client.myScreenshotReference();
 
         report_table

@@ -1,9 +1,9 @@
 module.exports = {
-    'tags': [ 'readonly', 'reports' ],
-    'reportMonthlyActivity': function(client) {
+    tags: [ 'readonly', 'reports' ],
+    reportMonthlyActivity: function(client) {
         var report_table = client.page.cryptomedic().tableIterator('#report_table table');
         client.page.cryptomedic().authenticate('readonly');
-        client.page.cryptomedic().report('activity', { 'period': 'month', 'month': '2014-05' });
+        client.page.cryptomedic().report('activity', { period: 'month', month: '2014-05' });
         client.myScreenshotReference();
 
         report_table.assert('1')
@@ -51,10 +51,10 @@ module.exports = {
             .end();
     },
 
-    'reportDailyActivity': function(client) {
+    reportDailyActivity: function(client) {
         var report_table = client.page.cryptomedic().tableIterator('#report_table table');
         client.page.cryptomedic().authenticate('readonly');
-        client.page.cryptomedic().report('activity', { 'period': 'day', 'day': '2014-05-20' });
+        client.page.cryptomedic().report('activity', { period: 'day', day: '2014-05-20' });
 
         report_table.assert('1')
             .nextCol().assert('2014-05-20')

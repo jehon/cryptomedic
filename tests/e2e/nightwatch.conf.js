@@ -10,33 +10,33 @@ if (process.env['CRYPTOMEDIC_PORT']) {
 let remoteTarget = `http://localhost:${port}/build/index.html`;
 
 module.exports = {
-    'src_folders': ['tests/e2e/tests'],
-    'page_objects_path': 'tests/e2e/pages',
-    'custom_commands_path': ['tests/e2e/commands'],
-    'custom_assertions_path': ['tests/e2e/assertions'],
-    'output_folder': 'tmp/e2e/',
+    src_folders: ['tests/e2e/tests'],
+    page_objects_path: 'tests/e2e/pages',
+    custom_commands_path: ['tests/e2e/commands'],
+    custom_assertions_path: ['tests/e2e/assertions'],
+    output_folder: 'tmp/e2e/',
 
-    'globals_path': 'nightwatch-global.js',
+    globals_path: 'nightwatch-global.js',
 
-    'webdriver': {
-        'start_process': true,
+    webdriver: {
+        start_process: true,
 
         // For chrome, because firefox does not works:
-        'server_path': 'node_modules/.bin/chromedriver',
-        'port': 9515,
-        'use_legacy_jsonwire': true,
+        server_path: 'node_modules/.bin/chromedriver',
+        port: 9515,
+        use_legacy_jsonwire: true,
     },
 
-    'test_settings': {
-        'default': {
-            'launch_url': remoteTarget,
-            'globals': {
-                'waitForConditionTimeout': 10000,
-                'waitForConditionPoolInterval': 10000
+    test_settings: {
+        default: {
+            launch_url: remoteTarget,
+            globals: {
+                waitForConditionTimeout: 10000,
+                waitForConditionPoolInterval: 10000
             },
-            'desiredCapabilities': {
+            desiredCapabilities: {
                 // 'browserName' : 'firefox',
-                'browserName': 'chrome',
+                browserName: 'chrome',
                 // 'acceptInsecureCerts' : true,
                 // 'loggingPrefs': {'driver': 'INFO', 'server': 'OFF', 'browser': 'INFO'}
                 'goog:chromeOptions': {
@@ -48,11 +48,11 @@ module.exports = {
                     ]
                 },
             },
-            'screenshots': {
-                'enabled': true,
-                'on_failure': true,
-                'on_error': true,
-                'path': 'tmp/e2e/browsers/firefox/'
+            screenshots: {
+                enabled: true,
+                on_failure: true,
+                on_error: true,
+                path: 'tmp/e2e/browsers/firefox/'
             },
         }
     }

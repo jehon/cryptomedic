@@ -22,7 +22,7 @@ export default class XWaiting extends XOverlay {
      * @returns {HTMLElement} for the waiting message
      */
     getXWaitingMessage() {
-        return createElementWith('slot', { 'name': 'waiting ' });
+        return createElementWith('slot', { name: 'waiting ' });
     }
 
     aroundPromise(p) {

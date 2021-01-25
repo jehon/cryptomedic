@@ -6,7 +6,7 @@ import JHElement from './jh-element.js';
 export default class XReadBoolean extends JHElement {
     static get properties() {
         return {
-            'value': 'Boolean'
+            value: 'Boolean'
         };
     }
 
