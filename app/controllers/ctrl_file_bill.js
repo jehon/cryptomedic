@@ -33,9 +33,9 @@ export default function ctrl_file_bill($scope, $element) {
             $scope.currentFile().calculatePriceId(getPrices());
             try {
                 $scope.currentFile().ratioSalary();
-            } catch (e) {}
+            } catch (e) { }
         }
-    $scope.safeApply();
+        $scope.safeApply();
     });
 
     const dateElement = $element[0].querySelector('[name=Date]');
@@ -55,16 +55,16 @@ export default function ctrl_file_bill($scope, $element) {
         try {
             $scope.currentFile().ratioSalary();
             document.querySelectorAll('x-fff-salary-ratio').forEach((/** @type {XFffSalaryRatio} */el) => el.refresh());
-        } catch (e) {}
+        } catch (e) { }
     });
 
     $scope.$watch('currentFile().sl_familySalary', function () {
         try {
             $scope.currentFile().ratioSalary();
             document.querySelectorAll('x-fff-salary-ratio').forEach((/** @type {XFffSalaryRatio} */el) => el.refresh());
-        } catch (e) {}
+        } catch (e) { }
     });
-    
+
     // Used in bill_summary
     $scope.isEmpty = function (value) {
         if (value == '' || value == '0' || value == 0 || value == '-1' || value == -1 || value == null) {

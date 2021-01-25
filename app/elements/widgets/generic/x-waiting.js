@@ -1,15 +1,28 @@
 
 import XOverlay from './x-overlay.js';
-import { insertInSlot } from '../../element-helpers.js';
-import { defineCustomElement } from '../../../js/custom-element.js';
+import { defineCustomElement, createElementWith } from '../../../js/custom-element.js';
 
 /**
  * Slot[]: content
  */
 export default class XWaiting extends XOverlay {
-    constructor() {
-        super();
-        insertInSlot(this, 'overlay', '<img src=\'/static/img/waiting.gif\' /> Loading<slot name="waiting"></slot>');
+    /**
+     * @override
+     */
+    getXOverlayOverlay() {
+        return createElementWith('img', {
+            src: '/static/img/waiting.gif'
+        }, [
+            'Loading',
+            this.getXWaitingMessage()
+        ]);
+    }
+
+    /**
+     * @returns {HTMLElement} for the waiting message
+     */
+    getXWaitingMessage() {
+        return createElementWith('slot', { 'name': 'waiting ' });
     }
 
     aroundPromise(p) {

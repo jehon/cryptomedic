@@ -2,15 +2,19 @@
 [     ] Know the clients
 > add info on logged computers
 
-[     ] Remove Laravel
-> build up the cache system
+[     ] Remove webDescribe
+- Used in legacy components, depends on Angular removal?
 
 [     ] Remove jQuery & bootstrap
 - migrate home page
+- info: BootStrap used on demo and main.js
 
 [     ] Remove Angular:
 - migrate district selection
 - migrate bill lines & blocks
+
+[     ] Remove Laravel
+> build up the cache system
 
 https://github.com/google/closure-compiler/wiki/Generic-Types
 

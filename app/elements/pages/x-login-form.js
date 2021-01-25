@@ -3,51 +3,41 @@ import { levels } from '../../config.js';
 import { setRoute, parseRouteLogin } from '../../js/router.js';
 import { setSession } from '../../js/session.js';
 
-import { loginRequestBuilder, loginCheckRequestBuilder } from '../widgets/generic/x-requestor.js';
-import '../widgets/generic/x-panel.js';
-import '../widgets/generic/x-messages.js';
-import '../widgets/generic/x-button.js';
+import XRequestor, { loginRequestBuilder, loginCheckRequestBuilder } from '../widgets/generic/x-requestor.js';
+import XPanel from '../widgets/generic/x-panel.js';
+import XMessages from '../widgets/generic/x-messages.js';
+import XButton from '../widgets/generic/x-button.js';
 import { formInit, formGetContent, formValidate } from '../../js/form.js';
-import { defineCustomElement } from '../../js/custom-element.js';
+import { createElementWith, defineCustomElement } from '../../js/custom-element.js';
 
-const requestor = Symbol('requestor');
 const form = Symbol('form');
 const messages = Symbol('messages');
 
 /**
  * attribute redirect - Where to redirect on login
  */
-export default class XLoginForm extends HTMLElement {
+export default class XLoginForm extends XRequestor {
     constructor() {
         super();
-        this.innerHTML = `
-			<x-requestor style="width: 100%">
-                <x-panel>
-                    <div style='width: 300px'>
-                        <form>
-                            <h2 class="form-signin-heading">Please sign in</h2>
-                            <label for="username">Username</label>
-                            <input id="username" name="username" class="form-control" placeholder="Username" required autofocus>
-                            <label for="password">Password</label>
-                            <input id="password" name="password" class="form-control" placeholder="Password" required type="password">
-                            <x-messages></x-messages>
-                            <br />
-                            <x-button id="login" action="commit" style='width: 100%'>Log in</x-button>
-                        </form>
-                    </div>
-                </x-panel>
-			</x-requestor>`;
-
-        /** @type {import('../widgets/generic/x-requestor.js').default} */
-        this[requestor] = this.querySelector('x-requestor');
-        this[form] = this.querySelector('form');
-        /** @type {import('../widgets/generic/x-messages.js').default} */
-        this[messages] = this.querySelector('x-messages');
-
-        formInit(this[form], () => this.doLogin());
-        this.querySelector('x-button#login').addEventListener('click', (event) => { event.preventDefault(); this.doLogin(); return false; });
-
         this.classList.add('full');
+        // The component is a final one, so we use the "slot" system here
+        this.appendChild(
+            createElementWith(XPanel, {}, [
+                createElementWith('div', { style: 'width: 300px' }, [
+                    this[form] = createElementWith('form', {}, [
+                        createElementWith('h2', { class: 'form-signin-heading' }, 'Please sign in'),
+                        createElementWith('label', { for: 'username' }, 'Username'),
+                        createElementWith('input', { id: 'username', name: 'username', class: 'form-control', placeholder: 'Username', required: true, autofocus: true }),
+                        createElementWith('label', { for: 'password' }, 'Password'),
+                        createElementWith('input', { id: 'password', name: 'password', class: 'form-control', placeholder: 'Password', required: true, autofocus: true, type: 'password' }),
+                        this[messages] = /** @type {XMessages} */ (createElementWith(XMessages)),
+                        createElementWith('br'),
+                        createElementWith(XButton, { id: 'login', action: 'commit', style: 'width: 100%' }, 'Log in',
+                            (el) => el.addEventListener('click', (event) => { event.preventDefault(); this.doLogin(); return false; }))
+                    ], (el) => formInit(el, () => this.doLogin()))
+                ])
+            ])
+        );
     }
 
     connectedCallback() {
@@ -55,12 +45,12 @@ export default class XLoginForm extends HTMLElement {
     }
 
     reset() {
-        this[requestor].reset();
+        super.reset();
         this[messages].clear();
     }
 
     async doLogin() {
-        if (this[requestor].isRequesting()) {
+        if (this.isRequesting()) {
             return -1;
         }
         this.reset();
@@ -72,7 +62,7 @@ export default class XLoginForm extends HTMLElement {
         const formData = formGetContent(this[form]);
 
         this.setAttribute('requesting', 'doLogin');
-        return this[requestor].request(loginRequestBuilder(formData.username.toLowerCase(), formData.password))
+        return this.request(loginRequestBuilder(formData.username.toLowerCase(), formData.password))
             .then((response) => {
                 if (response.ok) {
                     this[messages].addMessage({ text: 'Login success', level: levels.success, id: 'success' });
@@ -92,12 +82,14 @@ export default class XLoginForm extends HTMLElement {
     async doLoginCheck() {
         // 401: not authenticated
         this.setAttribute('requesting', 'doLoginCheck');
-        return this[requestor].request(loginCheckRequestBuilder())
+        return this.request(loginCheckRequestBuilder())
             .then(response => {
                 if (response.ok) {
                     setSession(response.data);
                     setRoute(parseRouteLogin().redirect);
                 }
+            }, () => {
+                this.block();
             })
             .finally(() => {
                 this.removeAttribute('requesting');
@@ -106,4 +98,3 @@ export default class XLoginForm extends HTMLElement {
 }
 
 defineCustomElement(XLoginForm);
-

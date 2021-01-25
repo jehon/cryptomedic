@@ -10,6 +10,8 @@ export default class XGroupPanel extends HTMLElement {
     }
 
     constructor() {
+        // TODO: use createElementWith
+
         super();
         this.attachShadow({ mode: 'open' });
         this.shadowRoot.innerHTML = `

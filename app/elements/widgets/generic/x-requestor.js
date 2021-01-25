@@ -3,16 +3,15 @@ import axios from '../../../cjs2esm/axios.js';
 axios.defaults.timeout = 30 * 1000;
 
 import { API_VERSION } from '../../../config.js';
-import { insertInSlotDefault } from '../../element-helpers.js';
 import { setSession } from '../../../js/session.js';
 import { routeToLogin } from '../../../js/router.js';
 
 import XWaiting from './x-waiting.js';
-import './x-overlay.js';
-import './x-panel.js';
-import './x-button.js';
+import XOverlay from './x-overlay.js';
+import XPanel from './x-panel.js';
+import XButton from './x-button.js';
 import '../../../../node_modules/css-inherit/css-inherit.js';
-import { defineCustomElement } from '../../../js/custom-element.js';
+import { createElementWith, defineCustomElement } from '../../../js/custom-element.js';
 import { getBrowserDescription } from '../../../js/browser.js';
 
 const error = Symbol('error');
@@ -23,26 +22,34 @@ const errorContent = Symbol('errorContent');
  * Slot[]: content
  */
 export default class XRequestor extends XWaiting {
-    constructor() {
-        super();
+    /**
+     * Render some content, which include the error message
+     * - The waiting wheel is the original XOverlay (from XWaiting)
+     * - The error message is in a new XOverlay
+     *
+     * @override
+     */
+    getXOverlayContent() {
+        return this[error] = createElementWith(XOverlay, { id: 'error' }, [
+            createElementWith(XPanel, { slot: 'overlay' }, [
+                createElementWith('css-inherit'),
+                this[errorMsg] = createElementWith('h1', { id: 'errorMsg' }),
+                this[errorContent] = createElementWith('div', { id: 'errorContent' }),
+                createElementWith(XButton, { action: 'cancel', id: 'closeButton' }, 'Dismiss',
+                    (el) => el.addEventListener('click', () => this[error].free())
+                )
+            ]),
+            createElementWith('div', {}, [
+                this.getXRequestorContent()
+            ])
+        ]);
+    }
 
-        insertInSlotDefault(this, `
-            <x-overlay id='error' debug-origin='x-requestor'>
-                <x-panel slot='overlay'>
-                    <css-inherit></css-inherit>
-                    <h1 id='errorMsg'></h1>
-                    <div id='errorContent'></div>
-                    <x-button action='cancel' id='closeButton'>Dismiss</x-button>
-                </x-panel>
-                <div><slot></slot></div>
-            </x-overlay>
-        `);
-
-        /** @type {import('./x-overlay.js').default} */
-        this[error] = this.shadowRoot.querySelector('#error');
-        this[errorMsg] = this.shadowRoot.querySelector('#errorMsg');
-        this[errorContent] = this.shadowRoot.querySelector('#errorContent');
-        this.shadowRoot.querySelector('#closeButton').addEventListener('click', () => this[error].free());
+    /**
+     * @returns {HTMLElement} to be protected by the XRequestor
+     */
+    getXRequestorContent() {
+        return createElementWith('slot');
     }
 
     /**

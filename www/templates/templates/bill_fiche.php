@@ -1,24 +1,24 @@
 <?php
-  // Example: 90420 (2010)
-  // Example: 10018 (2011)
-  // Example: 91513 (2012)
-  // Example: 97573 (2014 = price 2)
-  // Hack: 10010
+// Example: 90420 (2010)
+// Example: 10018 (2011)
+// Example: 91513 (2012)
+// Example: 97573 (2014 = price 2)
+// Hack: 10010
 
-  use App\Model\Bill;
+use App\Model\Bill;
 
-  t::setDefaultOption("baseExpression", "currentFile().");
+t::setDefaultOption("baseExpression", "currentFile().");
 
-  if (!function_exists("App\price")) {
-    function price($item) {
-      $name = explode(".", $item);
-      $name = $name[1];
-      $label = str_replace("_", " ", substr($item, strpos($item, '_') + 1));
-      if (array_key_exists($item, Bill::$translations)) {
-        $label = Bill::$translations[$item];
-      }
+if (!function_exists("App\price")) {
+  function price($item) {
+    $name = explode(".", $item);
+    $name = $name[1];
+    $label = str_replace("_", " ", substr($item, strpos($item, '_') + 1));
+    if (array_key_exists($item, Bill::$translations)) {
+      $label = Bill::$translations[$item];
+    }
 
-      echo <<<EOD
+    echo <<<EOD
 <x-fff-field label='$label'
     ng-if="currentFile().getPriceFor('$name') > 0"
     ng-class='{ notModeRead: !currentFile()["$name"] }'
@@ -26,20 +26,20 @@
   <div ng-if="currentFile().getPriceFor('$name')<=1">1x</div>
   <div>
 EOD;
-      (new t($item, [ "inline" => "style='width: 4em' step=1 min=0" ]))->value()->p();
-      echo <<<EOD
+    (new t($item, ["inline" => "style='width: 4em' step=1 min=0"]))->value()->p();
+    echo <<<EOD
   </div>
   <div ng-if="currentFile().getPriceFor('$name')>1"><div pricefor='$item'>{{currentFile().getPriceFor('$name')}}</div></div>
   <div>{{currentFile().getTotalFor('$name')}}</div>
 </x-fff-field>
 EOD;
-    }
   }
+}
 ?>
 <div class='container-fluid' ng-controller="ctrl_file_bill">
   <div class='row'>
     <div ng-if='errors.consultPhisioAndDoctor'>
-      <div class='alert alert-danger' >Error: you could not bill "physio" and "doctor" together!</div>
+      <div class='alert alert-danger'>Error: you could not bill "physio" and "doctor" together!</div>
     </div>
     <div ng-if='errors.homeVisitAndGiveAppointment'>
       <div class='alert alert-danger'>Error: you could not bill a "home visit" with "give appointment" together!</div>
@@ -61,27 +61,27 @@ EOD;
       <x-message ng-if='!currentFile().price' level='danger' role="alert" id="errorNoDate">Please select a date first!</x-message>
       <div ng-if='currentFile().price'>
         <?php
-          foreach(Bill::$categories as $cat) {
+        foreach (Bill::$categories as $cat) {
+        ?>
+          <x-group-panel title='<?php echo $cat; ?> items'>
+            <x-fff-field label=''>
+              <div>Quantity</div>
+              <div>Price</div>
+              <div>Total</div>
+            </x-fff-field>
+            <?php foreach (Bill::getFieldsList($cat) as $field) {
+              price("Bill." . $field);
+            }
             ?>
-              <x-group-panel title='<?php echo $cat; ?> items'>
-                <x-fff-field label=''>
-                  <div>Quantity</div>
-                  <div>Price</div>
-                  <div>Total</div>
-                </x-fff-field>
-                <?php foreach(Bill::getFieldsList($cat) as $field) {
-                    price("Bill." . $field);
-                  }
-                ?>
-              </x-group-panel>
-            <?php
-          }
+          </x-group-panel>
+        <?php
+        }
         ?>
       </div>
     </div>
     <div class="col-md-6">
       <x-ff-patient-related></x-ff-patient-related>
-			<x-ff-next-appointment></x-ff-next-appointment>
+      <x-ff-next-appointment></x-ff-next-appointment>
       <x-group-panel title='Social Data'>
         <?php (new t("Bill.sl_familySalary"))->tr2("Family Salary in a Month")->p(); ?>
         <?php (new t("Bill.sl_numberOfHouseholdMembers"))->tr2("Number of Houslehold Members")->p(); ?>
@@ -101,14 +101,14 @@ EOD;
         <x-fff-field label='Price to be asked to the patient'>
           <div id='total_calculated_asked'>{{currentFile().total_asked | number:0 }}<?php (new t("Bill.total_asked")); ?></div>
         </x-fff-field>
-        </x-group-panel>
-        <x-group-panel title='Received payment' ng-if='!currentFile().id'>
-          <tr>
-            <td>Payment already recieved</td>
-            <td id='first_payment'>
-              <input type='number' id='first_payment' ng-model='currentFile().first_payment'>
-            </td>
-          </tr>
+      </x-group-panel>
+      <x-group-panel title='Received payment' ng-if='!currentFile().id'>
+        <tr>
+          <td>Payment already recieved</td>
+          <td id='first_payment'>
+            <input type='number' id='first_payment' ng-model='currentFile().first_payment'>
+          </td>
+        </tr>
         <!-- TODO: migrate to x-fff-field
         <x-fff-field label='Payment already recieved' ng-if='!currentFile().id'>
           <div id='first_payment'>
@@ -120,8 +120,8 @@ EOD;
   </div>
   <br>
   <?php
-    t::setDefaultOption("baseExpression", "paymentEditor.");
-    t::setDefaultOption('writeOnly');
+  t::setDefaultOption("baseExpression", "paymentEditor.");
+  t::setDefaultOption('writeOnly');
   ?>
   <div class='row notModeWrite'>
     <h3>Related payments</h3>
@@ -156,15 +156,13 @@ EOD;
         </tr>
       </tfoot>
     </table>
-    <x-group-panel  id='paymentForm' title='Add / modify a payment'>
-      <form>
-        <?php (new t("Payment.Date"))->tr2("Date of receipt")->p(); ?>
-        <?php (new t("Payment.ExaminerName"))->tr2("Receiver")->p(); ?>
-        <?php (new t("Payment.Amount"))->tr2("Amount")->p(); ?>
-        <?php (new t("Payment.Notes"))->tr2("Notes")->p(); ?>
-      </form>
+    <x-group-panel id='paymentForm' title='Add / modify a payment' form-boundary>
+      <?php (new t("Payment.Date"))->tr2("Date of receipt")->p(); ?>
+      <?php (new t("Payment.ExaminerName"))->tr2("Receiver")->p(); ?>
+      <?php (new t("Payment.Amount"))->tr2("Amount")->p(); ?>
+      <?php (new t("Payment.Notes"))->tr2("Notes")->p(); ?>
       <x-button action='commit' id='button_payment_create' ng-click="actionAddPayment()" ng-if='paymentEditor.id == null'>Create</x-button>
-      <x-button action='commit' id='button_payment_save'   ng-click="actionAddPayment()" ng-if='paymentEditor.id > 0'>Save</x-button>
+      <x-button action='commit' id='button_payment_save' ng-click="actionAddPayment()" ng-if='paymentEditor.id > 0'>Save</x-button>
     </x-group-panel>
   </div>
 </div>

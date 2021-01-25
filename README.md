@@ -1,6 +1,5 @@
 # cryptomedic
 
-[![Build Status](https://travis-ci.com/jehon/cryptomedic.svg?branch=master)](https://travis-ci.com/jehon/cryptomedic)
 [![Renovate enabled](https://img.shields.io/badge/renovate-enabled-brightgreen.svg)](https://renovatebot.com/)
 
 cryptomedic
