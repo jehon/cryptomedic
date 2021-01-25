@@ -41,3 +41,14 @@ sudo apt install docker-compose docker.io make wget nodejs
 
 A build is automatically made on [travis-ci](http://www.travis-ci.com/jehon/cryptomedic).
 When the master branch success, it is automatically deployed to the production server.
+
+# Style
+
+## JSDoc
+https://github.com/cancerberoSgx/jsdoc-typeof-plugin
+
+```lang=javascript
+/**
+ * @return {typeof Something} a new Something subclass
+ */
+```
