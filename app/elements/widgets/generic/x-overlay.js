@@ -1,105 +1,117 @@
 
 import XPanel from './x-panel.js';
-import { insertInSlotDefault } from '../../element-helpers.js';
-import { defineCustomElement } from '../../../js/custom-element.js';
+import { createElementWith, defineCustomElement } from '../../../js/custom-element.js';
 
 /**
- * Slot[content]: content
- * Slot[overlay]: overlay
+ * Slot[]: content to be shown in the panel
+ * Slot[overlay]: overlay to be put on top when blocked
  */
 export default class XOverlay extends XPanel {
-    constructor() {
-        super();
-        insertInSlotDefault(this, `
-            <style css-inherit-local debug-origin='x-overlay'>
-                :host {
-                    box-sizing: border-box;
-                    padding: 0px;
-                }
+    /**
+     * @override
+     */
+    getXPanelContent() {
+        return createElementWith('span', {}, [
+            createElementWith('style', { 'css-inherit-local': true }, `
+:host {
+    box-sizing: border-box;
+    padding: 0px;
+}
 
-                #overlay {
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    width: 100%;
-                    height: 100%;
-                    z-index: 10;
-                    color: white;
+x-panel#overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    color: white;
 
-                    background-color: rgba(0.3,0.3,0.3, 0.8); /* Black w/opacity */
-                    overflow-x: hidden;
-                    transition: 0.5s;
-                    display: inline;
-                }
+    background-color: rgba(0.3,0.3,0.3, 0.8); /* Black w/opacity */
+    overflow-x: hidden;
+    transition: 0.5s;
 
-                #overlay > slot, #overlay > span[slot-overlay] {
-                    background-color: rgba(0,0,0, 1); /* Black w/opacity */
-                    padding: 10px;
-                    border-radius: 10px;
-                }
+    display: none;
+}
 
-                /* Mode free */
+x-panel#overlay > slot, x-panel#overlay > span[slot-overlay] {
+    background-color: rgba(0,0,0, 1); /* Black w/opacity */
+    padding: 10px;
+    border-radius: 10px;
+}
 
-                :host #overlay {
-                    display: none;
-                }
+x-panel#overlay > #close {
+    position: absolute;
+    top: 20px;
+    right: 45px;
 
-                /* Mode blocked */
+    background-color: transparent;
+    border: none;
+    color: white;
+    font-size: large;
+    font-weight: bold;
 
-                :host([blocked]) #overlay {
-                    display: block;
-                }
+    display: none;
+}
 
-                :host([global]) #overlay {
-                    position: fixed;
-                    top: 0;
-                    left: 0;
-                    width: 100%;
-                    height: 100%;
-                }
+x-panel#overlay > #close:hover, x-panel#overlay > #close:focus {
+    text-decoration: none;
+    color: #f1f1f1;
+}
 
-                /* Close button */
+/*
+ * Custom styles
+ */
 
-				:host #close {
-					display: none;
-				}
+:host([blocked]) x-panel#overlay {
+    display: block;
+}
 
-				:host([closable]) #close {
-                    display: block;
-                }
+:host([global]) x-panel#overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
 
-				#close {
-				    position: absolute;
-				    top: 20px;
-				    right: 45px;
-				    font-size: 60px;
+:host([closable]) x-panel#overlay > #close {
+    display: block;
+}
 
-					text-decoration: none;
-				    color: #818181;
-				}
+/* When the height of the screen is less than 450 pixels, change the font-size of the links and position the close button again, so they don't overlap */
+@media screen and (max-height: 450px) {
+    #close {
+        font-size: 40px;
+        top: 15px;
+        right: 35px;
+    }
+}`
+            ),
+            this.getXOverlayContent(),
+            createElementWith(XPanel, { id: 'overlay' }, [
+                createElementWith('button', { id: 'close' }, '✕',
+                    (el) => el.addEventListener('click', () => this.free())
+                ),
+                this.getXOverlayOverlay()
+            ])
+        ]);
+    }
 
-				#close:hover, #close:focus {
-				    text-decoration: none;
-				    color: #f1f1f1;
-				}
+    /**
+     * @returns {HTMLElement} to be inserted
+     */
+    getXOverlayContent() {
+        return document.createElement('slot');
+    }
 
-				/* When the height of the screen is less than 450 pixels, change the font-size of the links and position the close button again, so they don't overlap */
-				@media screen and (max-height: 450px) {
-				    #close {
-				        font-size: 40px;
-				        top: 15px;
-				        right: 35px;
-				    }
-				}
-			</style>
-            <slot></slot>
-            <x-panel id='overlay'>
-                <a id='close' href="javascript:void(0)">&times;</a>
-                <slot name='overlay'></slot>
-            </x-panel>
-			`);
-
-        this.shadowRoot.querySelector('#close').addEventListener('click', () => this.free());
+    /**
+     * @returns {HTMLElement} to be inserted
+     */
+    getXOverlayOverlay() {
+        const slot = document.createElement('slot');
+        slot.setAttribute('name', 'overlay');
+        return slot;
     }
 
     block() {

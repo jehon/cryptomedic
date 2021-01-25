@@ -26,7 +26,7 @@ export function formInit(formElement, submitCallback) {
  */
 export function formGetContent(form, prototype = {}) {
     // const log = (...args) => console.log(...args);
-    const log = () => { };
+    const log = (..._args) => { };
 
     let data = new prototype.constructor();
     Object.assign(data, prototype);
@@ -42,13 +42,17 @@ export function formGetContent(form, prototype = {}) {
         formElement = document.querySelector(form);
     }
 
+    let boundaries = [];
+
     let elementsList = formElement;
     if (formElement instanceof HTMLElement) {
         // HTMLElement -> NodeList
         elementsList = formElement.querySelectorAll('[name]');
+        boundaries = Array.from(formElement.querySelectorAll('[form-boundary]'));
+        log('Boundaries: ', boundaries, formElement);
     }
 
-    for (let i of elementsList) {
+    nextElement: for (let i of elementsList) {
         // Skip empty names
         let name = i.getAttribute('name');
         if (!name) {
@@ -62,9 +66,11 @@ export function formGetContent(form, prototype = {}) {
             continue;
         }
 
-        if (i.offsetHeight + i.offsetWidth < 1) {
-            log('too small: ', name, i.offsetHeight, i.offsetWidth);
-            continue;
+        for (const f of boundaries) {
+            if (f.contains(i)) {
+                log(`outside boundaries of ${f.id}:`, name);
+                continue nextElement;
+            }
         }
 
         // Only take the selected radio

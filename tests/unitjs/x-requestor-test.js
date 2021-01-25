@@ -1,7 +1,7 @@
 
 import '../../app/elements/widgets/generic/x-requestor.js';
 
-import { fn, webDescribe } from './athelpers.js';
+import { fn } from './athelpers.js';
 import JHElement from '../../app/elements/jh-element.js';
 import { API_VERSION } from '../../app/config.js';
 
@@ -9,8 +9,6 @@ import axios from '../../app/cjs2esm/axios.js';
 import MockAdapter from '../../app/cjs2esm/axios-mock-adapter.js';
 import XRequestor, { requestAndFilterBuilder, loginRequestBuilder, loginCheckRequestBuilder } from '../../app/elements/widgets/generic/x-requestor.js';
 import { getSession } from '../../app/js/session.js';
-
-// TODO: use constructor instead of webDescribe
 
 const buildResponse = function (ok = true, status = 200, statusText = '') {
     return {
@@ -102,9 +100,15 @@ describe(fn(import.meta.url), function () {
         mock.restore();
     });
 
-    webDescribe('initialized', '<x-requestor><div slot="content" style=\'width: 200px; height: 100px; background-color: red;\'>Content</div></x-requestor>', function (element) {
+    describe('initialize', function () {
+        let element;
+        beforeEach(() => {
+            element = new XRequestor();
+            element.innerHTML = '<div slot="content" style=\'width: 200px; height: 100px; background-color: red;\'>Content</div>';
+        });
+
         const testRequest = function (opts, done) {
-            return element()
+            return element
                 .request(opts)
                 .catch(response => {
                     console.error(response);
@@ -114,11 +118,11 @@ describe(fn(import.meta.url), function () {
         };
 
         it('should be hidden when initialized simply', function () {
-            expect(element().isBlocked()).toBeFalsy();
-            expect(element().shadowRoot.querySelector('x-overlay').isBlocked()).toBeFalsy();
-            expect(element().hasAttribute('running')).toBeFalsy();
-            expect(element().isRequesting()).toBeFalsy();
-            expect(element().isFailed()).toBeFalsy();
+            expect(element.isBlocked()).toBeFalsy();
+            expect(element.shadowRoot.querySelector('x-overlay').isBlocked()).toBeFalsy();
+            expect(element.hasAttribute('running')).toBeFalsy();
+            expect(element.isRequesting()).toBeFalsy();
+            expect(element.isFailed()).toBeFalsy();
         });
 
         describe('should match URL', function () {
@@ -149,20 +153,20 @@ describe(fn(import.meta.url), function () {
 
         describe('with success', function () {
             it('should make a get request', function (done) {
-                const promise = element().request({ url: '/delayed' });
+                const promise = element.request({ url: '/delayed' });
 
-                expect(element().isBlocked()).toBeTruthy();
-                expect(element().shadowRoot.querySelector('x-overlay').isBlocked()).toBeFalsy();
-                expect(element().hasAttribute('blocked')).toBeTruthy();
-                expect(element().isRequesting()).toBeTruthy();
-                expect(element().isFailed()).toBeFalsy();
+                expect(element.isBlocked()).toBeTruthy();
+                expect(element.shadowRoot.querySelector('x-overlay').isBlocked()).toBeFalsy();
+                expect(element.hasAttribute('blocked')).toBeTruthy();
+                expect(element.isRequesting()).toBeTruthy();
+                expect(element.isFailed()).toBeFalsy();
 
                 promise.then(() => {
-                    expect(element().isBlocked()).toBeFalsy();
-                    expect(element().shadowRoot.querySelector('x-overlay').isBlocked()).toBeFalsy();
-                    expect(element().hasAttribute('running')).toBeFalsy();
-                    expect(element().isRequesting()).toBeFalsy();
-                    expect(element().isFailed()).toBeFalsy();
+                    expect(element.isBlocked()).toBeFalsy();
+                    expect(element.shadowRoot.querySelector('x-overlay').isBlocked()).toBeFalsy();
+                    expect(element.hasAttribute('running')).toBeFalsy();
+                    expect(element.isRequesting()).toBeFalsy();
+                    expect(element.isFailed()).toBeFalsy();
                     done();
                 });
             });
@@ -170,78 +174,78 @@ describe(fn(import.meta.url), function () {
             it('should make a put request', function (done) {
                 testRequest({ url: '/put', data: { test: 1 }, method: 'PUT' }, done)
                     .then(response => {
-                        expect(element().isBlocked()).toBeFalsy();
-                        expect(element().shadowRoot.querySelector('x-overlay').isBlocked()).toBeFalsy();
-                        expect(element().hasAttribute('running')).toBeFalsy();
-                        expect(element().isRequesting()).toBeFalsy();
-                        expect(element().isFailed()).toBeFalsy();
+                        expect(element.isBlocked()).toBeFalsy();
+                        expect(element.shadowRoot.querySelector('x-overlay').isBlocked()).toBeFalsy();
+                        expect(element.hasAttribute('running')).toBeFalsy();
+                        expect(element.isRequesting()).toBeFalsy();
+                        expect(element.isFailed()).toBeFalsy();
                         expect(response.data).toEqual(555);
                         done();
                     });
             });
 
             it('should display string messages when requested', function () {
-                element().showFailure('Test message');
-                expect(element().isRequesting()).toBeFalsy();
-                expect(element().isFailed()).toBeTruthy();
-                expect(element().shadowRoot.querySelector('#errorMsg').innerText).toContain('Test message');
+                element.showFailure('Test message');
+                expect(element.isRequesting()).toBeFalsy();
+                expect(element.isFailed()).toBeTruthy();
+                expect(element.shadowRoot.querySelector('#errorMsg').innerText).toContain('Test message');
             });
 
             it('should close error messages with button', function () {
-                element().showFailure('Test message');
-                expect(element().isFailed()).toBeTruthy();
-                JHElement.fireOn(element().shadowRoot.querySelector('#closeButton'), 'click');
-                expect(element().isFailed()).toBeFalsy();
+                element.showFailure('Test message');
+                expect(element.isFailed()).toBeTruthy();
+                JHElement.fireOn(element.shadowRoot.querySelector('#closeButton'), 'click');
+                expect(element.isFailed()).toBeFalsy();
             });
 
             it('should display object messages when requested', function () {
-                element().showFailure(buildResponse(false, 404, 'Not found'));
-                expect(element().isRequesting()).toBeFalsy();
-                expect(element().isFailed()).toBeTruthy();
-                expect(element().shadowRoot.querySelector('#errorMsg').innerText).toContain('Not found');
-                expect(element().shadowRoot.querySelector('#errorContent').innerText).toContain('404');
+                element.showFailure(buildResponse(false, 404, 'Not found'));
+                expect(element.isRequesting()).toBeFalsy();
+                expect(element.isFailed()).toBeTruthy();
+                expect(element.shadowRoot.querySelector('#errorMsg').innerText).toContain('Not found');
+                expect(element.shadowRoot.querySelector('#errorContent').innerText).toContain('404');
             });
 
             it('should logout on 401 Response messages', function () {
-                element().showFailure(buildResponse(false, 401, 'Unauthorized'));
-                expect(element().shadowRoot.querySelector('#errorMsg').innerText).toContain('Unauthorized');
-                expect(element().shadowRoot.querySelector('#errorContent').innerText).toContain('401');
+                element.showFailure(buildResponse(false, 401, 'Unauthorized'));
+                expect(element.shadowRoot.querySelector('#errorMsg').innerText).toContain('Unauthorized');
+                expect(element.shadowRoot.querySelector('#errorContent').innerText).toContain('401');
                 expect(getSession()).toBeFalsy();
             });
 
             it('should display TypeError messages when requested', function () {
-                element().showFailure({ request: { a: 1 } });
-                expect(element().isRequesting()).toBeFalsy();
-                expect(element().isFailed()).toBeTruthy();
-                expect(element().shadowRoot.querySelector('#errorMsg').innerText).toContain('Network Error');
-                expect(element().shadowRoot.querySelector('#errorContent').innerText).toContain('Something went very wrong');
+                element.showFailure({ request: { a: 1 } });
+                expect(element.isRequesting()).toBeFalsy();
+                expect(element.isFailed()).toBeTruthy();
+                expect(element.shadowRoot.querySelector('#errorMsg').innerText).toContain('Network Error');
+                expect(element.shadowRoot.querySelector('#errorContent').innerText).toContain('Something went very wrong');
             });
         });
 
         it('should handle time-out requests', function (done) {
-            element().request({ url: '/timeout', timeout: 0.001 })
+            element.request({ url: '/timeout', timeout: 0.001 })
                 .then(() => {
                     done.fail('We should be in catch');
                 })
                 .catch(_error => {
-                    expect(element().isBlocked()).toBeTruthy();
-                    expect(element().isFailed()).toBeTruthy();
-                    expect(element().isRequesting()).toBeFalsy();
-                    expect(element().isFailed()).toBeTruthy();
+                    expect(element.isBlocked()).toBeTruthy();
+                    expect(element.isFailed()).toBeTruthy();
+                    expect(element.isRequesting()).toBeFalsy();
+                    expect(element.isFailed()).toBeTruthy();
                     done();
                 });
         });
 
         describe('with general error', function () {
             it('should handle time-out requests', function (done) {
-                element().request({ url: '/error' })
+                element.request({ url: '/error' })
                     .then(() => {
                         done.fail('We should be in catch');
                     }, () => {
-                        expect(element().isBlocked()).toBeTruthy();
-                        expect(element().isRequesting()).toBeFalsy();
-                        expect(element().isFailed()).toBeTruthy();
-                        expect(element().hasAttribute('blocked')).toBeFalsy();
+                        expect(element.isBlocked()).toBeTruthy();
+                        expect(element.isRequesting()).toBeFalsy();
+                        expect(element.isFailed()).toBeTruthy();
+                        expect(element.hasAttribute('blocked')).toBeFalsy();
                         done();
                     });
             });
@@ -249,7 +253,7 @@ describe(fn(import.meta.url), function () {
 
         describe('with request and filter', function () {
             it('should resquestAndFilter with filter and have correct results', async function () {
-                await element().request(requestAndFilterBuilder({ url: '/absolute' }))
+                await element.request(requestAndFilterBuilder({ url: '/absolute' }))
                     .then((response) => {
                         expect(response.data).toEqual(123456);
                         expect(response.ok).toBeTruthy();
@@ -258,17 +262,17 @@ describe(fn(import.meta.url), function () {
             });
 
             it('should resquestAndFilter with without treated', async function () {
-                await element().request(requestAndFilterBuilder({ url: '/absolute' }, [404]));
-                expect(element().isFailed()).toBeFalsy();
+                await element.request(requestAndFilterBuilder({ url: '/absolute' }, [404]));
+                expect(element.isFailed()).toBeFalsy();
             });
 
             it('should resquestAndTreat with with treated', async function () {
-                await element().request(requestAndFilterBuilder({ url: '/404' }, [404]));
-                expect(element().isFailed()).toBeFalsy();
+                await element.request(requestAndFilterBuilder({ url: '/404' }, [404]));
+                expect(element.isFailed()).toBeFalsy();
             });
 
             it('should resquestAndFilter with filter and have correct results', async function () {
-                await element().request(requestAndFilterBuilder({ url: '/404' }, [404]))
+                await element.request(requestAndFilterBuilder({ url: '/404' }, [404]))
                     .then((response) => {
                         expect(response.data).toEqual('Test: data is not found');
                         expect(response.ok).toBeFalsy();
@@ -277,17 +281,17 @@ describe(fn(import.meta.url), function () {
             });
 
             it('should resquestAndTreat with with treated', async function () {
-                await expectAsync(element().request(requestAndFilterBuilder({ url: '/404' }, [401]))).toBeRejected();
-                expect(element().isFailed()).toBeTruthy();
+                await expectAsync(element.request(requestAndFilterBuilder({ url: '/404' }, [401]))).toBeRejected();
+                expect(element.isFailed()).toBeTruthy();
             });
         });
 
         describe('mocks', function () {
             it('should accept no response', async (done) => {
                 const mock = mockNoResponse();
-                const req = element().request({ url: '/anything' });
+                const req = element.request({ url: '/anything' });
                 expect(mock.args.url).toBe('/anything');
-                expect(element().isBlocked()).toBeTruthy();
+                expect(element.isBlocked()).toBeTruthy();
                 req.then(
                     () => done.fail('should not be resolved'),
                     () => done.fail('should not be catched')
@@ -297,50 +301,48 @@ describe(fn(import.meta.url), function () {
 
             it('should accept success', async () => {
                 const mock = await mockResponseWithSuccess(123);
-                const _req = await element().request({ url: '/anything' });
+                const _req = await element.request({ url: '/anything' });
                 expect(mock.args.url).toBe('/anything');
-                expect(element().isRequesting()).toBeFalsy();
-                expect(element().isFailed()).toBeFalsy();
-                expect(element().isBlocked()).toBeFalsy();
+                expect(element.isRequesting()).toBeFalsy();
+                expect(element.isFailed()).toBeFalsy();
+                expect(element.isBlocked()).toBeFalsy();
             });
 
             it('should accept filtered success', async () => {
                 const mock = await mockResponseWithSuccessbutCode(123);
-                const _req = await element().request({ url: '/anything' });
+                await element.request({ url: '/anything' });
                 expect(mock.args.url).toBe('/anything');
-                expect(element().isRequesting()).toBeFalsy();
-                expect(element().isFailed()).toBeFalsy();
-                expect(element().isBlocked()).toBeFalsy();
+                expect(element.isRequesting()).toBeFalsy();
+                expect(element.isFailed()).toBeFalsy();
+                expect(element.isBlocked()).toBeFalsy();
             });
 
             it('should accept error', async (done) => {
                 const mock = await mockResponseWithFailureCode(400);
                 try {
-                    const _req = await element().request({ url: '/anything' });
+                    const _req = await element.request({ url: '/anything' });
                     done.fail('it should throw an error');
                 } catch {
                     expect(mock.args.url).toBe('/anything');
-                    expect(element().isRequesting()).toBeFalsy();
-                    expect(element().isFailed()).toBeTruthy();
-                    expect(element().isBlocked()).toBeTruthy();
+                    expect(element.isRequesting()).toBeFalsy();
+                    expect(element.isFailed()).toBeTruthy();
+                    expect(element.isBlocked()).toBeTruthy();
                     done();
                 }
             });
         });
     });
 
-    describe('with builders', function () {
-        it('loginRequestBuilder', function () {
-            const bb = loginRequestBuilder('test', 'password');
-            expect(bb.method).toBe('POST');
-            expect(bb.url).toBe('auth/mylogin');
-            expect(bb.data.username).toBe('test');
-        });
+    it('build loginRequestBuilder', function () {
+        const bb = loginRequestBuilder('test', 'password');
+        expect(bb.method).toBe('POST');
+        expect(bb.url).toBe('auth/mylogin');
+        expect(bb.data.username).toBe('test');
+    });
 
-        it('loginCheckRequestBuilder', function () {
-            const bb = loginCheckRequestBuilder();
-            expect(bb.url).toBe('auth/settings');
-        });
+    it('build loginCheckRequestBuilder', function () {
+        const bb = loginCheckRequestBuilder();
+        expect(bb.url).toBe('auth/settings');
     });
 });
 

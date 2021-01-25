@@ -21,6 +21,8 @@ export default class XMessages extends HTMLElement {
     }
 
     clear() {
+        // TODO: use createElementWith
+
         this.shadowRoot.innerHTML = `
             <style>
                 div#root {
@@ -47,7 +49,7 @@ export default class XMessages extends HTMLElement {
      * @returns {string} messageId
      */
     addMessage(msg) {
-        if (typeof(msg) == 'string') {
+        if (typeof (msg) == 'string') {
             msg = { text: msg };
         }
         msg = {

@@ -9,6 +9,9 @@ import { defineCustomElement } from '../../js/custom-element.js';
  */
 export default class XFolderGraphics extends HTMLElement {
     constructor() {
+
+        // TODO: use createElementWith
+
         super();
         this.innerHTML = `
         <div id='headerContainer' class='headerContainer'></div>
