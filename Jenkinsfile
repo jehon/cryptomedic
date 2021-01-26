@@ -11,6 +11,7 @@ pipeline {
     ansiColor('xterm')
     lock resource: 'port_${CRYPTOMEDIC_PORT}'
     skipStagesAfterUnstable()
+    disableConcurrentBuilds()
   }
   stages {
     stage('setup') {
