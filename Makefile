@@ -115,7 +115,9 @@ start: setup-structure \
 docker-started:
 # $(DOCKERCOMPOSE) build server
 # $(DOCKERCOMPOSE) build dev
-	$(DOCKERCOMPOSE) up --build -d
+	if ! nc -z localhost $(CRYPTOMEDIC_PORT) ; then \
+		$(DOCKERCOMPOSE) up --build -d; \
+	fi \
 
 .PHONY: stop
 stop: deploy-unmount
