@@ -30,8 +30,13 @@ define ensure_folder_empty
 endef
 
 define run_in_docker
-	$(DOCKERCOMPOSE) exec --user $(shell id -u) -T "$(1)" /bin/bash -c $(2)
-#	$(DOCKERCOMPOSE) $(shell bash -c '[ "$(1)" == "dev" ] && echo "run" || echo "exec"' ) --user $(shell id -u) -T $(1) /bin/bash -c $(2)
+	@if [ "$(IN_DOCKER)" = "$(1)" ]; then \
+		echo "- Running natively -"; \
+		/bin/bash -c $(2); \
+	else \
+		echo "- Running in docker -"; \
+		$(DOCKERCOMPOSE) exec --user $(shell id -u) -T "$(1)" /bin/bash -c $(2); \
+	fi
 endef
 
 # See https://coderwall.com/p/cezf6g/define-your-own-function-in-a-makefile
@@ -49,6 +54,10 @@ endef
 
 dump:
 	@echo "CRYPTOMEDIC_PORT: $(CRYPTOMEDIC_PORT)"
+	@echo "IN_DOCKER:        $(IN_DOCKER)"
+
+dump-in-docker: docker-started
+	$(call run_in_docker,dev,"make dump")
 
 all: start
 
