@@ -5,6 +5,8 @@ services:
       context: conf/server/
       dockerfile: Dockerfile
     user: "${UID:-1000}:${GID:-1000}"
+    environment:
+      IN_DOCKER: server
     expose:
       - 80
     volumes:
@@ -15,6 +17,7 @@ services:
     # OVH is on 5.5
     image: mysql:5.5
     environment:
+      IN_DOCKER: mysql
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: cryptomedic
       MYSQL_USER: username
@@ -26,6 +29,7 @@ services:
     # https://hub.docker.com/r/phpmyadmin/phpmyadmin/
     image: phpmyadmin/phpmyadmin
     environment:
+      IN_DOCKER: phpmyadmin
       PMA_HOST: mysql
       PMA_PORT: 3306
       PMA_USER: root
@@ -40,6 +44,7 @@ services:
     # The WS does not work correctly, due to proxy...
     image: mailhog/mailhog
     environment:
+      IN_DOCKER: mail
       MH_UI_WEB_PATH: /xmailx
     expose:
       - 1025
@@ -51,8 +56,9 @@ services:
       dockerfile: Dockerfile
     user: "${UID:-1000}:${GID:-1000}"
     environment:
-      - HOST_UID=${HOST_UID}
-      - HOST_GID=${HOST_GID}
+      IN_DOCKER: dev
+      HOST_UID: ${HOST_UID}
+      HOST_GID: ${HOST_GID}
     volumes:
       - .:/app
     ports:
