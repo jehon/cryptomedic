@@ -5,14 +5,15 @@ namespace Routes;
 require_once(__DIR__ . '/../../app/bootstrap.php');
 
 use Cryptomedic\Lib\Request;
-use Cryptomedic\Lib\CacheManager;
+use Cryptomedic\Lib\DatabaseStructure;
+use Cryptomedic\Lib\CachedAbstract;
 
 if (Request::hasParam('force')) {
-    CacheManager::generate();
+    CachedAbstract::cacheGenerateAll();
 }
 
 if (!Request::hasParam('quiet')) {
-    Request::replyWith(CacheManager::get());
+    Request::replyWith(DatabaseStructure::getDatabaseStructure());
 }
 
 http_response_code(200);

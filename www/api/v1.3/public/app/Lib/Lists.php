@@ -3,7 +3,6 @@
 namespace Cryptomedic\Lib;
 
 use Cryptomedic\Lib\Database;
-use Cryptomedic\Lib\CachedTrait;
 use Exception;
 
 function buildValueList(string $name, array $list): array {
@@ -47,13 +46,7 @@ function resetDataListing() {
 
 resetDataListing();
 
-class Lists {
-    use CachedTrait;
-
-    static function cacheName(): string {
-        return "lists";
-    }
-
+class Lists extends CachedAbstract {
     static function cacheGenerate(): array {
         resetDataListing();
 
@@ -248,13 +241,12 @@ class Lists {
 
     static $dynamicCache = null;
 
-    static function dynamicDataInit() {
-        self::cacheInit();
+    static function dynamicDataInit(): array {
         if (!self::$dynamicCache) {
             global $dataListings;
 
             resetDataListing();
-            $dynamicData = unserialize(serialize(self::$cached));
+            $dynamicData = unserialize(serialize(self::getCachedData()));
 
             $examiners = Database::selectAsArray("SELECT username, `name`, codage, inExaminerList FROM users", 'username');
             foreach ($examiners as $examiner) {
@@ -273,11 +265,12 @@ class Lists {
 
             self::$dynamicCache = $dynamicData;
         }
+        return self::$dynamicCache;
     }
 
-    static function getAllLists() {
-        self::dynamicDataInit();
-        return self::$dynamicCache['lists'];
+    static function getAllLists(): array {
+        $dynamicCache = self::dynamicDataInit();
+        return $dynamicCache['lists'];
     }
 
     static function getList(string $name): array {
@@ -287,17 +280,19 @@ class Lists {
             return $cachedLists[$name];
         }
 
-        throw new Exception('List does not exists: ' . $name);
+        throw new TechnicalException('List does not exists: ' . $name);
     }
 
     static function getCodes(): array {
-        self::dynamicDataInit();
+        $dynamicCache = self::dynamicDataInit();
 
-        return self::$dynamicCache['codes'];
+        return $dynamicCache['codes'];
     }
 
     static function getAssociations(): array {
-        self::dynamicDataInit();
-        return self::$dynamicCache['associations'];
+        $dynamicCache = self::dynamicDataInit();
+        return $dynamicCache['associations'];
     }
 }
+
+Lists::init();

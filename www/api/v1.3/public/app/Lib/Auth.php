@@ -2,14 +2,12 @@
 
 namespace Cryptomedic\Lib;
 
-use function Cryptomedic\Lib\Database;
-
 class Auth {
-    static function isLoggedIn() {
+    static function isLoggedIn(): bool {
         return self::getLogin() !== false;
     }
 
-    static function getLogin() {
+    static function getLogin(): string {
         // See Authenticated.php Authenticated.php
         // www/api/v1.3/app/Http/Middleware/Authenticated.php
         // TODO(BRIDGE): bridge to bare server
@@ -18,7 +16,7 @@ class Auth {
         // return $_SESSION['bare_username'];
     }
 
-    static function storeStatistics(string $browserUUID, string $login, array $features) {
+    static function storeStatistics(string $browserUUID, string $login, array $features): void {
         Database::exec("
 INSERT INTO browser_login SET
     created_at = NOW(),

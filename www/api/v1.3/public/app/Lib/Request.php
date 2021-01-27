@@ -9,7 +9,7 @@ if (!isset($cachedRequest)) {
 }
 
 class Request {
-    static function hasParam($name) {
+    static function hasParam(string $name): bool {
         global $cachedRequest;
         if (!array_key_exists($name, $cachedRequest)) {
             return false;
@@ -17,14 +17,17 @@ class Request {
         return !!$_REQUEST[$name];
     }
 
-    static function getParam($name) {
+    static function getParam(string $name): string {
         if (self::hasParam($name)) {
             return $_REQUEST($name);
         }
         return "";
     }
 
-    static function isParam($name) {
+    /**
+     * Return the value of the boolean parameter
+     */
+    static function isParam(string $name): bool {
         // if (!self::hasParam(($name))) {
         //     return false;
         // }
@@ -39,14 +42,8 @@ class Request {
     //     return getallheaders()[$name];
     // }
 
-    static function replyWith($data) {
+    static function replyWith(array $data): void {
         header('Content-Type: application/json');
         echo json_encode($data);
-
-        // if (self::getHeader('Accept')) {
-        //     if (preg_match('/.*text/html.*/', self::getHeader('Accept'))) {
-        //         echo "<pre>";
-        //     }
-        // }
     }
 }
