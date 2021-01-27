@@ -12,7 +12,8 @@
 
 // date_default_timezone_set("GMT");
 
-use Cryptomedic\Lib\Database;
+use Cryptomedic\Lib\DatabaseInvalidStructureException;
+use Cryptomedic\Lib\DatabaseStructure;
 use Cryptomedic\Lib\DatabaseUndefinedException;
 
 class t {
@@ -60,24 +61,24 @@ class t {
       $this->field = $data[1];
     }
 
-    $this->sqlTable = Database::getTableForModel($this->model);
+    $this->sqlTable = DatabaseStructure::getTableForModel($this->model);
 
     try {
-      $this->structure = Database::getDefinitionForField($this->sqlTable, $this->field);
+      $this->structure = DatabaseStructure::checkFieldExistsInTableAndGetDefinition($this->sqlTable, $this->field);
       $this->linked2DB = true;
 
       if (array_key_exists("list", $options) && $options['list']) {
-        $this->structure->type = Database::TYPE_LIST;
-        $this->structure->listing = $options['list'];
+        $this->structure['type'] = DatabaseStructure::TYPE_LIST;
+        $this->structure['listing'] = $options['list'];
       }
 
-      if ($this->structure->type == Database::TYPE_LIST) {
-        if (is_string($this->structure->listing)) {
+      if ($this->structure['type'] == DatabaseStructure::TYPE_LIST) {
+        if (is_string($this->structure['listing'])) {
           // String list name
-          $this->listingName = $this->structure->listing;
+          $this->listingName = $this->structure['listing'];
         }
       }
-    } catch (DatabaseUndefinedException $e) {
+    } catch (DatabaseInvalidStructureException $e) {
       $this->linked2DB = false;
     }
   }
@@ -91,11 +92,11 @@ class t {
   }
 
   function fieldIsRequired() {
-    return !$this->structure->optional;
+    return !$this->structure['optional'];
   }
 
   function fieldGetType() {
-    return $this->structure->type;
+    return $this->structure['type'];
   }
 
   function id($id) {
@@ -110,22 +111,22 @@ class t {
     }
 
     switch ($this->fieldGetType()) {
-      case Database::TYPE_TIMESTAMP:
+      case DatabaseStructure::TYPE_TIMESTAMP:
         // See https://docs.angularjs.org/api/ng/filter/date
         $this->res .= "<span id='{$this->jsId}'>{{ {$this->fieldGetKey()} | date:'{static::DATETIMEFORMAT}' }}</span>";
         break;
-      case Database::TYPE_BOOLEAN:
+      case DatabaseStructure::TYPE_BOOLEAN:
         $this->res .= "<x-read-boolean ng-attr-value='{{ {$this->fieldGetKey()} }}'></x-read-boolean>";
         break;
-      case Database::TYPE_LIST:
+      case DatabaseStructure::TYPE_LIST:
         $this->res .= "<span id='{$this->jsId}' name='{$this->field}'>{{ {$this->fieldGetKey()} }}</span>";
         break;
-      case Database::TYPE_DATE:
-      case Database::TYPE_INTEGER:
-      case Database::TYPE_CHAR:
+      case DatabaseStructure::TYPE_DATE:
+      case DatabaseStructure::TYPE_INTEGER:
+      case DatabaseStructure::TYPE_CHAR:
         $this->res .= "<span id='{$this->jsId}'>{{ {$this->fieldGetKey()} }}</span>";
         break;
-      case Database::TYPE_TEXT:
+      case DatabaseStructure::TYPE_TEXT:
         $this->res .= "<span id='{$this->jsId}' style='white-space: pre'>{{ {$this->fieldGetKey()} }}</span>";
         break;
       default:
@@ -148,7 +149,7 @@ class t {
     $inline = $inlineWithoutModel . " ng-model='{$this->fieldGetKey()}' ";
 
     switch ($this->fieldGetType()) {
-      case Database::TYPE_LIST:
+      case DatabaseStructure::TYPE_LIST:
         // New system:
         $jsonList = "";
         if (!$this->listingName) {
@@ -165,22 +166,22 @@ class t {
           . ($this->fieldIsRequired() ? "" : "nullable")
           . "></x-write-list>";
         break;
-      case Database::TYPE_TIMESTAMP:
+      case DatabaseStructure::TYPE_TIMESTAMP:
         $this->res .= "<span id='{$this->jsId}'>{{ {$this->fieldGetKey()} | date:'{static::DATETIMEFORMAT}' }}</span>";
         break;
-      case Database::TYPE_BOOLEAN:
+      case DatabaseStructure::TYPE_BOOLEAN:
         $this->res .= "<input id='{$this->jsId}' type='checkbox' ng-model='{$this->fieldGetKey()}' ng-true-value='1' ng-false-value='0' />";
         break;
-      case Database::TYPE_INTEGER:
+      case DatabaseStructure::TYPE_INTEGER:
         $this->res .= "<input type='number' $inline />";
         break;
-      case Database::TYPE_TEXT:
+      case DatabaseStructure::TYPE_TEXT:
         $this->res .= "<textarea cols=40 rows=4 $inline></textarea>";
         break;
-      case Database::TYPE_CHAR:
+      case DatabaseStructure::TYPE_CHAR:
         $this->res .= "<input $inline />";
         break;
-      case Database::TYPE_DATE:
+      case DatabaseStructure::TYPE_DATE:
         $this->res .= "<x-input-date id='{$this->jsId}' $inlineWithoutModel "
           . " value='{{" . $this->fieldGetKey() . "}}' "
           . "/>";
