@@ -169,15 +169,6 @@ test-unit: dependencies-node \
 	npm run test-unit-continuously -- --single-run
 	node tests/report.js
 
-# @NBR_TESTS=$$(cat tmp/js/junit/TESTS.xml | grep "<testCase" | wc -l); \
-# NORM_TESTS=$$( cat tests/unitjs/nbr.txt ); \
-# if [ "$$NBR_TESTS" = "$$NORM_TESTS" ]; then \
-# 	echo "V Correct number of tests"; \
-# else \
-# 	echo "X Incorrect number of tests (expected $$NORM_TESTS - received $$NBR_TESTS)" >&2 ; \
-# 	exit 1; \
-# fi
-
 .PHONY: test-e2e
 test-e2e: tmp/e2e/.tested
 tmp/e2e/.tested: data-reset www/build/index.html tests/e2e/**
