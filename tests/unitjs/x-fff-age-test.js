@@ -102,6 +102,7 @@ describe(fn(import.meta.url), function () {
 
     // TODO: remove
     describe('BirthDate2Age (legacy)', function () {
+
         const now = new Date(2010, 6, 1);
         const nowPlus5 = new Date(2015, 6, 1);
 
@@ -130,11 +131,13 @@ describe(fn(import.meta.url), function () {
                 reference: '2010-05'
             })).toBe('10y0m');
         });
+
         it('should handle yearOfBirth of string/7 vs. string/7', function () {
             expect(fromBirthDate('2000-05', {
                 reference: '2010-06'
             })).toBe('10y1m');
         });
+
         it('should handle yearOfBirth of string/7 vs. date', function () {
             expect(fromBirthDate('2000-05', {
                 reference: now
@@ -147,6 +150,7 @@ describe(fn(import.meta.url), function () {
                 reference: '2010-06'
             })).toBe('10y5m');
         });
+
         it('should handle yearOfBirth of string/4 vs. date', function () {
             expect(fromBirthDate('2000', {
                 reference: now
@@ -166,6 +170,7 @@ describe(fn(import.meta.url), function () {
                 reference: nowPlus5
             })).toBe('5y0m');
         });
+
         it('should handle yearOfBirth of date vs. date (format object)', function () {
             expect(fromBirthDate(now, {
                 reference: nowPlus5,
@@ -175,6 +180,7 @@ describe(fn(import.meta.url), function () {
                 months: 0
             });
         });
+
         it('should handle yearOfBirth of date vs. date (format number)', function () {
             expect(fromBirthDate(now, {
                 reference: nowPlus5,
