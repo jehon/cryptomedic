@@ -4,8 +4,8 @@
 // TODO: how to trigger "submit" event on form ? -> x-login-form-test
 
 /**
- * @param formElement
- * @param submitCallback
+ * @param {HTMLElement} formElement as the basis
+ * @param {function(void):void} submitCallback to be clicked on submit
  */
 export function formInit(formElement, submitCallback) {
     let submit = formElement.querySelector('input[type="submit"]');
@@ -21,8 +21,9 @@ export function formInit(formElement, submitCallback) {
 }
 
 /**
- * @param form
- * @param prototype
+ * @param {string|HTMLElement|*} form as the basis
+ * @param {*} prototype as the Class basis for the returned element
+ * @returns {object} with the data
  */
 export function formGetContent(form, prototype = {}) {
     // const log = (...args) => console.log(...args);
@@ -123,14 +124,12 @@ export function formGetContent(form, prototype = {}) {
 }
 
 /**
- * @param form
- * @param object
+ * @param {string|HTMLElement} form as the basis
+ * @param {object} object with the data to put in
  */
 export function formFillIn(form, object) {
-    let formElement = form;
-    if (!(form instanceof HTMLElement)) {
-        formElement = document.querySelector(form);
-    }
+    /** @type {HTMLElement} */
+    let formElement = (form instanceof HTMLElement) ? form : document.querySelector(form);
 
     Object.keys(object).forEach(k => {
         formElement.querySelectorAll(`[name='${k}']`).forEach(el => el.setAttribute('value', (object[k] ? object[k] : '')));
@@ -140,7 +139,8 @@ export function formFillIn(form, object) {
 }
 
 /**
- * @param formElement
+ * @param {HTMLFormElement} formElement as the basis
+ * @returns {boolean} if validation is ok
  */
 export function formValidate(formElement) {
     let result = true;
@@ -163,8 +163,8 @@ export function formValidate(formElement) {
 
 
 /**
- * @param formElement
- * @param object
+ * @param {HTMLFormElement} formElement as the basis
+ * @param {object} object as the basis of data
  */
 export function formEvaluateFunctions(formElement, object) {
     formElement.querySelectorAll('[function]').forEach(el => {
@@ -176,15 +176,12 @@ export function formEvaluateFunctions(formElement, object) {
 }
 
 /**
- * @param form
- * @param tag
- * @param mode
+ * @param {string|HTMLElement} form as the basis
+ * @param {string} tag to switch
+ * @param {string} mode to be applied
  */
 export function formSwitch(form, tag, mode) {
-    let formElement = form;
-    if (!(form instanceof HTMLElement)) {
-        formElement = document.querySelector(form);
-    }
+    let formElement = (form instanceof HTMLElement) ? form : document.querySelector(form);
 
     formElement.querySelectorAll(`[${tag}]`).forEach(el => {
         if (mode == 'read') {

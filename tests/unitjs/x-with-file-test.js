@@ -29,9 +29,11 @@ describe(fn(import.meta.url), function () {
 
         it('should define when set', function () {
             el.folder = testFolder;
+
             expect(el.folder.id).toBe(testFolder.id);
 
             el.file = file;
+
             expect(el.file).toBe(file);
             expect(el.file.uid()).toBe(file.uid());
             expect(el.fileUid).toBe(file.uid());
@@ -42,6 +44,7 @@ describe(fn(import.meta.url), function () {
             el.adapt = function () { ok = true; };
 
             el.file = null;
+
             expect(el.file).toBe(null);
             expect(el.fileUid).toBe('');
             expect(el.getAttribute('with-file')).toBe('null');
@@ -54,6 +57,7 @@ describe(fn(import.meta.url), function () {
             el.adapt = function () { ok = true; };
 
             el.file = file;
+
             expect(el.folder.getId()).toBe(testFolder.getId());
             expect(el.file.id).toBe(testFolder.list[0].id);
             expect(el.getAttribute('with-folder')).toBe(testFolder.uid());
@@ -63,7 +67,8 @@ describe(fn(import.meta.url), function () {
         });
 
     });
-    describe('without folder at first', function() {
+
+    describe('without folder at first', function () {
         it('should select file based on file-uid', function () {
             const el = new XWithFile();
             el.setAttribute('file-uid', RefFolder1RicketConsult13);

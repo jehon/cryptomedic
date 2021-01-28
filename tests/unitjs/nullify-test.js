@@ -42,24 +42,31 @@ describe('nullify-test', function () {
     it('should handle null', function () {
         expect(nullify(null)).toBe(null);
     });
+
     it('should handle "null"', function () {
         expect(nullify('null')).toBe(null);
     });
+
     it('should handle "?"', function () {
         expect(nullify('?')).toBe(null);
     });
+
     it('should handle numbers', function () {
         expect(nullify(123)).toBe(123);
     });
+
     it('should handle strings', function () {
         expect(nullify('hehehe')).toBe('hehehe');
     });
+
     it('should handle false', function () {
         expect(nullify(false)).toBe(false);
     });
+
     it('should handle true', function () {
         expect(nullify(true)).toBe(true);
     });
+
     it('should handle object', function () {
         expect(nullify({
             a: 123,

@@ -25,6 +25,7 @@ const buildResponse = function (ok = true, status = 200, statusText = '') {
  */
 export function mockNoResponse(cb = (_result) => { }) {
     let result = {};
+    /* eslint-disable-next-line jasmine/no-unsafe-spy */
     spyOn(XRequestor.prototype, '_rawRequest').and.callFake((args) => new Promise((resolve, reject) => {
         result.args = args;
         result.resolve = resolve;
@@ -131,7 +132,7 @@ describe(fn(import.meta.url), function () {
                     .then(response => {
                         expect(response.data).toBe(123456);
                         done();
-                    });
+                    }).catch(done.fail);
             });
 
             it('should make an absolute request with data', function (done) {
@@ -139,7 +140,7 @@ describe(fn(import.meta.url), function () {
                     .then(response => {
                         expect(response.data).toBe(123456);
                         done();
-                    });
+                    }).catch(done.fail);
             });
 
             it('should make an relative request', function (done) {
@@ -147,7 +148,7 @@ describe(fn(import.meta.url), function () {
                     .then(response => {
                         expect(response.data).toBe(34567);
                         done();
-                    });
+                    }).catch(done.fail);
             });
         });
 
@@ -168,7 +169,7 @@ describe(fn(import.meta.url), function () {
                     expect(element.isRequesting()).toBeFalsy();
                     expect(element.isFailed()).toBeFalsy();
                     done();
-                });
+                }).catch(done.fail);
             });
 
             it('should make a put request', function (done) {
@@ -181,11 +182,12 @@ describe(fn(import.meta.url), function () {
                         expect(element.isFailed()).toBeFalsy();
                         expect(response.data).toEqual(555);
                         done();
-                    });
+                    }).catch(done.fail);
             });
 
             it('should display string messages when requested', function () {
                 element.showFailure('Test message');
+
                 expect(element.isRequesting()).toBeFalsy();
                 expect(element.isFailed()).toBeTruthy();
                 expect(element.shadowRoot.querySelector('#errorMsg').innerText).toContain('Test message');
@@ -193,13 +195,16 @@ describe(fn(import.meta.url), function () {
 
             it('should close error messages with button', function () {
                 element.showFailure('Test message');
+
                 expect(element.isFailed()).toBeTruthy();
                 JHElement.fireOn(element.shadowRoot.querySelector('#closeButton'), 'click');
+
                 expect(element.isFailed()).toBeFalsy();
             });
 
             it('should display object messages when requested', function () {
                 element.showFailure(buildResponse(false, 404, 'Not found'));
+
                 expect(element.isRequesting()).toBeFalsy();
                 expect(element.isFailed()).toBeTruthy();
                 expect(element.shadowRoot.querySelector('#errorMsg').innerText).toContain('Not found');
@@ -208,6 +213,7 @@ describe(fn(import.meta.url), function () {
 
             it('should logout on 401 Response messages', function () {
                 element.showFailure(buildResponse(false, 401, 'Unauthorized'));
+
                 expect(element.shadowRoot.querySelector('#errorMsg').innerText).toContain('Unauthorized');
                 expect(element.shadowRoot.querySelector('#errorContent').innerText).toContain('401');
                 expect(getSession()).toBeFalsy();
@@ -215,6 +221,7 @@ describe(fn(import.meta.url), function () {
 
             it('should display TypeError messages when requested', function () {
                 element.showFailure({ request: { a: 1 } });
+
                 expect(element.isRequesting()).toBeFalsy();
                 expect(element.isFailed()).toBeTruthy();
                 expect(element.shadowRoot.querySelector('#errorMsg').innerText).toContain('Network Error');
@@ -247,7 +254,7 @@ describe(fn(import.meta.url), function () {
                         expect(element.isFailed()).toBeTruthy();
                         expect(element.hasAttribute('blocked')).toBeFalsy();
                         done();
-                    });
+                    }).catch(done.fail);
             });
         });
 
@@ -263,11 +270,13 @@ describe(fn(import.meta.url), function () {
 
             it('should resquestAndFilter with without treated', async function () {
                 await element.request(requestAndFilterBuilder({ url: '/absolute' }, [404]));
+
                 expect(element.isFailed()).toBeFalsy();
             });
 
             it('should resquestAndTreat with with treated', async function () {
                 await element.request(requestAndFilterBuilder({ url: '/404' }, [404]));
+
                 expect(element.isFailed()).toBeFalsy();
             });
 
@@ -282,6 +291,7 @@ describe(fn(import.meta.url), function () {
 
             it('should resquestAndTreat with with treated', async function () {
                 await expectAsync(element.request(requestAndFilterBuilder({ url: '/404' }, [401]))).toBeRejected();
+
                 expect(element.isFailed()).toBeTruthy();
             });
         });
@@ -290,18 +300,20 @@ describe(fn(import.meta.url), function () {
             it('should accept no response', async (done) => {
                 const mock = mockNoResponse();
                 const req = element.request({ url: '/anything' });
+
                 expect(mock.args.url).toBe('/anything');
                 expect(element.isBlocked()).toBeTruthy();
                 req.then(
                     () => done.fail('should not be resolved'),
                     () => done.fail('should not be catched')
-                );
+                ).catch(done.fail);
                 done();
             });
 
             it('should accept success', async () => {
                 const mock = await mockResponseWithSuccess(123);
                 const _req = await element.request({ url: '/anything' });
+
                 expect(mock.args.url).toBe('/anything');
                 expect(element.isRequesting()).toBeFalsy();
                 expect(element.isFailed()).toBeFalsy();
@@ -311,6 +323,7 @@ describe(fn(import.meta.url), function () {
             it('should accept filtered success', async () => {
                 const mock = await mockResponseWithSuccessbutCode(123);
                 await element.request({ url: '/anything' });
+
                 expect(mock.args.url).toBe('/anything');
                 expect(element.isRequesting()).toBeFalsy();
                 expect(element.isFailed()).toBeFalsy();

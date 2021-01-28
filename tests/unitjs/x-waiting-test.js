@@ -15,17 +15,18 @@ describe(fn(import.meta.url), function () {
 
     it('should be hidden when initialized simply', function () {
         expect(element.isBlocked()).toBeFalsy();
-        expect(element.shadowRoot.querySelector('img').offsetWidth > 0).toBeFalsy();
     });
 
     it('should show()', function () {
         element.block();
+
         expect(element.isBlocked()).toBeTruthy();
         expect(element.hasAttribute('blocked')).toBeTruthy();
     });
 
     it('should hide()', function () {
         element.free();
+
         expect(element.isBlocked()).toBeFalsy();
         expect(element.hasAttribute('blocked')).toBeFalsy();
     });
@@ -46,12 +47,13 @@ describe(fn(import.meta.url), function () {
 
             expect(element.isBlocked()).toBeFalsy();
             let p2 = element.aroundPromise(p);
+
             expect(element.isBlocked()).toBeTruthy();
             jasmine.clock().tick(150);
             p2.then(() => {
                 expect(element.isBlocked()).toBeFalsy();
                 done();
-            });
+            }).catch(done.fail);
         });
 
         it('should be shown and hidden if the promise fail', function (done) {
@@ -61,6 +63,7 @@ describe(fn(import.meta.url), function () {
 
             expect(element.isBlocked()).toBeFalsy();
             let p2 = element.aroundPromise(p);
+
             expect(element.isBlocked()).toBeTruthy();
             jasmine.clock().tick(150);
             p2.catch(() => {
