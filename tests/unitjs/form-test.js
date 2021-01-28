@@ -12,7 +12,7 @@ export function mockFormSubmit(form) {
     form.dispatchEvent(new CustomEvent('submit', { bubbles: true, cancelable: true }));
 }
 
-fdescribe('form-test', function () {
+describe('form-test', function () {
     it('should work with HTML Element', function () {
         const element = createElementWith('form', {}, [
             createElementWith('input', { name: 'n1', value: 'n1val' })
