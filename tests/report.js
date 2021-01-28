@@ -1,8 +1,14 @@
+#!/usr/bin/env node
 
 const path = require('path');
 const parse = require('lcov-parse');
 
 const filename = path.join(__dirname, '../tmp/js/lcov.info');
+
+if (process.env['NOCOV'] ?? false) {
+    console.info('!!! Required not to have coverage, no reporting it !!!');
+    process.exit(0);
+}
 
 function i(f, what) {
     if (f[what].hit == f[what].found) {
@@ -17,7 +23,7 @@ function i(f, what) {
 
 parse(filename, function (err, data) {
     if (err) {
-        console.error(err);
+        console.error(`Could not parse result file ${filename}`, err);
         process.exit(1);
     }
     data.forEach(f => {
