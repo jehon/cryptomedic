@@ -2,24 +2,24 @@
 
 set -e
 
-PHPVERSION="7.3"
+PHP_VERSION="7.3"
 
 ###############################
 #
-# Install php version $PHPVERSION
+# Install php version $PHP_VERSION
 #
 #
-echo "* Installing php version $PHPVERSION"
+echo "* Installing php version $PHP_VERSION"
 
 mkdir -p /setup/tmp
 
 # PHP: https://www.tecmint.com/install-different-php-versions-in-ubuntu/
 
 add-apt-repository --yes ppa:ondrej/php
-apt-get install --yes php${PHPVERSION} php${PHPVERSION}-xdebug php${PHPVERSION}-mbstring php${PHPVERSION}-xml php${PHPVERSION}-mysql
-# php${PHPVERSION}-curl php${PHPVERSION}-gd php${PHPVERSION}-intl php${PHPVERSION}-json
+apt-get install --yes php${PHP_VERSION} php${PHP_VERSION}-xdebug php${PHP_VERSION}-mbstring php${PHP_VERSION}-xml php${PHP_VERSION}-mysql
+# php${PHP_VERSION}-curl php${PHP_VERSION}-gd php${PHP_VERSION}-intl php${PHP_VERSION}-json
 
-update-alternatives --set php /usr/bin/php${PHPVERSION}
+update-alternatives --set php /usr/bin/php${PHP_VERSION}
 
 
 ###############################
