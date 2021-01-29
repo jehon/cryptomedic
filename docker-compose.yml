@@ -1,4 +1,14 @@
-version: "3.1"
+version: "3.4"
+
+x-common-env: &common-env
+  # MYSQL_VERSION: &MYSQL_VERSION 5.5
+  MYSQL_HOST: &MYSQL_HOST mysql
+  MYSQL_ROOT_PASSWORD: &MYSQL_ROOT_PASSWORD password
+  MYSQL_DATABASE: &MYSQL_DATABASE cryptomedic
+  MYSQL_USER: &MYSQL_USER username
+  MYSQL_USER_PASSWORD: &MYSQL_USER_PASSWORD password
+  # PHP_VERSION: 7.3
+
 services:
   server:
     build:
@@ -14,14 +24,14 @@ services:
 
   mysql:
     # https://hub.docker.com/_/mysql/
-    # OVH is on 5.5
-    image: mysql:5.5
+    image: mysql:${MYSQL_VERSION}
     environment:
       IN_DOCKER: mysql
-      MYSQL_ROOT_PASSWORD: password
-      MYSQL_DATABASE: cryptomedic
-      MYSQL_USER: username
-      MYSQL_PASSWORD: password
+      MYSQL_DATABASE: *MYSQL_DATABASE
+      MYSQL_ROOT_PASSWORD: *MYSQL_ROOT_PASSWORD
+      MYSQL_DATABASE: *MYSQL_DATABASE
+      MYSQL_USER: *MYSQL_USER
+      MYSQL_PASSWORD: *MYSQL_USER_PASSWORD
     expose:
       - 3306
 
@@ -30,10 +40,10 @@ services:
     image: phpmyadmin/phpmyadmin
     environment:
       IN_DOCKER: phpmyadmin
-      PMA_HOST: mysql
+      PMA_HOST: *MYSQL_HOST
       PMA_PORT: 3306
       PMA_USER: root
-      PMA_PASSWORD: password
+      PMA_PASSWORD: *MYSQL_ROOT_PASSWORD
     expose:
        - 80
     depends_on:
@@ -57,6 +67,7 @@ services:
     user: "${UID:-1000}:${GID:-1000}"
     environment:
       IN_DOCKER: dev
+      <<: *common-env
       HOST_UID: ${HOST_UID}
       HOST_GID: ${HOST_GID}
     volumes:

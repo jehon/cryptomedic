@@ -53,8 +53,10 @@ define recursive-dependencies
 endef
 
 dump:
+	@echo "SHELL:            $(SHELL)"
 	@echo "CRYPTOMEDIC_PORT: $(CRYPTOMEDIC_PORT)"
 	@echo "IN_DOCKER:        $(IN_DOCKER)"
+	docker-compose config
 
 dump-in-docker: docker-started
 	$(call run_in_docker,dev,"make dump")
