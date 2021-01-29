@@ -53,8 +53,11 @@ describe(fn(import.meta.url), function () {
 
         it('should refuse if pending request is running', async function () {
             const mock = mockNoResponse();
+
+            // Async -> this will block the next request
             element.doLogin();
             expect(element.isRequesting()).toBeTrue();
+
             await expectAsync(element.doLogin()).toBeResolvedTo(-1);
             mock.resolve();
         });

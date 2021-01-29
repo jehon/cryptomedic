@@ -23,13 +23,24 @@ const buildResponse = function (ok = true, status = 200, statusText = '') {
 /**
  * @param cb
  */
-export function mockNoResponse(cb = (_result) => { }) {
+export function mockNoResponse(cb = (_result) => ({})) {
     let result = {};
     /* eslint-disable-next-line jasmine/no-unsafe-spy */
     spyOn(XRequestor.prototype, '_rawRequest').and.callFake((args) => new Promise((resolve, reject) => {
         result.args = args;
-        result.resolve = resolve;
-        result.reject = reject;
+        result.resolve = (data = {}) => resolve({
+            ok: true,
+            status: 200,
+            data,
+            ...data
+        });
+        result.reject = (data = {}) => reject({
+            ok: false,
+            status: 404,
+            statusCode: 'default error',
+            data,
+            ...data
+        });
         return cb(result);
     }));
     return result;
