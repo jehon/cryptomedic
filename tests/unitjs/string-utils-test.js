@@ -1,6 +1,6 @@
 
 import { fn } from './athelpers.js';
-import { toTitleCase, toSentenceCase, toAttributeCase, toPropertyCase, _canonize } from '../../app/js/string-utils.js';
+import { toTitleCase, toSentenceCase, toAttributeCase, toPropertyCase, _canonize, buildTemplate } from '../../app/js/string-utils.js';
 
 describe(fn(import.meta.url), function () {
     it('should canonize', function () {
@@ -36,4 +36,9 @@ describe(fn(import.meta.url), function () {
         expect(toAttributeCase('abcDefGhi')).toBe('abc-def-ghi');
     });
 
+    it('should evalTemplate', function () {
+        expect(buildTemplate('${data.id} test')({ id: 123 })).toBe('123 test');
+        const truc = 1; // eslint-disable-line no-unused-vars
+        expect(() => buildTemplate('${data.id} ${truc} test')({ id: 123 })).toThrowError();
+    });
 });

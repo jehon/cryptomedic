@@ -65,3 +65,13 @@ export function toAttributeCase(text) {
     return _canonize(text)
         .join('-');
 }
+
+/**
+ * @param {string} template as the template to be built
+ * @returns {function(object): string} that can interplate the string
+ */
+export function buildTemplate(template) {
+    // const names = Object.keys(params);
+    // const vals = Object.values(params);
+    return /** @type {function(object): string} */ (new Function('data', `return \`${template}\`;`));
+}
