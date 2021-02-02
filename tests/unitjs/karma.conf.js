@@ -17,6 +17,22 @@ module.exports = function (config) {
             'jasmine-html'
         ],
 
+        /** import bare - begin */
+        plugins: [
+            require('@adobe/es-modules-middleware'),
+            'karma-*',
+        ],
+
+        middleware: ['es-modules'],
+
+        esModulesMiddleware: {
+            baseDir: 'node_modules',
+            paths: {
+                '/': path.join(__dirname, '../../node_modules'),
+            },
+        },
+        /** import bare - end */
+
         reporters: [
             'progress',
             'coverage',
