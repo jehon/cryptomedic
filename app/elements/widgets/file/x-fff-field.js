@@ -4,7 +4,7 @@ import { toSentenceCase } from '../../../js/string-utils.js';
 import XWithFile from './x-with-file.js';
 
 // TODO: use x-i18n
-
+// TODO: use x-label
 
 /**
  * Transform an abstract field into a real sided field
@@ -136,7 +136,7 @@ export default class XFffField extends XWithFile {
         if (!field) {
             return false;
         }
-        if (!this.file){
+        if (!this.file) {
             return false;
         }
         if (!(field in this.file) || !this.file[field]) {
@@ -157,11 +157,11 @@ export default class XFffField extends XWithFile {
 
     adaptEmpty() {
         if (this._testFieldIsEmpty(this.field)) {
-            return ;
+            return;
         }
         if (this.bySides) {
             if (this._testFieldIsEmpty(this.sideLeft) && this._testFieldIsEmpty(this.sideRight)) {
-                return ;
+                return;
             }
         }
         this.removeAttribute('empty');

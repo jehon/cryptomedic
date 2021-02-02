@@ -54,5 +54,5 @@ export function fn(url) {
 afterAll(function () {
     expect(fnCnt)
         .withContext('#FILE_NUMBER# Number of files in athelper.js')
-        .toBe(36);
+        .toBe(37);
 });

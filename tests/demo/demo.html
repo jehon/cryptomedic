@@ -50,6 +50,7 @@
     <script type='module' src='../../app/elements/x-input-date.js'></script>
 
     <script type='module' src='../../app/elements/widgets/generic/x-button.js'></script>
+    <script type='module' src='../../app/elements/widgets/generic/x-label.js'></script>
     <script type='module' src='../../app/elements/widgets/generic/x-i18n.js'></script>
     <script type='module' src='../../app/elements/widgets/generic/x-group-panel.js'></script>
     <script type='module' src='../../app/elements/widgets/generic/x-message.js'></script>
@@ -118,6 +119,15 @@
                 <div slot='third'></div>
             </x-fff-field>
         </x-group-panel>
+    </xx-test>
+    <xx-test>
+        <x-label label='text'>blablabla</x-label>
+        <x-label label='input text'><input name='truc' /></x-label>
+        <x-label label='select'><select name='truc'>
+                <option>test</option>
+                <option>test 2</option>
+            </select>
+        </x-label>
     </xx-test>
     <xx-test>
         <x-message level='success'>primary</x-message>
