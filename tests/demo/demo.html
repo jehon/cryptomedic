@@ -32,6 +32,10 @@
             background-color: lightgray;
         }
 
+        [invisible] {
+            display: none;
+        }
+
         [double] {
             width: calc(var(--box-width) * 2 + var(--margin-width) * 2);
         }
@@ -74,9 +78,10 @@
     <div>
         <h2>Menu</h2>
         <a href='http://localhost:5557/tests/'>Go back to index</a>
+        <a href='#'>Reset filters</a>
     </div>
 
-    <h1>generic</h1>
+    <xx-test title='generic'></xx-test>
     <xx-test>
         <x-button action='commit'>commit</x-button>
     </xx-test>
@@ -178,12 +183,12 @@
         <x-waiting blocked>content waiting</x-waiting>
     </xx-test>
 
-    <h1>pages</h1>
+    <xx-test title='pages'></xx-test>
     <xx-test>
         <x-login-form></x-login-form>
     </xx-test>
 
-    <h1>folder</h1>
+    <xx-test title='folder'></xx-test>
     <xx-test double>
         <x-ff-next-appointment demo-folder='test1'></x-ff-next-appointment>
     </xx-test>
@@ -203,9 +208,9 @@
         <x-graphic-wh demo-folder='test1'></x-graphic-wh>
     </xx-test>
 
-    <h1>file</h1>
+    <xx-test title='file'></xx-test>
 
-    <h1>other</h1>
+    <xx-test title='other'></xx-test>
     <xx-test>
         <x-input-date></x-input-date>
     </xx-test>

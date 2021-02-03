@@ -64,6 +64,12 @@ export default class XLabel extends HTMLElement {
         outline: 0;
         box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, 0.6);
     }
+
+    ::slotted(input:invalid), :host input:invalid {
+        border-color: #red;
+        outline: 0;
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, 0.6);
+    }
 `));
 
         this.shadowRoot.appendChild(this._label = createElementWith('div', { id: 'label' }));

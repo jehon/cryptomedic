@@ -23,6 +23,9 @@ export function setRoute(hash) {
  * @param {string} redirect is the current route to redirect to when login complete
  */
 export function routeToLogin(redirect = getCurrentRoute()) {
+    if (redirect.startsWith('/login/')) {
+        return;
+    }
     setRoute(`/login/${redirect}`);
 }
 
