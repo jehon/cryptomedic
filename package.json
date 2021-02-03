@@ -52,7 +52,7 @@
     "jasmine": "3.6.4",
     "jasmine-webcomponents": "github:jehon/jasmine-webcomponents",
     "jsdoc-typeof-plugin": "1.0.0",
-    "karma": "6.0.4",
+    "karma": "6.1.0",
     "karma-chrome-launcher": "3.1.0",
     "karma-coverage": "2.0.3",
     "karma-firefox-launcher": "2.1.0",
