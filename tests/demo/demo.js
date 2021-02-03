@@ -64,7 +64,7 @@ export default class XxTest extends HTMLElement {
     }
 
     onHashChange() {
-        const hash = location.hash.replace(/^#/g, '').replace(/\/.*\//g, '');
+        const hash = location.hash.replace(/^#/g, '').replace(/\/(.*\/)*/g, '');
         if (hash && (!(',' + hash + ',').includes(`,${this.type},`) || !this.type)) {
             this.setAttribute('invisible', 'invisible');
         } else {
