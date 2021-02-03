@@ -10,12 +10,37 @@ export default class XxTest extends HTMLElement {
             <slot></slot>
             <div id='code'></div>
             <style>
+                ::slotted(h1) {
+                    height: 100%;
+                    width: 100%;
+                    background-color: gray;
+                }
+
                 #code {
                     font-size: 8px;
                     padding-top: 10px;
                 }
             </style>
         `;
+
+        this.innerHTML = this.innerHTML.trim();
+
+        if (this.innerHTML.length == 0) {
+            this.style.backgroundColor = 'gray';
+            this.style.color = 'white';
+        }
+
+        try {
+            this.type = this.firstChild.tagName.toLowerCase();
+            if (this.type.substring(0, 2) != 'x-') {
+                this.type = false;
+            }
+        } catch {
+            this.type = '';
+        }
+
+        window.addEventListener('hashchange', () => this.onHashChange());
+        this.onHashChange();
     }
 
     connectedCallback() {
@@ -29,15 +54,22 @@ export default class XxTest extends HTMLElement {
             .replace(/'/g, '&#039;');
 
         if (!this.hasAttribute('title')) {
-            const topEl = this.querySelector('*');
-            if (topEl) {
-                const topElName = topEl.tagName.toLowerCase();
-                this.setAttribute('title', topElName);
+            if (this.type) {
+                this.setAttribute('title', this.type);
             } else {
                 this.setAttribute('title', '...');
             }
         }
         this.shadowRoot.querySelector('h2').innerHTML = this.getAttribute('title');
+    }
+
+    onHashChange() {
+        const hash = location.hash.replace(/^#/g, '').replace(/\/.*\//g, '');
+        if (hash && (!(',' + hash + ',').includes(`,${this.type},`) || !this.type)) {
+            this.setAttribute('invisible', 'invisible');
+        } else {
+            this.removeAttribute('invisible');
+        }
     }
 }
 
