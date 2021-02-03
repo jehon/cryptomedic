@@ -197,6 +197,7 @@ class Lists extends CachedAbstract {
             withCode("Rohinga Camp"), // since 07-2020
             withCode("CMOSH"),
             withCode("CMOSH Device Center"),
+            withCode("Forcibly Displaced Myanmar Nationals", "FDMN"),
             withCode("Other Field", "OF"),
             withCode("Virtual Consultation")
         ]);
