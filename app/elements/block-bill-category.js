@@ -3,7 +3,7 @@
 
 import JHElement from './jh-element.js';
 import './block-bill-line.js';
-import './widgets/generic/x-group-panel.js';
+import './render/x-group-panel.js';
 
 const tbody = Symbol('tbody');
 const catTotal = Symbol('catTotal');
@@ -73,7 +73,7 @@ export default class BlockBillCategory extends JHElement {
                     }, false);
                 }
                 if (v.Amount || this._edit) {
-                    this[tbody].appendChild(this.createElementAndAddThem(`<block-bill-line ${this._edit ? 'edit' : ''} style='display: table-row' value='${JSON.stringify(v)}' price='${JSON.stringify(p)}'></block-bill-line>`,
+                    this[tbody].append(this.createElementAndAddThem(`<block-bill-line ${this._edit ? 'edit' : ''} style='display: table-row' value='${JSON.stringify(v)}' price='${JSON.stringify(p)}'></block-bill-line>`,
                         null)[0]);
                     displayed = true;
                 }

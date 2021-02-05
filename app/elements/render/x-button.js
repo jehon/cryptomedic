@@ -23,8 +23,9 @@ export default class XButton extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
-        this.shadowRoot.appendChild(createElementWith('css-inherit'));
-        this.shadowRoot.appendChild(createElementWith('style', { 'css-inherit-local': true }, `
+        this.shadowRoot.append(
+            createElementWith('css-inherit'),
+            createElementWith('style', { 'css-inherit-local': true }, `
     :host {
         display: inline-block;
         background-color: rgba(0,0,0,0);
@@ -48,17 +49,17 @@ export default class XButton extends HTMLElement {
     :host(.selected) button {
         background-color: blue;
     }
-`));
+`),
 
-        this[button] = this.shadowRoot.appendChild(createElementWith('button', { class: `btn btn-${actions.alternate}` }, [
-            createElementWith('img'),
-            createElementWith('slot')
-        ], element => element.addEventListener('click', () => {
-            const toRoute = this.getAttribute('to-route');
-            if (toRoute) {
-                setRoute(toRoute);
-            }
-        })));
+            this[button] = createElementWith('button', { class: `btn btn-${actions.alternate}` }, [
+                createElementWith('img'),
+                createElementWith('slot')
+            ], element => element.addEventListener('click', () => {
+                const toRoute = this.getAttribute('to-route');
+                if (toRoute) {
+                    setRoute(toRoute);
+                }
+            })));
     }
 
     attributeChangedCallback(attributeName, oldValue, newValue) {

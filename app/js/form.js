@@ -13,7 +13,7 @@ export function formInit(formElement, submitCallback) {
         submit = document.createElement('input');
         submit.setAttribute('type', 'submit');
         submit.style.display = 'none';
-        formElement.appendChild(submit);
+        formElement.append(submit);
     }
 
     // Prevent form submission (thanks to https://stackoverflow.com/a/8664680/1954789)

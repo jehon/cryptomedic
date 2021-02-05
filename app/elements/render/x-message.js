@@ -42,7 +42,8 @@ export default class XMessage extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
-        this.shadowRoot.appendChild(createElementWith('style', {}, `
+        this.shadowRoot.append(
+            createElementWith('style', {}, `
     :host {
         display: block;
         box-sizing: border-box;
@@ -56,8 +57,9 @@ export default class XMessage extends HTMLElement {
         border-radius: 4px;
 
     }
-`));
-        this.shadowRoot.appendChild(createElementWith('slot'));
+`),
+            createElementWith('slot')
+        );
         this.refresh();
     }
 

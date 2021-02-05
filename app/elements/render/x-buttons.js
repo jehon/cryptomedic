@@ -10,7 +10,8 @@ export default class XButtons extends HTMLElement {
 
         super();
         this.attachShadow({ mode: 'open' });
-        this.shadowRoot.appendChild(createElementWith('style', {}, `
+        this.shadowRoot.append(
+            createElementWith('style', {}, `
     :host > div {
         display: flex;
 
@@ -23,11 +24,10 @@ export default class XButtons extends HTMLElement {
     ::slotted(*) {
         flex-grow: 1;
     }
-`));
-
-        this.shadowRoot.appendChild(createElementWith('div', {}, [
-            createElementWith('slot')
-        ]));
+`),
+            createElementWith('div', {}, [
+                createElementWith('slot')
+            ]));
 
     }
 }

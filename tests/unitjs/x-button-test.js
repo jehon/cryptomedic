@@ -51,7 +51,7 @@ describe(fn(import.meta.url), function () {
 
     it('should not submit a form', function (done) {
         const f = document.createElement('form');
-        f.appendChild(el);
+        f.append(el);
 
         el.addEventListener('submit', () => done.fail('form has been submitted'));
         el.shadowRoot.querySelector('button').click();

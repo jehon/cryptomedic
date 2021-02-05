@@ -1,5 +1,5 @@
 
-import XRestricted from '../../app/elements/widgets/generic/x-restricted.js';
+import XRestricted from '../../app/elements/funcs/x-restricted.js';
 import { deepCopy, setSession } from '../../app/js/session.js';
 import { fn, loadReference } from './athelpers.js';
 
@@ -15,11 +15,11 @@ describe(fn(import.meta.url), function () {
         el.connectedCallback();
     });
 
-    afterEach(function() {
+    afterEach(function () {
         el.disconnectedCallback();
     });
 
-    describe('without restricted-by', function() {
+    describe('without restricted-by', function () {
         it('should be hidden', function () {
             expect(el.style.display).toBe('none');
         });
@@ -31,7 +31,7 @@ describe(fn(import.meta.url), function () {
     });
 
     describe('with restricted-by not authorized', function () {
-        beforeEach(function() {
+        beforeEach(function () {
             el.setAttribute('restricted-by', 'anything.forbidden');
         });
 
@@ -53,7 +53,7 @@ describe(fn(import.meta.url), function () {
     });
 
     describe('with restricted-by authorized', function () {
-        beforeEach(function() {
+        beforeEach(function () {
             el.setAttribute('restricted-by', 'application.open');
         });
 
@@ -75,9 +75,9 @@ describe(fn(import.meta.url), function () {
     });
 
     describe('with inverted', function () {
-        beforeEach(function() {
+        beforeEach(function () {
             el.setAttribute('restricted-by', 'application.open');
-            el.setAttribute('inverted','');
+            el.setAttribute('inverted', '');
         });
 
         it('should be hidden', function () {
