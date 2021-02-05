@@ -1,5 +1,5 @@
 
-import XForm from '../../app/elements/widgets/generic/x-form.js';
+import XForm from '../../app/elements/funcs/x-form.js';
 import '../../app/elements/x-write.js';
 import '../../app/elements/x-write-list.js';
 import '../../app/elements/x-inline.js';

@@ -1,8 +1,6 @@
 
-import XGroupPanel from '../../app/elements/widgets/generic/x-group-panel.js';
+import XGroupPanel from '../../app/elements/render/x-group-panel.js';
 import { fn } from './athelpers.js';
-
-// TODO: use constructor instead of webDescribe
 
 describe(fn(import.meta.url), function () {
     it('should initialize', function () {

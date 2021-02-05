@@ -90,7 +90,7 @@ export default class JHElement extends HTMLElement {
         }
         document.querySelectorAll('style, link').forEach(el => {
             const node = el.cloneNode(true);
-            this.shadowRoot.appendChild(node);
+            this.shadowRoot.append(node);
         });
     }
 
@@ -179,7 +179,7 @@ export default class JHElement extends HTMLElement {
 
         if (to != null) {
             to.innerHTML = '';
-            template.content.childNodes.forEach(el => to.appendChild(el));
+            template.content.childNodes.forEach(el => to.append(el));
         }
         return template.content.childNodes;
     }

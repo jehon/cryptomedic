@@ -21,7 +21,7 @@ export default class XLoginForm extends XRequestor {
         super();
         this.classList.add('full');
         // The component is a final one, so we use the "slot" system here
-        this.appendChild(
+        this.append(
             createElementWith(XPanel, {}, [
                 createElementWith('div', { style: 'width: 300px' }, [
                     this[form] = createElementWith('form', {}, [

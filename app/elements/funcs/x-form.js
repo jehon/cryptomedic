@@ -1,11 +1,8 @@
 
-import { createElementWith, defineCustomElement } from '../../../js/custom-element.js';
-import { setRoute } from '../../../js/router.js';
-import { buildTemplate } from '../../../js/string-utils.js';
-import XRequestor from './x-requestor.js';
-import XMessages from '../../render/x-messages.js';
-import XButtons from '../../render/x-buttons.js';
-import XButton from '../../render/x-button.js';
+import { createElementWith, defineCustomElement } from '../../js/custom-element.js';
+import XMessages from '../render/x-messages.js';
+import XButtons from '../render/x-buttons.js';
+import XButton from '../render/x-button.js';
 
 // const log = (...args) => console.log('log: ', ...args);
 const log = (..._args) => { };
@@ -29,7 +26,7 @@ const log = (..._args) => { };
  *     message: { text, level } | text
  */
 
-export default class XForm extends XRequestor {
+export default class XForm extends HTMLElement {
     get observedAttributes() {
         return [
             'submit-label',
@@ -38,28 +35,30 @@ export default class XForm extends XRequestor {
         ];
     }
 
-    getXRequestorContents() {
-        // The formular:
-        //   - the main content is the set of inputs/...
-        //   - in the inner side, the buttons and the layout
-        //
+    /** @type {XMessages} */
+    _messages;
 
-        this.buttons = {};
+    constructor() {
+        super();
+        this._buttons = {};
 
-        const rootElement = [
+        this.attachShadow({ mode: 'open' });
+        this.shadowRoot.append(
+            createElementWith('css-inherit'),
             createElementWith('style', {}, `
-:host([no-cancel]) x-button#cancel {
-    display: nonev
-}
-`),
-            createElementWith('slot', { id: 'content' }),
-            this.messages =  /** @type {XMessages} */ (createElementWith(XMessages)),
+    :host([no-cancel]) x-button#cancel {
+        display: none
+    }
+`
+            ),
+            createElementWith('slot'),
+            this._messages =  /** @type {XMessages} */ (createElementWith(XMessages)),
             createElementWith(XButtons, {}, [
-                this.buttons.submit = createElementWith(XButton, { id: 'submit' },
+                this._buttons.submit = createElementWith(XButton, { id: 'submit', action: 'commit' },
                     this.getAttribute('submit-label') || 'Submit',
-                    (el) => el.addEventListener('click', () => this.onClickSubmit())),
+                    (el) => el.addEventListener('click', () => this._onClickSubmit())),
 
-                this.buttons.cancel = createElementWith(XButton, { id: 'cancel' },
+                this._buttons.cancel = createElementWith(XButton, { id: 'cancel', action: 'cancel' },
                     'Cancel',
                     (el) => el.addEventListener('click', () => this._onClickCancel())),
 
@@ -70,12 +69,9 @@ export default class XForm extends XRequestor {
                 // createElementWith(XButton, { id: 'delete' },
                 //     'Delete',
                 //     (el) => el.addEventListener('click', () => this.onDelete())),
+                createElementWith('slot', { name: 'buttons' })
             ])
-        ];
-
-        this._data = this.data;
-
-        return rootElement;
+        );
     }
 
     attributeChangedCallback(attributeName, _oldValue, newValue) {
@@ -85,8 +81,8 @@ export default class XForm extends XRequestor {
             //     break;
             case 'submit-label':
                 // TODO
-                if (this.buttons?.submit) {
-                    this.buttons.submit.innerHTML = newValue || 'Submit';
+                if (this._buttons?.submit) {
+                    this._buttons.submit.innerHTML = newValue || 'Submit';
                 }
                 break;
             // case 'readonly':
@@ -128,7 +124,6 @@ export default class XForm extends XRequestor {
         for (const j of this.getDataElements()) {
 
             // TODO: or the DataElement ???
-            /** @type {HTMLInputElement} */
             const el = /** @type {HTMLInputElement} */ (j);
 
             // Skip empty names
@@ -225,7 +220,9 @@ export default class XForm extends XRequestor {
     }
 
     reset() {
-        this.messages.clear();
+        if (this._messages) {
+            this._messages.clear();
+        }
 
         this.getDataElements().forEach(el => {
             const name = el.getAttribute('name');
@@ -245,14 +242,15 @@ export default class XForm extends XRequestor {
 
     /**
      * @private
+     *
      * @returns {Promise<boolean|object>} if the validation is ok
      */
-    async onClickSubmit() {
-        this.messages.clear();
+    async _onClickSubmit() {
+        this._messages.clear();
 
         if (!this.validate()) {
             // TODO: more explicit
-            this.messages.addMessage('The form contains some errors.');
+            this._messages.addMessage('The form contains some errors.');
             return false;
         }
 
@@ -260,36 +258,14 @@ export default class XForm extends XRequestor {
     }
 
     /**
+     * @abstract
+     *
      * @param {object} data to be sent (formular data by default)
      * @returns {Promise<object>} resolving with the data from the request
      */
-    async onSubmit(data = this.data) {
-        if (this.hasAttribute('submit-post')) {
-            const submitUrl = buildTemplate(this.getAttribute('submit-post'))(data);
-
-            return this.request({
-                url: submitUrl,
-                method: 'POST',
-                data
-            })
-                .then(response => this.onSubmitSuccess(response));
-        }
-
-        return data;
-    }
-
-    /**
-     * To handle the return from the onSubmit, in the url submit case
-     *
-     * @param {object} response from the request
-     */
-    onSubmitSuccess(response) {
-        log(response);
-        const submitRedirect = buildTemplate(this.getAttribute('submit-redirect'))(response);
-        log(submitRedirect);
-        if (submitRedirect) {
-            setRoute(submitRedirect);
-        }
+    async onSubmit(data) {
+        console.info(data);
+        return Promise.resolve(data);
     }
 
     /**
@@ -303,20 +279,12 @@ export default class XForm extends XRequestor {
     /**
      * To be called when the user has choosen to "cancel",
      * after handling default behaviors
+     *
+     * @abstract
      */
-    onCancel() {
-        if (this.hasAttribute('cancel-redirect')) {
-            setRoute(this.getAttribute('cancel-redirect'));
-        }
-    }
+    onCancel() { }
 
-    // onEdit() {
-
-    // }
-
-    // adapt() {
-    //     // Adapt to read / write mode
-    // }
+    // onEdit() {}
 }
 
 defineCustomElement(XForm);

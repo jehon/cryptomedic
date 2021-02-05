@@ -39,17 +39,15 @@ export default class XRequestor extends XWaiting {
                     (el) => el.addEventListener('click', () => this[error].free())
                 )
             ]),
-            createElementWith('div', {}, [
-                this.getXRequestorContent()
-            ])
+            ...this.getXRequestorContents()
         ]);
     }
 
     /**
-     * @returns {HTMLElement} to be protected by the XRequestor
+     * @returns {Array<HTMLElement>} to be protected by the XRequestor
      */
-    getXRequestorContent() {
-        return createElementWith('slot');
+    getXRequestorContents() {
+        return [createElementWith('slot')];
     }
 
     /**

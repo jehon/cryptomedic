@@ -97,8 +97,7 @@ describe(fn(import.meta.url), function () {
         });
         const divN = document.createElement('div');
 
-        xxTest.shadowRoot.appendChild(divY);
-        xxTest.shadowRoot.appendChild(divN);
+        xxTest.shadowRoot.append(divY, divN);
 
         it('with default behavior', function () {
             setPropertyOn(xxTest, prop, null);

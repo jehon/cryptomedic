@@ -10,9 +10,8 @@ export default class XPanel extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
-        this.shadowRoot.appendChild(
-            createElementWith('span', {}, [
-                createElementWith('style', { 'css-inherit-local': true }, `
+        this.shadowRoot.append(
+            createElementWith('style', { 'css-inherit-local': true }, `
     :host {
         box-sizing: border-box;
         width: 100%;
@@ -24,12 +23,7 @@ export default class XPanel extends HTMLElement {
         padding: ${spacing.text};
     }
 
-    :host > span {
-        height: 100%;
-        width: 100%;
-    }
-
-    :host > span > slot {
+    :host > slot {
         display: flex;
         width: 100%;
         height: 100%;
@@ -39,9 +33,8 @@ export default class XPanel extends HTMLElement {
         justify-content: center;
     }
 `
-                ),
-                this.getXPanelContent()
-            ])
+            ),
+            this.getXPanelContent()
         );
     }
 

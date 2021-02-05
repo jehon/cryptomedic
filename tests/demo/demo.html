@@ -53,9 +53,6 @@
     </style>
     <script type='module' src='../../app/elements/x-input-date.js'></script>
 
-    <script type='module' src='../../app/elements/widgets/generic/x-form.js'></script>
-    <script type='module' src='../../app/elements/widgets/generic/x-i18n.js'></script>
-    <script type='module' src='../../app/elements/widgets/generic/x-group-panel.js'></script>
     <script type='module' src='../../app/elements/widgets/generic/x-overlay.js'></script>
     <script type='module' src='../../app/elements/widgets/generic/x-panel.js'></script>
     <script type='module' src='../../app/elements/widgets/generic/x-requestor.js'></script>
@@ -74,7 +71,7 @@
 
     <div>
         <h2>Menu</h2>
-        <a href='http://localhost:5557/tests/'>Go back to index</a>
+        <a href='../index.html'>Go back to index</a>
         <a href='#'>Reset filters</a>
     </div>
 
@@ -104,39 +101,6 @@
         </x-buttons>
     </xx-test>
     <xx-test>
-        <x-label label='text'>blablabla</x-label>
-        <x-label label='input text'><input name='truc' /></x-label>
-        <x-label label='select'><select name='truc'>
-                <option>test</option>
-                <option>test 2</option>
-            </select>
-        </x-label>
-    </xx-test>
-    <xx-test>
-        <x-messages>
-            <x-message level='success'>primary</x-message>
-            <x-message level='info'>info</x-message>
-            <x-message level='warning'>warning</x-message>
-            <x-message level='danger'>danger</x-message>
-        </x-messages>
-    </xx-test>
-    <xx-test>
-        <x-messages></x-messages>
-    </xx-test>
-
-
-
-
-    <xx-test title='generic'></xx-test>
-    <xx-test>
-        <x-form>
-            <h3>Title of the form</h3>
-            <div>This is a testing form...</div>
-            <x-label label='login'><input name='login' required></x-label>
-            <x-label label='error'><input name='error' required validation-error='euh?'></x-label>
-        </x-form>
-    </xx-test>
-    <xx-test>
         <x-group-panel title='my title'>
             <div>test</div>
         </x-group-panel>
@@ -162,6 +126,41 @@
             </x-fff-field>
         </x-group-panel>
     </xx-test>
+    <xx-test>
+        <x-label label='text'>blablabla</x-label>
+        <x-label label='input text'><input name='truc' /></x-label>
+        <x-label label='select'><select name='truc'>
+                <option>test</option>
+                <option>test 2</option>
+            </select>
+        </x-label>
+    </xx-test>
+    <xx-test>
+        <x-messages>
+            <x-message level='success'>primary</x-message>
+            <x-message level='info'>info</x-message>
+            <x-message level='warning'>warning</x-message>
+            <x-message level='danger'>danger</x-message>
+        </x-messages>
+    </xx-test>
+    <xx-test>
+        <x-messages></x-messages>
+    </xx-test>
+
+    <xx-test title='funcs'></xx-test>
+    <xx-test>
+        <x-form>
+            <h3>Title of the form</h3>
+            <div>This is a testing form...</div>
+            <x-label label='login'><input name='login' required></x-label>
+            <x-label label='error'><input name='error' required validation-error='euh?'></x-label>
+        </x-form>
+    </xx-test>
+    <xx-test>
+        <x-i18n value='blablabla'></x-i18n>
+    </xx-test>
+
+    <xx-test title='generic'></xx-test>
     <xx-test>
         <x-overlay>
             <div>Content</div>

@@ -10,7 +10,7 @@ export default class XMessages extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
-        this.shadowRoot.appendChild(
+        this.shadowRoot.append(
             createElementWith('slot')
         );
     }
@@ -36,7 +36,7 @@ export default class XMessages extends HTMLElement {
      */
     addMessage(msg) {
         const xmsg = XMessage.buildMessage(msg);
-        this.appendChild(xmsg);
+        this.append(xmsg);
         return xmsg.msgId;
     }
 

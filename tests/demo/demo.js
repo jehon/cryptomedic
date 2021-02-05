@@ -3,9 +3,13 @@ import { defineCustomElement } from '../../app/js/custom-element.js';
 
 import '../../app/elements/render/x-button.js';
 import '../../app/elements/render/x-buttons.js';
+import '../../app/elements/render/x-group-panel.js';
 import '../../app/elements/render/x-label.js';
 import '../../app/elements/render/x-message.js';
 import '../../app/elements/render/x-messages.js';
+
+import '../../app/elements/funcs/x-form.js';
+import '../../app/elements/funcs/x-i18n.js';
 
 export default class XxTest extends HTMLElement {
     constructor() {
@@ -45,7 +49,7 @@ export default class XxTest extends HTMLElement {
             this.type = '';
         }
 
-        window.addEventListener('hashchange', () => this.onHashChange());
+        // window.addEventListener('hashchange', () => this.onHashChange());
         this.onHashChange();
     }
 
