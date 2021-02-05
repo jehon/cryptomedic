@@ -1,6 +1,6 @@
 
-import { createElementWith, defineCustomElement } from '../../../js/custom-element.js';
-import { toSentenceCase } from '../../../js/string-utils.js';
+import { createElementWith, defineCustomElement } from '../../js/custom-element.js';
+import { toSentenceCase } from '../../js/string-utils.js';
 
 // TODO: use x-i18n
 
@@ -41,7 +41,6 @@ export default class XLabel extends HTMLElement {
     }
 
     ::slotted(input), :host input {
-
         display: block;
         width: 100%;
         height: 34px;

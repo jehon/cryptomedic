@@ -1,5 +1,5 @@
 
-import './generic/x-button.js';
+import '../render/x-button.js';
 import { routeToLogin } from '../../js/router.js';
 import { onSession, getUsername } from '../../js/session.js';
 import { logoutBuilder } from './generic/x-requestor.js';

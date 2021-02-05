@@ -26,7 +26,7 @@ describe(fn(import.meta.url), function () {
     });
 
 
-    it('should be initialized', function() {
+    it('should be initialized', function () {
         const el = new XFfNextAppointment();
         expect(el.hasAttribute('blocked')).toBeTrue();
         expect(el._nextAppointment()).toBeNull();
@@ -76,12 +76,12 @@ describe(fn(import.meta.url), function () {
         });
     });
 
-    it('should click', function() {
+    it('should click', function () {
         const el = new XFfNextAppointment();
         el.folder = testFolder;
         location.hash = '#/';
 
-        (/** @type {import('../../app/elements/widgets/generic/x-button.js').default} */
+        (/** @type {import('../../app/elements/render/x-button.js').default} */
             (el.shadowRoot.querySelector('x-button#add-appointment'))
         ).click();
         expect(location.hash).toBe('#/folder/1/file/Appointment');

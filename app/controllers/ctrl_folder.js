@@ -13,7 +13,7 @@ import date2CanonicString from '../js/date2CanonicString.js';
 import setPropertyOn from '../js/set-property.js';
 
 import '../elements/pages/x-folder-graphics.js';
-import '../elements/widgets/generic/x-button.js';
+import '../elements/render/x-button.js';
 import '../elements/widgets/file/x-fff-bmi.js';
 import '../elements/widgets/file/x-fff-bmi-sd.js';
 import '../elements/widgets/file/x-fff-height-sd.js';
@@ -40,19 +40,19 @@ function newRefresh(folder = null, file = null) {
  */
 export default function ctrl_folder($scope, $routeParams) {
     /*
-	 * '/folder/:patient_id/:page?/:subtype?/:subid?/:mode?'
-	 *
-	 *  '/folder/123                      view the patient file
-	 *  '/folder/123/edit                 edit the patient  (page ~> mode)
-	 *  '/folder/                         add a patient     (page ~> mode)
-	 *  '/folder/123/file/Bills/456       view the sub file
-	 *  '/folder/123/file/Bills/456/edit  edit the sub file
-	 *  '/folder/123/file/Bills           add a bill
-	 *  '/folder/123/summary
-	 *  '/folder/123/graphics
-	 *  '/folder/123/addfile
-	 *
-	 */
+     * '/folder/:patient_id/:page?/:subtype?/:subid?/:mode?'
+     *
+     *  '/folder/123                      view the patient file
+     *  '/folder/123/edit                 edit the patient  (page ~> mode)
+     *  '/folder/                         add a patient     (page ~> mode)
+     *  '/folder/123/file/Bills/456       view the sub file
+     *  '/folder/123/file/Bills/456/edit  edit the sub file
+     *  '/folder/123/file/Bills           add a bill
+     *  '/folder/123/summary
+     *  '/folder/123/graphics
+     *  '/folder/123/addfile
+     *
+     */
 
     // *** ROUTING ***
     /*

@@ -3,7 +3,7 @@
 /* eslint-disable */
 
 import getDataService from '../js/getDataService.js';
-import '../elements/widgets/generic/x-button.js';
+import '../elements/render/x-button.js';
 
 // TODO: manage change in groups
 

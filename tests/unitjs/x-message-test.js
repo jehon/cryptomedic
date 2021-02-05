@@ -1,8 +1,8 @@
 
-import '../../app/elements/widgets/generic/x-messages.js';
+import '../../app/elements/render/x-messages.js';
 
 import { fn } from './athelpers.js';
-import XMessage from '../../app/elements/widgets/generic/x-message.js';
+import XMessage from '../../app/elements/render/x-message.js';
 
 describe(fn(import.meta.url), function () {
     const el = new XMessage();
