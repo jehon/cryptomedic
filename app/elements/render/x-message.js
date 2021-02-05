@@ -1,44 +1,72 @@
 
-import { spacing } from '../../../config.js';
-import { defineCustomElement } from '../../../js/custom-element.js';
-import { toAttributeCase } from '../../../js/string-utils.js';
+import { spacing } from '../../config.js';
+import { createElementWith, defineCustomElement } from '../../js/custom-element.js';
+import { toAttributeCase } from '../../js/string-utils.js';
+import { levels } from '../../config.js';
+
+/**
+ * @typedef {object} Message a message for x-messages
+ * @property {string} text to be shown
+ * @property {string} [level] of the message
+ * @property {string} [id] of the message
+ */
 
 /**
  * Slot[]: default
  */
 export default class XMessage extends HTMLElement {
+    /**
+     * @param {string|Message} msg to be shown
+     * @returns {XMessage} messageId
+     */
+    static buildMessage(msg) {
+        if (typeof (msg) == 'string') {
+            msg = { text: msg };
+        }
+        msg = {
+            level: levels.danger,
+            ...msg
+        };
+
+        return /** @type {XMessage} */ (createElementWith(XMessage, {
+            'msg-id': msg.id,
+            level: msg.level,
+
+        }, msg.text));
+    }
+
     static get observedAttributes() {
         return ['level'];
     }
 
     constructor() {
-        // TODO: use createElementWith
-
         super();
         this.attachShadow({ mode: 'open' });
-        this.shadowRoot.innerHTML = `
-            <style>
-                :host {
-                    display: block;
-                    box-sizing: border-box;
-                    width: 100%;
-                    margin-bottom: ${spacing.element};
+        this.shadowRoot.appendChild(createElementWith('style', {}, `
+    :host {
+        display: block;
+        box-sizing: border-box;
+        width: 100%;
+        margin-bottom: ${spacing.element};
 
-                    padding: calc(${spacing.text} * 3);
-                    text-align: center;
+        padding: calc(${spacing.text} * 3);
+        text-align: center;
 
-                    border: 1px solid transparent;
-                    border-radius: 4px;
+        border: 1px solid transparent;
+        border-radius: 4px;
 
-                }
-            </style>
-            <slot></slot>
-        `;
+    }
+`));
+        this.shadowRoot.appendChild(createElementWith('slot'));
         this.refresh();
     }
 
     attributeChangedCallback(_attributeName, _oldValue, _newValue) {
         this.refresh();
+    }
+
+    get msgId() {
+        return this.getAttribute('msg-id');
     }
 
     refresh() {

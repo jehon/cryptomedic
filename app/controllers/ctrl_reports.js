@@ -9,7 +9,7 @@ import date2CanonicString from '../js/date2CanonicString.js';
 import template from '../js/template.js';
 import ExcellentExport from '../../node_modules/excellentexport/dist/excellentexport.js';
 import '../elements/x-age.js';
-import '../elements/widgets/generic/x-button.js';
+import '../elements/render/x-button.js';
 
 export default function ctrl_reports($scope, $routeParams, $sce) {
     var report = $routeParams['report'];

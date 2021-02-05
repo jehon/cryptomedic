@@ -1,7 +1,7 @@
 
-import { spacing, icons, actions } from '../../../config.js';
-import { defineCustomElement } from '../../../js/custom-element.js';
-import { setRoute } from '../../../js/router.js';
+import { spacing, icons, actions } from '../../config.js';
+import { createElementWith, defineCustomElement } from '../../js/custom-element.js';
+import { setRoute } from '../../js/router.js';
 
 const button = Symbol('button');
 
@@ -23,44 +23,42 @@ export default class XButton extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
-        this.shadowRoot.innerHTML = `
-            <css-inherit></css-inherit>
-            <style css-inherit-local>
-                :host {
-                    display: inline-block;
-                    background-color: rgba(0,0,0,0);
-                    padding: calc(${spacing.element} / 2);
-                }
+        this.shadowRoot.appendChild(createElementWith('css-inherit'));
+        this.shadowRoot.appendChild(createElementWith('style', { 'css-inherit-local': true }, `
+    :host {
+        display: inline-block;
+        background-color: rgba(0,0,0,0);
+        padding: calc(${spacing.element} / 2);
+    }
 
-                button {
-                    width: 100%;
-                }
+    button {
+        width: 100%;
+    }
 
-                img[src=''] {
-                    display: none;
-                }
+    img[src=''] {
+        display: none;
+    }
 
-                img {
-                    height: 1.5em;
-                    vertical-align: middle;
-                    padding-right: ${spacing.element};
-                }
+    img {
+        height: 1.5em;
+        vertical-align: middle;
+        padding-right: ${spacing.element};
+    }
 
-                :host(.selected) button {
-                    background-color: blue;
-                }
-            </style>
-            <button class='btn btn-${actions.alternate}'>
-                <img src=''><slot></slot>
-            </button>
-        `;
-        this[button] = this.shadowRoot.querySelector('button');
-        this[button].addEventListener('click', () => {
+    :host(.selected) button {
+        background-color: blue;
+    }
+`));
+
+        this[button] = this.shadowRoot.appendChild(createElementWith('button', { class: `btn btn-${actions.alternate}` }, [
+            createElementWith('img'),
+            createElementWith('slot')
+        ], element => element.addEventListener('click', () => {
             const toRoute = this.getAttribute('to-route');
             if (toRoute) {
                 setRoute(toRoute);
             }
-        });
+        })));
     }
 
     attributeChangedCallback(attributeName, oldValue, newValue) {
@@ -88,11 +86,6 @@ export default class XButton extends HTMLElement {
                     this[button].style.backgroundColor = '';
                 }
                 break;
-        }
-
-        /* istanbul ignore if */
-        if (super.attributeChangedCallback) {
-            super.attributeChangedCallback(attributeName, oldValue, newValue);
         }
     }
 

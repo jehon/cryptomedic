@@ -5,8 +5,8 @@ import { setSession } from '../../js/session.js';
 
 import XRequestor, { loginRequestBuilder, loginCheckRequestBuilder } from '../widgets/generic/x-requestor.js';
 import XPanel from '../widgets/generic/x-panel.js';
-import XMessages from '../widgets/generic/x-messages.js';
-import XButton from '../widgets/generic/x-button.js';
+import XMessages from '../render/x-messages.js';
+import XButton from '../render/x-button.js';
 import { formInit, formGetContent, formValidate } from '../../js/form.js';
 import { createElementWith, defineCustomElement } from '../../js/custom-element.js';
 
