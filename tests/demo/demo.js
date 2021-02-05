@@ -1,5 +1,5 @@
 
-import { defineCustomElement } from '../../app/js/custom-element.js';
+import { createElementWith, defineCustomElement } from '../../app/js/custom-element.js';
 
 import '../../app/elements/render/x-button.js';
 import '../../app/elements/render/x-buttons.js';
@@ -15,23 +15,23 @@ export default class XxTest extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
-        this.shadowRoot.innerHTML = `
-            <h2>title</h2>
-            <slot></slot>
-            <div id='code'></div>
-            <style>
-                ::slotted(h1) {
-                    height: 100%;
-                    width: 100%;
-                    background-color: gray;
-                }
+        this.shadowRoot.append(
+            createElementWith('h2', {}, 'title'),
+            createElementWith('slot'),
+            this._code = createElementWith('div', { id: 'code' }),
+            createElementWith('style', {}, `
+    ::slotted(h1) {
+        height: 100%;
+        width: 100%;
+        background-color: gray;
+    }
 
-                #code {
-                    font-size: 8px;
-                    padding-top: 10px;
-                }
-            </style>
-        `;
+    #code {
+        font-size: 8px;
+        padding-top: 10px;
+    }`
+            )
+        );
 
         this.innerHTML = this.innerHTML.trim();
 
@@ -48,15 +48,12 @@ export default class XxTest extends HTMLElement {
         } catch {
             this.type = '';
         }
-
-        // window.addEventListener('hashchange', () => this.onHashChange());
-        this.onHashChange();
     }
 
     connectedCallback() {
         const code = this.innerHTML;
 
-        this.shadowRoot.querySelector('#code').innerHTML = code
+        this._code.innerHTML = code
             .replace(/&/g, '&amp;')
             .replace(/</g, '&lt;')
             .replace(/>/g, '&gt;')
@@ -71,6 +68,9 @@ export default class XxTest extends HTMLElement {
             }
         }
         this.shadowRoot.querySelector('h2').innerHTML = this.getAttribute('title');
+
+        // window.addEventListener('hashchange', () => this.onHashChange());
+        this.onHashChange();
     }
 
     onHashChange() {
