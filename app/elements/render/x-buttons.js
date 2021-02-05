@@ -1,5 +1,5 @@
 
-import { createElementWith, defineCustomElement } from '../../../js/custom-element.js';
+import { createElementWith, defineCustomElement } from '../../js/custom-element.js';
 
 /**
  * Slot[]: content

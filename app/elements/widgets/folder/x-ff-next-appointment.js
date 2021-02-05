@@ -6,8 +6,8 @@ import Appointment from '../../../models/Appointment.js';
 import XWithFolder from './x-with-folder.js';
 import '../generic/x-group-panel.js';
 import '../file/x-fff-field.js';
-import '../generic/x-message.js';
-import '../generic/x-button.js';
+import '../../render/x-message.js';
+import '../../render/x-button.js';
 
 
 // TODO: better layout for without appointment
