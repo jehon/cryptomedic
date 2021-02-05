@@ -24,6 +24,10 @@ DEPLOY_TEST_DIR ?= tmp/deploy-test-dir
 CJS2ESM_DIR := app/cjs2esm
 NM_BIN := node_modules/.bin/
 
+define itself
+	$(MAKE) $(FLAGS) $(MAKEOVERRIDES) "$1"
+endef
+
 define ensure_folder_empty
 	rm -fr "$1"
 	mkdir -p "$1"
@@ -116,8 +120,9 @@ update-deploy-host-key:
 start: setup-structure \
 		docker-started \
 		dependencies \
-		build \
-		data-reset
+		build
+
+	$(call itself,data-reset)
 
 	@echo "Open browser: http://localhost:$(CRYPTOMEDIC_PORT)/"
 	@echo "Test page: http://localhost:$(CRYPTOMEDIC_PORT)/xappx/tests/index.html"
@@ -153,14 +158,17 @@ lint:
 test: docker-started dependencies build test-api test-unit test-e2e test-style
 
 .PHONY: test-api
-test-api: docker-started dependencies-api data-reset
+test-api: docker-started dependencies-api
+	$(call itself,data-reset)
 	$(call run_in_docker,server,"/app/bin/dev-phpunit.sh laravel")
 
-test-api-bare: dependencies-api data-reset
+test-api-bare: dependencies-api
+	$(call itself,data-reset)
 	$(call run_in_docker,server,"/app/bin/dev-phpunit.sh bare")
 
 .PHONY: test-api-commit
-test-api-commit: docker-started dependencies-api data-reset
+test-api-commit: docker-started dependencies-api
+	$(call itself,data-reset)
 	$(call run_in_docker,server,"/app/bin/dev-phpunit.sh COMMIT")
 
 .PHONY: test-unit
@@ -173,7 +181,8 @@ test-unit: dependencies-node \
 
 .PHONY: test-e2e
 test-e2e: tmp/e2e/.tested
-tmp/e2e/.tested: data-reset www/build/index.html tests/e2e/**
+tmp/e2e/.tested: www/build/index.html tests/e2e/**
+	$(call itself,data-reset)
 	npm run --silent test-e2e
 	touch tmp/e2e/.tested
 
