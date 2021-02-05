@@ -1,6 +1,12 @@
 
 import { defineCustomElement } from '../../app/js/custom-element.js';
 
+import '../../app/elements/render/x-button.js';
+import '../../app/elements/render/x-buttons.js';
+import '../../app/elements/render/x-label.js';
+import '../../app/elements/render/x-message.js';
+import '../../app/elements/render/x-messages.js';
+
 export default class XxTest extends HTMLElement {
     constructor() {
         super();

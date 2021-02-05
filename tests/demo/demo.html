@@ -53,13 +53,9 @@
     </style>
     <script type='module' src='../../app/elements/x-input-date.js'></script>
 
-    <script type='module' src='../../app/elements/widgets/generic/x-button.js'></script>
-    <script type='module' src='../../app/elements/widgets/generic/x-buttons.js'></script>
-    <script type='module' src='../../app/elements/widgets/generic/x-label.js'></script>
+    <script type='module' src='../../app/elements/widgets/generic/x-form.js'></script>
     <script type='module' src='../../app/elements/widgets/generic/x-i18n.js'></script>
     <script type='module' src='../../app/elements/widgets/generic/x-group-panel.js'></script>
-    <script type='module' src='../../app/elements/widgets/generic/x-message.js'></script>
-    <script type='module' src='../../app/elements/widgets/generic/x-messages.js'></script>
     <script type='module' src='../../app/elements/widgets/generic/x-overlay.js'></script>
     <script type='module' src='../../app/elements/widgets/generic/x-panel.js'></script>
     <script type='module' src='../../app/elements/widgets/generic/x-requestor.js'></script>
@@ -82,7 +78,7 @@
         <a href='#'>Reset filters</a>
     </div>
 
-    <xx-test title='generic'></xx-test>
+    <xx-test title='render'></xx-test>
     <xx-test>
         <x-button action='commit'>commit</x-button>
     </xx-test>
@@ -93,6 +89,14 @@
         </div>
     </xx-test>
     <xx-test>
+        <x-button>default (alternate)</x-button>
+        <x-button action='commit'>commit</x-button>
+        <x-button action='cancel'>cancel</x-button>
+        <x-button action='delete'>delete</x-button>
+        <x-button action='alternate'>alternate</x-button>
+        <x-button class='selected'>selected</x-button>
+    </xx-test>
+    <xx-test>
         <x-buttons>
             <x-button action='commit'>commit</x-button>
             <x-button action='commit'>commit</x-button>
@@ -100,12 +104,37 @@
         </x-buttons>
     </xx-test>
     <xx-test>
-        <x-button>default (alternate)</x-button>
-        <x-button action='commit'>commit</x-button>
-        <x-button action='cancel'>cancel</x-button>
-        <x-button action='delete'>delete</x-button>
-        <x-button action='alternate'>alternate</x-button>
-        <x-button class='selected'>selected</x-button>
+        <x-label label='text'>blablabla</x-label>
+        <x-label label='input text'><input name='truc' /></x-label>
+        <x-label label='select'><select name='truc'>
+                <option>test</option>
+                <option>test 2</option>
+            </select>
+        </x-label>
+    </xx-test>
+    <xx-test>
+        <x-messages>
+            <x-message level='success'>primary</x-message>
+            <x-message level='info'>info</x-message>
+            <x-message level='warning'>warning</x-message>
+            <x-message level='danger'>danger</x-message>
+        </x-messages>
+    </xx-test>
+    <xx-test>
+        <x-messages></x-messages>
+    </xx-test>
+
+
+
+
+    <xx-test title='generic'></xx-test>
+    <xx-test>
+        <x-form>
+            <h3>Title of the form</h3>
+            <div>This is a testing form...</div>
+            <x-label label='login'><input name='login' required></x-label>
+            <x-label label='error'><input name='error' required validation-error='euh?'></x-label>
+        </x-form>
     </xx-test>
     <xx-test>
         <x-group-panel title='my title'>
@@ -132,24 +161,6 @@
                 <div slot='third'></div>
             </x-fff-field>
         </x-group-panel>
-    </xx-test>
-    <xx-test>
-        <x-label label='text'>blablabla</x-label>
-        <x-label label='input text'><input name='truc' /></x-label>
-        <x-label label='select'><select name='truc'>
-                <option>test</option>
-                <option>test 2</option>
-            </select>
-        </x-label>
-    </xx-test>
-    <xx-test>
-        <x-message level='success'>primary</x-message>
-        <x-message level='info'>info</x-message>
-        <x-message level='warning'>warning</x-message>
-        <x-message level='danger'>danger</x-message>
-    </xx-test>
-    <xx-test>
-        <x-messages></x-messages>
     </xx-test>
     <xx-test>
         <x-overlay>
@@ -239,11 +250,6 @@
             );
 
         document.querySelectorAll('x-button').forEach(e => e.addEventListener('click', evt => console.info('clicked', evt.target)));
-
-        document.querySelectorAll('x-messages').forEach(e => e.showMessages([
-            "This is an error",
-            { level: "warning", text: "This is a warning" }
-        ]));
 
         fetch(`../../www/api/${API_VERSION}/tests/references/FolderTest.test1.json`)
             .then(response => response.json())

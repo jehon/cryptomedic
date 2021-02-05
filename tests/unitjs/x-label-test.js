@@ -1,5 +1,5 @@
 
-import XLabel from '../../app/elements/widgets/generic/x-label.js';
+import XLabel from '../../app/elements/render/x-label.js';
 
 import { fn } from './athelpers.js';
 

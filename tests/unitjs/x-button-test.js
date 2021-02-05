@@ -1,6 +1,6 @@
 
 import { icons } from '../../app/config.js';
-import XButton from '../../app/elements/widgets/generic/x-button.js';
+import XButton from '../../app/elements/render/x-button.js';
 import { getCurrentRoute, setRoute } from '../../app/js/router.js';
 import { fn } from './athelpers.js';
 
@@ -13,7 +13,7 @@ describe(fn(import.meta.url), function () {
 
     it('should initialize', function () {
         expect(el.shadowRoot.querySelector('button')).not.toBeNull();
-        expect(el.shadowRoot.querySelector('img').getAttribute('src')).toBe('');
+        expect(el.shadowRoot.querySelector('img').getAttribute('src')).toBeNull();
     });
 
     it('should react to click by event listener', function (done) {
@@ -26,7 +26,7 @@ describe(fn(import.meta.url), function () {
         el.shadowRoot.querySelector('button').click();
     });
 
-    it('should handle to-route attribute', function() {
+    it('should handle to-route attribute', function () {
         setRoute('/');
         el.setAttribute('to-route', '/test');
         el.click();

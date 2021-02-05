@@ -9,7 +9,7 @@ import { routeToLogin } from '../../../js/router.js';
 import XWaiting from './x-waiting.js';
 import XOverlay from './x-overlay.js';
 import XPanel from './x-panel.js';
-import XButton from './x-button.js';
+import XButton from '../../render/x-button.js';
 import '../../../../node_modules/css-inherit/css-inherit.js';
 import { createElementWith, defineCustomElement } from '../../../js/custom-element.js';
 import { getBrowserDescription } from '../../../js/browser.js';
