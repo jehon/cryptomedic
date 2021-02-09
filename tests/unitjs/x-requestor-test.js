@@ -1,5 +1,5 @@
 
-import '../../app/elements/widgets/generic/x-requestor.js';
+import '../../app/elements/funcs/x-requestor.js';
 
 import { fn } from './athelpers.js';
 import JHElement from '../../app/elements/jh-element.js';
@@ -7,7 +7,7 @@ import { API_VERSION } from '../../app/config.js';
 
 import axios from '../../app/cjs2esm/axios.js';
 import MockAdapter from '../../app/cjs2esm/axios-mock-adapter.js';
-import XRequestor, { requestAndFilterBuilder, loginRequestBuilder, loginCheckRequestBuilder } from '../../app/elements/widgets/generic/x-requestor.js';
+import XRequestor, { requestAndFilterBuilder, loginRequestBuilder, loginCheckRequestBuilder } from '../../app/elements/funcs/x-requestor.js';
 import { getSession } from '../../app/js/session.js';
 
 const buildResponse = function (ok = true, status = 200, statusText = '') {
@@ -167,11 +167,10 @@ describe(fn(import.meta.url), function () {
             it('should make a get request', function (done) {
                 const promise = element.request({ url: '/delayed' });
 
-                expect(element.isBlocked()).toBeTruthy();
+                expect(element.isBlocked()).toBeTrue();
                 expect(element.shadowRoot.querySelector('x-overlay').isBlocked()).toBeFalsy();
-                expect(element.hasAttribute('blocked')).toBeTruthy();
-                expect(element.isRequesting()).toBeTruthy();
-                expect(element.isFailed()).toBeFalsy();
+                expect(element.isRequesting()).toBeTrue();
+                expect(element.isFailed()).toBeFalse();
 
                 promise.then(() => {
                     expect(element.isBlocked()).toBeFalsy();
@@ -263,7 +262,6 @@ describe(fn(import.meta.url), function () {
                         expect(element.isBlocked()).toBeTruthy();
                         expect(element.isRequesting()).toBeFalsy();
                         expect(element.isFailed()).toBeTruthy();
-                        expect(element.hasAttribute('blocked')).toBeFalsy();
                         done();
                     }).catch(done.fail);
             });

@@ -2,10 +2,10 @@
 
 <head>
     <meta charset="utf-8" />
+    <title>Cryptomedic demo page</title>
 </head>
 
 <body>
-    <script src='./demo.js' type='module'></script>
 
     <link rel="stylesheet" type="text/css" href="../../node_modules/bootstrap/dist/css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../../app/css/application.css">
@@ -24,7 +24,6 @@
             box-sizing: border-box;
             width: var(--box-width);
             margin: 10px;
-            /* height: 400px; */
             border: dashed 1px blue;
         }
 
@@ -44,19 +43,8 @@
             background-color: gray;
             border: 1px solid green;
         }
-
-        x-waiting,
-        x-overlay,
-        x-requestor {
-            height: 200px;
-        }
     </style>
     <script type='module' src='../../app/elements/x-input-date.js'></script>
-
-    <script type='module' src='../../app/elements/widgets/generic/x-overlay.js'></script>
-    <script type='module' src='../../app/elements/widgets/generic/x-panel.js'></script>
-    <script type='module' src='../../app/elements/widgets/generic/x-requestor.js'></script>
-    <script type='module' src='../../app/elements/widgets/generic/x-waiting.js'></script>
 
     <script type='module' src='../../app/elements/widgets/folder/x-ff-next-appointment.js'></script>
     <script type='module' src='../../app/elements/widgets/folder/x-ff-patient-related.js'></script>
@@ -67,7 +55,7 @@
 
     <script type='module' src='../../app/elements/widgets/file/x-fff-field.js'></script>
 
-    <script type='module' src='../../app/elements/pages/x-login-form.js'></script>
+    <script type='module' src='../../app/elements/pages/x-login-page.js'></script>
 
     <div>
         <h2>Menu</h2>
@@ -86,18 +74,21 @@
         </div>
     </xx-test>
     <xx-test>
-        <x-button>default (alternate)</x-button>
-        <x-button action='commit'>commit</x-button>
-        <x-button action='cancel'>cancel</x-button>
-        <x-button action='delete'>delete</x-button>
-        <x-button action='alternate'>alternate</x-button>
-        <x-button class='selected'>selected</x-button>
-    </xx-test>
-    <xx-test>
         <x-buttons>
+            <x-button>default (alternate)</x-button>
             <x-button action='commit'>commit</x-button>
-            <x-button action='commit'>commit</x-button>
-            <x-button action='commit'>commit</x-button>
+            <x-button action='cancel'>cancel</x-button>
+            <x-button action='delete'>delete</x-button>
+            <x-button action='alternate'>alternate</x-button>
+        </x-buttons>
+    </xx-test>
+    <xx-test title='x-buttons discrete'>
+        <x-buttons>
+            <x-button discrete>default (alternate)</x-button>
+            <x-button discrete action='commit'>commit</x-button>
+            <x-button discrete action='cancel'>cancel</x-button>
+            <x-button discrete action='delete'>delete</x-button>
+            <x-button discrete action='alternate'>alternate</x-button>
         </x-buttons>
     </xx-test>
     <xx-test>
@@ -136,6 +127,17 @@
                 <option>test 2</option>
             </select>
         </x-label>
+        <x-label label='input text with a very very long label'><input name='truc' /></x-label>
+    </xx-test>
+    <xx-test double>
+        <x-label label='text'>blablabla</x-label>
+        <x-label label='input text'><input name='truc' required /></x-label>
+        <x-label label='select'><select name='truc'>
+                <option>test</option>
+                <option>test 2</option>
+            </select>
+        </x-label>
+        <x-label label='input text with a very very long label'><input name='truc' /></x-label>
     </xx-test>
     <xx-test>
         <x-messages>
@@ -146,7 +148,60 @@
         </x-messages>
     </xx-test>
     <xx-test>
-        <x-messages></x-messages>
+        <x-overlay>
+            <div>Content 1</div>
+            <div>Content 2</div>
+            <div>Content 3</div>
+            <div>Content 4</div>
+            <div>Content 5</div>
+            <div slot='overlay'>Overlay</div>
+        </x-overlay>
+    </xx-test>
+    <xx-test>
+        <x-overlay blocked>
+            <div>Content 1</div>
+            <div>Content 2</div>
+            <div>Content 3</div>
+            <div>Content 4</div>
+            <div>Content 5</div>
+            <div slot='overlay'>Overlay</div>
+        </x-overlay>
+    </xx-test>
+    <xx-test>
+        <x-overlay blocked closable>
+            <div>Content 1</div>
+            <div>Content 2</div>
+            <div>Content 3</div>
+            <div>Content 4</div>
+            <div>Content 5</div>
+            <div slot='overlay'>Overlay</div>
+        </x-overlay>
+    </xx-test>
+    <xx-test>
+        <x-panel style='background-color: lightgreen'>
+            <div style='background-color: lightcyan'>test 1 full</div>
+            <div style='background-color: lightyellow'>test 2 full</div>
+        </x-panel>
+    </xx-test>
+    <xx-test title='x-panel full'>
+        <x-panel full style='background-color: lightgreen'>
+            <div style='background-color: lightcyan'>test 1 full</div>
+            <div style='background-color: lightyellow'>test 2 full</div>
+        </x-panel>
+    </xx-test>
+    <xx-test>
+        <x-waiting>content free</x-waiting>
+    </xx-test>
+    <xx-test>
+        <x-waiting blocked>
+            <div style='height: 100%'>content free</div>
+        </x-waiting>
+    </xx-test>
+    <xx-test>
+        <x-waiting blocked>
+            <span slot='waiting'>for data</span>
+            <div style='height: 100%'>content free</div>
+        </x-waiting>
     </xx-test>
 
     <xx-test title='funcs'></xx-test>
@@ -161,51 +216,25 @@
     <xx-test>
         <x-i18n value='blablabla'></x-i18n>
     </xx-test>
-
-    <xx-test title='generic'></xx-test>
-    <xx-test>
-        <x-overlay>
-            <div>Content</div>
-            <div slot='overlay'>Overlay</div>
-        </x-overlay>
-    </xx-test>
-    <xx-test>
-        <x-overlay blocked>
-            <div>Content</div>
-            <div slot='overlay'>Overlay</div>
-        </x-overlay>
-    </xx-test>
-    <xx-test>
-        <x-overlay blocked closable>
-            <div>Content</div>
-            <div slot='overlay'>Overlay</div>
-        </x-overlay>
-    </xx-test>
-    <xx-test>
-        <x-panel>
-            <div>test</div>
-        </x-panel>
-    </xx-test>
     <xx-test>
         <x-requestor>
             <div>Content</div>
         </x-requestor>
     </xx-test>
     <xx-test>
-        <x-requestor blocked fail>
-            <div>Content</div>
+        <x-requestor start-blocked>
+            <div>Content to be shown</div>
         </x-requestor>
     </xx-test>
     <xx-test>
-        <x-waiting>content free</x-waiting>
-    </xx-test>
-    <xx-test>
-        <x-waiting blocked>content waiting</x-waiting>
+        <x-requestor demo-failed>
+            <div>Content with error</div>
+        </x-requestor>
     </xx-test>
 
     <xx-test title='pages'></xx-test>
     <xx-test>
-        <x-login-form></x-login-form>
+        <x-login-page></x-login-page>
     </xx-test>
 
     <xx-test title='folder'></xx-test>
@@ -238,31 +267,7 @@
         <x-input-date value='01-02-2020'></x-input-date>
     </xx-test>
 
-    <script type='module'>
-        import { API_VERSION } from '../../app/config.js';
-        import Folder from '../../app/models/Folder.js';
-
-        document
-            .querySelectorAll('x-requestor[fail]').forEach(
-                e =>
-                    e.request({ url: '/nothing' })
-                        // Avoid it to appear in logs
-                        .catch(() => { })
-            );
-
-        document.querySelectorAll('x-button').forEach(e => e.addEventListener('click', evt => console.info('clicked', evt.target)));
-
-        fetch(`../../www/api/${API_VERSION}/tests/references/FolderTest.test1.json`)
-            .then(response => response.json())
-            .then(data => new Folder(data.folder))
-            .then(folder => {
-                document.querySelectorAll('[demo-folder="test1"]').forEach(el => {
-                    el.folder = folder;
-                    el.querySelectorAll('[with-folder]')
-                        .forEach(el => el.folder = folder)
-                })
-            });
-    </script>
+    <script src='./demo.js' type='module'></script>
 </body>
 
 </html>

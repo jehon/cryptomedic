@@ -15,7 +15,6 @@ export default class XOverlay extends JHElement {
 
     constructor() {
         super();
-        this.zIndex = 10;
 
         this.attachShadow({ mode: 'open' });
         this.shadowRoot.innerHTML = `
@@ -24,21 +23,17 @@ export default class XOverlay extends JHElement {
 					position: relative;
 				}
 
-                #overlay[hidden] {
-                    display: none !important;
-                }
-
 				#overlay {
 				    position: fixed;
 				    top: 0;
 				    left: 0;
 				    width: 100%;
 				    height: 100%;
-				    z-index: ${this._zIndex};
+				    z-index: 10;
 
 				    display: flex;
 					flex-direction: column;
-                    align-items: center; 
+                    align-items: center;
 					justify-content: center;
 
 				    background-color: rgba(0,0,0, 0.9); /* Black w/opacity */
@@ -46,17 +41,23 @@ export default class XOverlay extends JHElement {
 				    transition: 0.5s;
 				}
 
+                #overlay[hidden] {
+                    display: none !important;
+                }
+
 				#close {
 				    position: absolute;
 				    top: 20px;
 				    right: 45px;
 				    font-size: 60px;
+				    text-decoration: none;
+                    color: #818181;
+                    display: none;
 				}
 
-				#close {
-				    text-decoration: none;
-				    color: #818181;
-				}
+                :host([closable]) #close {
+                    display: block;
+                }
 
 				#close:hover, #close:focus {
 				    text-decoration: none;
@@ -70,7 +71,7 @@ export default class XOverlay extends JHElement {
 				        top: 15px;
 				        right: 35px;
 				    }
-				}
+                }
 			</style>
 			<div id="overlay">
 				<a id='close' href="javascript:void(0)">&times;</a>
@@ -80,12 +81,6 @@ export default class XOverlay extends JHElement {
         this[overlayDiv] = this.shadowRoot.querySelector('#overlay');
         this.shadowRoot.querySelector('#close').addEventListener('click', () => this.free());
         this.free();
-    }
-
-    adapt() {
-        let style = `z-index: ${this._zIndex}`;
-        this.shadowRoot.querySelector('#close').style.display = (this.closable ? 'block' : 'none');
-        this[overlayDiv].style = style;
     }
 
     block() {

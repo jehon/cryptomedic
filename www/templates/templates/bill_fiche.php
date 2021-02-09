@@ -58,7 +58,7 @@ EOD;
           price_id <?php (new t("Bill.price_id"))->read()->p(); ?><br>
         </div>
       </x-group-panel>
-      <x-message ng-if='!currentFile().price' level='danger' role="alert" id="errorNoDate">Please select a date first!</x-message>
+      <x-message ng-if='!currentFile().price' level='error' role="alert" id="errorNoDate">Please select a date first!</x-message>
       <div ng-if='currentFile().price'>
         <?php
         foreach (Bill::$categories as $cat) {
@@ -161,7 +161,7 @@ EOD;
       <?php (new t("Payment.ExaminerName"))->tr2("Receiver")->p(); ?>
       <?php (new t("Payment.Amount"))->tr2("Amount")->p(); ?>
       <?php (new t("Payment.Notes"))->tr2("Notes")->p(); ?>
-      <x-button action='commit' id='button_payment_create' ng-click="actionAddPayment()" ng-if='paymentEditor.id == null'>Create</x-button>
+      <x-button id='button_payment_create' ng-click="actionAddPayment()" ng-if='paymentEditor.id == null'>Create</x-button>
       <x-button action='commit' id='button_payment_save' ng-click="actionAddPayment()" ng-if='paymentEditor.id > 0'>Save</x-button>
     </x-group-panel>
   </div>

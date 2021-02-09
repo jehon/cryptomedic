@@ -1,8 +1,6 @@
 
 /* istanbul ignore file */
 
-// TODO: how to trigger "submit" event on form ? -> x-login-form-test
-
 /**
  * @param {HTMLElement} formElement as the basis
  * @param {function(void):void} submitCallback to be clicked on submit

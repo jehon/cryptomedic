@@ -1,8 +1,8 @@
 
 import { spacing } from '../../config.js';
-import { createElementWith, defineCustomElement } from '../../js/custom-element.js';
+import { createElementWithObject, createElementWithTag, defineCustomElement } from '../../js/custom-element.js';
 import { toAttributeCase } from '../../js/string-utils.js';
-import { levels } from '../../config.js';
+import { messages, colors } from '../../config.js';
 
 /**
  * @typedef {object} Message a message for x-messages
@@ -12,7 +12,12 @@ import { levels } from '../../config.js';
  */
 
 /**
- * Slot[]: default
+ * Properties:
+ * - level
+ * - msg-id (exported): of the message
+ *
+ * Slots:
+ * - <default>: the message
  */
 export default class XMessage extends HTMLElement {
     /**
@@ -24,11 +29,11 @@ export default class XMessage extends HTMLElement {
             msg = { text: msg };
         }
         msg = {
-            level: levels.danger,
+            level: messages.error,
             ...msg
         };
 
-        return /** @type {XMessage} */ (createElementWith(XMessage, {
+        return /** @type {XMessage} */ (createElementWithObject(XMessage, {
             'msg-id': msg.id,
             level: msg.level,
 
@@ -43,61 +48,45 @@ export default class XMessage extends HTMLElement {
         super();
         this.attachShadow({ mode: 'open' });
         this.shadowRoot.append(
-            createElementWith('style', {}, `
+            createElementWithTag('style', {}, `
     :host {
         display: block;
         box-sizing: border-box;
         width: 100%;
-        margin-bottom: ${spacing.element};
-
         padding: calc(${spacing.text} * 3);
-        text-align: center;
 
         border: 1px solid transparent;
         border-radius: 4px;
 
+        text-align: center;
     }
 `),
-            createElementWith('slot')
+            createElementWithTag('slot')
         );
-        this.refresh();
+        this.adapt();
     }
 
     attributeChangedCallback(_attributeName, _oldValue, _newValue) {
-        this.refresh();
+        this.adapt();
     }
 
     get msgId() {
         return this.getAttribute('msg-id');
     }
 
-    refresh() {
-        const level = this.getAttribute('level');
-        switch (level) {
-            case '':
-                break;
-            case 'success':
-                this.style.color = '#3c763d';
-                this.style.backgroundColor = '#dff0d8';
-                this.style.borderColor = '#d6e9c6';
-                break;
-            case 'info':
-                this.style.color = '#004085';
-                this.style.backgroundColor = '#cce5ff';
-                this.style.borderColor = '#b8daff;';
-                break;
-            case 'warning':
-                this.style.color = '#8a6d3b';
-                this.style.backgroundColor = '#fcf8e3';
-                this.style.borderColor = '#faebcc';
-                break;
-            case 'danger':
-                this.style.color = '#a94442';
-                this.style.backgroundColor = '#f2dede';
-                this.style.borderColor = '#ebccd1;';
-                break;
-            default:
-                console.info(toAttributeCase(XMessage.name) + ': Level not found: ', level);
+    adapt() {
+        let level = this.getAttribute('level');
+        if (!level) {
+            level = messages.error;
+        }
+        if (!(level in colors.messages)) {
+            console.info(toAttributeCase(XMessage.name) + ': Level not found: ', level);
+            return;
+        }
+        const styling = colors.messages[level];
+
+        for (const k of Object.keys(styling)) {
+            this.style[k] = styling[k];
         }
     }
 }

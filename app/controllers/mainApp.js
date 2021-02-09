@@ -97,8 +97,8 @@ mainApp.config(['$routeProvider', function ($routeProvider) {
         .when('/login/:redirect*?', {
             template: function (_params) {
                 // Thanks to https://stackoverflow.com/a/34217927/1954789
-                return import(/* webpackChunkName: "x-login-form", webpackPrefetch: true */'../elements/pages/x-login-form.js')
-                    .then(() => `<x-login-form redirect=${parseRouteLogin().redirect}></x-login-form>`);
+                return import(/* webpackChunkName: "x-login-page", webpackPrefetch: true */'../elements/pages/x-login-page.js')
+                    .then(() => `<x-login-page redirect=${parseRouteLogin().redirect}></x-login-page>`);
             }
         })
         .when('/redirect/api/:redirect*?', {

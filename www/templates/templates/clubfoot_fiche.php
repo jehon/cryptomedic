@@ -1,19 +1,19 @@
 <?php
-	// Example: 90658
-	t::setDefaultOption("baseExpression", "currentFile().");
-	t::setDefaultOption("model", "ClubFoot");
+// Example: 90658
+t::setDefaultOption("baseExpression", "currentFile().");
+t::setDefaultOption("model", "ClubFoot");
 ?>
 <div class='container-fluid'>
 	<div class='row'>
-    	<div ng-if='errors.dateInTheFuture'>
-			<x-message level='danger' id='errorDateFuture'>Error: The date can not be in the future!</x-message>
-    	</div>
-  	</div>
+		<div ng-if='errors.dateInTheFuture'>
+			<x-message level='error' id='errorDateFuture'>Error: The date can not be in the future!</x-message>
+		</div>
+	</div>
 	<div class='row'>
 		<div class="col-md-6">
 			<?php require(__DIR__ . "/../helpers/consult-introduction.php"); ?>
 			<x-group-panel title='Club Foot Pirani Score'>
-				<x-message level='danger'>Warning! Left and right sides are opposite.</x-message>
+				<x-message level='error'>Warning! Left and right sides are opposite.</x-message>
 				<x-fff-field>
 					<div slot='right'>Right</div>
 					<div slot='left'>Left</div>
@@ -35,7 +35,7 @@
 				</x-fff-field>
 			</x-group-panel>
 			<x-group-panel title='Walking Club Foot > 3 years CCRS'>
-				<x-message level='danger'>Warning! Left and right sides are opposite.</x-message>
+				<x-message level='error'>Warning! Left and right sides are opposite.</x-message>
 				<x-fff-field>
 					<div slot='right'>Right</div>
 					<div slot='left'>Left</div>

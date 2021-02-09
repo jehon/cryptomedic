@@ -1,7 +1,12 @@
 
-import { createElementWith, defineCustomElement } from '../../js/custom-element.js';
+import { spacing } from '../../config.js';
+import { createElementWithTag, defineCustomElement } from '../../js/custom-element.js';
 import './x-message.js';
 import XMessage from './x-message.js';
+
+/**
+ * @typedef {import('x-message.js').Message} Message
+ */
 
 /**
  * Slot[]: content
@@ -11,7 +16,12 @@ export default class XMessages extends HTMLElement {
         super();
         this.attachShadow({ mode: 'open' });
         this.shadowRoot.append(
-            createElementWith('slot')
+            createElementWithTag('style', {}, `
+    ::slotted(*) {
+        margin-bottom: ${spacing.element};
+    }
+            `),
+            createElementWithTag('slot')
         );
     }
 
