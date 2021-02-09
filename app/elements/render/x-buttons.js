@@ -1,34 +1,30 @@
 
-import { createElementWith, defineCustomElement } from '../../js/custom-element.js';
+import { spacing } from '../../config.js';
+import { createElementWithTag, defineCustomElement } from '../../js/custom-element.js';
 
 /**
  * Slot[]: content
  */
 export default class XButtons extends HTMLElement {
     constructor() {
-        // TODO: use createElementWith
-
         super();
         this.attachShadow({ mode: 'open' });
         this.shadowRoot.append(
-            createElementWith('style', {}, `
-    :host > div {
+            createElementWithTag('style', {}, `
+    :host {
         display: flex;
+        flex-wrap: wrap;
 
         margin: 0px;
-        padding: 5px;
-
-        background-color: lightgray;
     }
 
     ::slotted(*) {
         flex-grow: 1;
+        padding: calc(${spacing.element} / 2);
     }
 `),
-            createElementWith('div', {}, [
-                createElementWith('slot')
-            ]));
-
+            createElementWithTag('slot')
+        );
     }
 }
 

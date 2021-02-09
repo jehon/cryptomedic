@@ -19,21 +19,24 @@ export const spacing = {
     text: '5px'
 };
 
-export const levels = {
-    primary: 'primary',
-    danger: 'danger',
-    warning: 'warning',
+const nbrOr = (1 + Math.sqrt(5)) / 2;
+export const orSmall = 1 / (1 + nbrOr) * 100;
+export const orBig = 100 - orSmall;
+
+export const messages = {
     success: 'success',
     info: 'info',
-    default: 'default',
-    discrete: 'discrete'
+    warning: 'warning',
+    error: 'error',
 };
 
 export const actions = {
-    commit: levels.success,
-    cancel: levels.warning,
-    delete: levels.danger,
-    alternate: levels.info
+    query: 'query',
+    commit: 'commit',
+    // selected: 'selected',
+    cancel: 'cancel',
+    alternate: 'alternate',
+    delete: 'delete'
 };
 
 export const icons = {
@@ -42,18 +45,60 @@ export const icons = {
 };
 
 export const colors = {
+    // TODO: use this in button.js
     actions: {
-        default: {
-            fg: 'white',
-            bg: 'rgb(0, 123, 255)'
+        query: {
+            class: 'info'
         },
-        secondary: {
-            fg: 'white',
-            bg: 'rgb(108, 117, 125);'
+        commit: {
+            class: 'success',
+            // fg: 'white',
+            // bg: 'rgb(0, 123, 255)'
         },
-        dangerous: {
-            fg: 'white',
-            bg: 'rgb(220, 53, 69)'
+        // selected: {
+        //     class: 'info',
+        //     // fg: 'white',
+        //     // bg: 'rgb(0, 123, 255)'
+        // },
+        cancel: {
+            class: 'warning',
+            // fg: 'white',
+            // bg: 'rgb(108, 117, 125);'
+        },
+        alternate: {
+            class: 'info',
+            // fg: 'white',
+            // bg: 'rgb(108, 117, 125);'
+        },
+        delete: {
+            class: 'danger',
+            // fg: 'white',
+            // bg: 'rgb(220, 53, 69)'
         }
-    }
+    },
+    messages: {}
+};
+
+colors.messages[messages.success] = {
+    color: '#3c763d',
+    backgroundColor: '#dff0d8',
+    borderColor: '#d6e9c6'
+};
+
+colors.messages[messages.info] = {
+    color: '#004085',
+    backgroundColor: '#cce5ff',
+    borderColor: '#b8daff'
+};
+
+colors.messages[messages.warning] = {
+    color: '#8a6d3b',
+    backgroundColor: '#fcf8e3',
+    borderColor: '#faebcc'
+};
+
+colors.messages[messages.error] = {
+    color: '#a94442',
+    backgroundColor: '#f2dede',
+    borderColor: '#ebccd1'
 };

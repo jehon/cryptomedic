@@ -12,17 +12,42 @@ export function defineCustomElement(cl, name = toAttributeCase(cl.name)) {
 }
 
 /**
- * @param {string | typeof HTMLElement} tag to be created
+ * @template {HTMLElement} X
+ * @param {new() => X} tag to be created
  * @param {object} attributes to be set
- * @param {Array<HTMLElement | string> | HTMLElement | string} inner to fill in
+ * @param {Array<HTMLElement | string> | string} inner to fill in
+ * @param {function(HTMLElement): void} js to modify the element
+ * @returns {X} with all this set
+ */
+export function createElementWithObject(tag, attributes = {}, inner = [], js = (_el) => { }) {
+    const el = new tag();
+
+    enrichObject(el, attributes, inner, js);
+
+    return el;
+}
+
+/**
+ * @param {string} tag to be created
+ * @param {object} attributes to be set
+ * @param {Array<HTMLElement | string> | string} inner to fill in
  * @param {function(HTMLElement): void} js to modify the element
  * @returns {HTMLElement} with all this set
  */
-export function createElementWith(tag, attributes = {}, inner = [], js = (_el) => { }) {
-    const el = (typeof (tag) == 'string')
-        ? document.createElement(tag)
-        : new tag();
+export function createElementWithTag(tag, attributes = {}, inner = [], js = (_el) => { }) {
+    const el = document.createElement(tag);
 
+    enrichObject(el, attributes, inner, js);
+    return el;
+}
+
+/**
+ * @param {Element} el the element
+ * @param {object} attributes to be set
+ * @param {Array<Element | string>| string} inner to fill in
+ * @param {function(Element): void} js to modify the element
+ */
+function enrichObject(el, attributes = {}, inner = [], js = (_el) => { }) {
     for (const k of Object.keys(attributes)) {
         if (attributes[k] === false) {
             continue;
@@ -48,6 +73,4 @@ export function createElementWith(tag, attributes = {}, inner = [], js = (_el) =
     }
 
     js(el);
-
-    return el;
 }

@@ -1,8 +1,6 @@
 
-import { createElementWith, defineCustomElement } from '../../js/custom-element.js';
+import { createElementWithObject, createElementWithTag, defineCustomElement } from '../../js/custom-element.js';
 import XMessages from '../render/x-messages.js';
-import XButtons from '../render/x-buttons.js';
-import XButton from '../render/x-button.js';
 
 // const log = (...args) => console.log('log: ', ...args);
 const log = (..._args) => { };
@@ -27,14 +25,6 @@ const log = (..._args) => { };
  */
 
 export default class XForm extends HTMLElement {
-    get observedAttributes() {
-        return [
-            'submit-label',
-            'no-cancel'
-            // 'readonly'
-        ];
-    }
-
     /** @type {XMessages} */
     _messages;
 
@@ -44,51 +34,19 @@ export default class XForm extends HTMLElement {
 
         this.attachShadow({ mode: 'open' });
         this.shadowRoot.append(
-            createElementWith('css-inherit'),
-            createElementWith('style', {}, `
-    :host([no-cancel]) x-button#cancel {
-        display: none
-    }
-`
-            ),
-            createElementWith('slot'),
-            this._messages =  /** @type {XMessages} */ (createElementWith(XMessages)),
-            createElementWith(XButtons, {}, [
-                this._buttons.submit = createElementWith(XButton, { id: 'submit', action: 'commit' },
-                    this.getAttribute('submit-label') || 'Submit',
-                    (el) => el.addEventListener('click', () => this._onClickSubmit())),
-
-                this._buttons.cancel = createElementWith(XButton, { id: 'cancel', action: 'cancel' },
-                    'Cancel',
-                    (el) => el.addEventListener('click', () => this._onClickCancel())),
-
-                // this.buttons.edit = createElementWith(XButton, { id: 'edit' },
-                //     'Edit',
-                //     (el) => el.addEventListener('click', () => this.onEdit())),
-
-                // createElementWith(XButton, { id: 'delete' },
-                //     'Delete',
-                //     (el) => el.addEventListener('click', () => this.onDelete())),
-                createElementWith('slot', { name: 'buttons' })
-            ])
+            // createElementWithObject('css-inherit'),
+            createElementWithTag('slot'),
+            this._messages =  /** @type {XMessages} */ (createElementWithObject(XMessages)),
         );
-    }
 
-    attributeChangedCallback(attributeName, _oldValue, newValue) {
-        switch (attributeName) {
-            // case 'no-cancel':
-            //     this.buttons.cancel.style.display = this.hasAttribute('no-cancel') ? 'none' : 'block';
-            //     break;
-            case 'submit-label':
-                // TODO
-                if (this._buttons?.submit) {
-                    this._buttons.submit.innerHTML = newValue || 'Submit';
+        this.addEventListener('keypress', (event) => {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                if (this.validate()) {
+                    this.dispatchEvent(new CustomEvent('submit'));
                 }
-                break;
-            // case 'readonly':
-            //     this.adapt();
-            //     break;
-        }
+            }
+        });
     }
 
     /**
@@ -199,7 +157,9 @@ export default class XForm extends HTMLElement {
     }
 
     validate() {
+        this._messages.clear();
         let result = true;
+
         this.getDataElements().forEach(el => {
             if ('checkValidity' in el) {
                 const res = el.checkValidity();
@@ -213,16 +173,24 @@ export default class XForm extends HTMLElement {
         });
 
         if (!result) {
-            // this.buttons.submit.click();
+            this.addMessage({ text: 'The form contains some errors.', id: 'form-invalid' });
             return false;
         }
         return true;
     }
 
-    reset() {
+    addMessage(msg) {
+        return this._messages.addMessage(msg);
+    }
+
+    clear() {
         if (this._messages) {
             this._messages.clear();
         }
+    }
+
+    reset() {
+        this.clear();
 
         this.getDataElements().forEach(el => {
             const name = el.getAttribute('name');
@@ -239,52 +207,6 @@ export default class XForm extends HTMLElement {
             }
         });
     }
-
-    /**
-     * @private
-     *
-     * @returns {Promise<boolean|object>} if the validation is ok
-     */
-    async _onClickSubmit() {
-        this._messages.clear();
-
-        if (!this.validate()) {
-            // TODO: more explicit
-            this._messages.addMessage('The form contains some errors.');
-            return false;
-        }
-
-        return this.onSubmit(this.data);
-    }
-
-    /**
-     * @abstract
-     *
-     * @param {object} data to be sent (formular data by default)
-     * @returns {Promise<object>} resolving with the data from the request
-     */
-    async onSubmit(data) {
-        console.info(data);
-        return Promise.resolve(data);
-    }
-
-    /**
-     * @private
-     */
-    _onClickCancel() {
-        this.reset();
-        this.onCancel();
-    }
-
-    /**
-     * To be called when the user has choosen to "cancel",
-     * after handling default behaviors
-     *
-     * @abstract
-     */
-    onCancel() { }
-
-    // onEdit() {}
 }
 
 defineCustomElement(XForm);

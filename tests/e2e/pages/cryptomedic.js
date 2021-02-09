@@ -18,16 +18,16 @@ module.exports = {
             this.api.init();
             this.waitForElementVisible('body');
             this.assert.title('Cryptomedic');
-            this.waitForElementPresent('x-login-form');
-            this.waitForElementNotPresent('x-login-form[requesting=doLoginCheck]');
-            this.myComponentExecute('x-login-form #username', function (v) { this.value = v; }, [login]);
-            this.myComponentExecute('x-login-form #password', function (v) { this.value = v; }, [password]);
+            this.waitForElementPresent('x-login-page');
+            this.waitForElementNotPresent('x-login-page[requesting=doLoginCheck]');
+            this.myComponentExecute('x-login-page #username', function (v) { this.value = v; }, [login]);
+            this.myComponentExecute('x-login-page #password', function (v) { this.value = v; }, [password]);
             this.api.pause(10);
 
-            this.myComponentExecute('x-login-form', function () { this.doLogin(); });
+            this.myComponentExecute('x-login-page', function () { this.doLogin(); });
 
             this.api.pause(10);
-            this.waitForElementNotPresent('x-login-form[requesting]');
+            this.waitForElementNotPresent('x-login-page[requesting]');
             return this;
         },
 

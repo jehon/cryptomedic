@@ -1,78 +1,87 @@
 
-import axios from '../../../cjs2esm/axios.js';
+import axios from '../../cjs2esm/axios.js';
 axios.defaults.timeout = 30 * 1000;
 
-import { API_VERSION } from '../../../config.js';
-import { setSession } from '../../../js/session.js';
-import { routeToLogin } from '../../../js/router.js';
+import { API_VERSION } from '../../config.js';
+import { setSession } from '../../js/session.js';
+import { routeToLogin } from '../../js/router.js';
 
-import XWaiting from './x-waiting.js';
-import XOverlay from './x-overlay.js';
-import XPanel from './x-panel.js';
-import XButton from '../../render/x-button.js';
-import '../../../../node_modules/css-inherit/css-inherit.js';
-import { createElementWith, defineCustomElement } from '../../../js/custom-element.js';
-import { getBrowserDescription } from '../../../js/browser.js';
-
-const error = Symbol('error');
-const errorMsg = Symbol('errorMsg');
-const errorContent = Symbol('errorContent');
+import XWaiting from '../render/x-waiting.js';
+import XOverlay from '../render/x-overlay.js';
+import XButton from '../render/x-button.js';
+import { createElementWithObject, createElementWithTag, defineCustomElement } from '../../js/custom-element.js';
+import { getBrowserDescription } from '../../js/browser.js';
+import '../../../node_modules/css-inherit/css-inherit.js';
+import XPanel from '../render/x-panel.js';
 
 /**
  * Slot[]: content
  */
-export default class XRequestor extends XWaiting {
-    /**
-     * Render some content, which include the error message
-     * - The waiting wheel is the original XOverlay (from XWaiting)
-     * - The error message is in a new XOverlay
-     *
-     * @override
-     */
-    getXOverlayContent() {
-        return this[error] = createElementWith(XOverlay, { id: 'error' }, [
-            createElementWith(XPanel, { slot: 'overlay' }, [
-                createElementWith('css-inherit'),
-                this[errorMsg] = createElementWith('h1', { id: 'errorMsg' }),
-                this[errorContent] = createElementWith('div', { id: 'errorContent' }),
-                createElementWith(XButton, { action: 'cancel', id: 'closeButton' }, 'Dismiss',
-                    (el) => el.addEventListener('click', () => this[error].free())
-                )
-            ]),
-            ...this.getXRequestorContents()
-        ]);
+export default class XRequestor extends HTMLElement {
+
+    /** @type {XWaiting} */
+    _waiting;
+
+    /** @type {XOverlay} */
+    _error;
+
+    constructor() {
+        super();
+        this.attachShadow({ mode: 'open' });
+        this.shadowRoot.append(
+            createElementWithTag('style', {}, `
+    :host {
+        display: block;
     }
 
-    /**
-     * @returns {Array<HTMLElement>} to be protected by the XRequestor
-     */
-    getXRequestorContents() {
-        return [createElementWith('slot')];
+    x-waiting {
+        height: 100%;
+    }
+
+    x-overlay {
+        height: 100%;
+    }
+            `),
+            createElementWithTag('css-inherit'),
+            this._waiting = /** @type {XWaiting} */ (createElementWithObject(XWaiting, {}, [
+                this._error = /** @type {XOverlay} */(createElementWithObject(XOverlay, { type: 'on-error' }, [
+                    createElementWithObject(XPanel, { slot: 'overlay' }, [
+                        // createElementWithTag('css-inherit'),
+                        this._errorMsg = createElementWithTag('h1', { id: 'errorMsg' }),
+                        this._errorContent = createElementWithTag('div', { id: 'errorContent' }),
+                        createElementWithObject(XButton, { action: 'cancel', id: 'closeButton' }, 'Dismiss',
+                            (el) => el.addEventListener('click', () => this._error.free())
+                        )
+                    ]),
+                    createElementWithTag('slot')
+                ]))
+            ]))
+        );
+
+        if (this.hasAttribute('start-blocked')) {
+            this._waiting.block();
+        }
     }
 
     /**
      * @returns {boolean} wheter the request is failed
      */
     isFailed() {
-        return this[error].isBlocked();
+        return this._error.isBlocked();
     }
 
     /**
      * @returns {boolean} wheter the request is running
      */
     isRequesting() {
-        return super.isBlocked();
+        return this._waiting.isBlocked();
     }
 
     /**
      * @returns {boolean} wheter the request is running or has failed (isFailed || isRequesting)
      */
     isBlocked() {
-        return super.isBlocked() || this.isFailed();
-    }
-
-    async _rawRequest(options) {
-        return axios(options);
+        return this.isRequesting() || this.isFailed();
     }
 
     /**
@@ -81,10 +90,14 @@ export default class XRequestor extends XWaiting {
     reset() {
         this.removeAttribute('running');
         this.removeAttribute('erroneous');
-        this.free();
-        this[error].free();
-        this[errorMsg].innerHTML = '';
-        this[errorContent].innerHTML = '';
+        this._waiting.free();
+        this._error.free();
+        this._errorMsg.innerHTML = '';
+        this._errorContent.innerHTML = '';
+    }
+
+    async _rawRequest(options) {
+        return axios(options);
     }
 
     /**
@@ -100,7 +113,7 @@ export default class XRequestor extends XWaiting {
      */
     async request(opts) {
         this.reset();
-        this.block();
+        this._waiting.block();
 
         const options = {
             url: '/',
@@ -122,10 +135,10 @@ export default class XRequestor extends XWaiting {
                 // TODO: temp hack
                 response.ok = (response.status >= 200 && response.status < 300); // TODO: temp hack
 
-                this.free();
+                this._waiting.free();
                 return response;
             }, errorResponse => {
-                this.free();
+                this._waiting.free();
                 // Fill in the overlay
                 this.showFailure(errorResponse);
                 throw errorResponse;
@@ -140,14 +153,14 @@ export default class XRequestor extends XWaiting {
      */
     showFailure(errorResponse) {
         this.setAttribute('erroneous', 'erroneous');
-        this.free();
-        this[error].block();
-        this[errorMsg].innerHTML = 'Network error';
+        this._waiting.free();
+        this._error.block();
+        this._errorMsg.innerHTML = 'Network error';
         if (typeof (errorResponse) == 'object') {
             let html = '<table style=\'width: 300px\'>';
             if (errorResponse.response) {
                 // Code is not 2xx
-                this[errorMsg].innerHTML = errorResponse.response.statusText;
+                this._errorMsg.innerHTML = errorResponse.response.statusText;
                 html += `<tr><td>Status code</td><td>${errorResponse.response.status}</td></tr>`;
                 if (errorResponse.response.status == 401) {
                     // this will trigger a redirect to some login form or anything else
@@ -155,7 +168,7 @@ export default class XRequestor extends XWaiting {
                     routeToLogin();
                 }
             } else if (errorResponse.request) {
-                this[errorMsg].innerHTML = 'Network Error';
+                this._errorMsg.innerHTML = 'Network Error';
                 html += `<tr><td>Message</td><td>
                     Something went very wrong on your network. Please check:<br>
                     <ul>
@@ -168,10 +181,11 @@ export default class XRequestor extends XWaiting {
                 html += `<tr><td>Error</td><td>${errorResponse.message}</td></tr>`;
             }
             html += '</table>';
-            this[errorContent].innerHTML = html;
+            // console.log(html);
+            this._errorContent.innerHTML = html;
         } else {
             // String message
-            this[errorMsg].innerHTML = errorResponse;
+            this._errorMsg.innerHTML = errorResponse;
         }
     }
 }

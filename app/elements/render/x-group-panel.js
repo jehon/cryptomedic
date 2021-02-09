@@ -1,5 +1,5 @@
 
-import { createElementWith, defineCustomElement } from '../../js/custom-element.js';
+import { createElementWithTag, defineCustomElement } from '../../js/custom-element.js';
 
 /**
  * Slot[]: content
@@ -13,7 +13,11 @@ export default class XGroupPanel extends HTMLElement {
         super();
         this.attachShadow({ mode: 'open' });
         this.shadowRoot.append(
-            createElementWith('style', {}, `
+            createElementWithTag('style', {}, `
+    :host {
+        display: block;
+    }
+
     fieldset {
         border-radius: 10px;
         padding: 10px;
@@ -67,11 +71,11 @@ export default class XGroupPanel extends HTMLElement {
     }
 `),
 
-            createElementWith('fieldset', {}, [
-                this._legend = createElementWith('legend'),
-                createElementWith('slot', { name: 'versal' }),
-                createElementWith('div', { id: 'content' }, [
-                    createElementWith('slot')
+            createElementWithTag('fieldset', {}, [
+                this._legend = createElementWithTag('legend'),
+                createElementWithTag('slot', { name: 'versal' }),
+                createElementWithTag('div', { id: 'content' }, [
+                    createElementWithTag('slot')
                 ])
             ]));
     }

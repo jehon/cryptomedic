@@ -7,8 +7,8 @@ module.exports = {
 
         client.myScreenshotReference();
 
-        client.myComponentExecute('x-login-form x-messages', function () {
-            return this.messagesCount;
+        client.myComponentExecute('x-login-page', function () {
+            return this.hasAttribute('error');
         }, [], function (result) {
             client.assert.equal(result, 1);
         });

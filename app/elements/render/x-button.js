@@ -1,6 +1,6 @@
 
-import { spacing, icons, actions } from '../../config.js';
-import { createElementWith, defineCustomElement } from '../../js/custom-element.js';
+import { spacing, icons, actions, colors } from '../../config.js';
+import { createElementWithTag, defineCustomElement } from '../../js/custom-element.js';
 import { setRoute } from '../../js/router.js';
 
 const button = Symbol('button');
@@ -24,12 +24,17 @@ export default class XButton extends HTMLElement {
         super();
         this.attachShadow({ mode: 'open' });
         this.shadowRoot.append(
-            createElementWith('css-inherit'),
-            createElementWith('style', { 'css-inherit-local': true }, `
+            createElementWithTag('css-inherit'),
+            createElementWithTag('style', { 'css-inherit-local': true }, `
     :host {
         display: inline-block;
         background-color: rgba(0,0,0,0);
-        padding: calc(${spacing.element} / 2);
+        min-width: 100px;
+        flex-shrink: 0;
+    }
+
+    :host(.selected) {
+        border: blue 2px solid;
     }
 
     button {
@@ -45,24 +50,22 @@ export default class XButton extends HTMLElement {
         vertical-align: middle;
         padding-right: ${spacing.element};
     }
-
-    :host(.selected) button {
-        background-color: blue;
-    }
 `),
 
-            this[button] = createElementWith('button', { class: `btn btn-${actions.alternate}` }, [
-                createElementWith('img'),
-                createElementWith('slot')
+            this[button] = createElementWithTag('button', {}, [
+                createElementWithTag('img'),
+                createElementWithTag('slot')
             ], element => element.addEventListener('click', () => {
                 const toRoute = this.getAttribute('to-route');
                 if (toRoute) {
                     setRoute(toRoute);
                 }
             })));
+
+        this.colorizeButton();
     }
 
-    attributeChangedCallback(attributeName, oldValue, newValue) {
+    attributeChangedCallback(attributeName, _oldValue, newValue) {
         switch (attributeName) {
             case 'icon':
                 if (!(newValue in icons)) {
@@ -70,23 +73,12 @@ export default class XButton extends HTMLElement {
                 }
                 this.shadowRoot.querySelector('img').setAttribute('src', icons[newValue]);
                 break;
+
             case 'discrete':
-            case 'action':
-                // !! could not have any other class on button, otherwise it will be wiped out :-)
-                if (this.hasAttribute('discrete')) {
-                    this[button].className = 'btn';
-                    this[button].style.backgroundColor = 'transparent';
-                } else {
-                    let action = this.getAttribute('action');
-                    if (!(action in actions)) {
-                        console.error('unknown action: ', action);
-                        action = 'alternate';
-                    }
-                    const color = actions[action];
-                    this[button].className = `btn btn-${color}`;
-                    this[button].style.backgroundColor = '';
-                }
+            case 'action': {
+                this.colorizeButton();
                 break;
+            }
         }
     }
 
@@ -96,6 +88,27 @@ export default class XButton extends HTMLElement {
 
     set onclick(fn) {
         this[button].addEventListener('click', fn);
+    }
+
+    colorizeButton() {
+        this[button].style.backgroundColor = this.hasAttribute('discrete') ? 'transparent' : '';
+        this[button].className = 'btn';
+
+        if (this.hasAttribute('discrete')) {
+            return;
+        }
+        // !! could not have any other class on button, otherwise it will be wiped out :-)
+        let action = this.getAttribute('action');
+        if (!action) {
+            action = actions.query;
+        } else if (!(action in actions)) {
+            console.error('unknown action: ', action);
+            action = actions.query;
+        }
+        const cls = colors.actions[action].class;
+
+        // TODO: use config.js colors
+        this[button].classList.add(`btn-${cls}`);
     }
 }
 

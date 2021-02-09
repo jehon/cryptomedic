@@ -1,5 +1,5 @@
 
-import XLoginForm from '../../app/elements/pages/x-login-form.js';
+import XLoginPage from '../../app/elements/pages/x-login-page.js';
 
 import { fn } from './athelpers.js';
 
@@ -7,48 +7,52 @@ import * as router from '../../app/js/router.js';
 import { setSession, getUsername } from '../../app/js/session.js';
 
 import { mockNoResponse, mockResponseWithSuccess, mockResponseWithSuccessbutCode } from './x-requestor-test.js';
-import { mockFormSubmit } from './form-test.js';
+import { mockPressEnter } from './x-form-test.js';
 
 describe(fn(import.meta.url), function () {
     let element;
     let submitButton;
+    let xmessages;
 
     beforeEach(() => {
-        element = new XLoginForm();
+        element = new XLoginPage();
         setSession();
         element.reset();
-        submitButton = element.querySelector('#login');
+        submitButton = element.querySelector('#submit');
+        xmessages = element.querySelector('x-form').shadowRoot.querySelector('x-messages');
+
     });
 
     it('should be initialized', function () {
-        expect(element.isBlocked()).toBeFalse();
+        expect(element.querySelector('x-requestor').isBlocked()).toBeFalse();
     });
 
     it('should submit by click', function () {
         submitButton.click();
-        expect(element.querySelector('x-messages').messagesCount).toBe(1);
-        expect(element.querySelector('x-messages').messagesIds).toContain('empty');
+        expect(xmessages.messagesCount).toBe(1);
+        expect(xmessages.messagesIds).toContain('form-invalid');
     });
 
     it('should submit by enter', function () {
-        // TODO: how to trigger "submit" event on form ?
-        mockFormSubmit(element.querySelector('form'));
-        // element.querySelector('form').submit();
-        expect(element.querySelector('x-messages').messagesCount).toBe(1);
-        expect(element.querySelector('x-messages').messagesIds).toContain('empty');
+        mockPressEnter(element);
+        expect(xmessages.messagesCount).toBe(1);
+        expect(xmessages.messagesIds).toContain('form-invalid');
     });
 
     it('should refuse login when clicking on empty form', function () {
-        expect(element.isBlocked()).toBeFalse();
         submitButton.click();
-        expect(element.querySelector('x-messages').messagesCount).toBe(1);
-        expect(element.querySelector('x-messages').messagesIds).toContain('empty');
+        expect(xmessages.messagesCount).toBe(1);
+        expect(xmessages.messagesIds).toContain('form-invalid');
     });
 
     describe('with user/password', function () {
+        let xrequestor;
+
         beforeEach(() => {
             element.querySelector('input[name="username"]').value = 'user';
             element.querySelector('input[name="password"]').value = 'pass';
+            xrequestor = element.querySelector('x-requestor');
+            expect(xrequestor).toBeDefined();
         });
 
         it('should refuse if pending request is running', async function () {
@@ -56,7 +60,7 @@ describe(fn(import.meta.url), function () {
 
             // Async -> this will block the next request
             element.doLogin();
-            expect(element.isRequesting()).toBeTrue();
+            expect(xrequestor.isRequesting()).toBeTrue();
 
             await expectAsync(element.doLogin()).toBeResolvedTo(-1);
             mock.resolve();
@@ -65,16 +69,16 @@ describe(fn(import.meta.url), function () {
         it('should login when giving correct infos', async function () {
             mockResponseWithSuccess({ username: 'test' });
             await expectAsync(element.doLogin()).toBeResolvedTo(true);
-            expect(element.querySelector('x-messages').messagesCount).toBe(1);
-            expect(element.querySelector('x-messages').messagesIds).toContain('success');
+            expect(xmessages.messagesCount).toBe(1);
+            expect(xmessages.messagesIds).toContain('success');
             expect(getUsername()).toBe('test');
         });
 
         it('should show a message when incorrect info are fill in', async function () {
             mockResponseWithSuccessbutCode(404);
             await expectAsync(element.doLogin()).toBeResolvedTo(2);
-            expect(element.querySelector('x-messages').messagesCount).toBe(1);
-            expect(element.querySelector('x-messages').messagesIds).toContain('cred');
+            expect(xmessages.messagesCount).toBe(1);
+            expect(xmessages.messagesIds).toContain('invalid-credentials');
         });
     });
 

@@ -1,17 +1,17 @@
 
-import XOverlay from '../../app/elements/widgets/generic/x-overlay.js';
+import XOverlay from '../../app/elements/render/x-overlay.js';
 
 import { fn } from './athelpers.js';
 
 import JHElement from '../../app/elements/jh-element.js';
-import { createElementWith } from '../../app/js/custom-element.js';
+import { createElementWithObject, createElementWithTag } from '../../app/js/custom-element.js';
 
 describe(fn(import.meta.url), function () {
     let element;
     beforeEach(() => {
-        element = createElementWith(XOverlay, {}, [
-            createElementWith('div', {}, 'Content'),
-            createElementWith('div', { slot: 'overlay' }, 'Overlay')
+        element = createElementWithObject(XOverlay, {}, [
+            createElementWithTag('div', {}, 'Content'),
+            createElementWithTag('div', { slot: 'overlay' }, 'Overlay')
         ]);
     });
 

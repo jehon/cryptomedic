@@ -1,6 +1,6 @@
 
-import XWaiting from '../../app/elements/widgets/generic/x-waiting.js';
-import { createElementWith } from '../../app/js/custom-element.js';
+import XWaiting from '../../app/elements/render/x-waiting.js';
+import { createElementWithObject, createElementWithTag } from '../../app/js/custom-element.js';
 
 import { fn } from './athelpers.js';
 
@@ -8,8 +8,8 @@ describe(fn(import.meta.url), function () {
     let element;
 
     beforeEach(() => {
-        element = createElementWith(XWaiting, {}, [
-            createElementWith('div', {}, 'Content')
+        element = createElementWithObject(XWaiting, {}, [
+            createElementWithTag('div', {}, 'Content')
         ]);
     });
 
@@ -21,7 +21,6 @@ describe(fn(import.meta.url), function () {
         element.block();
 
         expect(element.isBlocked()).toBeTruthy();
-        expect(element.hasAttribute('blocked')).toBeTruthy();
     });
 
     it('should hide()', function () {
