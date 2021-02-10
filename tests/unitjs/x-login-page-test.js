@@ -7,8 +7,11 @@ import * as router from '../../app/js/router.js';
 import { setSession, getUsername } from '../../app/js/session.js';
 
 import { mockNoResponse, mockResponseWithSuccess, mockResponseWithSuccessbutCode } from './x-requestor-test.js';
-import { mockPressEnter } from './x-form-test.js';
 
+
+/**
+ * @typedef {import('../../app/elements/funcs/x-form.js').default} XForm
+ */
 describe(fn(import.meta.url), function () {
     let element;
     let submitButton;
@@ -20,7 +23,9 @@ describe(fn(import.meta.url), function () {
         element.reset();
         submitButton = element.querySelector('#submit');
         xmessages = element.querySelector('x-form').shadowRoot.querySelector('x-messages');
-
+        ( /** @type {XForm} */
+            (element.querySelector('x-form'))
+        ).connectedCallback();
     });
 
     it('should be initialized', function () {
@@ -29,12 +34,6 @@ describe(fn(import.meta.url), function () {
 
     it('should submit by click', function () {
         submitButton.click();
-        expect(xmessages.messagesCount).toBe(1);
-        expect(xmessages.messagesIds).toContain('form-invalid');
-    });
-
-    it('should submit by enter', function () {
-        mockPressEnter(element);
         expect(xmessages.messagesCount).toBe(1);
         expect(xmessages.messagesIds).toContain('form-invalid');
     });

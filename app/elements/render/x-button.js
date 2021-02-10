@@ -86,10 +86,6 @@ export default class XButton extends HTMLElement {
         this[button].click();
     }
 
-    set onclick(fn) {
-        this[button].addEventListener('click', fn);
-    }
-
     colorizeButton() {
         this[button].style.backgroundColor = this.hasAttribute('discrete') ? 'transparent' : '';
         this[button].className = 'btn';
