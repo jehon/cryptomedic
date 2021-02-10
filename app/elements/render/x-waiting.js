@@ -12,6 +12,23 @@ export default class XWaiting extends HTMLElement {
     /** @type {XOverlay} */
     _overlay;
 
+    static get observedAttributes() {
+        return ['global'];
+    }
+
+    attributeChangedCallback(attributeName, _oldValue, _newValue) {
+        switch (attributeName) {
+            case 'global':
+                if (this.hasAttribute('global')) {
+                    this._overlay.setAttribute('global', 'global');
+                } else {
+                    this._overlay.removeAttribute('global');
+                }
+                break;
+        }
+    }
+
+
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
