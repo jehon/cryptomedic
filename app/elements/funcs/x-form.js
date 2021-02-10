@@ -1,4 +1,5 @@
 
+import { actions } from '../../config.js';
 import { createElementWithObject, createElementWithTag, defineCustomElement } from '../../js/custom-element.js';
 import XMessages from '../render/x-messages.js';
 
@@ -41,12 +42,24 @@ export default class XForm extends HTMLElement {
 
         this.addEventListener('keypress', (event) => {
             if (event.key === 'Enter') {
-                event.preventDefault();
-                if (this.validate()) {
-                    this.dispatchEvent(new CustomEvent('submit'));
-                }
+                // event.preventDefault();
+                this.checkAndSubmit();
             }
         });
+    }
+
+    connectedCallback() {
+        this._data = this.data;
+
+        this.querySelectorAll(`x-button[action=${actions.cancel}]`)
+            .forEach(el => (/** @type {XButton} */(el)).addEventListener('click',
+                () => this.reset()
+            ));
+
+        this.querySelectorAll(`x-button:not([action]), x-button[action=${actions.query}], x-button[action=${actions.submit}]`)
+            .forEach(el => (/** @type {XButton} */(el)).addEventListener('click',
+                () => this.checkAndSubmit()
+            ));
     }
 
     /**
@@ -177,6 +190,12 @@ export default class XForm extends HTMLElement {
             return false;
         }
         return true;
+    }
+
+    checkAndSubmit() {
+        if (this.validate()) {
+            this.dispatchEvent(new CustomEvent('submit'));
+        }
     }
 
     addMessage(msg) {

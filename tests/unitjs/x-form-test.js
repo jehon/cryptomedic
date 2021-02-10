@@ -5,16 +5,13 @@ import '../../app/elements/x-write-list.js';
 import '../../app/elements/x-inline.js';
 import { createElementWithTag, createElementWithObject } from '../../app/js/custom-element.js';
 import { fn } from './athelpers.js';
+import XButton from '../../app/elements/render/x-button.js';
+import XButtons from '../../app/elements/render/x-buttons.js';
+import { actions } from '../../app/config.js';
 
 // import XWrite from '../../app/elements/x-write.js';
 // import XWriteList from '../../app/elements/x-write-list.js';
 // import XInline from '../../app/elements/x-inline.js';
-
-export function mockPressEnter(form) {
-    form
-        .querySelector('input')
-        .dispatchEvent(new KeyboardEvent('keypress', { key: 'Enter', bubbles: true }));
-}
 
 describe(fn(import.meta.url), function () {
     it('should work with HTML Element', function () {
@@ -53,8 +50,62 @@ describe(fn(import.meta.url), function () {
         expect(element.data).toEqual({});
     });
 
+    describe('with buttons', function () {
+        let element;
+        let iN1;
+        let bQuery;
+        let bReset;
+
+        beforeEach(() => {
+            element = /** @type {XForm} */ (createElementWithObject(XForm, {}, [
+                iN1 = createElementWithTag('input', { name: 'n1', required: true, value: 'initial' }),
+
+                createElementWithObject(XButtons, {}, [
+                    bQuery = createElementWithObject(XButton, {}, 'Query'),
+                    bReset = createElementWithObject(XButton, { action: actions.cancel }, 'Reset')
+                ])
+            ]));
+            element.connectedCallback();
+        });
+
+        it('should submit by enter', function (done) {
+            expect(element.validate()).toBeTrue();
+            element.addEventListener('submit', () => done());
+            iN1.dispatchEvent(new KeyboardEvent('keypress', { key: 'Enter', bubbles: true }));
+        });
+
+        it('should reset by click on reset button', function (done) {
+            expect(iN1.value).toBe('initial');
+            iN1.value = 'changed';
+            expect(element.validate()).toBeTrue();
+            element.addEventListener('submit', () => done.fail());
+
+            bReset.click();
+            setTimeout(() => {
+                expect(iN1.value).toBe('initial');
+                done();
+            }, 1);
+        });
+
+        it('should submit by click on query button', function (done) {
+            expect(element.validate()).toBeTrue();
+            element.addEventListener('submit', () => done());
+            bQuery.click();
+        });
+
+        it('should not submit by click on query button if not valid', function (done) {
+            iN1.value = '';
+            expect(element.validate()).toBeFalse();
+            element.addEventListener('submit', () => done.fail());
+            bQuery.click();
+            done();
+        });
+
+    });
+
     describe('with full form', function () {
         let element;
+
         beforeEach(() => {
             element = /** @type {XForm} */ (createElementWithObject(XForm, {}, [
                 createElementWithTag('input', { name: 'n1' }),
@@ -116,12 +167,6 @@ describe(fn(import.meta.url), function () {
                     n2: 'n2val2',
                     n3: 'n3val2'
                 });
-            });
-
-            it('should submit by enter', function (done) {
-                expect(element.validate()).toBeTrue();
-                element.addEventListener('submit', () => done());
-                mockPressEnter(element);
             });
         });
     });
