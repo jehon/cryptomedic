@@ -25,6 +25,22 @@ export default class XRequestor extends HTMLElement {
     /** @type {XOverlay} */
     _error;
 
+    static get observedAttributes() {
+        return ['global'];
+    }
+
+    attributeChangedCallback(attributeName, _oldValue, _newValue) {
+        switch (attributeName) {
+            case 'global':
+                if (this.hasAttribute('global')) {
+                    this._waiting.setAttribute('global', 'global');
+                } else {
+                    this._waiting.removeAttribute('global');
+                }
+                break;
+        }
+    }
+
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
@@ -251,3 +267,33 @@ export function logoutBuilder() {
         url: `/api/${API_VERSION}/auth/logout`
     };
 }
+
+/**
+ * @param {number} entryyear to be checked
+ * @param {number} entryorder to be checked
+ *
+ * @returns {object} options for request (see XRequestor#request)
+ */
+export function checkReferenceBuilder(entryyear, entryorder) {
+    return {
+        url: 'reference/' + entryyear + '/' + entryorder
+    };
+}
+
+// createReference(year, order) {
+//     setCurrentFolder();
+
+//     return this.requestAndFilter({
+//         url: 'reference', method: 'POST', data: {
+//             entryyear: year,
+//             entryorder: order
+//         }
+//     })
+//         .then(response => {
+//             let f = new Folder(response.asJson.folder);
+//             patientFolderCache.set(response.asJson.id, f);
+//             setCurrentFolder(f);
+//             return response.asJson;
+//         });
+// }
+

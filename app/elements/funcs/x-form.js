@@ -2,6 +2,11 @@
 import { actions } from '../../config.js';
 import { createElementWithObject, createElementWithTag, defineCustomElement } from '../../js/custom-element.js';
 import XMessages from '../render/x-messages.js';
+import '../render/x-button.js';
+
+/**
+ * @typedef {import('../render/x-button.js').default} XButton
+ */
 
 // const log = (...args) => console.log('log: ', ...args);
 const log = (..._args) => { };
@@ -38,6 +43,7 @@ export default class XForm extends HTMLElement {
             // createElementWithObject('css-inherit'),
             createElementWithTag('slot'),
             this._messages =  /** @type {XMessages} */ (createElementWithObject(XMessages)),
+            createElementWithTag('slot', { name: 'buttons' }),
         );
 
         this.addEventListener('keypress', (event) => {

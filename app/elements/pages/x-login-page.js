@@ -29,8 +29,8 @@ export default class XLoginPage extends HTMLElement {
         this.innerHTML = '';
         this.append(
             createElementWithObject(XPanel, {}, [
-                this._requestor = /** @type {XRequestor} */ (createElementWithObject(XRequestor, {}, [
-                    this._form = /** @type {XForm} */ (createElementWithObject(XForm, {},
+                this._requestor = createElementWithObject(XRequestor, { global: true }, [
+                    this._form = createElementWithObject(XForm, {},
                         [
                             createElementWithTag('h2', {}, 'Please sign in'),
                             createElementWithObject(XLabel, { label: 'Username' }, [
@@ -39,15 +39,13 @@ export default class XLoginPage extends HTMLElement {
                             createElementWithObject(XLabel, { label: 'Password' }, [
                                 createElementWithTag('input', { id: 'password', name: 'password', class: 'form-control', placeholder: 'Password', required: true, autofocus: true, type: 'password' })
                             ]),
+                            createElementWithObject(XButtons, { slot: 'buttons' }, [
+                                createElementWithObject(XButton, { id: 'submit' }, 'Login'),
+                            ]),
                         ],
                         (el) => el.addEventListener('submit', () => this.doLogin())
-                    )),
-                    createElementWithObject(XButtons, {}, [
-                        createElementWithObject(XButton, { id: 'submit' },
-                            'Login',
-                            (el) => el.addEventListener('click', () => this.doLogin())),
-                    ]),
-                ]))
+                    )
+                ])
             ])
         );
     }
