@@ -14,7 +14,7 @@ import XButton from '../render/x-button.js';
 /**
  * attribute redirect - Where to redirect on login
  */
-export default class XLoginPage extends HTMLElement {
+export default class XPageLogin extends HTMLElement {
 
     /** @type {XRequestor} */
     _requestor;
@@ -108,4 +108,4 @@ export default class XLoginPage extends HTMLElement {
     }
 }
 
-defineCustomElement(XLoginPage);
+defineCustomElement(XPageLogin);
