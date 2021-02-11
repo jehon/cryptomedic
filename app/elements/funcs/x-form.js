@@ -231,6 +231,8 @@ export default class XForm extends HTMLElement {
                 el.value = val;
             }
         });
+
+        this.dispatchEvent(new CustomEvent('reset'));
     }
 }
 
