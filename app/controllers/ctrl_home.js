@@ -1,7 +1,4 @@
 
-/* istanbul ignore file */
-/* eslint-disable */
-
 import { getRouteToCreateReference } from '../js/router.js';
 import '../elements/render/x-button.js';
 // import '../elements/pages/x-home.js';
