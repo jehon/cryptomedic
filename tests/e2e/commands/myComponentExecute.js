@@ -17,7 +17,7 @@ function executeInShadowDom(selector, fn, ...args) {
         }
         currentElement = currentElement.querySelector(selectors[i]);
         if (!currentElement) {
-            throw('Element not found: ' + selector + ' at ' + selectors[i]);
+            throw 'Element not found: ' + selector + ' at ' + selectors[i];
         }
     }
 
@@ -32,10 +32,19 @@ function executeInShadowDom(selector, fn, ...args) {
     return val;
 }
 
-exports.command = function(selector, fn = () => { return this; }, args = [], callback = function() {}) {
-    if (typeof(fn) == 'function') {
-        fn = fn.toString();
-    }
-    this.execute(executeInShadowDom, [ selector, fn, args ], function(result) { callback(result.value); });
+exports.command = function (selector, fn = () => { return this; }, args = []) {
+    /** @type {string} */
+    let txtFn = (typeof (fn) == 'function') ? fn.toString() : fn;
+
+    this.execute(
+        executeInShadowDom,
+        [selector, txtFn, args],
+        function (result) {
+            if (result.status < 0) {
+                console.error('Error: ', result.value.message);
+                throw 'Error: ' + result.value.message;
+            }
+        }
+    );
     return this;
 };
