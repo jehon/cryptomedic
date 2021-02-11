@@ -4,11 +4,11 @@ module.exports = {
         client.page.cryptomedic().authenticate('murshed');
 
         client.myClick('#menu_home');
-        client.waitForElementVisible('input[ng-model=\'entryyear\']');
+        client.waitForElementVisible('#button_generate_reference');
         client.myClick('#button_generate_reference');
         client.waitForElementPresent('#Patient_Name');
 
-        // // Edit and save
+        // Edit and save
         client.setValue('#Patient_entryyear', 1998);
         client.setValue('#Patient_Name', 'rezaul');
         client.myScreenshotReference();

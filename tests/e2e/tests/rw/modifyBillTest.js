@@ -10,19 +10,10 @@ let payment = {
 };
 
 module.exports = {
-    'find the bill': function(client) {
+    'find the bill': function (client) {
         client.page.cryptomedic().authenticate('thierry');
+        client.page.cryptomedic().goPatient(2014, 103); // id = 3
 
-        // Select file (id=3)
-        client.myClick('#menu_home');
-        client.waitForElementVisible('input[ng-model=\'entryyear\']');
-        client.clearValue('input[ng-model=\'entryyear\']');
-        client.setValue('input[ng-model=\'entryyear\']', 2014);
-        client.clearValue('input[ng-model=\'entryorder\']');
-        client.setValue('input[ng-model=\'entryorder\']', 103);
-        client.myClick('[ng-click=\'checkReference()\']');
-
-        client.waitForElementPresent('#Patient_Name');
         client.assert.containsText('#Patient_Name', 'OSMAN');
 
         client.page.cryptomedic().selectFile('Bill', 2);
@@ -33,7 +24,7 @@ module.exports = {
             .endTable();
     },
 
-    'try to set date in the future': function(client) {
+    'try to set date in the future': function (client) {
         client.myClick('#topsubmenu #button_unlock');
         client.waitForElementVisible('#Bill_Date');
         client.myFormFillIn('#fileForm', {
@@ -47,7 +38,7 @@ module.exports = {
         client.myClick('#topsubmenu #button_cancel');
     },
 
-    'add a payment': function(client) {
+    'add a payment': function (client) {
         client.myFormFillIn('#paymentForm', payment, '#button_payment_create');
         client.page.cryptomedic().tableIterator('#paymentsList')
             .row(4).col(1).assert(payment['#Payment_Date'])
@@ -59,7 +50,7 @@ module.exports = {
             .endTable();
     },
 
-    'modify a payment': function(client) {
+    'modify a payment': function (client) {
         client.click('#button_edit_3');
 
         // Check form
@@ -79,7 +70,7 @@ module.exports = {
             .endTable();
     },
 
-    'delete a payment': function(client) {
+    'delete a payment': function (client) {
         client.click('#button_delete_3');
         client.page.cryptomedic().myWaitFetch();
         client.pause(1000);
