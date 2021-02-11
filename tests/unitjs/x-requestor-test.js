@@ -25,8 +25,15 @@ const buildResponse = function (ok = true, status = 200, statusText = '') {
  */
 export function mockNoResponse(cb = (_result) => ({})) {
     let result = {};
-    /* eslint-disable-next-line jasmine/no-unsafe-spy */
-    spyOn(XRequestor.prototype, '_rawRequest').and.callFake((args) => new Promise((resolve, reject) => {
+
+    /** @type {jasmine.Spy} */
+    let spy = XRequestor.prototype._rawRequest;
+    if (!('calls' in spy)) {
+        /* eslint-disable-next-line jasmine/no-unsafe-spy */
+        spy = spyOn(XRequestor.prototype, '_rawRequest');
+    }
+
+    spy.and.callFake((args) => new Promise((resolve, reject) => {
         result.args = args;
         result.resolve = (data = {}) => resolve({
             ok: true,
