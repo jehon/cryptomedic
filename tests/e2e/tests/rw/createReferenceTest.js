@@ -9,15 +9,13 @@ module.exports = {
         client.page.cryptomedic().authenticate('murshed');
 
         client.myClick('#menu_home');
-        client.waitForElementVisible('input[ng-model=\'entryyear\']');
-        client.clearValue('input[ng-model=\'entryyear\']');
-        client.setValue('input[ng-model=\'entryyear\']', 1999);
-        client.clearValue('input[ng-model=\'entryorder\']');
-        client.setValue('input[ng-model=\'entryorder\']', 104);
-        client.myClick('[ng-click=\'checkReference()\']');
-        client.waitForElementVisible('#button_create_reference', 5000, 'The patient \'1999-104\' could not be created by reference. Does it already exists? Please delete it then...');
+        client.page.cryptomedic().myComponentExecute('x-patient-by-reference >>> [name=entryyear]', function (v) { this.value = v; }, [1999]);
+        client.page.cryptomedic().myComponentExecute('x-patient-by-reference >>> [name=entryorder]', function (v) { this.value = v; }, [104]);
+        client.page.cryptomedic().myComponentExecute('x-patient-by-reference >>> [action="query"]', function () { this.click(); }, []);
+
+        client.waitForElementVisible('css selector', 'x-patient-by-reference[status=creation-proposed]', 'The patient \'1999-104\' could not be created by reference. Does it already exists? Please delete it then...');
         client.myScreenshotReference();
-        client.myClick('#button_create_reference');
+        client.page.cryptomedic().myComponentExecute('x-patient-by-reference >>> #create-reference', function () { this.click(); }, []);
 
         client.waitForElementPresent('#Patient_Name');
         client.assert.containsText('#Patient_entryyear', 1999);

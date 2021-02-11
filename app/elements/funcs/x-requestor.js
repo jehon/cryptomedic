@@ -280,20 +280,20 @@ export function checkReferenceBuilder(entryyear, entryorder) {
     };
 }
 
-// createReference(year, order) {
-//     setCurrentFolder();
 
-//     return this.requestAndFilter({
-//         url: 'reference', method: 'POST', data: {
-//             entryyear: year,
-//             entryorder: order
-//         }
-//     })
-//         .then(response => {
-//             let f = new Folder(response.asJson.folder);
-//             patientFolderCache.set(response.asJson.id, f);
-//             setCurrentFolder(f);
-//             return response.asJson;
-//         });
-// }
-
+/**
+ * @param {number} entryyear to be checked
+ * @param {number} entryorder to be checked
+ *
+ * @returns {object} options for request (see XRequestor#request)
+ */
+export function createReferenceBuilder(entryyear, entryorder) {
+    return {
+        method: 'POST',
+        url: 'reference',
+        data: {
+            entryyear,
+            entryorder
+        }
+    };
+}
