@@ -42,6 +42,17 @@ export function createElementWithTag(tag, attributes = {}, inner = [], js = (_el
 }
 
 /**
+ * @param {string} html to be parsed
+ * @returns {Array<HTMLElement>} parsed
+ */
+export function createElementsFromHTML(html) {
+    var template = document.createElement('template');
+    template.innerHTML = html.trim();
+
+    return /** @type {Array<HTMLElement>} */ (Array.from(template.content.children));
+}
+
+/**
  * @param {Element} el the element
  * @param {object} attributes to be set
  * @param {Array<Element | string>| string} inner to fill in

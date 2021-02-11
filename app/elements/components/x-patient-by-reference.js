@@ -61,7 +61,10 @@ export default class XPatientByReference extends HTMLElement {
                                 createElementWithObject(XButton, { action: actions.cancel }, 'Reset')
                             ])
                         ],
-                        (el) => el.addEventListener('submit', () => this.searchReference())
+                        (el) => {
+                            el.addEventListener('submit', () => this.searchReference());
+                            el.addEventListener('reset', () => this.reset());
+                        }
                     ),
                     createElementWithTag('br'),
                     createElementWithObject(XPanel, { id: 'creator' }, [
