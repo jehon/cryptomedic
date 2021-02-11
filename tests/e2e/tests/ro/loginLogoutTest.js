@@ -7,7 +7,7 @@ module.exports = {
 
         client.myScreenshotReference();
 
-        client.myComponentExecute('x-login-page', function () {
+        client.myComponentExecute('x-page-login', function () {
             return this.hasAttribute('error');
         }, [], function (result) {
             client.assert.equal(result, 1);

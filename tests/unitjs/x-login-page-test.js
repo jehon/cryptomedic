@@ -1,5 +1,5 @@
 
-import XLoginPage from '../../app/elements/pages/x-login-page.js';
+import XPageLogin from '../../app/elements/pages/x-page-login.js';
 
 import { fn } from './athelpers.js';
 
@@ -18,7 +18,7 @@ describe(fn(import.meta.url), function () {
     let xmessages;
 
     beforeEach(() => {
-        element = new XLoginPage();
+        element = new XPageLogin();
         setSession();
         element.reset();
         submitButton = element.querySelector('#submit');

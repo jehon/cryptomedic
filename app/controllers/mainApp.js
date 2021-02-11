@@ -8,7 +8,6 @@ import 'angular-route';
 import ctrl_file_appointment from './ctrl_file_appointment.js';
 import ctrl_file_bill from './ctrl_file_bill.js';
 import ctrl_folder from './ctrl_folder.js';
-import ctrl_home from './ctrl_home.js';
 import ctrl_prices from './ctrl_prices.js';
 import ctrl_reports from './ctrl_reports.js';
 import ctrl_search from './ctrl_search.js';
@@ -86,30 +85,40 @@ mainApp.controller('ctrl', ['$scope', function ($scope) {
 mainApp.controller('ctrl_file_appointment', ctrl_file_appointment);
 mainApp.controller('ctrl_file_bill', ctrl_file_bill);
 mainApp.controller('ctrl_folder', ctrl_folder);
-mainApp.controller('ctrl_home', ctrl_home);
 mainApp.controller('ctrl_reports', ctrl_reports);
 mainApp.controller('ctrl_search', ctrl_search);
 mainApp.controller('ctrl_users', ctrl_users);
 mainApp.controller('ctrl_prices', ctrl_prices);
 
+import XPageLogin from '../elements/pages/x-page-login.js';
+import XPageHome from '../elements/pages/x-page-home.js';
+
+
+// template: function (_params) {
+//     // Thanks to https://stackoverflow.com/a/34217927/1954789
+//     return `<x-page-login redirect=${parseRouteLogin().redirect}></x-page-login>`;
+// }
+
+// template: function (_params) {
+//     // Thanks to https://stackoverflow.com/a/34217927/1954789
+//     window.location.href = parseRouteApi().redirect;
+// }
+
+
 mainApp.config(['$routeProvider', function ($routeProvider) {
     $routeProvider
         .when('/login/:redirect*?', {
-            template: function (_params) {
-                // Thanks to https://stackoverflow.com/a/34217927/1954789
-                return import(/* webpackChunkName: "x-login-page", webpackPrefetch: true */'../elements/pages/x-login-page.js')
-                    .then(() => `<x-login-page redirect=${parseRouteLogin().redirect}></x-login-page>`);
-            }
+            template: `<x-page-login redirect=${parseRouteLogin().redirect}></x-page-login>`
         })
         .when('/redirect/api/:redirect*?', {
-            template: function (_params) {
+            template: function (params) {
+                console.log(params, parseRouteApi().redirect);
                 // Thanks to https://stackoverflow.com/a/34217927/1954789
                 window.location.href = parseRouteApi().redirect;
             }
         })
         .when('/home', {
-            templateUrl: template('page', 'home'),
-            controller: 'ctrl_home'
+            template: '<x-page-home></x-page-home>'
         }).when('/folder/:patient_id/:page?/:subtype?/:subid?/:mode?', {
             templateUrl: template('folder'),
             controller: 'ctrl_folder',
