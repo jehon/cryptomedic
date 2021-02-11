@@ -181,7 +181,7 @@ test-unit: dependencies-node \
 
 .PHONY: test-e2e
 test-e2e: tmp/e2e/.tested
-tmp/e2e/.tested: www/build/index.html tests/e2e/**
+tmp/e2e/.tested: www/build/index.html $(call recursive-dependencies,tests/e2e,tmp/e2e/.tested) \
 	$(call itself,data-reset)
 	rm -fr tmp/e2e
 	npm run --silent test-e2e
