@@ -183,8 +183,9 @@ test-unit: dependencies-node \
 test-e2e: tmp/e2e/.tested
 tmp/e2e/.tested: www/build/index.html tests/e2e/**
 	$(call itself,data-reset)
+	rm -fr tmp/e2e
 	npm run --silent test-e2e
-	touch tmp/e2e/.tested
+	touch $@
 
 .PHONY: test-style
 test-style: tmp/styles.json
