@@ -92,13 +92,12 @@ module.exports = {
             }
             // this.sync();
             this.myClick('#menu_home');
-            this.waitForElementVisible('input[ng-model=\'entryyear\']');
-            this.clearValue('input[ng-model=\'entryyear\']');
-            this.setValue('input[ng-model=\'entryyear\']', entryyear);
-            this.clearValue('input[ng-model=\'entryorder\']');
-            this.setValue('input[ng-model=\'entryorder\']', entryorder);
-            this.waitForElementVisible('[ng-click=\'checkReference()\']');
-            this.myClick('[ng-click=\'checkReference()\']');
+            this.waitForElementVisible('x-patient-by-reference');
+
+            this.myComponentExecute('x-patient-by-reference >>> [name="entryyear"]', function (v) { this.value = v; }, [entryyear]);
+            this.myComponentExecute('x-patient-by-reference >>> [name="entryorder"]', function (v) { this.value = v; }, [entryorder]);
+            this.myComponentExecute('x-patient-by-reference >>> [action="query"]', function () { this.click(); }, []);
+
             this.waitForElementVisible('#Patient_entryyear');
             this.assert.containsText('#Patient_entryyear', entryyear);
             this.waitForElementVisible('#Patient_entryorder');

@@ -27,38 +27,6 @@ export default class CryptomedicDataService extends XRequestor {
             });
     }
 
-    checkReference(year, order) {
-        return this.request({ url: 'reference/' + year + '/' + order })
-            .then(response => {
-                if (response.ok) {
-                    let f = new Folder(response.asJson.folder);
-                    patientFolderCache.set(response.asJson.id, f);
-                    return response.asJson;
-                }
-                if (response.status == 404) {
-                    return false;
-                }
-                this.showFailure(response);
-            });
-    }
-
-    createReference(year, order) {
-        setCurrentFolder();
-
-        return this.requestAndFilter({
-            url: 'reference', method: 'POST', data: {
-                entryyear: year,
-                entryorder: order
-            }
-        })
-            .then(response => {
-                let f = new Folder(response.asJson.folder);
-                patientFolderCache.set(response.asJson.id, f);
-                setCurrentFolder(f);
-                return response.asJson;
-            });
-    }
-
     getFolder(id) {
         setCurrentFolder();
 
