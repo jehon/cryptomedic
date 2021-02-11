@@ -4,17 +4,8 @@ var nb = 0;
 module.exports = {
     'modify a Patient': function (client) {
         client.page.cryptomedic().authenticate('murshed');
+        client.page.cryptomedic().goPatient(2001, 4); // id = 7
 
-        // Select file (id: 7)
-        client.myClick('#menu_home');
-        client.waitForElementVisible('input[ng-model="entryyear"]');
-        client.clearValue('input[ng-model="entryyear"]');
-        client.setValue('input[ng-model="entryyear"]', 2001);
-        client.clearValue('input[ng-model="entryorder"]');
-        client.setValue('input[ng-model="entryorder"]', 4);
-        client.myClick('[ng-click="checkReference()"]');
-
-        client.waitForElementPresent('#Patient_Name');
         client.assert.containsText('#Patient_Name', 'mozahar ahamed');
     },
 

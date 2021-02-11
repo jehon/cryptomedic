@@ -51,6 +51,15 @@ export function parseRouteApi() {
 }
 
 /**
+ * @param {number} folderId - the folder to display
+ * @param {boolean} edit - whether the page is in edit mode or not
+ * @returns {string} the route
+ */
+export function getRouteToFolderPatient(folderId, edit = false) {
+    return '/folder/' + folderId + (edit ? '/edit' : '');
+}
+
+/**
  * @param {FolderPage} folderPage - the file to display
  * @returns {string} the route
  */
