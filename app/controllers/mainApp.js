@@ -51,6 +51,7 @@ import '../elements/x-file-bill-summary.js';
 
 import '../elements/widgets/file/x-fff-age.js';
 import '../elements/render/x-group-panel.js';
+import '../elements/render/x-label.js';
 
 let mainApp = angular.module('app_main', ['ngRoute'])
     // .config(['$compileProvider', function ($compileProvider) {

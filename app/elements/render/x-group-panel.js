@@ -1,4 +1,5 @@
 
+import { spacing } from '../../config.js';
 import { createElementWithTag, defineCustomElement } from '../../js/custom-element.js';
 
 /**
@@ -19,11 +20,12 @@ export default class XGroupPanel extends HTMLElement {
     }
 
     fieldset {
+        /* Horizontal Flex */
         display: flex;
         height: 100%;
 
         margin: 0px;
-        padding: 10px;
+        padding: ${spacing.element};
 
         border: solid 2px #002060;
         border-radius: 10px;
@@ -43,17 +45,36 @@ export default class XGroupPanel extends HTMLElement {
     ::slotted([slot=versal]) {
         background-color: white;
         flex-grow: 0;
+        margin: ${spacing.text};
     }
 
     div#content {
         flex-grow: 1;
     }
 
-    ::slotted(:not([slot]):nth-child(odd):not([white])) {
+    slot:not([name]) {
+        display: flex;
+        flex-direction: column;
+        margin: ${spacing.element};
+
+        height: 100%;
+    }
+
+    ::slotted(:not([slot])) {
+        flex-grow: 0;
+    }
+
+    ::slotted(hr:not([slot])) {
+        flex-grow: 1000;
+        border: none;
+        background-color: none;
+    }
+
+    ::slotted(:not(hr):not([slot]):nth-child(odd):not([white])) {
         background-color: #f5f5f5;
     }
 
-    ::slotted(:not([slot]):nth-child(even):not([white])) {
+    ::slotted(:not(hr):not([slot]):nth-child(even):not([white])) {
         background-color: lightgray;
     }
 
