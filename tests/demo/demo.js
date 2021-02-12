@@ -40,17 +40,19 @@ export default class XxTest extends HTMLElement {
         background-color: gray;
     }
 
+/*
     #code {
         font-size: 8px;
         padding-top: 10px;
-    }`
+    }
+*/
+`
             ),
             createElementWithTag('h2', {}, 'title'),
-            createElementWithTag('div', { id: 'content' }, [
+            this._shadowMaxContainer = createElementWithTag('div', { id: 'content' }, [
                 createElementWithTag('slot'),
             ]),
-            this._code = createElementWithTag('div', { id: 'code' })
-
+            // this._code = createElementWithTag('div', { id: 'code' }, 'code')
         );
 
         this.innerHTML = this.innerHTML.trim();

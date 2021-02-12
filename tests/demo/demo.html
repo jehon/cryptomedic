@@ -59,8 +59,9 @@
 
     <div>
         <h2>Menu</h2>
-        <a href='../index.html'>Go back to index</a>
-        <a href='#'>Reset filters</a>
+        <a href='../index.html'>Go back to index</a><br>
+        <a href='#'>Reset filters</a><br>
+        <a href='xgrouppanel.html'>x-group-panel</a><br>
     </div>
 
     <xx-test title='render'></xx-test>
@@ -93,8 +94,17 @@
     </xx-test>
     <xx-test>
         <x-group-panel title='my title'>
+            <div>test dark</div>
             <div>test light</div>
             <div>test dark</div>
+        </x-group-panel>
+    </xx-test>
+    <xx-test>
+        <x-group-panel title='my title'>
+            <div slot='versal'>Versal</div>
+            <div>test dark</div>
+            <div>test light</div>
+            <hr />
             <div>test light</div>
         </x-group-panel>
     </xx-test>

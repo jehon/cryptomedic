@@ -1,0 +1,91 @@
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Cryptomedic demo page</title>
+</head>
+
+<body>
+
+    <link rel="stylesheet" type="text/css" href="../../node_modules/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../app/css/application.css">
+    <style>
+        body {
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+
+        }
+
+        body>* {
+            --box-width: 300px;
+            --margin-width: 10px;
+
+            box-sizing: border-box;
+            width: var(--box-width);
+            margin: 10px;
+            border: dashed 1px blue;
+        }
+
+        body>h1 {
+            background-color: lightgray;
+        }
+
+        [invisible] {
+            display: none;
+        }
+
+        [double] {
+            width: calc(var(--box-width) * 2 + var(--margin-width) * 2);
+        }
+
+        [highlight] {
+            background-color: gray;
+            border: 1px solid green;
+        }
+    </style>
+    <script type='module' src='../../app/elements/x-input-date.js'></script>
+
+    <script type='module' src='../../app/elements/widgets/folder/x-ff-next-appointment.js'></script>
+    <script type='module' src='../../app/elements/widgets/folder/x-ff-patient-related.js'></script>
+    <script type='module' src='../../app/elements/widgets/folder/x-graphic-bmi.js'></script>
+    <script type='module' src='../../app/elements/widgets/folder/x-graphic-height.js'></script>
+    <script type='module' src='../../app/elements/widgets/folder/x-graphic-weight.js'></script>
+    <script type='module' src='../../app/elements/widgets/folder/x-graphic-wh.js'></script>
+
+    <script type='module' src='../../app/elements/widgets/file/x-fff-field.js'></script>
+
+    <script type='module' src='../../app/elements/pages/x-page-login.js'></script>
+
+    <div>
+        <h2>Menu</h2>
+        <a href='../index.html'>Go back to index</a><br>
+    </div>
+
+    <!-- <xx-test>
+        <x-group-panel title='my title'>
+            <div>test dark</div>
+            <div>test light</div>
+            <div>test dark</div>
+        </x-group-panel>
+    </xx-test> -->
+    <!-- <xx-test>
+        <x-group-panel title='my title'>
+            <div slot='versal'>Versal</div>
+            <div>test dark</div>
+            <div>test light</div>
+            <hr />
+            <div>test light</div>
+        </x-group-panel>
+    </xx-test> -->
+    <xx-test label='by div' style='height: 300px'>
+        <div style='background-color: yellow;'>
+            <div style='background-color: lightblue; padding: 10px'>Resizable</div>
+            <div style='background-color: lightgreen'>Bottom</div>
+        </div>
+    </xx-test>
+
+    <script src='./demo.js' type='module'></script>
+</body>
+
+</html>
