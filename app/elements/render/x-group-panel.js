@@ -19,32 +19,24 @@ export default class XGroupPanel extends HTMLElement {
     }
 
     fieldset {
-        border-radius: 10px;
-        padding: 10px;
-        border-style: solid;
-        border-width: 2px;
-        border-color: #002060;
-        margin: 0px;
-
         display: flex;
+        height: 100%;
+
+        margin: 0px;
+        padding: 10px;
+
+        border: solid 2px #002060;
+        border-radius: 10px;
     }
 
     fieldset > legend {
-        font-size: 120%;
-        color: #004a94;
+        margin-bottom: 0;
         padding-left: 10px;
         padding-right: 10px;
-        width: auto;
-        margin-bottom: 0;
 
-
-        display: block;
-        line-height: inherit;
-
+        font-size: 120%;
+        color: #004a94;
         border: 0;
-        border-bottom-color: currentcolor;
-        border-bottom-style: none;
-        border-bottom-width: 0px;
         border-bottom: 1px solid #e5e5e5;
     }
 
