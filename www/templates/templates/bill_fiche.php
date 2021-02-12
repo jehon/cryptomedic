@@ -103,12 +103,9 @@ EOD;
         </x-fff-field>
       </x-group-panel>
       <x-group-panel title='Received payment' ng-if='!currentFile().id'>
-        <tr>
-          <td>Payment already recieved</td>
-          <td id='first_payment'>
-            <input type='number' id='first_payment' ng-model='currentFile().first_payment'>
-          </td>
-        </tr>
+        <x-label label='Payment already received'>
+          <input type='number' id='first_payment' ng-model='currentFile().first_payment'>
+        </x-label>
         <!-- TODO: migrate to x-fff-field
         <x-fff-field label='Payment already recieved' ng-if='!currentFile().id'>
           <div id='first_payment'>
