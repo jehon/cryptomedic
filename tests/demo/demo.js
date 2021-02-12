@@ -1,5 +1,5 @@
 
-import { createElementWithTag, defineCustomElement } from '../../app/js/custom-element.js';
+import { createElementWithTag, defineCustomElement, resizeChildrenBasedOn } from '../../app/js/custom-element.js';
 
 // Must be imported globally
 import '../../node_modules/css-inherit/css-inherit.js';
@@ -31,7 +31,6 @@ export default class XxTest extends HTMLElement {
 
     #content {
         border: dashed 1px gray;
-        height: 250px !important;
     }
 
     ::slotted(h1) {
@@ -91,6 +90,8 @@ export default class XxTest extends HTMLElement {
 
         // window.addEventListener('hashchange', () => this.onHashChange());
         this.onHashChange();
+
+        resizeChildrenBasedOn(this);
     }
 
     onHashChange() {
