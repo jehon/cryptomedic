@@ -27,6 +27,10 @@
             border: dashed 1px blue;
         }
 
+        xx-test {
+            height: 300px;
+        }
+
         body>h1 {
             background-color: lightgray;
         }
@@ -57,12 +61,12 @@
 
     <script type='module' src='../../app/elements/pages/x-page-login.js'></script>
 
-    <div>
-        <h2>Menu</h2>
-        <a href='../index.html'>Go back to index</a><br>
-        <a href='#'>Reset filters</a><br>
-        <a href='xgrouppanel.html'>x-group-panel</a><br>
-    </div>
+    <xx-test title='Menu'>
+        <div><a href='../index.html'>Go back to index</a></div>
+        <div><a href='#'>Reset filters</a></div>
+        <div><a href='xgrouppanel.html'>x-group-panel</a></div>
+        <hr>
+    </xx-test>
 
     <xx-test title='render'></xx-test>
     <xx-test>
