@@ -108,6 +108,7 @@ function enrichObject(el, attributes = {}, inner = [], js = (_el) => { }) {
  * @returns {function(void):void} to stop watching
  */
 export function resizeChildrenBasedOn(base) {
+    // console.groupCollapsed('Initialize resize', base);
     /**
      * @param {string} msg to debug
      * @param {HTMLElement} el to be meseared
@@ -128,17 +129,34 @@ export function resizeChildrenBasedOn(base) {
     // scrollHeight:
     // getBoundingClientRect(): content + padding + border - https://developer.mozilla.org/en-US/docs/Web/API/Element/getBoundingClientRect
 
-    let resizable = /** @type {HTMLElement} */ (base.firstChild);
-    if (base.children.length > 1) {
-        resizable = /** @type {HTMLElement} */  (Array.from(base.children).filter(e => e.hasAttribute('full'))[0]);
+    let resizable;
+    const listing = /** @type {Array<HTMLElement>} */(Array.from(base.children))
+        .filter(e => e instanceof HTMLElement);
+
+    if (listing.length == 1) {
+        resizable = listing[0];
+    } else {
+        const fullListing = listing.filter(e => e.hasAttribute('full'));
+        if (fullListing.length > 0) {
+            resizable = fullListing[0];
+            // TODO: hr is not workin
+            // } else {
+            //     const hrListing = listing.filter(e => e.tagName == 'HR');
+            //     if (hrListing.length > 0) {
+            //         resizable = hrListing[0];
+            //     }
+        }
     }
 
     if (!resizable) {
+        // console.error('No resizable found for ', base);
         return;
     }
+    // console.log('resizable', resizable, resizable.style);
     resizable.style.boxSizing = 'border-box';
 
     const resizeObserver = new ResizeObserver(_entries => {
+        // console.groupCollapsed('resizer', base);
         const baseHeight = h('base', base, true);
         const shadowHeight = Array.from(base.shadowRoot.children).reduce(
             (acc, el) => acc + h('shadow', el),
@@ -149,7 +167,7 @@ export function resizeChildrenBasedOn(base) {
 
         const resizableFinalHeight = resizableInitHeight + availableSpace;
 
-        // console.log({
+        // console.log('resize', {
         //     base,
         //     baseHeight,
         //     shadowHeight,
@@ -160,10 +178,12 @@ export function resizeChildrenBasedOn(base) {
         // });
 
         resizable.style.height = resizableFinalHeight + 'px';
-        //        resizeObserver.disconnect();
+        // console.groupEnd();
+        // resizeObserver.disconnect();
     });
 
     resizeObserver.observe(base);
+    // console.groupEnd();
 
     return () => resizeObserver.disconnect();
 }

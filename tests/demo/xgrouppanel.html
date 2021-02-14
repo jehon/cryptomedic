@@ -67,27 +67,34 @@
         <hr />
     </xx-test>
 
-    <!-- <xx-test>
-        <x-group-panel title='my title'>
-            <div>test dark</div>
-            <div>test light</div>
-            <div>test dark</div>
-        </x-group-panel>
-    </xx-test> -->
-    <!-- <xx-test>
-        <x-group-panel title='my title'>
-            <div slot='versal'>Versal</div>
-            <div>test dark</div>
-            <div>test light</div>
-            <hr />
-            <div>test light</div>
-        </x-group-panel>
-    </xx-test> -->
-    <xx-test label='by div' style='height: 300px'>
+    <xx-test title='no x-group-panel - full'>
         <div style='background-color: yellow;'>
             <div style='background-color: lightblue; padding: 10px'>Resizable</div>
             <div style='background-color: lightgreen'>Bottom</div>
         </div>
+    </xx-test>
+    <xx-test title='x-group-panel - not full'>
+        <x-group-panel title='my title'>
+            <div>test dark</div>
+            <div>test light</div>
+            <div>test dark</div>
+        </x-group-panel>
+    </xx-test>
+    <xx-test>
+        <x-group-panel full title='resize'>
+            <div>test dark</div>
+            <div full>test light</div>
+            <div>test dark</div>
+        </x-group-panel>
+    </xx-test>
+    <xx-test>
+        <x-group-panel full title='my title'>
+            <div slot='versal'>Versal</div>
+            <div>test dark</div>
+            <div full>test light</div>
+            <hr />
+            <div>test light</div>
+        </x-group-panel>
     </xx-test>
 
     <script src='./demo.js' type='module'></script>

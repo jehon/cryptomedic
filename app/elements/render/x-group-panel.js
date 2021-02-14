@@ -1,13 +1,13 @@
 
 import { spacing } from '../../config.js';
-import { createElementWithTag, defineCustomElement } from '../../js/custom-element.js';
+import { createElementWithTag, defineCustomElement, resizeChildrenBasedOn } from '../../js/custom-element.js';
 
 /**
  * Slot[]: content
  */
 export default class XGroupPanel extends HTMLElement {
     static get observedAttributes() {
-        return ['title'];
+        return ['title', 'full'];
     }
 
     constructor() {
@@ -22,7 +22,6 @@ export default class XGroupPanel extends HTMLElement {
     fieldset {
         /* Horizontal Flex */
         display: flex;
-        height: 100%;
 
         margin: 0px;
         padding: ${spacing.element};
@@ -98,6 +97,13 @@ export default class XGroupPanel extends HTMLElement {
             case 'title':
                 this._legend.innerHTML = newValue;
                 break;
+            case 'full':
+                if (this._resizeCallbackCancel) {
+                    this._resizeCallbackCancel();
+                }
+                if (this.hasAttribute('full')) {
+                    this._resizeCallbackCancel = resizeChildrenBasedOn(this);
+                }
         }
     }
 
