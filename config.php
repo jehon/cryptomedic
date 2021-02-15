@@ -21,7 +21,6 @@ $myconfig = [
   ],
   'environment' => "production",
   'debug' => false,
-  'bypass' => false,
   'randomString' => str_pad("random script ", 256, "abcdefghijklmnopqrstuvwxyz"),
   'folders' => [
     # A pointer to this folder
