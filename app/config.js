@@ -31,6 +31,7 @@ export const messages = {
 };
 
 export const actions = {
+    move: 'move',
     query: 'query',
     commit: 'commit',
     // selected: 'selected',
@@ -48,6 +49,9 @@ export const colors = {
     // TODO: use this in button.js
     actions: {
         query: {
+            class: 'info'
+        },
+        move: {
             class: 'info'
         },
         commit: {
