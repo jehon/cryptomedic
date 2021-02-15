@@ -5,16 +5,16 @@ require_once("RouteReferenceTestCase.php");
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class AuthTest extends RouteReferenceTestCase {
-	public function testsLogin() {
-	    $json = $this->myRunAssertQuery(
-	        $this->getNewRequestOptionsBuilder()
-    			->withReference()
-	         	->setUrl("auth/mylogin")
+    public function testsLogin() {
+        $json = $this->myRunAssertQuery(
+            $this->getNewRequestOptionsBuilder()
+                ->withReference()
+                ->setUrl("auth/mylogin")
                 ->setMethod("POST")
                 ->addParam("username", "murshed")
-                ->addParam("password", "anything")
-	        	->asUnauthenticated()
-	    );
+                ->addParam("password", "p")
+                ->asUnauthenticated()
+        );
 
         $this->assertArrayHasKey('prices', $json);
         $this->assertEquals(3, count($json['prices']));
@@ -27,8 +27,8 @@ class AuthTest extends RouteReferenceTestCase {
         $this->assertArrayHasKey('codes', $json);
 
         $this->assertArrayHasKey('lists', $json);
-		$this->assertArrayHasKey('Examiner', $json['lists']);
-		$this->assertContains('Ershad', $json['lists']['Examiner']);
+        $this->assertArrayHasKey('Examiner', $json['lists']);
+        $this->assertContains('Ershad', $json['lists']['Examiner']);
         $this->assertContains('Morshedul Alam', $json['lists']['Examiner']);
-	}
+    }
 }

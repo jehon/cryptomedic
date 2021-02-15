@@ -14,7 +14,7 @@ module.exports = {
                 throw new Error('Cryptomedic: Authenticate expect parameter 1 to be the login');
             }
 
-            var password = 'this will not be read by the server in tests';
+            var password = 'p'; // See password.sql
             this.api.init();
             this.waitForElementVisible('body');
             this.assert.title('Cryptomedic');

@@ -117,16 +117,6 @@ class AuthController extends Controller {
     public function postMylogin() {
         $credentials = Request::only('username', 'password');
         global $myconfig;
-        if ($myconfig['bypass']) {
-            error_log("environment bypass authentication for " . $credentials['username']);
-            $user = User::where("username", $credentials['username'])->first();
-            if (!$user) {
-                return abort(404, "Invalid test credentials");
-            }
-            Auth::login($user);
-            return $this->getSettings();
-        }
-
         if (Auth::attempt($credentials)) {
             return $this->getSettings();
         }

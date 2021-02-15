@@ -10,14 +10,12 @@ if ($_SERVER && array_key_exists('HTTP_HOST', $_SERVER)) {
     $serverName = explode(":", $_SERVER['HTTP_HOST'])[0];
     if ($serverName == "localhost") {
         $myconfig['environment'] = 'dev';
-        $myconfig['bypass'] = true;
     }
 }
 
 if (array_key_exists("APP_ENV", $_ENV) && $_ENV["APP_ENV"] == "testing") {
     // Phpunit testing
     $myconfig['environment'] = 'phpunit';
-    $myconfig['bypass'] = true;    
 }
 
 // if ($myconfig['environment'] == 'dev') {
