@@ -16,7 +16,7 @@ export default class XRestricted extends HTMLElement {
         super();
         /**@type {function} */
         this.unreg = null;
-        this.style.flexFlow = 'column';
+        // this.style.flexFlow = 'column';
     }
 
     connectedCallback() {
