@@ -26,7 +26,7 @@ describe(fn(import.meta.url), function () {
 
         it('should show on restricted-by change', function () {
             el.setAttribute('restricted-by', 'application.open');
-            expect(el.style.display).toBe('inline-block');
+            expect(el.style.display).toBe('inline-flex');
         });
     });
 
@@ -41,14 +41,14 @@ describe(fn(import.meta.url), function () {
 
         it('should show on restricted-by change', function () {
             el.setAttribute('restricted-by', 'application.open');
-            expect(el.style.display).toBe('inline-block');
+            expect(el.style.display).toBe('inline-flex');
         });
 
         it('should show when enabled by session', function () {
             const nsession = deepCopy(refSession);
             nsession.authorized.push('anything.forbidden');
             setSession(nsession);
-            expect(el.style.display).toBe('inline-block');
+            expect(el.style.display).toBe('inline-flex');
         });
     });
 
@@ -58,7 +58,7 @@ describe(fn(import.meta.url), function () {
         });
 
         it('should be visible', function () {
-            expect(el.style.display).toBe('inline-block');
+            expect(el.style.display).toBe('inline-flex');
         });
 
         it('should hide on restricted-by change', function () {
@@ -86,14 +86,14 @@ describe(fn(import.meta.url), function () {
 
         it('should show on restricted-by change', function () {
             el.setAttribute('restricted-by', 'anything.else');
-            expect(el.style.display).toBe('inline-block');
+            expect(el.style.display).toBe('inline-flex');
         });
 
         it('should show when disabled by session', function () {
             const nsession = deepCopy(refSession);
             nsession.authorized = refSession.authorized.filter(v => v != 'application.open');
             setSession(nsession);
-            expect(el.style.display).toBe('inline-block');
+            expect(el.style.display).toBe('inline-flex');
         });
     });
 });
