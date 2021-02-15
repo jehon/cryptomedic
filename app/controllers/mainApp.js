@@ -13,7 +13,7 @@ import ctrl_reports from './ctrl_reports.js';
 import ctrl_search from './ctrl_search.js';
 import ctrl_users from './ctrl_users.js';
 
-import { parseRouteLogin, parseRouteApi } from '../js/router.js';
+import { parseRouteLogin } from '../js/router.js';
 import template from '../js/template.js';
 import goThere from '../js/goThere.js';
 
@@ -102,7 +102,7 @@ import XPageHome from '../elements/pages/x-page-home.js';
 
 // template: function (_params) {
 //     // Thanks to https://stackoverflow.com/a/34217927/1954789
-//     window.location.href = parseRouteApi().redirect;
+//     window.location.href = redirect;
 // }
 
 
@@ -110,13 +110,6 @@ mainApp.config(['$routeProvider', function ($routeProvider) {
     $routeProvider
         .when('/login/:redirect*?', {
             template: `<x-page-login redirect=${parseRouteLogin().redirect}></x-page-login>`
-        })
-        .when('/redirect/api/:redirect*?', {
-            template: function (params) {
-                console.log(params, parseRouteApi().redirect);
-                // Thanks to https://stackoverflow.com/a/34217927/1954789
-                window.location.href = parseRouteApi().redirect;
-            }
         })
         .when('/home', {
             template: '<x-page-home></x-page-home>'

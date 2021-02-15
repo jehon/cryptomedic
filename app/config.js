@@ -42,7 +42,8 @@ export const actions = {
 
 export const icons = {
     error: '/static/img/error.svg',
-    logout: '/static/img/logout.gif'
+    logout: '/static/img/logout.gif',
+    patient: '/static/img/patient.gif'
 };
 
 export const colors = {

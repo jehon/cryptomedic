@@ -2,7 +2,6 @@
 import * as router from '../../app/js/router.js';
 
 import { fn, RefFolder1 } from './athelpers.js';
-import { API_VERSION } from '../../app/config.js';
 
 import Folder from '../../app/models/Folder.js';
 import { loadReference } from './athelpers.js';
@@ -38,11 +37,6 @@ describe(fn(import.meta.url), function () {
     it('should route to login', function () {
         router.routeToLogin('test');
         expect(router.getCurrentRoute()).toBe('/login/test');
-    });
-
-    it('should parse route to api', function () {
-        router.setRoute('/redirect/api/brol/test?1=2');
-        expect(router.parseRouteApi().redirect).toBe(`/api/${API_VERSION}/brol/test?1=2`);
     });
 
     describe('folder routes', function () {
