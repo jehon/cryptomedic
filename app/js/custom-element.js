@@ -76,6 +76,9 @@ function enrichObject(el, attributes = {}, inner = [], js = (_el) => { }) {
 
     for (const k in inner) {
         const v = inner[k];
+        if (v == null) {
+            continue;
+        }
         if (typeof (v) == 'string') {
             el.insertAdjacentText('beforeend', v);
         } else {
