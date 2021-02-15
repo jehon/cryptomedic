@@ -54,7 +54,7 @@ export default class XButton extends HTMLElement {
 
             this[button] = createElementWithTag('button', {}, [
                 createElementWithTag('img'),
-                createElementWithTag('slot')
+                this._slot = createElementWithTag('slot')
             ], element => element.addEventListener('click', () => {
                 const toRoute = this.getAttribute('to-route');
                 if (toRoute) {
@@ -99,12 +99,32 @@ export default class XButton extends HTMLElement {
             action = actions.query;
         } else if (!(action in actions)) {
             console.error('unknown action: ', action);
-            action = actions.query;
+            action = actions.move;
         }
         const cls = colors.actions[action].class;
 
         // TODO: use config.js colors
         this[button].classList.add(`btn-${cls}`);
+        switch (action) {
+            case actions.move:
+                this._slot.innerHTML = 'Go';
+                break;
+            case actions.query:
+                this._slot.innerHTML = 'Search';
+                break;
+            case actions.alternate:
+                this._slot.innerHTML = 'Alternate';
+                break;
+            case actions.cancel:
+                this._slot.innerHTML = 'Cancel';
+                break;
+            case actions.commit:
+                this._slot.innerHTML = 'Save';
+                break;
+            case actions.delete:
+                this._slot.innerHTML = 'Delete';
+                break;
+        }
     }
 }
 
