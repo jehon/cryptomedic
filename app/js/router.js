@@ -1,5 +1,4 @@
 
-import { API_VERSION } from '../config.js';
 import FolderPage from '../models/FolderPage.js';
 
 /**
@@ -45,17 +44,6 @@ export function routeToLogin(redirect = getCurrentRoute()) {
 export function parseRouteLogin() {
     return {
         redirect: getCurrentRoute().replace(/^(\/+login)+\/+/, '/')
-    };
-}
-
-/**
- * Used for logout and some advanced routes
- *
- * @returns {object} the route parsed
- */
-export function parseRouteApi() {
-    return {
-        redirect: '/api/' + API_VERSION + getCurrentRoute().replace(/^(\/+redirect\/api)+\/+/, '/')
     };
 }
 

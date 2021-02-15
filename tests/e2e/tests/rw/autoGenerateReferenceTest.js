@@ -4,8 +4,8 @@ module.exports = {
         client.page.cryptomedic().authenticate('murshed');
 
         client.myClick('#menu_home');
-        client.waitForElementVisible('#button_generate_reference');
-        client.myClick('#button_generate_reference');
+        client.waitForElementVisible('#autogenerate-reference x-button');
+        client.myClick('#autogenerate-reference x-button');
         client.waitForElementPresent('#Patient_Name');
 
         // Edit and save
