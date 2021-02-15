@@ -1,7 +1,7 @@
 
 import { spacing, icons, actions, colors } from '../../config.js';
 import { createElementWithTag, defineCustomElement } from '../../js/custom-element.js';
-import { setRoute } from '../../js/router.js';
+import { setLocation, setRoute } from '../../js/router.js';
 
 const button = Symbol('button');
 
@@ -12,6 +12,7 @@ const button = Symbol('button');
  * level: default / primary / success / info / warning / danger
  *     https://getbootstrap.com/docs/3.3/css/#buttons-options
  * to-route: the route where to go on click (if set)
+ * to-location: the new location path (if set)
  */
 export default class XButton extends HTMLElement {
     static get observedAttributes() {
@@ -59,6 +60,11 @@ export default class XButton extends HTMLElement {
                 const toRoute = this.getAttribute('to-route');
                 if (toRoute) {
                     setRoute(toRoute);
+                } else {
+                    const toLocation = this.getAttribute('to-location');
+                    if (toLocation) {
+                        setLocation(toLocation);
+                    }
                 }
             })));
 

@@ -3,6 +3,15 @@ import { API_VERSION } from '../config.js';
 import FolderPage from '../models/FolderPage.js';
 
 /**
+ * @param {string} pathname to be set
+ * @returns {string} the same hash
+ */
+export function setLocation(pathname) {
+    return document.location = pathname;
+}
+
+
+/**
  * @returns {string} the current route
  */
 export function getCurrentRoute() {
