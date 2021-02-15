@@ -1,5 +1,5 @@
 
-import { createElementWithTag, defineCustomElement, resizeChildrenBasedOn } from '../../app/js/custom-element.js';
+import { createElementWithTag, defineCustomElement } from '../../app/js/custom-element.js';
 
 // Must be imported globally
 import '../../node_modules/css-inherit/css-inherit.js';
@@ -25,32 +25,40 @@ export default class XxTest extends HTMLElement {
         this.shadowRoot.append(
             createElementWithTag('style', {}, `
     :host {
-        display: block;
-        max-height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    :host([menu]) {
+        background-color: lightgray;
+        color: gray;
     }
 
     #content {
         border: dashed 1px gray;
+        flex-grow: 1;
     }
 
-    ::slotted(h1) {
-        height: 100% !important;
-        width: 100%;
-        background-color: gray;
+    slot {
+        display: flex;
+        flex-grow: 1;
+        flex-direction: column;
+
+        border: dashed 1px gray;
     }
 
-/*
+    ::slotted(*) {
+        flex-grow: 1;
+    }
+
     #code {
         font-size: 8px;
         padding-top: 10px;
     }
-*/
 `
             ),
             createElementWithTag('h2', {}, 'title'),
-            this._shadowMaxContainer = createElementWithTag('div', { id: 'content' }, [
-                createElementWithTag('slot'),
-            ]),
+            createElementWithTag('slot'),
             // this._code = createElementWithTag('div', { id: 'code' }, 'code')
         );
 
@@ -90,8 +98,6 @@ export default class XxTest extends HTMLElement {
 
         // window.addEventListener('hashchange', () => this.onHashChange());
         this.onHashChange();
-
-        resizeChildrenBasedOn(this);
     }
 
     onHashChange() {
