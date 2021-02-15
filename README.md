@@ -28,6 +28,11 @@ sudo apt install docker-compose docker.io make wget nodejs
 | make clean | clean up generated files
 | make clean-hard | make clean + remove dependencies
 | make deploy | deploy the stack to the production server (env config necessary)
+| make data-reset | To reset the database and files
+
+Notes:
+- All passwords are reset to "p" (see passwords.sql)
+- Available users: thierry, jehon, murshed, readonly, ershad, shetou
 
 ## Other commands
 
@@ -35,11 +40,6 @@ sudo apt install docker-compose docker.io make wget nodejs
 |------------|----------------------
 | make deploy-test | simulate deploy the stack to the production server (env config necessary)
 | make database-backup | create a new base.sql for next run (usefull when creating new data)
-
-# Travis
-
-A build is automatically made on [travis-ci](http://www.travis-ci.com/jehon/cryptomedic).
-When the master branch success, it is automatically deployed to the production server.
 
 # Style
 
