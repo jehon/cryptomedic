@@ -1,13 +1,13 @@
 
 import { spacing } from '../../config.js';
-import { createElementWithTag, defineCustomElement, resizeChildrenBasedOn } from '../../js/custom-element.js';
+import { createElementWithTag, defineCustomElement } from '../../js/custom-element.js';
 
 /**
  * Slot[]: content
  */
 export default class XGroupPanel extends HTMLElement {
     static get observedAttributes() {
-        return ['title', 'full'];
+        return ['title'];
     }
 
     constructor() {
@@ -16,18 +16,21 @@ export default class XGroupPanel extends HTMLElement {
         this.shadowRoot.append(
             createElementWithTag('style', {}, `
     :host {
-        display: block;
+        /* Allow taking whole space */
+        display: flex;
+        flex-direction: column;
     }
 
     fieldset {
-        /* Horizontal Flex */
-        display: flex;
-
         margin: 0px;
         padding: ${spacing.element};
 
         border: solid 2px #002060;
         border-radius: 10px;
+
+        /* Horizontal Flex [versal - content ]*/
+        display: flex;
+        flex-grow: 1;
     }
 
     fieldset > legend {
@@ -41,17 +44,29 @@ export default class XGroupPanel extends HTMLElement {
         border-bottom: 1px solid #e5e5e5;
     }
 
+    /***************************
+     *
+     * Versal (left)
+     *
+     * TODO: align top the versal !
+     */
+
     ::slotted([slot=versal]) {
         background-color: white;
         flex-grow: 0;
         margin: ${spacing.text};
+        object-fit: contain;
     }
 
-    div#content {
-        flex-grow: 1;
-    }
+    /***************************
+     *
+     * Main content (right)
+     *
+     */
 
     slot:not([name]) {
+        flex-grow: 1;
+
         display: flex;
         flex-direction: column;
         margin: ${spacing.element};
@@ -59,36 +74,19 @@ export default class XGroupPanel extends HTMLElement {
         height: 100%;
     }
 
-    ::slotted(:not([slot])) {
-        flex-grow: 0;
-    }
-
-    ::slotted(hr:not([slot])) {
-        flex-grow: 1000;
-        border: none;
-        background-color: none;
-    }
-
-    ::slotted(:not(hr):not([slot]):nth-child(odd):not([white])) {
+    ::slotted(:not(hr):not([slot]):not([white]):nth-child(odd)) {
         background-color: #f5f5f5;
     }
 
-    ::slotted(:not(hr):not([slot]):nth-child(even):not([white])) {
+    ::slotted(:not(hr):not([slot]):not([white]):nth-child(even)) {
         background-color: lightgray;
-    }
-
-    ::slotted(div:not([slot]):not([white])) {
-        font-weight: bold;
-        text-align: center;
     }
 `),
 
             createElementWithTag('fieldset', {}, [
                 this._legend = createElementWithTag('legend'),
                 createElementWithTag('slot', { name: 'versal' }),
-                createElementWithTag('div', { id: 'content' }, [
-                    createElementWithTag('slot')
-                ])
+                createElementWithTag('slot')
             ]));
     }
 
@@ -97,13 +95,6 @@ export default class XGroupPanel extends HTMLElement {
             case 'title':
                 this._legend.innerHTML = newValue;
                 break;
-            case 'full':
-                if (this._resizeCallbackCancel) {
-                    this._resizeCallbackCancel();
-                }
-                if (this.hasAttribute('full')) {
-                    this._resizeCallbackCancel = resizeChildrenBasedOn(this);
-                }
         }
     }
 
