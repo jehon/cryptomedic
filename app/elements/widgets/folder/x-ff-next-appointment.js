@@ -8,6 +8,8 @@ import '../../render/x-group-panel.js';
 import '../file/x-fff-field.js';
 import '../../render/x-message.js';
 import '../../render/x-button.js';
+import '../../render/x-buttons.js';
+import { actions, messages } from '../../../config.js';
 
 
 // TODO: better layout for without appointment
@@ -17,6 +19,7 @@ export default class XFfNextAppointment extends XWithFolder {
         super();
         this.attachShadow({ mode: 'open' });
         this.shadowRoot.innerHTML = `
+            <css-inherit></css-inherit>
             <x-group-panel class='related' title='Next Appointment'>
                 <div slot='versal'>
                     <img src="/static/img/consultOfDay.gif" style='height: 60px'>
@@ -25,8 +28,10 @@ export default class XFfNextAppointment extends XWithFolder {
                     Next appointment: <span id='appointment'></span>
                 </div>
                 <div id='withoutAppointment'>
-                    <x-message level='warning'>No appointment planned</x-message>
-                    <x-button id='add-appointment' action='commit'>Add an appointment</x-button>
+                    <x-message level='${messages.warning}'>No appointment planned</x-message>
+                    <x-buttons>
+                        <x-button id='add-appointment' action='${actions.commit}'>Add an appointment</x-button>
+                    </x-buttons>
                 </div>
             </x-group-panel>`;
 
