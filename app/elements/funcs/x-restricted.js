@@ -2,6 +2,7 @@
 import { onSession, getAuthorized } from '../../js/session.js';
 
 // TODO: adapt to work with x-button
+// TODO: include flex here!
 
 /**
  * Slot[]: content
@@ -15,6 +16,7 @@ export default class XRestricted extends HTMLElement {
         super();
         /**@type {function} */
         this.unreg = null;
+        this.style.flexFlow = 'column';
     }
 
     connectedCallback() {
@@ -41,7 +43,7 @@ export default class XRestricted extends HTMLElement {
     }
 
     getDisplayMode() {
-        return 'inline-block';
+        return 'inline-flex';
     }
 
     adapt() {
