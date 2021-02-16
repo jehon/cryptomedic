@@ -21,12 +21,12 @@ describe(fn(import.meta.url), function () {
 
     describe('without restricted-by', function () {
         it('should be hidden', function () {
-            expect(el.style.display).toBe('none');
+            expect(el.hasAttribute('authorized')).toBeFalse();
         });
 
         it('should show on restricted-by change', function () {
             el.setAttribute('restricted-by', 'application.open');
-            expect(el.style.display).toBe('inline-flex');
+            expect(el.hasAttribute('authorized')).toBeTrue();
         });
     });
 
@@ -36,19 +36,19 @@ describe(fn(import.meta.url), function () {
         });
 
         it('should be hidden', function () {
-            expect(el.style.display).toBe('none');
+            expect(el.hasAttribute('authorized')).toBeFalse();
         });
 
         it('should show on restricted-by change', function () {
             el.setAttribute('restricted-by', 'application.open');
-            expect(el.style.display).toBe('inline-flex');
+            expect(el.hasAttribute('authorized')).toBeTrue();
         });
 
         it('should show when enabled by session', function () {
             const nsession = deepCopy(refSession);
             nsession.authorized.push('anything.forbidden');
             setSession(nsession);
-            expect(el.style.display).toBe('inline-flex');
+            expect(el.hasAttribute('authorized')).toBeTrue();
         });
     });
 
@@ -58,19 +58,19 @@ describe(fn(import.meta.url), function () {
         });
 
         it('should be visible', function () {
-            expect(el.style.display).toBe('inline-flex');
+            expect(el.hasAttribute('authorized')).toBeTrue();
         });
 
         it('should hide on restricted-by change', function () {
             el.setAttribute('restricted-by', 'anything.else');
-            expect(el.style.display).toBe('none');
+            expect(el.hasAttribute('authorized')).toBeFalse();
         });
 
         it('should hide when disabled by session', function () {
             const nsession = deepCopy(refSession);
             nsession.authorized = refSession.authorized.filter(v => v != 'application.open');
             setSession(nsession);
-            expect(el.style.display).toBe('none');
+            expect(el.hasAttribute('authorized')).toBeFalse();
         });
     });
 
@@ -81,19 +81,19 @@ describe(fn(import.meta.url), function () {
         });
 
         it('should be hidden', function () {
-            expect(el.style.display).toBe('none');
+            expect(el.hasAttribute('authorized')).toBeFalse();
         });
 
         it('should show on restricted-by change', function () {
             el.setAttribute('restricted-by', 'anything.else');
-            expect(el.style.display).toBe('inline-flex');
+            expect(el.hasAttribute('authorized')).toBeTrue();
         });
 
         it('should show when disabled by session', function () {
             const nsession = deepCopy(refSession);
             nsession.authorized = refSession.authorized.filter(v => v != 'application.open');
             setSession(nsession);
-            expect(el.style.display).toBe('inline-flex');
+            expect(el.hasAttribute('authorized')).toBeTrue();
         });
     });
 });
