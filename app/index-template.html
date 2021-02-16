@@ -67,12 +67,8 @@
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header" style='width: 100%;'>
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#menuMain">
-                    <span class="sr-only">Toggle navigation</span>
-                </button>
                 <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a id='menu_home' href="#/home" class="navbar-link">
+                    <li><a id='menu_home' href="#/home" class="navbar-link">
                             <x-restricted restricted-by='application.open'>
                                 <img src="../static/img/home.gif" height="20px" />
                                 Home
@@ -94,32 +90,18 @@
                     <li>
                         <x-login-status></x-login-status>
                     </li>
-                    <li class="dropdown">
-                        <a id='menu_more' href="javascript:" class="dropdown-toggle" data-toggle="dropdown"
-                            role="button" aria-haspopup="true" aria-expanded="false">
-                            More<span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a id='menu_users' href='#/users'>
-                                    <x-restricted restricted-by='users.manage'>
-                                        <img src="../static/img/users.png" height="20px" />
-                                        Users
-                                    </x-restricted>
-                                </a></li>
-                            <li><a id='menu_prices' href="#/prices" class="navbar-link">
-                                    <x-restricted restricted-by='price.edit'>
-                                        <img src="../static/img/prices.png" height="20px" />
-                                        Prices
-                                    </x-restricted>
-                                </a></li>
-                            <li><a id='menu_reports' href="#/reports" class="navbar-link">
-                                    <x-restricted restricted-by='reports.execute'>
-                                        <img src="../static/img/reports.gif" height="20px" />
-                                        Reports
-                                    </x-restricted>
-                                </a></li>
-                        </ul>
-                    </li>
+                    <li><a id='menu_users' href='#/users'>
+                            <x-restricted restricted-by='users.manage'>
+                                <img src="../static/img/users.png" height="20px" />
+                                Users
+                            </x-restricted>
+                        </a></li>
+                    <li><a id='menu_reports' href="#/reports" class="navbar-link">
+                            <x-restricted restricted-by='reports.execute'>
+                                <img src="../static/img/reports.gif" height="20px" />
+                                Reports
+                            </x-restricted>
+                        </a></li>
                 </ul>
             </div>
         </div>
