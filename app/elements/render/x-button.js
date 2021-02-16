@@ -5,8 +5,6 @@ import { setLocation, setRoute } from '../../js/router.js';
 
 const button = Symbol('button');
 
-// TODO: restrict by auth -> extends XRestricted ?
-
 /**
  * Slot[]: content
  * level: default / primary / success / info / warning / danger
