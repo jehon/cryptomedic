@@ -42,19 +42,18 @@ function assertTableInitial(client, i = 0) {
 }
 
 module.exports = {
-    'go to the price page': function(client) {
+    'go to the price page': function (client) {
         client.page.cryptomedic().authenticate('thierry');
 
         // Select file
-        client.myClick('#menu_more');
         client.waitForElementVisible('#menu_prices');
-        client.myClick('#menu_prices');
+        client.myClick('#menu_prices x-button');
         client.page.cryptomedic().myWaitFetch();
 
         assertTableInitial(client);
     },
 
-    'create a new Price List': function(client) {
+    'create a new Price List': function (client) {
         // Button to create a new price list
         client.waitForElementVisible('#button_create');
         client.assert.not.elementPresent('#action_creating');
@@ -75,7 +74,7 @@ module.exports = {
         client.waitForElementNotPresent('#action_creating');
     },
 
-    'edit the created price list, but not saving': function(client) {
+    'edit the created price list, but not saving': function (client) {
         assertTableInitial(client, 1);
         client.waitForElementVisible('#button_save_0');
         client.waitForElementVisible('#button_cancel_0');
@@ -108,16 +107,15 @@ module.exports = {
         client.page.cryptomedic().tableIterator('#price_lists')
             .section('tbody')
             .col(2)
-            .row(1)   .assert('300')
+            .row(1).assert('300')
             .nextRow().assert('-')
             .nextRow().assert('100')
             .nextRow().assert('100')
-            .row(12).assert('open')
-        ;
+            .row(12).assert('open');
         assertTableInitial(client, 1);
     },
 
-    'edit the created price list': function(client) {
+    'edit the created price list': function (client) {
         assertTableInitial(client, 1);
         client.myClick('#button_edit_0');
         client.page.cryptomedic().myWaitFetch();
@@ -134,17 +132,17 @@ module.exports = {
         client.page.cryptomedic().tableIterator('#price_lists')
             .section('tbody')
             .col(2)
-            .row(1)   .assert(300)
+            .row(1).assert(300)
             .nextRow().assert(123)
             .nextRow().assert(100)
             .nextRow().assert(100)
-            .row(12)  .assert('open')
+            .row(12).assert('open')
             .endTable();
 
         assertTableInitial(client, 1);
     },
 
-    'delete the created price list': function(client) {
+    'delete the created price list': function (client) {
         client.waitForElementPresent('#button_delete_0');
         client.myClick('#button_delete_0');
         client.page.cryptomedic().myWaitFetch();

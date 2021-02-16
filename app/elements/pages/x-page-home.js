@@ -63,7 +63,7 @@ export default class XPageHome extends HTMLElement {
     }
 
     .grid > * {
-        /* height: 200px; */
+        min-height: 200px;
 
         flex-basis: 200px;
         flex-grow: 1;
@@ -118,6 +118,17 @@ Thanks
                     `,
                         toLocation: 'mailto:jeanhonlet@gmail.com?subject=Cryptomedic%20bug:'
                     }),
+
+                    createElementWithObject(XRestricted, { 'restricted-by': 'price.edit' }, [
+                        // @ts-ignore
+                        createMenu({
+                            title: 'Prices',
+                            id: 'menu_prices',
+                            versalIcon: '/static/img/prices.png',
+                            html: 'Manage the various prices',
+                            toRoute: '/prices'
+                        })
+                    ]),
 
                     createElementWithObject(XRestricted, { 'restricted-by': 'admin.securityMatrix' }, [
                         // @ts-ignore

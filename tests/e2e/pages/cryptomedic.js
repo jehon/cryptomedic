@@ -54,7 +54,6 @@ module.exports = {
                 throw new Error('Cryptomedic: You should be authenticated to use report function');
             }
 
-            this.myClick('#menu_more');
             this.waitForElementVisible('#menu_reports');
             this.myClick('#menu_reports');
             this.waitForElementVisible('#launch_report_' + reportName);
