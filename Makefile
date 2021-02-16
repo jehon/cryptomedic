@@ -155,7 +155,7 @@ lint:
 	npm run stylelint
 
 .PHONY: test
-test: docker-started dependencies build test-api test-unit test-e2e test-style
+test: docker-started dependencies build test-api test-api-bare test-unit test-e2e test-style
 
 .PHONY: test-api
 test-api: docker-started dependencies-api
@@ -318,9 +318,12 @@ database-backup:
 .PHONY: data-reset
 data-reset: docker-started dependencies-api-bare
 # Live folder
+	@echo "*** $@: reset files..."
 	rsync -a --delete live-for-test/ live/
+	@echo "*** $@: reset files - done"
 
 # Reset database
+	@echo "*** $@: reset the database..."
 	$(call run_in_docker,mysql, "while ! mysql -u root -p$(DBROOTPASS) --database=mysql -e 'Show tables;' >/dev/null; do sleep 1; done")
 	$(call run_in_docker,mysql," \
 		mysql -u root -p$(DBROOTPASS) --database=mysql -e \" \
@@ -341,6 +344,7 @@ data-reset: docker-started dependencies-api-bare
 		| $(DOCKERCOMPOSE) exec -T mysql mysql -u root -p$(DBROOTPASS) --database="$(DBNAME)"
 
 	bin/cryptomedic-refresh-structure.sh
+	@echo "*** $@: reset the database - done"
 
 #
 #
