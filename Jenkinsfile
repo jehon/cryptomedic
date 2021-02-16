@@ -35,17 +35,37 @@ make dependencies
       }
     }
 
-    stage('test') {
+    stage('test-api') {
       steps {
-        sh 'make test'
+        sh 'make test-api'
       }
     }
-
+    stage('test-api-bare') {
+      steps {
+        sh 'make test-api-bare'
+      }
+    }
+    stage('test-unit') {
+      steps {
+        sh 'make test-unit'
+      }
+    }
+    stage('test-e2e') {
+      steps {
+        sh 'make test-e2e'
+      }
+    }
+    stage('test-style') {
+      steps {
+        sh 'make test-style'
+      }
+    }
     stage('lint') {
       steps {
         sh 'make lint'
       }
     }
+
     stage('Deploy test') {
       when {
         anyOf { branch pattern: "ci/.*", comparator: "REGEXP" }

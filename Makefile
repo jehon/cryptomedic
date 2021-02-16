@@ -154,7 +154,7 @@ lint:
 	npm run eslint
 	npm run stylelint
 
-.PHONY: test
+.PHONY: test # In Jenkinfile, each step is separated:
 test: docker-started dependencies build test-api test-api-bare test-unit test-e2e test-style
 
 .PHONY: test-api
