@@ -3,7 +3,7 @@ import '../components/x-patient-by-reference.js';
 
 import { createElementsFromHTML, createElementWithObject, createElementWithTag, defineCustomElement } from '../../js/custom-element.js';
 import { toAttributeCase } from '../../js/string-utils.js';
-import { actions, API_VERSION, icons } from '../../config.js';
+import { actions, API_VERSION, icons, messages } from '../../config.js';
 
 import XPatientByReference from '../components/x-patient-by-reference.js';
 import XGroupPanel from '../render/x-group-panel.js';
@@ -13,6 +13,7 @@ import XButton from '../render/x-button.js';
 import XRestricted from '../funcs/x-restricted.js';
 
 import { getRouteToCreateReference } from '../../js/router.js';
+import XMessage from '../render/x-message.js';
 
 /**
  * @param {object} options to generate the XGroupPanel
@@ -80,12 +81,24 @@ export default class XPageHome extends HTMLElement {
     }
 `
             ),
+            createElementWithObject(XMessage, { level: messages.info }, createElementsFromHTML(`<div>
+Dear user,<br><br>
+
+The menu is currently changing. Top button will dissapear progressively. They will be replaced by
+links on this home page. This is done to ease usage of mobile.<br><br>
+
+Thanks for your understanding.<br><br>
+
+Jean
+</div>`)),
+
             // createElementWithObject()
             createElementWithObject(XPanel, { full: true }, [
                 ...createElementsFromHTML('<h1 id="page_home" class="text - center"><img src="/static/img/home.gif">Home</h1>'),
 
                 createElementWithTag('div', { class: 'grid' }, [
                     createElementWithObject(XPatientByReference),
+
                     // @ts-ignore
                     createMenu({
                         title: 'Create a reference',
