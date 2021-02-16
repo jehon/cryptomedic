@@ -67,12 +67,17 @@ export default class XPageHome extends HTMLElement {
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
+        justify-content: space-evenly;
         align-content: stretch;
     }
 
-    .grid > * {
-        min-height: 200px;
+    @media screen and (min-width: 600px) {
+        .grid > * {
+            min-height: 200px;
+        }
+    }
 
+    .grid > * {
         flex-basis: max(250px, calc(25% - 20px));
         flex-grow: 0;
         flex-shrink: 0;
