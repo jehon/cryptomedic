@@ -17,8 +17,6 @@ export default class XButton extends HTMLElement {
         return ['icon', 'action', 'discrete'];
     }
 
-    // TODO: use createElementWith
-
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });

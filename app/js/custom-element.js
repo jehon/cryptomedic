@@ -143,7 +143,7 @@ function enrichObject(el, attributes = {}, inner = [], js = (_el) => { }) {
 //         const fullListing = listing.filter(e => e.hasAttribute('full'));
 //         if (fullListing.length > 0) {
 //             resizable = fullListing[0];
-//             // TODO: hr is not workin
+//             // !! hr is not working
 //             // } else {
 //             //     const hrListing = listing.filter(e => e.tagName == 'HR');
 //             //     if (hrListing.length > 0) {

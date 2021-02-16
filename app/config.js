@@ -47,7 +47,6 @@ export const icons = {
 };
 
 export const colors = {
-    // TODO: use this in button.js
     actions: {
         query: {
             class: 'info'
@@ -60,11 +59,6 @@ export const colors = {
             // fg: 'white',
             // bg: 'rgb(0, 123, 255)'
         },
-        // selected: {
-        //     class: 'info',
-        //     // fg: 'white',
-        //     // bg: 'rgb(0, 123, 255)'
-        // },
         cancel: {
             class: 'warning',
             // fg: 'white',

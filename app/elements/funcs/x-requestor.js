@@ -148,7 +148,6 @@ export default class XRequestor extends HTMLElement {
 
         return this._rawRequest(options)
             .then(response => {
-                // TODO: temp hack
                 response.ok = (response.status >= 200 && response.status < 300); // TODO: temp hack
 
                 this._waiting.free();

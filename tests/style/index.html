@@ -128,7 +128,6 @@
                 for (let f of Object.keys(problemsList)) {
                     const data = problemsList[f];
 
-                    // TODO: show warning / error level + more details
                     document.querySelector('#results').insertAdjacentHTML('beforeend',
                         `<h3>${f} (${data.actual}/${data.max}: ${data.level})</h3>
                         <div class='compare'>
