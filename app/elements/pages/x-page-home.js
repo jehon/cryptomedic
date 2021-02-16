@@ -137,6 +137,15 @@ Thanks
                         toRoute: '/prices'
                     }),
 
+                    // @ts-ignore
+                    createMenu({
+                        title: 'Users management',
+                        restrictedBy: 'users.manage',
+                        id: 'menu_users',
+                        versalIcon: '/static/img/users.png',
+                        html: 'Manage the users of Cryptomedic.',
+                        toRoute: '/users'
+                    }),
 
                     // @ts-ignore
                     createMenu({
