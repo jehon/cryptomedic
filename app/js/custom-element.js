@@ -80,7 +80,7 @@ function enrichObject(el, attributes = {}, inner = [], js = (_el) => { }) {
             continue;
         }
         if (typeof (v) == 'string') {
-            el.insertAdjacentText('beforeend', v);
+            el.insertAdjacentText('beforeend', v.trim());
         } else {
             el.insertAdjacentElement('beforeend', v);
         }
