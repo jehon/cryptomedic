@@ -108,6 +108,17 @@ Jean
                         toRoute: getRouteToCreateReference()
                     }),
 
+                    // @ts-ignore
+                    createMenu({
+                        title: 'Bug reporting',
+                        versalIcon: '/static/img/bug.jpeg',
+                        html: `
+If you find a bug, please email to jeanhonlet@gmail.com.<br>
+Thanks
+                    `,
+                        toLocation: 'mailto:jeanhonlet@gmail.com?subject=Cryptomedic%20bug:'
+                    }),
+
                     createElementWithObject(XRestricted, { 'restricted-by': 'admin.securityMatrix' }, [
                         // @ts-ignore
                         createMenu({
