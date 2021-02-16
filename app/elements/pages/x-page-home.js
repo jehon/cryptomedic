@@ -24,10 +24,13 @@ import XMessage from '../render/x-message.js';
  * @param {string} options.toRoute - where to go when clicking on the button
  * @param {string?} options.buttonText - to explain
  * @param {string?} options.toLocation - location on click
- * @returns {XGroupPanel} with the content
+ * @param {string?} options.restrictedBy - to restrict the element
+ * @returns {HTMLElement} with the content
  */
-function createMenu({ title, id = toAttributeCase(title), versalIcon = '', html, toRoute = '', toLocation = '', buttonText = title }) {
-    return createElementWithObject(XGroupPanel,
+function createMenu({ title, restrictedBy = '', id = toAttributeCase(title), versalIcon = '', html, toRoute = '', toLocation = '', buttonText = title }) {
+
+    /** @type {HTMLElement} */
+    let res = createElementWithObject(XGroupPanel,
         {
             id: id ? id : toAttributeCase(title),
             title
@@ -45,6 +48,11 @@ function createMenu({ title, id = toAttributeCase(title), versalIcon = '', html,
                     , buttonText)
             ])
         ]);
+    if (restrictedBy) {
+        res = createElementWithObject(XRestricted, { 'restricted-by': restrictedBy }, res);
+    }
+
+    return res;
 }
 
 /**
@@ -119,26 +127,25 @@ Thanks
                         toLocation: 'mailto:jeanhonlet@gmail.com?subject=Cryptomedic%20bug:'
                     }),
 
-                    createElementWithObject(XRestricted, { 'restricted-by': 'price.edit' }, [
-                        // @ts-ignore
-                        createMenu({
-                            title: 'Prices',
-                            id: 'menu_prices',
-                            versalIcon: '/static/img/prices.png',
-                            html: 'Manage the various prices',
-                            toRoute: '/prices'
-                        })
-                    ]),
+                    // @ts-ignore
+                    createMenu({
+                        title: 'Prices',
+                        restrictedBy: 'price.edit',
+                        id: 'menu_prices',
+                        versalIcon: '/static/img/prices.png',
+                        html: 'Manage the various prices',
+                        toRoute: '/prices'
+                    }),
 
-                    createElementWithObject(XRestricted, { 'restricted-by': 'admin.securityMatrix' }, [
-                        // @ts-ignore
-                        createMenu({
-                            title: 'View matrix',
-                            versalIcon: '/static/img/matrix.png',
-                            html: 'List of rights',
-                            toLocation: `/api/${API_VERSION}/admin/securityMatrix`
-                        })
-                    ])
+
+                    // @ts-ignore
+                    createMenu({
+                        title: 'View matrix',
+                        restrictedBy: 'admin.securityMatrix',
+                        versalIcon: '/static/img/matrix.png',
+                        html: 'List of rights',
+                        toLocation: `/api/${API_VERSION}/admin/securityMatrix`
+                    })
                 ])
             ])
         );
