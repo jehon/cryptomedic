@@ -1,8 +1,6 @@
 
+import { createElementWithTag } from '../../js/custom-element.js';
 import { onSession, getAuthorized } from '../../js/session.js';
-
-// TODO: adapt to work with x-button
-// TODO: include flex here!
 
 /**
  * Slot[]: content
@@ -16,7 +14,24 @@ export default class XRestricted extends HTMLElement {
         super();
         /**@type {function} */
         this.unreg = null;
-        // this.style.flexFlow = 'column';
+
+        this.attachShadow({ mode: 'open' });
+        this.shadowRoot.append(
+            createElementWithTag('style', {}, `
+    :host {
+        /* Allow taking whole space */
+        display: inline-flex;
+        /* flex-direction: column; */
+        flex-grow: 1
+    }
+
+    :host(:not([authorized])) {
+        display: none;
+    }
+    `
+            ),
+            createElementWithTag('slot')
+        );
     }
 
     connectedCallback() {
@@ -42,25 +57,19 @@ export default class XRestricted extends HTMLElement {
         }
     }
 
-    getDisplayMode() {
-        return 'inline-flex';
-    }
-
     adapt() {
         const authKey = this.getAttribute('restricted-by');
-        this.active = false;
+        let active = false;
         if (authKey) {
-            this.active = getAuthorized(authKey);
+            active = getAuthorized(authKey);
             if (this.hasAttribute('inverted')) {
-                this.active = !this.active;
+                active = !active;
             }
         }
-        if (this.active) {
+        if (active) {
             this.setAttribute('authorized', 'authorized');
-            this.style.display = this.getDisplayMode();
         } else {
             this.removeAttribute('authorized');
-            this.style.display = 'none';
         }
     }
 }
