@@ -5,7 +5,7 @@
 
   ?>
   <cryptomedic-data-service id='reportService'>
-    <div ng-if="getReport()" class='container-fluid'>
+    <div class='container-fluid'>
       <div class='row'>
         <div class='col-sm-6'>
           <h1>{{getReport().name}}</h1>
@@ -109,21 +109,4 @@
       </div>
     </div>
   </cryptomedic-data-service>
-
-  <div class='container-fluid' ng-if="!getReport()">
-    <div class='row'>
-      <div class='col-sm-offset-3 col-sm-6'>
-        <x-group-panel id='add' title='Global reporting'>
-          <div ng-repeat='(k,r) in reports'>
-            <h3>{{r.name}}</h3>
-            <div ng-bind-html="r.description"></div>
-            <br>
-            <div>
-              <x-button action='commit' id='launch_report_{{k}}' to-route='#/reports/{{k}}'>{{r.name}}</x-button>
-            </div>
-          </div>
-        </x-group-panel>
-      </div>
-    </div>
-  </div>
 </span>

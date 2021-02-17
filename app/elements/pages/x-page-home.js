@@ -123,6 +123,59 @@ Jean
 
                     // @ts-ignore
                     createMenu({
+                        title: 'Search',
+                        restrictedBy: 'folder.read',
+                        id: 'search_menu',
+                        versalIcon: '/static/img/patientsSearch.gif',
+                        html: 'Search a patient',
+                        toRoute: '/search'
+                    }),
+
+                    // @ts-ignore
+                    createMenu({
+                        title: 'Consultations of the day',
+                        restrictedBy: 'planning.execute',
+                        id: 'report_consultations_menu',
+                        versalIcon: '/static/img/consultOfDay.gif',
+                        html: 'Have a list of the consultations of the day',
+                        toRoute: '/reports/consultations'
+                    }),
+
+                    // @ts-ignore
+                    createMenu({
+                        title: 'Activity Report',
+                        restrictedBy: 'reports.execute',
+                        id: 'report_activity_menu',
+                        versalIcon: '/static/img/reports.gif',
+                        html: `
+If you want to know your activity, choose this report.<br>
+Options: the day, and optionnaly the examiner, the center and type of activity (workshop / consult / surgical / ...).
+`,
+                        toRoute: '/reports/activity'
+                    }),
+
+                    // @ts-ignore
+                    createMenu({
+                        title: 'Statistical Report',
+                        restrictedBy: 'reports.execute',
+                        id: 'report_statistical_menu',
+                        versalIcon: '/static/img/reports.gif',
+                        html: 'If you want to know the activity of the SARPV CDC on a period.',
+                        toRoute: '/reports/statistical'
+                    }),
+
+                    // @ts-ignore
+                    createMenu({
+                        title: 'Surgical Report',
+                        restrictedBy: 'reports.execute',
+                        id: 'report_surgical_menu',
+                        versalIcon: '/static/img/reports.gif',
+                        html: 'Follow up of the surgical activity of the period.',
+                        toRoute: '/reports/surgical'
+                    }),
+
+                    // @ts-ignore
+                    createMenu({
                         title: 'Bug reporting',
                         versalIcon: '/static/img/bug.jpeg',
                         html: `

@@ -8,7 +8,7 @@ function testSearch(client, search, resultList) {
     client.pause(100);
     client.myScreenshotReference();
 
-    for(var i in resultList) {
+    for (var i in resultList) {
         var tsel = '#search_results tr:nth-child(' + (parseInt(i) + 1) + ') td:nth-child(2)';
         client.waitForElementPresent(tsel);
         client.assert.containsText(tsel, resultList[i]);
@@ -18,30 +18,31 @@ function testSearch(client, search, resultList) {
 }
 
 module.exports = {
-    allSearch: function(client) {
+    allSearch: function (client) {
         client.page.cryptomedic().authenticate('readonly');
-        client.myClick('#menu_search');
+        client.waitForElementPresent('#search_menu');
+        client.myClick('#search_menu x-button');
     },
 
-    byEntryYear: function(client) {
+    byEntryYear: function (client) {
         testSearch(client, {
             '#Patient_entryyear': '2000'
         }, ['2000-1']);
     },
 
-    byEntryYear2: function(client) {
+    byEntryYear2: function (client) {
         testSearch(client, {
             '#Patient_entryyear': '2001'
         }, ['2001-1', '2001-4']);
     },
 
-    byEntryOrder: function(client) {
+    byEntryOrder: function (client) {
         testSearch(client, {
             '#Patient_entryorder': '104'
         }, ['2014-104']);
     },
 
-    byNameUp: function(client) {
+    byNameUp: function (client) {
         testSearch(client, {
             '#Patient_Name': 'OSMAN'
         }, ['2014-103']);
@@ -56,19 +57,19 @@ module.exports = {
         }, ['2014-103']);
     },
 
-    byYearOfBirth: function(client) {
+    byYearOfBirth: function (client) {
         testSearch(client, {
             '#Patient_Yearofbirth': 2002
         }, ['2014-107']);
     },
 
-    byPhone: function(client) {
+    byPhone: function (client) {
         testSearch(client, {
             '#Patient_Telephone': '1813247984'
         }, ['2014-105']);
     },
 
-    byPathology: function(client) {
+    byPathology: function (client) {
         testSearch(client, {
             'x-write-list[name=Pathology]': {
                 value: 'ClubFoot'
@@ -77,7 +78,7 @@ module.exports = {
         // TODO: search by sex
     },
 
-    end: function(client) {
+    end: function (client) {
         client.end();
     }
 };
