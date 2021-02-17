@@ -54,10 +54,8 @@ module.exports = {
                 throw new Error('Cryptomedic: You should be authenticated to use report function');
             }
 
-            this.waitForElementVisible('#menu_reports');
-            this.myClick('#menu_reports');
-            this.waitForElementVisible('#launch_report_' + reportName);
-            this.myClick('#launch_report_' + reportName);
+            this.waitForElementVisible(`#report_${reportName}_menu`);
+            this.myClick(`#report_${reportName}_menu x-button`);
             for (var k in params) {
                 const el = '[name="' + k + '"]';
                 if (k == 'period') {

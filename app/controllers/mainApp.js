@@ -91,8 +91,8 @@ mainApp.controller('ctrl_search', ctrl_search);
 mainApp.controller('ctrl_users', ctrl_users);
 mainApp.controller('ctrl_prices', ctrl_prices);
 
-import XPageLogin from '../elements/pages/x-page-login.js';
-import XPageHome from '../elements/pages/x-page-home.js';
+import '../elements/pages/x-page-login.js';
+import '../elements/pages/x-page-home.js';
 
 
 // template: function (_params) {
@@ -113,21 +113,27 @@ mainApp.config(['$routeProvider', function ($routeProvider) {
         })
         .when('/home', {
             template: '<x-page-home></x-page-home>'
-        }).when('/folder/:patient_id/:page?/:subtype?/:subid?/:mode?', {
+        })
+        .when('/folder/:patient_id/:page?/:subtype?/:subid?/:mode?', {
             templateUrl: template('folder'),
             controller: 'ctrl_folder',
-        }).when('/search', {
+        })
+        .when('/search', {
             templateUrl: template('page', 'search'),
             controller: 'ctrl_search',
-        }).when('/reports/:report?', {
+        })
+        .when('/reports/:report?', {
             templateUrl: template('reports'),
             controller: 'ctrl_reports',
-        }).when('/users', {
+        })
+        .when('/users', {
             templateUrl: template('page', 'users'),
             controller: 'ctrl_users',
-        }).when('/prices', {
+        })
+        .when('/prices', {
             templateUrl: template('page', 'prices'),
             controller: 'ctrl_prices',
-        }).otherwise({ 'redirectTo': '/home' });
+        })
+        .otherwise({ 'redirectTo': '/home' });
 }]);
 

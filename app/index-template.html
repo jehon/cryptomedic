@@ -75,24 +75,6 @@
                             </x-restricted>
                         </a>
                     </li>
-                    <li><a id='menu_search' href="#/search" class="navbar-link">
-                            <x-restricted restricted-by='folder.read'>
-                                <img src="../static/img/patientsSearch.gif" height="20px" />
-                                Search a patient
-                            </x-restricted>
-                        </a></li>
-                    <li><a id='menu_consults' href="#/reports/consultations" class="navbar-link">
-                            <x-restricted restricted-by='planning.execute'>
-                                <img src="../static/img/consultOfDay.gif" height="20px" />
-                                Consults of the day
-                            </x-restricted>
-                        </a></li>
-                    <li><a id='menu_reports' href="#/reports" class="navbar-link">
-                            <x-restricted restricted-by='reports.execute'>
-                                <img src="../static/img/reports.gif" height="20px" />
-                                Reports
-                            </x-restricted>
-                        </a></li>
                     <li>
                         <x-login-status></x-login-status>
                     </li>
