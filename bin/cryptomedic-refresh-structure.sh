@@ -15,7 +15,7 @@ echo "* Upgrading database"
 wget -O - --quiet --content-on-error "http://${CRYPTOMEDIC_HTTP_HOST}/maintenance/patch_db.php?pwd=${CRYPTOMEDIC_DB_UPGRADE}"
 
 echo "* Upgrading files"
-wget -O - --quiet --content-on-error "http://${CRYPTOMEDIC_HTTP_HOST}/maintenance/reset.php?pwd=${CRYPTOMEDIC_DB_UPGRADE}&env=dev"
+wget -O - --quiet --content-on-error "http://${CRYPTOMEDIC_HTTP_HOST}/maintenance/reset.php?pwd=${CRYPTOMEDIC_DB_UPGRADE}"
 
 # Variable necessary for refresh.sh scripts
 export CRYPTOMEDIC_HTTP_HOST
