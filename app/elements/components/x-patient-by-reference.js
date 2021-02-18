@@ -62,7 +62,7 @@ export default class XPatientByReference extends HTMLElement {
                             ])
                         ],
                         (el) => {
-                            el.addEventListener('submit', () => this.searchReference());
+                            el.addEventListener('submit', () => this.search());
                             el.addEventListener('reset', () => this.reset());
                         }
                     ),
@@ -93,7 +93,7 @@ export default class XPatientByReference extends HTMLElement {
         this.removeAttribute('status');
     }
 
-    searchReference() {
+    search() {
         const data = this._form.data;
         this.setAttribute('status', 'searching');
 
