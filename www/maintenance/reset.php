@@ -53,10 +53,11 @@ try {
     deleteFileFromGlob(__DIR__ . "/../api/*/bootstrap/cache/*");
     deleteFileFromGlob(__DIR__ . "/../api/*/storage/framework/cache/cache.php");
 
-    if ($_REQUEST['env'] && $_REQUEST['env'] == 'dev') {
+    if ($myconfig['dev']) {
         // Clean up local structure
-        // $(call run_in_docker,server,"find /tmp/laravel -type f -delete")
-        deleteFileFromGlob('/tmp/laravel/*');
+        if (file_exists('/tmp/laravel')) {
+            deleteFileFromGlob('/tmp/laravel/*');
+        }
     }
 
     echo "\n\nDone\n";

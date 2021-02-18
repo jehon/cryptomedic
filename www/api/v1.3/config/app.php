@@ -26,7 +26,7 @@ return [
     |
     */
 
-    'env' => env('APP_ENV', $myconfig["environment"]),
+    'env' => env('APP_ENV', $myconfig["dev"] ? 'dev' : 'production'),
 
     /*
     |--------------------------------------------------------------------------

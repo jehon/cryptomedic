@@ -19,7 +19,7 @@ $myconfig = [
   'laravel' => [
     'key' => '12345678901234567890123456789012'
   ],
-  'environment' => "production",
+  'dev' => false,
   'debug' => false,
   'randomString' => str_pad("random script ", 256, "abcdefghijklmnopqrstuvwxyz"),
   'folders' => [
