@@ -16,7 +16,7 @@ describe(fn(import.meta.url), function () {
 
         element.shadowRoot.querySelector('[name=entryyear]').value = '2000';
         element.shadowRoot.querySelector('[name=entryorder]').value = '4444';
-        await element.searchReference();
+        await element.search();
         expect(element.getAttribute('status')).toBe('found');
         expect(getCurrentRoute()).toBe(getRouteToFolderPatient(123));
     });
@@ -27,7 +27,7 @@ describe(fn(import.meta.url), function () {
 
         element.shadowRoot.querySelector('[name=entryyear]').value = '2000';
         element.shadowRoot.querySelector('[name=entryorder]').value = '4444';
-        await element.searchReference();
+        await element.search();
         expect(element.getAttribute('status')).toBe('creation-proposed');
 
         mockResponseWithSuccess({ id: 456 });
