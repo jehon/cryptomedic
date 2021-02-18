@@ -31,6 +31,11 @@ try {
 	echo "\n\nRunning always\n";
 	$db->runDirectory(__DIR__ . "/../../conf/database/always/");
 
+	if ($myconfig['dev']) {
+		echo "\n\nRunning dev-always\n";
+		$db->runDirectory(__DIR__ . "/../../conf/database/dev-always/");
+	}
+
 	echo "\n\nDone\n";
 	http_response_code(200);
 } catch (Exception $e) {
