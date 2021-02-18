@@ -56,18 +56,22 @@ export function createElementsFromHTML(html) {
  * @param {Element} el the element
  * @param {object} attributes to be set
  * @param {Array<Element | string>| string} inner to fill in
- * @param {function(Element): void} js to modify the element
+ * @param {function(Element): void} callback to modify the element
  */
-function enrichObject(el, attributes = {}, inner = [], js = (_el) => { }) {
+export function enrichObject(el, attributes = {}, inner = [], callback = (_el) => { }) {
     for (const k of Object.keys(attributes)) {
-        if (attributes[k] === false) {
+        let val = attributes[k];
+        if (val === false) {
             continue;
         }
-        if (attributes[k] === true) {
-            el.setAttribute(k, k);
-            continue;
+        if (val === true) {
+            val = k;
         }
-        el.setAttribute(k, attributes[k]);
+
+        if (typeof (val) == 'object') {
+            val = Object.keys(val).map((k) => `${toAttributeCase(k)}: ${val[k]}`).join(';');
+        }
+        el.setAttribute(k, val);
     }
 
     if (!Array.isArray(inner)) {
@@ -79,14 +83,14 @@ function enrichObject(el, attributes = {}, inner = [], js = (_el) => { }) {
         if (v == null) {
             continue;
         }
-        if (typeof (v) == 'string') {
-            el.insertAdjacentText('beforeend', v.trim());
+        if (typeof (v) == 'string' || typeof (v) == 'number') {
+            el.insertAdjacentText('beforeend', (v + '').trim());
         } else {
             el.insertAdjacentElement('beforeend', v);
         }
     }
 
-    js(el);
+    callback(el);
 }
 
 // LEGACY: use flexbox instead !
