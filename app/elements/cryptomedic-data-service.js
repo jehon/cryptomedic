@@ -3,7 +3,6 @@
 
 import XRequestor from './x-requestor.js';
 import TimedMap from '../js/timedMap.js';
-import Patient from '../models/Patient.js';
 import Folder from '../models/Folder.js';
 import nullify from '../js/nullify.js';
 import { setCurrentFolder } from '../js/session.js';
@@ -14,18 +13,6 @@ export default class CryptomedicDataService extends XRequestor {
     /**************************/
     /*** Patient            ***/
     /**************************/
-
-    searchForPatients(params) {
-        return this.requestAndFilter({ url: 'folder', data: params })
-            .then(response => {
-                const data = response.asJson;
-                const list = [];
-                for (const i in data) {
-                    list.push(new Patient(data[i]));
-                }
-                return list;
-            });
-    }
 
     getFolder(id) {
         setCurrentFolder();
