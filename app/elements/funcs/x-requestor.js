@@ -296,3 +296,15 @@ export function createReferenceBuilder(entryyear, entryorder) {
         }
     };
 }
+
+/**
+ * @param {object} data describing the search
+ *
+ * @returns {object} options for request (see XRequestor#request)
+ */
+export function searchPatientBuilder(data) {
+    return {
+        url: 'folder',
+        data
+    };
+}

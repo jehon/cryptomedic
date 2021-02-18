@@ -10,7 +10,6 @@ import ctrl_file_bill from './ctrl_file_bill.js';
 import ctrl_folder from './ctrl_folder.js';
 import ctrl_prices from './ctrl_prices.js';
 import ctrl_reports from './ctrl_reports.js';
-import ctrl_search from './ctrl_search.js';
 import ctrl_users from './ctrl_users.js';
 
 import { parseRouteLogin } from '../js/router.js';
@@ -87,12 +86,12 @@ mainApp.controller('ctrl_file_appointment', ctrl_file_appointment);
 mainApp.controller('ctrl_file_bill', ctrl_file_bill);
 mainApp.controller('ctrl_folder', ctrl_folder);
 mainApp.controller('ctrl_reports', ctrl_reports);
-mainApp.controller('ctrl_search', ctrl_search);
 mainApp.controller('ctrl_users', ctrl_users);
 mainApp.controller('ctrl_prices', ctrl_prices);
 
 import '../elements/pages/x-page-login.js';
 import '../elements/pages/x-page-home.js';
+import '../elements/pages/x-page-search.js';
 
 
 // template: function (_params) {
@@ -114,13 +113,13 @@ mainApp.config(['$routeProvider', function ($routeProvider) {
         .when('/home', {
             template: '<x-page-home></x-page-home>'
         })
+        .when('/search', {
+            template: '<x-page-search></x-page-search>',
+        })
+
         .when('/folder/:patient_id/:page?/:subtype?/:subid?/:mode?', {
             templateUrl: template('folder'),
             controller: 'ctrl_folder',
-        })
-        .when('/search', {
-            templateUrl: template('page', 'search'),
-            controller: 'ctrl_search',
         })
         .when('/reports/:report?', {
             templateUrl: template('reports'),
