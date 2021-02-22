@@ -122,53 +122,33 @@ x-group-panel > table > thead > tr > th:nth-of-type(3) {
 /********************************************
  * Reports
  */
-table.reporting > thead {
-	border: black 2px solid;
-	color: white;
+table.reporting {
+	width: 100%;
 }
 
-table.reporting > thead > tr > th {
-	background-color: gray;
+table.reporting > * {
+	border: 2px solid black;
 }
 
-table.reporting > thead > tr > th.b_right {
-	border-right: white 1px solid;
-}
-
-table.reporting > thead > tr > th.b_left {
-	border-left: white 1px solid;
-}
-
-table.reporting > thead > tr > th.b_bottom {
-	border-bottom: white 1px solid;
-}
-
-table.reporting > thead > tr > th.b_top {
-	border-top: white 1px solid;
-}
-
-table.reporting > thead > tr > th.b_all {
-	border: white 1px solid;
-}
-
-table.reporting > tbody > tr > td,
 table.reporting > thead > tr > th,
-table.reporting > tfoot > tr > td {
+table.reporting > tbody > tr > td,
+table.reporting > tfoot > tr > th {
 	text-align: center;
 }
 
-table.reporting > tbody,
-table.reporting > tfoot {
-	border: black 2px solid;
+table.reporting > thead > tr > th,
+table.reporting > tfoot > tr > th {
+	background-color: gray;
+	border: 1px solid white;
+
+	color: white;
 }
 
-table.reporting > tbody > tr > td:nth-child(1),
-table.reporting > tfoot > tr > td:nth-child(1) {
-	text-align: left;
+table.reporting > tbody > tr > td {
+	border: 1px solid gray;
 }
 
-table.reporting > tbody > tr:nth-child(odd),
-table.reporting > tfoot > tr:nth-child(odd) {
+table.reporting > tbody > tr:nth-child(odd) {
 	background-color: lightgray;
 }
 
@@ -179,31 +159,6 @@ table.reporting > tfoot > tr > .subheader {
 	padding-top: 10px;
 	text-align: center;
 	font-weight: bold;
-}
-
-table.reporting > tbody > tr > td.b_right,
-table.reporting > tfoot > tr > td.b_right {
-	border-right: gray 1px solid;
-}
-
-table.reporting > tbody > tr > td.b_left,
-table.reporting > tfoot > tr > td.b_left {
-	border-left: gray 1px solid;
-}
-
-table.reporting > tbody > tr > td.b_bottom,
-table.reporting > tfoot > tr > td.b_bottom {
-	border-bottom: gray 1px solid;
-}
-
-table.reporting > tbody > tr > td.b_top,
-table.reporting > tfoot > tr > td.b_top {
-	border-top: gray 1px solid;
-}
-
-table.reporting > tbody > tr > td.b_all,
-table.reporting > tfoot > tr > td.b_all {
-	border: gray 1px solid;
 }
 
 /********************************************
