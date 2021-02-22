@@ -14,7 +14,7 @@ import XRestricted from '../funcs/x-restricted.js';
 
 import { getRouteToCreateReference, getRouteToReport } from '../../js/router.js';
 import XMessage from '../render/x-message.js';
-import { REPORT_ACTIVITY, REPORT_CONSULTATIONS, REPORT_STATISTICAL, REPORT_SURGICAL } from './x-page-reports.js';
+import { REPORT_ACTIVITY, REPORT_CONSULTATIONS, REPORT_SURGICAL } from './x-page-reports.js';
 
 /**
  * @param {object} options to generate the XGroupPanel
@@ -40,13 +40,15 @@ function createMenu({ title, restrictedBy = '', id = toAttributeCase(title), ver
             versalIcon ? createElementWithTag('img', { slot: 'versal', src: versalIcon }) : null,
             ...createElementsFromHTML(`<div style="flex-grow: 1" white>${html}</div>`),
             createElementWithObject(XButtons, {}, [
-                createElementWithObject(XButton,
-                    {
-                        action: actions.move,
-                        'to-route': toRoute,
-                        'to-location': toLocation
-                    }
-                    , buttonText)
+                (toRoute || toLocation)
+                    ? createElementWithObject(XButton,
+                        {
+                            action: actions.move,
+                            'to-route': toRoute ?? false,
+                            'to-location': toLocation ?? false
+                        }
+                        , buttonText)
+                    : null
             ])
         ]);
     if (restrictedBy) {
@@ -157,12 +159,12 @@ Options: the day, and optionnaly the examiner, the center and type of activity (
 
                     // @ts-ignore
                     createMenu({
-                        title: 'Statistical Report',
+                        title: 'Statistical Report', // TODO: statistical report or clean up ? @ tcrav on 2021-02-22
                         restrictedBy: 'reports.execute',
                         id: 'report_statistical_menu',
                         versalIcon: '/static/img/reports.gif',
-                        html: 'If you want to know the activity of the SARPV CDC on a period.',
-                        toRoute: getRouteToReport(REPORT_STATISTICAL)
+                        html: 'If you want to know the activity of the SARPV CDC on a period.<br> !! THIS REPORT DOES NOT WORK ANYMORE !! IF NEEDED, PLEASE CONTACT ME !!',
+                        // toRoute: getRouteToReport(REPORT_STATISTICAL)
                     }),
 
                     // @ts-ignore
