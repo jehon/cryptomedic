@@ -162,14 +162,14 @@ test-api: docker-started dependencies-api
 	$(call itself,data-reset)
 	$(call run_in_docker,server,"/app/bin/dev-phpunit.sh laravel")
 
+.PHONY: test-api-commit
+update-test-api: docker-started dependencies-api
+	$(call itself,data-reset)
+	$(call run_in_docker,server,"/app/bin/dev-phpunit.sh COMMIT")
+
 test-api-bare: dependencies-api
 	$(call itself,data-reset)
 	$(call run_in_docker,server,"/app/bin/dev-phpunit.sh bare")
-
-.PHONY: test-api-commit
-test-api-commit: docker-started dependencies-api
-	$(call itself,data-reset)
-	$(call run_in_docker,server,"/app/bin/dev-phpunit.sh COMMIT")
 
 .PHONY: test-unit
 test-unit: dependencies-node \
