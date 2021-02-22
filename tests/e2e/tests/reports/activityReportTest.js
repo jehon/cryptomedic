@@ -1,6 +1,6 @@
 module.exports = {
-    tags: [ 'readonly', 'reports' ],
-    reportMonthlyActivity: function(client) {
+    tags: ['readonly', 'reports'],
+    reportMonthlyActivity: function (client) {
         var report_table = client.page.cryptomedic().tableIterator('#report_table table');
         client.page.cryptomedic().authenticate('readonly');
         client.page.cryptomedic().report('activity', { period: 'month', month: '2014-05' });
@@ -22,7 +22,8 @@ module.exports = {
             .nextCol().assert('CF')
             .nextCol().assert('CsP')
             .nextCol().assert('Plast')
-            .nextCol().assert('100')
+
+            .nextCol(4).assert('100')
             .nextCol().assert('0')
             .nextCol().assert('0')
             .nextCol().assert('0')
@@ -31,27 +32,26 @@ module.exports = {
             .nextCol().assert('200')
             .nextCol().assert('')
 
-        // New / Old patient in same month
+            // New / Old patient in same month
             .row(2).col(5).assert('2014-107')
             .nextCol(4).assert('New')
             .nextRow(1).col(5).assert('2014-107')
             .nextCol(4).assert('Old')
 
-        // Payment recovery
+            // Payment recovery
             .row(6).col(3).assert('Ershad')
             .nextCol().assert('CDC')
             .nextCol(13).assert('Complementary payments')
             .col('last').assert('113')
 
             .section('tfoot')
-            .row('last').col(17).assert('400')
-            .row('last').col('last').assert('569')
-        ;
+            .row('last').col(2).assert('400')
+            .row('last').col('last').assert('569');
         client
             .end();
     },
 
-    reportDailyActivity: function(client) {
+    reportDailyActivity: function (client) {
         var report_table = client.page.cryptomedic().tableIterator('#report_table table');
         client.page.cryptomedic().authenticate('readonly');
         client.page.cryptomedic().report('activity', { period: 'day', day: '2014-05-20' });
@@ -72,7 +72,8 @@ module.exports = {
             .nextCol().assert('CF')
             .nextCol().assert('CsP')
             .nextCol().assert('Plast')
-            .nextCol().assert('100')
+
+            .nextCol(4).assert('100')
             .nextCol().assert('0')
             .nextCol().assert('0')
             .nextCol().assert('0')
@@ -81,16 +82,16 @@ module.exports = {
             .nextCol().assert('200')
             .nextCol().assert('')
 
-        // Payment recovery
+            // Payment recovery
             .row(3).col(3).assert('Ershad')
             .nextCol().assert('CDC')
+            .nextCol(3)
             .nextCol(13).assert('Complementary payments')
             .col('last').assert('113')
 
             .section('tfoot')
-            .row('last').col(17).assert('200')
-            .row('last').col('last').assert('569')
-        ;
+            .row('last').col(2).assert('200')
+            .row('last').col('last').assert('569');
         client.end();
     }
 };

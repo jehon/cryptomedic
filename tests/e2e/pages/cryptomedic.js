@@ -56,6 +56,7 @@ module.exports = {
 
             this.waitForElementVisible(`#report_${reportName}_menu`);
             this.myClick(`#report_${reportName}_menu x-button`);
+            this.waitForElementVisible('cryptomedic-data-service');
             for (var k in params) {
                 const el = '[name="' + k + '"]';
                 if (k == 'period') {

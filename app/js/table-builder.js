@@ -162,7 +162,7 @@ export default class TableBuilder {
             this.#data
                 .map(row =>
                     fieldData instanceof Function
-                        ? (i) => (fieldData(row, i) ?? '')
+                        ? (i) => fieldData(row, i)
                         : (i) => (this.#data[i][fieldData] ?? '')
                 ),
             'td'

@@ -88,24 +88,14 @@
       <div ng-if="isParam('year')" class='alert alert-warning'>
         Attention! Generating a yearly report may take a very very long time (ex: 5 minutes).
       </div>
+
       <div>
         <div ng-if="result && error" class='alert alert-danger'>
           Please fill in parameters (at least the day, month or year).<br>
           {{error}}
         </div>
-        <div ng-if="!result && !error">
-          <div class='alert alert-info'>Please press "refresh" to generate the report</div>
-        </div>
-        <div ng-if="result && !error">
-          <div class='text-right'>
-            <a style='display: none' id='report_download_button' download="{{reportName()}}.xls">download</a>
-            <x-button action='alternate' xid='report_download_button' ng-click='generate($event)'>
-              Export current table in XLS
-            </x-button>
-            <!-- onclick="return jQuery('.online').remove() & ExcellentExport.excel(this, jQuery('#report_table table')[0], 'cryptomedic');"> -->
-          </div>
-          <div ng-include="getReport().templateUrl" id='report_table'></div>
-        </div>
+
+        <x-page-reports></x-page-reports>
       </div>
     </div>
   </cryptomedic-data-service>

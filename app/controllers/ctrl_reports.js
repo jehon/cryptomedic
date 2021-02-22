@@ -7,9 +7,9 @@ import { getPref, setPref } from '../js/prefs.js';
 import getDataService from '../js/getDataService.js';
 import date2CanonicString from '../js/date2CanonicString.js';
 import template from '../js/template.js';
-import ExcellentExport from '../../node_modules/excellentexport/dist/excellentexport.js';
 import '../elements/x-age.js';
 import '../elements/render/x-button.js';
+import XPageReports from '../elements/pages/x-page-reports.js';
 
 export default function ctrl_reports($scope, $routeParams, $sce) {
     var report = $routeParams['report'];
@@ -146,12 +146,6 @@ export default function ctrl_reports($scope, $routeParams, $sce) {
 
         console.info('ctrl_report: Calling server to refresh the data\'s');
 
-        // const reportParamsValues = {};
-        // Object.keys($scope.values).forEach(k => {
-        //   const v = $scope.values[k];
-        //   reportParamsValues[k] = (v instanceof Date ? v.toISOString().substring(0, 10) : v)
-        // });
-
         // Launch the call
         $scope.centersList = [];
         getDataService('#reportService')
@@ -162,30 +156,13 @@ export default function ctrl_reports($scope, $routeParams, $sce) {
                 if (data.summary && data.summary.centers) {
                     $scope.centersList = Object.keys(data.summary.centers);
                 }
-                $scope.error = false;
+
+                // TODO: bridge to the new world...
+                /** @type {XPageReports} */ (document.querySelector('x-page-reports')).data = data;
                 $scope.safeApply();
             }, (error) => {
-                console.error('here we are in error: ', error);
-                $scope.result = true;
-                $scope.error = error;
                 $scope.safeApply();
             });
-    };
-
-    $scope.generate = function ($event) {
-        // TODO: check fixValue (see website) => on the fly filtering
-        document.querySelectorAll('#report_table .online').forEach(el => el.parentNode.removeChild(el));
-        document.querySelectorAll('#report_table jh-codage').forEach(el => el.parentNode.replaceChild(
-            document.createRange().createContextualFragment(`<span>${el.getAttribute('calculated-translated')}</span>`),
-            el
-        )
-        );
-        const alink = document.getElementById('report_download_button');
-        // bug fix here: https://github.com/jmaister/excellentexport/issues/54
-        ExcellentExport.excel(alink,
-            document.getElementById('report_table').getElementsByTagName('table')[0],
-            'cryptomedic');
-        alink.click();
     };
 }
 
