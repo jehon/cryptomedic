@@ -12,8 +12,9 @@ import XButtons from '../render/x-buttons.js';
 import XButton from '../render/x-button.js';
 import XRestricted from '../funcs/x-restricted.js';
 
-import { getRouteToCreateReference } from '../../js/router.js';
+import { getRouteToCreateReference, getRouteToReport } from '../../js/router.js';
 import XMessage from '../render/x-message.js';
+import { REPORT_ACTIVITY, REPORT_CONSULTATIONS, REPORT_STATISTICAL, REPORT_SURGICAL } from './x-page-reports.js';
 
 /**
  * @param {object} options to generate the XGroupPanel
@@ -138,7 +139,7 @@ Jean
                         id: 'report_consultations_menu',
                         versalIcon: '/static/img/consultOfDay.gif',
                         html: 'Have a list of the consultations of the day',
-                        toRoute: '/reports/consultations'
+                        toRoute: getRouteToReport(REPORT_CONSULTATIONS)
                     }),
 
                     // @ts-ignore
@@ -151,7 +152,7 @@ Jean
 If you want to know your activity, choose this report.<br>
 Options: the day, and optionnaly the examiner, the center and type of activity (workshop / consult / surgical / ...).
 `,
-                        toRoute: '/reports/activity'
+                        toRoute: getRouteToReport(REPORT_ACTIVITY)
                     }),
 
                     // @ts-ignore
@@ -161,7 +162,7 @@ Options: the day, and optionnaly the examiner, the center and type of activity (
                         id: 'report_statistical_menu',
                         versalIcon: '/static/img/reports.gif',
                         html: 'If you want to know the activity of the SARPV CDC on a period.',
-                        toRoute: '/reports/statistical'
+                        toRoute: getRouteToReport(REPORT_STATISTICAL)
                     }),
 
                     // @ts-ignore
@@ -171,7 +172,7 @@ Options: the day, and optionnaly the examiner, the center and type of activity (
                         id: 'report_surgical_menu',
                         versalIcon: '/static/img/reports.gif',
                         html: 'Follow up of the surgical activity of the period.',
-                        toRoute: '/reports/surgical'
+                        toRoute: getRouteToReport(REPORT_SURGICAL)
                     }),
 
                     // @ts-ignore

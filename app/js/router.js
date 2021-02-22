@@ -38,12 +38,15 @@ export function routeToLogin(redirect = getCurrentRoute()) {
 }
 
 /**
+ * @param {string} route - the route to be parsed
+ *
  * @see routeToLogin
+ *
  * @returns {object} the route parsed
  */
-export function parseRouteLogin() {
+export function parseRouteLogin(route = getCurrentRoute()) {
     return {
-        redirect: getCurrentRoute().replace(/^(\/+login)+\/+/, '/')
+        redirect: route.replace(/^(\/+login)+\/+/, '/')
     };
 }
 
@@ -86,4 +89,25 @@ export function getRouteToFolderAdd(folderId, type) {
  */
 export function getRouteToCreateReference() {
     return '/folder/-1/edit';
+}
+
+/**
+ * @param {string} reportName - the name of the report
+ *
+ * @returns {string} the route
+ */
+export function getRouteToReport(reportName) {
+    return `/reports/${reportName}`;
+}
+
+/**
+ * @param {string} route - the route to be parsed
+ * @see getRouteToReport
+ *
+ * @returns { object } the route parsed
+ */
+export function parseRouteReport(route = getCurrentRoute()) {
+    return {
+        report: route.replace(/^\/reports\//, '')
+    };
 }
