@@ -1,4 +1,6 @@
-<?php namespace App\Http\Controllers;
+<?php
+
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use DB;
@@ -24,6 +26,7 @@ abstract class ReportController extends Controller {
     $this->internalWhenTo = false;
 
     $this->result['params'] = array();
+    $this->result['list'] = array();
 
     // TODO: Refaire: param=time + from and to = calculated based on what is not specified in "time" (ex: 2016 -> +"-01-01")
     // demande changement dans controlleur javascript
@@ -177,8 +180,8 @@ abstract class ReportController extends Controller {
    * @return unknown $val
    */
   public function resultPathSet($path, $val) {
-    $loc = &$this->result;
-    foreach(explode('.', $path) as $step) {
+    $loc = &$this->result['list'];
+    foreach (explode('.', $path) as $step) {
       if (!array_key_exists($step, $loc)) {
         $loc[$step] = array();
       }
