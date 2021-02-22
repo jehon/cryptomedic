@@ -6,13 +6,13 @@ import { createElementWithTag, enrichObject } from './custom-element.js';
  * @param {Array<T>} arr to be fill in
  * @param {number} newSize to expand
  * @param {T} withValue to fill in
- * @template T
+ * @template {*} T
  *
  * @returns {Array<T>} completed
  */
 function arrayResize(arr, newSize, withValue) {
     arr = arr ?? [];
-    return /** @type {Array<T>} */ ([...arr, ...Array(newSize - arr.length).fill(withValue)]);
+    return [...arr, ...Array(newSize - arr.length).fill(withValue)];
 }
 
 export default class TableBuilder {
@@ -50,17 +50,16 @@ export default class TableBuilder {
         return this;
     }
 
-
     /**
      *
      * @param {HTMLElement} region of the region
      * @param {number} n - the number of * to add
      * @param {object} attributes to be set
-     * @param {function(Element, *, number): void} callback to modify the element
+     * @param {function(Element, number): void} callback to modify the element
      */
     _addRegion(region, n, attributes, callback) {
         for (let i = 0; i < n; i++) {
-            region.append(createElementWithTag('tr', attributes, [], (el) => callback(el, this.#data[i], i)));
+            region.append(createElementWithTag('tr', attributes, [], (el) => callback(el, i)));
         }
     }
 
@@ -69,7 +68,7 @@ export default class TableBuilder {
      *
      * @param {number} n - the number of * to add
      * @param {object} attributes to be set
-     * @param {function(Element, *, number): void} callback to modify the element
+     * @param {function(Element, number): void} callback to modify the element
      *
      * @returns {TableBuilder} for chaining
      */
@@ -83,7 +82,7 @@ export default class TableBuilder {
      *
      * @param {number} n - the number of * to add
      * @param {object} attributes to be set
-     * @param {function(Element, *, number): void} callback to modify the element
+     * @param {function(Element, number): void} callback to modify the element
      *
      * @returns {TableBuilder} for chaining
      */
@@ -101,7 +100,7 @@ export default class TableBuilder {
      */
     addData(data, attributes = {}, callback = (_el, _i) => { }) {
         this.#data = data;
-        this._addRegion(this.#regions.body, data.length, attributes, callback);
+        this._addRegion(this.#regions.body, data.length, attributes, (el, i) => callback(el, this.#data[i], i));
 
         return this;
     }
@@ -114,7 +113,15 @@ export default class TableBuilder {
      * @returns {Array<string>} of calculated values
      */
     _addToRegion(region, values, tag) {
+        if (!region) {
+            console.error('Region is empty: ', region);
+        }
+
         const childrenList = Array.from(region.children);
+        if (!childrenList || childrenList.length < values.length) {
+            console.error('Too much data: ', childrenList, values);
+        }
+
 
         let res = [];
 
@@ -142,14 +149,13 @@ export default class TableBuilder {
 
     /**
      *
-     * @param {string|function(object, number):string} fieldData to be put in cells
-     * @param {Array<null|string|function([string]):string>} headers to be put in headers (in reverse order)
-     * @param {Array<null|string|function([string]):string>} footers to be put in footesr (in reverse order)
+     * @param {string|function(object, number):(string|HTMLElement)} fieldData to be put in cells
+     * @param {Array<null|string|function([string]):(string|HTMLElement)>} headers to be put in headers (in reverse order)
+     * @param {Array<null|string|function([string]):(string|HTMLElement)>} footers to be put in footesr (in reverse order)
      *
      * @returns {TableBuilder} for chaining
      */
     addColumn(fieldData, headers = [], footers = []) {
-
         // BODY
         // const values =
         this._addToRegion(this.#regions.body,

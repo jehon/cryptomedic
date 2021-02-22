@@ -9,6 +9,7 @@ import XButton from '../render/x-button.js';
 import XButtons from '../render/x-buttons.js';
 import XGroupPanel from '../render/x-group-panel.js';
 import XPanel from '../render/x-panel.js';
+import '../x-write-list.js';
 
 export default class XPageSearch extends HTMLElement {
     constructor() {
@@ -107,16 +108,19 @@ export default class XPageSearch extends HTMLElement {
 
                 this._result.append(
                     ...createElementsFromHTML('<div style="text-align: center; color: red">Only the first 100 results are shown</div>'),
-                    new TableBuilder(data)
+                    new TableBuilder()
                         .enrichTable({ id: 'search_results', class: 'table table-hover table-bordered tablesorter', pagesize: '10' })
-                        .enrichRows({}, (el, data) => el.addEventListener('click', () => setRoute(getRouteToFolderPatient(data.id))))
-                        .addColumn('', () => createElementWithTag('img', { src: '/static/img/go.gif' }))
-                        .addColumn('Reference', data => data.entryyear + '-' + data.entryorder)
-                        .addColumn('Name', 'Name')
-                        .addColumn('Sex', 'Sex')
-                        .addColumn('Year of Birth', 'Yearofbirth')
-                        .addColumn('Telephone', 'Telephone')
-                        .addColumn('Pathology', 'Pathology')
+                        .addHeaders(1)
+                        .addData(data, {}, (el, data) => el.addEventListener('click', () => setRoute(getRouteToFolderPatient(data.id))))
+
+                        .addColumn(() => createElementWithTag('img', { src: '/static/img/go.gif' }), [''])
+                        .addColumn(data => data.entryyear + '-' + data.entryorder, ['Reference'])
+                        .addColumn('Name', ['Name'])
+                        .addColumn('Sex', ['Sex'])
+                        .addColumn('Yearofbirth', ['Year of Birth'])
+                        .addColumn('Telephone', ['Telephone'])
+                        .addColumn('Pathology', ['Pathology'])
+
                         .render()
                 );
                 this.removeAttribute('status');
