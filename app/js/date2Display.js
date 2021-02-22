@@ -6,7 +6,8 @@ const pad = (what, l) => {
 
 export const Invalid = 'Invalid date';
 
-// TODO: choose between date2Display and x-date
+// TODO: choose between date2Display and date2CanonicString
+// Used by x-display-date
 
 /**
  * Render a date to display
