@@ -113,7 +113,7 @@ setup-computer:
 	@echo "Installing the key"
 	cat ovh.key >> $(SSH_KNOWN_HOSTS)
 
-update-deploy-host-key:
+update-config-host-key:
 	ssh-keyscan -t ssh-rsa $(DEPLOY_HOST) > ovh.key
 
 .PHONY: start
@@ -163,7 +163,7 @@ test-api: docker-started dependencies-api
 	$(call run_in_docker,server,"/app/bin/dev-phpunit.sh laravel")
 
 .PHONY: test-api-commit
-update-test-api: docker-started dependencies-api
+update-references-api: docker-started dependencies-api
 	$(call itself,data-reset)
 	$(call run_in_docker,server,"/app/bin/dev-phpunit.sh COMMIT")
 
@@ -196,7 +196,7 @@ tmp/styles.json: tmp/e2e/.tested
 	npm run --silent test-style
 	@echo "Report is at http://localhost:$(CRYPTOMEDIC_PORT)/xappx/tmp/style.html"
 
-update-test-style-references:
+update-references-style:
 	@jq -r 'keys[]' tmp/styles.json | while IFS='' read -r F; do \
 		echo "updating $$F"; \
 		cp "tmp/e2e/browsers/firefox/$$F" "tests/style/references/$$F"; \
