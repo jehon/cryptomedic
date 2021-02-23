@@ -29,7 +29,6 @@ window.XRequestor = XRequestor;
 import '../elements/x-requestor-crud.js';
 import '../elements/cryptomedic-data-service.js';
 
-import '../elements/jh-codage.js';
 import '../elements/jh-script.js';
 import '../elements/block-bill-category.js';
 import '../elements/block-bill-line.js';

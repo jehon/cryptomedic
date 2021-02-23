@@ -41,7 +41,8 @@ module.exports = {
             // Payment recovery
             .row(6).col(3).assert('Ershad')
             .nextCol().assert('CDC')
-            .nextCol(13).assert('Complementary payments')
+            .col(16).assert('Plast')
+            .nextCol(4).assert('Complementary payments')
             .col('last').assert('113')
 
             .section('tfoot')
@@ -85,8 +86,8 @@ module.exports = {
             // Payment recovery
             .row(3).col(3).assert('Ershad')
             .nextCol().assert('CDC')
-            .nextCol(3)
-            .nextCol(13).assert('Complementary payments')
+            .col(16).assert('Plast')
+            .nextCol(4).assert('Complementary payments')
             .col('last').assert('113')
 
             .section('tfoot')

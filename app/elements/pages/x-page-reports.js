@@ -4,7 +4,7 @@ import { messages } from '../../config.js';
 import { createElementWithObject, createElementWithTag, defineCustomElement } from '../../js/custom-element.js';
 import { getRouteToFolderPatient, parseRouteReport } from '../../js/router.js';
 import TableBuilder from '../../js/table-builder.js';
-import JHCodage from '../jh-codage.js';
+import XCodage from '../funcs/x-codage.js';
 import XButton from '../render/x-button.js';
 import XDisplayDate from '../render/x-display-date.js';
 import XMessages from '../render/x-messages.js';
@@ -104,7 +104,7 @@ export default class XPageReports extends HTMLElement {
             createElementWithTag('span', {}, el.innerHTML),
             el
         ));
-        this.#result.querySelectorAll('jh-codage').forEach(el => el.parentNode.replaceChild(
+        this.#result.querySelectorAll('x-codage').forEach(el => el.parentNode.replaceChild(
             document.createRange().createContextualFragment(`<span>${el.getAttribute('calculated-translated')}</span>`),
             el
         ));
@@ -151,7 +151,7 @@ reports[REPORT_ACTIVITY] = { // test data: 2014-05
             )
             .addColumn('Date', ['Date'])
             .addColumn('ExaminerName', ['Examiner'])
-            .addColumn((data) => createElementWithObject(JHCodage, { value: data.Center }), ['Place'])
+            .addColumn((data) => createElementWithObject(XCodage, { value: data.Center }), ['Place'])
             .addColumn('patient_reference', ['Record n#'])
             .addColumn('patient_name', ['Patient Name', 'Identity', 'Where', 'When', 'Who'])
             .addColumn(data => createElementWithObject(XAge, { value: data.yearofbirth, ref: data.Date }), ['Age', null, params.center, params.when, params.examiner])
@@ -168,7 +168,7 @@ reports[REPORT_ACTIVITY] = { // test data: 2014-05
             .addColumn(data => Math.round(data.sl_familySalary / data.sl_numberOfHouseholdMembers), ['Tk per pers', null, '301-500', 1])
             .addColumn('Sociallevel', ['SL'])
 
-            .addColumn((data) => createElementWithObject(JHCodage, { value: data.Pathology }), ['Diagno', 'Medical', '501-1500', 2])
+            .addColumn((data) => createElementWithObject(XCodage, { value: data.Pathology }), ['Diagno', 'Medical', '501-1500', 2])
             .addColumn('act', ['Act'])
             .addColumn('treatment', ['Trt', null, '1501-3000', 3])
             .addColumn('last_seen', ['Last seen', 'Surgical'])
@@ -176,7 +176,7 @@ reports[REPORT_ACTIVITY] = { // test data: 2014-05
             .addColumn('last_treat_finished', ['Done ?', null])
 
             .addColumn(data => (data.complementary
-                ? createElementWithObject(JHCodage, { translated: 'Complementary payments', value: 'Money collected on bills from previous months' })
+                ? createElementWithObject(XCodage, { value: 'Money collected on bills from previous months', translated: 'Complementary payments' })
                 : (data.price_consult ?? 0)
             ), ['Consult', 'Price', '', '', ''], ['total', data.totals.price_consult])
 
@@ -263,7 +263,7 @@ reports[REPORT_SURGICAL] = { // test data: 2014-01
             .addColumn(data => Math.round(data.sl_familySalary / data.sl_numberOfHouseholdMembers), ['Tk per pers', null, '301-500', 1])
             .addColumn('Sociallevel', ['SL'])
 
-            .addColumn((data) => createElementWithObject(JHCodage, { value: data.Pathology }), ['Diagno', 'Medical', '501-1500', 2])
+            .addColumn((data) => createElementWithObject(XCodage, { value: data.Pathology }), ['Diagno', 'Medical', '501-1500', 2])
             .addColumn('act', ['Act'])
             .addColumn('treatment', ['Trt', null, '1501-3000', 3])
             .addColumn('last_seen', ['Last seen', 'Surgical'])
