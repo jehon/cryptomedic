@@ -162,7 +162,7 @@ test-api: docker-started dependencies-api
 	$(call itself,data-reset)
 	$(call run_in_docker,server,"/app/bin/dev-phpunit.sh laravel")
 
-.PHONY: test-api-commit
+.PHONY: update-references-api
 update-references-api: docker-started dependencies-api
 	$(call itself,data-reset)
 	$(call run_in_docker,server,"/app/bin/dev-phpunit.sh COMMIT")
@@ -196,7 +196,9 @@ tmp/styles.json: tmp/e2e/.tested
 	npm run --silent test-style
 	@echo "Report is at http://localhost:$(CRYPTOMEDIC_PORT)/xappx/tmp/style.html"
 
+.PHONY: update-references-style
 update-references-style:
+	# TODO: this does not allow new references
 	@jq -r 'keys[]' tmp/styles.json | while IFS='' read -r F; do \
 		echo "updating $$F"; \
 		cp "tmp/e2e/browsers/firefox/$$F" "tests/style/references/$$F"; \
@@ -270,10 +272,12 @@ www/api/$(VAPI)/public/vendor/.dependencies: www/api/$(VAPI)/public/composer.jso
 	$(call run_in_docker,dev,"cd www/api/$(VAPI)/public/ && composer install")
 	touch www/api/$(VAPI)/public/vendor/.dependencies
 
+.PHONY: update-dependencies-api
 update-dependencies-api:
 	$(call run_in_docker,dev,"cd www/api/$(VAPI) && composer update")
 	touch www/api/$(VAPI)/vendor/.dependencies
 
+.PHONY: update-dependencies-api-bare
 update-dependencies-api-bare:
 	$(call run_in_docker,dev,"cd www/api/$(VAPI)/public/ && composer update")
 	touch www/api/$(VAPI)/public/vendor/.dependencies
