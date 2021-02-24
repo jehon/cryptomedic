@@ -3,6 +3,8 @@ import ExcellentExport from '../../../node_modules/excellentexport/dist/excellen
 import { messages } from '../../config.js';
 import { createElementWithObject, createElementWithTag, defineCustomElement } from '../../js/custom-element.js';
 import { getRouteToFolderPatient, parseRouteReport } from '../../js/router.js';
+import { getSession } from '../../js/session.js';
+import { toSentenceCase } from '../../js/string-utils.js';
 import TableBuilder from '../../js/table-builder.js';
 import XCodage from '../funcs/x-codage.js';
 import XButton from '../render/x-button.js';
@@ -217,8 +219,9 @@ reports[REPORT_STATISTICAL] = { // test data:
     description: 'If you want to know the activity of the SARPV CDC on a period, choose this report',
     params: ['period', 'center', 'examiner'],
     dataGenerator: 'statistical',
-    generator: (_tableBuilder) => {
-        // TODO: this report is currently unavailable
+    generator: (tableBuilder, data) => {
+        // Break everything
+        tableBuilder._element.querySelector('tbody').innerHTML = statistical(data.list, data.params);
     }
 };
 
@@ -282,3 +285,116 @@ reports[REPORT_SURGICAL] = { // test data: 2014-01
 };
 
 defineCustomElement(XPageReports);
+
+
+/**
+ * @param {*} data for the report
+ * @param {*} params for the report
+ *
+ * @returns {string} as the table content
+ */
+function statistical(data, params) {
+    const r = (nbr, n) => Math.round(nbr * Math.pow(10, n)) / Math.pow(10, n);
+
+    // result.summary => data.summary
+
+    const listings = getSession().lists;
+
+    return `
+<tr><td colspan="2" class="subheader">Requested</td></tr>
+<tr><td>Period</td><td>${params.when}</td></tr>
+
+<tr><td colspan="2" class="subheader">Diagnostic</td></tr>
+<tr><td>If patient have multiple pathologies, he will be counted more than once</td><td></td></tr>
+<tr><td>Ricket consults</td><td>${data.summary.pathologies.rickets.total}</td></tr>
+<tr><td>Ricket consults (new only)</td><td>${data.summary.pathologies.rickets.new}</td></tr>
+<tr><td>Ricket consults (old only)</td><td>${data.summary.pathologies.rickets.old}</td></tr>
+<tr><td>Club Foots</td><td>${data.summary.pathologies.clubfoots.total}</td></tr>
+<tr><td>Club Foots (new only)</td><td>${data.summary.pathologies.clubfoots.new}</td></tr>
+<tr><td>Club Foots (old only)</td><td>${data.summary.pathologies.clubfoots.old}</td></tr>
+<tr><td>Polio</td><td>${data.summary.pathologies.polio.total}</td></tr>
+<tr><td>Burn</td><td>${data.summary.pathologies.burn.total}</td></tr>
+<tr><td>CP</td><td>${data.summary.pathologies.cp.total}</td></tr>
+<tr><td>Fracture</td><td>${data.summary.pathologies.fracture.total}</td></tr>
+<tr><td>Infection</td><td>${data.summary.pathologies.infection.total}</td></tr>
+<tr><td>Congenital</td><td>${data.summary.pathologies.congenital.total}</td></tr>
+<tr><td>Adult</td><td>${data.summary.pathologies.adult.total}</td></tr>
+<tr><td>Normal</td><td>${data.summary.pathologies.normal.total}</td></tr>
+<tr><td>Other</td><td>${data.summary.pathologies.other.total}</td></tr>
+<tr><td>All consultations</td><td>${data.summary.pathologies.total}</td></tr>
+
+<tr><td colspan="2" class="subheader">Patients seen</td></tr>
+<tr><td>Number of patients seen</td><td>${data.summary.nbPatients}</td></tr>
+
+<tr><td colspan="2" class="subheader">Social Level</td></tr>
+<tr><td>Family income (mean)</td><td>${r(data.summary.sociallevel.familyincome, 1)}</td ></tr>
+<tr><td>Nb household mb (mean)</td><td>${r(data.summary.sociallevel.nbhousehold, 1)}</td ></tr >
+<tr><td>ratio (mean)</td><td>${r(data.summary.sociallevel.familyincome / data.summary.sociallevel.nbhousehold, 2)}</td ></tr >
+${listings.SocialLevel.map(v => `<tr><td>Social Level ${v}</td><td>${data.summary.sociallevel[v]}</td></tr>`).join('\n')}
+<tr><td>All social level together</td><td>${data.summary.sociallevel.total}</td></tr>
+
+<tr><td colspan="2" class="subheader">Where</td></tr>
+${listings.Centers.map(v => `<tr><td>@<x-i18n value='${v}'></x-i18n></td><td>${data.summary.centers[v] ?? 0}</td></tr>`).join('\n')}
+<tr><td>center unspecified</td><td>${data.summary.centers.unspecified}</td></tr>
+
+<tr><td colspan="2" class="subheader">Surgical activity</td></tr>
+${Object.keys(data.summary.count.surgical).map(v => `<tr><td>${toSentenceCase(v)}</td><td>${data.summary.count.surgical[v]}</td></tr>`).join('\n')}
+
+<tr><td colspan="2" class="subheader">Medical Activity</td></tr>
+${Object.keys(data.summary.count.medecine).map(v => `<tr><td>${toSentenceCase(v)}</td><td>${data.summary.count.medecine[v]}</td></tr>`).join('\n')}
+
+<tr><td colspan="2" class="subheader">Workshop Activity</td></tr>
+${Object.keys(data.summary.count.workshop).map(v => `<tr><td>${toSentenceCase(v)}</td><td>${data.summary.count.workshop[v]}</td></tr>`).join('\n')}
+
+<tr><td colspan="2" class="subheader">Consult Activity</td></tr>
+${Object.keys(data.summary.count.consult).map(v => `<tr><td>${toSentenceCase(v)}</td><td>${data.summary.count.consult[v]}</td></tr>`).join('\n')}
+
+<tr><td colspan="2" class="subheader">Other activity</td></tr>
+${Object.keys(data.summary.count.other).map(v => `<tr><td>${toSentenceCase(v)}</td><td>${data.summary.count.other[v]}</td></tr>`).join('\n')}
+
+<tr><td colspan="2" class="subheader">Financials</td></tr>
+
+<tr><td colspan="2" class="subheader">Surgery</td></tr>
+<tr><td>total_real</td><td>${data.summary.financials.surgery.real}</td></tr>
+<tr><td>total_asked</td><td>${data.summary.financials.surgery.asked}</td></tr>
+<tr><td>total_paid</td><td>${data.summary.financials.surgery.paid}</td></tr>
+<tr><td>total paid / total real</td><td>${r(data.summary.financials.surgery.paid / data.summary.financials.surgery.real, 2)}</td ></tr >
+
+<tr><td colspan="2" class="subheader"></td></tr>
+<tr><td colspan="2" class="subheader">Medical (exl. above)</td></tr>
+<tr><td>total real</td><td>${data.summary.financials.medical.real}</td></tr>
+<tr><td>total asked</td><td>${data.summary.financials.medical.asked}</td></tr>
+<tr><td>total paid</td><td>${data.summary.financials.medical.paid}</td></tr>
+<tr><td>total paid / total real</td><td>${r(data.summary.financials.medical.paid / data.summary.financials.medical.real, 2)}</td ></tr >
+
+<tr><td colspan="2" class="subheader"></td></tr>
+<tr><td colspan="2" class="subheader">Workshop (exl. above)</td></tr>
+<tr><td>total real</td><td>${data.summary.financials.workshop.real}</td></tr>
+<tr><td>total asked</td><td>${data.summary.financials.workshop.asked}</td></tr>
+<tr><td>total paid</td><td>${data.summary.financials.workshop.paid}</td></tr>
+<tr><td>total paid / total real</td><td>${r(data.summary.financials.workshop.paid / data.summary.financials.workshop.real, 2)}</td ></tr >
+
+<tr><td colspan="2" class="subheader"></td></tr>
+<tr><td colspan="2" class="subheader">Consults (exl. above)</td></tr>
+<tr><td>total real</td><td>${data.summary.financials.consult.real}</td></tr>
+<tr><td>total asked</td><td>${data.summary.financials.consult.asked}</td></tr>
+<tr><td>total paid</td><td>${data.summary.financials.consult.paid}</td></tr>
+<tr><td>total paid / total real</td><td>${r(data.summary.financials.consult.paid / data.summary.financials.consult.real, 2)}</td ></tr >
+
+<tr><td colspan="2" class="subheader"></td></tr>
+<tr><td colspan="2" class="subheader">Others (exl. above)</td></tr>
+<tr><td>total real</td><td>${data.summary.financials.other.real}</td></tr>
+<tr><td>total asked</td><td>${data.summary.financials.other.asked}</td></tr>
+<tr><td>total paid</td><td>${data.summary.financials.other.paid}</td></tr>
+<tr><td>total paid / total real</td><td>${r(data.summary.financials.other.paid / data.summary.financials.other.real, 2)}</td ></tr >
+
+<tr><td colspan="2" class="subheader"></td></tr>
+<tr><td colspan="2" class="subheader">Grand Total</td></tr>
+<tr><td>total real</td><td>${data.summary.financials.total.real}</td></tr>
+<tr><td>total asked</td><td>${data.summary.financials.total.asked}</td></tr>
+<tr><td>total paid</td><td>${data.summary.financials.total.paid}</td></tr>
+<tr><td>total paid / total real</td><td>${r(data.summary.financials.total.paid / data.summary.financials.total.real, 2)}</td ></tr >
+
+<tr><td colspan="2" class="subheader"></td></tr>
+`;
+}
