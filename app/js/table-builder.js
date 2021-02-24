@@ -17,22 +17,22 @@ function arrayResize(arr, newSize, withValue) {
 
 export default class TableBuilder {
     /** @type {HTMLElement} */
-    #element
+    _element
 
-    #regions = {
+    _regions = {
         headers: createElementWithTag('thead', {}),
         body: createElementWithTag('tbody', {}),
         footers: createElementWithTag('tfoot', {}),
     }
 
     /** @type {Array<object>} */
-    #data
+    _data
 
     constructor() {
-        this.#element = createElementWithTag('table', {}, [
-            this.#regions.headers,
-            this.#regions.body,
-            this.#regions.footers,
+        this._element = createElementWithTag('table', {}, [
+            this._regions.headers,
+            this._regions.body,
+            this._regions.footers,
         ]);
     }
 
@@ -45,7 +45,7 @@ export default class TableBuilder {
      * @returns {TableBuilder} for chaining
      */
     enrichTable(attributes = {}, callback = (_el) => { }) {
-        enrichObject(this.#element, attributes, [], callback);
+        enrichObject(this._element, attributes, [], callback);
 
         return this;
     }
@@ -73,7 +73,7 @@ export default class TableBuilder {
      * @returns {TableBuilder} for chaining
      */
     addHeaders(n, attributes = {}, callback = (_el, _i) => { }) {
-        this._addRegion(this.#regions.headers, n, attributes, callback);
+        this._addRegion(this._regions.headers, n, attributes, callback);
         return this;
     }
 
@@ -87,7 +87,7 @@ export default class TableBuilder {
      * @returns {TableBuilder} for chaining
      */
     addFooters(n, attributes = {}, callback = (_el, _i) => { }) {
-        this._addRegion(this.#regions.footers, n, attributes, callback);
+        this._addRegion(this._regions.footers, n, attributes, callback);
         return this;
     }
 
@@ -99,8 +99,8 @@ export default class TableBuilder {
      * @returns {TableBuilder} for chaining
      */
     addData(data, attributes = {}, callback = (_el, _i) => { }) {
-        this.#data = data;
-        this._addRegion(this.#regions.body, data.length, attributes, (el, i) => callback(el, this.#data[i], i));
+        this._data = data;
+        this._addRegion(this._regions.body, data.length, attributes, (el, i) => callback(el, this._data[i], i));
 
         return this;
     }
@@ -158,18 +158,18 @@ export default class TableBuilder {
     addColumn(fieldData, headers = [], footers = []) {
         // BODY
         // const values =
-        this._addToRegion(this.#regions.body,
-            this.#data
+        this._addToRegion(this._regions.body,
+            this._data
                 .map(row =>
                     fieldData instanceof Function
                         ? (i) => fieldData(row, i)
-                        : (i) => (this.#data[i][fieldData] ?? '')
+                        : (i) => (this._data[i][fieldData] ?? '')
                 ),
             'td'
         );
 
-        this._addToRegion(this.#regions.headers,
-            arrayResize(headers, this.#regions.headers.childElementCount, null).reverse().map(row =>
+        this._addToRegion(this._regions.headers,
+            arrayResize(headers, this._regions.headers.childElementCount, null).reverse().map(row =>
                 (n) =>
                     row instanceof Function
                         ? 'Not implemented ' + n // TODO
@@ -178,8 +178,8 @@ export default class TableBuilder {
             'th'
         );
 
-        this._addToRegion(this.#regions.footers,
-            arrayResize(footers.reverse(), this.#regions.footers.childElementCount, null).reverse().map(row =>
+        this._addToRegion(this._regions.footers,
+            arrayResize(footers.reverse(), this._regions.footers.childElementCount, null).reverse().map(row =>
                 (n) =>
                     row instanceof Function
                         ? 'Not implemented ' + n // TODO
@@ -192,6 +192,6 @@ export default class TableBuilder {
     }
 
     render() {
-        return this.#element;
+        return this._element;
     }
 }
