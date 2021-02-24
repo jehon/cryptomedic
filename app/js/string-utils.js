@@ -5,6 +5,7 @@
  */
 export function _canonize(text) {
     return text
+        // .split(/([ _-]|(?=[A-Z][a-z]))/g)
         .split(/([ _-]|(?=[A-Z]))/g)
         .filter(v => v && ![' ', '_', '-'].includes(v))
         .map(v => v.toLowerCase());

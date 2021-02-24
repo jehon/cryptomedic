@@ -8,6 +8,8 @@ describe(fn(import.meta.url), function () {
         expect(_canonize('abc-def-ghi')).toEqual(['abc', 'def', 'ghi']);
         expect(_canonize('abc_def_ghi')).toEqual(['abc', 'def', 'ghi']);
         expect(_canonize('abcDefGhi')).toEqual(['abc', 'def', 'ghi']);
+        expect(_canonize('XWithFolder')).toEqual(['x', 'with', 'folder']);
+        // expect(_canonize('abc_DEF_ghi')).toEqual(['abc', 'DEF', 'ghi']); // TODO
     });
 
     it('should sentence case', function () {
