@@ -68,6 +68,10 @@ export function enrichObject(el, attributes = {}, inner = [], callback = (_el) =
             val = k;
         }
 
+        if (val === null) {
+            val = '';
+        }
+
         if (typeof (val) == 'object') {
             val = Object.keys(val).map((k) => `${toAttributeCase(k)}: ${val[k]}`).join(';');
         }
