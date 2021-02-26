@@ -1,9 +1,8 @@
 pipeline {
   agent any
   environment {
-    CRYPTOMEDIC_UPLOAD_USER = credentials('CRYPTOMEDIC_UPLOAD_USER')
-    CRYPTOMEDIC_UPLOAD_PASSWORD = credentials('CRYPTOMEDIC_UPLOAD_PASSWORD')
-    CRYPTOMEDIC_DB_UPGRADE = credentials('CRYPTOMEDIC_DB_UPGRADE')
+    CRYPTOMEDIC_UPLOAD = credentials('cryptomedic-upload')
+    CRYPTOMEDIC_DB_UPGRADE = credentials('cryptomedic-deploy')
     // Need a port for console call -> do everything from dev is ok
     CRYPTOMEDIC_PORT = 15080
   }
@@ -85,7 +84,10 @@ make dependencies
       }
       steps {
         lock(resource: 'cryptomedic_production') {
-          sh 'make deploy'
+          sh '''
+            CRYPTOMEDIC_UPLOAD_USER=$CRYPTOMEDIC_UPLOAD_USR
+            CRYPTOMEDIC_UPLOAD_PASSWORD=$CRYPTOMEDIC_UPLOAD_PSW
+               make deploy'''
         }
       }
     }
