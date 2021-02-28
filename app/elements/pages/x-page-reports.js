@@ -102,12 +102,11 @@ export default class XPageReports extends HTMLElement {
         // TODO: check fixValue (see website) => on the fly filtering
         this.#result.querySelectorAll('.online').forEach(el => el.parentNode.removeChild(el));
         this.#result.querySelectorAll('a').forEach(el => el.parentNode.replaceChild(
-            // document.createRange().createContextualFragment(`<span>${el.innerHTML}</span>`),
             createElementWithTag('span', {}, el.innerHTML),
             el
         ));
         this.#result.querySelectorAll('x-codage').forEach(el => el.parentNode.replaceChild(
-            document.createRange().createContextualFragment(`<span>${el.getAttribute('calculated-translated')}</span>`),
+            createElementWithTag('span', {}, [el.innerHTML]),
             el
         ));
 
