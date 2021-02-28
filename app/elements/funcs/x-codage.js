@@ -64,6 +64,7 @@ export default class XCodage extends HTMLElement {
         }
 
         this._content.innerHTML = translated;
+        this.setAttribute('printing', translated);
         this._tooltip.setAttribute('title', originalValue);
     }
 }
