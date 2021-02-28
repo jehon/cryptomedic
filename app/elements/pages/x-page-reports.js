@@ -100,6 +100,7 @@ export default class XPageReports extends HTMLElement {
 
     generateXLS() {
         // TODO: check fixValue (see website) => on the fly filtering
+        this.#result.querySelectorAll('[printing]').forEach(el => el.replaceWith(el.getAttribute('printing')));
         this.#result.querySelectorAll('.online').forEach(el => el.parentNode.removeChild(el));
         this.#result.querySelectorAll('a').forEach(el => el.parentNode.replaceChild(
             createElementWithTag('span', {}, el.innerHTML),
