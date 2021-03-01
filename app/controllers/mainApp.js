@@ -9,7 +9,6 @@ import ctrl_file_appointment from './ctrl_file_appointment.js';
 import ctrl_file_bill from './ctrl_file_bill.js';
 import ctrl_folder from './ctrl_folder.js';
 import ctrl_prices from './ctrl_prices.js';
-import ctrl_reports from './ctrl_reports.js';
 import ctrl_users from './ctrl_users.js';
 
 import { parseRouteLogin } from '../js/router.js';
@@ -84,12 +83,12 @@ mainApp.controller('ctrl', ['$scope', function ($scope) {
 mainApp.controller('ctrl_file_appointment', ctrl_file_appointment);
 mainApp.controller('ctrl_file_bill', ctrl_file_bill);
 mainApp.controller('ctrl_folder', ctrl_folder);
-mainApp.controller('ctrl_reports', ctrl_reports);
 mainApp.controller('ctrl_users', ctrl_users);
 mainApp.controller('ctrl_prices', ctrl_prices);
 
 import '../elements/pages/x-page-login.js';
 import '../elements/pages/x-page-home.js';
+import '../elements/pages/x-page-reports.js';
 import '../elements/pages/x-page-search.js';
 
 
@@ -121,8 +120,7 @@ mainApp.config(['$routeProvider', function ($routeProvider) {
             controller: 'ctrl_folder',
         })
         .when('/reports/:report?', {
-            templateUrl: template('reports'),
-            controller: 'ctrl_reports',
+            template: '<x-page-reports></x-page-reports>',
         })
         .when('/users', {
             templateUrl: template('page', 'users'),

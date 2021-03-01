@@ -1,16 +1,25 @@
 
 import ExcellentExport from '../../../node_modules/excellentexport/dist/excellentexport.js';
-import { messages } from '../../config.js';
+import { actions, messages } from '../../config.js';
 import { createElementWithObject, createElementWithTag, defineCustomElement } from '../../js/custom-element.js';
+import date2CanonicString from '../../js/date2CanonicString.js';
+import { getPref, setPref } from '../../js/prefs.js';
 import { getRouteToFolderPatient, parseRouteReport } from '../../js/router.js';
 import { getSession } from '../../js/session.js';
 import { toSentenceCase } from '../../js/string-utils.js';
 import TableBuilder from '../../js/table-builder.js';
 import XCodage from '../funcs/x-codage.js';
+import XForm from '../funcs/x-form.js';
+import XInputList from '../funcs/x-input-list.js';
+import XRequestor, { reportQueryBuilder } from '../funcs/x-requestor.js';
 import XButton from '../render/x-button.js';
+import XButtons from '../render/x-buttons.js';
 import XDisplayDate from '../render/x-display-date.js';
+import XGroupPanel from '../render/x-group-panel.js';
+import XLabel from '../render/x-label.js';
 import XMessages from '../render/x-messages.js';
 import XAge from '../x-age.js';
+import XInputDate from '../x-input-date.js';
 
 /**
  * Two parts here:
@@ -20,58 +29,242 @@ import XAge from '../x-age.js';
 
 export default class XPageReports extends HTMLElement {
 
+    /** @type {XRequestor} */
+    _requestor
+
+    /** @type {XForm} */
+    _form
+
     /** @type {HTMLElement} */
-    #result
+    _result
 
     /** @type {HTMLAnchorElement} */
-    #exportLink
+    _exportLink
 
     /** @type {XMessages} */
-    #messages
+    _messages
 
-    /** @type {Array<*>} */
-    #data
+    /** @type {*} */
+    _data
 
     constructor() {
         super();
 
-        // this.attachShadow({ mode: 'open' }); // TODO: remove shadow when fully migrated
-        this.innerHTML = '';
         this.append(
             createElementWithTag('css-inherit'),
+
+            // TODO: only two-columns on large screens !
             createElementWithTag('style', {}, `
+.top {
+    display: flex;
+    flex-direction: row;
+}
+
+.top > * {
+    flex-basis: 1px;
+    flex-grow: 1;
+}
         `
             ),
-            // Search pane
-            createElementWithTag('slot'),
 
-            this.#messages = createElementWithObject(XMessages),
+            this._requestor = createElementWithObject(XRequestor, {}, [
+                createElementWithTag('div', { class: 'top' }, [
+                    createElementWithTag('div', {}, [
+                        createElementWithTag('h1', {}, getReportDescription().name),
+                        createElementWithTag('div', {}, getReportDescription().description)
+                    ]),
+                    createElementWithTag('div', {}, [
+                        createElementWithObject(XGroupPanel, { title: 'Parameters' }, [
+                            this._form = createElementWithObject(XForm, {}, [
+                                this._params = createElementWithTag('span'),
+                                this._messages = createElementWithObject(XMessages),
+                                createElementWithObject(XButtons, {}, [
+                                    createElementWithObject(XButton, { action: actions.query }, 'Search'),
+                                    createElementWithObject(XButton, { action: actions.cancel }, 'Reset'),
+                                ])
+                            ], el => {
+                                el.addEventListener('submit', () => this.query());
+                                el.addEventListener('reset', () => this.reset());
+                            })
+                        ]),
+                    ]),
+                ]),
 
-            // Report result
-            this.#result = createElementWithTag('div', { id: 'report_table' })
+                // Report result
+                this._result = createElementWithTag('div', { id: 'report_table' })
+            ])
         );
+
+        //
+        // Center
+        //
+        if (getReportDescription().params.includes('center')) {
+            this._params.insertAdjacentElement('beforeend',
+                createElementWithObject(XLabel, { label: 'Center' }, [
+                    createElementWithObject(XInputList, { name: 'center', nullable: true, listName: 'Centers' })
+                ])
+            );
+        }
+
+        //
+        // Examiner
+        //
+        if (getReportDescription().params.includes('examiner')) {
+            this._params.insertAdjacentElement('beforeend',
+                createElementWithObject(XLabel, { label: 'Examiner' }, [
+                    createElementWithObject(XInputList, { name: 'examiner', listName: 'Examiner' })
+                ])
+            );
+        }
+
+        //
+        // Period
+
+        // TODO: consultations -> param = day !!!
+
+        //
+        if (getReportDescription().params.includes('period')) {
+            const periodList = ['day', 'month', 'year'];
+
+            const switchPeriod = (period) => {
+                periodList.forEach((e) => {
+                    const xlb = /** @type {XLabel} */(this._params.querySelector(`x-label[period="${e}"]`));
+                    xlb.style.display = (period == e) ? xlb.constructor.DISPLAY_MODE : 'none';
+                });
+            };
+            this._params.insertAdjacentElement('beforeend',
+                createElementWithObject(XLabel, { label: 'Period' }, [
+                    this._periodSelector = createElementWithObject(XInputList, { name: 'period', list: periodList, value: 'month' }, [],
+                        // On change, show the correct input value
+                        (/** @type {XInputList} */ el) => el.addEventListener('change', () => switchPeriod(el.value))
+                    )
+                ]));
+            switchPeriod(this._periodSelector.value);
+
+        }
+
+        if (getReportDescription().params.includes('period') || getReportDescription().params.includes('day')) {
+            this._params.insertAdjacentElement('beforeend',
+                createElementWithObject(XLabel, { label: 'Day', period: 'day' }, [
+                    createElementWithObject(XInputDate, { name: 'day' })
+                ]));
+        }
+
+        if (getReportDescription().params.includes('period') || getReportDescription().params.includes('month')) {
+            this._params.insertAdjacentElement('beforeend',
+                createElementWithObject(XLabel, { label: 'Month (yyyy-mm)', period: 'month' }, [
+                    createElementWithTag('input', { name: 'month' })
+                ]));
+        }
+
+        if (getReportDescription().params.includes('period') || getReportDescription().params.includes('year')) {
+            this._params.insertAdjacentElement('beforeend',
+                createElementWithObject(XLabel, { label: 'Year (yyyy)', period: 'year' }, [
+                    createElementWithTag('input', { name: 'year' })
+                ]));
+        }
+
+
+        //
+        // Activity
+        //
+        if (getReportDescription().params.includes('activity')) {
+            this._params.insertAdjacentElement('beforeend',
+                createElementWithObject(XLabel, { label: 'Activity' }, [
+                    createElementWithObject(XInputList, { name: 'activity', nullable: true, list: ['consult', 'workshop', 'surgical'] })
+                ])
+            );
+        }
+
         this.reset();
     }
 
+    // TODO: warning on "year"
+
+    empty() {
+        this._messages.clear();
+        this._result.innerHTML = '';
+    }
+
     reset() {
-        this.#result.innerHTML = '';
-        this.#messages.clear();
-        this.#messages.addMessage({
+        this.empty();
+        this._messages.addMessage({
             text: 'Please press "refresh" to generate the report',
             level: messages.info
         });
+
+        //
+        // Reset values to saved preferences
+        //
+
+        const prefs = {
+            center: '',
+            examiner: '',
+            period: 'month',
+            activity: '',
+            day: new Date(),
+            month: date2CanonicString(new Date()).substring(0, 7),
+            year: date2CanonicString(new Date()).substring(0, 4),
+            ...getPref('report')
+        };
+        this._form.data = prefs;
     }
 
-    set data(data) {
-        // see generateXLS for other usage !
+    query() {
+        this.empty();
 
-        this.#data = data;
-        this.#messages.clear();
+        const newValues = this._form.data;
 
-        const report = parseRouteReport();
-        this.#result.innerHTML = '';
-        if (!data || data.list.length < 1) {
-            this.#messages.addMessage({
+        //
+        // Set the preferences
+        //
+        var prefs = {};
+        for (var p in getReportDescription().params) {
+            let n = getReportDescription().params[p];
+            let v = newValues[n];
+            if (n == 'period') {
+                let pn = v;
+                let pv = newValues[pn];
+                prefs[pn] = pv;
+            }
+            prefs[n] = v;
+        }
+        setPref('report', prefs);
+
+        var dataGenerator = getReportId();
+        if (typeof (getReportDescription().dataGenerator) != 'undefined') {
+            // TODO: unify around reportId
+            dataGenerator = getReportDescription().dataGenerator;
+        }
+        if (getReportDescription().fixedParams) {
+            Object.assign(newValues, getReportDescription().fixedParams);
+        }
+
+        // Check input data:
+        if (isParam('period')) {
+            let period = newValues['period'];
+            let value = newValues[period];
+            if (!value) {
+                this._messages.addMessage({ text: `Invalid period (${period})`, level: messages.error });
+                return;
+            }
+        }
+
+        // Launch the call
+        this._requestor.request(reportQueryBuilder(dataGenerator, newValues))
+            .then(response => response.data)
+            .then((data) => {
+                this._data = data;
+                this.draw();
+            });
+    }
+
+    draw() {
+        this._messages.clear();
+
+        this._result.innerHTML = '';
+        if (!this._data || this._data.list.length < 1) {
+            this._messages.addMessage({
                 text: 'No data found',
                 level: messages.warning
             });
@@ -81,10 +274,10 @@ export default class XPageReports extends HTMLElement {
         //
         // Export button
         //
-        this.#result.append(
+        this._result.append(
             createElementWithTag('div', { style: { textAlign: 'right' } }, [
                 // createElementsFromHTML('<a style="display: none" id="report_download_button" download="export.xls">download</a>')[0],
-                this.#exportLink = /** @type {HTMLAnchorElement} */ (createElementWithTag('a', { style: { display: 'none' }, download: 'test.xls' }, 'download')),
+                this._exportLink = /** @type {HTMLAnchorElement} */ (createElementWithTag('a', { style: { display: 'none' }, download: 'test.xls' }, 'download')),
                 createElementWithObject(XButton, { action: 'alternate' }, 'Export to Excel',
                     (el) => el.addEventListener('click', () => this.generateXLS())
                 ),
@@ -93,33 +286,33 @@ export default class XPageReports extends HTMLElement {
 
         const tableBuilder = new TableBuilder()
             .enrichTable({ class: 'reporting' }) // table table-hover table-bordered tablesorter
-            .addData(data.list);
-        reports[report.report].generator(tableBuilder, data);
-        this.#result.append(tableBuilder.render());
+            .addData(this._data.list);
+        getReportDescription().generator(tableBuilder, this._data);
+        this._result.append(tableBuilder.render());
     }
 
     generateXLS() {
         // TODO: check fixValue (see website) => on the fly filtering
-        this.#result.querySelectorAll('[printing]').forEach(el => el.replaceWith(el.getAttribute('printing')));
-        this.#result.querySelectorAll('.online').forEach(el => el.parentNode.removeChild(el));
-        this.#result.querySelectorAll('a').forEach(el => el.parentNode.replaceChild(
+        this._result.querySelectorAll('[printing]').forEach(el => el.replaceWith(el.getAttribute('printing')));
+        this._result.querySelectorAll('.online').forEach(el => el.parentNode.removeChild(el));
+        this._result.querySelectorAll('a').forEach(el => el.parentNode.replaceChild(
             createElementWithTag('span', {}, el.innerHTML),
             el
         ));
-        this.#result.querySelectorAll('x-codage').forEach(el => el.parentNode.replaceChild(
+        this._result.querySelectorAll('x-codage').forEach(el => el.parentNode.replaceChild(
             createElementWithTag('span', {}, [el.innerHTML]),
             el
         ));
 
         // bug fix here: https://github.com/jmaister/excellentexport/issues/54
-        ExcellentExport.excel(this.#exportLink,
-            this.#result.getElementsByTagName('table')[0],
+        ExcellentExport.excel(this._exportLink,
+            this._result.getElementsByTagName('table')[0],
             'cryptomedic');
 
-        this.#exportLink.click();
+        this._exportLink.click();
 
         // Refresh the table to recover links etc...
-        this.data = this.#data;
+        this.draw();
     }
 }
 
@@ -127,6 +320,32 @@ export const REPORT_SURGICAL = 'surgical';
 export const REPORT_STATISTICAL = 'statistical';
 export const REPORT_ACTIVITY = 'activity';
 export const REPORT_CONSULTATIONS = 'consultations';
+
+/**
+ * Get the technical report name
+ *
+ * @returns {string} id
+ */
+function getReportId() {
+    return parseRouteReport().report;
+
+}
+
+/**
+ * @returns {*} description of the report
+ */
+function getReportDescription() {
+    return reports[getReportId()];
+}
+
+/**
+ * @param {string} p parameter name
+ *
+ * @returns {boolean} if the parameter is available
+ */
+function isParam(p) {
+    return getReportDescription().params.indexOf(p) >= 0;
+}
 
 const reports = {};
 reports[REPORT_ACTIVITY] = { // test data: 2014-05

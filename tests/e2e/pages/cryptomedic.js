@@ -56,31 +56,13 @@ module.exports = {
 
             this.waitForElementVisible(`#report_${reportName}_menu`);
             this.myClick(`#report_${reportName}_menu x-button`);
-            this.waitForElementVisible('cryptomedic-data-service');
-            for (var k in params) {
-                const el = '[name="' + k + '"]';
-                if (k == 'period') {
-                    this.myRadio(el, params['period']);
-                } else {
-                    this.waitForElementVisible('css selector', el, '@@ Waiting for parameter ' + k + ' => ' + params[k] + ': ' + el);
-                    if (k == 'day') {
-                        true;
-                    } else {
-                        this.clearValue(el);
-                    }
-                    if (params[k]) {
-                        const p = {};
-                        p[el] = params[k];
-                        this.myFormFillIn('#reportParamsForm', p);
-                    }
-                }
-            }
-            this.api.pause(100);
-            this.waitForElementVisible('#report_refresh_button');
-            this.myClick('#report_refresh_button');
-            this.waitForElementVisible('#report_table');
-            this.waitForElementVisible('#report_table table');
+            this.waitForElementVisible('x-page-reports');
+            this.waitForElementVisible('x-page-reports x-form');
 
+            this.myXFormFill('x-page-reports x-form', params, true);
+            this.api.pause(100);
+
+            this.waitForElementVisible('x-page-reports table');
             return this;
         },
 

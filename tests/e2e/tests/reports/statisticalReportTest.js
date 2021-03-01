@@ -2,7 +2,7 @@ module.exports = {
     tags: ['readonly', 'reports'],
     reportConsultation: function (client) {
         client.page.cryptomedic().authenticate('readonly');
-        client.page.cryptomedic().report('statistical', { month: '2014-05' });
+        client.page.cryptomedic().report('statistical', { period: 'month', month: '2014-05' });
 
         const report_table = client.page.cryptomedic().tableIterator('#report_table table');
         report_table

@@ -89,15 +89,6 @@ export default class CryptomedicDataService extends XRequestor {
     }
 
     /***********************/
-    /*** Report          ***/
-    /***********************/
-
-    getReport(reportName, data) {
-        return this.requestAndFilter({ url: 'reports/' + reportName, data: nullify(data) })
-            .then(response => response.asJson);
-    }
-
-    /***********************/
     /*** User management ***/
     /***********************/
 
