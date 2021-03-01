@@ -150,7 +150,7 @@ full: test lint
 #
 
 .PHONY: lint
-lint:
+lint: dependencies-node
 	npm run eslint
 	npm run stylelint
 
