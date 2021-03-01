@@ -9,6 +9,8 @@ import { createElementWithTag, defineCustomElement } from '../../js/custom-eleme
  * - label
  */
 export default class XLabel extends HTMLElement {
+    static get DISPLAY_MODE() { return 'flex'; }
+
     label = '';
 
     constructor() {
@@ -19,7 +21,7 @@ export default class XLabel extends HTMLElement {
         this.shadowRoot.append(
             createElementWithTag('style', {}, `
     :host {
-        display: flex;
+        display: ${XLabel.DISPLAY_MODE};
         flex-direction: row;
         justify-content: start;
         align-items: center;
