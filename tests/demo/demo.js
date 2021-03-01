@@ -16,6 +16,7 @@ import '../../app/elements/render/x-waiting.js';
 
 import '../../app/elements/funcs/x-form.js';
 import '../../app/elements/funcs/x-i18n.js';
+import '../../app/elements/funcs/x-input-list.js';
 import '../../app/elements/funcs/x-requestor.js';
 
 export default class XxTest extends HTMLElement {
@@ -124,6 +125,7 @@ document
     );
 
 document.querySelectorAll('x-button').forEach(e => e.addEventListener('click', evt => console.info('clicked', evt.target)));
+document.querySelectorAll('x-form').forEach(e => e.addEventListener('submit', evt => console.info('clicked', evt.target.data)));
 
 fetch(`../../www/api/${API_VERSION}/tests/references/FolderTest.test1.json`)
     .then(response => response.json())
