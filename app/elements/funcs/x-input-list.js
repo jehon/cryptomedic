@@ -39,6 +39,7 @@ export default class XInputList extends HTMLElement {
         }
     }
 
+    _listing = {};
 
     constructor() {
         super();
@@ -47,6 +48,7 @@ export default class XInputList extends HTMLElement {
     }
 
     draw() {
+        this.shadowRoot.innerHTML = '';
         this.shadowRoot.append(
             createElementWithTag('style', {}, `
             :host {
@@ -90,9 +92,11 @@ export default class XInputList extends HTMLElement {
 
         if (!list || list.length == 0) {
             this.setAttribute('mode', 'empty');
-            this.shadowRoot.innerHTML = 'X-Write-List: no list set';
+            this.shadowRoot.innerHTML = 'XInputList: no list set';
             return;
         }
+
+        this._listing = list.reduce((obj, v) => { obj[escape(v)] = v; return obj; }, {});
 
         const ruuid = uuid++;
         if (list.length > 5) {
@@ -118,7 +122,10 @@ export default class XInputList extends HTMLElement {
                     createElementWithTag('br')
                 ],
                 el => {
-                    el.addEventListener('click', () => { el.querySelector('input').setAttribute('checked', 'checked'); this.changed(); });
+                    el.addEventListener('click', () => {
+                        /** @type {HTMLInputElement} */(el.querySelector('input[type=radio]')).checked = true;
+                        this.changed();
+                    });
                 }
             );
 
@@ -127,30 +134,29 @@ export default class XInputList extends HTMLElement {
                 ...list.map(val => b(val, val))
             ]));
         }
-
-        this.value = '';
     }
 
     changed() {
-        fireOn(this, 'change', this.value);
+        fireOn(this, 'change');
     }
 
     set value(value) {
         const escaped = escape(value);
-        let el;
         switch (this.getAttribute('mode')) {
-            case 'select':
-                el = this.shadowRoot.querySelector('select');
+            case 'select': {
+                const el = this.shadowRoot.querySelector('select');
                 el.value = escaped;
                 break;
-            case 'radio':
-                el = this.shadowRoot.querySelector(`input[type=radio][value="${escaped}"]`);
-                if (el == null) {
-                    return;
+            }
+            case 'radio': {
+                const el = this.shadowRoot.querySelector(`input[type=radio][value="${escaped}"]`);
+                if (el != null) {
+                    el.setAttribute('checked', 'checked');
                 }
-                el.setAttribute('checked', 'checked');
                 break;
+            }
         }
+        this.changed();
     }
 
     get value() {
@@ -173,6 +179,10 @@ export default class XInputList extends HTMLElement {
         if (value == '' || value == undefined) {
             value = null;
         }
+        if (value in this._listing) {
+            return this._listing[value];
+        }
+
         return value;
     }
 
