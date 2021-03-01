@@ -80,7 +80,7 @@ export default class XForm extends HTMLElement {
      */
     set data(data) {
         this._data = data;
-        this.reset();
+        this.fillIn(data);
     }
 
     get data() {
@@ -215,11 +215,16 @@ export default class XForm extends HTMLElement {
     }
 
     reset() {
+        this.fillIn();
+        this.dispatchEvent(new CustomEvent('reset'));
+    }
+
+    fillIn(data) {
         this.clear();
 
         this.getDataElements().forEach(el => {
             const name = el.getAttribute('name');
-            const val = (name in this._data ? this._data[name] : '');
+            const val = (name in data ? data[name] : '');
 
             if (el.type == 'radio') {
                 if (el.value == val) {
@@ -231,8 +236,6 @@ export default class XForm extends HTMLElement {
                 el.value = val;
             }
         });
-
-        this.dispatchEvent(new CustomEvent('reset'));
     }
 }
 
