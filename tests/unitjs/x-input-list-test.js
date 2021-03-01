@@ -1,0 +1,145 @@
+
+import XInputList from '../../app/elements/funcs/x-input-list.js';
+
+import { setSession } from '../../app/js/session.js';
+import { createElementWithObject } from '../../app/js/custom-element.js';
+import fireOn from '../../app/js/fire.js';
+
+describe('x-write-list-test', function () {
+    const listRadio = ['truc', 'brol', 'machin', 'chose'];
+    const listSelect = ['truc', 'brol', 'machin', 'chose', 'bazar', 'ça', 'là'];
+
+    describe('with lists initialized', function () {
+        beforeEach(function () {
+            setSession({
+                lists: {
+                    listRadio: listRadio,
+                    listSelect: listSelect
+                }
+            });
+        });
+
+        it('with empty list', function () {
+            const el = createElementWithObject(XInputList, { list: '' });
+            expect(el.getAttribute('mode')).toBe('empty');
+            expect(el.shadowRoot.querySelector('input[type=radio]')).toBeNull();
+            expect(el.shadowRoot.querySelector('select')).toBeNull();
+        });
+
+        it('with empty list-name', function () {
+            const el = createElementWithObject(XInputList, { listName: '' });
+
+            expect(el.getAttribute('mode')).toBe('empty');
+            expect(el.shadowRoot.querySelector('input[type=radio]')).toBeNull();
+            expect(el.shadowRoot.querySelector('select')).toBeNull();
+        });
+
+        describe('in radio mode', function () {
+            const check = (el, v) => {
+                // Are we set?
+                expect(el.getAttribute('mode')).toBe('radio');
+                expect(el.shadowRoot.querySelectorAll('input[type=radio]').length).toBeGreaterThan(0);
+                expect(el.shadowRoot.querySelectorAll('select').length).toBe(0);
+
+                el.value = v;
+
+                // Check the value
+                expect(el.value).toBe(v);
+                expect(el.shadowRoot.querySelector('input[type=radio][value="' + (v ?? '') + '"]')).not.toBeNull();
+                expect(el.shadowRoot.querySelector('input[type=radio][value="' + (v ?? '') + '"]').hasAttribute('checked')).toBeTruthy();
+            };
+
+            it('should instanciated', function () {
+                const el = createElementWithObject(XInputList, { list: listRadio });
+                check(el, 'machin');
+            });
+
+            it('should fire event', function () {
+                const el = createElementWithObject(XInputList, { list: listRadio });
+                el.value = 'machin';
+
+                let eli = el.shadowRoot.querySelector('input[value="brol"]');
+                expect(eli).not.toBeNull();
+                let res = '';
+                el.addEventListener('change', () => { res = 'test'; });
+                eli.setAttribute('checked', 'checked');
+                fireOn(el, 'change', 'test');
+                expect(res).toBe('test');
+                expect(el.value).toBe('brol');
+            });
+
+            it('nullable', function () {
+                const el = createElementWithObject(XInputList, { list: listRadio, nullable: true });
+
+                expect(el.shadowRoot.querySelector('input[type=radio][value=""]')).not.toBeNull();
+                check(el, 'machin');
+            });
+
+            it('nullable with null value', function () {
+                const el = createElementWithObject(XInputList, { list: listRadio, nullable: true });
+                check(el, null);
+            });
+
+            it('should handle RADIO Span click', function () {
+                const el = createElementWithObject(XInputList, { list: listRadio, value: '', nullable: true });
+
+                check(el, 'machin');
+                el.shadowRoot.querySelector('span[to=truc').click();
+                check(el, 'truc');
+            });
+
+            it('should handle named list', function () {
+                const el = createElementWithObject(XInputList, { listName: 'unknownList' });
+                expect(el.getAttribute('mode')).toBe('empty');
+            });
+
+            it('should handle named list', function () {
+                const el = createElementWithObject(XInputList, { listName: 'listRadio' });
+                check(el, 'machin');
+            });
+        });
+
+        describe('in select mode', function () {
+            const check = (el, v) => {
+                // Are we set?
+                expect(el.getAttribute('mode')).toBe('select');
+                expect(el.shadowRoot.querySelectorAll('input[type=radio]').length).toBe(0);
+                expect(el.shadowRoot.querySelectorAll('select').length).toBeGreaterThan(0);
+
+                el.value = v;
+
+                // Check the value
+                expect(el.shadowRoot.querySelector('select').value).toBe(v ?? '');
+                expect(el.value).toBe(v);
+            };
+
+            it('should instanciated', function () {
+                const el = createElementWithObject(XInputList, { list: listSelect });
+                check(el, 'machin');
+            });
+
+            it('should fire event', function () {
+                const el = createElementWithObject(XInputList, { list: listSelect });
+
+                let eli = el.shadowRoot.querySelector('select');
+                expect(eli).not.toBeNull();
+                let res = '';
+                el.addEventListener('change', () => { res = 'test'; });
+                eli.value = 'brol';
+                fireOn(el, 'change', 'test');
+                expect(res).toBe('test');
+                expect(el.value).toBe('brol');
+            });
+
+            it('nullable', function () {
+                const el = createElementWithObject(XInputList, { list: listSelect, nullable: true });
+                expect(el.shadowRoot.querySelector('select option[value=""]')).not.toBeNull();
+            });
+
+            it('nullable with no vlaue', function () {
+                const el = createElementWithObject(XInputList, { list: listSelect, value: '', nullable: true });
+                check(el, null);
+            });
+        });
+    });
+});
