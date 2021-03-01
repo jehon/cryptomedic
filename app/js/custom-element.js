@@ -61,6 +61,11 @@ export function createElementsFromHTML(html) {
 export function enrichObject(el, attributes = {}, inner = [], callback = (_el) => { }) {
     for (const k of Object.keys(attributes)) {
         let val = attributes[k];
+
+        if (val === null) {
+            val = '';
+        }
+
         if (val === false) {
             continue;
         }
@@ -68,14 +73,14 @@ export function enrichObject(el, attributes = {}, inner = [], callback = (_el) =
             val = k;
         }
 
-        if (val === null) {
-            val = '';
+        if (Array.isArray(val)) {
+            val = JSON.stringify(val);
         }
 
         if (typeof (val) == 'object') {
             val = Object.keys(val).map((k) => `${toAttributeCase(k)}: ${val[k]}`).join(';');
         }
-        el.setAttribute(k, val);
+        el.setAttribute(toAttributeCase(k), val);
     }
 
     if (!Array.isArray(inner)) {
