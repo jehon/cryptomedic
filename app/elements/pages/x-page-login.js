@@ -56,7 +56,7 @@ export default class XPageLogin extends HTMLElement {
 
     reset() {
         this._requestor.reset();
-        this._form.clear();
+        this._form.clearMessages();
         this.removeAttribute('requesting');
         this.removeAttribute('error');
     }
@@ -67,11 +67,7 @@ export default class XPageLogin extends HTMLElement {
         }
         this.reset();
 
-        if (!this._form.validate()) {
-            return 1;
-        }
-
-        const formData = this._form.data;
+        const formData = this._form.getValues();
 
         this.setAttribute('requesting', 'doLogin');
         return this._requestor.request(loginRequestBuilder(formData.username.toLowerCase(), formData.password))

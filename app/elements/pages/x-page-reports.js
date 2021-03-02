@@ -55,14 +55,25 @@ export default class XPageReports extends HTMLElement {
 
             // TODO: only two-columns on large screens !
             createElementWithTag('style', {}, `
-.top {
-    display: flex;
-    flex-direction: row;
+
+@media screen and (min-width: 600px) {
+    .top {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .top > * {
+        flex-basis: 1px;
+        flex-grow: 1;
+    }
 }
 
-.top > * {
-    flex-basis: 1px;
-    flex-grow: 1;
+#separator {
+    height: 30px;
+}
+
+x-button#export {
+    margin-bottom: 10px;
 }
         `
             ),
@@ -89,6 +100,7 @@ export default class XPageReports extends HTMLElement {
                         ]),
                     ]),
                 ]),
+                createElementWithTag('div', { id: 'separator' }),
 
                 // Report result
                 this._result = createElementWithTag('div', { id: 'report_table' })
@@ -211,13 +223,13 @@ export default class XPageReports extends HTMLElement {
             year: date2CanonicString(new Date()).substring(0, 4),
             ...getPref('report')
         };
-        this._form.data = prefs;
+        this._form.setValues(prefs);
     }
 
     query() {
         this.empty();
 
-        const newValues = this._form.data;
+        const newValues = this._form.getValues();
 
         //
         // Set the preferences
@@ -282,7 +294,7 @@ export default class XPageReports extends HTMLElement {
             createElementWithTag('div', { style: { textAlign: 'right' } }, [
                 // createElementsFromHTML('<a style="display: none" id="report_download_button" download="export.xls">download</a>')[0],
                 this._exportLink = /** @type {HTMLAnchorElement} */ (createElementWithTag('a', { style: { display: 'none' }, download: 'test.xls' }, 'download')),
-                createElementWithObject(XButton, { action: 'alternate' }, 'Export to Excel',
+                createElementWithObject(XButton, { action: 'alternate', id: 'export' }, 'Export to Excel',
                     (el) => el.addEventListener('click', () => this.generateXLS())
                 ),
             ])

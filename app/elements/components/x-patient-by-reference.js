@@ -94,7 +94,7 @@ export default class XPatientByReference extends HTMLElement {
     }
 
     search() {
-        const data = this._form.data;
+        const data = this._form.getValues();
         this.setAttribute('status', 'searching');
 
         return this._requestor.request(checkReferenceBuilder(data.entryyear, data.entryorder))
@@ -110,7 +110,7 @@ export default class XPatientByReference extends HTMLElement {
     }
 
     createReference() {
-        const data = this._form.data;
+        const data = this._form.getValues();
         this.setAttribute('status', 'creation-requesting');
 
         return this._requestor.request(createReferenceBuilder(data.entryyear, data.entryorder))

@@ -19,7 +19,7 @@ describe(fn(import.meta.url), function () {
             createElementWithTag('input', { name: 'n1', value: 'n1val' })
         ]));
 
-        expect(element.data).toEqual({
+        expect(element.getValues()).toEqual({
             n1: 'n1val'
         });
     });
@@ -29,7 +29,7 @@ describe(fn(import.meta.url), function () {
             createElementWithTag('input', { name: 'n1', value: 'n1val', disabled: true })
         ]));
 
-        expect(element.data).toEqual({});
+        expect(element.getValues()).toEqual({});
     });
 
     it('should parse int', function () {
@@ -37,7 +37,7 @@ describe(fn(import.meta.url), function () {
             createElementWithTag('input', { name: 'n1', value: '14', type: 'number' })
         ]));
 
-        expect(element.data).toEqual({
+        expect(element.getValues()).toEqual({
             n1: 14
         });
     });
@@ -47,7 +47,7 @@ describe(fn(import.meta.url), function () {
             createElementWithTag('input', { value: 'n1val' })
         ]));
 
-        expect(element.data).toEqual({});
+        expect(element.getValues()).toEqual({});
     });
 
     describe('with buttons', function () {
@@ -69,7 +69,6 @@ describe(fn(import.meta.url), function () {
         });
 
         it('should submit by enter', function (done) {
-            expect(element.validate()).toBeTrue();
             element.addEventListener('submit', () => done());
             iN1.dispatchEvent(new KeyboardEvent('keypress', { key: 'Enter', bubbles: true }));
         });
@@ -77,7 +76,6 @@ describe(fn(import.meta.url), function () {
         it('should reset by click on reset button', function (done) {
             expect(iN1.value).toBe('initial');
             iN1.value = 'changed';
-            expect(element.validate()).toBeTrue();
             element.addEventListener('submit', () => done.fail());
 
             bReset.click();
@@ -88,14 +86,12 @@ describe(fn(import.meta.url), function () {
         });
 
         it('should submit by click on query button', function (done) {
-            expect(element.validate()).toBeTrue();
             element.addEventListener('submit', () => done());
             bQuery.click();
         });
 
         it('should not submit by click on query button if not valid', function (done) {
             iN1.value = '';
-            expect(element.validate()).toBeFalse();
             element.addEventListener('submit', () => done.fail());
             bQuery.click();
             done();
@@ -124,7 +120,7 @@ describe(fn(import.meta.url), function () {
         });
 
         it('should skip empty values', function () {
-            expect(element.data).toEqual({
+            expect(element.getValues()).toEqual({
                 n2: 'n2val1',
                 n3: 'n3val1'
             });
@@ -132,16 +128,16 @@ describe(fn(import.meta.url), function () {
 
         describe('with values', function () {
             beforeEach(() => {
-                element.data = {
+                element.setValues({
                     n1: '123',
                     n2: 'n2val2',
                     n3: 'n3val2'
-                };
+                });
             });
 
             it('should set values', function () {
                 expect(element.querySelector('[name=n1]').value).toBe('123');
-                expect(element.data).toEqual({
+                expect(element.getValues()).toEqual({
                     n1: '123',
                     n2: 'n2val2',
                     n3: 'n3val2'
@@ -154,7 +150,7 @@ describe(fn(import.meta.url), function () {
                 element.querySelector('[name=n2][value="n2val2"]').checked = false;
                 element.querySelector('[name=n3]').value = 'n3val1';
 
-                expect(element.data).toEqual({
+                expect(element.getValues()).toEqual({
                     n1: '456',
                     n2: 'n2val1',
                     n3: 'n3val1'
@@ -162,7 +158,7 @@ describe(fn(import.meta.url), function () {
 
                 element.reset();
 
-                expect(element.data).toEqual({
+                expect(element.getValues()).toEqual({
                     n1: '123',
                     n2: 'n2val2',
                     n3: 'n3val2'

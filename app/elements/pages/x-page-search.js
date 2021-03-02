@@ -97,7 +97,7 @@ export default class XPageSearch extends HTMLElement {
         this.setAttribute('status', 'searching');
         this.reset();
 
-        return this._requestor.request(searchPatientBuilder(this._form.data))
+        return this._requestor.request(searchPatientBuilder(this._form.getValues()))
             .then(response => response.data)
             .then(data => {
                 this._result.innerHTML = '';

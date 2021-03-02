@@ -1,7 +1,7 @@
 
-exports.command = function (selector, data, submit = true) {
+exports.command = function (selector, values, submit = true) {
 
-    this.myComponentExecute(selector, function (data) { this.data = data; }, data);
+    this.myComponentExecute(selector, function (values) { this.setValues(values); }, values);
     this.pause(100);
 
     if (submit) {

@@ -6,12 +6,19 @@ import '../render/x-button.js';
 
 /**
  * @typedef {import('../render/x-button.js').default} XButton
+ * @typedef {import('../render/x-message.js').Message} Message
  */
 
 // const log = (...args) => console.log('log: ', ...args);
 const log = (..._args) => { };
 
 /**
+ * Form facitlities
+ *   - on enter, submit the form
+ *   - can reset
+ *   - can set values (based on names)
+ *   - can get values (based on names)
+ *
  * slot[]: where the objects are stored
  * slot[buttons]: additionnal commands
  *
@@ -25,7 +32,7 @@ const log = (..._args) => { };
  * - submit-redictect: url
  *
  * functions:
- * - get/set data: the inline data
+ * - getValues/setValues: the inline values
  * - validate: validate the form (extensible) -> send back a list of messages
  *     message: { text, level } | text
  */
@@ -46,6 +53,7 @@ export default class XForm extends HTMLElement {
             createElementWithTag('slot', { name: 'buttons' }),
         );
 
+        // On enter, submit the form
         this.addEventListener('keypress', (event) => {
             if (event.key === 'Enter') {
                 // event.preventDefault();
@@ -55,13 +63,15 @@ export default class XForm extends HTMLElement {
     }
 
     connectedCallback() {
-        this._data = this.data;
+        this._values = this.getValues();
 
+        // For each "cancel" button, auto reset
         this.querySelectorAll(`x-button[action=${actions.cancel}]`)
             .forEach(el => (/** @type {XButton} */(el)).addEventListener('click',
                 () => this.reset()
             ));
 
+        // For each "query" button, auto submit
         this.querySelectorAll(`x-button:not([action]), x-button[action=${actions.query}], x-button[action=${actions.submit}]`)
             .forEach(el => (/** @type {XButton} */(el)).addEventListener('click',
                 () => this.checkAndSubmit()
@@ -69,22 +79,34 @@ export default class XForm extends HTMLElement {
     }
 
     /**
+     * Get the list of elements that can provide informations
+     *
      * @returns {Array<HTMLInputElement>} available
      */
-    getDataElements() {
+    _getValueElements() {
         return Array.from(this.querySelectorAll('[name]'));
     }
 
     /**
-     * @param {object} data - the data to be stored in the form
+     * Set the values on the formular
+     *
+     * And keep them for later "reset"
+     *
+     * @param {object} values - the values to be stored in the form
      */
-    set data(data) {
-        this._data = data;
-        this.fillIn(data);
+    setValues(values) {
+        this._values = values;
+        this.clearMessages();
+        this._fillIn(values);
     }
 
-    get data() {
-        let data = {};
+    /**
+     * Get the values currently on the formular
+     *
+     * @returns {object} values
+     */
+    getValues() {
+        let values = {};
 
         // form can be:
         //  - css selector
@@ -93,14 +115,13 @@ export default class XForm extends HTMLElement {
 
         let boundaries = [];
 
-        // TODO: remove the boundaries concept ?
+        // TODO: remove the boundaries concept
         boundaries = Array.from(this.querySelectorAll('x-form'));
         log('Boundaries: ', boundaries, this);
 
         nextElement:
-        for (const j of this.getDataElements()) {
+        for (const j of this._getValueElements()) {
 
-            // TODO: or the DataElement ???
             const el = /** @type {HTMLInputElement} */ (j);
 
             // Skip empty names
@@ -116,6 +137,7 @@ export default class XForm extends HTMLElement {
                 continue;
             }
 
+            // TODO: remove boundaries
             for (const f of boundaries) {
                 if (f.contains(el)) {
                     log(`outside boundaries of ${f.id}:`, name);
@@ -140,7 +162,7 @@ export default class XForm extends HTMLElement {
             // Skip empty values
             if (value === '' || value == null) {
                 log('no value: ', name, value, typeof (value));
-                delete (data[name]);
+                delete (values[name]);
                 continue;
             }
 
@@ -166,20 +188,32 @@ export default class XForm extends HTMLElement {
             // Assign it
             if (value == null) {
                 log('null value: ', name);
-                delete (data[name]);
+                delete (values[name]);
             } else {
-                data[name] = value;
+                values[name] = value;
                 log('ok: ', name, value);
             }
         }
-        return data;
+        return values;
     }
 
-    validate() {
+    /**
+     * Check if the form is ok
+     *
+     * If it does validate:
+     *   - dispatch a "submit" event
+     *
+     * If not:
+     *   - set a "validation-error" attribute
+     *   - add a message
+     *
+     * @returns {boolean} true if it does validate
+     */
+    checkAndSubmit() {
         this._messages.clear();
         let result = true;
 
-        this.getDataElements().forEach(el => {
+        this._getValueElements().forEach(el => {
             if ('checkValidity' in el) {
                 const res = el.checkValidity();
                 if (!res) {
@@ -195,36 +229,47 @@ export default class XForm extends HTMLElement {
             this.addMessage({ text: 'The form contains some errors.', id: 'form-invalid' });
             return false;
         }
+        this.dispatchEvent(new CustomEvent('submit'));
+
         return true;
     }
 
-    checkAndSubmit() {
-        if (this.validate()) {
-            this.dispatchEvent(new CustomEvent('submit'));
-        }
-    }
-
+    /**
+     * Add a message
+     *
+     * @param {Message|string} msg to be added
+     * @returns {string} the message id
+     */
     addMessage(msg) {
         return this._messages.addMessage(msg);
     }
 
-    clear() {
+    /**
+     * Remove all messages
+     */
+    clearMessages() {
         if (this._messages) {
             this._messages.clear();
         }
     }
 
+    /**
+     * Reset the values to the last saved state
+     *
+     * Automatically called by the "cancel" button
+     *
+     * Dispatch a "reset" event
+     */
     reset() {
-        this.fillIn();
+        this.clearMessages();
+        this.setValues(this._values);
         this.dispatchEvent(new CustomEvent('reset'));
     }
 
-    fillIn(data) {
-        this.clear();
-
-        this.getDataElements().forEach(el => {
+    _fillIn(values) {
+        this._getValueElements().forEach(el => {
             const name = el.getAttribute('name');
-            const val = (name in data ? data[name] : '');
+            const val = (name in values ? values[name] : '');
 
             if (el.type == 'radio') {
                 if (el.value == val) {
