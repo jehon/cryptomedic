@@ -13,6 +13,10 @@ let uuid = 1;
  * @returns {string} acceptable form for html
  */
 function _escape(str) {
+    if (!str) {
+        return '';
+    }
+
     return String(str)
         .replace(/&/g, '&amp;')
         .replace(/</g, '&lt;')
@@ -20,6 +24,14 @@ function _escape(str) {
         .replace(/"/g, '&quot;');
 }
 
+/**
+ * attributes:
+ *   list: the list content (array)
+ *   list-name: the list name inside the session
+ *   nullable: boolean if the field could be null
+ *
+ *   value: the value inside the list
+ */
 export default class XInputList extends HTMLElement {
     static get observedAttributes() {
         return ['value', 'list', 'list-name', 'nullable'];
@@ -96,12 +108,12 @@ export default class XInputList extends HTMLElement {
             return;
         }
 
-        this._listing = list.reduce((obj, v) => { obj[escape(v)] = v; return obj; }, {});
+        this._listing = list.reduce((obj, v) => { obj[_escape(v)] = v; return obj; }, {});
 
         const ruuid = uuid++;
         if (list.length > 5) {
             this.setAttribute('mode', 'select');
-            const b = (val, txt) => createElementWithTag('option', { value: escape(val) }, txt);
+            const b = (val, txt) => createElementWithTag('option', { value: _escape(val) }, txt);
 
             this.shadowRoot.append(createElementWithTag('select', {},
                 [
@@ -141,7 +153,7 @@ export default class XInputList extends HTMLElement {
     }
 
     set value(value) {
-        const escaped = escape(value);
+        const escaped = _escape(value);
         switch (this.getAttribute('mode')) {
             case 'select': {
                 const el = this.shadowRoot.querySelector('select');
@@ -151,7 +163,8 @@ export default class XInputList extends HTMLElement {
             case 'radio': {
                 const el = this.shadowRoot.querySelector(`input[type=radio][value="${escaped}"]`);
                 if (el != null) {
-                    el.setAttribute('checked', 'checked');
+                    /** @type {HTMLInputElement} */(el).checked = true;
+                    // el.setAttribute('checked', 'checked');
                 }
                 break;
             }
