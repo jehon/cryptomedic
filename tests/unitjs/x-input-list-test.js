@@ -4,8 +4,9 @@ import XInputList from '../../app/elements/funcs/x-input-list.js';
 import { setSession } from '../../app/js/session.js';
 import { createElementWithObject } from '../../app/js/custom-element.js';
 import fireOn from '../../app/js/fire.js';
+import { fn } from './athelpers.js';
 
-describe('x-write-list-test', function () {
+describe(fn(import.meta.url), function () {
     const listRadio = ['truc', 'brol', 'machin', 'chose'];
     const listSelect = ['truc', 'brol', 'machin', 'chose', 'bazar', 'ça', 'là'];
 
@@ -46,7 +47,7 @@ describe('x-write-list-test', function () {
                 // Check the value
                 expect(el.value).toBe(v);
                 expect(el.shadowRoot.querySelector('input[type=radio][value="' + (v ?? '') + '"]')).not.toBeNull();
-                expect(el.shadowRoot.querySelector('input[type=radio][value="' + (v ?? '') + '"]').hasAttribute('checked')).toBeTruthy();
+                expect(el.shadowRoot.querySelector('input[type=radio][value="' + (v ?? '') + '"]').checked).toBeTruthy();
             };
 
             it('should instanciated', function () {
