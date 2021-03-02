@@ -176,7 +176,7 @@ test-unit: dependencies-node \
 		$(CJS2ESM_DIR)/axios.js \
 		$(CJS2ESM_DIR)/axios-mock-adapter.js \
 		$(CJS2ESM_DIR)/platform.js
-	npm run test-unit-continuously -- --single-run
+	npm run test-unit-continuously-withcov -- --single-run
 	node tests/report.js
 
 .PHONY: test-e2e
