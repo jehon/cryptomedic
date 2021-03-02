@@ -95,10 +95,12 @@ export default class XPageReports extends HTMLElement {
             ])
         );
 
+        const isParam = (p) => getReportDescription().params.includes(p);
+
         //
         // Center
         //
-        if (getReportDescription().params.includes('center')) {
+        if (isParam('center')) {
             this._params.insertAdjacentElement('beforeend',
                 createElementWithObject(XLabel, { label: 'Center' }, [
                     createElementWithObject(XInputList, { name: 'center', nullable: true, listName: 'Centers' })
@@ -109,7 +111,7 @@ export default class XPageReports extends HTMLElement {
         //
         // Examiner
         //
-        if (getReportDescription().params.includes('examiner')) {
+        if (isParam('examiner')) {
             this._params.insertAdjacentElement('beforeend',
                 createElementWithObject(XLabel, { label: 'Examiner' }, [
                     createElementWithObject(XInputList, { name: 'examiner', listName: 'Examiner' })
@@ -119,19 +121,20 @@ export default class XPageReports extends HTMLElement {
 
         //
         // Period
-
-        // TODO: consultations -> param = day !!!
-
         //
-        if (getReportDescription().params.includes('period')) {
-            const periodList = ['day', 'month', 'year'];
+        //    fields can be set because of "period" or because they are explicitely wanted
+        //    ex: day from consultation
+        //
+        const periodList = ['day', 'month', 'year'];
+        const switchPeriod = (period) => {
+            periodList.forEach((e) => {
+                const xlb = /** @type {XLabel} */(this._params.querySelector(`x-label[period="${e}"]`));
+                xlb.style.display = (period == e) ? xlb.constructor.DISPLAY_MODE : 'none';
+            });
+        };
 
-            const switchPeriod = (period) => {
-                periodList.forEach((e) => {
-                    const xlb = /** @type {XLabel} */(this._params.querySelector(`x-label[period="${e}"]`));
-                    xlb.style.display = (period == e) ? xlb.constructor.DISPLAY_MODE : 'none';
-                });
-            };
+        // Period selector
+        if (isParam('period')) {
             this._params.insertAdjacentElement('beforeend',
                 createElementWithObject(XLabel, { label: 'Period' }, [
                     this._periodSelector = createElementWithObject(XInputList, { name: 'period', list: periodList, value: 'month' }, [],
@@ -139,36 +142,37 @@ export default class XPageReports extends HTMLElement {
                         (/** @type {XInputList} */ el) => el.addEventListener('change', () => switchPeriod(el.value))
                     )
                 ]));
-            switchPeriod(this._periodSelector.value);
-
         }
 
-        if (getReportDescription().params.includes('period') || getReportDescription().params.includes('day')) {
+        if (isParam('period') || isParam('day')) {
             this._params.insertAdjacentElement('beforeend',
                 createElementWithObject(XLabel, { label: 'Day', period: 'day' }, [
                     createElementWithObject(XInputDate, { name: 'day' })
                 ]));
         }
 
-        if (getReportDescription().params.includes('period') || getReportDescription().params.includes('month')) {
+        if (isParam('period') || isParam('month')) {
             this._params.insertAdjacentElement('beforeend',
                 createElementWithObject(XLabel, { label: 'Month (yyyy-mm)', period: 'month' }, [
-                    createElementWithTag('input', { name: 'month' })
+                    createElementWithTag('input', { name: 'month', pattern: '[0-9]{4}-[0-9]{1,2}', placeholder: 'yyyy-mm' })
                 ]));
         }
 
-        if (getReportDescription().params.includes('period') || getReportDescription().params.includes('year')) {
+        if (isParam('period') || isParam('year')) {
             this._params.insertAdjacentElement('beforeend',
                 createElementWithObject(XLabel, { label: 'Year (yyyy)', period: 'year' }, [
-                    createElementWithTag('input', { name: 'year' })
+                    createElementWithTag('input', { name: 'year', type: 'number', min: 1990, max: 2100 })
                 ]));
         }
 
+        if (isParam('period')) {
+            switchPeriod(this._periodSelector.value);
+        }
 
         //
         // Activity
         //
-        if (getReportDescription().params.includes('activity')) {
+        if (isParam('activity')) {
             this._params.insertAdjacentElement('beforeend',
                 createElementWithObject(XLabel, { label: 'Activity' }, [
                     createElementWithObject(XInputList, { name: 'activity', nullable: true, list: ['consult', 'workshop', 'surgical'] })
