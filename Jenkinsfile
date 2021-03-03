@@ -29,6 +29,11 @@ pipeline {
         sh 'make dump'
       }
     }
+    stage('start') {
+      steps {
+        sh 'make start'
+      }
+    }
     stage('dependencies') {
       steps {
         sh '''
