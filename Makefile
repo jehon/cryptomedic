@@ -35,10 +35,10 @@ endef
 
 define run_in_docker
 	@if [ "$(IN_DOCKER)" = "$(1)" ]; then \
-		echo "- Running natively $(1) - $(2)"; \
+		echo "- Running natively $(1)"; \
 		/bin/bash -c $(2); \
 	else \
-		echo "- Running in docker $(1) - $(2)"; \
+		echo "- Running in docker $(1)"; \
 		$(DOCKERCOMPOSE) exec --user $(shell id -u) -T "$(1)" /bin/bash -c $(2); \
 	fi
 endef
@@ -332,7 +332,7 @@ data-reset: docker-started dependencies-api-bare
 
 # Reset database
 	@echo "*** $@: reset the database..."
-	$(call run_in_docker,mysql, "while ! mysql -u root -p$(DBROOTPASS) --database=mysql -e 'Show tables;' >/dev/null; do sleep 1; done")
+	$(call run_in_docker,mysql, "while ! mysql -u root -p$(DBROOTPASS) --database=mysql -e 'Show tables;' &>/dev/null; do sleep 1; done")
 	$(call run_in_docker,mysql," \
 		mysql -u root -p$(DBROOTPASS) --database=mysql -e \" \
 			USE mysql; \
