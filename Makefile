@@ -64,7 +64,7 @@ dump:
 	@echo "Who am i(uid):    $(shell id -u)"
 	@echo "Who am i(gid):    $(shell id -g)"
 	@echo "DOCKERCOMPOSE:    $(DOCKERCOMPOSE)"
-	docker-compose config
+	$(DOCKERCOMPOSE) config
 
 dump-in-docker: docker-started
 	$(call run_in_docker,dev,"make dump")
