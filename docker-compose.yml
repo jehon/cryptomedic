@@ -14,7 +14,6 @@ services:
     build:
       context: conf/server/
       dockerfile: Dockerfile
-    user: "${UID:-1000}:${GID:-1000}"
     environment:
       IN_DOCKER: server
     expose:
@@ -64,12 +63,9 @@ services:
     build:
       context: conf/dev
       dockerfile: Dockerfile
-    user: "${UID}"
     environment:
       IN_DOCKER: dev
       <<: *common-env
-      HOST_UID: ${UID}
-      HOST_GID: ${GID}
     volumes:
       - .:/app
     ports:
