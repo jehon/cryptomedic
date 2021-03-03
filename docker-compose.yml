@@ -64,12 +64,12 @@ services:
     build:
       context: conf/dev
       dockerfile: Dockerfile
-    user: "${UID:-1000}:${GID:-1000}"
+    user: "${UID}"
     environment:
       IN_DOCKER: dev
       <<: *common-env
-      HOST_UID: ${HOST_UID}
-      HOST_GID: ${HOST_GID}
+      HOST_UID: ${UID}
+      HOST_GID: ${GID}
     volumes:
       - .:/app
     ports:

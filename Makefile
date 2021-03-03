@@ -11,9 +11,9 @@ DB_BASE := conf/database/base.sql
 
 DEPLOY_HOST := ftp.cluster003.ovh.net
 
-CRYPTOMEDIC_PORT ?= 5080
-
-DOCKERCOMPOSE := CRYPTOMEDIC_PORT=$(CRYPTOMEDIC_PORT) HOST_UID=$(shell id -u) HOST_GID=$(shell id -g) docker-compose
+export CRYPTOMEDIC_PORT ?= 5080
+export UID=$(shell id -u)
+export GID=$(shell id -g)
 
 SSH_KNOWN_HOSTS := ~/.ssh/known_hosts
 
@@ -39,7 +39,7 @@ define run_in_docker
 		/bin/bash -c $(2); \
 	else \
 		echo "- Running in docker $(1)"; \
-		$(DOCKERCOMPOSE) exec --user $(shell id -u) -T "$(1)" /bin/bash -c $(2); \
+		docker-compose exec --user $(shell id -u) -T "$(1)" /bin/bash -c $(2); \
 	fi
 endef
 
@@ -61,10 +61,12 @@ dump:
 	@echo "CRYPTOMEDIC_PORT: $(CRYPTOMEDIC_PORT)"
 	@echo "IN_DOCKER:        $(IN_DOCKER)"
 	@echo "Who am i:         $(shell whoami)"
-	@echo "Who am i(uid):    $(shell id -u)"
-	@echo "Who am i(gid):    $(shell id -g)"
-	@echo "DOCKERCOMPOSE:    $(DOCKERCOMPOSE)"
-	$(DOCKERCOMPOSE) config
+	@echo "Who am i:         $(shell id)"
+	@echo "UID:              $(UID)"
+	@echo "GID:              $(GID)"
+
+dump-docker-compose:
+	docker-compose config
 
 dump-in-docker: docker-started
 	$(call run_in_docker,dev,"make dump")
@@ -134,12 +136,12 @@ start: setup-structure \
 .PHONY: docker-started
 docker-started:
 	@if ! nc -w 1 -z localhost $(CRYPTOMEDIC_PORT) ; then \
-		$(DOCKERCOMPOSE) up --build -d; \
+		docker-compose up --build -d; \
 	fi
 
 .PHONY: stop
 stop: deploy-unmount
-	$(DOCKERCOMPOSE) down || true
+	docker-compose down || true
 
 .PHONY: full
 full: test lint
@@ -228,7 +230,7 @@ deploy-test: docker-started
 #
 .PHONY: logs
 logs:
-	$(DOCKERCOMPOSE) logs -f --tail=10 | sed 's/\\n/\n/g'
+	docker-compose logs -f --tail=10 | sed 's/\\n/\n/g'
 
 #
 #
@@ -349,7 +351,7 @@ data-reset: docker-started dependencies-api-bare
 # 	ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
 
 	cat "conf/database/base.sql" \
-		| $(DOCKERCOMPOSE) exec -T mysql mysql -u root -p$(DBROOTPASS) --database="$(DBNAME)"
+		| docker-compose exec -T mysql mysql -u root -p$(DBROOTPASS) --database="$(DBNAME)"
 
 	bin/cryptomedic-refresh-structure.sh
 	@echo "*** $@: reset the database - done"
