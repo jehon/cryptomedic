@@ -31,37 +31,26 @@ RUN a2enmod expires rewrite proxy proxy_http proxy_html proxy_connect proxy_wstu
 # RUN apt-get install -y google-chrome-stable
 #
 
-##################################
-#
-# Config
-#
-
-RUN mkdir -p /setup
-ADD . /setup
-RUN chmod +x /setup/*.sh
-
 ###################
 #
 # Apache2 config
 #
 
-# Because we will not run as www-data...
-RUN chmod a+rwx -R /var/log/apache2
-RUN mkdir -p /var/run/apache2
-RUN chmod a+rwx -R /var/run/apache2
-
+RUN rm -fr /etc/apache2/sites-enabled/*.conf
 COPY website.conf /etc/apache2/sites-enabled/website.conf
-RUN rm -fr /etc/apache2/sites-enabled/000-default.conf
 
 ###################
 #
-# Other configs
+# Configs
 #
 #
+
+ADD . /setup/
+RUN chmod a+x /setup/*.sh
 
 RUN /setup/install-ovh-key.sh
 RUN /setup/install-php.sh
 
 WORKDIR /app
 
-CMD /setup/start.sh
+CMD apachectl -D FOREGROUND || tail /var/log/apache2/error.log

@@ -12,8 +12,6 @@ DB_BASE := conf/database/base.sql
 DEPLOY_HOST := ftp.cluster003.ovh.net
 
 export CRYPTOMEDIC_PORT ?= 5080
-export UID=$(shell id -u)
-export GID=$(shell id -g)
 
 SSH_KNOWN_HOSTS := ~/.ssh/known_hosts
 
@@ -39,7 +37,7 @@ define run_in_docker
 		/bin/bash -c $(2); \
 	else \
 		echo "- Running in docker $(1)"; \
-		docker-compose exec --user $(shell id -u) -T "$(1)" /bin/bash -c $(2); \
+		docker-compose exec -T "$(1)" /bin/bash -c $(2); \
 	fi
 endef
 
@@ -140,15 +138,17 @@ docker-started:
 	fi
 
 .PHONY: stop
-stop: deploy-unmount
+stop: deploy-unmount chmod
 	docker-compose down || true
+
+.PHONY: chmod
+chmod: docker-started
+	$(call run_in_docker,server,"chmod -R a+rwX www/api/v1.3/bootstrap/cache/ www/api/v1.3/storage/")
 
 .PHONY: full
 full: test lint
-	@echo "** Status **"
-	@git status -s
-	@echo "** Stash list **"
-	@git stash list
+	@jh-git-status.sh
+
 #
 #
 # Tests
@@ -326,10 +326,10 @@ database-backup:
 	$(call run_in_docker,mysql, "mysqldump -u root -p$(DBROOTPASS) $(DBNAME)") > $(DB_BASE)
 
 .PHONY: data-reset
-data-reset: docker-started dependencies-api-bare
+data-reset: docker-started dependencies-api-bare chmod
 # Live folder
 	@echo "*** $@: reset files..."
-	rsync -a --delete live-for-test/ live/
+	$(call run_in_docker,dev,"rsync -a --delete live-for-test/ live/")
 	@echo "*** $@: reset files - done"
 
 # Reset database
