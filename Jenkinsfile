@@ -101,7 +101,7 @@ make dependencies
       sh 'make stop'
       junit 'tmp/js/junit/*.xml'
       junit 'tmp/phpv*/index*.xml'
-      deleteDir() /* clean up our workspace */
+      // deleteDir() /* clean up our workspace */
     }
   }
 }
