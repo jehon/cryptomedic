@@ -35,10 +35,10 @@ endef
 
 define run_in_docker
 	@if [ "$(IN_DOCKER)" = "$(1)" ]; then \
-		echo "- Running natively -"; \
+		echo "- Running natively $(1) - $(2)"; \
 		/bin/bash -c $(2); \
 	else \
-		echo "- Running in docker -"; \
+		echo "- Running in docker $(1) - $(2)"; \
 		$(DOCKERCOMPOSE) exec --user $(shell id -u) -T "$(1)" /bin/bash -c $(2); \
 	fi
 endef
