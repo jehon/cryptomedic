@@ -60,6 +60,10 @@ dump:
 	@echo "SHELL:            $(SHELL)"
 	@echo "CRYPTOMEDIC_PORT: $(CRYPTOMEDIC_PORT)"
 	@echo "IN_DOCKER:        $(IN_DOCKER)"
+	@echo "Who am i:         $(shell whoami)"
+	@echo "Who am i(uid):    $(shell id -u)"
+	@echo "Who am i(gid):    $(shell id -g)"
+	@echo "DOCKERCOMPOSE:    $(DOCKERCOMPOSE)"
 	docker-compose config
 
 dump-in-docker: docker-started

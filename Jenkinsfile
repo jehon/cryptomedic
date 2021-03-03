@@ -19,6 +19,11 @@ pipeline {
         sh 'make setup-computer'
       }
     }
+    stage('stop previous') {
+      steps {
+        sh 'make stop'
+      }
+    }
     stage('dump') {
       steps {
         sh 'make dump'
@@ -34,7 +39,6 @@ make dependencies
 '''
       }
     }
-
     stage('test-api') {
       steps {
         sh 'make test-api'
