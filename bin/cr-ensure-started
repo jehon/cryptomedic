@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+set -e
+
+. cr-lib
+
+# # Need to go back for .env to be present
+# cd "$ROOT"
+
+if ! docker-compose ps | grep "server" &>/dev/null ; then
+ 	header "starting docker"
+ 	docker-compose up --build -d
+    header_finished
+fi

@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+set -e
+
+. cr-lib
+
+SERVICE="$1"
+CMD="$2"
+
+cr-ensure-started
+
+if [ -z "$SERVICE" ]; then
+    echo "No service found as env" >&2
+    exit 2
+fi
+
+if [ "$IN_DOCKER" = "$SERVICE" ]; then
+    header "Running natively $CMD"
+    /bin/bash -c "$CMD"
+    header_finished
+else
+    header "Running in docker '$SERVICE': '$CMD'..."
+
+    docker-compose exec -T "$SERVICE" /bin/bash -c "$CMD"
+    header_finished
+fi
