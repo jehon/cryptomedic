@@ -110,7 +110,7 @@ make dependencies
   }
   post {
     always {
-      sh 'make chmod'
+      sh 'make chmod || true'
       sh 'make stop'
       junit 'tmp/js/junit/*.xml'
       junit 'tmp/phpv*/index*.xml'

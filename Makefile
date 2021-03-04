@@ -134,13 +134,14 @@ docker-started:
 	@if ! docker-compose ps | grep "server" &>/dev/null ; then \
 		docker-compose up --build -d; \
 	fi
+	$(call itself,chmod)
 
 .PHONY: stop
 stop: deploy-unmount
 	docker-compose down || true
 
 .PHONY: chmod
-chmod: docker-started
+chmod:
 	$(call run_in_docker,server,"chmod -R a+rwX www/api/v1.3/bootstrap/cache/ www/api/v1.3/storage/") || true
 
 .PHONY: full
