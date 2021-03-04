@@ -3,8 +3,13 @@ pipeline {
   environment {
     CRYPTOMEDIC_UPLOAD = credentials('cryptomedic-upload')
     CRYPTOMEDIC_DB_UPGRADE = credentials('cryptomedic-deploy')
-    // Need a port for console call -> do everything from dev is ok
+
+    // Need a different port, to allow continue working in dev with normal port
     CRYPTOMEDIC_PORT = 15080
+
+    // To have the same docker-compose to all, to allow killing previous one
+    //   See https://docs.docker.com/compose/reference/envvars/#compose_project_name
+    COMPOSE_PROJECT_NAME = jenkins_cryptomedic
   }
   options {
     ansiColor('xterm')
