@@ -60,8 +60,6 @@ dump:
 	@echo "IN_DOCKER:        $(IN_DOCKER)"
 	@echo "Who am i:         $(shell whoami)"
 	@echo "Who am i:         $(shell id)"
-	@echo "UID:              $(UID)"
-	@echo "GID:              $(GID)"
 
 dump-docker-compose:
 	docker-compose config
@@ -143,7 +141,7 @@ stop: deploy-unmount
 
 .PHONY: chmod
 chmod: docker-started
-	$(call run_in_docker,server,"chmod -R a+rwX www/api/v1.3/bootstrap/cache/ www/api/v1.3/storage/")
+	$(call run_in_docker,server,"chmod -R a+rwX www/api/v1.3/bootstrap/cache/ www/api/v1.3/storage/") || true
 
 .PHONY: full
 full: test lint
