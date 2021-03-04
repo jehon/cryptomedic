@@ -121,6 +121,7 @@ update-config-host-key:
 .PHONY: start
 start: setup-structure \
 		docker-started \
+		chmod \
 		dependencies \
 		build
 
