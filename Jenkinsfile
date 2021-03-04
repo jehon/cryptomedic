@@ -22,6 +22,7 @@ pipeline {
     stage('stop previous') {
       steps {
         sh 'make stop'
+        sh 'nc -v -w 1 localhost 15080 || true'
       }
     }
     stage('dump') {
