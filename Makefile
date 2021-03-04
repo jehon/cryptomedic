@@ -133,7 +133,7 @@ start: setup-structure \
 
 .PHONY: docker-started
 docker-started:
-	@if ! nc -w 1 -z localhost $(CRYPTOMEDIC_PORT) ; then \
+	@if ! docker-compose ps | grep "server" &>/dev/null ; then \
 		docker-compose up --build -d; \
 	fi
 
