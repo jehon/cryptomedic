@@ -94,9 +94,10 @@ make dependencies
       steps {
         lock(resource: 'cryptomedic_production') {
           sh '''
-            CRYPTOMEDIC_UPLOAD_USER=$CRYPTOMEDIC_UPLOAD_USR
-            CRYPTOMEDIC_UPLOAD_PASSWORD=$CRYPTOMEDIC_UPLOAD_PSW
-               make deploy'''
+            CRYPTOMEDIC_UPLOAD_USER=$CRYPTOMEDIC_UPLOAD_USR \
+              CRYPTOMEDIC_UPLOAD_PASSWORD=$CRYPTOMEDIC_UPLOAD_PSW \
+              make deploy
+          '''
         }
       }
     }
