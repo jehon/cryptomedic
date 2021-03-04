@@ -138,7 +138,7 @@ docker-started:
 	fi
 
 .PHONY: stop
-stop: deploy-unmount chmod
+stop: deploy-unmount
 	docker-compose down || true
 
 .PHONY: chmod
