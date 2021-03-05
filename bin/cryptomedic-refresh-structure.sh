@@ -2,6 +2,8 @@
 
 set -e
 
+cr-ensure-started
+
 SCRIPT_DIR="$( dirname "${BASH_SOURCE[0]}" )"
 PRJ_DIR="$(dirname "$SCRIPT_DIR")"
 

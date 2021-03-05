@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+set -e
+
+. cr-lib
+
+FOLDER="$1"
+if [ -z "$FOLDER" ]; then
+    FOLDER="."
+fi
+
+USERUID="$(id -u)"
+
+header "Fixing permission through 'dev' to $USERUID on $FOLDER"
+cr-in-docker "dev" "find '$FOLDER' \( -not -user '${USERUID}' \) -exec chown ${USERUID} '{}' ';' "
+header_finished

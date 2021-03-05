@@ -1,44 +1,38 @@
 
-VAPI := v1.3
-DBNAME := cryptomedic
-# From docker-compose.yml
-DBUSER := username
-DBPASS := password
-DBROOTPASS := password
-# From config.php
-DBUPDATEPWD := secret
-DB_BASE := conf/database/base.sql
-
-DEPLOY_HOST := ftp.cluster003.ovh.net
-
+#
+# Parameters
+#
 export CRYPTOMEDIC_PORT ?= 5080
+export VAPI := v1.3
 
-SSH_KNOWN_HOSTS := ~/.ssh/known_hosts
-
+BACKUP_DIR ?= tmp/backup-online
+DEPLOY_HOST := ftp.cluster003.ovh.net
 DEPLOY_MOUNT := tmp/remote
 DEPLOY_MOUNT_TEST_FILE := $(DEPLOY_MOUNT)/favicon.ico
-BACKUP_DIR ?= tmp/backup-online
 DEPLOY_TEST_DIR ?= tmp/deploy-test-dir
+SSH_KNOWN_HOSTS := ~/.ssh/known_hosts
+
+#
+# Dev env fixed
+#
+export DBNAME := cryptomedic
+# From docker-compose.yml
+export DBPASS := password
+export DBROOTPASS := password
+export DBUSER := username
+# From config.php
+export DBUPDATEPWD := secret
+
+#
+# Fixed
+#
 CJS2ESM_DIR := app/cjs2esm
-NM_BIN := node_modules/.bin/
+NM_BIN := $(shell npm bin)/
+export ROOT = $(shell dirname $(abspath $(lastword $(MAKEFILE_LIST))))
+export PATH := $(ROOT)/bin:$(PATH)
 
 define itself
 	$(MAKE) $(FLAGS) $(MAKEOVERRIDES) "$1"
-endef
-
-define ensure_folder_empty
-	rm -fr "$1"
-	mkdir -p "$1"
-endef
-
-define run_in_docker
-	@if [ "$(IN_DOCKER)" = "$(1)" ]; then \
-		echo "- Running natively $(1)"; \
-		/bin/bash -c $(2); \
-	else \
-		echo "- Running in docker $(1)"; \
-		docker-compose exec -T "$(1)" /bin/bash -c $(2); \
-	fi
 endef
 
 # See https://coderwall.com/p/cezf6g/define-your-own-function-in-a-makefile
@@ -58,45 +52,38 @@ dump:
 	@echo "SHELL:            $(SHELL)"
 	@echo "CRYPTOMEDIC_PORT: $(CRYPTOMEDIC_PORT)"
 	@echo "IN_DOCKER:        $(IN_DOCKER)"
+	@echo "PATH:             $(PATH)"
 	@echo "Who am i:         $(shell whoami)"
 	@echo "Who am i:         $(shell id)"
 
 dump-docker-compose:
 	docker-compose config
 
-dump-in-docker: docker-started
-	$(call run_in_docker,dev,"make dump")
+dump-in-docker:
+	cr-in-docker dev "make dump"
 
 all: start
 
 clear:
 	clear
 
-clean: deploy-unmount stop
+clean: deploy-unmount
+# TODO: in dev ?
 	if [ -r $(DEPLOY_MOUNT_TEST_FILE) ]; then echo "Remote mounted - stopping"; exit 1; fi
-	rm -fr node_modules
-	rm -fr www/maintenance/vendor
-	rm -fr www/api/$(VAPI)/vendor
-	rm -fr www/api/$(VAPI)/public/vendor
-	rm -fr vendor
-
-	rm -fr "tmp/"
+	find . -type d \( -name "vendor" -or -name "node_modules" \) -prune -exec "rm" "-fr" "{}" ";" || true
+	find . -name "tmp" -prune -exec "rm" "-fr" "{}" ";" || true
 	find . -name "*.log" -delete
+
+	rm -fr live/
 	rm -fr www/build
 	rm -fr app/cjs2esm
+	rm -fr www/api/*/bootstrap/cache
+	rm -fr www/api/*/storage
 
-	$(call ensure_folder_empty,www/api/$(VAPI)/bootstrap/cache/)
-	$(call ensure_folder_empty,www/api/$(VAPI)/app/public)
-	$(call ensure_folder_empty,www/api/$(VAPI)/storage/framework/cache)
-	$(call ensure_folder_empty,www/api/$(VAPI)/storage/framework/cache/data)
-	$(call ensure_folder_empty,www/api/$(VAPI)/storage/framework/sessions)
-	$(call ensure_folder_empty,www/api/$(VAPI)/storage/framework/views)
-	$(call ensure_folder_empty,www/api/$(VAPI)/storage/logs/)
-	$(call ensure_folder_empty,live/)
-
-setup: setup-structure
+	@echo "!! Removed dependencies, so husky (commit) will not work anymore. Please make dependencies-node to enable it again"
 
 setup-computer:
+# TODO -> deploy from dev
 # Test the remote key
 	@REMOTE="$(shell ssh-keyscan -t ssh-rsa $(DEPLOY_HOST) 2>/dev/null )"; \
 	STORED="$(shell cat ovh.key)"; \
@@ -116,26 +103,16 @@ setup-computer:
 	cat ovh.key >> $(SSH_KNOWN_HOSTS)
 
 update-config-host-key:
+# TODO -> deploy from dev
 	ssh-keyscan -t ssh-rsa $(DEPLOY_HOST) > ovh.key
 
 .PHONY: start
-start: setup-structure \
-		docker-started \
-		chmod \
-		dependencies \
-		build
-
-	$(call itself,data-reset)
+start:
+	cr-ensure-started
+	cr-fix-permissions '.'
 
 	@echo "Open browser: http://localhost:$(CRYPTOMEDIC_PORT)/"
 	@echo "Test page: http://localhost:$(CRYPTOMEDIC_PORT)/xappx/tests/index.html"
-
-.PHONY: docker-started
-docker-started:
-	@if ! docker-compose ps | grep "server" &>/dev/null ; then \
-		docker-compose up --build -d; \
-	fi
-	$(call itself,chmod)
 
 .PHONY: stop
 stop: deploy-unmount
@@ -143,7 +120,7 @@ stop: deploy-unmount
 
 .PHONY: chmod
 chmod:
-	$(call run_in_docker,server,"chmod -R a+rwX www/api/v1.3/bootstrap/cache/ www/api/v1.3/storage/") || true
+	cr-fix-permissions || true
 
 .PHONY: full
 full: test lint
@@ -157,41 +134,46 @@ full: test lint
 
 .PHONY: lint
 lint: dependencies-node
+# TODO -> from dev
 	npm run eslint
 	npm run stylelint
 
 .PHONY: test # In Jenkinfile, each step is separated:
-test: docker-started dependencies build test-api test-api-bare test-unit test-e2e test-style
+test: dependencies build test-api test-api-bare test-unit test-e2e test-style
 
 .PHONY: test-api
-test-api: docker-started dependencies-api
-	$(call itself,data-reset)
-	$(call run_in_docker,server,"/app/bin/dev-phpunit.sh laravel")
+test-api: dependencies-api
+	cr-data-reset
+	cr-phpunit laravel
 
 .PHONY: update-references-api
-update-references-api: docker-started dependencies-api
-	$(call itself,data-reset)
-	$(call run_in_docker,server,"/app/bin/dev-phpunit.sh COMMIT")
+update-references-api: dependencies-api
+	cr-data-reset
+	cr-phpunit COMMIT
 
 test-api-bare: dependencies-api
-	$(call itself,data-reset)
-	$(call run_in_docker,server,"/app/bin/dev-phpunit.sh bare")
+	cr-data-reset
+	cr-phpunit bare
 
 .PHONY: test-unit
 test-unit: dependencies-node \
 		$(CJS2ESM_DIR)/axios.js \
 		$(CJS2ESM_DIR)/axios-mock-adapter.js \
 		$(CJS2ESM_DIR)/platform.js
+# TODO -> from dev
 	npm run test-unit-continuously-withcov -- --single-run
 	node tests/report.js
 
 .PHONY: test-e2e
 test-e2e:
+# TODO -> from dev
 	rm -f tmp/e2e/.tested
+# TODO -> no call itself
 	$(call itself,tmp/e2e/.tested)
 
 tmp/e2e/.tested: www/build/index.html $(call recursive-dependencies,tests/e2e,tmp/e2e/.tested)
-	$(call itself,data-reset)
+# TODO -> from dev
+	cr-data-reset
 	rm -fr tmp/e2e
 	npm run --silent test-e2e
 	touch $@
@@ -199,6 +181,7 @@ tmp/e2e/.tested: www/build/index.html $(call recursive-dependencies,tests/e2e,tm
 .PHONY: test-style
 test-style: tmp/styles.json
 tmp/styles.json: tmp/e2e/.tested
+# TODO -> from dev
 	npm run --silent test-style
 	@echo "Report is at http://localhost:$(CRYPTOMEDIC_PORT)/xappx/tmp/style.html"
 
@@ -218,11 +201,13 @@ update-references-style:
 # Deploy command
 #
 .PHONY: deploy
-deploy: docker-started
+deploy:
+# TODO -> from dev + rewrite
 	bin/cryptomedic-deploy-patch.sh commit
 
 .PHONY: deploy-test
-deploy-test: docker-started
+deploy-test:
+# TODO -> from dev + rewrite
 	bin/cryptomedic-deploy-patch.sh
 
 #
@@ -234,59 +219,45 @@ logs:
 
 #
 #
-# Install > Structure
-#
-#
-.PHONY: setup-structure
-setup-structure: tmp/structure-exists
-tmp/structure-exists:
-	mkdir -p    tmp/
-	mkdir -p    live/
-	mkdir -p    www/api/$(VAPI)/bootstrap/cache/
-	mkdir -p    www/api/$(VAPI)/app/public
-	mkdir -p    www/api/$(VAPI)/storage/framework/cache
-	mkdir -p    www/api/$(VAPI)/storage/framework/sessions
-	mkdir -p    www/api/$(VAPI)/storage/framework/views
-	mkdir -p    www/api/$(VAPI)/storage/logs/
-	touch       www/api/$(VAPI)/storage/logs/laravel.log
-	touch       tmp/structure-exists
-
-#
-#
 # Install > dependencies
 #
 #
 .PHONY: depencencies
-dependencies: dependencies-node dependencies-api
+dependencies: dependencies-node dependencies-api depencencies-api-bare
 
 .PHONY: dependencies-node
 dependencies-node: node_modules/.dependencies
 node_modules/.dependencies: package.json package-lock.json
+# TODO -> from dev
 	npm install
 	touch package-lock.json
 	touch node_modules/.dependencies
 
 .PHONY: depencencies-api
 dependencies-api: www/api/$(VAPI)/vendor/.dependencies
-www/api/$(VAPI)/vendor/.dependencies: www/api/$(VAPI)/composer.json www/api/$(VAPI)/composer.lock tmp/structure-exists docker-started dependencies-api-bare
-	$(call run_in_docker,dev,"cd www/api/$(VAPI) && composer install")
-	touch www/api/$(VAPI)/vendor/.dependencies
+www/api/$(VAPI)/vendor/.dependencies: www/api/$(VAPI)/public/vendor/.dependencies \
+		www/api/$(VAPI)/composer.json \
+		www/api/$(VAPI)/composer.lock
+
+	mkdir -m 777 -p www/api/v1.3/bootstrap/cache
+
+	cr-dependencies-php "www/api/$(VAPI)"
 
 .PHONY: depencencies-api-bare
 dependencies-api-bare: www/api/$(VAPI)/public/vendor/.dependencies
-www/api/$(VAPI)/public/vendor/.dependencies: www/api/$(VAPI)/public/composer.json www/api/$(VAPI)/public/composer.lock tmp/structure-exists docker-started
-	$(call run_in_docker,dev,"cd www/api/$(VAPI)/public/ && composer install")
-	touch www/api/$(VAPI)/public/vendor/.dependencies
+www/api/$(VAPI)/public/vendor/.dependencies: \
+		www/api/$(VAPI)/public/composer.json \
+		www/api/$(VAPI)/public/composer.lock
+
+	cr-dependencies-php "www/api/$(VAPI)/public"
 
 .PHONY: update-dependencies-api
 update-dependencies-api:
-	$(call run_in_docker,dev,"cd www/api/$(VAPI) && composer update")
-	touch www/api/$(VAPI)/vendor/.dependencies
+	cr-dependencies-php "www/api/$(VAPI)" "update"
 
 .PHONY: update-dependencies-api-bare
 update-dependencies-api-bare:
-	$(call run_in_docker,dev,"cd www/api/$(VAPI)/public/ && composer update")
-	touch www/api/$(VAPI)/public/vendor/.dependencies
+	cr-dependencies-php "www/api/$(VAPI)/public" "update"
 
 #
 #
@@ -295,6 +266,7 @@ update-dependencies-api-bare:
 #
 
 package-lock.json: package.json
+# TODO -> from dev
 	npm install
 
 .PHONY: build
@@ -304,16 +276,21 @@ www/build/index.html: node_modules/.dependencies webpack.config.js \
 		$(call recursive-dependencies,app/,www/build/index.html) \
 		$(CJS2ESM_DIR)/axios.js \
 		$(CJS2ESM_DIR)/platform.js
+
+# TODO -> from dev
 	$(NM_BIN)webpack
 
 $(CJS2ESM_DIR)/axios.js: node_modules/axios/dist/axios.js
+# TODO -> from dev
 	$(NM_BIN)babel --out-file="$@" --plugins=transform-commonjs --source-maps inline $?
 
 $(CJS2ESM_DIR)/axios-mock-adapter.js: node_modules/axios-mock-adapter/dist/axios-mock-adapter.js
+# TODO -> from dev
 	$(NM_BIN)babel --out-file="$@" --plugins=transform-commonjs --source-maps inline $?
 	sed -i 's/from "axios";/from ".\/axios.js";/' $@
 
 $(CJS2ESM_DIR)/platform.js: node_modules/platform/platform.js
+# TODO -> from dev
 	$(NM_BIN)babel --out-file="$@" --plugins=transform-commonjs --source-maps inline $?
 
 #
@@ -323,38 +300,11 @@ $(CJS2ESM_DIR)/platform.js: node_modules/platform/platform.js
 #
 .PHONY: database-backup
 database-backup:
-	$(call run_in_docker,mysql, "mysqldump -u root -p$(DBROOTPASS) $(DBNAME)") > $(DB_BASE)
+	cr-in-docker mysql "mysqldump -u root -p$(DBROOTPASS) $(DBNAME)" > $(DB_BASE)
 
 .PHONY: data-reset
-data-reset: docker-started dependencies-api-bare chmod
-# Live folder
-	@echo "*** $@: reset files..."
-	$(call run_in_docker,dev,"rsync -a --delete live-for-test/ live/")
-	@echo "*** $@: reset files - done"
-
-# Reset database
-	@echo "*** $@: reset the database..."
-	$(call run_in_docker,mysql, "while ! mysql -u root -p$(DBROOTPASS) --database=mysql -e 'Show tables;' &>/dev/null; do sleep 1; done")
-	$(call run_in_docker,mysql," \
-		mysql -u root -p$(DBROOTPASS) --database=mysql -e \" \
-			USE mysql; \
-			DROP SCHEMA IF EXISTS $(DBNAME); \
-			CREATE SCHEMA $(DBNAME); \
-			USE $(DBNAME); \
-			GRANT ALL PRIVILEGES ON $(DBNAME)   TO $(DBUSER); \
-			GRANT ALL PRIVILEGES ON $(DBNAME).* TO $(DBUSER); \
-			SET PASSWORD FOR $(DBUSER) = PASSWORD('$(DBPASS)'); \
-	\" ")
-
-# Mysql 5.7, 7.0:
-# 	ALTER USER 'root' IDENTIFIED WITH mysql_native_password BY 'password';
-# 	ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
-
-	cat "conf/database/base.sql" \
-		| docker-compose exec -T mysql mysql -u root -p$(DBROOTPASS) --database="$(DBNAME)"
-
-	bin/cryptomedic-refresh-structure.sh
-	@echo "*** $@: reset the database - done"
+data-reset: dependencies-api-bare chmod
+	cr-data-reset
 
 #
 #

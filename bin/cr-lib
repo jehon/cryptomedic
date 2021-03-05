@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+export PREFIX="*$PREFIX"
+
+header() {
+    LASTMSG="$*"
+    echo -e "\e[93m$PREFIX $*\e[00m"
+}
+
+header_finished() {
+    echo -e "\e[93m$PREFIX $LASTMSG done\e[00m"
+}

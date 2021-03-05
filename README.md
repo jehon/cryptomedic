@@ -20,9 +20,14 @@ sudo apt install docker-compose docker.io make wget nodejs
 
 ## Quick install
 
+To start quickly:
+make start dependencies build data-reset
+
 | Command    | What does it does?
 |------------|----------------------
 | make start | will install and start the whole stack. Open localhost:${CRYPTOMEDIC_PORT:-5080} to view cryptomedic
+| make dependencies | install dependencies
+| make data-reset | install data
 | make stop  | stop the server
 | make test  | launch the tests
 | make clean | clean up generated files
