@@ -10,6 +10,7 @@ pipeline {
     // To have the same docker-compose to all, to allow killing previous one
     //   See https://docs.docker.com/compose/reference/envvars/#compose_project_name
     COMPOSE_PROJECT_NAME = "jenkins_cryptomedic"
+    VERBOSE = "targets"
   }
   options {
     ansiColor('xterm')
@@ -19,7 +20,7 @@ pipeline {
     timeout(time: 15, unit: 'MINUTES')
   }
   stages {
-    stage('setup') {
+    stage('setup-computer') {
       steps {
         sh 'make setup-computer'
       }
@@ -27,7 +28,7 @@ pipeline {
     stage('stop previous') {
       steps {
         sh 'make stop'
-        sh 'nc -v -w 1 localhost 15080 || true'
+        sh 'nc -v -w 1 localhost ${CRYPTOMEDIC_PORT} || true'
       }
     }
     stage('dump') {
@@ -43,11 +44,15 @@ pipeline {
     stage('dependencies') {
       steps {
         sh '''
-set -e
 npm ci
 touch node_modules/.dependencies
 make dependencies
 '''
+      }
+    }
+    stage('build') {
+      steps {
+        sh 'make build'
       }
     }
     stage('test-api') {

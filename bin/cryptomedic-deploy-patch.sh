@@ -4,6 +4,10 @@
 # To protect a version, please see md5sum.php (at the bottom)
 #
 
+. cr-lib
+
+cr-ensure-started
+
 # Stop on error
 # Thanks to https://unix.stackexchange.com/a/462157/240487
 set -eE -o functrace

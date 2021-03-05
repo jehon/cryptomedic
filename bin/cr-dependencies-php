@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+set -e
+
+. cr-lib
+
+FOLDER="$1"
+ACT="install"
+if [ -n "$2" ]; then
+    ACT="$2"
+fi
+
+header "Installing dependencies in $FOLDER"
+cr-in-docker "dev" "cd '$FOLDER' && composer '$ACT'"
+cr-fix-permissions "$FOLDER/vendor"
+touch "$FOLDER"/composer.lock
+touch "$FOLDER"/vendor/.dependencies
+header_finished
