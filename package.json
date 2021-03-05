@@ -35,7 +35,7 @@
     "babel-plugin-transform-commonjs": "1.1.6",
     "bluebird": "3.7.2",
     "chromedriver": "88.0.0",
-    "css-loader": "5.0.2",
+    "css-loader": "5.1.1",
     "eslint": "7.20.0",
     "eslint-plugin-jasmine": "4.1.2",
     "eslint-plugin-jsdoc": "32.2.0",
