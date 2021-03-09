@@ -21,7 +21,7 @@ sudo apt install docker-compose docker.io make wget nodejs
 ## Quick install
 
 To start quickly:
-make start dependencies build data-reset
+make start dependencies build
 
 | Command    | What does it does?
 |------------|----------------------
