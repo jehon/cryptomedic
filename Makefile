@@ -181,7 +181,7 @@ tmp/e2e/.tested: www/build/index.html $(call recursive-dependencies,tests/e2e,tm
 
 .PHONY: test-style
 test-style: tmp/styles.json
-tmp/styles.json: tmp/e2e/.tested
+tmp/styles.json: tests/style/* tests/style/references/* tmp/e2e/.tested
 # TODO -> from dev
 	npm run --silent test-style
 	@echo "Report is at http://localhost:$(CRYPTOMEDIC_PORT)/xappx/tmp/style.html"
