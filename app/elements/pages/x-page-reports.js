@@ -141,7 +141,13 @@ x-button#export {
         const switchPeriod = (period) => {
             periodList.forEach((e) => {
                 const xlb = /** @type {XLabel} */(this._params.querySelector(`x-label[period="${e}"]`));
-                xlb.style.display = (period == e) ? xlb.constructor.DISPLAY_MODE : 'none';
+                if (period == e) {
+                    xlb.style.display = xlb.constructor.DISPLAY_MODE;
+                    xlb.querySelectorAll('input').forEach(el => el.removeAttribute('disabled'));
+                } else {
+                    xlb.style.display = 'none';
+                    xlb.querySelectorAll('input').forEach(el => el.setAttribute('disabled', 'disabled'));
+                }
             });
         };
 
