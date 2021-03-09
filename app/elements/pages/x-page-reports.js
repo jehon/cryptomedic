@@ -289,11 +289,24 @@ x-button#export {
 
         //
         // Export button
+        //    Calculate the filename
         //
+        let filename = `cryptomedic-${getReportId()}`;
+        for (const i in getReportDescription().params) {
+            const p = getReportDescription().params[i];
+            if (this._data.params[p]) {
+                if (p == 'period') {
+                    filename += '-' + this._data.params['when'];
+                } else {
+                    filename += '-' + this._data.params[p].split(' ').join('_');
+                }
+            }
+        }
+
         this._result.append(
             createElementWithTag('div', { style: { textAlign: 'right' } }, [
                 // createElementsFromHTML('<a style="display: none" id="report_download_button" download="export.xls">download</a>')[0],
-                this._exportLink = /** @type {HTMLAnchorElement} */ (createElementWithTag('a', { style: { display: 'none' }, download: 'test.xls' }, 'download')),
+                this._exportLink = /** @type {HTMLAnchorElement} */ (createElementWithTag('a', { style: { display: 'none' }, download: filename + '.xls' }, 'download')),
                 createElementWithObject(XButton, { action: 'alternate', id: 'export' }, 'Export to Excel',
                     (el) => el.addEventListener('click', () => this.generateXLS())
                 ),
