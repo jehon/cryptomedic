@@ -126,7 +126,7 @@ x-button#export {
         if (isParam('examiner')) {
             this._params.insertAdjacentElement('beforeend',
                 createElementWithObject(XLabel, { label: 'Examiner' }, [
-                    createElementWithObject(XInputList, { name: 'examiner', listName: 'Examiner' })
+                    createElementWithObject(XInputList, { name: 'examiner', nullable: true, listName: 'Examiner' })
                 ])
             );
         }
