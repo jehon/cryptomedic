@@ -15,6 +15,13 @@
             width: 150%;
         }
 
+        #header {
+            position: sticky;
+            padding: 10px;
+            top: 0px;
+            background-color: lightgray;
+        }
+
         div.compare {
             width: 100%;
         }
@@ -109,16 +116,16 @@
     <script src='../../node_modules/pixelmatch/index.js'></script>
 
 
-    <div id='results'>
-        <div class='compare'>
-            <span>Test result
-                <button onclick='document.querySelector("body").setAttribute("wide", "wide");'>wide</button>
-                <button onclick='document.querySelector("body").setAttribute("wide", "normal");'>normal</button>
-            </span>
-            <span>Reference</span>
-            <span>Comparison</span>
-        </div>
+    <div class='compare' id='header'>
+        <span>Test result
+            <button onclick='document.querySelector("body").setAttribute("wide", "wide");'>wide</button>
+            <button onclick='document.querySelector("body").setAttribute("wide", "normal");'>normal</button>
+        </span>
+        <span>Reference</span>
+        <span>Comparison</span>
     </div>
+
+    <div id='results'> </div>
 
     <script>
         fetch('../../tmp/styles.json')
