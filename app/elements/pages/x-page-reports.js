@@ -253,11 +253,6 @@ x-button#export {
         }
         setPref('report', prefs);
 
-        var dataGenerator = getReportId();
-        if (typeof (getReportDescription().dataGenerator) != 'undefined') {
-            // TODO: unify around reportId
-            dataGenerator = getReportDescription().dataGenerator;
-        }
         if (getReportDescription().fixedParams) {
             Object.assign(newValues, getReportDescription().fixedParams);
         }
@@ -273,7 +268,7 @@ x-button#export {
         }
 
         // Launch the call
-        this._requestor.request(reportQueryBuilder(dataGenerator, newValues))
+        this._requestor.request(reportQueryBuilder(getReportId(), newValues))
             .then(response => response.data)
             .then((data) => {
                 this._data = data;
@@ -472,7 +467,6 @@ reports[REPORT_STATISTICAL] = { // test data:
     name: 'Statistical Report',
     description: 'If you want to know the activity of the SARPV CDC on a period, choose this report',
     params: ['period', 'center', 'examiner'],
-    dataGenerator: 'statistical',
     generator: (tableBuilder, data) => {
         // Break everything
         tableBuilder._element.querySelector('tbody').innerHTML = statistical(data.list, data.params);
@@ -483,7 +477,6 @@ reports[REPORT_SURGICAL] = { // test data: 2014-01
     name: 'Surgical Report',
     description: 'Follow up of the surgical activity of the period',
     params: ['period'],
-    dataGenerator: 'surgical',
     // TODO: legend
     generator: (tableBuilder, data) => {
         const params = data.params;
