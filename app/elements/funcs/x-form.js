@@ -24,17 +24,14 @@ const log = (..._args) => { };
  *
  * The elements are taken in the "innerHTML" part of the component
  *
- * attributes:
- * - readonly: suppress the edit / delete / save buttons
- * - cancel-redirect: where to go on cancel
- * - submit-label: what is the label of the submit
- * - submit-post: where to submit the form (POST)
- * - submit-redictect: url
- *
  * functions:
  * - getValues/setValues: the inline values
  * - validate: validate the form (extensible) -> send back a list of messages
  *     message: { text, level } | text
+ *
+ * events:
+ *  - submit (when the form is valid)
+ *  - reset (reset the form)
  */
 
 export default class XForm extends HTMLElement {
@@ -44,6 +41,8 @@ export default class XForm extends HTMLElement {
     constructor() {
         super();
         this._buttons = {};
+
+        this.style.display = 'inline';
 
         this.attachShadow({ mode: 'open' });
         this.shadowRoot.append(
@@ -72,7 +71,7 @@ export default class XForm extends HTMLElement {
             ));
 
         // For each "query" button, auto submit
-        this.querySelectorAll(`x-button:not([action]), x-button[action=${actions.query}], x-button[action=${actions.submit}]`)
+        this.querySelectorAll(`x-button:not([action]), x-button[action=${actions.query}], x-button[action=${actions.commit}]`)
             .forEach(el => (/** @type {XButton} */(el)).addEventListener('click',
                 () => this.checkAndSubmit()
             ));
