@@ -36,7 +36,7 @@
     "bluebird": "3.7.2",
     "chromedriver": "89.0.0",
     "css-loader": "5.1.2",
-    "eslint": "7.21.0",
+    "eslint": "7.22.0",
     "eslint-plugin-jasmine": "4.1.2",
     "eslint-plugin-jsdoc": "32.2.0",
     "file-loader": "6.2.0",
