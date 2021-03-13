@@ -97,17 +97,7 @@
     </div>
 
     <div ng-if='password'>
-      <table class='table table-hover table-bordered tablesorter'>
-        <tr>
-          <td>New password for {{password.name}}</td>
-          <td>
-            <input ng-model="password.newcode" class="form-control" placeholder="enter new password here" required
-              autofocus>
-          </td>
-        </tr>
-      </table>
-      <x-button action='cancel' ng-click='doCancel()'>cancel</x-button>
-      <x-button action='alternate' ng-click='doSavePassword()'>Set password</x-button>
+      <x-user-password id='{{password.id}}' name='{{password.name}}' ng-on-exit='doCancel()'></x-user-password>
     </div>
   </form>
 </span>

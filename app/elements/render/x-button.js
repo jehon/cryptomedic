@@ -14,8 +14,10 @@ const button = Symbol('button');
  */
 export default class XButton extends HTMLElement {
     static get observedAttributes() {
-        return ['icon', 'action', 'discrete'];
+        return ['icon', 'action', 'discrete', 'timed'];
     }
+
+    _disableCron = () => { }
 
     constructor() {
         super();
@@ -81,6 +83,19 @@ export default class XButton extends HTMLElement {
                 this.colorizeButton();
                 break;
             }
+            // TODO: timed x-button (x-confirmation)
+            // case 'timed': {
+            //     this._disableCron();
+            //     this._disableCron = () => { };
+            //     let t = parseInt(newValue);
+            //     if (t > 0) {
+            //         this._disableCron = cron(() => {
+            //             // https://css-tricks.com/timer-bars-in-css-with-custom-properties/
+            //             /* transition: width 5s ease; */
+            //         }, t);
+            //     }
+            //     break;
+            // }
         }
     }
 

@@ -4,6 +4,7 @@
 
 import getDataService from '../js/getDataService.js';
 import '../elements/render/x-button.js';
+import '../elements/components/x-user-password.js'
 
 // TODO: manage change in groups
 

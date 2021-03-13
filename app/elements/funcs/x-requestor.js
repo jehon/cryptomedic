@@ -321,3 +321,16 @@ export function searchPatientBuilder(data) {
         data
     };
 }
+
+/**
+ * @param {string} id of the user
+ * @param {string} password to be set
+ * @returns {object} options for request (see XRequestor#request)
+ */
+export function setPasswordBuilder(id, password) {
+    return {
+        url: `users/password/${id}`,
+        method: 'POST',
+        data: { password }
+    };
+}
