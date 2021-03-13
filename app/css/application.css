@@ -197,7 +197,8 @@ table.reporting > tfoot > tr > .subheader {
 /********************************************
  * Input
  */
-input.ng-required {
+input.ng-required,
+input[required] {
 	border: 1px solid blue;
 }
 

@@ -10,6 +10,7 @@ import XPanel from '../render/x-panel.js';
 import XLabel from '../render/x-label.js';
 import XButtons from '../render/x-buttons.js';
 import XButton from '../render/x-button.js';
+import XGroupPanel from '../render/x-group-panel.js';
 
 /**
  * attribute redirect - Where to redirect on login
@@ -29,22 +30,24 @@ export default class XPageLogin extends HTMLElement {
         this.innerHTML = '';
         this.append(
             createElementWithObject(XPanel, {}, [
-                this._requestor = createElementWithObject(XRequestor, { global: true }, [
-                    this._form = createElementWithObject(XForm, {},
-                        [
-                            createElementWithTag('h2', {}, 'Please sign in'),
-                            createElementWithObject(XLabel, { label: 'Username' }, [
-                                createElementWithTag('input', { id: 'username', name: 'username', class: 'form-control', placeholder: 'Username', required: true, autofocus: true })
-                            ]),
-                            createElementWithObject(XLabel, { label: 'Password' }, [
-                                createElementWithTag('input', { id: 'password', name: 'password', class: 'form-control', placeholder: 'Password', required: true, autofocus: true, type: 'password' })
-                            ]),
-                            createElementWithObject(XButtons, { slot: 'buttons' }, [
-                                createElementWithObject(XButton, { id: 'submit' }, 'Login'),
-                            ]),
-                        ],
-                        (el) => el.addEventListener('submit', () => this.doLogin())
-                    )
+                createElementWithObject(XGroupPanel, { title: 'Connexion...' }, [
+                    this._requestor = createElementWithObject(XRequestor, { global: true }, [
+                        this._form = createElementWithObject(XForm, {},
+                            [
+                                createElementWithTag('h2', {}, 'Please sign in'),
+                                createElementWithObject(XLabel, { label: 'Username' }, [
+                                    createElementWithTag('input', { id: 'username', name: 'username', class: 'form-control', placeholder: 'Username', required: true, autofocus: true })
+                                ]),
+                                createElementWithObject(XLabel, { label: 'Password' }, [
+                                    createElementWithTag('input', { id: 'password', name: 'password', class: 'form-control', placeholder: 'Password', required: true, autofocus: true, type: 'password' })
+                                ]),
+                                createElementWithObject(XButtons, { slot: 'buttons' }, [
+                                    createElementWithObject(XButton, { id: 'submit' }, 'Login'),
+                                ]),
+                            ],
+                            (el) => el.addEventListener('submit', () => this.doLogin())
+                        )
+                    ])
                 ])
             ])
         );

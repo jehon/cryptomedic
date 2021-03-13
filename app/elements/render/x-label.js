@@ -36,9 +36,9 @@ export default class XLabel extends HTMLElement {
         flex-shrink: 0;
         font-weight: bold;
 
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
+        /* overflow: hidden; */
+        /* white-space: nowrap; */
+        /* text-overflow: ellipsis; */
     }
 
     ::slotted(*) {

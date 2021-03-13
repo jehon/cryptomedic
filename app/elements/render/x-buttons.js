@@ -16,6 +16,7 @@ export default class XButtons extends HTMLElement {
         flex-wrap: wrap;
 
         margin: 0px;
+        margin-top: 10px;
     }
 
     ::slotted(*) {
