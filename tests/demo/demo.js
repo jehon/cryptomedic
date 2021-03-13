@@ -14,6 +14,7 @@ import '../../app/elements/render/x-messages.js';
 // import '../../app/elements/render/x-panel.js';
 import '../../app/elements/render/x-waiting.js';
 
+import '../../app/elements/funcs/x-confirmation.js';
 import '../../app/elements/funcs/x-form.js';
 import '../../app/elements/funcs/x-i18n.js';
 import '../../app/elements/funcs/x-input-list.js';
