@@ -111,11 +111,6 @@ export default class CryptomedicDataService extends XRequestor {
         return this.requestAndFilter({ url: 'users/' + user.id, method: 'PUT', data: user })
             .then(response => response.asJson);
     }
-
-    userPassword(id, pwd) {
-        return this.requestAndFilter({ url: 'users/password/' + id, method: 'POST', data: { password: pwd } })
-            .then(response => response.asJson);
-    }
 }
 
 window.customElements.define('cryptomedic-data-service', CryptomedicDataService);
