@@ -3,7 +3,7 @@ import { actions } from '../../config.js';
 import { createElementWithObject, createElementWithTag, defineCustomElement } from '../../js/custom-element.js';
 import XConfirmation from '../funcs/x-confirmation.js';
 import XForm from '../funcs/x-form.js';
-import XRequestor, { setPasswordBuilder } from '../funcs/x-requestor.js';
+import XRequestor, { userPasswordBuilder } from '../funcs/x-requestor.js';
 import XButton from '../render/x-button.js';
 import XButtons from '../render/x-buttons.js';
 import XGroupPanel from '../render/x-group-panel.js';
@@ -75,7 +75,7 @@ export default class XUserPassword extends HTMLElement {
     setPassword() {
         // TODO
         const values = this._form.getValues();
-        this._requestor.request(setPasswordBuilder(this.getAttribute('id'), values.password))
+        return this._requestor.request(userPasswordBuilder(this.getAttribute('id'), values.password))
             .then(() => this.showConfirmation());
     }
 
