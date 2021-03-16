@@ -111,3 +111,62 @@ export function parseRouteReport(route = getCurrentRoute()) {
         report: route.replace(/^\/reports\//, '')
     };
 }
+
+/**
+ * @param {string} route as /blabla/[arg]
+ * @param {object} data to customize the route
+ * @returns {string} the route
+ */
+export function getRoute(route, data = {}) {
+    let newRoute = route;
+    Object.keys(data).reverse().forEach(k => {
+        newRoute = newRoute.split(`[${k}]`).join(data[k]);
+    });
+
+    const up = new URLSearchParams();
+    Object.keys(data).filter(k => !route.includes(`[${k}]`)).map(k => up.append(k, data[k])).join('&');
+    if (up.toString()) {
+        newRoute = `${newRoute}?${up.toString()}`;
+    }
+
+    if (newRoute.includes('[')) {
+        throw new Error(`Route not instanciated completely: ${newRoute} (basis: ${route}, data: ${JSON.stringify(data)})`);
+    }
+    return newRoute;
+}
+
+/**
+ * @param {string} routeTemplate as /blabla/[arg]
+ * @param {string} route to be parsed
+ * @returns {object} data to customize the route
+ */
+export function getRouteParameters(routeTemplate, route) {
+    let n = route.indexOf('?');
+
+    // Path with mandatory elements
+    let r = (n > 0 ? route.substr(0, n) : route);
+    let regexp = new RegExp(
+        '^'
+        + routeTemplate
+            .split('[').join('(?<')
+            .split(']').join('>[^/]*)')
+        + '$'
+    );
+    const params = regexp.exec(r)?.groups ?? {};
+    if (params === null) {
+        throw new Error('Route is not matching');
+    }
+
+    if (getRoute(routeTemplate, params) != r) {
+        throw new Error('Not correct route');
+    }
+
+    // Optional arguments
+    let s = (n > 0 ? route.substr(n + 1) : '');
+    const add = Object.fromEntries(Array.from(new URLSearchParams(s).entries()));
+
+    return {
+        ...params,
+        ...add
+    };
+}
