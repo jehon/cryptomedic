@@ -121,13 +121,13 @@ class Database {
         $data = array_intersect_key($data, DatabaseStructure::checkTableExistsAndGetDefinition($table));
 
         $escapedData = array_map(function ($value, $key) {
-            // Special values
-            switch ($value) {
-                case "NOW()":
-                    return $value;
-                default:
-                    return "$key = " . self::$pdoConnection->quote($value);
+            if ($value === true) {
+                return "$key = 1";
             }
+            if ($value === "NOW()") {
+                return "$key = NOW()";
+            }
+            return "$key = " . self::$pdoConnection->quote($value);
         }, $data, array_keys($data));
 
         $sql = implode(", ", $escapedData);
