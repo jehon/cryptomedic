@@ -16,16 +16,16 @@ describe(fn(import.meta.url), function () {
     });
 
     it('should show different types', function () {
-        spyOn(console, 'info').and.callThrough();
+        spyOn(console, 'error');
         el.setAttribute('level', '');
         el.setAttribute('level', messages.success);
         el.setAttribute('level', messages.info);
         el.setAttribute('level', messages.warning);
         el.setAttribute('level', messages.error);
-        expect(console.info).not.toHaveBeenCalled();
+        expect(console.error).not.toHaveBeenCalled();
 
         el.setAttribute('level', 'anything');
-        expect(console.info).toHaveBeenCalled();
+        expect(console.error).toHaveBeenCalled();
     });
 
 });

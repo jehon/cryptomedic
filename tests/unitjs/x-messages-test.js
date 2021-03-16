@@ -42,13 +42,13 @@ describe(fn(import.meta.url), function () {
         el.addMessage('c');
         expect(el.messagesCount).toBe(1);
 
-        res = el.addMessage({ text: 'c', level: messages.danger, id: 'MSG_C' });
+        res = el.addMessage({ text: 'c', level: messages.error, id: 'MSG_C' });
         expect(res).toBe('MSG_C');
         expect(el.messagesCount).toBe(2);
         expect(el.querySelectorAll('x-message[msg-id=MSG_C]').length).toBe(1);
         expect(el.messagesIds).toContain('MSG_C');
 
-        res = el.addMessage({ text: 'c', level: messages.danger, id: 'MSG_D' });
+        res = el.addMessage({ text: 'c', level: messages.error, id: 'MSG_D' });
         expect(res).toBe('MSG_D');
         expect(el.messagesCount).toBe(3);
         expect(el.messagesIds).toContain('MSG_D');
