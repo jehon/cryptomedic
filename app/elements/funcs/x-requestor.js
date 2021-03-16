@@ -327,7 +327,7 @@ export function searchPatientBuilder(data) {
  * @param {string} password to be set
  * @returns {object} options for request (see XRequestor#request)
  */
-export function setPasswordBuilder(id, password) {
+export function userPasswordBuilder(id, password) {
     return {
         url: `users/password/${id}`,
         method: 'POST',
