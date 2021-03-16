@@ -1,4 +1,6 @@
-<?php namespace App\Http\Controllers;
+<?php
+
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use DB;
@@ -15,12 +17,17 @@ class UsersController extends Controller {
 		return response()->json($list);
 	}
 
+	public function show($id) {
+		$u = User::findOrFail($id);
+		return response()->json($u);
+	}
+
 	public function emails() {
 		// return $this->index();
 
 		$res = "";
 		$list = User::where('email', '>', '')->get();
-		foreach($list as $v) {
+		foreach ($list as $v) {
 			$res .= $v['name'] . '&lt;' . $v['email'] . '&gt;, ';
 		}
 		return $res;
@@ -38,12 +45,12 @@ class UsersController extends Controller {
 
 	// PUT / PATCH
 	public function update($id) {
- 		$attributes = Request::except('_type');
+		$attributes = Request::except('_type');
 
- 		$obj = User::findOrFail($id);
-		foreach($attributes as $k => $v) {
+		$obj = User::findOrFail($id);
+		foreach ($attributes as $k => $v) {
 			// Skip system fields
-			if (in_array($k, [ $obj->getUpdatedAtColumn(), $obj->getCreatedAtColumn() ])) {
+			if (in_array($k, [$obj->getUpdatedAtColumn(), $obj->getCreatedAtColumn()])) {
 				continue;
 			}
 			// Set existing fields
@@ -64,7 +71,7 @@ class UsersController extends Controller {
 		if (!$obj) {
 			return response()->json(array());
 		}
-		if(!$obj->delete()) {
+		if (!$obj->delete()) {
 			abort(404, "Could not delete $model@$id");
 		}
 		// return response()->json(array());
@@ -76,9 +83,10 @@ class UsersController extends Controller {
 		$user = User::findOrFail($id);
 		$pwd = Request::input('password', false);
 		if (!$pwd) {
-			abort(403, "No password supplied");
+			$user->password = '';
+		} else {
+			$user->password = Hash::make($pwd);
 		}
-		$user->password = Hash::make($pwd);
 		$user->save();
 		return $this->index();
 	}

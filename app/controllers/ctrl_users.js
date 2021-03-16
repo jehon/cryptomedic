@@ -4,7 +4,6 @@
 
 import getDataService from '../js/getDataService.js';
 import '../elements/render/x-button.js';
-import '../elements/components/x-user-password.js'
 
 // TODO: manage change in groups
 
@@ -41,13 +40,11 @@ export default function ctrl_users($scope) {
     // *** EDIT ****
     $scope.doCancel = function () {
         $scope.edit = false;
-        $scope.password = false;
         $scope.safeApply();
     };
 
     $scope.doEdit = function (index) {
         $scope.edit = $scope.users[index]; // Put object here
-        $scope.password = false;
         $scope.safeApply();
     };
 
@@ -68,7 +65,6 @@ export default function ctrl_users($scope) {
                     $scope.users = data;
                     $scope.safeApply();
                     $scope.$emit('message', { 'level': 'success', 'text': 'The user \'' + $scope.edit.username + '\' has been created successfully.' });
-                    // $scope.doShowPassword();
                     $scope.doCancel();
                 });
         }
@@ -84,22 +80,6 @@ export default function ctrl_users($scope) {
                     $scope.doCancel();
                 });
         }
-    };
-
-    // *** Passwords ****
-
-    $scope.doShowPassword = function (index) {
-        $scope.password = $scope.users[index];
-    };
-
-    $scope.doSavePassword = function () {
-        getDataService()
-            .then(dataService => dataService.userPassword($scope.password.id, $scope.password.newcode))
-            .then(function () {
-                $scope.$emit('message', { 'level': 'success', 'text': 'The password of user \'' + $scope.password.username + '\' has been updated successfully.' });
-                $scope.doCancel();
-                // $scope.safeApply();
-            });
     };
 
     $scope.doCancel();

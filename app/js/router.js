@@ -112,6 +112,12 @@ export function parseRouteReport(route = getCurrentRoute()) {
     };
 }
 
+export const routes = {
+    user_list: '/users',
+    users_edit: '/users/[id]',
+    users_password: '/users/[id]/password'
+};
+
 /**
  * @param {string} route as /blabla/[arg]
  * @param {object} data to customize the route

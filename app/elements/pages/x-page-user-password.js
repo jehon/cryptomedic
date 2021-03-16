@@ -1,9 +1,10 @@
 
 import { actions } from '../../config.js';
 import { createElementWithObject, createElementWithTag, defineCustomElement } from '../../js/custom-element.js';
+import { getRoute, routes, setRoute } from '../../js/router.js';
 import XConfirmation from '../funcs/x-confirmation.js';
 import XForm from '../funcs/x-form.js';
-import XRequestor, { userPasswordBuilder } from '../funcs/x-requestor.js';
+import XRequestor, { userGetBuilder, userPasswordBuilder } from '../funcs/x-requestor.js';
 import XButton from '../render/x-button.js';
 import XButtons from '../render/x-buttons.js';
 import XGroupPanel from '../render/x-group-panel.js';
@@ -14,11 +15,7 @@ import XPanel from '../render/x-panel.js';
  * attributes:
  * - id: the id of the user where to change the password
  */
-export default class XUserPassword extends HTMLElement {
-    static get observedAttributes() {
-        return ['name'];
-    }
-
+export default class XPageUserPassword extends HTMLElement {
     /** @type {XRequestor} */
     _requestor
 
@@ -31,7 +28,10 @@ export default class XUserPassword extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
+    }
 
+    connectedCallback() {
+        this.shadowRoot.innerHTML = '';
         this.shadowRoot.append(
             createElementWithTag('css-inherit'),
             createElementWithObject(XPanel, {}, [
@@ -50,6 +50,9 @@ export default class XUserPassword extends HTMLElement {
                                 ]),
                                 createElementWithObject(XButtons, { slot: 'buttons' }, [
                                     createElementWithObject(XButton, { action: actions.commit }, 'Set password'),
+                                    createElementWithObject(XButton, { action: actions.alternate }, 'Disable password',
+                                        el => el.addEventListener('click', () => this.emptyPassword())
+                                    ),
                                     createElementWithObject(XButton, { action: actions.cancel })
                                 ])
                             ],
@@ -62,31 +65,33 @@ export default class XUserPassword extends HTMLElement {
                 ])
             ])
         );
+        this._requestor.request(userGetBuilder(this.getAttribute('id')))
+            .then(response => response.data)
+            .then(data => {
+                this.user = data;
+                this._label.setAttribute('label', `New password for ${this.user.name}`);
+            });
     }
 
-    attributeChangedCallback(attributeName, _oldValue, newValue) {
-        switch (attributeName) {
-            case 'name':
-                this._label.setAttribute('label', `New password for ${newValue}`);
-                break;
-        }
+    emptyPassword() {
+        return this._requestor.request(userPasswordBuilder(this.getAttribute('id'), ''))
+            .then(() => this.showConfirmation('empty'));
     }
 
     setPassword() {
-        // TODO
         const values = this._form.getValues();
         return this._requestor.request(userPasswordBuilder(this.getAttribute('id'), values.password))
-            .then(() => this.showConfirmation());
+            .then(() => this.showConfirmation('updated'));
     }
 
-    showConfirmation() {
+    showConfirmation(action) {
         this.shadowRoot.innerHTML = '';
         this.shadowRoot.append(
             createElementWithTag('css-inherit'),
             createElementWithObject(XConfirmation, {},
                 [
                     createElementWithTag('div', {},
-                        `Password updated for user ${this.getAttribute('name')}`
+                        `Password ${action} for user ${this.user.name}`
                     )
                 ],
                 el => el.addEventListener('validated', () => this.exit())
@@ -96,8 +101,9 @@ export default class XUserPassword extends HTMLElement {
     }
 
     exit() {
+        setRoute(getRoute(routes.user_list));
         this.dispatchEvent(new CustomEvent('exit'));
     }
 }
 
-defineCustomElement(XUserPassword);
+defineCustomElement(XPageUserPassword);

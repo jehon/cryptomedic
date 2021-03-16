@@ -32,6 +32,12 @@
             if (input.value === notADateValue) {
                 shouldUpgrade('input[type=date]');
             }
+
+            // Test Object.fromEntries
+            // Ok since 2019-03 (android 2020-04)
+            if (!("fromEntries" in Object)) {
+                shouldUpgrade()
+            }
         })();
 
     </script>
