@@ -324,6 +324,16 @@ export function searchPatientBuilder(data) {
 
 /**
  * @param {string} id of the user
+ * @returns {object} options for request (see XRequestor#request)
+ */
+export function userGetBuilder(id) {
+    return {
+        url: `users/${id}`
+    };
+}
+
+/**
+ * @param {string} id of the user
  * @param {string} password to be set
  * @returns {object} options for request (see XRequestor#request)
  */
@@ -332,5 +342,16 @@ export function userPasswordBuilder(id, password) {
         url: `users/password/${id}`,
         method: 'POST',
         data: { password }
+    };
+}
+
+/**
+ * @param {string} id of the user
+ * @returns {object} options for request (see XRequestor#request)
+ */
+export function userDeleteBuilder(id) {
+    return {
+        url: `users/${id}`,
+        method: 'DELETE'
     };
 }
