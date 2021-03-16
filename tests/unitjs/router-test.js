@@ -1,13 +1,49 @@
 
+import { getRoute, getRouteParameters } from '../../app/js/router.js';
 import * as router from '../../app/js/router.js';
 
-import { fn, RefFolder1 } from './athelpers.js';
-
-import Folder from '../../app/models/Folder.js';
-import { loadReference } from './athelpers.js';
-import OtherConsult from '../../app/models/OtherConsult.js';
+import { fn } from './athelpers.js';
 
 describe(fn(import.meta.url), function () {
+    it('should handle constant routes', function () {
+        const r = '/blabla';
+        const p = {};
+
+        const str = getRoute(r, p);
+        expect(str).toBe('/blabla');
+        expect(getRouteParameters(r, str)).toEqual(p);
+    });
+
+    describe('with one parameter', function () {
+        const r = '/blabla/[id]';
+
+        it('should handle parametrized routes', function () {
+            const p = { id: '123' };
+
+            const str = getRoute(r, p);
+            expect(str).toBe('/blabla/123');
+            expect(getRouteParameters(r, str)).toEqual(p);
+        });
+
+        it('should handle parametrized routes with extra params', function () {
+            const p = { id: '123', extra: 'something' };
+
+            const str = getRoute(r, p);
+            expect(str).toBe('/blabla/123?extra=something');
+            expect(getRouteParameters(r, str)).toEqual(p);
+        });
+
+        it('should handle errors', function () {
+            expect(() => getRoute(r, '/blabla/123')).toThrow();
+        });
+
+        it('should detect invalid route', function () {
+            expect(() => getRouteParameters(r, '/truc/blabla/123')).toThrow();
+        });
+    });
+
+    // Legacy routes
+
     it('should parse login routes', function () {
         {
             router.setRoute('/test');
@@ -34,29 +70,8 @@ describe(fn(import.meta.url), function () {
         }
     });
 
-    it('should route to login', function () {
+    xit('should route to login', function () {
         router.routeToLogin('test');
         expect(router.getCurrentRoute()).toBe('/login/test');
-    });
-
-    describe('folder routes', function () {
-        let f;
-        beforeEach(() => {
-            f = new Folder(loadReference(RefFolder1).folder);
-            expect(f).toEqual(jasmine.any(Folder));
-        });
-
-        it('should route to file', function () {
-            let fp = f.getByTypeAndId(OtherConsult, 1);
-            expect(router.getRouteToFolderFile(fp)).toBe('/folder/1/file/OtherConsult/1');
-        });
-
-        it('should route to create reference', function () {
-            expect(router.getRouteToCreateReference()).toBe('/folder/-1/edit');
-        });
-
-        it('should route to add file', function () {
-            expect(router.getRouteToFolderAdd(1, 'Type')).toBe('/folder/1/file/Type');
-        });
     });
 });
