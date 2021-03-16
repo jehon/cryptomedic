@@ -4,7 +4,7 @@ import { actions, messages } from '../../config.js';
 import { createElementWithObject, createElementWithTag, defineCustomElement } from '../../js/custom-element.js';
 import date2CanonicString from '../../js/date2CanonicString.js';
 import { getPref, setPref } from '../../js/prefs.js';
-import { getRouteToFolderPatient, parseRouteReport } from '../../js/router.js';
+import { getRouteToFolderPatient } from '../../js/router.js';
 import { getSession } from '../../js/session.js';
 import { toSentenceCase } from '../../js/string-utils.js';
 import TableBuilder from '../../js/table-builder.js';
@@ -47,8 +47,24 @@ export default class XPageReports extends HTMLElement {
     /** @type {*} */
     _data
 
-    constructor() {
-        super();
+    /**
+     * @returns {*} description of the report
+     */
+    getReportDescription() {
+        return reports[this.reportId];
+    }
+
+    /**
+     * @param {string} p parameter name
+     *
+     * @returns {boolean} if the parameter is available
+     */
+    isParam(p) {
+        return this.getReportDescription().params.indexOf(p) >= 0;
+    }
+
+    connectedCallback() {
+        this.reportId = this.getAttribute('report');
 
         this.append(
             createElementWithTag('css-inherit'),
@@ -81,8 +97,8 @@ x-button#export {
             this._requestor = createElementWithObject(XRequestor, {}, [
                 createElementWithTag('div', { class: 'top' }, [
                     createElementWithTag('div', {}, [
-                        createElementWithTag('h1', {}, getReportDescription().name),
-                        createElementWithTag('div', {}, getReportDescription().description)
+                        createElementWithTag('h1', {}, this.getReportDescription().name),
+                        createElementWithTag('div', {}, this.getReportDescription().description)
                     ]),
                     createElementWithTag('div', {}, [
                         createElementWithObject(XGroupPanel, { title: 'Parameters' }, [
@@ -107,12 +123,10 @@ x-button#export {
             ])
         );
 
-        const isParam = (p) => getReportDescription().params.includes(p);
-
         //
         // Center
         //
-        if (isParam('center')) {
+        if (this.isParam('center')) {
             this._params.insertAdjacentElement('beforeend',
                 createElementWithObject(XLabel, { label: 'Center' }, [
                     createElementWithObject(XInputList, { name: 'center', nullable: true, listName: 'Centers' })
@@ -123,7 +137,7 @@ x-button#export {
         //
         // Examiner
         //
-        if (isParam('examiner')) {
+        if (this.isParam('examiner')) {
             this._params.insertAdjacentElement('beforeend',
                 createElementWithObject(XLabel, { label: 'Examiner' }, [
                     createElementWithObject(XInputList, { name: 'examiner', nullable: true, listName: 'Examiner' })
@@ -152,7 +166,7 @@ x-button#export {
         };
 
         // Period selector
-        if (isParam('period')) {
+        if (this.isParam('period')) {
             this._params.insertAdjacentElement('beforeend',
                 createElementWithObject(XLabel, { label: 'Period' }, [
                     this._periodSelector = createElementWithObject(XInputList, { name: 'period', list: periodList, value: 'month' }, [],
@@ -162,35 +176,35 @@ x-button#export {
                 ]));
         }
 
-        if (isParam('period') || isParam('day')) {
+        if (this.isParam('period') || this.isParam('day')) {
             this._params.insertAdjacentElement('beforeend',
                 createElementWithObject(XLabel, { label: 'Day', period: 'day' }, [
                     createElementWithObject(XInputDate, { name: 'day' })
                 ]));
         }
 
-        if (isParam('period') || isParam('month')) {
+        if (this.isParam('period') || this.isParam('month')) {
             this._params.insertAdjacentElement('beforeend',
                 createElementWithObject(XLabel, { label: 'Month (yyyy-mm)', period: 'month' }, [
                     createElementWithTag('input', { name: 'month', pattern: '[0-9]{4}-[0-9]{1,2}', placeholder: 'yyyy-mm' })
                 ]));
         }
 
-        if (isParam('period') || isParam('year')) {
+        if (this.isParam('period') || this.isParam('year')) {
             this._params.insertAdjacentElement('beforeend',
                 createElementWithObject(XLabel, { label: 'Year (yyyy)', period: 'year' }, [
                     createElementWithTag('input', { name: 'year', type: 'number', min: 1990, max: 2100 })
                 ]));
         }
 
-        if (isParam('period')) {
+        if (this.isParam('period')) {
             switchPeriod(this._periodSelector.value);
         }
 
         //
         // Activity
         //
-        if (isParam('activity')) {
+        if (this.isParam('activity')) {
             this._params.insertAdjacentElement('beforeend',
                 createElementWithObject(XLabel, { label: 'Activity' }, [
                     createElementWithObject(XInputList, { name: 'activity', nullable: true, list: ['consult', 'workshop', 'surgical'] })
@@ -241,8 +255,8 @@ x-button#export {
         // Set the preferences
         //
         var prefs = {};
-        for (var p in getReportDescription().params) {
-            let n = getReportDescription().params[p];
+        for (var p in this.getReportDescription().params) {
+            let n = this.getReportDescription().params[p];
             let v = newValues[n];
             if (n == 'period') {
                 let pn = v;
@@ -253,12 +267,12 @@ x-button#export {
         }
         setPref('report', prefs);
 
-        if (getReportDescription().fixedParams) {
-            Object.assign(newValues, getReportDescription().fixedParams);
+        if (this.getReportDescription().fixedParams) {
+            Object.assign(newValues, this.getReportDescription().fixedParams);
         }
 
         // Check input data:
-        if (isParam('period')) {
+        if (this.isParam('period')) {
             let period = newValues['period'];
             let value = newValues[period];
             if (!value) {
@@ -268,7 +282,7 @@ x-button#export {
         }
 
         // Launch the call
-        this._requestor.request(reportQueryBuilder(getReportId(), newValues))
+        this._requestor.request(reportQueryBuilder(this.reportId, newValues))
             .then(response => response.data)
             .then((data) => {
                 this._data = data;
@@ -292,9 +306,9 @@ x-button#export {
         // Export button
         //    Calculate the filename
         //
-        let filename = `cryptomedic-${getReportId()}`;
-        for (const i in getReportDescription().params) {
-            const p = getReportDescription().params[i];
+        let filename = `cryptomedic-${this.reportId}`;
+        for (const i in this.getReportDescription().params) {
+            const p = this.getReportDescription().params[i];
             if (this._data.params[p]) {
                 if (p == 'period') {
                     filename += '-' + this._data.params['when'];
@@ -317,7 +331,7 @@ x-button#export {
         const tableBuilder = new TableBuilder()
             .enrichTable({ class: 'reporting' }) // table table-hover table-bordered tablesorter
             .addData(this._data.list);
-        getReportDescription().generator(tableBuilder, this._data);
+        this.getReportDescription().generator(tableBuilder, this._data);
         this._result.append(tableBuilder.render());
     }
 
@@ -350,32 +364,6 @@ export const REPORT_SURGICAL = 'surgical';
 export const REPORT_STATISTICAL = 'statistical';
 export const REPORT_ACTIVITY = 'activity';
 export const REPORT_CONSULTATIONS = 'consultations';
-
-/**
- * Get the technical report name
- *
- * @returns {string} id
- */
-function getReportId() {
-    return parseRouteReport().report;
-
-}
-
-/**
- * @returns {*} description of the report
- */
-function getReportDescription() {
-    return reports[getReportId()];
-}
-
-/**
- * @param {string} p parameter name
- *
- * @returns {boolean} if the parameter is available
- */
-function isParam(p) {
-    return getReportDescription().params.indexOf(p) >= 0;
-}
 
 const reports = {};
 reports[REPORT_ACTIVITY] = { // test data: 2014-05
