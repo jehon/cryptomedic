@@ -123,10 +123,10 @@ mainApp.config(['$routeProvider', function ($routeProvider) {
             templateUrl: template('folder'),
             controller: 'ctrl_folder',
         })
-        .when('/reports/:report?', {
+        .when('/reports/:report', {
             template: (params) => goToElement(XPageReports, params)
         })
-        .when('/users/:id?', {
+        .when('/users/:id', {
             template: (params) => goToElement(XPageUserEdit, params)
         })
         .when('/users', {
