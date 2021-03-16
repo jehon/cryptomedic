@@ -69,7 +69,10 @@ describe(fn(import.meta.url), function () {
         });
 
         it('should submit by enter', function (done) {
-            element.addEventListener('submit', () => done());
+            element.addEventListener('submit', () => {
+                expect(true).toBeTrue();
+                done();
+            });
             iN1.dispatchEvent(new KeyboardEvent('keypress', { key: 'Enter', bubbles: true }));
         });
 
@@ -86,7 +89,10 @@ describe(fn(import.meta.url), function () {
         });
 
         it('should submit by click on query button', function (done) {
-            element.addEventListener('submit', () => done());
+            element.addEventListener('submit', () => {
+                expect(true).toBeTrue();
+                done();
+            });
             bQuery.click();
         });
 
@@ -94,6 +100,7 @@ describe(fn(import.meta.url), function () {
             iN1.value = '';
             element.addEventListener('submit', () => done.fail());
             bQuery.click();
+            expect(true).toBeTrue();
             done();
         });
 

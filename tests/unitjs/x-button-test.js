@@ -1,5 +1,4 @@
 
-import { icons } from '../../app/config.js';
 import XButton from '../../app/elements/render/x-button.js';
 import { getCurrentRoute, setRoute } from '../../app/js/router.js';
 import { fn } from './athelpers.js';
@@ -17,12 +16,18 @@ describe(fn(import.meta.url), function () {
     });
 
     it('should react to click by event listener', function (done) {
-        el.addEventListener('click', (_event) => done());
+        el.addEventListener('click', (_event) => {
+            expect(true).toBeTrue();
+            done();
+        });
         el.shadowRoot.querySelector('button').click();
     });
 
     it('should react to click by onclick', function (done) {
-        el.onclick = (_event) => done();
+        el.onclick = (_event) => {
+            expect(true).toBeTrue();
+            done();
+        };
         el.shadowRoot.querySelector('button').click();
     });
 
@@ -35,7 +40,7 @@ describe(fn(import.meta.url), function () {
 
     it('should initialize', function () {
         el.setAttribute('action', 'commit');
-        el.setAttribute('icon', icons.error);
+        el.setAttribute('icon', 'error');
 
         expect(el.shadowRoot.querySelector('button')).not.toBeNull();
         expect(el.shadowRoot.querySelector('img').getAttribute('src')).not.toBe('');
@@ -43,7 +48,7 @@ describe(fn(import.meta.url), function () {
 
     it('should initialize', function () {
         el.setAttribute('action', 'anything_else');
-        el.setAttribute('icon', icons.error);
+        el.setAttribute('icon', 'error');
 
         expect(el.shadowRoot.querySelector('button')).not.toBeNull();
         expect(el.shadowRoot.querySelector('img').getAttribute('src')).not.toBe('');
@@ -56,6 +61,7 @@ describe(fn(import.meta.url), function () {
         el.addEventListener('submit', () => done.fail('form has been submitted'));
         el.shadowRoot.querySelector('button').click();
         setTimeout(() => {
+            expect(true).toBeTrue();
             done();
         }, 10);
     });

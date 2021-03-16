@@ -34,7 +34,10 @@ describe('x-input-date-test', function () {
         });
 
         it('should fire blur event on change', function (done) {
-            element().addEventListener('blur', () => done());
+            element().addEventListener('blur', () => {
+                expect(true).toBeTrue();
+                done();
+            });
             JHElement.fireOn(element().querySelector('input'), 'blur', {});
         });
 

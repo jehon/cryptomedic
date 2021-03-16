@@ -8,5 +8,6 @@ describe(fn(import.meta.url), function () {
         // const el =
         new XButtons();
         // el.connectedCallback();
+        expect(true).toBeTrue();
     });
 });

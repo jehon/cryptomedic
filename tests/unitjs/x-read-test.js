@@ -9,7 +9,9 @@ import { webDescribe } from './athelpers.js';
 describe('x-read-test', function () {
     // Test click on span for radio
     webDescribe('', '<x-read name=\'test\'></x-read>', function () {
-        it('should be instantiated', function () { });
+        it('should be instantiated', function () {
+            expect(true).toBeTrue();
+        });
     });
 
 

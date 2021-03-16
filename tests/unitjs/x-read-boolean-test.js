@@ -9,6 +9,7 @@ describe('x-read-boolean-test', function () {
     // Test click on span for radio
     webDescribe('without value', '<x-read-boolean></x-read-boolean>', function (element) {
         it('should be instantiated', function (done) {
+            expect(true).toBeTrue();
             done();
         });
 

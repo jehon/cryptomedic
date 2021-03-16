@@ -9,5 +9,6 @@ describe(fn(import.meta.url), function () {
         const el = new XLabel();
         el.setAttribute('label', 'label');
         el.connectedCallback();
+        expect(true).toBeTrue();
     });
 });
