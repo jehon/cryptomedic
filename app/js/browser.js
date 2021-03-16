@@ -34,6 +34,8 @@ export function getBrowserDescription() {
         browser_version: platform.version,
         browser_full_name: platform.description,
         screen_height: window.screen.height,
-        screen_width: window.screen.width
+        screen_width: window.screen.width,
+        feat_test: true,
+        feat_fromentries: 'fromEntries' in Object
     };
 }
