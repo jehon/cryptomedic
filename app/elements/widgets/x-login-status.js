@@ -2,7 +2,10 @@
 import '../render/x-button.js';
 import { routeToLogin } from '../../js/router.js';
 import { onSession, getUsername, setSession } from '../../js/session.js';
-import { logoutBuilder } from '../funcs/x-requestor.js';
+import XRequestor, { logoutBuilder } from '../funcs/x-requestor.js';
+import { getPanelStyles } from '../render/x-panel.js';
+import { createElementWithObject, createElementWithTag } from '../../js/custom-element.js';
+import XButton from '../render/x-button.js';
 
 const user = Symbol('user');
 const logout = Symbol('logout');
@@ -10,26 +13,17 @@ const requestor = Symbol('requestor');
 
 export default class XLoginStatus extends HTMLElement {
     connectedCallback() {
-        this.innerHTML = `
-                <style>
-                    x-login-status {
-                        display: block;
-                    }
-                </style>
-                <x-button id='logout' icon='logout' discrete>
-                    <span id='user'></span>
-                </x-button>
-                <x-requestor global></x-requestor>
-        	`;
-        this[user] = this.querySelector('#user');
-        this[logout] = this.querySelector('#logout');
-
-        /**
-         * @type {import('../funcs/x-requestor.js').default} XRequestor
-         */
-        this[requestor] = this.querySelector('x-requestor');
-
-        this[logout].addEventListener('click', () => this.doLogout());
+        this.innerHTML = '';
+        this.append(
+            getPanelStyles(this),
+            this[requestor] = createElementWithObject(XRequestor, { global: true }, [
+                this[logout] = createElementWithObject(XButton, { id: 'logout', icon: 'logout', discrete: true },
+                    [
+                        this[user] = createElementWithTag('span', { id: 'user' })
+                    ],
+                    el => el.addEventListener('click', () => this.doLogout()))
+            ])
+        );
 
         this.unregisterListener = onSession(() => {
             const username = getUsername();

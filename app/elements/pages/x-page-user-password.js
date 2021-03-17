@@ -9,7 +9,7 @@ import XButton from '../render/x-button.js';
 import XButtons from '../render/x-buttons.js';
 import XGroupPanel from '../render/x-group-panel.js';
 import XLabel from '../render/x-label.js';
-import XPanel from '../render/x-panel.js';
+import XPanel, { getPanelStyles } from '../render/x-panel.js';
 
 /**
  * attributes:
@@ -34,6 +34,7 @@ export default class XPageUserPassword extends HTMLElement {
         this.shadowRoot.innerHTML = '';
         this.shadowRoot.append(
             createElementWithTag('css-inherit'),
+            getPanelStyles(this),
             createElementWithObject(XPanel, {}, [
                 createElementWithObject(XGroupPanel, { title: 'Set the password' }, [
                     this._requestor = createElementWithObject(XRequestor, {}, [

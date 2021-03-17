@@ -91,6 +91,10 @@ export default class XPageReports extends HTMLElement {
 x-button#export {
     margin-bottom: 10px;
 }
+
+#report_table {
+    width: 100%;
+}
         `
             ),
 

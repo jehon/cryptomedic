@@ -11,9 +11,11 @@ export default class XButtons extends HTMLElement {
         this.attachShadow({ mode: 'open' });
         this.shadowRoot.append(
             createElementWithTag('style', {}, `
-    :host {
-        display: flex;
+    :host(x-buttons) {
+        width: 100%;
+
         flex-wrap: wrap;
+        flex-direction: row;
 
         margin: 0px;
         margin-top: 10px;

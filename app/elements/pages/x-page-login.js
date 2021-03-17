@@ -30,7 +30,7 @@ export default class XPageLogin extends HTMLElement {
         this.innerHTML = '';
         this.append(
             createElementWithObject(XPanel, {}, [
-                createElementWithObject(XGroupPanel, { title: 'Connexion...' }, [
+                createElementWithObject(XGroupPanel, { title: 'Connexion...', style: { maxWidth: '400px' } }, [
                     this._requestor = createElementWithObject(XRequestor, { global: true }, [
                         this._form = createElementWithObject(XForm, {},
                             [

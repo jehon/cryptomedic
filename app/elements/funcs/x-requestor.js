@@ -90,7 +90,7 @@ export default class XRequestor extends HTMLElement {
             createElementWithTag('css-inherit'),
             this._waiting = /** @type {XWaiting} */ (createElementWithObject(XWaiting, {}, [
                 this._error = /** @type {XOverlay} */(createElementWithObject(XOverlay, { type: 'on-error' }, [
-                    createElementWithObject(XPanel, { slot: 'overlay' }, [
+                    createElementWithObject(XPanel, { slot: 'overlay', full: true }, [
                         // createElementWithTag('css-inherit'),
                         this._errorMsg = createElementWithTag('h1', { id: 'errorMsg' }),
                         this._errorContent = createElementWithTag('div', { id: 'errorContent' }),
