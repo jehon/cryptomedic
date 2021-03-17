@@ -2,12 +2,24 @@
 import { toAttributeCase } from './string-utils.js';
 
 /**
- * @param {object} cl - the class defining the object
+ * @param {(new() => HTMLElement)|HTMLElement} cls to be analysed
+ * @returns {string} as the class name
+ */
+export function getHTMLNameOfClass(cls) {
+    if (cls instanceof HTMLElement) {
+        cls = /** @type {new () => HTMLElement} */ (cls.constructor);
+    }
+
+    return toAttributeCase(cls.name);
+}
+
+/**
+ * @param {object} cls - the class defining the object
  * @param {string} [name] - the name of the class
  * @returns {string} the calculated name
  */
-export function defineCustomElement(cl, name = toAttributeCase(cl.name)) {
-    customElements.define(name, cl);
+export function defineCustomElement(cls, name = getHTMLNameOfClass(cls)) {
+    customElements.define(name, cls);
     return name;
 }
 
