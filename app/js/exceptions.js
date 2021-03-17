@@ -1,6 +1,13 @@
 
 import { toSentenceCase } from './string-utils.js';
 
+export class WithDataError extends Error {
+    constructor(message, data) {
+        super(message);
+        this.data = data;
+    }
+}
+
 export class ApplicationException extends Error {
     data = '';
 
@@ -31,7 +38,7 @@ export class DataOutOfBoundException extends ApplicationException {
      * @param {Array<any>} limits - [min, max]
      */
     constructor(data = 'some data', limits = null) {
-        super(`${toSentenceCase(data)} is out-of-bounds`+ (limits ? ` [${limits[0]} -> ${limits[1]}]` : ''));
+        super(`${toSentenceCase(data)} is out-of-bounds` + (limits ? ` [${limits[0]} -> ${limits[1]}]` : ''));
         this.data = data;
     }
 }

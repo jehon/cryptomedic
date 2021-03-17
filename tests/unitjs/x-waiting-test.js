@@ -57,7 +57,7 @@ describe(fn(import.meta.url), function () {
 
         it('should be shown and hidden if the promise fail', function (done) {
             let p = new Promise(function (resolve, reject) {
-                setTimeout(() => reject(), 100);
+                setTimeout(() => reject(new Error()), 100);
             });
 
             expect(element.isBlocked()).toBeFalsy();
