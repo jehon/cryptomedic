@@ -90,8 +90,10 @@ describe(fn(import.meta.url), function () {
             });
 
             it('should handle named list', function () {
+                spyOn(console, 'error');
                 const el = createElementWithObject(XInputList, { listName: 'unknownList' });
                 expect(el.getAttribute('mode')).toBe('empty');
+                expect(console.error).toHaveBeenCalled();
             });
 
             it('should handle named list', function () {

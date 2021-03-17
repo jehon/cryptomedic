@@ -79,9 +79,10 @@ export default class XMessage extends HTMLElement {
         if (!level) {
             level = messages.error;
         }
+
         if (!(level in colors.messages)) {
-            console.info(toAttributeCase(XMessage.name) + ': Level not found: ', level);
-            return;
+            console.error(`${toAttributeCase(XMessage.name)}: Level not found: '${level}'`);
+            level = messages.error;
         }
         const styling = colors.messages[level];
 
