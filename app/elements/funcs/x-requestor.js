@@ -13,6 +13,35 @@ import { createElementWithObject, createElementWithTag, defineCustomElement } fr
 import { getBrowserDescription } from '../../js/browser.js';
 import '../../../node_modules/css-inherit/css-inherit.js';
 import XPanel from '../render/x-panel.js';
+import { WithDataError } from '../../js/exceptions.js';
+
+/**
+ * @param {number} code - http code
+ * @returns {string} the status text
+ */
+function getHttpMessage(code) {
+    switch (code) {
+        case 401: return 'Unauthorized';
+        case 404: return 'Not found';
+        default: return `Error #${code}`;
+    }
+}
+
+export class ServerRequestError extends Error {
+    constructor(response) {
+        super(getHttpMessage(response.status));
+        this.data = response.data;
+        this.status = response.status;
+        this.statusText = response.statusText; // ???
+        this.headers = response.headers;
+    }
+}
+
+export class TransportRequestError extends WithDataError {
+    constructor(request) {
+        super('Network Error', request);
+    }
+}
 
 /**
  * Slot[]: content
@@ -148,43 +177,58 @@ export default class XRequestor extends HTMLElement {
 
         return this._rawRequest(options)
             .then(response => {
-                response.ok = (response.status >= 200 && response.status < 300); // TODO: temp hack
-
+                response.ok = (response.status >= 200 && response.status < 300); // TODO: how to handle this ? throw again? see x-page-login
                 this._waiting.free();
                 return response;
-            }, errorResponse => {
+            }, error => {
                 this._waiting.free();
+                let err = new Error();
+
+                // https://github.com/axios/axios#handling-errors
+
+                if (error.response) {
+                    // The request was made and the server responded with a status code
+                    // that falls out of the range of 2xx
+                    err = new ServerRequestError(error.response);
+                } else if (error.request) {
+                    // The request was made but no response was received
+                    // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+                    // http.ClientRequest in node.js
+                    err = new TransportRequestError(error.request);
+                } else {
+                    // Something happened in setting up the request that triggered an Error
+                    err = error;
+                }
+
                 // Fill in the overlay
-                this.showFailure(errorResponse);
-                throw errorResponse;
+                this.showFailure(err);
+                throw err;
             });
     }
 
     /**
      * Show an error response in a pop-up
      *
-     * @param {object} errorResponse from axios
+     * @param {TransportRequestError|ServerRequestError|Error} error from the request
      * @see See https://github.com/axios/axios#handling-errors
      */
-    showFailure(errorResponse) {
+    showFailure(error) {
         this.setAttribute('erroneous', 'erroneous');
         this._waiting.free();
         this._error.block();
-        this._errorMsg.innerHTML = 'Network error';
-        if (typeof (errorResponse) == 'object') {
-            let html = '<table style=\'width: 300px\'>';
-            if (errorResponse.response) {
-                // Code is not 2xx
-                this._errorMsg.innerHTML = errorResponse.response.statusText;
-                html += `<tr><td>Status code</td><td>${errorResponse.response.status}</td></tr>`;
-                if (errorResponse.response.status == 401) {
-                    // this will trigger a redirect to some login form or anything else
-                    setSession();
-                    routeToLogin();
-                }
-            } else if (errorResponse.request) {
-                this._errorMsg.innerHTML = 'Network Error';
-                html += `<tr><td>Message</td><td>
+        this._errorMsg.innerHTML = 'Network Error';
+        let html = '<table style=\'width: 300px\'>';
+        if (error instanceof ServerRequestError) {
+            this._errorMsg.innerHTML = error.message;
+            html += `<tr><td>Status code</td><td>${error.status}</td></tr>`;
+            if (error.status == 401) {
+                // this will trigger a redirect to some login form or anything else
+                setSession();
+                routeToLogin();
+            }
+        } else if (error instanceof TransportRequestError) {
+            this._errorMsg.innerHTML = error.message;
+            html += `<tr><td>Message</td><td>
                     Something went very wrong on your network. Please check:<br>
                     <ul>
                         <li>that you have an internet connection</li>
@@ -192,16 +236,11 @@ export default class XRequestor extends HTMLElement {
                     </ul>
                     In other case, please reload the page and try again..
                     <a href="javascript:window.location.reload()">Reload the page here</a></td></tr>`;
-            } else {
-                html += `<tr><td>Error</td><td>${errorResponse.message}</td></tr>`;
-            }
-            html += '</table>';
-            // console.log(html);
-            this._errorContent.innerHTML = html;
         } else {
-            // String message
-            this._errorMsg.innerHTML = errorResponse;
+            html += `<tr><td>Error</td><td>${error.message}</td></tr>`;
         }
+        html += '</table>';
+        this._errorContent.innerHTML = html;
     }
 }
 
@@ -342,6 +381,19 @@ export function userPasswordBuilder(id, password) {
         url: `users/password/${id}`,
         method: 'POST',
         data: { password }
+    };
+}
+
+/**
+ * @param {string} id of the user
+ * @param {object} data to be set
+ * @returns {object} options for request (see XRequestor#request)
+ */
+export function userUpdateBuilder(id, data) {
+    return {
+        url: `users/${id}`,
+        method: 'PUT',
+        data
     };
 }
 

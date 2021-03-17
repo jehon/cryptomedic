@@ -7,16 +7,14 @@ import { API_VERSION } from '../../app/config.js';
 
 import axios from '../../app/cjs2esm/axios.js';
 import MockAdapter from '../../app/cjs2esm/axios-mock-adapter.js';
-import XRequestor, { requestAndFilterBuilder, loginRequestBuilder, loginCheckRequestBuilder } from '../../app/elements/funcs/x-requestor.js';
+import XRequestor, { requestAndFilterBuilder, loginRequestBuilder, loginCheckRequestBuilder, ServerRequestError, TransportRequestError } from '../../app/elements/funcs/x-requestor.js';
 import { getSession } from '../../app/js/session.js';
 
 const buildResponse = function (ok = true, status = 200, statusText = '') {
     return {
-        response: {
-            ok,
-            status,
-            statusText
-        }
+        ok,
+        status,
+        statusText
     };
 };
 
@@ -26,56 +24,42 @@ const buildResponse = function (ok = true, status = 200, statusText = '') {
 export function mockNoResponse(cb = (_result) => ({})) {
     let result = {};
 
-    /** @type {jasmine.Spy} */
-    let spy = XRequestor.prototype._rawRequest;
-    if (!('calls' in spy)) {
+    if (!('calls' in XRequestor.prototype._rawRequest)) {
         /* eslint-disable-next-line jasmine/no-unsafe-spy */
-        spy = spyOn(XRequestor.prototype, '_rawRequest');
+        spyOn(XRequestor.prototype, '_rawRequest');
     }
 
-    spy.and.callFake((args) => new Promise((resolve, reject) => {
-        result.args = args;
-        result.resolve = (data = {}) => resolve({
-            ok: true,
-            status: 200,
-            data,
-            ...data
-        });
-        result.reject = (data = {}) => reject({
-            ok: false,
-            status: 404,
-            statusCode: 'default error',
-            data,
-            ...data
-        });
-        return cb(result);
-    }));
+    (/** @type {jasmine.Spy} */(XRequestor.prototype._rawRequest))
+        .and.callFake((args) => new Promise((resolve, reject) => {
+            result.args = args;
+            result.resolve = (data = {}) => resolve({
+                ok: true,
+                status: 200,
+                data,
+                ...data
+            });
+            result.reject = (data = {}) => reject(new ServerRequestError({
+                ok: false,
+                status: 404,
+                statusCode: 'default error',
+                data,
+                ...data
+            }));
+            return cb(result);
+        }));
     return result;
 }
 
 /**
- * @param data
+ * @param {object} data to be set
+ * @param {number?} status to be set
  */
-export function mockResponseWithSuccess(data) {
+export function mockResponseWithSuccess(data, status = 200) {
     return mockNoResponse(result => result.resolve({
-        status: 200,
+        status,
         ok: true,
         data
     }));
-}
-
-/**
- * @param code
- * @param data
- */
-export function mockResponseWithSuccessbutCode(code, data = {}) {
-    const result = mockNoResponse(result => result.resolve({
-        ok: false,
-        status: code,
-        statusCode: 'error ' + code,
-        data
-    }));
-    return result;
 }
 
 /**
@@ -202,16 +186,8 @@ describe(fn(import.meta.url), function () {
                     }).catch(done.fail);
             });
 
-            it('should display string messages when requested', function () {
-                element.showFailure('Test message');
-
-                expect(element.isRequesting()).toBeFalsy();
-                expect(element.isFailed()).toBeTruthy();
-                expect(element.shadowRoot.querySelector('#errorMsg').innerText).toContain('Test message');
-            });
-
             it('should close error messages with button', function () {
-                element.showFailure('Test message');
+                element.showFailure(new TransportRequestError({}));
 
                 expect(element.isFailed()).toBeTruthy();
                 JHElement.fireOn(element.shadowRoot.querySelector('#closeButton'), 'click');
@@ -219,8 +195,16 @@ describe(fn(import.meta.url), function () {
                 expect(element.isFailed()).toBeFalsy();
             });
 
+            it('should display TransportRequestError messages when requested', function () {
+                element.showFailure(new TransportRequestError({}));
+
+                expect(element.isRequesting()).toBeFalsy();
+                expect(element.isFailed()).toBeTruthy();
+                expect(element.shadowRoot.querySelector('#errorMsg').innerText).toContain('Network Error');
+            });
+
             it('should display object messages when requested', function () {
-                element.showFailure(buildResponse(false, 404, 'Not found'));
+                element.showFailure(new ServerRequestError(buildResponse(false, 404, 'Not found')));
 
                 expect(element.isRequesting()).toBeFalsy();
                 expect(element.isFailed()).toBeTruthy();
@@ -229,7 +213,7 @@ describe(fn(import.meta.url), function () {
             });
 
             it('should logout on 401 Response messages', function () {
-                element.showFailure(buildResponse(false, 401, 'Unauthorized'));
+                element.showFailure(new ServerRequestError(buildResponse(false, 401, 'Unauthorized')));
 
                 expect(element.shadowRoot.querySelector('#errorMsg').innerText).toContain('Unauthorized');
                 expect(element.shadowRoot.querySelector('#errorContent').innerText).toContain('401');
@@ -237,7 +221,7 @@ describe(fn(import.meta.url), function () {
             });
 
             it('should display TypeError messages when requested', function () {
-                element.showFailure({ request: { a: 1 } });
+                element.showFailure(new Error('Something went very wrong'));
 
                 expect(element.isRequesting()).toBeFalsy();
                 expect(element.isFailed()).toBeTruthy();
@@ -337,7 +321,7 @@ describe(fn(import.meta.url), function () {
             });
 
             it('should accept filtered success', async () => {
-                const mock = await mockResponseWithSuccessbutCode(123);
+                const mock = await mockResponseWithSuccess({}, 123);
                 await element.request({ url: '/anything' });
 
                 expect(mock.args.url).toBe('/anything');

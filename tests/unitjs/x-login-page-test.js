@@ -6,7 +6,7 @@ import { fn } from './athelpers.js';
 import * as router from '../../app/js/router.js';
 import { setSession, getUsername } from '../../app/js/session.js';
 
-import { mockNoResponse, mockResponseWithSuccess, mockResponseWithSuccessbutCode } from './x-requestor-test.js';
+import { mockNoResponse, mockResponseWithSuccess } from './x-requestor-test.js';
 
 
 /**
@@ -74,7 +74,7 @@ describe(fn(import.meta.url), function () {
         });
 
         it('should show a message when incorrect info are fill in', async function () {
-            mockResponseWithSuccessbutCode(404);
+            mockResponseWithSuccess({}, 404);
             await expectAsync(element.doLogin()).toBeResolvedTo(2);
             expect(xmessages.messagesCount).toBe(1);
             expect(xmessages.messagesIds).toContain('invalid-credentials');
@@ -90,7 +90,7 @@ describe(fn(import.meta.url), function () {
         });
 
         it('should show login form if no session is available', async function () {
-            mockResponseWithSuccessbutCode(401);
+            mockResponseWithSuccess({}, 401);
             router.setRoute('/login/test');
             await element.doLoginCheck();
             expect(router.getCurrentRoute()).toBe('/login/test');
