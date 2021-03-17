@@ -245,10 +245,18 @@
     </xx-test>
     <xx-test>
         <x-form>
-            <x-input-list name='i1' value='b' list='[ "a", "b", "c" ]'></x-input-list>
-            <x-input-list name='i2' value='b' list='[ "a", "b", "c", "d", "e", "f" ]'></x-input-list>
-            <x-input-list name='i3' value='b' list='[ "a", "b", "c" ]' nullable></x-input-list>
-            <x-input-list name='i4' value='b' list='[ "a", "b", "c", "d", "e", "f" ]' nullable></x-input-list>
+            <x-label label='radio'>
+                <x-input-list name='i1' value='b' list='[ "a", "b", "c" ]'></x-input-list>
+            </x-label>
+            <x-label label='dropdown'>
+                <x-input-list name='i2' value='b' list='[ "a", "b", "c", "d", "e", "f" ]'></x-input-list>
+            </x-label>
+            <x-label label='optional radio'>
+                <x-input-list name='i3' value='b' list='[ "a", "b", "c" ]' nullable></x-input-list>
+            </x-label>
+            <x-label label='optional dropdown'>
+                <x-input-list name='i4' value='b' list='[ "a", "b", "c", "d", "e", "f" ]' nullable></x-input-list>
+            </x-label>
             <x-buttons>
                 <x-button action='query'></x-button>
             </x-buttons>
