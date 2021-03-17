@@ -3,6 +3,7 @@ import { actions } from '../../config.js';
 import { createElementWithObject, createElementWithTag, defineCustomElement } from '../../js/custom-element.js';
 import XMessages from '../render/x-messages.js';
 import '../render/x-button.js';
+import { getPanelStyles } from '../render/x-panel.js';
 
 /**
  * @typedef {import('../render/x-button.js').default} XButton
@@ -42,10 +43,9 @@ export default class XForm extends HTMLElement {
         super();
         this._buttons = {};
 
-        this.style.display = 'inline';
-
         this.attachShadow({ mode: 'open' });
         this.shadowRoot.append(
+            getPanelStyles(this),
             // createElementWithObject('css-inherit'),
             createElementWithTag('slot'),
             this._messages =  /** @type {XMessages} */ (createElementWithObject(XMessages)),

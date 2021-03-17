@@ -1,6 +1,7 @@
 
 import { createElementWithTag } from '../../js/custom-element.js';
 import { onSession, getAuthorized } from '../../js/session.js';
+import { getPanelStyles } from '../render/x-panel.js';
 
 /**
  * Slot[]: content
@@ -17,18 +18,14 @@ export default class XRestricted extends HTMLElement {
 
         this.attachShadow({ mode: 'open' });
         this.shadowRoot.append(
+            getPanelStyles(this),
             createElementWithTag('style', {}, `
-    :host {
-        /* Allow taking whole space */
-        display: inline-flex;
-        /* flex-direction: column; */
-        flex-grow: 1
-    }
 
-    :host(:not([authorized])) {
-        display: none;
-    }
-    `
+:host(:not([authorized])) {
+    display: none;
+}
+
+`
             ),
             createElementWithTag('slot')
         );

@@ -1,5 +1,5 @@
 
-import XPanel from './x-panel.js';
+import XPanel, { getPanelStyles } from './x-panel.js';
 import { createElementWithObject, createElementWithTag, defineCustomElement } from '../../js/custom-element.js';
 
 /**
@@ -11,11 +11,9 @@ export default class XOverlay extends HTMLElement {
         super();
         this.attachShadow({ mode: 'open' });
         this.shadowRoot.append(
+            getPanelStyles(this, true),
             createElementWithTag('style', { 'css-inherit-local': true }, `
     :host {
-        display: block;
-        position: relative;
-        box-sizing: border-box;
         padding: 0px;
     }
 

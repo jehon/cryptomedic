@@ -1,6 +1,7 @@
 
 import { spacing } from '../../config.js';
 import { createElementWithTag, defineCustomElement } from '../../js/custom-element.js';
+import { getPanelStyles } from './x-panel.js';
 
 /**
  * Slot[]: content
@@ -14,14 +15,12 @@ export default class XGroupPanel extends HTMLElement {
         super();
         this.attachShadow({ mode: 'open' });
         this.shadowRoot.append(
+            getPanelStyles(this),
             createElementWithTag('style', {}, `
-    :host {
-        /* Allow taking whole space */
-        display: flex;
-        flex-direction: column;
-    }
-
     fieldset {
+        height: 100%;
+        width: 100%;
+
         margin: 0px;
         padding: ${spacing.element};
 

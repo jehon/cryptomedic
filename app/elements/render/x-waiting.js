@@ -1,7 +1,7 @@
 
 import XOverlay from './x-overlay.js';
 import { defineCustomElement, createElementWithTag, createElementWithObject } from '../../js/custom-element.js';
-import XPanel from './x-panel.js';
+import XPanel, { getPanelStyles } from './x-panel.js';
 import { spacing } from '../../config.js';
 
 /**
@@ -34,11 +34,8 @@ export default class XWaiting extends HTMLElement {
         this.attachShadow({ mode: 'open' });
 
         this.shadowRoot.append(
+            getPanelStyles(this, true),
             createElementWithTag('style', {}, `
-    :host {
-        display: block;
-    }
-
     img {
         vertical-align: baseline;
     }

@@ -85,7 +85,13 @@ export default class XPageHome extends HTMLElement {
         flex-grow: 0;
         flex-shrink: 0;
 
+        width: 100%;
+
         margin: 10px;
+    }
+
+    .grid x-group-panel {
+        width: 100%;
     }
 
     .grid x-group-panel > img[slot=versal] {
