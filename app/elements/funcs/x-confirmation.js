@@ -8,6 +8,10 @@ import XGroupPanel from '../render/x-group-panel.js';
 import XPanel from '../render/x-panel.js';
 
 /**
+ * TODO:
+ *   - button in the color of what is to be confirmed (delete / message)
+ *   - use x-overlay
+ *
  * attributes:
  * - id: the id of the user where to change the password
  */
