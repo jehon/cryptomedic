@@ -42,6 +42,21 @@ body {
 	height: 100%;
 }
 
+body > #menu {
+	background-color: #f8f8f8;
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	height: 40px;
+	border: 1px solid #e7e7e7;
+	border-radius: 0;
+}
+
+body > #menu > * {
+	display: block;
+	padding-left: 10px;
+}
+
 body > .container {
 	padding-bottom: 60px;
 }
@@ -53,14 +68,6 @@ body > .container {
 h1 > img {
 	height: 35px;
 	margin-right: 20px;
-}
-
-.nav > li > * {
-	padding-top: 5px;
-}
-
-x-login-status {
-	height: 25px;
 }
 
 /**********************************************

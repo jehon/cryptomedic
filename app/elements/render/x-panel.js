@@ -1,7 +1,6 @@
 
 import '../../../node_modules/css-inherit/css-inherit.js';
 import { createElementWithTag, defineCustomElement, getHTMLNameOfClass } from '../../js/custom-element.js';
-import { spacing } from '../../config.js';
 
 /**
  * @param {HTMLElement} element to be applied on
@@ -19,8 +18,10 @@ export function getPanelStyles(element, full = false) {
     align-items: center;
     justify-content: center;
 
+    padding: 0px;
+    margin: 0px;
+
     box-sizing: border-box;
-    padding: ${spacing.text};
 
 ${full ? `
     height: 100%;

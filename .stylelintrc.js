@@ -4,7 +4,7 @@ module.exports = {
   "rules": {
     "indentation": "tab",
     "selector-type-no-unknown": [true, { "ignore": "custom-elements" }],
-    "no-descending-specificity": [true, { ignore: "selectors-within-list" }],
+    "no-descending-specificity": null,
     "declaration-empty-line-before": null
   }
 }

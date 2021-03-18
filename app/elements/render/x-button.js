@@ -1,9 +1,7 @@
 
-import { spacing, icons, actions, colors } from '../../config.js';
+import { spacing, icons, actions } from '../../config.js';
 import { createElementWithTag, defineCustomElement } from '../../js/custom-element.js';
 import { setLocation, setRoute } from '../../js/router.js';
-
-const button = Symbol('button');
 
 /**
  * Slot[]: content
@@ -19,11 +17,13 @@ export default class XButton extends HTMLElement {
 
     _disableCron = () => { }
 
+    /** @type {HTMLButtonElement} */
+    _button
+
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
         this.shadowRoot.append(
-            createElementWithTag('css-inherit'),
             createElementWithTag('style', { 'css-inherit-local': true }, `
     :host {
         display: inline-block;
@@ -32,12 +32,66 @@ export default class XButton extends HTMLElement {
         flex-shrink: 0;
     }
 
-    :host(.selected) {
+    :host(x-button.selected) {
         border: blue 2px solid;
     }
 
     button {
+        display: inline-block;
+        margin-bottom: 0;
+        font-weight: 400;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: middle;
+        touch-action: manipulation;
+        cursor: pointer;
+        background-image: none;
+        border: 1px solid transparent;
+        padding: 6px 12px;
+        font-size: 14px;
+        line-height: 1.42857143;
+        border-radius: 4px;
+        user-select: none;
+
         width: 100%;
+    }
+
+    :host(x-button[discrete]) button {
+        background-color: transparent !important;
+        color: black !important;
+    }
+
+    button {
+        color: white;
+    }
+
+    :host(x-button:not([action])) button,
+    :host(x-button[action="${actions.move}"]) button,
+    :host(x-button[action="${actions.query}"]) button,
+    :host(x-button[action="${actions.alternate}"]) button
+    {
+        background-color: #5bc0de;
+        border-color: #46b8da;
+    }
+
+    :host(x-button[action="${actions.commit}"]) button {
+        background-color: #5cb85c;
+        border-color: #4cae4c;
+    }
+
+    :host(x-button[action="${actions.cancel}"]) button {
+        background-color: #f0ad4e;
+        border-color: #eea236;
+    }
+
+    :host(x-button[action="${actions.alternate}"]) button {
+        background-color: #5bc0de;
+        border-color: #46b8da;
+    }
+
+    :host(x-button[action="${actions.delete}"]) button {
+        background-color: #d9534f;
+        border-color: #d43f3a;
     }
 
     img[src=''] {
@@ -51,7 +105,7 @@ export default class XButton extends HTMLElement {
     }
 `),
 
-            this[button] = createElementWithTag('button', {}, [
+            this._button = /** @type {HTMLButtonElement} */ (createElementWithTag('button', {}, [
                 createElementWithTag('img'),
                 this._slot = createElementWithTag('slot')
             ], element => element.addEventListener('click', () => {
@@ -64,7 +118,7 @@ export default class XButton extends HTMLElement {
                         setLocation(toLocation);
                     }
                 }
-            })));
+            }))));
 
         this.colorizeButton();
     }
@@ -100,28 +154,23 @@ export default class XButton extends HTMLElement {
     }
 
     click() {
-        this[button].click();
+        this._button.click();
     }
 
     colorizeButton() {
-        this[button].style.backgroundColor = this.hasAttribute('discrete') ? 'transparent' : '';
-        this[button].className = 'btn';
-
         if (this.hasAttribute('discrete')) {
             return;
         }
+
         // !! could not have any other class on button, otherwise it will be wiped out :-)
         let action = this.getAttribute('action');
         if (!action) {
             action = actions.query;
         } else if (!(action in actions)) {
             console.error('unknown action: ', action);
-            action = actions.move;
+            action = actions.query;
         }
-        const cls = colors.actions[action].class;
 
-        // TODO: use config.js colors
-        this[button].classList.add(`btn-${cls}`);
         switch (action) {
             case actions.move:
                 this._slot.innerHTML = 'Go';

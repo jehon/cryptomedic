@@ -15,14 +15,14 @@ export default class XLoginStatus extends HTMLElement {
     connectedCallback() {
         this.innerHTML = '';
         this.append(
-            getPanelStyles(this),
-            this[requestor] = createElementWithObject(XRequestor, { global: true }, [
-                this[logout] = createElementWithObject(XButton, { id: 'logout', icon: 'logout', discrete: true },
-                    [
-                        this[user] = createElementWithTag('span', { id: 'user' })
-                    ],
-                    el => el.addEventListener('click', () => this.doLogout()))
-            ])
+            getPanelStyles(this, true),
+            this[logout] = createElementWithObject(XButton, { id: 'logout', icon: 'logout', discrete: true },
+                [
+                    this[user] = createElementWithTag('span', { id: 'user' })
+                ],
+                el => el.addEventListener('click', () => this.doLogout())
+            ),
+            this[requestor] = createElementWithObject(XRequestor, { global: true })
         );
 
         this.unregisterListener = onSession(() => {
