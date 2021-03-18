@@ -20,14 +20,14 @@ export default class XLabel extends HTMLElement {
 
         this.shadowRoot.append(
             createElementWithTag('style', {}, `
-    :host {
+    :host(x-label) {
         display: ${XLabel.DISPLAY_MODE};
         flex-direction: row;
-        justify-content: start;
-        align-items: center;
         flex-wrap: wrap;
+        gap: 20px;
 
         margin: 10px;
+        width: 100%;
     }
 
     div#label {
@@ -35,6 +35,7 @@ export default class XLabel extends HTMLElement {
         flex-grow: 0;
         flex-shrink: 0;
         font-weight: bold;
+        text-align: right;
 
         /* overflow: hidden; */
         /* white-space: nowrap; */
@@ -48,7 +49,7 @@ export default class XLabel extends HTMLElement {
         flex-basis: 100px;
     }
 
-    ::slotted(input) {
+    ::slotted(input:not([type="checkbox"])) {
         display: block;
         width: 100%;
 
