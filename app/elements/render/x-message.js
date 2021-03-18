@@ -1,8 +1,7 @@
 
 import { spacing } from '../../config.js';
 import { createElementWithObject, createElementWithTag, defineCustomElement } from '../../js/custom-element.js';
-import { toAttributeCase } from '../../js/string-utils.js';
-import { messages, colors } from '../../config.js';
+import { messages } from '../../config.js';
 
 /**
  * @typedef {object} Message a message for x-messages
@@ -40,10 +39,6 @@ export default class XMessage extends HTMLElement {
         }, msg.text));
     }
 
-    static get observedAttributes() {
-        return ['level'];
-    }
-
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
@@ -60,35 +55,40 @@ export default class XMessage extends HTMLElement {
 
         text-align: center;
     }
+
+    :host(x-message:not([level])),
+    :host(x-message[level="${messages.info}"])
+    {
+        color: #004085;
+        background-color: #cce5ff;
+        border-color: #b8daff;
+    }
+
+    :host(x-message[level="${messages.success}"]) {
+        color: #3c763d;
+        background-color: #dff0d8;
+        border-color: #d6e9c6;
+    }
+
+    :host(x-message[level="${messages.warning}"]) {
+        color: #8a6d3b;
+        background-color: #fcf8e3;
+        border-color: #faebcc;
+    }
+
+    :host(x-message[level="${messages.error}"]) {
+        color: #a94442;
+        background-color: #f2dede;
+        border-color: #ebccd1;
+    }
+
 `),
             createElementWithTag('slot')
         );
-        this.adapt();
-    }
-
-    attributeChangedCallback(_attributeName, _oldValue, _newValue) {
-        this.adapt();
     }
 
     get msgId() {
         return this.getAttribute('msg-id');
-    }
-
-    adapt() {
-        let level = this.getAttribute('level');
-        if (!level) {
-            level = messages.error;
-        }
-
-        if (!(level in colors.messages)) {
-            console.error(`${toAttributeCase(XMessage.name)}: Level not found: '${level}'`);
-            level = messages.error;
-        }
-        const styling = colors.messages[level];
-
-        for (const k of Object.keys(styling)) {
-            this.style[k] = styling[k];
-        }
     }
 }
 

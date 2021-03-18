@@ -3,6 +3,7 @@ import { spacing } from '../../config.js';
 import { createElementWithTag, defineCustomElement } from '../../js/custom-element.js';
 import './x-message.js';
 import XMessage from './x-message.js';
+import { getPanelStyles } from './x-panel.js';
 
 /**
  * @typedef {import('x-message.js').Message} Message
@@ -16,6 +17,7 @@ export default class XMessages extends HTMLElement {
         super();
         this.attachShadow({ mode: 'open' });
         this.shadowRoot.append(
+            getPanelStyles(this, true),
             createElementWithTag('style', {}, `
     ::slotted(*) {
         margin-bottom: ${spacing.element};
