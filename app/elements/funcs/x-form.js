@@ -65,16 +65,23 @@ export default class XForm extends HTMLElement {
         this._values = this.getValues();
 
         // For each "cancel" button, auto reset
-        this.querySelectorAll(`x-button[action=${actions.cancel}]`)
+        this.querySelectorAll(`x-button[action="${actions.cancel}"]`)
             .forEach(el => (/** @type {XButton} */(el)).addEventListener('click',
                 () => this.reset()
             ));
 
         // For each "query" button, auto submit
-        this.querySelectorAll(`x-button:not([action]), x-button[action=${actions.query}], x-button[action=${actions.commit}]`)
+        this.querySelectorAll(`x-button:not([action]), x-button[action="${actions.query}"], x-button[action="${actions.commit}"]`)
             .forEach(el => (/** @type {XButton} */(el)).addEventListener('click',
                 () => this.checkAndSubmit()
             ));
+
+        // For each "delete" button, ask confirmation and submit
+        this.querySelectorAll(`x-button[action="${actions.delete}"]`)
+            .forEach(el => (/** @type {XButton} */(el)).addEventListener('click',
+                () => this.askAndDelete()
+            ));
+
     }
 
     /**
@@ -197,43 +204,6 @@ export default class XForm extends HTMLElement {
     }
 
     /**
-     * Check if the form is ok
-     *
-     * If it does validate:
-     *   - dispatch a "submit" event
-     *
-     * If not:
-     *   - set a "validation-error" attribute
-     *   - add a message
-     *
-     * @returns {boolean} true if it does validate
-     */
-    checkAndSubmit() {
-        this._messages.clear();
-        let result = true;
-
-        this._getValueElements().forEach(el => {
-            if ('checkValidity' in el) {
-                const res = el.checkValidity();
-                if (!res) {
-                    el.setAttribute('validation-error', el.validationMessage);
-                } else {
-                    el.removeAttribute('validation-error');
-                }
-                result = result && res;
-            }
-        });
-
-        if (!result) {
-            this.addMessage({ text: 'The form contains some errors.', id: 'form-invalid' });
-            return false;
-        }
-        this.dispatchEvent(new CustomEvent('submit'));
-
-        return true;
-    }
-
-    /**
      * Add a message
      *
      * @param {Message|string} msg to be added
@@ -276,10 +246,59 @@ export default class XForm extends HTMLElement {
                 } else {
                     el.checked = false;
                 }
+            } else if (el.type == 'checkbox') {
+                el.checked = !!val;
             } else {
                 el.value = val;
             }
         });
+    }
+
+    /**
+     * Check if the form is ok
+     *
+     * If it does validate:
+     *   - dispatch a "submit" event
+     *
+     * If not:
+     *   - set a "validation-error" attribute
+     *   - add a message
+     *
+     * @returns {boolean} true if it does validate
+     */
+    checkAndSubmit() {
+        this._messages.clear();
+        let result = true;
+
+        this._getValueElements().forEach(el => {
+            if ('checkValidity' in el) {
+                const res = el.checkValidity();
+                if (!res) {
+                    el.setAttribute('validation-error', el.validationMessage);
+                } else {
+                    el.removeAttribute('validation-error');
+                }
+                result = result && res;
+            }
+        });
+
+        if (!result) {
+            this.addMessage({ text: 'The form contains some errors.', id: 'form-invalid' });
+            return false;
+        }
+        this.dispatchEvent(new CustomEvent('submit'));
+
+        return true;
+    }
+
+    /**
+     * Ask confirmation to the user and if so, emit a "delete" event
+     */
+    askAndDelete() {
+        // TODO: render a better confirmation dialog (x-confirmation when ready)
+        if (confirm('Are you sure you want to delete it?')) {
+            this.dispatchEvent(new CustomEvent('delete'));
+        }
     }
 }
 
