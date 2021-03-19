@@ -9,7 +9,7 @@
     "angular": "1.8.2",
     "angular-route": "1.8.2",
     "axios": "0.21.1",
-    "bootstrap": "3.4.1",
+    "bootstrap": "4.6.0",
     "css-inherit": "github:jehon/css-inherit",
     "duix": "3.0.1",
     "excellentexport": "3.6.0",
