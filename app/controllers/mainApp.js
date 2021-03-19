@@ -2,6 +2,10 @@
 /* istanbul ignore file */
 /* eslint-disable */
 
+// AngularJS
+import jQuery from 'jquery/src/jquery.js';
+window.jQuery = jQuery;
+
 import angular from 'angular';
 import 'angular-route';
 
