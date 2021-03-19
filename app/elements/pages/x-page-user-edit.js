@@ -143,7 +143,7 @@ export default class XPageUserEdit extends HTMLElement {
     }
 
     exit() {
-        setRoute(getRoute(routes.user_list));
+        setRoute(getRoute(routes.users_list));
     }
 }
 

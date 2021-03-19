@@ -104,7 +104,7 @@ export default class XPageUserPassword extends HTMLElement {
     }
 
     exit() {
-        setRoute(getRoute(routes.user_list));
+        setRoute(getRoute(routes.users_list));
         this.dispatchEvent(new CustomEvent('exit'));
     }
 }

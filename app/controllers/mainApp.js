@@ -9,9 +9,7 @@ import ctrl_file_appointment from './ctrl_file_appointment.js';
 import ctrl_file_bill from './ctrl_file_bill.js';
 import ctrl_folder from './ctrl_folder.js';
 import ctrl_prices from './ctrl_prices.js';
-import ctrl_users from './ctrl_users.js';
 
-import { getCurrentRoute, getRouteParameters, parseRouteLogin } from '../js/router.js';
 import { createElementWithObject } from '../js/custom-element.js';
 import template from '../js/template.js';
 import goThere from '../js/goThere.js';
@@ -84,7 +82,6 @@ mainApp.controller('ctrl', ['$scope', function ($scope) {
 mainApp.controller('ctrl_file_appointment', ctrl_file_appointment);
 mainApp.controller('ctrl_file_bill', ctrl_file_bill);
 mainApp.controller('ctrl_folder', ctrl_folder);
-mainApp.controller('ctrl_users', ctrl_users);
 mainApp.controller('ctrl_prices', ctrl_prices);
 
 import XPageLogin from '../elements/pages/x-page-login.js';
@@ -93,6 +90,7 @@ import XPageHome from '../elements/pages/x-page-home.js';
 import XPageSearch from '../elements/pages/x-page-search.js';
 import XPageReports from '../elements/pages/x-page-reports.js';
 import XPageUserPassword from '../elements/pages/x-page-user-password.js';
+import XPageUsersList from '../elements/pages/x-page-users-list.js';
 
 // template: function (_params) {
 //     // Thanks to https://stackoverflow.com/a/34217927/1954789
@@ -111,14 +109,13 @@ function goToElement(el, params = {}) {
 mainApp.config(['$routeProvider', function ($routeProvider) {
     $routeProvider
         .when('/login/:redirect*?', {
-            // template: `<x-page-login redirect=${parseRouteLogin().redirect}></x-page-login>`
             template: (params) => goToElement(XPageLogin, params)
         })
         .when('/home', {
-            template: () => goToElement(XPageHome) // '<x-page-home></x-page-home>'
+            template: () => goToElement(XPageHome)
         })
         .when('/search', {
-            template: () => goToElement(XPageSearch) //'<x-page-search></x-page-search>',
+            template: () => goToElement(XPageSearch)
         })
         .when('/folder/:patient_id/:page?/:subtype?/:subid?/:mode?', {
             templateUrl: template('folder'),
@@ -134,8 +131,7 @@ mainApp.config(['$routeProvider', function ($routeProvider) {
             template: (params) => goToElement(XPageUserEdit, params)
         })
         .when('/users', {
-            templateUrl: template('page', 'users'),
-            controller: 'ctrl_users',
+            template: () => goToElement(XPageUsersList)
         })
         .when('/prices', {
             templateUrl: template('page', 'prices'),

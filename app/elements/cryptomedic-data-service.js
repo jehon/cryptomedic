@@ -87,15 +87,6 @@ export default class CryptomedicDataService extends XRequestor {
                 return f;
             });
     }
-
-    /***********************/
-    /*** User management ***/
-    /***********************/
-
-    usersList() {
-        return this.requestAndFilter({ url: 'users' })
-            .then(response => response.asJson);
-    }
 }
 
 window.customElements.define('cryptomedic-data-service', CryptomedicDataService);
