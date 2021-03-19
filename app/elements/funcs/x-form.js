@@ -175,6 +175,9 @@ export default class XForm extends HTMLElement {
             // Treat some special cases
             if (el.type) {
                 switch (el.type) {
+                    case 'checkbox':
+                        value = el.checked;
+                        break;
                     case 'number':
                         value = Number.parseInt(value);
                         break;

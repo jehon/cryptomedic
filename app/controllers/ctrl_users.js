@@ -9,17 +9,6 @@ import '../elements/render/x-button.js';
 
 export default function ctrl_users($scope) {
     $scope.users = {};
-    $scope.edit = false;
-    $scope.password = false;
-
-    $scope.refresh = function () {
-        getDataService()
-            .then(dataService => dataService.usersList())
-            .then(function (data) {
-                $scope.users = data;
-                $scope.safeApply();
-            });
-    };
 
     $scope.emailAll = function () {
         var res = '';
@@ -31,59 +20,12 @@ export default function ctrl_users($scope) {
         return res;
     };
 
-    $scope.doAdd = function () {
-        $scope.edit = {
-            'id': -1
-        };
-    };
-
-    // *** EDIT ****
-    $scope.doCancel = function () {
-        $scope.edit = false;
-        $scope.safeApply();
-    };
-
-    $scope.doEdit = function (index) {
-        $scope.edit = $scope.users[index]; // Put object here
-        $scope.safeApply();
-    };
-
-    $scope.doSave = function () {
-        if ($scope.edit.id >= 0) {
-            getDataService()
-                .then(dataService => dataService.userUpdate($scope.edit))
-                .then(function (data) {
-                    $scope.users = data;
-                    $scope.safeApply();
-                    $scope.$emit('message', { 'level': 'success', 'text': 'The user \'' + $scope.edit.username + '\' has been saved successfully.' });
-                    $scope.doCancel();
-                });
-        } else {
-            getDataService()
-                .then(dataService => dataService.userAdd($scope.edit))
-                .then(function (data) {
-                    $scope.users = data;
-                    $scope.safeApply();
-                    $scope.$emit('message', { 'level': 'success', 'text': 'The user \'' + $scope.edit.username + '\' has been created successfully.' });
-                    $scope.doCancel();
-                });
-        }
-    };
-
-    $scope.doDelete = function () {
-        if (confirm('Are you sure you want to delete user \'' + $scope.edit.name + '\'?')) {
-            getDataService()
-                .then(dataService => dataService.userDelete($scope.edit.id))
-                .then(function (data) {
-                    $scope.$emit('message', { 'level': 'success', 'text': 'The user \'' + $scope.edit.username + '\' has been deleted successfully.' });
-                    $scope.users = data;
-                    $scope.doCancel();
-                });
-        }
-    };
-
-    $scope.doCancel();
-    $scope.refresh();
+    getDataService()
+        .then(dataService => dataService.usersList())
+        .then(function (data) {
+            $scope.users = data;
+            $scope.safeApply();
+        });
 }
 
 ctrl_users.$inject = ['$scope'];

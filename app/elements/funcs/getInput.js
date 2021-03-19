@@ -35,6 +35,7 @@ export default function getInputObject(type, name, value = '', opts = {}) {
         case TYPES.BOOLEAN:
             return createElementWithTag('input', {
                 type: 'checkbox',
+                value: '1',
                 name,
                 ...(value ? { checked: true } : {})
             });

@@ -96,21 +96,6 @@ export default class CryptomedicDataService extends XRequestor {
         return this.requestAndFilter({ url: 'users' })
             .then(response => response.asJson);
     }
-
-    userAdd(user) {
-        return this.requestAndFilter({ url: 'users', method: 'POST', data: nullify(user) })
-            .then(response => response.asJson);
-    }
-
-    userDelete(id) {
-        return this.requestAndFilter({ url: 'users/' + id, method: 'DELETE' })
-            .then(response => response.asJson);
-    }
-
-    userUpdate(user) {
-        return this.requestAndFilter({ url: 'users/' + user.id, method: 'PUT', data: user })
-            .then(response => response.asJson);
-    }
 }
 
 window.customElements.define('cryptomedic-data-service', CryptomedicDataService);
