@@ -40,7 +40,7 @@ class UsersController extends Controller {
 		if (!$newObj->id) {
 			abort(500, "Could not create the file");
 		}
-		return $this->index();
+		return $newObj;
 	}
 
 	// PUT / PATCH
@@ -62,7 +62,7 @@ class UsersController extends Controller {
 		unset($obj->last_login);
 
 		$obj->save();
-		return $this->index();
+		return $obj;
 	}
 
 	// DELETE

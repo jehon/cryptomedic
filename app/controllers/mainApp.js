@@ -88,7 +88,7 @@ mainApp.controller('ctrl_users', ctrl_users);
 mainApp.controller('ctrl_prices', ctrl_prices);
 
 import XPageLogin from '../elements/pages/x-page-login.js';
-// import XPageUserEdit from '../elements/pages/x-page-user-edit.js';
+import XPageUserEdit from '../elements/pages/x-page-user-edit.js';
 import XPageHome from '../elements/pages/x-page-home.js';
 import XPageSearch from '../elements/pages/x-page-search.js';
 import XPageReports from '../elements/pages/x-page-reports.js';
@@ -127,12 +127,12 @@ mainApp.config(['$routeProvider', function ($routeProvider) {
         .when('/reports/:report', {
             template: (params) => goToElement(XPageReports, params)
         })
-        .when('/users/:id/password', {
+        .when('/users/:uid/password', {
             template: (params) => goToElement(XPageUserPassword, params)
         })
-        // .when('/users/:id', {
-        //     template: (params) => goToElement(XPageUserEdit, params)
-        // })
+        .when('/users/:uid', {
+            template: (params) => goToElement(XPageUserEdit, params)
+        })
         .when('/users', {
             templateUrl: template('page', 'users'),
             controller: 'ctrl_users',

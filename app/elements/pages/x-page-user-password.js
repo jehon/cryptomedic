@@ -13,7 +13,7 @@ import XPanel, { getPanelStyles } from '../render/x-panel.js';
 
 /**
  * attributes:
- * - id: the id of the user where to change the password
+ * - uid: the id of the user where to change the password
  */
 export default class XPageUserPassword extends HTMLElement {
     /** @type {XRequestor} */
@@ -31,6 +31,8 @@ export default class XPageUserPassword extends HTMLElement {
     }
 
     connectedCallback() {
+        this.uid = parseInt(this.getAttribute('uid'));
+
         this.shadowRoot.innerHTML = '';
         this.shadowRoot.append(
             createElementWithTag('css-inherit'),
@@ -66,7 +68,7 @@ export default class XPageUserPassword extends HTMLElement {
                 ])
             ])
         );
-        this._requestor.request(userGetBuilder(this.getAttribute('id')))
+        this._requestor.request(userGetBuilder(this.uid))
             .then(response => response.data)
             .then(data => {
                 this.user = data;
@@ -75,13 +77,13 @@ export default class XPageUserPassword extends HTMLElement {
     }
 
     emptyPassword() {
-        return this._requestor.request(userPasswordBuilder(this.getAttribute('id'), ''))
+        return this._requestor.request(userPasswordBuilder(this.uid, ''))
             .then(() => this.showConfirmation('empty'));
     }
 
     setPassword() {
         const values = this._form.getValues();
-        return this._requestor.request(userPasswordBuilder(this.getAttribute('id'), values.password))
+        return this._requestor.request(userPasswordBuilder(this.uid, values.password))
             .then(() => this.showConfirmation('updated'));
     }
 

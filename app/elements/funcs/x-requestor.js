@@ -354,7 +354,7 @@ export function reportQueryBuilder(reportId, data) {
  *
  * @returns {object} options for request (see XRequestor#request)
  */
-export function searchPatientBuilder(data) {
+export function patientSearchBuilder(data) {
     return {
         url: 'folder',
         data
@@ -362,48 +362,69 @@ export function searchPatientBuilder(data) {
 }
 
 /**
- * @param {string} id of the user
  * @returns {object} options for request (see XRequestor#request)
  */
-export function userGetBuilder(id) {
+export function usersListBuilder() {
     return {
-        url: `users/${id}`
+        url: 'users'
     };
 }
 
 /**
- * @param {string} id of the user
+ * @param {number} uid of the user
+ * @returns {object} options for request (see XRequestor#request)
+ */
+export function userGetBuilder(uid) {
+    return {
+        url: `users/${uid}`
+    };
+}
+
+/**
+ * @param {number} uid of the user
  * @param {string} password to be set
  * @returns {object} options for request (see XRequestor#request)
  */
-export function userPasswordBuilder(id, password) {
+export function userPasswordBuilder(uid, password) {
     return {
-        url: `users/password/${id}`,
+        url: `users/password/${uid}`,
         method: 'POST',
         data: { password }
     };
 }
 
 /**
- * @param {string} id of the user
  * @param {object} data to be set
  * @returns {object} options for request (see XRequestor#request)
  */
-export function userUpdateBuilder(id, data) {
+export function userCreateBuilder(data) {
     return {
-        url: `users/${id}`,
+        url: 'users',
+        method: 'POST',
+        data
+    };
+}
+
+/**
+ * @param {number} uid of the user
+ * @param {object} data to be set
+ * @returns {object} options for request (see XRequestor#request)
+ */
+export function userUpdateBuilder(uid, data) {
+    return {
+        url: `users/${uid}`,
         method: 'PUT',
         data
     };
 }
 
 /**
- * @param {string} id of the user
+ * @param {number} uid of the user
  * @returns {object} options for request (see XRequestor#request)
  */
-export function userDeleteBuilder(id) {
+export function userDeleteBuilder(uid) {
     return {
-        url: `users/${id}`,
+        url: `users/${uid}`,
         method: 'DELETE'
     };
 }

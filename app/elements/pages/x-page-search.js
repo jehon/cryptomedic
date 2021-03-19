@@ -4,7 +4,7 @@ import { createElementsFromHTML, createElementWithObject, createElementWithTag, 
 import { getRouteToFolderPatient, setRoute } from '../../js/router.js';
 import TableBuilder from '../../js/table-builder.js';
 import XForm from '../funcs/x-form.js';
-import XRequestor, { searchPatientBuilder } from '../funcs/x-requestor.js';
+import XRequestor, { patientSearchBuilder } from '../funcs/x-requestor.js';
 import XButton from '../render/x-button.js';
 import XButtons from '../render/x-buttons.js';
 import XGroupPanel from '../render/x-group-panel.js';
@@ -97,7 +97,7 @@ export default class XPageSearch extends HTMLElement {
         this.setAttribute('status', 'searching');
         this.reset();
 
-        return this._requestor.request(searchPatientBuilder(this._form.getValues()))
+        return this._requestor.request(patientSearchBuilder(this._form.getValues()))
             .then(response => response.data)
             .then(data => {
                 this._result.innerHTML = '';
