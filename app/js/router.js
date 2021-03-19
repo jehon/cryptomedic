@@ -113,9 +113,10 @@ export function parseRouteReport(route = getCurrentRoute()) {
 }
 
 export const routes = {
-    user_list: '/users',
-    users_edit: '/users/[uid]',
-    users_password: '/users/[uid]/password'
+    users_list: '/users',
+    user_add: '/users/new',
+    user_edit: '/users/[uid]',
+    user_password: '/users/[uid]/password'
 };
 
 /**
