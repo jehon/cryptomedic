@@ -47,7 +47,7 @@ Promise.allSettled(Array.from(fullList).map(f => {
         resemble(path.join(testPath, f))
             .compareTo(path.join(refPath, f))
             .onComplete(function (data) {
-                const diffContent = data.misMatchPercentage;
+                const diffContent = parseFloat(data.misMatchPercentage);
                 const diffSize = Math.hypot(data.dimensionDifference.width, data.dimensionDifference.height);
                 if (diffSize > 0.5) {
                     result[f] = {
