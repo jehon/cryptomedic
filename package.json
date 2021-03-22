@@ -46,7 +46,7 @@
     "html-webpack-plugin": "5.3.1",
     "htmlhint": "0.14.2",
     "http-server": "0.12.3",
-    "husky": "5.1.3",
+    "husky": "5.2.0",
     "imports-loader": "2.0.0",
     "jasmine": "3.7.0",
     "jasmine-webcomponents": "github:jehon/jasmine-webcomponents",
