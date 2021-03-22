@@ -81,7 +81,7 @@
     "test-unit-continuously-withcov": "karma start tests/unitjs/karma.conf.js",
     "test-e2e": "nightwatch -c tests/e2e/nightwatch.conf.js",
     "test-e2e-chrome": "nightwatch -c tests/e2e/nightwatch.conf.js -e chrome",
-    "test-style": "tests/style/screenshots-test.js",
+    "test-style": "tests/style/styles-test.js",
     "eslint": "eslint .",
     "stylelint": "stylelint app/**/*.css"
   },
