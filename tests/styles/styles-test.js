@@ -50,6 +50,10 @@ Promise.allSettled(Array.from(fullList).map(f => {
             .onComplete(function (data) {
                 const diffContent = parseFloat(data.misMatchPercentage);
                 const diffSize = Math.hypot(data.dimensionDifference.width, data.dimensionDifference.height);
+
+                console.assert(typeof (diffContent) == 'number');
+                console.assert(isFinite(diffContent));
+
                 if (diffSize > 0.5) {
                     result[f] = {
                         level: 'error',
@@ -91,7 +95,7 @@ Promise.allSettled(Array.from(fullList).map(f => {
     .finally(() => {
         fs.writeFileSync(path.join(__dirname, '../../tmp/styles.json'), JSON.stringify(result));
     }).then((_result) => {
-        console.info('*** Final result ***');
+        console.info('*** The final result ***');
 
         // TODO: trust the allSetted (_result[*].statut = fulfulled|rejected, .reason=data
         if (success) {
