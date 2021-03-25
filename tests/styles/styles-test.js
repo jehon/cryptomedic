@@ -11,10 +11,10 @@ const globP = (pattern, options) => {
 };
 
 const refPath = path.join(__dirname, 'references');
-const testPath = path.join(__dirname, '..', '..', 'tmp', 'e2e', 'browsers', 'firefox');
+const testPath = path.join(__dirname, '..', '..', 'tmp', 'styles', 'run');
 
 let refs = globP('*', { cwd: refPath });
-let tests = globP('*_reference*.png', { cwd: testPath });
+let tests = globP('*', { cwd: testPath });
 let fullList = new Set([...refs, ...tests]);
 
 const result = {};
@@ -29,10 +29,11 @@ Promise.allSettled(Array.from(fullList).map(f => {
         if (!refs.includes(f)) {
             // if refs does not includes it, it is only present from 'test'
             result[f] = {
-                level: 'warning',
-                type: 'pending'
+                level: 'error',
+                type: 'no reference found'
             };
-            console.error(`${p_warn} ${f}: ${result[f].type}`);
+            success = false;
+            console.error(`${p_ko} ${f}: ${result[f].type}`);
             return resolve();
         }
         if (!tests.includes(f)) {
