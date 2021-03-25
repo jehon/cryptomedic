@@ -145,7 +145,7 @@ lint: dependencies-node
 	npm run stylelint
 
 .PHONY: test # In Jenkinfile, each step is separated:
-test: dependencies build test-api test-api-bare test-unit test-e2e test-style
+test: dependencies build test-api test-api-bare test-unit test-e2e test-styles
 
 .PHONY: test-api
 test-api: dependencies-api
@@ -185,8 +185,8 @@ tmp/e2e/.tested: www/build/index.html $(call recursive-dependencies,tests/e2e,$(
 	npm run --silent "cypress:run"
 	touch $@
 
-.PHONY: test-style
-test-style: $(TMP)/styles.json
+.PHONY: test-styles
+test-styles: tmp/styles.json
 tmp/styles.json: tests/styles/* tests/styles/references/* $(TMP)/e2e/.tested
 # TODO -> from dev
 	@mkdir -p "$(TMP)/styles"
