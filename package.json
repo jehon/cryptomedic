@@ -64,7 +64,7 @@
     "karma-jasmine-html-reporter": "1.5.4",
     "karma-junit-reporter": "2.0.1",
     "karma-read-json": "1.1.0",
-    "kill-by-port": "0.0.1",
+    "kill-by-port": "0.0.2",
     "lint-staged": "10.5.4",
     "nightwatch": "1.5.1",
     "nightwatch-html-reporter": "2.0.6",
