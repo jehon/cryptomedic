@@ -158,6 +158,7 @@ export default class XRequestor extends HTMLElement {
      */
     async request(opts) {
         this.reset();
+        this.setAttribute('running', 'running');
         this._waiting.block();
 
         const options = {
@@ -203,7 +204,8 @@ export default class XRequestor extends HTMLElement {
                 // Fill in the overlay
                 this.showFailure(err);
                 throw err;
-            });
+            })
+            .finally(() => this.removeAttribute('running'));
     }
 
     /**

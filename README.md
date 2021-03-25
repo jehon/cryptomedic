@@ -1,8 +1,7 @@
 # cryptomedic
 
 [![Renovate enabled](https://img.shields.io/badge/renovate-enabled-brightgreen.svg)](https://renovatebot.com/)
-
-cryptomedic
+[![Cypress.io](https://img.shields.io/badge/tested%20with-Cypress-04C38E.svg)](https://www.cypress.io/)
 
 ## Local requirements
 

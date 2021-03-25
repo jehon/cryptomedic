@@ -36,7 +36,9 @@
     "bluebird": "3.7.2",
     "chromedriver": "89.0.0",
     "css-loader": "5.2.0",
+    "cypress": "6.8.0",
     "eslint": "7.22.0",
+    "eslint-plugin-cypress": "2.11.2",
     "eslint-plugin-jasmine": "4.1.2",
     "eslint-plugin-jsdoc": "32.3.0",
     "file-loader": "6.2.0",
@@ -81,9 +83,11 @@
     "test-unit-continuously-withcov": "karma start tests/unitjs/karma.conf.js",
     "test-e2e": "nightwatch -c tests/e2e/nightwatch.conf.js",
     "test-e2e-chrome": "nightwatch -c tests/e2e/nightwatch.conf.js -e chrome",
-    "test-style": "tests/style/styles-test.js",
+    "test-styles": "tests/styles/styles-test.js",
     "eslint": "eslint .",
-    "stylelint": "stylelint app/**/*.css"
+    "stylelint": "stylelint app/**/*.css",
+    "cypress:open": "cypress open --project tests",
+    "cypress:run": "cypress run --project tests"
   },
   "lint-staged": {
     "*.{js,jsx}": "eslint",

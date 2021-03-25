@@ -95,8 +95,10 @@ if (!function_exists("submenu")) {
       <div class='submenu .container-fluid'>
         <div class='row' ng-if="patient_id >= 0">
           <div class="col-sm-4 text-left" style="font-size: x-small">
-            Modified on {{currentFile().updated_at | date:'yyyy-MM-dd HH:mm:ss' }}
-            by {{currentFile().lastuser}}
+            <span variable>
+              Modified on {{currentFile().updated_at | date:'yyyy-MM-dd HH:mm:ss' }}
+              by {{currentFile().lastuser}}
+            </span>
             <br>
             Patient #<span id='folder_id'>{{folder.getPatient().id}}</span> @{{page}}
             -> {{currentFile().getModel()}} #<span id='file_id'>{{currentFile().id}}</span>
