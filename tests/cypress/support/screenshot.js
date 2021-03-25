@@ -5,8 +5,7 @@ Cypress.Commands.overwrite('screenshot',
     (originalFn, subject, name, options) =>
         // call another command, no need to return as it is managed
         cy
-            .get('x-requestor')
-            .should('not.have.attr', 'running')
+            .crReady()
             // Call initial command
             .then(() => originalFn(subject, name, {
                 ...options,
