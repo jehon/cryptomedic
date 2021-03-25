@@ -1,4 +1,6 @@
 
+TMP=$(shell realpath "tmp/")
+
 #
 # Parameters
 #
@@ -28,6 +30,8 @@ export DBUPDATEPWD := secret
 #
 CJS2ESM_DIR := app/cjs2esm
 NM_BIN := $(shell npm bin)/
+STYLES_RUN_SCREENSHOTS=$(TMP)/styles/run
+
 export ROOT = $(shell dirname $(abspath $(lastword $(MAKEFILE_LIST))))
 export PATH := $(ROOT)/bin:$(PATH)
 
@@ -53,6 +57,7 @@ dump:
 	@echo "CRYPTOMEDIC_PORT: $(CRYPTOMEDIC_PORT)"
 	@echo "IN_DOCKER:        $(IN_DOCKER)"
 	@echo "PATH:             $(PATH)"
+	@echo "TMP:              $(TMP)"
 	@echo "Who am i:         $(shell whoami)"
 	@echo "Who am i:         $(shell id)"
 
@@ -140,7 +145,7 @@ lint: dependencies-node
 	npm run stylelint
 
 .PHONY: test # In Jenkinfile, each step is separated:
-test: dependencies build test-api test-api-bare test-unit test-e2e test-style
+test: dependencies build test-api test-api-bare test-unit test-e2e test-styles
 
 .PHONY: test-api
 test-api: dependencies-api
@@ -168,35 +173,48 @@ test-unit: dependencies-node \
 .PHONY: test-e2e
 test-e2e:
 # TODO -> from dev
-	rm -f tmp/e2e/.tested
+	rm -f $(TMP)/e2e/.tested
 # TODO -> no call itself
 	$(call itself,tmp/e2e/.tested)
 
-tmp/e2e/.tested: www/build/index.html $(call recursive-dependencies,tests/e2e,tmp/e2e/.tested)
+tmp/e2e/.tested: www/build/index.html $(call recursive-dependencies,tests/e2e,$(TMP)/e2e/.tested)
 # TODO -> from dev
 	cr-data-reset
-	rm -fr tmp/e2e
+	rm -fr $(TMP)/e2e
 	npm run --silent test-e2e
+	CYPRESS_BASE_URL="http://localhost:$(CRYPTOMEDIC_PORT)" npm run --silent "cypress:run"
 	touch $@
 
-.PHONY: test-style
-test-style: tmp/styles.json
-tmp/styles.json: tests/style/* tests/style/references/* tmp/e2e/.tested
+.PHONY: test-styles
+test-styles: tmp/styles.json
+tmp/styles.json: tests/styles/* tests/styles/references/* $(TMP)/e2e/.tested
 # TODO -> from dev
-	npm run --silent test-style
+	@mkdir -p "$(TMP)/styles"
+	@rm -fr "$(TMP)/styles/run"
+	@mkdir -p "$(TMP)/styles/run"
+
+	@echo "Nightwatch screenshots"
+	rsync -r \
+		--include "*_reference.png" --include "*_reference_*.png" --exclude "*" \
+		"$(TMP)/e2e/browsers/firefox/" "$(TMP)/styles/run"
+
+	@echo "Cypress screenshots"
+	find tests/cypress/screenshots/ -type f | while read -r F ; do \
+		FN="$$(basename "$$F")"; \
+		TN="$$(basename $$(dirname "$$F"))"; \
+		TN="$${TN%.spec.js}"; \
+		cp "$$F" "$(STYLES_RUN_SCREENSHOTS)/$$TN ~ $$FN"; \
+	done
+
+	@echo "Compare"
+	npm run --silent test-styles
 	@echo "Report is at http://localhost:$(CRYPTOMEDIC_PORT)/xappx/tmp/style.html"
 
 .PHONY: update-references-style
 update-references-style:
-	# TODO: this does not allow new references
-	@jq -r 'keys[]' tmp/styles.json | while IFS='' read -r F; do \
-		echo "updating $$F"; \
-		cp "tmp/e2e/browsers/firefox/$$F" "tests/style/references/$$F"; \
-	done
-
-# rsync --progress --recursive --delete \
-# 	--include "*_reference.png" --include "*_reference_*.png" --exclude "*" \
-# 	tmp/e2e/browsers/firefox/ tests/style/references
+	rsync -i -rt --delete \
+		--ignore-times \
+		"$(STYLES_RUN_SCREENSHOTS)/" "tests/styles/references/"
 
 #
 # Deploy command

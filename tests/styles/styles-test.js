@@ -11,28 +11,29 @@ const globP = (pattern, options) => {
 };
 
 const refPath = path.join(__dirname, 'references');
-const testPath = path.join(__dirname, '..', '..', 'tmp', 'e2e', 'browsers', 'firefox');
+const testPath = path.join(__dirname, '..', '..', 'tmp', 'styles', 'run');
 
 let refs = globP('*', { cwd: refPath });
-let tests = globP('*_reference*.png', { cwd: testPath });
+let tests = globP('*', { cwd: testPath });
 let fullList = new Set([...refs, ...tests]);
 
 const result = {};
 let success = true;
 
 const p_ok = chalk.green(' ✓');
-const p_warn = chalk.yellow(' !');
-const p_ko = chalk.red(' ✗');
+const p_warn = chalk.yellow(' ?');
+const p_ko = chalk.red('✗ ');
 
 Promise.allSettled(Array.from(fullList).map(f => {
     return new Promise((resolve, reject) => {
         if (!refs.includes(f)) {
             // if refs does not includes it, it is only present from 'test'
             result[f] = {
-                level: 'warning',
-                type: 'pending'
+                level: 'error',
+                type: 'no reference found'
             };
-            console.error(`${p_warn} ${f}: ${result[f].type}`);
+            success = false;
+            console.error(`${p_ko} ${f}: ${result[f].type}`);
             return resolve();
         }
         if (!tests.includes(f)) {
@@ -49,6 +50,10 @@ Promise.allSettled(Array.from(fullList).map(f => {
             .onComplete(function (data) {
                 const diffContent = parseFloat(data.misMatchPercentage);
                 const diffSize = Math.hypot(data.dimensionDifference.width, data.dimensionDifference.height);
+
+                console.assert(typeof (diffContent) == 'number');
+                console.assert(isFinite(diffContent));
+
                 if (diffSize > 0.5) {
                     result[f] = {
                         level: 'error',
@@ -90,7 +95,7 @@ Promise.allSettled(Array.from(fullList).map(f => {
     .finally(() => {
         fs.writeFileSync(path.join(__dirname, '../../tmp/styles.json'), JSON.stringify(result));
     }).then((_result) => {
-        console.info('*** Final result ***');
+        console.info('*** The final result ***');
 
         // TODO: trust the allSetted (_result[*].statut = fulfulled|rejected, .reason=data
         if (success) {
