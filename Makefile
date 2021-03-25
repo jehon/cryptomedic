@@ -182,7 +182,7 @@ tmp/e2e/.tested: www/build/index.html $(call recursive-dependencies,tests/e2e,$(
 	cr-data-reset
 	rm -fr $(TMP)/e2e
 	npm run --silent test-e2e
-	npm run --silent "cypress:run"
+	CYPRESS_BASE_URL="http://localhost:$(CRYPTOMEDIC_PORT)" npm run --silent "cypress:run"
 	touch $@
 
 .PHONY: test-styles

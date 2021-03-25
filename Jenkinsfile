@@ -75,9 +75,9 @@ make dependencies
         sh 'make test-e2e'
       }
     }
-    stage('test-style') {
+    stage('test-styles') {
       steps {
-        sh 'make test-style'
+        sh 'make test-styles'
       }
     }
     stage('lint') {
