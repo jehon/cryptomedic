@@ -15,6 +15,7 @@
 // ***********************************************************
 
 import './asserts.js';
+import './screenshot.js';
 
 //
 // On custom commands:

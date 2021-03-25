@@ -3,6 +3,7 @@ context('Actions', () => {
     it('initialize to login', () => {
         cy.visit('/build/');
         cy.hash().should('routeStartsWith', '/login');
+        cy.get('x-page-login').should('be.visible');
         cy.screenshot('screen');
 
         cy.get('#username').type('murshed');
