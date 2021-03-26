@@ -18,7 +18,7 @@ module.exports = {
             .row(5).assert('#3')
             .col(4).assert('Sociallevel')
             .endTable();
-        client.myScreenshotReference('summary');
+        // client.myScreenshotReference('summary');
 
         // Nonrickect Consult
         client.page.cryptomedic().selectFile('OtherConsult', 1);
