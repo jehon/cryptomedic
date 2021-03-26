@@ -91,7 +91,7 @@ setup-computer:
 # TODO -> deploy from dev
 # Test the remote key
 	@REMOTE="$(shell ssh-keyscan -t ssh-rsa $(DEPLOY_HOST) 2>/dev/null )"; \
-	STORED="$(shell cat ovh.key)"; \
+	STORED="$(shell cat conf/ovh.key)"; \
 	if [ "$$REMOTE" != "$$STORED" ]; then \
 		echo "Key is updated on remote host"; \
 		exit 1; \
@@ -105,11 +105,11 @@ setup-computer:
 		sed -i "/$(DEPLOY_HOST).*/d" $(SSH_KNOWN_HOSTS) ; \
 	fi
 	@echo "Installing the key"
-	cat ovh.key >> $(SSH_KNOWN_HOSTS)
+	cat conf/ovh.key >> $(SSH_KNOWN_HOSTS)
 
 update-config-host-key:
 # TODO -> deploy from dev
-	ssh-keyscan -t ssh-rsa $(DEPLOY_HOST) > ovh.key
+	ssh-keyscan -t ssh-rsa $(DEPLOY_HOST) > conf/ovh.key
 
 .PHONY: start
 start:

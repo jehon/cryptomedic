@@ -8,10 +8,10 @@ DEPLOY_HOST=ftp.cluster003.ovh.net
 SSH_KNOWN_HOSTS=~/.ssh/known_hosts
 
 REMOTE="$( ssh-keyscan -t ssh-rsa "$DEPLOY_HOST" 2>/dev/null )";
-STORED="$( cat /setup/ovh.key )";
+STORED="$( cat /setup/conf/ovh.key )";
 
 if [ "$1" == "update" ]; then
-    ssh-keyscan -t ssh-rsa "$DEPLOY_HOST" > ovh.key
+    ssh-keyscan -t ssh-rsa "$DEPLOY_HOST" > conf/ovh.key
 fi
 
 if [ "$REMOTE" != "$STORED" ]; then \
@@ -23,7 +23,7 @@ if [ "$REMOTE" != "$STORED" ]; then \
         sed -i "/$(DEPLOY_HOST).*/d" $SSH_KNOWN_HOSTS ; \
     fi
     echo "Installing the key"
-    cat ovh.key >> $SSH_KNOWN_HOSTS
+    cat conf/ovh.key >> $SSH_KNOWN_HOSTS
 else  \
     echo "Key is still the same, good!"; \
 fi
