@@ -15,6 +15,9 @@
 // ***********************************************************
 
 import './asserts.js';
+import './cr-api.js';
+import './cr-login.js';
+import './cr-ready.js';
 import './screenshot.js';
 
 //
