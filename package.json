@@ -37,7 +37,7 @@
     "chromedriver": "89.0.0",
     "css-loader": "5.2.0",
     "cypress": "6.8.0",
-    "eslint": "7.22.0",
+    "eslint": "7.23.0",
     "eslint-plugin-cypress": "2.11.2",
     "eslint-plugin-jasmine": "4.1.2",
     "eslint-plugin-jsdoc": "32.3.0",
