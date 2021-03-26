@@ -15,4 +15,9 @@ context('Actions', () => {
 
         cy.screenshot('logged');
     });
+
+    it('works also with cr-login', () => {
+        cy.crLogin('murshed');
+        cy.hash().should('not.routeStartsWith', '/login');
+    });
 });
