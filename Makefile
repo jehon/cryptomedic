@@ -84,6 +84,8 @@ clean: deploy-unmount
 	rm -fr app/cjs2esm
 	rm -fr www/api/*/bootstrap/cache
 	rm -fr www/api/*/storage
+	rm -fr tests/cypress/screenshots
+	rm -fr tests/cypress/videos
 
 	@echo "!! Removed dependencies, so husky (commit) will not work anymore. Please make dependencies-node to enable it again"
 

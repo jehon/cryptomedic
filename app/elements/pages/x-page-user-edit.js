@@ -31,9 +31,8 @@ export default class XPageUserEdit extends HTMLElement {
 
     constructor() {
         super();
-        this.attachShadow({ mode: 'open' });
-
-        this.shadowRoot.append(
+        this.innerHTML = '';
+        this.append(
             createElementWithTag('css-inherit'),
             createElementWithTag('style', {}, `
     :host([uid="new"]) .no-create {
@@ -106,8 +105,9 @@ export default class XPageUserEdit extends HTMLElement {
             .then(response => response.data)
             .then(data => {
                 this.data = data;
-                this.shadowRoot.innerHTML = '';
-                this.shadowRoot.append(
+                // TODO: use x-confirmation as done for x-requestor
+                this.innerHTML = '';
+                this.append(
                     createElementWithTag('css-inherit'),
                     createElementWithObject(XConfirmation, {},
                         [
@@ -124,10 +124,11 @@ export default class XPageUserEdit extends HTMLElement {
     }
 
     delete() {
+        // TODO: use x-confirmation as done for x-requestor
         return this._requestor.request(userDeleteBuilder(this.uid))
             .then(() => {
-                this.shadowRoot.innerHTML = '';
-                this.shadowRoot.append(
+                this.innerHTML = '';
+                this.append(
                     createElementWithTag('css-inherit'),
                     createElementWithObject(XConfirmation, {},
                         [
