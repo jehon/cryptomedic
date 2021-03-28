@@ -89,10 +89,10 @@ mainApp.controller('ctrl_folder', ctrl_folder);
 mainApp.controller('ctrl_prices', ctrl_prices);
 
 import XPageLogin from '../elements/pages/x-page-login.js';
-import XPageUserEdit from '../elements/pages/x-page-user-edit.js';
 import XPageHome from '../elements/pages/x-page-home.js';
 import XPageSearch from '../elements/pages/x-page-search.js';
 import XPageReports from '../elements/pages/x-page-reports.js';
+import XPageUserEdit from '../elements/pages/x-page-user-edit.js';
 import XPageUserPassword from '../elements/pages/x-page-user-password.js';
 import XPageUsersList from '../elements/pages/x-page-users-list.js';
 
