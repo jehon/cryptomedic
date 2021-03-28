@@ -25,16 +25,11 @@ export default class XPageUserPassword extends HTMLElement {
     /** @type {XLabel} */
     _label
 
-    constructor() {
-        super();
-        this.attachShadow({ mode: 'open' });
-    }
-
     connectedCallback() {
         this.uid = parseInt(this.getAttribute('uid'));
 
-        this.shadowRoot.innerHTML = '';
-        this.shadowRoot.append(
+        this.innerHTML = '';
+        this.append(
             createElementWithTag('css-inherit'),
             getPanelStyles(this),
             createElementWithObject(XPanel, {}, [
@@ -88,8 +83,8 @@ export default class XPageUserPassword extends HTMLElement {
     }
 
     showConfirmation(action) {
-        this.shadowRoot.innerHTML = '';
-        this.shadowRoot.append(
+        this.innerHTML = '';
+        this.append(
             createElementWithTag('css-inherit'),
             createElementWithObject(XConfirmation, {},
                 [
