@@ -27,7 +27,7 @@ export default class XPageUsersList extends HTMLElement {
         this.append(
             this._requestor = createElementWithObject(XRequestor, {}, [
                 createElementWithObject(XPanel, { style: { justifyContent: 'flex-end', flexDirection: 'row' } }, [
-                    createElementWithObject(XButton, { actions: actions.move, toRoute: routes.user_add }, 'Add user')
+                    createElementWithObject(XButton, { id: 'add', actions: actions.move, toRoute: routes.user_add }, 'Add user')
                 ])
             ])
         );
@@ -37,6 +37,7 @@ export default class XPageUsersList extends HTMLElement {
         this._requestor.request(usersListBuilder())
             .then(response => response.data)
             .then((data) => {
+                this._requestor.querySelector('table')?.remove();
                 this._requestor.append(
                     new TableBuilder()
                         .enrichTable({ class: 'table table-hover table-bordered tablesorter' })

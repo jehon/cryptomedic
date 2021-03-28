@@ -12,7 +12,7 @@ import { setLocation, setRoute } from '../../js/router.js';
  */
 export default class XButton extends HTMLElement {
     static get observedAttributes() {
-        return ['icon', 'action', 'discrete', 'timed'];
+        return ['icon', 'action', 'timed'];
     }
 
     _disableCron = () => { }
@@ -108,19 +108,20 @@ export default class XButton extends HTMLElement {
             this._button = /** @type {HTMLButtonElement} */ (createElementWithTag('button', {}, [
                 createElementWithTag('img'),
                 this._slot = createElementWithTag('slot')
-            ], element => element.addEventListener('click', () => {
-                const toRoute = this.getAttribute('to-route');
-                if (toRoute) {
-                    setRoute(toRoute);
-                } else {
-                    const toLocation = this.getAttribute('to-location');
-                    if (toLocation) {
-                        setLocation(toLocation);
-                    }
-                }
-            }))));
+            ], element => element)));
 
-        this.colorizeButton();
+        this.buttonText();
+        this.addEventListener('click', () => {
+            const toRoute = this.getAttribute('to-route');
+            if (toRoute) {
+                setRoute(toRoute);
+            } else {
+                const toLocation = this.getAttribute('to-location');
+                if (toLocation) {
+                    setLocation(toLocation);
+                }
+            }
+        });
     }
 
     attributeChangedCallback(attributeName, _oldValue, newValue) {
@@ -132,9 +133,8 @@ export default class XButton extends HTMLElement {
                 this.shadowRoot.querySelector('img').setAttribute('src', icons[newValue]);
                 break;
 
-            case 'discrete':
             case 'action': {
-                this.colorizeButton();
+                this.buttonText();
                 break;
             }
             // TODO: timed x-button (x-confirmation)
@@ -157,11 +157,7 @@ export default class XButton extends HTMLElement {
         this._button.click();
     }
 
-    colorizeButton() {
-        if (this.hasAttribute('discrete')) {
-            return;
-        }
-
+    buttonText() {
         // !! could not have any other class on button, otherwise it will be wiped out :-)
         let action = this.getAttribute('action');
         if (!action) {

@@ -1,6 +1,6 @@
 
 //
-// https://docs.cypress.io/api/commands/screenshot#Arguments
+//
 //
 Cypress.Commands.add('crReady',
     () =>
