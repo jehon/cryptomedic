@@ -20,7 +20,7 @@ context('Actions', () => {
         // Check the data's
         getRowByUsername('ershad').find('td:nth-child(1)').should('contains.text', '105');
         getRowByUsername('ershad').find('td:nth-child(2)').should('contains.text', 'ershad');
-        // cy.screenshot();
+        cy.crCompareSnapshot('listing');
 
         // Add a user
         cy.get('x-page-users-list').find('x-button#add').click();
@@ -34,7 +34,6 @@ context('Actions', () => {
 
         // Find back in the menu
         getRowByUsername(username).find('x-button#pwd').click();
-        // cy.screenshot();
 
         // Set a password
         cy.get('[name="password"]').type('test');
@@ -60,6 +59,7 @@ context('Actions', () => {
         // Delete it
         cy.get('x-page-user-edit').find('x-button[action="delete"]').click();
         // Delete it: confirm
+        cy.crCompareSnapshot('delete-confirm');
         cy.get('x-page-user-edit').find('x-confirmation').shadow().find('x-button').click();
 
         // Back in the menu: not found

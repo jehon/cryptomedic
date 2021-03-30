@@ -4,7 +4,7 @@ context('Actions', () => {
         cy.visit('/build/');
         cy.hash().should('routeStartsWith', '/login');
         cy.get('x-page-login').should('be.visible');
-        cy.screenshot('screen');
+        cy.crCompareSnapshot('initial');
 
         cy.get('#username').type('murshed');
         cy.get('#password').type('p');
@@ -13,7 +13,7 @@ context('Actions', () => {
         cy.get('x-user-status #user')
             .should('have.text', 'murshed');
 
-        cy.screenshot('logged');
+        cy.crCompareSnapshot('logged');
     });
 
     it('works also with cr-login', () => {
