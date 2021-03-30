@@ -35,8 +35,8 @@ module.exports = {
         // object in order to be able to be queued
         authenticate: function (login) {
             this.authenticate_fillIn(login);
-            this.waitForElementPresent('x-login-status[login]');
-            this.waitForElementPresent(`x-login-status[login=${login}]`);
+            this.waitForElementPresent('x-user-status[login]');
+            this.waitForElementPresent(`x-user-status[login=${login}]`);
             authenticated = true;
             return this;
         },

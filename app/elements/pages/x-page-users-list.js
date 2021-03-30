@@ -53,8 +53,8 @@ export default class XPageUsersList extends HTMLElement {
                         .addColumn('notes', ['Notes'])
                         .addColumn((data) =>
                             createElementWithObject(XButtons, {}, [
-                                createElementWithObject(XButton, { action: actions.move, toRoute: getRoute(routes.user_edit, { uid: data.id }) }, 'Edit'),
-                                createElementWithObject(XButton, { action: actions.move, toRoute: getRoute(routes.user_password, { uid: data.id }) }, 'Change Password'),
+                                createElementWithObject(XButton, { id: 'edit', action: actions.move, toRoute: getRoute(routes.user_edit, { uid: data.id }) }, 'Edit'),
+                                createElementWithObject(XButton, { id: 'pwd', action: actions.move, toRoute: getRoute(routes.user_password, { uid: data.id }) }, 'Change Password'),
                             ]), ['Actions'])
                         .render()
                 );

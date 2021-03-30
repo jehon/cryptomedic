@@ -3,11 +3,9 @@
 //
 //
 Cypress.Commands.add('crReady',
-    () =>
-        // call another command, no need to return as it is managed
-        cy
-            .get('x-requestor')
-            .should('not.have.attr', 'running')
+    () => cy
+        .get('x-requestor')
+        .should('not.have.attr', 'running')
 );
 
 //
@@ -39,10 +37,34 @@ Cypress.Commands.add('crLogin',
 
         cy.visit('/build/');
         cy.hash().should('routeStartsWith', '/home');
-        return cy.get('x-login-status #user').should('have.text', username);
+        return cy.get('x-user-status #user').should('have.text', username);
     }
 );
 
 Cypress.Commands.add('crGo',
     (route) => cy.visit(`/build/#${route}`)
+);
+
+
+// https://docs.cypress.io/api/commands/screenshot#Arguments
+
+Cypress.Commands.overwrite('screenshot',
+    (originalFn, subject, name, options) =>
+        // call another command, no need to return as it is managed
+        cy
+            .crReady()
+            // Call initial command
+            .then(() => originalFn(subject, name, {
+                ...options,
+                blackout: [
+                    ...(options?.blackout ?? []),
+                    '[variable]'
+                ]
+            }))
+);
+
+Cypress.Commands.add('crCompareSnapshot',
+    (_title) => {
+        // cy.compareSnapshot(title, 0.2);
+    }
 );

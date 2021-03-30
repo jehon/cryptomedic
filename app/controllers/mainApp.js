@@ -21,7 +21,7 @@ import goThere from '../js/goThere.js';
 import '../elements/funcs/x-restricted.js';
 import '../elements/funcs/x-i18n.js';
 
-import '../elements/widgets/x-login-status.js';
+import '../elements/widgets/x-user-status.js';
 
 import JHElement from '../elements/jh-element.js';
 window.JHElement = JHElement;

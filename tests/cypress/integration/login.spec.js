@@ -10,7 +10,7 @@ context('Actions', () => {
         cy.get('#password').type('p');
         cy.get('x-button#submit').click();
 
-        cy.get('x-login-status #user')
+        cy.get('x-user-status #user')
             .should('have.text', 'murshed');
 
         cy.screenshot('logged');
