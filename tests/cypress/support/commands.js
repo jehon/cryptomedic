@@ -64,7 +64,11 @@ Cypress.Commands.overwrite('screenshot',
 );
 
 Cypress.Commands.add('crCompareSnapshot',
-    (_title) => {
-        // cy.compareSnapshot(title, 0.2);
+    (title) => {
+        cy.crReady();
+        return cy.compareSnapshot(title, {
+            capture: 'fullPage',
+            errorThreshold: 0.1
+        });
     }
 );

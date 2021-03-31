@@ -23,6 +23,15 @@ compareSnapshotCommand({
 import './asserts.js';
 import './commands.js';
 
+// TODO: follow-up https://github.com/mjhea0/cypress-visual-regression/issues/74
+before(() => {
+    // Remove all references before run
+    if (Cypress.env('type') == 'interactive') {
+        console.info('Removing previous baseline if exists');
+        cy.exec('find cypress-visual-screenshots/baseline/ -type f -delete');
+    }
+});
+
 //
 // On custom commands:
 //   https://on.cypress.io/custom-commands
