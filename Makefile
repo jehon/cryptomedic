@@ -89,6 +89,12 @@ clean: deploy-unmount
 
 	@echo "!! Removed dependencies, so husky (commit) will not work anymore. Please make dependencies-node to enable it again"
 
+# Kill all ports
+.PHONY: clean-ports
+clean-ports:
+	pkill chromedriver || true
+	jh-kill-by-port.sh 9515 || true
+
 setup-computer:
 # TODO -> deploy from dev
 # Test the remote key
