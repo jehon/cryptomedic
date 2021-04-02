@@ -1,6 +1,4 @@
 
-var vsconfig = require('./jsconfig.json');
-
 module.exports = {
     root: true,
     extends: [
@@ -14,7 +12,7 @@ module.exports = {
     },
     parser: 'babel-eslint',
     parserOptions: {
-        ecmaVersion: vsconfig.compilerOptions.target.replace('es', ''),
+        ecmaVersion: (new Date()).getFullYear(),
         sourceType: 'module'
     },
     plugins: [
