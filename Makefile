@@ -195,7 +195,7 @@ tmp/e2e/.tested: www/build/index.html $(call recursive-dependencies,tests/e2e,$(
 
 .PHONY: test-styles
 test-styles: tmp/styles.json
-tmp/styles.json: tests/styles/* tests/styles/references/* $(TMP)/e2e/.tested
+tmp/styles.json: tests/styles/* tests/styles/references/* tmp/e2e/.tested
 # TODO -> from dev
 	@mkdir -p "$(TMP)/styles"
 	@rm -fr "$(TMP)/styles/run"
@@ -208,10 +208,7 @@ tmp/styles.json: tests/styles/* tests/styles/references/* $(TMP)/e2e/.tested
 
 	@echo "Cypress screenshots"
 	find tests/cypress/screenshots/ -type f | while read -r F ; do \
-		FN="$$(basename "$$F")"; \
-		TN="$$(basename $$(dirname "$$F"))"; \
-		TN="$${TN%.spec.js}"; \
-		cp "$$F" "$(STYLES_RUN_SCREENSHOTS)/$$TN ~ $$FN"; \
+		cp "$$F" "$(STYLES_RUN_SCREENSHOTS)/$$(basename $$F)"; \
 	done
 
 	@echo "Compare"
