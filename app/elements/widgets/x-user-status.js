@@ -4,14 +4,14 @@ import { routeToLogin } from '../../js/router.js';
 import { onSession, getUsername, setSession } from '../../js/session.js';
 import XRequestor, { logoutBuilder } from '../funcs/x-requestor.js';
 import { getPanelStyles } from '../render/x-panel.js';
-import { createElementWithObject, createElementWithTag } from '../../js/custom-element.js';
+import { createElementWithObject, createElementWithTag, defineCustomElement } from '../../js/custom-element.js';
 import XButton from '../render/x-button.js';
 
 const user = Symbol('user');
 const logout = Symbol('logout');
 const requestor = Symbol('requestor');
 
-export default class XLoginStatus extends HTMLElement {
+export default class XUserStatus extends HTMLElement {
     connectedCallback() {
         this.innerHTML = '';
         this.append(
@@ -54,4 +54,4 @@ export default class XLoginStatus extends HTMLElement {
     }
 }
 
-window.customElements.define('x-login-status', XLoginStatus);
+defineCustomElement(XUserStatus);

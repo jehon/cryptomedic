@@ -16,7 +16,7 @@ module.exports = {
 
     authenticate_multiple: function (client) {
         client.page.cryptomedic().authenticate('readonly');
-        client.myComponentExecute('x-login-status #logout', function () { this.click(); });
+        client.myComponentExecute('x-user-status #logout', function () { this.click(); });
         client.page.cryptomedic().authenticate('readonly');
         client.end();
     },

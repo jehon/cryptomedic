@@ -1,5 +1,5 @@
 
-import XLoginStatus from '../../app/elements/widgets/x-login-status.js';
+import XUserStatus from '../../app/elements/widgets/x-user-status.js';
 
 import { webDescribe, fireOn } from './athelpers.js';
 import { mockResponseWithSuccess } from './x-requestor-test.js';
@@ -7,7 +7,7 @@ import { setSession } from '../../app/js/session.js';
 
 // TODO: use constructor instead of webDescribe
 
-describe('tests/unit/x-login-status-test.js', function () {
+describe('tests/unit/x-user-status-test.js', function () {
     const testLoggedIn = function (element, username) {
         expect(element().hasAttribute('requesting')).toBeFalsy();
         expect(element().querySelector('#logout').offsetHeight).toBeGreaterThan(0);
@@ -22,7 +22,7 @@ describe('tests/unit/x-login-status-test.js', function () {
 
     describe('with logged in at initialization', function () {
         webDescribe('*', {
-            html: '<x-login-status></x-login-status>',
+            html: '<x-user-status></x-user-status>',
             setupTime: 100
         }, function (element) {
 
@@ -50,9 +50,9 @@ describe('tests/unit/x-login-status-test.js', function () {
                     // mock the logout request
                     mockResponseWithSuccess();
 
-                    spyOn(XLoginStatus.prototype, 'doLogout').and.callThrough();
+                    spyOn(XUserStatus.prototype, 'doLogout').and.callThrough();
                     fireOn(element().querySelector('#logout'), 'click');
-                    expect(XLoginStatus.prototype.doLogout).toHaveBeenCalled();
+                    expect(XUserStatus.prototype.doLogout).toHaveBeenCalled();
                 });
             });
         });
