@@ -87,9 +87,8 @@
     "test-styles": "tests/styles/styles-test.js",
     "eslint": "eslint .",
     "stylelint": "stylelint app/**/*.css",
-    "cypress:open": "cypress open --env type=interactive --project tests",
-    "cypress:run": "cypress run --project tests",
-    "cypress:update": "cypress run --env type=base --project tests"
+    "cypress:open": "cypress open --project tests",
+    "cypress:run": "cypress run --project tests"
   },
   "lint-staged": {
     "*.{js,jsx}": "eslint",

@@ -1,3 +1,6 @@
+
+const { renameSync } = require('fs');
+
 /// <reference types="cypress" />
 // ***********************************************************
 // This example plugins/index.js can be used to load plugins
@@ -17,11 +20,12 @@
  */
 // https://github.com/uktrade/cypress-image-diff/blob/main/docs/Cypress%20integration.md
 // eslint-disable-next-line no-unused-vars
-// https://github.com/uktrade/cypress-image-diff/blob/main/docs/Cypress%20integration.md
 module.exports = (on, config) => {
     // `on` is used to hook into various events Cypress emits
     // `config` is the resolved Cypress config
 
-    const getCompareSnapshotsPlugin = require('cypress-image-diff-js/dist/plugin');
-    getCompareSnapshotsPlugin(on, config);
+    on('after:screenshot', ({ path }) => {
+        renameSync(path, path.replace(/ \(\d*\)/i, ''));
+    });
+
 };

@@ -86,8 +86,6 @@ clean: deploy-unmount
 	rm -fr www/api/*/storage
 	rm -fr tests/cypress/screenshots
 	rm -fr tests/cypress/videos
-	rm -fr tests/cypress-visual-screenshots/comparison
-	rm -fr tests/cypress-visual-screenshots/diff
 
 	@echo "!! Removed dependencies, so husky (commit) will not work anymore. Please make dependencies-node to enable it again"
 
@@ -195,12 +193,9 @@ tmp/e2e/.tested: www/build/index.html $(call recursive-dependencies,tests/e2e,$(
 	CYPRESS_BASE_URL="http://localhost:$(CRYPTOMEDIC_PORT)" npm run --silent "cypress:run"
 	touch $@
 
-update-references-cypress:
-	$(NM_BIN)/cypress-image-diff -u
-
 .PHONY: test-styles
 test-styles: tmp/styles.json
-tmp/styles.json: tests/styles/* tests/styles/references/* $(TMP)/e2e/.tested
+tmp/styles.json: tests/styles/* tests/styles/references/* tmp/e2e/.tested
 # TODO -> from dev
 	@mkdir -p "$(TMP)/styles"
 	@rm -fr "$(TMP)/styles/run"
@@ -211,13 +206,10 @@ tmp/styles.json: tests/styles/* tests/styles/references/* $(TMP)/e2e/.tested
 		--include "*_reference.png" --include "*_reference_*.png" --exclude "*" \
 		"$(TMP)/e2e/browsers/firefox/" "$(TMP)/styles/run"
 
-	# @echo "Cypress screenshots"
-	# find tests/cypress/screenshots/ -type f | while read -r F ; do \
-	# 	FN="$$(basename "$$F")"; \
-	# 	TN="$$(basename $$(dirname "$$F"))"; \
-	# 	TN="$${TN%.spec.js}"; \
-	# 	cp "$$F" "$(STYLES_RUN_SCREENSHOTS)/$$TN ~ $$FN"; \
-	# done
+	@echo "Cypress screenshots"
+	find tests/cypress/screenshots/ -type f | while read -r F ; do \
+		cp "$$F" "$(STYLES_RUN_SCREENSHOTS)/$$(basename $$F)"; \
+	done
 
 	@echo "Compare"
 	npm run --silent test-styles
