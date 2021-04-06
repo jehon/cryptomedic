@@ -1,7 +1,5 @@
 
 //
-//
-//
 Cypress.Commands.add('crReady', () => {
     cy.get('x-requestor')
         .should('not.have.attr', 'running');
@@ -41,6 +39,7 @@ Cypress.Commands.add('crLogin',
 
 Cypress.Commands.add('crGo', (route) => {
     cy.visit(`/build/#${route}`);
+    cy.crReady();
 });
 
 

@@ -16,6 +16,7 @@ context('Actions', () => {
             );
         cy.crGo('/users');
         cy.get('x-page-users-list').should('be.visible');
+        cy.crReady(); // Not necessary?
     });
 
     it('list users', () => {
