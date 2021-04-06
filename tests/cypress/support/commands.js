@@ -1,8 +1,9 @@
 
 //
 Cypress.Commands.add('crReady', () => {
-    cy.get('x-requestor')
-        .should('not.have.attr', 'running');
+    cy.get('x-requestor[running]')
+        .should('not.exist');
+    // .should('not.have.attr', 'running');
 });
 
 //
