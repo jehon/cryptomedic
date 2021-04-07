@@ -80,10 +80,10 @@ export default class XPageSearch extends HTMLElement {
                     createElementWithTag('h1', {}, 'Results'),
                     ...createElementsFromHTML('<div style="text-align: center; color: red">Only the first 100 results are shown</div>'),
                     this._result = createElementWithObject(XTable, { id: 'search_results', full: true }, [],
-                        (/** @type {XTable} */ el) => {
+                        (/** @type {XTable} */ el) =>
                             el
                                 .addHeaders(1)
-                                .enrichTable({ id: 'search_results', class: 'table table-hover table-bordered tablesorter' })
+                                .enrichTable({ id: 'search_results' })
                                 .addRowFormatting((el, data) => el.addEventListener('click', () => setRoute(getRouteToFolderPatient(data.id))))
 
                                 .addColumn(() => createElementWithTag('img', { src: '/static/img/go.gif' }), [''])
@@ -92,8 +92,8 @@ export default class XPageSearch extends HTMLElement {
                                 .addColumn('Sex', ['Sex'])
                                 .addColumn('Yearofbirth', ['Year of Birth'])
                                 .addColumn('Telephone', ['Telephone'])
-                                .addColumn('Pathology', ['Pathology']);
-                        }),
+                                .addColumn('Pathology', ['Pathology'])
+                    ),
                 ])
             ])
         );
