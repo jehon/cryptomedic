@@ -1,7 +1,7 @@
 function testSearch(client, search, resultList) {
     client.myClick('x-page-search x-button[action="cancel"]');
     client.pause(10);
-    client.waitForElementPresent('x-page-search #search_empty');
+    client.waitForElementPresent('x-page-search x-group-panel');
     client.myFormFillIn('x-page-search', search, 'x-page-search x-button[action="query"]');
     client.waitForElementPresent('#search_results');
     client.page.cryptomedic().tableIterator('#search_results', 1, resultList.length).assert().endTable();

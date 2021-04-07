@@ -1,6 +1,10 @@
-import { createElementWithTag, enrichObject } from './custom-element.js';
 
-// TODO: use x-table
+// TODO: use x-table this in x-page-reports
+// TODO: use x-table this in x-page-search
+
+import { defineCustomElement, createElementWithObject, createElementWithTag, enrichObject } from '../../js/custom-element.js';
+import XOverlay from '../render/x-overlay.js';
+import XPanel from '../render/x-panel.js';
 
 /**
  * Fill in a table
@@ -17,25 +21,61 @@ function arrayResize(arr, newSize, withValue) {
     return [...arr, ...Array(newSize - arr.length).fill(withValue)];
 }
 
-export default class TableBuilder {
+export default class XTable extends HTMLElement {
     /** @type {HTMLElement} */
     _element
 
-    _regions = {
-        headers: createElementWithTag('thead', {}),
-        body: createElementWithTag('tbody', {}),
-        footers: createElementWithTag('tfoot', {}),
-    }
+    /** @type {XOverlay} */
+    _overlay
 
-    /** @type {Array<object>} */
-    _data
+    _regions
+
+    /** @type {Array<string|function(object, number):(string|HTMLElement)>} to describe data/body columns */
+    _columns
+
+    /** @type {function(Element, *, number): void} callback to modify the element */
+    _rowsCallback
 
     constructor() {
-        this._element = createElementWithTag('table', {}, [
-            this._regions.headers,
-            this._regions.body,
-            this._regions.footers,
-        ]);
+        super();
+
+        this._regions = {
+            headers: createElementWithTag('thead', {}),
+            body: createElementWithTag('tbody', {}),
+            footers: createElementWithTag('tfoot', {}),
+        };
+        this._columns = [];
+        this._rowsCallback = null;
+
+        // this.attachShadow({ mode: 'open' });
+
+        this.innerHTML = '';
+        this.append(
+            // createElementWithTag('css-inherit'),
+            // getPanelStyles(this, true),
+            this._overlay = createElementWithObject(XOverlay, {}, [
+                createElementWithObject(XPanel, { slot: 'overlay' }, [
+                    this._overlayMsg = createElementWithTag('div'),
+                ]),
+                this._element = createElementWithTag('table', {
+                    style: {
+                        width: '100%'
+                    }
+                }, [
+                    this._regions.headers,
+                    this._regions.body,
+                    this._regions.footers,
+                ])
+            ])
+        );
+        this.block();
+    }
+
+    block(msg = 'No result found') {
+        this._overlay.block();
+        this._overlayMsg.innerHTML = msg;
+        this.setAttribute('empty', 'empty');
+        this.setAttribute('count', '0');
     }
 
     /**
@@ -44,11 +84,10 @@ export default class TableBuilder {
      * @param {object} attributes to be set
      * @param {function(Element): void} callback to modify the element
      *
-     * @returns {TableBuilder} for chaining
+     * @returns {XTable} for chaining
      */
     enrichTable(attributes = {}, callback = (_el) => { }) {
         enrichObject(this._element, attributes, [], callback);
-
         return this;
     }
 
@@ -58,11 +97,14 @@ export default class TableBuilder {
      * @param {number} n - the number of * to add
      * @param {object} attributes to be set
      * @param {function(Element, number): void} callback to modify the element
+     *
+     * @returns {XTable} for chaining
      */
-    _addRegion(region, n, attributes, callback) {
+    _addLinesInRegion(region, n, attributes, callback) {
         for (let i = 0; i < n; i++) {
             region.append(createElementWithTag('tr', attributes, [], (el) => callback(el, i)));
         }
+        return this;
     }
 
     /**
@@ -72,10 +114,10 @@ export default class TableBuilder {
      * @param {object} attributes to be set
      * @param {function(Element, number): void} callback to modify the element
      *
-     * @returns {TableBuilder} for chaining
+     * @returns {XTable} for chaining
      */
     addHeaders(n, attributes = {}, callback = (_el, _i) => { }) {
-        this._addRegion(this._regions.headers, n, attributes, callback);
+        this._addLinesInRegion(this._regions.headers, n, attributes, callback);
         return this;
     }
 
@@ -86,26 +128,52 @@ export default class TableBuilder {
      * @param {object} attributes to be set
      * @param {function(Element, number): void} callback to modify the element
      *
-     * @returns {TableBuilder} for chaining
+     * @returns {XTable} for chaining
      */
     addFooters(n, attributes = {}, callback = (_el, _i) => { }) {
-        this._addRegion(this._regions.footers, n, attributes, callback);
+        this._addLinesInRegion(this._regions.footers, n, attributes, callback);
+        return this;
+    }
+
+    /**
+     * @param {function(Element, *, number): void} callback to modify the element
+     *
+     * @returns {XTable} for chaining
+     */
+    addRowFormatting(callback = (_el, _i) => { }) {
+        this._rowsCallback = callback;
         return this;
     }
 
     /**
      * @param {Array<object>} data to be set in the table
-     * @param {object} attributes to be set
-     * @param {function(Element, *, number): void} callback to modify the element
      *
-     * @returns {TableBuilder} for chaining
+     * @returns {XTable} for chaining
      */
-    addData(data, attributes = {}, callback = (_el, _i) => { }) {
-        this._data = data;
-        this._addRegion(this._regions.body, data.length, attributes, (el, i) => callback(el, this._data[i], i));
+    setData(data) {
+        this._regions.body.innerHTML = '';
+
+        this._overlay.free();
+        this.removeAttribute('empty');
+        this.setAttribute('count', '' + data?.length);
+
+        this._addLinesInRegion(this._regions.body, data.length, {}, (el, i) => this._rowsCallback(el, data[i], i));
+
+        for (const fieldData of this._columns) {
+            this._addCellToEachLinesInRegion(this._regions.body,
+                data
+                    .map(row =>
+                        fieldData instanceof Function
+                            ? (i) => fieldData(row, i)
+                            : (i) => (data[i][fieldData] ?? '')
+                    ),
+                'td'
+            );
+        }
 
         return this;
     }
+
     /**
      *
      * @param {HTMLElement} region to be filled in
@@ -114,7 +182,7 @@ export default class TableBuilder {
      *
      * @returns {Array<string>} of calculated values
      */
-    _addToRegion(region, values, tag) {
+    _addCellToEachLinesInRegion(region, values, tag) {
         if (!region) {
             console.error('Region is empty: ', region);
         }
@@ -155,22 +223,12 @@ export default class TableBuilder {
      * @param {Array<null|string|function([string]):(string|HTMLElement)>} headers to be put in headers (in reverse order)
      * @param {Array<null|string|function([string]):(string|HTMLElement)>} footers to be put in footesr (in reverse order)
      *
-     * @returns {TableBuilder} for chaining
+     * @returns {XTable} for chaining
      */
     addColumn(fieldData, headers = [], footers = []) {
-        // BODY
-        // const values =
-        this._addToRegion(this._regions.body,
-            this._data
-                .map(row =>
-                    fieldData instanceof Function
-                        ? (i) => fieldData(row, i)
-                        : (i) => (this._data[i][fieldData] ?? '')
-                ),
-            'td'
-        );
+        this._columns.push(fieldData);
 
-        this._addToRegion(this._regions.headers,
+        this._addCellToEachLinesInRegion(this._regions.headers,
             arrayResize(headers, this._regions.headers.childElementCount, null).reverse().map(row =>
                 (n) =>
                     row instanceof Function
@@ -180,7 +238,7 @@ export default class TableBuilder {
             'th'
         );
 
-        this._addToRegion(this._regions.footers,
+        this._addCellToEachLinesInRegion(this._regions.footers,
             arrayResize(footers.reverse(), this._regions.footers.childElementCount, null).reverse().map(row =>
                 (n) =>
                     row instanceof Function
@@ -192,8 +250,6 @@ export default class TableBuilder {
 
         return this;
     }
-
-    render() {
-        return this._element;
-    }
 }
+
+defineCustomElement(XTable);
