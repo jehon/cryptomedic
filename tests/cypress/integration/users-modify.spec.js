@@ -1,6 +1,6 @@
 
 function getRowByUsername(username) {
-    return cy.get('x-page-users-list').find('tr').find('td').contains(username).parent();
+    return cy.get('x-page-users-list x-table[count]:not([count=0])').find('tr').find('td').contains(username).parent();
 }
 
 context('Actions', () => {
