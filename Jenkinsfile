@@ -22,7 +22,7 @@ pipeline {
   stages {
     stage('setup-computer') {
       steps {
-        sh 'make setup-computer'
+        sh 'make ${STAGE_NAME}'
       }
     }
     stage('stop previous') {
@@ -33,12 +33,12 @@ pipeline {
     }
     stage('dump') {
       steps {
-        sh 'make dump'
+        sh 'make ${STAGE_NAME}'
       }
     }
     stage('start') {
       steps {
-        sh 'make start'
+        sh 'make ${STAGE_NAME}'
       }
     }
     stage('dependencies') {
@@ -46,43 +46,53 @@ pipeline {
         sh '''
 npm ci
 touch node_modules/.dependencies
-make dependencies
+make ${STAGE_NAME}
 '''
       }
     }
     stage('build') {
       steps {
-        sh 'make build'
+        sh 'make ${STAGE_NAME}'
       }
     }
     stage('test-api') {
       steps {
-        sh 'make test-api'
+        sh 'make ${STAGE_NAME}'
       }
     }
     stage('test-api-bare') {
       steps {
-        sh 'make test-api-bare'
+        sh 'make ${STAGE_NAME}'
       }
     }
     stage('test-unit') {
       steps {
-        sh 'make test-unit'
+        sh 'make ${STAGE_NAME}'
       }
     }
-    stage('test-e2e') {
+    // stage('test-e2e') {
+    //   steps {
+    //     sh 'make test-e2e'
+    //   }
+    // }
+    stage('test-e2e-nightwatch') {
       steps {
-        sh 'make test-e2e'
+        sh 'make ${STAGE_NAME}'
+      }
+    }
+    stage('test-e2e-cypress') {
+      steps {
+        sh 'make ${STAGE_NAME}'
       }
     }
     stage('test-styles') {
       steps {
-        sh 'make test-styles'
+        sh 'make ${STAGE_NAME}'
       }
     }
     stage('lint') {
       steps {
-        sh 'make lint'
+        sh 'make ${STAGE_NAME}'
       }
     }
 
