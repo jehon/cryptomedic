@@ -181,21 +181,28 @@ test-unit: dependencies-node \
 .PHONY: test-e2e
 test-e2e:
 # TODO -> from dev
-	rm -f $(TMP)/e2e/.tested
+	rm -fr $(TMP)/e2e
 # TODO -> no call itself
-	$(call itself,tmp/e2e/.tested)
+	$(call itself,test-e2e-nightwatch)
+	$(call itself,test-e2e-cypress)
 
-tmp/e2e/.tested: www/build/index.html $(call recursive-dependencies,tests/e2e,$(TMP)/e2e/.tested)
+test-e2e-nightwatch: tmp/e2e/.tested-nightwatch
+tmp/e2e/.tested-nightwatch: www/build/index.html $(call recursive-dependencies,tests/e2e,$(TMP)/e2e/.tested-nightwatch)
 # TODO -> from dev
 	cr-data-reset
-	rm -fr $(TMP)/e2e
 	npm run --silent test-e2e
+	touch $@
+
+test-e2e-cypress: tmp/e2e/.tested-cypress
+tmp/e2e/.tested-cypress: www/build/index.html $(call recursive-dependencies,tests/e2e,$(TMP)/e2e/.tested-cypress)
+# TODO -> from dev
+	cr-data-reset
 	CYPRESS_BASE_URL="http://localhost:$(CRYPTOMEDIC_PORT)" npm run --silent "cypress:run"
 	touch $@
 
 .PHONY: test-styles
 test-styles: tmp/styles.json
-tmp/styles.json: tests/styles/* tests/styles/references/* tmp/e2e/.tested
+tmp/styles.json: tests/styles/* tests/styles/references/* tmp/e2e/.tested-cypress tmp/e2e/.tested-nightwatch
 # TODO -> from dev
 	@mkdir -p "$(TMP)/styles"
 	@rm -fr "$(TMP)/styles/run"
