@@ -1,6 +1,5 @@
 
 // TODO: use x-table this in x-page-reports
-// TODO: use x-table this in x-page-search
 
 import { defineCustomElement, createElementWithObject, createElementWithTag, enrichObject } from '../../js/custom-element.js';
 import XOverlay from '../render/x-overlay.js';
@@ -45,7 +44,7 @@ export default class XTable extends HTMLElement {
             footers: createElementWithTag('tfoot', {}),
         };
         this._columns = [];
-        this._rowsCallback = null;
+        this._rowsCallback = () => { };
 
         // this.attachShadow({ mode: 'open' });
 
@@ -141,7 +140,7 @@ export default class XTable extends HTMLElement {
      *
      * @returns {XTable} for chaining
      */
-    addRowFormatting(callback = (_el, _i) => { }) {
+    addRowFormatting(callback = (_el, _data, _i) => { }) {
         this._rowsCallback = callback;
         return this;
     }
