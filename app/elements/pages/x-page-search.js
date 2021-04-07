@@ -2,9 +2,9 @@
 import { actions } from '../../config.js';
 import { createElementsFromHTML, createElementWithObject, createElementWithTag, defineCustomElement } from '../../js/custom-element.js';
 import { getRouteToFolderPatient, setRoute } from '../../js/router.js';
-import TableBuilder from '../../js/table-builder.js';
 import XForm from '../funcs/x-form.js';
 import XRequestor, { patientSearchBuilder } from '../funcs/x-requestor.js';
+import XTable from '../funcs/x-table.js';
 import XButton from '../render/x-button.js';
 import XButtons from '../render/x-buttons.js';
 import XGroupPanel from '../render/x-group-panel.js';
@@ -78,7 +78,22 @@ export default class XPageSearch extends HTMLElement {
                                 ]),
                         ]),
                     createElementWithTag('h1', {}, 'Results'),
-                    this._result = createElementWithTag('div', { style: { width: '100%' } })
+                    ...createElementsFromHTML('<div style="text-align: center; color: red">Only the first 100 results are shown</div>'),
+                    this._result = createElementWithObject(XTable, { id: 'search_results', full: true }, [],
+                        (/** @type {XTable} */ el) => {
+                            el
+                                .addHeaders(1)
+                                .enrichTable({ id: 'search_results', class: 'table table-hover table-bordered tablesorter' })
+                                .addRowFormatting((el, data) => el.addEventListener('click', () => setRoute(getRouteToFolderPatient(data.id))))
+
+                                .addColumn(() => createElementWithTag('img', { src: '/static/img/go.gif' }), [''])
+                                .addColumn(data => data.entryyear + '-' + data.entryorder, ['Reference'])
+                                .addColumn('Name', ['Name'])
+                                .addColumn('Sex', ['Sex'])
+                                .addColumn('Yearofbirth', ['Year of Birth'])
+                                .addColumn('Telephone', ['Telephone'])
+                                .addColumn('Pathology', ['Pathology']);
+                        }),
                 ])
             ])
         );
@@ -86,11 +101,7 @@ export default class XPageSearch extends HTMLElement {
     }
 
     reset() {
-        this._result.innerHTML = '';
-        this._result.append(
-            createElementWithTag('div', { id: 'search_empty' },
-                'Please fill in parameters and launch a search'
-            ));
+        this._result.block('Please fill in the form');
     }
 
     search() {
@@ -100,29 +111,12 @@ export default class XPageSearch extends HTMLElement {
         return this._requestor.request(patientSearchBuilder(this._form.getValues()))
             .then(response => response.data)
             .then(data => {
-                this._result.innerHTML = '';
                 if (!data || data.length == 0) {
-                    this._result.innerHTML = 'No results';
+                    this._result.block();
                     return data;
                 }
 
-                this._result.append(
-                    ...createElementsFromHTML('<div style="text-align: center; color: red">Only the first 100 results are shown</div>'),
-                    new TableBuilder()
-                        .enrichTable({ id: 'search_results', class: 'table table-hover table-bordered tablesorter', pagesize: '10' })
-                        .addHeaders(1)
-                        .addData(data, {}, (el, data) => el.addEventListener('click', () => setRoute(getRouteToFolderPatient(data.id))))
-
-                        .addColumn(() => createElementWithTag('img', { src: '/static/img/go.gif' }), [''])
-                        .addColumn(data => data.entryyear + '-' + data.entryorder, ['Reference'])
-                        .addColumn('Name', ['Name'])
-                        .addColumn('Sex', ['Sex'])
-                        .addColumn('Yearofbirth', ['Year of Birth'])
-                        .addColumn('Telephone', ['Telephone'])
-                        .addColumn('Pathology', ['Pathology'])
-
-                        .render()
-                );
+                this._result.setData(data);
                 this.removeAttribute('status');
             });
     }
