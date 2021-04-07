@@ -58,6 +58,7 @@ export default class XTable extends HTMLElement {
                     this._overlayMsg = createElementWithTag('div'),
                 ]),
                 this._element = createElementWithTag('table', {
+                    class: 'table table-hover table-bordered tablesorter',
                     style: {
                         width: '100%'
                     }
