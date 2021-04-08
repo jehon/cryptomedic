@@ -30,8 +30,9 @@ foreach (json_decode(file_get_contents(constant("BR_FILE")), true)["browsers"] a
     $supported[$b][] = $v;
 };
 
-
 // var_dump($supported);
+
+$detected = [];
 
 ?>
 <style>
@@ -41,6 +42,7 @@ foreach (json_decode(file_get_contents(constant("BR_FILE")), true)["browsers"] a
     td {
         border: 1px solid black;
         border-collapse: collapse;
+        padding: 5px;
     }
 </style>
 
@@ -67,6 +69,22 @@ foreach (json_decode(file_get_contents(constant("BR_FILE")), true)["browsers"] a
         $bn = strtolower(explode(" ", $b['browser_name'])[0]);
         $bv = explode(".", $b['browser_version'])[0];
 
+        if (!array_key_exists($bn, $detected)) {
+            $detected[$bn] = [
+                "min" => $bv,
+                "max" => $bv,
+                "min-last" => $b['last_login']
+            ];
+        } else {
+            $detected[$bn]["max"] = max($detected[$bn]['max'], $bv);
+            if ($bv < $detected[$bn]["min"]) {
+                $detected[$bn]["min"] = min($detected[$bn]['min'], $bv);
+                $detected[$bn]["min-last"] = $b['last_login'];
+            } else if ($bv == $detected[$bn]["min"]) {
+                $detected[$bn]["min-last"] = min($detected[$bn]['min-last'], $b['last_login']);
+            }
+        }
+
         echo "<tr>";
         echo "<td>${b['browser_name']}</td>";
         echo "<td>${bv}</td>";
@@ -91,7 +109,7 @@ foreach (json_decode(file_get_contents(constant("BR_FILE")), true)["browsers"] a
                 $support = "!! not supported version ($bv) !!";
             }
         } else {
-            $support = "unknown $bn ($v)";
+            $support = "unknown $bn ($bv)";
         }
         echo "<td>$support</td>";
 
@@ -100,6 +118,27 @@ foreach (json_decode(file_get_contents(constant("BR_FILE")), true)["browsers"] a
     }
     ?>
 </table>
-<?php
 
+<h1>Summary</h1>
+<table>
+    <thead>
+        <th>Browser</th>
+        <th>Max version</th>
+        <th>Min version</th>
+        <th>Min version last usage</th>
+    </thead>
+    <?php
+    foreach ($detected as $b => $d) {
+        echo "<tr>";
+        echo "<td>$b</td>";
+        echo "<td>${d['max']}</td>";
+        echo "<td>${d['min']}</td>";
+        echo "<td>${d['min-last']}</td>";
+        echo "</tr>";
+    }
+    print_r($detected);
+
+    ?>
+</table>
+<?php
 http_response_code(200);
