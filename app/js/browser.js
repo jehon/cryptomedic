@@ -35,6 +35,7 @@ export function getBrowserDescription() {
         browser_full_name: platform.description,
         screen_height: window.screen.height,
         screen_width: window.screen.width,
+        os: [platform.os.family || '', platform.os.version || ''].join(' '),
         feat_test: true,
         feat_fromentries: 'fromEntries' in Object
     };
