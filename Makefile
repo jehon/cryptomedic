@@ -60,6 +60,7 @@ dump:
 	@echo "TMP:              $(TMP)"
 	@echo "Who am i:         $(shell whoami)"
 	@echo "Who am i:         $(shell id)"
+	@echo "Supported:        $(shell npx browserslist)"
 
 dump-docker-compose:
 	docker-compose config
