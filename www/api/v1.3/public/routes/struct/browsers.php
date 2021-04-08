@@ -136,7 +136,6 @@ $detected = [];
         echo "<td>${d['min-last']}</td>";
         echo "</tr>";
     }
-    print_r($detected);
 
     ?>
 </table>
