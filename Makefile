@@ -315,6 +315,9 @@ www/build/index.html: node_modules/.dependencies webpack.config.js \
 www/build/browsers.json: .browserslistrc
 	npx browserslist --json > "$@"
 
+update-references-browsers:
+	npx browserslist --update
+
 $(CJS2ESM_DIR)/axios.js: node_modules/axios/dist/axios.js
 # TODO -> from dev
 	$(NM_BIN)babel --out-file="$@" --plugins=transform-commonjs --source-maps inline $?
