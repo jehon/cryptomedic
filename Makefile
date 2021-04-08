@@ -302,7 +302,7 @@ package-lock.json: package.json
 	npm install
 
 .PHONY: build
-build: www/build/index.html
+build: www/build/index.html www/build/browsers.json
 www/build/index.html: node_modules/.dependencies webpack.config.js \
 		package.json package-lock.json \
 		$(call recursive-dependencies,app/,www/build/index.html) \
@@ -311,6 +311,9 @@ www/build/index.html: node_modules/.dependencies webpack.config.js \
 
 # TODO -> from dev
 	$(NM_BIN)webpack
+
+www/build/browsers.json: .browserslistrc
+	npx browserslist --json > "$@"
 
 $(CJS2ESM_DIR)/axios.js: node_modules/axios/dist/axios.js
 # TODO -> from dev
