@@ -423,13 +423,13 @@ reports[REPORT_ACTIVITY] = { // test data: 2014-05
                 : (data.price_consult ?? 0)
             ), ['Consult', 'Price', '', '', ''], ['total', data.totals.price_consult])
 
-            .addColumn(data => data.complementary ? null : (data.price_medecine ?? 0), ['Medicine'], [data.totals.price_medecine])
-            .addColumn(data => data.complementary ? null : (data.price_surgical ?? 0), ['Surgical'], [data.totals.price_surgical])
-            .addColumn(data => data.complementary ? null : (data.price_workshop ?? 0), ['Workshop'], [data.totals.price_workshop])
-            .addColumn(data => data.complementary ? null : (data.price_other ?? 0), ['Others'], [data.totals.price_other])
-            .addColumn(data => data.complementary ? null : (data.total_real ?? 0), ['Full'], [data.totals.total_real])
-            .addColumn(data => data.complementary ? null : (data.total_asked ?? 0), ['Asked'], [data.totals.total_asked])
-            .addColumn('total_paid', ['Paid'], [data.totals.total_paid]);
+            .addColumn(data => data.complementary ? null : (data.price_medecine ?? 0), ['Medicine'], ['', data.totals.price_medecine])
+            .addColumn(data => data.complementary ? null : (data.price_surgical ?? 0), ['Surgical'], ['', data.totals.price_surgical])
+            .addColumn(data => data.complementary ? null : (data.price_workshop ?? 0), ['Workshop'], ['', data.totals.price_workshop])
+            .addColumn(data => data.complementary ? null : (data.price_other ?? 0), ['Others'], ['', data.totals.price_other])
+            .addColumn(data => data.complementary ? null : (data.total_real ?? 0), ['Full'], ['', data.totals.total_real])
+            .addColumn(data => data.complementary ? null : (data.total_asked ?? 0), ['Asked'], ['', data.totals.total_asked])
+            .addColumn('total_paid', ['Paid'], ['', data.totals.total_paid]);
     }
 };
 
