@@ -6,19 +6,9 @@ import XOverlay from '../render/x-overlay.js';
 import XPanel from '../render/x-panel.js';
 
 /**
- * Fill in a table
- *
- * @param {Array<T>} arr to be fill in
- * @param {number} newSize to expand
- * @param {T} withValue to fill in
- * @template {*} T
- *
- * @returns {Array<T>} completed
+ * @typedef {string|function(object, number):(string|HTMLElement)} BodyColumnDescription
+ * @typedef {null|string|function([string]):(string|HTMLElement)} HeadFootColumnDescription
  */
-function arrayResize(arr, newSize, withValue) {
-    arr = arr ?? [];
-    return [...arr, ...Array(newSize - arr.length).fill(withValue)];
-}
 
 export default class XTable extends HTMLElement {
     /** @type {HTMLElement} */
@@ -27,10 +17,20 @@ export default class XTable extends HTMLElement {
     /** @type {XOverlay} */
     _overlay
 
-    _regions
-
-    /** @type {Array<string|function(object, number):(string|HTMLElement)>} to describe data/body columns */
+    /**
+     * @type {Object} to describe data/body columns
+     * @property {BodyColumnDescription} rows - to generate row in each columns
+     * @property {Array<HeadFootColumnDescription>} headers - to generate thead data
+     * @property {Array<HeadFootColumnDescription>} footers - to generate tfoot data
+     */
     _columns
+
+    /**
+     * @type {Object} the config of the table
+     * @property {Object} headers to define headers
+     * @property {Object} footers to define footers
+     */
+    _config
 
     /** @type {function(Element, *, number): void} callback to modify the element */
     _rowsCallback
@@ -38,12 +38,9 @@ export default class XTable extends HTMLElement {
     constructor() {
         super();
 
-        this._regions = {
-            headers: createElementWithTag('thead', {}),
-            body: createElementWithTag('tbody', {}),
-            footers: createElementWithTag('tfoot', {}),
-        };
         this._columns = [];
+        this._config = {};
+
         this._rowsCallback = () => { };
 
         // this.attachShadow({ mode: 'open' });
@@ -61,11 +58,7 @@ export default class XTable extends HTMLElement {
                     style: {
                         width: '100%'
                     }
-                }, [
-                    this._regions.headers,
-                    this._regions.body,
-                    this._regions.footers,
-                ])
+                }, [])
             ])
         );
         this.block();
@@ -117,7 +110,7 @@ export default class XTable extends HTMLElement {
      * @returns {XTable} for chaining
      */
     addHeaders(n, attributes = {}, callback = (_el, _i) => { }) {
-        this._addLinesInRegion(this._regions.headers, n, attributes, callback);
+        this._config.headers = { n, attributes, callback };
         return this;
     }
 
@@ -131,7 +124,7 @@ export default class XTable extends HTMLElement {
      * @returns {XTable} for chaining
      */
     addFooters(n, attributes = {}, callback = (_el, _i) => { }) {
-        this._addLinesInRegion(this._regions.footers, n, attributes, callback);
+        this._config.footers = { n, attributes, callback };
         return this;
     }
 
@@ -151,24 +144,76 @@ export default class XTable extends HTMLElement {
      * @returns {XTable} for chaining
      */
     setData(data) {
-        this._regions.body.innerHTML = '';
-
         this._overlay.free();
         this.removeAttribute('empty');
         this.setAttribute('count', '' + data?.length);
 
-        this._addLinesInRegion(this._regions.body, data.length, {}, (el, i) => this._rowsCallback(el, data[i], i));
+        // empty rows and create them back emtpy
+        this._element.innerHTML = '';
+        const _regions = {
+            headers: createElementWithTag('thead', {}),
+            body: createElementWithTag('tbody', {}),
+            footers: createElementWithTag('tfoot', {}),
+        };
+        this._element.append(_regions.headers, _regions.body, _regions.footers);
 
-        for (const fieldData of this._columns) {
-            this._addCellToEachLinesInRegion(this._regions.body,
-                data
-                    .map(row =>
-                        fieldData instanceof Function
-                            ? (i) => fieldData(row, i)
-                            : (i) => (data[i][fieldData] ?? '')
-                    ),
+        if (this._config.headers) {
+            this._addLinesInRegion(_regions.headers, this._config.headers.n, this._config.headers.attributes, this._config.headers.callback);
+        }
+        if (this._config.footers) {
+            this._addLinesInRegion(_regions.footers, this._config.footers.n, this._config.footers.attributes, this._config.footers.callback);
+        }
+        this._addLinesInRegion(_regions.body, data.length, {}, (el, i) => this._rowsCallback(el, data[i], i));
+
+        for (const col of this._columns) {
+            let colData = data.map(row =>
+                col.body instanceof Function
+                    ? (i) => col.body(row, i)
+                    : (i) => (data[i][col.body] ?? '')
+            );
+
+            this._addCellToEachLinesInRegion(_regions.body,
+                colData,
                 'td'
             );
+
+            const calcColData = colData.map((v, i) => v(i));
+
+            if (this._config.headers) {
+                //
+                // If we don't have enough values, we need to add the at top rows
+                //    because the values given are probably more specific
+                //    To materialize this, headers are passed in reverse order (first on = closer to the body)
+                this._addCellToEachLinesInRegion(_regions.headers,
+                    [...col.headers, ...Array(this._config.headers.n - col.headers.length)].reverse()
+                        // For each row of ...
+                        .map(row =>
+                            (n) =>
+                                row instanceof Function
+                                    ? row(calcColData, n)
+                                    : row
+                        ),
+                    'th'
+                );
+            }
+
+            if (this._config.footers) {
+                //
+                // If we don't have enough values, we must add them at the bottom row
+                //    because the values given are probably more specific
+                //
+                this._addCellToEachLinesInRegion(_regions.footers,
+                    [...col.footers, ...Array(this._config.footers.n - col.footers.length)]
+                        // For each row of ...
+                        .map(row =>
+                            (n) =>
+                                row instanceof Function
+                                    ? row(calcColData, n)
+                                    : row
+                        ),
+                    'th'
+                );
+            }
         }
 
         return this;
@@ -177,30 +222,21 @@ export default class XTable extends HTMLElement {
     /**
      *
      * @param {HTMLElement} region to be filled in
-     * @param {Array<string|function(number):string|null>} values to be put in cells
+     * @param {Array<function(number):string|null>} values to be put in cells (number = row number)
      * @param {string} tag name
      *
      * @returns {Array<string>} of calculated values
      */
     _addCellToEachLinesInRegion(region, values, tag) {
-        if (!region) {
-            console.error('Region is empty: ', region);
-        }
-
         const childrenList = Array.from(region.children);
         if (!childrenList || childrenList.length < values.length) {
             console.error('Too much data: ', childrenList, values);
         }
 
-
         let res = [];
 
         for (let i = 0; i < childrenList.length; i++) {
-            let val = values[i];
-            if (val instanceof Function) {
-                val = val(i);
-            }
-
+            let val = values[i](i);
             const rowElement = childrenList[i];
             if (val == null) {
                 // null header = extend precedent one
@@ -219,34 +255,18 @@ export default class XTable extends HTMLElement {
 
     /**
      *
-     * @param {string|function(object, number):(string|HTMLElement)} fieldData to be put in cells
-     * @param {Array<null|string|function([string]):(string|HTMLElement)>} headers to be put in headers (in reverse order)
-     * @param {Array<null|string|function([string]):(string|HTMLElement)>} footers to be put in footesr (in reverse order)
+     * @param {BodyColumnDescription} fieldData to be put in cells
+     * @param {Array<HeadFootColumnDescription>} headers to be put in headers (in reverse order)
+     * @param {Array<HeadFootColumnDescription>} footers to be put in footers
      *
      * @returns {XTable} for chaining
      */
     addColumn(fieldData, headers = [], footers = []) {
-        this._columns.push(fieldData);
-
-        this._addCellToEachLinesInRegion(this._regions.headers,
-            arrayResize(headers, this._regions.headers.childElementCount, null).reverse().map(row =>
-                (n) =>
-                    row instanceof Function
-                        ? 'Not implemented ' + n // TODO
-                        : row
-            ),
-            'th'
-        );
-
-        this._addCellToEachLinesInRegion(this._regions.footers,
-            arrayResize(footers.reverse(), this._regions.footers.childElementCount, null).reverse().map(row =>
-                (n) =>
-                    row instanceof Function
-                        ? 'Not implemented ' + n // TODO
-                        : row
-            ),
-            'th'
-        );
+        this._columns.push({
+            body: fieldData,
+            headers: headers,
+            footers: footers
+        });
 
         return this;
     }
