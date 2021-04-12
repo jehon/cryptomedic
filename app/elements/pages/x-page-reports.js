@@ -1,17 +1,17 @@
 
 import ExcellentExport from '../../../node_modules/excellentexport/dist/excellentexport.js';
 import { actions, messages } from '../../config.js';
-import { createElementWithObject, createElementWithTag, defineCustomElement } from '../../js/custom-element.js';
+import { createElementsFromHTML, createElementWithObject, createElementWithTag, defineCustomElement } from '../../js/custom-element.js';
 import date2CanonicString from '../../js/date2CanonicString.js';
 import { getPref, setPref } from '../../js/prefs.js';
-import { getRouteToFolderPatient } from '../../js/router.js';
+import { getRouteToFolderFileByParams, getRouteToFolderPatient } from '../../js/router.js';
 import { getSession } from '../../js/session.js';
 import { toSentenceCase } from '../../js/string-utils.js';
-import TableBuilder from '../../js/table-builder.js';
 import XCodage from '../funcs/x-codage.js';
 import XForm from '../funcs/x-form.js';
 import XInputList from '../funcs/x-input-list.js';
 import XRequestor, { reportQueryBuilder } from '../funcs/x-requestor.js';
+import XTable from '../funcs/x-table.js';
 import XButton from '../render/x-button.js';
 import XButtons from '../render/x-buttons.js';
 import XDisplayDate from '../render/x-display-date.js';
@@ -35,7 +35,7 @@ export default class XPageReports extends HTMLElement {
     /** @type {XForm} */
     _form
 
-    /** @type {HTMLElement} */
+    /** @type {XTable} */
     _result
 
     /** @type {HTMLAnchorElement} */
@@ -51,7 +51,10 @@ export default class XPageReports extends HTMLElement {
      * @returns {*} description of the report
      */
     getReportDescription() {
-        return reports[this.reportId];
+        return {
+            dataTransform: (data) => data,
+            ...reports[this.reportId]
+        };
     }
 
     /**
@@ -67,10 +70,19 @@ export default class XPageReports extends HTMLElement {
         this.reportId = this.getAttribute('report');
 
         this.append(
-            createElementWithTag('css-inherit'),
-
             // TODO: only two-columns on large screens !
             createElementWithTag('style', {}, `
+
+x-page-reports {
+    width: 100%;
+    display: flex;
+}
+
+x-page-reports > x-requestor,
+x-page-reports > x-requestor > *
+{
+    width: 100%;
+}
 
 @media screen and (min-width: 600px) {
     .top {
@@ -91,18 +103,14 @@ export default class XPageReports extends HTMLElement {
 x-button#export {
     margin-bottom: 10px;
 }
-
-#report_table {
-    width: 100%;
-}
         `
             ),
 
-            this._requestor = createElementWithObject(XRequestor, {}, [
-                createElementWithTag('div', { class: 'top' }, [
+            this._requestor = createElementWithObject(XRequestor, { full: true }, [
+                createElementWithTag('div', { class: 'top', full: true }, [
                     createElementWithTag('div', {}, [
                         createElementWithTag('h1', {}, this.getReportDescription().name),
-                        createElementWithTag('div', {}, this.getReportDescription().description)
+                        createElementWithTag('div', {}, createElementsFromHTML(this.getReportDescription().description))
                     ]),
                     createElementWithTag('div', {}, [
                         createElementWithObject(XGroupPanel, { title: 'Parameters' }, [
@@ -123,7 +131,21 @@ x-button#export {
                 createElementWithTag('div', { id: 'separator' }),
 
                 // Report result
-                this._result = createElementWithTag('div', { id: 'report_table' })
+                createElementWithTag('div', { style: { textAlign: 'right' } }, [
+                    // createElementsFromHTML('<a style="display: none" id="report_download_button" download="export.xls">download</a>')[0],
+                    this._exportLink = /** @type {HTMLAnchorElement} */ (createElementWithTag('a', { style: { display: 'none' } }, 'download')),
+                    createElementWithObject(XButton, { action: 'alternate', id: 'export' }, 'Export to Excel',
+                        (el) => el.addEventListener('click', () => this.generateXLS())
+                    ),
+                ]),
+                this._result = createElementWithObject(XTable, { id: 'report_table' }, [],
+                    (/** @type {XTable} */ el) => {
+                        el
+                            .enrichTable({ class: 'reporting' }); // table table-hover table-bordered tablesorter
+
+                        this.getReportDescription().generator(el);
+                    }
+                )
             ])
         );
 
@@ -223,7 +245,7 @@ x-button#export {
 
     empty() {
         this._messages.clear();
-        this._result.innerHTML = '';
+        this._result.block('No data');
     }
 
     reset() {
@@ -288,55 +310,40 @@ x-button#export {
         // Launch the call
         this._requestor.request(reportQueryBuilder(this.reportId, newValues))
             .then(response => response.data)
+            // .then(data => {
+            //     return {
+            //         ...data,
+            //         list: this.getReportDescription().dataTransform(data.list)
+            //     };
+            // })
             .then((data) => {
-                this._data = data;
-                this.draw();
-            });
-    }
+                this._messages.clear();
 
-    draw() {
-        this._messages.clear();
+                /* For context */
 
-        this._result.innerHTML = '';
-        if (!this._data || this._data.list.length < 1) {
-            this._messages.addMessage({
-                text: 'No data found',
-                level: messages.warning
-            });
-            return;
-        }
-
-        //
-        // Export button
-        //    Calculate the filename
-        //
-        let filename = `cryptomedic-${this.reportId}`;
-        for (const i in this.getReportDescription().params) {
-            const p = this.getReportDescription().params[i];
-            if (this._data.params[p]) {
-                if (p == 'period') {
-                    filename += '-' + this._data.params['when'];
-                } else {
-                    filename += '-' + this._data.params[p].split(' ').join('_');
+                if (!data || data.list.length < 1) {
+                    this._result.block();
+                    return;
                 }
-            }
-        }
 
-        this._result.append(
-            createElementWithTag('div', { style: { textAlign: 'right' } }, [
-                // createElementsFromHTML('<a style="display: none" id="report_download_button" download="export.xls">download</a>')[0],
-                this._exportLink = /** @type {HTMLAnchorElement} */ (createElementWithTag('a', { style: { display: 'none' }, download: filename + '.xls' }, 'download')),
-                createElementWithObject(XButton, { action: 'alternate', id: 'export' }, 'Export to Excel',
-                    (el) => el.addEventListener('click', () => this.generateXLS())
-                ),
-            ])
-        );
-
-        const tableBuilder = new TableBuilder()
-            .enrichTable({ class: 'reporting' }) // table table-hover table-bordered tablesorter
-            .addData(this._data.list);
-        this.getReportDescription().generator(tableBuilder, this._data);
-        this._result.append(tableBuilder.render());
+                //
+                // Export button
+                //    Calculate the filename
+                //
+                let filename = `cryptomedic-${this.reportId}`;
+                for (const i in this.getReportDescription().params) {
+                    const p = this.getReportDescription().params[i];
+                    if (data.params[p]) {
+                        if (p == 'period') {
+                            filename += '-' + data.params['when'];
+                        } else {
+                            filename += '-' + data.params[p].split(' ').join('_');
+                        }
+                    }
+                }
+                this._exportLink.setAttribute('download', filename + '.xls');
+                this._result.setData(data.list, data);
+            });
     }
 
     generateXLS() {
@@ -360,9 +367,11 @@ x-button#export {
         this._exportLink.click();
 
         // Refresh the table to recover links etc...
-        this.draw();
+        // TODO: this.draw();
     }
 }
+
+defineCustomElement(XPageReports);
 
 export const REPORT_SURGICAL = 'surgical';
 export const REPORT_STATISTICAL = 'statistical';
@@ -373,19 +382,18 @@ const reports = {};
 reports[REPORT_ACTIVITY] = { // test data: 2014-05
     name: 'Activity (daily/monthly) Report',
     description: 'If you want to know your activity, choose this report.<br>'
-        + 'Options: the day, and optionnaly the examiner, the center and type of activity (workshop / consult / surgical / ...).<br>',
+        + 'Options: the day, and optionnaly the examiner, the center and type of activity (workshop / consult / surgical / ...).',
     params: ['period', 'center', 'examiner', 'activity'],
-    generator: (tableBuilder, data) => {
+    generator: (xtable) => {
         // TODO: this is exactly the same as the SURGICAL REPORT but with a first line different (no "2")
-        const params = data.params;
-        tableBuilder
+        xtable
             .addHeaders(6)
             .addFooters(2)
-            .addColumn((data, i) => createElementWithTag('a', { href: '#' + getRouteToFolderPatient(data.pid) }, `#${i + 1}`),
+            .addColumn((data, i) => createElementWithTag('a', { href: '#' + getRouteToFolderFileByParams(data.pid, 'Bill', data.bid) }, `#${i + 1}`),
                 [
                     'N',
                     '',
-                    'Daily report of ' + params.when,
+                    (_col, _n, data) => 'Daily report of ' + data.params.when,
                     'SARPV, CHAKARIA DISABILITY CENTER, CHAKARIA, COX\'S BAZAR',
                     'Name of the project: Rikces in cox\' Bazar',
                     'SARPV - AMD - KDM'
@@ -397,11 +405,11 @@ reports[REPORT_ACTIVITY] = { // test data: 2014-05
             .addColumn((data) => createElementWithObject(XCodage, { value: data.Center }), ['Place'])
             .addColumn('patient_reference', ['Record n#'])
             .addColumn('patient_name', ['Patient Name', 'Identity', 'Where', 'When', 'Who'])
-            .addColumn(data => createElementWithObject(XAge, { value: data.yearofbirth, ref: data.Date }), ['Age', null, params.center, params.when, params.examiner])
+            .addColumn(data => createElementWithObject(XAge, { value: data.yearofbirth, ref: data.Date }), ['Age', null, (_col, _n, data) => data.params.center, (_col, _n, data) => data.params.when, (_col, _n, data) => data.params.examiner])
             .addColumn('Sex', ['M/F'])
-            .addColumn(data => (data.oldPatient == 1)
+            .addColumn((val, _i, ctx) => (val.oldPatient == 1)
                 ? 'Old'
-                : (data.patient_reference.substr(0, 4) < ('' + params.when).substr(0, 4)
+                : (val.patient_reference.substr(0, 4) < ('' + ctx.params.when).substr(0, 4)
                     ? 'Old(EN)'
                     : 'New'
                 ), ['Old/New']
@@ -421,15 +429,15 @@ reports[REPORT_ACTIVITY] = { // test data: 2014-05
             .addColumn(data => (data.complementary
                 ? createElementWithObject(XCodage, { value: 'Money collected on bills from previous months', translated: 'Complementary payments' })
                 : (data.price_consult ?? 0)
-            ), ['Consult', 'Price', '', '', ''], ['total', data.totals.price_consult])
+            ), ['Consult', 'Price', '', '', ''], ['total', (_col, _i, data) => data.totals.price_consult])
 
-            .addColumn(data => data.complementary ? null : (data.price_medecine ?? 0), ['Medicine'], ['', data.totals.price_medecine])
-            .addColumn(data => data.complementary ? null : (data.price_surgical ?? 0), ['Surgical'], ['', data.totals.price_surgical])
-            .addColumn(data => data.complementary ? null : (data.price_workshop ?? 0), ['Workshop'], ['', data.totals.price_workshop])
-            .addColumn(data => data.complementary ? null : (data.price_other ?? 0), ['Others'], ['', data.totals.price_other])
-            .addColumn(data => data.complementary ? null : (data.total_real ?? 0), ['Full'], ['', data.totals.total_real])
-            .addColumn(data => data.complementary ? null : (data.total_asked ?? 0), ['Asked'], ['', data.totals.total_asked])
-            .addColumn('total_paid', ['Paid'], ['', data.totals.total_paid]);
+            .addColumn(data => data.complementary ? null : (data.price_medecine ?? 0), ['Medicine'], [null, (_col, _i, data) => data.totals.price_medecine])
+            .addColumn(data => data.complementary ? null : (data.price_surgical ?? 0), ['Surgical'], [null, (_col, _i, data) => data.totals.price_surgical])
+            .addColumn(data => data.complementary ? null : (data.price_workshop ?? 0), ['Workshop'], [null, (_col, _i, data) => data.totals.price_workshop])
+            .addColumn(data => data.complementary ? null : (data.price_other ?? 0), ['Others'], [null, (_col, _i, data) => data.totals.price_other])
+            .addColumn(data => data.complementary ? null : (data.total_real ?? 0), ['Full'], [null, (_col, _i, data) => data.totals.total_real])
+            .addColumn(data => data.complementary ? null : (data.total_asked ?? 0), ['Asked'], [null, (_col, _i, data) => data.totals.total_asked])
+            .addColumn('total_paid', ['Paid'], [null, (_col, _i, data) => data.totals.total_paid]);
     }
 };
 
@@ -442,8 +450,8 @@ reports[REPORT_CONSULTATIONS] = { // test data: 2015-04-28
     fixedParams: {
         period: 'day'
     },
-    generator: (tableBuilder) => {
-        tableBuilder
+    generator: (xtable) => {
+        xtable
             .addHeaders(1)
             .addColumn('c_Center', ['Center'])
             .addColumn(data => createElementWithTag('a', { href: '#' + getRouteToFolderPatient(data.patient_id) }, `${data.entryyear}-${data.entryorder}`), ['Patient'])
@@ -455,31 +463,20 @@ reports[REPORT_CONSULTATIONS] = { // test data: 2015-04-28
     }
 };
 
-reports[REPORT_STATISTICAL] = { // test data:
-    name: 'Statistical Report',
-    description: 'If you want to know the activity of the SARPV CDC on a period, choose this report',
-    params: ['period', 'center', 'examiner'],
-    generator: (tableBuilder, data) => {
-        // Break everything
-        tableBuilder._element.querySelector('tbody').innerHTML = statistical(data.list, data.params);
-    }
-};
-
 reports[REPORT_SURGICAL] = { // test data: 2014-01
     name: 'Surgical Report',
     description: 'Follow up of the surgical activity of the period',
     params: ['period'],
     // TODO: legend
-    generator: (tableBuilder, data) => {
-        const params = data.params;
-        tableBuilder
+    generator: (xtable) => {
+        xtable
             .addHeaders(6)
             .addFooters(2)
             .addColumn((data, i) => createElementWithTag('a', { href: '#' + getRouteToFolderPatient(data.pid) }, `#${i + 1}`),
                 [
                     'N',
                     '',
-                    'Daily report of ' + params.when,
+                    (_col, _n, ctx) => 'Daily report of ' + ctx.params.when,
                     'SARPV, CHAKARIA DISABILITY CENTER, CHAKARIA, COX\'S BAZAR',
                     'Name of the project: Rikces in cox\' Bazar',
                     'SARPV - AMD - KDM 2'
@@ -491,11 +488,11 @@ reports[REPORT_SURGICAL] = { // test data: 2014-01
             .addColumn('Center', ['Place'])
             .addColumn('patient_reference', ['Record n#'])
             .addColumn('patient_name', ['Patient Name', 'Identity', 'Where', 'When', 'Who'])
-            .addColumn(data => createElementWithObject(XAge, { value: data.yearofbirth }), ['Age', null, params.center, params.when, params.examiner])
+            .addColumn(data => createElementWithObject(XAge, { value: data.yearofbirth }), ['Age', null, (_col, _n, data) => data.params.center, (_col, _n, ctx) => ctx.params.when, (_col, _n, ctx) => ctx.params.examiner])
             .addColumn('Sex', ['M/F'])
-            .addColumn(data => (data.oldPatient == 1)
+            .addColumn((data, _i, ctx) => (data.oldPatient == 1)
                 ? 'Old'
-                : (data.patient_reference.substr(0, 4) < ('' + params.when).substr(0, 4)
+                : (data.patient_reference.substr(0, 4) < ('' + ctx.params.when).substr(0, 4)
                     ? 'Old(EN)'
                     : 'New'
                 ), ['Old/New']
@@ -512,128 +509,257 @@ reports[REPORT_SURGICAL] = { // test data: 2014-01
             .addColumn('last_treat_result', ['Result', null, '3001-...', 4])
             .addColumn('last_treat_finished', ['Done ?', null])
 
-            .addColumn('price_consult', ['Consult', 'Price', '', '', ''], ['total', data.totals.price_consult])
-            .addColumn('price_medecine', ['Medicine'], [data.totals.price_medecine])
-            .addColumn('price_surgical', ['Surgical'], [data.totals.price_surgical])
-            .addColumn('price_workshop', ['Workshop'], [data.totals.price_workshop])
-            .addColumn('price_other', ['Others'], [data.totals.price_other])
-            .addColumn('total_real', ['Full'], [data.totals.total_real])
-            .addColumn('total_asked', ['Asked'], [data.totals.total_asked])
-            .addColumn('total_paid', ['Paid'], [data.totals.total_paid]);
+            .addColumn('price_consult', ['Consult', 'Price', '', '', ''], ['total', (_col, _i, ctx) => ctx.totals.price_consult])
+            .addColumn('price_medecine', ['Medicine'], [null, (_col, _i, ctx) => ctx.totals.price_medecine])
+            .addColumn('price_surgical', ['Surgical'], [null, (_col, _i, ctx) => ctx.totals.price_surgical])
+            .addColumn('price_workshop', ['Workshop'], [null, (_col, _i, ctx) => ctx.totals.price_workshop])
+            .addColumn('price_other', ['Others'], [null, (_col, _i, ctx) => ctx.totals.price_other])
+            .addColumn('total_real', ['Full'], [null, (_col, _i, ctx) => ctx.totals.total_real])
+            .addColumn('total_asked', ['Asked'], [null, (_col, _i, ctx) => ctx.totals.total_asked])
+            .addColumn('total_paid', ['Paid'], [null, (_col, _i, ctx) => ctx.totals.total_paid]);
     }
 };
 
-defineCustomElement(XPageReports);
+reports[REPORT_STATISTICAL] = { // test data:
+
+    // TODO: this report is only an incredible hack !!!
+    // Idea: https://stackoverflow.com/a/44092580/1954789
+
+    name: 'Statistical Report',
+    description: 'If you want to know the activity of the SARPV CDC on a period, choose this report',
+    params: ['period', 'center', 'examiner'],
+    generator: (xtable) => {
+        const r = (nbr, n) => Math.round(nbr * Math.pow(10, n)) / Math.pow(10, n);
+        const listings = getSession().lists;
+
+        xtable.setData = function (data, context) {
+            const params = context.params;
+
+            xtable._overlay.free();
+            xtable.removeAttribute('empty');
+            xtable.setAttribute('count', '' + data?.length);
 
 
-/**
- * @param {*} data for the report
- * @param {*} params for the report
- *
- * @returns {string} as the table content
- */
-function statistical(data, params) {
-    const r = (nbr, n) => Math.round(nbr * Math.pow(10, n)) / Math.pow(10, n);
+            xtable._element.append(
+                createElementWithTag('tbody', {},
+                    createElementsFromHTML(`
+    <tr><td colspan="2" class="subheader">Requested</td></tr>
+    <tr><td>Period</td><td>${params.when}</td></tr>
 
-    // result.summary => data.summary
+    <tr><td colspan="2" class="subheader">Diagnostic</td></tr>
+    <tr><td>If patient have multiple pathologies, he will be counted more than once</td><td></td></tr>
+    <tr><td>Ricket consults</td><td>${data.summary.pathologies.rickets.total}</td></tr>
+    <tr><td>Ricket consults (new only)</td><td>${data.summary.pathologies.rickets.new}</td></tr>
+    <tr><td>Ricket consults (old only)</td><td>${data.summary.pathologies.rickets.old}</td></tr>
+    <tr><td>Club Foots</td><td>${data.summary.pathologies.clubfoots.total}</td></tr>
+    <tr><td>Club Foots (new only)</td><td>${data.summary.pathologies.clubfoots.new}</td></tr>
+    <tr><td>Club Foots (old only)</td><td>${data.summary.pathologies.clubfoots.old}</td></tr>
+    <tr><td>Polio</td><td>${data.summary.pathologies.polio.total}</td></tr>
+    <tr><td>Burn</td><td>${data.summary.pathologies.burn.total}</td></tr>
+    <tr><td>CP</td><td>${data.summary.pathologies.cp.total}</td></tr>
+    <tr><td>Fracture</td><td>${data.summary.pathologies.fracture.total}</td></tr>
+    <tr><td>Infection</td><td>${data.summary.pathologies.infection.total}</td></tr>
+    <tr><td>Congenital</td><td>${data.summary.pathologies.congenital.total}</td></tr>
+    <tr><td>Adult</td><td>${data.summary.pathologies.adult.total}</td></tr>
+    <tr><td>Normal</td><td>${data.summary.pathologies.normal.total}</td></tr>
+    <tr><td>Other</td><td>${data.summary.pathologies.other.total}</td></tr>
+    <tr><td>All consultations</td><td>${data.summary.pathologies.total}</td></tr>
 
-    const listings = getSession().lists;
+    <tr><td colspan="2" class="subheader">Patients seen</td></tr>
+    <tr><td>Number of patients seen</td><td>${data.summary.nbPatients}</td></tr>
 
-    return `
-<tr><td colspan="2" class="subheader">Requested</td></tr>
-<tr><td>Period</td><td>${params.when}</td></tr>
+    <tr><td colspan="2" class="subheader">Social Level</td></tr>
+    <tr><td>Family income (mean)</td><td>${r(data.summary.sociallevel.familyincome, 1)}</td ></tr>
+    <tr><td>Nb household mb (mean)</td><td>${r(data.summary.sociallevel.nbhousehold, 1)}</td ></tr >
+    <tr><td>ratio (mean)</td><td>${r(data.summary.sociallevel.familyincome / data.summary.sociallevel.nbhousehold, 2)}</td ></tr >
+    ${listings.SocialLevel.map(v => `<tr><td>Social Level ${v}</td><td>${data.summary.sociallevel[v]}</td></tr>`).join('\n')}
+    <tr><td>All social level together</td><td>${data.summary.sociallevel.total}</td></tr>
 
-<tr><td colspan="2" class="subheader">Diagnostic</td></tr>
-<tr><td>If patient have multiple pathologies, he will be counted more than once</td><td></td></tr>
-<tr><td>Ricket consults</td><td>${data.summary.pathologies.rickets.total}</td></tr>
-<tr><td>Ricket consults (new only)</td><td>${data.summary.pathologies.rickets.new}</td></tr>
-<tr><td>Ricket consults (old only)</td><td>${data.summary.pathologies.rickets.old}</td></tr>
-<tr><td>Club Foots</td><td>${data.summary.pathologies.clubfoots.total}</td></tr>
-<tr><td>Club Foots (new only)</td><td>${data.summary.pathologies.clubfoots.new}</td></tr>
-<tr><td>Club Foots (old only)</td><td>${data.summary.pathologies.clubfoots.old}</td></tr>
-<tr><td>Polio</td><td>${data.summary.pathologies.polio.total}</td></tr>
-<tr><td>Burn</td><td>${data.summary.pathologies.burn.total}</td></tr>
-<tr><td>CP</td><td>${data.summary.pathologies.cp.total}</td></tr>
-<tr><td>Fracture</td><td>${data.summary.pathologies.fracture.total}</td></tr>
-<tr><td>Infection</td><td>${data.summary.pathologies.infection.total}</td></tr>
-<tr><td>Congenital</td><td>${data.summary.pathologies.congenital.total}</td></tr>
-<tr><td>Adult</td><td>${data.summary.pathologies.adult.total}</td></tr>
-<tr><td>Normal</td><td>${data.summary.pathologies.normal.total}</td></tr>
-<tr><td>Other</td><td>${data.summary.pathologies.other.total}</td></tr>
-<tr><td>All consultations</td><td>${data.summary.pathologies.total}</td></tr>
+    <tr><td colspan="2" class="subheader">Where</td></tr>
+    ${listings.Centers.map(v => `<tr><td>@<x-i18n value='${v}'></x-i18n></td><td>${data.summary.centers[v] ?? 0}</td></tr>`).join('\n')}
+    <tr><td>center unspecified</td><td>${data.summary.centers.unspecified}</td></tr>
 
-<tr><td colspan="2" class="subheader">Patients seen</td></tr>
-<tr><td>Number of patients seen</td><td>${data.summary.nbPatients}</td></tr>
+    <tr><td colspan="2" class="subheader">Surgical activity</td></tr>
+    ${Object.keys(data.summary.count.surgical).map(v => `<tr><td>${toSentenceCase(v)}</td><td>${data.summary.count.surgical[v]}</td></tr>`).join('\n')}
 
-<tr><td colspan="2" class="subheader">Social Level</td></tr>
-<tr><td>Family income (mean)</td><td>${r(data.summary.sociallevel.familyincome, 1)}</td ></tr>
-<tr><td>Nb household mb (mean)</td><td>${r(data.summary.sociallevel.nbhousehold, 1)}</td ></tr >
-<tr><td>ratio (mean)</td><td>${r(data.summary.sociallevel.familyincome / data.summary.sociallevel.nbhousehold, 2)}</td ></tr >
-${listings.SocialLevel.map(v => `<tr><td>Social Level ${v}</td><td>${data.summary.sociallevel[v]}</td></tr>`).join('\n')}
-<tr><td>All social level together</td><td>${data.summary.sociallevel.total}</td></tr>
+    <tr><td colspan="2" class="subheader">Medical Activity</td></tr>
+    ${Object.keys(data.summary.count.medecine).map(v => `<tr><td>${toSentenceCase(v)}</td><td>${data.summary.count.medecine[v]}</td></tr>`).join('\n')}
 
-<tr><td colspan="2" class="subheader">Where</td></tr>
-${listings.Centers.map(v => `<tr><td>@<x-i18n value='${v}'></x-i18n></td><td>${data.summary.centers[v] ?? 0}</td></tr>`).join('\n')}
-<tr><td>center unspecified</td><td>${data.summary.centers.unspecified}</td></tr>
+    <tr><td colspan="2" class="subheader">Workshop Activity</td></tr>
+    ${Object.keys(data.summary.count.workshop).map(v => `<tr><td>${toSentenceCase(v)}</td><td>${data.summary.count.workshop[v]}</td></tr>`).join('\n')}
 
-<tr><td colspan="2" class="subheader">Surgical activity</td></tr>
-${Object.keys(data.summary.count.surgical).map(v => `<tr><td>${toSentenceCase(v)}</td><td>${data.summary.count.surgical[v]}</td></tr>`).join('\n')}
+    <tr><td colspan="2" class="subheader">Consult Activity</td></tr>
+    ${Object.keys(data.summary.count.consult).map(v => `<tr><td>${toSentenceCase(v)}</td><td>${data.summary.count.consult[v]}</td></tr>`).join('\n')}
 
-<tr><td colspan="2" class="subheader">Medical Activity</td></tr>
-${Object.keys(data.summary.count.medecine).map(v => `<tr><td>${toSentenceCase(v)}</td><td>${data.summary.count.medecine[v]}</td></tr>`).join('\n')}
+    <tr><td colspan="2" class="subheader">Other activity</td></tr>
+    ${Object.keys(data.summary.count.other).map(v => `<tr><td>${toSentenceCase(v)}</td><td>${data.summary.count.other[v]}</td></tr>`).join('\n')}
 
-<tr><td colspan="2" class="subheader">Workshop Activity</td></tr>
-${Object.keys(data.summary.count.workshop).map(v => `<tr><td>${toSentenceCase(v)}</td><td>${data.summary.count.workshop[v]}</td></tr>`).join('\n')}
+    <tr><td colspan="2" class="subheader">Financials</td></tr>
 
-<tr><td colspan="2" class="subheader">Consult Activity</td></tr>
-${Object.keys(data.summary.count.consult).map(v => `<tr><td>${toSentenceCase(v)}</td><td>${data.summary.count.consult[v]}</td></tr>`).join('\n')}
+    <tr><td colspan="2" class="subheader">Surgery</td></tr>
+    <tr><td>total_real</td><td>${data.summary.financials.surgery.real}</td></tr>
+    <tr><td>total_asked</td><td>${data.summary.financials.surgery.asked}</td></tr>
+    <tr><td>total_paid</td><td>${data.summary.financials.surgery.paid}</td></tr>
+    <tr><td>total paid / total real</td><td>${r(data.summary.financials.surgery.paid / data.summary.financials.surgery.real, 2)}</td ></tr >
 
-<tr><td colspan="2" class="subheader">Other activity</td></tr>
-${Object.keys(data.summary.count.other).map(v => `<tr><td>${toSentenceCase(v)}</td><td>${data.summary.count.other[v]}</td></tr>`).join('\n')}
+    <tr><td colspan="2" class="subheader"></td></tr>
+    <tr><td colspan="2" class="subheader">Medical (exl. above)</td></tr>
+    <tr><td>total real</td><td>${data.summary.financials.medical.real}</td></tr>
+    <tr><td>total asked</td><td>${data.summary.financials.medical.asked}</td></tr>
+    <tr><td>total paid</td><td>${data.summary.financials.medical.paid}</td></tr>
+    <tr><td>total paid / total real</td><td>${r(data.summary.financials.medical.paid / data.summary.financials.medical.real, 2)}</td ></tr >
 
-<tr><td colspan="2" class="subheader">Financials</td></tr>
+    <tr><td colspan="2" class="subheader"></td></tr>
+    <tr><td colspan="2" class="subheader">Workshop (exl. above)</td></tr>
+    <tr><td>total real</td><td>${data.summary.financials.workshop.real}</td></tr>
+    <tr><td>total asked</td><td>${data.summary.financials.workshop.asked}</td></tr>
+    <tr><td>total paid</td><td>${data.summary.financials.workshop.paid}</td></tr>
+    <tr><td>total paid / total real</td><td>${r(data.summary.financials.workshop.paid / data.summary.financials.workshop.real, 2)}</td ></tr >
 
-<tr><td colspan="2" class="subheader">Surgery</td></tr>
-<tr><td>total_real</td><td>${data.summary.financials.surgery.real}</td></tr>
-<tr><td>total_asked</td><td>${data.summary.financials.surgery.asked}</td></tr>
-<tr><td>total_paid</td><td>${data.summary.financials.surgery.paid}</td></tr>
-<tr><td>total paid / total real</td><td>${r(data.summary.financials.surgery.paid / data.summary.financials.surgery.real, 2)}</td ></tr >
+    <tr><td colspan="2" class="subheader"></td></tr>
+    <tr><td colspan="2" class="subheader">Consults (exl. above)</td></tr>
+    <tr><td>total real</td><td>${data.summary.financials.consult.real}</td></tr>
+    <tr><td>total asked</td><td>${data.summary.financials.consult.asked}</td></tr>
+    <tr><td>total paid</td><td>${data.summary.financials.consult.paid}</td></tr>
+    <tr><td>total paid / total real</td><td>${r(data.summary.financials.consult.paid / data.summary.financials.consult.real, 2)}</td ></tr >
 
-<tr><td colspan="2" class="subheader"></td></tr>
-<tr><td colspan="2" class="subheader">Medical (exl. above)</td></tr>
-<tr><td>total real</td><td>${data.summary.financials.medical.real}</td></tr>
-<tr><td>total asked</td><td>${data.summary.financials.medical.asked}</td></tr>
-<tr><td>total paid</td><td>${data.summary.financials.medical.paid}</td></tr>
-<tr><td>total paid / total real</td><td>${r(data.summary.financials.medical.paid / data.summary.financials.medical.real, 2)}</td ></tr >
+    <tr><td colspan="2" class="subheader"></td></tr>
+    <tr><td colspan="2" class="subheader">Others (exl. above)</td></tr>
+    <tr><td>total real</td><td>${data.summary.financials.other.real}</td></tr>
+    <tr><td>total asked</td><td>${data.summary.financials.other.asked}</td></tr>
+    <tr><td>total paid</td><td>${data.summary.financials.other.paid}</td></tr>
+    <tr><td>total paid / total real</td><td>${r(data.summary.financials.other.paid / data.summary.financials.other.real, 2)}</td ></tr >
 
-<tr><td colspan="2" class="subheader"></td></tr>
-<tr><td colspan="2" class="subheader">Workshop (exl. above)</td></tr>
-<tr><td>total real</td><td>${data.summary.financials.workshop.real}</td></tr>
-<tr><td>total asked</td><td>${data.summary.financials.workshop.asked}</td></tr>
-<tr><td>total paid</td><td>${data.summary.financials.workshop.paid}</td></tr>
-<tr><td>total paid / total real</td><td>${r(data.summary.financials.workshop.paid / data.summary.financials.workshop.real, 2)}</td ></tr >
+    <tr><td colspan="2" class="subheader"></td></tr>
+    <tr><td colspan="2" class="subheader">Grand Total</td></tr>
+    <tr><td>total real</td><td>${data.summary.financials.total.real}</td></tr>
+    <tr><td>total asked</td><td>${data.summary.financials.total.asked}</td></tr>
+    <tr><td>total paid</td><td>${data.summary.financials.total.paid}</td></tr>
+    <tr><td>total paid / total real</td><td>${r(data.summary.financials.total.paid / data.summary.financials.total.real, 2)}</td ></tr >
 
-<tr><td colspan="2" class="subheader"></td></tr>
-<tr><td colspan="2" class="subheader">Consults (exl. above)</td></tr>
-<tr><td>total real</td><td>${data.summary.financials.consult.real}</td></tr>
-<tr><td>total asked</td><td>${data.summary.financials.consult.asked}</td></tr>
-<tr><td>total paid</td><td>${data.summary.financials.consult.paid}</td></tr>
-<tr><td>total paid / total real</td><td>${r(data.summary.financials.consult.paid / data.summary.financials.consult.real, 2)}</td ></tr >
+    <tr><td colspan="2" class="subheader"></td></tr>
+    `)
 
-<tr><td colspan="2" class="subheader"></td></tr>
-<tr><td colspan="2" class="subheader">Others (exl. above)</td></tr>
-<tr><td>total real</td><td>${data.summary.financials.other.real}</td></tr>
-<tr><td>total asked</td><td>${data.summary.financials.other.asked}</td></tr>
-<tr><td>total paid</td><td>${data.summary.financials.other.paid}</td></tr>
-<tr><td>total paid / total real</td><td>${r(data.summary.financials.other.paid / data.summary.financials.other.real, 2)}</td ></tr >
+                )
+            );
+        };
 
-<tr><td colspan="2" class="subheader"></td></tr>
-<tr><td colspan="2" class="subheader">Grand Total</td></tr>
-<tr><td>total real</td><td>${data.summary.financials.total.real}</td></tr>
-<tr><td>total asked</td><td>${data.summary.financials.total.asked}</td></tr>
-<tr><td>total paid</td><td>${data.summary.financials.total.paid}</td></tr>
-<tr><td>total paid / total real</td><td>${r(data.summary.financials.total.paid / data.summary.financials.total.real, 2)}</td ></tr >
+        // generator: (xtable) =>
+        //     xtable
+        //         .addRowFormatting((el, val) => { if (val.title) { el.classList.add('subheader'); } })
+        //         .addColumn('label')
+        //         .addColumn((row, _i, ctx) => (typeof (row.value) == 'function')
+        //             ? row.value(row, ctx)
+        //             : row['value'])
+        // ,
 
-<tr><td colspan="2" class="subheader"></td></tr>
-`;
-}
+        // dataTransform: (dataList) => {
+        //     // dataList = { summary: {...}}
+
+        //     const t = (label) => ({ title: true, label: label, value: null });
+        //     const l = (label, value) => ({ title: false, label, value });
+
+        //     const r = (nbr, n) => Math.round(nbr * Math.pow(10, n)) / Math.pow(10, n);
+        //     const listings = getSession().lists;
+
+        //     // TODO: should receive a list, and so remplacing here ctx.summary by data[period]
+        //     return [
+
+        //         t('Requested'),
+        //         l('Period', (row, ctx) => ctx.params.when),
+
+        //         t('Diagnostic'),
+        //         l('If patient have multiple pathologies, he will be counted more than once', ''),
+        //         l('Ricket consults', (_row) => dataList.summary.pathologies.rickets.total),
+        //         l('Ricket consults (new only)', (_row) => dataList.summary.pathologies.rickets.new),
+        //         l('Ricket consults (old only)', (_row) => dataList.summary.pathologies.rickets.old),
+        //         l('Club Foots', (_row) => dataList.summary.pathologies.clubfoots.total),
+        //         l('Club Foots (new only)', (_row) => dataList.summary.pathologies.clubfoots.new),
+        //         l('Club Foots (old only)', (_row) => dataList.summary.pathologies.clubfoots.old),
+        //         l('Polio', (_row) => dataList.summary.pathologies.polio.total),
+        //         l('Burn', (_row) => dataList.summary.pathologies.burn.total),
+        //         l('CP', (_row) => dataList.summary.pathologies.cp.total),
+        //         l('Fracture', (_row) => dataList.summary.pathologies.fracture.total),
+        //         l('Infection', (_row) => dataList.summary.pathologies.infection.total),
+        //         l('Congenital', (_row) => dataList.summary.pathologies.congenital.total),
+        //         l('Adult', (_row) => dataList.summary.pathologies.adult.total),
+        //         l('Normal', (_row) => dataList.summary.pathologies.normal.total),
+        //         l('Other', (_row) => dataList.summary.pathologies.other.total),
+        //         l('All consultations', (_row) => dataList.summary.pathologies.total),
+
+        //         t('Patients seen'),
+        //         l('Number of patients seen', (_row) => dataList.summary.nbPatients),
+
+        //         t('Social Level'),
+        //         l('Family income (mean)', (_row) => r(dataList.summary.sociallevel.familyincome, 1)),
+        //         l('Nb household mb (mean)', (_row) => r(dataList.summary.sociallevel.nbhousehold, 1)),
+        //         l('ratio (mean)', (_row) => r(dataList.summary.sociallevel.familyincome / dataList.summary.sociallevel.nbhousehold, 2)),
+        //         ...listings.SocialLevel.map(v => l(`Social Level ${v}`, (_row) => dataList.summary.sociallevel[v])),
+        //         l('All social level together', (_row) => dataList.summary.sociallevel.total),
+
+        //         t('Where'),
+        //         // ...listings.Centers.map(v => `<tr><td>@<x-i18n value='${v}'></x-i18n>', (row, ctx) =>   ctx.summary.centers[v] ?? 0),
+        //         l('center unspecified', (_row) => dataList.summary.centers.unspecified),
+
+        //         t('Surgical activity'),
+        //         ...Object.keys(dataList.summary.count.surgical).map(v => l(toSentenceCase(v), (_row) => dataList.summary.count.surgical[v])),
+
+        //         t('Medical Activity'),
+        //         ...Object.keys(dataList.summary.count.medecine).map(v => l(toSentenceCase(v), (_row) => dataList.summary.count.medecine[v])),
+
+        //         t('Workshop Activity'),
+        //         ...Object.keys(dataList.summary.count.workshop).map(v => l(toSentenceCase(v), (_row) => dataList.summary.count.workshop[v])),
+
+        //         t('Consult Activity'),
+        //         ...Object.keys(dataList.summary.count.consult).map(v => l(toSentenceCase(v), (_row) => dataList.summary.count.consult[v])),
+
+        //         t('Other Activity'),
+        //         ...Object.keys(dataList.summary.count.other).map(v => l(toSentenceCase(v), (_row) => dataList.summary.count.other[v])),
+
+        //         t('Financials'),
+
+        //         t('Surgery'),
+        //         l('total_real', (_row) => dataList.summary.financials.surgery.real),
+        //         l('total_asked', (_row) => dataList.summary.financials.surgery.asked),
+        //         l('total_paid', (_row) => dataList.summary.financials.surgery.paid),
+        //         l('total paid / total real', (_row) => r(dataList.summary.financials.surgery.paid / dataList.summary.financials.surgery.real, 2)),
+
+        //         t(''),
+        //         t('Medical (exl. above)'),
+        //         l('total real', (_row) => dataList.summary.financials.medical.real),
+        //         l('total asked', (_row) => dataList.summary.financials.medical.asked),
+        //         l('total paid', (_row) => dataList.summary.financials.medical.paid),
+        //         l('total paid / total real', (_row) => r(dataList.summary.financials.medical.paid / dataList.summary.financials.medical.real, 2)),
+
+        //         t(''),
+        //         t('Workshop (exl. above)'),
+        //         l('total real', (_row) => dataList.summary.financials.workshop.real),
+        //         l('total asked', (_row) => dataList.summary.financials.workshop.asked),
+        //         l('total paid', (_row) => dataList.summary.financials.workshop.paid),
+        //         l('total paid / total real', (_row) => r(dataList.summary.financials.workshop.paid / dataList.summary.financials.workshop.real, 2)),
+
+        //         t(''),
+        //         t('Consults (exl. above)'),
+        //         l('total real', (_row) => dataList.summary.financials.consult.real),
+        //         l('total asked', (_row) => dataList.summary.financials.consult.asked),
+        //         l('total paid', (_row) => dataList.summary.financials.consult.paid),
+        //         l('total paid / total real', (_row) => r(dataList.summary.financials.consult.paid / dataList.summary.financials.consult.real, 2)),
+
+        //         t(''),
+        //         t('Others (exl. above)'),
+        //         l('total real', (_row) => dataList.summary.financials.other.real),
+        //         l('total asked', (_row) => dataList.summary.financials.other.asked),
+        //         l('total paid', (_row) => dataList.summary.financials.other.paid),
+        //         l('total paid / total real', (_row) => r(dataList.summary.financials.other.paid / dataList.summary.financials.other.real, 2)),
+
+        //         t(''),
+        //         t('Grand Total'),
+        //         l('total real', (_row) => dataList.summary.financials.total.real),
+        //         l('total asked', (_row) => dataList.summary.financials.total.asked),
+        //         l('total paid', (_row) => dataList.summary.financials.total.paid),
+        //         l('total paid / total real', (_row) => r(dataList.summary.financials.total.paid / dataList.summary.financials.total.real, 2)),
+
+        //         t(''),
+        //     ];
+    }
+};
