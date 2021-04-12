@@ -31,6 +31,11 @@ pipeline {
         sh 'nc -v -w 1 localhost ${CRYPTOMEDIC_PORT} || true'
       }
     }
+    stage('clean') {
+      steps {
+        sh 'make ${STAGE_NAME}'
+      }
+    }
     stage('dump') {
       steps {
         sh 'make ${STAGE_NAME}'
