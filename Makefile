@@ -193,6 +193,7 @@ test-e2e-nightwatch: tmp/e2e/.tested-nightwatch
 tmp/e2e/.tested-nightwatch: www/build/index.html $(call recursive-dependencies,tests/e2e,$(TMP)/e2e/.tested-nightwatch) $(STYLES_RUN_SCREENSHOTS)
 # TODO -> from dev
 	cr-data-reset
+	find "$(STYLES_RUN_SCREENSHOTS)" -type f -not -name '*.spec.*' -delete
 	npm run --silent test-e2e
 	@echo "Nightwatch screenshots"
 	rsync -r \
@@ -204,6 +205,7 @@ test-e2e-cypress: tmp/e2e/.tested-cypress
 tmp/e2e/.tested-cypress: www/build/index.html $(call recursive-dependencies,tests/e2e,$(TMP)/e2e/.tested-cypress) $(STYLES_RUN_SCREENSHOTS)
 # TODO -> from dev
 	cr-data-reset
+	find "$(STYLES_RUN_SCREENSHOTS)" -type f -name '*.spec.*' -delete
 	CYPRESS_BASE_URL="http://localhost:$(CRYPTOMEDIC_PORT)" npm run --silent "cypress:run"
 	@echo "Cypress screenshots"
 	find tests/cypress/screenshots/ -type f | while read -r F ; do \
