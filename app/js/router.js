@@ -64,7 +64,17 @@ export function getRouteToFolderPatient(folderId, edit = false) {
  * @returns {string} the route
  */
 export function getRouteToFolderFile(folderPage) {
-    return '/folder/' + folderPage.patient_id + '/file/' + folderPage.getModel() + '/' + folderPage.id;
+    return getRouteToFolderFileByParams(folderPage.patient_id, folderPage.getModel(), folderPage.id);
+}
+
+/**
+ * @param {number} folderId of the patient
+ * @param {string} fileName of the file (Bill ?)
+ * @param {number} fileId of the file
+ * @returns {string} the route
+ */
+export function getRouteToFolderFileByParams(folderId, fileName, fileId) {
+    return '/folder/' + folderId + '/file/' + fileName + '/' + fileId;
 }
 
 /**

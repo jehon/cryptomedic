@@ -1,13 +1,17 @@
 
-// TODO: use x-table this in x-page-reports
-
 import { defineCustomElement, createElementWithObject, createElementWithTag, enrichObject } from '../../js/custom-element.js';
 import XOverlay from '../render/x-overlay.js';
 import XPanel from '../render/x-panel.js';
 
+//
+// TODO: switch to Grid
+// Idea to reverse it (statistical report): https://stackoverflow.com/a/44092580/1954789
+// Style by region name: https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
+//
+
 /**
- * @typedef {string|function(object, number):(string|HTMLElement)} BodyColumnDescription
- * @typedef {null|string|function([string]):(string|HTMLElement)} HeadFootColumnDescription
+ * @typedef {string|function(object, number, object):(string|HTMLElement)} BodyColumnDescription - function is (val, index, fullData)
+ * @typedef {null|string|function([string], number, Object):(string|HTMLElement)} HeadFootColumnDescription - funciton is (col, index, fullData)
  */
 
 export default class XTable extends HTMLElement {
@@ -140,10 +144,10 @@ export default class XTable extends HTMLElement {
 
     /**
      * @param {Array<object>} data to be set in the table
-     *
+     * @param {object} context as third parameter for everything
      * @returns {XTable} for chaining
      */
-    setData(data) {
+    setData(data, context) {
         this._overlay.free();
         this.removeAttribute('empty');
         this.setAttribute('count', '' + data?.length);
@@ -168,8 +172,8 @@ export default class XTable extends HTMLElement {
         for (const col of this._columns) {
             let colData = data.map(row =>
                 col.body instanceof Function
-                    ? (i) => col.body(row, i)
-                    : (i) => (data[i][col.body] ?? '')
+                    ? (i) => col.body(row, i, context)
+                    : () => (row[col.body] ?? '')
             );
 
             this._addCellToEachLinesInRegion(_regions.body,
@@ -190,7 +194,7 @@ export default class XTable extends HTMLElement {
                         .map(row =>
                             (n) =>
                                 row instanceof Function
-                                    ? row(calcColData, n)
+                                    ? row(calcColData, n, context)
                                     : row
                         ),
                     'th'
@@ -208,7 +212,7 @@ export default class XTable extends HTMLElement {
                         .map(row =>
                             (n) =>
                                 row instanceof Function
-                                    ? row(calcColData, n)
+                                    ? row(calcColData, n, context)
                                     : row
                         ),
                     'th'
