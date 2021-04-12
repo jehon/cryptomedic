@@ -183,45 +183,48 @@ test-unit: dependencies-node \
 test-e2e:
 # TODO -> from dev
 	rm -fr $(TMP)/e2e
+	rm -fr $(STYLES_RUN_SCREENSHOTS)
+
 # TODO -> no call itself
 	$(call itself,test-e2e-nightwatch)
 	$(call itself,test-e2e-cypress)
 
 test-e2e-nightwatch: tmp/e2e/.tested-nightwatch
-tmp/e2e/.tested-nightwatch: www/build/index.html $(call recursive-dependencies,tests/e2e,$(TMP)/e2e/.tested-nightwatch)
+tmp/e2e/.tested-nightwatch: www/build/index.html $(call recursive-dependencies,tests/e2e,$(TMP)/e2e/.tested-nightwatch) $(STYLES_RUN_SCREENSHOTS)
 # TODO -> from dev
 	cr-data-reset
 	npm run --silent test-e2e
-	touch $@
-
-test-e2e-cypress: tmp/e2e/.tested-cypress
-tmp/e2e/.tested-cypress: www/build/index.html $(call recursive-dependencies,tests/e2e,$(TMP)/e2e/.tested-cypress)
-# TODO -> from dev
-	cr-data-reset
-	CYPRESS_BASE_URL="http://localhost:$(CRYPTOMEDIC_PORT)" npm run --silent "cypress:run"
-	touch $@
-
-.PHONY: test-styles
-test-styles: tmp/styles.json
-tmp/styles.json: tests/styles/* tests/styles/references/* tmp/e2e/.tested-cypress tmp/e2e/.tested-nightwatch
-# TODO -> from dev
-	@mkdir -p "$(TMP)/styles"
-	@rm -fr "$(TMP)/styles/run"
-	@mkdir -p "$(TMP)/styles/run"
-
 	@echo "Nightwatch screenshots"
 	rsync -r \
 		--include "*_reference.png" --include "*_reference_*.png" --exclude "*" \
 		"$(TMP)/e2e/browsers/firefox/" "$(TMP)/styles/run"
+	touch $@
 
+test-e2e-cypress: tmp/e2e/.tested-cypress
+tmp/e2e/.tested-cypress: www/build/index.html $(call recursive-dependencies,tests/e2e,$(TMP)/e2e/.tested-cypress) $(STYLES_RUN_SCREENSHOTS)
+# TODO -> from dev
+	cr-data-reset
+	CYPRESS_BASE_URL="http://localhost:$(CRYPTOMEDIC_PORT)" npm run --silent "cypress:run"
 	@echo "Cypress screenshots"
 	find tests/cypress/screenshots/ -type f | while read -r F ; do \
 		cp "$$F" "$(STYLES_RUN_SCREENSHOTS)/$$(basename $$F)"; \
 	done
+	touch $@
+
+.PHONY: test-styles
+test-styles: tmp/styles.json
+tmp/styles.json: tests/styles/* tests/styles/references/* tmp/e2e/.tested-cypress tmp/e2e/.tested-nightwatch $(STYLES_RUN_SCREENSHOTS)
+# TODO -> from dev
+# @mkdir -p "$(TMP)/styles"
+# @rm -fr "$(TMP)/styles/run"
+# @mkdir -p "$(TMP)/styles/run"
 
 	@echo "Compare"
 	npm run --silent test-styles
 	@echo "Report is at http://localhost:$(CRYPTOMEDIC_PORT)/xappx/tmp/style.html"
+
+$(STYLES_RUN_SCREENSHOTS):
+	mkdir -p "$@"
 
 .PHONY: update-references-style
 update-references-style:

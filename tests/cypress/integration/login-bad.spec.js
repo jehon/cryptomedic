@@ -1,3 +1,4 @@
+/// <reference types="Cypress" />
 
 context('Actions', () => {
     it('should show error on bad login', () => {

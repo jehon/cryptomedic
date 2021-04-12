@@ -1,3 +1,4 @@
+/// <reference types="Cypress" />
 
 context('Actions', () => {
     it('initialize to login', () => {
