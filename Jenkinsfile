@@ -134,6 +134,7 @@ make ${STAGE_NAME}
       sh 'make stop'
       junit 'tmp/js/junit/*.xml'
       junit 'tmp/phpv*/index*.xml'
+      archiveArtifacts artifacts: 'tmp/**/*,tests/cypress/video/**/*,tests/cypress/screenshots/**/*', allowEmptyArchive: true
       // deleteDir() /* clean up our workspace */
     }
   }
