@@ -3,7 +3,7 @@
 import { TableIterator } from '../helpers/helpers.js';
 
 context('Actions', () => {
-    it('should show activity report', () => {
+    it('should show report', () => {
         cy.crLogin('murshed');
         cy.get('#report_consultations_menu > x-buttons > x-button').click();
 
