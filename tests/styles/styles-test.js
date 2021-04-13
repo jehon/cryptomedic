@@ -39,7 +39,7 @@ Promise.allSettled(Array.from(fullList).map(f => {
         if (!tests.includes(f)) {
             result[f] = {
                 level: 'error',
-                type: 'unavailable'
+                type: 'no run file found'
             };
             console.error(`${p_ko} ${f}: ${result[f].type}`);
             success = false;
