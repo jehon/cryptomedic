@@ -1,3 +1,4 @@
+/// <reference types="Cypress" />
 
 //
 Cypress.Commands.add('crReady', () => {
