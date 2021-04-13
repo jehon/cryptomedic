@@ -1,5 +1,7 @@
 /// <reference types="Cypress" />
 
+import './form-fill-in.js';
+
 //
 Cypress.Commands.add('crReady', () => {
     cy.get('x-requestor[running]')
