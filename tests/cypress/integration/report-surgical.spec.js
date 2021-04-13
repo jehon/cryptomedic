@@ -1,6 +1,6 @@
 /// <reference types="Cypress" />
 
-import { TableIterator } from '../helpers/helpers.js';
+import TableIterator from '../helpers/table-iterator.js';
 
 context('Actions', () => {
     it('should show report', () => {
