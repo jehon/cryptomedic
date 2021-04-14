@@ -11,7 +11,7 @@ pipeline {
     //   See https://docs.docker.com/compose/reference/envvars/#compose_project_name
     COMPOSE_PROJECT_NAME = "jenkins_cryptomedic"
     VERBOSE = "targets"
-    MAKE = "make -d"
+    MAKEOPT = "-d"
   }
   options {
     ansiColor('xterm')
@@ -23,28 +23,28 @@ pipeline {
   stages {
     stage('setup-computer') {
       steps {
-        sh '${env.MAKE} ${STAGE_NAME}'
+        sh 'make ${MAKEOPT} ${STAGE_NAME}'
       }
     }
     stage('stop previous') {
       steps {
-        sh '${env.MAKE} stop'
+        sh 'make ${MAKEOPT} stop'
         sh 'nc -v -w 1 localhost ${CRYPTOMEDIC_PORT} || true'
       }
     }
     stage('clean') {
       steps {
-        sh '${env.MAKE} ${STAGE_NAME}'
+        sh 'make ${MAKEOPT} ${STAGE_NAME}'
       }
     }
     stage('dump') {
       steps {
-        sh '${env.MAKE} ${STAGE_NAME}'
+        sh 'make ${MAKEOPT} ${STAGE_NAME}'
       }
     }
     stage('start') {
       steps {
-        sh '${env.MAKE} ${STAGE_NAME}'
+        sh 'make ${MAKEOPT} ${STAGE_NAME}'
       }
     }
     stage('dependencies') {
@@ -52,53 +52,53 @@ pipeline {
         sh '''
 npm ci
 touch node_modules/.dependencies
-${env.MAKE} ${STAGE_NAME}
+make ${MAKEOPT} ${STAGE_NAME}
 '''
       }
     }
     stage('build') {
       steps {
-        sh '${env.MAKE} ${STAGE_NAME}'
+        sh 'make ${MAKEOPT} ${STAGE_NAME}'
       }
     }
     stage('test-api') {
       steps {
-        sh '${env.MAKE} ${STAGE_NAME}'
+        sh 'make ${MAKEOPT} ${STAGE_NAME}'
       }
     }
     stage('test-api-bare') {
       steps {
-        sh '${env.MAKE} ${STAGE_NAME}'
+        sh 'make ${MAKEOPT} ${STAGE_NAME}'
       }
     }
     stage('test-unit') {
       steps {
-        sh '${env.MAKE} ${STAGE_NAME}'
+        sh 'make ${MAKEOPT} ${STAGE_NAME}'
       }
     }
     // stage('test-e2e') {
     //   steps {
-    //     sh '${env.MAKE} test-e2e'
+    //     sh 'make ${MAKEOPT} test-e2e'
     //   }
     // }
     stage('test-e2e-nightwatch') {
       steps {
-        sh '${env.MAKE} ${STAGE_NAME}'
+        sh 'make ${MAKEOPT} ${STAGE_NAME}'
       }
     }
     stage('test-e2e-cypress') {
       steps {
-        sh '${env.MAKE} ${STAGE_NAME}'
+        sh 'make ${MAKEOPT} ${STAGE_NAME}'
       }
     }
     stage('test-styles') {
       steps {
-        sh '${env.MAKE} ${STAGE_NAME}'
+        sh 'make ${MAKEOPT} ${STAGE_NAME}'
       }
     }
     stage('lint') {
       steps {
-        sh '${env.MAKE} ${STAGE_NAME}'
+        sh 'make ${MAKEOPT} ${STAGE_NAME}'
       }
     }
 
@@ -107,7 +107,7 @@ ${env.MAKE} ${STAGE_NAME}
         anyOf { branch pattern: "ci/.*", comparator: "REGEXP" }
       }
       steps {
-        sh '${env.MAKE} ${STAGE_NAME}'
+        sh 'make ${MAKEOPT} ${STAGE_NAME}'
         archiveArtifacts 'tmp/e2e/browsers/firefox/*.png'
       }
     }
@@ -123,7 +123,7 @@ ${env.MAKE} ${STAGE_NAME}
           sh '''
             CRYPTOMEDIC_UPLOAD_USER=$CRYPTOMEDIC_UPLOAD_USR \
               CRYPTOMEDIC_UPLOAD_PASSWORD=$CRYPTOMEDIC_UPLOAD_PSW \
-              ${env.MAKE} ${STAGE_NAME}
+              make ${MAKEOPT} ${STAGE_NAME}
           '''
         }
       }
@@ -131,8 +131,8 @@ ${env.MAKE} ${STAGE_NAME}
   }
   post {
     always {
-      sh '${env.MAKE} chmod || true'
-      // sh '${env.MAKE} stop'
+      sh 'make ${MAKEOPT} chmod || true'
+      // sh 'make ${MAKEOPT} stop'
       junit 'tmp/js/junit/*.xml'
       junit 'tmp/phpv*/index*.xml'
       archiveArtifacts artifacts: 'tmp/**/*,tests/cypress/video/**/*,tests/cypress/screenshots/**/*', allowEmptyArchive: true
