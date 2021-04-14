@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+PORT=${1:-"5080"}
+
+DEV="$(docker ps --filter status=running --filter publish="$PORT" --format="{{.Names}}" )"
+
+if [ -z "$DEV" ]; then
+    echo "Nobody is publishing on $PORT"
+    exit 0;
+fi
+echo "Found dev server: $DEV"
+
+ROOT="${DEV/_*/}"
+echo "Found root: $ROOT"
+
+docker ps --filter name="${ROOT}_[a-z]+_1" --format="{{.Names}}" | while read -r CI; do
+#docker ps --filter name="${ROOT}_[a-z]+_1" --format="{{.ID}}" | while read -r CI; do
+    echo "Killing $CI..."
+    docker stop "$CI"
+    echo "Killing $CI done"
+done

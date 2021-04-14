@@ -132,6 +132,7 @@ start:
 .PHONY: stop
 stop: deploy-unmount
 	docker-compose down || true
+	cr-kill-others $(CRYPTOMEDIC_PORT)
 
 .PHONY: chmod
 chmod:
