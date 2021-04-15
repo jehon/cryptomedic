@@ -7,7 +7,7 @@ set -e
 # # Need to go back for .env to be present
 # cd "$ROOT"
 
-if ! docker-compose ps | grep "server" &>/dev/null ; then
+if ! docker-compose ps --filter "status=running" --services  | grep "server" &>/dev/null ; then
  	header "starting docker"
  	docker-compose up --build -d
     header_finished

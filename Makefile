@@ -132,6 +132,7 @@ start:
 .PHONY: stop
 stop: deploy-unmount
 	docker-compose down || true
+	cr-kill-others $(CRYPTOMEDIC_PORT)
 
 .PHONY: chmod
 chmod:
@@ -200,7 +201,7 @@ tmp/e2e/.tested-nightwatch: www/build/index.html $(call recursive-dependencies,t
 	rsync -r \
 		--include "*_reference.png" --include "*_reference_*.png" --exclude "*" \
 		"$(TMP)/e2e/browsers/firefox/" "$(TMP)/styles/run"
-	touch $@
+	touch "$@"
 
 test-e2e-cypress: tmp/e2e/.tested-cypress
 tmp/e2e/.tested-cypress: www/build/index.html $(call recursive-dependencies,tests/e2e,$(TMP)/e2e/.tested-cypress) $(STYLES_RUN_SCREENSHOTS)
@@ -213,7 +214,7 @@ tmp/e2e/.tested-cypress: www/build/index.html $(call recursive-dependencies,test
 	find tests/cypress/screenshots/ -type f | while read -r F ; do \
 		cp "$$F" "$(STYLES_RUN_SCREENSHOTS)/$$(basename $$F)"; \
 	done
-	touch $@
+	touch "$@"
 
 .PHONY: test-styles
 test-styles: tmp/styles.json
