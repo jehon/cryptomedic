@@ -4,31 +4,36 @@ set -e
 
 . cr-lib
 
+cr-ensure-started
+
 # Live folder
 header "data-reset: reset files..."
-cr-in-docker dev "rsync -a --delete live-for-test/ live/"
+docker-compose run --rm dev \
+    rsync -a --delete live-for-test/ live/
 cr-fix-permissions "live/"
 header_finished
 
 # Reset database
 header "data-reset: reset the database..."
-cr-in-docker mysql "while ! mysql -u root -p${DBROOTPASS} --database=mysql -e 'Show tables;' &>/dev/null; do sleep 1; done"
-cr-in-docker mysql \
-    "mysql -u root -p${DBROOTPASS} --database=mysql -e \" \
+docker-compose exec -T mysql \
+    bash -c "while ! mysql -u root -p${DBROOTPASS} --database=mysql -e 'Show tables;' &>/dev/null; do sleep 1; done"
+header "data-reset: build up the schema..."
+docker-compose exec -T mysql \
+    mysql -u root "-p${DBROOTPASS}" --database=mysql -e " \
             USE mysql; \
-            DROP SCHEMA IF EXISTS ${DBNAME}; \
+            DROP SCHEMA IF EXISTS ${DBNAME} ; \
             CREATE SCHEMA ${DBNAME}; \
             USE ${DBNAME}; \
             GRANT ALL PRIVILEGES ON ${DBNAME}   TO ${DBUSER}; \
             GRANT ALL PRIVILEGES ON ${DBNAME}.* TO ${DBUSER}; \
             SET PASSWORD FOR ${DBUSER} = PASSWORD('${DBPASS}'); \
-        \"
-    "
+        "
 # Mysql 5.7, 7.0:
 # 	ALTER USER 'root' IDENTIFIED WITH mysql_native_password BY 'password';
 # 	ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
-cr-in-docker mysql "mysql -u root -p${DBROOTPASS} --database='${DBNAME}'" \
-    < "conf/database/base.sql"
+header "data-reset: restore backup..."
+docker-compose exec -T mysql \
+    mysql -u root "-p${DBROOTPASS}" --database="${DBNAME}" < "conf/database/base.sql"
 header_finished
 
 ensure_folder_empty() {

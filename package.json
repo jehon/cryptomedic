@@ -35,10 +35,9 @@
     "babel-loader": "8.2.2",
     "babel-plugin-transform-commonjs": "1.1.6",
     "bluebird": "3.7.2",
+    "chalk": "4.1.0",
     "chromedriver": "89.0.0",
     "css-loader": "5.2.1",
-    "cypress": "6.8.0",
-    "cypress-image-diff-js": "1.9.0",
     "eslint": "7.24.0",
     "eslint-plugin-cypress": "2.11.2",
     "eslint-plugin-jasmine": "4.1.2",
@@ -88,9 +87,7 @@
     "test-e2e-chrome": "nightwatch -c tests/e2e/nightwatch.conf.js -e chrome",
     "test-styles": "tests/styles/styles-test.js",
     "eslint": "eslint .",
-    "stylelint": "stylelint app/**/*.css",
-    "cypress:open": "cypress open --project tests",
-    "cypress:run": "cypress run --project tests"
+    "stylelint": "stylelint app/**/*.css"
   },
   "lint-staged": {
     "*.{js,jsx}": "eslint",
