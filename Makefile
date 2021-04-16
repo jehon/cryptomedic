@@ -46,6 +46,19 @@ define itself
 	$(MAKE) $(FLAGS) $(MAKEOVERRIDES) "$1"
 endef
 
+#
+# 1: command
+# 2: additional arguments
+#
+# $(cypress) run --projects tests
+# Hardcoded command is "run" (see https://github.com/cypress-io/cypress-docker-images/tree/master/included)
+define cypress
+	docker-compose run --rm -e CYPRESS_BASE_URL="http://server:80" \
+		-e DISPLAY \
+		--entrypoint=cypress \
+		cypress
+endef
+
 # See https://coderwall.com/p/cezf6g/define-your-own-function-in-a-makefile
 # 1: folder where to look
 # 2: base file to have files newer than, to limit the length of the output
@@ -59,7 +72,7 @@ define recursive-dependencies
 	)
 endef
 
-dump:
+dump: dump-cypress
 	@echo "CRYPTOMEDIC_PORT: $(CRYPTOMEDIC_PORT)"
 	@echo "DISPLAY:          $(DISPLAY)"
 	@echo "IN_DOCKER:        $(IN_DOCKER)"
@@ -72,6 +85,9 @@ dump:
 
 dump-docker-compose:
 	docker-compose config
+
+dump-cypress:
+	$(cypress) info
 
 all: start
 
@@ -216,8 +232,7 @@ tmp/e2e/.tested-cypress: www/build/index.html $(call recursive-dependencies,test
 	cr-data-reset
 	rm -fr tests/cypress/screenshots
 	find "$(STYLES_RUN_SCREENSHOTS)" -type f -name '*.spec*' -delete
-	docker-compose run --rm -e CYPRESS_BASE_URL="http://server:80" cypress \
-		--project tests run
+	$(cypress) run --project tests
 	cr-fix-permissions tests/cypress
 	@echo "Cypress screenshots"
 	find tests/cypress/screenshots/ -type f | while read -r F ; do \
@@ -226,8 +241,8 @@ tmp/e2e/.tested-cypress: www/build/index.html $(call recursive-dependencies,test
 	touch "$@"
 
 cypress-open:
-	docker-compose run --rm -e DISPLAY=$(DISPLAY) -e CYPRESS_BASE_URL="http://server:80" cypress \
-		--project tests open
+	$(shell npm bin)/cypress open --project tests
+# echo "DISPLAY: $(DISPLAY)"
 
 .PHONY: test-styles
 test-styles: tmp/styles.json
