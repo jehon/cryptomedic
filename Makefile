@@ -2,6 +2,12 @@
 TMP=$(shell realpath "tmp/")
 
 #
+# Debug options:
+#   --warn-undefined-variables
+#   --debug=basic
+#
+
+#
 # Parameters
 #
 export CRYPTOMEDIC_PORT ?= 5080
@@ -13,6 +19,7 @@ DEPLOY_MOUNT := tmp/remote
 DEPLOY_MOUNT_TEST_FILE := $(DEPLOY_MOUNT)/favicon.ico
 DEPLOY_TEST_DIR ?= tmp/deploy-test-dir
 SSH_KNOWN_HOSTS := ~/.ssh/known_hosts
+DISPLAY ?= ":0"
 
 #
 # Dev env fixed
@@ -53,27 +60,25 @@ define recursive-dependencies
 endef
 
 dump:
-	@echo "SHELL:            $(SHELL)"
 	@echo "CRYPTOMEDIC_PORT: $(CRYPTOMEDIC_PORT)"
+	@echo "DISPLAY:          $(DISPLAY)"
 	@echo "IN_DOCKER:        $(IN_DOCKER)"
+	@echo "SHELL:            $(SHELL)"
 	@echo "PATH:             $(PATH)"
 	@echo "TMP:              $(TMP)"
 	@echo "Who am i:         $(shell whoami)"
-	@echo "Who am i:         $(shell id)"
+	@echo "Id:               $(shell id)"
 	@echo "Supported:        $(shell npx browserslist)"
 
 dump-docker-compose:
 	docker-compose config
-
-dump-in-docker:
-	cr-in-docker dev "make dump"
 
 all: start
 
 clear:
 	clear
 
-clean: deploy-unmount
+clean: deploy-unmount chmod
 # TODO: in dev ?
 	if [ -r $(DEPLOY_MOUNT_TEST_FILE) ]; then echo "Remote mounted - stopping"; exit 1; fi
 	find . -type d \( -name "vendor" -or -name "node_modules" \) -prune -exec "rm" "-fr" "{}" ";" || true
@@ -123,20 +128,20 @@ update-config-host-key:
 .PHONY: start
 start:
 	cr-ensure-started
-	cr-fix-permissions '.'
+	cr-fix-permissions
 	cr-data-reset
 
 	@echo "Open browser: http://localhost:$(CRYPTOMEDIC_PORT)/"
 	@echo "Test page: http://localhost:$(CRYPTOMEDIC_PORT)/xappx/tests/index.html"
 
 .PHONY: stop
-stop: deploy-unmount
+stop: deploy-unmount chmod
 	docker-compose down || true
 	cr-kill-others $(CRYPTOMEDIC_PORT)
 
 .PHONY: chmod
 chmod:
-	cr-fix-permissions || true
+	cr-fix-permissions
 
 .PHONY: full
 full: test lint
@@ -159,6 +164,7 @@ test: dependencies build test-api test-api-bare test-unit test-e2e test-styles
 
 .PHONY: test-api
 test-api: dependencies-api
+	cr-ensure-started
 	cr-data-reset
 	cr-phpunit laravel
 
@@ -168,6 +174,7 @@ update-references-api: dependencies-api
 	cr-phpunit COMMIT
 
 test-api-bare: dependencies-api
+	cr-ensure-started
 	cr-data-reset
 	cr-phpunit bare
 
@@ -176,13 +183,14 @@ test-unit: dependencies-node \
 		$(CJS2ESM_DIR)/axios.js \
 		$(CJS2ESM_DIR)/axios-mock-adapter.js \
 		$(CJS2ESM_DIR)/platform.js
-# TODO -> from dev
+
+# docker-compose run --rm --entrypoint /bin/bash cypress
 	npm run test-unit-continuously-withcov -- --single-run
+
 	node tests/report.js
 
 .PHONY: test-e2e
 test-e2e:
-# TODO -> from dev
 	rm -fr $(TMP)/e2e
 	rm -fr $(STYLES_RUN_SCREENSHOTS)
 
@@ -204,25 +212,27 @@ tmp/e2e/.tested-nightwatch: www/build/index.html $(call recursive-dependencies,t
 	touch "$@"
 
 test-e2e-cypress: tmp/e2e/.tested-cypress
-tmp/e2e/.tested-cypress: www/build/index.html $(call recursive-dependencies,tests/e2e,$(TMP)/e2e/.tested-cypress) $(STYLES_RUN_SCREENSHOTS)
-# TODO -> from dev
+tmp/e2e/.tested-cypress: www/build/index.html $(call recursive-dependencies,tests/cypress/,$(TMP)/e2e/.tested-cypress) $(STYLES_RUN_SCREENSHOTS)
 	cr-data-reset
 	rm -fr tests/cypress/screenshots
 	find "$(STYLES_RUN_SCREENSHOTS)" -type f -name '*.spec*' -delete
-	CYPRESS_BASE_URL="http://localhost:$(CRYPTOMEDIC_PORT)" npm run --silent "cypress:run"
+	docker-compose run --rm -e CYPRESS_BASE_URL="http://server:80" cypress \
+		--project tests run
+	cr-fix-permissions tests/cypress
 	@echo "Cypress screenshots"
 	find tests/cypress/screenshots/ -type f | while read -r F ; do \
 		cp "$$F" "$(STYLES_RUN_SCREENSHOTS)/$$(basename $$F)"; \
 	done
 	touch "$@"
 
+cypress-open:
+	docker-compose run --rm -e DISPLAY=$(DISPLAY) -e CYPRESS_BASE_URL="http://server:80" cypress \
+		--project tests open
+
 .PHONY: test-styles
 test-styles: tmp/styles.json
 tmp/styles.json: tests/styles/* tests/styles/references/* tmp/e2e/.tested-cypress tmp/e2e/.tested-nightwatch $(STYLES_RUN_SCREENSHOTS)
 # TODO -> from dev
-# @mkdir -p "$(TMP)/styles"
-# @rm -fr "$(TMP)/styles/run"
-# @mkdir -p "$(TMP)/styles/run"
 
 	@echo "Compare"
 	npm run --silent test-styles
@@ -346,7 +356,8 @@ $(CJS2ESM_DIR)/platform.js: node_modules/platform/platform.js
 #
 .PHONY: database-backup
 database-backup:
-	cr-in-docker mysql "mysqldump -u root -p$(DBROOTPASS) $(DBNAME)" > $(DB_BASE)
+	docker-compose exec mysql \
+		"mysqldump -u root -p$(DBROOTPASS) $(DBNAME)" > $(DB_BASE)
 
 .PHONY: data-reset
 data-reset: dependencies-api-bare chmod
