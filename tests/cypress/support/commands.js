@@ -4,8 +4,8 @@ import './form-fill-in.js';
 
 //
 Cypress.Commands.add('crReady', () => {
-    cy.get('x-requestor[running]')
-        .should('not.exist');
+    cy.get('x-requestor[running]', { includeShadowDom: true })
+        .should('not.exist', { includeShadowDom: true });
     // .should('not.have.attr', 'running');
 });
 
