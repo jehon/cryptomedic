@@ -6,6 +6,7 @@
 /**/node_modules/
 /**/tmp/
 /**/vendor/
+*.tmp.*
 
 commit.msg
 .git
