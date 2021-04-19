@@ -242,7 +242,16 @@ tmp/e2e/.tested-cypress: www/build/index.html $(call recursive-dependencies,test
 
 cypress-open:
 	$(shell npm bin)/cypress open --project tests
+#
+# Display does not work through WSL
+#
 # echo "DISPLAY: $(DISPLAY)"
+# $(cypress) open -e DISPLAY --project tests
+
+# docker-compose run --rm -e CYPRESS_BASE_URL="http://server:80" \
+# 	-e DISPLAY=$(DISPLAY) -v /tmp/.X11-unix:/tmp/.X11-unix \
+# 	cypress \
+# 	open --project tests
 
 .PHONY: test-styles
 test-styles: tmp/styles.json
