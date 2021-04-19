@@ -228,7 +228,7 @@ tmp/e2e/.tested-nightwatch: www/build/index.html $(call recursive-dependencies,t
 	touch "$@"
 
 test-e2e-cypress: tmp/e2e/.tested-cypress
-tmp/e2e/.tested-cypress: www/build/index.html $(call recursive-dependencies,tests/cypress/,$(TMP)/e2e/.tested-cypress) $(STYLES_RUN_SCREENSHOTS)
+tmp/e2e/.tested-cypress: chmod www/build/index.html $(call recursive-dependencies,tests/cypress/,$(TMP)/e2e/.tested-cypress) $(STYLES_RUN_SCREENSHOTS)
 	cr-data-reset
 	rm -fr tests/cypress/screenshots
 	find "$(STYLES_RUN_SCREENSHOTS)" -type f -name '*.spec*' -delete
