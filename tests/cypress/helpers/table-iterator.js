@@ -14,11 +14,15 @@ export default class TableIterator {
     /** @type {string} */
     #section
 
-    constructor(tableSelector, row = 1, col = 1, section = 'tbody') {
+    /** @type {boolean} true if the table selector is a x-table */
+    #xtable
+
+    constructor(tableSelector, options) {
         this.#tableSelector = tableSelector;
-        this.#row = row;
-        this.#col = col;
-        this.#section = section;
+        this.#row = options?.row ?? 1;
+        this.#col = options?.col ?? 1;
+        this.#section = options?.section ?? 'tbody';
+        this.#xtable = options?.xtable ?? true;
     }
 
     col(i) { this.#col = i; return this; }
@@ -36,7 +40,7 @@ export default class TableIterator {
     }
 
     assert(text, selector = '') {
-        cy.get(this.#tableSelector).find('table > ' + this.toString() + ' ' + selector).should('contain', text);
+        cy.get(this.#tableSelector).find((this.#xtable ? 'table > ' : '') + this.toString() + ' ' + selector).should('contain.text', text);
         return this;
     }
 }
