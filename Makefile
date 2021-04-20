@@ -214,10 +214,11 @@ test-e2e:
 	$(call itself,test-e2e-cypress)
 
 test-e2e-nightwatch: tmp/e2e/.tested-nightwatch
-tmp/e2e/.tested-nightwatch: www/build/index.html $(call recursive-dependencies,tests/e2e,$(TMP)/e2e/.tested-nightwatch) $(STYLES_RUN_SCREENSHOTS)
+tmp/e2e/.tested-nightwatch: www/build/index.html $(call recursive-dependencies,tests/e2e,$(TMP)/e2e/.tested-nightwatch)
 # TODO -> from dev
 	cr-data-reset
 	rm -fr tmp/e2e/browsers
+	mkdir -p "$(STYLES_RUN_SCREENSHOTS)"
 	find "$(STYLES_RUN_SCREENSHOTS)" -type f -not -name '*.spec*' -delete
 	npm run --silent test-e2e
 	@echo "Nightwatch screenshots"
@@ -227,9 +228,10 @@ tmp/e2e/.tested-nightwatch: www/build/index.html $(call recursive-dependencies,t
 	touch "$@"
 
 test-e2e-cypress: tmp/e2e/.tested-cypress
-tmp/e2e/.tested-cypress: chmod www/build/index.html $(call recursive-dependencies,tests/cypress/,$(TMP)/e2e/.tested-cypress) $(STYLES_RUN_SCREENSHOTS)
+tmp/e2e/.tested-cypress: www/build/index.html $(call recursive-dependencies,tests/cypress/,$(TMP)/e2e/.tested-cypress)
 	cr-data-reset
 	rm -fr tests/cypress/screenshots
+	mkdir -p "$(STYLES_RUN_SCREENSHOTS)"
 	find "$(STYLES_RUN_SCREENSHOTS)" -type f -name '*.spec*' -delete
 	$(cypress) run --project tests
 	cr-fix-permissions tests/cypress
@@ -344,6 +346,7 @@ package-lock.json: package.json
 
 .PHONY: build
 build: www/build/index.html www/build/browsers.json
+# TODO: index.html depend on axios-mock, wich is for testing only
 www/build/index.html: node_modules/.dependencies webpack.config.js \
 		package.json package-lock.json \
 		$(call recursive-dependencies,app/,www/build/index.html) \
