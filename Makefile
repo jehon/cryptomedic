@@ -145,7 +145,6 @@ update-config-host-key:
 start:
 	cr-ensure-started
 	cr-fix-permissions
-	cr-data-reset
 
 	@echo "Open browser: http://localhost:$(CRYPTOMEDIC_PORT)/"
 	@echo "Test page: http://localhost:$(CRYPTOMEDIC_PORT)/xappx/tests/index.html"
