@@ -11,7 +11,7 @@ pipeline {
     //   See https://docs.docker.com/compose/reference/envvars/#compose_project_name
     COMPOSE_PROJECT_NAME = "jenkins_cryptomedic"
     VERBOSE = "targets"
-    MAKEOPT = "-d"
+    MAKEOPT = "--debug=basic"
   }
   options {
     ansiColor('xterm')
