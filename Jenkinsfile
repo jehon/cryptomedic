@@ -108,7 +108,6 @@ make ${MAKEOPT} ${STAGE_NAME}
       }
       steps {
         sh 'make ${MAKEOPT} ${STAGE_NAME}'
-        archiveArtifacts 'tmp/e2e/browsers/firefox/*.png'
       }
     }
     stage('deploy') {
