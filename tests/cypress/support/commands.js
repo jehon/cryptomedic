@@ -5,8 +5,13 @@ import './form-fill-in.js';
 //
 Cypress.Commands.add('crReady', () => {
     cy.get('x-requestor[running]', { includeShadowDom: true })
-        .should('not.exist', { includeShadowDom: true });
-    // .should('not.have.attr', 'running');
+        .should('not.exist');
+
+    // See
+    // cy.get('img', { includeShadowDom: true })
+    //     .filter('[src]')
+    //     .filter(':visible')
+    //     .should(($imgs) => $imgs.map((i, /** @type {HTMLImageElement} */ img) => expect(img.naturalWidth).to.be.greaterThan(0)));
 });
 
 //
