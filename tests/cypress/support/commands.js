@@ -8,10 +8,10 @@ Cypress.Commands.add('crReady', () => {
         .should('not.exist');
 
     // See
-    // cy.get('img', { includeShadowDom: true })
-    //     .filter('[src]')
-    //     .filter(':visible')
-    //     .should(($imgs) => $imgs.map((i, /** @type {HTMLImageElement} */ img) => expect(img.naturalWidth).to.be.greaterThan(0)));
+    cy.get('img', { includeShadowDom: true })
+        .filter('[src]')
+        .filter(':visible')
+        .should(($imgs) => $imgs.map((i, /** @type {HTMLImageElement} */ img) => expect(img.naturalWidth).to.be.greaterThan(0)));
 });
 
 //
