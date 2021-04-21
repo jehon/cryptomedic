@@ -11,7 +11,7 @@ Cypress.Commands.add('crReady', () => {
     cy.get('img', { includeShadowDom: true })
         .filter('[src]')
         .filter(':visible')
-        .should(($imgs) => $imgs.map((i, /** @type {HTMLImageElement} */ img) => expect(img.naturalWidth).to.be.greaterThan(0)));
+        .should((imgs) => imgs.map((i, /** @type {HTMLImageElement} */ img) => expect(img.naturalWidth).to.be.greaterThan(0)));
 });
 
 //
