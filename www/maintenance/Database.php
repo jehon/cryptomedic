@@ -1,4 +1,5 @@
 <?php
+
 namespace Jehon\Maintenance;
 
 use \PDO;
@@ -6,8 +7,8 @@ use \PDOException;
 use \Exception;
 
 function myglob($glob, $recursive = false) {
- 	$pattern = basename($glob);
- 	$path = dirname($glob);
+	$pattern = basename($glob);
+	$path = dirname($glob);
 	if ($path == DIRECTORY_SEPARATOR) return array(".");
 
 	if (!is_readable($path)) {
@@ -15,28 +16,28 @@ function myglob($glob, $recursive = false) {
 	}
 
 	$handle = opendir($path);
- 	if ($handle === false) {
-    	return array();
-  	}
-	$list = array();
-  	while (false !== ($file = readdir($handle))) {
-	   	if ($file == ".") {
-			continue;
-    	}
-    	if ($file == "..") {
-	    	continue;
-	  	}
-		if (is_file(dirname($glob) . DIRECTORY_SEPARATOR . $file) && fnmatch($pattern, $file)) {
-		  	$list[] = $path . DIRECTORY_SEPARATOR . $file;
-	  	}
-	  	if (is_dir(dirname($glob) . DIRECTORY_SEPARATOR . $file) && $recursive) {
-		  	$res = myglob(dirname($glob) . DIRECTORY_SEPARATOR . $file . DIRECTORY_SEPARATOR . basename($glob), $recursive);
-	  		$list = array_merge($list, $res);
-	  	}
+	if ($handle === false) {
+		return array();
 	}
-  	closedir($handle);
-  	natsort($list);
-  	return $list;
+	$list = array();
+	while (false !== ($file = readdir($handle))) {
+		if ($file == ".") {
+			continue;
+		}
+		if ($file == "..") {
+			continue;
+		}
+		if (is_file(dirname($glob) . DIRECTORY_SEPARATOR . $file) && fnmatch($pattern, $file)) {
+			$list[] = $path . DIRECTORY_SEPARATOR . $file;
+		}
+		if (is_dir(dirname($glob) . DIRECTORY_SEPARATOR . $file) && $recursive) {
+			$res = myglob(dirname($glob) . DIRECTORY_SEPARATOR . $file . DIRECTORY_SEPARATOR . basename($glob), $recursive);
+			$list = array_merge($list, $res);
+		}
+	}
+	closedir($handle);
+	natsort($list);
+	return $list;
 }
 
 class Database {
@@ -62,7 +63,7 @@ class Database {
 		}
 
 		$params = array();
-		foreach($data as $key => $value) {
+		foreach ($data as $key => $value) {
 			$params[":" . $key] = $value;
 		}
 
@@ -101,7 +102,7 @@ class Database {
 	public function getVersion() {
 		$exists = $this->runPrepareSqlStatement(
 			"SELECT table_name FROM information_schema.tables WHERE table_schema = :mydb AND table_name = 'settings';",
-			[ 'mydb' => $this->getCurrentDatabase() ]
+			['mydb' => $this->getCurrentDatabase()]
 		);
 
 		if (count($exists) < 1) {
@@ -168,12 +169,13 @@ class Database {
 		while (feof($file) === false) {
 			$query[] = fgets($file);
 
-			if ((preg_match('~' . preg_quote($delimiter, '~') . '\s*$~iS', end($query)) === 1) || (feof($file))){
+			if ((preg_match('~' . preg_quote($delimiter, '~') . '\s*$~iS', end($query)) === 1) || (feof($file))) {
 				$i++;
 				$query = trim(implode('', $query));
 				if (strlen(trim($query)) < 1) {
 					continue;
 				}
+				$query = str_replace('@@', ';', $query);
 
 				$this->runPrepareSqlStatement($query, array(), "running query $i");
 				if ($i % 50 == 0) {
@@ -200,13 +202,14 @@ class Database {
 		$list = myglob($fromDir . "/*.sql");
 		natsort($list);
 
-		foreach($list as $f) {
+		foreach ($list as $f) {
 			$nextVersion = basename($f, ".sql");
 			if (preg_match("~^(\d+)~", basename($f, ".sql"), $nn)) {
 				if (count($nn) > 1) {
 					$nextVersion = $nn[1];
 					if (($this->getVersion() == $nextVersion)
-							|| (strnatcmp($this->getVersion(), $nextVersion) > 0)) {
+						|| (strnatcmp($this->getVersion(), $nextVersion) > 0)
+					) {
 						echo "\nSkipping $f [$nextVersion]";
 						continue;
 					}
