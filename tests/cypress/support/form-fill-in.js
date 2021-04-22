@@ -38,6 +38,7 @@ Cypress.Commands.add('crFormFillIn', { prevSubject: true },
 
             // Loose focus on element
             // this.execute(function (fsel) { document.querySelector(fsel).blur(); }, [fsel]);
+            cy.log('Form filled in with', fields);
         }
     }
 );
