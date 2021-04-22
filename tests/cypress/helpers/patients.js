@@ -12,10 +12,14 @@ export function goPatient(year, order) {
     crReady();
     cy.get('#Patient_entryyear').should('contain.text', year);
     cy.get('#Patient_entryorder').should('contain.text', order);
+
+    cy.log(`Gone to patient ${year}-${order} successfully`);
 }
 
 export function selectFile(type, id) {
     cy.get(`#folder_menu_${type}_${id}`).should('contain.text', type);
     cy.get(`#folder_menu_${type}_${id}`).click();
     crReady();
+
+    cy.log(`Gone to file ${type}#${id} successfully`);
 }
