@@ -9,12 +9,12 @@ context('Actions', () => {
         cy.get('x-page-login').should('be.visible');
         cy.crCompareSnapshot('initial');
 
-        cy.get('#username').type('murshed');
+        cy.get('#username').type(crLogin.RO);
         cy.get('#password').type('p');
         cy.get('x-button#submit').click();
 
         cy.get('x-user-status #user')
-            .should('have.text', 'murshed');
+            .should('have.text', crLogin.RO);
 
         cy.crCompareSnapshot('logged');
     });
