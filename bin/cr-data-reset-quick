@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+set -e
+
+. cr-lib
+
+cr-ensure-started
+
+header "data-reset: restore quick fix..."
+docker-compose exec -T mysql \
+    mysql -u root "-p${DBROOTPASS}" --database="${DBNAME}" < "conf/database/quick-fix.sql"
+header_finished
