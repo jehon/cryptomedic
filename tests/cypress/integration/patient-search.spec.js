@@ -1,12 +1,14 @@
 /// <reference types="Cypress" />
 
+import { crLogin } from '../helpers/cr.js';
+
 /**
  * @param {string}  title of the screenshot
  * @param {object} search to be searched (key=css selector, value)
  * @param {Array<string>} resultList of entrynumbers (year-order) present in the result
  */
 function testSearch(title, search, resultList) {
-    cy.crLogin('readonly');
+    crLogin(crLogin.RO);
     cy.get('#search_menu > x-buttons > x-button').click();
 
     cy.get('x-page-search x-form').as('form');

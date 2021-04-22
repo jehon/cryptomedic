@@ -1,5 +1,7 @@
 /// <reference types="Cypress" />
 
+import { crLogin, crGo, crApi, crReady } from '../helpers/cr.js';
+
 function getRowByUsername(username) {
     return cy.get('x-page-users-list x-table[count]:not([count=0])').find('tr').find('td').contains(username).parent();
 }
@@ -9,15 +11,15 @@ context('Actions', () => {
 
     before(() => {
         // Delete previously create user
-        cy.crLogin('jehon');
-        cy.crApi({ url: 'users' })
+        crLogin(crLogin.ADMIN);
+        crApi({ url: 'users' })
             .then(response => response.body)
             .then(data => data.filter(l => l.username == username).map(l => l.id)
-                .forEach(id => cy.crApi({ url: `users/${id}`, method: 'DELETE' }))
+                .forEach(id => crApi({ url: `users/${id}`, method: 'DELETE' }))
             );
-        cy.crGo('/users');
+        crGo('/users');
         cy.get('x-page-users-list').should('be.visible');
-        cy.crReady(); // Not necessary?
+        crReady(); // Not necessary?
     });
 
     it('list users', () => {
@@ -49,14 +51,14 @@ context('Actions', () => {
 
         // // Test login (logout)
         // cy.get('x-user-status').find('x-button').click();
-        // cy.crLogin(username, 'test');
+        // crLogin(username, 'test');
 
         // // Ok, come back
         // cy.get('x-user-status').find('x-button').click();
 
         // Login as admin
-        // cy.crLogin('jehon');
-        cy.crGo('/users');
+        // crLogin(crLogin.ADMIN);
+        crGo('/users');
 
         getRowByUsername(username).find('x-button#edit').click();
 

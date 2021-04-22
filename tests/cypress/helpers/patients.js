@@ -1,3 +1,4 @@
+import { crReady } from './cr.js';
 
 export function goPatient(year, order) {
     cy.get('#menu_home').click();
@@ -8,7 +9,7 @@ export function goPatient(year, order) {
     cy.get('@xpbr').find('[name="entryorder"]').invoke('attr', 'value', order);
     cy.get('@xpbr').find('x-button[action="query"]').click();
 
-    cy.crReady();
+    crReady();
     cy.get('#Patient_entryyear').should('contain.text', year);
     cy.get('#Patient_entryorder').should('contain.text', order);
 }
@@ -16,5 +17,5 @@ export function goPatient(year, order) {
 export function selectFile(type, id) {
     cy.get(`#folder_menu_${type}_${id}`).should('contain.text', type);
     cy.get(`#folder_menu_${type}_${id}`).click();
-    cy.crReady();
+    crReady();
 }
