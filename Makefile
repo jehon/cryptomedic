@@ -229,7 +229,7 @@ tmp/e2e/.tested-nightwatch: www/build/index.html $(call recursive-dependencies,t
 	touch "$@"
 
 test-e2e-cypress: tmp/e2e/.tested-cypress
-tmp/e2e/.tested-cypress: www/build/index.html $(call recursive-dependencies,tests/cypress/,$(TMP)/e2e/.tested-cypress)
+tmp/e2e/.tested-cypress: www/build/index.html $(shell find tests/cypress/ -name "*.js")
 	cr-data-reset
 	rm -fr tests/cypress/screenshots
 	mkdir -p "$(STYLES_RUN_SCREENSHOTS)"
