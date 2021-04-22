@@ -1,11 +1,12 @@
 /// <reference types="Cypress" />
 
+import { crLogin } from '../helpers/cr.js';
 import { goPatient, selectFile } from '../helpers/patients.js';
 import TableIterator from '../helpers/table-iterator.js';
 
 context('Actions', () => {
     beforeEach(() => {
-        cy.crLogin('readonly');
+        crLogin(crLogin.RO);
     });
 
     it('read patient 2000-1', () => { // id: 1

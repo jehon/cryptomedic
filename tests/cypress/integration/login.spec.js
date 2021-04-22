@@ -1,5 +1,7 @@
 /// <reference types="Cypress" />
 
+import { crLogin } from '../helpers/cr.js';
+
 context('Actions', () => {
     it('initialize to login', () => {
         cy.visit('/build/');
@@ -18,7 +20,7 @@ context('Actions', () => {
     });
 
     it('works also with cr-login', () => {
-        cy.crLogin('murshed');
+        crLogin(crLogin.RO);
         cy.hash().should('not.routeStartsWith', '/login');
     });
 });

@@ -1,10 +1,11 @@
 /// <reference types="Cypress" />
 
+import { crLogin } from '../helpers/cr.js';
 import TableIterator from '../helpers/table-iterator.js';
 
 context('Actions', () => {
     it('should show report', () => {
-        cy.crLogin('murshed');
+        crLogin(crLogin.RO);
         cy.get('#report_activity_menu > x-buttons > x-button').click();
 
         cy.get('x-page-reports x-form')

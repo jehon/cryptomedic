@@ -1,9 +1,12 @@
 
 /// <reference types="Cypress" />
 
+import { crLogin } from '../helpers/cr.js';
+import { guiAcceptAlert } from '../helpers/gui.js';
+
 context('Actions', () => {
-    it.only('generate a reference', () => {
-        cy.crLogin('murshed');
+    it('generate a reference', () => {
+        crLogin(crLogin.PHYSIO);
 
         cy.get('#autogenerate-reference').should('be.visible')
             .within(() => {
@@ -25,9 +28,7 @@ context('Actions', () => {
         cy.get('#topsubmenu #patient_edit').click();
         cy.get('#topsubmenu #patient_delete').click();
 
-        cy.on('window:alert', (_txt) => {
-            // expect(txt).to.contains('Your full name cannot be blank.');
-        });
+        guiAcceptAlert();
 
         cy.get('#page_home').should('be.visible');
         cy.hash().should('routeStartsWith', '/home');

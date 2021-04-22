@@ -15,7 +15,8 @@
 // ***********************************************************
 
 import './asserts.js';
-import './commands.js';
+import './compare-snapshot.js';
+import './form-fill-in.js';
 
 //
 // On custom commands:
