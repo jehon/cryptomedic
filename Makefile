@@ -392,6 +392,9 @@ database-backup:
 data-reset: dependencies-api-bare chmod
 	cr-data-reset
 
+data-reset-quick:
+	cr-data-reset-quick
+
 #
 #
 # Deploy
