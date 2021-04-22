@@ -59,3 +59,16 @@ export function crApi(options = {}) {
         url: options.url[0] == '/' ? options.url : `/api/v1.3/${options.url}`
     });
 }
+
+export function crPatientDelete(entryyear, entrynumber) {
+    // Delete previously create user
+    crLogin(crLogin.PHYSIO);
+    crApi({ url: `reference/${entryyear}/${entrynumber}` })
+        .then(response => response.body)
+        .then(folder => {
+            if (folder?.id > 0) {
+                return crApi({ url: `fiche/patients/${folder.id}`, method: 'DELETE' });
+            }
+        });
+
+}
