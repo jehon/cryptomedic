@@ -12,6 +12,7 @@ context('Actions', () => {
             .within(() => {
                 cy.get('x-button').click();
             });
+
         cy.get('#Patient_Name').should('be.visible');
 
         // Edit and save
