@@ -243,8 +243,12 @@ tmp/e2e/.tested-cypress: www/build/index.html $(call recursive-dependencies,test
 	mkdir -p "$(dir $@)"
 	touch "$@"
 
-cypress-open:
+cypress-open: chmod
 	$(shell npm bin)/cypress open --project tests
+
+cypress-open-docker:
+	$(cypress) open --project tests
+
 #
 # Display does not work through WSL
 #
