@@ -13,6 +13,7 @@ export function crLogin(username, password = null) {
     cy.get('x-user-status #user').should('have.text', username);
 
     crReady();
+    cy.log(`Logged in as ${username} successfully`);
 }
 crLogin.PHYSIO = 'murshed';
 crLogin.RO = 'readonly';
@@ -22,6 +23,7 @@ export function crLogout() {
     crApi({
         url: 'auth/logout',
     });
+    cy.log('Logged out successfully');
 }
 
 export function crReady() {
@@ -32,12 +34,15 @@ export function crReady() {
     cy.get('img', { includeShadowDom: true })
         .filter('[src]')
         .filter(':visible')
-        .should((imgs) => imgs.map((i, /** @type {HTMLImageElement} */ img) => expect(img.naturalWidth).to.be.greaterThan(0)));
+        // TODO: remove logs
+        .should((imgs) => imgs.map((i, /** @type {HTMLImageElement} */ img) => expect(img.naturalWidth).to.be.greaterThan(0, 'loaded: ')));
+    cy.log('Ready!');
 }
 
 export function crGo(route) {
     cy.visit(`/build/#${route}`);
     crReady();
+    cy.log(`Gone to ${route} successfully`);
 }
 
 //
