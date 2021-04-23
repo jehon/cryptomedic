@@ -17,8 +17,8 @@ export default class XPatientByReference extends HTMLElement {
     constructor() {
         super();
 
-        this.attachShadow({ mode: 'open' });
-        this.shadowRoot.append(
+        this.innerHTML = '';
+        this.append(
             createElementWithTag('css-inherit'),
             createElementWithTag('style', {}, `
      #creator {

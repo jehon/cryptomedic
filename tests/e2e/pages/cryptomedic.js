@@ -49,23 +49,6 @@ module.exports = {
             return this;
         },
 
-        report: function (reportName, params) {
-            if (!authenticated) {
-                throw new Error('Cryptomedic: You should be authenticated to use report function');
-            }
-
-            this.waitForElementVisible(`#report_${reportName}_menu`);
-            this.myClick(`#report_${reportName}_menu x-button`);
-            this.waitForElementVisible('x-page-reports');
-            this.waitForElementVisible('x-page-reports x-form');
-
-            this.myXFormFill('x-page-reports x-form', params, true);
-            this.api.pause(100);
-
-            this.waitForElementVisible('x-page-reports table');
-            return this;
-        },
-
         goPatient: function (entryyear, entryorder) {
             if (!authenticated) {
                 throw new Error('Cryptomedic: You should be authenticated to use report function');
@@ -74,9 +57,9 @@ module.exports = {
             this.myClick('#menu_home');
             this.waitForElementVisible('x-patient-by-reference');
 
-            this.myComponentExecute('x-patient-by-reference >>> [name="entryyear"]', function (v) { this.value = v; }, [entryyear]);
-            this.myComponentExecute('x-patient-by-reference >>> [name="entryorder"]', function (v) { this.value = v; }, [entryorder]);
-            this.myComponentExecute('x-patient-by-reference >>> [action="query"]', function () { this.click(); }, []);
+            this.myComponentExecute('x-patient-by-reference [name="entryyear"]', function (v) { this.value = v; }, [entryyear]);
+            this.myComponentExecute('x-patient-by-reference [name="entryorder"]', function (v) { this.value = v; }, [entryorder]);
+            this.myComponentExecute('x-patient-by-reference [action="query"]', function () { this.click(); }, []);
 
             this.waitForElementVisible('#Patient_entryyear');
             this.assert.containsText('#Patient_entryyear', entryyear);
