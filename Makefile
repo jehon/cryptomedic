@@ -238,7 +238,7 @@ tmp/e2e/.tested-cypress: www/build/index.html $(shell find tests/cypress/ -name 
 	cr-fix-permissions tests/cypress
 	@echo "Cypress screenshots"
 	find tests/cypress/screenshots/ -type f | while read -r F ; do \
-		cp "$$F" "$(STYLES_RUN_SCREENSHOTS)/$$(basename $$F)"; \
+		cp "$$F" "$(STYLES_RUN_SCREENSHOTS)/$$(basename "$$F")"; \
 	done
 	mkdir -p "$(dir $@)"
 	touch "$@"
