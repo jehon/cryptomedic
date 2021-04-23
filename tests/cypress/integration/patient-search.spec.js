@@ -1,6 +1,7 @@
 /// <reference types="Cypress" />
 
-import { crLogin } from '../helpers/cr.js';
+import { crApiLogin } from '../helpers/cr-api.js';
+import { crLoginInBackground } from '../helpers/cr.js';
 
 /**
  * @param {string}  title of the screenshot
@@ -8,31 +9,34 @@ import { crLogin } from '../helpers/cr.js';
  * @param {Array<string>} resultList of entrynumbers (year-order) present in the result
  */
 function testSearch(title, search, resultList) {
-    crLogin(crLogin.RO);
+    crLoginInBackground(crApiLogin.RO);
     cy.get('#search_menu > x-buttons > x-button').click();
 
-    cy.get('x-page-search x-form').as('form');
-    cy.get('@form').should('be.visible');
-    cy.get('@form').find('x-button[action="cancel"]').click();
+    cy.get('x-page-search').within((page) => {
+        cy.get('x-form').should('be.visible');
+        cy.get('x-form').find('x-button[action="cancel"]').click();
 
-    cy.get('@form').crFormFillIn(search);
+        cy.get('x-form').crFormFillIn(search);
 
-    cy.get('x-page-search x-form x-button[action="query"]').click();
+        cy.get('x-form x-button[action="query"]').click();
 
-    // cy.wait(10);
-    cy.get('x-page-search:not([status]) x-table table tbody').as('result');
-    cy.get('@result').should('be.visible');
+        cy.wrap(page).invoke('attr', 'status').should('not.exist');
 
-    // We don't have any more results
-    cy.get('@result').find('tr').should('have.length', resultList.length);
+        cy.get('x-table table tbody')
+            .should('be.visible')
+            .within(() => {
+                // We don't have any more results
+                cy.get('tr').should('have.length', resultList.length);
 
-    // Each result is ok
-    for (var i in resultList) {
-        cy.get('@result').find(`tr:nth-child(${parseInt(i) + 1}) td:nth-child(2)`)
-            .should('contain.text', resultList[i]);
-    }
+                // Each result is ok
+                for (var i in resultList) {
+                    cy.get(`tr:nth-child(${parseInt(i) + 1}) td:nth-child(2)`)
+                        .should('contain.text', resultList[i]);
+                }
+            });
 
-    cy.crCompareSnapshot(title);
+        cy.crCompareSnapshot(title);
+    });
 }
 
 context('Actions', () => {
