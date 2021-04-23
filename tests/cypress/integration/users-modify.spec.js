@@ -1,74 +1,91 @@
 /// <reference types="Cypress" />
 
-import { crLogin, crGo, crApi, crReady } from '../helpers/cr.js';
+import { crApiDeleteUsers, crApiLogin, crApiLogout } from '../helpers/cr-api.js';
+import { crGo, crLoginInBackground } from '../helpers/cr.js';
 
 function getRowByUsername(username) {
-    return cy.get('x-page-users-list x-table[count]:not([count=0])').find('tr').find('td').contains(username).parent();
+    return cy.get('x-table[count]:not([count=0])').find('tr').find('td').contains(username).parent();
 }
 
 context('Actions', () => {
     const username = 'cypress_user_modify_spec';
 
     before(() => {
-        // Delete previously create user
-        crLogin(crLogin.ADMIN);
-        crApi({ url: 'users' })
-            .then(response => response.body)
-            .then(data => data.filter(l => l.username == username).map(l => l.id)
-                .forEach(id => crApi({ url: `users/${id}`, method: 'DELETE' }))
-            );
-        crGo('/users');
-        cy.get('x-page-users-list').should('be.visible');
-        crReady(); // Not necessary?
+        crApiDeleteUsers(username);
     });
 
     it('list users', () => {
-        // Check the data's
-        getRowByUsername('ershad').find('td:nth-child(1)').should('contains.text', '105');
-        getRowByUsername('ershad').find('td:nth-child(2)').should('contains.text', 'ershad');
-        cy.crCompareSnapshot();
-        // });
+        crLoginInBackground(crApiLogin.ADMIN);
 
-        // it('crud', () => {
-        // Add a user
-        cy.get('x-page-users-list').find('x-button#add').click();
-        cy.get('x-page-user-edit').find('[name="username"]').type(username);
-        cy.get('x-page-user-edit').find('[name="name"]').type('Cypress');
-        cy.crCompareSnapshot('read');
+        crGo('/users');
+        cy.get('x-page-users-list')
+            .should('be.visible')
+            .within(() => {
+                // Check the data's
+                getRowByUsername('ershad').find('td:nth-child(1)').should('contains.text', '105');
+                getRowByUsername('ershad').find('td:nth-child(2)').should('contains.text', 'ershad');
+                cy.crCompareSnapshot('1 - listing');
 
-        cy.get('x-page-user-edit').find('x-button[action="commit"]').click();
+                // Add a user
+                cy.get('x-button#add').click();
+            });
 
-        // Add a user: confirm
-        cy.get('x-page-user-edit').find('x-confirmation').shadow().find('x-button').click();
+        cy.get('x-page-user-edit')
+            .should('be.visible')
+            .within(() => {
+                cy.get('[name="username"]').type(username);
+                cy.get('[name="name"]').type('Cypress');
+                cy.crCompareSnapshot('2 - add user');
 
-        // Find back in the menu
-        getRowByUsername(username).find('x-button#pwd').click();
+                cy.get('x-button[action="commit"]').click();
+
+                // Add a user: confirm
+                cy.get('x-confirmation').shadow().find('x-button').click();
+            });
+
+        cy.get('x-page-users-list')
+            .should('be.visible')
+            .within(() => {
+
+                // Find back in the menu
+                getRowByUsername(username).find('x-button#pwd').click();
+            });
 
         // Set a password
-        cy.get('x-page-user-password').get('[name="password"]').type('test');
-        cy.crCompareSnapshot('password');
-        cy.get('x-page-user-password').find('x-button[action="commit"]').click();
+        cy.get('x-page-user-password')
+            .should('be.visible')
+            .within(() => {
+                cy.get('[name="password"]').type('test');
+                cy.crCompareSnapshot('3 - set password');
 
-        // // Test login (logout)
-        // cy.get('x-user-status').find('x-button').click();
-        // crLogin(username, 'test');
+                cy.get('x-button[action="commit"]').click();
+            });
 
-        // // Ok, come back
-        // cy.get('x-user-status').find('x-button').click();
+        // Test that the new login is working correctly
+        crApiLogin(username, 'test');
+        crApiLogout();
 
-        // Login as admin
-        // crLogin(crLogin.ADMIN);
+        crLoginInBackground(crApiLogin.ADMIN);
         crGo('/users');
 
-        getRowByUsername(username).find('x-button#edit').click();
+        cy.get('x-page-users-list')
+            .should('be.visible')
+            .within(() => {
+                getRowByUsername(username).find('x-button#edit').click();
+            });
 
-        // Edit it back
-        cy.get('x-page-user-edit').find('[name="username"]').should('contain.value', username);
+        cy.get('x-page-user-edit')
+            .should('be.visible')
+            .within(() => {
+                // Edit it back
+                cy.get('[name="username"]').should('contain.value', username);
 
-        // Delete it
-        cy.get('x-page-user-edit').find('x-button[action="delete"]').click();
-        // Delete it: confirm
-        cy.crCompareSnapshot('delete-confirm');
-        cy.get('x-page-user-edit').find('x-confirmation').shadow().find('x-button').click();
+                // Delete it
+                cy.get('x-button[action="delete"]').click();
+
+                // Delete it: confirm
+                // cy.crCompareSnapshot('4 - delete - confirm');
+                cy.get('x-confirmation').shadow().find('x-button').click();
+            });
     });
 });
