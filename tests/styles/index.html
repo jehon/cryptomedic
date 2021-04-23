@@ -34,11 +34,15 @@
         }
 
         [status='empty'] {
-            border: solid gray 2px;
+            border: solid gray 5px;
         }
 
         [status='running'] {
-            border: solid yellow 2px;
+            border: solid blue 5px;
+        }
+
+        [status='running'] {
+            border: solid yellow 5px;
         }
 
         compare {
@@ -47,8 +51,17 @@
         }
     </style>
     <script>
+        // Not module to be loaded first
+        const keyRef = 1;
+        const keyRun = 2;
+    </script>
+    <script>
         module = { exports: {} };
         const done = new Set();
+
+        function setCanvasStatus(id, str) {
+            document.querySelector(`canvas[for=${id}]`).setAttribute('status', str);
+        }
 
         function img2data(id, w, h) {
             const myImgElement = document.querySelector('#' + id);
@@ -81,13 +94,13 @@
             }
 
             console.info("Calculating ", id);
+            setCanvasStatus(id, 'running');
             done.add(id);
 
             const w = myImgRef.naturalWidth;
             const h = myImgRef.naturalHeight;
 
             const canvas = document.querySelector('#i' + id + '_fin');
-            canvas.setAttribute('status', 'running');
             canvas.width = w;
             canvas.height = h;
             const diff = canvas.getContext('2d');
@@ -107,8 +120,15 @@
             window.addEventListener('load', () => resolve());
         });
 
-        function img_diff_tempo(id) {
-            p = p.then(() => img_diff(id));
+        const loaded = new Map();
+        function img_diff_tempo(id, key) {
+            let already = (loaded.get(id) ?? 0) | key;
+
+            if (already == 3) {
+                setCanvasStatus(id, 'preparing');
+                p = p.then(() => img_diff(id));
+            }
+            loaded.set(id, key);
             return p;
         }
 
@@ -138,8 +158,8 @@
                     document.querySelector('#results').insertAdjacentHTML('beforeend',
                         `<h3>${f} (${data.actual}/${data.max}: ${data.level})</h3>
                         <div class='compare'>
-                                    <img target-id='${id}' onload='img_diff_tempo(${id})' id='i${id}_ref' src='references/${f}'></img>
-                                    <img target-id='${id}' onload='img_diff_tempo(${id})' id='i${id}_tst' src='../../tmp/styles/run/${f}'></img>
+                                    <img target-id='${id}' onload='img_diff_tempo(${id}, ${keyRef})' id='i${id}_ref' src='references/${f}'></img>
+                                    <img target-id='${id}' onload='img_diff_tempo(${id}, ${keyRun})' id='i${id}_tst' src='../../tmp/styles/run/${f}'></img>
                                     <canvas status='empty' id='i${id}_fin' for='${id}'></canvas>
                         </div>`);
                     id++;
