@@ -1,11 +1,12 @@
 /// <reference types="Cypress" />
 
 import { crPage } from '../helpers/cr.js';
+import { guiHashStartWith } from '../helpers/gui.js';
 
 context('Actions', () => {
     it('should show error on bad login', () => {
         cy.visit('/build/');
-        cy.hash().should('routeStartsWith', '/login');
+        guiHashStartWith('/login');
 
         crPage().within(() => {
             cy.get('#username').type('murshed');

@@ -3,7 +3,7 @@
 import { homeGenerateReference } from '../helpers/e2e-entrynumber-assigned.js';
 import { crLoginInBackground, crPage } from '../helpers/cr.js';
 import { crApiPatientDelete } from '../helpers/cr-api.js';
-import { guiAcceptAlert } from '../helpers/gui.js';
+import { guiAcceptAlert, guiHashStartWith } from '../helpers/gui.js';
 import { crApiLogin } from '../helpers/cr-api.js';
 
 context('Actions', () => {
@@ -42,7 +42,7 @@ context('Actions', () => {
             guiAcceptAlert();
 
             cy.get('#page_home').should('be.visible');
-            cy.hash().should('routeStartsWith', '/home');
+            guiHashStartWith('/home');
         });
     });
 });
