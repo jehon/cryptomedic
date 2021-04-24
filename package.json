@@ -39,6 +39,7 @@
     "chromedriver": "89.0.0",
     "css-loader": "5.2.1",
     "cypress": "7.1.0",
+    "escape-string-regexp": "5.0.0",
     "eslint": "7.24.0",
     "eslint-plugin-cypress": "2.11.2",
     "eslint-plugin-jasmine": "4.1.2",

@@ -2,11 +2,12 @@
 
 import { crApiLogin } from '../helpers/cr-api.js';
 import { crLoginInBackground, crPage } from '../helpers/cr.js';
+import { guiHashStartWith } from '../helpers/gui.js';
 
 context('Actions', () => {
     it('initialize to login', () => {
         cy.visit('/build/');
-        cy.hash().should('routeStartsWith', '/login');
+        guiHashStartWith('/login');
         crPage().within(() => {
 
             cy.get('x-page-login').should('be.visible');
@@ -25,7 +26,7 @@ context('Actions', () => {
 
     it('works also with crLoginInBackground', () => {
         crLoginInBackground(crApiLogin.RO);
-        cy.hash().should('not.routeStartsWith', '/login');
+        guiHashStartWith('/home');
         cy.get('x-user-status #user')
             .should('have.text', crApiLogin.RO);
     });
