@@ -1,18 +1,19 @@
 /// <reference types="Cypress" />
 
 import { crPage } from '../helpers/cr.js';
+import { guiHashStartWith } from '../helpers/gui.js';
 
 context('Actions', () => {
     it('login - logout - login', () => {
         cy.visit('/build/');
-        cy.hash().should('routeStartsWith', '/login');
+        guiHashStartWith('/login');
 
         crPage().within(() => {
             // Login
             cy.get('#username').type('murshed');
             cy.get('#password').type('p');
             cy.get('x-button#submit').click();
-            cy.hash().should('routeStartsWith', '/home');
+            guiHashStartWith('/home');
         });
 
         cy.get('x-user-status #user')
@@ -22,7 +23,7 @@ context('Actions', () => {
         cy.get('x-user-status x-button')
             .click();
 
-        cy.hash().should('routeStartsWith', '/login');
+        guiHashStartWith('/login');
 
         crPage().within(() => {
             // Login back again

@@ -1,7 +1,7 @@
 /// <reference types="Cypress" />
 
 import { crApiLogin } from '../helpers/cr-api.js';
-import { crLoginInBackground } from '../helpers/cr.js';
+import { crFormFillIn, crLoginInBackground } from '../helpers/cr.js';
 
 /**
  * @param {string}  title of the screenshot
@@ -16,7 +16,7 @@ function testSearch(title, search, resultList) {
         cy.get('x-form').should('be.visible');
         cy.get('x-form').find('x-button[action="cancel"]').click();
 
-        cy.get('x-form').crFormFillIn(search);
+        crFormFillIn('x-form', search);
 
         cy.get('x-form x-button[action="query"]').click();
 
