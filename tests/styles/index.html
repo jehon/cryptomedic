@@ -60,7 +60,7 @@
         const done = new Set();
 
         function setCanvasStatus(id, str) {
-            document.querySelector(`canvas[for=${id}]`).setAttribute('status', str);
+            document.querySelector(`canvas[for="${id}"]`).setAttribute('status', str);
         }
 
         function img2data(id, w, h) {
