@@ -28,13 +28,17 @@ export function crApi(options = {}) {
  */
 export function crApiLogin(username = null, password = null) {
     const realUser = username ?? 'murshed';
-    crApiLogout();
+    const realPassword = password ?? 'p';
+
+    cy.log(`Doing crApiLogin: ${realUser} / ${realPassword}`);
     crApi({
         url: 'auth/mylogin', method: 'POST', body: {
             username: realUser,
-            password: password ?? 'p'
+            password: realPassword
         }
     });
+
+    cy.log(`Done crApiLogin: ${realUser}`);
     return realUser;
 }
 crApiLogin.PHYSIO = 'murshed';
@@ -50,7 +54,7 @@ export function crApiLogout() {
     crApi({
         url: 'auth/logout',
     });
-    cy.log('Logged out successfully');
+    cy.log('Done crApiLogout');
 }
 
 /**
@@ -62,7 +66,7 @@ export function crApiLogout() {
  */
 export function crApiPatientDelete(entryyear, entrynumber = 1000) {
     // Delete previously create user
-    crApiLogin(crApiLogin.ADMIN);
+    cy.log(`Doing crApiPatientDelete: ${entryyear} / ${entrynumber}`);
     crApi({ url: `reference/${entryyear}/${entrynumber}` })
         .then(response => response.body)
         .then(folder => {
@@ -70,13 +74,14 @@ export function crApiPatientDelete(entryyear, entrynumber = 1000) {
                 return crApi({ url: `fiche/patients/${folder.id}`, method: 'DELETE' });
             }
         });
+    cy.log(`Done crApiPatientDelete: ${entryyear} / ${entrynumber}`);
 }
 
 export function crApiDeleteUsers(username) {
-    crApiLogin(crApiLogin.ADMIN);
     crApi({ url: 'users' })
         .then(response => response.body)
         .then(data => data.filter(l => l.username == username).map(l => l.id)
             .forEach(id => crApi({ url: `users/${id}`, method: 'DELETE' }))
         );
+    cy.log(`Done crApiDeleteUsers: ${crApiDeleteUsers}`);
 }
