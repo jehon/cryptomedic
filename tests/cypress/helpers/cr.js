@@ -18,7 +18,8 @@ export function crReady() {
         .filter(':visible')
         // TODO: remove logs
         .should((imgs) => imgs.map((i, /** @type {HTMLImageElement} */ img) => expect(img.naturalWidth).to.be.greaterThan(0, 'loaded: ')));
-    cy.log('Ready!');
+
+    cy.log('Done: crReady');
 }
 
 /**
@@ -32,7 +33,9 @@ export function crLoginInBackground(username = null, password = null) {
     cy.visit('/build/');
     cy.get('x-user-status #user').should('have.text', realUser);
     guiHashStartWith('/home');
-    cy.log(`Logged in as ${realUser} successfully`);
+
+    crReady();
+    cy.log(`Done crLoginInBackground: ${realUser}`);
 }
 
 /**
@@ -44,7 +47,7 @@ export function crLoginInBackground(username = null, password = null) {
 export function crGo(route) {
     cy.visit(`/build/#${route}`);
     crReady();
-    cy.log(`Gone to ${route} successfully`);
+    cy.log(`Done crGo: ${route}`);
 }
 
 /**
@@ -98,5 +101,5 @@ export function crFormFillIn(subject, fields) {
             }
         });
 
-    cy.log('Form filled in with', fields);
+    cy.log('Done: crFormFillIn: ', fields);
 }
