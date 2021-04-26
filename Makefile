@@ -243,6 +243,18 @@ tmp/e2e/.tested-cypress: www/build/index.html $(shell find tests/cypress/ -name 
 	mkdir -p "$(dir $@)"
 	touch "$@"
 
+test-e2e-cypress-one:
+	@clear
+#	F=$(dialog --stdout --title "text" --fselect tests/cypress/integration/ $(expr $LINES - 15) $(expr $COLUMNS - 10))
+	@if [ -z "$(TEST)" ]; then \
+		echo "Please select test in TEST"; \
+		exit 1; \
+	fi
+	#echo "Running test $(TEST) only"
+	$(cypress) run --config video=true  --project tests --spec "$(TEST)"
+	cr-fix-permissions tests/cypress
+	echo "Running test "$(TEST)" only done"
+
 cypress-open: chmod
 	$(shell npm bin)/cypress open --project tests
 
