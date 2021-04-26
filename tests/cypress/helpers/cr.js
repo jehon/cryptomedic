@@ -30,8 +30,8 @@ export function crReady() {
 export function crLoginInBackground(username = null, password = null) {
     const realUser = crApiLogin(username, password);
     cy.visit('/build/');
-    guiHashStartWith('/home');
     cy.get('x-user-status #user').should('have.text', realUser);
+    guiHashStartWith('/home');
     cy.log(`Logged in as ${realUser} successfully`);
 }
 
