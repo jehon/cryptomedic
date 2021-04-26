@@ -29,6 +29,7 @@ export function crReady() {
  * @param {string?} password
  */
 export function crLoginInBackground(username = null, password = null) {
+    cy.visit('/');
     const realUser = crApiLogin(username, password);
     cy.visit('/build/');
     cy.get('x-user-status #user').should('have.text', realUser);
