@@ -11,12 +11,11 @@ context('Actions', () => {
     const username = 'cypress_user_modify_spec';
 
     before(() => {
+        crLoginInBackground(crApiLogin.ADMIN);
         crApiDeleteUsers(username);
     });
 
     it('list users', () => {
-        crLoginInBackground(crApiLogin.ADMIN);
-
         crGo('/users');
         cy.get('x-page-users-list')
             .should('be.visible')
@@ -62,6 +61,7 @@ context('Actions', () => {
             });
 
         // Test that the new login is working correctly
+        crApiLogout();
         crApiLogin(username, 'test');
         crApiLogout();
 
