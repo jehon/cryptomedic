@@ -53,11 +53,10 @@ endef
 # $(cypress) run --projects tests
 # Hardcoded command is "run" (see https://github.com/cypress-io/cypress-docker-images/tree/master/included)
 define cypress
-	docker-compose run --rm -e CYPRESS_BASE_URL="http://server:80" \
-		-e DISPLAY \
-		--entrypoint=cypress \
-		cypress
+	docker-compose run --rm -e CYPRESS_BASE_URL="http://server:80" cypress
 endef
+#		-e DISPLAY \
+
 
 # See https://coderwall.com/p/cezf6g/define-your-own-function-in-a-makefile
 # 1: folder where to look
