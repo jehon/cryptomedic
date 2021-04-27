@@ -35,7 +35,7 @@
     "babel-loader": "8.2.2",
     "babel-plugin-transform-commonjs": "1.1.6",
     "bluebird": "3.7.2",
-    "chalk": "4.1.0",
+    "chalk": "4.1.1",
     "chromedriver": "89.0.0",
     "css-loader": "5.2.4",
     "cypress": "7.1.0",
