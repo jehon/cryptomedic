@@ -37,12 +37,12 @@ pipeline {
         sh 'make ${MAKEOPT} ${STAGE_NAME}'
       }
     }
-    stage('start') {
+    stage('dump') {
       steps {
         sh 'make ${MAKEOPT} ${STAGE_NAME}'
       }
     }
-    stage('dump') {
+    stage('start') {
       steps {
         sh 'make ${MAKEOPT} ${STAGE_NAME}'
       }
