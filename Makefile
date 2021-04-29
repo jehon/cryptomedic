@@ -86,7 +86,7 @@ dump-docker-compose:
 	docker-compose config
 
 dump-cypress:
-	$(cypress) info
+	$(cypress) info --project tests
 
 all: start
 
