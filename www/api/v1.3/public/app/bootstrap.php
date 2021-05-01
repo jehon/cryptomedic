@@ -12,7 +12,14 @@
 |
 */
 
-require_once(__DIR__ . '/../vendor/autoload.php');
+# https://www.php.net/manual/en/function.set-error-handler.php
+// function headerErrorHandler() {
+//     http_response_code(500);
+//     return false;
+// }
+// set_error_handler("headerErrorHandler");
+
+require_once(__DIR__ . '/shared.php');
 
 global $myconfig;
 

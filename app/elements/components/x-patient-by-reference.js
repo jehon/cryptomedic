@@ -21,11 +21,11 @@ export default class XPatientByReference extends HTMLElement {
         this.append(
             createElementWithTag('css-inherit'),
             createElementWithTag('style', {}, `
-     #creator {
+    x-patient-by-reference #creator {
         display: none;
     }
 
-    :host([status=creation-proposed]) #creator {
+    x-patient-by-reference[status=creation-proposed] #creator {
         display: flex;
     }
             `),

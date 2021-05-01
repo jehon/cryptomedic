@@ -1,25 +1,25 @@
 import { crPage, crReady } from './cr.js';
 
 /**
- *
- * @param {*} year of the patient
- * @param {*} order of the patient
+ * @param {object} patient
+ * @property {number|string} entryyear of the patient
+ * @property {number|string} entryorder of the patient
  * @returns {Cypress.Chainable} with the Page element
  */
-export function patientgo(year, order) {
+export function patientgo(patient) {
     cy.get('#menu_home').click();
 
     cy.get('x-patient-by-reference').within(() => {
-        cy.get('[name="entryyear"]').invoke('attr', 'value', year);
-        cy.get('[name="entryorder"]').invoke('attr', 'value', order);
+        cy.get('[name="entryyear"]').invoke('attr', 'value', patient.entryyear);
+        cy.get('[name="entryorder"]').invoke('attr', 'value', patient.entryorder);
         cy.get('x-button[action="query"]').click();
     });
 
     crReady();
-    cy.get('#Patient_entryyear').should('contain.text', year);
-    cy.get('#Patient_entryorder').should('contain.text', order);
+    cy.get('#Patient_entryyear').should('contain.text', patient.entryyear);
+    cy.get('#Patient_entryorder').should('contain.text', patient.entryorder);
 
-    cy.log(`Gone to patient ${year}-${order} successfully`);
+    cy.log(`Gone to patient ${patient.entryyear}-${patient.entryorder} successfully`);
 
     return crPage();
 }
