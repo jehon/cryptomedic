@@ -1,9 +1,10 @@
 /// <reference types="Cypress" />
 
-import { patientCrudCreateReference, patientCrudGenerateReference } from '../helpers/e2e-entrynumber-assigned.js';
+import { patientCrudCreateReference, patientCrudGenerateReference, patientFilesCrud } from '../helpers/e2e-entrynumber-assigned.js';
 import { crApiLogin, crApiPatientDelete } from '../helpers/cr-api.js';
 import { crLoginInBackground, crPage } from '../helpers/cr.js';
 import { guiAcceptAlert, guiHashStartWith } from '../helpers/gui.js';
+import { patientgo } from '../helpers/patients.js';
 
 context('Actions', () => {
     beforeEach(() => {
@@ -75,16 +76,19 @@ context('Actions', () => {
         });
     });
 
-    // it('edit and cancel patient', () => {
-    //         cy.get('#button_patient').click();
-    //         cy.get('#topsubmenu #patient_edit').click();
-    //         client.waitForElementPresent('input#Patient_Name');
-    //         client.assert.value('#Patient_Name', 'mozahar ahamed');
-    //         client.mySetAttribute('[name=Pathology]', 'value', 'ClubFoot');
-    //         cy.get('#Patient_Name').type('rezaul');
-    //         cy.get('#topsubmenu #patient_cancel').click();
-    //         client.waitForElementPresent('#Patient_Name');
-    //         cy.get('#Patient_Name').should('contain.text', 'mozahar ahamed');
-    // });
+    it('edit and cancel patient', () => {
+        patientgo(patientFilesCrud);
+        crPage().within(() => {
+            cy.get('#button_patient').click();
+            cy.get('#topsubmenu #patient_edit').click();
+            cy.get('input#Patient_Name').should('be.visible');
+            cy.get('#Patient_Name').should('have.value', 'crud patient');
 
+            cy.get('[name=Pathology]').invoke('attr', 'value', 'ClubFoot');
+            cy.get('#Patient_Name').clear().type('rezaul');
+
+            cy.get('#topsubmenu #patient_cancel').click();
+            cy.get('#Patient_Name').should('contain.text', 'crud patient');
+        });
+    });
 });
