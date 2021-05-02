@@ -91,4 +91,7 @@ context('Actions', () => {
             cy.get('#Patient_Name').should('contain.text', 'crud patient');
         });
     });
+
+    // TODO: edit and submit patient
+
 });
