@@ -25,6 +25,10 @@ import { crReady } from '../helpers/cr.js';
 Cypress.Commands.add('crCompareSnapshot',
     (name = '') => {
         crReady();
+
+        // TODO: clean-up this wait, but don't know how to do that otherwise
+        cy.wait(1000); /* eslint-disable-line */
+
         var testName = ''.concat(Cypress.spec.name.replace('.js', '')).concat(name ? '-' + name : ''); // Take a screenshot and copy to baseline if it does not exist
         cy.screenshot(testName, {
             blackout: [
