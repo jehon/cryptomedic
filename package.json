@@ -40,6 +40,7 @@
     "chromedriver": "90.0.0",
     "css-loader": "5.2.4",
     "cypress": "7.2.0",
+    "cypress-plugin-snapshots": "^1.4.4",
     "eslint": "7.25.0",
     "eslint-plugin-cypress": "2.11.2",
     "eslint-plugin-jasmine": "4.1.2",
