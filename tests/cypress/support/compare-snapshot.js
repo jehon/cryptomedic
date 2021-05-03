@@ -26,7 +26,13 @@ Cypress.Commands.add('crCompareSnapshot',
     (name = '') => {
         crReady();
         var testName = ''.concat(Cypress.spec.name.replace('.js', '')).concat(name ? '-' + name : ''); // Take a screenshot and copy to baseline if it does not exist
-        cy.screenshot(testName, {
+        // cy.screenshot(testName, {
+        //     blackout: [
+        //         '[variable]'
+        //     ]
+        // });
+        cy.document().toMatchImageSnapshot({
+            name: testName,
             blackout: [
                 '[variable]'
             ]
