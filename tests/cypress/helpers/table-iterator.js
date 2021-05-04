@@ -43,4 +43,9 @@ export default class TableIterator {
         cy.get(this.#tableSelector).find((this.#xtable ? 'table > ' : '') + this.toString() + ' ' + selector).should('contain.text', text);
         return this;
     }
+
+    log() {
+        console.info(this.toString(), document.querySelector(this.toString()));
+        return this;
+    }
 }
