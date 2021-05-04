@@ -8,15 +8,10 @@
     "license": "MIT",
     "type": "project",
     "require": {
-        "php": ">=7.2.0",
         "laravel/framework": "8.39.0"
     },
     "require-dev": {
-        "fzaninotto/faker": "1.9.2",
-        "mockery/mockery": "1.4.3",
-        "phpunit/phpunit": "9.5.4",
-        "symfony/dom-crawler": "5.2.4",
-        "filp/whoops": "2.12.1"
+        "phpunit/phpunit": "9.5.4"
     },
     "autoload": {
         "classmap": [
