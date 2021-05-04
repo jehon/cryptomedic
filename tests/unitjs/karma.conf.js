@@ -56,7 +56,8 @@ module.exports = function (config) {
         autoWatch: true,
 
         browsers: [
-            //'FirefoxHeadless',
+            // 'FirefoxHeadless'
+            // 'Chrome'
             'ChromeHeadless'
         ],
 
