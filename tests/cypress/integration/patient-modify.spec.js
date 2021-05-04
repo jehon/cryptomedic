@@ -1,8 +1,8 @@
 /// <reference types="Cypress" />
 
 import { patientCrudCreateReference, patientCrudGenerateReference, patientFilesCrud } from '../helpers/e2e-entrynumber-assigned.js';
-import { crApiLogin, crApiPatientDelete } from '../helpers/cr-api.js';
-import { crLoginInBackground, crPage } from '../helpers/cr.js';
+import { crApiFicheModify, crApiLogin, crApiPatientDelete } from '../helpers/cr-api.js';
+import { crLoginInBackground, crPage, crReady } from '../helpers/cr.js';
 import { guiAcceptAlert, guiHashStartWith } from '../helpers/gui.js';
 import { patientgo } from '../helpers/patients.js';
 
@@ -10,13 +10,17 @@ context('Actions', () => {
     beforeEach(() => {
         crLoginInBackground(crApiLogin.PHYSIO);
 
-        crApiPatientDelete(patientCrudCreateReference.entryyear, patientCrudCreateReference.entrynumber);
-
-        // entrynumber will be set automatically to 10.000
-        crApiPatientDelete(patientCrudGenerateReference.entryyear, patientCrudGenerateReference.entrynumber);
+        crApiFicheModify('patients', patientFilesCrud.id, {
+            entryyear: patientFilesCrud.entryyear,
+            entryorder: patientFilesCrud.entryorder,
+            Name: 'crud patient',
+            Pathology: 'ClubFoot',
+        });
     });
 
     it('create a reference', () => {
+        crApiPatientDelete(patientCrudCreateReference.entryyear, patientCrudCreateReference.entrynumber);
+
         cy.get('x-patient-by-reference').within((el) => {
             cy.get('input[name=entryyear]')
                 .clear()
@@ -45,6 +49,9 @@ context('Actions', () => {
     });
 
     it('generate a reference', () => {
+        // entrynumber will be set automatically to 10.000
+        crApiPatientDelete(patientCrudGenerateReference.entryyear, patientCrudGenerateReference.entrynumber);
+
         cy.get('#autogenerate-reference').should('be.visible')
             .within(() => {
                 cy.crCompareSnapshot('generate-1-input');
@@ -92,6 +99,18 @@ context('Actions', () => {
         });
     });
 
-    // TODO: edit and submit patient
+    it('edit a patient', () => {
+        patientgo(patientFilesCrud);
+        crPage().within(() => {
+            cy.get('#button_patient').click();
+            cy.get('#topsubmenu #patient_edit').click();
+            cy.get('input#Patient_Name').should('be.visible');
+            cy.get('#Patient_Name').should('have.value', 'crud patient');
+            cy.get('#Patient_Name').clear().type('rezaul');
 
+            cy.get('#topsubmenu #patient_save').click();
+            crReady();
+            cy.get('#Patient_Name').should('contain.text', 'rezaul');
+        });
+    });
 });

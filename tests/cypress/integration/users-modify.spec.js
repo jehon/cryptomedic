@@ -1,6 +1,6 @@
 /// <reference types="Cypress" />
 
-import { crApiDeleteUsers, crApiLogin, crApiLogout } from '../helpers/cr-api.js';
+import { crApiUserDelete, crApiLogin, crApiLogout } from '../helpers/cr-api.js';
 import { crGo, crLoginInBackground } from '../helpers/cr.js';
 
 function getRowByUsername(username) {
@@ -12,7 +12,7 @@ context('Actions', () => {
 
     before(() => {
         crLoginInBackground(crApiLogin.ADMIN);
-        crApiDeleteUsers(username);
+        crApiUserDelete(username);
     });
 
     it('list users', () => {
