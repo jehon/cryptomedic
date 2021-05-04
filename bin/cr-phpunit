@@ -33,8 +33,8 @@ testOne() {
 			chmod a+rwx "$REPORTS"
 
 			header "PHPUnit: Laravel $V starting"
-			docker-compose exec -T "server" \
-				bash -c "cd '$V' && XDEBUG_MODE=coverage ./vendor/bin/phpunit  --coverage-html '/app/$REPORTS' --coverage-xml '/app/$REPORTS' $*"
+			docker-compose run --rm -T --workdir "/app/$V" -e XDEBUG_MODE=coverage "php" \
+				./vendor/bin/phpunit  --coverage-html "/app/$REPORTS" --coverage-xml "/app/$REPORTS" "$@"
 			cr-fix-permissions "$REPORTS"
 			header_finished
 		else
@@ -50,8 +50,8 @@ testOne() {
 			chmod a+rwx "$REPORTS"
 
 			header "PHPUnit: Bare $V starting"
-			docker-compose exec -T "server" \
-				bash -c "cd '$V/public' && XDEBUG_MODE=coverage ./vendor/bin/phpunit  --coverage-html '/app/$REPORTS' --coverage-xml '/app/$REPORTS' $*"
+			docker-compose run --rm -T --workdir "/app/$V/public" -e XDEBUG_MODE=coverage "php" \
+				./vendor/bin/phpunit  --coverage-html "/app/$REPORTS" --coverage-xml "/app/$REPORTS" "$@"
 			cr-fix-permissions "$REPORTS"
 			header_finished
 		else
