@@ -341,7 +341,8 @@ www/api/$(VAPI)/public/vendor/.dependencies: \
 	cr-dependencies-php "www/api/$(VAPI)/public"
 
 .PHONY: update-dependencies-api
-update-dependencies-api:
+update-dependencies-api: update-dependencies-api-bare
+	mkdir -m 777 -p www/api/v1.3/bootstrap/cache
 	cr-dependencies-php "www/api/$(VAPI)" "update"
 
 .PHONY: update-dependencies-api-bare
