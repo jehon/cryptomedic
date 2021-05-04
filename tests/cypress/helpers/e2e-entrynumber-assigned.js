@@ -9,7 +9,8 @@ export const patientCrudGenerateReference = {
     entryorder: 10000
 };
 
-export const patientFilesCrud = { // id: 8
+export const patientFilesCrud = {
     entryyear: '1991',
-    entryorder: '299'
+    entryorder: '299',
+    id: 8
 };

@@ -77,11 +77,25 @@ export function crApiPatientDelete(entryyear, entrynumber = 1000) {
     cy.log(`Done crApiPatientDelete: ${entryyear} / ${entrynumber}`);
 }
 
-export function crApiDeleteUsers(username) {
+/**
+ * Update a Fiche
+ *
+ * @param {string} type to be updated
+ * @param {number|string} id to be updated
+ * @param {object} data to be set
+ */
+export function crApiFicheModify(type, id, data) {
+    // Modify a file
+    cy.log(`Doing crApiFicheModify: ${type}#${id}`);
+    crApi({ url: `fiche/${type}/${id}`, method: 'PUT', data });
+    cy.log(`Done crApiFicheModify: ${type}#${id}`);
+}
+
+export function crApiUserDelete(username) {
     crApi({ url: 'users' })
         .then(response => response.body)
         .then(data => data.filter(l => l.username == username).map(l => l.id)
             .forEach(id => crApi({ url: `users/${id}`, method: 'DELETE' }))
         );
-    cy.log(`Done crApiDeleteUsers: ${crApiDeleteUsers}`);
+    cy.log(`Done crApiUserDelete: ${crApiUserDelete}`);
 }
