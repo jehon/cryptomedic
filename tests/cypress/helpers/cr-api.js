@@ -91,6 +91,21 @@ export function crApiFicheModify(type, id, data) {
     cy.log(`Done crApiFicheModify: ${type}#${id}`);
 }
 
+export function crApiPriceList() {
+    cy.log('Doing crApiPriceList');
+    return crApi({ url: 'admin/prices' })
+        .then(response => response.body)
+        .then(data => {
+            cy.log('Done crApiPriceList: ', data);
+        });
+}
+
+export function crApiPriceDelete(id) {
+    cy.log(`Doing crApiPriceDelete: ${id}`);
+    crApi({ url: `admin/prices/${id}`, method: 'DELETE' });
+    cy.log(`Done crApiPriceDelete: ${id}`);
+}
+
 export function crApiUserDelete(username) {
     crApi({ url: 'users' })
         .then(response => response.body)
