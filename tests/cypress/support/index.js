@@ -16,8 +16,8 @@
 
 import './compare-snapshot.js';
 
-// https://github.com/meinaart/cypress-plugin-snapshots
-import 'cypress-plugin-snapshots/commands';
+// // https://github.com/meinaart/cypress-plugin-snapshots
+// import 'cypress-plugin-snapshots/commands';
 
 //
 // On custom commands:
