@@ -14,7 +14,7 @@ fs.writeFileSync(__dirname + '/www/build/release_version.txt', released_version)
 fs.writeFileSync(__dirname + '/www/build/release_version.js', `window.application_version = '${released_version}';`);
 fse.copy(__dirname + '/app/build.htaccess', __dirname + '/www/build/.htaccess');
 
-const isDebug = parseInt(child_process.execSync('php config.php debug').toString()) > 0;
+const isDebug = parseInt(child_process.execSync(path.join(__dirname, 'bin', 'cr-get-config') + ' debug').toString()) > 0;
 if (isDebug) {
     console.info('Enabling debug/development mode in webpack');
 }
