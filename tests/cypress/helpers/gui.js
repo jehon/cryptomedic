@@ -1,5 +1,5 @@
 
-import escapeStringRegexp from 'escape-string-regexp';
+import escapeStringRegexp from '../../../node_modules/escape-string-regexp/index.js';
 
 export function guiAcceptAlert(cb = (_txt) => { }) {
     cy.on('window:alert', (txt) => cb(txt));

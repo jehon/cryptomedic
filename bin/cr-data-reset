@@ -11,6 +11,7 @@ header "data-reset: reset files..."
 docker-compose run --rm dev \
     rsync -a --delete live-for-test/ live/
 cr-fix-permissions "live/"
+chmod -R a+rwX live/storage/uploadedPictures
 header_finished
 
 # Reset database

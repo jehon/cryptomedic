@@ -19,6 +19,9 @@ import './compare-snapshot.js';
 // // https://github.com/meinaart/cypress-plugin-snapshots
 // import 'cypress-plugin-snapshots/commands';
 
+// https://www.npmjs.com/package/cypress-file-upload
+import 'cypress-file-upload';
+
 //
 // On custom commands:
 //   https://on.cypress.io/custom-commands

@@ -102,19 +102,19 @@ context('Actions', () => {
         });
     });
 
-    it.skip('should add a picture', () => {
-        // TODO: test add a picture
-        // https://www.npmjs.com/package/cypress-file-upload
+    it('should add a picture', () => {
+        checkFileAdd('picture', () => {
+            cy.get('#Picture_Date').invoke('attr', 'value', '2003-01-01');
+            cy.get('x-input-picture').shadow().find('input[type=file]')
+                .should('be.visible')
+                // https://www.npmjs.com/package/cypress-file-upload
+                .attachFile('upload.jpg'); // image/gif
 
-        // checkFileAdd('picture', () => {
-        // cy.get('#Picture_Date').invoke('attr', 'value', '2003-01-01');
-        // cy.get('x-input-picture').shadow().find('input[type=file]')
-        // .should('be.visible')
-        // .attachFile('upload.jpg'); // image/gif
-        // }, () => {
-        // cy.get('#Picture_Date').should('contain.text', '2003-01-01');
-        // crReady();
-        // });
+            crReady();
+        }, () => {
+            cy.get('#Picture_Date').should('contain.text', '2003-01-01');
+            crReady();
+        });
     });
 
     it('should add an appointment', () => {
