@@ -1,22 +1,14 @@
 
-[     ] Know the clients
-> add info on logged computers
-
 [     ] Remove webDescribe
 - Used in legacy components, depends on Angular removal?
 
-[     ] Remove jQuery & bootstrap
-- migrate home page
-- info: BootStrap used on demo and main.js
-
 [     ] Remove Angular:
-- migrate district selection
-- migrate bill lines & blocks
 
 [     ] Remove Laravel
 > build up the cache system
 
-https://github.com/google/closure-compiler/wiki/Generic-Types
 
-Compile:
-https://docs.angularjs.org/api/ng/service/$compile
+Unify the objects (around "camelcase" plural ?):
+- PHP
+- REST api
+- Javascript
