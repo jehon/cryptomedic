@@ -58,6 +58,20 @@ export function crApiLogout() {
 }
 
 /**
+ * Get the price list
+ *
+ * @returns {Cypress.Chainable<*>} Promise to price list
+ */
+export function crApiFolderGet(id) {
+    cy.log('Doing crApiFolderGet');
+    return crApi({ url: `folder/Patient/${id}` })
+        .then(response => response.body)
+        .then(data => {
+            cy.log('Done crApiFolderGet: ', data);
+        });
+}
+
+/**
  * Delete a patient using the API
  *   !! It need to log as Admin to do that
  *
@@ -91,6 +105,33 @@ export function crApiFicheModify(type, id, data) {
     cy.log(`Done crApiFicheModify: ${type}#${id}`);
 }
 
+/**
+ * Delete a Fiche
+ *
+ * @param {string} type to be updated
+ * @param {number|string} id to be updated
+ */
+export function crApiFicheDelete(type, id) {
+    // Modify a file
+    cy.log(`Doing crApiFicheDelete: ${type}#${id}`);
+    const apiTypes = {
+        Appointment: 'appointments',
+        RicketConsult: 'ricketconsults',
+        OtherConsult: 'otherconsults',
+        ClubFoot: 'clubfeet',
+        Surgery: 'surgeries',
+        Picture: 'pictures'
+    };
+
+    crApi({ url: `fiche/${apiTypes[type]}/${id}`, method: 'DELETE' });
+    cy.log(`Done crApiFicheDelete: ${type}#${id}`);
+}
+
+/**
+ * Get the price list
+ *
+ * @returns {Cypress.Chainable<*>} Promise to price list
+ */
 export function crApiPriceList() {
     cy.log('Doing crApiPriceList');
     return crApi({ url: 'admin/prices' })
