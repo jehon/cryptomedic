@@ -57,8 +57,6 @@ context('Actions', () => {
         });
 
         crGo('prices');
-
-
     });
 
     it('go to the price page', () => {

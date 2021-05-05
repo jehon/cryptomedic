@@ -6,6 +6,8 @@ export function guiAcceptAlert(cb = (_txt) => { }) {
     cy.log('Alert accepted');
 }
 
-export function guiHashStartWith(hash) {
-    cy.hash().should('match', new RegExp(`^#${escapeStringRegexp(hash)}([/?].*)?$`));
+export function guiHashStartWith(hash, strict = false) {
+    cy.hash().should('match',
+        new RegExp(`^#${escapeStringRegexp(hash)}${strict ? '' : '([/].*)?'}([?].*)?$`)
+    );
 }
