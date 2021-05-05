@@ -9,7 +9,7 @@ PRJ_DIR="$(dirname "$SCRIPT_DIR")"
 
 if [ -z "$CRYPTOMEDIC_HTTP_HOST" ]; then
     CRYPTOMEDIC_HTTP_HOST="localhost:${CRYPTOMEDIC_PORT:-5080}"
-    CRYPTOMEDIC_DB_UPGRADE="$( php "$PRJ_DIR/config.php" "security.key" )"
+    CRYPTOMEDIC_DB_UPGRADE="$( cr-get-config "security.key" )"
 fi
 echo "Deploying to $CRYPTOMEDIC_HTTP_HOST with pwd of #${#CRYPTOMEDIC_DB_UPGRADE} char length"
 
