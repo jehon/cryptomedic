@@ -50,7 +50,7 @@ endef
 # 1: command
 # 2: additional arguments
 #
-# $(cypress) run --projects tests
+# $(cypress) run
 # Hardcoded command is "run" (see https://github.com/cypress-io/cypress-docker-images/tree/master/included)
 define cypress
 	docker-compose run --rm -e CYPRESS_BASE_URL="http://server:80" --entrypoint=cypress cypress
@@ -105,8 +105,9 @@ clean: deploy-unmount chmod
 	rm -fr app/cjs2esm
 	rm -fr www/api/*/bootstrap/cache
 	rm -fr www/api/*/storage
-	rm -fr tests/cypress/screenshots
-	rm -fr tests/cypress/videos
+	rm -fr cypress/screenshots
+	rm -fr cypress/videos
+	rm -fr cypress/results
 
 	@echo "!! Removed dependencies, so husky (commit) will not work anymore. Please make dependencies-node to enable it again"
 
@@ -211,16 +212,17 @@ test-e2e: test-e2e-before
 # TODO -> no call itself
 	$(call itself,tmp/e2e/.tested)
 
-test-e2e-before: build $(shell find tests/cypress/ -name "*.js")
+test-e2e-before: build $(shell find cypress/ -name "*.js")
 	@cr-data-reset
-	@cr-ensure-folder-empty tests/cypress/screenshots
-	@cr-ensure-folder-empty tests/cypress/videos
+	@cr-ensure-folder-empty cypress/screenshots
+	@cr-ensure-folder-empty cypress/videos
+	@cr-ensure-folder-empty cypress/results
 	@cr-ensure-folder-empty $(STYLES_RUN_SCREENSHOTS)
 
 tmp/e2e/.tested:
-	$(cypress) run --project tests
-	cr-fix-permissions tests/cypress
-	cr-capture-output find tests/cypress/screenshots/ -type f | while read -r F ; do \
+	$(cypress) run
+	cr-fix-permissions cypress
+	cr-capture-output find cypress/screenshots/ -type f | while read -r F ; do \
 		cp "$$F" "$(STYLES_RUN_SCREENSHOTS)/$$(basename "$$F")"; \
 	done
 	@mkdir -p "$(dir $@)"
@@ -228,31 +230,31 @@ tmp/e2e/.tested:
 
 test-e2e-one: test-e2e-before
 	@clear
-#	F=$(dialog --stdout --title "text" --fselect tests/cypress/integration/ $(expr $LINES - 15) $(expr $COLUMNS - 10))
+#	F=$(dialog --stdout --title "text" --fselect cypress/integration/ $(expr $LINES - 15) $(expr $COLUMNS - 10))
 	@if [ -z "$(TEST)" ]; then \
 		echo "Please select test in TEST"; \
 		exit 1; \
 	fi
-	$(cypress) run --config video=true --project tests --spec "$(TEST)"
-	cr-fix-permissions tests/cypress
+	$(cypress) run --config video=true --spec "$(TEST)"
+	cr-fix-permissions cypress
 	@echo "Running test "$(TEST)" only done"
 
 cypress-open: chmod
-	$(shell npm bin)/cypress open --project tests
+	$(shell npm bin)/cypress open
 
 cypress-open-docker:
-	$(cypress) open --project tests
+	$(cypress) open
 
 #
 # Display does not work through WSL
 #
 # echo "DISPLAY: $(DISPLAY)"
-# $(cypress) open -e DISPLAY --project tests
+# $(cypress) open -e DISPLAY
 
 # docker-compose run --rm -e CYPRESS_BASE_URL="http://server:80" \
 # 	-e DISPLAY=$(DISPLAY) -v /tmp/.X11-unix:/tmp/.X11-unix \
 # 	cypress \
-# 	open --project tests
+# 	open
 
 .PHONY: test-styles
 test-styles: tmp/styles.json
