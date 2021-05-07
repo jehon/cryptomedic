@@ -60,6 +60,7 @@ context('Actions', () => {
             });
 
         patientgo(patientFilesCrud);
+        crReady();
     });
 
     it('should add a ricket_consult', () => {

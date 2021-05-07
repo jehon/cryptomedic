@@ -116,12 +116,18 @@ export function crApiFicheDelete(type, id) {
     cy.log(`Doing crApiFicheDelete: ${type}#${id}`);
     const apiTypes = {
         Appointment: 'appointments',
-        RicketConsult: 'ricketconsults',
-        OtherConsult: 'otherconsults',
+        Bill: 'bills',
         ClubFoot: 'clubfeet',
+        OtherConsult: 'otherconsults',
+        Payment: 'payments',
+        Picture: 'pictures',
+        RicketConsult: 'ricketconsults',
         Surgery: 'surgeries',
-        Picture: 'pictures'
     };
+
+    if (!apiTypes[type]) {
+        throw new Error(`No mapping found for ${type}`);
+    }
 
     crApi({ url: `fiche/${apiTypes[type]}/${id}`, method: 'DELETE' });
     cy.log(`Done crApiFicheDelete: ${type}#${id}`);
