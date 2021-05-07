@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+. cr-lib
+
+if [ ! -d "$1" ]; then
+    mkdir -p "$1"
+fi
+
+cr-capture-output find "$1" -mindepth 1 ! -path './.*' -delete

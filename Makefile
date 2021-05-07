@@ -205,25 +205,24 @@ test-unit: dependencies-node \
 
 .PHONY: test-e2e
 test-e2e:
-	rm -fr $(TMP)/e2e
-	rm -fr $(STYLES_RUN_SCREENSHOTS)
+	@rm -fr $(TMP)/e2e
+	@rm -fr $(STYLES_RUN_SCREENSHOTS)
 
 # TODO -> no call itself
 	$(call itself,tmp/e2e/.tested)
 
 tmp/e2e/.tested: build $(shell find tests/cypress/ -name "*.js")
-	cr-data-reset
-	rm -fr tests/cypress/screenshots
-	mkdir -p "$(STYLES_RUN_SCREENSHOTS)"
-	find "$(STYLES_RUN_SCREENSHOTS)" -type f -name '*.spec*' -delete
+	@cr-data-reset
+	@cr-ensure-folder-empty tests/cypress/screenshots
+	@cr-ensure-folder-empty tests/cypress/videos
+	@cr-ensure-folder-empty $(STYLES_RUN_SCREENSHOTS)
 	$(cypress) run --project tests
 	cr-fix-permissions tests/cypress
-	@echo "Cypress screenshots"
-	find tests/cypress/screenshots/ -type f | while read -r F ; do \
+	cr-capture-output find tests/cypress/screenshots/ -type f | while read -r F ; do \
 		cp "$$F" "$(STYLES_RUN_SCREENSHOTS)/$$(basename "$$F")"; \
 	done
-	mkdir -p "$(dir $@)"
-	touch "$@"
+	@mkdir -p "$(dir $@)"
+	@touch "$@"
 
 test-e2e-cypress-one:
 	@clear
@@ -232,10 +231,9 @@ test-e2e-cypress-one:
 		echo "Please select test in TEST"; \
 		exit 1; \
 	fi
-	#echo "Running test $(TEST) only"
 	$(cypress) run --config video=true  --project tests --spec "$(TEST)"
 	cr-fix-permissions tests/cypress
-	echo "Running test "$(TEST)" only done"
+	@echo "Running test "$(TEST)" only done"
 
 cypress-open: chmod
 	$(shell npm bin)/cypress open --project tests
