@@ -8,18 +8,18 @@ cr-ensure-started
 
 # Live folder
 header "data-reset: reset files..."
-docker-compose run --rm dev \
+cr_capture_output docker-compose run --rm dev \
     rsync -a --delete live-for-test/ live/
-cr-fix-permissions "live/"
+cr_capture_output cr-fix-permissions "live/"
 chmod -R a+rwX live/storage/uploadedPictures
 header_finished
 
 # Reset database
 header "data-reset: reset the database..."
-docker-compose exec -T mysql \
+cr_capture_output docker-compose exec -T mysql \
     bash -c "while ! mysql -u root -p${DBROOTPASS} --database=mysql -e 'Show tables;' &>/dev/null; do sleep 1; done"
 header "data-reset: build up the schema..."
-docker-compose exec -T mysql \
+cr_capture_output docker-compose exec -T mysql \
     mysql -u root "-p${DBROOTPASS}" --database=mysql -e " \
             USE mysql; \
             DROP SCHEMA IF EXISTS ${DBNAME} ; \
@@ -33,7 +33,7 @@ docker-compose exec -T mysql \
 # 	ALTER USER 'root' IDENTIFIED WITH mysql_native_password BY 'password';
 # 	ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
 header "data-reset: restore backup..."
-docker-compose exec -T mysql \
+cr_capture_output docker-compose exec -T mysql \
     mysql -u root "-p${DBROOTPASS}" --database="${DBNAME}" < "conf/database/base.sql"
 header_finished
 
@@ -55,6 +55,6 @@ ensure_folder_empty "www/api/${VAPI}/storage/logs/"
 header_finished
 
 header "data-reset: refresh structure..."
-cryptomedic-refresh-structure.sh
+cr_capture_output cryptomedic-refresh-structure.sh
 cr-fix-permissions
 header_finished
