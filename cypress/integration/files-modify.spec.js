@@ -35,7 +35,14 @@ function checkFileAdd(type, inputCb, checkCb) {
             .should('be.visible').click();
         crReady();
 
-        cy.get('#topsubmenu #button_delete').click();
+        cy.get('form#fileForm')
+            .should('be.visible');
+
+        cy.get('form#fileForm input')
+            .should('be.visible');
+
+        cy.get('#topsubmenu #button_delete')
+            .should('be.visible').click();
         guiAcceptAlert();
         crReady();
     });
