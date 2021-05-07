@@ -209,26 +209,9 @@ test-e2e:
 	rm -fr $(STYLES_RUN_SCREENSHOTS)
 
 # TODO -> no call itself
-	$(call itself,test-e2e-nightwatch)
-	$(call itself,test-e2e-cypress)
+	$(call itself,tmp/e2e/.tested)
 
-test-e2e-nightwatch: tmp/e2e/.tested-nightwatch
-tmp/e2e/.tested-nightwatch: www/build/index.html $(call recursive-dependencies,tests/e2e,$(TMP)/e2e/.tested-nightwatch)
-# TODO -> from dev
-	cr-data-reset
-	rm -fr tmp/e2e/browsers
-	mkdir -p "$(STYLES_RUN_SCREENSHOTS)"
-	find "$(STYLES_RUN_SCREENSHOTS)" -type f -not -name '*.spec*' -delete
-	npm run --silent test-e2e
-	@echo "Nightwatch screenshots"
-	rsync -r \
-		--include "*_reference.png" --include "*_reference_*.png" --exclude "*" \
-		"$(TMP)/e2e/browsers/firefox/" "$(TMP)/styles/run"
-	mkdir -p "$(dir $@)"
-	touch "$@"
-
-test-e2e-cypress: tmp/e2e/.tested-cypress
-tmp/e2e/.tested-cypress: www/build/index.html $(shell find tests/cypress/ -name "*.js")
+tmp/e2e/.tested: build $(shell find tests/cypress/ -name "*.js")
 	cr-data-reset
 	rm -fr tests/cypress/screenshots
 	mkdir -p "$(STYLES_RUN_SCREENSHOTS)"
@@ -273,7 +256,7 @@ cypress-open-docker:
 
 .PHONY: test-styles
 test-styles: tmp/styles.json
-tmp/styles.json: tests/styles/* tests/styles/references/* tmp/e2e/.tested-cypress tmp/e2e/.tested-nightwatch
+tmp/styles.json: tests/styles/* tests/styles/references/* tmp/e2e/.tested
 # TODO -> from dev
 
 	@echo "Compare"
@@ -360,7 +343,7 @@ package-lock.json: package.json
 	npm install
 
 .PHONY: build
-build: www/build/index.html www/build/browsers.json
+build: www/build/index.html www/build/browsers.json dependencies
 # TODO: index.html depend on axios-mock, wich is for testing only
 www/build/index.html: node_modules/.dependencies webpack.config.js \
 		package.json package-lock.json \
