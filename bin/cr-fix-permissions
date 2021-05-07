@@ -12,6 +12,6 @@ fi
 USERUID="$(id -u)"
 
 header "Fixing permission through 'dev' to $USERUID on $FOLDER"
-cr-capture-output docker-compose run --rm "dev" \
+docker-compose run --rm "dev" \
     find "$FOLDER" \( -not -user "${USERUID}" \) -exec chown "${USERUID}" '{}' ';'
 header_finished

@@ -217,9 +217,9 @@ test-e2e-before: build $(shell find cypress/ -name "*.js")
 	@cr-ensure-folder-empty cypress/screenshots
 	@cr-ensure-folder-empty cypress/videos
 	@cr-ensure-folder-empty cypress/results
-	@cr-ensure-folder-empty $(STYLES_RUN_SCREENSHOTS)
 
 tmp/e2e/.tested:
+	@cr-ensure-folder-empty $(STYLES_RUN_SCREENSHOTS)
 	$(cypress) run
 	cr-fix-permissions cypress
 	cr-capture-output find cypress/screenshots/ -type f | while read -r F ; do \
