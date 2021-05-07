@@ -1,0 +1,9 @@
+{
+    "baseUrl": "http://localhost:5080",
+    "video": false,
+    "testFiles": "**/*.spec.js",
+    "reporter": "cypress-multi-reporters",
+    "reporterOptions": {
+        "configFile": "cypress-reporters.json"
+    }
+}
