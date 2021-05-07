@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="Mocha Tests" time="15.1610" tests="1" failures="0">
-  <testsuite name="Root Suite" timestamp="2021-05-07T12:23:59" tests="0" file="cypress/integration/files-modify-bill.spec.js" time="0.0000" failures="0">
-  </testsuite>
-  <testsuite name="Actions" timestamp="2021-05-07T12:23:59" tests="1" time="15.1610" failures="0">
-    <testcase name="Actions add a price normally" time="15.1610" classname="add a price normally">
-    </testcase>
-  </testsuite>
-</testsuites>
