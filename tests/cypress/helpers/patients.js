@@ -7,6 +7,8 @@ import { crPage, crReady } from './cr.js';
  * @returns {Cypress.Chainable} with the Page element
  */
 export function patientgo(patient) {
+    cy.visit('/build/');
+
     cy.get('#menu_home').click();
 
     cy.get('x-patient-by-reference').within(() => {
@@ -20,6 +22,8 @@ export function patientgo(patient) {
     cy.get('#Patient_entryorder').should('contain.text', patient.entryorder);
 
     cy.log(`Gone to patient ${patient.entryyear}-${patient.entryorder} successfully`);
+
+    crReady();
 
     return crPage();
 }
