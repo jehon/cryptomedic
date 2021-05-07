@@ -10,11 +10,3 @@ header() {
 header_finished() {
     echo -e "\e[93m$PREFIX $LASTMSG done\e[00m"
 }
-
-cr_capture_output() {
-    if type jh-run-and-capture >/dev/null 2>&1; then
-        jh-run-and-capture "$@"
-    else
-        "$@"
-    fi
-}

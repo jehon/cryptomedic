@@ -9,6 +9,6 @@ set -e
 
 if ! docker-compose ps --filter "status=running" --services  | grep "server" &>/dev/null ; then
  	header "starting docker"
- 	cr_capture_output docker-compose up --build -d
+ 	cr-capture-output docker-compose up --build -d
     header_finished
 fi
