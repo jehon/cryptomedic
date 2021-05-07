@@ -11,8 +11,8 @@ if [ -n "$2" ]; then
 fi
 
 header "Installing dependencies in $FOLDER"
-docker-compose run --rm  --workdir "/app/$FOLDER" "php" "/composer.phar" "$ACT"
+cr_capture_output docker-compose run --rm  --workdir "/app/$FOLDER" "php" "/composer.phar" "$ACT"
 cr-fix-permissions "$FOLDER/vendor"
-touch "$FOLDER"/composer.lock
-touch "$FOLDER"/vendor/.dependencies
+cr_capture_output touch "$FOLDER"/composer.lock
+cr_capture_output touch "$FOLDER"/vendor/.dependencies
 header_finished
