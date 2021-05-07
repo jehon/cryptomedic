@@ -60,7 +60,6 @@ context('Actions', () => {
             });
 
         patientgo(patientFilesCrud);
-        crReady();
     });
 
     it('should add a ricket_consult', () => {
@@ -73,7 +72,7 @@ context('Actions', () => {
         });
     });
 
-    it('should add a other_consult', () => {
+    it('should add an other_consult', () => {
         checkFileAdd('other_consult', () => {
             cy.get('#Date').invoke('attr', 'value', '2003-01-01');
             cy.get('#Weightkg').clear().type('13');
