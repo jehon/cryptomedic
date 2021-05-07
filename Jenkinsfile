@@ -76,17 +76,7 @@ make ${MAKEOPT} ${STAGE_NAME}
         sh 'make ${MAKEOPT} ${STAGE_NAME}'
       }
     }
-    // stage('test-e2e') {
-    //   steps {
-    //     sh 'make ${MAKEOPT} test-e2e'
-    //   }
-    // }
-    stage('test-e2e-nightwatch') {
-      steps {
-        sh 'make ${MAKEOPT} ${STAGE_NAME}'
-      }
-    }
-    stage('test-e2e-cypress') {
+    stage('test-e2e') {
       steps {
         sh 'make ${MAKEOPT} ${STAGE_NAME}'
       }
