@@ -204,18 +204,20 @@ test-unit: dependencies-node \
 	node tests/report.js
 
 .PHONY: test-e2e
-test-e2e:
+test-e2e: test-e2e-before
 	@rm -fr $(TMP)/e2e
 	@rm -fr $(STYLES_RUN_SCREENSHOTS)
 
 # TODO -> no call itself
 	$(call itself,tmp/e2e/.tested)
 
-tmp/e2e/.tested: build $(shell find tests/cypress/ -name "*.js")
+test-e2e-before: build $(shell find tests/cypress/ -name "*.js")
 	@cr-data-reset
 	@cr-ensure-folder-empty tests/cypress/screenshots
 	@cr-ensure-folder-empty tests/cypress/videos
 	@cr-ensure-folder-empty $(STYLES_RUN_SCREENSHOTS)
+
+tmp/e2e/.tested:
 	$(cypress) run --project tests
 	cr-fix-permissions tests/cypress
 	cr-capture-output find tests/cypress/screenshots/ -type f | while read -r F ; do \
@@ -224,14 +226,14 @@ tmp/e2e/.tested: build $(shell find tests/cypress/ -name "*.js")
 	@mkdir -p "$(dir $@)"
 	@touch "$@"
 
-test-e2e-cypress-one:
+test-e2e-one: test-e2e-before
 	@clear
 #	F=$(dialog --stdout --title "text" --fselect tests/cypress/integration/ $(expr $LINES - 15) $(expr $COLUMNS - 10))
 	@if [ -z "$(TEST)" ]; then \
 		echo "Please select test in TEST"; \
 		exit 1; \
 	fi
-	$(cypress) run --config video=true  --project tests --spec "$(TEST)"
+	$(cypress) run --config video=true --project tests --spec "$(TEST)"
 	cr-fix-permissions tests/cypress
 	@echo "Running test "$(TEST)" only done"
 
