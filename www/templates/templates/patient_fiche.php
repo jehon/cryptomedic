@@ -1,10 +1,10 @@
 <?php
-	t::setDefaultOption("baseExpression", "folder.getPatient().");
+t::setDefaultOption("baseExpression", "folder.getPatient().");
 ?>
 <div class='container-fluid'>
 	<div class='row'>
 		<div class="col-md-6">
-	        <x-group-panel title='General data'>
+			<x-group-panel title='General data'>
 				<x-fff-field ng-if="patient_id > -1" label='Entry Number'>
 					<div><?php (new t("Patient.entryyear"))->read()->p(); ?>-<?php (new t("Patient.entryorder"))->read()->p(); ?></div>
 				</x-fff-field>
@@ -13,7 +13,7 @@
 						<x-message level='info'>
 							You asked the system to generate a reference for you. This reference will be generated
 							when you will save this file. I just need the year to build up the reference.
-							<?php (new t("Patient.entryyear", [ "required" => "required" ]))->write()->p(); ?>
+							<?php (new t("Patient.entryyear", ["required" => "required"]))->write()->p(); ?>
 						</x-message>
 					</div>
 				</x-fff-field>
@@ -30,8 +30,10 @@
 					</div>
 				</x-fff-field>
 				<div class='notModeRead'>Calculate year of birth</div>
-				<x-fff-field class='notModeWrite' label='Age (today)'>
-					<div id='#ageToday'><x-fff-age></x-fff-age> old</div>
+				<x-fff-field class='notModeWrite' label='Age (today)' variable>
+					<div id='#ageToday' variable>
+						<x-fff-age></x-fff-age> old
+					</div>
 				</x-fff-field>
 				<x-fff-field field='District'>
 					<div>
@@ -66,20 +68,20 @@
 				<?php (new t("Patient.Telephone"))->tr2()->p(); ?>
 				<?php (new t("Patient.AddressNotes"))->tr2("Adress Notes")->p(); ?>
 			</x-group-panel>
-	 	</div>
+		</div>
 		<div class="col-md-6">
 			<x-group-panel id='PatientPathology' ng-class='{ jserror: errors.noPathology }' title='Pathology'>
 				<?php (new t("Patient.Pathology"))->tr2("Main pathology")->p(); ?>
 				<?php (new t("Patient.other_comments"))->tr2("Other comments")->p(); ?>
 			</x-group-panel>
-	 		<br/>
+			<br />
 		</div>
 	</div>
 	<jh-script>
 		document.querySelector("x-write-list[name=Upazilla]")
-			.follow(document.querySelector("x-write-list[name=District]"), "district");
+		.follow(document.querySelector("x-write-list[name=District]"), "district");
 
 		document.querySelector("x-write-list[name=Union_]")
-			.follow(document.querySelector("x-write-list[name=Upazilla]"), "upazilla");
-  	</jh-script>
+		.follow(document.querySelector("x-write-list[name=Upazilla]"), "upazilla");
+	</jh-script>
 </div>
