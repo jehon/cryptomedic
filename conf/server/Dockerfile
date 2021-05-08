@@ -3,7 +3,7 @@
 #
 # See https://github.com/docker-library/docs/blob/master/php/variant-apache.md
 #
-FROM php:7.3-apache
+FROM php:7.4-apache
 
 RUN a2enmod expires rewrite
 
