@@ -5,5 +5,9 @@
   "automerge": true,
   "major": {
     "automerge": false
-  }
+  },
+  "ignorePaths": [
+    "conf/php/Dockerfile",
+    "conf/server/Dockerfile"
+  ]
 }
