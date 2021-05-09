@@ -50,7 +50,7 @@ endef
 # 1: command
 # 2: additional arguments
 #
-# $(cypress) run --projects tests
+# $(cypress) run
 # Hardcoded command is "run" (see https://github.com/cypress-io/cypress-docker-images/tree/master/included)
 define cypress
 	docker-compose run --rm -e CYPRESS_BASE_URL="http://server:80" --entrypoint=cypress cypress
@@ -105,8 +105,9 @@ clean: deploy-unmount chmod
 	rm -fr app/cjs2esm
 	rm -fr www/api/*/bootstrap/cache
 	rm -fr www/api/*/storage
-	rm -fr tests/cypress/screenshots
-	rm -fr tests/cypress/videos
+	rm -fr cypress/screenshots
+	rm -fr cypress/videos
+	rm -fr cypress/results
 
 	@echo "!! Removed dependencies, so husky (commit) will not work anymore. Please make dependencies-node to enable it again"
 
@@ -204,76 +205,60 @@ test-unit: dependencies-node \
 	node tests/report.js
 
 .PHONY: test-e2e
-test-e2e:
-	rm -fr $(TMP)/e2e
-	rm -fr $(STYLES_RUN_SCREENSHOTS)
+test-e2e: test-e2e-before
+	@rm -fr $(TMP)/e2e
+	@rm -fr $(STYLES_RUN_SCREENSHOTS)
 
 # TODO -> no call itself
-	$(call itself,test-e2e-nightwatch)
-	$(call itself,test-e2e-cypress)
+	$(call itself,tmp/e2e/.tested)
 
-test-e2e-nightwatch: tmp/e2e/.tested-nightwatch
-tmp/e2e/.tested-nightwatch: www/build/index.html $(call recursive-dependencies,tests/e2e,$(TMP)/e2e/.tested-nightwatch)
-# TODO -> from dev
-	cr-data-reset
-	rm -fr tmp/e2e/browsers
-	mkdir -p "$(STYLES_RUN_SCREENSHOTS)"
-	find "$(STYLES_RUN_SCREENSHOTS)" -type f -not -name '*.spec*' -delete
-	npm run --silent test-e2e
-	@echo "Nightwatch screenshots"
-	rsync -r \
-		--include "*_reference.png" --include "*_reference_*.png" --exclude "*" \
-		"$(TMP)/e2e/browsers/firefox/" "$(TMP)/styles/run"
-	mkdir -p "$(dir $@)"
-	touch "$@"
+test-e2e-before: build $(shell find cypress/ -name "*.js")
+	@cr-data-reset
+	@cr-ensure-folder-empty cypress/screenshots
+	@cr-ensure-folder-empty cypress/videos
+	@cr-ensure-folder-empty cypress/results
 
-test-e2e-cypress: tmp/e2e/.tested-cypress
-tmp/e2e/.tested-cypress: www/build/index.html $(shell find tests/cypress/ -name "*.js")
-	cr-data-reset
-	rm -fr tests/cypress/screenshots
-	mkdir -p "$(STYLES_RUN_SCREENSHOTS)"
-	find "$(STYLES_RUN_SCREENSHOTS)" -type f -name '*.spec*' -delete
-	$(cypress) run --project tests
-	cr-fix-permissions tests/cypress
-	@echo "Cypress screenshots"
-	find tests/cypress/screenshots/ -type f | while read -r F ; do \
+tmp/e2e/.tested:
+	@cr-ensure-folder-empty $(STYLES_RUN_SCREENSHOTS)
+	$(cypress) run
+	cr-fix-permissions cypress
+	find cypress/screenshots/ -type f | while read -r F ; do \
 		cp "$$F" "$(STYLES_RUN_SCREENSHOTS)/$$(basename "$$F")"; \
 	done
-	mkdir -p "$(dir $@)"
-	touch "$@"
+	@mkdir -p "$(dir $@)"
+	@touch "$@"
 
-test-e2e-cypress-one:
+test-e2e-one: test-e2e-before
 	@clear
-#	F=$(dialog --stdout --title "text" --fselect tests/cypress/integration/ $(expr $LINES - 15) $(expr $COLUMNS - 10))
+#	F=$(dialog --stdout --title "text" --fselect cypress/integration/ $(expr $LINES - 15) $(expr $COLUMNS - 10))
 	@if [ -z "$(TEST)" ]; then \
 		echo "Please select test in TEST"; \
 		exit 1; \
 	fi
-	#echo "Running test $(TEST) only"
-	$(cypress) run --config video=true  --project tests --spec "$(TEST)"
-	cr-fix-permissions tests/cypress
-	echo "Running test "$(TEST)" only done"
+	$(cypress) run --config video=true --spec "$(TEST)"
+	cr-fix-permissions cypress
+	@echo "Running test "$(TEST)" only done"
 
 cypress-open: chmod
-	$(shell npm bin)/cypress open --project tests
+	$(shell npm bin)/cypress open
 
 cypress-open-docker:
-	$(cypress) open --project tests
+	$(cypress) open
 
 #
 # Display does not work through WSL
 #
 # echo "DISPLAY: $(DISPLAY)"
-# $(cypress) open -e DISPLAY --project tests
+# $(cypress) open -e DISPLAY
 
 # docker-compose run --rm -e CYPRESS_BASE_URL="http://server:80" \
 # 	-e DISPLAY=$(DISPLAY) -v /tmp/.X11-unix:/tmp/.X11-unix \
 # 	cypress \
-# 	open --project tests
+# 	open
 
 .PHONY: test-styles
 test-styles: tmp/styles.json
-tmp/styles.json: tests/styles/* tests/styles/references/* tmp/e2e/.tested-cypress tmp/e2e/.tested-nightwatch
+tmp/styles.json: tests/styles/* tests/styles/references/* tmp/e2e/.tested
 # TODO -> from dev
 
 	@echo "Compare"
@@ -341,7 +326,8 @@ www/api/$(VAPI)/public/vendor/.dependencies: \
 	cr-dependencies-php "www/api/$(VAPI)/public"
 
 .PHONY: update-dependencies-api
-update-dependencies-api:
+update-dependencies-api: update-dependencies-api-bare
+	mkdir -m 777 -p www/api/v1.3/bootstrap/cache
 	cr-dependencies-php "www/api/$(VAPI)" "update"
 
 .PHONY: update-dependencies-api-bare
@@ -359,7 +345,7 @@ package-lock.json: package.json
 	npm install
 
 .PHONY: build
-build: www/build/index.html www/build/browsers.json
+build: www/build/index.html www/build/browsers.json dependencies
 # TODO: index.html depend on axios-mock, wich is for testing only
 www/build/index.html: node_modules/.dependencies webpack.config.js \
 		package.json package-lock.json \

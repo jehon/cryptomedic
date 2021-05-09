@@ -19,6 +19,12 @@ export default class XAge extends HTMLElement {
     }
 
     adapt() {
+        // Do we need to hide this in the e2e screenshots ?
+        if (this.hasAttribute('ref')) {
+            this.removeAttribute('variable');
+        } else {
+            this.setAttribute('variable', 'variable');
+        }
         try {
             this.removeAttribute('error');
             this.innerHTML = yearsToYM(this.value);

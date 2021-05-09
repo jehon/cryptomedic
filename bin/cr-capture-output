@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+if type jh-run-and-capture >/dev/null 2>&1; then
+    jh-run-and-capture "$@"
+else
+    "$@"
+fi

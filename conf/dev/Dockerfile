@@ -49,7 +49,6 @@ ADD . /setup/
 RUN chmod a+x /setup/*.sh
 
 RUN /setup/install-ovh-key.sh
-RUN /setup/install-php.sh
 
 WORKDIR /app
 

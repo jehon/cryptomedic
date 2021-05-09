@@ -37,6 +37,9 @@ export default class CryptomedicDataService extends XRequestor {
     /**************************/
 
     createOrSaveFile(data) {
+        if (!data) {
+            throw new Error('CryptomedicDataService: create or save null data');
+        }
         if (data.id) {
             return this.saveFile(data);
         }
@@ -45,6 +48,9 @@ export default class CryptomedicDataService extends XRequestor {
 
     createFile(data) {
         setCurrentFolder();
+        if (!data) {
+            throw new Error('CryptomedicDataService: create null data');
+        }
         return this.requestAndFilter({ url: 'fiche/' + data.getServerRessource(), method: 'POST', data: nullify(data) })
             .then(response => {
                 let f = new Folder(response.asJson.folder);
@@ -57,6 +63,9 @@ export default class CryptomedicDataService extends XRequestor {
 
     saveFile(data) {
         setCurrentFolder();
+        if (!data) {
+            throw new Error('CryptomedicDataService: save null data');
+        }
         return this.requestAndFilter({ url: 'fiche/' + data.getServerRessource() + '/' + data['id'], method: 'PUT', data: nullify(data) })
             .then(response => {
                 let f = new Folder(response.asJson.folder);
@@ -68,6 +77,9 @@ export default class CryptomedicDataService extends XRequestor {
 
     deleteFile(data) {
         setCurrentFolder();
+        if (!data) {
+            throw new Error('CryptomedicDataService: delete null data');
+        }
         return this.requestAndFilter({ url: 'fiche/' + data.getServerRessource() + '/' + data['id'], method: 'DELETE' })
             .then(response => {
                 let f = new Folder(response.asJson.folder);
@@ -79,6 +91,9 @@ export default class CryptomedicDataService extends XRequestor {
 
     unlockFile(data) {
         setCurrentFolder();
+        if (!data) {
+            throw new Error('CryptomedicDataService: unlock null data');
+        }
         return this.requestAndFilter({ url: 'fiche/' + data.getServerRessource() + '/unlock/' + data['id'] })
             .then(response => {
                 let f = new Folder(response.asJson.folder);
