@@ -39,6 +39,7 @@ cr-ensure-folder-empty "www/api/${VAPI}/storage/framework/cache/data"
 cr-ensure-folder-empty "www/api/${VAPI}/storage/framework/sessions"
 cr-ensure-folder-empty "www/api/${VAPI}/storage/framework/views"
 cr-ensure-folder-empty "www/api/${VAPI}/storage/logs/"
+cr-ensure-folder-empty "tmp/webTemp/cache"
 # touch www/api/${VAPI}/storage/logs/laravel.log
 
 cr-capture-output cryptomedic-refresh-structure.sh
