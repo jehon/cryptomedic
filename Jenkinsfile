@@ -125,7 +125,7 @@ make ${MAKEOPT} ${STAGE_NAME}
       junit 'tmp/js/junit/*.xml'
       junit 'tmp/phpv*/index*.xml'
       junit 'cypress/results/*.xml'
-      archiveArtifacts 'tests/styles'
+      archiveArtifacts artifacts: 'tests/styles/**/*', allowEmptyArchive: true
       archiveArtifacts artifacts: 'tmp/**/*,tests/cypress/video/**/*,tests/cypress/screenshots/**/*', allowEmptyArchive: true
       // deleteDir() /* clean up our workspace */
     }
