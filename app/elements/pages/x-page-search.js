@@ -84,15 +84,15 @@ export default class XPageSearch extends HTMLElement {
                             el
                                 .addHeaders(1)
                                 .enrichTable({ id: 'search_results' })
-                                .addRowFormatting((el, data) => el.addEventListener('click', () => setRoute(getRouteToFolderPatient(data.id))))
+                                .addSetFormatting((el, data) => el.addEventListener('click', () => setRoute(getRouteToFolderPatient(data.id))))
 
-                                .addColumn(() => createElementWithTag('img', { src: '/static/img/go.gif' }), [''])
-                                .addColumn(data => data.entryyear + '-' + data.entryorder, ['Reference'])
-                                .addColumn('Name', ['Name'])
-                                .addColumn('Sex', ['Sex'])
-                                .addColumn('Yearofbirth', ['Year of Birth'])
-                                .addColumn('Telephone', ['Telephone'])
-                                .addColumn('Pathology', ['Pathology'])
+                                .addDetail(() => createElementWithTag('img', { src: '/static/img/go.gif' }), [''])
+                                .addDetail(data => data.entryyear + '-' + data.entryorder, ['Reference'])
+                                .addDetail('Name', ['Name'])
+                                .addDetail('Sex', ['Sex'])
+                                .addDetail('Yearofbirth', ['Year of Birth'])
+                                .addDetail('Telephone', ['Telephone'])
+                                .addDetail('Pathology', ['Pathology'])
                     ),
                 ])
             ])
