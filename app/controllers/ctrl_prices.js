@@ -4,6 +4,8 @@
 
 import getDataService from '../js/getDataService.js';
 import { formGetContent } from '../js/form.js';
+import '../elements/widgets/x-price-item-edit.js';
+// import '../elements/pages/x-page-prices.js';
 
 export default function ctrl_prices($scope, $timeout) {
     $scope.prices = {};

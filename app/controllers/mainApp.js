@@ -34,7 +34,6 @@ import '../elements/cryptomedic-data-service.js';
 import '../elements/jh-script.js';
 import '../elements/block-bill-category.js';
 import '../elements/block-bill-line.js';
-import '../elements/edit-price.js';
 import '../elements/x-inline.js';
 import '../elements/x-input-date.js';
 import XInputPicture from '../elements/x-input-picture.js';
