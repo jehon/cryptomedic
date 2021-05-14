@@ -62,14 +62,15 @@ describe(fn(import.meta.url), function () {
         );
         element.setData([
             { c0: 'br0c0', c1: 'br0c1' },
-            { c0: 'br1c0', c1: 'br1c1' }
+            { c0: 'br1c0', c1: 'br1c1' },
+            { c0: 'br2c0', c1: 'br2c1' }
         ]);
 
         checkTable(
             element,
             {
                 thead: [['hr0c0', 'hr0c1'], ['hr1c0', 'hr1c1']],
-                tbody: [['br0c0', 'br0c1'], ['br1c0', 'br1c1']],
+                tbody: [['br0c0', 'br0c1'], ['br1c0', 'br1c1'], ['br2c0', 'br2c1']],
                 tfoot: [['fr0c0', 'fr0c1'], ['fr1c0', 'fr1c1']]
             });
     });
@@ -137,13 +138,13 @@ describe(fn(import.meta.url), function () {
                     .addFooters(2)
                     // Indice is ok
                     .addDetail((data, _) => data.c0,
-                        ['hr1c0', (_ata, i) => `hr${i}c0`],
-                        ['fr0c0', (_ata, i) => `fr${i}c0`]
+                        ['hr1c0', (_data) => 'hr0c0'],
+                        ['fr0c0', (_data) => 'fr1c0']
                     )
                     // Data is ok
                     .addDetail((_ata, i) => `br${i}c1`,
-                        ['hr1c1', (data, _) => data.join('/')],
-                        ['fr0c1', (data, _) => data.join('/')]
+                        ['hr1c1', (data) => data.join('/')],
+                        ['fr0c1', (data) => data.join('/')]
                     );
             }
         );
@@ -165,29 +166,27 @@ describe(fn(import.meta.url), function () {
 
 
     it('should maintain context in functions', function () {
-        let c = '_';
         const element = createElementWithObject(XTable, {}, [],
             (/** @type {XTable} */ el) => {
                 el
                     .addHeaders(2)
                     .addFooters(2)
                     // Indice is ok
-                    .addDetail((data, _) => `${c}${data.c0}`,
-                        ['hr1c0', (_ata, i) => `${c}hr${i}c0`],
-                        ['fr0c0', (_ata, i) => `${c}fr${i}c0`]
+                    .addDetail((data, _, context) => `${context}${data.c0}`,
+                        ['hr1c0', (_ata, context) => `${context}hr0c0`],
+                        ['fr0c0', (_ata, context) => `${context}fr1c0`]
                     )
                     // Data is ok
-                    .addDetail((_ata, i) => `${c}br${i}c1`,
-                        ['hr1c1', (data, _) => c + data.join('/')],
-                        ['fr0c1', (data, _) => c + data.join('/')]
+                    .addDetail((_ata, i, context) => `${context}br${i}c1`,
+                        ['hr1c1', (data, context) => context + data.join('/')],
+                        ['fr0c1', (data, context) => context + data.join('/')]
                     );
             }
         );
-        c = '';
         element.setData([
             { c0: 'br0c0', c1: 'br0c1' },
             { c0: 'br1c0', c1: 'br1c1' }
-        ]);
+        ], '');
 
         checkTable(
             element,

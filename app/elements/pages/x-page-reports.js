@@ -389,55 +389,56 @@ reports[REPORT_ACTIVITY] = { // test data: 2014-05
         xtable
             .addHeaders(6)
             .addFooters(2)
-            .addColumn((data, i) => createElementWithTag('a', { href: '#' + getRouteToFolderFileByParams(data.pid, 'Bill', data.bid) }, `#${i + 1}`),
+            .addDetail((data, i) => createElementWithTag('a', { href: '#' + getRouteToFolderFileByParams(data.pid, 'Bill', data.bid) }, `#${i + 1}`),
                 [
                     'N',
                     '',
-                    (_col, _n, data) => 'Daily report of ' + data.params.when,
+                    (_col, context) => 'Daily report of ' + context.params.when,
                     'SARPV, CHAKARIA DISABILITY CENTER, CHAKARIA, COX\'S BAZAR',
                     'Name of the project: Rikces in cox\' Bazar',
                     'SARPV - AMD - KDM'
                 ],
                 ['', '']
             )
-            .addColumn('Date', ['Date'])
-            .addColumn('ExaminerName', ['Examiner'])
-            .addColumn((data) => createElementWithObject(XCodage, { value: data.Center }), ['Place'])
-            .addColumn('patient_reference', ['Record n#'])
-            .addColumn('patient_name', ['Patient Name', 'Identity', 'Where', 'When', 'Who'])
-            .addColumn(data => createElementWithObject(XAge, { value: data.yearofbirth, ref: data.Date }), ['Age', null, (_col, _n, data) => data.params.center, (_col, _n, data) => data.params.when, (_col, _n, data) => data.params.examiner])
-            .addColumn('Sex', ['M/F'])
-            .addColumn((val, _i, ctx) => (val.oldPatient == 1)
+            .addDetail('Date', ['Date'])
+            .addDetail('ExaminerName', ['Examiner'])
+            .addDetail(data => createElementWithObject(XCodage, { value: data.Center }), ['Place'])
+            .addDetail('patient_reference', ['Record n#'])
+            .addDetail('patient_name', ['Patient Name', 'Identity', 'Where', 'When', 'Who'])
+            .addDetail(data => createElementWithObject(XAge, { value: data.yearofbirth, ref: data.Date }), ['Age', null, (_col, context) => context.params.center, (_col, context) => context.params.when, (_col, context) => context.params.examiner])
+            .addDetail('Sex', ['M/F'])
+            .addDetail((val, _i, context) => (val.oldPatient == 1)
                 ? 'Old'
-                : (val.patient_reference.substr(0, 4) < ('' + ctx.params.when).substr(0, 4)
+                : (val.patient_reference.substr(0, 4) < ('' + context.params.when).substr(0, 4)
                     ? 'Old(EN)'
                     : 'New'
                 ), ['Old/New']
             )
-            .addColumn('sl_familySalary', ['Tk income', 'SEL', '0 - 300', 0, 'Levels of the social level'])
-            .addColumn('sl_numberOfHouseholdMembers', ['Nb pers'])
-            .addColumn(data => Math.round(data.sl_familySalary / data.sl_numberOfHouseholdMembers), ['Tk per pers', null, '301-500', 1])
-            .addColumn('Sociallevel', ['SL'])
+            .addDetail('sl_familySalary', ['Tk income', 'SEL', '0 - 300', 0, 'Levels of the social level'])
+            .addDetail('sl_numberOfHouseholdMembers', ['Nb pers'])
+            .addDetail(data => Math.round(data.sl_familySalary / data.sl_numberOfHouseholdMembers), ['Tk per pers', null, '301-500', 1])
+            .addDetail('Sociallevel', ['SL'])
 
-            .addColumn((data) => createElementWithObject(XCodage, { value: data.Pathology }), ['Diagno', 'Medical', '501-1500', 2])
-            .addColumn('act', ['Act'])
-            .addColumn('treatment', ['Trt', null, '1501-3000', 3])
-            .addColumn('last_seen', ['Last seen', 'Surgical'])
-            .addColumn('last_treat_result', ['Result', null, '3001-...', 4])
-            .addColumn('last_treat_finished', ['Done ?', null])
+            .addDetail(data => createElementWithObject(XCodage, { value: data.Pathology }), ['Diagno', 'Medical', '501-1500', 2])
+            .addDetail('act', ['Act'])
+            .addDetail('treatment', ['Trt', null, '1501-3000', 3])
+            .addDetail('last_seen', ['Last seen', 'Surgical'])
+            .addDetail('last_treat_result', ['Result', null, '3001-...', 4])
+            .addDetail('last_treat_finished', ['Done ?', null])
 
-            .addColumn(data => (data.complementary
+            .addDetail(data => (data.complementary
                 ? createElementWithObject(XCodage, { value: 'Money collected on bills from previous months', translated: 'Complementary payments' })
                 : (data.price_consult ?? 0)
-            ), ['Consult', 'Price', '', '', ''], ['total', (_col, _i, data) => data.totals.price_consult])
+            ), ['Consult', 'Price', '', '', ''], ['total', (_col, context) => context.totals.price_consult])
 
-            .addColumn(data => data.complementary ? null : (data.price_medecine ?? 0), ['Medicine'], [null, (_col, _i, data) => data.totals.price_medecine])
-            .addColumn(data => data.complementary ? null : (data.price_surgical ?? 0), ['Surgical'], [null, (_col, _i, data) => data.totals.price_surgical])
-            .addColumn(data => data.complementary ? null : (data.price_workshop ?? 0), ['Workshop'], [null, (_col, _i, data) => data.totals.price_workshop])
-            .addColumn(data => data.complementary ? null : (data.price_other ?? 0), ['Others'], [null, (_col, _i, data) => data.totals.price_other])
-            .addColumn(data => data.complementary ? null : (data.total_real ?? 0), ['Full'], [null, (_col, _i, data) => data.totals.total_real])
-            .addColumn(data => data.complementary ? null : (data.total_asked ?? 0), ['Asked'], [null, (_col, _i, data) => data.totals.total_asked])
-            .addColumn('total_paid', ['Paid'], [null, (_col, _i, data) => data.totals.total_paid]);
+            .addDetail(data => data.complementary ? null : (data.price_medecine ?? 0), ['Medicine'], [null, (_col, context) => context.totals.price_medecine])
+            .addDetail(data => data.complementary ? null : (data.price_surgical ?? 0), ['Surgical'], [null, (_col, context) => context.totals.price_surgical])
+            .addDetail(data => data.complementary ? null : (data.price_workshop ?? 0), ['Workshop'], [null, (_col, context) => context.totals.price_workshop])
+            .addDetail(data => data.complementary ? null : (data.price_other ?? 0), ['Others'], [null, (_col, context) => context.totals.price_other])
+            .addDetail(data => data.complementary ? null : (data.total_real ?? 0), ['Full'], [null, (_col, context) => context.totals.total_real])
+            .addDetail(data => data.complementary ? null : (data.total_asked ?? 0), ['Asked'], [null, (_col, context) => context.totals.total_asked])
+            .addDetail('total_paid', ['Paid'], [null, (_col, context) => context.totals.total_paid])
+            .end();
     }
 };
 
@@ -453,13 +454,14 @@ reports[REPORT_CONSULTATIONS] = { // test data: 2015-04-28
     generator: (xtable) => {
         xtable
             .addHeaders(1)
-            .addColumn('c_Center', ['Center'])
-            .addColumn(data => createElementWithTag('a', { href: '#' + getRouteToFolderPatient(data.patient_id) }, `${data.entryyear}-${data.entryorder}`), ['Patient'])
-            .addColumn('Name', ['Name'])
-            .addColumn('Telephone', ['Phone'])
-            .addColumn('ExaminerName', ['Appointment from'])
-            .addColumn('purpose', ['Purpose'])
-            .addColumn(data => createElementWithObject(XDisplayDate, { value: data.c_Date }), ['Appointment from']);
+            .addDetail('c_Center', ['Center'])
+            .addDetail(data => createElementWithTag('a', { href: '#' + getRouteToFolderPatient(data.patient_id) }, `${data.entryyear}-${data.entryorder}`), ['Patient'])
+            .addDetail('Name', ['Name'])
+            .addDetail('Telephone', ['Phone'])
+            .addDetail('ExaminerName', ['Appointment from'])
+            .addDetail('purpose', ['Purpose'])
+            .addDetail(data => createElementWithObject(XDisplayDate, { value: data.c_Date }), ['Appointment from'])
+            .end();
     }
 };
 
@@ -472,51 +474,52 @@ reports[REPORT_SURGICAL] = { // test data: 2014-01
         xtable
             .addHeaders(6)
             .addFooters(2)
-            .addColumn((data, i) => createElementWithTag('a', { href: '#' + getRouteToFolderPatient(data.pid) }, `#${i + 1}`),
+            .addDetail((data, i) => createElementWithTag('a', { href: '#' + getRouteToFolderPatient(data.pid) }, `#${i + 1}`),
                 [
                     'N',
                     '',
-                    (_col, _n, ctx) => 'Daily report of ' + ctx.params.when,
+                    (_col, context) => 'Daily report of ' + context.params.when,
                     'SARPV, CHAKARIA DISABILITY CENTER, CHAKARIA, COX\'S BAZAR',
                     'Name of the project: Rikces in cox\' Bazar',
                     'SARPV - AMD - KDM 2'
                 ],
                 ['', '']
             )
-            .addColumn('Date', ['Date'])
-            .addColumn('ExaminerName', [''])
-            .addColumn('Center', ['Place'])
-            .addColumn('patient_reference', ['Record n#'])
-            .addColumn('patient_name', ['Patient Name', 'Identity', 'Where', 'When', 'Who'])
-            .addColumn(data => createElementWithObject(XAge, { value: data.yearofbirth }), ['Age', null, (_col, _n, data) => data.params.center, (_col, _n, ctx) => ctx.params.when, (_col, _n, ctx) => ctx.params.examiner])
-            .addColumn('Sex', ['M/F'])
-            .addColumn((data, _i, ctx) => (data.oldPatient == 1)
+            .addDetail('Date', ['Date'])
+            .addDetail('ExaminerName', [''])
+            .addDetail('Center', ['Place'])
+            .addDetail('patient_reference', ['Record n#'])
+            .addDetail('patient_name', ['Patient Name', 'Identity', 'Where', 'When', 'Who'])
+            .addDetail(data => createElementWithObject(XAge, { value: data.yearofbirth }), ['Age', null, (_col, context) => context.params.center, (_col, context) => context.params.when, (_col, context) => context.params.examiner])
+            .addDetail('Sex', ['M/F'])
+            .addDetail((data, _i, context) => (data.oldPatient == 1)
                 ? 'Old'
-                : (data.patient_reference.substr(0, 4) < ('' + ctx.params.when).substr(0, 4)
+                : (data.patient_reference.substr(0, 4) < ('' + context.params.when).substr(0, 4)
                     ? 'Old(EN)'
                     : 'New'
                 ), ['Old/New']
             )
-            .addColumn('sl_familySalary', ['Tk income', 'SEL', '0 - 300', 0, 'Levels of the social level'])
-            .addColumn('sl_numberOfHouseholdMembers', ['Nb pers'])
-            .addColumn(data => Math.round(data.sl_familySalary / data.sl_numberOfHouseholdMembers), ['Tk per pers', null, '301-500', 1])
-            .addColumn('Sociallevel', ['SL'])
+            .addDetail('sl_familySalary', ['Tk income', 'SEL', '0 - 300', 0, 'Levels of the social level'])
+            .addDetail('sl_numberOfHouseholdMembers', ['Nb pers'])
+            .addDetail(data => Math.round(data.sl_familySalary / data.sl_numberOfHouseholdMembers), ['Tk per pers', null, '301-500', 1])
+            .addDetail('Sociallevel', ['SL'])
 
-            .addColumn((data) => createElementWithObject(XCodage, { value: data.Pathology }), ['Diagno', 'Medical', '501-1500', 2])
-            .addColumn('act', ['Act'])
-            .addColumn('treatment', ['Trt', null, '1501-3000', 3])
-            .addColumn('last_seen', ['Last seen', 'Surgical'])
-            .addColumn('last_treat_result', ['Result', null, '3001-...', 4])
-            .addColumn('last_treat_finished', ['Done ?', null])
+            .addDetail(data => createElementWithObject(XCodage, { value: data.Pathology }), ['Diagno', 'Medical', '501-1500', 2])
+            .addDetail('act', ['Act'])
+            .addDetail('treatment', ['Trt', null, '1501-3000', 3])
+            .addDetail('last_seen', ['Last seen', 'Surgical'])
+            .addDetail('last_treat_result', ['Result', null, '3001-...', 4])
+            .addDetail('last_treat_finished', ['Done ?', null])
 
-            .addColumn('price_consult', ['Consult', 'Price', '', '', ''], ['total', (_col, _i, ctx) => ctx.totals.price_consult])
-            .addColumn('price_medecine', ['Medicine'], [null, (_col, _i, ctx) => ctx.totals.price_medecine])
-            .addColumn('price_surgical', ['Surgical'], [null, (_col, _i, ctx) => ctx.totals.price_surgical])
-            .addColumn('price_workshop', ['Workshop'], [null, (_col, _i, ctx) => ctx.totals.price_workshop])
-            .addColumn('price_other', ['Others'], [null, (_col, _i, ctx) => ctx.totals.price_other])
-            .addColumn('total_real', ['Full'], [null, (_col, _i, ctx) => ctx.totals.total_real])
-            .addColumn('total_asked', ['Asked'], [null, (_col, _i, ctx) => ctx.totals.total_asked])
-            .addColumn('total_paid', ['Paid'], [null, (_col, _i, ctx) => ctx.totals.total_paid]);
+            .addDetail('price_consult', ['Consult', 'Price', '', '', ''], ['total', (_col, context) => context.totals.price_consult])
+            .addDetail('price_medecine', ['Medicine'], [null, (_col, context) => context.totals.price_medecine])
+            .addDetail('price_surgical', ['Surgical'], [null, (_col, context) => context.totals.price_surgical])
+            .addDetail('price_workshop', ['Workshop'], [null, (_col, context) => context.totals.price_workshop])
+            .addDetail('price_other', ['Others'], [null, (_col, context) => context.totals.price_other])
+            .addDetail('total_real', ['Full'], [null, (_col, context) => context.totals.total_real])
+            .addDetail('total_asked', ['Asked'], [null, (_col, context) => context.totals.total_asked])
+            .addDetail('total_paid', ['Paid'], [null, (_col, context) => context.totals.total_paid])
+            .end();
     }
 };
 
@@ -647,8 +650,8 @@ reports[REPORT_STATISTICAL] = { // test data:
         // generator: (xtable) =>
         //     xtable
         //         .addRowFormatting((el, val) => { if (val.title) { el.classList.add('subheader'); } })
-        //         .addColumn('label')
-        //         .addColumn((row, _i, ctx) => (typeof (row.value) == 'function')
+        //         .addDetail('label')
+        //         .addDetail((row, _i, ctx) => (typeof (row.value) == 'function')
         //             ? row.value(row, ctx)
         //             : row['value'])
         // ,
