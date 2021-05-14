@@ -4,24 +4,29 @@ import XOverlay from '../render/x-overlay.js';
 import XPanel from '../render/x-panel.js';
 
 //
-// TODO: switch to Grid
 // Idea to reverse it (statistical report): https://stackoverflow.com/a/44092580/1954789
 // Style by region name: https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas
 //
 
 /**
- * @typedef {string|function(object, number, object):(string|HTMLElement)} BodyDetailDescription - function is (val, index, fullData)
- * @typedef {null|string|function([string], number, Object):(string|HTMLElement)} HeadFootDetailDescription - funciton is (col, index, fullData)
+ * @typedef {string|function(object, number, object):(string|HTMLElement)} BodyDetailDescription - function is (dataSet, index of data in datas, context)
+ * @typedef {null|string|function([string], Object):(string|HTMLElement)} HeadFootDetailDescription - funciton is (col, context)
  */
+
+const HEADER = 'header';
+const FOOTER = 'footer';
+const BODY = 'body';
 
 /**
  *
- * Attributes: horizontal (otherwise: by columns)
+ * Attributes: horizontal
  *
  *  > set: a set of data ([hi, hi], [i, i, i], [fi, fi] )
- *  - detail: a cross et ([ h1 ], [ i, j, k, l ], [ f1 ])
+ *  - detail: a cross et ([ h1 ], [ i1, j1, k1, l1 ], [ f1 ])
  *
  * Vertical (default)
+ *      line = details
+ *      cols = sets
  *
  * +-----+
  * │head │
@@ -36,6 +41,8 @@ import XPanel from '../render/x-panel.js';
  * +-----+
  *
  * Horizontal
+ *     line = sets
+ *     cols = details
  *
  * +-+-----+-+
  * |h|iiiii|f|
@@ -56,9 +63,9 @@ export default class XTable extends HTMLElement {
 
     /**
      * @type {Object} to describe data/body
-     * @property {BodyColumnDescription} rows - to generate row in each columns
-     * @property {Array<HeadFootColumnDescription>} headers - to generate thead data
-     * @property {Array<HeadFootColumnDescription>} footers - to generate tfoot data
+     * @property {BodyDetailDescription} body - to generate row in each columns
+     * @property {Array<HeadFootDetailDescription>} headers - to generate thead data
+     * @property {Array<HeadFootDetailDescription>} footers - to generate tfoot data
      */
     _details
 
@@ -69,16 +76,23 @@ export default class XTable extends HTMLElement {
      */
     _config
 
-    /** @type {function(Element, *, number): void} callback to modify the element */
-    _rowsCallback
+    /** @type {function(Element, number): void} callback to modify the element */
+    _setsCallback
 
     constructor() {
         super();
 
         this._details = [];
-        this._config = {};
+        this._config = {
+            headers: {
+                n: 0
+            },
+            footers: {
+                n: 0
+            }
+        };
 
-        this._rowsCallback = () => { };
+        this._setsCallback = () => { };
 
         // this.attachShadow({ mode: 'open' });
 
@@ -112,12 +126,11 @@ export default class XTable extends HTMLElement {
      * Set attributes on the top table element
      *
      * @param {object} attributes to be set
-     * @param {function(Element): void} callback to modify the element
      *
      * @returns {XTable} for chaining
      */
-    enrichTable(attributes = {}, callback = (_el) => { }) {
-        enrichObject(this._element, attributes, [], callback);
+    enrichTable(attributes = {}) {
+        enrichObject(this._element, attributes);
         return this;
     }
 
@@ -125,13 +138,11 @@ export default class XTable extends HTMLElement {
      * Set the number of headers
      *
      * @param {number} n - the number of * to add
-     * @param {object} attributes to be set
-     * @param {function(Element, number): void} callback to modify the element
      *
      * @returns {XTable} for chaining
      */
-    addHeaders(n, attributes = {}, callback = (_el, _i) => { }) {
-        this._config.headers = { n, attributes, callback };
+    addHeaders(n) {
+        this._config.headers = { n };
         return this;
     }
 
@@ -139,13 +150,11 @@ export default class XTable extends HTMLElement {
      * Set the number of footers
      *
      * @param {number} n - the number of * to add
-     * @param {object} attributes to be set
-     * @param {function(Element, number): void} callback to modify the element
      *
      * @returns {XTable} for chaining
      */
-    addFooters(n, attributes = {}, callback = (_el, _i) => { }) {
-        this._config.footers = { n, attributes, callback };
+    addFooters(n) {
+        this._config.footers = { n };
         return this;
     }
 
@@ -154,28 +163,101 @@ export default class XTable extends HTMLElement {
      * @param {BodyDetailDescription} fieldData to be put in cells
      * @param {Array<HeadFootDetailDescription>} headers to be put in headers (in reverse order)
      * @param {Array<HeadFootDetailDescription>} footers to be put in footers
-     * @param {function(Element, BodyDetailDescription, number): void} callback to modify the element
+     * @ param {function(Element, BodyDetailDescription, number): void} callback to modify the element
+     * @param empty
      * @returns {XTable} for chaining
      */
-    addDetail(fieldData, headers = [], footers = [], callback = (_el, _fieldData, _i) => { }) {
+    addDetail(fieldData, headers = [], footers = [], empty = false /*, callback = (_el, _fieldData, _i) => { } */) {
+        if (empty !== false) {
+            console.trace('called with', empty, ' for ', fieldData); // eslint-disable-line
+        }
         this._details.push({
             body: fieldData,
             headers,
             footers,
-            callback
+            // callback
         });
 
         return this;
     }
 
     /**
-     * @param {function(Element, *, number): void} callback to modify the element
+     * Format the whole set by callback
      *
+     * @param {function(Element, object): void} callback to modify the element
      * @returns {XTable} for chaining
      */
-    addSetFormatting(callback = (_el, _data, _i) => { }) {
-        this._rowsCallback = callback;
+    addSetFormatting(callback = (_el, _data) => { }) {
+        this._setsCallback = callback;
         return this;
+    }
+
+    /**
+     * @param {Array<object>} data to be set in the table
+     * @param {object} context as third parameter for everything
+     * @returns {object} with all the data [set][zone][detail] (Horizontal layout)
+     *        head   |    body     |  foot
+     *  0:   h00 h01 | b00 b01 b02 | f00 f01  <= detail[0] => result[0]
+     *  1:   h10 h11 | b10 b11 b12 | f10 f11
+     */
+    _buildData(data, context) {
+        const results = [];
+
+        for (let i = 0; i < this._details.length; i++) {
+            const iResult = {};
+            const iDetail = this._details[i];
+
+            iResult[BODY] = data.map((d, j) => iDetail.body instanceof Function
+                ? iDetail.body(d, j, context)
+                : d[iDetail.body] ?? ''
+            );
+
+            iResult[HEADER] = [
+                ...(new Array(this._config.headers.n - (iDetail.headers?.length ?? 0)).fill(null)),
+                ...[...iDetail.headers]?.reverse().map(f => f instanceof Function
+                    ? f(iResult[BODY], context)
+                    : f
+                )
+            ];
+
+            iResult[FOOTER] = [
+                ...iDetail.footers?.map(f => f instanceof Function
+                    ? f(iResult[BODY], context)
+                    : f
+                ),
+                ...(new Array(this._config.footers.n - (iDetail.footers?.length ?? 0)).fill(null))
+            ];
+
+            // // TODO: what signature?
+            // iResult.formatter = iDetail.callback;
+
+            results.push(iResult);
+        }
+
+        /** Dump Horizontal layout
+         * [set][zone][detail]
+         * +-+-----+-+
+         * |h|iiiii|f|
+         * |e|j   j|o|
+         * |a|k > k|o|
+         * |d|l   l|t|
+         * |d|mmmmm|t|
+         * +-+-----+-+
+         *
+         */
+
+        // console.log(results, '\n---'
+        //     + results.map(iRes => '\n'
+        //         + iRes[HEADER].join(' | ')
+        //         + ' || '
+        //         + iRes[BODY].join(' | ')
+        //         + ' || '
+        //         + iRes[FOOTER].join(' | ')
+        //     )
+        //     + '\n---\n'
+        // );
+
+        return results;
     }
 
     /**
@@ -188,76 +270,142 @@ export default class XTable extends HTMLElement {
         this.removeAttribute('empty');
         this.setAttribute('count', '' + data?.length);
 
+        const builtData = this._buildData(data, context);
+
         // empty rows and create them back emtpy
         this._element.innerHTML = '';
-        const _regions = {
-            headers: createElementWithTag('thead', {}),
-            body: createElementWithTag('tbody', {}),
-            footers: createElementWithTag('tfoot', {}),
-        };
-        this._element.append(_regions.headers, _regions.body, _regions.footers);
 
-        if (this._config.headers) {
-            this._addSetInRegion(_regions.headers, this._config.headers.n, this._config.headers.attributes, this._config.headers.callback);
-        }
-        if (this._config.footers) {
-            this._addSetInRegion(_regions.footers, this._config.footers.n, this._config.footers.attributes, this._config.footers.callback);
-        }
-        this._addSetInRegion(_regions.body, data.length, {}, (el, i) => this._rowsCallback(el, data[i], i));
+        // TODO: rework this to transform the buildData in vertical / horizontal layout
+        if (this.hasAttribute('horizontal')) {
+            /**
+             * Horizontal layout
+             *     line = sets
+             *     cols = details
+             *
+             * +-+-----+-+
+             * |h|iiiii|f|
+             * |e|j   j|o|
+             * |a|k > k|o|
+             * |d|l   l|t|
+             * |d|mmmmm|t|
+             * +-+-----+-+
+             */
 
-        for (const col of this._details) {
-            let colData = data.map(row =>
-                col.body instanceof Function
-                    ? (i) => col.body(row, i, context)
-                    : () => (row[col.body] ?? '')
-            );
-
-            this._addDetailToSetsInRegion(_regions.body,
-                colData,
-                'td'
-            );
-
-            const calcColData = colData.map((v, i) => v(i));
-
-            if (this._config.headers) {
-                //
-                // If we don't have enough values, we need to add the at top rows
-                //    because the values given are probably more specific
-                //    To materialize this, headers are passed in reverse order (first on = closer to the body)
-                this._addDetailToSetsInRegion(_regions.headers,
-                    [...col.headers, ...Array(this._config.headers.n - col.headers.length)].reverse()
-                        // For each row of ...
-                        .map(row =>
-                            (n) =>
-                                row instanceof Function
-                                    ? row(calcColData, n, context)
-                                    : row
-                        ),
-                    'th'
+            // console.log(results, '\n---'
+            //     + results.map(iRes => '\n'
+            //         + iRes[HEADER].join(' | ')
+            //         + ' || '
+            //         + iRes[BODY].join(' | ')
+            //         + ' || '
+            //         + iRes[FOOTER].join(' | ')
+            //     )
+            //     + '\n---\n'
+            // );
+            for (let setNbr = 0; setNbr < builtData.length; setNbr++) {
+                const bd = builtData[setNbr];
+                const line = createElementWithTag('tr');
+                this._element.append(line);
+                line.append(
+                    ...bd[HEADER].map(b => createElementWithTag('th', { class: 'header' }, b ?? ''))
+                );
+                line.append(
+                    ...bd[BODY].map(b => createElementWithTag('th', { class: 'body' }, b ?? ''))
+                );
+                line.append(
+                    ...bd[FOOTER].map(b => createElementWithTag('th', { class: 'footer' }, b ?? ''))
                 );
             }
+        } else {
+            /**
+             * Vertical layout
+             *      line = details
+             *      cols = sets
+             *
+             * +-----+
+             * │head │
+             * +-----+
+             * │ijllm│
+             * │i   m│
+             * │i v m│
+             * │i   m│
+             * │ijklm│
+             * +-----+
+             * │foot │
+             * +-----+
+             */
 
-            if (this._config.footers) {
-                //
-                // If we don't have enough values, we must add them at the bottom row
-                //    because the values given are probably more specific
-                //
-                this._addDetailToSetsInRegion(_regions.footers,
-                    [...col.footers, ...Array(this._config.footers.n - col.footers.length)]
-                        // For each row of ...
-                        .map(row =>
-                            (n) =>
-                                row instanceof Function
-                                    ? row(calcColData, n, context)
-                                    : row
-                        ),
-                    'th'
-                );
+            // Headers
+            {
+                const block = createElementWithTag('thead');
+                this._element.append(block);
+                for (let lineNbr = 0; lineNbr < this._config.headers.n; lineNbr++) {
+                    const line = createElementWithTag('tr');
+                    // This will reverse the order
+                    block.append(line);
+                    let lastEl = null;
+                    let lastSize = 1;
+                    for (let setNbr = 0; setNbr < builtData.length; setNbr++) {
+                        const txt = builtData[setNbr][HEADER][lineNbr];
+                        if (txt === undefined || txt === null) {
+                            if (lastEl == null) {
+                                console.error(this, 'Not enough headers in first line');
+                                continue;
+                            }
+                            lastSize++;
+                            lastEl.setAttribute('colspan', '' + lastSize);
+                        } else {
+                            lastEl = createElementWithTag('th', { class: 'header' }, txt);
+                            lastSize = 1;
+                            line.append(lastEl);
+                        }
+                    }
+                }
+            }
+
+            const block = createElementWithTag('tbody');
+            this._element.append(block);
+            for (let lineNbr = 0; lineNbr < data.length; lineNbr++) {
+                const line = createElementWithTag('tr');
+                block.append(line);
+                this._setsCallback(line, data[lineNbr]);
+                for (let setNbr = 0; setNbr < builtData.length; setNbr++) {
+                    line.append(createElementWithTag('td', {}, builtData[setNbr][BODY][lineNbr]));
+                }
+            }
+
+            // Footers
+            {
+                const block = createElementWithTag('tfoot');
+                this._element.append(block);
+                for (let lineNbr = 0; lineNbr < this._config.footers.n; lineNbr++) {
+                    const line = createElementWithTag('tr');
+                    block.insertAdjacentElement('beforeend', line);
+                    let lastEl = null;
+                    let lastSize = 1;
+                    for (let setNbr = 0; setNbr < builtData.length; setNbr++) {
+                        const txt = builtData[setNbr][FOOTER][lineNbr];
+                        if (txt === undefined || txt === null) {
+                            if (lastEl == null) {
+                                console.error(this, 'Not enough footers in first line');
+                                continue;
+                            }
+                            lastSize++;
+                            lastEl.setAttribute('colspan', '' + lastSize);
+                        } else {
+                            lastEl = createElementWithTag('th', { class: 'header' }, txt);
+                            lastSize = 1;
+                            line.append(lastEl);
+                        }
+
+                    }
+                }
             }
         }
 
         return this;
     }
+
+    end() { }
 
     /**
      *
@@ -275,7 +423,6 @@ export default class XTable extends HTMLElement {
         }
         return this;
     }
-
 
     /**
      *

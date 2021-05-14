@@ -18,7 +18,10 @@ import '../../app/elements/funcs/x-confirmation.js';
 import '../../app/elements/funcs/x-form.js';
 import '../../app/elements/funcs/x-i18n.js';
 import '../../app/elements/funcs/x-input-list.js';
+import XTable from '../../app/elements/funcs/x-table.js';
 import '../../app/elements/funcs/x-requestor.js';
+
+const filtersMenu = document.querySelector('xx-test#filters');
 
 export default class XxTest extends HTMLElement {
     constructor() {
@@ -47,6 +50,11 @@ export default class XxTest extends HTMLElement {
         flex-direction: column;
 
         border: dashed 1px gray;
+    }
+
+    :host([menu]) slot {
+        flex-direction: row;
+        flex-wrap: wrap;
     }
 
     ::slotted(*) {
@@ -100,9 +108,19 @@ export default class XxTest extends HTMLElement {
 
         // window.addEventListener('hashchange', () => this.onHashChange());
         this.onHashChange();
+
+        if (this.type) {
+            filtersMenu.insertAdjacentElement('beforeend',
+                createElementWithTag('span', {}, this.type,
+                    el => el.addEventListener('click', () => location.hash += `,${this.type}`)
+                ));
+        }
     }
 
     onHashChange() {
+        if (this.hasAttribute('menu')) {
+            return;
+        }
         const hash = location.hash.replace(/^#/g, '').replace(/\/(.*\/)*/g, '');
         if (hash && (!(',' + hash + ',').includes(`,${this.type},`) || !this.type)) {
             this.setAttribute('invisible', 'invisible');
@@ -138,3 +156,17 @@ fetch(`../../www/api/${API_VERSION}/tests/references/FolderTest.test1.json`)
                 .forEach(el => el.folder = folder);
         });
     });
+
+document.querySelectorAll('x-table').forEach(
+    el => /** @type {XTable} */(el)
+        .addHeaders(2)
+        .addFooters(2)
+        .addSetFormatting((el, data) => el.addEventListener('click', () => console.info(data)))
+        .addDetail('c0', ['hr1c0', 'hr0c0'], ['fr0c0', 'fr1c0'])
+        .addDetail('c1', ['hr0c1'], ['fr0c1', null])
+        .addDetail('')
+        .setData([
+            { c0: 'br0c0', c1: 'br0c1' },
+            { c0: 'br1c0', c1: 'br1c1' }
+        ])
+);
