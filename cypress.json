@@ -1,5 +1,7 @@
 {
     "baseUrl": "http://localhost:5080",
+    "viewportWidth": 1000,
+    "viewportHeight": 660,
     "video": false,
     "testFiles": "**/*.spec.js",
     "reporter": "cypress-multi-reporters",
