@@ -48,7 +48,6 @@ module.exports = function (config) {
             'node_modules/bootstrap/dist/css/bootstrap.min.css',
             { pattern: 'tests/unitjs/*-test.js', type: 'module' },
             { pattern: 'tests/unitjs/**', included: false },
-            { pattern: 'tests/resources/**', included: false },
             { pattern: 'app/**/*', included: false },
             { pattern: '**/*', included: false, watched: false },
         ],
