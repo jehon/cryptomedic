@@ -275,7 +275,6 @@ export default class XTable extends HTMLElement {
         // empty rows and create them back emtpy
         this._element.innerHTML = '';
 
-        // TODO: rework this to transform the buildData in vertical / horizontal layout
         if (this.hasAttribute('horizontal')) {
             /**
              * Horizontal layout
@@ -301,10 +300,13 @@ export default class XTable extends HTMLElement {
             //     )
             //     + '\n---\n'
             // );
+            const block = createElementWithTag('tbody');
+            this._element.append(block);
+
             for (let setNbr = 0; setNbr < builtData.length; setNbr++) {
                 const bd = builtData[setNbr];
                 const line = createElementWithTag('tr');
-                this._element.append(line);
+                block.append(line);
                 line.append(
                     ...bd[HEADER].map(b => createElementWithTag('th', { class: 'header' }, b ?? ''))
                 );
