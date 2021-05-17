@@ -389,8 +389,8 @@ reports[REPORT_ACTIVITY] = { // test data: 2014-05
         xtable
             .addHeaders(6)
             .addFooters(2)
-            .addDetail((data, i) => createElementWithTag('a', { href: '#' + getRouteToFolderFileByParams(data.pid, 'Bill', data.bid) }, `#${i + 1}`),
-                [
+            .addDetail((data, i) => createElementWithTag('a', { href: '#' + getRouteToFolderFileByParams(data.pid, 'Bill', data.bid) }, `#${i + 1}`), {
+                headers: [
                     'N',
                     '',
                     (_col, context) => 'Daily report of ' + context.params.when,
@@ -398,46 +398,46 @@ reports[REPORT_ACTIVITY] = { // test data: 2014-05
                     'Name of the project: Rikces in cox\' Bazar',
                     'SARPV - AMD - KDM'
                 ],
-                ['', '']
-            )
-            .addDetail('Date', ['Date'])
-            .addDetail('ExaminerName', ['Examiner'])
-            .addDetail(data => createElementWithObject(XCodage, { value: data.Center }), ['Place'])
-            .addDetail('patient_reference', ['Record n#'])
-            .addDetail('patient_name', ['Patient Name', 'Identity', 'Where', 'When', 'Who'])
-            .addDetail(data => createElementWithObject(XAge, { value: data.yearofbirth, ref: data.Date }), ['Age', null, (_col, context) => context.params.center, (_col, context) => context.params.when, (_col, context) => context.params.examiner])
-            .addDetail('Sex', ['M/F'])
-            .addDetail((val, _i, context) => (val.oldPatient == 1)
+                footers: ['', '']
+            })
+            .addDetail('Date', { headers: ['Date'] })
+            .addDetail('ExaminerName', { headers: ['Examiner'] })
+            .addDetailLegacy(data => createElementWithObject(XCodage, { value: data.Center }), ['Place'])
+            .addDetailLegacy('patient_reference', ['Record n#'])
+            .addDetailLegacy('patient_name', ['Patient Name', 'Identity', 'Where', 'When', 'Who'])
+            .addDetailLegacy(data => createElementWithObject(XAge, { value: data.yearofbirth, ref: data.Date }), ['Age', null, (_col, context) => context.params.center, (_col, context) => context.params.when, (_col, context) => context.params.examiner])
+            .addDetailLegacy('Sex', ['M/F'])
+            .addDetailLegacy((val, _i, context) => (val.oldPatient == 1)
                 ? 'Old'
                 : (val.patient_reference.substr(0, 4) < ('' + context.params.when).substr(0, 4)
                     ? 'Old(EN)'
                     : 'New'
                 ), ['Old/New']
             )
-            .addDetail('sl_familySalary', ['Tk income', 'SEL', '0 - 300', 0, 'Levels of the social level'])
-            .addDetail('sl_numberOfHouseholdMembers', ['Nb pers'])
-            .addDetail(data => Math.round(data.sl_familySalary / data.sl_numberOfHouseholdMembers), ['Tk per pers', null, '301-500', 1])
-            .addDetail('Sociallevel', ['SL'])
+            .addDetailLegacy('sl_familySalary', ['Tk income', 'SEL', '0 - 300', 0, 'Levels of the social level'])
+            .addDetailLegacy('sl_numberOfHouseholdMembers', ['Nb pers'])
+            .addDetailLegacy(data => Math.round(data.sl_familySalary / data.sl_numberOfHouseholdMembers), ['Tk per pers', null, '301-500', 1])
+            .addDetailLegacy('Sociallevel', ['SL'])
 
-            .addDetail(data => createElementWithObject(XCodage, { value: data.Pathology }), ['Diagno', 'Medical', '501-1500', 2])
-            .addDetail('act', ['Act'])
-            .addDetail('treatment', ['Trt', null, '1501-3000', 3])
-            .addDetail('last_seen', ['Last seen', 'Surgical'])
-            .addDetail('last_treat_result', ['Result', null, '3001-...', 4])
-            .addDetail('last_treat_finished', ['Done ?', null])
+            .addDetailLegacy(data => createElementWithObject(XCodage, { value: data.Pathology }), ['Diagno', 'Medical', '501-1500', 2])
+            .addDetailLegacy('act', ['Act'])
+            .addDetailLegacy('treatment', ['Trt', null, '1501-3000', 3])
+            .addDetailLegacy('last_seen', ['Last seen', 'Surgical'])
+            .addDetailLegacy('last_treat_result', ['Result', null, '3001-...', 4])
+            .addDetailLegacy('last_treat_finished', ['Done ?', null])
 
-            .addDetail(data => (data.complementary
+            .addDetailLegacy(data => (data.complementary
                 ? createElementWithObject(XCodage, { value: 'Money collected on bills from previous months', translated: 'Complementary payments' })
                 : (data.price_consult ?? 0)
             ), ['Consult', 'Price', '', '', ''], ['total', (_col, context) => context.totals.price_consult])
 
-            .addDetail(data => data.complementary ? null : (data.price_medecine ?? 0), ['Medicine'], [null, (_col, context) => context.totals.price_medecine])
-            .addDetail(data => data.complementary ? null : (data.price_surgical ?? 0), ['Surgical'], [null, (_col, context) => context.totals.price_surgical])
-            .addDetail(data => data.complementary ? null : (data.price_workshop ?? 0), ['Workshop'], [null, (_col, context) => context.totals.price_workshop])
-            .addDetail(data => data.complementary ? null : (data.price_other ?? 0), ['Others'], [null, (_col, context) => context.totals.price_other])
-            .addDetail(data => data.complementary ? null : (data.total_real ?? 0), ['Full'], [null, (_col, context) => context.totals.total_real])
-            .addDetail(data => data.complementary ? null : (data.total_asked ?? 0), ['Asked'], [null, (_col, context) => context.totals.total_asked])
-            .addDetail('total_paid', ['Paid'], [null, (_col, context) => context.totals.total_paid])
+            .addDetailLegacy(data => data.complementary ? null : (data.price_medecine ?? 0), ['Medicine'], [null, (_col, context) => context.totals.price_medecine])
+            .addDetailLegacy(data => data.complementary ? null : (data.price_surgical ?? 0), ['Surgical'], [null, (_col, context) => context.totals.price_surgical])
+            .addDetailLegacy(data => data.complementary ? null : (data.price_workshop ?? 0), ['Workshop'], [null, (_col, context) => context.totals.price_workshop])
+            .addDetailLegacy(data => data.complementary ? null : (data.price_other ?? 0), ['Others'], [null, (_col, context) => context.totals.price_other])
+            .addDetailLegacy(data => data.complementary ? null : (data.total_real ?? 0), ['Full'], [null, (_col, context) => context.totals.total_real])
+            .addDetailLegacy(data => data.complementary ? null : (data.total_asked ?? 0), ['Asked'], [null, (_col, context) => context.totals.total_asked])
+            .addDetailLegacy('total_paid', ['Paid'], [null, (_col, context) => context.totals.total_paid])
             .end();
     }
 };
@@ -454,13 +454,13 @@ reports[REPORT_CONSULTATIONS] = { // test data: 2015-04-28
     generator: (xtable) => {
         xtable
             .addHeaders(1)
-            .addDetail('c_Center', ['Center'])
-            .addDetail(data => createElementWithTag('a', { href: '#' + getRouteToFolderPatient(data.patient_id) }, `${data.entryyear}-${data.entryorder}`), ['Patient'])
-            .addDetail('Name', ['Name'])
-            .addDetail('Telephone', ['Phone'])
-            .addDetail('ExaminerName', ['Appointment from'])
-            .addDetail('purpose', ['Purpose'])
-            .addDetail(data => createElementWithObject(XDisplayDate, { value: data.c_Date }), ['Appointment from'])
+            .addDetailLegacy('c_Center', ['Center'])
+            .addDetailLegacy(data => createElementWithTag('a', { href: '#' + getRouteToFolderPatient(data.patient_id) }, `${data.entryyear}-${data.entryorder}`), ['Patient'])
+            .addDetailLegacy('Name', ['Name'])
+            .addDetailLegacy('Telephone', ['Phone'])
+            .addDetailLegacy('ExaminerName', ['Appointment from'])
+            .addDetailLegacy('purpose', ['Purpose'])
+            .addDetailLegacy(data => createElementWithObject(XDisplayDate, { value: data.c_Date }), ['Appointment from'])
             .end();
     }
 };
@@ -474,7 +474,7 @@ reports[REPORT_SURGICAL] = { // test data: 2014-01
         xtable
             .addHeaders(6)
             .addFooters(2)
-            .addDetail((data, i) => createElementWithTag('a', { href: '#' + getRouteToFolderPatient(data.pid) }, `#${i + 1}`),
+            .addDetailLegacy((data, i) => createElementWithTag('a', { href: '#' + getRouteToFolderPatient(data.pid) }, `#${i + 1}`),
                 [
                     'N',
                     '',
@@ -485,40 +485,40 @@ reports[REPORT_SURGICAL] = { // test data: 2014-01
                 ],
                 ['', '']
             )
-            .addDetail('Date', ['Date'])
-            .addDetail('ExaminerName', [''])
-            .addDetail('Center', ['Place'])
-            .addDetail('patient_reference', ['Record n#'])
-            .addDetail('patient_name', ['Patient Name', 'Identity', 'Where', 'When', 'Who'])
-            .addDetail(data => createElementWithObject(XAge, { value: data.yearofbirth }), ['Age', null, (_col, context) => context.params.center, (_col, context) => context.params.when, (_col, context) => context.params.examiner])
-            .addDetail('Sex', ['M/F'])
-            .addDetail((data, _i, context) => (data.oldPatient == 1)
+            .addDetailLegacy('Date', ['Date'])
+            .addDetailLegacy('ExaminerName', [''])
+            .addDetailLegacy('Center', ['Place'])
+            .addDetailLegacy('patient_reference', ['Record n#'])
+            .addDetailLegacy('patient_name', ['Patient Name', 'Identity', 'Where', 'When', 'Who'])
+            .addDetailLegacy(data => createElementWithObject(XAge, { value: data.yearofbirth }), ['Age', null, (_col, context) => context.params.center, (_col, context) => context.params.when, (_col, context) => context.params.examiner])
+            .addDetailLegacy('Sex', ['M/F'])
+            .addDetailLegacy((data, _i, context) => (data.oldPatient == 1)
                 ? 'Old'
                 : (data.patient_reference.substr(0, 4) < ('' + context.params.when).substr(0, 4)
                     ? 'Old(EN)'
                     : 'New'
                 ), ['Old/New']
             )
-            .addDetail('sl_familySalary', ['Tk income', 'SEL', '0 - 300', 0, 'Levels of the social level'])
-            .addDetail('sl_numberOfHouseholdMembers', ['Nb pers'])
-            .addDetail(data => Math.round(data.sl_familySalary / data.sl_numberOfHouseholdMembers), ['Tk per pers', null, '301-500', 1])
-            .addDetail('Sociallevel', ['SL'])
+            .addDetailLegacy('sl_familySalary', ['Tk income', 'SEL', '0 - 300', 0, 'Levels of the social level'])
+            .addDetailLegacy('sl_numberOfHouseholdMembers', ['Nb pers'])
+            .addDetailLegacy(data => Math.round(data.sl_familySalary / data.sl_numberOfHouseholdMembers), ['Tk per pers', null, '301-500', 1])
+            .addDetailLegacy('Sociallevel', ['SL'])
 
-            .addDetail(data => createElementWithObject(XCodage, { value: data.Pathology }), ['Diagno', 'Medical', '501-1500', 2])
-            .addDetail('act', ['Act'])
-            .addDetail('treatment', ['Trt', null, '1501-3000', 3])
-            .addDetail('last_seen', ['Last seen', 'Surgical'])
-            .addDetail('last_treat_result', ['Result', null, '3001-...', 4])
-            .addDetail('last_treat_finished', ['Done ?', null])
+            .addDetailLegacy(data => createElementWithObject(XCodage, { value: data.Pathology }), ['Diagno', 'Medical', '501-1500', 2])
+            .addDetailLegacy('act', ['Act'])
+            .addDetailLegacy('treatment', ['Trt', null, '1501-3000', 3])
+            .addDetailLegacy('last_seen', ['Last seen', 'Surgical'])
+            .addDetailLegacy('last_treat_result', ['Result', null, '3001-...', 4])
+            .addDetailLegacy('last_treat_finished', ['Done ?', null])
 
-            .addDetail('price_consult', ['Consult', 'Price', '', '', ''], ['total', (_col, context) => context.totals.price_consult])
-            .addDetail('price_medecine', ['Medicine'], [null, (_col, context) => context.totals.price_medecine])
-            .addDetail('price_surgical', ['Surgical'], [null, (_col, context) => context.totals.price_surgical])
-            .addDetail('price_workshop', ['Workshop'], [null, (_col, context) => context.totals.price_workshop])
-            .addDetail('price_other', ['Others'], [null, (_col, context) => context.totals.price_other])
-            .addDetail('total_real', ['Full'], [null, (_col, context) => context.totals.total_real])
-            .addDetail('total_asked', ['Asked'], [null, (_col, context) => context.totals.total_asked])
-            .addDetail('total_paid', ['Paid'], [null, (_col, context) => context.totals.total_paid])
+            .addDetailLegacy('price_consult', ['Consult', 'Price', '', '', ''], ['total', (_col, context) => context.totals.price_consult])
+            .addDetailLegacy('price_medecine', ['Medicine'], [null, (_col, context) => context.totals.price_medecine])
+            .addDetailLegacy('price_surgical', ['Surgical'], [null, (_col, context) => context.totals.price_surgical])
+            .addDetailLegacy('price_workshop', ['Workshop'], [null, (_col, context) => context.totals.price_workshop])
+            .addDetailLegacy('price_other', ['Others'], [null, (_col, context) => context.totals.price_other])
+            .addDetailLegacy('total_real', ['Full'], [null, (_col, context) => context.totals.total_real])
+            .addDetailLegacy('total_asked', ['Asked'], [null, (_col, context) => context.totals.total_asked])
+            .addDetailLegacy('total_paid', ['Paid'], [null, (_col, context) => context.totals.total_paid])
             .end();
     }
 };
@@ -646,15 +646,6 @@ reports[REPORT_STATISTICAL] = { // test data:
                 )
             );
         };
-
-        // generator: (xtable) =>
-        //     xtable
-        //         .addRowFormatting((el, val) => { if (val.title) { el.classList.add('subheader'); } })
-        //         .addDetail('label')
-        //         .addDetail((row, _i, ctx) => (typeof (row.value) == 'function')
-        //             ? row.value(row, ctx)
-        //             : row['value'])
-        // ,
 
         // dataTransform: (dataList) => {
         //     // dataList = { summary: {...}}

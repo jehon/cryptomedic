@@ -135,6 +135,17 @@ export default class XTable extends HTMLElement {
     }
 
     /**
+     * Change layout to horizontal layout
+     *   (same as setting the attribute)
+     *
+     * @returns {XTable} for chaining
+     */
+    horizontal() {
+        this.setAttribute('horizontal', 'horizontal');
+        return this;
+    }
+
+    /**
      * Set the number of headers
      *
      * @param {number} n - the number of * to add
@@ -161,24 +172,33 @@ export default class XTable extends HTMLElement {
     /**
      *
      * @param {BodyDetailDescription} fieldData to be put in cells
-     * @param {Array<HeadFootDetailDescription>} headers to be put in headers (in reverse order)
-     * @param {Array<HeadFootDetailDescription>} footers to be put in footers
-     * @ param {function(Element, BodyDetailDescription, number): void} callback to modify the element
-     * @param empty
+     * @param {object} config to configure the line
+     * @param {Array<HeadFootDetailDescription>} [config.headers] to be put in headers (in reverse order)
+     * @param {Array<HeadFootDetailDescription>} [config.footers] to be put in footers
      * @returns {XTable} for chaining
      */
-    addDetail(fieldData, headers = [], footers = [], empty = false /*, callback = (_el, _fieldData, _i) => { } */) {
-        if (empty !== false) {
-            console.trace('called with', empty, ' for ', fieldData); // eslint-disable-line
-        }
+    addDetail(fieldData, config = null) {
         this._details.push({
             body: fieldData,
-            headers,
-            footers,
-            // callback
+            ...Object.assign({
+                headers: [],
+                footers: [],
+                label: false
+            }, config ?? {})
         });
-
         return this;
+    }
+
+    /**
+     * @deprecated todo: remove addDetailLegacy
+     *
+     * @param {BodyDetailDescription} fieldData to be put in cells
+     * @param {Array<HeadFootDetailDescription>} headers to be put in headers (in reverse order)
+     * @param {Array<HeadFootDetailDescription>} footers to be put in footers
+     * @returns {XTable} for chaining
+     */
+    addDetailLegacy(fieldData, headers = [], footers = []) {
+        return this.addDetail(fieldData, { headers, footers });
     }
 
     /**
@@ -322,18 +342,19 @@ export default class XTable extends HTMLElement {
              * Vertical layout
              *      line = details
              *      cols = sets
+             *      l = line label
              *
-             * +-----+
-             * │head │
-             * +-----+
-             * │ijllm│
-             * │i   m│
-             * │i v m│
-             * │i   m│
-             * │ijklm│
-             * +-----+
-             * │foot │
-             * +-----+
+             * +-+-----+
+             * │ |head │
+             * +-+-----+
+             * │l|ijllm│
+             * │l|i   m│
+             * │l|i v m│
+             * │l|i   m│
+             * │l|ijklm│
+             * +-+-----+
+             * │ |foot │
+             * +-+-----+
              */
 
             // Headers
@@ -407,6 +428,9 @@ export default class XTable extends HTMLElement {
         return this;
     }
 
+    /**
+     * To ease writing it
+     */
     end() { }
 
     /**
