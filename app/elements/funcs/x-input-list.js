@@ -9,7 +9,6 @@ let uuid = 1;
 
 /**
  * @param {string} str to be transformed
- *
  * @returns {string} acceptable form for html
  */
 function _escape(str) {

@@ -126,7 +126,6 @@ export default class XTable extends HTMLElement {
      * Set attributes on the top table element
      *
      * @param {object} attributes to be set
-     *
      * @returns {XTable} for chaining
      */
     enrichTable(attributes = {}) {
@@ -149,7 +148,6 @@ export default class XTable extends HTMLElement {
      * Set the number of headers
      *
      * @param {number} n - the number of * to add
-     *
      * @returns {XTable} for chaining
      */
     addHeaders(n) {
@@ -161,7 +159,6 @@ export default class XTable extends HTMLElement {
      * Set the number of footers
      *
      * @param {number} n - the number of * to add
-     *
      * @returns {XTable} for chaining
      */
     addFooters(n) {
@@ -191,7 +188,6 @@ export default class XTable extends HTMLElement {
 
     /**
      * @deprecated todo: remove addDetailLegacy
-     *
      * @param {BodyDetailDescription} fieldData to be put in cells
      * @param {Array<HeadFootDetailDescription>} headers to be put in headers (in reverse order)
      * @param {Array<HeadFootDetailDescription>} footers to be put in footers
@@ -439,7 +435,6 @@ export default class XTable extends HTMLElement {
      * @param {number} n - the number of * to add
      * @param {object} attributes to be set
      * @param {function(Element, number): void} callback to modify the element
-     *
      * @returns {XTable} for chaining
      */
     _addSetInRegion(region, n, attributes, callback) {
@@ -455,7 +450,6 @@ export default class XTable extends HTMLElement {
      * @param {HTMLElement} region to be filled in
      * @param {Array<function(number):string|null>} values to be put in cells (number = row number)
      * @param {string} tag name
-     *
      * @returns {Array<string>} of calculated values
      */
     _addDetailToSetsInRegion(region, values, tag) {

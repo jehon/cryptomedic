@@ -39,9 +39,7 @@ export function routeToLogin(redirect = getCurrentRoute()) {
 
 /**
  * @param {string} route - the route to be parsed
- *
  * @see routeToLogin
- *
  * @returns {object} the route parsed
  */
 export function parseRouteLogin(route = getCurrentRoute()) {
@@ -103,7 +101,6 @@ export function getRouteToCreateReference() {
 
 /**
  * @param {string} reportName - the name of the report
- *
  * @returns {string} the route
  */
 export function getRouteToReport(reportName) {
@@ -113,7 +110,6 @@ export function getRouteToReport(reportName) {
 /**
  * @param {string} route - the route to be parsed
  * @see getRouteToReport
- *
  * @returns { object } the route parsed
  */
 export function parseRouteReport(route = getCurrentRoute()) {
