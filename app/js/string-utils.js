@@ -43,10 +43,10 @@ export function toTitleCase(text) {
 /**
  * Transform into camel case (abcDefGhi - to use in object)
  *
- * @see https://en.wikipedia.org/wiki/Letter_case#Special_case_styles
  * @param {string} text to be transformed (abc-def-ghi)
  * @param {boolean} middle if the string has to be put in inside of a block (...AbcDef)
  * @returns {string} transformed into camel case (AbcDefGhi)
+ * @see https://en.wikipedia.org/wiki/Letter_case#Special_case_styles
  */
 export function toPropertyCase(text, middle = false) {
     return _canonize(text)
@@ -57,10 +57,9 @@ export function toPropertyCase(text, middle = false) {
 /**
  * Transform into kebab case (abc-def-ghi - to use in html)
  *
- * @see https://en.wikipedia.org/wiki/Letter_case#Special_case_styles
- *
  * @param {string} text to be transformed (abcDefGhi)
  * @returns {string} transformed into kebab case (AbcDefGhi)
+ * @see https://en.wikipedia.org/wiki/Letter_case#Special_case_styles
  */
 export function toAttributeCase(text) {
     return _canonize(text)

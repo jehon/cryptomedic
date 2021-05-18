@@ -153,7 +153,6 @@ export default class XRequestor extends HTMLElement {
      * @property {string} [method] of the request (GET by default)
      * @property {number} [timeout] of the request (in seconds)
      * @property {object} [data] of the request (GET param will be taken from here)
-     *
      * @returns {Promise} that resolve whith the request
      */
     async request(opts) {
@@ -377,7 +376,6 @@ export function logoutBuilder() {
 /**
  * @param {number} entryyear to be checked
  * @param {number} entryorder to be checked
- *
  * @returns {object} options for request (see XRequestor#request)
  */
 export function checkReferenceBuilder(entryyear, entryorder) {
@@ -390,7 +388,6 @@ export function checkReferenceBuilder(entryyear, entryorder) {
 /**
  * @param {number} entryyear to be checked
  * @param {number} entryorder to be checked
- *
  * @returns {object} options for request (see XRequestor#request)
  */
 export function createReferenceBuilder(entryyear, entryorder) {
@@ -407,7 +404,6 @@ export function createReferenceBuilder(entryyear, entryorder) {
 /**
  * @param {string} reportId name
  * @param {object} data describing the search
- *
  * @returns {object} options for request (see XRequestor#request)
  */
 export function reportQueryBuilder(reportId, data) {
@@ -419,7 +415,6 @@ export function reportQueryBuilder(reportId, data) {
 
 /**
  * @param {object} data describing the search
- *
  * @returns {object} options for request (see XRequestor#request)
  */
 export function patientSearchBuilder(data) {

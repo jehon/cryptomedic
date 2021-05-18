@@ -59,7 +59,6 @@ export default class XPageReports extends HTMLElement {
 
     /**
      * @param {string} p parameter name
-     *
      * @returns {boolean} if the parameter is available
      */
     isParam(p) {

@@ -3,11 +3,10 @@
 /**
  * Make an api call
  *
- * @see https://docs.cypress.io/api/commands/request
- *
  * @param {object} options
  * @property {string} url of the call (relative to version if relative)
  * @property {string?} method of the call
+ * @see https://docs.cypress.io/api/commands/request
  */
 export function crApi(options = {}) {
     return cy.request({
