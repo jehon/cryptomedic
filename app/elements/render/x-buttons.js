@@ -24,7 +24,8 @@ export default class XButtons extends HTMLElement {
         margin: 0px;
         margin-top: 10px;
 
-        background-color: white !important;
+        background-color: transparent;
+        /* background-color: white !important; */
     }
 
     ::slotted(*) {
