@@ -272,6 +272,72 @@ export function requestAndFilterBuilder(options, allowed = []) {
 }
 
 /**
+ * @param {string} basePath of the crud
+ * @returns {object} is a crud builder
+ */
+export function requestCRUDBuilder(basePath) {
+    return {
+        /**
+         * @param {object} [parameters] to restrict the search
+         * @returns {object} options for request (see XRequestor#request)
+         */
+        list: (parameters) => ({
+            url: basePath,
+            data: parameters
+        }),
+
+        /**
+         * To create an element
+         *
+         * @param {object} data to create the element
+         * @returns {object} options for request (see XRequestor#request)
+         */
+        create: (data) => ({
+            url: basePath,
+            method: 'POST',
+            data
+        }),
+
+        /**
+         * To read an entity
+         *
+         * @param {number} id to be requested
+         * @returns {object} options for request (see XRequestor#request)
+         */
+        read: (id) => ({
+            url: basePath + '/' + id
+        }),
+
+        /**
+         * To update an element
+         *
+         * @param {number} id to be requested
+         * @param {object} data to create the element
+         * @returns {object} options for request (see XRequestor#request)
+         */
+        update: (id, data) => ({
+            url: basePath + '/' + id,
+            method: 'PUT',
+            data
+        }),
+
+        /**
+         * To delete an element
+         *    data may be null, but should be used for optimistic locking
+         *
+         * @param {number} id to be requested
+         * @param {object} [data] to create the element
+         * @returns {object} options for request (see XRequestor#request)
+         */
+        delete: (id, data) => ({
+            url: basePath + '/' + id,
+            method: 'DELETE',
+            data
+        })
+    };
+}
+
+/**
  * Build object for XRequestor#request
  *
  * @param {string} username of the request
@@ -364,69 +430,23 @@ export function patientSearchBuilder(data) {
 }
 
 /**
- * @returns {object} options for request (see XRequestor#request)
+ * Build up a users crud
+ *
+ * @returns {object} with the various commands
  */
-export function usersListBuilder() {
+export function usersCrud() {
     return {
-        url: 'users'
-    };
-}
+        ...requestCRUDBuilder('users'),
 
-/**
- * @param {number} uid of the user
- * @returns {object} options for request (see XRequestor#request)
- */
-export function userGetBuilder(uid) {
-    return {
-        url: `users/${uid}`
-    };
-}
-
-/**
- * @param {number} uid of the user
- * @param {string} password to be set
- * @returns {object} options for request (see XRequestor#request)
- */
-export function userPasswordBuilder(uid, password) {
-    return {
-        url: `users/password/${uid}`,
-        method: 'POST',
-        data: { password }
-    };
-}
-
-/**
- * @param {object} data to be set
- * @returns {object} options for request (see XRequestor#request)
- */
-export function userCreateBuilder(data) {
-    return {
-        url: 'users',
-        method: 'POST',
-        data
-    };
-}
-
-/**
- * @param {number} uid of the user
- * @param {object} data to be set
- * @returns {object} options for request (see XRequestor#request)
- */
-export function userUpdateBuilder(uid, data) {
-    return {
-        url: `users/${uid}`,
-        method: 'PUT',
-        data
-    };
-}
-
-/**
- * @param {number} uid of the user
- * @returns {object} options for request (see XRequestor#request)
- */
-export function userDeleteBuilder(uid) {
-    return {
-        url: `users/${uid}`,
-        method: 'DELETE'
+        /**
+         * @param {number} uid of the user
+         * @param {string} password to be set
+         * @returns {object} options for request (see XRequestor#request)
+         */
+        updatePassword: (uid, password) => ({
+            url: `users/password/${uid}`,
+            method: 'POST',
+            data: { password }
+        })
     };
 }
