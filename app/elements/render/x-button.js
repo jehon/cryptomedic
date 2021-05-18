@@ -68,7 +68,8 @@ export default class XButton extends HTMLElement {
     :host(x-button:not([action])) button,
     :host(x-button[action="${actions.move}"]) button,
     :host(x-button[action="${actions.query}"]) button,
-    :host(x-button[action="${actions.alternate}"]) button
+    :host(x-button[action="${actions.alternate}"]) button,
+    :host(x-button[action="${actions.edit}"]) button
     {
         background-color: #5bc0de;
         border-color: #46b8da;
@@ -173,6 +174,9 @@ export default class XButton extends HTMLElement {
                 break;
             case actions.query:
                 this._slot.innerHTML = 'Search';
+                break;
+            case actions.edit:
+                this._slot.innerHTML = 'Edit';
                 break;
             case actions.alternate:
                 this._slot.innerHTML = 'Alternate';

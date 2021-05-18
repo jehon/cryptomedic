@@ -34,6 +34,7 @@ export const actions = {
     move: 'move',
     query: 'query',
     commit: 'commit',
+    edit: 'edit',
     // selected: 'selected',
     cancel: 'cancel',
     alternate: 'alternate',
