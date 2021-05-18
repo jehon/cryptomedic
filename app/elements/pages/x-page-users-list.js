@@ -2,7 +2,7 @@
 import { actions } from '../../config.js';
 import { createElementWithObject, defineCustomElement } from '../../js/custom-element.js';
 import { getRoute, routes } from '../../js/router.js';
-import XRequestor, { usersListBuilder } from '../funcs/x-requestor.js';
+import XRequestor, { usersCrud } from '../funcs/x-requestor.js';
 import XTable from '../funcs/x-table.js';
 import XButton from '../render/x-button.js';
 import XButtons from '../render/x-buttons.js';
@@ -55,7 +55,7 @@ export default class XPageUsersList extends HTMLElement {
     }
 
     connectedCallback() {
-        this._requestor.request(usersListBuilder())
+        this._requestor.request(usersCrud().list())
             .then(response => response.data)
             .then((data) => this._result.setData(data));
     }

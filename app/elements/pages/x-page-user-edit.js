@@ -5,7 +5,7 @@ import { setRoute, getRoute, routes } from '../../js/router.js';
 import getInputObject, { TYPES } from '../funcs/getInput.js';
 import XConfirmation from '../funcs/x-confirmation.js';
 import XForm from '../funcs/x-form.js';
-import XRequestor, { userCreateBuilder, userDeleteBuilder, userGetBuilder, userUpdateBuilder } from '../funcs/x-requestor.js';
+import XRequestor, { usersCrud } from '../funcs/x-requestor.js';
 import XButton from '../render/x-button.js';
 import XButtons from '../render/x-buttons.js';
 import XGroupPanel from '../render/x-group-panel.js';
@@ -86,7 +86,7 @@ export default class XPageUserEdit extends HTMLElement {
     connectedCallback() {
         this.uid = parseInt(this.getAttribute('uid')) ?? 0;
         if (this.uid > 0) {
-            this._requestor.request(userGetBuilder(this.uid))
+            this._requestor.request(usersCrud().read(this.uid))
                 .then(response => response.data)
                 .then((data) => {
                     this.data = data;
@@ -99,8 +99,8 @@ export default class XPageUserEdit extends HTMLElement {
         const newValues = this._form.getValues();
         this._requestor.request(
             this.uid > 0
-                ? userUpdateBuilder(this.uid, newValues)
-                : userCreateBuilder(newValues)
+                ? usersCrud().update(this.uid, newValues)
+                : usersCrud().create(newValues)
         )
             .then(response => response.data)
             .then(data => {
@@ -125,7 +125,7 @@ export default class XPageUserEdit extends HTMLElement {
 
     delete() {
         // TODO: use x-confirmation as done for x-requestor
-        return this._requestor.request(userDeleteBuilder(this.uid))
+        return this._requestor.request(usersCrud().delete(this.uid))
             .then(() => {
                 this.innerHTML = '';
                 this.append(

@@ -4,7 +4,7 @@ import { createElementWithObject, createElementWithTag, defineCustomElement } fr
 import { getRoute, routes, setRoute } from '../../js/router.js';
 import XConfirmation from '../funcs/x-confirmation.js';
 import XForm from '../funcs/x-form.js';
-import XRequestor, { userGetBuilder, userPasswordBuilder } from '../funcs/x-requestor.js';
+import XRequestor, { usersCrud } from '../funcs/x-requestor.js';
 import XButton from '../render/x-button.js';
 import XButtons from '../render/x-buttons.js';
 import XGroupPanel from '../render/x-group-panel.js';
@@ -63,7 +63,7 @@ export default class XPageUserPassword extends HTMLElement {
                 ])
             ])
         );
-        this._requestor.request(userGetBuilder(this.uid))
+        this._requestor.request(usersCrud().read(this.uid))
             .then(response => response.data)
             .then(data => {
                 this.user = data;
@@ -72,13 +72,13 @@ export default class XPageUserPassword extends HTMLElement {
     }
 
     emptyPassword() {
-        return this._requestor.request(userPasswordBuilder(this.uid, ''))
+        return this._requestor.request(usersCrud().updatePassword(this.uid, ''))
             .then(() => this.showConfirmation('empty'));
     }
 
     setPassword() {
         const values = this._form.getValues();
-        return this._requestor.request(userPasswordBuilder(this.uid, values.password))
+        return this._requestor.request(usersCrud().updatePassword(this.uid, values.password))
             .then(() => this.showConfirmation('updated'));
     }
 
