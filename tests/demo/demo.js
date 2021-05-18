@@ -162,8 +162,8 @@ document.querySelectorAll('x-table').forEach(
         .addHeaders(2)
         .addFooters(2)
         .addSetFormatting((el, data) => el.addEventListener('click', () => console.info(data)))
-        .addDetail('c0', ['hr1c0', 'hr0c0'], ['fr0c0', 'fr1c0'])
-        .addDetail('c1', ['hr0c1'], ['fr0c1', null])
+        .addDetail('c0', { headers: ['hr1c0', 'hr0c0'], footers: ['fr0c0', 'fr1c0'] })
+        .addDetail('c1', { headers: ['hr0c1'], footers: ['fr0c1', null] })
         .addDetail('')
         .setData([
             { c0: 'br0c0', c1: 'br0c1' },

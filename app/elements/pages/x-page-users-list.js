@@ -34,19 +34,21 @@ export default class XPageUsersList extends HTMLElement {
                         el
                             // .enrichTable({ class: 'table table-hover table-bordered tablesorter' })
                             .addHeaders(1)
-                            .addDetail('id', ['Id'])
-                            .addDetail('username', ['Username'])
-                            .addDetail('name', ['Full Name'])
-                            .addDetail('codage', ['Codage'])
-                            .addDetail('email', ['Email'])
-                            .addDetail(data => createElementWithObject(XReadBoolean, { value: data.inExaminerList }), ['In Examiner List'])
-                            .addDetail(data => createElementWithObject(XReadBoolean, { value: data.hasPassword }), ['Has Password'])
-                            .addDetail('notes', ['Notes'])
+                            .addDetail('id', { headers: ['Id'] })
+                            .addDetail('username', { headers: ['Username'] })
+                            .addDetail('name', { headers: ['Full Name'] })
+                            .addDetail('codage', { headers: ['Codage'] })
+                            .addDetail('email', { headers: ['Email'] })
+                            .addDetail(data => createElementWithObject(XReadBoolean, { value: data.inExaminerList }), { headers: ['In Examiner List'] })
+                            .addDetail(data => createElementWithObject(XReadBoolean, { value: data.hasPassword }), { headers: ['Has Password'] })
+                            .addDetail('notes', { headers: ['Notes'] })
                             .addDetail(data =>
                                 createElementWithObject(XButtons, {}, [
                                     createElementWithObject(XButton, { id: 'edit', action: actions.move, toRoute: getRoute(routes.user_edit, { uid: data.id }) }, 'Edit'),
                                     createElementWithObject(XButton, { id: 'pwd', action: actions.move, toRoute: getRoute(routes.user_password, { uid: data.id }) }, 'Change Password'),
-                                ]), ['Actions'])
+                                ]), {
+                                headers: ['Actions']
+                            })
                 )
             ])
         );

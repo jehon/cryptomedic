@@ -60,8 +60,14 @@ describe(fn(import.meta.url), function () {
                     el
                         .addHeaders(2)
                         .addFooters(2)
-                        .addDetail('c0', ['hr1c0', 'hr0c0'], ['fr0c0', 'fr1c0'])
-                        .addDetail('c1', ['hr1c1', 'hr0c1'], ['fr0c1', 'fr1c1']);
+                        .addDetail('c0', {
+                            headers: ['hr1c0', 'hr0c0'],
+                            footers: ['fr0c0', 'fr1c0']
+                        })
+                        .addDetail('c1', {
+                            headers: ['hr1c1', 'hr0c1'],
+                            footers: ['fr0c1', 'fr1c1']
+                        });
                 }
             );
             element.setData([
@@ -85,8 +91,14 @@ describe(fn(import.meta.url), function () {
                     el
                         .addHeaders(2)
                         .addFooters(2)
-                        .addDetail('c0', ['hr1c0', 'hr0c0'], ['fr0c0', 'fr1c0'])
-                        .addDetail('c1', ['hr1c1', 'hr0c1'], ['fr0c1', 'fr1c1']);
+                        .addDetail('c0', {
+                            headers: ['hr1c0', 'hr0c0'],
+                            footers: ['fr0c0', 'fr1c0']
+                        })
+                        .addDetail('c1', {
+                            headers: ['hr1c1', 'hr0c1'],
+                            footers: ['fr0c1', 'fr1c1']
+                        });
                 }
             );
             element.setData([
@@ -113,8 +125,14 @@ describe(fn(import.meta.url), function () {
                     el
                         .addHeaders(2)
                         .addFooters(2)
-                        .addDetail('c0', ['hr1c0', 'hr0c0'], ['fr0c0', 'fr1c0'])
-                        .addDetail('c1', [null], [null])
+                        .addDetail('c0', {
+                            headers: ['hr1c0', 'hr0c0'],
+                            footers: ['fr0c0', 'fr1c0']
+                        })
+                        .addDetail('c1', {
+                            headers: [null],
+                            footers: [null]
+                        })
                         .addDetail('');
                 }
             );
@@ -141,15 +159,15 @@ describe(fn(import.meta.url), function () {
                         .addHeaders(2)
                         .addFooters(2)
                         // Indice is ok
-                        .addDetail((data, _) => data.c0,
-                            ['hr1c0', (_data) => 'hr0c0'],
-                            ['fr0c0', (_data) => 'fr1c0']
-                        )
+                        .addDetail((data, _) => data.c0, {
+                            headers: ['hr1c0', (_data) => 'hr0c0'],
+                            footers: ['fr0c0', (_data) => 'fr1c0']
+                        })
                         // Data is ok
-                        .addDetail((_ata, i) => `br${i}c1`,
-                            ['hr1c1', (data) => data.join('/')],
-                            ['fr0c1', (data) => data.join('/')]
-                        );
+                        .addDetail((_ata, i) => `br${i}c1`, {
+                            headers: ['hr1c1', (data) => data.join('/')],
+                            footers: ['fr0c1', (data) => data.join('/')]
+                        });
                 }
             );
             element.setData([
@@ -176,15 +194,15 @@ describe(fn(import.meta.url), function () {
                         .addHeaders(2)
                         .addFooters(2)
                         // Indice is ok
-                        .addDetail((data, _, context) => `${context}${data.c0}`,
-                            ['hr1c0', (_ata, context) => `${context}hr0c0`],
-                            ['fr0c0', (_ata, context) => `${context}fr1c0`]
-                        )
+                        .addDetail((data, _, context) => `${context}${data.c0}`, {
+                            headers: ['hr1c0', (_ata, context) => `${context}hr0c0`],
+                            footers: ['fr0c0', (_ata, context) => `${context}fr1c0`]
+                        })
                         // Data is ok
-                        .addDetail((_ata, i, context) => `${context}br${i}c1`,
-                            ['hr1c1', (data, context) => context + data.join('/')],
-                            ['fr0c1', (data, context) => context + data.join('/')]
-                        );
+                        .addDetail((_ata, i, context) => `${context}br${i}c1`, {
+                            headers: ['hr1c1', (data, context) => context + data.join('/')],
+                            footers: ['fr0c1', (data, context) => context + data.join('/')]
+                        });
                 }
             );
             element.setData([
@@ -209,8 +227,14 @@ describe(fn(import.meta.url), function () {
                     el
                         .addHeaders(2)
                         .addFooters(2)
-                        .addDetail('c0', ['hr1c0', 'hr0c0'], ['fr0c0', 'fr1c0'])
-                        .addDetail('c1', ['hr1c1', 'hr0c1'], ['fr0c1', 'fr1c1']);
+                        .addDetail('c0', {
+                            headers: ['hr1c0', 'hr0c0'],
+                            footers: ['fr0c0', 'fr1c0']
+                        })
+                        .addDetail('c1', {
+                            headers: ['hr1c1', 'hr0c1'],
+                            footers: ['fr0c1', 'fr1c1']
+                        });
                 }
             );
             element.setData([
@@ -218,8 +242,6 @@ describe(fn(import.meta.url), function () {
                 { c0: 'br1c0', c1: 'br1c1' },
                 { c0: 'br2c0', c1: 'br2c1' }
             ]);
-
-            d(element);
 
             checkTable(
                 element,
