@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Http\Controllers;
 
@@ -16,7 +16,7 @@ class PricesController extends Controller {
 
 	// POST = create
 	public function store() {
- 		$pivot = Request::input('pivot');
+		$pivot = Request::input('pivot');
 		$lastPrice = Price::where("dateto", null)->first();
 
 		if ($lastPrice->_editable) {
@@ -47,15 +47,15 @@ class PricesController extends Controller {
 
 	// PUT / PATCH
 	public function update($id) {
- 		$attributes = Request::except([ '_type', 'datefrom', 'dateto' ]);
+		$attributes = Request::except(['_type', 'datefrom', 'dateto']);
 
- 		$obj = Price::findOrFail($id);
- 		if (!$obj->_editable) {
- 			abort(403, "Could not be done on that object");
- 		}
-		foreach($attributes as $k => $v) {
+		$obj = Price::findOrFail($id);
+		if (!$obj->_editable) {
+			abort(403, "Could not be done on that object");
+		}
+		foreach ($attributes as $k => $v) {
 			// Skip system fields
-			if (in_array($k, [ $obj->getUpdatedAtColumn(), $obj->getCreatedAtColumn() ])) {
+			if (in_array($k, [$obj->getUpdatedAtColumn(), $obj->getCreatedAtColumn()])) {
 				continue;
 			}
 			// Set existing fields
@@ -79,7 +79,7 @@ class PricesController extends Controller {
 		if (!$obj->_editable) {
 			abort(403, "Forbidden");
 		}
-		if(!$obj->delete()) {
+		if (!$obj->delete()) {
 			abort(404, "Could not delete $model@$id");
 		}
 
@@ -98,7 +98,7 @@ class PricesController extends Controller {
 		sort($billFields, SORT_NATURAL);
 
 		$billDef = "INT(11) NOT NULL DEFAULT '0'";
-		$priceDef = "INT(11) NULL DEFAULT '-1'";
+		$priceDef = "INT(11) NULL DEFAULT '0'";
 
 		$old = $values['old'];
 		$new = str_replace(" ", "_", $values['new']);
@@ -126,13 +126,13 @@ class PricesController extends Controller {
 		echo "\n";
 		echo "</textarea>";
 
-		?>
-			<form>
-				Old: <input name='old' value='<?php echo $old ?>'><br>
-				New: <input name='new' value='<?php echo $new ?>'><br>
-				<button type='submit'>Submit</button>
-			</form>
-		<?php
+?>
+		<form>
+			Old: <input name='old' value='<?php echo $old ?>'><br>
+			New: <input name='new' value='<?php echo $new ?>'><br>
+			<button type='submit'>Submit</button>
+		</form>
+<?php
 
 		echo implode("<br>", $billFields);
 	}

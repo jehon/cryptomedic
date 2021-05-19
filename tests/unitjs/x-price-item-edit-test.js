@@ -14,7 +14,7 @@ describe(fn(import.meta.url), function () {
         expect(el.shadowRoot.querySelector('input[type=radio][choice="open"]').checked).toBeFalse();
         expect(el.shadowRoot.querySelector('input[type=number]').style.display).toBe('none');
 
-        expect(el.value).toBe(-1);
+        expect(el.value).toBe(0);
     });
 
     it('should initalize with value=1', () => {
