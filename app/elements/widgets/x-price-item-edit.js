@@ -72,7 +72,7 @@ export default class XPriceItemEdit extends HTMLElement {
             return 1;
         }
         if (this.elChoiceUnused.checked) {
-            return -1;
+            return 0;
         }
         return Number.parseInt(this.elSpecific.value);
     }
@@ -84,7 +84,7 @@ export default class XPriceItemEdit extends HTMLElement {
         if (typeof (val) == 'string') {
             val = Number.parseInt(val);
         }
-        if (val < 0) {
+        if (val <= 0) {
             this.elChoiceUnused.checked = true;
         } else if (val == 1) {
             this.elChoiceOpen.checked = true;
