@@ -14,6 +14,7 @@ import { getBrowserDescription } from '../../js/browser.js';
 import '../../../node_modules/css-inherit/css-inherit.js';
 import XPanel from '../render/x-panel.js';
 import { WithDataError } from '../../js/exceptions.js';
+import nullify from '../../js/nullify.js';
 
 /**
  * @param {number} code - http code
@@ -163,6 +164,7 @@ export default class XRequestor extends HTMLElement {
         const options = {
             url: '/',
             ...opts,
+            data: opts.data ? nullify(opts.data) : undefined,
             timeout: ((('timeout' in opts) ? opts.timeout : 30) * 1000)
         };
 
