@@ -105,7 +105,7 @@ make ${MAKEOPT} ${STAGE_NAME}
       //   lock resource: 'cryptomedic_production'
       // }
       when {
-        branch 'master'
+        branch 'main'
       }
       steps {
         lock(resource: 'cryptomedic_production') {
