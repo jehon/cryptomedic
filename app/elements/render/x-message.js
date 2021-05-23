@@ -56,6 +56,10 @@ export default class XMessage extends HTMLElement {
         text-align: center;
     }
 
+    :host > * {
+        text-align: left;
+    }
+
     :host(x-message:not([level])),
     :host(x-message[level="${messages.info}"])
     {
