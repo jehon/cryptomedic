@@ -6,6 +6,10 @@
 	background-image: url('img/cal.gif');
 }
 
+[hidden] {
+	display: none !important;
+}
+
 [full] {
 	width: 100%;
 	height: 100%;
