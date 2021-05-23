@@ -1,5 +1,6 @@
 
 import { actions } from '../../app/config.js';
+import XForm from '../../app/elements/funcs/x-form.js';
 import XButton from '../../app/elements/render/x-button.js';
 import { getCurrentRoute, setRoute } from '../../app/js/router.js';
 import { fn } from './athelpers.js';
@@ -59,7 +60,7 @@ describe(fn(import.meta.url), function () {
         const f = document.createElement('form');
         f.append(el);
 
-        el.addEventListener('submit', () => done.fail('form has been submitted'));
+        el.addEventListener(XForm.ActionSubmit, () => done.fail('form has been submitted'));
         el.shadowRoot.querySelector('button').click();
         setTimeout(() => {
             expect(true).toBeTrue();

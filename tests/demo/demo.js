@@ -134,6 +134,7 @@ defineCustomElement(XxTest);
 
 import { API_VERSION } from '../../app/config.js';
 import Folder from '../../app/models/Folder.js';
+import XForm from '../../app/elements/funcs/x-form.js';
 
 document
     .querySelectorAll('x-requestor[demo-failed]').forEach(
@@ -144,7 +145,7 @@ document
     );
 
 document.querySelectorAll('x-button').forEach(e => e.addEventListener('click', evt => console.info('clicked', evt.target)));
-document.querySelectorAll('x-form').forEach(e => e.addEventListener('submit', evt => console.info('clicked', evt.target.data)));
+document.querySelectorAll('x-form').forEach(e => e.addEventListener(XForm.ActionSubmit, evt => console.info('clicked', evt.target.data)));
 
 fetch(`../../www/api/${API_VERSION}/tests/references/FolderTest.test1.json`)
     .then(response => response.json())

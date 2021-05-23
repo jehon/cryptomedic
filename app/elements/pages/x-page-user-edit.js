@@ -72,9 +72,9 @@ export default class XPageUserEdit extends HTMLElement {
                                 ])
                             ],
                             el => {
-                                el.addEventListener('submit', () => this.save());
-                                el.addEventListener('delete', () => this.delete());
-                                el.addEventListener('reset', () => this.exit());
+                                el.addEventListener(XForm.ActionSubmit, () => this.save());
+                                el.addEventListener(XForm.ActionDelete, () => this.delete());
+                                el.addEventListener(XForm.ActionReset, () => this.exit());
                             }
                         )
                     ])

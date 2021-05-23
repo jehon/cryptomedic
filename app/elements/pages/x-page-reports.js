@@ -121,8 +121,8 @@ x-button#export {
                                     createElementWithObject(XButton, { action: actions.cancel }, 'Reset'),
                                 ])
                             ], el => {
-                                el.addEventListener('submit', () => this.query());
-                                el.addEventListener('reset', () => this.reset());
+                                el.addEventListener(XForm.ActionSubmit, () => this.query());
+                                el.addEventListener(XForm.ActionReset, () => this.reset());
                             })
                         ]),
                     ]),

@@ -45,7 +45,7 @@ export default class XPageLogin extends HTMLElement {
                                     createElementWithObject(XButton, { id: 'submit' }, 'Login'),
                                 ]),
                             ],
-                            (el) => el.addEventListener('submit', () => this.doLogin())
+                            (el) => el.addEventListener(XForm.ActionSubmit, () => this.doLogin())
                         )
                     ])
                 ])
