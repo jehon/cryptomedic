@@ -55,8 +55,8 @@ export default class XPageUserPassword extends HTMLElement {
                                 ])
                             ],
                             el => {
-                                el.addEventListener('submit', () => this.setPassword());
-                                el.addEventListener('reset', () => this.exit());
+                                el.addEventListener(XForm.ActionSubmit, () => this.setPassword());
+                                el.addEventListener(XForm.ActionReset, () => this.exit());
                             }
                         )
                     ])

@@ -62,8 +62,8 @@ export default class XPatientByReference extends HTMLElement {
                             ])
                         ],
                         (el) => {
-                            el.addEventListener('submit', () => this.search());
-                            el.addEventListener('reset', () => this.reset());
+                            el.addEventListener(XForm.ActionSubmit, () => this.search());
+                            el.addEventListener(XForm.ActionReset, () => this.reset());
                         }
                     ),
                     createElementWithTag('br'),

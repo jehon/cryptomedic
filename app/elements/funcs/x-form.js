@@ -35,7 +35,14 @@ const log = (..._args) => { };
  *  - reset (reset the form)
  */
 
+// console.log(this.shadowRoot.querySelector('slot').assignedNodes({ flattern: true}));
+
 export default class XForm extends HTMLElement {
+    static get ActionSubmit() { return 'submit'; }
+    static get ActionCancel() { return 'cancel'; }
+    static get ActionDelete() { return 'delete'; }
+    static get ActionReset() { return 'reset'; }
+
     /** @type {XMessages} */
     _messages;
 
@@ -64,10 +71,16 @@ export default class XForm extends HTMLElement {
     connectedCallback() {
         this._values = this.getValues();
 
+        // For each "reset" button, auto reset
+        this.querySelectorAll(`x-button[action="${actions.reset}"]`)
+            .forEach(el => (/** @type {XButton} */(el)).addEventListener('click',
+                () => this.reset()
+            ));
+
         // For each "cancel" button, auto reset
         this.querySelectorAll(`x-button[action="${actions.cancel}"]`)
             .forEach(el => (/** @type {XButton} */(el)).addEventListener('click',
-                () => this.reset()
+                () => this.dispatchEvent(new CustomEvent(XForm.ActionCancel))
             ));
 
         // For each "query" button, auto submit
@@ -235,7 +248,7 @@ export default class XForm extends HTMLElement {
     reset() {
         this.clearMessages();
         this.setValues(this._values);
-        this.dispatchEvent(new CustomEvent('reset'));
+        this.dispatchEvent(new CustomEvent(XForm.ActionReset));
     }
 
     _fillIn(values) {
@@ -289,7 +302,7 @@ export default class XForm extends HTMLElement {
             this.addMessage({ text: 'The form contains some errors.', id: 'form-invalid' });
             return false;
         }
-        this.dispatchEvent(new CustomEvent('submit'));
+        this.dispatchEvent(new CustomEvent(XForm.ActionSubmit));
 
         return true;
     }
@@ -300,7 +313,7 @@ export default class XForm extends HTMLElement {
     askAndDelete() {
         // TODO: render a better confirmation dialog (x-confirmation when ready)
         if (confirm('Are you sure you want to delete it?')) {
-            this.dispatchEvent(new CustomEvent('delete'));
+            this.dispatchEvent(new CustomEvent(XForm.ActionDelete));
         }
     }
 }

@@ -31,14 +31,17 @@ export const messages = {
 };
 
 export const actions = {
-    move: 'move',
-    query: 'query',
+    /* x-form: begin */
     commit: 'commit',
-    edit: 'edit',
-    // selected: 'selected',
+    reset: 'reset',
     cancel: 'cancel',
+    delete: 'delete',
+    query: 'query',
+    /* x-form: end */
+
+    edit: 'edit',
+    move: 'move',
     alternate: 'alternate',
-    delete: 'delete'
 };
 
 export const icons = {

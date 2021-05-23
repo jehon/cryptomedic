@@ -62,14 +62,14 @@ describe(fn(import.meta.url), function () {
 
                 createElementWithObject(XButtons, {}, [
                     bQuery = createElementWithObject(XButton, {}, 'Query'),
-                    bReset = createElementWithObject(XButton, { action: actions.cancel }, 'Reset')
+                    bReset = createElementWithObject(XButton, { action: actions.reset }, 'Reset')
                 ])
             ]));
             element.connectedCallback();
         });
 
         it('should submit by enter', function (done) {
-            element.addEventListener('submit', () => {
+            element.addEventListener(XForm.ActionSubmit, () => {
                 expect(true).toBeTrue();
                 done();
             });
@@ -79,7 +79,7 @@ describe(fn(import.meta.url), function () {
         it('should reset by click on reset button', function (done) {
             expect(iN1.value).toBe('initial');
             iN1.value = 'changed';
-            element.addEventListener('submit', () => done.fail());
+            element.addEventListener(XForm.ActionSubmit, () => done.fail());
 
             bReset.click();
             setTimeout(() => {
@@ -89,7 +89,7 @@ describe(fn(import.meta.url), function () {
         });
 
         it('should submit by click on query button', function (done) {
-            element.addEventListener('submit', () => {
+            element.addEventListener(XForm.ActionSubmit, () => {
                 expect(true).toBeTrue();
                 done();
             });
@@ -98,7 +98,7 @@ describe(fn(import.meta.url), function () {
 
         it('should not submit by click on query button if not valid', function (done) {
             iN1.value = '';
-            element.addEventListener('submit', () => done.fail());
+            element.addEventListener(XForm.ActionSubmit, () => done.fail());
             bQuery.click();
             expect(true).toBeTrue();
             done();
