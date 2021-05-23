@@ -81,6 +81,7 @@ export function enrichObject(el, attributes = {}, inner = [], callback = (_el) =
         if (val === false) {
             continue;
         }
+
         if (val === true) {
             val = k;
         }
@@ -113,106 +114,3 @@ export function enrichObject(el, attributes = {}, inner = [], callback = (_el) =
 
     callback(el);
 }
-
-// LEGACY: use flexbox instead !
-// /**
-//  * Resize automatically the first "innerHTML" "[full]" element
-//  * based on the the element size.
-//  *
-//  * Example:
-//  *   connectedCallback() {
-//  *     resizeChildrenBasedOn(this)
-//  *   }
-//  *
-//  * Rationale:
-//  *    When a "innerHTML" has a "height: 100%", it take the whole space of its parent
-//  *    eventhough it is included in a <slot /> that can not take 100% of parent
-//  *
-//  *    This emulate thus the "fill the height" bevavior by calculating the target height
-//  *    of the "innerHTML" with the "full" element (child only - not deeper in the innerHTML!).
-//  *
-//  * TODO: collapsable margins + pseudo elements (::before, ::after)
-//  *
-//  * @param {HTMLElement} base - the base element
-//  * @returns {function(void):void} to stop watching
-//  */
-// export function resizeChildrenBasedOn(base) {
-//     // console.groupCollapsed('Initialize resize', base);
-//     /**
-//      * @param {string} msg to debug
-//      * @param {HTMLElement} el to be meseared
-//      * @param {boolean} inside - true if we take only the inside part
-//      * @returns {number} the height
-//      */
-//     const h = (msg, el, inside = false) => {
-//         const cs = window.getComputedStyle(el);
-//         const h = el.getBoundingClientRect().height
-//             + (inside ? 0 : parseInt(cs.marginTop) + parseInt(cs.marginBottom));
-//         // console.log(msg, el, h, el.getBoundingClientRect().height, cs.marginTop, cs.marginBottom);
-//         return h;
-//     };
-
-//     // https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserver
-//     // offsetHeight: content + padding + border
-//     // clientHeight: content + padding
-//     // scrollHeight:
-//     // getBoundingClientRect(): content + padding + border - https://developer.mozilla.org/en-US/docs/Web/API/Element/getBoundingClientRect
-
-//     let resizable;
-//     const listing = /** @type {Array<HTMLElement>} */(Array.from(base.children))
-//         .filter(e => e instanceof HTMLElement);
-
-//     if (listing.length == 1) {
-//         resizable = listing[0];
-//     } else {
-//         const fullListing = listing.filter(e => e.hasAttribute('full'));
-//         if (fullListing.length > 0) {
-//             resizable = fullListing[0];
-//             // !! hr is not working
-//             // } else {
-//             //     const hrListing = listing.filter(e => e.tagName == 'HR');
-//             //     if (hrListing.length > 0) {
-//             //         resizable = hrListing[0];
-//             //     }
-//         }
-//     }
-
-//     if (!resizable) {
-//         // console.error('No resizable found for ', base);
-//         return;
-//     }
-//     // console.log('resizable', resizable, resizable.style);
-//     resizable.style.boxSizing = 'border-box';
-
-//     const resizeObserver = new ResizeObserver(_entries => {
-//         // console.groupCollapsed('resizer', base);
-//         const baseHeight = h('base', base, true);
-//         const shadowHeight = Array.from(base.shadowRoot.children).reduce(
-//             (acc, el) => acc + h('shadow', el),
-//             0
-//         );
-//         const resizableInitHeight = h('resizable', resizable);
-//         const availableSpace = baseHeight - shadowHeight;
-
-//         const resizableFinalHeight = resizableInitHeight + availableSpace;
-
-//         // console.log('resize', {
-//         //     base,
-//         //     baseHeight,
-//         //     shadowHeight,
-//         //     availableSpace,
-//         //     resizable,
-//         //     resizableInitHeight,
-//         //     resizableFinalHeight
-//         // });
-
-//         resizable.style.height = resizableFinalHeight + 'px';
-//         // console.groupEnd();
-//         // resizeObserver.disconnect();
-//     });
-
-//     resizeObserver.observe(base);
-//     // console.groupEnd();
-
-//     return () => resizeObserver.disconnect();
-// }
