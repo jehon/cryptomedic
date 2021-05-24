@@ -74,25 +74,37 @@ export default class XForm extends HTMLElement {
         // For each "reset" button, auto reset
         this.querySelectorAll(`x-button[action="${actions.reset}"]`)
             .forEach(el => (/** @type {XButton} */(el)).addEventListener('click',
-                () => this.reset()
+                (evt) => {
+                    evt.preventDefault();
+                    this.reset();
+                }
             ));
 
         // For each "cancel" button, auto reset
         this.querySelectorAll(`x-button[action="${actions.cancel}"]`)
             .forEach(el => (/** @type {XButton} */(el)).addEventListener('click',
-                () => this.dispatchEvent(new CustomEvent(XForm.ActionCancel))
+                (evt) => {
+                    evt.preventDefault();
+                    this.dispatchEvent(new CustomEvent(XForm.ActionCancel));
+                }
             ));
 
         // For each "query" button, auto submit
         this.querySelectorAll(`x-button:not([action]), x-button[action="${actions.query}"], x-button[action="${actions.commit}"]`)
             .forEach(el => (/** @type {XButton} */(el)).addEventListener('click',
-                () => this.checkAndSubmit()
+                (evt) => {
+                    evt.preventDefault();
+                    this.checkAndSubmit();
+                }
             ));
 
         // For each "delete" button, ask confirmation and submit
         this.querySelectorAll(`x-button[action="${actions.delete}"]`)
             .forEach(el => (/** @type {XButton} */(el)).addEventListener('click',
-                () => this.askAndDelete()
+                (evt) => {
+                    evt.preventDefault();
+                    this.askAndDelete();
+                }
             ));
 
     }
@@ -302,7 +314,7 @@ export default class XForm extends HTMLElement {
             this.addMessage({ text: 'The form contains some errors.', id: 'form-invalid' });
             return false;
         }
-        this.dispatchEvent(new CustomEvent(XForm.ActionSubmit));
+        this.dispatchEvent(new CustomEvent(XForm.ActionSubmit, { detail: this.getValues() }));
 
         return true;
     }

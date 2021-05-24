@@ -69,8 +69,10 @@ describe(fn(import.meta.url), function () {
         });
 
         it('should submit by enter', function (done) {
-            element.addEventListener(XForm.ActionSubmit, () => {
+            element.addEventListener(XForm.ActionSubmit, (evt) => {
                 expect(true).toBeTrue();
+                expect(evt.detail).not.toBeNull();
+                expect(evt.detail.n1).toBe('initial');
                 done();
             });
             iN1.dispatchEvent(new KeyboardEvent('keypress', { key: 'Enter', bubbles: true }));
