@@ -114,3 +114,14 @@ export function enrichObject(el, attributes = {}, inner = [], callback = (_el) =
 
     callback(el);
 }
+
+/**
+ * @param {Event} event to check
+ * @param {HTMLSlotElement} slot to scope it
+ * @returns {boolean} if it does
+ */
+export function isEventOutOfSlot(event, slot) {
+    return slot.assignedNodes()
+        .map(e => e.contains(/** @type {Node} */(event.target)))
+        .reduce((prev, cur) => prev || cur, false);
+}
