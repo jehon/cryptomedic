@@ -1,12 +1,17 @@
 
 import XPanel, { getPanelStyles } from './x-panel.js';
-import { createElementWithObject, createElementWithTag, defineCustomElement } from '../../js/custom-element.js';
+import { createElementWithObject, createElementWithTag, defineCustomElement, isEventOutOfSlot } from '../../js/custom-element.js';
+import XForm from '../funcs/x-form.js';
 
 /**
  * Slot[]: content to be shown in the panel
  * Slot[overlay]: overlay to be put on top when blocked
  */
 export default class XOverlay extends HTMLElement {
+
+    /** @type {HTMLSlotElement} */
+    _overlaySlot
+
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
@@ -96,10 +101,23 @@ export default class XOverlay extends HTMLElement {
                 createElementWithTag('button', { id: 'close' }, '✕',
                     (el) => el.addEventListener('click', () => this.free())
                 ),
-                createElementWithTag('slot', { name: 'overlay' })
+                this._overlaySlot = /** @type {HTMLSlotElement} */ (createElementWithTag('slot', { name: 'overlay' }))
             ]),
             document.createElement('slot')
         );
+
+        this.addEventListener(XForm.ActionCancel, (evt) => this._freeOnEvent(evt));
+        this.addEventListener(XForm.ActionDelete, (evt) => this._freeOnEvent(evt));
+        this.addEventListener(XForm.ActionReset, (evt) => this._freeOnEvent(evt));
+        this.addEventListener(XForm.ActionSubmit, (evt) => this._freeOnEvent(evt));
+    }
+
+    _freeOnEvent(evt) {
+        if (isEventOutOfSlot(evt, this._overlaySlot)) {
+            if (evt.target instanceof XForm) {
+                this.free();
+            }
+        }
     }
 
     block() {
