@@ -66,6 +66,7 @@ export default class XButton extends HTMLElement {
     }
 
     :host(x-button:not([action])) button,
+    :host(x-button[action="${actions.ok}"]) button,
     :host(x-button[action="${actions.move}"]) button,
     :host(x-button[action="${actions.query}"]) button,
     :host(x-button[action="${actions.alternate}"]) button,
@@ -169,6 +170,9 @@ export default class XButton extends HTMLElement {
         }
 
         switch (action) {
+            case actions.ok:
+                this._slot.innerHTML = 'OK';
+                break;
             case actions.move:
                 this._slot.innerHTML = 'Go';
                 break;
