@@ -1,8 +1,6 @@
 
-import { actions } from '../../config.js';
 import { createElementWithObject, createElementWithTag, defineCustomElement } from '../../js/custom-element.js';
 import { getRoute, routes, setRoute } from '../../js/router.js';
-import XConfirmation from '../funcs/x-confirmation.js';
 import XForm from '../funcs/x-form.js';
 import XRequestor, { usersCrud } from '../funcs/x-requestor.js';
 import XButton from '../render/x-button.js';
@@ -10,6 +8,7 @@ import XButtons from '../render/x-buttons.js';
 import XGroupPanel from '../render/x-group-panel.js';
 import XLabel from '../render/x-label.js';
 import XPanel, { getPanelStyles } from '../render/x-panel.js';
+import { overlayAcknowledge } from '../render/overlay-builder.js';
 
 /**
  * attributes:
@@ -47,11 +46,11 @@ export default class XPageUserPassword extends HTMLElement {
                                     })
                                 ]),
                                 createElementWithObject(XButtons, { slot: 'buttons' }, [
-                                    createElementWithObject(XButton, { action: actions.commit }, 'Set password'),
-                                    createElementWithObject(XButton, { action: actions.alternate }, 'Disable password',
+                                    createElementWithObject(XButton, { action: XButton.Save }, 'Set password'),
+                                    createElementWithObject(XButton, { action: XButton.Alternate }, 'Disable password',
                                         el => el.addEventListener('click', () => this.emptyPassword())
                                     ),
-                                    createElementWithObject(XButton, { action: actions.cancel })
+                                    createElementWithObject(XButton, { action: XButton.Cancel })
                                 ])
                             ],
                             el => {
@@ -83,19 +82,8 @@ export default class XPageUserPassword extends HTMLElement {
     }
 
     showConfirmation(action) {
-        this.innerHTML = '';
-        this.append(
-            createElementWithTag('css-inherit'),
-            createElementWithObject(XConfirmation, {},
-                [
-                    createElementWithTag('div', {},
-                        `Password ${action} for user ${this.user.name}`
-                    )
-                ],
-                el => el.addEventListener('validated', () => this.exit())
-            )
-
-        );
+        return overlayAcknowledge(`Password ${action} for user ${this.user.name}`)
+            .then(() => this.exit());
     }
 
     exit() {

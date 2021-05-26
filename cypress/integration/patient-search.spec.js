@@ -1,5 +1,6 @@
 /// <reference types="Cypress" />
 
+import XButton from '../../app/elements/render/x-button.js';
 import { crApiLogin } from '../helpers/cr-api.js';
 import { crFormFillIn, crLoginInBackground } from '../helpers/cr.js';
 
@@ -14,11 +15,11 @@ function testSearch(title, search, resultList) {
 
     cy.get('x-page-search').within((page) => {
         cy.get('x-form').should('be.visible');
-        cy.get('x-form').find('x-button[action="cancel"]').click();
+        cy.get('x-form').find(`x-button[action="${XButton.Reset}"]`).click();
 
         crFormFillIn('x-form', search);
 
-        cy.get('x-form x-button[action="query"]').click();
+        cy.get(`x-form x-button[action="${XButton.Search}"]`).click();
 
         cy.wrap(page).invoke('attr', 'status').should('not.exist');
 

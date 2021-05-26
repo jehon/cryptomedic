@@ -1,3 +1,4 @@
+import XButton from '../../app/elements/render/x-button.js';
 import { crPage, crReady } from './cr.js';
 
 /**
@@ -14,7 +15,7 @@ export function patientgo(patient) {
     cy.get('x-patient-by-reference').within(() => {
         cy.get('[name="entryyear"]').invoke('attr', 'value', patient.entryyear);
         cy.get('[name="entryorder"]').invoke('attr', 'value', patient.entryorder);
-        cy.get('x-button[action="query"]').click();
+        cy.get(`x-button[action="${XButton.Search}"]`).click();
     });
 
     crReady();

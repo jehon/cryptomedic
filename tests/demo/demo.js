@@ -10,16 +10,11 @@ import '../../app/elements/render/x-group-panel.js';
 import '../../app/elements/render/x-label.js';
 import '../../app/elements/render/x-message.js';
 import '../../app/elements/render/x-messages.js';
-// import '../../app/elements/render/x-overlay.js';
 // import '../../app/elements/render/x-panel.js';
-import '../../app/elements/render/x-waiting.js';
-
-import '../../app/elements/funcs/x-confirmation.js';
 import '../../app/elements/funcs/x-form.js';
 import '../../app/elements/funcs/x-i18n.js';
 import '../../app/elements/funcs/x-input-list.js';
 import XTable from '../../app/elements/funcs/x-table.js';
-import '../../app/elements/funcs/x-requestor.js';
 
 const filtersMenu = document.querySelector('xx-test#filters');
 

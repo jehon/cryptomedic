@@ -45,29 +45,6 @@ export default class XOverlay extends HTMLElement {
         border-radius: 10px;
     }
 
-    x-panel#overlay > #close {
-        position: absolute;
-        top: 20px;
-        right: calc(0px + 2em);
-
-        background-color: transparent;
-        border: none;
-        color: white;
-        font-size: large;
-        font-weight: bold;
-
-        height: 2em;
-        width: 2em;
-        border-radius: 1em;
-        text-decoration: none;
-
-        display: none;
-    }
-
-    x-panel#overlay > #close:hover, x-panel#overlay > #close:focus {
-        background-color: lightgray;
-    }
-
     /*
      * Custom styles
      */
@@ -84,10 +61,6 @@ export default class XOverlay extends HTMLElement {
         height: 100%;
     }
 
-    :host([closable]) x-panel#overlay > #close {
-        display: block;
-    }
-
     /* When the height of the screen is less than 450 pixels, change the font-size of the links and position the close button again, so they don't overlap */
     @media screen and (max-height: 450px) {
         #close {
@@ -99,9 +72,6 @@ export default class XOverlay extends HTMLElement {
 `
             ),
             createElementWithObject(XPanel, { id: 'overlay' }, [
-                createElementWithTag('button', { id: 'close' }, '✕',
-                    (el) => el.addEventListener('click', () => this.free())
-                ),
                 this._overlaySlot = /** @type {HTMLSlotElement} */ (createElementWithTag('slot', { name: 'overlay' }))
             ]),
             document.createElement('slot')
@@ -121,7 +91,10 @@ export default class XOverlay extends HTMLElement {
             if (evt.target instanceof XForm) {
                 this.dispatchEvent(new CustomEvent(XOverlay.ActionFree, {
                     bubbles: true,
-                    detail: evt
+                    detail: {
+                        action: evt.type,
+                        data: evt['detail']
+                    }
                 }));
             }
             this.free();

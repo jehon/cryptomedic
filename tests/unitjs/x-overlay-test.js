@@ -3,7 +3,6 @@ import XOverlay from '../../app/elements/render/x-overlay.js';
 
 import { fn } from './athelpers.js';
 
-import JHElement from '../../app/elements/jh-element.js';
 import { createElementWithObject, createElementWithTag } from '../../app/js/custom-element.js';
 
 describe(fn(import.meta.url), function () {
@@ -26,14 +25,6 @@ describe(fn(import.meta.url), function () {
 
     it('should free()', function () {
         element.free();
-        expect(element.isBlocked()).toBeFalsy();
-    });
-
-    it('should be react to clicks', function () {
-        expect(element.isBlocked()).toBeFalsy();
-        element.block();
-        expect(element.isBlocked()).toBeTruthy();
-        JHElement.fireOn(element.shadowRoot.querySelector('#close'), 'click');
         expect(element.isBlocked()).toBeFalsy();
     });
 });

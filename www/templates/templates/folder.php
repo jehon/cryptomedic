@@ -8,9 +8,9 @@ if (!function_exists("submenu")) {
       <span ng-if="(mode == 'add')">
         <!--  Add file route -->
         <x-restricted restricted-by='folder.edit'>
-          <x-button action='commit' id='button_save' ng-click="actionCreate()">Create/Save</x-button>
+          <x-button action='Save' id='button_save' ng-click="actionCreate()">Create/Save</x-button>
         </x-restricted>
-        <x-button action='cancel' id='button_cancel' ng-click="actionCancel()">Cancel</x-button>
+        <x-button action='Cancel' id='button_cancel' ng-click="actionCancel()">Cancel</x-button>
       </span>
       <span ng-if="(mode == 'read')">
         <!--  View file route -->
@@ -21,7 +21,7 @@ if (!function_exists("submenu")) {
             You can not edit it anymore.
           </x-restricted>
           <x-restricted restricted-by='folder.unlock'>
-            <x-button action='commit' id='button_unlock' ng-click='actionUnlock()'>
+            <x-button action='Save' id='button_unlock' ng-click='actionUnlock()'>
               <img src='/static/img/unlock.gif'>
               Unlock the file
             </x-button>
@@ -29,36 +29,36 @@ if (!function_exists("submenu")) {
         </span>
         <span ng-if="!currentFile().isLocked()">
           <x-restricted restricted-by='folder.edit'>
-            <x-button id='button_edit' ng-click="go('/folder/' + patient_id + '/file/' + subtype + '/' + subid + '/edit')">Edit</x-button>
+            <x-button action='Edit' id='button_edit' ng-click="go('/folder/' + patient_id + '/file/' + subtype + '/' + subid + '/edit')">Edit</x-button>
           </x-restricted>
         </span>
       </span>
       <span ng-if="(mode == 'edit')">
         <!--  Modify file route -->
         <x-restricted restricted-by='folder.delete'>
-          <x-button action='delete' id='button_delete' ng-click='actionDelete()'>Delete</x-button>
+          <x-button action='Delete' id='button_delete' ng-click='actionDelete()'>Delete</x-button>
         </x-restricted>
         <x-restricted restricted-by='folder.edit'>
-          <x-button action='commit' id='button_save' ng-click="actionSave()">Save</x-button>
+          <x-button action='Save' id='button_save' ng-click="actionSave()">Save</x-button>
         </x-restricted>
-        <x-button action='cancel' id='button_cancel' ng-click="actionCancel()">Cancel</x-button>
+        <x-button action='Cancel' id='button_cancel' ng-click="actionCancel()">Cancel</x-button>
       </span>
     </div>
 
     <div ng-if="(!page)">
       <span ng-if="(mode == 'read')">
         <x-restricted restricted-by='folder.edit'>
-          <x-button action='commit' id='patient_edit' ng-click="go('/folder/' + patient_id + '/edit')">Edit</x-button>
+          <x-button action='Edit' id='patient_edit' ng-click="go('/folder/' + patient_id + '/edit')">Edit</x-button>
         </x-restricted>
       </span>
       <span ng-if="(mode == 'edit')">
         <x-restricted restricted-by='folder.edit'>
-          <x-button action='commit' id='patient_save' ng-click="actionSavePatient()">Save</x-button>
+          <x-button action='Save' id='patient_save' ng-click="actionSavePatient()">Save</x-button>
         </x-restricted>
         <x-restricted restricted-by='folder.delete'>
-          <x-button action='delete' id='patient_delete' ng-if='(folder.getFilesRelatedToPatient().length == 0)' ng-click="actionDeletePatient()">Delete</x-button>
+          <x-button action='Delete' id='patient_delete' ng-if='(folder.getFilesRelatedToPatient().length == 0)' ng-click="actionDeletePatient()">Delete</x-button>
         </x-restricted>
-        <x-button action='cancel' id='patient_cancel' ng-click="actionCancel()">Cancel</x-button>
+        <x-button action='Cancel' id='patient_cancel' ng-click="actionCancel()">Cancel</x-button>
       </span>
       <!--  Modify patient route -->
     </div>
@@ -68,7 +68,7 @@ if (!function_exists("submenu")) {
       <x-restricted restricted-by='folder.edit'>
         <x-button id='patient_create' ng-click="actionCreatePatient()">Create patient</x-button>
       </x-restricted>
-      <x-button action='cancel' id='patient_cancel' ng-click="go('/home')">Cancel</x-button>
+      <x-button action='Cancel' id='patient_cancel' ng-click="go('/home')">Cancel</x-button>
     </div>
 <?php
   }

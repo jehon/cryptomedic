@@ -139,8 +139,8 @@ EOD;
           <td>{{p.Amount}}</td>
           <td>{{p.Notes}}</td>
           <td>
-            <x-button id='button_edit_{{$index}}' ng-click="actionEditPayment(p.id)">Edit</x-button>
-            <x-button action='delete' id='button_delete_{{$index}}' ng-click="actionDeletePayment(p.id)">Delete</x-button>
+            <x-button action='Edit' id='button_edit_{{$index}}' ng-click="actionEditPayment(p.id)">Edit</x-button>
+            <x-button action='Delete' id='button_delete_{{$index}}' ng-click="actionDeletePayment(p.id)">Delete</x-button>
           </td>
         </tr>
       </tbody>
@@ -159,7 +159,7 @@ EOD;
       <?php (new t("Payment.Amount"))->tr2("Amount")->p(); ?>
       <?php (new t("Payment.Notes"))->tr2("Notes")->p(); ?>
       <x-button id='button_payment_create' ng-click="actionAddPayment()" ng-if='paymentEditor.id == null'>Create</x-button>
-      <x-button action='commit' id='button_payment_save' ng-click="actionAddPayment()" ng-if='paymentEditor.id > 0'>Save</x-button>
+      <x-button action='Save' id='button_payment_save' ng-click="actionAddPayment()" ng-if='paymentEditor.id > 0'>Save</x-button>
     </x-group-panel>
   </div>
 </div>

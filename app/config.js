@@ -30,22 +30,6 @@ export const messages = {
     error: 'error',
 };
 
-// TODO: refine this list
-export const actions = {
-    /* x-form: begin */
-    ok: 'ok',
-    commit: 'commit',
-    reset: 'reset',
-    cancel: 'cancel',
-    delete: 'delete',
-    query: 'query',
-    /* x-form: end */
-
-    edit: 'edit',
-    move: 'move',
-    alternate: 'alternate',
-};
-
 export const icons = {
     error: '/static/img/error.svg',
     logout: '/static/img/logout.gif',

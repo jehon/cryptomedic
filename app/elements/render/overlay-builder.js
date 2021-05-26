@@ -1,15 +1,14 @@
 
-import { actions } from '../config.js';
-import { createElementWithObject, createElementWithTag } from '../js/custom-element.js';
-import XForm from './funcs/x-form.js';
-import XButton from './render/x-button.js';
-import XButtons from './render/x-buttons.js';
-import XOverlay from './render/x-overlay.js';
-import XPanel from './render/x-panel.js';
+import { createElementWithObject, createElementWithTag } from '../../js/custom-element.js';
+import XForm from '../funcs/x-form.js';
+import XButton from './x-button.js';
+import XButtons from './x-buttons.js';
+import XOverlay from './x-overlay.js';
+import XPanel from './x-panel.js';
 
 // TODO: x-overlay should not have a 'inline' content, only a 'popup' content
 /**
- * @typedef {import('./funcs/x-form.js').FormValidator} FormValidator
+ * @typedef {import('../funcs/x-form.js').FormValidator} FormValidator
  */
 
 class OverlayBuilder {
@@ -59,9 +58,18 @@ class OverlayBuilder {
                     ])
                 ])
             ],
-            el => el.addEventListener(XOverlay.ActionFree, (evt) => this._terminate(/** @type {CustomEvent} */(evt)))
+            el => el.addEventListener(XOverlay.ActionFree, (evt) => this.terminate(/** @type {CustomEvent} */(evt)))
         );
         this.xOverlay.block();
+    }
+
+    /**
+     * @param {string} cls to be applied
+     * @returns {OverlayBuilder} for chaining
+     */
+    withClass(cls) {
+        this.xOverlay.classList.add(cls);
+        return this;
     }
 
     /**
@@ -106,15 +114,18 @@ class OverlayBuilder {
 
     /**
      *
-     * @param {CustomEvent} event passed by the XOverlay
+     * @param {CustomEvent} [event] passed by the XOverlay
      */
-    _terminate(event) {
+    terminate(event) {
         // Remove from the DOM
         this.xOverlay.remove();
-        if (event.detail.type == XForm.ActionSubmit) {
+        if (!event) {
+            return;
+        }
+        if (event.detail.action == XForm.ActionSubmit) {
             this.resolve({
-                type: event.detail.type,
-                detail: event.detail.detail
+                action: event.detail.action,
+                data: event.detail.data
             });
         } else {
             this.reject(event);
@@ -137,12 +148,32 @@ export function createOverlay() {
 
 /**
  * @param {string} text to be inserted as info
- * @returns {OverlayBuilder} to build up an overlay
+ * @returns {Promise} to follow up
  */
-export function createOverlayInfo(text) {
+export function overlayAcknowledge(text) {
     return createOverlay()
+        .withClass('acknowledge')
         .withTexts([text])
         .withButtons([
-            createElementWithObject(XButton, { action: actions.ok })
+            createElementWithObject(XButton)
+        ])
+        .go();
+}
+
+/**
+ * @param {string} [message] to be shown
+ * @returns {function(void): void} to stop the waiting
+ */
+export function overlayWaiting(message = '') {
+    const ov = createOverlay()
+        .withClass('waiting')
+        .withTexts([
+            // TODO: could be more beautifull...
+            createElementWithTag('img', { src: '/static/img/waiting.gif' }),
+            createElementWithTag('span', { id: 'versal' }, 'Loading '),
+            createElementWithTag('div', {}, message)
         ]);
+    ov.go();
+
+    return () => ov.terminate();
 }

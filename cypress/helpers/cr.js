@@ -9,16 +9,17 @@ import { guiHashStartWith } from './gui.js';
  * - no (visible) image loading
  */
 export function crReady() {
-    cy.get('x-requestor[running]', { includeShadowDom: true })
-        .should('not.exist');
+    cy.document().its('body').within(() => {
+        cy.get('x-requestor[running]', { includeShadowDom: true })
+            .should('not.exist');
 
-    // See
-    cy.get('img', { includeShadowDom: true })
-        .filter('[src]')
-        .filter(':visible')
-        // TODO: remove logs
-        .should((imgs) => imgs.map((i, /** @type {HTMLImageElement} */ img) => expect(img.naturalWidth).to.be.greaterThan(0, 'loaded: ')));
-
+        // We need at least a img for this to work...
+        cy.get('img', { includeShadowDom: true })
+            .filter('[src]')
+            .filter(':visible')
+            // TODO: remove logs
+            .should((imgs) => imgs.map((i, /** @type {HTMLImageElement} */ img) => expect(img.naturalWidth).to.be.greaterThan(0, 'loaded: ')));
+    });
     cy.log('Done: crReady');
 }
 

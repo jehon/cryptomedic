@@ -1,8 +1,17 @@
 
-# Components
+# Summary
 
-Shadow root: no
+|               | innerHTML | shadow/slots | Attributes | css dependant | functions | objective               |
+| ------------- | --------- | ------------ | ---------- | ------------- | --------- | ----------------------- |
+| pages         | yes       | -            | -          | yes           | -         | regroup content         |
+| components    | yes       | -            | -          | yes           | -         | regroup content         |
+|               |           |              |            |               |           |                         |
+| funcs         | -         | yes          | yes        | no            | yes       | functionnal (no layout) |
+| render        | -         | yes          | yes        | -             | maybe     | graphical               |
+|               |           |              |            |               |           |                         |
+| TODO: widgets | -         | yes          | yes        | embedded      | yes       | One function            |
+|               |           |              |            |               |           |                         |
 
-# Page:
-
-Shadow root: no
+TODO: components -> below pages
+TODO: widgets(folder/file) -> below pages
+TODO: render / funcs -> widgets

@@ -1,5 +1,4 @@
 
-import { actions } from '../../app/config.js';
 import XForm from '../../app/elements/funcs/x-form.js';
 import XButton from '../../app/elements/render/x-button.js';
 import { getCurrentRoute, setRoute } from '../../app/js/router.js';
@@ -41,7 +40,7 @@ describe(fn(import.meta.url), function () {
     });
 
     it('should initialize', function () {
-        el.setAttribute('action', actions.commit);
+        el.setAttribute('action', XButton.Save);
         el.setAttribute('icon', 'error');
 
         expect(el.shadowRoot.querySelector('button')).not.toBeNull();
@@ -49,7 +48,7 @@ describe(fn(import.meta.url), function () {
     });
 
     it('should initialize', function () {
-        el.setAttribute('action', actions.alternate);
+        el.setAttribute('action', XButton.Alternate);
         el.setAttribute('icon', 'error');
 
         expect(el.shadowRoot.querySelector('button')).not.toBeNull();

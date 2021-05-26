@@ -1,12 +1,11 @@
-import { actions } from '../../app/config.js';
-import { createOverlay, createOverlayInfo } from '../../app/elements/x-overlay-builder.js';
+import XButton from '../../app/elements/render/x-button.js';
+import { createOverlay, overlayAcknowledge, overlayWaiting } from '../../app/elements/render/overlay-builder.js';
 import { createElementWithTag } from '../../app/js/custom-element.js';
 
 document.querySelector('x-overlay#inline').block();
 
 document.querySelector('x-button#info').addEventListener('click', () =>
-    createOverlayInfo('This is the overlay')
-        .go()
+    overlayAcknowledge('This is the overlay')
         .then(data => console.info('Done with data: ', data))
 );
 
@@ -16,7 +15,12 @@ document.querySelector('x-button#form').addEventListener('click', () =>
         .withForm([
             createElementWithTag('input', { name: 'my-input' })
         ])
-        .withButtons([actions.ok])
+        .withButtons([XButton.Default])
         .go()
         .then(data => console.info('Done with data: ', data))
 );
+
+document.querySelector('x-button#waiting').addEventListener('click', () => {
+    const endWait = overlayWaiting('Please wait 3 seconds');
+    setTimeout(() => endWait(), 3000);
+});

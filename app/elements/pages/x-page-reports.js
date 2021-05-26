@@ -1,6 +1,6 @@
 
 import ExcellentExport from '../../../node_modules/excellentexport/dist/excellentexport.js';
-import { actions, messages } from '../../config.js';
+import { messages } from '../../config.js';
 import { createElementsFromHTML, createElementWithObject, createElementWithTag, defineCustomElement } from '../../js/custom-element.js';
 import date2CanonicString from '../../js/date2CanonicString.js';
 import { getPref, setPref } from '../../js/prefs.js';
@@ -116,9 +116,9 @@ x-button#export {
                             this._form = createElementWithObject(XForm, {}, [
                                 this._params = createElementWithTag('span'),
                                 this._messages = createElementWithObject(XMessages),
-                                createElementWithObject(XButtons, {}, [
-                                    createElementWithObject(XButton, { action: actions.query }, 'Search'),
-                                    createElementWithObject(XButton, { action: actions.cancel }, 'Reset'),
+                                createElementWithObject(XButtons, { slot: 'buttons' }, [
+                                    createElementWithObject(XButton, { action: XButton.Search }),
+                                    createElementWithObject(XButton, { action: XButton.Reset }),
                                 ])
                             ], el => {
                                 el.addEventListener(XForm.ActionSubmit, () => this.query());
@@ -133,7 +133,7 @@ x-button#export {
                 createElementWithTag('div', { style: { textAlign: 'right' } }, [
                     // createElementsFromHTML('<a style="display: none" id="report_download_button" download="export.xls">download</a>')[0],
                     this._exportLink = /** @type {HTMLAnchorElement} */ (createElementWithTag('a', { style: { display: 'none' } }, 'download')),
-                    createElementWithObject(XButton, { action: 'alternate', id: 'export' }, 'Export to Excel',
+                    createElementWithObject(XButton, { action: XButton.Alternate, id: 'export' }, 'Export to Excel',
                         (el) => el.addEventListener('click', () => this.generateXLS())
                     ),
                 ]),

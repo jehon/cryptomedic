@@ -1,4 +1,5 @@
 
+import XButton from '../../app/elements/render/x-button.js';
 import { crApiLogin } from './cr-api.js';
 import { crLoginInBackground, crPage } from './cr.js';
 import TableIterator from './table-iterator.js';
@@ -16,7 +17,7 @@ export function goReport(reportName, fillInFieldsCb, checkCb) {
                     .should('be.visible')
                     .within(() => {
                         fillInFieldsCb();
-                        cy.get('x-button[action="query"]').click();
+                        cy.get(`x-button[action="${XButton.Search}"]`).click();
                     });
 
                 cy.get('x-table[count]').should('be.visible');

@@ -25,8 +25,8 @@
                 <x-form>
                     This is the form.
                     <div slot='buttons'>
-                        <x-button action='commit'></x-button>
-                        <x-button action='cancel'></x-button>
+                        <x-button action='Save'></x-button>
+                        <x-button action='Cancel'></x-button>
                     </div>
                 </x-form>
             </div>
@@ -34,8 +34,8 @@
                 <x-form>
                     This is the protected content
                     <div slot='buttons'>
-                        <x-button action='commit'></x-button>
-                        <x-button action='cancel'></x-button>
+                        <x-button action='Save'></x-button>
+                        <x-button action='Cancel'></x-button>
                     </div>
                 </x-form>
             </div>
@@ -45,6 +45,7 @@
     <xx-test title='Created by action'>
         <x-button id='info'>Launch it</x-button>
         <x-button id='form'>Launch formular</x-button>
+        <x-button id='waiting'>Launch waiting</x-button>
     </xx-test>
 
     <script type='module' src='./x-overlay-demo.js'></script>
