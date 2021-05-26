@@ -20,6 +20,7 @@ import XLabel from '../render/x-label.js';
 import XMessages from '../render/x-messages.js';
 import XAge from '../x-age.js';
 import XInputDate from '../x-input-date.js';
+import pageStyles from './page-helper.js';
 
 /**
  * Two parts here:
@@ -69,6 +70,7 @@ export default class XPageReports extends HTMLElement {
         this.reportId = this.getAttribute('report');
 
         this.append(
+            pageStyles(this),
             // TODO: only two-columns on large screens !
             createElementWithTag('style', {}, `
 

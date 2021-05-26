@@ -1,13 +1,13 @@
 
-import { createElementWithObject, createElementWithTag, defineCustomElement } from '../../js/custom-element.js';
-import { getRouteToFolderPatient, setRoute } from '../../js/router.js';
-import XForm from '../funcs/x-form.js';
-import XRequestor, { checkReferenceBuilder, createReferenceBuilder } from '../funcs/x-requestor.js';
-import XButton from '../render/x-button.js';
-import XButtons from '../render/x-buttons.js';
-import XGroupPanel from '../render/x-group-panel.js';
-import XLabel from '../render/x-label.js';
-import XPanel from '../render/x-panel.js';
+import { createElementWithObject, createElementWithTag, defineCustomElement } from '../../../js/custom-element.js';
+import { getRouteToFolderPatient, setRoute } from '../../../js/router.js';
+import XForm from '../../funcs/x-form.js';
+import XRequestor, { checkReferenceBuilder, createReferenceBuilder } from '../../funcs/x-requestor.js';
+import XButton from '../../render/x-button.js';
+import XButtons from '../../render/x-buttons.js';
+import XGroupPanel from '../../render/x-group-panel.js';
+import XLabel from '../../render/x-label.js';
+import XPanel from '../../render/x-panel.js';
 
 /**
  * Slot: none

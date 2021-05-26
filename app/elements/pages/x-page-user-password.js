@@ -9,6 +9,7 @@ import XGroupPanel from '../render/x-group-panel.js';
 import XLabel from '../render/x-label.js';
 import XPanel, { getPanelStyles } from '../render/x-panel.js';
 import { overlayAcknowledge } from '../render/overlay-builder.js';
+import pageStyles from './page-helper.js';
 
 /**
  * attributes:
@@ -29,6 +30,7 @@ export default class XPageUserPassword extends HTMLElement {
 
         this.innerHTML = '';
         this.append(
+            pageStyles(this),
             createElementWithTag('css-inherit'),
             getPanelStyles(this),
             createElementWithObject(XPanel, {}, [

@@ -9,11 +9,13 @@ import XButtons from '../render/x-buttons.js';
 import XGroupPanel from '../render/x-group-panel.js';
 import XPanel from '../render/x-panel.js';
 import '../x-write-list.js';
+import pageStyles from './page-helper.js';
 
 export default class XPageSearch extends HTMLElement {
     constructor() {
         super();
         this.append(
+            pageStyles(this),
             createElementWithTag('css-inherit'),
             createElementWithTag('style', {}, `
 /* no style defined */

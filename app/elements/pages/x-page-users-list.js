@@ -7,6 +7,7 @@ import XButton from '../render/x-button.js';
 import XButtons from '../render/x-buttons.js';
 import XPanel from '../render/x-panel.js';
 import XReadBoolean from '../x-read-boolean.js';
+import pageStyles from './page-helper.js';
 
 /**
  * attributes:
@@ -24,6 +25,7 @@ export default class XPageUsersList extends HTMLElement {
         this.innerHTML = '';
 
         this.append(
+            pageStyles(this),
             this._requestor = createElementWithObject(XRequestor, {}, [
                 createElementWithObject(XPanel, { style: { justifyContent: 'flex-end', flexDirection: 'row' } }, [
                     createElementWithObject(XButton, { id: 'add', actions: XButton.Default, toRoute: routes.user_add }, 'Add user')

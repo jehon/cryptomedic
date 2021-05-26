@@ -11,6 +11,7 @@ import XLabel from '../render/x-label.js';
 import XButtons from '../render/x-buttons.js';
 import XButton from '../render/x-button.js';
 import XGroupPanel from '../render/x-group-panel.js';
+import pageStyles from './page-helper.js';
 
 /**
  * attribute redirect - Where to redirect on login
@@ -29,6 +30,7 @@ export default class XPageLogin extends HTMLElement {
 
         this.innerHTML = '';
         this.append(
+            pageStyles(this),
             createElementWithObject(XPanel, {}, [
                 createElementWithObject(XGroupPanel, { title: 'Connexion...', style: { maxWidth: '400px' } }, [
                     this._requestor = createElementWithObject(XRequestor, { global: true }, [

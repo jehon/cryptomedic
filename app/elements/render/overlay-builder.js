@@ -147,13 +147,13 @@ export function createOverlay() {
 }
 
 /**
- * @param {string} text to be inserted as info
+ * @param {string|HTMLElement|Array<string|HTMLElement>} text to be inserted as info
  * @returns {Promise} to follow up
  */
 export function overlayAcknowledge(text) {
     return createOverlay()
         .withClass('acknowledge')
-        .withTexts([text])
+        .withTexts(Array.isArray(text) ? text : [text])
         .withButtons([
             createElementWithObject(XButton)
         ])
