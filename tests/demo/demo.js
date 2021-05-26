@@ -115,6 +115,17 @@ export default class XxTest extends HTMLElement {
                     el => el.addEventListener('click', () => location.hash += `,${this.type}`)
                 ));
         }
+
+        if (this.hasAttribute('dump-events')) {
+            for (var i in this) {
+                if (i.startsWith('on')) {
+                    this.addEventListener(i.substr(2),
+                        evt => (evt instanceof CustomEvent) && console.info(this, evt),
+                        true
+                    );
+                }
+            }
+        }
     }
 
     onHashChange() {
