@@ -1,5 +1,6 @@
 /// <reference types="Cypress" />
 
+import XButton from '../../app/elements/render/x-button.js';
 import { crApiUserDelete, crApiLogin, crApiLogout } from '../helpers/cr-api.js';
 import { crGo, crLoginInBackground } from '../helpers/cr.js';
 
@@ -36,11 +37,11 @@ context('Actions', () => {
                 cy.get('[name="name"]').type('Cypress');
                 cy.crCompareSnapshot('2 - add user');
 
-                cy.get('x-button[action="commit"]').click();
+                cy.get(`x-button[action="${XButton.Save}"]`).click();
 
-                // Add a user: confirm
-                cy.get('x-confirmation').shadow().find('x-button').click();
             });
+        // Add a user: confirm
+        cy.get('x-overlay.acknowledge x-button').click();
 
         cy.get('x-page-users-list')
             .should('be.visible')
@@ -57,7 +58,7 @@ context('Actions', () => {
                 cy.get('[name="password"]').type('test');
                 cy.crCompareSnapshot('3 - set password');
 
-                cy.get('x-button[action="commit"]').click();
+                cy.get(`x-button[action="${XButton.Save}"]`).click();
             });
 
         // Test that the new login is working correctly
@@ -81,11 +82,11 @@ context('Actions', () => {
                 cy.get('[name="username"]').should('contain.value', username);
 
                 // Delete it
-                cy.get('x-button[action="delete"]').click();
+                cy.get(`x-button[action="${XButton.Delete}"]`).click();
 
-                // Delete it: confirm
-                // cy.crCompareSnapshot('4 - delete - confirm');
-                cy.get('x-confirmation').shadow().find('x-button').click();
             });
+
+        // Delete it: confirm
+        cy.get('x-overlay.acknowledge x-button').click();
     });
 });

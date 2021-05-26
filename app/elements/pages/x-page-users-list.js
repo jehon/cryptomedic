@@ -1,5 +1,4 @@
 
-import { actions } from '../../config.js';
 import { createElementWithObject, defineCustomElement } from '../../js/custom-element.js';
 import { getRoute, routes } from '../../js/router.js';
 import XRequestor, { usersCrud } from '../funcs/x-requestor.js';
@@ -27,7 +26,7 @@ export default class XPageUsersList extends HTMLElement {
         this.append(
             this._requestor = createElementWithObject(XRequestor, {}, [
                 createElementWithObject(XPanel, { style: { justifyContent: 'flex-end', flexDirection: 'row' } }, [
-                    createElementWithObject(XButton, { id: 'add', actions: actions.move, toRoute: routes.user_add }, 'Add user')
+                    createElementWithObject(XButton, { id: 'add', actions: XButton.Default, toRoute: routes.user_add }, 'Add user')
                 ]),
                 this._result = createElementWithObject(XTable, { full: true }, [],
                     (/** @type {XTable} */ el) =>
@@ -44,8 +43,8 @@ export default class XPageUsersList extends HTMLElement {
                             .addDetail('notes', { headers: ['Notes'] })
                             .addDetail(data =>
                                 createElementWithObject(XButtons, {}, [
-                                    createElementWithObject(XButton, { id: 'edit', action: actions.move, toRoute: getRoute(routes.user_edit, { uid: data.id }) }, 'Edit'),
-                                    createElementWithObject(XButton, { id: 'pwd', action: actions.move, toRoute: getRoute(routes.user_password, { uid: data.id }) }, 'Change Password'),
+                                    createElementWithObject(XButton, { id: 'edit', action: XButton.Default, toRoute: getRoute(routes.user_edit, { uid: data.id }) }, 'Edit'),
+                                    createElementWithObject(XButton, { id: 'pwd', action: XButton.Default, toRoute: getRoute(routes.user_password, { uid: data.id }) }, 'Change Password'),
                                 ]), {
                                 headers: ['Actions']
                             })

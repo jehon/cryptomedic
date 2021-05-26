@@ -6,7 +6,6 @@ import { API_VERSION } from '../../config.js';
 import { setSession } from '../../js/session.js';
 import { routeToLogin } from '../../js/router.js';
 
-import XWaiting from '../render/x-waiting.js';
 import XOverlay from '../render/x-overlay.js';
 import XButton from '../render/x-button.js';
 import { createElementWithObject, createElementWithTag, defineCustomElement } from '../../js/custom-element.js';
@@ -15,6 +14,7 @@ import '../../../node_modules/css-inherit/css-inherit.js';
 import XPanel from '../render/x-panel.js';
 import { WithDataError } from '../../js/exceptions.js';
 import nullify from '../../js/nullify.js';
+import { overlayWaiting } from '../render/overlay-builder.js';
 
 /**
  * @param {number} code - http code
@@ -45,31 +45,18 @@ export class TransportRequestError extends WithDataError {
 }
 
 /**
- * Slot[]: content
+ * Slot[]: content (TODO: remove)
+ * Attribute:
+ *   > global
+ *   < running, erroneous
  */
 export default class XRequestor extends HTMLElement {
 
-    /** @type {XWaiting} */
-    _waiting;
+    /** @type {function(void): void} */
+    _stopWaiting = () => { };
 
     /** @type {XOverlay} */
-    _error;
-
-    static get observedAttributes() {
-        return ['global'];
-    }
-
-    attributeChangedCallback(attributeName, _oldValue, _newValue) {
-        switch (attributeName) {
-            case 'global':
-                if (this.hasAttribute('global')) {
-                    this._waiting.setAttribute('global', 'global');
-                } else {
-                    this._waiting.removeAttribute('global');
-                }
-                break;
-        }
-    }
+    _error
 
     constructor() {
         super();
@@ -80,33 +67,23 @@ export default class XRequestor extends HTMLElement {
         display: block;
     }
 
-    x-waiting {
-        height: 100%;
-    }
-
     x-overlay {
         height: 100%;
     }
             `),
             createElementWithTag('css-inherit'),
-            this._waiting = /** @type {XWaiting} */ (createElementWithObject(XWaiting, {}, [
-                this._error = /** @type {XOverlay} */(createElementWithObject(XOverlay, { type: 'on-error' }, [
-                    createElementWithObject(XPanel, { slot: 'overlay', full: true }, [
-                        // createElementWithTag('css-inherit'),
-                        this._errorMsg = createElementWithTag('h1', { id: 'errorMsg' }),
-                        this._errorContent = createElementWithTag('div', { id: 'errorContent' }),
-                        createElementWithObject(XButton, { action: 'cancel', id: 'closeButton' }, 'Dismiss',
-                            (el) => el.addEventListener('click', () => this._error.free())
-                        )
-                    ]),
-                    createElementWithTag('slot')
-                ]))
+            this._error = /** @type {XOverlay} */(createElementWithObject(XOverlay, { type: 'on-error' }, [
+                createElementWithObject(XPanel, { slot: 'overlay', full: true }, [
+                    // createElementWithTag('css-inherit'),
+                    this._errorMsg = createElementWithTag('h1', { id: 'errorMsg' }),
+                    this._errorContent = createElementWithTag('div', { id: 'errorContent' }),
+                    createElementWithObject(XButton, { action: XButton.Cancel, id: 'closeButton' }, 'Dismiss',
+                        (el) => el.addEventListener('click', () => this._error.free())
+                    )
+                ]),
+                createElementWithTag('slot')
             ]))
         );
-
-        if (this.hasAttribute('start-blocked')) {
-            this._waiting.block();
-        }
     }
 
     /**
@@ -120,7 +97,7 @@ export default class XRequestor extends HTMLElement {
      * @returns {boolean} wheter the request is running
      */
     isRequesting() {
-        return this._waiting.isBlocked();
+        return this.hasAttribute('running');
     }
 
     /**
@@ -136,7 +113,10 @@ export default class XRequestor extends HTMLElement {
     reset() {
         this.removeAttribute('running');
         this.removeAttribute('erroneous');
-        this._waiting.free();
+        if (this._stopWaiting) {
+            this._stopWaiting();
+            this._stopWaiting = () => { };
+        }
         this._error.free();
         this._errorMsg.innerHTML = '';
         this._errorContent.innerHTML = '';
@@ -159,7 +139,7 @@ export default class XRequestor extends HTMLElement {
     async request(opts) {
         this.reset();
         this.setAttribute('running', 'running');
-        this._waiting.block();
+        this._stopWaiting = overlayWaiting('Requesting');
 
         const options = {
             url: '/',
@@ -180,10 +160,12 @@ export default class XRequestor extends HTMLElement {
         return this._rawRequest(options)
             .then(response => {
                 response.ok = (response.status >= 200 && response.status < 300); // TODO: how to handle this ? throw again? see x-page-login
-                this._waiting.free();
+                this._stopWaiting();
+                this._stopWaiting = () => { };
                 return response;
             }, error => {
-                this._waiting.free();
+                this._stopWaiting();
+                this._stopWaiting = () => { };
                 let err = new Error();
 
                 // https://github.com/axios/axios#handling-errors
@@ -217,7 +199,8 @@ export default class XRequestor extends HTMLElement {
      */
     showFailure(error) {
         this.setAttribute('erroneous', 'erroneous');
-        this._waiting.free();
+        this._stopWaiting();
+        this._stopWaiting = () => { };
         this._error.block();
         this._errorMsg.innerHTML = 'Network Error';
         let html = '<table style=\'width: 300px\'>';

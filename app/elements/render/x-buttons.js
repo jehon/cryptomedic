@@ -30,7 +30,6 @@ export default class XButtons extends HTMLElement {
 
     ::slotted(*) {
         flex-grow: 1;
-        xxxpadding: calc(${spacing.element} / 2);
     }
 `),
             createElementWithTag('slot')

@@ -1,5 +1,6 @@
 /// <reference types="Cypress" />
 
+import XButton from '../../app/elements/render/x-button.js';
 import { goReport } from '../helpers/report.js';
 
 context('Actions', () => {
@@ -9,7 +10,7 @@ context('Actions', () => {
                 // cy.get('@form').find('[label="Period"] > x-input-list').invoke('attr', 'value', 'day');
                 cy.get('x-input-date[name="day"]').invoke('attr', 'value', '2015-04-28');
 
-                cy.get('x-button[action="query"]').click();
+                cy.get(`x-button[action="${XButton.Search}"]`).click();
             },
             tableIterator => tableIterator
                 .assert('Chakaria Disability Center')

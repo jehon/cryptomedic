@@ -27,8 +27,8 @@
     <xx-test title='Menu' menu>
         <div><a href='../index.html'>Go back to index</a></div>
         <div><a href='#'>Reset filters</a></div>
-        <div><a href='xgrouppanel.html'>x-group-panel</a></div>
-        <div><a href='x-overlay.html'>x-overlay</a></div>
+        <div><a href='x-group-panel-demo.html'>x-group-panel</a></div>
+        <div><a href='x-overlay-demo.html'>x-overlay</a></div>
         <hr>
     </xx-test>
 
@@ -38,15 +38,14 @@
 
     <h1>Render</h1>
     <xx-test>
-        <x-button action='commit'>commit</x-button>
+        <x-button action='Save'>Save</x-button>
     </xx-test>
     <xx-test title='x-button default value'>
-        <x-button action='move'></x-button>
-        <x-button action='query'></x-button>
-        <x-button action='commit'></x-button>
-        <x-button action='cancel'></x-button>
-        <x-button action='alternate'></x-button>
-        <x-button action='delete'></x-button>
+        <x-button action='Search'></x-button>
+        <x-button action='Save'></x-button>
+        <x-button action='Cancel'></x-button>
+        <x-button action='Alternate'></x-button>
+        <x-button action='Delete'></x-button>
     </xx-test>
     <xx-test title='x-button within div'>
         <div>
@@ -57,19 +56,19 @@
     <xx-test>
         <x-buttons>
             <x-button>default (alternate)</x-button>
-            <x-button action='commit'></x-button>
-            <x-button action='cancel'></x-button>
-            <x-button action='delete'></x-button>
-            <x-button action='alternate'></x-button>
+            <x-button action='Save'></x-button>
+            <x-button action='Cancel'></x-button>
+            <x-button action='Delete'></x-button>
+            <x-button action='Alternate'></x-button>
         </x-buttons>
     </xx-test>
     <xx-test title='x-buttons discrete'>
         <x-buttons>
             <x-button discrete>default (alternate)</x-button>
-            <x-button discrete action='commit'>commit</x-button>
-            <x-button discrete action='cancel'>cancel</x-button>
-            <x-button discrete action='delete'>delete</x-button>
-            <x-button discrete action='alternate'>alternate</x-button>
+            <x-button discrete action='Save'>commit</x-button>
+            <x-button discrete action='Cancel'>cancel</x-button>
+            <x-button discrete action='Delete'>delete</x-button>
+            <x-button discrete action='Alternate'>alternate</x-button>
         </x-buttons>
     </xx-test>
     <xx-test>
@@ -138,36 +137,6 @@
         </x-messages>
     </xx-test>
     <xx-test>
-        <x-overlay>
-            <div>Content 1</div>
-            <div>Content 2</div>
-            <div>Content 3</div>
-            <div>Content 4</div>
-            <div>Content 5</div>
-            <div slot='overlay'>Overlay</div>
-        </x-overlay>
-    </xx-test>
-    <xx-test>
-        <x-overlay blocked>
-            <div>Content 1</div>
-            <div>Content 2</div>
-            <div>Content 3</div>
-            <div>Content 4</div>
-            <div>Content 5</div>
-            <div slot='overlay'>Overlay</div>
-        </x-overlay>
-    </xx-test>
-    <xx-test>
-        <x-overlay blocked closable>
-            <div>Content 1</div>
-            <div>Content 2</div>
-            <div>Content 3</div>
-            <div>Content 4</div>
-            <div>Content 5</div>
-            <div slot='overlay'>Overlay</div>
-        </x-overlay>
-    </xx-test>
-    <xx-test>
         <x-panel style='background-color: lightgreen'>
             <div style='background-color: lightcyan'>test 1 full</div>
             <div style='background-color: lightyellow'>test 2 full</div>
@@ -178,20 +147,6 @@
             <div style='background-color: lightcyan'>test 1 full</div>
             <div style='background-color: lightyellow'>test 2 full</div>
         </x-panel>
-    </xx-test>
-    <xx-test>
-        <x-waiting>content free</x-waiting>
-    </xx-test>
-    <xx-test>
-        <x-waiting blocked>
-            <div style='height: 100%'>content free</div>
-        </x-waiting>
-    </xx-test>
-    <xx-test>
-        <x-waiting blocked>
-            <span slot='waiting'>for data</span>
-            <div style='height: 100%'>content free</div>
-        </x-waiting>
     </xx-test>
 
     <h1>Funcs</h1>
@@ -239,11 +194,6 @@
     <xx-test>
         <x-requestor>
             <div>Content</div>
-        </x-requestor>
-    </xx-test>
-    <xx-test>
-        <x-requestor start-blocked>
-            <div>Content to be shown</div>
         </x-requestor>
     </xx-test>
     <xx-test>

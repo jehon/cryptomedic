@@ -1,9 +1,7 @@
 
-import { actions } from '../../config.js';
 import { createElementWithObject, createElementWithTag, defineCustomElement } from '../../js/custom-element.js';
 import { setRoute, getRoute, routes } from '../../js/router.js';
 import getInputObject, { TYPES } from '../funcs/getInput.js';
-import XConfirmation from '../funcs/x-confirmation.js';
 import XForm from '../funcs/x-form.js';
 import XRequestor, { usersCrud } from '../funcs/x-requestor.js';
 import XButton from '../render/x-button.js';
@@ -11,6 +9,7 @@ import XButtons from '../render/x-buttons.js';
 import XGroupPanel from '../render/x-group-panel.js';
 import XLabel from '../render/x-label.js';
 import XPanel from '../render/x-panel.js';
+import { overlayAcknowledge } from '../render/overlay-builder.js';
 
 /**
  * attributes:
@@ -66,9 +65,9 @@ export default class XPageUserEdit extends HTMLElement {
                                     getInputObject(TYPES.NOTES, 'notes')
                                 ]),
                                 createElementWithObject(XButtons, { slot: 'buttons' }, [
-                                    createElementWithObject(XButton, { action: actions.commit }, 'Save'),
-                                    createElementWithObject(XButton, { action: actions.delete, class: 'no-create' }),
-                                    createElementWithObject(XButton, { action: actions.cancel })
+                                    createElementWithObject(XButton, { action: XButton.Save }),
+                                    createElementWithObject(XButton, { action: XButton.Delete, class: 'no-create' }),
+                                    createElementWithObject(XButton, { action: XButton.Cancel })
                                 ])
                             ],
                             el => {
@@ -103,44 +102,15 @@ export default class XPageUserEdit extends HTMLElement {
                 : usersCrud().create(newValues)
         )
             .then(response => response.data)
-            .then(data => {
-                this.data = data;
-                // TODO: use x-confirmation as done for x-requestor
-                this.innerHTML = '';
-                this.append(
-                    createElementWithTag('css-inherit'),
-                    createElementWithObject(XConfirmation, {},
-                        [
-                            createElementWithTag('div', {},
-                                `User ${this.data.name} ${this.uid > 0 ? 'updated' : 'created'}`
-                            )
-                        ],
-                        el => el.addEventListener('validated', () => this.exit())
-                    )
-
-                );
-            });
-
+            .then(data => this.data = data)
+            .then(() => overlayAcknowledge(`User ${this.data.name} ${this.uid > 0 ? 'updated' : 'created'}`))
+            .then(() => this.exit());
     }
 
     delete() {
-        // TODO: use x-confirmation as done for x-requestor
         return this._requestor.request(usersCrud().delete(this.uid))
-            .then(() => {
-                this.innerHTML = '';
-                this.append(
-                    createElementWithTag('css-inherit'),
-                    createElementWithObject(XConfirmation, {},
-                        [
-                            createElementWithTag('div', {},
-                                `User ${this.data.name} deleted`
-                            )
-                        ],
-                        el => el.addEventListener('validated', () => this.exit())
-                    )
-
-                );
-            });
+            .then(() => overlayAcknowledge(`User ${this.data.name} deleted`))
+            .then(() => this.exit());
     }
 
     exit() {

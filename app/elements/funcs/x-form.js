@@ -1,9 +1,10 @@
 
-import { actions, messages } from '../../config.js';
+import { messages } from '../../config.js';
 import { createElementWithObject, createElementWithTag, defineCustomElement } from '../../js/custom-element.js';
 import XMessages from '../render/x-messages.js';
 import '../render/x-button.js';
 import { getPanelStyles } from '../render/x-panel.js';
+import XButton from '../render/x-button.js';
 
 /**
  * Export
@@ -14,7 +15,6 @@ import { getPanelStyles } from '../render/x-panel.js';
 /**
  * Import
  *
- * @typedef {import('../render/x-button.js').default} XButton
  * @typedef {import('../render/x-message.js').Message} Message
  */
 
@@ -80,7 +80,7 @@ export default class XForm extends HTMLElement {
         this._values = this.getValues();
 
         // For each "reset" button, auto reset
-        this.querySelectorAll(`x-button[action="${actions.reset}"]`)
+        this.querySelectorAll(`x-button[action="${XButton.Reset}"]`)
             .forEach(el => (/** @type {XButton} */(el)).addEventListener('click',
                 (evt) => {
                     evt.preventDefault();
@@ -89,7 +89,7 @@ export default class XForm extends HTMLElement {
             ));
 
         // For each "cancel" button, auto reset
-        this.querySelectorAll(`x-button[action="${actions.cancel}"]`)
+        this.querySelectorAll(`x-button[action="${XButton.Cancel}"]`)
             .forEach(el => (/** @type {XButton} */(el)).addEventListener('click',
                 (evt) => {
                     evt.preventDefault();
@@ -98,10 +98,10 @@ export default class XForm extends HTMLElement {
             ));
 
         // For each "query" button, auto submit
-        this.querySelectorAll(`x-button:not([action])
-                x-button[action="${actions.query}"],
-                x-button[action="${actions.commit}"],
-                x-button[action="${actions.ok}"]
+        this.querySelectorAll(`x-button:not([action]),
+                x-button[action="${XButton.Default}"],
+                x-button[action="${XButton.Save}"],
+                x-button[action="${XButton.Search}"]
                 `)
             .forEach(el => (/** @type {XButton} */(el)).addEventListener('click',
                 (evt) => {
@@ -111,7 +111,7 @@ export default class XForm extends HTMLElement {
             ));
 
         // For each "delete" button, ask confirmation and submit
-        this.querySelectorAll(`x-button[action="${actions.delete}"]`)
+        this.querySelectorAll(`x-button[action="${XButton.Delete}"]`)
             .forEach(el => (/** @type {XButton} */(el)).addEventListener('click',
                 (evt) => {
                     evt.preventDefault();
@@ -352,7 +352,7 @@ export default class XForm extends HTMLElement {
      * Ask confirmation to the user and if so, emit a "delete" event
      */
     askAndDelete() {
-        // TODO: render a better confirmation dialog (x-confirmation when ready)
+        // TODO: render a better confirmation dialog (createOverlay when ready)
         if (confirm('Are you sure you want to delete it?')) {
             this.dispatchEvent(new CustomEvent(XForm.ActionDelete, { bubbles: true }));
         }

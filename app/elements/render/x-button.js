@@ -1,5 +1,5 @@
 
-import { spacing, icons, actions } from '../../config.js';
+import { spacing, icons } from '../../config.js';
 import { createElementWithTag, defineCustomElement } from '../../js/custom-element.js';
 import { setLocation, setRoute } from '../../js/router.js';
 
@@ -11,6 +11,20 @@ import { setLocation, setRoute } from '../../js/router.js';
  * to-location: the new location path (if set)
  */
 export default class XButton extends HTMLElement {
+    // Commit the form:
+    static get Default() { return 'Default'; }
+    static get Save() { return 'Save'; }
+    static get Search() { return 'Search'; }
+
+    // Special actions in x-form
+    static get Reset() { return 'Reset'; }
+    static get Cancel() { return 'Cancel'; }
+    static get Delete() { return 'Delete'; }
+
+    // Not managed by x-form
+    static get Edit() { return 'Edit'; }
+    static get Alternate() { return 'Alternate'; }
+
     static get observedAttributes() {
         return ['icon', 'action', 'timed'];
     }
@@ -66,32 +80,31 @@ export default class XButton extends HTMLElement {
     }
 
     :host(x-button:not([action])) button,
-    :host(x-button[action="${actions.ok}"]) button,
-    :host(x-button[action="${actions.move}"]) button,
-    :host(x-button[action="${actions.query}"]) button,
-    :host(x-button[action="${actions.alternate}"]) button,
-    :host(x-button[action="${actions.edit}"]) button
+    :host(x-button[action="${XButton.Default}"]) button,
+    :host(x-button[action="${XButton.Search}"]) button,
+    :host(x-button[action="${XButton.Edit}"]) button
     {
         background-color: #5bc0de;
         border-color: #46b8da;
     }
 
-    :host(x-button[action="${actions.commit}"]) button {
+    :host(x-button[action="${XButton.Save}"]) button {
         background-color: #5cb85c;
         border-color: #4cae4c;
     }
 
-    :host(x-button[action="${actions.cancel}"]) button {
+    :host(x-button[action="${XButton.Cancel}"]) button,
+    :host(x-button[action="${XButton.Reset}"]) button {
         background-color: #f0ad4e;
         border-color: #eea236;
     }
 
-    :host(x-button[action="${actions.alternate}"]) button {
+    :host(x-button[action="${XButton.Alternate}"]) button {
         background-color: #5bc0de;
         border-color: #46b8da;
     }
 
-    :host(x-button[action="${actions.delete}"]) button {
+    :host(x-button[action="${XButton.Delete}"]) button {
         background-color: #d9534f;
         border-color: #d43f3a;
     }
@@ -163,36 +176,38 @@ export default class XButton extends HTMLElement {
         // !! could not have any other class on button, otherwise it will be wiped out :-)
         let action = this.getAttribute('action');
         if (!action) {
-            action = actions.query;
-        } else if (!(action in actions)) {
+            action = XButton.Default;
+        } else if (!(action in XButton)) {
             console.error('unknown action: ', action);
-            action = actions.query;
+            action = XButton.Default;
         }
 
         switch (action) {
-            case actions.ok:
-                this._slot.innerHTML = 'OK';
-                break;
-            case actions.move:
-                this._slot.innerHTML = 'Go';
-                break;
-            case actions.query:
+            case XButton.Search:
                 this._slot.innerHTML = 'Search';
                 break;
-            case actions.edit:
+            case XButton.Edit:
                 this._slot.innerHTML = 'Edit';
                 break;
-            case actions.alternate:
+            case XButton.Alternate:
                 this._slot.innerHTML = 'Alternate';
                 break;
-            case actions.cancel:
+            case XButton.Cancel:
                 this._slot.innerHTML = 'Cancel';
                 break;
-            case actions.commit:
+            case XButton.Reset:
+                this._slot.innerHTML = 'Reset';
+                break;
+            case XButton.Save:
                 this._slot.innerHTML = 'Save';
                 break;
-            case actions.delete:
+            case XButton.Delete:
                 this._slot.innerHTML = 'Delete';
+                break;
+
+            case XButton.Default:
+            default:
+                this._slot.innerHTML = 'Ok';
                 break;
         }
     }

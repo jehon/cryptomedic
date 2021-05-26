@@ -9,7 +9,8 @@ import '../file/x-fff-field.js';
 import '../../render/x-message.js';
 import '../../render/x-button.js';
 import '../../render/x-buttons.js';
-import { actions, messages } from '../../../config.js';
+import { messages } from '../../../config.js';
+import XButton from '../../render/x-button.js';
 
 
 // TODO: better layout for without appointment
@@ -30,7 +31,7 @@ export default class XFfNextAppointment extends XWithFolder {
                 <div id='withoutAppointment'>
                     <x-message level='${messages.warning}'>No appointment planned</x-message>
                     <x-buttons>
-                        <x-button id='add-appointment' action='${actions.commit}'>Add an appointment</x-button>
+                        <x-button id='add-appointment' action='${XButton.Save}'>Add an appointment</x-button>
                     </x-buttons>
                 </div>
             </x-group-panel>`;

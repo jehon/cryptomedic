@@ -7,7 +7,6 @@ import { createElementWithTag, createElementWithObject } from '../../app/js/cust
 import { fn } from './athelpers.js';
 import XButton from '../../app/elements/render/x-button.js';
 import XButtons from '../../app/elements/render/x-buttons.js';
-import { actions } from '../../app/config.js';
 
 // import XWrite from '../../app/elements/x-write.js';
 // import XWriteList from '../../app/elements/x-write-list.js';
@@ -60,9 +59,9 @@ describe(fn(import.meta.url), function () {
             element = /** @type {XForm} */ (createElementWithObject(XForm, {}, [
                 iN1 = createElementWithTag('input', { name: 'n1', required: true, value: 'initial' }),
 
-                createElementWithObject(XButtons, {}, [
-                    bQuery = createElementWithObject(XButton, {}, 'Query'),
-                    bReset = createElementWithObject(XButton, { action: actions.reset }, 'Reset')
+                createElementWithObject(XButtons, { slot: 'buttons' }, [
+                    bQuery = createElementWithObject(XButton, { action: XButton.Search }),
+                    bReset = createElementWithObject(XButton, { action: XButton.Reset })
                 ])
             ]));
             element.connectedCallback();

@@ -1,5 +1,4 @@
 
-import { actions } from '../../config.js';
 import { createElementsFromHTML, createElementWithObject, createElementWithTag, defineCustomElement } from '../../js/custom-element.js';
 import { getRouteToFolderPatient, setRoute } from '../../js/router.js';
 import XForm from '../funcs/x-form.js';
@@ -66,8 +65,8 @@ export default class XPageSearch extends HTMLElement {
 `
                                             ),
                                             createElementWithObject(XButtons, { slot: 'buttons' }, [
-                                                createElementWithObject(XButton, { action: actions.query }, 'Search'),
-                                                createElementWithObject(XButton, { action: actions.cancel }, 'Reset')
+                                                createElementWithObject(XButton, { action: XButton.Search }),
+                                                createElementWithObject(XButton, { action: XButton.Reset })
                                             ])
                                         ],
                                         (el) => {

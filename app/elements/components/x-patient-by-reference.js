@@ -1,5 +1,4 @@
 
-import { actions } from '../../config.js';
 import { createElementWithObject, createElementWithTag, defineCustomElement } from '../../js/custom-element.js';
 import { getRouteToFolderPatient, setRoute } from '../../js/router.js';
 import XForm from '../funcs/x-form.js';
@@ -57,8 +56,8 @@ export default class XPatientByReference extends HTMLElement {
                                 el => el.addEventListener('change', () => this.reset())
                             ),
                             createElementWithObject(XButtons, { slot: 'buttons' }, [
-                                createElementWithObject(XButton, { action: actions.query }, 'Search reference'),
-                                createElementWithObject(XButton, { action: actions.cancel }, 'Reset')
+                                createElementWithObject(XButton, { action: XButton.Search }),
+                                createElementWithObject(XButton, { action: XButton.Cancel })
                             ])
                         ],
                         (el) => {
@@ -73,7 +72,7 @@ export default class XPatientByReference extends HTMLElement {
                         ]),
                         createElementWithObject(XButton,
                             {
-                                action: actions.commit,
+                                action: XButton.Save,
                                 id: 'create-reference',
                                 style: 'min-width: 50%'
 

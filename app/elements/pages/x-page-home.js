@@ -3,7 +3,7 @@ import '../components/x-patient-by-reference.js';
 
 import { createElementsFromHTML, createElementWithObject, createElementWithTag, defineCustomElement } from '../../js/custom-element.js';
 import { toAttributeCase } from '../../js/string-utils.js';
-import { actions, API_VERSION, icons } from '../../config.js';
+import { API_VERSION, icons } from '../../config.js';
 
 import XPatientByReference from '../components/x-patient-by-reference.js';
 import XGroupPanel from '../render/x-group-panel.js';
@@ -42,7 +42,7 @@ function createMenu({ title, restrictedBy = '', id = toAttributeCase(title), ver
                 (toRoute || toLocation)
                     ? createElementWithObject(XButton,
                         {
-                            action: actions.move,
+                            action: XButton.Default,
                             'to-route': toRoute ?? false,
                             'to-location': toLocation ?? false
                         }
