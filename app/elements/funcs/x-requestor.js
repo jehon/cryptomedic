@@ -409,3 +409,11 @@ export function usersCrud() {
 
     return crud;
 }
+
+
+/**
+ * @returns {RequestCRUD} for prices
+ */
+export function pricesCrud() {
+    return new RequestCRUD('admin/prices');
+}
