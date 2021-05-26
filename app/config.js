@@ -30,8 +30,10 @@ export const messages = {
     error: 'error',
 };
 
+// TODO: refine this list
 export const actions = {
     /* x-form: begin */
+    ok: 'ok',
     commit: 'commit',
     reset: 'reset',
     cancel: 'cancel',
