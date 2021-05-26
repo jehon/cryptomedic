@@ -1,11 +1,19 @@
 
-import { actions } from '../../config.js';
+import { actions, messages } from '../../config.js';
 import { createElementWithObject, createElementWithTag, defineCustomElement } from '../../js/custom-element.js';
 import XMessages from '../render/x-messages.js';
 import '../render/x-button.js';
 import { getPanelStyles } from '../render/x-panel.js';
 
 /**
+ * Export
+ *
+ * @typedef {function(object):(boolean|string)} FormValidator
+ */
+
+/**
+ * Import
+ *
  * @typedef {import('../render/x-button.js').default} XButton
  * @typedef {import('../render/x-message.js').Message} Message
  */
@@ -42,6 +50,9 @@ export default class XForm extends HTMLElement {
 
     /** @type {XMessages} */
     _messages;
+
+    /** @type {function(object): (boolean|string)} to validate the formular*/
+    _customValidator = (_data) => true
 
     constructor() {
         super();
@@ -87,7 +98,11 @@ export default class XForm extends HTMLElement {
             ));
 
         // For each "query" button, auto submit
-        this.querySelectorAll(`x-button:not([action]), x-button[action="${actions.query}"], x-button[action="${actions.commit}"]`)
+        this.querySelectorAll(`x-button:not([action])
+                x-button[action="${actions.query}"],
+                x-button[action="${actions.commit}"],
+                x-button[action="${actions.ok}"]
+                `)
             .forEach(el => (/** @type {XButton} */(el)).addEventListener('click',
                 (evt) => {
                     evt.preventDefault();
@@ -104,6 +119,11 @@ export default class XForm extends HTMLElement {
                 }
             ));
 
+    }
+
+    withCustomValidator(fn) {
+        // TODO: allow adding more than one validator?
+        this._customValidator = fn;
     }
 
     /**
@@ -207,8 +227,8 @@ export default class XForm extends HTMLElement {
                     case 'file':
                         // http://blog.teamtreehouse.com/uploading-files-ajax
                         // We can pass the 'File' object to FormData, it will handle it for us....
-                        if (el.data) {
-                            value = el.data.data;
+                        if (el['data']) {
+                            value = el['data'].data;
                         } else {
                             value = null;
                         }
@@ -307,11 +327,23 @@ export default class XForm extends HTMLElement {
             }
         });
 
+        const values = this.getValues();
+        if (this._customValidator) {
+            const cv = this._customValidator(values);
+            if (typeof (cv) == 'string') {
+                result = false;
+                this.addMessage({ text: cv, id: 'custom-error', level: messages.error });
+            }
+            if (typeof (cv) == 'boolean') {
+                result = result && cv;
+            }
+        }
+
         if (!result) {
             this.addMessage({ text: 'The form contains some errors.', id: 'form-invalid' });
             return false;
         }
-        this.dispatchEvent(new CustomEvent(XForm.ActionSubmit, { detail: this.getValues(), bubbles: true }));
+        this.dispatchEvent(new CustomEvent(XForm.ActionSubmit, { detail: values, bubbles: true }));
 
         return true;
     }
