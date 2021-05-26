@@ -8,6 +8,7 @@ import XForm from '../funcs/x-form.js';
  * Slot[overlay]: overlay to be put on top when blocked
  */
 export default class XOverlay extends HTMLElement {
+    static get ActionFree() { return 'x-overlay-free'; }
 
     /** @type {HTMLSlotElement} */
     _overlaySlot
@@ -108,15 +109,22 @@ export default class XOverlay extends HTMLElement {
 
         this.addEventListener(XForm.ActionCancel, (evt) => this._freeOnEvent(evt));
         this.addEventListener(XForm.ActionDelete, (evt) => this._freeOnEvent(evt));
-        this.addEventListener(XForm.ActionReset, (evt) => this._freeOnEvent(evt));
         this.addEventListener(XForm.ActionSubmit, (evt) => this._freeOnEvent(evt));
     }
 
+    /**
+     *
+     * @param {Event} evt - the source event
+     */
     _freeOnEvent(evt) {
         if (isEventOutOfSlot(evt, this._overlaySlot)) {
             if (evt.target instanceof XForm) {
-                this.free();
+                this.dispatchEvent(new CustomEvent(XOverlay.ActionFree, {
+                    bubbles: true,
+                    detail: evt
+                }));
             }
+            this.free();
         }
     }
 

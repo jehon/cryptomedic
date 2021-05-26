@@ -19,8 +19,8 @@
         <div><a href='../index.html'>Go back to index</a></div>
     </xx-test>
 
-    <xx-test title='div - full'>
-        <x-overlay dump-events>
+    <xx-test title='Inline'>
+        <x-overlay dump-events id="inline">
             <div slot='overlay'>
                 <x-form>
                     This is the form.
@@ -42,11 +42,12 @@
         </x-overlay>
     </xx-test>
 
-    <script type='module'>
-        const el = document.querySelector('x-overlay');
-        el.block();
-    </script>
+    <xx-test title='Created by action'>
+        <x-button id='info'>Launch it</x-button>
+        <x-button id='form'>Launch formular</x-button>
+    </xx-test>
 
+    <script type='module' src='./x-overlay-demo.js'></script>
 </body>
 
 </html>
