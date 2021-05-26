@@ -1,11 +1,11 @@
 
-import '../components/x-patient-by-reference.js';
+import './blocks/x-patient-by-reference.js';
 
 import { createElementsFromHTML, createElementWithObject, createElementWithTag, defineCustomElement } from '../../js/custom-element.js';
 import { toAttributeCase } from '../../js/string-utils.js';
 import { API_VERSION, icons } from '../../config.js';
 
-import XPatientByReference from '../components/x-patient-by-reference.js';
+import XPatientByReference from './blocks/x-patient-by-reference.js';
 import XGroupPanel from '../render/x-group-panel.js';
 import XPanel from '../render/x-panel.js';
 import XButtons from '../render/x-buttons.js';
@@ -14,6 +14,7 @@ import XRestricted from '../funcs/x-restricted.js';
 
 import { getRouteToCreateReference, getRouteToReport } from '../../js/router.js';
 import { REPORT_ACTIVITY, REPORT_CONSULTATIONS, REPORT_STATISTICAL, REPORT_SURGICAL } from './x-page-reports.js';
+import pageStyles from './page-helper.js';
 
 /**
  * @param {object} options to generate the XGroupPanel
@@ -64,6 +65,7 @@ export default class XPageHome extends HTMLElement {
     constructor() {
         super();
         this.append(
+            pageStyles(this),
             createElementWithTag('style', {}, `
     .grid {
         display: flex;

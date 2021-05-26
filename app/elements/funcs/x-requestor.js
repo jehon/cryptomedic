@@ -6,15 +6,14 @@ import { API_VERSION } from '../../config.js';
 import { setSession } from '../../js/session.js';
 import { routeToLogin } from '../../js/router.js';
 
-import XOverlay from '../render/x-overlay.js';
-import XButton from '../render/x-button.js';
-import { createElementWithObject, createElementWithTag, defineCustomElement } from '../../js/custom-element.js';
+import { createElementsFromHTML, createElementWithObject, createElementWithTag, defineCustomElement } from '../../js/custom-element.js';
 import { getBrowserDescription } from '../../js/browser.js';
 import '../../../node_modules/css-inherit/css-inherit.js';
-import XPanel from '../render/x-panel.js';
+import XLabel from '../render/x-label.js';
 import { WithDataError } from '../../js/exceptions.js';
 import nullify from '../../js/nullify.js';
-import { overlayWaiting } from '../render/overlay-builder.js';
+import { overlayAcknowledge, overlayWaiting } from '../render/overlay-builder.js';
+
 
 /**
  * @param {number} code - http code
@@ -44,6 +43,8 @@ export class TransportRequestError extends WithDataError {
     }
 }
 
+// TODO: should be a function and not a component anymore
+
 /**
  * Slot[]: content (TODO: remove)
  * Attribute:
@@ -51,46 +52,14 @@ export class TransportRequestError extends WithDataError {
  *   < running, erroneous
  */
 export default class XRequestor extends HTMLElement {
-
     /** @type {function(void): void} */
     _stopWaiting = () => { };
-
-    /** @type {XOverlay} */
-    _error
-
-    constructor() {
-        super();
-        this.attachShadow({ mode: 'open' });
-        this.shadowRoot.append(
-            createElementWithTag('style', {}, `
-    :host {
-        display: block;
-    }
-
-    x-overlay {
-        height: 100%;
-    }
-            `),
-            createElementWithTag('css-inherit'),
-            this._error = /** @type {XOverlay} */(createElementWithObject(XOverlay, { type: 'on-error' }, [
-                createElementWithObject(XPanel, { slot: 'overlay', full: true }, [
-                    // createElementWithTag('css-inherit'),
-                    this._errorMsg = createElementWithTag('h1', { id: 'errorMsg' }),
-                    this._errorContent = createElementWithTag('div', { id: 'errorContent' }),
-                    createElementWithObject(XButton, { action: XButton.Cancel, id: 'closeButton' }, 'Dismiss',
-                        (el) => el.addEventListener('click', () => this._error.free())
-                    )
-                ]),
-                createElementWithTag('slot')
-            ]))
-        );
-    }
 
     /**
      * @returns {boolean} wheter the request is failed
      */
     isFailed() {
-        return this._error.isBlocked();
+        return this.hasAttribute('erroneous');
     }
 
     /**
@@ -117,9 +86,6 @@ export default class XRequestor extends HTMLElement {
             this._stopWaiting();
             this._stopWaiting = () => { };
         }
-        this._error.free();
-        this._errorMsg.innerHTML = '';
-        this._errorContent.innerHTML = '';
     }
 
     async _rawRequest(options) {
@@ -201,32 +167,34 @@ export default class XRequestor extends HTMLElement {
         this.setAttribute('erroneous', 'erroneous');
         this._stopWaiting();
         this._stopWaiting = () => { };
-        this._error.block();
-        this._errorMsg.innerHTML = 'Network Error';
-        let html = '<table style=\'width: 300px\'>';
+
+        /** @type {Array<string|HTMLElement>} */
+        const errorMsg = [
+            createElementWithTag('h1', {}, error.message)
+        ];
+
         if (error instanceof ServerRequestError) {
-            this._errorMsg.innerHTML = error.message;
-            html += `<tr><td>Status code</td><td>${error.status}</td></tr>`;
+            errorMsg.push(createElementWithObject(XLabel, { label: 'Status code' }, error.status));
             if (error.status == 401) {
                 // this will trigger a redirect to some login form or anything else
                 setSession();
                 routeToLogin();
             }
         } else if (error instanceof TransportRequestError) {
-            this._errorMsg.innerHTML = error.message;
-            html += `<tr><td>Message</td><td>
-                    Something went very wrong on your network. Please check:<br>
+            errorMsg.push(createElementWithObject(XLabel, { label: 'Message' }, createElementsFromHTML(`
+            Something went very wrong on your network. Please check:<br>
                     <ul>
                         <li>that you have an internet connection</li>
                         <li>that your connection is really working</li>
                     </ul>
                     In other case, please reload the page and try again..
-                    <a href="javascript:window.location.reload()">Reload the page here</a></td></tr>`;
+                    <a href="javascript:window.location.reload()">Reload the page here</a></td></tr>`
+            )));
         } else {
-            html += `<tr><td>Error</td><td>${error.message}</td></tr>`;
+            errorMsg.push('Network error');
         }
-        html += '</table>';
-        this._errorContent.innerHTML = html;
+        return overlayAcknowledge(errorMsg)
+            .then(() => this.removeAttribute('erroneous'));
     }
 }
 
@@ -433,7 +401,7 @@ export function usersCrud() {
      * @param {string} password to be set
      * @returns {object} options for request (see XRequestor#request)
      */
-    crud.updatePassword = (uid, password) => ({
+    crud['updatePassword'] = (uid, password) => ({
         url: `users/password/${uid}`,
         method: 'POST',
         data: { password }

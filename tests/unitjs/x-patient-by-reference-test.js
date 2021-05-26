@@ -1,6 +1,6 @@
 
 import { fn } from './athelpers.js';
-import XPatientByReference from '../../app/elements/components/x-patient-by-reference.js';
+import XPatientByReference from '../../app/elements/pages/blocks/x-patient-by-reference.js';
 import { mockResponseWithSuccess } from './x-requestor-test.js';
 import { getCurrentRoute, getRouteToFolderPatient } from '../../app/js/router.js';
 

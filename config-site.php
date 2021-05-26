@@ -11,9 +11,5 @@ if (array_key_exists("APP_ENV", $_ENV) && $_ENV["APP_ENV"] == "testing") {
     $myconfig['environment'] = 'phpunit';
 }
 
-// if ($myconfig['environment'] == 'dev') {
-//     // This match localhost, but not testing
-
-//     // TODO: this is artificial waiting time
-//     sleep(1);
-// }
+// // this is an artificial waiting time
+// sleep(3);

@@ -10,6 +10,7 @@ import XGroupPanel from '../render/x-group-panel.js';
 import XLabel from '../render/x-label.js';
 import XPanel from '../render/x-panel.js';
 import { overlayAcknowledge } from '../render/overlay-builder.js';
+import pageStyles from './page-helper.js';
 
 /**
  * attributes:
@@ -32,6 +33,7 @@ export default class XPageUserEdit extends HTMLElement {
         super();
         this.innerHTML = '';
         this.append(
+            pageStyles(this),
             createElementWithTag('css-inherit'),
             createElementWithTag('style', {}, `
     :host([uid="new"]) .no-create {
