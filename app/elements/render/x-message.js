@@ -33,6 +33,7 @@ export default class XMessage extends HTMLElement {
         };
 
         return /** @type {XMessage} */ (createElementWithObject(XMessage, {
+            id: msg.id,
             'msg-id': msg.id,
             level: msg.level,
 

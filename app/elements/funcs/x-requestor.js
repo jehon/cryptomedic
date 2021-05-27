@@ -162,6 +162,7 @@ export default class XRequestor extends HTMLElement {
      *
      * @param {TransportRequestError|ServerRequestError|Error} error from the request
      * @see See https://github.com/axios/axios#handling-errors
+     * @returns {Promise} to wait for acknowledge
      */
     showFailure(error) {
         this.setAttribute('erroneous', 'erroneous');

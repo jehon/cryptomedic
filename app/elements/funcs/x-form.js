@@ -333,7 +333,7 @@ export default class XForm extends HTMLElement {
         const cv = this._customValidator(values);
         if (typeof (cv) == 'string') {
             result = false;
-            this.addMessage({ text: cv, id: 'custom-error', level: messages.error });
+            this.addMessage({ text: cv, id: 'custom-validation', level: messages.error });
         }
         if (typeof (cv) == 'boolean') {
             result = result && cv;
