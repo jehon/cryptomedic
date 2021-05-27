@@ -21,7 +21,15 @@ function toSide(field, side) {
 }
 
 /**
- * mode: read (hide empty values), write (?)
+ * Attributes:
+ *  - mode: ro / wo / rw
+ *  - edit: true / false
+ *
+ *    ! One of the two !
+ *  - field: to be shown
+ *  - by-sides: field if set by sides
+ *
+ *  - label (default constructed basd on field / by-sides)
  */
 export default class XFffField extends XWithFile {
     label = '';
@@ -74,7 +82,6 @@ export default class XFffField extends XWithFile {
             <slot name='left'><div id='side-left'></div></slot>
             <slot name='third'></slot>
         `;
-        // this.refresh();
     }
 
     static get observedAttributes() {

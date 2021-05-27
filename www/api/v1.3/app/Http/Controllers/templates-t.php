@@ -10,11 +10,8 @@
  * /templates/writes/blablabla.html -> will go to /templates/fiches/blablabla.html, but in write mode (writeOnly forced)
  */
 
-// date_default_timezone_set("GMT");
-
 use Cryptomedic\Lib\DatabaseInvalidStructureException;
 use Cryptomedic\Lib\DatabaseStructure;
-use Cryptomedic\Lib\DatabaseUndefinedException;
 
 class t {
   const DATETIMEFORMAT = "short";
@@ -196,6 +193,9 @@ class t {
   }
 
   function value() {
+    if ($this->options['templateMode']) {
+      return "";
+    }
     if ($this->options['readOnly']) {
       return $this->read();
     }
