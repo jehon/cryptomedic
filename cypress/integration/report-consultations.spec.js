@@ -1,6 +1,6 @@
 /// <reference types="Cypress" />
 
-import XButton from '../../app/elements/render/x-button.js';
+import XButton from '../../app/widgets/style/x-button.js';
 import { goReport } from '../helpers/report.js';
 
 context('Actions', () => {

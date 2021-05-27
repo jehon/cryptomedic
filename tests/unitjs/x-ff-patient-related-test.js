@@ -2,7 +2,7 @@
 import { fn, loadReference, RefFolder1 } from './athelpers.js';
 
 import Folder from '../../app/models/Folder.js';
-import XFfPatientRelated from '../../app/elements/widgets/folder/x-ff-patient-related.js';
+import XFfPatientRelated from '../../app/widgets/folder/x-ff-patient-related.js';
 
 let testFolder;
 
@@ -22,7 +22,7 @@ describe(fn(import.meta.url), function () {
         expect(el.shadowRoot.querySelector('[field=Sex]').shadowRoot.querySelector('div#content').innerHTML).toBe('Male');
     });
 
-    it('should click', function() {
+    it('should click', function () {
         location.hash = '#/';
         el.click();
         expect(location.hash)

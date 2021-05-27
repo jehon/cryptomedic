@@ -1,5 +1,5 @@
 
-import '../../app/elements/pages/x-folder-graphics.js';
+import '../../app/pages/blocks/x-folder-graphics.js';
 
 import { fn, webDescribe } from './athelpers.js';
 

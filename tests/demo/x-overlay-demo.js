@@ -1,6 +1,9 @@
-import XButton from '../../app/elements/render/x-button.js';
-import { createOverlay, overlayAcknowledge, overlayWaiting } from '../../app/elements/render/overlay-builder.js';
+
+import XButton from '../../app/widgets/style/x-button.js';
+import { createOverlay, overlayAcknowledge, overlayWaiting } from '../../app/js/overlay-builder.js';
 import { createElementWithTag } from '../../app/js/custom-element.js';
+import '../../app/widgets/func/x-form.js';
+import '../../app/widgets/func/x-overlay.js';
 
 document.querySelector('x-overlay#inline').block();
 

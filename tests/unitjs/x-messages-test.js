@@ -1,7 +1,6 @@
 
 import { messages } from '../../app/config.js';
-import '../../app/elements/render/x-messages.js';
-import XMessages from '../../app/elements/render/x-messages.js';
+import XMessages from '../../app/widgets/func/x-messages.js';
 import { fn } from './athelpers.js';
 
 

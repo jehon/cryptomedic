@@ -2,7 +2,7 @@
 import { fn, loadReference, RefFolder1, RefFolder1RicketConsult13 } from './athelpers.js';
 
 import Folder from '../../app/models/Folder.js';
-import XFffBmiSd from '../../app/elements/widgets/file/x-fff-bmi-sd.js';
+import XFffBmiSd from '../../app/widgets/file/x-fff-bmi-sd.js';
 
 let testFolder;
 

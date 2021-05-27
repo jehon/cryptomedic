@@ -1,5 +1,5 @@
 
-import XTable from '../../app/elements/funcs/x-table.js';
+import XTable from '../../app/elements/x-table.js';
 import { createElementWithObject } from '../../app/js/custom-element.js';
 
 import { fn } from './athelpers.js';

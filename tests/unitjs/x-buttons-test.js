@@ -1,5 +1,5 @@
 
-import XButtons from '../../app/elements/render/x-buttons.js';
+import XButtons from '../../app/widgets/func/x-buttons.js';
 import { fn } from './athelpers.js';
 
 describe(fn(import.meta.url), function () {

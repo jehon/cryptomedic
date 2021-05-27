@@ -1,6 +1,6 @@
 
-import '../../app/elements/widgets/x-price-item-edit.js';
-import XPriceItemEdit from '../../app/elements/widgets/x-price-item-edit.js';
+import '../../app/widgets/x-price-item-edit.js';
+import XPriceItemEdit from '../../app/widgets/x-price-item-edit.js';
 import { createElementWithObject } from '../../app/js/custom-element.js';
 import { fn } from './athelpers.js';
 

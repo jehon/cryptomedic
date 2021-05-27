@@ -1,12 +1,12 @@
 
-import XForm from '../../app/elements/funcs/x-form.js';
+import XForm from '../../app/widgets/func/x-form.js';
 import '../../app/elements/x-write.js';
 import '../../app/elements/x-write-list.js';
 import '../../app/elements/x-inline.js';
 import { createElementWithTag, createElementWithObject } from '../../app/js/custom-element.js';
 import { fn } from './athelpers.js';
-import XButton from '../../app/elements/render/x-button.js';
-import XButtons from '../../app/elements/render/x-buttons.js';
+import XButton from '../../app/widgets/style/x-button.js';
+import XButtons from '../../app/widgets/func/x-buttons.js';
 
 // import XWrite from '../../app/elements/x-write.js';
 // import XWriteList from '../../app/elements/x-write-list.js';

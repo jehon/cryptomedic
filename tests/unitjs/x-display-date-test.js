@@ -1,5 +1,5 @@
 
-import XDisplayDate from '../../app/elements/render/x-display-date.js';
+import XDisplayDate from '../../app/widgets/style/x-display-date.js';
 
 import { fn } from './athelpers.js';
 

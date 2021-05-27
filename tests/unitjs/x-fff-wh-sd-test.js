@@ -2,7 +2,7 @@
 import { fn, loadReference, RefFolder1, RefFolder1RicketConsult13 } from './athelpers.js';
 
 import Folder from '../../app/models/Folder.js';
-import XFffWhSd from '../../app/elements/widgets/file/x-fff-wh-sd.js';
+import XFffWhSd from '../../app/widgets/file/x-fff-wh-sd.js';
 
 let testFolder;
 

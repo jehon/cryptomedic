@@ -4,17 +4,16 @@ import { createElementWithTag, defineCustomElement } from '../../app/js/custom-e
 // Must be imported globally
 import '../../node_modules/css-inherit/css-inherit.js';
 
-import '../../app/elements/render/x-button.js';
-import '../../app/elements/render/x-buttons.js';
-import '../../app/elements/render/x-group-panel.js';
-import '../../app/elements/render/x-label.js';
-import '../../app/elements/render/x-message.js';
-import '../../app/elements/render/x-messages.js';
-// import '../../app/elements/render/x-panel.js';
-import '../../app/elements/funcs/x-form.js';
-import '../../app/elements/funcs/x-i18n.js';
-import '../../app/elements/funcs/x-input-list.js';
-import XTable from '../../app/elements/funcs/x-table.js';
+import '../../app/widgets/style/x-button.js';
+import '../../app/widgets/func/x-buttons.js';
+import '../../app/widgets/style/x-group-panel.js';
+import '../../app/widgets/style/x-label.js';
+import '../../app/widgets/style/x-message.js';
+import '../../app/widgets/func/x-messages.js';
+import '../../app/widgets/func/x-form.js';
+import '../../app/widgets/func/x-i18n.js';
+import '../../app/widgets/data/x-input-list.js';
+import XTable from '../../app/elements/x-table.js';
 
 const filtersMenu = document.querySelector('xx-test#filters');
 
@@ -140,7 +139,7 @@ defineCustomElement(XxTest);
 
 import { API_VERSION } from '../../app/config.js';
 import Folder from '../../app/models/Folder.js';
-import XForm from '../../app/elements/funcs/x-form.js';
+import XForm from '../../app/widgets/func/x-form.js';
 
 document
     .querySelectorAll('x-requestor[demo-failed]').forEach(

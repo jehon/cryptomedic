@@ -1,5 +1,5 @@
 
-import XPageLogin from '../../app/elements/pages/x-page-login.js';
+import XPageLogin from '../../app/pages/x-page-login.js';
 
 import { fn } from './athelpers.js';
 
@@ -10,7 +10,7 @@ import { mockNoResponse, mockResponseWithSuccess } from './x-requestor-test.js';
 
 
 /**
- * @typedef {import('../../app/elements/funcs/x-form.js').default} XForm
+ * @typedef {import('../../app/widgets/func/x-form.js').default} XForm
  */
 describe(fn(import.meta.url), function () {
     let element;
