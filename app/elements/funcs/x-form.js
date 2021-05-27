@@ -43,10 +43,10 @@ const log = (..._args) => { };
  *  - reset (reset the form)
  */
 export default class XForm extends HTMLElement {
-    static get ActionSubmit() { return 'submit'; }
-    static get ActionCancel() { return 'cancel'; }
-    static get ActionDelete() { return 'delete'; }
-    static get ActionReset() { return 'reset'; }
+    static get ActionSubmit() { return 'x-form-submit'; }
+    static get ActionCancel() { return 'x-form-cancel'; }
+    static get ActionDelete() { return 'x-form-delete'; }
+    static get ActionReset() { return 'x-form-reset'; }
 
     /** @type {XMessages} */
     _messages;
