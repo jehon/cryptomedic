@@ -13,23 +13,34 @@ export default class XTwoColumns extends HTMLElement {
                 :host(x-two-columns) > div {
                     display: flex;
                     flex-direction: row;
+                    flex-wrap: wrap;
                     align-items: flex-start;
                     width: 100%;
 
-                    xxx-margin-right: -15px;
-                    xxx-margin-left: -15px;
+                    margin-right: -15px;
+                    margin-left: -15px;
                 }
 
                 ::slotted(*) {
-                    flex-basis: 100px;
-                    flex-grow: 1;
+                    flex-basis: 100%;
+                    flex-grow: 0;
+                    flex-shrink: 0;
 
-                    max-width: 50%;
+                    max-width: 100%;
                     box-sizing: border-box;
 
                     padding-right: 15px;
                     padding-left: 15px;
+
                 }
+
+                @media (min-width: 768px) {
+                    ::slotted(*) {
+                        flex-basis: auto;
+                        width: 50%;
+                    }
+                }
+
             `),
             createElementWithTag('div', {}, [
                 createElementWithTag('slot'),
