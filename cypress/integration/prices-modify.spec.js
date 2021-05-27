@@ -1,5 +1,6 @@
 /// <reference types="Cypress" />
 
+import XButton from '../../app/elements/render/x-button.js';
 import { crApiLogin, crApiPriceDelete, crApiPriceList } from '../helpers/cr-api.js';
 import { crGo, crLoginInBackground, crReady } from '../helpers/cr.js';
 import TableIterator from '../helpers/table-iterator.js';
@@ -67,26 +68,29 @@ context('Actions', () => {
     it('create a new Price List', () => {
 
         // Button to create a new price list
-        cy.get('#action_creating').should('not.exist');
         cy.get('#button_create')
             .should('be.visible')
             .click();
-        cy.get('#action_creating').should('be.visible');
+        cy.get('#button_create').should('be.visible');
 
-        // with an invalic date, it fail
-        cy.get('[name=pivotDate]')
+        cy.get('x-overlay.pivot')
             .should('be.visible')
-            .invoke('attr', 'value', '2010-01-01');
-        cy.get('#button_do_create').click();
-        cy.get('#error_date').should('be.visible');
+            .within(() => {
+                // with an invalic date, it fail
+                cy.get('[name=pivot]')
+                    .should('be.visible')
+                    .invoke('attr', 'value', '2010-01-02');
+                cy.get(`x-button[action='${XButton.Save}']`).click();
+                cy.get('x-form').should('be.visible');
+                cy.get('x-form').shadow().find('x-messages x-message#custom-validation').should('be.visible');
 
-        cy.get('[name=pivotDate]').invoke('attr', 'value', '2130-01-01');
-        cy.get('#button_do_create').click();
+                cy.get('[name=pivot]').invoke('attr', 'value', '2130-01-01');
+                cy.get(`x-button[action='${XButton.Save}']`).click();
+            })
+            .should('not.exist');
 
         // Creation ok
-        cy.get('#error_date').should('not.exist');
-        cy.get('#button_create').should('not.exist');
-        cy.get('#action_creating').should('not.exist');
+        cy.get('#button_create').should('not.to.be.visible');
         assertTableInitial(1);
 
         // Edit the form
@@ -94,7 +98,12 @@ context('Actions', () => {
             .should('be.visible')
             .invoke('attr', 'value', '123');
 
-        cy.get('#button_save_0').click();
+        cy.get(`table x-button[action=${XButton.Save}]`)
+            .should('be.visible')
+            .click();
+
+        cy.get(`x-overlay x-button[action=${XButton.Default}`)
+            .click();
 
         // Check the modif
         crReady();
@@ -109,10 +118,11 @@ context('Actions', () => {
         assertTableInitial(1);
 
         // Delete it back
-        cy.get('#button_delete_0')
+        cy.get(`table x-button[action=${XButton.Delete}]`)
             .should('be.visible')
             .click();
         crReady();
+
         assertTableInitial();
     });
 });

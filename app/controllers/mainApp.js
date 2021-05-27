@@ -12,7 +12,6 @@ import 'angular-route';
 import ctrl_file_appointment from './ctrl_file_appointment.js';
 import ctrl_file_bill from './ctrl_file_bill.js';
 import ctrl_folder from './ctrl_folder.js';
-import ctrl_prices from './ctrl_prices.js';
 
 import { createElementWithObject } from '../js/custom-element.js';
 import template from '../js/template.js';
@@ -26,9 +25,6 @@ import '../elements/widgets/x-user-status.js';
 import JHElement from '../elements/jh-element.js';
 window.JHElement = JHElement;
 import '../elements/x-overlay.js';
-import XRequestor from '../elements/x-requestor.js';
-window.XRequestor = XRequestor;
-import '../elements/x-requestor-crud.js';
 import '../elements/cryptomedic-data-service.js';
 
 import '../elements/jh-script.js';
@@ -85,10 +81,10 @@ mainApp.controller('ctrl', ['$scope', function ($scope) {
 mainApp.controller('ctrl_file_appointment', ctrl_file_appointment);
 mainApp.controller('ctrl_file_bill', ctrl_file_bill);
 mainApp.controller('ctrl_folder', ctrl_folder);
-mainApp.controller('ctrl_prices', ctrl_prices);
 
 import XPageLogin from '../elements/pages/x-page-login.js';
 import XPageHome from '../elements/pages/x-page-home.js';
+import XPagePrices from '../elements/pages/x-page-prices.js';
 import XPageSearch from '../elements/pages/x-page-search.js';
 import XPageReports from '../elements/pages/x-page-reports.js';
 import XPageUserEdit from '../elements/pages/x-page-user-edit.js';
@@ -137,8 +133,7 @@ mainApp.config(['$routeProvider', function ($routeProvider) {
             template: () => goToElement(XPageUsersList)
         })
         .when('/prices', {
-            templateUrl: template('page', 'prices'),
-            controller: 'ctrl_prices',
+            template: () => goToElement(XPagePrices)
         })
         .otherwise({ 'redirectTo': '/home' });
 }]);
