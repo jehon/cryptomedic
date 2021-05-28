@@ -2,6 +2,8 @@
 /* istanbul ignore file */
 /* eslint-disable */
 
+// *** Legacy ***
+
 // AngularJS
 import jQuery from 'jquery/src/jquery.js';
 window.jQuery = jQuery;
@@ -9,18 +11,8 @@ window.jQuery = jQuery;
 import angular from 'angular';
 import 'angular-route';
 
-import ctrl_file_appointment from './ctrl_file_appointment.js';
-import ctrl_file_bill from './ctrl_file_bill.js';
-import ctrl_folder from './ctrl_folder.js';
-
-import { createElementWithObject } from '../js/custom-element.js';
 import template from '../js/template.js';
 import goThere from '../js/goThere.js';
-
-import '../widgets/func/x-restricted.js';
-import '../widgets/func/x-i18n.js';
-
-import '../widgets/x-user-status.js';
 
 import JHElement from '../elements/jh-element.js';
 window.JHElement = JHElement;
@@ -78,10 +70,25 @@ mainApp.controller('ctrl', ['$scope', function ($scope) {
     $scope.$on('$routeChangeError', function () { console.error('error in routes', arguments); });
 }]);
 
+import ctrl_file_appointment from './ctrl_file_appointment.js';
 mainApp.controller('ctrl_file_appointment', ctrl_file_appointment);
+
+import ctrl_file_bill from './ctrl_file_bill.js';
 mainApp.controller('ctrl_file_bill', ctrl_file_bill);
+
+import ctrl_folder from './ctrl_folder.js';
 mainApp.controller('ctrl_folder', ctrl_folder);
 
+// *** Legacy End ***
+
+
+
+// Elements present on the index.html:
+import '../widgets/x-user-status.js';
+import '../widgets/func/x-restricted.js';
+
+// Routing
+import { createElementWithObject } from '../js/custom-element.js';
 import XPageLogin from '../pages/x-page-login.js';
 import XPageHome from '../pages/x-page-home.js';
 import XPagePrices from '../pages/x-page-prices.js';

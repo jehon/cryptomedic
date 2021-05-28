@@ -6,6 +6,7 @@ import { getRouteToFolderFile, setRoute } from '../../js/router.js';
 
 import createCallback from '../../js/callback.js';
 import XWithFolder from './x-with-folder.js';
+import '../style/x-group-panel.js';
 
 const hooverCallback = createCallback('hooverCallback');
 
