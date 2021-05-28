@@ -36,20 +36,18 @@ EOD;
   }
 }
 ?>
-<div class='container-fluid' ng-controller="ctrl_file_bill">
-  <div class='row'>
-    <div ng-if='errors.consultPhisioAndDoctor'>
-      <div class='alert alert-danger'>Error: you could not bill "physio" and "doctor" together!</div>
-    </div>
-    <div ng-if='errors.homeVisitAndGiveAppointment'>
-      <div class='alert alert-danger'>Error: you could not bill a "home visit" with "give appointment" together!</div>
-    </div>
-    <div ng-if='errors.dateInTheFuture'>
-      <div class='alert alert-danger' id='errorDateFuture'>Error: The date can not be in the future!</div>
-    </div>
+<div ng-controller="ctrl_file_bill">
+  <div ng-if='errors.consultPhisioAndDoctor'>
+    <div class='alert alert-danger'>Error: you could not bill "physio" and "doctor" together!</div>
   </div>
-  <div class='row'>
-    <div class="col-md-6">
+  <div ng-if='errors.homeVisitAndGiveAppointment'>
+    <div class='alert alert-danger'>Error: you could not bill a "home visit" with "give appointment" together!</div>
+  </div>
+  <div ng-if='errors.dateInTheFuture'>
+    <div class='alert alert-danger' id='errorDateFuture'>Error: The date can not be in the future!</div>
+  </div>
+  <x-two-columns>
+    <div>
       <x-group-panel title='General data'>
         <?php (new t("Bill.Date"))->tr2()->p(); ?>
         <?php (new t("Bill.ExaminerName"))->tr2("Examiner")->p(); ?>
@@ -79,7 +77,7 @@ EOD;
         ?>
       </div>
     </div>
-    <div class="col-md-6">
+    <div>
       <x-ff-patient-related></x-ff-patient-related>
       <x-ff-next-appointment></x-ff-next-appointment>
       <x-group-panel title='Social Data'>
@@ -114,13 +112,13 @@ EOD;
         </x-fff-field> -->
       </x-group-panel>
     </div>
-  </div>
+  </x-two-columns>
   <br>
   <?php
   t::setDefaultOption("baseExpression", "paymentEditor.");
   t::setDefaultOption('writeOnly');
   ?>
-  <div class='row notModeWrite'>
+  <div class='notModeWrite'>
     <h3>Related payments</h3>
     <table class='table table-hover table-bordered tablesorter' ng-if='paymentsList().length > 0' id='paymentsList'>
       <thead>
@@ -162,4 +160,4 @@ EOD;
       <x-button action='Save' id='button_payment_save' ng-click="actionAddPayment()" ng-if='paymentEditor.id > 0'>Save</x-button>
     </x-group-panel>
   </div>
-</div>
+</div><!-- end of controller -->
