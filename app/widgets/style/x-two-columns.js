@@ -40,11 +40,9 @@ export default class XTwoColumns extends HTMLElement {
                         width: 50%;
                     }
                 }
-
             `),
             createElementWithTag('div', {}, [
                 createElementWithTag('slot'),
-                createElementWithTag('slot', { name: 'right' })
             ])
         );
     }
