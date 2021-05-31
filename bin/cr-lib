@@ -1,12 +1,40 @@
 #!/usr/bin/env bash
 
-export PREFIX="*$PREFIX"
+# TODO: export some of this into .env => share with docker-compose etc...
+
+set -e
+
+export CR_SCRIPT_DIR
+export CR_PRJ_DIR
+export CR_TMP
+export CR_DB_ROOT_PASS="password"
+export CR_DB_NAME="cryptomedic"
+# From docker-compose.yml
+export CR_DB_USER_PASS="password"
+export CR_DB_ROOT_PASS="password"
+export CR_DB_USER="username"
+
+CR_SCRIPT_DIR="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
+CR_PRJ_DIR="$(dirname "$CR_SCRIPT_DIR")"
+CR_TMP="$CR_PRJ_DIR/tmp"
+
+export PATH="$CR_SCRIPT_DIR:$PATH"
+
+# For recursion
+export CR_HEADER_PREFIX="*$CR_HEADER_PREFIX"
 
 header() {
     LASTMSG="$*"
-    echo -e "\e[93m$PREFIX $*\e[00m"
+    echo -e "\e[93m$CR_HEADER_PREFIX $*\e[00m"
 }
 
 header_finished() {
-    echo -e "\e[93m$PREFIX $LASTMSG done\e[00m"
+    echo -e "\e[93m$CR_HEADER_PREFIX $LASTMSG done\e[00m"
+}
+
+# 1: absolute path
+# 2: docker path
+p2docker() {
+    # Thanks to https://stackoverflow.com/a/28523143/1954789
+    echo "${2:-/app}/$(realpath --canonicalize-missing --relative-to="$CR_PRJ_DIR" "$1")"
 }

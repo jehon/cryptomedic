@@ -2,7 +2,10 @@
 
 set -e
 
-. cr-lib
+CR_SCRIPT_DIR="$(dirname "${BASH_SOURCE[0]}")"
+
+# shellcheck source=./cr-lib
+. "$CR_SCRIPT_DIR"/cr-lib
 
 cr-ensure-started
 
@@ -14,23 +17,26 @@ cr-capture-output cr-fix-permissions "live/"
 chmod -R a+rwX live/storage/uploadedPictures
 
 # Reset database
+header "Waiting for mysql to be available"
 cr-capture-output docker-compose exec -T mysql \
-    bash -c "while ! mysql -u root -p${DBROOTPASS} --database=mysql -e 'Show tables;' &>/dev/null; do sleep 1; done"
+    bash -c "while ! mysql -u root -p${CR_DB_ROOT_PASS} --database=mysql -e 'Show tables;' &>/dev/null; do sleep 1; done"
+header_finished
+
 cr-capture-output docker-compose exec -T mysql \
-    mysql -u root "-p${DBROOTPASS}" --database=mysql -e " \
+    mysql -u root "-p${CR_DB_ROOT_PASS}" --database=mysql -e " \
             USE mysql; \
-            DROP SCHEMA IF EXISTS ${DBNAME} ; \
-            CREATE SCHEMA ${DBNAME}; \
-            USE ${DBNAME}; \
-            GRANT ALL PRIVILEGES ON ${DBNAME}   TO ${DBUSER}; \
-            GRANT ALL PRIVILEGES ON ${DBNAME}.* TO ${DBUSER}; \
-            SET PASSWORD FOR ${DBUSER} = PASSWORD('${DBPASS}'); \
+            DROP SCHEMA IF EXISTS ${CR_DB_NAME} ; \
+            CREATE SCHEMA ${CR_DB_NAME}; \
+            USE ${CR_DB_NAME}; \
+            GRANT ALL PRIVILEGES ON ${CR_DB_NAME}   TO ${CR_DB_USER}; \
+            GRANT ALL PRIVILEGES ON ${CR_DB_NAME}.* TO ${CR_DB_USER}; \
+            SET PASSWORD FOR ${CR_DB_USER} = PASSWORD('${CR_DB_USER_PASS}'); \
         "
 # Mysql 5.7, 7.0:
 # 	ALTER USER 'root' IDENTIFIED WITH mysql_native_password BY 'password';
 # 	ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
 cr-capture-output docker-compose exec -T mysql \
-    mysql -u root "-p${DBROOTPASS}" --database="${DBNAME}" < "conf/database/base.sql"
+    mysql -u root "-p${CR_DB_ROOT_PASS}" --database="${CR_DB_NAME}" <"conf/database/base.sql"
 
 cr-ensure-folder-empty "www/api/${VAPI}/bootstrap/cache/"
 # cr-ensure-folder-empty "www/api/${VAPI}/app/public"

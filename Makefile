@@ -24,11 +24,6 @@ DISPLAY ?= ":0"
 #
 # Dev env fixed
 #
-export DBNAME := cryptomedic
-# From docker-compose.yml
-export DBPASS := password
-export DBROOTPASS := password
-export DBUSER := username
 # From config.php
 export DBUPDATEPWD := secret
 
@@ -37,7 +32,6 @@ export DBUPDATEPWD := secret
 #
 CJS2ESM_DIR := app/cjs2esm
 NM_BIN := $(shell npm bin)/
-STYLES_RUN_SCREENSHOTS=$(TMP)/styles/run
 
 export ROOT = $(shell dirname $(abspath $(lastword $(MAKEFILE_LIST))))
 export PATH := $(ROOT)/bin:$(PATH)
@@ -45,18 +39,6 @@ export PATH := $(ROOT)/bin:$(PATH)
 define itself
 	$(MAKE) $(FLAGS) $(MAKEOVERRIDES) "$1"
 endef
-
-#
-# 1: command
-# 2: additional arguments
-#
-# $(cypress) run
-# Hardcoded command is "run" (see https://github.com/cypress-io/cypress-docker-images/tree/master/included)
-define cypress
-	docker-compose run --rm -e CYPRESS_BASE_URL="http://server:80" --entrypoint=cypress cypress
-endef
-#		-e DISPLAY \
-
 
 # See https://coderwall.com/p/cezf6g/define-your-own-function-in-a-makefile
 # 1: folder where to look
@@ -77,7 +59,6 @@ dump: dump-cypress
 	@echo "IN_DOCKER:        $(IN_DOCKER)"
 	@echo "SHELL:            $(SHELL)"
 	@echo "PATH:             $(PATH)"
-	@echo "TMP:              $(TMP)"
 	@echo "Who am i:         $(shell whoami)"
 	@echo "Id:               $(shell id)"
 	@echo "Supported:        $(shell npx browserslist)"
@@ -105,9 +86,6 @@ clean: deploy-unmount chmod
 	rm -fr app/cjs2esm
 	rm -fr www/api/*/bootstrap/cache
 	rm -fr www/api/*/storage
-	rm -fr cypress/screenshots
-	rm -fr cypress/videos
-	rm -fr cypress/results
 
 	@echo "!! Removed dependencies, so husky (commit) will not work anymore. Please make dependencies-node to enable it again"
 
@@ -159,8 +137,7 @@ chmod:
 	cr-fix-permissions
 
 .PHONY: full
-full: test lint
-	@jh-git-status.sh
+full: start dependencies build test lint
 
 #
 #
@@ -175,75 +152,61 @@ lint: dependencies-node
 	npm run stylelint
 
 .PHONY: test # In Jenkinfile, each step is separated:
-test: dependencies build test-api test-api-bare test-unit test-e2e test-styles
+test: dependencies tmp/.build test-api test-api-bare test-unit test-e2e test-styles
 
 .PHONY: test-api
-test-api: dependencies-api
+test-api: tmp/.dependencies-api
 	cr-ensure-started
 	cr-data-reset
 	cr-phpunit laravel
 
 .PHONY: update-references-api
-update-references-api: dependencies-api
+update-references-api: tmp/.dependencies-api
 	cr-data-reset
 	cr-phpunit COMMIT
 
-test-api-bare: dependencies-api
+test-api-bare: tmp/.dependencies-api
 	cr-ensure-started
 	cr-data-reset
 	cr-phpunit bare
 
 .PHONY: test-unit
-test-unit: dependencies-node \
+test-unit: tmp/.dependencies-node \
 		$(CJS2ESM_DIR)/axios.js \
 		$(CJS2ESM_DIR)/axios-mock-adapter.js \
 		$(CJS2ESM_DIR)/platform.js
 
-# docker-compose run --rm --entrypoint /bin/bash cypress
 	npm run test-unit-continuously-withcov -- --single-run
 
 	node tests/report.js
 
 .PHONY: test-e2e
-test-e2e: test-e2e-before
-	@rm -fr $(TMP)/e2e
-	@rm -fr $(STYLES_RUN_SCREENSHOTS)
+test-e2e: test-e2e-desktop test-e2e-mobile
+# 	cr-fix-permissions tmp/e2e
+# 	@rm -fr tmp/e2e
 
-# TODO -> no call itself
-	$(call itself,tmp/e2e/.tested)
+# # TODO -> no call itself
+# 	$(call itself,tmp/e2e/.tested-desktop)
+# 	$(call itself,tmp/e2e/.tested-mobile)
 
-test-e2e-before: build $(shell find cypress/ -name "*.js")
-	@cr-data-reset
-	@cr-ensure-folder-empty cypress/screenshots
-	@cr-ensure-folder-empty cypress/videos
-	@cr-ensure-folder-empty cypress/results
+.PHONY: test-e2e-desktop
+test-e2e-desktop: tmp/.tested-e2e-desktop
+tmp/.tested-e2e-desktop: tmp/.build $(shell find cypress/ -name "*.js")
+	cr-cypress
 
-tmp/e2e/.tested:
-	@cr-ensure-folder-empty $(STYLES_RUN_SCREENSHOTS)
-	$(cypress) run
-	cr-fix-permissions cypress
-	find cypress/screenshots/ -type f | while read -r F ; do \
-		cp "$$F" "$(STYLES_RUN_SCREENSHOTS)/$$(basename "$$F")"; \
-	done
 	@mkdir -p "$(dir $@)"
 	@touch "$@"
 
-test-e2e-one: test-e2e-before
-	@clear
-#	F=$(dialog --stdout --title "text" --fselect cypress/integration/ $(expr $LINES - 15) $(expr $COLUMNS - 10))
-	@if [ -z "$(TEST)" ]; then \
-		echo "Please select test in TEST"; \
-		exit 1; \
-	fi
-	$(cypress) run --config video=true --spec "$(TEST)"
-	cr-fix-permissions cypress
-	@echo "Running test "$(TEST)" only done"
+.PHONY: test-e2e-mobile
+test-e2e-mobile: tmp/.tested-e2e-mobile
+tmp/.tested-e2e-mobile: tmp/.build $(shell find cypress/ -name "*.js")
+	cr-cypress "mobile"
+
+	@mkdir -p "$(dir $@)"
+	@touch "$@"
 
 cypress-open: chmod
 	$(shell npm bin)/cypress open
-
-cypress-open-docker:
-	$(cypress) open
 
 #
 # Display does not work through WSL
@@ -258,7 +221,7 @@ cypress-open-docker:
 
 .PHONY: test-styles
 test-styles: tmp/styles.json
-tmp/styles.json: tests/styles/* tests/styles/references/* tmp/e2e/.tested
+tmp/styles.json: tests/styles/* tests/styles/references/* tmp/.tested-e2e-desktop tmp/.tested-e2e-mobile
 # TODO -> from dev
 
 	@echo "Compare"
@@ -267,9 +230,7 @@ tmp/styles.json: tests/styles/* tests/styles/references/* tmp/e2e/.tested
 
 .PHONY: update-references-style
 update-references-style:
-	rsync -i -r --delete \
-		--ignore-times \
-		"$(STYLES_RUN_SCREENSHOTS)/" "tests/styles/references/"
+	npm run --silent test-styles -- --update
 
 #
 # Deploy command
@@ -297,19 +258,21 @@ logs:
 #
 #
 .PHONY: depencencies
-dependencies: dependencies-node dependencies-api depencencies-api-bare
+dependencies: tmp/.dependencies-node tmp/.dependencies-api tmp/.dependencies-api-bare
 
 .PHONY: dependencies-node
-dependencies-node: node_modules/.dependencies
-node_modules/.dependencies: package.json package-lock.json
+dependencies-node: tmp/.dependencies-node
+tmp/.dependencies-node: package.json package-lock.json
 # TODO -> from dev
 	npm install
 	touch package-lock.json
-	touch node_modules/.dependencies
+
+	@mkdir -p "$(dir $@)"
+	@touch "$@"
 
 .PHONY: depencencies-api
-dependencies-api: www/api/$(VAPI)/vendor/.dependencies
-www/api/$(VAPI)/vendor/.dependencies: www/api/$(VAPI)/public/vendor/.dependencies \
+dependencies-api: tmp/.dependencies-api
+tmp/.dependencies-api: tmp/.dependencies-api-bare \
 		www/api/$(VAPI)/composer.json \
 		www/api/$(VAPI)/composer.lock
 
@@ -317,16 +280,22 @@ www/api/$(VAPI)/vendor/.dependencies: www/api/$(VAPI)/public/vendor/.dependencie
 
 	cr-dependencies-php "www/api/$(VAPI)"
 
+	@mkdir -p "$(dir $@)"
+	@touch "$@"
+
 .PHONY: depencencies-api-bare
-dependencies-api-bare: www/api/$(VAPI)/public/vendor/.dependencies
-www/api/$(VAPI)/public/vendor/.dependencies: \
+dependencies-api-bare: tmp/.dependencies-api-bare
+tmp/.dependencies-api-bare: \
 		www/api/$(VAPI)/public/composer.json \
 		www/api/$(VAPI)/public/composer.lock
 
 	cr-dependencies-php "www/api/$(VAPI)/public"
 
+	@mkdir -p "$(dir $@)"
+	@touch "$@"
+
 .PHONY: update-dependencies-api
-update-dependencies-api: update-dependencies-api-bare
+update-dependencies-api: tmp/.dependencies-bare
 	mkdir -m 777 -p www/api/v1.3/bootstrap/cache
 	cr-dependencies-php "www/api/$(VAPI)" "update"
 
@@ -345,32 +314,41 @@ package-lock.json: package.json
 	npm install
 
 .PHONY: build
-build: www/build/index.html www/build/browsers.json dependencies
-# TODO: index.html depend on axios-mock, wich is for testing only
-www/build/index.html: node_modules/.dependencies webpack.config.js \
+build: tmp/.build
+tmp/.build: www/build/index.html www/build/browsers.json
+	@mkdir -p "$(dir $@)"
+	@touch "$@"
+
+# We need to depend on axios-mock-adapter.js, because otherwise, this will force a rebuild
+# due to the recursive-dependencies
+www/build/index.html: tmp/.dependencies-node webpack.config.js  \
 		package.json package-lock.json \
 		$(call recursive-dependencies,app/,www/build/index.html) \
 		$(CJS2ESM_DIR)/axios.js \
+		$(CJS2ESM_DIR)/axios-mock-adapter.js \
 		$(CJS2ESM_DIR)/platform.js
 
 # TODO -> from dev
 	$(NM_BIN)webpack
 
-www/build/browsers.json: .browserslistrc
+www/build/browsers.json: .browserslistrc tmp/.dependencies-node
 	npx browserslist --json > "$@"
 
 update-references-browsers:
 	npx browserslist --update
 
+# Dependencies are used in the build !
 $(CJS2ESM_DIR)/axios.js: node_modules/axios/dist/axios.js
 # TODO -> from dev
 	$(NM_BIN)babel --out-file="$@" --plugins=transform-commonjs --source-maps inline $?
 
+# Dependencies are used in the build !
 $(CJS2ESM_DIR)/axios-mock-adapter.js: node_modules/axios-mock-adapter/dist/axios-mock-adapter.js
 # TODO -> from dev
 	$(NM_BIN)babel --out-file="$@" --plugins=transform-commonjs --source-maps inline $?
 	sed -i 's/from "axios";/from ".\/axios.js";/' $@
 
+# Dependencies are used in the build !
 $(CJS2ESM_DIR)/platform.js: node_modules/platform/platform.js
 # TODO -> from dev
 	$(NM_BIN)babel --out-file="$@" --plugins=transform-commonjs --source-maps inline $?
@@ -380,17 +358,9 @@ $(CJS2ESM_DIR)/platform.js: node_modules/platform/platform.js
 # data
 #
 #
-.PHONY: database-backup
-database-backup:
-	docker-compose exec mysql \
-		"mysqldump -u root -p$(DBROOTPASS) $(DBNAME)" > $(DB_BASE)
-
 .PHONY: data-reset
-data-reset: dependencies-api-bare chmod
+data-reset: tmp/.dependencies-api-bare chmod
 	cr-data-reset
-
-data-reset-quick:
-	cr-data-reset-quick
 
 #
 #
@@ -444,7 +414,7 @@ deploy-unmount:
 # .PHONY: deploy-rsync-act
 # deploy-rsync-act: setup-structure \
 # 		dependencies \
-# 		build \
+# 		tmp/.build \
 # 		deploy-mount
 
 # 	rsync --recursive --itemize-changes --times \
@@ -455,7 +425,7 @@ deploy-unmount:
 # .PHONY: deploy-rsync-noact
 # deploy-rsync-noact: setup-structure \
 # 		dependencies \
-# 		build \
+# 		tmp/.build \
 # 		deploy-mount
 
 # 	rsync --recursive --itemize-changes --times \

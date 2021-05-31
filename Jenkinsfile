@@ -76,7 +76,12 @@ make ${MAKEOPT} ${STAGE_NAME}
         sh 'make ${MAKEOPT} ${STAGE_NAME}'
       }
     }
-    stage('test-e2e') {
+    stage('test-e2e-desktop') {
+      steps {
+        sh 'make ${MAKEOPT} ${STAGE_NAME}'
+      }
+    }
+    stage('test-e2e-mobile') {
       steps {
         sh 'make ${MAKEOPT} ${STAGE_NAME}'
       }
@@ -124,9 +129,9 @@ make ${MAKEOPT} ${STAGE_NAME}
       // sh 'make ${MAKEOPT} stop'
       junit 'tmp/js/junit/*.xml'
       junit 'tmp/phpv*/index*.xml'
-      junit 'cypress/results/*.xml'
+      junit 'tmp/e2e/*/coverage/*.xml'
       archiveArtifacts artifacts: 'tests/styles/**/*', allowEmptyArchive: true
-      archiveArtifacts artifacts: 'tmp/**/*,tests/cypress/video/**/*,tests/cypress/screenshots/**/*', allowEmptyArchive: true
+      archiveArtifacts artifacts: 'tmp/**/*', allowEmptyArchive: true
       // deleteDir() /* clean up our workspace */
     }
   }

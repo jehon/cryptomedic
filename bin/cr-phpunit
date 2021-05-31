@@ -2,7 +2,10 @@
 
 set -e
 
-. cr-lib
+CR_SCRIPT_DIR="$(dirname "${BASH_SOURCE[0]}")"
+
+# shellcheck source=./cr-lib
+. "$CR_SCRIPT_DIR"/cr-lib
 
 cr-ensure-started
 
@@ -15,7 +18,7 @@ mkdir -m 777 -p tmp
 if [ "$1" == "COMMIT" ]; then
 	echo "Setting COMMIT"
 	export COMMIT=1
-    shift
+	shift
 fi
 
 testOne() {
@@ -35,7 +38,7 @@ testOne() {
 			header "PHPUnit: Laravel $V starting"
 			docker-compose run --rm -T --workdir "/app/$V" -e XDEBUG_MODE=coverage -e COMMIT="$COMMIT" \
 				"php" \
-				./vendor/bin/phpunit  --coverage-html "/app/$REPORTS" --coverage-xml "/app/$REPORTS" "$@"
+				./vendor/bin/phpunit --coverage-html "/app/$REPORTS" --coverage-xml "/app/$REPORTS" "$@"
 			cr-fix-permissions "$REPORTS"
 			header_finished
 		else
@@ -53,7 +56,7 @@ testOne() {
 			header "PHPUnit: Bare $V starting"
 			docker-compose run --rm -T --workdir "/app/$V/public" -e XDEBUG_MODE=coverage -e COMMIT="$COMMIT" \
 				"php" \
-				./vendor/bin/phpunit  --coverage-html "/app/$REPORTS" --coverage-xml "/app/$REPORTS" "$@"
+				./vendor/bin/phpunit --coverage-html "/app/$REPORTS" --coverage-xml "/app/$REPORTS" "$@"
 			cr-fix-permissions "$REPORTS"
 			header_finished
 		else
@@ -72,7 +75,7 @@ shift || true # If arg is missing, do not fail...
 
 if [ -n "$T" ]; then
 	if [[ -z "$V" ]]; then
-		for Vi in www/api/v* ; do
+		for Vi in www/api/v*; do
 			testOne "$T" "$Vi"
 		done
 	else
@@ -80,7 +83,7 @@ if [ -n "$T" ]; then
 	fi
 else
 	if [[ -z "$V" ]]; then
-		for Vi in www/api/v* ; do
+		for Vi in www/api/v*; do
 			testOne "" "$Vi"
 		done
 	else

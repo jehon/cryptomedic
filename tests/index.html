@@ -19,79 +19,130 @@
         a {
             margin: 10px;
         }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 1px solid gray;
+        }
+
+        table td,
+        table th {
+            padding: 5px;
+            border: 1px solid gray;
+        }
+
+        table.prod_test>tbody>tr>td:nth-child(1),
+        [prod] {
+            background-color: lightcoral;
+        }
+
+        table.prod_test>tbody>tr>td:nth-child(2),
+        [dev] {
+            background-color: lightgreen;
+        }
+
+        table>tbody>tr[action]>td::before {
+            content: "!!action!!"
+        }
     </style>
 </head>
 
 <body>
     <div>
+        <table class='prod_test'>
+            <thead>
+                <tr>
+                    <th>Production</th>
+                    <th>Developpement</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><a href='http://www.cryptomedic.org/'>Cryptomedic</a></td>
+                    <td><a href='/'>Cryptomedic</a></td>
+                </tr>
+                <tr>
+                    <td><a
+                            href='https://phpmyadmin.cluster003.hosting.ovh.net/index.php?pma_username=cryptomekpmain&pma_servername=cryptomekpmain.mysql.db'>
+                            PhpMyAdmin OVH Database</a></td>
+                    <td><a href='/xphpmyadminx/'>PhpMyAdmin</a></td>
+                </tr>
+                <tr action>
+                    <td><a href='http://www.cryptomedic.org/maintenance/patch_db.php?pwd='>Patch DB</a></td>
+                    <td><a href='/maintenance/patch_db.php?pwd=secret'>Patch DB</a></td>
+                </tr>
+                <tr action>
+                    <td><a href='http://www.cryptomedic.org/api/-api.version-/routes/struct/cron.php'>cron</a></td>
+                    <td><a href='/api/-api.version-/routes/struct/cron.php'>cron</a></td>
+                </tr>
+                <tr action>
+                    <td></td>
+                    <td><a href='/maintenance/reset.php?pwd=secret&env=dev'>Reset data</a></td>
+                </tr>
+                <tr>
+                    <td><a
+                            href='http://www.cryptomedic.org/api/-api.version-/routes/struct/data.php?force=1'>database-structure</a>
+                    </td>
+                    <td><a href='/api/-api.version-/routes/struct/data.php?force=1'>database-structure</a></td>
+                </tr>
+                <tr>
+                    <td><a href='http://www.cryptomedic.org/api/-api.version-/routes/struct/browsers.php'>browsers</a>
+                    </td>
+                    <td><a href='/api/-api.version-/routes/struct/browsers.php'>browsers</a></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+
+        </table>
+    </div>
+    <div prod>
         <h2>Production</h2>
         <ul>
-            <li>Production<a href='http://www.cryptomedic.org/'>Cryptomedic</a></li>
-            <li>Direct links to maintenance tasks
-                <ul>
-                    <li><a
-                            href='https://phpmyadmin.cluster003.hosting.ovh.net/index.php?pma_username=cryptomekpmain&pma_servername=cryptomekpmain.mysql.db'>
-                            PhpMyAdmin OVH Database</a></li>
-                    <li><a href='http://www.cryptomedic.org/maintenance/patch_db.php?pwd='>Patch DB</a></li>
-                    <li><a
-                            href='http://www.cryptomedic.org/api/-api.version-/routes/struct/data.php?force=1'>database-structure</a>
-                    </li>
-                    <li>
-                        <a href='http://www.cryptomedic.org/api/-api.version-/routes/struct/browsers.php'>browsers</a>
-                    </li>
-                    <li>
-                        <a href='http://www.cryptomedic.org/api/-api.version-/routes/struct/cron.php'>cron</a>
-                    </li>
-                </ul>
-            </li>
-            <li>Online tools
-                <ul>
-                    <li><a href='https://github.com/jehon/'>GitHub</a></li>
-                    <!-- <li><a href='https://travis-ci.com/github/jehon/cryptomedic/branches'><img
+            <li><a href='https://github.com/jehon/'>GitHub</a></li>
+            <!-- <li><a href='https://travis-ci.com/github/jehon/cryptomedic/branches'><img
                                 src="https://travis-ci.com/jehon/cryptomedic.svg?branch=master&amp;status=passed"
                                 alt="build:passed"></a></li> -->
-                    <li>
-                        <a
-                            href='https://www.ovh.com/manager/web/#/configuration/hosting/cryptomedic.org?tab=GENERAL_INFORMATIONS'>OVH
-                            manager</a>
-                    </li>
-                </ul>
+            <li>
+                <a
+                    href='https://www.ovh.com/manager/web/#/configuration/hosting/cryptomedic.org?tab=GENERAL_INFORMATIONS'>OVH
+                    manager</a>
             </li>
         </ul>
     </div>
-    <div>
+    <div dev>
         <h2>Development environment</h2>
         <ul>
-            <li>Local dev env<a href='/'>Cryptomedic</a></li>
-            <li>Direct links to maintenance tasks
-                <ul>
-                    <li><a href='/xphpmyadminx/'>PhpMyAdmin</a></li>
-                    <li><a href='/maintenance/patch_db.php?pwd=secret'>Patch DB</a></li>
-                    <li><a href='/maintenance/reset.php?pwd=secret&env=dev'>Reset data</a></li>
-                    <li><a href='/api/-api.version-/routes/struct/data.php?force=1'>database-structure</a></li>
-                    <li><a href='/api/-api.version-/routes/struct/browsers.php'>browsers</a></li>
-                    <li><a href='/api/-api.version-/routes/struct/cron.php'>cron</a></li>
-                </ul>
+            <li>
+                <a href='/xappx/tests/demo/demo.html'>Demo</a>
             </li>
-            <li>Acceptance tools
-                <ul>
-                    <li><a href='/xmailx/'>MailHog</a></li>
-                </ul>
+            <li>
+                <a href='/xappx/tests/styles/index.html'>Style_comparison</a>
+            </li>
+            <li>
+                <a href=':9876/debug.html'>Karma debug</a>
             </li>
         </ul>
-    </div>
-    <div>
-        <h2>Tests</h2>
-        <a href=':9876/debug.html'>Karma debug</a>
-        <a href='/xappx/tests/demo/demo.html'>Demo</a>
-
-        <h3>Tests results</h3>
+        <h2>Tests results</h2>
         <ul>
+            <li><a href='/xmailx/'>MailHog</a></li>
             <li><a href='/xappx/tmp/js/junit/'>JUnit</a></li>
             <li><a href='/xappx/tmp/js/lcov-report/index.html'>Coverage</a></li>
             <li><a href='/xappx/tmp/php-api.version-/index.html'>Coverage_php_laravel</a></li>
             <li><a href='/xappx/tmp/php-api.version--bare/index.html'>Coverage_php_bare</a></li>
-            <li><a href='/xappx/tests/styles/index.html'>Style_comparison</a></li>
+            <li><a href='/xappx/tmp/e2e/desktop/coverage/index.html'>Coverage_e2e_desktop</a></li>
+            <li><a href='/xappx/tmp/e2e/mobile/coverage/index.html'>Coverage_e2e_mobile</a></li>
         </ul>
     </div>
     <div>
@@ -165,10 +216,9 @@
         document.querySelectorAll('a').forEach(/* type HTMLElement */ e => {
             let href = e.getAttribute('href');
             href = href.replace('-api.version-', API_VERSION)
-            if (href[0] == ':') {
-                href = host + href;
-            }
-            // console.log(e.getAttribute('href'), href);
+            // if (href[0] == ':') {
+            //     href = host + href;
+            // }
             e.setAttribute('href', href);
         })
     </script>

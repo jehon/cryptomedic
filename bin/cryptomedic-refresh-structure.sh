@@ -2,14 +2,16 @@
 
 set -e
 
-cr-ensure-started
+CR_SCRIPT_DIR="$(dirname "${BASH_SOURCE[0]}")"
 
-SCRIPT_DIR="$( dirname "${BASH_SOURCE[0]}" )"
-PRJ_DIR="$(dirname "$SCRIPT_DIR")"
+# shellcheck source=./cr-lib
+. "$CR_SCRIPT_DIR"/cr-lib
+
+cr-ensure-started
 
 if [ -z "$CRYPTOMEDIC_HTTP_HOST" ]; then
     CRYPTOMEDIC_HTTP_HOST="localhost:${CRYPTOMEDIC_PORT:-5080}"
-    CRYPTOMEDIC_DB_UPGRADE="$( cr-get-config "security.key" )"
+    CRYPTOMEDIC_DB_UPGRADE="$(cr-get-config "security.key")"
 fi
 echo "Deploying to $CRYPTOMEDIC_HTTP_HOST with pwd of #${#CRYPTOMEDIC_DB_UPGRADE} char length"
 
@@ -22,9 +24,9 @@ wget -O - --quiet --content-on-error "http://${CRYPTOMEDIC_HTTP_HOST}/maintenanc
 # Variable necessary for refresh.sh scripts
 export CRYPTOMEDIC_HTTP_HOST
 
-for E in "$PRJ_DIR"/www/api/*/bin/refresh.sh ; do
+for E in "$CR_PRJ_DIR"/www/api/*/bin/refresh.sh; do
     if [ ! -f "$E" ]; then
-        continue;
+        continue
     fi
     echo "Found: $E"
     "$E"

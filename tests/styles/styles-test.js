@@ -6,103 +6,151 @@ const glob = require('glob');
 const resemble = require('node-resemble-js');
 const chalk = require('chalk');
 
-const globP = (pattern, options) => {
-    return glob.sync(pattern, options);
-};
-
-const refPath = path.join(__dirname, 'references');
-const testPath = path.join(__dirname, '..', '..', 'tmp', 'styles', 'run');
-
-let refs = globP('*', { cwd: refPath });
-let tests = globP('*', { cwd: testPath });
-let fullList = new Set([...refs, ...tests]);
-
-const result = {};
-let success = true;
-
 const p_ok = chalk.green(' ✓');
 const p_warn = chalk.yellow(' ?');
 const p_ko = chalk.red('✗ ');
 
-Promise.allSettled(Array.from(fullList).map(f => {
-    return new Promise((resolve, reject) => {
-        if (!refs.includes(f)) {
-            // if refs does not includes it, it is only present from 'test'
-            result[f] = {
-                level: 'error',
-                type: 'no reference found'
-            };
-            success = false;
-            console.error(`${p_ko} ${f}: ${result[f].type}`);
-            return resolve();
+
+// Configurations
+const MaxDiffs = {
+    size: 0.1,
+    content: 0.1
+};
+const configs = [{
+    mode: 'desktop',
+    refPath: path.join('references', 'desktop'),
+    runPath: path.join('..', '..', 'tmp', 'e2e', 'desktop', 'screenshots')
+}, {
+    mode: 'mobile',
+    refPath: path.join('references', 'mobile'),
+    runPath: path.join('..', '..', 'tmp', 'e2e', 'mobile', 'screenshots')
+}];
+
+(async function () {
+    function real(p) {
+        return path.join(__dirname, p);
+    }
+
+    const listOfFiles = [];
+    for (const cfg of configs) {
+        // Add the ref
+        glob.sync('**/*.png', { cwd: real(cfg.refPath) }).map(f => listOfFiles.push({
+            ...cfg,
+            key: cfg.mode + '#' + path.basename(f),
+            name: path.basename(f),
+            ref: path.join(cfg.refPath, f)
+        }));
+
+        // Add the run
+        glob.sync('**/*.png', { cwd: real(cfg.runPath) }).map(f => listOfFiles.push({
+            ...cfg,
+            key: cfg.mode + '#' + path.basename(f),
+            name: path.basename(f),
+            run: path.join(cfg.runPath, f)
+        }));
+    }
+
+    // Combine all results => { fk1: f1+f1, fk2: f2 } => [ f1 f2 f3 ]
+    const uniqueFiles = Object.values(listOfFiles.reduce((acc, val) => {
+        acc[val.key] = {
+            ...acc[val.key],
+            ...val
+        };
+        // Object.assign({}, acc[val.key], val);
+        return acc;
+    }, {}));
+
+    uniqueFiles.map(fset => {
+        fset.problem = false;
+        fset.warning = false;
+
+        if (!('ref' in fset)) {
+            fset.problem = true;
+            fset.problemText = 'No reference found';
         }
-        if (!tests.includes(f)) {
-            result[f] = {
-                level: 'error',
-                type: 'no run file found'
-            };
-            console.error(`${p_ko} ${f}: ${result[f].type}`);
-            success = false;
-            return resolve();
+        if (!('run' in fset)) {
+            fset.problem = true;
+            fset.problemText = 'No run found';
         }
-        resemble(path.join(testPath, f))
-            .compareTo(path.join(refPath, f))
+    });
+
+    for (const fset of uniqueFiles) {
+        if (fset.problem) {
+            continue;
+        }
+        // Calculate problems for each files
+        await new Promise((resolve) => resemble(real(fset.run))
+            .compareTo(real(fset.ref))
             .onComplete(function (data) {
+                fset.compared = true;
                 const diffContent = parseFloat(data.misMatchPercentage);
                 const diffSize = Math.hypot(data.dimensionDifference.width, data.dimensionDifference.height);
 
-                console.assert(typeof (diffContent) == 'number');
                 console.assert(isFinite(diffContent));
+                console.assert(isFinite(diffSize));
 
-                if (diffSize > 0.5) {
-                    result[f] = {
-                        level: 'error',
-                        type: 'size',
-                        max: 0.5,
-                        actual: diffSize
-                    };
-                    console.error(`${p_ko} ${f}: (${result[f].type}) - ${result[f].actual} vs. ${result[f].max}`);
-                    success = false;
-                    return reject();
+                if (diffSize > 0) {
+                    fset.diffSize = diffSize;
+                    if (diffSize > MaxDiffs.size) {
+                        fset.problem = true;
+                        fset.problemText = `size    - ${diffSize} vs. ${MaxDiffs.size}`;
+                    }
+                } else if (diffContent > 0) {
+                    fset.diffContent = diffContent;
+                    if (diffContent > MaxDiffs.content) {
+                        fset.problem = true;
+                        fset.problemText = `content - ${diffContent} vs. ${MaxDiffs.content}`;
+                    } else {
+                        fset.warning = true;
+                        fset.warningText = `content - ${diffContent}`;
+                    }
                 }
-                if (diffContent > 0.5) {
-                    result[f] = {
-                        level: 'error',
-                        type: 'content',
-                        max: 0.5,
-                        actual: diffContent
-                    };
-                    console.error(`${p_ko} ${f}: (${result[f].type}) - ${result[f].actual} vs. ${result[f].max}`);
-                    success = false;
-                    return reject();
-                }
-                if (diffContent > 0) {
-                    result[f] = {
-                        level: 'warning',
-                        msg: f + ' differ is content',
-                        type: 'content',
-                        max: 0.5,
-                        actual: diffContent
-                    };
-                    console.error(`${p_warn} ${f}: (${result[f].type}) - ${result[f].actual} vs. ${result[f].max}`);
-                    return resolve();
-                }
-                console.info(p_ok, f, ': ok');
-                return resolve();
-            });
-    });
-}))
-    .finally(() => {
-        fs.writeFileSync(path.join(__dirname, '../../tmp/styles.json'), JSON.stringify(result));
-    }).then((_result) => {
-        console.info('*** The final result ***');
+                resolve();
+            }));
+    }
 
-        // TODO: trust the allSetted (_result[*].statut = fulfulled|rejected, .reason=data
-        if (success) {
-            console.info(p_ok, 'ok');
-            process.exit(0);
+    const problemsList = uniqueFiles.filter(fset => fset.problem || fset.warning);
+
+    // Show the problem list
+    for (const fset of problemsList) {
+        if (fset.problem) {
+            console.error(`${p_ko}: ${fset.key} ${fset.problemText}`);
+        } else if (fset.warning) {
+            console.warn(`${p_warn}: ${fset.key} ${fset.warningText}`);
         } else {
+            console.info(`${p_ok}: ${fset.key}`);
+        }
+    }
+
+    console.info('---------------------');
+
+    if (process.argv.map(v => v == '--update').reduce((acc, val) => acc || val, false)) {
+        console.info(chalk.yellow('update mode'));
+        let success = true;
+        for (const fset of problemsList) {
+            if (!fset.problem && !fset.warning) {
+                continue;
+            }
+            if (!fset.run) {
+                console.error(`${p_ko}: ${fset.key} does not have a run`);
+                success = false;
+                continue;
+            }
+            const dest = fset.ref ? fset.ref : path.join(fset.refPath, fset.name);
+            process.stdout.write(`> ${fset.mode}/${fset.name}\n`);
+            fs.copyFileSync(real(fset.run), real(dest));
+        }
+        if (!success) {
+            console.error(p_ko, 'Problem');
+            process.exit(1);
+        }
+    } else {
+        fs.writeFileSync(path.join(__dirname, '../../tmp/styles.json'), JSON.stringify(problemsList, null, 2));
+        if (problemsList.filter(fset => fset.problem).length > 0) {
             console.error(p_ko, 'some tests did fail');
             process.exit(1);
         }
-    });
+    }
+    console.info(p_ok, 'ok');
+    process.exit(0);
+})();

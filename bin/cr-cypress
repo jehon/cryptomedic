@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+
+set -e
+
+CR_SCRIPT_DIR="$(dirname "${BASH_SOURCE[0]}")"
+
+# shellcheck source=./cr-lib
+. "$CR_SCRIPT_DIR"/cr-lib
+
+FLAVOR="${1:-desktop}"
+header "Testing cypress for $FLAVOR"
+
+OUTPUT="$CR_TMP"/e2e/"$FLAVOR"
+ODOCKER="$(p2docker "$OUTPUT")"
+header "Setup $OUTPUT (into $ODOCKER)"
+
+case "$FLAVOR" in
+"desktop")
+    # Nothing to do - default flavor - use the config preset's
+    ;;
+"mobile")
+    # Mobile: 360 x 480
+
+    CYPRESS_ARGS=(
+        --config "videosFolder=$ODOCKER/video,screenshotsFolder=$ODOCKER/screenshots,viewportWidth=360,viewportHeight=640"
+        --reporter-options configFile="cypress-reporters-mobile.json"
+    )
+    ;;
+*)
+    echo "Unknown flavor: $1"
+    exit 1
+    ;;
+esac
+
+# echo "CYPRESS_ARGS: ${CYPRESS_ARGS[*]}"
+
+cr-ensure-started
+cr-fix-permissions "$ODOCKER"
+
+cr-data-reset
+mkdir -p "$OUTPUT"
+cr-ensure-folder-empty "$OUTPUT"/screenshots
+cr-ensure-folder-empty "$OUTPUT"/videos
+cr-ensure-folder-empty "$OUTPUT"/coverage
+header_finished
+
+header "Run tests"
+#
+# Hardcoded command is "run" (see https://github.com/cypress-io/cypress-docker-images/tree/master/included)
+#
+set -x
+docker-compose run --rm -e CYPRESS_BASE_URL="http://server:80" --entrypoint=cypress cypress \
+    run \
+    "${CYPRESS_ARGS[@]}" \
+    "$@"
+set +x
+
+cr-fix-permissions "$ODOCKER"
+header_finished
+
+header_finished
