@@ -1,5 +1,5 @@
 
-import { fromBirthDateTo } from '../../app/elements/widgets/file/x-fff-age.js';
+import { fromBirthDateTo } from '../../app/widgets/file/x-fff-age.js';
 import { toBirthDate } from '../../app/js/age.js';
 
 describe('calculations.age', function () {
@@ -20,7 +20,7 @@ describe('calculations.age', function () {
         it('on 2020-08-30', function () {
             const now = new Date(2020, 7, 30, 20);
 
-            const birthDate = toBirthDate(10 ,5, now);
+            const birthDate = toBirthDate(10, 5, now);
             expect(birthDate).toBe('2010-03');
 
             expect(fromBirthDateTo(birthDate, now)).toBe(10 + 5 / 12);

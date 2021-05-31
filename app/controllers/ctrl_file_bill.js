@@ -7,7 +7,7 @@ import { formGetContent } from '../js/form.js';
 import { extractPrefsFile } from '../js/prefs.js';
 import getDataService from '../js/getDataService.js';
 import { getSession, onSession } from '../js/session.js';
-import XFffSalaryRatio from '../elements/widgets/file/x-fff-salary-ratio.js';
+import XFffSalaryRatio from '../widgets/file/x-fff-salary-ratio.js';
 
 /**
  * @param $scope

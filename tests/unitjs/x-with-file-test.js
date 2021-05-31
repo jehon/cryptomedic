@@ -1,7 +1,7 @@
 
 import { fn, loadReference, RefFolder1, RefFolder1RicketConsult13 } from './athelpers.js';
 
-import XWithFile from '../../app/elements/widgets/file/x-with-file.js';
+import XWithFile from '../../app/widgets/file/x-with-file.js';
 import Folder from '../../app/models/Folder.js';
 
 let testFolder;

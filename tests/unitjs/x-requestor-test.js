@@ -1,12 +1,14 @@
 
-import '../../app/elements/funcs/x-requestor.js';
-
 import { fn } from './athelpers.js';
 import { API_VERSION } from '../../app/config.js';
 
+import XRequestor, {
+    requestAndFilterBuilder,
+    loginRequestBuilder, loginCheckRequestBuilder, ServerRequestError, TransportRequestError
+} from '../../app/widgets/func/x-requestor.js';
+
 import axios from '../../app/cjs2esm/axios.js';
 import MockAdapter from '../../app/cjs2esm/axios-mock-adapter.js';
-import XRequestor, { requestAndFilterBuilder, loginRequestBuilder, loginCheckRequestBuilder, ServerRequestError, TransportRequestError } from '../../app/elements/funcs/x-requestor.js';
 import { getSession } from '../../app/js/session.js';
 
 const buildResponse = function (ok = true, status = 200, statusText = '') {

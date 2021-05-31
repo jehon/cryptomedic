@@ -1,6 +1,6 @@
 /// <reference types="Cypress" />
 
-import XButton from '../../app/elements/render/x-button.js';
+import XButton from '../../app/widgets/style/x-button.js';
 import { crApiLogin, crApiPriceDelete, crApiPriceList } from '../helpers/cr-api.js';
 import { crGo, crLoginInBackground, crReady } from '../helpers/cr.js';
 import TableIterator from '../helpers/table-iterator.js';

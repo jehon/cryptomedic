@@ -1,5 +1,5 @@
 
-import XUserStatus from '../../app/elements/widgets/x-user-status.js';
+import XUserStatus from '../../app/widgets/x-user-status.js';
 
 import { webDescribe, fireOn } from './athelpers.js';
 import { mockResponseWithSuccess } from './x-requestor-test.js';

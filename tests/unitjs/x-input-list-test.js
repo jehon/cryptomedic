@@ -1,5 +1,5 @@
 
-import XInputList from '../../app/elements/funcs/x-input-list.js';
+import XInputList from '../../app/widgets/data/x-input-list.js';
 
 import { setSession } from '../../app/js/session.js';
 import { createElementWithObject } from '../../app/js/custom-element.js';

@@ -1,5 +1,5 @@
 
-import XButton from '../../app/elements/render/x-button.js';
+import XButton from '../../app/widgets/style/x-button.js';
 import { crApiLogin } from './cr-api.js';
 import { crLoginInBackground, crPage } from './cr.js';
 import TableIterator from './table-iterator.js';

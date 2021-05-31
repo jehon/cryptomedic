@@ -1,7 +1,7 @@
 
 /* istanbul ignore file */
 
-import XRequestor from './x-requestor.js';
+import XRequestor from './x-o-requestor.js';
 import TimedMap from '../js/timedMap.js';
 import Folder from '../models/Folder.js';
 import nullify from '../js/nullify.js';

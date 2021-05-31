@@ -5,7 +5,7 @@ import { crApiFicheModify, crApiLogin, crApiPatientDelete } from '../helpers/cr-
 import { crLoginInBackground, crPage, crReady } from '../helpers/cr.js';
 import { guiAcceptAlert, guiHashStartWith } from '../helpers/gui.js';
 import { patientgo } from '../helpers/patients.js';
-import XButton from '../../app/elements/render/x-button.js';
+import XButton from '../../app/widgets/style/x-button.js';
 
 context('Actions', () => {
     beforeEach(() => {

@@ -1,5 +1,5 @@
 
-import XOverlay from '../../app/elements/render/x-overlay.js';
+import XOverlay from '../../app/widgets/func/x-overlay.js';
 
 import { fn } from './athelpers.js';
 
