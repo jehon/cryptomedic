@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-if type jh-run-and-capture >/dev/null 2>&1; then
+if [ -z "$CR_LIVE" ] && type jh-run-and-capture >/dev/null 2>&1; then
+    echo "[capturing output]"
     jh-run-and-capture "$@"
 else
     "$@"
