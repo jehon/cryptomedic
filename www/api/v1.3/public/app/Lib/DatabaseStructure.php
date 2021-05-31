@@ -2,6 +2,16 @@
 
 namespace Cryptomedic\Lib;
 
+/**
+ * Structure
+ *  - {boolean}       protected (read-only)
+ *  - {boolean}       optional
+ *  - {enum}          type (see static TYPE_ below)
+ *  - {string}        listing (listing name)
+ *  - {Array<string>} list
+ *  - {number}        length (type char & text)
+ */
+
 define("HARDCODED_LISTINGS", [
     /***********************/
     /**** Common fields ****/
