@@ -193,9 +193,6 @@ class t {
   }
 
   function value() {
-    if ($this->options['templateMode']) {
-      return "";
-    }
     if ($this->options['readOnly']) {
       return $this->read();
     }

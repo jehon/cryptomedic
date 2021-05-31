@@ -15,3 +15,8 @@ header "Fixing permission through 'dev' to $USERUID on $FOLDER"
 docker-compose run --rm "dev" \
     find "$FOLDER" \( -not -user "${USERUID}" \) -exec chown "${USERUID}" '{}' ';'
 header_finished
+
+header "Fixing permission a+rwx on specific folders"
+docker-compose run --rm "dev" \
+    chmod a+rwX www/api/v1.3/storage/framework/cache/cache.php
+header_finished
