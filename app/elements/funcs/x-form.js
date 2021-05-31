@@ -328,15 +328,15 @@ export default class XForm extends HTMLElement {
         });
 
         const values = this.getValues();
-        if (this._customValidator) {
-            const cv = this._customValidator(values);
-            if (typeof (cv) == 'string') {
-                result = false;
-                this.addMessage({ text: cv, id: 'custom-error', level: messages.error });
-            }
-            if (typeof (cv) == 'boolean') {
-                result = result && cv;
-            }
+
+        // custom validation
+        const cv = this._customValidator(values);
+        if (typeof (cv) == 'string') {
+            result = false;
+            this.addMessage({ text: cv, id: 'custom-error', level: messages.error });
+        }
+        if (typeof (cv) == 'boolean') {
+            result = result && cv;
         }
 
         if (!result) {
