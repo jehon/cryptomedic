@@ -21,6 +21,7 @@ import XMessages from '../widgets/func/x-messages.js';
 import XAge from '../widgets/func/x-age.js';
 import XInputDate from '../elements/x-input-date.js';
 import pageStyles from './page-helper.js';
+import '../widgets/func/x-i18n.js';
 
 /**
  * Two parts here:
