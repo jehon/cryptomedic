@@ -2,7 +2,10 @@
 
 set -e
 
-. cr-lib
+CR_SCRIPT_DIR="$(dirname "${BASH_SOURCE[0]}")"
+
+# shellcheck source=./cr-lib
+. "$CR_SCRIPT_DIR"/cr-lib
 
 FOLDER="$1"
 ACT="install"
@@ -11,8 +14,7 @@ if [ -n "$2" ]; then
 fi
 
 header "Installing dependencies in $FOLDER"
-cr-capture-output docker-compose run --rm  --workdir "/app/$FOLDER" "php" "/composer.phar" "$ACT"
+cr-capture-output docker-compose run --rm --workdir "/app/$FOLDER" "php" "/composer.phar" "$ACT"
 cr-fix-permissions "$FOLDER/vendor"
 cr-capture-output touch "$FOLDER"/composer.lock
-cr-capture-output touch "$FOLDER"/vendor/.dependencies
 header_finished

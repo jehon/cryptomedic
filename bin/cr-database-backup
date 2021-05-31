@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+set -e
+
+CR_SCRIPT_DIR="$(dirname "${BASH_SOURCE[0]}")"
+
+# shellcheck source=./cr-lib
+. "$CR_SCRIPT_DIR"/cr-lib
+
+OUTPUT="$CR_TMP/$CR_DB_NAME"
+
+cr-ensure-started
+mkdir -p "$(dirname "$OUTPUT")"
+
+(
+    docker-compose exec mysql \
+        mysqldump -u root -p"$CR_DB_ROOT_PASS" "$CR_DB_NAME"
+) >"$OUTPUT"
+
+echo "Backup available at $OUTPUT"

@@ -51,11 +51,6 @@
         }
     </style>
     <script>
-        // Not module to be loaded first
-        const keyRef = 1;
-        const keyRun = 2;
-    </script>
-    <script>
         module = { exports: {} };
         const done = new Set();
 
@@ -88,7 +83,7 @@
                 return;
             }
 
-            const myImgTest = document.querySelector('#i' + id + '_tst');
+            const myImgTest = document.querySelector('#i' + id + '_run');
             if (!myImgTest.complete) {
                 return;
             }
@@ -109,7 +104,7 @@
 
             pixelmatch(
                 img2data('i' + id + '_ref', w, h),
-                img2data('i' + id + '_tst', w, h),
+                img2data('i' + id + '_run', w, h),
                 diffImg.data,
                 w, h, { threshold: 0.01 });
             diff.putImageData(diffImg, 0, 0);
@@ -156,10 +151,10 @@
                     const data = problemsList[f];
 
                     document.querySelector('#results').insertAdjacentHTML('beforeend',
-                        `<h3>${f} (${data.actual}/${data.max}: ${data.level})</h3>
+                        `<h3>${data.mode}/${data.name}: ${data.problemText ?? data.warningText}</h3>
                         <div class='compare'>
-                                    <img target-id='${id}' onload='img_diff_tempo(${id}, ${keyRef})' id='i${id}_ref' src='references/${f}'></img>
-                                    <img target-id='${id}' onload='img_diff_tempo(${id}, ${keyRun})' id='i${id}_tst' src='../../tmp/styles/run/${f}'></img>
+                                    <img target-id='${id}' onload='img_diff_tempo(${id}, 1)' id='i${id}_ref' src='${data.ref}'></img>
+                                    <img target-id='${id}' onload='img_diff_tempo(${id}, 2)' id='i${id}_run' src='${data.run}'></img>
                                     <canvas status='empty' id='i${id}_fin' for='${id}'></canvas>
                         </div>`);
                     id++;

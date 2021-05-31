@@ -1,10 +1,13 @@
 #!/usr/bin/env bash
 
-. cr-lib
+CR_SCRIPT_DIR="$(dirname "${BASH_SOURCE[0]}")"
+
+# shellcheck source=./cr-lib
+. "$CR_SCRIPT_DIR"/cr-lib
 
 if [ ! -d "$1" ]; then
-    mkdir -p "$1" > /dev/null
+    mkdir -p "$1" >/dev/null
 fi
 
-find "$1" -mindepth 1 ! -path './.*' -delete > /dev/null
-chmod a+rwX "$1" > /dev/null
+find "$1" -mindepth 1 ! -path './.*' -delete >/dev/null
+chmod a+rwX "$1" >/dev/null

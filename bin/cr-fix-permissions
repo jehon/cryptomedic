@@ -2,7 +2,10 @@
 
 set -e
 
-. cr-lib
+CR_SCRIPT_DIR="$(dirname "${BASH_SOURCE[0]}")"
+
+# shellcheck source=./cr-lib
+. "$CR_SCRIPT_DIR"/cr-lib
 
 FOLDER="$1"
 if [ -z "$FOLDER" ]; then
@@ -11,12 +14,15 @@ fi
 
 USERUID="$(id -u)"
 
-header "Fixing permission through 'dev' to $USERUID on $FOLDER"
-docker-compose run --rm "dev" \
-    find "$FOLDER" \( -not -user "${USERUID}" \) -exec chown "${USERUID}" '{}' ';'
-header_finished
+if [ -r "$FOLDER" ]; then
+    header "Fixing permission through 'dev' to $USERUID on $FOLDER"
+    docker-compose run --rm "dev" \
+        find "$FOLDER" \( -not -user "${USERUID}" \) -exec chown "${USERUID}" '{}' ';'
+    header_finished
+fi
 
-header "Fixing permission a+rwx on specific folders"
-docker-compose run --rm "dev" \
-    chmod a+rwX www/api/v1.3/storage/framework/cache/cache.php
-header_finished
+if [ -z "$1" ]; then
+    header "Fixing permission a+rwx on specific folders"
+    cr-ensure-folder-empty www/api/v1.3/storage/framework/cache
+    header_finished
+fi

@@ -2,12 +2,14 @@
 
 set -e
 
-SCRIPT_DIR="$( dirname "${BASH_SOURCE[0]}" )"
-PRJ_DIR="$(dirname "$SCRIPT_DIR")"
+CR_SCRIPT_DIR="$(dirname "${BASH_SOURCE[0]}")"
+
+# shellcheck source=./cr-lib
+. "$CR_SCRIPT_DIR"/cr-lib
 
 if [ -z "$1" ]; then
     echo "Please specify the key you want to get, as json-path notation" >&2
     exit 1
 fi
 
-docker-compose run --rm -v "$( realpath "${PRJ_DIR}"):/app" php "php" "/app/config.php" "$1"
+docker-compose run --rm -v "$(realpath "${CR_PRJ_DIR}"):/app" php "php" "/app/config.php" "$1"
