@@ -75,6 +75,9 @@ export default class XInputDate extends JHElement {
     }
 
     get value() {
+        if (!(element in this)) {
+            return null;
+        }
         return this[element].value;
     }
 }

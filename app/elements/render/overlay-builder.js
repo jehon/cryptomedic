@@ -155,7 +155,7 @@ export function overlayAcknowledge(text) {
         .withClass('acknowledge')
         .withTexts(Array.isArray(text) ? text : [text])
         .withButtons([
-            createElementWithObject(XButton)
+            createElementWithObject(XButton, { action: XButton.Default })
         ])
         .go();
 }
