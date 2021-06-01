@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -o errfail
+set -o errexit
 
 # shellcheck source=/usr/bin/jh-lib.sh
 . jh-lib.sh

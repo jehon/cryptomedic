@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -o errfail
+set -o errexit
 
 SCRIPT_DIR="$(dirname "${BASH_SOURCE[0]}")"
 

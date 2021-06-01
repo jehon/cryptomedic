@@ -6,7 +6,7 @@
 
 # Stop on error
 # Thanks to https://unix.stackexchange.com/a/462157/240487
-set -o errfail
+set -o errexit
 set -o functrace
 set -o pipefail
 

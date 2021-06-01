@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -o errfail
+set -o errexit
 
 mkdir -p ~/.ssh
 
