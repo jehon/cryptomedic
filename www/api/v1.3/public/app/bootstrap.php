@@ -1,23 +1,12 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Register The Composer Auto Loader
-|--------------------------------------------------------------------------
-|
-| Composer provides a convenient, automatically generated class loader
-| for our application. We just need to utilize it! We'll require it
-| into the script here so that we do not have to worry about the
-| loading of any our classes "manually". Feels great to relax.
-|
-*/
+/**
+ * This file is the first file that should start the application
+ *
+ * It should not be included by the Laravel part -> see shared for that.
+ */
 
-# https://www.php.net/manual/en/function.set-error-handler.php
-// function headerErrorHandler() {
-//     http_response_code(500);
-//     return false;
-// }
-// set_error_handler("headerErrorHandler");
+require_once(__DIR__ . '/Lib/ErrorHandler.php');
 
 require_once(__DIR__ . '/shared.php');
 
