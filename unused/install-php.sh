@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -o errfail
+set -o errexit
 
 PHP_VERSION="7.3"
 
