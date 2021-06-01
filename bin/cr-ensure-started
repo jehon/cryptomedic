@@ -15,3 +15,10 @@ if ! docker-compose ps --filter "status=running" --services | grep "server" &>/d
 	cr-capture-output docker-compose up --build -d
 	header_finished
 fi
+
+# Check folders
+header "Add folders if necessary"
+cr-ensure-folder-empty www/api/v1.3/bootstrap/cache
+cr-ensure-folder-empty www/api/v1.3/storage/framework/cache
+cr-ensure-folder-empty www/api/v1.3/storage/framework/sessions
+header_finished

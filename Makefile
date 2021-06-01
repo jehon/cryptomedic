@@ -86,6 +86,7 @@ clean: deploy-unmount chmod
 	rm -fr app/cjs2esm
 	rm -fr www/api/*/bootstrap/cache
 	rm -fr www/api/*/storage
+	rm -fr tmp
 
 	@echo "!! Removed dependencies, so husky (commit) will not work anymore. Please make dependencies-node to enable it again"
 
@@ -191,19 +192,25 @@ test-e2e: test-e2e-desktop test-e2e-mobile
 
 .PHONY: test-e2e-desktop
 test-e2e-desktop: tmp/.tested-e2e-desktop
-tmp/.tested-e2e-desktop: tmp/.build $(shell find cypress/ -name "*.js")
+tmp/.tested-e2e-desktop: tmp/.build $(shell find cypress/ -name "*.js") depencencies
+	cr-fix-permissions tmp/e2e
+	cr-data-reset
 	cr-cypress
 
 	@mkdir -p "$(dir $@)"
 	@touch "$@"
+	cr-fix-permissions tmp/e2e
 
 .PHONY: test-e2e-mobile
 test-e2e-mobile: tmp/.tested-e2e-mobile
-tmp/.tested-e2e-mobile: tmp/.build $(shell find cypress/ -name "*.js")
+tmp/.tested-e2e-mobile: tmp/.build $(shell find cypress/ -name "*.js") depencencies
+	cr-fix-permissions tmp/e2e
+	cr-data-reset
 	cr-cypress "mobile"
 
 	@mkdir -p "$(dir $@)"
 	@touch "$@"
+	cr-fix-permissions tmp/e2e
 
 cypress-open: chmod
 	$(shell npm bin)/cypress open
@@ -227,6 +234,14 @@ tmp/styles.json: tests/styles/* tests/styles/references/* tmp/.tested-e2e-deskto
 	@echo "Compare"
 	npm run --silent test-styles
 	@echo "Report is at http://localhost:$(CRYPTOMEDIC_PORT)/xappx/tmp/style.html"
+
+# Dependencies to force partial rebuild
+test-styles-only-desktop: tmp/.tested-e2e-desktop
+	npm run --silent test-styles -m desktop
+
+# Dependencies to force partial rebuild
+test-styles-only-mobile: tmp/.tested-e2e-mobile
+	npm run --silent test-styles -m mobile
 
 .PHONY: update-references-style
 update-references-style:
