@@ -6,25 +6,47 @@ const glob = require('glob');
 const resemble = require('node-resemble-js');
 const chalk = require('chalk');
 
-const p_ok = chalk.green(' ✓');
-const p_warn = chalk.yellow(' ?');
-const p_ko = chalk.red('✗ ');
+const p_ok = chalk.green(' ✓ ');
+const p_warn = chalk.yellow(' ? ');
+const p_ko = chalk.red('✗  ');
 
+const opts = require('yargs/yargs')(process.argv.slice(2))
+    .option('module', {
+        alias: 'm',
+        type: 'string',
+        choices: ['desktop', 'mobile']
+    })
+    .option('update', {
+        alias: 'u',
+        type: 'boolean'
+    })
+    .help()
+    .strict()
+    .argv;
 
 // Configurations
 const MaxDiffs = {
     size: 0.1,
     content: 0.1
 };
-const configs = [{
-    mode: 'desktop',
-    refPath: path.join('references', 'desktop'),
-    runPath: path.join('..', '..', 'tmp', 'e2e', 'desktop', 'screenshots')
-}, {
-    mode: 'mobile',
-    refPath: path.join('references', 'mobile'),
-    runPath: path.join('..', '..', 'tmp', 'e2e', 'mobile', 'screenshots')
-}];
+const configs = [];
+if (!opts.module || opts.module == 'desktop') {
+    console.info(chalk.yellow('Adding desktop config'));
+    configs.push(
+        {
+            mode: 'desktop',
+            refPath: path.join('references', 'desktop'),
+            runPath: path.join('..', '..', 'tmp', 'e2e', 'desktop', 'screenshots')
+        });
+}
+if (!opts.module || opts.module == 'mobile') {
+    console.info(chalk.yellow('Adding mobile config'));
+    configs.push({
+        mode: 'mobile',
+        refPath: path.join('references', 'mobile'),
+        runPath: path.join('..', '..', 'tmp', 'e2e', 'mobile', 'screenshots')
+    });
+}
 
 (async function () {
     function real(p) {
@@ -74,6 +96,7 @@ const configs = [{
         }
     });
 
+    let scanned = 0;
     for (const fset of uniqueFiles) {
         if (fset.problem) {
             continue;
@@ -105,6 +128,10 @@ const configs = [{
                         fset.warningText = `content - ${diffContent}`;
                     }
                 }
+                scanned++;
+                process.stdout.clearLine(0);
+                process.stdout.cursorTo(0);
+                process.stdout.write(`Processed ${scanned}/${uniqueFiles.length}`);
                 resolve();
             }));
     }
@@ -112,7 +139,7 @@ const configs = [{
     const problemsList = uniqueFiles.filter(fset => fset.problem || fset.warning);
 
     // Show the problem list
-    for (const fset of problemsList) {
+    for (const fset of uniqueFiles) {
         if (fset.problem) {
             console.error(`${p_ko}: ${fset.key} ${fset.problemText}`);
         } else if (fset.warning) {
@@ -124,7 +151,7 @@ const configs = [{
 
     console.info('---------------------');
 
-    if (process.argv.map(v => v == '--update').reduce((acc, val) => acc || val, false)) {
+    if (opts.update) {
         console.info(chalk.yellow('update mode'));
         let success = true;
         for (const fset of problemsList) {
