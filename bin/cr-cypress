@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -e
+set -o errfail
 
 CR_SCRIPT_DIR="$(dirname "${BASH_SOURCE[0]}")"
 
@@ -48,12 +48,10 @@ header "Run tests"
 #
 # Hardcoded command is "run" (see https://github.com/cypress-io/cypress-docker-images/tree/master/included)
 #
-set -x
 docker-compose run --rm -e CYPRESS_BASE_URL="http://server:80" --entrypoint=cypress cypress \
     run \
     "${CYPRESS_ARGS[@]}" \
     "$@"
-set +x
 
 cr-fix-permissions "$ODOCKER"
 header_finished

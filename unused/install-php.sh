@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -e
+set -o errfail
 
 PHP_VERSION="7.3"
 
@@ -20,7 +20,6 @@ apt-get install --yes php${PHP_VERSION} php${PHP_VERSION}-xdebug php${PHP_VERSIO
 # php${PHP_VERSION}-curl php${PHP_VERSION}-gd php${PHP_VERSION}-intl php${PHP_VERSION}-json
 
 update-alternatives --set php /usr/bin/php${PHP_VERSION}
-
 
 ###############################
 #

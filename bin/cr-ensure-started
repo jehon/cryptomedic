@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
 
-set -e
+set -o errfail
 
 CR_SCRIPT_DIR="$(dirname "${BASH_SOURCE[0]}")"
 
-. cr-lib
+# shellcheck source=./cr-lib
+. "$CR_SCRIPT_DIR"/cr-lib
 
 # # Need to go back for .env to be present
 # cd "$ROOT"

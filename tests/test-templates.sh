@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
-set -e
+set -o errfail
 
 # shellcheck source=/usr/bin/jh-lib.sh
 . jh-lib.sh
 
-ROOT="$( dirname "$( realpath "$( dirname "${BASH_SOURCE[0]}" )" )" )"
+ROOT="$(dirname "$(realpath "$(dirname "${BASH_SOURCE[0]}")")")"
 TMP="$ROOT/tmp"
 
 mkdir -p "$TMP"/current
