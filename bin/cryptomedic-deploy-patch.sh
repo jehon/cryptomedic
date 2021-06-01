@@ -6,7 +6,8 @@
 
 # Stop on error
 # Thanks to https://unix.stackexchange.com/a/462157/240487
-set -eE -o functrace
+set -o errfail
+set -o functrace
 set -o pipefail
 
 CR_SCRIPT_DIR="$(dirname "${BASH_SOURCE[0]}")"

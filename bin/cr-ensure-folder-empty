@@ -9,5 +9,8 @@ if [ ! -d "$1" ]; then
     mkdir -p "$1" >/dev/null
 fi
 
+# Remove files inside
 find "$1" -mindepth 1 ! -path './.*' -delete >/dev/null
+
+# Give access to anybody
 chmod a+rwX "$1" >/dev/null

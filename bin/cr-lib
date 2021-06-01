@@ -2,7 +2,7 @@
 
 # TODO: export some of this into .env => share with docker-compose etc...
 
-set -e
+set -o errfail
 
 export CR_SCRIPT_DIR
 export CR_PRJ_DIR
