@@ -3,6 +3,7 @@
 import XButton from '../../app/widgets/style/x-button.js';
 import { crApiLogin, crApiPriceDelete, crApiPriceList } from '../helpers/cr-api.js';
 import { crGo, crLoginInBackground, crReady } from '../helpers/cr.js';
+import configFilter from '../helpers/filter-tests.js';
 import TableIterator from '../helpers/table-iterator.js';
 
 function assertTableInitial(i = 0) {
@@ -45,84 +46,85 @@ function assertTableInitial(i = 0) {
     cy.get('#button_save_' + (i + 1)).should('not.exist');
     cy.get('#button_save_' + (i + 2)).should('not.exist');
 }
-
-context('Actions', () => {
-    beforeEach(() => {
-        crLoginInBackground(crApiLogin.ADMIN);
-        crApiPriceList().then(data => {
-            data.forEach(p => {
-                if (p.datefrom > '2130') {
-                    crApiPriceDelete(p.id);
-                }
+configFilter(configFilter.DESKTOP, () =>
+    context('Actions', () => {
+        beforeEach(() => {
+            crLoginInBackground(crApiLogin.ADMIN);
+            crApiPriceList().then(data => {
+                data.forEach(p => {
+                    if (p.datefrom > '2130') {
+                        crApiPriceDelete(p.id);
+                    }
+                });
             });
+
+            crGo('prices');
         });
 
-        crGo('prices');
-    });
+        it('go to the price page', () => {
+            assertTableInitial();
+            cy.crCompareSnapshot();
+        });
 
-    it('go to the price page', () => {
-        assertTableInitial();
-        cy.crCompareSnapshot();
-    });
+        it('create a new Price List', () => {
 
-    it('create a new Price List', () => {
+            // Button to create a new price list
+            cy.get('#button_create')
+                .should('be.visible')
+                .click();
+            cy.get('#button_create').should('be.visible');
 
-        // Button to create a new price list
-        cy.get('#button_create')
-            .should('be.visible')
-            .click();
-        cy.get('#button_create').should('be.visible');
+            cy.get('x-overlay.pivot')
+                .should('be.visible')
+                .within(() => {
+                    // with an invalic date, it fail
+                    cy.get('[name=pivot]')
+                        .should('be.visible')
+                        .invoke('attr', 'value', '2010-01-02');
+                    cy.get(`x-button[action='${XButton.Save}']`).click();
+                    cy.get('x-form').should('be.visible');
+                    cy.get('x-form').shadow().find('x-messages x-message#custom-validation').should('be.visible');
 
-        cy.get('x-overlay.pivot')
-            .should('be.visible')
-            .within(() => {
-                // with an invalic date, it fail
-                cy.get('[name=pivot]')
-                    .should('be.visible')
-                    .invoke('attr', 'value', '2010-01-02');
-                cy.get(`x-button[action='${XButton.Save}']`).click();
-                cy.get('x-form').should('be.visible');
-                cy.get('x-form').shadow().find('x-messages x-message#custom-validation').should('be.visible');
+                    cy.get('[name=pivot]').invoke('attr', 'value', '2130-01-01');
+                    cy.get(`x-button[action='${XButton.Save}']`).click();
+                })
+                .should('not.exist');
 
-                cy.get('[name=pivot]').invoke('attr', 'value', '2130-01-01');
-                cy.get(`x-button[action='${XButton.Save}']`).click();
-            })
-            .should('not.exist');
+            // Creation ok
+            cy.get('#button_create').should('not.to.be.visible');
+            assertTableInitial(1);
 
-        // Creation ok
-        cy.get('#button_create').should('not.to.be.visible');
-        assertTableInitial(1);
+            // Edit the form
+            cy.get('#price_lists [name="consult_CDC_consultation_Doctor"]')
+                .should('be.visible')
+                .invoke('attr', 'value', '123');
 
-        // Edit the form
-        cy.get('#price_lists [name="consult_CDC_consultation_Doctor"]')
-            .should('be.visible')
-            .invoke('attr', 'value', '123');
+            cy.get(`table x-button[action=${XButton.Save}]`)
+                .should('be.visible')
+                .click();
 
-        cy.get(`table x-button[action=${XButton.Save}]`)
-            .should('be.visible')
-            .click();
+            cy.get(`x-overlay x-button[action=${XButton.Default}`)
+                .click();
 
-        cy.get(`x-overlay x-button[action=${XButton.Default}`)
-            .click();
+            // Check the modif
+            crReady();
+            new TableIterator('#price_lists', { xtable: false })
+                .section('tbody')
+                .col(2).row(1).assert(300)
+                .nextRow().assert(123)
+                .nextRow().assert(100)
+                .nextRow().assert(100)
+                .row(12).assert('open');
 
-        // Check the modif
-        crReady();
-        new TableIterator('#price_lists', { xtable: false })
-            .section('tbody')
-            .col(2).row(1).assert(300)
-            .nextRow().assert(123)
-            .nextRow().assert(100)
-            .nextRow().assert(100)
-            .row(12).assert('open');
+            assertTableInitial(1);
 
-        assertTableInitial(1);
+            // Delete it back
+            cy.get(`table x-button[action=${XButton.Delete}]`)
+                .should('be.visible')
+                .click();
+            crReady();
 
-        // Delete it back
-        cy.get(`table x-button[action=${XButton.Delete}]`)
-            .should('be.visible')
-            .click();
-        crReady();
-
-        assertTableInitial();
-    });
-});
+            assertTableInitial();
+        });
+    })
+);
