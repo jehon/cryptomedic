@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+set -o errexit
+
+CR_SCRIPT_DIR="$(dirname "${BASH_SOURCE[0]}")"
+
+# shellcheck source=./cr-lib
+. "$CR_SCRIPT_DIR"/cr-lib
+
+FOLDER="$(realpath --relative-to "$CR_PRJ_DIR" .)"
+
+docker-compose run --rm --workdir "/app/$FOLDER" "php" "php" "$@"
