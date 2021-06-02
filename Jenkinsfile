@@ -18,7 +18,7 @@ pipeline {
     lock resource: 'port_${CRYPTOMEDIC_PORT}'
     skipStagesAfterUnstable()
     disableConcurrentBuilds()
-    timeout(time: 20, unit: 'MINUTES')
+    timeout(time: 60, unit: 'MINUTES')
   }
   stages {
     stage('setup-computer') {
