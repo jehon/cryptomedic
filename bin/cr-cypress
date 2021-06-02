@@ -14,6 +14,8 @@ OUTPUT="$CR_TMP"/e2e/"$FLAVOR"
 ODOCKER="$(p2docker "$OUTPUT")"
 header "Setup $OUTPUT (into $ODOCKER)"
 
+declare -a CYPRESS_ARGS
+
 case "$FLAVOR" in
 "desktop")
     # Nothing to do - default flavor - use the config preset's
@@ -31,6 +33,8 @@ case "$FLAVOR" in
     exit 1
     ;;
 esac
+
+CYPRESS_ARGS+=("--env" "config=$FLAVOR")
 
 # echo "CYPRESS_ARGS: ${CYPRESS_ARGS[*]}"
 
