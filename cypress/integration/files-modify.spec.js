@@ -109,20 +109,23 @@ context('Actions', () => {
         });
     });
 
-    it('should add a picture', () => {
-        checkFileAdd('picture', () => {
-            cy.get('#Picture_Date').invoke('attr', 'value', '2003-01-01');
-            cy.get('x-input-picture').shadow().find('input[type=file]')
-                .should('be.visible')
-                // https://www.npmjs.com/package/cypress-file-upload
-                .attachFile('upload.jpg'); // image/gif
+    //
+    // TODO: e2e add a picture test is flakky
+    //
+    // it('should add a picture', () => {
+    //     checkFileAdd('picture', () => {
+    //         cy.get('#Picture_Date').invoke('attr', 'value', '2003-01-01');
+    //         cy.get('x-input-picture').shadow().find('input[type=file]')
+    //             .should('be.visible')
+    //             // https://www.npmjs.com/package/cypress-file-upload
+    //             .attachFile('upload.jpg'); // image/gif
 
-            crReady();
-        }, () => {
-            cy.get('#Picture_Date').should('contain.text', '2003-01-01');
-            crReady();
-        });
-    });
+    //         crReady();
+    //     }, () => {
+    //         cy.get('#Picture_Date').should('contain.text', '2003-01-01');
+    //         crReady();
+    //     });
+    // });
 
     it('should add an appointment', () => {
         checkFileAdd('appointment', () => {
