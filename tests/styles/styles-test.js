@@ -129,14 +129,18 @@ if (!opts.module || opts.module == 'mobile') {
                     }
                 }
                 scanned++;
-                process.stdout.clearLine(0);
-                process.stdout.cursorTo(0);
-                process.stdout.write(`Processed ${scanned}/${uniqueFiles.length}`);
+                if (process.stdout.clearLine) {
+                    process.stdout.clearLine(0);
+                    process.stdout.cursorTo(0);
+                    process.stdout.write(`Processed ${scanned}/${uniqueFiles.length}`);
+                }
                 resolve();
             }));
     }
-    process.stdout.clearLine(0);
-    process.stdout.cursorTo(0);
+    if (process.stdout.clearLine) {
+        process.stdout.clearLine(0);
+        process.stdout.cursorTo(0);
+    }
 
     const problemsList = uniqueFiles.filter(fset => fset.problem || fset.warning);
 
