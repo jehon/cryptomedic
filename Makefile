@@ -192,7 +192,7 @@ test-e2e: test-e2e-desktop test-e2e-mobile
 
 .PHONY: test-e2e-desktop
 test-e2e-desktop: tmp/.tested-e2e-desktop
-tmp/.tested-e2e-desktop: tmp/.build $(shell find cypress/ -name "*.js") depencencies
+tmp/.tested-e2e-desktop: tmp/.build $(shell find cypress/ -name "*.js") dependencies
 	cr-fix-permissions tmp/e2e
 	cr-data-reset
 	cr-cypress
@@ -203,7 +203,7 @@ tmp/.tested-e2e-desktop: tmp/.build $(shell find cypress/ -name "*.js") depencen
 
 .PHONY: test-e2e-mobile
 test-e2e-mobile: tmp/.tested-e2e-mobile
-tmp/.tested-e2e-mobile: tmp/.build $(shell find cypress/ -name "*.js") depencencies
+tmp/.tested-e2e-mobile: tmp/.build $(shell find cypress/ -name "*.js") dependencies
 	cr-fix-permissions tmp/e2e
 	cr-data-reset
 	cr-cypress "mobile"
@@ -272,7 +272,7 @@ logs:
 # Install > dependencies
 #
 #
-.PHONY: depencencies
+.PHONY: dependencies
 dependencies: tmp/.dependencies-node tmp/.dependencies-api tmp/.dependencies-api-bare
 
 .PHONY: dependencies-node
@@ -285,20 +285,19 @@ tmp/.dependencies-node: package.json package-lock.json
 	@mkdir -p "$(dir $@)"
 	@touch "$@"
 
-.PHONY: depencencies-api
+.PHONY: dependencies-api
 dependencies-api: tmp/.dependencies-api
 tmp/.dependencies-api: tmp/.dependencies-api-bare \
 		www/api/$(VAPI)/composer.json \
 		www/api/$(VAPI)/composer.lock
 
-	mkdir -m 777 -p www/api/v1.3/bootstrap/cache
-
+	cr-ensure-folder-empty www/api/v1.3/bootstrap/cache
 	cr-dependencies-php "www/api/$(VAPI)"
 
 	@mkdir -p "$(dir $@)"
 	@touch "$@"
 
-.PHONY: depencencies-api-bare
+.PHONY: dependencies-api-bare
 dependencies-api-bare: tmp/.dependencies-api-bare
 tmp/.dependencies-api-bare: \
 		www/api/$(VAPI)/public/composer.json \
