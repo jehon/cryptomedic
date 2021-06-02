@@ -1,5 +1,7 @@
 <?php
 
+namespace Cryptomedic\Lib;
+
 # See https://www.php.net/manual/en/function.set-error-handler
 
 // function mapErrorCode($code) {
@@ -62,5 +64,4 @@ function handleError($code, $description, $file = null, $line = null, $context =
     // var_dump($data);
 }
 
-set_error_handler("handleError");
-ob_start();
+set_error_handler("Cryptomedic\Lib\handleError");
