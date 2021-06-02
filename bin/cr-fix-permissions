@@ -20,9 +20,3 @@ if [ -r "$FOLDER" ]; then
         find "$FOLDER" \( -not -user "${USERUID}" \) -exec chown "${USERUID}" '{}' ';'
     header_finished
 fi
-
-if [ -z "$1" ]; then
-    header "Fixing permission a+rwx on specific folders"
-    cr-ensure-folder-empty www/api/v1.3/storage/framework/cache
-    header_finished
-fi
