@@ -42,13 +42,11 @@
 
 function handleError($code, $description, $file = null, $line = null, $context = null) {
     http_response_code(500);
-    echo "Error thrown";
+    header('X-WHERE', 'bare-api');
 
-    $displayErrors = ini_get("display_errors");
-    // $displayErrors = strtolower($displayErrors);
-    // if (error_reporting() === 0 || $displayErrors === "on") {
-    //     return false;
-    // }
+    echo "Error thrown<br>";
+    return false;
+
     // list($error, $log) = mapErrorCode($code);
     // $data = array(
     //     'level' => $log,
@@ -64,5 +62,5 @@ function handleError($code, $description, $file = null, $line = null, $context =
     // var_dump($data);
 }
 
-ob_start();
 set_error_handler("handleError");
+ob_start();
