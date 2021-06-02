@@ -135,6 +135,7 @@ if (!opts.module || opts.module == 'mobile') {
                 resolve();
             }));
     }
+    process.stdout.clearLine(0);
 
     const problemsList = uniqueFiles.filter(fset => fset.problem || fset.warning);
 
