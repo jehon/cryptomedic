@@ -1,17 +1,49 @@
 
 import { orSmall } from '../../config.js';
-import { createElementWithTag, defineCustomElement } from '../../js/custom-element.js';
+import { createElementWithObject, createElementWithTag, defineCustomElement } from '../../js/custom-element.js';
+import XI18n from '../func/x-i18n.js';
 
 // TODO: use x-i18n
 
 /**
  * Properties:
  * - label
+ *
+ * Slots:
+ * - *:
+ * - right
+ * - left
+ * - stat
+ *
+ * layout:
+ *    +----------+----------+
+ *    | label    | default  |
+ *    +----------+----------+
+ *
+ *    +----------+------------+-----------+
+ *    | label    | (R) right  | (L) left  |
+ *    +----------+------------+-----------+
+ *
+ *    +----------+------------++-----------+
+ *    | label    | default    || stat      |
+ *    +----------+------------++-----------+
+ *
  */
 export default class XLabel extends HTMLElement {
+    // TODO: is this used ?
     static get DISPLAY_MODE() { return 'flex'; }
 
-    label = '';
+    static get observedAttributes() {
+        return ['label'];
+    }
+
+    attributeChangedCallback(attributeName, _oldValue, newValue) {
+        switch (attributeName) {
+            case 'label':
+                this._label.setAttribute('value', newValue ?? '');
+                break;
+        }
+    }
 
     constructor() {
         super();
@@ -20,7 +52,7 @@ export default class XLabel extends HTMLElement {
 
         this.shadowRoot.append(
             createElementWithTag('style', {}, `
-    :host(x-label) {
+    :host {
         display: ${XLabel.DISPLAY_MODE};
         flex-direction: row;
         flex-wrap: wrap;
@@ -30,16 +62,12 @@ export default class XLabel extends HTMLElement {
         width: 100%;
     }
 
-    div#label {
+    #label {
         width: ${orSmall}%;
         flex-grow: 0;
         flex-shrink: 0;
         font-weight: bold;
         text-align: right;
-
-        /* overflow: hidden; */
-        /* white-space: nowrap; */
-        /* text-overflow: ellipsis; */
     }
 
     ::slotted(*) {
@@ -73,35 +101,18 @@ export default class XLabel extends HTMLElement {
         border-color: red;
         box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, 0.6);
     }
+
+    ::slotted([slot=stat]) {
+        border-left: 1px solid black;
+        padding-left: 5px;
+    }
 `),
-            this._label = createElementWithTag('div', { id: 'label' }),
-            createElementWithTag('slot')
+            this._label = createElementWithObject(XI18n, { id: 'label', value: this.getAttribute('label') ?? '' }),
+            createElementWithTag('slot'),
+            createElementWithTag('slot', { name: 'right' }),
+            createElementWithTag('slot', { name: 'left' }),
+            createElementWithTag('slot', { name: 'stat' }),
         );
-    }
-
-    static get observedAttributes() {
-        return ['label'];
-    }
-
-    attributeChangedCallback(attributeName, _oldValue, newValue) {
-        switch (attributeName) {
-            case 'label':
-                this.label = newValue;
-                this.updateLabel();
-                break;
-        }
-    }
-
-    connectedCallback() {
-        this.updateLabel();
-    }
-
-    updateLabel() {
-        let label = this.label;
-        // if (!this.label && this.hasAttribute('name')) {
-        //     label = toSentenceCase(this.getAttribute('name'));
-        // }
-        this._label.innerHTML = label;
     }
 }
 

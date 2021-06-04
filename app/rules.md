@@ -12,5 +12,7 @@
 | widgets\style | -         | yes          | yes        | embedded      | -         | graphical               |
 |               |           |              |            |               |           |                         |
 
+Some widget need to be "hidden" to avoid their functionnalities to be taken upstream
+
 TODO: widgets(folder/file) -> below pages
 TODO: render / funcs -> widgets

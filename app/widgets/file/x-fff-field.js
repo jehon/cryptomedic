@@ -3,7 +3,6 @@ import { defineCustomElement } from '../../js/custom-element.js';
 import { toSentenceCase } from '../../js/string-utils.js';
 import XWithFile from './x-with-file.js';
 
-// TODO: use x-i18n
 // TODO: use x-label
 
 /**
@@ -70,7 +69,7 @@ export default class XFffField extends XWithFile {
                     flex-basis: 10px;
                 }
 
-                ::slotted([slot=third]) {
+                ::slotted([slot=stat]) {
                     border-left: 1px solid black;
                     padding-left: 5px;
                 }
@@ -80,7 +79,7 @@ export default class XFffField extends XWithFile {
             <slot><div id='content'></div></slot>
             <slot name='right'><div id='side-right'></div></slot>
             <slot name='left'><div id='side-left'></div></slot>
-            <slot name='third'></slot>
+            <slot name='stat'></slot>
         `;
     }
 
