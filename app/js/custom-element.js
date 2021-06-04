@@ -2,6 +2,10 @@
 import { toAttributeCase } from './string-utils.js';
 
 /**
+ * @typedef {Object<string,string|Object>} Parameters
+ */
+
+/**
  * @param {(new() => HTMLElement)|HTMLElement} cls to be analysed
  * @returns {string} as the class name
  */
@@ -26,7 +30,7 @@ export function defineCustomElement(cls, name = getHTMLNameOfClass(cls)) {
 /**
  * @template {HTMLElement} X
  * @param {new() => X} tag to be created
- * @param {object} attributes to be set
+ * @param {Parameters} attributes to be set
  * @param {Array<HTMLElement | string> | string} inner to fill in
  * @param {function(HTMLElement): void} js to modify the element
  * @returns {X} with all this set
@@ -41,7 +45,7 @@ export function createElementWithObject(tag, attributes = {}, inner = [], js = (
 
 /**
  * @param {string} tag to be created
- * @param {object} attributes to be set
+ * @param {Parameters} attributes to be set
  * @param {Array<HTMLElement | string> | string} inner to fill in
  * @param {function(HTMLElement): void} js to modify the element
  * @returns {HTMLElement} with all this set
@@ -66,7 +70,7 @@ export function createElementsFromHTML(html) {
 
 /**
  * @param {Element} el the element
- * @param {object} attributes to be set
+ * @param {Parameters} attributes to be set
  * @param {Array<Element | string>| string} inner to fill in
  * @param {function(Element): void} callback to modify the element
  */
