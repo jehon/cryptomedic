@@ -77,6 +77,26 @@ export default class XLabel extends HTMLElement {
         flex-basis: 100px;
     }
 
+    ::slotted([slot=right]):before {
+        content: 'R';
+    }
+
+    ::slotted([slot=left]):before {
+        content: 'L';
+    }
+
+    ::slotted([slot=right]):before,
+    ::slotted([slot=left]):before {
+        margin-right: 2px;
+        padding: 4px;
+        border: 1px solid gray;
+        border-radius: 20px;
+        font-size: 9px;
+        background-color: gray;
+        color: white;
+        font-weight: bold;
+    }
+
     ::slotted(input:not([type="checkbox"])) {
         display: block;
         width: 100%;
