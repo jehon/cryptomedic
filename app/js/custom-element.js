@@ -71,6 +71,14 @@ export function createElementsFromHTML(html) {
  * @param {function(Element): void} callback to modify the element
  */
 export function enrichObject(el, attributes = {}, inner = [], callback = (_el) => { }) {
+    if (typeof attributes != 'object' || Array.isArray(attributes)) {
+        console.error('Error in enrichObject ', el, ': attributes is not an object', attributes);
+    }
+
+    if (typeof inner != 'string' && !Array.isArray(inner)) {
+        console.error('Error in enrichObject ', el, ': attributes is not an array', attributes);
+    }
+
     for (const k of Object.keys(attributes)) {
         let val = attributes[k];
 
