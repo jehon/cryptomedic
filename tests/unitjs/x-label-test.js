@@ -8,7 +8,6 @@ describe(fn(import.meta.url), function () {
     it('should instanciate', function () {
         const el = new XLabel();
         el.setAttribute('label', 'label');
-        el.connectedCallback();
         expect(true).toBeTrue();
     });
 });

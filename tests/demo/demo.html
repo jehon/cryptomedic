@@ -97,14 +97,14 @@
             </x-fff-field>
             <x-fff-field demo-folder='test1' file-uid='ricket-consult-13' field='test3'>
                 <span>hello3</span>
-                <span slot='third'>hello3bis</span>
+                <span slot='stat'>hello3bis</span>
             </x-fff-field>
             <x-fff-field demo-folder='test1' file-uid='ricket-consult-13' by-sides='*legAngle'></x-fff-field>
             <x-fff-field demo-folder='test1' file-uid='ricket-consult-13' by-sides='*legAngle'>
-                <div slot='third'>Euh</div>
+                <div slot='stat'>Euh</div>
             </x-fff-field>
             <x-fff-field demo-folder='test1' file-uid='ricket-consult-13' by-sides='*legAngle'>
-                <div slot='third'></div>
+                <div slot='stat'></div>
             </x-fff-field>
         </x-group-panel>
     </xx-test>
@@ -127,6 +127,17 @@
             </select>
         </x-label>
         <x-label label='input text with a very very long label'><input name='truc' /></x-label>
+    </xx-test>
+    <xx-test double>
+        <x-label label='text'>blablabla</x-label>
+        <x-label label='text'>
+            <div slot='right'>droit</div>
+            <div slot='left'>gauche</div>
+        </x-label>
+        <x-label label='text'>
+            <div>blablabla</div>
+            <div slot='stat'>stat</div>
+        </x-label>
     </xx-test>
     <xx-test>
         <x-messages>
