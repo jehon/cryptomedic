@@ -1,6 +1,8 @@
 
-import { defineCustomElement } from '../../js/custom-element.js';
+import { createElementWithObject, createElementWithTag, defineCustomElement } from '../../js/custom-element.js';
 import { toSentenceCase } from '../../js/string-utils.js';
+import XLabel from '../style/x-label.js';
+import { getPanelStyles } from '../style/x-panel.js';
 import XWithFile from './x-with-file.js';
 
 // TODO: use x-label
@@ -42,45 +44,29 @@ export default class XFffField extends XWithFile {
 
         this.attachShadow({ mode: 'open' });
 
-        this.shadowRoot.innerHTML = `
-            <style>
-                :host {
-                    display: flex;
-                    flex-direction: row;
-                    flex-wrap: nowrap;
-                    justify-content: start;
-                }
-
+        this.shadowRoot.innerHTML = '';
+        this.shadowRoot.append(
+            getPanelStyles(this),
+            createElementWithTag('style', {}, `
                 :host([mode=read][empty]) {
                     display: none !important;
                 }
-
-                #label {
-                    width: min(25%, 150px);
-                    flex-grow: 0;
-                    flex-shrink: 0;
-                    font-weight: bold;
-                }
-
-                ::slotted(*), slot > div {
-                    padding: 5px;
-                    flex-grow: 1;
-                    flex-shrink: 1;
-                    flex-basis: 10px;
-                }
-
-                ::slotted([slot=stat]) {
-                    border-left: 1px solid black;
-                    padding-left: 5px;
-                }
-
-            </style>
-            <div id='label'></div>
-            <slot><div id='content'></div></slot>
-            <slot name='right'><div id='side-right'></div></slot>
-            <slot name='left'><div id='side-left'></div></slot>
-            <slot name='stat'></slot>
-        `;
+            `),
+            createElementWithObject(XLabel, {}, [
+                createElementWithTag('slot', {}, [
+                    createElementWithTag('div', { id: 'content' })
+                ]),
+                createElementWithTag('slot', { name: 'right' }, [
+                    createElementWithTag('div', { slot: 'right' })
+                ]),
+                createElementWithTag('slot', { name: 'left' }, [
+                    createElementWithTag('div', { slot: 'left' })
+                ]),
+                createElementWithTag('slot', { name: 'stat' }, [
+                    createElementWithTag('div', { slot: 'stat' })
+                ])
+            ])
+        );
     }
 
     static get observedAttributes() {
@@ -181,7 +167,7 @@ export default class XFffField extends XWithFile {
         if (!label) {
             label = toSentenceCase(toSide(this.bySides, ''));
         }
-        this.shadowRoot.querySelector('#label').innerHTML = label;
+        this.shadowRoot.querySelector('x-label').setAttribute('label', label);
     }
 }
 
