@@ -137,3 +137,23 @@ export function isEventOutOfSlot(event, slot) {
         .map(e => e.contains(/** @type {Node} */(event.target)))
         .reduce((prev, cur) => prev || cur, false);
 }
+
+/**
+ *
+ * @param {HTMLElement} from element
+ * @param {HTMLElement} to element
+ * @param {Object<string, string>} list of attribute to be copied (with default value - empty mean no default)
+ */
+export function copyAttributes(from, to, list) {
+    for (const k in Object.keys(list)) {
+        if (from.hasAttribute(k)) {
+            to.setAttribute(k, from.getAttribute('k'));
+        } else {
+            if (list[k]) {
+                to.setAttribute(k, list[k]);
+            } else {
+                to.removeAttribute(k);
+            }
+        }
+    }
+}
