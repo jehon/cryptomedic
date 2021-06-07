@@ -2,7 +2,6 @@
 import XForm from '../../app/widgets/func/x-form.js';
 import '../../app/elements/x-write.js';
 import '../../app/elements/x-write-list.js';
-import '../../app/elements/x-inline.js';
 import { createElementWithTag, createElementWithObject } from '../../app/js/custom-element.js';
 import { fn } from './athelpers.js';
 import XButton from '../../app/widgets/style/x-button.js';
@@ -10,7 +9,6 @@ import XButtons from '../../app/widgets/func/x-buttons.js';
 
 // import XWrite from '../../app/elements/x-write.js';
 // import XWriteList from '../../app/elements/x-write-list.js';
-// import XInline from '../../app/elements/x-inline.js';
 
 describe(fn(import.meta.url), function () {
     it('should work with HTML Element', function () {
@@ -122,8 +120,6 @@ describe(fn(import.meta.url), function () {
                 // TODO: need XWrite etc... to be migrated to out-of-webDescribe
                 // createElementWithObject(XWrite, { name: 'n4', type: 'list', list: ['n4val1', 'n4val2', 'n4val3'] }),
                 // createElementWithObject(XWriteList, { name: 'n5', list: ['n5val1', 'n5val2', 'n5val3'] }),
-                // createElementWithObject(XInline, { name: 'n6', list: ['n6val1', 'n6val2', 'n6val3'], edit: true }),
-                // createElementWithObject(XInline, { name: 'n7', type: 'char' })
             ]));
         });
 

@@ -2,7 +2,7 @@
 /* istanbul ignore file */
 
 import JHElement from './jh-element.js';
-import './x-inline.js';
+import '../widgets/io/x-io-numeric.js';
 
 const title = Symbol('title');
 const price = Symbol('price');
@@ -35,7 +35,7 @@ export default class BlockBillLine extends JHElement {
         super.render();
         this.createElementAndAddThem(`
                 <div style='display: table-cell' id='title'></div>
-                <div style='display: table-cell'><x-inline ${this.edit ? 'edit=1' : ''} type='numeric' name='${this._price.title}' value='0' inline='min=0 step=1 style="width: 4em" '></x-inline></div>
+                <div style='display: table-cell'><x-io-numeric mode=${this.edit ? 'input' : 'write'} name='${this._price.title}' value='0'></x-io-numeric></div>
                 <div style='display: table-cell' id='price'></div>
                 <div style='display: table-cell' id='total'></div>
             `);
