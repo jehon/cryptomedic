@@ -1,5 +1,4 @@
 
-import { orSmall } from '../../config.js';
 import { createElementWithObject, createElementWithTag, defineCustomElement } from '../../js/custom-element.js';
 import XI18n from '../func/x-i18n.js';
 
@@ -63,7 +62,7 @@ export default class XLabel extends HTMLElement {
     }
 
     #label {
-        width: ${orSmall}%;
+        width: min(25%, 150px);
         flex-grow: 0;
         flex-shrink: 0;
         font-weight: bold;
@@ -71,7 +70,6 @@ export default class XLabel extends HTMLElement {
     }
 
     ::slotted(*) {
-        padding: 5px;
         flex-grow: 1;
         flex-shrink: 0;
         flex-basis: 100px;
@@ -102,9 +100,8 @@ export default class XLabel extends HTMLElement {
         width: 100%;
 
         box-sizing: border-box;
-        /* height: 34px; */
         margin: 0;
-        padding: 6px 12px;
+        /* padding: 6px 12px; */
 
         color: #555555;
         border: 1px solid #ccc;

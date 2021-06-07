@@ -6,7 +6,7 @@ import XFffField from '../../app/widgets/file/x-fff-field.js';
 
 let f;
 
-describe(fn(import.meta.url), function () {
+xdescribe(fn(import.meta.url), function () {
     beforeEach(() => {
         f = new Folder(loadReference(RefFolder1).folder);
     });
