@@ -253,12 +253,12 @@ update-references-style:
 .PHONY: deploy
 deploy:
 # TODO -> from dev + rewrite
-	bin/cryptomedic-deploy-patch.sh commit
+	bin/cr-deploy-patch commit
 
 .PHONY: deploy-test
 deploy-test:
 # TODO -> from dev + rewrite
-	bin/cryptomedic-deploy-patch.sh
+	bin/cr-deploy-patch
 
 #
 # Other commands

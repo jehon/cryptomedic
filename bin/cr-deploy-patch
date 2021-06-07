@@ -18,7 +18,7 @@ CR_SCRIPT_DIR="$(dirname "${BASH_SOURCE[0]}")"
 cr-ensure-started
 
 failure() {
-	set +x
+	set +o functrace
 	echo "Failed at $1: $2"
 }
 trap 'failure ${LINENO} "$BASH_COMMAND"' ERR
@@ -156,7 +156,7 @@ fi
 export CRYPTOMEDIC_HTTP_HOST="www.cryptomedic.org"
 export CRYPTOMEDIC_DB_UPGRADE
 
-"$CR_SCRIPT_DIR/"cryptomedic-refresh-structure.sh
+"$CR_SCRIPT_DIR/"cr-refresh-structure
 
 echo "*** End ***"
 echo "*** End ***"
