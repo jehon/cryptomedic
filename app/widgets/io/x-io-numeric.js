@@ -16,6 +16,13 @@ export default class XIoNumeric extends XIoString {
         });
         return el;
     }
+
+    /**
+     * @override
+     */
+    getInputValue() {
+        return parseInt(this._inputEl.value);
+    }
 }
 
 defineCustomElement(XIoNumeric);
