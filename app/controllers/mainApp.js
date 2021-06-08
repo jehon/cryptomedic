@@ -19,8 +19,8 @@ window.JHElement = JHElement;
 import '../elements/x-o-overlay.js';
 import '../elements/cryptomedic-data-service.js';
 
+import '../widgets/style/x-two-columns.js'
 import '../elements/jh-script.js';
-import '../elements/block-bill-category.js';
 import '../elements/x-input-date.js';
 import XInputPicture from '../elements/x-input-picture.js';
 window.XInputPicture = XInputPicture;
