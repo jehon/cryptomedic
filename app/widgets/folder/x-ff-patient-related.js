@@ -25,9 +25,9 @@ export default class XFfPatientRelated extends XWithFolder {
                 this._form = createElementWithObject(XForm, { white: true }, [
                     createElementWithObject(XLabel, { label: 'Reference' }, [
                         createElementWithTag('div', {}, [
-                            createElementWithObject(XIoNumeric, { name: 'entryorder' }),
+                            createElementWithObject(XIoNumeric, { name: 'entryorder', style: { display: 'inline-block' } }),
                             '-',
-                            createElementWithObject(XIoNumeric, { name: 'entryyear' }),
+                            createElementWithObject(XIoNumeric, { name: 'entryyear', style: { display: 'inline-block' } }),
                         ])
                     ]),
                     createElementWithObject(XLabel, { label: 'Name' }, [
