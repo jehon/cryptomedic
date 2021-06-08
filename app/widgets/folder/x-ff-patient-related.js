@@ -6,6 +6,7 @@ import XGroupPanel from '../style/x-group-panel.js';
 import XLabel from '../style/x-label.js';
 import XForm from '../func/x-form.js';
 import XIoString from '../io/x-io-string.js';
+import XIoNumeric from '../io/x-io-numeric.js';
 
 export default class XFfPatientRelated extends XWithFolder {
     /** @type {XForm} */
@@ -24,9 +25,9 @@ export default class XFfPatientRelated extends XWithFolder {
                 this._form = createElementWithObject(XForm, { white: true }, [
                     createElementWithObject(XLabel, { label: 'Reference' }, [
                         createElementWithTag('div', {}, [
-                            createElementWithObject(XIoString, { name: 'entryorder', style: { display: 'inline-block' } }),
+                            createElementWithObject(XIoNumeric, { name: 'entryorder' }),
                             '-',
-                            createElementWithObject(XIoString, { name: 'entryyear', style: { display: 'inline-block' } }),
+                            createElementWithObject(XIoNumeric, { name: 'entryyear' }),
                         ])
                     ]),
                     createElementWithObject(XLabel, { label: 'Name' }, [
