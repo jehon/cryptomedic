@@ -18,7 +18,7 @@ import JHElement from '../elements/jh-element.js';
 window.JHElement = JHElement;
 import '../elements/x-o-overlay.js';
 import '../elements/cryptomedic-data-service.js';
-
+import '../widgets/file/x-fff-field.js';
 import '../widgets/style/x-two-columns.js'
 import '../elements/jh-script.js';
 import '../elements/x-input-date.js';
@@ -28,21 +28,15 @@ import '../elements/x-read.js';
 import '../elements/x-read-boolean.js';
 import '../elements/x-write.js';
 import '../elements/x-write-list.js';
-
 import XFile from '../elements/x-file.js';
 window.XFile = XFile;
 import '../elements/x-file-bill.js';
 import '../elements/x-file-bill-summary.js';
-
 import '../widgets/file/x-fff-age.js';
 import '../widgets/style/x-group-panel.js';
 import '../widgets/style/x-label.js';
 
 let mainApp = angular.module('app_main', ['ngRoute'])
-    // .config(['$compileProvider', function ($compileProvider) {
-    //     $compileProvider.aHrefSanitizationWhitelist(/^\s*((https?|ftp|mailto|chrome-extension):|data:text,)/);
-    //     $compileProvider.imgSrcSanitizationWhitelist($compileProvider.aHrefSanitizationWhitelist());
-    // }])
     .config(['$locationProvider', function ($locationProvider) {
         $locationProvider.hashPrefix('');
     }]);
@@ -79,11 +73,6 @@ mainApp.controller('ctrl_folder', ctrl_folder);
 
 // *** Legacy End ***
 
-
-
-// Elements present on the index.html:
-import '../widgets/x-user-status.js';
-import '../widgets/func/x-restricted.js';
 
 // Routing
 import { createElementWithObject } from '../js/custom-element.js';
