@@ -138,7 +138,7 @@ chmod:
 	cr-fix-permissions
 
 .PHONY: full
-full: start dependencies build test lint
+full: clear start dependencies build test lint
 
 #
 #
