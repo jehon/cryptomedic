@@ -46,13 +46,13 @@ function createMenu({ title, restrictedBy = '', id = toAttributeCase(title), ver
                             action: XButton.Default,
                             'to-route': toRoute ?? false,
                             'to-location': toLocation ?? false
-                        }
-                        , buttonText)
+                        },
+                        buttonText)
                     : null
             ])
         ]);
     if (restrictedBy) {
-        res = createElementWithObject(XRestricted, { 'restricted-by': restrictedBy }, res);
+        res = createElementWithObject(XRestricted, { 'restricted-by': restrictedBy }, [res]);
     }
 
     return res;
@@ -104,18 +104,6 @@ export default class XPageHome extends HTMLElement {
     }
 `
             ),
-            //             createElementWithObject(XMessage, { level: messages.info }, createElementsFromHTML(`<div>
-            // Dear user,<br><br>
-
-            // The menu is currently changing. Top button will dissapear progressively. They will be replaced by
-            // links on this home page. This is done to ease usage of mobile.<br><br>
-
-            // Thanks for your understanding.<br><br>
-
-            // Jean
-            // </div>`)),
-
-            // createElementWithObject()
             createElementWithObject(XPanel, { full: true }, [
                 ...createElementsFromHTML('<h1 id="page_home" class="text - center"><img src="/static/img/home.gif">Home</h1>'),
 
