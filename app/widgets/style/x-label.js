@@ -56,7 +56,6 @@ export default class XLabel extends HTMLElement {
         flex-wrap: wrap;
         gap: 20px;
 
-        margin: 10px;
         width: 100%;
     }
 
