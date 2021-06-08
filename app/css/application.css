@@ -54,7 +54,6 @@ body {
 body > #menu {
 	background-color: #f8f8f8;
 	display: flex;
-	justify-content: flex-end;
 	align-items: center;
 	height: 40px;
 	border: 1px solid #e7e7e7;
