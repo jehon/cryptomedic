@@ -10,6 +10,8 @@ import { createElementWithTag, defineCustomElement } from '../../js/custom-eleme
  *  - required (todo)
  *  - placeholder (todo)
  *
+ *  - empty (readonly)
+ *
  */
 export default class XIoString extends HTMLElement {
     static get observedAttributes() {
@@ -25,13 +27,14 @@ export default class XIoString extends HTMLElement {
         super();
 
         this.innerHTML = '';
-        this._initialValue = this.getAttribute('value');
+        this.value = this.getAttribute('value');
     }
 
     attributeChangedCallback(attributeName, _oldValue, newValue) {
         switch (attributeName) {
             case 'value':
-                this._initialValue = newValue;
+                /* Use the setter */
+                this.value = newValue;
                 break;
         }
 
@@ -41,10 +44,6 @@ export default class XIoString extends HTMLElement {
 
     isInputMode() {
         return this.hasAttribute('mode') && this.getAttribute('mode') == 'input';
-    }
-
-    getInitialValue() {
-        return this._initialValue;
     }
 
     /**
@@ -71,22 +70,32 @@ export default class XIoString extends HTMLElement {
         return this.getInitialValue();
     }
 
+    getInitialValue() {
+        return this._initialValue;
+    }
+
     adapt() {
-        this.innerHTML = '';
-        let el;
-        if (this.isInputMode()) {
-            el = this.getInputElement(this.getInitialValue());
+        if (this.getInitialValue()) {
+            // TODO: this should be done only in readonly mode
+            this.removeAttribute('empty');
         } else {
-            el = this.getOutputElement(this.getInitialValue());
+            this.setAttribute('empty', 'empty');
         }
-        this.append(el);
+
+        this.innerHTML = '';
+        this.append(this.isInputMode()
+            ? this.getInputElement(this.getInitialValue())
+            : this.getOutputElement(this.getInitialValue())
+        );
+
+        this.onInputChange();
     }
 
     /**
      * To be called by child elements when element is changed
      */
-    onInputChanged() {
-        // TODO
+    onInputChange() {
+        this.dispatchEvent(new CustomEvent('change', { bubbles: true, detail: this.value }));
     }
 
     /**
@@ -104,7 +113,7 @@ export default class XIoString extends HTMLElement {
     getInputElement(value) {
         return this._inputEl = /** @type {HTMLInputElement} */ (
             createElementWithTag('input', { value }, [],
-                el => el.addEventListener('change', () => this.onInputChanged()))
+                el => el.addEventListener('change', () => this.onInputChange()))
         );
     }
 

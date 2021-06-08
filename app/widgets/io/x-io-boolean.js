@@ -21,7 +21,7 @@ export default class XIoBoolean extends XIoString {
         return this._inputEl = /** @type {HTMLInputElement} */ (createElementWithTag('input', {
             type: 'checkbox',
             checked: !!value
-        }, [], el => el.addEventListener('click', () => this.onInputChanged())));
+        }, [], el => el.addEventListener('click', () => this.onInputChange())));
     }
 
     /**
