@@ -17,9 +17,10 @@ describe(fn(import.meta.url), function () {
     it('should show', function () {
         expect(el.hasAttribute('blocked')).toBeFalse();
         expect(el.getAttribute('patient-entry-number')).toBe('2000-1');
-        expect(el.shadowRoot.querySelector('[field=entryorder]').innerHTML).toBe('2000-1');
-        expect(el.shadowRoot.querySelector('[field=Name]').shadowRoot.querySelector('div#content').innerHTML).toBe('rezaul islam');
-        expect(el.shadowRoot.querySelector('[field=Sex]').shadowRoot.querySelector('div#content').innerHTML).toBe('Male');
+        expect(el.shadowRoot.querySelector('[name=entryyear]').value).toBe(2000);
+        expect(el.shadowRoot.querySelector('[name=entryorder]').value).toBe(1);
+        expect(el.shadowRoot.querySelector('[name=Name]').value).toBe('rezaul islam');
+        expect(el.shadowRoot.querySelector('[name=Sex]').value).toBe('Male');
     });
 
     it('should click', function () {
