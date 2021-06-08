@@ -30,8 +30,7 @@ foreach (json_decode(file_get_contents(constant("BR_FILE")), true)["browsers"] a
     $supported[$b][] = $v;
 };
 
-// var_dump($supported);
-
+$screenWidth = [];
 $detected = [];
 
 ?>
@@ -73,18 +72,17 @@ $detected = [];
             $detected[$bn] = [
                 "min" => $bv,
                 "max" => $bv,
-                "min-last" => $b['last_login']
+                "last_login" => $b['last_login']
             ];
         } else {
             $detected[$bn]["max"] = max($detected[$bn]['max'], $bv);
             if ($bv < $detected[$bn]["min"]) {
                 $detected[$bn]["min"] = min($detected[$bn]['min'], $bv);
-                $detected[$bn]["min-last"] = $b['last_login'];
+                $detected[$bn]["last_login"] = $b['last_login'];
             } else if ($bv == $detected[$bn]["min"]) {
-                $detected[$bn]["min-last"] = min($detected[$bn]['min-last'], $b['last_login']);
+                $detected[$bn]["last_login"] = min($detected[$bn]['last_login'], $b['last_login']);
             }
         }
-
         echo "<tr>";
         echo "<td>${b['browser_name']}</td>";
         echo "<td>${bv}</td>";
@@ -114,30 +112,61 @@ $detected = [];
         echo "<td>$support</td>";
 
         // echo "<td>${b['browser_uuid']}</td>";
+
+        $sw = $b['screen_width'];
+        if (!array_key_exists($sw, $screenWidth)) {
+            $screenWidth[$sw] = $b;
+        }
+
+        if ($screenWidth[$sw]['last_login'] < $b[$sw]['last_login']) {
+            $screenWidth[$sw] = $b;
+        }
+
         echo "</tr>";
     }
     ?>
 </table>
 
 <h1>Summary</h1>
+<h3>Versions</h3>
 <table>
     <thead>
         <th>Browser</th>
-        <th>Max version</th>
         <th>Min version</th>
         <th>Min version last usage</th>
+        <th>Max version</th>
     </thead>
     <?php
-    foreach ($detected as $b => $d) {
+    foreach ($detected as $br => $b) {
         echo "<tr>";
-        echo "<td>$b</td>";
-        echo "<td>${d['max']}</td>";
-        echo "<td>${d['min']}</td>";
-        echo "<td>${d['min-last']}</td>";
+        echo "<td>$br</td>";
+        echo "<td>${b['min']}</td>";
+        echo "<td>" . substr($b['last_login'], 0, 7) . "</td>";
+        echo "<td>${b['max']}</td>";
         echo "</tr>";
     }
-
     ?>
 </table>
+
+<h3>Screen sizes</h3>
+<table>
+    <thead>
+        <th>Width</th>
+        <th>Height</th>
+        <th>Last usage</th>
+        <th>Who</th>
+    </thead>
+    <?php
+    foreach ($screenWidth as $sw => $b) {
+        echo "<tr>";
+        echo "<td>${b['screen_width']}</td>";
+        echo "<td>${b['screen_height']}</td>";
+        echo "<td>" . substr($b['last_login'], 0, 7) . "</td>";
+        echo "<td>${b['last_login_name']}</td>";
+        echo "</tr>";
+    }
+    ?>
+</table>
+
 <?php
 http_response_code(200);
