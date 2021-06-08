@@ -2,11 +2,10 @@
 import { createElementWithObject, createElementWithTag, defineCustomElement } from '../../js/custom-element.js';
 import XI18n from '../func/x-i18n.js';
 
-// TODO: use x-i18n
-
 /**
- * Properties:
+ * Attributes:
  * - label
+ * - empty (readonly)
  *
  * Slots:
  * - *:
@@ -59,6 +58,10 @@ export default class XLabel extends HTMLElement {
 
         margin: 10px;
         width: 100%;
+    }
+
+    :host([empty]) {
+        display: none;
     }
 
     #label {
@@ -130,6 +133,23 @@ export default class XLabel extends HTMLElement {
             createElementWithTag('slot', { name: 'left' }),
             createElementWithTag('slot', { name: 'stat' }),
         );
+    }
+
+    connectedCallback() {
+        this.addEventListener('change', () => {
+            /**
+             * If we have some "named" elements and that all of those are empty,
+             * then we hide usself
+             */
+            const namedElements = this.querySelectorAll('[name]').length;
+            const namedElementsEmpty = this.querySelectorAll('[name][empty]').length;
+            if (namedElements > 0 && namedElements == namedElementsEmpty) {
+                // TODO: this should be done in readonly mode
+                this.setAttribute('empty', 'empty');
+            } else {
+                this.removeAttribute('empty');
+            }
+        });
     }
 }
 
