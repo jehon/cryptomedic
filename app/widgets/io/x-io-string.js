@@ -1,3 +1,4 @@
+
 import { createElementWithTag, defineCustomElement } from '../../js/custom-element.js';
 
 /**
@@ -10,27 +11,108 @@ import { createElementWithTag, defineCustomElement } from '../../js/custom-eleme
  *  - placeholder (todo)
  *
  */
-export default class XIoAbstract extends HTMLElement {
+export default class XIoString extends HTMLElement {
     static get observedAttributes() {
         return ['mode', 'value'];
-    }
-
-    attributeChangedCallback(_attributeName, _oldValue, _newValue) {
-        // always adapt...
-        this.adapt();
     }
 
     /** @type {HTMLInputElement} */
     _inputEl
 
+    _initialValue
+
     constructor() {
         super();
 
         this.innerHTML = '';
+        this._initialValue = this.getAttribute('value');
+    }
+
+    attributeChangedCallback(attributeName, _oldValue, newValue) {
+        switch (attributeName) {
+            case 'value':
+                this._initialValue = newValue;
+                break;
+        }
+
+        // always adapt...
+        this.adapt();
     }
 
     isInputMode() {
         return this.hasAttribute('mode') && this.getAttribute('mode') == 'input';
+    }
+
+    getInitialValue() {
+        return this._initialValue;
+    }
+
+    /**
+     * Set the value through properties
+     *
+     * Used by XForm
+     *
+     * @see {XForm}
+     */
+    set value(val) {
+        this._initialValue = val;
+        this.adapt();
+    }
+
+    /**
+     * According to mode
+     *
+     * @returns {*} with the value
+     */
+    get value() {
+        if (this.isInputMode()) {
+            return this.getInputValue();
+        }
+        return this.getInitialValue();
+    }
+
+    adapt() {
+        this.innerHTML = '';
+        let el;
+        if (this.isInputMode()) {
+            el = this.getInputElement(this.getInitialValue());
+        } else {
+            el = this.getOutputElement(this.getInitialValue());
+        }
+        this.append(el);
+    }
+
+    /**
+     * To be called by child elements when element is changed
+     */
+    onInputChanged() {
+        // TODO
+    }
+
+    /**
+     * @param  {string} value to be filled
+     * @returns {HTMLElement} as input
+     */
+    getOutputElement(value) {
+        return createElementWithTag('div', {}, '' + value);
+    }
+
+    /**
+     * @param  {string} value to be filled
+     * @returns {HTMLElement} as input
+     */
+    getInputElement(value) {
+        return this._inputEl = /** @type {HTMLInputElement} */ (
+            createElementWithTag('input', { value }, [],
+                el => el.addEventListener('change', () => this.onInputChanged()))
+        );
+    }
+
+    /**
+     * @returns {*} from the input
+     */
+    getInputValue() {
+        return this._inputEl.value;
     }
 
     /**
@@ -58,63 +140,6 @@ export default class XIoAbstract extends HTMLElement {
     reportValidity() {
         return this._inputEl.reportValidity();
     }
-
-    /**
-     * According to mode
-     *
-     * @returns {*} with the value
-     */
-    get value() {
-        if (this.isInputMode()) {
-            return this.getInputValue();
-        }
-        return this.getAttribute('value');
-    }
-
-    adapt() {
-        this.innerHTML = '';
-        let el;
-        if (this.isInputMode()) {
-            el = this.getInputElement();
-        } else {
-            el = this.getOutputElement();
-        }
-        this.append(el);
-    }
-
-    /**
-     * To be called by child elements when element is changed
-     */
-    onInputChanged() {
-        // TODO
-    }
-
-    /**
-     * @param  {string} [value] to be filled
-     * @returns {HTMLElement} as input
-     */
-    getOutputElement(value) {
-        return createElementWithTag('div', {}, value);
-    }
-
-
-    /**
-     * @param  {string} [value] to be filled
-     * @returns {HTMLElement} as input
-     */
-    getInputElement(value) {
-        return this._inputEl = /** @type {HTMLInputElement} */ (
-            createElementWithTag('input', { value }, [],
-                el => el.addEventListener('change', () => this.onInputChanged()))
-        );
-    }
-
-    /**
-     * @returns {*} from the input
-     */
-    getInputValue() {
-        return this._inputEl.value;
-    }
 }
 
-defineCustomElement(XIoAbstract);
+defineCustomElement(XIoString);

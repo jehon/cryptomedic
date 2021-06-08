@@ -1,8 +1,8 @@
 
 import { createElementWithTag, defineCustomElement } from '../../js/custom-element.js';
-import XIoAbstract from './x-io-string.js';
+import XIoString from './x-io-string.js';
 
-class XIoBoolean extends XIoAbstract {
+export default class XIoText extends XIoString {
     /**
      * @override
      */
@@ -22,4 +22,4 @@ class XIoBoolean extends XIoAbstract {
     }
 }
 
-defineCustomElement(XIoBoolean);
+defineCustomElement(XIoText);
