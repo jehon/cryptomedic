@@ -1,38 +1,54 @@
 
-import { defineCustomElement } from '../../js/custom-element.js';
+import { createElementWithObject, createElementWithTag, defineCustomElement } from '../../js/custom-element.js';
 import { routeToFolderPatient } from '../../js/router.js';
-import setPropertyOn from '../../js/set-property.js';
 import XWithFolder from './x-with-folder.js';
-import '../style/x-group-panel.js';
-import '../file/x-fff-field.js';
+import XGroupPanel from '../style/x-group-panel.js';
+import XLabel from '../style/x-label.js';
+import XForm from '../func/x-form.js';
+import XIoString from '../io/x-io-string.js';
 
 export default class XFfPatientRelated extends XWithFolder {
+    /** @type {XForm} */
+    _form
+
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
         // this.style.width = '100%';
-        this.shadowRoot.innerHTML = `
-            <x-group-panel class='related' title='Related Patient'>
-                <div slot='versal'>
-                    <img src="/static/img/patient.gif">
-                </div>
-                <x-fff-field label='Reference' field='entryorder'>
-                    <div></div>
-                </x-fff-field>
-                <x-fff-field field='Name'></x-fff-field>
-                <x-fff-field field='Yearofbirth'></x-fff-field>
-                <x-fff-field field='Sex'></x-fff-field>
-            </x-group-panel>`;
-
+        this.shadowRoot.innerHTML = '';
+        this.shadowRoot.append(
+            createElementWithObject(XGroupPanel, { class: 'related', title: 'Related patient' }, [
+                createElementWithTag('div', { slot: 'versal' }, [
+                    createElementWithTag('img', { src: '/static/img/patient.gif' })
+                ]),
+                this._form = createElementWithObject(XForm, { white: true }, [
+                    createElementWithObject(XLabel, { label: 'Reference' }, [
+                        createElementWithTag('div', {}, [
+                            createElementWithObject(XIoString, { name: 'entryorder', style: { display: 'inline-block' } }),
+                            '-',
+                            createElementWithObject(XIoString, { name: 'entryyear', style: { display: 'inline-block' } }),
+                        ])
+                    ]),
+                    createElementWithObject(XLabel, { label: 'Name' }, [
+                        createElementWithObject(XIoString, { name: 'Name' })
+                    ]),
+                    createElementWithObject(XLabel, { label: 'Year of Birth' }, [
+                        createElementWithObject(XIoString, { name: 'Yearofbirth' })
+                    ]),
+                    createElementWithObject(XLabel, { label: 'Sex' }, [
+                        createElementWithObject(XIoString, { name: 'Sex' })
+                    ])
+                ])
+            ])
+        );
         this.addEventListener('click', () => routeToFolderPatient(this.folder.getId()));
     }
 
     adapt() {
         const patient = this.folder.getPatient();
+        this._form.setValues(patient);
         const pen = `${patient.entryyear}-${patient.entryorder}`;
         this.setAttribute('patient-entry-number', pen);
-        setPropertyOn(this, 'file', patient);
-        this.shadowRoot.querySelector('[field=entryorder]').innerHTML = pen;
     }
 }
 
