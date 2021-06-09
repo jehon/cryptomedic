@@ -8,7 +8,9 @@ export default class XI18n extends HTMLElement {
 
     attributeChangedCallback(_attributeName, _oldValue, newValue) {
         if (newValue) {
-            this.innerHTML = newValue.split(/(?=[A-Z]+[a-z])/).join(' ');
+            this.innerHTML = newValue
+                .split('_').join(' ')
+                .split(/(?=[A-Z]+[a-z])/).join(' ');
         } else {
             this.innerHTML = '';
         }
