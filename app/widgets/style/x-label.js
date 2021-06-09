@@ -8,7 +8,7 @@ import XI18n from '../func/x-i18n.js';
  * - empty (readonly)
  *
  * Slots:
- * - *:
+ * - * (can be multiple)
  * - right
  * - left
  * - stat
@@ -18,13 +18,13 @@ import XI18n from '../func/x-i18n.js';
  *    | label    | default  |
  *    +----------+----------+
  *
- *    +----------+------------+-----------+
- *    | label    | (R) right  | (L) left  |
- *    +----------+------------+-----------+
+ *    +----------+-------------+------------+
+ *    | label    | (R) right   | (L) left   |
+ *    +----------+-------------+------------+
  *
- *    +----------+------------++-----------+
- *    | label    | default    || stat      |
- *    +----------+------------++-----------+
+ *    +----------+-------------++-----------+
+ *    | label    | default+    || stat      |
+ *    +----------+-------------++-----------+
  *
  */
 export default class XLabel extends HTMLElement {

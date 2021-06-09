@@ -11,7 +11,6 @@ import '../func/x-buttons.js';
 import { messages } from '../../config.js';
 import XButton from '../style/x-button.js';
 
-
 // TODO: better layout for without appointment
 
 export default class XFfNextAppointment extends XWithFolder {
