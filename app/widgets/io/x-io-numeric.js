@@ -8,11 +8,12 @@ export default class XIoNumeric extends XIoString {
      */
     getInputElement(value) {
         const el = super.getInputElement(value);
-        el.setAttribute('type', 'numeric');
+        el.setAttribute('type', 'number');
         copyAttributes(this, el, {
-            min: '0',
+            min: 0,
             max: '',
-            step: '1'
+            step: 1,
+            size: 3
         });
         return el;
     }

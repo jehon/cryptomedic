@@ -15,7 +15,7 @@ import { createElementWithTag, defineCustomElement } from '../../js/custom-eleme
  */
 export default class XIoString extends HTMLElement {
     static get observedAttributes() {
-        return ['mode', 'value'];
+        return ['input', 'value'];
     }
 
     /** @type {HTMLInputElement} */
@@ -38,12 +38,12 @@ export default class XIoString extends HTMLElement {
                 break;
         }
 
-        // always adapt...
+        // Always adapt...
         this.adapt();
     }
 
     isInputMode() {
-        return this.hasAttribute('mode') && this.getAttribute('mode') == 'input';
+        return this.hasAttribute('input');
     }
 
     /**

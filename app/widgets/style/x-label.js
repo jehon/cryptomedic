@@ -74,7 +74,7 @@ export default class XLabel extends HTMLElement {
     ::slotted(*) {
         flex-grow: 1;
         flex-shrink: 0;
-        flex-basis: 100px;
+        flex-basis: 50px;
     }
 
     ::slotted([slot=right]):before {
