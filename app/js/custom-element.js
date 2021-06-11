@@ -142,17 +142,17 @@ export function isEventOutOfSlot(event, slot) {
  *
  * @param {HTMLElement} from element
  * @param {HTMLElement} to element
- * @param {Object<string, string>} list of attribute to be copied (with default value - empty mean no default)
+ * @param {Object<string, (string|boolean|number)>} list of attribute to be copied (with default value - empty mean no default)
  */
 export function copyAttributes(from, to, list) {
-    for (const k in Object.keys(list)) {
+    for (const k of Object.keys(list)) {
         if (from.hasAttribute(k)) {
-            to.setAttribute(k, from.getAttribute('k'));
+            to.setAttribute(k, from.getAttribute(k));
         } else {
-            if (list[k]) {
-                to.setAttribute(k, list[k]);
-            } else {
+            if (list[k] === false || list[k] === null || list[k] === undefined) {
                 to.removeAttribute(k);
+            } else {
+                to.setAttribute(k, '' + list[k]);
             }
         }
     }
