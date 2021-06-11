@@ -7,7 +7,6 @@
 # Stop on error
 # Thanks to https://unix.stackexchange.com/a/462157/240487
 set -o errexit
-set -o functrace
 set -o pipefail
 
 CR_SCRIPT_DIR="$(dirname "${BASH_SOURCE[0]}")"
@@ -17,13 +16,15 @@ CR_SCRIPT_DIR="$(dirname "${BASH_SOURCE[0]}")"
 
 cr-ensure-started
 
-failure() {
-	set +o functrace
-	echo "Failed at $1: $2"
-}
-trap 'failure ${LINENO} "$BASH_COMMAND"' ERR
+LOG="$CR_TMP/sftp.log"
+REMOTE_LISTING="$CR_TMP"/deploy-remote.txt
+truncate --size=0 "$LOG"
+# We use this file in lftp_mkdir
+truncate --size=0 "$REMOTE_LISTING"
 
-CRYPTOMEDIC_UPLOAD_HOST="ftp.cluster003.ovh.net"
+export CRYPTOMEDIC_UPLOAD_HOST="ftp.cluster003.ovh.net"
+export CRYPTOMEDIC_HTTP_HOST="www.cryptomedic.org"
+
 if [ -z "$CRYPTOMEDIC_UPLOAD_USER" ]; then
 	echo "Missing CRYPTOMEDIC_UPLOAD_USER" >&2
 	exit 255
@@ -48,13 +49,11 @@ lftp_connect() {
 	echo "open -u $CRYPTOMEDIC_UPLOAD_USER,$CRYPTOMEDIC_UPLOAD_PASSWORD $CRYPTOMEDIC_UPLOAD_HOST"
 }
 
-rm -f sftp.log
-
 sftp_exec() {
 	SSHPASS="$CRYPTOMEDIC_UPLOAD_PASSWORD" sshpass -e \
 		sftp "$CRYPTOMEDIC_UPLOAD_USER@$CRYPTOMEDIC_UPLOAD_HOST" \
 		2>&1 |
-		tee -a sftp.log |
+		tee -a "$LOG" |
 		grep -v "Connected to" |
 		grep -v "Couldn't create directory" |
 		(grep -v "^sftp" || [[ $? == 1 ]]) |
@@ -65,49 +64,66 @@ sftp_exec() {
 				return 1
 			fi
 		done
-	echo "**********" >>sftp.log
+	echo "**********" >>"$LOG"
+}
+
+sftp_mkdir() {
+	if [ "$1" = "." ]; then
+		return
+	fi
+
+	if [ -r "$REMOTE_LISTING" ]; then
+		if grep ": /$1" "$REMOTE_LISTING" >/dev/null 2>&1; then
+			echo "# mkdir $1: already exists"
+			# It already exists (there is a file in it)
+			return
+		fi
+	fi
+
+	sftp_mkdir "$(dirname "$1")"
+	echo "mkdir \"$1\""
 }
 
 sftp_put() {
-	dir="$(dirname "$1")"
-	while [ "$dir" != "." ]; do
-		echo "mkdir \"$dir\""
-		dir="$(dirname "$dir")"
-	done
-
+	sftp_mkdir "$(dirname "$1")"
 	echo "put \"$1\" \"$1\""
 }
 
 sftp_rm() {
-	echo "rm \"$file\""
+	echo "rm \"$1\""
 }
 
 echo ""
-echo "Updating md5sum.php script [for real]"
+header "Updating md5sum.php script [for real]"
 (
+	echo "version"
 	sftp_put www/maintenance/md5sum.php
 	sftp_put deploy-filter
-	sftp_rm www/api/v1.3/bootstrap/cache/packages.php
-	sftp_rm www/api/v1.3/bootstrap/cache/services.php
 ) | sftp_exec
+header_finished
 
-echo "Getting the md5 from local"
+header "Getting the md5 from local"
 wget --quiet --content-on-error "http://localhost:${CRYPTOMEDIC_PORT:-5080}/maintenance/md5sum.php?filter=local" -O "$CR_TMP"/deploy-local.txt
+header_finished
 
-echo "Getting the md5 from remote"
-wget --quiet --content-on-error "http://www.cryptomedic.org/maintenance/md5sum.php?filter=remote" -O "$CR_TMP"/deploy-remote.txt
-
-echo "Sorting local file"
+header "Sorting local file"
 sort --stable "$CR_TMP"/deploy-local.txt >"$CR_TMP"/deploy-local.sorted.txt
+header_finished
 
-echo "Sorting remote file"
-sort --stable "$CR_TMP"/deploy-remote.txt >"$CR_TMP"/deploy-remote.sorted.txt
+header "Getting the md5 from remote"
+wget --quiet --content-on-error "http://www.cryptomedic.org/maintenance/md5sum.php?filter=remote" -O "$REMOTE_LISTING"
+header_finished
 
-if diff -u "$CR_TMP"/deploy-remote.sorted.txt "$CR_TMP"/deploy-local.sorted.txt; then
+header "Sorting remote file"
+sort --stable "$REMOTE_LISTING" >"$CR_TMP"/deploy-remote.sorted.txt
+header_finished
+
+if diff -q "$CR_TMP"/deploy-remote.sorted.txt "$CR_TMP"/deploy-local.sorted.txt; then
 	echo "No diff found"
 	exit 0
 fi
-echo "Building the diff"
+
+header "Building the diff"
 {
 	diff -u "$CR_TMP"/deploy-remote.sorted.txt "$CR_TMP"/deploy-local.sorted.txt || true
 } | tee "$CR_TMP"/deploy-diff-1-raw.txt |
@@ -124,6 +140,7 @@ echo "Building the diff"
 			fi
 		done
 	} >"$CR_TMP"/deploy-diff-5-sftp-commands.txt
+header_finished
 
 if [ -r "$CR_TMP"/deploy-diff-4-sorted.txt ]; then
 	echo "-------------- Differences --------------"
@@ -135,8 +152,9 @@ if [ -r "$CR_TMP"/deploy-diff-4-sorted.txt ]; then
 	echo "-------------- Differences --------------"
 
 	if [ "$1" == "commit" ]; then
-		echo "*** Commiting ***"
+		header "Commiting"
 		sftp_exec <"$CR_TMP"/deploy-diff-5-sftp-commands.txt
+		header_finished
 	else
 		echo "!!!!!!!!!!!!!!!!!!! TEST MODE !!!!!!!!!!!!!!!!!!!!!!"
 		echo "!!!!!!!!!!!!!!!!!!! TEST MODE !!!!!!!!!!!!!!!!!!!!!!"
@@ -152,12 +170,10 @@ if [ -r "$CR_TMP"/deploy-diff-4-sorted.txt ]; then
 	fi
 fi
 
-# Variable necessary for refresh.sh scripts
-export CRYPTOMEDIC_HTTP_HOST="www.cryptomedic.org"
-export CRYPTOMEDIC_DB_UPGRADE
+sleep 2
 
+header "Refreshing structure"
 "$CR_SCRIPT_DIR/"cr-refresh-structure
+header_finished
 
-echo "*** End ***"
-echo "*** End ***"
 echo "*** End ***"
