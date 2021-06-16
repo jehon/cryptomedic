@@ -6,19 +6,32 @@ export default class XIoText extends XIoString {
     /**
      * @override
      */
-    getInputElement(value) {
-        return this._inputEl = /** @type {HTMLInputElement} */ (createElementWithTag('textarea', {
-            value,
-            cols: 40,
-            rows: 4
-        }));
+    goInputMode() {
+        this.setElements(
+            createElementWithTag('textarea',
+                {
+                    style: { width: '100%' },
+                    rows: 4
+                }, [],
+                el => el.addEventListener('change',
+                    () => this.dispatchChange(/** @type {HTMLInputElement} */(el).value))
+            )
+        );
     }
 
     /**
      * @override
      */
-    getOutputElement(value) {
-        return createElementWithTag('span', { style: { whiteSpace: 'pre' } }, value);
+    goOutputMode() {
+        super.goOutputMode();
+        this.getRootElement().style.whiteSpace = 'pre';
+    }
+
+    setInputValue(val) {
+        const el = this.getRootElement().querySelector('textarea');
+        if (el) {
+            el.innerHTML = val;
+        }
     }
 }
 

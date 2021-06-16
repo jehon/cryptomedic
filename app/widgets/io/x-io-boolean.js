@@ -3,32 +3,28 @@ import { createElementWithTag, defineCustomElement } from '../../js/custom-eleme
 import XIoString from './x-io-string.js';
 
 export default class XIoBoolean extends XIoString {
-
-    /** @type {HTMLInputElement} */
-    _inputEl
-
-    /**
-     * @override
-     */
-    getOutputElement(value) {
-        return createElementWithTag('img', { src: `/static/img/boolean-${value ? 'true' : 'false'}.gif` });
+    setOutputValue(newValue) {
+        this.setElements(
+            createElementWithTag('img', { src: `/static/img/boolean-${newValue ? 'true' : 'false'}.gif` })
+        );
     }
 
     /**
      * @override
      */
-    getInputElement(value) {
-        return this._inputEl = /** @type {HTMLInputElement} */ (createElementWithTag('input', {
+    goInputMode() {
+        this.setElements(createElementWithTag('input', {
             type: 'checkbox',
-            checked: !!value
-        }, [], el => el.addEventListener('click', () => this.onInputChange())));
+        }, [], el => el.addEventListener('click',
+            () => this.dispatchChange(/** @type {HTMLInputElement} */(el).checked)))
+        );
     }
 
     /**
      * @override
      */
-    getInputValue() {
-        return this._inputEl.checked;
+    setInputValue(val) {
+        this.getRootElement().querySelector('input').checked = !!val;
     }
 }
 
