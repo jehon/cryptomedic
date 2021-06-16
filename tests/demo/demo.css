@@ -5,7 +5,7 @@ body {
 }
 
 body > * {
-	--box-width: 300px;
+	--box-width: 320px;
 	--margin-width: 10px;
 
 	box-sizing: border-box;
@@ -15,7 +15,7 @@ body > * {
 }
 
 xx-test {
-	height: 300px;
+	height: 500px;
 }
 
 body > h1 {
