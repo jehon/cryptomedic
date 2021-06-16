@@ -9,6 +9,8 @@ import getDataService from '../js/getDataService.js';
 import { getSession, onSession } from '../js/session.js';
 import XFffSalaryRatio from '../widgets/file/x-fff-salary-ratio.js';
 
+import XFolderBill from '../pages/blocks/x-folder-bill.js';
+
 /**
  * @param $scope
  * @param $element
@@ -19,6 +21,16 @@ export default function ctrl_file_bill($scope, $element) {
           getSession().prices
     */
 
+    /**
+     * @returns {XFolderBill|Object}
+     */
+    const getXFolderBill = function () {
+        // We return {} in case we are not installed in the "bill_fiche"
+        //   => feature switch :-)
+
+        return /** @type {XFolderBill} */ (document.querySelector('x-folder-bill')) ?? {};
+    }
+    getXFolderBill().currentFile = $scope.currentFile();
 
     const getPrices = function () {
         const definitions = getSession();
@@ -36,6 +48,7 @@ export default function ctrl_file_bill($scope, $element) {
             } catch (e) { }
         }
         $scope.safeApply();
+        getXFolderBill().allPrices = getPrices();
     });
 
     const dateElement = $element[0].querySelector('[name=Date]');

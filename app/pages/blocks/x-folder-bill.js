@@ -1,6 +1,7 @@
 
 import { defineCustomElement } from '../../js/custom-element.js';
-// import XBillLine from '../../widgets/x-bill-line.js';
+import '../../widgets/io/x-io-bill.js';
+import '../../widgets/style/x-label.js';
 
 /**
  * @typedef {import('../../widgets/io/x-io-numeric.js')} XIoNumeric
@@ -76,20 +77,17 @@ export default class XFolderBill extends HTMLElement {
 
         setTimeout(() => {
             // Let some time to angular to render the stuff
-            for (const e of this.querySelectorAll('x-bill-line[price-name]')) {
-                const pn = e.getAttribute('price-name');
-                e.setAttribute('price', '' + selectedPrice[pn]);
+            for (const e of this.querySelectorAll('x-io-bill[name]')) {
+                const n = e.getAttribute('name');
+                e.setAttribute('price', '' + selectedPrice[n]);
+                // e.value = this._currentFile[n];
+
                 if (this._edit) {
                     e.setAttribute('input', 'input');
                 } else {
                     e.removeAttribute('input');
                 }
-            }
 
-            for (const e of this.querySelectorAll('x-io-numeric[name]')) {
-                const xio = /** @type {XIoNumeric} */ /** @type {*} */ (e);
-                const pn = xio.getAttribute('name');
-                xio.value = this._currentFile[pn];
             }
         }, 1000);
     }
