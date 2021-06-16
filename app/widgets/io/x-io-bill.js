@@ -1,6 +1,7 @@
 
 import { createElementWithObject, createElementWithTag, defineCustomElement } from '../../js/custom-element.js';
 import XIoNumeric from './x-io-numeric.js';
+import XIoString from './x-io-string.js';
 
 /**
  * attributes:
@@ -20,7 +21,7 @@ import XIoNumeric from './x-io-numeric.js';
  */
 export default class XIoBill extends XIoNumeric {
     static get observedAttributes() {
-        return [...XIoNumeric.observedAttributes, 'price'];
+        return [...XIoString.observedAttributes, 'price'];
     }
 
     /**
@@ -43,52 +44,84 @@ export default class XIoBill extends XIoNumeric {
 
     constructor() {
         super();
-        this.updatePrice();
-    }
-
-    getOutputElement(value) {
-        const el = createElementWithTag('div', {}, [
+        this.setElements(
             createElementWithTag('style', {}, `
-        :host([no-available]) {
-            display: none;
+
+        :host([unavailable]) {
+            visibility: hidden;
+            position: relative;
         }
 
-        :host(:not([input]):not([total])) {
-            display: none;
+        :host([unavailable]):before {
+            visibility: visible;
+            position: absolute;
+            top: 0;
+            left: 0;
+            content: "unavailable";
+            color: red;
         }
 
-        span {
-            flex-grow: 0;
-            flex-basis: 2em;
+        ${this.getRootCssSelector()} {
+            display: flex;
+            padding-right: 20px;
         }
 
-        * {
+        ${this.getRootCssSelector()} > * {
+            flex-grow: 1;
+            flex-basis: 1em;
             text-align: right;
         }
 
-        .total {
-            padding-right: 20px;
+        ${this.getRootCssSelector()} > span {
+            flex-grow: 0;
+            text-align: center;
         }
     `),
             this._priceEl = createElementWithTag('div', {}, '' + this._price),
             createElementWithTag('span', {}, 'x'),
-            this._xIoNumericEl = createElementWithObject(XIoNumeric, { value }, [],
-                el => el.addEventListener('change', () => this.totalChanged())),
+            this._xIoNumericEl = createElementWithObject(XIoNumeric, {}, [],
+                el => el.addEventListener('change', () => this.dispatchTotalChanged())),
             createElementWithTag('span', {}, '='),
             this._totalEl = createElementWithTag('div', { class: 'total' }, '0')
-        ]);
+        );
         this.updatePrice();
-        return el;
     }
 
-    getInputElement(value) {
-        const el = this.getOutputElement(value);
-        this._xIoNumericEl.setAttribute('input', 'input');
-        return el;
+    /**
+     * @override
+     */
+    goOutputMode() {
+        if (this._xIoNumericEl) {
+            this._xIoNumericEl.removeAttribute('input');
+        }
     }
 
-    getInputValue() {
-        return this._xIoNumericEl.value;
+    /**
+     * @override
+     */
+    setOutputValue(val) {
+        if (this._xIoNumericEl) {
+            this._xIoNumericEl.value = val;
+        }
+    }
+
+    /**
+     * @override
+     */
+    goInputMode() {
+        if (this._xIoNumericEl) {
+            this._xIoNumericEl.setAttribute('input', 'input');
+        }
+        this.updatePrice();
+    }
+
+    /**
+     * @override
+     */
+    setInputValue(val) {
+        if (this._xIoNumericEl) {
+            this._xIoNumericEl.value = val;
+        }
     }
 
     //
@@ -97,7 +130,8 @@ export default class XIoBill extends XIoNumeric {
     //
     //
 
-    attributeChangedCallback(attributeName, _oldValue, newValue) {
+    attributeChangedCallback(attributeName, oldValue, newValue) {
+        super.attributeChangedCallback(attributeName, oldValue, newValue);
         switch (attributeName) {
             case 'price':
                 this._price = parseInt(newValue);
@@ -110,11 +144,11 @@ export default class XIoBill extends XIoNumeric {
         this._priceEl.innerHTML = '' + this._price;
 
         if (this._price < 1) {
-            this.setAttribute('no-available', '' + this._price);
+            this.setAttribute('unavailable', '' + this._price);
         } else {
-            this.removeAttribute('no-available');
+            this.removeAttribute('unavailable');
         }
-        this.totalChanged();
+        this.dispatchTotalChanged();
     }
 
     /**
@@ -123,10 +157,11 @@ export default class XIoBill extends XIoNumeric {
      * @returns {number} of the total (cost) of the line
      */
     get total() {
-        return Math.max(0, this._price * this._input.value);
+        return Math.max(0, this._price * this._xIoNumericEl.value);
     }
 
-    totalChanged() {
+    dispatchTotalChanged() {
+        this.dispatchChange(this._xIoNumericEl.value);
         this._totalEl.innerHTML = '' + this.total;
         if (this.total > 0) {
             this.setAttribute('total', '' + this.total);

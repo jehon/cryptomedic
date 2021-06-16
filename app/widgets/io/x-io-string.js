@@ -3,59 +3,163 @@ import { createElementWithTag, defineCustomElement } from '../../js/custom-eleme
 
 /**
  * Attributes:
- *  - value
- *  - mode
+ *  - value (write only)
+ *  - input (boolean)
+ *  - empty (readonly)
  *
  *  - readonly (todo)
  *  - required (todo)
  *  - placeholder (todo)
  *
- *  - empty (readonly)
  *
+ * Properties
+ *  - value (also set by attribute)
+ *
+ * Events:
+ *  - mode
+ *  - change
  */
 export default class XIoString extends HTMLElement {
     static get observedAttributes() {
         return ['input', 'value'];
     }
 
-    /** @type {HTMLInputElement} */
-    _inputEl
+    /** @type {HTMLElement} */
+    _rootEl
 
-    _initialValue
+    /** @type {string} */
+    _initialValue = '';
+
+    /** @type {string} */
+    _currentValue = '';
 
     constructor() {
         super();
+        this.setAttribute('x-io', 'x-io');
 
-        this.innerHTML = '';
-        this.value = this.getAttribute('value');
+        this.attachShadow({ mode: 'open' });
+        this.shadowRoot.append(
+            createElementWithTag('style', {}, `
+            ::slotted(input:not([type="checkbox"])) {
+                display: block;
+                width: 100%;
+
+                box-sizing: border-box;
+                margin: 0;
+                /* padding: 6px 12px; */
+
+                color: #555555;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+            }
+
+            ::slotted(input:focus) {
+                border-color: #66afe9;
+                box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, 0.6);
+            }
+
+            ::slotted(input:invalid) {
+                border-color: red;
+                box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, 0.6);
+            }
+            `),
+            this._rootEl = createElementWithTag('div', { id: 'root' })
+        );
+        this.goOutputMode();
+        this.dispatchChange(this._initialValue);
+    }
+
+    /**
+     * @returns {string} as the root css selector
+     */
+    getRootCssSelector() {
+        return '#root';
+    }
+
+    /**
+     * @returns {HTMLElement} as the root element
+     */
+    getRootElement() {
+        return this._rootEl;
     }
 
     attributeChangedCallback(attributeName, _oldValue, newValue) {
         switch (attributeName) {
+            case 'input':
+                if (this.isInputMode()) {
+                    this.goInputMode();
+                } else {
+                    this.goOutputMode();
+                }
+                this.dispatchEvent(new CustomEvent('mode', { bubbles: true }));
+                break;
+
             case 'value':
-                /* Use the setter */
+                // Call the setter to have the same behavior
                 this.value = newValue;
                 break;
         }
-
-        // Always adapt...
-        this.adapt();
     }
+
+
+    /**
+     * @returns {*} as the initial value
+     */
+    getInitialValue() {
+        return this._initialValue;
+    }
+
+    //
+    //
+    // I/O Mode handling
+    //
+    //
 
     isInputMode() {
         return this.hasAttribute('input');
     }
 
     /**
-     * Set the value through properties
      *
-     * Used by XForm
-     *
-     * @see {XForm}
+     * @param {...HTMLElement}els to be inserted
      */
-    set value(val) {
-        this._initialValue = val;
-        this.adapt();
+    setElements(...els) {
+        this._rootEl.innerHTML = '';
+        this._rootEl.append(...els);
+    }
+
+    goInputMode() {
+        this.setElements(
+            createElementWithTag('input', { value: this.getInitialValue(), style: { width: '100%' } }, [],
+                el => el.addEventListener('change',
+                    () => this.dispatchChange(/** @type {HTMLInputElement} */(el).value))
+            )
+        );
+        this.setInputValue(this._initialValue);
+    }
+
+    goOutputMode() {
+        this.setElements(
+            createElementWithTag('div')
+        );
+        this.setOutputValue(this._initialValue);
+    }
+
+    //
+    //
+    // Value handling
+    //
+    //
+
+    set value(newValue) {
+        this._initialValue = newValue;
+        if (this.isInputMode()) {
+            this.setInputValue(newValue);
+        } else {
+            this.setOutputValue(newValue);
+        }
+        this.dispatchChange(newValue);
     }
 
     /**
@@ -64,64 +168,32 @@ export default class XIoString extends HTMLElement {
      * @returns {*} with the value
      */
     get value() {
-        if (this.isInputMode()) {
-            return this.getInputValue();
-        }
-        return this.getInitialValue();
+        return this._currentValue;
     }
 
-    getInitialValue() {
-        return this._initialValue;
+    setInputValue(val) {
+        const el = this.shadowRoot.querySelector('input');
+        if (el) {
+            el.setAttribute('value', val);
+        }
     }
 
-    adapt() {
-        if (this.getInitialValue()) {
-            // TODO: this should be done only in readonly mode
-            this.removeAttribute('empty');
-        } else {
-            this.setAttribute('empty', 'empty');
+    setOutputValue(val) {
+        const el = this.shadowRoot.querySelector('div');
+        if (el) {
+            el.innerHTML = val;
         }
-
-        this.innerHTML = '';
-        this.append(this.isInputMode()
-            ? this.getInputElement(this.getInitialValue())
-            : this.getOutputElement(this.getInitialValue())
-        );
-
-        this.onInputChange();
     }
 
     /**
      * To be called by child elements when element is changed
+     *
+     * @param {*} val to be set
      */
-    onInputChange() {
-        this.dispatchEvent(new CustomEvent('change', { bubbles: true, detail: this.value }));
-    }
-
-    /**
-     * @param  {string} value to be filled
-     * @returns {HTMLElement} as input
-     */
-    getOutputElement(value) {
-        return createElementWithTag('div', {}, '' + value);
-    }
-
-    /**
-     * @param  {string} value to be filled
-     * @returns {HTMLElement} as input
-     */
-    getInputElement(value) {
-        return this._inputEl = /** @type {HTMLInputElement} */ (
-            createElementWithTag('input', { value }, [],
-                el => el.addEventListener('change', () => this.onInputChange()))
-        );
-    }
-
-    /**
-     * @returns {*} from the input
-     */
-    getInputValue() {
-        return this._inputEl.value;
+    dispatchChange(val) {
+        this.toggleAttribute('empty', !this.getInitialValue());
+        this._currentValue = val;
+        this.dispatchEvent(new CustomEvent('change', { bubbles: true }));
     }
 
     /**
@@ -134,7 +206,10 @@ export default class XIoString extends HTMLElement {
      * @returns {boolean} if ok
      */
     checkValidity() {
-        return this._inputEl.checkValidity();
+        if (!this.isInputMode()) {
+            return true;
+        }
+        return this.querySelector('input').checkValidity();
     }
 
     /**
@@ -147,7 +222,10 @@ export default class XIoString extends HTMLElement {
      * @returns {boolean} if ok
      */
     reportValidity() {
-        return this._inputEl.reportValidity();
+        if (!this.isInputMode()) {
+            return true;
+        }
+        return this.querySelector('input').reportValidity();
     }
 }
 

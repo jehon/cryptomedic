@@ -97,6 +97,8 @@ export default class XLabel extends HTMLElement {
         font-weight: bold;
     }
 
+    /* TODO: this should be in x-io-string only */
+
     ::slotted(input:not([type="checkbox"])) {
         display: block;
         width: 100%;
@@ -135,20 +137,18 @@ export default class XLabel extends HTMLElement {
     }
 
     connectedCallback() {
-        this.addEventListener('change', () => {
-            /**
-             * If we have some "named" elements and that all of those are empty,
-             * then we hide usself
-             */
-            const namedElements = this.querySelectorAll('[name]').length;
-            const namedElementsEmpty = this.querySelectorAll('[name][empty]').length;
-            if (namedElements > 0 && namedElements == namedElementsEmpty) {
-                // TODO: this should be done in readonly mode
-                this.setAttribute('empty', 'empty');
-            } else {
-                this.removeAttribute('empty');
-            }
-        });
+        ['change', 'mode'].forEach(evt =>
+            this.addEventListener(evt, () => {
+                /**
+                 * If we have some "named" elements and that all of those are empty,
+                 * then we hide usself
+                 */
+
+                const namedElements = this.querySelectorAll('[name]');
+                const namedElementsEmpty = this.querySelectorAll('[name][empty]:not([input])');
+                this.toggleAttribute('empty', (namedElements.length > 0 && namedElements.length == namedElementsEmpty.length));
+            })
+        );
     }
 }
 
