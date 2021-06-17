@@ -175,7 +175,7 @@ export default class XRequestor extends HTMLElement {
         ];
 
         if (error instanceof ServerRequestError) {
-            errorMsg.push(createElementWithObject(XLabel, { label: 'Status code' }, error.status));
+            errorMsg.push(createElementWithObject(XLabel, { label: 'Status code' }, '' + error.status));
             if (error.status == 401) {
                 // this will trigger a redirect to some login form or anything else
                 setSession();

@@ -24,7 +24,7 @@ export default class XIoBoolean extends XIoString {
      * @override
      */
     setInputValue(val) {
-        this.getRootElement().querySelector('input').checked = !!val;
+        this.onRootElement('input', el => el.checked = !!val);
     }
 }
 

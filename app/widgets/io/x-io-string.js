@@ -1,5 +1,5 @@
 
-import { createElementWithTag, defineCustomElement } from '../../js/custom-element.js';
+import { copyAttributes, createElementWithTag, defineCustomElement } from '../../js/custom-element.js';
 
 /**
  * Attributes:
@@ -21,7 +21,14 @@ import { createElementWithTag, defineCustomElement } from '../../js/custom-eleme
  */
 export default class XIoString extends HTMLElement {
     static get observedAttributes() {
-        return ['input', 'value'];
+        return ['input', 'value', ...this.transmissibleAttributesWithDefaultValues];
+    }
+
+    /**
+     * @type {Array<string>} as name of attributes that need to be copied
+     */
+    static get transmissibleAttributesWithDefaultValues() {
+        return ['type', 'required', 'autofocus', 'placeholder'];
     }
 
     /** @type {HTMLElement} */
@@ -84,7 +91,24 @@ export default class XIoString extends HTMLElement {
         return this._rootEl;
     }
 
+    /**
+     * Apply callback on each found element
+     *
+     * @param {string} selector based on root element
+     * @param {function(HTMLElement): any} cb to apply on each found element
+     * @returns {Array<*>} as the results of each function
+     */
+    onRootElement(selector, cb) {
+        return Array.from(this.getRootElement().querySelectorAll(selector))
+            .map(el => cb(el));
+    }
+
+
     attributeChangedCallback(attributeName, _oldValue, newValue) {
+        if (this.constructor.transmissibleAttributesWithDefaultValues.includes(attributeName)) {
+            this.onRootElement('input', el => el.setAttribute(attributeName, newValue));
+            return;
+        }
         switch (attributeName) {
             case 'input':
                 if (this.isInputMode()) {
@@ -125,17 +149,23 @@ export default class XIoString extends HTMLElement {
      * @param {...HTMLElement}els to be inserted
      */
     setElements(...els) {
-        this._rootEl.innerHTML = '';
-        this._rootEl.append(...els);
+        this.getRootElement().innerHTML = '';
+        this.getRootElement().append(...els);
     }
 
     goInputMode() {
         this.setElements(
             createElementWithTag('input', { value: this.getInitialValue(), style: { width: '100%' } }, [],
-                el => el.addEventListener('change',
-                    () => this.dispatchChange(/** @type {HTMLInputElement} */(el).value))
+                el => {
+                    el.addEventListener('change',
+                        () => this.dispatchChange(/** @type {HTMLInputElement} */(el).value));
+                    el.addEventListener('blur',
+                        () => this.dispatchChange(/** @type {HTMLInputElement} */(el).value));
+                    copyAttributes(this, el, this.constructor.transmissibleAttributesWithDefaultValues);
+                }
             )
         );
+
         this.setInputValue(this._initialValue);
     }
 
@@ -168,14 +198,10 @@ export default class XIoString extends HTMLElement {
      * @returns {*} with the value
      */
     get value() {
-        return this._currentValue;
-    }
-
-    setInputValue(val) {
-        const el = this.shadowRoot.querySelector('input');
-        if (el) {
-            el.setAttribute('value', val);
+        if (this.isInputMode()) {
+            return this.getInputValue();
         }
+        return this._initialValue;
     }
 
     setOutputValue(val) {
@@ -185,14 +211,24 @@ export default class XIoString extends HTMLElement {
         }
     }
 
+    setInputValue(val) {
+        const el = this.shadowRoot.querySelector('input');
+        if (el) {
+            el.setAttribute('value', val);
+        }
+    }
+
+    getInputValue() {
+        return this.onRootElement('input', el => el.value)[0];
+    }
+
     /**
      * To be called by child elements when element is changed
      *
-     * @param {*} val to be set
+     * @param {*} _val to be set
      */
-    dispatchChange(val) {
+    dispatchChange(_val) {
         this.toggleAttribute('empty', !this.getInitialValue());
-        this._currentValue = val;
         this.dispatchEvent(new CustomEvent('change', { bubbles: true }));
     }
 
@@ -209,24 +245,26 @@ export default class XIoString extends HTMLElement {
         if (!this.isInputMode()) {
             return true;
         }
-        return this.querySelector('input').checkValidity();
+        return this.onRootElement('input', el => el.checkValidity())
+            .reduce((prev, curr) => prev & curr, true);
     }
 
-    /**
-     * reportValidity():
-     *   Returns true if the element's value passes validity checks; otherwise, returns false.
-     *
-     * (not used in cr code)
-     *
-     * @see https://developer.mozilla.org/en-US/docs/Web/API/HTMLFormElement/reportValidity
-     * @returns {boolean} if ok
-     */
-    reportValidity() {
-        if (!this.isInputMode()) {
-            return true;
-        }
-        return this.querySelector('input').reportValidity();
-    }
+    // /**
+    //  * reportValidity():
+    //  *   Returns true if the element's value passes validity checks; otherwise, returns false.
+    //  *
+    //  * (not used in cr code)
+    //  *
+    //  * @see https://developer.mozilla.org/en-US/docs/Web/API/HTMLFormElement/reportValidity
+    //  * @returns {boolean} if ok
+    //  */
+    // reportValidity() {
+    //     console.log('reportValidity');
+    //     if (!this.isInputMode()) {
+    //         return true;
+    //     }
+    //     return this.querySelector('input').reportValidity();
+    // }
 }
 
 defineCustomElement(XIoString);
