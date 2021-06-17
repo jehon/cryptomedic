@@ -24,14 +24,25 @@ export default class XIoText extends XIoString {
      */
     goOutputMode() {
         super.goOutputMode();
-        this.getRootElement().style.whiteSpace = 'pre';
+        this.onRootElement('textarea', el => {
+            el.style.whiteSpace = 'pre';
+        });
     }
 
+    /**
+     * @override
+     */
     setInputValue(val) {
-        const el = this.getRootElement().querySelector('textarea');
-        if (el) {
+        this.onRootElement('textarea', el => {
             el.innerHTML = val;
-        }
+        });
+    }
+
+    /**
+     * @override
+     */
+    getInputValue() {
+        return this.onRootElement('textarea', el => el.value)[0];
     }
 }
 

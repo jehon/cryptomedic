@@ -8,6 +8,10 @@ import XIoString from './x-io-string.js';
  *
  */
 export default class XIoNumeric extends XIoString {
+    static get transmissibleAttributesWithDefaultValues() {
+        return [ ...super.transmissibleAttributesWithDefaultValues, 'type', 'required', 'autofocus', 'placeholder'];
+    }
+
     constructor() {
         super();
 
@@ -57,12 +61,11 @@ export default class XIoNumeric extends XIoString {
      */
     goInputMode() {
         super.goInputMode();
-        const el = this.getRootElement().querySelector('input');
-        el.setAttribute('type', 'number');
-        copyAttributes(this, el, {
-            min: 0,
-            max: '',
-            step: 1
+        this.onRootElement('input', el => {
+            el.setAttribute('type', 'number');
+            el.setAttribute('step', '1');
+            el.setAttribute('min', '0');
+            copyAttributes(this, el, this.constructor.transmissibleAttributesWithDefaultValues);
         });
     }
 

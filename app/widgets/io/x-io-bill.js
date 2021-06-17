@@ -124,6 +124,10 @@ export default class XIoBill extends XIoNumeric {
         }
     }
 
+    getInputValue() {
+        return this._xIoNumericEl.value;
+    }
+
     //
     //
     // Price management

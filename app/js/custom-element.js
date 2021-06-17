@@ -76,11 +76,11 @@ export function createElementsFromHTML(html) {
  */
 export function enrichObject(el, attributes = {}, inner = [], callback = (_el) => { }) {
     if (typeof attributes != 'object' || Array.isArray(attributes)) {
-        console.error('Error in enrichObject ', el, ': attributes is not an object', attributes);
+        console.error('Error in enrichObject ', el, ': attributes is not an object', attributes, { type: typeof attributes, array: Array.isArray(attributes)});
     }
 
     if (typeof inner != 'string' && !Array.isArray(inner)) {
-        console.error('Error in enrichObject ', el, ': attributes is not an array', attributes);
+        console.error('Error in enrichObject ', el, ': inner is incorrect', inner);
     }
 
     for (const k of Object.keys(attributes)) {
@@ -142,18 +142,12 @@ export function isEventOutOfSlot(event, slot) {
  *
  * @param {HTMLElement} from element
  * @param {HTMLElement} to element
- * @param {Object<string, (string|boolean|number)>} list of attribute to be copied (with default value - empty mean no default)
+ * @param {Array<string>} list of attribute to be copied (with default value - empty mean no default)
  */
 export function copyAttributes(from, to, list) {
-    for (const k of Object.keys(list)) {
+    for (const k of list) {
         if (from.hasAttribute(k)) {
             to.setAttribute(k, from.getAttribute(k));
-        } else {
-            if (list[k] === false || list[k] === null || list[k] === undefined) {
-                to.removeAttribute(k);
-            } else {
-                to.setAttribute(k, '' + list[k]);
-            }
         }
     }
 }
