@@ -21,8 +21,8 @@ export function crApi(options = {}) {
  *
  * Please use crLogin.* constants for username
  *
- * @param {string?} username
- * @param {string?} password
+ * @param {string} [username]
+ * @param {string} [password]
  * @returns {string} the real user used
  */
 export function crApiLogin(username = null, password = null) {
@@ -74,8 +74,8 @@ export function crApiFolderGet(id) {
  * Delete a patient using the API
  *   !! It need to log as Admin to do that
  *
- * @param {string|number} entryyear  to be deleted
- * @param {string|number} entrynumber to be deleted
+ * @param {number} entryyear  to be deleted
+ * @param {number} entrynumber to be deleted
  */
 export function crApiPatientDelete(entryyear, entrynumber = 1000) {
     // Delete previously create user
@@ -108,7 +108,7 @@ export function crApiFicheModify(type, id, data) {
  * Delete a Fiche
  *
  * @param {string} type to be updated
- * @param {number|string} id to be updated
+ * @param {number} id to be updated
  */
 export function crApiFicheDelete(type, id) {
     // Modify a file

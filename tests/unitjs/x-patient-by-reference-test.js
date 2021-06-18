@@ -15,7 +15,7 @@ describe(fn(import.meta.url), function () {
         mockResponseWithSuccess({ id: 123 });
 
         element.querySelector('[name=entryyear]').value = '2000';
-        element.querySelector('[name=entryorder]').value = '4444';
+        element.querySelector('[name=entryorder]').value = '2100';
         await element.search();
         expect(element.getAttribute('status')).toBe('found');
         expect(getCurrentRoute()).toBe(getRouteToFolderPatient(123));
@@ -26,7 +26,7 @@ describe(fn(import.meta.url), function () {
         mockResponseWithSuccess({});
 
         element.querySelector('[name=entryyear]').value = '2000';
-        element.querySelector('[name=entryorder]').value = '4444';
+        element.querySelector('[name=entryorder]').value = '2100';
         await element.search();
         expect(element.getAttribute('status')).toBe('creation-proposed');
 

@@ -3,20 +3,26 @@ import { crPage, crReady } from './cr.js';
 
 /**
  * @param {object} patient
- * @property {number|string} entryyear of the patient
- * @property {number|string} entryorder of the patient
+ * @property {number} entryyear of the patient
+ * @property {number} entryorder of the patient
+ * @property {number} [id] of the patient
  * @returns {Cypress.Chainable} with the Page element
  */
 export function patientgo(patient) {
-    cy.visit('/build/');
 
-    cy.get('#menu_home').click();
+    if (patient.id) {
+        cy.visit(`/build/index.html#/folder/${patient.id}`);
+    } else {
+        cy.visit('/build/');
 
-    cy.get('x-patient-by-reference').within(() => {
-        cy.get('[name="entryyear"]').invoke('attr', 'value', patient.entryyear);
-        cy.get('[name="entryorder"]').invoke('attr', 'value', patient.entryorder);
-        cy.get(`x-button[action="${XButton.Search}"]`).click();
-    });
+        cy.get('#menu_home').click();
+
+        cy.get('x-patient-by-reference').within(() => {
+            cy.get('[name="entryyear"]').invoke('attr', 'value', patient.entryyear);
+            cy.get('[name="entryorder"]').invoke('attr', 'value', patient.entryorder);
+            cy.get(`x-button[action="${XButton.Search}"]`).click();
+        });
+    }
 
     crReady();
     cy.get('#Patient_entryyear').should('contain.text', patient.entryyear);
@@ -28,7 +34,10 @@ export function patientgo(patient) {
 
     return crPage();
 }
-
+/**
+ * @param {string} type of the fiel
+ * @param {number} id of the file
+ */
 export function patientSelectFile(type, id) {
     cy.get(`#folder_menu_${type}_${id}`).should('contain.text', type);
     cy.get(`#folder_menu_${type}_${id}`).click();
