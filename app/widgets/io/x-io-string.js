@@ -47,29 +47,53 @@ export default class XIoString extends HTMLElement {
         this.attachShadow({ mode: 'open' });
         this.shadowRoot.append(
             createElementWithTag('style', {}, `
-            ::slotted(input:not([type="checkbox"])) {
-                display: block;
-                width: 100%;
-
-                box-sizing: border-box;
-                margin: 0;
-                /* padding: 6px 12px; */
-
-                color: #555555;
-                border: 1px solid #ccc;
-                border-radius: 4px;
-                box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+            div#root {
+                align-items: center;
             }
 
-            ::slotted(input:focus) {
+            input, textarea, select {
+                display: block;
+                box-sizing: border-box;
+                xmargin: 0;
+                width: 100%;
+                /* height: calc(1.5em + .75rem + 2px); */
+
+                padding: .375rem .75rem;
+                font-weight: 400;
+                color: #495057;
+                background-color: #fff;
+                background-clip: padding-box;
+                border: 1px solid #ced4da;
+                border-radius: .25rem;
+
+                box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+
+                transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+            }
+
+            input:focus {
                 border-color: #66afe9;
                 box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, 0.6);
             }
 
-            ::slotted(input:invalid) {
+            input:invalid {
                 border-color: red;
                 box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, 0.6);
             }
+
+            input[type=checkbox] {
+                height: 1em;
+            }
+
+            input[required] {
+                border: 1px solid blue;
+            }
+
+            /*
+            *, ::after, ::before {
+                box-sizing: border-box;
+            }
+*/
             `),
             this._rootEl = createElementWithTag('div', { id: 'root' })
         );

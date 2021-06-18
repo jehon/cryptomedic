@@ -9,8 +9,8 @@ context('Actions', () => {
         guiHashStartWith('/login');
 
         crPage().within(() => {
-            cy.get('#username').type('murshed');
-            cy.get('#password').type('invalid');
+            cy.get('[name="username"]').invoke('attr', 'value', 'murshed');
+            cy.get('[name="password"]').invoke('attr', 'value', 'invalid');
             cy.get('x-button#submit').click();
 
             cy.get('x-page-login').find('x-form')

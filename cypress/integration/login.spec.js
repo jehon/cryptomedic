@@ -13,8 +13,8 @@ context('Actions', () => {
             cy.get('x-page-login').should('be.visible');
             cy.crCompareSnapshot('x-page-login');
 
-            cy.get('#username').type(crApiLogin.RO);
-            cy.get('#password').type('p');
+            cy.get('[name="username"]').invoke('attr', 'value', crApiLogin.RO);
+            cy.get('[name="password"]').invoke('attr', 'value', 'p');
             cy.get('x-button#submit').click();
         });
 
