@@ -2,6 +2,7 @@
 
 import { crApiLogin } from '../helpers/cr-api.js';
 import { crLoginInBackground } from '../helpers/cr.js';
+import { patientFilesRead2000_1, patientFilesRead2001_1, patientFilesRead2014_103, patientFilesRead2014_105 } from '../helpers/e2e-entrynumber-assigned.js';
 import { patientgo, patientSelectFile } from '../helpers/patients.js';
 import TableIterator from '../helpers/table-iterator.js';
 
@@ -11,7 +12,7 @@ context('Actions', () => {
     });
 
     it('read patient 2000-1', () => { // id: 1
-        patientgo({ entryyear: 2000, entryorder: 1 }).within(() => {
+        patientgo(patientFilesRead2000_1).within(() => {
             cy.get('#Patient_Name').should('contain.text', 'rezaul islam');
             cy.get('#Patient_Sex').should('contain.text', 'Male');
             cy.get('#Patient_District').should('contain.text', 'Chittagong');
@@ -68,7 +69,7 @@ context('Actions', () => {
     });
 
     it('read patient 2014-105', () => { // id: 5
-        patientgo({ entryyear: 2014, entryorder: 105 }).within(() => {
+        patientgo(patientFilesRead2014_105).within(() => {
             cy.get('#Patient_Upazilla').should('contain.text', 'Ukhia');
             cy.get('#Patient_Union_').should('contain.text', 'Jalia palong');
             cy.get('#Patient_Telephone').should('contain.text', '1813247984');
@@ -84,7 +85,7 @@ context('Actions', () => {
     });
 
     it('read patient 2001-1', () => { // id: 6
-        patientgo({ entryyear: 2001, entryorder: 1 }).within(() => {
+        patientgo(patientFilesRead2001_1).within(() => {
             patientSelectFile('RicketConsult', 3);
             // TODO: adapt the data and check them
             cy.get('#button_edit').should('not.exist');
@@ -94,7 +95,7 @@ context('Actions', () => {
     });
 
     it('read patient 2014-103', () => { // id: 3
-        patientgo({ entryyear: 2014, entryorder: 103 }).within(() => {
+        patientgo(patientFilesRead2014_103).within(() => {
             patientSelectFile('Bill', 2);
             new TableIterator('#paymentsList', { xtable: false })
                 .col(2).assert('Murshed')
