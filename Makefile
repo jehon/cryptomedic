@@ -72,7 +72,12 @@ dump-cypress:
 all: start
 
 clear:
-	clear
+	@clear
+	@echo "**"
+	@echo "**"
+	@echo "** Tests starting at $$(date) **"
+	@echo "**"
+	@echo "**"
 
 clean: deploy-unmount chmod
 # TODO: in dev ?
@@ -138,7 +143,7 @@ chmod:
 	cr-fix-permissions
 
 .PHONY: full
-full: clear start dependencies build test lint
+full: clear test lint
 
 #
 #
