@@ -10,8 +10,8 @@ context('Actions', () => {
 
         crPage().within(() => {
             // Login
-            cy.get('#username').type('murshed');
-            cy.get('#password').type('p');
+            cy.get('[name="username"]').invoke('attr', 'value', 'murshed');
+            cy.get('[name="password"]').invoke('attr', 'value', 'p');
             cy.get('x-button#submit').click();
             guiHashStartWith('/home');
         });
@@ -27,8 +27,8 @@ context('Actions', () => {
 
         crPage().within(() => {
             // Login back again
-            cy.get('#username').type('thierry');
-            cy.get('#password').type('p');
+            cy.get('[name="username"]').invoke('attr', 'value', 'thierry');
+            cy.get('[name="password"]').invoke('attr', 'value', 'p');
             cy.get('x-button#submit').click();
         });
 

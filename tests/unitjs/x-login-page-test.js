@@ -48,8 +48,8 @@ describe(fn(import.meta.url), function () {
         let xrequestor;
 
         beforeEach(() => {
-            element.querySelector('input[name="username"]').value = 'user';
-            element.querySelector('input[name="password"]').value = 'pass';
+            element.querySelector('[name="username"]').value = 'user';
+            element.querySelector('[name="password"]').value = 'pass';
             xrequestor = element.querySelector('x-requestor');
             expect(xrequestor).toBeDefined();
         });

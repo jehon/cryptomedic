@@ -8,6 +8,7 @@ import XButtons from '../../widgets/func/x-buttons.js';
 import XGroupPanel from '../../widgets/style/x-group-panel.js';
 import XLabel from '../../widgets/style/x-label.js';
 import XPanel from '../../widgets/style/x-panel.js';
+import XIoNumeric from '../../widgets/io/x-io-numeric.js';
 
 /**
  * Slot: none
@@ -35,10 +36,12 @@ export default class XPatientByReference extends HTMLElement {
                             createElementWithTag('div', { white: true }, 'Please enter the reference for the patient you want to see'),
                             createElementWithObject(XLabel, { label: 'Entry Year' },
                                 [
-                                    createElementWithTag('input', {
-                                        name: 'entryyear',
-                                        type: 'number',
+                                    createElementWithObject(XIoNumeric, {
+                                        name:'entryyear',
+                                        input: true,
                                         required: true,
+                                        min: '1990',
+                                        max: '2100',
                                         value: (new Date()).getFullYear()
                                     })
                                 ],
@@ -46,9 +49,9 @@ export default class XPatientByReference extends HTMLElement {
                             ),
                             createElementWithObject(XLabel, { label: 'Entry Order' },
                                 [
-                                    createElementWithTag('input', {
+                                    createElementWithObject(XIoNumeric, {
                                         name: 'entryorder',
-                                        type: 'number',
+                                        input: true,
                                         required: true,
                                         autofocus: true
                                     })

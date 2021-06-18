@@ -12,6 +12,7 @@ import XButtons from '../widgets/func/x-buttons.js';
 import XButton from '../widgets/style/x-button.js';
 import XGroupPanel from '../widgets/style/x-group-panel.js';
 import pageStyles from './page-helper.js';
+import XIoString from '../widgets/io/x-io-string.js';
 
 /**
  * attribute redirect - Where to redirect on login
@@ -38,10 +39,10 @@ export default class XPageLogin extends HTMLElement {
                             [
                                 createElementWithTag('h2', {}, 'Please sign in'),
                                 createElementWithObject(XLabel, { label: 'Username' }, [
-                                    createElementWithTag('input', { id: 'username', name: 'username', class: 'form-control', placeholder: 'Username', required: true, autofocus: true })
+                                    createElementWithObject(XIoString, { input: true, name: 'username', placeholder: 'Username', required: true, autofocus: true })
                                 ]),
                                 createElementWithObject(XLabel, { label: 'Password' }, [
-                                    createElementWithTag('input', { id: 'password', name: 'password', class: 'form-control', placeholder: 'Password', required: true, autofocus: true, type: 'password' })
+                                    createElementWithObject(XIoString, { input: true, name: 'password', placeholder: 'Password', required: true, autofocus: true, type: 'password' })
                                 ]),
                                 createElementWithObject(XButtons, { slot: 'buttons' }, [
                                     createElementWithObject(XButton, { id: 'submit' }, 'Login'),

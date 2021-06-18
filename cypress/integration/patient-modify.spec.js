@@ -23,12 +23,10 @@ context('Actions', () => {
         crApiPatientDelete(patientCrudCreateReference.entryyear, patientCrudCreateReference.entrynumber);
 
         cy.get('x-patient-by-reference').within((el) => {
-            cy.get('input[name=entryyear]')
-                .clear()
-                .type(patientCrudCreateReference.entryyear);
+            cy.get('[name=entryyear]')
+                .invoke('attr', 'value', patientCrudCreateReference.entryyear);
             cy.get('[name=entryorder]')
-                .clear()
-                .type(patientCrudCreateReference.entrynumber);
+                .invoke('attr', 'value', patientCrudCreateReference.entrynumber);
 
             cy.get(`x-button[action="${XButton.Search}"]`).click();
 
