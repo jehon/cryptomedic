@@ -157,7 +157,7 @@ class t {
             $this->listing
           ));
         }
-        $this->res .= "<x-write-list value='{{{$this->fieldGetKey()}}}' name='{$this->field}'"
+        $this->res .= "<x-write-list value='{{{$this->fieldGetKey()}}}' name='{$this->field}' "
           . "list-name='{$this->listingName}' "
           . "list='" . $jsonList . "' "
           . ($this->fieldIsRequired() ? "" : "nullable")
@@ -181,7 +181,7 @@ class t {
       case DatabaseStructure::TYPE_DATE:
         $this->res .= "<x-input-date id='{$this->jsId}' $inlineWithoutModel "
           . " value='{{" . $this->fieldGetKey() . "}}' "
-          . "/>";
+          . "></x-input-date>";
         break;
       default:
         $this->res .= "WW {$this->fieldGetType()} input ";
