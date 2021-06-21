@@ -10,19 +10,23 @@ import { crPage, crReady } from './cr.js';
  */
 export function patientgo(patient) {
 
-    if (patient.id) {
-        cy.visit(`/build/index.html#/folder/${patient.id}`);
-    } else {
-        cy.visit('/build/');
+    // if (patient.id) {
+    //     cy.visit(`/build/index.html#/folder/${patient.id}`);
+    // } else {
+    cy.visit('/build/');
 
-        cy.get('#menu_home').click();
+    cy.get('#menu_home').click();
 
-        cy.get('x-patient-by-reference').within(() => {
-            cy.get('[name="entryyear"]').invoke('attr', 'value', patient.entryyear);
-            cy.get('[name="entryorder"]').invoke('attr', 'value', patient.entryorder);
-            cy.get(`x-button[action="${XButton.Search}"]`).click();
-        });
-    }
+    cy.get('x-patient-by-reference').within(() => {
+        cy.get('[name="entryyear"]').invoke('attr', 'value', patient.entryyear);
+        cy.get('[name="entryorder"]').invoke('attr', 'value', patient.entryorder);
+        cy.get(`x-button[action="${XButton.Search}"]`).click();
+    });
+    // }
+
+
+    crReady();
+    cy.get('#folderpage').should('be.visible');
 
     crReady();
     cy.get('#Patient_entryyear').should('contain.text', patient.entryyear);
