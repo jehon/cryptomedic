@@ -82,12 +82,7 @@ export default class XFolderBill extends HTMLElement {
                 e.setAttribute('price', '' + selectedPrice[n]);
                 // e.value = this._currentFile[n];
 
-                if (this._edit) {
-                    e.setAttribute('input', 'input');
-                } else {
-                    e.removeAttribute('input');
-                }
-
+                e.toggleAttribute('input', this._edit);
             }
         }, 1000);
     }
