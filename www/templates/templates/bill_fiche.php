@@ -33,6 +33,10 @@ EOD;
   <div>{{currentFile().getTotalFor('$name')}}</div>
 </x-fff-field>
 EOD;
+    // <x-label label='$label'>
+    //   <x-io-bill name='$name' value='{{currentFile()["$name"]}}' t='currentFile()["$name"]'></x-io-bill>
+    // </x-label>
+
   }
 }
 ?>
@@ -53,7 +57,7 @@ EOD;
         <?php (new t("Bill.ExaminerName"))->tr2("Examiner")->p(); ?>
         <?php (new t("Bill.Center"))->tr2("Center where consultation took place")->p(); ?>
         <div class='debug_infos'>
-          price_id <?php (new t("Bill.price_id"))->read()->p(); ?><br>
+          price_id <?php (new t("Bill.price_id"))->read()->p(); ?>
         </div>
       </x-group-panel>
       <x-message ng-if='!currentFile().price' level='error' role="alert" id="errorNoDate">Please select a date first!</x-message>
@@ -104,7 +108,7 @@ EOD;
         <x-label label='Payment already received'>
           <input type='number' id='first_payment' ng-model='currentFile().first_payment'>
         </x-label>
-        <!-- TODO: migrate to x-fff-field
+        <!--
         <x-fff-field label='Payment already recieved' ng-if='!currentFile().id'>
           <div id='first_payment'>
             <input type='number' id='first_payment' ng-model='currentFile().first_payment'>
@@ -113,7 +117,8 @@ EOD;
       </x-group-panel>
     </div>
   </x-two-columns>
-  <br>
+
+  <br />
   <?php
   t::setDefaultOption("baseExpression", "paymentEditor.");
   t::setDefaultOption('writeOnly');
