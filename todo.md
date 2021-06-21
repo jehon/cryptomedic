@@ -15,3 +15,20 @@ Unify the objects (around "camelcase" plural ?):
 
 
 Firefox 90: private fields
+
+input:
+v x-page-login
+v x-patient-by-reference
+
+- bill_fiche
+
+- x-page-search
+- x-price-item-edit
+- patient_fiche
+- template-t
+
++ remove css from x-label
++ x-input-date
++ x-input-list
++ x-input-file
++ ... ?
