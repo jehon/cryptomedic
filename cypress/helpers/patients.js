@@ -1,5 +1,6 @@
 import XButton from '../../app/widgets/style/x-button.js';
 import { crPage, crReady } from './cr.js';
+import { guiHashStartWith } from './gui.js';
 
 /**
  * @param {object} patient
@@ -24,6 +25,9 @@ export function patientgo(patient) {
     });
     // }
 
+    if (patient.id)  {
+        guiHashStartWith(`/folder/${patient.id}`, true);
+    }
 
     crReady();
     cy.get('#folderpage').should('be.visible');
