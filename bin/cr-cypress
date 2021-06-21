@@ -52,7 +52,7 @@ header "Run tests"
 #
 # Hardcoded command is "run" (see https://github.com/cypress-io/cypress-docker-images/tree/master/included)
 #
-docker-compose run --rm -e CYPRESS_BASE_URL="http://server:80" --entrypoint=cypress cypress \
+time docker-compose run --rm -e CYPRESS_BASE_URL="http://server:80" --entrypoint=cypress cypress \
     run \
     "${CYPRESS_ARGS[@]}" \
     "$@"
