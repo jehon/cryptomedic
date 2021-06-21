@@ -8,6 +8,6 @@
     "reporterOptions": {
         "configFile": "cypress-reporters.json"
     },
-    "videoFolder": "tmp/e2e/desktop/video/",
+    "videosFolder": "tmp/e2e/desktop/videos/",
     "screenshotsFolder": "tmp/e2e/desktop/screenshots/"
 }
