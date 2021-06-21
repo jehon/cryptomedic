@@ -74,7 +74,7 @@ if (!function_exists("submenu")) {
   }
 }
 ?>
-<div class='container-fluid modeRead'>
+<div id="folderpage" class='container-fluid modeRead'>
   <div class='row'>
     <div id='folder_menu' ng-if="patient_id >= 0" class='col-sm-2'>
       <x-restricted restricted-by='folder.delete' style='width: 100%'>
