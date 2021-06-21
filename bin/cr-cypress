@@ -24,7 +24,7 @@ case "$FLAVOR" in
     # Mobile: 360 x 480
 
     CYPRESS_ARGS=(
-        --config "videosFolder=$ODOCKER/video,screenshotsFolder=$ODOCKER/screenshots,viewportWidth=360,viewportHeight=640"
+        --config "videosFolder=$ODOCKER/videos,screenshotsFolder=$ODOCKER/screenshots,viewportWidth=360,viewportHeight=640"
         --reporter-options configFile="cypress-reporters-mobile.json"
     )
     ;;
