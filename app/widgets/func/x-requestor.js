@@ -7,7 +7,6 @@ import { setSession } from '../../js/session.js';
 import { routeToLogin } from '../../js/router.js';
 
 import { createElementsFromHTML, createElementWithObject, createElementWithTag, defineCustomElement } from '../../js/custom-element.js';
-import { getBrowserDescription } from '../../js/browser.js';
 import '../../../node_modules/css-inherit/css-inherit.js';
 import XLabel from '../style/x-label.js';
 import { WithDataError } from '../../js/exceptions.js';
@@ -224,7 +223,7 @@ export function requestAndFilterBuilder(options, allowed = []) {
     };
 }
 
-class RequestCRUD {
+export class RequestCRUD {
     /** @type {string} */
     basePath
 
@@ -299,122 +298,16 @@ class RequestCRUD {
             data
         };
     }
-}
-
-/**
- * Build object for XRequestor#request
- *
- * @param {string} username of the request
- * @param {string} password of the request
- * @returns {object} options for request (see XRequestor#request)
- */
-export function loginRequestBuilder(username, password) {
-    return requestAndFilterBuilder({
-        url: 'auth/mylogin', method: 'POST',
-        data: { username, password, browser: getBrowserDescription() }
-    }, [404]);
-}
-
-/**
- * Build object for XRequestor#request
- *
- * @returns {object} options for request (see XRequestor#request)
- */
-export function loginCheckRequestBuilder() {
-    return requestAndFilterBuilder({
-        url: 'auth/settings', method: 'POST',
-        data: { browser: getBrowserDescription() }
-    }, [401]);
-}
-
-/**
- * Build object for XRequestor#request
- *
- * @returns {object} options for request (see XRequestor#request)
- */
-export function logoutBuilder() {
-    return {
-        url: `/api/${API_VERSION}/auth/logout`
-    };
-}
-
-/**
- * @param {number} entryyear to be checked
- * @param {number} entryorder to be checked
- * @returns {object} options for request (see XRequestor#request)
- */
-export function checkReferenceBuilder(entryyear, entryorder) {
-    return {
-        url: 'reference/' + entryyear + '/' + entryorder
-    };
-}
-
-
-/**
- * @param {number} entryyear to be checked
- * @param {number} entryorder to be checked
- * @returns {object} options for request (see XRequestor#request)
- */
-export function createReferenceBuilder(entryyear, entryorder) {
-    return {
-        method: 'POST',
-        url: 'reference',
-        data: {
-            entryyear,
-            entryorder
-        }
-    };
-}
-
-/**
- * @param {string} reportId name
- * @param {object} data describing the search
- * @returns {object} options for request (see XRequestor#request)
- */
-export function reportQueryBuilder(reportId, data) {
-    return {
-        url: 'reports/' + reportId,
-        data
-    };
-}
-
-/**
- * @param {object} data describing the search
- * @returns {object} options for request (see XRequestor#request)
- */
-export function patientSearchBuilder(data) {
-    return {
-        url: 'folder',
-        data
-    };
-}
-
-/**
- * Build up a users crud
- *
- * @returns {object} with the various commands
- */
-export function usersCrud() {
-    const crud = new RequestCRUD('users');
 
     /**
-     * @param {number} uid of the user
-     * @param {string} password to be set
+     * Unlock a file
+     *
+     * @param {number} id to be unlocked
      * @returns {object} options for request (see XRequestor#request)
      */
-    crud['updatePassword'] = (uid, password) => ({
-        url: `users/password/${uid}`,
-        method: 'POST',
-        data: { password }
-    });
-
-    return crud;
-}
-
-
-/**
- * @returns {RequestCRUD} for prices
- */
-export function pricesCrud() {
-    return new RequestCRUD('admin/prices');
+    unlock(id) {
+        return {
+            url: this.basePath + '/unlock/' + id
+        };
+    }
 }

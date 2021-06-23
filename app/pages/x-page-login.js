@@ -3,7 +3,7 @@ import { messages } from '../config.js';
 import { setRoute, parseRouteLogin } from '../js/router.js';
 import { setSession } from '../js/session.js';
 
-import XRequestor, { loginRequestBuilder, loginCheckRequestBuilder } from '../widgets/func/x-requestor.js';
+import XRequestor from '../widgets/func/x-requestor.js';
 import { createElementWithObject, createElementWithTag, defineCustomElement } from '../js/custom-element.js';
 import XForm from '../widgets/func/x-form.js';
 import XPanel from '../widgets/style/x-panel.js';
@@ -13,6 +13,7 @@ import XButton from '../widgets/style/x-button.js';
 import XGroupPanel from '../widgets/style/x-group-panel.js';
 import pageStyles from './page-helper.js';
 import XIoString from '../widgets/io/x-io-string.js';
+import { loginCheckRequestBuilder, loginRequestBuilder } from '../widgets/func/requests-authenticator.js';
 
 /**
  * attribute redirect - Where to redirect on login
