@@ -10,7 +10,7 @@ import { toSentenceCase } from '../js/string-utils.js';
 import XCodage from '../widgets/func/x-codage.js';
 import XForm from '../widgets/func/x-form.js';
 import XInputList from '../widgets/data/x-input-list.js';
-import XRequestor, { reportQueryBuilder } from '../widgets/func/x-requestor.js';
+import XRequestor from '../widgets/func/x-requestor.js';
 import XTable from '../elements/x-table.js';
 import XButton from '../widgets/style/x-button.js';
 import XButtons from '../widgets/func/x-buttons.js';
@@ -22,6 +22,7 @@ import XAge from '../widgets/func/x-age.js';
 import XInputDate from '../elements/x-input-date.js';
 import pageStyles from './page-helper.js';
 import '../widgets/func/x-i18n.js';
+import { reportQueryBuilder } from '../widgets/func/requests-reports.js';
 
 /**
  * Two parts here:

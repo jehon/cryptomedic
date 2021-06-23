@@ -2,7 +2,7 @@
 import { messages } from '../config.js';
 import { createElementWithObject, createElementWithTag, defineCustomElement } from '../js/custom-element.js';
 import XForm from '../widgets/func/x-form.js';
-import XRequestor, { pricesCrud } from '../widgets/func/x-requestor.js';
+import XRequestor from '../widgets/func/x-requestor.js';
 import XButton from '../widgets/style/x-button.js';
 import XButtons from '../widgets/func/x-buttons.js';
 import XGroupPanel from '../widgets/style/x-group-panel.js';
@@ -14,6 +14,7 @@ import XPriceItemEdit from '../widgets/x-price-item-edit.js';
 import XInputDate from '../elements/x-input-date.js';
 import { createOverlay, overlayAcknowledge } from '../js/overlay-builder.js';
 import pageStyles from './page-helper.js';
+import { pricesCrud } from '../widgets/func/requests-admin.js';
 
 /**
  * Sort !in place!

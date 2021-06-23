@@ -2,8 +2,9 @@
 import { createElementWithObject, createElementWithTag, defineCustomElement } from '../js/custom-element.js';
 import { setRoute, getRoute, routes } from '../js/router.js';
 import getInputObject, { TYPES } from '../js/getInput.js';
+import { usersCrud } from '../widgets/func/requests-admin.js';
 import XForm from '../widgets/func/x-form.js';
-import XRequestor, { usersCrud } from '../widgets/func/x-requestor.js';
+import XRequestor from '../widgets/func/x-requestor.js';
 import XButton from '../widgets/style/x-button.js';
 import XButtons from '../widgets/func/x-buttons.js';
 import XGroupPanel from '../widgets/style/x-group-panel.js';

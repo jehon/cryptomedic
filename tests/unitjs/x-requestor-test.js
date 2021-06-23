@@ -4,12 +4,13 @@ import { API_VERSION } from '../../app/config.js';
 
 import XRequestor, {
     requestAndFilterBuilder,
-    loginRequestBuilder, loginCheckRequestBuilder, ServerRequestError, TransportRequestError
+    ServerRequestError, TransportRequestError
 } from '../../app/widgets/func/x-requestor.js';
 
 import axios from '../../app/cjs2esm/axios.js';
 import MockAdapter from '../../app/cjs2esm/axios-mock-adapter.js';
 import { getSession } from '../../app/js/session.js';
+import { loginCheckRequestBuilder, loginRequestBuilder } from '../../app/widgets/func/requests-authenticator.js';
 
 const buildResponse = function (ok = true, status = 200, statusText = '') {
     return {
