@@ -125,7 +125,10 @@ export default class XIoBill extends XIoNumeric {
     }
 
     getInputValue() {
-        return this._xIoNumericEl.value;
+        if (this._xIoNumericEl) {
+            return this._xIoNumericEl.value;
+        }
+        return 0;
     }
 
     //
