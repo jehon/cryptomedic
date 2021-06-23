@@ -9,9 +9,7 @@ import getDataService from '../js/getDataService.js';
 import { getSession, onSession } from '../js/session.js';
 import XFffSalaryRatio from '../widgets/file/x-fff-salary-ratio.js';
 
-// import XFolderBill from '../pages/blocks/x-folder-bill.js';
-// import '../widgets/io/x-io-bill.js';
-// import '../widgets/style/x-label.js';
+import XFolderBill from '../pages/blocks/x-folder-bill.js';
 
 /**
  * @param $scope

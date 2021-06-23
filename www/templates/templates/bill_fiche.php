@@ -33,91 +33,93 @@ EOD;
   <div>{{currentFile().getTotalFor('$name')}}</div>
 </x-fff-field>
 EOD;
+    // var_dump(t::isWriteMode());
     // <x-label label='$label'>
-    //   <x-io-bill name='$name' value='{{currentFile()["$name"]}}' t='currentFile()["$name"]'></x-io-bill>
+    //   <x-io-bill name='$name' value='{{currentFile()["$name"]}}' t='currentFile()["$name"]' <?php echo t::isWriteMode() ? 'input' : ''; ? > ></x-io-bill>
     // </x-label>
 
   }
 }
 ?>
 <div ng-controller="ctrl_file_bill">
-  <div ng-if='errors.consultPhisioAndDoctor'>
-    <div class='alert alert-danger'>Error: you could not bill "physio" and "doctor" together!</div>
-  </div>
-  <div ng-if='errors.homeVisitAndGiveAppointment'>
-    <div class='alert alert-danger'>Error: you could not bill a "home visit" with "give appointment" together!</div>
-  </div>
-  <div ng-if='errors.dateInTheFuture'>
-    <div class='alert alert-danger' id='errorDateFuture'>Error: The date can not be in the future!</div>
-  </div>
-  <x-two-columns>
-    <div>
-      <x-group-panel title='General data'>
-        <?php (new t("Bill.Date"))->tr2()->p(); ?>
-        <?php (new t("Bill.ExaminerName"))->tr2("Examiner")->p(); ?>
-        <?php (new t("Bill.Center"))->tr2("Center where consultation took place")->p(); ?>
-        <div class='debug_infos'>
-          price_id <?php (new t("Bill.price_id"))->read()->p(); ?>
-        </div>
-      </x-group-panel>
-      <x-message ng-if='!currentFile().price' level='error' role="alert" id="errorNoDate">Please select a date first!</x-message>
-      <div ng-if='currentFile().price'>
-        <?php
-        foreach (Bill::$categories as $cat) {
-        ?>
-          <x-group-panel title='<?php echo $cat; ?> items'>
-            <x-fff-field label=''>
-              <div>Quantity</div>
-              <div>Price</div>
-              <div>Total</div>
-            </x-fff-field>
-            <?php foreach (Bill::getFieldsList($cat) as $field) {
-              price("Bill." . $field);
-            }
-            ?>
-          </x-group-panel>
-        <?php
-        }
-        ?>
-      </div>
+  <x-folder-bill>
+    <div ng-if='errors.consultPhisioAndDoctor'>
+      <div class='alert alert-danger'>Error: you could not bill "physio" and "doctor" together!</div>
     </div>
-    <div>
-      <x-ff-patient-related></x-ff-patient-related>
-      <x-ff-next-appointment></x-ff-next-appointment>
-      <x-group-panel title='Social Data'>
-        <?php (new t("Bill.sl_familySalary"))->tr2("Family Salary in a Month")->p(); ?>
-        <?php (new t("Bill.sl_numberOfHouseholdMembers"))->tr2("Number of Houslehold Members")->p(); ?>
-        <x-fff-field label='Salary Ratio'>
-          <x-fff-salary-ratio></x-fff-salary-ratio>
-        </x-fff-field>
-        <?php (new t("Bill.Sociallevel"))->id("calculated_social_level")->readOnly()->tr2("Calculated Social Level")->p(); ?>
-      </x-group-panel>
-      <x-group-panel title='Summary'>
-        <x-fff-field label='Raw Calculated total'>
-          <div id='total_calculated_raw'>{{currentFile().calculate_total_real()}}<?php new t("Bill.total_real"); ?></div>
-        </x-fff-field>
-        <?php (new t("Bill.Sociallevel"))->readOnly()->tr2("Social Level")->p(); ?>
-        <x-fff-field label='Percentage of price to be asked'>
-          <div id='percentage'>{{currentFile().calculate_percentage_asked() * 100 | number:0}}%</div>
-        </x-fff-field>
-        <x-fff-field label='Price to be asked to the patient'>
-          <div id='total_calculated_asked'>{{currentFile().total_asked | number:0 }}<?php (new t("Bill.total_asked")); ?></div>
-        </x-fff-field>
-      </x-group-panel>
-      <x-group-panel title='Received payment' ng-if='!currentFile().id'>
-        <x-label label='Payment already received'>
-          <input type='number' id='first_payment' ng-model='currentFile().first_payment'>
-        </x-label>
-        <!--
+    <div ng-if='errors.homeVisitAndGiveAppointment'>
+      <div class='alert alert-danger'>Error: you could not bill a "home visit" with "give appointment" together!</div>
+    </div>
+    <div ng-if='errors.dateInTheFuture'>
+      <div class='alert alert-danger' id='errorDateFuture'>Error: The date can not be in the future!</div>
+    </div>
+    <x-two-columns>
+      <div>
+        <x-group-panel title='General data'>
+          <?php (new t("Bill.Date"))->tr2()->p(); ?>
+          <?php (new t("Bill.ExaminerName"))->tr2("Examiner")->p(); ?>
+          <?php (new t("Bill.Center"))->tr2("Center where consultation took place")->p(); ?>
+          <div class='debug_infos'>
+            price_id <?php (new t("Bill.price_id"))->read()->p(); ?>
+          </div>
+        </x-group-panel>
+        <x-message ng-if='!currentFile().price' level='error' role="alert" id="errorNoDate">Please select a date first!</x-message>
+        <div ng-if='currentFile().price'>
+          <?php
+          foreach (Bill::$categories as $cat) {
+          ?>
+            <x-group-panel title='<?php echo $cat; ?> items'>
+              <x-fff-field label=''>
+                <div>Quantity</div>
+                <div>Price</div>
+                <div>Total</div>
+              </x-fff-field>
+              <?php foreach (Bill::getFieldsList($cat) as $field) {
+                price("Bill." . $field);
+              }
+              ?>
+            </x-group-panel>
+          <?php
+          }
+          ?>
+        </div>
+      </div>
+      <div>
+        <x-ff-patient-related></x-ff-patient-related>
+        <x-ff-next-appointment></x-ff-next-appointment>
+        <x-group-panel title='Social Data'>
+          <?php (new t("Bill.sl_familySalary"))->tr2("Family Salary in a Month")->p(); ?>
+          <?php (new t("Bill.sl_numberOfHouseholdMembers"))->tr2("Number of Houslehold Members")->p(); ?>
+          <x-fff-field label='Salary Ratio'>
+            <x-fff-salary-ratio></x-fff-salary-ratio>
+          </x-fff-field>
+          <?php (new t("Bill.Sociallevel"))->id("calculated_social_level")->readOnly()->tr2("Calculated Social Level")->p(); ?>
+        </x-group-panel>
+        <x-group-panel title='Summary'>
+          <x-fff-field label='Raw Calculated total'>
+            <div id='total_calculated_raw'>{{currentFile().calculate_total_real()}}<?php new t("Bill.total_real"); ?></div>
+          </x-fff-field>
+          <?php (new t("Bill.Sociallevel"))->readOnly()->tr2("Social Level")->p(); ?>
+          <x-fff-field label='Percentage of price to be asked'>
+            <div id='percentage'>{{currentFile().calculate_percentage_asked() * 100 | number:0}}%</div>
+          </x-fff-field>
+          <x-fff-field label='Price to be asked to the patient'>
+            <div id='total_calculated_asked'>{{currentFile().total_asked | number:0 }}<?php (new t("Bill.total_asked")); ?></div>
+          </x-fff-field>
+        </x-group-panel>
+        <x-group-panel title='Received payment' ng-if='!currentFile().id'>
+          <x-label label='Payment already received'>
+            <input type='number' id='first_payment' ng-model='currentFile().first_payment'>
+          </x-label>
+          <!--
         <x-fff-field label='Payment already recieved' ng-if='!currentFile().id'>
           <div id='first_payment'>
             <input type='number' id='first_payment' ng-model='currentFile().first_payment'>
           </div>
         </x-fff-field> -->
-      </x-group-panel>
-    </div>
-  </x-two-columns>
-
+        </x-group-panel>
+      </div>
+    </x-two-columns>
+  </x-folder-bill>
   <br />
   <?php
   t::setDefaultOption("baseExpression", "paymentEditor.");

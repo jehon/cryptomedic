@@ -1,11 +1,10 @@
 
 import { defineCustomElement } from '../../js/custom-element.js';
+import XFolderFile from './x-folder-file.js';
+
+import './x-folder-payments.js';
 import '../../widgets/io/x-io-bill.js';
 import '../../widgets/style/x-label.js';
-
-/**
- * @typedef {import('../../widgets/io/x-io-numeric.js')} XIoNumeric
- */
 
 /**
  * @param {Array<Object<string,(number|Date)>>} prices as the reference
@@ -40,19 +39,10 @@ function selectPriceFromDate(prices, date) {
     return price;
 }
 
-export default class XFolderBill extends HTMLElement {
+export default class XFolderBill extends XFolderFile {
     _allPrices
 
     _currentFile
-
-    _edit = false;
-
-    constructor() {
-        super();
-        if (location.hash.endsWith('/edit') || location.hash.endsWith('/Bill')) {
-            this._edit = true;
-        }
-    }
 
     set allPrices(p) {
         this._allPrices = p;
