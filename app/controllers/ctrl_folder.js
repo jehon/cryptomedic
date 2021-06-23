@@ -12,6 +12,8 @@ import goThere from '../js/goThere.js';
 import date2CanonicString from '../js/date2CanonicString.js';
 import setPropertyOn from '../js/set-property.js';
 
+import XPageFolder from '../pages/x-page-folder.js';
+
 import '../pages/blocks/x-folder-graphics.js';
 import '../widgets/style/x-button.js';
 import '../widgets/file/x-fff-bmi.js';

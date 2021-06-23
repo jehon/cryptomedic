@@ -32,6 +32,10 @@ class t {
     static::$defaultOptions[$key] = $val;
   }
 
+  static function isWriteMode() {
+    return static::$defaultOptions["writeOnly"];
+  }
+
   var $key;
   var $options;
   var $res = "";
