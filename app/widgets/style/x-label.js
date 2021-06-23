@@ -134,21 +134,28 @@ export default class XLabel extends HTMLElement {
             createElementWithTag('slot', { name: 'left' }),
             createElementWithTag('slot', { name: 'stat' }),
         );
+
+        this.onChildChange();
     }
 
     connectedCallback() {
-        ['change', 'mode'].forEach(evt =>
-            this.addEventListener(evt, () => {
-                /**
-                 * If we have some "named" elements and that all of those are empty,
-                 * then we hide usself
-                 */
-
-                const namedElements = this.querySelectorAll('[name]');
-                const namedElementsEmpty = this.querySelectorAll('[name][empty]:not([input])');
-                this.toggleAttribute('empty', (namedElements.length > 0 && namedElements.length == namedElementsEmpty.length));
-            })
+        ['change', 'mode'].forEach(evtName =>
+            this.addEventListener(evtName, () => this.onChildChange())
         );
+    }
+
+    onChildChange() {
+        /**
+         * If we have some "named" elements and that all of those are empty,
+         * then we hide usself
+         */
+
+        const namedElements = this.querySelectorAll('[name]');
+        const notVisible = this.querySelectorAll('[name][empty]:not([input]), [name][unavailable]');
+
+        // console.log({ label: this.getAttribute('label'), namedElements, notVisible });
+
+        this.toggleAttribute('empty', (namedElements.length > 0) && ((namedElements.length - notVisible.length) == 0));
     }
 }
 
