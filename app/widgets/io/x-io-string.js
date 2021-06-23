@@ -145,7 +145,7 @@ export default class XIoString extends HTMLElement {
 
             case 'value':
                 // Call the setter to have the same behavior
-                this.value = newValue;
+                this.value = newValue ?? '';
                 break;
         }
     }
