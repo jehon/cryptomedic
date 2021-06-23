@@ -13,11 +13,13 @@ export default class XIoBoolean extends XIoString {
      * @override
      */
     goInputMode() {
-        this.setElements(createElementWithTag('input', {
-            type: 'checkbox',
-        }, [], el => el.addEventListener('click',
-            () => this.dispatchChange(/** @type {HTMLInputElement} */(el).checked)))
-        );
+        this.setElements(createElementWithTag('input',
+            {
+                type: 'checkbox',
+            }, [], el => el.addEventListener('click',
+                () => this.dispatchChange()
+            )
+        ));
     }
 
     /**

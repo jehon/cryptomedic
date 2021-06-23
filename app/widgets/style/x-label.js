@@ -139,8 +139,8 @@ export default class XLabel extends HTMLElement {
     }
 
     connectedCallback() {
-        ['change', 'mode'].forEach(evtName =>
-            this.addEventListener(evtName, () => this.onChildChange())
+        ['change', 'mode'].forEach(evtName => this.addEventListener(evtName,
+            () => this.onChildChange())
         );
     }
 

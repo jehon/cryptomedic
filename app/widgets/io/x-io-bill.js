@@ -168,7 +168,7 @@ export default class XIoBill extends XIoNumeric {
     }
 
     dispatchTotalChanged() {
-        this.dispatchChange(this._xIoNumericEl.value);
+        this.dispatchChange();
         this._totalEl.innerHTML = '' + this.total;
         if (this.total > 0) {
             this.setAttribute('total', '' + this.total);

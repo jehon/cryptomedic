@@ -248,11 +248,9 @@ export default class XIoString extends HTMLElement {
 
     /**
      * To be called by child elements when element is changed
-     *
-     * @param {*} _val to be set
      */
-    dispatchChange(_val) {
-        this.toggleAttribute('empty', !this.getInitialValue());
+    dispatchChange() {
+        this.toggleAttribute('empty', !this.value);
         this.dispatchEvent(new CustomEvent('change', { bubbles: true }));
     }
 

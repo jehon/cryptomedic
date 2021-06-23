@@ -70,8 +70,6 @@ export default class XFolderBill extends XFolderFile {
             for (const e of this.querySelectorAll('x-io-bill[name]')) {
                 const n = e.getAttribute('name');
                 e.setAttribute('price', '' + selectedPrice[n]);
-                // e.value = this._currentFile[n];
-
                 e.toggleAttribute('input', this._edit);
             }
         }, 1000);
