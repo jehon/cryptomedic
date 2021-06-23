@@ -68,10 +68,6 @@ export default class XIoNumeric extends XIoString {
             copyAttributes(this, el, this.constructor.transmissibleAttributesWithDefaultValues);
         });
     }
-
-    dispatchChange(val) {
-        super.dispatchChange(this._round(val));
-    }
 }
 
 defineCustomElement(XIoNumeric);
