@@ -74,7 +74,7 @@
     "mocha-junit-reporter": "2.0.0",
     "node-resemble-js": "0.2.0",
     "pixelmatch": "5.2.1",
-    "style-loader": "2.0.0",
+    "style-loader": "3.0.0",
     "stylelint": "13.13.1",
     "stylelint-config-standard": "22.0.0",
     "stylelint-no-unsupported-browser-features": "4.1.4",
