@@ -101,6 +101,7 @@ clean-ports:
 	pkill chromedriver || true
 	jh-kill-by-port.sh 9515 || true
 
+.PHONY: setup-computer
 setup-computer:
 # TODO -> deploy from dev
 # Test the remote key
