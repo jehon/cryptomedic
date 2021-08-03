@@ -13,6 +13,8 @@ if [ -n "$2" ]; then
     ACT="$2"
 fi
 
+cr-ensure-started
+
 header "Installing dependencies in $FOLDER"
 (cd "$FOLDER" && cr-capture-output cr-composer "$ACT")
 cr-fix-permissions "$FOLDER/vendor"
