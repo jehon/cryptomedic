@@ -315,7 +315,7 @@ tmp/.dependencies-api-bare: \
 	@touch "$@"
 
 .PHONY: update-dependencies-api
-update-dependencies-api: tmp/.dependencies-bare
+update-dependencies-api: tmp/.dependencies-api-bare
 	mkdir -m 777 -p www/api/v1.3/bootstrap/cache
 	cr-dependencies-php "www/api/$(VAPI)" "update"
 
