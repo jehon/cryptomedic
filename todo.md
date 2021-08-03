@@ -16,6 +16,9 @@ Unify the objects (around "camelcase" plural ?):
 
 Firefox 90: private fields
 
+x-list (abstract)
+x-editor (abstract)
+
 input:
 v x-page-login
 v x-patient-by-reference
