@@ -12,4 +12,4 @@ if [ -z "$1" ]; then
     exit 1
 fi
 
-docker-compose run --rm -v "$(realpath "${CR_PRJ_DIR}"):/app" php "php" "/app/config.php" "$1"
+cr-docker-compose-run -v "$(realpath "${CR_PRJ_DIR}"):/app" php "php" "/app/config.php" "$1"

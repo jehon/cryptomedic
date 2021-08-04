@@ -48,11 +48,11 @@ cr-ensure-folder-empty "$OUTPUT"/videos
 cr-ensure-folder-empty "$OUTPUT"/coverage
 header_finished
 
-header "Run tests"
+header "Cypress run tests"
 #
 # Hardcoded command is "run" (see https://github.com/cypress-io/cypress-docker-images/tree/master/included)
 #
-time docker-compose run --rm -e CYPRESS_BASE_URL="http://server:80" --entrypoint=cypress cypress \
+time cr-docker-compose-run -e CYPRESS_BASE_URL="http://server:80" --entrypoint=cypress cypress \
     run \
     "${CYPRESS_ARGS[@]}" \
     "$@"

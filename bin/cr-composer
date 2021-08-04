@@ -9,5 +9,5 @@ CR_SCRIPT_DIR="$(dirname "${BASH_SOURCE[0]}")"
 
 FOLDER="$(realpath --relative-to "$CR_PRJ_DIR" .)"
 
-docker-compose run --rm --workdir "/app/$FOLDER" "php" "/composer.phar" "$@"
+cr-docker-compose-run --workdir "/app/$FOLDER" "php" "/composer.phar" "$@"
 cr-fix-permissions "$FOLDER/vendor"

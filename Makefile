@@ -227,7 +227,7 @@ cypress-open: chmod
 # echo "DISPLAY: $(DISPLAY)"
 # $(cypress) open -e DISPLAY
 
-# docker-compose run --rm -e CYPRESS_BASE_URL="http://server:80" \
+# cr-docker-compose-run -e CYPRESS_BASE_URL="http://server:80" \
 # 	-e DISPLAY=$(DISPLAY) -v /tmp/.X11-unix:/tmp/.X11-unix \
 # 	cypress \
 # 	open

@@ -11,7 +11,7 @@ cr-ensure-started
 
 # Live folder
 header "data-reset..."
-cr-capture-output docker-compose run --rm dev \
+cr-capture-output cr-docker-compose-run dev \
     rsync -a --delete live-for-test/ live/
 cr-capture-output cr-fix-permissions "live/"
 chmod -R a+rwX live/storage/uploadedPictures
