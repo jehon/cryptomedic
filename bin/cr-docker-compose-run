@@ -7,6 +7,6 @@ CR_SCRIPT_DIR="$(dirname "${BASH_SOURCE[0]}")"
 # shellcheck source=./cr-lib
 . "$CR_SCRIPT_DIR"/cr-lib
 
-FOLDER="$(realpath --relative-to "$CR_PRJ_DIR" .)"
+# https://docs.docker.com/compose/env-file/
 
-cr-docker-compose-run --workdir "/app/$FOLDER" "php" "php" "$@"
+docker-compose --project-directory="$CR_PRJ_DIR" run --rm "$@"
