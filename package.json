@@ -80,7 +80,7 @@
     "stylelint-no-unsupported-browser-features": "4.1.4",
     "watch": "1.0.2",
     "webpack": "5.50.0",
-    "webpack-cli": "4.7.2"
+    "webpack-cli": "4.8.0"
   },
   "scripts": {
     "postinstall": "touch node_modules/.dependencies && husky install",
