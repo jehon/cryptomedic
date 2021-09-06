@@ -8,7 +8,7 @@
   "dependencies": {
     "angular": "1.8.2",
     "angular-route": "1.8.2",
-    "axios": "0.21.3",
+    "axios": "0.21.4",
     "bootstrap": "4.6.0",
     "css-inherit": "github:jehon/css-inherit",
     "duix": "3.0.1",
