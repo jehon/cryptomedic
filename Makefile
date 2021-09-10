@@ -153,13 +153,13 @@ full: clear test lint
 #
 
 .PHONY: lint
-lint: dependencies-node
+lint: tmp/.dependencies-node
 # TODO -> from dev
 	npm run eslint
 	npm run stylelint
 
 .PHONY: test # In Jenkinfile, each step is separated:
-test: dependencies tmp/.build test-api test-api-bare test-unit test-e2e test-styles
+test: tmp/.dependencies tmp/.build test-api test-api-bare test-unit test-e2e test-styles
 
 .PHONY: test-api
 test-api: tmp/.dependencies-api
@@ -198,7 +198,7 @@ test-e2e: test-e2e-desktop test-e2e-mobile
 
 .PHONY: test-e2e-desktop
 test-e2e-desktop: tmp/.tested-e2e-desktop
-tmp/.tested-e2e-desktop: tmp/.build $(shell find cypress/ -name "*.js") dependencies
+tmp/.tested-e2e-desktop: tmp/.build $(shell find cypress/ -name "*.js") tmp/.dependencies
 	cr-fix-permissions tmp/e2e
 	cr-data-reset
 	cr-cypress
@@ -209,7 +209,7 @@ tmp/.tested-e2e-desktop: tmp/.build $(shell find cypress/ -name "*.js") dependen
 
 .PHONY: test-e2e-mobile
 test-e2e-mobile: tmp/.tested-e2e-mobile
-tmp/.tested-e2e-mobile: tmp/.build $(shell find cypress/ -name "*.js") dependencies
+tmp/.tested-e2e-mobile: tmp/.build $(shell find cypress/ -name "*.js") tmp/.dependencies
 	cr-fix-permissions tmp/e2e
 	cr-data-reset
 	cr-cypress "mobile"
@@ -279,7 +279,10 @@ logs:
 #
 #
 .PHONY: dependencies
-dependencies: tmp/.dependencies-node tmp/.dependencies-api tmp/.dependencies-api-bare
+dependencies: tmp/.dependencies
+tmp/.dependencies: tmp/.dependencies-node tmp/.dependencies-api tmp/.dependencies-api-bare
+	@mkdir -p "$(dir $@)"
+	@touch "$@"
 
 .PHONY: dependencies-node
 dependencies-node: tmp/.dependencies-node
@@ -433,7 +436,7 @@ deploy-unmount:
 
 # .PHONY: deploy-rsync-act
 # deploy-rsync-act: setup-structure \
-# 		dependencies \
+# 		tmp/.dependencies \
 # 		tmp/.build \
 # 		deploy-mount
 
@@ -444,7 +447,7 @@ deploy-unmount:
 
 # .PHONY: deploy-rsync-noact
 # deploy-rsync-noact: setup-structure \
-# 		dependencies \
+# 		tmp/.dependencies \
 # 		tmp/.build \
 # 		deploy-mount
 
