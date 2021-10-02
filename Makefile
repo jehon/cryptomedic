@@ -36,10 +36,6 @@ NM_BIN := $(shell npm bin)/
 export ROOT = $(shell dirname $(abspath $(lastword $(MAKEFILE_LIST))))
 export PATH := $(ROOT)/bin:$(PATH)
 
-define itself
-	$(MAKE) $(FLAGS) $(MAKEOVERRIDES) "$1"
-endef
-
 # See https://coderwall.com/p/cezf6g/define-your-own-function-in-a-makefile
 # 1: folder where to look
 # 2: base file to have files newer than, to limit the length of the output
@@ -53,7 +49,7 @@ define recursive-dependencies
 	)
 endef
 
-dump: dump-cypress
+dump:
 	@echo "CRYPTOMEDIC_PORT: $(CRYPTOMEDIC_PORT)"
 	@echo "DISPLAY:          $(DISPLAY)"
 	@echo "IN_DOCKER:        $(IN_DOCKER)"
@@ -61,13 +57,10 @@ dump: dump-cypress
 	@echo "PATH:             $(PATH)"
 	@echo "Who am i:         $(shell whoami)"
 	@echo "Id:               $(shell id)"
-	@echo "Supported:        $(shell npx browserslist)"
+	@echo "Supported:        $(shell npx -y browserslist)"
 
 dump-docker-compose:
 	docker-compose config
-
-dump-cypress:
-	$(cypress) info
 
 all: start
 
@@ -191,10 +184,6 @@ test-unit: tmp/.dependencies-node \
 test-e2e: test-e2e-desktop test-e2e-mobile
 # 	cr-fix-permissions tmp/e2e
 # 	@rm -fr tmp/e2e
-
-# # TODO -> no call itself
-# 	$(call itself,tmp/e2e/.tested-desktop)
-# 	$(call itself,tmp/e2e/.tested-mobile)
 
 .PHONY: test-e2e-desktop
 test-e2e-desktop: tmp/.tested-e2e-desktop
@@ -355,10 +344,10 @@ www/build/index.html: tmp/.dependencies-node webpack.config.js  \
 	$(NM_BIN)webpack
 
 www/build/browsers.json: .browserslistrc tmp/.dependencies-node
-	npx browserslist --json > "$@"
+	npx -y browserslist --json > "$@"
 
 update-references-browsers:
-	npx browserslist --update
+	npx -y browserslist --update
 
 # Dependencies are used in the build !
 $(CJS2ESM_DIR)/axios.js: node_modules/axios/dist/axios.js
