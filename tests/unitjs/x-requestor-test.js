@@ -328,17 +328,16 @@ describe(fn(import.meta.url), function () {
                 expect(element.isBlocked()).toBeFalsy();
             });
 
-            it('should accept error', async (done) => {
+            it('should accept error', async () => {
                 const mock = await mockResponseWithFailureCode(400);
                 try {
                     const _req = await element.request({ url: '/anything' });
-                    done.fail('it should throw an error');
+                    throw 'it should throw an error';
                 } catch {
                     expect(mock.args.url).toBe('/anything');
                     expect(element.isRequesting()).toBeFalsy();
                     expect(element.isFailed()).toBeTruthy();
                     expect(element.isBlocked()).toBeTruthy();
-                    done();
                 }
             });
         });
