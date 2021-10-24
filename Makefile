@@ -2,6 +2,8 @@
 TMP=$(shell realpath "tmp/")
 
 pull-request: clear update-dependencies-api-bare update-dependencies-api test ok
+	git branch
+	date
 
 clear:
 	clear
