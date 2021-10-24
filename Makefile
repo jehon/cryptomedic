@@ -1,6 +1,16 @@
 
 TMP=$(shell realpath "tmp/")
 
+pull-request: clear test ok
+
+clear:
+	clear
+
+ok:
+	@echo "ok"
+	date
+
+
 #
 # Debug options:
 #   --warn-undefined-variables
