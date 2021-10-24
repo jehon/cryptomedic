@@ -1,7 +1,7 @@
 
 TMP=$(shell realpath "tmp/")
 
-pull-request: clear test ok
+pull-request: clear update-dependencies-api-bare update-dependencies-api test ok
 
 clear:
 	clear
