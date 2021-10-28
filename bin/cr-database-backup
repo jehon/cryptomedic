@@ -13,7 +13,7 @@ cr-ensure-started
 mkdir -p "$(dirname "$OUTPUT")"
 
 (
-    docker-compose exec mysql \
+    docker compose exec mysql \
         mysqldump -u root -p"$CR_DB_ROOT_PASS" "$CR_DB_NAME"
 ) >"$OUTPUT"
 
