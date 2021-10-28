@@ -2,7 +2,7 @@
 TMP=$(shell realpath "tmp/")
 GIT_BRANCH=$(shell git rev-parse --abbrev-ref HEAD)
 
-pull-request: clear update-dependencies-api-bare update-dependencies-api test ok
+pull-request: pull-request-pre update-dependencies-api-bare update-dependencies-api test ok
 	@echo "Git Branch: $(GIT_BRANCH)"
 	git branch
 	date
@@ -12,6 +12,11 @@ pull-request: clear update-dependencies-api-bare update-dependencies-api test ok
 	git push
 	git branch -D "$(GIT_BRANCH)"
 	@echo "Pull request merged"
+
+pull-request-pre:
+	make clean
+	git merge main
+        @echo "Git Branch: $(GIT_BRANCH)"
 
 ok:
 	@echo "ok"
