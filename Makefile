@@ -1,6 +1,6 @@
 
 TMP=$(shell realpath "tmp/")
-GIT_BRANCH=$(shell git branch)
+GIT_BRANCH=$(shell git rev-parse --abbrev-ref HEAD)
 
 pull-request: clear update-dependencies-api-bare update-dependencies-api test ok
 	@echo "Git Branch: $(GIT_BRANCH)"
