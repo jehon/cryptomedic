@@ -18,11 +18,11 @@ chmod -R a+rwX live/storage/uploadedPictures
 
 # Reset database
 header "Waiting for mysql to be available"
-cr-capture-output docker-compose exec -T mysql \
+cr-capture-output docker compose exec -T mysql \
     bash -c "while ! mysql -u root -p${CR_DB_ROOT_PASS} --database=mysql -e 'Show tables;' &>/dev/null; do sleep 1; done"
 header_finished
 
-cr-capture-output docker-compose exec -T mysql \
+cr-capture-output docker compose exec -T mysql \
     mysql -u root "-p${CR_DB_ROOT_PASS}" --database=mysql -e " \
             USE mysql; \
             DROP SCHEMA IF EXISTS ${CR_DB_NAME} ; \
@@ -35,7 +35,7 @@ cr-capture-output docker-compose exec -T mysql \
 # Mysql 5.7, 7.0:
 # 	ALTER USER 'root' IDENTIFIED WITH mysql_native_password BY 'password';
 # 	ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
-cr-capture-output docker-compose exec -T mysql \
+cr-capture-output docker compose exec -T mysql \
     mysql -u root "-p${CR_DB_ROOT_PASS}" --database="${CR_DB_NAME}" <"conf/database/base.sql"
 
 cr-ensure-folder-empty "www/api/${VAPI}/bootstrap/cache/"
