@@ -2,6 +2,11 @@
 TMP=$(shell realpath "tmp/")
 GIT_BRANCH=$(shell git rev-parse --abbrev-ref HEAD)
 
+# Default target
+.PHONY: dev
+dev:
+
+.PHONY: pull-request
 pull-request: pull-request-pre update-dependencies-api-bare update-dependencies-api test ok
 	@echo "Git Branch: $(GIT_BRANCH)"
 	git branch
@@ -13,15 +18,16 @@ pull-request: pull-request-pre update-dependencies-api-bare update-dependencies-
 	git branch -D "$(GIT_BRANCH)"
 	@echo "Pull request merged"
 
+.PHONY: pull-request-pre
 pull-request-pre:
 	make clean
 	git merge main
         @echo "Git Branch: $(GIT_BRANCH)"
 
+.PHONY: ok
 ok:
 	@echo "ok"
 	date
-
 
 #
 # Debug options:
