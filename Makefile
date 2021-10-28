@@ -1,12 +1,17 @@
 
 TMP=$(shell realpath "tmp/")
+GIT_BRANCH=$(shell git rev-parse --abbrev-ref HEAD)
 
 pull-request: clear update-dependencies-api-bare update-dependencies-api test ok
+	@echo "Git Branch: $(GIT_BRANCH)"
 	git branch
 	date
-
-clear:
-	clear
+	git checkout main
+	git pull
+	git merge "$(GIT_BRANCH)"
+	git push
+	git branch -D "$(GIT_BRANCH)"
+	@echo "Pull request merged"
 
 ok:
 	@echo "ok"
@@ -72,7 +77,7 @@ dump:
 	@echo "Supported:        $(shell npx -y browserslist)"
 
 dump-docker-compose:
-	docker-compose config
+	docker compose config
 
 all: start
 
@@ -141,7 +146,7 @@ start:
 
 .PHONY: stop
 stop: deploy-unmount chmod
-	docker-compose down || true
+	docker compose down || true
 	cr-kill-others $(CRYPTOMEDIC_PORT)
 
 .PHONY: chmod
@@ -272,7 +277,7 @@ deploy-test:
 #
 .PHONY: logs
 logs:
-	docker-compose logs -f --tail=10 | sed 's/\\n/\n/g'
+	docker compose logs -f --tail=10 | sed 's/\\n/\n/g'
 
 #
 #
