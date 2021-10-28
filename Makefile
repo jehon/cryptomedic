@@ -4,7 +4,7 @@ GIT_BRANCH=$(shell git rev-parse --abbrev-ref HEAD)
 
 # Default target
 .PHONY: dev
-dev:
+dev: clear test lint ok
 
 .PHONY: pull-request
 pull-request: pull-request-pre update-dependencies-api-bare update-dependencies-api test ok
@@ -90,8 +90,6 @@ dump:
 dump-docker-compose:
 	docker compose config
 
-all: start
-
 clear:
 	@clear
 	@echo "**"
@@ -163,9 +161,6 @@ stop: deploy-unmount chmod
 .PHONY: chmod
 chmod:
 	cr-fix-permissions
-
-.PHONY: full
-full: clear test lint
 
 #
 #
