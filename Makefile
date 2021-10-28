@@ -1,9 +1,17 @@
 
 TMP=$(shell realpath "tmp/")
+GIT_BRANCH=$(shell git branch)
 
 pull-request: clear update-dependencies-api-bare update-dependencies-api test ok
+	@echo "Git Branch: $(GIT_BRANCH)"
 	git branch
 	date
+	git checkout main
+	git pull
+	git merge "$(GIT_BRANCH)"
+	git push
+	git branch -D "$(GIT_BRANCH)"
+	@echo "Pull request merged"
 
 clear:
 	clear
