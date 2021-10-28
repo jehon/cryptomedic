@@ -24,7 +24,7 @@ before_install:
   - ssh -V
   - google-chrome --version
   - sort --version
-  - docker-compose --version
+  - docker compose --version
 
 install:
   - make setup-computer
