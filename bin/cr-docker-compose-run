@@ -9,4 +9,4 @@ CR_SCRIPT_DIR="$(dirname "${BASH_SOURCE[0]}")"
 
 # https://docs.docker.com/compose/env-file/
 
-docker-compose --project-directory="$CR_PRJ_DIR" run --rm "$@"
+docker compose --project-directory="$CR_PRJ_DIR" run --rm "$@"
