@@ -50,7 +50,7 @@
     "geckodriver": "latest",
     "glob": "7.2.0",
     "html-webpack-plugin": "5.5.0",
-    "htmlhint": "0.15.2",
+    "htmlhint": "0.16.0",
     "http-server": "14.0.0",
     "husky": "7.0.4",
     "imports-loader": "3.1.0",
