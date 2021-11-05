@@ -21,7 +21,7 @@ pipeline {
     timeout(time: 60, unit: 'MINUTES')
   }
   stages {
-    stage('setup-computer') {
+    stage('computer-setup') {
       steps {
         sh 'make ${MAKEOPT} ${STAGE_NAME}'
       }
