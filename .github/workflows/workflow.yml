@@ -1,0 +1,25 @@
+name: Laravel
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - run: make computer-setup
+    - run: make dump
+    - run: make start
+    - run: make dependencies
+    - run: make build
+    - run: make test-api
+    - run: make test-unit
+    - run: make test-e2e-desktop
+    - run: make test-e2e-mobile
+    - run: make test-styles
+    - run: make lint
