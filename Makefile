@@ -79,6 +79,8 @@ endef
 
 dump:
 	@echo "CRYPTOMEDIC_PORT: $(CRYPTOMEDIC_PORT)"
+	@echo "Chrome:           $(shell google-chrome --version)"
+	@echo "NodeJS:           $(shell node --version)"
 	@echo "DISPLAY:          $(DISPLAY)"
 	@echo "IN_DOCKER:        $(IN_DOCKER)"
 	@echo "SHELL:            $(SHELL)"
