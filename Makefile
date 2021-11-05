@@ -120,8 +120,8 @@ clean-ports:
 	pkill chromedriver || true
 	jh-kill-by-port.sh 9515 || true
 
-.PHONY: setup-computer
-setup-computer:
+.PHONY: computer-setup
+computer-setup:
 # TODO -> deploy from dev
 # Test the remote key
 	@REMOTE="$(shell ssh-keyscan -t ssh-rsa $(DEPLOY_HOST) 2>/dev/null )"; \
