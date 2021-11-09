@@ -72,6 +72,7 @@ services:
       - ${CRYPTOMEDIC_PORT:-0}:80 # Only if the variable is not set in the environment
 
   php:
+    profiles: [ "manual" ]
     # See https://hub.docker.com/_/php
     build:
       context: conf/php
@@ -86,6 +87,7 @@ services:
       - .:/app
 
   cypress:
+    profiles: [ "manual" ]
     # Adaptations:
     # See https://github.com/cypress-io/cypress-docker-images/blob/master/included/7.1.0/Dockerfile
     image: cypress/included:8.7.0
