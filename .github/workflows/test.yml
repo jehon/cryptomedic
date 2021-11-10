@@ -27,3 +27,9 @@ jobs:
     - run: make test-e2e-mobile
     - run: make test-styles
     - run: make lint
+    - name: 'Upload Artifact'
+      uses: actions/upload-artifact@v2
+      with:
+        name: styles
+        path: tmp/styles/
+        retention-days: 5
