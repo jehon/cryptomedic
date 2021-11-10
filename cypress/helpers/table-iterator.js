@@ -3,19 +3,19 @@ export default class TableIterator {
     static get LAST() { return -1; }
 
     /** @type {string} */
-    #tableSelector
+    #tableSelector;
 
     /** @type {number} */
-    #row
+    #row;
 
     /** @type {number} */
-    #col
+    #col;
 
     /** @type {string} */
-    #section
+    #section;
 
     /** @type {boolean} true if the table selector is a x-table */
-    #xtable
+    #xtable;
 
     constructor(tableSelector, options) {
         this.#tableSelector = tableSelector;

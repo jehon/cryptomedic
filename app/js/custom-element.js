@@ -76,7 +76,7 @@ export function createElementsFromHTML(html) {
  */
 export function enrichObject(el, attributes = {}, inner = [], callback = (_el) => { }) {
     if (typeof attributes != 'object' || Array.isArray(attributes)) {
-        console.error('Error in enrichObject ', el, ': attributes is not an object', attributes, { type: typeof attributes, array: Array.isArray(attributes)});
+        console.error('Error in enrichObject ', el, ': attributes is not an object', attributes, { type: typeof attributes, array: Array.isArray(attributes) });
     }
 
     if (typeof inner != 'string' && !Array.isArray(inner)) {

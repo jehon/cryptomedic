@@ -11,9 +11,9 @@ const p_warn = chalk.yellow(' ? ');
 const p_ko = chalk.red('✗  ');
 
 const projectRoot = path.dirname(path.dirname(__dirname));
-const stylesRoot = path.join(projectRoot, "tmp", "styles");
-const referenceFolder = path.join(stylesRoot, "references");
-const runFolder = path.join(stylesRoot, "run");
+const stylesRoot = path.join(projectRoot, 'tmp', 'styles');
+const referenceFolder = path.join(stylesRoot, 'references');
+const runFolder = path.join(stylesRoot, 'run');
 const referenceUpdateFolder = path.join(projectRoot, 'tests', 'styles', 'references');
 
 const opts = require('yargs/yargs')(process.argv.slice(2))
@@ -126,7 +126,7 @@ const MaxDiffs = {
                 fset.refURL = path.relative(stylesRoot, fset.ref);
             }
             return fset;
-        })
+        });
 
     // Show the problem list
     for (const fset of uniqueFiles) {

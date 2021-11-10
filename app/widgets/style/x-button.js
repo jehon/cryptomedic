@@ -29,10 +29,10 @@ export default class XButton extends HTMLElement {
         return ['icon', 'action', 'timed'];
     }
 
-    _disableCron = () => { }
+    _disableCron = () => { };
 
     /** @type {HTMLButtonElement} */
-    _button
+    _button;
 
     constructor() {
         super();

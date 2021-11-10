@@ -19,16 +19,16 @@ import pageStyles from './page-helper.js';
  */
 export default class XPageUserEdit extends HTMLElement {
     /** @type {number} */
-    uid
+    uid;
 
     /** @type {object} the user as an object */
-    data
+    data;
 
     /** @type {XRequestor} */
-    _requestor
+    _requestor;
 
     /** @type {XForm} */
-    _form
+    _form;
 
     constructor() {
         super();

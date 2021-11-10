@@ -52,7 +52,7 @@ export default class XForm extends HTMLElement {
     _messages;
 
     /** @type {function(object): (boolean|string)} to validate the formular*/
-    _customValidator = (_data) => true
+    _customValidator = (_data) => true;
 
     constructor() {
         super();

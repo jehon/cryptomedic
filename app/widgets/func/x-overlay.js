@@ -11,7 +11,7 @@ export default class XOverlay extends HTMLElement {
     static get ActionFree() { return 'x-overlay-free'; }
 
     /** @type {HTMLSlotElement} */
-    _overlaySlot
+    _overlaySlot;
 
     constructor() {
         super();

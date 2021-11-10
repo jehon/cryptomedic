@@ -10,7 +10,7 @@ import XIoNumeric from '../io/x-io-numeric.js';
 
 export default class XFfPatientRelated extends XWithFolder {
     /** @type {XForm} */
-    _form
+    _form;
 
     constructor() {
         super();

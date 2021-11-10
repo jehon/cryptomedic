@@ -16,10 +16,10 @@ import { usersCrud } from '../widgets/func/requests-admin.js';
  */
 export default class XPageUsersList extends HTMLElement {
     /** @type {XRequestor} */
-    _requestor
+    _requestor;
 
     /** @type {HTMLElement} */
-    _listing
+    _listing;
 
     constructor() {
         super();

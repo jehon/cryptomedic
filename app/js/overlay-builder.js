@@ -13,22 +13,22 @@ import XPanel from '../widgets/style/x-panel.js';
 
 class OverlayBuilder {
     /** @type {XOverlay} */
-    xOverlay
+    xOverlay;
 
     /** @type {XForm}  */
-    xForm
+    xForm;
 
     /** @type {HTMLDivElement}  */
-    xHeader
+    xHeader;
 
     /** @type {Promise} */
-    promise
+    promise;
 
     /** @type {function(*): void} */
-    resolve
+    resolve;
 
     /** @type {function(*): void} */
-    reject
+    reject;
 
     constructor() {
         this.promise = new Promise((resolve, reject) => { this.resolve = resolve; this.reject = reject; });

@@ -33,22 +33,22 @@ import { reportQueryBuilder } from '../widgets/func/requests-reports.js';
 export default class XPageReports extends HTMLElement {
 
     /** @type {XRequestor} */
-    _requestor
+    _requestor;
 
     /** @type {XForm} */
-    _form
+    _form;
 
     /** @type {XTable} */
-    _result
+    _result;
 
     /** @type {HTMLAnchorElement} */
-    _exportLink
+    _exportLink;
 
     /** @type {XMessages} */
-    _messages
+    _messages;
 
     /** @type {*} */
-    _data
+    _data;
 
     /**
      * @returns {*} description of the report
