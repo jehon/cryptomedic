@@ -56,7 +56,6 @@ module.exports = function (config) {
 
         browsers: [
             // 'FirefoxHeadless'
-            // 'Chrome'
             'ChromeHeadless'
         ],
 
@@ -74,7 +73,7 @@ module.exports = function (config) {
         },
 
         coverageReporter: {
-            dir: path.join(root, '/tmp/'),
+            dir: path.join(root, 'tmp'),
             includeAllSources: true,
             reporters: [
                 {
