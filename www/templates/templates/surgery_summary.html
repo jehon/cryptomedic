@@ -2,7 +2,8 @@
 	<tbody>
 		<tr ng-class='{ emptyValue: !folder.getFilesRelatedToPatient($index).ReportDiagnostic}'>
 			<td>Operation</td>
-			<td><span id='Surgery_ReportDiagnostic'>{{ folder.getFilesRelatedToPatient($index).ReportDiagnostic }}</span></td>
+			<td><span id='Surgery_ReportDiagnostic'>{{ folder.getFilesRelatedToPatient($index).ReportDiagnostic
+					}}</span></td>
 		</tr>
 		<tr ng-class='{ emptyValue: !folder.getFilesRelatedToPatient($index).ReportSurgeon}'>
 			<td>Operation</td>

@@ -25,6 +25,8 @@
 	</tr>
 	<tr ng-class='{ emptyValue: !folder.getPatient().other_comments}'>
 		<td>Comments</td>
-		<td><span id='Patient_other_comments' style='white-space: pre'>{{ folder.getPatient().other_comments }}</span></td>
+		<td>
+			<span id='Patient_other_comments' style='white-space: pre'>{{ folder.getPatient().other_comments }}</span>
+		</td>
 	</tr>
 </table>

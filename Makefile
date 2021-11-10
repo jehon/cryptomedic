@@ -247,7 +247,7 @@ cypress-open: chmod
 # 	open
 
 .PHONY: test-styles
-test-styles: tmp/styles.json
+test-styles: tmp/styles/styles.json
 tmp/styles/styles.json: tests/styles/* tests/styles/references/* tmp/.tested-e2e-desktop tmp/.tested-e2e-mobile
 # TODO -> from dev
 
@@ -369,7 +369,7 @@ www/build/index.html: tmp/.dependencies-node webpack.config.js  \
 		$(CJS2ESM_DIR)/platform.js
 
 # TODO -> from dev
-	$(NM_BIN)webpack
+	NODE_OPTIONS="--openssl-legacy-provider" $(NM_BIN)webpack
 
 www/build/browsers.json: .browserslistrc tmp/.dependencies-node
 	npx -y browserslist --json > "$@"

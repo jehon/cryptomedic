@@ -115,7 +115,7 @@ x-group-panel > table > thead {
 
 fieldset > table > tbody > tr:nth-child(odd),
 x-group-panel > table > tbody > tr:nth-child(odd) {
-	background-color: rgb(230, 230, 230);
+	background-color: rgb(230 230 230);
 }
 
 fieldset > table > tbody > tr > td:nth-of-type(1),
@@ -202,7 +202,7 @@ table.reporting > tfoot > tr > .subheader {
 }
 
 .catchedError {
-	color: rgb(180, 0, 0);
+	color: rgb(180 0 0);
 }
 
 .emptyValue .catchedError {
@@ -224,19 +224,19 @@ input[validation-message] {
 	border: 2px solid red;
 }
 
-input[type=date] {
+input[type="date"] {
 	/* line-height: inherit !important; */
 	line-height: normal !important; /* Workaround bootstrap */
 }
 
-input[type=checkbox].form-control {
+input[type="checkbox"].form-control {
 	width: auto;
 }
 
 .jserror {
 	color: red;
 	min-height: 20px;
-	background-image: url('img/error.png');
+	background-image: url("img/error.png");
 	background-repeat: no-repeat;
 	background-size: 20px;
 	padding-left: 25px;
@@ -267,7 +267,7 @@ x-input-picture {
 /********************************************
  *  Marks and graphics - legacy
  */
-.markContainer {
+.mark-container {
 	/* position: absolute -> relative to the first non-static element -> relative to 0,0 = pseudo-static */
 	position: relative;
 }
@@ -305,7 +305,7 @@ tr.hovered {
 	min-height: 100%;
 	position: absolute;
 	text-align: center;
-	background: rgba(3, 3, 3, 0.6);
+	background: rgb(3 3 3 / 60%);
 
 	/*   background-color: #333; */
 	color: #fff;
@@ -317,7 +317,7 @@ tr.hovered {
 	vertical-align: top;
 	background-color: #333;
 
-	/*    background: rgba(3, 3, 3, 1); */
+	/*    background: rgb(3 3 3 / 1); */
 }
 
 .cover-container {
@@ -341,7 +341,7 @@ table.summary table > tbody > tr > td:nth-of-type(1) {
 }
 
 table.summary table > tbody > tr:nth-child(2n) {
-	background-color: rgb(230, 230, 230);
+	background-color: rgb(230 230 230);
 }
 
 /*******************************************
