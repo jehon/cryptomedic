@@ -135,7 +135,7 @@ export default class XGraphic extends XWithFolder {
             /********************************************
              *  Marks and graphics
              */
-            .markContainer {
+            .mark-container {
                 /* position: absolute -> relative to the first non-static element -> relative to 0,0 = pseudo-static */
                 position: relative;
             }
@@ -182,7 +182,7 @@ export default class XGraphic extends XWithFolder {
         }
 
         fs.insertAdjacentHTML('beforeend', `
-            <div class='markContainer'>
+            <div class='mark-container'>
                 <img id='graph' src="/static/img/stats_${this.getImageName()}-${this.folder.getPatient().sexStr()}.jpg" width='100%'></img>
             </div>
             <table class='colorize datalegend'>
@@ -197,7 +197,7 @@ export default class XGraphic extends XWithFolder {
         `);
 
         const tableElement = this.querySelector('table > tbody');
-        const imgElement = this.querySelector('.markContainer');
+        const imgElement = this.querySelector('.mark-container');
 
         for (const index in this.folder.getFilesRelatedToPatient()) {
             const file = this.folder.getFilesRelatedToPatient(index);
