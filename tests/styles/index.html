@@ -129,7 +129,7 @@
 
     </script>
     <script src='./pixelmatch.js'></script>
-
+    <script src='./styles-problems-list.js'></script>
 
     <div class='compare' id='header'>
         <span>Reference
@@ -143,24 +143,19 @@
     <div id='results'> </div>
 
     <script>
-        fetch('./styles.json')
-            .then(res => res.json())
-            .then(problemsList => {
-                let id = 0;
-                for (let f of Object.keys(problemsList)) {
-                    const data = problemsList[f];
+        let id = 0;
+        for (let f of Object.keys(problemsList)) {
+            const data = problemsList[f];
 
-                    document.querySelector('#results').insertAdjacentHTML('beforeend',
-                        `<h3>${data.mode}/${data.name}: ${data.problemText ?? data.warningText}</h3>
-                        <div class='compare'>
-                                    <img target-id='${id}' onload='img_diff_tempo(${id}, 1)' id='i${id}_ref' src='${data.refURL}'></img>
-                                    <img target-id='${id}' onload='img_diff_tempo(${id}, 2)' id='i${id}_run' src='${data.runURL}'></img>
-                                    <canvas status='empty' id='i${id}_fin' for='${id}'></canvas>
-                        </div>`);
-                    id++;
-                }
-
-            })
+            document.querySelector('#results').insertAdjacentHTML('beforeend',
+                `<h3>${data.mode}/${data.name}: ${data.problemText ?? data.warningText}</h3>
+                <div class='compare'>
+                            <img target-id='${id}' onload='img_diff_tempo(${id}, 1)' id='i${id}_ref' src='${data.refURL}'></img>
+                            <img target-id='${id}' onload='img_diff_tempo(${id}, 2)' id='i${id}_run' src='${data.runURL}'></img>
+                            <canvas status='empty' id='i${id}_fin' for='${id}'></canvas>
+                </div>`);
+            id++;
+        }
     </script>
 </body>
 

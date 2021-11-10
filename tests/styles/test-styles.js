@@ -162,7 +162,7 @@ const MaxDiffs = {
         }
     } else {
         fs.mkdirSync(stylesRoot, { recursive: true });
-        fs.writeFileSync(path.join(stylesRoot, 'styles.json'), JSON.stringify(problemsList, null, 2));
+        fs.writeFileSync(path.join(stylesRoot, 'styles-problems-list.js'), 'problemsList = ' + JSON.stringify(problemsList, null, 2));
         if (problemsList.filter(fset => fset.problem).length > 0) {
             console.error(p_ko, 'some tests did fail');
             process.exit(1);
