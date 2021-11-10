@@ -247,8 +247,8 @@ cypress-open: chmod
 # 	open
 
 .PHONY: test-styles
-test-styles: tmp/styles/styles.json
-tmp/styles/styles.json: tests/styles/* tests/styles/references/* tmp/.tested-e2e-desktop tmp/.tested-e2e-mobile
+test-styles: tmp/styles/styles-problems-list.js
+tmp/styles/styles-problems-list.js: tests/styles/* tests/styles/references/* tmp/.tested-e2e-desktop tmp/.tested-e2e-mobile
 # TODO -> from dev
 
 	@rm -fr "$(dir $@)"
