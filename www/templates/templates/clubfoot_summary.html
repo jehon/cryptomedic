@@ -1,7 +1,7 @@
 <table style='width: 100%'>
 	<colgroup span="2" width="50%"></colgroup>
 	<tbody>
-		<tr ng-class='{ emptyValue: !folder.getFilesRelatedToPatient($index).Treatment}'>
+		<tr ng-class='{ "empty-value": !folder.getFilesRelatedToPatient($index).Treatment}'>
 			<td>Treatment</td>
 			<td><span id='ClubFoot_Treatment' name='Treatment'>{{ folder.getFilesRelatedToPatient($index).Treatment
 					}}</span></td>

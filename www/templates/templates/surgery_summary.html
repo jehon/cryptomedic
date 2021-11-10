@@ -1,11 +1,11 @@
 <table style='width: 100%'>
 	<tbody>
-		<tr ng-class='{ emptyValue: !folder.getFilesRelatedToPatient($index).ReportDiagnostic}'>
+		<tr ng-class='{ "empty-value": !folder.getFilesRelatedToPatient($index).ReportDiagnostic}'>
 			<td>Operation</td>
 			<td><span id='Surgery_ReportDiagnostic'>{{ folder.getFilesRelatedToPatient($index).ReportDiagnostic
 					}}</span></td>
 		</tr>
-		<tr ng-class='{ emptyValue: !folder.getFilesRelatedToPatient($index).ReportSurgeon}'>
+		<tr ng-class='{ "empty-value": !folder.getFilesRelatedToPatient($index).ReportSurgeon}'>
 			<td>Operation</td>
 			<td><span id='Surgery_ReportSurgeon'>{{ folder.getFilesRelatedToPatient($index).ReportSurgeon }}</span></td>
 		</tr>

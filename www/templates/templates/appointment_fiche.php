@@ -3,7 +3,7 @@ t::setDefaultOption("baseExpression", "currentFile().");
 ?>
 <x-two-columns ng-controller='ctrl_file_appointment'>
 	<x-group-panel title='Next appointment'>
-		<x-fff-field variable label='Today' class='notModeRead'>
+		<x-fff-field variable label='Today' class='not-mode-read'>
 			<div>{{today}}</div>
 		</x-fff-field>
 		<?php (new t("Appointment.Date"))->tr2("Entry date")->p(); ?>

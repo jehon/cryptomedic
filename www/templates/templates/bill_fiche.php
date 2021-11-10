@@ -21,7 +21,7 @@ if (!function_exists("App\price")) {
     echo <<<EOD
 <x-fff-field label='$label'
     ng-if="currentFile().getPriceFor('$name') > 0"
-    ng-class='{ notModeRead: !currentFile()["$name"] }'
+    ng-class='{ "not-mode-read": !currentFile()["$name"] }'
   >
   <div ng-if="currentFile().getPriceFor('$name')<=1">1x</div>
   <div>
@@ -125,7 +125,7 @@ EOD;
   t::setDefaultOption("baseExpression", "paymentEditor.");
   t::setDefaultOption('writeOnly');
   ?>
-  <div class='notModeWrite'>
+  <div class='not-mode-write'>
     <h3>Related payments</h3>
     <table class='table table-hover table-bordered tablesorter' ng-if='paymentsList().length > 0' id='paymentsList'>
       <thead>
