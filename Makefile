@@ -201,9 +201,9 @@ test-unit: tmp/.dependencies-node \
 		$(CJS2ESM_DIR)/axios-mock-adapter.js \
 		$(CJS2ESM_DIR)/platform.js
 
-	npm run test-unit-continuously-withcov -- --single-run
-
-	node tests/report.js
+# TODO: reenable coverage
+	NOCOV=1 npm run test-unit-continuously-withcov -- --single-run
+# node tests/report.js
 
 .PHONY: test-e2e
 test-e2e: test-e2e-desktop test-e2e-mobile
