@@ -1,13 +1,11 @@
 version: "3.4"
 
 x-common-env: &common-env
-  # MYSQL_VERSION: &MYSQL_VERSION 5.5
   MYSQL_HOST: &MYSQL_HOST mysql
   MYSQL_ROOT_PASSWORD: &MYSQL_ROOT_PASSWORD password
   MYSQL_DATABASE: &MYSQL_DATABASE cryptomedic
   MYSQL_USER: &MYSQL_USER username
   MYSQL_USER_PASSWORD: &MYSQL_USER_PASSWORD password
-  # PHP_VERSION: 7.3
 
 services:
   server:
@@ -23,7 +21,7 @@ services:
 
   mysql:
     # https://hub.docker.com/_/mysql/
-    image: mysql:${MYSQL_VERSION}
+    image: mysql:5.5
     environment:
       IN_DOCKER: mysql
       MYSQL_DATABASE: *MYSQL_DATABASE
@@ -78,7 +76,7 @@ services:
       context: conf/php
       dockerfile: Dockerfile
       args:
-        PHP_VERSION: ${PHP_VERSION}
+        PHP_VERSION: 7.3
     environment:
       IN_DOCKER: dev
       <<: *common-env

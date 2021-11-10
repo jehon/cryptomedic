@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-# TODO: export some of this into .env => share with docker-compose etc...
-
 set -o errexit
 
 export CR_SCRIPT_DIR
