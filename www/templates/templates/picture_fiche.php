@@ -1,7 +1,7 @@
 <?php
 t::setDefaultOption("baseExpression", "currentFile().");
 ?>
-<div ng-if="!currentFile().file" class="notModeRead alert alert-success" role="alert">
+<div ng-if="!currentFile().file" class="not-mode-read alert alert-success" role="alert">
 	The uploading of the file is changed. Now, please select the file to upload at the first step.<br>
 	The picture will be reduced automatically (to enhance upload speed), and you will see the result below.<br>
 	Then you can save the file to the server with the "create/save" button.<br>
@@ -15,12 +15,12 @@ t::setDefaultOption("baseExpression", "currentFile().");
 			<?php (new t("Picture.Date"))->tr2()->p(); ?>
 			<?php (new t("Picture.comment"))->tr2()->p(); ?>
 			<?php (new t("Picture.file"))->readOnly()->tr2("File")->p(); ?>
-			<x-fff-field class='notModeRead' label='Upload a file' ng-if="!currentFile().file" ng-class="{ error: errors.pictureRequired }">
+			<x-fff-field class='not-mode-read' label='Upload a file' ng-if="!currentFile().file" ng-class="{ error: errors.pictureRequired }">
 				<x-restricted slot='label' restricted-by='folder.edit'>
 					Upload a file
 				</x-restricted>
 			</x-fff-field>
-			<x-fff-field class='notModeRead' ng-if="!currentFile().file" ng-class="{ error: errors.pictureRequired }">
+			<x-fff-field class='not-mode-read' ng-if="!currentFile().file" ng-class="{ error: errors.pictureRequired }">
 				<div>
 					<x-restricted restricted-by='folder.edit'>
 						Upload a file

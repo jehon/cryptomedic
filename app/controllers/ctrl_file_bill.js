@@ -81,7 +81,7 @@ export default function ctrl_file_bill($scope, $element) {
     // Used in bill_summary
     $scope.isEmpty = function (value) {
         if (value == '' || value == '0' || value == 0 || value == '-1' || value == -1 || value == null) {
-            return 'emptyValue';
+            return 'empty-value';
         }
         return '';
     };

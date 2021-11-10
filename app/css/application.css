@@ -179,34 +179,26 @@ table.reporting > tfoot > tr > .subheader {
 /********************************************
  * Data display (modes, emtpyValues)
  */
-.summary .emptyValue {
+.summary .empty-value {
 	display: none;
 }
 
-.related .emptyValue {
+.related .empty-value {
 	display: none;
 }
 
-.modeRead .emptyValue {
+.mode-read .empty-value {
 	color: lightgray;
 	font-size: smaller;
 	background-color: white;
 }
 
-.modeRead .notModeRead {
+.mode-read .not-mode-read {
 	display: none;
 }
 
-.modeWrite .notModeWrite {
+.mode-write .not-mode-write {
 	display: none;
-}
-
-.catchedError {
-	color: rgb(180 0 0);
-}
-
-.emptyValue .catchedError {
-	color: lightgray;
 }
 
 /********************************************

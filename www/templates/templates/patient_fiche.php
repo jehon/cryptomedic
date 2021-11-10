@@ -21,45 +21,45 @@ t::setDefaultOption("baseExpression", "folder.getPatient().");
 			<x-fff-field label='Year of birth'>
 				<div>
 					{{folder.getPatient().Yearofbirth}}
-					<div class='notModeRead'>
+					<div class='not-mode-read'>
 						<h5>Calculate year of birth</h5>
 						<div><input ng-model='age.years' type='number' min='0' max='100'> years</div>
 						<div><input ng-model='age.months' type='number' min='-1' max='12'> months</div>
 					</div>
 				</div>
 			</x-fff-field>
-			<div class='notModeRead'>Calculate year of birth</div>
-			<x-fff-field class='notModeWrite' label='Age (today)' variable>
+			<div class='not-mode-read'>Calculate year of birth</div>
+			<x-fff-field class='not-mode-write' label='Age (today)' variable>
 				<div id='#ageToday' variable>
 					<x-fff-age></x-fff-age> old
 				</div>
 			</x-fff-field>
 			<x-fff-field field='District'>
 				<div>
-					<span class='notModeRead'>
+					<span class='not-mode-read'>
 						<x-write-list value='{{folder.getPatient().District}}' name='District' list-name='Districts' nullable></x-write-list>
 					</span>
-					<span class='notModeWrite'>
+					<span class='not-mode-write'>
 						<?php (new t("Patient.District"))->read()->p(); ?>
 					</span>
 				</div>
 			</x-fff-field>
 			<x-fff-field field='Upazilla'>
 				<div>
-					<span class='notModeRead'>
+					<span class='not-mode-read'>
 						<x-write-list value='{{folder.getPatient().Upazilla}}' name='Upazilla' nullable></x-write-list>
 					</span>
-					<span class='notModeWrite'>
+					<span class='not-mode-write'>
 						<?php (new t("Patient.Upazilla"))->read()->p(); ?>
 					</span>
 				</div>
 			</x-fff-field>
 			<x-fff-field field='Union'>
 				<div>
-					<span class='notModeRead'>
+					<span class='not-mode-read'>
 						<x-write-list value='{{folder.getPatient().Union_}}' name='Union_' nullable></x-write-list>
 					</span>
-					<span class='notModeWrite'>
+					<span class='not-mode-write'>
 						<?php (new t("Patient.Union_"))->read()->p(); ?>
 					</span>
 				</div>

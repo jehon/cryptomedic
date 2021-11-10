@@ -154,9 +154,9 @@ export default function ctrl_folder($scope, $routeParams) {
 
         // Layout
         if ($scope.mode == 'edit' || $scope.mode == 'add') {
-            document.querySelectorAll('.modeRead').forEach(e => { e.classList.remove('modeRead'); e.classList.add('modeWrite'); });
+            document.querySelectorAll('.mode-read').forEach(e => { e.classList.remove('mode-read'); e.classList.add('mode-write'); });
         } else {
-            document.querySelectorAll('.modeWrite').forEach(e => { e.classList.remove('modeWrite'); e.classList.add('modeRead'); });
+            document.querySelectorAll('.mode-write').forEach(e => { e.classList.remove('mode-write'); e.classList.add('mode-read'); });
         }
 
         // Date
