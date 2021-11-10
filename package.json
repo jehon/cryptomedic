@@ -87,7 +87,7 @@
     "build-continuously": "watch 'clear; make build' app/",
     "test-unit-continuously": "NOCOV=1 karma start tests/unitjs/karma.conf.js",
     "test-unit-continuously-withcov": "karma start tests/unitjs/karma.conf.js",
-    "test-styles": "tests/styles/styles-test.js",
+    "test-styles": "tests/styles/test-styles.js",
     "eslint": "eslint .",
     "stylelint": "stylelint app/**/*.css"
   },

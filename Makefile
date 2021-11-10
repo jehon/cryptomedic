@@ -248,20 +248,23 @@ cypress-open: chmod
 
 .PHONY: test-styles
 test-styles: tmp/styles.json
-tmp/styles.json: tests/styles/* tests/styles/references/* tmp/.tested-e2e-desktop tmp/.tested-e2e-mobile
+tmp/styles/styles.json: tests/styles/* tests/styles/references/* tmp/.tested-e2e-desktop tmp/.tested-e2e-mobile
 # TODO -> from dev
+
+	@rm -fr "$(dir $@)"
+	@mkdir -p "$(dir $@)"
+	@mkdir -p "$(dir $@)/run/mobile"
+	@mkdir -p "$(dir $@)/run/desktop"
+
+	rsync -r tests/styles/ "$(dir $@)/"
+	rsync node_modules/pixelmatch/index.js "$(dir $@)/pixelmatch.js"
+	find tmp/e2e/mobile/screenshots/ -type "f" -exec "cp" "{}" "$(dir $@)/run/mobile/" ";"
+	find tmp/e2e/desktop/screenshots/ -type "f" -exec "cp" "{}" "$(dir $@)/run/desktop/" ";"
 
 	@echo "Compare"
 	npm run --silent test-styles
 	@echo "Report is at http://localhost:$(CRYPTOMEDIC_PORT)/xappx/tmp/style.html"
-
-# Dependencies to force partial rebuild
-test-styles-only-desktop: tmp/.tested-e2e-desktop
-	npm run --silent test-styles -m desktop
-
-# Dependencies to force partial rebuild
-test-styles-only-mobile: tmp/.tested-e2e-mobile
-	npm run --silent test-styles -m mobile
+	du -ksh "$(dir $@)"
 
 .PHONY: update-references-style
 update-references-style:

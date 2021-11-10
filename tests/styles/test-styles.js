@@ -10,12 +10,13 @@ const p_ok = chalk.green(' ✓ ');
 const p_warn = chalk.yellow(' ? ');
 const p_ko = chalk.red('✗  ');
 
+const projectRoot = path.dirname(path.dirname(__dirname));
+const stylesRoot = path.join(projectRoot, "tmp", "styles");
+const referenceFolder = path.join(stylesRoot, "references");
+const runFolder = path.join(stylesRoot, "run");
+const referenceUpdateFolder = path.join(projectRoot, 'tests', 'styles', 'references');
+
 const opts = require('yargs/yargs')(process.argv.slice(2))
-    .option('module', {
-        alias: 'm',
-        type: 'string',
-        choices: ['desktop', 'mobile']
-    })
     .option('update', {
         alias: 'u',
         type: 'boolean'
@@ -29,48 +30,22 @@ const MaxDiffs = {
     size: 0.1,
     content: 0.1
 };
-const configs = [];
-if (!opts.module || opts.module == 'desktop') {
-    console.info(chalk.yellow('Adding desktop config'));
-    configs.push(
-        {
-            mode: 'desktop',
-            refPath: path.join('references', 'desktop'),
-            runPath: path.join('..', '..', 'tmp', 'e2e', 'desktop', 'screenshots')
-        });
-}
-if (!opts.module || opts.module == 'mobile') {
-    console.info(chalk.yellow('Adding mobile config'));
-    configs.push({
-        mode: 'mobile',
-        refPath: path.join('references', 'mobile'),
-        runPath: path.join('..', '..', 'tmp', 'e2e', 'mobile', 'screenshots')
-    });
-}
 
 (async function () {
-    function real(p) {
-        return path.join(__dirname, p);
-    }
-
     const listOfFiles = [];
-    for (const cfg of configs) {
-        // Add the ref
-        glob.sync('**/*.png', { cwd: real(cfg.refPath) }).map(f => listOfFiles.push({
-            ...cfg,
-            key: cfg.mode + '#' + path.basename(f),
-            name: path.basename(f),
-            ref: path.join(cfg.refPath, f)
-        }));
+    // Add the ref
+    glob.sync('**/*.png', { cwd: referenceFolder }).map(f => listOfFiles.push({
+        key: f,
+        name: path.basename(f),
+        ref: path.join(referenceFolder, f)
+    }));
 
-        // Add the run
-        glob.sync('**/*.png', { cwd: real(cfg.runPath) }).map(f => listOfFiles.push({
-            ...cfg,
-            key: cfg.mode + '#' + path.basename(f),
-            name: path.basename(f),
-            run: path.join(cfg.runPath, f)
-        }));
-    }
+    // Add the run
+    glob.sync('**/*.png', { cwd: runFolder }).map(f => listOfFiles.push({
+        key: f,
+        name: path.basename(f),
+        run: path.join(runFolder, f)
+    }));
 
     // Combine all results => { fk1: f1+f1, fk2: f2 } => [ f1 f2 f3 ]
     const uniqueFiles = Object.values(listOfFiles.reduce((acc, val) => {
@@ -78,7 +53,6 @@ if (!opts.module || opts.module == 'mobile') {
             ...acc[val.key],
             ...val
         };
-        // Object.assign({}, acc[val.key], val);
         return acc;
     }, {}));
 
@@ -102,8 +76,8 @@ if (!opts.module || opts.module == 'mobile') {
             continue;
         }
         // Calculate problems for each files
-        await new Promise((resolve) => resemble(real(fset.run))
-            .compareTo(real(fset.ref))
+        await new Promise((resolve) => resemble(fset.run)
+            .compareTo(fset.ref)
             .onComplete(function (data) {
                 fset.compared = true;
                 const diffContent = parseFloat(data.misMatchPercentage);
@@ -142,7 +116,17 @@ if (!opts.module || opts.module == 'mobile') {
         process.stdout.cursorTo(0);
     }
 
-    const problemsList = uniqueFiles.filter(fset => fset.problem || fset.warning);
+    const problemsList = uniqueFiles
+        .filter(fset => fset.problem || fset.warning)
+        .map(fset => {
+            if (fset.run) {
+                fset.runURL = path.relative(stylesRoot, fset.run);
+            }
+            if (fset.ref) {
+                fset.refURL = path.relative(stylesRoot, fset.ref);
+            }
+            return fset;
+        })
 
     // Show the problem list
     for (const fset of uniqueFiles) {
@@ -169,16 +153,16 @@ if (!opts.module || opts.module == 'mobile') {
                 success = false;
                 continue;
             }
-            const dest = fset.ref ? fset.ref : path.join(fset.refPath, fset.name);
-            process.stdout.write(`> ${fset.mode}/${fset.name}\n`);
-            fs.copyFileSync(real(fset.run), real(dest));
+            process.stdout.write(`> ${fset.ref}\n`);
+            fs.copyFileSync(fset.run, path.join(referenceUpdateFolder, fset.dest));
         }
         if (!success) {
             console.error(p_ko, 'Problem');
             process.exit(1);
         }
     } else {
-        fs.writeFileSync(path.join(__dirname, '../../tmp/styles.json'), JSON.stringify(problemsList, null, 2));
+        fs.mkdirSync(stylesRoot, { recursive: true });
+        fs.writeFileSync(path.join(stylesRoot, 'styles.json'), JSON.stringify(problemsList, null, 2));
         if (problemsList.filter(fset => fset.problem).length > 0) {
             console.error(p_ko, 'some tests did fail');
             process.exit(1);
