@@ -18,13 +18,13 @@ import { usersCrud } from '../widgets/func/requests-admin.js';
  */
 export default class XPageUserPassword extends HTMLElement {
     /** @type {XRequestor} */
-    _requestor
+    _requestor;
 
     /** @type {XForm} */
-    _form
+    _form;
 
     /** @type {XLabel} */
-    _label
+    _label;
 
     connectedCallback() {
         this.uid = parseInt(this.getAttribute('uid'));

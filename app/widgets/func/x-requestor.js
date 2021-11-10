@@ -225,7 +225,7 @@ export function requestAndFilterBuilder(options, allowed = []) {
 
 export class RequestCRUD {
     /** @type {string} */
-    basePath
+    basePath;
 
     constructor(basePath) {
         this.basePath = basePath;

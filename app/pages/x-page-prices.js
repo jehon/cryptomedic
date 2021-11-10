@@ -59,13 +59,13 @@ function sortPrices(prices) {
 export default class XPagePrices extends HTMLElement {
 
     /** @type {HTMLElement} */
-    explainEl
+    explainEl;
 
     /** @type {XRequestor} */
-    _requestor
+    _requestor;
 
     /** @type {number} */
-    editId = null
+    editId = null;
 
     constructor() {
         super();

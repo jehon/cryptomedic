@@ -32,7 +32,7 @@ export default class XIoString extends HTMLElement {
     }
 
     /** @type {HTMLElement} */
-    _rootEl
+    _rootEl;
 
     /** @type {string} */
     _initialValue = '';

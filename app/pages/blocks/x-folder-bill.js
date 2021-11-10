@@ -40,9 +40,9 @@ function selectPriceFromDate(prices, date) {
 }
 
 export default class XFolderBill extends XFolderFile {
-    _allPrices
+    _allPrices;
 
-    _currentFile
+    _currentFile;
 
     set allPrices(p) {
         this._allPrices = p;

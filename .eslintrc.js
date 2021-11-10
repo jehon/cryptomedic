@@ -10,10 +10,11 @@ module.exports = {
         es6: true,
         browser: true
     },
-    parser: 'babel-eslint',
+    parser: '@babel/eslint-parser',
     parserOptions: {
         ecmaVersion: (new Date()).getFullYear(),
-        sourceType: 'module'
+        sourceType: 'module',
+        requireConfigFile: false
     },
     plugins: [
         'jsdoc'

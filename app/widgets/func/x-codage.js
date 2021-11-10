@@ -18,10 +18,10 @@ export default class XCodage extends HTMLElement {
     }
 
     /** @type {HTMLElement} */
-    _tooltip
+    _tooltip;
 
     /** @type {HTMLElement} */
-    _content
+    _content;
 
     constructor() {
         super();

@@ -31,7 +31,7 @@ export default function createCallback(symbol = Symbol()) {
              * Subscribe to value change
              * The callback is called immediately with the value
              *
-             * @param {function(any)} cb - the callback
+             * @param {function(any):void} cb - the callback
              * @returns {function(void): void} - the unsubscribe function
              */
             cb => duix.subscribe(symbol, cb, { fireImmediately: true })

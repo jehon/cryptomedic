@@ -32,7 +32,7 @@ export default class XIoBill extends XIoNumeric {
      *
      * @type {number}
      */
-    _price = -1
+    _price = -1;
 
     /**
      * We store this input to use it everywhere
@@ -40,7 +40,7 @@ export default class XIoBill extends XIoNumeric {
      *
      * @type {XIoNumeric}
      */
-    _xIoNumericEl
+    _xIoNumericEl;
 
     constructor() {
         super();

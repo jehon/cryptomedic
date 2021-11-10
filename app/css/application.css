@@ -3,7 +3,7 @@
  */
 ::-webkit-calendar-picker-indicator {
 	color: red;
-	background-image: url('img/cal.gif');
+	background-image: url("img/cal.gif");
 }
 
 [hidden] {
@@ -24,7 +24,7 @@
 	border-color: yellow;
 }
 
-.debug_infos {
+.debug-infos {
 	font-size: xx-small;
 	font-style: italic;
 	color: lightgray;
@@ -40,7 +40,7 @@
 }
 
 .loading::before {
-	content: url('img/waiting.gif');
+	content: url("img/waiting.gif");
 }
 
 /*

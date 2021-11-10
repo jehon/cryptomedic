@@ -58,7 +58,7 @@ EOD;
           <?php (new t("Bill.Date"))->tr2()->p(); ?>
           <?php (new t("Bill.ExaminerName"))->tr2("Examiner")->p(); ?>
           <?php (new t("Bill.Center"))->tr2("Center where consultation took place")->p(); ?>
-          <div class='debug_infos'>
+          <div class='debug-infos'>
             price_id <?php (new t("Bill.price_id"))->read()->p(); ?>
           </div>
         </x-group-panel>

@@ -24,16 +24,16 @@ export default class XPriceItemEdit extends HTMLElement {
     }
 
     /** @type {HTMLInputElement} */
-    elSpecific
+    elSpecific;
 
     /** @type {HTMLInputElement} */
-    elChoiceOpen
+    elChoiceOpen;
 
     /** @type {HTMLInputElement} */
-    elChoiceUnused
+    elChoiceUnused;
 
     /** @type {HTMLInputElement} */
-    elChoiceSpecific
+    elChoiceSpecific;
 
     constructor() {
         super();

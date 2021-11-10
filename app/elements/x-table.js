@@ -56,10 +56,10 @@ const BODY = 'body';
  */
 export default class XTable extends HTMLElement {
     /** @type {HTMLElement} */
-    _element
+    _element;
 
     /** @type {XOverlay} */
-    _overlay
+    _overlay;
 
     /**
      * @type {Object} to describe data/body
@@ -67,17 +67,17 @@ export default class XTable extends HTMLElement {
      * @property {Array<HeadFootDetailDescription>} headers - to generate thead data
      * @property {Array<HeadFootDetailDescription>} footers - to generate tfoot data
      */
-    _details
+    _details;
 
     /**
      * @type {Object} the config of the table
      * @property {Object} headers to define headers
      * @property {Object} footers to define footers
      */
-    _config
+    _config;
 
     /** @type {function(Element, number): void} callback to modify the element */
-    _setsCallback
+    _setsCallback;
 
     constructor() {
         super();
@@ -230,17 +230,17 @@ export default class XTable extends HTMLElement {
 
             iResult[HEADER] = [
                 ...(new Array(this._config.headers.n - (iDetail.headers?.length ?? 0)).fill(null)),
-                ...[...iDetail.headers]?.reverse().map(f => f instanceof Function
+                ...([...iDetail.headers]?.reverse().map(f => f instanceof Function
                     ? f(iResult[BODY], context)
                     : f
-                )
+                ) ?? [])
             ];
 
             iResult[FOOTER] = [
-                ...iDetail.footers?.map(f => f instanceof Function
+                ...(iDetail.footers?.map(f => f instanceof Function
                     ? f(iResult[BODY], context)
                     : f
-                ),
+                ) ?? []),
                 ...(new Array(this._config.footers.n - (iDetail.footers?.length ?? 0)).fill(null))
             ];
 
@@ -250,7 +250,8 @@ export default class XTable extends HTMLElement {
             results.push(iResult);
         }
 
-        /** Dump Horizontal layout
+        /**
+         * Dump Horizontal layout
          * [set][zone][detail]
          * +-+-----+-+
          * |h|iiiii|f|
