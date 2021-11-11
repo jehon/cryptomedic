@@ -369,7 +369,7 @@ www/build/index.html: tmp/.dependencies-node webpack.config.js  \
 		$(CJS2ESM_DIR)/platform.js
 
 # TODO -> from dev
-	NODE_OPTIONS="--openssl-legacy-provider" $(NM_BIN)webpack
+	$(NM_BIN)webpack
 
 www/build/browsers.json: .browserslistrc tmp/.dependencies-node
 	npx -y browserslist --json > "$@"
