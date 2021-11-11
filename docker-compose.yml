@@ -21,7 +21,7 @@ services:
 
   mysql:
     # https://hub.docker.com/_/mysql/
-    image: mysql:5.5
+    image: mysql:5.7
     environment:
       IN_DOCKER: mysql
       MYSQL_DATABASE: *MYSQL_DATABASE
