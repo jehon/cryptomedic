@@ -50,85 +50,6 @@
             margin-bottom: 5px;
         }
     </style>
-    <script>
-        module = { exports: {} };
-        const done = new Set();
-
-        function setCanvasStatus(id, str) {
-            document.querySelector(`canvas[for="${id}"]`).setAttribute('status', str);
-        }
-
-        function img2data(id, w, h) {
-            const myImgElement = document.querySelector('#' + id);
-
-            // 1) Create a canvas, either on the page or simply in code
-            var canvas = document.createElement('canvas');
-            canvas.height = h;
-            canvas.width = w;
-            var ctx = canvas.getContext('2d');
-
-            // 2) Copy your image data into the canvas
-            ctx.drawImage(myImgElement, 0, 0, w, h);
-
-            // 3) Read your image data
-            return ctx.getImageData(0, 0, w, h).data;
-        }
-
-        function img_diff(id) {
-            if (done.has(id)) {
-                return;
-            }
-            const myImgRef = document.querySelector('#i' + id + '_ref');
-            if (!myImgRef.complete) {
-                return;
-            }
-
-            const myImgTest = document.querySelector('#i' + id + '_run');
-            if (!myImgTest.complete) {
-                return;
-            }
-
-            console.info("Calculating ", id);
-            setCanvasStatus(id, 'running');
-            done.add(id);
-
-            const w = myImgRef.naturalWidth;
-            const h = myImgRef.naturalHeight;
-
-            const canvas = document.querySelector('#i' + id + '_fin');
-            canvas.width = w;
-            canvas.height = h;
-            const diff = canvas.getContext('2d');
-
-            const diffImg = diff.createImageData(w, h);
-
-            pixelmatch(
-                img2data('i' + id + '_ref', w, h),
-                img2data('i' + id + '_run', w, h),
-                diffImg.data,
-                w, h, { threshold: 0.01 });
-            diff.putImageData(diffImg, 0, 0);
-            canvas.removeAttribute('status');
-        }
-
-        let p = new Promise(resolve => {
-            window.addEventListener('load', () => resolve());
-        });
-
-        const loaded = new Map();
-        function img_diff_tempo(id, key) {
-            let already = (loaded.get(id) ?? 0) | key;
-
-            if (already == 3) {
-                setCanvasStatus(id, 'preparing');
-                p = p.then(() => img_diff(id));
-            }
-            loaded.set(id, key);
-            return p;
-        }
-
-    </script>
-    <script src='./pixelmatch.js'></script>
     <script src='./styles-problems-list.js'></script>
 
     <div class='compare' id='header'>
@@ -138,6 +59,7 @@
         </span>
         <span>Test result</span>
         <span>Comparison</span>
+        <span>Diff</span>
     </div>
 
     <div id='results'> </div>
@@ -150,9 +72,9 @@
             document.querySelector('#results').insertAdjacentHTML('beforeend',
                 `<h3>${data.mode}/${data.name}: ${data.problemText ?? data.warningText}</h3>
                 <div class='compare'>
-                            <img target-id='${id}' onload='img_diff_tempo(${id}, 1)' id='i${id}_ref' src='${data.refURL}'></img>
-                            <img target-id='${id}' onload='img_diff_tempo(${id}, 2)' id='i${id}_run' src='${data.runURL}'></img>
-                            <canvas status='empty' id='i${id}_fin' for='${id}'></canvas>
+                    <img ref src='${data.ref}'></img>
+                    <img run src='${data.run}'></img>
+                    <img diff src='${data.diff}'></img>
                 </div>`);
             id++;
         }

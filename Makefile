@@ -257,7 +257,6 @@ tmp/styles/styles-problems-list.js: tests/styles/* tests/styles/references/* tmp
 	@mkdir -p "$(dir $@)/run/desktop"
 
 	rsync -r tests/styles/ "$(dir $@)/"
-	rsync node_modules/pixelmatch/index.js "$(dir $@)/pixelmatch.js"
 	find tmp/e2e/mobile/screenshots/ -type "f" -exec "cp" "{}" "$(dir $@)/run/mobile/" ";"
 	find tmp/e2e/desktop/screenshots/ -type "f" -exec "cp" "{}" "$(dir $@)/run/desktop/" ";"
 
