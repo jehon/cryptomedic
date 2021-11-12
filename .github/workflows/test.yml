@@ -28,6 +28,7 @@ jobs:
     - run: make test-styles
     - run: make lint
     - run: make deploy
+      if: ${{ github.ref_name == 'main' && github.ref_type == 'branch' }}
       env:
         CRYPTOMEDIC_DB_UPGRADE: ${{ secrets.CRYPTOMEDIC_DB_UPGRADE }}
         CRYPTOMEDIC_UPLOAD_PASSWORD: ${{ secrets.CRYPTOMEDIC_UPLOAD_PASSWORD }}
