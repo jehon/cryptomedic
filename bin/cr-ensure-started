@@ -7,7 +7,7 @@ CR_SCRIPT_DIR="$(dirname "${BASH_SOURCE[0]}")"
 # shellcheck source=./cr-lib
 . "$CR_SCRIPT_DIR"/cr-lib
 
-if ! docker compose ps --filter "status=running" --services | grep "server" &>/dev/null; then
+if ! docker compose ps --filter "status=running" | grep " server " &>/dev/null; then
 	header "starting docker"
 	cr-capture-output docker compose up --build -d
 	header_finished
