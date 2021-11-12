@@ -27,6 +27,7 @@ jobs:
     - run: make test-e2e-mobile
     - run: make test-styles
     - run: make lint
+    - run: make deploy
 
     - name: 'Upload Artifact'
       if: always()
