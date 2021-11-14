@@ -109,7 +109,7 @@ class ReportStatisticalController extends ReportController {
 			$res2[$line->Center] = $line->count;
 		}
 		foreach ($centers as $c) {
-			$this->resultPathSet("summary.centers." . CryptomedicModel::myCleanValue($c), array_key_exists($c, $res2) ? $res2[$c] : 0);
+			$this->resultPathSet("summary.centers.$c", array_key_exists($c, $res2) ? $res2[$c] : 0);
 		}
 		$this->resultPathSet("summary.centers.unspecified", array_key_exists('', $res2) ? $res2[''] : 0);
 
