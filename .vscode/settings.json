@@ -6,5 +6,8 @@
     "activityBar.background": "#001f00",
     "titleBar.activeBackground": "#001f00",
     "titleBar.activeForeground": "#ffffff"
-  }
+  },
+  "shellcheck.customArgs": [
+    "-x"
+  ]
 }
