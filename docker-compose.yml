@@ -1,6 +1,10 @@
 version: "3.4"
 
-x-common-env: &common-env
+# Also update .ovhconfig
+x-common-env:
+  &common-env
+  PHP_VERSION: &PHP_VERSION 7.3
+  MYSQL_IMAGE: &MYSQL_IMAGE mysql:5.5
   MYSQL_HOST: &MYSQL_HOST mysql
   MYSQL_ROOT_PASSWORD: &MYSQL_ROOT_PASSWORD password
   MYSQL_DATABASE: &MYSQL_DATABASE cryptomedic
@@ -13,7 +17,7 @@ services:
       context: conf/server/
       dockerfile: Dockerfile
       args:
-        PHP_VERSION: 7.3
+        PHP_VERSION: *PHP_VERSION
     environment:
       IN_DOCKER: server
     expose:
@@ -23,12 +27,11 @@ services:
 
   mysql:
     # https://hub.docker.com/_/mysql/
-    image: mysql:5.5
+    image: *MYSQL_IMAGE
     environment:
       IN_DOCKER: mysql
       MYSQL_DATABASE: *MYSQL_DATABASE
       MYSQL_ROOT_PASSWORD: *MYSQL_ROOT_PASSWORD
-      MYSQL_DATABASE: *MYSQL_DATABASE
       MYSQL_USER: *MYSQL_USER
       MYSQL_PASSWORD: *MYSQL_USER_PASSWORD
     expose:
@@ -44,7 +47,7 @@ services:
       PMA_USER: root
       PMA_PASSWORD: *MYSQL_ROOT_PASSWORD
     expose:
-       - 80
+      - 80
     depends_on:
       - mysql
 
@@ -78,7 +81,7 @@ services:
       context: conf/php
       dockerfile: Dockerfile
       args:
-        PHP_VERSION: 7.3
+        PHP_VERSION: *PHP_VERSION
     environment:
       IN_DOCKER: dev
       <<: *common-env
