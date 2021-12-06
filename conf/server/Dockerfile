@@ -21,7 +21,7 @@ RUN install-php-extensions gd pdo_mysql xdebug
 
 COPY ssmtp.conf /etc/ssmtp/ssmtp.conf
 
-COPY php.ini /etc/php/7.3/apache2/conf.d/99-php.ini
+COPY php.ini /etc/php/${PHP_VERSION}/apache2/conf.d/99-php.ini
 
 # RUN mkdir -p \
 #     /tmp/laravel/framework \
