@@ -2,7 +2,7 @@
 ; http://www.ovh.com/fr/g1175.format_du_point_ovhconfig
 
 app.engine=php
-app.engine.version=7.3
-container.image=stable
+app.engine.version=7.4
+container.image=stable64
 environment=production
 http.firewall=none
