@@ -18,7 +18,7 @@
 + /deploy-filter
 
 # Required config is only databases prod files
-+ /conf/
++ /conf
 + /conf/database
 + /conf/database/versions
 + /conf/database/always
@@ -34,15 +34,15 @@
 - /www/maintenance/dev
 - /www/api/*/tests
 - /www/api/*/vendor/bin
-+ /www/
++ /www
 
 # Protect: server-side files
 P *.log
 P /config-site.php
 - /live
 P /live
-- /tmp/
-P /tmp/
+- /tmp
+P /tmp
 P /www/api/*/storage
 
 - /*
