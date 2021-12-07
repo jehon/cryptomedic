@@ -17,6 +17,10 @@ if ($_REQUEST['pwd'] != $myconfig['security']['key']) {
 	die("No correct pwd given");
 }
 
+if (isset($_REQUEST['debug'])) {
+	\Jehon\Maintenance\Database::debug(true);
+}
+
 try {
 	http_response_code(500);
 	$db = new \Jehon\Maintenance\Database(
@@ -24,6 +28,8 @@ try {
 		$myconfig['database']['username'],
 		$myconfig['database']['password']
 	);
+	echo "\nDetected version: ";
+	echo $db->getVersion() . "\n";
 
 	echo "\n\nRunning versions\n";
 	$db->runDirectory(__DIR__ . "/../../conf/database/versions/");

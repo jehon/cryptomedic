@@ -59,7 +59,7 @@ class Database {
 
 	public function runPrepareSqlStatement($sql, $data = array()) {
 		if (self::$_debug) {
-			echo "Running prepared statement: $sql [" . implode($data, ",") .  "]<br>";
+			echo "Running prepared statement: $sql [" . implode(",", $data) .  "]<br>";
 		}
 
 		$params = array();
@@ -219,7 +219,7 @@ class Database {
 			}
 
 			echo "\nTreating $f [$nextVersion]: ";
-			$res = $this->runFile($f, true);
+			$res = $this->runFile($f);
 			echo " = " . $res . "\n";
 			if (!$res) {
 				return false;
