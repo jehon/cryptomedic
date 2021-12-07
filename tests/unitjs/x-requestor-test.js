@@ -295,7 +295,7 @@ describe(fn(import.meta.url), function () {
         });
 
         describe('mocks', function () {
-            it('should accept no response', async (done) => {
+            it('should accept no response', function (done) {
                 const mock = mockNoResponse();
                 const req = element.request({ url: '/anything' });
 
@@ -308,7 +308,7 @@ describe(fn(import.meta.url), function () {
                 done();
             });
 
-            it('should accept success', async () => {
+            it('should accept success', async function () {
                 const mock = await mockResponseWithSuccess(123);
                 const _req = await element.request({ url: '/anything' });
 
@@ -318,7 +318,7 @@ describe(fn(import.meta.url), function () {
                 expect(element.isBlocked()).toBeFalsy();
             });
 
-            it('should accept filtered success', async () => {
+            it('should accept filtered success', async function () {
                 const mock = await mockResponseWithSuccess({}, 123);
                 await element.request({ url: '/anything' });
 
@@ -328,7 +328,7 @@ describe(fn(import.meta.url), function () {
                 expect(element.isBlocked()).toBeFalsy();
             });
 
-            it('should accept error', async () => {
+            it('should accept error', async function () {
                 const mock = await mockResponseWithFailureCode(400);
                 try {
                     const _req = await element.request({ url: '/anything' });
