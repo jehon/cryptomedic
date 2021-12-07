@@ -17,7 +17,7 @@ describe(fn(import.meta.url), function () {
             setSession();
         });
 
-        it('is empty on start', async function (done) {
+        it('is empty on start', function (done) {
             const unreg = onSession(data => {
                 expect(data).toBeNull();
                 expect(getSession()).toBeFalsy();
@@ -61,7 +61,7 @@ describe(fn(import.meta.url), function () {
             setSession(refSession);
         });
 
-        it('with memorized value', async function (done) {
+        it('with memorized value', function (done) {
             expect(getSession()).not.toBeNull();
             expect(getSession()).toBeTruthy();
             expect(getSession().group).toBe('cdc');
@@ -72,7 +72,7 @@ describe(fn(import.meta.url), function () {
             unreg();
         });
 
-        it('with username', async function (done) {
+        it('with username', function (done) {
             expect(getSession()).toBeTruthy();
             expect(getUsername()).toBe('murshed');
             const unreg = onSession(_data => {

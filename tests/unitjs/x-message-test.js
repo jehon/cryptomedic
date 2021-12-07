@@ -11,6 +11,7 @@ describe(fn(import.meta.url), function () {
     it('should show a message', function () {
         el.innerHTML = 'test';
         el.setAttribute('level', 'success');
+        expect(true).toBeTrue();
     });
 
     it('should show different types', function () {
@@ -19,6 +20,7 @@ describe(fn(import.meta.url), function () {
         el.setAttribute('level', messages.info);
         el.setAttribute('level', messages.warning);
         el.setAttribute('level', messages.error);
+        expect(true).toBeTrue();
     });
 
 });
