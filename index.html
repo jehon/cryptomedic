@@ -94,8 +94,8 @@
                     <td><a href='/api/-api.version-/routes/struct/browsers.php'>browsers</a></td>
                 </tr>
                 <tr>
-                    <td></td>
-                    <td></td>
+                    <td><a href='http://www.cryptomedic.org/maintenance/md5sum.php?filter=remote'>md5sum remote</a></td>
+                    <td><a href='/maintenance/md5sum.php?filter=local'>md5sum local</a></td>
                 </tr>
                 <tr>
                     <td></td>
@@ -212,7 +212,7 @@
     </div>
 
     <script type='module'>
-        import { API_VERSION } from '../app/config.js';
+        import { API_VERSION } from './app/config.js';
 
         const host = window.location.origin.split(':').slice(0, -1).join(':');
         document.querySelectorAll('a').forEach(/* type HTMLElement */ e => {
