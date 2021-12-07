@@ -17,7 +17,8 @@ define("PRJ_ROOT", dirname(dirname(__DIR__)));
 const F_LOCAL = "local";
 const F_REMOTE = "remote";
 
-$debug = isset($_REQUEST['debug']);
+# verbosity: 1, 2, 3
+$debug = isset($_REQUEST['debug']) ? intval($_REQUEST['debug']) : 0;
 
 $filter = $_REQUEST['filter'];
 if (!$filter) {
@@ -67,7 +68,7 @@ $filters = array_map(
 	)
 );
 
-if ($debug) {
+if ($debug > 2) {
 	echo "\nRaw filters: \n";
 	print_r($filters);
 }
@@ -79,13 +80,9 @@ if ($filter == "remote") {
 			return $a[0] == "P";
 		}
 	);
-	// } else {
-	// 	$filters = array_filter($filters,
-	// 		function($a) { return $a[0] != "P"; }
-	// 	);
 }
 
-if ($debug) {
+if ($debug > 1) {
 	echo "\nPost filter: \n";
 	print_r($filters);
 }
@@ -101,7 +98,7 @@ function getFiles($absPath) {
 			$fabs = $absPath . DIRECTORY_SEPARATOR . $f;
 			$frel = substr($fabs, strlen(PRJ_ROOT));
 
-			if ($debug) {
+			if ($debug > 0) {
 				echo ("\nTEST $frel: ");
 			}
 
@@ -109,7 +106,7 @@ function getFiles($absPath) {
 			foreach ($filters as $filt) {
 				$match = preg_match($filt[2], $frel);
 
-				if ($debug) {
+				if ($debug > 2) {
 					echo " - " . $filt[1] . ' ? ' . ($match ? 'Y' : 'n');
 				}
 
@@ -124,19 +121,19 @@ function getFiles($absPath) {
 				}
 			}
 			if (!$keep) {
-				if ($debug) {
+				if ($debug > 0) {
 					echo "SKIPPING";
 				}
 				continue;
 			}
-			if ($debug) {
+			if ($debug > 0) {
 				echo "\n";
 			}
 
 			if (is_dir($fabs)) {
 				getfiles($fabs);
 			} else {
-				echo \hash_file('crc32b', $fabs) . ": " . $frel . "\n";
+				echo \hash_file('crc32b', $fabs) . ": $frel\n";
 			}
 		}
 		closedir($handle);
@@ -145,8 +142,7 @@ function getFiles($absPath) {
 	}
 }
 
-getFiles(PRJ_ROOT . "/www");
-getFiles(PRJ_ROOT . "/conf/database");
+getFiles(PRJ_ROOT);
 
 ?>
 # done
