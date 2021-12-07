@@ -33,7 +33,7 @@
     "babel-loader": "8.2.3",
     "babel-plugin-transform-commonjs": "1.1.6",
     "bluebird": "3.7.2",
-    "chalk": "4.1.2",
+    "chalk": "5.0.0",
     "chromedriver": "96.0.0",
     "css-loader": "5.2.7",
     "cypress": "9.1.1",
@@ -83,7 +83,7 @@
     "build-continuously": "watch 'clear; make build' app/",
     "test-unit-continuously": "NOCOV=1 karma start tests/unitjs/karma.conf.js",
     "test-unit-continuously-withcov": "karma start tests/unitjs/karma.conf.js",
-    "test-styles": "tests/styles/test-styles.js",
+    "test-styles": "tests/styles/test-styles.mjs",
     "eslint": "eslint .",
     "stylelint": "stylelint app/**/*.css"
   },
