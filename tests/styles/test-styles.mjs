@@ -1,18 +1,20 @@
 #!/usr/bin/env node
 
-const fs = require('fs');
-const path = require('path');
-const glob = require('glob');
-const resemble = require('node-resemble-js');
-const chalk = require('chalk');
-const pixelMatch = require('pixelmatch');
-const PNG = require('pngjs').PNG;
+import fs from 'fs';
+import path from 'path';
+import glob from 'glob';
+import resemble from 'node-resemble-js';
+import chalk from 'chalk';
+import pixelMatch from 'pixelmatch';
+import { PNG } from 'pngjs';
+import yargs from 'yargs';
+import { fileURLToPath } from 'url';
 
 const p_ok = chalk.green(' ✓ ');
 const p_warn = chalk.yellow(' ? ');
 const p_ko = chalk.red('✗  ');
 
-const projectRoot = path.dirname(path.dirname(__dirname));
+const projectRoot = path.dirname(path.dirname(path.dirname(fileURLToPath(import.meta.url))));
 const stylesRoot = path.join(projectRoot, 'tmp', 'styles');
 const referenceFolder = 'references';
 const runFolder = 'run';
@@ -28,7 +30,7 @@ fs.mkdirSync(inStyles(diffFolder), { recursive: true });
 fs.mkdirSync(inStyles(diffFolder, 'desktop'), { recursive: true });
 fs.mkdirSync(inStyles(diffFolder, 'mobile'), { recursive: true });
 
-const opts = require('yargs/yargs')(process.argv.slice(2))
+const opts = yargs(process.argv.slice(2))
     .option('update', {
         alias: 'u',
         type: 'boolean'
