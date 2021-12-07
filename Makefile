@@ -153,7 +153,7 @@ start:
 	cr-fix-permissions
 
 	@echo "Open browser: http://localhost:$(CRYPTOMEDIC_PORT)/"
-	@echo "Test page: http://localhost:$(CRYPTOMEDIC_PORT)/xappx/tests/index.html"
+	@echo "Test page: http://localhost:$(CRYPTOMEDIC_PORT)/xappx/"
 
 .PHONY: stop
 stop: deploy-unmount chmod
