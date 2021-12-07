@@ -4,7 +4,10 @@ GIT_BRANCH=$(shell git rev-parse --abbrev-ref HEAD)
 
 # Default target
 .PHONY: dev
-dev: clear stop test lint ok
+dev: clear test lint ok
+
+.PHONY: full
+full: clear clean stop test lint ok
 
 .PHONY: pull-request
 pull-request: pull-request-pre update-dependencies-api-bare update-dependencies-api test ok
