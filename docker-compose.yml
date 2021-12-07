@@ -3,7 +3,7 @@ version: "3.4"
 # Also update .ovhconfig
 x-common-env:
   &common-env
-  PHP_VERSION: &PHP_VERSION 7.4
+  PHP_VERSION: &PHP_VERSION 8.0
   MYSQL_IMAGE: &MYSQL_IMAGE mysql:5.6
   MYSQL_HOST: &MYSQL_HOST mysql
   MYSQL_ROOT_PASSWORD: &MYSQL_ROOT_PASSWORD password
