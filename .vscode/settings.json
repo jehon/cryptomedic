@@ -9,5 +9,6 @@
   },
   "shellcheck.customArgs": [
     "-x"
-  ]
+  ],
+  "gitlens.codeLens.enabled": false
 }
