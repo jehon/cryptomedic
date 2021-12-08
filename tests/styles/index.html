@@ -70,7 +70,7 @@
             const data = problemsList[f];
 
             document.querySelector('#results').insertAdjacentHTML('beforeend',
-                `<h3>${data.mode}/${data.name}: ${data.problemText ?? data.warningText}</h3>
+                `<h3>${data.mode} → ${data.name}: ${data.problemText ?? data.warningText}</h3>
                 <div class='compare'>
                     <img ref src='${data.ref}'></img>
                     <img run src='${data.run}'></img>
