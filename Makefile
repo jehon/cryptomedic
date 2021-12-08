@@ -7,7 +7,7 @@ GIT_BRANCH=$(shell git rev-parse --abbrev-ref HEAD)
 dev: clear test lint ok
 
 .PHONY: full
-full: clear clean stop test lint ok
+full: clear clean stop start-with-rebuild test lint ok
 
 .PHONY: pull-request
 pull-request: pull-request-pre update-dependencies-api-bare update-dependencies-api test ok
@@ -149,6 +149,10 @@ computer-setup:
 update-config-host-key:
 # TODO -> deploy from dev
 	ssh-keyscan -t ssh-rsa $(DEPLOY_HOST) > conf/ovh.key
+
+.PHONY: start-with-rebuild
+start-with-rebuild:
+	docker compose build --pull --no-cache
 
 .PHONY: start
 start:
