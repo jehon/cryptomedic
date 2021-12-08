@@ -35,12 +35,5 @@ Cypress.Commands.add('crCompareSnapshot',
                 '[variable]'
             ]
         });
-
-        // cy.document().toMatchImageSnapshot({
-        //     name: testName,
-        //     blackout: [
-        //         '[variable]'
-        //     ]
-        // });
     }
 );
