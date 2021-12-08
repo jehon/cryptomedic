@@ -221,7 +221,6 @@ test-e2e: test-e2e-desktop test-e2e-mobile
 test-e2e-desktop: tmp/.tested-e2e-desktop
 tmp/.tested-e2e-desktop: tmp/.build $(shell find cypress/ -name "*.js") tmp/.dependencies
 	cr-fix-permissions tmp/e2e
-	cr-data-reset
 	cr-cypress
 
 	@mkdir -p "$(dir $@)"
@@ -232,7 +231,6 @@ tmp/.tested-e2e-desktop: tmp/.build $(shell find cypress/ -name "*.js") tmp/.dep
 test-e2e-mobile: tmp/.tested-e2e-mobile
 tmp/.tested-e2e-mobile: tmp/.build $(shell find cypress/ -name "*.js") tmp/.dependencies
 	cr-fix-permissions tmp/e2e
-	cr-data-reset
 	cr-cypress "mobile"
 
 	@mkdir -p "$(dir $@)"
