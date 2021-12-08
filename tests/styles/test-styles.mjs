@@ -41,7 +41,7 @@ const opts = yargs(process.argv.slice(2))
 // Configurations
 const MaxDiffs = {
     sizePercent: 0.1,
-    contentPixels: 20
+    contentPixels: 40
 };
 
 (async function () {
