@@ -3,7 +3,6 @@
 import fs from 'fs';
 import path from 'path';
 import glob from 'glob';
-import resemble from 'node-resemble-js';
 import chalk from 'chalk';
 import pixelMatch from 'pixelmatch';
 import { PNG } from 'pngjs';
@@ -41,8 +40,8 @@ const opts = yargs(process.argv.slice(2))
 
 // Configurations
 const MaxDiffs = {
-    size: 0.1,
-    content: 0.1
+    sizePercent: 0.1,
+    contentPixels: 20
 };
 
 (async function () {
@@ -59,94 +58,66 @@ const MaxDiffs = {
         run: path.join(runFolder, f)
     }));
 
-    // Combine all results => { fk1: f1+f1, fk2: f2 } => [ f1 f2 f3 ]
-    const uniqueFiles = Object.values(listOfFiles.reduce((acc, val) => {
+    const problemsList = Object.values(listOfFiles.reduce((acc, val) => {
+        // Join ref and run
+        // { fk1: f1+f1, fk2: f2 } => [ f1 f2 f3 ]
         acc[val.key] = {
             ...acc[val.key],
             ...val
         };
         return acc;
-    }, {}));
+    }, {}))
+        .map(fset => {
+            fset.problem = false;
+            fset.warning = false;
 
-    uniqueFiles.map(fset => {
-        fset.problem = false;
-        fset.warning = false;
+            if (!('ref' in fset)) {
+                fset.problem = true;
+                fset.problemText = 'No reference found';
+            }
+            if (!('run' in fset)) {
+                fset.problem = true;
+                fset.problemText = 'No run found';
+            }
 
-        if (!('ref' in fset)) {
-            fset.problem = true;
-            fset.problemText = 'No reference found';
-        }
-        if (!('run' in fset)) {
-            fset.problem = true;
-            fset.problemText = 'No run found';
-        }
-    });
+            if (!fset.problem) {
+                fset.mode = fset.ref.split('/')[1];
+                fset.name = fset.ref.split('/').pop();
 
-    let scanned = 0;
-    for (const fset of uniqueFiles) {
-        if (fset.problem) {
-            continue;
-        }
-        // Calculate problems for each files
-        await new Promise((resolve) => resemble(inStyles(fset.run))
-            .compareTo(inStyles(fset.ref))
-            .onComplete(function (data) {
-                fset.compared = true;
-                const diffContent = parseFloat(data.misMatchPercentage);
-                const diffSize = Math.hypot(data.dimensionDifference.width, data.dimensionDifference.height);
+                // Generate the diffs
+                fset.diff = path.join(diffFolder, fset.key);
+                const ref = PNG.sync.read(fs.readFileSync(inStyles(fset.ref)));
+                const run = PNG.sync.read(fs.readFileSync(inStyles(fset.run)));
+                const { width, height } = ref;
+                const diffPNG = new PNG({ width, height });
 
-                console.assert(isFinite(diffContent));
-                console.assert(isFinite(diffSize));
+                fset.diffPixels = pixelMatch(ref.data, run.data, diffPNG.data, width, height /*, { threshold: 0.1 } */);
 
-                if (diffSize == 0 && diffContent == 0) {
+                fset.diffSize = Math.abs(1 - (run.height * run.width) / (ref.height * ref.width));
+
+                const r = (v) => Math.round(v * 100) + '%';
+
+                if (fset.diffSize == 0 && fset.diffContent == 0) {
                     fs.unlinkSync(inStyles(fset.ref));
-                    // fs.unlinkSync(inStyles(fset.run));
                 } else {
-                    if (diffSize > 0) {
-                        fset.diffSize = diffSize;
-                        if (diffSize > MaxDiffs.size) {
+                    if (fset.diffSize > 0) {
+                        if (fset.diffSize > MaxDiffs.sizePercent) {
                             fset.problem = true;
-                            fset.problemText = `size    - ${diffSize} vs. ${MaxDiffs.size}`;
+                            fset.problemText = `size    - ${r(fset.diffSize)} vs. ${MaxDiffs.sizePercent}`;
                         }
-                    } else if (diffContent > 0) {
-                        fset.diffContent = diffContent;
-                        if (diffContent > MaxDiffs.content) {
+                    } else if (fset.diffPixels > 0) {
+                        if (fset.diffPixels > MaxDiffs.contentPixels) {
                             fset.problem = true;
-                            fset.problemText = `content - ${diffContent} vs. ${MaxDiffs.content}`;
+                            fset.problemText = `content - ${fset.diffPixels} vs. ${MaxDiffs.contentPixels}`;
                         } else {
                             fset.warning = true;
-                            fset.warningText = `content - ${diffContent}`;
+                            fset.warningText = `content - ${fset.diffPixels} - ${fset.diffContent}`;
                         }
                     }
 
-                    // Generate the diffs
-                    fset.diff = path.join(diffFolder, fset.key);
-                    const ref = PNG.sync.read(fs.readFileSync(inStyles(fset.ref)));
-                    const run = PNG.sync.read(fs.readFileSync(inStyles(fset.run)));
-                    const { width, height } = ref;
-                    const diff = new PNG({ width, height });
-
-                    pixelMatch(ref.data, run.data, diff.data, width, height, { threshold: 0.1 });
-
-                    fs.writeFileSync(inStyles(fset.diff), PNG.sync.write(diff));
+                    fs.writeFileSync(inStyles(fset.diff), PNG.sync.write(diffPNG));
                 }
-
-                scanned++;
-                if (process.stdout.clearLine) {
-                    process.stdout.clearLine(0);
-                    process.stdout.cursorTo(0);
-                    process.stdout.write(`Processed ${scanned}/${uniqueFiles.length}`);
-                }
-                resolve();
-            }));
-    }
-    if (process.stdout.clearLine) {
-        process.stdout.clearLine(0);
-        process.stdout.cursorTo(0);
-    }
-
-    const problemsList = uniqueFiles
-        .map(fset => {
+            }
             if (fset.problem || fset.warning) {
                 if (fset.problem) {
                     console.error(`${p_ko}: ${fset.key} ${fset.problemText}`);
