@@ -36,13 +36,13 @@ module.exports = {
     ],
     module: {
         rules: [
-            { test: /\.css$/, use: ['style-loader', 'css-loader'] },
+            { test: /\.css/, use: ['style-loader', 'css-loader'] },
             {
                 test: /\.(eot|svg|ttf|woff|woff2|png|svg|jpg|gif)$/,
-                loader: 'file-loader',
-                options: {
-                    name: '[name]-[contenthash].[ext]'
-                }
+                type: 'asset'
+                // options: {
+                //     name: '[name]-[contenthash].[ext]'
+                // }
             },
             {
                 test: /\.js$/,
