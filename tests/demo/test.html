@@ -3,33 +3,34 @@
 
 <head>
     <meta charset="utf-8" />
+    <title>Test index page</title>
 </head>
 
-<body with-folder='null'>
-    <x-test debug='html'></x-test>
+<body with-folder="null">
+    <x-test debug="html"></x-test>
 
-    <script type='module'>
+    <script type="module">
         class XTest extends HTMLElement {
             constructor() {
                 super();
-                this.showParent("constr");
-                this.innerHTML = "x-test";
+                this.showParent('constr');
+                this.innerHTML = 'x-test';
             }
 
             connectedCallback() {
-                this.showParent("connec");
+                this.showParent('connec');
             }
 
             disconnectedCallback() {
-                this.showParent("discon");
+                this.showParent('discon');
             }
 
             adoptedCallback() {
-                this.showParent("adopt");
+                this.showParent('adopt');
             }
 
             showParent(ctx = 'direct') {
-                console.log(ctx, this.getAttribute('debug'), "parentElement", this.parentElement?.parentElement, "rootNode", this.getRootNode());
+                console.log(ctx, this.getAttribute('debug'), 'parentElement', this.parentElement?.parentElement, 'rootNode', this.getRootNode());
             }
         }
 

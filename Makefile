@@ -1,6 +1,7 @@
 
 TMP=$(shell realpath "tmp/")
 GIT_BRANCH=$(shell git rev-parse --abbrev-ref HEAD)
+NPM_BIN=$(shell npm bin)
 
 # Default target
 .PHONY: dev
@@ -178,10 +179,22 @@ chmod:
 #
 
 .PHONY: lint
-lint: tmp/.dependencies-node
+lint: lint-es lint-css lint-html
+
+.PHONY: lint-es
+lint-es: tmp/.dependencies-node
 # TODO -> from dev
-	npm run eslint
-	npm run stylelint
+	$(NPM_BIN)/eslint
+
+.PHONY: lint-css
+lint-css: tmp/.dependencies-node
+# TODO -> from dev
+	$(NPM_BIN)/stylelint app/**/*.css
+
+.PHONY: lint-html
+lint-html: tmp/.dependencies-node
+# TODO -> from dev
+	$(NPM_BIN)/htmlhint app/**/*.html tests/**/*.html www/api/*/public/**/*.html --format=compact
 
 .PHONY: test # In Jenkinfile, each step is separated:
 test: tmp/.dependencies tmp/.build test-api test-api-bare test-unit test-e2e test-styles

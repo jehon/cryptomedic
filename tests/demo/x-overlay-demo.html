@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 
 <head>
@@ -11,40 +12,40 @@
     <link rel="stylesheet" type="text/css" href="../../app/css/application.css">
     <link rel="stylesheet" type="text/css" href="demo.css">
 
-    <xx-test title='Menu' menu>
-        <div><a href='../index.html'>Go back to index</a></div>
+    <xx-test title="Menu" menu>
+        <div><a href="../index.html">Go back to index</a></div>
     </xx-test>
 
-    <xx-test title='Inline'>
+    <xx-test title="Inline">
         <x-overlay dump-events id="inline">
-            <div slot='overlay'>
+            <div slot="overlay">
                 <x-form>
                     This is the form.
-                    <div slot='buttons'>
-                        <x-button action='Save'></x-button>
-                        <x-button action='Cancel'></x-button>
+                    <div slot="buttons">
+                        <x-button action="Save"></x-button>
+                        <x-button action="Cancel"></x-button>
                     </div>
                 </x-form>
             </div>
             <div>
                 <x-form>
                     This is the protected content
-                    <div slot='buttons'>
-                        <x-button action='Save'></x-button>
-                        <x-button action='Cancel'></x-button>
+                    <div slot="buttons">
+                        <x-button action="Save"></x-button>
+                        <x-button action="Cancel"></x-button>
                     </div>
                 </x-form>
             </div>
         </x-overlay>
     </xx-test>
 
-    <xx-test title='Created by action'>
-        <x-button id='info'>Launch it</x-button>
-        <x-button id='form'>Launch formular</x-button>
-        <x-button id='waiting'>Launch waiting</x-button>
+    <xx-test title="Created by action">
+        <x-button id="info">Launch it</x-button>
+        <x-button id="form">Launch formular</x-button>
+        <x-button id="waiting">Launch waiting</x-button>
     </xx-test>
 
-    <script type='module' src='./x-overlay-demo.js'></script>
+    <script type="module" src="./x-overlay-demo.js"></script>
 </body>
 
 </html>

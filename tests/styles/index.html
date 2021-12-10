@@ -1,11 +1,12 @@
+<!DOCTYPE html>
 <html>
 
 <head>
     <title>Compare screenshots</title>
-    <meta charset='utf-8'>
+    <meta charset="utf-8">
 </head>
 
-<body wide='normal'>
+<body wide="normal">
     <style>
         body[wide=normal] {
             width: 100%;
@@ -50,19 +51,19 @@
             margin-bottom: 5px;
         }
     </style>
-    <script src='./styles-problems-list.js'></script>
+    <script src="./styles-problems-list.js"></script>
 
-    <div class='compare' id='header'>
+    <div class="compare" id="header">
         <span>Reference
-            <button onclick='document.querySelector("body").setAttribute("wide", "wide");'>wide</button>
-            <button onclick='document.querySelector("body").setAttribute("wide", "normal");'>normal</button>
+            <button onclick="document.querySelector('body').setAttribute('wide', 'wide');">wide</button>
+            <button onclick="document.querySelector('body').setAttribute('wide', 'normal');">normal</button>
         </span>
         <span>Test result</span>
         <span>Comparison</span>
         <span>Diff</span>
     </div>
 
-    <div id='results'> </div>
+    <div id="results"> </div>
 
     <script>
         let id = 0;
@@ -71,10 +72,10 @@
 
             document.querySelector('#results').insertAdjacentHTML('beforeend',
                 `<h3>${data.mode} → ${data.name}: ${data.problemText ?? data.warningText}</h3>
-                <div class='compare'>
-                    <img ref src='${data.ref}'></img>
-                    <img run src='${data.run}'></img>
-                    <img diff src='${data.diff}'></img>
+                <div class="compare">
+                    <img ref src="${data.ref}"></img>
+                    <img run src="${data.run}"></img>
+                    <img diff src="${data.diff}"></img>
                 </div>`);
             id++;
         }
