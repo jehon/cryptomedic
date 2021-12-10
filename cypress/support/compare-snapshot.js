@@ -32,9 +32,6 @@ Cypress.Commands.add('crCompareSnapshot',
             document.querySelector('input#no-caret').focus();
         });
 
-        // cy.wait(100); /* eslint-disable-line */
-        // cy.document().find('input#no-caret').first().focus();
-
         // TODO: clean-up this wait, but don't know how to do that otherwise
         cy.wait(1000); /* eslint-disable-line */
 
