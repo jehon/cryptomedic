@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 
 <head>
@@ -11,77 +12,77 @@
     <link rel="stylesheet" type="text/css" href="../../app/css/application.css">
     <link rel="stylesheet" type="text/css" href="demo.css">
 
-    <script type='module' src='../../app/elements/x-input-date.js'></script>
+    <script type="module" src="../../app/elements/x-input-date.js"></script>
 
-    <script type='module' src='../../app/widgets/folder/x-ff-next-appointment.js'></script>
-    <script type='module' src='../../app/widgets/folder/x-ff-patient-related.js'></script>
-    <script type='module' src='../../app/widgets/folder/x-graphic-bmi.js'></script>
-    <script type='module' src='../../app/widgets/folder/x-graphic-height.js'></script>
-    <script type='module' src='../../app/widgets/folder/x-graphic-weight.js'></script>
-    <script type='module' src='../../app/widgets/folder/x-graphic-wh.js'></script>
+    <script type="module" src="../../app/widgets/folder/x-ff-next-appointment.js"></script>
+    <script type="module" src="../../app/widgets/folder/x-ff-patient-related.js"></script>
+    <script type="module" src="../../app/widgets/folder/x-graphic-bmi.js"></script>
+    <script type="module" src="../../app/widgets/folder/x-graphic-height.js"></script>
+    <script type="module" src="../../app/widgets/folder/x-graphic-weight.js"></script>
+    <script type="module" src="../../app/widgets/folder/x-graphic-wh.js"></script>
 
-    <script type='module' src='../../app/widgets/style/x-label.js'></script>
+    <script type="module" src="../../app/widgets/style/x-label.js"></script>
 
-    <script type='module' src='../../app/pages/x-page-login.js'></script>
+    <script type="module" src="../../app/pages/x-page-login.js"></script>
 
-    <xx-test title='Menu' menu>
-        <div><a href='../index.html'>Go back to index</a></div>
-        <div><a href='#'>Reset filters</a></div>
-        <div><a href='x-group-panel-demo.html'>x-group-panel</a></div>
-        <div><a href='x-overlay-demo.html'>x-overlay</a></div>
-        <div><a href='x-form-demo.html'>x-form</a></div>
+    <xx-test title="Menu" menu>
+        <div><a href="../index.html">Go back to index</a></div>
+        <div><a href="#">Reset filters</a></div>
+        <div><a href="x-group-panel-demo.html">x-group-panel</a></div>
+        <div><a href="x-overlay-demo.html">x-overlay</a></div>
+        <div><a href="x-form-demo.html">x-form</a></div>
         <hr>
     </xx-test>
 
-    <xx-test title='Filters' id='filters' menu double>
+    <xx-test title="Filters" id="filters" menu double>
 
     </xx-test>
 
     <h1>Render</h1>
     <xx-test>
-        <x-button action='Save'>Save</x-button>
+        <x-button action="Save">Save</x-button>
     </xx-test>
-    <xx-test title='x-button default value'>
-        <x-button action='Search'></x-button>
-        <x-button action='Save'></x-button>
-        <x-button action='Cancel'></x-button>
-        <x-button action='Alternate'></x-button>
-        <x-button action='Delete'></x-button>
+    <xx-test title="x-button default value">
+        <x-button action="Search"></x-button>
+        <x-button action="Save"></x-button>
+        <x-button action="Cancel"></x-button>
+        <x-button action="Alternate"></x-button>
+        <x-button action="Delete"></x-button>
     </xx-test>
-    <xx-test title='x-button within div'>
+    <xx-test title="x-button within div">
         <div>
             <x-button>alternate</x-button>
-            <x-button icon='error'>iconic</x-button>
+            <x-button icon="error">iconic</x-button>
         </div>
     </xx-test>
     <xx-test>
         <x-buttons>
             <x-button>default (alternate)</x-button>
-            <x-button action='Save'></x-button>
-            <x-button action='Cancel'></x-button>
-            <x-button action='Delete'></x-button>
-            <x-button action='Alternate'></x-button>
+            <x-button action="Save"></x-button>
+            <x-button action="Cancel"></x-button>
+            <x-button action="Delete"></x-button>
+            <x-button action="Alternate"></x-button>
         </x-buttons>
     </xx-test>
-    <xx-test title='x-buttons discrete'>
+    <xx-test title="x-buttons discrete">
         <x-buttons>
             <x-button discrete>default (alternate)</x-button>
-            <x-button discrete action='Save'>commit</x-button>
-            <x-button discrete action='Cancel'>cancel</x-button>
-            <x-button discrete action='Delete'>delete</x-button>
-            <x-button discrete action='Alternate'>alternate</x-button>
+            <x-button discrete action="Save">commit</x-button>
+            <x-button discrete action="Cancel">cancel</x-button>
+            <x-button discrete action="Delete">delete</x-button>
+            <x-button discrete action="Alternate">alternate</x-button>
         </x-buttons>
     </xx-test>
     <xx-test>
-        <x-group-panel title='my title'>
+        <x-group-panel title="my title">
             <div>test dark</div>
             <div>test light</div>
             <div>test dark</div>
         </x-group-panel>
     </xx-test>
     <xx-test>
-        <x-group-panel title='my title'>
-            <div slot='versal'>Versal</div>
+        <x-group-panel title="my title">
+            <div slot="versal">Versal</div>
             <div>test dark</div>
             <div>test light</div>
             <hr />
@@ -89,75 +90,75 @@
         </x-group-panel>
     </xx-test>
     <xx-test double>
-        <x-group-panel title='With fields'>
-            <x-label demo-folder='test1' file-uid='ricket-consult-13' field='test'>
+        <x-group-panel title="With fields">
+            <x-label demo-folder="test1" file-uid="ricket-consult-13" field="test">
                 <span>hello</span>
             </x-label>
-            <x-label demo-folder='test1' file-uid='ricket-consult-13' field='test2'>
+            <x-label demo-folder="test1" file-uid="ricket-consult-13" field="test2">
                 <span>hello2 hello2 hello2 hello2 hello2 hello2 hello2 hello2 hello2 hello2</span>
             </x-label>
-            <x-label demo-folder='test1' file-uid='ricket-consult-13' field='test3'>
+            <x-label demo-folder="test1" file-uid="ricket-consult-13" field="test3">
                 <span>hello3</span>
-                <span slot='stat'>hello3bis</span>
+                <span slot="stat">hello3bis</span>
             </x-label>
-            <x-label demo-folder='test1' file-uid='ricket-consult-13' by-sides='*legAngle'></x-label>
-            <x-label demo-folder='test1' file-uid='ricket-consult-13' by-sides='*legAngle'>
-                <div slot='stat'>Euh</div>
+            <x-label demo-folder="test1" file-uid="ricket-consult-13" by-sides="*legAngle"></x-label>
+            <x-label demo-folder="test1" file-uid="ricket-consult-13" by-sides="*legAngle">
+                <div slot="stat">Euh</div>
             </x-label>
-            <x-label demo-folder='test1' file-uid='ricket-consult-13' by-sides='*legAngle'>
-                <div slot='stat'></div>
+            <x-label demo-folder="test1" file-uid="ricket-consult-13" by-sides="*legAngle">
+                <div slot="stat"></div>
             </x-label>
         </x-group-panel>
     </xx-test>
     <xx-test>
-        <x-label label='text'>blablabla</x-label>
-        <x-label label='input text'><input name='truc' /></x-label>
-        <x-label label='select'><select name='truc'>
+        <x-label label="text">blablabla</x-label>
+        <x-label label="input text"><input name="truc" /></x-label>
+        <x-label label="select"><select name="truc">
                 <option>test</option>
                 <option>test 2</option>
             </select>
         </x-label>
-        <x-label label='input text with a very very long label'><input name='truc' /></x-label>
+        <x-label label="input text with a very very long label"><input name="truc" /></x-label>
     </xx-test>
     <xx-test double>
-        <x-label label='text'>blablabla</x-label>
-        <x-label label='input text'><input name='truc' required /></x-label>
-        <x-label label='select'><select name='truc'>
+        <x-label label="text">blablabla</x-label>
+        <x-label label="input text"><input name="truc" required /></x-label>
+        <x-label label="select"><select name="truc">
                 <option>test</option>
                 <option>test 2</option>
             </select>
         </x-label>
-        <x-label label='input text with a very very long label'><input name='truc' /></x-label>
+        <x-label label="input text with a very very long label"><input name="truc" /></x-label>
     </xx-test>
     <xx-test double>
-        <x-label label='text'>blablabla</x-label>
-        <x-label label='text'>
-            <div slot='right'>droit</div>
-            <div slot='left'>gauche</div>
+        <x-label label="text">blablabla</x-label>
+        <x-label label="text">
+            <div slot="right">droit</div>
+            <div slot="left">gauche</div>
         </x-label>
-        <x-label label='text'>
+        <x-label label="text">
             <div>blablabla</div>
-            <div slot='stat'>stat</div>
+            <div slot="stat">stat</div>
         </x-label>
     </xx-test>
     <xx-test>
         <x-messages>
-            <x-message level='success'>success</x-message>
-            <x-message level='info'>info</x-message>
-            <x-message level='warning'>warning</x-message>
-            <x-message level='error'>error</x-message>
+            <x-message level="success">success</x-message>
+            <x-message level="info">info</x-message>
+            <x-message level="warning">warning</x-message>
+            <x-message level="error">error</x-message>
         </x-messages>
     </xx-test>
     <xx-test>
-        <x-panel style='background-color: lightgreen'>
-            <div style='background-color: lightcyan'>test 1 full</div>
-            <div style='background-color: lightyellow'>test 2 full</div>
+        <x-panel style="background-color: lightgreen">
+            <div style="background-color: lightcyan">test 1 full</div>
+            <div style="background-color: lightyellow">test 2 full</div>
         </x-panel>
     </xx-test>
-    <xx-test title='x-panel full'>
-        <x-panel full style='background-color: lightgreen'>
-            <div style='background-color: lightcyan'>test 1 full</div>
-            <div style='background-color: lightyellow'>test 2 full</div>
+    <xx-test title="x-panel full">
+        <x-panel full style="background-color: lightgreen">
+            <div style="background-color: lightcyan">test 1 full</div>
+            <div style="background-color: lightyellow">test 2 full</div>
         </x-panel>
     </xx-test>
 
@@ -171,37 +172,37 @@
         <x-form>
             <h3>Title of the form</h3>
             <div>This is a testing form...</div>
-            <x-label label='login'><input name='login' required></x-label>
-            <x-label label='error'><input name='error' required validation-error='euh?'></x-label>
+            <x-label label="login"><input name="login" required></x-label>
+            <x-label label="error"><input name="error" required validation-error="euh?"></x-label>
         </x-form>
     </xx-test>
     <xx-test>
-        <x-i18n value='blablabla'></x-i18n>
+        <x-i18n value="blablabla"></x-i18n>
     </xx-test>
     <xx-test>
         <x-form>
-            <x-label label='radio'>
-                <x-input-list name='i1' value='b' list='[ "a", "b", "c" ]'></x-input-list>
+            <x-label label="radio">
+                <x-input-list name="i1" value="b" list="[ 'a', 'b', 'c' ]"></x-input-list>
             </x-label>
-            <x-label label='dropdown'>
-                <x-input-list name='i2' value='b' list='[ "a", "b", "c", "d", "e", "f" ]'></x-input-list>
+            <x-label label="dropdown">
+                <x-input-list name="i2" value="b" list="[ 'a', 'b', 'c', 'd', 'e', 'f' ]"></x-input-list>
             </x-label>
-            <x-label label='optional radio'>
-                <x-input-list name='i3' value='b' list='[ "a", "b", "c" ]' nullable></x-input-list>
+            <x-label label="optional radio">
+                <x-input-list name="i3" value="b" list="[ 'a', 'b', 'c' ]" nullable></x-input-list>
             </x-label>
-            <x-label label='optional dropdown'>
-                <x-input-list name='i4' value='b' list='[ "a", "b", "c", "d", "e", "f" ]' nullable></x-input-list>
+            <x-label label="optional dropdown">
+                <x-input-list name="i4" value="b" list="[ 'a', 'b', 'c', 'd', 'e', 'f' ]" nullable></x-input-list>
             </x-label>
             <x-buttons>
-                <x-button action='Search'></x-button>
+                <x-button action="Search"></x-button>
             </x-buttons>
         </x-form>
     </xx-test>
     <xx-test>
-        <x-table id='1'></x-table>
+        <x-table id="1"></x-table>
     </xx-test>
     <xx-test>
-        <x-table id='2' horizontal></x-table>
+        <x-table id="2" horizontal></x-table>
     </xx-test>
     <xx-test>
         <x-requestor>
@@ -221,22 +222,22 @@
 
     <h1>Folder</h1>
     <xx-test double>
-        <x-ff-next-appointment demo-folder='test1'></x-ff-next-appointment>
+        <x-ff-next-appointment demo-folder="test1"></x-ff-next-appointment>
     </xx-test>
     <xx-test double>
-        <x-ff-patient-related demo-folder='test1'></x-ff-patient-related>
+        <x-ff-patient-related demo-folder="test1"></x-ff-patient-related>
     </xx-test>
     <xx-test>
-        <x-graphic-bmi demo-folder='test1'></x-graphic-bmi>
+        <x-graphic-bmi demo-folder="test1"></x-graphic-bmi>
     </xx-test>
     <xx-test>
-        <x-graphic-height demo-folder='test1'></x-graphic-height>
+        <x-graphic-height demo-folder="test1"></x-graphic-height>
     </xx-test>
     <xx-test>
-        <x-graphic-weight demo-folder='test1'></x-graphic-weight>
+        <x-graphic-weight demo-folder="test1"></x-graphic-weight>
     </xx-test>
     <xx-test>
-        <x-graphic-wh demo-folder='test1'></x-graphic-wh>
+        <x-graphic-wh demo-folder="test1"></x-graphic-wh>
     </xx-test>
 
     <h1>File</h1>
@@ -246,10 +247,10 @@
         <x-input-date></x-input-date>
     </xx-test>
     <xx-test>
-        <x-input-date value='01-02-2020'></x-input-date>
+        <x-input-date value="01-02-2020"></x-input-date>
     </xx-test>
 
-    <script src='./demo.js' type='module'></script>
+    <script src="./demo.js" type="module"></script>
 </body>
 
 </html>

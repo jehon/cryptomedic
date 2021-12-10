@@ -1,4 +1,6 @@
 {
 	"doctype-html5": true,
 	"indent-style": "tab",
+  	"attr-value-not-empty": false,
+	"attr-value-double-quotes": true
 }

@@ -4,7 +4,7 @@
 <head>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>Cryptomedic</title>
-    <meta charset='utf-8'>
+    <meta charset="utf-8">
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -70,20 +70,20 @@
 
 <body ng-app="app_main" ng-controller="ctrl">
     <!--  Navigation bar -->
-    <div id='menu'>
-        <img src='/favicon.svg' height="30px">
-        <span style='flex-grow: 1'></span>
-        <a id='menu_home' href="#/home" class="navbar-link">
-            <x-restricted restricted-by='application.open' style='flex-direction: row;'>
+    <div id="menu">
+        <img src="/favicon.svg" height="30px">
+        <span style="flex-grow: 1"></span>
+        <a id="menu_home" href="#/home" class="navbar-link">
+            <x-restricted restricted-by="application.open" style="flex-direction: row;">
                 <img src="../static/img/home.gif" height="20px" />
                 Home
             </x-restricted>
         </a>
         <x-user-status></x-user-status>
     </div>
-    <div class='container-fluid' id='main_content'>
+    <div class="container-fluid" id="main_content">
         <!--  Pending screen -->
-        <cryptomedic-data-service id='dataService'>
+        <cryptomedic-data-service id="dataService">
             <div>
                 <div ng-view></div>
             </div>
