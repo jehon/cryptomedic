@@ -2,42 +2,43 @@
 
 import { crReady } from '../helpers/cr.js';
 
-// // https://docs.cypress.io/api/commands/screenshot#Arguments
-// Cypress.Commands.overwrite('screenshot',
-//     // Additionnal parameter: name
-//     (originalFn, subject, ...args) => {
-//         // call another command, no need to return as it is managed
-//         crReady();
-//         console.log(args,);
-//         originalFn(subject, ...(args.map(o => (typeof (o) == 'object' && o != null) ?
-//             {
-//                 ...o,
-//                 blackout: [
-//                     ...(o?.blackout ?? []),
-//                     '[variable]'
-//                 ]
-//             }
-//             : o)
-//         ).map(e => console.log(e)));
-//     }
-// );
-
 Cypress.Commands.add('crCompareSnapshot',
     (name = '') => {
         crReady();
 
-        // //
-        // // TODO: Remove caret while screenshot
-        // //
-
-        // // Escape within (https://docs.cypress.io/api/commands/within#Temporarily-escape)
-        // cy.root().closest('html').then($body => {
-        //     if ($body.find('input#no-caret').length == 0) {
-        //         // Add an input and set the focus on it
-        //         document.body.innerHTML += '<input id="no-caret" style="position: absolute; left: -1000px; top: 0px;">';
+        //
+        // Remove caret by putting it on the offsecreen input
+        //
+        //
+        // Add an input to hold the focus. This input is "offscreen"
+        // We do this here to enjoy the crReady delay (if necessary)
+        //
+        // cy.document().then(document => {
+        //     if (!document.querySelector('input#no-caret')) {
+        //         document.body.innerHTML += '<input id="no-caret" size="1" style="position: absolute; left: -1000px; top: 0px;" />';
         //     }
-        //     $body.find('input#no-caret').first().focus();
+        //     // document.querySelector('input#no-caret').focus();
         // });
+
+        // cy.root().closest('html').find('body').first().then($body => {
+        //     if ($body.querySelector('input#no-caret').length == 0) {
+        //         // Add an input and set the focus on it
+        //         $body.innerHTML += '<input id="no-caret" style="position: absolute; left: -1000px; top: 0px;">';
+        //     }
+        //     $body.querySelector('input#no-caret').first().focus();
+        // });
+
+
+        // cy.document().then(document => {
+        //     document.querySelector('input#no-caret').focus();
+        // });
+
+        cy.document().then(document => {
+            document.querySelector('input#no-caret').focus();
+        });
+
+        // cy.wait(100); /* eslint-disable-line */
+        // cy.document().find('input#no-caret').first().focus();
 
         // TODO: clean-up this wait, but don't know how to do that otherwise
         cy.wait(1000); /* eslint-disable-line */
