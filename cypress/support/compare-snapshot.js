@@ -13,20 +13,8 @@ Cypress.Commands.add('crCompareSnapshot',
         // Add an input to hold the focus. This input is "offscreen"
         // We do this here to enjoy the crReady delay (if necessary)
         //
-        // cy.document().then(document => {
-        //     if (!document.querySelector('input#no-caret')) {
-        //         document.body.innerHTML += '<input id="no-caret" size="1" style="position: absolute; left: -1000px; top: 0px;" />';
-        //     }
-        //     // document.querySelector('input#no-caret').focus();
-        // });
-
-        // cy.root().closest('html').find('body').first().then($body => {
-        //     if ($body.querySelector('input#no-caret').length == 0) {
-        //         // Add an input and set the focus on it
-        //         $body.innerHTML += '<input id="no-caret" style="position: absolute; left: -1000px; top: 0px;">';
-        //     }
-        //     $body.querySelector('input#no-caret').first().focus();
-        // });
+        // Note: Tried to create the input here, but that cause the "cy.within" to be resetted
+        //
 
         cy.document().then(document => {
             document.querySelector('input#no-caret').focus();
