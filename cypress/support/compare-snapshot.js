@@ -28,11 +28,6 @@ Cypress.Commands.add('crCompareSnapshot',
         //     $body.querySelector('input#no-caret').first().focus();
         // });
 
-
-        // cy.document().then(document => {
-        //     document.querySelector('input#no-caret').focus();
-        // });
-
         cy.document().then(document => {
             document.querySelector('input#no-caret').focus();
         });
