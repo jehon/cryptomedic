@@ -146,7 +146,7 @@ const MaxDiffs = {
                 continue;
             }
             process.stdout.write(`> ${fset.ref}\n`);
-            fs.copyFileSync(fset.run, path.join(referenceUpdateFolder, fset.dest));
+            fs.copyFileSync(inStyles(fset.run), path.join(referenceUpdateFolder, fset.mode, fset.name));
         }
         if (!success) {
             console.error(p_ko, 'Problem');
