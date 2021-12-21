@@ -8,7 +8,7 @@
     "license": "MIT",
     "type": "project",
     "require": {
-        "laravel/framework": "8.76.2"
+        "laravel/framework": "8.77.1"
     },
     "require-dev": {
         "phpunit/phpunit": "9.5.10"
