@@ -22,10 +22,10 @@
   },
   "devDependencies": {
     "@adobe/es-modules-middleware": "1.1.0",
-    "@babel/cli": "7.16.0",
+    "@babel/cli": "7.16.8",
     "@babel/eslint-parser": "7.16.5",
-    "@babel/helper-compilation-targets": "7.16.3",
-    "@babel/preset-env": "7.16.5",
+    "@babel/helper-compilation-targets": "7.16.7",
+    "@babel/preset-env": "7.16.8",
     "@commitlint/cli": "15.0.0",
     "@commitlint/config-conventional": "15.0.0",
     "axios-mock-adapter": "1.20.0",
