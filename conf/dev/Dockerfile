@@ -1,6 +1,6 @@
 # https://hub.docker.com/_/ubuntu/
 
-FROM ubuntu:latest
+FROM ubuntu:20.04
 
 WORKDIR /
 
