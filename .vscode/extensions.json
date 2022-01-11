@@ -1,6 +1,7 @@
 {
     "recommendations": [
         "tyriar.luna-paint",
-        "mkaufman.htmlhint"
+        "mkaufman.htmlhint",
+        "ms-azuretools.vscode-docker"
     ]
 }
