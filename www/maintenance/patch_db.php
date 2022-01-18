@@ -42,7 +42,7 @@ try {
 		$db->runDirectory(__DIR__ . "/../../conf/database/dev-always/");
 	}
 
-	echo "\n\nDone\n";
+    echo "\n\nDone " . __FILE__ . "\n";
 	http_response_code(200);
 } catch (Exception $e) {
 	echo "Upgrade failed: " . $e->getMessage();

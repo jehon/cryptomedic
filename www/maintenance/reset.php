@@ -60,7 +60,7 @@ try {
         }
     }
 
-    echo "\n\nDone\n";
+    echo "\n\nDone " . __FILE__ . "\n";
     http_response_code(200);
     ob_end_flush();
 } catch (Exception $e) {

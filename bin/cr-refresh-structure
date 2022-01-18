@@ -9,26 +9,18 @@ CR_SCRIPT_DIR="$(dirname "${BASH_SOURCE[0]}")"
 
 cr-ensure-started
 
-if [ -z "$CRYPTOMEDIC_HTTP_HOST" ]; then
-    echo "* Initialize CRYPTOMEDIC_HTTP_HOST"
-    CRYPTOMEDIC_HTTP_HOST="localhost:$CR_HTTP_PORT"
-fi
-
 if [ -z "$CRYPTOMEDIC_DB_UPGRADE" ]; then
     echo "* Initialize CRYPTOMEDIC_DB_UPGRADE"
     CRYPTOMEDIC_DB_UPGRADE="$(cr-get-config "security.key")"
 fi
 
-echo "Deploying to $CRYPTOMEDIC_HTTP_HOST with pwd of #${#CRYPTOMEDIC_DB_UPGRADE} char length"
+echo "Deploying to ${CR_HTTP_HOST} with pwd of #${#CRYPTOMEDIC_DB_UPGRADE} char length"
 
 echo "* Upgrading database"
-curl -fsSL "http://${CRYPTOMEDIC_HTTP_HOST}/maintenance/patch_db.php?pwd=${CRYPTOMEDIC_DB_UPGRADE}"
+curl -fsSL "http://${CR_HTTP_HOST}/maintenance/patch_db.php?pwd=${CRYPTOMEDIC_DB_UPGRADE}"
 
 echo "* Upgrading files"
-curl -fsSL "http://${CRYPTOMEDIC_HTTP_HOST}/maintenance/reset.php?pwd=${CRYPTOMEDIC_DB_UPGRADE}"
-
-# Variable necessary for refresh.sh scripts
-export CRYPTOMEDIC_HTTP_HOST
+curl -fsSL "http://${CR_HTTP_HOST}/maintenance/reset.php?pwd=${CRYPTOMEDIC_DB_UPGRADE}"
 
 for E in "$CR_PRJ_DIR"/www/api/*/bin/refresh.sh; do
     if [ ! -f "$E" ]; then
