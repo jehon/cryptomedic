@@ -9,6 +9,10 @@ CR_SCRIPT_DIR="$(dirname "${BASH_SOURCE[0]}")"
 
 cr-ensure-started
 
+echo "* debug"
+cr-get-config "security.key"
+echo "* debug done"
+
 if [ -z "$CRYPTOMEDIC_HTTP_HOST" ]; then
     CRYPTOMEDIC_HTTP_HOST="localhost:${CRYPTOMEDIC_PORT:-5080}"
     CRYPTOMEDIC_DB_UPGRADE="$(cr-get-config "security.key")"
