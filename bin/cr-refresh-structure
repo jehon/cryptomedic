@@ -4,7 +4,7 @@ set -o errexit
 
 CR_SCRIPT_DIR="$(dirname "${BASH_SOURCE[0]}")"
 
-# shellcheck source=./cr-lib
+# shellcheck source=/dev/null
 . "$CR_SCRIPT_DIR"/cr-lib
 
 cr-ensure-started
