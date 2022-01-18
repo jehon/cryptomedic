@@ -10,9 +10,15 @@ CR_SCRIPT_DIR="$(dirname "${BASH_SOURCE[0]}")"
 cr-ensure-started
 
 if [ -z "$CRYPTOMEDIC_HTTP_HOST" ]; then
+    echo "* Initialize CRYPTOMEDIC_HTTP_HOST"
     CRYPTOMEDIC_HTTP_HOST="localhost:${CRYPTOMEDIC_PORT:-5080}"
+fi
+
+if [ -z "$CRYPTOMEDIC_DB_UPGRADE" ]; then
+    echo "* Initialize CRYPTOMEDIC_DB_UPGRADE"
     CRYPTOMEDIC_DB_UPGRADE="$(cr-get-config "security.key")"
 fi
+
 echo "Deploying to $CRYPTOMEDIC_HTTP_HOST with pwd of #${#CRYPTOMEDIC_DB_UPGRADE} char length"
 
 echo "* Upgrading database"
