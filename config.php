@@ -1,3 +1,5 @@
+CONFIG
+
 <?php
 
 global $myconfig;
@@ -44,6 +46,9 @@ if (file_exists(__DIR__ . '/config-site.php')) {
   # This file will be protected by the prj-go-site.sh
   require(__DIR__ . '/config-site.php');
 }
+
+var_dump($myconfig);
+var_dump($argv);
 
 function myShowConfigByPathForCmdLine($path) {
   global $myconfig;
