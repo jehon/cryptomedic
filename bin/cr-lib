@@ -12,6 +12,8 @@ export CR_DB_USER_PASS="password"
 export CR_DB_ROOT_PASS="password"
 export CR_DB_USER="username"
 
+export CR_HTTP_PORT="${CRYPTOMEDIC_PORT:5080}"
+
 CR_SCRIPT_DIR="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
 CR_PRJ_DIR="$(dirname "$CR_SCRIPT_DIR")"
 CR_TMP="$CR_PRJ_DIR/tmp"

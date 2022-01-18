@@ -11,7 +11,7 @@ cr-ensure-started
 
 if [ -z "$CRYPTOMEDIC_HTTP_HOST" ]; then
     echo "* Initialize CRYPTOMEDIC_HTTP_HOST"
-    CRYPTOMEDIC_HTTP_HOST="localhost:${CRYPTOMEDIC_PORT:-5080}"
+    CRYPTOMEDIC_HTTP_HOST="localhost:$CR_HTTP_PORT"
 fi
 
 if [ -z "$CRYPTOMEDIC_DB_UPGRADE" ]; then
@@ -22,10 +22,10 @@ fi
 echo "Deploying to $CRYPTOMEDIC_HTTP_HOST with pwd of #${#CRYPTOMEDIC_DB_UPGRADE} char length"
 
 echo "* Upgrading database"
-wget -O - --quiet --content-on-error "http://${CRYPTOMEDIC_HTTP_HOST}/maintenance/patch_db.php?pwd=${CRYPTOMEDIC_DB_UPGRADE}"
+curl -fsSL "http://${CRYPTOMEDIC_HTTP_HOST}/maintenance/patch_db.php?pwd=${CRYPTOMEDIC_DB_UPGRADE}"
 
 echo "* Upgrading files"
-wget -O - --quiet --content-on-error "http://${CRYPTOMEDIC_HTTP_HOST}/maintenance/reset.php?pwd=${CRYPTOMEDIC_DB_UPGRADE}"
+curl -fsSL "http://${CRYPTOMEDIC_HTTP_HOST}/maintenance/reset.php?pwd=${CRYPTOMEDIC_DB_UPGRADE}"
 
 # Variable necessary for refresh.sh scripts
 export CRYPTOMEDIC_HTTP_HOST
