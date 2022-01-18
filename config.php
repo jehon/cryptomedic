@@ -47,9 +47,6 @@ if (file_exists(__DIR__ . '/config-site.php')) {
   require(__DIR__ . '/config-site.php');
 }
 
-var_dump($myconfig);
-var_dump($argv);
-
 function myShowConfigByPathForCmdLine($path) {
   global $myconfig;
   $array = $myconfig;

@@ -14,7 +14,7 @@ if (!$myconfig['security']['key']) {
 
 if ($_REQUEST['pwd'] != $myconfig['security']['key']) {
 	http_response_code(500);
-	die("No correct pwd given");
+	die("No correct pwd given (${__FILE__})");
 }
 
 if (isset($_REQUEST['debug'])) {
