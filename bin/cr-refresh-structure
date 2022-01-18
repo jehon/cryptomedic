@@ -26,6 +26,7 @@ for E in "$CR_PRJ_DIR"/www/api/*/bin/refresh.sh; do
     if [ ! -f "$E" ]; then
         continue
     fi
-    echo "Found: $E"
+    echo "cr-refresh-structure found: $E..."
     "$E"
+    echo "cr-refresh-structure found: $E done"
 done
