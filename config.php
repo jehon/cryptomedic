@@ -1,5 +1,3 @@
-CONFIG
-
 <?php
 
 global $myconfig;
