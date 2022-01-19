@@ -8,9 +8,7 @@ set -o pipefail
 
 cr-ensure-started
 
-header_begin "data-reset"
-
-header_begin "reset folder structure..."
+header_begin "cr-data-reset: reset folder structure..."
 cr-docker-compose run --rm \
     "dev" \
     rsync -a --delete live-for-test/ live/
@@ -31,7 +29,7 @@ cr-fix-permissions
 header_end
 
 # Reset database
-header_begin "Restore mysql"
+header_begin "cr-data-reset: restore mysql"
 docker compose exec -T mysql \
     bash -c "while ! mysql -u root -p${CR_DB_ROOT_PASS} --database=mysql -e 'Show tables;' &>/dev/null; do sleep 1; done"
 echo "Mysql is available"
@@ -55,6 +53,6 @@ cr-docker-compose exec -T \
     mysql -u root "-p${CR_DB_ROOT_PASS}" --database="${CR_DB_NAME}" <"conf/database/base.sql"
 header_end
 
+header_begin "cr-data-reset: cr-refresh-structure"
 cr-refresh-structure
-
 header_end
