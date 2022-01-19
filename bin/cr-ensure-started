@@ -6,7 +6,6 @@ set -o pipefail
 # shellcheck source=./cr-lib
 . "$(dirname "${BASH_SOURCE[0]}")"/cr-lib
 
-# if ! docker compose ps --filter "status=running" | grep " server " &>/dev/null; then
 if ! cr-docker-compose ps --filter "status=running" | grep " server " &>/dev/null; then
 	header_begin "starting docker"
 	cr-capture-output \
