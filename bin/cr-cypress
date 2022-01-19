@@ -46,7 +46,7 @@ CYPRESS_ARGS+=("--env" "config=$FLAVOR")
 cr-ensure-started
 cr-fix-permissions "$ODOCKER"
 
-cr-data-reset
+cr-capture-output cr-data-reset
 mkdir -p "$OUTPUT"
 cr-ensure-folder-empty "$OUTPUT"/screenshots
 cr-ensure-folder-empty "$OUTPUT"/videos

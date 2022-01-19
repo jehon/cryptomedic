@@ -207,17 +207,17 @@ test-shell:
 .PHONY: test-api
 test-api: tmp/.dependencies-api
 	cr-ensure-started
-	cr-data-reset
+	cr-capture-output cr-data-reset
 	cr-phpunit laravel
 
 .PHONY: update-references-api
 update-references-api: tmp/.dependencies-api
-	cr-data-reset
+	cr-capture-output cr-data-reset
 	cr-phpunit COMMIT
 
 test-api-bare: tmp/.dependencies-api
 	cr-ensure-started
-	cr-data-reset
+	cr-capture-output cr-data-reset
 	cr-phpunit bare
 
 .PHONY: test-unit
