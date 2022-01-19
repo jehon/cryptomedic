@@ -103,7 +103,7 @@ header "Updating md5sum.php script [for real]"
 header_finished
 
 header "Getting the md5 from local"
-wget --quiet --content-on-error "http://localhost:${CRYPTOMEDIC_PORT:-5080}/maintenance/md5sum.php?filter=local" -O "$CR_TMP"/deploy-local.txt
+curl -fsSL "http://localhost:$CR_HTTP_PORT/maintenance/md5sum.php?filter=local" >"$CR_TMP"/deploy-local.txt
 header_finished
 
 header "Sorting local file"
@@ -111,7 +111,7 @@ sort --stable "$CR_TMP"/deploy-local.txt >"$CR_TMP"/deploy-local.sorted.txt
 header_finished
 
 header "Getting the md5 from remote"
-wget --quiet --content-on-error "http://www.cryptomedic.org/maintenance/md5sum.php?filter=remote" -O "$REMOTE_LISTING"
+curl -fsSL "http://www.cryptomedic.org/maintenance/md5sum.php?filter=remote" >"$REMOTE_LISTING"
 header_finished
 
 header "Sorting remote file"

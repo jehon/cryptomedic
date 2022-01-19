@@ -2,6 +2,7 @@
     "recommendations": [
         "tyriar.luna-paint",
         "mkaufman.htmlhint",
-        "ms-azuretools.vscode-docker"
+        "ms-azuretools.vscode-docker",
+        "adpyke.vscode-sql-formatter"
     ]
 }

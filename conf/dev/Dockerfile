@@ -12,7 +12,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 #
 RUN apt-get update && apt-get install -y \
     gnupg bash-completion \
-    curl rsync unzip git make lftp wget openssh-client sshpass sshfs \
+    curl rsync unzip git make lftp curl openssh-client sshpass sshfs \
     apache2 \
     unzip \
     git \

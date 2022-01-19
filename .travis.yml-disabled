@@ -13,7 +13,7 @@ addons:
     packages:
       - make
       - lftp
-      - wget
+      - curl
       - openssh-client
       - sshpass
       - sshfs

@@ -14,7 +14,7 @@ if (!$myconfig['security']['key']) {
 
 if ($_REQUEST['pwd'] != $myconfig['security']['key']) {
 	http_response_code(500);
-	die("No correct pwd given");
+	die("No correct pwd given (" . basename(__FILE__) . ")");
 }
 
 if (isset($_REQUEST['debug'])) {
@@ -42,7 +42,7 @@ try {
 		$db->runDirectory(__DIR__ . "/../../conf/database/dev-always/");
 	}
 
-	echo "\n\nDone\n";
+    echo "\n\nDone " . basename(__FILE__) . "\n";
 	http_response_code(200);
 } catch (Exception $e) {
 	echo "Upgrade failed: " . $e->getMessage();

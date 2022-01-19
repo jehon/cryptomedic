@@ -2,8 +2,10 @@
 
 set -o errexit
 
-# shellcheck source=/usr/bin/jh-lib.sh
-. jh-lib.sh
+# shellcheck source=/usr/bin/jh-lib
+. jh-lib
+
+. ${JH_SWD}/bin/cr-lib
 
 ROOT="$(dirname "$(realpath "$(dirname "${BASH_SOURCE[0]}")")")"
 TMP="$ROOT/tmp"
@@ -12,9 +14,8 @@ mkdir -p "$TMP"/current
 
 t() {
     echo "Getting $1"
-    wget --quiet --content-on-error \
-        "http://localhost:5555/api/v1.3/templates/$1" \
-        -O "$TMP/current/$1"
+    curl -fsSL \
+        "http://localhost:${CRYP}/api/v1.3/templates/$1" >"$TMP/current/$1"
 }
 
 t3() {
