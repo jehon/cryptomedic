@@ -41,6 +41,9 @@ $myconfig = [
 echo "1+\n";
 var_dump($myconfig);
 echo "1-\n";
+var_dump(__DIR__);
+var_dump(file_exists(__DIR__ . '/config-custom.php')); 
+echo "1=\n";
 
 if (file_exists(__DIR__ . '/config-custom.php')) {
   # config-custom hold the configuration of the project
