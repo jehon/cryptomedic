@@ -8,6 +8,9 @@ export CR_PRJ_DIR
 export CR_TMP
 export CR_HTTP_PORT
 export CR_HTTP_HOST
+
+# unused ?
+
 export CR_DB_ROOT_PASS="password"
 export CR_DB_NAME="cryptomedic"
 # From docker-compose.yml

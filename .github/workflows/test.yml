@@ -21,6 +21,7 @@ jobs:
     - run: make start
     - run: make dependencies
     - run: make build
+    - run: make test-shell
     - run: make test-api
     - run: make test-unit
     - run: make test-e2e-desktop

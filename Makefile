@@ -197,7 +197,12 @@ lint-html: tmp/.dependencies-node
 	$(NPM_BIN)/htmlhint app/**/*.html tests/**/*.html www/api/*/public/**/*.html --format=compact
 
 .PHONY: test # In Jenkinfile, each step is separated:
-test: tmp/.dependencies tmp/.build test-api test-api-bare test-unit test-e2e test-styles
+test: tmp/.dependencies tmp/.build test-shell test-api test-api-bare test-unit test-e2e test-styles
+
+
+.PHONY: test-shell
+test-shell:
+	run-parts tests/shell/
 
 .PHONY: test-api
 test-api: tmp/.dependencies-api

@@ -3,6 +3,10 @@
 global $myconfig;
 
 $myconfig = [
+  'test' => 'hello world',
+  'in' => [
+    'there' => 'hello universe'
+  ],
   'database' => [
     'host'       => 'mysql',
     'schema'     => 'cryptomedic',
