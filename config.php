@@ -3,6 +3,10 @@
 global $myconfig;
 
 $myconfig = [
+  'test' => 'hello world',
+  'in' => [
+    'there' => 'hello universe'
+  ],
   'database' => [
     'host'       => 'mysql',
     'schema'     => 'cryptomedic',
@@ -34,10 +38,18 @@ $myconfig = [
   ]
 ];
 
+echo "1\n";
+var_dump($myconfig);
+echo "1\n";
+
 if (file_exists(__DIR__ . '/config-custom.php')) {
   # config-custom hold the configuration of the project
   require(__DIR__ . '/config-custom.php');
 }
+
+echo "2\n";
+var_dump($myconfig);
+echo "2\n";
 
 if (file_exists(__DIR__ . '/config-site.php')) {
   # config-custom hold the configuration of the site
@@ -45,18 +57,28 @@ if (file_exists(__DIR__ . '/config-site.php')) {
   require(__DIR__ . '/config-site.php');
 }
 
+echo "3\n";
+var_dump($myconfig);
+echo "3\n";
+
 function myShowConfigByPathForCmdLine($path) {
   global $myconfig;
   $array = $myconfig;
 
   $keys = explode('.', $path);
   foreach ($keys as $key) {
+    echo "Looking for $key\n";
+    var_dump($array);
+
     if (isset($array[$key])) {
       $array = $array[$key];
     } else {
+      echo "PATH NOT FOUND: $path\n";
       throw new Exception("Path not found: " . $path);
     }
   }
+  echo "********* found **********\n";
+  var_dump($array);
   if (is_array($array)) {
     # If we have an array, then display the various keys
     echo implode("\n", array_keys($array)) . "\n";
