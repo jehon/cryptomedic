@@ -3,10 +3,8 @@
 set -o errexit
 set -o pipefail
 
-CR_SCRIPT_DIR="$(dirname "${BASH_SOURCE[0]}")"
-
 # shellcheck source=./cr-lib
-. "$CR_SCRIPT_DIR"/cr-lib
+. "$(dirname "${BASH_SOURCE[0]}")"/cr-lib
 
 #
 # To protect a version, please see md5sum.php (at the bottom)
@@ -92,36 +90,36 @@ sftp_rm() {
 }
 
 echo ""
-header "Updating md5sum.php script [for real]"
+header_begin "Updating md5sum.php script [for real]"
 (
 	echo "version"
 	sftp_put www/maintenance/md5sum.php
 	sftp_put deploy-filter
 ) | sftp_exec
-header_finished
+header_end
 
-header "Getting the md5 from local"
+header_begin "Getting the md5 from local"
 curl -fsSL "http://localhost:$CR_HTTP_PORT/maintenance/md5sum.php?filter=local" >"$CR_TMP"/deploy-local.txt
-header_finished
+header_end
 
-header "Sorting local file"
+header_begin "Sorting local file"
 sort --stable "$CR_TMP"/deploy-local.txt >"$CR_TMP"/deploy-local.sorted.txt
-header_finished
+header_end
 
-header "Getting the md5 from remote"
+header_begin "Getting the md5 from remote"
 curl -fsSL "http://www.cryptomedic.org/maintenance/md5sum.php?filter=remote" >"$REMOTE_LISTING"
-header_finished
+header_end
 
-header "Sorting remote file"
+header_begin "Sorting remote file"
 sort --stable "$REMOTE_LISTING" >"$CR_TMP"/deploy-remote.sorted.txt
-header_finished
+header_end
 
 if diff -q "$CR_TMP"/deploy-remote.sorted.txt "$CR_TMP"/deploy-local.sorted.txt; then
 	echo "No diff found"
 	exit 0
 fi
 
-header "Building the diff"
+header_begin "Building the diff"
 {
 	diff -u "$CR_TMP"/deploy-remote.sorted.txt "$CR_TMP"/deploy-local.sorted.txt || true
 } | tee "$CR_TMP"/deploy-diff-1-raw.txt |
@@ -138,7 +136,7 @@ header "Building the diff"
 			fi
 		done
 	} >"$CR_TMP"/deploy-diff-5-sftp-commands.txt
-header_finished
+header_end
 
 if [ -r "$CR_TMP"/deploy-diff-4-sorted.txt ]; then
 	echo "-------------- Differences --------------"
@@ -150,9 +148,9 @@ if [ -r "$CR_TMP"/deploy-diff-4-sorted.txt ]; then
 	echo "-------------- Differences --------------"
 
 	if [ "$1" == "commit" ]; then
-		header "Commiting"
+		header_begin "Commiting"
 		sftp_exec <"$CR_TMP"/deploy-diff-5-sftp-commands.txt
-		header_finished
+		header_end
 	else
 		echo "!!!!!!!!!!!!!!!!!!! TEST MODE !!!!!!!!!!!!!!!!!!!!!!"
 		echo "!!!!!!!!!!!!!!!!!!! TEST MODE !!!!!!!!!!!!!!!!!!!!!!"
@@ -170,8 +168,8 @@ fi
 
 sleep 2
 
-header "Refreshing structure"
+header_begin "Refreshing structure"
 "$CR_SCRIPT_DIR/"cr-refresh-structure
-header_finished
+header_end
 
 echo "*** End ***"

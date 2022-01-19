@@ -3,21 +3,15 @@
 set -o errexit
 set -o pipefail
 
-CR_SCRIPT_DIR="$(dirname "${BASH_SOURCE[0]}")"
-
 # shellcheck source=./cr-lib
-. "$CR_SCRIPT_DIR"/cr-lib
+. "$(dirname "${BASH_SOURCE[0]}")"/cr-lib
 
-FOLDER="$1"
-if [ -z "$FOLDER" ]; then
-    FOLDER="."
-fi
-
-USERUID="$(id -u)"
-
+FOLDER="${1:-.}"
 if [ -r "$FOLDER" ]; then
+    USERUID="$(id -u)"
     header "Fixing permission through 'dev' to $USERUID on $FOLDER"
-    cr-docker-compose-run "dev" \
+    cr-docker-compose run --rm \
+        "dev" \
         find "$FOLDER" \( -not -user "${USERUID}" \) -exec chown "${USERUID}" '{}' ';'
-    header_finished
+    header_end
 fi
