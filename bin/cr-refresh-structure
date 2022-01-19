@@ -9,17 +9,19 @@ set -o pipefail
 cr-ensure-started
 
 if [ -z "$CRYPTOMEDIC_DB_UPGRADE" ]; then
-    echo "* Initialize CRYPTOMEDIC_DB_UPGRADE"
+    echo "Initialize CRYPTOMEDIC_DB_UPGRADE"
     CRYPTOMEDIC_DB_UPGRADE="$(cr-get-config "security.key")"
 fi
 
 echo "Deploying to ${CR_HTTP_HOST} with pwd of #${#CRYPTOMEDIC_DB_UPGRADE} char length"
 
-echo "* Upgrading database"
+header_begin "* Upgrading database"
 curl -fsSL "http://${CR_HTTP_HOST}/maintenance/patch_db.php?pwd=${CRYPTOMEDIC_DB_UPGRADE}"
+header_end
 
-echo "* Upgrading files"
+header_begin "* Upgrading files"
 curl -fsSL "http://${CR_HTTP_HOST}/maintenance/reset.php?pwd=${CRYPTOMEDIC_DB_UPGRADE}"
+header_end
 
 for V in "$CR_PRJ_DIR/www/api/"*; do
     CR_API_VERSION="$(basename "$V")"
@@ -28,8 +30,8 @@ for V in "$CR_PRJ_DIR/www/api/"*; do
             continue
         fi
         export CR_API_VERSION
-        echo "cr-refresh-structure found: $E..."
+        header_begin "cr-refresh-structure found: $E..."
         "$E"
-        echo "cr-refresh-structure found: $E done"
+        header_done
     done
 done
