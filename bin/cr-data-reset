@@ -3,27 +3,28 @@
 set -o errexit
 set -o pipefail
 
-CR_SCRIPT_DIR="$(dirname "${BASH_SOURCE[0]}")"
-
 # shellcheck source=./cr-lib
-. "$CR_SCRIPT_DIR"/cr-lib
+. "$(dirname "${BASH_SOURCE[0]}")"/cr-lib
 
 cr-ensure-started
 
 # Live folder
-header "data-reset..."
-cr-capture-output cr-docker-compose-run dev \
+header_begin "data-reset..."
+cr-capture-output cr-docker-compose run --rm \
+    "dev" \
     rsync -a --delete live-for-test/ live/
+
 cr-capture-output cr-fix-permissions "live/"
 chmod -R a+rwX live/storage/uploadedPictures
 
 # Reset database
-header "Waiting for mysql to be available"
+header_begin "Waiting for mysql to be available"
 cr-capture-output docker compose exec -T mysql \
     bash -c "while ! mysql -u root -p${CR_DB_ROOT_PASS} --database=mysql -e 'Show tables;' &>/dev/null; do sleep 1; done"
-header_finished
+header_end
 
-cr-capture-output docker compose exec -T mysql \
+cr-capture-output cr-docker-compose exec -T \
+    "mysql" \
     mysql -u root "-p${CR_DB_ROOT_PASS}" --database=mysql -e " \
             USE mysql; \
             DROP SCHEMA IF EXISTS ${CR_DB_NAME} ; \
@@ -36,7 +37,8 @@ cr-capture-output docker compose exec -T mysql \
 # Mysql 5.7, 7.0:
 # 	ALTER USER 'root' IDENTIFIED WITH mysql_native_password BY 'password';
 # 	ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
-cr-capture-output docker compose exec -T mysql \
+cr-capture-output cr-docker-compose exec -T \
+    "mysql" \
     mysql -u root "-p${CR_DB_ROOT_PASS}" --database="${CR_DB_NAME}" <"conf/database/base.sql"
 
 cr-ensure-folder-empty "www/api/${VAPI}/bootstrap/cache/"
@@ -52,4 +54,4 @@ cr-ensure-folder-empty "tmp/webTemp/cache"
 cr-capture-output cr-refresh-structure
 cr-fix-permissions
 
-header_finished
+header_end

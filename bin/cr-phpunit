@@ -3,10 +3,8 @@
 set -o errexit
 set -o pipefail
 
-CR_SCRIPT_DIR="$(dirname "${BASH_SOURCE[0]}")"
-
 # shellcheck source=./cr-lib
-. "$CR_SCRIPT_DIR"/cr-lib
+. "$(dirname "${BASH_SOURCE[0]}")"/cr-lib
 
 cr-ensure-started
 
@@ -23,47 +21,42 @@ if [ "$1" == "COMMIT" ]; then
 fi
 
 testOne() {
-	local T="$1" # type: laravel/bare/-
+	local T="$1" # type: laravel/bare
 	local V="$2" # www/api/v1.3
 	shift
 	shift
 
-	echo "Version $V"
+	case "$T" in
+	"laravel")
+		FOLDER="$V"
+		REPORTS="tmp/php$(basename "$V")"
+		;;
 
-	if [[ -z "$T" ]] || [[ "$T" == "laravel" ]]; then
-		if [ -f "$V/phpunit.xml" ]; then
-			REPORTS="tmp/php$(basename "$V")"
-			mkdir -p "$REPORTS"
-			chmod a+rwx "$REPORTS"
+	"bare")
+		FOLDER="$V/public"
+		REPORTS="tmp/php$(basename "$V")-bare"
+		;;
+	"*")
+		echo "Unsupported flavor: $T" >&2
+		exit 255
+		;;
+	esac
 
-			header "PHPUnit: Laravel $V starting"
-			cr-docker-compose-run -T --workdir "/app/$V" -e XDEBUG_MODE=coverage -e COMMIT="$COMMIT" \
-				"php" \
-				./vendor/bin/phpunit --coverage-html "/app/$REPORTS" --coverage-xml "/app/$REPORTS" "$@"
-			cr-fix-permissions "$REPORTS"
-			header_finished
-		else
-			echo "** Laravel $V: skipping because no phpunit.xml **" >&2
-			pwd
-		fi
-	fi
+	if [ -f "$FOLDER/phpunit.xml" ]; then
+		mkdir -p "$REPORTS"
+		chmod a+rwx "$REPORTS"
 
-	if [[ -z "$T" ]] || [[ "$T" == "bare" ]]; then
-		if [ -f "$V/public/phpunit.xml" ]; then
-			REPORTS="tmp/php$(basename "$V")-bare"
-			mkdir -p "$REPORTS"
-			chmod a+rwx "$REPORTS"
+		header_begin "PHPUnit: $T $V starting"
 
-			header "PHPUnit: Bare $V starting"
-			cr-docker-compose-run -T --workdir "/app/$V/public" -e XDEBUG_MODE=coverage -e COMMIT="$COMMIT" \
-				"php" \
-				./vendor/bin/phpunit --coverage-html "/app/$REPORTS" --coverage-xml "/app/$REPORTS" "$@"
-			cr-fix-permissions "$REPORTS"
-			header_finished
-		else
-			echo "** Bare $V: skipping because no phpunit.xml **" >&2
-			pwd
-		fi
+		cr-docker-compose run --rm -T --workdir "/app/$FOLDER" -e XDEBUG_MODE=coverage -e COMMIT="$COMMIT" \
+			"php" \
+			./vendor/bin/phpunit --coverage-html "/app/$REPORTS" --coverage-xml "/app/$REPORTS" "$@"
+
+		cr-fix-permissions "$REPORTS"
+		header_end
+	else
+		echo "** $T $V: skipping because no phpunit.xml **" >&2
+		pwd
 	fi
 }
 
@@ -85,9 +78,11 @@ if [ -n "$T" ]; then
 else
 	if [[ -z "$V" ]]; then
 		for Vi in www/api/v*; do
-			testOne "" "$Vi"
+			testOne "laravel" "$Vi"
+			testOne "bare" "$Vi"
 		done
 	else
-		testOne "" "$V"
+		testOne "laravel" "$V"
+		testOne "bare" "$V"
 	fi
 fi

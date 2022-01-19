@@ -3,14 +3,14 @@
 set -o errexit
 set -o pipefail
 
-CR_SCRIPT_DIR="$(dirname "${BASH_SOURCE[0]}")"
-
 # shellcheck source=./cr-lib
-. "$CR_SCRIPT_DIR"/cr-lib
+. "$(dirname "${BASH_SOURCE[0]}")"/cr-lib
 
 if [ -z "$1" ]; then
     echo "Please specify the key you want to get, as json-path notation" >&2
     exit 1
 fi
 
-cr-docker-compose-run -v "$(realpath "${CR_PRJ_DIR}"):/app" php "php" "/app/config.php" "$1"
+cr-docker-compose run --rm \
+    "php" \
+    "php" "/app/config.php" "$1"

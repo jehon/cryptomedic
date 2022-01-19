@@ -6,6 +6,8 @@ set -o pipefail
 export CR_SCRIPT_DIR
 export CR_PRJ_DIR
 export CR_TMP
+export CR_HTTP_PORT
+export CR_HTTP_HOST
 export CR_DB_ROOT_PASS="password"
 export CR_DB_NAME="cryptomedic"
 # From docker-compose.yml
@@ -13,12 +15,14 @@ export CR_DB_USER_PASS="password"
 export CR_DB_ROOT_PASS="password"
 export CR_DB_USER="username"
 
-export CR_HTTP_PORT="${CRYPTOMEDIC_PORT:-5080}"
-export CR_HTTP_HOST="${CRYPTOMEDIC_HTTP_HOST:-"localhost"}:$CR_HTTP_PORT"
-
+#
+# Initialize
+#
 CR_SCRIPT_DIR="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
 CR_PRJ_DIR="$(dirname "$CR_SCRIPT_DIR")"
 CR_TMP="$CR_PRJ_DIR/tmp"
+CR_HTTP_PORT="${CRYPTOMEDIC_PORT:-5080}"
+CR_HTTP_HOST="${CRYPTOMEDIC_HTTP_HOST:-"localhost"}:$CR_HTTP_PORT"
 
 export PATH="$CR_SCRIPT_DIR:$PATH"
 
@@ -26,16 +30,22 @@ export PATH="$CR_SCRIPT_DIR:$PATH"
 export CR_HEADER_PREFIX="*$CR_HEADER_PREFIX"
 
 header() {
+    echo -e "\e[93m$CR_HEADER_PREFIX $*\e[00m"
+}
+
+header_begin() {
     LASTMSG="$*"
     echo -e "\e[93m$CR_HEADER_PREFIX $*\e[00m"
 }
 
-header_finished() {
+header_end() {
     echo -e "\e[93m$CR_HEADER_PREFIX $LASTMSG done\e[00m"
 }
 
-# 1: absolute path (./)
-# 2: docker path   (./)
+#
+# 1: absolute path (./ = cwd)
+# 2: docker path   (./ = workdir)
+#
 absoluteToDockerRelative() {
     # Thanks to https://stackoverflow.com/a/28523143/1954789
     echo "${2:-.}/$(realpath --canonicalize-missing --relative-to="$CR_PRJ_DIR" "${1:-.}")"

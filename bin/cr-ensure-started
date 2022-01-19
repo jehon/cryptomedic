@@ -3,20 +3,20 @@
 set -o errexit
 set -o pipefail
 
-CR_SCRIPT_DIR="$(dirname "${BASH_SOURCE[0]}")"
-
 # shellcheck source=./cr-lib
-. "$CR_SCRIPT_DIR"/cr-lib
+. "$(dirname "${BASH_SOURCE[0]}")"/cr-lib
 
-if ! docker compose ps --filter "status=running" | grep " server " &>/dev/null; then
-	header "starting docker"
-	cr-capture-output docker compose up --build -d
-	header_finished
+# if ! docker compose ps --filter "status=running" | grep " server " &>/dev/null; then
+if ! cr-docker-compose ps --filter "status=running" | grep " server " &>/dev/null; then
+	header_begin "starting docker"
+	cr-capture-output \
+		cr-docker-compose up --build -d
+	header_end
 fi
 
 # Check folders
-header "Add folders if necessary"
+header_begin "Add folders if necessary"
 cr-ensure-folder-empty www/api/v1.3/bootstrap/cache
 cr-ensure-folder-empty www/api/v1.3/storage/framework/cache
 cr-ensure-folder-empty www/api/v1.3/storage/framework/sessions
-header_finished
+header_end

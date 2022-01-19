@@ -3,17 +3,13 @@
 set -o errexit
 set -o pipefail
 
-CR_SCRIPT_DIR="$(dirname "${BASH_SOURCE[0]}")"
-
 # shellcheck source=./cr-lib
-. "$CR_SCRIPT_DIR"/cr-lib
+. "$(dirname "${BASH_SOURCE[0]}")"/cr-lib
 
-PORT=${1:-"5080"}
-
-DEV="$(docker ps --filter status=running --filter publish="$PORT" --format="{{.Names}}")"
+DEV="$(docker ps --filter status=running --filter publish="$CR_HTTP_PORT" --format="{{.Names}}")"
 
 if [ -z "$DEV" ]; then
-    echo "Nobody is publishing on $PORT"
+    echo "Nobody is publishing on $CR_HTTP_PORT"
     exit 0
 fi
 echo "Found dev server: $DEV"
@@ -22,7 +18,6 @@ ROOT="${DEV/_*/}"
 echo "Found root: $ROOT"
 
 docker ps --filter name="${ROOT}_[a-z]+_1" --format="{{.Names}}" | while read -r CI; do
-    #docker ps --filter name="${ROOT}_[a-z]+_1" --format="{{.ID}}" | while read -r CI; do
     echo "Killing $CI..."
     docker stop "$CI"
     echo "Killing $CI done"

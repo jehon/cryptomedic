@@ -3,17 +3,14 @@
 set -o errexit
 set -o pipefail
 
-CR_SCRIPT_DIR="$(dirname "${BASH_SOURCE[0]}")"
-
 # shellcheck source=./cr-lib
-. "$CR_SCRIPT_DIR"/cr-lib
+. "$(dirname "${BASH_SOURCE[0]}")"/cr-lib
 
-if [ ! -d "$1" ]; then
-    mkdir -p "$1" >/dev/null
+if [ -d "$1" ]; then
+    rm -fr "$1"
 fi
 
-# Remove files inside
-find "$1" -mindepth 1 ! -path './.*' -delete >/dev/null
+mkdir -p "$1" >/dev/null
 
 # Give access to anybody
 chmod a+rwX "$1" >/dev/null

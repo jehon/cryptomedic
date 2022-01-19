@@ -3,13 +3,11 @@
 set -o errexit
 set -o pipefail
 
-CR_SCRIPT_DIR="$(dirname "${BASH_SOURCE[0]}")"
-
 # shellcheck source=./cr-lib
-. "$CR_SCRIPT_DIR"/cr-lib
+. "$(dirname "${BASH_SOURCE[0]}")"/cr-lib
 
 # https://docs.docker.com/compose/env-file/
 #
 # Bug about newline: see https://issueexplorer.com/issue/docker/compose/8833
 #
-docker compose --project-directory="$CR_PRJ_DIR" run --rm "$@" </dev/null
+docker compose --project-directory="$CR_PRJ_DIR" "$@" </dev/null
