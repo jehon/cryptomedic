@@ -32,6 +32,6 @@ for V in "$CR_PRJ_DIR/www/api/"*; do
         export CR_API_VERSION
         header_begin "cr-refresh-structure found: $E..."
         "$E"
-        header_done
+        header_end
     done
 done
