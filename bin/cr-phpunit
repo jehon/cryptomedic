@@ -22,7 +22,7 @@ fi
 
 testOne() {
 	local T="$1" # type: laravel/bare
-	local V="$2" # www/api/v1.3
+	local V="$2" # ${CR_API_VERSION}
 	shift
 	shift
 

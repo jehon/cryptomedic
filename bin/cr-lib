@@ -8,15 +8,15 @@ export CR_PRJ_DIR
 export CR_TMP
 export CR_HTTP_PORT
 export CR_HTTP_HOST
+export CR_API_VERSION="v1.3" # From Makefile and config.js
 
 # unused ?
 
 export CR_DB_ROOT_PASS="password"
 export CR_DB_NAME="cryptomedic"
-# From docker-compose.yml
-export CR_DB_USER_PASS="password"
-export CR_DB_ROOT_PASS="password"
-export CR_DB_USER="username"
+export CR_DB_USER_PASS="password" # From docker-compose.yml
+export CR_DB_ROOT_PASS="password" # From docker-compose.yml
+export CR_DB_USER="username"      # From docker-compose.yml
 
 #
 # Initialize
