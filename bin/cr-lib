@@ -12,6 +12,9 @@ export CR_DB_USER_PASS="password"
 export CR_DB_ROOT_PASS="password"
 export CR_DB_USER="username"
 
+export CR_HTTP_PORT="${CRYPTOMEDIC_PORT:-5080}"
+export CR_HTTP_HOST="${CRYPTOMEDIC_HTTP_HOST:-"localhost"}:$CR_HTTP_PORT"
+
 CR_SCRIPT_DIR="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
 CR_PRJ_DIR="$(dirname "$CR_SCRIPT_DIR")"
 CR_TMP="$CR_PRJ_DIR/tmp"
@@ -20,11 +23,6 @@ export PATH="$CR_SCRIPT_DIR:$PATH"
 
 # For recursion
 export CR_HEADER_PREFIX="*$CR_HEADER_PREFIX"
-
-if [ -n "$JH_PACKAGE_FOLDER" ]; then
-    # shellcheck source=/dev/null
-    . "$JH_PACKAGE_FOLDER"/bin/jh-secrets-get "CRYPTOMEDIC_UPLOAD_USER" "CRYPTOMEDIC_UPLOAD_PASSWORD" "CRYPTOMEDIC_DB_UPGRADE"
-fi
 
 header() {
     LASTMSG="$*"
