@@ -12,7 +12,7 @@ FLAVOR="${1:-desktop}"
 header "Testing cypress for $FLAVOR"
 
 OUTPUT="$CR_TMP"/e2e/"$FLAVOR"
-ODOCKER="$(p2docker "$OUTPUT")"
+ODOCKER="$(absoluteToDockerRelative "$OUTPUT")"
 header "Setup $OUTPUT (into $ODOCKER)"
 
 declare -a CYPRESS_ARGS

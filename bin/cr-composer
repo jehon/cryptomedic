@@ -8,7 +8,8 @@ CR_SCRIPT_DIR="$(dirname "${BASH_SOURCE[0]}")"
 # shellcheck source=./cr-lib
 . "$CR_SCRIPT_DIR"/cr-lib
 
-FOLDER="$(realpath --relative-to "$CR_PRJ_DIR" .)"
+# shellcheck disable=SC2119
+FOLDER="$(absoluteToDockerRelative)"
 
 cr-docker-compose-run --workdir "/app/$FOLDER" "php" "/composer.phar" "$@"
 cr-fix-permissions "$FOLDER/vendor"

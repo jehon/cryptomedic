@@ -34,9 +34,9 @@ header_finished() {
     echo -e "\e[93m$CR_HEADER_PREFIX $LASTMSG done\e[00m"
 }
 
-# 1: absolute path
-# 2: docker path
-p2docker() {
+# 1: absolute path (./)
+# 2: docker path   (./)
+absoluteToDockerRelative() {
     # Thanks to https://stackoverflow.com/a/28523143/1954789
-    echo "${2:-/app}/$(realpath --canonicalize-missing --relative-to="$CR_PRJ_DIR" "$1")"
+    echo "${2:-.}/$(realpath --canonicalize-missing --relative-to="$CR_PRJ_DIR" "${1:-.}")"
 }
