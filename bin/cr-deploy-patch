@@ -1,11 +1,5 @@
 #!/bin/bash
 
-#
-# To protect a version, please see md5sum.php (at the bottom)
-#
-
-# Stop on error
-# Thanks to https://unix.stackexchange.com/a/462157/240487
 set -o errexit
 set -o pipefail
 
@@ -13,6 +7,10 @@ CR_SCRIPT_DIR="$(dirname "${BASH_SOURCE[0]}")"
 
 # shellcheck source=./cr-lib
 . "$CR_SCRIPT_DIR"/cr-lib
+
+#
+# To protect a version, please see md5sum.php (at the bottom)
+#
 
 cr-ensure-started
 
