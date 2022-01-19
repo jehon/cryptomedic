@@ -38,18 +38,18 @@ $myconfig = [
   ]
 ];
 
-echo "1\n";
+echo "1+\n";
 var_dump($myconfig);
-echo "1\n";
+echo "1-\n";
 
 if (file_exists(__DIR__ . '/config-custom.php')) {
   # config-custom hold the configuration of the project
   require(__DIR__ . '/config-custom.php');
 }
 
-echo "2\n";
+echo "2+\n";
 var_dump($myconfig);
-echo "2\n";
+echo "2-\n";
 
 if (file_exists(__DIR__ . '/config-site.php')) {
   # config-custom hold the configuration of the site
@@ -57,9 +57,9 @@ if (file_exists(__DIR__ . '/config-site.php')) {
   require(__DIR__ . '/config-site.php');
 }
 
-echo "3\n";
+echo "3+\n";
 var_dump($myconfig);
-echo "3\n";
+echo "3-\n";
 
 function myShowConfigByPathForCmdLine($path) {
   global $myconfig;
