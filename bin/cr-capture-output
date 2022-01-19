@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+set -o errexit
+set -o pipefail
+
 if [ -z "$CR_LIVE" ] && type jh-run-and-capture >/dev/null 2>&1; then
     jh-run-and-capture "$@"
 else

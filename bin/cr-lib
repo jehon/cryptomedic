@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 set -o errexit
+set -o pipefail
 
 export CR_SCRIPT_DIR
 export CR_PRJ_DIR

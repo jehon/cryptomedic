@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 set -o errexit
+set -o pipefail
 
 CR_SCRIPT_DIR="$(dirname "${BASH_SOURCE[0]}")"
 

@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
 
 set -o errexit
+set -o pipefail
 
 CR_SCRIPT_DIR="$(dirname "${BASH_SOURCE[0]}")"
 
-# shellcheck source=/dev/null
+# shellcheck source=./cr-lib
 . "$CR_SCRIPT_DIR"/cr-lib
 
 cr-ensure-started
@@ -22,11 +23,15 @@ curl -fsSL "http://${CR_HTTP_HOST}/maintenance/patch_db.php?pwd=${CRYPTOMEDIC_DB
 echo "* Upgrading files"
 curl -fsSL "http://${CR_HTTP_HOST}/maintenance/reset.php?pwd=${CRYPTOMEDIC_DB_UPGRADE}"
 
-for E in "$CR_PRJ_DIR"/www/api/*/bin/refresh.sh; do
-    if [ ! -f "$E" ]; then
-        continue
-    fi
-    echo "cr-refresh-structure found: $E..."
-    "$E"
-    echo "cr-refresh-structure found: $E done"
+for V in "$CR_PRJ_DIR/www/api/"*; do
+    CR_API_VERSION="$(basename "$V")"
+    for E in "$CR_PRJ_DIR"/www/api/$CR_API_VERSION/bin/refresh.sh; do
+        if [ ! -f "$E" ]; then
+            continue
+        fi
+        export CR_API_VERSION
+        echo "cr-refresh-structure found: $E..."
+        "$E"
+        echo "cr-refresh-structure found: $E done"
+    done
 done

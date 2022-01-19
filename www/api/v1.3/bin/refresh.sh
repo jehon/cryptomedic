@@ -2,12 +2,12 @@
 
 set -o errexit
 
-SCRIPT_DIR="$(dirname "${BASH_SOURCE[0]}")"
+#
+# This script is called by "cr-refresh-structure" that will set all necessary variables
+#
+#    CR_*
+#    CR_API_VERSION
+#
+#
 
-# shellcheck source=/dev/null
-. "$SCRIPT_DIR/../../../../bin/cr-lib"
-
-# Current api dynamically calculated
-API="$(basename "$(dirname "$SCRIPT_DIR")")"
-
-curl -fsSL "http://${CR_HTTP_HOST}/api/$API/routes/struct/data.php?force=1&quiet=true"
+curl -fsSL "http://${CR_HTTP_HOST}/api/$CR_API_VERSION/routes/struct/data.php?force=1&quiet=true"

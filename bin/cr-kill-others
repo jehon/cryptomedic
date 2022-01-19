@@ -1,5 +1,13 @@
 #!/usr/bin/env bash
 
+set -o errexit
+set -o pipefail
+
+CR_SCRIPT_DIR="$(dirname "${BASH_SOURCE[0]}")"
+
+# shellcheck source=./cr-lib
+. "$CR_SCRIPT_DIR"/cr-lib
+
 PORT=${1:-"5080"}
 
 DEV="$(docker ps --filter status=running --filter publish="$PORT" --format="{{.Names}}")"
