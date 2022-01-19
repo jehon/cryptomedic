@@ -16,7 +16,7 @@ fi
 
 # Check folders
 header_begin "Add folders if necessary"
-cr-ensure-folder-empty www/api/v1.3/bootstrap/cache
-cr-ensure-folder-empty www/api/v1.3/storage/framework/cache
-cr-ensure-folder-empty www/api/v1.3/storage/framework/sessions
+cr-ensure-folder-empty "www/api/${CR_API_VERSION}/bootstrap/cache"
+cr-ensure-folder-empty "www/api/${CR_API_VERSION}/storage/framework/cache"
+cr-ensure-folder-empty "www/api/${CR_API_VERSION}/storage/framework/sessions"
 header_end
