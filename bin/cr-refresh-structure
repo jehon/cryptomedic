@@ -23,15 +23,11 @@ header_begin "* Upgrading files"
 curl -fsSL "http://${CR_HTTP_HOST}/maintenance/reset.php?pwd=${CRYPTOMEDIC_DB_UPGRADE}"
 header_end
 
-for V in "$CR_PRJ_DIR/www/api/"*; do
-    CR_API_VERSION="$(basename "$V")"
-    for E in "$CR_PRJ_DIR"/www/api/$CR_API_VERSION/bin/refresh.sh; do
-        if [ ! -f "$E" ]; then
-            continue
-        fi
-        export CR_API_VERSION
-        header_begin "cr-refresh-structure found: $E..."
-        "$E"
-        header_end
-    done
+for E in "$CR_PRJ_DIR"/www/api/*/bin/refresh.sh; do
+    if [ ! -f "$E" ]; then
+        continue
+    fi
+    header_begin "cr-refresh-structure found: $E..."
+    "$E"
+    header_end
 done
