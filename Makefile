@@ -104,13 +104,13 @@ dump-dockers:
 	@cr-docker-compose run --rm "dev" node -v
 
 	@echo "[server] Php version"
-	@cr-docker-compose exec "server" php -v
+	@cr-docker-compose exec -T "server" php -v
 
 	@echo "[mysql] mysqld version"
-	@cr-docker-compose exec "mysql" mysql --user=guest --password="" --database=mysql -e "SELECT VERSION();"
+	@cr-docker-compose exec -T "mysql" mysql --user=guest --password="" --database=mysql -e "SELECT VERSION();"
 
 	@echo "[mysql] mysql version"
-	@cr-docker-compose exec "mysql" mysql --version
+	@cr-docker-compose exec -T "mysql" mysql --version
 
 clear:
 	@clear
