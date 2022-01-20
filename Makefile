@@ -153,6 +153,8 @@ update-config-host-key:
 
 .PHONY: start-with-rebuild
 start-with-rebuild:
+	docker compose down
+	docker system prune -f
 	docker compose build --pull --no-cache
 
 .PHONY: start
