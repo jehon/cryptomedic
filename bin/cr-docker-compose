@@ -10,4 +10,11 @@ set -o pipefail
 #
 # Bug about newline: see https://issueexplorer.com/issue/docker/compose/8833
 #
-docker compose --project-directory="$CR_PRJ_DIR" "$@" </dev/null
+
+# Thanks to https://stackoverflow.com/a/2456870/1954789
+# Thanks to https://superuser.com/a/813477/287025
+if [ -t 0 ]; then
+    exec 0<&-
+fi
+
+docker compose --project-directory="$CR_PRJ_DIR" "$@"

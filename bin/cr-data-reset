@@ -29,28 +29,35 @@ cr-fix-permissions
 header_end
 
 # Reset database
-header_begin "cr-data-reset: restore mysql"
-docker compose exec -T mysql \
-    bash -c "while ! mysql -u root -p${CR_DB_ROOT_PASS} --database=mysql -e 'Show tables;' &>/dev/null; do sleep 1; done"
-echo "Mysql is available"
-
-cr-docker-compose exec -T \
+header_begin "cr-data-reset - Mysql - waiting for server"
+cr-docker-compose exec \
     "mysql" \
-    mysql -u root "-p${CR_DB_ROOT_PASS}" --database=mysql -e " \
+    bash -c "while ! mysql -u root -p${CR_DB_ROOT_PASS} --database=mysql -e 'Show tables;' &>/dev/null; do sleep 1; done"
+header_end
+
+header_begin "cr-data-reset - Mysql - configuring"
+cr-docker-compose exec \
+    "mysql" \
+    mysql --user=root "--password=${CR_DB_ROOT_PASS}" --database=mysql -e " \
             USE mysql; \
             DROP SCHEMA IF EXISTS ${CR_DB_NAME} ; \
             CREATE SCHEMA ${CR_DB_NAME}; \
             USE ${CR_DB_NAME}; \
             GRANT ALL PRIVILEGES ON ${CR_DB_NAME}   TO ${CR_DB_USER}; \
             GRANT ALL PRIVILEGES ON ${CR_DB_NAME}.* TO ${CR_DB_USER}; \
+            GRANT SELECT, SHOW DATABASES, SHOW VIEW ON *.* TO 'guest'@'%'; \
             SET PASSWORD FOR ${CR_DB_USER} = PASSWORD('${CR_DB_USER_PASS}'); \
         "
 # Mysql 5.7, 7.0:
 # 	ALTER USER 'root' IDENTIFIED WITH mysql_native_password BY 'password';
 # 	ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
-cr-docker-compose exec -T \
+header_end
+
+header_begin "cr-data-reset - Mysql - restoring base.sql"
+cr-docker-compose exec \
     "mysql" \
-    mysql -u root "-p${CR_DB_ROOT_PASS}" --database="${CR_DB_NAME}" <"conf/database/base.sql"
+    mysql --user=root "--password=${CR_DB_ROOT_PASS}" --database="${CR_DB_NAME}" <"conf/database/base.sql"
+
 header_end
 
 header_begin "cr-data-reset: cr-refresh-structure"
