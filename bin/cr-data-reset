@@ -30,13 +30,13 @@ header_end
 
 # Reset database
 header_begin "cr-data-reset - Mysql - waiting for server"
-cr-docker-compose exec \
+cr-docker-compose exec -T \
     "mysql" \
     bash -c "while ! mysql -u root -p${CR_DB_ROOT_PASS} --database=mysql -e 'Show tables;' &>/dev/null; do sleep 1; done"
 header_end
 
 header_begin "cr-data-reset - Mysql - configuring"
-cr-docker-compose exec \
+cr-docker-compose exec -T \
     "mysql" \
     mysql --user=root "--password=${CR_DB_ROOT_PASS}" --database=mysql -e " \
             USE mysql; \
@@ -54,7 +54,7 @@ cr-docker-compose exec \
 header_end
 
 header_begin "cr-data-reset - Mysql - restoring base.sql"
-cr-docker-compose exec \
+cr-docker-compose exec -T \
     "mysql" \
     mysql --user=root "--password=${CR_DB_ROOT_PASS}" --database="${CR_DB_NAME}" <"conf/database/base.sql"
 
