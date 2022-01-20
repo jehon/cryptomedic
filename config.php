@@ -11,8 +11,8 @@ $myconfig = [
     'host'       => 'mysql',
     'schema'     => 'cryptomedic',
     'rootuser'   => 'root',
-    'rootpwd'    => 'password',
-    'username'   => 'root',
+    'rootpwd'    => 'root',
+    'username'   => 'username',
     'password'   => 'password',
   ],
   'security' => [
