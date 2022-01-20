@@ -6,7 +6,7 @@ set -o pipefail
 # shellcheck source=./cr-lib
 . "$(dirname "${BASH_SOURCE[0]}")"/cr-lib
 
-OUTPUT="$CR_TMP/$CR_DB_NAME"
+OUTPUT="$CR_TMP/cryptomedic-$(date +%F-%H-%M-%S.%N)"
 
 cr-ensure-started
 mkdir -p "$(dirname "$OUTPUT")"
@@ -14,7 +14,7 @@ mkdir -p "$(dirname "$OUTPUT")"
 (
     cr-docker-compose exec -T \
         "mysql" \
-        mysqldump -u root -p"$CR_DB_ROOT_PASS" "$CR_DB_NAME"
+        mysqldump --user=root --password=root cryptomedic
 
 ) >"$OUTPUT"
 
