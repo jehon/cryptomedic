@@ -85,6 +85,7 @@ dump:
 	@echo "CRYPTOMEDIC_PORT: $(CRYPTOMEDIC_PORT)"
 	@echo "Chrome:           $(shell google-chrome --version)"
 	@echo "NodeJS:           $(shell node --version)"
+	@echo "Bash:             $(shell bash --version)"
 	@echo "Docker:           $(shell docker --version)"
 	@echo "Docker compose:   $(shell docker compose version)"
 	@echo "DISPLAY:          $(DISPLAY)"
