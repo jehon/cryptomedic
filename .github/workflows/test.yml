@@ -20,6 +20,7 @@ jobs:
     - run: make computer-setup
     - run: make dump
     - run: make start
+    - run: make dump-docker-compose
     - run: make dependencies
     - run: make build
     - run: make test-shell
