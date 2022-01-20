@@ -100,6 +100,18 @@ dump-dockers:
 	@echo "[php] Php version"
 	@cr-docker-compose run --rm "php" php -v
 	
+	@echo "[dev] Node version"
+	@cr-docker-compose exec "dev" node -v
+
+	@echo "[server] Php version"
+	@cr-docker-compose exec "server" php -v
+
+	@echo "[mysql] mysqld version"
+	@cr-docker-compose exec "mysql" mysql --user=guest --password="" --database=mysql -e "SELECT VERSION();"
+
+	@echo "[mysql] mysql version"
+	@cr-docker-compose exec "mysql" mysql --version
+
 clear:
 	@clear
 	@echo "**"
@@ -156,7 +168,7 @@ update-config-host-key:
 	ssh-keyscan -t ssh-rsa $(DEPLOY_HOST) > conf/ovh.key
 
 .PHONY: start-with-rebuild
-start-with-rebuild:
+docker-rebuild:
 	docker compose down
 	docker system prune -f
 	docker compose build --pull --no-cache
