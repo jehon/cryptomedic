@@ -14,7 +14,7 @@ echo "<-"
 header_end
 
 header_begin "get test in variable"
-RES="$(cr-get-config "test")"
+RES=$(cr-get-config "test")
 if [[ "$RES" != "hello world" ]]; then
     echo "Unexpected: $RES"
     exit 1
@@ -27,7 +27,7 @@ echo "<-"
 header_end
 
 header_begin "get in.there in variable"
-RES="$(cr-get-config "in.there")"
+RES=$(cr-get-config "in.there")
 if [[ "$RES" != "hello universe" ]]; then
     echo "Unexpected: $RES"
     exit 1
