@@ -107,7 +107,7 @@ dump-dockers:
 	@cr-docker-compose exec -T "server" php -v
 
 	@echo "[mysql] mysqld version"
-	@cr-docker-compose exec -T "mysql" mysql --user=guest --password="" --database=mysql -e "SELECT VERSION();"
+	@cr-docker-compose exec -T "mysql" mysql --user=root --password=root --database=mysql -e "SELECT VERSION();"
 
 	@echo "[mysql] mysql version"
 	@cr-docker-compose exec -T "mysql" mysql --version
