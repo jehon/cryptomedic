@@ -90,8 +90,11 @@ function myShowConfigByPathForCmdLine($path) {
   }
 }
 
+echo "0000000000000"
 if (isset($argc)) {
+  echo "11111111111111111"
   if (($argc == 2) && (substr($argv[0], -strlen(basename(__FILE__))) == basename(__FILE__))) {
+    echo "22222222222222222222"
     myShowConfigByPathForCmdLine($argv[1]);
   }
 }
