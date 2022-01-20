@@ -101,7 +101,7 @@ dump-dockers:
 	@cr-docker-compose run --rm "php" php -v
 	
 	@echo "[dev] Node version"
-	@cr-docker-compose exec "dev" node -v
+	@cr-docker-compose run --rm "dev" node -v
 
 	@echo "[server] Php version"
 	@cr-docker-compose exec "server" php -v
