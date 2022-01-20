@@ -94,6 +94,7 @@ dump:
 	@echo "Who am i:         $(shell whoami)"
 	@echo "Id:               $(shell id)"
 	@echo "Supported:        $(shell npx -y browserslist)"
+	docker compose config
 
 dump-docker-compose:
 	docker compose config
