@@ -96,9 +96,10 @@ dump:
 	@echo "Supported:        $(shell npx -y browserslist)"
 	docker compose config
 
-dump-docker-compose:
-	docker compose config
-
+dump-dockers:
+	@echo "[php] Php version"
+	@cr-docker-compose run --rm "php" php -v
+	
 clear:
 	@clear
 	@echo "**"
