@@ -10,6 +10,8 @@ on:
 jobs:
   ga-test:
     runs-on: ubuntu-latest
+    env:
+      CRYPTOMEDIC_PROD: true
 
     steps:
     - name: Setup Node.js environment
@@ -23,7 +25,6 @@ jobs:
     - run: make dump-dockers
     - run: make dependencies
     - run: make build
-    - run: make test-shell
     - run: make test-api
     - run: make test-unit
     - run: make test-e2e-desktop
