@@ -2,7 +2,6 @@
 
 const path = require('path');
 const fs = require('fs');
-var child_process = require('child_process');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const fse = require('fs-extra');
@@ -14,7 +13,7 @@ fs.writeFileSync(__dirname + '/www/build/release_version.txt', released_version)
 fs.writeFileSync(__dirname + '/www/build/release_version.js', `window.application_version = '${released_version}';`);
 fse.copy(__dirname + '/app/build.htaccess', __dirname + '/www/build/.htaccess');
 
-const isDebug = parseInt(child_process.execSync(path.join(__dirname, 'bin', 'cr-get-config') + ' debug').toString()) > 0;
+const isDebug = (!process.env.CRYPTOMEDIC_PROD) ?? true;
 if (isDebug) {
     console.info('Enabling debug/development mode in webpack');
 }

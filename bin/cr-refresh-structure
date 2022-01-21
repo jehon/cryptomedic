@@ -10,7 +10,7 @@ cr-ensure-started
 
 if [ -z "$CRYPTOMEDIC_DB_UPGRADE" ]; then
     echo "Initialize CRYPTOMEDIC_DB_UPGRADE"
-    CRYPTOMEDIC_DB_UPGRADE="$(cr-get-config "security.key")"
+    CRYPTOMEDIC_DB_UPGRADE="secret"
 fi
 
 echo "Deploying to ${CR_HTTP_HOST} with pwd of #${#CRYPTOMEDIC_DB_UPGRADE} char length"
