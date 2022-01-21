@@ -15,7 +15,9 @@ fse.copy(__dirname + '/app/build.htaccess', __dirname + '/www/build/.htaccess');
 
 const isDebug = (!process.env.CRYPTOMEDIC_PROD) ?? true;
 if (isDebug) {
-    console.info('Enabling debug/development mode in webpack');
+    console.info('Webpack mode: development');
+} else {
+    console.info('Webpack mode: production');
 }
 
 module.exports = {
