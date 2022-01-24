@@ -53,12 +53,12 @@ cr-ensure-folder-empty "$OUTPUT"/videos
 cr-ensure-folder-empty "$OUTPUT"/coverage
 header_end
 
-header_begin "Cypress run tests"
-time cr-docker-compose run --rm -e CYPRESS_BASE_URL="http://server:80" --entrypoint=cypress \
+header_begin "Cypress run tests (${CYPRESS_ARGS[*]}) ($*)"
+time cr-docker-compose run --rm -e CYPRESS_BASE_URL="http://server" --entrypoint=cypress \
     "cypress" \
     run "${CYPRESS_ARGS[@]}" "$@"
-
-cr-fix-permissions "$ODOCKER"
 header_end
 
+header_begin "Fix permissions"
+cr-fix-permissions "$ODOCKER"
 header_end
