@@ -34,7 +34,7 @@
     "babel-plugin-transform-commonjs": "1.1.6",
     "bluebird": "3.7.2",
     "chalk": "5.0.0",
-    "chromedriver": "96.0.0",
+    "chromedriver": "97.0.2",
     "css-loader": "6.5.1",
     "cypress": "9.3.1",
     "cypress-file-upload": "5.0.8",
