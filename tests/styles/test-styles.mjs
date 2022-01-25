@@ -91,9 +91,10 @@ const MaxDiffs = {
                 const { width, height } = ref;
                 const diffPNG = new PNG({ width, height });
 
-                fset.diffPixels = pixelMatch(ref.data, run.data, diffPNG.data, width, height /*, { threshold: 0.1 } */);
-
                 fset.diffSize = Math.abs(1 - (run.height * run.width) / (ref.height * ref.width));
+                if (fset.diffSize == 0) {
+                    fset.diffPixels = pixelMatch(ref.data, run.data, diffPNG.data, width, height /*, { threshold: 0.1 } */);
+                }
 
                 const r = (v) => Math.round(v * 100) + '%';
 
@@ -101,10 +102,10 @@ const MaxDiffs = {
                     fs.unlinkSync(inStyles(fset.ref));
                 } else {
                     if (fset.diffSize > 0) {
-                        if (fset.diffSize > MaxDiffs.sizePercent) {
-                            fset.problem = true;
-                            fset.problemText = `size    - ${r(fset.diffSize)} vs. ${MaxDiffs.sizePercent}`;
-                        }
+                        // if (fset.diffSize > MaxDiffs.sizePercent) {
+                        fset.problem = true;
+                        fset.problemText = `size    - ${r(fset.diffSize)} vs. ${MaxDiffs.sizePercent}`;
+                        // }
                     } else if (fset.diffPixels > 0) {
                         if (fset.diffPixels > MaxDiffs.contentPixels) {
                             fset.problem = true;
@@ -117,6 +118,7 @@ const MaxDiffs = {
 
                     fs.writeFileSync(inStyles(fset.diff), PNG.sync.write(diffPNG));
                 }
+
             }
             if (fset.problem || fset.warning) {
                 if (fset.problem) {
