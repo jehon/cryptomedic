@@ -114,7 +114,7 @@ dump-dockers:
 	@cr-docker-compose exec -T "mysql" mysql --version
 
 clear:
-	@clear
+	@if [ -z "$$NO_CLEAR" ]; then clear; fi
 	@echo "**"
 	@echo "**"
 	@echo "** Tests starting at $$(date) **"
