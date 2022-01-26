@@ -185,7 +185,7 @@ class Lists extends CachedAbstract {
             withCode("Chakaria Disability Center", "CDC"),
             withCode("Chakaria Device Center", "CDev"),
             withCode("Chakaria XRay Center", "CXR"),
-            //   withCode("Cox's Bazar"                , "CB"),
+            withCode("Cox's Bazar"                , "CB"), // Back since 01-2022
             //   withCode("Cox's Bazar Device Center"  , "CBDC"),
             withCode("Ukhia", "UK"),
             withCode("Ukhiya Device Center", "UKDC"),
