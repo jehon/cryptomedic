@@ -9,7 +9,7 @@ set -o pipefail
 cr-ensure-started
 
 header_begin "cr-data-reset: reset folder structure..."
-cr-docker-compose run --rm \
+cr-docker-compose run \
     "dev" \
     rsync -a --delete live-for-test/ live/
 

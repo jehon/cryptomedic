@@ -9,7 +9,7 @@ set -o pipefail
 # shellcheck disable=SC2119
 FOLDER="$(absoluteToDockerRelative)"
 
-cr-docker-compose run --rm --workdir "/app/$FOLDER" \
+cr-docker-compose run --workdir "/app/$FOLDER" \
     "php" \
     "/composer.phar" "$@"
 
