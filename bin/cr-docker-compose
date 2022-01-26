@@ -28,5 +28,4 @@ case "$CMD" in
     ;;
 esac
 
-set -x
 docker compose --project-directory="$CR_PRJ_DIR" "$CMD" "${ADD[@]}" "$@"
