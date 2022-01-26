@@ -194,7 +194,7 @@ class Lists extends CachedAbstract {
             withCode("Moheshkhali Device Center", "MODC"),
             //   withCode("Lohagara"                   , "LOH"),
             withCode("Pakua"), // since 07-2020
-            withCode("Rohinga Camp"), // since 07-2020
+            // withCode("Rohinga Camp"), // since 07-2020 merged into FDMN on 01-2022
             withCode("CMOSH"),
             withCode("CMOSH Device Center"),
             withCode("Forcibly Displaced Myanmar Nationals", "FDMN"),
