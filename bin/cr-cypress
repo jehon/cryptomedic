@@ -28,7 +28,8 @@ ODOCKER="$(absoluteToDockerRelative "$OUTPUT")"
 
 header_begin "Setup $OUTPUT (into $ODOCKER)"
 
-CYPRESS_ARGS=("--env" "flavor=$FLAVOR")
+# Thanks to: https://github.com/cypress-io/github-action/blob/master/index.js
+CYPRESS_ARGS=("--env" "flavor=$FLAVOR" "--headless" -e "DEBUG=cypress:*")
 case "$FLAVOR" in
 "desktop")
     # Nothing to do - default flavor - use the config preset's
