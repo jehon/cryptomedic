@@ -48,7 +48,7 @@ testOne() {
 
 		header_begin "PHPUnit: $T $V starting"
 
-		cr-docker-compose run --rm -T --workdir "/app/$FOLDER" -e XDEBUG_MODE=coverage -e COMMIT="$COMMIT" \
+		cr-docker-compose run -T --workdir "/app/$FOLDER" -e XDEBUG_MODE=coverage -e COMMIT="$COMMIT" \
 			"php" \
 			./vendor/bin/phpunit --coverage-html "/app/$REPORTS" --coverage-xml "/app/$REPORTS" "$@"
 

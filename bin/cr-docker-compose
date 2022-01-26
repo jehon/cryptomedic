@@ -18,4 +18,15 @@ if [ -t 0 ]; then
     exec <&-
 fi
 
-docker compose --project-directory="$CR_PRJ_DIR" "$@"
+CMD="$1"
+shift
+
+ADD=()
+case "$CMD" in
+"run")
+    ADD+=("--rm" "--quiet-pull")
+    ;;
+esac
+
+set -x
+docker compose --project-directory="$CR_PRJ_DIR" "$CMD" "${ADD[@]}" "$@"

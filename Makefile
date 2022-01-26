@@ -99,10 +99,10 @@ dump:
 
 dump-dockers:
 	@echo "[php] Php version"
-	@cr-docker-compose run --rm "php" php -v
+	@cr-docker-compose run "php" php -v
 	
 	@echo "[dev] Node version"
-	@cr-docker-compose run --rm "dev" node -v
+	@cr-docker-compose run "dev" node -v
 
 	@echo "[server] Php version"
 	@cr-docker-compose exec -T "server" php -v
@@ -114,7 +114,7 @@ dump-dockers:
 	@cr-docker-compose exec -T "mysql" mysql --version
 
 	@echo "[cypress] version"
-	@cr-docker-compose run --rm "cypress" version --component package
+	@cr-docker-compose run "cypress" version --component package
 
 clear:
 	@if [ -z "$$NO_CLEAR" ]; then clear; fi
@@ -281,7 +281,7 @@ cypress-open: chmod
 # echo "DISPLAY: $(DISPLAY)"
 # $(cypress) open -e DISPLAY
 
-# cr-docker-compose run --rm -e CYPRESS_BASE_URL="http://server:80" \
+# cr-docker-compose run -e CYPRESS_BASE_URL="http://server:80" \
 # 	-e DISPLAY=$(DISPLAY) -v /tmp/.X11-unix:/tmp/.X11-unix \
 # 	cypress \
 # 	open
