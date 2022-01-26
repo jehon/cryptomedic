@@ -35,7 +35,6 @@ case "$FLAVOR" in
     ;;
 "mobile")
     # Mobile: 360 x 480
-
     CYPRESS_ARGS+=(
         --config "videosFolder=$ODOCKER/videos,screenshotsFolder=$ODOCKER/screenshots,viewportWidth=360,viewportHeight=640"
         --reporter-options configFile="cypress-reporters-mobile.json"
@@ -58,11 +57,12 @@ cr-ensure-folder-empty "$OUTPUT"/coverage
 header_end
 
 header_begin "Cypress run tests (${CYPRESS_ARGS[*]}) ($*)"
-time cr-docker-compose run -e CYPRESS_BASE_URL="http://server" --entrypoint=cypress \
-    "cypress" \
-    run "${CYPRESS_ARGS[@]}" "$@"
+(
+    time cr-docker-compose run \
+        "cypress" \
+        run "${CYPRESS_ARGS[@]}" "$@"
+) | grep -v "Failed to connect to the bus"
 header_end
-
 header_begin "Fix permissions"
 cr-fix-permissions "$ODOCKER"
 header_end
