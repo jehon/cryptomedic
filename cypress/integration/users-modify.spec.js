@@ -3,13 +3,13 @@
 import XButton from '../../app/widgets/style/x-button.js';
 import { crApiUserDelete, crApiLogin, crApiLogout } from '../helpers/cr-api.js';
 import { crGo, crLoginInBackground } from '../helpers/cr.js';
-import configFilter from '../helpers/filter-tests.js';
+import flavorFilter from '../helpers/filter-tests.js';
 
 function getRowByUsername(username) {
     return cy.get('x-table[count]:not([count=0])').find('tr').find('td').contains(username).parent();
 }
 
-configFilter(configFilter.DESKTOP, () =>
+flavorFilter(flavorFilter.DESKTOP, () =>
 
     context('Actions', () => {
         const username = 'cypress_user_modify_spec';
