@@ -1,4 +1,6 @@
 
+DROP PROCEDURE IF EXISTS DeletePatient ;
+
 CREATE PROCEDURE DeletePatient (IN pEntryYear VARCHAR(10),
                                IN pEntryOrder VARCHAR(10))
 proc: BEGIN
