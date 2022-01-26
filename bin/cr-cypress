@@ -14,15 +14,21 @@ set -o pipefail
 # shellcheck source=./cr-lib
 . "$(dirname "${BASH_SOURCE[0]}")"/cr-lib
 
-FLAVOR="${1:-desktop}"
+if [[ -z "$1" ]]; then
+    echo "Need flavor as [1]" >&2
+    exit 255
+fi
+
+FLAVOR="$1"
+shift
 
 header_begin "Testing cypress for $FLAVOR"
 OUTPUT="$CR_TMP"/e2e/"$FLAVOR"
 ODOCKER="$(absoluteToDockerRelative "$OUTPUT")"
 
 header_begin "Setup $OUTPUT (into $ODOCKER)"
-declare -a CYPRESS_ARGS
 
+CYPRESS_ARGS=("--env" "flavor=$FLAVOR")
 case "$FLAVOR" in
 "desktop")
     # Nothing to do - default flavor - use the config preset's
@@ -30,18 +36,16 @@ case "$FLAVOR" in
 "mobile")
     # Mobile: 360 x 480
 
-    CYPRESS_ARGS=(
+    CYPRESS_ARGS+=(
         --config "videosFolder=$ODOCKER/videos,screenshotsFolder=$ODOCKER/screenshots,viewportWidth=360,viewportHeight=640"
         --reporter-options configFile="cypress-reporters-mobile.json"
     )
     ;;
 *)
-    echo "Unknown flavor: $1"
+    echo "Unknown flavor: $FLAVOR"
     exit 1
     ;;
 esac
-
-CYPRESS_ARGS+=("--env" "config=$FLAVOR")
 
 cr-ensure-started
 cr-fix-permissions "$ODOCKER"

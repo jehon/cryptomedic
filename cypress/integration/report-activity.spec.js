@@ -1,9 +1,9 @@
 /// <reference types="Cypress" />
 
-import configFilter from '../helpers/filter-tests.js';
+import flavorFilter from '../helpers/filter-tests.js';
 import { goReport } from '../helpers/report.js';
 
-configFilter(configFilter.DESKTOP, () =>
+flavorFilter(flavorFilter.DESKTOP, () =>
     context('Actions', () => {
         it('should show report', () => {
             goReport('activity',

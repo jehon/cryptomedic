@@ -3,7 +3,7 @@
 import XButton from '../../app/widgets/style/x-button.js';
 import { crApiLogin, crApiPriceDelete, crApiPriceList } from '../helpers/cr-api.js';
 import { crGo, crLoginInBackground, crReady } from '../helpers/cr.js';
-import configFilter from '../helpers/filter-tests.js';
+import flavorFilter from '../helpers/filter-tests.js';
 import TableIterator from '../helpers/table-iterator.js';
 
 function assertTableInitial(i = 0) {
@@ -46,7 +46,7 @@ function assertTableInitial(i = 0) {
     cy.get('#button_save_' + (i + 1)).should('not.exist');
     cy.get('#button_save_' + (i + 2)).should('not.exist');
 }
-configFilter(configFilter.DESKTOP, () =>
+flavorFilter(flavorFilter.DESKTOP, () =>
     context('Actions', () => {
         beforeEach(() => {
             crLoginInBackground(crApiLogin.ADMIN);
