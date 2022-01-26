@@ -33,7 +33,6 @@ class RouteReferenceTestCase extends TestCase {
 				$user = new User(['name' => 'test', 'group' => $opt->getRole()]);
 			}
 
-
 			$this->actingAs($user);
 		} else {
 			// $this->be(null);
