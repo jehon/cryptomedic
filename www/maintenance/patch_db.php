@@ -1,6 +1,8 @@
-<pre>
-
 <?php
+	ob_start();
+	http_response_code(500);
+
+	echo "<pre>";
 
 require_once(__DIR__ . "/../../config.php");
 require_once(__DIR__ . "/Database.php");
@@ -8,12 +10,10 @@ require_once(__DIR__ . "/Database.php");
 global $myconfig;
 
 if (!$myconfig['security']['key']) {
-	http_response_code(500);
 	die("No security.admin configured");
 }
 
 if ($_REQUEST['pwd'] != $myconfig['security']['key']) {
-	http_response_code(500);
 	die("No correct pwd given (" . basename(__FILE__) . ")");
 }
 
@@ -22,7 +22,6 @@ if (isset($_REQUEST['debug'])) {
 }
 
 try {
-	http_response_code(500);
 	$db = new \Jehon\Maintenance\Database(
 		"mysql:dbname={$myconfig['database']['schema']};host={$myconfig['database']['host']}",
 		$myconfig['database']['username'],
@@ -46,5 +45,4 @@ try {
 	http_response_code(200);
 } catch (Exception $e) {
 	echo "Upgrade failed: " . $e->getMessage();
-	http_response_code(500);
 }
