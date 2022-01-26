@@ -107,7 +107,7 @@ $detected = [];
                 $support = "!! not supported version ($bv) !!";
             }
         } else {
-            $support = "unknown $bn ($bv)";
+            $support = "support unknown: $bn ($bv)";
         }
         echo "<td>$support</td>";
 
@@ -118,7 +118,9 @@ $detected = [];
             $screenWidth[$sw] = $b;
         }
 
-        if ($screenWidth[$sw]['last_login'] < $b[$sw]['last_login']) {
+        if (array_key_exists($sw, $screenWidth) 
+                && array_key_exists($sw, $b) 
+                && $screenWidth[$sw]['last_login'] < $b[$sw]['last_login']) {
             $screenWidth[$sw] = $b;
         }
 
