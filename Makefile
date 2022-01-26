@@ -113,6 +113,9 @@ dump-dockers:
 	@echo "[mysql] mysql version"
 	@cr-docker-compose exec -T "mysql" mysql --version
 
+	@echo "[cypress] version"
+	@cr-docker-compose run --rm "cypress" version --component package
+
 clear:
 	@if [ -z "$$NO_CLEAR" ]; then clear; fi
 	@echo "**"
