@@ -249,6 +249,7 @@ x-button#export {
     empty() {
         this._messages.clear();
         this._result.block('No data');
+        this._result.clear();
     }
 
     reset() {
@@ -582,7 +583,7 @@ reports[REPORT_STATISTICAL] = { // test data:
     <tr><td>All social level together</td><td>${data.summary.sociallevel.total}</td></tr>
 
     <tr><td colspan="2" class="subheader">Where</td></tr>
-    ${listings.Centers.map(v => `<tr><td>@<x-i18n value='${v}'></x-i18n></td><td>${data.summary.centers[v] ?? 0}</td></tr>`).join('\n')}
+    ${listings.Centers.map(v => `<tr><td>@<x-i18n value="${v}"></x-i18n></td><td>${data.summary.centers[v] ?? 0}</td></tr>`).join('\n')}
     <tr><td>center unspecified</td><td>${data.summary.centers.unspecified}</td></tr>
 
     <tr><td colspan="2" class="subheader">Surgical activity</td></tr>
@@ -695,7 +696,7 @@ reports[REPORT_STATISTICAL] = { // test data:
         //         l('All social level together', (_row) => dataList.summary.sociallevel.total),
 
         //         t('Where'),
-        //         // ...listings.Centers.map(v => `<tr><td>@<x-i18n value='${v}'></x-i18n>', (row, ctx) =>   ctx.summary.centers[v] ?? 0),
+        //         // ...listings.Centers.map(v => `<tr><td>@<x-i18n value="${v}"></x-i18n>', (row, ctx) =>   ctx.summary.centers[v] ?? 0),
         //         l('center unspecified', (_row) => dataList.summary.centers.unspecified),
 
         //         t('Surgical activity'),

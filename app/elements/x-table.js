@@ -115,6 +115,10 @@ export default class XTable extends HTMLElement {
         this.block();
     }
 
+    clear() {
+        this._element.innerHTML = '';
+    }
+
     block(msg = 'No result found') {
         this._overlay.block();
         this._overlayMsg.innerHTML = msg;
