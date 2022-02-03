@@ -5,7 +5,7 @@ NPM_BIN=$(shell npm bin)
 
 # Default target
 .PHONY: dev
-dev: clear test lint ok
+dev: clear clean test lint ok
 
 .PHONY: full
 full: clear clean stop start-with-rebuild test lint ok
