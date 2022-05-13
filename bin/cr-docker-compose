@@ -24,7 +24,7 @@ shift
 ADD=()
 case "$CMD" in
 "run")
-    ADD+=("--rm" "--quiet-pull")
+    ADD+=("--rm" "--quiet-pull" "-T")
     ;;
 esac
 
