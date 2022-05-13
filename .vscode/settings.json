@@ -1,4 +1,7 @@
 {
+  "workbench.colorCustomizations": {
+    "titleBar.activeBackground": "#004f03",
+  },
   "shellcheck.customArgs": [
     "-x"
   ],
