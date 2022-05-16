@@ -29,7 +29,6 @@
     "@commitlint/cli": "16.3.0",
     "@commitlint/config-conventional": "16.2.4",
     "axios-mock-adapter": "1.20.0",
-    "babel-eslint": "10.1.0",
     "babel-loader": "8.2.5",
     "babel-plugin-transform-commonjs": "1.1.6",
     "bluebird": "3.7.2",
