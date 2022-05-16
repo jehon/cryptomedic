@@ -49,7 +49,7 @@
     "glob": "8.0.3",
     "html-webpack-plugin": "5.5.0",
     "htmlhint": "1.1.4",
-    "husky": "7.0.4",
+    "husky": "8.0.1",
     "imports-loader": "3.1.1",
     "jasmine": "4.1.0",
     "jasmine-webcomponents": "github:jehon/jasmine-webcomponents",
