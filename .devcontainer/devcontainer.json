@@ -19,10 +19,16 @@
 	"settings": {},
 	// Add the IDs of extensions you want installed when the container is created.
 	"extensions": [
+		"dbaeumer.vscode-eslint",
+		"EditorConfig.EditorConfig",
+		"ecmel.vscode-html-css",
+		"mkaufman.HTMLHint",
+		"nobuhito.printcode",
+		"gruntfuggly.todo-tree",
+		"meganrogge.template-string-converter",
 		"tyriar.luna-paint",
-		"mkaufman.htmlhint",
-		"ms-azuretools.vscode-docker",
-		"adpyke.vscode-sql-formatter"
+		"adpyke.vscode-sql-formatter",
+		"timonwong.shellcheck"
 	],
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	"forwardPorts": [
