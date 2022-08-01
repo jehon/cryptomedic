@@ -19,7 +19,7 @@ jobs:
       with:
         node-version: current
     - uses: actions/checkout@v3
-    - run: make computer-setup
+    - run: bin/cr-deploy-update-key
     - run: make dump
     - run: make start
     - run: make dump-dockers

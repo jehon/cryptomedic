@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+set -o errexit
+
+# shellcheck source=./cr-lib
+. "$(dirname "${BASH_SOURCE[0]}")"/cr-lib
+
+REMOTE="$(shell ssh-keyscan -t ssh-rsa $CR_DEPLOY_HOST 2>/dev/null )"
+STORED="$(shell cat conf/ovh.key)"
+if [ "$REMOTE" = "$STORED" ]; then
+    echo "Key is still the same, good!"
+    exit 0
+fi
+
+echo "Key is updated on remote host"
+ssh-keyscan -t ssh-rsa "$CR_DEPLOY_HOST" > conf/ovh.key    

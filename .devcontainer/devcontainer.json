@@ -1,13 +1,14 @@
 {
 	"name": "Existing Docker Compose (Extend)",
-	"dockerComposeFile": [
-		"../docker-compose.yml",
-		"docker-compose.yml"
+	"build": {
+		"dockerfile": "../Dockerfile"
+	},
+	"runArgs": [
+		"--init",
+		"--privileged"
 	],
-	"service": "dev",
-	"workspaceFolder": "/workspace",
+	"overrideCommand": false,
 	"settings": {},
-	// Add the IDs of extensions you want installed when the container is created.
 	"extensions": [
 		"dbaeumer.vscode-eslint",
 		"EditorConfig.EditorConfig",
@@ -18,17 +19,10 @@
 		"meganrogge.template-string-converter",
 		"tyriar.luna-paint",
 		"adpyke.vscode-sql-formatter",
-		"timonwong.shellcheck"
+		"timonwong.shellcheck",
+		"ms-azuretools.vscode-docker"
 	],
-	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	"forwardPorts": [
 		5080
-	],
-	// Uncomment the next line if you want start specific services in your Docker Compose config.
-	//	"runServices": [
-	//		"server",
-	//		"mysql",
-	//		"phpmyadmin",
-	//		"mail"
-	//	]
+	]
 }

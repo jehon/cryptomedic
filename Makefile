@@ -10,28 +10,13 @@ dev: clear clean test lint ok
 .PHONY: full
 full: clear clean stop start-with-rebuild test lint ok
 
-.PHONY: pull-request
-pull-request: pull-request-pre update-dependencies-api-bare update-dependencies-api test ok
-	@echo "Git Branch: $(GIT_BRANCH)"
-	git branch
-	date
-	git checkout main
-	git pull
-	git merge "$(GIT_BRANCH)"
-	git push
-	git branch -D "$(GIT_BRANCH)"
-	@echo "Pull request merged"
-
-.PHONY: pull-request-pre
-pull-request-pre:
-	make clean
-	git merge main
-        @echo "Git Branch: $(GIT_BRANCH)"
-
 .PHONY: ok
 ok:
 	@echo "ok"
 	date
+
+.PHONY: pull-request
+pull-request: update-dependencies-api-bare update-dependencies-api test
 
 #
 # Debug options:
@@ -150,26 +135,7 @@ clean-ports:
 computer-setup:
 # TODO -> deploy from dev
 # Test the remote key
-	@REMOTE="$(shell ssh-keyscan -t ssh-rsa $(DEPLOY_HOST) 2>/dev/null )"; \
-	STORED="$(shell cat conf/ovh.key)"; \
-	if [ "$$REMOTE" != "$$STORED" ]; then \
-		echo "Key is updated on remote host"; \
-		exit 1; \
-	else  \
-		echo "Key is still the same, good!"; \
-	fi
-
-	mkdir -p ~/.ssh/
-	@if grep $(DEPLOY_HOST) $(SSH_KNOWN_HOSTS) >/dev/null; then \
-		echo "Removing old key"; \
-		sed -i "/$(DEPLOY_HOST).*/d" $(SSH_KNOWN_HOSTS) ; \
-	fi
-	@echo "Installing the key"
-	cat conf/ovh.key >> $(SSH_KNOWN_HOSTS)
-
-update-config-host-key:
-# TODO -> deploy from dev
-	ssh-keyscan -t ssh-rsa $(DEPLOY_HOST) > conf/ovh.key
+	bin/cr-deploy-update-key
 
 .PHONY: start-with-rebuild
 docker-rebuild:
