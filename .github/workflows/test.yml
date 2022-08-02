@@ -33,16 +33,33 @@ jobs:
     - name: make dump
       run: docker exec devcontainer make dump
 
-    - run: make dump
-    - run: make start
-    - run: make dump-dockers
-    - run: make dependencies
-    - run: make build
-    - run: make test-api
-    - run: make test-unit
-    - run: make test-e2e-desktop
-    - run: make test-e2e-mobile
-    - run: make test-styles
+    - name: make start
+      run: docker exec devcontainer make start
+
+    - name: make dump-dockers
+      run: docker exec devcontainer make dump-dockers
+
+    - name: make dependencies
+      run: docker exec devcontainer make dependencies
+
+    - name: make build
+      run: docker exec devcontainer make build
+
+    - name: make test-api
+      run: docker exec devcontainer make test-api
+
+    - name: make test-unit
+      run: docker exec devcontainer make test-unit
+
+    - name: make test-e2e-desktop
+      run: docker exec devcontainer make test-e2e-desktop
+
+    - name: make test-e2e-mobile
+      run: docker exec devcontainer make test-e2e-mobile
+
+    - name: make test-styles
+      run: docker exec devcontainer make test-styles
+
     - name: 'Artifacts test-styles'
       if: always()
       uses: actions/upload-artifact@v3
@@ -50,8 +67,12 @@ jobs:
         name: styles
         path: tmp/styles/
         retention-days: 1
-    - run: make lint
-    - run: make deploy
+
+    - name: make lint
+      run: docker exec devcontainer make lint
+
+    - name: make deploy
+      run: docker exec devcontainer make deploy
       if: ${{ github.ref_name == 'main' && github.ref_type == 'branch' }}
       env:
         CRYPTOMEDIC_DB_UPGRADE: ${{ secrets.CRYPTOMEDIC_DB_UPGRADE }}
