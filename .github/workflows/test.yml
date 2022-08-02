@@ -53,3 +53,6 @@ jobs:
         CRYPTOMEDIC_DB_UPGRADE: ${{ secrets.CRYPTOMEDIC_DB_UPGRADE }}
         CRYPTOMEDIC_UPLOAD_PASSWORD: ${{ secrets.CRYPTOMEDIC_UPLOAD_PASSWORD }}
         CRYPTOMEDIC_UPLOAD_USER: ${{ secrets.CRYPTOMEDIC_UPLOAD_USER }}
+
+    - name: stop docker
+      run: docker kill devcontainer
