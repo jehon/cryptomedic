@@ -19,7 +19,16 @@ jobs:
       with:
         node-version: current
     - uses: actions/checkout@v3
-    - run: bin/cr-deploy-update-key
+
+    - name: Build docker images
+      run: docker build -t local .
+
+    - name: start docker
+      run: docker run --name devcontainer --detach --privileged --volume $PWD:/workspace --workdir /workspace local sleep infinity
+
+    - name: make dump
+      run: docker exec devcontainer make dump
+
     - run: make dump
     - run: make start
     - run: make dump-dockers

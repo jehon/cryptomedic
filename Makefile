@@ -131,12 +131,6 @@ clean-ports:
 	pkill chromedriver || true
 	jh-kill-by-port.sh 9515 || true
 
-.PHONY: computer-setup
-computer-setup:
-# TODO -> deploy from dev
-# Test the remote key
-	bin/cr-deploy-update-key
-
 .PHONY: start-with-rebuild
 docker-rebuild:
 	docker compose down
