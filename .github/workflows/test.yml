@@ -7,6 +7,10 @@ on:
     branches: [ main ]
   workflow_dispatch:
 
+concurrency: 
+  group: release
+  # cancel-in-progress: true
+
 jobs:
   ga-test:
     runs-on: ubuntu-latest
