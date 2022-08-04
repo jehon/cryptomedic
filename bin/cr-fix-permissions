@@ -9,9 +9,7 @@ set -o pipefail
 FOLDER="${1:-.}"
 if [ -r "$FOLDER" ]; then
     USERUID="$(id -u)"
-    header "Fixing permission through 'dev' to $USERUID on $FOLDER"
-    cr-docker-compose run \
-        "dev" \
-        find "$FOLDER" \( -not -user "${USERUID}" \) -exec chown "${USERUID}" '{}' ';'
+    header "Fixing permission to $USERUID on $FOLDER"
+    find "$FOLDER" \( -not -user "${USERUID}" \) -exec chown "${USERUID}" '{}' ';'
     header_end
 fi

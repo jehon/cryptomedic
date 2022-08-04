@@ -9,9 +9,7 @@ set -o pipefail
 cr-ensure-started
 
 header_begin "cr-data-reset: reset folder structure..."
-cr-docker-compose run \
-    "dev" \
-    rsync -a --delete live-for-test/ live/
+rsync -a --delete live-for-test/ live/
 
 cr-fix-permissions "live/"
 chmod -R a+rwX live/storage/uploadedPictures

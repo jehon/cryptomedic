@@ -86,9 +86,6 @@ dump-dockers:
 	@echo "[php] Php version"
 	@cr-docker-compose run "php" php -v
 	
-	@echo "[dev] Node version"
-	@cr-docker-compose run "dev" node -v
-
 	@echo "[server] Php version"
 	@cr-docker-compose exec -T "server" php -v
 
@@ -110,7 +107,6 @@ clear:
 	@echo "**"
 
 clean: deploy-unmount chmod
-# TODO: in dev ?
 	if [ -r $(DEPLOY_MOUNT_TEST_FILE) ]; then echo "Remote mounted - stopping"; exit 1; fi
 	find . -type d \( -name "vendor" -or -name "node_modules" \) -prune -exec "rm" "-fr" "{}" ";" || true
 	find . -name "tmp" -prune -exec "rm" "-fr" "{}" ";" || true
@@ -165,17 +161,14 @@ lint: lint-es lint-css lint-html
 
 .PHONY: lint-es
 lint-es: tmp/.dependencies-node
-# TODO -> from dev
 	$(NPM_BIN)/eslint
 
 .PHONY: lint-css
 lint-css: tmp/.dependencies-node
-# TODO -> from dev
 	$(NPM_BIN)/stylelint app/**/*.css
 
 .PHONY: lint-html
 lint-html: tmp/.dependencies-node
-# TODO -> from dev
 	$(NPM_BIN)/htmlhint app/**/*.html tests/**/*.html www/api/*/public/**/*.html --format=compact
 
 .PHONY: test # In Jenkinfile, each step is separated:
@@ -190,7 +183,7 @@ test-api: tmp/.dependencies-api
 .PHONY: update-references-api
 update-references-api: tmp/.dependencies-api
 	cr-capture-output cr-data-reset
-	cr-phpunit COMMIT
+	COMMIT=1 cr-phpunit
 
 test-api-bare: tmp/.dependencies-api
 	cr-ensure-started
@@ -249,8 +242,6 @@ cypress-open: chmod
 .PHONY: test-styles
 test-styles: tmp/styles/styles-problems-list.js
 tmp/styles/styles-problems-list.js: tests/styles/* tests/styles/references/* tmp/.tested-e2e-desktop tmp/.tested-e2e-mobile
-# TODO -> from dev
-
 	@rm -fr "$(dir $@)"
 	@mkdir -p "$(dir $@)"
 	@mkdir -p "$(dir $@)/run/mobile"
@@ -274,12 +265,10 @@ update-references-style:
 #
 .PHONY: deploy
 deploy:
-# TODO -> from dev + rewrite
 	bin/cr-deploy-patch commit
 
 .PHONY: deploy-test
 deploy-test:
-# TODO -> from dev + rewrite
 	bin/cr-deploy-patch
 
 #
@@ -303,12 +292,15 @@ tmp/.dependencies: tmp/.dependencies-node tmp/.dependencies-api tmp/.dependencie
 .PHONY: dependencies-node
 dependencies-node: tmp/.dependencies-node
 tmp/.dependencies-node: package.json package-lock.json
-# TODO -> from dev
 	npm install
 	touch package-lock.json
 
 	@mkdir -p "$(dir $@)"
 	@touch "$@"
+
+# %/composer.lock: %/composer.json
+# 	cd $(dir $@) && cr-capture-output /composer.phar install
+# 	touch "$@"
 
 .PHONY: dependencies-api
 dependencies-api: tmp/.dependencies-api
@@ -317,7 +309,7 @@ tmp/.dependencies-api: tmp/.dependencies-api-bare \
 		www/api/$(VAPI)/composer.lock
 
 	cr-ensure-folder-empty www/api/v1.3/bootstrap/cache
-	cr-dependencies-php "www/api/$(VAPI)"
+	cd "www/api/$(VAPI)" && /composer.phar update
 
 	@mkdir -p "$(dir $@)"
 	@touch "$@"
@@ -328,7 +320,7 @@ tmp/.dependencies-api-bare: \
 		www/api/$(VAPI)/public/composer.json \
 		www/api/$(VAPI)/public/composer.lock
 
-	cr-dependencies-php "www/api/$(VAPI)/public"
+	cd "www/api/$(VAPI)/public" && /composer.phar update
 
 	@mkdir -p "$(dir $@)"
 	@touch "$@"
@@ -336,11 +328,11 @@ tmp/.dependencies-api-bare: \
 .PHONY: update-dependencies-api
 update-dependencies-api: tmp/.dependencies-api-bare
 	mkdir -m 777 -p www/api/v1.3/bootstrap/cache
-	cr-dependencies-php "www/api/$(VAPI)" "update"
+	cd "www/api/$(VAPI)" && /composer.phar update
 
 .PHONY: update-dependencies-api-bare
 update-dependencies-api-bare:
-	cr-dependencies-php "www/api/$(VAPI)/public" "update"
+	cd "www/api/$(VAPI)/public" && /composer.phar update
 
 #
 #
@@ -349,7 +341,6 @@ update-dependencies-api-bare:
 #
 
 package-lock.json: package.json
-# TODO -> from dev
 	npm install
 
 .PHONY: build
@@ -367,7 +358,6 @@ www/build/index.html: tmp/.dependencies-node webpack.config.js  \
 		$(CJS2ESM_DIR)/axios-mock-adapter.js \
 		$(CJS2ESM_DIR)/platform.js
 
-# TODO -> from dev
 	$(NM_BIN)webpack
 
 www/build/browsers.json: .browserslistrc tmp/.dependencies-node
@@ -378,18 +368,15 @@ update-references-browsers:
 
 # Dependencies are used in the build !
 $(CJS2ESM_DIR)/axios.js: node_modules/axios/dist/axios.js
-# TODO -> from dev
 	$(NM_BIN)babel --out-file="$@" --plugins=transform-commonjs --source-maps inline $?
 
 # Dependencies are used in the build !
 $(CJS2ESM_DIR)/axios-mock-adapter.js: node_modules/axios-mock-adapter/dist/axios-mock-adapter.js
-# TODO -> from dev
 	$(NM_BIN)babel --out-file="$@" --plugins=transform-commonjs --source-maps inline $?
 	sed -i 's/from "axios";/from ".\/axios.js";/' $@
 
 # Dependencies are used in the build !
 $(CJS2ESM_DIR)/platform.js: node_modules/platform/platform.js
-# TODO -> from dev
 	$(NM_BIN)babel --out-file="$@" --plugins=transform-commonjs --source-maps inline $?
 
 #

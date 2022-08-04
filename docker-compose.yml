@@ -3,7 +3,7 @@ version: "3.9"
 # Also update .ovhconfig
 x-common-env:
   &common-env
-  PHP_VERSION: &PHP_VERSION "8.0" # OVH is in 8.1
+  PHP_VERSION: &PHP_VERSION "8.1" # OVH is in 8.1
   MYSQL_IMAGE: &MYSQL_IMAGE mysql:5.6
   MYSQL_HOST: &MYSQL_HOST mysql
 
@@ -69,21 +69,6 @@ services:
       - .:/app
     ports:
       - ${CRYPTOMEDIC_PORT:-0}:80 # Only if the variable is not set in the environment
-
-  php:
-    profiles: [ "manual" ]
-    # See https://hub.docker.com/_/php
-    build:
-      context: conf/php
-      dockerfile: Dockerfile
-      args:
-        PHP_VERSION: *PHP_VERSION
-    environment:
-      IN_DOCKER: dev
-      <<: *common-env
-    working_dir: /app
-    volumes:
-      - .:/app
 
   cypress:
     profiles: [ "manual" ]

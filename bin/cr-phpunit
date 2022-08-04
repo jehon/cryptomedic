@@ -1,24 +1,17 @@
 #!/usr/bin/env bash
 
+#
+# Env variables
+#   COMMIT=1
+#
+
 set -o errexit
 set -o pipefail
 
 # shellcheck source=./cr-lib
 . "$(dirname "${BASH_SOURCE[0]}")"/cr-lib
 
-cr-ensure-started
-
-# Test install of php-xdebug
-# php -i | grep xdebug
-# apt update && apt install php-xdebug
-
 mkdir -m 777 -p tmp
-
-if [ "$1" == "COMMIT" ]; then
-	echo "Setting COMMIT"
-	export COMMIT=1
-	shift
-fi
 
 testOne() {
 	local T="$1" # type: laravel/bare
@@ -29,12 +22,12 @@ testOne() {
 	case "$T" in
 	"laravel")
 		FOLDER="$V"
-		REPORTS="tmp/php$(basename "$V")"
+		REPORTS="$CR_TMP/php$(basename "$V")"
 		;;
 
 	"bare")
 		FOLDER="$V/public"
-		REPORTS="tmp/php$(basename "$V")-bare"
+		REPORTS="$CR_TMP/php$(basename "$V")-bare"
 		;;
 	"*")
 		echo "Unsupported flavor: $T" >&2
@@ -48,11 +41,11 @@ testOne() {
 
 		header_begin "PHPUnit: $T $V starting"
 
-		cr-docker-compose run -T --workdir "/app/$FOLDER" -e XDEBUG_MODE=coverage -e COMMIT="$COMMIT" \
-			"php" \
-			./vendor/bin/phpunit --coverage-html "/app/$REPORTS" --coverage-xml "/app/$REPORTS" "$@"
+		export COMMIT
+		export XDEBUG_MODE="coverage"
 
-		cr-fix-permissions "$REPORTS"
+		( cd "$FOLDER" && ./vendor/bin/phpunit --coverage-html "$REPORTS" --coverage-xml "$REPORTS" "$@" )
+
 		header_end
 	else
 		echo "** $T $V: skipping because no phpunit.xml **" >&2
@@ -64,8 +57,6 @@ testOne() {
 # 2: version
 T="$1"
 V="$2"
-shift || true # If arg is missing, do not fail...
-shift || true # If arg is missing, do not fail...
 
 if [ -n "$T" ]; then
 	if [[ -z "$V" ]]; then
