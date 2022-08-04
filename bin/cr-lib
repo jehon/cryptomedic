@@ -12,6 +12,8 @@ export CR_API_VERSION="v1.3" # From Makefile and config.js
 export CR_DEPLOY_HOST
 export SSH_KNOWN_HOSTS="$HOME/.ssh/known_hosts"
 
+export DEBIAN_FRONTEND=noninteractive
+
 #
 # Initialize
 #
