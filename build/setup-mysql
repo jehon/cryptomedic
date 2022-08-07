@@ -20,12 +20,16 @@ export DEBIAN_FRONTEND=noninteractive
 # gpg --dearmor tmp/mysql.ascii
 # mv tmp/mysql.ascii.gpg conf/etc/apt/trusted.gpg.d/mysql.gpg
 
-# precise
-RELEASE="precise"
+NAME="$( lsb_release -si )"
+NAME="${NAME,,}"
+RELEASE="$( lsb_release -sc )"
+
+echo "NAME:    $NAME"
+echo "RELEASE: $RELEASE"
 
 cat <<-EOS > /etc/apt/sources.list.d/mysql.list
-    deb http://repo.mysql.com/apt/ubuntu/ $RELEASE mysql-apt-config
-    deb http://repo.mysql.com/apt/ubuntu/ $RELEASE mysql-5.6
+    deb http://repo.mysql.com/apt/$NAME/ $RELEASE mysql-apt-config
+    deb http://repo.mysql.com/apt/$NAME/ $RELEASE mysql-5.6
 EOS
 
 apt update --quiet --yes

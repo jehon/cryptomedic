@@ -18,7 +18,10 @@ export DEBIAN_FRONTEND=noninteractive
 #
 # Configure the repository
 #
-RELEASE="$(lsb_release -sc)"
+RELEASE="$( lsb_release -sc )"
+
+echo "RELEASE: $RELEASE"
+
 echo "deb https://packages.sury.org/php/ $RELEASE main" > /etc/apt/sources.list.d/php.list
 
 apt update --quiet --yes
