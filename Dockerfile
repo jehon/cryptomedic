@@ -13,10 +13,12 @@ RUN /usr/sbin/jh-install-google-chrome
 RUN /usr/sbin/jh-install-docker
 
 #
-# PHP
-#
-ADD bin/setup-php /setup/setup-php
-RUN chmod +x /setup/setup-php && /setup/setup-php "8.1"
+# Override configs
+# 
+COPY build/ /setup/cryptomedic/
+COPY build/etc/ /etc/
+COPY conf/startup/ /setup/startup
+RUN chmod +x /setup/cryptomedic/*
 
 #
 # Website
@@ -25,7 +27,7 @@ RUN a2enmod expires rewrite proxy proxy_http proxy_html proxy_connect proxy_wstu
 RUN rm -fr /etc/apache2/sites-enabled/*.conf
 
 #
-# Override configs
-# 
-COPY conf/etc/ /etc/
-COPY conf/startup/ /setup/startup
+# PHP
+#
+RUN /setup/cryptomedic/setup-php "8.1"
+

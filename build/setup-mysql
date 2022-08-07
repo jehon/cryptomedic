@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+set -o errexit
+
+# shellcheck source=/usr/bin/jh-lib
+. jh-lib
+
+VERSION="$1"
+if [ -z "$VERSION" ]; then
+    jh_fatal "Specify version as [1]"
+fi
+
+export DEBIAN_FRONTEND=noninteractive
+
+#
+# See https://stackoverflow.com/a/34806229/1954789
+#
+
+# curl -s -o tmp/mysql.ascii http://ronaldbradford.com/mysql/mysql.gpg
+# gpg --dearmor tmp/mysql.ascii
+# mv tmp/mysql.ascii.gpg conf/etc/apt/trusted.gpg.d/mysql.gpg
+
+# precise
+RELEASE="precise"
+
+cat <<-EOS > /etc/apt/sources.list.d/mysql.list
+    deb http://repo.mysql.com/apt/ubuntu/ $RELEASE mysql-apt-config
+    deb http://repo.mysql.com/apt/ubuntu/ $RELEASE mysql-5.6
+EOS
+
+apt update --quiet --yes
+apt install --quiet --yes "mysql-server-${VERSION}"
