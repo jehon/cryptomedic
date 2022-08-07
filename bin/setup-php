@@ -5,9 +5,9 @@ set -o errexit
 # shellcheck source=/usr/bin/jh-lib
 . jh-lib
 
-PHP_VERSION="$1"
-if [ -z "$PHP_VERSION" ]; then
-    jh_fatal "Specify php version as [1]"
+VERSION="$1"
+if [ -z "$VERSION" ]; then
+    jh_fatal "Specify version as [1]"
 fi
 
 export DEBIAN_FRONTEND=noninteractive
@@ -18,20 +18,20 @@ export DEBIAN_FRONTEND=noninteractive
 #
 # Configure the repository
 #
-wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
-echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" > /etc/apt/sources.list.d/php.list
+RELEASE="$(lsb_release -sc)"
+echo "deb https://packages.sury.org/php/ $RELEASE main" > /etc/apt/sources.list.d/php.list
 
 apt update --quiet --yes
 
 # Install php
 apt install --quiet --yes \
-    "php${PHP_VERSION}-common" \
-    "php${PHP_VERSION}-pdo-mysql" \
-    "php${PHP_VERSION}-cli" \
-    "php${PHP_VERSION}-curl" \
-    "php${PHP_VERSION}-xml" \
-    "php${PHP_VERSION}-xdebug" \
-    "libapache2-mod-php${PHP_VERSION}"
+    "php${VERSION}-common" \
+    "php${VERSION}-pdo-mysql" \
+    "php${VERSION}-cli" \
+    "php${VERSION}-curl" \
+    "php${VERSION}-xml" \
+    "php${VERSION}-xdebug" \
+    "libapache2-mod-php${VERSION}"
 
 # && { \
 # echo "xdebug.mode=debug"; \
