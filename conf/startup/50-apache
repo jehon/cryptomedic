@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+# shellcheck source=/usr/bin/jh-lib
+. jh-lib
+
+jh_background_process apachectl

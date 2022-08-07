@@ -33,9 +33,11 @@ jobs:
     - name: make dump
       run: docker exec devcontainer make dump
 
+    # TODO
     - name: make start
       run: docker exec devcontainer make start
 
+    # TODO
     - name: make dump-dockers
       run: docker exec devcontainer make dump-dockers
 
@@ -45,21 +47,26 @@ jobs:
     - name: make build
       run: docker exec devcontainer make build
 
+    # TODO
     - name: make test-api
       run: docker exec devcontainer make test-api
 
     - name: make test-unit
       run: docker exec devcontainer make test-unit
 
+    # TODO
     - name: make test-e2e-desktop
       run: docker exec devcontainer make test-e2e-desktop
 
+    # TODO
     - name: make test-e2e-mobile
       run: docker exec devcontainer make test-e2e-mobile
 
+    # TODO
     - name: make test-styles
       run: docker exec devcontainer make test-styles
 
+    # TODO
     - name: 'Artifacts test-styles'
       if: always()
       uses: actions/upload-artifact@v3
@@ -68,9 +75,11 @@ jobs:
         path: tmp/styles/
         retention-days: 1
 
+    # TODO
     - name: make lint
       run: docker exec devcontainer make lint
 
+    # TODO
     - name: make deploy
       run: docker exec devcontainer make deploy
       if: ${{ github.ref_name == 'main' && github.ref_type == 'branch' }}

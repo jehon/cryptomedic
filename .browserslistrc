@@ -1,6 +1,9 @@
+
+# https://github.com/browserslist/browserslist#readme
+
 # Default: > 0.5%, last 2 versions, Firefox ESR, not dead => less browser supported!
 
-since 2020 and last 2 years
+last 2 years
 not dead
-not edge > 0
+not edge > 1
 last 2 Electron versions

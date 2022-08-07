@@ -7,7 +7,7 @@ set -o errexit
 
 PHP_VERSION="$1"
 if [ -z "$PHP_VERSION" ]; then
-    jh-fatal "Specify php version as [1]"
+    jh_fatal "Specify php version as [1]"
 fi
 
 export DEBIAN_FRONTEND=noninteractive
@@ -25,11 +25,13 @@ apt update --quiet --yes
 
 # Install php
 apt install --quiet --yes \
+    "php${PHP_VERSION}-common" \
     "php${PHP_VERSION}-pdo-mysql" \
     "php${PHP_VERSION}-cli" \
     "php${PHP_VERSION}-curl" \
     "php${PHP_VERSION}-xml" \
-    "php${PHP_VERSION}-xdebug"
+    "php${PHP_VERSION}-xdebug" \
+    "libapache2-mod-php${PHP_VERSION}"
 
 # && { \
 # echo "xdebug.mode=debug"; \

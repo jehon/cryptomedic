@@ -58,18 +58,6 @@ services:
       - 1025
       - 8025
 
-  dev:
-    build:
-      context: conf/dev
-      dockerfile: Dockerfile
-    environment:
-      IN_DOCKER: dev
-      <<: *common-env
-    volumes:
-      - .:/app
-    ports:
-      - ${CRYPTOMEDIC_PORT:-0}:80 # Only if the variable is not set in the environment
-
   cypress:
     profiles: [ "manual" ]
     # Adaptations:

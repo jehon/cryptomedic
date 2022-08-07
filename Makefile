@@ -80,12 +80,9 @@ dump:
 	@echo "Who am i:         $(shell whoami)"
 	@echo "Id:               $(shell id)"
 	@echo "Supported:        $(shell npx -y browserslist)"
-	docker compose config
+# docker compose config
 
 dump-dockers:
-	@echo "[php] Php version"
-	@cr-docker-compose run "php" php -v
-	
 	@echo "[server] Php version"
 	@cr-docker-compose exec -T "server" php -v
 
@@ -125,14 +122,16 @@ clean: deploy-unmount chmod
 .PHONY: clean-ports
 clean-ports:
 	pkill chromedriver || true
-	jh-kill-by-port.sh 9515 || true
+	jh-kill-by-port 9515 || true
 
+# TODO
 .PHONY: start-with-rebuild
 docker-rebuild:
 	docker compose down
 	docker system prune -f
 	docker compose build --pull --no-cache
 
+# TODO
 .PHONY: start
 start:
 	cr-ensure-started
@@ -141,11 +140,13 @@ start:
 	@echo "Open browser: http://localhost:$(CRYPTOMEDIC_PORT)/"
 	@echo "Test page: http://localhost:$(CRYPTOMEDIC_PORT)/xappx/"
 
+# TODO
 .PHONY: stop
 stop: deploy-unmount chmod
 	docker compose down || true
 	cr-kill-others $(CRYPTOMEDIC_PORT)
 
+# TODO
 .PHONY: chmod
 chmod:
 	cr-fix-permissions
@@ -156,35 +157,43 @@ chmod:
 #
 #
 
+# TODO
 .PHONY: lint
 lint: lint-es lint-css lint-html
 
+# TODO
 .PHONY: lint-es
 lint-es: tmp/.dependencies-node
 	$(NPM_BIN)/eslint
 
+# TODO
 .PHONY: lint-css
 lint-css: tmp/.dependencies-node
 	$(NPM_BIN)/stylelint app/**/*.css
 
+# TODO
 .PHONY: lint-html
 lint-html: tmp/.dependencies-node
 	$(NPM_BIN)/htmlhint app/**/*.html tests/**/*.html www/api/*/public/**/*.html --format=compact
 
+# TODO
 .PHONY: test # In Jenkinfile, each step is separated:
 test: tmp/.dependencies tmp/.build test-api test-api-bare test-unit test-e2e test-styles
 
+# TODO
 .PHONY: test-api
 test-api: tmp/.dependencies-api
 	cr-ensure-started
 	cr-capture-output cr-data-reset
 	cr-phpunit laravel
 
+# TODO
 .PHONY: update-references-api
 update-references-api: tmp/.dependencies-api
 	cr-capture-output cr-data-reset
 	COMMIT=1 cr-phpunit
 
+# TODO
 test-api-bare: tmp/.dependencies-api
 	cr-ensure-started
 	cr-capture-output cr-data-reset
@@ -197,14 +206,17 @@ test-unit: tmp/.dependencies-node \
 		$(CJS2ESM_DIR)/platform.js
 
 # TODO: reenable coverage
-	NOCOV=1 npm run test-unit-continuously-withcov -- --single-run
+# TODO(user): run as user
+	mkdir -p tmp/js && chown user tmp/js && su user bash -c "NOCOV=1 npm run test-unit-continuously-withcov -- --single-run"
 # node tests/report.js
 
+# TODO
 .PHONY: test-e2e
 test-e2e: test-e2e-desktop test-e2e-mobile
 # 	cr-fix-permissions tmp/e2e
 # 	@rm -fr tmp/e2e
 
+# TODO
 .PHONY: test-e2e-desktop
 test-e2e-desktop: tmp/.tested-e2e-desktop
 tmp/.tested-e2e-desktop: tmp/.build $(shell find cypress/ -name "*.js") tmp/.dependencies
@@ -215,6 +227,7 @@ tmp/.tested-e2e-desktop: tmp/.build $(shell find cypress/ -name "*.js") tmp/.dep
 	@touch "$@"
 	cr-fix-permissions tmp/e2e
 
+# TODO
 .PHONY: test-e2e-mobile
 test-e2e-mobile: tmp/.tested-e2e-mobile
 tmp/.tested-e2e-mobile: tmp/.build $(shell find cypress/ -name "*.js") tmp/.dependencies
@@ -225,6 +238,7 @@ tmp/.tested-e2e-mobile: tmp/.build $(shell find cypress/ -name "*.js") tmp/.depe
 	@touch "$@"
 	cr-fix-permissions tmp/e2e
 
+# TODO
 cypress-open: chmod
 	$(shell npm bin)/cypress open
 
@@ -239,6 +253,7 @@ cypress-open: chmod
 # 	cypress \
 # 	open
 
+# TODO
 .PHONY: test-styles
 test-styles: tmp/styles/styles-problems-list.js
 tmp/styles/styles-problems-list.js: tests/styles/* tests/styles/references/* tmp/.tested-e2e-desktop tmp/.tested-e2e-mobile
@@ -256,6 +271,7 @@ tmp/styles/styles-problems-list.js: tests/styles/* tests/styles/references/* tmp
 	@echo "Report is at http://localhost:$(CRYPTOMEDIC_PORT)/xappx/tmp/style.html"
 	du -ksh "$(dir $@)"
 
+# TODO
 .PHONY: update-references-style
 update-references-style:
 	npm run --silent test-styles -- --update
@@ -263,10 +279,13 @@ update-references-style:
 #
 # Deploy command
 #
+
+# TODO
 .PHONY: deploy
 deploy:
 	bin/cr-deploy-patch commit
 
+# TODO
 .PHONY: deploy-test
 deploy-test:
 	bin/cr-deploy-patch
@@ -274,6 +293,8 @@ deploy-test:
 #
 # Other commands
 #
+
+# TODO
 .PHONY: logs
 logs:
 	docker compose logs -f --tail=10 | sed 's/\\n/\n/g'
@@ -283,6 +304,8 @@ logs:
 # Install > dependencies
 #
 #
+
+# TODO
 .PHONY: dependencies
 dependencies: tmp/.dependencies
 tmp/.dependencies: tmp/.dependencies-node tmp/.dependencies-api tmp/.dependencies-api-bare
@@ -363,8 +386,9 @@ www/build/index.html: tmp/.dependencies-node webpack.config.js  \
 www/build/browsers.json: .browserslistrc tmp/.dependencies-node
 	npx -y browserslist --json > "$@"
 
+# TODO
 update-references-browsers:
-	npx -y browserslist --update
+	npx -y browserslist --update-db
 
 # Dependencies are used in the build !
 $(CJS2ESM_DIR)/axios.js: node_modules/axios/dist/axios.js
@@ -384,6 +408,7 @@ $(CJS2ESM_DIR)/platform.js: node_modules/platform/platform.js
 # data
 #
 #
+# TODO
 .PHONY: data-reset
 data-reset: tmp/.dependencies-api-bare chmod
 	cr-data-reset
@@ -406,6 +431,7 @@ data-reset: tmp/.dependencies-api-bare chmod
 # .PHONY: deploy-rsync-test
 # deploy-rsync-test: | deploy-mount deploy-rsync-noact deploy-unmount
 
+# TODO
 .PHONY: deploy-mount
 deploy-mount:
 	@if [ -z "$$CRYPTOMEDIC_UPLOAD_USER" ]; then \
@@ -431,6 +457,7 @@ deploy-mount:
 				$(CRYPTOMEDIC_UPLOAD_USER)@$(DEPLOY_HOST):/home/$(CRYPTOMEDIC_UPLOAD_USER) $(DEPLOY_MOUNT) & \
 	fi \
 
+# TODO
 .PHONY: deploy-unmount
 deploy-unmount:
 	if [ -r $(DEPLOY_MOUNT_TEST_FILE) ]; then \
