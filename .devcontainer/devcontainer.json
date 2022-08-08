@@ -23,6 +23,6 @@
 		"ms-azuretools.vscode-docker"
 	],
 	"forwardPorts": [
-		5080
+		80
 	]
 }

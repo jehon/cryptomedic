@@ -27,7 +27,7 @@ pull-request: update-dependencies-api-bare update-dependencies-api test
 #
 # Parameters
 #
-export CRYPTOMEDIC_PORT ?= 5080
+export CRYPTOMEDIC_PORT ?= 80
 export VAPI := v1.3
 
 BACKUP_DIR ?= tmp/backup-online
