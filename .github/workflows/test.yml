@@ -37,10 +37,6 @@ jobs:
     - name: make start
       run: docker exec devcontainer make start
 
-    # TODO
-    - name: make dump-dockers
-      run: docker exec devcontainer make dump-dockers
-
     - name: make dependencies
       run: docker exec devcontainer make dependencies
 

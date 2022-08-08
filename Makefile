@@ -68,11 +68,14 @@ endef
 
 dump:
 	@echo "CRYPTOMEDIC_PORT: $(CRYPTOMEDIC_PORT)"
-	@echo "Chrome:           $(shell google-chrome --version)"
+	@echo "MySQL:            $(shell mysql --version)"
+	@echo "MySQL Server:     $(shell mysql --user=root --password=root --database=mysql -e "SELECT VERSION();")"
+	@echo "PHP:              $(shell php --version)"
 	@echo "NodeJS:           $(shell node --version)"
+	@echo "Cypress:          $(shell $(NM_BIN)/cypress --version --component package)"
+	@echo "Chrome:           $(shell google-chrome --version)"
 	@echo "Bash:             $(shell bash --version)"
 	@echo "Docker:           $(shell docker --version)"
-	@echo "Docker compose:   $(shell docker compose version)"
 	@echo "DISPLAY:          $(DISPLAY)"
 	@echo "IN_DOCKER:        $(IN_DOCKER)"
 	@echo "SHELL:            $(SHELL)"
@@ -81,19 +84,6 @@ dump:
 	@echo "Id:               $(shell id)"
 	@echo "Supported:        $(shell npx -y browserslist)"
 # docker compose config
-
-dump-dockers:
-	@echo "[server] Php version"
-	@cr-docker-compose exec -T "server" php -v
-
-	@echo "[mysql] mysqld version"
-	@cr-docker-compose exec -T "mysql" mysql --user=root --password=root --database=mysql -e "SELECT VERSION();"
-
-	@echo "[mysql] mysql version"
-	@cr-docker-compose exec -T "mysql" mysql --version
-
-	@echo "[cypress] version"
-	@cr-docker-compose run "cypress" version --component package
 
 clear:
 	@if [ -z "$$NO_CLEAR" ]; then clear; fi
@@ -220,17 +210,6 @@ tmp/.tested-e2e-mobile: tmp/.built $(shell find cypress/ -name "*.js") tmp/.depe
 # TODO
 cypress-open:
 	$(shell npm bin)/cypress open
-
-#
-# Display does not work through WSL
-#
-# echo "DISPLAY: $(DISPLAY)"
-# $(cypress) open -e DISPLAY
-
-# cr-docker-compose run -e CYPRESS_BASE_URL="http://server:80" \
-# 	-e DISPLAY=$(DISPLAY) -v /tmp/.X11-unix:/tmp/.X11-unix \
-# 	cypress \
-# 	open
 
 # TODO
 .PHONY: test-styles

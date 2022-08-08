@@ -24,9 +24,8 @@ shift
 
 header_begin "Testing cypress for $FLAVOR"
 OUTPUT="$CR_TMP"/e2e/"$FLAVOR"
-ODOCKER="$(absoluteToDockerRelative "$OUTPUT")"
 
-header_begin "Setup $OUTPUT (into $ODOCKER)"
+header_begin "Setup $OUTPUT"
 
 CYPRESS_ARGS=("--env" "flavor=$FLAVOR")
 case "$FLAVOR" in
@@ -54,9 +53,5 @@ cr-ensure-folder-empty "$OUTPUT"/coverage
 header_end
 
 header_begin "Cypress run tests (${CYPRESS_ARGS[*]}) ($*)"
-(
-    time cr-docker-compose run \
-        "cypress" \
-        run "${CYPRESS_ARGS[@]}" "$@"
-) | grep -v "Failed to connect to the bus"
+time "$(NM_BIN)"/cypress run "${CYPRESS_ARGS[@]}" "$@"
 header_end
