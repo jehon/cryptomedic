@@ -7,10 +7,7 @@ FROM jehon/devcontainer
 RUN DEBIAN_FRONTEND=noninteractive apt install --quiet --yes \
     rsync unzip lftp openssh-client sshpass sshfs gnupg \
     git unzip \
-    apache2 \
-    ssmtp
-RUN /usr/sbin/jh-install-google-chrome
-RUN /usr/sbin/jh-install-docker
+    apache2 ssmtp
 
 #
 # Override configs
@@ -19,18 +16,9 @@ COPY build/ /setup/cryptomedic/
 COPY build/root/ /
 RUN chmod +x /setup/cryptomedic/*
 
-#
-# Website
-#
-RUN a2enmod expires rewrite proxy proxy_http proxy_html proxy_connect proxy_wstunnel
-RUN rm -fr /etc/apache2/sites-enabled/default.conf
+RUN /usr/sbin/jh-install-google-chrome
+RUN /usr/sbin/jh-install-docker
 
-#
-# PHP
-#
-RUN /setup/cryptomedic/setup-php "8.1"
-
-#
-# Mysql
-# 
+# RUN /setup/cryptomedic/setup-apache
 RUN /setup/cryptomedic/setup-mysql "5.6"
+RUN /setup/cryptomedic/setup-php "8.1"
