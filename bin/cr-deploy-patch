@@ -10,8 +10,6 @@ set -o pipefail
 # To protect a version, please see md5sum.php (at the bottom)
 #
 
-cr-ensure-started
-
 LOG="$CR_TMP/sftp.log"
 REMOTE_LISTING="$CR_TMP"/deploy-remote.txt
 truncate --size=0 "$LOG"

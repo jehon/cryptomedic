@@ -46,10 +46,7 @@ case "$FLAVOR" in
     ;;
 esac
 
-cr-ensure-started
-cr-fix-permissions "$ODOCKER"
-
-cr-capture-output cr-data-reset
+jh-run-and-capture cr-data-reset
 mkdir -p "$OUTPUT"
 cr-ensure-folder-empty "$OUTPUT"/screenshots
 cr-ensure-folder-empty "$OUTPUT"/videos
@@ -62,7 +59,4 @@ header_begin "Cypress run tests (${CYPRESS_ARGS[*]}) ($*)"
         "cypress" \
         run "${CYPRESS_ARGS[@]}" "$@"
 ) | grep -v "Failed to connect to the bus"
-header_end
-header_begin "Fix permissions"
-cr-fix-permissions "$ODOCKER"
 header_end

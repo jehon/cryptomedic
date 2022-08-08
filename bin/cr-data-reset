@@ -6,12 +6,10 @@ set -o pipefail
 # shellcheck source=./cr-lib
 . "$(dirname "${BASH_SOURCE[0]}")"/cr-lib
 
-cr-ensure-started
-
 header_begin "cr-data-reset: reset folder structure..."
 rsync -a --delete live-for-test/ live/
 
-cr-fix-permissions "live/"
+chmod -R a+rX "live/"
 chmod -R a+rwX live/storage/uploadedPictures
 
 cr-ensure-folder-empty "www/api/${CR_API_VERSION}/bootstrap/cache/"
@@ -22,39 +20,27 @@ cr-ensure-folder-empty "www/api/${CR_API_VERSION}/storage/framework/views"
 cr-ensure-folder-empty "www/api/${CR_API_VERSION}/storage/logs/"
 cr-ensure-folder-empty "tmp/webTemp/cache"
 # touch www/api/${CR_API_VERSION}/storage/logs/laravel.log
-cr-fix-permissions
 
 header_end
 
 # Reset database
-header_begin "cr-data-reset - Mysql - waiting for server"
-cr-docker-compose exec -T \
-    "mysql" \
-    bash -c "while ! mysql --user=root --password=root --database=mysql -e 'Show tables;' &>/dev/null; do sleep 1; done"
-header_end
-
 header_begin "cr-data-reset - Mysql - configuring"
-cr-docker-compose exec -T \
-    "mysql" \
-    mysql --user=root --password=root --database=mysql -e " \
-            USE mysql; \
-            DROP SCHEMA IF EXISTS cryptomedic ; \
-            CREATE SCHEMA cryptomedic; \
-            USE cryptomedic; \
-            GRANT ALL PRIVILEGES ON cryptomedic   TO username; \
-            GRANT ALL PRIVILEGES ON cryptomedic.* TO username; \
-            SET PASSWORD FOR username = PASSWORD('password'); \
-        "
+mysql --user=root --password=root --database=mysql -e " \
+        USE mysql; \
+        DROP SCHEMA IF EXISTS cryptomedic ; \
+        CREATE SCHEMA cryptomedic; \
+        USE cryptomedic; \
+        GRANT ALL PRIVILEGES ON cryptomedic   TO username; \
+        GRANT ALL PRIVILEGES ON cryptomedic.* TO username; \
+        SET PASSWORD FOR username = PASSWORD('password'); \
+    "
 # Mysql 5.7, 7.0:
 # 	ALTER USER 'root' IDENTIFIED WITH mysql_native_password BY 'password';
 # 	ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
 header_end
 
 header_begin "cr-data-reset - Mysql - restoring base.sql"
-cr-docker-compose exec -T \
-    "mysql" \
-    mysql --user=root --password=root --database="cryptomedic" <"conf/database/base.sql"
-
+mysql --user=root --password=root --database="cryptomedic" <"conf/database/base.sql"
 header_end
 
 header_begin "cr-data-reset: cr-refresh-structure"

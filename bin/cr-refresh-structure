@@ -6,8 +6,6 @@ set -o pipefail
 # shellcheck source=./cr-lib
 . "$(dirname "${BASH_SOURCE[0]}")"/cr-lib
 
-cr-ensure-started
-
 if [ -z "$CRYPTOMEDIC_DB_UPGRADE" ]; then
     echo "Initialize CRYPTOMEDIC_DB_UPGRADE"
     CRYPTOMEDIC_DB_UPGRADE="secret"

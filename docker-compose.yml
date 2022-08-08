@@ -4,7 +4,6 @@ version: "3.9"
 x-common-env:
   &common-env
   PHP_VERSION: &PHP_VERSION "8.1" # OVH is in 8.1
-  MYSQL_IMAGE: &MYSQL_IMAGE mysql:5.6
   MYSQL_HOST: &MYSQL_HOST mysql
 
 services:
@@ -20,18 +19,6 @@ services:
       - 80
     volumes:
       - .:/app
-
-  mysql:
-    # https://hub.docker.com/_/mysql/
-    image: *MYSQL_IMAGE
-    environment:
-      IN_DOCKER: mysql
-      MYSQL_DATABASE: cryptomedic
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_USER: username
-      MYSQL_PASSWORD: password
-    expose:
-      - 3306
 
   phpmyadmin:
     # https://hub.docker.com/r/phpmyadmin/phpmyadmin/

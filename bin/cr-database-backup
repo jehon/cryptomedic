@@ -8,15 +8,9 @@ set -o pipefail
 
 OUTPUT="$CR_TMP/cryptomedic-$(date +%F-%H-%M-%S.%N)"
 
-cr-ensure-started
 mkdir -p "$(dirname "$OUTPUT")"
 
-(
-    cr-docker-compose exec -T \
-        "mysql" \
-        mysqldump --user=root --password=root cryptomedic
-
-) >"$OUTPUT"
+mysqldump --user=root --password=root cryptomedic >"$OUTPUT"
 
 echo
 echo "Backup available at $OUTPUT"

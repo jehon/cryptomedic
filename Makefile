@@ -103,7 +103,7 @@ clear:
 	@echo "**"
 	@echo "**"
 
-clean: deploy-unmount chmod
+clean: deploy-unmount
 	if [ -r $(DEPLOY_MOUNT_TEST_FILE) ]; then echo "Remote mounted - stopping"; exit 1; fi
 	find . -type d \( -name "vendor" -or -name "node_modules" \) -prune -exec "rm" "-fr" "{}" ";" || true
 	find . -name "tmp" -prune -exec "rm" "-fr" "{}" ";" || true
@@ -134,22 +134,10 @@ docker-rebuild:
 # TODO
 .PHONY: start
 start:
-	cr-ensure-started
-	cr-fix-permissions
+	jh-run-and-capture cr-data-reset
 
 	@echo "Open browser: http://localhost:$(CRYPTOMEDIC_PORT)/"
 	@echo "Test page: http://localhost:$(CRYPTOMEDIC_PORT)/xappx/"
-
-# TODO
-.PHONY: stop
-stop: deploy-unmount chmod
-	docker compose down || true
-	cr-kill-others $(CRYPTOMEDIC_PORT)
-
-# TODO
-.PHONY: chmod
-chmod:
-	cr-fix-permissions
 
 #
 #
@@ -183,20 +171,18 @@ test: tmp/.dependencies tmp/.built test-api test-api-bare test-unit test-e2e tes
 # TODO
 .PHONY: test-api
 test-api: tmp/.dependencies-api
-	cr-ensure-started
-	cr-capture-output cr-data-reset
+	jh-run-and-capture cr-data-reset
 	cr-phpunit laravel
 
 # TODO
 .PHONY: update-references-api
 update-references-api: tmp/.dependencies-api
-	cr-capture-output cr-data-reset
+	jh-run-and-capture cr-data-reset
 	COMMIT=1 cr-phpunit
 
 # TODO
 test-api-bare: tmp/.dependencies-api
-	cr-ensure-started
-	cr-capture-output cr-data-reset
+	jh-run-and-capture cr-data-reset
 	cr-phpunit bare
 
 .PHONY: test-unit
@@ -210,36 +196,29 @@ test-unit: tmp/.dependencies-node \
 	mkdir -p tmp/js && chown user tmp/js && su user bash -c "NOCOV=1 npm run test-unit-continuously-withcov -- --single-run"
 # node tests/report.js
 
-# TODO
 .PHONY: test-e2e
 test-e2e: test-e2e-desktop test-e2e-mobile
-# 	cr-fix-permissions tmp/e2e
-# 	@rm -fr tmp/e2e
 
 # TODO
 .PHONY: test-e2e-desktop
 test-e2e-desktop: tmp/.tested-e2e-desktop
 tmp/.tested-e2e-desktop: tmp/.built $(shell find cypress/ -name "*.js") tmp/.dependencies
-	cr-fix-permissions tmp/e2e
 	cr-cypress "desktop"
 
 	@mkdir -p "$(dir $@)"
 	@touch "$@"
-	cr-fix-permissions tmp/e2e
 
 # TODO
 .PHONY: test-e2e-mobile
 test-e2e-mobile: tmp/.tested-e2e-mobile
 tmp/.tested-e2e-mobile: tmp/.built $(shell find cypress/ -name "*.js") tmp/.dependencies
-	cr-fix-permissions tmp/e2e
 	cr-cypress "mobile"
 
 	@mkdir -p "$(dir $@)"
 	@touch "$@"
-	cr-fix-permissions tmp/e2e
 
 # TODO
-cypress-open: chmod
+cypress-open:
 	$(shell npm bin)/cypress open
 
 #
@@ -322,7 +301,7 @@ tmp/.dependencies-node: package.json package-lock.json
 	@touch "$@"
 
 # %/composer.lock: %/composer.json
-# 	cd $(dir $@) && cr-capture-output /composer.phar install
+# 	cd $(dir $@) && jh-run-and-capture /composer.phar install
 # 	touch "$@"
 
 .PHONY: dependencies-api
@@ -410,7 +389,7 @@ $(CJS2ESM_DIR)/platform.js: node_modules/platform/platform.js
 #
 # TODO
 .PHONY: data-reset
-data-reset: tmp/.dependencies-api-bare chmod
+data-reset: tmp/.dependencies-api-bare
 	cr-data-reset
 
 #
