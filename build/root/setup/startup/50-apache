@@ -3,4 +3,5 @@
 # shellcheck source=/usr/bin/jh-lib
 . jh-lib
 
+# Log will be redirected automatically to /startup/logs/apache
 jh_background_process apachectl start

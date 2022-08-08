@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+# shellcheck source=/usr/bin/jh-lib
+. jh-lib
+
+# Log will be redirected automatically to /startup/logs/mysql
+jh_background_process runuser -u mysql mysqld
