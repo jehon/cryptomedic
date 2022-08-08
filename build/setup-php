@@ -34,6 +34,7 @@ apt install --quiet --yes \
     "php${VERSION}-pdo-mysql" \
     "php${VERSION}-cli" \
     "php${VERSION}-curl" \
+    "php${VERSION}-gd" \
     "php${VERSION}-xml" \
     "php${VERSION}-xdebug" \
     "libapache2-mod-php${VERSION}"
