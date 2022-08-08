@@ -19,8 +19,10 @@ export DEBIAN_FRONTEND=noninteractive
 # Configure the repository
 #
 RELEASE="$( lsb_release -sc )"
-
 echo "RELEASE: $RELEASE"
+
+# To link our config into VERSION config
+ln -s /etc/php/current "/etc/php/${VERSION}"
 
 echo "deb https://packages.sury.org/php/ $RELEASE main" > /etc/apt/sources.list.d/php.list
 
