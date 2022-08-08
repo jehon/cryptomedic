@@ -69,21 +69,19 @@ endef
 dump:
 	@echo "CRYPTOMEDIC_PORT: $(CRYPTOMEDIC_PORT)"
 	@echo "MySQL:            $(shell mysql --version)"
-	@echo "MySQL Server:     $(shell mysql --user=root --password=root --database=mysql -e "SELECT VERSION();")"
-	@echo "PHP:              $(shell php --version)"
+	@echo "MySQL Server:     $(shell mysql --silent --raw --skip-column-names -e "SELECT VERSION();")"
+	@echo "MySQL user:       $(shell mysql --silent --raw --skip-column-names -e "SELECT CURRENT_USER;")"
+	@echo "PHP:              $(shell php -r 'echo PHP_VERSION;')"
 	@echo "NodeJS:           $(shell node --version)"
 	@echo "Cypress:          $(shell $(NM_BIN)/cypress --version --component package)"
 	@echo "Chrome:           $(shell google-chrome --version)"
-	@echo "Bash:             $(shell bash --version)"
 	@echo "Docker:           $(shell docker --version)"
 	@echo "DISPLAY:          $(DISPLAY)"
-	@echo "IN_DOCKER:        $(IN_DOCKER)"
+	@echo "Who am i:         $(shell whoami)"
 	@echo "SHELL:            $(SHELL)"
 	@echo "PATH:             $(PATH)"
-	@echo "Who am i:         $(shell whoami)"
 	@echo "Id:               $(shell id)"
 	@echo "Supported:        $(shell npx -y browserslist)"
-# docker compose config
 
 clear:
 	@if [ -z "$$NO_CLEAR" ]; then clear; fi
