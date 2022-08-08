@@ -3,23 +3,9 @@ version: "3.9"
 # Also update .ovhconfig
 x-common-env:
   &common-env
-  PHP_VERSION: &PHP_VERSION "8.1" # OVH is in 8.1
   MYSQL_HOST: &MYSQL_HOST mysql
 
 services:
-  server:
-    build:
-      context: conf/server/
-      dockerfile: Dockerfile
-      args:
-        PHP_VERSION: *PHP_VERSION
-    environment:
-      IN_DOCKER: server
-    expose:
-      - 80
-    volumes:
-      - .:/app
-
   phpmyadmin:
     # https://hub.docker.com/r/phpmyadmin/phpmyadmin/
     image: phpmyadmin/phpmyadmin
