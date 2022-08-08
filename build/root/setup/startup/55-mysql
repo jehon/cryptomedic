@@ -13,4 +13,14 @@ while ! mysql --user=root --database=mysql -e 'Show tables;' &>/dev/null; do
 done
 echo -n " done"
 
-mysql --user root -e "SET PASSWORD FOR 'root'@'localhost' = PASSWORD('root'); flush privileges;"
+ROOT_PASSWORD="root"
+mysql --user root --password="" -e "SET PASSWORD FOR 'root'@'localhost' = PASSWORD('$ROOT_PASSWORD'); flush privileges;"
+
+# TODO: create a normal user to manage the user database
+
+# Need to run now, after the setup of the password in the server!
+cat <<-EOS > /root/.my.cnf
+    [client]
+    user=root
+    password=$ROOT_PASSWORD
+EOS
