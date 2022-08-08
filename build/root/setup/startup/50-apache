@@ -3,4 +3,4 @@
 # shellcheck source=/usr/bin/jh-lib
 . jh-lib
 
-jh_background_process apachectl
+jh_background_process apachectl start

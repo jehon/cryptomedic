@@ -16,18 +16,21 @@ RUN /usr/sbin/jh-install-docker
 # Override configs
 # 
 COPY build/ /setup/cryptomedic/
-COPY build/etc/ /etc/
-COPY conf/startup/ /setup/startup
+COPY build/root/ /
 RUN chmod +x /setup/cryptomedic/*
 
 #
 # Website
 #
 RUN a2enmod expires rewrite proxy proxy_http proxy_html proxy_connect proxy_wstunnel
-RUN rm -fr /etc/apache2/sites-enabled/*.conf
+RUN rm -fr /etc/apache2/sites-enabled/default.conf
 
 #
 # PHP
 #
 RUN /setup/cryptomedic/setup-php "8.1"
 
+#
+# Mysql
+# 
+RUN /setup/cryptomedic/setup-mysql "5.6"

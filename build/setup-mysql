@@ -16,21 +16,19 @@ export DEBIAN_FRONTEND=noninteractive
 # See https://stackoverflow.com/a/34806229/1954789
 #
 
-# curl -s -o tmp/mysql.ascii http://ronaldbradford.com/mysql/mysql.gpg
-# gpg --dearmor tmp/mysql.ascii
-# mv tmp/mysql.ascii.gpg conf/etc/apt/trusted.gpg.d/mysql.gpg
-
 NAME="$( lsb_release -si )"
 NAME="${NAME,,}"
 RELEASE="$( lsb_release -sc )"
 
+NAME="ubuntu"
+RELEASE="precise"
+
 echo "NAME:    $NAME"
 echo "RELEASE: $RELEASE"
 
-cat <<-EOS > /etc/apt/sources.list.d/mysql.list
-    deb http://repo.mysql.com/apt/$NAME/ $RELEASE mysql-apt-config
-    deb http://repo.mysql.com/apt/$NAME/ $RELEASE mysql-5.6
+cat <<-EOS > /etc/apt/sources.list.d/jh-mysql.list
+    deb [trusted=yes] http://repo.mysql.com/apt/$NAME/ $RELEASE mysql-apt-config
 EOS
 
 apt update --quiet --yes
-apt install --quiet --yes "mysql-server-${VERSION}"
+apt install --quiet --yes "mysql-community-server"

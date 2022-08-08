@@ -1,0 +1,7 @@
+### THIS FILE IS AUTOMATICALLY CONFIGURED ###
+# You may comment out entries below, but any other modifications may be lost.
+# Use command 'dpkg-reconfigure mysql-apt-config' as root for modifications.
+
+deb [trusted=yes] http://repo.mysql.com/apt/debian/ stretch mysql-apt-config
+deb [trusted=yes] http://repo.mysql.com/apt/debian/ stretch mysql-5.6
+deb [trusted=yes] http://repo.mysql.com/apt/debian/ stretch mysql-tools
