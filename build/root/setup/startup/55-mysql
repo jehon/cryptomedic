@@ -11,10 +11,10 @@ while ! mysql --user=root --database=mysql -e 'Show tables;' &>/dev/null; do
     sleep 1
     echo -n "."
 done
-echo -n " done"
+echo " done"
 
 ROOT_PASSWORD="root"
-mysql --user root --password="" -e "SET PASSWORD FOR 'root'@'localhost' = PASSWORD('$ROOT_PASSWORD'); flush privileges;"
+mysql --user root -e "SET PASSWORD FOR 'root'@'localhost' = PASSWORD('$ROOT_PASSWORD'); flush privileges;"
 
 # TODO: create a normal user to manage the user database
 
