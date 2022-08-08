@@ -8,10 +8,12 @@ const fse = require('fs-extra');
 
 const released_version = (new Date()).toISOString();
 
-fse.emptyDirSync(__dirname + '/www/build');
-fs.writeFileSync(__dirname + '/www/build/release_version.txt', released_version);
-fs.writeFileSync(__dirname + '/www/build/release_version.js', `window.application_version = '${released_version}';`);
-fse.copy(__dirname + '/app/build.htaccess', __dirname + '/www/build/.htaccess');
+const builtRoot = path.join(__dirname, '/www/built');
+
+fse.emptyDirSync(builtRoot);
+fs.writeFileSync(path.join(builtRoot, 'release_version.txt'), released_version);
+fs.writeFileSync(path.join(builtRoot, 'release_version.js'), `window.application_version = '${released_version}';`);
+fse.copy(path.join(__dirname, 'app/build.htaccess'), path.join(builtRoot, '.htaccess'));
 
 const isDebug = (!process.env.CRYPTOMEDIC_PROD) ?? true;
 if (isDebug) {
@@ -24,13 +26,13 @@ module.exports = {
     mode: (isDebug ? 'development' : 'production'),
     entry: path.join(__dirname, '/app/main.js'),
     output: {
-        path: path.join(__dirname, 'www/build/'),
+        path: builtRoot,
         filename: '[name]-[fullhash].js'
     },
     plugins: [
         new HtmlWebpackPlugin({
             template: path.join(__dirname, 'app/index-template.html'),
-            filename: path.join(__dirname, 'www/build/index.html'),
+            filename: path.join(builtRoot, 'index.html'),
             inject: 'head',
             xhtml: true
         })

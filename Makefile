@@ -110,7 +110,7 @@ clean: deploy-unmount chmod
 	find . -name "*.log" -delete
 
 	rm -fr live/
-	rm -fr www/build
+	rm -fr www/built
 	rm -fr app/cjs2esm
 	rm -fr www/api/*/bootstrap/cache
 	rm -fr www/api/*/storage
@@ -178,7 +178,7 @@ lint-html: tmp/.dependencies-node
 
 # TODO
 .PHONY: test # In Jenkinfile, each step is separated:
-test: tmp/.dependencies tmp/.build test-api test-api-bare test-unit test-e2e test-styles
+test: tmp/.dependencies tmp/.built test-api test-api-bare test-unit test-e2e test-styles
 
 # TODO
 .PHONY: test-api
@@ -219,7 +219,7 @@ test-e2e: test-e2e-desktop test-e2e-mobile
 # TODO
 .PHONY: test-e2e-desktop
 test-e2e-desktop: tmp/.tested-e2e-desktop
-tmp/.tested-e2e-desktop: tmp/.build $(shell find cypress/ -name "*.js") tmp/.dependencies
+tmp/.tested-e2e-desktop: tmp/.built $(shell find cypress/ -name "*.js") tmp/.dependencies
 	cr-fix-permissions tmp/e2e
 	cr-cypress "desktop"
 
@@ -230,7 +230,7 @@ tmp/.tested-e2e-desktop: tmp/.build $(shell find cypress/ -name "*.js") tmp/.dep
 # TODO
 .PHONY: test-e2e-mobile
 test-e2e-mobile: tmp/.tested-e2e-mobile
-tmp/.tested-e2e-mobile: tmp/.build $(shell find cypress/ -name "*.js") tmp/.dependencies
+tmp/.tested-e2e-mobile: tmp/.built $(shell find cypress/ -name "*.js") tmp/.dependencies
 	cr-fix-permissions tmp/e2e
 	cr-cypress "mobile"
 
@@ -367,23 +367,23 @@ package-lock.json: package.json
 	npm install
 
 .PHONY: build
-build: tmp/.build
-tmp/.build: www/build/index.html www/build/browsers.json
+build: tmp/.built
+tmp/.built: www/built/index.html www/built/browsers.json
 	@mkdir -p "$(dir $@)"
 	@touch "$@"
 
 # We need to depend on axios-mock-adapter.js, because otherwise, this will force a rebuild
 # due to the recursive-dependencies
-www/build/index.html: tmp/.dependencies-node webpack.config.js  \
+www/built/index.html: tmp/.dependencies-node webpack.config.js  \
 		package.json package-lock.json \
-		$(call recursive-dependencies,app/,www/build/index.html) \
+		$(call recursive-dependencies,app/,www/built/index.html) \
 		$(CJS2ESM_DIR)/axios.js \
 		$(CJS2ESM_DIR)/axios-mock-adapter.js \
 		$(CJS2ESM_DIR)/platform.js
 
 	$(NM_BIN)webpack
 
-www/build/browsers.json: .browserslistrc tmp/.dependencies-node
+www/built/browsers.json: .browserslistrc tmp/.dependencies-node
 	npx -y browserslist --json > "$@"
 
 # TODO
@@ -467,7 +467,7 @@ deploy-unmount:
 # .PHONY: deploy-rsync-act
 # deploy-rsync-act: setup-structure \
 # 		tmp/.dependencies \
-# 		tmp/.build \
+# 		tmp/.built \
 # 		deploy-mount
 
 # 	rsync --recursive --itemize-changes --times \
@@ -478,7 +478,7 @@ deploy-unmount:
 # .PHONY: deploy-rsync-noact
 # deploy-rsync-noact: setup-structure \
 # 		tmp/.dependencies \
-# 		tmp/.build \
+# 		tmp/.built \
 # 		deploy-mount
 
 # 	rsync --recursive --itemize-changes --times \

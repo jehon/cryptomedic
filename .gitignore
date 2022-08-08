@@ -1,7 +1,7 @@
 /live/
 /tmp/
 
-/**/build/
+/**/built/
 /**/logs/
 /**/node_modules/
 /**/tmp/
