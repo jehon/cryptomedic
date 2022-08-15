@@ -12,8 +12,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt install --quiet --yes \
 #
 # Override configs
 # 
-COPY build/ /setup/cryptomedic/
-COPY build/root/ /
+COPY build/ /
 RUN chmod +x /setup/cryptomedic/*
 
 RUN /usr/sbin/jh-install-google-chrome
