@@ -17,7 +17,7 @@ COPY build/root/ /
 RUN chmod +x /setup/cryptomedic/*
 
 RUN /usr/sbin/jh-install-google-chrome
-RUN /usr/sbin/jh-install-docker
+RUN /setup/enable-docker
 
 # RUN /setup/cryptomedic/setup-apache
 RUN /setup/cryptomedic/setup-mysql "5.6"
