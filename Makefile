@@ -113,13 +113,6 @@ clean-ports:
 	jh-kill-by-port 9515 || true
 
 # TODO
-.PHONY: start-with-rebuild
-docker-rebuild:
-	docker compose down
-	docker system prune -f
-	docker compose build --pull --no-cache
-
-# TODO
 .PHONY: start
 start:
 	jh-run-and-capture cr-data-reset
