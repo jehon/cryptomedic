@@ -4,21 +4,10 @@
 . jh-lib
 
 echo -n "Wait for mysql to come online"
-while ! mysql --user=root --database=mysql -e 'Show tables;' &>/dev/null; do 
+while ! mysql --database=mysql -e 'Show tables;' &>/dev/null; do 
     sleep 1
     echo -n "."
 done
 echo " done"
 
-ROOT_PASSWORD="root"
-mysql --user root -e "SET PASSWORD FOR 'root'@'localhost' = PASSWORD('$ROOT_PASSWORD'); flush privileges;"
-
 # TODO: create a normal user to manage the user database
-
-# Need to run now, after the setup of the password in the server!
-cat <<-EOS > /root/.my.cnf
-    [client]
-    user=root
-    password=$ROOT_PASSWORD
-    database=cryptomedic
-EOS
