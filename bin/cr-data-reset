@@ -25,7 +25,7 @@ header_end
 
 # Reset database
 header_begin "cr-data-reset - Mysql - configuring"
-mysql --user=root --password=root --database=mysql -e " \
+mysql --database=mysql -e " \
         USE mysql; \
         DROP SCHEMA IF EXISTS cryptomedic ; \
         CREATE SCHEMA cryptomedic; \
@@ -40,7 +40,7 @@ mysql --user=root --password=root --database=mysql -e " \
 header_end
 
 header_begin "cr-data-reset - Mysql - restoring base.sql"
-mysql --user=root --password=root --database="cryptomedic" <"conf/database/base.sql"
+mysql <"conf/database/base.sql"
 header_end
 
 header_begin "cr-data-reset: cr-refresh-structure"

@@ -20,4 +20,5 @@ cat <<-EOS > /root/.my.cnf
     [client]
     user=root
     password=$ROOT_PASSWORD
+    database=cryptomedic
 EOS
