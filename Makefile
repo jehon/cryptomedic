@@ -126,21 +126,17 @@ start:
 #
 #
 
-# TODO
 .PHONY: lint
 lint: lint-es lint-css lint-html
 
-# TODO
 .PHONY: lint-es
 lint-es: tmp/.dependencies-node
 	$(NPM_BIN)/eslint
 
-# TODO
 .PHONY: lint-css
 lint-css: tmp/.dependencies-node
 	$(NPM_BIN)/stylelint app/**/*.css
 
-# TODO
 .PHONY: lint-html
 lint-html: tmp/.dependencies-node
 	$(NPM_BIN)/htmlhint app/**/*.html tests/**/*.html www/api/*/public/**/*.html --format=compact
