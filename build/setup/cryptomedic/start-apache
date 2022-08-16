@@ -1,11 +1,14 @@
 #!/usr/bin/env bash
 
+set -o errexit
+
 # shellcheck source=/usr/bin/jh-lib
 . jh-lib
 
 export CR_WORKSPACE
 CR_WORKSPACE="$(pwd)"
 
-envsubst < /build/cryptomedic/website.conf > /etc/apache2/sites-enabled/website.conf
+# We are in the running container, use latest sources
+envsubst < "$CR_WORKSPACE"/build/setup/cryptomedic/website.conf > /etc/apache2/sites-enabled/website.conf
 
-/usr/sbin/apache2ctl -DFOREGROUND -k start
+exec /usr/sbin/apache2ctl -DFOREGROUND -k start
