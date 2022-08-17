@@ -67,7 +67,15 @@ define recursive-dependencies
 endef
 
 dump:
+	@echo "Who am i:         $(shell whoami)"
+	@echo "SHELL:            $(SHELL)"
+	@echo "PATH:             $(PATH)"
+	@echo "DISPLAY:          $(DISPLAY)"
 	@echo "CRYPTOMEDIC_PORT: $(CRYPTOMEDIC_PORT)"
+	@echo "--------------- Supervisor ---------------"
+	/usr/bin/supervisorctl status
+	@echo "------------------------------------------"
+	@echo "Docker:           $(shell docker --version)"
 	@echo "MySQL:            $(shell mysql --version)"
 	@echo "MySQL Server:     $(shell mysql --silent --raw --skip-column-names -e "SELECT VERSION();")"
 	@echo "MySQL user:       $(shell mysql --silent --raw --skip-column-names -e "SELECT CURRENT_USER;")"
@@ -75,12 +83,6 @@ dump:
 	@echo "NodeJS:           $(shell node --version)"
 	@echo "Cypress:          $(shell $(NM_BIN)/cypress --version --component package)"
 	@echo "Chrome:           $(shell google-chrome --version)"
-	@echo "Docker:           $(shell docker --version)"
-	@echo "DISPLAY:          $(DISPLAY)"
-	@echo "Who am i:         $(shell whoami)"
-	@echo "SHELL:            $(SHELL)"
-	@echo "PATH:             $(PATH)"
-	@echo "Id:               $(shell id)"
 	@echo "Supported:        $(shell npx -y browserslist)"
 
 clear:
