@@ -33,6 +33,11 @@ while ! mysql --database=mysql -e 'Show tables;' &>/dev/null; do
 done
 echo " done"
 
+## The user may already exists
+## In mysql 7+, there is an "IF NOT EXISTS"
+mysql --database=mysql -e "DROP USER 'username'@'localhost'" 2>/dev/null || true
+mysql --database=mysql -e "CREATE USER 'username'@'localhost' IDENTIFIED BY 'password'"
+
 mysql --database=mysql -e " \
         USE mysql; \
         DROP SCHEMA IF EXISTS cryptomedic ; \
