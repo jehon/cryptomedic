@@ -7,7 +7,7 @@ on:
     branches: [ main ]
   workflow_dispatch:
 
-concurrency: 
+concurrency:
   group: release
   # cancel-in-progress: true
 
@@ -66,7 +66,6 @@ jobs:
         path: tmp/styles/
         retention-days: 1
 
-    # TODO
     - name: make lint
       run: docker exec devcontainer make lint
 
