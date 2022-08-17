@@ -28,7 +28,7 @@ jobs:
       run: docker build -t local .
 
     - name: start docker
-      run: docker run --name devcontainer --detach --privileged --volume $PWD:/workspace --workdir /workspace local sleep infinity
+      run: docker run --name devcontainer --detach --privileged --volume $PWD:/workspaces/cryptomedic --workdir /workspaces/cryptomedic local sleep infinity
 
     - name: make dump
       run: docker exec devcontainer make dump
