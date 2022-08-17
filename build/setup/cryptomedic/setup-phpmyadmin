@@ -24,8 +24,8 @@ cat <<'EOS' > "$ROOT"/config.inc.php
     $cfg['Servers'] = [
         1 => [
             'auth_type' => 'config',
-            'user' => 'pma',
-            'password' => 'pma'
+            'user' => 'root',
+            'password' => false
         ]
     ];
 EOS

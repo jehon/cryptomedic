@@ -21,3 +21,4 @@ RUN /setup/enable-docker
 RUN /setup/cryptomedic/setup-apache
 RUN /setup/cryptomedic/setup-mysql "5.6"
 RUN /setup/cryptomedic/setup-php "8.1"
+RUN /setup/cryptomedic/setup-phpmyadmin
