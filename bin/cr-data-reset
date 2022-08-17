@@ -25,6 +25,14 @@ header_end
 
 # Reset database
 header_begin "cr-data-reset - Mysql - configuring"
+
+echo -n "Wait for mysql to come online"
+while ! mysql --database=mysql -e 'Show tables;' &>/dev/null; do 
+    sleep 1
+    echo -n "."
+done
+echo " done"
+
 mysql --database=mysql -e " \
         USE mysql; \
         DROP SCHEMA IF EXISTS cryptomedic ; \
