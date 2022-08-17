@@ -140,7 +140,6 @@ lint-css: tmp/.dependencies-node
 lint-html: tmp/.dependencies-node
 	$(NPM_BIN)/htmlhint app/**/*.html tests/**/*.html www/api/*/public/**/*.html --format=compact
 
-# TODO
 .PHONY: test # In Jenkinfile, each step is separated:
 test: tmp/.dependencies tmp/.built test-api test-api-bare test-unit test-e2e test-styles
 
