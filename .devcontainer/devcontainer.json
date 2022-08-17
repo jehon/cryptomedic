@@ -7,6 +7,7 @@
 		"--init",
 		"--privileged"
 	],
+	"postStartCommand": "make start",
 	"overrideCommand": false,
 	"settings": {},
 	"extensions": [
