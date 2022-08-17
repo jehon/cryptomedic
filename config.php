@@ -6,8 +6,6 @@ $myconfig = [
   'database' => [
     'host'       => 'localhost',
     'schema'     => 'cryptomedic',
-    'rootuser'   => 'root',
-    'rootpwd'    => 'root',
     'username'   => 'username',
     'password'   => 'password',
   ],
