@@ -73,7 +73,7 @@ dump:
 	@echo "DISPLAY:          $(DISPLAY)"
 	@echo "CRYPTOMEDIC_PORT: $(CRYPTOMEDIC_PORT)"
 	@echo "--------------- Supervisor ---------------"
-	/usr/bin/supervisorctl status
+	sudo /usr/bin/supervisorctl status
 	@echo "------------------------------------------"
 	@echo "Docker:           $(shell docker --version)"
 	@echo "MySQL:            $(shell mysql --version)"

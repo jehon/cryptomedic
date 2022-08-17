@@ -13,7 +13,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt install --quiet --yes \
 # Override configs
 # 
 COPY build/ /
-RUN chmod +x /setup/cryptomedic/*
+RUN chown -R user.user /home/user
 
 RUN /usr/sbin/jh-install-google-chrome
 RUN /setup/enable-docker
