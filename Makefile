@@ -112,9 +112,8 @@ clean-ports:
 	pkill chromedriver || true
 	jh-kill-by-port 9515 || true
 
-# TODO
 .PHONY: start
-start:
+start: dependencies
 	jh-run-and-capture cr-data-reset
 
 	@echo "Open browser: http://localhost:$(CRYPTOMEDIC_PORT)/"
@@ -145,19 +144,16 @@ lint-html: tmp/.dependencies-node
 .PHONY: test # In Jenkinfile, each step is separated:
 test: tmp/.dependencies tmp/.built test-api test-api-bare test-unit test-e2e test-styles
 
-# TODO
 .PHONY: test-api
 test-api: tmp/.dependencies-api
 	jh-run-and-capture cr-data-reset
 	cr-phpunit laravel
 
-# TODO
 .PHONY: update-references-api
 update-references-api: tmp/.dependencies-api
 	jh-run-and-capture cr-data-reset
 	COMMIT=1 cr-phpunit
 
-# TODO
 test-api-bare: tmp/.dependencies-api
 	jh-run-and-capture cr-data-reset
 	cr-phpunit bare
@@ -239,10 +235,9 @@ deploy-test:
 # Other commands
 #
 
-# TODO
 .PHONY: logs
 logs:
-	docker compose logs -f --tail=10 | sed 's/\\n/\n/g'
+	/setup/bin/dc-logs
 
 #
 #
@@ -250,7 +245,6 @@ logs:
 #
 #
 
-# TODO
 .PHONY: dependencies
 dependencies: tmp/.dependencies
 tmp/.dependencies: tmp/.dependencies-node tmp/.dependencies-api tmp/.dependencies-api-bare
@@ -331,7 +325,6 @@ www/built/index.html: tmp/.dependencies-node webpack.config.js  \
 www/built/browsers.json: .browserslistrc tmp/.dependencies-node
 	npx -y browserslist --json > "$@"
 
-# TODO
 update-references-browsers:
 	npx -y browserslist --update-db
 
@@ -347,16 +340,6 @@ $(CJS2ESM_DIR)/axios-mock-adapter.js: node_modules/axios-mock-adapter/dist/axios
 # Dependencies are used in the build !
 $(CJS2ESM_DIR)/platform.js: node_modules/platform/platform.js
 	$(NM_BIN)babel --out-file="$@" --plugins=transform-commonjs --source-maps inline $?
-
-#
-#
-# data
-#
-#
-# TODO
-.PHONY: data-reset
-data-reset: tmp/.dependencies-api-bare
-	cr-data-reset
 
 #
 #

@@ -33,17 +33,12 @@ jobs:
     - name: make dump
       run: docker exec devcontainer make dump
 
-    # TODO
-    - name: make start
-      run: docker exec devcontainer make start
-
     - name: make dependencies
       run: docker exec devcontainer make dependencies
 
     - name: make build
       run: docker exec devcontainer make build
 
-    # TODO
     - name: make test-api
       run: docker exec devcontainer make test-api
 
