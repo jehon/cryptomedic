@@ -35,6 +35,7 @@ apt install --quiet --yes \
     "php${VERSION}-cli" \
     "php${VERSION}-curl" \
     "php${VERSION}-gd" \
+    "php${VERSION}-mbstring" \
     "php${VERSION}-xml" \
     "php${VERSION}-xdebug" \
     "libapache2-mod-php${VERSION}"

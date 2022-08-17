@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+# shellcheck source=/usr/bin/jh-lib
+. jh-lib
+
+VERSION="4.9.10"
+
+curl -fsSL https://files.phpmyadmin.net/phpMyAdmin/4.9.10/phpMyAdmin-$VERSION-english.tar.gz -o /setup/tmp/phpmyadmin.tar.gz
+
+ROOT="/var/www/html/phpmyadmin"
+
+rm -fr "$ROOT"
+mkdir -p "$ROOT"
+cd "$ROOT" && tar --strip-components=1 -xvzf /setup/tmp/phpmyadmin.tar.gz > /dev/null
+
+mkdir "$ROOT/tmp"
+chown www-data /var/www/html/phpmyadmin/tmp/
+
+# https://docs.phpmyadmin.net/en/latest/setup.html#quick-install
+cat <<'EOS' > "$ROOT"/config.inc.php
+<?php
+    $cfg['SendErrorReports'] = 'never';
+
+    $cfg['Servers'] = [
+        1 => [
+            'auth_type' => 'config',
+            'user' => 'pma',
+            'password' => 'pma'
+        ]
+    ];
+EOS
