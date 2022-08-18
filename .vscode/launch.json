@@ -5,6 +5,14 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "type": "bashdb",
+      "request": "launch",
+      "name": "Bash-Debug (type in script name)",
+      "cwd": "${workspaceFolder}",
+      "program": "${command:AskForScriptName}",
+      "args": []
+    },
+    {
       "type": "node",
       "request": "launch",
       "name": "test-e2e current file",
