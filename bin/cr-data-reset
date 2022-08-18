@@ -57,5 +57,5 @@ mysql <"conf/database/base.sql"
 header_end
 
 header_begin "cr-data-reset: cr-refresh-structure"
-cr-refresh-structure
+cr-refresh-structure |& jh-tag-stdin "cr-refresh-structure"
 header_end
