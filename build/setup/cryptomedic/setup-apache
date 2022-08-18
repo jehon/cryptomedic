@@ -10,3 +10,5 @@ export DEBIAN_FRONTEND=noninteractive
 # Enable modules
 a2enmod expires rewrite \
     proxy proxy_http proxy_html proxy_connect proxy_wstunnel
+
+ln -s /workspaces/cryptomedic/conf/website.conf /etc/apache2/sites-enabled/website.conf
