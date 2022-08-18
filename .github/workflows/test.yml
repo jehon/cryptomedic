@@ -42,6 +42,9 @@ jobs:
     - name: make test-api
       run: docker exec devcontainer make test-api
 
+    - name: make test-api-bare
+      run: docker exec devcontainer make test-api-bare
+
     - name: make test-unit
       run: docker exec devcontainer make test-unit
 
