@@ -11,4 +11,7 @@ export DEBIAN_FRONTEND=noninteractive
 a2enmod expires rewrite \
     proxy proxy_http proxy_html proxy_connect proxy_wstunnel
 
+# Run as user (for php unit testing)
+echo "export APACHE_RUN_USER=user" >> /etc/apache2/envvars
+
 ln -s /workspaces/cryptomedic/conf/website.conf /etc/apache2/sites-enabled/website.conf

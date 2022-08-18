@@ -166,8 +166,8 @@ test-unit: tmp/.dependencies-node \
 		$(CJS2ESM_DIR)/platform.js
 
 # TODO: reenable coverage
-# TODO(user): run as user
-	mkdir -p tmp/js && chown user tmp/js && su user bash -c "NOCOV=1 npm run test-unit-continuously-withcov -- --single-run"
+	mkdir -p tmp/js
+	NOCOV=1 npm run test-unit-continuously-withcov -- --single-run
 # node tests/report.js
 
 .PHONY: test-e2e

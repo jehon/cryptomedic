@@ -7,6 +7,7 @@
 		"--init",
 		"--privileged"
 	],
+	"remoteUser": "user",
 	"postStartCommand": "make start",
 	"overrideCommand": false,
 	"settings": {},
