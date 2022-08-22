@@ -23,7 +23,8 @@
 		"adpyke.vscode-sql-formatter",
 		"timonwong.shellcheck",
 		"ms-azuretools.vscode-docker",
-		"rogalmic.bash-debug"
+		"rogalmic.bash-debug",
+		"xdebug.php-debug"
 	],
 	"forwardPorts": [
 		80
