@@ -28,7 +28,7 @@ jobs:
       run: docker build -t local .
 
     - name: start docker
-      run: docker run --name devcontainer --detach --privileged --volume $PWD:/workspaces/cryptomedic --workdir /workspaces/cryptomedic local sleep infinity
+      run: docker run --name devcontainer --privileged --volume $PWD:/workspaces/cryptomedic --workdir /workspaces/cryptomedic local sleep infinity > tmp/docker.log 2>&1
 
     - name: make dump
       run: docker exec devcontainer make dump
@@ -60,15 +60,6 @@ jobs:
     - name: make test-styles
       run: docker exec devcontainer make test-styles
 
-    # TODO
-    - name: 'Artifacts test-styles'
-      if: always()
-      uses: actions/upload-artifact@v3
-      with:
-        name: styles
-        path: tmp/styles/
-        retention-days: 1
-
     - name: make lint
       run: docker exec devcontainer make lint
 
@@ -83,3 +74,19 @@ jobs:
 
     - name: stop docker
       run: docker kill devcontainer
+
+    - name: 'Artifacts test-styles'
+      if: always()
+      uses: actions/upload-artifact@v3
+      with:
+        name: styles
+        path: tmp/styles/
+        retention-days: 1
+
+    - name: 'Artifacts docker logs'
+      if: always()
+      uses: actions/upload-artifact@v3
+      with:
+        name: docker
+        path: tmp/docker.log
+        retention-days: 1
