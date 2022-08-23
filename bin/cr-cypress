@@ -19,6 +19,15 @@ if [[ -z "$1" ]]; then
     exit 255
 fi
 
+#
+#  See https://stackoverflow.com/questions/50706128/no-version-of-cypress-is-installed-in-ci-travisci-and-circleci
+#
+# Sometimes, no version of Cypress is installed in: /home/user/.cache/Cypress/9.6.1/Cypress
+# Please reinstall Cypress by running: cypress install
+#
+#
+"$(npm bin)"/cypress install
+
 FLAVOR="$1"
 shift
 
@@ -35,7 +44,7 @@ case "$FLAVOR" in
 "mobile")
     # Mobile: 360 x 480
     CYPRESS_ARGS+=(
-        --config "videosFolder=$ODOCKER/videos,screenshotsFolder=$ODOCKER/screenshots,viewportWidth=360,viewportHeight=640"
+        --config "videosFolder=$OUTPUT/videos,screenshotsFolder=$OUTPUT/screenshots,viewportWidth=360,viewportHeight=640"
         --reporter-options configFile="cypress-reporters-mobile.json"
     )
     ;;
@@ -53,5 +62,5 @@ cr-ensure-folder-empty "$OUTPUT"/coverage
 header_end
 
 header_begin "Cypress run tests (${CYPRESS_ARGS[*]}) ($*)"
-time "$(NM_BIN)"/cypress run "${CYPRESS_ARGS[@]}" "$@"
+time "$(npm bin)"/cypress run "${CYPRESS_ARGS[@]}" "$@"
 header_end

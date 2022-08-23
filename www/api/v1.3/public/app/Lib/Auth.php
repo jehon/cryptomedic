@@ -35,6 +35,7 @@ ON DUPLICATE KEY UPDATE
 INSERT INTO browser_features SET
     created_at = NOW(),
     browser_uuid = '$browserUUID',
+    lastuser = '$login',
     $featuresSql
 ON DUPLICATE KEY UPDATE
     updated_at = NOW(),

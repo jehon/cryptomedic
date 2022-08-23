@@ -176,7 +176,7 @@ test-e2e: test-e2e-desktop test-e2e-mobile
 # TODO
 .PHONY: test-e2e-desktop
 test-e2e-desktop: tmp/.tested-e2e-desktop
-tmp/.tested-e2e-desktop: tmp/.built $(shell find cypress/ -name "*.js") tmp/.dependencies
+tmp/.tested-e2e-desktop: tmp/.built tmp/.dependencies $(shell find cypress/ -name "*.js")
 	cr-cypress "desktop"
 
 	@mkdir -p "$(dir $@)"
@@ -185,7 +185,7 @@ tmp/.tested-e2e-desktop: tmp/.built $(shell find cypress/ -name "*.js") tmp/.dep
 # TODO
 .PHONY: test-e2e-mobile
 test-e2e-mobile: tmp/.tested-e2e-mobile
-tmp/.tested-e2e-mobile: tmp/.built $(shell find cypress/ -name "*.js") tmp/.dependencies
+tmp/.tested-e2e-mobile: tmp/.built tmp/.dependencies $(shell find cypress/ -name "*.js")
 	cr-cypress "mobile"
 
 	@mkdir -p "$(dir $@)"
