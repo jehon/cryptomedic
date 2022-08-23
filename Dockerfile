@@ -24,3 +24,5 @@ RUN /setup/cryptomedic/setup-php "8.1"
 RUN /setup/cryptomedic/setup-phpmyadmin
 
 ENV PATH=/workspaces/cryptomedic/bin:${PATH}
+
+USER user
