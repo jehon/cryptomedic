@@ -30,6 +30,9 @@ jobs:
     - name: start docker
       run: docker run --name devcontainer --privileged --volume $PWD:/workspaces/cryptomedic --workdir /workspaces/cryptomedic local sleep infinity > tmp/docker.log 2>&1
 
+    - name: wait for docker to be up
+      run: /usr/bin/jh-docker-wait "devcontainer"
+
     - name: make dump
       run: docker exec devcontainer make dump
 
@@ -48,15 +51,12 @@ jobs:
     - name: make test-unit
       run: docker exec devcontainer make test-unit
 
-    # TODO
     - name: make test-e2e-desktop
       run: docker exec devcontainer make test-e2e-desktop
 
-    # TODO
     - name: make test-e2e-mobile
       run: docker exec devcontainer make test-e2e-mobile
 
-    # TODO
     - name: make test-styles
       run: docker exec devcontainer make test-styles
 
