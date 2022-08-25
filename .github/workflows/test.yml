@@ -28,7 +28,7 @@ jobs:
       run: docker build -t local .
 
     - name: start docker
-      run: docker run --name devcontainer --privileged --volume $PWD:/workspaces/cryptomedic --workdir /workspaces/cryptomedic local sleep infinity > tmp/docker.log 2>&1
+      run: mkdir -p tmp && docker run --name devcontainer --privileged --volume $PWD:/workspaces/cryptomedic --workdir /workspaces/cryptomedic local sleep infinity > tmp/docker.log 2>&1 &
 
     - name: wait for docker to be up
       run: /usr/bin/jh-docker-wait "devcontainer"
