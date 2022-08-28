@@ -259,6 +259,9 @@ tmp/.dependencies-node: package.json package-lock.json
 	touch package-lock.json
 
 	@mkdir -p "$(dir $@)"
+	ls -ld .
+	ls -ld tmp
+	ls -l tmp
 	@touch "$@"
 
 # %/composer.lock: %/composer.json

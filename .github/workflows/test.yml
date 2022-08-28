@@ -18,11 +18,12 @@ jobs:
       CRYPTOMEDIC_PROD: true
 
     steps:
-    - name: Setup Node.js environment
-      uses: actions/setup-node@v3.2.0
-      with:
-        node-version: current
     - uses: actions/checkout@v3
+
+    - name: chmod
+      run: |
+        chmod -R a+rwX .
+        find . -type d -exec chmod a+rwx "{}" ";"
 
     - name: dc dump
       uses: jehon/actions-devcontainer@main
