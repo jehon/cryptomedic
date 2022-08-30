@@ -1,5 +1,8 @@
 
-TMP=$(shell realpath "tmp/")
+export ROOT = $(shell dirname $(abspath $(lastword $(MAKEFILE_LIST))))
+export PATH := $(ROOT)/bin:$(PATH)
+TMP := $(ROOT)/tmp
+
 GIT_BRANCH=$(shell git rev-parse --abbrev-ref HEAD)
 NPM_BIN=$(shell npm bin)
 
@@ -30,11 +33,11 @@ pull-request: update-dependencies-api-bare update-dependencies-api test
 export CRYPTOMEDIC_PORT ?= 80
 export VAPI := v1.3
 
-BACKUP_DIR ?= tmp/backup-online
+BACKUP_DIR ?= $(TMP)/backup-online
 DEPLOY_HOST := ftp.cluster003.ovh.net
-DEPLOY_MOUNT := tmp/remote
+DEPLOY_MOUNT := $(TMP)/remote
 DEPLOY_MOUNT_TEST_FILE := $(DEPLOY_MOUNT)/.ovhconfig
-DEPLOY_TEST_DIR ?= tmp/deploy-test-dir
+DEPLOY_TEST_DIR ?= $(TMP)/deploy-test-dir
 SSH_KNOWN_HOSTS := ~/.ssh/known_hosts
 DISPLAY ?= ":0"
 
@@ -50,8 +53,6 @@ export DBUPDATEPWD := secret
 CJS2ESM_DIR := app/cjs2esm
 NM_BIN := $(shell npm bin)/
 
-export ROOT = $(shell dirname $(abspath $(lastword $(MAKEFILE_LIST))))
-export PATH := $(ROOT)/bin:$(PATH)
 
 # See https://coderwall.com/p/cezf6g/define-your-own-function-in-a-makefile
 # 1: folder where to look
@@ -104,7 +105,7 @@ clean: deploy-unmount
 	rm -fr app/cjs2esm
 	rm -fr www/api/*/bootstrap/cache
 	rm -fr www/api/*/storage
-	rm -fr tmp
+	rm -fr $(TMP)
 
 	@echo "!! Removed dependencies, so husky (commit) will not work anymore. Please make dependencies-node to enable it again"
 
@@ -131,42 +132,42 @@ start: dependencies
 lint: lint-es lint-css lint-html
 
 .PHONY: lint-es
-lint-es: tmp/.dependencies-node
+lint-es: $(TMP)/.dependencies-node
 	$(NPM_BIN)/eslint
 
 .PHONY: lint-css
-lint-css: tmp/.dependencies-node
+lint-css: $(TMP)/.dependencies-node
 	$(NPM_BIN)/stylelint app/**/*.css
 
 .PHONY: lint-html
-lint-html: tmp/.dependencies-node
+lint-html: $(TMP)/.dependencies-node
 	$(NPM_BIN)/htmlhint app/**/*.html tests/**/*.html www/api/*/public/**/*.html --format=compact
 
 .PHONY: test # In Jenkinfile, each step is separated:
-test: tmp/.dependencies tmp/.built test-api test-api-bare test-unit test-e2e test-styles
+test: $(TMP)/.dependencies $(TMP)/.built test-api test-api-bare test-unit test-e2e test-styles
 
 .PHONY: test-api
-test-api: tmp/.dependencies-api
+test-api: $(TMP)/.dependencies-api
 	jh-run-and-capture cr-data-reset
 	cr-phpunit laravel
 
 .PHONY: update-references-api
-update-references-api: tmp/.dependencies-api
+update-references-api: $(TMP)/.dependencies-api
 	jh-run-and-capture cr-data-reset
 	COMMIT=1 cr-phpunit
 
-test-api-bare: tmp/.dependencies-api
+test-api-bare: $(TMP)/.dependencies-api
 	jh-run-and-capture cr-data-reset
 	cr-phpunit bare
 
 .PHONY: test-unit
-test-unit: tmp/.dependencies-node \
+test-unit: $(TMP)/.dependencies-node \
 		$(CJS2ESM_DIR)/axios.js \
 		$(CJS2ESM_DIR)/axios-mock-adapter.js \
 		$(CJS2ESM_DIR)/platform.js
 
 # TODO: reenable coverage
-	mkdir -p tmp/js
+	mkdir -p $(TMP)/js
 	NOCOV=1 npm run test-unit-continuously-withcov -- --single-run
 # node tests/report.js
 
@@ -175,8 +176,8 @@ test-e2e: test-e2e-desktop test-e2e-mobile
 
 # TODO
 .PHONY: test-e2e-desktop
-test-e2e-desktop: tmp/.tested-e2e-desktop
-tmp/.tested-e2e-desktop: tmp/.built tmp/.dependencies $(shell find cypress/ -name "*.js")
+test-e2e-desktop: $(TMP)/.tested-e2e-desktop
+$(TMP)/.tested-e2e-desktop: $(TMP)/.built $(TMP)/.dependencies $(shell find cypress/ -name "*.js")
 	cr-cypress "desktop"
 
 	@mkdir -p "$(dir $@)"
@@ -184,8 +185,8 @@ tmp/.tested-e2e-desktop: tmp/.built tmp/.dependencies $(shell find cypress/ -nam
 
 # TODO
 .PHONY: test-e2e-mobile
-test-e2e-mobile: tmp/.tested-e2e-mobile
-tmp/.tested-e2e-mobile: tmp/.built tmp/.dependencies $(shell find cypress/ -name "*.js")
+test-e2e-mobile: $(TMP)/.tested-e2e-mobile
+$(TMP)/.tested-e2e-mobile: $(TMP)/.built $(TMP)/.dependencies $(shell find cypress/ -name "*.js")
 	cr-cypress "mobile"
 
 	@mkdir -p "$(dir $@)"
@@ -197,16 +198,16 @@ cypress-open:
 
 # TODO
 .PHONY: test-styles
-test-styles: tmp/styles/styles-problems-list.js
-tmp/styles/styles-problems-list.js: tests/styles/* tests/styles/references/* tmp/.tested-e2e-desktop tmp/.tested-e2e-mobile
+test-styles: $(TMP)/styles/styles-problems-list.js
+$(TMP)/styles/styles-problems-list.js: tests/styles/* tests/styles/references/* $(TMP)/.tested-e2e-desktop $(TMP)/.tested-e2e-mobile
 	@rm -fr "$(dir $@)"
 	@mkdir -p "$(dir $@)"
 	@mkdir -p "$(dir $@)/run/mobile"
 	@mkdir -p "$(dir $@)/run/desktop"
 
 	rsync -r tests/styles/ "$(dir $@)/"
-	find tmp/e2e/mobile/screenshots/ -type "f" -exec "cp" "{}" "$(dir $@)/run/mobile/" ";"
-	find tmp/e2e/desktop/screenshots/ -type "f" -exec "cp" "{}" "$(dir $@)/run/desktop/" ";"
+	find $(TMP)/e2e/mobile/screenshots/ -type "f" -exec "cp" "{}" "$(dir $@)/run/mobile/" ";"
+	find $(TMP)/e2e/desktop/screenshots/ -type "f" -exec "cp" "{}" "$(dir $@)/run/desktop/" ";"
 
 	@echo "Compare"
 	npm run --silent test-styles
@@ -247,21 +248,18 @@ logs:
 #
 
 .PHONY: dependencies
-dependencies: tmp/.dependencies
-tmp/.dependencies: tmp/.dependencies-node tmp/.dependencies-api tmp/.dependencies-api-bare
+dependencies: $(TMP)/.dependencies
+$(TMP)/.dependencies: $(TMP)/.dependencies-node $(TMP)/.dependencies-api $(TMP)/.dependencies-api-bare
 	@mkdir -p "$(dir $@)"
 	@touch "$@"
 
 .PHONY: dependencies-node
-dependencies-node: tmp/.dependencies-node
-tmp/.dependencies-node: package.json package-lock.json
-	npm install --unsafe-perm=true --allow-root
+dependencies-node: $(TMP)/.dependencies-node
+$(TMP)/.dependencies-node: package.json package-lock.json
+	npm install
 	touch package-lock.json
 
 	@mkdir -p "$(dir $@)"
-	ls -ld .
-	ls -ld tmp
-	ls -l tmp
 	@touch "$@"
 
 # %/composer.lock: %/composer.json
@@ -269,8 +267,8 @@ tmp/.dependencies-node: package.json package-lock.json
 # 	touch "$@"
 
 .PHONY: dependencies-api
-dependencies-api: tmp/.dependencies-api
-tmp/.dependencies-api: tmp/.dependencies-api-bare \
+dependencies-api: $(TMP)/.dependencies-api
+$(TMP)/.dependencies-api: $(TMP)/.dependencies-api-bare \
 		www/api/$(VAPI)/composer.json \
 		www/api/$(VAPI)/composer.lock
 
@@ -281,8 +279,8 @@ tmp/.dependencies-api: tmp/.dependencies-api-bare \
 	@touch "$@"
 
 .PHONY: dependencies-api-bare
-dependencies-api-bare: tmp/.dependencies-api-bare
-tmp/.dependencies-api-bare: \
+dependencies-api-bare: $(TMP)/.dependencies-api-bare
+$(TMP)/.dependencies-api-bare: \
 		www/api/$(VAPI)/public/composer.json \
 		www/api/$(VAPI)/public/composer.lock
 
@@ -292,7 +290,7 @@ tmp/.dependencies-api-bare: \
 	@touch "$@"
 
 .PHONY: update-dependencies-api
-update-dependencies-api: tmp/.dependencies-api-bare
+update-dependencies-api: $(TMP)/.dependencies-api-bare
 	mkdir -m 777 -p www/api/v1.3/bootstrap/cache
 	cd "www/api/$(VAPI)" && /composer.phar update
 
@@ -310,14 +308,14 @@ package-lock.json: package.json
 	npm install
 
 .PHONY: build
-build: tmp/.built
-tmp/.built: www/built/index.html www/built/browsers.json
+build: $(TMP)/.built
+$(TMP)/.built: www/built/index.html www/built/browsers.json
 	@mkdir -p "$(dir $@)"
 	@touch "$@"
 
 # We need to depend on axios-mock-adapter.js, because otherwise, this will force a rebuild
 # due to the recursive-dependencies
-www/built/index.html: tmp/.dependencies-node webpack.config.js  \
+www/built/index.html: $(TMP)/.dependencies-node webpack.config.js  \
 		package.json package-lock.json \
 		$(call recursive-dependencies,app/,www/built/index.html) \
 		$(CJS2ESM_DIR)/axios.js \
@@ -326,7 +324,7 @@ www/built/index.html: tmp/.dependencies-node webpack.config.js  \
 
 	$(NM_BIN)webpack
 
-www/built/browsers.json: .browserslistrc tmp/.dependencies-node
+www/built/browsers.json: .browserslistrc $(TMP)/.dependencies-node
 	npx -y browserslist --json > "$@"
 
 update-references-browsers:
@@ -354,7 +352,7 @@ $(CJS2ESM_DIR)/platform.js: node_modules/platform/platform.js
 # .PHONY: deploy-backup
 # deploy-backup: deploy-mount
 # 	rsync --progress --recursive --times --delete \
-# 		--exclude tmp/ \
+# 		--exclude $(TMP)/ \
 # 		$(DEPLOY_MOUNT)/ $(BACKUP_DIR)
 
 # .PHONY: deploy-rsync
@@ -398,8 +396,8 @@ deploy-unmount:
 
 # .PHONY: deploy-rsync-act
 # deploy-rsync-act: setup-structure \
-# 		tmp/.dependencies \
-# 		tmp/.built \
+# 		$(TMP)/.dependencies \
+# 		$(TMP)/.built \
 # 		deploy-mount
 
 # 	rsync --recursive --itemize-changes --times \
@@ -409,8 +407,8 @@ deploy-unmount:
 
 # .PHONY: deploy-rsync-noact
 # deploy-rsync-noact: setup-structure \
-# 		tmp/.dependencies \
-# 		tmp/.built \
+# 		$(TMP)/.dependencies \
+# 		$(TMP)/.built \
 # 		deploy-mount
 
 # 	rsync --recursive --itemize-changes --times \

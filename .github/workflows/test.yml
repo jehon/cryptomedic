@@ -12,7 +12,6 @@ on:
 
 concurrency:
   group: release
-  # cancel-in-progress: true
 
 jobs:
   ga-test:
