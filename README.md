@@ -3,6 +3,14 @@
 [![Renovate enabled](https://img.shields.io/badge/renovate-enabled-brightgreen.svg)](https://renovatebot.com/)
 [![workflow](https://github.com/jehon/cryptomedic/actions/workflows/workflow.yml/badge.svg)](https://github.com/jehon/cryptomedic/actions/workflows/workflow.yml)
 
+## Local links
+
+Devcontainers: http://localhost:9001
+
+Application: http://localhost
+
+Debug: http://localhost/xappx
+
 ## Local requirements
 
 (to be checked)
