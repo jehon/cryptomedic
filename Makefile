@@ -255,7 +255,7 @@ tmp/.dependencies: tmp/.dependencies-node tmp/.dependencies-api tmp/.dependencie
 .PHONY: dependencies-node
 dependencies-node: tmp/.dependencies-node
 tmp/.dependencies-node: package.json package-lock.json
-	npm install
+	npm install --unsafe-perm=true --allow-root
 	touch package-lock.json
 
 	@mkdir -p "$(dir $@)"
