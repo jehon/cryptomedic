@@ -32,6 +32,7 @@ pull-request: update-dependencies-api-bare update-dependencies-api test
 #
 export CRYPTOMEDIC_PORT ?= 80
 export VAPI := v1.3
+export CYPRESS_CACHE_FOLDER := $(TMP)/cache/cypress
 
 BACKUP_DIR ?= $(TMP)/backup-online
 DEPLOY_HOST := ftp.cluster003.ovh.net
