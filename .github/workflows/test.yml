@@ -105,8 +105,12 @@ jobs:
     #   if: ${{ github.ref == 'refs/heads/main' }}
     #   run: docker exec -e "JH_DOCKER_HUB_TOKEN=${{ secrets.JH_DOCKER_HUB_TOKEN }}" ${{ steps.start.outputs.container }} make --debug release
 
+    # This will upload the docker.log
     - name: stop docker
-      run: docker kill devcontainer
+      if: always()
+      uses: jehon/actions-devcontainer@main
+      with:
+        action: stop
 
     - name: 'Artifacts test-styles'
       if: always()
@@ -114,4 +118,3 @@ jobs:
       with:
         name: styles
         path: tmp/styles/
-        retention-days: 1
