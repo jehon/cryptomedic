@@ -101,9 +101,9 @@ jobs:
     #     CRYPTOMEDIC_UPLOAD_PASSWORD: ${{ secrets.CRYPTOMEDIC_UPLOAD_PASSWORD }}
     #     CRYPTOMEDIC_UPLOAD_USER: ${{ secrets.CRYPTOMEDIC_UPLOAD_USER }}
 
-    - name: make release
-      if: ${{ github.ref == 'refs/heads/main' }}
-      run: docker exec -e "JH_DOCKER_HUB_TOKEN=${{ secrets.JH_DOCKER_HUB_TOKEN }}" ${{ steps.start.outputs.container }} make --debug release
+    # - name: make release
+    #   if: ${{ github.ref == 'refs/heads/main' }}
+    #   run: docker exec -e "JH_DOCKER_HUB_TOKEN=${{ secrets.JH_DOCKER_HUB_TOKEN }}" ${{ steps.start.outputs.container }} make --debug release
 
     - name: stop docker
       run: docker kill devcontainer
