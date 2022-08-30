@@ -20,93 +20,76 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - name: chmod
-      run: |
-        chmod -R a+rwX .
-        find . -type d -exec chmod a+rwx "{}" ";"
-
     - name: dc dump
       uses: jehon/actions-devcontainer@main
       with:
         action: dump
-        dc-user: user
 
     - id: start
       name: dc start
       uses: jehon/actions-devcontainer@main
       with:
         action: start
-        dc-user: user
 
     - name: make dump
       uses: jehon/actions-devcontainer@main
       with:
         action: make
         make: dump
-        dc-user: user
 
     - name: make dependencies
       uses: jehon/actions-devcontainer@main
       with:
         action: make
         make: dependencies
-        dc-user: user
 
     - name: make build
       uses: jehon/actions-devcontainer@main
       with:
         action: make
         make: build
-        dc-user: user
 
     - name: make test-api
       uses: jehon/actions-devcontainer@main
       with:
         action: make
         make: test-api
-        dc-user: user
 
     - name: make test-api-bare
       uses: jehon/actions-devcontainer@main
       with:
         action: make
         make: test-api-bare
-        dc-user: user
 
     - name: make test-unit
       uses: jehon/actions-devcontainer@main
       with:
         action: make
         make: test-unit
-        dc-user: user
 
     - name: make test-e2e-desktop
       uses: jehon/actions-devcontainer@main
       with:
         action: make
         make: test-e2e-desktop
-        dc-user: user
 
     - name: make test-e2e-mobile
       uses: jehon/actions-devcontainer@main
       with:
         action: make
         make: test-e2e-mobile
-        dc-user: user
 
     - name: make test-styles
       uses: jehon/actions-devcontainer@main
       with:
         action: make
         make: test-styles
-        dc-user: user
 
     - name: make lint
       uses: jehon/actions-devcontainer@main
       with:
         action: make
         make: lint
-        dc-user: user
 
     # # TODO
     # - name: make deploy

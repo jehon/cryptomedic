@@ -56,15 +56,19 @@ module.exports = function (config) {
 
         browsers: [
             // 'FirefoxHeadless'
-            'ChromeHeadless'
+            'ChromeHeadlessNoSandbox'
         ],
 
         // https://github.com/karma-runner/karma-firefox-launcher/issues/76
         customLaunchers: {
+            ChromeHeadlessNoSandbox: {
+                base: 'ChromeHeadless',
+                flags: ['--no-sandbox']
+            },
             FirefoxHeadless: {
                 base: 'Firefox',
                 flags: ['-headless'],
-            },
+            }
         },
 
         preprocessors: {
