@@ -16,8 +16,6 @@ concurrency:
 jobs:
   ga-test:
     runs-on: ubuntu-latest
-    env:
-      CRYPTOMEDIC_PROD: true
 
     steps:
     - uses: actions/checkout@v3
@@ -32,6 +30,7 @@ jobs:
       uses: jehon/actions-devcontainer@main
       with:
         action: start
+        dc-env-0: CRYPTOMEDIC_PROD=true
 
     - name: make dump
       uses: jehon/actions-devcontainer@main
