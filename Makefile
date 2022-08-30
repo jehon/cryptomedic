@@ -118,7 +118,7 @@ clean-ports:
 
 .PHONY: start
 start: dependencies
-	jh-run-and-capture cr-data-reset
+	cr-data-reset
 
 	@echo "Open browser: http://localhost:$(CRYPTOMEDIC_PORT)/"
 	@echo "Test page: http://localhost:$(CRYPTOMEDIC_PORT)/xappx/"
@@ -149,16 +149,16 @@ test: $(TMP)/.dependencies $(TMP)/.built test-api test-api-bare test-unit test-e
 
 .PHONY: test-api
 test-api: $(TMP)/.dependencies-api
-	jh-run-and-capture cr-data-reset
+	cr-data-reset
 	cr-phpunit laravel
 
 .PHONY: update-references-api
 update-references-api: $(TMP)/.dependencies-api
-	jh-run-and-capture cr-data-reset
+	cr-data-reset
 	COMMIT=1 cr-phpunit
 
 test-api-bare: $(TMP)/.dependencies-api
-	jh-run-and-capture cr-data-reset
+	cr-data-reset
 	cr-phpunit bare
 
 .PHONY: test-unit
@@ -264,7 +264,7 @@ $(TMP)/.dependencies-node: package.json package-lock.json
 	@touch "$@"
 
 # %/composer.lock: %/composer.json
-# 	cd $(dir $@) && jh-run-and-capture /composer.phar install
+# 	cd $(dir $@) && /composer.phar install
 # 	touch "$@"
 
 .PHONY: dependencies-api
