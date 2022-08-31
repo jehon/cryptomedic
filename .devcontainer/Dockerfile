@@ -12,7 +12,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt install --quiet --yes \
 #
 # Override configs
 # 
-COPY build/ /
+COPY --chown=root:root build/ /
 RUN chown -R user.user /home/user
 
 RUN /usr/sbin/jh-install-google-chrome
