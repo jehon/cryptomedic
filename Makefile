@@ -88,9 +88,9 @@ dump:
 	@echo "Chrome:           $(shell google-chrome --version 2>&1 )"
 	@echo "Supported:        $(shell npx -y browserslist 2>&1 )"
 	@echo "---"
-	ls -l /var/run/mysqld/mysqld.sock || true
+    ls -l /var/run/mysqld/mysqld.sock || true
 	@echo "---"
-	pgrep mysql
+    pgrep mysql
 	@echo "---"
 	cat /setup/log/mysql_error.log
 	@echo "---"
