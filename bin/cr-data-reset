@@ -28,9 +28,16 @@ header_begin "cr-data-reset - Mysql - configuring"
 
 echo -n "Wait for mysql to come online..."
 mysql --database=mysql -e 'Show tables;' > /dev/null || true
+((I = 1)) # If it was 0, it would fail the script
+((MAX = "15"))
 while ! mysql --database=mysql -e 'Show tables;' &>/dev/null; do 
-    sleep 1
+    sleep 1s
     echo -n "."
+    ((I++))
+    ((I > MAX)) && (
+        echo "Waited $I without success" >&2
+        exit 2
+    )
 done
 echo "...done"
 
