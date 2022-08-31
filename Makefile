@@ -77,15 +77,15 @@ dump:
 	@echo "--------------- Supervisor ---------------"
 	sudo /usr/bin/supervisorctl status
 	@echo "------------------------------------------"
-	@echo "Docker:           $(shell docker --version)"
-	@echo "MySQL:            $(shell mysql --version)"
-	@echo "MySQL Server:     $(shell mysql --silent --database mysql --raw --skip-column-names -e "SELECT VERSION();")"
-	@echo "MySQL user:       $(shell mysql --silent --database mysql --raw --skip-column-names -e "SELECT CURRENT_USER;")"
-	@echo "PHP:              $(shell php -r 'echo PHP_VERSION;')"
-	@echo "NodeJS:           $(shell node --version)"
-	@echo "Cypress:          $(shell $(NM_BIN)/cypress --version --component package)"
-	@echo "Chrome:           $(shell google-chrome --version)"
-	@echo "Supported:        $(shell npx -y browserslist)"
+	@echo "Docker:           $(shell docker --version 2>&1 )"
+	@echo "MySQL:            $(shell mysql --version 2>&1 )"
+	@echo "MySQL Server:     $(shell mysql --silent --database mysql --raw --skip-column-names -e "SELECT VERSION();" 2>&1)"
+	@echo "MySQL user:       $(shell mysql --silent --database mysql --raw --skip-column-names -e "SELECT CURRENT_USER; " 2>&1)"
+	@echo "PHP:              $(shell php -r 'echo PHP_VERSION;' 2>&1 )"
+	@echo "NodeJS:           $(shell node --version 2>&1 )"
+	@echo "Cypress:          $(shell $(NM_BIN)/cypress --version --component package 2>&1 )"
+	@echo "Chrome:           $(shell google-chrome --version 2>&1 )"
+	@echo "Supported:        $(shell npx -y browserslist 2>&1 )"
 
 clear:
 	@if [ -z "$$NO_CLEAR" ]; then clear; fi

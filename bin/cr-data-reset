@@ -27,7 +27,7 @@ header_end
 header_begin "cr-data-reset - Mysql - configuring"
 
 echo -n "Wait for mysql to come online..."
-mysql --database=mysql -e 'Show tables;' || true
+mysql --database=mysql -e 'Show tables;' > /dev/null || true
 while ! mysql --database=mysql -e 'Show tables;' &>/dev/null; do 
     sleep 1
     echo -n "."
