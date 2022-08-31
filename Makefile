@@ -70,6 +70,7 @@ endef
 
 dump:
 	@echo "Who am i:         $(shell whoami)"
+	@echo "HOME:             $(HOME)"
 	@echo "SHELL:            $(SHELL)"
 	@echo "PATH:             $(PATH)"
 	@echo "DISPLAY:          $(DISPLAY)"
