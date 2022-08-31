@@ -36,6 +36,9 @@ while ! mysql --database=mysql -e 'Show tables;' &>/dev/null; do
     ((I++))
     ((I > MAX)) && (
         echo "Waited $I without success" >&2
+        ls -l /var/run/mysqld/mysqld.sock || true
+        ps -e | grep mysql
+        cat /setup/log/mysql_error.log
         exit 2
     )
 done
