@@ -10,9 +10,6 @@ on:
     - main
   workflow_dispatch:
 
-concurrency:
-  group: release
-
 jobs:
   ga-test:
     runs-on: ubuntu-latest
@@ -97,12 +94,16 @@ jobs:
     # - name: make deploy
     #   run: docker exec devcontainer make deploy
     #   if: ${{ github.ref_name == 'main' && github.ref_type == 'branch' }}
+    #    concurrency:
+    #      group: 'release'
     #   env:
     #     CRYPTOMEDIC_DB_UPGRADE: ${{ secrets.CRYPTOMEDIC_DB_UPGRADE }}
     #     CRYPTOMEDIC_UPLOAD_PASSWORD: ${{ secrets.CRYPTOMEDIC_UPLOAD_PASSWORD }}
     #     CRYPTOMEDIC_UPLOAD_USER: ${{ secrets.CRYPTOMEDIC_UPLOAD_USER }}
 
     # - name: make release
+    #    concurrency:
+    #      group: 'release'
     #   if: ${{ github.ref == 'refs/heads/main' }}
     #   run: docker exec -e "JH_DOCKER_HUB_TOKEN=${{ secrets.JH_DOCKER_HUB_TOKEN }}" ${{ steps.start.outputs.container }} make --debug release
 
