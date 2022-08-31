@@ -12,9 +12,9 @@ import { guiHashStartWith } from './gui.js';
 export function patientgo(patient) {
 
     if (patient.id) {
-        cy.visit(`/build/index.html#/folder/${patient.id}`);
+        cy.visit(`/built/index.html#/folder/${patient.id}`);
     } else {
-        cy.visit('/build/');
+        cy.visit('/built/');
 
         cy.get('#menu_home').click();
 
@@ -25,7 +25,7 @@ export function patientgo(patient) {
         });
     }
 
-    if (patient.id)  {
+    if (patient.id) {
         guiHashStartWith(`/folder/${patient.id}`, true);
     }
 

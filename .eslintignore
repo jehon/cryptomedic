@@ -1,7 +1,7 @@
 vendor/**
 **/tmp/**
 **/documentation/**
-**/build/**
+**/built/**
 app/cjs2esm
 **/unused/**
 tmp/

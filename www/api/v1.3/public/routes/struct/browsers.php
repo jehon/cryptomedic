@@ -2,7 +2,7 @@
 
 namespace Routes;
 
-define("BR_FILE", __DIR__ . "../../../../../../build/browsers.json");
+define("BR_FILE", __DIR__ . "../../../../../../built/browsers.json");
 
 require_once(__DIR__ . '/../../app/bootstrap.php');
 

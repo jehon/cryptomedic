@@ -6,7 +6,7 @@ import { guiHashStartWith } from '../helpers/gui.js';
 
 context('Actions', () => {
     it('initialize to login', () => {
-        cy.visit('/build/');
+        cy.visit('/built/');
         guiHashStartWith('/login');
         crPage().within(() => {
 

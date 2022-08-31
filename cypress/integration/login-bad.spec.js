@@ -5,7 +5,7 @@ import { guiHashStartWith } from '../helpers/gui.js';
 
 context('Actions', () => {
     it('should show error on bad login', () => {
-        cy.visit('/build/');
+        cy.visit('/built/');
         guiHashStartWith('/login');
 
         crPage().within(() => {

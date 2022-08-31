@@ -88,7 +88,7 @@
 					},
 					{
 						"key": "Referer",
-						"value": "http://localhost:5555/build/index.html"
+						"value": "http://localhost:5555/built/index.html"
 					},
 					{
 						"key": "Cookie",

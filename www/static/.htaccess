@@ -1,6 +1,6 @@
 
 # Redirect from old location to new build location
-# /static/index.html => /build/index.html
+# /static/index.html => /built/index.html
 
 RewriteEngine On
-RewriteRule ^index.html /build/index.html [QSA,R,L]
+RewriteRule ^index.html /built/index.html [QSA,R,L]
