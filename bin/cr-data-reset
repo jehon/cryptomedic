@@ -6,7 +6,7 @@ set -o pipefail
 # shellcheck source=./cr-lib
 . "$(dirname "${BASH_SOURCE[0]}")"/cr-lib
 
-header_begin "cr-data-reset: reset folder structure..."
+header_begin "cr-data-reset: reset folder structure"
 rsync -a --delete live-for-test/ live/
 
 chmod -R a+rX "live/"
@@ -26,12 +26,13 @@ header_end
 # Reset database
 header_begin "cr-data-reset - Mysql - configuring"
 
-echo -n "Wait for mysql to come online"
+echo -n "Wait for mysql to come online..."
+mysql --database=mysql -e 'Show tables;' || true
 while ! mysql --database=mysql -e 'Show tables;' &>/dev/null; do 
     sleep 1
     echo -n "."
 done
-echo " done"
+echo "...done"
 
 ## The user may already exists
 ## In mysql 7+, there is an "IF NOT EXISTS"
