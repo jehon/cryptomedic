@@ -94,6 +94,9 @@ dump:
 	@echo "---"
 	cat /setup/log/mysql_error.log
 	@echo "---"
+	ls -ld /usr/data
+	ls -l /usr/data/
+	@echo "---"
 
 clear:
 	@if [ -z "$$NO_CLEAR" ]; then clear; fi
