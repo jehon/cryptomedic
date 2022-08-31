@@ -25,25 +25,6 @@ header_end
 
 # Reset database
 header_begin "cr-data-reset - Mysql - configuring"
-
-echo -n "Wait for mysql to come online..."
-mysql --database=mysql -e 'Show tables;' > /dev/null || true
-((I = 1)) # If it was 0, it would fail the script
-((MAX = "15"))
-while ! mysql --database=mysql -e 'Show tables;' &>/dev/null; do 
-    sleep 1s
-    echo -n "."
-    ((I++))
-    ((I > MAX)) && (
-        echo "Waited $I without success" >&2
-        ls -l /var/run/mysqld/mysqld.sock || true
-        ps -e | grep mysql
-        cat /setup/log/mysql_error.log
-        exit 2
-    )
-done
-echo "...done"
-
 ## The user may already exists
 ## In mysql 7+, there is an "IF NOT EXISTS"
 mysql --database=mysql -e "DROP USER 'username'@'localhost'" 2>/dev/null || true
