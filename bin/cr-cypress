@@ -54,7 +54,7 @@ case "$FLAVOR" in
     ;;
 esac
 
-cr-data-reset
+jh-run-and-capture cr-data-reset
 mkdir -p "$OUTPUT"
 cr-ensure-folder-empty "$OUTPUT"/screenshots
 cr-ensure-folder-empty "$OUTPUT"/videos
