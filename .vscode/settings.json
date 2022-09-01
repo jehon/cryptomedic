@@ -10,5 +10,10 @@
     "**/vendor": true,
     "**/node_modules": true,
     "**/tmp": true
-  }
+  },
+  "javascript.preferences.importModuleSpecifierEnding": "js",
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "javascript.preferences.importModuleSpecifier": "relative",
+  "php.suggest.basic": false,
+  "css.format.spaceAroundSelectorSeparator": true
 }
