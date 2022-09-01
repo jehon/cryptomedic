@@ -10,3 +10,9 @@ log_error = /setup/log/mysql_error.log
 general_log = 1
 general_log_file = /setup/log/mysql.log
 log_error = /setup/log/mysql_error.log
+
+#
+# Prepare the 6.0 version
+#    see https://stackoverflow.com/questions/15701636/how-to-enable-explicit-defaults-for-timestamp
+#
+explicit_defaults_for_timestamp = 1
