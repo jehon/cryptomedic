@@ -32,3 +32,10 @@ EOS
 
 apt update --quiet --yes
 apt install --quiet --yes "mysql-community-server"
+
+#
+# https://dev.mysql.com/doc/refman/8.0/en/data-directory-initialization.html
+#
+header_begin "Initialize mysql"
+/usr/sbin/mysqld --initialize-insecure --user=mysql --defaults-file=/etc/mysql/my.cnf 2>&1 | tee /setup/log/mysql-initialize.log || true
+header_end
