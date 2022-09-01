@@ -90,13 +90,13 @@ dump:
 	@echo "---"
 	ls -l /var/run/mysqld/mysqld.sock || true
 	@echo "---"
-	pgrep mysql
-	@echo "---"
-	cat /setup/log/mysql_error.log
-	@echo "---"
 	ls -ld /usr/data
+	@echo "---"
 	ls -l /usr/data/
 	@echo "---"
+	cat /setup/log/mysql_error.l0og
+	@echo "---"
+	pgrep mysql
 
 clear:
 	@if [ -z "$$NO_CLEAR" ]; then clear; fi
