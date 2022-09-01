@@ -106,13 +106,15 @@ const MaxDiffs = {
                         fset.problem = true;
                         fset.problemText = `size    - ${r(fset.diffSize)} vs. ${MaxDiffs.sizePercent}`;
                         // }
-                    } else if (fset.diffPixels > 0) {
-                        if (fset.diffPixels > MaxDiffs.contentPixels) {
-                            fset.problem = true;
-                            fset.problemText = `content - ${fset.diffPixels} vs. ${MaxDiffs.contentPixels}`;
-                        } else {
-                            fset.warning = true;
-                            fset.warningText = `content - ${fset.diffPixels} - ${fset.diffContent}`;
+                    } else {
+                        if (fset.diffPixels > 0) {
+                            if (fset.diffPixels > MaxDiffs.contentPixels) {
+                                fset.problem = true;
+                                fset.problemText = `content - ${fset.diffPixels} vs. ${MaxDiffs.contentPixels}`;
+                            } else {
+                                fset.warning = true;
+                                fset.warningText = `content - ${fset.diffPixels}`;
+                            }
                         }
                     }
 
