@@ -94,7 +94,7 @@ dump:
 	@echo "---"
 	ls -l /usr/data/
 	@echo "---"
-	cat /setup/log/mysql_error.l0og
+	cat /setup/log/mysql_error.log
 	@echo "---"
 	pgrep mysql
 
