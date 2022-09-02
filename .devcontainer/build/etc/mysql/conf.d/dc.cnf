@@ -16,3 +16,19 @@ log_error = /setup/log/mysql_error.log
 #    see https://stackoverflow.com/questions/15701636/how-to-enable-explicit-defaults-for-timestamp
 #
 explicit_defaults_for_timestamp = 1
+
+#
+# Reduce memory consumption
+#   See https://stackoverflow.com/a/53528421/1954789
+#
+performance_schema = off
+key_buffer_size = 16M
+tmp_table_size = 1M
+innodb_buffer_pool_size = 1M
+innodb_log_buffer_size = 1M
+max_connections = 25
+sort_buffer_size = 512K
+read_buffer_size = 256K
+read_rnd_buffer_size = 512K
+join_buffer_size = 128K
+thread_stack = 196K
