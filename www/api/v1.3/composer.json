@@ -3,7 +3,7 @@
     "license": "MIT",
     "type": "project",
     "require": {
-        "laravel/framework": "9.25.1"
+        "laravel/framework": "9.27.0"
     },
     "require-dev": {
         "phpunit/phpunit": "9.5.24"
