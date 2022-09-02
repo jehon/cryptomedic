@@ -67,9 +67,10 @@ export function crApiFolderGet(id) {
     cy.log('Doing crApiFolderGet');
     return crApi({ url: `folder/Patient/${id}` })
         .then(response => response.body)
-        .then(data => {
-            cy.log('Done crApiFolderGet: ', data);
-        });
+        .then(data => cy
+            .log('Done crApiFolderGet: ', data)
+            .then(() => data)
+        );
 }
 
 /**
@@ -143,9 +144,10 @@ export function crApiPriceList() {
     cy.log('Doing crApiPriceList');
     return crApi({ url: 'admin/prices' })
         .then(response => response.body)
-        .then(data => {
-            cy.log('Done crApiPriceList: ', data);
-        });
+        .then(data => cy
+            .log('Done crApiPriceList: ', data)
+            .then(() => data)
+        );
 }
 
 export function crApiPriceDelete(id) {

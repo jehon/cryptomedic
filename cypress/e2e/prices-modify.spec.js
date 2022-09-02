@@ -46,6 +46,7 @@ function assertTableInitial(i = 0) {
     cy.get('#button_save_' + (i + 1)).should('not.exist');
     cy.get('#button_save_' + (i + 2)).should('not.exist');
 }
+
 flavorFilter(flavorFilter.DESKTOP, () =>
     context('Actions', () => {
         beforeEach(() => {

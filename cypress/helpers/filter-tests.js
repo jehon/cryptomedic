@@ -10,7 +10,8 @@ const activeConfig = Cypress.env('flavor');
  * @example npm run open --env flavor=api
  */
 export default function flavorFilter(requiredConfig, runTest) {
-    if (activeConfig == requiredConfig) {
+    // In case we run in cypress, we have no "activeConfig" and that's expected:
+    if (activeConfig == requiredConfig || !activeConfig) {
         runTest();
     }
 }

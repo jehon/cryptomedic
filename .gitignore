@@ -14,6 +14,8 @@ commit.msg
 .~lock.*
 *.bak
 *.log
+.phpunit.result.cache
+core
 
 /.buildpath
 /.externalToolBuilders/
@@ -22,5 +24,3 @@ commit.msg
 /.project
 /.settings
 /.DS_Store
-
-.phpunit.result.cache
