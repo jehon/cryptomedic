@@ -98,7 +98,7 @@ const MaxDiffs = {
 
                 const r = (v) => Math.round(v * 100) + '%';
 
-                if (fset.diffSize == 0 && fset.diffContent == 0) {
+                if (fset.diffSize == 0 && 'diffPixels' in fset && fset.diffPixels == 0) {
                     fs.unlinkSync(inStyles(fset.ref));
                 } else {
                     if (fset.diffSize > 0) {
