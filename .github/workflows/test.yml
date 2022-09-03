@@ -18,6 +18,13 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
+    - name: swap
+      run: |
+        sudo fallocate -l 2G /swap
+        sudo chmod 400 /swap
+        sudo mkswap /swap
+        sudo swapon /swap
+
     - name: dc dump
       uses: jehon/actions-devcontainer@main
       with:
