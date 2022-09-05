@@ -16,8 +16,6 @@ COPY --chown=root:root build/ /
 RUN chown -R user.user /home/user
 
 RUN /usr/sbin/jh-install-google-chrome
-RUN /setup/enable-docker
-
 RUN /setup/cryptomedic/setup-apache
 RUN /setup/cryptomedic/setup-mysql "5.6"
 RUN /setup/cryptomedic/setup-php "8.1"
