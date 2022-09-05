@@ -25,6 +25,9 @@ jobs:
         sudo mkswap /swap
         sudo swapon /swap
 
+    - name: enable monitoring
+      run: /usr/bin/supervisorctl start monitoring
+
     - name: dc dump
       uses: jehon/actions-devcontainer@main
       with:
