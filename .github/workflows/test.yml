@@ -38,7 +38,10 @@ jobs:
         dc-env-0: CRYPTOMEDIC_PROD=true
 
     - name: enable monitoring
-      run: /usr/bin/supervisorctl start monitoring
+      uses: jehon/actions-devcontainer@main
+      with:
+        action: shell
+        make: /usr/bin/supervisorctl start monitoring
 
     - name: make dump
       uses: jehon/actions-devcontainer@main
