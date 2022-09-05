@@ -10,7 +10,7 @@ module.exports = {
         es6: true,
         browser: true
     },
-    parser: '@babel/eslint-parser',
+    // parser: '@babel/eslint-parser',
     parserOptions: {
         ecmaVersion: (new Date()).getFullYear(),
         sourceType: 'module',

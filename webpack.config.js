@@ -43,31 +43,22 @@ module.exports = {
             {
                 test: /\.(eot|svg|ttf|woff|woff2|png|svg|jpg|gif)$/,
                 type: 'asset'
-                // options: {
-                //     name: '[name]-[contenthash].[ext]'
-                // }
             },
-            {
-                test: /\.js$/,
-                exclude: /node_modules/,
-                loader: 'babel-loader',
-                options: {
-                    presets: [
-                        ['@babel/preset-env']
-                    ],
-                    plugins: [
-                        '@babel/plugin-proposal-optional-chaining',
-                        '@babel/plugin-proposal-nullish-coalescing-operator',
-                        '@babel/plugin-proposal-class-properties'
-                    ]
-                }
-            }
+            // {
+            //     test: /\.js$/,
+            //     exclude: /node_modules/,
+            //     loader: 'babel-loader',
+            //     options: {
+            //         presets: [
+            //             ['@babel/preset-env']
+            //         ],
+            //         plugins: []
+            //     }
+            // }
         ]
     },
     optimization: {
-        moduleIds: 'deterministic',
-        // splitChunks: {
-        //     chunks: 'all',
-        // },
+        // https://webpack.js.org/configuration/optimization/#optimizationmoduleids
+        moduleIds: 'deterministic'
     },
 };
