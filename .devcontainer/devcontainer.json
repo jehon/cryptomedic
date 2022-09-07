@@ -4,8 +4,7 @@
 		"dockerfile": "Dockerfile"
 	},
 	"runArgs": [
-		"--init",
-		"--privileged"
+		"--init"
 	],
 	"postCreateCommand": "make start",
 	"overrideCommand": false,

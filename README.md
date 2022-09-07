@@ -15,14 +15,13 @@ Debug: http://localhost/xappx
 
 (to be checked)
 
-- docker-compose
 - docker
 - make
 - curl
 - node
 
 ```lang=bash
-sudo apt install docker-compose docker.io make curl nodejs
+sudo apt install docker.io make curl nodejs
 ```
 
 ## Quick install

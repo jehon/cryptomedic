@@ -78,7 +78,6 @@ dump:
 	@echo "--------------- Supervisor ---------------"
 	sudo /usr/bin/supervisorctl status || true
 	@echo "------------------------------------------"
-	@echo "Docker:           $(shell docker --version 2>&1 )"
 	@echo "MySQL:            $(shell mysql --version 2>&1 )"
 	@echo "MySQL Server:     $(shell mysql --silent --database mysql --raw --skip-column-names -e "SELECT VERSION();" 2>&1)"
 	@echo "MySQL user:       $(shell mysql --silent --database mysql --raw --skip-column-names -e "SELECT CURRENT_USER; " 2>&1)"
