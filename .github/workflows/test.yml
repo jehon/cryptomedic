@@ -35,90 +35,70 @@ jobs:
       uses: jehon/actions-devcontainer@main
       with:
         action: start
-        dc-env-0: CRYPTOMEDIC_PROD=true
 
     - name: enable monitoring
       uses: jehon/actions-devcontainer@main
       with:
-        action: shell
-        make: /usr/bin/supervisorctl start monitoring
+        run: /usr/bin/supervisorctl start monitoring
 
     - name: make dump
       uses: jehon/actions-devcontainer@main
       with:
-        action: make
-        make: dump
+        run: make dump
 
     - name: make dependencies
       uses: jehon/actions-devcontainer@main
       with:
-        action: make
-        make: dependencies
+        run: CRYPTOMEDIC_PROD=true make dependencies
 
     - name: make build
       uses: jehon/actions-devcontainer@main
       with:
-        action: make
-        make: build
+        run: CRYPTOMEDIC_PROD=true make build
 
     - name: make test-api
       uses: jehon/actions-devcontainer@main
       with:
-        action: make
-        make: test-api
+        run: make test-api
 
     - name: make test-api-bare
       uses: jehon/actions-devcontainer@main
       with:
-        action: make
-        make: test-api-bare
+        run: make test-api-bare
 
     - name: make test-unit
       uses: jehon/actions-devcontainer@main
       with:
-        action: make
-        make: test-unit
+        run: make test-unit
 
     - name: make test-e2e-desktop
       uses: jehon/actions-devcontainer@main
       with:
-        action: make
-        make: test-e2e-desktop
+        run: make test-e2e-desktop
 
     - name: make test-e2e-mobile
       uses: jehon/actions-devcontainer@main
       with:
-        action: make
-        make: test-e2e-mobile
+        run: make test-e2e-mobile
 
     - name: make test-styles
       uses: jehon/actions-devcontainer@main
       with:
-        action: make
-        make: test-styles
+        run: make test-styles
 
     - name: make lint
       uses: jehon/actions-devcontainer@main
       with:
-        action: make
-        make: lint
+        run: make lint
 
     # # TODO
     # - name: make deploy
-    #   run: docker exec devcontainer make deploy
+    #   uses: jehon/actions-devcontainer@main
     #   if: ${{ github.ref_name == 'main' && github.ref_type == 'branch' }}
-    #    concurrency:
+    #   concurrency:
     #      group: 'release'
-    #   env:
-    #     CRYPTOMEDIC_DB_UPGRADE: ${{ secrets.CRYPTOMEDIC_DB_UPGRADE }}
-    #     CRYPTOMEDIC_UPLOAD_PASSWORD: ${{ secrets.CRYPTOMEDIC_UPLOAD_PASSWORD }}
-    #     CRYPTOMEDIC_UPLOAD_USER: ${{ secrets.CRYPTOMEDIC_UPLOAD_USER }}
-
-    # - name: make release
-    #    concurrency:
-    #      group: 'release'
-    #   if: ${{ github.ref == 'refs/heads/main' }}
-    #   run: docker exec -e "JH_DOCKER_HUB_TOKEN=${{ secrets.JH_DOCKER_HUB_TOKEN }}" ${{ steps.start.outputs.container }} make --debug release
+    #   with:
+    #     run: CRYPTOMEDIC_DB_UPGRADE=${{ secrets.CRYPTOMEDIC_DB_UPGRADE }} CRYPTOMEDIC_UPLOAD_PASSWORD=${{ secrets.CRYPTOMEDIC_UPLOAD_PASSWORD }} CRYPTOMEDIC_UPLOAD_USER=${{ secrets.CRYPTOMEDIC_UPLOAD_USER }} make deploy
 
     # This will upload the docker.log
     - name: stop docker
