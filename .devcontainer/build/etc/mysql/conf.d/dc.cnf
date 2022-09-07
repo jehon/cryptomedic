@@ -22,13 +22,14 @@ explicit_defaults_for_timestamp = 1
 #   See https://stackoverflow.com/a/53528421/1954789
 #
 performance_schema = off
-key_buffer_size = 16M
+key_buffer_size = 8M
 tmp_table_size = 1M
 innodb_buffer_pool_size = 1M
 innodb_log_buffer_size = 1M
+# open_files_limit = 100
 max_connections = 25
 sort_buffer_size = 512K
 read_buffer_size = 256K
 read_rnd_buffer_size = 512K
 join_buffer_size = 128K
-thread_stack = 196K
+# thread_stack = 196K
