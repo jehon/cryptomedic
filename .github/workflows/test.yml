@@ -41,6 +41,11 @@ jobs:
       with:
         run: /usr/bin/supervisorctl start monitoring
 
+    - name: make ready
+      uses: jehon/actions-devcontainer@main
+      with:
+        run: make ready
+
     - name: make dump
       uses: jehon/actions-devcontainer@main
       with:
