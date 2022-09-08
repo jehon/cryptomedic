@@ -96,7 +96,14 @@ export default class XPagePrices extends HTMLElement {
             ]),
             this._requestor = createElementWithObject(XRequestor, {}, [
                 this._form = createElementWithObject(XForm, { id: 'editForm' }, [
-                    this._table = createElementWithTag('table', { class: 'table table-hover table-bordered tablesorter reporting', id: 'price_lists' })
+                    createElementWithTag('div', {
+                        style: {
+                            width: '100%',
+                            overflowX: 'auto'
+                        }
+                    }, [
+                        this._table = createElementWithTag('table', { class: 'table table-hover table-bordered tablesorter reporting', id: 'price_lists' })
+                    ])
                 ])
             ])
         );
