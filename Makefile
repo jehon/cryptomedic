@@ -136,7 +136,7 @@ clean-ports:
 	jh-kill-by-port 9515 || true
 
 .PHONY: start
-start: dependencies
+start: dependencies build
 	jh-run-and-capture cr-data-reset
 
 	@echo "Open browser: http://localhost:$(CRYPTOMEDIC_PORT)/"
