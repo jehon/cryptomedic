@@ -69,13 +69,13 @@ define recursive-dependencies
 endef
 
 ready:
-	@echo -n "Waiting for mysql..."
-	@while ! mysql -e "SHOW DATABASES; " mysql 2>/dev/null 1>/dev/null ; do sleep 1; done
-	@echo "...ready"
+	@echo -n "Service Mysql:"
+	@jh-wait 12 "mysql -e "SHOW DATABASES;" " "5s"
 
-	@echo -n "Waiting for apache..."
-	@while ! nc -z -w 1 localhost 80 2>/dev/null 1>/dev/null ; do sleep 1; done
-	@echo "...ready"
+	@echo -n "Service Apache: "
+	@jh-wait 12 "nc -z -w 1 localhost 80" " "5s"
+
+	@echo "Waiting for services done"
 
 dump:
 	@echo "Who am i:         $(shell whoami)"
