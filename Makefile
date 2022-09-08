@@ -219,7 +219,7 @@ cypress-open:
 # TODO
 .PHONY: test-styles
 test-styles: $(TMP)/styles/styles-problems-list.js
-$(TMP)/styles/styles-problems-list.js: tests/styles/* tests/styles/references/* $(TMP)/.tested-e2e-desktop $(TMP)/.tested-e2e-mobile
+$(TMP)/styles/styles-problems-list.js: tests/styles tests/styles/references $(TMP)/.tested-e2e-desktop $(TMP)/.tested-e2e-mobile
 	@rm -fr "$(dir $@)"
 	@mkdir -p "$(dir $@)"
 	@mkdir -p "$(dir $@)/run/mobile"
@@ -230,14 +230,14 @@ $(TMP)/styles/styles-problems-list.js: tests/styles/* tests/styles/references/* 
 	find $(TMP)/e2e/desktop/screenshots/ -type "f" -exec "cp" "{}" "$(dir $@)/run/desktop/" ";"
 
 	@echo "Compare"
-	npm run --silent test-styles
+	node tests/styles/test-styles.mjs
 	@echo "Report is at http://localhost:$(CRYPTOMEDIC_PORT)/xappx/tmp/style.html"
 	du -ksh "$(dir $@)"
 
-# TODO
 .PHONY: update-references-style
-update-references-style:
-	npm run --silent test-styles -- --update
+update-references-style: $(TMP)/styles/styles-problems-list.js
+	@echo "Compare"
+	node tests/styles/update-styles.mjs
 
 #
 # Deploy command
