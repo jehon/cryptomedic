@@ -18,7 +18,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - name: swap
+    - name: Add swap
       run: |
         sudo fallocate -l 2G /swap
         sudo chmod 400 /swap
@@ -32,6 +32,7 @@ jobs:
 
     - id: start
       name: dc start
+      timeout-minutes: 2
       uses: jehon/actions-devcontainer@main
       with:
         action: start
@@ -42,11 +43,13 @@ jobs:
         run: /usr/bin/supervisorctl start monitoring
 
     - name: make ready
+      timeout-minutes: 2
       uses: jehon/actions-devcontainer@main
       with:
         run: make ready
 
     - name: make dump
+      timeout-minutes: 2
       uses: jehon/actions-devcontainer@main
       with:
         run: make dump
