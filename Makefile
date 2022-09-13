@@ -218,8 +218,8 @@ cypress-open:
 
 # TODO
 .PHONY: test-styles
-test-styles: $(TMP)/styles/styles-problems-list.js
-$(TMP)/styles/styles-problems-list.js: tests/styles tests/styles/references $(TMP)/.tested-e2e-desktop $(TMP)/.tested-e2e-mobile
+test-styles: $(TMP)/styles/styles-problems-list.json
+$(TMP)/styles/styles-problems-list.json: tests/styles tests/styles/references $(TMP)/.tested-e2e-desktop $(TMP)/.tested-e2e-mobile
 	@rm -fr "$(dir $@)"
 	@mkdir -p "$(dir $@)"
 	@mkdir -p "$(dir $@)/run/mobile"
@@ -235,7 +235,8 @@ $(TMP)/styles/styles-problems-list.js: tests/styles tests/styles/references $(TM
 	du -ksh "$(dir $@)"
 
 .PHONY: update-references-style
-update-references-style: $(TMP)/styles/styles-problems-list.js
+update-references-style:
+	if [ ! -r $(TMP)/styles/styles-problems-list.json ]; then echo "No tmp/styles/styles-problems-list.json found!"; exit 1; fi
 	@echo "Compare"
 	node tests/styles/update-styles.mjs
 
