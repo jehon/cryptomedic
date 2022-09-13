@@ -96,6 +96,7 @@ export default class XPagePrices extends HTMLElement {
             ]),
             this._requestor = createElementWithObject(XRequestor, {}, [
                 this._form = createElementWithObject(XForm, { id: 'editForm' }, [
+                    // TODO: use XTable
                     createElementWithTag('div', {
                         style: {
                             width: '100%',
