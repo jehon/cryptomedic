@@ -12,7 +12,7 @@ on:
 
 jobs:
   ga-test:
-    runs-on: ubuntu-latest
+    runs-on: debian
     timeout-minutes: 45
 
     steps:
