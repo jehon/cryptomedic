@@ -234,8 +234,8 @@ $(TMP)/styles/styles-problems-list.json: tests/styles tests/styles/references $(
 	@echo "Report is at http://localhost:$(CRYPTOMEDIC_PORT)/xappx/tmp/style.html"
 	du -ksh "$(dir $@)"
 
-.PHONY: update-references-style
-update-references-style:
+.PHONY: update-references-styles
+update-references-styles:
 	if [ ! -r $(TMP)/styles/styles-problems-list.json ]; then echo "No tmp/styles/styles-problems-list.json found!"; exit 1; fi
 	@echo "Compare"
 	node tests/styles/update-styles.mjs
