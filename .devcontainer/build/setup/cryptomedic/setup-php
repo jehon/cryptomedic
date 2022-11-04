@@ -20,6 +20,8 @@ export DEBIAN_FRONTEND=noninteractive
 #
 RELEASE="$( lsb_release -sc )"
 echo "RELEASE: $RELEASE"
+RELEASE="bullseye"
+echo "Overriden release: $RELEASE"
 
 # To link our config into VERSION config
 ln -s /etc/php/current "/etc/php/${VERSION}"
