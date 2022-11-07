@@ -7,8 +7,9 @@ GIT_BRANCH=$(shell git rev-parse --abbrev-ref HEAD)
 NPM_BIN=$(shell npm bin)
 
 # Default target
+# End by test, since test-styles may fail
 .PHONY: dev
-dev: clear clean test lint ok
+dev: clear clean lint test ok
 
 .PHONY: full
 full: clear clean stop start-with-rebuild test lint ok
