@@ -20,17 +20,13 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - name: dc dump
-      uses: jehon/actions-devcontainer@main
-      with:
-        action: dump
-
     - id: start
       name: dc start
       timeout-minutes: 2
       uses: jehon/actions-devcontainer@main
       with:
         action: start
+        privileged: true
 
     - name: enable monitoring
       uses: jehon/actions-devcontainer@main
