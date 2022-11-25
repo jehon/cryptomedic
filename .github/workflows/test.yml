@@ -22,7 +22,7 @@ jobs:
 
     - id: start
       name: dc start
-      timeout-minutes: 2
+      timeout-minutes: 10
       uses: jehon/actions-devcontainer@main
       with:
         action: start
