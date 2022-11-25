@@ -4,7 +4,7 @@ export PATH := $(ROOT)/bin:$(PATH)
 TMP := $(ROOT)/tmp
 
 GIT_BRANCH=$(shell git rev-parse --abbrev-ref HEAD)
-NPM_BIN=$(shell npm bin)
+NPM_BIN=$(shell npm root)/.bin
 
 # Default target
 # End by test, since test-styles may fail
@@ -53,7 +53,6 @@ export DBUPDATEPWD := secret
 # Fixed
 #
 CJS2ESM_DIR := app/cjs2esm
-NM_BIN := $(shell npm bin)/
 
 
 # See https://coderwall.com/p/cezf6g/define-your-own-function-in-a-makefile
@@ -93,7 +92,7 @@ dump:
 	@echo "MySQL user:       $(shell mysql --silent --database mysql --raw --skip-column-names -e "SELECT CURRENT_USER; " 2>&1)"
 	@echo "PHP:              $(shell php -r 'echo PHP_VERSION;' 2>&1 )"
 	@echo "NodeJS:           $(shell node --version 2>&1 )"
-	@echo "Cypress:          $(shell $(NM_BIN)/cypress --version --component package 2>&1 )"
+	@echo "Cypress:          $(shell $(NPM_BIN)/cypress --version --component package 2>&1 )"
 	@echo "Chrome:           $(shell google-chrome --version 2>&1 )"
 	@echo "Supported:        $(shell npx -y browserslist 2>&1 )"
 	@echo "---"
@@ -215,7 +214,7 @@ $(TMP)/.tested-e2e-mobile: $(TMP)/.built $(TMP)/.dependencies $(shell find cypre
 
 # TODO
 cypress-open:
-	$(shell npm bin)/cypress open
+	$(NPM_BIN)/cypress open
 
 # TODO
 .PHONY: test-styles
@@ -344,7 +343,7 @@ www/built/index.html: $(TMP)/.dependencies-node webpack.config.js  \
 		$(CJS2ESM_DIR)/axios-mock-adapter.js \
 		$(CJS2ESM_DIR)/platform.js
 
-	$(NM_BIN)webpack
+	$(NPM_BIN)webpack
 
 www/built/browsers.json: .browserslistrc $(TMP)/.dependencies-node
 	npx -y browserslist --json > "$@"
@@ -354,16 +353,16 @@ update-references-browsers:
 
 # Dependencies are used in the build !
 $(CJS2ESM_DIR)/axios.js: node_modules/axios/dist/axios.js
-	$(NM_BIN)babel --out-file="$@" --plugins=transform-commonjs --source-maps inline $?
+	$(NPM_BIN)babel --out-file="$@" --plugins=transform-commonjs --source-maps inline $?
 
 # Dependencies are used in the build !
 $(CJS2ESM_DIR)/axios-mock-adapter.js: node_modules/axios-mock-adapter/dist/axios-mock-adapter.js
-	$(NM_BIN)babel --out-file="$@" --plugins=transform-commonjs --source-maps inline $?
+	$(NPM_BIN)babel --out-file="$@" --plugins=transform-commonjs --source-maps inline $?
 	sed -i 's/from "axios";/from ".\/axios.js";/' $@
 
 # Dependencies are used in the build !
 $(CJS2ESM_DIR)/platform.js: node_modules/platform/platform.js
-	$(NM_BIN)babel --out-file="$@" --plugins=transform-commonjs --source-maps inline $?
+	$(NPM_BIN)babel --out-file="$@" --plugins=transform-commonjs --source-maps inline $?
 
 #
 #
