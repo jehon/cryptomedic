@@ -343,7 +343,7 @@ www/built/index.html: $(TMP)/.dependencies-node webpack.config.js  \
 		$(CJS2ESM_DIR)/axios-mock-adapter.js \
 		$(CJS2ESM_DIR)/platform.js
 
-	$(NPM_BIN)webpack
+	$(NPM_BIN)/webpack
 
 www/built/browsers.json: .browserslistrc $(TMP)/.dependencies-node
 	npx -y browserslist --json > "$@"
@@ -353,16 +353,16 @@ update-references-browsers:
 
 # Dependencies are used in the build !
 $(CJS2ESM_DIR)/axios.js: node_modules/axios/dist/axios.js
-	$(NPM_BIN)babel --out-file="$@" --plugins=transform-commonjs --source-maps inline $?
+	$(NPM_BIN)/babel --out-file="$@" --plugins=transform-commonjs --source-maps inline $?
 
 # Dependencies are used in the build !
 $(CJS2ESM_DIR)/axios-mock-adapter.js: node_modules/axios-mock-adapter/dist/axios-mock-adapter.js
-	$(NPM_BIN)babel --out-file="$@" --plugins=transform-commonjs --source-maps inline $?
+	$(NPM_BIN)/babel --out-file="$@" --plugins=transform-commonjs --source-maps inline $?
 	sed -i 's/from "axios";/from ".\/axios.js";/' $@
 
 # Dependencies are used in the build !
 $(CJS2ESM_DIR)/platform.js: node_modules/platform/platform.js
-	$(NPM_BIN)babel --out-file="$@" --plugins=transform-commonjs --source-maps inline $?
+	$(NPM_BIN)/babel --out-file="$@" --plugins=transform-commonjs --source-maps inline $?
 
 #
 #
