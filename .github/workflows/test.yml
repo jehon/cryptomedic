@@ -112,3 +112,10 @@ jobs:
       with:
         name: styles
         path: tmp/styles/
+
+    - name: 'Artifacts Mysql'
+      if: always()
+      uses: actions/upload-artifact@v3
+      with:
+        name: mysql-error.log
+        path: /var/log/mysql/error.log
