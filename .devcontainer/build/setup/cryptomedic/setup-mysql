@@ -8,39 +8,28 @@ set -o errexit
 VERSION="$1"
 if [ -z "$VERSION" ]; then
     jh_fatal "Specify version as [1]"
+    # TODO: VERSION need to be stored in .devcontainer/build/etc/apt/sources.list.d/mysql.list
 fi
 
 export DEBIAN_FRONTEND=noninteractive
 
 #
+# See https://dev.mysql.com/doc/mysql-apt-repo-quick-guide/en/
 # See https://stackoverflow.com/a/34806229/1954789
+# See http://repo.mysql.com/apt/debian/dists/
 #
-
-NAME="$( lsb_release -si )"
-NAME="${NAME,,}"
-RELEASE="$( lsb_release -sc )"
-
-NAME="ubuntu"
-RELEASE="precise"
-
-echo "NAME:    $NAME"
-echo "RELEASE: $RELEASE"
-
-cat <<-EOS > /etc/apt/sources.list.d/jh-mysql.list
-    deb [trusted=yes] http://repo.mysql.com/apt/$NAME/ $RELEASE mysql-apt-config
-EOS
 
 apt update --quiet --yes
 apt install --quiet --yes "mysql-community-server"
 
-#
-# https://dev.mysql.com/doc/refman/8.0/en/data-directory-initialization.html
-#
-header_begin "Initialize mysql"
-(
-    # https://dev.mysql.com/doc/refman/5.6/en/data-directory-initialization.html
-    /usr/bin/mysql_install_db --user=mysql --defaults-file=/etc/mysql/my.cnf
-    # For version 8.0:
-    # /usr/sbin/mysqld --initialize-insecure --user=mysql --defaults-file=/etc/mysql/my.cnf 
-) 2>&1 | tee /setup/log/mysql-initialize.log || true
-header_end
+##
+## https://dev.mysql.com/doc/refman/8.0/en/data-directory-initialization.html
+##
+#header_begin "Initialize mysql"
+# (
+#     # https://dev.mysql.com/doc/refman/5.6/en/data-directory-initialization.html
+#     /usr/bin/mysql_install_db --user=mysql --defaults-file=/etc/mysql/my.cnf
+#     # For version 8.0:
+#     # /usr/sbin/mysqld --initialize-insecure --user=mysql --defaults-file=/etc/mysql/my.cnf 
+# ) 2>&1 | tee /setup/log/mysql-initialize.log || true
+#header_end

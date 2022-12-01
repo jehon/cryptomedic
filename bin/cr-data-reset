@@ -27,8 +27,8 @@ header_end
 header_begin "cr-data-reset - Mysql - configuring"
 ## The user may already exists
 ## In mysql 7+, there is an "IF NOT EXISTS"
-mysql --database=mysql -e "DROP USER 'username'@'localhost'" 2>/dev/null || true
-mysql --database=mysql -e "CREATE USER 'username'@'localhost' IDENTIFIED BY 'password'"
+mysql --database=mysql -e "DROP USER 'username'" 2>/dev/null || true
+mysql --database=mysql -e "CREATE USER 'username' IDENTIFIED BY 'password'"
 
 mysql --database=mysql -e " \
         USE mysql; \
