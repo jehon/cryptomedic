@@ -6,6 +6,10 @@
 	"runArgs": [
 		"--init"
 	],
+	"mounts": [
+		"source=/etc/jehon/restricted/cryptomedic.php,target=/etc/jehon/restricted/cryptomedic.php,type=bind",
+		"source=/etc/jehon/restricted/cryptomedic.sh,target=/etc/jehon/restricted/cryptomedic.sh,type=bind"
+	],
 	"postCreateCommand": "make start",
 	"overrideCommand": false,
 	"settings": {},
