@@ -58,8 +58,10 @@ sftp_exec() {
 		sftp "$CRYPTOMEDIC_UPLOAD_USER@$CRYPTOMEDIC_UPLOAD_HOST" \
 		2>&1 |
 		tee -a "$LOG" |
+		grep -v "SFTP protocol" |
 		grep -v "Connected to" |
 		grep -v "Couldn't create directory" |
+		grep -v "remote mkdir .*: Failure" |
 		(grep -v "^sftp" || [[ $? == 1 ]]) |
 		while read -r R; do
 			echo "$R"
