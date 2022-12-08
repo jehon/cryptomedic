@@ -9,7 +9,7 @@ NPM_BIN=$(shell npm root)/.bin
 # Default target
 # End by test, since test-styles may fail
 .PHONY: dev
-dev: clear clean lint test ok
+dev: clear dependencies build lint test ok
 
 .PHONY: full
 full: clear clean stop start-with-rebuild test lint ok

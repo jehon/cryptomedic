@@ -71,6 +71,9 @@ export default class XLabel extends HTMLElement {
         flex-shrink: 0;
         font-weight: bold;
         text-align: right;
+
+        overflow: hidden;
+        text-overflow: clip ".";
     }
 
     ::slotted(*) {
