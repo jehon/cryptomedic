@@ -5,7 +5,7 @@
 
 VERSION="4.9.10"
 
-curl -fsSL https://files.phpmyadmin.net/phpMyAdmin/4.9.10/phpMyAdmin-$VERSION-english.tar.gz -o /setup/tmp/phpmyadmin.tar.gz
+curl -fsSL "https://files.phpmyadmin.net/phpMyAdmin/${VERSION}/phpMyAdmin-${VERSION}-english.tar.gz" -o /setup/tmp/phpmyadmin.tar.gz
 
 ROOT="/var/www/html/phpmyadmin"
 
