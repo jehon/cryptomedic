@@ -26,7 +26,6 @@ jobs:
       uses: jehon/actions-devcontainer@main
       with:
         action: start
-        privileged: true
 
     - name: enable monitoring
       uses: jehon/actions-devcontainer@main
