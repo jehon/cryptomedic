@@ -6,6 +6,12 @@ set -o pipefail
 # shellcheck source=./cr-lib
 . "$(dirname "${BASH_SOURCE[0]}")"/cr-lib
 
+ACTION="$1"
+
+if [ -r /etc/jehon/restricted/cryptomedic.sh ]; then
+	. /etc/jehon/restricted/cryptomedic.sh
+fi
+
 #
 # To protect a version, please see md5sum.php (at the bottom)
 #
@@ -149,7 +155,7 @@ if [ -r "$CR_TMP"/deploy-diff-4-sorted.txt ]; then
 	echo "-------------- Differences --------------"
 	echo "-------------- Differences --------------"
 
-	if [ "$1" == "commit" ]; then
+	if [ "$ACTION" == "commit" ]; then
 		header_begin "Commiting"
 		sftp_exec <"$CR_TMP"/deploy-diff-5-sftp-commands.txt
 		header_end
