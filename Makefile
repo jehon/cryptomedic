@@ -95,16 +95,6 @@ dump:
 	@echo "Cypress:          $(shell $(NPM_BIN)/cypress --version --component package 2>&1 )"
 	@echo "Chrome:           $(shell google-chrome --version 2>&1 )"
 	@echo "Supported:        $(shell npx -y browserslist 2>&1 )"
-	@echo "---"
-	ls -l /var/run/mysqld/mysqld.sock || true
-	@echo "---"
-	ls -ld /usr/data
-	@echo "---"
-	ls -l /usr/data/
-	@echo "---"
-	cat /setup/log/mysql_error.log
-	@echo "---"
-	pgrep mysql
 
 clear:
 	@if [ -z "$$NO_CLEAR" ]; then clear; fi
