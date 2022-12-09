@@ -68,15 +68,6 @@ define recursive-dependencies
 	)
 endef
 
-ready:
-	@echo -n "Service Apache: "
-	@jh-wait 60 "nc -z -w 1 localhost 80"
-
-	@echo -n "Service Mysql:"
-	@jh-wait 60 "mysql -e 'SHOW DATABASES;' "
-
-	@echo "All services are ready"
-
 dump:
 	@echo "Who am i:         $(shell whoami)"
 	@echo "HOME:             $(HOME)"
