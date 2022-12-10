@@ -26,7 +26,8 @@
 		"timonwong.shellcheck",
 		"ms-azuretools.vscode-docker",
 		"rogalmic.bash-debug",
-		"xdebug.php-debug"
+		"xdebug.php-debug",
+		"bmewburn.vscode-intelephense-client"
 	],
 	"forwardPorts": [
 		80
