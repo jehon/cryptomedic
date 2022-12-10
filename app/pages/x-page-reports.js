@@ -377,10 +377,11 @@ x-button#export {
 
 defineCustomElement(XPageReports);
 
-export const REPORT_SURGICAL = 'surgical';
-export const REPORT_STATISTICAL = 'statistical';
 export const REPORT_ACTIVITY = 'activity';
 export const REPORT_CONSULTATIONS = 'consultations';
+export const REPORT_FINANCIAL = 'financial';
+export const REPORT_SURGICAL = 'surgical';
+export const REPORT_STATISTICAL = 'statistical';
 
 const reports = {};
 reports[REPORT_ACTIVITY] = { // test data: 2014-05
@@ -455,18 +456,16 @@ reports[REPORT_CONSULTATIONS] = { // test data: 2015-04-28
     fixedParams: {
         period: 'day'
     },
-    generator: (xtable) => {
-        xtable
-            .addHeaders(1)
-            .addDetailLegacy('c_Center', ['Center'])
-            .addDetailLegacy(data => createElementWithTag('a', { href: '#' + getRouteToFolderPatient(data.patient_id) }, `${data.entryyear}-${data.entryorder}`), ['Patient'])
-            .addDetailLegacy('Name', ['Name'])
-            .addDetailLegacy('Telephone', ['Phone'])
-            .addDetailLegacy('ExaminerName', ['Appointment from'])
-            .addDetailLegacy('purpose', ['Purpose'])
-            .addDetailLegacy(data => createElementWithObject(XDisplayDate, { value: data.c_Date }), ['Appointment from'])
-            .end();
-    }
+    generator: xtable => xtable
+        .addHeaders(1)
+        .addDetailLegacy('c_Center', ['Center'])
+        .addDetailLegacy(data => createElementWithTag('a', { href: '#' + getRouteToFolderPatient(data.patient_id) }, `${data.entryyear}-${data.entryorder}`), ['Patient'])
+        .addDetailLegacy('Name', ['Name'])
+        .addDetailLegacy('Telephone', ['Phone'])
+        .addDetailLegacy('ExaminerName', ['Appointment from'])
+        .addDetailLegacy('purpose', ['Purpose'])
+        .addDetailLegacy(data => createElementWithObject(XDisplayDate, { value: data.c_Date }), ['Appointment from'])
+        .end()
 };
 
 reports[REPORT_SURGICAL] = { // test data: 2014-01
@@ -761,3 +760,4 @@ reports[REPORT_STATISTICAL] = { // test data:
         //     ];
     }
 };
+
