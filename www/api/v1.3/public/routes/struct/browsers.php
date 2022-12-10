@@ -84,17 +84,17 @@ $detected = [];
             }
         }
         echo "<tr>";
-        echo "<td>${b['browser_name']}</td>";
-        echo "<td>${bv}</td>";
-        echo "<td>${b['browser_version']}</td>";
-        echo "<td>${b['os']}</td>";
+        echo "<td>{$b['browser_name']}</td>";
+        echo "<td>{$bv}</td>";
+        echo "<td>{$b['browser_version']}</td>";
+        echo "<td>{$b['os']}</td>";
         echo "<td>" . substr($b['last_login'], 0, 7) . "</td>";
-        echo "<td>${b['last_login_name']}</td>";
-        echo "<td>${b['screen_width']}</td>";
-        echo "<td>${b['screen_height']}</td>";
+        echo "<td>{$b['last_login_name']}</td>";
+        echo "<td>{$b['screen_width']}</td>";
+        echo "<td>{$b['screen_height']}</td>";
         foreach ($b as $k => $v) {
             if (substr($k, 0, 5) == 'feat_') {
-                echo "<td>${v}</td>";
+                echo "<td>{$v}</td>";
             }
         }
         $support = "not supported $bn - $bv";
@@ -111,7 +111,7 @@ $detected = [];
         }
         echo "<td>$support</td>";
 
-        // echo "<td>${b['browser_uuid']}</td>";
+        // echo "<td>{$b['browser_uuid']}</td>";
 
         $sw = $b['screen_width'];
         if (!array_key_exists($sw, $screenWidth)) {
@@ -142,9 +142,9 @@ $detected = [];
     foreach ($detected as $br => $b) {
         echo "<tr>";
         echo "<td>$br</td>";
-        echo "<td>${b['min']}</td>";
+        echo "<td>{$b['min']}</td>";
         echo "<td>" . substr($b['last_login'], 0, 7) . "</td>";
-        echo "<td>${b['max']}</td>";
+        echo "<td>{$b['max']}</td>";
         echo "</tr>";
     }
     ?>
@@ -161,10 +161,10 @@ $detected = [];
     <?php
     foreach ($screenWidth as $sw => $b) {
         echo "<tr>";
-        echo "<td>${b['screen_width']}</td>";
-        echo "<td>${b['screen_height']}</td>";
+        echo "<td>{$b['screen_width']}</td>";
+        echo "<td>{$b['screen_height']}</td>";
         echo "<td>" . substr($b['last_login'], 0, 7) . "</td>";
-        echo "<td>${b['last_login_name']}</td>";
+        echo "<td>{$b['last_login_name']}</td>";
         echo "</tr>";
     }
     ?>
