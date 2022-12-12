@@ -145,8 +145,6 @@ abstract class ReportController extends Controller {
   }
 
   public function getParamAsSqlFilter($name, $field, $mandatory = false) {
-    $sqlParam = $name . count($this->sqlBindParams);
-
     if ($name == "when") {
       return "($field BETWEEN " . $this->getParamAsSqlNamed("whenFrom") . " AND " . $this->getParamAsSqlNamed("whenTo") . ")";
     }
