@@ -468,6 +468,18 @@ reports[REPORT_CONSULTATIONS] = { // test data: 2015-04-28
         .end()
 };
 
+reports[REPORT_FINANCIAL] = { // test data: 2014
+    name: 'Financial',
+    description: 'Financial follow-up',
+    params: ['period'],
+    generator: xtable => xtable
+        .addHeaders(1)
+        .addDetailLegacy(data => createElementWithTag('a', { href: '#' + getRouteToFolderPatient(data.patient_id) }, `${data.entryyear}-${data.entryorder}`), ['Patient'])
+        .addDetailLegacy('Name', ['Name'])
+        .addDetailLegacy('purpose', ['Purpose'])
+        .end()
+};
+
 reports[REPORT_SURGICAL] = { // test data: 2014-01
     name: 'Surgical Report',
     description: 'Follow up of the surgical activity of the period',

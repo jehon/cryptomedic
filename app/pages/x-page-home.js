@@ -174,6 +174,16 @@ Options: the day, and optionnaly the examiner, the center and type of activity (
 
                     // @ts-ignore
                     createMenu({
+                        title: 'Financial Report',
+                        restrictedBy: 'reports.execute',
+                        id: 'report_financial_menu',
+                        versalIcon: '/static/img/reports.gif',
+                        html: 'Follow up of the financials.',
+                        toRoute: getRouteToReport(REPORT_SURGICAL)
+                    }),
+
+                    // @ts-ignore
+                    createMenu({
                         title: 'Bug reporting',
                         versalIcon: '/static/img/bug.jpeg',
                         html: `
