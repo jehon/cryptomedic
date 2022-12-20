@@ -10,7 +10,7 @@ import XPanel from '../widgets/style/x-panel.js';
 
 /**
  * @typedef {string|function(object, number, object):(string|HTMLElement)} BodyDetailDescription - function is (dataSet, index of data in datas, context)
- * @typedef {null|string|function([string], Object):(string|HTMLElement)} HeadFootDetailDescription - funciton is (col, context)
+ * @typedef {null|string|function([string], Object):(string|HTMLElement)} HeadFootDetailDescription - function is (col, context)
  */
 
 const HEADER = 'header';
