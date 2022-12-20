@@ -7,7 +7,6 @@ use App\Model\Bill;
 class ReportFinancialController extends ReportController {
   public function buildData() {
     $this->result['list'] = $this->runSqlWithNamedParameter("SELECT
-        bills.id as bid,
         patients.id as pid,
         CONCAT(patients.entryyear, '-', patients.entryorder) as patient_reference,
         patients.Name as patient_name,
@@ -18,12 +17,14 @@ class ReportFinancialController extends ReportController {
         SUM(" . Bill::getSQLFieldsSum(Bill::CAT_WORKSHOP) . ") AS price_workshop,
         SUM(" . Bill::getSQLFieldsSum(Bill::CAT_SURGICAL) . ") AS price_surgical,
         SUM(" . Bill::getSQLFieldsSum(Bill::CAT_OTHER) . ") AS price_other,
-        bills.total_real as total_real,
-        bills.total_asked as total_asked,
-        (select sum(amount) from payments where bill_id = bills.id) as total_paid,
+        (SELECT sum(amount) FROM payments WHERE bill_id = bills.id) AS total_paid,
         consults.Date AS last_seen,
         consults.TreatmentEvaluation AS last_treat_result,
-        consults.TreatmentFinished AS last_treat_finished
+        consults.TreatmentFinished AS last_treat_finished,
+        (SELECT min(year(Date)) - patients.yearofbirth from bills where patient_id = patients.id) as age_at_first_consult,
+        (SELECT count(*) from consults WHERE consults.patient_id = patients.id) as nbr_consults,
+        (SELECT count(*) from pictures WHERE pictures.patient_id = patients.id) as nbr_pictures,
+        count(*) as nbr_bills
       FROM bills
           JOIN patients ON bills.patient_id = patients.id
           JOIN prices ON bills.price_id = prices.id
@@ -31,7 +32,7 @@ class ReportFinancialController extends ReportController {
       WHERE (1 = 1)
         AND " . $this->getParamAsSqlFilter("when", "bills.Date") . "
       GROUP BY patients.id
-      ORDER BY bills.Date, bills.id"
+      ORDER BY patient_reference"
     );
 
   }
