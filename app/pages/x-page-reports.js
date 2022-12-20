@@ -473,10 +473,30 @@ reports[REPORT_FINANCIAL] = { // test data: 2014
     description: 'Financial follow-up',
     params: ['period'],
     generator: xtable => xtable
-        .addHeaders(1)
-        .addDetailLegacy(data => createElementWithTag('a', { href: '#' + getRouteToFolderPatient(data.patient_id) }, `${data.entryyear}-${data.entryorder}`), ['Patient'])
-        .addDetailLegacy('Name', ['Name'])
-        .addDetailLegacy('purpose', ['Purpose'])
+        .addHeaders(2)
+        .addFooters(1)
+        .addDetail(data => createElementWithTag('a', { href: '#' + getRouteToFolderPatient(data.pid) }, data.patient_reference),
+            { headers: ['id', 'Patient'], footers: [''] })
+        .addDetail('patient_name',
+            { headers: ['Name'], footers: [''] })
+        .addDetail('age_at_first_consult',
+            { headers: ['Age at first consult'], footers: [''] })
+        .addDetail('price_consult',
+            { headers: ['Consult', 'Care categories'], footers: [(col) => col.reduce((a, b) => a + b, 0)] })
+        .addDetail('price_medecine',
+            { headers: ['Medicine'], footers: [(col) => col.reduce((a, b) => a + b, 0)] })
+        .addDetail('price_surgical',
+            { headers: ['Surgical'], footers: [(col) => col.reduce((a, b) => a + b, 0)] })
+        .addDetail('price_workshop',
+            { headers: ['Workshop'], footers: [(col) => col.reduce((a, b) => a + b, 0)] })
+        .addDetail('price_other',
+            { headers: ['Others'], footers: [(col) => col.reduce((a, b) => a + b, 0)] })
+        .addDetail('total_real',
+            { headers: ['Full', 'Total'], footers: [(col) => col.reduce((a, b) => a + b, 0)] })
+        .addDetail('total_asked',
+            { headers: ['Asked'], footers: [(col) => col.reduce((a, b) => a + b, 0)] })
+        .addDetail('total_paid',
+            { headers: ['Paid'], footers: [(col) => col.reduce((a, b) => a + b, 0)] })
         .end()
 };
 
