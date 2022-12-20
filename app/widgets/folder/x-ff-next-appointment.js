@@ -19,6 +19,12 @@ export default class XFfNextAppointment extends XWithFolder {
         this.attachShadow({ mode: 'open' });
         this.shadowRoot.innerHTML = `
             <css-inherit></css-inherit>
+            <style>
+                #withoutAppointment {
+                    display: flex;
+                    flex-direction: column;        
+                }
+            </style>
             <x-group-panel class='related' title='Next Appointment'>
                 <div slot='versal'>
                     <img src="/static/img/consultOfDay.gif" style='height: 60px'>

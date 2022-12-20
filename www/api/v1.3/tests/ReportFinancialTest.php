@@ -24,7 +24,7 @@ class ReportFinanicialTest extends RouteReferenceTestCase {
 		// $this->assertArrayHasKey('totals', $json);
 		$this->assertTrue(count($json['list']) >= 0);
 
-		$this->assertEquals(count($json['list']), 4);
+		$this->assertEquals(4, count($json['list']));
 
 		$v = $json['list'][0];
 		$this->assertEquals('2014-103', $v['patient_reference']);
@@ -49,8 +49,8 @@ class ReportFinanicialTest extends RouteReferenceTestCase {
 		$this->assertEquals(0, $v['price_workshop']);
 		$this->assertEquals(20000, $v['price_surgical']);
 		$this->assertEquals(800, $v['price_other']);
-		// $this->assertEquals(8400, $v['total_real']);
-		// $this->assertEquals(7000, $v['total_asked']);
+		// $this->assertEquals(21000, $v['total_real']);
+		// $this->assertEquals(8400, $v['total_asked']);
 		$this->assertEquals(0, $v['total_paid']);
 		$this->assertEquals(0, $v['nbr_consults']);
 		$this->assertEquals(0, $v['nbr_pictures']);
