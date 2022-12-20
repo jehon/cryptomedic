@@ -23,9 +23,10 @@ cat <<'EOS' > "$ROOT"/config.inc.php
 
     $cfg['Servers'] = [
         1 => [
+            'host' => 'localhost',
             'auth_type' => 'config',
-            'user' => 'root',
-            'password' => false
+            'user' => 'mysql_cryptomedic_username',
+            'password' => 'mysql_cryptomedic_password'
         ]
     ];
 EOS
