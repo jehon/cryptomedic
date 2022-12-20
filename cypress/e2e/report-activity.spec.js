@@ -35,7 +35,7 @@ flavorFilter(flavorFilter.DESKTOP, () =>
                     .nextCol().assert('0')
                     .nextCol().assert('400')
                     .nextCol().assert('500')
-                    .nextCol().assert('200')
+                    .nextCol().assert('100')
                     .nextCol().assert('')
 
                     // New / Old patient in same month
