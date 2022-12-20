@@ -51,7 +51,7 @@ class ReportFinanicialTest extends RouteReferenceTestCase {
 		$this->assertEquals(800, $v['price_other']);
 		// $this->assertEquals(21000, $v['total_real']);
 		// $this->assertEquals(8400, $v['total_asked']);
-		$this->assertEquals(0, $v['total_paid']);
+		$this->assertEquals(7000, $v['total_paid']);
 		$this->assertEquals(0, $v['nbr_consults']);
 		$this->assertEquals(0, $v['nbr_pictures']);
 		$this->assertEquals(2, $v['nbr_bills']);
