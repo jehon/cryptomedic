@@ -37,9 +37,12 @@ class ReportFinanicialTest extends RouteReferenceTestCase {
 		$this->assertEquals(1600, $v['total_real']);
 		$this->assertEquals(320, $v['total_asked']);
 		$this->assertEquals(138, $v['total_paid']);
-		$this->assertEquals(0, $v['nbr_consults']);
-		$this->assertEquals(2, $v['nbr_pictures']);
-		$this->assertEquals(4, $v['nbr_bills']);
+		$this->assertEquals(0, $v['nb_consults']);
+		$this->assertEquals(2, $v['nb_pictures']);
+		$this->assertEquals(4, $v['nb_bills']);
+		$this->assertTrue($v['is_complete']);
+		$this->assertTrue($v['is_child']);
+
 
 		$v = $json['list'][1];
 		$this->assertEquals('2014-104', $v['patient_reference']);
@@ -52,15 +55,17 @@ class ReportFinanicialTest extends RouteReferenceTestCase {
 		$this->assertEquals(21000, $v['total_real']);
 		$this->assertEquals(8400, $v['total_asked']);
 		$this->assertEquals(7000, $v['total_paid']);
-		$this->assertEquals(0, $v['nbr_consults']);
-		$this->assertEquals(0, $v['nbr_pictures']);
-		$this->assertEquals(2, $v['nbr_bills']);
+		$this->assertEquals(0, $v['nb_consults']);
+		$this->assertEquals(0, $v['nb_pictures']);
+		$this->assertEquals(2, $v['nb_bills']);
+		$this->assertFalse($v['is_complete']);
+		$this->assertTrue($v['is_child']);
 
 		$v = $json['list'][2];
 		$this->assertEquals('2014-105', $v['patient_reference']);
 		$this->assertEquals(1, $v['age_at_first_consult']);
-		$this->assertEquals(6, $v['nbr_consults']);
-		$this->assertEquals(1, $v['nbr_pictures']);
+		$this->assertEquals(6, $v['nb_consults']);
+		$this->assertEquals(1, $v['nb_pictures']);
 
 		$v = $json['list'][3];
 		$this->assertEquals('2014-107', $v['patient_reference']);

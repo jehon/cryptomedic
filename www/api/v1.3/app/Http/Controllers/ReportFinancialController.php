@@ -6,7 +6,13 @@ use App\Model\Bill;
 
 class ReportFinancialController extends ReportController {
   public function buildData() {
-    $this->result['list'] = $this->runSqlWithNamedParameter("SELECT
+    $this->result['list'] = array_map(
+      function($rec) {
+        $rec->is_child = ($rec->age_at_first_consult < 18);
+        $rec->is_complete = ($rec->nb_consults + $rec->nb_pictures) > 0;
+        return $rec;
+      },
+      $this->runSqlWithNamedParameter("SELECT
         patients.id as pid,
         CONCAT(patients.entryyear, '-', patients.entryorder) as patient_reference,
         patients.Name as patient_name,
@@ -21,9 +27,9 @@ class ReportFinancialController extends ReportController {
         SUM(bills.total_asked) AS total_asked,
         COALESCE(SUM((SELECT SUM(amount) FROM payments WHERE bill_id = bills.id)), 0) AS total_paid,
         (SELECT min(year(Date)) - patients.yearofbirth from bills where patient_id = patients.id) as age_at_first_consult,
-        (SELECT count(*) from consults WHERE consults.patient_id = patients.id) as nbr_consults,
-        (SELECT count(*) from pictures WHERE pictures.patient_id = patients.id) as nbr_pictures,
-        COUNT(*) as nbr_bills
+        (SELECT count(*) from consults WHERE consults.patient_id = patients.id) as nb_consults,
+        (SELECT count(*) from pictures WHERE pictures.patient_id = patients.id) as nb_pictures,
+        COUNT(*) as nb_bills
       FROM patients
           JOIN bills ON bills.patient_id = patients.id
           JOIN prices ON prices.id = bills.price_id
@@ -31,7 +37,8 @@ class ReportFinancialController extends ReportController {
         AND " . $this->getParamAsSqlFilter("when", "bills.Date") . "
       GROUP BY patients.id
       ORDER BY patient_reference"
-    );
+    )
+  );
 
   }
 }

@@ -22,9 +22,11 @@
             "total_asked": 320,
             "total_paid": 138,
             "age_at_first_consult": 5,
-            "nbr_consults": 0,
-            "nbr_pictures": 2,
-            "nbr_bills": 4
+            "nb_consults": 0,
+            "nb_pictures": 2,
+            "nb_bills": 4,
+            "is_child": true,
+            "is_complete": true
         },
         {
             "pid": 4,
@@ -41,9 +43,11 @@
             "total_asked": 8400,
             "total_paid": 7000,
             "age_at_first_consult": 7,
-            "nbr_consults": 0,
-            "nbr_pictures": 0,
-            "nbr_bills": 2
+            "nb_consults": 0,
+            "nb_pictures": 0,
+            "nb_bills": 2,
+            "is_child": true,
+            "is_complete": false
         },
         {
             "pid": 5,
@@ -60,9 +64,11 @@
             "total_asked": 440,
             "total_paid": 0,
             "age_at_first_consult": 1,
-            "nbr_consults": 6,
-            "nbr_pictures": 1,
-            "nbr_bills": 3
+            "nb_consults": 6,
+            "nb_pictures": 1,
+            "nb_bills": 3,
+            "is_child": true,
+            "is_complete": true
         },
         {
             "pid": 2,
@@ -79,9 +85,11 @@
             "total_asked": 1400,
             "total_paid": 300,
             "age_at_first_consult": 12,
-            "nbr_consults": 0,
-            "nbr_pictures": 0,
-            "nbr_bills": 2
+            "nb_consults": 0,
+            "nb_pictures": 0,
+            "nb_bills": 2,
+            "is_child": true,
+            "is_complete": false
         }
     ]
 }
