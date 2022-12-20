@@ -34,8 +34,8 @@ class ReportFinanicialTest extends RouteReferenceTestCase {
 		$this->assertEquals(0, $v['price_workshop']);
 		$this->assertEquals(0, $v['price_surgical']);
 		$this->assertEquals(1200, $v['price_other']);
-		// $this->assertEquals(1600, $v['total_real']);
-		// $this->assertEquals(320, $v['total_asked']);
+		$this->assertEquals(1600, $v['total_real']);
+		$this->assertEquals(320, $v['total_asked']);
 		$this->assertEquals(138, $v['total_paid']);
 		$this->assertEquals(0, $v['nbr_consults']);
 		$this->assertEquals(2, $v['nbr_pictures']);
@@ -49,8 +49,8 @@ class ReportFinanicialTest extends RouteReferenceTestCase {
 		$this->assertEquals(0, $v['price_workshop']);
 		$this->assertEquals(20000, $v['price_surgical']);
 		$this->assertEquals(800, $v['price_other']);
-		// $this->assertEquals(21000, $v['total_real']);
-		// $this->assertEquals(8400, $v['total_asked']);
+		$this->assertEquals(21000, $v['total_real']);
+		$this->assertEquals(8400, $v['total_asked']);
 		$this->assertEquals(7000, $v['total_paid']);
 		$this->assertEquals(0, $v['nbr_consults']);
 		$this->assertEquals(0, $v['nbr_pictures']);
@@ -59,31 +59,11 @@ class ReportFinanicialTest extends RouteReferenceTestCase {
 		$v = $json['list'][2];
 		$this->assertEquals('2014-105', $v['patient_reference']);
 		$this->assertEquals(1, $v['age_at_first_consult']);
-		// $this->assertEquals(200, $v['price_consult']);
-		// $this->assertEquals(0, $v['price_medecine']);
-		// $this->assertEquals(0, $v['price_workshop']);
-		// $this->assertEquals(20000, $v['price_surgical']);
-		// $this->assertEquals(0, $v['price_other']);
-		// // $this->assertEquals(8400, $v['total_real']);
-		// // $this->assertEquals(7000, $v['total_asked']);
-		// $this->assertEquals(0, $v['total_paid']);
 		$this->assertEquals(6, $v['nbr_consults']);
 		$this->assertEquals(1, $v['nbr_pictures']);
-		// $this->assertEquals(3, $v['nbr_bills']);
 
 		$v = $json['list'][3];
 		$this->assertEquals('2014-107', $v['patient_reference']);
 		$this->assertEquals($v['age_at_first_consult'], 12);
-		// $this->assertEquals(200, $v['price_consult']);
-		// $this->assertEquals(0, $v['price_medecine']);
-		// $this->assertEquals(0, $v['price_workshop']);
-		// $this->assertEquals(20000, $v['price_surgical']);
-		// $this->assertEquals(0, $v['price_other']);
-		// // $this->assertEquals(8400, $v['total_real']);
-		// // $this->assertEquals(7000, $v['total_asked']);
-		// $this->assertEquals(0, $v['total_paid']);
-		// $this->assertEquals(0, $v['nbr_consults']);
-		// $this->assertEquals(0, $v['nbr_pictures']);
-		// $this->assertEquals(2, $v['nbr_bills']);
 	}
 }

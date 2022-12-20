@@ -17,6 +17,8 @@ class ReportFinancialController extends ReportController {
         SUM(" . Bill::getSQLFieldsSum(Bill::CAT_WORKSHOP) . ") AS price_workshop,
         SUM(" . Bill::getSQLFieldsSum(Bill::CAT_SURGICAL) . ") AS price_surgical,
         SUM(" . Bill::getSQLFieldsSum(Bill::CAT_OTHER) . ") AS price_other,
+        SUM(bills.total_real) AS total_real,
+        SUM(bills.total_asked) AS total_asked,
         COALESCE(SUM((SELECT SUM(amount) FROM payments WHERE bill_id = bills.id)), 0) AS total_paid,
         (SELECT min(year(Date)) - patients.yearofbirth from bills where patient_id = patients.id) as age_at_first_consult,
         (SELECT count(*) from consults WHERE consults.patient_id = patients.id) as nbr_consults,
