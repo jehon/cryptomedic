@@ -13,7 +13,7 @@ import XButton from '../widgets/style/x-button.js';
 import XRestricted from '../widgets/func/x-restricted.js';
 
 import { getRouteToCreateReference, getRouteToReport } from '../js/router.js';
-import { REPORT_ACTIVITY, REPORT_CONSULTATIONS, REPORT_STATISTICAL, REPORT_SURGICAL } from './x-page-reports.js';
+import { REPORT_ACTIVITY, REPORT_CONSULTATIONS, REPORT_FINANCIAL, REPORT_STATISTICAL, REPORT_SURGICAL } from './x-page-reports.js';
 import pageStyles from './page-helper.js';
 
 /**
@@ -179,7 +179,7 @@ Options: the day, and optionnaly the examiner, the center and type of activity (
                         id: 'report_financial_menu',
                         versalIcon: '/static/img/reports.gif',
                         html: 'Follow up of the financials.',
-                        toRoute: getRouteToReport(REPORT_SURGICAL)
+                        toRoute: getRouteToReport(REPORT_FINANCIAL)
                     }),
 
                     // @ts-ignore
