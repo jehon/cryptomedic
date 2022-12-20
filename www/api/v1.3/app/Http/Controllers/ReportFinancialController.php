@@ -6,12 +6,10 @@ use App\Model\Bill;
 
 class ReportFinancialController extends ReportController {
   public function buildData() {
-    $this->result['list'] = array_map(
-      function($rec) {
-        $rec->is_child = ($rec->age_at_first_consult < 18);
-        $rec->is_complete = ($rec->nb_consults + $rec->nb_pictures) > 0;
-        return $rec;
-      },
+    $this->result['list'] = array_map(fn($rec) => array_merge((array) $rec, [
+        "is_child" => ($rec->age_at_first_consult < 18),
+        "is_complete" => ($rec->nb_consults + $rec->nb_pictures) > 0
+      ]),
       $this->runSqlWithNamedParameter("SELECT
         patients.id as pid,
         CONCAT(patients.entryyear, '-', patients.entryorder) as patient_reference,
