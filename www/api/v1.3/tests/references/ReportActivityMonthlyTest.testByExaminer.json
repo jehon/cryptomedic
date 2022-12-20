@@ -32,7 +32,7 @@
             "price_surgical": 0,
             "price_other": 400,
             "total_real": 500,
-            "total_asked": 200,
+            "total_asked": 100,
             "total_paid": null,
             "oldPatient": 1,
             "complementary": 0
@@ -145,7 +145,7 @@
         "price_surgical": 0,
         "price_other": 800,
         "total_real": 1100,
-        "total_asked": 440,
+        "total_asked": 340,
         "oldPatient": 3,
         "complementary": 2,
         "total_paid": 569

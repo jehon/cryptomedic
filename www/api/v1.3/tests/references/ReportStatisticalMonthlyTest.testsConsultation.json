@@ -240,7 +240,7 @@
                 },
                 "consult": {
                     "real": 1200,
-                    "asked": 480,
+                    "asked": 360,
                     "paid": 300
                 },
                 "other": {
@@ -250,7 +250,7 @@
                 },
                 "total": {
                     "real": 4200,
-                    "asked": 1680,
+                    "asked": 1560,
                     "paid": 300
                 }
             }
