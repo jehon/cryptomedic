@@ -10,7 +10,7 @@ class ReportFinanicialTest extends RouteReferenceTestCase {
 		$this->opt = $this->getNewRequestOptionsBuilder()
 			->setUrl("reports/financial")
 			->setParams(['period' => self::YEARLY, 'year' => self::$year])
-			// ->withReference()
+			->withReference()
 			;
 		
 		}
