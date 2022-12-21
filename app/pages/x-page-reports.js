@@ -10,6 +10,7 @@ import { toSentenceCase } from '../js/string-utils.js';
 import XCodage from '../widgets/func/x-codage.js';
 import XForm from '../widgets/func/x-form.js';
 import XInputList from '../widgets/data/x-input-list.js';
+import XIoBoolean from '../widgets/io/x-io-boolean.js';
 import XRequestor from '../widgets/func/x-requestor.js';
 import XTable from '../elements/x-table.js';
 import XButton from '../widgets/style/x-button.js';
@@ -379,6 +380,10 @@ x-button#export {
     }
 }
 
+
+// TODO: remove addDetailsLegacy
+// TODO: remove calculated totals serverside
+
 defineCustomElement(XPageReports);
 
 export const REPORT_ACTIVITY = 'activity';
@@ -485,22 +490,30 @@ reports[REPORT_FINANCIAL] = { // test data: 2014
             { headers: ['Name'], footers: [''] })
         .addDetail('age_at_first_consult',
             { headers: ['Age at first consult'], footers: [''] })
+        .addDetail(val => createElementWithObject(XIoBoolean, { value: val.is_child }),
+            { headers: ['Child?'], footers: [XTable.MACROS.countBoolean] })
+        .addDetail('nb_consults',
+            { headers: ['# Consults', 'Completion'], footers: [''] })
+        .addDetail('nb_pictures',
+            { headers: ['# Pictures'], footers: [''] })
+        .addDetail(val => createElementWithObject(XIoBoolean, { value: val.is_complete }),
+            { headers: ['Complete?'], footers: [XTable.MACROS.countBoolean] })
         .addDetail('price_consult',
-            { headers: ['Consult', 'Care categories'], footers: [(col) => col.reduce((a, b) => a + b, 0)] })
+            { headers: ['Consult', 'Care categories'], footers: [XTable.MACROS.sum] })
         .addDetail('price_medecine',
-            { headers: ['Medicine'], footers: [(col) => col.reduce((a, b) => a + b, 0)] })
+            { headers: ['Medicine'], footers: [XTable.MACROS.sum] })
         .addDetail('price_surgical',
-            { headers: ['Surgical'], footers: [(col) => col.reduce((a, b) => a + b, 0)] })
+            { headers: ['Surgical'], footers: [XTable.MACROS.sum] })
         .addDetail('price_workshop',
-            { headers: ['Workshop'], footers: [(col) => col.reduce((a, b) => a + b, 0)] })
+            { headers: ['Workshop'], footers: [XTable.MACROS.sum] })
         .addDetail('price_other',
-            { headers: ['Others'], footers: [(col) => col.reduce((a, b) => a + b, 0)] })
+            { headers: ['Others'], footers: [XTable.MACROS.sum] })
         .addDetail('total_real',
-            { headers: ['Full', 'Total'], footers: [(col) => col.reduce((a, b) => a + b, 0)] })
+            { headers: ['Full', 'Total'], footers: [XTable.MACROS.sum] })
         .addDetail('total_asked',
-            { headers: ['Asked'], footers: [(col) => col.reduce((a, b) => a + b, 0)] })
+            { headers: ['Asked'], footers: [XTable.MACROS.sum] })
         .addDetail('total_paid',
-            { headers: ['Paid'], footers: [(col) => col.reduce((a, b) => a + b, 0)] })
+            { headers: ['Paid'], footers: [XTable.MACROS.sum] })
         .end()
 };
 
