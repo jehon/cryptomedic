@@ -13,7 +13,7 @@ export const stylesRoot = path.join(projectRoot, 'tmp', 'styles');
 export const referenceFolder = 'references';
 export const runFolder = 'run';
 export const diffFolder = 'diff';
-export const referenceUpdateFolder = path.join(projectRoot, 'tests', 'styles', 'references');
+export const referenceUpdateFolder = path.join(projectRoot, 'tests', 'styles', referenceFolder);
 
 export const stylesJSON = path.join(stylesRoot, 'styles-problems-list.json');
 export function inStyles(...folder) {
