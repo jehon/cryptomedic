@@ -54,8 +54,6 @@ const problemsList = Object.values(listOfFiles.reduce((acc, val) => {
     .map(fset => {
         fset.problem = false;
         fset.warning = false;
-        fset.mode = fset.key.split('/')[0];
-        fset.name = fset.key.split('/').pop();
 
         if (!('ref' in fset)) {
             fset.problem = true;
