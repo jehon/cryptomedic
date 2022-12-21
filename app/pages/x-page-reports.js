@@ -365,6 +365,10 @@ x-button#export {
                     if (data.params[p]) {
                         if (p == 'period') {
                             filename += '-' + data.params['when'];
+                        } else if (typeof(data.params[p]) == 'boolean') {
+                            if (data.params[p]) {
+                                filename += '-' + p;
+                            }
                         } else {
                             filename += '-' + data.params[p].split(' ').join('_');
                         }
