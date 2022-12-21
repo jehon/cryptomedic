@@ -242,6 +242,28 @@ x-button#export {
             );
         }
 
+        //
+        // Is Child
+        //
+        if (this.isParam('is_child')) {
+            this._params.insertAdjacentElement('beforeend',
+                createElementWithObject(XLabel, { label: 'Child only' }, [
+                    createElementWithObject(XIoBoolean, { name: 'is_child', input: true })
+                ])
+            );
+        }
+
+        //
+        // Is Complete
+        //
+        if (this.isParam('is_complete')) {
+            this._params.insertAdjacentElement('beforeend',
+                createElementWithObject(XLabel, { label: 'Complete only' }, [
+                    createElementWithObject(XIoBoolean, { name: 'is_complete', input: true })
+                ])
+            );
+        }
+
         this.reset();
     }
 
@@ -272,6 +294,8 @@ x-button#export {
             day: new Date(),
             month: date2CanonicString(new Date()).substring(0, 7),
             year: date2CanonicString(new Date()).substring(0, 4),
+            is_complete: false,
+            is_child: false,
             ...getPref('report')
         };
         this._form.setValues(prefs);
@@ -480,7 +504,7 @@ reports[REPORT_CONSULTATIONS] = { // test data: 2015-04-28
 reports[REPORT_FINANCIAL] = { // test data: 2014
     name: 'Financial',
     description: 'Financial follow-up',
-    params: ['period'],
+    params: ['period', 'is_child', 'is_complete'],
     generator: xtable => xtable
         .addHeaders(2)
         .addFooters(1)
