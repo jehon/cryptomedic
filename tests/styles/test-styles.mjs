@@ -54,6 +54,8 @@ const problemsList = Object.values(listOfFiles.reduce((acc, val) => {
     .map(fset => {
         fset.problem = false;
         fset.warning = false;
+        fset.mode = fset.key.split('/')[0];
+        fset.name = fset.key.split('/').pop();
 
         if (!('ref' in fset)) {
             fset.problem = true;
@@ -65,9 +67,6 @@ const problemsList = Object.values(listOfFiles.reduce((acc, val) => {
         }
 
         if (!fset.problem) {
-            fset.mode = fset.ref.split('/')[1];
-            fset.name = fset.ref.split('/').pop();
-
             // Generate the diffs
             fset.diff = path.join(diffFolder, fset.key);
             const ref = PNG.sync.read(fs.readFileSync(inStyles(fset.ref)));
