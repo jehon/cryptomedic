@@ -3,6 +3,8 @@ import { createElementWithTag, defineCustomElement } from '../../js/custom-eleme
 import XIoString from './x-io-string.js';
 
 export default class XIoBoolean extends XIoString {
+    #checkbox;
+
     setOutputValue(newValue) {
         this.setElements(
             createElementWithTag('img', { src: `/static/img/boolean-${newValue ? 'true' : 'false'}.gif` })
@@ -13,7 +15,7 @@ export default class XIoBoolean extends XIoString {
      * @override
      */
     goInputMode() {
-        this.setElements(createElementWithTag('input',
+        this.setElements(this.#checkbox = createElementWithTag('input',
             {
                 type: 'checkbox',
             }, [], el => el.addEventListener('click',
@@ -26,8 +28,20 @@ export default class XIoBoolean extends XIoString {
      * @override
      */
     setInputValue(val) {
-        this.onRootElement('input', el => el.checked = !!val);
+        if (this.isInputMode()) {
+            this.#checkbox.checked = !!val;
+        }
     }
+
+    /**
+     * @override
+     */
+    getInputValue() {
+        if (this.isInputMode()) {
+            return this.#checkbox.checked;
+        }
+    }
+
 }
 
 defineCustomElement(XIoBoolean);
