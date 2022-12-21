@@ -55,6 +55,13 @@ const BODY = 'body';
  * TODO: addBefore(), addAfter() => first/last column or head/foot ?
  */
 export default class XTable extends HTMLElement {
+
+    static MACROS = {
+        sum: (col) => col.reduce((prev, val) => prev + val, 0),
+        count: (col) => col.reduce((prev, val) => prev + (val ? 1 : 0), 0),
+        countBoolean: (col) => col.reduce((prev, el) => prev + (el.value ? 1 : 0), 0)
+    };
+
     /** @type {HTMLElement} */
     _element;
 
