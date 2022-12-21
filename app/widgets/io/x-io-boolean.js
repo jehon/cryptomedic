@@ -5,6 +5,13 @@ import XIoString from './x-io-string.js';
 export default class XIoBoolean extends XIoString {
     #checkbox;
 
+    canonizeValue(val) {
+        if (val == '0' || val == 0) {
+            val = false;
+        }
+        return !!val;
+    }
+
     setOutputValue(newValue) {
         this.setElements(
             createElementWithTag('img', { src: `/static/img/boolean-${newValue ? 'true' : 'false'}.gif` })
@@ -28,20 +35,15 @@ export default class XIoBoolean extends XIoString {
      * @override
      */
     setInputValue(val) {
-        if (this.isInputMode()) {
-            this.#checkbox.checked = !!val;
-        }
+        this.#checkbox.checked = val;
     }
 
     /**
      * @override
      */
     getInputValue() {
-        if (this.isInputMode()) {
-            return this.#checkbox.checked;
-        }
+        return this.#checkbox.checked;
     }
-
 }
 
 defineCustomElement(XIoBoolean);

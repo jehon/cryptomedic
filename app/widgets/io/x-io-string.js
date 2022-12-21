@@ -206,8 +206,12 @@ export default class XIoString extends HTMLElement {
     //
     //
 
+    canonizeValue(val) {
+        return val;
+    }
+
     set value(newValue) {
-        this._initialValue = newValue;
+        this._initialValue = newValue = this.canonizeValue(newValue);
         if (this.isInputMode()) {
             this.setInputValue(newValue);
         } else {
