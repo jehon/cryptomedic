@@ -362,6 +362,10 @@ x-button#export {
             createElementWithTag('span', {}, [el.innerHTML]),
             el
         ));
+        this._result.querySelectorAll('x-io-boolean').forEach(el => el.parentNode.replaceChild(
+            createElementWithTag('span', {}, [el.value ? '1' : '0']),
+            el
+        ));
 
         // bug fix here: https://github.com/jmaister/excellentexport/issues/54
         ExcellentExport.excel(this._exportLink,
