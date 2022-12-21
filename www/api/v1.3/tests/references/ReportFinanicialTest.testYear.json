@@ -3,6 +3,8 @@
         "period": "year",
         "year": 2014,
         "when": 2014,
+        "is_child": false,
+        "is_complete": false,
         "whenFrom": "2014-01-01",
         "whenTo": "2014-12-31"
     },

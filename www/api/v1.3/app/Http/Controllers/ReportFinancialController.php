@@ -6,6 +6,9 @@ use App\Model\Bill;
 
 class ReportFinancialController extends ReportController {
   public function buildData() {
+    $this->getParam('is_child', false);
+    $this->getParam('is_complete', false);
+
     $this->result['list'] = array_map(fn($rec) => array_merge((array) $rec, [
         "is_child" => ($rec->age_at_first_consult < 18),
         "is_complete" => ($rec->nb_consults + $rec->nb_pictures) > 0
@@ -34,6 +37,7 @@ class ReportFinancialController extends ReportController {
       WHERE (1 = 1)
         AND " . $this->getParamAsSqlFilter("when", "bills.Date") . "
       GROUP BY patients.id
+      " . "
       ORDER BY patient_reference"
     )
   );

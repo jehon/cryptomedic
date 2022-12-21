@@ -128,6 +128,16 @@ abstract class ReportController extends Controller {
     } else {
       $ret = $default;
     }
+
+    switch($ret) {
+      case "true": 
+        $ret = true;
+        break;
+      case "false": 
+        $ret = false;
+        break;
+    }
+
     $this->result['params'][$name] = $ret;
     return $ret;
   }
