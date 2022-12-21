@@ -19,6 +19,6 @@ for (const fset of problemsList) {
         console.error(`${p_ko}: ${fset.key} does not have a run`);
         continue;
     }
-    process.stdout.write(`[update] ${fset.ref}\n`);
-    fs.copyFileSync(inStyles(fset.run), path.join(referenceUpdateFolder, fset.mode, fset.name));
+    process.stdout.write(`[update] ${fset.key}\n`);
+    fs.copyFileSync(inStyles(fset.run), path.join(referenceUpdateFolder, fset.key));
 }
