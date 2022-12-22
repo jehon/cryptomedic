@@ -517,13 +517,13 @@ reports[REPORT_FINANCIAL] = { // test data: 2014
             { headers: ['Name'], footers: [''] })
         .addDetail('age_at_first_consult',
             { headers: ['Age at first consult'], footers: [''] })
-        .addDetail(val => createElementWithObject(XIoBoolean, { value: val.is_child }),
+        .addDetail(XTable.MACROS.boolean('is_child'),
             { headers: ['Child?'], footers: [XTable.MACROS.countBoolean] })
         .addDetail('nb_consults',
             { headers: ['# Consults', 'Completion'], footers: [''] })
         .addDetail('nb_pictures',
             { headers: ['# Pictures'], footers: [''] })
-        .addDetail(val => createElementWithObject(XIoBoolean, { value: val.is_complete }),
+        .addDetail(XTable.MACROS.boolean('is_complete'),
             { headers: ['Complete?'], footers: [XTable.MACROS.countBoolean] })
         .addDetail('price_consult',
             { headers: ['Consult', 'Care categories'], footers: [XTable.MACROS.sum] })

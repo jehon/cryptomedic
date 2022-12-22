@@ -2,6 +2,7 @@
 import { defineCustomElement, createElementWithObject, createElementWithTag, enrichObject } from '../js/custom-element.js';
 import XOverlay from '../widgets/func/x-overlay.js';
 import XPanel from '../widgets/style/x-panel.js';
+import XIoBoolean from '../widgets/io/x-io-boolean.js';
 
 //
 // Idea to reverse it (statistical report): https://stackoverflow.com/a/44092580/1954789
@@ -59,7 +60,8 @@ export default class XTable extends HTMLElement {
     static MACROS = {
         sum: (col) => col.reduce((prev, val) => prev + val, 0),
         count: (col) => col.reduce((prev, val) => prev + (val ? 1 : 0), 0),
-        countBoolean: (col) => col.reduce((prev, el) => prev + (el.value ? 1 : 0), 0)
+        countBoolean: (col) => col.reduce((prev, el) => prev + (el.value ? 1 : 0), 0),
+        boolean: (key) => ((val) => createElementWithObject(XIoBoolean, { value: val[key] }))
     };
 
     /** @type {HTMLElement} */
