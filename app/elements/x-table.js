@@ -3,6 +3,7 @@ import { defineCustomElement, createElementWithObject, createElementWithTag, enr
 import XOverlay from '../widgets/func/x-overlay.js';
 import XPanel from '../widgets/style/x-panel.js';
 import XIoBoolean from '../widgets/io/x-io-boolean.js';
+import { getFloatFrom } from '../js/number-utils.js';
 
 //
 // Idea to reverse it (statistical report): https://stackoverflow.com/a/44092580/1954789
@@ -58,7 +59,7 @@ const BODY = 'body';
 export default class XTable extends HTMLElement {
 
     static MACROS = {
-        sum: (col) => col.reduce((prev, val) => prev + val, 0),
+        sum: (col) => col.reduce((prev, val) => prev + getFloatFrom(val), 0),
         count: (col) => col.reduce((prev, val) => prev + (val ? 1 : 0), 0),
         countBoolean: (col) => col.reduce((prev, el) => prev + (el.value ? 1 : 0), 0),
         boolean: (key) => ((val) => createElementWithObject(XIoBoolean, { value: val[key] }))
