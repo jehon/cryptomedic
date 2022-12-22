@@ -79,10 +79,6 @@ export function enrichObject(el, attributes = {}, inner = [], callback = (_el) =
         console.error('Error in enrichObject ', el, ': attributes is not an object', attributes, { type: typeof attributes, array: Array.isArray(attributes) });
     }
 
-    if (typeof inner != 'string' && typeof inner != 'number' && !Array.isArray(inner) && ! (inner instanceof HTMLElement)) {
-        console.error('Error in enrichObject ', el, ': inner is incorrect', inner);
-    }
-
     for (const k of Object.keys(attributes)) {
         let val = attributes[k];
 
