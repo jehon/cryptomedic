@@ -11,7 +11,7 @@ import XIoBoolean from '../widgets/io/x-io-boolean.js';
 
 /**
  * @typedef {string|function(object, number, object):(string|HTMLElement)} BodyDetailDescription - function is (dataSet, index of data in datas, context)
- * @typedef {null|string|function([string], Object):(string|HTMLElement)} HeadFootDetailDescription - function is (col, context)
+ * @typedef {null|string|function([string], object):(string|HTMLElement)} HeadFootDetailDescription - function is (col, context)
  */
 
 const HEADER = 'header';
