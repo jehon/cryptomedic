@@ -21,7 +21,6 @@ class ReportFinanicialTest extends RouteReferenceTestCase {
 		$json = $this->myRunAssertQueryForRoles($opt);
 		$this->assertArrayHasKey('params', $json);
 		$this->assertArrayHasKey('list', $json);
-		// $this->assertArrayHasKey('totals', $json);
 		$this->assertTrue(count($json['list']) >= 0);
 
 		$this->assertEquals(4, count($json['list']));

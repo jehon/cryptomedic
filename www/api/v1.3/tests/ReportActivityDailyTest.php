@@ -19,7 +19,6 @@ class ReportActivityDailyTest extends RouteReferenceTestCase {
 	protected function thisAssertResponse($json, $nbr) {
 		$this->assertArrayHasKey('params', $json);
 		$this->assertArrayHasKey('list', $json);
-		$this->assertArrayHasKey('totals', $json);
 		$this->assertTrue(count($json['list']) >= 0);
 		$this->assertEquals($nbr[$this->type], count($json['list']));
 	}

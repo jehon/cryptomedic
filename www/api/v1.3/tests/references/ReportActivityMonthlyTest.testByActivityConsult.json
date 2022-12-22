@@ -158,23 +158,5 @@
             "oldPatient": 1,
             "complementary": 1
         }
-    ],
-    "totals": {
-        "bid": 49,
-        "pid": 18,
-        "yearofbirth": 12044,
-        "sl_familySalary": 58500,
-        "sl_numberOfHouseholdMembers": 48,
-        "Sociallevel": 14,
-        "price_consult": 400,
-        "price_medecine": 0,
-        "price_workshop": 0,
-        "price_surgical": 0,
-        "price_other": 800,
-        "total_real": 1200,
-        "total_asked": 360,
-        "oldPatient": 4,
-        "complementary": 2,
-        "total_paid": 569
-    }
+    ]
 }

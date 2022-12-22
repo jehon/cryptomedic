@@ -35,22 +35,5 @@
             "last_treat_result": null,
             "last_treat_finished": null
         }
-    ],
-    "totals": {
-        "bid": 8,
-        "pid": 4,
-        "yearofbirth": 2007,
-        "sl_familySalary": 7000,
-        "sl_numberOfHouseholdMembers": 10,
-        "Sociallevel": 2,
-        "price_consult": 100,
-        "price_medecine": 0,
-        "price_workshop": 0,
-        "price_surgical": 20000,
-        "price_other": 400,
-        "total_real": 20500,
-        "total_asked": 8200,
-        "total_paid": 7000,
-        "oldPatient": 0
-    }
+    ]
 }

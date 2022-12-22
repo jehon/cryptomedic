@@ -45,18 +45,5 @@ class ReportSurgicalController extends ReportController {
         AND consults2.Date IS NULL
       ORDER BY bills.Date, bills.id"
     );
-
-    $this->result['totals'] = array();
-    foreach($this->result['list'] as $e) {
-      foreach($e as $k => $v) {
-		if (!is_numeric($v)) {
-			continue;
-		}
-        if (!array_key_exists($k, $this->result['totals'])) {
-          $this->result['totals'][$k] = 0;
-        }
-        $this->result['totals'][$k] += $v;
-      }
-    }
   }
 }

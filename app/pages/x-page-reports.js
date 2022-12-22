@@ -410,7 +410,6 @@ x-button#export {
 
 
 // TODO: remove addDetailsLegacy
-// TODO: remove calculated totals serverside
 
 defineCustomElement(XPageReports);
 
@@ -471,15 +470,15 @@ reports[REPORT_ACTIVITY] = { // test data: 2014-05
             .addDetailLegacy(data => (data.complementary
                 ? createElementWithObject(XCodage, { value: 'Money collected on bills from previous months', translated: 'Complementary payments' })
                 : (data.price_consult ?? 0)
-            ), ['Consult', 'Price', '', '', ''], ['total', (_col, context) => context.totals.price_consult])
+            ), ['Consult', 'Price', '', '', ''], ['total', XTable.MACROS.sum])
 
-            .addDetailLegacy(data => data.complementary ? null : (data.price_medecine ?? 0), ['Medicine'], [null, (_col, context) => context.totals.price_medecine])
-            .addDetailLegacy(data => data.complementary ? null : (data.price_surgical ?? 0), ['Surgical'], [null, (_col, context) => context.totals.price_surgical])
-            .addDetailLegacy(data => data.complementary ? null : (data.price_workshop ?? 0), ['Workshop'], [null, (_col, context) => context.totals.price_workshop])
-            .addDetailLegacy(data => data.complementary ? null : (data.price_other ?? 0), ['Others'], [null, (_col, context) => context.totals.price_other])
-            .addDetailLegacy(data => data.complementary ? null : (data.total_real ?? 0), ['Full'], [null, (_col, context) => context.totals.total_real])
-            .addDetailLegacy(data => data.complementary ? null : (data.total_asked ?? 0), ['Asked'], [null, (_col, context) => context.totals.total_asked])
-            .addDetailLegacy('total_paid', ['Paid'], [null, (_col, context) => context.totals.total_paid])
+            .addDetailLegacy(data => data.complementary ? null : (data.price_medecine ?? 0), ['Medicine'], [null, XTable.MACROS.sum])
+            .addDetailLegacy(data => data.complementary ? null : (data.price_surgical ?? 0), ['Surgical'], [null, XTable.MACROS.sum])
+            .addDetailLegacy(data => data.complementary ? null : (data.price_workshop ?? 0), ['Workshop'], [null, XTable.MACROS.sum])
+            .addDetailLegacy(data => data.complementary ? null : (data.price_other ?? 0), ['Others'], [null, XTable.MACROS.sum])
+            .addDetailLegacy(data => data.complementary ? null : (data.total_real ?? 0), ['Full'], [null, XTable.MACROS.sum])
+            .addDetailLegacy(data => data.complementary ? null : (data.total_asked ?? 0), ['Asked'], [null, XTable.MACROS.sum])
+            .addDetailLegacy('total_paid', ['Paid'], [null, XTable.MACROS.sum])
             .end();
     }
 };
@@ -591,14 +590,14 @@ reports[REPORT_SURGICAL] = { // test data: 2014-01
             .addDetailLegacy('last_treat_result', ['Result', null, '3001-...', 4])
             .addDetailLegacy('last_treat_finished', ['Done ?', null])
 
-            .addDetailLegacy('price_consult', ['Consult', 'Price', '', '', ''], ['total', (_col, context) => context.totals.price_consult])
-            .addDetailLegacy('price_medecine', ['Medicine'], [null, (_col, context) => context.totals.price_medecine])
-            .addDetailLegacy('price_surgical', ['Surgical'], [null, (_col, context) => context.totals.price_surgical])
-            .addDetailLegacy('price_workshop', ['Workshop'], [null, (_col, context) => context.totals.price_workshop])
-            .addDetailLegacy('price_other', ['Others'], [null, (_col, context) => context.totals.price_other])
-            .addDetailLegacy('total_real', ['Full'], [null, (_col, context) => context.totals.total_real])
-            .addDetailLegacy('total_asked', ['Asked'], [null, (_col, context) => context.totals.total_asked])
-            .addDetailLegacy('total_paid', ['Paid'], [null, (_col, context) => context.totals.total_paid])
+            .addDetailLegacy('price_consult', ['Consult', 'Price', '', '', ''], ['total', XTable.MACROS.sum])
+            .addDetailLegacy('price_medecine', ['Medicine'], [null, XTable.MACROS.sum])
+            .addDetailLegacy('price_surgical', ['Surgical'], [null, XTable.MACROS.sum])
+            .addDetailLegacy('price_workshop', ['Workshop'], [null, XTable.MACROS.sum])
+            .addDetailLegacy('price_other', ['Others'], [null, XTable.MACROS.sum])
+            .addDetailLegacy('total_real', ['Full'], [null, XTable.MACROS.sum])
+            .addDetailLegacy('total_asked', ['Asked'], [null, XTable.MACROS.sum])
+            .addDetailLegacy('total_paid', ['Paid'], [null, XTable.MACROS.sum])
             .end();
     }
 };
