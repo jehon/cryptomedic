@@ -69,7 +69,7 @@ export default class XTable extends HTMLElement {
     _overlay;
 
     /**
-     * @type {Object} to describe data/body
+     * @type {object} to describe data/body
      * @property {BodyDetailDescription} body - to generate row in each columns
      * @property {Array<HeadFootDetailDescription>} headers - to generate thead data
      * @property {Array<HeadFootDetailDescription>} footers - to generate tfoot data
@@ -77,9 +77,9 @@ export default class XTable extends HTMLElement {
     _details;
 
     /**
-     * @type {Object} the config of the table
-     * @property {Object} headers to define headers
-     * @property {Object} footers to define footers
+     * @type {object} the config of the table
+     * @property {object} headers to define headers
+     * @property {object} footers to define footers
      */
     _config;
 
