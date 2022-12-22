@@ -3,9 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Request;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 require_once(__DIR__ . "/templates-t.php");
 

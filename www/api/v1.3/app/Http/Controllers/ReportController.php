@@ -4,10 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use DB;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Request;
-
-use App\Model\Bill;
 
 abstract class ReportController extends Controller {
   protected $params;
