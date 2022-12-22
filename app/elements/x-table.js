@@ -208,17 +208,6 @@ export default class XTable extends HTMLElement {
     }
 
     /**
-     * @deprecated todo: remove addDetailLegacy
-     * @param {BodyDetailDescription} fieldData to be put in cells
-     * @param {Array<HeadFootDetailDescription>} headers to be put in headers (in reverse order)
-     * @param {Array<HeadFootDetailDescription>} footers to be put in footers
-     * @returns {XTable} for chaining
-     */
-    addDetailLegacy(fieldData, headers = [], footers = []) {
-        return this.addDetail(fieldData, { headers, footers });
-    }
-
-    /**
      * Format the whole set by callback
      *
      * @param {function(Element, object): void} callback to modify the element

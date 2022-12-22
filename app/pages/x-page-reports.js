@@ -408,7 +408,6 @@ x-button#export {
     }
 }
 
-
 // TODO: remove addDetailsLegacy
 
 defineCustomElement(XPageReports);
@@ -443,42 +442,66 @@ reports[REPORT_ACTIVITY] = { // test data: 2014-05
             })
             .addDetail('Date', { headers: ['Date'] })
             .addDetail('ExaminerName', { headers: ['Examiner'] })
-            .addDetailLegacy(data => createElementWithObject(XCodage, { value: data.Center }), ['Place'])
-            .addDetailLegacy('patient_reference', ['Record n#'])
-            .addDetailLegacy('patient_name', ['Patient Name', 'Identity', 'Where', 'When', 'Who'])
-            .addDetailLegacy(data => createElementWithObject(XAge, { value: data.yearofbirth, ref: data.Date }), ['Age', null, (_col, context) => context.params.center, (_col, context) => context.params.when, (_col, context) => context.params.examiner])
-            .addDetailLegacy('Sex', ['M/F'])
-            .addDetailLegacy((val, _i, context) => (val.oldPatient == 1)
-                ? 'Old'
-                : (val.patient_reference.substr(0, 4) < ('' + context.params.when).substr(0, 4)
-                    ? 'Old(EN)'
-                    : 'New'
-                ), ['Old/New']
-            )
-            .addDetailLegacy('sl_familySalary', ['Tk income', 'SEL', '0 - 300', 0, 'Levels of the social level'])
-            .addDetailLegacy('sl_numberOfHouseholdMembers', ['Nb pers'])
-            .addDetailLegacy(data => Math.round(data.sl_familySalary / data.sl_numberOfHouseholdMembers), ['Tk per pers', null, '301-500', 1])
-            .addDetailLegacy('Sociallevel', ['SL'])
+            .addDetail(data => createElementWithObject(XCodage, { value: data.Center }),
+                { headers: ['Place'] })
+            .addDetail('patient_reference',
+                { headers: ['Record n#'] })
+            .addDetail('patient_name',
+                { headers: ['Patient Name', 'Identity', 'Where', 'When', 'Who'] })
+            .addDetail(data => createElementWithObject(XAge, { value: data.yearofbirth, ref: data.Date }),
+                { headers: ['Age', null, (_col, context) => context.params.center, (_col, context) => context.params.when, (_col, context) => context.params.examiner] })
+            .addDetail('Sex',
+                { headers: ['M/F'] })
+            .addDetail(
+                (val, _i, context) => (val.oldPatient == 1)
+                    ? 'Old'
+                    : (val.patient_reference.substr(0, 4) < ('' + context.params.when).substr(0, 4)
+                        ? 'Old(EN)'
+                        : 'New'
+                    ),
+                { headers: ['Old/New'] })
+            .addDetail('sl_familySalary',
+                { headers: ['Tk income', 'SEL', '0 - 300', 0, 'Levels of the social level'] })
+            .addDetail('sl_numberOfHouseholdMembers',
+                { headers: ['Nb pers'] })
+            .addDetail(data => Math.round(data.sl_familySalary / data.sl_numberOfHouseholdMembers),
+                { headers: ['Tk per pers', null, '301-500', 1] })
+            .addDetail('Sociallevel',
+                { headers: ['SL'] })
 
-            .addDetailLegacy(data => createElementWithObject(XCodage, { value: data.Pathology }), ['Diagno', 'Medical', '501-1500', 2])
-            .addDetailLegacy('act', ['Act'])
-            .addDetailLegacy('treatment', ['Trt', null, '1501-3000', 3])
-            .addDetailLegacy('last_seen', ['Last seen', 'Surgical'])
-            .addDetailLegacy('last_treat_result', ['Result', null, '3001-...', 4])
-            .addDetailLegacy('last_treat_finished', ['Done ?', null])
+            .addDetail(data => createElementWithObject(XCodage, { value: data.Pathology }),
+                { headers: ['Diagno', 'Medical', '501-1500', 2] })
+            .addDetail('act',
+                { headers: ['Act'] })
+            .addDetail('treatment',
+                { headers: ['Trt', null, '1501-3000', 3] })
+            .addDetail('last_seen',
+                { headers: ['Last seen', 'Surgical'] })
+            .addDetail('last_treat_result',
+                { headers: ['Result', null, '3001-...', 4] })
+            .addDetail('last_treat_finished',
+                { headers: ['Done ?', null] })
 
-            .addDetailLegacy(data => (data.complementary
-                ? createElementWithObject(XCodage, { value: 'Money collected on bills from previous months', translated: 'Complementary payments' })
-                : (data.price_consult ?? 0)
-            ), ['Consult', 'Price', '', '', ''], ['total', XTable.MACROS.sum])
+            .addDetail(
+                data => data.complementary
+                    ? createElementWithObject(XCodage, { value: 'Money collected on bills from previous months', translated: 'Complementary payments' })
+                    : (data.price_consult ?? 0),
+                { headers: ['Consult', 'Price', '', '', ''], footers: ['total', XTable.MACROS.sum] })
 
-            .addDetailLegacy(data => data.complementary ? null : (data.price_medecine ?? 0), ['Medicine'], [null, XTable.MACROS.sum])
-            .addDetailLegacy(data => data.complementary ? null : (data.price_surgical ?? 0), ['Surgical'], [null, XTable.MACROS.sum])
-            .addDetailLegacy(data => data.complementary ? null : (data.price_workshop ?? 0), ['Workshop'], [null, XTable.MACROS.sum])
-            .addDetailLegacy(data => data.complementary ? null : (data.price_other ?? 0), ['Others'], [null, XTable.MACROS.sum])
-            .addDetailLegacy(data => data.complementary ? null : (data.total_real ?? 0), ['Full'], [null, XTable.MACROS.sum])
-            .addDetailLegacy(data => data.complementary ? null : (data.total_asked ?? 0), ['Asked'], [null, XTable.MACROS.sum])
-            .addDetailLegacy('total_paid', ['Paid'], [null, XTable.MACROS.sum])
+            .addDetail(data => data.complementary ? null : (data.price_medecine ?? 0),
+                { headers: ['Medicine'], footers: [null, XTable.MACROS.sum] })
+            .addDetail(data => data.complementary ? null : (data.price_surgical ?? 0),
+                { headers: ['Surgical'], footers: [null, XTable.MACROS.sum] })
+            .addDetail(data => data.complementary ? null : (data.price_workshop ?? 0),
+                { headers: ['Workshop'], footers: [null, XTable.MACROS.sum] })
+            .addDetail(data => data.complementary ? null : (data.price_other ?? 0),
+                { headers: ['Others'], footers: [null, XTable.MACROS.sum] })
+            .addDetail(data => data.complementary ? null : (data.total_real ?? 0),
+                { headers: ['Full'], footers: [null, XTable.MACROS.sum] })
+            .addDetail(data => data.complementary ? null : (data.total_asked ?? 0),
+                { headers: ['Asked'], footers: [null, XTable.MACROS.sum] })
+            .addDetail('total_paid',
+                { headers: ['Paid'], footers: [null, XTable.MACROS.sum] })
             .end();
     }
 };
@@ -494,13 +517,20 @@ reports[REPORT_CONSULTATIONS] = { // test data: 2015-04-28
     },
     generator: xtable => xtable
         .addHeaders(1)
-        .addDetailLegacy('c_Center', ['Center'])
-        .addDetailLegacy(data => createElementWithTag('a', { href: '#' + getRouteToFolderPatient(data.patient_id) }, `${data.entryyear}-${data.entryorder}`), ['Patient'])
-        .addDetailLegacy('Name', ['Name'])
-        .addDetailLegacy('Telephone', ['Phone'])
-        .addDetailLegacy('ExaminerName', ['Appointment from'])
-        .addDetailLegacy('purpose', ['Purpose'])
-        .addDetailLegacy(data => createElementWithObject(XDisplayDate, { value: data.c_Date }), ['Appointment from'])
+        .addDetail('c_Center',
+            { headers: ['Center']})
+        .addDetail(data => createElementWithTag('a', { href: '#' + getRouteToFolderPatient(data.patient_id) }, `${data.entryyear}-${data.entryorder}`),
+            { headers: ['Patient'] })
+        .addDetail('Name',
+            { headers: ['Name'] })
+        .addDetail('Telephone',
+            { headers: ['Phone'] })
+        .addDetail('ExaminerName',
+            { headers: ['Appointment from'] })
+        .addDetail('purpose',
+            { headers: ['Purpose'] })
+        .addDetail(data => createElementWithObject(XDisplayDate, { value: data.c_Date }),
+            { headers: ['Appointment from'] })
         .end()
 };
 
@@ -553,51 +583,80 @@ reports[REPORT_SURGICAL] = { // test data: 2014-01
         xtable
             .addHeaders(6)
             .addFooters(2)
-            .addDetailLegacy((data, i) => createElementWithTag('a', { href: '#' + getRouteToFolderPatient(data.pid) }, `#${i + 1}`),
-                [
-                    'N',
-                    '',
-                    (_col, context) => 'Daily report of ' + context.params.when,
-                    'SARPV, CHAKARIA DISABILITY CENTER, CHAKARIA, COX\'S BAZAR',
-                    'Name of the project: Rikces in cox\' Bazar',
-                    'SARPV - AMD - KDM 2'
-                ],
-                ['', '']
+            .addDetail((data, i) => createElementWithTag('a', { href: '#' + getRouteToFolderPatient(data.pid) }, `#${i + 1}`),
+                {
+                    headers: [
+                        'N',
+                        '',
+                        (_col, context) => 'Daily report of ' + context.params.when,
+                        'SARPV, CHAKARIA DISABILITY CENTER, CHAKARIA, COX\'S BAZAR',
+                        'Name of the project: Rikces in cox\' Bazar',
+                        'SARPV - AMD - KDM 2'
+                    ],
+                    footers: ['', '']
+                }
             )
-            .addDetailLegacy('Date', ['Date'])
-            .addDetailLegacy('ExaminerName', [''])
-            .addDetailLegacy('Center', ['Place'])
-            .addDetailLegacy('patient_reference', ['Record n#'])
-            .addDetailLegacy('patient_name', ['Patient Name', 'Identity', 'Where', 'When', 'Who'])
-            .addDetailLegacy(data => createElementWithObject(XAge, { value: data.yearofbirth }), ['Age', null, (_col, context) => context.params.center, (_col, context) => context.params.when, (_col, context) => context.params.examiner])
-            .addDetailLegacy('Sex', ['M/F'])
-            .addDetailLegacy((data, _i, context) => (data.oldPatient == 1)
-                ? 'Old'
-                : (data.patient_reference.substr(0, 4) < ('' + context.params.when).substr(0, 4)
-                    ? 'Old(EN)'
-                    : 'New'
-                ), ['Old/New']
+            .addDetail('Date',
+                { headers: ['Date'] })
+            .addDetail('ExaminerName',
+                { headers: [''] })
+            .addDetail('Center',
+                { headers: ['Place'] })
+            .addDetail('patient_reference',
+                { headers: ['Record n#'] })
+            .addDetail('patient_name',
+                { headers: ['Patient Name', 'Identity', 'Where', 'When', 'Who'] })
+            .addDetail(data => createElementWithObject(XAge, { value: data.yearofbirth }),
+                { headers: ['Age', null, (_col, context) => context.params.center, (_col, context) => context.params.when, (_col, context) => context.params.examiner] })
+            .addDetail('Sex',
+                { headers: ['M/F'] })
+            .addDetail(
+                (data, _i, context) => (data.oldPatient == 1)
+                    ? 'Old'
+                    : (data.patient_reference.substr(0, 4) < ('' + context.params.when).substr(0, 4)
+                        ? 'Old(EN)'
+                        : 'New'
+                    ),
+                { headers: ['Old/New'] }
             )
-            .addDetailLegacy('sl_familySalary', ['Tk income', 'SEL', '0 - 300', 0, 'Levels of the social level'])
-            .addDetailLegacy('sl_numberOfHouseholdMembers', ['Nb pers'])
-            .addDetailLegacy(data => Math.round(data.sl_familySalary / data.sl_numberOfHouseholdMembers), ['Tk per pers', null, '301-500', 1])
-            .addDetailLegacy('Sociallevel', ['SL'])
+            .addDetail('sl_familySalary',
+                { headers: ['Tk income', 'SEL', '0 - 300', 0, 'Levels of the social level'] })
+            .addDetail('sl_numberOfHouseholdMembers',
+                { headers: ['Nb pers'] })
+            .addDetail(data => Math.round(data.sl_familySalary / data.sl_numberOfHouseholdMembers),
+                { headers: ['Tk per pers', null, '301-500', 1] })
+            .addDetail('Sociallevel',
+                { headers: ['SL'] })
 
-            .addDetailLegacy(data => createElementWithObject(XCodage, { value: data.Pathology }), ['Diagno', 'Medical', '501-1500', 2])
-            .addDetailLegacy('act', ['Act'])
-            .addDetailLegacy('treatment', ['Trt', null, '1501-3000', 3])
-            .addDetailLegacy('last_seen', ['Last seen', 'Surgical'])
-            .addDetailLegacy('last_treat_result', ['Result', null, '3001-...', 4])
-            .addDetailLegacy('last_treat_finished', ['Done ?', null])
+            .addDetail(data => createElementWithObject(XCodage, { value: data.Pathology }),
+                { headers: ['Diagno', 'Medical', '501-1500', 2] })
+            .addDetail('act',
+                { headers: ['Act'] })
+            .addDetail('treatment',
+                { headers: ['Trt', null, '1501-3000', 3] })
+            .addDetail('last_seen',
+                { headers: ['Last seen', 'Surgical'] })
+            .addDetail('last_treat_result',
+                { headers: ['Result', null, '3001-...', 4] })
+            .addDetail('last_treat_finished',
+                { headers: ['Done ?', null] })
 
-            .addDetailLegacy('price_consult', ['Consult', 'Price', '', '', ''], ['total', XTable.MACROS.sum])
-            .addDetailLegacy('price_medecine', ['Medicine'], [null, XTable.MACROS.sum])
-            .addDetailLegacy('price_surgical', ['Surgical'], [null, XTable.MACROS.sum])
-            .addDetailLegacy('price_workshop', ['Workshop'], [null, XTable.MACROS.sum])
-            .addDetailLegacy('price_other', ['Others'], [null, XTable.MACROS.sum])
-            .addDetailLegacy('total_real', ['Full'], [null, XTable.MACROS.sum])
-            .addDetailLegacy('total_asked', ['Asked'], [null, XTable.MACROS.sum])
-            .addDetailLegacy('total_paid', ['Paid'], [null, XTable.MACROS.sum])
+            .addDetail('price_consult',
+                { headers: ['Consult', 'Price', '', '', ''], footers: ['total', XTable.MACROS.sum] })
+            .addDetail('price_medecine',
+                { headers: ['Medicine'], footers: [null, XTable.MACROS.sum] })
+            .addDetail('price_surgical',
+                { headers: ['Surgical'], footers: [null, XTable.MACROS.sum] })
+            .addDetail('price_workshop',
+                { headers: ['Workshop'], footers: [null, XTable.MACROS.sum] })
+            .addDetail('price_other',
+                { headers: ['Others'], footers: [null, XTable.MACROS.sum] })
+            .addDetail('total_real',
+                { headers: ['Full'], footers: [null, XTable.MACROS.sum] })
+            .addDetail('total_asked',
+                { headers: ['Asked'], footers: [null, XTable.MACROS.sum] })
+            .addDetail('total_paid',
+                { headers: ['Paid'], footers: [null, XTable.MACROS.sum] })
             .end();
     }
 };
