@@ -2,24 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\SQL;
 use App\Model\Bill;
 
 class ReportFinancialController extends ReportController {
   public function buildData() {
-    $this->result['list'] = array_map(fn($rec) => array_merge(
-        (array) $rec,
-        [
-          "is_child" => $rec->is_child > 0,
-          "is_complete" => $rec->is_complete > 0
-        ]
-    ),
-      $this->runSqlWithNamedParameter("
-        SELECT
-          *,
-          ( age_at_first_consult < 18 ) AS is_child,
-          ( ( nb_consults + nb_pictures ) > 0) AS is_complete
-        FROM
-          (
+    $this->result['list'] = SQL::NormalizeList(
+      $this->runSqlWithNamedParameter(
+        SQL::withCalculated("
             SELECT
               patients.id as pid,
               CONCAT(patients.entryyear, '-', patients.entryorder) as patient_reference,
@@ -45,12 +35,20 @@ class ReportFinancialController extends ReportController {
               AND " . $this->getParamAsSqlFilter("when", "bills.Date") . "
             GROUP BY patients.id
             HAVING (1 = 1)
-          ) AS results
-          HAVING (1 = 1)
-          " . ($this->getParam('is_complete', false) ? " AND ( nb_consults + nb_pictures > 0 )" : "") . "
-          " . ($this->getParam('is_child', false) ? " AND ( age_at_first_consult < 18 )" : "") . "
-          ORDER BY patient_reference
-      ")
+      ",
+      [ 
+        "is_child" => "age_at_first_consult < 18",
+        "is_complete" => "(nb_consults + nb_pictures) > 0"
+      ])
+      . " HAVING (1 = 1)
+        " . ($this->getParam('is_complete', false) ? " AND ( nb_consults + nb_pictures > 0 )" : "") . "
+        " . ($this->getParam('is_child', false) ? " AND ( age_at_first_consult < 18 )" : "") . "
+        ORDER BY patient_reference"
+      ),
+      [
+        "is_child" => SQL::BOOLEAN,
+        "is_complete" => SQL::BOOLEAN
+      ]
     );
   }
 }
