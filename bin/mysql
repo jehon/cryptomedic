@@ -2,4 +2,5 @@
 
 set -o errexit
 
-/usr/bin/mysql "$@"
+docker compose exec mysql mysql --password=mysql_root_password "$@"
+# docker compose exec mysql mysql "$@"

@@ -5,6 +5,9 @@
 		"docker-compose-override.yaml"
 	],
 	"service": "dev",
+	"runServices": [
+		"mysql"
+	],
 	"mounts": [
 		"source=/etc/jehon/restricted/cryptomedic.php,target=/etc/jehon/restricted/cryptomedic.php,type=bind",
 		"source=/etc/jehon/restricted/cryptomedic.sh,target=/etc/jehon/restricted/cryptomedic.sh,type=bind"
@@ -31,6 +34,6 @@
 		"bmewburn.vscode-intelephense-client"
 	],
 	"forwardPorts": [
-		80
+		"phpmyadmin:80"
 	]
 }
