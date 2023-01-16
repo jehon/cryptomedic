@@ -75,8 +75,6 @@ dump:
 	@echo "PATH:             $(PATH)"
 	@echo "DISPLAY:          $(DISPLAY)"
 	@echo "CRYPTOMEDIC_PORT: $(CRYPTOMEDIC_PORT)"
-	@echo "--------------- Supervisor ---------------"
-	sudo /usr/bin/supervisorctl status || true
 	@echo "------------------------------------------"
 	@echo "MySQL:            $(shell mysql --version 2>&1 )"
 	@echo "MySQL Server:     $(shell mysql --silent --database mysql --raw --skip-column-names -e "SELECT VERSION();" 2>&1)"
