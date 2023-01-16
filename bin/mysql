@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
 set -o errexit
+set -o pipefail
 
-docker compose exec mysql mysql --password=mysql_root_password "$@"
-# docker compose exec mysql mysql "$@"
+docker compose exec -T mysql mysql "$@"

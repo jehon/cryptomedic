@@ -16,7 +16,8 @@ services:
   mysql:
     image: mysql:5.7
     environment:
-      MYSQL_ROOT_PASSWORD: mysql_root_password
+      MYSQL_ALLOW_EMPTY_PASSWORD: yes
+      # MYSQL_ROOT_PASSWORD: mysql_root_password
       MYSQL_DATABASE: cryptomedic
     healthcheck:
         test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
@@ -33,7 +34,7 @@ services:
       PMA_HOST: mysql
       PMA_PORT: 3306
       PMA_USER: root
-      PMA_PASSWORD: mysql_root_password
+      # PMA_PASSWORD: mysql_root_password
     expose:
       - 80
     depends_on:

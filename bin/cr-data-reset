@@ -46,7 +46,7 @@ mysql --database=mysql -e " \
 header_end
 
 header_begin "cr-data-reset - Mysql - restoring base.sql"
-mysql <"conf/database/base.sql"
+mysql "mysql" <"conf/database/base.sql"
 header_end
 
 header_begin "cr-data-reset: cr-refresh-structure"
