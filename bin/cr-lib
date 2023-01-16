@@ -3,9 +3,6 @@
 set -o errexit
 set -o pipefail
 
-# shellcheck source=/usr/bin/jh-lib
-. jh-lib
-
 export CR_SCRIPT_DIR
 export CR_PRJ_DIR
 export CR_TMP
@@ -31,3 +28,25 @@ export PATH="$CR_SCRIPT_DIR:$PATH"
 
 # For recursion
 export CR_HEADER_PREFIX="*$CR_HEADER_PREFIX"
+
+jh_color() {
+    COLOR=${1:-"0"}
+    if [ -z "$JH_DAEMON" ]; then
+        echo -en "\e[${COLOR}m"
+    fi
+}
+
+header_begin() {
+    LASTMSG="$*"
+    jh_color 93
+    echo -n "$CR_HEADER_PREFIX $*..."
+    jh_color
+    echo
+}
+
+header_end() {
+    jh_color 93
+    echo -n "$CR_HEADER_PREFIX $LASTMSG done"
+    jh_color
+    echo
+}
