@@ -7,7 +7,8 @@ x-common-env:
 
 services:
   dev:
-    # profiles: [ "manual" ]
+    # We can not set a profile here, because it need to start in DC
+    # But it exit immediately, so no problems
     build: 
       context: conf/dev
       dockerfile: Dockerfile
