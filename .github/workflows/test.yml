@@ -2,9 +2,9 @@ name: Makefile
 
 on:
   push:
-    branches:
-    - main
-    - ci/*
+    # branches:
+    # - main
+    # - ci/*
   pull_request:
     branches:
     - main
