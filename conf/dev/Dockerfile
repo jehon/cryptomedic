@@ -9,8 +9,11 @@ ADD root /
 RUN apt update
 
 RUN DEBIAN_FRONTEND=noninteractive apt install --quiet --yes \
-    rsync unzip lftp openssh-client sshpass sshfs gnupg \
+    make rsync unzip lftp openssh-client sshpass sshfs gnupg \
     git unzip
+
+RUN /setup/setup-node "lts"
+
 
 # #
 # # Override configs

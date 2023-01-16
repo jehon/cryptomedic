@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+set -o errexit
+
+VERSION="$1"
+if [ -z "$VERSION" ]; then
+    echo "Specify version as [1]" >&2
+    exit 1
+fi
+
+export NVM_DIR="$HOME/.nvm"
+mkdir -p "$NVM_DIR"
+
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
+chmod +x "$NVM_DIR"/nvm.sh
+# shellcheck source=/dev/null
+. "$NVM_DIR"/nvm.sh
+
+nvm install --lts
+
+node --version
+npm --version
