@@ -6,10 +6,10 @@ FROM debian:stable
 #
 RUN apt update
 
-RUN DEBIAN_FRONTEND=noninteractive apt install --quiet --yes \
-    rsync unzip lftp openssh-client sshpass sshfs gnupg \
-    git unzip \
-    apache2 ssmtp
+# RUN DEBIAN_FRONTEND=noninteractive apt install --quiet --yes \
+#     rsync unzip lftp openssh-client sshpass sshfs gnupg \
+#     git unzip \
+#     apache2 ssmtp
 
 # #
 # # Override configs

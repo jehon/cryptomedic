@@ -1,0 +1,53 @@
+version: "3.9"
+
+# Also update .ovhconfig
+x-common-env:
+  &common-env
+  MYSQL_HOST: &MYSQL_HOST mysql
+
+services:
+  dev:
+    # profiles: [ "manual" ]
+    build: 
+      context: conf/dev
+      dockerfile: Dockerfile
+
+  # phpmyadmin:
+  #   # https://hub.docker.com/r/phpmyadmin/phpmyadmin/
+  #   image: phpmyadmin/phpmyadmin
+  #   environment:
+  #     IN_DOCKER: phpmyadmin
+  #     PMA_HOST: *MYSQL_HOST
+  #     PMA_PORT: 3306
+  #     PMA_USER: root
+  #     PMA_PASSWORD: root
+  #   expose:
+  #     - 80
+  #   depends_on:
+  #     - mysql
+
+  # mail:
+    # profiles: [ "manual" ]
+  #   # https://hub.docker.com/r/mailhog/mailhog/
+  #   # The WS does not work correctly, due to proxy...
+  #   image: mailhog/mailhog
+  #   environment:
+  #     IN_DOCKER: mail
+  #     MH_UI_WEB_PATH: /xmailx
+  #   expose:
+  #     - 1025
+  #     - 8025
+
+  # cypress:
+  #   profiles: [ "manual" ]
+  #   # Adaptations:
+  #   # See https://github.com/cypress-io/cypress-docker-images/blob/master/included/7.1.0/Dockerfile
+  #   image: cypress/included:9.3.1 # 8.7.0 is causing issue in github actions: https://stackoverflow.com/a/70519386/1954789
+  #   environment:
+  #     LANG: C.UTF-8
+  #     ENV DBUS_SESSION_BUS_ADDRESS:
+  #     CYPRESS_BASE_URL: http://server
+  #   working_dir: /app
+  #   volumes:
+  #     - .:/app
+    

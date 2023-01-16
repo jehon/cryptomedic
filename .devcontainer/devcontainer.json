@@ -1,8 +1,10 @@
 {
 	"name": "Devcontainer",
-	"build": {
-		"dockerfile": "Dockerfile"
-	},
+	"dockerComposeFile": [
+		"../docker-compose.yaml",
+		"docker-compose-override.yaml"
+	],
+	"service": "dev",
 	"mounts": [
 		"source=/etc/jehon/restricted/cryptomedic.php,target=/etc/jehon/restricted/cryptomedic.php,type=bind",
 		"source=/etc/jehon/restricted/cryptomedic.sh,target=/etc/jehon/restricted/cryptomedic.sh,type=bind"
