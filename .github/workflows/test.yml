@@ -26,11 +26,6 @@ jobs:
       with:
         action: start
 
-    - name: enable monitoring
-      uses: jehon/actions-devcontainer@main
-      with:
-        run: /usr/bin/supervisorctl start monitoring
-
     - name: make dump
       timeout-minutes: 2
       uses: jehon/actions-devcontainer@main
