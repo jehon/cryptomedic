@@ -38,6 +38,7 @@
 		"bmewburn.vscode-intelephense-client"
 	],
 	"forwardPorts": [
+		"web:80",
 		"phpmyadmin:80"
 	]
 }
