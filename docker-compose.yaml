@@ -38,6 +38,9 @@ services:
         retries: 10
     expose:
       - 3306
+    volumes:
+      - type: tmpfs
+        target: /var/lib/mysql
 
 ################################################################
 #
