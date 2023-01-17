@@ -5,3 +5,7 @@ set -o errexit
 docker compose up -d --force-recreate --build "$@"
 
 docker ps
+
+if [ -n "$1" ]; then
+    docker compose logs -f "$1"
+fi
