@@ -38,5 +38,3 @@ chmod +x /setup/tmp/get-composer.sh
 
 cd /setup/composer || exit 1
 php /setup/tmp/get-composer.sh
-
-ln -s /setup/composer/composer.phar /usr/local/bin/composer

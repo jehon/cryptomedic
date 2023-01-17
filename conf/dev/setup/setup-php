@@ -2,12 +2,10 @@
 
 set -o errexit
 
-# shellcheck source=/usr/bin/jh-lib
-. jh-lib
-
 VERSION="$1"
 if [ -z "$VERSION" ]; then
-    jh_fatal "Specify version as [1]"
+    echo "Specify version as [1]" >&2
+    exit 1
 fi
 
 export DEBIAN_FRONTEND=noninteractive
@@ -24,9 +22,10 @@ RELEASE="bullseye"
 echo "Overriden release: $RELEASE"
 
 # To link our config into VERSION config
-ln -s /etc/php/current "/etc/php/${VERSION}"
+mkdir -p /etc/php
+ln -sf /etc/php/current "/etc/php/${VERSION}"
 
-echo "deb https://packages.sury.org/php/ $RELEASE main" > /etc/apt/sources.list.d/php.list
+echo "deb [trusted=yes] https://packages.sury.org/php/ $RELEASE main" > /etc/apt/sources.list.d/php.list
 
 apt update --quiet --yes
 
@@ -48,6 +47,5 @@ apt install --quiet --yes \
 # && echo "xdebug.remote_enable=on" >> /usr/local/etc/php/conf.d/xdebug.ini \
 # && echo "xdebug.remote_autostart=off" >> /usr/local/etc/php/conf.d/xdebug.ini
 
-
-# Install composer.phar at /composer.phar
+# Install composer.phar at /composer.phar (will be used through bin/composer proxy)
 ( cd / && curl --silent --show-error https://getcomposer.org/installer | php )

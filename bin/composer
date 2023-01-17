@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+set -o errexit
+set -o pipefail
+
+. cr-lib
+
+# RELATIVE="$( realpath --relative-to="$CR_PRJ_DIR" . )"
+
+# set -x
+# docker compose exec \
+#     --workdir "/app/$RELATIVE" \
+#     composer sh -c "ls"
+
+#    --user "$(id -u):$(id -g)" \
+#    --volume "$HOME"/.composer:/tmp \
+
+/composer.phar "$@"
