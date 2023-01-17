@@ -6,7 +6,8 @@
 	],
 	"service": "dev",
 	"runServices": [
-		"mysql"
+		"mysql",
+		"web"
 	],
 	"mounts": [
 		"source=/etc/jehon/restricted/cryptomedic.php,target=/etc/jehon/restricted/cryptomedic.php,type=bind",
