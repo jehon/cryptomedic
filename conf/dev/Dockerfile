@@ -1,7 +1,7 @@
 
 FROM debian:stable
 
-ADD root /
+ADD . /
 
 #
 # Tools
