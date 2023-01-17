@@ -13,6 +13,9 @@
 		"source=/etc/jehon/restricted/cryptomedic.php,target=/etc/jehon/restricted/cryptomedic.php,type=bind",
 		"source=/etc/jehon/restricted/cryptomedic.sh,target=/etc/jehon/restricted/cryptomedic.sh,type=bind"
 	],
+	"remoteEnv": { 
+		"LOCAL_WORKSPACE_FOLDER": "${localWorkspaceFolder}"
+	},
 	"features": {
 		"ghcr.io/devcontainers/features/docker-outside-of-docker": {
 			"dockerDashComposeVersion": "v2"
