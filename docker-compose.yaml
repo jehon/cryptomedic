@@ -6,12 +6,18 @@ version: "3.9"
 #   &common-env
 
 services:
-  dev:
-    # We can not set a profile here, because it need to start in DC
-    # But it exit immediately, so no problems
-    build: 
-      context: conf/dev
-      dockerfile: Dockerfile
+  web:
+    build:
+      context: conf/web
+    depends_on:
+      mysql:
+        condition: service_healthy
+    ports:
+      - 80:80
+    expose:
+      - 80
+    volumes:
+      - ./www:/var/www/html/
 
   mysql:
     image: mysql:5.7
@@ -26,6 +32,13 @@ services:
     expose:
       - 3306
 
+  dev:
+    # We can not set a profile here, because it need to start in DC
+    # But it exit immediately, so no problems
+    build: 
+      context: conf/dev
+      dockerfile: Dockerfile
+
   phpmyadmin:
     # https://hub.docker.com/r/phpmyadmin/phpmyadmin/
     image: phpmyadmin/phpmyadmin
@@ -36,7 +49,9 @@ services:
       PMA_USER: root
       # PMA_PASSWORD: mysql_root_password
     expose:
-      - 80
+      - 8080:80
+    # ports:
+    #   - 8080:80
     depends_on:
       - mysql
 
