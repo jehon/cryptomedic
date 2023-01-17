@@ -61,10 +61,8 @@ services:
       PMA_PORT: 3306
       PMA_USER: root
       # PMA_PASSWORD: mysql_root_password
-    expose:
+    ports:
       - 8080:80
-    # ports:
-    #   - 8080:80
     depends_on:
       - mysql
 
