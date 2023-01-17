@@ -66,6 +66,15 @@ services:
   #     - 1025
   #     - 8025
 
+  # composer:
+  #   profiles:
+  #     - tool
+  #   image: composer:latest
+  #   working_dir: /app
+  #   volumes:
+  #     - ./:/app
+  # #   entrypoint: sleep infinity
+
   # cypress:
   #   profiles: [ "manual" ]
   #   # Adaptations:
