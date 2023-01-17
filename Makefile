@@ -80,10 +80,11 @@ dump:
 	@echo "MySQL Server:     $(shell mysql --silent --database mysql --raw --skip-column-names -e "SELECT VERSION();" 2>&1)"
 	@echo "MySQL user:       $(shell mysql --silent --database mysql --raw --skip-column-names -e "SELECT CURRENT_USER; " 2>&1)"
 	@echo "PHP:              $(shell php -r 'echo PHP_VERSION;' 2>&1 )"
+	@echo "PHP composer:     $(shell composer --version 2>&1 )"
 	@echo "NodeJS:           $(shell node --version 2>&1 )"
-	@echo "Cypress:          $(shell $(NPM_BIN)/cypress --version --component package 2>&1 )"
-	@echo "Chrome:           $(shell google-chrome --version 2>&1 )"
-	@echo "Supported:        $(shell npx -y browserslist 2>&1 )"
+# @echo "Cypress:          $(shell $(NPM_BIN)/cypress --version --component package 2>&1 )"
+#	@echo "Chrome:           $(shell google-chrome --version 2>&1 )"
+#	@echo "Supported:        $(shell npx -y browserslist 2>&1 )"
 
 clear:
 	@if [ -z "$$NO_CLEAR" ]; then clear; fi
