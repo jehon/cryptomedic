@@ -14,7 +14,10 @@
 		"source=/etc/jehon/restricted/cryptomedic.sh,target=/etc/jehon/restricted/cryptomedic.sh,type=bind"
 	],
 	"remoteEnv": { 
-		"LOCAL_WORKSPACE_FOLDER": "${localWorkspaceFolder}"
+		// DOC: https://containers.dev/implementors/json_reference/
+		"LOCAL_WORKSPACE_FOLDER": "${localWorkspaceFolder}",
+		"DEV_CONTAINER_ID": "${devcontainerId}",
+		"LOCAL_WORKSPACE_FOLDER_BASENAME": "${localWorkspaceFolderBasename}"
 	},
 	"features": {
 		"ghcr.io/devcontainers/features/docker-outside-of-docker": {
