@@ -111,14 +111,13 @@ services:
 # Tools / commands
 #
 ################################################################
-  # composer:
-  #   profiles:
-  #     - tool
-  #   image: composer:latest
-  #   working_dir: /app
-  #   volumes:
-  #     - ./:/app
-  # #   entrypoint: sleep infinity
+  node:
+    profiles:
+      - tool
+    image: node:lts
+    working_dir: /app
+    volumes:
+      - ./:/app
 
   # cypress:
   #   profiles: [ "manual" ]
