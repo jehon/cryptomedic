@@ -1,8 +1,9 @@
 {
 	"name": "Devcontainer",
 	"dockerComposeFile": [
-		"../docker-compose.yaml",
-		"docker-compose-override.yaml"
+		"../docker-compose.yaml"
+		// ,
+		// "docker-compose-override.yaml"
 	],
 	"service": "dev",
 	"runServices": [
