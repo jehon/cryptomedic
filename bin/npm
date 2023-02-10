@@ -10,4 +10,4 @@ docker compose run --quiet-pull -T \
     --workdir /workdir \
     --user "$(id -u)" \
     node \
-    "$@"
+    npm "$@"

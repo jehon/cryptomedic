@@ -274,7 +274,7 @@ $(TMP)/.dependencies-api: $(TMP)/.dependencies-api-bare \
 		www/api/$(VAPI)/composer.lock
 
 	cr-ensure-folder-empty www/api/v1.3/bootstrap/cache
-	cd "www/api/$(VAPI)" && composer update
+	cd "www/api/$(VAPI)" && $(ROOT)/bin/composer update
 
 	@mkdir -p "$(dir $@)"
 	@touch "$@"
