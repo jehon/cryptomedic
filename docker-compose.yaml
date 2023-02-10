@@ -13,18 +13,40 @@ services:
 ################################################################
 
   web:
+    image: traefik
+    restart: always
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--entrypoints.web.address=:80"
+    ports:
+      - "80:80"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+    labels:
+      - traefik.protocol=http
+      - traefik.http.middlewares.jhstriproot.stripprefixregex.regex=/[a-zA-Z0-9_-]+/
+        
+      - traefik.http.routers.api.rule=PathPrefix(`/api`)
+      - traefik.http.routers.api.service=api@internal
+
+      - traefik.http.routers.dashboard.rule=PathPrefix(`/dashboard`)
+      - traefik.http.routers.dashboard.service=dashboard@internal
+      - traefik.http.routers.dashboard.middlewares=jhstriproot@docker
+
+  php:
     # https://hub.docker.com/_/php
     build:
       context: conf/web
     depends_on:
       mysql:
         condition: service_healthy
-    ports:
-      - 80:80
     expose:
       - 80
     volumes:
       - ./:/app
+    labels:
+        - traefik.http.routers.php.rule=PathPrefix(`/`)
 
   mysql:
     image: mysql:5.7
@@ -69,17 +91,19 @@ services:
       - mysql
 
   mail:
-    # https://hub.docker.com/r/mailhog/mailhog/
-    # The WS does not work correctly, due to proxy...
-    image: mailhog/mailhog
+    # https://github.com/maildev/maildev
+    image: maildev/maildev
     environment:
-      IN_DOCKER: mail
-      MH_UI_WEB_PATH: /xmailx
+        # Not working with healthcheck: - MAILDEV_BASE_PATHNAME=/maildev/
+        - MAILDEV_WEB_PORT=1080
     expose:
       - 1025
       - 8025
-    ports:
-      - 8025:8025
+    labels:
+        # https://github.com/maildev/maildev/issues/402
+        - traefik.http.routers.mail.rule=PathPrefix(`/mail`)
+        - traefik.http.routers.mail.middlewares=jhstriproot@docker
+        - traefik.http.services.mail.loadbalancer.server.port=1080
 
 ################################################################
 #
