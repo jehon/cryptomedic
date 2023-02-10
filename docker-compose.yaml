@@ -83,12 +83,13 @@ services:
       PMA_HOST: mysql
       PMA_USER: root
       # PMA_PASSWORD: mysql_root_password
-    ports:
-      - 8080:80
     expose:
       - 80
     depends_on:
       - mysql
+    labels:
+        - traefik.http.routers.phpmyadmin.rule=PathPrefix(`/phpmyadmin`)
+        - traefik.http.routers.phpmyadmin.middlewares=jhstriproot@docker
 
   mail:
     # https://github.com/maildev/maildev
