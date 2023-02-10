@@ -24,7 +24,7 @@ services:
     expose:
       - 80
     volumes:
-      - ./www:/var/www/html/
+      - ./:/app
 
   mysql:
     image: mysql:5.7
