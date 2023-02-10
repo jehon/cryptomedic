@@ -13,7 +13,7 @@
 		"source=/etc/jehon/restricted/cryptomedic.php,target=/etc/jehon/restricted/cryptomedic.php,type=bind",
 		"source=/etc/jehon/restricted/cryptomedic.sh,target=/etc/jehon/restricted/cryptomedic.sh,type=bind"
 	],
-	"remoteEnv": { 
+	"remoteEnv": {
 		// DOC: https://containers.dev/implementors/json_reference/
 		"LOCAL_WORKSPACE_FOLDER": "${localWorkspaceFolder}",
 		"DEV_CONTAINER_ID": "${devcontainerId}",
@@ -24,22 +24,26 @@
 			"dockerDashComposeVersion": "v2"
 		}
 	},
-	"extensions": [
-		"dbaeumer.vscode-eslint",
-		"EditorConfig.EditorConfig",
-		"ecmel.vscode-html-css",
-		"mkaufman.HTMLHint",
-		"nobuhito.printcode",
-		"gruntfuggly.todo-tree",
-		"meganrogge.template-string-converter",
-		"tyriar.luna-paint",
-		"adpyke.vscode-sql-formatter",
-		"timonwong.shellcheck",
-		"ms-azuretools.vscode-docker",
-		"rogalmic.bash-debug",
-		"xdebug.php-debug",
-		"bmewburn.vscode-intelephense-client"
-	],
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"dbaeumer.vscode-eslint",
+				"EditorConfig.EditorConfig",
+				"ecmel.vscode-html-css",
+				"mkaufman.HTMLHint",
+				"nobuhito.printcode",
+				"gruntfuggly.todo-tree",
+				"meganrogge.template-string-converter",
+				"tyriar.luna-paint",
+				"adpyke.vscode-sql-formatter",
+				"timonwong.shellcheck",
+				"ms-azuretools.vscode-docker",
+				"rogalmic.bash-debug",
+				"xdebug.php-debug",
+				"bmewburn.vscode-intelephense-client"
+			]
+		}
+	},
 	"forwardPorts": [
 		"web:80",
 		"phpmyadmin:80"
