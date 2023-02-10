@@ -264,7 +264,7 @@ $(TMP)/.dependencies-node: package.json package-lock.json
 	@touch "$@"
 
 # %/composer.lock: %/composer.json
-# 	cd $(dir $@) && composer install
+# 	bin/composer install --working-dir "$(dir $@)"
 # 	touch "$@"
 
 .PHONY: dependencies-api
@@ -274,7 +274,7 @@ $(TMP)/.dependencies-api: $(TMP)/.dependencies-api-bare \
 		www/api/$(VAPI)/composer.lock
 
 	cr-ensure-folder-empty www/api/v1.3/bootstrap/cache
-	cd "www/api/$(VAPI)" && $(ROOT)/bin/composer update
+	bin/composer install --working-dir "www/api/$(VAPI)"
 
 	@mkdir -p "$(dir $@)"
 	@touch "$@"
@@ -285,7 +285,7 @@ $(TMP)/.dependencies-api-bare: \
 		www/api/$(VAPI)/public/composer.json \
 		www/api/$(VAPI)/public/composer.lock
 
-	cd "www/api/$(VAPI)/public" && composer update
+	bin/composer install --working-dir "www/api/$(VAPI)/public"
 
 	@mkdir -p "$(dir $@)"
 	@touch "$@"
@@ -293,11 +293,12 @@ $(TMP)/.dependencies-api-bare: \
 .PHONY: update-dependencies-api
 update-dependencies-api: $(TMP)/.dependencies-api-bare
 	mkdir -m 777 -p www/api/v1.3/bootstrap/cache
-	cd "www/api/$(VAPI)" && composer update
+	bin/composer update --working-dir "www/api/$(VAPI)/"
+
 
 .PHONY: update-dependencies-api-bare
 update-dependencies-api-bare:
-	cd "www/api/$(VAPI)/public" && composer update
+	bin/composer update --working-dir "www/api/$(VAPI)/public"
 
 #
 #

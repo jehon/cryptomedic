@@ -5,8 +5,15 @@ set -o pipefail
 
 . "$(realpath "$( dirname "${BASH_SOURCE[0]}")")"/cr-lib
 
-# docker compose exec --quiet-pull -T dev /composer.phar "$@"
+FOLDER="$(realpath --relative-to="$CR_PRJ_DIR" "$(pwd)" )"
 
-docker compose run --quiet-pull -T composer \
-    --volume "$(pwd):/workdir" \
+# docker compose exec -T \
+#    php \
+#    /composer.phar
+
+docker compose run --quiet-pull -T \
+    --workdir /app/$FOLDER \
+    --user "$(id -u)" \
+    composer \
+    --no-interaction \
     "$@"
