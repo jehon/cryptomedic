@@ -53,7 +53,6 @@ services:
     # But it exit immediately, so no problems
     build: 
       context: conf/dev
-      dockerfile: Dockerfile
 
   phpmyadmin:
     # https://hub.docker.com/r/phpmyadmin/phpmyadmin/
@@ -69,16 +68,18 @@ services:
     depends_on:
       - mysql
 
-  # mail:
-  #   # https://hub.docker.com/r/mailhog/mailhog/
-  #   # The WS does not work correctly, due to proxy...
-  #   image: mailhog/mailhog
-  #   environment:
-  #     IN_DOCKER: mail
-  #     MH_UI_WEB_PATH: /xmailx
-  #   expose:
-  #     - 1025
-  #     - 8025
+  mail:
+    # https://hub.docker.com/r/mailhog/mailhog/
+    # The WS does not work correctly, due to proxy...
+    image: mailhog/mailhog
+    environment:
+      IN_DOCKER: mail
+      MH_UI_WEB_PATH: /xmailx
+    expose:
+      - 1025
+      - 8025
+    ports:
+      - 8025:8025
 
 ################################################################
 #
