@@ -4,7 +4,6 @@ export PATH := $(ROOT)/bin:$(PATH)
 TMP := $(ROOT)/tmp
 
 GIT_BRANCH=$(shell git rev-parse --abbrev-ref HEAD)
-NPM_BIN=$(shell npm root)/.bin
 
 # Default target
 # End by test, since test-styles may fail
@@ -82,7 +81,7 @@ dump:
 	@echo "PHP:              $(shell bin/php -r 'echo PHP_VERSION;' 2>&1 )"
 	@echo "PHP composer:     $(shell bin/composer --version 2>&1 )"
 	@echo "NodeJS:           $(shell bin/node --version 2>&1 )"
-# @echo "Cypress:          $(shell $(NPM_BIN)/cypress --version --component package 2>&1 )"
+# @echo "Cypress:          $(shell node node_modules/.bin/cypress --version --component package 2>&1 )"
 #	@echo "Chrome:           $(shell google-chrome --version 2>&1 )"
 #	@echo "Supported:        $(shell npx -y browserslist 2>&1 )"
 
@@ -133,15 +132,15 @@ lint: lint-es lint-css lint-html
 
 .PHONY: lint-es
 lint-es: $(TMP)/.dependencies-node
-	$(NPM_BIN)/eslint
+	node node_modules/.bin/eslint
 
 .PHONY: lint-css
 lint-css: $(TMP)/.dependencies-node
-	$(NPM_BIN)/stylelint app/**/*.css
+	node node_modules/.bin/stylelint app/**/*.css
 
 .PHONY: lint-html
 lint-html: $(TMP)/.dependencies-node
-	$(NPM_BIN)/htmlhint app/**/*.html tests/**/*.html www/api/*/public/**/*.html --format=compact
+	node node_modules/.bin/htmlhint app/**/*.html tests/**/*.html www/api/*/public/**/*.html --format=compact
 
 .PHONY: test # In Jenkinfile, each step is separated:
 test: $(TMP)/.dependencies $(TMP)/.built test-api test-api-bare test-unit test-e2e test-styles
@@ -168,7 +167,7 @@ test-unit: $(TMP)/.dependencies-node \
 
 # TODO: reenable coverage
 	mkdir -p $(TMP)/js
-	NOCOV=1 npm run test-unit-continuously-withcov -- --single-run
+	NOCOV=1 bin/npm run test-unit-continuously-withcov -- --single-run
 # node tests/report.js
 
 .PHONY: test-e2e
@@ -194,7 +193,7 @@ $(TMP)/.tested-e2e-mobile: $(TMP)/.built $(TMP)/.dependencies $(shell find cypre
 
 # TODO
 cypress-open:
-	$(NPM_BIN)/cypress open
+	node node_modules/.bin/cypress open
 
 # TODO
 .PHONY: test-styles
@@ -210,7 +209,7 @@ $(TMP)/styles/styles-problems-list.json: tests/styles tests/styles/references $(
 	find $(TMP)/e2e/desktop/screenshots/ -type "f" -exec "cp" "{}" "$(dir $@)/run/desktop/" ";"
 
 	@echo "Compare"
-	node tests/styles/test-styles.mjs
+	bin/node tests/styles/test-styles.mjs
 	@echo "Report is at http://localhost:$(CRYPTOMEDIC_PORT)/xappx/tmp/style.html"
 	du -ksh "$(dir $@)"
 
@@ -324,26 +323,26 @@ www/built/index.html: $(TMP)/.dependencies-node webpack.config.js  \
 		$(CJS2ESM_DIR)/axios-mock-adapter.js \
 		$(CJS2ESM_DIR)/platform.js
 
-	$(NPM_BIN)/webpack
+	node node_modules/.bin/webpack
 
 www/built/browsers.json: .browserslistrc $(TMP)/.dependencies-node
-	npx -y browserslist --json > "$@"
+	node node_modules/.bin/browserslist --json > "$@"
 
 update-references-browsers:
-	npx -y browserslist --update-db
+	node node_modules/.bin/browserslist --update-db
 
 # Dependencies are used in the build !
 $(CJS2ESM_DIR)/axios.js: node_modules/axios/dist/axios.js
-	$(NPM_BIN)/babel --out-file="$@" --plugins=transform-commonjs --source-maps inline $?
+	node node_modules/.bin/babel --out-file="$@" --plugins=transform-commonjs --source-maps inline $?
 
 # Dependencies are used in the build !
 $(CJS2ESM_DIR)/axios-mock-adapter.js: node_modules/axios-mock-adapter/dist/axios-mock-adapter.js
-	$(NPM_BIN)/babel --out-file="$@" --plugins=transform-commonjs --source-maps inline $?
+	node node_modules/.bin/babel --out-file="$@" --plugins=transform-commonjs --source-maps inline $?
 	sed -i 's/from "axios";/from ".\/axios.js";/' $@
 
 # Dependencies are used in the build !
 $(CJS2ESM_DIR)/platform.js: node_modules/platform/platform.js
-	$(NPM_BIN)/babel --out-file="$@" --plugins=transform-commonjs --source-maps inline $?
+	node node_modules/.bin/babel --out-file="$@" --plugins=transform-commonjs --source-maps inline $?
 
 #
 #

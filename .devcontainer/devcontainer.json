@@ -5,6 +5,7 @@
 		"docker-compose-override.yaml"
 	],
 	"service": "dev",
+	"overrideCommand": false, // /usr/bin/sleep is unknown
 	"runServices": [
 		"web",
 		"mysql",
