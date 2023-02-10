@@ -15,7 +15,7 @@ RUN chmod +x /usr/local/bin/install-php-extensions
 # mbstring, xml already installed
 RUN install-php-extensions gd pdo_mysql xdebug
 
-RUN curl -s https://getcomposer.org/installer | php -- --install-dir=/
+# RUN curl -s https://getcomposer.org/installer | php -- --install-dir=/
 
 ADD . /
 

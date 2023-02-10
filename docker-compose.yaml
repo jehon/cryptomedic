@@ -111,6 +111,14 @@ services:
 # Tools / commands
 #
 ################################################################
+  composer:
+    profiles:
+      - tool
+    image: composer:latest
+    working_dir: /app
+    volumes:
+      - ./:/app
+
   node:
     profiles:
       - tool
@@ -131,4 +139,3 @@ services:
   #   working_dir: /app
   #   volumes:
   #     - .:/app
-    
