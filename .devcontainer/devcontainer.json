@@ -1,14 +1,14 @@
 {
 	"name": "Devcontainer",
 	"dockerComposeFile": [
-		"../docker-compose.yaml"
-		// ,
-		// "docker-compose-override.yaml"
+		"../docker-compose.yaml",
+		"docker-compose-override.yaml"
 	],
 	"service": "dev",
 	"runServices": [
+		"web",
 		"mysql",
-		"web"
+		"php"
 	],
 	"mounts": [
 		"source=/etc/jehon/restricted/cryptomedic.php,target=/etc/jehon/restricted/cryptomedic.php,type=bind",

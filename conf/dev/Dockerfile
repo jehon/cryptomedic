@@ -8,7 +8,11 @@ ADD . /
 #
 RUN apt update
 
+#
+# coreutils => sleep
+#
 RUN DEBIAN_FRONTEND=noninteractive apt install --quiet --yes \
+    coreutils \
     curl git unzip lsb-release \
     make rsync unzip lftp openssh-client sshpass sshfs gnupg
 
