@@ -6,8 +6,6 @@
  * It should not be included by the Laravel part -> see shared for that.
  */
 
-require_once(__DIR__ . '/shared.php');
-
 use Symfony\Component\ErrorHandler\Debug;
 
 Debug::enable();

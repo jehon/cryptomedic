@@ -19,7 +19,7 @@ ok:
 	date
 
 .PHONY: pull-request
-pull-request: update-dependencies-api-bare update-dependencies-api test
+pull-request: update-dependencies-api test
 
 #
 # Debug options:
@@ -252,7 +252,7 @@ logs:
 
 .PHONY: dependencies
 dependencies: $(TMP)/.dependencies
-$(TMP)/.dependencies: $(TMP)/.dependencies-node $(TMP)/.dependencies-api $(TMP)/.dependencies-api-bare
+$(TMP)/.dependencies: $(TMP)/.dependencies-node $(TMP)/.dependencies-api
 	@mkdir -p "$(dir $@)"
 	@touch "$@"
 
@@ -271,7 +271,7 @@ $(TMP)/.dependencies-node: package.json package-lock.json
 
 .PHONY: dependencies-api
 dependencies-api: $(TMP)/.dependencies-api
-$(TMP)/.dependencies-api: $(TMP)/.dependencies-api-bare \
+$(TMP)/.dependencies-api: \
 		www/api/$(VAPI)/composer.json \
 		www/api/$(VAPI)/composer.lock
 
@@ -281,26 +281,10 @@ $(TMP)/.dependencies-api: $(TMP)/.dependencies-api-bare \
 	@mkdir -p "$(dir $@)"
 	@touch "$@"
 
-.PHONY: dependencies-api-bare
-dependencies-api-bare: $(TMP)/.dependencies-api-bare
-$(TMP)/.dependencies-api-bare: \
-		www/api/$(VAPI)/public/composer.json \
-		www/api/$(VAPI)/public/composer.lock
-
-	bin/composer install --working-dir "www/api/$(VAPI)/public"
-
-	@mkdir -p "$(dir $@)"
-	@touch "$@"
-
 .PHONY: update-dependencies-api
-update-dependencies-api: $(TMP)/.dependencies-api-bare
+update-dependencies-api:
 	mkdir -m 777 -p www/api/v1.3/bootstrap/cache
 	bin/composer update --working-dir "www/api/$(VAPI)/"
-
-
-.PHONY: update-dependencies-api-bare
-update-dependencies-api-bare:
-	bin/composer update --working-dir "www/api/$(VAPI)/public"
 
 #
 #
