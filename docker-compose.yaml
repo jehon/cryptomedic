@@ -41,9 +41,6 @@ services:
       context: conf/web
       args:
         PHP_VERSION: ${PHP_VERSION}
-    depends_on:
-      mysql:
-        condition: service_healthy
     expose:
       - 80
     volumes:
@@ -88,8 +85,6 @@ services:
       # PMA_PASSWORD: mysql_root_password
     expose:
       - 80
-    depends_on:
-      - mysql
     labels:
         - traefik.http.routers.phpmyadmin.rule=PathPrefix(`/phpmyadmin`)
         - traefik.http.routers.phpmyadmin.middlewares=jhstriproot@docker
