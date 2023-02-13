@@ -151,16 +151,16 @@ test: $(TMP)/.dependencies $(TMP)/.built test-api test-api-bare test-unit test-e
 .PHONY: test-api
 test-api: $(TMP)/.dependencies-api
 	jh-run-and-capture cr-data-reset
-	cr-phpunit laravel
+	bin/cr-phpunit laravel
 
 .PHONY: update-references-api
 update-references-api: $(TMP)/.dependencies-api
 	jh-run-and-capture cr-data-reset
-	COMMIT=1 cr-phpunit
+	COMMIT=1 bin/cr-phpunit laravel
 
 test-api-bare: $(TMP)/.dependencies-api
 	jh-run-and-capture cr-data-reset
-	cr-phpunit bare
+	bin/cr-phpunit bare
 
 .PHONY: test-unit
 test-unit: $(TMP)/.dependencies-node \
