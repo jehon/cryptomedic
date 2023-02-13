@@ -4,7 +4,7 @@ global $myconfig;
 
 $myconfig = [
   'database' => [
-    'host'       => 'localhost',
+    'host'       => 'mysql',
     'schema'     => 'cryptomedic',
     'username'   => 'mysql_cryptomedic_username',
     'password'   => 'mysql_cryptomedic_password',
