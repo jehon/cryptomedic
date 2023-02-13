@@ -117,6 +117,11 @@ clean-ports:
 .PHONY: start
 start: dependencies build
 	docker compose up -d --build
+
+	@echo -n "Waiting for mysql to be ready"
+	@while ! bin/mysqladmin ping -h "localhost" --silent >/dev/null; do sleep 1; echo -n "."; done
+	@echo "Done"
+
 	jh-run-and-capture cr-data-reset
 
 	@echo "Open browser: http://localhost:$(CRYPTOMEDIC_PORT)/"

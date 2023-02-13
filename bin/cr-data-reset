@@ -26,13 +26,6 @@ header_end
 # Reset database
 header_begin "cr-data-reset - Mysql - configuring"
 
-header_begin "Waiting for mysql:"
-while ! $CR_SCRIPT_DIR/mysqladmin ping -h "localhost" --silent; do
-    sleep 1
-done
-header_end
-
-
 ## The user may already exists
 ## In mysql 7+, there is an "IF NOT EXISTS"
 mysql --database=mysql -e "DROP USER 'mysql_cryptomedic_username'" 2>/dev/null || true
