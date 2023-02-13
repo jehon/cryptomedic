@@ -1,5 +1,5 @@
 
-ARG PHP_VERSION=8.1
+ARG PHP_VERSION
 
 FROM php:${PHP_VERSION}-apache
 

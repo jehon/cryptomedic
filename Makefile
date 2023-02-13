@@ -116,11 +116,14 @@ clean-ports:
 
 .PHONY: start
 start: dependencies build
+	docker compose up -d --build
 	jh-run-and-capture cr-data-reset
 
 	@echo "Open browser: http://localhost:$(CRYPTOMEDIC_PORT)/"
 	@echo "Test page: http://localhost:$(CRYPTOMEDIC_PORT)/xappx/"
 
+reset: 
+	jh-run-and-capture cr-data-reset
 #
 #
 # Tests

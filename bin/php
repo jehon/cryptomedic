@@ -3,4 +3,4 @@
 set -o errexit
 set -o pipefail
 
-docker compose exec -T php php "$@"
+docker compose exec -T web php "$@"

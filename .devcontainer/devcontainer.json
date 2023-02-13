@@ -7,9 +7,9 @@
 	"service": "dev",
 	"overrideCommand": false, // /usr/bin/sleep is unknown
 	"runServices": [
-		"web",
+		"proxy",
 		"mysql",
-		"php"
+		"web"
 	],
 	"mounts": [
 		"source=/etc/jehon/restricted/cryptomedic.php,target=/etc/jehon/restricted/cryptomedic.php,type=bind",

@@ -1,5 +1,5 @@
 
-version: "3.9"
+# env_file: .env
 
 # # Also update .ovhconfig
 # x-common-env:
@@ -12,7 +12,7 @@ services:
 #
 ################################################################
 
-  web:
+  proxy:
     image: traefik
     restart: always
     command:
@@ -20,24 +20,27 @@ services:
       - "--providers.docker=true"
       - "--entrypoints.web.address=:80"
     ports:
-      - "80:80"
+      - "${CRYPTOMEDIC_PORT}:80"
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
     labels:
       - traefik.protocol=http
       - traefik.http.middlewares.jhstriproot.stripprefixregex.regex=/[a-zA-Z0-9_-]+/
         
-      - traefik.http.routers.api.rule=PathPrefix(`/api`)
-      - traefik.http.routers.api.service=api@internal
+# ## conflict with cryptomedic:
+#       - traefik.http.routers.api.rule=PathPrefix(`/api`)
+#       - traefik.http.routers.api.service=api@internal
 
-      - traefik.http.routers.dashboard.rule=PathPrefix(`/dashboard`)
-      - traefik.http.routers.dashboard.service=dashboard@internal
+#       - traefik.http.routers.dashboard.rule=PathPrefix(`/dashboard`)
+#       - traefik.http.routers.dashboard.service=dashboard@internal
       - traefik.http.routers.dashboard.middlewares=jhstriproot@docker
 
-  php:
+  web:
     # https://hub.docker.com/_/php
     build:
       context: conf/web
+      args:
+        PHP_VERSION: ${PHP_VERSION}
     depends_on:
       mysql:
         condition: service_healthy
@@ -49,7 +52,7 @@ services:
         - traefik.http.routers.php.rule=PathPrefix(`/`)
 
   mysql:
-    image: mysql:5.7
+    image: mysql:${MYSQL_VERSION}
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: yes
       # MYSQL_ROOT_PASSWORD: mysql_root_password
