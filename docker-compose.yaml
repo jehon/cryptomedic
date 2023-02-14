@@ -20,13 +20,13 @@ services:
       - "--providers.docker=true"
       - "--entrypoints.web.address=:80"
     ports:
-      - ${CRYPTOMEDIC_PORT}:80
+      - ${CRYPTOMEDIC_PORT:-5555}:80
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
     labels:
       - traefik.protocol=http
       - traefik.http.middlewares.jhstriproot.stripprefixregex.regex=/[a-zA-Z0-9_-]+/
-        
+
 # ## conflict with cryptomedic:
 #       - traefik.http.routers.api.rule=PathPrefix(`/api`)
 #       - traefik.http.routers.api.service=api@internal
