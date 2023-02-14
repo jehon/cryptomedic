@@ -281,7 +281,7 @@ class Lists extends CachedAbstract {
             return $cachedLists[$name];
         }
 
-        throw new TechnicalException('List does not exists: ' . $name);
+        throw new \Exception('List does not exists: ' . $name);
     }
 
     static function getCodes(): array {

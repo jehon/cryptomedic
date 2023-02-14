@@ -2,7 +2,7 @@
 
 namespace Cryptomedic\Lib;
 
-class DatabaseInvalidStructureException extends BusinessException {
+class DatabaseInvalidStructureException extends \Exception {
     function __construct($table, $field = '') {
         parent::__construct("No structure for: $table" . ($field ? "#$field" : ""));
     }

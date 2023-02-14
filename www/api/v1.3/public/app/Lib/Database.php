@@ -10,13 +10,7 @@ use PDO;
 
 use Cryptomedic\Lib\StringsOps;
 
-class DatabaseQueryException extends TechnicalException {
-}
-
-class DatabaseNotFoundException extends BusinessException {
-}
-
-class DatabaseInvalidParameters extends BusinessException {
+class DatabaseInvalidParameters extends \Exception {
     function __construct($field, $value) {
         parent::__construct("Field $field has invalid value '$value'", 404);
         $this->field = $field;
@@ -112,7 +106,7 @@ class Database {
         if (array_key_exists($id, $list)) {
             return $list[$id];
         }
-        throw new DatabaseNotFoundException("Id not found: $table(id)#$id");
+        throw new Exception("Id not found: $table(id)#$id");
     }
 
     static public function buildSetStatement(string $table, array $data) {
