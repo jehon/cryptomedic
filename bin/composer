@@ -11,7 +11,7 @@ FOLDER="$(realpath --relative-to="$CR_PRJ_DIR" "$(pwd)" )"
 #    php \
 #    /composer.phar
 
-docker compose run --quiet-pull -T \
+docker compose run --rm --quiet-pull -T \
     --workdir /app/$FOLDER \
     --user "$(id -u)" \
     composer \

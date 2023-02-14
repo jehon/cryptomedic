@@ -5,7 +5,7 @@ set -o pipefail
 
 . "$(realpath "$( dirname "${BASH_SOURCE[0]}")")"/cr-lib
 
-docker compose run --quiet-pull -T \
+docker compose run --rm --quiet-pull -T \
     --volume "$(pwd):/workdir" \
     --workdir /workdir \
     --user "$(id -u)" \

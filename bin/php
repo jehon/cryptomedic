@@ -3,4 +3,11 @@
 set -o errexit
 set -o pipefail
 
-docker compose exec -T web php "$@"
+. "$(realpath "$( dirname "${BASH_SOURCE[0]}")")"/cr-lib
+
+docker compose exec --quiet-pull -T \
+    --volume "$(pwd):/workdir" \
+    --workdir /workdir \
+    --user "$(id -u)" \
+    web \
+    php "$@"
