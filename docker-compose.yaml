@@ -1,9 +1,5 @@
 
-# env_file: .env
-
-# # Also update .ovhconfig
-# x-common-env:
-#   &common-env
+version: '3.9'
 
 services:
 ################################################################
