@@ -13,11 +13,11 @@ fi
 
 echo "Deploying to ${CR_HTTP_HOST} with pwd of #${#CRYPTOMEDIC_DB_UPGRADE} char length"
 
-header_begin "* Upgrading database"
+header_begin "Upgrading database"
 curl -fsSL "http://${CR_HTTP_HOST}/maintenance/patch_db.php?pwd=${CRYPTOMEDIC_DB_UPGRADE}"
 header_end
 
-header_begin "* Upgrading files"
+header_begin "Upgrading files"
 curl -fsSL "http://${CR_HTTP_HOST}/maintenance/reset.php?pwd=${CRYPTOMEDIC_DB_UPGRADE}"
 header_end
 
