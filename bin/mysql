@@ -3,4 +3,19 @@
 set -o errexit
 set -o pipefail
 
+mysql_test() {
+    docker compose exec mysql mysql -e "SHOW DATABASES;" > /dev/null
+}
+
+if ! mysql_test ; then
+    echo -n "Waiting for mysql"
+    sleep 0.5s
+    while ! mysql_test ; do
+        echo -n "."
+        sleep 0.5s
+    done
+    echo
+fi
+
+# -T is necessary for <file.sql
 docker compose exec -T mysql mysql "$@"
