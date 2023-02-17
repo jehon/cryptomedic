@@ -3,8 +3,17 @@
 set -o errexit
 set -o pipefail
 
+#
+# Caution:
+#
+#   this script can be called like: $0 < blabla.sql
+#
+# So, nobody can listen to stdin before the real "mysql" call!
+#
+
 mysql_test() {
-    docker compose exec mysql mysql -e "SHOW DATABASES;" > /dev/null
+    # Do not capture stdin!
+    docker compose exec mysql mysql -e "SHOW DATABASES;" > /dev/null < /dev/null
 }
 
 sleep 1s
