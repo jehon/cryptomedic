@@ -47,8 +47,6 @@ class ReportActivityController extends ReportController {
     );
 
     $this->result['list'] = $list1;
-    // $this->getParamAsSqlReset();
-
     // $list2 = $this->runSqlWithNamedParameter("SELECT
     //   payments.ExaminerName as ExaminerName,
     //   bills.Center as Center,
