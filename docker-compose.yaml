@@ -14,6 +14,7 @@ services:
     command:
       - "--api.insecure=true"
       - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
       - "--entrypoints.web.address=:80"
     ports:
       # CRYPTOMEDIC_PORT
@@ -21,19 +22,23 @@ services:
       - published: 5555
         target: 80
         mode: host
+      - published: 5558
+        target: 8080
+        mode: host
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
     labels:
       - traefik.protocol=http
+      - traefik.enable=true
       - traefik.http.middlewares.jhstriproot.stripprefixregex.regex=/[a-zA-Z0-9_-]+/
 
-      - traefik.http.routers.traeffik_api.rule=PathPrefix(`/traeffik/api`)
-      - traefik.http.routers.traeffik_api.service=api@internal
-      - traefik.http.routers.traeffik_api.middlewares=jhstriproot@docker
+      # - traefik.http.routers.traeffik_api.rule=PathPrefix(`/traefik/api`)
+      # - traefik.http.routers.traeffik_api.service=api@internal
+      # - traefik.http.routers.traeffik_api.middlewares=jhstriproot@docker
 
-      - traefik.http.routers.traeffik_dashboard.rule=PathPrefix(`/traeffik/`)
-      - traefik.http.routers.traeffik_dashboard.service=dashboard@internal
-      - traefik.http.routers.traeffik_dashboard.middlewares=jhstriproot@docker
+      # - traefik.http.routers.traeffik_dashboard.rule=PathPrefix(`/traefik/dashboard/`)
+      # - traefik.http.routers.traeffik_dashboard.service=dashboard@internal
+      # - traefik.http.routers.traeffik_dashboard.middlewares=jhstriproot@docker
 
   web:
     # https://hub.docker.com/_/php
@@ -46,7 +51,8 @@ services:
     volumes:
       - ./:/app
     labels:
-        - traefik.http.routers.php.rule=PathPrefix(`/`)
+        - traefik.enable=true
+        - traefik.http.routers.web.rule=PathPrefix(`/`)
 
   mysql:
     image: mysql:${MYSQL_VERSION}
@@ -86,6 +92,7 @@ services:
     expose:
       - 80
     labels:
+        - traefik.enable=true
         - traefik.http.routers.phpmyadmin.rule=PathPrefix(`/phpmyadmin`)
         - traefik.http.routers.phpmyadmin.middlewares=jhstriproot@docker
 
@@ -99,6 +106,7 @@ services:
       - 1025
       - 8025
     labels:
+        - traefik.enable=true
         # https://github.com/maildev/maildev/issues/402
         - traefik.http.routers.mail.rule=PathPrefix(`/mail`)
         - traefik.http.routers.mail.middlewares=jhstriproot@docker
