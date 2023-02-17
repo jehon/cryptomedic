@@ -127,6 +127,9 @@ start: dependencies build
 	@echo "Open browser: http://localhost:$(CRYPTOMEDIC_PORT)/"
 	@echo "Test page: http://localhost:$(CRYPTOMEDIC_PORT)/xappx/"
 
+stop:
+	docker compose down
+
 reset: 
 	jh-run-and-capture cr-data-reset
 #
