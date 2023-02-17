@@ -27,13 +27,13 @@ services:
       - traefik.protocol=http
       - traefik.http.middlewares.jhstriproot.stripprefixregex.regex=/[a-zA-Z0-9_-]+/
 
-# ## conflict with cryptomedic:
-#       - traefik.http.routers.api.rule=PathPrefix(`/api`)
-#       - traefik.http.routers.api.service=api@internal
+      - traefik.http.routers.traeffik_api.rule=PathPrefix(`/traeffik/api`)
+      - traefik.http.routers.traeffik_api.service=api@internal
+      - traefik.http.routers.traeffik_api.middlewares=jhstriproot@docker
 
-#       - traefik.http.routers.dashboard.rule=PathPrefix(`/dashboard`)
-#       - traefik.http.routers.dashboard.service=dashboard@internal
-      - traefik.http.routers.dashboard.middlewares=jhstriproot@docker
+      - traefik.http.routers.traeffik_dashboard.rule=PathPrefix(`/traeffik/`)
+      - traefik.http.routers.traeffik_dashboard.service=dashboard@internal
+      - traefik.http.routers.traeffik_dashboard.middlewares=jhstriproot@docker
 
   web:
     # https://hub.docker.com/_/php
