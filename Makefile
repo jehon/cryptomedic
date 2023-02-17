@@ -122,7 +122,7 @@ start: dependencies build
 	@while ! bin/mysqladmin ping -h "localhost" --silent >/dev/null; do sleep 1; echo -n "."; done
 	@echo "Done"
 
-	jh-run-and-capture cr-data-reset
+	cr-data-reset
 
 	@echo "Open browser: http://localhost:$(CRYPTOMEDIC_PORT)/"
 	@echo "Test page: http://localhost:$(CRYPTOMEDIC_PORT)/xappx/"
@@ -131,7 +131,7 @@ stop:
 	docker compose down
 
 reset: 
-	jh-run-and-capture cr-data-reset
+	cr-data-reset
 #
 #
 # Tests
