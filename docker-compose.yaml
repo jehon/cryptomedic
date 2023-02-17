@@ -20,7 +20,11 @@ services:
       - "--providers.docker=true"
       - "--entrypoints.web.address=:80"
     ports:
-      - ${CRYPTOMEDIC_PORT:-5555}:80
+      # CRYPTOMEDIC_PORT
+      # Using variable here does not work
+      - published: 5555
+        target: 80
+        mode: host
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
     labels:
