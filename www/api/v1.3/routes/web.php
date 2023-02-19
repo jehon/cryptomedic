@@ -31,17 +31,18 @@ Route::group([ 'prefix' => '/api/' . basename(dirname(__DIR__)) ], function() {
   });
 
   // Public public
-  Route::get('/templates/{category?}/{name?}', "TemplatesController@render");
-  Route::post('/auth/mylogin', "AuthController@postMylogin");
-  Route::get('/auth/logout', "AuthController@getLogout");
+  Route::get('templates/{category?}/{name?}', "TemplatesController@render");
+  Route::post('auth/mylogin', "AuthController@postMylogin");
+  Route::get('auth/logout', "AuthController@getLogout");
 
   // Without effect
   Route::get('admin/priceFields', "PricesController@priceFields");
+  Route::get('struct/database', 'DatabaseStructureController@index');
 
   // Private
   Route::group(array('middleware' => 'authenticated'), function()
   {
-    Route::post('/auth/settings', "AuthController@getSettings");
+    Route::post('auth/settings', "AuthController@getSettings");
 
     hasPermission('users.manage', function() {
       Route::get('users/emails', 'UsersController@emails');

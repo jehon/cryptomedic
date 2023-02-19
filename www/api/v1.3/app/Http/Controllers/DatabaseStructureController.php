@@ -1,6 +1,9 @@
 <?php
 
-namespace Cryptomedic\Lib;
+namespace App\Http\Controllers;
+
+use App\Http\Controllers\Controller;
+use DB;
 
 /**
  * Structure
@@ -103,7 +106,7 @@ define('DB_DEPENDANTS', [
     ]
 ]);
 
-class DatabaseStructure extends CachedAbstract {
+class DatabaseStructureController extends Controller {
     public const TYPE_LIST         = "list";
     public const TYPE_TIMESTAMP    = "timestamp";
     public const TYPE_BOOLEAN      = "boolean";
@@ -113,7 +116,7 @@ class DatabaseStructure extends CachedAbstract {
     public const TYPE_DATE         = "date";
     public const TYPE_BINARY       = "binary";
 
-    static public function cacheGenerate(): array {
+    static public function index() {
         global $myconfig;
 
         $databaseStructure = [];
@@ -122,26 +125,15 @@ class DatabaseStructure extends CachedAbstract {
         /* Structure of the database */
         /*****************************/
 
-        foreach (Database::select("SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE table_schema = '{$myconfig["database"]["schema"]}'") as $row) {
-            $sqlTable = $row['TABLE_NAME'];
-            $sqlField = $row['COLUMN_NAME'];
+        foreach (DB::select("SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE table_schema = '{$myconfig["database"]["schema"]}'") as $row) {
+            $sqlTable = $row->TABLE_NAME;
+            $sqlField = $row->COLUMN_NAME;
 
             if (!array_key_exists($sqlTable, $databaseStructure)) {
                 $databaseStructure[$sqlTable] = [];
             }
 
             $databaseStructure[$sqlTable][$sqlField] = self::parseColumn($row);
-
-            // if (StringsOps::endsWith($sqlField, '_id')) {
-            //     $targetTable = substr($sqlField, 0, -3);
-            //     if (!array_key_exists($targetTable, $databaseStructure['_relations'])) {
-
-            //         // TODO: translate $targetTable into model ?
-
-            //         $databaseStructure['_relations'][$targetTable] = [];
-            //     }
-            //     $databaseStructure['_relations'][$targetTable][$sqlTable] = $sqlField;
-            // }
         }
 
         /**********************/
@@ -171,19 +163,19 @@ class DatabaseStructure extends CachedAbstract {
             }
         }
 
-        return $databaseStructure;
+        return response()->json($databaseStructure)->setEncodingOptions(JSON_NUMERIC_CHECK);
     }
 
-    static private function parseColumn(array $sqlData): array {
+    static private function parseColumn(object $sqlData): array {
         // TODO: normalize and test this function
 
-        $name = $sqlData['COLUMN_NAME'];
+        $name = $sqlData->COLUMN_NAME;
         $res = new \stdClass;
 
         $res->protected = in_array($name, ['id', 'created_at', 'updated_at', 'lastuser']);
 
         if (!$res->protected) {
-            $res->optional = ($sqlData['IS_NULLABLE'] == "YES");
+            $res->optional = ($sqlData->IS_NULLABLE == "YES");
 
             if (!$res->optional) {
                 // Only mandatory fields can be insertOnly (e.g. patient_id)
@@ -191,7 +183,7 @@ class DatabaseStructure extends CachedAbstract {
             }
         }
 
-        $res->type = $sqlData['DATA_TYPE'];
+        $res->type = $sqlData->DATA_TYPE;
 
         // Special case:
         switch ($res->type) {
@@ -202,7 +194,7 @@ class DatabaseStructure extends CachedAbstract {
             case "decimal":
             case "tinyint":
             case "int":
-                $length = $sqlData['NUMERIC_PRECISION'];
+                $length = $sqlData->NUMERIC_PRECISION;
                 if ($length == 3) {
                     $res->type = self::TYPE_BOOLEAN;
                 } else {
@@ -214,7 +206,7 @@ class DatabaseStructure extends CachedAbstract {
             case "text":
             case "char":
             case "varchar":
-                $res->length = $sqlData['CHARACTER_MAXIMUM_LENGTH'];
+                $res->length = $sqlData->CHARACTER_MAXIMUM_LENGTH;
                 if ($res->length >= 800) {
                     // Long text = blob
                     $res->type = self::TYPE_TEXT;
@@ -223,14 +215,14 @@ class DatabaseStructure extends CachedAbstract {
                 }
                 break;
             case "mediumtext":
-                $res->length = $sqlData['CHARACTER_MAXIMUM_LENGTH'];
+                $res->length = $sqlData->CHARACTER_MAXIMUM_LENGTH;
                 $res->type = self::TYPE_TEXT;
                 break;
             case "timestamp":
                 $res->type = self::TYPE_TIMESTAMP;
                 break;
             case "longblob":
-                $res->length = $sqlData['CHARACTER_MAXIMUM_LENGTH'];
+                $res->length = $sqlData->CHARACTER_MAXIMUM_LENGTH;
                 $res->type = self::TYPE_BINARY;
                 break;
             default:
@@ -240,60 +232,4 @@ class DatabaseStructure extends CachedAbstract {
         }
         return (array) $res;
     }
-
-    static public function getDatabaseStructure(): array {
-        return self::getCachedData();
-    }
-
-    static public function checkTableExistsAndGetDefinition(string $table): array {
-        if (!array_key_exists($table, self::getCachedData())) {
-            throw new \Exception("checkTableExistsAndGetDefinition: $table");
-        }
-        return self::getCachedData()[$table];
-    }
-
-    static public function checkFieldExistsInTableAndGetDefinition(string $table, string $field): array {
-        $tableDef = self::checkTableExistsAndGetDefinition($table);
-        if (!array_key_exists($field, $tableDef)) {
-            throw new Exception("checkFieldExistsInTableAndGetDefinition: ${table}/${field}");
-        }
-        return $tableDef[$field];
-    }
-
-    static public function doesFieldExistsInTable(string $table, string $field): bool {
-        try {
-            self::checkFieldExistsInTableAndGetDefinition($table, $field);
-            return true;
-        } catch (\Exception $e) {
-            return false;
-        }
-    }
-
-    static public function protectData(string $table, array $data): array {
-        // TODO
-        return $data;
-    }
-
-    /**
-     * Transform number, dates, boolean
-     */
-    static public function normalizeRecord(string $table, array $data): array {
-        // TODO
-        return $data;
-    }
-
-
-    static function getDependantsOfTable($table) {
-        return DB_DEPENDANTS[$table];
-    }
-
-    static function getModelForTable($table) {
-        return array_search($table, MODEL_TO_DB);
-    }
-
-    static function getTableForModel($model) {
-        return MODEL_TO_DB[$model];
-    }
 }
-
-DatabaseStructure::init();

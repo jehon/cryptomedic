@@ -8,4 +8,4 @@ set -o errexit
 SWD="$(dirname "${BASH_SOURCE[0]}")"
 V="$(basename "$(dirname "$SWD")")"
 
-curl -fsSL "http://${CR_HTTP_HOST}/api/$V/routes/struct/data.php?force=1&quiet=true"
+curl -fsSL "http://${CR_HTTP_HOST}/api/$V/struct/database?force=1&quiet=true"
