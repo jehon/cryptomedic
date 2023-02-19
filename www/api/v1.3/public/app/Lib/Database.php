@@ -128,46 +128,4 @@ class Database {
 
         return $sql;
     }
-
-    // static public function insert(string $table, array $data, bool $orUpdate = false) {
-    //     self::init();
-
-    //     $validData = [];
-    //     $updateOnlyData = [];
-    //     foreach ($data as $key => $value) {
-    //         try {
-    //             $def = DatabaseStructure::getDefinitionForField($table, $key);
-    //             $validData[$key] = $value;
-    //             if (!$def->protected && !$def->insertOnly) {
-    //                 $updateOnlyData[$key] = $value;
-    //             }
-    //         } catch (DatabaseInvalidStructureException $e) {
-    //             // TODO: what to do with undefined columns?
-    //         }
-    //     }
-
-    //     $sql = self::buildSetStatement($table, $validData);
-
-    //     // INSERT INTO table (id, name, age) VALUES(1, "A", 19) ON DUPLICATE KEY UPDATE name="A", age=19
-    //     $sql = "INSERT INTO $table SET $sql";
-    //     if ($orUpdate) {
-    //         $sqlUpdate = self::buildSetStatement($table, $updateOnlyData);
-    //         $sql .= " ON DUPLICATE KEY UPDATE $sqlUpdate";
-    //     }
-    //     self::exec($sql);
-
-    //     // if ($res == 1) {
-    //     //     return;
-    //     // }
-    //     // if ($res == 0 && $orUpdate) {
-    //     //     return;
-    //     // }
-    //     // throw new DatabaseQueryException("Insert gave invalid result " . $res);
-    // }
-
-    // static function update(string $table, object $data): bool
-    // {
-    //     self::init();
-    //     return false;
-    // }
 }

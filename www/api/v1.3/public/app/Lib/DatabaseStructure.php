@@ -247,7 +247,7 @@ class DatabaseStructure extends CachedAbstract {
 
     static public function checkTableExistsAndGetDefinition(string $table): array {
         if (!array_key_exists($table, self::getCachedData())) {
-            throw new DatabaseInvalidStructureException($table);
+            throw new \Exception("checkTableExistsAndGetDefinition: $table");
         }
         return self::getCachedData()[$table];
     }
@@ -255,7 +255,7 @@ class DatabaseStructure extends CachedAbstract {
     static public function checkFieldExistsInTableAndGetDefinition(string $table, string $field): array {
         $tableDef = self::checkTableExistsAndGetDefinition($table);
         if (!array_key_exists($field, $tableDef)) {
-            throw new DatabaseInvalidStructureException($table, $field);
+            throw new Exception("checkFieldExistsInTableAndGetDefinition: ${table}/${field}");
         }
         return $tableDef[$field];
     }
@@ -264,7 +264,7 @@ class DatabaseStructure extends CachedAbstract {
         try {
             self::checkFieldExistsInTableAndGetDefinition($table, $field);
             return true;
-        } catch (DatabaseInvalidStructureException $e) {
+        } catch (\Exception $e) {
             return false;
         }
     }

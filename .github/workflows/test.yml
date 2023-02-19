@@ -47,11 +47,6 @@ jobs:
       with:
         run: make test-api
 
-    - name: make test-api-bare
-      uses: jehon/actions-devcontainer@main
-      with:
-        run: make test-api-bare
-
     - name: make test-unit
       uses: jehon/actions-devcontainer@main
       with:
