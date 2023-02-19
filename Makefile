@@ -154,7 +154,7 @@ lint-html: $(TMP)/.dependencies-node
 	node node_modules/.bin/htmlhint app/**/*.html tests/**/*.html www/api/*/public/**/*.html --format=compact
 
 .PHONY: test # In Jenkinfile, each step is separated:
-test: $(TMP)/.dependencies $(TMP)/.built test-api test-api-bare test-unit test-e2e test-styles
+test: $(TMP)/.dependencies $(TMP)/.built test-api test-unit test-e2e test-styles
 
 .PHONY: test-api
 test-api: $(TMP)/.dependencies-api
@@ -165,10 +165,6 @@ test-api: $(TMP)/.dependencies-api
 update-references-api: $(TMP)/.dependencies-api
 	jh-run-and-capture cr-data-reset
 	COMMIT=1 bin/cr-phpunit laravel
-
-test-api-bare: $(TMP)/.dependencies-api
-	jh-run-and-capture cr-data-reset
-	bin/cr-phpunit bare
 
 .PHONY: test-unit
 test-unit: $(TMP)/.dependencies-node \
