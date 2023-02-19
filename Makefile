@@ -159,12 +159,12 @@ test: $(TMP)/.dependencies $(TMP)/.built test-api test-unit test-e2e test-styles
 .PHONY: test-api
 test-api: $(TMP)/.dependencies-api
 	jh-run-and-capture cr-data-reset
-	bin/cr-phpunit laravel
+	bin/cr-phpunit
 
 .PHONY: update-references-api
 update-references-api: $(TMP)/.dependencies-api
 	jh-run-and-capture cr-data-reset
-	COMMIT=1 bin/cr-phpunit laravel
+	COMMIT=1 bin/cr-phpunit
 
 .PHONY: test-unit
 test-unit: $(TMP)/.dependencies-node \
