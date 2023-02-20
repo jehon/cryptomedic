@@ -40,6 +40,8 @@ Route::group([ 'prefix' => '/api/' . basename(dirname(__DIR__)) ], function() {
   Route::get('browsers/clean', 'BrowsersController@clean');
   Route::get('browsers/stats', 'BrowsersController@stats');
 
+  Route::get('system/lists/all', 'SystemController@allLists');
+
   // Private
   Route::group(array('middleware' => 'authenticated'), function()
   {

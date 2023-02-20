@@ -20,12 +20,3 @@ header_end
 header_begin "Upgrading files"
 curl -fsSL "http://${CR_HTTP_HOST}/maintenance/reset.php?pwd=${CRYPTOMEDIC_DB_UPGRADE}"
 header_end
-
-for E in "$CR_PRJ_DIR"/www/api/*/bin/refresh.sh; do
-    if [ ! -f "$E" ]; then
-        continue
-    fi
-    header_begin "cr-refresh-structure found: $E..."
-    "$E"
-    header_end
-done
