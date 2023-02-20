@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use DB;
 
-class StructureController extends Controller {
-    static public function cron() {
+class BrowsersController extends Controller {
+    static public function clean() {
         $res = "";
         $res .= "<h3>Removing too old browser_features</h3>";
         $n = DB::delete("
