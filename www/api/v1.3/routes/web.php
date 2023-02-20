@@ -39,6 +39,7 @@ Route::group([ 'prefix' => '/api/' . basename(dirname(__DIR__)) ], function() {
   Route::get('admin/priceFields', "PricesController@priceFields");
   Route::get('admin/database', 'DatabaseStructureController@index');
   Route::get('browsers/clean', 'BrowsersController@clean');
+  Route::get('browsers/stats', 'BrowsersController@stats');
 
   // Private
   Route::group(array('middleware' => 'authenticated'), function()
