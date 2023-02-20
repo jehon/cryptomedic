@@ -2,29 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use DB;
 
-define("BR_FILE", __DIR__ . "/../../../../../built/browsers.json")
+use App\Http\Controllers\Controller;
+use App\Model\Browsers;
+
+define("BR_FILE", __DIR__ . "/../../../../../built/browsers.json");
 
 class BrowsersController extends Controller {
     static public function clean() {
-        $res = "";
-        $res .= "<h3>Removing too old browser_features</h3>";
-        $n = DB::delete("
-            DELETE FROM browser_features
-            WHERE updated_at < curdate() - interval 6 month
-            ");
-        $res .= "$n lines removed";
+        $stats = Browsers::clean();
         
-        $res .= "<h3>Removing too old browser_login</h3>";
-        $n = DB::delete("
-            DELETE FROM browser_login
-            WHERE updated_at < curdate() - interval 6 month
-            ");
-        $res .= "$n lines removed";
-
-        return $res;
+        echo "<h3>Removing too old browser_features</h3>";
+        echo "{$stats['features']} lines removed";
+        
+        echo "<h3>Removing too old browser_login</h3>";
+        echo "{$stats['login']} lines removed";
+        
+        return false;
     }
 
     static public function stats() {
@@ -59,8 +54,6 @@ class BrowsersController extends Controller {
 
         $screenWidth = [];
         $detected = [];
-
-        ob_start();
 ?>
 <style>
     table,
@@ -93,14 +86,14 @@ class BrowsersController extends Controller {
     </thead>
     <?php
     foreach ($browsers as $b) {
-        $bn = strtolower(explode(" ", $b['browser_name'])[0]);
-        $bv = explode(".", $b['browser_version'])[0];
+        $bn = strtolower(explode(" ", $b->browser_name)[0]);
+        $bv = explode(".", $b->browser_version)[0];
 
         if (!array_key_exists($bn, $detected)) {
             $detected[$bn] = [
                 "min" => $bv,
                 "max" => $bv,
-                "last_login" => $b['last_login']
+                "last_login" => $b->last_login
             ];
         } else {
             $detected[$bn]["max"] = max($detected[$bn]['max'], $bv);
@@ -112,14 +105,14 @@ class BrowsersController extends Controller {
             }
         }
         echo "<tr>";
-        echo "<td>{$b['browser_name']}</td>";
+        echo "<td>{$b->browser_name}</td>";
         echo "<td>{$bv}</td>";
-        echo "<td>{$b['browser_version']}</td>";
-        echo "<td>{$b['os']}</td>";
-        echo "<td>" . substr($b['last_login'], 0, 7) . "</td>";
-        echo "<td>{$b['last_login_name']}</td>";
-        echo "<td>{$b['screen_width']}</td>";
-        echo "<td>{$b['screen_height']}</td>";
+        echo "<td>{$b->browser_version}</td>";
+        echo "<td>{$b->os}</td>";
+        echo "<td>" . substr($b->last_login, 0, 7) . "</td>";
+        echo "<td>{$b->last_login_name}</td>";
+        echo "<td>{$b->screen_width}</td>";
+        echo "<td>{$b->screen_height}</td>";
         foreach ($b as $k => $v) {
             if (substr($k, 0, 5) == 'feat_') {
                 echo "<td>{$v}</td>";
@@ -141,13 +134,13 @@ class BrowsersController extends Controller {
 
         // echo "<td>{$b['browser_uuid']}</td>";
 
-        $sw = $b['screen_width'];
+        $sw = $b->screen_width;
         if (!array_key_exists($sw, $screenWidth)) {
             $screenWidth[$sw] = $b;
         }
 
         if (array_key_exists($sw, $screenWidth) 
-                && array_key_exists($sw, $b) 
+                && property_exists($b, $sw)
                 && $screenWidth[$sw]['last_login'] < $b[$sw]['last_login']) {
             $screenWidth[$sw] = $b;
         }
@@ -189,18 +182,17 @@ class BrowsersController extends Controller {
     <?php
     foreach ($screenWidth as $sw => $b) {
         echo "<tr>";
-        echo "<td>{$b['screen_width']}</td>";
-        echo "<td>{$b['screen_height']}</td>";
-        echo "<td>" . substr($b['last_login'], 0, 7) . "</td>";
-        echo "<td>{$b['last_login_name']}</td>";
+        echo "<td>{$b->screen_width}</td>";
+        echo "<td>{$b->screen_height}</td>";
+        echo "<td>" . substr($b->last_login, 0, 7) . "</td>";
+        echo "<td>{$b->last_login_name}</td>";
         echo "</tr>";
     }
     ?>
 </table>
 
 <?php
-        $res .= ob_get_content();
 
-        return $res;
+        return false;
     }
 }

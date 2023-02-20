@@ -9,8 +9,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
 use Route;
 
-use Cryptomedic\Lib\Auth as CryptomedicAuth;
-use Cryptomedic\Lib\Lists;
+use App\Model\Browsers;
+use App\Model\Lists;
 
 class AuthController extends Controller {
     /*
@@ -66,7 +66,7 @@ class AuthController extends Controller {
             $uuid = $data['browser']['browser_uuid'];
             unset($data['browser']['browser_uuid']);
 
-            CryptomedicAuth::storeStatistics($uuid, Auth::user()->username, $data['browser']);
+            Browsers::storeStatistics($uuid, Auth::user()->username, $data['browser']);
         }
     }
 
@@ -100,7 +100,7 @@ class AuthController extends Controller {
         }
 
         // Order is important: getAllList will get all the lists
-        $data['lists'] = Lists::getAllLists();
+        $data['lists'] = Lists::getLists();
         $data['codes'] = Lists::getCodes();
         $data['associations'] = Lists::getAssociations();
 

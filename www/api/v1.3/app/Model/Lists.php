@@ -17,7 +17,7 @@ class Lists {
     }
 
     static function getLists(): array {
-        return self::getAll()['list'];
+        return self::getAll()['lists'];
     }
 
     static function getList(string $name): array {
