@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 // use Illuminate\Database\Eloquent\Builder;
 // use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use Cryptomedic\Lib\Database;
 use Cryptomedic\Lib\DatabaseStructure;
 
 // See https://github.com/laravel/framework/issues/5276

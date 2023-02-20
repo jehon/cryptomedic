@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Model;
 
-use App\Http\Controllers\Controller;
 use DB;
 
 /**
@@ -106,7 +105,7 @@ define('DB_DEPENDANTS', [
     ]
 ]);
 
-class DatabaseStructureController extends Controller {
+class DatabaseStructure {
     public const TYPE_LIST         = "list";
     public const TYPE_TIMESTAMP    = "timestamp";
     public const TYPE_BOOLEAN      = "boolean";
@@ -116,7 +115,7 @@ class DatabaseStructureController extends Controller {
     public const TYPE_DATE         = "date";
     public const TYPE_BINARY       = "binary";
 
-    static public function index() {
+    static public function load() {
         global $myconfig;
 
         $databaseStructure = [];

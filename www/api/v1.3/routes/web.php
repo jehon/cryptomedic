@@ -37,7 +37,6 @@ Route::group([ 'prefix' => '/api/' . basename(dirname(__DIR__)) ], function() {
 
   // Without effect
   Route::get('admin/priceFields', "PricesController@priceFields");
-  Route::get('admin/database', 'DatabaseStructureController@index');
   Route::get('browsers/clean', 'BrowsersController@clean');
   Route::get('browsers/stats', 'BrowsersController@stats');
 
