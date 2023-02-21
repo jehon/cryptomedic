@@ -4,8 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Model\Bill;
 use App\Model\CryptomedicModel;
-
-use Cryptomedic\Lib\Lists;
+use App\Model\Lists;
 
 class ReportStatisticalController extends ReportController {
 	protected $filter = "(1=1)";
