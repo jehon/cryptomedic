@@ -13,39 +13,23 @@ set -o pipefail
 
 mkdir -m 777 -p tmp
 
-testOne() {
-	local V="$1" # ${CR_API_VERSION}
-	shift
-	shift
+FOLDER="www/api/${CR_API_VERSION}/"
+REPORTS="$CR_TMP/php1.3/"
 
-	FOLDER="$V"
-	REPORTS="$CR_TMP/php$(basename "$V")"
+mkdir -p "$REPORTS"
+chmod a+rwx "$REPORTS"
 
-	if [ -f "$FOLDER/phpunit.xml" ]; then
-		mkdir -p "$REPORTS"
-		chmod a+rwx "$REPORTS"
+header_begin "PHPUnit: $T $V starting"
 
-		header_begin "PHPUnit: $T $V starting"
+# ( cd "$FOLDER" && ./vendor/bin/phpunit --coverage-html "$REPORTS" --coverage-xml "$REPORTS" "$@" )
 
-		export COMMIT
-		export XDEBUG_MODE="coverage"
+docker compose run --quiet-pull -T \
+	-e "COMMIT=$COMMIT" \
+	-e "XDEBUG_MODE=coverage" \
+	--volume "$(pwd):/workdir" \
+	--workdir "/workdir/$FOLDER" \
+	--user "$(id -u)" \
+	web \
+	vendor/bin/phpunit --coverage-html "$REPORTS" --coverage-xml "$REPORTS"
 
-		( cd "$FOLDER" && ./vendor/bin/phpunit --coverage-html "$REPORTS" --coverage-xml "$REPORTS" "$@" )
-
-		header_end
-	else
-		echo "** $T $V: skipping because no phpunit.xml **" >&2
-		pwd
-	fi
-}
-
-# 2: version
-V="$1"
-
-if [[ -z "$V" ]]; then
-	for Vi in www/api/v*; do
-		testOne "$Vi"
-	done
-else
-	testOne "$V"
-fi
+header_end
