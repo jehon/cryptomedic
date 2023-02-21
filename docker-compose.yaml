@@ -128,7 +128,7 @@ services:
   node:
     profiles:
       - tool
-    image: node:lts
+    build: conf/node
     working_dir: /app
     volumes:
       - ./:/app
