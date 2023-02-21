@@ -31,7 +31,7 @@ fi
 FLAVOR="$1"
 shift
 
-header_begin "Testing cypress for $FLAVOR"
+echo "* Testing cypress for $FLAVOR"
 OUTPUT="$CR_TMP"/e2e/"$FLAVOR"
 
 header_begin "Setup $OUTPUT"
@@ -54,7 +54,6 @@ case "$FLAVOR" in
     ;;
 esac
 
-jh-run-and-capture cr-data-reset
 mkdir -p "$OUTPUT"
 cr-ensure-folder-empty "$OUTPUT"/screenshots
 cr-ensure-folder-empty "$OUTPUT"/videos
