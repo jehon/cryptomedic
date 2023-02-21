@@ -2,7 +2,7 @@
 
 require_once("RouteReferenceTestCase.php");
 
-class ReportFinanicialTest extends RouteReferenceTestCase {
+class ReportFinancialTest extends RouteReferenceTestCase {
 	static public $year = "2014";
 
 	public function setUp(): void {
