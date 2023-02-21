@@ -12,7 +12,7 @@ class FolderController extends Controller {
 
 	public static function getFolder($model, $id) {
 		if ($model == "Patient") {
-			return Patient::findOrFail($id)->getDependantsList();
+			return Patient::findOrFail($id)->getDependantsRecords();
 		}
 	}
 

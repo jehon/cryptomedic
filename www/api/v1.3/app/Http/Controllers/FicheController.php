@@ -22,7 +22,7 @@ abstract class FicheController extends CRUDController {
 
         return response()->json([
             'newKey' => $id,
-            'folder' => $newObj->getRoot()->getDependantsList()
+            'folder' => $newObj->getRoot()->getDependantsRecords()
         ]);
     }
 
@@ -30,7 +30,7 @@ abstract class FicheController extends CRUDController {
         $obj = parent::update($id);
         return response()->json([
             "id" => $obj->id,
-            'folder' => $obj->getRoot()->getDependantsList()
+            'folder' => $obj->getRoot()->getDependantsRecords()
         ]);
     }
 
@@ -44,7 +44,7 @@ abstract class FicheController extends CRUDController {
 
             return response()->json([
                 "id" => $id,
-                'folder' => $root->getDependantsList()
+                'folder' => $root->getDependantsRecords()
             ]);
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
             return response()->json('not found');
@@ -63,7 +63,7 @@ abstract class FicheController extends CRUDController {
 
         return response()->json([
             'id' => $id,
-            'folder' => $obj->getRoot()->getDependantsList()
+            'folder' => $obj->getRoot()->getDependantsRecords()
         ]);
     }
 }

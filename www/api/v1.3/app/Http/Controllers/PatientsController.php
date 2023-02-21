@@ -45,7 +45,7 @@ class PatientsController extends FicheController {
 	 
 	    return response()->json([
     		'newKey' => $id,
-    		'folder' => $newObj->getRoot()->getDependantsList()
+    		'folder' => $newObj->getRoot()->getDependantsRecords()
     	]);
 	}
 

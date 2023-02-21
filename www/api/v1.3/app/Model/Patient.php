@@ -10,7 +10,7 @@ class Patient extends CryptomedicModel {
     return false;
   }
 
-  public function getDependantsList() {
+  public function getDependantsRecords() {
     $list = [];
 
     foreach (DatabaseStructure::getDependantsOfTable(DatabaseStructure::getTableForModel('Patient')) as $table => $field) {
@@ -18,7 +18,7 @@ class Patient extends CryptomedicModel {
 
       $r = $obj::where($field, $this->id)->get();
       foreach ($r as $ri => $rv) {
-        $list = array_merge($list, $rv->getDependantsList());
+        $list = array_merge($list, $rv->getDependantsRecords());
       }
     }
 

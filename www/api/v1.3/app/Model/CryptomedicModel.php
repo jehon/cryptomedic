@@ -145,10 +145,22 @@ class CryptomedicModel extends Model {
 		return false;
 	}
 
-	public function getDependantsList() {
+	/**
+	 * Get the dependant records
+	 *   - implemented in Bill and Patient
+	 */
+	public function getDependantsRecords() {
+		// By default, we are the only dependant...
 		return [$this->getLineRecord()];
 	}
 
+	/**
+	 * A simple line for dependant records
+	 * Formatted as:
+	 *    type:
+	 *    id:
+	 *    record: the full data
+	 */
 	public function getLineRecord() {
 		$classname = get_class($this);
 		if ($pos = strrpos($classname, '\\')) {
