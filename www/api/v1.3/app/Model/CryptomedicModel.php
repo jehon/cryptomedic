@@ -4,11 +4,10 @@ namespace App\Model;
 
 // Note: Unit Tests are transactionals ! -- > see RouteReferenceTestCase and each tests
 
+use Schema;
+
 use Illuminate\Database\Eloquent\Model;
-// use Illuminate\Database\Eloquent\Builder;
-// use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use Cryptomedic\Lib\DatabaseStructure;
 
 // See https://github.com/laravel/framework/issues/5276
 
@@ -41,9 +40,8 @@ class CryptomedicModel extends Model {
 	}
 
 	static public function getTableColumnsList() {
-		return array_keys(DatabaseStructure::checkTableExistsAndGetDefinition(with(new static)->getTable()));
-		// // @see http://stackoverflow.com/a/19953826/1954789
-		// return \Schema::getColumnListing(with(new static)->getTable());
+		// @see http://stackoverflow.com/a/19953826/1954789
+		return Schema::getColumnListing(static::staticGetTable());
 	}
 
 	static public function filterData($data, $forUpdate = true) {
