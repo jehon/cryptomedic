@@ -232,10 +232,10 @@ class DatabaseStructure {
         return (array) $res;
     }
 
-    static function getDependantsOfTable($table) {
-        if (!array_key_exists($table, DB_DEPENDANTS)) {
+    static function getDependantsOfTable($model) {
+        if (!array_key_exists($model, DB_DEPENDANTS)) {
             return [];
         }
-        return DB_DEPENDANTS[$table];
+        return DB_DEPENDANTS[$model];
     }
 }
