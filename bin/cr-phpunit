@@ -11,10 +11,15 @@ set -o pipefail
 # shellcheck source=./cr-lib
 . "$(dirname "${BASH_SOURCE[0]}")"/cr-lib
 
-mkdir -m 777 -p tmp
+#
+# !! All path are inside the docker !!
+#
+#
+
+mkdir -m 777 -p "tmp"
 
 FOLDER="www/api/"
-REPORTS="$CR_TMP/php/"
+REPORTS="tmp/php/"
 
 mkdir -p "$REPORTS"
 chmod a+rwx "$REPORTS"
