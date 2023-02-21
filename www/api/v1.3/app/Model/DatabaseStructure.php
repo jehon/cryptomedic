@@ -78,30 +78,30 @@ define("HARDCODED_LISTINGS", [
     ]
 ]);
 
-define('MODEL_TO_DB', array(
-    "Bill"             => "bills",
-    "ClubFoot"         => "club_feet",
-    "OtherConsult"     => "other_consults",
-    "Patient"          => "patients",
-    "Picture"          => "pictures",
-    "Appointment"      => "appointments",
-    "RicketConsult"    => "ricket_consults",
-    "Surgery"          => "surgeries",
-    "Payment"          => "payments",
-));
+// define('MODEL_TO_DB', array(
+//     "Bill"             => "bills",
+//     "ClubFoot"         => "club_feet",
+//     "OtherConsult"     => "other_consults",
+//     "Patient"          => "patients",
+//     "Picture"          => "pictures",
+//     "Appointment"      => "appointments",
+//     "RicketConsult"    => "ricket_consults",
+//     "Surgery"          => "surgeries",
+//     "Payment"          => "payments",
+// ));
 
 define('DB_DEPENDANTS', [
-    "patients" => [
-        "appointments" => "patient_id",
-        "bills" => "patient_id",
-        "club_feet" => "patient_id",
-        "other_consults" => "patient_id",
-        "pictures" => "patient_id",
-        "ricket_consults" => "patient_id",
-        "surgeries" => "patient_id",
+    "Patient" => [
+        "Appointment" => "patient_id",
+        "Bill" => "patient_id",
+        "ClubFoot" => "patient_id",
+        "OtherConsult" => "patient_id",
+        "Picture" => "patient_id",
+        "RicketConsult" => "patient_id",
+        "Surgery" => "patient_id",
     ],
-    "bills" => [
-        "payments" => "bill_id"
+    "Bill" => [
+        "Payment" => "bill_id"
     ]
 ]);
 
@@ -230,5 +230,12 @@ class DatabaseStructure {
                 break;
         }
         return (array) $res;
+    }
+
+    static function getDependantsOfTable($table) {
+        if (!array_key_exists($table, DB_DEPENDANTS)) {
+            return [];
+        }
+        return DB_DEPENDANTS[$table];
     }
 }
