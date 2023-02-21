@@ -21,7 +21,7 @@ class Lists {
     }
 
     static function getList(string $name): array {
-        $lists = self::getAllLists();
+        $lists = self::getLists();
         if ($name && !array_key_exists($name, $lists)) {
             throw new \Exception('List does not exists: ' . $name);
         }
