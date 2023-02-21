@@ -2,9 +2,6 @@
 
 namespace App\Model;
 
-use Cryptomedic\Lib\Database;
-use Cryptomedic\Lib\DatabaseStructure;
-
 class Patient extends CryptomedicModel {
   public function isLocked() {
     return false;
@@ -13,8 +10,8 @@ class Patient extends CryptomedicModel {
   public function getDependantsRecords() {
     $list = [];
 
-    foreach (DatabaseStructure::getDependantsOfTable(DatabaseStructure::getTableForModel('Patient')) as $table => $field) {
-      $obj = "\\App\\Model\\" . DatabaseStructure::getModelForTable($table);
+    foreach (self::getDependantsTables() as $model => $field) {
+      $obj = "\\App\\Model\\" . $model;
 
       $r = $obj::where($field, $this->id)->get();
       foreach ($r as $ri => $rv) {

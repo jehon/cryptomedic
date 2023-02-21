@@ -9,6 +9,8 @@ use Schema;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
+use App\Model\DatabaseStructure;
+
 // See https://github.com/laravel/framework/issues/5276
 
 // TODO: restrict operations to unlocked files
@@ -16,6 +18,14 @@ class CryptomedicModel extends Model {
 	use OptimisticLockingTrait;
 
 	protected $guarded = array('id');
+
+	static public function staticGetModelName() {
+		return  (new \ReflectionClass(new static))->getShortName();
+	}
+
+	static public function staticGetTable() {
+		return with(new static)->getTable();
+	}
 
 	// Protected fields in update only (allowed in create)
 	public static function getReadOnlyField() {
@@ -42,6 +52,10 @@ class CryptomedicModel extends Model {
 	static public function getTableColumnsList() {
 		// @see http://stackoverflow.com/a/19953826/1954789
 		return Schema::getColumnListing(static::staticGetTable());
+	}
+
+	static public function getDependantsTables() {
+		return DatabaseStructure::getDependantsOfTable(self::staticGetModelName());
 	}
 
 	static public function filterData($data, $forUpdate = true) {
