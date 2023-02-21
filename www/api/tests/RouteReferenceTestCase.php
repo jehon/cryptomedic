@@ -13,7 +13,7 @@ class RouteReferenceTestCase extends TestCase {
 	private $params = array();
 
 	protected static function absoluteUrl($relativeUrl) {
-		return "/api/" . basename(dirname(dirname(__FILE__))) . "/" . $relativeUrl;
+		return "/api/" . $relativeUrl;
 	}
 
 	public function getNewRequestOptionsBuilder() {

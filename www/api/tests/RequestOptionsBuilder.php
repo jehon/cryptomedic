@@ -39,7 +39,7 @@ class RequestOptionsBuilder {
   }
 
   public function getAbsoluteUrl() {
-    return "/api/" . basename(dirname(dirname(__FILE__))) . "/" . $this->getUrl();
+    return "/api/" . $this->getUrl();
   }
 
   public function setUrl($url) {
