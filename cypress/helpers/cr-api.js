@@ -1,7 +1,5 @@
 /// <reference types="Cypress" />
 
-import { API_VERSION } from '../../app/config.js';
-
 /**
  * Make an api call
  *
@@ -13,7 +11,7 @@ import { API_VERSION } from '../../app/config.js';
 export function crApi(options = {}) {
     return cy.request({
         ...options,
-        url: options.url[0] == '/' ? options.url : `/api/${API_VERSION}/${options.url}`
+        url: options.url[0] == '/' ? options.url : `/api/${options.url}`
     });
 }
 

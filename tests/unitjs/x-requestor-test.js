@@ -1,6 +1,5 @@
 
 import { fn } from './athelpers.js';
-import { API_VERSION } from '../../app/config.js';
 
 import XRequestor, {
     requestAndFilterBuilder,
@@ -87,7 +86,7 @@ describe(fn(import.meta.url), function () {
         mock.onGet('/absolute').reply(200, 123456);
         mock.onGet('/401').reply(401, 'Test: data is forbidden');
         mock.onGet('/404').reply(404, 'Test: data is not found');
-        mock.onGet(`/api/${API_VERSION}/relativeUrl`).reply(200, 34567);
+        mock.onGet('/api/relativeUrl').reply(200, 34567);
         mock.onPut('/put').reply(200, 555);
 
         mock.onGet('/timeout').timeout();

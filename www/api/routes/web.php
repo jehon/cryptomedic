@@ -25,7 +25,7 @@ if (!function_exists('hasPermission')) {
 /**
  * For anybody
  */
-Route::group([ 'prefix' => '/api/' . basename(dirname(__DIR__)) ], function() {
+Route::group([ 'prefix' => '/api/' ], function() {
   Route::get('/', function () {
       return view('welcome');
   });

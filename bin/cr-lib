@@ -8,7 +8,6 @@ export CR_PRJ_DIR
 export CR_TMP
 export CR_HTTP_PORT
 export CR_HTTP_HOST
-export CR_API_VERSION="v1.3" # From Makefile and config.js
 export CR_DEPLOY_HOST
 export SSH_KNOWN_HOSTS="$HOME/.ssh/known_hosts"
 

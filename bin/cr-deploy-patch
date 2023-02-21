@@ -12,10 +12,6 @@ if [ -r /etc/jehon/restricted/cryptomedic.sh ]; then
 	. /etc/jehon/restricted/cryptomedic.sh
 fi
 
-#
-# To protect a version, please see md5sum.php (at the bottom)
-#
-
 LOG="$CR_TMP/sftp.log"
 REMOTE_LISTING="$CR_TMP"/deploy-remote.txt
 truncate --size=0 "$LOG"

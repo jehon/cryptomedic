@@ -1,4 +1,3 @@
-import { API_VERSION } from '../../config.js';
 import { getBrowserDescription } from '../../js/browser.js';
 import { requestAndFilterBuilder } from './x-requestor.js';
 
@@ -35,6 +34,6 @@ export function loginCheckRequestBuilder() {
  */
 export function logoutBuilder() {
     return {
-        url: `/api/${API_VERSION}/auth/logout`
+        url: '/api/auth/logout'
     };
 }

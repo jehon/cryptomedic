@@ -37,7 +37,7 @@ class Authenticated {
 		// --- Begin
 		// Export to bare server
 		// See Auth.php
-		// www/api/v1.3/public/app/Lib/Auth.php
+		// www/api/public/app/Lib/Auth.php
 		// TODO(BRIDGE): bridge to bare server
 		global $bareUserName;
 		global $bareUserGroup;

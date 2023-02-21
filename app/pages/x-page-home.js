@@ -3,7 +3,7 @@ import './blocks/x-patient-by-reference.js';
 
 import { createElementsFromHTML, createElementWithObject, createElementWithTag, defineCustomElement } from '../js/custom-element.js';
 import { toAttributeCase } from '../js/string-utils.js';
-import { API_VERSION, icons } from '../config.js';
+import { icons } from '../config.js';
 
 import XPatientByReference from './blocks/x-patient-by-reference.js';
 import XGroupPanel from '../widgets/style/x-group-panel.js';
@@ -219,7 +219,7 @@ Thanks
                         restrictedBy: 'admin.securityMatrix',
                         versalIcon: '/static/img/matrix.png',
                         html: 'List of rights',
-                        toLocation: `/api/${API_VERSION}/admin/securityMatrix`
+                        toLocation: '/api/admin/securityMatrix'
                     })
                 ])
             ])

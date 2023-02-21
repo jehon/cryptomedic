@@ -2,7 +2,6 @@
 import axios from '../../cjs2esm/axios.js';
 axios.defaults.timeout = 30 * 1000;
 
-import { API_VERSION } from '../../config.js';
 import { setSession } from '../../js/session.js';
 import { routeToLogin } from '../../js/router.js';
 
@@ -114,7 +113,7 @@ export default class XRequestor extends HTMLElement {
         };
 
         if (options.url[0] != '/') {
-            options.url = `/api/${API_VERSION}/${options.url}`;
+            options.url = `/api/${options.url}`;
         }
 
         if (!options.method || options.method == 'GET') {

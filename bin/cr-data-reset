@@ -12,14 +12,14 @@ rsync -a --delete live-for-test/ live/
 chmod -R a+rX "live/"
 chmod -R a+rwX live/storage/uploadedPictures
 
-cr-ensure-folder-empty "www/api/${CR_API_VERSION}/bootstrap/cache/"
-cr-ensure-folder-empty "www/api/${CR_API_VERSION}/storage/framework/cache"
-cr-ensure-folder-empty "www/api/${CR_API_VERSION}/storage/framework/cache/data"
-cr-ensure-folder-empty "www/api/${CR_API_VERSION}/storage/framework/sessions"
-cr-ensure-folder-empty "www/api/${CR_API_VERSION}/storage/framework/views"
-cr-ensure-folder-empty "www/api/${CR_API_VERSION}/storage/logs/"
+cr-ensure-folder-empty "www/api/bootstrap/cache/"
+cr-ensure-folder-empty "www/api/storage/framework/cache"
+cr-ensure-folder-empty "www/api/storage/framework/cache/data"
+cr-ensure-folder-empty "www/api/storage/framework/sessions"
+cr-ensure-folder-empty "www/api/storage/framework/views"
+cr-ensure-folder-empty "www/api/storage/logs/"
 cr-ensure-folder-empty "tmp/webTemp/cache"
-# touch www/api/${CR_API_VERSION}/storage/logs/laravel.log
+# touch www/api/storage/logs/laravel.log
 
 header_end
 

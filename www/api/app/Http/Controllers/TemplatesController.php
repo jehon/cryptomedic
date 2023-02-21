@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 
 require_once(__DIR__ . "/templates-t.php");
 
-define('TEMPLATE_ROOT', __DIR__ . "/../../../../../templates/templates");
+define('TEMPLATE_ROOT', __DIR__ . "/../../../../templates/templates");
 
 class TemplatesController extends Controller {
   public function render($category, $name = false) {

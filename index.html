@@ -75,8 +75,8 @@
                     <td><a href="/maintenance/patch_db.php?pwd=secret">Patch DB</a></td>
                 </tr>
                 <tr action>
-                    <td><a href="http://www.cryptomedic.org/api/-api.version-/browsers/clean">browsers clean</a></td>
-                    <td><a href="/api/-api.version-/browsers/clean">browsers clean</a></td>
+                    <td><a href="http://www.cryptomedic.org/api/browsers/clean">browsers clean</a></td>
+                    <td><a href="/api/browsers/clean">browsers clean</a></td>
                 </tr>
                 <tr action>
                     <td></td>
@@ -84,14 +84,14 @@
                 </tr>
                 <tr>
                     <td><a
-                            href="http://www.cryptomedic.org/api/-api.version-/admin/database?force=1">database-structure</a>
+                            href="http://www.cryptomedic.org/api/admin/database?force=1">database-structure</a>
                     </td>
-                    <td><a href="/api/-api.version-/admin/database">database-structure</a></td>
+                    <td><a href="/api/admin/database">database-structure</a></td>
                 </tr>
                 <tr>
-                    <td><a href="http://www.cryptomedic.org/api/-api.version-/browsers/show">browsers</a>
+                    <td><a href="http://www.cryptomedic.org/api/browsers/show">browsers</a>
                     </td>
-                    <td><a href="/api/-api.version-/routes/browsers/show">browsers</a></td>
+                    <td><a href="/api/routes/browsers/show">browsers</a></td>
                 </tr>
                 <tr>
                     <td><a href="http://www.cryptomedic.org/maintenance/md5sum.php?filter=remote">md5sum remote</a></td>
@@ -141,8 +141,7 @@
             <li><a href="/x/mail/">MailHog</a></li>
             <li><a href="/x/tmp/js/junit/">JUnit</a></li>
             <li><a href="/x/tmp/js/lcov-report/index.html">Coverage</a></li>
-            <li><a href="/x/tmp/php-api.version-/index.html">Coverage_php_laravel</a></li>
-            <li><a href="/x/tmp/php-api.version--bare/index.html">Coverage_php_bare</a></li>
+            <li><a href="/x/tmp/php/index.html">Coverage_php_laravel</a></li>
             <li><a href="/x/tmp/e2e/desktop/coverage/index.html">Coverage_e2e_desktop</a></li>
             <li><a href="/x/tmp/e2e/mobile/coverage/index.html">Coverage_e2e_mobile</a></li>
         </ul>
@@ -210,20 +209,6 @@
         </div>
 
     </div>
-
-    <script type="module">
-        import { API_VERSION } from './app/config.js';
-
-        const host = window.location.origin.split(':').slice(0, -1).join(':');
-        document.querySelectorAll('a').forEach(/* type HTMLElement */ e => {
-            let href = e.getAttribute('href');
-            href = href.replace('-api.version-', API_VERSION)
-            // if (href[0] == ':') {
-            //     href = host + href;
-            // }
-            e.setAttribute('href', href);
-        })
-    </script>
 </body>
 
 </html>

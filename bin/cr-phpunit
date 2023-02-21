@@ -13,8 +13,8 @@ set -o pipefail
 
 mkdir -m 777 -p tmp
 
-FOLDER="www/api/${CR_API_VERSION}/"
-REPORTS="$CR_TMP/php1.3/"
+FOLDER="www/api/"
+REPORTS="$CR_TMP/php/"
 
 mkdir -p "$REPORTS"
 chmod a+rwx "$REPORTS"

@@ -31,7 +31,6 @@ pull-request: update-dependencies-api test
 # Parameters
 #
 export CRYPTOMEDIC_PORT ?= 80
-export VAPI := v1.3
 export CYPRESS_CACHE_FOLDER := $(TMP)/cache/cypress
 
 BACKUP_DIR ?= $(TMP)/backup-online
@@ -278,19 +277,19 @@ $(TMP)/.dependencies-node: package.json package-lock.json
 .PHONY: dependencies-api
 dependencies-api: $(TMP)/.dependencies-api
 $(TMP)/.dependencies-api: \
-		www/api/$(VAPI)/composer.json \
-		www/api/$(VAPI)/composer.lock
+		www/api/composer.json \
+		www/api/composer.lock
 
-	cr-ensure-folder-empty www/api/v1.3/bootstrap/cache
-	bin/composer install --working-dir "www/api/$(VAPI)"
+	cr-ensure-folder-empty www/api//bootstrap/cache
+	bin/composer install --working-dir "www/api/"
 
 	@mkdir -p "$(dir $@)"
 	@touch "$@"
 
 .PHONY: update-dependencies-api
 update-dependencies-api:
-	mkdir -m 777 -p www/api/v1.3/bootstrap/cache
-	bin/composer update --working-dir "www/api/$(VAPI)/"
+	mkdir -m 777 -p www/api/bootstrap/cache
+	bin/composer update --working-dir "www/api/"
 
 #
 #
