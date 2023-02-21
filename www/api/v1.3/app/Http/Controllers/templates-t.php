@@ -10,8 +10,7 @@
  * /templates/writes/blablabla.html -> will go to /templates/fiches/blablabla.html, but in write mode (writeOnly forced)
  */
 
-use Cryptomedic\Lib\DatabaseInvalidStructureException;
-use Cryptomedic\Lib\DatabaseStructure;
+use App\Model\DatabaseStructure;
 
 class t {
   const DATETIMEFORMAT = "short";
@@ -62,10 +61,8 @@ class t {
       $this->field = $data[1];
     }
 
-    $this->sqlTable = DatabaseStructure::getTableForModel($this->model);
-
     try {
-      $this->structure = DatabaseStructure::checkFieldExistsInTableAndGetDefinition($this->sqlTable, $this->field);
+      $this->structure = DatabaseStructure::getModelFieldDescription($this->model, $this->field);
       $this->linked2DB = true;
 
       if (array_key_exists("list", $options) && $options['list']) {

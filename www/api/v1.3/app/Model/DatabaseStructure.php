@@ -78,17 +78,17 @@ define("HARDCODED_LISTINGS", [
     ]
 ]);
 
-// define('MODEL_TO_DB', array(
-//     "Bill"             => "bills",
-//     "ClubFoot"         => "club_feet",
-//     "OtherConsult"     => "other_consults",
-//     "Patient"          => "patients",
-//     "Picture"          => "pictures",
-//     "Appointment"      => "appointments",
-//     "RicketConsult"    => "ricket_consults",
-//     "Surgery"          => "surgeries",
-//     "Payment"          => "payments",
-// ));
+define('MODEL_TO_DB', array(
+    "Bill"             => "bills",
+    "ClubFoot"         => "club_feet",
+    "OtherConsult"     => "other_consults",
+    "Patient"          => "patients",
+    "Picture"          => "pictures",
+    "Appointment"      => "appointments",
+    "RicketConsult"    => "ricket_consults",
+    "Surgery"          => "surgeries",
+    "Payment"          => "payments",
+));
 
 define('DB_DEPENDANTS', [
     "Patient" => [
@@ -115,10 +115,12 @@ class DatabaseStructure {
     public const TYPE_DATE         = "date";
     public const TYPE_BINARY       = "binary";
 
+    static $databaseStructure;
+
     static public function load() {
         global $myconfig;
 
-        $databaseStructure = [];
+        self::$databaseStructure = [];
 
         /*****************************/
         /* Structure of the database */
@@ -128,11 +130,11 @@ class DatabaseStructure {
             $sqlTable = $row->TABLE_NAME;
             $sqlField = $row->COLUMN_NAME;
 
-            if (!array_key_exists($sqlTable, $databaseStructure)) {
-                $databaseStructure[$sqlTable] = [];
+            if (!array_key_exists($sqlTable, self::$databaseStructure)) {
+                self::$databaseStructure[$sqlTable] = [];
             }
 
-            $databaseStructure[$sqlTable][$sqlField] = self::parseColumn($row);
+            self::$databaseStructure[$sqlTable][$sqlField] = self::parseColumn($row);
         }
 
         /**********************/
@@ -140,29 +142,29 @@ class DatabaseStructure {
         /**********************/
 
         foreach (constant('HARDCODED_LISTINGS')['all'] as $targetField => $listData) {
-            foreach ($databaseStructure as $table => $data) {
-                if (array_key_exists($targetField, $databaseStructure[$table])) {
-                    $databaseStructure[$table][$targetField]['type'] = self::TYPE_LIST;
-                    $databaseStructure[$table][$targetField]['listing'] = $listData;
+            foreach (self::$databaseStructure as $table => $data) {
+                if (array_key_exists($targetField, self::$databaseStructure[$table])) {
+                    self::$databaseStructure[$table][$targetField]['type'] = self::TYPE_LIST;
+                    self::$databaseStructure[$table][$targetField]['listing'] = $listData;
                 }
             }
         }
 
         foreach (constant('HARDCODED_LISTINGS') as $table => $tableListData) {
-            if (!array_key_exists($table, $databaseStructure)) {
+            if (!array_key_exists($table, self::$databaseStructure)) {
                 // Skip table that does not exists
                 // This will also skip 'all' definition :-)
                 continue;
             }
             foreach ($tableListData as $targetField => $listData) {
-                if (array_key_exists($targetField, $databaseStructure[$table])) {
-                    $databaseStructure[$table][$targetField]['type'] = self::TYPE_LIST;
-                    $databaseStructure[$table][$targetField]['listing'] = $listData;
+                if (array_key_exists($targetField, self::$databaseStructure[$table])) {
+                    self::$databaseStructure[$table][$targetField]['type'] = self::TYPE_LIST;
+                    self::$databaseStructure[$table][$targetField]['listing'] = $listData;
                 }
             }
         }
 
-        return response()->json($databaseStructure)->setEncodingOptions(JSON_NUMERIC_CHECK);
+        return response()->json(self::$databaseStructure)->setEncodingOptions(JSON_NUMERIC_CHECK);
     }
 
     static private function parseColumn(object $sqlData): array {
@@ -232,6 +234,21 @@ class DatabaseStructure {
         return (array) $res;
     }
 
+    static function getModelFieldDescription($model, $field) {
+        if (!array_key_exists($model, MODEL_TO_DB)) {
+            throw new \Exception("DatabaseStructure: Model '$model' is unknown");
+        }
+        $table = MODEL_TO_DB[$model];
+        if (! array_key_exists($table, self::$databaseStructure)) {
+            throw new \Exception("DatabaseStructure: Table '$table' does not exists");
+        }
+        if (! array_key_exists($field, self::$databaseStructure[$table])) {
+            throw new \Exception("DatabaseStructure: Field '$field' does not exists in '$table'");
+        }
+
+        return self::$databaseStructure[$table][$field];
+    }
+
     static function getDependantsOfTable($model) {
         if (!array_key_exists($model, DB_DEPENDANTS)) {
             return [];
@@ -239,3 +256,5 @@ class DatabaseStructure {
         return DB_DEPENDANTS[$model];
     }
 }
+
+DatabaseStructure::load();
