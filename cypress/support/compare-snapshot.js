@@ -1,6 +1,6 @@
 /// <reference types="Cypress" />
 
-import { crReady } from '../helpers/cr.js';
+import { crReady } from '../e2e/helpers/cr.js';
 
 Cypress.Commands.add('crCompareSnapshot',
     (name = '') => {

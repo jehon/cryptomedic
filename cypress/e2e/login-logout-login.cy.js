@@ -1,7 +1,7 @@
 /// <reference types="Cypress" />
 
-import { crPage } from '../helpers/cr.js';
-import { guiHashStartWith } from '../helpers/gui.js';
+import { crPage } from './helpers/cr.js';
+import { guiHashStartWith } from './helpers/gui.js';
 
 context('Actions', () => {
     it('login - logout - login', () => {

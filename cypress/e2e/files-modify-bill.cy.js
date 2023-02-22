@@ -1,10 +1,10 @@
 
 /// <reference types="Cypress" />
 
-import { crApiFicheDelete, crApiFolderGet, crApiLogin } from '../helpers/cr-api.js';
-import { crLoginInBackground, crReady } from '../helpers/cr.js';
-import { patientFilesCrud } from '../helpers/e2e-entrynumber-assigned.js';
-import { patientgo } from '../helpers/patients.js';
+import { crApiFicheDelete, crApiFolderGet, crApiLogin } from './helpers/cr-api.js';
+import { crLoginInBackground, crReady } from './helpers/cr.js';
+import { patientFilesCrud } from './helpers/e2e-entrynumber-assigned.js';
+import { patientgo } from './helpers/patients.js';
 
 context('Actions', () => {
     beforeEach(() => {

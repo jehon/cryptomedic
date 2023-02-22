@@ -1,10 +1,10 @@
 /// <reference types="Cypress" />
 
-import { crApiLogin } from '../helpers/cr-api.js';
-import { crLoginInBackground } from '../helpers/cr.js';
-import { patientFilesRead2000_1, patientFilesRead2001_1, patientFilesRead2014_103, patientFilesRead2014_105 } from '../helpers/e2e-entrynumber-assigned.js';
-import { patientgo, patientSelectFile } from '../helpers/patients.js';
-import TableIterator from '../helpers/table-iterator.js';
+import { crApiLogin } from './helpers/cr-api.js';
+import { crLoginInBackground } from './helpers/cr.js';
+import { patientFilesRead2000_1, patientFilesRead2001_1, patientFilesRead2014_103, patientFilesRead2014_105 } from './helpers/e2e-entrynumber-assigned.js';
+import { patientgo, patientSelectFile } from './helpers/patients.js';
+import TableIterator from './helpers/table-iterator.js';
 
 context('Actions', () => {
     beforeEach(() => {

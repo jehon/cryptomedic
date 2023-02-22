@@ -1,8 +1,8 @@
 /// <reference types="Cypress" />
 
-import { crApiLogin } from '../helpers/cr-api.js';
-import { crLoginInBackground, crPage } from '../helpers/cr.js';
-import { guiHashStartWith } from '../helpers/gui.js';
+import { crApiLogin } from './helpers/cr-api.js';
+import { crLoginInBackground, crPage } from './helpers/cr.js';
+import { guiHashStartWith } from './helpers/gui.js';
 
 context('Actions', () => {
     it('initialize to login', () => {

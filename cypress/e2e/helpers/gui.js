@@ -1,5 +1,5 @@
 
-import escapeStringRegexp from '../../node_modules/escape-string-regexp/index.js';
+import escapeStringRegexp from '../../../node_modules/escape-string-regexp/index.js';
 
 /**
  * @param cb

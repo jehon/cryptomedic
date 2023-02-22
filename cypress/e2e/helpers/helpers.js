@@ -25,6 +25,6 @@ export function getTestName() {
 
     // extractTitles(cypressContext);
     let orderedTitles = testTitles.reverse();
-    let fileName = Cypress.spec.relative.replace('cypress/integration/', '') + '-' + orderedTitles.join('-');
+    let fileName = Cypress.spec.relative.replace('cypress/e2e/', '') + '-' + orderedTitles.join('-');
     return fileName;
 }

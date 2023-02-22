@@ -1,10 +1,10 @@
 /// <reference types="Cypress" />
 
-import { crApiFicheDelete, crApiFolderGet, crApiLogin } from '../helpers/cr-api.js';
-import { crLoginInBackground, crPage, crReady } from '../helpers/cr.js';
-import { patientFilesCrud } from '../helpers/e2e-entrynumber-assigned.js';
-import { guiAcceptAlert, guiHashStartWith } from '../helpers/gui.js';
-import { patientgo } from '../helpers/patients.js';
+import { crApiFicheDelete, crApiFolderGet, crApiLogin } from './helpers/cr-api.js';
+import { crLoginInBackground, crPage, crReady } from './helpers/cr.js';
+import { patientFilesCrud } from './helpers/e2e-entrynumber-assigned.js';
+import { guiAcceptAlert, guiHashStartWith } from './helpers/gui.js';
+import { patientgo } from './helpers/patients.js';
 
 function checkFileAdd(type, inputCb, checkCb) {
     crPage().within(() => {

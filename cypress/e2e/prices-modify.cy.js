@@ -1,10 +1,10 @@
 /// <reference types="Cypress" />
 
 import XButton from '../../app/widgets/style/x-button.js';
-import { crApiLogin, crApiPriceDelete, crApiPriceList } from '../helpers/cr-api.js';
-import { crGo, crLoginInBackground, crReady } from '../helpers/cr.js';
-import flavorFilter from '../helpers/filter-tests.js';
-import TableIterator from '../helpers/table-iterator.js';
+import { crApiLogin, crApiPriceDelete, crApiPriceList } from './helpers/cr-api.js';
+import { crGo, crLoginInBackground, crReady } from './helpers/cr.js';
+import flavorFilter from './helpers/filter-tests.js';
+import TableIterator from './helpers/table-iterator.js';
 
 function assertTableInitial(i = 0) {
     new TableIterator('#price_lists', { xtable: false })

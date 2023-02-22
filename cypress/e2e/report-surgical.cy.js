@@ -1,7 +1,7 @@
 /// <reference types="Cypress" />
 
-import flavorFilter from '../helpers/filter-tests.js';
-import { goReport } from '../helpers/report.js';
+import flavorFilter from './helpers/filter-tests.js';
+import { goReport } from './helpers/report.js';
 
 flavorFilter(flavorFilter.DESKTOP, () =>
     context('Actions', () => {

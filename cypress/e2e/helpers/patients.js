@@ -1,4 +1,4 @@
-import XButton from '../../app/widgets/style/x-button.js';
+import XButton from '../../../app/widgets/style/x-button.js';
 import { crPage, crReady } from './cr.js';
 import { guiHashStartWith } from './gui.js';
 
