@@ -79,7 +79,8 @@ dump:
 	@echo "MySQL user:       $(shell bin/mysql --silent --database mysql --raw --skip-column-names -e "SELECT CURRENT_USER; " 2>&1)"
 	@echo "PHP:              $(shell bin/php -r 'echo PHP_VERSION;' 2>&1 )"
 	@echo "PHP composer:     $(shell bin/composer --version 2>&1 )"
-	@echo "NodeJS:           $(shell bin/node --version 2>&1 )"
+	@echo "NodeJS:           $(shell bin/cr-node --version 2>&1 )"
+	@echo "NPM:              $(shell bin/cr-npm --version 2>&1 )"
 # @echo "Cypress:          $(shell node node_modules/.bin/cypress --version --component package 2>&1 )"
 #	@echo "Chrome:           $(shell google-chrome --version 2>&1 )"
 #	@echo "Supported:        $(shell npx -y browserslist 2>&1 )"
@@ -173,7 +174,7 @@ test-unit: $(TMP)/.dependencies-node \
 
 # TODO: reenable coverage
 	mkdir -p $(TMP)/js
-	NOCOV=1 bin/npm run test-unit-continuously-withcov -- --single-run
+	NOCOV=1 bin/cr-npm run test-unit-continuously-withcov -- --single-run
 # node tests/report.js
 
 .PHONY: test-e2e
@@ -201,12 +202,12 @@ $(TMP)/.tested-e2e-mobile: $(TMP)/.built $(TMP)/.dependencies $(shell find cypre
 
 # TODO
 cypress-open:
-	node node_modules/.bin/cypress open
+	node_modules/.bin/cypress open
 
 # TODO
 .PHONY: test-styles
 test-styles: $(TMP)/styles/styles-problems-list.json
-$(TMP)/styles/styles-problems-list.json: tests/styles tests/styles/references $(TMP)/.tested-e2e-desktop $(TMP)/.tested-e2e-mobile
+$(TMP)/styles/styles-problems-list.json: tests/styles tests/styles/references $(TMP)/.tested-e2e-desktop #$(TMP)/.tested-e2e-mobile
 	@rm -fr "$(dir $@)"
 	@mkdir -p "$(dir $@)"
 	@mkdir -p "$(dir $@)/run/mobile"
@@ -217,7 +218,7 @@ $(TMP)/styles/styles-problems-list.json: tests/styles tests/styles/references $(
 	find $(TMP)/e2e/desktop/screenshots/ -type "f" -exec "cp" "{}" "$(dir $@)/run/desktop/" ";"
 
 	@echo "Compare"
-	bin/node tests/styles/test-styles.mjs
+	bin/cr-node tests/styles/test-styles.mjs
 	@echo "Report is at http://localhost:$(CRYPTOMEDIC_PORT)/xappx/tmp/style.html"
 	du -ksh "$(dir $@)"
 
@@ -225,7 +226,7 @@ $(TMP)/styles/styles-problems-list.json: tests/styles tests/styles/references $(
 update-references-styles:
 	if [ ! -r $(TMP)/styles/styles-problems-list.json ]; then echo "No tmp/styles/styles-problems-list.json found!"; exit 1; fi
 	@echo "Compare"
-	node tests/styles/update-styles.mjs
+	bin/cr-node tests/styles/update-styles.mjs
 
 #
 # Deploy command
@@ -264,7 +265,7 @@ $(TMP)/.dependencies: $(TMP)/.dependencies-node $(TMP)/.dependencies-api
 .PHONY: dependencies-node
 dependencies-node: $(TMP)/.dependencies-node
 $(TMP)/.dependencies-node: package.json package-lock.json
-	npm install
+	bin/cr-npm install
 	touch package-lock.json
 
 	@mkdir -p "$(dir $@)"
@@ -298,7 +299,7 @@ update-dependencies-api:
 #
 
 package-lock.json: package.json
-	npm install
+	bin/cr-npm install
 
 .PHONY: build
 build: $(TMP)/.built
@@ -315,26 +316,26 @@ www/built/index.html: $(TMP)/.dependencies-node webpack.config.js  \
 		$(CJS2ESM_DIR)/axios-mock-adapter.js \
 		$(CJS2ESM_DIR)/platform.js
 
-	node node_modules/.bin/webpack
+	bin/cr-node node_modules/.bin/webpack
 
 www/built/browsers.json: .browserslistrc $(TMP)/.dependencies-node
-	node node_modules/.bin/browserslist --json > "$@"
+	bin/cr-node node_modules/.bin/browserslist --json > "$@"
 
 update-references-browsers:
-	node node_modules/.bin/browserslist --update-db
+	bin/cr-node node_modules/.bin/browserslist --update-db
 
 # Dependencies are used in the build !
 $(CJS2ESM_DIR)/axios.js: node_modules/axios/dist/axios.js
-	node node_modules/.bin/babel --out-file="$@" --plugins=transform-commonjs --source-maps inline $?
+	bin/cr-node node_modules/.bin/babel --out-file="$@" --plugins=transform-commonjs --source-maps inline $?
 
 # Dependencies are used in the build !
 $(CJS2ESM_DIR)/axios-mock-adapter.js: node_modules/axios-mock-adapter/dist/axios-mock-adapter.js
-	node node_modules/.bin/babel --out-file="$@" --plugins=transform-commonjs --source-maps inline $?
+	bin/cr-node node_modules/.bin/babel --out-file="$@" --plugins=transform-commonjs --source-maps inline $?
 	sed -i 's/from "axios";/from ".\/axios.js";/' $@
 
 # Dependencies are used in the build !
 $(CJS2ESM_DIR)/platform.js: node_modules/platform/platform.js
-	node node_modules/.bin/babel --out-file="$@" --plugins=transform-commonjs --source-maps inline $?
+	bin/cr-node node_modules/.bin/babel --out-file="$@" --plugins=transform-commonjs --source-maps inline $?
 
 #
 #
