@@ -51,8 +51,8 @@ services:
     volumes:
       - ./:/app
     labels:
-        - traefik.enable=true
-        - traefik.http.routers.web.rule=PathPrefix(`/`)
+      - traefik.enable=true
+      - traefik.http.routers.web.rule=PathPrefix(`/`)
 
   mysql:
     image: mysql:${MYSQL_VERSION}
