@@ -74,11 +74,11 @@ dump:
 	@echo "DISPLAY:          $(DISPLAY)"
 	@echo "CRYPTOMEDIC_PORT: $(CRYPTOMEDIC_PORT)"
 	@echo "------------------------------------------"
-	@echo "MySQL:            $(shell bin/mysql --version 2>&1 )"
-	@echo "MySQL Server:     $(shell bin/mysql --silent --database mysql --raw --skip-column-names -e "SELECT VERSION();" 2>&1)"
-	@echo "MySQL user:       $(shell bin/mysql --silent --database mysql --raw --skip-column-names -e "SELECT CURRENT_USER; " 2>&1)"
-	@echo "PHP:              $(shell bin/php -r 'echo PHP_VERSION;' 2>&1 )"
-	@echo "PHP composer:     $(shell bin/composer --version 2>&1 )"
+	@echo "MySQL:            $(shell bin/cr-mysql --version 2>&1 )"
+	@echo "MySQL Server:     $(shell bin/cr-mysql --silent --database mysql --raw --skip-column-names -e "SELECT VERSION();" 2>&1)"
+	@echo "MySQL user:       $(shell bin/cr-mysql --silent --database mysql --raw --skip-column-names -e "SELECT CURRENT_USER; " 2>&1)"
+	@echo "PHP:              $(shell bin/cr-php -r 'echo PHP_VERSION;' 2>&1 )"
+	@echo "PHP composer:     $(shell bin/crcomposer --version 2>&1 )"
 	@echo "NodeJS:           $(shell bin/cr-node --version 2>&1 )"
 	@echo "NPM:              $(shell bin/cr-npm --version 2>&1 )"
 # @echo "Cypress:          $(shell node node_modules/.bin/cypress --version --component package 2>&1 )"
@@ -119,7 +119,7 @@ start: dependencies build
 	docker compose up -d --build
 
 	@echo -n "Waiting for mysql to be ready"
-	@while ! bin/mysqladmin ping -h "localhost" --silent >/dev/null; do sleep 1; echo -n "."; done
+	@while ! bin/cr-mysqladmin ping -h "localhost" --silent >/dev/null; do sleep 1; echo -n "."; done
 	@echo "Done"
 
 	cr-data-reset

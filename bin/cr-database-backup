@@ -10,7 +10,7 @@ OUTPUT="$CR_TMP/cryptomedic-$(date +%F-%H-%M-%S.%N)"
 
 mkdir -p "$(dirname "$OUTPUT")"
 
-mysqldump --user=root --password=root cryptomedic >"$OUTPUT"
+cr-mysqldump --user=root --password=root cryptomedic >"$OUTPUT"
 
 echo
 echo "Backup available at $OUTPUT"
