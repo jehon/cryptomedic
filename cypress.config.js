@@ -17,6 +17,6 @@ module.exports = defineConfig({
             return require('./cypress/plugins/index.js')(on, config);
         },
         baseUrl: 'http://localhost:80',
-        specPattern: 'cypress/e2e/**/*.spec.js',
+        specPattern: 'cypress/e2e/**/*.cy.js',
     },
 });
