@@ -77,6 +77,8 @@ services:
 ################################################################
 
   dev:
+    profiles:
+      - tools
     # We can not set a profile here, because it need to start in DC
     # But it exit immediately, so no problems
     build: 
