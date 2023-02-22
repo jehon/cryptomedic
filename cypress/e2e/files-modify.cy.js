@@ -117,8 +117,7 @@ context('Actions', () => {
     //         cy.get('#Picture_Date').invoke('attr', 'value', '2003-01-01');
     //         cy.get('x-input-picture').shadow().find('input[type=file]')
     //             .should('be.visible')
-    //             // https://www.npmjs.com/package/cypress-file-upload
-    //             .attachFile('upload.jpg'); // image/gif
+    //             .selectFile('cypress/fixtures/upload.jpg'); // image/gif
 
     //         crReady();
     //     }, () => {

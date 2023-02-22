@@ -14,6 +14,7 @@ module.exports = defineConfig({
     screenshotsFolder: 'tmp/e2e/desktop/screenshots/',
     e2e: {
         baseUrl: 'http://localhost:5555',
+        supportFile: 'cypress/support/e2e.js',
         setupNodeEvents(on, _config) {
             // https://docs.cypress.io/api/plugins/writing-a-plugin
             on('after:screenshot', ({ path }) => {
