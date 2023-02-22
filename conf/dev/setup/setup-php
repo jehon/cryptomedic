@@ -47,5 +47,5 @@ apt install --quiet --yes \
 # && echo "xdebug.remote_enable=on" >> /usr/local/etc/php/conf.d/xdebug.ini \
 # && echo "xdebug.remote_autostart=off" >> /usr/local/etc/php/conf.d/xdebug.ini
 
-# Install composer.phar at /composer.phar (will be used through bin/composer proxy)
+# Install composer.phar at /composer.phar (will be used through bin/cr-composer proxy)
 ( cd / && curl --silent --show-error https://getcomposer.org/installer | php )

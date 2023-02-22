@@ -282,7 +282,7 @@ $(TMP)/.dependencies-api: \
 		www/api/composer.lock
 
 	cr-ensure-folder-empty www/api//bootstrap/cache
-	bin/composer install --working-dir "www/api/"
+	bin/cr-composer install --working-dir "www/api/"
 
 	@mkdir -p "$(dir $@)"
 	@touch "$@"
@@ -290,7 +290,7 @@ $(TMP)/.dependencies-api: \
 .PHONY: update-dependencies-api
 update-dependencies-api:
 	mkdir -m 777 -p www/api/bootstrap/cache
-	bin/composer update --working-dir "www/api/"
+	bin/cr-composer update --working-dir "www/api/"
 
 #
 #
