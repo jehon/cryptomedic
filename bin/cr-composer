@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+set -o errexit
+set -o pipefail
+
+. "$(realpath "$( dirname "${BASH_SOURCE[0]}")")"/cr-lib
+
+FOLDER="$(realpath --relative-to="$CR_PRJ_DIR" "$(pwd)" )"
+
+# docker compose exec -T \
+#    php \
+#    /composer.phar
+
+docker compose run --rm --quiet-pull -T \
+    --workdir /app/$FOLDER \
+    --user "$(id -u)" \
+    composer \
+    --no-interaction \
+    "$@"

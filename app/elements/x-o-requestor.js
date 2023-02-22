@@ -2,7 +2,6 @@
 /* istanbul ignore file */
 
 import JHElement from './jh-element.js';
-import { API_VERSION } from '../config.js';
 import './x-waiting.js';
 import './x-o-overlay.js';
 
@@ -69,7 +68,7 @@ export default class XRequestor extends JHElement {
         };
 
         if (options.url[0] != '/') {
-            options.url = `/api/${API_VERSION}/${options.url}`;
+            options.url = `/api/${options.url}`;
         }
 
         if (!options.method || options.method == 'GET') {

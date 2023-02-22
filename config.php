@@ -4,7 +4,7 @@ global $myconfig;
 
 $myconfig = [
   'database' => [
-    'host'       => 'localhost',
+    'host'       => 'mysql',
     'schema'     => 'cryptomedic',
     'username'   => 'mysql_cryptomedic_username',
     'password'   => 'mysql_cryptomedic_password',
@@ -38,33 +38,32 @@ if (file_exists(__DIR__ . '/config-custom.php')) {
 }
 
 if (file_exists(__DIR__ . '/config-site.php')) {
-  # config-custom hold the configuration of the site
   # This file will be protected by the prj-go-site.sh
   require(__DIR__ . '/config-site.php');
 }
 
-function myShowConfigByPathForCmdLine($path) {
-  global $myconfig;
-  $array = $myconfig;
+// function myShowConfigByPathForCmdLine($path) {
+//   global $myconfig;
+//   $array = $myconfig;
 
-  $keys = explode('.', $path);
-  foreach ($keys as $key) {
-    if (isset($array[$key])) {
-      $array = $array[$key];
-    } else {
-      throw new Exception("Path not found: " . $path);
-    }
-  }
-  if (is_array($array)) {
-    # If we have an array, then display the various keys
-    echo implode("\n", array_keys($array)) . "\n";
-  } else {
-    echo $array;
-  }
-}
+//   $keys = explode('.', $path);
+//   foreach ($keys as $key) {
+//     if (isset($array[$key])) {
+//       $array = $array[$key];
+//     } else {
+//       throw new Exception("Path not found: " . $path);
+//     }
+//   }
+//   if (is_array($array)) {
+//     # If we have an array, then display the various keys
+//     echo implode("\n", array_keys($array)) . "\n";
+//   } else {
+//     echo $array;
+//   }
+// }
 
-if (isset($argc)) {
-  if (($argc == 2) && (substr($argv[0], -strlen(basename(__FILE__))) == basename(__FILE__))) {
-    myShowConfigByPathForCmdLine($argv[1]);
-  }
-}
+// if (isset($argc)) {
+//   if (($argc == 2) && (substr($argv[0], -strlen(basename(__FILE__))) == basename(__FILE__))) {
+//     myShowConfigByPathForCmdLine($argv[1]);
+//   }
+// }

@@ -1,0 +1,147 @@
+
+version: '3.9'
+
+services:
+################################################################
+#
+# Prod like services
+#
+################################################################
+
+  proxy:
+    image: traefik
+    restart: always
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+    ports:
+      # CRYPTOMEDIC_PORT
+      # Using variable here does not work
+      - published: 5555
+        target: 80
+        mode: host
+      - published: 5558
+        target: 8080
+        mode: host
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+    labels:
+      - traefik.protocol=http
+      - traefik.enable=true
+      - traefik.http.middlewares.jhstriproot.stripprefixregex.regex=/[a-zA-Z0-9_-]+/
+
+      # - traefik.http.routers.traeffik_api.rule=PathPrefix(`/traefik/api`)
+      # - traefik.http.routers.traeffik_api.service=api@internal
+      # - traefik.http.routers.traeffik_api.middlewares=jhstriproot@docker
+
+      # - traefik.http.routers.traeffik_dashboard.rule=PathPrefix(`/traefik/dashboard/`)
+      # - traefik.http.routers.traeffik_dashboard.service=dashboard@internal
+      # - traefik.http.routers.traeffik_dashboard.middlewares=jhstriproot@docker
+
+  web:
+    # https://hub.docker.com/_/php
+    build:
+      context: conf/web
+      args:
+        PHP_VERSION: ${PHP_VERSION}
+    expose:
+      - 80
+    volumes:
+      - ./:/app
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.web.rule=PathPrefix(`/`)
+
+  mysql:
+    image: mysql:${MYSQL_VERSION}
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: yes
+      # MYSQL_ROOT_PASSWORD: mysql_root_password
+      MYSQL_DATABASE: cryptomedic
+    healthcheck:
+        test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+        timeout: 20s
+        retries: 10
+    expose:
+      - 3306
+    volumes:
+      - type: tmpfs
+        target: /var/lib/mysql
+
+################################################################
+#
+# Dev services
+#
+################################################################
+
+  dev:
+    # We can not set a profile here, because it need to start in DC
+    # But it exit immediately, so no problems
+    build: 
+      context: conf/dev
+
+  phpmyadmin:
+    # https://hub.docker.com/r/phpmyadmin/phpmyadmin/
+    image: phpmyadmin/phpmyadmin
+    environment:
+      PMA_HOST: mysql
+      PMA_USER: root
+      # PMA_PASSWORD: mysql_root_password
+    expose:
+      - 80
+    labels:
+        - traefik.enable=true
+        - traefik.http.routers.phpmyadmin.rule=PathPrefix(`/phpmyadmin`)
+        - traefik.http.routers.phpmyadmin.middlewares=jhstriproot@docker
+
+  mail:
+    # https://github.com/maildev/maildev
+    image: maildev/maildev
+    environment:
+        # Not working with healthcheck: - MAILDEV_BASE_PATHNAME=/maildev/
+        - MAILDEV_WEB_PORT=1080
+    expose:
+      - 1025
+      - 8025
+    labels:
+        - traefik.enable=true
+        # https://github.com/maildev/maildev/issues/402
+        - traefik.http.routers.mail.rule=PathPrefix(`/mail`)
+        - traefik.http.routers.mail.middlewares=jhstriproot@docker
+        - traefik.http.services.mail.loadbalancer.server.port=1080
+
+################################################################
+#
+# Tools / commands
+#
+################################################################
+  composer:
+    profiles:
+      - tool
+    image: composer:latest
+    working_dir: /app
+    volumes:
+      - ./:/app
+
+  node:
+    profiles:
+      - tool
+    build: conf/node
+    working_dir: /app
+    volumes:
+      - ./:/app
+
+  # cypress:
+  #   profiles: [ "manual" ]
+  #   # Adaptations:
+  #   # See https://github.com/cypress-io/cypress-docker-images/blob/master/included/7.1.0/Dockerfile
+  #   image: cypress/included:9.3.1 # 8.7.0 is causing issue in github actions: https://stackoverflow.com/a/70519386/1954789
+  #   environment:
+  #     LANG: C.UTF-8
+  #     ENV DBUS_SESSION_BUS_ADDRESS:
+  #     CYPRESS_BASE_URL: http://server
+  #   working_dir: /app
+  #   volumes:
+  #     - .:/app

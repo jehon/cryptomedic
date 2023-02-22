@@ -2,7 +2,6 @@
 /* istanbul ignore file */
 
 import PatientRelated from './PatientRelated.js';
-import { API_VERSION } from '../config.js';
 
 export default class Picture extends PatientRelated {
     getModel() {
@@ -10,11 +9,11 @@ export default class Picture extends PatientRelated {
     }
 
     getPictureUrl() {
-        return '/api/' + API_VERSION + '/picture/' + this.id;
+        return '/api/picture/' + this.id;
     }
 
     getThumbnailUrl() {
-        return '/api/' + API_VERSION + '/picture/' + this.id + '/thumbnail';
+        return '/api/picture/' + this.id + '/thumbnail';
     }
 
     validate(res) {

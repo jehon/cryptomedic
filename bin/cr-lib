@@ -3,15 +3,11 @@
 set -o errexit
 set -o pipefail
 
-# shellcheck source=/usr/bin/jh-lib
-. jh-lib
-
 export CR_SCRIPT_DIR
 export CR_PRJ_DIR
 export CR_TMP
 export CR_HTTP_PORT
 export CR_HTTP_HOST
-export CR_API_VERSION="v1.3" # From Makefile and config.js
 export CR_DEPLOY_HOST
 export SSH_KNOWN_HOSTS="$HOME/.ssh/known_hosts"
 
@@ -23,6 +19,9 @@ export DEBIAN_FRONTEND=noninteractive
 CR_SCRIPT_DIR="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
 CR_PRJ_DIR="$(dirname "$CR_SCRIPT_DIR")"
 CR_TMP="$CR_PRJ_DIR/tmp"
+
+. $CR_PRJ_DIR/.env
+
 CR_HTTP_PORT="${CRYPTOMEDIC_PORT:-80}"
 CR_HTTP_HOST="${CRYPTOMEDIC_HTTP_HOST:-"localhost"}:$CR_HTTP_PORT"
 CR_DEPLOY_HOST="ftp.cluster003.ovh.net"
@@ -31,3 +30,25 @@ export PATH="$CR_SCRIPT_DIR:$PATH"
 
 # For recursion
 export CR_HEADER_PREFIX="*$CR_HEADER_PREFIX"
+
+jh_color() {
+    COLOR=${1:-"0"}
+    if [ -z "$JH_DAEMON" ]; then
+        echo -en "\e[${COLOR}m"
+    fi
+}
+
+header_begin() {
+    LASTMSG="$*"
+    jh_color 93
+    echo -n "$CR_HEADER_PREFIX $*..."
+    jh_color
+    echo
+}
+
+header_end() {
+    jh_color 93
+    echo -n "$CR_HEADER_PREFIX $LASTMSG done"
+    jh_color
+    echo
+}

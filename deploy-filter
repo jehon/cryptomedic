@@ -28,12 +28,12 @@
 - /www/api/*/storage
 
 # Is a cache
-- /www/api/*/bootstrap/cache
+- /www/api/bootstrap/cache
 
 # Not very usefull
 - /www/maintenance/dev
-- /www/api/*/tests
-- /www/api/*/vendor/bin
+- /www/api/tests
+- /www/api/vendor/bin
 + /www
 
 # Protect: server-side files

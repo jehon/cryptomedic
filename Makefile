@@ -4,7 +4,6 @@ export PATH := $(ROOT)/bin:$(PATH)
 TMP := $(ROOT)/tmp
 
 GIT_BRANCH=$(shell git rev-parse --abbrev-ref HEAD)
-NPM_BIN=$(shell npm root)/.bin
 
 # Default target
 # End by test, since test-styles may fail
@@ -20,7 +19,7 @@ ok:
 	date
 
 .PHONY: pull-request
-pull-request: update-dependencies-api-bare update-dependencies-api test
+pull-request: update-dependencies-api test
 
 #
 # Debug options:
@@ -32,7 +31,6 @@ pull-request: update-dependencies-api-bare update-dependencies-api test
 # Parameters
 #
 export CRYPTOMEDIC_PORT ?= 80
-export VAPI := v1.3
 export CYPRESS_CACHE_FOLDER := $(TMP)/cache/cypress
 
 BACKUP_DIR ?= $(TMP)/backup-online
@@ -75,17 +73,17 @@ dump:
 	@echo "PATH:             $(PATH)"
 	@echo "DISPLAY:          $(DISPLAY)"
 	@echo "CRYPTOMEDIC_PORT: $(CRYPTOMEDIC_PORT)"
-	@echo "--------------- Supervisor ---------------"
-	sudo /usr/bin/supervisorctl status || true
 	@echo "------------------------------------------"
-	@echo "MySQL:            $(shell mysql --version 2>&1 )"
-	@echo "MySQL Server:     $(shell mysql --silent --database mysql --raw --skip-column-names -e "SELECT VERSION();" 2>&1)"
-	@echo "MySQL user:       $(shell mysql --silent --database mysql --raw --skip-column-names -e "SELECT CURRENT_USER; " 2>&1)"
-	@echo "PHP:              $(shell php -r 'echo PHP_VERSION;' 2>&1 )"
-	@echo "NodeJS:           $(shell node --version 2>&1 )"
-	@echo "Cypress:          $(shell $(NPM_BIN)/cypress --version --component package 2>&1 )"
-	@echo "Chrome:           $(shell google-chrome --version 2>&1 )"
-	@echo "Supported:        $(shell npx -y browserslist 2>&1 )"
+	@echo "MySQL:            $(shell bin/cr-mysql --version 2>&1 )"
+	@echo "MySQL Server:     $(shell bin/cr-mysql --silent --database mysql --raw --skip-column-names -e "SELECT VERSION();" 2>&1)"
+	@echo "MySQL user:       $(shell bin/cr-mysql --silent --database mysql --raw --skip-column-names -e "SELECT CURRENT_USER; " 2>&1)"
+	@echo "PHP:              $(shell bin/cr-php -r 'echo PHP_VERSION;' 2>&1 )"
+	@echo "PHP composer:     $(shell bin/crcomposer --version 2>&1 )"
+	@echo "NodeJS:           $(shell bin/cr-node --version 2>&1 )"
+	@echo "NPM:              $(shell bin/cr-npm --version 2>&1 )"
+# @echo "Cypress:          $(shell node node_modules/.bin/cypress --version --component package 2>&1 )"
+#	@echo "Chrome:           $(shell google-chrome --version 2>&1 )"
+#	@echo "Supported:        $(shell npx -y browserslist 2>&1 )"
 
 clear:
 	@if [ -z "$$NO_CLEAR" ]; then clear; fi
@@ -118,11 +116,22 @@ clean-ports:
 
 .PHONY: start
 start: dependencies build
-	jh-run-and-capture cr-data-reset
+	docker compose up -d --build
+
+	@echo -n "Waiting for mysql to be ready"
+	@while ! bin/cr-mysqladmin ping -h "localhost" --silent >/dev/null; do sleep 1; echo -n "."; done
+	@echo "Done"
+
+	cr-data-reset
 
 	@echo "Open browser: http://localhost:$(CRYPTOMEDIC_PORT)/"
 	@echo "Test page: http://localhost:$(CRYPTOMEDIC_PORT)/xappx/"
 
+stop:
+	docker compose down
+
+reset: 
+	cr-data-reset
 #
 #
 # Tests
@@ -134,32 +143,28 @@ lint: lint-es lint-css lint-html
 
 .PHONY: lint-es
 lint-es: $(TMP)/.dependencies-node
-	$(NPM_BIN)/eslint
+	node node_modules/.bin/eslint
 
 .PHONY: lint-css
 lint-css: $(TMP)/.dependencies-node
-	$(NPM_BIN)/stylelint app/**/*.css
+	node node_modules/.bin/stylelint app/**/*.css
 
 .PHONY: lint-html
 lint-html: $(TMP)/.dependencies-node
-	$(NPM_BIN)/htmlhint app/**/*.html tests/**/*.html www/api/*/public/**/*.html --format=compact
+	node node_modules/.bin/htmlhint app/**/*.html tests/**/*.html www/api/*/public/**/*.html --format=compact
 
 .PHONY: test # In Jenkinfile, each step is separated:
-test: $(TMP)/.dependencies $(TMP)/.built test-api test-api-bare test-unit test-e2e test-styles
+test: $(TMP)/.dependencies $(TMP)/.built test-api test-unit test-e2e test-styles
 
 .PHONY: test-api
 test-api: $(TMP)/.dependencies-api
-	jh-run-and-capture cr-data-reset
-	cr-phpunit laravel
+	cr-data-reset
+	bin/cr-phpunit
 
 .PHONY: update-references-api
 update-references-api: $(TMP)/.dependencies-api
-	jh-run-and-capture cr-data-reset
-	COMMIT=1 cr-phpunit
-
-test-api-bare: $(TMP)/.dependencies-api
-	jh-run-and-capture cr-data-reset
-	cr-phpunit bare
+	cr-data-reset
+	COMMIT=1 bin/cr-phpunit
 
 .PHONY: test-unit
 test-unit: $(TMP)/.dependencies-node \
@@ -169,7 +174,7 @@ test-unit: $(TMP)/.dependencies-node \
 
 # TODO: reenable coverage
 	mkdir -p $(TMP)/js
-	NOCOV=1 npm run test-unit-continuously-withcov -- --single-run
+	NOCOV=1 bin/cr-npm run test-unit-continuously-withcov -- --single-run
 # node tests/report.js
 
 .PHONY: test-e2e
@@ -179,7 +184,8 @@ test-e2e: test-e2e-desktop test-e2e-mobile
 .PHONY: test-e2e-desktop
 test-e2e-desktop: $(TMP)/.tested-e2e-desktop
 $(TMP)/.tested-e2e-desktop: $(TMP)/.built $(TMP)/.dependencies $(shell find cypress/ -name "*.js")
-	cr-cypress "desktop"
+	bin/cr-data-reset
+	bin/cr-cypress "desktop"
 
 	@mkdir -p "$(dir $@)"
 	@touch "$@"
@@ -188,19 +194,20 @@ $(TMP)/.tested-e2e-desktop: $(TMP)/.built $(TMP)/.dependencies $(shell find cypr
 .PHONY: test-e2e-mobile
 test-e2e-mobile: $(TMP)/.tested-e2e-mobile
 $(TMP)/.tested-e2e-mobile: $(TMP)/.built $(TMP)/.dependencies $(shell find cypress/ -name "*.js")
-	cr-cypress "mobile"
+	bin/cr-data-reset
+	bin/cr-cypress "mobile"
 
 	@mkdir -p "$(dir $@)"
 	@touch "$@"
 
 # TODO
 cypress-open:
-	$(NPM_BIN)/cypress open
+	node_modules/.bin/cypress open
 
 # TODO
 .PHONY: test-styles
 test-styles: $(TMP)/styles/styles-problems-list.json
-$(TMP)/styles/styles-problems-list.json: tests/styles tests/styles/references $(TMP)/.tested-e2e-desktop $(TMP)/.tested-e2e-mobile
+$(TMP)/styles/styles-problems-list.json: tests/styles tests/styles/references $(TMP)/.tested-e2e-desktop #$(TMP)/.tested-e2e-mobile
 	@rm -fr "$(dir $@)"
 	@mkdir -p "$(dir $@)"
 	@mkdir -p "$(dir $@)/run/mobile"
@@ -211,7 +218,7 @@ $(TMP)/styles/styles-problems-list.json: tests/styles tests/styles/references $(
 	find $(TMP)/e2e/desktop/screenshots/ -type "f" -exec "cp" "{}" "$(dir $@)/run/desktop/" ";"
 
 	@echo "Compare"
-	node tests/styles/test-styles.mjs
+	bin/cr-node tests/styles/test-styles.mjs
 	@echo "Report is at http://localhost:$(CRYPTOMEDIC_PORT)/xappx/tmp/style.html"
 	du -ksh "$(dir $@)"
 
@@ -219,7 +226,7 @@ $(TMP)/styles/styles-problems-list.json: tests/styles tests/styles/references $(
 update-references-styles:
 	if [ ! -r $(TMP)/styles/styles-problems-list.json ]; then echo "No tmp/styles/styles-problems-list.json found!"; exit 1; fi
 	@echo "Compare"
-	node tests/styles/update-styles.mjs
+	bin/cr-node tests/styles/update-styles.mjs
 
 #
 # Deploy command
@@ -251,54 +258,39 @@ logs:
 
 .PHONY: dependencies
 dependencies: $(TMP)/.dependencies
-$(TMP)/.dependencies: $(TMP)/.dependencies-node $(TMP)/.dependencies-api $(TMP)/.dependencies-api-bare
+$(TMP)/.dependencies: $(TMP)/.dependencies-node $(TMP)/.dependencies-api
 	@mkdir -p "$(dir $@)"
 	@touch "$@"
 
 .PHONY: dependencies-node
 dependencies-node: $(TMP)/.dependencies-node
 $(TMP)/.dependencies-node: package.json package-lock.json
-	npm install
+	bin/cr-npm install
 	touch package-lock.json
 
 	@mkdir -p "$(dir $@)"
 	@touch "$@"
 
 # %/composer.lock: %/composer.json
-# 	cd $(dir $@) && /composer.phar install
+# 	bin/composer install --working-dir "$(dir $@)"
 # 	touch "$@"
 
 .PHONY: dependencies-api
 dependencies-api: $(TMP)/.dependencies-api
-$(TMP)/.dependencies-api: $(TMP)/.dependencies-api-bare \
-		www/api/$(VAPI)/composer.json \
-		www/api/$(VAPI)/composer.lock
+$(TMP)/.dependencies-api: \
+		www/api/composer.json \
+		www/api/composer.lock
 
-	cr-ensure-folder-empty www/api/v1.3/bootstrap/cache
-	cd "www/api/$(VAPI)" && /composer.phar update
-
-	@mkdir -p "$(dir $@)"
-	@touch "$@"
-
-.PHONY: dependencies-api-bare
-dependencies-api-bare: $(TMP)/.dependencies-api-bare
-$(TMP)/.dependencies-api-bare: \
-		www/api/$(VAPI)/public/composer.json \
-		www/api/$(VAPI)/public/composer.lock
-
-	cd "www/api/$(VAPI)/public" && /composer.phar update
+	cr-ensure-folder-empty www/api//bootstrap/cache
+	bin/cr-composer install --working-dir "www/api/"
 
 	@mkdir -p "$(dir $@)"
 	@touch "$@"
 
 .PHONY: update-dependencies-api
-update-dependencies-api: $(TMP)/.dependencies-api-bare
-	mkdir -m 777 -p www/api/v1.3/bootstrap/cache
-	cd "www/api/$(VAPI)" && /composer.phar update
-
-.PHONY: update-dependencies-api-bare
-update-dependencies-api-bare:
-	cd "www/api/$(VAPI)/public" && /composer.phar update
+update-dependencies-api:
+	mkdir -m 777 -p www/api/bootstrap/cache
+	bin/cr-composer update --working-dir "www/api/"
 
 #
 #
@@ -307,7 +299,7 @@ update-dependencies-api-bare:
 #
 
 package-lock.json: package.json
-	npm install
+	bin/cr-npm install
 
 .PHONY: build
 build: $(TMP)/.built
@@ -324,26 +316,26 @@ www/built/index.html: $(TMP)/.dependencies-node webpack.config.js  \
 		$(CJS2ESM_DIR)/axios-mock-adapter.js \
 		$(CJS2ESM_DIR)/platform.js
 
-	$(NPM_BIN)/webpack
+	bin/cr-node node_modules/.bin/webpack
 
 www/built/browsers.json: .browserslistrc $(TMP)/.dependencies-node
-	npx -y browserslist --json > "$@"
+	bin/cr-node node_modules/.bin/browserslist --json > "$@"
 
 update-references-browsers:
-	npx -y browserslist --update-db
+	bin/cr-node node_modules/.bin/browserslist --update-db
 
 # Dependencies are used in the build !
 $(CJS2ESM_DIR)/axios.js: node_modules/axios/dist/axios.js
-	$(NPM_BIN)/babel --out-file="$@" --plugins=transform-commonjs --source-maps inline $?
+	bin/cr-node node_modules/.bin/babel --out-file="$@" --plugins=transform-commonjs --source-maps inline $?
 
 # Dependencies are used in the build !
 $(CJS2ESM_DIR)/axios-mock-adapter.js: node_modules/axios-mock-adapter/dist/axios-mock-adapter.js
-	$(NPM_BIN)/babel --out-file="$@" --plugins=transform-commonjs --source-maps inline $?
+	bin/cr-node node_modules/.bin/babel --out-file="$@" --plugins=transform-commonjs --source-maps inline $?
 	sed -i 's/from "axios";/from ".\/axios.js";/' $@
 
 # Dependencies are used in the build !
 $(CJS2ESM_DIR)/platform.js: node_modules/platform/platform.js
-	$(NPM_BIN)/babel --out-file="$@" --plugins=transform-commonjs --source-maps inline $?
+	bin/cr-node node_modules/.bin/babel --out-file="$@" --plugins=transform-commonjs --source-maps inline $?
 
 #
 #

@@ -31,7 +31,7 @@ fi
 FLAVOR="$1"
 shift
 
-header_begin "Testing cypress for $FLAVOR"
+echo "* Testing cypress for $FLAVOR"
 OUTPUT="$CR_TMP"/e2e/"$FLAVOR"
 
 header_begin "Setup $OUTPUT"
@@ -54,7 +54,6 @@ case "$FLAVOR" in
     ;;
 esac
 
-jh-run-and-capture cr-data-reset
 mkdir -p "$OUTPUT"
 cr-ensure-folder-empty "$OUTPUT"/screenshots
 cr-ensure-folder-empty "$OUTPUT"/videos
@@ -62,5 +61,18 @@ cr-ensure-folder-empty "$OUTPUT"/coverage
 header_end
 
 header_begin "Cypress run tests (${CYPRESS_ARGS[*]}) ($*)"
-time "$(npm root)"/.bin/cypress run "${CYPRESS_ARGS[@]}" "$@"
+# $CR_SCRIPT_DIR/node node_modules/.bin/cypress install
+
+# time "$CR_SCRIPT_DIR"/node node_modules/.bin/cypress run "${CYPRESS_ARGS[@]}" "$@"
+
+# docker compose run --rm --quiet-pull -T \
+#     --volume "$(pwd):/workdir" \
+#     --workdir /workdir \
+#     --user "$(id -u)" \
+#     cypress
+#     run "${CYPRESS_ARGS[@]}" "$@"
+
+"$(npm root)"/.bin/cypress \
+    run "${CYPRESS_ARGS[@]}" "$@"
+
 header_end

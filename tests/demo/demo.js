@@ -137,7 +137,6 @@ export default class XxTest extends HTMLElement {
 
 defineCustomElement(XxTest);
 
-import { API_VERSION } from '../../app/config.js';
 import Folder from '../../app/models/Folder.js';
 import XForm from '../../app/widgets/func/x-form.js';
 
@@ -152,7 +151,7 @@ document
 document.querySelectorAll('x-button').forEach(e => e.addEventListener('click', evt => console.info('clicked', evt.target)));
 document.querySelectorAll('x-form').forEach(e => e.addEventListener(XForm.ActionSubmit, evt => console.info('clicked', evt.target.data)));
 
-fetch(`../../www/api/${API_VERSION}/tests/references/FolderTest.test1.json`)
+fetch('../../www/api/tests/references/FolderTest.test1.json')
     .then(response => response.json())
     .then(data => new Folder(data.folder))
     .then(folder => {

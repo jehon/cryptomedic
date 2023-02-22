@@ -51,7 +51,6 @@ try {
     echo "\nRunning\n";
 
     deleteFileFromGlob(__DIR__ . "/../api/*/bootstrap/cache/*");
-    deleteFileFromGlob(__DIR__ . "/../api/*/storage/framework/cache/cache.php");
 
     if ($myconfig['dev']) {
         // Clean up local structure
