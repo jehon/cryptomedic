@@ -28,7 +28,7 @@ header_begin "PHPUnit: $T $V starting"
 
 # ( cd "$FOLDER" && ./vendor/bin/phpunit --coverage-html "$REPORTS" --coverage-xml "$REPORTS" "$@" )
 
-docker compose run --quiet-pull -T \
+docker compose run --rm --quiet-pull -T \
 	-e "COMMIT=$COMMIT" \
 	-e "XDEBUG_MODE=coverage" \
 	--volume "$(pwd):/workdir" \
