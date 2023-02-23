@@ -120,15 +120,12 @@ start: dc-up dependencies build reset
 
 dc-up:
 	docker compose up -d --build
+	bin/cr-mysql-wait
 
 stop:
 	docker compose down
 
 reset: 
-	@echo -n "Waiting for mysql to be ready"
-	@while ! bin/cr-mysqladmin ping -h "localhost" --silent >/dev/null; do sleep 1; echo -n "."; done
-	@echo "Done"
-
 	cr-data-reset
 
 #
