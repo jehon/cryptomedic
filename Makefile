@@ -120,6 +120,7 @@ start: dc-up dependencies build reset
 
 dc-up:
 	docker compose up -d --build
+	docker compose --profile=tool build
 	bin/cr-mysql-wait
 
 stop:
