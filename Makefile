@@ -92,7 +92,7 @@ clear:
 	@echo "**"
 	@echo "**"
 
-clean: deploy-unmount
+clean: stop deploy-unmount
 	if [ -r $(DEPLOY_MOUNT_TEST_FILE) ]; then echo "Remote mounted - stopping"; exit 1; fi
 	find . -type d \( -name "vendor" -or -name "node_modules" \) -prune -exec "rm" "-fr" "{}" ";" || true
 	find . -name "tmp" -prune -exec "rm" "-fr" "{}" ";" || true
