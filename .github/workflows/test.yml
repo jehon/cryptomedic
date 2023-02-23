@@ -33,85 +33,85 @@ jobs:
       name: I fail
       run: /i_fail
 
-    - id: start
-      name: dc start
-      timeout-minutes: 10
-      uses: jehon/actions-devcontainer@main
-      with:
-        action: start
-
-    - name: make dump
-      timeout-minutes: 2
-      uses: jehon/actions-devcontainer@main
-      with:
-        run: make dump
-
-    - name: make dependencies
-      uses: jehon/actions-devcontainer@main
-      with:
-        run: CRYPTOMEDIC_PROD=true make dependencies
-
-    - name: make build
-      uses: jehon/actions-devcontainer@main
-      with:
-        run: CRYPTOMEDIC_PROD=true make build
-
-    - name: make test-api
-      uses: jehon/actions-devcontainer@main
-      with:
-        run: make test-api
-
-    - name: make test-unit
-      uses: jehon/actions-devcontainer@main
-      with:
-        run: make test-unit
-
-    - name: make test-e2e-desktop
-      uses: jehon/actions-devcontainer@main
-      with:
-        run: make test-e2e-desktop
-
-    - name: make test-e2e-mobile
-      uses: jehon/actions-devcontainer@main
-      with:
-        run: make test-e2e-mobile
-
-    - name: make test-styles
-      uses: jehon/actions-devcontainer@main
-      with:
-        run: make test-styles
-
-    - name: make lint
-      uses: jehon/actions-devcontainer@main
-      with:
-        run: make lint
-
-    # # TODO
-    # - name: make deploy
+    # - id: start
+    #   name: dc start
+    #   timeout-minutes: 10
     #   uses: jehon/actions-devcontainer@main
-    #   if: ${{ github.ref_name == 'main' && github.ref_type == 'branch' }}
-    #   concurrency:
-    #      group: 'release'
     #   with:
-    #     run: CRYPTOMEDIC_DB_UPGRADE=${{ secrets.CRYPTOMEDIC_DB_UPGRADE }} CRYPTOMEDIC_UPLOAD_PASSWORD=${{ secrets.CRYPTOMEDIC_UPLOAD_PASSWORD }} CRYPTOMEDIC_UPLOAD_USER=${{ secrets.CRYPTOMEDIC_UPLOAD_USER }} make deploy
+    #     action: start
 
-    # This will upload the docker.log
-    - name: stop docker
-      if: always()
-      uses: jehon/actions-devcontainer@main
-      with:
-        action: stop
+    # - name: make dump
+    #   timeout-minutes: 2
+    #   uses: jehon/actions-devcontainer@main
+    #   with:
+    #     run: make dump
 
-    - name: 'Artifacts test-styles'
-      if: always()
-      uses: actions/upload-artifact@v3
-      with:
-        name: styles
-        path: tmp/styles/
+    # - name: make dependencies
+    #   uses: jehon/actions-devcontainer@main
+    #   with:
+    #     run: CRYPTOMEDIC_PROD=true make dependencies
 
-    - name: 'Artifacts Mysql'
-      if: always()
-      uses: actions/upload-artifact@v3
-      with:
-        name: mysql-error.log
-        path: /var/log/mysql/error.log
+    # - name: make build
+    #   uses: jehon/actions-devcontainer@main
+    #   with:
+    #     run: CRYPTOMEDIC_PROD=true make build
+
+    # - name: make test-api
+    #   uses: jehon/actions-devcontainer@main
+    #   with:
+    #     run: make test-api
+
+    # - name: make test-unit
+    #   uses: jehon/actions-devcontainer@main
+    #   with:
+    #     run: make test-unit
+
+    # - name: make test-e2e-desktop
+    #   uses: jehon/actions-devcontainer@main
+    #   with:
+    #     run: make test-e2e-desktop
+
+    # - name: make test-e2e-mobile
+    #   uses: jehon/actions-devcontainer@main
+    #   with:
+    #     run: make test-e2e-mobile
+
+    # - name: make test-styles
+    #   uses: jehon/actions-devcontainer@main
+    #   with:
+    #     run: make test-styles
+
+    # - name: make lint
+    #   uses: jehon/actions-devcontainer@main
+    #   with:
+    #     run: make lint
+
+    # # # TODO
+    # # - name: make deploy
+    # #   uses: jehon/actions-devcontainer@main
+    # #   if: ${{ github.ref_name == 'main' && github.ref_type == 'branch' }}
+    # #   concurrency:
+    # #      group: 'release'
+    # #   with:
+    # #     run: CRYPTOMEDIC_DB_UPGRADE=${{ secrets.CRYPTOMEDIC_DB_UPGRADE }} CRYPTOMEDIC_UPLOAD_PASSWORD=${{ secrets.CRYPTOMEDIC_UPLOAD_PASSWORD }} CRYPTOMEDIC_UPLOAD_USER=${{ secrets.CRYPTOMEDIC_UPLOAD_USER }} make deploy
+
+    # # This will upload the docker.log
+    # - name: stop docker
+    #   if: always()
+    #   uses: jehon/actions-devcontainer@main
+    #   with:
+    #     action: stop
+
+    # - name: 'Artifacts test-styles'
+    #   if: always()
+    #   uses: actions/upload-artifact@v3
+    #   with:
+    #     name: styles
+    #     path: tmp/styles/
+
+    # - name: 'Artifacts Mysql'
+    #   if: always()
+    #   uses: actions/upload-artifact@v3
+    #   with:
+    #     name: mysql-error.log
+    #     path: /var/log/mysql/error.log
