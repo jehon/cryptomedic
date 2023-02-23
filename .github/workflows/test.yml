@@ -19,9 +19,9 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - run: make dump
-
     - run: make dc-up
+
+    - run: make dump
 
     - run: make dependencies
 
