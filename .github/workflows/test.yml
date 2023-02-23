@@ -19,6 +19,12 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
+    - run: make start
+
+    - id: failed
+      name: I fail
+      run: /i_fail
+
     - id: start
       name: dc start
       timeout-minutes: 10
