@@ -67,7 +67,7 @@ define recursive-dependencies
 endef
 
 dump:
-	@echo "Who am i:         $(shell whoami)"
+	@echo "Who am i:         $(shell whoami) ($(shell id -u))"
 	@echo "HOME:             $(HOME)"
 	@echo "SHELL:            $(SHELL)"
 	@echo "PATH:             $(PATH)"
