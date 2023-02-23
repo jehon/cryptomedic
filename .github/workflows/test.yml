@@ -21,7 +21,13 @@ jobs:
 
     - run: make dump
 
-    - run: make start
+    - run: make dc-up
+
+    - run: make dependencies
+
+    - run: make build
+
+    - run: make reset
 
     - id: failed
       name: I fail

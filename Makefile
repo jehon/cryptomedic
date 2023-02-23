@@ -114,23 +114,23 @@ clean-ports:
 	jh-kill-by-port 9515 || true
 
 .PHONY: start
-start: dependencies build
+start: dc-up dependencies build reset
+	@echo "Open browser: http://localhost:$(CRYPTOMEDIC_PORT)/"
+	@echo "Test page: http://localhost:$(CRYPTOMEDIC_PORT)/xappx/"
+
+dc-up:
 	docker compose up -d --build
 
+stop:
+	docker compose down
+
+reset: 
 	@echo -n "Waiting for mysql to be ready"
 	@while ! bin/cr-mysqladmin ping -h "localhost" --silent >/dev/null; do sleep 1; echo -n "."; done
 	@echo "Done"
 
 	cr-data-reset
 
-	@echo "Open browser: http://localhost:$(CRYPTOMEDIC_PORT)/"
-	@echo "Test page: http://localhost:$(CRYPTOMEDIC_PORT)/xappx/"
-
-stop:
-	docker compose down
-
-reset: 
-	cr-data-reset
 #
 #
 # Tests
