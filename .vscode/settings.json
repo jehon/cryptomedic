@@ -15,5 +15,8 @@
   "javascript.updateImportsOnFileMove.enabled": "always",
   "javascript.preferences.importModuleSpecifier": "relative",
   "php.suggest.basic": false,
-  "css.format.spaceAroundSelectorSeparator": true
+  "css.format.spaceAroundSelectorSeparator": true,
+  "github-actions.workflows.pinned.workflows": [
+    ".github/workflows/test.yml"
+  ]
 }
