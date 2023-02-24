@@ -7,8 +7,6 @@ RUN apt-get update && apt-get install gnupg wget -y && \
     apt-get update && \
     apt-get install google-chrome-stable -y --no-install-recommends
 
-ENV npm_config_cache /home/npm
-
 ADD root /
 
-RUN mkdir /home/npm && chmod 777 /home/npm
+ENTRYPOINT [ "/start" ]
