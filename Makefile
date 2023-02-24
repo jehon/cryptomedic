@@ -8,10 +8,10 @@ GIT_BRANCH=$(shell git rev-parse --abbrev-ref HEAD)
 # Default target
 # End by test, since test-styles may fail
 .PHONY: dev
-dev: clear dependencies build lint test ok
+dev: clear start dependencies build lint test ok
 
 .PHONY: full
-full: clear clean stop start-with-rebuild test lint ok
+full: clear clean stop start test lint ok
 
 .PHONY: ok
 ok:
