@@ -9,4 +9,6 @@ RUN apt-get update && apt-get install gnupg wget -y && \
 
 ADD root /
 
+RUN chmod 777 /home
+
 ENTRYPOINT [ "/start" ]
