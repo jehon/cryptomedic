@@ -13,7 +13,7 @@ ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/do
 RUN chmod +x /usr/local/bin/install-php-extensions
 
 # mbstring, xml already installed
-RUN install-php-extensions gd pdo_mysql xdebug intl
+RUN install-php-extensions pdo_mysql xdebug intl
 
 # RUN curl -s https://getcomposer.org/installer | php -- --install-dir=/
 

@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+set -o errexit
+set -o pipefail
+shopt -s nullglob
+
+if [ -z $HOME ]; then
+    HOME=/home/user
+fi
+
+mkdir -p "$HOME"
+
+"$@"

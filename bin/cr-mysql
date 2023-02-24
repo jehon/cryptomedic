@@ -11,21 +11,5 @@ set -o pipefail
 # So, nobody can listen to stdin before the real "mysql" call!
 #
 
-mysql_test() {
-    # Do not capture stdin!
-    docker compose exec mysql mysql -e "SHOW DATABASES;" > /dev/null < /dev/null
-}
-
-sleep 1s
-if ! mysql_test ; then
-    echo -n "Waiting for mysql"
-    sleep 0.5s
-    while ! mysql_test ; do
-        echo -n "."
-        sleep 0.5s
-    done
-    echo
-fi
-
 # -T is necessary for <file.sql
 docker compose exec -T mysql mysql "$@"

@@ -8,10 +8,10 @@ GIT_BRANCH=$(shell git rev-parse --abbrev-ref HEAD)
 # Default target
 # End by test, since test-styles may fail
 .PHONY: dev
-dev: clear dependencies build lint test ok
+dev: clear start dependencies build lint test ok
 
 .PHONY: full
-full: clear clean stop start-with-rebuild test lint ok
+full: clear clean stop start test lint ok
 
 .PHONY: ok
 ok:
@@ -67,7 +67,7 @@ define recursive-dependencies
 endef
 
 dump:
-	@echo "Who am i:         $(shell whoami)"
+	@echo "Who am i:         $(shell whoami) ($(shell id -u))"
 	@echo "HOME:             $(HOME)"
 	@echo "SHELL:            $(SHELL)"
 	@echo "PATH:             $(PATH)"
@@ -81,8 +81,8 @@ dump:
 	@echo "PHP composer:     $(shell bin/cr-composer --version 2>&1 )"
 	@echo "NodeJS:           $(shell bin/cr-node --version 2>&1 )"
 	@echo "NPM:              $(shell bin/cr-npm --version 2>&1 )"
-    @echo "Cypress:          $(shell node node_modules/.bin/cypress --version --component package 2>&1 )"
-    @echo "Chrome:           $(shell google-chrome --version 2>&1 )"
+#	@echo "Cypress:          $(shell node node_modules/.bin/cypress --version --component package 2>&1 )"
+#	@echo "Chrome:           $(shell google-chrome --version 2>&1 )"
 
 clear:
 	@if [ -z "$$NO_CLEAR" ]; then clear; fi
@@ -92,7 +92,7 @@ clear:
 	@echo "**"
 	@echo "**"
 
-clean: deploy-unmount
+clean: stop deploy-unmount
 	if [ -r $(DEPLOY_MOUNT_TEST_FILE) ]; then echo "Remote mounted - stopping"; exit 1; fi
 	find . -type d \( -name "vendor" -or -name "node_modules" \) -prune -exec "rm" "-fr" "{}" ";" || true
 	find . -name "tmp" -prune -exec "rm" "-fr" "{}" ";" || true
@@ -114,23 +114,21 @@ clean-ports:
 	jh-kill-by-port 9515 || true
 
 .PHONY: start
-start: dependencies build
-	docker compose up -d --build
-
-	@echo -n "Waiting for mysql to be ready"
-	@while ! bin/cr-mysqladmin ping -h "localhost" --silent >/dev/null; do sleep 1; echo -n "."; done
-	@echo "Done"
-
-	cr-data-reset
-
+start: dc-up dependencies build reset
 	@echo "Open browser: http://localhost:$(CRYPTOMEDIC_PORT)/"
 	@echo "Test page: http://localhost:$(CRYPTOMEDIC_PORT)/xappx/"
+
+dc-up:
+	docker compose up -d --build
+	docker compose --profile=tool build
+	bin/cr-mysql-wait
 
 stop:
 	docker compose down
 
 reset: 
 	cr-data-reset
+
 #
 #
 # Tests

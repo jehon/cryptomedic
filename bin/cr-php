@@ -5,9 +5,7 @@ set -o pipefail
 
 . "$(realpath "$( dirname "${BASH_SOURCE[0]}")")"/cr-lib
 
-docker compose exec --quiet-pull -T \
-    --volume "$(pwd):/workdir" \
-    --workdir /workdir \
+docker compose exec -T \
     --user "$(id -u)" \
     web \
     php "$@"
