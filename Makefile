@@ -8,18 +8,18 @@ GIT_BRANCH=$(shell git rev-parse --abbrev-ref HEAD)
 # Default target
 # End by test, since test-styles may fail
 .PHONY: dev
-dev: clear start dependencies build lint test ok
+dev: clear stop start dependencies lint build test ok
 
 .PHONY: full
-full: clear clean stop start test lint ok
+full: clear clean stop start dependencies lint update-dependencies build test ok
+
+.PHONY: pull-request
+pull-request: full
 
 .PHONY: ok
 ok:
 	@echo "ok"
 	date
-
-.PHONY: pull-request
-pull-request: update-dependencies-api test
 
 #
 # Debug options:
@@ -259,6 +259,8 @@ $(TMP)/.dependencies: $(TMP)/.dependencies-node $(TMP)/.dependencies-api
 	@mkdir -p "$(dir $@)"
 	@touch "$@"
 
+update-dependencies: update-dependencies-node update-dependencies-api
+
 .PHONY: dependencies-node
 dependencies-node: $(TMP)/.dependencies-node
 $(TMP)/.dependencies-node: package.json package-lock.json
@@ -267,6 +269,8 @@ $(TMP)/.dependencies-node: package.json package-lock.json
 
 	@mkdir -p "$(dir $@)"
 	@touch "$@"
+
+update-dependencies-node: dependencies-node
 
 # %/composer.lock: %/composer.json
 # 	bin/composer install --working-dir "$(dir $@)"
