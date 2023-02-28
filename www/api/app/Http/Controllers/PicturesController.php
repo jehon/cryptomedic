@@ -156,18 +156,18 @@ class PicturesController extends FicheController {
     // If cache doesn't exist or too old, build it.
     if (!file_exists($cacheName) or ($srcTime > $filectime($cacheFile))) {
 		// Create output image
-        $outImg = imagecreatetruecolor($outWidth, $outHeight);
+        $outImg = \imagecreatetruecolor($outWidth, $outHeight);
 
         // Load src image
         switch($srcType) {
             case "png":
-                $srcImg = imagecreatefrompng($file);
+                $srcImg = \imagecreatefrompng($file);
                 break;
             case "gif":
-                $srcImg = imagecreatefromgif($file);
+                $srcImg = \imagecreatefromgif($file);
                 break;
             case "jpeg":
-                $srcImg = imagecreatefromjpeg($file);
+                $srcImg = \imagecreatefromjpeg($file);
                 break;
             default:
                 diewith("unsupported file type '$file'");
