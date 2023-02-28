@@ -6,10 +6,6 @@ module.exports = defineConfig({
     viewportWidth: 1280,
     viewportHeight: 800,
     video: false,
-    reporter: 'cypress-multi-reporters',
-    reporterOptions: {
-        configFile: 'cypress-reporters.json',
-    },
     videosFolder: 'tmp/e2e/desktop/videos/',
     screenshotsFolder: 'tmp/e2e/desktop/screenshots/',
     e2e: {
