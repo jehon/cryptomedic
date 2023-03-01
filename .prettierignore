@@ -8,3 +8,4 @@ tmp/
 vendor/
 www/api/
 app/cjs2esm
+www/api/tests/references/*.json

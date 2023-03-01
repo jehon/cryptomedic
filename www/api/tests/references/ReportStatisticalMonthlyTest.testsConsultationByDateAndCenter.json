@@ -1,259 +1,259 @@
 {
-  "params": {
-    "period": "month",
-    "month": "2014-05",
-    "when": "2014-05",
-    "whenFrom": "2014-05-01",
-    "whenTo": "2014-05-31",
-    "examiner": "",
-    "center": "Chakaria Disability Center"
-  },
-  "list": {
-    "summary": {
-      "pathologies": {
-        "rickets": {
-          "total": 0,
-          "new": 0,
-          "old": 0
-        },
-        "clubfoots": {
-          "total": 3,
-          "new": 0,
-          "old": 3
-        },
-        "polio": {
-          "total": 0,
-          "new": 0,
-          "old": 0
-        },
-        "burn": {
-          "total": 0,
-          "new": 0,
-          "old": 0
-        },
-        "cp": {
-          "total": 0,
-          "new": 0,
-          "old": 0
-        },
-        "fracture": {
-          "total": 0,
-          "new": 0,
-          "old": 0
-        },
-        "infection": {
-          "total": 0,
-          "new": 0,
-          "old": 0
-        },
-        "congenital": {
-          "total": 0,
-          "new": 0,
-          "old": 0
-        },
-        "adult": {
-          "total": 0,
-          "new": 0,
-          "old": 0
-        },
-        "normal": {
-          "total": 0,
-          "new": 0,
-          "old": 0
-        },
-        "other": {
-          "total": 0,
-          "new": 0,
-          "old": 0
-        },
-        "total": 3
-      },
-      "nbPatients": 2,
-      "sociallevel": {
-        "familyincome": 15000,
-        "nbhousehold": 7,
-        "0": 0,
-        "1": 0,
-        "2": 3,
-        "3": 0,
-        "4": 0,
-        "total": 3
-      },
-      "centers": {
-        "Chakaria Disability Center": 3,
-        "Chakaria Device Center": 0,
-        "Chakaria XRay Center": 0,
-        "Cox's Bazar": 0,
-        "Cox's Bazar Device Center": 0,
-        "Ukhia": 0,
-        "Ukhiya Device Center": 0,
-        "Ramu": 0,
-        "Moheshkhali": 0,
-        "Moheshkhali Device Center": 0,
-        "Pakua": 0,
-        "CMOSH": 0,
-        "CMOSH Device Center": 0,
-        "Forcibly Displaced Myanmar Nationals": 0,
-        "Other Field": 0,
-        "Virtual Consultation": 0,
-        "unspecified": 0
-      },
-      "count": {
-        "surgical": {
-          "surgical_Burn_release": 0,
-          "surgical_PMR_club_club_foot_bi": 0,
-          "surgical_PMR_club_foot": 0,
-          "surgical_Pin_removal": 0,
-          "surgical_burn_little_release": 0,
-          "surgical_epiphysiodesis": 0,
-          "surgical_epiphysiodesis_bi": 0,
-          "surgical_osteotomy": 0,
-          "surgical_osteotomy_bi": 0,
-          "surgical_percutaneous_AL_club_foot": 0,
-          "surgical_percutaneous_achil_tenotomy_bi_cdc": 0,
-          "surgical_percutaneous_achil_tenotomy_bi_cmosh": 0,
-          "surgical_percutaneous_achil_tenotomy_uni_cdc": 0,
-          "surgical_polio_AL": 0,
-          "surgical_polio_achileus_Achileus_lenthening_bi": 0,
-          "surgical_other_operation": 0
-        },
-        "medecine": {
-          "medecine_calcium_30x500mg": 0,
-          "medecine_medecine": 0,
-          "medecine_vitamineD": 0
-        },
-        "workshop": {
-          "workshop_AFO_-_Articulated": 0,
-          "workshop_AFO_night": 0,
-          "workshop_AFO_night_child": 0,
-          "workshop_AFO_walking": 0,
-          "workshop_AFO_walking_child": 0,
-          "workshop_Abdominal_corset_belt": 0,
-          "workshop_Arch_support": 0,
-          "workshop_Artificial_Tr_radial_prosthesis_Alimco": 0,
-          "workshop_Artificial_Tr_radial_prosthesis_jaipur": 0,
-          "workshop_Artificial_limb_-_AK_-_Exoskeleton": 0,
-          "workshop_Artificial_limb_-_AK_-_single_axis_standard": 0,
-          "workshop_Artificial_limb_-_BK_-_Endoskeleton_with_pylon_Std": 0,
-          "workshop_Artificial_limb_-_BK_-_Exoskeleton": 0,
-          "workshop_BAFO_night": 0,
-          "workshop_BAFO_walking": 1,
-          "workshop_BAFO_walking_child": 0,
-          "workshop_BHKAFO_Drop_lock_single_axis": 0,
-          "workshop_BHKAFO_night": 0,
-          "workshop_BHKAFO_walking": 0,
-          "workshop_BKAFO_night_-_plastic": 0,
-          "workshop_BKAFO_walking": 0,
-          "workshop_CP_chair_-_wooden": 0,
-          "workshop_CP_standing_table_-_wooden": 0,
-          "workshop_Cervical_Collar": 0,
-          "workshop_Compensation_sole": 0,
-          "workshop_Compensation_sole_1cm": 0,
-          "workshop_Compensation_sole_2cm": 0,
-          "workshop_Compensation_sole_3cm": 0,
-          "workshop_Compensation_sole_4cm": 0,
-          "workshop_Compensation_sole_5cm": 0,
-          "workshop_Crutch_-_Stainless_steel": 0,
-          "workshop_Crutch_a_pair_-_local": 0,
-          "workshop_DB_splint": 0,
-          "workshop_Elbow_crutch": 0,
-          "workshop_Extension_brace_-_AFO": 0,
-          "workshop_Finger_splint": 0,
-          "workshop_Hand_splint": 0,
-          "workshop_Hearing_aids": 0,
-          "workshop_KAFO_night": 0,
-          "workshop_Knee_brace": 0,
-          "workshop_Lifspring_BAFO": 0,
-          "workshop_Matetarsal_pade": 0,
-          "workshop_Orthoshoes_with_bar_-_one_leg": 0,
-          "workshop_Orthoshoes_without_bar_-_one_leg": 0,
-          "workshop_Reparing": 0,
-          "workshop_Supinator_corner": 0,
-          "workshop_UHKAFO_-_Drop_lock_single_axis_-_MI": 0,
-          "workshop_UHKAFO_night": 0,
-          "workshop_UHKAFO_night_child": 0,
-          "workshop_UHKAFO_walking": 0,
-          "workshop_UKAFO_walking": 0,
-          "workshop_Walker_with_wheel_-_folding": 0,
-          "workshop_Walker_with_wheel_-_non_folding": 0,
-          "workshop_Wheel_Chair_-_china_-_modified": 0,
-          "workshop_Wheel_chair_-_folding": 0,
-          "workshop_White_can": 0,
-          "workshop_Wirst_splint": 0,
-          "workshop_artificial_limb_-_AK_-_polycentric_knee_joint": 0,
-          "workshop_crutch_alumenium_-_a_pair": 0,
-          "workshop_fracture_brace_-_one_leg": 0,
-          "workshop_leg_truction": 0,
-          "workshop_lifspring_afo": 0,
-          "workshop_mailwalke_brace": 0,
-          "workshop_other": 0,
-          "workshop_samainto_brace": 0,
-          "workshop_smo": 0,
-          "workshop_thoracic_brace": 0,
-          "workshop_thoracic_brace_and_scoliosis_brace": 0,
-          "workshop_wheel_chair_china": 0,
-          "workshop_Other_orthodevice": 0
-        },
-        "consult": {
-          "consult_CDC_consultation_Bengali_Doctor": 0,
-          "consult_CDC_consultation_Doctor": 0,
-          "consult_CDC_consultation_physio": 2,
-          "consult_ClubFoot_Follow_up": 0,
-          "consult_field_visit": 0,
-          "consult_give_appointment": 0,
-          "consult_home_visit": 0
-        },
-        "other": {
-          "other_CMOSH_follow_up": 0,
-          "other_X_Ray": 0,
-          "other_group_physiotherapy": 0,
-          "other_make_long_plaster": 0,
-          "other_make_short_plaster": 0,
-          "other_making_dressing": 0,
-          "other_making_plaster": 1,
-          "other_microbus": 0,
-          "other_nutritionalAdvice": 0,
-          "other_nutritionalSupport": 0,
-          "other_physiotherapy": 0,
-          "other_physiotherapy_adult": 0,
-          "other_physiotherapy_child": 0,
-          "other_Other_consultation_care": 0,
-          "other_Other_dressing": 0,
-          "other_Other_plaster": 0
+    "params": {
+        "period": "month",
+        "month": "2014-05",
+        "when": "2014-05",
+        "whenFrom": "2014-05-01",
+        "whenTo": "2014-05-31",
+        "examiner": "",
+        "center": "Chakaria Disability Center"
+    },
+    "list": {
+        "summary": {
+            "pathologies": {
+                "rickets": {
+                    "total": 0,
+                    "new": 0,
+                    "old": 0
+                },
+                "clubfoots": {
+                    "total": 3,
+                    "new": 0,
+                    "old": 3
+                },
+                "polio": {
+                    "total": 0,
+                    "new": 0,
+                    "old": 0
+                },
+                "burn": {
+                    "total": 0,
+                    "new": 0,
+                    "old": 0
+                },
+                "cp": {
+                    "total": 0,
+                    "new": 0,
+                    "old": 0
+                },
+                "fracture": {
+                    "total": 0,
+                    "new": 0,
+                    "old": 0
+                },
+                "infection": {
+                    "total": 0,
+                    "new": 0,
+                    "old": 0
+                },
+                "congenital": {
+                    "total": 0,
+                    "new": 0,
+                    "old": 0
+                },
+                "adult": {
+                    "total": 0,
+                    "new": 0,
+                    "old": 0
+                },
+                "normal": {
+                    "total": 0,
+                    "new": 0,
+                    "old": 0
+                },
+                "other": {
+                    "total": 0,
+                    "new": 0,
+                    "old": 0
+                },
+                "total": 3
+            },
+            "nbPatients": 2,
+            "sociallevel": {
+                "familyincome": 15000,
+                "nbhousehold": 7,
+                "0": 0,
+                "1": 0,
+                "2": 3,
+                "3": 0,
+                "4": 0,
+                "total": 3
+            },
+            "centers": {
+                "Chakaria Disability Center": 3,
+                "Chakaria Device Center": 0,
+                "Chakaria XRay Center": 0,
+                "Cox's Bazar": 0,
+                "Cox's Bazar Device Center": 0,
+                "Ukhia": 0,
+                "Ukhiya Device Center": 0,
+                "Ramu": 0,
+                "Moheshkhali": 0,
+                "Moheshkhali Device Center": 0,
+                "Pakua": 0,
+                "CMOSH": 0,
+                "CMOSH Device Center": 0,
+                "Forcibly Displaced Myanmar Nationals": 0,
+                "Other Field": 0,
+                "Virtual Consultation": 0,
+                "unspecified": 0
+            },
+            "count": {
+                "surgical": {
+                    "surgical_Burn_release": 0,
+                    "surgical_PMR_club_club_foot_bi": 0,
+                    "surgical_PMR_club_foot": 0,
+                    "surgical_Pin_removal": 0,
+                    "surgical_burn_little_release": 0,
+                    "surgical_epiphysiodesis": 0,
+                    "surgical_epiphysiodesis_bi": 0,
+                    "surgical_osteotomy": 0,
+                    "surgical_osteotomy_bi": 0,
+                    "surgical_percutaneous_AL_club_foot": 0,
+                    "surgical_percutaneous_achil_tenotomy_bi_cdc": 0,
+                    "surgical_percutaneous_achil_tenotomy_bi_cmosh": 0,
+                    "surgical_percutaneous_achil_tenotomy_uni_cdc": 0,
+                    "surgical_polio_AL": 0,
+                    "surgical_polio_achileus_Achileus_lenthening_bi": 0,
+                    "surgical_other_operation": 0
+                },
+                "medecine": {
+                    "medecine_calcium_30x500mg": 0,
+                    "medecine_medecine": 0,
+                    "medecine_vitamineD": 0
+                },
+                "workshop": {
+                    "workshop_AFO_-_Articulated": 0,
+                    "workshop_AFO_night": 0,
+                    "workshop_AFO_night_child": 0,
+                    "workshop_AFO_walking": 0,
+                    "workshop_AFO_walking_child": 0,
+                    "workshop_Abdominal_corset_belt": 0,
+                    "workshop_Arch_support": 0,
+                    "workshop_Artificial_Tr_radial_prosthesis_Alimco": 0,
+                    "workshop_Artificial_Tr_radial_prosthesis_jaipur": 0,
+                    "workshop_Artificial_limb_-_AK_-_Exoskeleton": 0,
+                    "workshop_Artificial_limb_-_AK_-_single_axis_standard": 0,
+                    "workshop_Artificial_limb_-_BK_-_Endoskeleton_with_pylon_Std": 0,
+                    "workshop_Artificial_limb_-_BK_-_Exoskeleton": 0,
+                    "workshop_BAFO_night": 0,
+                    "workshop_BAFO_walking": 1,
+                    "workshop_BAFO_walking_child": 0,
+                    "workshop_BHKAFO_Drop_lock_single_axis": 0,
+                    "workshop_BHKAFO_night": 0,
+                    "workshop_BHKAFO_walking": 0,
+                    "workshop_BKAFO_night_-_plastic": 0,
+                    "workshop_BKAFO_walking": 0,
+                    "workshop_CP_chair_-_wooden": 0,
+                    "workshop_CP_standing_table_-_wooden": 0,
+                    "workshop_Cervical_Collar": 0,
+                    "workshop_Compensation_sole": 0,
+                    "workshop_Compensation_sole_1cm": 0,
+                    "workshop_Compensation_sole_2cm": 0,
+                    "workshop_Compensation_sole_3cm": 0,
+                    "workshop_Compensation_sole_4cm": 0,
+                    "workshop_Compensation_sole_5cm": 0,
+                    "workshop_Crutch_-_Stainless_steel": 0,
+                    "workshop_Crutch_a_pair_-_local": 0,
+                    "workshop_DB_splint": 0,
+                    "workshop_Elbow_crutch": 0,
+                    "workshop_Extension_brace_-_AFO": 0,
+                    "workshop_Finger_splint": 0,
+                    "workshop_Hand_splint": 0,
+                    "workshop_Hearing_aids": 0,
+                    "workshop_KAFO_night": 0,
+                    "workshop_Knee_brace": 0,
+                    "workshop_Lifspring_BAFO": 0,
+                    "workshop_Matetarsal_pade": 0,
+                    "workshop_Orthoshoes_with_bar_-_one_leg": 0,
+                    "workshop_Orthoshoes_without_bar_-_one_leg": 0,
+                    "workshop_Reparing": 0,
+                    "workshop_Supinator_corner": 0,
+                    "workshop_UHKAFO_-_Drop_lock_single_axis_-_MI": 0,
+                    "workshop_UHKAFO_night": 0,
+                    "workshop_UHKAFO_night_child": 0,
+                    "workshop_UHKAFO_walking": 0,
+                    "workshop_UKAFO_walking": 0,
+                    "workshop_Walker_with_wheel_-_folding": 0,
+                    "workshop_Walker_with_wheel_-_non_folding": 0,
+                    "workshop_Wheel_Chair_-_china_-_modified": 0,
+                    "workshop_Wheel_chair_-_folding": 0,
+                    "workshop_White_can": 0,
+                    "workshop_Wirst_splint": 0,
+                    "workshop_artificial_limb_-_AK_-_polycentric_knee_joint": 0,
+                    "workshop_crutch_alumenium_-_a_pair": 0,
+                    "workshop_fracture_brace_-_one_leg": 0,
+                    "workshop_leg_truction": 0,
+                    "workshop_lifspring_afo": 0,
+                    "workshop_mailwalke_brace": 0,
+                    "workshop_other": 0,
+                    "workshop_samainto_brace": 0,
+                    "workshop_smo": 0,
+                    "workshop_thoracic_brace": 0,
+                    "workshop_thoracic_brace_and_scoliosis_brace": 0,
+                    "workshop_wheel_chair_china": 0,
+                    "workshop_Other_orthodevice": 0
+                },
+                "consult": {
+                    "consult_CDC_consultation_Bengali_Doctor": 0,
+                    "consult_CDC_consultation_Doctor": 0,
+                    "consult_CDC_consultation_physio": 2,
+                    "consult_ClubFoot_Follow_up": 0,
+                    "consult_field_visit": 0,
+                    "consult_give_appointment": 0,
+                    "consult_home_visit": 0
+                },
+                "other": {
+                    "other_CMOSH_follow_up": 0,
+                    "other_X_Ray": 0,
+                    "other_group_physiotherapy": 0,
+                    "other_make_long_plaster": 0,
+                    "other_make_short_plaster": 0,
+                    "other_making_dressing": 0,
+                    "other_making_plaster": 1,
+                    "other_microbus": 0,
+                    "other_nutritionalAdvice": 0,
+                    "other_nutritionalSupport": 0,
+                    "other_physiotherapy": 0,
+                    "other_physiotherapy_adult": 0,
+                    "other_physiotherapy_child": 0,
+                    "other_Other_consultation_care": 0,
+                    "other_Other_dressing": 0,
+                    "other_Other_plaster": 0
+                }
+            },
+            "financials": {
+                "surgery": {
+                    "real": null,
+                    "asked": null,
+                    "paid": null
+                },
+                "medical": {
+                    "real": null,
+                    "asked": null,
+                    "paid": null
+                },
+                "workshop": {
+                    "real": 3000,
+                    "asked": 1200,
+                    "paid": null
+                },
+                "consult": {
+                    "real": 600,
+                    "asked": 240,
+                    "paid": 300
+                },
+                "other": {
+                    "real": null,
+                    "asked": null,
+                    "paid": null
+                },
+                "total": {
+                    "real": 3600,
+                    "asked": 1440,
+                    "paid": 300
+                }
+            }
         }
-      },
-      "financials": {
-        "surgery": {
-          "real": null,
-          "asked": null,
-          "paid": null
-        },
-        "medical": {
-          "real": null,
-          "asked": null,
-          "paid": null
-        },
-        "workshop": {
-          "real": 3000,
-          "asked": 1200,
-          "paid": null
-        },
-        "consult": {
-          "real": 600,
-          "asked": 240,
-          "paid": 300
-        },
-        "other": {
-          "real": null,
-          "asked": null,
-          "paid": null
-        },
-        "total": {
-          "real": 3600,
-          "asked": 1440,
-          "paid": 300
-        }
-      }
     }
-  }
 }
