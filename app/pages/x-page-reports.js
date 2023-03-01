@@ -518,6 +518,19 @@ x-button#export {
       this._result.getElementsByTagName("table")[0],
       "cryptomedic"
     );
+    // TODO:
+    // ExcellentExport.convert({
+    //   anchor: this._exportLink,
+    //   format: 'xlsx',
+    //   // filename:
+    // }, [
+    //   {
+    //     name: 'cryptomedic',
+    //     from: {
+    //       table:  this._result.getElementsByTagName("table")[0]
+    //     }
+    //   }
+    // ]);
 
     this._exportLink.click();
 
