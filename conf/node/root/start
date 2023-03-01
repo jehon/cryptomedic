@@ -4,10 +4,10 @@ set -o errexit
 set -o pipefail
 shopt -s nullglob
 
-if [ -z $HOME ]; then
-    HOME=/home/user
+if [ "$HOME" = "/" ]; then
+    HOME=/home/$UID
+    mkdir -p "$HOME"
+    npm set cache "$HOME"/.npm 
 fi
-
-mkdir -p "$HOME"
 
 "$@"
