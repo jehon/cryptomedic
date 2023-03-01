@@ -31,6 +31,8 @@ jobs:
 
       - run: make build
 
+      - run: make lint
+
       - run: make reset
 
       - run: make test-api
@@ -42,8 +44,6 @@ jobs:
       - run: make test-e2e-mobile
 
       - run: make test-styles
-
-      - run: make lint
 
       # TODO
       - name: make deploy
