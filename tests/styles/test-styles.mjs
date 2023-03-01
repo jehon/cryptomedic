@@ -2,7 +2,7 @@
 
 import path from "path";
 import fs from "fs";
-import glob from "glob";
+import { globSync } from "glob";
 import pixelMatch from "pixelmatch";
 import { PNG } from "pngjs";
 
@@ -31,7 +31,7 @@ const MaxDiffs = {
 
 const listOfFiles = [];
 // Add the ref
-glob.sync("**/*.png", { cwd: inStyles(referenceFolder) }).map((f) =>
+globSync("**/*.png", { cwd: inStyles(referenceFolder) }).map((f) =>
   listOfFiles.push({
     key: f,
     ref: path.join(referenceFolder, f)
@@ -39,7 +39,7 @@ glob.sync("**/*.png", { cwd: inStyles(referenceFolder) }).map((f) =>
 );
 
 // Add the run
-glob.sync("**/*.png", { cwd: inStyles(runFolder) }).map((f) =>
+globSync("**/*.png", { cwd: inStyles(runFolder) }).map((f) =>
   listOfFiles.push({
     key: f,
     run: path.join(runFolder, f)
